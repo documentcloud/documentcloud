@@ -1,0 +1,34 @@
+
+
+Processing WorkspaceController#index (for 127.0.0.1 at 2009-08-06 11:32:42) [GET]
+Rendering template within layouts/barebones
+Rendering workspace/index
+Completed in 29ms (View: 28, DB: 0) | 200 OK [http://documentcloud-dev.org/]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-08-06 11:32:42) [GET]
+
+ActionController::RoutingError (No route matches "/stylesheets/barebones.css" with {:method=>:get}):
+  <internal:prelude>:8:in `synchronize'
+  /usr/local/lib/ruby19/1.9.1/webrick/httpserver.rb:111:in `service'
+  /usr/local/lib/ruby19/1.9.1/webrick/httpserver.rb:70:in `run'
+  /usr/local/lib/ruby19/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+Rendering rescues/layout (not_found)
+
+
+Processing WorkspaceController#index (for 127.0.0.1 at 2009-08-06 11:32:50) [GET]
+Rendering template within layouts/barebones
+Rendering workspace/index
+Completed in 7ms (View: 6, DB: 0) | 200 OK [http://documentcloud-dev.org/]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-08-06 11:32:50) [GET]
+
+ActionController::RoutingError (No route matches "/stylesheets/barebones.css" with {:method=>:get}):
+  <internal:prelude>:8:in `synchronize'
+  /usr/local/lib/ruby19/1.9.1/webrick/httpserver.rb:111:in `service'
+  /usr/local/lib/ruby19/1.9.1/webrick/httpserver.rb:70:in `run'
+  /usr/local/lib/ruby19/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+Rendering rescues/layout (not_found)
