@@ -1,0 +1,10 @@
+:asset_root: public
+:load_path:
+  - app/javascripts
+  - public/javascripts
+  - vendor/sprockets/*/src
+  - vendor/plugins/*/javascripts
+:source_files:
+  - public/javascripts/vendor/jquery-1.3.2.js
+  - app/javascripts/application.js
+  - app/javascripts/**/*.js
