@@ -1,0 +1,41 @@
+html {
+  font-family: arial, Helvetica, sans-serif;
+  color: #373737;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: Rockwell, arial, Helvetica, sans-serif;
+}
+
+#topbar {
+  width: 100%;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#aaa));
+  border-bottom: 10px solid #7f7f7f;
+  height: 80px;
+}
+  #logo {
+    position: absolute;
+    top: 5px; left: 5px;
+    width: 362px; height: 70px;
+    background: url(/images/common/document_cloud_logo.png) no-repeat;
+  }
+  #title {
+    position: absolute;
+    left: 0; right: 0; top: 23px;
+    text-align: center;
+    color: #4a4a4a;
+    font-size: 35px;
+    -webkit-text-stroke: 1px #3a3a3a;
+  }
+  #search {
+    position: absolute;
+    right: 10px; top: 30px;
+    font-size: 14px;
+    width: 20%;
+    color: #666;
+  }
+  
+#content {
+  position: absolute;
+  bottom: 0px; top: 90px; left: 0; right: 0;
+  background: #efefef;
+}

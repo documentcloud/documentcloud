@@ -1,0 +1,3 @@
+class DocumentController < ApplicationController
+  
+end

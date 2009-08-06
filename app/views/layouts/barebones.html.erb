@@ -1,14 +1,30 @@
+<%
+	@page_title = @title || "Untitled Page"
+%>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-	<title><%= @title || "Untitled Page" %> | DocumentCloud</title>
+	<title><%= @page_title %> | DocumentCloud</title>
+	<%= stylesheet_link_tag 'reset' %>
 	<%= stylesheet_link_tag 'barebones' %>
 </head>
 <body>
 	
-	<%= yield %>
+	<div id="container">
+		<div id="topbar">
+			<div id="logo"></div>
+			<h1 id="title"><%= @page_title %></h1>
+			<input type="text" value="search..." id="search" />
+		</div>
+	
+		<div id="content">
+			<%= yield %>
+		</div>
+		
+	</div>
 	
 </body>
 </html>
