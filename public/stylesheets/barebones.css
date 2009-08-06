@@ -8,6 +8,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #topbar {
   width: 100%;
+  background: #dedede;
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#aaa));
   border-bottom: 10px solid #7f7f7f;
   height: 80px;

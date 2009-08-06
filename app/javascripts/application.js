@@ -12,6 +12,8 @@
 window.fetch_documents = function() {
   $.get('/documents/test.json', {}, function(resp) {
     console.log(resp);
-    window.resp = resp;
+    $(resp.documents).each(function() {
+      $('#documents').append((new dc.ui.DocumentTile(this)).render());
+    });
   }, 'json');
 };
