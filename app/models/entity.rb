@@ -22,7 +22,7 @@ class Entity
   # TODO: Expand this to look into a document's full text and pull out a string,
   # with its position.
   def self.generate_fake_entity
-    value     = Faker::Lorem.words(1)
+    value     = Faker::Lorem.words(1).first
     type      = CALAIS_TYPES[rand(CALAIS_TYPES.length)]
     relevance = rand(100/100.0)
     Entity.new(value, type, relevance)
