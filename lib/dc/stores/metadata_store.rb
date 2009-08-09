@@ -13,32 +13,53 @@ module DC
     # For a first pass, the metadata store will keep entries in a Tokyo Cabinet
     # table, locally. 
     class MetadataStore
+      include DC::Stores::TokyoCabinetTable
       
-      # Instead of creating a new MetadataStore when you want to read or write,
-      # call MetadataStore.instance, which will give you a handle on a thread-
-      # local store. Other processes may still be accessing it, however, so
-      # transactions for transactional things are still suggested.
-      def self.instance
-        @instance ||= DC::Stores::MetadataStore.new
+      def save(metadatum)
+        open_for_writing {|store| store[metadatum.id] = metadatum.to_hash }
       end
       
-      def initialize
-        
+      def save_document(document)
+        open_for_writing do |store|
+          document.metadata.each do |metadatum|
+            store[metadatum.id] = metadatum.to_hash
+          end
+        end
       end
       
-      def save_metadatum(metadatum)
-        @store.save(metadatum.document.id, metadatum.value, metadatum.relevance)
+      # Searching for metadata that mach a value does a precise string equality
+      # for now. TCTDB also supports tokenized searches, numerical searches,
+      # regex-based searches, and full-text searches.
+      def find_by_value(value, num_results = nil)
+        results = open_for_reading do |store|
+          store.query do |q|
+            q.add_condition 'value', :equals, value
+            q.order_by 'relevance', :numdesc
+            q.limit num_results if num_results
+          end
+        end
+        results.map {|r| Metadatum.from_hash(r) }
       end
       
-      def find_by_value(value, num_results)
-        @store.find_top_relevant_metadata_by_value(value, num_results)
+      # When you already have a document_id, and you want to collect the
+      # most relevant metadata for that document...
+      def find_by_document(document, num_results = nil)
+        results = open_for_reading do |store|
+          store.query do |q|
+            q.add_condition 'document_id', :equals, document.id
+            q.order_by 'relevance', :numdesc
+            q.limit num_results if num_results
+          end
+        end
+        results.map {|r| Metadatum.from_hash(r) }
       end
       
-      def metadata_for_document(document, num_results)
-        @store.find_most_relevant_metadata_for_document(document, num_results)
+      # Compute the path to the Tokyo Cabinet Table store on disk.
+      def path
+        "#{RAILS_ROOT}/db/#{RAILS_ENV}_metadata.tdb"
       end
       
     end
-  
+    
   end
 end

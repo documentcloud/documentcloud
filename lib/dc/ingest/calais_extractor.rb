@@ -17,6 +17,7 @@ module DC
         extract_standard_metadata(document, calais)
         extract_categories(document, calais)
         extract_entities(document, calais)
+        extract_full_text(document, calais)
       end
       
       
@@ -35,7 +36,7 @@ module DC
       # Extract the categories that the Document falls under.
       def extract_categories(document, calais)
         document.metadata += calais.categories.map do |cat|
-          Metadatum.new(cat.name.underscore, 'category', cat.score)
+          Metadatum.new(cat.name.underscore, 'category', cat.score, document.id)
         end
       end
       
@@ -49,10 +50,23 @@ module DC
             entity.attributes['name'], 
             entity.type.underscore,
             entity.relevance,
-            entity.instances.map {|i| Instance.new(i.offset, i.length) }
+            document.id,
+            {
+              :instances => entity.instances.map {|i| Instance.new(i.offset, i.length) },
+              :calais_hash => entity.calais_hash.value
+            }
           )
         end
         document.metadata += extracted
+      end
+      
+      # Hopefully we'll never need to use this method, but if you pass in 
+      # a document that doesn't have any full_text, we can take it out of
+      # the Calais RDF response.
+      def extract_full_text(document, calais)
+        return if document.full_text
+        xml = XML::Parser.string(document.rdf).parse
+        document.full_text = xml.root.find('//c:document').first.content
       end
       
     end

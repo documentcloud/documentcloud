@@ -8,17 +8,24 @@ module DC
     # Potential backing engines for this store are MySQL, MongoDB, Tokyo Cabinet
     # (either hash or table backends).
     class EntryStore
+      include DC::Stores::TokyoCabinetTable
       
-      def initialize
-        
-      end
-      
+      # Save a document's entry attributes.
       def save(document)
-        @store.put(document.id, document.to_entry.to_json)
+        open_for_writing do |store|
+          store[document.id] = document.to_entry_hash
+        end
       end
       
+      # Find a document's entry, referenced by document id.
       def find(document_id)
-        Document.revivify(@store.find(document_id))
+        doc_hash = open_for_reading {|store| store[document_id] }
+        Document.from_entry_hash(doc_hash)
+      end
+      
+      # Compute the path to the Tokyo Cabinet Table store on disk.
+      def path
+        "#{RAILS_ROOT}/db/#{RAILS_ENV}_entries.tdb"
       end
       
     end

@@ -3,7 +3,7 @@
 # text.) Metadata have a whitelisted type, or list of acceptable types.
 class Metadatum
   
-  attr_accessor :type, :instances, :relevance, :value, :calais_hash
+  attr_accessor :type, :instances, :relevance, :value, :calais_hash, :document_id
   
   CALAIS_TYPES = [
     :city, :company, :continent, :country, :email_address, :facility, 
@@ -20,24 +20,40 @@ class Metadatum
   def self.acceptable_type?(type)
     CALAIS_TYPES.include? type.underscore.to_sym
   end
+
+  # Recreate a Metadatum object from it's freeze-dried counterpart on disk.
+  # Performs the inverse of the to_hash serialization method below.
+  def self.from_hash(data)
+    Metadatum.new(
+      data['value'],
+      data['type'],
+      data['relevance'].to_i,
+      data['document_id'],
+      {
+        :instances => Instance.from_csv(data['instances']),
+        :calais_hash => data['calais_hash']
+      }
+    )
+  end
   
   # Generate a fake Metadatum for testing purposes.
   # TODO: Expand this to look into a document's full text and pull out a string,
   # with its instances.
-  def self.generate_fake
-    value     = Faker::Lorem.words(1).first
-    type      = CALAIS_TYPES[rand(CALAIS_TYPES.length)]
-    relevance = rand(100/100.0)
-    Metadatum.new(value, type, relevance)
+  # def self.generate_fake
+  #   value     = Faker::Lorem.words(1).first
+  #   type      = CALAIS_TYPES[rand(CALAIS_TYPES.length)]
+  #   relevance = rand(100/100.0)
+  #   Metadatum.new(value, type, relevance)
+  # end
+  
+  def initialize(value, type, relevance, document_id, opts={})
+    @value, @type, @relevance, @document_id = value, type, relevance, document_id
+    @instances, @calais_hash = opts[:instances], opts[:calais_hash]
   end
   
-  def initialize(value, type, relevance, instances=nil)
-    @value, @type, @relevance, @instances = value, type, relevance, instances
-  end
-  
-  def primary_key
-    raise "Cannot produce key without Calais hash." if !@calais_hash
-    @calais_hash
+  # Totally hokey way to get a unique id. Think about what this should be.
+  def id
+    "#{@calais_hash || @value}--#{@document_id}"
   end
   
   def to_hash
@@ -45,7 +61,9 @@ class Metadatum
       'value' => @value,
       'type' => @type,
       'relevance' => @relevance,
-      'instances' => Instance.to_csv(instances)
+      'document_id' => @document_id,
+      'instances' => Instance.to_csv(@instances),
+      'calais_hash' => @calais_hash
     }
   end
   
