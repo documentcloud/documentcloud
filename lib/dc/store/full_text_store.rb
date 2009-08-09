@@ -1,5 +1,5 @@
 module DC
-  module Stores
+  module Store
     
     # Stores full text for a document, indexed by document_id, in a full text
     # search index (appropriate choices would be Tokyo Dystopia, Solr, 

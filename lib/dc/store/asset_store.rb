@@ -1,5 +1,5 @@
 module DC
-  module Stores
+  module Store
     
     # The AssetStore is responsible for storing search-opaque document assets, 
     # either on S3 (or in development on the local filesystem in /tmp).
@@ -7,7 +7,7 @@ module DC
       include FileUtils
       
       def initialize
-        mkdir_p(local_storage_path) unless exists?(local_storage_path)
+        mkdir_p(local_storage_path) unless File.exists?(local_storage_path)
       end
       
       def local_storage_path

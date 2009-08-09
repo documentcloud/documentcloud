@@ -40,14 +40,15 @@ class Document
   end
   
   def save
-    DC::Stores::EntryStore.new.save(self)
-    DC::Stores::AssetStore.new.save_full_text(self)
-    DC::Stores::MetadataStore.new.save_document(self)
+    DC::Store::EntryStore.new.save(self)
+    DC::Store::AssetStore.new.save_full_text(self)
+    DC::Store::MetadataStore.new.save_document(self)
   end
   
   def to_entry_hash
     ENTRY_ATTRIBUTES.inject({}) do |memo, name|
       memo[name.to_s] = send(name)
+      memo
     end
   end
   

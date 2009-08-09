@@ -1,5 +1,5 @@
 module DC
-  module Stores
+  module Store
     
     # The EntryStore is responsible for keeping a denormalized (in theory, the
     # attributes could be rebuilt from the MetadataStore) representation of a 
@@ -8,7 +8,7 @@ module DC
     # Potential backing engines for this store are MySQL, MongoDB, Tokyo Cabinet
     # (either hash or table backends).
     class EntryStore
-      include DC::Stores::TokyoCabinetTable
+      include DC::Store::TokyoCabinetTable
       
       # Save a document's entry attributes.
       def save(document)

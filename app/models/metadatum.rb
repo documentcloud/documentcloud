@@ -48,7 +48,8 @@ class Metadatum
   
   def initialize(value, type, relevance, document_id, opts={})
     @value, @type, @relevance, @document_id = value, type, relevance, document_id
-    @instances, @calais_hash = opts[:instances], opts[:calais_hash]
+    @instances = opts[:instances] || []
+    @calais_hash = opts[:calais_hash]
   end
   
   # Totally hokey way to get a unique id. Think about what this should be.

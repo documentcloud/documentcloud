@@ -7,8 +7,8 @@ module DC
     class DocumentSearcher
       
       def initialize
-        @metadata_store  = DC::Stores::MetadataStore.new
-        @full_text_store = DC::Stores::FullTextStore.new
+        @metadata_store  = DC::Store::MetadataStore.new
+        @full_text_store = DC::Store::FullTextStore.new
       end
       
       def find(query)
