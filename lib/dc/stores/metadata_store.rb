@@ -8,8 +8,19 @@ module DC
   
     # The MetadataStore knows how to save and search for metadata, keyed by
     # document_id and relevance. Appropriate backing stores are Tokyo Cabinet
-    # (table backend), Redis, MySQL, and potentially Solr. 
+    # (table backend), Redis, MySQL, and potentially Solr.
+    #
+    # For a first pass, the metadata store will keep entries in a Tokyo Cabinet
+    # table, locally. 
     class MetadataStore
+      
+      # Instead of creating a new MetadataStore when you want to read or write,
+      # call MetadataStore.instance, which will give you a handle on a thread-
+      # local store. Other processes may still be accessing it, however, so
+      # transactions for transactional things are still suggested.
+      def self.instance
+        @instance ||= DC::Stores::MetadataStore.new
+      end
       
       def initialize
         
