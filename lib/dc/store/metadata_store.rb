@@ -27,18 +27,31 @@ module DC
         end
       end
       
-      # Searching for metadata that mach a search_phrase. To perform a literal,
+      # Searching for metadata that match a search_phrase. To perform a literal,
       # string equality search, pass +:literal => true+ 
-      def find_by_value(search_text, opts = {})
+      def find_by_field(type = :any, search_text = nil, opts = {})
         results = open_for_reading do |store|
           search_type = opts[:literal] ? :equals : :phrase
           store.query do |q|
             q.add_condition 'value', search_type, search_text
+            q.add_condition 'type', :equals, type if type.to_sym != :any
             q.order_by 'relevance', :numdesc
             q.limit opts[:limit] if opts[:limit]
           end
         end
         results.map {|r| Metadatum.from_hash(r) }
+      end
+      
+      # Aggregate search for the top N metadata that match a collection of
+      # fields.
+      def find_by_fields(fields, opts={})
+        results = []
+        fields.each do |field|
+          results += find_by_field(field.type, field.value, opts)
+        end
+        sorted = results.sort_by {|meta| -meta.relevance }
+        return sorted[0...opts[:limit]] if opts[:limit]
+        sorted
       end
       
       # When you already have a document_id, and you want to collect the

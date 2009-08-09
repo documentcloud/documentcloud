@@ -27,7 +27,7 @@ class Metadatum
     Metadatum.new(
       data['value'],
       data['type'],
-      data['relevance'].to_i,
+      data['relevance'].to_f,
       data['document_id'],
       {
         :instances => Instance.from_csv(data['instances']),
