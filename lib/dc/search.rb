@@ -12,7 +12,8 @@ module DC
       
       results = []
       query = parser.parse(query_string)
-      metadata_store.find_by_fields(query.fields, opts)
+      metadata = metadata_store.find_by_fields(query.fields, opts)
+      metadata.map {|m| m.document }
     end
     
   end

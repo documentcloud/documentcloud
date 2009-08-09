@@ -1,5 +1,6 @@
 # NB: Doesn't inherit from ActiveRecord::Base ... yet.
 class Document
+  include ActionView::Helpers::TextHelper
   
   ENTRY_ATTRIBUTES = [:author, :created_at, :date, :language, :organization, 
                       :summary, :title, :calais_request_id]
@@ -50,6 +51,23 @@ class Document
       memo[name.to_s] = send(name)
       memo
     end
+  end
+  
+  # TODO: Think about keeping a metadata_count in the document entry, and then
+  # we can determine if we've already got the complete set of data, or need to
+  # go query the store for more.
+  def metadata
+    return @metadata unless @metadata.empty?
+    @metadata = DC::Store::MetadataStore.new.find_by_document(self)
+  end
+  
+  def full_text
+    @full_text ||= DC::Store::AssetStore.new.find_full_text(self)
+  end
+  
+  def inspect
+    short_title = ActionView::Helpers::TextHelper
+    "#<Document \"#{truncate(title, 50)}\">"
   end
   
 end

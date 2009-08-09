@@ -57,6 +57,17 @@ class Metadatum
     "#{@calais_hash || @value}--#{@document_id}"
   end
   
+  # Return or find the document to which this metadatum belongs.
+  # TODO: Think about moving the cached document into a per-request identity map
+  # living on Document itself.
+  def document
+    @document ||= DC::Store::EntryStore.new.find(@document_id)
+  end
+  
+  def inspect
+    "#<Metadatum #{type}:#{value}>"
+  end
+  
   def to_hash
     {
       'value' => @value,
