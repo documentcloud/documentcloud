@@ -1,0 +1,232 @@
+/*
+aristo.css
+source: http://github.com/maccman/aristo/tree/master
+license: http://creativecommons.org/licenses/by-sa/3.0/us/
+*/
+
+/*
+CSS 3 Docs
+http://qooxdoo.org/documentation/general/webkit_css_styles
+http://trac.webkit.org/browser/trunk/LayoutTests//fast/css
+*/
+
+* {
+  font-family: 'Arial';
+  font-size: 14px;
+  font-weight: bold;
+}
+
+input[type="checkbox"] {
+  -khtml-appearance: none;
+  background: url(/images/aristo/check-box-bezel.png) no-repeat;
+  width: 15px;
+  height: 16px;
+}
+
+input[type="checkbox"]:checked {
+  background: url(/images/aristo/check-box-bezel-selected.png) no-repeat;
+}
+
+input[type="radio"] {
+  -khtml-appearance: none;
+  background: url(/images/aristo/radio-bezel.png) no-repeat;
+  width: 17px;
+  height: 17px;
+}
+
+input[type="radio"]:checked {
+  border: none;
+  background: url(/images/aristo/radio-bezel-selected.png) no-repeat;
+}
+
+button {
+  margin: 5px;
+  -khtml-appearance: none;
+  -moz-appearance: none;
+  background: none;
+  -webkit-border-image: url(/images/aristo/button-bezel.png) 2 2 2 2 stretch stretch;
+  -moz-border-image: url(/images/aristo/button-bezel.png) 2 2 2 2 stretch stretch;
+  padding: 3px 8px;
+  color: #4F4F4F;
+  -webkit-transition: -webkit-box-shadow 0.2s linear;
+  text-shadow: 0px 1px 1px #fff;
+  cursor: pointer;
+}
+
+button.default {
+  color: #1C4257;
+  -webkit-border-image: url(/images/aristo/default-button-bezel.png) 2 2 2 2 stretch stretch;
+  -moz-border-image: url(/images/aristo/default-button-bezel.png) 2 2 2 2 stretch stretch;
+}
+
+.hud button, button.hud {
+  font-size: 11px;
+  color: #fff;
+  padding: 0;
+  -webkit-border-image: url(/images/aristo/hud/button-bezel.png) 9 13 10 13 / 8px 13px 9px 13px repeat repeat;
+  -moz-border-image: url(/images/aristo/hud/button-bezel.png) 9 13 10 13 / 8px 13px 9px 13px repeat repeat;
+  text-shadow: none;
+}
+
+button:hover:not(:disabled) {
+  -webkit-box-shadow: 0 0 15px #D4D4D4;
+  -moz-box-shadow: 0 0 15px #D4D4D4;
+}
+
+button.default:hover {
+  -webkit-box-shadow: 0 0 15px #A1CAE2;
+  -moz-box-shadow: 0 0 15px #A1CAE2;
+}
+
+.hud button:hover, button.hud:hover {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+
+button:active:not(:disabled) {
+  -webkit-border-image: url(/images/aristo/button-bezel-highlighted.png) 2 2 2 2 stretch stretch;
+  -moz-border-image: url(/images/aristo/button-bezel-highlighted.png) 2 2 2 2 stretch stretch;
+}
+
+button.default:active {
+  -webkit-border-image: url(/images/aristo/default-button-bezel-highlighted.png) 2 2 2 2 stretch stretch;
+  -moz-border-image: url(/images/aristo/default-button-bezel-highlighted.png) 2 2 2 2 stretch stretch;
+}
+
+.hud button:active, button.hud:active {
+  -webkit-border-image: url(/images/aristo/hud/button-bezel-highlighted.png) 9 13 10 13 / 8px 13px 9px 13px repeat repeat;
+  -moz-border-image: url(/images/aristo/hud/button-bezel-highlighted.png) 9 13 10 13 / 8px 13px 9px 13px repeat repeat;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar {
+  width: 17px;
+  height: 17px;
+}
+
+::-webkit-scrollbar-button:vertical:end {
+  background: url(/images/aristo/scroller-down-arrow.png) no-repeat;
+  width: 17px;
+  height: 20px;
+}
+
+::-webkit-scrollbar-button:vertical:start {
+  background: url(/images/aristo/scroller-up-arrow.png) no-repeat;
+  width: 17px;
+  height: 22px;
+}
+
+::-webkit-scrollbar-button:horizontal:start {
+  background: url(/images/aristo/scroller-left-arrow.png) no-repeat;
+  width: 22px;
+  height: 17px;
+}
+
+::-webkit-scrollbar-button:horizontal:end {
+  background: url(/images/aristo/scroller-right-arrow.png) no-repeat;
+  width: 22px;
+  height: 17px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  -webkit-border-image: url(/images/aristo/scroller-vertical-knob.png) 8 0 8 0 / 8px 0 8px 0 stretch repeat;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  -webkit-border-image: url(/images/aristo/scroller-horizontal-knob.png) 7 9 7 9 / 7px 9px 7px 9px stretch repeat;
+}
+
+::-webkit-scrollbar-track-piece:vertical:start {
+  background-image: url(/images/aristo/scroller-up-arrow-track.png), url(/images/aristo/scroller-vertical-track.png);
+  background-repeat: no-repeat, repeat-y;
+}
+
+::-webkit-scrollbar-track-piece:vertical:end {
+  background-image: url(/images/aristo/scroller-down-arrow-track.png), url(/images/aristo/scroller-vertical-track.png);
+  background-repeat: no-repeat, repeat-y;
+  background-position: bottom left, 0 0;
+}
+
+::-webkit-scrollbar-track-piece:horizontal:end {
+  background-image: url(/images/aristo/scroller-right-arrow-track.png), url(/images/aristo/scroller-horizontal-track.png);
+  background-repeat: no-repeat, repeat-x;
+  background-position: bottom right, 0 0;
+}
+
+::-webkit-scrollbar-track-piece:horizontal:start {
+  background-image: url(/images/aristo/scroller-left-arrow-track.png), url(/images/aristo/scroller-horizontal-track.png);
+  background-repeat: no-repeat, repeat-x;
+}
+
+/* Turn on single button up on top, and down on bottom */
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+    display: block;
+}
+ 
+/* Turn off the down area up on top, and up area on bottom */
+::-webkit-scrollbar-button:start:increment,
+::-webkit-scrollbar-button:end:decrement {
+    display: none;
+}
+
+input[type="range"] {
+  -khtml-appearance: none; 
+  -webkit-border-image: url(/images/aristo/slider-horizontal-track.png) 2 4 2 4 / 2px 4px 2px 4px repeat repeat;
+  height: 5px;
+  padding: 0;
+}
+
+::-webkit-slider-thumb { 
+  -khtml-appearance: none; 
+  background: url(/images/aristo/slider-knob.png) no-repeat; 
+  width: 23px; 
+  height: 24px;
+}
+
+/*This doesn't seem to be implemented yet*/
+::-webkit-slider-thumb:active { 
+  background: url(/images/aristo/slider-knob-highlighted.png) no-repeat;
+}
+
+input, textarea {
+  font-size: 12px;
+  color: #000 !important;
+  font-weight: normal;
+  padding: 4px !important;
+  border: none;
+}
+
+::-webkit-input-placeholder {
+  color: #BDC7D3;
+}
+
+.copy {
+  cursor: copy;
+}
+
+.progress {
+  cursor: progress;
+}
+
+header, div.header {
+  display: block;
+  height: 30px;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 2px solid #979797;
+  background: -webkit-gradient(linear, left top, left bottom, from(#EAEAEA), to(#C2C2C2));
+  text-shadow: 0px 1px 1px #fff;
+  color: #2C2C2C;
+}
+
+.hud {
+  -webkit-border-radius: 3px;
+  color: #fff;
+  background: -webkit-gradient(linear, left top, left bottom, from(#525252), color-stop(0.3, #212121), color-stop(0.33, #1D1D1D), to(#1D1D1D));
+  height: 100px;
+  width: 200px;
+}

@@ -21,11 +21,7 @@ window.fetch_documents = function() {
 // TEST TEST TEST
 $(document).ready(function() {
   var el = $('#search');
-  el.bind('focus', function() {
-    if (el.attr('value') == 'search...') el.attr('value', '');
-  }).bind('blur', function() {
-    if (el.attr('value') == '') el.attr('value', 'search...');
-  }).bind('keydown', function(e) {
+  el.bind('keydown', function(e) {
     if (e.keyCode == 13) {
       $.get('/search.json', {query_string : el.attr('value')}, function(resp) {
         if (window.console) console.log(resp);

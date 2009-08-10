@@ -9,19 +9,22 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	<title><%= @page_title %> | DocumentCloud</title>
 	<%= stylesheet_link_tag 'reset' %>
+	<%= stylesheet_link_tag 'aristo' %>
 	<%= stylesheet_link_tag 'barebones' %>
 	<%= sprockets_include_tag %>
 </head>
 <body>
 	
 	<div id="container">
-		<div id="topbar">
-			<div id="logo"></div>
-			<h1 id="title"><%= @page_title %></h1>
-			<input type="text" value="search..." id="search" />
+		<div id="topbar" class="header">
+			<div id="cloud_edge"></div>
+			<div id="wordmark" class="logo_words">DocumentCloud</div>
+			<h1 id="title" class="logo_words"><%= @page_title %></h1>
+			<input id="search" type="search" placeholder="search" />
 		</div>
 	
 		<div id="content">
+			<button>Test Button</button>
 			<%= yield %>
 		</div>
 		
