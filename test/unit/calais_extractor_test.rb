@@ -34,6 +34,7 @@ class CalaisExtractorTest < ActiveSupport::TestCase
     should "be able to extract the document's full text" do
       assert @doc.full_text
       assert @doc.full_text[0...30] == "At least 24 states across the "
+      assert @doc.summary == @doc.full_text[0...255]
     end
     
     should "be able to extract the Calais-identified entities" do

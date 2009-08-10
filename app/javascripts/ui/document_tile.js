@@ -5,9 +5,7 @@ dc.ui.DocumentTile = function(data) {
 dc.ui.DocumentTile.prototype = {
   
   render : function() {
-    return $(document.createElement('div'))
-            .addClass('document_tile')
-            .append(this.data.title);
+    return dc.templates.WORKSPACE_DOCUMENT_TILE(this.data);
   }
   
 };

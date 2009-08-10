@@ -64,7 +64,10 @@ module DC
         return if document.full_text
         xml = XML::Parser.string(document.rdf).parse
         wrapped = XML::Parser.string(xml.root.find('//c:document').first.content).parse
-        document.full_text = wrapped.root.find('//body').first.content.strip
+        full_text = wrapped.root.find('//body').first.content.strip
+        full_text.gsub!(/(\[\[|\]\]|\{\{|\}\})/, '')
+        document.full_text = full_text
+        document.summary = full_text[0...255]
       end
       
     end

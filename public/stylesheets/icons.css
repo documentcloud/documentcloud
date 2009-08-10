@@ -1,0 +1,11 @@
+.icon {
+  background-repeat: no-repeat;
+  vertical-align: middle;
+}
+
+.document_tile.large_size .icon.document {
+  width: 60px; height: 75px;
+}
+  .icon.document.generic {
+    background: url(/images/documents/generic.png);
+  }

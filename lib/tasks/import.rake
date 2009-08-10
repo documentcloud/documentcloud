@@ -9,7 +9,8 @@ namespace :import do
       print "loading #{path}"
       doc = Document.new(:rdf => File.read(path))
       DC::Import::CalaisExtractor.new.extract_metadata(doc)
-      puts " / saving as #{new_id}"
+      doc.organization ||= Faker::Company.name
+      puts " / saving as #{doc.id}"
       doc.save
     end
   end

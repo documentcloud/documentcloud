@@ -1,6 +1,7 @@
 html {
   font-family: Arial, sans-serif;
   color: #373737;
+  font-size: 12px;
 }
 
 #topbar {
@@ -34,8 +35,14 @@ html {
   
 #content {
   position: absolute;
-  padding: 10px;
   bottom: 0px; top: 52px; left: 0; right: 0;
   overflow: hidden;
   background: #efefef;
+}
+
+#documents {
+  position: absolute;
+  left: 250px; right: 0px; top: 0px; bottom: 0px; 
+  overflow: auto;
+  padding: 15px 15px 0 0;
 }
