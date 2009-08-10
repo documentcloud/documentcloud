@@ -20,6 +20,11 @@ module DC
         !!@phrase
       end
       
+      # Does this query include multiple kinds of search?
+      def compound?
+        fielded? && textual?
+      end
+      
     end
     
   end

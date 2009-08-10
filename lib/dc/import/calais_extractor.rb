@@ -6,10 +6,6 @@ module DC
     # to the document.
     class CalaisExtractor
       
-      def initialize
-        
-      end
-      
       # Public API: Pass in a document, sans-metadata, but with RDF attached
       # as a raw XML string.
       def extract_metadata(document)
@@ -67,7 +63,8 @@ module DC
       def extract_full_text(document, calais)
         return if document.full_text
         xml = XML::Parser.string(document.rdf).parse
-        document.full_text = xml.root.find('//c:document').first.content
+        wrapped = XML::Parser.string(xml.root.find('//c:document').first.content).parse
+        document.full_text = wrapped.root.find('//body').first.content.strip
       end
       
     end

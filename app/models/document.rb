@@ -86,6 +86,12 @@ class Document
     @metadata ||= DC::Store::MetadataStore.new.find_by_document(self)
   end
   
+  # Categories are stored alongside the rest of the metadata for the moment,
+  # so pulling them out means going fishing.
+  def categories
+    @categories ||= metadata.select {|meta| meta.type == 'category' }
+  end
+  
   def full_text
     return nil unless @full_text || @id
     @full_text ||= DC::Store::AssetStore.new.find_full_text(self)

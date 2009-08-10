@@ -64,6 +64,11 @@ class Metadatum
     @document ||= DC::Store::EntryStore.new.find(@document_id)
   end
   
+  # A Metadatum is considered to be textual if it occurs in the body of the text.
+  def textual?
+    !@instances.empty?
+  end
+  
   def inspect
     "#<Metadatum #{type}:#{value}>"
   end

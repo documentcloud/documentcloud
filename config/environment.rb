@@ -32,6 +32,10 @@ Rails::Initializer.run do |config|
   config.gem 'faker'
   config.gem 'calais', :version => '>= 0.0.7'
   config.gem 'rufus-tokyo', :version => '>= 1.0.0'
+  
+  if Rails.test?
+    config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
+  end
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
