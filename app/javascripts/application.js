@@ -28,7 +28,8 @@ $(document).ready(function() {
   }).bind('keydown', function(e) {
     if (e.keyCode == 13) {
       $.get('/search.json', {query_string : el.attr('value')}, function(resp) {
-        console.log(resp);
+        if (window.console) console.log(resp);
+        $('#documents').html('');
         $(resp.documents).each(function() {
           $('#documents').append((new dc.ui.DocumentTile(this)).render());
         });

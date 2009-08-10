@@ -1,4 +1,4 @@
-namespace :ingest do
+namespace :import do
   
   # NB: Oy. A rake task with both arguments and dependencies is an ugly little
   # bugger. Completely defeats the purpose of the DSL.
@@ -6,9 +6,10 @@ namespace :ingest do
   task :load_rdf, [:directory] => [:environment, :delete_databases] do |t, args|
     file_names = Dir[args[:directory] + '/*.xml']
     file_names.each do |path|
-      puts "loading document from #{path}"
+      print "loading #{path}"
       doc = Document.new(:rdf => File.read(path))
-      DC::Ingest::CalaisExtractor.new.extract_metadata(doc)
+      DC::Import::CalaisExtractor.new.extract_metadata(doc)
+      puts " / saving as #{new_id}"
       doc.save
     end
   end

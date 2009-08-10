@@ -43,12 +43,15 @@ module DC
       end
       
       # Aggregate search for the top N metadata that match a collection of
-      # fields.
+      # fields. Uses AND for now.
       def find_by_fields(fields, opts={})
         results = []
         fields.each do |field|
-          results += find_by_field(field.type, field.value, opts)
+          results << find_by_field(field.type, field.value, opts)
         end
+        ids = results.flatten.map(&:document_id)
+        counts = ids.inject(Hash.new(0)) {|memo, id| memo[id] += 1; memo }
+        results = results.flatten.select {|m| counts[m.document_id] >= results.length }
         sorted = results.sort_by {|meta| -meta.relevance }
         return sorted[0...opts[:limit]] if opts[:limit]
         sorted

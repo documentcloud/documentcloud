@@ -1,5 +1,5 @@
 module DC
-  module Ingest
+  module Import
     
     # The CalaisExtractor takes in a raw RDF file from OpenCalais, pulls out
     # all of the whitelisted metadata we're interested in, and attaches them

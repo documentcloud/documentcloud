@@ -20,7 +20,7 @@ module DC
       # Find a document's entry, referenced by document id.
       def find(document_id)
         doc_hash = open_for_reading {|store| store[document_id] }
-        raise DocumentNotFound, "Could not find document with id: #{document_id}"
+        raise DocumentNotFound, "Could not find document with id: #{document_id}" if !doc_hash
         Document.from_entry_hash(doc_hash)
       end
       

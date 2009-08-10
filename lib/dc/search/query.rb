@@ -10,6 +10,16 @@ module DC
         @fields = opts[:fields] || []
       end
       
+      # Does this query search by field?
+      def fielded?
+        !@fields.empty?
+      end
+      
+      # Does this query incorporate full-text search?
+      def textual?
+        !!@phrase
+      end
+      
     end
     
   end

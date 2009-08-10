@@ -52,6 +52,13 @@ class Document
     id.hex
   end
   
+  # Two documents are equal if they have the same document id. If we have two
+  # different objects for the same document floating around in a thread...
+  # that's a bug.
+  def ==(other)
+    id == other.id && other.is_a?(Document)
+  end
+  
   # TODO: Saving the full text both as an asset and in the full text index
   # may be redundant.
   def save
