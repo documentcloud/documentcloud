@@ -72,6 +72,11 @@ module DC
         "#{RAILS_ROOT}/db/#{RAILS_ENV}_metadata.tdb"
       end
       
+      # Delete the metadata store entirely.
+      def delete_database!
+        FileUtils.rm(path) if File.exists?(path)
+      end
+      
     end
     
   end

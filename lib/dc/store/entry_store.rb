@@ -20,12 +20,18 @@ module DC
       # Find a document's entry, referenced by document id.
       def find(document_id)
         doc_hash = open_for_reading {|store| store[document_id] }
+        raise DocumentNotFound, "Could not find document with id: #{document_id}"
         Document.from_entry_hash(doc_hash)
       end
       
       # Compute the path to the Tokyo Cabinet Table store on disk.
       def path
         "#{RAILS_ROOT}/db/#{RAILS_ENV}_entries.tdb"
+      end
+      
+      # Delete the entry store entirely.
+      def delete_database!
+        FileUtils.rm(path) if File.exists?(path)
       end
       
     end

@@ -57,6 +57,11 @@ module DC
         File.read(full_text_path(document))
       end
       
+      # Delete the assets store entirely.
+      def delete_database!
+        FileUtils.rm_r(local_storage_path) if File.exists?(local_storage_path)
+      end
+      
     end
     
   end

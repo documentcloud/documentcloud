@@ -2,4 +2,5 @@ log
 tmp
 db/*.sqlite3
 db/*.tdb
+db/*_full_text
 raw

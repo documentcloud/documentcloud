@@ -2,7 +2,7 @@
 class Document
   include ActionView::Helpers::TextHelper
   
-  ENTRY_ATTRIBUTES = [:author, :created_at, :date, :language, :organization, 
+  ENTRY_ATTRIBUTES = [:author, :created_at, :date, :id, :language, :organization, 
                       :summary, :title, :calais_request_id]
                       
   TEMPORARY_ATTRIBUTES = [:full_text, :rdf, :metadata, :calais_signature]
@@ -29,21 +29,36 @@ class Document
   # end
   
   def initialize(opts={})
-    @metadata = []
     opts.each do |name, value|
       send("#{name}=", value) if ATTRIBUTES.include?(name.to_sym)
     end
   end
   
-  # Use the calais request UUID as the primary key for now.
+  # The document id should be some way of uniquely identifying the document.
+  # Disallow leading zeros so we can safely convert it to an integer.
+  # TODO: Add created_at, or some other discriminator between textually-
+  # identical documents, to this.
   def id
-    @calais_request_id
+    return @id if @id
+    new_id = Digest::SHA1.hexdigest(full_text)[0...15]
+    new_id[0] = '1' if new_id.first == '0'
+    @id = new_id
   end
   
+  # FIXME: Get an integer representation of the UUID (we need it to be an integer
+  # for Dystopia to store). Can't convert the entire UUID because it's too large.
+  # Needs a better solution.
+  def integer_id
+    id.hex
+  end
+  
+  # TODO: Saving the full text both as an asset and in the full text index
+  # may be redundant.
   def save
     DC::Store::EntryStore.new.save(self)
     DC::Store::AssetStore.new.save_full_text(self)
     DC::Store::MetadataStore.new.save_document(self)
+    DC::Store::FullTextStore.new.save(self)
   end
   
   def to_entry_hash
@@ -53,15 +68,19 @@ class Document
     end
   end
   
+  def to_json
+    to_entry_hash
+  end
+  
   # TODO: Think about keeping a metadata_count in the document entry, and then
   # we can determine if we've already got the complete set of data, or need to
   # go query the store for more.
   def metadata
-    return @metadata unless @metadata.empty?
-    @metadata = DC::Store::MetadataStore.new.find_by_document(self)
+    @metadata ||= DC::Store::MetadataStore.new.find_by_document(self)
   end
   
   def full_text
+    return nil unless @full_text || @id
     @full_text ||= DC::Store::AssetStore.new.find_full_text(self)
   end
   

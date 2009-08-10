@@ -9,11 +9,19 @@ module DC
       parser          = Parser.new
       metadata_store  = Store::MetadataStore.new
       full_text_store = Store::FullTextStore.new
+      results         = []
+      query           = parser.parse(query_string)
       
-      results = []
-      query = parser.parse(query_string)
-      metadata = metadata_store.find_by_fields(query.fields, opts)
-      metadata.map {|m| m.document }
+      if !query.fields.empty?
+        metadata = metadata_store.find_by_fields(query.fields, opts)
+        results += metadata.map {|m| m.document }
+      end
+      
+      if query.phrase
+        results += full_text_store.find(query.phrase, opts)
+      end
+      
+      results
     end
     
   end

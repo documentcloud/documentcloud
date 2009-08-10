@@ -14,10 +14,11 @@ module DC
       # as a raw XML string.
       def extract_metadata(document)
         calais = Calais::Response.new(document.rdf)
+        document.metadata = []
+        extract_full_text(document, calais)
         extract_standard_metadata(document, calais)
         extract_categories(document, calais)
         extract_entities(document, calais)
-        extract_full_text(document, calais)
       end
       
       
