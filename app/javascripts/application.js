@@ -3,6 +3,7 @@
 (function() {
   window.dc = {};
   dc.model = {};
+  dc.util = {};
   dc.app = {};
   dc.ui = {};
 })();
