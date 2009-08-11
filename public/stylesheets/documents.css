@@ -5,16 +5,16 @@
     height: 75px;
     overflow: hidden;
     padding-left: 70px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
   }
   .document_tile .icon {
     position: absolute;
-    left: 0;
+    left: 12px;
   }
   .document_tile .title {
     color: #002256;
     font: bold 14px Georgia, serif;
-    margin-top: 6px;
+    margin-top: 9px;
     overflow: hidden;
     height: 17px;
   }

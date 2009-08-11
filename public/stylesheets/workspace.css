@@ -6,6 +6,7 @@ html {
 
 #topbar {
   display: block;
+  border-bottom: 2px solid #777;
 }
   #cloud_edge {
     position: absolute;
@@ -37,12 +38,42 @@ html {
   position: absolute;
   bottom: 0px; top: 52px; left: 0; right: 0;
   overflow: hidden;
-  background: #efefef;
+/*  background: #efefef;*/
+  background: #979797;
 }
+
+#sidebar {
+  position: absolute;
+  top: 10px; left: 10px; bottom: 10px;
+  width: 350px;
+  overflow: hidden;
+}
+  #sidebar_background {
+    position: absolute;
+    top: 21px; bottom: 21px;
+    width: 348px;
+    background: #e6e6e6;
+    border: 1px solid #8b8b8b;
+    border-top: 0; border-bottom: 0;
+  }
+  .sidebar_back {
+    position: absolute;
+    height: 21px; width: 350px;
+  }
+    #sidebar_top {
+      top: 0px;
+      background: url(/images/ui/sidebar_top.png);
+    }
+    #sidebar_bottom {
+      bottom: 0px;
+      background: url(/images/ui/sidebar_bottom.png);
+    }
 
 #documents {
   position: absolute;
-  left: 250px; right: 0px; top: 0px; bottom: 0px; 
+  left: 370px; right: 10px; top: 10px; bottom: 10px; 
   overflow: auto;
-  padding: 15px 15px 0 0;
+  padding: 10px 25px 10px 10px;
+  background: #fff;
+  -webkit-border-radius: 6px;
 }
