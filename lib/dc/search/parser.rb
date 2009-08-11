@@ -5,9 +5,9 @@ module DC
     # fielded queries ... so, no nesting.
     class Parser
       
-      BARE_FIELD_MATCHER    = /\w+:[^'"]\S*/
-      QUOTED_FIELD_MATCHER  = /\w+:['"].+?['"]/
-      ALL_FIELDS_MATCHER    = /\w+:((['"].+?['"])|([^'"]\S*))/
+      BARE_FIELD_MATCHER    = /\w+:\s?[^'"]{2}\S*/
+      QUOTED_FIELD_MATCHER  = /\w+:\s?['"].+?['"]/
+      ALL_FIELDS_MATCHER    = /\w+:\s?((['"].+?['"])|([^'"]{2}\S*))/
       
       def parse(query_string)
         bare_fields   = query_string.scan(BARE_FIELD_MATCHER)
