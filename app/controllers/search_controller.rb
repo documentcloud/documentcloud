@@ -1,8 +1,10 @@
 class SearchController < ApplicationController
   
   def search
+    query = DC::Search::Parser.new.parse(params[:query_string])
     render :json => {
-      'documents' => DC::Search.find(params[:query_string]).map {|d| d.to_json }
+      'query' => query,
+      'documents' => DC::Search.find(query)
     }
   end
   

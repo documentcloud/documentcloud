@@ -25,10 +25,15 @@ $(document).ready(function() {
     if (e.keyCode == 13) {
       $.get('/search.json', {query_string : el.attr('value')}, function(resp) {
         if (window.console) console.log(resp);
+        
+        $('#query').html(new dc.ui.Query(resp.query).render(resp.documents.length));
+        
         $('#documents').html('');
         $(resp.documents).each(function() {
           $('#documents').append((new dc.ui.DocumentTile(this)).render());
         });
+        
+        
       }, 'json');
     }
   });

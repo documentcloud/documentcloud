@@ -68,6 +68,13 @@ html {
       bottom: 0px;
       background: url(/images/ui/sidebar_bottom.png);
     }
+  #query {
+    position: relative;
+    margin: 31px 10px 10px 10px;
+    font-size: 10px;
+    line-height: 12px;
+    color: #777;
+  }
 
 #documents {
   position: absolute;

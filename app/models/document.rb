@@ -75,7 +75,7 @@ class Document
     end
   end
   
-  def to_json
+  def as_json(opts={})
     to_entry_hash
   end
   

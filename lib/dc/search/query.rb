@@ -25,6 +25,19 @@ module DC
         fielded? && textual?
       end
       
+      def inspect
+        phrase = @phrase ? "\"#{@phrase}\"" : ''
+        fields = @fields.map(&:to_s).join(' ')
+        "#<DC::Search::Query #{phrase} #{fields}>"
+      end
+      
+      def as_json(opts={})
+        {
+          'phrase' => @phrase,
+          'fields' => @fields
+        }
+      end
+      
     end
     
   end

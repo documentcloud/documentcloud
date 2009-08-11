@@ -1,7 +1,7 @@
 module DC
   
   # The Search module takes in a raw query string, processes it, queries
-  # our backing stores for the most relevant results, and mergest the result
+  # our backing stores for the most relevant results, and merges the result
   # sets together according to a strategy of our choosing.
   #
   # TODO: Split out some senible kind of logic for merging result sets -- we 
@@ -9,33 +9,31 @@ module DC
   # replace these broken hashes.
   module Search
     
-    def self.find(query_string, opts={})
-      parser          = Parser.new
+    def self.find(query, opts={})
       metadata_store  = Store::MetadataStore.new
       full_text_store = Store::FullTextStore.new
-      query           = parser.parse(query_string)
-      results, counts = {}, Hash.new(0)
+      results         = []
       
+      query = Parser.new.parse(query) if query.is_a? String
+                  
       if query.fielded?
         metadata = metadata_store.find_by_fields(query.fields, opts)
-        metadata.each do |meta| 
-          results[meta.document_id] = meta.document
-          counts[meta.document_id] += 1
-        end
+        metadata.each {|meta| results << meta.document }
       end
       
       if query.textual?
         docs = full_text_store.find(query.phrase, opts)
-        docs.each do |doc| 
-          results[doc.id] = doc
-          counts[doc.id] += 1
+        text_ids = docs.map(&:id)
+        if query.fielded?
+          results = results.select {|doc| text_ids.include?(doc.id) }
+        else
+          results = docs
         end
       end
       
-      if query.fielded? && query.textual?
-        return results.values.select {|doc| counts[doc.id] >= 2} 
-      end
-      results.values   
+      # FIXME: Uniq isn't working, despite implementing Document#hash and 
+      # Document#eql?, so hash for now.
+      results.inject({}) {|h, doc| h[doc.id] = doc; h}.values
     end
     
   end

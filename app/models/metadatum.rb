@@ -8,7 +8,7 @@ class Metadatum
   CALAIS_TYPES = [
     :city, :company, :continent, :country, :email_address, :facility, 
     :holiday, :industry_term, :natural_feature, :organization, :person,
-    :position, :product, :provice_or_state, :published_medium, :region,
+    :position, :product, :province_or_state, :published_medium, :region,
     :technology, :url
   ]
   
