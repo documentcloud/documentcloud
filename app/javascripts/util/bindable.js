@@ -1,7 +1,6 @@
 dc.util.Bindable = {
   
-  UNBIND : 'bindable:unbind',
-  ALL_EVENTS : 'bindable:bind_all',
+  ALL : 'bindable:bind_all',
   
   // Mix in bindable methods to the target class.
   extend : function(obj) {
@@ -54,22 +53,13 @@ dc.util.Bindable = {
       var calls = this.__callbacks__;
       
       for (var j=0; j<2; j++) {
-        var ev = j ? e : dc.util.Bindable.ALL_EVENTS;
+        var ev = j ? e : dc.util.Bindable.ALL;
         var list = calls && calls[ev], i = (list && list.length) || 0;
         var thin = false;
         while(i--) {
           var bound = list[i];
           if (bound) {
-            try {
-              bound.callback.apply(this, arguments);
-            } catch(except) {
-              if (except == dc.util.Bindable.UNBIND) {
-                list[i] = null;
-                thin = true;
-              } else {
-                throw except;
-              }
-            }
+            bound.callback.apply(this, arguments);
           } else {
             thin = true;
           }

@@ -32,7 +32,7 @@ module DC
       end
       
       # FIXME: Uniq isn't working, despite implementing Document#hash and 
-      # Document#eql?, so hash for now.
+      # Document#eql?, so hash it ourselves for now.
       results.inject({}) {|h, doc| h[doc.id] = doc; h}.values
     end
     
