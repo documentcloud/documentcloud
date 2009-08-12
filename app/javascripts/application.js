@@ -25,6 +25,7 @@ $(document).ready(function() {
   el.bind('keydown', function(e) {
     if (e.keyCode == 13) {
       dc.ui.Spinner.show('searching');
+      $('#metadata').html('');
       $.get('/search.json', {query_string : el.attr('value')}, function(resp) {        
         if (window.console) console.log(resp);
         

@@ -49,9 +49,8 @@ module DC
         fields.each do |field|
           results << find_by_field(field.type, field.value, opts)
         end
-        ids = results.flatten.map(&:document_id)
-        counts = ids.inject(Hash.new(0)) {|memo, id| memo[id] += 1; memo }
-        results = results.flatten.select {|m| counts[m.document_id] >= results.length }
+        first = results.shift
+        results = first.select {|m| results.all?{|list| list.any?{|o| m.document_id == o.document_id}}}
         sorted = results.sort_by {|meta| -meta.relevance }
         return sorted[0...opts[:limit]] if opts[:limit]
         sorted

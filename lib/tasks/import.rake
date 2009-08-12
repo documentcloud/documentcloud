@@ -2,6 +2,7 @@ namespace :import do
   
   # NB: Oy. A rake task with both arguments and dependencies is an ugly little
   # bugger. Completely defeats the purpose of the DSL.
+  # Usage: rake import:load_rdf[../wiki_news_rdf] --trace
   desc 'Load and save all RDF from a directory of your choosing as Documents.'
   task :load_rdf, [:directory] => [:environment, :delete_databases] do |t, args|
     file_names = Dir[args[:directory] + '/*.xml']

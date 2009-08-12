@@ -9,6 +9,10 @@ class DocumentsController < ApplicationController
     render :json => {'metadata' => meta}
   end
   
+  def full_text
+    render :text => Document.new(:id => params[:id]).full_text
+  end
+  
   def test
     render :json => {
       'documents' => Array.new(10).map { Document.generate_fake_entry }
