@@ -1,30 +1,4 @@
-dc.ui.View = function(options) {
-  this.modes = {};
-  this._callbacks = {};
-  
-  this.el = $el(this._tagName, {'class' : className});
-  if (this._tagName.toLowerCase() == 'a') this.el.href = '#';
-  
-  this.configure(options);
-  // if(this.options.className) this.el.addClassName(this.options.className);
-  // if(this.options.style) this.el.setStyle(this.options.style);
-  // if(this.options.title) this.el.title = this.options.title;
-  // if(this.options.id) this.el.id = this.options.id;
-  return this;
-};
-
-$.extend(dc.ui.View, {
-  
-  DEFAULT_OPTIONS : {
-    className : null,
-    id : null,
-    style : null,
-    title : null
-  }
-  
-});
-
-dc.ui.View.prototype = {
+dc.ui.View = Base.extend({
   
   el : null,
   model : null,
@@ -33,6 +7,21 @@ dc.ui.View.prototype = {
   klassName : 'dc.ui.View',
   _tagName : 'div',
   _callbacks : null,
+  
+  constructor : function(options) {
+    this.modes = {};
+    this._callbacks = {};
+    
+    // this.el = $.el(this._tagName, {'class' : className});
+    // if (this._tagName.toLowerCase() == 'a') this.el.href = '#';
+    
+    this.configure(options);
+    // if(this.options.className) this.el.addClassName(this.options.className);
+    // if(this.options.style) this.el.setStyle(this.options.style);
+    // if(this.options.title) this.el.title = this.options.title;
+    // if(this.options.id) this.el.id = this.options.id;
+    return this;
+  },
   
   configure : function(options) {
     // Need to clone and merge DEFAULT_OPTIONS and defaultOptions...
@@ -56,6 +45,13 @@ dc.ui.View.prototype = {
     // THINK ABOUT BASING ALL CALLBACKS ON LIVE_QUERY ... COULD GREATLY SIMPLIFY.
   }
   
-  
-  
-};
+}, {
+
+  DEFAULT_OPTIONS : {
+    className : null,
+    id : null,
+    style : null,
+    title : null
+  }
+
+});

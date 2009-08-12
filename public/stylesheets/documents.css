@@ -11,7 +11,8 @@
     position: absolute;
     left: 12px;
   }
-  .document_tile .title {
+  .document_tile a.title {
+    display: block;
     color: #002256;
     font: bold 14px Georgia, serif;
     margin-top: 9px;
@@ -21,6 +22,8 @@
   .document_tile .organization {
     text-transform: uppercase;
     font-size: 10px;
+    overflow: hidden;
+    height: 10px;
     color: #808080;
     margin-top: 2px;
   }

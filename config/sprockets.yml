@@ -5,6 +5,8 @@
   - vendor/sprockets/*/src
   - vendor/plugins/*/javascripts
 :source_files:
-  - public/javascripts/vendor/jquery-1.3.2.js
+  - public/javascripts/vendor/*.js
   - app/javascripts/application.js
+  - app/javascripts/model/base.js
+  - app/javascripts/ui/view.js
   - app/javascripts/**/*.js
