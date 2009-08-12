@@ -27,10 +27,10 @@ $(document).ready(function() {
       $.get('/search.json', {query_string : el.attr('value')}, function(resp) {
         if (window.console) console.log(resp);
         
-        $('#query').html(new dc.ui.Query(resp.query).render(resp.documents.length));
+        $('#query').html(new dc.ui.Query(resp.query).render(resp.results.documents.length));
         
         $('#documents').html('');
-        $(resp.documents).each(function() {
+        $(resp.results.documents).each(function() {
           $('#documents').append((new dc.ui.DocumentTile(this)).render());
         });
         

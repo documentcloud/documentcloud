@@ -38,10 +38,10 @@ class CalaisExtractorTest < ActiveSupport::TestCase
     end
     
     should "be able to extract the Calais-identified entities" do
-      assert @doc.metadata.length == 28
+      assert @doc.metadata.length == 33
       assert @doc.metadata.map(&:type).uniq.sort ==
         %w(category city country facility industry_term natural_feature 
-           organization person position region technology)
+           organization person position province_or_state region technology)
            
       meta = @doc.metadata[-2]
       assert meta.value       == "Pennsylvania Department of Agriculture"
