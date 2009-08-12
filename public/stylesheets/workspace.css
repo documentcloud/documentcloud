@@ -34,6 +34,29 @@ html {
     color: #333;
   }
   
+#spinner {
+  display: none;
+  position: absolute;
+  margin-right: 30px;
+  top: 17px; right: 20%;
+  font-size: 10px;
+  text-transform: uppercase;
+  background: #efefef;
+  color: #878787;
+  border: 1px solid #aaa;
+  -webkit-border-radius: 5px;
+  padding: 4px 5px 3px 5px;
+}
+  #spinner_text {
+    float: left;
+  }
+  #spinner_image {
+    float: left;
+    margin: 2px 0 0 7px;
+    width: 56px; height: 7px;
+    background: url(/images/ui/spinner.gif);
+  }
+  
 #content {
   position: absolute;
   bottom: 0px; top: 52px; left: 0; right: 0;

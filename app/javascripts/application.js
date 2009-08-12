@@ -24,7 +24,8 @@ $(document).ready(function() {
   var el = $('#search');
   el.bind('keydown', function(e) {
     if (e.keyCode == 13) {
-      $.get('/search.json', {query_string : el.attr('value')}, function(resp) {
+      dc.ui.Spinner.show('searching');
+      $.get('/search.json', {query_string : el.attr('value')}, function(resp) {        
         if (window.console) console.log(resp);
         
         $('#query').html(new dc.ui.Query(resp.query).render(resp.results.documents.length));
@@ -34,7 +35,7 @@ $(document).ready(function() {
           $('#documents').append((new dc.ui.DocumentTile(this)).render());
         });
         
-        
+        dc.ui.Spinner.hide();
       }, 'json');
     }
   });
