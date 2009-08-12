@@ -28,14 +28,28 @@ $(document).ready(function() {
       $.get('/search.json', {query_string : el.attr('value')}, function(resp) {        
         if (window.console) console.log(resp);
         
-        $('#query').html(new dc.ui.Query(resp.query).render(resp.results.documents.length));
+        $('#query').html(new dc.ui.Query(resp.query).render(resp.documents.length));
         
         $('#documents').html('');
-        $(resp.results.documents).each(function() {
+        $(resp.documents).each(function() {
           $('#documents').append((new dc.ui.DocumentTile(this)).render());
         });
         
-        dc.ui.Spinner.hide();
+        if (resp.documents.length == 0) return dc.ui.Spinner.hide();
+        
+        dc.ui.Spinner.show('gathering metadata');
+        $.get('/documents/metadata.json', {'ids[]' : _.pluck(resp.documents, 'id')}, function(resp2) {
+          var sorted = _.sortBy(resp2.metadata, function(meta){ return -meta.relevance; });
+          var metaHash = _.inject(sorted, {}, function(memo, meta) {
+            var val = meta.value;
+            memo[val] = memo[val] || meta;
+            if (meta.relevance > memo[val].relevance) memo[val] = meta;
+            return memo;
+          });
+          var text = _.map(metaHash, function(pair) { return "<span title='type:" + pair.value.type + " relevance:" + pair.value.relevance + "'>" + pair.key + "</span>"; }).join(' / ');
+          $('#metadata').html(text);
+          dc.ui.Spinner.hide();
+        }, 'json');
       }, 'json');
     }
   });

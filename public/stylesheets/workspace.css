@@ -98,6 +98,14 @@ html {
     line-height: 12px;
     color: #777;
   }
+  #metadata {
+    position: relative;
+    margin: 0 10px 31px 10px;
+    overflow: hidden;
+    font-size: 10px;
+    color: #454545;
+    line-height: 12px;
+  }
 
 #documents {
   position: absolute;

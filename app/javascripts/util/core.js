@@ -264,7 +264,30 @@ window._ = {
   
   isUndefined : function(obj) {
     return typeof obj == 'undefined';
-  }
+  },
+  
+  toString : function(obj) {
+    return obj == null ? '' : String(obj);
+  },
+
+  // Don't think we need this ... jQuery should hande it for us.
+  //
+  // toQueryString : function(obj) {
+  //   var encURI = window.encodeURIComponent;
+  //   return _.inject(obj, [], function(results, pair) {
+  //     var key = encodeURIComponent(pair.key), values = pair.value;
+  //     if (values && typeof values == 'object') {
+  //       if (_.isArray(values)) { 
+  //         return results.concat(_.map(values, function(val) {
+  //           return _.isUndefined(val) ? key : key + '=' + encURI(_.toString(val));
+  //         }));
+  //       }
+  //     } else {
+  //       results.push(_.isUndefined(values) ? key : key + '=' + encURI(_.toString(values)));
+  //     }
+  //     return results;
+  //   }).join('&');
+  // }
   
 };
 
