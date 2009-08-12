@@ -29,6 +29,8 @@ Rails::Initializer.run do |config|
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
   
+  require 'digest/md5'
+  
   config.gem 'json', :version => '>= 1.1.7'
   config.gem 'faker', :version => '>= 0.3.1'
   config.gem 'calais', :version => '>= 0.0.7'
