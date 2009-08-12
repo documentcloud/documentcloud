@@ -3,19 +3,20 @@ dc.ui.View = Base.extend({
   el : null,
   model : null,
   defaultOptions : {},
+  callbacks : {},
   modes : null,
-  klassName : 'dc.ui.View',
+  className : 'view',
   _tagName : 'div',
-  _callbacks : null,
   
   constructor : function(options) {
     this.modes = {};
-    this._callbacks = {};
     
-    // this.el = $.el(this._tagName, {'class' : className});
-    // if (this._tagName.toLowerCase() == 'a') this.el.href = '#';
+    this.el = $.el(this._tagName, {'class' : this.className});  
+    if (this._tagName.toUpperCase() == 'A') this.el.href = '#';
     
     this.configure(options);
+    
+    this.setCallbacks();
     // if(this.options.className) this.el.addClassName(this.options.className);
     // if(this.options.style) this.el.setStyle(this.options.style);
     // if(this.options.title) this.el.title = this.options.title;
@@ -39,6 +40,15 @@ dc.ui.View = Base.extend({
   
   children : function() {
     return [];
+  },
+  
+  setCallbacks : function() {
+    var me = this;
+    _.each(this.callbacks, function(triplet) {
+      var selector = triplet[0], ev = triplet[1], methodName = triplet[2];
+      var method = _.bind(me[methodName], me);
+      $(selector, me.el).live(ev, method);
+    });
   },
   
   cleanup : function() {

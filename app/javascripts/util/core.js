@@ -289,6 +289,15 @@ window._ = {
   //   }).join('&');
   // }
   
+  bind : function(func, context) {
+    if (!context) return func;
+    var args = _.toArray(arguments).slice(2);
+    return function() {
+      var a = args.concat(_.toArray(arguments));
+      return func.apply(context, a);
+    };
+  }
+  
 };
 
 // Extend the JQuery namespace with core utility methods for DOM manipulation.

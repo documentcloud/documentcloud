@@ -8,20 +8,15 @@
   dc.ui = {};
 })();
 
-
-// TEST TEST TEST
-window.fetch_documents = function() {
-  $.get('/documents/test.json', {}, function(resp) {
-    console.log(resp);
-    $(resp.documents).each(function() {
-      $('#documents').append((new dc.ui.DocumentTile(this)).render());
-    });
-  }, 'json');
-};
-
 // TEST TEST TEST
 $(document).ready(function() {
-  $('#workspace_document_list').html((new dc.ui.DocumentList()).render());
+  // Move this somewhere. Prevent '#' links from page jumping.
+  $('body').bind('click', function(e){
+    if (e.target.tagName.toUpperCase() == 'A' && 
+      e.target.href == window.location.toString() + '#') e.preventDefault();
+  });
+  
+  $('#workspace_document_list').html((new dc.ui.DocumentList()).render().el);
   
   
   var el = $('#search');
@@ -32,11 +27,12 @@ $(document).ready(function() {
       $.get('/search.json', {query_string : el.attr('value')}, function(resp) {        
         if (window.console) console.log(resp);
         
-        $('#query').html(new dc.ui.Query(resp.query).render(resp.documents.length));
+        var query = new dc.ui.Query(resp.query).render(resp.documents.length);
+        $('#query_container').html(query.el);
         
         $('.documents').html('');
         $(resp.documents).each(function() {
-          $('.documents').append((new dc.ui.DocumentTile(this)).render());
+          $('.documents').append((new dc.ui.DocumentTile(this)).render().el);
         });
         
         if (resp.documents.length == 0) return dc.ui.Spinner.hide();
