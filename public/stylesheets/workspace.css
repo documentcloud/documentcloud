@@ -110,12 +110,23 @@ a {
     color: #454545;
     line-height: 12px;
   }
-
-#documents {
+  
+.cap {
+  height: 21px;
   position: absolute;
-  left: 370px; right: 10px; top: 10px; bottom: 10px; 
-  overflow: auto;
-  padding: 10px 25px 10px 10px;
-  background: #fff;
-  -webkit-border-radius: 6px;
+  top: 0;
 }
+  .cap_top_left {
+    left: -1px;
+    width: 13px;
+    background: url(/images/ui/cap_top_left.png);
+  }
+  .cap_top_middle {
+    left: 12px; right: 11px;
+    background: url(/images/ui/cap_top_middle.png);
+  }
+  .cap_top_right {
+    width: 12px;
+    right: -1px;
+    background: url(/images/ui/cap_top_right.png);
+  }

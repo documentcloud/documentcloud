@@ -21,6 +21,9 @@ window.fetch_documents = function() {
 
 // TEST TEST TEST
 $(document).ready(function() {
+  $('#workspace_document_list').html((new dc.ui.DocumentList()).render());
+  
+  
   var el = $('#search');
   el.bind('keydown', function(e) {
     if (e.keyCode == 13) {
@@ -31,9 +34,9 @@ $(document).ready(function() {
         
         $('#query').html(new dc.ui.Query(resp.query).render(resp.documents.length));
         
-        $('#documents').html('');
+        $('.documents').html('');
         $(resp.documents).each(function() {
-          $('#documents').append((new dc.ui.DocumentTile(this)).render());
+          $('.documents').append((new dc.ui.DocumentTile(this)).render());
         });
         
         if (resp.documents.length == 0) return dc.ui.Spinner.hide();

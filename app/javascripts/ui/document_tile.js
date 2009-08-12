@@ -1,12 +1,12 @@
-dc.ui.DocumentTile = Base.extend({
+dc.ui.DocumentTile = dc.ui.View.extend({
   
   constructor : function(data) {
-    this.data = data;
-    this.data.full_text_url = '/documents/full_text/' + this.data.id;
+    this.base(data);
+    this.options.full_text_url = '/documents/full_text/' + this.options.id;
   },
   
   render : function() {
-    return dc.templates.WORKSPACE_DOCUMENT_TILE(this.data);
+    return dc.templates.DOCUMENT_TILE(this.options);
   }
   
 });
