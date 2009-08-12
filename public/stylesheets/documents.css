@@ -7,30 +7,44 @@
     text-transform: uppercase;
     color: #777;
     font-size: 10px;
-    right: 5px; top: 5px;
+    right: 7px; top: 5px;
   }
   .documents {
     position: absolute;
     left: 0px; right: 0px; top: 21px; bottom: 0px; 
     overflow: auto;
-    padding: 10px 25px 10px 10px;
+    padding: 10px 10px 10px 10px;
     background: #fff;
     -webkit-border-radius: 6px;
     -webkit-border-top-left-radius: 0; -webkit-border-top-right-radius: 0;
   }
+    .document_list.large_size .documents {
+      padding-right: 30px;
+    }
   
 .document_tile {
-  
+  position: relative;
+  overflow: hidden;
 }
-  .document_tile.large_size {
+  .document_list.large_size .document_tile {
     height: 75px;
-    overflow: hidden;
     padding-left: 70px;
     margin-bottom: 15px;
   }
+  .document_list.medium_size .document_tile {
+    float: left;
+    width: 290px;
+    padding-left: 34px;
+    margin: 0 15px 15px 0;
+    height: 35px;
+  }
+  .document_list.small_size .document_tile {
+    margin-bottom: 10px;
+    height: 14px;
+  }
   .document_tile .icon {
     position: absolute;
-    left: 12px;
+    left: 2px;
   }
   .document_tile a.title {
     display: block;
@@ -40,6 +54,16 @@
     overflow: hidden;
     height: 17px;
   }
+    .document_list.medium_size a.title {
+      margin-top: 2px;
+      font-size: 12px;
+      height: 15px;
+    }
+    .document_list.small_size a.title {
+      margin: 0 10px 0 0;
+      float: left;
+      font-size: 12px;
+    }
   .document_tile .organization {
     text-transform: uppercase;
     font-size: 10px;
@@ -48,6 +72,12 @@
     color: #808080;
     margin-top: 2px;
   }
+    .document_list.small_size .organization {
+      float: left;
+      margin-right: 10px;
+      line-height: 13px;
+      color: #333;
+    }
   .document_tile .summary {
     font-family: Georgia, serif;
     line-height: 16px;
@@ -55,3 +85,13 @@
     height: 33px;
     overflow: hidden;
   }
+    .document_list.medium_size .summary {
+      display: none;
+    }
+    .document_list.small_size .summary {
+      display: inline;
+      margin: 0;
+      position: relative;
+      font-size: 11px;
+      color: #777;
+    }

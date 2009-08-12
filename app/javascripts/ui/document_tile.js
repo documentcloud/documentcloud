@@ -6,7 +6,6 @@ dc.ui.DocumentTile = dc.ui.View.extend({
     this.base(data);
     this.options.full_text_url = '/documents/full_text/' + this.options.id;
     this.el.id = 'document_tile_' + this.options.id;
-    $(this.el).addClass('large_size');
   },
   
   render : function() {

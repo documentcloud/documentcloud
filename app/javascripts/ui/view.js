@@ -16,7 +16,7 @@ dc.ui.View = Base.extend({
     
     this.configure(options);
     
-    this.setCallbacks();
+    this._setCallbacks();
     // if(this.options.className) this.el.addClassName(this.options.className);
     // if(this.options.style) this.el.setStyle(this.options.style);
     // if(this.options.title) this.el.title = this.options.title;
@@ -42,7 +42,17 @@ dc.ui.View = Base.extend({
     return [];
   },
   
-  setCallbacks : function() {
+  // Makes the view enter a mode. Modes have both a 'mode' and a 'group',
+  // and are mutually exclusive with any other modes in the same group.
+  // Setting will update the view's modes hash, as well as set an HTML className
+  // of [mode]_[group] on the view's element. Convenient way to swap styles
+  // and behavior.
+  setMode : function(mode, group) {
+    $.setMode(this.el, mode, group);
+    this.modes[group] = mode;
+  },
+  
+  _setCallbacks : function() {
     var me = this;
     _.each(this.callbacks, function(triplet) {
       var selector = triplet[0], ev = triplet[1], methodName = triplet[2];

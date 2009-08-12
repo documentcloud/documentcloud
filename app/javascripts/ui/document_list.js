@@ -8,21 +8,26 @@ dc.ui.DocumentList = dc.ui.View.extend({
     ['.view_large',   'click',    'viewLarge']
   ],
   
+  constructor : function(options) {
+    this.base(options);
+    $(this.el).addClass('large_size');
+  },
+  
   render : function() {
     $(this.el).html(dc.templates.DOCUMENT_LIST({}));
     return this;
   },
   
   viewSmall : function() {
-    alert('small!');
+    this.setMode('small', 'size');
   },
   
   viewMedium : function() {
-    alert('medium!');
+    this.setMode('medium', 'size');
   },
   
   viewLarge : function() {
-    alert('large!');
+    this.setMode('large', 'size');
   }
   
 });

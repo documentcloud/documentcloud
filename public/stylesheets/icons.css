@@ -3,9 +3,11 @@
   vertical-align: middle;
 }
 
-.document_tile.large_size .icon.document {
+.document_list.large_size .icon.document.generic {
   width: 60px; height: 75px;
+  background: url(/images/documents/generic.png);
 }
-  .icon.document.generic {
-    background: url(/images/documents/generic.png);
-  }
+.document_list.medium_size .icon.document.generic {
+  width: 24px; height: 30px;
+  background: url(/images/documents/generic_small.png);
+}

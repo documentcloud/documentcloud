@@ -309,6 +309,17 @@ $.extend({
     $(el).attr(attributes);
     return el;
   },
+  
+  // See dc.ui.View#setMode...
+  setMode : function(el, state, group) {
+    group = group || 'mode';
+    var re = new RegExp("\\w+_" + group + "(\\s|$)", 'g');
+    var mode = (state === null) ? "" : state + "_" + group;
+    var name = el.className.replace(re, '') + ' ' + mode;
+    name = name.replace(/\s\s/g, ' ');
+    el.className = name;
+    return mode;
+  },
 
   // Javascript templating a-la ERB, pilfered from John Resig's 
   // "Secrets of the Javascript Ninja", page 83.
