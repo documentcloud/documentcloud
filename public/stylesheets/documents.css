@@ -9,6 +9,11 @@
     font-size: 10px;
     right: 7px; top: 5px;
   }
+    .document_list.large_size .view_large,
+    .document_list.medium_size .view_medium,
+    .document_list.small_size .view_small {
+      font-weight: bold;
+    }
   .documents {
     position: absolute;
     left: 0px; right: 0px; top: 21px; bottom: 0px; 
