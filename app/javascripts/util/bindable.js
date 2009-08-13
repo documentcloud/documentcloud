@@ -14,8 +14,8 @@ dc.util.Bindable = {
     // scope -> optional scoping object
     // message -> optional message to be invoked every time the callback fires
     bind : function(e, callback, scope, message) {
-      if (!e)         throw('dc.util.Bindable: Undefined event');
-      if (!callback)  throw('dc.util.Bindable: Undefined callback');
+      if (!e)         throw new Error('dc.util.Bindable: Undefined event');
+      if (!callback)  throw new Error('dc.util.Bindable: Undefined callback');
       var calls = (this.__callbacks__ = this.__callbacks__ || {});
       var list = (calls[e] = calls[e] || []);
       list.push({
@@ -49,7 +49,7 @@ dc.util.Bindable = {
     
     // Fire an event, triggering all bound callbacks.
     fire : function(e) {
-      if (!e) throw('dc.util.Bindable: Undefined event');
+      if (!e) throw new Error('dc.util.Bindable: Undefined event');
       var calls = this.__callbacks__;
       
       for (var j=0; j<2; j++) {

@@ -296,6 +296,35 @@ window._ = {
       var a = args.concat(_.toArray(arguments));
       return func.apply(context, a);
     };
+  },
+  
+  uniqueId : function(prefix) {
+    var id = this._idCounter = (this._idCounter || 0) + 1;
+    return prefix ? prefix + id : id;
+  },
+  
+  // Perform a deep comparison to check if two objects are equal.
+  isEqual : function(a, b) {
+    // Check object identity.
+    if (a === b) return true;
+    // Different types?
+    var at = typeof(a), bt = typeof(b);
+    if (at != bt) return false;
+    // Basic equality test (watch out for coercions).
+    if (a == b) return true;
+    // One of them implements an isEqual()?
+    if (a.isEqual) return a.isEqual(b);
+    // Nothing else worked, deep compare the contents.
+    return at === 'object' && _.isEqualContents(a, b);
+  },
+  
+  // Objects have equal contents if they have the same keys, and all the values
+  // are equal (as defined by _.isEqual).
+  _isEqualContents : function(a, b) {
+    var aKeys = _.keys(a), bKeys = _.keys(b);
+    if (aKeys.length != bKeys.length) return false;
+    for (var key in a) if (!_.isEqual(a[key], b[key])) return false;
+    return true; 
   }
   
 };
@@ -310,7 +339,7 @@ $.extend({
     return el;
   },
   
-  // See dc.ui.View#setMode...
+  // See dc.View#setMode...
   setMode : function(el, state, group) {
     group = group || 'mode';
     var re = new RegExp("\\w+_" + group + "(\\s|$)", 'g');

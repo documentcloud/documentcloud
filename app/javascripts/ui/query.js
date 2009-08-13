@@ -1,4 +1,4 @@
-dc.ui.Query = dc.ui.View.extend({
+dc.ui.Query = dc.View.extend({
   
   className : 'search_query',
     

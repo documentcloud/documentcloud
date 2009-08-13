@@ -1,4 +1,4 @@
-dc.ui.DocumentList = dc.ui.View.extend({
+dc.ui.DocumentList = dc.View.extend({
   
   className : 'document_list',
   

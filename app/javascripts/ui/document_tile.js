@@ -1,4 +1,4 @@
-dc.ui.DocumentTile = dc.ui.View.extend({
+dc.ui.DocumentTile = dc.View.extend({
   
   className : 'document_tile',
   

@@ -1,4 +1,4 @@
-dc.ui.View = Base.extend({
+dc.View = Base.extend({
   
   el : null,
   model : null,
