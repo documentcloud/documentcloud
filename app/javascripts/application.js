@@ -9,6 +9,8 @@
 })();
 
 // TEST TEST TEST
+// For serious.
+// TEST TEST TEST
 $(document).ready(function() {
   // Move this somewhere. Prevent '#' links from page jumping.
   $('body').bind('click', function(e){
@@ -27,6 +29,8 @@ $(document).ready(function() {
       $.get('/search.json', {query_string : el.attr('value')}, function(resp) {        
         if (window.console) console.log(resp);
         
+        Documents.refresh(_.map(resp.documents, function(m){ return new dc.model.Document(m); }));
+        
         var query = new dc.ui.Query(resp.query).render(resp.documents.length);
         $('#query_container').html(query.el);
         
@@ -39,6 +43,9 @@ $(document).ready(function() {
         
         dc.ui.Spinner.show('gathering metadata');
         $.get('/documents/metadata.json', {'ids[]' : _.pluck(resp.documents, 'id')}, function(resp2) {
+          
+          Metadata.refresh(_.map(resp2.metadata, function(m){ return new dc.model.Metadatum(m); }));
+          
           var sorted = _.sortBy(resp2.metadata, function(meta){ return -meta.relevance; });
           var metaHash = _.inject(sorted, {}, function(memo, meta) {
             var val = meta.value;

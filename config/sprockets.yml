@@ -9,5 +9,6 @@
   - app/javascripts/application.js
   - app/javascripts/util/*.js
   - app/javascripts/model.js
+  - app/javascripts/set.js
   - app/javascripts/view.js
   - app/javascripts/**/*.js
