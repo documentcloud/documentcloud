@@ -49,7 +49,7 @@ module DC
             entity.relevance,
             document.id,
             {
-              :instances => entity.instances.map {|i| Instance.new(i.offset, i.length) },
+              :ocurrences => entity.instances.map {|i| Occurrence.new(i.offset, i.length) },
               :calais_hash => entity.calais_hash.value
             }
           )

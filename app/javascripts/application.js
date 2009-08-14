@@ -44,16 +44,10 @@ $(document).ready(function() {
         dc.ui.Spinner.show('gathering metadata');
         $.get('/documents/metadata.json', {'ids[]' : _.pluck(resp.documents, 'id')}, function(resp2) {
           
-          Metadata.refresh(_.map(resp2.metadata, function(m){ return new dc.model.Metadatum(m); }));
+          _.each(resp2.metadata, function(m){ Metadata.addOrCreate(m); });
           
           var sorted = _.sortBy(resp2.metadata, function(meta){ return -meta.relevance; });
-          var metaHash = _.inject(sorted, {}, function(memo, meta) {
-            var val = meta.value;
-            memo[val] = memo[val] || meta;
-            if (meta.relevance > memo[val].relevance) memo[val] = meta;
-            return memo;
-          });
-          var text = _.map(metaHash, function(pair) { return "<span title='type:" + pair.value.type + " relevance:" + pair.value.relevance + "'>" + pair.key + "</span>"; }).join(' / ');
+          var text = _.map(sorted, function(m) { return "<span title='type:" + m.type + " relevance:" + m.relevance + "'>" + m.value + "</span>"; }).join(' / ');
           $('#metadata').html(text);
           dc.ui.Spinner.hide();
         }, 'json');

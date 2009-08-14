@@ -33,9 +33,11 @@ a {
   #search {
     position: absolute;
     right: 15px; top: 15px;
-    font-size: 14px;
+    font-size: 12px;
     width: 20%;
     color: #333;
+    border: 1px solid #999;
+    -moz-border-radius: 6px;
   }
   
 #spinner {

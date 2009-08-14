@@ -35,6 +35,11 @@ dc.Set = Base.extend({
     return _.keys(this._byCid);
   },
   
+  // Simply return the models in the set as an array (useful for debugging).
+  values : function() {
+    return _.values(this._byId);
+  },
+  
   // How many models are in the set?
   size : function() {
     return this._size;

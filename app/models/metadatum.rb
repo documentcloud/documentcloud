@@ -3,7 +3,7 @@
 # text.) Metadata have a whitelisted type, or list of acceptable types.
 class Metadatum
   
-  attr_accessor :type, :instances, :relevance, :value, :calais_hash, :document_id
+  attr_accessor :type, :occurrences, :relevance, :value, :calais_hash, :document_id
   
   CALAIS_TYPES = [
     :city, :company, :continent, :country, :email_address, :facility, 
@@ -30,7 +30,7 @@ class Metadatum
       data['relevance'].to_f,
       data['document_id'],
       {
-        :instances => Instance.from_csv(data['instances']),
+        :occurrences => Occurrence.from_csv(data['occurrences']),
         :calais_hash => data['calais_hash']
       }
     )
@@ -38,7 +38,7 @@ class Metadatum
   
   # Generate a fake Metadatum for testing purposes.
   # TODO: Expand this to look into a document's full text and pull out a string,
-  # with its instances.
+  # with its occurrences.
   # def self.generate_fake
   #   value     = Faker::Lorem.words(1).first
   #   type      = CALAIS_TYPES[rand(CALAIS_TYPES.length)]
@@ -48,7 +48,7 @@ class Metadatum
   
   def initialize(value, type, relevance, document_id, opts={})
     @value, @type, @relevance, @document_id = value, type, relevance, document_id
-    @instances = opts[:instances] || []
+    @occurrences = opts[:occurrences] || []
     @calais_hash = opts[:calais_hash]
   end
   
@@ -66,7 +66,7 @@ class Metadatum
   
   # A Metadatum is considered to be textual if it occurs in the body of the text.
   def textual?
-    !@instances.empty?
+    !@occurrences.empty?
   end
   
   def inspect
@@ -79,7 +79,7 @@ class Metadatum
       'type' => @type,
       'relevance' => @relevance,
       'document_id' => @document_id,
-      'instances' => Instance.to_csv(@instances),
+      'occurrences' => Occurrence.to_csv(@occurrences),
       'calais_hash' => @calais_hash
     }
   end
