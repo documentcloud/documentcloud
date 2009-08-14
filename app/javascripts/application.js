@@ -23,8 +23,10 @@ $(document).ready(function() {
   
   var el = $('#search');
   el.bind('keydown', function(e) {
-    if (e.keyCode == 13) {
+    if (!el.outstandingSearch && (!e.keyCode || e.keyCode == 13)) {
+      el.outstandingSearch = true;
       dc.ui.Spinner.show('searching');
+      $('.documents').html('');
       $('#metadata').html('');
       $.get('/search.json', {query_string : el.attr('value')}, function(resp) {        
         if (window.console) console.log(resp);
@@ -34,12 +36,15 @@ $(document).ready(function() {
         var query = new dc.ui.Query(resp.query).render(resp.documents.length);
         $('#query_container').html(query.el);
         
-        $('.documents').html('');
-        $(resp.documents).each(function() {
-          $('.documents').append((new dc.ui.DocumentTile(this)).render().el);
+        _.each(Documents.values(), function(el) {
+          $('.documents').append((new dc.ui.DocumentTile(el)).render().el);
         });
         
-        if (resp.documents.length == 0) return dc.ui.Spinner.hide();
+        if (resp.documents.length == 0) {
+          dc.ui.Spinner.hide();
+          el.outstandingSearch = false;
+          return;
+        }
         
         dc.ui.Spinner.show('gathering metadata');
         $.get('/documents/metadata.json', {'ids[]' : _.pluck(resp.documents, 'id')}, function(resp2) {
@@ -51,6 +56,7 @@ $(document).ready(function() {
           $('#metadata').html(mView.render().el);
           
           dc.ui.Spinner.hide();
+          el.outstandingSearch = false;
         }, 'json');
       }, 'json');
     }

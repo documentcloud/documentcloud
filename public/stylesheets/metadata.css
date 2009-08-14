@@ -38,11 +38,13 @@
     padding: 3px 5px 2px 9px;
     background: #ddd;
     background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#dadada));
-    color: #666;
+    border-top: 1px solid #dadada;
+    color: #777;
   }
   .metalist_entry {
     padding: 2px 0 0 19px;
     line-height: 14px;
+    font-size: 11px;
   }
     .metalist_entry:hover {
       background: #d7d7d7;

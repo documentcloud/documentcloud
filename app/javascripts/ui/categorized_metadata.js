@@ -5,7 +5,8 @@ dc.ui.CategorizedMetadata = dc.View.extend({
   callbacks : [
     ['.toggle .less',           'click',    'showLess'],
     ['.toggle .more',           'click',    'showMore'],
-    ['.metalist_entry_text',    'click',    'addToSearch']
+    ['.metalist_entry_text',    'click',    'addToSearch'],
+    ['.metalist_entry_text',    'dblclick', 'addThenSearch']
   ],
   
   // At creation, pass in a sorted array of metadata options.metadata.
@@ -40,7 +41,14 @@ dc.ui.CategorizedMetadata = dc.View.extend({
     var search = meta.toSearchQuery();
     var searchField = $('#search').get(0);
     if (searchField.value.indexOf(search) > 0) return;
-    searchField.value += (' ' + search);
+    var endsWithSpace = !!searchField.value.match(/\s$/);
+    searchField.value += ((endsWithSpace ? '' : ' ') + search);
+  },
+  
+  // TODO: Move this ''
+  addThenSearch : function(e) {
+    this.addToSearch(e);
+    $('#search').triggerHandler('keydown');
   },
   
   showLess : function(e) {

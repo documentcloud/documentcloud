@@ -99,9 +99,11 @@ a {
     }
   .search_query {
     position: absolute;
-    top: 5px; left: 10px;
+    top: 3px; left: 10px; right: 10px;
     font-size: 10px;
-    line-height: 12px;
+    line-height: 16px;
+    height: 16px; 
+    overflow: hidden;
     color: #777;
   }
   
