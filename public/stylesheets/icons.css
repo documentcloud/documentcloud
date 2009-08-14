@@ -11,3 +11,21 @@
   width: 24px; height: 30px;
   background: url(/images/documents/generic_small.png);
 }
+
+.icon.plus, .icon.minus {
+  display: block;
+  width: 14px; height: 14px;
+  background-position: center center;
+}
+  .icon.plus {
+    background-image: url(/images/ui/plus.png);
+  }
+    .icon.plus:hover {
+      background-image: url(/images/ui/plus_lit.png);
+    }
+  .icon.minus {
+    background-image: url(/images/ui/minus.png);
+  }
+    .icon.minus:hover {
+      background-image: url(/images/ui/minus_lit.png);
+    }

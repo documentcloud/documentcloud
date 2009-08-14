@@ -33,8 +33,7 @@ dc.model.SortedSet = dc.Set.extend({
   },
   
   // Overridden. Add an item to the SortedSet, keeping sort order.
-  add : function(model, silent) {
-    if (_.isArray(model)) throw new Error("SortedSet doesn't yet implement batch adds ... looks like you should bite the bullet.");
+  _add : function(model, silent) {
     if (model = this.base(model, true)) {
       var index = _.sortedIndex(this._byIndex, this._comparator, model);
       this._byIndex.splice(index, 0, model);
@@ -44,7 +43,7 @@ dc.model.SortedSet = dc.Set.extend({
   },
   
   // Overridden. Remove an item from the SortedSet.
-  remove : function(model, silent) {
+  _remove : function(model, silent) {
     if (model = this.base(model, true)) {
       this._byIndex.remove(item);
       if (!silent) this.fire(dc.Set.MODEL_REMOVED, this, model);

@@ -1,0 +1,21 @@
+<div class="metalist less_shown" id="metalist_<%= key %>">
+	<div class="metalist_title">
+		<%= key %>
+		<% if (value.rest.length > 0) { %>
+			<a href="#" class="toggle">
+				<span class="more icon plus"></span>
+				<span class="less icon minus"></span>
+			</a>
+		<% } %>
+	</div>
+	<div class="metalist_content shown">
+		<% for (var i=0; i<value.shown.length; i++) { %>
+			<%= dc.templates.WORKSPACE_METALIST_ENTRY({meta : value.shown[i]}) %>
+		<% } %>
+	</div>
+	<div class="metalist_content rest">
+		<% for (var i=0; i<value.rest.length; i++) { %>
+			<%= dc.templates.WORKSPACE_METALIST_ENTRY({meta : value.rest[i]}) %>
+		<% } %>
+	</div>
+</div>

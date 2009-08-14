@@ -46,6 +46,14 @@ dc.model.Metadatum = dc.Model.extend({
     });
   },
   
+  // Return the string that one would use to perform a fielded search for this
+  // metadatum.
+  toSearchQuery : function() {
+    var val = this.get('value'), type = this.get('type');
+    if (val.match(/\s/)) val = '"' + val + '"';
+    return type + ":" + val;
+  },
+  
   // Inspect.
   toString : function() {
     return 'Metadatum "' + this.get('instances')[0].value + '" ' + this.id;

@@ -44,6 +44,7 @@ $(document).ready(function() {
         dc.ui.Spinner.show('gathering metadata');
         $.get('/documents/metadata.json', {'ids[]' : _.pluck(resp.documents, 'id')}, function(resp2) {
           
+          Metadata.refresh();
           _.each(resp2.metadata, function(m){ Metadata.addOrCreate(m); });
           Metadata.sort();
           var mView = new dc.ui.CategorizedMetadata({metadata : Metadata.values()});

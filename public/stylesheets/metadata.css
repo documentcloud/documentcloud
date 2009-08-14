@@ -1,3 +1,52 @@
-.metalist_entry {
-  margin-left: 10px;
+#metadata {
+  position: absolute;
+  top: 21px; left: 1px; right: 1px; bottom: 21px;
+  padding: 0 0 10px 0;
+  font-size: 10px;
+  color: #454545;
+  line-height: 12px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
+
+.metalist {
+  margin: 10px 0 0 0;
+}
+  .metalist:first-child {
+    margin-top: 0;
+  }
+    .metalist:first-child .metalist_title {
+      padding-top: 7px;
+    }
+  .metalist_content.rest {
+    display: none;
+  }
+    .metalist.more_shown .metalist_content.rest {
+      display: block;
+    }
+  .metalist .toggle {
+    position: absolute;
+    opacity: 0.75;
+    margin-top: -2px;
+  }
+    .metalist.less_shown .toggle .less,
+    .metalist.more_shown .toggle .more {
+      display: none;
+    }
+  .metalist_title {
+    text-transform: uppercase;
+    padding: 3px 5px 2px 9px;
+    background: #ddd;
+    background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#dadada));
+    color: #666;
+  }
+  .metalist_entry {
+    padding: 2px 0 0 19px;
+    line-height: 14px;
+  }
+    .metalist_entry:hover {
+      background: #d7d7d7;
+    }
+    .metalist_entry > span {
+      cursor: copy;
+    }

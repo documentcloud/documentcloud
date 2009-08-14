@@ -34,7 +34,7 @@ a {
     position: absolute;
     right: 15px; top: 15px;
     font-size: 12px;
-    width: 20%;
+    width: 30%;
     color: #333;
     border: 1px solid #999;
     -moz-border-radius: 6px;
@@ -44,7 +44,7 @@ a {
   display: none;
   position: absolute;
   margin-right: 30px;
-  top: 17px; right: 20%;
+  top: 17px; right: 30%;
   font-size: 10px;
   text-transform: uppercase;
   background: #efefef;
@@ -98,19 +98,11 @@ a {
       background: url(/images/ui/sidebar_bottom.png);
     }
   .search_query {
-    position: relative;
-    margin: 31px 10px 10px 10px;
+    position: absolute;
+    top: 5px; left: 10px;
     font-size: 10px;
     line-height: 12px;
     color: #777;
-  }
-  #metadata {
-    position: relative;
-    margin: 0 10px 31px 10px;
-    overflow: hidden;
-    font-size: 10px;
-    color: #454545;
-    line-height: 12px;
   }
   
 .cap {
