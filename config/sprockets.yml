@@ -7,8 +7,5 @@
 :source_files:
   - public/javascripts/vendor/*.js
   - app/javascripts/application.js
-  - app/javascripts/util/*.js
-  - app/javascripts/model.js
-  - app/javascripts/set.js
-  - app/javascripts/view.js
+  - app/javascripts/lib/*.js
   - app/javascripts/**/*.js

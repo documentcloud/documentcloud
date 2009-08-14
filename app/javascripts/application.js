@@ -45,9 +45,9 @@ $(document).ready(function() {
         $.get('/documents/metadata.json', {'ids[]' : _.pluck(resp.documents, 'id')}, function(resp2) {
           
           _.each(resp2.metadata, function(m){ Metadata.addOrCreate(m); });
+          Metadata.sort();
           
-          var sorted = _.sortBy(resp2.metadata, function(meta){ return -meta.relevance; });
-          var text = _.map(sorted, function(m) { return "<span title='type:" + m.type + " relevance:" + m.relevance + "'>" + m.value + "</span>"; }).join(' / ');
+          var text = _.map(Metadata.values(), function(m) { return "<span title='type:" + m.get('type') + " total relevance:" + m.totalRelevance() + "'>" + m.get('value') + "</span>"; }).join(' / ');
           $('#metadata').html(text);
           dc.ui.Spinner.hide();
         }, 'json');

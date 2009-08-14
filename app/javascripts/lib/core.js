@@ -159,6 +159,17 @@ window._ = {
     }), 'value');
   },
   
+  // Use a comparator function to figure out at what index an object should
+  // be inserted so as to maintain order. Uses binary search.
+  sortedIndex : function(array, comparator, obj) {
+    var low = 0, high = array.length;
+    while (low < high) {
+      var mid = (low + high) >> 1;
+      comparator(array[mid], obj) < 0 ? low = mid + 1 : high = mid;
+    }
+    return low;
+  },
+  
   // Convert anything iterable into a real, live array.
   toArray : function(iterable) {
     if (!iterable) return [];

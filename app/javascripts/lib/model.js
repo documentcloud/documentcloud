@@ -117,7 +117,13 @@ dc.Model = Base.extend({
 }, {
   
   // Event fired when the model's properties have changed.
-  CHANGED : 'model:changed'
+  CHANGED : 'model:changed',
+  
+  // Comparator (the default for SortedSets) that simply compares ids.
+  ID_COMPARATOR : function(a, b) {
+    var aid = a.id, bid = b.id;
+    return aid < bid ? -1 : (bid < aid ? 1 : 0);
+  }
   
 });
 

@@ -1,11 +1,6 @@
-dc.model.MetadataSet = dc.Set.extend({
+dc.model.MetadataSet = dc.model.SortedSet.extend({
   
-  constructor : function() {
-    this.base();
-    this._byType = {};
-    this._byCalaisHash = {};
-  },
-  
+  // TODO: ... extend this to re-sort addInstance'd metas.
   addOrCreate : function(obj) {
     var id = dc.model.Metadatum.generateId(obj);
     var meta = this.get(id);
@@ -18,4 +13,9 @@ dc.model.MetadataSet = dc.Set.extend({
   
 });
 
-window.Metadata = new dc.model.MetadataSet();
+window.Metadata = new dc.model.MetadataSet(
+  function(a, b) {
+    var aRel = a.totalRelevance(), bRel = b.totalRelevance();
+    return aRel < bRel ? 1 : (bRel < aRel ? -1 : 0);
+  }
+);
