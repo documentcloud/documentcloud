@@ -46,9 +46,9 @@ $(document).ready(function() {
           
           _.each(resp2.metadata, function(m){ Metadata.addOrCreate(m); });
           Metadata.sort();
+          var mView = new dc.ui.CategorizedMetadata({metadata : Metadata.values()});
+          $('#metadata').html(mView.render().el);
           
-          var text = _.map(Metadata.values(), function(m) { return "<span title='type:" + m.get('type') + " total relevance:" + m.totalRelevance() + "'>" + m.get('value') + "</span>"; }).join(' / ');
-          $('#metadata').html(text);
           dc.ui.Spinner.hide();
         }, 'json');
       }, 'json');

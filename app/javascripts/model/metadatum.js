@@ -19,7 +19,7 @@ dc.model.Metadatum = dc.Model.extend({
   
   // Adds a document-instance of the metadatum to this object.
   addInstance : function(instance) {
-    this.set({instances : this.get('instances').concat(instance)});
+    this.get('instances').push(instance);
     this._size++;
     return instance;
   },
