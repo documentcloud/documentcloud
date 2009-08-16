@@ -1,3 +1,5 @@
+// The Query is the plain-text, plain-english representation of the thing
+// that you just searched for.
 dc.ui.Query = dc.View.extend({
   
   className : 'search_query',

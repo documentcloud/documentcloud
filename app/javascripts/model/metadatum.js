@@ -3,6 +3,17 @@
 // it has an averageRelevance() over its documents()...
 dc.model.Metadatum = dc.Model.extend({
   
+  // Mapping from our white listed metadata types to their display names.
+  // Keep this list in sync with the mapping in metadatum.rb, please.
+  TYPE_MAP : {
+    category : "Categories", city : 'Cities', company : 'Companies', continent : 'Contintents', 
+    country : 'Countries', email_address : 'Email Addresses', facility : 'Places', 
+    holiday : "Holidays", industry_term : "Terms", natural_feature : "Landmarks", 
+    organization : "Organizations", person : "People", position : "Positions", 
+    product : "Products", province_or_state : "States", published_medium : "Newspapers", 
+    region : "Regions", technology : "Technologies", url : "Web Pages"
+  },
+  
   // Create a new metadatum from an instance(s) raw object.
   // Generally, you'll want to make 'em through Metadata.addOrCreate() instead.
   constructor : function(instances) {
@@ -44,6 +55,11 @@ dc.model.Metadatum = dc.Model.extend({
     return _.inject(this.get('instances'), 0, function(sum, instance) {
       return sum + instance.relevance;
     });
+  },
+  
+  // Display-ready version of the metadata type.
+  displayType : function() {
+    return this.TYPE_MAP[this.get('type')];
   },
   
   // Return the string that one would use to perform a fielded search for this

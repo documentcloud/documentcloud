@@ -5,6 +5,8 @@ class Metadatum
   
   attr_accessor :type, :occurrences, :relevance, :value, :calais_hash, :document_id
   
+  # The whitelisted types of metadata from OpenCalais that we're interested in.
+  # Keep this list in sync with the mapping in metadatum.js, please.
   CALAIS_TYPES = [
     :city, :company, :continent, :country, :email_address, :facility, 
     :holiday, :industry_term, :natural_feature, :organization, :person,

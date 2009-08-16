@@ -13,6 +13,8 @@ dc.model.MetadataSet = dc.model.SortedSet.extend({
   
 });
 
+// Metadata, the central set of all metadata currently on the client, is kept
+// sorted by totalRelevance() of each datum, across its documents.
 window.Metadata = new dc.model.MetadataSet(
   function(a, b) {
     var aRel = a.totalRelevance(), bRel = b.totalRelevance();

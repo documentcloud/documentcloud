@@ -52,7 +52,7 @@ $(document).ready(function() {
           Metadata.refresh();
           _.each(resp2.metadata, function(m){ Metadata.addOrCreate(m); });
           Metadata.sort();
-          var mView = new dc.ui.CategorizedMetadata({metadata : Metadata.values()});
+          var mView = new dc.ui.MetadataList({metadata : Metadata.values()});
           $('#metadata').html(mView.render().el);
           
           dc.ui.Spinner.hide();

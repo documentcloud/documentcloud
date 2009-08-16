@@ -1,3 +1,5 @@
+// Responsible for rendering a list of DocumentTiles. The tiles can be displayed
+// in a number of different sizes.
 dc.ui.DocumentList = dc.View.extend({
   
   className : 'document_list',

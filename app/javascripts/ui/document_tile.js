@@ -1,3 +1,4 @@
+// A tile view for previewing a Document in a listing.
 dc.ui.DocumentTile = dc.View.extend({
   
   className : 'document_tile',

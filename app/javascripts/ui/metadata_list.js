@@ -1,4 +1,6 @@
-dc.ui.CategorizedMetadata = dc.View.extend({
+// The MetadataList View shows a categorized expanded/collapsed list of
+// metadata for the current Document set.
+dc.ui.MetadataList = dc.View.extend({
   
   className : 'categorized_metadata',
   
@@ -9,22 +11,29 @@ dc.ui.CategorizedMetadata = dc.View.extend({
     ['.metalist_entry_text',    'dblclick', 'addThenSearch']
   ],
   
+  // Think about limiting the initially visible metadata to ones that are above
+  // a certain relevance threshold, showing at least three, or something along
+  // those lines.
+  NUM_INITIALLY_VISIBLE : 5,
+  
   // At creation, pass in a sorted array of metadata options.metadata.
   constructor : function(options) {
     this.base(options);
     this.mapMetadata();
   },
   
-  // Separate the metadata out. ONLY RENDERS THE TOP 5.
+  // Process and separate the metadata out into types.
   mapMetadata : function() {
     var byType = this._byType = {};
+    var max = this.NUM_INITIALLY_VISIBLE;
     _.each(this.options.metadata, function(meta) {
       var type = meta.get('type');
-      var list = byType[type] = byType[type] || {shown : [], rest : []};
-      (list.shown.length < 5 ? list.shown : list.rest).push(meta);
+      var list = byType[type] = byType[type] || {shown : [], rest : [], title : meta.displayType()};
+      (list.shown.length < max ? list.shown : list.rest).push(meta);
     });
   },
   
+  // Render...
   render : function() {
     $(this.el).html('');
     var html = _.map(this._byType, function(pair) {
@@ -51,10 +60,12 @@ dc.ui.CategorizedMetadata = dc.View.extend({
     $('#search').triggerHandler('keydown');
   },
   
+  // Show only the top metadata for the type.
   showLess : function(e) {
     $.setMode($(e.target).parents('.metalist').get(0), 'less', 'shown');
   },
   
+  // Show *all* the metadata for the type.
   showMore : function(e) {
     $.setMode($(e.target).parents('.metalist').get(0), 'more', 'shown');
   }

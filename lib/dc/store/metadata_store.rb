@@ -15,6 +15,8 @@ module DC
     class MetadataStore
       include DC::Store::TokyoCabinetTable
       
+      PROBABLY_AN_ACRONYM = /\A[A-Z]{2,6}\Z/
+      
       def save(metadatum)
         open_for_writing {|store| store[metadatum.id] = metadatum.to_hash }
       end
@@ -29,9 +31,11 @@ module DC
       
       # Searching for metadata that match a search_phrase. To perform a literal,
       # string equality search, pass +:literal => true+ 
+      # Tries to be smart and detect searches that should be literal.
       def find_by_field(type = :any, search_text = nil, opts = {})
+        acronym = !!search_text.match(PROBABLY_AN_ACRONYM)
+        search_type = opts[:literal] || acronym ? :equals : :phrase
         results = open_for_reading do |store|
-          search_type = opts[:literal] ? :equals : :phrase
           store.query do |q|
             q.add_condition 'value', search_type, search_text
             q.add_condition 'type', :equals, type if type.to_sym != :any

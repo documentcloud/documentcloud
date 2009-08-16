@@ -1,3 +1,5 @@
+// There's only a single global instance of the Spinner. show() it, passing in
+// a message, and hide() it when the corresponding action has finished.
 dc.ui.Spinner = {
   
   show : function(message) {
