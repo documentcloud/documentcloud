@@ -29,8 +29,10 @@ module DC
       def ensure_rdf(document)
         return if document.rdf
         raise DC::DocumentNotValid.new('In order for the CalaisExtractor to process it, a document must have either rdf or full_text.') if !document.full_text
+        # Calais complains if the content contains HTML tags...
+        content = HTML::FullSanitizer.new.sanitize(document.full_text)
         client = Calais::Client.new(
-          :content                        => document.full_text,
+          :content                        => content,
           :content_type                   => :text,
           :license_id                     => SECRETS['calais'],
           :allow_distribution             => false,

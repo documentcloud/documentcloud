@@ -1,4 +1,8 @@
-<div class="icon document generic"></div>
+<% if (thumbnail_path) { %>
+	<img class="icon document generic" src="/documents/thumbnail/<%= id %>" />
+<% } else { %>
+	<div class="icon document generic"></div>
+<% } %>
 <a class="title" href="<%= display_url %>" target="_blank"><%= title %></a>
 <div class="organization">Source: <%= organization %></div>
 <div class="summary"><%= summary %>&hellip;</div>

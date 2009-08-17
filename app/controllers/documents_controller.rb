@@ -15,13 +15,20 @@ class DocumentsController < ApplicationController
   end
   
   def pdf
-    get_document
+    get_document(true)
     send_file(@document.pdf_path, :disposition => 'inline', :type => 'application/pdf')
   end
   
+  def thumbnail
+    get_document(true)
+    send_file(@document.thumbnail_path, :disposition => 'inline', :type => 'image/jpeg')
+  end
+  
   def display
-    get_document
-    File.exists?(@document.pdf_path) ? self.pdf : self.full_text
+    get_document(true)
+    @document.pdf_path ?
+      redirect_to("/documents/pdf/#{@document.id}.pdf") :
+      redirect_to("/documents/full_text/#{@document.id}.txt")
   end
   
   def test
@@ -33,8 +40,12 @@ class DocumentsController < ApplicationController
   
   private
   
-  def get_document
-    @document ||= Document.new(:id => params[:id])
+  def get_document(from_entry=false)
+    if from_entry
+      @document ||= DC::Store::EntryStore.new.find(params[:id])
+    else
+      @document ||= Document.new(:id => params[:id])
+    end
   end
   
 end 

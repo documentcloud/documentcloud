@@ -28,7 +28,15 @@ namespace :import do
         puts " / skipped because text length is #{text.length}"
         next
       end
-      doc = Document.new(:full_text => text, :title => title, :pdf_path => path)
+      image_ex = DC::Import::ImageExtractor.new(path)
+      image_ex.get_thumbnails
+      doc = Document.new(
+        :full_text            => text, 
+        :title                => title, 
+        :pdf_path             => path,
+        :thumbnail_path       => image_ex.thumbnail_path,
+        :small_thumbnail_path => image_ex.small_thumbnail_path
+      )
       DC::Import::CalaisExtractor.new.extract_metadata(doc)
       doc.organization ||= Faker::Company.name
       puts " / saving as #{doc.id}"

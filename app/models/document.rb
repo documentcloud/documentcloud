@@ -3,9 +3,10 @@ class Document
   include ActionView::Helpers::TextHelper
   
   ENTRY_ATTRIBUTES = [:author, :created_at, :date, :id, :language, :organization, 
-                      :summary, :title, :calais_request_id]
+                      :summary, :title, :calais_request_id, :thumbnail_path,
+                      :small_thumbnail_path, :pdf_path]
                       
-  TEMPORARY_ATTRIBUTES = [:full_text, :rdf, :metadata, :calais_signature, :pdf_path]
+  TEMPORARY_ATTRIBUTES = [:full_text, :rdf, :metadata, :calais_signature]
   
   ATTRIBUTES = ENTRY_ATTRIBUTES + TEMPORARY_ATTRIBUTES
                       
@@ -62,10 +63,10 @@ class Document
   # TODO: Saving the full text both as an asset and in the full text index
   # may be redundant.
   def save
-    DC::Store::EntryStore.new.save(self)
     DC::Store::AssetStore.new.save_document(self)
-    DC::Store::MetadataStore.new.save_document(self)
     DC::Store::FullTextStore.new.save(self)
+    DC::Store::EntryStore.new.save(self)
+    DC::Store::MetadataStore.new.save_document(self)
   end
   
   def to_entry_hash
@@ -95,10 +96,6 @@ class Document
   def full_text
     return nil unless @full_text || @id
     @full_text ||= DC::Store::AssetStore.new.find_full_text(self)
-  end
-  
-  def pdf_path
-    @pdf_path ||= DC::Store::AssetStore.new.pdf_path(self)
   end
   
   def inspect

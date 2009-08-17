@@ -18,30 +18,40 @@ module DC
         "#{local_storage_path}/#{document.id}.txt"
       end
       
-      def pdf_path(document)
+      def pdf_path_for(document)
         "#{local_storage_path}/#{document.id}.pdf"
+      end
+      
+      def thumbnail_path_for(document, extension=nil)
+        ext = extension ? "_#{extension}" : ''
+        "#{local_storage_path}/#{document.id}#{ext}.jpg"
       end
       
       def save_document(document)
         save_pdf(document)
+        save_images(document)
         save_full_text(document)
-        # save_images(document)
       end
       
       def save_pdf(document)
-        doc_path, real_path = document.pdf_path, pdf_path(document)
+        doc_path, real_path = document.pdf_path, pdf_path_for(document)
         return if !doc_path || doc_path == real_path
         FileUtils.cp doc_path, real_path
         document.pdf_path = real_path
       end
       
-      # def save_images(document)
-      #   document.images.each {|image| save_image(image) }
-      # end
-      # 
-      # def save_image(image)
-      #   @store.save(image.path, image.contents)
-      # end
+      def save_thumbnail(document, extension=nil)
+        thumb_path = extension == 'small' ? document.small_thumbnail_path : document.thumbnail_path
+        real_path = thumbnail_path_for(document, extension)
+        return if !thumb_path || thumb_path == real_path
+        FileUtils.cp thumb_path, real_path
+        extension == 'small' ? document.small_thumbnail_path = real_path : document.thumbnail_path = real_path
+      end
+      
+      def save_images(document)
+        save_thumbnail(document)
+        save_thumbnail(document, 'small')
+      end
       
       def save_full_text(document)
         path = full_text_path(document)
