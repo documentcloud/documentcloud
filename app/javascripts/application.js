@@ -23,12 +23,12 @@ $(document).ready(function() {
   
   var el = $('#search');
   el.bind('keydown', function(e) {
-    if (!el.outstandingSearch && (!e.keyCode || e.keyCode == 13)) {
+    if (!el.outstandingSearch && (!e.keyCode || e.keyCode == 13) && el.val()) {
       el.outstandingSearch = true;
       dc.ui.Spinner.show('searching');
       $('.documents').html('');
       $('#metadata').html('');
-      $.get('/search.json', {query_string : el.attr('value')}, function(resp) {        
+      $.get('/search.json', {query_string : el.val()}, function(resp) {        
         if (window.console) console.log(resp);
         
         Documents.refresh(_.map(resp.documents, function(m){ return new dc.model.Document(m); }));
