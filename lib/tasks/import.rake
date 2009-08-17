@@ -23,7 +23,7 @@ namespace :import do
     file_names.each do |path|
       print "loading #{path}"
       ex = DC::Import::TextExtractor.new(path)
-      text, title = ex.get_text, ex.get_title
+      text, title = ex.get_text, (ex.get_title || "Untitled Document")
       if text.length > DC::Import::CalaisExtractor::MAX_TEXT_SIZE
         puts " / skipped because text length is #{text.length}"
         next
