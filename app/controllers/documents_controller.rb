@@ -10,7 +10,18 @@ class DocumentsController < ApplicationController
   end
   
   def full_text
-    render :text => Document.new(:id => params[:id]).full_text
+    get_document
+    render :text => @document.full_text
+  end
+  
+  def pdf
+    get_document
+    send_file(@document.pdf_path, :disposition => 'inline', :type => 'application/pdf')
+  end
+  
+  def display
+    get_document
+    File.exists?(@document.pdf_path) ? self.pdf : self.full_text
   end
   
   def test
@@ -19,4 +30,11 @@ class DocumentsController < ApplicationController
     }
   end
   
-end
+  
+  private
+  
+  def get_document
+    @document ||= Document.new(:id => params[:id])
+  end
+  
+end 

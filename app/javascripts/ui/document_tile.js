@@ -5,7 +5,7 @@ dc.ui.DocumentTile = dc.View.extend({
   
   constructor : function(doc) {
     this.base(doc.getAttributes());
-    this.options.full_text_url = '/documents/full_text/' + this.options.id;
+    this.options.display_url = '/documents/display/' + this.options.id + ".pdf";
     this.el.id = 'document_tile_' + this.options.id;
   },
   

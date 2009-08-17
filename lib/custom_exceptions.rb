@@ -6,4 +6,6 @@ module DC
   
   class DocumentNotFound < DC::Error; end
   
+  class DocumentNotValid < DC::Error; end
+  
 end
