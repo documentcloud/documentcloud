@@ -74,13 +74,13 @@ a {
 #sidebar {
   position: absolute;
   top: 10px; left: 10px; bottom: 10px;
-  width: 350px;
+  width: 300px;
   overflow: hidden;
 }
   #sidebar_background {
     position: absolute;
     top: 21px; bottom: 21px;
-    width: 348px;
+    width: 298px;
     background: #e6e6e6;
     border: 1px solid #8b8b8b;
     border-top: 0; border-bottom: 0;

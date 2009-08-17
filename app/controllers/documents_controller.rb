@@ -4,7 +4,7 @@ class DocumentsController < ApplicationController
     meta = []
     if params[:ids]
       docs = params[:ids].map {|id| Document.new(:id => id) }
-      meta = docs.inject([]) {|memo, doc| memo += doc.metadata; memo}
+      meta = DC::Store::MetadataStore.new.find_by_documents(docs)
     end
     render :json => {'metadata' => meta}
   end

@@ -73,6 +73,17 @@ module DC
         results.map {|r| Metadatum.from_hash(r) }
       end
       
+      def find_by_documents(documents, opts={})
+        results = open_for_reading do |store|
+          store.query do |q|
+            q.add_condition 'document_id', :ftsor, documents.map(&:id).join(' ')
+            q.order_by 'relevance', :numdesc
+            q.limit opts[:limit] if opts[:limit]
+          end
+        end
+        results.map {|r| Metadatum.from_hash(r) }
+      end
+      
       # Compute the path to the Tokyo Cabinet Table store on disk.
       def path
         "#{RAILS_ROOT}/db/#{RAILS_ENV}_metadata.tdb"
