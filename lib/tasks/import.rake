@@ -9,7 +9,7 @@ namespace :import do
     file_names.each do |path|
       print "loading #{path}"
       doc = Document.new(:rdf => File.read(path))
-      DC::Import::CalaisExtractor.new.extract_metadata(doc)
+      DC::Import::MetadataExtractor.new.extract_metadata(doc)
       doc.organization ||= Faker::Company.name
       puts " / saving as #{doc.id}"
       doc.save
@@ -24,7 +24,7 @@ namespace :import do
       print "loading #{path}"
       ex = DC::Import::TextExtractor.new(path)
       text, title = ex.get_text, (ex.get_title || "Untitled Document")
-      if text.length > DC::Import::CalaisExtractor::MAX_TEXT_SIZE
+      if text.length > DC::Import::CalaisFetcher::MAX_TEXT_SIZE
         puts " / skipped because text length is #{text.length}"
         next
       end
@@ -37,7 +37,7 @@ namespace :import do
         :thumbnail_path       => image_ex.thumbnail_path,
         :small_thumbnail_path => image_ex.small_thumbnail_path
       )
-      DC::Import::CalaisExtractor.new.extract_metadata(doc)
+      DC::Import::MetadataExtractor.new.extract_metadata(doc)
       doc.organization ||= Faker::Company.name
       puts " / saving as #{doc.id}"
       doc.save

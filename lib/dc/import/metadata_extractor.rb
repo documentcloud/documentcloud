@@ -1,13 +1,10 @@
 module DC
   module Import
     
-    # The CalaisExtractor takes in a raw RDF file from OpenCalais, pulls out
+    # The MetadataExtractor takes in a raw RDF file from OpenCalais, pulls out
     # all of the whitelisted metadata we're interested in, and attaches them
     # to the document.
-    class CalaisExtractor
-      
-      # Content limit that Calais sets on characters.
-      MAX_TEXT_SIZE = 100000
+    class MetadataExtractor
       
       # Public API: Pass in a document, either with full_text or rdf already 
       # attached.
@@ -28,19 +25,8 @@ module DC
       # If the document has full_text, we can go fetch the RDF from Calais.
       def ensure_rdf(document)
         return if document.rdf
-        raise DC::DocumentNotValid.new('In order for the CalaisExtractor to process it, a document must have either rdf or full_text.') if !document.full_text
-        # Calais complains if the content contains HTML tags...
-        content = HTML::FullSanitizer.new.sanitize(document.full_text)
-        client = Calais::Client.new(
-          :content                        => content,
-          :content_type                   => :text,
-          :license_id                     => SECRETS['calais'],
-          :allow_distribution             => false,
-          :allow_search                   => false,
-          :submitter                      => "DocumentCloud (#{RAILS_ENV})",
-          :omit_outputting_original_text  => true
-        )
-        document.rdf = client.enlighten
+        raise DC::DocumentNotValid.new('In order for the MetadataExtractor to process it, a document must have either rdf or full_text.') if !document.full_text
+        document.rdf = CalaisFetcher.new.fetch_rdf(document.full_text)
       end
       
       # Pull out all of the standard, top-level metadata, and add it to our
@@ -72,7 +58,7 @@ module DC
             entity.relevance,
             document.id,
             {
-              :ocurrences => entity.instances.map {|i| Occurrence.new(i.offset, i.length) },
+              :occurrences => entity.instances.map {|i| Occurrence.new(i.offset, i.length) },
               :calais_hash => entity.calais_hash.value
             }
           )

@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class CalaisExtractorTest < ActiveSupport::TestCase
+class MetadataExtractorTest < ActiveSupport::TestCase
   
   RDF = File.read(File.dirname(__FILE__) + "/honeybee_article.rdf")
   
   def initialize(*args)
     super(*args)
-    @calais = DC::Import::CalaisExtractor.new
+    @calais = DC::Import::MetadataExtractor.new
     @doc = Document.new(:rdf => RDF)
     @calais.extract_metadata(@doc)
   end
@@ -49,9 +49,9 @@ class CalaisExtractorTest < ActiveSupport::TestCase
       assert meta.calais_hash == '48ccaeea-e553-3ef8-905c-32bc4bfb627f'
       assert meta.relevance   == 0.312
       
-      instance = meta.instances.first
-      assert instance.offset == 518
-      assert instance.length == 38
+      occurrence = meta.occurrences.first
+      assert occurrence.offset == 518
+      assert occurrence.length == 38
     end
     
   end
