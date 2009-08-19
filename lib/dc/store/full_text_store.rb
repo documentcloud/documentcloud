@@ -60,14 +60,3 @@ module DC
     
   end
 end
-
-# Opens up the store on disk for reading.
-def open_for_reading
-  begin
-    store = Rufus::Tokyo::Table.new(path, :mode => 'r', :opts => 'ld')
-    result = yield(store)
-  ensure
-    store.close
-  end
-  result
-end

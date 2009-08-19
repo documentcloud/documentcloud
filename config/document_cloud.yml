@@ -1,0 +1,11 @@
+defaults : &defaults
+  dogpile_server: http://localhost:9173
+  
+development :
+  <<: *defaults
+  
+test :
+  <<: *defaults
+    
+production :
+  <<: *defaults

@@ -44,6 +44,14 @@ namespace :import do
     end
   end
   
+  # Usage: rake import:dogpile_pdf[../congressional_documents] --trace
+  desc 'Load and save all PDF files from a directory of your choosing via Dogpile.'
+  task :dogpile_pdf, [:directory] => [:environment] do |t, args|
+    urls = Dir[args[:directory] + "/*.pdf"].map {|pdf| "file://#{File.expand_path(pdf)}" }
+    dp = DC::Import::DogpileImporter.new
+    dp.import(urls)    
+  end
+  
   desc "completely wipe out all existing data stores"
   task :delete_databases => :environment do
     DC::Store::AssetStore.new.delete_database!

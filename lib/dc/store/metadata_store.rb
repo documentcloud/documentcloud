@@ -78,7 +78,8 @@ module DC
           store.query do |q|
             q.add_condition 'document_id', :ftsor, documents.map(&:id).join(' ')
             q.order_by 'relevance', :numdesc
-            q.limit opts[:limit] if opts[:limit]
+            # q.limit opts[:limit] if opts[:limit]
+            q.limit opts[:limit] || 200
           end
         end
         results.map {|r| Metadatum.from_hash(r) }

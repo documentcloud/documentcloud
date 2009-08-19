@@ -1,3 +1,5 @@
+require 'calais'
+
 module DC
   module Import
     
@@ -9,7 +11,8 @@ module DC
       # If the document has full_text, we can go fetch the RDF from Calais.
       def fetch_rdf(text)
         # Calais complains if the content contains HTML tags...
-        text = HTML::FullSanitizer.new.sanitize(text)
+        # TODO: Fix this in some other way.
+        text.gsub!(/<\/?[^>]*>/, "")
         client = Calais::Client.new(
           :content                        => text,
           :content_type                   => :text,

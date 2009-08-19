@@ -39,6 +39,7 @@ Rails::Initializer.run do |config|
   config.gem 'calais', :version => '>= 0.0.7'
   config.gem 'rufus-tokyo', :version => '>= 1.0.0'
   config.gem 'sprockets', :version => '>=1.0.2'
+  config.gem 'rest-client', :version => '>= 1.0.3', :lib => 'rest_client'
   
   if Rails.test?
     config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
