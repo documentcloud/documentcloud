@@ -6,9 +6,12 @@ module DC
     # Xapian, and perhaps Sphinx).
     class FullTextStore
       
+      # Trying to save twice causes our dear Rufus-Tokyo to throw a 9999 
+      # Miscellaneous Error, so ensure that we only save a document once.
       def save(document)
         open_for_writing do |store|
-          store.store(document.integer_id, document.full_text)
+          already = !!store.fetch(document.integer_id)
+          store.store(document.integer_id, document.full_text) unless already
         end
       end
       
@@ -38,7 +41,7 @@ module DC
       
       def open_for_writing
         begin
-          store = Rufus::Tokyo::Dystopia::Core.new(path, 'a')
+          store = Rufus::Tokyo::Dystopia::Core.new(path, 'a+')
           result = yield(store)
         ensure
           store.close

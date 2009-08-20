@@ -3,6 +3,7 @@ module DC
     
     class DogpileImporter
       
+      # TODO: Figure out how we're going to specify where the callback URL lives.
       def import(urls)
         RestClient.post(
           DC::CONFIG['dogpile_server'] + '/jobs', {:json => {

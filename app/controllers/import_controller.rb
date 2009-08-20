@@ -18,6 +18,13 @@ class ImportController < ApplicationController
         doc.save
       end
     end
+    
+    # Cleaning up later so that we don't deadlock in development.
+    Thread.new do
+      sleep 1
+      RestClient.delete DC::CONFIG['dogpile_server'] + "/jobs/#{job['id']}"
+    end
+    
     render :nothing => true
   end
   
