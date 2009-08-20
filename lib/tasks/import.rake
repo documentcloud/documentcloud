@@ -24,10 +24,6 @@ namespace :import do
       print "loading #{path}"
       ex = DC::Import::TextExtractor.new(path)
       text, title = ex.get_text, (ex.get_title || "Untitled Document")
-      if text.length > DC::Import::CalaisFetcher::MAX_TEXT_SIZE
-        puts " / skipped because text length is #{text.length}"
-        next
-      end
       image_ex = DC::Import::ImageExtractor.new(path)
       image_ex.get_thumbnails
       doc = Document.new(
