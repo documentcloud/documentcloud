@@ -4,4 +4,6 @@ db/*.sqlite3
 db/*.tdb
 db/*.tdb.idx.*
 db/*_full_text
+db/*.tct
+db/*.pid
 raw

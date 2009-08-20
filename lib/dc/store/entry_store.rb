@@ -8,7 +8,7 @@ module DC
     # Potential backing engines for this store are MySQL, MongoDB, Tokyo Cabinet
     # (either hash or table backends).
     class EntryStore
-      include DC::Store::TokyoCabinetTable
+      include DC::Store::TokyoTyrantTable
       
       # Save a document's entry attributes.
       def save(document)
@@ -26,7 +26,11 @@ module DC
       
       # Compute the path to the Tokyo Cabinet Table store on disk.
       def path
-        "#{RAILS_ROOT}/db/#{RAILS_ENV}_entries.tdb"
+        "#{RAILS_ROOT}/db/#{RAILS_ENV}_entries.tct"
+      end
+      
+      def port
+        DC::CONFIG['entry_store_port']
       end
       
       # Delete the entry store entirely.

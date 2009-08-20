@@ -13,7 +13,7 @@ module DC
     # For a first pass, the metadata store will keep entries in a Tokyo Cabinet
     # table, locally. There are no indices on any of the columns, yet.
     class MetadataStore
-      include DC::Store::TokyoCabinetTable
+      include DC::Store::TokyoTyrantTable
       
       PROBABLY_AN_ACRONYM = /\A[A-Z]{2,6}\Z/
       
@@ -78,8 +78,8 @@ module DC
           store.query do |q|
             q.add_condition 'document_id', :ftsor, documents.map(&:id).join(' ')
             q.order_by 'relevance', :numdesc
-            # q.limit opts[:limit] if opts[:limit]
-            q.limit opts[:limit] || 200
+            q.limit opts[:limit] if opts[:limit]
+            # q.limit opts[:limit] || 200
           end
         end
         results.map {|r| Metadatum.from_hash(r) }
@@ -87,12 +87,17 @@ module DC
       
       # Compute the path to the Tokyo Cabinet Table store on disk.
       def path
-        "#{RAILS_ROOT}/db/#{RAILS_ENV}_metadata.tdb"
+        "#{RAILS_ROOT}/db/#{RAILS_ENV}_metadata.tct"
       end
       
-      # Delete the metadata store entirely.
+      def port
+        DC::CONFIG['metadata_store_port']
+      end
+      
+      # Delete the metadata store entirely. And its indices.
       def delete_database!
         FileUtils.rm(path) if File.exists?(path)
+        Dir[path.sub(/\.tct\Z/, '*.lex')].each {|index| FileUtils.rm(index) }
       end
       
     end

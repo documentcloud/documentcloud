@@ -1,5 +1,7 @@
 defaults : &defaults
-  dogpile_server: http://localhost:9173
+  dogpile_server:       http://localhost:9173
+  entry_store_port:     70007
+  metadata_store_port:  80008
   
 development :
   <<: *defaults

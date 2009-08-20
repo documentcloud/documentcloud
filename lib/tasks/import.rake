@@ -52,12 +52,4 @@ namespace :import do
     dp.import(urls)    
   end
   
-  desc "completely wipe out all existing data stores"
-  task :delete_databases => :environment do
-    DC::Store::AssetStore.new.delete_database!
-    DC::Store::EntryStore.new.delete_database!
-    DC::Store::FullTextStore.new.delete_database!
-    DC::Store::MetadataStore.new.delete_database!
-  end
-  
 end
