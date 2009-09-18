@@ -11,6 +11,9 @@
   width: 24px; height: 30px;
   background: url(/images/documents/generic_small.png);
 }
+.document_list.small_size .icon.document {
+  display: none;
+}
 
 .icon.plus, .icon.minus {
   display: block;

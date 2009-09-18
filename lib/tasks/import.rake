@@ -40,12 +40,11 @@ namespace :import do
     end
   end
   
-  # Usage: rake import:dogpile_pdf[../congressional_documents] --trace
+  # Usage: rake import:cloud_crowd_pdf[../congressional_documents] --trace
   desc 'Load and save all PDF files from a directory of your choosing via Dogpile.'
-  task :dogpile_pdf, [:directory] => [:environment] do |t, args|
+  task :cloud_crowd_pdf, [:directory] => [:environment] do |t, args|
     urls = Dir[args[:directory] + "/*.pdf"].map {|pdf| "file://#{File.expand_path(pdf)}" }
-    dp = DC::Import::DogpileImporter.new
-    dp.import(urls)    
+    DC::Import::CloudCrowdImporter.new.import(urls)
   end
   
 end
