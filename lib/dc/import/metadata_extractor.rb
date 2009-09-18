@@ -1,3 +1,6 @@
+gem 'documentcloud-calais'
+require 'calais'
+
 module DC
   module Import
     
@@ -6,11 +9,18 @@ module DC
     # to the document.
     class MetadataExtractor
       
+      OVER_CALAIS_QPS = '<h1>403 Developer Over Qps</h1>'
+      
       # Public API: Pass in a document, either with full_text or rdf already 
       # attached.
       def extract_metadata(document)
-        ensure_rdf(document)
-        calais = Calais::Response.new(document.rdf)        
+        return unless ensure_rdf(document)
+        begin
+          calais = Calais::Response.new(document.rdf)
+        rescue Calais::Error => e
+          RAILS_DEFAULT_LOGGER.warn(e.message)
+          return
+        end      
         document.metadata = []
         extract_full_text(document, calais)
         extract_summary(document)
@@ -24,7 +34,13 @@ module DC
       
       # If the document has full_text, we can go fetch the RDF from Calais.
       def ensure_rdf(document)
-        return if document.rdf
+        if document.rdf
+          if document.rdf == OVER_CALAIS_QPS
+            RAILS_DEFAULT_LOGGER.warn("Document ##{document.id} went over the Calais developer limit.")
+            return false
+          end
+          return true
+        end
         raise DC::DocumentNotValid.new('In order for the MetadataExtractor to process it, a document must have either rdf or full_text.') if !document.full_text
         document.rdf = CalaisFetcher.new.fetch_rdf(document.full_text)
       end

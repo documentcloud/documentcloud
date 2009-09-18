@@ -7,7 +7,7 @@ module DC
       def import(urls)
         RestClient.post(
           DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-            'action'  => 'document_cloud_import',
+            'action'  => 'document_import',
             'inputs'  => urls,
             'options' => {},
             'callback_url' => 'http://localhost:3000/import/cloud_crowd'
