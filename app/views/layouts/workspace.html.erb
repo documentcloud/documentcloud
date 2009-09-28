@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-	<title><%= @title || "Untitled Page" %> | DocumentCloud</title>
+	<title><%= @title %> | DocumentCloud</title>
 	<%= stylesheet_link_tag 'reset' %>
 	<%= stylesheet_link_tag 'aristo' %>
 	<%= stylesheet_link_tag 'icons' %>
@@ -19,7 +19,7 @@
 		<div id="topbar" class="header">
 			<div id="cloud_edge"></div>
 			<div id="wordmark" class="logo_words">DocumentCloud</div>
-			<h1 id="title" class="logo_words"><%= @page_title %></h1>
+			<h1 id="title" class="logo_words"><%= @title %></h1>
 			<input id="search" type="search" placeholder="search" />
 		</div>
 	
@@ -29,5 +29,12 @@
 		
 	</div>
 	
+<script type="text/javascript">
+  <% if params[:q] %>
+    window.SEARCH_QUERY = '<%= escape_javascript(params[:q]) %>';
+  <% end %>
+  dc.app.workspace.initialize();
+</script>	
+
 </body>
 </html>

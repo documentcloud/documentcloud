@@ -25,6 +25,7 @@ a {
     top: 23px;
   }
     #wordmark {
+      cursor: pointer;
       left: 10px;
     }
     #title {
