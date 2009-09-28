@@ -90,7 +90,7 @@ module DC
       end
       
       def port
-        DC::CONFIG['metadata_store_port']
+        DC_CONFIG['metadata_store_port']
       end
       
       # Delete the metadata store entirely. And its indices.

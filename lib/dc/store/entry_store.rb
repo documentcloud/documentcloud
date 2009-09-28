@@ -30,7 +30,7 @@ module DC
       end
       
       def port
-        DC::CONFIG['entry_store_port']
+        DC_CONFIG['entry_store_port']
       end
       
       # Delete the entry store entirely.

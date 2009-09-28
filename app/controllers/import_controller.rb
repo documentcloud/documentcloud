@@ -22,7 +22,7 @@ class ImportController < ApplicationController
     # Cleaning up later so that we don't deadlock in development.
     Thread.new do
       sleep 1
-      RestClient.delete DC::CONFIG['cloud_crowd_server'] + "/jobs/#{job['id']}"
+      RestClient.delete DC_CONFIG['cloud_crowd_server'] + "/jobs/#{job['id']}"
     end
     
     render :nothing => true

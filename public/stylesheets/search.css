@@ -1,0 +1,36 @@
+body {
+  font-family: Arial, sans-serif;
+  color: #373737;
+  font-size: 12px;
+  background: #e9e9e9;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+div {
+  background: transparent;
+}
+
+#container {
+  overflow-y: auto;
+}
+  #content {
+    position: absolute;
+    top: 40%; left: 50%;
+    margin: -66px 0 0 -195px;
+    height: 132px; width: 390px;
+    text-align: center;
+  }
+
+#logo {
+  width: 390px;
+  margin: 0 auto;
+}
+
+#search_container {
+  margin-top: 5px;
+}
+  #search {
+    font-size: 16px;
+  }

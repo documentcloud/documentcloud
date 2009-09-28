@@ -25,6 +25,8 @@
       display: block;
     }
   .metalist .toggle {
+    display: inline;
+    cursor: pointer;
     position: absolute;
     opacity: 0.75;
     margin-top: -2px;

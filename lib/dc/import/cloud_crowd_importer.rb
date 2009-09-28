@@ -6,7 +6,7 @@ module DC
       # TODO: Figure out how we're going to specify where the callback URL lives.
       def import(urls)
         RestClient.post(
-          DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+          DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
             'action'  => 'document_import',
             'inputs'  => urls,
             'options' => {},

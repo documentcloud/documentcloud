@@ -14,8 +14,9 @@
 $(document).ready(function() {
   // Move this somewhere. Prevent '#' links from page jumping.
   $('body').bind('click', function(e){
-    if (e.target.tagName.toUpperCase() == 'A' && 
-      e.target.href == window.location.toString() + '#') e.preventDefault();
+    if (e.target.tagName.toUpperCase() == 'A' && e.target.href == window.location.toString() + '#') {
+      e.preventDefault();
+    }
   });
   
   $('#workspace_document_list').html((new dc.ui.DocumentList()).render().el);
