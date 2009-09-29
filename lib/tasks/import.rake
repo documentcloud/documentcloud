@@ -48,7 +48,7 @@ namespace :import do
   end
   
   desc 'Load all PDF files from public/docs via CloudCrowd.'
-  task :public_docs_pdf do
+  task :public_docs_pdf => :environment do
     Dir.chdir("#{RAILS_ROOT}/public") do
       urls = Dir['docs/**/*.pdf'].map {|pdf| "#{DC_CONFIG['server_root']}/#{pdf}"}
       DC::Import::CloudCrowdImporter.new.import(urls)
