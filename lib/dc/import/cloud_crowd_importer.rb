@@ -10,7 +10,7 @@ module DC
             'action'  => 'document_import',
             'inputs'  => urls,
             'options' => {},
-            'callback_url' => 'http://localhost:3000/import/cloud_crowd'
+            'callback_url' => "#{DC_CONFIG['server_root']}/import/cloud_crowd"
           }.to_json}
         )
       end
