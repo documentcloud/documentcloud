@@ -15,7 +15,8 @@ class ImportController < ApplicationController
         :full_text =>             RestClient.get(result['full_text_url']),
         :rdf =>                   RestClient.get(result['rdf_url']),
         :thumbnail_path =>        result['thumbnail_url'],
-        :small_thumbnail_path =>  result['small_thumbnail_url']
+        :small_thumbnail_path =>  result['small_thumbnail_url'],
+        :organization =>          Faker::Company.name
       })
       DC::Import::MetadataExtractor.new.extract_metadata(doc)
       doc.save
