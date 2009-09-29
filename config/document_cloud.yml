@@ -1,13 +1,18 @@
-defaults : &defaults
+defaults: &defaults
   cloud_crowd_server:   http://localhost:9173
+  server_root:          http://localhost:3000
   entry_store_port:     70007
   metadata_store_port:  80008
   
-development :
+development:
   <<: *defaults
   
-test :
+staging:
+  <<: *defaults
+  server_root:          http://ec2-75-101-222-118.compute-1.amazonaws.com
+  
+test:
   <<: *defaults
     
-production :
+production:
   <<: *defaults
