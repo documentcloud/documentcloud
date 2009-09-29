@@ -54,7 +54,7 @@ module DC
           store = Rufus::Tokyo::Dystopia::Core.new(path, 'r')
           result = yield(store)
         ensure
-          store.close
+          store.close if store
         end
         result
       end
