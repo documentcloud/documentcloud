@@ -1,0 +1,20 @@
+TODO:
+
+  * Figure out how controllers are going to work -- refactor javascripts/app/
+    workspace.js accordingly.
+    
+  * Build out surrounding start page blips... About Us, How to Join, 
+    What is This?
+    
+  * Enhance the Journalist Workspace with journo-specific bits -- figure out 
+    the separation of their search from the common man's search.
+    
+  * Create a News Organization "Signup" page.
+  
+  * Create a News Organization "Manage Journalists" page.
+  
+  * Replace raw PDF link with a DocumentViewer.
+  
+  * Create an "Upload Document" UI within the journo workspace.
+
+DONE:

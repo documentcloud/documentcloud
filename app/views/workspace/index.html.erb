@@ -1,5 +1,6 @@
 <%
 	@title = "Workspace"
+	@show_search = true
 %>
 
 <div id="sidebar">
@@ -17,3 +18,10 @@
 <div id="workspace_document_list">
 	<%# Render target for the document list %>
 </div>
+
+<script type="text/javascript">
+  <% if params[:q] %>
+    window.SEARCH_QUERY = '<%= escape_javascript(params[:q]) %>';
+  <% end %>
+  dc.app.workspace.initialize();
+</script>

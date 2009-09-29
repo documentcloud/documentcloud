@@ -1,0 +1,38 @@
+<%
+  @title = "Partner Sign-up"
+%>
+
+<div id="signup_form">
+  <div class="cap_top_left cap"></div>
+  <div class="cap_top_middle cap"></div>
+  <div class="cap_top_right cap"></div>
+  <form class="panel_background" action="/workspace/signup_organization">
+    <h1>Sign up as a DocumentCloud Partner</h1>
+    <div class="line">
+      <input type="text" name="name" />
+      <label for="name">
+        Organization Name:<br /><span class="example">ex: The Daily Tribune</span>
+      </label>
+    </div>
+    <div class="line">
+      <input type="text" name="slug" />
+      <label for="slug">
+        Short Name for URLs:<br /><span class="example">ex: daily-tribune</span>
+      </label>
+    </div>
+    <div class="line license">
+      By signing up for DocumentCloud, you agree to the following terms of 
+      service. Any documents uploaded by your organization will be made 
+      available to the public, in perpetuity, after the applicable embargo
+      period has expired. As long as your organization hosts a copy of the 
+      document, DocumentCloud will send all search traffic for that document
+      to you. If at any time the document ceases to be accessible from the web,
+      DocumentCloud reserves the right to provide the document as the host of
+      last resort. Use of the DocumentCloud service is at your sole risk. The 
+      service is provided on an "as is" and "as available" basis.
+    </div>
+    <div class="line">
+      <button class="default">Sign Up</button>
+    </div>
+  </form>
+</div>

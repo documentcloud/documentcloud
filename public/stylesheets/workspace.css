@@ -108,6 +108,18 @@ a {
     color: #777;
   }
   
+.panel_background {
+  position: absolute;
+  left: 0px; right: 0px; top: 21px; bottom: 0px; 
+  overflow: auto;
+  padding: 10px;
+  background: #fff;
+  -webkit-border-radius: 6px;
+  -webkit-border-top-left-radius: 0; -webkit-border-top-right-radius: 0;
+  -moz-border-radius: 6px;
+  -moz-border-radius-topleft: 0; -moz-border-radius-topright: 0;
+}
+  
 .cap {
   height: 21px;
   position: absolute;
@@ -127,3 +139,53 @@ a {
     right: -1px;
     background: url(/images/ui/cap_top_right.png);
   }
+
+#signup_form {
+  position: absolute;
+  text-align: center;
+  top: 10px; left: 10px; right: 10px; bottom: 10px;
+}
+  #signup_form form {
+    padding: 20px 0 0 0;
+  }
+    #signup_form h1 {
+      color: #566eaa;
+      font: bold 24px Arial;
+    }
+    #signup_form .line {
+      width: 545px;
+      margin: 25px auto;
+    }
+      #signup_form label {
+        display: block;
+        width: 170px;
+        text-align: right;
+        font: bold 16px Arial;
+        line-height: 14px;
+        color: #444;
+      }
+        #signup_form .example {
+          font: bold italic 11px Arial;
+          color: #666;
+        }
+      #signup_form input {
+        position: absolute;
+        margin: 0 0 0 195px;
+        width: 350px;
+        font-size: 16px;
+        line-height: 20px;
+        border: 1px solid #999;
+        -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
+        display: block;
+      }
+      #signup_form .license {
+        color: #666;
+        width: 355px;
+        padding-left: 195px;
+        text-align: justify;
+        font: italic 11px Arial;
+      }
+      #signup_form button {
+        position: relative;
+        left: -42px;
+      }

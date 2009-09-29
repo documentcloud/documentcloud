@@ -20,7 +20,9 @@
 			<div id="cloud_edge"></div>
 			<div id="wordmark" class="logo_words">DocumentCloud</div>
 			<h1 id="title" class="logo_words"><%= @title %></h1>
-			<input id="search" type="search" placeholder="search" />
+			<% if @show_search %>
+			  <input id="search" type="search" placeholder="search" />
+			<% end %>
 		</div>
 	
 		<div id="content">
@@ -28,13 +30,6 @@
 		</div>
 		
 	</div>
-	
-<script type="text/javascript">
-  <% if params[:q] %>
-    window.SEARCH_QUERY = '<%= escape_javascript(params[:q]) %>';
-  <% end %>
-  dc.app.workspace.initialize();
-</script>	
 
 </body>
 </html>
