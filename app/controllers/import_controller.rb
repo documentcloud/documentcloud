@@ -10,8 +10,10 @@ class ImportController < ApplicationController
       doc = Document.new({
         :title =>                 result['title'],
         :pdf_path =>              result['pdf_url'],
-        :full_text =>             File.read(result['full_text_url'].sub(FILE_URL, '')),
-        :rdf =>                   File.read(result['rdf_url'].sub(FILE_URL, '')),
+        # :full_text =>             File.read(result['full_text_url'].sub(FILE_URL, '')),
+        # :rdf =>                   File.read(result['rdf_url'].sub(FILE_URL, '')),
+        :full_text =>             RestClient.get(result['full_text_url']),
+        :rdf =>                   RestClient.get(result['rdf_url']),
         :thumbnail_path =>        result['thumbnail_url'],
         :small_thumbnail_path =>  result['small_thumbnail_url']
       })
