@@ -35,14 +35,11 @@ module DC
       def delete_database!
         FileUtils.rm_r(path) if File.exists?(path)
       end
-      
-      
-      private
-      
+                  
       def open_for_writing
         begin
           store = Rufus::Tokyo::Dystopia::Core.new(path, 'a+')
-          result = yield(store)
+          result = block_given? ? yield(store) : nil
         ensure
           store.close
         end

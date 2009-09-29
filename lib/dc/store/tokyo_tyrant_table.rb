@@ -5,15 +5,13 @@ module DC
     # backend. Classes mixing in this module must implement a +path+ method,
     # returning the desired path to the store on disk.
     module TokyoTyrantTable
-      
-      protected
-            
+                  
       # Opens up the store on disk for writing.
       def open_for_writing
         begin
           store = Rufus::Tokyo::TyrantTable.new('127.0.0.1', port)
           # store = Rufus::Tokyo::Table.new(path, :mode => 'wc', :opts => 'ld')
-          result = yield(store)
+          result = block_given? ? yield(store) : nil
         ensure
           store.close unless store.nil?
         end

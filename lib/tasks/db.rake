@@ -8,6 +8,13 @@ namespace :db do
     DC::Store::MetadataStore.new.delete_database!
   end
   
+  desc "ensure that all data stores exist"
+  task :create_datastores => :environment do
+    DC::Store::EntryStore.new.open_for_writing { }
+    DC::Store::MetadataStore.new.open_for_writing { }
+    DC::Store::FullTextStore.new.open_for_writing { }
+  end
+  
   desc "start up all our Tokyo Tyrant servers"
   task :start_tyrant => :environment do
     entry_path  = File.expand_path("#{RAILS_ROOT}/db/#{RAILS_ENV}_entries.tct")
