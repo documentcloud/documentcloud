@@ -28,7 +28,8 @@ class DocumentImport < CloudCrowd::Action
     @text = ex.get_text
     path = "#{work_directory}/#{file_name}.txt"
     File.open(path, 'w+') {|f| f.write(@text) }
-    [path, ex.get_title || "Untitled Document"]
+    title = ex.get_title || File.basename(input)
+    [path, title]
   end
   
   def generate_thumbnails
