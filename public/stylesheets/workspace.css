@@ -197,7 +197,7 @@ a {
       
 #controls {
   position: absolute;
-  left: 20px; top: 10px;
+  left: 17px; top: 15px;
 }
   #controls .control {
     width: 28px; height: 28px;
@@ -210,17 +210,16 @@ a {
     overflow: hidden;
     -webkit-box-shadow: 0 1px 3px #555;
     -webkit-border-radius: 3px;
-    -webkit-transition: -webkit-box-shadow, background, width 0.33s linear;
+    -webkit-transition: -webkit-box-shadow, background, width 0.2s linear;
   }
     #controls .control:hover {
-      width: 100px;
+      width: 97px;
       -webkit-box-shadow: 0 1px 10px #444;
       background-color: #eee;
     }
     #controls .control_title {
       font: 9px Arial;
-      position: absolute;
-      width: 60px;
+      width: 65px;
       margin: 4px 0 0 28px;
       line-height: 11px;
       text-transform: uppercase;
@@ -238,4 +237,33 @@ a {
     }
     #manage_collections_button {
       background-image: url(/images/icons/sitemap.png);
+    }
+    
+#navigation {
+  position: absolute;
+  left: 320px; top: 0px; right: 10px;
+  padding-left: 7px;
+  height: 50px;
+  overflow: hidden;
+}
+  #navigation .nav {
+    cursor: pointer;
+    position: relative;
+    float: left;
+    margin: 17px 7px 100px 0px;
+    font: 15px Arial;
+    padding: 8px 12px;
+    background: #dadada;
+    -webkit-box-shadow: 0 1px 5px #666;
+    -webkit-border-radius: 3px;
+    -webkit-border-bottom-left-radius: 0; -webkit-border-bottom-right-radius: 0;
+    background: -webkit-gradient(linear, left top, left bottom, from(#e0e0e0), to(#cacaca));
+    -webkit-transition: -webkit-box-shadow 0.2s linear;
+    color: #224455;
+  }
+    #navigation .nav:hover {
+      background: #efefef;
+      color: #002256;
+      background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#dfdfdf));
+      -webkit-box-shadow: 0 1px 10px #222;
     }
