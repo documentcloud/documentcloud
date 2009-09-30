@@ -19,6 +19,8 @@ TODO:
   
   * Create a deploy rake task that updates both 'staging-central' and 
     'staging-workers', restarts cloud-crowd and document-cloud.
+    
+  * Swap params#q search query for a hashtag-based one.
 
 DONE:
 

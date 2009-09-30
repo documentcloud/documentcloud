@@ -11,8 +11,16 @@ dc.app.workspace = {
           e.preventDefault();
         }
       });
+      
+      var sidebar = dc.app.workspace.sidebar = new dc.ui.Sidebar();
+      $('#content').append(sidebar.render().el);
+      
+      var panel = dc.app.workspace.panel = new dc.ui.Panel();
+      $('#content').append(panel.render().el);
+      
+      panel.show((new dc.ui.DocumentList()).render());
     
-      $('#workspace_document_list').html((new dc.ui.DocumentList()).render().el);
+      // $('#workspace_document_list').html((new dc.ui.DocumentList()).render().el);
     
       var el = $('#search');
       el.bind('keydown', function(e) {
@@ -33,14 +41,14 @@ dc.app.workspace = {
     el.outstandingSearch = true;
     dc.ui.Spinner.show('searching');
     $('.documents').html('');
-    $('#metadata').html('');
+    $('.sidebar_content').html('');
     $.get('/search.json', {query_string : query}, function(resp) {        
       if (window.console) console.log(resp);
 
       Documents.refresh(_.map(resp.documents, function(m){ return new dc.model.Document(m); }));
 
       var query = new dc.ui.Query(resp.query).render(resp.documents.length);
-      $('#query_container').html(query.el);
+      $('.sidebar_content').append(query.el);
 
       _.each(Documents.values(), function(el) {
         $('.documents').append((new dc.ui.DocumentTile(el)).render().el);
@@ -59,7 +67,7 @@ dc.app.workspace = {
         _.each(resp2.metadata, function(m){ Metadata.addOrCreate(m); });
         Metadata.sort();
         var mView = new dc.ui.MetadataList({metadata : Metadata.values()});
-        $('#metadata').html(mView.render().el);
+        $('.sidebar_content').append(mView.render().el);
 
         dc.ui.Spinner.hide();
         el.outstandingSearch = false;

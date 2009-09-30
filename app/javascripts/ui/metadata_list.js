@@ -2,7 +2,7 @@
 // metadata for the current Document set.
 dc.ui.MetadataList = dc.View.extend({
   
-  className : 'categorized_metadata',
+  className : 'metadata',
   
   callbacks : [
     ['.toggle .less',           'click',    'showLess'],

@@ -1,27 +1,23 @@
-.document_list {
+.size_controls {
   position: absolute;
-  left: 320px; right: 10px; top: 10px; bottom: 10px;
+  text-transform: uppercase;
+  color: #777;
+  font-size: 10px;
+  right: 7px; top: 5px;
 }
-  body.logged_in .document_list {
-    top: 50px;
+  body.upload_shown .size_controls {
+    display: none;
   }
-  .size_controls {
-    position: absolute;
-    text-transform: uppercase;
-    color: #777;
-    font-size: 10px;
-    right: 7px; top: 5px;
+  .document_list.large_size .view_large,
+  .document_list.medium_size .view_medium,
+  .document_list.small_size .view_small {
+    font-weight: bold;
   }
-    .document_list.large_size .view_large,
-    .document_list.medium_size .view_medium,
-    .document_list.small_size .view_small {
-      font-weight: bold;
-    }
-  .documents {
+.documents {
+}
+  .document_list.large_size .documents {
+    padding-right: 30px;
   }
-    .document_list.large_size .documents {
-      padding-right: 30px;
-    }
   
 .document_tile {
   position: relative;

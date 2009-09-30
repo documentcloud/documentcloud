@@ -72,16 +72,16 @@ a {
   background: #979797;
 }
 
-#sidebar {
+.sidebar {
   position: absolute;
   top: 10px; left: 10px; bottom: 10px;
   width: 300px;
   overflow: hidden;
 }
-  body.logged_in #sidebar {
+  body.logged_in .sidebar {
     top: 50px;
   }
-  #sidebar_background {
+  .sidebar_background {
     position: absolute;
     top: 21px; bottom: 21px;
     width: 298px;
@@ -93,11 +93,11 @@ a {
     position: absolute;
     height: 21px; width: 300px;
   }
-    #sidebar_top {
+    .sidebar_top {
       top: 0px;
       background: url(/images/ui/sidebar_top.png);
     }
-    #sidebar_bottom {
+    .sidebar_bottom {
       bottom: 0px;
       background: url(/images/ui/sidebar_bottom.png);
     }
@@ -122,6 +122,14 @@ a {
   -moz-border-radius: 6px;
   -moz-border-radius-topleft: 0; -moz-border-radius-topright: 0;
 }
+
+.panel {
+  position: absolute;
+  left: 320px; right: 10px; top: 10px; bottom: 10px;
+}
+  body.logged_in .panel {
+    top: 50px;
+  }
   
 .cap {
   height: 21px;
@@ -250,9 +258,9 @@ a {
     cursor: pointer;
     position: relative;
     float: left;
-    margin: 17px 7px 100px 0px;
-    font: 15px Arial;
-    padding: 8px 12px;
+    margin: 19px 7px 100px 0px;
+    font: 14px/17px Arial;
+    padding: 7px 12px;
     background: #dadada;
     -webkit-box-shadow: 0 1px 5px #666;
     -webkit-border-radius: 3px;
@@ -267,3 +275,35 @@ a {
       background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#dfdfdf));
       -webkit-box-shadow: 0 1px 10px #222;
     }
+
+#upload_form {
+  position: absolute;
+  top: 71px; left: 10px; right: 10px; bottom: 31px;
+  display: none;
+}
+  body.upload_shown #upload_form {
+    display: block;
+  }
+  #upload_form .help {
+    position: absolute;
+    top: 0; bottom: 0;
+    padding: 10px;
+    overflow: hidden;
+    width: 280px;
+  }
+    #upload_form .help h4 {
+      font: bold 10px Arial;
+      text-transform: uppercase;
+      color: #4d4d4d;
+      margin: 0 0 7px 0;
+    }
+    #upload_form .help p {
+      font: 11px;
+      line-height: 16px;
+      color: #222;
+      margin-bottom: 15px;
+    }
+  #upload_form form {
+    position: absolute;
+    left: 320px;
+  }

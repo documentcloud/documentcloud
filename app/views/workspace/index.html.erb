@@ -6,23 +6,8 @@
 <% if @account %>
   <%= render :partial => 'controls' %>
   <%= render :partial => 'navigation' %>
+  <%= render :partial => 'upload_form' %>
 <% end %>
-
-<div id="sidebar">
-	<div id="sidebar_background"></div>
-	<div id="sidebar_top" class="sidebar_back"></div>
-	<div id="sidebar_bottom" class="sidebar_back"></div>
-	<div id="query_container">
-		<%# Render target for the current query. %>
-	</div>
-	<div id="metadata">
-		<%# Render target for metadata %>
-	</div>
-</div>
-
-<div id="workspace_document_list">
-	<%# Render target for the document list %>
-</div>
 
 <script type="text/javascript">
   <% if params[:q] %>
