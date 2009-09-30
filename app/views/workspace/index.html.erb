@@ -3,6 +3,11 @@
 	@show_search = true
 %>
 
+<% if @account %>
+  <%= render :partial => 'controls' %>
+  <%= render :partial => 'navigation' %>
+<% end %>
+
 <div id="sidebar">
 	<div id="sidebar_background"></div>
 	<div id="sidebar_top" class="sidebar_back"></div>

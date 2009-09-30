@@ -78,6 +78,9 @@ a {
   width: 300px;
   overflow: hidden;
 }
+  body.logged_in #sidebar {
+    top: 50px;
+  }
   #sidebar_background {
     position: absolute;
     top: 21px; bottom: 21px;
@@ -191,3 +194,48 @@ a {
         position: relative;
         left: -42px;
       }
+      
+#controls {
+  position: absolute;
+  left: 20px; top: 10px;
+}
+  #controls .control {
+    width: 28px; height: 28px;
+    float: left;
+    margin-right: 7px;
+    cursor: pointer;
+    background-color: #ddd;
+    background-repeat: no-repeat;
+    background-position: 6px 6px;
+    overflow: hidden;
+    -webkit-box-shadow: 0 1px 3px #555;
+    -webkit-border-radius: 3px;
+    -webkit-transition: -webkit-box-shadow, background, width 0.33s linear;
+  }
+    #controls .control:hover {
+      width: 100px;
+      -webkit-box-shadow: 0 1px 10px #444;
+      background-color: #eee;
+    }
+    #controls .control_title {
+      font: 9px Arial;
+      position: absolute;
+      width: 60px;
+      margin: 4px 0 0 28px;
+      line-height: 11px;
+      text-transform: uppercase;
+      color: #666;
+      display: none;
+    }
+      #controls .control:hover .control_title {
+        display: block;
+      }
+    #upload_document_button {
+      background-image: url(/images/icons/page_white_add.png);
+    }
+    #manage_accounts_button {
+      background-image: url(/images/icons/group.png);
+    }
+    #manage_collections_button {
+      background-image: url(/images/icons/sitemap.png);
+    }

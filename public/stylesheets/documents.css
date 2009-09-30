@@ -2,6 +2,9 @@
   position: absolute;
   left: 320px; right: 10px; top: 10px; bottom: 10px;
 }
+  body.logged_in .document_list {
+    top: 50px;
+  }
   .size_controls {
     position: absolute;
     text-transform: uppercase;
