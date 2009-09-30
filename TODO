@@ -16,5 +16,8 @@ TODO:
   * Replace raw PDF link with a DocumentViewer.
   
   * Create an "Upload Document" UI within the journo workspace.
+  
+  * Create a deploy rake task that updates both 'staging-central' and 
+    'staging-workers', restarts cloud-crowd and document-cloud.
 
 DONE:

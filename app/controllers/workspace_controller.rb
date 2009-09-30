@@ -1,4 +1,6 @@
 class WorkspaceController < ApplicationController
+  
+  before_filter :authenticate unless Rails.development?
     
   def index;  end
   
