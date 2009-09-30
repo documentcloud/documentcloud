@@ -110,46 +110,45 @@ a {
     overflow: hidden;
     color: #777;
   }
-  
-.panel_background {
-  position: absolute;
-  left: 0px; right: 0px; top: 21px; bottom: 0px; 
-  overflow: auto;
-  padding: 10px;
-  background: #fff;
-  -webkit-border-radius: 6px;
-  -webkit-border-top-left-radius: 0; -webkit-border-top-right-radius: 0;
-  -moz-border-radius: 6px;
-  -moz-border-radius-topleft: 0; -moz-border-radius-topright: 0;
-}
 
 .panel {
   position: absolute;
   left: 320px; right: 10px; top: 10px; bottom: 10px;
+  padding: 31px 10px 10px 10px;
 }
   body.logged_in .panel {
     top: 50px;
   }
-  
-.cap {
-  height: 21px;
-  position: absolute;
-  top: 0;
-}
-  .cap_top_left {
-    left: -1px;
-    width: 13px;
-    background: url(/images/ui/cap_top_left.png);
+  .panel_background {
+    position: absolute;
+    left: 0px; right: 0px; top: 21px; bottom: 0px; 
+    overflow: auto;
+    padding: 10px;
+    background: #fff;
+    -webkit-border-radius: 6px;
+    -webkit-border-top-left-radius: 0; -webkit-border-top-right-radius: 0;
+    -moz-border-radius: 6px;
+    -moz-border-radius-topleft: 0; -moz-border-radius-topright: 0;
   }
-  .cap_top_middle {
-    left: 12px; right: 11px;
-    background: url(/images/ui/cap_top_middle.png);
+  .cap {
+    height: 21px;
+    position: absolute;
+    top: 0;
   }
-  .cap_top_right {
-    width: 12px;
-    right: -1px;
-    background: url(/images/ui/cap_top_right.png);
-  }
+    .cap_top_left {
+      left: -1px;
+      width: 13px;
+      background: url(/images/ui/cap_top_left.png);
+    }
+    .cap_top_middle {
+      left: 12px; right: 11px;
+      background: url(/images/ui/cap_top_middle.png);
+    }
+    .cap_top_right {
+      width: 12px;
+      right: -1px;
+      background: url(/images/ui/cap_top_right.png);
+    }
 
 #signup_form {
   position: absolute;
@@ -276,34 +275,49 @@ a {
       -webkit-box-shadow: 0 1px 10px #222;
     }
 
-#upload_form {
-  position: absolute;
-  top: 71px; left: 10px; right: 10px; bottom: 31px;
-  display: none;
+.document_upload {
+  position: relative;
+  padding: 10px;
 }
-  body.upload_shown #upload_form {
+  .document_upload label {
+    font: bold 16px Arial;
+    line-height: 14px;
+    color: #444;
+    display: block;
+    margin-bottom: 7px;
+  }
+    .document_upload label .example {
+      font: bold italic 11px Arial;
+      color: #666;
+    }
+  .document_upload input {
+    margin-bottom: 25px;
     display: block;
   }
-  #upload_form .help {
-    position: absolute;
-    top: 0; bottom: 0;
-    padding: 10px;
-    overflow: hidden;
-    width: 280px;
+    .document_upload input[type=text] {
+      width: 350px;
+      font-size: 16px;
+      line-height: 20px;
+      border: 1px solid #999;
+      -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
+    }
+  
+.sidebar .help {
+  position: absolute;
+  top: 21px; bottom: 0;
+  padding: 10px;
+  overflow: hidden;
+  width: 280px;
+}
+  .sidebar .help h4 {
+    font: bold 10px Arial;
+    text-transform: uppercase;
+    color: #4d4d4d;
+    margin: 0 0 7px 0;
   }
-    #upload_form .help h4 {
-      font: bold 10px Arial;
-      text-transform: uppercase;
-      color: #4d4d4d;
-      margin: 0 0 7px 0;
-    }
-    #upload_form .help p {
-      font: 11px;
-      line-height: 16px;
-      color: #222;
-      margin-bottom: 15px;
-    }
-  #upload_form form {
-    position: absolute;
-    left: 320px;
+  .sidebar .help p {
+    font: 11px;
+    line-height: 16px;
+    color: #222;
+    margin-bottom: 15px;
   }

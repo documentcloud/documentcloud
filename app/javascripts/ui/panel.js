@@ -14,8 +14,8 @@ dc.ui.Panel = dc.View.extend({
     return this;
   },
   
-  show : function(subview) {
-    this.content.html(subview.el);
+  show : function(content) {
+    this.content.html(content);
   }
   
 });

@@ -1,0 +1,24 @@
+<form class="workspace_form" method="POST" action="/import/upload_pdf" enctype="multipart/form-data">
+  
+  <label for="document_upload_title">
+    Title:
+    <br />
+    <span class="example">ex: U.S. Congressional Record — July 10, 2007</span>
+  </label>
+  <input name="title" id="document_upload_title" type="text" />
+  
+  <label for="document_upload_source">
+    Source:
+    <br />
+    <span class="example">ex: U.S. Government Printing Office</span>
+  </label>
+  <input name="source" id="document_upload_source" type="text" />
+  
+  <label for="document_upload_file">
+    Document PDF:
+  </label>
+  <input name="pdf" id="document_upload_file" type="file" />
+  
+  <button class="default">Upload Document</button>
+  
+</form>

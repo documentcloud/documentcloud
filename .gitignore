@@ -7,3 +7,5 @@ db/*_full_text
 db/*.tct
 db/*.pid
 raw
+config/cloud_crowd_devel
+public/docs

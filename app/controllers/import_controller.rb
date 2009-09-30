@@ -2,6 +2,14 @@ class ImportController < ApplicationController
   
   FILE_URL = /\Afile:\/\//
   
+  def upload_pdf
+    pdf = params[:pdf]
+    save_path = "docs/#{pdf.original_filename}"
+    FileUtils.cp(pdf.path, "#{RAILS_ROOT}/public/#{save_path}")
+    DC::Import::CloudCrowdImporter.new.import(["#{DC_CONFIG['server_root']}/#{save_path}"])
+    redirect_to DC_CONFIG['cloud_crowd_server']
+  end
+  
   def cloud_crowd
     job = JSON.parse(params[:job])
     raise "CloudCrowd processing failed" if job['status'] != 'succeeded'
@@ -10,10 +18,8 @@ class ImportController < ApplicationController
       doc = Document.new({
         :title =>                 result['title'],
         :pdf_path =>              result['pdf_url'],
-        # :full_text =>             File.read(result['full_text_url'].sub(FILE_URL, '')),
-        # :rdf =>                   File.read(result['rdf_url'].sub(FILE_URL, '')),
-        :full_text =>             RestClient.get(result['full_text_url']),
-        :rdf =>                   RestClient.get(result['rdf_url']),
+        :full_text =>             fetch_contents(result['full_text_url']),
+        :rdf =>                   fetch_contents(result['rdf_url']),
         :thumbnail_path =>        result['thumbnail_url'],
         :small_thumbnail_path =>  result['small_thumbnail_url'],
         :organization =>          Faker::Company.name
@@ -29,6 +35,14 @@ class ImportController < ApplicationController
     end
     
     render :nothing => true
+  end
+  
+  
+  private
+  
+  # Read the contents of a URL, whether local or remote.
+  def fetch_contents(url)
+    url.match(FILE_URL) ? File.read(url.sub(FILE_URL, '')) : RestClient.get(url)
   end
   
 end

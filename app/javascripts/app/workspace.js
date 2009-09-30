@@ -19,9 +19,7 @@ dc.app.workspace = {
     
     this.panel = new dc.ui.Panel();
     $('#content').append(this.panel.render().el);
-    
-    this.panel.show((new dc.ui.DocumentList()).render());
-    
+        
     var el = $('#search');
     el.bind('keydown', function(e) {
       if (!el.outstandingSearch && e.keyCode == 13 && el.val()) {
@@ -29,9 +27,17 @@ dc.app.workspace = {
       }
     });
     
-    $('#wordmark').bind('click', function(){ window.location = '/'; });
+    $('#wordmark').click(function(){ window.location = '/'; });
+    
+    $('#upload_document_button').click(function(){ dc.app.workspace.showUploadForm(); });
     
     this.performDefaultSearch();
+  },
+  
+  showUploadForm : function() {
+    var docUpload = new dc.ui.DocumentUpload();
+    this.sidebar.show(docUpload.helpContent());
+    this.panel.show(docUpload.render().el);
   },
   
   search : function(query) {
@@ -39,15 +45,16 @@ dc.app.workspace = {
     el.outstandingSearch = true;
     dc.ui.Spinner.show('searching');
     $('.documents').html('');
-    $('.sidebar_content').html('');
+    this.sidebar.show('');
     $.get('/search.json', {query_string : query}, function(resp) {        
       if (window.console) console.log(resp);
 
       Documents.refresh(_.map(resp.documents, function(m){ return new dc.model.Document(m); }));
 
       var query = new dc.ui.Query(resp.query).render(resp.documents.length);
-      $('.sidebar_content').append(query.el);
+      $(dc.app.workspace.sidebar.content).append(query.el);
 
+      dc.app.workspace.panel.show((new dc.ui.DocumentList()).render().el);
       _.each(Documents.values(), function(el) {
         $('.documents').append((new dc.ui.DocumentTile(el)).render().el);
       });
@@ -65,7 +72,7 @@ dc.app.workspace = {
         _.each(resp2.metadata, function(m){ Metadata.addOrCreate(m); });
         Metadata.sort();
         var mView = new dc.ui.MetadataList({metadata : Metadata.values()});
-        $('.sidebar_content').append(mView.render().el);
+        $(dc.app.workspace.sidebar.content).append(mView.render().el);
 
         dc.ui.Spinner.hide();
         el.outstandingSearch = false;
