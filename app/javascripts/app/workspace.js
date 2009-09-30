@@ -3,37 +3,35 @@ dc.app.workspace = {
   
   // On Document ready, bind all callbacks.
   initialize : function() {
+    $(document).ready(function() { dc.app.workspace.load(); });
+  },
   
-    $(document).ready(function() {
-      // Move this somewhere. Prevent '#' links from page jumping.
-      $('body').bind('click', function(e){
-        if (e.target.tagName.toUpperCase() == 'A' && e.target.href == window.location.toString() + '#') {
-          e.preventDefault();
-        }
-      });
-      
-      var sidebar = dc.app.workspace.sidebar = new dc.ui.Sidebar();
-      $('#content').append(sidebar.render().el);
-      
-      var panel = dc.app.workspace.panel = new dc.ui.Panel();
-      $('#content').append(panel.render().el);
-      
-      panel.show((new dc.ui.DocumentList()).render());
-    
-      // $('#workspace_document_list').html((new dc.ui.DocumentList()).render().el);
-    
-      var el = $('#search');
-      el.bind('keydown', function(e) {
-        if (!el.outstandingSearch && e.keyCode == 13 && el.val()) {
-          dc.app.workspace.search(el.val());
-        }
-      });
-      
-      $('#wordmark').bind('click', function(){ window.location = '/'; });
-      
-      dc.app.workspace.performDefaultSearch();
+  load : function() {
+    // Move this somewhere. Prevent '#' links from page jumping.
+    $('body').bind('click', function(e){
+      if (e.target.tagName.toUpperCase() == 'A' && e.target.href == window.location.toString() + '#') {
+        e.preventDefault();
+      }
     });
     
+    this.sidebar = new dc.ui.Sidebar();
+    $('#content').append(this.sidebar.render().el);
+    
+    this.panel = new dc.ui.Panel();
+    $('#content').append(this.panel.render().el);
+    
+    this.panel.show((new dc.ui.DocumentList()).render());
+    
+    var el = $('#search');
+    el.bind('keydown', function(e) {
+      if (!el.outstandingSearch && e.keyCode == 13 && el.val()) {
+        dc.app.workspace.search(el.val());
+      }
+    });
+    
+    $('#wordmark').bind('click', function(){ window.location = '/'; });
+    
+    this.performDefaultSearch();
   },
   
   search : function(query) {
@@ -79,7 +77,7 @@ dc.app.workspace = {
     var query = window.SEARCH_QUERY;
     if (query) {
       $('#search').val(query);
-      dc.app.workspace.search(query);
+      this.search(query);
     }
   }
   
