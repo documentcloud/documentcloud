@@ -51,7 +51,7 @@ a {
   background: #efefef;
   color: #878787;
   border: 1px solid #aaa;
-  -webkit-border-radius: 5px;
+  -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
   padding: 4px 5px 3px 5px;
 }
   #spinner_text {
@@ -125,10 +125,8 @@ a {
     overflow: auto;
     padding: 10px;
     background: #fff;
-    -webkit-border-radius: 6px;
-    -webkit-border-top-left-radius: 0; -webkit-border-top-right-radius: 0;
-    -moz-border-radius: 6px;
-    -moz-border-radius-topleft: 0; -moz-border-radius-topright: 0;
+    -webkit-border-radius: 6px; -moz-border-radius: 6px; -border-radius: 6px;
+    -webkit-border-top-left-radius: 0; -webkit-border-top-right-radius: 0; -moz-border-radius-topleft: 0; -moz-border-radius-topright: 0;
   }
   .cap {
     height: 21px;
@@ -215,20 +213,20 @@ a {
     background-repeat: no-repeat;
     background-position: 6px 6px;
     overflow: hidden;
-    -webkit-box-shadow: 0 1px 3px #555;
-    -webkit-border-radius: 3px;
+    -webkit-box-shadow: 0 1px 3px #555; -moz-box-shadow: 0 1px 3px #555;
+    -webkit-border-radius: 3px; -moz-border-radius: 3px;
     -webkit-transition: -webkit-box-shadow, background, width 0.2s linear;
   }
     #controls .control:hover {
       width: 97px;
-      -webkit-box-shadow: 0 1px 10px #444;
+      -webkit-box-shadow: 0 1px 10px #444; -moz-box-shadow: 0 1px 10px #444;
       background-color: #eee;
     }
     #controls .control_title {
       font: 9px Arial;
       width: 65px;
       margin: 4px 0 0 28px;
-      line-height: 11px;
+      line-height: 10px;
       text-transform: uppercase;
       color: #666;
       display: none;
@@ -261,9 +259,9 @@ a {
     font: 14px/17px Arial;
     padding: 7px 12px;
     background: #dadada;
-    -webkit-box-shadow: 0 1px 5px #666;
-    -webkit-border-radius: 3px;
-    -webkit-border-bottom-left-radius: 0; -webkit-border-bottom-right-radius: 0;
+    -webkit-box-shadow: 0 1px 5px #666; -moz-box-shadow: 0 1px 5px #666;
+    -webkit-border-radius: 3px; -moz-border-radius: 3px;
+    -webkit-border-bottom-left-radius: 0; -webkit-border-bottom-right-radius: 0; -moz-border-radius-bottomleft: 0; -moz-border-radius-bottomright: 0;
     background: -webkit-gradient(linear, left top, left bottom, from(#e0e0e0), to(#cacaca));
     -webkit-transition: -webkit-box-shadow 0.2s linear;
     color: #224455;
@@ -272,7 +270,7 @@ a {
       background: #efefef;
       color: #002256;
       background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#dfdfdf));
-      -webkit-box-shadow: 0 1px 10px #222;
+      -webkit-box-shadow: 0 1px 10px #222; -moz-box-shadow: 0 1px 10px #222;
     }
 
 .document_upload {
