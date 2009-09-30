@@ -6,7 +6,9 @@ class ImportController < ApplicationController
     pdf = params[:pdf]
     save_path = "docs/#{pdf.original_filename}"
     FileUtils.cp(pdf.path, "#{RAILS_ROOT}/public/#{save_path}")
-    DC::Import::CloudCrowdImporter.new.import(["#{DC_CONFIG['server_root']}/#{save_path}"])
+    urls = ["#{DC_CONFIG['server_root']}/#{save_path}"]
+    options = {'title' => params[:title], 'source' => params[:source]}
+    DC::Import::CloudCrowdImporter.new.import(urls, options)
     redirect_to DC_CONFIG['cloud_crowd_server']
   end
   
@@ -16,13 +18,13 @@ class ImportController < ApplicationController
     job['outputs'].each do |result|
       logger.info "Importing #{File.basename(result['pdf_url'])}"
       doc = Document.new({
-        :title =>                 result['title'],
-        :pdf_path =>              result['pdf_url'],
-        :full_text =>             fetch_contents(result['full_text_url']),
-        :rdf =>                   fetch_contents(result['rdf_url']),
-        :thumbnail_path =>        result['thumbnail_url'],
-        :small_thumbnail_path =>  result['small_thumbnail_url'],
-        :organization =>          Faker::Company.name
+        :title                => result['title'],
+        :organization         => result['source'],
+        :pdf_path             => result['pdf_url'],
+        :full_text            => fetch_contents(result['full_text_url']),
+        :rdf                  => fetch_contents(result['rdf_url']),
+        :thumbnail_path       => result['thumbnail_url'],
+        :small_thumbnail_path => result['small_thumbnail_url']
       })
       DC::Import::MetadataExtractor.new.extract_metadata(doc)
       doc.save

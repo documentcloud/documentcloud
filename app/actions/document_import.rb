@@ -14,7 +14,8 @@ class DocumentImport < CloudCrowd::Action
     thumb_path, small_thumb_path = *generate_thumbnails
     rdf_path = fetch_rdf_from_calais
     {
-      'title'               => title,
+      'title'               => options['title'] || title,
+      'source'              => options['source'],
       'pdf_url'             => input,
       'full_text_url'       => save(text_path),
       'rdf_url'             => save(rdf_path),
