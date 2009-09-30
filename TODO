@@ -21,3 +21,5 @@ TODO:
     'staging-workers', restarts cloud-crowd and document-cloud.
 
 DONE:
+
+  * Access control. Lockdown.

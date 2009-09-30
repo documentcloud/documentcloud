@@ -143,7 +143,9 @@ a {
 #signup_form {
   position: absolute;
   text-align: center;
-  top: 10px; left: 10px; right: 10px; bottom: 10px;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #fff;
+  background: -webkit-gradient(radial, center top, 0, 0 0, 1500, from(rgb(245,245,245)), to(rgb(155,155,155)));
 }
   #signup_form form {
     padding: 50px 0 0 0;
