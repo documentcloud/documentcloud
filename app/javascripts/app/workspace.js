@@ -13,7 +13,7 @@ dc.app.workspace = {
         e.preventDefault();
       }
     });
-    
+        
     this.sidebar = new dc.ui.Sidebar();
     $('#content').append(this.sidebar.render().el);
     
@@ -31,6 +31,9 @@ dc.app.workspace = {
     
     $('#upload_document_button').click(function(){ dc.app.workspace.showUploadForm(); });
     
+    dc.history.register(/^#search\//, function(hash) {
+      dc.app.workspace.search(decodeURIComponent(hash));
+    });
     this.performDefaultSearch();
   },
   
@@ -42,10 +45,12 @@ dc.app.workspace = {
   
   search : function(query) {
     var el = $('#search');
+    el.val(query);
+    dc.history.save('search/' + encodeURIComponent(query));
     el.outstandingSearch = true;
     dc.ui.Spinner.show('searching');
     $('.documents').html('');
-    this.sidebar.show('');
+    dc.app.workspace.sidebar.show('');
     $.get('/search.json', {query_string : query}, function(resp) {        
       if (window.console) console.log(resp);
 
@@ -81,11 +86,10 @@ dc.app.workspace = {
   },
   
   performDefaultSearch : function() {
-    var query = window.SEARCH_QUERY;
-    if (query) {
-      $('#search').val(query);
-      this.search(query);
-    }
+    var hash = window.location.hash;
+    if (!hash.match(/^#search\//)) return;
+    var query = decodeURIComponent(hash.replace(/^#search\//, ''));
+    if (query) this.search(query);
   }
   
 };

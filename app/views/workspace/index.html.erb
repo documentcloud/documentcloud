@@ -9,8 +9,5 @@
 <% end %>
 
 <script type="text/javascript">
-  <% if params[:q] %>
-    window.SEARCH_QUERY = '<%= escape_javascript(params[:q]) %>';
-  <% end %>
   dc.app.workspace.initialize();
 </script>
