@@ -9,7 +9,7 @@ development:
   
 staging:
   <<: *defaults
-  cloud_crowd_server:   http://localhost:9173
+  cloud_crowd_server:   http://ec2-75-101-222-118.compute-1.amazonaws.com:9173
   server_root:          http://ec2-75-101-222-118.compute-1.amazonaws.com
   
 test:

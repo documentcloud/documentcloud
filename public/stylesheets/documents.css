@@ -13,11 +13,18 @@
   .document_list.small_size .view_small {
     font-weight: bold;
   }
-.documents {
+  
+.document_list {
 }
-  .document_list.large_size .documents {
-    padding-right: 30px;
+  .documents {
+    position: absolute;
+    overflow-y: auto;
+    top: 21px; left: 0px; right: 0px; bottom: 0px;
+    padding: 5px 10px;
   }
+    .document_list.large_size .documents {
+      padding-right: 30px;
+    }
   
 .document_tile {
   position: relative;
