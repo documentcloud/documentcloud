@@ -302,8 +302,7 @@ a {
   
 .sidebar .help {
   position: absolute;
-  right: 1px;
-  top: 21px; bottom: 21px;
+  top: 21px; bottom: 21px; left: 1px; right: 1px;
   overflow-y: auto;
   padding: 10px;
   width: 280px;
