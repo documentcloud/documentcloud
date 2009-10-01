@@ -7,5 +7,7 @@
 :source_files:
   - public/javascripts/vendor/*.js
   - app/javascripts/application.js
+  - app/javascripts/lib/bindable.js
+  - app/javascripts/lib/set.js
   - app/javascripts/lib/*.js
   - app/javascripts/**/*.js

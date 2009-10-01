@@ -24,7 +24,7 @@ class ImportController < ApplicationController
         logger.info "Import: #{name} starting..."
         doc = Document.new({
           :title                => result['title'],
-          :organization         => result['source'],
+          :organization         => result['source'] || Faker::Company.name,
           :pdf_path             => result['pdf_url'],
           :full_text            => fetch_contents(result['full_text_url']),
           :rdf                  => fetch_contents(result['rdf_url']),

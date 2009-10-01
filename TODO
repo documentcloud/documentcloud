@@ -6,17 +6,18 @@ TODO:
   * Build out surrounding start page blips... About Us, How to Join, 
     What is This?
     
-  * Enhance the Journalist Workspace with journo-specific bits -- figure out 
-    the separation of their search from the common man's search.
-    
   * Create a News Organization "Signup" page.
   
   * Create a News Organization "Manage Journalists" page.
   
   * Replace raw PDF link with a DocumentViewer.
+  
+  * Provide a way of deleting documents, at least temporarily, so that we can
+    we-import mistyped ones, and remove garbage docs.
     
-  * Create a deploy rake task that updates both 'staging-central' and 
-    'staging-workers', restarts cloud-crowd and document-cloud.
+  * Implement client-side restful sets as a basic way to interact.
+  
+  * Replace Tokyo Dystopia with a better full text search solution.
     
     
 DONE:
@@ -26,3 +27,9 @@ DONE:
   * Access control. Lockdown.
   
   * Create an "Upload Document" UI within the journo workspace.
+  
+  * Enhance the Journalist Workspace with journo-specific bits -- figure out 
+    the separation of their search from the common man's search.
+    
+  * Create a deploy rake task that updates both 'staging-central' and 
+    'staging-workers', restarts cloud-crowd and document-cloud.

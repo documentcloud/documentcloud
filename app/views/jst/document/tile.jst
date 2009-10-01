@@ -3,6 +3,9 @@
 <% } else { %>
 	<div class="icon document generic"></div>
 <% } %>
-<a class="title" href="<%= display_url %>" target="_blank"><%= title %></a>
+<a class="title" href="<%= display_url %>" target="_blank">
+  <%= title %>
+  <div class="delete_document"></div>
+</a>
 <div class="organization">Source: <%= organization %></div>
 <div class="summary"><%= summary %>&hellip;</div>

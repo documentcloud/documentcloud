@@ -12,7 +12,7 @@ dc.util.Bindable = {
     // e -> event object
     // callback -> callback function
     // scope -> optional scoping object
-    // message -> optional message to be invoked every time the callback fires
+    // message -> optional message to be logged every time the callback fires
     bind : function(e, callback, scope, message) {
       if (!e)         throw new Error('dc.util.Bindable: Undefined event');
       if (!callback)  throw new Error('dc.util.Bindable: Undefined callback');
@@ -59,6 +59,7 @@ dc.util.Bindable = {
         while(i--) {
           var bound = list[i];
           if (bound) {
+            if (bound.message && window.console) console.log(bound.message);
             bound.callback.apply(this, arguments);
           } else {
             thin = true;

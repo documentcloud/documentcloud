@@ -14,7 +14,7 @@ module DC
         "#{RAILS_ROOT}/tmp/asset_store"
       end
       
-      def full_text_path(document)
+      def full_text_path_for(document)
         "#{local_storage_path}/#{document.id}.txt"
       end
       
@@ -55,7 +55,7 @@ module DC
       end
       
       def save_full_text(document)
-        path = full_text_path(document)
+        path = full_text_path_for(document)
         File.open(path, 'w+') {|f| f.write(document.full_text) }
       end
       
@@ -68,7 +68,16 @@ module DC
       end
       
       def find_full_text(document)
-        File.read(full_text_path(document))
+        File.read(full_text_path_for(document))
+      end
+      
+      def destroy_document(document)
+        paths = []
+        paths << pdf_path_for(document)
+        paths << full_text_path_for(document)
+        paths << thumbnail_path_for(document)
+        paths << thumbnail_path_for(document, 'small')
+        paths.each {|path| FileUtils.rm(path) if File.exists?(path) }
       end
       
       # Delete the assets store entirely.

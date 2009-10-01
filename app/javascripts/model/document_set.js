@@ -1,5 +1,7 @@
 // TBI.
-dc.model.DocumentSet = dc.Set.extend({
+dc.model.DocumentSet = dc.model.RESTfulSet.extend({
+  
+  resource : 'documents'
   
 });
 

@@ -24,6 +24,11 @@ module DC
         Document.from_entry_hash(doc_hash)
       end
       
+      # Delete a document's entry from the store.
+      def destroy(document)
+        open_for_writing {|store| store.delete(document.id) }
+      end
+      
       # Compute the path to the Tokyo Cabinet Table store on disk.
       def path
         "#{RAILS_ROOT}/db/#{RAILS_ENV}_entries.tct"

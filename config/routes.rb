@@ -34,6 +34,9 @@ ActionController::Routing::Routes.draw do |map|
   
   map.root :controller => "search"
   map.search_api 'search.:format', :controller => 'search', :action => 'search'
+  map.resources :documents, 
+                :collection => {:metadata => :get},
+                :member => {:full_text => :get, :pdf => :get, :thumbnail => :get, :display => :get}
   
   SprocketsApplication.routes(map)
 

@@ -29,6 +29,11 @@ module DC
         end
       end
       
+      # Remove all of a document's metadata occurrences from the store.
+      def destroy_document(document)
+        open_for_writing {|store| store.delete_keys_with_prefix(document.id + '--') }
+      end
+      
       # Searching for metadata that match a search_phrase. To perform a literal,
       # string equality search, pass +:literal => true+ 
       # Tries to be smart and detect searches that should be literal.

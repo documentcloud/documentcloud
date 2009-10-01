@@ -6,10 +6,6 @@ namespace :db do
     DC::Store::EntryStore.new.delete_database!
     DC::Store::FullTextStore.new.delete_database!
     DC::Store::MetadataStore.new.delete_database!
-  end
-  
-  desc "ensure that all data stores exist"
-  task :create_datastores => :environment do
     DC::Store::EntryStore.new.open_for_writing { }
     DC::Store::MetadataStore.new.open_for_writing { }
     DC::Store::FullTextStore.new.open_for_writing { }

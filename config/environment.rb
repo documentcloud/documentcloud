@@ -37,7 +37,7 @@ Rails::Initializer.run do |config|
   config.gem 'json', :version => '>= 1.1.7'
   config.gem 'faker', :version => '>= 0.3.1'
   config.gem 'documentcloud-calais', :version => '>= 0.0.7', :lib => 'calais'
-  config.gem 'rufus-tokyo', :version => '>= 1.0.0'
+  config.gem 'rufus-tokyo', :version => '>= 1.0.1'
   config.gem 'sprockets', :version => '>=1.0.2'
   config.gem 'rest-client', :version => '>= 1.0.3', :lib => 'rest_client'
   

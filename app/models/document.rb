@@ -69,6 +69,14 @@ class Document
     DC::Store::MetadataStore.new.save_document(self)
   end
   
+  # Remove all the pieces of the document that we've saved.
+  def destroy
+    DC::Store::AssetStore.new.destroy_document(self)
+    DC::Store::FullTextStore.new.destroy(self)
+    DC::Store::EntryStore.new.destroy(self)
+    DC::Store::MetadataStore.new.destroy_document(self)
+  end
+  
   def to_entry_hash
     ENTRY_ATTRIBUTES.inject({}) do |memo, name|
       memo[name.to_s] = send(name)

@@ -27,6 +27,11 @@ module DC
         doc_ids.map {|id| entry_store.find(id) }
       end
       
+      # Remove a document's full-text entry from the store.
+      def destroy(document)
+        open_for_writing {|store| store.delete(document.integer_id) }
+      end
+      
       def path
         "#{RAILS_ROOT}/db/#{RAILS_ENV}_full_text"
       end

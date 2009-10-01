@@ -16,7 +16,6 @@ dc.View = Base.extend({
     
     this.configure(options);
     
-    this._setCallbacks();
     // if(this.options.className) this.el.addClassName(this.options.className);
     // if(this.options.style) this.el.setStyle(this.options.style);
     // if(this.options.title) this.el.title = this.options.title;
@@ -52,17 +51,13 @@ dc.View = Base.extend({
     this.modes[group] = mode;
   },
   
-  _setCallbacks : function() {
+  setCallbacks : function() {
     var me = this;
     _.each(this.callbacks, function(triplet) {
       var selector = triplet[0], ev = triplet[1], methodName = triplet[2];
       var method = _.bind(me[methodName], me);
-      $(selector, me.el).live(ev, method);
+      $(selector, me.el).bind(ev, method);
     });
-  },
-  
-  cleanup : function() {
-    // THINK ABOUT BASING ALL CALLBACKS ON LIVE_QUERY ... COULD GREATLY SIMPLIFY.
   }
   
 }, {

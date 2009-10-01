@@ -40,6 +40,7 @@ dc.ui.MetadataList = dc.View.extend({
       return dc.templates.WORKSPACE_METALIST(pair);
     });
     $(this.el).html(html.join(''));
+    this.setCallbacks();
     return this;
   },
   

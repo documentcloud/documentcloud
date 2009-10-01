@@ -12,6 +12,13 @@ class ApplicationController < ActionController::Base
   
   protected
   
+  # Convenience method for responding with JSON. Sets the content type, 
+  # serializes, and allows empty responses.
+  def json(obj)
+    return head :no_content if obj.nil?
+    render :json => obj
+  end
+  
   # Return forbidden when the access is unauthorized.
   def forbidden
     render :file => "#{RAILS_ROOT}/public/403.html", :status => 403

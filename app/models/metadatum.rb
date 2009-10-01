@@ -56,7 +56,7 @@ class Metadatum
   
   # Totally hokey way to get a unique id. Think about what this should be.
   def id
-    "#{@calais_hash || @value}--#{@document_id}"
+    "#{@document_id}--#{@calais_hash || @value}"
   end
   
   # Return or find the document to which this metadatum belongs.

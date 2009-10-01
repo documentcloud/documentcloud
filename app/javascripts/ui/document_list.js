@@ -13,11 +13,17 @@ dc.ui.DocumentList = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     $(this.el).addClass('large_size');
+    Documents.bind(dc.Set.MODEL_REMOVED, this.removeDocument);
   },
   
   render : function() {
     $(this.el).html(dc.templates.DOCUMENT_LIST({}));
+    this.setCallbacks();
     return this;
+  },
+  
+  removeDocument : function(e, model) {
+    $('#document_tile_' + model.id).remove();
   },
   
   viewSmall : function() {
