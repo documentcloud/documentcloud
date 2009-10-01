@@ -9,8 +9,8 @@ development:
   
 staging:
   <<: *defaults
-  cloud_crowd_server:   http://ec2-75-101-222-118.compute-1.amazonaws.com:9173
-  server_root:          http://ec2-75-101-222-118.compute-1.amazonaws.com
+  cloud_crowd_server:   http://staging.dcloud.org:9173
+  server_root:          http://staging.dcloud.org
   
 test:
   <<: *defaults
