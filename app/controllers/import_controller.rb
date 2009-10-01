@@ -4,7 +4,7 @@ class ImportController < ApplicationController
   
   def upload_pdf
     pdf = params[:pdf]
-    save_path = "docs/#{pdf.original_filename}"
+    save_path = "docs/#{pdf.original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')}"
     FileUtils.cp(pdf.path, "#{RAILS_ROOT}/public/#{save_path}")
     urls = ["#{DC_CONFIG['server_root']}/#{save_path}"]
     options = {'title' => params[:title], 'source' => params[:source]}

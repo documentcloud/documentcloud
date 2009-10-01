@@ -12,7 +12,6 @@ task :deploy do
   todo << 'thin -e staging -p 80 -d start'
   system "ssh -t -i /Users/jashkenas/Desktop/id-documentcloud-staging root@75.101.222.118 '#{todo.join(' && ')}'"
   
-  
   # Then the CloudCrowd worker server.
   todo = []
   todo << 'cd /web/document-cloud'
