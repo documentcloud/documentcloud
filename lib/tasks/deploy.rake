@@ -18,6 +18,7 @@ task :deploy do
   todo << 'cd /web/document-cloud'
   todo << 'crowd -c config/cloud_crowd node stop'
   todo << 'git pull'
+  todo << 'sleep 1'
   todo << 'crowd -c config/cloud_crowd -d node start'
   system "ssh -t -i /Users/jashkenas/Desktop/id-documentcloud-staging root@174.129.169.143 '#{todo.join(' && ')}'"
 end

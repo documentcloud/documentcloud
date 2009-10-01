@@ -20,7 +20,8 @@ class ImportController < ApplicationController
     Thread.new do
       sleep 1
       job['outputs'].each do |result|
-        logger.info "Importing #{File.basename(result['pdf_url'])}"
+        name = File.basename(result['pdf_url'])
+        logger.info "Import: #{name} starting..."
         doc = Document.new({
           :title                => result['title'],
           :organization         => result['source'],
@@ -30,8 +31,11 @@ class ImportController < ApplicationController
           :thumbnail_path       => result['thumbnail_url'],
           :small_thumbnail_path => result['small_thumbnail_url']
         })
+        logger.info "Import: #{name} extracting metadata..."
         DC::Import::MetadataExtractor.new.extract_metadata(doc)
+        logger.info "Import: #{name} saving..."
         doc.save
+        logger.info "Import: #{name} saved"
       end
       RestClient.delete DC_CONFIG['cloud_crowd_server'] + "/jobs/#{job['id']}"
     end
