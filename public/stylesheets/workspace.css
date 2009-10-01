@@ -302,9 +302,10 @@ a {
   
 .sidebar .help {
   position: absolute;
-  top: 21px; bottom: 0;
+  right: 1px;
+  top: 21px; bottom: 21px;
+  overflow-y: auto;
   padding: 10px;
-  overflow: hidden;
   width: 280px;
 }
   .sidebar .help h4 {
