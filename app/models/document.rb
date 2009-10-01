@@ -16,6 +16,13 @@ class Document
     Document.new(entry_hash)
   end
   
+  # FIXME: Get an integer representation of the UUID (we need it to be an integer
+  # for Dystopia to store). Can't convert the entire UUID because it's too large.
+  # Needs a better solution.
+  def self.integer_id(document_id)
+    document_id.hex
+  end
+  
   # Reproduce would-be attributes of a made-up document entry.
   # Optionally specify the top N entities to return.
   # def self.generate_fake_entry(num_metadata=10)
@@ -46,11 +53,9 @@ class Document
     @id = new_id
   end
   
-  # FIXME: Get an integer representation of the UUID (we need it to be an integer
-  # for Dystopia to store). Can't convert the entire UUID because it's too large.
-  # Needs a better solution.
+  # Get the integer representation of the document id.
   def integer_id
-    id.hex
+    Document.integer_id(self.id)
   end
   
   # Two documents are equal if they have the same document id. If we have two

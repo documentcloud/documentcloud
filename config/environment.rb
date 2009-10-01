@@ -40,6 +40,7 @@ Rails::Initializer.run do |config|
   config.gem 'rufus-tokyo', :version => '>= 1.0.1'
   config.gem 'sprockets', :version => '>=1.0.2'
   config.gem 'rest-client', :version => '>= 1.0.3', :lib => 'rest_client'
+  config.gem 'riddle', :version => '>= 0.9.8.1231.0'
   
   if Rails.test?
     config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'

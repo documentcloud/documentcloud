@@ -6,6 +6,7 @@ db/*.tdb.idx.*
 db/*_full_text
 db/*.tct
 db/*.pid
+db/sphinx
 raw
 config/cloud_crowd_devel
 public/docs

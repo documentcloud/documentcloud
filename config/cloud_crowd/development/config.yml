@@ -1,0 +1,4 @@
+:central_server:      http://localhost:9173
+:max_workers:         5
+:storage:             filesystem
+:actions_path:        app/actions

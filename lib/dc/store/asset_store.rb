@@ -27,6 +27,10 @@ module DC
         "#{local_storage_path}/#{document.id}#{ext}.jpg"
       end
       
+      def full_text_paths
+        Dir["#{local_storage_path}/*.txt"]
+      end
+      
       def save_document(document)
         save_pdf(document)
         save_images(document)
@@ -37,7 +41,6 @@ module DC
         doc_path, real_path = document.pdf_path, pdf_path_for(document)
         return if !doc_path || doc_path == real_path
         `curl -s #{doc_path} > #{real_path}`
-        # FileUtils.cp doc_path, real_path
         document.pdf_path = real_path
       end
       

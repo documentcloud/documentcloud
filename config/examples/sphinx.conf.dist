@@ -1,0 +1,488 @@
+#
+# Sphinx configuration file sample
+#
+# WARNING! While this sample file mentions all available options,
+# it contains (very) short helper descriptions only. Please refer to
+# doc/sphinx.html for details.
+#
+
+#############################################################################
+## data source definition
+#############################################################################
+
+source src1
+{
+	# data source type. mandatory, no default value
+	# known types are 'mysql', 'pgsql', 'xmlpipe', 'xmlpipe2'
+	type					= mysql
+
+	#####################################################################
+	## SQL settings (for 'mysql' and 'pgsql' types)
+	#####################################################################
+
+	# some straightforward parameters for SQL source types
+	sql_host				= localhost
+	sql_user				= test
+	sql_pass				=
+	sql_db					= test
+	sql_port				= 3306	# optional, default is 3306
+
+	# UNIX socket name
+	# optional, default is empty (reuse client library defaults)
+	# usually '/var/lib/mysql/mysql.sock' on Linux
+	# usually '/tmp/mysql.sock' on FreeBSD
+	#
+	# sql_sock				= /tmp/mysql.sock
+
+
+	# MySQL specific client connection flags
+	# optional, default is 0
+	#
+	# mysql_connect_flags	= 32 # enable compression
+
+
+	# pre-query, executed before the main fetch query
+	# multi-value, optional, default is empty list of queries
+	#
+	# sql_query_pre			= SET NAMES utf8
+	# sql_query_pre			= SET SESSION query_cache_type=OFF
+
+
+	# main document fetch query
+	# mandatory, integer document ID field MUST be the first selected column
+	sql_query				= \
+		SELECT id, group_id, UNIX_TIMESTAMP(date_added) AS date_added, title, content \
+		FROM documents
+
+	# range query setup, query that must return min and max ID values
+	# optional, default is empty
+	#
+	# sql_query will need to reference $start and $end boundaries
+	# if using ranged query:
+	#
+	# sql_query				= \
+	#	SELECT doc.id, doc.id AS group, doc.title, doc.data \
+	#	FROM documents doc \
+	#	WHERE id>=$start AND id<=$end
+	#
+	# sql_query_range		= SELECT MIN(id),MAX(id) FROM documents
+
+
+	# range query step
+	# optional, default is 1024
+	#
+	# sql_range_step		= 1000
+
+
+	# unsigned integer attribute declaration
+	# multi-value (an arbitrary number of attributes is allowed), optional
+	# optional bit size can be specified, default is 32
+	#
+	# sql_attr_uint			= author_id
+	# sql_attr_uint			= forum_id:9 # 9 bits for forum_id
+	sql_attr_uint			= group_id
+
+	# boolean attribute declaration
+	# multi-value (an arbitrary number of attributes is allowed), optional
+	# equivalent to sql_attr_uint with 1-bit size
+	#
+	# sql_attr_bool			= is_deleted
+
+	
+	# UNIX timestamp attribute declaration
+	# multi-value (an arbitrary number of attributes is allowed), optional
+	# similar to integer, but can also be used in date functions
+	#
+	# sql_attr_timestamp	= posted_ts
+	# sql_attr_timestamp	= last_edited_ts
+	sql_attr_timestamp		= date_added
+
+	# string ordinal attribute declaration
+	# multi-value (an arbitrary number of attributes is allowed), optional
+	# sorts strings (bytewise), and stores their indexes in the sorted list
+	# sorting by this attr is equivalent to sorting by the original strings
+	#
+	# sql_attr_str2ordinal	= author_name
+
+
+	# floating point attribute declaration
+	# multi-value (an arbitrary number of attributes is allowed), optional
+	# values are stored in single precision, 32-bit IEEE 754 format
+	#
+	# sql_attr_float = lat_radians
+	# sql_attr_float = long_radians
+
+
+	# multi-valued attribute (MVA) attribute declaration
+	# multi-value (an arbitrary number of attributes is allowed), optional
+	# MVA values are variable length lists of unsigned 32-bit integers
+	#
+	# syntax is ATTR-TYPE ATTR-NAME 'from' SOURCE-TYPE [;QUERY] [;RANGE-QUERY]
+	# ATTR-TYPE is 'uint' or 'timestamp'
+	# SOURCE-TYPE is 'field', 'query', or 'ranged-query'
+	# QUERY is SQL query used to fetch all ( docid, attrvalue ) pairs
+	# RANGE-QUERY is SQL query used to fetch min and max ID values, similar to 'sql_query_range'
+	#
+	# sql_attr_multi	= uint tag from query; SELECT id, tag FROM tags
+	# sql_attr_multi	= uint tag from ranged-query; \
+	#	SELECT id, tag FROM tags WHERE id>=$start AND id<=$end; \
+	#	SELECT MIN(id), MAX(id) FROM tags
+
+
+	# post-query, executed on sql_query completion
+	# optional, default is empty
+	#
+	# sql_query_post		=
+
+	
+	# post-index-query, executed on successful indexing completion
+	# optional, default is empty
+	# $maxid expands to max document ID actually fetched from DB
+	#
+	# sql_query_post_index = REPLACE INTO counters ( id, val ) \
+	#	VALUES ( 'max_indexed_id', $maxid )
+
+
+	# ranged query throttling, in milliseconds
+	# optional, default is 0 which means no delay
+	# enforces given delay before each query step
+	sql_ranged_throttle	= 0
+
+	
+	# document info query, ONLY for CLI search (ie. testing and debugging)
+	# optional, default is empty
+	# must contain $id macro and must fetch the document by that id
+	sql_query_info		= SELECT * FROM documents WHERE id=$id
+
+	#####################################################################
+	## xmlpipe settings
+	#####################################################################
+
+	# type				= xmlpipe
+
+	# shell command to invoke xmlpipe stream producer
+	# mandatory
+	#
+	# xmlpipe_command	= cat /usr/local/var/test.xml
+
+	#####################################################################
+	## xmlpipe2 settings
+	#####################################################################
+
+	# type				= xmlpipe2
+	# xmlpipe_command	= cat /usr/local/var/test2.xml
+
+
+	# xmlpipe2 field declaration
+	# multi-value, optional, default is empty
+	#
+	# xmlpipe_field				= subject
+	# xmlpipe_field				= content
+
+
+	# xmlpipe2 attribute declaration
+	# multi-value, optional, default is empty
+	# all xmlpipe_attr_XXX options are fully similar to sql_attr_XXX
+	#
+	# xmlpipe_attr_timestamp	= published
+	# xmlpipe_attr_uint			= author_id
+}
+
+
+# inherited source example
+#
+# all the parameters are copied from the parent source,
+# and may then be overridden in this source definition
+source src1throttled : src1
+{
+	sql_ranged_throttle			= 100
+}
+
+#############################################################################
+## index definition
+#############################################################################
+
+# local index example
+#
+# this is an index which is stored locally in the filesystem
+#
+# all indexing-time options (such as morphology and charsets)
+# are configured per local index
+index test1
+{
+	# document source(s) to index
+	# multi-value, mandatory
+	# document IDs must be globally unique across all sources
+	source			= src1
+
+	# index files path and file name, without extension
+	# mandatory, path must be writable, extensions will be auto-appended
+	path			= /usr/local/var/data/test1
+
+	# document attribute values (docinfo) storage mode
+	# optional, default is 'extern'
+	# known values are 'none', 'extern' and 'inline'
+	docinfo			= extern
+
+	# memory locking for cached data (.spa and .spi), to prevent swapping
+	# optional, default is 0 (do not mlock)
+	# requires searchd to be run from root
+	mlock			= 0
+
+	# a list of morphology preprocessors to apply
+	# optional, default is empty
+	#
+	# builtin preprocessors are 'none', 'stem_en', 'stem_ru', 'stem_enru',
+	# 'soundex', and 'metaphone'; additional preprocessors available from
+	# libstemmer are 'libstemmer_XXX', where XXX is algorithm code
+	# (see libstemmer_c/libstemmer/modules.txt)
+	#
+	# morphology 	= stem_en, stem_ru, soundex
+	# morphology	= libstemmer_german
+	# morphology	= libstemmer_sv
+	morphology		= none
+
+	# stopword files list (space separated)
+	# optional, default is empty
+	# contents are plain text, charset_table and stemming are both applied
+	#
+	# stopwords			= /usr/local/var/data/stopwords.txt
+
+
+	# wordforms file, in "mapfrom > mapto" plain text format
+	# optional, default is empty
+	#
+	# wordforms			= /usr/local/var/data/wordforms.txt
+
+
+	# tokenizing exceptions file
+	# optional, default is empty
+	#
+	# plain text, case sensitive, space insensitive in map-from part
+	# one "Map Several Words => ToASingleOne" entry per line
+	#
+	# exceptions		= /usr/local/var/data/exceptions.txt
+
+
+	# minimum indexed word length
+	# default is 1 (index everything)
+	min_word_len		= 1
+
+	# charset encoding type
+	# optional, default is 'sbcs'
+	# known types are 'sbcs' (Single Byte CharSet) and 'utf-8'
+	charset_type		= sbcs
+
+	# charset definition and case folding rules "table"
+	# optional, default value depends on charset_type
+	#
+	# defaults are configured to include English and Russian characters only
+	# you need to change the table to include additional ones
+	# this behavior MAY change in future versions
+	#
+	# 'sbcs' default value is
+	# charset_table		= 0..9, A..Z->a..z, _, a..z, U+A8->U+B8, U+B8, U+C0..U+DF->U+E0..U+FF, U+E0..U+FF
+	#
+	# 'utf-8' default value is
+	# charset_table		= 0..9, A..Z->a..z, _, a..z, U+410..U+42F->U+430..U+44F, U+430..U+44F
+
+
+	# ignored characters list
+	# optional, default value is empty
+	#
+	# ignore_chars		= U+00AD
+
+
+	# minimum word prefix length to index
+	# optional, default is 0 (do not index prefixes)
+	#
+	# min_prefix_len	= 0
+
+
+	# minimum word infix length to index
+	# optional, default is 0 (do not index infixes)
+	#
+	# min_infix_len		= 0
+
+
+	# list of fields to limit prefix/infix indexing to
+	# optional, default value is empty (index all fields in prefix/infix mode)
+	#
+	# prefix_fields		= filename
+	# infix_fields		= url, domain
+
+
+	# enable star-syntax (wildcards) when searching prefix/infix indexes
+	# known values are 0 and 1
+	# optional, default is 0 (do not use wildcard syntax)
+	#
+	# enable_star		= 1
+
+
+	# n-gram length to index, for CJK indexing
+	# only supports 0 and 1 for now, other lengths to be implemented
+	# optional, default is 0 (disable n-grams)
+	#
+	# ngram_len				= 1
+
+
+	# n-gram characters list, for CJK indexing
+	# optional, default is empty
+	#
+	# ngram_chars			= U+3000..U+2FA1F
+
+
+	# phrase boundary characters list
+	# optional, default is empty
+	#
+	# phrase_boundary		= ., ?, !, U+2026 # horizontal ellipsis
+
+
+	# phrase boundary word position increment
+	# optional, default is 0
+	#
+	# phrase_boundary_step	= 100
+
+
+	# whether to strip HTML tags from incoming documents
+	# known values are 0 (do not strip) and 1 (do strip)
+	# optional, default is 0
+	html_strip				= 0
+
+	# what HTML attributes to index if stripping HTML
+	# optional, default is empty (do not index anything)
+	#
+	# html_index_attrs		= img=alt,title; a=title;
+
+
+	# what HTML elements contents to strip
+	# optional, default is empty (do not strip element contents)
+	#
+	# html_remove_elements	= style, script
+
+
+	# whether to preopen index data files on startup
+	# optional, default is 0 (do not preopen)
+	#
+	# preopen				= 1
+}
+
+
+# inherited index example
+#
+# all the parameters are copied from the parent index,
+# and may then be overridden in this index definition
+index test1stemmed : test1
+{
+	path			= /usr/local/var/data/test1stemmed
+	morphology		= stem_en
+}
+
+
+# distributed index example
+#
+# this is a virtual index which can NOT be directly indexed,
+# and only contains references to other local and/or remote indexes
+index dist1
+{
+	# 'distributed' index type MUST be specified
+	type				= distributed
+
+	# local index to be searched
+	# there can be many local indexes configured
+	local				= test1
+	local				= test1stemmed
+
+	# remote agent
+	# multiple remote agents may be specified
+	# syntax is 'hostname:port:index1,[index2[,...]]
+	agent				= localhost:3313:remote1
+	agent				= localhost:3314:remote2,remote3
+
+	# remote agent connection timeout, milliseconds
+	# optional, default is 1000 ms, ie. 1 sec
+	agent_connect_timeout	= 1000
+
+	# remote agent query timeout, milliseconds
+	# optional, default is 3000 ms, ie. 3 sec
+	agent_query_timeout		= 3000
+}
+
+#############################################################################
+## indexer settings
+#############################################################################
+
+indexer
+{
+	# memory limit, in bytes, kiloytes (16384K) or megabytes (256M)
+	# optional, default is 32M, max is 2047M, recommended is 256M to 1024M
+	mem_limit			= 32M
+
+	# maximum IO calls per second (for I/O throttling)
+	# optional, default is 0 (unlimited)
+	#
+	# max_iops			= 40
+
+
+	# maximum IO call size, bytes (for I/O throttling)
+	# optional, default is 0 (unlimited)
+	#
+	# max_iosize		= 1048576
+}
+
+#############################################################################
+## searchd settings
+#############################################################################
+
+searchd
+{
+	# IP address to bind on
+	# optional, default is 0.0.0.0 (ie. listen on all interfaces)
+	#
+	# address				= 127.0.0.1
+	# address				= 192.168.0.1
+
+
+	# searchd TCP port number
+	# mandatory, default is 3312
+	port				= 3312
+
+	# log file, searchd run info is logged here
+	# optional, default is 'searchd.log'
+	log					= /usr/local/var/log/searchd.log
+
+	# query log file, all search queries are logged here
+	# optional, default is empty (do not log queries)
+	query_log			= /usr/local/var/log/query.log
+
+	# client read timeout, seconds
+	# optional, default is 5
+	read_timeout		= 5
+
+	# maximum amount of children to fork (concurrent searches to run)
+	# optional, default is 0 (unlimited)
+	max_children		= 30
+
+	# PID file, searchd process ID file name
+	# mandatory
+	pid_file			= /usr/local/var/log/searchd.pid
+
+	# max amount of matches the daemon ever keeps in RAM, per-index
+	# WARNING, THERE'S ALSO PER-QUERY LIMIT, SEE SetLimits() API CALL
+	# default is 1000 (just like Google)
+	max_matches			= 1000
+
+	# seamless rotate, prevents rotate stalls if precaching huge datasets
+	# optional, default is 1
+	seamless_rotate		= 1
+
+	# whether to forcibly preopen all indexes on startup
+	# optional, default is 0 (do not preopen)
+	preopen_indexes		= 0
+
+	# whether to unlink .old index copies on succesful rotation.
+	# optional, default is 1 (do unlink)
+	unlink_old			= 1
+}
+
+# --eof--
