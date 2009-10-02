@@ -4,6 +4,7 @@
   color: #777;
   font-size: 10px;
   right: 7px; top: 5px;
+  cursor: pointer;
 }
   body.upload_shown .size_controls {
     display: none;
@@ -50,7 +51,7 @@
     position: absolute;
     left: 2px;
   }
-  .document_tile a.title {
+  .document_tile .title {
     display: block;
     color: #002256;
     font: bold 14px Georgia, serif;
@@ -58,30 +59,51 @@
     overflow: hidden;
     height: 17px;
   }
-    .document_list.medium_size a.title {
+    .document_list.medium_size .title {
       margin-top: 2px;
       font-size: 12px;
       height: 15px;
     }
-    .document_list.small_size a.title {
+    .document_list.small_size .title {
       margin: 0 10px 0 0;
       float: left;
       font-size: 12px;
     }
-    .delete_document {
+    .document_tile .view_document {
+      cursor: pointer;
+    }
+    .document_tools {
       display: none;
       opacity: 0;
-      width: 16px; height: 16px;
       position: absolute;
+      padding-left: 7px;
       -webkit-transition: opacity 0.2s linear;
-      background: url(/images/icons/bullet_delete.png);
     }
-      body.logged_in .delete_document {
+      .document_list.large_size .document_tools {
         display: inline;
       }
-      .document_tile:hover .delete_document {
+      .document_tile:hover .document_tools {
         opacity: 1;
       }
+      .document_tools > div {
+        float: left;
+        cursor: pointer;
+        width: 16px; height: 16px;
+        margin-right: 7px;
+      }
+        .document_tools .view_pdf {
+          background: url(/images/icons/page_white_acrobat.png);
+        }
+        .document_tools .view_text {
+          background: url(/images/icons/text_columns.png);
+        }
+        .document_tools .delete_document {
+          display: none;
+          background: url(/images/icons/bin.png);
+        }
+          body.logged_in .document_tools .delete_document {
+            display: inline;
+          }
   .document_tile .organization {
     text-transform: uppercase;
     font-size: 10px;

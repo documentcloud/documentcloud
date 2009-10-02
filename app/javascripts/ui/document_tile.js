@@ -4,12 +4,14 @@ dc.ui.DocumentTile = dc.View.extend({
   className : 'document_tile',
   
   callbacks : [
+    ['.view_document',    'click',  'viewPDF'],
+    ['.view_pdf',         'click',  'viewPDF'],
+    ['.view_text',        'click',  'viewFullText'],
     ['.delete_document',  'click',  'deleteDocument']
   ],
   
   constructor : function(doc) {
     this.base(doc.getAttributes());
-    this.options.display_url = '/documents/' + this.options.id + '.pdf';
     this.el.id = 'document_tile_' + this.options.id;
   },
   
@@ -17,6 +19,14 @@ dc.ui.DocumentTile = dc.View.extend({
     $(this.el).html(dc.templates.DOCUMENT_TILE(this.options));
     this.setCallbacks();
     return this;
+  },
+  
+  viewPDF : function() {
+    window.open(this.getDocument().pdfURL());
+  },
+  
+  viewFullText : function() {
+    window.open(this.getDocument().textURL());
   },
   
   getDocument : function() {

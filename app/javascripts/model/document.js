@@ -11,6 +11,14 @@ dc.model.Document = dc.Model.extend({
     });
   },
   
+  pdfURL : function() {
+    return '/documents/' + this.id + '.pdf';
+  },
+  
+  textURL : function() {
+    return '/documents/' + this.id + '.txt';
+  },
+  
   // Inspect.
   toString : function() {
     return 'Document ' + this.id + ' "' + this.get('title') + '"';
