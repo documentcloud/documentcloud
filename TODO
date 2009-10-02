@@ -22,9 +22,11 @@ TODO:
     
   * Look into Linux (or OpenCalais) automatic summary tools for the summary.
   
-  * Get Tesseract hooked up again as OCR.
-    
+  * Add a link to view the document plain text.
+      
 DONE:
+
+  * Get Tesseract hooked up again as OCR.
 
   * Provide a way of deleting documents, at least temporarily, so that we can
     we-import mistyped ones, and remove garbage docs.

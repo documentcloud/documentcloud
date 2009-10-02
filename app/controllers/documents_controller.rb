@@ -1,5 +1,15 @@
 class DocumentsController < ApplicationController
+  layout nil
   
+  def show
+    doc = current_document(true)
+    respond_to do |format|
+      format.pdf  { send_file(doc.pdf_path, :disposition => 'inline', :type => 'application/pdf') }
+      format.text { render :text => doc.full_text }
+      format.html
+    end
+  end
+
   def destroy
     current_document.destroy
     json nil
@@ -13,26 +23,10 @@ class DocumentsController < ApplicationController
     end
     json({'metadata' => meta})
   end
-  
-  def full_text
-    render :text => current_document.full_text
-  end
-  
-  def pdf
-    doc = current_document(true)
-    send_file(doc.pdf_path, :disposition => 'inline', :type => 'application/pdf')
-  end
-  
+    
   def thumbnail
     doc = current_document(true)
     send_file(doc.thumbnail_path, :disposition => 'inline', :type => 'image/jpeg')
-  end
-  
-  def display
-    doc = current_document(true)
-    doc.pdf_path ?
-      redirect_to("/documents/pdf/#{doc.id}.pdf") :
-      redirect_to("/documents/full_text/#{doc.id}.txt")
   end
   
   def test
