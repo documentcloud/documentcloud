@@ -58,7 +58,7 @@ dc.ui.MetadataList = dc.View.extend({
   // TODO: Move this ''
   addThenSearch : function(e) {
     this.addToSearch(e);
-    dc.app.workspace.search($('#searc').val());
+    dc.app.workspace.search($('#search').val());
   },
   
   // Show only the top metadata for the type.
