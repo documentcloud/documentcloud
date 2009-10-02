@@ -19,12 +19,15 @@ TODO:
     
   * Look into all the weightings and filterings that Sphinx has to offer,
     take advantage.
-    
-  * Look into Linux (or OpenCalais) automatic summary tools for the summary.
-  
+      
   * Add a link to view the document plain text.
+  
+  * Replace document IDs in URLs with title-based slugs.
       
 DONE:
+
+  * Look into Linux (or OpenCalais) automatic summary tools for the summary
+    (nothing seems good enough).
 
   * Get Tesseract hooked up again as OCR.
 
