@@ -19,12 +19,12 @@ TODO:
     
   * Look into all the weightings and filterings that Sphinx has to offer,
     take advantage.
-      
-  * Add a link to view the document plain text.
-  
+        
   * Replace document IDs in URLs with title-based slugs.
       
 DONE:
+
+  * Add a link to view the document plain text.
 
   * Look into Linux (or OpenCalais) automatic summary tools for the summary
     (nothing seems good enough).

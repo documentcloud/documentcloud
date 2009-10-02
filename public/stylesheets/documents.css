@@ -71,16 +71,17 @@
     }
     .document_tile .view_document {
       cursor: pointer;
+      float: left;
     }
     .document_tools {
       display: none;
       opacity: 0;
-      position: absolute;
-      padding-left: 7px;
+      padding-left: 10px;
       -webkit-transition: opacity 0.2s linear;
     }
       .document_list.large_size .document_tools {
-        display: inline;
+        float: left;
+        display: block;
       }
       .document_tile:hover .document_tools {
         opacity: 1;
