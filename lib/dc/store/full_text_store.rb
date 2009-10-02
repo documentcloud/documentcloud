@@ -12,11 +12,17 @@ module DC
       
       # Find the top most relevant results.
       def find(search_text, opts={})
-        entry_store   = EntryStore.new
-        client        = Riddle::Client.new
-        client.limit  = opts[:limit] if opts[:limit]
-        results       = client.query(search_text)
+        entry_store     = EntryStore.new
+        client          = Riddle::Client.new
+        client.limit    = opts[:limit] if opts[:limit]
+        existing        = Riddle::Client::Filter.new('exists', [1])
+        client.filters  = [existing]
+        results         = client.query(search_text)
         results[:matches].map {|m| entry_store.find(m[:doc].to_s(16)) }
+      end
+      
+      def destroy(document)
+        Riddle::Client.new.update('documents', ['exists'], document.integer_id => 0)
       end
       
       # Tell indexer to re-index all the documents. Only do this after a chunk

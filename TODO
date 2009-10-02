@@ -17,6 +17,8 @@ TODO:
     go delta. To get really fancy, the delta interval can be a constant 
     multiplier of the amount of time it takes to run a full index.
     
+  * Look into all the weightings and filterings that Sphinx has to offer,
+    take advantage.
     
 DONE:
 

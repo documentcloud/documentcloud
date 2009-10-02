@@ -78,6 +78,7 @@ class Document
     DC::Store::AssetStore.new.destroy_document(self)
     DC::Store::EntryStore.new.destroy(self)
     DC::Store::MetadataStore.new.destroy_document(self)
+    DC::Store::FullTextStore.new.destroy(self)
   end
   
   def to_entry_hash

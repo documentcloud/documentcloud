@@ -12,9 +12,13 @@ module DC
         schema = Nokogiri::XML::Node.new('sphinx:schema', xml)
         field  = Nokogiri::XML::Node.new('sphinx:field', xml)
         field['name'] = 'full_text'
+        exists = Nokogiri::XML::Node.new('sphinx:attr', xml)
+        exists['name'] = 'exists'
+        exists['type'] = 'bool'
         
         docset << schema
         schema << field
+        schema << exists
         xml << docset
         
         text_paths.each do |path|
@@ -23,6 +27,8 @@ module DC
           doc['id'] = Document.integer_id(id).to_s
           full_text = Nokogiri::XML::Node.new('full_text', xml)
           full_text.content = File.read(path).gsub(/[^[:print:]]/, '')
+          existence = Nokogiri::XML::Node.new('exists', xml)
+          existence.content = '1'
           
           # Alternate approaches that don't work...
           # to_xs is way, way too slow for production -- especially if 
@@ -35,6 +41,7 @@ module DC
           # full_text.content = converter.iconv(File.read(path) << ' ')[0..-2]
           
           doc << full_text
+          doc << existence
           docset << doc
         end
         
