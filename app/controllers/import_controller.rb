@@ -18,7 +18,6 @@ class ImportController < ApplicationController
     
     # Finishing the job later so that we don't deadlock in development.
     Thread.new do
-      sleep 1
       job['outputs'].each do |result|
         name = File.basename(result['pdf_url'])
         logger.info "Import: #{name} starting..."
@@ -37,6 +36,7 @@ class ImportController < ApplicationController
         doc.save
         logger.info "Import: #{name} saved"
       end
+      DC::Store::FullTextStore.new.index
       RestClient.delete DC_CONFIG['cloud_crowd_server'] + "/jobs/#{job['id']}"
     end
     

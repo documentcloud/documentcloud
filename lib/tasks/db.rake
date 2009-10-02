@@ -4,7 +4,7 @@ namespace :db do
   task :delete_datastores => :environment do
     DC::Store::AssetStore.new.delete_database!
     DC::Store::EntryStore.new.delete_database!
-    # DC::Store::FullTextStore.new.delete_database!
+    DC::Store::FullTextStore.new.delete_database!
     DC::Store::MetadataStore.new.delete_database!
     DC::Store::EntryStore.new.open_for_writing { }
     DC::Store::MetadataStore.new.open_for_writing { }

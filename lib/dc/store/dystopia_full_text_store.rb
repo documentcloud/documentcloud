@@ -1,9 +1,8 @@
 module DC
   module Store
     
-    # Stores full text for a document, indexed by document_id, in a full text
-    # search index (appropriate choices would be Tokyo Dystopia, Solr, 
-    # Xapian, and perhaps Sphinx).
+    # This Tokyo Dystopia backed version of the FullTextStore has been 
+    # superceded by the current Sphinx implementation.
     class FullTextStore
       
       # Trying to save twice causes our dear Rufus-Tokyo to throw a 9999 

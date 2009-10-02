@@ -1,40 +1,31 @@
-require 'fileutils'
-
 namespace :sphinx do
   
   task :document_xml => :environment do
     puts DC::Import::SphinxXMLPipe.new.xml
   end
   
-  task :start do
-    unless sphinx_running?
-      FileUtils.mkdir_p 'db/sphinx'
-      Dir['db/sphinx/*.spl'].each {|file| File.delete(file) }
-      sh 'searchd --pidfile --config config/sphinx.conf'
-    end
+  task :start => :environment do
+    full_text_store.start_searchd
   end
   
-  task :stop do
-    sh 'searchd --stop --config config/sphinx.conf' if sphinx_running?
+  task :stop => :environment do
+    full_text_store.stop_searchd
   end
   
   task :restart => [:stop, :start]
   
-  task :index do
-    FileUtils.mkdir_p 'db/sphinx'
-    rotate = sphinx_running? ? '--rotate' : ''
-    sh "indexer --config config/sphinx.conf --all #{rotate}"
+  task :index => :environment do
+    full_text_store.index
   end
   
   task :rebuild => [:stop, :index, :start]
   
+  task :status => :environment do
+    puts full_text_store.searchd_status
+  end
+  
 end
 
-def sphinx_pid
-  pid_path = 'tmp/pids/searchd.pid'
-  @sphinx_pid ||= File.exists?(pid_path) ? File.read(pid_path)[/\d+/].to_i : nil
-end
-
-def sphinx_running?
-  !!sphinx_pid && !!Process.kill(0, sphinx_pid) rescue false
+def full_text_store
+  @full_text_store ||= DC::Store::FullTextStore.new
 end

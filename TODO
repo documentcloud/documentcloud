@@ -12,16 +12,21 @@ TODO:
   
   * Replace raw PDF link with a DocumentViewer.
   
+  * Fix up Sphinx search to use delta indexes (and sharded indexes, perhaps), 
+    so that all new documents imported within, say, a five-minute period 
+    go delta. To get really fancy, the delta interval can be a constant 
+    multiplier of the amount of time it takes to run a full index.
+    
+    
+DONE:
+
   * Provide a way of deleting documents, at least temporarily, so that we can
     we-import mistyped ones, and remove garbage docs.
     
   * Implement client-side restful sets as a basic way to interact.
   
   * Replace Tokyo Dystopia with a better full text search solution.
-    
-    
-DONE:
-
+  
   * Swap params#q search query for a hashtag-based one.
 
   * Access control. Lockdown.

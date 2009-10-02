@@ -69,7 +69,6 @@ class Document
   # may be redundant.
   def save
     DC::Store::AssetStore.new.save_document(self)
-    DC::Store::FullTextStore.new.save(self)
     DC::Store::EntryStore.new.save(self)
     DC::Store::MetadataStore.new.save_document(self)
   end
@@ -77,7 +76,6 @@ class Document
   # Remove all the pieces of the document that we've saved.
   def destroy
     DC::Store::AssetStore.new.destroy_document(self)
-    DC::Store::FullTextStore.new.destroy(self)
     DC::Store::EntryStore.new.destroy(self)
     DC::Store::MetadataStore.new.destroy_document(self)
   end
