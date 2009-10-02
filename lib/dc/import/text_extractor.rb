@@ -29,10 +29,11 @@ module DC
         raise Errno::ENOENT.new(pdf_path) if !File.exists?(pdf_path)
         FileUtils.mkdir_p(TMP_DIR)        if !File.exists?(TMP_DIR)
         
-        @pdf_path     = pdf_path
-        @pdf_name     = File.basename(pdf_path, '.pdf')
-        @target_path  = "#{TMP_DIR}/#{@pdf_name}.txt"
-        @tiff_path    = "#{TMP_DIR}/#{@pdf_name}.tif"
+        @pdf_path   = pdf_path
+        @pdf_name   = File.basename(pdf_path, '.pdf')
+        @base_path  = "#{TMP_DIR}/#{@pdf_name}"
+        @text_path  = "#{base_path}.txt"
+        @tiff_path  = "#{base_path}.tif"
       end
       
       def get_text
@@ -51,19 +52,20 @@ module DC
       end
       
       def text_from_pdf
-        `pdftotext -enc UTF-8 #{@pdf_path} #{@target_path}`
-        full_text = File.read(@target_path)
-        File.unlink(@target_path)
+        `pdftotext -enc UTF-8 #{@pdf_path} #{@text_path}`
+        full_text = File.read(@text_path)
+        File.unlink(@text_path)
         full_text
       end
       
       # OCR'ing text, uses GraphicsMagick to convert the PDF into a multi-page
       # TIFF, and then Tesseract to OCR. Really quite expensive.
+      # If Ocropus ever stabilizes, replace raw Tesseract with that instead.
       def text_from_ocr
-        `gm convert -density 200x200 -colorspace GRAY #{@pdf_path} #{@tiff_path}`
-        `tesseract #{@tiff_path} #{@target_path} -l eng`
-        full_text = File.read(@target_path)
-        File.unlink(@tiff_path, @target_path)
+        system "gm convert -density 200x200 -colorspace GRAY #{@pdf_path} #{@tiff_path}"
+        system "tesseract #{@tiff_path} #{@base_path} -l eng"
+        full_text = File.read(@text_path)
+        File.unlink(@tiff_path, @text_path)
         full_text
       end
       

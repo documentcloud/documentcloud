@@ -20,6 +20,10 @@ TODO:
   * Look into all the weightings and filterings that Sphinx has to offer,
     take advantage.
     
+  * Look into Linux (or OpenCalais) automatic summary tools for the summary.
+  
+  * Get Tesseract hooked up again as OCR.
+    
 DONE:
 
   * Provide a way of deleting documents, at least temporarily, so that we can

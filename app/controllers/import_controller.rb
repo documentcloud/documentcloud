@@ -30,9 +30,7 @@ class ImportController < ApplicationController
           :thumbnail_path       => result['thumbnail_url'],
           :small_thumbnail_path => result['small_thumbnail_url']
         })
-        logger.info "Import: #{name} extracting metadata..."
         DC::Import::MetadataExtractor.new.extract_metadata(doc)
-        logger.info "Import: #{name} saving..."
         doc.save
         logger.info "Import: #{name} saved"
       end
