@@ -4,8 +4,7 @@ task :deploy do
   todo = []
   todo << 'cd /web/document-cloud'
   todo << 'rake staging crowd:server:stop app:stop'
-  todo << 'rm -r public/assets'
-  todo << 'rm -r public/sprockets.js'
+  todo << 'rm -r public/assets public/sprockets.js'
   todo << 'git pull'
   todo << 'rake staging crowd:server:start app:start'
   system "ssh -t -i /Users/jashkenas/Desktop/id-documentcloud-staging root@75.101.222.118 '#{todo.join(' && ')}'"

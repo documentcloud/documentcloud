@@ -32,8 +32,8 @@ module DC
         @pdf_path   = pdf_path
         @pdf_name   = File.basename(pdf_path, '.pdf')
         @base_path  = "#{TMP_DIR}/#{@pdf_name}"
-        @text_path  = "#{base_path}.txt"
-        @tiff_path  = "#{base_path}.tif"
+        @text_path  = "#{@base_path}.txt"
+        @tiff_path  = "#{@base_path}.tif"
       end
       
       def get_text
