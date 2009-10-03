@@ -8,7 +8,7 @@ module DC
   
     # The MetadataStore knows how to save and search for metadata, keyed by
     # document_id and relevance. Appropriate backing stores are Tokyo Cabinet
-    # (table backend), Redis, MySQL, and potentially Solr.
+    # (table backend), Redis, MySQL, SimpleDB, and potentially Solr.
     #
     # For a first pass, the metadata store will keep entries in a Tokyo Cabinet
     # table, locally. There are no indices on any of the columns, yet.

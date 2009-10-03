@@ -32,7 +32,7 @@
   overflow: hidden;
 }
   .document_list.large_size .document_tile {
-    height: 75px;
+    height: 77px;
     padding-left: 70px;
     margin-bottom: 15px;
   }
@@ -50,6 +50,7 @@
   .document_tile .icon {
     position: absolute;
     left: 2px;
+    border: 1px solid #eee;
   }
   .document_tile .title {
     display: block;
