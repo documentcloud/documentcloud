@@ -19,6 +19,9 @@ TODO:
     
   * Look into all the weightings and filterings that Sphinx has to offer,
     take advantage.
+    
+  * Roll our own asset packaging that handles CSS as well as Javascript, along
+    the lines of what we're doing with JST right now. Axe Sprockets.
         
   * Replace document IDs in URLs with title-based slugs.
   

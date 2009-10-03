@@ -5,11 +5,13 @@ window.$break = '__break__';
 window._ = {
     
   // The centerpiece, an each implementation.
-  // Handles objects implementing _each, arrays, and raw objects.
+  // Handles objects implementing forEach, _each, arrays, and raw objects.
   each : function(obj, iterator, context) {
     var index = 0;
     try {
-      if (obj.length) {
+      if (obj.forEach) {
+        obj.forEach(iterator, context);
+      } else if (obj.length) {
         for (var i=0; i<obj.length; i++) {
           iterator.call(context, obj[i], i);
         }
@@ -32,8 +34,10 @@ window._ = {
     return obj;
   },
   
-  // Determine whether all of the elements match a truth test.
+  // Determine whether all of the elements match a truth test. Delegate to
+  // Javascript 1.6's every(), if it is present.
   all : function(obj, iterator, context) {
+    if (obj.every) return obj.every(iterator, context);
     var result = true;
     _.each(obj, function(value, index) {
       result = result && !!iterator.call(context, value, index);
@@ -42,8 +46,10 @@ window._ = {
     return result;
   },
   
-  // Determine if at least one element in the object matches a truth test.
+  // Determine if at least one element in the object matches a truth test. Use
+  // Javascript 1.6's some(), if it exists.
   any : function(obj, iterator, context) {
+    if (obj.some) return obj.some(iterator, context);
     var result = false;
     _.each(obj, function(value, index) {
       if (result = !!iterator.call(context, value, index)) throw $break;
@@ -51,8 +57,10 @@ window._ = {
     return result;
   },
   
-  // Return the results of applying the iterator to each element.
+  // Return the results of applying the iterator to each element. Use Javascript
+  // 1.6's version of map, if possible.
   map : function(obj, iterator, context) {
+    if (obj.map) return obj.map(iterator, context);
     var results = [];
     _.each(obj, function(value, index) {
       results.push(iterator.call(context, value, index));
@@ -72,8 +80,10 @@ window._ = {
     return result;
   },
   
-  // Return all the elements that pass a truth test.
+  // Return all the elements that pass a truth test. Use Javascript 1.6's
+  // filter(), if it exists.
   select : function(obj, iterator, context) {
+    if (obj.filter) return obj.filter(iterator, context);
     var results = [];
     _.each(obj, function(value, index) {
       if (iterator.call(context, value, index)) results.push(value);
