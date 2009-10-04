@@ -2,7 +2,7 @@
 # This includes JST (Javascript Templates).
 class AssetsController < ApplicationController
   
-  caches_page :jst
+  caches_page :jst, :javascripts, :stylesheets
   
   # For the moment, we have one, large javascript template cache.
   # Later, imagine breaking it up into workspace, search, and embedded portions.
@@ -17,6 +17,14 @@ class AssetsController < ApplicationController
     end
     cache = "window.dc.templates = { #{templates.join(",\n")} };"
     render :js => cache
+  end
+  
+  def javascripts
+    
+  end
+  
+  def stylesheets
+    
   end
   
 end
