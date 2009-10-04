@@ -14,11 +14,6 @@ module DC
         @result  = ''
       end
       
-      # Is the character a letter, digit, underscore, dollar, or non-ASCII?
-      def alpha_numeric?(c)
-        c && (c.match(IDENTIFIER) || c[0] > 126)
-      end
-      
       # Get the next character. Watch out for lookahead. If the character is a
       # control character, translate it into a space or newline.
       def get
@@ -39,6 +34,11 @@ module DC
         return c unless c == '/' && (peek == '/' || peek == '*') 
         return consume_single_line_comment if peek == '/'
         consume_multi_line_comment
+      end
+      
+      # Is the character a letter, digit, underscore, dollar, or non-ASCII?
+      def alpha_numeric?(c)
+        c && (c.match(IDENTIFIER) || c[0] > 126)
       end
       
       # Read ahead to the end of the '//' comment.
