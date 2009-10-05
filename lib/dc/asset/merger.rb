@@ -6,23 +6,26 @@ module DC
     # download.
     class Merger
       
+      CSS_GLOBS = ASSET_CONFIG[:stylesheets]
+      JS_GLOBS  = ASSET_CONFIG[:javascripts]
+                
+      CSS_PATHS = CSS_GLOBS.map {|glob| Dir[glob] }.flatten!.uniq!
+      JS_PATHS  = JS_GLOBS.map {|glob| Dir[glob] }.flatten!.uniq!
+                
+      CSS_URLS  = CSS_PATHS.map {|p| p.sub(/\Apublic/, DC_CONFIG['server_root']) }
+      JS_URLS   = JS_PATHS.map {|p| p.sub(/\Apublic/, DC_CONFIG['server_root']) }
+      
       def compile_css(globs)
-        compile(globs, CSSPacker)
+        compile(CSS_PATHS, CSSPacker)
       end
       
       def compile_js(globs)
-        compile(globs, JavascriptPacker)
+        compile(JS_PATHS, JavascriptPacker)
       end
       
-      def compile(globs, packer_class)
-        paths   = determine_file_list(globs)
+      def compile(paths, packer_class)
         packer  = packer_class.new
         paths.map {|path| packer.compress(File.read(path)) }.join("\n")
-      end
-      
-      # Expand all globs in order, then remove duplicate entries.
-      def determine_file_list(globs)
-        globs.map {|glob| Dir[glob] }.flatten!.uniq!
       end
       
     end

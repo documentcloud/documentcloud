@@ -1,10 +1,10 @@
 :javascripts:
   - public/javascripts/vendor/*.js
-  - app/javascripts/application.js
-  - app/javascripts/lib/bindable.js
-  - app/javascripts/lib/set.js
-  - app/javascripts/lib/*.js
-  - app/javascripts/**/*.js
+  - public/javascripts/application.js
+  - public/javascripts/lib/bindable.js
+  - public/javascripts/lib/set.js
+  - public/javascripts/lib/*.js
+  - public/javascripts/**/*.js
 
 :stylesheets:
   - public/stylesheets/reset.css

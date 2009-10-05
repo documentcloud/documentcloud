@@ -38,8 +38,6 @@ ActionController::Routing::Routes.draw do |map|
                 :collection => {:metadata => :get},
                 :member => {:thumbnail => :get}
   
-  SprocketsApplication.routes(map)
-
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.

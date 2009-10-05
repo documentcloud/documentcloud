@@ -9,4 +9,6 @@ namespace :app do
     sh 'thin stop'
   end
   
+  task :restart => [:stop, :start]
+  
 end
