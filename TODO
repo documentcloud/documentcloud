@@ -29,6 +29,13 @@ TODO:
     watch out for them after the switch.
     
   * Figure out our own taxonomy and map all the OpenCalais categories into it.
+  
+  * Start on a preliminary document-relation visualization.
+  
+  * Create a UI for making and managing collections (folders?) of documents.
+  
+  * Make a distinction between private and public documents. Uh oh, getting that
+    into the metadata store is going to be a little tricky.
       
 DONE:
 
