@@ -15,11 +15,11 @@ module DC
       CSS_URLS  = CSS_PATHS.map {|p| p.sub(/\Apublic/, DC_CONFIG['server_root']) }
       JS_URLS   = JS_PATHS.map {|p| p.sub(/\Apublic/, DC_CONFIG['server_root']) }
       
-      def compile_css(globs)
+      def compile_css
         compile(CSS_PATHS, CSSPacker)
       end
       
-      def compile_js(globs)
+      def compile_js
         compile(JS_PATHS, JavascriptPacker)
       end
       
