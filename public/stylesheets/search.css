@@ -1,24 +1,11 @@
-body {
-  font-family: Arial, sans-serif;
-  color: #373737;
-  font-size: 12px;
-}
-a {
-  color: inherit;
-  text-decoration: none;
-}
-div {
-  background: transparent;
-}
-
-#container {
+body.empty #container {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background: #e9e9e9;
   background: -webkit-gradient(radial, center top, 0, 0 0, 1500, from(rgb(245,245,245)), to(rgb(155,155,155)));
   overflow-y: auto;
 }
-  #content {
+  body.empty #content {
     position: absolute;
     top: 40%; left: 50%;
     margin: -66px 0 0 -195px;
@@ -26,15 +13,15 @@ div {
     text-align: center;
   }
 
-#logo {
+body.empty #logo {
   width: 390px;
   margin: 0 auto;
 }
 
-#search_container {
+body.empty #search_container {
   margin-top: 5px;
 }
-  #search {
+  body.empty #search {
     font-size: 16px;
     color: #333;
     border: 1px solid #999;

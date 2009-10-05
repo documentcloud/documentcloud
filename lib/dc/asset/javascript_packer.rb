@@ -101,6 +101,16 @@ module DC
         consume_regex if @next == '/' && @current.match(PUNCTUATION)
       end
       
+      # If the next char is alpha-numeric, then we output, otherwise just copy.
+      def next_char_action
+        action alpha_numeric?(@next) ? :output : :copy
+      end
+      
+      # If the current char is alpha-numeric, then we output, otherwise skip.
+      def current_char_action
+        action alpha_numeric?(@current) ? :output : :next
+      end
+      
       # Compress the javascript in the source string, removing comments, and
       # uncessesary whitespace, replacing tabs with spaces, and carriage returns 
       # with linefeeds.
@@ -109,20 +119,20 @@ module DC
         action :next
         while @current do
           case @current
-          when ' ' then action alpha_numeric?(@next) ? :output : :copy
+          when ' ' then next_char_action
           when "\n"
             case @next
             when '{', '[', '(', '+', '-' then action :output
             when ' ' then action :next
-            else action alpha_numeric?(@next) ? :output : :copy
+            else next_char_action
             end
           else
             case @next
-            when ' ' then action alpha_numeric?(@current) ? :output : :next
+            when ' ' then current_char_action
             when "\n"
               case @current
               when '}', ']', ')', '+', '-', "\\", "'", '"' then action :output
-              else action alpha_numeric?(@current) ? :output : :next
+              else current_char_action
               end
             else action :output
             end

@@ -20,11 +20,13 @@ class AssetsController < ApplicationController
   end
   
   def javascripts
-    
+    script = DC::Asset::Merger.new.compile_js(ASSET_CONFIG[:javascripts])
+    render :js => script
   end
   
   def stylesheets
-    
+    styles = DC::Asset::Merger.new.compile_css(ASSET_CONFIG[:stylesheets])
+    render :text => styles, :content_type => 'text/css'
   end
   
 end

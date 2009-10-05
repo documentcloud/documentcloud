@@ -14,9 +14,9 @@ class ApplicationController < ActionController::Base
   
   # Convenience method for responding with JSON. Sets the content type, 
   # serializes, and allows empty responses.
-  def json(obj)
+  def json(obj, status=200)
     return head :no_content if obj.nil?
-    render :json => obj
+    render :json => obj, :status => status
   end
   
   # Return forbidden when the access is unauthorized.

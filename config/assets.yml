@@ -1,0 +1,12 @@
+:javascripts:
+  - public/javascripts/vendor/*.js
+  - app/javascripts/application.js
+  - app/javascripts/lib/bindable.js
+  - app/javascripts/lib/set.js
+  - app/javascripts/lib/*.js
+  - app/javascripts/**/*.js
+
+:stylesheets:
+  - public/stylesheets/reset.css
+  - public/stylesheets/aristo.css
+  - public/stylesheets/*.css
