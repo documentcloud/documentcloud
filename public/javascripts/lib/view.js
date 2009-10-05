@@ -9,11 +9,9 @@ dc.View = Base.extend({
   _tagName : 'div',
   
   constructor : function(options) {
+    options = options || {};
     this.modes = {};
-    
-    this.el = $.el(this._tagName, {'class' : this.className});  
-    if (this._tagName.toUpperCase() == 'A') this.el.href = '#';
-    
+    this.el = options.el || $.el(this._tagName, {'class' : this.className});  
     this.configure(options);
     
     // if(this.options.className) this.el.addClassName(this.options.className);
