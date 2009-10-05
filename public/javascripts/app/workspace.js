@@ -10,7 +10,7 @@ _.extend(dc.app.workspace, {
   
   // Initializes the workspace, binding it to <body>.
   initialize : function() {
-    this.el = $('body').get();
+    this.el = $('body')[0];
     
     this.sidebar = new dc.ui.Sidebar();
     $('#content').append(this.sidebar.render().el);

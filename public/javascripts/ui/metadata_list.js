@@ -48,8 +48,8 @@ dc.ui.MetadataList = dc.View.extend({
   addToSearch : function(e) {
     var metaId = $(e.target).attr('metadatum_id'); 
     var meta = Metadata.get(metaId);
-    var search = meta.toSearchQuery();
-    var searchField = $('#search').get(0);
+    var search = meta.toSearchQuery();    
+    var searchField = dc.app.searchBox.el;
     if (searchField.value.indexOf(search) > 0) return;
     var endsWithSpace = !!searchField.value.match(/\s$/);
     searchField.value += ((endsWithSpace ? '' : ' ') + search);
@@ -58,7 +58,7 @@ dc.ui.MetadataList = dc.View.extend({
   // TODO: Move this ''
   addThenSearch : function(e) {
     this.addToSearch(e);
-    dc.app.workspace.search($('#search').val());
+    dc.app.searchBox.search($('#search').val());
   },
   
   // Show only the top metadata for the type.

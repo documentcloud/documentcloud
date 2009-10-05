@@ -7,7 +7,7 @@ dc.ui.SearchBox = dc.View.extend({
   
   // Creating a new SearchBox registers #search page fragments.
   constructor : function() {
-    this.base({el : $('#search').get()});
+    this.base({el : $('#search')[0]});
     this.outstandingSearch = false;
     this.setCallbacks();
     _.bindAll('loadSearchResults', 'loadMetadataResults', 'searchByHash', this);
