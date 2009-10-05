@@ -49,12 +49,16 @@ dc.View = Base.extend({
     this.modes[group] = mode;
   },
   
+  // Set callbacks, where this.callbacks is an array of [CSS-selector, 
+  // event-name, callback-name] triplets. Callbacks will be bound to the view,
+  // with 'this' set properly. Passing a selector of 'el' binds to the view's
+  // element.
   setCallbacks : function() {
     var me = this;
     _.each(this.callbacks, function(triplet) {
       var selector = triplet[0], ev = triplet[1], methodName = triplet[2];
       var method = _.bind(me[methodName], me);
-      $(selector, me.el).bind(ev, method);
+      (selector == 'el' ? $(me.el) : $(selector, me.el)).bind(ev, method);
     });
   }
   

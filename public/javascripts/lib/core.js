@@ -319,6 +319,14 @@ window._ = {
     };
   },
   
+  bindAll : function() {
+    var args = _.toArray(arguments);
+    var context = args.pop();
+    _.each(args, function(methodName) {
+      context[methodName] = _.bind(context[methodName], context);
+    });
+  },
+  
   uniqueId : function(prefix) {
     var id = this._idCounter = (this._idCounter || 0) + 1;
     return prefix ? prefix + id : id;
