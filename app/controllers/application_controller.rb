@@ -19,6 +19,21 @@ class ApplicationController < ActionController::Base
     render :json => obj, :status => status
   end
   
+  
+  def login_required
+    session['account_id'] && session['organization_id'] or forbidden
+  end
+  
+  def current_account
+    return nil unless session['account_id']
+    @current_account ||= Account.find(session['account_id'])
+  end
+  
+  def current_organization
+    return nil unless session['organization_id']
+    @current_organization ||= Organization.find(session['organization_id'])
+  end
+  
   # Return forbidden when the access is unauthorized.
   def forbidden
     render :file => "#{RAILS_ROOT}/public/403.html", :status => 403

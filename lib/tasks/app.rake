@@ -6,7 +6,7 @@ namespace :app do
   end
   
   task :stop do
-    sh 'thin stop'
+    sh 'thin stop -f'
   end
   
   task :restart => [:stop, :start]

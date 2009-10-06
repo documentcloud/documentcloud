@@ -5,7 +5,8 @@ _.extend(dc.app.workspace, {
   
   callbacks : [
     ['#wordmark',               'click',      'goHome'],
-    ['#upload_document_button', 'click',      'showUploadForm']
+    ['#upload_document_button', 'click',      'showUploadForm'],
+    ['#log_out_button',         'click',      'logout']
   ],
   
   // Initializes the workspace, binding it to <body>.
@@ -27,6 +28,11 @@ _.extend(dc.app.workspace, {
   // Return to the DocumentCloud homepage.
   goHome : function() {
     window.location = '/';
+  },
+  
+  // Log out, returning to the homepage.
+  logout : function() {
+    window.location = '/logout';
   },
   
   // Show the document upload form.

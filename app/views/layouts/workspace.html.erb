@@ -8,7 +8,7 @@
   <%= javascript_asset_tag %>
   <%= jst_asset_tag %>
 </head>
-<body class="workspace <%= @account ? 'logged_in' : '' %>">
+<body class="workspace <%= @account ? 'logged_in' : '' %> <%= @bodyclass %>">
   
   <div id="container">
     <div id="topbar" class="header">

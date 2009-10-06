@@ -6,7 +6,13 @@ class Account < ActiveRecord::Base
   validates_format_of     :email, :with => DC::Validators::EMAIL
   validates_uniqueness_of :email
   
-  def self.log_in(login, password)
+  # Attempt to log in with an email address and password.
+  def self.log_in(email, password, session)
+    account = Account.find_by_email(email)
+    return false unless account && account.password == password
+    session['account_id'] = account.id
+    session['organization_id'] = account.organization_id
+    account
   end
   
   # It's slo-o-o-w to compare passwords. Which is a mixed bag, but mostly good.

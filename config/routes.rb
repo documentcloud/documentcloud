@@ -32,10 +32,17 @@ ActionController::Routing::Routes.draw do |map|
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   
-  map.root :controller => "search"
-  map.search_api 'search.:format', :controller => 'search', :action => 'search'
-  map.signup '/signup', :controller => 'workspace', :action => 'signup' 
-  map.login '/login', :controller => 'workspace', :action => 'login' 
+  map.with_options :controller => 'search' do |search|
+    search.root
+    search.api '/search.:format', :action => 'search'
+  end  
+  
+  map.with_options :controller => 'workspace' do |main|
+    main.signup  '/signup', :action => 'signup' 
+    main.login   '/login',  :action => 'login' 
+    main.logout  '/logout', :action => 'logout'
+  end
+  
   map.resources :documents, 
                 :collection => {:metadata => :get},
                 :member => {:thumbnail => :get}
