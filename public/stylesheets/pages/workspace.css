@@ -151,9 +151,10 @@ a {
 #signup_form {
   position: absolute;
   text-align: center;
+  overflow: auto;
   top: 0; left: 0; right: 0; bottom: 0;
   background: #fff;
-  background: -webkit-gradient(radial, center top, 0, 0 0, 1500, from(rgb(245,245,245)), to(rgb(155,155,155)));
+  background: -webkit-gradient(radial, center top, 0, 0 0, 1500, from(rgb(250,250,250)), to(rgb(155,155,155)));
 }
   #signup_form form {
     padding: 50px 0 0 0;
@@ -161,10 +162,11 @@ a {
     #signup_form h1 {
       color: #566eaa;
       font: bold 24px Arial;
+      text-shadow: 0px 1px 1px #fff;
     }
     #signup_form .line {
       width: 545px;
-      margin: 25px auto;
+      margin: 30px auto;
     }
       #signup_form label {
         display: block;
@@ -173,6 +175,7 @@ a {
         font: bold 16px Arial;
         line-height: 14px;
         color: #444;
+        text-shadow: 0px 1px 1px #fff;
       }
         #signup_form .example {
           font: bold italic 11px Arial;
@@ -186,8 +189,16 @@ a {
         line-height: 20px;
         border: 1px solid #999;
         -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
+        background: -webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#fff));
         display: block;
       }
+        #signup_form input.left_half {
+          width: 160px;
+        }
+        #signup_form input.right_half {
+          width: 160px;
+          margin-left: 385px;
+        }
       #signup_form .license {
         color: #666;
         width: 355px;
@@ -197,6 +208,7 @@ a {
       }
       #signup_form button {
         position: relative;
+        margin: 0;
         left: -42px;
       }
       

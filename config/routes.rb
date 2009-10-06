@@ -34,6 +34,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.root :controller => "search"
   map.search_api 'search.:format', :controller => 'search', :action => 'search'
+  map.signup '/signup', :controller => 'workspace', :action => 'signup' 
+  map.login '/login', :controller => 'workspace', :action => 'login' 
   map.resources :documents, 
                 :collection => {:metadata => :get},
                 :member => {:thumbnail => :get}

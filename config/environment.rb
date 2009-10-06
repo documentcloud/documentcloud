@@ -34,12 +34,13 @@ Rails::Initializer.run do |config|
   require 'tmpdir'
   
   # Gems:
-  config.gem 'json', :version => '>= 1.1.7'
-  config.gem 'faker', :version => '>= 0.3.1'
-  config.gem 'documentcloud-calais', :version => '>= 0.0.7', :lib => 'calais'
-  config.gem 'rufus-tokyo', :version => '>= 1.0.1'
-  config.gem 'rest-client', :version => '>= 1.0.3', :lib => 'rest_client'
-  config.gem 'riddle', :version => '>= 0.9.8.1231.0'
+  config.gem 'json',                  :version => '>= 1.1.7'
+  config.gem 'faker',                 :version => '>= 0.3.1'
+  config.gem 'documentcloud-calais',  :version => '>= 0.0.7',       :lib => 'calais'
+  config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'
+  config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
+  config.gem 'rufus-tokyo',           :version => '>= 1.0.1'
+  config.gem 'riddle',                :version => '>= 0.9.8.1231.0'
   
   if Rails.test?
     config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'

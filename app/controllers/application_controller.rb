@@ -37,8 +37,8 @@ class ApplicationController < ActionController::Base
     false
   end
   
-  # Simple auth for now...
-  def authenticate
+  # Simple HTTP Basic Auth to make sure folks don't snoop where the shouldn't.
+  def bouncer
     authenticate_or_request_with_http_basic("DocumentCloud Staging") do |login, password|
       return true if login == 'main' && password == 'REDACTED'
       forbidden

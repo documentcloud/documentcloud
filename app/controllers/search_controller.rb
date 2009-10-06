@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   layout 'empty'
   
-  before_filter :authenticate unless Rails.development?
+  before_filter :bouncer unless Rails.development?
   
   # DocumentCloud home page...
   def index; end
