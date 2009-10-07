@@ -10,9 +10,9 @@ class WorkspaceController < ApplicationController
     return render unless request.post?
     org = Organization.create(params[:organization])
     return fail(org.errors.full_messages.first) if org.errors.any?
-    account = Account.create(params[:account].merge({:organization => org}))
-    return fail(account.errors.full_messages.first) if account.errors.any?
-    account.authenticate_session(session)
+    acc = Account.create(params[:account].merge({:organization => org}))
+    return org.destroy && fail(acc.errors.full_messages.first) if acc.errors.any?
+    acc.authenticate_session(session)
     redirect_to '/workspace'
   end
   
