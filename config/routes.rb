@@ -41,6 +41,7 @@ ActionController::Routing::Routes.draw do |map|
     main.signup  '/signup', :action => 'signup' 
     main.login   '/login',  :action => 'login' 
     main.logout  '/logout', :action => 'logout'
+    main.todo    '/todo',   :action => 'todo'
   end
   
   map.resources :documents, 

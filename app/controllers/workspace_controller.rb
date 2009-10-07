@@ -23,4 +23,10 @@ class WorkspaceController < ApplicationController
     redirect_to '/'
   end
   
+  def todo
+    @todo_text = File.read("#{RAILS_ROOT}/TODO")
+    @todo_text.gsub!(/^([A-Z]+:)/, '</ul><h2>\1</h2><ul>').gsub!(/\*(.+?)\n\s*\n/m, '<li>\1</li>')
+    render :action => 'todo', :layout => false
+  end
+  
 end

@@ -1,7 +1,4 @@
 TODO:
-
-  * Figure out how controllers are going to work -- refactor javascripts/app/
-    workspace.js accordingly.
     
   * Build out surrounding start page blips... About Us, How to Join, 
     What is This?
@@ -21,6 +18,10 @@ TODO:
     
   * Look into all the weightings and filterings that Sphinx has to offer,
     take advantage.
+    
+  * Think about building a real full text search query parser that can be 
+    translated into Sphinx extended2 syntax (or alternatively, just documenting
+    Sphinx's syntax itself).
         
   * Replace document IDs in URLs with title-based slugs.
   
@@ -41,6 +42,11 @@ TODO:
       
 DONE:
 
+  * Add a TODO page to the wiki.
+
+  * Figure out how controllers are going to work -- refactor javascripts/app/
+    workspace.js accordingly.
+
   * Roll our own asset packaging that handles CSS as well as Javascript, along
     the lines of what we're doing with JST right now. Axe Sprockets.
 
@@ -53,19 +59,20 @@ DONE:
 
   * Provide a way of deleting documents, at least temporarily, so that we can
     we-import mistyped ones, and remove garbage docs.
-    
+
   * Implement client-side restful sets as a basic way to interact.
-  
+
   * Replace Tokyo Dystopia with a better full text search solution.
-  
+
   * Swap params#q search query for a hashtag-based one.
 
   * Access control. Lockdown.
-  
+
   * Create an "Upload Document" UI within the journo workspace.
-  
+
   * Enhance the Journalist Workspace with journo-specific bits -- figure out 
     the separation of their search from the common man's search.
-    
+
   * Create a deploy rake task that updates both 'staging-central' and 
     'staging-workers', restarts cloud-crowd and document-cloud.
+
