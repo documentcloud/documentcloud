@@ -12,12 +12,13 @@ module DC
       
       # Find the top most relevant results.
       def find(search_text, opts={})
-        entry_store     = EntryStore.new
-        client          = Riddle::Client.new
-        client.limit    = opts[:limit] if opts[:limit]
-        existing        = Riddle::Client::Filter.new('exists', [1])
-        client.filters  = [existing]
-        results         = client.query(search_text)
+        entry_store       = EntryStore.new
+        client            = Riddle::Client.new
+        client.limit      = opts[:limit] if opts[:limit]
+        existing          = Riddle::Client::Filter.new('exists', [1])
+        client.filters    = [existing]
+        client.match_mode = :extended2
+        results           = client.query(search_text)
         results[:matches].map {|m| entry_store.find(m[:doc].to_s(16)) }
       end
       
