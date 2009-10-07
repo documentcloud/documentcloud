@@ -155,7 +155,7 @@ a {
   text-align: center;
   overflow: auto;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: #fff;
+  background: #f2f2f2;
   background: -webkit-gradient(radial, center top, 0, 0 0, 1500, from(rgb(250,250,250)), to(rgb(155,155,155)));
 }
   #full_screen_form form {
