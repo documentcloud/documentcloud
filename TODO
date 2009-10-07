@@ -2,9 +2,7 @@ TODO:
     
   * Build out surrounding start page blips... About Us, How to Join, 
     What is This?
-    
-  * Create a News Organization "Signup" page.
-  
+      
   * Create a News Organization "Manage Journalists" page.
   
   * Replace raw PDF link with a DocumentViewer.
@@ -41,6 +39,8 @@ TODO:
     into the metadata store is going to be a little tricky.
       
 DONE:
+
+  * Create a News Organization "Signup" page.
 
   * Add a TODO page to the wiki.
 
