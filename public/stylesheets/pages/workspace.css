@@ -306,17 +306,11 @@ a {
       font: bold italic 11px Arial;
       color: #666;
     }
-  .document_upload input {
+  .document_upload .text_input, .document_upload input[type=file] {
     margin-bottom: 25px;
+    width: 350px;
     display: block;
   }
-    .document_upload input[type=text] {
-      width: 350px;
-      font-size: 16px;
-      line-height: 20px;
-      border: 1px solid #999;
-      -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
-    }
   
 .sidebar .help {
   position: absolute;
