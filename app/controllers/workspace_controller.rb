@@ -9,19 +9,17 @@ class WorkspaceController < ApplicationController
   def signup
     return render unless request.post?
     org = Organization.create(params[:organization])
+    return fail(org.errors.full_messages.first) if org.errors.any?
     account = Account.create(params[:account].merge({:organization => org}))
-    if org.errors.any? || account.errors.any?
-      @failed_signup = org.errors.full_messages + account.errors.full_messages
-    else
-      account.authenticate_session(session)
-      redirect_to '/workspace'
-    end
+    return fail(account.errors.full_messages.first) if account.errors.any?
+    account.authenticate_session(session)
+    redirect_to '/workspace'
   end
   
   def login
     return render unless request.post?
     account = Account.log_in(params[:email], params[:password], session)
-    account ? redirect_to('/workspace') : @failed_login = true
+    account ? redirect_to('/workspace') : fail(true)
   end
   
   def logout
@@ -33,6 +31,13 @@ class WorkspaceController < ApplicationController
     @todo_text = File.read("#{RAILS_ROOT}/TODO")
     @todo_text.gsub!(/^([A-Z]+:)/, '</ul><h2>\1</h2><ul>').gsub!(/\*(.+?)\n\s*\n/m, '<li>\1</li>')
     render :action => 'todo', :layout => false
+  end
+  
+  
+  private
+  
+  def fail(message)
+    @failure = message
   end
   
 end

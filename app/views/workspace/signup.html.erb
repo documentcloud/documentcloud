@@ -6,12 +6,9 @@
 <div id="full_screen_form">
   <form action="/signup" method="POST">
     <h1>Sign up as a DocumentCloud Partner</h1>
-    <% if @failed_signup %>
+    <% if @failure %>
       <div class="form_error">
-        <span>
-          <%# One error at a time... %>
-          <%= @failed_signup.first %>
-        </span>
+        <span><%= @failure %></span>
       </div>
     <% end %>
     <div class="line">
