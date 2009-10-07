@@ -37,6 +37,10 @@ TODO:
   
   * Make a distinction between private and public documents. Uh oh, getting that
     into the metadata store is going to be a little tricky.
+    
+  * We need an upload progress widget.
+  
+  * Add document titles and sources to the searchable metadata.
       
 DONE:
 
