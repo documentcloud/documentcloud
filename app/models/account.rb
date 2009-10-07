@@ -10,9 +10,14 @@ class Account < ActiveRecord::Base
   def self.log_in(email, password, session)
     account = Account.find_by_email(email)
     return false unless account && account.password == password
-    session['account_id'] = account.id
-    session['organization_id'] = account.organization_id
-    account
+    account.authenticate(session)
+  end
+  
+  # Save this account as the current account in the session. Logs a visitor in.
+  def authenticate(session)
+    session['account_id'] = id
+    session['organization_id'] = organization_id
+    self
   end
   
   # It's slo-o-o-w to compare passwords. Which is a mixed bag, but mostly good.

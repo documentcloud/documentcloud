@@ -6,33 +6,41 @@
 <div id="full_screen_form">
   <form action="/signup" method="POST">
     <h1>Sign up as a DocumentCloud Partner</h1>
+    <% if @failed_signup %>
+      <div class="form_error">
+        <span>
+          <%# One error at a time... %>
+          <%= @failed_signup.first %>
+        </span>
+      </div>
+    <% end %>
     <div class="line">
-      <input type="text" name="organization[name]" id="organization_name" />
+      <span class="text_input"><span><input type="text" name="organization[name]" id="organization_name" /></span></span>
       <label for="organization_name">
         Organization Name:<br /><span class="example">ex: The Daily Tribune</span>
       </label>
     </div>
     <div class="line">
-      <input type="text" name="organization[slug]" id="organization_slug" />
+      <span class="text_input"><span><input type="text" name="organization[slug]" id="organization_slug" /></span></span>
       <label for="organization_slug">
         Short Name for URLs:<br /><span class="example">ex: daily-tribune</span>
       </label>
     </div>
     <div class="line">
-      <input type="text" name="account[email]" id="account_email" />
+      <span class="text_input"><span><input type="text" name="account[email]" id="account_email" /></span></span>
       <label for="account_email">
         Your Email Address:<br /><span class="example">You'll use this email to log in</span>
       </label>
     </div>
     <div class="line">
-      <input type="text" name="account[first_name]" class="left_half" />
-      <input type="text" name="account[last_name]" class="right_half" />
+      <span class="text_input left_half"><span><input type="text" name="account[first_name]" /></span></span>
+      <span class="text_input right_half"><span><input type="text" name="account[last_name]" /></span></span>
       <label>
         Full Name:<br /><span class="example">First Name, Last Name</span>
       </label>
     </div>
     <div class="line">
-      <input type="password" name="account[password]" id="account_password" />
+      <span class="text_input"><span><input type="password" name="account[password]" id="account_password" /></span></span>
       <label for="account_password">
         Password:<br /><span class="example">At least 6 letters long, please</span>
       </label>

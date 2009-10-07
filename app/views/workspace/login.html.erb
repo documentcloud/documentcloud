@@ -6,18 +6,20 @@
 <div id="full_screen_form">
   <form action="/login" method="POST">
     <% if @failed_login %>
-      <div class="form_error">
-        Incorrect email address or password.
+      <div class="form_error login_error">
+        <span>
+          Incorrect email address or password.
+        </span>
       </div>
     <% end %>
     <div class="line">
-      <input type="text" name="email" id="account_email" />
+      <span class="text_input"><span><input type="text" name="email" id="account_email" /></span></span>
       <label for="account_email">
         Email Address:<br /><span class="example"><a href="/signup">Need an Account?</a></span>
       </label>
     </div>
     <div class="line">
-      <input type="password" name="password" id="account_password" />
+      <span class="text_input"><span><input type="password" name="password" id="account_password" /></span></span>
       <label for="account_password">
         Password:<br /><span class="example"><a href="#">Forgot your Password?</a></span>
       </label>

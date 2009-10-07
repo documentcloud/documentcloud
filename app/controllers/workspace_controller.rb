@@ -9,7 +9,13 @@ class WorkspaceController < ApplicationController
   def signup
     return render unless request.post?
     org = Organization.create(params[:organization])
-    Account.create(params[:account].merge({:organization => org}))
+    account = Account.create(params[:account].merge({:organization => org}))
+    if org.errors.any? || account.errors.any?
+      @failed_signup = org.errors.full_messages + account.errors.full_messages
+    else
+      account.authenticate_session(session)
+      redirect_to '/workspace'
+    end
   end
   
   def login

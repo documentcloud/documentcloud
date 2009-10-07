@@ -1,0 +1,40 @@
+/*------------------------------ Text Inputs ---------------------------------*/
+span.text_input {
+  display: block;
+  position: relative;
+  height: 30px;
+  background: transparent url(/images/ui/text_input_large_left.png) no-repeat center left;
+}
+  span.text_input > span {
+    display: block;
+    background: transparent url(/images/ui/text_input_large_right.png) no-repeat center right;
+    margin-left: 6px;
+    height: 30px;
+  }
+    span.text_input input {
+      display: block;
+      position: absolute;
+      left: 4px; right: 4px; top: 2px;
+      border: none;
+      margin: 0; padding: 0;      
+      background: transparent;
+      font-size: 16px;
+      line-height: 20px;
+    }
+    
+/*------------------------------ Error Messages ------------------------------*/
+.form_error {
+  position: relative;
+  color: #844;
+  text-transform: uppercase;
+  font: 10px Arial;
+}
+  .form_error > span {
+    padding: 5px 10px;
+    border: 1px solid #aa7766;
+    background: #555;
+    background: -webkit-gradient(linear, left top, left bottom, from(#faa), to(#fcc));
+    margin: 0 auto;
+    display: inline;
+    -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
+  }
