@@ -8,7 +8,7 @@ module DC
       attr_reader :type, :value
       
       def initialize(type, value)
-        @type, @value = type, value.strip
+        @type, @value = type.downcase, value.strip
       end
       
       def to_s

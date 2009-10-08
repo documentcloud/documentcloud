@@ -9,13 +9,6 @@ module DC
     # http://www.google.com/help/cheatsheet.html
     class Parser
       
-      module Matchers
-        BARE_FIELD    = /\w+:\s?[^'"]{2}\S*/
-        QUOTED_FIELD  = /\w+:\s?['"].+?['"]/
-        ALL_FIELDS    = /\w+:\s?((['"].+?['"])|([^'"]{2}\S*))/
-        BOOLEAN_OR    = /\s+OR\s+/
-      end
-      
       def parse(query_string)
         bare_fields   = query_string.scan(Matchers::BARE_FIELD)
         quoted_fields = query_string.scan(Matchers::QUOTED_FIELD)
@@ -29,7 +22,7 @@ module DC
       
       def process_search_phrase(phrase)
         return nil if phrase.empty?
-        phrase.gsub(Matchers::BOOLEAN_OR, ' | ')
+        phrase.gsub(Matchers::BOOLEAN_OR, SPHINX_OR)
       end
       
       def process_fields(bare, quoted)

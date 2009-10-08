@@ -16,10 +16,6 @@ TODO:
     
   * Look into all the weightings and filterings that Sphinx has to offer,
     take advantage.
-    
-  * Think about building a real full text search query parser that can be 
-    translated into Sphinx extended2 syntax (or alternatively, just documenting
-    Sphinx's syntax itself).
         
   * Replace document IDs in URLs with title-based slugs.
   
@@ -41,8 +37,15 @@ TODO:
   * We need an upload progress widget.
   
   * Add document titles and sources to the searchable metadata.
+  
+  * Rename EntityStore => 'organization' to 'source', add 'organization_id' and
+    'account_id'.
       
 DONE:
+
+  * Think about building a real full text search query parser that can be 
+    translated into Sphinx extended2 syntax (or alternatively, just documenting
+    Sphinx's syntax itself).
 
   * Create a News Organization "Signup" page.
 

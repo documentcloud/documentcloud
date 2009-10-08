@@ -24,6 +24,16 @@ module DC
         Document.from_entry_hash(doc_hash)
       end
       
+      def find_by(attribute, value, opts = {})
+        results = open_for_reading do |store|
+          store.query do |q|
+            q.add_condition attribute, :phrase, value
+            q.limit opts[:limit] if opts[:limit]
+          end
+        end
+        results.map {|r| Document.from_entry_hash(r) }
+      end
+      
       # Delete a document's entry from the store.
       def destroy(document)
         open_for_writing {|store| store.delete(document.id) }

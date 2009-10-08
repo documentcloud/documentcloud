@@ -12,7 +12,7 @@ task :deploy do
   # Then the CloudCrowd worker server.
   todo = []
   todo << 'cd /web/document-cloud'
-  todo << 'sleep 1' # Wait for the CloudCrowd server to wake up.
+  todo << 'sleep 2' # Wait for the CloudCrowd server to wake up.
   todo << 'rake staging crowd:node:stop'
   todo << 'git pull'
   todo << 'rake staging crowd:node:start'
