@@ -36,6 +36,13 @@ class SearchParserTest < ActiveSupport::TestCase
       assert query.fields.first.value == 'food'
     end
     
+    should "transform boolean ORs into Sphinx-compatible ones" do
+      query_string = "person:peter mike   OR   tom"
+      query = @parser.parse(query_string)
+      assert query.compound? && query.fielded? && query.textual?
+      assert query.phrase == "mike | tom"
+    end
+    
   end
   
 end

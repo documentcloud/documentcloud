@@ -18,7 +18,9 @@ staging:
   database: dcloud_main_staging
 
 test:
-  adapter: sqlite3
-  database: db/test_main.sqlite3
-  pool: 5
-  timeout: 5000
+  adapter:  mysql
+  encoding: utf8
+  username: root
+  password:
+  socket:   /tmp/mysql.sock
+  database: dcloud_main_test

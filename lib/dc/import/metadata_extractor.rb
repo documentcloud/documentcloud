@@ -87,9 +87,9 @@ module DC
       # the Calais RDF response.
       def extract_full_text(document, calais)
         return if document.full_text
-        xml = XML::Parser.string(document.rdf).parse
-        wrapped = XML::Parser.string(xml.root.find('//c:document').first.content).parse
-        full_text = wrapped.root.find('//body').first.content.strip
+        xml = Nokogiri::XML.parse(document.rdf)
+        wrapped = Nokogiri::XML.parse(xml.root.search('//c:document').first.content)
+        full_text = wrapped.root.search('//body').first.content.strip
         full_text.gsub!(/(\[\[|\]\]|\{\{|\}\})/, '')
         document.full_text = full_text
       end
