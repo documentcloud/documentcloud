@@ -27,7 +27,7 @@ class Account < ActiveRecord::Base
   
   # BCrypt'd passwords helpfuly have the salt built-in.
   def password=(new_password)
-    @password = BCrypt::Password.create(new_password)
+    @password = BCrypt::Password.create(new_password, :cost => 8)
     self.hashed_password = @password
   end
   
