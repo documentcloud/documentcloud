@@ -30,17 +30,18 @@ TODO:
   * Start on a preliminary document-relation visualization.
   
   * Create a UI for making and managing collections (folders?) of documents.
-  
+    
+  * We need an upload progress widget.
+
+
+DONE:
+
   * Make a distinction between private and public documents. (Uh oh, getting that
     into the metadata store is going to be a little tricky.) Full on access 
     control -- at least 'private', 'organization', 'exclusive', 'public', but 
     maybe per-user. Add organization_id and account_id.
-    
-  * We need an upload progress widget.
-  
+
   * Update fielded search to use Tokyo Table intersection of queries.
-        
-DONE:
 
   * It looks like we're going to be sticking with the current meta/entry split,
     so try to streamline search and metadata retrieval.
