@@ -19,6 +19,8 @@ TODO:
   
   * Pervasive P-A-G-I-N-A-T-I-O-N
   
+  * Start work on the Public API.
+  
   * Swap out our single Thin instance on staging for a Passenger setup --
     the advantage of the single instance is that deadlocks become obvious, so be
     watch out for them after the switch.
@@ -29,15 +31,16 @@ TODO:
   
   * Create a UI for making and managing collections (folders?) of documents.
   
-  * Make a distinction between private and public documents. Uh oh, getting that
-    into the metadata store is going to be a little tricky.
+  * Make a distinction between private and public documents. (Uh oh, getting that
+    into the metadata store is going to be a little tricky.) Full on access 
+    control -- at least 'private', 'organization', 'exclusive', 'public', but 
+    maybe per-user. Add organization_id and account_id.
     
   * We need an upload progress widget.
-    
-  * Rename EntityStore => 'organization' to 'source', add 'organization_id' and
-    'account_id'.
-      
+        
 DONE:
+
+  * Rename EntityStore => 'organization' to 'source'.
 
   * Give MongoDB a spin for everything but full-text search. (Tried it, we have
     a Mongo branch with a pretty complete implementation -- unfortunately, the

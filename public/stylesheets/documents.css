@@ -108,7 +108,7 @@
           body.logged_in .document_tools .delete_document {
             display: inline;
           }
-  .document_tile .organization {
+  .document_tile .source {
     text-transform: uppercase;
     font-size: 10px;
     overflow: hidden;
@@ -116,7 +116,7 @@
     color: #808080;
     margin-top: 2px;
   }
-    .document_list.small_size .organization {
+    .document_list.small_size .source {
       float: left;
       margin-right: 10px;
       line-height: 13px;

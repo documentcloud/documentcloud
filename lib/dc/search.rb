@@ -44,7 +44,7 @@ module DC
       end
             
       results += entry_store.find_by('title', query.title_query) if query.title_query      
-      results += entry_store.find_by('organization', query.source_query) if query.source_query
+      results += entry_store.find_by('source', query.source_query) if query.source_query
       
       # FIXME: Uniq isn't working, despite implementing Document#hash and 
       # Document#eql?, so hash it ourselves for now.

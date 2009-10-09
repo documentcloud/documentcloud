@@ -2,7 +2,7 @@
 class Document
   include ActionView::Helpers::TextHelper
   
-  ENTRY_ATTRIBUTES = [:author, :created_at, :date, :id, :language, :organization, 
+  ENTRY_ATTRIBUTES = [:author, :created_at, :date, :id, :language, :source, 
                       :summary, :title, :calais_request_id, :thumbnail_path,
                       :small_thumbnail_path, :pdf_path]
                       
@@ -29,7 +29,7 @@ class Document
   #   {
   #     'title'         => Faker::Lorem.words(rand(10) + 2).join(' '),
   #     'author'        => Faker::Name.name,
-  #     'organization'  => Faker::Company.name,
+  #     'source'        => Faker::Company.name,
   #     'created_at'    => rand(600).days.from_now,
   #     'summary'       => Faker::Lorem.paragraph,
   #     'metadata'      => Array.new(num_metadata).map { Metadatum.generate_fake }
