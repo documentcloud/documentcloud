@@ -7,8 +7,9 @@ dc.ui.Query = dc.View.extend({
   render : function(count) {
     var data = this.options;
     var sentence = count + " document" + (count == 1 ? "" : "s") + " matching ";
-    var list = $.map(data.fields, function(f){ return f.value; });
-    if (data.phrase) list.push(data.phrase);
+    var fields = data.fields.concat(data.attributes);
+    var list = $.map(fields, function(f){ return f.value; });
+    if (data.text) list.push(data.text);
     list = $.map(list, function(s){ return '"' + s + '"'; });
     var last = list.pop();
     

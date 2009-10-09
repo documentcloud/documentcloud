@@ -5,6 +5,11 @@ module DC
     # backend. Classes mixing in this module must implement a +path+ method,
     # returning the desired path to the store on disk.
     module TokyoTyrantTable
+      
+      # Convenience method to open up a table for reading and run a query on it.
+      def query
+        open_for_reading {|store| store.query {|query| yield query } }
+      end
                   
       # Opens up the store on disk for writing.
       def open_for_writing

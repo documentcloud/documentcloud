@@ -3,10 +3,6 @@ module DC
   # The Search module takes in a raw query string, processes it, queries
   # our backing stores for the most relevant results, and merges the result
   # sets together according to a strategy of our choosing.
-  #
-  # TODO: Split out some senible kind of logic for merging result sets -- we 
-  # need it both here and in multi-fielded metadata search, and use that to
-  # replace these broken hashes.
   module Search
     
     module Matchers
@@ -23,33 +19,21 @@ module DC
       metadata_store  = Store::MetadataStore.new
       full_text_store = Store::FullTextStore.new
       entry_store     = Store::EntryStore.new
-      results         = []
-      
-      query = Parser.new.parse(query) if query.is_a? String
-              
-      # TODO: Think about where the title and source should really belong.    
-      if query.fielded?
-        metadata = metadata_store.find_by_fields(query.fields, opts)
-        metadata.each {|meta| results << meta.document }
-      end
-      
-      if query.textual?
-        docs = full_text_store.find(query.phrase, opts)
-        text_ids = docs.map(&:id)
-        if query.fielded?
-          results = results.select {|doc| text_ids.include?(doc.id) }
-        else
-          results = docs
-        end
-      end
             
-      results += entry_store.find_by('title', query.title_query) if query.title_query      
-      results += entry_store.find_by('source', query.source_query) if query.source_query
+      query = Parser.new.parse(query) if query.is_a? String
+            
+      fielded_results = metadata_store.find_by_fields(query.fields, opts) if query.has_fields?
+      attribute_results = entry_store.find_by_attributes(query.attributes, opts) if query.has_attributes?
+      text_results = full_text_store.find(query.text, opts) if query.has_text?
+      
+      result_sets = [fielded_results, attribute_results, text_results].select {|set| set.present? }
+      results = result_sets.flatten
+      results = results.select {|doc| result_sets.all? {|set| set.include?(doc) } }
+      entry_store.find_all(results.map {|doc| doc.id })
       
       # FIXME: Uniq isn't working, despite implementing Document#hash and 
       # Document#eql?, so hash it ourselves for now.
-      docs = results.inject({}) {|h, doc| h[doc.id] = doc; h}.values
-      DocumentSet.new(docs)
+      # docs = results.inject({}) {|h, doc| h[doc.id] = doc; h}.values
     end
     
   end

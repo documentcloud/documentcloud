@@ -8,13 +8,11 @@ class Document
                       
   TEMPORARY_ATTRIBUTES = [:full_text, :rdf, :metadata, :calais_signature]
   
+  SEARCHABLE_ATTRIBUTES = [:title, :source]
+  
   ATTRIBUTES = ENTRY_ATTRIBUTES + TEMPORARY_ATTRIBUTES
                       
   ATTRIBUTES.each {|a| attr_accessor a }
-  
-  def self.from_entry_hash(entry_hash)
-    Document.new(entry_hash)
-  end
   
   # FIXME: Get an integer representation of the UUID (we need it to be an integer
   # for Dystopia to store). Can't convert the entire UUID because it's too large.
@@ -37,9 +35,7 @@ class Document
   # end
   
   def initialize(opts={})
-    opts.each do |name, value|
-      send("#{name}=", value) if ATTRIBUTES.include?(name.to_sym)
-    end
+    set_attributes(opts)
   end
   
   # The document id should be some way of uniquely identifying the document.
@@ -92,11 +88,17 @@ class Document
     to_entry_hash
   end
   
+  def set_attributes(attrs={})
+    attrs.each do |name, value|
+      send("#{name}=", value) if ATTRIBUTES.include?(name.to_sym)
+    end
+  end
+  
   # TODO: Think about keeping a metadata_count in the document entry, and then
   # we can determine if we've already got the complete set of data, or need to
   # go query the store for more.
   def metadata
-    @metadata ||= DC::Store::MetadataStore.new.find_by_document(self)
+    @metadata ||= DC::Store::MetadataStore.new.find_by_documents([self])
   end
   
   # Categories are stored alongside the rest of the metadata for the moment,
@@ -111,8 +113,8 @@ class Document
   end
   
   def inspect
-    short_title = ActionView::Helpers::TextHelper
-    "#<Document \"#{truncate(title, 50)}\">"
+    identifier = @title ? "\"#{truncate(@title, 50)}\"" : "##{@id}"
+    "#<Document #{identifier}>"
   end
   
 end

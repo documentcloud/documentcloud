@@ -40,13 +40,11 @@ module DC
       def find_by_field(type = :any, search_text = nil, opts = {})
         acronym = !!search_text.match(PROBABLY_AN_ACRONYM)
         search_type = opts[:literal] || acronym ? :equals : :phrase
-        results = open_for_reading do |store|
-          store.query do |q|
-            q.add_condition 'value', search_type, search_text
-            q.add_condition 'type', :equals, type if type.to_sym != :any
-            q.order_by 'relevance', :numdesc
-            q.limit opts[:limit] if opts[:limit]
-          end
+        results = query do |q|
+          q.add 'value', search_type, search_text
+          q.add 'type', :equals, type if type.to_sym != :any
+          q.order_by 'relevance', :numdesc
+          q.limit opts[:limit] if opts[:limit]
         end
         results.map {|r| Metadatum.from_hash(r) }
       end
@@ -55,36 +53,21 @@ module DC
       # fields. Uses AND for now.
       def find_by_fields(fields, opts={})
         results = []
-        fields.each do |field|
-          results << find_by_field(field.type, field.value, opts)
-        end
+        fields.each {|f| results << find_by_field(f.type, f.value, opts) }
         first = results.shift
-        results = first.select {|m| results.all?{|list| list.any?{|o| m.document_id == o.document_id}}}
-        sorted = results.sort_by {|meta| -meta.relevance }
-        return sorted[0...opts[:limit]] if opts[:limit]
-        sorted
+        results = first.select {|m| results.all? {|list| list.any? {|o| m.document_id == o.document_id}}}
+        results = results.sort_by {|meta| -meta.relevance }
+        return results[0...opts[:limit]] if opts[:limit]
+        results.map {|meta| Document.new(:id => meta.document_id) }
       end
       
-      # When you already have a document_id, and you want to collect the
-      # most relevant metadata for that document...
-      def find_by_document(document, opts = {})
-        results = open_for_reading do |store|
-          store.query do |q|
-            q.add_condition 'document_id', :equals, document.id
-            q.order_by 'relevance', :numdesc
-            q.limit opts[:limit] if opts[:limit]
-          end
-        end
-        results.map {|r| Metadatum.from_hash(r) }
-      end
-      
+      # When you already have a document_ids, and you want to collect the
+      # most relevant metadata for those documents...
       def find_by_documents(documents, opts={})
-        results = open_for_reading do |store|
-          store.query do |q|
-            q.add_condition 'document_id', :ftsor, documents.map(&:id).join(' ')
-            q.order_by 'relevance', :numdesc
-            q.limit opts[:limit] if opts[:limit]
-          end
+        results = query do |q|
+          q.add 'document_id', :stroreq, documents.map(&:id).join(' ')
+          q.order_by 'relevance', :numdesc
+          q.limit opts[:limit] if opts[:limit]
         end
         results.map {|r| Metadatum.from_hash(r) }
       end

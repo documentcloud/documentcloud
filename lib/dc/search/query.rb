@@ -3,55 +3,31 @@ module DC
     
     class Query
       
-      attr_reader :phrase, :fields, :title, :source
+      attr_reader :text, :fields, :attributes
       
       def initialize(opts={})
-        @phrase       = opts[:phrase]
-        @naked_phrase = @phrase && @phrase.sub(Matchers::QUOTED_VALUE, '\1')
-        @fields       = opts[:fields] || []
-        @title        = extract_fields('title')
-        @source       = extract_fields('source')
+        @text       = opts[:text]
+        @naked_text = @text && @text.sub(Matchers::QUOTED_VALUE, '\1')
+        @fields     = opts[:fields] || []
+        @attributes = opts[:attributes] || []
       end
       
-      def title_query
-        @title || @naked_phrase
-      end
-      
-      def source_query
-        @source || @naked_phrase
-      end
-      
-      # Does this query search by field?
-      def fielded?
-        @fields.present?
-      end
-      
-      # Does this query incorporate full-text search?
-      def textual?
-        @phrase.present?
-      end
-      
-      # Does this query include multiple kinds of search?
-      def compound?
-        fielded? && textual?
-      end
-      
-      def extract_fields(special)
-        matched_fields = @fields.select {|f| f.type == special }
-        return nil if matched_fields.empty?
-        matched_fields.map {|f| f.value }.join(SPHINX_OR)
-      end
+      def has_fields?;      @fields.present?;       end      
+      def has_text?;        @text.present?;         end
+      def has_attributes?;  @attributes.present?;   end
       
       def inspect
-        phrase = @phrase ? "\"#{@phrase}\"" : ''
-        fields = @fields.map(&:to_s).join(' ')
-        "#<DC::Search::Query #{phrase} #{fields}>"
+        text        = @text ? "\"#{@text}\"" : ''
+        fields      = @fields.map(&:to_s).join(' ')
+        attributes  = @attributes.map(&:to_s).join(' ')
+        "#<DC::Search::Query #{text} #{attributes} #{fields}>"
       end
       
       def as_json(opts={})
         {
-          'phrase' => @phrase,
-          'fields' => @fields
+          'text'        => @text,
+          'fields'      => @fields,
+          'attributes'  => @attributes
         }
       end
       

@@ -12,23 +12,28 @@ module DC
       def parse(query_string)
         bare_fields   = query_string.scan(Matchers::BARE_FIELD)
         quoted_fields = query_string.scan(Matchers::QUOTED_FIELD)
-        search_phrase = query_string.gsub(Matchers::ALL_FIELDS, '').squeeze(' ').strip
+        search_text   = query_string.gsub(Matchers::ALL_FIELDS, '').squeeze(' ').strip
         
-        search_phrase = process_search_phrase(search_phrase)
-        fields = process_fields(bare_fields, quoted_fields)
+        search_text = process_search_text(search_text)
+        fields, attributes = *process_fields(bare_fields, quoted_fields)
         
-        Query.new(:phrase => search_phrase, :fields => fields)
+        Query.new(:text => search_text, :fields => fields, :attributes => attributes)
       end
       
-      def process_search_phrase(phrase)
-        return nil if phrase.empty?
-        phrase.gsub(Matchers::BOOLEAN_OR, SPHINX_OR)
+      def process_search_text(text)
+        return nil if text.empty?
+        text.gsub(Matchers::BOOLEAN_OR, SPHINX_OR)
       end
       
       def process_fields(bare, quoted)
+        fields, attributes = [], []
         bare.map! {|f| f.split(':') }
         quoted.map! {|f| f.gsub(/['"]/, '').split(':') }
-        (bare + quoted).map {|pair| Field.new(*pair) }
+        (bare + quoted).each do |pair| 
+          field = Field.new(*pair)
+          (field.attribute? ? attributes : fields) << field
+        end
+        return fields, attributes
       end
       
     end

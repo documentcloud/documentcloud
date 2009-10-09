@@ -21,17 +21,20 @@ module DC
       def find(document_id)
         doc_hash = open_for_reading {|store| store[document_id] }
         raise DocumentNotFound, "Could not find document with id: #{document_id}" if !doc_hash
-        Document.from_entry_hash(doc_hash)
+        Document.new(doc_hash)
       end
       
-      def find_by(attribute, value, opts = {})
-        results = open_for_reading do |store|
-          store.query do |q|
-            q.add_condition attribute, :phrase, value
-            q.limit opts[:limit] if opts[:limit]
-          end
+      def find_all(document_ids)
+        results = query {|q| q.add '', :stroreq, document_ids.join(' ') }
+        results.map {|r| Document.new(r) }
+      end
+      
+      def find_by_attributes(attributes, opts = {})
+        results = query do |q|
+          attributes.each {|field| q.add field.type, :phrase, field.value }
+          q.limit opts[:limit] if opts[:limit]
         end
-        results.map {|r| Document.from_entry_hash(r) }
+        results.map {|r| Document.new(:id => r['id']) }
       end
       
       # Delete a document's entry from the store.

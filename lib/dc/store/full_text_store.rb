@@ -19,7 +19,7 @@ module DC
         client.filters    = [existing]
         client.match_mode = :extended2
         results           = client.query(search_text)
-        results[:matches].map {|m| entry_store.find(m[:doc].to_s(16)) }
+        results[:matches].map {|m| Document.new(:id => m[:doc].to_s(16)) }
       end
       
       def destroy(document)

@@ -11,6 +11,10 @@ module DC
         @type, @value = type.downcase, value.strip
       end
       
+      def attribute?
+        Document::SEARCHABLE_ATTRIBUTES.include? @type.to_sym
+      end
+      
       def to_s
         val = @value.match(HAS_WHITESPACE) ? "\"#{@value}\"" : @value
         "#{@type}:#{val}"

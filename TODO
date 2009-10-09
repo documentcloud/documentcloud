@@ -37,8 +37,12 @@ TODO:
     maybe per-user. Add organization_id and account_id.
     
   * We need an upload progress widget.
+  
         
 DONE:
+
+  * It looks like we're going to be sticking with the current meta/entry split,
+    so try to streamline search and metadata retrieval.
 
   * Rename EntityStore => 'organization' to 'source'.
 
