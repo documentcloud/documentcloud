@@ -6,9 +6,7 @@ TODO:
   * Create a News Organization "Manage Journalists" page.
   
   * Replace raw PDF link with a DocumentViewer.
-  
-  * Give MongoDB a spin for everything but full-text search.
-  
+    
   * Fix up Sphinx search to use delta indexes (and sharded indexes, perhaps), 
     so that all new documents imported within, say, a five-minute period 
     go delta. To get really fancy, the delta interval can be a constant 
@@ -40,6 +38,10 @@ TODO:
     'account_id'.
       
 DONE:
+
+  * Give MongoDB a spin for everything but full-text search. (Tried it, we have
+    a Mongo branch with a pretty complete implementation -- unfortunately, the
+    querying isn't flexible enough yet to satisfy our search requirements.)
 
   * Add document titles and sources to the searchable metadata.
 
