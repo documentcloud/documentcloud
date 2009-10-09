@@ -36,6 +36,7 @@ module DC
       def find_by_attributes(attributes, opts = {})
         results = query do |q|
           attributes.each {|field| q.add field.type, :phrase, field.value }
+          q.add 'access', :numeq, DC::Access::PUBLIC
           q.pk_only
           q.limit opts[:limit] if opts[:limit]
         end

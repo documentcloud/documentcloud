@@ -34,7 +34,7 @@ namespace :migrate do
             id = meta.delete('id')
             meta['access'] = entry['access']
             mstore.delete(id)
-            new_id = "#{doc_id}/0/0/#{meta['calais_hash'] || meta['value']}"
+            new_id = "0/0/#{doc_id}/#{meta['calais_hash'] || meta['value']}"
             puts "saving metadatum #{new_id}"
             mstore[new_id] = meta
           end

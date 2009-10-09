@@ -15,16 +15,19 @@ module DC
         entry_store       = EntryStore.new
         client            = Riddle::Client.new
         client.limit      = opts[:limit] if opts[:limit]
-        # TODO: Add back in access control.
-        # existing          = Riddle::Client::Filter.new('exists', [1])
-        # client.filters    = [existing]
+        existing          = Riddle::Client::Filter.new('access', [DC::Access::PUBLIC])
+        client.filters    = [existing]
         client.match_mode = :extended2
         results           = client.query(search_text)
         results[:matches].map {|m| Document.new(:id => m[:doc].to_s(16)) }
       end
       
-      def destroy(document)
-        Riddle::Client.new.update('documents', ['exists'], document.integer_id => 0)
+      def destroy(doc)
+        Riddle::Client.new.update('documents', ['access'], doc.integer_id => DC::Access::DELETED)
+      end
+      
+      def update_access(doc)
+        Riddle::Client.new.update('documents', ['access'], doc.integer_id => doc.access)
       end
       
       # Tell indexer to re-index all the documents. Only do this after a chunk

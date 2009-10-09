@@ -45,6 +45,7 @@ module DC
         results = query do |q|
           q.add 'value', search_type, search_text
           q.add 'type', :equals, type if type.to_sym != :any
+          q.add 'access', :numeq, DC::Access::PUBLIC
           q.order_by 'relevance', :numdesc
           q.limit opts[:limit] if opts[:limit]
         end
@@ -75,6 +76,17 @@ module DC
           end
         end
         results.map {|key, value| Metadatum.from_hash(value.merge('id' => key)) }
+      end
+      
+      def update_access(document)
+        keys = open_for_reading {|store| store.keys(:prefix => document.metadata_prefix) }
+        open_for_writing do |store|
+          keys.each do |key|
+            hash = store[key]
+            hash['access'] = document.access
+            store[key] = hash
+          end
+        end
       end
       
       # Compute the path to the Tokyo Cabinet Table store on disk.

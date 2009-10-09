@@ -53,12 +53,11 @@ class Document
     id == other.id && other.is_a?(Document)
   end
   
-  # TODO: Saving the full text both as an asset and in the full text index
-  # may be redundant.
   def save
     DC::Store::AssetStore.new.save_document(self)
     DC::Store::EntryStore.new.save(self)
     DC::Store::MetadataStore.new.save_document(self)
+    self
   end
   
   # Remove all the pieces of the document that we've saved.
@@ -67,6 +66,15 @@ class Document
     DC::Store::EntryStore.new.destroy(self)
     DC::Store::MetadataStore.new.destroy_document(self)
     DC::Store::FullTextStore.new.destroy(self)
+    self
+  end
+  
+  def update_access(access_level)
+    self.access = access_level
+    DC::Store::EntryStore.new.save(self)
+    DC::Store::MetadataStore.new.update_access(self)
+    DC::Store::FullTextStore.new.update_access(self)
+    true
   end
   
   def to_entry_hash
