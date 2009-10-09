@@ -50,8 +50,10 @@
   .document_tile .icon {
     position: absolute;
     left: 2px;
-    border: 1px solid #eee;
   }
+    .document_tile img.icon {
+      border: 1px solid #eee;      
+    }
   .document_tile .title {
     display: block;
     color: #002256;
