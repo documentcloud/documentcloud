@@ -44,10 +44,12 @@ class SearchParserTest < ActiveSupport::TestCase
     
     should "pull out title and source fielded searches" do
       query = search("title:launch freedom rides source:times title:duty")
-      assert query.attributes[0].value == 'launch'
-      assert query.attributes[0].type == 'title'
-      assert query.attributes[1].value == 'times'
-      assert query.attributes[1].type == 'source'
+      assert query.attributes[0].value == 'freedom rides'
+      assert query.attributes[0].type  == 'title'
+      assert query.attributes[1].value == 'launch'
+      assert query.attributes[1].type  == 'title'
+      assert query.attributes[2].value == 'times'
+      assert query.attributes[2].type  == 'source'
       assert query.text == 'freedom rides'
     end
     
