@@ -2,10 +2,10 @@ class DocumentsController < ApplicationController
   layout nil
   
   def show
-    doc = current_document(true)
+    current_document(true)
     respond_to do |format|
-      format.pdf  { send_file(doc.pdf_path, :disposition => 'inline', :type => 'application/pdf') }
-      format.text { render :text => doc.full_text }
+      format.pdf  { send_pdf }
+      format.text { send_text }
       format.html
     end
   end
@@ -35,6 +35,15 @@ class DocumentsController < ApplicationController
   
   
   private
+  
+  def send_pdf
+    return redirect_to("/documents/#{@current_document.id}.txt") if @current_document.pdf_path.blank?
+    send_file @current_document.pdf_path, :disposition => 'inline', :type => 'application/pdf'
+  end
+  
+  def send_text
+    render :text => @current_document.full_text
+  end
   
   def current_document(exists=false)
     @current_document ||= exists ? DC::Store::EntryStore.new.find(params[:id]) : 
