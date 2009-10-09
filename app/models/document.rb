@@ -1,43 +1,27 @@
-# NB: Doesn't inherit from ActiveRecord::Base ... yet.
 class Document
   include ActionView::Helpers::TextHelper
   
   ENTRY_ATTRIBUTES = [:author, :created_at, :date, :id, :language, :source, 
                       :summary, :title, :calais_request_id, :thumbnail_path,
-                      :small_thumbnail_path, :pdf_path]
+                      :small_thumbnail_path, :pdf_path, :organization_id,
+                      :account_id, :access]
                       
   TEMPORARY_ATTRIBUTES = [:full_text, :rdf, :metadata, :calais_signature]
   
   SEARCHABLE_ATTRIBUTES = [:title, :source]
   
+  INTEGER_ATTRIBUTES = [:organization_id, :account_id, :access]
+  
   ATTRIBUTES = ENTRY_ATTRIBUTES + TEMPORARY_ATTRIBUTES
                       
   ATTRIBUTES.each {|a| attr_accessor a }
   
-  # FIXME: Get an integer representation of the UUID (we need it to be an integer
-  # for Dystopia to store). Can't convert the entire UUID because it's too large.
-  # Needs a better solution.
-  def self.integer_id(document_id)
-    document_id.hex
-  end
-  
-  # Reproduce would-be attributes of a made-up document entry.
-  # Optionally specify the top N entities to return.
-  # def self.generate_fake_entry(num_metadata=10)
-  #   {
-  #     'title'         => Faker::Lorem.words(rand(10) + 2).join(' '),
-  #     'author'        => Faker::Name.name,
-  #     'source'        => Faker::Company.name,
-  #     'created_at'    => rand(600).days.from_now,
-  #     'summary'       => Faker::Lorem.paragraph,
-  #     'metadata'      => Array.new(num_metadata).map { Metadatum.generate_fake }
-  #   }
-  # end
+  INTEGER_ATTRIBUTES.each {|a| class_eval("def #{a}=(val); @#{a} = val.to_i; end") }
   
   def initialize(opts={})
     set_attributes(opts)
   end
-  
+    
   # The document id should be some way of uniquely identifying the document.
   # Disallow leading zeros so we can safely convert it to an integer.
   # TODO: Add created_at, or some other discriminator between textually-
@@ -49,9 +33,17 @@ class Document
     @id = new_id
   end
   
-  # Get the integer representation of the document id.
+  # FIXME: Get an integer representation of the UUID (we need it to be an integer
+  # for Sphinx to store). Can't convert the entire UUID because it's too large.
+  # Needs a better solution.  
   def integer_id
-    Document.integer_id(self.id)
+    @integer_id ||= id.hex
+  end
+  
+  # A document's metadata are keyed by organization_id/account_id/document_id
+  def metadata_prefix
+    raise "incompletely loaded document" unless organization_id && account_id && id
+    "#{organization_id}/#{account_id}/#{id}"
   end
   
   # Two documents are equal if they have the same document id. If we have two
@@ -92,6 +84,7 @@ class Document
     attrs.each do |name, value|
       send("#{name}=", value) if ATTRIBUTES.include?(name.to_sym)
     end
+    @id = attrs[:pk] if attrs[:pk]
   end
   
   # TODO: Think about keeping a metadata_count in the document entry, and then

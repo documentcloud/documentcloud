@@ -10,6 +10,15 @@ module DC
       def query
         open_for_reading {|store| store.query {|query| yield query } }
       end
+      
+      # Convenience to open up a table for reading and run a search over it.
+      def search(type, full_records = true)
+        open_for_reading do |store|
+          queries = yield store
+          queries << false unless full_records
+          store.search(type, *queries)
+        end
+      end
                   
       # Opens up the store on disk for writing.
       def open_for_writing

@@ -16,6 +16,9 @@ class DocumentImport < CloudCrowd::Action
     {
       'title'               => options['title'] || title,
       'source'              => options['source'],
+      'organization_id'     => options['organization_id'],
+      'account_id'          => options['account_id'],
+      'access'              => options['access'],
       'pdf_url'             => input,
       'full_text_url'       => save(text_path),
       'rdf_url'             => save(rdf_path),

@@ -15,8 +15,9 @@ module DC
         entry_store       = EntryStore.new
         client            = Riddle::Client.new
         client.limit      = opts[:limit] if opts[:limit]
-        existing          = Riddle::Client::Filter.new('exists', [1])
-        client.filters    = [existing]
+        # TODO: Add back in access control.
+        # existing          = Riddle::Client::Filter.new('exists', [1])
+        # client.filters    = [existing]
         client.match_mode = :extended2
         results           = client.query(search_text)
         results[:matches].map {|m| Document.new(:id => m[:doc].to_s(16)) }

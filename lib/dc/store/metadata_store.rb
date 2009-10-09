@@ -17,21 +17,23 @@ module DC
       
       PROBABLY_AN_ACRONYM = /\A[A-Z]{2,6}\Z/
       
+      def save_to(store, metadatum)
+        hash = metadatum.to_hash
+        id = hash.delete('id')
+        store[id] = hash
+      end
+      
       def save(metadatum)
-        open_for_writing {|store| store[metadatum.id] = metadatum.to_hash }
+        open_for_writing {|store| save_to(store, metadatum) }
       end
       
       def save_document(document)
-        open_for_writing do |store|
-          document.metadata.each do |metadatum|
-            store[metadatum.id] = metadatum.to_hash
-          end
-        end
+        open_for_writing {|store| document.metadata.each {|m| save_to(store, m) }}
       end
       
       # Remove all of a document's metadata occurrences from the store.
       def destroy_document(document)
-        open_for_writing {|store| store.delete_keys_with_prefix(document.id + '--') }
+        open_for_writing {|store| store.delete_keys_with_prefix(document.metadata_prefix) }
       end
       
       # Searching for metadata that match a search_phrase. To perform a literal,
@@ -58,18 +60,21 @@ module DC
         results = first.select {|m| results.all? {|list| list.any? {|o| m.document_id == o.document_id}}}
         results = results.sort_by {|meta| -meta.relevance }
         return results[0...opts[:limit]] if opts[:limit]
-        results.map {|meta| Document.new(:id => meta.document_id) }
+        results.map {|meta| Document.new('id' => meta.document_id) }
       end
       
       # When you already have a document_ids, and you want to collect the
       # most relevant metadata for those documents...
       def find_by_documents(documents, opts={})
-        results = query do |q|
-          q.add 'document_id', :stroreq, documents.map(&:id).join(' ')
-          q.order_by 'relevance', :numdesc
-          q.limit opts[:limit] if opts[:limit]
+        results = search(:union) do |store|
+          documents.map do |doc|
+            store.prepare_query do |q|
+              q.add '', :includes, "/#{doc.id}/"
+              q.limit opts[:limit] if opts[:limit]
+            end
+          end
         end
-        results.map {|r| Metadatum.from_hash(r) }
+        results.map {|key, value| Metadatum.from_hash(value.merge('id' => key)) }
       end
       
       # Compute the path to the Tokyo Cabinet Table store on disk.

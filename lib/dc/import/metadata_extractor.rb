@@ -58,7 +58,7 @@ module DC
       # Extract the categories that the Document falls under.
       def extract_categories(document, calais)
         document.metadata += calais.categories.map do |cat|
-          Metadatum.new(cat.name.underscore, 'category', cat.score, document.id)
+          Metadatum.new(cat.name.underscore, 'category', cat.score, :document => document)
         end
       end
       
@@ -72,8 +72,8 @@ module DC
             entity.attributes['name'], 
             entity.type.underscore,
             entity.relevance,
-            document.id,
             {
+              :document    => document,
               :occurrences => entity.instances.map {|i| Occurrence.new(i.offset, i.length) },
               :calais_hash => entity.calais_hash.value
             }

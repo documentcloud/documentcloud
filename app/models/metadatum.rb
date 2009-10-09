@@ -3,7 +3,8 @@
 # text.) Metadata have a whitelisted type, or list of acceptable types.
 class Metadatum
   
-  attr_accessor :type, :occurrences, :relevance, :value, :calais_hash, :document_id
+  attr_accessor :type, :occurrences, :relevance, :value, :calais_hash, 
+                :document_id, :organization_id, :account_id, :access, :id
   
   # The whitelisted types of metadata from OpenCalais that we're interested in.
   # Keep this list in sync with the mapping in metadatum.js, please.
@@ -30,33 +31,34 @@ class Metadatum
       data['value'],
       data['type'],
       data['relevance'].to_f,
-      data['document_id'],
       {
+        :id => data['id'] || data[:pk],
+        :access => data['access'],
         :occurrences => Occurrence.from_csv(data['occurrences']),
         :calais_hash => data['calais_hash']
       }
     )
   end
   
-  # Generate a fake Metadatum for testing purposes.
-  # TODO: Expand this to look into a document's full text and pull out a string,
-  # with its occurrences.
-  # def self.generate_fake
-  #   value     = Faker::Lorem.words(1).first
-  #   type      = CALAIS_TYPES[rand(CALAIS_TYPES.length)]
-  #   relevance = rand(100/100.0)
-  #   Metadatum.new(value, type, relevance)
-  # end
-  
-  def initialize(value, type, relevance, document_id, opts={})
-    @value, @type, @relevance, @document_id = value, type, relevance, document_id
+  def initialize(value, type, relevance, opts={})
+    @value, @type, @relevance = value, type, relevance
     @occurrences = opts[:occurrences] || []
     @calais_hash = opts[:calais_hash]
+    @access      = opts[:access] || opts[:document].access
+    set_scope(opts[:id], opts[:document])
   end
   
-  # Totally hokey way to get a unique id. Think about what this should be.
-  def id
-    "#{@document_id}--#{@calais_hash || @value}"
+  def set_scope(an_id=nil, document=nil)
+    if an_id
+      @id = an_id
+      @organization_id, @account_id, @document_id = *@id.split('/')
+      @organization_id = @organization_id.to_i
+      @account_id = @account_id.to_i
+    elsif document
+      @id = "#{document.metadata_prefix}/#{@calais_hash || @value}"
+    else
+      raise "Tried to instantiate a Metadatum without an id or document"
+    end
   end
   
   # Return or find the document to which this metadatum belongs.
@@ -77,10 +79,11 @@ class Metadatum
   
   def to_hash
     {
-      'value' => @value,
-      'type' => @type,
-      'relevance' => @relevance,
-      'document_id' => @document_id,
+      'id'          => @id,
+      'value'       => @value,
+      'type'        => @type,
+      'relevance'   => @relevance,
+      'access'      => @access,
       'occurrences' => Occurrence.to_csv(@occurrences),
       'calais_hash' => @calais_hash
     }

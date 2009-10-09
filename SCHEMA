@@ -1,0 +1,35 @@
+entry = {
+  document_id 
+  account_id
+  organization_id
+  title
+  source
+  summary
+  author
+  access          # One of: public, private, organization, exclusive, deleted
+  created_at
+  date
+  language
+  thumbnail_path
+  small_thumbnail_path
+  pdf_path
+  calais_request_id
+}
+
+full_text = {
+  document_id     # (Integer version)
+  account_id
+  organization_id
+  full_text
+  access          # One of: public, private, organization, exclusive, deleted 
+}
+
+metadata = {
+  id              # organization_id/account_id/document_id/calais_hash or value
+  type
+  value
+  relevance
+  calais_hash
+  occurrences     # CSV list of offset:length text positions
+  access          # One of: public, private, organization, exclusive, deleted
+}

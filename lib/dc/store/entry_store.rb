@@ -13,7 +13,9 @@ module DC
       # Save a document's entry attributes.
       def save(document)
         open_for_writing do |store|
-          store[document.id] = document.to_entry_hash
+          hash = document.to_entry_hash
+          id = hash.delete('id')
+          store[id] = hash
         end
       end
       
@@ -21,20 +23,23 @@ module DC
       def find(document_id)
         doc_hash = open_for_reading {|store| store[document_id] }
         raise DocumentNotFound, "Could not find document with id: #{document_id}" if !doc_hash
-        Document.new(doc_hash)
+        Document.new(doc_hash.merge('id' => document_id))
       end
       
       def find_all(document_ids)
-        results = query {|q| q.add '', :stroreq, document_ids.join(' ') }
+        results = query do |q| 
+          q.add '', :stroreq, document_ids.join(' ')
+        end
         results.map {|r| Document.new(r) }
       end
       
       def find_by_attributes(attributes, opts = {})
         results = query do |q|
           attributes.each {|field| q.add field.type, :phrase, field.value }
+          q.pk_only
           q.limit opts[:limit] if opts[:limit]
         end
-        results.map {|r| Document.new(:id => r['id']) }
+        results.map {|r| Document.new('id' => r) }
       end
       
       # Delete a document's entry from the store.

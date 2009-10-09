@@ -21,7 +21,7 @@ module DC
       entry_store     = Store::EntryStore.new
             
       query = Parser.new.parse(query) if query.is_a? String
-            
+                  
       fielded_results = metadata_store.find_by_fields(query.fields, opts) if query.has_fields?
       attribute_results = entry_store.find_by_attributes(query.attributes, opts) if query.has_attributes?
       text_results = full_text_store.find(query.text, opts) if query.has_text?

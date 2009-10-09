@@ -8,9 +8,9 @@ namespace :import do
     file_names = Dir[args[:directory] + '/*.xml']
     file_names.each do |path|
       print "loading #{path}"
-      doc = Document.new(:rdf => File.read(path))
+      doc = Document.new(:rdf => File.read(path), :organization_id => 0, :account_id => 0, :access => DC::Access::PUBLIC)
       DC::Import::MetadataExtractor.new.extract_metadata(doc)
-      doc.organization ||= Faker::Company.name
+      doc.source ||= Faker::Company.name
       puts " / saving as #{doc.id}"
       doc.save
     end
@@ -32,10 +32,13 @@ namespace :import do
         :title                => title, 
         :pdf_path             => path,
         :thumbnail_path       => image_ex.thumbnail_path,
-        :small_thumbnail_path => image_ex.small_thumbnail_path
+        :small_thumbnail_path => image_ex.small_thumbnail_path,
+        :organization_id      => 0, 
+        :account_id           => 0, 
+        :access => DC::Access::PUBLIC
       )
       DC::Import::MetadataExtractor.new.extract_metadata(doc)
-      doc.organization ||= Faker::Company.name
+      doc.source ||= Faker::Company.name
       puts " / saving as #{doc.id}"
       doc.save
     end

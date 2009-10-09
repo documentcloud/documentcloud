@@ -7,9 +7,6 @@ module DC
     # Performs some simple translations to transform standard boolean queries
     # into a form that Sphinx extended2 can understand.
     #
-    # Something that might be a little unexpected is the transformation of 
-    # any textual queries into "title" attribute queries as well.
-    #
     # We should try to adopt Google conventions, if possible, after:
     # http://www.google.com/help/cheatsheet.html
     class Parser
@@ -29,7 +26,9 @@ module DC
       
       def process_search_text(text)
         return if text.empty?
-        @attributes << Field.new('title', text)
+        # Something that might be a little unexpected is the transformation of 
+        # any textual queries into "title" attribute queries as well.
+        # @attributes << Field.new('title', text)
         @text = text.gsub(Matchers::BOOLEAN_OR, SPHINX_OR)
       end
       

@@ -2,6 +2,8 @@
 // that you just searched for.
 dc.ui.Query = dc.View.extend({
   
+  QUOTED : /^['"].+['"]$/,
+  
   className : 'search_query',
     
   render : function(count) {
@@ -10,7 +12,10 @@ dc.ui.Query = dc.View.extend({
     var fields = data.fields.concat(data.attributes);
     var list = $.map(fields, function(f){ return f.value; });
     if (data.text) list.push(data.text);
-    list = $.map(list, function(s){ return '"' + s + '"'; });
+    var me = this;
+    list = $.map(list, function(s) {
+      return me.QUOTED.test(s) ? s : '"' + s + '"';
+    });
     var last = list.pop();
     
     if (list.length == 0) {
