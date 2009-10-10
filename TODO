@@ -32,6 +32,8 @@ TODO:
   * Create a UI for making and managing collections (folders?) of documents.
     
   * We need an upload progress widget.
+  
+  * Authorize logged-in folks to view private and organization documents.
 
 
 DONE:

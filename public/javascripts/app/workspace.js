@@ -21,6 +21,8 @@ _.extend(dc.app.workspace, {
                 
     dc.app.searchBox = new dc.ui.SearchBox();
     
+    this.titleEl = $('h1#title');
+    
     this.setCallbacks();
     dc.history.loadURL();
   },
@@ -40,6 +42,12 @@ _.extend(dc.app.workspace, {
     var docUpload = new dc.ui.DocumentUpload();
     this.sidebar.show(docUpload.helpContent());
     this.panel.show(docUpload.render().el);
+    this.setTitle('Upload a Document');
+  },
+  
+  setTitle : function(title) {
+    this.titleEl.text(title);
+    document.title = title + ' | DocumentCloud';
   }
   
 });

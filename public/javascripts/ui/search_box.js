@@ -21,6 +21,7 @@ dc.ui.SearchBox = dc.View.extend({
   
   // Start a search for a query string, updating the page URL.
   search : function(query) {
+    dc.app.workspace.setTitle('Workspace');
     this.value(query);
     dc.history.save('search/' + encodeURIComponent(query));
     this.outstandingSearch = true;
