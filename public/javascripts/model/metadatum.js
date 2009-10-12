@@ -44,9 +44,9 @@ dc.model.Metadatum = dc.Model.extend({
   },
   
   // Compute the average relevance of this Metadatum to the currently loaded
-  // set of Documents. Maintains 4 significant digits of accuracy.
+  // set of Documents.
   averageRelevance : function() {
-    return Math.round((this.totalRelevance() / this._size) * 1000) / 1000;
+    return this.totalRelevance() / this._size;
   },
   
   // Compute the total relevance of this Metadatum (metadata occurring in more
@@ -55,6 +55,11 @@ dc.model.Metadatum = dc.Model.extend({
     return _.inject(this.get('instances'), 0, function(sum, instance) {
       return sum + instance.relevance;
     });
+  },
+  
+  // Truncate the total relevance for display.
+  displayTotalRelevance : function() {
+    return this.totalRelevance().toString().substring(0, 5);
   },
   
   // Display-ready version of the metadata type.
