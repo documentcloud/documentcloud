@@ -19,7 +19,7 @@ dc.model.RESTfulSet = dc.Set.extend({
     $.ajax({
       url       : '/' + this.resource,
       type      : 'POST',
-      data      : model.getAttributes(),
+      data      : model.attributes(),
       dataType  : 'json'
     });
     this.add(model);

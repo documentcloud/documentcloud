@@ -17,12 +17,12 @@ dc.Model = Base.extend({
     this.set(attributes);
     this.cid = _.uniqueId('c');
     this._changed - false;
-    this._formerAttributes = this.getAttributes();
+    this._formerAttributes = this.attributes();
   },
   
   // Create a new model with identical attributes to this one.
   clone : function() {
-    return new (this.constructor)(this.getAttributes());
+    return new (this.constructor)(this.attributes());
   },
   
   // Are this model's attributes identical to another model?
@@ -34,7 +34,7 @@ dc.Model = Base.extend({
   // Calling this will cause all objects observing the model to update.
   changed : function() {
     this.fire(dc.Model.CHANGED, this);
-    this._formerAttributes = this.getAttributes();
+    this._formerAttributes = this.attributes();
     this._changed = false;
     this._changedAttributes = false;
   },
@@ -48,28 +48,28 @@ dc.Model = Base.extend({
   
   // Get the previous value of an attribute, recorded at the time the last 
   // CHANGED event was fired.
-  getFormerValue : function(attr) {
+  formerValue : function(attr) {
     if (!attr || !this._formerAttributes) return null;
     return this._formerAttributes[attr];
   },
   
   // Removes the former state, setting it to the state of the current attributes.
   resetFormerAttributes : function() {
-    this._formerAttributes = this.getAttributes();
+    this._formerAttributes = this.attributes();
   },
   
   // Get all of the attributes of the model at the time of the previous 
   // CHANGED event.
-  getFormerAttributes : function() {
+  formerAttributes : function() {
     return this._formerAttributes;
   },
   
   // Return an object containing all the attributes that have changed. Useful
   // for determining what parts of a view need to be updated and/or what
   // attributes need to be persisted to the server.
-  getChangedAttributes : function() {
+  changedAttributes : function() {
     if (!this._formerAttributes) {
-      var old = this.getFormerAttributes(), now = this.getAttributes();
+      var old = this.formerAttributes(), now = this.attributes();
       var changed = this._changedAttributes = {};
       for (var attr in now) {
         if (!_.isEqual(old[attr], now[attr])) changed[attr] = now[attr];
@@ -104,7 +104,7 @@ dc.Model = Base.extend({
   },
   
   // Return a copy of the model's attributes.
-  getAttributes : function() {
+  attributes : function() {
     return _.clone(this._attributes);
   },
   

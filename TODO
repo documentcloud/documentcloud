@@ -34,6 +34,8 @@ TODO:
   * We need an upload progress widget.
   
   * Authorize logged-in folks to view private and organization documents.
+  
+  * Make a flexible JS class for tabbed page sections.
 
 
 DONE:

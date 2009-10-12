@@ -1,0 +1,26 @@
+.account_badge {
+  position: absolute;
+  top: 8px; left: 11px;
+  background: #9f9f9f;
+  padding: 4px 10px 4px 5px;
+  border: 1px solid #909090;
+  -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+}
+  .account_badge img.avatar {
+    position: absolute;
+    border: 1px solid #aaa;
+  }
+  .account_badge .textual {
+    font: 10px/22px Arial;
+    color: #454545;
+    margin-left: 27px;
+  }
+    .account_badge .pipe {
+      color: #666;
+    }
+    .account_badge .textual a {
+      color: #353566;
+    }
+      .account_badge .textual a:hover {
+        text-decoration: underline;
+      }

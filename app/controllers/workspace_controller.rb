@@ -3,7 +3,7 @@ class WorkspaceController < ApplicationController
   before_filter :bouncer unless Rails.development?
     
   def index
-    @account = current_account
+    current_account
   end
   
   def signup
@@ -13,13 +13,13 @@ class WorkspaceController < ApplicationController
     acc = Account.create(params[:account].merge({:organization => org}))
     return org.destroy && fail(acc.errors.full_messages.first) if acc.errors.any?
     acc.authenticate(session)
-    redirect_to '/workspace'
+    redirect_to '/workspace/'
   end
   
   def login
     return render unless request.post?
     account = Account.log_in(params[:email], params[:password], session)
-    account ? redirect_to('/workspace') : fail(true)
+    account ? redirect_to('/workspace/') : fail(true)
   end
   
   def logout

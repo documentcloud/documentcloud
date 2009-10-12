@@ -21,6 +21,8 @@ dc.ui.SearchBox = dc.View.extend({
   
   // Start a search for a query string, updating the page URL.
   search : function(query) {
+    dc.app.workspace.deselectTabs();
+    $('#documents_nav').addClass('active');
     dc.app.workspace.setTitle('Workspace');
     this.value(query);
     dc.history.save('search/' + encodeURIComponent(query));
@@ -54,7 +56,6 @@ dc.ui.SearchBox = dc.View.extend({
   // associated metadata, as long as something was found. Think about returning
   // the metadata right alongside the document JSON.
   loadSearchResults : function(resp) {        
-    if (window.console) console.log(resp);
     Documents.refresh(_.map(resp.documents, function(m){ 
       return new dc.model.Document(m); 
     }));

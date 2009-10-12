@@ -4,22 +4,27 @@ dc.app.workspace = new dc.View();
 _.extend(dc.app.workspace, {
   
   callbacks : [
-    ['#wordmark',               'click',      'goHome'],
-    ['#upload_document_button', 'click',      'showUploadForm'],
-    ['#log_out_button',         'click',      'logout']
+    ['#documents_nav',    'click',    'showDocuments'],
+    ['#upload_nav',       'click',    'showUploadForm']
   ],
   
   // Initializes the workspace, binding it to <body>.
   initialize : function() {
     this.el = $('body')[0];
+    var content = $('#content');
     
     this.sidebar = new dc.ui.Sidebar();
-    $('#content').append(this.sidebar.render().el);
+    content.append(this.sidebar.render().el);
     
     this.panel = new dc.ui.Panel();
-    $('#content').append(this.panel.render().el);
+    content.append(this.panel.render().el);
                 
     dc.app.searchBox = new dc.ui.SearchBox();
+    
+    if (window.currentAccount) {
+      this.accountBadge = new dc.ui.AccountBadge(currentAccount);
+      content.append(this.accountBadge.render().el);
+    }
     
     this.titleEl = $('h1#title');
     
@@ -27,18 +32,20 @@ _.extend(dc.app.workspace, {
     dc.history.loadURL();
   },
   
-  // Return to the DocumentCloud homepage.
-  goHome : function() {
-    window.location = '/';
+  // TEMP TEMP TEMP
+  deselectTabs : function() {
+    $('#navigation .nav').removeClass('active');
   },
   
-  // Log out, returning to the homepage.
-  logout : function() {
-    window.location = '/logout';
+  // TEMP TEMP TEMP
+  showDocuments : function() {
+    dc.app.searchBox.search(dc.app.searchBox.value());
   },
   
   // Show the document upload form.
   showUploadForm : function() {
+    this.deselectTabs();
+    $('#upload_nav').addClass('active');
     var docUpload = new dc.ui.DocumentUpload();
     this.sidebar.show(docUpload.helpContent());
     this.panel.show(docUpload.render().el);
