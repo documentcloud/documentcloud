@@ -26,3 +26,11 @@
       background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#dfdfdf));
       -webkit-box-shadow: 0 1px 10px #222; -moz-box-shadow: 0 1px 10px #222;
     }
+    
+.tab_content {
+  display: none;
+}
+  body.upload_navigation .upload_tab_content,
+  body.documents_navigation .documents_tab_content {
+    display: block;
+  }

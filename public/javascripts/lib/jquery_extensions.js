@@ -2,9 +2,10 @@
 $.extend({
 
   // Quick-create a dom element with attributes.
-  el : function(tagName, attributes) {
+  el : function(tagName, attributes, content) {
     var el = document.createElement(tagName);
-    $(el).attr(attributes);
+    if (attributes) $(el).attr(attributes);
+    if (content) $(el).html(content);
     return el;
   },
   

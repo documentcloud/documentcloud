@@ -1,17 +1,18 @@
 dc.View = Base.extend({
   
-  el : null,
-  model : null,
-  defaultOptions : {},
-  callbacks : {},
-  modes : null,
-  className : 'view',
-  _tagName : 'div',
+  el              : null,
+  model           : null,
+  defaultOptions  : {},
+  callbacks       : {},
+  modes           : null,
+  id              : null,
+  className       : 'view',
+  tagName         : 'div',
   
   constructor : function(options) {
     options = options || {};
     this.modes = {};
-    this.el = options.el || $.el(this._tagName, {'class' : this.className});  
+    this.el = options.el || $.el(this.tagName, {id : this.id, 'class' : this.className});  
     this.configure(options);
     
     // if(this.options.className) this.el.addClassName(this.options.className);

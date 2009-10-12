@@ -35,10 +35,10 @@ TODO:
   
   * Authorize logged-in folks to view private and organization documents.
   
-  * Make a flexible JS class for tabbed page sections.
-
 
 DONE:
+
+  * Make a flexible JS class for tabbed page sections.
 
   * Make a distinction between private and public documents. (Uh oh, getting that
     into the metadata store is going to be a little tricky.) Full on access 

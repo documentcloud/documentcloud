@@ -14,8 +14,8 @@ dc.ui.Sidebar = dc.View.extend({
     return this;
   },
   
-  show : function(content) {
-    this.content.html(content);
+  add : function(view) {
+    this.content.append(view);
   }
   
 });
