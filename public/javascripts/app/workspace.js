@@ -27,7 +27,7 @@ _.extend(dc.app.workspace, {
     var content   = $('#content');
     content.append(this.sidebar.render().el);
     content.append(this.panel.render().el);
-    this.uploadForm.render();
+    if (this.uploadForm) this.uploadForm.render();
     if (this.navigation) content.append(this.navigation.render().el);
     if (this.accountBadge) content.append(this.accountBadge.render().el);
   }
