@@ -27,7 +27,7 @@
       -webkit-box-shadow: 0 1px 10px #222; -moz-box-shadow: 0 1px 10px #222;
     }
     
-.tab_content {
+body.logged_in .tab_content {
   display: none;
 }
   body.upload_navigation .upload_tab_content,
