@@ -19,9 +19,12 @@ class ApplicationController < ActionController::Base
     render :json => obj, :status => status
   end
   
+  def logged_in?
+    session['account_id'] && session['organization_id']
+  end 
   
   def login_required
-    session['account_id'] && session['organization_id'] or forbidden
+    logged_in? || forbidden
   end
   
   def current_account

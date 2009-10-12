@@ -15,7 +15,7 @@ module DC
     
     SPHINX_OR = ' | '
     
-    def self.find(query, opts={})
+    def self.find(query, opts={})      
       metadata_store  = Store::MetadataStore.new
       full_text_store = Store::FullTextStore.new
       entry_store     = Store::EntryStore.new

@@ -4,7 +4,8 @@ dc.ui.DocumentUpload = dc.View.extend({
   className : 'document_upload',
   
   render : function() {
-    $(this.el).html(dc.templates.DOCUMENT_UPLOAD_FORM({}));
+    var params = {organization : currentAccount.get('organization_name')};
+    $(this.el).html(dc.templates.DOCUMENT_UPLOAD_FORM(params));
     return this;
   },
   

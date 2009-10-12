@@ -65,7 +65,7 @@ class Metadatum
   # TODO: Think about moving the cached document into a per-request identity map
   # living on Document itself.
   def document
-    @document ||= DC::Store::EntryStore.new.find(@document_id)
+    @document ||= Document.find(@document_id)
   end
   
   # A Metadatum is considered to be textual if it occurs in the body of the text.

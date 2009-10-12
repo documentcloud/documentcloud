@@ -18,6 +18,11 @@ class Document
   
   INTEGER_ATTRIBUTES.each {|a| class_eval("def #{a}=(val); @#{a} = val.to_i; end") }
   
+  # Delegate to the EntryStore to find documents by id.
+  def self.find(document_id)
+    DC::Store::EntryStore.new.find(document_id)
+  end
+  
   def initialize(opts={})
     set_attributes(opts)
   end

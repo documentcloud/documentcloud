@@ -216,7 +216,9 @@ a {
       }
 
 .document_upload {
-  position: relative;
+  position: absolute;
+  top: 21px; left: 0px; right: 0px; bottom: 0px;
+  overflow-y: auto;
   padding: 18px;
 }
   .document_upload label {
@@ -230,10 +232,18 @@ a {
       font: bold italic 11px Arial;
       color: #666;
     }
-  .document_upload .text_input, .document_upload input[type=file] {
+  .document_upload .text_input, 
+  .document_upload input[type=file],
+  .document_upload select {
     margin-bottom: 25px;
     width: 350px;
     display: block;
+  }
+    .document_upload select {
+      width: auto;
+    }
+  .document_upload option {
+    font: normal 12px Arial;
   }
   
 .sidebar .help {

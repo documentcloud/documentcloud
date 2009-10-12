@@ -12,7 +12,6 @@ module DC
       
       # Find the top most relevant results.
       def find(search_text, opts={})
-        entry_store       = EntryStore.new
         client            = Riddle::Client.new
         client.limit      = opts[:limit] if opts[:limit]
         existing          = Riddle::Client::Filter.new('access', [DC::Access::PUBLIC])

@@ -6,15 +6,17 @@ class ImportController < ApplicationController
   
   def upload_pdf
     pdf = params[:pdf]
-    save_path = "docs/#{pdf.original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')}"
-    FileUtils.cp(pdf.path, "#{RAILS_ROOT}/public/#{save_path}")
-    urls = ["#{DC_CONFIG['server_root']}/#{save_path}"]
+    save_dir = "#{RAILS_ROOT}/public/docs"
+    Dir.mkdir(save_dir) unless File.exists?(save_dir)
+    save_path = pdf.original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
+    FileUtils.cp(pdf.path, File.join(save_dir, save_path))
+    urls = ["#{DC_CONFIG['server_root']}/docs/#{save_path}"]
     options = {
       'title' => params[:title], 
       'source' => params[:source],
       'organization_id' => current_organization.id,
       'account_id' => current_account.id,
-      'access' => DC::Access::PUBLIC
+      'access' => params[:access].to_i
     }
     DC::Import::CloudCrowdImporter.new.import(urls, options)
     redirect_to DC_CONFIG['cloud_crowd_server']

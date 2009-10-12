@@ -45,8 +45,9 @@ class DocumentsController < ApplicationController
     render :text => @current_document.full_text
   end
   
+  # TODO: Access control this document -- but not yet.
   def current_document(exists=false)
-    @current_document ||= exists ? DC::Store::EntryStore.new.find(params[:id]) : 
+    @current_document ||= exists ? Document.find(params[:id]) : 
                                    Document.new(:id => params[:id])
   end
   
