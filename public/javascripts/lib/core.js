@@ -1,9 +1,7 @@
-// JQuery doesn't provide much support for functional programming: re-implement
-// a bunch of functional methods from Prototype and Steele's Functional.
-window.$break = '__break__';
-
+// Javascript can be so much more pleasant when it's functional -- re-implement
+// a bunch of utility methods from Prototype and Steele's Functional...
 window._ = {
-    
+      
   // The centerpiece, an each implementation.
   // Handles objects implementing forEach, _each, arrays, and raw objects.
   each : function(obj, iterator, context) {
@@ -29,7 +27,7 @@ window._ = {
         }
       }
     } catch(e) {
-      if (e != $break) throw e;
+      if (e != '__break__') throw e;
     }
     return obj;
   },
@@ -41,7 +39,7 @@ window._ = {
     var result = true;
     _.each(obj, function(value, index) {
       result = result && !!iterator.call(context, value, index);
-      if (!result) throw $break;
+      if (!result) throw '__break__';
     });
     return result;
   },
@@ -52,7 +50,7 @@ window._ = {
     if (obj.some) return obj.some(iterator, context);
     var result = false;
     _.each(obj, function(value, index) {
-      if (result = !!iterator.call(context, value, index)) throw $break;
+      if (result = !!iterator.call(context, value, index)) throw '__break__';
     });
     return result;
   },
@@ -74,7 +72,7 @@ window._ = {
     _.each(obj, function(value, index) {
       if (iterator.call(context, value, index)) {
         result = value;
-        throw $break;
+        throw '__break__';
       }
     });
     return result;
@@ -98,7 +96,7 @@ window._ = {
     _.each(obj, function(value) {
       if (value == target) {
         found = true;
-        throw $break;
+        throw '__break__';
       }
     });
     return found;
@@ -224,9 +222,6 @@ window._ = {
     return _.select(function(value){ return !_.include(values, value); });
   },
   
-  // reverse seems to be implemented natively ... if it turns out not to
-  // be in all browsers ... put it here.
-  
   // Produce a duplicate-free version of the array. If the array has already
   // been sorted, you have the option of using a faster algorithm.
   uniq : function(array, sorted) {
@@ -254,39 +249,48 @@ window._ = {
   
   /* ---------------- The following methods apply to objects ---------------- */
   
+  // Retrieve the names of an object's properties.
   keys : function(obj) {
     return _.pluck(obj, 'key');
   },
   
+  // Retrieve the values of an object's properties.
   values : function(obj) {
     return _.pluck(obj, 'value');
   },
   
+  // Extend a given object with all of the properties in a source object.
   extend : function(destination, source) {
     for (var property in source) destination[property] = source[property];
     return destination;
   },
   
+  // Create a (shallow-cloned) duplicate of an object.
   clone : function(obj) {
     return _.extend({}, obj);
   },
   
+  // Is a given value a DOM element?
   isElement : function(obj) {
     return !!(obj && obj.nodeType == 1);
   },
   
+  // Is a given value a real Array?
   isArray : function(obj) {
     return Object.prototype.toString.call(obj) == '[object Array]';
   },
   
+  // Is a given value a Function?
   isFunction : function(obj) {
     return typeof obj == 'function';
   },
   
+  // Is a given variable undefined?
   isUndefined : function(obj) {
     return typeof obj == 'undefined';
   },
   
+  // Convert any value into printable string form.
   toString : function(obj) {
     return obj == null ? '' : String(obj);
   },
@@ -310,6 +314,8 @@ window._ = {
   //   }).join('&');
   // }
   
+  // Create a function bound to a given object (assigning 'this', and arguments,
+  // optionally).
   bind : function(func, context) {
     if (!context) return func;
     var args = _.toArray(arguments).slice(2);
@@ -319,6 +325,8 @@ window._ = {
     };
   },
   
+  // Bind all of an object's methods to that object. Useful for ensuring that 
+  // all callbacks defined on an object belong to it.
   bindAll : function() {
     var args = _.toArray(arguments);
     var context = args.pop();
@@ -327,6 +335,8 @@ window._ = {
     });
   },
   
+  // Generate a unique integer id (unique within the entire client session).
+  // Useful for temporary DOM ids.
   uniqueId : function(prefix) {
     var id = this._idCounter = (this._idCounter || 0) + 1;
     return prefix ? prefix + id : id;
@@ -357,118 +367,3 @@ window._ = {
   }
   
 };
-
-// Extend the JQuery namespace with core utility methods for DOM manipulation.
-$.extend({
-
-  // Quick-create a dom element with attributes.
-  el : function(tagName, attributes) {
-    var el = document.createElement(tagName);
-    $(el).attr(attributes);
-    return el;
-  },
-  
-  // See dc.View#setMode...
-  setMode : function(el, state, group) {
-    group = group || 'mode';
-    var re = new RegExp("\\w+_" + group + "(\\s|$)", 'g');
-    var mode = (state === null) ? "" : state + "_" + group;
-    var name = el.className.replace(re, '') + ' ' + mode;
-    name = name.replace(/\s\s/g, ' ');
-    el.className = name;
-    return mode;
-  },
-  
-  // Align an element relative to a target element's coordinates. Forces the
-  // element to be absolutely positioned. Element must be visible.
-  // Position string format is: "top -right".
-  // You can pass an optional offset object with top and left offsets specified.
-  align : function(el, target, pos, offset) {
-    el = $(el);
-    target = $(target);
-    pos = pos || '';
-    offset = offset || {};
-    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
-    var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0;
-    var clientWidth = document.documentElement.clientWidth;
-    var clientHeight = document.documentElement.clientHeight;
-    
-    // var targPos = target.position();
-    var targOff = target.offset();
-    var b = {
-      left : targOff.left - scrollLeft,
-      top : targOff.top - scrollTop,
-      width : target.width(),
-      height : target.height()
-    };
-    
-    var elb = {
-      width : el.width(),
-      height : el.height()
-    };
-    
-    var left, top;
-    
-    if (pos.indexOf('-left') >= 0) {
-      left = b.left;
-    } else if (pos.indexOf('left') >= 0) {
-      left = b.left - elb.width;
-    } else if (pos.indexOf('-right') >= 0) {
-      left = b.left + b.width - elb.width;
-    } else if (pos.indexOf('right') >= 0) {
-      left = b.left + b.width;
-    } else { // Centered.
-      left = b.left + (b.width - elb.width) / 2;
-    }
-    
-    if (pos.indexOf('-top') >= 0) {
-      top = b.top;
-    } else if (pos.indexOf('top') >= 0) {
-      top = b.top - elb.height;
-    } else if (pos.indexOf('-bottom') >= 0) {
-      top = b.top + b.height - elb.height;
-    } else if (pos.indexOf('bottom') >= 0) {
-      top = b.top + b.height;
-    } else { // Centered.
-      top = b.top + (b.height - elb.height) / 2;
-    }
-    
-    var constrain = (pos.indexOf('no-constraint') >= 0) ? false : true;
-    
-    left += offset.left || 0;
-    top += offset.top || 0;
-    
-    if (constrain) {
-      left = Math.max(scrollLeft, Math.min(left, scrollLeft + clientWidth - elb.width));
-      top = Math.max(scrollTop, Math.min(top, scrollTop + clientHeight - elb.height));
-    }
-    
-    var offParent;
-    if (offParent = el.offsetParent()) {
-      left -= offParent.offset().left;
-      top -= offParent.offset().top;
-    }
-    
-    $(el).css({position : 'absolute', left : left + 'px', top : top + 'px'});
-    return el;
-  },
-
-  // Javascript templating a-la ERB, pilfered from John Resig's 
-  // "Secrets of the Javascript Ninja", page 83.
-  template : function(str, data) {
-    var fn = new Function('obj', 
-      'var p=[],print=function(){p.push.apply(p,arguments);};' +
-      'with(obj){p.push(\'' +
-      str
-        .replace(/[\r\t\n]/g, " ") 
-        .split("<%").join("\t") 
-        .replace(/((^|%>)[^\t]*)'/g, "$1\r") 
-        .replace(/\t=(.*?)%>/g, "',$1,'") 
-        .split("\t").join("');") 
-        .split("%>").join("p.push('") 
-        .split("\r").join("\\'") 
-    + "');}return p.join('');");
-    return data ? fn(data) : fn;  
-  }
-
-});
