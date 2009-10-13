@@ -1,5 +1,5 @@
 // Snagged from Prototype
-window.inflector = {
+window.Inflector = {
   
   camelize: function(s) {
     var parts = s.split('-'), len = parts.length;

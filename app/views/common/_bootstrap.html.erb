@@ -1,5 +1,5 @@
 <script type="text/javascript">
 <% if @current_account %>
-  window.currentAccount = new dc.model.Account(<%= @current_account.as_json %>);
+  window.currentAccount = new dc.model.Account(<%= @current_account.to_json %>);
 <% end %>
 </script>

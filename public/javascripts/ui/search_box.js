@@ -1,5 +1,7 @@
 // The search controller is responsible for managing document/metadata search.
 dc.ui.SearchBox = dc.View.extend({
+  
+  fragment : null,
     
   callbacks : [
     ['el',  'keydown',  'maybeSearch']
@@ -21,9 +23,10 @@ dc.ui.SearchBox = dc.View.extend({
   
   // Start a search for a query string, updating the page URL.
   search : function(query) {
-    if (dc.app.workspace.navigation) dc.app.workspace.navigation.setTab('documents');
+    if (dc.app.workspace.navigation) dc.app.workspace.navigation.tab('documents');
     this.value(query);
-    dc.history.save('search/' + encodeURIComponent(query));
+    this.fragment = 'search/' + encodeURIComponent(query);
+    dc.history.save(this.fragment);
     this.outstandingSearch = true;
     dc.ui.Spinner.show('searching');
     $('.documents').html('');

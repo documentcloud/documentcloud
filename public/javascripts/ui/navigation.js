@@ -5,7 +5,7 @@ dc.ui.Navigation = dc.View.extend({
   currentTab  : null,
   
   callbacks   : [
-    ['el',  'click',  'switchTab']
+    ['el',  'click',  'onTabClick']
   ],
   
   // List of tab names => page titles.
@@ -17,19 +17,24 @@ dc.ui.Navigation = dc.View.extend({
     {name : 'admin',     title : 'Admin'}
   ],
   
+  constructor : function(options) {
+    this.base(options);
+    this.enableTabURLs();
+  },
+  
   // Render the list of tabs that should be shown to the logged-in journalist.
   render : function() {
     var nav = this.el;
     _.each(this.tabs, function(tab) {
       var attrs = {id : tab.name + '_nav', tab : tab.name, title : tab.title, 'class' : 'nav'};
-      $(nav).append($.el('div', attrs, inflector.capitalize(tab.name)));
+      $(nav).append($.el('div', attrs, Inflector.capitalize(tab.name)));
     });
     this.setCallbacks();
     return this;
   },
   
   // Switch to a tab by name.
-  setTab : function(tab) {
+  tab : function(tab) {
     if (this.currentTab == tab) return;
     this.currentTab = tab;
     var el = $('#' + tab + '_nav', this.el);
@@ -40,9 +45,21 @@ dc.ui.Navigation = dc.View.extend({
   },
   
   // Switch to a tab as an event callback.
-  switchTab : function(e) {
+  onTabClick : function(e) {
     if (!$(e.target).hasClass('nav')) return;
-    this.setTab($(e.target).attr('tab'));
+    var tab = $(e.target).attr('tab');
+    var box = dc.app.searchBox;
+    var fragment = tab == 'documents' && box.fragment ? box.fragment : tab;
+    dc.history.save(fragment);
+    this.tab(tab);
+  },
+  
+  // Add all of the tabs as history handlers.
+  enableTabURLs : function() {
+    var me = this;
+    _.each(_.pluck(this.tabs, 'name'), function(tab) {
+      dc.history.register(new RegExp('^#' + tab + '\\b'), _.bind(me.tab, me, tab));
+    });
   },
   
   // Set the title of the page (both in HTML and the browser window).

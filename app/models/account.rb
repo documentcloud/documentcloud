@@ -43,7 +43,7 @@ class Account < ActiveRecord::Base
   end
   
   def as_json(opts={})
-    CLIENT_SIDE_ATTRIBUTES.inject({}) {|h, name| h[name] = send(name); h }.to_json
+    CLIENT_SIDE_ATTRIBUTES.inject({}) {|h, name| h[name] = send(name); h }
   end
   
 end
