@@ -39,13 +39,13 @@ $.extend({
     var b = {
       left : targOff.left - scrollLeft,
       top : targOff.top - scrollTop,
-      width : target.width(),
-      height : target.height()
+      width : target.innerWidth(),
+      height : target.innerHeight()
     };
     
     var elb = {
-      width : el.width(),
-      height : el.height()
+      width : el.innerWidth(),
+      height : el.innerHeight()
     };
     
     var left, top;

@@ -83,6 +83,9 @@ a {
   body.logged_in .sidebar {
     top: 50px;
   }
+    body.accounts_navigation .sidebar {
+      display: none;
+    }
   .sidebar_background {
     position: absolute;
     top: 21px; bottom: 21px;
@@ -121,6 +124,9 @@ a {
   body.logged_in .panel_container {
     top: 50px;
   }
+    body.accounts_navigation .panel_container {
+      left: 10px;
+    }
   .panel_background {
     position: absolute;
     left: 0px; right: 0px; top: 21px; bottom: 0px; 

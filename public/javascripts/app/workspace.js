@@ -14,6 +14,7 @@ _.extend(dc.app.workspace, {
   // Create all of the requisite subviews.
   createSubViews : function() {
     dc.app.searchBox  = new dc.ui.SearchBox();
+    dc.app.notifier   = new dc.ui.Notifier();
     this.sidebar      = new dc.ui.Sidebar();
     this.panel        = new dc.ui.Panel();
     
@@ -21,7 +22,7 @@ _.extend(dc.app.workspace, {
     
     dc.app.navigation = new dc.ui.Navigation();
     this.uploadForm   = new dc.ui.DocumentUpload();
-    this.accountBadge = new dc.ui.AccountBadge(currentAccount);
+    this.accountBadge = new dc.ui.AccountView(currentAccount, 'badge');
     this.accountList  = new dc.ui.AccountList();
   },
   

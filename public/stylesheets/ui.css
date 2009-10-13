@@ -25,11 +25,11 @@ span.text_input {
 /*------------------------------ Error Messages ------------------------------*/
 .form_error {
   position: relative;
-  color: #844;
-  text-transform: uppercase;
-  font: 10px Arial;
 }
-  .form_error > span {
+  .form_error > span, #notifier {
+    color: #844;
+    text-transform: uppercase;
+    font: 10px Arial;
     padding: 5px 10px;
     border: 1px solid #aa7766;
     background: #555;
@@ -38,3 +38,8 @@ span.text_input {
     display: inline;
     -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
   }
+  
+#notifier {
+  position: absolute;
+  display: none;
+}

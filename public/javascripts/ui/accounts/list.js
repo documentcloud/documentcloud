@@ -1,7 +1,8 @@
 dc.ui.AccountList = dc.View.extend({
   
-  id : 'account_list',
+  id        : 'account_list',
   className : 'panel',
+  rendered  : false,
   
   constructor : function(options) {
     this.base(options);
@@ -10,10 +11,15 @@ dc.ui.AccountList = dc.View.extend({
   },
   
   renderAccounts : function() {
-    var el = $(this.el);
+    if (this.rendered) return;
+    this.rendered = true;
+    $(this.el).append(dc.templates.ACCOUNT_LIST({}));
+    var content = $('#account_list_content', this.el);
     if (Accounts.empty()) Accounts.fetch(function() {
       Accounts.each(function(account) {
-        el.append(account.toString());
+        var row = new dc.ui.AccountView(account, 'row');
+        window.row = row;
+        content.append(row.render().el);
       });
     });
   }

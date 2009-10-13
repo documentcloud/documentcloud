@@ -1,4 +1,4 @@
-.account_badge {
+.account_view.badge {
   position: absolute;
   top: 9px; left: 11px;
   background: #9f9f9f;
@@ -6,24 +6,68 @@
   border: 1px solid #909090;
   -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
 }
-  .account_badge img.avatar {
+  .account_view.badge img.avatar {
     position: absolute;
     border: 1px solid #aaa;
   }
-  .account_badge .textual {
+  .account_view.badge .textual {
     font: 10px/22px Arial;
     color: #454545;
     margin-left: 28px;
   }
-    .account_badge .pipe {
+    .account_view.badge .pipe {
       color: #666;
     }
-    .account_badge .textual a {
+    .account_view.badge .textual a {
       color: #353566;
     }
-      .account_badge .textual a:hover {
+      .account_view.badge .textual a:hover {
         text-decoration: underline;
       }
       
 #account_list {
+  top: 0;
+  padding: 0;
 }
+  #account_list table {
+    width: 100%;
+  }
+    #account_list td, #account_list th {
+      padding-left: 20px;
+    }
+      #account_list .first { width: 0%; padding-right: 0; }
+      #account_list .name  { width: 20%; }
+      #account_list .email { width: 20%; }
+      #account_list .last  { width: 60%; }
+      #account_list th {
+        text-transform: uppercase;
+        color: #777;
+        font-size: 10px;
+        line-height: 21px;
+      }
+      #account_list td {
+        padding: 10px 25px 10px 20px;
+        vertical-align: middle;
+      }
+    #account_list tbody tr {
+      background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#dfdfdf));
+    }
+      #account_list tbody td {
+        border-bottom: 1px solid #bbb;
+        font: 14px/11px Arial;
+        color: #333;
+      }
+        #account_list tbody td.edit span {
+          display: none;
+          cursor: pointer;
+          text-decoration: underline;
+          color: #353566;
+        }
+          #account_list tbody tr:hover td.edit span {
+            display: inline;
+          }
+    #account_list tfoot button {
+      position: relative;
+      left: -6px;
+    }
+      
