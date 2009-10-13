@@ -45,6 +45,15 @@ dc.Set = Base.extend({
     return this._size;
   },
   
+  // Is the set empty?
+  empty : function() {
+    return this._size <= 0;
+  },
+  
+  each : function(iterator, context) {
+    return _.each(this.values(), iterator, context);
+  },
+  
   // Is a given model already present in the set?
   include : function(model) {
     return !!this._byId[model.id];

@@ -18,10 +18,6 @@
 .document_list {
 }
   .documents {
-    position: absolute;
-    overflow-y: auto;
-    top: 21px; left: 0px; right: 0px; bottom: 0px;
-    padding: 10px;
   }
     .document_list.large_size .documents {
       padding-right: 30px;

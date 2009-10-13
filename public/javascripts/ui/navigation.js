@@ -1,10 +1,11 @@
 // A tabbed navigation bar, relying on CSS rules to hide and show tabs.
 dc.ui.Navigation = dc.View.extend({
   
-  id          : 'navigation',
-  currentTab  : null,
+  id            : 'navigation',
+  currentTab    : null,
+  tabCallbacks  : {},
   
-  callbacks   : [
+  callbacks : [
     ['el',  'click',  'onTabClick']
   ],
   
@@ -16,7 +17,7 @@ dc.ui.Navigation = dc.View.extend({
     {name : 'visualize', title : 'Visualize'}, 
     {name : 'admin',     title : 'Admin'}
   ],
-  
+    
   constructor : function(options) {
     this.base(options);
     this.enableTabURLs();
@@ -33,10 +34,17 @@ dc.ui.Navigation = dc.View.extend({
     return this;
   },
   
+  // Register tab changes to trigger callbacks.
+  register : function(tabName, callback) {
+    this.tabCallbacks[tabName] = this.tabCallbacks[tabName] || [];
+    this.tabCallbacks[tabName].push(callback);
+  },
+  
   // Switch to a tab by name.
   tab : function(tab) {
     if (this.currentTab == tab) return;
     this.currentTab = tab;
+    if (this.tabCallbacks[tab]) _.invoke(this.tabCallbacks[tab]);
     var el = $('#' + tab + '_nav', this.el);
     $('.nav', this.el).removeClass('active');
     el.addClass('active');

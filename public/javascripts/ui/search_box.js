@@ -23,7 +23,7 @@ dc.ui.SearchBox = dc.View.extend({
   
   // Start a search for a query string, updating the page URL.
   search : function(query) {
-    if (dc.app.workspace.navigation) dc.app.workspace.navigation.tab('documents');
+    if (dc.app.navigation) dc.app.navigation.tab('documents');
     this.value(query);
     this.fragment = 'search/' + encodeURIComponent(query);
     dc.history.save(this.fragment);

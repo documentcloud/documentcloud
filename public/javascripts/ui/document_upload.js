@@ -1,7 +1,7 @@
 // The Sidebar. Switches contexts between different subviews.
 dc.ui.DocumentUpload = dc.View.extend({
   
-  className : 'document_upload',
+  className : 'document_upload panel',
   
   render : function() {
     var params = {organization : currentAccount.get('organization_name')};

@@ -7,7 +7,7 @@ _.extend(dc.app.workspace, {
     this.el = $('body')[0];
     this.createSubViews();
     this.renderSubViews();
-    if (this.navigation) this.navigation.tab('documents');
+    if (dc.app.navigation) dc.app.navigation.tab('documents');
     dc.history.loadURL();
   },
   
@@ -16,10 +16,13 @@ _.extend(dc.app.workspace, {
     dc.app.searchBox  = new dc.ui.SearchBox();
     this.sidebar      = new dc.ui.Sidebar();
     this.panel        = new dc.ui.Panel();
+    
     if (!window.currentAccount) return;
-    this.navigation   = new dc.ui.Navigation();
+    
+    dc.app.navigation = new dc.ui.Navigation();
     this.uploadForm   = new dc.ui.DocumentUpload();
     this.accountBadge = new dc.ui.AccountBadge(currentAccount);
+    this.accountList  = new dc.ui.AccountList();
   },
   
   // Render all of the existing subviews and place them in the DOM.
@@ -27,9 +30,13 @@ _.extend(dc.app.workspace, {
     var content   = $('#content');
     content.append(this.sidebar.render().el);
     content.append(this.panel.render().el);
-    if (this.uploadForm) this.uploadForm.render();
-    if (this.navigation) content.append(this.navigation.render().el);
-    if (this.accountBadge) content.append(this.accountBadge.render().el);
+    
+    if (!window.currentAccount) return;
+    
+    this.uploadForm.render();
+    this.panel.add('accounts_panel', this.accountList.render().el);
+    content.append(dc.app.navigation.render().el);
+    content.append(this.accountBadge.render().el);
   }
   
 });

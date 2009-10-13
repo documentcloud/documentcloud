@@ -1,12 +1,7 @@
 // The main central panel. Switches contexts between different subviews.
 dc.ui.Panel = dc.View.extend({
   
-  className : 'panel',
-  
-  // constructor : function(options) {
-  //   this.base(options);
-  //   $(this.el).addClass('large_size');
-  // },
+  className : 'panel_container',
   
   render : function() {
     $(this.el).html(dc.templates.WORKSPACE_PANEL({}));
@@ -14,8 +9,8 @@ dc.ui.Panel = dc.View.extend({
     return this;
   },
   
-  add : function(view) {
-    this.content.append(view);
+  add : function(containerName, view) {
+    $('#' + containerName + '_container', this.el).append(view);
   }
   
 });

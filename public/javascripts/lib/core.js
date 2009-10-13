@@ -114,7 +114,7 @@ window._ = {
   invoke : function(obj, method) {
     var args = _.toArray(arguments).slice(2);
     return _.map(obj, function(value) {
-      return value[method].apply(value, args);
+      return (method ? value[method] : value).apply(value, args);
     });
   },
   
