@@ -1,7 +1,7 @@
-<img class="avatar" src="<%= imageURL %>" width="<%= size %>" height="<%= size %>" />
+<img class="avatar" src="<%= account.gravatarURL(size) %>" width="<%= size %>" height="<%= size %>" />
 <div class="textual">
   <div class="name">
-    <%= first_name %> <%= last_name %>
+    <%= account.fullName(true) %>
     <span class="pipe">&nbsp;|&nbsp;</span>
     <a href="/logout">Log Out</a>
   </div>

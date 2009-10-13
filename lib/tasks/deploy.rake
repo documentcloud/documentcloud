@@ -6,7 +6,7 @@ task :deploy do
   todo << 'rake staging crowd:server:stop app:stop'
   todo << 'rm -r public/assets'
   todo << 'git pull'
-  todo << 'rake staging crowd:server:start app:start'
+  todo << 'rake staging db:migrate crowd:server:start app:start'
   system "ssh -t -i /Users/jashkenas/Desktop/id-documentcloud-staging root@75.101.222.118 '#{todo.join(' && ')}'"
   
   # Then the CloudCrowd worker server.

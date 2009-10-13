@@ -1,3 +1,8 @@
+span[role="link"] {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 /*------------------------------ Text Inputs ---------------------------------*/
 span.text_input {
   display: block;

@@ -113,3 +113,15 @@ $.extend({
   }
 
 });
+
+$.fn.extend({
+  
+  // A-la serializeArray but returns a hash instead of a list.
+  serializeJSON : function() {
+    return _.inject(this.serializeArray(), {}, function(hash, pair) {
+      hash[pair.name] = pair.value;
+      return hash;
+    });
+  }
+  
+});

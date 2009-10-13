@@ -18,11 +18,11 @@ _.extend(dc.app.workspace, {
     this.sidebar      = new dc.ui.Sidebar();
     this.panel        = new dc.ui.Panel();
     
-    if (!window.currentAccount) return;
+    if (!dc.app.accountId) return;
     
     dc.app.navigation = new dc.ui.Navigation();
     this.uploadForm   = new dc.ui.DocumentUpload();
-    this.accountBadge = new dc.ui.AccountView(currentAccount, 'badge');
+    this.accountBadge = new dc.ui.AccountView(Accounts.current(), 'badge');
     this.accountList  = new dc.ui.AccountList();
   },
   
@@ -32,7 +32,7 @@ _.extend(dc.app.workspace, {
     content.append(this.sidebar.render().el);
     content.append(this.panel.render().el);
     
-    if (!window.currentAccount) return;
+    if (!dc.app.accountId) return;
     
     this.uploadForm.render();
     this.panel.add('accounts_panel', this.accountList.render().el);

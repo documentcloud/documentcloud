@@ -14,7 +14,7 @@ dc.Model = Base.extend({
     this._attributes = {};
     attributes = attributes || {};
     attributes.id = attributes.id || -_.uniqueId();
-    this.set(attributes);
+    this.set(attributes, true);
     this.cid = _.uniqueId('c');
     this._changed - false;
     this._formerAttributes = this.attributes();
@@ -36,7 +36,6 @@ dc.Model = Base.extend({
     this.fire(dc.Model.CHANGED, this);
     this._formerAttributes = this.attributes();
     this._changed = false;
-    this._changedAttributes = false;
   },
   
   // Determine if the model has changed since the last CHANGED event.
@@ -53,11 +52,6 @@ dc.Model = Base.extend({
     return this._formerAttributes[attr];
   },
   
-  // Removes the former state, setting it to the state of the current attributes.
-  resetFormerAttributes : function() {
-    this._formerAttributes = this.attributes();
-  },
-  
   // Get all of the attributes of the model at the time of the previous 
   // CHANGED event.
   formerAttributes : function() {
@@ -68,24 +62,27 @@ dc.Model = Base.extend({
   // for determining what parts of a view need to be updated and/or what
   // attributes need to be persisted to the server.
   changedAttributes : function() {
-    if (!this._formerAttributes) {
-      var old = this.formerAttributes(), now = this.attributes();
-      var changed = this._changedAttributes = {};
-      for (var attr in now) {
-        if (!_.isEqual(old[attr], now[attr])) changed[attr] = now[attr];
-      }
+    var old = this.formerAttributes(), now = this.attributes(), changed = {};
+    for (var attr in now) {
+      if (!_.isEqual(old[attr], now[attr])) changed[attr] = now[attr];
     }
-    return this._changedAttributes;
+    return changed;
   },
   
   // Set a hash of model attributes on the object, firing CHANGED unless you
   // choose to silence it.
-  set : function(obj, silent) {
-    if (!obj) return;
-    obj = obj._attributes || obj;
-    for (var attr in obj) this._attributes[attr] = obj[attr];
-    if (obj.id) this.id = obj.id;
-    if (!silent) this.changed();
+  set : function(next, silent) {
+    if (!next) return this;
+    next = next._attributes || next;
+    var now = this._attributes;
+    for (var attr in next) {
+      if (!_.isEqual(now[attr], next[attr])) {
+        if (!silent) this._changed = true;
+        now[attr] = next[attr];
+      }
+    }
+    if (next.id) this.id = next.id;
+    if (!silent && this._changed) this.changed();
     return this;
   },
   

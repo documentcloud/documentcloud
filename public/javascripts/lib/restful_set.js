@@ -15,12 +15,15 @@ dc.model.RESTfulSet = dc.Set.extend({
   },
   
   // Create a model on the server and add it to the set.
+  // When the server returns a JSON representation of the model, we update it
+  // on the client.
   create : function(model) {
     $.ajax({
       url       : '/' + this.resource,
       type      : 'POST',
       data      : model.attributes(),
       dataType  : 'json'
+      // success   : function(attributes) { model.set(attributes); }
     });
     this.add(model);
   },
@@ -36,15 +39,18 @@ dc.model.RESTfulSet = dc.Set.extend({
     this.remove(model);
   },
   
-  // Update a model on the server and the client.
+  // Update a model on the server and (optionally) the client.
+  // Pass only a model to persist its current attributes to the server.
   update : function(model, attributes) {
+    var changeAttributes = !!attributes;
+    attributes = attributes || model.attributes();
     $.ajax({
       url       : '/' + this.resource + '/' + model.id,
       type      : 'POST',
       data      : _.extend(attributes, {_method : 'put'}),
       dataType  : 'json'
     });
-    model.set(attributes);
+    if (changeAttributes) model.set(attributes);
   }
     
 });

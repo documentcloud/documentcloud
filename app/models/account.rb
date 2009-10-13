@@ -1,8 +1,9 @@
 class Account < ActiveRecord::Base
   
   belongs_to :organization
+  has_one :security_key, :as => :securable, :dependent => :destroy
   
-  validates_presence_of   :first_name, :last_name, :email, :hashed_password
+  validates_presence_of   :first_name, :last_name, :email
   validates_format_of     :email, :with => DC::Validators::EMAIL
   validates_uniqueness_of :email
   

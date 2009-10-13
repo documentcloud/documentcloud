@@ -19,6 +19,14 @@ class ApplicationController < ActionController::Base
     render :json => obj, :status => status
   end
   
+  # Select only a sub-set of passed parameters. Useful for whitelisting 
+  # attributes from the params hash before performing a mass-assignment.
+  def pick_params(*keys)
+    filtered = {}
+    params.each {|key, value| filtered[key] = value if keys.include?(key.to_sym) }
+    filtered
+  end
+  
   def logged_in?
     session['account_id'] && session['organization_id']
   end 

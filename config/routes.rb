@@ -47,6 +47,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :documents, 
                 :collection => {:metadata => :get},
                 :member => {:thumbnail => :get}
+                
+  map.resources :accounts
   
   # See how all your routes lay out with "rake routes"
 

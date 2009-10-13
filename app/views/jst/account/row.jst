@@ -1,14 +1,37 @@
 <td class="first">
-  <img class="avatar" src="<%= imageURL %>" width="<%= size %>" height="<%= size %>" />
+  <img class="avatar" src="<%= account.gravatarURL(size) %>" width="<%= size %>" height="<%= size %>" />
 </td>
 <td class="name">
-  <%= first_name %> <%= last_name %>
+  <span class="display"><%= account.fullName(true) %></span>
+  <div class="edit name_wrapper">
+    <span class="text_input">
+      <span>
+        <input name="first_name" type="text" placeholder="first name" value="<%= account.get('first_name') %>" />
+      </span>
+    </span>
+    <span class="text_input">
+      <span>
+        <input name="last_name" type="text" placeholder="last name" value="<%= account.get('last_name') %>" />
+      </span>
+    </span>
+  </div>
 </td>
 <td class="email">
-  <a href="mailto:<%= email %>" title="send email to <%= email %>">
+  <a href="mailto:<%= email %>" title="send email to <%= email %>" class="display">
     <%= email %>
   </a>
+  <span class="text_input edit">
+    <span>
+      <input name="email" type="text" placeholder="email" value="<%= email %>" />
+    </span>
+  </span>
 </td>
-<td class="edit last">
-  <span class="edit_account">edit</span>
+<td class="last">
+  <span class="edit_account display" role="link">edit</span>
+  <div class="edit controls_wrapper">
+    <button class="save_changes">ok</button>
+    <% if (account.id && account.id > 0 && account.id != dc.app.accountId) { %>
+      <span class="delete_account" role="link">delete</span>
+    <% } %>
+  </div>
 </td>

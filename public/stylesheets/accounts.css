@@ -33,12 +33,12 @@
     width: 100%;
   }
     #account_list td, #account_list th {
-      padding-left: 20px;
+      padding-left: 15px;
     }
       #account_list .first { width: 0%; padding-right: 0; }
-      #account_list .name  { width: 20%; }
-      #account_list .email { width: 20%; }
-      #account_list .last  { width: 60%; }
+      #account_list .name  { width: 0%; }
+      #account_list .email { width: 0%; }
+      #account_list .last  { width: 100%; }
       #account_list th {
         text-transform: uppercase;
         color: #777;
@@ -46,28 +46,61 @@
         line-height: 21px;
       }
       #account_list td {
-        padding: 10px 25px 10px 20px;
+        padding: 10px 25px 10px 15px;
         vertical-align: middle;
       }
+        #account_list tbody td {
+          border-bottom: 1px solid #bbb;
+          font: 14px/11px Arial;
+          height: 36px;
+          color: #333;
+        }
     #account_list tbody tr {
       background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#dfdfdf));
     }
-      #account_list tbody td {
-        border-bottom: 1px solid #bbb;
-        font: 14px/11px Arial;
-        color: #333;
-      }
-        #account_list tbody td.edit span {
-          display: none;
-          cursor: pointer;
-          text-decoration: underline;
-          color: #353566;
-        }
-          #account_list tbody tr:hover td.edit span {
-            display: inline;
-          }
     #account_list tfoot button {
       position: relative;
       left: -6px;
     }
-      
+#account_list tr .edit, #account_list tr .display {
+  display: none;
+}
+#account_list tr.edit_view .edit, #account_list tr.display_view .display {
+  display: block;
+}
+#account_list .text_input {
+  width: 200px;
+}
+  #account_list .text_input input[type="text"] {
+    font: 14px/18px Arial;
+  }
+#account_list .name_wrapper {
+  min-width: 215px;
+}
+  #account_list .name_wrapper .text_input {
+    display: inline-block;
+    width: 100px;
+  }
+    #account_list .name_wrapper .text_input:first-child {
+      margin-right: 10px;
+    }
+#account_list .controls_wrapper {
+  min-width: 100px;
+}
+#account_list span.edit_account {
+  opacity: 0;
+  -webkit-transition: opacity 0.2s linear;
+  color: #353566;
+}
+  #account_list tbody tr:hover span.edit_account {
+    opacity: 1;
+  }
+#account_list button.save_changes {
+  display: inline-block;
+  position: relative;
+  left: -6px;
+}
+#account_list span.delete_account {
+  display: inline-block;
+  color: #774433;
+}

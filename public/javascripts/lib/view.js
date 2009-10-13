@@ -54,9 +54,9 @@ dc.View = Base.extend({
   // event-name, callback-name] triplets. Callbacks will be bound to the view,
   // with 'this' set properly. Passing a selector of 'el' binds to the view's
   // element.
-  setCallbacks : function() {
+  setCallbacks : function(callbacks) {
     var me = this;
-    _.each(this.callbacks, function(triplet) {
+    _.each(callbacks || this.callbacks, function(triplet) {
       var selector = triplet[0], ev = triplet[1], methodName = triplet[2];
       var method = _.bind(me[methodName], me);
       (selector == 'el' ? $(me.el) : $(selector, me.el)).bind(ev, method);
