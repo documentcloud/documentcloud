@@ -1,0 +1,24 @@
+<%
+  @title      = "Enable Account"
+  @bodyclass  = "full_screen_form"
+%>
+
+<div id="full_screen_form">
+  <form action="/accounts/enable/<%= params[:key] %>" method="POST">
+    <h1>Enable your DocumentCloud Account</h1>
+    <% if @failure %>
+      <div class="form_error">
+        <span>The account is invalid, or has already been activated</span>
+      </div>
+    <% end %>
+    <div class="line">
+      <span class="text_input"><span><input type="password" name="password" id="account_password" /></span></span>
+      <label for="account_password">
+        Set Password:<br /><span class="example">Use this password to log in</span>
+      </label>
+    </div>
+    <div class="line">
+      <button class="default">Log In</button>
+    </div>
+  </form>
+</div>

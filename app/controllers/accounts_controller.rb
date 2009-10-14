@@ -1,7 +1,18 @@
 class AccountsController < ApplicationController
-  layout nil
+  layout 'workspace'
   
   before_filter :login_required
+  
+  def enable
+    return render if request.get?
+    key = SecurityKey.find_by_key(params[:key])
+    @failure = true and return render unless key
+    account = key.securable
+    account.password = params[:password]
+    account.save
+    account.authenticate(session)
+    redirect_to '/workspace'
+  end
   
   def index
     json 'accounts' => current_organization.accounts
@@ -10,7 +21,7 @@ class AccountsController < ApplicationController
   def create
     attributes = pick_params(:first_name, :last_name, :email)
     account = current_organization.accounts.create(attributes)
-    account.create_security_key
+    account.send_login_instructions
     json account
   end
   

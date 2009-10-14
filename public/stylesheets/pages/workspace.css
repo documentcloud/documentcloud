@@ -158,7 +158,6 @@ a {
 
 #full_screen_form {
   position: absolute;
-  text-align: center;
   overflow: auto;
   top: 0; left: 0; right: 0; bottom: 0;
   background: #f2f2f2;
@@ -168,6 +167,7 @@ a {
     padding: 50px 0 0 0;
   }
     #full_screen_form h1 {
+      text-align: center;
       color: #566eaa;
       font: bold 24px Arial;
       text-shadow: 0px 1px 1px #fff;
@@ -217,8 +217,8 @@ a {
       }
       #full_screen_form button {
         position: relative;
+        left: 195px;
         margin: 0;
-        left: -42px;
       }
 
 .panel_container .document_upload.panel {

@@ -82,10 +82,11 @@ dc.ui.AccountView = dc.View.extend({
     this.setMode('display', 'view');
     model.set(resp);
     if (newAccount) dc.ui.notifier.show({
-      text : 'account created. email sent to ' + model.get('email'),
-      mode : 'info',
-      anchor : $('td.last', this.el), 
-      position : '-left'
+      text      : 'login email sent to ' + model.get('email'),
+      duration  : 5000,
+      mode      : 'info',
+      anchor    : $('td.last', this.el), 
+      position  : '-left'
     });
   },
   
@@ -94,10 +95,11 @@ dc.ui.AccountView = dc.View.extend({
     dc.ui.spinner.hide();
     this.showEdit();
     dc.ui.notifier.show({
-      text : resp.errors[0], 
-      anchor : $('button', this.el), 
-      position : 'right', 
-      left : 18, top : 2
+      text      : resp.errors[0], 
+      anchor    : $('button', this.el), 
+      position  : 'right', 
+      left      : 18, 
+      top       : 2
     });
   }
   

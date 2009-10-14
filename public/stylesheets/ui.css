@@ -30,6 +30,7 @@ span.text_input {
 /*------------------------------ Error Messages ------------------------------*/
 .form_error {
   position: relative;
+  text-align: center;
 }
   .form_error > span, #notifier {
     color: #844;

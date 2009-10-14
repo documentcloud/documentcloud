@@ -1,7 +1,6 @@
 dc.ui.Notifier = dc.View.extend({
   
   id : 'notifier',
-  duration : 2000,
   
   callbacks : [
     ['el',   'click',  'hide']
@@ -22,7 +21,7 @@ dc.ui.Notifier = dc.View.extend({
     this.setMode(options.mode, 'style');
     $(this.el).text(options.text).fadeIn('fast');
     $.align(this.el, options.anchor, options.position, options);
-    if (!options.leaveOpen) setTimeout(this.hide, this.duration);
+    if (!options.leaveOpen) setTimeout(this.hide, options.duration);
   },
   
   hide : function() {
@@ -36,6 +35,7 @@ dc.ui.Notifier = dc.View.extend({
       text      : 'ok',
       left      : 0,
       top       : 0,
+      duration  : 2000,
       leaveOpen : false,
       mode      : 'warn'
     };

@@ -27,6 +27,17 @@ class Account < ActiveRecord::Base
     self
   end
   
+  # When an account is created by a third party, send an email with a secure
+  # key to set the password.
+  def send_login_instructions
+    create_security_key
+    LifecycleMailer.deliver_login_instructions(self)
+  end
+  
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+  
   # MD5 hash of processed email address, for use in Gravatar URLs.
   def hashed_email
     @hashed_email ||= Digest::MD5.hexdigest(email.downcase.gsub(/\s/, ''))

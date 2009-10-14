@@ -49,6 +49,9 @@ ActionController::Routing::Routes.draw do |map|
                 :member => {:thumbnail => :get}
                 
   map.resources :accounts
+  map.with_options :controller => 'accounts' do |accounts|
+    accounts.enable '/accounts/enable/:key', :action => 'enable'
+  end
   
   # See how all your routes lay out with "rake routes"
 
