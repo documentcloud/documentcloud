@@ -43,6 +43,11 @@ module DC
         results.map {|r| Document.new('id' => r) }
       end
       
+      # Get a list of every single document id in the database.
+      def document_ids
+        open_for_reading {|store| store.keys }
+      end
+      
       # Delete a document's entry from the store.
       def destroy(document)
         open_for_writing {|store| store.delete(document.id) }
