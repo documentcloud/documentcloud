@@ -35,7 +35,7 @@ class ImportController < ApplicationController
           :title                => result['title'],
           :organization_id      => result['organization_id'],
           :account_id           => result['account_id'],
-          :access               => result['access'],
+          :access               => result['access'] || DC::Access::PUBLIC,
           :source               => result['source'] || Faker::Company.name,          
           :pdf_path             => result['pdf_url'],
           :full_text            => fetch_contents(result['full_text_url']),
@@ -43,9 +43,12 @@ class ImportController < ApplicationController
           :thumbnail_path       => result['thumbnail_url'],
           :small_thumbnail_path => result['small_thumbnail_url']
         })
-        DC::Import::MetadataExtractor.new.extract_metadata(doc)
-        doc.save
-        logger.info "Import: #{name} saved"
+        # The complete save, from before when CloudCrowd handled the metadata.
+        # DC::Import::MetadataExtractor.new.extract_metadata(doc)
+        # doc.save
+        DC::Store::AssetStore.new.save_document(doc)
+        DC::Store::EntryStore.new.save(doc)
+        logger.info "Import: #{name} saved entry and assets"
       end
       DC::Store::FullTextStore.new.index
       RestClient.delete DC_CONFIG['cloud_crowd_server'] + "/jobs/#{job['id']}"

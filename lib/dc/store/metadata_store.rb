@@ -17,6 +17,12 @@ module DC
       
       PROBABLY_AN_ACRONYM = /\A[A-Z]{2,6}\Z/
       
+      # Creating a MetadataStore sets the host and port.
+      def initialize
+        @host, @port = DC_CONFIG['metadata_store'].split(':')
+        @port = @port.to_i
+      end
+      
       def save_to(store, metadatum)
         hash = metadatum.to_hash
         id = hash.delete('id')
@@ -92,10 +98,6 @@ module DC
       # Compute the path to the Tokyo Cabinet Table store on disk.
       def path
         "#{RAILS_ROOT}/db/#{RAILS_ENV}_metadata.tct"
-      end
-      
-      def port
-        DC_CONFIG['metadata_store_port']
       end
       
       # Delete the metadata store entirely. And its indices.

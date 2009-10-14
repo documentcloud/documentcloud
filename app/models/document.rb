@@ -1,5 +1,4 @@
 class Document
-  include ActionView::Helpers::TextHelper
   
   ENTRY_ATTRIBUTES = [:author, :created_at, :date, :id, :language, :source, 
                       :summary, :title, :calais_request_id, :thumbnail_path,
@@ -119,7 +118,7 @@ class Document
   end
   
   def inspect
-    identifier = @title ? "\"#{truncate(@title, 50)}\"" : "##{@id}"
+    identifier = @title ? "\"#{@title}\"" : "##{@id}"
     "#<Document #{identifier}>"
   end
   

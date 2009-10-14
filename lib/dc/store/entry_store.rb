@@ -10,6 +10,12 @@ module DC
     class EntryStore
       include DC::Store::TokyoTyrantTable
       
+      # Creating an EntryStore sets the host and port.
+      def initialize
+        @host, @port = DC_CONFIG['entry_store'].split(':')
+        @port = @port.to_i
+      end
+      
       # Save a document's entry attributes.
       def save(document)
         open_for_writing do |store|
@@ -56,10 +62,6 @@ module DC
       # Compute the path to the Tokyo Cabinet Table store on disk.
       def path
         "#{RAILS_ROOT}/db/#{RAILS_ENV}_entries.tct"
-      end
-      
-      def port
-        DC_CONFIG['entry_store_port']
       end
       
       # Delete the entry store entirely.

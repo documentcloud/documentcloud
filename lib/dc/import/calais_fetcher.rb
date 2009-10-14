@@ -33,7 +33,7 @@ module DC
         client = Calais::Client.new(
           :content                        => text,
           :content_type                   => :text,
-          :license_id                     => defined?(CALAIS_LICENSE) ? CALAIS_LICENSE : SECRETS['calais_license'],
+          :license_id                     => SECRETS['calais_license'],
           :allow_distribution             => false,
           :allow_search                   => false,
           :submitter                      => "DocumentCloud (development)",
