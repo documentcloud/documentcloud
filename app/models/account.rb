@@ -9,6 +9,7 @@ class Account < ActiveRecord::Base
   
   delegate :name, :to => :organization, :prefix => true
   
+  # A whitelist of Account attributes that should be sent down to the client.
   CLIENT_SIDE_ATTRIBUTES = %w(
     id first_name last_name email hashed_email organization_id organization_name
   )
