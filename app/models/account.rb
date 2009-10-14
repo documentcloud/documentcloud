@@ -39,6 +39,10 @@ class Account < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
   
+  def rfc_email
+    "\"#{full_name}\" <#{email}>"
+  end
+  
   # MD5 hash of processed email address, for use in Gravatar URLs.
   def hashed_email
     @hashed_email ||= Digest::MD5.hexdigest(email.downcase.gsub(/\s/, ''))

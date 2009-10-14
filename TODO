@@ -2,9 +2,7 @@ TODO:
     
   * Build out surrounding start page blips... About Us, How to Join, 
     What is This?
-      
-  * Create a News Organization "Manage Journalists" page.
-  
+        
   * Replace raw PDF link with a DocumentViewer.
     
   * Fix up Sphinx search to use delta indexes (and sharded indexes, perhaps), 
@@ -37,11 +35,15 @@ TODO:
   
   * Blog the dc.app.History class.
   
+  * Badge the not-yet-password'd accounts with some icon.
+  
   * Pull all docs from: http://www.aclu.org/accountability/released. and
     http://projects.nytimes.com/guantanamo into staging.
   
 
 DONE:
+
+  * Create a News Organization "Manage Journalists" page. (The Accounts tab)
 
   * Make a flexible JS class for tabbed page sections.
 
