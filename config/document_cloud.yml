@@ -9,7 +9,7 @@ development:
   
 staging:
   <<: *defaults
-  cloud_crowd_server:   http://staging.dcloud.org:9173
+  cloud_crowd_server:   http://staging.dcloud.org:8080
   server_root:          http://staging.dcloud.org
   
 test:
