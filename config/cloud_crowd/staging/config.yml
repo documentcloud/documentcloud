@@ -1,5 +1,5 @@
 # The URL where you're planning on running the central server/queue/database.
-:central_server:      http://staging.dcloud.org:9173
+:central_server:      http://staging.dcloud.org:8080
 
 # The following settings allow you to control the number of workers that can run
 # on a given node, to prevent the node from becoming overloaded. 'max_workers' 

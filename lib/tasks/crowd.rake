@@ -8,7 +8,8 @@ namespace :crowd do
       end
       
       task :start do
-        sh "crowd -c config/cloud_crowd/#{RAILS_ENV} -d #{resource} start"
+        port = (RAILS_ENV == 'staging' && resource == :server) ? '-p 8080' : ''
+        sh "crowd -c config/cloud_crowd/#{RAILS_ENV} #{port} -d #{resource} start"
       end
       
     end

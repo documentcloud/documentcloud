@@ -2,6 +2,7 @@ class AccountsController < ApplicationController
   layout 'workspace'
   
   before_filter :login_required, :except => [:enable]
+  before_filter :bouncer, :only => [:enable] unless Rails.development?
   
   def enable
     return render if request.get?
