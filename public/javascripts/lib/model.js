@@ -30,6 +30,12 @@ dc.Model = Base.extend({
     return other && _.isEqual(this._attributes, other._attributes);
   },
   
+  // A model is new if it has never been saved to the server, and has a negative
+  // ID.
+  isNew : function() {
+    return this.id < 0;
+  },
+  
   // Call this method to fire manually fire a CHANGED event for this model.
   // Calling this will cause all objects observing the model to update.
   changed : function() {
@@ -58,13 +64,17 @@ dc.Model = Base.extend({
     return this._formerAttributes;
   },
   
-  // Return an object containing all the attributes that have changed. Useful
-  // for determining what parts of a view need to be updated and/or what
-  // attributes need to be persisted to the server.
-  changedAttributes : function() {
-    var old = this.formerAttributes(), now = this.attributes(), changed = {};
+  // Return an object containing all the attributes that have changed, or false
+  // if there are no changed attributes. Useful for determining what parts of a 
+  // view need to be updated and/or what attributes need to be persisted to 
+  // the server.
+  changedAttributes : function(now) {
+    var old = this.formerAttributes(), now = now || this.attributes(), changed = false;
     for (var attr in now) {
-      if (!_.isEqual(old[attr], now[attr])) changed[attr] = now[attr];
+      if (!_.isEqual(old[attr], now[attr])) {
+        changed = changed || {};
+        changed[attr] = now[attr];
+      }
     }
     return changed;
   },
@@ -114,8 +124,8 @@ dc.Model = Base.extend({
 }, {
   
   // Event fired when the model's properties have changed.
-  CHANGED : 'model:changed',
-  
+  CHANGED : 'model:changed',  
+
   // Comparator (the default for SortedSets) that simply compares ids.
   ID_COMPARATOR : function(a, b) {
     var aid = a.id, bid = b.id;

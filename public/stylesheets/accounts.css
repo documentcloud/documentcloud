@@ -26,38 +26,29 @@
       }
       
 #account_list {
-  top: 0;
   padding: 0;
 }
   #account_list table {
     width: 100%;
   }
-    #account_list td, #account_list th {
+    #account_list tbody tr {
+      background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#dfdfdf));
+    }
+    #account_list td {
+      padding: 10px 25px 10px 15px;
+      vertical-align: middle;
       padding-left: 15px;
     }
+      #account_list tbody td {
+        border-bottom: 1px solid #bbb;
+        font: 14px/11px Arial;
+        height: 36px;
+        color: #333;
+      }
       #account_list .first { width: 0%; padding-right: 0; }
       #account_list .name  { width: 0%; }
       #account_list .email { width: 0%; }
       #account_list .last  { width: 100%; }
-      #account_list th {
-        text-transform: uppercase;
-        color: #777;
-        font-size: 10px;
-        line-height: 21px;
-      }
-      #account_list td {
-        padding: 10px 25px 10px 15px;
-        vertical-align: middle;
-      }
-        #account_list tbody td {
-          border-bottom: 1px solid #bbb;
-          font: 14px/11px Arial;
-          height: 36px;
-          color: #333;
-        }
-    #account_list tbody tr {
-      background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#dfdfdf));
-    }
     #account_list tfoot button {
       position: relative;
       left: -6px;

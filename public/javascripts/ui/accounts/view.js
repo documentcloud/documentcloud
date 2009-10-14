@@ -13,8 +13,8 @@ dc.ui.AccountView = dc.View.extend({
   
   callbacks : [
     ['.edit_account',     'click',  'showEdit'],
-    ['.save_changes',     'click',  'doneEditing'],
-    ['.delete_account',   'click',  'deleteAccount']
+    ['.save_changes',     'click',  '_doneEditing'],
+    ['.delete_account',   'click',  '_deleteAccount']
   ],
   
   constructor : function(account, kind) {
@@ -24,11 +24,12 @@ dc.ui.AccountView = dc.View.extend({
     this.base();
     this.account    = account;
     this.template   = dc.templates['ACCOUNT_' + this.kind.toUpperCase()];
-    _.bindAll('render', this);
-    this.account.bind(dc.Model.CHANGED, this.render);
+    _.bindAll('_onSuccess', '_onError', this);
+    this.account.bind(dc.Model.CHANGED, _.bind(this.render, this, 'display'));
   },
   
   render : function(viewMode) {
+    if (this.modes.view == 'edit') return;
     viewMode = viewMode || 'display';
     var attrs = {account : this.account, email : this.account.get('email'), size : this.AVATAR_SIZES[this.kind]};
     if (this.isRow()) this.setMode(viewMode, 'view');
@@ -49,26 +50,54 @@ dc.ui.AccountView = dc.View.extend({
     this.setMode('edit', 'view');
   },
 
-  doneEditing : function() {
+  // When we're done editing an account, it's either a create or update. 
+  // This method specializes to try and avoid server requests when nothing has
+  // changed.
+  _doneEditing : function() {
+    var me = this;
     var attributes = this.serialize();
-    if (this.account.id < 0 && !attributes.email) return $(this.el).remove(); 
-    this.account.set(attributes);
-    if (this.account.id < 0) Accounts.create(this.account);
-    this.setMode('display', 'view');
+    var options = {success : this._onSuccess, error : this._onError};
+    if (this.account.isNew()) {
+      if (!attributes.email) return $(this.el).remove();
+      dc.ui.spinner.show('creating account');
+      Accounts.create(this.account, attributes, options);
+    } else if (!this.account.invalid && !this.account.changedAttributes(attributes)) {
+      this.setMode('display', 'view');
+    } else {
+      dc.ui.spinner.show('saving account');
+      Accounts.update(this.account, attributes, options);
+    }
   },
   
-  deleteAccount : function() {
+  _deleteAccount : function() {
     if (!confirm('Really delete ' + this.account.fullName() + '?')) return;
     $(this.el).remove();
     Accounts.destroy(this.account);
   },
   
-  warnEmailTaken : function() {
-    dc.app.notifier.show({
-      text      : 'that email address is already taken',
-      anchor    : $('td.email a')[0],
-      position  : 'center right',
-      left      : 20
+  _onSuccess : function(model, resp) {
+    var newAccount = model.isNew();
+    model.invalid = false;
+    dc.ui.spinner.hide();
+    this.setMode('display', 'view');
+    model.set(resp);
+    if (newAccount) dc.ui.notifier.show({
+      text : 'account created. email sent to ' + model.get('email'),
+      mode : 'info',
+      anchor : $('td.last', this.el), 
+      position : '-left'
+    });
+  },
+  
+  _onError : function(model, resp) {
+    model.invalid = true;
+    dc.ui.spinner.hide();
+    this.showEdit();
+    dc.ui.notifier.show({
+      text : resp.errors[0], 
+      anchor : $('button', this.el), 
+      position : 'right', 
+      left : 18, top : 2
     });
   }
   

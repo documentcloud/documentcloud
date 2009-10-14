@@ -14,7 +14,7 @@ _.extend(dc.app.workspace, {
   // Create all of the requisite subviews.
   createSubViews : function() {
     dc.app.searchBox  = new dc.ui.SearchBox();
-    dc.app.notifier   = new dc.ui.Notifier();
+    dc.ui.notifier    = new dc.ui.Notifier();
     this.sidebar      = new dc.ui.Sidebar();
     this.panel        = new dc.ui.Panel();
     

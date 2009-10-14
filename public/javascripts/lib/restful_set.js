@@ -17,40 +17,58 @@ dc.model.RESTfulSet = dc.Set.extend({
   // Create a model on the server and add it to the set.
   // When the server returns a JSON representation of the model, we update it
   // on the client.
-  create : function(model) {
+  create : function(model, attributes, options) {
+    options = options || {};
+    if (attributes) model.set(attributes);
+    if (!this.include(model)) this.add(model);
     $.ajax({
       url       : '/' + this.resource,
       type      : 'POST',
       data      : model.attributes(),
-      dataType  : 'json'
-      // success   : function(attributes) { model.set(attributes); }
+      dataType  : 'json',
+      success   : _.bind(this._handleSuccess, this, model, options.success),
+      error     : _.bind(this._handleError, this, model, options.error)
     });
-    this.add(model);
   },
   
   // Destroy a model on the server and remove it from the set.
-  destroy : function(model) {
+  destroy : function(model, options) {
+    options = options || {};
+    this.remove(model);
     $.ajax({
       url       : '/' + this.resource + '/' + model.id,
       type      : 'POST',
       data      : {_method : 'delete'},
-      dataType  : 'json'
+      dataType  : 'json',
+      success   : function(resp) { if (options.success) options.success(model, resp); },
+      error     : _.bind(this._handleError, this, model, options.error)
     });
-    this.remove(model);
   },
   
   // Update a model on the server and (optionally) the client.
   // Pass only a model to persist its current attributes to the server.
-  update : function(model, attributes) {
-    var changeAttributes = !!attributes;
-    attributes = attributes || model.attributes();
+  update : function(model, attributes, options) {
+    options = options || {};
+    if (attributes) model.set(attributes);
     $.ajax({
       url       : '/' + this.resource + '/' + model.id,
       type      : 'POST',
-      data      : _.extend(attributes, {_method : 'put'}),
-      dataType  : 'json'
+      data      : _.extend(model.attributes(), {_method : 'put'}),
+      dataType  : 'json',
+      success   : _.bind(this._handleSuccess, this, model, options.success),
+      error     : _.bind(this._handleError, this, model, options.error)
     });
-    if (changeAttributes) model.set(attributes);
+  },
+  
+  _handleSuccess : function(model, callback, resp) {
+    if (callback) return callback(model, resp);
+    model.set(resp);
+  },
+  
+  _handleError : function(model, callback, resp) {
+    var json = eval('(' + resp.responseText + ')');
+    if (callback) return callback(model, json);
+    dc.ui.notifier.show({text : json.errors[0]});
   }
     
 });

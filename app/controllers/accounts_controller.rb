@@ -19,7 +19,7 @@ class AccountsController < ApplicationController
   def update
     account = current_organization.accounts.find(params[:id])
     account.update_attributes pick_params(:first_name, :last_name, :email)
-    json nil
+    json account
   end
   
   def destroy

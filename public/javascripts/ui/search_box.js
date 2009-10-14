@@ -28,7 +28,7 @@ dc.ui.SearchBox = dc.View.extend({
     this.fragment = 'search/' + encodeURIComponent(query);
     dc.history.save(this.fragment);
     this.outstandingSearch = true;
-    dc.ui.Spinner.show('searching');
+    dc.ui.spinner.show('searching');
     $('.documents').html('');
     $('#metadata_container').html('');
     $('#query_container').html('');
@@ -50,7 +50,7 @@ dc.ui.SearchBox = dc.View.extend({
   
   // Hide the spinner and remove the search lock when finished searching.
   doneSearching : function() {
-    dc.ui.Spinner.hide();
+    dc.ui.spinner.hide();
     this.outstandingSearch = false;
   },
   
@@ -68,7 +68,7 @@ dc.ui.SearchBox = dc.View.extend({
       $('.documents').append((new dc.ui.DocumentTile(el)).render().el);
     });
     if (resp.documents.length == 0) return this.doneSearching();
-    dc.ui.Spinner.show('gathering metadata');
+    dc.ui.spinner.show('gathering metadata');
     var docIds = _.pluck(resp.documents, 'id');
     $.get('/documents/metadata.json', {'ids[]' : docIds}, this.loadMetadataResults, 'json');
   },

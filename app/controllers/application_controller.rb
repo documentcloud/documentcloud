@@ -13,9 +13,15 @@ class ApplicationController < ActionController::Base
   protected
   
   # Convenience method for responding with JSON. Sets the content type, 
-  # serializes, and allows empty responses.
+  # serializes, and allows empty responses. If json'ing an ActiveRecord object,
+  # and the object has errors on it, a 409 Conflict will be returned with a 
+  # list of error messages.
   def json(obj, status=200)
-    return head :no_content if obj.nil?
+    obj = {} if obj.nil?
+    if obj.respond_to?(:errors) && obj.errors.any?
+      obj = {'errors' => obj.errors.full_messages}
+      status = 409
+    end
     render :json => obj, :status => status
   end
   
