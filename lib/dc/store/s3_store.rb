@@ -18,7 +18,7 @@ module DC
       end
       
       def full_text_for(document)
-        bucket.get(prefix(document, 'full_text.txt')).data
+        bucket.get(prefix(document, 'full_text.txt'))
       end
       
       def destroy(document)
