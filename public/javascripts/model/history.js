@@ -29,7 +29,10 @@ dc.model.History = dc.Model.extend({
   // Until HTML5's hashchange event is widely supported, we poll the window
   // location for changes to the hash.
   checkURL : function() {
-    if (window.location.hash != dc.history.get('hash')) dc.history.loadURL();
+    var current = window.location.hash, previous = dc.history.get('hash');
+    if (current != previous && current != decodeURIComponent(previous)) {
+      dc.history.loadURL();
+    }
   },
   
   // Load the history callback associated with the current page fragment. On
