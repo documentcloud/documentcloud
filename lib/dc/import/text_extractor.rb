@@ -26,8 +26,8 @@ module DC
       NO_TEXT_DETECTED = /---------\n\Z/
       
       def initialize(pdf_path)
-        raise Errno::ENOENT.new(pdf_path) if !File.exists?(pdf_path)
-        FileUtils.mkdir_p(TMP_DIR)        if !File.exists?(TMP_DIR)
+        raise Errno::ENOENT.new(pdf_path) unless pdf_path && File.exists?(pdf_path)
+        FileUtils.mkdir_p(TMP_DIR)        unless File.exists?(TMP_DIR)
         
         @pdf_path   = pdf_path
         @pdf_name   = File.basename(pdf_path, '.pdf')

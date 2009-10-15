@@ -49,7 +49,11 @@ class DocumentImport < CloudCrowd::Action
         :thumbnail            => thumb_path,
         :small_thumbnail      => small_thumb_path
       })
-      DC::Import::MetadataExtractor.new.extract_metadata(doc, calais_response)
+      if calais_response
+        DC::Import::MetadataExtractor.new.extract_metadata(doc, calais_response)
+      else
+        doc.metadata = []
+      end
       doc.save
       return doc.id
     rescue Exception => e
@@ -72,6 +76,8 @@ class DocumentImport < CloudCrowd::Action
     [image_ex.thumbnail_path, image_ex.small_thumbnail_path]
   end
   
+  # TODO: clean up the errors that we want to retry only -- add calais exception
+  # classes to the gem.
   def fetch_rdf_from_calais
     path = "#{work_directory}/#{file_name}.rdf"
     begin
@@ -79,6 +85,7 @@ class DocumentImport < CloudCrowd::Action
       return Calais::Response.new(@rdf)
     rescue Calais::Error => e
       puts e.message
+      return @rdf = nil if e.message == 'Calais continues to expand its list of supported languages, but does not yet support your submitted content.'
       puts 'waiting 10 seconds'
       sleep 10
       retry
