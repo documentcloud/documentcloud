@@ -7,7 +7,7 @@ module DC
         options = {
           'organization_id' => 0, 
           'account_id'      => 0, 
-          'source'          => 'The New York Times',
+          'source'          => 'The New York Times', # FIXME FIXME
           'access'          => DC::Access::PUBLIC
         }.merge(opts)
         RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {

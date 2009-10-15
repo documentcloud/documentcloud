@@ -4,6 +4,10 @@ TODO:
     What is This?
         
   * Replace raw PDF link with a DocumentViewer.
+  
+  * Think about a unified faceted search through Solr.
+  
+  * Think about caching all metadata for a document in a single JSON file on S3.
     
   * Fix up Sphinx search to use delta indexes (and sharded indexes, perhaps), 
     so that all new documents imported within, say, a five-minute period 
@@ -37,11 +41,12 @@ TODO:
   
   * Badge the not-yet-password'd accounts with some icon.
   
-  * Pull all docs from: http://www.aclu.org/accountability/released. and
-    http://projects.nytimes.com/guantanamo into staging.
+  * Pull all docs from http://www.aclu.org/accountability/released into staging.
   
 
 DONE:
+
+  * Pull all docs from http://projects.nytimes.com/guantanamo into staging.
 
   * Create a News Organization "Manage Journalists" page. (The Accounts tab)
 

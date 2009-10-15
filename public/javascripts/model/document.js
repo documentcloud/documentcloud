@@ -1,10 +1,8 @@
 dc.model.Document = dc.Model.extend({
   
-  WEB_URL : (/^https?:/),
-
   constructor : function(attributes) {
     this.base(attributes);
-    this.s3 = !!this.get('pdf').match(this.WEB_URL);
+    this.s3 = !(RAILS_ENV == 'development');
   },
   
   // Return a list of the document's metadata. Think about caching this on the
