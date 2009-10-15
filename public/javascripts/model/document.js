@@ -1,6 +1,6 @@
 dc.model.Document = dc.Model.extend({
   
-  WEB_URL : /^https?:\/\//,
+  WEB_URL : (/^https?:\/\//),
 
   constructor : function(attributes) {
     this.base(attributes);
