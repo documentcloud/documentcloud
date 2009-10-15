@@ -12,9 +12,9 @@ dc.ui.Paginator = dc.View.extend({
   
   constructor : function(query) {
     this.base();
-    this.query = query;
-    this.prevEl = $.el('span', {'class' : 'arrow previous_page'}, '&larr;');
-    this.nextEl = $.el('span', {'class' : 'arrow next_page'}, '&rarr;');
+    this.query    = query;
+    this.prevEl   = $.el('span', {'class' : 'arrow previous_page'}, '&larr;');
+    this.nextEl   = $.el('span', {'class' : 'arrow next_page'}, '&rarr;');
   },
   
   pageCount : function() {

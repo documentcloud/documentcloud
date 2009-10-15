@@ -118,6 +118,7 @@ a {
     }
       #paginator > span:hover, #paginator .current {
         font-weight: bold;
+        color: #555;
       }
       #paginator .arrow {
         font-size: 12px;
