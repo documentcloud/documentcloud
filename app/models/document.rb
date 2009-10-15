@@ -45,10 +45,8 @@ class Document
     @integer_id ||= id.hex
   end
   
-  # A document's metadata are keyed by organization_id/account_id/document_id
-  def metadata_prefix
-    raise "incompletely loaded document" unless organization_id && account_id && id
-    "#{organization_id}/#{account_id}/#{id}"
+  def hash
+    integer_id
   end
   
   # Two documents are equal if they have the same document id. If we have two
@@ -56,6 +54,16 @@ class Document
   # that's a bug.
   def ==(other)
     id == other.id && other.is_a?(Document)
+  end
+  
+  def eql?(other)
+    hash == other.hash
+  end
+  
+  # A document's metadata are keyed by organization_id/account_id/document_id
+  def metadata_prefix
+    raise "incompletely loaded document" unless organization_id && account_id && id
+    "#{organization_id}/#{account_id}/#{id}"
   end
   
   def save
