@@ -58,7 +58,7 @@ class Document
   end
   
   def save
-    DC::Store::AssetStore.new.save_document(self)
+    DC::Store::AssetStore.new.save(self)
     DC::Store::EntryStore.new.save(self)
     DC::Store::MetadataStore.new.save_document(self)
     self
@@ -66,7 +66,7 @@ class Document
   
   # Remove all the pieces of the document that we've saved.
   def destroy
-    DC::Store::AssetStore.new.destroy_document(self)
+    DC::Store::AssetStore.new.destroy(self)
     DC::Store::EntryStore.new.destroy(self)
     DC::Store::MetadataStore.new.destroy_document(self)
     DC::Store::FullTextStore.new.destroy(self)
@@ -114,7 +114,7 @@ class Document
   
   def full_text
     return nil unless @full_text || @id
-    @full_text ||= DC::Store::AssetStore.new.find_full_text(self)
+    @full_text ||= DC::Store::AssetStore.new.full_text_for(self)
   end
   
   def inspect

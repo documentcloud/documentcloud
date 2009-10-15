@@ -46,7 +46,7 @@ class ImportController < ApplicationController
         # The complete save, from before when CloudCrowd handled the metadata.
         # DC::Import::MetadataExtractor.new.extract_metadata(doc)
         # doc.save
-        DC::Store::AssetStore.new.save_document(doc)
+        DC::Store::AssetStore.new.save(doc)
         DC::Store::EntryStore.new.save(doc)
         logger.info "Import: #{name} saved entry and assets"
       end

@@ -40,6 +40,7 @@ Rails::Initializer.run do |config|
   config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'
   config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
   config.gem 'rufus-tokyo',           :version => '>= 1.0.1'
+  config.gem 'right_aws',             :version => '>= 1.10.0'
   config.gem 'riddle',                :version => '>= 0.9.8.1231.0'
   
   if Rails.test?
