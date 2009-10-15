@@ -1,6 +1,6 @@
 dc.model.Document = dc.Model.extend({
   
-  WEB_URL : (/^https?:\/\//),
+  WEB_URL : (/^https?:/),
 
   constructor : function(attributes) {
     this.base(attributes);
@@ -19,15 +19,15 @@ dc.model.Document = dc.Model.extend({
   },
   
   thumbnailURL : function() {
-    return this.s3 ? this.get('thumbnail') : ('/documents/thumbnail/' + this.id);
+    return this.s3 ? this.get('thumbnail') : '/documents/thumbnail/' + this.id;
   },
   
   pdfURL : function() {
-    return this.s3 ? this.get('pdf') : ('/documents/' + this.id + '.pdf');
+    return this.s3 ? this.get('pdf') : '/documents/' + this.id + '.pdf';
   },
   
   textURL : function() {
-    return ('/documents/' + this.id + '.txt');
+    return '/documents/' + this.id + '.txt';
   },
   
   // Inspect.
