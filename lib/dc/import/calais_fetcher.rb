@@ -36,7 +36,7 @@ module DC
           :license_id                     => SECRETS['calais_license'],
           :allow_distribution             => false,
           :allow_search                   => false,
-          :submitter                      => "DocumentCloud (development)",
+          :submitter                      => "DocumentCloud (#{RAILS_ENV})",
           :omit_outputting_original_text  => true
         )
         client.enlighten

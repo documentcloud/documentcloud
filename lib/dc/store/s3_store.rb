@@ -44,7 +44,7 @@ module DC
       
       # Saves a local file to a location on S3, and returns the public URL.
       def save_file(file, s3_path, path=true)
-        return target if path && target.match(WEB_URL)
+        return file if path && file.match(WEB_URL)
         file = path ? File.open(file) : file
         bucket.put(s3_path, file, {}, 'public-read')
         bucket.key(s3_path).public_link

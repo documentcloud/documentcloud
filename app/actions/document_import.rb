@@ -53,6 +53,7 @@ class DocumentImport < CloudCrowd::Action
       doc.save
       return doc.id
     rescue Exception => e
+      puts e.class.to_s
       puts e.message
       puts e.backtrace
       raise e
@@ -75,7 +76,7 @@ class DocumentImport < CloudCrowd::Action
     path = "#{work_directory}/#{file_name}.rdf"
     begin
       @rdf = DC::Import::CalaisFetcher.new.fetch_rdf(@text)
-      Calais::Response.new(@rdf)
+      return Calais::Response.new(@rdf)
     rescue Calais::Error => e
       puts e.message
       puts 'waiting 10 seconds'
