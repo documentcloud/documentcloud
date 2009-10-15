@@ -3,11 +3,11 @@ module DC
     
     class CloudCrowdImporter
       
-      # TODO: Figure out how we're going to specify where the callback URL lives.
       def import(urls, opts={})
         options = {
           'organization_id' => 0, 
           'account_id'      => 0, 
+          'source'          => 'The New York Times',
           'access'          => DC::Access::PUBLIC
         }.merge(opts)
         RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {

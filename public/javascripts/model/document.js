@@ -1,5 +1,12 @@
 dc.model.Document = dc.Model.extend({
   
+  WEB_URL : /^https?:\/\//,
+
+  constructor : function(attributes) {
+    this.base(attributes);
+    this.s3 = !!this.get('pdf').match(this.WEB_URL);
+  },
+  
   // Return a list of the document's metadata. Think about caching this on the
   // document by binding to Metadata, instead of on-the-fly.
   metadata : function() {
@@ -11,8 +18,12 @@ dc.model.Document = dc.Model.extend({
     });
   },
   
+  thumbnailURL : function() {
+    return this.s3 ? this.get('thumbnail') : '/documents/thumbnail/' + this.id;
+  },
+  
   pdfURL : function() {
-    return '/documents/' + this.id + '.pdf';
+    return this.s3 ? this.get('pdf') : '/documents/' + this.id + '.pdf';
   },
   
   textURL : function() {

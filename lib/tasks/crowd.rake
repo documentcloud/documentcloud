@@ -12,6 +12,8 @@ namespace :crowd do
         sh "crowd -c config/cloud_crowd/#{RAILS_ENV} -e #{RAILS_ENV} #{port} -d #{resource} start"
       end
       
+      task :restart => [:stop, :start]
+      
     end
   end
 

@@ -1,8 +1,8 @@
 class Document
   
   ENTRY_ATTRIBUTES = [:author, :created_at, :date, :id, :language, :source, 
-                      :summary, :title, :calais_request_id, :thumbnail_path,
-                      :small_thumbnail_path, :pdf_path, :organization_id,
+                      :summary, :title, :calais_request_id, :thumbnail,
+                      :small_thumbnail, :pdf, :organization_id,
                       :account_id, :access]
                       
   TEMPORARY_ATTRIBUTES = [:full_text, :rdf, :metadata, :calais_signature]

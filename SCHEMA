@@ -10,9 +10,9 @@ entry = {
   created_at
   date
   language
-  thumbnail_path
-  small_thumbnail_path
-  pdf_path
+  thumbnail
+  small_thumbnail
+  pdf
   calais_request_id
 }
 

@@ -11,32 +11,29 @@ dc.ui.DocumentTile = dc.View.extend({
   ],
   
   constructor : function(doc) {
-    this.base(doc.attributes());
-    this.el.id = 'document_tile_' + this.options.id;
+    this.base();
+    this.document = doc;
+    this.el.id = 'document_tile_' + this.document.id;
   },
   
   render : function() {
-    $(this.el).html(dc.templates.DOCUMENT_TILE(this.options));
+    $(this.el).html(dc.templates.DOCUMENT_TILE({'document' : this.document}));
     this.setCallbacks();
     return this;
   },
   
   viewPDF : function() {
-    window.open(this.getDocument().pdfURL());
+    window.open(this.document.pdfURL());
   },
   
   viewFullText : function() {
-    window.open(this.getDocument().textURL());
-  },
-  
-  getDocument : function() {
-    return Documents.get(this.options.id);
+    window.open(this.document.textURL());
   },
   
   deleteDocument : function(e) {
     e.preventDefault();
-    if (!confirm('Really delete "' + this.options.title + '" ?')) return;
-    Documents.destroy(Documents.get(this.options.id));
+    if (!confirm('Really delete "' + this.document.get('title') + '" ?')) return;
+    Documents.destroy(this.document);
   }
   
 });

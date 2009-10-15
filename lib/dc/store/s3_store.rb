@@ -51,14 +51,14 @@ module DC
       end
       
       def save_pdf(document)
-        local = document.pdf_path
+        local = document.pdf
         remote = prefix(document, File.basename(local))
-        document.pdf_path = save_file(local, remote)
+        document.pdf = save_file(local, remote)
       end
       
       def save_images(document)
-        document.small_thumbnail_path = save_file(document.small_thumbnail_path, prefix(document, "thumbnail_small.jpg"))
-        document.thumbnail_path = save_file(document.thumbnail_path, prefix(document, "thumbnail.jpg"))
+        document.small_thumbnail = save_file(document.small_thumbnail, prefix(document, "thumbnail_small.jpg"))
+        document.thumbnail = save_file(document.thumbnail, prefix(document, "thumbnail.jpg"))
       end
       
       def save_full_text(document)

@@ -40,18 +40,18 @@ module DC
       end
       
       def save_pdf(document)
-        doc_path, real_path = document.pdf_path, pdf_path_for(document)
+        doc_path, real_path = document.pdf, pdf_path_for(document)
         return if !doc_path || doc_path == real_path
-        `curl -s #{doc_path} > #{real_path}`
-        document.pdf_path = real_path
+        FileUtils.cp(doc_path, real_path)
+        document.pdf = real_path
       end
       
       def save_thumbnail(document, extension=nil)
-        thumb_path = extension == 'small' ? document.small_thumbnail_path : document.thumbnail_path
+        thumb_path = extension == 'small' ? document.small_thumbnail : document.thumbnail
         real_path = thumbnail_path_for(document, extension)
         return if !thumb_path || thumb_path == real_path
-        `curl -s #{thumb_path} > #{real_path}`
-        extension == 'small' ? document.small_thumbnail_path = real_path : document.thumbnail_path = real_path
+        FileUtils.cp(thumb_path, real_path)
+        extension == 'small' ? document.small_thumbnail = real_path : document.thumbnail = real_path
       end
       
       def save_images(document)

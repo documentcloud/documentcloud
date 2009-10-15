@@ -30,9 +30,9 @@ namespace :import do
       doc = Document.new(
         :full_text            => text, 
         :title                => title, 
-        :pdf_path             => path,
-        :thumbnail_path       => image_ex.thumbnail_path,
-        :small_thumbnail_path => image_ex.small_thumbnail_path,
+        :pdf                  => path,
+        :thumbnail            => image_ex.thumbnail_path,
+        :small_thumbnail      => image_ex.small_thumbnail_path,
         :organization_id      => 0, 
         :account_id           => 0, 
         :access => DC::Access::PUBLIC

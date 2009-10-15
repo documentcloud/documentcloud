@@ -11,7 +11,7 @@ class DocumentsController < ApplicationController
   end
 
   def destroy
-    current_document.destroy
+    current_document(true).destroy
     json nil
   end
   
@@ -26,7 +26,7 @@ class DocumentsController < ApplicationController
     
   def thumbnail
     doc = current_document(true)
-    send_file(doc.thumbnail_path, :disposition => 'inline', :type => 'image/jpeg')
+    send_file(doc.thumbnail, :disposition => 'inline', :type => 'image/jpeg')
   end
   
   def test
@@ -37,8 +37,8 @@ class DocumentsController < ApplicationController
   private
   
   def send_pdf
-    return redirect_to("/documents/#{@current_document.id}.txt") if @current_document.pdf_path.blank?
-    send_file @current_document.pdf_path, :disposition => 'inline', :type => 'application/pdf'
+    return redirect_to("/documents/#{@current_document.id}.txt") if @current_document.pdf.blank?
+    send_file @current_document.pdf, :disposition => 'inline', :type => 'application/pdf'
   end
   
   def send_text
