@@ -9,14 +9,9 @@ TODO:
   
   * Figure out the access control policies for all assets on S3. Public ones we
     can load directly from the client, probably.
-    
-  * Look into all the weightings and filterings that Sphinx has to offer,
-    take advantage.
         
   * Replace document IDs in URLs with title-based slugs.
-  
-  * Pervasive P-A-G-I-N-A-T-I-O-N
-  
+    
   * Start work on the Public API.
   
   * Swap out our single Thin instance on staging for a Passenger setup --
@@ -41,6 +36,11 @@ TODO:
   
 
 DONE:
+
+  * Look into all the weightings and filterings that Sphinx has to offer,
+    take advantage.
+
+  * Pervasive P-A-G-I-N-A-T-I-O-N
 
   * Fix up Sphinx search to use delta indexes (and sharded indexes, perhaps), 
     so that all new documents imported within, say, a five-minute period 

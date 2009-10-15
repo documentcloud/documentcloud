@@ -29,7 +29,7 @@ module DC
       
       result_sets = [fielded_results, attribute_results, text_results].select {|set| set.present? }
       results = result_sets.flatten
-      results = results.select {|doc| result_sets.all? {|set| set.include?(doc) } }.map(&:id).uniq!
+      results = results.select {|doc| result_sets.all? {|set| set.include?(doc) } }.map(&:id).uniq
       
       if query.page
         query.total = results.length
