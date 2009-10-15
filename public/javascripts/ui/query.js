@@ -6,9 +6,9 @@ dc.ui.Query = dc.View.extend({
   
   className : 'search_query',
     
-  render : function(count) {
+  render : function() {
     var data = this.options;
-    var sentence = count + " document" + (count == 1 ? "" : "s") + " matching ";
+    var sentence = '' + (data.from + 1) + " &ndash; " + data.to + " of " + data.total + " document" + (data.total == 1 ? "" : "s") + " matching ";
     var fields = data.fields.concat(data.attributes);
     var list = $.map(fields, function(f){ return f.value; });
     if (data.text) list.push(data.text);

@@ -1,7 +1,10 @@
 // The search controller is responsible for managing document/metadata search.
 dc.ui.SearchBox = dc.View.extend({
+    
+  PAGE_MATCHER : (/\/p(\d+)$/),
   
   fragment : null,
+  currentPage : null,
     
   callbacks : [
     ['el',  'keydown',  'maybeSearch']
@@ -22,22 +25,32 @@ dc.ui.SearchBox = dc.View.extend({
   },
   
   // Start a search for a query string, updating the page URL.
-  search : function(query) {
+  search : function(query, page) {
     if (dc.app.navigation) dc.app.navigation.tab('documents');
+    if (page <= 1) page = null;
     this.value(query);
     this.fragment = 'search/' + encodeURIComponent(query);
-    dc.history.save(this.fragment);
+    dc.history.save(this.fragment + (page ? '/p' + page : ''));
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');
     $('.documents').html('');
     $('#metadata_container').html('');
     $('#query_container').html('');
-    $.get('/search.json', {query_string : query}, this.loadSearchResults, 'json');
+    var params = {query_string : query};
+    this.currentPage = page;
+    if (page) params.page = page;
+    $.get('/search.json', params, this.loadSearchResults, 'json');
   },
   
   // When searching by the URL's hash value, we need to unescape first.
   searchByHash : function(hash) {
-    this.search(decodeURIComponent(hash));
+    var page = null;
+    var pageMatch = hash.match(this.PAGE_MATCHER);
+    if (pageMatch) {
+      var page = pageMatch[1];
+      hash = hash.replace(this.PAGE_MATCHER, '');
+    } 
+    this.search(decodeURIComponent(hash), page);
   },
   
   // Callback fired on key press in the search box. We search when they hit
@@ -61,8 +74,8 @@ dc.ui.SearchBox = dc.View.extend({
     Documents.refresh(_.map(resp.documents, function(m){ 
       return new dc.model.Document(m); 
     }));
-    var query = new dc.ui.Query(resp.query).render(resp.documents.length);
-    $('#query_container').html(query.el);
+    $('#query_container').html(new dc.ui.Query(resp.query).render().el);
+    $('#pagination_container').html(new dc.ui.Paginator(resp.query).render().el);
     $('#document_list_container').html((new dc.ui.DocumentList()).render().el);
     _.each(Documents.values(), function(el) {
       $('.documents').append((new dc.ui.DocumentTile(el)).render().el);

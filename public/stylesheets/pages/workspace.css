@@ -103,7 +103,7 @@ a {
       bottom: 0px;
       background: url(/images/ui/sidebar_bottom.png);
     }
-  .search_query {
+  .search_query, #paginator {
     position: absolute;
     top: 3px; left: 10px; right: 10px;
     font-size: 10px;
@@ -112,6 +112,16 @@ a {
     overflow: hidden;
     color: #777;
   }
+    #paginator > span {
+      padding: 0 2px;
+      cursor: pointer;
+    }
+      #paginator > span:hover, #paginator .current {
+        font-weight: bold;
+      }
+      #paginator .arrow {
+        font-size: 12px;
+      }
 
 .panel_container {
   position: absolute;

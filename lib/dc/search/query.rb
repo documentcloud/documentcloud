@@ -3,11 +3,11 @@ module DC
     
     class Query
       
-      attr_reader :text, :fields, :attributes
+      attr_reader   :text, :fields, :attributes
+      attr_accessor :page, :from, :to, :total
       
       def initialize(opts={})
         @text       = opts[:text]
-        @naked_text = @text && @text.sub(Matchers::QUOTED_VALUE, '\1')
         @fields     = opts[:fields] || []
         @attributes = opts[:attributes] || []
       end
@@ -24,11 +24,10 @@ module DC
       end
       
       def as_json(opts={})
-        {
-          'text'        => @text,
-          'fields'      => @fields,
-          'attributes'  => @attributes
-        }
+        instance_variables.inject({}) do |memo, var| 
+          memo[var[1..-1]] = instance_variable_get(var)
+          memo
+        end
       end
       
     end
