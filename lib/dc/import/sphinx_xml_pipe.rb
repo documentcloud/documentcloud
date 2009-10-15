@@ -21,6 +21,7 @@ module DC
         entry_store = DC::Store::EntryStore.new
         doc_ids = entry_store.open_for_reading {|store| store.keys }
         doc_ids.map do |doc_id|
+          RAILS_DEFAULT_LOGGER.info "fetching text for: #{doc_id}"
           entry = entry_store.find(doc_id)
           doc = node('sphinx:document', 'id' => entry.integer_id.to_s)
           full_text = node('full_text')
