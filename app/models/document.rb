@@ -24,6 +24,7 @@ class Document
   
   def initialize(opts={})
     set_attributes(opts)
+    @created_at = Time.now.to_i if @created_at.blank?
   end
     
   # The document id should be some way of uniquely identifying the document.

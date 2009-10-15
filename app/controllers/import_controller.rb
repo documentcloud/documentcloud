@@ -28,7 +28,9 @@ class ImportController < ApplicationController
     # Finishing the job later so that we don't deadlock in development.
     Thread.new do
       logger.info "Imported: #{job['outputs'].join(', ')}"
-      DC::Store::FullTextStore.new.index
+      full_text_store = DC::Store::FullTextStore.new
+      full_text_store.index
+      full_text_store.merge
       RestClient.delete DC_CONFIG['cloud_crowd_server'] + "/jobs/#{job['id']}"
     end
     render :nothing => true

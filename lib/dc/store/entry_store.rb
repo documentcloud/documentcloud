@@ -54,6 +54,14 @@ module DC
         open_for_reading {|store| store.keys }
       end
       
+      # Get a list of every document id that's been added since a given moment.
+      def document_ids_since(unix_time)
+        results = query do |q|
+          q.pk_only
+          q.add 'created_at', :gt, unix_time
+        end
+      end
+      
       # Delete a document's entry from the store.
       def destroy(document)
         open_for_writing {|store| store.delete(document.id) }

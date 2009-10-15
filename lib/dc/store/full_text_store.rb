@@ -10,6 +10,10 @@ module DC
       CONFIG_PATH = "#{RAILS_ROOT}/config/sphinx.conf"
       PID_PATH    = "#{RAILS_ROOT}/tmp/pids/searchd.pid"
       
+      def initialize
+        ensure_index_folder
+      end
+      
       # Find the top most relevant results.
       def find(search_text, opts={})
         client            = Riddle::Client.new
@@ -29,12 +33,17 @@ module DC
         Riddle::Client.new.update('documents', ['access'], doc.integer_id => doc.access)
       end
       
-      # Tell indexer to re-index all the documents. Only do this after a chunk
-      # of documents has been imported -- never for each document alone.
+      # Tell indexer to re-index all the documents.
+      def index_all
+        system "indexer -c #{CONFIG_PATH} --all #{rotate_options}"
+      end
+      
       def index
-        ensure_index_folder
-        rotate = searchd_running? ? '--rotate' : ''
-        system "indexer -c #{CONFIG_PATH} --all #{rotate}"
+        system "indexer -c #{CONFIG_PATH} documents_delta #{rotate_options}"
+      end
+      
+      def merge
+        system "indexer -c #{CONFIG_PATH} --merge documents documents_delta --merge-dst-range access 1 10 #{rotate_options}"
       end
       
       # Delete the full-text store entirely.
@@ -68,8 +77,15 @@ module DC
         !!searchd_pid && !!Process.kill(0, searchd_pid) rescue false
       end
       
+      
+      private
+      
       def ensure_index_folder
         FileUtils.mkdir_p(INDEX_PATH) unless File.exists?(INDEX_PATH)
+      end
+      
+      def rotate_options
+        searchd_running? ? '--rotate' : ''
       end
       
     end

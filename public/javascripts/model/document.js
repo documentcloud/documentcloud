@@ -17,6 +17,7 @@ dc.model.Document = dc.Model.extend({
   },
   
   thumbnailURL : function() {
+    if (!this.get('thumbnail')) return null;
     return this.s3 ? this.get('thumbnail') : '/documents/thumbnail/' + this.id;
   },
   

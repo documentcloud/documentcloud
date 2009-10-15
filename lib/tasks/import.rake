@@ -14,7 +14,9 @@ namespace :import do
       puts " / saving as #{doc.id}"
       doc.save
     end
-    DC::Store::FullTextStore.new.index
+    fts = DC::Store::FullTextStore.new
+    fts.index
+    fts.merge
   end
   
   # Usage: rake import:load_pdf[../presidential_papers] --trace
@@ -42,7 +44,9 @@ namespace :import do
       puts " / saving as #{doc.id}"
       doc.save
     end
-    DC::Store::FullTextStore.new.index
+    fts = DC::Store::FullTextStore.new
+    fts.index
+    fts.merge
   end
   
   # Usage: rake import:cloud_crowd_pdf[../congressional_documents] --trace

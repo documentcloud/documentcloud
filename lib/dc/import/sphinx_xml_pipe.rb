@@ -4,40 +4,52 @@ module DC
     class SphinxXMLPipe
       include Nokogiri::XML
       
-      def xml        
-        @xml = Nokogiri::XML::Document.new
+      def initialize
+        @entry_store = DC::Store::EntryStore.new
+      end
+      
+      def build_xml     
+        @xml          = Nokogiri::XML::Document.new
         @xml.encoding = 'utf-8'
-        @docset = node('sphinx:docset')
-        
-        @docset << schema_definition
-        full_text_documents.each {|doc_node| @docset << doc_node }
-        
-        @xml << @docset
+        @docset       = node('sphinx:docset')
+        @docset       << schema_definition        
+        @xml          << @docset
+        yield
         @xml.to_xml(:indent => 2)
       end
       
-      # XML Representations of all the documents with full text.
-      def full_text_documents
-        entry_store = DC::Store::EntryStore.new
-        doc_ids = entry_store.open_for_reading {|store| store.keys }
-        doc_ids.map do |doc_id|
-          RAILS_DEFAULT_LOGGER.info "fetching text for: #{doc_id}"
-          entry = entry_store.find(doc_id)
-          doc = node('sphinx:document', 'id' => entry.integer_id.to_s)
-          full_text = node('full_text')
-          full_text.content = entry.full_text.gsub(/[^[:print:]]/, '')
-          organization_id = node('organization_id')
-          organization_id.content = entry.organization_id
-          account_id = node('account_id')
-          account_id.content = entry.account_id
-          access = node('access')
-          access.content = entry.access
-          doc << full_text
-          doc << organization_id
-          doc << account_id
-          doc << access
-          doc
+      def all_xml
+        build_xml do
+          @entry_store.document_ids.each do |doc_id|
+            @docset << xml_for_document(@entry_store.find(doc_id))
+          end
         end
+      end
+      
+      def delta_xml
+        last_merge = AppConstant.replace(:sphinx_merged_at, Time.now.to_i, 0)
+        build_xml do
+          @entry_store.document_ids_since(last_merge).each do |doc_id|
+            @docset << xml_for_document(@entry_store.find(doc_id))
+          end
+        end
+      end
+      
+      def xml_for_document(entry)
+        doc = node('sphinx:document', 'id' => entry.integer_id.to_s)
+        full_text = node('full_text')
+        full_text.content = entry.full_text.gsub(/[^[:print:]]/, '')
+        organization_id = node('organization_id')
+        organization_id.content = entry.organization_id
+        account_id = node('account_id')
+        account_id.content = entry.account_id
+        access = node('access')
+        access.content = entry.access
+        doc << full_text
+        doc << organization_id
+        doc << account_id
+        doc << access
+        doc
       end
       
       # See SCHEMA.txt for a clearer picture.

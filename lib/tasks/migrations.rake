@@ -42,7 +42,15 @@ namespace :migrate do
       end
     end
     puts "re-indexing full text"
-    DC::Store::FullTextStore.new.index
+    DC::Store::FullTextStore.new.index_all
+  end
+  
+  desc "migrate all documents to have created_at timestamps"
+  task :created_at => :environment do
+    entry_store = DC::Store::EntryStore.new
+    entry_store.document_ids.each do |doc_id|
+      entry_store.save(entry_store.find(doc_id))
+    end
   end
   
 end

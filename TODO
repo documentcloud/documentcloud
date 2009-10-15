@@ -4,10 +4,11 @@ TODO:
     What is This?
         
   * Replace raw PDF link with a DocumentViewer.
-  
-  * Think about a unified faceted search through Solr.
-  
+    
   * Think about caching all metadata for a document in a single JSON file on S3.
+  
+  * Figure out the access control policies for all assets on S3. Public ones we
+    can load directly from the client, probably.
     
   * Fix up Sphinx search to use delta indexes (and sharded indexes, perhaps), 
     so that all new documents imported within, say, a five-minute period 
@@ -45,6 +46,8 @@ TODO:
   
 
 DONE:
+
+  * Think about a unified faceted search through Solr.
 
   * Pull all docs from http://projects.nytimes.com/guantanamo into staging.
 
