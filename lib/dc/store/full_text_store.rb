@@ -10,6 +10,8 @@ module DC
       CONFIG_PATH = "#{RAILS_ROOT}/config/sphinx.conf"
       PID_PATH    = "#{RAILS_ROOT}/tmp/pids/searchd.pid"
       
+      MAX_MATCHES = 1000
+      
       def initialize
         ensure_index_folder
       end
@@ -17,7 +19,7 @@ module DC
       # Find the top most relevant results.
       def find(search_text, opts={})
         client            = Riddle::Client.new
-        client.limit      = opts[:limit] if opts[:limit]
+        client.limit      = opts[:limit] || MAX_MATCHES
         existing          = Riddle::Client::Filter.new('access', [DC::Access::PUBLIC])
         client.filters    = [existing]
         client.match_mode = :extended2

@@ -8,7 +8,8 @@ dc.ui.Query = dc.View.extend({
     
   render : function() {
     var data = this.options;
-    var sentence = '' + (data.from + 1) + " &ndash; " + data.to + " of " + data.total + " document" + (data.total == 1 ? "" : "s") + " matching ";
+    var to = Math.min(data.to, data.total);
+    var sentence = '' + (data.from + 1) + " &ndash; " + to + " of " + data.total + " document" + (data.total == 1 ? "" : "s") + " matching ";
     var fields = data.fields.concat(data.attributes);
     var list = $.map(fields, function(f){ return f.value; });
     if (data.text) list.push(data.text);
