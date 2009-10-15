@@ -29,7 +29,7 @@ module DC
       
       result_sets = [fielded_results, attribute_results, text_results].select {|set| set.present? }
       results = result_sets.flatten
-      results = results.select {|doc| result_sets.all? {|set| set.include?(doc) } }
+      results = results.select {|doc| result_sets.all? {|set| set.include?(doc) } }.map(&:id).uniq!
       
       if query.page
         query.total = results.length
@@ -38,7 +38,7 @@ module DC
         results     = results[query.from...query.to]
       end
       
-      entry_store.find_all(results.map {|doc| doc.id })
+      entry_store.find_all(results)
     end
     
   end
