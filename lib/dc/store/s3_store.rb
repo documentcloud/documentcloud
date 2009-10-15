@@ -34,7 +34,7 @@ module DC
       private 
       
       def bucket
-        @s3 ||= RightAws::S3.new(key, secret, :protocol => 'http', :port => 80)
+        @s3 ||= RightAws::S3.new(@key, @secret, :protocol => 'http', :port => 80)
         @bucket ||= (@s3.bucket(BUCKET_NAME) || @s3.bucket(BUCKET_NAME, true))
       end
       
