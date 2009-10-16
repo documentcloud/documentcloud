@@ -28,11 +28,7 @@ class DocumentsController < ApplicationController
     doc = current_document(true)
     send_file(doc.thumbnail, :disposition => 'inline', :type => 'image/jpeg')
   end
-  
-  def test
-    json({'documents' => Array.new(10).map { Document.generate_fake_entry }})
-  end
-  
+
   
   private
   

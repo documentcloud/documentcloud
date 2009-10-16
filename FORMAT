@@ -1,0 +1,92 @@
+{
+
+  id        : opaque value, can be integer or string
+  
+  title     : a title is required
+  
+  pages     : the number of pages in the document
+  
+  resources : {  A comprehensive list of the URLs and URL Templates that can be
+                 used to reference portions of the document.
+  
+    page_image : URL template for a page image. Should take {page} and, 
+                 optionally, {size}. Page numbers are 5-digits long (zero-
+                 padded). Size is an opaque value (could be 'small', or '700'),
+                 with the available sizes documented in your API docs.
+                 Ex: http://dcloud.org/docs/nyc-olympics/images/page-{page}-{size}.jpg
+                 
+    page_text  : URL template for the UTF-8 plain text of a single page. Should
+                 take {page} as a parameter. Page numbers are 5-digits long, as
+                 above.
+                 Ex: http://dcloud.org/docs/nyc-olympics/pages/{page}.txt
+                 
+    page_html  : URL template for the HTML formatted text of a single page. 
+                 Takes {page} as a parameter.
+                 
+    full_text  : URL to a UTF-8 full text of the entire document.
+    
+    pdf        : URL to a PDF file of the entire document.
+    
+    thumbnail  : A URL to a thumbnail image of the document.
+    
+  }
+  
+  attributes : { (optional)
+  
+    date      : The ISO 8601 formatted date of publication or creation.
+    
+    language  : The ISO 639-1 (or 639-2) language code for the document.
+    
+    source    : The name of the source of the document.
+  
+  }
+  
+  entities : [{ (optional)
+    
+    name      : The name of the entity (which may or may not be present verbatim
+                in the document).
+    
+    type      : The type of thing the entity is.
+    
+    relevance : A score between 0 and 1 of how relevant the entity is to the
+                document as a whole.
+  
+  }]
+  
+  sections : [{ (optional)
+    
+    title  : A section title is required.
+    
+    pages  : A comma-separated list of the page ranges that the section 
+             covers. Most sections will simply look like "5-13", but a more
+             complicated example could be: "2-7,13,25-62". Note that "13" and
+             "13-13" are equivalent.
+    
+  }]
+  
+  annotations : [{ (optional)
+  
+    page      : The page number where the annotation occurs.
+    
+    title     : (optional) The title of the annotation.
+    
+    content   : (optional) The content of the annotation.
+    
+    format    : (optional) Defaults to UTF-8 'text/plain', but alternatives 
+                could be any mime type: 'text/html', 'application/json'...
+  
+    position  : (optional) {
+                  top : px, left : px, right : px, bottom : px  (for images)
+                  offset : integer, length : integer            (for text)
+                  id : 'html-id'                                (for html)
+                }
+                Describes the bounding box of the annotation, measured in
+                pixels, relative to the default size of the page images. Or
+                the offset and length of the annotation's reference in the 
+                plain text. Or the id of the HTML element for the annotation.
+                Leaving position unspecified means that the annotation applies
+                to the entire page.
+    
+  }]
+  
+}

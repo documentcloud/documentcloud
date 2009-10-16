@@ -10,5 +10,4 @@ db/mongodb*
 db/solr_*
 db/sphinx
 raw
-config/cloud_crowd_devel
 public/docs
