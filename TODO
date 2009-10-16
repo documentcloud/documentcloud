@@ -29,13 +29,13 @@ TODO:
   * Authorize logged-in folks to view private and organization documents.
   
   * Blog the dc.app.History class.
-  
-  * Badge the not-yet-password'd accounts with some icon.
-  
+    
   * Pull all docs from http://www.aclu.org/accountability/released into staging.
   
 
 DONE:
+
+  * Badge the not-yet-password'd accounts with some icon.
 
   * Look into all the weightings and filterings that Sphinx has to offer,
     take advantage.
