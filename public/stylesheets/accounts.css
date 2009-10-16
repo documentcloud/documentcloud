@@ -95,3 +95,22 @@
   display: inline-block;
   color: #774433;
 }
+#account_list .pending_badge {
+  display: none;
+  position: absolute;
+  margin: 21px 0 0 21px;
+  width: 10px; height: 10px;
+}
+  #account_list .row.pending .pending_badge {
+    display: block;
+  }
+#account_list tr.row .pending_notification {
+  font: 10px Arial;
+  text-transform: uppercase;
+  padding-left: 7px;
+  color: #999;
+  display: none;
+}
+  #account_list .row.pending .pending_notification {
+    display: inline;
+  }

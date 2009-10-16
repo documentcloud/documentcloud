@@ -34,6 +34,7 @@ dc.ui.AccountView = dc.View.extend({
     var attrs = {account : this.account, email : this.account.get('email'), size : this.AVATAR_SIZES[this.kind]};
     if (this.isRow()) this.setMode(viewMode, 'view');
     $(this.el).html(this.template(attrs));
+    if (this.account.get('pending')) $(this.el).addClass('pending');
     if (this.isRow()) this.setCallbacks();
     return this;
   },

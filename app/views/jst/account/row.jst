@@ -1,8 +1,11 @@
 <td class="first">
+  <img class="pending_badge" src="/images/icons/warning_16.png" alt="" />
   <img class="avatar" src="<%= account.gravatarURL(size) %>" width="<%= size %>" height="<%= size %>" />
 </td>
 <td class="name">
-  <span class="display"><%= account.fullName(true) %></span>
+  <span class="display">
+    <%= account.fullName(true) %>&nbsp;<span class="pending_notification">(pending)</span>
+  </span>
   <div class="edit name_wrapper">
     <span class="text_input">
       <span>

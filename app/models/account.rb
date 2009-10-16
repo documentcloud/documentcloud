@@ -48,8 +48,14 @@ class Account < ActiveRecord::Base
     @hashed_email ||= Digest::MD5.hexdigest(email.downcase.gsub(/\s/, ''))
   end
   
+  # Has this account been assigned, but never logged into, with no password set?
+  def pending?
+    !hashed_password
+  end
+  
   # It's slo-o-o-w to compare passwords. Which is a mixed bag, but mostly good.
   def password
+    return false if hashed_password.nil?
     @password ||= BCrypt::Password.new(hashed_password)
   end
   
@@ -60,7 +66,9 @@ class Account < ActiveRecord::Base
   end
   
   def as_json(opts={})
-    CLIENT_SIDE_ATTRIBUTES.inject({}) {|h, name| h[name] = send(name); h }
+    hash = CLIENT_SIDE_ATTRIBUTES.inject({}) {|h, name| h[name] = send(name); h }
+    hash['pending'] = pending?
+    hash
   end
   
 end

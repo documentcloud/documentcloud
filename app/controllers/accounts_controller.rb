@@ -12,6 +12,7 @@ class AccountsController < ApplicationController
     account.password = params[:password]
     account.save
     account.authenticate(session)
+    key.destroy
     redirect_to '/workspace'
   end
   
