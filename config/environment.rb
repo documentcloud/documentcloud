@@ -47,6 +47,7 @@ Rails::Initializer.run do |config|
     config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
   end
   
+  require 'json/add/rails'
   require 'rufus/tokyo/tyrant'
       
   # Only load the plugins named here, in the order given (default is alphabetical).

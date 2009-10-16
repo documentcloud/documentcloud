@@ -14,8 +14,7 @@ dc.ui.Navigation = dc.View.extend({
     {name : 'documents', title : 'Workspace'}, 
     {name : 'upload',    title : 'Upload a Document'}, 
     {name : 'accounts',  title : 'Manage Accounts'},
-    {name : 'visualize', title : 'Visualize'}, 
-    {name : 'admin',     title : 'Admin'}
+    {name : 'visualize', title : 'Visualize'}
   ],
     
   constructor : function(options) {
