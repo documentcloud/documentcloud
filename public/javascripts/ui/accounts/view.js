@@ -82,6 +82,7 @@ dc.ui.AccountView = dc.View.extend({
     dc.ui.spinner.hide();
     this.setMode('display', 'view');
     model.set(resp);
+    model.changed();
     if (newAccount) dc.ui.notifier.show({
       text      : 'login email sent to ' + model.get('email'),
       duration  : 5000,
