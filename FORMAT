@@ -1,24 +1,24 @@
 {
 
-  id        : opaque value, can be integer or string
+  id        : An opaque value, can be an integer or a string.
   
-  title     : a title is required
+  title     : A title is the only required attribute.
   
-  pages     : the number of pages in the document
+  pages     : The number of pages in the document.
   
-  resources : {  A comprehensive list of the URLs and URL Templates that can be
-                 used to reference portions of the document.
+  resources : {  Describes a comprehensive list of the URLs and URL Templates 
+                 that can be used to reference document assets.
   
     page_image : URL template for a page image. Should take {page} and, 
                  optionally, {size}. Page numbers are 5-digits long (zero-
                  padded). Size is an opaque value (could be 'small', or '700'),
                  with the available sizes documented in your API docs.
-                 Ex: http://dcloud.org/docs/nyc-olympics/images/page-{page}-{size}.jpg
+                 Ex: http://docs.org/olympics-02/images/page-{page}-{size}.jpg
                  
     page_text  : URL template for the UTF-8 plain text of a single page. Should
                  take {page} as a parameter. Page numbers are 5-digits long, as
                  above.
-                 Ex: http://dcloud.org/docs/nyc-olympics/pages/{page}.txt
+                 Ex: http://docs.org/olympics-02/pages/{page}.txt
                  
     page_html  : URL template for the HTML formatted text of a single page. 
                  Takes {page} as a parameter.
@@ -40,18 +40,6 @@
     source    : The name of the source of the document.
   
   }
-  
-  entities : [{ (optional)
-    
-    name      : The name of the entity (which may or may not be present verbatim
-                in the document).
-    
-    type      : The type of thing the entity is.
-    
-    relevance : A score between 0 and 1 of how relevant the entity is to the
-                document as a whole.
-  
-  }]
   
   sections : [{ (optional)
     
@@ -89,4 +77,25 @@
     
   }]
   
+  entities : [{ (optional)
+    
+    name      : The name of the entity (which may or may not be present 
+                verbatim in the document).
+    
+    type      : The type of thing the entity is.
+    
+    relevance : (optional) A score between 0 and 1 of how relevant the entity 
+                is to the document as a whole.
+                
+    position  : (optional) Same format as annotation position, see above.
+  
+  }]
+  
 }
+
+
+Issues: Authors. Multiples (sources). Required attributes at top? Zero-padded 
+        page numbers? Should 'size' be opaque? Thumbnail sizes? Standard name
+        for sources (take the title of the Wikipedia page as the standard when
+        in doubt)? How to deal with section-annotation ambiguity when there's
+        more than one section on a page.
