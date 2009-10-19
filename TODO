@@ -1,4 +1,6 @@
 TODO:
+
+  * Stash paged result sets for a given search on the document model.
     
   * Build out surrounding start page blips... About Us, How to Join, 
     What is This?

@@ -1,4 +1,3 @@
-// TBI.
 dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   
   resource : 'documents'

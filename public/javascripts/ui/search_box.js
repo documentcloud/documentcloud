@@ -70,7 +70,7 @@ dc.ui.SearchBox = dc.View.extend({
   // After the initial search results come back, send out a request for the
   // associated metadata, as long as something was found. Think about returning
   // the metadata right alongside the document JSON.
-  loadSearchResults : function(resp) {        
+  loadSearchResults : function(resp) { 
     Documents.refresh(_.map(resp.documents, function(m){ 
       return new dc.model.Document(m); 
     }));
