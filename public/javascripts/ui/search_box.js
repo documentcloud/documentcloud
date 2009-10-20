@@ -26,7 +26,7 @@ dc.ui.SearchBox = dc.View.extend({
   
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber) {
-    if (dc.app.navigation) dc.app.navigation.tab('documents');
+    if (dc.app.navigation) dc.app.navigation.tab('search');
     var page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
     this.fragment = 'search/' + encodeURIComponent(query);

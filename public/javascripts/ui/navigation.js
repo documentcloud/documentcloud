@@ -12,6 +12,7 @@ dc.ui.Navigation = dc.View.extend({
   // List of tab names => page titles.
   tabs : [
     {name : 'documents', title : 'Workspace'}, 
+    {name : 'search',    title : 'Search'}, 
     {name : 'upload',    title : 'Upload a Document'}, 
     {name : 'accounts',  title : 'Manage Accounts'},
     {name : 'visualize', title : 'Visualize'}
@@ -56,7 +57,7 @@ dc.ui.Navigation = dc.View.extend({
     if (!$(e.target).hasClass('nav')) return;
     var tab = $(e.target).attr('tab');
     var box = dc.app.searchBox;
-    var fragment = tab == 'documents' && box.fragment ? box.fragment : tab;
+    var fragment = tab == 'search' && box.fragment ? box.fragment : tab;
     dc.history.save(fragment);
     this.tab(tab);
   },

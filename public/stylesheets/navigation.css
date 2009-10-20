@@ -31,7 +31,8 @@ body.logged_in .tab_content {
   display: none;
 }
   body.upload_navigation .upload_tab_content,
-  body.documents_navigation .documents_tab_content,
-  body.accounts_navigation .accounts_tab_content {
+  body.search_navigation .search_tab_content,
+  body.accounts_navigation .accounts_tab_content,
+  body.documents_navigation .documents_tab_content {
     display: block;
   }

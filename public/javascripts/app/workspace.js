@@ -25,6 +25,7 @@ _.extend(dc.app.workspace, {
     this.uploadForm   = new dc.ui.DocumentUpload();
     this.accountBadge = new dc.ui.AccountView(Accounts.current(), 'badge');
     this.accountList  = new dc.ui.AccountList();
+    this.folderList   = new dc.ui.FolderList();
   },
   
   // Render all of the existing subviews and place them in the DOM.
@@ -32,14 +33,15 @@ _.extend(dc.app.workspace, {
     var content   = $('#content');
     content.append(this.sidebar.render().el);
     content.append(this.panel.render().el);
-    $('#pagination_container').append(dc.app.paginator.el);
+    this.panel.add('pagination', dc.app.paginator.el);
     
     if (!dc.app.accountId) return;
     
-    this.uploadForm.render();
-    this.panel.add('accounts_panel', this.accountList.render().el);
     content.append(dc.app.navigation.render().el);
     content.append(this.accountBadge.render().el);
+    this.uploadForm.render();
+    this.panel.add('accounts_panel', this.accountList.render().el);
+    this.sidebar.add('folders', this.folderList.render().el);
   }
   
 });

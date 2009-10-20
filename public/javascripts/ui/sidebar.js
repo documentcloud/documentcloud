@@ -14,8 +14,8 @@ dc.ui.Sidebar = dc.View.extend({
     return this;
   },
   
-  add : function(view) {
-    this.content.append(view);
+  add : function(containerName, view) {
+    $('#' + containerName + '_container', this.el).append(view);
   }
   
 });
