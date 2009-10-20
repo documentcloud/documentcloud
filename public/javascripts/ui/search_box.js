@@ -102,7 +102,8 @@ dc.ui.SearchBox = dc.View.extend({
     var options = {anchor : this.saveSearchButton, position: 'left center', left: -12, top: -1};
     SavedSearches.create(new dc.model.SavedSearch({query : this.value()}), null, {success : function() {
       dc.ui.notifier.show(_.extend(options, {mode : 'info', text : 'search saved'}));
-    }, error : function() {
+    }, error : function(model) {
+      if (model.view) $(model.view.el).remove();
       dc.ui.notifier.show(_.extend(options, {text : 'search already saved'}));
     }});
   },

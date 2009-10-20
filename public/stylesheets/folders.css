@@ -34,3 +34,13 @@
     #folder_list .folder:hover, #folder_list .saved_search:hover {
       background: #d7d7d7;
     }
+    #folder_list .saved_search .delete_search {
+      display: none;
+      position: absolute;
+      left: 7px;
+      width: 12px; height: 12px;
+      background: url(/images/icons/bullet_delete.png);
+    }
+      #folder_list .saved_search:hover .delete_search {
+        display: block;
+      }

@@ -2,42 +2,30 @@ dc.ui.FolderList = dc.View.extend({
   
   id : 'folder_list',
   
-  callbacks : [
-    ['.saved_search',   'click',    'runSearch']
-  ],
-  
   constructor : function(options) {
     this.base(options);
-    _.bindAll('renderAll', 'renderFolders', 'renderSearches', 'runSearch', this);
-    dc.app.navigation.register('documents', this.renderAll);
-  },
-  
-  render : function() {
+    _.bindAll('ensurePopulated', 'renderFolders', 'addSavedSearch', 'removeSavedSearch', 'runSearch', this);
+    dc.app.navigation.register('documents', this.ensurePopulated);
+    SavedSearches.bind(dc.Set.MODEL_ADDED, this.addSavedSearch);
+    SavedSearches.bind(dc.Set.MODEL_REMOVED, this.removeSavedSearch);
     $(this.el).html(dc.templates.FOLDER_LIST({}));
-    return this;
+    this.searchesEl = $('#saved_searches', this.el);
   },
   
-  renderAll : function() {
-    if (this.rendered) return;
-    this.rendered = true;
-    SavedSearches.populate({success : this.renderSearches});
+  ensurePopulated : function() {
+    if (!SavedSearches.populated) SavedSearches.populate();
   },
   
   renderFolders : function() {
     
   },
   
-  renderSearches : function() {
-    var rows = _.map(SavedSearches.models(), function(search) {
-      var q = search.get('query');
-      return $.el('div', {'class' : 'saved_search', query : q}, q);
-    });
-    $('#saved_searches', this.el).html(rows);
-    this.setCallbacks();
+  addSavedSearch : function(e, model) {
+    this.searchesEl.append(new dc.ui.SavedSearch({model : model}).render().el);
   },
   
-  runSearch : function(e) {
-    dc.app.searchBox.search($(e.target).attr('query'));
+  removeSavedSearch : function(e, model) {
+    $(model.view.el).remove();    
   }
   
 });

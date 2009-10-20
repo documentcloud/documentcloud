@@ -24,6 +24,7 @@ dc.View = Base.extend({
   
   configure : function(options) {
     // Need to clone and merge DEFAULT_OPTIONS and defaultOptions...
+    if (options.model) this.model = options.model;
     this.options = options;
   },
   

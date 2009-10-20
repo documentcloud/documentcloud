@@ -61,6 +61,7 @@ dc.model.RESTfulSet = dc.Set.extend({
   
   // Initialize the client-side set of models with its default contents.
   populate : function(options) {
+    options = options || {};
     var me = this;
     $.ajax({
       url       : '/' + this.resource,

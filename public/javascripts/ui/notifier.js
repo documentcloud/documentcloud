@@ -21,10 +21,12 @@ dc.ui.Notifier = dc.View.extend({
     this.setMode(options.mode, 'style');
     $(this.el).text(options.text).fadeIn('fast');
     $.align(this.el, options.anchor, options.position, options);
-    if (!options.leaveOpen) setTimeout(this.hide, options.duration);
+    if (this.timeout) clearTimeout(this.timeout);
+    if (!options.leaveOpen) this.timeout = setTimeout(this.hide, options.duration);
   },
   
   hide : function() {
+    this.timeout = null;
     $(this.el).fadeOut('fast');
   },
   
