@@ -1,41 +1,56 @@
 {
 
-  id        : An opaque value, can be an integer or a string.
+  id    : An opaque value, integer or string.
+        
+  title : A title is required to provide a label for the document.
+        
+  pages : The number of pages in the document. Pages are numbered starting
+          with page 1. Many resources use page numbers as URL components.
   
-  title     : A title is the only required attribute.
-  
-  pages     : The number of pages in the document.
-  
-  resources : {  Describes a comprehensive list of the URLs and URL Templates 
-                 that can be used to reference document assets.
-  
-    page_image : URL template for a page image. Should take {page} and, 
-                 optionally, {size}. Size is an opaque value (could be 'small', 
-                 or '700'), with the available sizes documented.
-                 Ex: http://docs.org/olympics-02/images/page-{page}-{size}.jpg
+  resources : { Describes a comprehensive list of the URLs and URL Templates 
+                that can be used to reference document assets.
                  
-    page_text  : URL template for the UTF-8 plain text of a single page. Should
-                 take {page} as a parameter.
-                 Ex: http://docs.org/olympics-02/pages/{page}.txt
-                 
-    page_html  : URL template for the HTML formatted text of a single page. 
-                 Takes {page} as a parameter.
-                 
-    full_text  : URL to a UTF-8 full text of the entire document.
+    text      : URL to the UTF-8 full text of the entire document.
     
-    pdf        : URL to a PDF file of the entire document.
+    pdf       : URL to a PDF file of the entire document.
     
-    thumbnail  : A URL to a thumbnail image of the document.
+    search    : URL that can be used to search within the document. Takes
+                 a 'q' parameter with the contents of the search query.
+    
+    thumbnail : (ext) A URL to a thumbnail image of the document.
+                 
+    page      : {  Lists the URLs for all the formats that individual pages are
+                available in. Annotation positions should mirror these formats.
+  
+      image   : URL template for a page image. Should take {page} and, 
+                optionally, {size}. Size is an opaque value (could be 'small', 
+                or '700'), with the available sizes documented.
+                Ex: http://docs.org/olympics-02/images/{size}/p{page}.jpg
+                 
+      text    : URL template for the UTF-8 plain text of a single page. Should
+                take {page} as a parameter. Plain text should be monospace
+                formatted if possible.
+                Ex: http://docs.org/olympics-02/pages/p{page}.txt
+                 
+      html    : (ext) URL template for the HTML formatted text of a single 
+                page. Takes {page} as a parameter.
+              
+    }
     
   }
   
-  attributes : { (optional)
+  attributes : { (optional) In general the supported attributes are the same
+                 as the Atom format.
   
-    date      : The ISO 8601 formatted date of publication or creation.
+    published : The ISO 8601 formatted date of publication.
     
-    language  : The ISO 639-1 (or 639-2) language code for the document.
+    language  : The ISO 639-1 (or 639-2) language code for the document. The
+                default code is assumed to be 'en'.
     
     source    : The name of the source of the document.
+    
+    summary   : A brief summary of the document. Summaries over 255 characters
+                may be truncated.
   
   }
   
@@ -52,26 +67,31 @@
   
   annotations : [{ (optional)
   
-    page            : The page number where the annotation occurs.
-    
-    title           : (optional) The title of the annotation.
-    
-    content         : (optional) The content of the annotation.
-    
-    format          : (optional) Defaults to UTF-8 'text/plain', but 
-                      alternatives could be any mime type: 'text/html'...
+    page     : The page number where the annotation occurs.
+             
+    title    : (optional) The title of the annotation.
+             
+    content  : (optional) The content of the annotation.
+             
+    format   : (optional) Defaults to UTF-8 'text/plain', but 
+               alternatives could be any mime type: 'text/html'...
+                      
+    location : { (optional) The content-type-specific location of the 
+                 annotation on its page. Leaving a location unspecified means 
+                 that the annotation will be interpreted as applying to the 
+                 entire page.
                 
-    location_image  : (optional) "top,right,bottom,left" 
-                      A-la CSS, in pixels, measured relative to the default 
-                      image size.
+      image  : "top,right,bottom,left" 
+               A-la CSS, in pixels, measured relative to the default 
+               image size.
     
-    location_text   : (optional) "offset:length"
-                      Measured in characters from the start of the page.
+      text   : "offset,length"
+               Measured in characters from the start of the page.
     
-    location_html   : (optional) "id"
-                      The DOM id of the referred-to HTML element. Leaving a 
-                      location unspecified means that the annotation will be 
-                      interpreted as applying to the entire page.
+      html   : "id"
+               The DOM id of the referred-to HTML element.
+               
+    }
     
   }]
   
@@ -81,19 +101,13 @@
                 verbatim in the document).
     
     type      : The type of thing the entity is.
+                Ex: 'person', 'term', 'company', 'location', 'technology'... 
     
-    relevance : (optional) A score between 0 and 1 of how relevant the entity 
-                is to the document as a whole.
+    relevance : (optional) A score between 0 and 1, measuring the relevance of
+                the entity to the document as a whole.
                 
-    position  : (optional) Same format as annotation position, see above.
+    location  : (optional) Identical format to annotation location, see above.
   
   }]
   
 }
-
-
-Issues: Authors. Multiples (sources). Required attributes at top?
-        Should 'size' be opaque? Thumbnail sizes? Standard name
-        for sources (take the title of the Wikipedia page as the standard when
-        in doubt)? How to deal with section-annotation ambiguity when there's
-        more than one section on a page.
