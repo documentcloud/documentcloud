@@ -44,6 +44,12 @@ a {
     -moz-border-radius: 6px;
   }
   
+#save_search {
+  opacity: 0;
+  position: absolute;
+  top: 71px; right: 10px;
+}
+  
 #spinner {
   display: none;
   position: absolute;

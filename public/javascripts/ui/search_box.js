@@ -15,7 +15,7 @@ dc.ui.SearchBox = dc.View.extend({
     this.base({el : $('#search')[0]});
     this.outstandingSearch = false;
     this.setCallbacks();
-    _.bindAll('loadSearchResults', 'loadMetadataResults', 'searchByHash', this);
+    _.bindAll('loadSearchResults', 'loadMetadataResults', 'searchByHash', 'saveCurrentSearch', this);
     dc.history.register(/^#search\//, this.searchByHash);
   },
   
@@ -34,9 +34,9 @@ dc.ui.SearchBox = dc.View.extend({
     $('.documents').html('');
     $('#metadata_container').html('');
     $('#query_container').html('');
-    // if (Documents.checkCache(query, pageNumber)) alert('cached, yo');
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');
+    if (this.saveSearchButton) $(this.saveSearchButton).css({opacity : 1});
     var params = {query_string : query};
     this.currentPage = page;
     if (page) params.page = page;
@@ -96,6 +96,21 @@ dc.ui.SearchBox = dc.View.extend({
     var mView = new dc.ui.MetadataList({metadata : Metadata.models()});
     $('#metadata_container').html(mView.render().el);
     this.doneSearching();
+  },
+  
+  saveCurrentSearch : function() {
+    var options = {anchor : this.saveSearchButton, position: 'left center', left: -12, top: -1};
+    SavedSearches.create(new dc.model.SavedSearch({query : this.value()}), null, {success : function() {
+      dc.ui.notifier.show(_.extend(options, {mode : 'info', text : 'search saved'}));
+    }, error : function() {
+      dc.ui.notifier.show(_.extend(options, {text : 'search already saved'}));
+    }});
+  },
+  
+  addSaveSearchButton : function() {
+    this.saveSearchButton = $.el('div', {id : 'save_search', 'class' : 'minibutton tab_content search_tab_content'}, 'save this search');
+    $(document.body).append(this.saveSearchButton);
+    $(this.saveSearchButton).bind('click', this.saveCurrentSearch);
   }
   
 });

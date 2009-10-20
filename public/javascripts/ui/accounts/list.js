@@ -10,23 +10,26 @@ dc.ui.AccountList = dc.View.extend({
   
   constructor : function(options) {
     this.base(options);
-    _.bindAll('renderAccounts', this);
-    dc.app.navigation.register('accounts', this.renderAccounts);
+    _.bindAll('renderAccounts', 'ensureRendered', this);
+    dc.app.navigation.register('accounts', this.ensureRendered);
   },
   
-  renderAccounts : function() {
+  ensureRendered : function() {
     if (this.rendered) return;
     this.rendered = true;
     $(this.el).append(dc.templates.ACCOUNT_LIST({}));
-    var list = this.list = $('#account_list_content', this.el);
+    this.list = $('#account_list_content', this.el);
     this.setCallbacks();
-    Accounts.populate({success : function() {
-      Accounts.each(function(account) {
-        var row = new dc.ui.AccountView(account, 'row');
-        window.row = row;
-        list.append(row.render().el);
-      });
-    }});
+    Accounts.populate({success : this.renderAccounts});
+  },
+  
+  renderAccounts : function() {
+    var list = this.list;
+    Accounts.each(function(account) {
+      var row = new dc.ui.AccountView(account, 'row');
+      window.row = row;
+      list.append(row.render().el);
+    });
   },
   
   newAccount : function() {

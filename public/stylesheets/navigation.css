@@ -4,7 +4,11 @@
   padding-left: 7px;
   height: 50px;
   overflow: hidden;
+  z-index: 10;
 }
+  body.search_navigation #navigation {
+    right: 120px;
+  }
   #navigation .nav {
     cursor: pointer;
     position: relative;

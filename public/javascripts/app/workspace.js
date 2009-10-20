@@ -41,6 +41,7 @@ _.extend(dc.app.workspace, {
     this.uploadForm.render();
     this.panel.add('accounts_panel', this.accountList.render().el);
     this.sidebar.add('folders', this.folderList.render().el);
+    dc.app.searchBox.addSaveSearchButton();
   }
   
 });
