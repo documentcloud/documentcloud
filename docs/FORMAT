@@ -10,14 +10,12 @@
                  that can be used to reference document assets.
   
     page_image : URL template for a page image. Should take {page} and, 
-                 optionally, {size}. Page numbers are 5-digits long (zero-
-                 padded). Size is an opaque value (could be 'small', or '700'),
-                 with the available sizes documented in your API docs.
+                 optionally, {size}. Size is an opaque value (could be 'small', 
+                 or '700'), with the available sizes documented.
                  Ex: http://docs.org/olympics-02/images/page-{page}-{size}.jpg
                  
     page_text  : URL template for the UTF-8 plain text of a single page. Should
-                 take {page} as a parameter. Page numbers are 5-digits long, as
-                 above.
+                 take {page} as a parameter.
                  Ex: http://docs.org/olympics-02/pages/{page}.txt
                  
     page_html  : URL template for the HTML formatted text of a single page. 
@@ -54,26 +52,26 @@
   
   annotations : [{ (optional)
   
-    page      : The page number where the annotation occurs.
+    page            : The page number where the annotation occurs.
     
-    title     : (optional) The title of the annotation.
+    title           : (optional) The title of the annotation.
     
-    content   : (optional) The content of the annotation.
+    content         : (optional) The content of the annotation.
     
-    format    : (optional) Defaults to UTF-8 'text/plain', but alternatives 
-                could be any mime type: 'text/html', 'application/json'...
-  
-    position  : (optional) {
-                  top : px, left : px, right : px, bottom : px  (for images)
-                  offset : integer, length : integer            (for text)
-                  id : 'html-id'                                (for html)
-                }
-                Describes the bounding box of the annotation, measured in
-                pixels, relative to the default size of the page images. Or
-                the offset and length of the annotation's reference in the 
-                plain text. Or the id of the HTML element for the annotation.
-                Leaving position unspecified means that the annotation applies
-                to the entire page.
+    format          : (optional) Defaults to UTF-8 'text/plain', but 
+                      alternatives could be any mime type: 'text/html'...
+                
+    location_image  : (optional) "top,right,bottom,left" 
+                      A-la CSS, in pixels, measured relative to the default 
+                      image size.
+    
+    location_text   : (optional) "offset:length"
+                      Measured in characters from the start of the page.
+    
+    location_html   : (optional) "id"
+                      The DOM id of the referred-to HTML element. Leaving a 
+                      location unspecified means that the annotation will be 
+                      interpreted as applying to the entire page.
     
   }]
   
@@ -94,8 +92,8 @@
 }
 
 
-Issues: Authors. Multiples (sources). Required attributes at top? Zero-padded 
-        page numbers? Should 'size' be opaque? Thumbnail sizes? Standard name
+Issues: Authors. Multiples (sources). Required attributes at top?
+        Should 'size' be opaque? Thumbnail sizes? Standard name
         for sources (take the title of the Wikipedia page as the standard when
         in doubt)? How to deal with section-annotation ambiguity when there's
         more than one section on a page.

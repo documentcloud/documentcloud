@@ -25,17 +25,18 @@ dc.ui.SearchBox = dc.View.extend({
   },
   
   // Start a search for a query string, updating the page URL.
-  search : function(query, page) {
+  search : function(query, pageNumber) {
     if (dc.app.navigation) dc.app.navigation.tab('documents');
-    if (page <= 1) page = null;
+    var page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
     this.fragment = 'search/' + encodeURIComponent(query);
     dc.history.save(this.fragment + (page ? '/p' + page : ''));
-    this.outstandingSearch = true;
-    dc.ui.spinner.show('searching');
     $('.documents').html('');
     $('#metadata_container').html('');
     $('#query_container').html('');
+    // if (Documents.checkCache(query, pageNumber)) alert('cached, yo');
+    this.outstandingSearch = true;
+    dc.ui.spinner.show('searching');
     var params = {query_string : query};
     this.currentPage = page;
     if (page) params.page = page;
@@ -71,11 +72,11 @@ dc.ui.SearchBox = dc.View.extend({
   // associated metadata, as long as something was found. Think about returning
   // the metadata right alongside the document JSON.
   loadSearchResults : function(resp) { 
+    dc.app.paginator.setQuery(resp.query);
     Documents.refresh(_.map(resp.documents, function(m){ 
       return new dc.model.Document(m); 
     }));
     $('#query_container').html(new dc.ui.Query(resp.query).render().el);
-    $('#pagination_container').html(new dc.ui.Paginator(resp.query).render().el);
     $('#document_list_container').html((new dc.ui.DocumentList()).render().el);
     _.each(Documents.values(), function(el) {
       $('.documents').append((new dc.ui.DocumentTile(el)).render().el);
