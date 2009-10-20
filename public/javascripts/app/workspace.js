@@ -7,8 +7,7 @@ _.extend(dc.app.workspace, {
     this.el = $('body')[0];
     this.createSubViews();
     this.renderSubViews();
-    if (dc.app.navigation) dc.app.navigation.tab('documents');
-    dc.history.loadURL();
+    dc.history.loadURL({fallback : 'documents'});
   },
   
   // Create all of the requisite subviews.

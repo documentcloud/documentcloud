@@ -7,7 +7,7 @@ dc.model.SortedSet = dc.Set.extend({
   // Pass in the comparator function when you create a new SortedSet.
   constructor : function(comparator) {
     this.base();
-    this.setComparator(comparator, true);
+    this.setComparator(comparator || this.comparator, true);
   },
   
   // Overrides _init to add a _byIndex index.

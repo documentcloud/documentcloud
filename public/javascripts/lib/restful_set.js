@@ -2,15 +2,14 @@
 // create   => POST     /resource
 // destroy  => DELETE   /resource/id
 // update   => PUT      /resource/id
+// populate => GET      /resource
 dc.model.RESTfulSet = dc.Set.extend({
   
-  // TODO: Think about if it makes sense to implement 'read'.
-  
-  // TODO: Think about if we care about server responses, and if so, success
-  // and failure.
+  populated : false,
   
   constructor : function() {
     if (!this.resource) throw new Error('dc.model.RESTfulSet: Unspecified resource');
+    this.modelClass = dc.model[Inflector.classify(this.resource)];
     this.base();
   },
   
@@ -58,6 +57,24 @@ dc.model.RESTfulSet = dc.Set.extend({
       success   : _.bind(this._handleSuccess, this, model, options.success),
       error     : _.bind(this._handleError, this, model, options.error)
     });
+  },
+  
+  // Initialize the client-side set of models with its default contents.
+  populate : function(options) {
+    var me = this;
+    $.ajax({
+      url       : '/' + this.resource,
+      type      : 'GET',
+      dataType  : 'json',
+      success   : function(resp) {
+        _.each(resp[me.resource], function(attrs) {
+          var model = new me.modelClass(attrs);
+          if (!me.include(model)) me.add(model);
+        });
+        if (options.success) options.success();
+      }
+    });
+    this.populated = true;
   },
   
   _handleSuccess : function(model, callback, resp) {

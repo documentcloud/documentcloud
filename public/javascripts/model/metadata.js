@@ -1,3 +1,5 @@
+// Metadata Model
+
 // A Metadatum, on the client, should be the aggregate of all of the occurrences
 // of a particular entity in the currently-viewed documents. To that end,
 // it has an averageRelevance() over its documents()...
@@ -88,3 +90,30 @@ dc.model.Metadatum = dc.Model.extend({
   }
   
 });
+
+
+// Metadata Set
+
+dc.model.MetadataSet = dc.model.SortedSet.extend({
+  
+  // Metadata are kept sorted by totalRelevance() of each datum, across its 
+  // documents.
+  comparator : function(a, b) {
+    var aRel = a.totalRelevance(), bRel = b.totalRelevance();
+    return aRel < bRel ? 1 : (bRel < aRel ? -1 : 0);
+  },
+  
+  // TODO: ... extend this to re-sort addInstance'd metas.
+  addOrCreate : function(obj) {
+    var id = dc.model.Metadatum.generateId(obj);
+    var meta = this.get(id);
+    return meta ? meta.addInstance(obj) : this.add(new dc.model.Metadatum(obj));
+  },
+  
+  toString : function() {
+    return 'Metadata ' + this.base();
+  }
+  
+});
+
+window.Metadata = new dc.model.MetadataSet();

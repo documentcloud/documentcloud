@@ -20,13 +20,13 @@ dc.ui.AccountList = dc.View.extend({
     $(this.el).append(dc.templates.ACCOUNT_LIST({}));
     var list = this.list = $('#account_list_content', this.el);
     this.setCallbacks();
-    Accounts.fetch(function() {
+    Accounts.populate({success : function() {
       Accounts.each(function(account) {
         var row = new dc.ui.AccountView(account, 'row');
         window.row = row;
         list.append(row.render().el);
       });
-    });
+    }});
   },
   
   newAccount : function() {

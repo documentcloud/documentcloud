@@ -25,6 +25,14 @@ window.Inflector = {
 
   dasherize: function(s) {
     return s.replace(/_/g,'-');
+  },
+  
+  singularize: function(s) {
+    return s.replace(/e?s$/, '');
+  },
+  
+  classify: function(s) {
+    return this.camelize(this.capitalize(this.dasherize(this.singularize(s))));
   }
   
 };

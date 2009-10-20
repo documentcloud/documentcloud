@@ -1,3 +1,5 @@
+// Document Model
+
 dc.model.Document = dc.Model.extend({
   
   constructor : function(attributes) {
@@ -9,7 +11,7 @@ dc.model.Document = dc.Model.extend({
   // document by binding to Metadata, instead of on-the-fly.
   metadata : function() {
     var docId = this.id;
-    return _.select(Metadata.values(), function(m) {
+    return _.select(Metadata.models(), function(m) {
       return _.any(m.get('instances'), function(i){ 
         return i.document_id == docId; 
       });
@@ -35,3 +37,14 @@ dc.model.Document = dc.Model.extend({
   }
   
 });
+
+
+// Document Set
+
+dc.model.DocumentSet = dc.model.RESTfulSet.extend({
+  
+  resource : 'documents'
+  
+});
+
+window.Documents = new dc.model.DocumentSet();

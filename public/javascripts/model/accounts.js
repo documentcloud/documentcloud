@@ -1,3 +1,5 @@
+// Account Model
+
 dc.model.Account = dc.Model.extend({
   
   GRAVATAR_BASE  : 'http://www.gravatar.com/avatar/',
@@ -22,3 +24,18 @@ dc.model.Account = dc.Model.extend({
   }
   
 });
+
+// Account Set
+
+dc.model.AccountSet = dc.model.RESTfulSet.extend({
+  
+  resource : 'accounts',
+  
+  // Fetch the account of the logged-in journalist.
+  current : function() {
+    return this.get(dc.app.accountId);
+  }
+  
+});
+
+window.Accounts = new dc.model.AccountSet();

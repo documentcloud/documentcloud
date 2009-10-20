@@ -78,7 +78,7 @@ dc.ui.SearchBox = dc.View.extend({
     }));
     $('#query_container').html(new dc.ui.Query(resp.query).render().el);
     $('#document_list_container').html((new dc.ui.DocumentList()).render().el);
-    _.each(Documents.values(), function(el) {
+    Documents.each(function(el) {
       $('.documents').append((new dc.ui.DocumentTile(el)).render().el);
     });
     if (resp.documents.length == 0) return this.doneSearching();
@@ -93,7 +93,7 @@ dc.ui.SearchBox = dc.View.extend({
     Metadata.refresh();
     _.each(resp.metadata, function(m){ Metadata.addOrCreate(m); });
     Metadata.sort();
-    var mView = new dc.ui.MetadataList({metadata : Metadata.values()});
+    var mView = new dc.ui.MetadataList({metadata : Metadata.models()});
     $('#metadata_container').html(mView.render().el);
     this.doneSearching();
   }

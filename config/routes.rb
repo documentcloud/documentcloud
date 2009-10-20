@@ -53,6 +53,8 @@ ActionController::Routing::Routes.draw do |map|
     accounts.enable '/accounts/enable/:key', :action => 'enable'
   end
   
+  map.resources :saved_searches
+  
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.

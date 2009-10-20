@@ -38,14 +38,16 @@ dc.model.History = dc.Model.extend({
   // Load the history callback associated with the current page fragment. On
   // pages that support history, this method should be called at page load, 
   // after all the history callbacks have been registered.
-  loadURL : function() {
+  loadURL : function(options) {
     var hash = window.location.hash;
     dc.history.set({hash : hash});
-    _.each(dc.history.get('handlers'), function(handler) {
+    var matched = _.any(dc.history.get('handlers'), function(handler) {
       if (hash.match(handler.matcher)) {
         handler.callback(hash.replace(handler.matcher, ''));
+        return true;
       }
     });
+    if (!matched && options.fallback) dc.app.navigation.tab(options.fallback);
   }
   
 });

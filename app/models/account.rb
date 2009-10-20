@@ -1,12 +1,16 @@
 class Account < ActiveRecord::Base
   
-  belongs_to :organization
-  has_one :security_key, :as => :securable, :dependent => :destroy
+  # Associations:
+  belongs_to  :organization
+  has_many    :saved_searches,  :dependent => :destroy
+  has_one     :security_key,    :dependent => :destroy, :as => :securable
   
+  # Validations:
   validates_presence_of   :first_name, :last_name, :email
   validates_format_of     :email, :with => DC::Validators::EMAIL
   validates_uniqueness_of :email
   
+  # Delegations:
   delegate :name, :to => :organization, :prefix => true
   
   # A whitelist of Account attributes that should be sent down to the client.

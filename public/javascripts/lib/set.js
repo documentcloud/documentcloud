@@ -36,7 +36,7 @@ dc.Set = Base.extend({
   },
   
   // Simply return the models in the set as an array (useful for debugging).
-  values : function() {
+  models : function() {
     return _.values(this._byId);
   },
   
@@ -51,7 +51,7 @@ dc.Set = Base.extend({
   },
   
   each : function(iterator, context) {
-    return _.each(this.values(), iterator, context);
+    return _.each(this.models(), iterator, context);
   },
   
   // Is a given model already present in the set?
