@@ -13,7 +13,7 @@ dc.ui.SavedSearch = dc.View.extend({
   },
   
   render : function() {
-    $(this.el).html(dc.templates.FOLDER_SEARCH(this.model.attributes()));
+    $(this.el).html(dc.templates.LABEL_SEARCH(this.model.attributes()));
     this.setCallbacks();
     return this;
   },

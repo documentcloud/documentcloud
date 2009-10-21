@@ -1,14 +1,14 @@
-dc.ui.FolderList = dc.View.extend({
+dc.ui.LabelList = dc.View.extend({
   
-  id : 'folder_list',
+  id : 'label_list',
   
   constructor : function(options) {
     this.base(options);
-    _.bindAll('ensurePopulated', 'renderFolders', 'addSavedSearch', 'removeSavedSearch', 'runSearch', this);
+    _.bindAll('ensurePopulated', 'renderLabels', 'addSavedSearch', 'removeSavedSearch', 'runSearch', this);
     dc.app.navigation.register('documents', this.ensurePopulated);
     SavedSearches.bind(dc.Set.MODEL_ADDED, this.addSavedSearch);
     SavedSearches.bind(dc.Set.MODEL_REMOVED, this.removeSavedSearch);
-    $(this.el).html(dc.templates.FOLDER_LIST({}));
+    $(this.el).html(dc.templates.LABEL_LIST({}));
     this.searchesEl = $('#saved_searches', this.el);
   },
   
@@ -16,7 +16,7 @@ dc.ui.FolderList = dc.View.extend({
     if (!SavedSearches.populated) SavedSearches.populate();
   },
   
-  renderFolders : function() {
+  renderLabels : function() {
     
   },
   

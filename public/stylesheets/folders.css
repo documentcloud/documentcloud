@@ -1,4 +1,4 @@
-#folder_list {
+#label_list {
   position: absolute;
   display: block;
   top: 21px; left: 1px; right: 1px; bottom: 21px;
@@ -7,7 +7,7 @@
   line-height: 13px;
   color: #454545;
 }
-  #folder_list .divider {
+  #label_list .divider {
     text-transform: uppercase;
     padding: 4px 5px 4px 28px;
     background: #ddd;
@@ -15,35 +15,35 @@
     border-top: 1px solid #dadada;
     color: #777;
   }
-    #folder_list .divider img {
+    #label_list .divider img {
       position: absolute;
-      margin: -3px 0 0 -20px;
+      margin: -2px 0 0 -20px;
     }
-      #folder_list .divider.labels img {
-        margin-top: -2px;
+      #label_list .divider.saved_searches img {
+        margin-top: -3px;
       }
-  #folder_list #folders, #folder_list #saved_searches {
+  #label_list #labels, #label_list #saved_searches {
     padding: 0 0 10px 0;
   }
-  #folder_list .folder, #folder_list .saved_search {
+  #label_list .label, #label_list .saved_search {
     padding: 1px 0 1px 28px;
     line-height: 16px;
     font-size: 11px;
     cursor: pointer;
   }
-    #folder_list .folder:first-child, #folder_list .saved_search:first-child {
+    #label_list .label:first-child, #label_list .saved_search:first-child {
       padding-top: 3px;
     }
-    #folder_list .folder:hover, #folder_list .saved_search:hover {
+    #label_list .label:hover, #label_list .saved_search:hover {
       background: #d7d7d7;
     }
-    #folder_list .saved_search .delete_search {
+    #label_list .saved_search .delete_search {
       display: none;
       position: absolute;
       left: 7px;
       width: 12px; height: 12px;
       background: url(/images/icons/bullet_delete.png);
     }
-      #folder_list .saved_search:hover .delete_search {
+      #label_list .saved_search:hover .delete_search {
         display: block;
       }
