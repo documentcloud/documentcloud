@@ -48,6 +48,7 @@ a {
   opacity: 0;
   position: absolute;
   top: 71px; right: 10px;
+/*  top: 128px; right: 15px;*/
 }
   
 #spinner {
@@ -118,6 +119,9 @@ a {
     overflow: hidden;
     color: #777;
   }
+    #paginator {
+      top: 2px;
+    }
     #paginator > span {
       padding: 0 2px;
       cursor: pointer;

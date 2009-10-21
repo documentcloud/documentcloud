@@ -2,6 +2,15 @@
 
 dc.model.Label = dc.Model.extend({
   
+  constructor : function(options) {
+    this.base(options);
+    _.bindAll('addSelectedDocuments', this);
+  },
+  
+  addSelectedDocuments : function() {
+    Labels.update(this, {document_ids : Documents.selectedIds()});
+  }
+  
 });
 
 

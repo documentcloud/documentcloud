@@ -45,6 +45,7 @@
       background: #d7d7d7;
     }
     #label_list .delete_bullet {
+      opacity: 0.65;
       display: none;
       position: absolute;
       left: 7px;
@@ -53,6 +54,9 @@
     }
       #label_list .saved_search:hover .delete_bullet, #label_list .label:hover .delete_bullet {
         display: block;
+      }
+      #label_list .delete_bullet:hover {
+        opacity: 1;
       }
       
 #label_maker {

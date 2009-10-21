@@ -1,0 +1,20 @@
+#search_toolbar_container {
+  position: absolute;
+  overflow: hidden;
+  height: 0;
+  left: -1px; right: -1px;
+  -webkit-transition: height 0.1s linear;
+  background: #ddd;
+  background: -webkit-gradient(linear, left top, left bottom, from(#cacaca), to(#f0f0f0));
+}
+  .panel_content.open_toolbar #search_toolbar_container {
+    height: 30px;
+    border: 1px solid #8b8b8b; border-top: 0; border-bottom-color: #aaa;
+  }
+  
+.toolbar {
+  padding: 5px 10px;
+}
+  .toolbar .item {
+    float: left;
+  }

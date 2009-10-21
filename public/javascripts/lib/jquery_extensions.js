@@ -122,6 +122,31 @@ $.fn.extend({
       hash[pair.name] = pair.value;
       return hash;
     });
+  },
+  
+  // When the next click or keypress happens, anywhere on the screen, hide the
+  // element. 'clickable' makes the element and its contents clickable without
+  // hiding. The 'onHide' callback runs when the hide fires, and has a chance
+  // to cancel it.
+  autohide : function(options) {
+    var me = this;
+    options = _.extend({clickable : null, onHide : null}, options || {});
+    me._autoignore = true;
+    setTimeout(function(){ delete me._autoignore; }, 0);
+
+    if (!me._autohider) {
+      this._autohider = function(e) {
+        if (me._autoignore) return;
+        if (options.clickable && (me[0] == e.target || _.include($(e.target).parents(), me[0]))) return;
+        if (options.onHide && !options.onHide(e)) return;
+        me.hide();
+        $(document).unbind('click', me._autohider);
+        $(document).unbind('keypress', me._autohider);
+        me._autohider = null;
+      };
+      $(document).bind('click', this._autohider);
+      $(document).bind('keypress', this._autohider);
+    }
   }
   
 });

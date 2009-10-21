@@ -32,6 +32,7 @@ dc.ui.Paginator = dc.View.extend({
     var el = $(this.el);
     el.html('');
     if (!this.query || this.query.total < this.PAGE_SIZE) return this;
+    el.html('page: ');
     var from = this.query.from, to = this.query.to;
     if (from > 0) el.append(this.prevEl);
     for (var i=1; i<=this.pageCount(); i++) {

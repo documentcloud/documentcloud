@@ -1,4 +1,6 @@
+/*--- Size Controls are disabled for now -- not useful with pagination. -----*/
 .size_controls {
+  display: none;
   position: absolute;
   text-transform: uppercase;
   color: #777;
@@ -17,20 +19,25 @@
   
 .document_list {
 }
-  .documents {
+  .panel_content .panel.documents {
+    padding: 5px;
+    -webkit-transition: top 0.1s linear;
   }
-    .document_list.large_size .documents {
-      padding-right: 30px;
+    body.logged_in .panel_content.open_toolbar .panel.documents {
+      top: 51px;
     }
   
 .document_tile {
   position: relative;
   overflow: hidden;
+  height: 77px;
+  padding: 5px 30px 5px 77px;
+  margin-bottom: 5px;
+  -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
 }
-  .document_list.large_size .document_tile {
-    height: 77px;
-    padding-left: 72px;
-    margin-bottom: 15px;
+  .document_tile.is_selected {
+    background: #eaeafa;
+    background: -webkit-gradient(linear, left top, left bottom, from(#eaeafa), to(#fafaff));
   }
   .document_list.medium_size .document_tile {
     float: left;
@@ -45,8 +52,11 @@
   }
   .document_tile .icon {
     position: absolute;
-    left: 2px;
+    left: 7px;
   }
+    body.logged_in .document_tile .icon {
+      cursor: pointer;
+    }
     .document_tile img.icon {
       border: 1px solid #eee;      
     }

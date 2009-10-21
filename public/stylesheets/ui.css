@@ -40,11 +40,42 @@ span.text_input {
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   -webkit-box-shadow: 0 0 1px #000; -moz-box-shadow: 0 0 1px #000;
 }
-  .minibutton:hover {
+  .minibutton:hover, .minibutton.is_open {
     color: #222;
     -webkit-box-shadow: 0 0 4px #333; -moz-box-shadow: 0 0 4px #333;
     background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#afafaf));
   }
+  .minibutton.menu > span {
+    position: relative;
+    left: 2px;
+    padding-right: 18px;
+    background: url(/images/icons/bullet_arrow_down.png) no-repeat right center;
+  }
+  .menu_content {
+    display: none;
+    position: absolute;
+    width: 150px;
+    background: white;
+    padding: 4px;
+    opacity: 0.95;
+    -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+    -webkit-box-shadow: 0 3px 7px #999; -moz-box-shadow: 0 3px 7px #999;
+  }
+    .menu_content .menu_item {
+      cursor: pointer;
+      font: 11px/18px Arial;
+      color: #454545;
+      padding: 0px 3px 3px 3px;
+      height: 16px;
+      overflow: hidden;
+      border-top: 1px solid #eee;
+    }
+      .menu_content .menu_item:first-child {
+        border-top: 0;
+      }
+      .menu_content .menu_item:hover {
+        background: #f2f2ff;
+      }
     
 /*------------------------------ Error Messages ------------------------------*/
 .form_error {

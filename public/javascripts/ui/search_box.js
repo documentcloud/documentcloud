@@ -37,6 +37,7 @@ dc.ui.SearchBox = dc.View.extend({
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');
     this.contextSensitiveSaveButton(query);
+    if (dc.app.toolbar) dc.app.toolbar.hide();
     var params = {query_string : query};
     this.currentPage = page;
     if (page) params.page = page;

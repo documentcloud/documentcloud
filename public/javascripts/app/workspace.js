@@ -21,10 +21,11 @@ _.extend(dc.app.workspace, {
     if (!dc.app.accountId) return;
     
     dc.app.navigation = new dc.ui.Navigation();
+    dc.app.toolbar    = new dc.ui.Toolbar({tab : 'search'});
     this.uploadForm   = new dc.ui.DocumentUpload();
     this.accountBadge = new dc.ui.AccountView(Accounts.current(), 'badge');
     this.accountList  = new dc.ui.AccountList();
-    this.LabelList   =  new dc.ui.LabelList();
+    this.LabelList    = new dc.ui.LabelList();
   },
   
   // Render all of the existing subviews and place them in the DOM.
@@ -40,6 +41,7 @@ _.extend(dc.app.workspace, {
     content.append(this.accountBadge.render().el);
     this.uploadForm.render();
     this.panel.add('accounts_panel', this.accountList.render().el);
+    this.panel.add('search_toolbar', dc.app.toolbar.render().el);
     this.sidebar.add('labels', this.LabelList.render().el);
     dc.app.searchBox.addSaveSearchButton();
   }
