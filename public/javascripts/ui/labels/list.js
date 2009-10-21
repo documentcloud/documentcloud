@@ -33,7 +33,7 @@ dc.ui.LabelList = dc.View.extend({
   },
   
   warnAlreadyExists : function() {
-    dc.ui.notifier.show({text : 'label already exists', anchor : this.newLabelEl, position : '-left -top'});
+    dc.ui.notifier.show({text : 'label already exists', anchor : this.newLabelEl, position : '-left bottom'});
   },
   
   saveNewLabel : function(e) {

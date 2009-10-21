@@ -110,8 +110,15 @@ dc.Set = Base.extend({
   },
   
   // Internal method called every time a model in the set fires an event.
+  // Sets need to update their indexes when models change ids.
   _onModelEvent : function(e, model) {
-    if (e == dc.Model.CHANGED) this.fire(dc.Set.MODEL_CHANGED, this, model);
+    if (e == dc.Model.CHANGED) {
+      if (model.hasChanged('id')) {
+        delete this._byId[model.formerValue('id')];
+        this._byId[model.id] = model;
+      }
+      this.fire(dc.Set.MODEL_CHANGED, this, model);
+    }
   },
   
   // Inspect.
