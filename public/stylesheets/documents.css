@@ -43,8 +43,8 @@
   }
   .document_list.medium_size .document_tile {
     float: left;
-    width: 290px;
-    padding-left: 34px;
+    width: 250px;
+    padding-left: 40px;
     margin: 5px 15px 10px 0;
     height: 35px;
   }

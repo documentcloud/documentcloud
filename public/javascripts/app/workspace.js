@@ -44,6 +44,12 @@ _.extend(dc.app.workspace, {
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
     this.sidebar.add('labels', this.LabelList.render().el);
     dc.app.searchBox.addSaveSearchButton();
+    this.warnNonWebkit();
+  },
+  
+  // For now, the prototype only supports webkit-based browsers.
+  warnNonWebkit : function() {
+    if (!$.browser.safari) dc.ui.notifier.show({text : 'please use a webkit-based browser'});
   }
   
 });

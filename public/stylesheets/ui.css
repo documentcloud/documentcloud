@@ -92,7 +92,7 @@ span.text_input {
     font: 10px Arial;
     padding: 4px 10px;
     border: 1px solid #aa7766;
-    background: #555;
+    background: #fcc;
     background: -webkit-gradient(linear, left top, left bottom, from(#faa), to(#fcc));
     margin: 0 auto;
     display: inline;
@@ -108,6 +108,6 @@ span.text_input {
   #notifier.info_style {
     color: #171;
     border-color: #171;
-    background: #555;
+    background: #cec;
     background: -webkit-gradient(linear, left top, left bottom, from(#beb), to(#ded));
   }
