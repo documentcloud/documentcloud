@@ -8,6 +8,7 @@
   color: #454545;
 }
   #label_list .divider {
+    cursor: pointer;
     text-transform: uppercase;
     padding: 4px 5px 4px 28px;
     background: #ddd;
@@ -22,6 +23,12 @@
       #label_list .divider.saved_searches img {
         margin-top: -3px;
       }
+      #label_list .divider img.collapsable {
+        right: 3px;
+      }
+        #label_list.collapsed_labels img.collapser, #label_list.expanded_labels img.expander {
+          display: none;
+        }
   #label_list #labels, #label_list #saved_searches {
     padding: 0 0 10px 0;
   }
@@ -47,3 +54,27 @@
       #label_list .saved_search:hover .delete_search {
         display: block;
       }
+      
+#label_maker {
+  height: 0;
+  overflow: hidden;
+  background: #d0d0d0;
+  position: relative;
+  -webkit-transition: height 0.1s linear;
+}
+  #label_list.expanded_labels #label_maker {
+    height: 25px;
+    padding: 2px 0;
+  }
+  #label_maker input {
+    margin-left: 24px;
+    background: #f0f0f0;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+    font-size: 11px;
+    width: 212px;
+    line-height: 13px;
+  }
+  #label_maker .minibutton {
+    position: absolute;
+    right: 8px; top: 5px;
+  }

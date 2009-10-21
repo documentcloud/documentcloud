@@ -55,6 +55,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :saved_searches
+  map.resources :labels
   
   # See how all your routes lay out with "rake routes"
 

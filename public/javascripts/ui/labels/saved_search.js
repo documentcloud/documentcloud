@@ -3,7 +3,7 @@ dc.ui.SavedSearch = dc.View.extend({
   className : 'saved_search',
   
   callbacks : [
-    ['el',          'click',    'runSearch'],
+    ['el',              'click',    'runSearch'],
     ['.delete_search',  'click',    'deleteSearch']
   ],
   
