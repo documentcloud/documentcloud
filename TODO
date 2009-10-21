@@ -1,5 +1,8 @@
 TODO:
 
+  * Figure out a way to use base.js to do multiple inheritance, so that we can
+    have a SortedAndRESTfulSet.
+
   * EMPTY RESULTS FOR PORTIONS OF A SEARCH NEED TO KILL THE SEARCH, pronto.
 
   * Stash paged result sets for a given search on the document model.

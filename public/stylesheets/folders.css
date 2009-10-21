@@ -19,6 +19,9 @@
       position: absolute;
       margin: -3px 0 0 -20px;
     }
+      #folder_list .divider.labels img {
+        margin-top: -2px;
+      }
   #folder_list #folders, #folder_list #saved_searches {
     padding: 0 0 10px 0;
   }
