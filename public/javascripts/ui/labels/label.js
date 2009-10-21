@@ -23,7 +23,6 @@ dc.ui.Label = dc.View.extend({
     if (!this.model.get('document_ids')) return;
     dc.history.save('label/' + encodeURIComponent(this.model.get('title')));
     dc.ui.spinner.show('loading documents');
-    if (dc.app.toolbar) dc.app.toolbar.hide();
     $.get('/labels/documents/' + this.model.id + '.json', {}, this.loadDocuments, 'json');
   },
   
@@ -32,7 +31,9 @@ dc.ui.Label = dc.View.extend({
     dc.app.LabeledDocuments.refresh(_.map(resp.documents, function(m){
       return new dc.model.Document(m);
     }));
-    $('#labeled_documents_container').html((new dc.ui.DocumentList({set : dc.app.LabeledDocuments})).render().el);
+    var list = new dc.ui.DocumentList({set : dc.app.LabeledDocuments});
+    list.setMode('medium', 'size');
+    $('#labeled_documents_container').html(list.render().el);
     dc.app.LabeledDocuments.each(function(doc) {
       $('#labeled_documents_container .documents').append((new dc.ui.DocumentTile(doc)).render().el);
     });
