@@ -116,7 +116,7 @@ dc.ui.SearchBox = dc.View.extend({
   
   contextSensitiveSaveButton : function(query) {
     if (!this.saveSearchButton) return;
-    $(this.saveSearchButton)[SavedSearches.find(query) ? 'hide' : 'show']();
+    $(this.saveSearchButton).css({opacity : SavedSearches.find(query) ? 0 : 1});
   }
   
 });

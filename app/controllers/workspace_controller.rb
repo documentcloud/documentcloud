@@ -1,9 +1,11 @@
 class WorkspaceController < ApplicationController
   
+  RESULTS_REQUEST = /\A\/results/
+  
   before_filter :bouncer unless Rails.development?
     
-  def index
-    current_account
+  def index    
+    redirect_to '/search' unless current_account || results_request?
   end
   
   def signup
@@ -13,13 +15,13 @@ class WorkspaceController < ApplicationController
     acc = Account.create(params[:account].merge({:organization => org}))
     return org.destroy && fail(acc.errors.full_messages.first) if acc.errors.any?
     acc.authenticate(session)
-    redirect_to '/workspace/'
+    redirect_to '/'
   end
   
   def login
     return render unless request.post?
     account = Account.log_in(params[:email], params[:password], session)
-    account ? redirect_to('/workspace/') : fail(true)
+    account ? redirect_to('/') : fail(true)
   end
   
   def logout
@@ -38,6 +40,10 @@ class WorkspaceController < ApplicationController
   
   def fail(message)
     @failure = message
+  end
+  
+  def results_request?
+    !!request.path.match(RESULTS_REQUEST)
   end
   
 end

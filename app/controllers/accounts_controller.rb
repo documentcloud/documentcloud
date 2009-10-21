@@ -13,7 +13,7 @@ class AccountsController < ApplicationController
     account.save
     account.authenticate(session)
     key.destroy
-    redirect_to '/workspace'
+    redirect_to '/'
   end
   
   def index

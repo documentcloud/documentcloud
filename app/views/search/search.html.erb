@@ -2,7 +2,7 @@
   @bodyclass = 'search'
 %>
 
-<form id="search_form" method="get" action="/workspace/">
+<form id="search_form" method="get" action="/results/">
   <img id="logo" src="/images/common/document_cloud_logo_large.png" alt="DocumentCloud" />
   
   <div id="search_container">
@@ -13,7 +13,7 @@
 <script type="text/javascript">
   $('#search_form').bind('submit', function(e) {
     var query = $('#search').val();
-    window.location = "/workspace/#search/" + encodeURIComponent(query);
+    window.location = "/results/#search/" + encodeURIComponent(query);
     return false;
   });
 </script>
