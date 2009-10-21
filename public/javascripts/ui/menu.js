@@ -1,7 +1,7 @@
 // The Sidebar. Switches contexts between different subviews.
 dc.ui.Menu = dc.View.extend({
   
-  className : 'minibutton item menu',
+  className : 'minibutton menu',
   
   callbacks : [
     ['el',    'click',    'open']

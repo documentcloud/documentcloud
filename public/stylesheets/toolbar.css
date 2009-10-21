@@ -15,6 +15,13 @@
 .toolbar {
   padding: 5px 10px;
 }
-  .toolbar .item {
+  .toolbar .minibutton {
     float: left;
+    margin-left: 10px;
   }
+    .toolbar .minibutton:first-child {
+      margin-left: 0;
+    }
+    .toolbar #delete_document_button {
+      float: right;
+    }
