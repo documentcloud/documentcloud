@@ -36,7 +36,7 @@ dc.ui.SearchBox = dc.View.extend({
     $('#query_container').html('');
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');
-    if (this.saveSearchButton) $(this.saveSearchButton).css({opacity : 1});
+    this.contextSensitiveSaveButton(query);
     var params = {query_string : query};
     this.currentPage = page;
     if (page) params.page = page;
@@ -112,6 +112,11 @@ dc.ui.SearchBox = dc.View.extend({
     this.saveSearchButton = $.el('div', {id : 'save_search', 'class' : 'minibutton tab_content search_tab_content'}, 'save this search');
     $(document.body).append(this.saveSearchButton);
     $(this.saveSearchButton).bind('click', this.saveCurrentSearch);
+  },
+  
+  contextSensitiveSaveButton : function(query) {
+    if (!this.saveSearchButton) return;
+    $(this.saveSearchButton)[SavedSearches.find(query) ? 'hide' : 'show']();
   }
   
 });
