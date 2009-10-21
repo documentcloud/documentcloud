@@ -55,7 +55,9 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :saved_searches
-  map.resources :labels
+  
+  map.resources :labels,
+                :member => {:documents => :get}
   
   # See how all your routes lay out with "rake routes"
 

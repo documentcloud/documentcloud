@@ -20,6 +20,10 @@ class LabelsController < ApplicationController
     json nil
   end
   
+  def documents
+    json 'documents' => current_label.loaded_documents
+  end
+  
   
   private
   

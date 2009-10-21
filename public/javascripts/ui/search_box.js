@@ -31,7 +31,7 @@ dc.ui.SearchBox = dc.View.extend({
     this.value(query);
     this.fragment = 'search/' + encodeURIComponent(query);
     dc.history.save(this.fragment + (page ? '/p' + page : ''));
-    $('.documents').html('');
+    $('#document_list_container .documents').html('');
     $('#metadata_container').html('');
     $('#query_container').html('');
     this.outstandingSearch = true;
@@ -78,9 +78,9 @@ dc.ui.SearchBox = dc.View.extend({
       return new dc.model.Document(m); 
     }));
     $('#query_container').html(new dc.ui.Query(resp.query).render().el);
-    $('#document_list_container').html((new dc.ui.DocumentList()).render().el);
+    $('#document_list_container').html((new dc.ui.DocumentList({set : Documents})).render().el);
     Documents.each(function(el) {
-      $('.documents').append((new dc.ui.DocumentTile(el)).render().el);
+      $('#document_list_container .documents').append((new dc.ui.DocumentTile(el)).render().el);
     });
     if (resp.documents.length == 0) return this.doneSearching();
     dc.ui.spinner.show('gathering metadata');

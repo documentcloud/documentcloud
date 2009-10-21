@@ -55,4 +55,8 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   
 });
 
+// The main set of Documents, used by the search tab.
 window.Documents = new dc.model.DocumentSet();
+
+// The set of documents that is used to look at a particular label.
+dc.app.LabeledDocuments = new dc.model.DocumentSet();

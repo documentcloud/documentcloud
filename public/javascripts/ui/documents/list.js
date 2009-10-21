@@ -13,7 +13,7 @@ dc.ui.DocumentList = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     $(this.el).addClass('large_size');
-    Documents.bind(dc.Set.MODEL_REMOVED, this.removeDocument);
+    this.set.bind(dc.Set.MODEL_REMOVED, this.removeDocument);
   },
   
   render : function() {

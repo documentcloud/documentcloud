@@ -21,7 +21,7 @@ class DocumentsController < ApplicationController
       docs = params[:ids].map {|id| Document.new(:id => id) }
       meta = DC::Store::MetadataStore.new.find_by_documents(docs)
     end
-    json({'metadata' => meta})
+    json 'metadata' => meta
   end
     
   def thumbnail

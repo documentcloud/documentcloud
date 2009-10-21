@@ -6,7 +6,11 @@ class Label < ActiveRecord::Base
   default_scope :order => 'title'
   
   def documents
-    document_ids.split(',').map {|doc_id| Document.new(doc_id) }
+    document_ids.split(',').map {|doc_id| Document.new(:id => doc_id) }
+  end
+  
+  def loaded_documents
+    DC::Store::EntryStore.new.find_all(document_ids.split(','))
   end
   
   def as_json(opts={})
