@@ -7,8 +7,14 @@ dc.model.Label = dc.Model.extend({
     _.bindAll('addSelectedDocuments', this);
   },
   
+  documentIds : function() {
+    if (!this.get('document_ids')) return [];
+    return this.get('document_ids').split(',');
+  },
+  
   addSelectedDocuments : function() {
-    Labels.update(this, {document_ids : Documents.selectedIds()});
+    var newIds = _.uniq(this.documentIds().concat(Documents.selectedIds()));
+    Labels.update(this, {document_ids : newIds.join(',')});
   }
   
 });

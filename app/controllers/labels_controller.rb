@@ -10,11 +10,21 @@ class LabelsController < ApplicationController
     json current_account.labels.create(pick_params(:title))
   end
   
-  # TODO: Implement update for changing the title of a label.
+  def update
+    current_label.update_attributes(pick_params(:title, :document_ids))
+    json label
+  end  
   
   def destroy
-    current_account.labels.find(params[:id]).destroy
+    current_label.destroy
     json nil
+  end
+  
+  
+  private
+  
+  def current_label
+    current_account.labels.find(params[:id])
   end
   
 end

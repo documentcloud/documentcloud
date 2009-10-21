@@ -91,7 +91,7 @@ window._ = {
   
   // Determine if a given value is included in the object, based on '=='.
   include : function(obj, target) {
-    if (_.isArray(obj)) if (_.indexOf(obj, target) != -1) return true;
+    if (_.isArray(obj)) if (obj.indexOf(target) != -1) return true;
     var found = false;
     _.each(obj, function(value) {
       if (value == target) {

@@ -3,6 +3,7 @@ dc.ui.Label = dc.View.extend({
   className : 'label',
   
   callbacks : [
+    ['el',                'click',    'showDocuments'],
     ['.delete_bullet',    'click',    'deleteLabel']
   ],
   
@@ -15,6 +16,10 @@ dc.ui.Label = dc.View.extend({
     $(this.el).html(dc.templates.LABEL_VIEW(this.model.attributes()));
     this.setCallbacks();
     return this;
+  },
+  
+  showDocuments : function() {
+    alert(this.model.get('document_ids'));
   },
   
   deleteLabel : function(e) {
