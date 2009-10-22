@@ -11,7 +11,7 @@ dc.ui.LabelList = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     _.bindAll('ensurePopulated', '_addSavedSearch', '_addLabel', '_removeSubView', this);
-    dc.app.navigation.register('documents', this.ensurePopulated);
+    dc.app.navigation.register('organize', this.ensurePopulated);
     $(this.el).html(dc.templates.LABEL_LIST({}));
     this.labelsEl     = $('#labels', this.el);
     this.searchesEl   = $('#saved_searches', this.el);

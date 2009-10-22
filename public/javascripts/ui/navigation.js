@@ -11,11 +11,11 @@ dc.ui.Navigation = dc.View.extend({
   
   // List of tab names => page titles.
   tabs : [
-    {name : 'documents', title : 'Workspace'}, 
+    {name : 'organize', title : 'Workspace'}, 
     {name : 'search',    title : 'Search'}, 
     {name : 'upload',    title : 'Upload a Document'}, 
-    {name : 'accounts',  title : 'Manage Accounts'},
-    {name : 'visualize', title : 'Visualize'}
+    {name : 'visualize', title : 'Visualize'},
+    {name : 'admin',  title : 'Manage Accounts'}
   ],
     
   constructor : function(options) {

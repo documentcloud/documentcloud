@@ -1,5 +1,7 @@
 TODO:
 
+  * Think about adding search history.
+
   * Refactor searchbox and label document list rendering -- it's getting messy.
 
   * Show if the currently-selected documents are tagged with the labels in

@@ -11,7 +11,7 @@ dc.ui.AccountList = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     _.bindAll('renderAccounts', 'ensureRendered', this);
-    dc.app.navigation.register('accounts', this.ensureRendered);
+    dc.app.navigation.register('admin', this.ensureRendered);
   },
   
   ensureRendered : function() {
