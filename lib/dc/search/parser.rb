@@ -12,16 +12,16 @@ module DC
     class Parser
       
       def parse(query_string)
-        @text, @fields, @attributes = nil, [], []
+        @text, @fields, @labels, @attributes = nil, [], [], []
         
         bare_fields   = query_string.scan(Matchers::BARE_FIELD)
         quoted_fields = query_string.scan(Matchers::QUOTED_FIELD)
         search_text   = query_string.gsub(Matchers::ALL_FIELDS, '').squeeze(' ').strip
         
         process_search_text(search_text)
-        process_fields(bare_fields, quoted_fields)
+        process_fields_and_labels(bare_fields, quoted_fields)
         
-        Query.new(:text => @text, :fields => @fields, :attributes => @attributes)
+        Query.new(:text => @text, :fields => @fields, :labels => @labels, :attributes => @attributes)
       end
       
       def process_search_text(text)
@@ -32,13 +32,22 @@ module DC
         @text = text.gsub(Matchers::BOOLEAN_OR, SPHINX_OR)
       end
       
-      def process_fields(bare, quoted)
+      def process_fields_and_labels(bare, quoted)
         bare.map! {|f| f.split(':') }
         quoted.map! {|f| f.gsub(/['"]/, '').split(':') }
-        (bare + quoted).each do |pair| 
-          field = Field.new(*pair)
-          (field.attribute? ? @attributes : @fields) << field
+        (bare + quoted).each do |pair|
+          type, value = *pair
+          type.downcase == 'label' ? process_label(value) : process_field(type, value)
         end
+      end
+      
+      def process_field(type, value)
+        field = Field.new(type, value)
+        (field.attribute? ? @attributes : @fields) << field
+      end
+
+      def process_label(title)
+        @labels << title
       end
       
     end

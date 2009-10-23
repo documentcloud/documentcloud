@@ -15,6 +15,13 @@ dc.model.Label = dc.Model.extend({
   addSelectedDocuments : function() {
     var newIds = _.uniq(this.documentIds().concat(Documents.selectedIds()));
     Labels.update(this, {document_ids : newIds.join(',')});
+  },
+  
+  // Return the title of this label as a search parameter.
+  toSearchParam : function() {
+    var titlePart = this.get('title');
+    if (titlePart.match(/\s/)) titlePart = '"' + titlePart + '"';
+    return 'label: ' + titlePart;
   }
   
 });

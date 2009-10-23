@@ -25,7 +25,7 @@ _.extend(dc.app.workspace, {
     this.uploadForm   = new dc.ui.DocumentUpload();
     this.accountBadge = new dc.ui.AccountView(Accounts.current(), 'badge');
     this.accountList  = new dc.ui.AccountList();
-    this.LabelList    = new dc.ui.LabelList();
+    this.organizer    = new dc.ui.Organizer();
   },
   
   // Render all of the existing subviews and place them in the DOM.
@@ -42,7 +42,7 @@ _.extend(dc.app.workspace, {
     this.uploadForm.render();
     this.panel.add('accounts_panel', this.accountList.render().el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
-    this.sidebar.add('labels', this.LabelList.render().el);
+    this.panel.add('organizer', this.organizer.render().el);
     dc.app.searchBox.addSaveSearchButton();
     this.warnNonWebkit();
   },

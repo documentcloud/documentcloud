@@ -1,6 +1,6 @@
 dc.ui.Label = dc.View.extend({
   
-  className : 'label',
+  className : 'label box',
   
   callbacks : [
     ['el',                'click',    'showDocuments'],
@@ -20,23 +20,7 @@ dc.ui.Label = dc.View.extend({
   },
   
   showDocuments : function() {
-    if (!this.model.get('document_ids')) return;
-    dc.history.save('label/' + encodeURIComponent(this.model.get('title')));
-    dc.ui.spinner.show('loading documents');
-    $.get('/labels/documents/' + this.model.id + '.json', {}, this.loadDocuments, 'json');
-  },
-  
-  loadDocuments : function(resp) {
-    dc.ui.spinner.hide();
-    dc.app.LabeledDocuments.refresh(_.map(resp.documents, function(m){
-      return new dc.model.Document(m);
-    }));
-    var list = new dc.ui.DocumentList({set : dc.app.LabeledDocuments});
-    list.setMode('medium', 'size');
-    $('#labeled_documents_container').html(list.render().el);
-    dc.app.LabeledDocuments.each(function(doc) {
-      $('#labeled_documents_container .documents').append((new dc.ui.DocumentTile(doc)).render().el);
-    });
+    dc.app.searchBox.search(this.model.toSearchParam());
   },
   
   deleteLabel : function(e) {

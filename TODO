@@ -10,8 +10,6 @@ TODO:
   * Figure out a way to use base.js to do multiple inheritance, so that we can
     have a SortedAndRESTfulSet.
 
-  * EMPTY RESULTS FOR PORTIONS OF A SEARCH NEED TO KILL THE SEARCH, pronto.
-
   * Stash paged result sets for a given search on the document model.
     
   * Build out surrounding start page blips... About Us, How to Join, 
@@ -48,6 +46,8 @@ TODO:
   
 
 DONE:
+
+  * EMPTY RESULTS FOR PORTIONS OF A SEARCH NEED TO KILL THE SEARCH, pronto.
 
   * Pull all docs from http://www.aclu.org/accountability/released into staging.
 

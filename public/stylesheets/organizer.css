@@ -1,0 +1,31 @@
+#organizer {
+  position: absolute;
+  top: 21px; bottom: 0;
+  padding: 5px;
+  overflow-y: auto;
+}
+  #organizer .box {
+    float: left;
+    overflow: hidden;
+    margin: 7px;
+    width: 170px; height: 32px;
+    padding: 7px;
+    cursor: pointer;
+    background-position: 9px center;
+    background-repeat: no-repeat;
+    color: #002256;
+    font: bold 12px Georgia, serif;
+    -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
+  }
+    #organizer .box:hover {
+      background-color: #f2f2ff;
+      background: -webkit-gradient(linear, left top, left bottom, from(#fafaff), to(#efefff));
+      -webkit-box-shadow: 0 0px 15px #bbb; -moz-box-shadow: 0 0px 15px #bbb;
+    }
+    #organizer .box > span {
+      line-height: 16px;
+    }
+      #organizer img {
+        float: left;
+        margin-right: 10px;
+      }
