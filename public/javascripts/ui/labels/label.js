@@ -4,7 +4,7 @@ dc.ui.Label = dc.View.extend({
   
   callbacks : [
     ['el',                'click',    'showDocuments'],
-    ['.delete_bullet',    'click',    'deleteLabel']
+    ['.delete_button',    'click',    'deleteLabel']
   ],
   
   constructor : function(options) {
