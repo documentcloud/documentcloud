@@ -49,6 +49,14 @@ module DC
         results.map {|r| Document.new('id' => r) }
       end
       
+      def find_by_labels(label_titles, opts={})
+        labels  = label_titles.map {|t| Label.owned.find_by_title(t) }
+        ids     = labels.map {|l| l.nil? ? [] : l.split_document_ids }
+        first   = ids.shift
+        results = first.select {|id| ids.all? {|list| list.include?(id) } }
+        results.map {|id| Document.new(:id => id) }
+      end
+      
       # Get a list of every single document id in the database.
       def document_ids
         open_for_reading {|store| store.keys }

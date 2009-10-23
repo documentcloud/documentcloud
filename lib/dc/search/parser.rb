@@ -34,7 +34,7 @@ module DC
       
       def process_fields_and_labels(bare, quoted)
         bare.map! {|f| f.split(':') }
-        quoted.map! {|f| f.gsub(/['"]/, '').split(':') }
+        quoted.map! {|f| f.gsub(/['"]/, '').split(/:\s*/) }
         (bare + quoted).each do |pair|
           type, value = *pair
           type.downcase == 'label' ? process_label(value) : process_field(type, value)

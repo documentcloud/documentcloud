@@ -1,7 +1,7 @@
 <script type="text/javascript">
 window.RAILS_ENV = '<%= RAILS_ENV %>';
-<% if @current_account %>
-  dc.app.accountId = <%= @current_account.id %>;
-  Accounts.add(new dc.model.Account(<%= @current_account.to_json %>));
+<% if Account.current %>
+  dc.app.accountId = <%= Account.current.id %>;
+  Accounts.add(new dc.model.Account(<%= Account.current.to_json %>));
 <% end %>
 </script>
