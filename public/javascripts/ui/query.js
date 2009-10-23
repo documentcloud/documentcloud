@@ -9,7 +9,7 @@ dc.ui.Query = dc.View.extend({
   render : function() {
     var data = this.options;
     var to = Math.min(data.to, data.total);
-    var fromPart = (data.total > 0 ? '' + (data.from + 1) + " &ndash; " + to + " of " : ''); 
+    var fromPart = (data.total < 2 ? '' : '' + (data.from + 1) + " &ndash; " + to + " of "); 
     var verbPart = (data.labels.length > 0 && !data.text && data.fields.length <= 0 && data.attributes.length <= 0) ? ' labeled ' : ' matching ';
     var sentence = fromPart + data.total + " document" + (data.total == 1 ? "" : "s") + verbPart;
     var fields = data.fields.concat(data.attributes);
