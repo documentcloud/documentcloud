@@ -13,7 +13,7 @@ class AssetsController < ApplicationController
       template_name = path.match(/\/jst\/(\S+)\.jst\Z/)[1]
       template_name = template_name.gsub('/', '_').upcase
       contents = File.read(path).gsub(/\n/, '').gsub("'", '\\\\\'')
-      templates << "#{template_name} : $.template('#{contents}')"
+      templates << "#{template_name} : _.template('#{contents}')"
     end
     cache = "window.dc.templates = { #{templates.join(",\n")} };"
     render :js => cache
