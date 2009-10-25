@@ -1,4 +1,5 @@
 :javascripts:
+  - public/javascripts/vendor/underscore/underscore.js
   - public/javascripts/vendor/*.js
   - public/javascripts/application.js
   - public/javascripts/lib/bindable.js
