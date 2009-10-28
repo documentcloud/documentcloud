@@ -8,8 +8,14 @@ dc.ui.Organizer = dc.View.extend({
     this.base(options);
     _.bindAll('ensurePopulated', '_addLabel', '_addSavedSearch', '_removeSubView', this);
     dc.app.navigation.register('organize', this.ensurePopulated);
-    this.setCallbacks();
     this._bindToSets();
+    this.sidebar = new dc.ui.OrganizerSidebar();
+  },
+  
+  render : function() {
+    dc.app.workspace.sidebar.add('organizer_sidebar', this.sidebar.render().el);
+    this.setCallbacks();
+    return this;
   },
   
   ensurePopulated : function() {

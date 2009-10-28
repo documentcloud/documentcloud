@@ -14,7 +14,7 @@ dc.ui.Label = dc.View.extend({
   },
   
   render : function() {
-    $(this.el).html(dc.templates.LABEL_VIEW(this.model.attributes()));
+    $(this.el).html(dc.templates.ORGANIZER_LABEL(this.model.attributes()));
     this.setCallbacks();
     return this;
   },
