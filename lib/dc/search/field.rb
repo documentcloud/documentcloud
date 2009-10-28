@@ -20,11 +20,8 @@ module DC
         "#{@type}:#{val}"
       end
       
-      def as_json(opts={})
-        {
-          'type' => type,
-          'value' => value
-        }
+      def to_json(opts={})
+        {'type' => type, 'value' => value}.to_json
       end
       
     end

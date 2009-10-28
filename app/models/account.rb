@@ -78,10 +78,10 @@ class Account < ActiveRecord::Base
     self.hashed_password = @password
   end
   
-  def as_json(opts={})
+  def to_json(opts={})
     hash = CLIENT_SIDE_ATTRIBUTES.inject({}) {|h, name| h[name] = send(name); h }
     hash['pending'] = pending?
-    hash
+    hash.to_json
   end
   
 end

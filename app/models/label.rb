@@ -22,8 +22,8 @@ class Label < ActiveRecord::Base
     DC::Store::EntryStore.new.find_all(document_ids.split(','))
   end
   
-  def as_json(opts={})
-    attributes
+  def to_json(opts={})
+    attributes.to_json
   end
   
 end

@@ -97,8 +97,8 @@ class Document
     end
   end
   
-  def as_json(opts={})
-    to_entry_hash
+  def to_json(opts={})
+    to_entry_hash.to_json
   end
   
   def set_attributes(attrs={})

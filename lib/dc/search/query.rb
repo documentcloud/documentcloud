@@ -24,11 +24,11 @@ module DC
       
       # The json representation of a Search::Query includes all the instance
       # variables.
-      def as_json(opts={})
-        instance_variables.inject({}) do |memo, var| 
+      def to_json(opts={})
+        instance_variables.inject({}) {|memo, var| 
           memo[var[1..-1]] = instance_variable_get(var)
           memo
-        end
+        }.to_json
       end
       
     end

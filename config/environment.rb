@@ -34,7 +34,7 @@ Rails::Initializer.run do |config|
   require 'tmpdir'
   
   # Gems:
-  config.gem 'json',                  :version => '>= 1.1.7'
+  config.gem 'json',                  :version => '>= 1.1.9'
   config.gem 'faker',                 :version => '>= 0.3.1'
   config.gem 'documentcloud-calais',  :version => '>= 0.0.7',       :lib => 'calais'
   config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'

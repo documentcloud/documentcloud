@@ -37,7 +37,7 @@ module DC
         query.to    = query.from + PAGE_SIZE
         results     = results[query.from...query.to]
       end
-      
+            
       entry_store.find_all(results)
     end
     

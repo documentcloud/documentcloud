@@ -44,12 +44,12 @@ class ApplicationController < ActionController::Base
   
   def current_account
     return nil unless session['account_id']
-    Account.current ||= Account.find(session['account_id'])
+    Account.current ||= Account.find_by_id(session['account_id'])
   end
   
   def current_organization
     return nil unless session['organization_id']
-    Organization.current ||= Organization.find(session['organization_id'])
+    Organization.current ||= Organization.find_by_id(session['organization_id'])
   end
   
   # Return forbidden when the access is unauthorized.
