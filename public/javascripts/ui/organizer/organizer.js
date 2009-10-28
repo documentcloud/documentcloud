@@ -32,11 +32,19 @@ dc.ui.Organizer = dc.View.extend({
   },
   
   _addSavedSearch : function(e, model) {
-    $(this.el).append(new dc.ui.SavedSearch({model : model}).render().el);
+    this._addSubView(new dc.ui.SavedSearch({model : model}).render());
   },
   
   _addLabel : function(e, model) {
-    $(this.el).append(new dc.ui.Label({model : model}).render().el);
+    this._addSubView(new dc.ui.Label({model : model}).render());
+  },
+  
+  _addSubView : function(view) {
+    var models = Labels.models().concat(SavedSearches.models());
+    models = _.sortBy(models, function(m){ return m.get('title') || m.get('query'); });
+    var previous = models[_.indexOf(models, view.model) - 1];
+    if (!previous) return $(this.el).append(view);
+    $(view).insertAfter('#' + previous.resource + "_" + previous.cid);
   },
   
   _removeSubView : function(e, model) {

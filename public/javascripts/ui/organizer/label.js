@@ -15,6 +15,7 @@ dc.ui.Label = dc.View.extend({
   
   render : function() {
     $(this.el).html(dc.templates.ORGANIZER_LABEL(this.model.attributes()));
+    this.el.id = "label_" + this.model.cid;
     this.setCallbacks();
     return this;
   },
