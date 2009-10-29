@@ -44,8 +44,8 @@ module DC
       # Read ahead to the end of the '//' comment.
       def consume_single_line_comment
         loop do 
-          c = get 
-          return c if c <= "\n"
+          c = get
+          return c if c.nil? || c <= "\n"
         end
       end
       
