@@ -10,6 +10,7 @@ dc.ui.Organizer = dc.View.extend({
     dc.app.navigation.register('organize', this.ensurePopulated);
     this._bindToSets();
     this.sidebar = new dc.ui.OrganizerSidebar();
+    this.subViews = [];
   },
   
   render : function() {
@@ -18,9 +19,25 @@ dc.ui.Organizer = dc.View.extend({
     return this;
   },
   
+  autofilter : function(search) {
+    var matcher = new RegExp(search, 'i');
+    _.each(this.subViews, function(view) {
+      var selected = !!view.model.sortKey().match(matcher);
+      $(view.el).toggle(selected);
+    });
+  },
+  
   ensurePopulated : function() {
     if (!SavedSearches.populated) SavedSearches.populate();
     if (!Labels.populated)        Labels.populate();
+  },
+  
+  models : function() {
+    return Labels.models().concat(SavedSearches.models());
+  },
+  
+  sortedModels : function() {
+    return _.sortBy(this.models(), function(m){ return m.sortKey(); });
   },
   
   // Bind all possible SavedSearch and Label events for rendering.
@@ -40,8 +57,8 @@ dc.ui.Organizer = dc.View.extend({
   },
   
   _addSubView : function(view) {
-    var models = Labels.models().concat(SavedSearches.models());
-    models = _.sortBy(models, function(m){ return m.sortKey(); });
+    this.subViews.push(view);
+    var models = this.sortedModels();
     var previous = models[_.indexOf(models, view.model) - 1];
     var previousView = previous && previous.view;
     if (!previous || !previousView) { return $(this.el).append(view.el); }
@@ -49,6 +66,7 @@ dc.ui.Organizer = dc.View.extend({
   },
   
   _removeSubView : function(e, model) {
+    this.subViews = _.without(this.subViews, model.view);
     $(model.view.el).remove();
   }
   

@@ -2,7 +2,6 @@ dc.View = Base.extend({
   
   el              : null,
   model           : null,
-  defaultOptions  : {},
   callbacks       : {},
   modes           : null,
   id              : null,
@@ -13,17 +12,11 @@ dc.View = Base.extend({
     options = options || {};
     this.modes = {};
     this.configure(options);
-    this.el = options.el || $.el(this.tagName, {id : this.id, 'class' : this.className});  
-    
-    // if(this.options.className) this.el.addClassName(this.options.className);
-    // if(this.options.style) this.el.setStyle(this.options.style);
-    // if(this.options.title) this.el.title = this.options.title;
-    // if(this.options.id) this.el.id = this.options.id;
+    this.el = options.el || $.el(this.tagName, {id : this.id, 'class' : this.className});    
     return this;
   },
   
   configure : function(options) {
-    // Need to clone and merge DEFAULT_OPTIONS and defaultOptions...
     if (options.model)      this.model = options.model;
     if (options.set)        this.set = options.set;
     if (options.id)         this.id = options.id;
@@ -67,13 +60,4 @@ dc.View = Base.extend({
     });
   }
   
-}, {
-
-  DEFAULT_OPTIONS : {
-    className : null,
-    id : null,
-    style : null,
-    title : null
-  }
-
 });
