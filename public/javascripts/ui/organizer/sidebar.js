@@ -20,8 +20,8 @@ dc.ui.OrganizerSidebar = dc.View.extend({
   },
   
   onLabelInput : function(e) {
-    if (e.keyCode && e.keyCode === 13) return this.saveNewLabel(e);
     this.organizer.autofilter(this.labelInputEl.val());
+    if (e.keyCode && e.keyCode === 13) return this.saveNewLabel(e);
   },
   
   saveNewLabel : function(e) {
@@ -32,6 +32,7 @@ dc.ui.OrganizerSidebar = dc.View.extend({
     if (Labels.find(title)) return this.warnAlreadyExists();
     input.val(null);
     input.focus();
+    this.organizer.autofilter('');
     var label = new dc.model.Label({title : title});
     Labels.create(label, null, {error : function() { Labels.remove(label); }});
   },
