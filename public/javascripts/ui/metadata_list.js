@@ -36,8 +36,8 @@ dc.ui.MetadataList = dc.View.extend({
   // Render...
   render : function() {
     $(this.el).html('');
-    var html = _.map(this._byType, function(pair) {
-      return dc.templates.WORKSPACE_METALIST(pair);
+    var html = _.map(this._byType, function(value, key) {
+      return dc.templates.WORKSPACE_METALIST({key : key, value : value});
     });
     $(this.el).html(html.join(''));
     this.setCallbacks();

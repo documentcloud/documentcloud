@@ -28,14 +28,14 @@ dc.model.SortedSet = dc.Set.extend({
   // Force the set to re-sort itself. You don't need to call this under normal
   // circumstances, as the set will maintain sort order as each item is added.
   sort : function(silent) {
-    this._byIndex.sort(this._comparator);
+    this._byIndex = _.sortBy(this._byIndex, this._comparator);
     if (!silent) this.fire(dc.Set.REFRESHED, this);
   },
   
   // Overridden. Add an item to the SortedSet, keeping sort order.
   _add : function(model, silent) {
     if (model = this.base(model, true)) {
-      var index = _.sortedIndex(this._byIndex, this._comparator, model);
+      var index = _.sortedIndex(this._byIndex, model, this._comparator);
       this._byIndex.splice(index, 0, model);
       if (!silent) this.fire(dc.Set.MODEL_ADDED, this, model);
     }

@@ -127,9 +127,8 @@ dc.Model = Base.extend({
   CHANGED : 'model:changed',  
 
   // Comparator (the default for SortedSets) that simply compares ids.
-  ID_COMPARATOR : function(a, b) {
-    var aid = a.id, bid = b.id;
-    return aid < bid ? -1 : (bid < aid ? 1 : 0);
+  ID_COMPARATOR : function(a) {
+    return m.id;
   }
   
 });

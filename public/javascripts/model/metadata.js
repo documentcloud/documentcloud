@@ -98,9 +98,8 @@ dc.model.MetadataSet = dc.model.SortedSet.extend({
   
   // Metadata are kept sorted by totalRelevance() of each datum, across its 
   // documents.
-  comparator : function(a, b) {
-    var aRel = a.totalRelevance(), bRel = b.totalRelevance();
-    return aRel < bRel ? 1 : (bRel < aRel ? -1 : 0);
+  comparator : function(m) {
+    return m.totalRelevance();
   },
   
   // TODO: ... extend this to re-sort addInstance'd metas.

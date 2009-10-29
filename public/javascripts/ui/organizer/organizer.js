@@ -41,10 +41,11 @@ dc.ui.Organizer = dc.View.extend({
   
   _addSubView : function(view) {
     var models = Labels.models().concat(SavedSearches.models());
-    models = _.sortBy(models, function(m){ return m.get('title') || m.get('query'); });
+    models = _.sortBy(models, function(m){ return m.sortKey(); });
     var previous = models[_.indexOf(models, view.model) - 1];
-    if (!previous) return $(this.el).append(view);
-    $(view).insertAfter('#' + previous.resource + "_" + previous.cid);
+    var previousView = previous && previous.view;
+    if (!previous || !previousView) return $(this.el).append(view.el);
+    $(previousView.el).after(view.el);
   },
   
   _removeSubView : function(e, model) {

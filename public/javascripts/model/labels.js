@@ -2,6 +2,8 @@
 
 dc.model.Label = dc.Model.extend({
   
+  resource : 'labels',
+  
   constructor : function(options) {
     this.base(options);
     _.bindAll('addSelectedDocuments', this);
@@ -22,6 +24,10 @@ dc.model.Label = dc.Model.extend({
     var titlePart = this.get('title');
     if (titlePart.match(/\s/)) titlePart = '"' + titlePart + '"';
     return 'label: ' + titlePart;
+  },
+  
+  sortKey : function() {
+    this.get('title');
   }
   
 });

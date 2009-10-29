@@ -2,6 +2,12 @@
 
 dc.model.SavedSearch = dc.Model.extend({
   
+  resource : 'saved_searches',
+  
+  sortKey : function() {
+    return this.get('query');
+  }
+  
 });
 
 
