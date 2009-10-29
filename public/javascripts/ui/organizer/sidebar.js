@@ -4,25 +4,29 @@ dc.ui.OrganizerSidebar = dc.View.extend({
   
   callbacks : [
     ['#new_label_button', 'click',    'saveNewLabel'],
-    ['#new_label',        'keypress', 'saveNewLabel']
+    ['#label_input',      'keyup',    'onLabelInput']
   ],
   
   constructor : function(options) {
     this.base(options);
-    // _.bindAll('ensurePopulated', '_addLabel', '_addSavedSearch', '_removeSubView', this);
+    this.organizer = this.options.organizer;
   },
   
   render : function() {
     $(this.el).append(dc.templates.ORGANIZER_SIDEBAR({}));
-    this.newLabelEl = $('#new_label', this.el);
+    this.labelInputEl = $('#label_input', this.el);
     this.setCallbacks();
     return this;
   },
   
+  onLabelInput : function(e) {
+    if (e.keyCode && e.keyCode === 13) return this.saveNewLabel(e);
+    this.organizer.autofilter(this.labelInputEl.val());
+  },
+  
   saveNewLabel : function(e) {
-    if (e.keyCode && e.keyCode != 13) return;
     var me = this;
-    var input = this.newLabelEl;
+    var input = this.labelInputEl;
     var title = input.val();
     if (!title) return;
     if (Labels.find(title)) return this.warnAlreadyExists();
@@ -33,7 +37,7 @@ dc.ui.OrganizerSidebar = dc.View.extend({
   },
   
   warnAlreadyExists : function() {
-    dc.ui.notifier.show({text : 'label already exists', anchor : this.newLabelEl, position : '-left bottom', top : 6, left : 1});
+    dc.ui.notifier.show({text : 'label already exists', anchor : this.labelInputEl, position : '-left bottom', top : 6, left : 1});
   }
   
 });

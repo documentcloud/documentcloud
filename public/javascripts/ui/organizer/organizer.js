@@ -9,7 +9,7 @@ dc.ui.Organizer = dc.View.extend({
     _.bindAll('ensurePopulated', '_addLabel', '_addSavedSearch', '_removeSubView', this);
     dc.app.navigation.register('organize', this.ensurePopulated);
     this._bindToSets();
-    this.sidebar = new dc.ui.OrganizerSidebar();
+    this.sidebar = new dc.ui.OrganizerSidebar({organizer : this});
     this.subViews = [];
   },
   
@@ -19,12 +19,17 @@ dc.ui.Organizer = dc.View.extend({
     return this;
   },
   
+  // Filters the visible labels and saved searches, by case-insensitive search.
+  // Returns the number of visible items.
   autofilter : function(search) {
+    var count = 0;
     var matcher = new RegExp(search, 'i');
     _.each(this.subViews, function(view) {
       var selected = !!view.model.sortKey().match(matcher);
+      if (selected) count++;
       $(view.el).toggle(selected);
     });
+    return count;
   },
   
   ensurePopulated : function() {
