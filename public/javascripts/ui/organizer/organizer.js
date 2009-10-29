@@ -44,7 +44,7 @@ dc.ui.Organizer = dc.View.extend({
     models = _.sortBy(models, function(m){ return m.sortKey(); });
     var previous = models[_.indexOf(models, view.model) - 1];
     var previousView = previous && previous.view;
-    if (!previous || !previousView) return $(this.el).append(view.el);
+    if (!previous || !previousView) { return $(this.el).append(view.el); }
     $(previousView.el).after(view.el);
   },
   

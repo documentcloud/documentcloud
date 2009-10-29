@@ -27,7 +27,7 @@ dc.model.Label = dc.Model.extend({
   },
   
   sortKey : function() {
-    this.get('title');
+    return this.get('title').toLowerCase();
   }
   
 });
