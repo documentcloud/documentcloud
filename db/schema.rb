@@ -1,22 +1,14 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
-#
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
-#
-# It's strongly recommended to check this file into your version control system.
+include DC::Store::MigrationHelpers
 
-ActiveRecord::Schema.define(:version => 20091021130154) do
+ActiveRecord::Schema.define(:version => 1) do
 
   create_table "accounts", :force => true do |t|
     t.integer "organization_id", :null => false
-    t.string  "first_name",      :null => false
-    t.string  "last_name",       :null => false
-    t.string  "email",           :null => false
+    t.string  "first_name",      :null => false, :limit => 40
+    t.string  "last_name",       :null => false, :limit => 40
+    t.string  "email",           :null => false, :limit => 100
     t.string  "hashed_password"
+    t.timestamps
   end
 
   add_index "accounts", ["email"], :name => "index_accounts_on_email", :unique => true
@@ -26,18 +18,74 @@ ActiveRecord::Schema.define(:version => 20091021130154) do
     t.string "key"
     t.string "value"
   end
+  
+  create_table "documents", :force => true do |t|
+    t.integer   "organization_id", :null => false
+    t.integer   "account_id",      :null => false
+    t.integer   "access",          :null => false
+    t.integer   "page_count",      :null => false
+    t.string    "title"
+    t.string    "source"
+    t.string    "language",        :limit => 3
+    t.string    "summary",         :limit => 140
+    t.string    "calais_id",       :limit => 40
+    t.datetime  "publication_date"
+    t.timestamps
+  end
+  
+  create_table "full_text", :force => true do |t|
+    t.integer   "organization_id", :null => false
+    t.integer   "account_id",      :null => false
+    t.integer   "document_id",     :null => false
+    t.integer   "access",          :null => false
+    t.text      "text",            :null => false
+  end
+
+  add_index "full_text", ["document_id"], :name => "index_full_text_on_document_id", :unique => true
+  execute "create index full_text_fti on full_text using gin(to_tsvector('english', text));"
+  
+  create_table "pages", :force => true do |t|
+    t.integer   "organization_id", :null => false
+    t.integer   "account_id",      :null => false
+    t.integer   "document_id",     :null => false
+    t.integer   "access",          :null => false
+    t.integer   "page_number",  :null => false
+    t.text      "text",         :null => false
+  end
+  
+  add_index "pages", ["document_id", "page_number"], :name => "index_pages_on_document_id_and_page_number", :unique => true
+  execute "create index page_text_fti on full_text using gin(to_tsvector('english', text));"
+  
+  # TODO: Add document indexes.
+  
+  create_table "metadata", :force => true do |t|
+    t.integer   "organization_id",  :null => false
+    t.integer   "account_id",       :null => false
+    t.integer   "document_id",      :null => false
+    t.integer   "access",           :null => false
+    t.string    "kind",             :null => false, :limit => 40
+    t.string    "value",            :null => false
+    t.decimal   "relevance",        :null => false, :default => 0.0
+    t.string    "occurrences",                      :limit => 500
+    t.string    "calais_id",                        :limit => 40 
+  end
+  
+  execute "create index value_fti on metadata using gin(to_tsvector('english', value));"
+  
+  # TODO: Add metadata indexes.
 
   create_table "labels", :force => true do |t|
     t.integer "account_id",   :null => false
-    t.string  "title",        :null => false
+    t.string  "title",        :null => false, :limit => 100
     t.text    "document_ids"
   end
 
   add_index "labels", ["account_id"], :name => "index_labels_on_account_id"
 
   create_table "organizations", :force => true do |t|
-    t.string "name", :null => false
-    t.string "slug", :null => false
+    t.string "name", :null => false, :limit => 100
+    t.string "slug", :null => false, :limit => 100
+    t.timestamps
   end
 
   add_index "organizations", ["name"], :name => "index_organizations_on_name", :unique => true
@@ -51,9 +99,9 @@ ActiveRecord::Schema.define(:version => 20091021130154) do
   add_index "saved_searches", ["account_id"], :name => "index_saved_searches_on_account_id"
 
   create_table "security_keys", :force => true do |t|
-    t.string  "securable_type"
+    t.string  "securable_type", :null => false, :limit => 40
     t.integer "securable_id",   :null => false
-    t.string  "key"
+    t.string  "key",                            :limit => 40
   end
 
 end

@@ -3,6 +3,11 @@ TODO:
   * Begin storing the complete image and page assets. -- Integrate the new
     document format / DocViewer. Start using the document package format for
     imports.
+    
+  * Think about modeling journalist-provided attributes in the same
+    way as the rest of the metadata we're gathering. Our metadata system
+    should be able to handle things like title, author, news_org,
+    published_date, provenance, etc.
 
   * Think about adding search history.
 

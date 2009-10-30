@@ -66,13 +66,13 @@ dc.model.Metadatum = dc.Model.extend({
   
   // Display-ready version of the metadata type.
   displayType : function() {
-    return this.TYPE_MAP[this.get('type')];
+    return this.TYPE_MAP[this.get('kind')];
   },
   
   // Return the string that one would use to perform a fielded search for this
   // metadatum.
   toSearchQuery : function() {
-    var val = this.get('value'), type = this.get('type');
+    var val = this.get('value'), type = this.get('kind');
     if (val.match(/\s/)) val = '"' + val + '"';
     return type + ":" + val;
   },

@@ -100,7 +100,7 @@
     name      : The name of the entity (which may or may not be present 
                 verbatim in the document).
     
-    type      : The type of thing the entity is.
+    kind      : The type of thing the entity is.
                 Ex: 'person', 'term', 'company', 'location', 'technology'... 
     
     relevance : (optional) A score between 0 and 1, measuring the relevance of

@@ -1,7 +1,5 @@
 namespace :import do
   
-  # NB: Oy. A rake task with both arguments and dependencies is an ugly little
-  # bugger. Completely defeats the purpose of the DSL.
   # Usage: rake import:load_rdf[../wiki_news_rdf] --trace
   desc 'Load and save all RDF files from a directory of your choosing as Documents.'
   task :load_rdf, [:directory] => [:environment] do |t, args|
@@ -10,13 +8,11 @@ namespace :import do
       print "loading #{path}"
       doc = Document.new(:rdf => File.read(path), :organization_id => 0, :account_id => 0, :access => DC::Access::PUBLIC)
       DC::Import::MetadataExtractor.new.extract_metadata(doc)
+      doc.page_count = 1
       doc.source ||= Faker::Company.name
-      puts " / saving as #{doc.id}"
-      doc.save
+      puts " / saving #{doc.title}"
+      doc.save!
     end
-    fts = DC::Store::FullTextStore.new
-    fts.index
-    fts.merge
   end
   
   # Usage: rake import:load_pdf[../presidential_papers] --trace

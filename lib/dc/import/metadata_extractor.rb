@@ -23,7 +23,6 @@ module DC
         end      
         document.metadata = []
         extract_full_text(document, response)
-        extract_summary(document)
         extract_standard_metadata(document, response)
         extract_categories(document, response)
         extract_entities(document, response)
@@ -49,16 +48,21 @@ module DC
       # document if it hasn't already been set.
       def extract_standard_metadata(document, calais)
         document.title ||= calais.doc_title
-        document.language ||= calais.language || 'English'
-        document.date ||= calais.doc_date
+        document.language = 'en' # TODO: Convert calais.language into an ISO language code.
+        document.publication_date ||= calais.doc_date
         document.calais_signature = calais.signature
-        document.calais_request_id = calais.request_id
+        document.calais_id = calais.request_id
       end
       
       # Extract the categories that the Document falls under.
       def extract_categories(document, calais)
         document.metadata += calais.categories.map do |cat|
-          Metadatum.new(cat.name.underscore, 'category', cat.score, :document => document)
+          Metadatum.new(
+            :value      => cat.name.underscore, 
+            :kind       => 'category', 
+            :relevance  => cat.score || Metadatum::DEFAULT_RELEVANCE, 
+            :document   => document
+          )
         end
       end
       
@@ -67,16 +71,15 @@ module DC
       def extract_entities(document, calais)
         extracted = []
         calais.entities.each do |entity|
-          next unless Metadatum.acceptable_type? entity.type
+          next unless Metadatum.acceptable_kind? entity.type
+          occurrences = entity.instances.map {|i| Occurrence.new(i.offset, i.length) }
           extracted << Metadatum.new(
-            entity.attributes['name'], 
-            entity.type.underscore,
-            entity.relevance,
-            {
-              :document    => document,
-              :occurrences => entity.instances.map {|i| Occurrence.new(i.offset, i.length) },
-              :calais_hash => entity.calais_hash.value
-            }
+            :value        => entity.attributes['name'], 
+            :kind         => entity.type.underscore,
+            :relevance    => entity.relevance,
+            :document     => document,
+            :occurrences  => Occurrence.to_csv(occurrences),
+            :calais_id    => entity.calais_hash.value
           )
         end
         document.metadata += extracted
@@ -91,12 +94,9 @@ module DC
         wrapped = Nokogiri::XML.parse(xml.root.search('//c:document').first.content)
         full_text = wrapped.root.search('//body').first.content.strip
         full_text.gsub!(/(\[\[|\]\]|\{\{|\}\})/, '')
-        document.full_text = full_text
-      end
-      
-      # Pull out the executive summary.
-      def extract_summary(document)
-        document.summary = document.full_text[0...255]
+        document.summary = full_text[0...140]
+        document.full_text = FullText.new(:text => full_text, :document => document)
+        document.pages = [Page.new(:text => full_text, :document => document, :page_number => 1)]
       end
       
     end

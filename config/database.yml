@@ -1,34 +1,20 @@
 defaults: &defaults
-  adapter:  postgresql
+  adapter: postgresql
   encoding: unicode
+  schema_search_path: public
   pool:     5
   username: REDACTED
   password: REDACTED
+  allow_concurrency: true
   
-# Main Database.
-
 development:
   <<: *defaults
-  database: dcloud_main_development
+  database: dcloud_development
 
 staging:
   <<: *defaults
-  database: dcloud_main_staging
+  database: dcloud_staging
 
 test:
   <<: *defaults
-  database: dcloud_main_test
-  
-# Document Database.
-  
-docs_development:
-  <<: *defaults
-  database: dcloud_docs_development
-
-docs_staging:
-  <<: *defaults
-  database: dcloud_docs_staging
-  
-docs_test:
-  <<: *defaults
-  database: dcloud_docs_test
+  database: dcloud_test
