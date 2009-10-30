@@ -1,26 +1,34 @@
-# SQLite version 3.x
-#   gem install sqlite3-ruby (not necessary on OS X Leopard)
+defaults: &defaults
+  adapter:  postgresql
+  encoding: unicode
+  pool:     5
+  username: REDACTED
+  password: REDACTED
+  
+# Main Database.
 
 development:
-  adapter:  mysql
-  encoding: utf8
-  username: root
-  password:
-  socket:   /tmp/mysql.sock
+  <<: *defaults
   database: dcloud_main_development
 
 staging:
-  adapter:  mysql
-  encoding: utf8
-  username: root
-  password:
-  socket:   /var/run/mysqld/mysqld.sock
+  <<: *defaults
   database: dcloud_main_staging
 
 test:
-  adapter:  mysql
-  encoding: utf8
-  username: root
-  password:
-  socket:   /tmp/mysql.sock
+  <<: *defaults
   database: dcloud_main_test
+  
+# Document Database.
+  
+docs_development:
+  <<: *defaults
+  database: dcloud_docs_development
+
+docs_staging:
+  <<: *defaults
+  database: dcloud_docs_staging
+  
+docs_test:
+  <<: *defaults
+  database: dcloud_docs_test
