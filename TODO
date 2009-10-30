@@ -1,8 +1,10 @@
 TODO:
 
-  * Think about adding search history.
+  * Begin storing the complete image and page assets. -- Integrate the new
+    document format / DocViewer. Start using the document package format for
+    imports.
 
-  * Refactor searchbox and label document list rendering -- it's getting messy.
+  * Think about adding search history.
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown.
@@ -33,19 +35,19 @@ TODO:
   * Figure out our own taxonomy and map all the OpenCalais categories into it.
   
   * Start on a preliminary document-relation visualization.
-  
-  * Create a UI for making and managing collections (labels?) of documents.
-    
+      
   * We need an upload progress widget.
   
   * Authorize logged-in folks to view private and organization documents.
-  
-  * Blog the dc.app.History class.
-  
+    
   * Figure out what belongs in the Accounts sidebar.
   
 
 DONE:
+
+  * Create a UI for making and managing collections (labels?) of documents.
+
+  * Refactor searchbox and label document list rendering -- it's getting messy.
 
   * EMPTY RESULTS FOR PORTIONS OF A SEARCH NEED TO KILL THE SEARCH, pronto.
 
