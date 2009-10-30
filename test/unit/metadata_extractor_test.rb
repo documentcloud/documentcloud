@@ -7,7 +7,7 @@ class MetadataExtractorTest < ActiveSupport::TestCase
   def initialize(*args)
     super(*args)
     @calais = DC::Import::MetadataExtractor.new
-    @doc = Document.new(:rdf => RDF)
+    @doc = Document.new(:rdf => RDF, :organization_id => 1, :account_id => 1)
     @calais.extract_metadata(@doc)
   end
   

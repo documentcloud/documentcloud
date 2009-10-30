@@ -45,20 +45,16 @@ class Metadatum
     @occurrences = opts[:occurrences] || []
     @calais_hash = opts[:calais_hash]
     @access      = opts[:access] || opts[:document].access
+    @document    = opts[:document]
     set_scope(opts[:id], opts[:document])
   end
   
-  def set_scope(an_id=nil, document=nil)
-    if an_id
-      @id = an_id
-      @organization_id, @account_id, @document_id = *@id.split('/')
-      @organization_id = @organization_id.to_i
-      @account_id = @account_id.to_i
-    elsif document
-      @id = "#{document.metadata_prefix}/#{@calais_hash || @value}"
-    else
-      raise "Tried to instantiate a Metadatum without an id or document"
-    end
+  def set_scope(an_id=nil, a_document=nil)
+    raise "Tried to instantiate a Metadatum without an id or document" unless an_id || a_document
+    @id = an_id || "#{a_document.metadata_prefix}/#{@calais_hash || @value}"
+    @organization_id, @account_id, @document_id = *@id.split('/')
+    @organization_id = @organization_id.to_i
+    @account_id = @account_id.to_i
   end
   
   # Return or find the document to which this metadatum belongs.
