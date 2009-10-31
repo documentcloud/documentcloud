@@ -4,13 +4,14 @@ module DC
     # Our first stab at a Search::Parser will just use simple regexs to pull out
     # fielded queries ... so, no nesting.
     #
-    # Performs some simple translations to transform standard boolean queries
-    # into a form that Sphinx extended2 can understand.
+    # All the regex matchers live in the Search module.
     #
     # We should try to adopt Google conventions, if possible, after:
     # http://www.google.com/help/cheatsheet.html
     class Parser
       
+      # Parse a raw query_string, returning a DC::Search::Query that knows
+      # about the text, fields, labels, and attributes it's composed of.
       def parse(query_string)
         @text, @fields, @labels, @attributes = nil, [], [], []
         
@@ -24,14 +25,14 @@ module DC
         Query.new(:text => @text, :fields => @fields, :labels => @labels, :attributes => @attributes)
       end
       
+      # Convert the full-text search into a form that our index can handle.
       def process_search_text(text)
         return if text.empty?
-        # Something that might be a little unexpected is the transformation of 
-        # any textual queries into "title" attribute queries as well.
-        # @attributes << Field.new('title', text)
         @text = text.gsub(Matchers::BOOLEAN_OR, SPHINX_OR)
       end
       
+      # Extract the portions of the query that are fields, attributes, 
+      # and labels.
       def process_fields_and_labels(bare, quoted)
         bare.map! {|f| f.split(':') }
         quoted.map! {|f| f.gsub(/['"]/, '').split(/:\s*/) }
@@ -41,15 +42,19 @@ module DC
         end
       end
       
+      # Convert an individual field or attribute search into a DC::Search::Field.
       def process_field(kind, value)
         field = Field.new(match_kind(kind), value.strip)
         (field.attribute? ? @attributes : @fields) << field
       end
 
+      # Convert an individual label search.
       def process_label(title)
         @labels << title.strip
       end
       
+      # Convert a field kind string into its canonical form, by searching 
+      # through all the valid kinds for a match.
       def match_kind(kind)
         matcher = Regexp.new(kind.downcase)
         DC::VALID_KINDS.detect {|canonical| canonical.match(matcher) }
