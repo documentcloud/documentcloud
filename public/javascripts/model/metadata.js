@@ -86,7 +86,8 @@ dc.model.Metadatum = dc.Model.extend({
   
   // Generate the canonical client id for a kind, and calais hash or value pair.
   generateId : function(attributes) {
-    return attributes.kind + ':' + (attributes.calais_id || attributes.value);
+    var value = (attributes.calais_id || attributes.value).replace(/\W/g, '');
+    return attributes.kind + ':' + value;
   }
   
 });

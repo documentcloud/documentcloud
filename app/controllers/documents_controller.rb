@@ -34,7 +34,7 @@ class DocumentsController < ApplicationController
   end
   
   def send_text
-    render :text => @current_document.full_text
+    render :text => @current_document.full_text.text
   end
   
   # TODO: Access control this document -- but not yet.
