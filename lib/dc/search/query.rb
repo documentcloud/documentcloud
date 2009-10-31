@@ -1,13 +1,15 @@
 module DC
   module Search
     
-    # A Search::Query is almost a struct, holding all the segregated components
-    # that can go into a single document search.
+    # A Search::Query is the structured form of a fielded search, and knows
+    # how to generate all of the SQL needed to run and paginate the search.
     class Query
       
       attr_reader   :text, :fields, :labels, :attributes, :conditions
       attr_accessor :page, :from, :to, :total
       
+      # Queries are created by the Search::Parser, which sets them up with the
+      # appropriate attributes.
       def initialize(opts={})
         @text           = opts[:text]
         @page           = opts[:page]
@@ -27,12 +29,15 @@ module DC
       def has_labels?;      @labels.present?;       end      
       def has_attributes?;  @attributes.present?;   end
       
+      # Set the page of the search that this query is supposed to access.
       def page=(page)
         @page = page
         @from = @page * PAGE_SIZE
         @to   = @from + PAGE_SIZE        
       end
       
+      # Generate all of the SQL, including conditions and joins, that is needed
+      # to run the query.
       def generate_sql
         generate_text_sql       if has_text?
         generate_fields_sql     if has_fields?
@@ -41,6 +46,9 @@ module DC
         @conditions = [@sql.join(' and ')] + @interpolations
       end
       
+      # Runs (at most) two queries -- one to count the total number of results
+      # that match the search, and one that retrieves the documents for the
+      # current page.
       def run
         generate_sql
         options = {:conditions => @conditions, :joins => @joins}
@@ -54,24 +62,28 @@ module DC
         Document.all(options)
       end
       
-      # The json representation of a Search::Query includes all the instance
-      # variables.
+      # The JSON representation of a query contains all the structured aspects
+      # of the search.
       def to_json(opts={})
-        instance_variables.inject({}) {|memo, var| 
-          memo[var[1..-1]] = instance_variable_get(var)
-          memo
+        { 'text'        => @text,
+          'page'        => @page,
+          'fields'      => @fields,
+          'labels'      => @labels,
+          'attributes'  => @attributes
         }.to_json
       end
       
       
       private
       
+      # Generate the SQL needed to run a full-text search.
       def generate_text_sql
         @sql << "to_tsvector('english', full_text.text) @@ plainto_tsquery(?)"
         @interpolations << @text
         @joins << :full_text
       end
       
+      # Generate the SQL to search across the fielded metadata.
       def generate_fields_sql
         intersections = []
         @fields.each do |field|
@@ -81,6 +93,7 @@ module DC
         @sql << "documents.id in (#{intersections.join(' intersect ')})"
       end
       
+      # Generate the SQL to restrict the search to labeled documents.
       def generate_labels_sql
         labels = Account.current.labels.all(:conditions => {:title => @labels})
         doc_ids = labels.map(&:split_document_ids).flatten.uniq        
@@ -88,6 +101,7 @@ module DC
         @interpolations << doc_ids
       end
       
+      # Generate the SQL to match document attributes.
       def generate_attributes_sql
         @attributes.each do |field|
           @sql << "documents.#{field.kind} = ?"
