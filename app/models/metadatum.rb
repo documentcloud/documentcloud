@@ -4,14 +4,12 @@
 class Metadatum < ActiveRecord::Base
   
   include DC::Store::DocumentResource
-  
-  VALID_KINDS = DC::CALAIS_KINDS.map(&:to_s) + ['category']
-  
+    
   DEFAULT_RELEVANCE = 0.0
   
   belongs_to :document
   
-  validates_inclusion_of :kind, :in => VALID_KINDS
+  validates_inclusion_of :kind, :in => DC::VALID_KINDS
   
   named_scope :search_value, lambda { |query|
     {:conditions => ["to_tsvector('english', value) @@ plainto_tsquery(?)", query]}

@@ -12,4 +12,8 @@ module DC
     :technology, :url
   ]
   
+  CALAIS_KINDS_STRINGS = CALAIS_KINDS.map(&:to_s)
+  
+  VALID_KINDS = CALAIS_KINDS_STRINGS + ['category']
+  
 end

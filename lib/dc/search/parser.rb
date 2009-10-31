@@ -41,13 +41,18 @@ module DC
         end
       end
       
-      def process_field(type, value)
-        field = Field.new(type, value.strip)
+      def process_field(kind, value)
+        field = Field.new(match_kind(kind), value.strip)
         (field.attribute? ? @attributes : @fields) << field
       end
 
       def process_label(title)
         @labels << title.strip
+      end
+      
+      def match_kind(kind)
+        matcher = Regexp.new(kind.downcase)
+        DC::VALID_KINDS.detect {|canonical| canonical.match(matcher) }
       end
       
     end
