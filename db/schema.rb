@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer   "access",           :null => false
     t.string    "kind",             :null => false, :limit => 40
     t.string    "value",            :null => false
-    t.decimal   "relevance",        :null => false, :default => 0.0
+    t.float     "relevance",        :null => false, :default => 0.0
     t.string    "occurrences",                      :limit => 500
     t.string    "calais_id",                        :limit => 40 
   end
