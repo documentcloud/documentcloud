@@ -42,12 +42,12 @@ module DC
       end
       
       def process_field(type, value)
-        field = Field.new(type, value)
+        field = Field.new(type, value.strip)
         (field.attribute? ? @attributes : @fields) << field
       end
 
       def process_label(title)
-        @labels << title
+        @labels << title.strip
       end
       
     end

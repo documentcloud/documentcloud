@@ -5,23 +5,23 @@ module DC
       
       HAS_WHITESPACE = /\s/
       
-      attr_reader :type, :value
+      attr_reader :kind, :value
       
-      def initialize(type, value)
-        @type, @value = type.downcase, value.strip
+      def initialize(kind, value)
+        @kind, @value = kind.downcase, value.strip
       end
       
       def attribute?
-        Document::SEARCHABLE_ATTRIBUTES.include? @type.to_sym
+        Document::SEARCHABLE_ATTRIBUTES.include? @kind.to_sym
       end
       
       def to_s
         val = @value.match(HAS_WHITESPACE) ? "\"#{@value}\"" : @value
-        "#{@type}:#{val}"
+        "#{@kind}:#{val}"
       end
       
       def to_json(opts={})
-        {'type' => type, 'value' => value}.to_json
+        {'kind' => kind, 'value' => value}.to_json
       end
       
     end

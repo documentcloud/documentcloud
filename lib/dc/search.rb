@@ -16,11 +16,6 @@ module DC
     PAGE_SIZE = 10
     SPHINX_OR = ' | '
     
-    def self.find(query, opts={})      
-      query = Parser.new.parse(query) if query.is_a? String
-      query.run
-    end
-    
   end
   
 end

@@ -12,8 +12,8 @@ class LabelsController < ApplicationController
   
   def update
     current_label.update_attributes(pick_params(:title, :document_ids))
-    json label
-  end  
+    json current_label
+  end
   
   def destroy
     current_label.destroy

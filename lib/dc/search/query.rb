@@ -5,14 +5,19 @@ module DC
     # that can go into a single document search.
     class Query
       
-      attr_reader   :text, :fields, :labels, :attributes
+      attr_reader   :text, :fields, :labels, :attributes, :conditions
       attr_accessor :page, :from, :to, :total
       
       def initialize(opts={})
-        @text       = opts[:text]
-        @fields     = opts[:fields] || []
-        @labels     = opts[:labels] || []
-        @attributes = opts[:attributes] || []
+        @text           = opts[:text]
+        @page           = opts[:page]
+        @fields         = opts[:fields] || []
+        @labels         = opts[:labels] || []
+        @attributes     = opts[:attributes] || []
+        @conditions     = nil
+        @sql            = []
+        @interpolations = []
+        @joins          = []
       end
       
       # Series of attribute checks to determine the type of query.
@@ -22,13 +27,31 @@ module DC
       def has_labels?;      @labels.present?;       end      
       def has_attributes?;  @attributes.present?;   end
       
+      def page=(page)
+        @page = page
+        @from = @page * PAGE_SIZE
+        @to   = @from + PAGE_SIZE        
+      end
+      
+      def generate_sql
+        generate_text_sql       if has_text?
+        generate_fields_sql     if has_fields?
+        generate_labels_sql     if has_labels?
+        generate_attributes_sql if has_attributes?
+        @conditions = [@sql.join(' and ')] + @interpolations
+      end
+      
       def run
+        generate_sql
+        options = {:conditions => @conditions, :joins => @joins}
         if @page
-          @total    = run_count
-          @from     = @page * PAGE_SIZE
-          @to       = @from + PAGE_SIZE
+          options[:select] = "distinct documents.id"
+          self.total = Document.count(options)
+          options[:limit]   = PAGE_SIZE
+          options[:offset]  = @from
         end
-        run_search
+        options[:select] = "distinct on (documents.id) documents.*"
+        Document.all(options)
       end
       
       # The json representation of a Search::Query includes all the instance
@@ -43,12 +66,33 @@ module DC
       
       private
       
-      def run_search
-        FullText.search_text(@text).map(&:document)
+      def generate_text_sql
+        @sql << "to_tsvector('english', full_text.text) @@ plainto_tsquery(?)"
+        @interpolations << @text
+        @joins << :full_text
       end
       
-      def run_count
-        FullText.search_text(@text).count
+      def generate_fields_sql
+        intersections = []
+        @fields.each do |field|
+          intersections << "(select document_id from metadata where (metadata.kind = ? and to_tsvector('english', metadata.value) @@ plainto_tsquery(?)))"
+          @interpolations += [field.kind, field.value]
+        end
+        @sql << "documents.id in (#{intersections.join(' intersect ')})"
+      end
+      
+      def generate_labels_sql
+        labels = Account.current.labels.all(:conditions => {:title => @labels})
+        doc_ids = labels.map(&:split_document_ids).flatten.uniq        
+        @sql << "documents.id in (?)"
+        @interpolations << doc_ids
+      end
+      
+      def generate_attributes_sql
+        @attributes.each do |field|
+          @sql << "documents.#{field.kind} = ?"
+          @interpolations << field.value
+        end
       end
       
     end

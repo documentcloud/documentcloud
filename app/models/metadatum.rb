@@ -14,7 +14,7 @@ class Metadatum < ActiveRecord::Base
   validates_inclusion_of :kind, :in => VALID_KINDS
   
   named_scope :search_value, lambda { |query|
-    {:conditions => ["to_tsvector('english', value) @@ ?", query]}
+    {:conditions => ["to_tsvector('english', value) @@ plainto_tsquery(?)", query]}
   }
   
   def self.acceptable_kind?(kind)

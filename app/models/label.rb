@@ -3,6 +3,8 @@ class Label < ActiveRecord::Base
   validates_presence_of :title
   validates_uniqueness_of :title, :scope => :account_id
   
+  before_validation :set_document_ids
+  
   default_scope :order => 'title'
   
   # Scope to the labels owned by the current account.
@@ -10,20 +12,19 @@ class Label < ActiveRecord::Base
     {:conditions => {:account_id => Account.current.id}}
   }
   
-  def documents
-    split_document_ids.map {|doc_id| Document.new(:id => doc_id) }
-  end
-  
   def split_document_ids
-    document_ids.nil? ? [] : document_ids.split(',')
-  end
-  
-  def loaded_documents
-    DC::Store::EntryStore.new.find_all(document_ids.split(','))
+    document_ids.nil? ? [] : document_ids.split(',').map(&:to_i).uniq
   end
   
   def to_json(opts={})
     attributes.to_json
+  end
+  
+  
+  private
+  
+  def set_document_ids
+    self.document_ids = split_document_ids.join(',')
   end
   
 end
