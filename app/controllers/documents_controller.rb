@@ -15,13 +15,9 @@ class DocumentsController < ApplicationController
     json nil
   end
   
+  # TODO: Access-control this.
   def metadata
-    meta = []
-    if params[:ids]
-      docs = params[:ids].map {|id| Document.new(:id => id) }
-      meta = DC::Store::MetadataStore.new.find_by_documents(docs)
-    end
-    json 'metadata' => meta
+    json 'metadata' => Metadatum.all(:conditions => {:document_id => params[:ids]})
   end
     
   def thumbnail

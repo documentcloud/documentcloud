@@ -44,10 +44,10 @@ class MetadataExtractorTest < ActiveSupport::TestCase
            organization person position province_or_state region technology)
            
       meta = @doc.metadata[-2]
-      assert meta.value       == "Pennsylvania Department of Agriculture"
-      assert meta.type        == "organization"
-      assert meta.calais_hash == '48ccaeea-e553-3ef8-905c-32bc4bfb627f'
-      assert meta.relevance   == 0.312
+      assert meta.value     == "Pennsylvania Department of Agriculture"
+      assert meta.type      == "organization"
+      assert meta.calais_id == '48ccaeea-e553-3ef8-905c-32bc4bfb627f'
+      assert meta.relevance == 0.312
       
       occurrence = meta.occurrences.first
       assert occurrence.offset == 518

@@ -22,13 +22,13 @@ dc.ui.MetadataList = dc.View.extend({
     this.mapMetadata();
   },
   
-  // Process and separate the metadata out into types.
+  // Process and separate the metadata out into kinds.
   mapMetadata : function() {
-    var byType = this._byType = {};
+    var byKind = this._byKind = {};
     var max = this.NUM_INITIALLY_VISIBLE;
     _.each(this.options.metadata, function(meta) {
-      var type = meta.get('type');
-      var list = byType[type] = byType[type] || {shown : [], rest : [], title : meta.displayType()};
+      var kind = meta.get('kind');
+      var list = byKind[kind] = byKind[kind] || {shown : [], rest : [], title : meta.displayKind()};
       (list.shown.length < max ? list.shown : list.rest).push(meta);
     });
   },
@@ -36,7 +36,7 @@ dc.ui.MetadataList = dc.View.extend({
   // Render...
   render : function() {
     $(this.el).html('');
-    var html = _.map(this._byType, function(value, key) {
+    var html = _.map(this._byKind, function(value, key) {
       return dc.templates.WORKSPACE_METALIST({key : key, value : value});
     });
     $(this.el).html(html.join(''));
@@ -61,12 +61,12 @@ dc.ui.MetadataList = dc.View.extend({
     dc.app.searchBox.search($('#search').val());
   },
   
-  // Show only the top metadata for the type.
+  // Show only the top metadata for the kind.
   showLess : function(e) {
     $.setMode($(e.target).parents('.metalist').get(0), 'less', 'shown');
   },
   
-  // Show *all* the metadata for the type.
+  // Show *all* the metadata for the kind.
   showMore : function(e) {
     $.setMode($(e.target).parents('.metalist').get(0), 'more', 'shown');
   }

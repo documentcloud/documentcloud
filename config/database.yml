@@ -13,6 +13,7 @@ development:
 
 staging:
   <<: *defaults
+  host: staging.dcloud.org
   database: dcloud_staging
 
 test:

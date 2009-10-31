@@ -5,9 +5,9 @@
 // it has an averageRelevance() over its documents()...
 dc.model.Metadatum = dc.Model.extend({
   
-  // Mapping from our white listed metadata types to their display names.
+  // Mapping from our white listed metadata kinds to their display names.
   // Keep this list in sync with the mapping in metadatum.rb, please.
-  TYPE_MAP : {
+  KIND_MAP : {
     category : "Categories", city : 'Cities', company : 'Companies', continent : 'Contintents', 
     country : 'Countries', email_address : 'Email Addresses', facility : 'Places', 
     holiday : "Holidays", industry_term : "Terms", natural_feature : "Landmarks", 
@@ -26,7 +26,7 @@ dc.model.Metadatum = dc.Model.extend({
       instances : instances, 
       id : id, 
       value : instances[0].value,
-      type : instances[0].type
+      kind : instances[0].kind
     });
   },
   
@@ -64,17 +64,17 @@ dc.model.Metadatum = dc.Model.extend({
     return this.totalRelevance().toString().substring(0, 5);
   },
   
-  // Display-ready version of the metadata type.
-  displayType : function() {
-    return this.TYPE_MAP[this.get('kind')];
+  // Display-ready version of the metadata kind.
+  displayKind : function() {
+    return this.KIND_MAP[this.get('kind')];
   },
   
   // Return the string that one would use to perform a fielded search for this
   // metadatum.
   toSearchQuery : function() {
-    var val = this.get('value'), type = this.get('kind');
+    var val = this.get('value'), kind = this.get('kind');
     if (val.match(/\s/)) val = '"' + val + '"';
-    return type + ":" + val;
+    return kind + ":" + val;
   },
   
   // Inspect.
@@ -84,9 +84,9 @@ dc.model.Metadatum = dc.Model.extend({
   
 }, {
   
-  // Generate the canonical client id for a type, and calais hash or value pair.
+  // Generate the canonical client id for a kind, and calais hash or value pair.
   generateId : function(attributes) {
-    return attributes.type + ':' + (attributes.calais_hash || attributes.value);
+    return attributes.kind + ':' + (attributes.calais_id || attributes.value);
   }
   
 });

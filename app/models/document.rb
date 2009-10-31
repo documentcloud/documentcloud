@@ -6,4 +6,8 @@ class Document < ActiveRecord::Base
   has_many :pages,      :dependent => :destroy  
   has_many :metadata,   :dependent => :destroy
   
+  def to_json(opts={})
+    attributes.to_json
+  end
+  
 end

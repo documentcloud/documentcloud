@@ -25,11 +25,11 @@ full_text = {
 }
 
 metadata = {
-  id              # organization_id/account_id/document_id/calais_hash or value
+  id              # organization_id/account_id/document_id/calais_id or value
   type
   value
   relevance
-  calais_hash
+  calais_id
   occurrences     # CSV list of offset:length text positions
   access          # One of: public, private, organization, exclusive, deleted
 }

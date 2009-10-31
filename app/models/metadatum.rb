@@ -26,4 +26,13 @@ class Metadatum < ActiveRecord::Base
     !occurrences.empty?
   end
   
+  def to_json(opts={})
+    { 'id'          => id,
+      'document_id' => document_id,
+      'kind'        => kind,
+      'value'       => value,
+      'relevance'   => relevance
+    }.to_json
+  end
+  
 end

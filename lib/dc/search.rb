@@ -17,28 +17,8 @@ module DC
     SPHINX_OR = ' | '
     
     def self.find(query, opts={})      
-      metadata_store  = Store::MetadataStore.new
-      full_text_store = Store::FullTextStore.new
-      entry_store     = Store::EntryStore.new
-            
       query = Parser.new.parse(query) if query.is_a? String
-                  
-      fielded_results   = metadata_store.find_by_fields(query.fields, opts)       if query.has_fields?
-      attribute_results = entry_store.find_by_attributes(query.attributes, opts)  if query.has_attributes?
-      text_results      = full_text_store.find(query.text, opts)                  if query.has_text?
-      labeled_results   = entry_store.find_by_labels(query.labels, opts)          if query.has_labels?
-      
-      result_sets = [fielded_results, attribute_results, text_results, labeled_results].reject {|set| set.nil? }
-      results = result_sets.flatten.uniq.select {|doc| result_sets.all? {|set| set.include?(doc) } }.map(&:id)
-      
-      if query.page
-        query.total = results.length
-        query.from  = query.page * PAGE_SIZE
-        query.to    = query.from + PAGE_SIZE
-        results     = results[query.from...query.to]
-      end
-            
-      entry_store.find_all(results)
+      query.run
     end
     
   end
