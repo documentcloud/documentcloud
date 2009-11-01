@@ -2,14 +2,22 @@ require 'test_helper'
 
 class AccountTest < ActiveSupport::TestCase
   
-  context "The search parser" do
+  context "A DocumentCloud Journalist Account" do
     
-    should "parse full text searches as phrases" do
-      query = search("I'm a full text phrase")
-      assert query.is_a? DC::Search::Query
-      assert !query.has_fields?
-      assert query.has_text?
-      assert query.text == "I'm a full text phrase"
+    should_belong_to :organization
+    should_have_many :labels
+    should_have_many :saved_searches
+    should_have_one  :security_key
+    
+    should "not be able to log in with a bad password" do
+      account = Account.log_in('lmercier@tribune.org', 'nope', {})
+      assert !account
+    end
+    
+    should "be able to log in" do
+      session = {}
+      account = Account.log_in('lmercier@tribune.org', 'password', {})
+      assert account
     end
     
   end

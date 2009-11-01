@@ -1,0 +1,7 @@
+louis:
+  organization: tribune
+  email: lmercier@tribune.org
+  first_name: Louis
+  last_name: Mercier
+  hashed_password: $2a$08$FR1MWbwlC7qqdVfmF/C/8uHRHzZDjV97pkVd6M5ixbigq/3nhcNtm
+  # His password is 'password', by the way.
