@@ -11,15 +11,16 @@ module DC
       # Queries are created by the Search::Parser, which sets them up with the
       # appropriate attributes.
       def initialize(opts={})
-        @text           = opts[:text]
-        @page           = opts[:page]
-        @fields         = opts[:fields] || []
-        @labels         = opts[:labels] || []
-        @attributes     = opts[:attributes] || []
-        @conditions     = nil
-        @sql            = []
-        @interpolations = []
-        @joins          = []
+        @text               = opts[:text]
+        @page               = opts[:page]
+        @fields             = opts[:fields] || []
+        @labels             = opts[:labels] || []
+        @attributes         = opts[:attributes] || []
+        @from, @to, @total  = nil, nil, nil
+        @conditions         = nil
+        @sql                = []
+        @interpolations     = []
+        @joins              = []
       end
       
       # Series of attribute checks to determine the type of query.
@@ -54,7 +55,7 @@ module DC
         options = {:conditions => @conditions, :joins => @joins}
         if @page
           options[:select] = "distinct documents.id"
-          self.total = Document.count(options)
+          @total = Document.count(options)
           options[:limit]   = PAGE_SIZE
           options[:offset]  = @from
         end
@@ -67,6 +68,9 @@ module DC
       def to_json(opts={})
         { 'text'        => @text,
           'page'        => @page,
+          'from'        => @from,
+          'to'          => @to,
+          'total'       => @total,
           'fields'      => @fields,
           'labels'      => @labels,
           'attributes'  => @attributes
@@ -95,7 +99,7 @@ module DC
       
       # Generate the SQL to restrict the search to labeled documents.
       def generate_labels_sql
-        labels = Account.current.labels.all(:conditions => {:title => @labels})
+        labels = @current_account.labels.all(:conditions => {:title => @labels})
         doc_ids = labels.map(&:split_document_ids).flatten.uniq        
         @sql << "documents.id in (?)"
         @interpolations << doc_ids

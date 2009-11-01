@@ -19,14 +19,6 @@ class Account < ActiveRecord::Base
     id first_name last_name email hashed_email organization_id organization_name
   )
   
-  def self.current
-    Thread.current[:current_account]
-  end
-  
-  def self.current=(account)
-    Thread.current[:current_account] = account
-  end
-  
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session)
     account = Account.find_by_email(email)

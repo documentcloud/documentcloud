@@ -7,11 +7,6 @@ class Label < ActiveRecord::Base
   
   default_scope :order => 'title'
   
-  # Scope to the labels owned by the current account.
-  named_scope :owned, lambda {
-    {:conditions => {:account_id => Account.current.id}}
-  }
-  
   def split_document_ids
     document_ids.nil? ? [] : document_ids.split(',').map(&:to_i).uniq
   end

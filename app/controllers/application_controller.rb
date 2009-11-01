@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
   
   around_filter :perform_profile if Rails.development?
-  after_filter  :clear_thread_locals
   
   protected
   
@@ -44,12 +43,12 @@ class ApplicationController < ActionController::Base
   
   def current_account
     return nil unless session['account_id']
-    Account.current ||= Account.find_by_id(session['account_id'])
+    @current_account ||= Account.find_by_id(session['account_id'])
   end
   
   def current_organization
     return nil unless session['organization_id']
-    Organization.current ||= Organization.find_by_id(session['organization_id'])
+    @current_organization ||= Organization.find_by_id(session['organization_id'])
   end
   
   # Return forbidden when the access is unauthorized.
@@ -68,13 +67,6 @@ class ApplicationController < ActionController::Base
   def server_error(e)
     render :file => "#{RAILS_ROOT}/public/500.html", :status => 500
     false
-  end
-  
-  # After each request, we clear out the thread local variables that were
-  # authenticating that request.
-  def clear_thread_locals
-    Account.current      = nil
-    Organization.current = nil
   end
   
   # Simple HTTP Basic Auth to make sure folks don't snoop where the shouldn't.

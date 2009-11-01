@@ -10,7 +10,7 @@
   <%= jst_asset_tag %>
   <%= render :partial => 'common/bootstrap' %>
 </head>
-<body class="workspace <%= Account.current ? 'logged_in' : '' %> <%= @bodyclass %>">
+<body class="workspace <%= @current_account ? 'logged_in' : '' %> <%= @bodyclass %>">
   
   <div id="container">
     <div id="topbar" class="header">
