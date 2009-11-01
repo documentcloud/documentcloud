@@ -44,6 +44,7 @@ Rails::Initializer.run do |config|
   
   if Rails.test?
     config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
+    config.gem 'mocha', :version => '>= 0.9.7'
   end
   
   require 'json/add/rails'
