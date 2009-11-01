@@ -13,7 +13,7 @@ entry = {
   thumbnail
   small_thumbnail
   pdf
-  calais_request_id
+  calais_id
 }
 
 full_text = {

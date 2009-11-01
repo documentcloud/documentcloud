@@ -57,7 +57,7 @@ module DC
       # through all the valid kinds for a match.
       def match_kind(kind)
         matcher = Regexp.new(kind.downcase)
-        DC::VALID_KINDS.detect {|canonical| canonical.match(matcher) }
+        DC::VALID_KINDS.detect {|canonical| canonical.match(matcher) } || kind
       end
       
     end

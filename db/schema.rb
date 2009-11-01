@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string    "language",        :limit => 3
     t.string    "summary",         :limit => 255
     t.string    "calais_id",       :limit => 40
-    t.datetime  "publication_date"
+    t.date      "publication_date"
     t.timestamps
   end
   

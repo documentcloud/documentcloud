@@ -15,13 +15,19 @@ class Metadatum < ActiveRecord::Base
     {:conditions => ["to_tsvector('english', value) @@ plainto_tsquery(?)", query]}
   }
   
+  named_scope :categories, {:conditions => {:kind => 'category'}}
+  
   def self.acceptable_kind?(kind)
     DC::CALAIS_KINDS.include? kind.underscore.to_sym
   end
   
+  def split_occurrences
+    Occurrence.from_csv(self.occurrences)
+  end
+  
   # A Metadatum is considered to be textual if it occurs in the body of the text.
   def textual?
-    !occurrences.empty?
+    occurrences.present?
   end
   
   def to_json(opts={})
