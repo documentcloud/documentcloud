@@ -2,7 +2,7 @@ require 'test_helper'
 
 class MetadataExtractorTest < ActiveSupport::TestCase
   
-  RDF = File.read(File.dirname(__FILE__) + "/honeybee_article.rdf")
+  RDF = File.read("#{RAILS_ROOT}/test/fixtures/honeybee_article.rdf")
   
   def initialize(*args)
     super(*args)
