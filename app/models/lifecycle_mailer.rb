@@ -11,7 +11,7 @@ class LifecycleMailer < ActionMailer::Base
     recipients  [account.rfc_email]
     body        :account            => account, 
                 :key                => account.security_key.key,
-                :organization_name  => account.organization.name
+                :organization_name  => account.organization_name
   end
 
 end

@@ -1,3 +1,6 @@
+# An Account on DocumentCloud can be used to access the workspace and upload
+# documents. Accounts have full priviledges for the entire organization, at the
+# moment.
 class Account < ActiveRecord::Base
   
   # Associations:
@@ -13,11 +16,6 @@ class Account < ActiveRecord::Base
   
   # Delegations:
   delegate :name, :to => :organization, :prefix => true
-  
-  # A whitelist of Account attributes that should be sent down to the client.
-  CLIENT_SIDE_ATTRIBUTES = %w(
-    id first_name last_name email hashed_email organization_id organization_name
-  )
   
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session)
@@ -40,10 +38,12 @@ class Account < ActiveRecord::Base
     LifecycleMailer.deliver_login_instructions(self)
   end
   
+  # No middle names, for now.
   def full_name
     "#{first_name} #{last_name}"
   end
   
+  # The ISO 8601-formatted email address.
   def rfc_email
     "\"#{full_name}\" <#{email}>"
   end
@@ -54,7 +54,7 @@ class Account < ActiveRecord::Base
   end
   
   # Has this account been assigned, but never logged into, with no password set?
-  def pending?
+  def pending
     !hashed_password
   end
   
@@ -64,16 +64,20 @@ class Account < ActiveRecord::Base
     @password ||= BCrypt::Password.new(hashed_password)
   end
   
-  # BCrypt'd passwords helpfuly have the salt built-in.
+  # BCrypt'd passwords helpfully have the salt built-in.
   def password=(new_password)
     @password = BCrypt::Password.create(new_password, :cost => 8)
     self.hashed_password = @password
   end
   
-  def to_json(opts={})
-    hash = CLIENT_SIDE_ATTRIBUTES.inject({}) {|h, name| h[name] = send(name); h }
-    hash['pending'] = pending?
-    hash.to_json
+  # The JSON representation of an account avoids sending down the password,
+  # among other things, and includes extra attributes.
+  def to_json(options = nil)
+    options ||= {
+      :only     => [:id, :first_name, :last_name, :email, :organization_id], 
+      :methods  => [:hashed_email, :organization_name, :pending]
+    }
+    super(options)
   end
   
 end

@@ -69,3 +69,4 @@ Rails::Initializer.run do |config|
 end
 
 ActiveSupport::JSON.backend = 'JSONGem'
+ActiveRecord::Base.include_root_in_json = false
