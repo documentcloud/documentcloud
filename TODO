@@ -1,5 +1,7 @@
 TODO:
 
+  * We need an upload progress widget.
+
   * Begin storing the complete image and page assets. -- Integrate the new
     document format / DocViewer. Start using the document package format for
     imports.
@@ -12,7 +14,7 @@ TODO:
   * Think about adding search history.
 
   * Show if the currently-selected documents are tagged with the labels in
-    the labels pulldown.
+    the labels pulldown. Add autocomplete and label creation to the pulldown.
 
   * Figure out a way to use base.js to do multiple inheritance, so that we can
     have a SortedAndRESTfulSet.
@@ -23,9 +25,7 @@ TODO:
     What is This?
         
   * Replace raw PDF link with a DocumentViewer.
-    
-  * Think about caching all metadata for a document in a single JSON file on S3.
-  
+      
   * Figure out the access control policies for all assets on S3. Public ones we
     can load directly from the client, probably.
         
@@ -40,15 +40,17 @@ TODO:
   * Figure out our own taxonomy and map all the OpenCalais categories into it.
   
   * Start on a preliminary document-relation visualization.
-      
-  * We need an upload progress widget.
-  
+        
   * Authorize logged-in folks to view private and organization documents.
     
   * Figure out what belongs in the Accounts sidebar.
   
 
 DONE:
+
+  * Think about caching all metadata for a document in a single JSON file on S3.
+    (Thought about it -- now that they're in the same DB, there's not as much 
+    to gain.)
 
   * Create a UI for making and managing collections (labels?) of documents.
 

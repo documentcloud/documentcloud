@@ -51,7 +51,7 @@ ActionController::Routing::Routes.draw do |map|
                 
   map.resources :accounts
   map.with_options :controller => 'accounts' do |accounts|
-    accounts.enable '/accounts/enable/:key', :action => 'enable'
+    accounts.enable_account '/accounts/enable/:key', :action => 'enable'
   end
   
   map.resources :saved_searches

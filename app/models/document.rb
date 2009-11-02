@@ -1,6 +1,6 @@
 class Document < ActiveRecord::Base
   
-  attr_accessor :rdf, :calais_signature
+  attr_accessor :rdf, :pdf, :calais_signature, :thumbnail, :small_thumbnail
 
   has_one  :full_text,  :dependent => :destroy
   has_many :pages,      :dependent => :destroy  

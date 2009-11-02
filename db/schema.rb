@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string    "kind",             :null => false, :limit => 40
     t.string    "value",            :null => false
     t.float     "relevance",        :null => false, :default => 0.0
-    t.string    "occurrences",                      :limit => 500
     t.string    "calais_id",                        :limit => 40 
+    t.text      "occurrences"
   end
   
   execute "create index value_fti on metadata using gin(to_tsvector('english', value));"

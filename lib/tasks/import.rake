@@ -6,9 +6,8 @@ namespace :import do
     file_names = Dir[args[:directory] + '/*.xml']
     file_names.each do |path|
       print "loading #{path}"
-      doc = Document.new(:rdf => File.read(path), :organization_id => 0, :account_id => 0, :access => DC::Access::PUBLIC)
+      doc = Document.new(:rdf => File.read(path), :organization_id => 0, :account_id => 0, :access => DC::Access::PUBLIC, :page_count => 1)
       DC::Import::MetadataExtractor.new.extract_metadata(doc)
-      doc.page_count = 1
       doc.source ||= Faker::Company.name
       puts " / saving #{doc.title}"
       doc.save!
