@@ -6,7 +6,7 @@ module DC
     DOMAIN = /\A((?:[a-z0-9\-_]+\.)+[a-z]{2,6})\Z/i
 
     # We're not talking full domains, just (prefix).documentcloud.org
-    SUBDOMAIN = /\A[0-9a-z\-_]+\Z/
+    SUBDOMAIN = /\A[0-9a-z\-_]+\Z/i
     
     # Proper slugs are alphanumeric, lowercased, with dashes or underscores.
     SLUG = /\A[a-z0-9\-_]+\Z/
