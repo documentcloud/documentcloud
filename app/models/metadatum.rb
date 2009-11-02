@@ -30,13 +30,9 @@ class Metadatum < ActiveRecord::Base
     occurrences.present?
   end
   
-  def to_json(opts={})
-    { 'id'          => id,
-      'document_id' => document_id,
-      'kind'        => kind,
-      'value'       => value,
-      'relevance'   => relevance
-    }.to_json
+  def to_json(opts=nil)
+    opts ||= {:only => [:id, :document_id, :kind, :value, :relevance]}
+    super(opts)
   end
   
 end

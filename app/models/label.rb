@@ -20,6 +20,7 @@ class Label < ActiveRecord::Base
   
   private
   
+  # Before saving a label, we ensure that it doesn't reference any duplicates.
   def set_document_ids
     self.document_ids = split_document_ids.join(',')
   end
