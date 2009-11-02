@@ -16,8 +16,4 @@ class Document < ActiveRecord::Base
     query.run
   end
   
-  def to_json(opts={})
-    attributes.to_json
-  end
-  
 end

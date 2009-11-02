@@ -6,8 +6,4 @@ class SavedSearch < ActiveRecord::Base
   
   default_scope :order => 'query'
   
-  def to_json(opts={})
-    attributes.to_json
-  end
-  
 end
