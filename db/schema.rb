@@ -24,7 +24,8 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer   "account_id",      :null => false
     t.integer   "access",          :null => false
     t.integer   "page_count",      :null => false
-    t.string    "title"
+    t.string    "title",           :null => false
+    t.string    "slug",            :null => false
     t.string    "source"
     t.string    "language",        :limit => 3
     t.string    "summary",         :limit => 255

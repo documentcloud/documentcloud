@@ -32,11 +32,11 @@ dc.ui.DocumentTile = dc.View.extend({
   },
   
   viewPDF : function() {
-    window.open(this.model.pdfURL());
+    window.open(this.model.get('pdf_url'));
   },
   
   viewFullText : function() {
-    window.open(this.model.textURL());
+    window.open(this.model.get('full_text_url'));
   },
   
   deleteDocument : function(e) {

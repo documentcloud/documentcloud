@@ -20,15 +20,13 @@ class DocumentImport < CloudCrowd::Action
       generate_thumbnails
       calais_response = fetch_rdf_from_calais
       doc = Document.new({
-        :title                => options['title'] || @title,
-        :source               => options['source'] || Faker::Company.name,
-        :organization_id      => options['organization_id'],
-        :account_id           => options['account_id'],
-        :access               => options['access'] || DC::Access::PUBLIC,
-        :pdf                  => input_path,
-        :rdf                  => @rdf,
-        :thumbnail            => @thumb_path,
-        :small_thumbnail      => @small_thumb_path
+        :title           => options['title'] || @title,
+        :source          => options['source'] || Faker::Company.name,
+        :organization_id => options['organization_id'],
+        :account_id      => options['account_id'],
+        :access          => options['access'] || DC::Access::PUBLIC,
+        :rdf             => @rdf,
+        :summary         => @text[0...255]
       })
       doc.full_text = FullText.new(:text => @text, :document => doc)
       # TODO: Start splitting pdf into pages.
@@ -40,7 +38,7 @@ class DocumentImport < CloudCrowd::Action
         doc.metadata = []
       end
       doc.save!
-      DC::Store::AssetStore.new.save(document)
+      DC::Store::AssetStore.new.save(doc, :pdf => input_path, :thumbnail => @thumb_path)
       return doc.id
     rescue Exception => e
       puts e.class.to_s
@@ -53,14 +51,13 @@ class DocumentImport < CloudCrowd::Action
   def extract_full_text_and_title
     ex = DC::Import::TextExtractor.new(input_path)
     @text = ex.get_text
-    @title = ex.get_title || File.basename(input)
+    @title = ex.get_title || File.basename(input, File.extname(input))
   end
   
   def generate_thumbnails
     image_ex = DC::Import::ImageExtractor.new(input_path)
     image_ex.get_thumbnails
     @thumb_path = image_ex.thumbnail_path
-    @small_thumb_path = image_ex.small_thumbnail_path
   end
   
   # TODO: clean up the errors that we want to retry only -- add calais exception
@@ -70,7 +67,7 @@ class DocumentImport < CloudCrowd::Action
     begin
       @rdf = DC::Import::CalaisFetcher.new.fetch_rdf(@text)
       return Calais::Response.new(@rdf)
-    rescue Calais::Error => e
+    rescue Calais::Error, Curl::Err => e
       puts e.message
       return @rdf = nil if e.message == 'Calais continues to expand its list of supported languages, but does not yet support your submitted content.'
       puts 'waiting 10 seconds'

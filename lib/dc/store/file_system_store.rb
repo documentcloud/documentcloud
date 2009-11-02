@@ -4,73 +4,38 @@ module DC
     # An implementation of an AssetStore.
     module FileSystemStore
       
-      def initialize
-        FileUtils.mkdir_p(local_storage_path) unless File.exists?(local_storage_path)
+      module ClassMethods
+        def asset_root
+          "#{RAILS_ROOT}/public/asset_store"
+        end
       end
       
-      def save(document)
-        save_pdf(document)
-        save_images(document)
-        save_full_text(document)
+      def initialize
+        FileUtils.mkdir_p(AssetStore.asset_root) unless File.exists?(AssetStore.asset_root)
+      end
+      
+      def save(document, assets)
+        FileUtils.mkdir_p(local(document.path)) unless File.exists?(local(document.path))
+        FileUtils.cp(assets[:pdf], local(document.pdf_path))
+        FileUtils.cp(assets[:thumbnail], local(document.thumbnail_path))
+        File.open(local(document.full_text_path), 'w+') {|f| f.write(document.text) }
       end
       
       def destroy(document)
-        paths = []
-        paths << pdf_path_for(document)
-        paths << full_text_path_for(document)
-        paths << thumbnail_path_for(document)
-        paths << thumbnail_path_for(document, 'small')
-        paths.each {|path| FileUtils.rm(path) if File.exists?(path) }
+        doc_path = local(document.path)
+        FileUtils.rm_r(doc_path) if File.exists?(doc_path)
       end
       
       # Delete the assets store entirely.
       def delete_database!
-        FileUtils.rm_r(local_storage_path) if File.exists?(local_storage_path)
+        FileUtils.rm_r(AssetStore.asset_root) if File.exists?(AssetStore.asset_root)
       end
       
       
-      private 
+      protected
       
-      def local_storage_path
-        "#{RAILS_ROOT}/tmp/asset_store"
-      end
-      
-      def save_pdf(document)
-        doc_path, real_path = document.pdf, pdf_path_for(document)
-        return if !doc_path || doc_path == real_path
-        FileUtils.cp(doc_path, real_path)
-        document.pdf = real_path
-      end
-      
-      def save_thumbnail(document, extension=nil)
-        thumb_path = extension == 'small' ? document.small_thumbnail : document.thumbnail
-        real_path = thumbnail_path_for(document, extension)
-        return if !thumb_path || thumb_path == real_path
-        FileUtils.cp(thumb_path, real_path)
-        extension == 'small' ? document.small_thumbnail = real_path : document.thumbnail = real_path
-      end
-      
-      def save_images(document)
-        save_thumbnail(document)
-        save_thumbnail(document, 'small')
-      end
-      
-      def save_full_text(document)
-        path = full_text_path_for(document)
-        File.open(path, 'w+') {|f| f.write(document.text) }
-      end
-      
-      def full_text_path_for(document)
-        "#{local_storage_path}/#{document.id}.txt"
-      end
-      
-      def pdf_path_for(document)
-        "#{local_storage_path}/#{document.id}.pdf"
-      end
-      
-      def thumbnail_path_for(document, extension=nil)
-        ext = extension ? "_#{extension}" : ''
-        "#{local_storage_path}/#{document.id}#{ext}.jpg"
+      def local(path)
+        File.join(AssetStore.asset_root, path)
       end
       
     end

@@ -22,15 +22,16 @@ class DocumentsController < ApplicationController
     
   def thumbnail
     doc = current_document(true)
-    send_file(doc.thumbnail, :disposition => 'inline', :type => 'image/jpeg')
+    secured_url = File.join(DC::Store::AssetStore.asset_root, doc.thumbnail_path)
+    send_file(secured_url, :disposition => 'inline', :type => 'image/jpeg')
   end
 
   
   private
   
   def send_pdf
-    return redirect_to("/documents/#{@current_document.id}.txt") if @current_document.pdf.blank?
-    send_file @current_document.pdf, :disposition => 'inline', :type => 'application/pdf'
+    secured_url = File.join(DC::Store::AssetStore.asset_root, @current_document.pdf_path)
+    send_file secured_url, :disposition => 'inline', :type => 'application/pdf'
   end
   
   def send_text

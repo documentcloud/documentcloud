@@ -1,5 +1,5 @@
-<% if (document.thumbnailURL()) { %>
-  <img class="icon document generic" src="<%= document.thumbnailURL() %>" />
+<% if (document.get('thumbnail_url')) { %>
+  <img class="icon document generic" src="<%= document.get('thumbnail_url') %>" />
 <% } else { %>
   <div class="icon document generic"></div>
 <% } %>

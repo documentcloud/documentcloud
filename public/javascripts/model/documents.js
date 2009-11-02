@@ -4,7 +4,6 @@ dc.model.Document = dc.Model.extend({
   
   constructor : function(attributes) {
     this.base(attributes);
-    this.s3 = !(RAILS_ENV == 'development');
   },
   
   // Return a list of the document's metadata. Think about caching this on the
@@ -16,19 +15,6 @@ dc.model.Document = dc.Model.extend({
         return i.document_id == docId; 
       });
     });
-  },
-  
-  thumbnailURL : function() {
-    if (!this.get('thumbnail')) return null;
-    return this.s3 ? this.get('thumbnail') : '/documents/thumbnail/' + this.id;
-  },
-  
-  pdfURL : function() {
-    return this.s3 ? this.get('pdf') : '/documents/' + this.id + '.pdf';
-  },
-  
-  textURL : function() {
-    return '/documents/' + this.id + '.txt';
   },
   
   // Inspect.

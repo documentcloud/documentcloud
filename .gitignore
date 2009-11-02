@@ -11,3 +11,4 @@ db/solr_*
 db/sphinx
 raw
 public/docs
+public/asset_store
