@@ -41,7 +41,7 @@ module DC
           return true
         end
         raise DC::DocumentNotValid.new('In order for the MetadataExtractor to process it, a document must have either rdf or full_text.') if !document.full_text
-        document.rdf = CalaisFetcher.new.fetch_rdf(document.full_text)
+        document.rdf = CalaisFetcher.new.fetch_rdf(document.text)
       end
       
       # Pull out all of the standard, top-level metadata, and add it to our

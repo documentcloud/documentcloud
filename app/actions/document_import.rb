@@ -40,6 +40,7 @@ class DocumentImport < CloudCrowd::Action
         doc.metadata = []
       end
       doc.save!
+      DC::Store::AssetStore.new.save(document)
       return doc.id
     rescue Exception => e
       puts e.class.to_s

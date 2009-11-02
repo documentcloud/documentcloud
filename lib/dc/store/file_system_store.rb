@@ -14,10 +14,6 @@ module DC
         save_full_text(document)
       end
       
-      def full_text_for(document)
-        File.read(full_text_path_for(document))
-      end
-      
       def destroy(document)
         paths = []
         paths << pdf_path_for(document)
@@ -61,7 +57,7 @@ module DC
       
       def save_full_text(document)
         path = full_text_path_for(document)
-        File.open(path, 'w+') {|f| f.write(document.full_text) }
+        File.open(path, 'w+') {|f| f.write(document.text) }
       end
       
       def full_text_path_for(document)

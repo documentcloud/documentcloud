@@ -17,10 +17,6 @@ module DC
         save_full_text(document)
       end
       
-      def full_text_for(document)
-        bucket.get(prefix(document, 'full_text.txt'))
-      end
-      
       def destroy(document)
         bucket.delete_folder("docs/#{document.id}")
       end
@@ -62,7 +58,7 @@ module DC
       end
       
       def save_full_text(document)
-        save_file(document.full_text, prefix(document, "full_text.txt"), false)
+        save_file(document.text, prefix(document, "full_text.txt"), false)
       end
       
     end
