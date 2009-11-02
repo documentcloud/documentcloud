@@ -8,6 +8,8 @@ class Document < ActiveRecord::Base
   
   SEARCHABLE_ATTRIBUTES = [:title, :source]
   
+  delegate :text, :to => :full_text
+  
   # Main document search method -- handles queries.
   def self.search(query, options={})
     query = DC::Search::Parser.new.parse(query) if query.is_a? String
