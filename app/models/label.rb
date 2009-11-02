@@ -1,5 +1,7 @@
 class Label < ActiveRecord::Base
   
+  belongs_to :account
+  
   validates_presence_of :title
   validates_uniqueness_of :title, :scope => :account_id
   

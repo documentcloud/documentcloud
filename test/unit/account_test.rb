@@ -39,8 +39,6 @@ class AccountTest < ActiveSupport::TestCase
       assert !json['pending']
     end
     
-    
-    
   end
   
 end

@@ -1,3 +1,4 @@
+# Since we're off Sphinx, the AppConstant isn't being used at the moment.
 class AppConstant < ActiveRecord::Base
   
   validates_presence_of :key
