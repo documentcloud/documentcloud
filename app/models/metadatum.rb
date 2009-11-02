@@ -1,6 +1,6 @@
 # A metadatum, for our purposes, is a piece of metadata either about or 
 # contained by a document (i.e., it may have a location within the document's
-# text.) Metadata have a whitelisted kind, or list of acceptable kinds.
+# text.) Each valid kind of metadata must be whitelisted.
 class Metadatum < ActiveRecord::Base
   
   include DC::Store::DocumentResource
