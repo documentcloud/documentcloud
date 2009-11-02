@@ -4,12 +4,18 @@ dc.model.History = dc.Model.extend({
   URL_CHECK_INTERVAL : 500,
 
   // Initialize history with an empty set of handlers.
+  // Bind to the HTML5 'onhashchange' callback, if it exists. Otherwise, 
+  // start polling the window location.
   constructor : function() {
     this.base({
       handlers : [],
       hash     : window.location.hash
     });
-    setInterval(this.checkURL, this.URL_CHECK_INTERVAL);
+    if ('onhashchange' in window) {
+      window.onhashchange = this.checkURL;
+    } else {
+      setInterval(this.checkURL, this.URL_CHECK_INTERVAL);
+    }
   },
   
   // Register a history handler. Pass a regular expression that can be used to
