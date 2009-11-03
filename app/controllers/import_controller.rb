@@ -2,6 +2,8 @@ class ImportController < ApplicationController
   
   FILE_URL = /\Afile:\/\//
   
+  layout nil
+  
   before_filter :login_required, :only => [:upload_pdf]
   
   def upload_pdf
@@ -20,8 +22,10 @@ class ImportController < ApplicationController
       'access'          => params[:access].to_i,
       'original_pdf'    => local_path
     }
-    DC::Import::CloudCrowdImporter.new.import(urls, options)
-    redirect_to DC_CONFIG['cloud_crowd_server']
+    response = DC::Import::CloudCrowdImporter.new.import(urls, options)
+    job = JSON.parse(response)
+    record = ProcessingJob.create!(:account => current_account, :cloud_crowd_id => job['id'], :remote_job => job)
+    @status = record.status.merge({'title' => options['title']})
   end
   
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.
@@ -29,14 +33,19 @@ class ImportController < ApplicationController
   def cloud_crowd
     job = JSON.parse(params[:job])
     if job['status'] == 'succeeded'
-      doc = job['options']['original_pdf']
+      doc = job['outputs'].first['original_pdf']
       FileUtils.rm(doc) if File.exists?(doc) && doc.match(/\.pdf\Z/)
     else
       logger.warn("Document import failed: " + job.inspect)
-      broken_doc = Document.find_by_id(job['outputs'].first)
-      broken_doc.destroy if broken_doc
     end
+    ProcessingJob.destroy_all(:cloud_crowd_id => job['id'])
     render :text => '201 Created', :status => 201
+  end
+  
+  # Get the current status of an active processing job.
+  def job_status
+    job = current_account.processing_jobs.find_by_id(params[:id])
+    json job && job.status
   end
   
   

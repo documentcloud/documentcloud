@@ -62,7 +62,7 @@ class DocumentImport < CloudCrowd::Action
     DC::Import::MetadataExtractor.new.extract_metadata(doc, calais_response) if calais_response
     doc.save!
     DC::Store::AssetStore.new.save_full_text(doc)
-    doc.id
+    {'document_id' => doc.id, 'original_pdf' => options['original_pdf']}
   end
 
   

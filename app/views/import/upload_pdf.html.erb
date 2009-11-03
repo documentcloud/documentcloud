@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript">
+    var job = new top.dc.model.ProcessingJob(<%= @status.to_json %>);
+    top.ProcessingJobs.add(job);
+    top.ProcessingJobs.startUpdates();
+  </script>
+</head>
+<body>
+</body>
+</html>

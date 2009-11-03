@@ -1,4 +1,6 @@
-<form class="workspace_form" method="POST" action="/import/upload_pdf" enctype="multipart/form-data">
+<form id="upload_form" class="workspace_form" method="POST" action="/import/upload_pdf" target="upload_iframe" enctype="multipart/form-data">
+  
+  <iframe id="upload_iframe" name="upload_iframe" src="#" class="hidden_iframe"></iframe>                 
   
   <label for="document_upload_title">
     Title:

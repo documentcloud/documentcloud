@@ -117,7 +117,7 @@ dc.Set = Base.extend({
         delete this._byId[model.formerValue('id')];
         this._byId[model.id] = model;
       }
-      this.fire(dc.Set.MODEL_CHANGED, this, model);
+      this.fire(dc.Set.MODEL_CHANGED, model);
     }
   },
   

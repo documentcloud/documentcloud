@@ -74,6 +74,13 @@ ActiveRecord::Schema.define(:version => 1) do
   execute "create index value_fti on metadata using gin(to_tsvector('english', value));"
   
   # TODO: Add metadata indexes.
+  
+  create_table "processing_jobs", :force => true do |t|
+    t.integer "account_id",     :null => false
+    t.integer "cloud_crowd_id", :null => false
+  end
+  
+  add_index "processing_jobs", ["account_id"], :name => "index_processing_jobs_on_account_id"
 
   create_table "labels", :force => true do |t|
     t.integer "account_id",   :null => false
