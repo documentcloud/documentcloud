@@ -1,6 +1,3 @@
-gem 'documentcloud-calais'
-require 'calais'
-
 module DC
   module Import
     

@@ -1,5 +1,3 @@
-require 'tmpdir'
-
 module DC
   module Import
     
@@ -10,15 +8,6 @@ module DC
     # Dependencies:
     # poppler or xpdf for a functional pdftotext command.
     # GraphicsMagick along with tesseract (gm and tesseract commands) for OCR.
-    #
-    # TODO: This class is going to shell out with the path to the pdf file a 
-    # good bit. We need to be *really* confident in the security of the 
-    # interpolated path. Also, look into Ruby wrappers for any of the
-    # libraries we depend on Ruby/Poppler, RMagick, etc.
-    # 
-    # TODO: Right now we're returning the string of the full text, but it may
-    # not be necessary to ever read the text into memory. Think about just 
-    # passing paths around.
     class TextExtractor
       
       TMP_DIR = File.join(Dir.tmpdir, 'dc_text_extractor')

@@ -17,10 +17,14 @@ module DC
         FileUtils.mkdir_p(AssetStore.asset_root) unless File.exists?(AssetStore.asset_root)
       end
       
-      def save(document, assets)
-        FileUtils.mkdir_p(local(document.path)) unless File.exists?(local(document.path))
+      def save_files(document, assets)
+        ensure_document_directory(document)
         FileUtils.cp(assets[:pdf], local(document.pdf_path))
         FileUtils.cp(assets[:thumbnail], local(document.thumbnail_path))
+      end
+      
+      def save_full_text(document)
+        ensure_document_directory(document)
         File.open(local(document.full_text_path), 'w+') {|f| f.write(document.text) }
       end
       
@@ -43,6 +47,10 @@ module DC
       
       
       protected
+      
+      def ensure_document_directory(document)
+        FileUtils.mkdir_p(local(document.path)) unless File.exists?(local(document.path))
+      end
       
       def local(path)
         File.join(AssetStore.asset_root, path)

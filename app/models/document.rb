@@ -23,6 +23,12 @@ class Document < ActiveRecord::Base
     query.run(options)
   end
   
+  # Produce the full text of the document by combining the text of each of
+  # the pages. Used at initial import.
+  def combined_page_text
+    self.pages.all(:select => [:text]).map(&:text).join('')
+  end
+  
   # Ex: docs/1011
   def path
     File.join('docs', id.to_s)

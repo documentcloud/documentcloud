@@ -23,7 +23,13 @@ class ImportController < ApplicationController
   end
   
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.
+  # If the document failed to import, we remove it.
   def cloud_crowd
+    job = JSON.parse(params[:job])
+    if job['status'] == 'failed'
+      broken_doc = Document.find_by_id(job['outputs'].first)
+      broken_doc.destroy if broken_doc
+    end
     render :text => '201 Created', :status => 201
   end
   

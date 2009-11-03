@@ -19,9 +19,12 @@ module DC
         @key, @secret = SECRETS['aws_access_key'], SECRETS['aws_secret_key']
       end
       
-      def save(document, assets)
+      def save_files(document, assets)
         save_file(assets[:pdf], document.pdf_path)
         save_file(assets[:thumbnail], document.thumbnail_path)
+      end
+      
+      def save_full_text(document)
         save_file(document.text, document.full_text_path, false)
       end
       

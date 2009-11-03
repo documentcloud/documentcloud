@@ -12,6 +12,8 @@ class Page < ActiveRecord::Base
   
   delegate :pages_path, :to => :document
   
+  default_scope :order => 'page_number'
+  
   # Ex: docs/1011/pages/21_large.gif
   def image_path(size)
     File.join(document.pages_path, "#{document.slug}-p#{page_number}-#{size}.gif")
