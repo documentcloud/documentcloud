@@ -1,8 +1,6 @@
 defaults: &defaults
   cloud_crowd_server: http://localhost:9173
   server_root:        http://localhost:3000
-  entry_store:        127.0.0.1:70007
-  metadata_store:     127.0.0.1:80008
   
 development:
   <<: *defaults
@@ -11,8 +9,6 @@ staging:
   <<: *defaults
   cloud_crowd_server: http://staging.dcloud.org:8080
   server_root:        http://staging.dcloud.org
-  entry_store:        staging.dcloud.org:70007
-  metadata_store:     staging.dcloud.org:80008
   
 test:
   <<: *defaults

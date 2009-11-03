@@ -3,17 +3,19 @@ module DC
     
     class CloudCrowdImporter
       
-      def import(urls, opts={})
+      DEFAULT_OPTIONS = {
+        'organization_id' => 0, 
+        'account_id'      => 0, 
+        'source'          => 'Unknown',
+        'access'          => DC::Access::PUBLIC
+      }
+      
+      def import(urls, options={})
         RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-            'action'  => 'document_import',
-            'inputs'  => urls,
-            'options' => {
-              'organization_id' => 0, 
-              'account_id'      => 0, 
-              'source'          => 'The New York Times', # FIXME FIXME
-              'access'          => DC::Access::PUBLIC
-            }.merge(opts),
-            'callback_url' => "#{DC_CONFIG['server_root']}/import/cloud_crowd"
+          'action'  => 'document_import',
+          'inputs'  => urls,
+          'options' => DEFAULT_OPTIONS.merge(options),
+          'callback_url' => "#{DC_CONFIG['server_root']}/import/cloud_crowd"
         }.to_json})
       end
       

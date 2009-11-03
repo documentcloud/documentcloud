@@ -9,14 +9,16 @@ class ImportController < ApplicationController
     save_dir = "#{RAILS_ROOT}/public/docs"
     Dir.mkdir(save_dir) unless File.exists?(save_dir)
     save_path = pdf.original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
-    FileUtils.cp(pdf.path, File.join(save_dir, save_path))
+    local_path = File.join(save_dir, save_path)
+    FileUtils.cp(pdf.path, local_path)
     urls = ["#{DC_CONFIG['server_root']}/docs/#{save_path}"]
     options = {
-      'title' => params[:title], 
-      'source' => params[:source],
+      'title'           => params[:title], 
+      'source'          => params[:source],
       'organization_id' => current_organization.id,
-      'account_id' => current_account.id,
-      'access' => params[:access].to_i
+      'account_id'      => current_account.id,
+      'access'          => params[:access].to_i,
+      'original_pdf'    => local_path
     }
     DC::Import::CloudCrowdImporter.new.import(urls, options)
     redirect_to DC_CONFIG['cloud_crowd_server']
@@ -26,7 +28,11 @@ class ImportController < ApplicationController
   # If the document failed to import, we remove it.
   def cloud_crowd
     job = JSON.parse(params[:job])
-    if job['status'] == 'failed'
+    if job['status'] == 'succeeded'
+      doc = job['options']['original_pdf']
+      FileUtils.rm(doc) if File.exists?(doc) && doc.match(/\.pdf\Z/)
+    else
+      logger.warn("Document import failed: " + job.inspect)
       broken_doc = Document.find_by_id(job['outputs'].first)
       broken_doc.destroy if broken_doc
     end
