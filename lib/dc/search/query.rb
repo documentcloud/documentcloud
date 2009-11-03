@@ -11,16 +11,17 @@ module DC
       # Queries are created by the Search::Parser, which sets them up with the
       # appropriate attributes.
       def initialize(opts={})
-        @text               = opts[:text]
-        @page               = opts[:page]
-        @fields             = opts[:fields] || []
-        @labels             = opts[:labels] || []
-        @attributes         = opts[:attributes] || []
-        @from, @to, @total  = nil, nil, nil
-        @conditions         = nil
-        @sql                = []
-        @interpolations     = []
-        @joins              = []
+        @text                   = opts[:text]
+        @page                   = opts[:page]
+        @fields                 = opts[:fields] || []
+        @labels                 = opts[:labels] || []
+        @attributes             = opts[:attributes] || []
+        @from, @to, @total      = nil, nil, nil
+        @account, @organization = nil, nil
+        @conditions             = nil
+        @sql                    = []
+        @interpolations         = []
+        @joins                  = []
       end
       
       # Series of attribute checks to determine the type of query.
@@ -50,7 +51,8 @@ module DC
       # Runs (at most) two queries -- one to count the total number of results
       # that match the search, and one that retrieves the documents for the
       # current page.
-      def run
+      def run(options={})
+        @account, @organization = options[:account], options[:organization]
         generate_sql
         options = {:conditions => @conditions, :joins => @joins}
         if @page
@@ -99,7 +101,8 @@ module DC
       
       # Generate the SQL to restrict the search to labeled documents.
       def generate_labels_sql
-        labels = @current_account.labels.all(:conditions => {:title => @labels})
+        return unless @account
+        labels = @account.labels.all(:conditions => {:title => @labels})
         doc_ids = labels.map(&:split_document_ids).flatten.uniq        
         @sql << "documents.id in (?)"
         @interpolations << doc_ids

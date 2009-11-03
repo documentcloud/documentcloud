@@ -20,7 +20,7 @@ class Document < ActiveRecord::Base
   # Main document search method -- handles queries.
   def self.search(query, options={})
     query = DC::Search::Parser.new.parse(query) if query.is_a? String
-    query.run
+    query.run(options)
   end
   
   # Ex: docs/1011
