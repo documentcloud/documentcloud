@@ -1,14 +1,9 @@
 TODO:
 
-  * We need an upload progress widget.
+  * Replace document IDs in URLs with title-based slugs.
 
   * Integrate the new document format / DocViewer. Start using the document 
-    package format for imports.
-    
-  * Think about modeling journalist-provided attributes in the same
-    way as the rest of the metadata we're gathering. Our metadata system
-    should be able to handle things like title, author, news_org,
-    published_date, provenance, etc.
+    package format for imports. Replace raw PDF link with a DocumentViewer.
 
   * Think about adding search history.
 
@@ -22,14 +17,10 @@ TODO:
     
   * Build out surrounding start page blips... About Us, How to Join, 
     What is This?
-        
-  * Replace raw PDF link with a DocumentViewer.
-      
+              
   * Figure out the access control policies for all assets on S3. Public ones we
     can load directly from the client, probably.
-        
-  * Replace document IDs in URLs with title-based slugs.
-    
+            
   * Start work on the Public API.
   
   * Swap out our single Thin instance on staging for a Passenger setup --
@@ -46,6 +37,13 @@ TODO:
   
 
 DONE:
+
+  * Think about modeling journalist-provided attributes in the same
+    way as the rest of the metadata we're gathering. Our metadata system
+    should be able to handle things like title, author, news_org,
+    published_date, provenance, etc. (Nope -- then we'd have to join.)
+
+  * We need an upload progress widget.
 
   * Begin storing the complete image and page assets.
 
