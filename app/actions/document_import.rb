@@ -27,7 +27,7 @@ class DocumentImport < CloudCrowd::Action
         :source          => options['source'] || Faker::Company.name,
         :organization_id => options['organization_id'],
         :account_id      => options['account_id'],
-        :access          => options['access'] || DC::Access::PUBLIC,
+        :access          => DC::Access::PENDING,
         :page_count      => 0
       })
       DC::Store::AssetStore.new.save_files(doc, :pdf => input_path, :thumbnail => @thumb_path)
@@ -54,6 +54,7 @@ class DocumentImport < CloudCrowd::Action
   def merge
     doc = Document.find(input.first)
     text = doc.combined_page_text
+    doc.access = options['access'] || DC::Access::PUBLIC
     doc.full_text = FullText.new(:text => text, :document => doc)
     doc.summary = text[0...255]
     calais_response = fetch_rdf_from_calais(text)

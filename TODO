@@ -2,9 +2,8 @@ TODO:
 
   * We need an upload progress widget.
 
-  * Begin storing the complete image and page assets. -- Integrate the new
-    document format / DocViewer. Start using the document package format for
-    imports.
+  * Integrate the new document format / DocViewer. Start using the document 
+    package format for imports.
     
   * Think about modeling journalist-provided attributes in the same
     way as the rest of the metadata we're gathering. Our metadata system
@@ -47,6 +46,8 @@ TODO:
   
 
 DONE:
+
+  * Begin storing the complete image and page assets.
 
   * Think about caching all metadata for a document in a single JSON file on S3.
     (Thought about it -- now that they're in the same DB, there's not as much 
