@@ -13,7 +13,7 @@
 
 
 require 'rubygems'
-require 'cloud-crowd'
+require '../cloud_crowd/lib/cloud-crowd'
 
 CloudCrowd.configure(File.dirname(__FILE__) + '/config.yml')
 CloudCrowd.configure_database(File.dirname(__FILE__) + '/database.yml')

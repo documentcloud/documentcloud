@@ -22,18 +22,9 @@ class ImportController < ApplicationController
     redirect_to DC_CONFIG['cloud_crowd_server']
   end
   
+  # Returning a "201 Created" ack tells CloudCrowd to clean up the job.
   def cloud_crowd
-    job = JSON.parse(params[:job])
-    raise "CloudCrowd processing failed" if job['status'] != 'succeeded'
-    # Finishing the job later so that we don't deadlock in development.
-    Thread.new do
-      logger.info "Imported: #{job['outputs'].join(', ')}"
-      full_text_store = DC::Store::FullTextStore.new
-      full_text_store.index
-      full_text_store.merge
-      RestClient.delete DC_CONFIG['cloud_crowd_server'] + "/jobs/#{job['id']}"
-    end
-    render :nothing => true
+    render :text => '201 Created', :status => 201
   end
   
   

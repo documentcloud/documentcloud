@@ -12,7 +12,7 @@ dc.model.Metadatum = dc.Model.extend({
     country : 'Countries', email_address : 'Email Addresses', facility : 'Places', 
     holiday : "Holidays", industry_term : "Terms", natural_feature : "Landmarks", 
     organization : "Organizations", person : "People", position : "Positions", 
-    product : "Products", province_or_state : "States", published_medium : "Newspapers", 
+    product : "Products", province_or_state : "States", published_medium : "Publications", 
     region : "Regions", technology : "Technologies", url : "Web Pages"
   },
   

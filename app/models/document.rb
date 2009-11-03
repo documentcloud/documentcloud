@@ -53,21 +53,15 @@ class Document < ActiveRecord::Base
   end
   
   def pdf_url
-    !public? || Rails.development? ? 
-      File.join(DC_CONFIG['server_root'], 'documents', "#{id}.pdf") :
-      File.join(DC::Store::AssetStore.asset_root, pdf_path)              
+    File.join(DC::Store::AssetStore.web_root, pdf_path)              
   end
   
   def thumbnail_url
-    !public? || Rails.development? ? 
-      File.join(DC_CONFIG['server_root'], 'documents/thumbnail', "#{id}.jpg") :
-      File.join(DC::Store::AssetStore.asset_root, thumbnail_path)
+    File.join(DC::Store::AssetStore.web_root, thumbnail_path)
   end
   
   def full_text_url
-    !public? || Rails.development? ? 
-      File.join(DC_CONFIG['server_root'], 'documents', "#{id}.txt") :
-      File.join(DC::Store::AssetStore.asset_root, full_text_path)
+    File.join(DC::Store::AssetStore.web_root, full_text_path)
   end
   
   def asset_store

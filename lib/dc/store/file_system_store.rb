@@ -8,6 +8,9 @@ module DC
         def asset_root
           "#{RAILS_ROOT}/public/asset_store"
         end
+        def web_root
+          File.join(DC_CONFIG['server_root'], 'asset_store')
+        end
       end
       
       def initialize
@@ -24,6 +27,13 @@ module DC
       def destroy(document)
         doc_path = local(document.path)
         FileUtils.rm_r(doc_path) if File.exists?(doc_path)
+      end
+      
+      def save_page(page, assets)
+        FileUtils.mkdir_p(local(page.pages_path)) unless File.exists?(local(page.pages_path))
+        FileUtils.cp(assets[:normal_image], local(page.image_path('normal')))
+        FileUtils.cp(assets[:large_image], local(page.image_path('large')))
+        File.open(local(page.text_path), 'w+') {|f| f.write(page.text) }
       end
       
       # Delete the assets store entirely.

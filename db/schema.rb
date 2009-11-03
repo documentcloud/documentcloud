@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer   "organization_id", :null => false
     t.integer   "account_id",      :null => false
     t.integer   "access",          :null => false
-    t.integer   "page_count",      :null => false
+    t.integer   "page_count",      :null => false, :default => 0
     t.string    "title",           :null => false
     t.string    "slug",            :null => false
     t.string    "source"

@@ -10,6 +10,9 @@ module DC
         def asset_root
           "http://s3.amazonaws.com/#{BUCKET_NAME}"
         end
+        def web_root
+          asset_root
+        end
       end
       
       def initialize
@@ -24,6 +27,12 @@ module DC
       
       def destroy(document)
         bucket.delete_folder(document.path)
+      end
+      
+      def save_page(page, assets)
+        save_file(assets[:normal_image], page.image_path('normal'))
+        save_file(assets[:large_image], page.image_path('large'))
+        save_file(page.text, page.text_path, false)
       end
       
       # Delete the assets store entirely.
