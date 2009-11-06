@@ -55,7 +55,7 @@ class Account < ActiveRecord::Base
   end
   
   # Has this account been assigned, but never logged into, with no password set?
-  def pending
+  def pending?
     !hashed_password
   end
   
@@ -74,11 +74,9 @@ class Account < ActiveRecord::Base
   # The JSON representation of an account avoids sending down the password,
   # among other things, and includes extra attributes.
   def to_json(options = nil)
-    options ||= {
-      :only     => [:id, :first_name, :last_name, :email, :organization_id], 
-      :methods  => [:hashed_email, :organization_name, :pending]
-    }
-    super(options)
+    {'id' => id, 'first_name' => first_name, 'last_name' => last_name,
+     'email' => email, 'hashed_email' => hashed_email, 'pending' => pending?,
+     'organization_id' => organization_id, 'organization_name' => organization_name}.to_json
   end
   
 end

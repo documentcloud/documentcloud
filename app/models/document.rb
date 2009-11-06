@@ -83,7 +83,20 @@ class Document < ActiveRecord::Base
   end
   
   def to_json(options={})
-    super(options.merge({:methods => [:pdf_url, :thumbnail_url, :full_text_url]}))
+    {
+      'id'              => id,
+      'organization_id' => organization_id,
+      'account_id'      => account_id,
+      'access'          => access,
+      'page_count'      => page_count,
+      'title'           => title,
+      'slug'            => slug,
+      'source'          => source,
+      'summary'         => summary,
+      'pdf_url'         => pdf_url,
+      'thumbnail_url'   => thumbnail_url,
+      'full_text_url'   => full_text_url
+    }.to_json
   end
   
   

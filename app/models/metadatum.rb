@@ -31,7 +31,12 @@ class Metadatum < ActiveRecord::Base
   end
   
   def to_json(options=nil)
-    super(options.merge({:only => [:id, :document_id, :kind, :value, :relevance]}))
+    {'id'           => id, 
+     'document_id'  => document_id, 
+     'kind'         => kind, 
+     'value'        => value, 
+     'relevance'    => relevance 
+    }.to_json
   end
   
 end

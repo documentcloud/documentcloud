@@ -13,6 +13,9 @@ class Label < ActiveRecord::Base
     document_ids.nil? ? [] : document_ids.split(',').map(&:to_i).uniq
   end
   
+  def to_json(opts={})
+    attributes.to_json
+  end
   
   private
   
