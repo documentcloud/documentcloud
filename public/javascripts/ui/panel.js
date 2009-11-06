@@ -4,7 +4,7 @@ dc.ui.Panel = dc.View.extend({
   className : 'panel_container',
   
   render : function() {
-    $(this.el).html(dc.templates.WORKSPACE_PANEL({}));
+    $(this.el).html(JST.workspace_panel({}));
     this.content = $('.panel_content', this.el);
     return this;
   },

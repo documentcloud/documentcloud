@@ -32,6 +32,9 @@ ActionController::Routing::Routes.draw do |map|
   # Labels.
   map.resources :labels, :member => {:documents => :get}
   
+  # Asset packages.
+  Jammit::Routes.draw(map)
+  
   # Default routes:
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

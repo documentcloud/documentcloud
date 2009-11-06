@@ -18,7 +18,7 @@ dc.ui.DocumentTile = dc.View.extend({
   },
   
   render : function() {
-    $(this.el).html(dc.templates.DOCUMENT_TILE({'document' : this.model}));
+    $(this.el).html(JST.document_tile({'document' : this.model}));
     this.setCallbacks();
     this.setMode('not', 'selected');
     return this;

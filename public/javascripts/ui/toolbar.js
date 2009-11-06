@@ -10,7 +10,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
   
   render : function() {
-    $(this.el).html(dc.templates.WORKSPACE_TOOLBAR({}));
+    $(this.el).html(JST.workspace_toolbar({}));
     $(this.el).prepend(this.labelMenu.render().el);
     return this;
   },

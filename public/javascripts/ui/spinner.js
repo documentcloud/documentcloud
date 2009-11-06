@@ -5,7 +5,7 @@ dc.ui.spinner = {
   show : function(message) {
     message = message || "Loading";
     if (!this.el) {
-      $(document.body).append(dc.templates.COMMON_SPINNER({}));
+      $(document.body).append(JST.common_spinner({}));
       this.el = $('#spinner');
       this.messageContainer = $('#spinner_text', this.el);
     }

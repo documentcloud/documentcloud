@@ -17,7 +17,7 @@ dc.ui.AccountList = dc.View.extend({
   ensureRendered : function() {
     if (this.rendered) return;
     this.rendered = true;
-    $(this.el).append(dc.templates.ACCOUNT_LIST({}));
+    $(this.el).append(JST.account_list({}));
     this.list = $('#account_list_content', this.el);
     this.setCallbacks();
     Accounts.populate({success : this.renderAccounts});

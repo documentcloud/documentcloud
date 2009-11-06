@@ -23,7 +23,7 @@ dc.ui.AccountView = dc.View.extend({
     this.className  = 'account_view ' + this.kind;
     this.base();
     this.account    = account;
-    this.template   = dc.templates['ACCOUNT_' + this.kind.toUpperCase()];
+    this.template   = JST['account_' + this.kind];
     _.bindAll('_onSuccess', '_onError', this);
     this.account.bind(dc.Model.CHANGED, _.bind(this.render, this, 'display'));
   },

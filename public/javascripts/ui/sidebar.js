@@ -9,7 +9,7 @@ dc.ui.Sidebar = dc.View.extend({
   // },
   
   render : function() {
-    $(this.el).html(dc.templates.WORKSPACE_SIDEBAR({}));
+    $(this.el).html(JST.workspace_sidebar({}));
     this.content = $('.sidebar_content', this.el);
     return this;
   },

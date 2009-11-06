@@ -4,9 +4,9 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <title>DocumentCloud</title>
-  <%= stylesheet_asset_tag '/stylesheets/pages/empty.css' %>
-  <%= javascript_asset_tag %>
-  <%= jst_asset_tag %>
+  <%= include_stylesheets :app, :empty %>
+  <%= include_javascripts :workspace %>
+  <%= include_jst :complete %>
 </head>
 <body class="empty">
   

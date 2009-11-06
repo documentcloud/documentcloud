@@ -41,6 +41,7 @@ Rails::Initializer.run do |config|
   config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
   config.gem 'right_aws',             :version => '>= 1.10.0'
   config.gem 'postgres',              :version => '>= 0.7.9.2008.01.28'
+  config.gem 'jammit'
   
   if Rails.test?
     config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'

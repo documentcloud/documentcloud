@@ -13,7 +13,7 @@ dc.ui.SavedSearch = dc.View.extend({
   },
   
   render : function() {
-    $(this.el).html(dc.templates.ORGANIZER_SEARCH(this.model.attributes()));
+    $(this.el).html(JST.organizer_search(this.model.attributes()));
     this.el.id = "saved_search_" + this.model.cid;
     this.setCallbacks();
     return this;

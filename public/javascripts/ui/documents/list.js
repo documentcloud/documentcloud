@@ -17,7 +17,7 @@ dc.ui.DocumentList = dc.View.extend({
   },
   
   render : function() {
-    $(this.el).html(dc.templates.DOCUMENT_LIST({}));
+    $(this.el).html(JST.document_list({}));
     this.setCallbacks();
     return this;
   },

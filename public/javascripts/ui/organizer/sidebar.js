@@ -13,7 +13,7 @@ dc.ui.OrganizerSidebar = dc.View.extend({
   },
   
   render : function() {
-    $(this.el).append(dc.templates.ORGANIZER_SIDEBAR({}));
+    $(this.el).append(JST.organizer_sidebar({}));
     this.labelInputEl = $('#label_input', this.el);
     this.setCallbacks();
     return this;

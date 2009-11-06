@@ -14,9 +14,9 @@ dc.ui.DocumentUpload = dc.View.extend({
   
   render : function() {
     var params = {organization : Accounts.current().get('organization_name')};
-    $(this.el).html(dc.templates.DOCUMENT_UPLOAD_FORM(params));
+    $(this.el).html(JST.document_upload_form(params));
     $('#document_upload_container').html(this.el);
-    $('#upload_progress_container').html(dc.templates.DOCUMENT_PROGRESS_CONTAINER({}));
+    $('#upload_progress_container').html(JST.document_progress_container({}));
     this.setCallbacks();
     this._observeUploadProgress();
     return this;
@@ -33,7 +33,7 @@ dc.ui.DocumentUpload = dc.View.extend({
   },
   
   _onUploadStarted : function(e, model) {
-    $('#upload_progress_inner').append(dc.templates.DOCUMENT_PROGRESS(model.attributes()));
+    $('#upload_progress_inner').append(JST.document_progress(model.attributes()));
     this._updateProgress(e, model);
   },
   
