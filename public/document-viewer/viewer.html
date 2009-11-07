@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title><%= @document.title %></title>
+
+  <%= include_stylesheets :viewer %>
+  <%= include_javascripts :viewer %>
+  <%= include_jst :viewer %>
+  
+</head>
+<body>
+</body>
+<script type="text/javascript">
+  DV.load(<%= @document.canonical %>);
+</script>
+</html>

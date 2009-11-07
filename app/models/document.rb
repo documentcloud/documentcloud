@@ -54,6 +54,14 @@ class Document < ActiveRecord::Base
     File.join(path, 'pages')
   end
   
+  def page_image_template
+    File.join(pages_path, "#{slug}-p{page}-{size}.gif")
+  end
+  
+  def page_text_template
+    File.join(pages_path, "#{slug}-p{page}.txt")
+  end
+  
   def public?
     self.access == DC::Access::PUBLIC
   end
@@ -68,6 +76,14 @@ class Document < ActiveRecord::Base
   
   def full_text_url
     File.join(DC::Store::AssetStore.web_root, full_text_path)
+  end
+  
+  def page_image_url_template
+    File.join(DC::Store::AssetStore.web_root, page_image_template)
+  end
+  
+  def page_text_url_template
+    File.join(DC::Store::AssetStore.web_root, page_text_template)
   end
   
   def asset_store
@@ -96,6 +112,21 @@ class Document < ActiveRecord::Base
       'pdf_url'         => pdf_url,
       'thumbnail_url'   => thumbnail_url,
       'full_text_url'   => full_text_url
+    }.to_json
+  end
+  
+  def canonical
+    doc = {
+      'id'            => slug,
+      'title'         => title,
+      'pages'         => page_count,
+      'resources'     => {
+        'page'        => {
+          'sizes'     => ['normal', 'large'],
+          'image'     => page_image_url_template,
+          'text'      => page_text_url_template
+        }
+      }
     }.to_json
   end
   
