@@ -78,6 +78,14 @@ class Document < ActiveRecord::Base
     File.join(DC::Store::AssetStore.web_root, full_text_path)
   end
   
+  def document_viewer_url
+    "#{DC_CONFIG['server_root']}/documents/#{id}-#{slug}.html"
+  end
+  
+  def search_url
+    "/documents/#{id}/search.json"
+  end
+  
   def page_image_url_template
     File.join(DC::Store::AssetStore.web_root, page_image_template)
   end
@@ -100,18 +108,19 @@ class Document < ActiveRecord::Base
   
   def to_json(options={})
     {
-      'id'              => id,
-      'organization_id' => organization_id,
-      'account_id'      => account_id,
-      'access'          => access,
-      'page_count'      => page_count,
-      'title'           => title,
-      'slug'            => slug,
-      'source'          => source,
-      'summary'         => summary,
-      'pdf_url'         => pdf_url,
-      'thumbnail_url'   => thumbnail_url,
-      'full_text_url'   => full_text_url
+      'id'                  => id,
+      'organization_id'     => organization_id,
+      'account_id'          => account_id,
+      'access'              => access,
+      'page_count'          => page_count,
+      'title'               => title,
+      'slug'                => slug,
+      'source'              => source,
+      'summary'             => summary,
+      'pdf_url'             => pdf_url,
+      'thumbnail_url'       => thumbnail_url,
+      'full_text_url'       => full_text_url,
+      'document_viewer_url' => document_viewer_url
     }.to_json
   end
   
@@ -121,6 +130,7 @@ class Document < ActiveRecord::Base
       'title'         => title,
       'pages'         => page_count,
       'resources'     => {
+        'search'      => search_url,
         'page'        => {
           'sizes'     => ['normal', 'large'],
           'image'     => page_image_url_template,

@@ -18,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
   # Document representations and sub-resources.
   map.resources :documents, 
                 :collection => {:metadata => :get},
-                :member => {:thumbnail => :get}
+                :member     => {:thumbnail => :get, :search => :get}
   
   # Accounts and account management.       
   map.resources :accounts

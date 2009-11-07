@@ -2,7 +2,7 @@ class DocumentsController < ApplicationController
   layout nil
   
   def show
-    current_document(true)
+    @current_document = Document.find_by_id(params[:id].to_i)
     respond_to do |format|
       format.pdf  { send_pdf }
       format.text { send_text }
@@ -24,6 +24,12 @@ class DocumentsController < ApplicationController
     doc = current_document(true)
     secured_url = File.join(DC::Store::AssetStore.asset_root, doc.thumbnail_path)
     send_file(secured_url, :disposition => 'inline', :type => 'image/jpeg')
+  end
+  
+  def search
+    doc          = current_document(true)
+    page_numbers = doc.pages.search_text(params[:query]).map(&:page_number)
+    render :json => {'query' => params[:query], 'results' => page_numbers}
   end
 
   
