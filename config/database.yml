@@ -6,7 +6,7 @@ defaults: &defaults
   username: REDACTED
   password: REDACTED
   allow_concurrency: true
-  
+
 development:
   <<: *defaults
   database: dcloud_development
