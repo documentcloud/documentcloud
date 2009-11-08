@@ -6,7 +6,8 @@ RAILS_ENV = ENV['RAILS_ENV'] = ENV['RACK_ENV']
 if CloudCrowd.node?
   require 'rubygems'
   require 'activerecord'
-  ActiveRecord::Base.logger = Logger.new(File.open("log/node.log"))
+  Object.remove_const "RAILS_DEFAULT_LOGGER"
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
   require 'config/environment'
 end
 
