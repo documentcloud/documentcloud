@@ -6,7 +6,7 @@ RAILS_ENV = ENV['RAILS_ENV'] = ENV['RACK_ENV']
 if CloudCrowd.node?
   require 'rubygems'
   require 'activerecord'
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
+  ActiveRecord::Base.logger = Logger.new(File.open("log/node.log"))
   require 'config/environment'
 end
 
@@ -14,7 +14,7 @@ end
 # from a PDF document. The calling DocumentCloud instance is responsible for
 # downloading and ingesting these resources.
 class DocumentImport < CloudCrowd::Action
-  
+
   def split
     log_exceptions do
       ActiveRecord::Base.establish_connection
@@ -35,7 +35,7 @@ class DocumentImport < CloudCrowd::Action
       split_into_pages(doc)
     end
   end
-  
+
   # Process handles an individual batch of pages.
   def process
     log_exceptions do
@@ -47,7 +47,7 @@ class DocumentImport < CloudCrowd::Action
       input['document_id']
     end
   end
-  
+
   # After all of the document's pages have been imported, we combine their text
   # to produce the document's full_text, and send it to Calais for entity
   # extraction.
@@ -65,9 +65,9 @@ class DocumentImport < CloudCrowd::Action
     {'document_id' => doc.id, 'original_pdf' => options['original_pdf']}
   end
 
-  
+
   private
-  
+
   # Split the pdf up into individual pages, and archive them in batches.
   def split_into_pages(document)
     wrangler = DC::Import::PDFWrangler.new
@@ -75,7 +75,7 @@ class DocumentImport < CloudCrowd::Action
     tars = wrangler.archive(pdfs, options['batch_size'])
     tars.map {|tar| {'document_id' => document.id, 'batch_url' => save(tar)} }
   end
-  
+
   # Import and save a single page of a document, including text and images.
   def import_page(page_pdf)
     page_number = page_pdf.match(/(\d+)\.pdf$/)[1].to_i
@@ -85,7 +85,7 @@ class DocumentImport < CloudCrowd::Action
     DC::Store::AssetStore.new.save_page(page, :normal_image => @normal_page_image, :large_image => @large_page_image)
     page.id
   end
-  
+
   # TODO: clean up the errors that we want to retry only -- add calais exception
   # classes to the gem.
   def fetch_rdf_from_calais(text)
@@ -100,30 +100,30 @@ class DocumentImport < CloudCrowd::Action
       retry
     end
   end
-  
+
   # Extract the full text of a PDF (or sub-page), using pdftotext or OCR.
   def extract_full_text(path)
     @text = DC::Import::TextExtractor.new(path).get_text
   end
-  
+
   # Extract the title of the PDF.
   def extract_title(path)
     @title = DC::Import::TextExtractor.new(path).get_title || file_name
   end
-  
+
   # Extract all the requisite thumbnails for the Document from the PDF.
   def generate_thumbnails(path)
     image_ex = DC::Import::ImageExtractor.new(input_path).get_thumbnails
     @thumb_path = image_ex.thumbnail_path
   end
-  
+
   # Extract all the sized page images for a single page of a PDF.
   def generate_page_images(path)
     image_ex = DC::Import::ImageExtractor.new(path).get_page_images
     @normal_page_image = image_ex.normal_page_image
     @large_page_image = image_ex.large_page_image
   end
-  
+
   # Run a block, printing out full exceptions before raising them.
   def log_exceptions
     begin
@@ -135,5 +135,5 @@ class DocumentImport < CloudCrowd::Action
       raise e
     end
   end
-  
+
 end
