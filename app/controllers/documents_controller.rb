@@ -28,7 +28,7 @@ class DocumentsController < ApplicationController
 
   def page_text
     doc = current_document(true)
-    page_number = params[:page_name].match(/(\d+)\.txt/)[1].to_i
+    page_number = params[:page_name].match(/(\d+)\Z/)[1].to_i
     render :text => doc.pages.find_by_page_number(page_number).text
   end
 
