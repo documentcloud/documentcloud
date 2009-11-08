@@ -4,10 +4,9 @@ RAILS_ENV = ENV['RAILS_ENV'] = ENV['RACK_ENV']
 
 # Load the DocumentCloud environment if we're in a Node context.
 if CloudCrowd.node?
+  Object.const_set "RAILS_DEFAULT_LOGGER", Logger.new(STDOUT)
   require 'rubygems'
   require 'activerecord'
-  Object.remove_const "RAILS_DEFAULT_LOGGER"
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
   require 'config/environment'
 end
 
