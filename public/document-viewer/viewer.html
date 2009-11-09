@@ -10,8 +10,12 @@
   <%= include_jst :viewer %>
   
 </head>
-<body>
-</body>
+
+<!--[if lte IE 6]><body class="DV-ie DV-ie6"><![endif]-->
+<!--[if IE 7]><body class="DV-ie DV-ie7"><![endif]-->
+<!--[if IE 8]><body class="DV-ie DV-ie8"><![endif]-->
+<!--[if !IE]><!--><body><!-- <![endif]-->
+
 <script type="text/javascript">
   DV.load(<%= @document.canonical %>);
 </script>
