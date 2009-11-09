@@ -9,23 +9,24 @@ if (!window.console) {
 }
 
 $.extend({
-  
+
   // Add a debug object to JQuery to contain all debugging methods.
   debug : {
-    
+
     // Look at all the elements in the document to alert you of any duplicate
     // element ids that might have slipped in by mistake.
     checkForDuplicateIds : function() {
       var dups = {};
-      var ids = $('*').map(function(){ return this.id; });
-      $.each(ids, function() {
+      var everything = $('*');
+      var ids = everything.map(function(){ return this.id; });
+      $.each(ids, function(i) {
         if (this == '') return;
         dups[this] = dups[this] || 0;
         dups[this] += 1;
-        if (dups[this] >= 2) console.log('duplicate id found: ' + this);
+        if (dups[this] >= 2) console.log('duplicate id found: ' + this, everything[i]);
       });
     },
-    
+
     // Reload all of the CSS in each frame.
     reloadCSS : function(win) {
       win = win || window;
@@ -40,7 +41,7 @@ $.extend({
       });
       $.each(win.frames, function() { $.debug.reloadCSS(this); });
     }
-    
+
   }
 });
 

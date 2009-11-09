@@ -1,6 +1,6 @@
 dc.ui.Visualizer = dc.View.extend({
 
-  id : 'organizer',
+  id : 'visualizer',
 
   callbacks : [],
 
