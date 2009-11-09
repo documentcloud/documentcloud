@@ -1,3 +1,5 @@
+# CRITICAL POSTGRES COST ADJUSTMENT: alter function to_tsvector(regconfig,text) cost 10000;
+
 include DC::Store::MigrationHelpers
 
 ActiveRecord::Schema.define(:version => 1) do
@@ -18,7 +20,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string "key"
     t.string "value"
   end
-  
+
   create_table "documents", :force => true do |t|
     t.integer   "organization_id", :null => false
     t.integer   "account_id",      :null => false
@@ -33,7 +35,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.date      "publication_date"
     t.timestamps
   end
-  
+
   create_table "full_text", :force => true do |t|
     t.integer   "organization_id", :null => false
     t.integer   "account_id",      :null => false
@@ -44,7 +46,7 @@ ActiveRecord::Schema.define(:version => 1) do
 
   add_index "full_text", ["document_id"], :name => "index_full_text_on_document_id", :unique => true
   execute "create index full_text_fti on full_text using gin(to_tsvector('english', text));"
-  
+
   create_table "pages", :force => true do |t|
     t.integer   "organization_id", :null => false
     t.integer   "account_id",      :null => false
@@ -53,12 +55,12 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer   "page_number",  :null => false
     t.text      "text",         :null => false
   end
-  
+
   add_index "pages", ["document_id", "page_number"], :name => "index_pages_on_document_id_and_page_number", :unique => true
   execute "create index page_text_fti on full_text using gin(to_tsvector('english', text));"
-  
+
   # TODO: Add document indexes.
-  
+
   create_table "metadata", :force => true do |t|
     t.integer   "organization_id",  :null => false
     t.integer   "account_id",       :null => false
@@ -67,19 +69,19 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string    "kind",             :null => false, :limit => 40
     t.string    "value",            :null => false
     t.float     "relevance",        :null => false, :default => 0.0
-    t.string    "calais_id",                        :limit => 40 
+    t.string    "calais_id",                        :limit => 40
     t.text      "occurrences"
   end
-  
+
   execute "create index value_fti on metadata using gin(to_tsvector('english', value));"
-  
+
   # TODO: Add metadata indexes.
-  
+
   create_table "processing_jobs", :force => true do |t|
     t.integer "account_id",     :null => false
     t.integer "cloud_crowd_id", :null => false
   end
-  
+
   add_index "processing_jobs", ["account_id"], :name => "index_processing_jobs_on_account_id"
 
   create_table "labels", :force => true do |t|
