@@ -2,9 +2,6 @@ TODO:
 
   * Replace document IDs in URLs with title-based slugs.
 
-  * Integrate the new document format / DocViewer. Start using the document 
-    package format for imports. Replace raw PDF link with a DocumentViewer.
-
   * Think about adding search history.
 
   * Show if the currently-selected documents are tagged with the labels in
@@ -37,6 +34,9 @@ TODO:
   
 
 DONE:
+
+  * Integrate the new document format / DocViewer. Start using the document 
+    package format for imports. Replace raw PDF link with a DocumentViewer.
 
   * Think about modeling journalist-provided attributes in the same
     way as the rest of the metadata we're gathering. Our metadata system
