@@ -22,10 +22,11 @@
   position: absolute;
   margin: 0;
   width: 150px; height: 77px;
-  padding: 0 0 5px 77px;
+  padding: 5px 0 5px 77px;
   overflow: visible;
 }
   #visualizer .document_tile .title {
+    margin-top: 0;
     height: auto;
   }
   #visualizer .document_tile .source {
