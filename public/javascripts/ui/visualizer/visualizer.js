@@ -5,31 +5,51 @@ dc.ui.Visualizer = dc.View.extend({
   callbacks : [],
 
   constructor : function(options) {
-    _.bindAll('visualizeCollection', 'open', this);
+    _.bindAll('renderVisualization', 'open', this);
     this.base(options);
     dc.app.navigation.register('visualize', this.open);
-    $(window).resize(this.visualizeCollection);
+    $(window).resize(this.renderVisualization);
   },
 
   open : function() {
+    this._kindFilter = null;
+    this.gatherMetadata();
+    _.defer(this.renderVisualization);
+  },
+
+  visualize : function(kind) {
+    this._kindFilter = kind;
+    this.gatherMetadata();
+    this.renderVisualization();
+  },
+
+  gatherMetadata : function() {
     var seenKinds = {};
+    var filter = this._kindFilter;
     this.topMetadata = _(Metadata.models()).chain()
       .sortBy(function(meta){ return meta.instanceCount + meta.totalRelevance(); })
       .reverse()
       .select(function(meta){
         var kind = meta.get('kind');
-        if (_(['country', 'province_or_state', 'category']).include(kind)) return false;
-        if (seenKinds[kind]) return false;
-        return seenKinds[kind] = true;
+        if (filter) {
+          return (kind == filter);
+        } else {
+          if (_(['country', 'province_or_state', 'category']).include(kind)) return false;
+          if (seenKinds[kind]) return false;
+          return seenKinds[kind] = true;
+        }
       })
       .slice(0,7)
       .value();
-    _.defer(this.visualizeCollection);
   },
 
-  visualizeCollection : function() {
+  renderVisualization : function() {
+    if (this.topMetadata.length == 0) return;
     var el = $(this.el);
     el.html('');
+
+    var title = (this._kindFilter ? Metadata.KIND_MAP[this._kindFilter] : 'Most Relevant') + ':';
+    el.append($.el('div', {id : 'visualization_title'}, title));
 
     var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.height()});
     el.append(canvas);

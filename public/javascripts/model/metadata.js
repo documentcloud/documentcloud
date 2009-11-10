@@ -5,17 +5,6 @@
 // it has an averageRelevance() over its documents()...
 dc.model.Metadatum = dc.Model.extend({
 
-  // Mapping from our white listed metadata kinds to their display names.
-  // Keep this list in sync with the mapping in metadatum.rb, please.
-  KIND_MAP : {
-    category : "Categories", city : 'Cities', company : 'Companies', continent : 'Contintents',
-    country : 'Countries', email_address : 'Email Addresses', facility : 'Places',
-    holiday : "Holidays", industry_term : "Terms", natural_feature : "Landmarks",
-    organization : "Organizations", person : "People", position : "Positions",
-    product : "Products", province_or_state : "States", published_medium : "Publications",
-    region : "Regions", technology : "Technologies", url : "Web Pages"
-  },
-
   // Create a new metadatum from an instance(s) raw object.
   // Generally, you'll want to make 'em through Metadata.addOrCreate() instead.
   constructor : function(instances) {
@@ -66,7 +55,7 @@ dc.model.Metadatum = dc.Model.extend({
 
   // Display-ready version of the metadata kind.
   displayKind : function() {
-    return this.KIND_MAP[this.get('kind')];
+    return Metadata.KIND_MAP[this.get('kind')];
   },
 
   // Return the string that one would use to perform a fielded search for this
@@ -96,6 +85,17 @@ dc.model.Metadatum = dc.Model.extend({
 // Metadata Set
 
 dc.model.MetadataSet = dc.model.SortedSet.extend({
+
+  // Mapping from our white listed metadata kinds to their display names.
+  // Keep this list in sync with the mapping in metadatum.rb, please.
+  KIND_MAP : {
+    category : "Categories", city : 'Cities', company : 'Companies', continent : 'Contintents',
+    country : 'Countries', email_address : 'Email Addresses', facility : 'Places',
+    holiday : "Holidays", industry_term : "Terms", natural_feature : "Landmarks",
+    organization : "Organizations", person : "People", position : "Positions",
+    product : "Products", province_or_state : "States", published_medium : "Publications",
+    region : "Regions", technology : "Technologies", url : "Web Pages"
+  },
 
   // Metadata are kept sorted by totalRelevance() of each datum, across its
   // documents.

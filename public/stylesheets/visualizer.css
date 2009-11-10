@@ -40,6 +40,14 @@
     display: none;
   }
 
+#visualization_title {
+  position: absolute;
+  top: 15px; left: 15px;
+  font: bold 22px Georgia;
+  color: #002456;
+  text-shadow: 0px 1px 1px #fff;
+}
+
 #visualizer .metaviz {
   position: absolute;
   font: bold 11px Arial;
