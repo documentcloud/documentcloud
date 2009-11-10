@@ -77,8 +77,8 @@ dc.ui.Visualizer = dc.View.extend({
         ctx.lineWidth = instance.relevance * 20 + 1;
         ctx.beginPath();
         ctx.moveTo(pos.left + w2, pos.top + h2);
-        ctx.bezierCurveTo(Math.cos(position) * width * 4 + originX - w2,
-                          Math.sin(position) * height * 4 + originY - h2,
+        ctx.bezierCurveTo(Math.cos(position) * width * 2.5 + originX - w2,
+                          Math.sin(position) * height * 2.5 + originY - h2,
                           docx, docy,
                           docx, docy);
         ctx.stroke();
