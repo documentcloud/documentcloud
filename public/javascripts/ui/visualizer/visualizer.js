@@ -72,12 +72,16 @@ dc.ui.Visualizer = dc.View.extend({
   highlightDatum : function(e) {
     var ids = e.data.documentIds();
     _.each(this.docViews, function(view) {
-      $(view.el).addClass(_(ids).include(view.model.id) ? 'bolded' : 'muted');
+      if (_(ids).include(view.model.id)) {
+        $(view.el).addClass('bolded');
+      } else {
+        $(view.el).addClass('muted').animate({opacity : 0.5}, {duration : 'fast', queue : false});
+      }
     });
   },
 
   highlightOff : function() {
-    $('.document_tile', this.el).removeClass('muted').removeClass('bolded');
+    $('.document_tile', this.el).removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
   },
 
   renderVisualization : function() {
