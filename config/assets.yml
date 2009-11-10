@@ -5,6 +5,7 @@ javascripts:
     - public/javascripts/lib/bindable.js
     - public/javascripts/lib/set.js
     - public/javascripts/lib/*.js
+    - public/javascripts/ui/menu.js
     - public/javascripts/**/*.js
 
 stylesheets:
@@ -16,7 +17,7 @@ stylesheets:
     - public/stylesheets/pages/workspace.css
   empty:
     - public/stylesheets/pages/empty.css
-  
+
 jst:
   complete:
     - app/views/jst/**/*.jst
