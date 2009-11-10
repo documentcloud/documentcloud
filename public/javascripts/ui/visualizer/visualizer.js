@@ -22,17 +22,17 @@ dc.ui.Visualizer = dc.View.extend({
   open : function() {
     this._kindFilter = null;
     this.setMode('linear', 'format');
-    this.gatherMetadata();
+    this.gatherMetadata(10);
     _.defer(this.renderVisualization);
   },
 
   visualize : function(kind) {
     this._kindFilter = kind;
-    this.gatherMetadata();
+    this.gatherMetadata(this.topMetadata.length);
     this.renderVisualization();
   },
 
-  gatherMetadata : function() {
+  gatherMetadata : function(number) {
     this.topDocuments = _(Documents.models()).sortBy(function(doc){ return doc.id; });
     var seenKinds = {};
     var filter = this._kindFilter;
@@ -49,18 +49,20 @@ dc.ui.Visualizer = dc.View.extend({
           return seenKinds[kind] = true;
         }
       })
-      .slice(0,7)
+      .slice(0,number)
       .sortBy(function(meta){ return meta.get('instances')[0].document_id; })
       .value();
   },
 
   renderCircular : function() {
     this.setMode('circular', 'format');
+    this.gatherMetadata(7);
     this.renderVisualization();
   },
 
   renderLinear : function() {
     this.setMode('linear', 'format');
+    this.gatherMetadata(10);
     this.renderVisualization();
   },
 
@@ -80,7 +82,8 @@ dc.ui.Visualizer = dc.View.extend({
     el.append($.el('div', {id :'viz_inner_wrapper'}, $.el('div', {id :'viz_inner'})));
     el = $('#viz_inner');
     if (linear) {
-      el.css({height : this.topDocuments.length * 100});
+      var maxHeight = _.max([this.topDocuments.length * 100, this.topMetadata.length * 75]);
+      el.css({height : maxHeight});
     } else {
       el.css({height : $(this.el).height()});
     }
