@@ -14,7 +14,8 @@ dc.ui.Visualizer = dc.View.extend({
   open : function() {
     var seenKinds = {};
     this.topMetadata = _(Metadata.models()).chain()
-      .sortBy(function(meta){ return -meta.instanceCount; })
+      .sortBy(function(meta){ return meta.instanceCount + meta.totalRelevance(); })
+      .reverse()
       .select(function(meta){
         var kind = meta.get('kind');
         if (_(['country', 'province_or_state', 'category']).include(kind)) return false;
@@ -76,7 +77,10 @@ dc.ui.Visualizer = dc.View.extend({
         ctx.lineWidth = instance.relevance * 20 + 1;
         ctx.beginPath();
         ctx.moveTo(pos.left + w2, pos.top + h2);
-        ctx.bezierCurveTo(pos.left + w2, pos.top + h2 - 100, docx, docy + 100, docx, docy);
+        ctx.bezierCurveTo(Math.cos(position) * width * 4 + originX - w2,
+                          Math.sin(position) * height * 4 + originY - h2,
+                          docx, docy,
+                          docx, docy);
         ctx.stroke();
       });
     });
