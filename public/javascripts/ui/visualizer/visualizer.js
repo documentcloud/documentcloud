@@ -23,6 +23,7 @@ dc.ui.Visualizer = dc.View.extend({
     this._kindFilter = null;
     this.setMode('linear', 'format');
     this._numMetadata = 10;
+    this.gatherMetadata();
     _.defer(this.renderVisualization);
   },
 
