@@ -83,10 +83,3 @@ dc.ui.Visualizer = dc.View.extend({
   }
 
 });
-
-
-// this.labelMenu = new dc.ui.LabelMenu({
-//   id : 'visualizer_labels', onclick : this.visualizeCollection
-// });
-// dc.app.workspace.sidebar.add('visualizer_sidebar', this.labelMenu.render().el);
-// if (!Labels.populated) Labels.populate();
