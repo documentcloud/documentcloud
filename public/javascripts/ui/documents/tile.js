@@ -11,15 +11,22 @@ dc.ui.DocumentTile = dc.View.extend({
     ['.icon',             'click',  'select']
   ],
 
-  constructor : function(doc, className) {
-    if (className) this.className += ' ' + className;
+  constructor : function(doc, mode) {
+    this.mode = mode;
+    if (mode) this.className += ' ' + mode;
     this.base();
     this.model = doc;
-    this.el.id = 'document_' + (className || 'tile') + '_' + this.model.id;
+    this.el.id = 'document_' + (mode || 'tile') + '_' + this.model.id;
   },
 
   render : function() {
-    $(this.el).html(JST.document_tile({'document' : this.model}));
+    var title = this.model.get('title');
+    $(this.el).html(JST.document_tile({
+      'thumbnail' : this.model.get('thumbnail_url'),
+      'title'     : this.mode == 'viz' ? Inflector.truncate(title, 55) : title,
+      'source'    : this.model.get('source'),
+      'summary'   : this.model.get('summary')
+    }));
     this.setCallbacks();
     this.setMode('not', 'selected');
     return this;

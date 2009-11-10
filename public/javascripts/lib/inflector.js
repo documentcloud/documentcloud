@@ -1,6 +1,6 @@
 // Snagged from Prototype
 window.Inflector = {
-  
+
   camelize: function(s) {
     var parts = s.split('-'), len = parts.length;
     if (len == 1) return parts[0];
@@ -26,13 +26,19 @@ window.Inflector = {
   dasherize: function(s) {
     return s.replace(/_/g,'-');
   },
-  
+
   singularize: function(s) {
     return s.replace(/e?s$/, '');
   },
-  
+
   classify: function(s) {
     return this.camelize(this.capitalize(this.dasherize(this.singularize(s))));
+  },
+
+  truncate : function(s, length, truncation) {
+    length = length || 30;
+    truncation = _.isUndefined(truncation) ? '...' : truncation;
+    return s.length > length ? s.slice(0, length - truncation.length) + truncation : s;
   }
-  
+
 };
