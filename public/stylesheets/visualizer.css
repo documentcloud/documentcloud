@@ -13,10 +13,19 @@
     margin-left: 2px;
   }
 
-#visualizer {
+#visualizer, #viz_inner_wrapper {
   position: absolute;
   top: 21px; bottom: 0; left: 0; right: 0;
 }
+  #viz_inner_wrapper {
+    top: 0;
+  }
+    #visualizer.linear_format #viz_inner_wrapper {
+      overflow-y: auto;
+    }
+      #visualizer.linear_format #viz_inner {
+        position: relative;
+      }
 
 #visualizer_canvas {
   position: absolute;

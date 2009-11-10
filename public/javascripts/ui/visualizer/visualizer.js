@@ -77,13 +77,21 @@ dc.ui.Visualizer = dc.View.extend({
     var links = el.append(links);
     this.setCallbacks();
 
+    el.append($.el('div', {id :'viz_inner_wrapper'}, $.el('div', {id :'viz_inner'})));
+    el = $('#viz_inner');
+    if (linear) {
+      el.css({height : this.topDocuments.length * 100});
+    } else {
+      el.css({height : $(this.el).height()});
+    }
+
     var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.height()});
     el.append(canvas);
     var ctx = canvas.getContext('2d');
     ctx.strokeStyle = "#abafe5";
     ctx.lineCap = "round";
 
-    var scale = 0.9 - (150 / el.width());
+    var scale = 0.92 - (150 / el.width());
     var originX = el.width() / 2, originY = el.height() / 2;
     var width = originX * scale, height = originY * scale;
     var piece = Math.PI * 2 / Documents.size();
@@ -95,8 +103,8 @@ dc.ui.Visualizer = dc.View.extend({
       el.append(tile.el);
       var position = piece * i;
       $(tile.el).css({
-        left: Math.cos(position) * width + originX - 100,
-        top: Math.sin(position) * height + originY - 50
+        left: Math.cos(position) * width + originX - 110,
+        top: Math.sin(position) * height + originY - 40
       });
     });
 
