@@ -13,7 +13,7 @@ dc.ui.Visualizer = dc.View.extend({
   ],
 
   constructor : function(options) {
-    _.bindAll('renderVisualization', 'open', this);
+    _.bindAll('open', 'renderVisualization', 'highlightDatum', 'highlightOff', this);
     this.base(options);
     dc.app.navigation.register('visualize', this.open);
     $(window).resize(this.renderVisualization);
@@ -69,10 +69,23 @@ dc.ui.Visualizer = dc.View.extend({
     this.renderVisualization();
   },
 
+  highlightDatum : function(e) {
+    var ids = e.data.documentIds();
+    _.each(this.docViews, function(view) {
+      $(view.el).addClass(_(ids).include(view.model.id) ? 'bolded' : 'muted');
+    });
+  },
+
+  highlightOff : function() {
+    $('.document_tile', this.el).removeClass('muted').removeClass('bolded');
+  },
+
   renderVisualization : function() {
     if (this.topMetadata.length == 0) return;
+    var me = this;
     var el = $(this.el);
     el.html('');
+    this.docViews = [];
     var linear = this.modes.format == 'linear';
 
     var title = (this._kindFilter ? Metadata.KIND_MAP[this._kindFilter] : 'Most Relevant') + ':';
@@ -101,11 +114,10 @@ dc.ui.Visualizer = dc.View.extend({
     var originX = el.width() / 2, originY = el.height() / 2;
     var width = originX * scale, height = originY * scale;
     var piece = Math.PI * 2 / Documents.size();
-    var docViews = [];
 
     _.each(this.topDocuments, function(doc, i) {
       var tile = new dc.ui.DocumentTile(doc, 'viz').render();
-      docViews.push(tile);
+      me.docViews.push(tile);
       el.append(tile.el);
       var position = piece * i;
       $(tile.el).css({
@@ -121,6 +133,8 @@ dc.ui.Visualizer = dc.View.extend({
     _.each(this.topMetadata, function(meta, i) {
       var metaEl = $($.el('div', {'class' : 'datum'}, meta.get('value')));
       el.append(metaEl[0]);
+      metaEl.bind('mouseenter', meta, me.highlightDatum);
+      metaEl.bind('mouseleave', meta, me.highlightOff);
       var position = piece * i;
       var w2 = metaEl.width() / 2, h2 = metaEl.height() / 2;
       if (linear) {

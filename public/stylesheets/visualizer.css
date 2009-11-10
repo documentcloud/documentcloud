@@ -56,6 +56,9 @@
     top: 0 !important; left: 0 !important;
     margin: 15px 0 5px 15px;
   }
+  #visualizer .document_tile.muted {
+    opacity: 0.5;
+  }
   #visualizer .document_tile .title {
     margin-top: 0;
     height: auto;
@@ -67,6 +70,9 @@
   #visualizer .document_tile .icon {
     -webkit-box-shadow: 0 0px 5px #999; -moz-box-shadow: 0 0px 5px #999;
   }
+    #visualizer .document_tile.bolded .icon {
+      -webkit-box-shadow: 0 0px 15px #555; -moz-box-shadow: 0 0px 15px #555;
+    }
   #visualizer .document_tile .summary {
     display: none;
   }
@@ -92,6 +98,7 @@
   color: #454545;
   padding: 4px 8px;
   background: white;
+  cursor: crosshair;
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
   -moz-border-radius: 3px; -webkit-border-radius: 3px;
   -webkit-box-shadow: 0 0px 10px #999; -moz-box-shadow: 0 0px 10px #999;

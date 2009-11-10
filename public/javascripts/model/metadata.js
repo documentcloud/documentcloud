@@ -26,12 +26,14 @@ dc.model.Metadatum = dc.Model.extend({
     return instance;
   },
 
+  documentIds : function() {
+    return _.pluck(this.get('instances'), 'document_id');
+  },
+
   // Return a list of all of the currently-loaded documents referencing this
   // Metadatum.
   documents : function() {
-    return _.map(this.get('instances'), function(instance) {
-      return Documents.get(instance.document_id);
-    });
+    _(this.documentIds()).map(function(id){ return Documents.get(id); });
   },
 
   // Compute the average relevance of this Metadatum to the currently loaded
