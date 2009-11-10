@@ -22,7 +22,7 @@
   position: absolute;
   margin: 0;
   width: 150px; height: 77px;
-  padding: 5px 0 5px 77px;
+  padding: 0 0 5px 77px;
 }
   #visualizer .document_tile .title {
     height: auto;
