@@ -22,17 +22,17 @@ dc.ui.Visualizer = dc.View.extend({
   open : function() {
     this._kindFilter = null;
     this.setMode('linear', 'format');
-    this.gatherMetadata(10);
+    this._numMetadata = 10;
     _.defer(this.renderVisualization);
   },
 
   visualize : function(kind) {
     this._kindFilter = kind;
-    this.gatherMetadata(this.topMetadata.length);
+    this.gatherMetadata();
     this.renderVisualization();
   },
 
-  gatherMetadata : function(number) {
+  gatherMetadata : function() {
     this.topDocuments = _(Documents.models()).sortBy(function(doc){ return doc.id; });
     var seenKinds = {};
     var filter = this._kindFilter;
@@ -49,20 +49,22 @@ dc.ui.Visualizer = dc.View.extend({
           return seenKinds[kind] = true;
         }
       })
-      .slice(0,number)
+      .slice(0, this._numMetadata)
       .sortBy(function(meta){ return meta.get('instances')[0].document_id; })
       .value();
   },
 
   renderCircular : function() {
     this.setMode('circular', 'format');
-    this.gatherMetadata(7);
+    this._numMetadata = 7;
+    this.gatherMetadata();
     this.renderVisualization();
   },
 
   renderLinear : function() {
     this.setMode('linear', 'format');
-    this.gatherMetadata(10);
+    this._numMetadata = 10;
+    this.gatherMetadata();
     this.renderVisualization();
   },
 
