@@ -21,7 +21,7 @@ dc.ui.Visualizer = dc.View.extend({
 
   open : function() {
     this._kindFilter = null;
-    this.setMode('circular', 'format');
+    this.setMode('linear', 'format');
     this.gatherMetadata();
     _.defer(this.renderVisualization);
   },
@@ -73,7 +73,7 @@ dc.ui.Visualizer = dc.View.extend({
     var title = (this._kindFilter ? Metadata.KIND_MAP[this._kindFilter] : 'Most Relevant') + ':';
     el.append($.el('div', {id : 'visualization_title'}, title));
 
-    var links = $.el('div', {id : 'viz_types'}, '<span id="viz_circle">circular</span> | <span id="viz_line">linear</span>');
+    var links = $.el('div', {id : 'viz_types'}, '<span id="viz_line">linear</span> | <span id="viz_circle">circular</span>');
     var links = el.append(links);
     this.setCallbacks();
 
