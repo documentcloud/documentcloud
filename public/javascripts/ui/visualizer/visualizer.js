@@ -24,6 +24,7 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   gatherMetadata : function() {
+    this.topDocuments = _(Documents.models()).sortBy(function(doc){ return doc.id; });
     var seenKinds = {};
     var filter = this._kindFilter;
     this.topMetadata = _(Metadata.models()).chain()
@@ -40,6 +41,7 @@ dc.ui.Visualizer = dc.View.extend({
         }
       })
       .slice(0,7)
+      .sortBy(function(meta){ return meta.get('instances')[0].document_id; })
       .value();
   },
 
@@ -63,7 +65,7 @@ dc.ui.Visualizer = dc.View.extend({
     var piece = Math.PI * 2 / Documents.size();
     var docViews = [];
 
-    Documents.each(function(doc, i) {
+    _.each(this.topDocuments, function(doc, i) {
       var tile = new dc.ui.DocumentTile(doc, 'viz').render();
       docViews.push(tile);
       el.append(tile.el);
