@@ -1,3 +1,8 @@
+////////////////////////////////////////////////////////
+// Although a lot of the surrounding code may be sound,
+// this file is SUPER-PROTOTYPE-Y-ONLY!
+///////////////////////////////////////////////////////
+
 dc.ui.Visualizer = dc.View.extend({
 
   id : 'visualizer',
