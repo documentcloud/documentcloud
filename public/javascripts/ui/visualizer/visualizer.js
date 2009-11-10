@@ -7,7 +7,10 @@ dc.ui.Visualizer = dc.View.extend({
 
   id : 'visualizer',
 
-  callbacks : [],
+  callbacks : [
+    ['#viz_circle',     'click',    'renderCircular'],
+    ['#viz_line',       'click',    'renderLinear']
+  ],
 
   constructor : function(options) {
     _.bindAll('renderVisualization', 'open', this);
@@ -18,6 +21,7 @@ dc.ui.Visualizer = dc.View.extend({
 
   open : function() {
     this._kindFilter = null;
+    this.setMode('circular', 'format');
     this.gatherMetadata();
     _.defer(this.renderVisualization);
   },
@@ -50,13 +54,28 @@ dc.ui.Visualizer = dc.View.extend({
       .value();
   },
 
+  renderCircular : function() {
+    this.setMode('circular', 'format');
+    this.renderVisualization();
+  },
+
+  renderLinear : function() {
+    this.setMode('linear', 'format');
+    this.renderVisualization();
+  },
+
   renderVisualization : function() {
     if (this.topMetadata.length == 0) return;
     var el = $(this.el);
     el.html('');
+    var linear = this.modes.format == 'linear';
 
     var title = (this._kindFilter ? Metadata.KIND_MAP[this._kindFilter] : 'Most Relevant') + ':';
     el.append($.el('div', {id : 'visualization_title'}, title));
+
+    var links = $.el('div', {id : 'viz_types'}, '<span id="viz_circle">circular</span> | <span id="viz_line">linear</span>');
+    var links = el.append(links);
+    this.setCallbacks();
 
     var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.height()});
     el.append(canvas);
@@ -86,14 +105,19 @@ dc.ui.Visualizer = dc.View.extend({
     piece = Math.PI * 2 / this.topMetadata.length;
 
     _.each(this.topMetadata, function(meta, i) {
-      var metaEl = $($.el('div', {'class' : 'metaviz'}, meta.get('value')));
+      var metaEl = $($.el('div', {'class' : 'datum'}, meta.get('value')));
       el.append(metaEl[0]);
       var position = piece * i;
       var w2 = metaEl.width() / 2, h2 = metaEl.height() / 2;
-      metaEl.css({
-        left: Math.cos(position) * width + originX - w2,
-        top: Math.sin(position) * height + originY - h2
-      });
+      if (linear) {
+        metaEl.css({left: 'auto', top: i * 75 + 25, right : 25});
+      } else {
+        metaEl.css({
+          left: Math.cos(position) * width + originX - w2,
+          top: Math.sin(position) * height + originY - h2,
+          right: 'auto'
+        });
+      }
       var pos = metaEl.position();
 
       _.each(meta.get('instances'), function(instance) {
@@ -104,10 +128,17 @@ dc.ui.Visualizer = dc.View.extend({
         ctx.lineWidth = instance.relevance * 20 + 1;
         ctx.beginPath();
         ctx.moveTo(pos.left + w2, pos.top + h2);
-        ctx.bezierCurveTo(Math.cos(position) * width * 2.5 + originX - w2,
-                          Math.sin(position) * height * 2.5 + originY - h2,
-                          docx, docy,
-                          docx, docy);
+        if (linear) {
+          ctx.bezierCurveTo(pos.left + w2 - originX,
+                            pos.top + h2,
+                            docx + originX, docy,
+                            docx, docy);
+        } else {
+          ctx.bezierCurveTo(Math.cos(position) * width * 2.5 + originX - w2,
+                            Math.sin(position) * height * 2.5 + originY - h2,
+                            docx, docy,
+                            docx, docy);
+        }
         ctx.stroke();
       });
     });
