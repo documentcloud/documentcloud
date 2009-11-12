@@ -18,6 +18,6 @@ stylesheets:
   empty:
     - public/stylesheets/pages/empty.css
 
-jst:
+templates:
   complete:
     - app/views/jst/**/*.jst
