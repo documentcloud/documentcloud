@@ -1,23 +1,38 @@
 module Jammit
-  
+
   class Controller < ActionController::Base
-    
-    caches_page :jst, :javascripts, :stylesheets
-    
-    def javascripts
-      render :js => Jammit.packager.pack_javascript(params[:package].to_sym)
+
+    VERSION_STRIPPER = /-v\d+\Z/
+
+    caches_page :package
+
+    # Dispatch to the appropriate packaging method for the filetype.
+    def package
+      case params[:format]
+      when 'js'
+        render :js => Jammit.packager.pack_javascripts(package)
+      when 'css'
+        render :text => Jammit.packager.pack_stylesheets(package), :content_type => 'text/css'
+      when 'jst'
+        render :js => Jammit.packager.pack_templates(package)
+      else
+        unsupported_media_type
+      end
     end
-    
-    def stylesheets
-      render :text => Jammit.packager.pack_stylesheet(params[:package].to_sym), :content_type => 'text/css'
+
+
+    private
+
+    def package
+      params[:args].last.sub(VERSION_STRIPPER, '').to_sym
     end
-    
-    def jst
-      render :js => Jammit.packager.pack_jst(params[:package].to_sym)
+
+    def unsupported_media_type
+      render :text => "Unsupported Media Type: \"#{params[:format]}\"", :status => 415
     end
-    
+
   end
-  
+
 end
 
 ::JammitController = Jammit::Controller

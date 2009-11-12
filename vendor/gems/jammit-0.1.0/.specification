@@ -10,7 +10,7 @@ bindir: bin
 cert_chain: []
 
 date: 2009-11-06 00:00:00 -05:00
-default_executable: 
+default_executable: jammit
 dependencies: 
 - !ruby/object:Gem::Dependency 
   name: rails
@@ -34,17 +34,19 @@ dependencies:
     version: 
 description: "    Lorem Ipsum.\n"
 email: jeremy@documentcloud.org
-executables: []
-
+executables: 
+- jammit
 extensions: []
 
 extra_rdoc_files: 
 - README
 files: 
+- bin/jammit
 - jammit.gemspec
 - lib/jammit.rb
-- lib/jammit/controller.rb
+- lib/jammit/command_line.rb
 - lib/jammit/compressor.rb
+- lib/jammit/controller.rb
 - lib/jammit/helper.rb
 - lib/jammit/jst.js
 - lib/jammit/packager.rb
