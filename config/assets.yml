@@ -1,3 +1,6 @@
+embed_images: yes
+force_packaging: yes
+
 javascripts:
   workspace:
     - public/javascripts/vendor/*.js
