@@ -1,19 +1,23 @@
 namespace :app do
-  
+
   task :start do
-    sh "thin -e #{RAILS_ENV} -p #{port_number} -d start"
+    fallback("nginx", "thin -e #{RAILS_ENV} -p #{port_number} -d start")
   end
-  
+
   task :run do
     sh "thin -e #{RAILS_ENV} -p #{port_number} start"
   end
-  
+
   task :stop do
-    sh 'thin stop -f'
+    fallback("killall nginx", "thin stop -f")
   end
-  
+
   task :restart => [:stop, :start]
-  
+
+end
+
+def fallback(real, development)
+  sh(RAILS_ENV == 'development' ? development : fallback)
 end
 
 def port_number
