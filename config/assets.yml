@@ -1,5 +1,4 @@
 embed_images: yes
-force_packaging: yes
 
 javascripts:
   workspace:
