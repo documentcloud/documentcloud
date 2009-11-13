@@ -104,14 +104,14 @@
         margin-right: 7px;
       }
         .document_tools .view_pdf {
-          background: url(/images/icons/page_white_acrobat.png);
+          background: url(/images/embed/icons/page_white_acrobat.png);
         }
         .document_tools .view_text {
-          background: url(/images/icons/text_columns.png);
+          background: url(/images/embed/icons/text_columns.png);
         }
         .document_tools .delete_document {
           display: none;
-          background: url(/images/icons/bin.png);
+          background: url(/images/embed/icons/bin.png);
         }
           body.logged_in .document_tools .delete_document {
             display: inline;

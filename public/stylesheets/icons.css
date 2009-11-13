@@ -5,11 +5,11 @@
 
 .document_list.large_size .icon.document.generic {
   width: 60px; height: 75px;
-  background: url(/images/documents/generic.png);
+  background: url(/images/embed/documents/generic.png);
 }
 .document_list.medium_size .icon.document.generic {
   width: 24px; height: 30px;
-  background: url(/images/documents/generic_small.png);
+  background: url(/images/embed/documents/generic_small.png);
 }
 .document_list.small_size .icon.document {
   display: none;
@@ -21,14 +21,14 @@
   background-position: center center;
 }
   .icon.plus {
-    background-image: url(/images/ui/plus.png);
+    background-image: url(/images/embed/ui/plus.png);
   }
     .icon.plus:hover {
-      background-image: url(/images/ui/plus_lit.png);
+      background-image: url(/images/embed/ui/plus_lit.png);
     }
   .icon.minus {
-    background-image: url(/images/ui/minus.png);
+    background-image: url(/images/embed/ui/minus.png);
   }
     .icon.minus:hover {
-      background-image: url(/images/ui/minus_lit.png);
+      background-image: url(/images/embed/ui/minus_lit.png);
     }

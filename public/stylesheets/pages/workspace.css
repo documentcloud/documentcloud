@@ -71,7 +71,7 @@ a {
     float: left;
     margin: 2px 0 0 7px;
     width: 56px; height: 7px;
-    background: url(/images/ui/spinner.gif);
+    background: url(/images/embed/ui/spinner.gif);
   }
   
 #content {
@@ -104,11 +104,11 @@ a {
   }
     .sidebar_top {
       top: 0px;
-      background: url(/images/ui/sidebar_top.png);
+      background: url(/images/embed/ui/sidebar_top.png);
     }
     .sidebar_bottom {
       bottom: 0px;
-      background: url(/images/ui/sidebar_bottom.png);
+      background: url(/images/embed/ui/sidebar_bottom.png);
     }
   .search_query, #paginator {
     position: absolute;
@@ -165,16 +165,16 @@ a {
     .cap_top_left {
       left: -1px;
       width: 13px;
-      background: url(/images/ui/cap_top_left.png);
+      background: url(/images/embed/ui/cap_top_left.png);
     }
     .cap_top_middle {
       left: 12px; right: 11px;
-      background: url(/images/ui/cap_top_middle.png);
+      background: url(/images/embed/ui/cap_top_middle.png);
     }
     .cap_top_right {
       width: 12px;
       right: -1px;
-      background: url(/images/ui/cap_top_right.png);
+      background: url(/images/embed/ui/cap_top_right.png);
     }
 
 #full_screen_form {

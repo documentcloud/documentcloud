@@ -26,7 +26,7 @@
     #organizer .box .delete_button {
       display: none;
       width: 16px; height: 16px;
-      background: url(/images/icons/delete.png) no-repeat;
+      background: url(/images/embed/icons/delete.png) no-repeat;
       position: absolute;
       opacity: 0.65;
       top: -8px; left: -8px;
@@ -63,13 +63,13 @@
     background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#dadada));
     border-top: 1px solid #dadada;
     color: #777;
-  } 
+  }
     #organizer_sidebar_container .nametag img {
       position: absolute;
       margin: -2px 0 0 -20px;
     }
     #organizer_sidebar_container .minibutton {
-      position: absolute; 
+      position: absolute;
       right: 8px; top: 28px;
     }
     #organizer_sidebar_container input {

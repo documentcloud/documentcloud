@@ -8,11 +8,11 @@ span.text_input {
   display: block;
   position: relative;
   height: 30px;
-  background: transparent url(/images/ui/text_input_large_left.png) no-repeat center left;
+  background: transparent url(/images/embed/ui/text_input_large_left.png) no-repeat center left;
 }
   span.text_input > span {
     display: block;
-    background: transparent url(/images/ui/text_input_large_right.png) no-repeat center right;
+    background: transparent url(/images/embed/ui/text_input_large_right.png) no-repeat center right;
     margin-left: 6px;
     height: 30px;
   }
@@ -53,7 +53,7 @@ span.text_input {
     position: relative;
     left: 2px;
     padding-right: 18px;
-    background: url(/images/icons/bullet_arrow_down.png) no-repeat right center;
+    background: url(/images/embed/icons/bullet_arrow_down.png) no-repeat right center;
   }
   .menu_content {
     display: none;
