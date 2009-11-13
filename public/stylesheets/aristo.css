@@ -29,14 +29,14 @@ input[type="checkbox"]:checked {
 
 input[type="radio"] {
   -khtml-appearance: none;
-  background: url(/images/aristo/radio-bezel.png) no-repeat;
+  background: urldisabled(/images/aristo/radio-bezel.png) no-repeat;
   width: 17px;
   height: 17px;
 }
 
 input[type="radio"]:checked {
   border: none;
-  background: url(/images/aristo/radio-bezel-selected.png) no-repeat;
+  background: urldisabled(/images/aristo/radio-bezel-selected.png) no-repeat;
 }
 
 button {
@@ -44,8 +44,8 @@ button {
   -khtml-appearance: none;
   -moz-appearance: none;
   background: none;
-  -webkit-border-image: url(/images/aristo/button-bezel.png) 2 2 2 2 stretch stretch;
-  -moz-border-image: url(/images/aristo/button-bezel.png) 2 2 2 2 stretch stretch;
+  -webkit-border-image: urldisabled(/images/aristo/button-bezel.png) 2 2 2 2 stretch stretch;
+  -moz-border-image: urldisabled(/images/aristo/button-bezel.png) 2 2 2 2 stretch stretch;
   padding: 3px 8px;
   color: #4F4F4F;
   -webkit-transition: -webkit-box-shadow 0.2s linear;
@@ -55,16 +55,16 @@ button {
 
 button.default {
   color: #1C4257;
-  -webkit-border-image: url(/images/aristo/default-button-bezel.png) 2 2 2 2 stretch stretch;
-  -moz-border-image: url(/images/aristo/default-button-bezel.png) 2 2 2 2 stretch stretch;
+  -webkit-border-image: urldisabled(/images/aristo/default-button-bezel.png) 2 2 2 2 stretch stretch;
+  -moz-border-image: urldisabled(/images/aristo/default-button-bezel.png) 2 2 2 2 stretch stretch;
 }
 
 .hud button, button.hud {
   font-size: 11px;
   color: #fff;
   padding: 0;
-  -webkit-border-image: url(/images/aristo/hud/button-bezel.png) 9 13 10 13 / 8px 13px 9px 13px repeat repeat;
-  -moz-border-image: url(/images/aristo/hud/button-bezel.png) 9 13 10 13 / 8px 13px 9px 13px repeat repeat;
+  -webkit-border-image: urldisabled(/images/aristo/hud/button-bezel.png) 9 13 10 13 / 8px 13px 9px 13px repeat repeat;
+  -moz-border-image: urldisabled(/images/aristo/hud/button-bezel.png) 9 13 10 13 / 8px 13px 9px 13px repeat repeat;
   text-shadow: none;
 }
 
@@ -84,18 +84,18 @@ button.default:hover {
 }
 
 button:active:not(:disabled) {
-  -webkit-border-image: url(/images/aristo/button-bezel-highlighted.png) 2 2 2 2 stretch stretch;
-  -moz-border-image: url(/images/aristo/button-bezel-highlighted.png) 2 2 2 2 stretch stretch;
+  -webkit-border-image: urldisabled(/images/aristo/button-bezel-highlighted.png) 2 2 2 2 stretch stretch;
+  -moz-border-image: urldisabled(/images/aristo/button-bezel-highlighted.png) 2 2 2 2 stretch stretch;
 }
 
 button.default:active {
-  -webkit-border-image: url(/images/aristo/default-button-bezel-highlighted.png) 2 2 2 2 stretch stretch;
-  -moz-border-image: url(/images/aristo/default-button-bezel-highlighted.png) 2 2 2 2 stretch stretch;
+  -webkit-border-image: urldisabled(/images/aristo/default-button-bezel-highlighted.png) 2 2 2 2 stretch stretch;
+  -moz-border-image: urldisabled(/images/aristo/default-button-bezel-highlighted.png) 2 2 2 2 stretch stretch;
 }
 
 .hud button:active, button.hud:active {
-  -webkit-border-image: url(/images/aristo/hud/button-bezel-highlighted.png) 9 13 10 13 / 8px 13px 9px 13px repeat repeat;
-  -moz-border-image: url(/images/aristo/hud/button-bezel-highlighted.png) 9 13 10 13 / 8px 13px 9px 13px repeat repeat;
+  -webkit-border-image: urldisabled(/images/aristo/hud/button-bezel-highlighted.png) 9 13 10 13 / 8px 13px 9px 13px repeat repeat;
+  -moz-border-image: urldisabled(/images/aristo/hud/button-bezel-highlighted.png) 9 13 10 13 / 8px 13px 9px 13px repeat repeat;
 }
 
 button:disabled {
@@ -166,7 +166,7 @@ button:disabled {
 ::-webkit-scrollbar-button:end:increment {
     display: block;
 }
- 
+
 /* Turn off the down area up on top, and up area on bottom */
 ::-webkit-scrollbar-button:start:increment,
 ::-webkit-scrollbar-button:end:decrement {
@@ -174,22 +174,22 @@ button:disabled {
 }
 
 input[type="range"] {
-  -khtml-appearance: none; 
-  -webkit-border-image: url(/images/aristo/slider-horizontal-track.png) 2 4 2 4 / 2px 4px 2px 4px repeat repeat;
+  -khtml-appearance: none;
+  -webkit-border-image: urldisabled(/images/aristo/slider-horizontal-track.png) 2 4 2 4 / 2px 4px 2px 4px repeat repeat;
   height: 5px;
   padding: 0;
 }
 
-::-webkit-slider-thumb { 
-  -khtml-appearance: none; 
-  background: url(/images/aristo/slider-knob.png) no-repeat; 
-  width: 23px; 
+::-webkit-slider-thumb {
+  -khtml-appearance: none;
+  background: urldisabled(/images/aristo/slider-knob.png) no-repeat;
+  width: 23px;
   height: 24px;
 }
 
 /*This doesn't seem to be implemented yet*/
-::-webkit-slider-thumb:active { 
-  background: url(/images/aristo/slider-knob-highlighted.png) no-repeat;
+::-webkit-slider-thumb:active {
+  background: urldisabled(/images/aristo/slider-knob-highlighted.png) no-repeat;
 }
 
 input, textarea {
