@@ -1,17 +1,17 @@
 defaults: &defaults
-  cloud_crowd_server: http://localhost:9173
-  server_root:        http://localhost:3000
-  
+  cloud_crowd_server: http://dev.dcloud.org:9173
+  server_root:        http://dev.dcloud.org:3000
+
 development:
   <<: *defaults
-  
+
 staging:
   <<: *defaults
   cloud_crowd_server: http://staging.dcloud.org:8080
   server_root:        http://staging.dcloud.org
-  
+
 test:
   <<: *defaults
-    
+
 production:
   <<: *defaults
