@@ -17,7 +17,7 @@ namespace :app do
 end
 
 def fallback(real, development)
-  sh(RAILS_ENV == 'development' ? development : fallback)
+  sh(RAILS_ENV == 'development' ? development : real)
 end
 
 def port_number
