@@ -1,7 +1,11 @@
 namespace :app do
 
   task :start do
-    fallback("nginx", "thin -e #{RAILS_ENV} -p #{port_number} -d start")
+    if RAILS_ENV == 'development'
+      sh "thin -e #{RAILS_ENV} -p #{port_number} -d start"
+    else
+      sh "nginx"
+    end
   end
 
   task :run do
@@ -9,15 +13,15 @@ namespace :app do
   end
 
   task :stop do
-    fallback("killall nginx", "thin stop -f")
+    if RAILS_ENV == 'development'
+      sh "thin stop -f"
+    else
+      sh "killall nginx" if File.exists?('/var/run/nginx.pid')
+    end
   end
 
   task :restart => [:stop, :start]
 
-end
-
-def fallback(real, development)
-  sh(RAILS_ENV == 'development' ? development : real)
 end
 
 def port_number
