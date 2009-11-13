@@ -24,7 +24,7 @@
       .account_view.badge .textual a:hover {
         text-decoration: underline;
       }
-      
+
 #account_list {
   padding: 0;
 }
@@ -98,8 +98,7 @@
 #account_list .pending_badge {
   display: none;
   position: absolute;
-  margin: 21px 0 0 21px;
-  width: 10px; height: 10px;
+  margin: 18px 0 0 18px;
 }
   #account_list .row.pending .pending_badge {
     display: block;

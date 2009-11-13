@@ -23,22 +23,23 @@
       background: -webkit-gradient(linear, left top, left bottom, from(#fafaff), to(#efefff));
       -webkit-box-shadow: 0 0px 15px #bbb; -moz-box-shadow: 0 0px 15px #bbb;
     }
-    #organizer .box .delete_button {
+    #organizer .box .icon.delete {
       display: none;
-      width: 16px; height: 16px;
-      background: url(/images/embed/icons/delete.png) no-repeat;
       position: absolute;
       opacity: 0.65;
       top: -8px; left: -8px;
     }
-      #organizer .box:hover .delete_button {
+      #organizer .box:hover .icon.delete {
         display: block;
       }
-    #organizer .box > span {
-      display: block;
+    #organizer .box .icon.size32 {
+      position: absolute;
+    }
+    #organizer .box .contents {
       height: 32px;
       line-height: 16px;
       overflow: hidden;
+      padding-left: 40px;
     }
       #organizer img {
         float: left;
@@ -64,7 +65,7 @@
     border-top: 1px solid #dadada;
     color: #777;
   }
-    #organizer_sidebar_container .nametag img {
+    #organizer_sidebar_container .nametag .icon {
       position: absolute;
       margin: -2px 0 0 -20px;
     }

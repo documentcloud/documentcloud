@@ -1,7 +1,12 @@
 .icon {
   background-repeat: no-repeat;
+  background-position: center center;
   vertical-align: middle;
+  width: 16px; height: 16px;
 }
+  .icon.size32 {
+    width: 32px; height: 32px;
+  }
 
 .document_list.large_size .icon.document.generic {
   width: 60px; height: 75px;
@@ -13,6 +18,22 @@
 }
 .document_list.small_size .icon.document {
   display: none;
+}
+
+.icon.delete {
+  background-image: url(/images/embed/icons/delete.png);
+}
+.icon.warning_16 {
+  background-image: url(/images/embed/icons/warning_16.png);
+}
+.icon.tag_yellow_16 {
+  background-image: url(/images/embed/icons/tag_yellow_16.png);
+}
+.icon.tag_yellow_32 {
+  background-image: url(/images/embed/icons/tag_yellow_32.png);
+}
+.icon.search_32 {
+  background-image: url(/images/embed/icons/search_32.png);
 }
 
 .icon.plus, .icon.minus {
