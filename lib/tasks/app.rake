@@ -20,10 +20,10 @@ namespace :app do
     end
   end
 
-  if RAILS_ENV == 'development'
-    task :restart => [:stop, :start]
-  else
-    task :restart do
+  task :restart do
+    if RAILS_ENV == 'development'
+      sh "thin stop -f && thin -e #{RAILS_ENV} -p #{port_number} -d start"
+    else
       sh "touch tmp/restart.txt"
     end
   end
