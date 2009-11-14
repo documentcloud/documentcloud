@@ -27,7 +27,7 @@ module Jammit
       filename = File.join(output_dir, Jammit.filename(package, extension, suffix))
       zip_name = "#{filename}.gz"
       File.open(filename, 'w+') {|f| f.write(contents) }
-      File.open(zip_name, 'w+') {|f| f.write(compress(contents)) }
+      Zlib::GzipWriter.open(zip_name, Zlib::BEST_COMPRESSION) {|f| f.write(contents) }
       FileUtils.touch([filename, zip_name])
     end
 
@@ -75,13 +75,6 @@ module Jammit
 
 
     private
-
-    def compress(contents)
-      deflater = Zlib::Deflate.new(Zlib::BEST_COMPRESSION)
-      compressed = deflater.deflate(contents, Zlib::FINISH)
-      deflater.close
-      compressed
-    end
 
     def create_packages(config)
       packages = {}
