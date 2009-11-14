@@ -16,12 +16,16 @@ namespace :app do
     if RAILS_ENV == 'development'
       sh "thin stop -f"
     else
-      sh "killall nginx" if File.exists?('/var/run/nginx.pid')
+      sh "kill #{File.read(nginx_pid)}" if File.exists?(nginx_pid)
     end
   end
 
   task :restart => [:stop, :start]
 
+end
+
+def nginx_pid
+  '/var/run/nginx.pid'
 end
 
 def port_number
