@@ -10,7 +10,7 @@ module Jammit
 
   DEFAULT_JST_SCRIPT   = "#{ROOT}/lib/jammit/jst.js"
 
-  DEFAULT_JST_COMPILER = "JST.compile"
+  DEFAULT_JST_COMPILER = "template"
 
   class PackageNotFound < NameError; end
 
