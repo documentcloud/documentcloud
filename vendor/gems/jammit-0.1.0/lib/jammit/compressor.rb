@@ -26,7 +26,7 @@ module Jammit
 
     # JST file constants.
     JST_START       = "(function(){window.JST = window.JST || {};"
-    JST_END         = ")();"
+    JST_END         = "})();"
 
     # Uses the "yui-compressor" gem.
     def initialize
