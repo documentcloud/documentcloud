@@ -20,7 +20,13 @@ namespace :app do
     end
   end
 
-  task :restart => [:stop, :start]
+  if RAILS_ENV == 'development'
+    task :restart => [:stop, :start]
+  else
+    task :restart do
+      sh "touch tmp/restart.txt"
+    end
+  end
 
 end
 
