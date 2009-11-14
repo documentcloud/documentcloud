@@ -79,7 +79,7 @@ module Jammit
       paths = {}
       css = css.gsub(IMAGE_DETECTOR) do |url|
         paths[$1] ||= "public#{$1}"
-        "url(\"mhtml:#{asset_url}!#{$1}\")"
+        "url(mhtml:#{asset_url}!#{$1})"
       end
       mhtml = paths.map do |identifier, path|
         mime, contents = mime_type(path), encoded_contents(path)
