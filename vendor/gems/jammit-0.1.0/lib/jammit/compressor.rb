@@ -55,7 +55,7 @@ module Jammit
         contents      = File.read(path).gsub(/\n/, '').gsub("'", '\\\\\'')
         "window.JST.#{template_name} = #{Jammit.template_function}('#{contents}');"
       end
-      (Jammit.include_jst_compiler? ? File.read(DEFAULT_JST_SCRIPT) : '') + compiled.join("\n")
+      (Jammit.include_jst_script ? File.read(DEFAULT_JST_SCRIPT) : '') + compiled.join("\n")
     end
 
 

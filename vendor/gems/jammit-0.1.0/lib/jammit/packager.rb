@@ -38,7 +38,7 @@ module Jammit
         precache(p, 'css', pack_stylesheets(p), output_dir)
         if Jammit.embed_images
           precache(p, 'css', pack_stylesheets(p, :datauri), output_dir, :datauri)
-          if base_url
+          if Jammit.mhtml_enabled && base_url
             mtime = Time.now
             asset_url = "#{base_url}#{Jammit.asset_url(p, :css, :mhtml, mtime)}"
             precache(p, 'css', pack_stylesheets(p, :mhtml, asset_url), output_dir, :mhtml, mtime)
