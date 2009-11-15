@@ -28,11 +28,11 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
-  
+
   # Standard Library:
   require 'digest/md5'
   require 'tmpdir'
-  
+
   # Gems:
   config.gem 'json',                  :version => '>= 1.1.9'
   config.gem 'faker',                 :version => '>= 0.3.1'
@@ -42,14 +42,9 @@ Rails::Initializer.run do |config|
   config.gem 'right_aws',             :version => '>= 1.10.0'
   config.gem 'postgres',              :version => '>= 0.7.9.2008.01.28'
   config.gem 'jammit'
-  
-  if Rails.test?
-    config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
-    config.gem 'mocha', :version => '>= 0.9.7'
-  end
-  
+
   require 'json/add/rails'
-      
+
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]

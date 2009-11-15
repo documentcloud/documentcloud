@@ -4,7 +4,7 @@
 # every request.  This slows down response time but is perfect for development
 # since you don't have to restart the webserver when you make code changes.
 
-# We've been running into *serious* common issues with 
+# We've been running into *serious* common issues with
 # "A copy of [some_class] has been removed from the module tree but is still active!"
 # Caching classes until there's a patch to Rails 2.3.3 for it.
 config.cache_classes = true
@@ -18,3 +18,6 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
+
+config.gem "rack-bug", :lib => 'rack/bug'
+config.middleware.use "Rack::Bug", :password => 'REDACTED'
