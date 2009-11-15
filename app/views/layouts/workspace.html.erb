@@ -7,11 +7,11 @@
   <title><%= @title %> | DocumentCloud</title>
   <%= include_stylesheets :app, :workspace %>
   <%= include_javascripts :workspace %>
-  <%= include_jst :complete %>
+  <%= include_templates :complete %>
   <%= render :partial => 'common/bootstrap' %>
 </head>
 <body class="workspace <%= @current_account ? 'logged_in' : '' %> <%= @bodyclass %>">
-  
+
   <div id="container">
     <div id="topbar" class="header">
       <div id="cloud_edge"></div>
@@ -21,11 +21,11 @@
         <input id="search" type="search" placeholder="search" />
       <% end %>
     </div>
-  
+
     <div id="content">
       <%= yield %>
     </div>
-    
+
   </div>
 
 </body>

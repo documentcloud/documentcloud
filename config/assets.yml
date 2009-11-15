@@ -1,3 +1,5 @@
+package_assets: always
+package_path: packages
 template_function: _.template
 embed_images: yes
 

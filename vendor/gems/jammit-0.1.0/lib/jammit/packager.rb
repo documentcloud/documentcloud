@@ -4,9 +4,6 @@ module Jammit
   # a single asset package.
   class Packager
 
-    # The output directory can be overriden as an argument to 'jammit'.
-    DEFAULT_OUTPUT_DIRECTORY = 'public/assets'
-
     # In Rails, the difference between a path and an asset URL is "public".
     PATH_TO_URL = /\A\/?public/
 
@@ -30,7 +27,7 @@ module Jammit
     # versions. In order to prebuild the MHTML stylesheets, we need to know the
     # base_url, because IE only supports MHTML with absolute references.
     def precache_all(output_dir=nil, base_url=nil)
-      output_dir ||= DEFAULT_OUTPUT_DIRECTORY
+      output_dir ||= "public/#{Jammit.package_path}"
       FileUtils.mkdir_p(output_dir) unless File.exists?(output_dir)
       @config[:js].keys.each  {|p| precache(p, 'js',  pack_javascripts(p), output_dir) }
       @config[:jst].keys.each {|p| precache(p, 'jst', pack_templates(p),  output_dir) }
@@ -58,32 +55,32 @@ module Jammit
 
     # Get the original list of individual assets for a package.
     def individual_urls(package, extension)
-      @packages[extension][package][:urls]
+      package_for(package, extension)[:urls]
     end
 
     # Return the compressed contents of a stylesheet package.
     def pack_stylesheets(package, variant=nil, asset_url=nil)
-      pack = @packages[:css][package]
-      raise PackageNotFound, "assets.yml does not contain a '#{package}' stylesheet package" if !pack
-      @compressor.compress_css(pack[:paths], variant, asset_url)
+      @compressor.compress_css(package_for(package, :css)[:paths], variant, asset_url)
     end
 
     # Return the compressed contents of a javascript package.
     def pack_javascripts(package)
-      pack = @packages[:js][package]
-      raise PackageNotFound, "assets.yml does not contain a '#{package}' javascript package" if !pack
-      @compressor.compress_js(pack[:paths])
+      @compressor.compress_js(package_for(package, :js)[:paths])
     end
 
     # Return the compiled contents of a JST package.
     def pack_templates(package)
-      pack = @packages[:jst][package]
-      raise PackageNotFound, "assets.yml does not contain a '#{package}' jst package" if !pack
-      @compressor.compile_jst(pack[:paths])
+      @compressor.compile_jst(package_for(package, :jst)[:paths])
     end
 
 
     private
+
+    # Access a package asset list, raises an exception if the package is MIA.
+    def package_for(package, extension)
+      pack = @packages[extension] && @packages[extension][package]
+      pack || not_found(package, extension)
+    end
 
     # Compiles the list of assets that goes into a package. Runs an ordered
     # list of Dir.globs, taking the unique, concatenated result.
@@ -98,6 +95,11 @@ module Jammit
         packages[name][:urls]  = paths.map {|path| path.sub(PATH_TO_URL, '') }
       end
       packages
+    end
+
+    # Raise a 404 for missing packages...
+    def not_found(package, extension)
+      raise PackageNotFound, "assets.yml does not contain a \"#{package}\" #{extension.to_s.upcase} package"
     end
 
   end
