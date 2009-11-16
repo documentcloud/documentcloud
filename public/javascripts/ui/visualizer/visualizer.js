@@ -72,7 +72,7 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   empty : function() {
-    return _.empty(this.topMetadata);
+    return _.isEmpty(this.topMetadata);
   },
 
   highlightDatum : function(e) {
