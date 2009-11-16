@@ -13,12 +13,12 @@ dc.ui.Visualizer = dc.View.extend({
   ],
 
   constructor : function(options) {
-    _.bindAll('open', 'renderVisualization', 'highlightDatum', 'highlightOff', this);
+    _.bindAll('open', 'renderVisualization', 'highlightDatum', 'highlightOff', 'onResize', this);
     this.base(options);
+    this.topDocuments = [];
+    this.topMetadata = [];
     dc.app.navigation.register('visualize', this.open);
-    $(window).resize(function() {
-      if (dc.app.navigation.currentTab == 'visualize') this.renderVisualization();
-    });
+    $(window).resize(this.onResize);
   },
 
   open : function() {
@@ -71,6 +71,10 @@ dc.ui.Visualizer = dc.View.extend({
     this.renderVisualization();
   },
 
+  empty : function() {
+    return _.empty(this.topMetadata);
+  },
+
   highlightDatum : function(e) {
     var ids = e.data.documentIds();
     _.each(this.docViews, function(view) {
@@ -86,8 +90,12 @@ dc.ui.Visualizer = dc.View.extend({
     $('.document_tile', this.el).removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
   },
 
+  onResize : function() {
+    if (dc.app.navigation.currentTab == 'visualize' && !this.empty()) this.renderVisualization();
+  },
+
   renderVisualization : function() {
-    if (this.topMetadata.length == 0) return;
+    if (this.empty()) return;
     var me = this;
     var el = $(this.el);
     el.html('');
