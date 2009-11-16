@@ -3,10 +3,10 @@ Gem::Specification.new do |s|
   s.version   = '0.1.0'         # Keep version in sync with jammit.rb
   s.date      = '2009-11-06'
 
-  s.homepage    = "http://wiki.github.com/documentcloud/jammit"
-  s.summary     = "Industrial-Strength Asset Packaging for Rails"
+  s.homepage    = "http://documentcloud.github.com/jammit/"
+  s.summary     = "Industrial Strength Asset Packaging for Rails"
   s.description = <<-EOS
-    Jammit is an industrial-strength asset packaging library for Rails,
+    Jammit is an industrial strength asset packaging library for Rails,
     providing both the CSS and JavaScript concatenation and compression
     that you'd expect, as well as ahead-of-time gzipping, built-in JavaScript
     template support, and optional Data-URI / MHTML image embedding.
@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
                          '--main'     << 'README' <<
                          '--all'
 
-  s.add_dependency 'rails'
+  s.add_dependency 'rails', ['>= 2.0.0']
   s.add_dependency 'yui-compressor', ['>= 0.9.1']
 
   s.files = %w(

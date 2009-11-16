@@ -20,7 +20,7 @@ dependencies:
     requirements: 
     - - ">="
       - !ruby/object:Gem::Version 
-        version: "0"
+        version: 2.0.0
     version: 
 - !ruby/object:Gem::Dependency 
   name: yui-compressor
@@ -32,7 +32,7 @@ dependencies:
       - !ruby/object:Gem::Version 
         version: 0.9.1
     version: 
-description: "    Jammit is an industrial-strength asset packaging library for Rails,\n    providing both the CSS and JavaScript concatenation and compression\n    that you'd expect, as well as ahead-of-time gzipping, built-in JavaScript\n    template support, and optional Data-URI / MHTML image embedding.\n"
+description: "    Jammit is an industrial strength asset packaging library for Rails,\n    providing both the CSS and JavaScript concatenation and compression\n    that you'd expect, as well as ahead-of-time gzipping, built-in JavaScript\n    template support, and optional Data-URI / MHTML image embedding.\n"
 email: jeremy@documentcloud.org
 executables: 
 - jammit
@@ -55,7 +55,7 @@ files:
 - Rakefile
 - README
 has_rdoc: true
-homepage: http://wiki.github.com/documentcloud/jammit
+homepage: http://documentcloud.github.com/jammit/
 licenses: []
 
 post_install_message: 
@@ -87,6 +87,6 @@ rubyforge_project: jammit
 rubygems_version: 1.3.5
 signing_key: 
 specification_version: 3
-summary: Industrial-Strength Asset Packaging for Rails
+summary: Industrial Strength Asset Packaging for Rails
 test_files: []
 

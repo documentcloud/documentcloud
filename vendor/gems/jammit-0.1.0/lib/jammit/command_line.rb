@@ -42,10 +42,8 @@ Options:
       exit(1)
     end
 
-    # Uses @OptionParser@ to grab the options.
-    # - --output   := output folder for packages
-    # - --config   := path to assets.yml
-    # - --base-url := specifying the base-url is required for MHTML pre-compilation.
+    # Uses @OptionParser@ to grab the options: *--output*, *--config*, and
+    # *--base-url*...
     def parse_options
       @options = {
         :config_path => Jammit::DEFAULT_CONFIG_PATH,
