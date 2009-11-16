@@ -16,7 +16,9 @@ dc.ui.Visualizer = dc.View.extend({
     _.bindAll('open', 'renderVisualization', 'highlightDatum', 'highlightOff', this);
     this.base(options);
     dc.app.navigation.register('visualize', this.open);
-    $(window).resize(this.renderVisualization);
+    $(window).resize(function() {
+      if (dc.app.navigation.currentTab == 'visualize') this.renderVisualization();
+    });
   },
 
   open : function() {
