@@ -16,6 +16,10 @@ namespace :app do
     sh "touch tmp/restart.txt"
   end
 
+  task :warm do
+    sh "curl http://localhost:80"
+  end
+
 end
 
 def nginx_pid
