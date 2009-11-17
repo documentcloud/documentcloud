@@ -28,15 +28,19 @@ class DocumentsController < ApplicationController
   end
 
   def page_text
-    doc = current_document(true)
+    doc         = current_document(true)
     page_number = params[:page_name].match(/(\d+)\Z/)[1].to_i
-    render :text => doc.pages.find_by_page_number(page_number).text
+    @response   = doc.pages.find_by_page_number(page_number).text
+    return if jsonp_request?
+    render :text => @response
   end
 
   def search
     doc          = current_document(true)
     page_numbers = doc.pages.search_text(params[:query]).map(&:page_number)
-    render :json => {'query' => params[:query], 'results' => page_numbers}
+    @response    = {'query' => params[:query], 'results' => page_numbers}
+    return if jsonp_request?
+    render :json => @response
   end
 
 
@@ -55,12 +59,12 @@ class DocumentsController < ApplicationController
     name    = @current_document.slug
     html    = ERB.new(File.read("#{RAILS_ROOT}/app/views/documents/show.html.erb")).result(binding)
     assets  = Dir["#{RAILS_ROOT}/public/document-viewer/*"]
-    html.gsub!(/\="\/document-viewer\//, '="assets/')
+    html.gsub!(/\="\/document-viewer\//, '="document-viewer/')
     Dir.mktmpdir do |temp_dir|
       zipfile = "#{temp_dir}/#{name}.zip"
       Zip::ZipFile.open(zipfile, Zip::ZipFile::CREATE) do |zip|
         zip.get_output_stream("#{name}.html") {|f| f.write(html) }
-        assets.each {|asset| zip.add("assets/#{File.basename(asset)}", asset) }
+        assets.each {|asset| zip.add("document-viewer/#{File.basename(asset)}", asset) }
       end
       # TODO: We can stream, or even better, use X-Accel-Redirect, if we can
       # be sure to clean up the Zip after the fact -- or maybe let it be cached
