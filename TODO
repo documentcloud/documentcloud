@@ -19,21 +19,21 @@ TODO:
     can load directly from the client, probably.
             
   * Start work on the Public API.
-  
-  * Swap out our single Thin instance on staging for a Passenger setup --
-    the advantage of the single instance is that deadlocks become obvious, so be
-    watch out for them after the switch.
     
   * Figure out our own taxonomy and map all the OpenCalais categories into it.
-  
-  * Start on a preliminary document-relation visualization.
-        
+          
   * Authorize logged-in folks to view private and organization documents.
     
   * Figure out what belongs in the Accounts sidebar.
   
 
 DONE:
+
+  * Start on a preliminary document-relation visualization.
+
+  * Swap out our single Thin instance on staging for a Passenger setup --
+    the advantage of the single instance is that deadlocks become obvious, so be
+    watch out for them after the switch.
 
   * Integrate the new document format / DocViewer. Start using the document 
     package format for imports. Replace raw PDF link with a DocumentViewer.
