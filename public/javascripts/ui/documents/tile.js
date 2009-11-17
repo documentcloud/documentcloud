@@ -7,6 +7,7 @@ dc.ui.DocumentTile = dc.View.extend({
     ['.view_document',    'click',  'viewDocument'],
     ['.view_pdf',         'click',  'viewPDF'],
     ['.view_text',        'click',  'viewFullText'],
+    ['.download_viewer',  'click',  'downloadViewer'],
     ['.delete_document',  'click',  'deleteDocument'],
     ['.icon',             'click',  'select']
   ],
@@ -49,6 +50,10 @@ dc.ui.DocumentTile = dc.View.extend({
 
   viewFullText : function() {
     window.open(this.model.get('full_text_url'));
+  },
+
+  downloadViewer : function() {
+    $('#hidden_iframe').attr({src : this.model.get('download_viewer_url')});
   },
 
   deleteDocument : function(e) {

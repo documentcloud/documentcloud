@@ -16,7 +16,7 @@
   .document_list.small_size .view_small {
     font-weight: bold;
   }
-  
+
 .document_list {
 }
   .panel_content .panel.documents {
@@ -26,7 +26,7 @@
     body.logged_in .panel_content.open_toolbar #document_list_container .panel.documents {
       top: 51px;
     }
-  
+
 .document_tile {
   position: relative;
   overflow: hidden;
@@ -60,7 +60,7 @@
       cursor: pointer;
     }
     .document_tile img.icon {
-      border: 1px solid #eee;      
+      border: 1px solid #eee;
     }
   .document_tile .title {
     display: block;
@@ -107,11 +107,14 @@
           background: url(/images/embed/icons/page_white_acrobat.png);
         }
         .document_tools .view_text {
-          background: url(/images/embed/icons/text_columns.png);
+          background: url(/images/embed/icons/page_white_text.png);
+        }
+        .document_tools .download_viewer {
+          background: url(/images/embed/icons/page_white_zip.png);
         }
         .document_tools .delete_document {
           display: none;
-          background: url(/images/embed/icons/bin.png);
+          background: url(/images/embed/icons/page_white_delete.png);
         }
           body.logged_in .document_tools .delete_document {
             display: inline;

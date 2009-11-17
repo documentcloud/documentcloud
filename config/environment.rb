@@ -39,9 +39,11 @@ Rails::Initializer.run do |config|
   config.gem 'documentcloud-calais',  :version => '>= 0.0.7',       :lib => 'calais'
   config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'
   config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
+  config.gem 'rubyzip',               :version => '>= 0.9.1',       :lib => 'zip/zip'
   config.gem 'right_aws',             :version => '>= 1.10.0'
   config.gem 'postgres',              :version => '>= 0.7.9.2008.01.28'
-  config.gem 'jammit'
+  config.gem 'jammit',                :version => '>= 0.1.1'
+
 
   require 'json/add/rails'
 

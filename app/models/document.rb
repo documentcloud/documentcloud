@@ -82,8 +82,12 @@ class Document < ActiveRecord::Base
     "#{DC_CONFIG['server_root']}/documents/#{id}-#{slug}.html"
   end
 
+  def download_viewer_url
+    "#{DC_CONFIG['server_root']}/documents/#{id}-#{slug}.zip"
+  end
+
   def search_url
-    "/documents/#{id}/search.json"
+    "#{DC_CONFIG['server_root']}/documents/#{id}/search.json"
   end
 
   def page_image_url_template
@@ -91,7 +95,7 @@ class Document < ActiveRecord::Base
   end
 
   def page_text_url_template
-    "/documents/#{id}/#{slug}-p{page}.txt"
+    "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}-p{page}.txt"
   end
 
   def asset_store
@@ -120,7 +124,8 @@ class Document < ActiveRecord::Base
       'pdf_url'             => pdf_url,
       'thumbnail_url'       => thumbnail_url,
       'full_text_url'       => full_text_url,
-      'document_viewer_url' => document_viewer_url
+      'document_viewer_url' => document_viewer_url,
+      'download_viewer_url' => download_viewer_url
     }.to_json
   end
 
