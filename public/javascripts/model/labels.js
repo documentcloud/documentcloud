@@ -2,13 +2,6 @@
 
 dc.model.Label = dc.Model.extend({
 
-  resource : 'labels',
-
-  constructor : function(options) {
-    this.base(options);
-    _.bindAll('addSelectedDocuments', this);
-  },
-
   documentIds : function() {
     if (!this.get('document_ids')) return [];
     return this.get('document_ids').split(',');
@@ -33,11 +26,6 @@ dc.model.Label = dc.Model.extend({
 dc.model.LabelSet = dc.model.RESTfulSet.extend({
 
   resource : 'labels',
-
-  constructor : function(options) {
-    _.bindAll('addSelectedDocuments', this);
-    this.base(options);
-  },
 
   addSelectedDocuments : function(label) {
     var newIds = _.uniq(label.documentIds().concat(Documents.selectedIds()));

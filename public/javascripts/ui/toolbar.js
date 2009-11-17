@@ -5,7 +5,8 @@ dc.ui.Toolbar = dc.View.extend({
   constructor : function(options) {
     this.id = options.tab = '_toolbar';
     this.base(options);
-    this.labelMenu = new dc.ui.LabelMenu({onclick : Labels.addSelectedDocuments});
+    _.bindAll('_addSelectedDocuments', this);
+    this.labelMenu = new dc.ui.LabelMenu({onclick : this._addSelectedDocuments});
   },
 
   render : function() {
@@ -26,6 +27,13 @@ dc.ui.Toolbar = dc.View.extend({
   show : function() {
     if (!Labels.populated) Labels.populate();
     $.setMode(this._panel(), 'open', 'toolbar');
+  },
+
+  _addSelectedDocuments : function(label) {
+    var count = Documents.countSelected();
+    var notification = "added " + count + ' ' + Inflector.pluralize('document', count) + ' to "' + label.get('title') + '"';
+    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.labelMenu.el, position : 'center right', left : 7});
+    Labels.addSelectedDocuments(label);
   },
 
   _panel : function() {

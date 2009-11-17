@@ -37,6 +37,10 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 
   selectedIds : function() {
     return _.pluck(this.selected(), 'id');
+  },
+
+  countSelected : function() {
+    return this.selected().length;
   }
 
 });

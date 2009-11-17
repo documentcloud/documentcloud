@@ -31,6 +31,11 @@ window.Inflector = {
     return s.replace(/e?s$/, '');
   },
 
+  // Only works for words that pluralize by adding an 's'.
+  pluralize: function(s, count) {
+    return count != 1 ? s + 's' : s;
+  },
+
   classify: function(s) {
     return this.camelize(this.capitalize(this.dasherize(this.singularize(s))));
   },
