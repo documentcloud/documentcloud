@@ -2,8 +2,6 @@ TODO:
 
   * Replace document IDs in URLs with title-based slugs.
 
-  * Think about adding search history.
-
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Add autocomplete and label creation to the pulldown.
 
@@ -28,6 +26,8 @@ TODO:
   
 
 DONE:
+
+  * Think about adding search history.
 
   * Start on a preliminary document-relation visualization.
 
