@@ -1,10 +1,11 @@
+javascript_compressor: closure
 template_function: _.template
 embed_images: on
 
 javascripts:
   workspace:
-    - public/javascripts/vendor/*.js
     - public/javascripts/application.js
+    - public/javascripts/vendor/*.js
     - public/javascripts/lib/bindable.js
     - public/javascripts/lib/set.js
     - public/javascripts/lib/*.js

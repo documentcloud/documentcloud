@@ -1,14 +1,14 @@
 dc.util.Bindable = {
-  
+
   ALL : 'bindable:bind_all',
-  
+
   // Mix in bindable methods to the target class.
   extend : function(obj) {
-    return $.extend(obj, dc.util.Bindable.methods);
+    return _.extend(obj, dc.util.Bindable.methods);
   },
-  
+
   methods : {
-    
+
     // e -> event object
     // callback -> callback function
     // scope -> optional scoping object
@@ -24,7 +24,7 @@ dc.util.Bindable = {
         message : message
       });
     },
-    
+
     // Remove one or more callbacks.
     unbind : function(e, callback, scope) {
       var calls = this.__callbacks__;
@@ -41,17 +41,17 @@ dc.util.Bindable = {
         }
       }
     },
-    
+
     // Remove all bound callbacks.
     unbindAll : function() {
       delete this.__callbacks__;
     },
-    
+
     // Fire an event, triggering all bound callbacks.
     fire : function(e) {
       if (!e) throw new Error('dc.util.Bindable: Undefined event');
       var calls = this.__callbacks__;
-      
+
       for (var j=0; j<2; j++) {
         var ev = j ? e : dc.util.Bindable.ALL;
         var list = calls && calls[ev], i = (list && list.length) || 0;
@@ -67,13 +67,13 @@ dc.util.Bindable = {
         }
         if (thin) {
           calls[ev] = [];
-          for (k=0; k<list.length; k++) { 
-            if (list[k]) calls[ev].push(list[k]); 
+          for (k=0; k<list.length; k++) {
+            if (list[k]) calls[ev].push(list[k]);
           }
         }
       }
     }
-    
+
   }
-  
+
 };

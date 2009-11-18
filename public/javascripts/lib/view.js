@@ -1,5 +1,5 @@
 dc.View = Base.extend({
-  
+
   el              : null,
   model           : null,
   callbacks       : {},
@@ -7,15 +7,15 @@ dc.View = Base.extend({
   id              : null,
   className       : 'view',
   tagName         : 'div',
-  
+
   constructor : function(options) {
     options = options || {};
     this.modes = {};
     this.configure(options);
-    this.el = options.el || $.el(this.tagName, {id : this.id, 'class' : this.className});    
+    this.el = options.el || $.el(this.tagName, {id : this.id, 'class' : this.className});
     return this;
   },
-  
+
   configure : function(options) {
     if (options.model)      this.model = options.model;
     if (options.set)        this.set = options.set;
@@ -23,20 +23,20 @@ dc.View = Base.extend({
     if (options.className)  this.className = options.className;
     this.options = options;
   },
-  
+
   setOptions : function(options) {
-    this.options = $.extend(this.options, options);
+    this.options = _.extend(this.options, options);
     return this;
   },
-  
+
   render : function() {
     return this;
   },
-  
+
   children : function() {
     return [];
   },
-  
+
   // Makes the view enter a mode. Modes have both a 'mode' and a 'group',
   // and are mutually exclusive with any other modes in the same group.
   // Setting will update the view's modes hash, as well as set an HTML className
@@ -46,8 +46,8 @@ dc.View = Base.extend({
     $.setMode(this.el, mode, group);
     this.modes[group] = mode;
   },
-  
-  // Set callbacks, where this.callbacks is an array of [CSS-selector, 
+
+  // Set callbacks, where this.callbacks is an array of [CSS-selector,
   // event-name, callback-name] triplets. Callbacks will be bound to the view,
   // with 'this' set properly. Passing a selector of 'el' binds to the view's
   // element.
@@ -59,5 +59,5 @@ dc.View = Base.extend({
       (selector == 'el' ? $(me.el) : $(selector, me.el)).bind(ev, method);
     });
   }
-  
+
 });
