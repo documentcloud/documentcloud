@@ -17,7 +17,7 @@ namespace :app do
   end
 
   task :warm do
-    sh "curl http://localhost:80"
+    sh "curl -s -u guest:docsforall http://localhost:80 > /dev/null"
   end
 
 end
