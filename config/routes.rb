@@ -21,6 +21,9 @@ ActionController::Routing::Routes.draw do |map|
                 :member     => {:thumbnail => :get, :search => :get}
   map.page_text "/documents/:id/:page_name.txt", :controller => :documents, :action => :page_text
 
+  # Bulk downloads.
+  map.bulk_download '/download/*args.zip', :controller => 'download', :action => 'bulk_download'
+
   # Accounts and account management.
   map.resources :accounts
   map.with_options :controller => 'accounts' do |accounts|

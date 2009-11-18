@@ -82,10 +82,6 @@ class Document < ActiveRecord::Base
     "#{DC_CONFIG['server_root']}/documents/#{id}-#{slug}.html"
   end
 
-  def download_viewer_url
-    "#{DC_CONFIG['server_root']}/documents/#{id}-#{slug}.zip"
-  end
-
   def search_url
     "#{DC_CONFIG['server_root']}/documents/#{id}/search.json"
   end
@@ -125,7 +121,6 @@ class Document < ActiveRecord::Base
       'thumbnail_url'       => thumbnail_url,
       'full_text_url'       => full_text_url,
       'document_viewer_url' => document_viewer_url,
-      'download_viewer_url' => download_viewer_url
     }.to_json
   end
 

@@ -1,5 +1,6 @@
 <script type="text/javascript">
 window.RAILS_ENV = '<%= RAILS_ENV %>';
+window.SERVER_ROOT = '<%= DC_CONFIG["server_root"] %>';
 <% if @current_account %>
   dc.app.accountId = <%= @current_account.id %>;
   Accounts.add(new dc.model.Account(<%= @current_account.to_json %>));

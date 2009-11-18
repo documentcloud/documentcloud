@@ -11,17 +11,14 @@
     height: 30px;
     border: 1px solid #8b8b8b; border-top: 0; border-bottom-color: #aaa;
   }
-  
+
 .toolbar {
-  padding: 5px 10px;
+  padding: 5px 12px;
 }
   .toolbar .minibutton {
     float: left;
-    margin-left: 10px;
+    margin-left: 12px;
   }
     .toolbar .minibutton:first-child {
       margin-left: 0;
-    }
-    .toolbar #delete_document_button {
-      float: right;
     }

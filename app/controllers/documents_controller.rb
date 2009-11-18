@@ -6,7 +6,6 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       format.pdf  { send_pdf }
       format.text { send_text }
-      format.zip  { send_packaged_viewer }
       format.html
     end
   end
@@ -53,24 +52,6 @@ class DocumentsController < ApplicationController
 
   def send_text
     render :text => @current_document.full_text.text
-  end
-
-  def send_packaged_viewer
-    name    = @current_document.slug
-    html    = ERB.new(File.read("#{RAILS_ROOT}/app/views/documents/show.html.erb")).result(binding)
-    assets  = Dir["#{RAILS_ROOT}/public/document-viewer/*"]
-    html.gsub!(/\="\/document-viewer\//, '="document-viewer/')
-    Dir.mktmpdir do |temp_dir|
-      zipfile = "#{temp_dir}/#{name}.zip"
-      Zip::ZipFile.open(zipfile, Zip::ZipFile::CREATE) do |zip|
-        zip.get_output_stream("#{name}.html") {|f| f.write(html) }
-        assets.each {|asset| zip.add("document-viewer/#{File.basename(asset)}", asset) }
-      end
-      # TODO: We can stream, or even better, use X-Accel-Redirect, if we can
-      # be sure to clean up the Zip after the fact -- or maybe let it be cached
-      # and clear them out on deploy.
-      send_file zipfile, :stream => false
-    end
   end
 
   # TODO: Access control this document -- but not yet.

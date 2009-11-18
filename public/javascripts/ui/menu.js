@@ -12,6 +12,7 @@ dc.ui.Menu = dc.View.extend({
     this.content = $.el('div', {'class' : 'menu_content', id : (this.id ? this.id + '_content' : null)});
     this.modes.open = 'not';
     _.bindAll('close', this);
+    if (options.items) this.addItems(options.items);
   },
 
   render : function() {
@@ -35,6 +36,15 @@ dc.ui.Menu = dc.View.extend({
     this.setMode('not', 'open');
     if (this.options.onClose) this.options.onClose(this);
     return true;
+  },
+
+  addItems : function(items) {
+    var elements = _(items).map(function(item) {
+      var el = $.el('div', {'class' : 'menu_item'}, item.title);
+      if (item.onClick) el.onclick = item.onClick;
+      return el;
+    });
+    $(this.content).append(elements);
   }
 
 });

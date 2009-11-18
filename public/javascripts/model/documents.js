@@ -31,6 +31,11 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 
   resource : 'documents',
 
+  constructor : function(options) {
+    this.base(options);
+    _.bindAll('downloadSelectedViewers', 'downloadSelectedPDF', 'downloadSelectedFullText', this);
+  },
+
   selected : function() {
     return _.select(this.models(), function(m){ return m.selected; });
   },
@@ -41,6 +46,20 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 
   countSelected : function() {
     return this.selected().length;
+  },
+
+  downloadSelectedViewers : function() {
+    dc.app.download('/download/' + this.selectedIds().join('/') + '/document_viewer.zip');
+  },
+
+  downloadSelectedPDF : function() {
+    if (this.countSelected() <= 1) return window.open(this.selected()[0].get('pdf_url'));
+    dc.app.download('/download/' + this.selectedIds().join('/') + '/document_pdfs.zip');
+  },
+
+  downloadSelectedFullText : function() {
+    if (this.countSelected() <= 1) return window.open(this.selected()[0].get('full_text_url'));
+    dc.app.download('/download/' + this.selectedIds().join('/') + '/document_text.zip');
   }
 
 });
