@@ -4,7 +4,7 @@
 <head>
   <%= render :partial => 'common/meta_tags' %>
   <title><%= @title %> | DocumentCloud</title>
-  <%= include_stylesheets :app, :workspace %>
+  <%= include_stylesheets :app, :workspace, :media => 'all' %>
   <%= include_javascripts :workspace %>
   <%= include_templates :complete %>
   <%= render :partial => 'common/bootstrap' %>
@@ -26,8 +26,8 @@
     </div>
 
   </div>
-  
-  <iframe id="hidden_iframe" name="hidden_iframe" src="about:blank" class="hidden_iframe"></iframe>                 
+
+  <iframe id="hidden_iframe" name="hidden_iframe" src="about:blank" class="hidden_iframe"></iframe>
 
 </body>
 </html>
