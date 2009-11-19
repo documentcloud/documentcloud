@@ -26,7 +26,7 @@ dc.ui.DocumentTile = dc.View.extend({
       'thumbnail' : this.model.get('thumbnail_url'),
       'title'     : this.mode == 'viz' ? Inflector.truncate(title, 55) : title,
       'source'    : this.model.get('source'),
-      'summary'   : this.model.get('summary')
+      'summary'   : this.model.inlineSummary()
     }));
     this.setCallbacks();
     this.setMode('not', 'selected');

@@ -57,7 +57,7 @@ class DocumentImport < CloudCrowd::Action
     text = doc.combined_page_text
     doc.access = options['access'] || DC::Access::PUBLIC
     doc.full_text = FullText.new(:text => text, :document => doc)
-    doc.summary = text[0...255]
+    doc.summary = text[0...1000].gsub(/\s+/, ' ')[0...255]
     calais_response = fetch_rdf_from_calais(text)
     doc.rdf = @rdf
     DC::Import::MetadataExtractor.new.extract_metadata(doc, calais_response) if calais_response
