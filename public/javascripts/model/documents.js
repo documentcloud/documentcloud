@@ -10,7 +10,7 @@ dc.model.Document = dc.Model.extend({
   // version of the summary has all runs of whitespace squeezed out.
   inlineSummary : function() {
     var summ = this.get('summary');
-    summ ? summ.replace(/\s+/g, ' ') : '';
+    return summ ? summ.replace(/\s+/g, ' ') : '';
   },
 
   // Return a list of the document's metadata. Think about caching this on the
