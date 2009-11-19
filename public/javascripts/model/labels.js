@@ -2,6 +2,8 @@
 
 dc.model.Label = dc.Model.extend({
 
+  resource : 'labels',
+
   documentIds : function() {
     if (!this.get('document_ids')) return [];
     return this.get('document_ids').split(',');

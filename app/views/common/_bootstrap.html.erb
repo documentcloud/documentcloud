@@ -4,5 +4,7 @@ window.SERVER_ROOT = '<%= DC_CONFIG["server_root"] %>';
 <% if @current_account %>
   dc.app.accountId = <%= @current_account.id %>;
   Accounts.add(new dc.model.Account(<%= @current_account.to_json %>));
+  Labels.populate(<%= @current_account.labels.to_json %>);
+  SavedSearches.populate(<%= @current_account.saved_searches.to_json %>);
 <% end %>
 </script>

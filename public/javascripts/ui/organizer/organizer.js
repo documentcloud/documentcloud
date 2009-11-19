@@ -6,8 +6,7 @@ dc.ui.Organizer = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll('ensurePopulated', '_addLabel', '_addSavedSearch', '_removeSubView', this);
-    dc.app.navigation.register('organize', this.ensurePopulated);
+    _.bindAll('_addSubView', '_removeSubView', this);
     this._bindToSets();
     this.sidebar = new dc.ui.OrganizerSidebar({organizer : this});
     this.subViews = [];
@@ -16,7 +15,14 @@ dc.ui.Organizer = dc.View.extend({
   render : function() {
     dc.app.workspace.sidebar.add('organizer_sidebar', this.sidebar.render().el);
     this.setCallbacks();
+    this.renderAll();
     return this;
+  },
+
+  renderAll : function() {
+    _.each(this.sortedModels(), _.bind(function(model) {
+      this._addSubView(null, model);
+    }, this));
   },
 
   // Filters the visible labels and saved searches, by case-insensitive search.
@@ -32,11 +38,6 @@ dc.ui.Organizer = dc.View.extend({
     return count;
   },
 
-  ensurePopulated : function() {
-    if (!SavedSearches.populated) SavedSearches.populate();
-    if (!Labels.populated)        Labels.populate();
-  },
-
   models : function() {
     return Labels.models().concat(SavedSearches.models());
   },
@@ -47,21 +48,15 @@ dc.ui.Organizer = dc.View.extend({
 
   // Bind all possible SavedSearch and Label events for rendering.
   _bindToSets : function() {
-    SavedSearches.bind(dc.Set.MODEL_ADDED, this._addSavedSearch);
+    SavedSearches.bind(dc.Set.MODEL_ADDED, this._addSubView);
     SavedSearches.bind(dc.Set.MODEL_REMOVED, this._removeSubView);
-    Labels.bind(dc.Set.MODEL_ADDED, this._addLabel);
+    Labels.bind(dc.Set.MODEL_ADDED, this._addSubView);
     Labels.bind(dc.Set.MODEL_REMOVED, this._removeSubView);
   },
 
-  _addSavedSearch : function(e, model) {
-    this._addSubView(new dc.ui.SavedSearch({model : model}).render());
-  },
-
-  _addLabel : function(e, model) {
-    this._addSubView(new dc.ui.Label({model : model}).render());
-  },
-
-  _addSubView : function(view) {
+  _addSubView : function(e, model) {
+    var viewClass = model.resource == 'labels' ? 'Label' : 'SavedSearch';
+    var view = new dc.ui[viewClass]({model : model}).render();
     this.subViews.push(view);
     var models = this.sortedModels();
     var previous = models[_.indexOf(models, view.model) - 1];
