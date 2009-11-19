@@ -9,7 +9,8 @@ dc.model.Document = dc.Model.extend({
   // The import process will take care of this in the future, but the inline
   // version of the summary has all runs of whitespace squeezed out.
   inlineSummary : function() {
-    return this.get('summary').replace(/\s+/g, ' ');
+    var summ = this.get('summary');
+    summ ? summ.replace(/\s+/g, ' ') : '';
   },
 
   // Return a list of the document's metadata. Think about caching this on the
