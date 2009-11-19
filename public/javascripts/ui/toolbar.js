@@ -30,12 +30,12 @@ dc.ui.Toolbar = dc.View.extend({
 
   hide : function() {
     dc.ui.notifier.hide(true);
-    $.setMode(this._panel(), 'closed', 'toolbar');
+    $(this._panel()).setMode('closed', 'toolbar');
   },
 
   show : function() {
     if (!Labels.populated) Labels.populate();
-    $.setMode(this._panel(), 'open', 'toolbar');
+    $(this._panel()).setMode('open', 'toolbar');
   },
 
   _addSelectedDocuments : function(label) {

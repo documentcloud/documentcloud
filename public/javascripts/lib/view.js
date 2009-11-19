@@ -43,7 +43,7 @@ dc.View = Base.extend({
   // of [mode]_[group] on the view's element. Convenient way to swap styles
   // and behavior.
   setMode : function(mode, group) {
-    $.setMode(this.el, mode, group);
+    $(this.el).setMode(mode, group);
     this.modes[group] = mode;
   },
 

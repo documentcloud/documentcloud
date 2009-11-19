@@ -43,14 +43,14 @@ a {
     border: 1px solid #999;
     -moz-border-radius: 6px;
   }
-  
+
 #save_search {
   opacity: 0;
   position: absolute;
   top: 71px; right: 10px;
 /*  top: 128px; right: 15px;*/
 }
-  
+
 #spinner {
   display: none;
   position: absolute;
@@ -73,7 +73,7 @@ a {
     width: 56px; height: 7px;
     background: url(/images/embed/ui/spinner.gif);
   }
-  
+
 #content {
   position: absolute;
   bottom: 0px; top: 52px; left: 0; right: 0;
@@ -115,7 +115,7 @@ a {
     top: 3px; left: 10px; right: 10px;
     font-size: 10px;
     line-height: 16px;
-    height: 16px; 
+    height: 16px;
     overflow: hidden;
     color: #777;
   }
@@ -144,7 +144,7 @@ a {
   }
   .panel_background {
     position: absolute;
-    left: 0px; right: 0px; top: 21px; bottom: 0px; 
+    left: 0px; right: 0px; top: 21px; bottom: 0px;
     overflow: auto;
     padding: 10px;
     background: #fff;
@@ -241,7 +241,7 @@ a {
         left: 195px;
         margin: 0;
       }
-  
+
 .sidebar .help {
   position: absolute;
   top: 21px; bottom: 21px; left: 1px; right: 1px;

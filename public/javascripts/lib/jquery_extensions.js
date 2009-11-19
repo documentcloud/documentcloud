@@ -8,18 +8,7 @@ $.extend({
     if (content) $(el).html(content);
     return el;
   },
-  
-  // See dc.View#setMode...
-  setMode : function(el, state, group) {
-    group = group || 'mode';
-    var re = new RegExp("\\w+_" + group + "(\\s|$)", 'g');
-    var mode = (state === null) ? "" : state + "_" + group;
-    var name = el.className.replace(re, '') + ' ' + mode;
-    name = name.replace(/\s\s/g, ' ');
-    el.className = name;
-    return mode;
-  },
-  
+
   // Align an element relative to a target element's coordinates. Forces the
   // element to be absolutely positioned. Element must be visible.
   // Position string format is: "top -right".
@@ -33,7 +22,7 @@ $.extend({
     var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0;
     var clientWidth = document.documentElement.clientWidth;
     var clientHeight = document.documentElement.clientHeight;
-    
+
     // var targPos = target.position();
     var targOff = target.offset();
     var b = {
@@ -42,14 +31,14 @@ $.extend({
       width : target.innerWidth(),
       height : target.innerHeight()
     };
-    
+
     var elb = {
       width : el.innerWidth(),
       height : el.innerHeight()
     };
-    
+
     var left, top;
-    
+
     if (pos.indexOf('-left') >= 0) {
       left = b.left;
     } else if (pos.indexOf('left') >= 0) {
@@ -61,7 +50,7 @@ $.extend({
     } else { // Centered.
       left = b.left + (b.width - elb.width) / 2;
     }
-    
+
     if (pos.indexOf('-top') >= 0) {
       top = b.top;
     } else if (pos.indexOf('top') >= 0) {
@@ -73,23 +62,23 @@ $.extend({
     } else { // Centered.
       top = b.top + (b.height - elb.height) / 2;
     }
-    
+
     var constrain = (pos.indexOf('no-constraint') >= 0) ? false : true;
-    
+
     left += offset.left || 0;
     top += offset.top || 0;
-    
+
     if (constrain) {
       left = Math.max(scrollLeft, Math.min(left, scrollLeft + clientWidth - elb.width));
       top = Math.max(scrollTop, Math.min(top, scrollTop + clientHeight - elb.height));
     }
-    
+
     var offParent;
     if (offParent = el.offsetParent()) {
       left -= offParent.offset().left;
       top -= offParent.offset().top;
     }
-    
+
     $(el).css({position : 'absolute', left : left + 'px', top : top + 'px'});
     return el;
   }
@@ -97,7 +86,18 @@ $.extend({
 });
 
 $.fn.extend({
-  
+
+  // See dc.View#setMode...
+  setMode : function(state, group) {
+    group = group || 'mode';
+    var re = new RegExp("\\w+_" + group + "(\\s|$)", 'g');
+    var mode = (state === null) ? "" : state + "_" + group;
+    var name = this[0].className.replace(re, '') + ' ' + mode;
+    name = name.replace(/\s\s/g, ' ');
+    this[0].className = name;
+    return mode;
+  },
+
   // A-la serializeArray but returns a hash instead of a list.
   serializeJSON : function() {
     return _.inject(this.serializeArray(), {}, function(hash, pair) {
@@ -105,7 +105,7 @@ $.fn.extend({
       return hash;
     });
   },
-  
+
   // When the next click or keypress happens, anywhere on the screen, hide the
   // element. 'clickable' makes the element and its contents clickable without
   // hiding. The 'onHide' callback runs when the hide fires, and has a chance
@@ -130,5 +130,5 @@ $.fn.extend({
       $(document).bind('keypress', this._autohider);
     }
   }
-  
+
 });

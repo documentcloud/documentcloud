@@ -30,14 +30,24 @@
       background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#dfdfdf));
       -webkit-box-shadow: 0 1px 10px #222; -moz-box-shadow: 0 1px 10px #222;
     }
-    
+
 body.logged_in .tab_content {
   display: none;
 }
   body.upload_navigation .upload_tab_content,
   body.search_navigation .search_tab_content,
   body.admin_navigation .admin_tab_content,
-  body.organize_navigation .organize_tab_content,
   body.visualize_navigation .visualize_tab_content {
+    display: block;
+  }
+
+body.search_navigation div.active_search,
+body.search_navigation div.empty_search,
+body.search_navigation div.no_search {
+  display: none;
+}
+  body.search_navigation.active_search div.active_search,
+  body.search_navigation.empty_search div.empty_search,
+  body.search_navigation.no_search div.no_search {
     display: block;
   }

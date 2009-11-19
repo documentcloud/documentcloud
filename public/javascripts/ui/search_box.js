@@ -15,6 +15,7 @@ dc.ui.SearchBox = dc.View.extend({
   constructor : function() {
     this.base({el : $('#search')[0]});
     this.outstandingSearch = false;
+    $(document.body).setMode('no', 'search');
     this.setCallbacks();
     _.bindAll('loadSearchResults', 'loadMetadataResults', 'searchByHash', 'saveCurrentSearch', this);
     dc.history.register(/^#search\//, this.searchByHash);
@@ -28,6 +29,7 @@ dc.ui.SearchBox = dc.View.extend({
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber) {
     if (dc.app.navigation) dc.app.navigation.tab('search');
+    $(document.body).setMode('active', 'search');
     var page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
     this.fragment = 'search/' + encodeURIComponent(query);
@@ -59,18 +61,21 @@ dc.ui.SearchBox = dc.View.extend({
   // Callback fired on key press in the search box. We search when they hit
   // return.
   maybeSearch : function(e) {
-    if (!this.outstandingSearch && e.keyCode == 13 && this.value()) {
-      this.search(this.value());
-    }
+    var query = this.value();
+    if (!query) return $(document.body).setMode('no', 'search');
+    if (!this.outstandingSearch && e.keyCode == 13) this.search(query);
   },
 
   // Webkit knows how to fire a real "search" event.
   searchEvent : function(e) {
-    if (!this.outstandingSearch && this.value()) this.search(this.value());
+    var query = this.value();
+    if (!query) return $(document.body).setMode('no', 'search');
+    if (!this.outstandingSearch && query) this.search(query);
   },
 
   // Hide the spinner and remove the search lock when finished searching.
-  doneSearching : function() {
+  doneSearching : function(empty) {
+    if (empty) $(document.body).setMode('empty', 'search');
     dc.ui.spinner.hide();
     this.outstandingSearch = false;
   },
@@ -88,7 +93,7 @@ dc.ui.SearchBox = dc.View.extend({
     Documents.each(function(el) {
       $('#document_list_container .documents').append((new dc.ui.DocumentTile(el)).render().el);
     });
-    if (resp.documents.length == 0) return this.doneSearching();
+    if (resp.documents.length == 0) return this.doneSearching(true);
     dc.ui.spinner.show('gathering metadata');
     var docIds = _.pluck(resp.documents, 'id');
     $.get('/documents/metadata.json', {'ids[]' : docIds}, this.loadMetadataResults, 'json');

@@ -70,12 +70,12 @@ dc.ui.MetadataList = dc.View.extend({
 
   // Show only the top metadata for the kind.
   showLess : function(e) {
-    $.setMode($(e.target).parents('.metalist').get(0), 'less', 'shown');
+    $(e.target).parents('.metalist').setMode('less', 'shown');
   },
 
   // Show *all* the metadata for the kind.
   showMore : function(e) {
-    $.setMode($(e.target).parents('.metalist').get(0), 'more', 'shown');
+    $(e.target).parents('.metalist').setMode('more', 'shown');
   }
 
 });

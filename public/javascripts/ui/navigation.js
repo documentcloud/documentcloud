@@ -11,7 +11,6 @@ dc.ui.Navigation = dc.View.extend({
 
   // List of tab names => page titles.
   tabs : [
-    {name : 'organize', title : 'Workspace'},
     {name : 'search',    title : 'Search'},
     {name : 'upload',    title : 'Upload a Document'},
     {name : 'visualize', title : 'Visualize'},
@@ -49,7 +48,7 @@ dc.ui.Navigation = dc.View.extend({
     $('.nav', this.el).removeClass('active');
     el.addClass('active');
     this.setTitle(el.attr('title'));
-    $.setMode(document.body, tab, 'navigation');
+    $(document.body).setMode(tab, 'navigation');
   },
 
   // Switch to a tab as an event callback.
