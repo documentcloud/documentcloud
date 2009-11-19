@@ -49,6 +49,7 @@ dc.ui.Toolbar = dc.View.extend({
     var docs = Documents.selected();
     if (!confirm('Really delete ' + docs.length + ' ' + Inflector.pluralize('document', docs.length) + '?')) return;
     _(docs).each(function(doc){ Documents.destroy(doc); });
+    this.display();
   },
 
   _panel : function() {
