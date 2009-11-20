@@ -1,6 +1,6 @@
 dc.ui.Label = dc.View.extend({
 
-  className : 'label box',
+  className : 'label box serif',
 
   callbacks : [
     ['el',              'click',    'showDocuments'],

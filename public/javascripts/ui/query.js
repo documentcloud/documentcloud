@@ -15,7 +15,7 @@ dc.ui.Query = dc.View.extend({
     $(this.el).html('');
   },
 
-  render : function(data) {
+  render : function(data, count) {
     data = data ? (this.data = data) : this.data;
     var to = Math.min(data.to, data.total);
     var fromPart = (data.total < 2 ? '' : '' + (data.from + 1) + " &ndash; " + to + " of ");
@@ -31,15 +31,13 @@ dc.ui.Query = dc.View.extend({
     });
     var last = list.pop();
 
-    if (list.length == 0) {
-      sentence += last + ".";
-    } else if (list.length == 1) {
-      sentence += list[0] + ' and ' + last + ".";
-    } else {
-      sentence += list.join(', ') + ", and " + last + ".";
-    }
+    var query = (list.length == 0) ? last :
+                (list.length == 1) ? list[0] + ' and ' + last :
+                                     list.join(', ') + ", and " + last;
 
+    sentence += (query + '.');
     $(this.el).html(sentence);
+    if (count === 0) $('#no_results_query').html('&ndash; ' + query + ' &ndash; ');
     return this;
   },
 
@@ -50,7 +48,7 @@ dc.ui.Query = dc.View.extend({
 
   _onSelectionChange : function() {
     var count = Documents.countSelected();
-    count > 0 ? this.renderSelected(count) : this.render();
+    count > 0 ? this.renderSelected(count) : this.render(null, count);
   }
 
 });

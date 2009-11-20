@@ -8,7 +8,8 @@
     width: 32px; height: 32px;
   }
 
-.document_list.large_size .icon.document.generic {
+.document_list.large_size .icon.document.generic,
+#no_results .icon.document.generic {
   width: 60px; height: 75px;
   background: url(/images/embed/documents/generic.png);
 }

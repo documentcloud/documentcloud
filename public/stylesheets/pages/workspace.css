@@ -177,6 +177,30 @@ a {
       background: url(/images/embed/ui/cap_top_right.png);
     }
 
+#no_results_container {
+  position: absolute;
+}
+  #no_results {
+    position: relative;
+    margin: 15px 0 0 15px;
+    padding: 8px 15px 8px 77px;
+    height: 77px;
+    font-size: 14px;
+    line-height: 77px;
+    color: #777;
+    background: #eee;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+    border: 1px solid #ccc;
+    border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px;
+  }
+    #no_results_query {
+      font-weight: bold;
+    }
+    #no_results .icon {
+      position: absolute;
+      top: 8px; left: 8px;
+    }
+
 #full_screen_form {
   position: absolute;
   overflow: auto;

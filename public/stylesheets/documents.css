@@ -65,7 +65,8 @@
   .document_tile .title {
     display: block;
     color: #002256;
-    font: bold 14px Georgia, serif;
+    font-size: 14px;
+    font-weight: bold;
     margin-top: 8px;
     overflow: hidden;
     height: 17px;
@@ -134,7 +135,6 @@
       color: #333;
     }
   .document_tile .summary {
-    font-family: Georgia, serif;
     line-height: 16px;
     margin-top: 5px;
     height: 33px;

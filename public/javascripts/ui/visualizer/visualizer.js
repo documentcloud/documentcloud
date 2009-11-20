@@ -73,7 +73,7 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   empty : function() {
-    return _.isEmpty(this.topMetadata);
+    return _.isEmpty(this.topMetadata) || _.isEmpty(this.topDocuments);
   },
 
   highlightDatum : function(e) {
@@ -102,16 +102,16 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   renderVisualization : function() {
-    if (this.empty()) return;
     var me = this;
     var el = $(this.el);
     el.html('');
+    if (this.empty()) return;
     this.docViews = [];
     var selectedIds = Documents.selectedIds();
     var linear = this.modes.format == 'linear';
 
     var title = (this._kindFilter ? Metadata.KIND_MAP[this._kindFilter] : 'Most Relevant') + ':';
-    el.append($.el('div', {id : 'visualization_title'}, title));
+    el.append($.el('div', {id : 'visualization_title', 'class' : 'serif'}, title));
 
     var links = $.el('div', {id : 'viz_types'}, '<span id="viz_line">linear</span> | <span id="viz_circle">circular</span>');
     var links = el.append(links);

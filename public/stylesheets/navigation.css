@@ -43,11 +43,13 @@ body.logged_in .tab_content {
 
 body.search_navigation div.active_search,
 body.search_navigation div.empty_search,
+body.visualize_navigation div.empty_search,
 body.search_navigation div.no_search {
   display: none;
 }
   body.search_navigation.active_search div.active_search,
   body.search_navigation.empty_search div.empty_search,
+  body.visualize_navigation.empty_search div.empty_search,
   body.search_navigation.no_search div.no_search {
     display: block;
   }

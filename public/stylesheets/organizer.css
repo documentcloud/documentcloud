@@ -15,7 +15,7 @@
     background-position: 9px center;
     background-repeat: no-repeat;
     color: #002256;
-    font: bold 12px Georgia, serif;
+    font-weight: bold;
     -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
   }
     #organizer .box:hover {

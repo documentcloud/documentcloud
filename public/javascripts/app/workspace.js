@@ -38,6 +38,7 @@ _.extend(dc.app.workspace, {
     content.append(this.panel.render().el);
     this.panel.add('pagination', dc.app.paginator.el);
     $('#query_container').append(dc.ui.query.el);
+    $('#no_results_container').html(JST.no_results({}));
 
     if (!dc.app.accountId) return;
 

@@ -82,7 +82,8 @@
 #visualization_title {
   position: absolute;
   top: 15px; left: 15px;
-  font: bold 22px Georgia;
+  font-weight: bold;
+  font-size: 22px;
   color: #002456;
   text-shadow: 0px 1px 1px #fff;
 }
