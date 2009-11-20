@@ -3,7 +3,6 @@ task :deploy do
   # First, the main server.
   todo = []
   todo << 'cd /web/document-cloud'
-  todo << 'if [ -d public/assets ]; then rm -r public/assets; fi'
   todo << 'git pull'
   todo << 'su www-data -c "jammit -u http://staging.dcloud.org"'
   todo << 'rake staging db:migrate crowd:server:restart app:restart app:warm'
