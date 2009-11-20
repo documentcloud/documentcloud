@@ -1,7 +1,4 @@
 TODO:
-
-  * Figure out what's going on with the file upload size limit -- an EC2 thing?
-    Maybe firebug will help?
     
   * Authorize logged-in folks to view private and organization documents.
     
@@ -10,8 +7,6 @@ TODO:
 
   * Hook the upload progress widget into an Nginx upload progress module --
     switch to passenger nginx in development.
-
-  * Replace document IDs in URLs with title-based slugs.
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Add autocomplete and label creation to the pulldown.
@@ -24,6 +19,11 @@ TODO:
   
 
 DONE:
+
+  * Replace document IDs in URLs with title-based slugs.
+
+  * Figure out what's going on with the file upload size limit -- an EC2 thing?
+    Maybe firebug will help?
 
   * Think about adding search history.
 
