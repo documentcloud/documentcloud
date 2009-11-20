@@ -1,27 +1,25 @@
 TODO:
 
+  * Figure out what's going on with the file upload size limit -- an EC2 thing?
+    Maybe firebug will help?
+    
+  * Authorize logged-in folks to view private and organization documents.
+    
+  * Figure out the access control policies for all assets on S3. Public ones we
+    can load directly from the client, probably.
+
+  * Hook the upload progress widget into an Nginx upload progress module --
+    switch to passenger nginx in development.
+
   * Replace document IDs in URLs with title-based slugs.
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Add autocomplete and label creation to the pulldown.
-
-  * Figure out a way to use base.js to do multiple inheritance, so that we can
-    have a SortedAndRESTfulSet.
-
-  * Stash paged result sets for a given search on the document model.
-    
-  * Build out surrounding start page blips... About Us, How to Join, 
-    What is This?
-              
-  * Figure out the access control policies for all assets on S3. Public ones we
-    can load directly from the client, probably.
             
   * Start work on the Public API.
     
   * Figure out our own taxonomy and map all the OpenCalais categories into it.
-          
-  * Authorize logged-in folks to view private and organization documents.
-    
+              
   * Figure out what belongs in the Accounts sidebar.
   
 
