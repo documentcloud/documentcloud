@@ -34,12 +34,12 @@
   .document_tile.is_selected {
     background: #eaeafa;
     background: -webkit-gradient(linear, left top, left bottom, from(#eaeafa), to(#fafaff));
+    -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
   }
   .document_list.large_size .document_tile {
     height: 77px;
     padding: 5px 30px 5px 77px;
     margin-bottom: 5px;
-    -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
   }
   .document_list.medium_size .document_tile {
     float: left;

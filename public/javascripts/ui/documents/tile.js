@@ -15,9 +15,9 @@ dc.ui.DocumentTile = dc.View.extend({
   constructor : function(doc, mode) {
     this.mode = mode;
     if (mode) this.className += ' ' + mode;
-    this.base();
-    this.model = doc;
+    this.base({model : doc});
     this.el.id = 'document_' + (mode || 'tile') + '_' + this.model.id;
+    this.model.bind(dc.Model.CHANGED, _.bind(this._setSelected, this));
   },
 
   render : function() {
@@ -29,14 +29,14 @@ dc.ui.DocumentTile = dc.View.extend({
       'summary'   : this.model.inlineSummary()
     }));
     this.setCallbacks();
-    this.setMode('not', 'selected');
+    this._setSelected();
     return this;
   },
 
   select : function() {
     if (!dc.app.accountId) return;
-    this.model.selected = !this.model.selected;
-    this.setMode(this.model.selected ? 'is' : 'not', 'selected');
+    var selected = !this.model.get('selected');
+    this.model.set({selected : selected});
     dc.app.toolbar.display();
     dc.app.metaList.render();
     var count = Documents.countSelected();
@@ -63,6 +63,10 @@ dc.ui.DocumentTile = dc.View.extend({
     e.preventDefault();
     if (!confirm('Really delete "' + this.model.get('title') + '" ?')) return;
     Documents.destroy(this.model);
+  },
+
+  _setSelected : function() {
+    this.setMode(this.model.get('selected') ? 'is' : 'not', 'selected');
   }
 
 });

@@ -44,7 +44,7 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   },
 
   selected : function() {
-    return _.select(this.models(), function(m){ return m.selected; });
+    return _.select(this.models(), function(m){ return m.get('selected'); });
   },
 
   selectedIds : function() {
