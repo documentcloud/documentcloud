@@ -1,6 +1,8 @@
 class DocumentsController < ApplicationController
   layout nil
 
+  before_filter(:bouncer, :only => [:show]) unless Rails.development?
+
   def show
     @current_document = Document.find_by_id(params[:id].to_i)
     respond_to do |format|
