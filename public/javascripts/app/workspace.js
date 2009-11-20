@@ -14,7 +14,9 @@ _.extend(dc.app.workspace, {
   createSubViews : function() {
     dc.app.searchBox  = new dc.ui.SearchBox();
     dc.app.paginator  = new dc.ui.Paginator();
+    dc.app.metaList   = new dc.ui.MetadataList();
     dc.ui.notifier    = new dc.ui.Notifier();
+    dc.ui.query       = new dc.ui.Query();
     this.sidebar      = new dc.ui.Sidebar();
     this.panel        = new dc.ui.Panel();
 
@@ -35,6 +37,7 @@ _.extend(dc.app.workspace, {
     content.append(this.sidebar.render().el);
     content.append(this.panel.render().el);
     this.panel.add('pagination', dc.app.paginator.el);
+    $('#query_container').append(dc.ui.query.el);
 
     if (!dc.app.accountId) return;
 

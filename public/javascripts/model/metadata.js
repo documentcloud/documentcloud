@@ -23,11 +23,13 @@ dc.model.Metadatum = dc.Model.extend({
   addInstance : function(instance) {
     this.get('instances').push(instance);
     this.instanceCount++;
+    delete this._docIds;
     return instance;
   },
 
+  // Look up and cache the set of documentIds from the metadata instances.
   documentIds : function() {
-    return _.pluck(this.get('instances'), 'document_id');
+    return this._docIds = this._docIds || _.pluck(this.get('instances'), 'document_id');
   },
 
   // Return a list of all of the currently-loaded documents referencing this
@@ -105,7 +107,16 @@ dc.model.MetadataSet = dc.model.SortedSet.extend({
     return m.totalRelevance();
   },
 
-  // TODO: ... extend this to re-sort addInstance'd metas.
+  // Returns the sorted list of metadata for the currently-selected documents.
+  // If "ensure" is passed, return all Metadata when no documents are selected.
+  selected : function(ensure) {
+    var docIds = Documents.selectedIds();
+    if (docIds.length <= 0) return ensure ? this.models() : [];
+    return _(this.models()).select(function(meta){
+      return _(meta.documentIds()).any(function(id){ return _(docIds).include(id); });
+    });
+  },
+
   addOrCreate : function(obj) {
     var id = dc.model.Metadatum.generateId(obj);
     var meta = this.get(id);

@@ -17,17 +17,11 @@ dc.ui.MetadataList = dc.View.extend({
   // those lines.
   NUM_INITIALLY_VISIBLE : 5,
 
-  // At creation, pass in a sorted array of metadata options.metadata.
-  constructor : function(options) {
-    this.base(options);
-    this.mapMetadata();
-  },
-
   // Process and separate the metadata out into kinds.
-  mapMetadata : function() {
-    var byKind = this._byKind = {};
-    var max = this.NUM_INITIALLY_VISIBLE;
-    _.each(this.options.metadata, function(meta) {
+  collectMetadata : function() {
+    var byKind  = this._byKind = {};
+    var max     = this.NUM_INITIALLY_VISIBLE;
+    _(Metadata.selected(true)).each(function(meta) {
       var kind = meta.get('kind');
       var list = byKind[kind] = byKind[kind] || {shown : [], rest : [], title : meta.displayKind()};
       (list.shown.length < max ? list.shown : list.rest).push(meta);
@@ -36,11 +30,13 @@ dc.ui.MetadataList = dc.View.extend({
 
   // Render...
   render : function() {
+    this.collectMetadata();
     $(this.el).html('');
     var html = _.map(this._byKind, function(value, key) {
       return JST.workspace_metalist({key : key, value : value});
     });
     $(this.el).html(html.join(''));
+    $('#metadata_container').html(this.el);
     this.setCallbacks();
     return this;
   },
