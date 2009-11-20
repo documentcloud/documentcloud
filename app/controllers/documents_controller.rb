@@ -31,7 +31,9 @@ class DocumentsController < ApplicationController
   def page_text
     doc         = current_document(true)
     page_number = params[:page_name].match(/(\d+)\Z/)[1].to_i
-    @response   = doc.pages.find_by_page_number(page_number).text
+    page        = doc.pages.find_by_page_number(page_number)
+    return not_found unless page
+    @response   = page.text
     return if jsonp_request?
     render :text => @response
   end
