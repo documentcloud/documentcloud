@@ -37,10 +37,6 @@ dc.ui.DocumentTile = dc.View.extend({
     if (!dc.app.accountId) return;
     var selected = !this.model.get('selected');
     this.model.set({selected : selected});
-    dc.app.toolbar.display();
-    dc.app.metaList.render();
-    var count = Documents.countSelected();
-    count > 0 ? dc.ui.query.renderSelected(count) : dc.ui.query.render();
   },
 
   viewDocument : function() {

@@ -6,6 +6,11 @@ dc.ui.Query = dc.View.extend({
 
   className : 'search_query',
 
+  constructor : function(options) {
+    this.base(options);
+    Documents.bind(Documents.SELECTION_CHANGED, _(this._onSelectionChange).bind(this));
+  },
+
   blank : function() {
     $(this.el).html('');
   },
@@ -41,6 +46,11 @@ dc.ui.Query = dc.View.extend({
   renderSelected : function(count) {
     var sentence = count + ' selected ' + Inflector.pluralize('document', count) + '.';
     $(this.el).html(sentence);
+  },
+
+  _onSelectionChange : function() {
+    var count = Documents.countSelected();
+    count > 0 ? this.renderSelected(count) : this.render();
   }
 
 });

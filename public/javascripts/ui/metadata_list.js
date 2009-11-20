@@ -17,6 +17,12 @@ dc.ui.MetadataList = dc.View.extend({
   // those lines.
   NUM_INITIALLY_VISIBLE : 5,
 
+  constructor : function(options) {
+    this.base(options);
+    _.bindAll('render', this);
+    Documents.bind(Documents.SELECTION_CHANGED, this.render);
+  },
+
   // Process and separate the metadata out into kinds.
   collectMetadata : function() {
     var byKind  = this._byKind = {};

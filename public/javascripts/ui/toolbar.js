@@ -9,9 +9,10 @@ dc.ui.Toolbar = dc.View.extend({
   constructor : function(options) {
     this.id = options.tab = '_toolbar';
     this.base(options);
-    _.bindAll('_addSelectedDocuments', this);
+    _.bindAll('_addSelectedDocuments', 'display', this);
     this.downloadMenu = this._createDownloadMenu();
     this.labelMenu = new dc.ui.LabelMenu({onclick : this._addSelectedDocuments});
+    Documents.bind(Documents.SELECTION_CHANGED, this.display);
   },
 
   render : function() {

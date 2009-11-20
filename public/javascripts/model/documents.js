@@ -38,6 +38,8 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 
   resource : 'documents',
 
+  SELECTION_CHANGED : 'documents:selection_changed',
+
   constructor : function(options) {
     this.base(options);
     _.bindAll('downloadSelectedViewers', 'downloadSelectedPDF', 'downloadSelectedFullText', this);
@@ -67,6 +69,14 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   downloadSelectedFullText : function() {
     if (this.countSelected() <= 1) return window.open(this.selected()[0].get('full_text_url'));
     dc.app.download('/download/' + this.selectedIds().join('/') + '/document_text.zip');
+  },
+
+  // We override "_onModelEvent" to fire selection changed events when documents
+  // change their selected state.
+  _onModelEvent : function(e, model) {
+    this.base(e, model);
+    var fire = (e == dc.Model.CHANGED && model.hasChanged('selected'));
+    if (fire) _.defer(_(this.fire).bind(this, this.SELECTION_CHANGED, this));
   }
 
 });

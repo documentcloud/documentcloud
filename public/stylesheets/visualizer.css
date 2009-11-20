@@ -48,13 +48,17 @@
   position: absolute;
   margin: 0;
   width: 150px; height: 77px;
-  padding: 5px 0 5px 77px;
+  padding: 5px 5px 5px 77px;
   overflow: visible;
+  border: 1px solid transparent;
 }
   #visualizer.linear_format .document_tile {
     position: relative;
     top: 0 !important; left: 0 !important;
     margin: 15px 0 5px 15px;
+  }
+  #visualizer .document_tile.is_selected {
+    border: 1px solid #e0e0fa;
   }
   #visualizer .document_tile .title {
     margin-top: 0;

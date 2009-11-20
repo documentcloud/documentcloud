@@ -19,6 +19,7 @@ dc.ui.Visualizer = dc.View.extend({
     this.topMetadata = [];
     dc.app.navigation.register('visualize', this.open);
     $(window).resize(this.onResize);
+    Documents.bind(Documents.SELECTION_CHANGED, this.renderVisualization);
   },
 
   open : function() {
@@ -100,6 +101,7 @@ dc.ui.Visualizer = dc.View.extend({
     var el = $(this.el);
     el.html('');
     this.docViews = [];
+    var selectedIds = Documents.selectedIds();
     var linear = this.modes.format == 'linear';
 
     var title = (this._kindFilter ? Metadata.KIND_MAP[this._kindFilter] : 'Most Relevant') + ':';
@@ -121,7 +123,6 @@ dc.ui.Visualizer = dc.View.extend({
     var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.height()});
     el.append(canvas);
     var ctx = canvas.getContext('2d');
-    ctx.strokeStyle = "#abafe5";
     ctx.lineCap = "round";
 
     var scale = 0.92 - (150 / el.width());
@@ -163,9 +164,11 @@ dc.ui.Visualizer = dc.View.extend({
       var pos = metaEl.position();
 
       _.each(meta.get('instances'), function(instance) {
-        var del = $('#document_viz_' + instance.document_id);
-        var dpos = del.position();
-        var docx = dpos.left + del.width() / 4, docy = dpos.top + del.height() / 2;
+        var docId = instance.document_id;
+        var del   = $('#document_viz_' + docId);
+        var dpos  = del.position();
+        var docx  = dpos.left + del.width() / 4, docy = dpos.top + del.height() / 2;
+        ctx.strokeStyle = _(selectedIds).include(docId) ? "#abafe5" : "#bbb";
         ctx.globalAlpha = instance.relevance * 0.9 + 0.1;
         ctx.lineWidth = instance.relevance * 20 + 1;
         ctx.beginPath();
