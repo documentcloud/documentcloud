@@ -35,6 +35,7 @@ Rails::Initializer.run do |config|
 
   # Gems:
   config.gem 'json',                  :version => '>= 1.1.9'
+
   config.gem 'faker',                 :version => '>= 0.3.1'
   config.gem 'documentcloud-calais',  :version => '>= 0.0.7',       :lib => 'calais'
   config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'
@@ -43,8 +44,6 @@ Rails::Initializer.run do |config|
   config.gem 'right_aws',             :version => '>= 1.10.0'
   config.gem 'postgres',              :version => '>= 0.7.9.2008.01.28'
   config.gem 'jammit',                :version => '>= 0.2.1'
-
-  require 'json/add/rails'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -67,5 +66,7 @@ Rails::Initializer.run do |config|
 end
 
 RightAws::RightAWSParser.xml_lib = 'libxml'
-ActiveSupport::JSON.backend = 'JSONGem'
 ActiveRecord::Base.include_root_in_json = false
+ActiveSupport::JSON.backend = 'JSONGem'
+require 'json'
+# require 'json/add/rails'

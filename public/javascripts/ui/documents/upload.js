@@ -13,8 +13,7 @@ dc.ui.DocumentUpload = dc.View.extend({
   },
 
   render : function() {
-    var params = {organization : Accounts.current().get('organization_name')};
-    $(this.el).html(JST.document_upload_form(params));
+    $(this.el).html(JST.document_upload_form({organization : dc.app.organization.name}));
     $('#document_upload_container').html(this.el);
     $('#upload_progress_container').html(JST.document_progress_container({}));
     this.setCallbacks();

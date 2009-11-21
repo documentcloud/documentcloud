@@ -113,3 +113,20 @@
   #account_list .row.pending .pending_notification {
     display: inline;
   }
+
+#organization_info {
+  position: absolute; top: 21px; left: 1px; right: 1px;
+  padding: 6px 10px;
+  line-height: 21px;
+  font-size: 10px;
+}
+  #organization_info .name {
+    font-size: 18px; font-weight: bold; line-height: 25px;
+    color: #555;
+    text-shadow: 0 1px 1px #fff;
+  }
+  #organization_info .since, #organization_info .counts {
+    line-height: 18px;
+    text-transform: uppercase;
+    color: #777;
+  }

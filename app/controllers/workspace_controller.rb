@@ -7,7 +7,7 @@ class WorkspaceController < ApplicationController
   # Main documentcloud.org page. Renders the workspace if logged in or
   # searching, the home page otherwise.
   def index
-    return if current_account || results_request?
+    return if (current_organization && current_account) || results_request?
     render :template => 'search/search', :layout => 'empty'
   end
 

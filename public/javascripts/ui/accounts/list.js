@@ -27,6 +27,7 @@ dc.ui.AccountList = dc.View.extend({
   renderAccounts : function() {
     dc.ui.spinner.hide();
     var list = this.list;
+    dc.app.workspace.sidebar.add('accounts_sidebar', JST.organization_info(dc.app.organization));
     Accounts.each(function(account) {
       var row = new dc.ui.AccountView(account, 'row');
       window.row = row;
