@@ -14,11 +14,11 @@ TODO:
   * Start work on the Public API.
     
   * Figure out our own taxonomy and map all the OpenCalais categories into it.
-              
-  * Figure out what belongs in the Accounts sidebar.
-  
+    
 
 DONE:
+
+  * Figure out what belongs in the Accounts sidebar.
 
   * Replace document IDs in URLs with title-based slugs.
 

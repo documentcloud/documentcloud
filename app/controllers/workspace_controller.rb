@@ -8,7 +8,11 @@ class WorkspaceController < ApplicationController
   # searching, the home page otherwise.
   def index
     return if (current_organization && current_account) || results_request?
-    render :template => 'search/search', :layout => 'empty'
+    render :action => 'home', :layout => 'empty'
+  end
+
+  def home
+    render :action => 'home', :layout => 'empty'
   end
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and

@@ -8,7 +8,10 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
 
-  around_filter :perform_profile if Rails.development?
+  if Rails.development?
+    around_filter :perform_profile
+    after_filter  :debug_api
+  end
 
   protected
 
@@ -98,6 +101,12 @@ class ApplicationController < ActionController::Base
     File.open("#{RAILS_ROOT}/tmp/profile.txt", 'w+') do |f|
       printer.print(f)
     end
+  end
+
+  # Return all requests as text/plain, if a 'debug' param is passed, to make
+  # the JSON visible in the browser.
+  def debug_api
+    response.content_type = 'text/plain' if params[:debug]
   end
 
 end

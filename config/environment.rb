@@ -69,4 +69,4 @@ RightAws::RightAWSParser.xml_lib = 'libxml'
 ActiveRecord::Base.include_root_in_json = false
 ActiveSupport::JSON.backend = 'JSONGem'
 require 'json'
-# require 'json/add/rails'
+require 'json/add/rails'

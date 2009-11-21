@@ -24,6 +24,6 @@
 
 </body>
 <script type="text/javascript">
-  DV.load(<%= @current_document.canonical %>);
+  DV.load(<%= @current_document.canonical.to_json %>);
 </script>
 </html>

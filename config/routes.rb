@@ -2,12 +2,14 @@ ActionController::Routing::Routes.draw do |map|
 
   # Search API.
   map.with_options :controller => 'search' do |search|
-    search.api '/search.:format', :action => 'search'
+    search.internal '/search.:format',      :action => 'internal_search'
+    search.api      '/api/search.:foramt',  :action => 'api_search'
   end
 
   # Workspace and surrounding HTML.
   map.with_options :controller => 'workspace' do |main|
     main.root
+    main.home    '/home',     :action => 'home'
     main.results '/results',  :action => 'index'
     main.signup  '/signup',   :action => 'signup'
     main.login   '/login',    :action => 'login'

@@ -126,18 +126,21 @@ class Document < ActiveRecord::Base
 
   def canonical
     doc = {
-      'id'            => slug,
+      'id'            => "#{id}-#{slug}",
       'title'         => title,
       'pages'         => page_count,
       'resources'     => {
+        'thumbnail'   => thumbnail_url,
+        'text'        => full_text_url,
+        'pdf'         => pdf_url,
         'search'      => search_url,
         'page'        => {
-          'sizes'     => ['normal', 'large'],
+          'sizes'     => ['normal', 'large'], # To be removed or embedded in the URL template.
           'image'     => page_image_url_template,
           'text'      => page_text_url_template
         }
       }
-    }.to_json
+    }
   end
 
 
