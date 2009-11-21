@@ -12,13 +12,13 @@ TODO:
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Add autocomplete and label creation to the pulldown.
-            
-  * Start work on the Public API.
-    
+                
   * Figure out our own taxonomy and map all the OpenCalais categories into it.
     
 
 DONE:
+
+  * Start work on the Public API.
 
   * Figure out what belongs in the Accounts sidebar.
 
