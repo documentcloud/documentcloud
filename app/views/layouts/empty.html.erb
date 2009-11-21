@@ -4,7 +4,8 @@
 <head>
   <%= render :partial => 'common/meta_tags' %>
   <title>DocumentCloud</title>
-  <%= include_stylesheets :app, :empty, :media => 'all' %>
+  <% css = [:app, :empty] + (@stylesheets || []) + [{:media => 'all'}] %>
+  <%= include_stylesheets *css %>
   <%= include_javascripts :workspace %>
   <%= include_templates :complete %>
 </head>

@@ -1,4 +1,6 @@
 TODO:
+
+  * Remove image sizes from canonical JSON.
     
   * Authorize logged-in folks to view private and organization documents.
     

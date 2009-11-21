@@ -3,9 +3,11 @@ span[role="link"] {
   cursor: pointer;
 }
 
-.serif {
+.serif, .serif * {
   font-family: Georgia, serif;
-/*  font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;*/
+}
+.super_serif, .super_serif * {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
 }
 
 /*------------------------------ Text Inputs ---------------------------------*/

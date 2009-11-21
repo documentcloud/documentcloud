@@ -1,0 +1,53 @@
+<%
+  @title        = "API Documentation"
+  @bodyclass    = "documentation"
+  @stylesheets  = [:docs]
+%>
+
+<div id="docs" class="full_page_background super_serif">
+
+  <h1> API Documentation </h1>
+
+  <p>
+    DocumentCloud exposes an interface to search and read its documents.
+    This page contains all of the reference material on what's available and
+    how to use it.
+  </p>
+
+  <h1>API Keys</h1>
+
+  <p>
+    In order to access the <b>DocumentCloud API</b> from JavaScript, you'll need to
+    <a href="/api/signup">register your domain for an API key</a>. The key must
+    be appended to every request... Rate limit by IP address instead?
+  </p>
+
+  <h1>Try a Search</h1>
+
+  <p>
+    Use the form below to try a search query, and take a look at the format of the
+    returned results.
+  </p>
+
+  <form id="search_form" action="about:blank">
+    <button id="run_search" class="default">Search</button>
+    <span class="text_input"><span><input type="text" name="q" id="q" /></span></span>
+    <label for="q">
+      Search Query:<br /><span class="example">ex: "person:geithner"</span>
+    </label>
+  </form>
+
+  <pre id="search_results"></pre>
+
+</div>
+<script type="text/javascript" src="http://www.json.org/json2.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#search_form').submit(function(e) {
+      e.preventDefault();
+      $.getJSON('/api/search', {query_string : $('#q').val()}, function(resp) {
+        $('#search_results').text(JSON.stringify(resp, null, 2));
+      });
+    });
+  });
+</script>

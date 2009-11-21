@@ -40,6 +40,7 @@ input[type="radio"]:checked {
 }
 
 button {
+  font-family: 'Arial' !important;
   margin: 5px;
   -khtml-appearance: none;
   -moz-appearance: none;

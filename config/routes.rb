@@ -1,20 +1,19 @@
 ActionController::Routing::Routes.draw do |map|
 
-  # Search API.
-  map.with_options :controller => 'search' do |search|
-    search.internal '/search.:format',      :action => 'internal_search'
-    search.api      '/api/search.:foramt',  :action => 'api_search'
-  end
+  # Internal Search API.
+  map.search '/search.json', :controller => 'search', :action => 'search'
+
+  # API Controller uses default routes, for now.
 
   # Workspace and surrounding HTML.
   map.with_options :controller => 'workspace' do |main|
     main.root
-    main.home    '/home',     :action => 'home'
-    main.results '/results',  :action => 'index'
-    main.signup  '/signup',   :action => 'signup'
-    main.login   '/login',    :action => 'login'
-    main.logout  '/logout',   :action => 'logout'
-    main.todo    '/todo',     :action => 'todo'
+    main.home       '/home',        :action => 'home'
+    main.results    '/results',     :action => 'index'
+    main.signup     '/signup',      :action => 'signup'
+    main.login      '/login',       :action => 'login'
+    main.logout     '/logout',      :action => 'logout'
+    main.todo       '/todo',        :action => 'todo'
   end
 
   # Document representations and sub-resources.

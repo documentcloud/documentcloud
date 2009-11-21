@@ -1,9 +1,9 @@
 <%
   @title      = "Login"
-  @bodyclass  = "full_screen_form"
+  @bodyclass  = "full_page_background"
 %>
 
-<div id="full_screen_form">
+<div id="full_screen_form" class="full_page_background">
   <form action="/login" method="POST">
     <% if @failure %>
       <div class="form_error login_error">

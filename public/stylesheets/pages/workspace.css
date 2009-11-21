@@ -12,7 +12,7 @@ a {
   display: block;
   border-bottom: 2px solid #777;
 }
-  body.full_screen_form #topbar {
+  body.full_page_background #topbar {
     border-bottom-color: #aaa;
   }
   #cloud_edge {
@@ -201,7 +201,7 @@ a {
       top: 8px; left: 8px;
     }
 
-#full_screen_form {
+.full_page_background {
   position: absolute;
   overflow: auto;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -227,16 +227,19 @@ a {
       width: 545px;
       margin: 30px auto;
     }
-      #full_screen_form label {
+      .full_page_background label {
         display: block;
-        width: 170px;
         text-align: right;
         font: bold 16px Arial;
-        line-height: 14px;
+        width: 120px;
+        line-height: 14px !important;
         color: #444;
         text-shadow: 0px 1px 1px #fff;
       }
-        #full_screen_form .example {
+        #full_screen_form label {
+          width: 170px;
+        }
+        .full_page_background .example {
           font: bold italic 11px Arial;
           color: #666;
         }

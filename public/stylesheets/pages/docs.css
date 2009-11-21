@@ -1,0 +1,39 @@
+#docs {
+  padding: 50px 25px 50px 50px;
+  color: #454545;
+}
+  #docs h1 {
+    font-size: 25px;
+    line-height: 50px;
+    color: #222;
+  }
+  #docs p, #docs form {
+    position: relative;
+    margin: 0 0 25px 0;
+    width: 550px;
+  }
+    #docs p, #docs p > * {
+      font-size: 16px;
+      line-height: 22px;
+    }
+  #docs a {
+    color: #222266;
+    text-decoration: underline;
+  }
+  #docs #search_results {
+    line-height: 18px;
+    margin: 35px 0 0 0;
+    font-family: "Monaco", monospace;
+  }
+
+#docs .text_input {
+  position: absolute;
+  display: block;
+  margin: 0 0 0 140px;
+  width: 300px;
+}
+#docs button {
+  position: absolute;
+  right: 5px;
+  margin-top: 1px;
+}

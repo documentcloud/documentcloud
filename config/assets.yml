@@ -21,6 +21,8 @@ stylesheets:
     - public/stylesheets/pages/workspace.css
   empty:
     - public/stylesheets/pages/empty.css
+  docs:
+    - public/stylesheets/pages/docs.css
 
 templates:
   complete:
