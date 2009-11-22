@@ -125,21 +125,17 @@ class Document < ActiveRecord::Base
   end
 
   def canonical
-    doc = {
-      'id'            => "#{id}-#{slug}",
-      'title'         => title,
-      'pages'         => page_count,
-      'resources'     => {
-        'thumbnail'   => thumbnail_url,
-        'text'        => full_text_url,
-        'pdf'         => pdf_url,
-        'search'      => search_url,
-        'page'        => {
-          'image'     => page_image_url_template,
-          'text'      => page_text_url_template
-        }
-      }
-    }
+    doc = ActiveSupport::OrderedHash.new
+    doc['id']         = "#{id}-#{slug}"
+    doc['title']      = title
+    doc['pages']      = page_count
+    doc['resources']  = res = ActiveSupport::OrderedHash.new
+    res['pdf']        = pdf_url
+    res['text']       = full_text_url
+    res['thumbnail']  = thumbnail_url
+    res['search']     = search_url
+    res['page']       = {'image' => page_image_url_template, 'text' => page_text_url_template}
+    doc
   end
 
 

@@ -2,8 +2,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <meta http-equiv="imagetoolbar" content="no"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="imagetoolbar" content="no" />
+  <meta http-equiv="ClearType" content="true" />
   <title><%= @current_document.title %></title>
 
   <!--[if (!IE)|(gte IE 8)]><!-->
@@ -16,14 +17,9 @@
   <script src="/document-viewer/viewer.jst" type="text/javascript"></script>
 
 </head>
-
-<!--[if lte IE 6]><body class="DV-ie DV-ie6"><![endif]-->
-<!--[if IE 7]><body class="DV-ie DV-ie7"><![endif]-->
-<!--[if IE 8]><body class="DV-ie DV-ie8"><![endif]-->
-<!--[if !IE]><!--><body><!-- <![endif]-->
-
+<body>
+  <script type="text/javascript">
+    DV.load(<%= @current_document.canonical.to_json %>);
+  </script>
 </body>
-<script type="text/javascript">
-  DV.load(<%= @current_document.canonical.to_json %>);
-</script>
 </html>
