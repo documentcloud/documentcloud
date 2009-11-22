@@ -45,7 +45,7 @@
   $(document).ready(function() {
     $('#search_form').submit(function(e) {
       e.preventDefault();
-      $.getJSON('/api/search', {query_string : $('#q').val()}, function(resp) {
+      $.getJSON('/api/search', {q : $('#q').val()}, function(resp) {
         $('#search_results').text(JSON.stringify(resp, null, 2));
       });
     });

@@ -83,7 +83,7 @@ class Document < ActiveRecord::Base
   end
 
   def search_url
-    "#{DC_CONFIG['server_root']}/documents/#{id}/search.json"
+    "#{DC_CONFIG['server_root']}/documents/#{id}/search.json?q={query}"
   end
 
   def page_image_url_template
@@ -135,7 +135,6 @@ class Document < ActiveRecord::Base
         'pdf'         => pdf_url,
         'search'      => search_url,
         'page'        => {
-          'sizes'     => ['normal', 'large'], # To be removed or embedded in the URL template.
           'image'     => page_image_url_template,
           'text'      => page_text_url_template
         }

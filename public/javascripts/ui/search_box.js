@@ -41,7 +41,7 @@ dc.ui.SearchBox = dc.View.extend({
     dc.ui.spinner.show('searching');
     this.contextSensitiveSaveButton(query);
     if (dc.app.toolbar) dc.app.toolbar.hide();
-    var params = {query_string : query};
+    var params = {q : query};
     this.currentPage = page;
     if (page) params.page = page;
     $.get('/search.json', params, this.loadSearchResults, 'json');
