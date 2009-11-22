@@ -1,0 +1,55 @@
+/* Extra DocViewer override rules go here: */
+
+#DV-headerHat, #DV-title, #DV-description {
+  display: none;
+}
+#DV-header {
+  padding: 0;
+  border-bottom: 2px solid #979797;
+  position: relative;
+  z-index: 20000;
+  box-shadow: 0 0 25px #777; -webkit-box-shadow: 0 0 25px #777; -moz-box-shadow: 0 0 25px #777;
+}
+  #DV-Controls {
+    margin-top: 0;
+    border: 0;
+    background: #d7d7d7;
+    background: -webkit-gradient(linear, left top, left bottom, from(#EAEAEA), to(#C2C2C2));
+    text-shadow: 0px 1px 1px #fff;
+    color: #2C2C2C;
+  }
+    #DV-searchInput {
+      width: 160px;
+    }
+    #DV-searchSubmit {
+      background: #e7e7e7;
+      color: #4F4F4F;
+      height: auto;
+      padding: 3px 10px 4px 10px;
+      font-weight: bold;
+      border: 1px solid #999;
+      border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
+      background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#c4c4c4));
+      text-shadow: 0px 1px 1px #fff;
+      cursor: pointer;
+    }
+
+#DV-docViewer-Container {
+  margin: 0;
+  border: 0;
+}
+#DV-pages {
+  padding-bottom: 20px;
+  background: #bbb;
+}
+
+.DV-views div a {
+  border-bottom: 0 !important;
+  background: #e3e3e3;
+  background: -webkit-gradient(linear, left top, left bottom, from(#E3E3E3), to(#C2C2C2));
+}
+  .DV-viewDocument .DV-views #DV-documentView a,
+  .DV-viewAnnotations .DV-views #DV-annotationView a,
+  .DV-viewText .DV-views #DV-textView a {
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#a0a0a0));
+  }

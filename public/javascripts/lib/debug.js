@@ -8,7 +8,7 @@ if (!window.console) {
   for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
 }
 
-$.extend({
+jQuery.extend({
 
   // Add a debug object to JQuery to contain all debugging methods.
   debug : {
@@ -17,9 +17,9 @@ $.extend({
     // element ids that might have slipped in by mistake.
     checkForDuplicateIds : function() {
       var dups = {};
-      var everything = $('*');
+      var everything = jQuery('*');
       var ids = everything.map(function(){ return this.id; });
-      $.each(ids, function(i) {
+      jQuery.each(ids, function(i) {
         if (this == '') return;
         dups[this] = dups[this] || 0;
         dups[this] += 1;
@@ -30,16 +30,16 @@ $.extend({
     // Reload all of the CSS in each frame.
     reloadCSS : function(win) {
       win = win || window;
-      var links = $('link', win.document);
+      var links = jQuery('link', win.document);
       links.each(function() {
-        var link = $(this);
+        var link = jQuery(this);
         var url = link.attr('href');
         if (url && (/stylesheet/i).test(link.attr('rel'))) {
           var h = url.replace(/(&|%5C?)forceReload=\d+/, '');
           link.attr('href', h+(h.indexOf('?')>=0?'&':'?')+'forceReload='+(new Date().valueOf()));
         }
       });
-      $.each(win.frames, function() { $.debug.reloadCSS(this); });
+      jQuery.each(win.frames, function() { jQuery.debug.reloadCSS(this); });
     }
 
   }

@@ -13,8 +13,12 @@
   <!--[if lte IE 7]>
     <link href="/document-viewer/viewer.css" media="screen" rel="stylesheet" type="text/css" />
   <![endif]-->
+  <link href="/stylesheets/pages/viewer.css" media="screen" rel="stylesheet" type="text/css" />
   <script src="/document-viewer/viewer.js" type="text/javascript"></script>
   <script src="/document-viewer/viewer.jst" type="text/javascript"></script>
+  <% if Rails.development? %>
+    <script src="/javascripts/lib/debug.js" type="text/javascript"></script>
+  <% end %>
 
 </head>
 <body>
