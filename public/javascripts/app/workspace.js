@@ -40,7 +40,7 @@ _.extend(dc.app.workspace, {
     $('#query_container').append(dc.ui.query.el);
     $('#no_results_container').html(JST.no_results({}));
 
-    if (!dc.app.accountId) return;
+    if (!dc.app.accountId) return $(document.body).setMode('search', 'navigation');
 
     content.append(dc.app.navigation.render().el);
     content.append(this.accountBadge.render().el);
