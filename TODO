@@ -1,11 +1,11 @@
 TODO:
   
   * Show in-progress uploads even after a page refresh.
-    
-  * Authorize logged-in folks to view private and organization documents.
-    
-  * Figure out the access control policies for all assets on S3. Public ones we
-    can load directly from the client, probably.
+      
+  * Start access controlling assets on S3. This includes changing permissions
+    in bulk, as well as serving different URLs for public and private assets
+    all private assets are going to have to be served through authentication
+    within Rails.
 
   * Hook the upload progress widget into an Nginx upload progress module.
 
@@ -18,6 +18,8 @@ TODO:
     
 
 DONE:
+
+  * Authorize logged-in folks to view private and organization documents.
 
   * Go through and fix the logged-out search UI.
 
