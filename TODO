@@ -1,23 +1,19 @@
 TODO:
-  
-  * Show in-progress uploads even after a page refresh.
-      
+        
   * Start access controlling assets on S3. This includes changing permissions
     in bulk, as well as serving different URLs for public and private assets
     all private assets are going to have to be served through authentication
     within Rails.
 
-  * Hook the upload progress widget into an Nginx upload progress module.
-
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Add autocomplete and label creation to the pulldown.
                 
   * Figure out our own taxonomy and map all the OpenCalais categories into it.
-  
-  * Take a look at Snow Stack for potential document browsing.
-    
+      
 
 DONE:
+
+  * Show in-progress uploads even after a page refresh.
 
   * Authorize logged-in folks to view private and organization documents.
 
