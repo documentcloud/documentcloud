@@ -1,4 +1,6 @@
 TODO:
+  
+  * Show in-progress uploads even after a page refresh.
     
   * Authorize logged-in folks to view private and organization documents.
     

@@ -1,13 +1,16 @@
 module DC
   module Search
-    
+
     # A Search::Query is the structured form of a fielded search, and knows
     # how to generate all of the SQL needed to run and paginate the search.
+    # Queries can be run authenticated as an account/organization, as well
+    # as unrestricted (pass :unrestricted => true).
     class Query
-      
+      include DC::Access
+
       attr_reader   :text, :fields, :labels, :attributes, :conditions
       attr_accessor :page, :from, :to, :total
-      
+
       # Queries are created by the Search::Parser, which sets them up with the
       # appropriate attributes.
       def initialize(opts={})
@@ -23,36 +26,37 @@ module DC
         @interpolations         = []
         @joins                  = []
       end
-      
+
       # Series of attribute checks to determine the type of query.
-    
+
       def has_text?;        @text.present?;         end
       def has_fields?;      @fields.present?;       end
-      def has_labels?;      @labels.present?;       end      
+      def has_labels?;      @labels.present?;       end
       def has_attributes?;  @attributes.present?;   end
-      
+
       # Set the page of the search that this query is supposed to access.
       def page=(page)
         @page = page
         @from = @page * PAGE_SIZE
-        @to   = @from + PAGE_SIZE        
+        @to   = @from + PAGE_SIZE
       end
-      
+
       # Generate all of the SQL, including conditions and joins, that is needed
       # to run the query.
       def generate_sql
+        generate_access_sql
         generate_text_sql       if has_text?
         generate_fields_sql     if has_fields?
         generate_labels_sql     if has_labels?
         generate_attributes_sql if has_attributes?
         @conditions = [@sql.join(' and ')] + @interpolations
       end
-      
+
       # Runs (at most) two queries -- one to count the total number of results
       # that match the search, and one that retrieves the documents for the
       # current page.
       def run(options={})
-        @account, @organization = options[:account], options[:organization]
+        @account, @organization, @unrestricted = options[:account], options[:organization], options[:unrestricted]
         generate_sql
         options = {:conditions => @conditions, :joins => @joins}
         if @page
@@ -64,7 +68,7 @@ module DC
         options[:select] = "distinct on (documents.id) documents.*"
         Document.all(options)
       end
-      
+
       # The JSON representation of a query contains all the structured aspects
       # of the search.
       def to_json(opts={})
@@ -78,17 +82,17 @@ module DC
           'attributes'  => @attributes
         }.to_json
       end
-      
-      
+
+
       private
-      
+
       # Generate the SQL needed to run a full-text search.
       def generate_text_sql
         @sql << "to_tsvector('english', full_text.text) @@ plainto_tsquery(?)"
         @interpolations << @text
         @joins << :full_text
       end
-      
+
       # Generate the SQL to search across the fielded metadata.
       def generate_fields_sql
         intersections = []
@@ -98,16 +102,16 @@ module DC
         end
         @sql << "documents.id in (#{intersections.join(' intersect ')})"
       end
-      
+
       # Generate the SQL to restrict the search to labeled documents.
       def generate_labels_sql
         return unless @account
         labels = @account.labels.all(:conditions => {:title => @labels})
-        doc_ids = labels.map(&:split_document_ids).flatten.uniq        
+        doc_ids = labels.map(&:split_document_ids).flatten.uniq
         @sql << "documents.id in (?)"
         @interpolations << doc_ids
       end
-      
+
       # Generate the SQL to match document attributes.
       def generate_attributes_sql
         @attributes.each do |field|
@@ -115,8 +119,18 @@ module DC
           @interpolations << field.value
         end
       end
-      
+
+      # Generate the SQL to restrict access control by organization and account.
+      def generate_access_sql
+        return if @unrestricted
+        access = []
+        access << "(documents.access = #{PUBLIC})"
+        access << "(documents.access = #{PRIVATE} and documents.account_id = #{@account.id})" if @account
+        access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{@organization.id})" if @organization
+        @sql << "(#{access.join(' or ')})"
+      end
+
     end
-    
+
   end
 end
