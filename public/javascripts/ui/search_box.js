@@ -62,18 +62,21 @@ dc.ui.SearchBox = dc.View.extend({
   // return.
   maybeSearch : function(e) {
     var query = this.value();
-    if (!query) return $(document.body).setMode('no', 'search');
-    if (!this.outstandingSearch && e.keyCode == 13) this.search(query);
+    if (!this.outstandingSearch && e.keyCode == 13) {
+      query ? this.search(query) : this.clearSearch();;
+    }
   },
 
   // Webkit knows how to fire a real "search" event.
   searchEvent : function(e) {
     var query = this.value();
-    if (!query) {
-      this.contextSensitiveSaveButton(query);
-      return $(document.body).setMode('no', 'search');
-    }
+    if (!query) return this.clearSearch();
     if (!this.outstandingSearch && query) this.search(query);
+  },
+
+  clearSearch : function() {
+    this.contextSensitiveSaveButton(false);
+    return $(document.body).setMode('no', 'search');
   },
 
   // Hide the spinner and remove the search lock when finished searching.
