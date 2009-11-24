@@ -1,4 +1,5 @@
 class Document < ActiveRecord::Base
+  include DC::Access
 
   attr_accessor :rdf, :calais_signature
 
@@ -16,6 +17,15 @@ class Document < ActiveRecord::Base
   SEARCHABLE_ATTRIBUTES = [:title, :source]
 
   delegate :text, :to => :full_text
+
+  # Restrict accessible documents for a given account/organzation.
+  named_scope :accessible, lambda { |account, org|
+    access = []
+    access << "(documents.access = #{PUBLIC})"
+    access << "(documents.access = #{PRIVATE} and documents.account_id = #{account.id})"
+    access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})"
+    {:conditions => "(#{access.join(' or ')})"}
+  }
 
   # Main document search method -- handles queries.
   def self.search(query, options={})
@@ -63,7 +73,7 @@ class Document < ActiveRecord::Base
   end
 
   def public?
-    self.access == DC::Access::PUBLIC
+    self.access == PUBLIC
   end
 
   def pdf_url

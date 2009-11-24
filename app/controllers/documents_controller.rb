@@ -4,7 +4,7 @@ class DocumentsController < ApplicationController
   before_filter(:bouncer, :only => [:show]) unless Rails.env.development?
 
   def show
-    @current_document = Document.find_by_id(params[:id].to_i)
+    current_document(true)
     respond_to do |format|
       format.pdf  { send_pdf }
       format.text { send_text }
@@ -58,10 +58,10 @@ class DocumentsController < ApplicationController
     render :text => @current_document.full_text.text
   end
 
-  # TODO: Access control this document -- but not yet.
   def current_document(exists=false)
-    @current_document ||= exists ? Document.find(params[:id]) :
-                                   Document.new(:id => params[:id])
+    @current_document ||= exists ?
+      Document.accessible(current_account, current_organization).find(params[:id]) :
+      Document.new(:id => params[:id])
   end
 
 end

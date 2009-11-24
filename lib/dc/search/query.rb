@@ -6,7 +6,6 @@ module DC
     # Queries can be run authenticated as an account/organization, as well
     # as unrestricted (pass :unrestricted => true).
     class Query
-      include DC::Access
 
       attr_reader   :text, :fields, :labels, :attributes, :conditions
       attr_accessor :page, :from, :to, :total
@@ -44,7 +43,6 @@ module DC
       # Generate all of the SQL, including conditions and joins, that is needed
       # to run the query.
       def generate_sql
-        generate_access_sql
         generate_text_sql       if has_text?
         generate_fields_sql     if has_fields?
         generate_labels_sql     if has_labels?
@@ -66,7 +64,7 @@ module DC
           options[:offset]  = @from
         end
         options[:select] = "distinct on (documents.id) documents.*"
-        Document.all(options)
+        @unrestricted ? Document.all(options) : Document.accessible(@account, @organization).all(options)
       end
 
       # The JSON representation of a query contains all the structured aspects
@@ -118,16 +116,6 @@ module DC
           @sql << "documents.#{field.kind} = ?"
           @interpolations << field.value
         end
-      end
-
-      # Generate the SQL to restrict access control by organization and account.
-      def generate_access_sql
-        return if @unrestricted
-        access = []
-        access << "(documents.access = #{PUBLIC})"
-        access << "(documents.access = #{PRIVATE} and documents.account_id = #{@account.id})" if @account
-        access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{@organization.id})" if @organization
-        @sql << "(#{access.join(' or ')})"
       end
 
     end

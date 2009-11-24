@@ -5,7 +5,7 @@ class DownloadController < ApplicationController
 
   # TODO: Access control this, but not yet.
   def bulk_download
-    @documents = Document.find_all_by_id(params[:args][0...-1])
+    @documents = Document.accessible(current_account, current_organization).find_all_by_id(params[:args][0...-1])
     case params[:args].last
     when 'document_pdfs'    then send_pdfs
     when 'document_text'    then send_text
