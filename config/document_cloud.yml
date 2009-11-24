@@ -1,6 +1,6 @@
 defaults: &defaults
   cloud_crowd_server: http://dev.dcloud.org:9173
-  server_root:        http://dev.dcloud.org:3000
+  server_root:        http://dev.dcloud.org
 
 development:
   <<: *defaults

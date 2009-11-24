@@ -1,14 +1,13 @@
 TODO:
 
-  * Remove image sizes from canonical JSON.
+  * Go through and fix the logged-out search UI.
     
   * Authorize logged-in folks to view private and organization documents.
     
   * Figure out the access control policies for all assets on S3. Public ones we
     can load directly from the client, probably.
 
-  * Hook the upload progress widget into an Nginx upload progress module --
-    switch to passenger nginx in development.
+  * Hook the upload progress widget into an Nginx upload progress module.
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Add autocomplete and label creation to the pulldown.
@@ -19,6 +18,10 @@ TODO:
     
 
 DONE:
+
+  * Switch to Passenger Nginx in development.
+  
+  * Remove image sizes from canonical JSON.
 
   * Start work on the Public API.
 
