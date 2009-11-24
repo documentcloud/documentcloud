@@ -1,7 +1,7 @@
 class DocumentsController < ApplicationController
   layout nil
 
-  before_filter(:bouncer, :only => [:show]) unless Rails.development?
+  before_filter(:bouncer, :only => [:show]) unless Rails.env.development?
 
   def show
     @current_document = Document.find_by_id(params[:id].to_i)

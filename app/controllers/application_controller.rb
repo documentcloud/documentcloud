@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
 
-  if Rails.development?
+  if Rails.env.development?
     around_filter :perform_profile
     after_filter  :debug_api
   end

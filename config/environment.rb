@@ -1,14 +1,5 @@
 # Be sure to restart your server when you modify this file
 
-# Let's stop matching against +RAILS_ENV+, shall we?
-# Make a series of methods like +Rails.production?+
-unless defined?(Rails)
-  module Rails; end
-end
-%w(development test staging production).each do |env|
-  Rails.module_eval "def self.#{env}?; RAILS_ENV == '#{env}'; end"
-end
-
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 

@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   include DC::Search::Controller
 
-  before_filter :bouncer unless Rails.development?
+  before_filter :bouncer unless Rails.env.development?
 
   def search
     perform_search
