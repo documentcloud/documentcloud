@@ -1,6 +1,4 @@
 TODO:
-
-  * Go through and fix the logged-out search UI.
     
   * Authorize logged-in folks to view private and organization documents.
     
@@ -18,6 +16,8 @@ TODO:
     
 
 DONE:
+
+  * Go through and fix the logged-out search UI.
 
   * Switch to Passenger Nginx in development.
   

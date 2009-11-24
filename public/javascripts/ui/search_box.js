@@ -69,7 +69,10 @@ dc.ui.SearchBox = dc.View.extend({
   // Webkit knows how to fire a real "search" event.
   searchEvent : function(e) {
     var query = this.value();
-    if (!query) return $(document.body).setMode('no', 'search');
+    if (!query) {
+      this.contextSensitiveSaveButton(query);
+      return $(document.body).setMode('no', 'search');
+    }
     if (!this.outstandingSearch && query) this.search(query);
   },
 
@@ -127,7 +130,7 @@ dc.ui.SearchBox = dc.View.extend({
 
   contextSensitiveSaveButton : function(query) {
     if (!this.saveSearchButton) return;
-    $(this.saveSearchButton).css({opacity : SavedSearches.find(query) ? 0 : 1});
+    $(this.saveSearchButton).css({opacity : !query || SavedSearches.find(query) ? 0 : 1});
   }
 
 });
