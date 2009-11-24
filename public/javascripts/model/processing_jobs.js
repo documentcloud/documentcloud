@@ -3,6 +3,7 @@
 dc.model.ProcessingJob = dc.Model.extend({
 
   DOCUMENT_STATUSES : {
+    loading    : "loading...",
     splitting  : "starting...",
     processing : "processing pages...",
     merging    : "extracting entities..."
@@ -32,7 +33,9 @@ dc.model.ProcessingJob = dc.Model.extend({
 
 // ProcessingJob Set
 
-dc.model.ProcessingJobSet = dc.Set.extend({
+dc.model.ProcessingJobSet = dc.model.RESTfulSet.extend({
+
+  resource : 'processing_jobs',
 
   UPDATE_INTERVAL : 5000,
 

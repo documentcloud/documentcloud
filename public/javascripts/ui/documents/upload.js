@@ -29,9 +29,14 @@ dc.ui.DocumentUpload = dc.View.extend({
     ProcessingJobs.bind(dc.Set.MODEL_ADDED,   this._onUploadStarted);
     ProcessingJobs.bind(dc.Set.MODEL_REMOVED, this._onUploadCompleted);
     ProcessingJobs.bind(dc.Set.MODEL_CHANGED, this._updateProgress);
+    if (ProcessingJobs.size()) {
+      ProcessingJobs.each(_(function(job){ this._onUploadStarted(null, job); }).bind(this));
+      ProcessingJobs.startUpdates();
+    }
   },
 
   _onUploadStarted : function(e, model) {
+    $('#no_uploads').hide();
     $('#upload_progress_inner').append(JST.document_progress(model.attributes()));
     this._updateProgress(e, model);
   },

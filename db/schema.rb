@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(:version => 1) do
   create_table "processing_jobs", :force => true do |t|
     t.integer "account_id",     :null => false
     t.integer "cloud_crowd_id", :null => false
+    t.string  "title",          :null => false
   end
 
   add_index "processing_jobs", ["account_id"], :name => "index_processing_jobs_on_account_id"

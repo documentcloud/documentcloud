@@ -3,20 +3,24 @@
 dc.ui.spinner = {
 
   show : function(message) {
+    this.ensureElement();
     message = message || "Loading";
-    if (!this.el) {
-      $(document.body).append(JST.common_spinner({}));
-      this.el = $('#spinner');
-      this.messageContainer = $('#spinner_text', this.el);
-    }
     this.messageContainer.html(message);
     this.el.fadeIn('fast');
   },
 
   hide : function() {
+    this.ensureElement();
     this.el.fadeOut('fast', function(){ $(this).css({display : 'none'}); });
+  },
+
+  ensureElement : function() {
+    if (this.el) return;
+    $(document.body).append(JST.common_spinner({}));
+    this.el = $('#spinner');
+    this.messageContainer = $('#spinner_text', this.el);
   }
 
 };
 
-_.bindAll('hide', dc.ui.spinner);
+_.bindAll('show', 'hide', dc.ui.spinner);

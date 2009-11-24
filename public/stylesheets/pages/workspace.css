@@ -201,6 +201,24 @@ a {
       top: 8px; left: 8px;
     }
 
+#no_uploads {
+  position: absolute;
+  top: 7px; left: 7px; right: 7px;
+  padding: 7px 15px 7px 28px;
+  color: #999;
+  text-transform: uppercase;
+  font-size: 10px;
+  background: #eee;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+  border: 1px solid #ccc;
+  border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+}
+  #no_uploads .icon {
+    position: absolute;
+    top: 4px; left: 4px;
+    opacity: 0.75;
+  }
+
 .full_page_background {
   position: absolute;
   overflow: auto;
