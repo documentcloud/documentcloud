@@ -1,4 +1,6 @@
 TODO:
+
+  * Fix Postgres Unicode input: "invalid byte sequence for encoding"
         
   * Start access controlling assets on S3. This includes changing permissions
     in bulk, as well as serving different URLs for public and private assets
