@@ -21,8 +21,8 @@ module DC
         @pdf_path   = pdf_path
         @pdf_name   = File.basename(pdf_path, '.pdf')
         @base_path  = "#{TMP_DIR}/#{@pdf_name}"
-        @plain_path = "#{@base_path}-plain.txt"
         @text_path  = "#{@base_path}.txt"
+        @temp_path  = "#{@base_path}-temp.txt"
         @tiff_path  = "#{@base_path}.tif"
       end
 
@@ -41,9 +41,14 @@ module DC
         return !font_listing.match(NO_TEXT_DETECTED)
       end
 
+      def ensure_utf8
+        `mv #{@text_path} #{@temp_path}`
+        `iconv -f UTF-8 -t UTF-8//IGNORE < #{@temp_path} > #{@text_path}`
+      end
+
       def text_from_pdf
-        `pdftotext -enc UTF-8 #{@pdf_path} #{@plain_path}`
-        `iconv -f UTF-8 -t UTF-8//TRANSLIT//IGNORE < #{@plain_path} > #{@text_path}`
+        `pdftotext -enc UTF-8 #{@pdf_path} #{@text_path}`
+        ensure_utf8
         full_text = File.read(@text_path)
         File.unlink(@text_path)
         full_text
@@ -55,6 +60,7 @@ module DC
       def text_from_ocr
         system "gm convert -density 200x200 -colorspace GRAY #{@pdf_path} #{@tiff_path}"
         system "tesseract #{@tiff_path} #{@base_path} -l eng"
+        ensure_utf8
         full_text = File.read(@text_path)
         File.unlink(@tiff_path, @text_path)
         full_text
