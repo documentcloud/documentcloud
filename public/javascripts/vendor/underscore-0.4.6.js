@@ -31,7 +31,7 @@
   if (typeof exports !== 'undefined') exports._ = _;
 
   // Current version.
-  _.VERSION = '0.4.4';
+  _.VERSION = '0.4.6';
 
   /*------------------------ Collection Functions: ---------------------------*/
 
@@ -156,7 +156,7 @@
 
   // Invoke a method with arguments on every item in a collection.
   _.invoke = function(obj, method) {
-    var args = _.toArray(arguments).slice(2);
+    var args = _.rest(arguments, 2);
     return _.map(obj, function(value) {
       return (method ? value[method] : value).apply(value, args);
     });
@@ -216,7 +216,8 @@
 
   // Convert anything iterable into a real, live array.
   _.toArray = function(iterable) {
-    if (!iterable) return [];
+    if (!iterable)           return [];
+    if (iterable.toArray)    return iterable.toArray();
     if (_.isArray(iterable)) return iterable;
     return _.map(iterable, function(val){ return val; });
   };
@@ -228,9 +229,17 @@
 
   /*-------------------------- Array Functions: ------------------------------*/
 
-  // Get the first element of an array.
-  _.first = function(array) {
-    return array[0];
+  // Get the first element of an array. Passing "n" will return the first N
+  // values in the array. Aliased as "head".
+  _.first = function(array, n) {
+    return n ? Array.prototype.slice.call(array, 0, n) : array[0];
+  };
+
+  // Returns everything but the first entry of the array. Aliased as "tail".
+  // Especially useful on the arguments object. Passing an "index" will return
+  // the rest of the values in the array from that index onward.
+  _.rest = function(array, index) {
+    return Array.prototype.slice.call(array, _.isUndefined(index) ? 1 : index);
   };
 
   // Get the last element of an array.
@@ -254,7 +263,7 @@
 
   // Return a version of the array that does not contain the specified value(s).
   _.without = function(array) {
-    var values = array.slice.call(arguments, 0);
+    var values = _.rest(arguments);
     return _.select(array, function(value){ return !_.include(values, value); });
   };
 
@@ -270,7 +279,7 @@
   // Produce an array that contains every item shared between all the
   // passed-in arrays.
   _.intersect = function(array) {
-    var rest = _.toArray(arguments).slice(1);
+    var rest = _.rest(arguments);
     return _.select(_.uniq(array), function(item) {
       return _.all(rest, function(other) {
         return _.indexOf(other, item) >= 0;
@@ -306,25 +315,38 @@
     return -1;
   };
 
+  // Generate an integer Array containing an arithmetic progression. A port of
+  // the native Python range() function. See:
+  // http://docs.python.org/library/functions.html#range
+  _.range = function(start, stop, step) {
+    var a     = _.toArray(arguments);
+    var solo  = a.length <= 1;
+    var start = solo ? 0 : a[0], stop = solo ? a[0] : a[1], step = a[2] || 1;
+    var len   = Math.ceil((stop - start) / step);
+    if (len <= 0) return [];
+    var range = new Array(len);
+    for (var i = start, idx = 0; true; i += step) {
+      if ((step > 0 ? i - stop : stop - i) >= 0) return range;
+      range[idx++] = i;
+    }
+  };
+
   /* ----------------------- Function Functions: -----------------------------*/
 
   // Create a function bound to a given object (assigning 'this', and arguments,
   // optionally). Binding with arguments is also known as 'curry'.
   _.bind = function(func, context) {
-    context = context || root;
-    var args = _.toArray(arguments).slice(2);
+    var args = _.rest(arguments, 2);
     return function() {
-      var a = args.concat(_.toArray(arguments));
-      return func.apply(context, a);
+      return func.apply(context || root, args.concat(_.toArray(arguments)));
     };
   };
 
   // Bind all of an object's methods to that object. Useful for ensuring that
   // all callbacks defined on an object belong to it.
   _.bindAll = function() {
-    var args = _.toArray(arguments);
-    var context = args.pop();
-    _.each(args, function(methodName) {
+    var context = Array.prototype.pop.call(arguments);
+    _.each(arguments, function(methodName) {
       context[methodName] = _.bind(context[methodName], context);
     });
   };
@@ -332,14 +354,14 @@
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
   _.delay = function(func, wait) {
-    var args = _.toArray(arguments).slice(2);
+    var args = _.rest(arguments, 2);
     return setTimeout(function(){ return func.apply(func, args); }, wait);
   };
 
   // Defers a function, scheduling it to run after the current call stack has
   // cleared.
   _.defer = function(func) {
-    return _.delay.apply(_, [func, 1].concat(_.toArray(arguments).slice(1)));
+    return _.delay.apply(_, [func, 1].concat(_.rest(arguments)));
   };
 
   // Returns the first function passed as an argument to the second,
@@ -507,6 +529,8 @@
   _.filter   = _.select;
   _.every    = _.all;
   _.some     = _.any;
+  _.head     = _.first;
+  _.tail     = _.rest;
   _.methods  = _.functions;
 
   /*------------------------ Setup the OOP Wrapper: --------------------------*/
