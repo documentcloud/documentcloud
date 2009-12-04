@@ -4,16 +4,16 @@ class ImportController < ApplicationController
 
   layout nil
 
-  before_filter :login_required, :only => [:upload_pdf]
+  before_filter :login_required, :only => [:upload_document]
 
   # TODO: Clean up this method.
-  def upload_pdf
-    pdf = params[:pdf]
+  def upload_document
+    file = params[:file]
     save_dir = "#{RAILS_ROOT}/public/docs"
     Dir.mkdir(save_dir) unless File.exists?(save_dir)
-    save_path = pdf.original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
+    save_path = file.original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
     local_path = File.join(save_dir, save_path)
-    FileUtils.cp(pdf.path, local_path)
+    FileUtils.cp(file.path, local_path)
     urls = ["#{DC_CONFIG['server_root']}/docs/#{save_path}"]
     options = {
       'title'           => params[:title],
@@ -21,7 +21,7 @@ class ImportController < ApplicationController
       'organization_id' => current_organization.id,
       'account_id'      => current_account.id,
       'access'          => params[:access].to_i,
-      'original_pdf'    => local_path
+      'original_file'   => local_path
     }
     response = DC::Import::CloudCrowdImporter.new.import(urls, options)
     job = JSON.parse(response)
@@ -39,8 +39,8 @@ class ImportController < ApplicationController
   def cloud_crowd
     job = JSON.parse(params[:job])
     if job['status'] == 'succeeded'
-      doc = job['outputs'].first['original_pdf']
-      FileUtils.rm(doc) if File.exists?(doc) && doc.match(/\.pdf\Z/)
+      doc = job['outputs'].first['original_file']
+      FileUtils.rm(doc) if File.exists?(doc)
     else
       logger.warn("Document import failed: " + job.inspect)
     end

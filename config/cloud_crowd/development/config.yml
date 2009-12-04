@@ -2,4 +2,4 @@
 :max_workers:         5
 :storage:             filesystem
 :actions_path:        app/actions
-:work_unit_retries:   3
+:work_unit_retries:   1

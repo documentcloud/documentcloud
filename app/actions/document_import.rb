@@ -7,84 +7,90 @@ if CloudCrowd.node?
   require 'logger'
   Object.const_set "RAILS_DEFAULT_LOGGER", Logger.new(STDOUT)
   require 'rubygems'
-  require 'activerecord'
+  require 'active_record'
   require 'config/environment'
 end
 
-# DocumentCloud import produces full text, RDF from OpenCalais, and thumbnails
-# from a PDF document. The calling DocumentCloud instance is responsible for
-# downloading and ingesting these resources.
 class DocumentImport < CloudCrowd::Action
 
   def split
-    log_exceptions do
-      ActiveRecord::Base.establish_connection
-      # Extract document-wide assets: title, thumbnails, rdf.
-      extract_title(input_path)
-      generate_thumbnails(input_path)
-      # Create a naked document record in the database (we'll need the id).
-      doc = Document.create!({
-        :title           => options['title'] || @title,
-        :source          => options['source'] || Faker::Company.name,
-        :organization_id => options['organization_id'],
-        :account_id      => options['account_id'],
-        :access          => DC::Access::PENDING,
-        :page_count      => 0
-      })
-      DC::Store::AssetStore.new.save_files(doc, :pdf => input_path, :thumbnail => @thumb_path)
-      # Split the document into pages for further (parallel) processing.
-      split_into_pages(doc)
-    end
+    ActiveRecord::Base.establish_connection
+    pdf = ensure_pdf(input_path)
+    basename = File.basename(pdf, '.pdf')
+
+    # Create initial document.
+    doc = Document.create!({
+      :title           => options['title'] || Docsplit.extract_title(pdf) || basename,
+      :source          => options['source'] || Faker::Company.name,
+      :organization_id => options['organization_id'],
+      :account_id      => options['account_id'],
+      :access          => DC::Access::PENDING,
+      :page_count      => 0
+    })
+    asset_store.save_pdf(doc, pdf)
+    inputs_for_processing(doc, 'images', 'text')
   end
 
-  # Process handles an individual batch of pages.
   def process
-    log_exceptions do
-      tar = File.basename(input['batch_url'])
-      download(input['batch_url'], tar)
-      `tar -xzf #{tar}`
-      ActiveRecord::Base.establish_connection
-      Dir['*.pdf'].map {|page_pdf| import_page(page_pdf) }
-      input['document_id']
+    ActiveRecord::Base.establish_connection
+    @pdf      = File.basename(input['pdf'])
+    @basename = File.basename(@pdf, '.pdf')
+    @doc      = Document.find(input['id'])
+    download(input['pdf'], @pdf)
+    case input['task']
+    when 'text'   then process_text
+    when 'images' then process_images
     end
   end
 
-  # After all of the document's pages have been imported, we combine their text
-  # to produce the document's full_text, and send it to Calais for entity
-  # extraction.
   def merge
+    ActiveRecord::Base.establish_connection
     doc = Document.find(input.first)
-    text = doc.combined_page_text
-    doc.access = options['access'] || DC::Access::PUBLIC
-    doc.full_text = FullText.new(:text => text, :document => doc)
-    doc.summary = text[0...1000].gsub(/\s+/, ' ')[0...255]
+    doc.update_attributes :access => options['access'] || DC::Access::PUBLIC
+    {'document_id' => doc.id, 'original_file' => options['original_file']}
+  end
+
+  def process_images
+    Docsplit.extract_images(@pdf, :format => :jpg, :size => '60x75!', :pages => 1, :output => 'thumbs')
+    asset_store.save_thumbnail(@doc, "thumbs/#{@basename}_1.jpg")
+    Docsplit.extract_images(@pdf, :format => :gif, :size => ['700x', '1000x'], :output => 'images')
+    Dir['images/700x/*.gif'].length.times do |i|
+      page_number = i + 1
+      page_name   = "#{@basename}_#{page_number}"
+      page        = Page.new(:document_id => @doc.id, :page_number => page_number)
+      asset_store.save_page(page, :normal_image => "images/700x/#{page_name}.gif", :large_image => "images/1000x/#{page_name}.gif")
+    end
+    @doc.id
+  end
+
+  def process_text
+    Docsplit.extract_text(@pdf, :pages => :all, :output => 'text')
+    Dir['text/*.txt'].length.times do |i|
+      page_number = i + 1
+      page_name   = "#{@basename}_#{page_number}"
+      text        = File.read("text/#{page_name}.txt")
+      page        = Page.create!(:document_id => @doc.id, :text => text, :page_number => page_number)
+    end
+    text            = @doc.combined_page_text
+    @doc.full_text   = FullText.new(:text => text, :document => @doc)
+    @doc.summary     = @doc.full_text.summary
     calais_response = fetch_rdf_from_calais(text)
-    doc.rdf = @rdf
-    DC::Import::MetadataExtractor.new.extract_metadata(doc, calais_response) if calais_response
-    doc.save!
-    DC::Store::AssetStore.new.save_full_text(doc)
-    {'document_id' => doc.id, 'original_pdf' => options['original_pdf']}
+    @doc.rdf = @rdf
+    DC::Import::MetadataExtractor.new.extract_metadata(@doc, calais_response) if calais_response
+    @doc.save!
+    asset_store.save_full_text(@doc)
+    @doc.id
   end
 
 
   private
 
-  # Split the pdf up into individual pages, and archive them in batches.
-  def split_into_pages(document)
-    wrangler = DC::Import::PDFWrangler.new
-    pdfs = wrangler.burst(input_path)
-    tars = wrangler.archive(pdfs, options['batch_size'])
-    tars.map {|tar| {'document_id' => document.id, 'batch_url' => save(tar)} }
+  def asset_store
+    @asset_store ||= DC::Store::AssetStore.new
   end
 
-  # Import and save a single page of a document, including text and images.
-  def import_page(page_pdf)
-    page_number = page_pdf.match(/(\d+)\.pdf$/)[1].to_i
-    extract_full_text(page_pdf)
-    generate_page_images(page_pdf)
-    page = Page.create!(:document_id => input['document_id'], :text => @text, :page_number => page_number)
-    DC::Store::AssetStore.new.save_page(page, :normal_image => @normal_page_image, :large_image => @large_page_image)
-    page.id
+  def inputs_for_processing(doc, *tasks)
+    tasks.map {|t| {:task => t, :pdf => doc.pdf_url, :id => doc.id} }
   end
 
   # TODO: clean up the errors that we want to retry only -- add calais exception
@@ -102,39 +108,13 @@ class DocumentImport < CloudCrowd::Action
     end
   end
 
-  # Extract the full text of a PDF (or sub-page), using pdftotext or OCR.
-  def extract_full_text(path)
-    @text = DC::Import::TextExtractor.new(path).get_text
-  end
-
-  # Extract the title of the PDF.
-  def extract_title(path)
-    @title = DC::Import::TextExtractor.new(path).get_title || file_name
-  end
-
-  # Extract all the requisite thumbnails for the Document from the PDF.
-  def generate_thumbnails(path)
-    image_ex = DC::Import::ImageExtractor.new(input_path).get_thumbnails
-    @thumb_path = image_ex.thumbnail_path
-  end
-
-  # Extract all the sized page images for a single page of a PDF.
-  def generate_page_images(path)
-    image_ex = DC::Import::ImageExtractor.new(path).get_page_images
-    @normal_page_image = image_ex.normal_page_image
-    @large_page_image = image_ex.large_page_image
-  end
-
-  # Run a block, printing out full exceptions before raising them.
-  def log_exceptions
-    begin
-      yield
-    rescue Exception => e
-      puts e.class.to_s
-      puts e.message
-      puts e.backtrace
-      raise e
-    end
+  # If they've uploaded another format of document, convert it to PDF before
+  # starting processing.
+  def ensure_pdf(file)
+    ext = File.extname(file)
+    return file if ext == '.pdf'
+    Docsplit.convert_to_pdf(file)
+    File.basename(file, ext) + '.pdf'
   end
 
 end

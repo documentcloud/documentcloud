@@ -17,10 +17,14 @@ module DC
         FileUtils.mkdir_p(AssetStore.asset_root) unless File.exists?(AssetStore.asset_root)
       end
 
-      def save_files(document, assets)
+      def save_pdf(document, pdf_path)
         ensure_document_directory(document)
-        FileUtils.cp(assets[:pdf], local(document.pdf_path))
-        FileUtils.cp(assets[:thumbnail], local(document.thumbnail_path))
+        FileUtils.cp(pdf_path, local(document.pdf_path))
+      end
+
+      def save_thumbnail(document, thumb_path)
+        ensure_document_directory(document)
+        FileUtils.cp(thumb_path, local(document.thumbnail_path))
       end
 
       def save_full_text(document)
