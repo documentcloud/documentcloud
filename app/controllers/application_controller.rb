@@ -65,19 +65,19 @@ class ApplicationController < ActionController::Base
 
   # Return forbidden when the access is unauthorized.
   def forbidden
-    render :file => "#{RAILS_ROOT}/public/403.html", :status => 403
+    render :file => "#{Rails.root}/public/403.html", :status => 403
     false
   end
 
   # Return not_found when a resource can't be located.
   def not_found
-    render :file => "#{RAILS_ROOT}/public/404.html", :status => 404
+    render :file => "#{Rails.root}/public/404.html", :status => 404
     false
   end
 
   # Return server_error when an uncaught exception bubbles up.
   def server_error(e)
-    render :file => "#{RAILS_ROOT}/public/500.html", :status => 500
+    render :file => "#{Rails.root}/public/500.html", :status => 500
     false
   end
 
@@ -98,7 +98,7 @@ class ApplicationController < ActionController::Base
     yield
     result = RubyProf.stop
     printer = RubyProf::FlatPrinter.new(result)
-    File.open("#{RAILS_ROOT}/tmp/profile.txt", 'w+') do |f|
+    File.open("#{Rails.root}/tmp/profile.txt", 'w+') do |f|
       printer.print(f)
     end
   end

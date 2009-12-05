@@ -6,7 +6,7 @@ module DC
 
       module ClassMethods
         def asset_root
-          "#{RAILS_ROOT}/public/asset_store"
+          "#{Rails.root}/public/asset_store"
         end
         def web_root
           File.join(DC_CONFIG['server_root'], 'asset_store')

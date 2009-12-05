@@ -2,8 +2,7 @@ class ImportController < ApplicationController
 
   FILE_URL = /\Afile:\/\//
 
-  PENDING_DIR = "#{RAILS_ROOT}/public/pending"
-  Dir.mkdir(PENDING_DIR) unless File.exists?(PENDING_DIR)
+  PENDING_DIR = "#{Rails.root}/public/pending"
 
   layout nil
 
@@ -11,6 +10,7 @@ class ImportController < ApplicationController
 
   # TODO: Clean up this method.
   def upload_document
+    Dir.mkdir_p(PENDING_DIR) unless File.exists?(PENDING_DIR)
     save_path   = params[:file].original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
     local_path  = File.join(PENDING_DIR, save_path)
     basename    = File.basename(save_path, File.extname(save_path))
