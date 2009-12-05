@@ -18,7 +18,7 @@ module DC
       def initialize
         @key, @secret = SECRETS['aws_access_key'], SECRETS['aws_secret_key']
       end
-      
+
       def save_pdf(document, pdf_path)
         save_file(pdf_path, document.pdf_path)
       end
@@ -31,9 +31,12 @@ module DC
         save_file(document.text, document.full_text_path, false)
       end
 
-      def save_page(page, assets)
-        save_file(assets[:normal_image], page.image_path('normal'))
-        save_file(assets[:large_image], page.image_path('large'))
+      def save_page_images(page, images)
+        save_file(images[:normal_image], page.image_path('normal'))
+        save_file(images[:large_image], page.image_path('large'))
+      end
+
+      def save_page_text(page)
         save_file(page.text, page.text_path, false)
       end
 

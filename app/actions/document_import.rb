@@ -41,7 +41,8 @@ class DocumentImport < CloudCrowd::Action
     Docsplit.extract_images(@pdf, :format => :gif, :size => ['700x', '1000x'], :output => 'images')
     Dir['images/700x/*.gif'].length.times do |i|
       image = "#{@basename}_#{i + 1}.gif"
-      asset_store.save_page(Page.new(:document_id => document.id, :page_number => i + 1),
+      asset_store.save_page_images(
+        Page.new(:document_id => document.id, :page_number => i + 1),
         :normal_image => "images/700x/#{image}",
         :large_image => "images/1000x/#{image}"
       )
@@ -51,7 +52,8 @@ class DocumentImport < CloudCrowd::Action
   def process_text
     Docsplit.extract_text(@pdf, :pages => :all, :output => 'text')
     Dir['text/*.txt'].each_with_index do |page, i|
-      Page.create!(:document => document, :text => File.read(page), :page_number => i + 1)
+      page = Page.create!(:document => document, :text => File.read(page), :page_number => i + 1)
+      asset_store.save_page_text(page)
     end
     text                = document.combined_page_text
     document.full_text  = FullText.new(:text => text, :document => document)

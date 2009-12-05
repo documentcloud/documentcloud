@@ -32,10 +32,14 @@ module DC
         File.open(local(document.full_text_path), 'w+') {|f| f.write(document.text) }
       end
 
-      def save_page(page, assets)
+      def save_page(page, images)
         FileUtils.mkdir_p(local(page.pages_path)) unless File.exists?(local(page.pages_path))
-        FileUtils.cp(assets[:normal_image], local(page.image_path('normal')))
-        FileUtils.cp(assets[:large_image], local(page.image_path('large')))
+        FileUtils.cp(images[:normal_image], local(page.image_path('normal')))
+        FileUtils.cp(images[:large_image], local(page.image_path('large')))
+      end
+
+      def save_page_text(page)
+        FileUtils.mkdir_p(local(page.pages_path)) unless File.exists?(local(page.pages_path))
         File.open(local(page.text_path), 'w+') {|f| f.write(page.text) }
       end
 
