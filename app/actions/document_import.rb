@@ -83,7 +83,7 @@ class DocumentImport < CloudCrowd::Action
   def ensure_pdf(file)
     ext = File.extname(file)
     return file if ext == '.pdf'
-    Docsplit.convert_to_pdf(file)
+    Docsplit.extract_pdf(file)
     File.basename(file, ext) + '.pdf'
   end
 
