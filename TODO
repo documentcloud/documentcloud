@@ -1,6 +1,8 @@
 TODO:
 
-  * Fix Postgres Unicode input: "invalid byte sequence for encoding"
+  * Start extracting dates (not times) -- integrate the DateExtractor into
+    document import. What to do about relevance? Make sure to record occurrences
+    and merge identical dates.
         
   * Start access controlling assets on S3. This includes changing permissions
     in bulk, as well as serving different URLs for public and private assets
@@ -14,6 +16,8 @@ TODO:
       
 
 DONE:
+
+  * Fix Postgres Unicode input: "invalid byte sequence for encoding"
 
   * Show in-progress uploads even after a page refresh.
 
