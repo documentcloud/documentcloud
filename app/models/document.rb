@@ -1,8 +1,6 @@
 class Document < ActiveRecord::Base
   include DC::Access
 
-  attr_accessor :rdf, :calais_signature
-
   has_one  :full_text,  :dependent => :destroy
   has_many :pages,      :dependent => :destroy
   has_many :metadata,   :dependent => :destroy

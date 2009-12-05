@@ -2,33 +2,37 @@ class ImportController < ApplicationController
 
   FILE_URL = /\Afile:\/\//
 
+  PENDING_DIR = "#{RAILS_ROOT}/public/pending"
+  Dir.mkdir(PENDING_DIR) unless File.exists?(PENDING_DIR)
+
   layout nil
 
   before_filter :login_required, :only => [:upload_document]
 
   # TODO: Clean up this method.
   def upload_document
-    file = params[:file]
-    save_dir = "#{RAILS_ROOT}/public/docs"
-    Dir.mkdir(save_dir) unless File.exists?(save_dir)
-    save_path = file.original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
-    local_path = File.join(save_dir, save_path)
-    FileUtils.cp(file.path, local_path)
-    urls = ["#{DC_CONFIG['server_root']}/docs/#{save_path}"]
-    options = {
-      'title'           => params[:title],
-      'source'          => params[:source],
-      'organization_id' => current_organization.id,
-      'account_id'      => current_account.id,
-      'access'          => params[:access].to_i,
-      'original_file'   => local_path
-    }
-    response = DC::Import::CloudCrowdImporter.new.import(urls, options)
-    job = JSON.parse(response)
+    save_path   = params[:file].original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
+    local_path  = File.join(PENDING_DIR, save_path)
+    basename    = File.basename(save_path, File.extname(save_path))
+    FileUtils.cp(params[:file].path, local_path)
+    urls = ["#{DC_CONFIG['server_root']}/pending/#{save_path}"]
+    doc = Document.create!(
+      :title            => params[:title] || basename,
+      :source           => params[:source],
+      :organization_id  => current_organization.id,
+      :account_id       => current_account.id,
+      :access           => DC::Access::PENDING,
+      :page_count       => 0
+    )
+    job = JSON.parse(DC::Import::CloudCrowdImporter.new.import(urls, {
+      'id'            => doc.id,
+      'access'        => params[:access].to_i,
+      'original_file' => local_path
+    }))
     record = ProcessingJob.create!(
       :account        => current_account,
       :cloud_crowd_id => job['id'],
-      :title          => options['title'],
+      :title          => doc.title,
       :remote_job     => job
     )
     @status = record.status
