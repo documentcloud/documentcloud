@@ -39,10 +39,11 @@ class DocumentImport < CloudCrowd::Action
     Docsplit.extract_images(@pdf, :format => :jpg, :size => '60x75!', :pages => 1, :output => 'thumbs')
     asset_store.save_thumbnail(document, "thumbs/#{@basename}_1.jpg")
     Docsplit.extract_images(@pdf, :format => :gif, :size => ['700x', '1000x'], :output => 'images')
-    Dir['images/700x/*.gif'].each_with_index do |image, i|
+    Dir['images/700x/*.gif'].length.times do |i|
+      image = "#{@basename}_#{i + 1}.gif"
       asset_store.save_page(Page.new(:document_id => document.id, :page_number => i + 1),
-        :normal_image => "images/700x/#{File.basename(image)}",
-        :large_image => "images/1000x/#{File.basename(image)}"
+        :normal_image => "images/700x/#{image}",
+        :large_image => "images/1000x/#{image}"
       )
     end
   end
