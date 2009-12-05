@@ -1,5 +1,7 @@
 TODO:
 
+  * Build an in-viewer annotation and section editing UI.
+
   * Start extracting dates (not times) -- integrate the DateExtractor into
     document import. What to do about relevance? Make sure to record occurrences
     and merge identical dates.
