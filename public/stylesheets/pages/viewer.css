@@ -1,7 +1,7 @@
 /* Extra DocViewer override rules go here: */
 
-#DV-headerHat, #DV-title, #DV-description {
-  display: none;
+#DV-headerHat, #DV-title, #DV-description, .DV-contentsHeader {
+  display: none !important;
 }
 #DV-header {
   padding: 0;
@@ -39,8 +39,15 @@
   border: 0;
 }
 #DV-pages {
-  padding-bottom: 20px;
+  padding-bottom: 16px;
   background: #bbb;
+}
+
+#DV-overlay {
+  left: 0; right: 282px; bottom: 0;
+}
+#DV-well {
+  padding-bottom: 16px;
 }
 
 .DV-views div a {
@@ -57,6 +64,7 @@
   }
   .DV-viewDocument .DV-views #DV-documentView a,
   .DV-viewAnnotations .DV-views #DV-annotationView a,
-  .DV-viewText .DV-views #DV-textView a {
+  .DV-viewText .DV-views #DV-textView a,
+  .DV-viewSearch .DV-views #DV-textView a {
     background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#a0a0a0));
   }

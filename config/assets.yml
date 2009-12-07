@@ -11,6 +11,19 @@ javascripts:
     - public/javascripts/lib/*.js
     - public/javascripts/ui/menu.js
     - public/javascripts/**/*.js
+  viewer:
+    - public/document-viewer/js/DV/vendor/jquery-1.3.2.min.js
+    - public/document-viewer/js/DV/vendor/*.js
+    - public/document-viewer/js/DV/lib/initializer.js
+    - public/document-viewer/js/DV/lib/class.js
+    - public/document-viewer/js/DV/lib/*.js
+    - public/document-viewer/js/DV/schema/*.js
+    - public/document-viewer/js/DV/elements/*.js
+    - public/document-viewer/js/DV/models/*.js
+    - public/document-viewer/js/DV/events/*.js
+    - public/document-viewer/js/DV/helpers/*.js
+    - public/document-viewer/js/DV/states/*.js
+    - public/document-viewer/js/DV/controllers/*.js
 
 stylesheets:
   app:
@@ -23,7 +36,12 @@ stylesheets:
     - public/stylesheets/pages/empty.css
   docs:
     - public/stylesheets/pages/docs.css
+  viewer:
+    - public/document-viewer/css/DV/**/*.css
+    - public/stylesheets/pages/viewer.css
 
 templates:
   complete:
     - app/views/jst/**/*.jst
+  viewer:
+    - public/document-viewer/js/DV/views/*.jst
