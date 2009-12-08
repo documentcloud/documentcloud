@@ -48,12 +48,12 @@ ActiveRecord::Schema.define(:version => 1) do
   execute "create index full_text_fti on full_text using gin(to_tsvector('english', text));"
 
   create_table "pages", :force => true do |t|
-    t.integer   "organization_id", :null => false
-    t.integer   "account_id",      :null => false
-    t.integer   "document_id",     :null => false
-    t.integer   "access",          :null => false
-    t.integer   "page_number",  :null => false
-    t.text      "text",         :null => false
+    t.integer   "organization_id",  :null => false
+    t.integer   "account_id",       :null => false
+    t.integer   "document_id",      :null => false
+    t.integer   "access",           :null => false
+    t.integer   "page_number",      :null => false
+    t.text      "text",             :null => false
   end
 
   add_index "pages", ["document_id", "page_number"], :name => "index_pages_on_document_id_and_page_number", :unique => true
@@ -76,6 +76,32 @@ ActiveRecord::Schema.define(:version => 1) do
   execute "create index value_fti on metadata using gin(to_tsvector('english', value));"
 
   # TODO: Add metadata indexes.
+
+  create_table "sections", :force => true do |t|
+    t.integer   "organization_id",  :null => false
+    t.integer   "account_id",       :null => false
+    t.integer   "document_id",      :null => false
+    t.string    "title",            :null => false
+    t.integer   "start_page",       :null => false
+    t.integer   "end_page",         :null => false
+    # Do sections need access levels?
+  end
+
+  add_index "sections", ["document_id"], :name => "index_sections_on_document_id"
+
+  create_table "annotations", :force => true do |t|
+    t.integer   "organization_id",  :null => false
+    t.integer   "account_id",       :null => false
+    t.integer   "document_id",      :null => false
+    t.integer   "page_number",      :null => false
+    t.integer   "access",           :null => false
+    t.string    "title",            :null => false
+    t.text      "content"
+    t.string    "position",         :limit => 40
+    t.timestamps
+  end
+
+  add_index "annotations", ["document_id"], :name => "index_annotations_on_document_id"
 
   create_table "processing_jobs", :force => true do |t|
     t.integer "account_id",     :null => false
