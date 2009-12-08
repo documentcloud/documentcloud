@@ -35,13 +35,14 @@ class DownloadController < ApplicationController
   end
 
   def send_viewer
-    assets  = Dir["#{Rails.root}/public/document-viewer/*"]
+    assets  = Dir["#{Rails.root}/public/document-viewer/*"] + ["#{Rails.root}/public/stylesheets/pages/plainviewer.css"]
     package("document_viewer.zip") do |zip|
       assets.each {|asset| zip.add("document-viewer/#{File.basename(asset)}", asset) }
       @documents.each do |doc|
         @current_document = doc
         html = ERB.new(File.read("#{Rails.root}/app/views/documents/show.html.erb")).result(binding)
         html.gsub!(/\="\/document-viewer\//, '="document-viewer/')
+        html.gsub!(/\="\/stylesheets\/pages\//, '="document-viewer/')
         zip.get_output_stream("#{doc.slug}.html") {|f| f.write(html) }
       end
     end
