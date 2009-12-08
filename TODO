@@ -1,5 +1,7 @@
 TODO:
 
+  * Add fleshed-out section and annotation models.
+
   * Build an in-viewer annotation and section editing UI.
 
   * Start extracting dates (not times) -- integrate the DateExtractor into

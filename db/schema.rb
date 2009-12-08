@@ -97,11 +97,12 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer   "access",           :null => false
     t.string    "title",            :null => false
     t.text      "content"
-    t.string    "position",         :limit => 40
+    t.string    "location",         :limit => 40
     t.timestamps
   end
 
   add_index "annotations", ["document_id"], :name => "index_annotations_on_document_id"
+  execute "create index annotations_content_fti on annotations using gin(to_tsvector('english', content));"
 
   create_table "processing_jobs", :force => true do |t|
     t.integer "account_id",     :null => false

@@ -1,9 +1,11 @@
 class Document < ActiveRecord::Base
   include DC::Access
 
-  has_one  :full_text,  :dependent => :destroy
-  has_many :pages,      :dependent => :destroy
-  has_many :metadata,   :dependent => :destroy
+  has_one  :full_text,    :dependent => :destroy
+  has_many :pages,        :dependent => :destroy
+  has_many :metadata,     :dependent => :destroy
+  has_many :sections,     :dependent => :destroy
+  has_many :annotations,  :dependent => :destroy
 
   validates_presence_of :organization_id, :account_id, :access, :page_count,
                         :title, :slug
