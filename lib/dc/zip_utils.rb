@@ -11,8 +11,7 @@ module DC
           yield zip
         end
         # TODO: We can stream, or even better, use X-Accel-Redirect, if we can
-        # be sure to clean up the Zip after the fact -- or maybe let it be cached
-        # and clear them out on deploy.
+        # be sure to clean up the Zip after the fact -- with a cron or equivalent.
         send_file zipfile, :stream => false
       end
     end

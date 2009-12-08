@@ -28,7 +28,7 @@ dc.model.History = dc.Model.extend({
   // Save a moment into browser history. Make sure you've registered a handler
   // for it. You're responsible for pre-escaping the URL fragment.
   save : function(hash) {
-    this.set({hash : '#' + hash});
+    this.set({hash : hash ? '#' + hash : ''});
     window.location.hash = hash;
   },
 

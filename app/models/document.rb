@@ -14,7 +14,7 @@ class Document < ActiveRecord::Base
 
   after_destroy :delete_assets
 
-  SEARCHABLE_ATTRIBUTES = [:title, :source]
+  SEARCHABLE_ATTRIBUTES = [:title, :source, :account]
 
   delegate :text, :to => :full_text
 

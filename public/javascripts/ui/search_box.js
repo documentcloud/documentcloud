@@ -76,6 +76,7 @@ dc.ui.SearchBox = dc.View.extend({
 
   clearSearch : function() {
     this.contextSensitiveSaveButton(false);
+    dc.history.save('search');
     return $(document.body).setMode('no', 'search');
   },
 

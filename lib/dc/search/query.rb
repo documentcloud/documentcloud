@@ -111,10 +111,19 @@ module DC
       end
 
       # Generate the SQL to match document attributes.
+      # TODO: Fix the special-case for "account" by figuring out a way to do
+      # arbitrary translations of faux-attributes.
+      # TODO: Remove sql injection potential in field.kind.
       def generate_attributes_sql
         @attributes.each do |field|
-          @sql << "documents.#{field.kind} = ?"
-          @interpolations << field.value
+          if field.kind == 'account'
+            account = Account.find_by_email(field.value)
+            @sql << "documents.account_id = ?"
+            @interpolations << (account ? account.id : -1)
+          else
+            @sql << "documents.#{field.kind} = ?"
+            @interpolations << field.value
+          end
         end
       end
 

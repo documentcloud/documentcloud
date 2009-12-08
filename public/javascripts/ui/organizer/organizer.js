@@ -20,9 +20,16 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   renderAll : function() {
+    this._renderMyDocuments();
     _.each(this.sortedModels(), _.bind(function(model) {
       this._addSubView(null, model);
     }, this));
+  },
+
+  _renderMyDocuments : function() {
+    var view = new dc.ui.MyDocuments().render();
+    this.subViews.push(view);
+    $(this.el).prepend(view.el);
   },
 
   // Filters the visible labels and saved searches, by case-insensitive search.
@@ -31,7 +38,8 @@ dc.ui.Organizer = dc.View.extend({
     var count = 0;
     var matcher = new RegExp(search, 'i');
     _.each(this.subViews, function(view) {
-      var selected = !!view.model.sortKey().match(matcher);
+      var sortKey = view.sortKey || view.model.sortKey();
+      var selected = !!sortKey.match(matcher);
       if (selected) count++;
       $(view.el).toggle(selected);
     });

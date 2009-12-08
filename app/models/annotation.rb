@@ -16,10 +16,8 @@ class Annotation < ActiveRecord::Base
 
   def canonical
     data = {'page' => page_number, 'title' => title, 'content' => content}
-    data['location'] => {'image' => location} if location
+    data['location'] = {'image' => location} if location
     data
   end
-
-
 
 end

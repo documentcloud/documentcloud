@@ -39,6 +39,9 @@
 .icon.search_32 {
   background-image: url(/images/embed/icons/search_32.png);
 }
+.icon.page_text_32 {
+  background-image: url(/images/embed/icons/page_text_32.png);
+}
 
 .icon.plus, .icon.minus {
   display: block;
