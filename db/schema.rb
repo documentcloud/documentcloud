@@ -1,4 +1,4 @@
-# CRITICAL POSTGRES COST ADJUSTMENT: alter function to_tsvector(regconfig,text) cost 10000;
+# CRITICAL POSTGRES COST ADJUSTMENT: alter function to_tsvector(regconfig,text) cost 100000;
 
 include DC::Store::MigrationHelpers
 
