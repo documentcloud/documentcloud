@@ -10,13 +10,14 @@ module DC
 
       # Public API: Pass in a document, either with full_text or rdf already
       # attached.
-      def extract_metadata(document)
+      def extract_metadata(document, opts={})
         document.metadata = []
-        response = fetch_entities(document)
-        extract_full_text(document, response)
+        response = opts[:rdf] ? Calais::Response.new(opts[:rdf]) : fetch_entities(document)
+        extract_full_text(document, response, opts[:rdf])
         extract_standard_metadata(document, response)
         extract_categories(document, response)
         extract_entities(document, response)
+        document.save
       end
 
 
@@ -39,7 +40,7 @@ module DC
       # Pull out all of the standard, top-level metadata, and add it to our
       # document if it hasn't already been set.
       def extract_standard_metadata(document, calais)
-        document.title ||= calais.doc_title
+        document.title = calais.doc_title unless document.titled?
         document.language = 'en' # TODO: Convert calais.language into an ISO language code.
         document.publication_date ||= calais.doc_date
         document.calais_id = calais.request_id
@@ -79,9 +80,9 @@ module DC
       # Hopefully we'll never need to use this method, but if you pass in
       # a document that doesn't have any full_text, we can take it out of
       # the Calais RDF response.
-      def extract_full_text(document, calais)
+      def extract_full_text(document, calais, rdf=nil)
         return if document.full_text
-        xml = Nokogiri::XML.parse(document.rdf)
+        xml = Nokogiri::XML.parse(rdf)
         wrapped = Nokogiri::XML.parse(xml.root.search('//c:document').first.content)
         full_text = wrapped.root.search('//body').first.content.strip
         full_text.gsub!(/(\[\[|\]\]|\{\{|\}\})/, '')

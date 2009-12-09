@@ -1,6 +1,10 @@
 class Document < ActiveRecord::Base
   include DC::Access
 
+  SEARCHABLE_ATTRIBUTES = [:title, :source, :account]
+
+  DEFAULT_TITLE = "Untitled Document"
+
   has_one  :full_text,    :dependent => :destroy
   has_many :pages,        :dependent => :destroy
   has_many :metadata,     :dependent => :destroy
@@ -13,8 +17,6 @@ class Document < ActiveRecord::Base
   before_validation_on_create :ensure_titled
 
   after_destroy :delete_assets
-
-  SEARCHABLE_ATTRIBUTES = [:title, :source, :account]
 
   delegate :text, :to => :full_text
 
@@ -37,6 +39,11 @@ class Document < ActiveRecord::Base
   # the pages. Used at initial import.
   def combined_page_text
     self.pages.all(:select => [:text]).map(&:text).join('')
+  end
+
+  # Does this document have a title?
+  def titled?
+    title.present? && (title != DEFAULT_TITLE)
   end
 
   # Ex: docs/1011
@@ -152,7 +159,7 @@ class Document < ActiveRecord::Base
   private
 
   def ensure_titled
-    self.title ||= "Untitled Document"
+    self.title ||= DEFAULT_TITLE
     return true if self.slug
     slugged = title.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n, '').to_s # As ASCII
     slugged.gsub!(/[']+/, '') # Remove all apostrophes.

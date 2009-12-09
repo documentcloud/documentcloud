@@ -6,9 +6,8 @@ class MetadataExtractorTest < ActiveSupport::TestCase
 
   def initialize(*args)
     super(*args)
-    @calais = DC::Import::MetadataExtractor.new
-    @doc = Document.new(:rdf => RDF, :organization_id => 1, :account_id => 1, :access => DC::Access::PUBLIC)
-    @calais.extract_metadata(@doc)
+    @doc = Document.create(:organization_id => 1, :account_id => 1, :access => DC::Access::PUBLIC)
+    DC::Import::MetadataExtractor.new.extract_metadata(@doc, :rdf => RDF)
   end
 
   context "The Calais Extractor" do
@@ -19,7 +18,6 @@ class MetadataExtractorTest < ActiveSupport::TestCase
       assert @doc.title             == "World agricultural honeybee disappearance"
       assert @doc.language          == 'en'
       assert @doc.publication_date  == Date.parse('Wed, 21 Mar 2007')
-      assert @doc.calais_signature  == "digestalg-1|qC1AZ/AeTEkvL4aLoWeI8dv9oRA=|Fs1iG3hFHGPjsQcjeFCLdNV5Sp4KZWdGFUV4WaU8122G7emcGHFqkw=="
       assert @doc.calais_id == '1897e340-2365-4b63-9c18-40af7df14648'
     end
 

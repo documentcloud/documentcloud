@@ -1,9 +1,5 @@
 TODO:
 
-  * My Documents!!!
-
-  * Add fleshed-out section and annotation models.
-
   * Build an in-viewer annotation and section editing UI.
 
   * Start extracting dates (not times) -- integrate the DateExtractor into
@@ -22,6 +18,10 @@ TODO:
       
 
 DONE:
+
+  * My Documents!!!
+
+  * Add fleshed-out section and annotation models.
 
   * Fix Postgres Unicode input: "invalid byte sequence for encoding"
 

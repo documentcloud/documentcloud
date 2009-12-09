@@ -5,6 +5,7 @@ module DC
     module DocumentResource
 
       def before_validation_on_create
+        self.document_id      = document.id
         self.organization_id  = document.organization_id
         self.account_id       = document.account_id
         # TODO: deal with access more granularly.
