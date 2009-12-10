@@ -1,5 +1,11 @@
 TODO:
 
+  * Add saved bookmarks to specific pages of documents.
+  
+  * Add the ability to edit a document's summary.
+  
+  * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
+
   * Build an in-viewer annotation and section editing UI.
 
   * Start extracting dates (not times) -- integrate the DateExtractor into
