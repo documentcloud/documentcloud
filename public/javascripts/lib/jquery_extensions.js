@@ -7,14 +7,18 @@ $.extend({
     if (attributes) $(el).attr(attributes);
     if (content) $(el).html(content);
     return el;
-  },
+  }
+
+});
+
+$.fn.extend({
 
   // Align an element relative to a target element's coordinates. Forces the
   // element to be absolutely positioned. Element must be visible.
   // Position string format is: "top -right".
   // You can pass an optional offset object with top and left offsets specified.
-  align : function(el, target, pos, offset) {
-    el = $(el);
+  align : function(target, pos, offset) {
+    var el = this;
     target = $(target);
     pos = pos || '';
     offset = offset || {};
@@ -81,11 +85,7 @@ $.extend({
 
     $(el).css({position : 'absolute', left : left + 'px', top : top + 'px'});
     return el;
-  }
-
-});
-
-$.fn.extend({
+  },
 
   // See dc.View#setMode...
   setMode : function(state, group) {
@@ -129,6 +129,35 @@ $.fn.extend({
       $(document).bind('click', this._autohider);
       $(document).bind('keypress', this._autohider);
     }
+  },
+
+  draggable : function() {
+    this.each(function() {
+      var drag = _.bind(function(e) {
+        e.stopPropagation() && e.preventDefault();
+        this.style.left = this._drag.left + event.pageX - this._drag.x + 'px';
+        this.style.top  = this._drag.top + event.pageY - this._drag.y + 'px';
+      }, this);
+      var dragEnd = _.bind(function(e) {
+        e.stopPropagation() && e.preventDefault();
+        $(document.body).unbind('mouseup', dragEnd);
+        $(document.body).unbind('mousemove', drag);
+        $(this).removeClass('dragging');
+      }, this);
+      var dragStart = _.bind(function(e) {
+        e.stopPropagation() && e.preventDefault();
+        $(this).addClass('dragging');
+        this._drag = {
+          left : parseInt(this.style.left, 10) || 0,
+          top  : parseInt(this.style.top, 10) || 0,
+          x    : e.pageX,
+          y    : e.pageY
+        };
+        $(document.body).bind('mouseup', dragEnd);
+        $(document.body).bind('mousemove', drag);
+      }, this);
+      $(this).bind('mousedown', dragStart);
+    });
   }
 
 });

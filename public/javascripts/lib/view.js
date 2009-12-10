@@ -9,14 +9,14 @@ dc.View = Base.extend({
   tagName         : 'div',
 
   constructor : function(options) {
-    options = options || {};
     this.modes = {};
-    this.configure(options);
-    this.el = options.el || $.el(this.tagName, {id : this.id, 'class' : this.className});
+    this.configure(options || {});
+    this.el = this.options.el || $.el(this.tagName, {id : this.id, 'class' : this.className});
     return this;
   },
 
   configure : function(options) {
+    if (this.defaultOptions) options = _.extend(this.defaultOptions(), options);
     if (options.model)      this.model = options.model;
     if (options.set)        this.set = options.set;
     if (options.id)         this.id = options.id;

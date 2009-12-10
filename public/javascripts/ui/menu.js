@@ -1,4 +1,3 @@
-// The Sidebar. Switches contexts between different subviews.
 dc.ui.Menu = dc.View.extend({
 
   className : 'minibutton menu',
@@ -28,7 +27,7 @@ dc.ui.Menu = dc.View.extend({
     this.setMode('is', 'open');
     if (this.options.onOpen) this.options.onOpen(this);
     $(this.content).show();
-    $.align(this.content, this.el, '-left bottom', {top : 1});
+    $(this.content).align(this.el, '-left bottom', {top : 1});
     $(this.content).autohide({onHide : this.close});
   },
 

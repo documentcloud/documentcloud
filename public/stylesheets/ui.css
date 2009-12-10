@@ -56,6 +56,10 @@ span.text_input {
     background: #eaa;
     background: -webkit-gradient(linear, left top, left bottom, from(#fbb), to(#c88));
   }
+  .minibutton.ok {
+    background: #aae;
+    background: -webkit-gradient(linear, left top, left bottom, from(#eef), to(#bbe));
+  }
   .minibutton.disabled {
     opacity: 0.33;
     cursor: default;
@@ -95,6 +99,34 @@ span.text_input {
       .menu_content .menu_item:hover {
         background: #f2f2ff;
       }
+
+/*------------------------------ Dialog Boxes --------------------------------*/
+div.dialog {
+  position: absolute;
+  min-width: 300px;
+  max-width: 600px;
+  background: #fff;
+  z-index: 1000;
+  -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+  -webkit-box-shadow: 0 3px 25px #666; -moz-box-shadow: 0 3px 25px #666;
+}
+  div.dialog .title {
+    background: #e0e0e0;
+    padding: 5px 10px;
+    cursor: move;
+    border-bottom: 1px solid #949494;
+    -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
+    -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#eaeaea), to(#c2c2c2));
+  }
+  div.dialog .text {
+    padding: 10px 10px 25px 10px;
+  }
+  div.dialog .minibutton {
+    float: right;
+    margin: 0 10px 8px 0;
+  }
+
 
 /*------------------------------ Hidden Iframes ------------------------------*/
 iframe.hidden_iframe {

@@ -3,10 +3,14 @@ html {
   color: #373737;
   font-size: 12px;
 }
+body {
+  overflow: hidden;
+}
 a {
   color: inherit;
   text-decoration: none;
 }
+
 
 #topbar {
   display: block;

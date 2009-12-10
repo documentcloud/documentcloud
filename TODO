@@ -1,7 +1,7 @@
 TODO:
-  
-  * Add the ability to edit a document's summary.
-  
+
+  * Create, and start using, a dc.ui.Dialog instead of alert() and friends.
+    
   * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
 
   * Build an in-viewer annotation and section editing UI.
@@ -22,6 +22,8 @@ TODO:
       
 
 DONE:
+
+  * Add the ability to edit a document's summary.
 
   * Split label filtering and adding into two fields.
 
