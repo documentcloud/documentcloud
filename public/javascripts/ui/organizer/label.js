@@ -9,7 +9,7 @@ dc.ui.Label = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll('loadDocuments', this);
+    _.bindAll(this, 'loadDocuments');
     this.model.view = this;
   },
 

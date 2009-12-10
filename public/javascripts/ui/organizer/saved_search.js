@@ -4,7 +4,7 @@ dc.ui.SavedSearch = dc.View.extend({
 
   callbacks : [
     ['el',              'click',    'runSearch'],
-    ['.delete_button',  'click',    'deleteSearch']
+    ['.icon.delete',  'click',    'deleteSearch']
   ],
 
   constructor : function(options) {

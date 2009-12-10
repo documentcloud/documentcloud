@@ -37,6 +37,9 @@ ActionController::Routing::Routes.draw do |map|
   # Labels.
   map.resources :labels, :member => {:documents => :get}
 
+  # Bookmarks.
+  map.resources :bookmarks
+
   # Asset packages.
   Jammit::Routes.draw(map)
 

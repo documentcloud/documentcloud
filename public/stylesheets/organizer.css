@@ -35,12 +35,21 @@
     #organizer .box .icon.size32 {
       position: absolute;
     }
-    #organizer .box .contents {
+    #organizer .contents,
+    #organizer .contents > div {
       height: 32px;
       line-height: 16px;
       overflow: hidden;
       padding-left: 40px;
     }
+      #organizer .contents > div {
+        height: 16px;
+        padding-left: 0;
+      }
+        #organizer .contents .page_number {
+          font: 10px/16px Arial;
+          color: #777;
+        }
       #organizer img {
         float: left;
         margin-right: 10px;

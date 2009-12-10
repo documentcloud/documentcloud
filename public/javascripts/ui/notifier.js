@@ -10,7 +10,7 @@ dc.ui.Notifier = dc.View.extend({
     this.base();
     this.defaultAnchor = $('#topbar')[0];
     $(document.body).append(this.el);
-    _.bindAll('show', 'hide', this);
+    _.bindAll(this, 'show', 'hide');
     this.setCallbacks();
   },
 

@@ -1,22 +1,22 @@
 // A tile view for previewing a Document in a listing.
 dc.ui.AccountView = dc.View.extend({
-    
+
   AVATAR_SIZES : {
     badge : 20,
     row   : 32
   },
-  
+
   TAGS : {
     badge : 'div',
     row   : 'tr'
   },
-  
+
   callbacks : [
     ['.edit_account',     'click',  'showEdit'],
     ['.save_changes',     'click',  '_doneEditing'],
     ['.delete_account',   'click',  '_deleteAccount']
   ],
-  
+
   constructor : function(account, kind) {
     this.kind       = kind;
     this.tagName    = this.TAGS[kind];
@@ -24,10 +24,10 @@ dc.ui.AccountView = dc.View.extend({
     this.base();
     this.account    = account;
     this.template   = JST['account_' + this.kind];
-    _.bindAll('_onSuccess', '_onError', this);
+    _.bindAll(this, '_onSuccess', '_onError');
     this.account.bind(dc.Model.CHANGED, _.bind(this.render, this, 'display'));
   },
-  
+
   render : function(viewMode) {
     if (this.modes.view == 'edit') return;
     viewMode = viewMode || 'display';
@@ -38,20 +38,20 @@ dc.ui.AccountView = dc.View.extend({
     if (this.isRow()) this.setCallbacks();
     return this;
   },
-  
+
   isRow : function() {
     return this.kind == 'row';
   },
 
   serialize : function() {
     return $('input', this.el).serializeJSON();
-  },  
+  },
 
   showEdit : function() {
     this.setMode('edit', 'view');
   },
 
-  // When we're done editing an account, it's either a create or update. 
+  // When we're done editing an account, it's either a create or update.
   // This method specializes to try and avoid server requests when nothing has
   // changed.
   _doneEditing : function() {
@@ -69,13 +69,13 @@ dc.ui.AccountView = dc.View.extend({
       Accounts.update(this.account, attributes, options);
     }
   },
-  
+
   _deleteAccount : function() {
     if (!confirm('Really delete ' + this.account.fullName() + '?')) return;
     $(this.el).remove();
     Accounts.destroy(this.account);
   },
-  
+
   _onSuccess : function(model, resp) {
     var newAccount = model.isNew();
     model.invalid = false;
@@ -87,22 +87,22 @@ dc.ui.AccountView = dc.View.extend({
       text      : 'login email sent to ' + model.get('email'),
       duration  : 5000,
       mode      : 'info',
-      anchor    : $('td.last', this.el), 
+      anchor    : $('td.last', this.el),
       position  : '-left'
     });
   },
-  
+
   _onError : function(model, resp) {
     model.invalid = true;
     dc.ui.spinner.hide();
     this.showEdit();
     dc.ui.notifier.show({
-      text      : resp.errors[0], 
-      anchor    : $('button', this.el), 
-      position  : 'right', 
-      left      : 18, 
+      text      : resp.errors[0],
+      anchor    : $('button', this.el),
+      position  : 'right',
+      left      : 18,
       top       : 2
     });
   }
-  
+
 });

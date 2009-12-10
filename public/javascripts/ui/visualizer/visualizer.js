@@ -13,7 +13,7 @@ dc.ui.Visualizer = dc.View.extend({
   ],
 
   constructor : function(options) {
-    _.bindAll('open', 'renderVisualization', 'highlightDatum', 'highlightOff', 'onResize', this);
+    _.bindAll(this, 'open', 'renderVisualization', 'highlightDatum', 'highlightOff', 'onResize');
     this.base(options);
     this.topDocuments = [];
     this.topMetadata = [];

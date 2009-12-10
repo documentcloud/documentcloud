@@ -17,7 +17,7 @@ dc.ui.SearchBox = dc.View.extend({
     this.outstandingSearch = false;
     $(document.body).setMode('no', 'search');
     this.setCallbacks();
-    _.bindAll('loadSearchResults', 'loadMetadataResults', 'searchByHash', 'saveCurrentSearch', this);
+    _.bindAll(this, 'loadSearchResults', 'loadMetadataResults', 'searchByHash', 'saveCurrentSearch');
     dc.history.register(/^#search\//, this.searchByHash);
   },
 

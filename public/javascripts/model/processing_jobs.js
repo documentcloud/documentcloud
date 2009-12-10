@@ -41,7 +41,7 @@ dc.model.ProcessingJobSet = dc.model.RESTfulSet.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll('checkForUpdates', this);
+    _.bindAll(this, 'checkForUpdates');
   },
 
   startUpdates : function() {

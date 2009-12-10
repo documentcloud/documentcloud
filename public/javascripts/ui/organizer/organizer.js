@@ -6,7 +6,7 @@ dc.ui.Organizer = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll('_addSubView', '_removeSubView', this);
+    _.bindAll(this, '_addSubView', '_removeSubView');
     this._bindToSets();
     this.sidebar = new dc.ui.OrganizerSidebar({organizer : this});
     this.subViews = [];
@@ -47,24 +47,23 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   models : function() {
-    return Labels.models().concat(SavedSearches.models());
+    return _.flatten([Labels.models(), Bookmarks.models(), SavedSearches.models()]);
   },
 
   sortedModels : function() {
     return _.sortBy(this.models(), function(m){ return m.sortKey(); });
   },
 
-  // Bind all possible SavedSearch and Label events for rendering.
+  // Bind all possible SavedSearch, Bookmark and Label events for rendering.
   _bindToSets : function() {
-    SavedSearches.bind(dc.Set.MODEL_ADDED, this._addSubView);
-    SavedSearches.bind(dc.Set.MODEL_REMOVED, this._removeSubView);
-    Labels.bind(dc.Set.MODEL_ADDED, this._addSubView);
-    Labels.bind(dc.Set.MODEL_REMOVED, this._removeSubView);
+    _.each([Labels, Bookmarks, SavedSearches], _.bind(function(set) {
+      set.bind(dc.Set.MODEL_ADDED, this._addSubView);
+      set.bind(dc.Set.MODEL_REMOVED, this._removeSubView);
+    }, this));
   },
 
   _addSubView : function(e, model) {
-    var viewClass = model.resource == 'labels' ? 'Label' : 'SavedSearch';
-    var view = new dc.ui[viewClass]({model : model}).render();
+    var view = new dc.ui[model.viewClass]({model : model}).render();
     this.subViews.push(view);
     var models = this.sortedModels();
     var previous = models[_.indexOf(models, view.model) - 1];

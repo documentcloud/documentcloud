@@ -9,7 +9,7 @@ dc.ui.DocumentUpload = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll('_onUploadStarted', '_onUploadCompleted', '_updateProgress', this);
+    _.bindAll(this, '_onUploadStarted', '_onUploadCompleted', '_updateProgress');
   },
 
   render : function() {

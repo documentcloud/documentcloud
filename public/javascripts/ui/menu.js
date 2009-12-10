@@ -11,7 +11,7 @@ dc.ui.Menu = dc.View.extend({
     this.base(options);
     this.content = $.el('div', {'class' : 'menu_content', id : (this.id ? this.id + '_content' : null)});
     this.modes.open = 'not';
-    _.bindAll('close', this);
+    _.bindAll(this, 'close');
     if (options.items) this.addItems(options.items);
   },
 

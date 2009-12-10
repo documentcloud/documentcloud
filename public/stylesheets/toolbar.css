@@ -12,13 +12,13 @@
     border: 1px solid #8b8b8b; border-top: 0; border-bottom-color: #aaa;
   }
 
-.toolbar {
+#toolbar {
   padding: 5px 12px;
 }
-  .toolbar .minibutton {
+  #toolbar .minibutton {
     float: left;
     margin-left: 12px;
   }
-    .toolbar .minibutton:first-child {
+    #toolbar .label_menu_container .minibutton {
       margin-left: 0;
     }

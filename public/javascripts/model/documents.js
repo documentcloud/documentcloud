@@ -24,6 +24,11 @@ dc.model.Document = dc.Model.extend({
     });
   },
 
+  bookmark : function(pageNumber) {
+    var bookmark = new dc.model.Bookmark({title : this.get('title'), page_number : pageNumber, document_id : this.id});
+    Bookmarks.create(bookmark);
+  },
+
   // Inspect.
   toString : function() {
     return 'Document ' + this.id + ' "' + this.get('title') + '"';
@@ -42,7 +47,7 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll('downloadSelectedViewers', 'downloadSelectedPDF', 'downloadSelectedFullText', this);
+    _.bindAll(this, 'downloadSelectedViewers', 'downloadSelectedPDF', 'downloadSelectedFullText');
   },
 
   selected : function() {

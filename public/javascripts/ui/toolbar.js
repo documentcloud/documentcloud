@@ -1,15 +1,15 @@
 dc.ui.Toolbar = dc.View.extend({
 
-  className : 'toolbar',
+  id : 'toolbar',
 
   callbacks : [
-    ['#delete_document_button',  'click',   '_deleteSelectedDocuments']
+    ['#delete_document_button',  'click',   '_deleteSelectedDocuments'],
+    ['#bookmark_button',         'click',   '_bookmarkSelectedDocument']
   ],
 
   constructor : function(options) {
-    this.id = options.tab = '_toolbar';
     this.base(options);
-    _.bindAll('_addSelectedDocuments', 'display', this);
+    _.bindAll(this, '_addSelectedDocuments', 'display');
     this.downloadMenu = this._createDownloadMenu();
     this.labelMenu = new dc.ui.LabelMenu({onclick : this._addSelectedDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
@@ -18,15 +18,17 @@ dc.ui.Toolbar = dc.View.extend({
   render : function() {
     var el = $(this.el);
     el.html(JST.workspace_toolbar({}));
-    el.prepend(this.downloadMenu.render().el);
-    el.prepend(this.labelMenu.render().el);
+    $('.download_menu_container', el).append(this.downloadMenu.render().el);
+    $('.label_menu_container', el).append(this.labelMenu.render().el);
+    this.bookmarkButton = $('#bookmark_button', el);
     this.setCallbacks();
     return this;
   },
 
   display : function() {
-    var any = $('.document_tile.is_selected').length > 0;
-    any ? this.show() : this.hide();
+    var count = $('.document_tile.is_selected').length;
+    count > 0 ? this.show() : this.hide();
+    this.bookmarkButton.toggleClass('disabled', count > 1);
   },
 
   hide : function() {
@@ -51,6 +53,17 @@ dc.ui.Toolbar = dc.View.extend({
     if (!confirm('Really delete ' + docs.length + ' ' + Inflector.pluralize('document', docs.length) + '?')) return;
     _(docs).each(function(doc){ Documents.destroy(doc); });
     this.display();
+  },
+
+  _bookmarkSelectedDocument : function() {
+    if (this.bookmarkButton.hasClass('disabled')) return false;
+    var doc = _.first(Documents.selected());
+    var pageNumber = parseInt(prompt("Page number for bookmark:"), 10);
+    if (!pageNumber) return false;
+    if (pageNumber > doc.get('page_count') || pageNumber < 1) return alert('Page ' + pageNumber + ' does not exist in "' + doc.get('title') + '".');
+    doc.bookmark(pageNumber);
+    var notification = "added bookmark to page " + pageNumber + ' of "' + doc.get('title') + '"';
+    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.bookmarkButton, position : 'center right', left : 7});
   },
 
   _panel : function() {

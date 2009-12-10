@@ -19,7 +19,7 @@ dc.ui.MetadataList = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll('render', this);
+    _.bindAll(this, 'render');
     Documents.bind(Documents.SELECTION_CHANGED, this.render);
   },
 

@@ -136,6 +136,15 @@ ActiveRecord::Schema.define(:version => 1) do
 
   add_index "saved_searches", ["account_id"], :name => "index_saved_searches_on_account_id"
 
+  create_table "bookmarks", :force => true do |t|
+    t.integer "account_id",   :null => false
+    t.integer "document_id",  :null => false
+    t.integer "page_number",  :null => false
+    t.string  "title",        :null => false, :limit => 100
+  end
+
+  add_index "bookmarks", ["account_id"], :name => "index_bookmarks_on_account_id"
+
   create_table "security_keys", :force => true do |t|
     t.string  "securable_type", :null => false, :limit => 40
     t.integer "securable_id",   :null => false

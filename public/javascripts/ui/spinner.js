@@ -23,4 +23,4 @@ dc.ui.spinner = {
 
 };
 
-_.bindAll('show', 'hide', dc.ui.spinner);
+_.bindAll(dc.ui.spinner, 'show', 'hide');
