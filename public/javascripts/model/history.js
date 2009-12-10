@@ -11,11 +11,7 @@ dc.model.History = dc.Model.extend({
       handlers : [],
       hash     : window.location.hash
     });
-    if ('onhashchange' in window) {
-      window.onhashchange = this.checkURL;
-    } else {
-      setInterval(this.checkURL, this.URL_CHECK_INTERVAL);
-    }
+    this._startCheckingURL();
   },
 
   // Register a history handler. Pass a regular expression that can be used to
@@ -32,13 +28,11 @@ dc.model.History = dc.Model.extend({
     window.location.hash = hash;
   },
 
-  // Until HTML5's hashchange event is widely supported, we poll the window
-  // location for changes to the hash.
+  // Check the current URL hash against the recorded one, firing callbacks.
   checkURL : function() {
     var current = window.location.hash, previous = dc.history.get('hash');
-    if (current != previous && current != decodeURIComponent(previous)) {
-      dc.history.loadURL();
-    }
+    var changed = current != previous && current != decodeURIComponent(previous);
+    if (changed) this.loadURL();
   },
 
   // Load the history callback associated with the current page fragment. On
@@ -54,6 +48,17 @@ dc.model.History = dc.Model.extend({
       }
     });
     if (!matched && options.fallback) dc.app.navigation.tab(options.fallback);
+  },
+
+  // Until HTML5's hashchange event is widely supported, we poll the window
+  // location for changes to the hash.
+  _startCheckingURL : function() {
+    _.bindAll(this, 'checkURL');
+    if ('onhashchange' in window) {
+      window.onhashchange = this.checkURL;
+    } else {
+      setInterval(this.checkURL, this.URL_CHECK_INTERVAL);
+    }
   }
 
 });
