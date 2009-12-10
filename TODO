@@ -1,8 +1,4 @@
 TODO:
-
-  * Split label filtering and adding into two fields.
-
-  * Add saved bookmarks to specific pages of documents.
   
   * Add the ability to edit a document's summary.
   
@@ -26,6 +22,10 @@ TODO:
       
 
 DONE:
+
+  * Split label filtering and adding into two fields.
+
+  * Add saved bookmarks to specific pages of documents.
 
   * My Documents!!!
 

@@ -80,7 +80,7 @@
     }
     #organizer_sidebar_container .minibutton {
       position: absolute;
-      right: 8px; top: 28px;
+      right: 8px; bottom: 2px;
     }
     #organizer_sidebar_container input {
       margin: 4px 0 0 7px;
@@ -90,4 +90,11 @@
       font-size: 11px;
       width: 229px;
       line-height: 13px;
+    }
+
+  #filter_wrapper {
+    padding-bottom: 15px;
+  }
+    #filter_wrapper input {
+      width: 275px;
     }
