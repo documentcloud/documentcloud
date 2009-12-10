@@ -12,6 +12,10 @@ class DocumentsController < ApplicationController
     end
   end
 
+  def update
+    json current_document(true).update_attributes(pick_params(:summary))
+  end
+
   def destroy
     current_document(true).destroy
     json nil

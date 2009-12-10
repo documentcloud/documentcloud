@@ -17,7 +17,7 @@ dc.ui.DocumentTile = dc.View.extend({
     if (mode) this.className += ' ' + mode;
     this.base({model : doc});
     this.el.id = 'document_' + (mode || 'tile') + '_' + this.model.id;
-    this.model.bind(dc.Model.CHANGED, _.bind(this._setSelected, this));
+    this.model.bind(dc.Model.CHANGED, _.bind(this._onDocumentChange, this));
   },
 
   render : function() {
@@ -63,6 +63,10 @@ dc.ui.DocumentTile = dc.View.extend({
 
   _setSelected : function() {
     this.setMode(this.model.get('selected') ? 'is' : 'not', 'selected');
+  },
+
+  _onDocumentChange : function() {
+    (this.model.hasChanged('summary')) ? this.render() : this._setSelected();
   }
 
 });

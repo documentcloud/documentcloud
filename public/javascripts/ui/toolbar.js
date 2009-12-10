@@ -4,7 +4,8 @@ dc.ui.Toolbar = dc.View.extend({
 
   callbacks : [
     ['#delete_document_button',  'click',   '_deleteSelectedDocuments'],
-    ['#bookmark_button',         'click',   '_bookmarkSelectedDocument']
+    ['#bookmark_button',         'click',   '_bookmarkSelectedDocument'],
+    ['#edit_summary_button',     'click',   '_editSelectedSummary']
   ],
 
   constructor : function(options) {
@@ -21,6 +22,7 @@ dc.ui.Toolbar = dc.View.extend({
     $('.download_menu_container', el).append(this.downloadMenu.render().el);
     $('.label_menu_container', el).append(this.labelMenu.render().el);
     this.bookmarkButton = $('#bookmark_button', el);
+    this.summaryButton = $('#edit_summary_button', el);
     this.setCallbacks();
     return this;
   },
@@ -29,6 +31,7 @@ dc.ui.Toolbar = dc.View.extend({
     var count = $('.document_tile.is_selected').length;
     count > 0 ? this.show() : this.hide();
     this.bookmarkButton.toggleClass('disabled', count > 1);
+    this.summaryButton.toggleClass('disabled', count > 1);
   },
 
   hide : function() {
@@ -64,6 +67,15 @@ dc.ui.Toolbar = dc.View.extend({
     doc.bookmark(pageNumber);
     var notification = "added bookmark to page " + pageNumber + ' of "' + doc.get('title') + '"';
     dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.bookmarkButton, position : 'center right', left : 7});
+  },
+
+  _editSelectedSummary : function() {
+    if (this.summaryButton.hasClass('disabled')) return false;
+    var doc = _.first(Documents.selected());
+    var summary = doc.get('summary');
+    var revised = prompt("Edit summary:", summary);
+    if (_.isNull(revised)) return false;
+    Documents.update(doc, {summary : Inflector.truncate(revised, 255, '')});
   },
 
   _panel : function() {

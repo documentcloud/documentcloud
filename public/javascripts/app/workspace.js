@@ -7,7 +7,7 @@ _.extend(dc.app.workspace, {
     this.el = $('body')[0];
     this.createSubViews();
     this.renderSubViews();
-    dc.history.loadURL({fallback : 'search'});
+    dc.history.loadURL();
   },
 
   // Create all of the requisite subviews.
