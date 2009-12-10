@@ -1,12 +1,5 @@
 // Handles JavaScript history management and callbacks. To use, register a
-// regexp that matches the history hash with its corresponding callback:
-//
-//     dc.history.register(/^#search/, controller.runSearch);
-//
-// And then you can save arbitrary history fragments.
-//
-//     dc.history.save('search/freedom/p3');
-//
+// regexp that matches the history hash with its corresponding callback.
 dc.history = {
 
   // The interval at which the window location is polled.
