@@ -24,8 +24,8 @@ class Document < ActiveRecord::Base
   named_scope :accessible, lambda { |account, org|
     access = []
     access << "(documents.access = #{PUBLIC})"
-    access << "(documents.access = #{PRIVATE} and documents.account_id = #{account.id})"
-    access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})"
+    access << "(documents.access = #{PRIVATE} and documents.account_id = #{account.id})" if account
+    access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org
     {:conditions => "(#{access.join(' or ')})"}
   }
 
