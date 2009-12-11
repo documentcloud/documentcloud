@@ -141,6 +141,9 @@
     height: 33px;
     overflow: hidden;
   }
+    .document_tile .summary b {
+      font-size: 12px;
+    }
     .document_list.medium_size .summary {
       display: none;
     }

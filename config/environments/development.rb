@@ -21,3 +21,4 @@ config.action_mailer.raise_delivery_errors = false
 
 config.gem "rack-bug", :lib => 'rack/bug'
 config.middleware.use "Rack::Bug", :password => 'REDACTED'
+

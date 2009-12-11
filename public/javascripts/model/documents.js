@@ -6,11 +6,13 @@ dc.model.Document = dc.Model.extend({
     this.base(attributes);
   },
 
+  // For display, show either the highlighted search results, or the summary,
+  // if no highlights are available.
   // The import process will take care of this in the future, but the inline
   // version of the summary has all runs of whitespace squeezed out.
-  inlineSummary : function() {
-    var summ = this.get('summary');
-    return summ ? summ.replace(/\s+/g, ' ') : '';
+  displaySummary : function() {
+    var text = this.get('highlight') || this.get('summary');
+    return text ? text.replace(/\s+/g, ' ') : '';
   },
 
   // Return a list of the document's metadata. Think about caching this on the

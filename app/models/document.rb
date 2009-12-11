@@ -1,6 +1,8 @@
 class Document < ActiveRecord::Base
   include DC::Access
 
+  attr_accessor :highlight
+
   SEARCHABLE_ATTRIBUTES = [:title, :source, :account]
 
   DEFAULT_TITLE = "Untitled Document"
@@ -19,6 +21,8 @@ class Document < ActiveRecord::Base
   after_destroy :delete_assets
 
   delegate :text, :to => :full_text
+
+  default_scope :order => 'created_at desc'
 
   # Restrict accessible documents for a given account/organzation.
   named_scope :accessible, lambda { |account, org|
@@ -134,6 +138,7 @@ class Document < ActiveRecord::Base
       'slug'                => slug,
       'source'              => source,
       'summary'             => summary,
+      'highlight'           => highlight,
       'pdf_url'             => pdf_url,
       'thumbnail_url'       => thumbnail_url,
       'full_text_url'       => full_text_url,

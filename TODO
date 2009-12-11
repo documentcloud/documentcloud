@@ -1,6 +1,4 @@
 TODO:
-
-  * Create, and start using, a dc.ui.Dialog instead of alert() and friends.
     
   * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
 
@@ -22,6 +20,8 @@ TODO:
       
 
 DONE:
+
+  * Create, and start using, a dc.ui.Dialog instead of alert() and friends.
 
   * Add the ability to edit a document's summary.
 

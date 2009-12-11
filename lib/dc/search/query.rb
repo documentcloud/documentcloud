@@ -7,7 +7,7 @@ module DC
     # as unrestricted (pass :unrestricted => true).
     class Query
 
-      attr_reader   :text, :fields, :labels, :attributes, :conditions
+      attr_reader   :text, :fields, :labels, :attributes, :conditions, :results
       attr_accessor :page, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
@@ -26,12 +26,10 @@ module DC
         @joins                  = []
       end
 
-      # Series of attribute checks to determine the type of query.
-
-      def has_text?;        @text.present?;         end
-      def has_fields?;      @fields.present?;       end
-      def has_labels?;      @labels.present?;       end
-      def has_attributes?;  @attributes.present?;   end
+      # Series of attribute checks to determine the kind and state of query.
+      %w(text fields labels attributes results).each do |att|
+        class_eval "def has_#{att}?; @#{att}.present?; end"
+      end
 
       # Set the page of the search that this query is supposed to access.
       def page=(page)
@@ -59,13 +57,21 @@ module DC
         options = {:conditions => @conditions, :joins => @joins}
         doc_proxy = @unrestricted ? Document : Document.accessible(@account, @organization)
         if @page
-          options[:select] = "distinct documents.id"
           @total = doc_proxy.count(options)
           options[:limit]   = PAGE_SIZE
           options[:offset]  = @from
         end
-        options[:select] = "distinct on (documents.id) documents.*"
-        doc_proxy.all(options)
+        @results = doc_proxy.all(options)
+        populate_highlights if DC_CONFIG['include_highlights']
+        self
+      end
+
+      # If we've got a full text search with results, we can get Postgres to
+      # generate the text highlights for our search results.
+      def populate_highlights
+        return false unless has_text? and has_results?
+        highlights = FullText.highlights(@results, @text)
+        @results.each {|doc| doc.highlight = highlights[doc.id] }
       end
 
       # The JSON representation of a query contains all the structured aspects

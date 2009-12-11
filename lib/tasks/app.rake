@@ -1,15 +1,11 @@
 namespace :app do
 
   task :start do
-    sh "nginx"
-  end
-
-  task :run do
-    sh "thin -e #{RAILS_ENV} -p 3000 start"
+    sh "sudo nginx"
   end
 
   task :stop do
-    sh "kill #{File.read(nginx_pid)}" if File.exists?(nginx_pid)
+    sh "sudo kill #{File.read(nginx_pid)}" if nginx_pid
   end
 
   task :restart do
@@ -23,6 +19,7 @@ namespace :app do
 end
 
 def nginx_pid
-  '/var/run/nginx.pid'
+  pid_locations = ['/var/run/nginx.pid', '/usr/local/nginx/logs/nginx.pid']
+  @nginx_pid ||= pid_locations.detect {|pid| File.exists?(pid) }
 end
 
