@@ -57,8 +57,8 @@ dc.ui.DocumentTile = dc.View.extend({
 
   deleteDocument : function(e) {
     e.preventDefault();
-    if (!confirm('Really delete "' + this.model.get('title') + '" ?')) return;
-    Documents.destroy(this.model);
+    var destructor = _.bind(Documents.destroy, Documents, this.model);
+    dc.ui.Dialog.confirm('Really delete "' + this.model.get('title') + '" ?', destructor);
   },
 
   _setSelected : function() {

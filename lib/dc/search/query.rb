@@ -57,14 +57,15 @@ module DC
         @account, @organization, @unrestricted = options[:account], options[:organization], options[:unrestricted]
         generate_sql
         options = {:conditions => @conditions, :joins => @joins}
+        doc_proxy = @unrestricted ? Document : Document.accessible(@account, @organization)
         if @page
           options[:select] = "distinct documents.id"
-          @total = Document.count(options)
+          @total = doc_proxy.count(options)
           options[:limit]   = PAGE_SIZE
           options[:offset]  = @from
         end
         options[:select] = "distinct on (documents.id) documents.*"
-        @unrestricted ? Document.all(options) : Document.accessible(@account, @organization).all(options)
+        doc_proxy.all(options)
       end
 
       # The JSON representation of a query contains all the structured aspects

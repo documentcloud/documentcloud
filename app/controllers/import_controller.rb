@@ -10,6 +10,7 @@ class ImportController < ApplicationController
 
   # TODO: Clean up this method.
   def upload_document
+    return bad_request unless params[:file]
     Dir.mkdir_p(PENDING_DIR) unless File.exists?(PENDING_DIR)
     save_path   = params[:file].original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
     local_path  = File.join(PENDING_DIR, save_path)

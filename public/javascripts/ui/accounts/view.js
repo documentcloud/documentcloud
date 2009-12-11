@@ -71,9 +71,10 @@ dc.ui.AccountView = dc.View.extend({
   },
 
   _deleteAccount : function() {
-    if (!confirm('Really delete ' + this.account.fullName() + '?')) return;
-    $(this.el).remove();
-    Accounts.destroy(this.account);
+    dc.ui.Dialog.confirm('Really delete ' + this.account.fullName() + '?', _.bind(function() {
+      $(this.el).remove();
+      Accounts.destroy(this.account);
+    }, this));
   },
 
   _onSuccess : function(model, resp) {

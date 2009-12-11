@@ -32,7 +32,7 @@ module DC
         File.open(local(document.full_text_path), 'w+') {|f| f.write(document.text) }
       end
 
-      def save_page(page, images)
+      def save_page_images(page, images)
         FileUtils.mkdir_p(local(page.pages_path)) unless File.exists?(local(page.pages_path))
         FileUtils.cp(images[:normal_image], local(page.image_path('normal')))
         FileUtils.cp(images[:large_image], local(page.image_path('large')))

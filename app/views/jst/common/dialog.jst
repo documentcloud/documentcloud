@@ -1,6 +1,17 @@
 <div class="title"><%= title %></div>
-<div class="text"><%= text %></div>
+<% if (text) { %>
+  <div class="text"><%= text %></div>
+<% } %>
+<% if( mode == 'prompt' || mode == 'short_prompt') { %>
+  <div class="<%= mode %>">
+    <% if( mode == 'prompt') { %>
+      <textarea class="content"></textarea>
+    <% } else { %>
+      <input class="content" type="text" value="" />
+    <% } %>
+  </div>
+<% } %>
 <div class="controls">
-  <div class="minibutton ok">ok</div>
-  <div class="minibutton cancel">cancel</div>
+  <button class="ok default">ok</button>
+  <button class="cancel">cancel</button>
 </div>

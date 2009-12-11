@@ -53,29 +53,34 @@ dc.ui.Toolbar = dc.View.extend({
 
   _deleteSelectedDocuments : function() {
     var docs = Documents.selected();
-    if (!confirm('Really delete ' + docs.length + ' ' + Inflector.pluralize('document', docs.length) + '?')) return;
-    _(docs).each(function(doc){ Documents.destroy(doc); });
-    this.display();
+    var message = 'Really delete ' + docs.length + ' ' + Inflector.pluralize('document', docs.length) + '?';
+    dc.ui.Dialog.confirm(message, _.bind(function() {
+      _(docs).each(function(doc){ Documents.destroy(doc); });
+      this.display();
+    }, this));
   },
 
   _bookmarkSelectedDocument : function() {
-    if (this.bookmarkButton.hasClass('disabled')) return false;
+    var button = this.bookmarkButton;
+    if (button.hasClass('disabled')) return false;
     var doc = _.first(Documents.selected());
-    var pageNumber = parseInt(prompt("Page number for bookmark:"), 10);
-    if (!pageNumber) return false;
-    if (pageNumber > doc.get('page_count') || pageNumber < 1) return alert('Page ' + pageNumber + ' does not exist in "' + doc.get('title') + '".');
-    doc.bookmark(pageNumber);
-    var notification = "added bookmark to page " + pageNumber + ' of "' + doc.get('title') + '"';
-    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.bookmarkButton, position : 'center right', left : 7});
+    dc.ui.Dialog.prompt("Page number to bookmark:", null, function(number) {
+      var pageNumber = parseInt(number, 10);
+      if (!pageNumber) return false;
+      if (pageNumber > doc.get('page_count') || pageNumber < 1) return dc.ui.Dialog.alert('Page ' + pageNumber + ' does not exist in "' + doc.get('title') + '".');
+      doc.bookmark(pageNumber);
+      var notification = "added bookmark to page " + pageNumber + ' of "' + doc.get('title') + '"';
+      dc.ui.notifier.show({mode : 'info', text : notification, anchor : button, position : 'center right', left : 7});
+    }, true);
   },
 
   _editSelectedSummary : function() {
     if (this.summaryButton.hasClass('disabled')) return false;
     var doc = _.first(Documents.selected());
-    var summary = doc.get('summary');
-    var revised = prompt("Edit summary:", summary);
-    if (_.isNull(revised)) return false;
-    Documents.update(doc, {summary : Inflector.truncate(revised, 255, '')});
+    dc.ui.Dialog.prompt("Edit summary:", doc.get('summary'), function(revised) {
+      if (!revised) return false;
+      Documents.update(doc, {summary : Inflector.truncate(revised, 255, '')});
+    });
   },
 
   _panel : function() {

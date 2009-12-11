@@ -133,19 +133,24 @@ $.fn.extend({
 
   draggable : function() {
     this.each(function() {
+      var checkEvent = function(e) {
+        var tag = e.target.tagName.toLowerCase();
+        if (tag == 'input' || tag == 'textarea') return true;
+        e.stopPropagation();
+        e.preventDefault();
+      };
       var drag = _.bind(function(e) {
-        e.stopPropagation() && e.preventDefault();
+        if (checkEvent(e)) return true;
         this.style.left = this._drag.left + event.pageX - this._drag.x + 'px';
         this.style.top  = this._drag.top + event.pageY - this._drag.y + 'px';
       }, this);
       var dragEnd = _.bind(function(e) {
-        e.stopPropagation() && e.preventDefault();
         $(document.body).unbind('mouseup', dragEnd);
         $(document.body).unbind('mousemove', drag);
         $(this).removeClass('dragging');
       }, this);
       var dragStart = _.bind(function(e) {
-        e.stopPropagation() && e.preventDefault();
+        if (checkEvent(e)) return true;
         $(this).addClass('dragging');
         this._drag = {
           left : parseInt(this.style.left, 10) || 0,

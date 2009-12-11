@@ -63,6 +63,11 @@ class ApplicationController < ActionController::Base
     @current_organization ||= Organization.find_by_id(session['organization_id'])
   end
 
+  def bad_request
+    render :file => "#{Rails.root}/public/400.html", :status => 400
+    false
+  end
+
   # Return forbidden when the access is unauthorized.
   def forbidden
     render :file => "#{Rails.root}/public/403.html", :status => 403
