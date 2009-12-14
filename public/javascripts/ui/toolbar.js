@@ -4,7 +4,7 @@ dc.ui.Toolbar = dc.View.extend({
 
   callbacks : [
     ['#delete_document_button',  'click',   '_deleteSelectedDocuments'],
-    ['#bookmark_button',         'click',   '_bookmarkSelectedDocument'],
+    // ['#bookmark_button',         'click',   '_bookmarkSelectedDocument'],
     ['#edit_summary_button',     'click',   '_editSelectedSummary']
   ],
 
@@ -21,7 +21,7 @@ dc.ui.Toolbar = dc.View.extend({
     el.html(JST.workspace_toolbar({}));
     $('.download_menu_container', el).append(this.downloadMenu.render().el);
     $('.label_menu_container', el).append(this.labelMenu.render().el);
-    this.bookmarkButton = $('#bookmark_button', el);
+    // this.bookmarkButton = $('#bookmark_button', el);
     this.summaryButton = $('#edit_summary_button', el);
     this.setCallbacks();
     return this;
@@ -30,7 +30,7 @@ dc.ui.Toolbar = dc.View.extend({
   display : function() {
     var count = $('.document_tile.is_selected').length;
     count > 0 ? this.show() : this.hide();
-    this.bookmarkButton.toggleClass('disabled', count > 1);
+    // this.bookmarkButton.toggleClass('disabled', count > 1);
     this.summaryButton.toggleClass('disabled', count > 1);
   },
 
@@ -60,19 +60,19 @@ dc.ui.Toolbar = dc.View.extend({
     }, this));
   },
 
-  _bookmarkSelectedDocument : function() {
-    var button = this.bookmarkButton;
-    if (button.hasClass('disabled')) return false;
-    var doc = _.first(Documents.selected());
-    dc.ui.Dialog.prompt("Page number to bookmark:", null, function(number) {
-      var pageNumber = parseInt(number, 10);
-      if (!pageNumber) return false;
-      if (pageNumber > doc.get('page_count') || pageNumber < 1) return dc.ui.Dialog.alert('Page ' + pageNumber + ' does not exist in "' + doc.get('title') + '".');
-      doc.bookmark(pageNumber);
-      var notification = "added bookmark to page " + pageNumber + ' of "' + doc.get('title') + '"';
-      dc.ui.notifier.show({mode : 'info', text : notification, anchor : button, position : 'center right', left : 7});
-    }, true);
-  },
+  // _bookmarkSelectedDocument : function() {
+  //   var button = this.bookmarkButton;
+  //   if (button.hasClass('disabled')) return false;
+  //   var doc = _.first(Documents.selected());
+  //   dc.ui.Dialog.prompt("Page number to bookmark:", null, function(number) {
+  //     var pageNumber = parseInt(number, 10);
+  //     if (!pageNumber) return false;
+  //     if (pageNumber > doc.get('page_count') || pageNumber < 1) return dc.ui.Dialog.alert('Page ' + pageNumber + ' does not exist in "' + doc.get('title') + '".');
+  //     doc.bookmark(pageNumber);
+  //     var notification = "added bookmark to page " + pageNumber + ' of "' + doc.get('title') + '"';
+  //     dc.ui.notifier.show({mode : 'info', text : notification, anchor : button, position : 'center right', left : 7});
+  //   }, true);
+  // },
 
   _editSelectedSummary : function() {
     if (this.summaryButton.hasClass('disabled')) return false;
