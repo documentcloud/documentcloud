@@ -32,7 +32,7 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     Bookmarks.create(bookmark, null, {
       success : _.bind(function(model, resp) {
         bookmark.set(resp);
-        openerMarks.add(bookmark);
+        if (openerMarks) openerMarks.add(bookmark);
         this.notify({mode: 'info', text : 'bookmark saved'});
       }, this),
       error : _.bind(function() {
