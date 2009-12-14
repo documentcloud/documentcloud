@@ -1,0 +1,13 @@
+<% if @current_account %>
+  <%= include_stylesheets :viewer_editing %>
+  <%= include_javascripts :workspace %>
+  <%= include_templates   :complete %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var docId = <%= @current_document.id %>;
+      var isOwner = <%= @current_account.owns?(@current_document) %>;
+      dc.app.editor.initialize(docId, isOwner);
+    });
+  </script>
+<% end %>

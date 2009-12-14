@@ -8,6 +8,10 @@ TODO:
     Adding a "search pages" feature.
 
   * Build an in-viewer annotation and section editing UI.
+    * Bookmark the page if logged-in.
+    * Add and edit annotation (private if logged-in, public if owner).
+    * Add sections if owner.
+    * Edit page text.
 
   * Start extracting dates (not times) -- integrate the DateExtractor into
     document import. What to do about relevance? Make sure to record occurrences

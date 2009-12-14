@@ -23,6 +23,9 @@ stylesheets:
     - public/stylesheets/pages/empty.css
   docs:
     - public/stylesheets/pages/docs.css
+  viewer_editing:
+    - public/stylesheets/ui.css
+    - public/stylesheets/pages/viewer_editing.css
 
 templates:
   complete:

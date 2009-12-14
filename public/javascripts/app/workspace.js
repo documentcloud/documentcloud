@@ -7,6 +7,7 @@ _.extend(dc.app.workspace, {
     this.el = $('body')[0];
     this.createSubViews();
     this.renderSubViews();
+    dc.history.initialize();
     dc.history.loadURL();
   },
 

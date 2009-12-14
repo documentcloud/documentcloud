@@ -4,6 +4,8 @@ class Bookmark < ActiveRecord::Base
 
   validates_presence_of :title, :document_id, :account_id, :page_number
 
+  validates_uniqueness_of :page_number, :scope => [:document_id, :account_id]
+
   default_scope :order => 'title'
 
   def to_json(opts={})

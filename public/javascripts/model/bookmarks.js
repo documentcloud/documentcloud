@@ -7,7 +7,7 @@ dc.model.Bookmark = dc.Model.extend({
   viewClass : 'Bookmark',
 
   sortKey : function() {
-    return this.get('title').toLowerCase();
+    return this.get('title').toLowerCase() + this.get('page_number');
   },
 
   url : function() {

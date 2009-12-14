@@ -33,6 +33,11 @@ class Account < ActiveRecord::Base
     self
   end
 
+  # An account owns a resource if it's tagged with the account_id.
+  def owns?(resource)
+    resource.account_id == id
+  end
+
   # When an account is created by a third party, send an email with a secure
   # key to set the password.
   def send_login_instructions

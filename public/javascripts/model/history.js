@@ -67,5 +67,3 @@ dc.history = {
   }
 
 };
-
-jQuery(document).ready(function(){ dc.history.initialize(); });
