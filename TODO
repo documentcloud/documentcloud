@@ -8,7 +8,6 @@ TODO:
     Adding a "search pages" feature.
 
   * Build an in-viewer annotation and section editing UI.
-    * Bookmark the page if logged-in.
     * Add and edit annotation (private if logged-in, public if owner).
     * Add sections if owner.
     * Edit page text.
@@ -29,6 +28,8 @@ TODO:
       
 
 DONE:
+
+  * In-viewer bookmarking.
 
   * Create, and start using, a dc.ui.Dialog instead of alert() and friends.
 

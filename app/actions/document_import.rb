@@ -50,11 +50,19 @@ class DocumentImport < CloudCrowd::Action
   end
 
   def process_text
-    Docsplit.extract_text(@pdf, :pages => :all, :output => 'text')
-    Dir['text/*.txt'].length.times do |i|
-      page_name = "text/#{@basename}_#{i + 1}.txt"
-      page = Page.create!(:document => document, :text => File.read(page_name), :page_number => i + 1)
-      asset_store.save_page_text(page)
+    pages = []
+    extractor = DC::Import::TextExtractor.new(@pdf)
+    if extractor.contains_text?
+      Docsplit.extract_text(@pdf, :pages => :all, :output => 'text')
+      Dir['text/*.txt'].length.times do |i|
+        save_page_text(File.read("text/#{@basename}_#{i + 1}.txt"), i + 1)
+      end
+    else
+      Docsplit.extract_pages(@pdf, :output => 'text')
+      Dir['text/*.pdf'].length.times do |i|
+        text = DC::Import::TextExtractor.new("text/#{@basename}_#{i + 1}.pdf").text_from_ocr
+        save_page_text(text, i + 1)
+      end
     end
     text                = document.combined_page_text
     document.full_text  = FullText.new(:text => text, :document => document)
@@ -67,6 +75,11 @@ class DocumentImport < CloudCrowd::Action
 
 
   private
+
+  def save_page_text(text, page_number)
+    page = Page.create!(:document => document, :text => text, :page_number => page_number)
+    asset_store.save_page_text(page)
+  end
 
   def document
     return @document if @document
