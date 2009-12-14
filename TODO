@@ -1,6 +1,11 @@
 TODO:
+
+  * Get a real production server setup, and start deploying there as well.
+  
+  * Flesh out a more comprehensive API.
     
   * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
+    Adding a "search pages" feature.
 
   * Build an in-viewer annotation and section editing UI.
 
