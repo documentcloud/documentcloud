@@ -54,8 +54,8 @@ class DocumentsController < ApplicationController
   private
 
   def send_pdf
-    secured_url = File.join(DC::Store::AssetStore.asset_root, @current_document.pdf_path)
-    send_file secured_url, :disposition => 'inline', :type => 'application/pdf'
+    secured_url = File.join(DC::Store::AssetStore.web_root, @current_document.pdf_path)
+    redirect_to secured_url
   end
 
   def send_text
