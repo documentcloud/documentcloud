@@ -28,8 +28,11 @@ dc.ui.ViewerControlPanel = dc.View.extend({
       page_number : DV.controller.models.document.currentPage(),
       document_id : dc.app.editor.docId
     });
+    var openerMarks = (window.opener && window.opener.Bookmarks);
     Bookmarks.create(bookmark, null, {
-      success : _.bind(function() {
+      success : _.bind(function(model, resp) {
+        bookmark.set(resp);
+        openerMarks.add(bookmark);
         this.notify({mode: 'info', text : 'bookmark saved'});
       }, this),
       error : _.bind(function() {
