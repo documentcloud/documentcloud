@@ -51,8 +51,9 @@ class DocumentImport < CloudCrowd::Action
 
   def process_text
     Docsplit.extract_text(@pdf, :pages => :all, :output => 'text')
-    Dir['text/*.txt'].each_with_index do |page, i|
-      page = Page.create!(:document => document, :text => File.read(page), :page_number => i + 1)
+    Dir['text/*.txt'].length.times do |i|
+      page_name = "text/#{@basename}_#{i + 1}.txt"
+      page = Page.create!(:document => document, :text => File.read(page_name), :page_number => i + 1)
       asset_store.save_page_text(page)
     end
     text                = document.combined_page_text
