@@ -52,6 +52,9 @@ span.text_input {
     -webkit-box-shadow: 0 0 4px #333; -moz-box-shadow: 0 0 4px #333;
     background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#afafaf));
   }
+  .minibutton::selection, .minibutton > span::selection {
+    background: transparent;
+  }
   .minibutton.warn {
     background: #eaa;
     background: -webkit-gradient(linear, left top, left bottom, from(#fbb), to(#c88));

@@ -2,7 +2,7 @@ dc.ui.LabelMenu = dc.ui.Menu.extend({
 
   constructor : function(options) {
     _.bindAll(this, 'renderLabels');
-    options = _.extend({label : 'label', onOpen : this.renderLabels}, options);
+    options = _.extend({label : 'labels', onOpen : this.renderLabels}, options);
     this.base(options);
   },
 

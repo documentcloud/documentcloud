@@ -8,7 +8,7 @@ dc.ui.Menu = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    this.content = $.el('div', {'class' : 'menu_content', id : (this.id ? this.id + '_content' : null)});
+    this.content = $(JST.menu({id : this.id}));
     this.modes.open = 'not';
     _.bindAll(this, 'close');
     if (options.items) this.addItems(options.items);
