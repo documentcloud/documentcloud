@@ -9,14 +9,17 @@ class Bookmark < ActiveRecord::Base
 
   named_scope :alphabetical, {:order => 'title'}
 
+  # JSON representation of a bookmark. (not exposed through any API, yet)
   def to_json(opts={})
     {:id => id, :title => title, :document_id => document_id, :page_number => page_number}.to_json
   end
 
+  # The document that this bookmark references.
   def document
     Document.find(document_id)
   end
 
+  # The complete URL to the correct page in a document viewer.
   def document_viewer_url
     document.document_viewer_url + "#view=Document&page=#{page_number}"
   end

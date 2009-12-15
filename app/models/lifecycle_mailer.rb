@@ -1,3 +1,4 @@
+# Responsible for sending out lifecycle emails to active accounts.
 class LifecycleMailer < ActionMailer::Base
 
   def support_email

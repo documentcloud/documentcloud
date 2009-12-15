@@ -1,3 +1,4 @@
+# Searches can be saved to be run again later.
 class SavedSearch < ActiveRecord::Base
 
   belongs_to :account

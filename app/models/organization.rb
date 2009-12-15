@@ -1,3 +1,5 @@
+# A (News or Watchdog) organization with the power to create DocumentCloud
+# accounts and upload documents.
 class Organization < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
 
@@ -7,6 +9,7 @@ class Organization < ActiveRecord::Base
   validates_uniqueness_of :name, :slug
   validates_format_of :slug, :with => DC::Validators::SLUG
 
+  # How many documents have been uploaded across the whole organization?
   def document_count
     Document.count(:conditions => {:organization_id => id})
   end

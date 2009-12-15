@@ -1,3 +1,5 @@
+# A single page of a document has its own text saved separately, so that
+# in-document searches can be performed.
 class Page < ActiveRecord::Base
 
   include DC::Store::DocumentResource
