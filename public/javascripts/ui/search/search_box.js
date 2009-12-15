@@ -17,8 +17,9 @@ dc.ui.SearchBox = dc.View.extend({
     this.outstandingSearch = false;
     $(document.body).setMode('no', 'search');
     this.setCallbacks();
-    _.bindAll(this, 'loadSearchResults', 'loadMetadataResults', 'searchByHash', 'saveCurrentSearch');
+    _.bindAll(this, 'loadSearchResults', 'loadMetadataResults', 'searchByHash', 'clearSearch', 'saveCurrentSearch');
     dc.history.register(/^#search\//, this.searchByHash);
+    dc.history.register(/^#home$/, this.clearSearch);
   },
 
   // Shortcut to the searchbox's value.
@@ -76,8 +77,10 @@ dc.ui.SearchBox = dc.View.extend({
 
   clearSearch : function() {
     this.contextSensitiveSaveButton(false);
-    dc.history.save('search');
-    return $(document.body).setMode('no', 'search');
+    dc.history.save('home');
+    dc.app.workspace.organizer.clear();
+    $(document.body).setMode('no', 'search');
+    dc.app.navigation.tab('search');
   },
 
   // Hide the spinner and remove the search lock when finished searching.

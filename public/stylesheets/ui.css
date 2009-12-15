@@ -87,7 +87,7 @@ span.text_input {
   padding: 4px;
   opacity: 0.95;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
-  -webkit-box-shadow: 0 3px 7px #999; -moz-box-shadow: 0 3px 7px #999;
+  -webkit-box-shadow: 0 3px 7px #777; -moz-box-shadow: 0 3px 7px #777;
 }
   .menu_content .menu_item {
     cursor: pointer;

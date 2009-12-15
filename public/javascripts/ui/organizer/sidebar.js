@@ -22,7 +22,7 @@ dc.ui.OrganizerSidebar = dc.View.extend({
   },
 
   autofilter : function(e) {
-    this.organizer.autofilter(this.filterEl.val());
+    this.organizer.autofilter(this.filterEl.val(), e);
   },
 
   onLabelInput : function(e) {

@@ -3,7 +3,7 @@ dc.ui.SavedSearch = dc.View.extend({
   className : 'saved_search box serif',
 
   callbacks : [
-    ['el',              'click',    'runSearch'],
+    ['el',            'click',    'runSearch'],
     ['.icon.delete',  'click',    'deleteSearch']
   ],
 

@@ -32,17 +32,42 @@ dc.ui.Organizer = dc.View.extend({
     $(this.el).prepend(view.el);
   },
 
+  clickSelectedItem : function() {
+    $(this.selectedItem.el).trigger('click');
+  },
+
+  select : function(view) {
+    $(view.el).addClass('selected');
+    this.selectedItem = view;
+  },
+
+  deselect : function() {
+    if (this.selectedItem) $(this.selectedItem.el).removeClass('selected');
+    this.selectedItem = null;
+  },
+
+  clear : function() {
+    this.deselect();
+    this.sidebar.filterEl.val('');
+    $('.box', this.el).show();
+  },
+
   // Filters the visible labels and saved searches, by case-insensitive search.
   // Returns the number of visible items.
-  autofilter : function(search) {
+  autofilter : function(search, e) {
+    if (e && e.keyCode == 13) this.clickSelectedItem();
     var count = 0;
     var matcher = new RegExp(search, 'i');
-    _.each(this.subViews, function(view) {
+    this.deselect();
+    _.each(this.subViews, _.bind(function(view) {
       var sortKey = view.sortKey || view.model.sortKey();
       var selected = !!sortKey.match(matcher);
-      if (selected) count++;
       $(view.el).toggle(selected);
-    });
+      if (!search || !selected) return;
+      count++;
+      if (!this.selectedItem) this.select(view);
+    }, this));
+    // $(document.body).setMode(count === 0 ? 'empty' : 'no', 'search');
     return count;
   },
 

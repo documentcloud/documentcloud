@@ -71,7 +71,7 @@ dc.ui.Menu = dc.View.extend({
   },
 
   deselect : function() {
-    $('.menu_item', this.content).removeClass('selected');
+    if (this.selectedItem) this.selectedItem.menuEl.removeClass('selected');
     this.selectedItem = null;
   },
 

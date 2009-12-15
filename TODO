@@ -28,7 +28,7 @@ TODO:
     within Rails.
 
   * Show if the currently-selected documents are tagged with the labels in
-    the labels pulldown. Add autocomplete and label creation to the pulldown.
+    the labels pulldown. Make 'em removable.
                 
   * Figure out our own taxonomy and map all the OpenCalais categories into it.
       
