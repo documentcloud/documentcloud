@@ -1,5 +1,11 @@
 TODO:
 
+  * Make a query banner for searches.
+  
+  * Kill the metadata sidebar for searches, and create an organization one
+    to go there instead. Alter the metadata sidebar to go better with
+    the visualizations.
+
   * Get a real production server setup, and start deploying there as well.
   
   * Flesh out a more comprehensive API.
