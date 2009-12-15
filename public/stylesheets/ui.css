@@ -108,6 +108,20 @@ span.text_input {
   .menu_content .menu_autofilter .icon {
     position: absolute;
   }
+    .menu_content .add_16,
+    .menu_content .auto_add,
+    .menu_content.none_selected .search_button_16 {
+      display: none;
+    }
+    .menu_content.none_selected .add_16,
+    .menu_content.none_selected .auto_add {
+      display: block;
+    }
+  .menu_content .auto_add {
+    margin: 0 0 4px 19px;
+    font: italic 10px Arial;
+    color: #777;
+  }
   .menu_content .autofilter_input {
     font-size: 11px;
     margin: 0 0 5px 19px;

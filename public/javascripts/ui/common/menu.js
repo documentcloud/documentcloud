@@ -10,11 +10,12 @@ dc.ui.Menu = dc.View.extend({
     _.bindAll(this, 'close', 'autofilter');
     options.id = options.id || null;
     this.base(options);
-    this.items = [];
-    this.content = $(JST.menu(this.options));
+    this.items          = [];
+    this.content        = $(JST.menu(this.options));
     this.itemsContainer = $('.menu_items', this.content);
-    this.filter = $('.autofilter_input', this.content);
-    this.modes.open = 'not';
+    this.filter         = $('.autofilter_input', this.content);
+    this.addIcon        = $('.bullet_add', this.content);
+    this.modes.open     = 'not';
     if (options.items) this.addItems(options.items);
   },
 
@@ -41,14 +42,16 @@ dc.ui.Menu = dc.View.extend({
   },
 
   close : function(e) {
+    if (e && this.options.onClose && !this.options.onClose(e)) return false;
     this.setMode('not', 'open');
-    return this.options.onClose ? this.options.onClose(e) : true;
+    return true;
   },
 
   clear : function() {
     this.filter.val('');
     this.items = [];
     $(this.itemsContainer).html('');
+    this.content.setMode(null, 'selected');
   },
 
   addItems : function(items) {
@@ -73,8 +76,10 @@ dc.ui.Menu = dc.View.extend({
   },
 
   clickSelectedItem : function() {
-    this.selectedItem.onClick();
     this.content.forceHide();
+    if (this.selectedItem) return this.selectedItem.onClick();
+    var val = this.filter.val();
+    if (val) this.options.onAdd(val);
   },
 
   autofilter : function(e) {
@@ -91,7 +96,7 @@ dc.ui.Menu = dc.View.extend({
       count++;
       if (!this.selectedItem) this.select(item);
     }, this));
-    return count;
+    this.content.setMode(count ? 'some' : 'none', 'selected');
   }
 
 });

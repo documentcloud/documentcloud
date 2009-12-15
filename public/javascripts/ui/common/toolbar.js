@@ -10,9 +10,9 @@ dc.ui.Toolbar = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, '_addSelectedDocuments', 'display');
+    _.bindAll(this, '_addSelectedDocuments', '_addLabelWithDocuments', 'display');
     this.downloadMenu = this._createDownloadMenu();
-    this.labelMenu = new dc.ui.LabelMenu({onclick : this._addSelectedDocuments});
+    this.labelMenu = new dc.ui.LabelMenu({onClick : this._addSelectedDocuments, onAdd : this._addLabelWithDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
   },
 
@@ -44,11 +44,22 @@ dc.ui.Toolbar = dc.View.extend({
     $(this._panel()).setMode('open', 'toolbar');
   },
 
+  notifyLabeled : function(labelName, numDocs) {
+    var notification = "added " + numDocs + ' ' + Inflector.pluralize('document', numDocs) + ' to "' + labelName + '"';
+    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.labelMenu.el, position : 'center right', left : 7});
+  },
+
   _addSelectedDocuments : function(label) {
     var count = Documents.countSelected();
-    var notification = "added " + count + ' ' + Inflector.pluralize('document', count) + ' to "' + label.get('title') + '"';
-    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.labelMenu.el, position : 'center right', left : 7});
     Labels.addSelectedDocuments(label);
+    this.notifyLabeled(label.get('title'), count);
+  },
+
+  _addLabelWithDocuments : function(title) {
+    var ids = Documents.selectedIds();
+    var label = new dc.model.Label({title : title, document_ids : ids.join(',')});
+    Labels.create(label, null, {error : function() { Labels.remove(label); }});
+    this.notifyLabeled(title, ids.length);
   },
 
   _deleteSelectedDocuments : function() {

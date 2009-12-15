@@ -31,6 +31,10 @@ dc.model.LabelSet = dc.model.RESTfulSet.extend({
 
   resource : 'labels',
 
+  comparator : function(m) {
+    return m.get('title');
+  },
+
   addSelectedDocuments : function(label) {
     var newIds = _.uniq(label.documentIds().concat(Documents.selectedIds()));
     this.update(label, {document_ids : newIds.join(',')});
@@ -49,4 +53,5 @@ dc.model.LabelSet = dc.model.RESTfulSet.extend({
 
 });
 
+dc.model.LabelSet.implement(dc.model.SortedSet);
 window.Labels = new dc.model.LabelSet();
