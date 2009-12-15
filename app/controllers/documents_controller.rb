@@ -8,7 +8,7 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       format.pdf  { send_pdf }
       format.text { send_text }
-      format.html
+      format.html { @edits_enabled = true }
     end
   end
 

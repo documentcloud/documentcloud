@@ -19,7 +19,7 @@
   <% if Rails.env.development? %>
     <script src="/javascripts/lib/debug.js" type="text/javascript"></script>
   <% end %>
-  <%= render :partial => 'viewer_editing' %>
+  <%= render(:partial => 'viewer_editing') if @edits_enabled %>
 </head>
 <body>
   <script type="text/javascript">
