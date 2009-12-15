@@ -27,3 +27,9 @@ body.empty #search_container {
     border: 1px solid #999;
     -moz-border-radius: 6px;
   }
+
+body.empty #quick_links {
+  margin-top: 30px;
+  font: 12px Arial;
+  color: #3656ab;
+}
