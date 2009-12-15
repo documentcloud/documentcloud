@@ -44,7 +44,7 @@
   .document_list.medium_size .document_tile {
     float: left;
     width: 250px;
-    padding-left: 40px;
+    padding-left: 43px;
     margin: 5px 15px 10px 0;
     height: 35px;
   }
@@ -54,14 +54,11 @@
   }
   .document_tile .icon {
     position: absolute;
-/*    -webkit-box-shadow: 0 0px 5px #999; -moz-box-shadow: 0 0px 5px #999;*/
+    -webkit-box-shadow: 0 0px 5px #999; -moz-box-shadow: 0 0px 5px #999;
     left: 7px;
   }
     body.logged_in .document_tile .icon {
       cursor: pointer;
-    }
-    .document_tile img.icon {
-      border: 1px solid #eee;
     }
   .document_tile .title {
     display: block;
