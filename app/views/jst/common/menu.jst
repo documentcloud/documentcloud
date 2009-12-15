@@ -1,5 +1,12 @@
 <% var mid = id ? id + "_content" : ''; %>
 <div class="menu_content" id="<%= mid %>">
-
+  <% if (autofilter) { %>
+    <div class="menu_autofilter">
+      <div class="icon search_button_16"></div>
+      <input class="autofilter_input" type="text" />
+    </div>
+  <% } %>
+  <div class="menu_items">
+  </div>
 </div>
 

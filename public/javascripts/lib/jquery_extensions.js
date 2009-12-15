@@ -117,14 +117,19 @@ $.fn.extend({
     setTimeout(function(){ delete me._autoignore; }, 0);
 
     if (!me._autohider) {
-      this._autohider = function(e) {
-        if (me._autoignore) return;
-        if (options.clickable && (me[0] == e.target || _.include($(e.target).parents(), me[0]))) return;
-        if (options.onHide && !options.onHide(e)) return;
+      me.forceHide = function(e) {
+        if (!e && options.onHide) options.onHide();
         me.hide();
         $(document).unbind('click', me._autohider);
         $(document).unbind('keypress', me._autohider);
         me._autohider = null;
+        me.forceHide = null;
+      };
+      me._autohider = function(e) {
+        if (me._autoignore) return;
+        if (options.clickable && (me[0] == e.target || _.include($(e.target).parents(), me[0]))) return;
+        if (options.onHide && !options.onHide(e)) return;
+        me.forceHide(e);
       };
       $(document).bind('click', this._autohider);
       $(document).bind('keypress', this._autohider);
