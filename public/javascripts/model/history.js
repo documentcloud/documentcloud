@@ -63,7 +63,7 @@ dc.history = {
         return true;
       }
     });
-    if (!matched) dc.app.navigation.tab('search');
+    if (!matched && !hash) dc.app.searchBox.clearSearch();
   }
 
 };
