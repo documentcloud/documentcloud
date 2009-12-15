@@ -3,7 +3,7 @@ class BookmarksController < ApplicationController
   before_filter :login_required
 
   def index
-    json 'bookmarks' => current_account.bookmarks
+    json 'bookmarks' => current_account.bookmarks.alphabetical
   end
 
   def show

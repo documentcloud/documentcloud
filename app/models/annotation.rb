@@ -1,3 +1,4 @@
+# Annotations are still in limbo -- not yet editable in the viewer.
 class Annotation < ActiveRecord::Base
 
   include DC::Store::DocumentResource

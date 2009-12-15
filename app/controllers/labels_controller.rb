@@ -3,7 +3,7 @@ class LabelsController < ApplicationController
   before_filter :login_required
 
   def index
-    json 'labels' => current_account.labels
+    json 'labels' => current_account.labels.alphabetical
   end
 
   def create

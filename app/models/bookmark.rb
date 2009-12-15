@@ -1,3 +1,4 @@
+# A bookmark saves a quick link to a specific page of a document.
 class Bookmark < ActiveRecord::Base
 
   belongs_to :account
@@ -6,7 +7,7 @@ class Bookmark < ActiveRecord::Base
 
   validates_uniqueness_of :page_number, :scope => [:document_id, :account_id]
 
-  default_scope :order => 'title'
+  named_scope :alphabetical, {:order => 'title'}
 
   def to_json(opts={})
     {:id => id, :title => title, :document_id => document_id, :page_number => page_number}.to_json

@@ -61,7 +61,7 @@ module DC
           options[:limit]   = PAGE_SIZE
           options[:offset]  = @from
         end
-        @results = doc_proxy.all(options)
+        @results = doc_proxy.chronological.all(options)
         populate_highlights if DC_CONFIG['include_highlights']
         self
       end

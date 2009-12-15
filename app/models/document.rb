@@ -22,7 +22,7 @@ class Document < ActiveRecord::Base
 
   delegate :text, :to => :full_text
 
-  default_scope :order => 'created_at desc'
+  named_scope :chronological, {:order => 'created_at desc'}
 
   # Restrict accessible documents for a given account/organzation.
   named_scope :accessible, lambda { |account, org|
