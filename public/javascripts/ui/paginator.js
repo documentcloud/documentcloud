@@ -1,17 +1,17 @@
 dc.ui.Paginator = dc.View.extend({
-  
+
   PAGE_SIZE : 10,
-    
+
   id    : 'paginator',
   query : null,
   page  : null,
-    
+
   callbacks : [
     ['.previous_page',    'click',    'previousPage'],
     ['.next_page',        'click',    'nextPage'],
     ['.page_link',        'click',    'goToPage']
   ],
-  
+
   constructor : function() {
     this.base();
     this.prevEl   = $.el('span', {'class' : 'arrow previous_page'}, '&larr;');
@@ -31,7 +31,7 @@ dc.ui.Paginator = dc.View.extend({
   render : function() {
     var el = $(this.el);
     el.html('');
-    if (!this.query || this.query.total < this.PAGE_SIZE) return this;
+    if (!this.query || this.query.total <= this.PAGE_SIZE) return this;
     el.html('page: ');
     var from = this.query.from, to = this.query.to;
     if (from > 0) el.append(this.prevEl);
@@ -44,19 +44,19 @@ dc.ui.Paginator = dc.View.extend({
     this.setCallbacks();
     return this;
   },
-  
+
   // TODO: Move all these into the searchBox and clean it up.
-  
+
   previousPage : function() {
     dc.app.searchBox.search(dc.app.searchBox.value(), (dc.app.searchBox.currentPage || 1) - 1);
   },
-  
+
   nextPage : function() {
     dc.app.searchBox.search(dc.app.searchBox.value(), (dc.app.searchBox.currentPage || 1) + 1);
   },
-  
+
   goToPage : function(e) {
     dc.app.searchBox.search(dc.app.searchBox.value(), e.target.page);
   }
-  
+
 });
