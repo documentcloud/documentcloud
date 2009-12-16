@@ -13,13 +13,24 @@ _.extend(dc.app.editor, {
 
   // Create all of the requisite subviews.
   createSubViews : function() {
-    dc.ui.notifier    = new dc.ui.Notifier();
-    this.controlPanel = new dc.ui.ViewerControlPanel();
+    dc.ui.notifier      = new dc.ui.Notifier();
+    this.controlPanel   = new dc.ui.ViewerControlPanel();
+    this.sectionEditor  = new dc.ui.SectionEditor();
   },
 
   // Render all of the existing subviews and place them in the DOM.
   renderSubViews : function() {
     $('#DV-pages').append(this.controlPanel.render().el);
+  },
+
+  notify : function(options) {
+    dc.ui.notifier.show({
+      mode      : options.mode,
+      text      : options.text,
+      anchor    : $('#DV-views'),
+      position  : 'center right',
+      left      : 10
+    });
   }
 
 });
