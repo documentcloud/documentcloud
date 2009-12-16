@@ -15,7 +15,7 @@ dc.ui.SectionEditor = dc.View.extend({
       mode      : 'confirm',
       buttons   : 'mini',
       onClose   : _.bind(function(){ this.dialog = null; }, this),
-      onConfirm : _.bind(function(){ this.saveSections(this.serializeSections()); }, this)
+      onConfirm : _.bind(function(){ return this.saveSections(this.serializeSections()); }, this)
     }).render();
     this.sectionsEl = $($.el('ol', {id : 'section_rows'}));
     this.removeEl   = $($.el('span', {'class' : 'remove_all', role : 'link'}, 'remove all sections'));
