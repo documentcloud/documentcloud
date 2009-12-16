@@ -90,8 +90,9 @@ dc.ui.Toolbar = dc.View.extend({
     if (this.summaryButton.hasClass('disabled')) return false;
     var doc = _.first(Documents.selected());
     dc.ui.Dialog.prompt("Edit summary:", doc.get('summary'), function(revised) {
-      if (!revised) return false;
+      if (!revised) return true;
       Documents.update(doc, {summary : Inflector.truncate(revised, 255, '')});
+      return true;
     });
   },
 

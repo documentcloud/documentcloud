@@ -5,7 +5,7 @@ class Annotation < ActiveRecord::Base
 
   belongs_to :document
 
-  validates_presence_of :title, :page_number, :access
+  validates_presence_of :title, :page_number
 
   named_scope :search_content, lambda { |query|
     {:conditions => ["to_tsvector('english', content) @@ plainto_tsquery(?)", query]}

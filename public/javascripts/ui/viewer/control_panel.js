@@ -34,9 +34,10 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     $.ajax({
       url       : '/sections/set',
       type      : 'POST',
-      data      : sections,
+      data      : {sections : JSON.stringify(sections), document_id : dc.app.editor.docId},
       dataType  : 'json'
     });
+    this.notify({mode: 'info', text : 'sections saved'});
     return true;
   },
 
@@ -44,9 +45,9 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     var sections = [];
     $('.section_row').each(function(i, row) {
       var title = $('input', row).val();
-      var first = parseInt($('.first_page', row).val(), 10);
-      var last  = parseInt($('.last_page', row).val(), 10);
-      sections.push({title : title, first : first, last : last});
+      var first = parseInt($('.start_page', row).val(), 10);
+      var last  = parseInt($('.end_page', row).val(), 10);
+      if (title) sections.push({title : title, start_page : first, end_page : last});
     });
     return sections;
   },

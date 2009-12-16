@@ -14,7 +14,7 @@ module DC
 
       def self.included(klass)
         klass.class_eval do
-          validates_presence_of :organization_id, :account_id, :document_id
+          validates_presence_of :organization_id, :account_id, :document_id, :access
         end
       end
 

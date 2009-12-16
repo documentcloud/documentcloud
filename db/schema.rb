@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer   "organization_id",  :null => false
     t.integer   "account_id",       :null => false
     t.integer   "document_id",      :null => false
+    t.integer   "access",           :null => false
     t.string    "title",            :null => false
     t.integer   "start_page",       :null => false
     t.integer   "end_page",         :null => false

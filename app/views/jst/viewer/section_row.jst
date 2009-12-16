@@ -1,12 +1,12 @@
 <li class="section_row">
   <input class="section_title" type="text" placeholder="section title" />
-  <select class="first_page">
+  <select class="start_page">
     <% for (var page=1; page<=pageCount; page++) { %>
       <option value="<%= page %>"><%= page %></option>
     <% } %>
   </select>
   &ndash;
-  <select class="last_page">
+  <select class="end_page">
     <% for (var page=1; page<=pageCount; page++) { %>
       <option value="<%= page %>"><%= page %></option>
     <% } %>

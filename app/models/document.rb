@@ -157,6 +157,7 @@ class Document < ActiveRecord::Base
     res['thumbnail']  = thumbnail_url
     res['search']     = search_url
     res['page']       = {'image' => page_image_url_template, 'text' => page_text_url_template}
+    doc['sections']   = sections.map(&:canonical)
     doc
   end
 
