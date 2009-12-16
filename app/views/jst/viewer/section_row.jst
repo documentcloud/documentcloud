@@ -1,14 +1,16 @@
 <li class="section_row">
-  <input class="section_title" type="text" placeholder="section title" />
+  <input class="section_title" type="text" placeholder="section title" value="<%= title %>" />
   <select class="start_page">
     <% for (var page=1; page<=pageCount; page++) { %>
-      <option value="<%= page %>"><%= page %></option>
+      <% var selected = start_page === page ? 'selected="true"' : ''; %>
+      <option value="<%= page %>" <%= selected %>><%= page %></option>
     <% } %>
   </select>
   &ndash;
   <select class="end_page">
     <% for (var page=1; page<=pageCount; page++) { %>
-      <option value="<%= page %>"><%= page %></option>
+      <% var selected = end_page === page ? 'selected="true"' : ''; %>
+      <option value="<%= page %>" <%= selected %>><%= page %></option>
     <% } %>
   </select>
   &nbsp;&nbsp;&nbsp;

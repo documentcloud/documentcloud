@@ -9,7 +9,7 @@ dc.ui.ViewerControlPanel = dc.View.extend({
 
   constructor : function(opts) {
     this.base(opts);
-    _.bindAll(this, 'addSectionRow', 'saveSections');
+    this.sectionEditor = new dc.ui.SectionEditor({panel : this});
   },
 
   render : function() {
@@ -28,53 +28,8 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     });
   },
 
-  saveSections : function() {
-    var sections = this.serializeSections();
-    // if (!this.validateSections(sections)) return false; TBI
-    $.ajax({
-      url       : '/sections/set',
-      type      : 'POST',
-      data      : {sections : JSON.stringify(sections), document_id : dc.app.editor.docId},
-      dataType  : 'json'
-    });
-    this.notify({mode: 'info', text : 'sections saved'});
-    return true;
-  },
-
-  serializeSections : function() {
-    var sections = [];
-    $('.section_row').each(function(i, row) {
-      var title = $('input', row).val();
-      var first = parseInt($('.start_page', row).val(), 10);
-      var last  = parseInt($('.end_page', row).val(), 10);
-      if (title) sections.push({title : title, start_page : first, end_page : last});
-    });
-    return sections;
-  },
-
   openSectionEditor : function() {
-    if (this.sectionEditor) return false;
-    this.sectionEditor = new dc.ui.Dialog({
-      id        : 'section_editor',
-      mode      : 'confirm',
-      buttons   : 'mini',
-      title     : 'Edit Sections',
-      text      : 'Please choose a title and page range for each section:',
-      onClose   : _.bind(function(){ this.sectionEditor = null; }, this),
-      onConfirm : this.saveSections
-    }).render();
-    this.sections = $($.el('ol', {id : 'section_rows'}));
-    this.sectionEditor.append(this.sections);
-    _.each(_.range(3), this.addSectionRow);
-  },
-
-  addSectionRow : function(previous) {
-    var pages = DV.controller.models.document.totalPages;
-    var row = $(JST.section_row({pageCount : pages}));
-    $('.minus', row).bind('click', function(){ row.remove(); });
-    $('.plus', row).bind('click', _.bind(function(){ this.addSectionRow(row); }, this));
-    if (previous.after) return previous.after(row);
-    this.sections.append(row);
+    this.sectionEditor.open();
   },
 
   bookmarkCurrentPage : function() {
