@@ -2,7 +2,7 @@ dc.ui.SectionEditor = dc.View.extend({
 
   constructor : function(opts) {
     this.base(opts);
-    _.bindAll(this, 'addRow', 'saveSections');
+    _.bindAll(this, 'addRow', 'saveSections', 'removeAllSections');
   },
 
   open : function() {
@@ -15,10 +15,13 @@ dc.ui.SectionEditor = dc.View.extend({
       mode      : 'confirm',
       buttons   : 'mini',
       onClose   : _.bind(function(){ this.dialog = null; }, this),
-      onConfirm : this.saveSections
+      onConfirm : _.bind(function(){ this.saveSections(this.serializeSections()); }, this)
     }).render();
     this.sectionsEl = $($.el('ol', {id : 'section_rows'}));
+    this.removeEl   = $($.el('span', {'class' : 'remove_all', role : 'link'}, 'remove all sections'));
+    this.removeEl.bind('click', this.removeAllSections);
     this.dialog.append(this.sectionsEl);
+    this.dialog.append(this.removeEl);
     this.renderSections();
   },
 
@@ -28,8 +31,7 @@ dc.ui.SectionEditor = dc.View.extend({
     return true;
   },
 
-  saveSections : function() {
-    var sections = this.serializeSections();
+  saveSections : function(sections) {
     if (!this.validateSections(sections)) return false;
     $.ajax({
       url       : '/sections/set',
@@ -42,14 +44,18 @@ dc.ui.SectionEditor = dc.View.extend({
     return true;
   },
 
+  removeAllSections : function() {
+    this.saveSections([]);
+    this.dialog.close();
+  },
+
   serializeSections : function() {
     var sections = [];
     $('.section_row').each(function(i, row) {
       var title = $('input', row).val();
       var first = parseInt($('.start_page', row).val(), 10);
       var last  = parseInt($('.end_page', row).val(), 10);
-      var pages = '' + first + '-' + last;
-      if (title) sections.push({title : title, start_page : first, end_page : last, pages : pages});
+      if (title) sections.push({title : title, start_page : first, end_page : last});
     });
     return sections;
   },
@@ -64,6 +70,7 @@ dc.ui.SectionEditor = dc.View.extend({
   },
 
   updateNavigation : function(sections) {
+    sections = _.map(sections, function(s){ return _.extend({pages : '' + s.start_page + '-' + s.end_page}, s); });
     DV.controller.setSections(sections);
   },
 

@@ -3,7 +3,7 @@ class SectionsController < ApplicationController
   before_filter :login_required
 
   def set
-    return json(nil) if !sections || sections.empty?
+    return json(nil) unless sections
     current_document.sections.destroy_all
     sections.each {|s| current_document.sections.create(s) }
     json nil

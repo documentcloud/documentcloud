@@ -41,6 +41,12 @@
     color: #777;
     padding-bottom: 15px;
   }
+  #section_editor .remove_all {
+    font: italic 11px Arial;
+    color: #a55;
+    position: absolute;
+    left: 10px; bottom: 10px;
+  }
   #section_editor ol {
     margin: 0 0 25px 0;
     padding-right: 25px;
