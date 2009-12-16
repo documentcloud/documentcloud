@@ -16,9 +16,10 @@ dc.ui.Dialog = dc.View.extend({
   render : function() {
     $(this.el).html(JST.dialog(this.options));
     this.contentEl = $('.content', this.el);
+    this.controlsEl = $('.controls', this.el);
     if (this.options.content) this.contentEl.text(this.options.content);
     $(document.body).append(this.el);
-    $(this.el).align($('#content'), null, {top : -100});
+    $(this.el).align($('#content')[0] || document.body, null, {top : -100});
     $(this.el).draggable();
     this.setCallbacks();
     if (this.contentEl[0]) this.contentEl.focus();
@@ -27,9 +28,14 @@ dc.ui.Dialog = dc.View.extend({
 
   defaultOptions : function() {
     return {
-      title : "Untitled Dialog",
-      text  : "The content of the dialog goes here..."
+      title   : "Untitled Dialog",
+      text    : "The content of the dialog goes here...",
+      buttons : null
     };
+  },
+
+  append : function(el) {
+    this.controlsEl.before(el);
   },
 
   val : function() {
@@ -42,7 +48,7 @@ dc.ui.Dialog = dc.View.extend({
   },
 
   confirm : function() {
-    if (this.options.onConfirm) this.options.onConfirm(this);
+    if (this.options.onConfirm && !this.options.onConfirm(this)) return false;
     this.close();
   },
 

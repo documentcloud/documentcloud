@@ -137,10 +137,11 @@ $.fn.extend({
   },
 
   draggable : function() {
+    var draggableTags = ['div', 'p'];
     this.each(function() {
       var checkEvent = function(e) {
         var tag = e.target.tagName.toLowerCase();
-        if (tag == 'input' || tag == 'textarea') return true;
+        if (!_.include(draggableTags, tag)) return true;
         e.stopPropagation();
         e.preventDefault();
       };

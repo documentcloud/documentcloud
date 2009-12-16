@@ -68,6 +68,7 @@ dc.ui.Toolbar = dc.View.extend({
     dc.ui.Dialog.confirm(message, _.bind(function() {
       _(docs).each(function(doc){ Documents.destroy(doc); });
       this.display();
+      return true;
     }, this));
   },
 

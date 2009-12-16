@@ -3,8 +3,14 @@ dc.ui.ViewerControlPanel = dc.View.extend({
   id : 'control_panel',
 
   callbacks : [
-    ['#bookmark_page',  'click',  'bookmarkCurrentPage']
+    ['#bookmark_page',  'click',  'bookmarkCurrentPage'],
+    ['#set_sections',   'click',  'openSectionEditor']
   ],
+
+  constructor : function(opts) {
+    this.base(opts);
+    _.bindAll(this, 'addSectionRow', 'saveSections');
+  },
 
   render : function() {
     $(this.el).html(JST.viewer_control_panel({}));
@@ -20,6 +26,54 @@ dc.ui.ViewerControlPanel = dc.View.extend({
       position  : 'center right',
       left      : 10
     });
+  },
+
+  saveSections : function() {
+    var sections = this.serializeSections();
+    // if (!this.validateSections(sections)) return false; TBI
+    $.ajax({
+      url       : '/sections/set',
+      type      : 'POST',
+      data      : sections,
+      dataType  : 'json'
+    });
+    return true;
+  },
+
+  serializeSections : function() {
+    var sections = [];
+    $('.section_row').each(function(i, row) {
+      var title = $('input', row).val();
+      var first = parseInt($('.first_page', row).val(), 10);
+      var last  = parseInt($('.last_page', row).val(), 10);
+      sections.push({title : title, first : first, last : last});
+    });
+    return sections;
+  },
+
+  openSectionEditor : function() {
+    if (this.sectionEditor) return false;
+    this.sectionEditor = new dc.ui.Dialog({
+      id        : 'section_editor',
+      mode      : 'confirm',
+      buttons   : 'mini',
+      title     : 'Edit Sections',
+      text      : 'Please choose a title and page range for each section:',
+      onClose   : _.bind(function(){ this.sectionEditor = null; }, this),
+      onConfirm : this.saveSections
+    }).render();
+    this.sections = $($.el('ol', {id : 'section_rows'}));
+    this.sectionEditor.append(this.sections);
+    _.each(_.range(3), this.addSectionRow);
+  },
+
+  addSectionRow : function(previous) {
+    var pages = DV.controller.models.document.totalPages;
+    var row = $(JST.section_row({pageCount : pages}));
+    $('.minus', row).bind('click', function(){ row.remove(); });
+    $('.plus', row).bind('click', _.bind(function(){ this.addSectionRow(row); }, this));
+    if (previous.after) return previous.after(row);
+    this.sections.append(row);
   },
 
   bookmarkCurrentPage : function() {

@@ -19,9 +19,37 @@
   #control_panel .button {
     cursor: pointer;
     padding: 5px 10px;
+    border-top: 1px solid #aaa;
   }
+    #control_panel .button:first-child {
+      border-top: 0;
+    }
+    #control_panel .button:hover {
+      font-weight: bold;
+    }
 
 #notifier {
   font-size: 10px;
   z-index: 10000000;
 }
+
+#section_editor {
+  z-index: 10000000;
+}
+  #section_editor .text {
+    font: italic 11px Arial;
+    color: #777;
+    padding-bottom: 15px;
+  }
+  #section_editor ol {
+    margin: 0 0 25px 0;
+    padding-right: 25px;
+    width: 315px; max-height: 400px;
+    overflow-y: auto;
+  }
+    #section_editor li {
+      margin-bottom: 7px;
+    }
+      #section_editor li:first-child .minus {
+        display: none;
+      }

@@ -12,6 +12,11 @@
   </div>
 <% } %>
 <div class="controls">
-  <button class="ok default">ok</button>
-  <button class="cancel">cancel</button>
+  <% if (buttons === "mini") { %>
+    <div class="minibutton ok"><span>ok</span></div>
+    <div class="minibutton cancel"><span>cancel</span></div>
+  <% } else { %>  
+    <button class="ok default">ok</button>
+    <button class="cancel">cancel</button>
+  <% } %>
 </div>

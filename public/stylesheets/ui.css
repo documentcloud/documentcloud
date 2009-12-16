@@ -138,6 +138,7 @@ div.dialog {
   background: #e6e6e6;
   background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#fff));
   z-index: 1000;
+  font: 12px Arial;
   -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
   -webkit-box-shadow: 0 3px 25px #666; -moz-box-shadow: 0 3px 25px #666;
 }
@@ -158,11 +159,11 @@ div.dialog {
     div.dialog .short_prompt {
       padding-bottom: 10px;
     }
-  div.dialog button {
+  div.dialog .controls button, div.dialog .controls .minibutton {
     float: right;
     margin: 0 10px 8px 0;
   }
-    div.dialog.alert_dialog button.cancel {
+    div.dialog.alert_dialog button.cancel, div.dialog.alert_dialog .minibutton.cancel {
       display: none;
     }
   div.dialog .content {
