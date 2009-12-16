@@ -7,7 +7,7 @@ dc.ui.SectionEditor = dc.View.extend({
 
   open : function() {
     if (this.dialog) return false;
-    this.sections = _.sortBy(_.clone(DV.Schema.data.sections || []), function(s){ return parseInt(s.pageNumber, 10); });
+    this.sections = _.sortBy(DV.controller.getSections(), function(s){ return parseInt(s.pageNumber, 10); });
     this.dialog = new dc.ui.Dialog({
       title     : 'Edit Sections',
       text      : 'Please choose a title and page range for each section:',
@@ -48,7 +48,8 @@ dc.ui.SectionEditor = dc.View.extend({
       var title = $('input', row).val();
       var first = parseInt($('.start_page', row).val(), 10);
       var last  = parseInt($('.end_page', row).val(), 10);
-      if (title) sections.push({title : title, start_page : first, end_page : last});
+      var pages = '' + first + '-' + last;
+      if (title) sections.push({title : title, start_page : first, end_page : last, pages : pages});
     });
     return sections;
   },
@@ -63,22 +64,11 @@ dc.ui.SectionEditor = dc.View.extend({
   },
 
   updateNavigation : function(sections) {
-    DV.Schema.data.chapters = [];
-    _.each(sections, function(sec) {
-      sec.id = _.uniqueId();
-      sec.pages = '' + sec.start_page + '-' + sec.end_page;
-      _.each(_.range(sec.start_page-1, sec.end_page), function(i){
-        DV.Schema.data.chapters[i] = sec.id;
-      });
-    });
-    DV.controller.models.chapters.chapters = DV.Schema.data.chapters;
-    DV.Schema.data.sections = sections;
-    $('#DV-navigationBolds', document.head).remove();
-    DV.controller.helpers.renderNavigation();
+    DV.controller.setSections(sections);
   },
 
   addRow : function(options) {
-    options = _.extend({pageCount : DV.controller.models.document.totalPages, title : '', start_page : '', end_page : ''}, options);
+    options = _.extend({pageCount : DV.controller.numberOfPages(), title : '', start_page : '', end_page : ''}, options);
     var row = $(JST.section_row(options));
     $('.minus', row).bind('click', function(){ row.remove(); });
     $('.plus', row).bind('click', _.bind(function(){ this.addRow({after : row}); }, this));

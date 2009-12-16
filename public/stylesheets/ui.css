@@ -140,7 +140,7 @@ div.dialog {
   z-index: 1000;
   font: 12px Arial;
   -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-  -webkit-box-shadow: 0 3px 25px #666; -moz-box-shadow: 0 3px 25px #666;
+  -webkit-box-shadow: 0 5px 50px #888; -moz-box-shadow: 0 5px 50px #888;
 }
   div.dialog .title {
     background: #e0e0e0;
