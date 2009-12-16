@@ -13,7 +13,7 @@ dc.ui.ViewerControlPanel = dc.View.extend({
   },
 
   render : function() {
-    $(this.el).html(JST.viewer_control_panel({}));
+    $(this.el).html(JST.viewer_control_panel({isOwner : dc.app.editor.isOwner}));
     this.setCallbacks();
     return this;
   },
