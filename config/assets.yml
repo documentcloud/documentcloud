@@ -25,6 +25,7 @@ stylesheets:
     - public/stylesheets/pages/docs.css
   viewer_editing:
     - public/stylesheets/ui.css
+    - public/stylesheets/icons.css
     - public/stylesheets/pages/viewer_editing.css
 
 templates:

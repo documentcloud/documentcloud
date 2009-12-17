@@ -1,6 +1,6 @@
 #control_panel {
   position: fixed;
-  top: 60px; left: 20px;
+  bottom: 10px; left: 10px;
   z-index: -1;
   font: 10px Arial;
   text-transform: uppercase;
@@ -50,12 +50,19 @@
   #section_editor ol {
     margin: 0 0 25px 0;
     padding-right: 25px;
-    width: 315px; max-height: 400px;
+    width: 310px; max-height: 400px;
     overflow-y: auto;
   }
     #section_editor li {
       margin-bottom: 7px;
     }
+      #section_editor .plus, #section_editor .minus {
+        float: right;
+        margin: 0px 0 0 3px;
+        position: relative;
+        top: 7px;
+        cursor: pointer;
+      }
       #section_editor li:first-child .minus {
         display: none;
       }

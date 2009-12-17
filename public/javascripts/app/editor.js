@@ -27,9 +27,9 @@ _.extend(dc.app.editor, {
     dc.ui.notifier.show({
       mode      : options.mode,
       text      : options.text,
-      anchor    : $('#DV-views'),
-      position  : 'center right',
-      left      : 10
+      anchor    : $('#control_panel'),
+      position  : 'top -left',
+      top       : -10
     });
   }
 

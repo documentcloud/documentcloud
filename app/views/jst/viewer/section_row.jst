@@ -1,4 +1,6 @@
 <li class="section_row">
+  <div class="icon plus"></div>
+  <div class="icon minus"></div>
   <input class="section_title" type="text" placeholder="section title" value="<%= title %>" />
   <select class="start_page">
     <% for (var page=1; page<=pageCount; page++) { %>
@@ -13,7 +15,4 @@
       <option value="<%= page %>" <%= selected %>><%= page %></option>
     <% } %>
   </select>
-  &nbsp;&nbsp;&nbsp;
-  <span class="minus" role="link"><big>&ndash;</big></span>
-  <span class="plus" role="link"><big>+</big></span>
 </li>
