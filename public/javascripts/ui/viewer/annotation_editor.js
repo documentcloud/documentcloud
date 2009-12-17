@@ -1,8 +1,14 @@
 dc.ui.AnnotationEditor = dc.View.extend({
 
+  id : 'annotation_editor',
+
   open : function() {
-    var json = eval(prompt('annotation json please:'));
-    this.addAnnotation(json);
+    $(this.el).html(JST.annotation_editor({}));
+    $(document.body).append(this.el);
+    $(this.el).align(document.body);
+    $(this.el).draggable();
+    // var json = eval(prompt('annotation json please:'));
+    // this.addAnnotation(json);
   },
 
   addAnnotation : function(anno) {

@@ -17,6 +17,9 @@
   #DV-docViewer.DV-viewAnnotations #control_panel {
     display: none;
   }
+  #DV-pages.DV-coverVisible #control_panel {
+    opacity: 0.1 !important;
+  }
   #control_panel:hover {
     opacity: 1;
   }
@@ -43,7 +46,7 @@
   z-index: 10000000;
 }
 
-#section_editor {
+#section_editor, #annotation_editor {
   z-index: 10000000;
 }
   #section_editor .text {
@@ -76,3 +79,18 @@
       #section_editor li:first-child .minus {
         display: none;
       }
+
+#annotation_editor {
+  position: absolute;
+}
+  #annotation_editor .title_wrapper {
+    background: #eee;
+  }
+  #annotation_editor .annotation_cropper {
+    min-width: 100px; min-height: 100px;
+    width: 450px; height: 150px;
+    border: 1px solid #aaa;
+  }
+  #annotation_editor .annotation_content {
+    width: 450px; height: 75px;
+  }
