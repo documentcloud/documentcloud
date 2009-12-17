@@ -147,8 +147,8 @@ $.fn.extend({
       };
       var drag = _.bind(function(e) {
         if (checkEvent(e)) return true;
-        this.style.left = this._drag.left + event.pageX - this._drag.x + 'px';
-        this.style.top  = this._drag.top + event.pageY - this._drag.y + 'px';
+        this.style.left = this._drag.left + e.pageX - this._drag.x + 'px';
+        this.style.top  = this._drag.top + e.pageY - this._drag.y + 'px';
       }, this);
       var dragEnd = _.bind(function(e) {
         $(document.body).unbind('mouseup', dragEnd);

@@ -21,7 +21,7 @@ _.extend(dc.app.editor, {
 
   // Render all of the existing subviews and place them in the DOM.
   renderSubViews : function() {
-    $('#DV-pages').append(this.controlPanel.render().el);
+    $('#DV-pageCollection').append(this.controlPanel.render().el);
   },
 
   notify : function(options) {
@@ -29,8 +29,8 @@ _.extend(dc.app.editor, {
       mode      : options.mode,
       text      : options.text,
       anchor    : $('#control_panel'),
-      position  : 'top -left',
-      top       : -10
+      position  : 'bottom -left',
+      top       : 10
     });
   }
 

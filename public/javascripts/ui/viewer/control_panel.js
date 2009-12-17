@@ -5,7 +5,7 @@ dc.ui.ViewerControlPanel = dc.View.extend({
   callbacks : [
     ['.bookmark_page',  'click',  'bookmarkCurrentPage'],
     ['.set_sections',   'click',  'openSectionEditor'],
-    ['.add_annotation', 'click',  'openAnnotationEditor']
+    ['.add_annotation', 'click',  'toggleAnnotationEditor']
   ],
 
   render : function() {
@@ -18,14 +18,14 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     dc.app.editor.sectionEditor.open();
   },
 
-  openAnnotationEditor : function() {
-    dc.app.editor.annotationEditor.open();
+  toggleAnnotationEditor : function() {
+    dc.app.editor.annotationEditor.toggle();
   },
 
   bookmarkCurrentPage : function() {
     var bookmark = new dc.model.Bookmark({
       title       : DV.Schema.data.title,
-      page_number : DV.controller.models.document.currentPage(),
+      page_number : DV.api.currentPage(),
       document_id : dc.app.editor.docId
     });
     var openerMarks = (window.opener && window.opener.Bookmarks);
