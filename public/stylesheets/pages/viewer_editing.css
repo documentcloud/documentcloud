@@ -1,5 +1,6 @@
 #control_panel {
   position: fixed;
+/*  top: 50px; left: 10px;*/
   bottom: 10px; left: 10px;
   z-index: -1;
   font: 10px Arial;
@@ -13,6 +14,9 @@
   opacity: 0.65;
   -webkit-transition: opacity 0.15s linear;
 }
+  #DV-docViewer.DV-viewAnnotations #control_panel {
+    display: none;
+  }
   #control_panel:hover {
     opacity: 1;
   }
@@ -26,6 +30,12 @@
     }
     #control_panel .button:hover {
       font-weight: bold;
+    }
+  #control_panel .document_only {
+    display: none;
+  }
+    #DV-docViewer.DV-viewDocument #control_panel .document_only {
+      display: block;
     }
 
 #notifier {

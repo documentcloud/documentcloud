@@ -13,9 +13,10 @@ _.extend(dc.app.editor, {
 
   // Create all of the requisite subviews.
   createSubViews : function() {
-    dc.ui.notifier      = new dc.ui.Notifier();
-    this.controlPanel   = new dc.ui.ViewerControlPanel();
-    this.sectionEditor  = new dc.ui.SectionEditor();
+    dc.ui.notifier          = new dc.ui.Notifier();
+    this.controlPanel       = new dc.ui.ViewerControlPanel();
+    this.sectionEditor      = new dc.ui.SectionEditor();
+    this.annotationEditor   = new dc.ui.AnnotationEditor();
   },
 
   // Render all of the existing subviews and place them in the DOM.

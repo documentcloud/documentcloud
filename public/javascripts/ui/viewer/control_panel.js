@@ -3,8 +3,9 @@ dc.ui.ViewerControlPanel = dc.View.extend({
   id : 'control_panel',
 
   callbacks : [
-    ['#bookmark_page',  'click',  'bookmarkCurrentPage'],
-    ['#set_sections',   'click',  'openSectionEditor']
+    ['.bookmark_page',  'click',  'bookmarkCurrentPage'],
+    ['.set_sections',   'click',  'openSectionEditor'],
+    ['.add_annotation', 'click',  'openAnnotationEditor']
   ],
 
   render : function() {
@@ -15,6 +16,10 @@ dc.ui.ViewerControlPanel = dc.View.extend({
 
   openSectionEditor : function() {
     dc.app.editor.sectionEditor.open();
+  },
+
+  openAnnotationEditor : function() {
+    dc.app.editor.annotationEditor.open();
   },
 
   bookmarkCurrentPage : function() {

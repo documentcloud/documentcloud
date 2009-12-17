@@ -19,7 +19,8 @@ ActionController::Routing::Routes.draw do |map|
   # Document representations and sub-resources.
   map.resources :documents,
                 :collection => {:metadata => :get},
-                :member     => {:thumbnail => :get, :search => :get}
+                :member     => {:thumbnail => :get, :search => :get},
+                :has_many   => [:annotations]
   map.page_text "/documents/:id/:page_name.txt", :controller => :documents, :action => :page_text
 
   # Bulk downloads.
