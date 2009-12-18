@@ -7,6 +7,8 @@ class Annotation < ActiveRecord::Base
 
   validates_presence_of :title, :page_number
 
+  before_validation :ensure_title
+
   named_scope :search_content, lambda { |query|
     {:conditions => ["to_tsvector('english', content) @@ plainto_tsquery(?)", query]}
   }
@@ -16,9 +18,20 @@ class Annotation < ActiveRecord::Base
   end
 
   def canonical
-    data = {'page' => page_number, 'title' => title, 'content' => content}
+    data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content}
     data['location'] = {'image' => location} if location
     data
+  end
+
+  def to_json(opts={})
+    canonical
+  end
+
+
+  private
+
+  def ensure_title
+    self.title = "Untitled Annotation" if title.blank?
   end
 
 end

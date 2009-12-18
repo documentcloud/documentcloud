@@ -9,15 +9,13 @@ dc.ui.AnnotationEditor = dc.View.extend({
   constructor : function(opts) {
     this.base(opts);
     this._open = false;
-    _.bindAll(this, 'open', 'close', 'drawAnnotation');
+    this._baseURL = '/documents/' + dc.app.editor.docId + '/annotations';
+    _.bindAll(this, 'open', 'close', 'drawAnnotation', 'saveAnnotation', 'deleteAnnotation');
+    DV.api.onAnnotationSave(this.saveAnnotation);
+    DV.api.onAnnotationDelete(this.deleteAnnotation);
   },
 
   open : function() {
-    // $(this.el).html(JST.annotation_editor({}));
-    // $(document.body).append(this.el);
-    // $(this.el).align(document.body);
-    // $(this.el).draggable();
-    // this.setCallbacks();
     this._open   = true;
     this._button = $('#control_panel .add_annotation');
     this.pages   = $('#DV-pages');
@@ -25,8 +23,6 @@ dc.ui.AnnotationEditor = dc.View.extend({
     this.page.css({cursor : 'crosshair'});
     this.page.bind('mousedown', this.drawAnnotation);
     this._button.addClass('open');
-    // var json = eval(prompt('annotation json please:'));
-    // this.addAnnotation(json);
   },
 
   close : function() {
@@ -35,7 +31,6 @@ dc.ui.AnnotationEditor = dc.View.extend({
     this.page.unbind('mousedown', this.drawAnnotation);
     this.clearAnnotation();
     this._button.removeClass('open');
-    // $(this.el).remove();
   },
 
   toggle : function() {
@@ -71,32 +66,46 @@ dc.ui.AnnotationEditor = dc.View.extend({
       this.pages.unbind('mouseup', dragEnd).unbind('mousemove', drag);
       atop  -= (offTop + this._activePage.offset().top);
       aleft -= (offLeft + this._activePage.offset().left);
-      var loc = [atop, aleft + $(this.region).width(), atop + $(this.region).height(), aleft].join(',');
-      this.addAnnotation({location : loc, page_number : DV.api.currentPage()});
+      var aright = aleft + $(this.region).width();
+      var abottom = atop + $(this.region).height();
+      var zoom = DV.api.currentZoom();
+      var loc = [atop / zoom, aright / zoom, abottom / zoom, aleft / zoom].join(',');
+      this.close();
+      DV.api.addAnnotation({location : {image : loc}, page : DV.api.currentPage(), unsaved : true});
     }, this);
     this.pages.bind('mouseup', dragEnd).bind('mousemove', drag);
   },
 
-  addAnnotation : function(anno) {
-    var title = prompt("Title:");
-    var content = prompt("Content:");
-    var anno = _.extend(anno, {title : title, content : content});
-    this.close();
-    $.ajax({
-      url       : '/documents/' + dc.app.editor.docId + '/annotations',
-      type      : 'POST',
-      data      : anno,
-      dataType  : 'json'
-    });
-    dc.app.editor.notify({mode: 'info', text : 'annotation saved'});
-    this.addAnnotationToViewer(anno);
-    return true;
+  saveAnnotation : function(anno) {
+    this[anno.unsaved ? 'createAnnotation' : 'updateAnnotation'](anno);
   },
 
-  addAnnotationToViewer : function(anno) {
-    anno.page = anno.page_number;
-    anno.location = {image : anno.location};
-    DV.api.addAnnotation(anno);
+  annotationToParams : function(anno, extra) {
+    delete anno.unsaved;
+    return _.extend({
+      location    : anno.location.image,
+      page_number : anno.page,
+      content     : anno.text,
+      title       : anno.title
+    }, extra || {});
+  },
+
+  createAnnotation : function(anno) {
+    var params = this.annotationToParams(anno);
+    $.ajax({url : this._baseURL, type : 'POST', data : params, dataType : 'json', success : function(resp) {
+      anno.server_id = resp.id;
+    }});
+  },
+
+  updateAnnotation : function(anno) {
+    var url = this._baseURL + '/' + anno.server_id;
+    var params = this.annotationToParams(anno, {_method : 'put'});
+    $.ajax({url : url, type : 'POST', data : params, dataType : 'json'});
+  },
+
+  deleteAnnotation : function(anno) {
+    var url = this._baseURL + '/' + anno.server_id;
+    $.ajax({url : url, type : 'POST', data : {_method : 'delete'}, dataType : 'json'});
   }
 
 });

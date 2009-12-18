@@ -21,6 +21,7 @@ _.extend(dc.app.editor, {
 
   // Render all of the existing subviews and place them in the DOM.
   renderSubViews : function() {
+    if (this.isOwner) $('#DV-docViewer').addClass('DV-isOwner');
     $('#DV-pageCollection').append(this.controlPanel.render().el);
   },
 

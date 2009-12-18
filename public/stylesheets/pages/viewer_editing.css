@@ -102,3 +102,21 @@
   #annotation_editor .annotation_content {
     width: 450px; height: 75px;
   }
+
+.DV-annotationEditControls {
+  position: absolute;
+  top: -55px; left: 5px;
+  background: white;
+  text-align: center;
+  width: 95px;
+  padding: 5px 0px 6px;
+  border: 4px solid #dec01c;
+  border-bottom: 0;
+  -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
+  -webkit-border-bottom-right-radius: 0; -webkit-border-bottom-left-radius: 0;
+  -moz-border-radius-bottomright: 0; -moz-border-radius-bottomleft: 0;
+/*  z-index: -1;*/
+}
+.DV-annotationTextArea {
+  border: 1px solid #ccc;
+}

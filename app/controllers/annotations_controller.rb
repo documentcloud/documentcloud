@@ -6,6 +6,11 @@ class AnnotationsController < ApplicationController
     json current_document.annotations.create(pick_params(:page_number, :title, :content, :location))
   end
 
+  def update
+    current_annotation.update_attributes(pick_params(:title, :content))
+    json current_annotation
+  end
+
   def destroy
     current_annotation.destroy
     json nil
@@ -15,7 +20,7 @@ class AnnotationsController < ApplicationController
   private
 
   def current_annotation
-    current_document.annotations.find(params[:id])
+    @current_annotation ||= current_document.annotations.find(params[:id])
   end
 
   def current_document
