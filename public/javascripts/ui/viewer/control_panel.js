@@ -3,9 +3,10 @@ dc.ui.ViewerControlPanel = dc.View.extend({
   id : 'control_panel',
 
   callbacks : [
-    ['.bookmark_page',  'click',  'bookmarkCurrentPage'],
-    ['.set_sections',   'click',  'openSectionEditor'],
-    ['.add_annotation', 'click',  'toggleAnnotationEditor']
+    ['.bookmark_page',      'click',    'bookmarkCurrentPage'],
+    ['.set_sections',       'click',    'openSectionEditor'],
+    ['.public_annotation',  'click',    'togglePublicAnnotation'],
+    ['.private_annotation', 'click',    'togglePrivateAnnotation']
   ],
 
   render : function() {
@@ -18,8 +19,12 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     dc.app.editor.sectionEditor.open();
   },
 
-  toggleAnnotationEditor : function() {
-    dc.app.editor.annotationEditor.toggle();
+  togglePublicAnnotation : function() {
+    dc.app.editor.annotationEditor.toggle('public');
+  },
+
+  togglePrivateAnnotation : function() {
+    dc.app.editor.annotationEditor.toggle('private');
   },
 
   bookmarkCurrentPage : function() {

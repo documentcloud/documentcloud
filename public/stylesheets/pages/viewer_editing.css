@@ -37,6 +37,18 @@
     #control_panel .button:hover {
       font-weight: bold;
     }
+      #control_panel .color_block {
+        margin-left: 4px;
+        width: 10px; height: 10px;
+        border: 1px solid #aaa;
+        display: inline-block;
+      }
+        #control_panel .private_annotation .color_block {
+          background: #b4c8f5;
+        }
+        #control_panel .public_annotation .color_block {
+          background: #edd134;
+        }
   #control_panel .document_only {
     display: none;
   }

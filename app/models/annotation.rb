@@ -24,7 +24,7 @@ class Annotation < ActiveRecord::Base
   end
 
   def to_json(opts={})
-    canonical
+    canonical.to_json
   end
 
 

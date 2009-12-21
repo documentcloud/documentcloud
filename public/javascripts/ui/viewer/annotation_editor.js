@@ -8,33 +8,36 @@ dc.ui.AnnotationEditor = dc.View.extend({
 
   constructor : function(opts) {
     this.base(opts);
-    this._open = false;
+    this._open    = false;
+    this._buttons = {};
     this._baseURL = '/documents/' + dc.app.editor.docId + '/annotations';
     _.bindAll(this, 'open', 'close', 'drawAnnotation', 'saveAnnotation', 'deleteAnnotation');
     DV.api.onAnnotationSave(this.saveAnnotation);
     DV.api.onAnnotationDelete(this.deleteAnnotation);
   },
 
-  open : function() {
-    this._open   = true;
-    this._button = $('#control_panel .add_annotation');
-    this.pages   = $('#DV-pages');
-    this.page    = $('.DV-page');
+  open : function(kind) {
+    this._open          = true;
+    this._buttons[kind] = $('#control_panel .' + kind + '_annotation');
+    this.pages          = $('#DV-pages');
+    this.page           = $('.DV-page');
     this.page.css({cursor : 'crosshair'});
     this.page.bind('mousedown', this.drawAnnotation);
-    this._button.addClass('open');
+    this._buttons[kind].addClass('open');
   },
 
-  close : function() {
+  close : function(kind) {
+    kind = kind || this._kind;
     this._open = false;
     this.page.css({cursor : null});
     this.page.unbind('mousedown', this.drawAnnotation);
     this.clearAnnotation();
-    this._button.removeClass('open');
+    this._buttons[kind].removeClass('open');
   },
 
-  toggle : function() {
-    this._open ? this.close() : this.open();
+  toggle : function(kind) {
+    this._kind = kind;
+    this._open ? this.close(kind) : this.open(kind);
   },
 
   clearAnnotation : function() {
