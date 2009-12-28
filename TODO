@@ -13,10 +13,7 @@ TODO:
   * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
     Adding a "search pages" feature.
 
-  * Build an in-viewer annotation and section editing UI.
-    * Add and edit annotation (private if logged-in, public if owner).
-    * Add sections if owner.
-    * Edit page text.
+  * Edit page text.
 
   * Start extracting dates (not times) -- integrate the DateExtractor into
     document import. What to do about relevance? Make sure to record occurrences
@@ -34,6 +31,10 @@ TODO:
       
 
 DONE:
+
+  * Build an in-viewer annotation and section editing UI.
+    * Add and edit annotation (private if logged-in, public if owner).
+    * Add sections if owner.
 
   * In-viewer bookmarking.
 
