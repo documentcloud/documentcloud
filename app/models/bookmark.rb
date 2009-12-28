@@ -21,7 +21,7 @@ class Bookmark < ActiveRecord::Base
 
   # The complete URL to the correct page in a document viewer.
   def document_viewer_url
-    document.document_viewer_url + "#view=Document&page=#{page_number}"
+    document.document_viewer_url + "#document/p#{page_number}"
   end
 
 end
