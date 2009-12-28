@@ -6,10 +6,9 @@ module DC
 
       def before_validation_on_create
         self.document_id      = document.id
-        self.organization_id  = document.organization_id
-        self.account_id       = document.account_id
-        # TODO: deal with access more granularly.
-        self.access           = document.access
+        self.organization_id  = organization_id || document.organization_id
+        self.account_id       = account_id || document.account_id
+        self.access           = access || document.access
       end
 
       def self.included(klass)

@@ -23,7 +23,7 @@
 </head>
 <body>
   <script type="text/javascript">
-    DV.load(<%= @current_document.canonical.to_json %>);
+    DV.load(<%= @current_document.canonical(@current_account).to_json %>);
   </script>
 </body>
 </html>

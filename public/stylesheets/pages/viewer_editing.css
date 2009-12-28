@@ -44,7 +44,7 @@
         display: inline-block;
       }
         #control_panel .private_annotation .color_block {
-          background: #b4c8f5;
+          background: #a4c0ff;
         }
         #control_panel .public_annotation .color_block {
           background: #edd134;
@@ -127,8 +127,10 @@
   -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
   -webkit-border-bottom-right-radius: 0; -webkit-border-bottom-left-radius: 0;
   -moz-border-radius-bottomright: 0; -moz-border-radius-bottomleft: 0;
-/*  z-index: -1;*/
 }
+  .DV-private .DV-annotationEditControls {
+    border-color: #4ec4dd;
+  }
 .DV-annotationTextArea {
   border: 1px solid #ccc;
 }

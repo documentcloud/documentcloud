@@ -36,8 +36,11 @@ dc.ui.AnnotationEditor = dc.View.extend({
   },
 
   toggle : function(kind) {
-    this._kind = kind;
-    this._open ? this.close(kind) : this.open(kind);
+    if (this._open) {
+      this.close(this._kind);
+      if (kind === this._kind) return;
+    }
+    this.open(this._kind = kind);
   },
 
   clearAnnotation : function() {
@@ -55,7 +58,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
     var ox = e.pageX, oy = e.pageY;
     var atop    = oy + offTop,
         aleft   = ox + offLeft;
-    this.region = $.el('div', {'class' : 'DV-annotationRegion active'});
+    this.region = $.el('div', {'class' : 'DV-annotationRegion active DV-' + this._kind});
     this.pages.append(this.region);
     $(this.region).css({left : aleft, top : atop});
     var drag = _.bind(function(e) {
@@ -74,7 +77,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
       var zoom = DV.api.currentZoom();
       var loc = [atop / zoom, aright / zoom, abottom / zoom, aleft / zoom].join(',');
       this.close();
-      DV.api.addAnnotation({location : {image : loc}, page : DV.api.currentPage(), unsaved : true});
+      DV.api.addAnnotation({location : {image : loc}, page : DV.api.currentPage(), unsaved : true, access : this._kind});
     }, this);
     this.pages.bind('mouseup', dragEnd).bind('mousemove', drag);
   },
@@ -89,7 +92,8 @@ dc.ui.AnnotationEditor = dc.View.extend({
       location    : anno.location.image,
       page_number : anno.page,
       content     : anno.text,
-      title       : anno.title
+      title       : anno.title,
+      access      : anno.access == 'private' ? 1 : 4
     }, extra || {});
   },
 

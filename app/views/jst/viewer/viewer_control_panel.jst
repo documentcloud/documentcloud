@@ -1,10 +1,12 @@
 <div class="bookmark_page button">bookmark this page</div>
 <% if (isOwner) { %>
   <div class="set_sections button document_only">edit sections</div>
-  <div class="private_annotation button document_only">
-    private annotation
-    <div class="color_block">&nbsp;&nbsp;</div>
-  </div>
+<% } %>
+<div class="private_annotation button document_only">
+  private annotation
+  <div class="color_block">&nbsp;&nbsp;</div>
+</div>  
+<% if (isOwner) { %>
   <div class="public_annotation button document_only">
     public annotation
     <div class="color_block">&nbsp;</div>

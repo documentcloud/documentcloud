@@ -1,17 +1,25 @@
 class AnnotationsController < ApplicationController
+  include DC::Access
 
   before_filter :login_required
 
   def create
-    json current_document.annotations.create(pick_params(:page_number, :title, :content, :location))
+    return forbidden unless params[:access].to_i == PRIVATE || current_account.owns?(current_document)
+    json current_document.annotations.create(
+      pick_params(:page_number, :title, :content, :location, :access).merge({
+        :account_id => current_account.id, :organization_id => current_organization.id
+      })
+    )
   end
 
   def update
+    return forbidden unless current_account.owns?(current_annotation)
     current_annotation.update_attributes(pick_params(:title, :content))
     json current_annotation
   end
 
   def destroy
+    return forbidden unless current_account.owns?(current_annotation)
     current_annotation.destroy
     json nil
   end

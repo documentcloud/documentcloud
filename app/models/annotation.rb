@@ -1,7 +1,7 @@
-# Annotations are still in limbo -- not yet editable in the viewer.
 class Annotation < ActiveRecord::Base
 
   include DC::Store::DocumentResource
+  include DC::Access
 
   belongs_to :document
 
@@ -13,6 +13,13 @@ class Annotation < ActiveRecord::Base
     {:conditions => ["to_tsvector('english', content) @@ plainto_tsquery(?)", query]}
   }
 
+  named_scope :accessible, lambda { |account|
+    access = []
+    access << "(annotations.access = #{PUBLIC})"
+    access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
+    {:conditions => "(#{access.join(' or ')})"}
+  }
+
   def page
     document.pages.find_by_page_number(page_number)
   end
@@ -20,6 +27,7 @@ class Annotation < ActiveRecord::Base
   def canonical
     data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content}
     data['location'] = {'image' => location} if location
+    data['access'] = 'private' if access == PRIVATE
     data
   end
 
