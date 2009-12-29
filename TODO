@@ -1,33 +1,36 @@
 TODO:
 
-  * Make a query banner for searches.
-  
-  * Kill the metadata sidebar for searches, and create an organization one
-    to go there instead. Alter the metadata sidebar to go better with
-    the visualizations.
-
   * Get a real production server setup, and start deploying there as well.
-  
+
   * Flesh out a more comprehensive API.
-    
-  * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
-    Adding a "search pages" feature.
-
+  
   * Edit page text.
-
-  * Start extracting dates (not times) -- integrate the DateExtractor into
-    document import. What to do about relevance? Make sure to record occurrences
-    and merge identical dates.
-        
+  
   * Start access controlling assets on S3. This includes changing permissions
     in bulk, as well as serving different URLs for public and private assets
     all private assets are going to have to be served through authentication
     within Rails.
+  
+  * Figure out our own taxonomy and map all the OpenCalais categories into it.
+  
+  
+WAITING ON DESIGN:
+
+  * Make a query banner for searches.
+
+  * Kill the metadata sidebar for searches, and create an organization one
+    to go there instead. Alter the metadata sidebar to go better with
+    the visualizations.
+
+  * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
+    Adding a "search pages" feature.
+
+  * Start extracting dates (not times) -- integrate the DateExtractor into
+    document import. What to do about relevance? Make sure to record occurrences
+    and merge identical dates.
 
   * Show if the currently-selected documents are tagged with the labels in
-    the labels pulldown. Make 'em removable.
-                
-  * Figure out our own taxonomy and map all the OpenCalais categories into it.
+  the labels pulldown. Make 'em removable.
       
 
 DONE:
