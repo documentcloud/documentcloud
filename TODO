@@ -1,8 +1,6 @@
 TODO:
 
   * Get a real production server setup, and start deploying there as well.
-
-  * Flesh out a more comprehensive API.
   
   * Edit page text.
   
@@ -31,6 +29,14 @@ WAITING ON DESIGN:
 
   * Show if the currently-selected documents are tagged with the labels in
   the labels pulldown. Make 'em removable.
+  
+
+AFTER BETA:
+  
+  * Flesh out a more comprehensive API.
+  
+  * Settle the linked data representation of a document with the semantic web
+    folks.
       
 
 DONE:
