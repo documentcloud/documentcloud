@@ -179,10 +179,12 @@ $.fn.extend({
     $.each( text || this, function(){
       $.each( this.childNodes, function() {
         if ( this.nodeType != 8 ) {
+          var tagName = this.tagName && this.tagName.toLowerCase();
+          var isBreak = tagName == 'div' || tagName == 'p';
+          if (isBreak && !_.include(["\n", ''], ret.charAt(ret.length - 1))) ret += "\n";
           ret += this.nodeType != 1 ? this.nodeValue : $.fn.textWithNewlines([this]);
+          if (isBreak) ret += "\n";
         }
-        var tagName = this.tagName && this.tagName.toLowerCase();
-        if (tagName == 'div' || tagName == 'p') ret += "\n";
       });
     });
     return ret;
