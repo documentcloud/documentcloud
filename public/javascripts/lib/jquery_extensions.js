@@ -169,6 +169,23 @@ $.fn.extend({
       }, this);
       $(this).bind('mousedown', dragStart);
     });
+  },
+
+  // jQuery's default text() method doesn't play nice with contentEditable
+  // elements, which insert divs or paras instead of newline characters.
+  // Convert them properly.
+  textWithNewlines: function( text ) {
+    var ret = "";
+    $.each( text || this, function(){
+      $.each( this.childNodes, function() {
+        if ( this.nodeType != 8 ) {
+          ret += this.nodeType != 1 ? this.nodeValue : $.fn.textWithNewlines([this]);
+        }
+        var tagName = this.tagName && this.tagName.toLowerCase();
+        if (tagName == 'div' || tagName == 'p') ret += "\n";
+      });
+    });
+    return ret;
   }
 
 });
