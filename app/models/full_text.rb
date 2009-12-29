@@ -24,4 +24,9 @@ class FullText < ActiveRecord::Base
     text[0...1000].gsub(/\s+/, ' ')[0...255]
   end
 
+  # Refresh the full text index from the contents of the document's pages.
+  def refresh
+    update_attribute :text, document.combined_page_text
+  end
+
 end

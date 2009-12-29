@@ -21,7 +21,8 @@ ActionController::Routing::Routes.draw do |map|
                 :collection => {:metadata => :get},
                 :member     => {:thumbnail => :get, :search => :get},
                 :has_many   => [:annotations]
-  map.page_text "/documents/:id/:page_name.txt", :controller => :documents, :action => :page_text
+  map.page_text "/documents/:id/:page_name.txt", :controller => :documents, :action => :page_text, :conditions => {:method => :get}
+  map.page_text "/documents/:id/:page_name.txt", :controller => :documents, :action => :set_page_text, :conditions => {:method => :post}
 
   # Bulk downloads.
   map.bulk_download '/download/*args.zip', :controller => 'download', :action => 'bulk_download'

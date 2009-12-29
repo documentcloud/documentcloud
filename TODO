@@ -1,8 +1,8 @@
 TODO:
 
   * Get a real production server setup, and start deploying there as well.
-  
-  * Edit page text.
+    
+  * Think about the common filters for searching: Dates, Orgs, Accounts.
   
   * Start access controlling assets on S3. This includes changing permissions
     in bulk, as well as serving different URLs for public and private assets
@@ -40,6 +40,8 @@ AFTER BETA:
       
 
 DONE:
+
+  * Edit page text.
 
   * Build an in-viewer annotation and section editing UI.
     * Add and edit annotation (private if logged-in, public if owner).

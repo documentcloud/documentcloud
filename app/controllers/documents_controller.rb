@@ -21,9 +21,10 @@ class DocumentsController < ApplicationController
     json nil
   end
 
-  # TODO: Access-control this.
+  # TODO: Access-control this:
   def metadata
-    json 'metadata' => Metadatum.all(:conditions => {:document_id => params[:ids]})
+    meta = Metadatum.all(:conditions => {:document_id => params[:ids]})
+    json 'metadata' => meta
   end
 
   def thumbnail
@@ -33,13 +34,16 @@ class DocumentsController < ApplicationController
   end
 
   def page_text
-    doc         = current_document(true)
-    page_number = params[:page_name].match(/(\d+)\Z/)[1].to_i
-    page        = doc.pages.find_by_page_number(page_number)
-    return not_found unless page
-    @response   = page.text
+    return not_found unless current_page
+    @response = current_page.text
     return if jsonp_request?
     render :text => @response
+  end
+
+  def set_page_text
+    return not_found unless current_page
+    return forbidden unless current_account.owns?(current_page)
+    json current_page.update_attributes(pick_params(:text))
   end
 
   def search
@@ -66,6 +70,11 @@ class DocumentsController < ApplicationController
     @current_document ||= exists ?
       Document.accessible(current_account, current_organization).find(params[:id]) :
       Document.new(:id => params[:id])
+  end
+
+  def current_page
+    num = params[:page_name].match(/(\d+)\Z/)[1].to_i
+    @current_page ||= current_document(true).pages.find_by_page_number(num)
   end
 
 end

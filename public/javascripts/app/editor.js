@@ -23,6 +23,7 @@ _.extend(dc.app.editor, {
   renderSubViews : function() {
     $('#DV-docViewer').addClass('DV-isEditor');
     $('#DV-pageCollection').append(this.controlPanel.render().el);
+    if (this.isOwner) $('#DV-textContents').attr({contentEditable : 'true'});
   },
 
   notify : function(options) {

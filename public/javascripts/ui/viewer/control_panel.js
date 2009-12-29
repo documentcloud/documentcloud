@@ -6,10 +6,12 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     ['.bookmark_page',      'click',    'bookmarkCurrentPage'],
     ['.set_sections',       'click',    'openSectionEditor'],
     ['.public_annotation',  'click',    'togglePublicAnnotation'],
-    ['.private_annotation', 'click',    'togglePrivateAnnotation']
+    ['.private_annotation', 'click',    'togglePrivateAnnotation'],
+    ['.save_text',          'click',    'savePageText']
   ],
 
   render : function() {
+    this._page = $('#DV-textContents');
     $(this.el).html(JST.viewer_control_panel({isOwner : dc.app.editor.isOwner}));
     this.setCallbacks();
     return this;
@@ -25,6 +27,14 @@ dc.ui.ViewerControlPanel = dc.View.extend({
 
   togglePrivateAnnotation : function() {
     dc.app.editor.annotationEditor.toggle('private');
+  },
+
+  savePageText : function() {
+    var url = '/documents/' + dc.app.editor.docId + '/p' + DV.api.currentPage() + '.txt';
+    var text = this._page.text();
+    $.ajax({url : url, type : 'POST', data : {text : text}, dataType : 'json', success : function() {
+      dc.app.editor.notify({mode : 'info', text : 'page saved'});
+    }});
   },
 
   bookmarkCurrentPage : function() {
