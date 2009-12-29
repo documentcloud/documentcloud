@@ -1,9 +1,5 @@
 TODO:
 
-  * Fix page text editing -- either by writing a custom jQuery.text method
-    that handles the browser differences between different contentEditables,
-    or by just using a <pre>
-
   * Get a real production server setup, and start deploying there as well.
     
   * Think about the common filters for searching: Dates, Orgs, Accounts.
@@ -44,6 +40,10 @@ AFTER BETA:
       
 
 DONE:
+
+  * Fix page text editing -- either by writing a custom jQuery.text method
+    that handles the browser differences between different contentEditables,
+    or by just using a <pre>
 
   * Edit page text.
 
