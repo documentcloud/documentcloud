@@ -27,6 +27,7 @@ class FullText < ActiveRecord::Base
   # Refresh the full text index from the contents of the document's pages.
   def refresh
     update_attribute :text, document.combined_page_text
+    DC::Store::AssetStore.new.save_full_text(document)
   end
 
 end

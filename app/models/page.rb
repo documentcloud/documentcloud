@@ -40,6 +40,7 @@ class Page < ActiveRecord::Base
   def track_text_changes
     return true unless text_changed?
     self.text = strip_tags(text)
+    DC::Store::AssetStore.new.save_page_text(self)
   end
 
   # When page text changes, we need to update the document's full text index.
