@@ -43,7 +43,7 @@ DONE:
 
   * Fix page text editing -- either by writing a custom jQuery.text method
     that handles the browser differences between different contentEditables,
-    or by just using a <pre>
+    or by just using a pre tag.
 
   * Edit page text.
 
