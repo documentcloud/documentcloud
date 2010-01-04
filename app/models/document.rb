@@ -91,8 +91,10 @@ class Document < ActiveRecord::Base
     "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}.pdf"
   end
 
-  def pdf_url
-    public? ? public_pdf_url : private_pdf_url
+  def pdf_url(direct=false)
+    return public_pdf_url  if public? || Rails.development?
+    return private_pdf_url unless direct
+    DC::Store::AssetStore.new.authorized_url(pdf_path)
   end
 
   def public_thumbnail_url
@@ -103,8 +105,10 @@ class Document < ActiveRecord::Base
     "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}.jpg"
   end
 
-  def thumbnail_url
-    public? ? public_thumbnail_url : private_thumbnail_url
+  def thumbnail_url(direct=false)
+    return public_pdf_url   if public? || Rails.development?
+    return private_pdf_url  unless direct
+    DC::Store::AssetStore.new.authorized_url(thumbnail_path)
   end
 
   def public_full_text_url
@@ -136,7 +140,7 @@ class Document < ActiveRecord::Base
   end
 
   def page_image_url
-    public? ? public_page_image_url : private_page_image_url
+    public? || Rails.development? ? public_page_image_url : private_page_image_url
   end
 
   def page_text_url

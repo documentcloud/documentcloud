@@ -6,6 +6,8 @@ module DC
 
       BUCKET_NAME = "dcloud_#{RAILS_ENV}"
 
+      AUTHORIZATION_PERIOD = 5.minutes
+
       module ClassMethods
         def asset_root
           "http://s3.amazonaws.com/#{BUCKET_NAME}"
@@ -17,6 +19,10 @@ module DC
 
       def initialize
         @key, @secret = SECRETS['aws_access_key'], SECRETS['aws_secret_key']
+      end
+
+      def authorized_url(path)
+        @s3.interface.get_link(@bucket, path, AUTHORIZATION_PERIOD)
       end
 
       def save_pdf(document, pdf_path)

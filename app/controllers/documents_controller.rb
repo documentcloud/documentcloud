@@ -27,13 +27,24 @@ class DocumentsController < ApplicationController
     json 'metadata' => meta
   end
 
-  def thumbnail
-    doc = current_document(true)
-    secured_url = File.join(DC::Store::AssetStore.asset_root, doc.thumbnail_path)
-    send_file(secured_url, :disposition => 'inline', :type => 'image/jpeg')
+  def send_pdf
+    redirect_to(current_document(true).pdf_url(:direct))
   end
 
-  def page_text
+  def send_thumbnail
+    redirect_to(current_document(true).thumbnail_url(:direct))
+  end
+
+  def send_page_image
+    return not_found unless current_page
+    redirect_to(current_page.authorized_image_url)
+  end
+
+  def send_full_text
+    send_data(current_document(true).text)
+  end
+
+  def send_page_text
     return not_found unless current_page
     @response = current_page.text
     return if jsonp_request?
@@ -56,10 +67,6 @@ class DocumentsController < ApplicationController
 
 
   private
-
-  def send_text
-    render :text => @current_document.full_text.text
-  end
 
   def current_document(exists=false)
     @current_document ||= exists ?

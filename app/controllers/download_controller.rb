@@ -29,7 +29,7 @@ class DownloadController < ApplicationController
   def send_text
     package("document_text.zip") do |zip|
       @documents.each do |doc|
-        zip.get_output_stream("#{doc.slug}.txt") {|f| f.write(doc.full_text.text) }
+        zip.get_output_stream("#{doc.slug}.txt") {|f| f.write(doc.text) }
       end
     end
   end
