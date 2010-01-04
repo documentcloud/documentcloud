@@ -92,7 +92,7 @@ class Document < ActiveRecord::Base
   end
 
   def pdf_url(direct=false)
-    return public_pdf_url  if public? || Rails.development?
+    return public_pdf_url  if public? || Rails.env.development?
     return private_pdf_url unless direct
     DC::Store::AssetStore.new.authorized_url(pdf_path)
   end
@@ -106,7 +106,7 @@ class Document < ActiveRecord::Base
   end
 
   def thumbnail_url(direct=false)
-    return public_pdf_url   if public? || Rails.development?
+    return public_pdf_url   if public? || Rails.env.development?
     return private_pdf_url  unless direct
     DC::Store::AssetStore.new.authorized_url(thumbnail_path)
   end
@@ -140,7 +140,7 @@ class Document < ActiveRecord::Base
   end
 
   def page_image_url
-    public? || Rails.development? ? public_page_image_url : private_page_image_url
+    public? || Rails.env.development? ? public_page_image_url : private_page_image_url
   end
 
   def page_text_url
