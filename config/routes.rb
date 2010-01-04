@@ -21,11 +21,11 @@ ActionController::Routing::Routes.draw do |map|
                  :collection => {:metadata => :get},
                  :member     => {:search => :get},
                  :has_many   => [:annotations]
-  map.page_text  "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :send_page_text, :conditions => {:method => :get}
-  map.set_text   "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :set_page_text,  :conditions => {:method => :post}
   map.pdf        "/documents/:id/:slug.pdf",      :controller => :documents, :action => :send_pdf
   map.full_text  "/documents/:id/:slug.txt",      :controller => :documents, :action => :send_full_text
-  map.page_image "/documents/:id/:page_name.gif", :controller => :documents, :action => :send_page_image
+  map.page_text  "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :send_page_text, :conditions => {:method => :get}
+  map.set_text   "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :set_page_text,  :conditions => {:method => :post}
+  map.page_image "/documents/:id/pages/:page_name.gif", :controller => :documents, :action => :send_page_image
 
 
   # Bulk downloads.
