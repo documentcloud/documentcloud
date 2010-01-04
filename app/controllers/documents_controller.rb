@@ -71,7 +71,7 @@ class DocumentsController < ApplicationController
   end
 
   def current_page
-    num = params[:page_name][/(\d+)\Z/, 1]
+    num = params[:page_name][/-p(\d+)/, 1]
     return bad_request unless num
     @current_page ||= current_document(true).pages.find_by_page_number(num.to_i)
   end
