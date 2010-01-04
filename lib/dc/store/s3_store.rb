@@ -22,7 +22,7 @@ module DC
       end
 
       def authorized_url(path)
-        @s3.interface.get_link(@bucket, path, AUTHORIZATION_PERIOD)
+        s3.interface.get_link(bucket, path, AUTHORIZATION_PERIOD)
       end
 
       def save_pdf(document, pdf_path)
@@ -62,9 +62,12 @@ module DC
 
       private
 
-      def bucket
+      def s3
         @s3 ||= RightAws::S3.new(@key, @secret, :protocol => 'http', :port => 80)
-        @bucket ||= (@s3.bucket(BUCKET_NAME) || @s3.bucket(BUCKET_NAME, true))
+      end
+
+      def bucket
+        @bucket ||= (s3.bucket(BUCKET_NAME) || s3.bucket(BUCKET_NAME, true))
       end
 
       # Saves a local file to a location on S3, and returns the public URL.
