@@ -6,9 +6,9 @@ class DocumentsController < ApplicationController
   def show
     current_document(true)
     respond_to do |format|
-      format.pdf  { send_pdf }
-      format.text { send_text }
-      format.html { @edits_enabled = true }
+      format.pdf  { redirect_to(current_document.pdf_url)  }
+      format.text { redirect_to(current_document.text_url) }
+      format.html { @edits_enabled = true                  }
     end
   end
 
@@ -56,11 +56,6 @@ class DocumentsController < ApplicationController
 
 
   private
-
-  def send_pdf
-    secured_url = File.join(DC::Store::AssetStore.web_root, @current_document.pdf_path)
-    redirect_to secured_url
-  end
 
   def send_text
     render :text => @current_document.full_text.text

@@ -79,24 +79,44 @@ class Document < ActiveRecord::Base
     File.join(pages_path, "#{slug}-p{page}-{size}.gif")
   end
 
-  def page_text_template
-    File.join(pages_path, "#{slug}-p{page}.txt")
-  end
-
   def public?
     self.access == PUBLIC
   end
 
-  def pdf_url
+  def public_pdf_url
     File.join(DC::Store::AssetStore.web_root, pdf_path)
   end
 
-  def thumbnail_url
+  def private_pdf_url
+    "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}.pdf"
+  end
+
+  def pdf_url
+    public? ? public_pdf_url : private_pdf_url
+  end
+
+  def public_thumbnail_url
     File.join(DC::Store::AssetStore.web_root, thumbnail_path)
   end
 
-  def full_text_url
+  def private_thumbnail_url
+    "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}.jpg"
+  end
+
+  def thumbnail_url
+    public? ? public_thumbnail_url : private_thumbnail_url
+  end
+
+  def public_full_text_url
     File.join(DC::Store::AssetStore.web_root, full_text_path)
+  end
+
+  def private_full_text_url
+    "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}.txt"
+  end
+
+  def full_text_url
+    public? ? public_full_text_url : private_full_text_url
   end
 
   def document_viewer_url
@@ -107,11 +127,19 @@ class Document < ActiveRecord::Base
     "#{DC_CONFIG['server_root']}/documents/#{id}/search.json?q={query}"
   end
 
-  def page_image_url_template
+  def public_page_image_url
     File.join(DC::Store::AssetStore.web_root, page_image_template)
   end
 
-  def page_text_url_template
+  def private_page_image_url
+    "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}-p{page}-{size}.gif"
+  end
+
+  def page_image_url
+    public? ? public_page_image_url : private_page_image_url
+  end
+
+  def page_text_url
     "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}-p{page}.txt"
   end
 
@@ -156,7 +184,7 @@ class Document < ActiveRecord::Base
     res['text']        = full_text_url
     res['thumbnail']   = thumbnail_url
     res['search']      = search_url
-    res['page']        = {'image' => page_image_url_template, 'text' => page_text_url_template}
+    res['page']        = {'image' => page_image_url, 'text' => page_text_url}
     doc['sections']    = sections.map(&:canonical)
     doc['annotations'] = annotations.accessible(account).map(&:canonical)
     doc
