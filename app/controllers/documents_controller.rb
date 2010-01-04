@@ -6,9 +6,9 @@ class DocumentsController < ApplicationController
   def show
     current_document(true)
     respond_to do |format|
-      format.pdf  { redirect_to(current_document.pdf_url)  }
-      format.text { redirect_to(current_document.text_url) }
-      format.html { @edits_enabled = true                  }
+      format.pdf  { redirect_to(current_document.pdf_url) }
+      format.text { redirect_to(current_document.full_text_url) }
+      format.html { @edits_enabled = true }
     end
   end
 
@@ -31,17 +31,13 @@ class DocumentsController < ApplicationController
     redirect_to(current_document(true).pdf_url(:direct))
   end
 
-  def send_thumbnail
-    redirect_to(current_document(true).thumbnail_url(:direct))
-  end
-
   def send_page_image
     return not_found unless current_page
     redirect_to(current_page.authorized_image_url)
   end
 
   def send_full_text
-    send_data(current_document(true).text)
+    send_data(current_document(true).text, :disposition => 'inline', :type => :txt)
   end
 
   def send_page_text
@@ -75,8 +71,9 @@ class DocumentsController < ApplicationController
   end
 
   def current_page
-    num = params[:page_name].match(/(\d+)\Z/)[1].to_i
-    @current_page ||= current_document(true).pages.find_by_page_number(num)
+    num = params[:page_name][/(\d+)\Z/, 1]
+    return bad_request unless num
+    @current_page ||= current_document(true).pages.find_by_page_number(num.to_i)
   end
 
 end

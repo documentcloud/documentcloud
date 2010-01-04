@@ -52,7 +52,7 @@ class Document < ActiveRecord::Base
 
   # Ex: docs/1011
   def path
-    File.join('docs', id.to_s)
+    File.join('documents', id.to_s)
   end
 
   # Ex: docs/1011/sec-madoff-investigation.txt
@@ -79,6 +79,10 @@ class Document < ActiveRecord::Base
     File.join(pages_path, "#{slug}-p{page}-{size}.gif")
   end
 
+  def page_text_template
+    File.join(pages_path, "#{slug}-p{page}.txt")
+  end
+
   def public?
     self.access == PUBLIC
   end
@@ -88,7 +92,7 @@ class Document < ActiveRecord::Base
   end
 
   def private_pdf_url
-    "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}.pdf"
+    File.join(DC_CONFIG['server_root'], pdf_path)
   end
 
   def pdf_url(direct=false)
@@ -97,18 +101,8 @@ class Document < ActiveRecord::Base
     DC::Store::AssetStore.new.authorized_url(pdf_path)
   end
 
-  def public_thumbnail_url
+  def thumbnail_url
     File.join(DC::Store::AssetStore.web_root, thumbnail_path)
-  end
-
-  def private_thumbnail_url
-    "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}.jpg"
-  end
-
-  def thumbnail_url(direct=false)
-    return public_pdf_url   if public? || Rails.env.development?
-    return private_pdf_url  unless direct
-    DC::Store::AssetStore.new.authorized_url(thumbnail_path)
   end
 
   def public_full_text_url
@@ -116,7 +110,7 @@ class Document < ActiveRecord::Base
   end
 
   def private_full_text_url
-    "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}.txt"
+    File.join(DC_CONFIG['server_root'], full_text_path)
   end
 
   def full_text_url
@@ -131,20 +125,20 @@ class Document < ActiveRecord::Base
     "#{DC_CONFIG['server_root']}/documents/#{id}/search.json?q={query}"
   end
 
-  def public_page_image_url
+  def public_page_image_template
     File.join(DC::Store::AssetStore.web_root, page_image_template)
   end
 
-  def private_page_image_url
-    "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}-p{page}-{size}.gif"
+  def private_page_image_template
+    File.join(DC_CONFIG['server_root'], page_image_template)
   end
 
-  def page_image_url
-    public? || Rails.env.development? ? public_page_image_url : private_page_image_url
+  def page_image_url_template
+    public? || Rails.env.development? ? public_page_image_template : private_page_image_template
   end
 
-  def page_text_url
-    "#{DC_CONFIG['server_root']}/documents/#{id}/#{slug}-p{page}.txt"
+  def page_text_url_template
+    File.join(DC_CONFIG['server_root'], page_text_template)
   end
 
   def asset_store
@@ -188,7 +182,7 @@ class Document < ActiveRecord::Base
     res['text']        = full_text_url
     res['thumbnail']   = thumbnail_url
     res['search']      = search_url
-    res['page']        = {'image' => page_image_url, 'text' => page_text_url}
+    res['page']        = {'image' => page_image_url_template, 'text' => page_text_url_template}
     doc['sections']    = sections.map(&:canonical)
     doc['annotations'] = annotations.accessible(account).map(&:canonical)
     doc
