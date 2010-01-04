@@ -3,7 +3,7 @@ class DocumentsController < ApplicationController
 
   before_filter(:bouncer, :only => [:show]) unless Rails.env.development?
 
-  SIZE_EXTRACTOR        = /-(\w+)\.gif\Z/
+  SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
 
   def show
