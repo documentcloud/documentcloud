@@ -1,5 +1,8 @@
 TODO:
 
+  * Switch to AWS-S3. Implement authorized_url in the FilesystemStore, just in
+    case. Implement Document#set_access. Add it to the UI. (Pulldown).
+
   * Get a real production server setup, and start deploying there as well.
     
   * Think about the common filters for searching: Dates, Orgs, Accounts.

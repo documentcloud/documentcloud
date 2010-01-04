@@ -50,6 +50,16 @@ class Document < ActiveRecord::Base
     title.present? && (title != DEFAULT_TITLE)
   end
 
+  def public?
+    self.access == PUBLIC
+  end
+
+  # When the access level changes, all asset permissions need to be updated
+  # on S3.
+  def set_access(access_level)
+
+  end
+
   # Ex: docs/1011
   def path
     File.join('documents', id.to_s)
@@ -81,10 +91,6 @@ class Document < ActiveRecord::Base
 
   def page_text_template
     File.join(pages_path, "#{slug}-p{page}.txt")
-  end
-
-  def public?
-    self.access == PUBLIC
   end
 
   def public_pdf_url
