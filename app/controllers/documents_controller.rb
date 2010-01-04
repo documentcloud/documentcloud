@@ -3,6 +3,9 @@ class DocumentsController < ApplicationController
 
   before_filter(:bouncer, :only => [:show]) unless Rails.env.development?
 
+  SIZE_EXTRACTOR        = /-(\w+)\.gif\Z/
+  PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
+
   def show
     current_document(true)
     respond_to do |format|
@@ -33,7 +36,8 @@ class DocumentsController < ApplicationController
 
   def send_page_image
     return not_found unless current_page
-    redirect_to(current_page.authorized_image_url)
+    size = params[:page_name][SIZE_EXTRACTOR, 1]
+    redirect_to(current_page.authorized_image_url(size))
   end
 
   def send_full_text
@@ -71,7 +75,7 @@ class DocumentsController < ApplicationController
   end
 
   def current_page
-    num = params[:page_name][/-p(\d+)/, 1]
+    num = params[:page_name][PAGE_NUMBER_EXTRACTOR, 1]
     return bad_request unless num
     @current_page ||= current_document(true).pages.find_by_page_number(num.to_i)
   end

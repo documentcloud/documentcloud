@@ -32,8 +32,8 @@ class Page < ActiveRecord::Base
     File.join(document.pages_path, "#{document.slug}-p#{page_number}.txt")
   end
 
-  def authorized_image_url
-    DC::Store::AssetStore.new.authorized_url(image_path)
+  def authorized_image_url(size)
+    DC::Store::AssetStore.new.authorized_url(image_path(size))
   end
 
 
