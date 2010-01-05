@@ -19,7 +19,7 @@ class ImportController < ApplicationController
       :page_count       => 0
     )
     DC::Store::AssetStore.new.save_pdf(doc, params[:file].path)
-    job = JSON.parse(DC::Import::CloudCrowdImporter.new.import(doc.id, {
+    job = JSON.parse(DC::Import::CloudCrowdImporter.new.import([doc.id], {
       'id'            => doc.id,
       'access'        => params[:access].to_i
     }))
