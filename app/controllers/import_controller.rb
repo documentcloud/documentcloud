@@ -54,7 +54,7 @@ class ImportController < ApplicationController
     name = params[:file].original_filename
     ext  = File.extname(name)
     return path if ext == '.pdf'
-    temp = File.join(Rails.root, 'tmp', 'pending')
+    temp = File.join(Rails.root, 'tmp')
     doc  = File.join(temp, name)
     FileUtils.mkdir_p(temp) unless File.exists?(temp)
     FileUtils.mv(path, doc)
