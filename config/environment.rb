@@ -23,6 +23,7 @@ Rails::Initializer.run do |config|
   # Standard Library:
   require 'digest/md5'
   require 'tmpdir'
+  require 'fileutils'
 
   # Gems:
   config.gem 'json',                  :version => '>= 1.1.9'
