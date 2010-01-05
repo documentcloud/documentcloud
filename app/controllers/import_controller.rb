@@ -50,12 +50,14 @@ class ImportController < ApplicationController
   # converted first. Return the path to the converted document.
   def ensure_pdf
     path = params[:file].path
-    ext  = File.extname(params[:file].original_filename)
+    name = params[:file].original_filename
+    ext  = File.extname(name)
     return path if ext == '.pdf'
-    FileUtils.mv(path, path + ext)
-    Docsplit.extract_pdf(path + ext)
-    FileUtils.mv(path + ext, path)
-    path
+    dir = File.dirname(path)
+    doc = File.join(File.dirname(path), name)
+    FileUtils.mv(path, doc)
+    Docsplit.extract_pdf(doc)
+    File.join(dir, File.basename(doc, ext) + '.pdf')
   end
 
   # Kick off and record a CloudCrowd document import job.
