@@ -12,7 +12,7 @@ class ImportController < ApplicationController
     doc = new_document
     DC::Store::AssetStore.new.save_pdf(doc, path)
     cloud_crowd_import(doc)
-    FileUtils.rm(path)
+    FileUtils.rm(path) if File.writable?(path)
   end
 
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.
