@@ -16,9 +16,10 @@ end
 class DocumentImport < CloudCrowd::Action
 
   def split
-    pdf       = ensure_pdf(input_path)
+    pdf_url   = DC::Store::AssetStore.new.authorized_url(document.pdf_path)
+    path      = download(pdf_url)
+    pdf       = ensure_pdf(path)
     basename  = File.basename(pdf, '.pdf')
-    asset_store.save_pdf(document, pdf)
     inputs_for_processing(document, 'images', 'text')
   end
 

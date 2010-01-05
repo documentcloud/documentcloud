@@ -2,8 +2,6 @@ class ImportController < ApplicationController
 
   FILE_URL = /\Afile:\/\//
 
-  PENDING_DIR = "#{Rails.root}/public/pending"
-
   layout nil
 
   before_filter :login_required, :only => [:upload_document]
@@ -11,12 +9,7 @@ class ImportController < ApplicationController
   # TODO: Clean up this method.
   def upload_document
     return bad_request unless params[:file]
-    Dir.mkdir_p(PENDING_DIR) unless File.exists?(PENDING_DIR)
-    save_path   = params[:file].original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
-    local_path  = File.join(PENDING_DIR, save_path)
-    basename    = File.basename(save_path, File.extname(save_path))
-    FileUtils.cp(params[:file].path, local_path)
-    urls = ["#{DC_CONFIG['server_root']}/pending/#{save_path}"]
+    basename    = File.basename(params[:file].original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-'))
     doc = Document.create!(
       :title            => params[:title] || basename,
       :source           => params[:source],
@@ -25,7 +18,8 @@ class ImportController < ApplicationController
       :access           => DC::Access::PENDING,
       :page_count       => 0
     )
-    job = JSON.parse(DC::Import::CloudCrowdImporter.new.import(urls, {
+    DC::Store::AssetStore.new.save_pdf(doc, params[:file])
+    job = JSON.parse(DC::Import::CloudCrowdImporter.new.import(doc.id, {
       'id'            => doc.id,
       'access'        => params[:access].to_i,
       'original_file' => local_path
