@@ -9,9 +9,10 @@ class ImportController < ApplicationController
   def upload_document
     return bad_request unless params[:file]
     path = ensure_pdf
-    doc  = new_document
+    doc = new_document
     DC::Store::AssetStore.new.save_pdf(doc, path)
     cloud_crowd_import(doc)
+    FileUtils.rm(path)
   end
 
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.
@@ -56,7 +57,7 @@ class ImportController < ApplicationController
     dir = File.dirname(path)
     doc = File.join(File.dirname(path), name)
     FileUtils.mv(path, doc)
-    Docsplit.extract_pdf(doc)
+    Docsplit.extract_pdf(doc, :output => dir)
     File.join(dir, File.basename(doc, ext) + '.pdf')
   end
 
