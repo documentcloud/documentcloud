@@ -52,9 +52,10 @@ class ImportController < ApplicationController
     path = params[:file].path
     ext  = File.extname(params[:file].original_filename)
     return path if ext == '.pdf'
-    FileUtils.cp(path, path + ext)
+    FileUtils.mv(path, path + ext)
     Docsplit.extract_pdf(path + ext)
-    path + '.pdf'
+    FileUtils.mv(path + ext, path)
+    path
   end
 
   # Kick off and record a CloudCrowd document import job.
