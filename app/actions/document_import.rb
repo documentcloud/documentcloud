@@ -19,7 +19,8 @@ class DocumentImport < CloudCrowd::Action
     pdf_url   = DC::Store::AssetStore.new.authorized_url(document.pdf_path)
     puts pdf_url
     path      = download(pdf_url, options['basename'])
-    puts File.read(pdf_url)
+    puts options['basename']
+    puts File.read(path)
     pdf       = ensure_pdf(path)
     basename  = File.basename(pdf, '.pdf')
     inputs_for_processing(document, 'images', 'text')
