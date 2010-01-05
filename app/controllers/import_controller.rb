@@ -54,11 +54,12 @@ class ImportController < ApplicationController
     name = params[:file].original_filename
     ext  = File.extname(name)
     return path if ext == '.pdf'
-    dir = File.dirname(path)
-    doc = File.join(File.dirname(path), name)
+    temp = File.join(RAILS_ROOT, 'tmp', 'pending')
+    doc  = File.join(temp, name)
+    FileUtils.mkdir_p(temp) unless File.exists?(temp)
     FileUtils.mv(path, doc)
-    Docsplit.extract_pdf(doc, :output => dir)
-    File.join(dir, File.basename(doc, ext) + '.pdf')
+    Docsplit.extract_pdf(doc, :output => temp)
+    File.join(temp, File.basename(name, ext) + '.pdf')
   end
 
   # Kick off and record a CloudCrowd document import job.
