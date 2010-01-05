@@ -17,6 +17,10 @@ module DC
         FileUtils.mkdir_p(AssetStore.asset_root) unless File.exists?(AssetStore.asset_root)
       end
 
+      def authorized_url(path)
+        File.join(self.class.web_root, path)
+      end
+
       def save_pdf(document, pdf_path)
         ensure_document_directory(document)
         FileUtils.cp(pdf_path, local(document.pdf_path))
