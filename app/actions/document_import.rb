@@ -17,7 +17,7 @@ class DocumentImport < CloudCrowd::Action
 
   def split
     pdf_url   = DC::Store::AssetStore.new.authorized_url(document.pdf_path)
-    path      = download(pdf_url)
+    path      = download(pdf_url, options['basename'])
     pdf       = ensure_pdf(path)
     basename  = File.basename(pdf, '.pdf')
     inputs_for_processing(document, 'images', 'text')
