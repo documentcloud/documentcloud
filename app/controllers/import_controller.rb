@@ -18,11 +18,10 @@ class ImportController < ApplicationController
       :access           => DC::Access::PENDING,
       :page_count       => 0
     )
-    DC::Store::AssetStore.new.save_pdf(doc, params[:file])
+    DC::Store::AssetStore.new.save_pdf(doc, params[:file].path)
     job = JSON.parse(DC::Import::CloudCrowdImporter.new.import(doc.id, {
       'id'            => doc.id,
-      'access'        => params[:access].to_i,
-      'original_file' => local_path
+      'access'        => params[:access].to_i
     }))
     record = ProcessingJob.create!(
       :account        => current_account,
@@ -37,10 +36,7 @@ class ImportController < ApplicationController
   # If the document failed to import, we remove it.
   def cloud_crowd
     job = JSON.parse(params[:job])
-    if job['status'] == 'succeeded'
-      doc = job['outputs'].first['original_file']
-      FileUtils.rm(doc) if File.exists?(doc)
-    else
+    if job['status'] != 'succeeded'
       logger.warn("Document import failed: " + job.inspect)
     end
     ProcessingJob.destroy_all(:cloud_crowd_id => job['id'])

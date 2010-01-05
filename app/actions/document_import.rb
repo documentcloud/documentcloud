@@ -35,7 +35,7 @@ class DocumentImport < CloudCrowd::Action
 
   def merge
     document.update_attributes :access => options['access'] || DC::Access::PUBLIC
-    {'document_id' => document.id, 'original_file' => options['original_file']}
+    document.id
   end
 
   def process_images
