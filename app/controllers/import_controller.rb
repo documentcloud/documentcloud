@@ -57,7 +57,7 @@ class ImportController < ApplicationController
     temp = File.join(Rails.root, 'tmp')
     doc  = File.join(temp, name)
     FileUtils.mkdir_p(temp) unless File.exists?(temp)
-    FileUtils.mv(path, doc)
+    FileUtils.cp(path, doc)
     Docsplit.extract_pdf(doc, :output => temp)
     File.join(temp, File.basename(name, ext) + '.pdf')
   end
