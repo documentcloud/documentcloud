@@ -9,19 +9,23 @@ class ImportController < ApplicationController
   # TODO: Clean up this method.
   def upload_document
     return bad_request unless params[:file]
-    basename    = File.basename(params[:file].original_filename.gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-'))
     doc = Document.create!(
-      :title            => params[:title] || basename,
+      :title            => params[:title],
       :source           => params[:source],
       :organization_id  => current_organization.id,
       :account_id       => current_account.id,
       :access           => DC::Access::PENDING,
       :page_count       => 0
     )
-    DC::Store::AssetStore.new.save_pdf(doc, params[:file].path)
+    path = params[:file].path
+    ext  = File.extname(params[:file].original_filename)
+    if ext != '.pdf'
+      Docsplit.extract_pdf(path)
+      path = File.basename(path, ext) + '.pdf'
+    end
+    DC::Store::AssetStore.new.save_pdf(doc, path)
     job = JSON.parse(DC::Import::CloudCrowdImporter.new.import([doc.id], {
       'id'            => doc.id,
-      'basename'      => basename,
       'access'        => params[:access].to_i
     }))
     record = ProcessingJob.create!(

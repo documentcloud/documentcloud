@@ -16,20 +16,12 @@ end
 class DocumentImport < CloudCrowd::Action
 
   def split
-    pdf_url   = DC::Store::AssetStore.new.authorized_url(document.pdf_path)
-    puts pdf_url
-    path      = download(pdf_url, options['basename'])
-    puts options['basename']
-    puts File.read(path)
-    pdf       = ensure_pdf(path)
-    basename  = File.basename(pdf, '.pdf')
     inputs_for_processing(document, 'images', 'text')
   end
 
   def process
-    @pdf      = File.basename(input['pdf'])
-    @basename = File.basename(@pdf, '.pdf')
-    download(input['pdf'], @pdf)
+    @pdf = document.slug + '.pdf'
+    download(asset_store.authorized_url(document.pdf_path), @pdf)
     case input['task']
     when 'text'   then process_text
     when 'images' then process_images
@@ -43,10 +35,10 @@ class DocumentImport < CloudCrowd::Action
 
   def process_images
     Docsplit.extract_images(@pdf, :format => :jpg, :size => '60x75!', :pages => 1, :output => 'thumbs')
-    asset_store.save_thumbnail(document, "thumbs/#{@basename}_1.jpg")
+    asset_store.save_thumbnail(document, "thumbs/#{document.slug}_1.jpg")
     Docsplit.extract_images(@pdf, :format => :gif, :size => ['700x', '1000x'], :output => 'images')
     Dir['images/700x/*.gif'].length.times do |i|
-      image = "#{@basename}_#{i + 1}.gif"
+      image = "#{document.slug}_#{i + 1}.gif"
       asset_store.save_page_images(
         Page.new(:document_id => document.id, :page_number => i + 1),
         :normal_image => "images/700x/#{image}",
@@ -61,12 +53,12 @@ class DocumentImport < CloudCrowd::Action
     if extractor.contains_text?
       Docsplit.extract_text(@pdf, :pages => :all, :output => 'text')
       Dir['text/*.txt'].length.times do |i|
-        save_page_text(File.read("text/#{@basename}_#{i + 1}.txt"), i + 1)
+        save_page_text(File.read("text/#{document.slug}_#{i + 1}.txt"), i + 1)
       end
     else
       Docsplit.extract_pages(@pdf, :output => 'text')
       Dir['text/*.pdf'].length.times do |i|
-        text = DC::Import::TextExtractor.new("text/#{@basename}_#{i + 1}.pdf").text_from_ocr
+        text = DC::Import::TextExtractor.new("text/#{document.slug}_#{i + 1}.pdf").text_from_ocr
         save_page_text(text, i + 1)
       end
     end
@@ -98,16 +90,7 @@ class DocumentImport < CloudCrowd::Action
   end
 
   def inputs_for_processing(doc, *tasks)
-    tasks.map {|t| {:task => t, :pdf => doc.pdf_url, :id => doc.id} }
-  end
-
-  # If they've uploaded another format of document, convert it to PDF before
-  # starting processing.
-  def ensure_pdf(file)
-    ext = File.extname(file)
-    return file if ext == '.pdf'
-    Docsplit.extract_pdf(file)
-    File.basename(file, ext) + '.pdf'
+    tasks.map {|t| {:task => t, :id => doc.id} }
   end
 
 end
