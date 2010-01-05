@@ -34,7 +34,7 @@ module DC
       end
 
       def save_full_text(document)
-        save_file(document.text, document.full_text_path, false)
+        save_file(document.text, document.full_text_path, :string => true)
       end
 
       def save_page_images(page, images)
@@ -43,7 +43,7 @@ module DC
       end
 
       def save_page_text(page)
-        save_file(page.text, page.text_path, false)
+        save_file(page.text, page.text_path, :string => true)
       end
 
       def read_pdf(document)
@@ -71,8 +71,8 @@ module DC
       end
 
       # Saves a local file to a location on S3, and returns the public URL.
-      def save_file(file, s3_path, path=true)
-        file = path ? File.open(file) : file
+      def save_file(file, s3_path, opts={})
+        file = opts[:string] ? file : File.open(file)
         bucket.put(s3_path, file, {}, 'public-read')
         bucket.key(s3_path).public_link
       end
