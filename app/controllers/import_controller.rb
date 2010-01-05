@@ -6,35 +6,12 @@ class ImportController < ApplicationController
 
   before_filter :login_required, :only => [:upload_document]
 
-  # TODO: Clean up this method.
   def upload_document
     return bad_request unless params[:file]
-    doc = Document.create!(
-      :title            => params[:title],
-      :source           => params[:source],
-      :organization_id  => current_organization.id,
-      :account_id       => current_account.id,
-      :access           => DC::Access::PENDING,
-      :page_count       => 0
-    )
-    path = params[:file].path
-    ext  = File.extname(params[:file].original_filename)
-    if ext != '.pdf'
-      Docsplit.extract_pdf(path)
-      path = File.basename(path, ext) + '.pdf'
-    end
+    path = ensure_pdf
+    doc  = new_document
     DC::Store::AssetStore.new.save_pdf(doc, path)
-    job = JSON.parse(DC::Import::CloudCrowdImporter.new.import([doc.id], {
-      'id'            => doc.id,
-      'access'        => params[:access].to_i
-    }))
-    record = ProcessingJob.create!(
-      :account        => current_account,
-      :cloud_crowd_id => job['id'],
-      :title          => doc.title,
-      :remote_job     => job
-    )
-    @status = record.status
+    cloud_crowd_import(doc)
   end
 
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.
@@ -57,9 +34,41 @@ class ImportController < ApplicationController
 
   private
 
-  # Read the contents of a URL, whether local or remote.
-  def fetch_contents(url)
-    url.match(FILE_URL) ? File.read(url.sub(FILE_URL, '')) : RestClient.get(url)
+  # A new, pending document for the request.
+  def new_document
+    Document.create!(
+      :title            => params[:title],
+      :source           => params[:source],
+      :organization_id  => current_organization.id,
+      :account_id       => current_account.id,
+      :access           => DC::Access::PENDING,
+      :page_count       => 0
+    )
+  end
+
+  # Make sure we're dealing with a PDF. If not, it needs to be
+  # converted first. Return the path to the converted document.
+  def ensure_pdf
+    path = params[:file].path
+    ext  = File.extname(params[:file].original_filename)
+    return path if ext == '.pdf'
+    Docsplit.extract_pdf(path)
+    File.basename(path, ext) + '.pdf'
+  end
+
+  # Kick off and record a CloudCrowd document import job.
+  def cloud_crowd_import(document)
+    job = JSON.parse(DC::Import::CloudCrowdImporter.new.import([document.id], {
+      'id'            => document.id,
+      'access'        => params[:access].to_i
+    }))
+    record = ProcessingJob.create!(
+      :account        => current_account,
+      :cloud_crowd_id => job['id'],
+      :title          => document.title,
+      :remote_job     => job
+    )
+    @status = record.status
   end
 
 end
