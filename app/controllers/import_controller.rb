@@ -8,11 +8,11 @@ class ImportController < ApplicationController
 
   def upload_document
     return bad_request unless params[:file]
-    path = ensure_pdf
     doc = new_document
-    DC::Store::AssetStore.new.save_pdf(doc, path)
+    ensure_pdf do |path|
+      DC::Store::AssetStore.new.save_pdf(doc, path)
+    end
     cloud_crowd_import(doc)
-    FileUtils.rm(path) if File.writable?(path)
   end
 
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.
@@ -50,16 +50,16 @@ class ImportController < ApplicationController
   # Make sure we're dealing with a PDF. If not, it needs to be
   # converted first. Return the path to the converted document.
   def ensure_pdf
-    path = params[:file].path
-    name = params[:file].original_filename
-    ext  = File.extname(name)
-    return path if ext == '.pdf'
-    temp = File.join(Rails.root, 'tmp')
-    doc  = File.join(temp, name)
-    FileUtils.mkdir_p(temp) unless File.exists?(temp)
-    FileUtils.cp(path, doc)
-    Docsplit.extract_pdf(doc, :output => temp)
-    File.join(temp, File.basename(name, ext) + '.pdf')
+    Dir.mktmpdir do |temp_dir|
+      path = params[:file].path
+      name = params[:file].original_filename
+      ext  = File.extname(name)
+      return yield(path) if ext == ".pdf"
+      doc  = File.join(temp_dir, name)
+      FileUtils.cp(path, doc)
+      Docsplit.extract_pdf(doc, :output => temp_dir)
+      yield(File.join(temp_dir, File.basename(name, ext) + '.pdf'))
+    end
   end
 
   # Kick off and record a CloudCrowd document import job.
