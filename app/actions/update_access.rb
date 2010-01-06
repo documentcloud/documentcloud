@@ -5,7 +5,7 @@ class UpdateAccess < CloudCrowd::Action
   def process
     ActiveRecord::Base.establish_connection
     document = Document.find(input)
-    document.set_access(document.access)
+    DC::Store::AssetStore.new.set_access(document, document.access)
   end
 
 end
