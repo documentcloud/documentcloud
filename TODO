@@ -4,17 +4,8 @@ TODO:
 
   * Add ts_vector columns to full_text and pages -- index those instead of the
     direct text. Add triggers (or callbacks) to keep them up-to-date.
-
-  * Get a real production server setup, and start deploying there as well.
     
   * Think about the common filters for searching: Dates, Orgs, Accounts.
-  
-  * Start access controlling assets on S3. This includes changing permissions
-    in bulk, as well as serving different URLs for public and private assets
-    all private assets are going to have to be served through authentication
-    within Rails.
-  
-  * Figure out our own taxonomy and map all the OpenCalais categories into it.
   
   
 WAITING ON DESIGN:
@@ -40,6 +31,16 @@ WAITING ON DESIGN:
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Make 'em removable.
+    
+  
+WAITING ON MIKE'S RESEARCH:
+
+  * Get a real production server setup, and start deploying there as well.
+    
+
+WAITING ON CALAIS SHAKEDOWN:
+  
+  * Figure out our own taxonomy and map all the OpenCalais categories into it.
   
 
 AFTER BETA:
@@ -51,6 +52,11 @@ AFTER BETA:
       
 
 DONE:
+
+  * Start access controlling assets on S3. This includes changing permissions
+    in bulk, as well as serving different URLs for public and private assets
+    all private assets are going to have to be served through authentication
+    within Rails.
 
   * Start access-controlling S3 assets -- this means saving them private
     and implementing Document#set_access with RightAWS#put with no body 
