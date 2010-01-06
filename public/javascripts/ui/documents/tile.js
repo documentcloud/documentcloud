@@ -23,10 +23,11 @@ dc.ui.DocumentTile = dc.View.extend({
   render : function() {
     var title = this.model.get('title');
     $(this.el).html(JST.document_tile({
-      'thumbnail' : this.model.get('thumbnail_url'),
-      'title'     : this.mode == 'viz' ? Inflector.truncate(title, 55) : title,
-      'source'    : this.model.get('source'),
-      'summary'   : this.model.displaySummary()
+      thumbnail : this.model.get('thumbnail_url'),
+      title     : this.mode == 'viz' ? Inflector.truncate(title, 55) : title,
+      source    : this.model.get('source'),
+      summary   : this.model.displaySummary(),
+      pub       : this.model.get('access') == dc.access.PUBLIC
     }));
     this.setCallbacks();
     this._setSelected();
@@ -66,7 +67,8 @@ dc.ui.DocumentTile = dc.View.extend({
   },
 
   _onDocumentChange : function() {
-    (this.model.hasChanged('summary')) ? this.render() : this._setSelected();
+    var changed = this.model.hasChanged('summary') || this.model.hasChanged('access');
+    changed ? this.render() : this._setSelected();
   }
 
 });

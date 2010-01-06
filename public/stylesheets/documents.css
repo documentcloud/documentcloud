@@ -52,12 +52,12 @@
     margin-bottom: 10px;
     height: 14px;
   }
-  .document_tile .icon {
+  .document_tile img.icon {
     position: absolute;
     -webkit-box-shadow: 0 0px 5px #999; -moz-box-shadow: 0 0px 5px #999;
     left: 7px;
   }
-    body.logged_in .document_tile .icon {
+    body.logged_in .document_tile img.icon {
       cursor: pointer;
     }
   .document_tile .title {
@@ -84,40 +84,19 @@
       float: left;
     }
     .document_tools {
-      display: none;
-      opacity: 0;
+      display: block;
+      float: left;
       padding-left: 10px;
+      opacity: 0.5;
       -webkit-transition: opacity 0.2s linear;
     }
-      .document_list.large_size .document_tools {
-        float: left;
-        display: block;
-      }
       .document_tile:hover .document_tools {
         opacity: 1;
       }
       .document_tools > div {
         float: left;
-        cursor: pointer;
-        width: 16px; height: 16px;
         margin-right: 7px;
       }
-        .document_tools .view_pdf {
-          background: url(/images/embed/icons/page_white_acrobat.png);
-        }
-        .document_tools .view_text {
-          background: url(/images/embed/icons/page_white_text.png);
-        }
-        .document_tools .download_viewer {
-          background: url(/images/embed/icons/page_white_zip.png);
-        }
-        .document_tools .delete_document {
-          display: none;
-          background: url(/images/embed/icons/page_white_delete.png);
-        }
-          body.logged_in .document_tools .delete_document {
-            display: inline;
-          }
   .document_tile .source {
     text-transform: uppercase;
     font-size: 10px;

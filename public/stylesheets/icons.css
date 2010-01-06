@@ -52,6 +52,9 @@
   background-image: url(/images/embed/icons/add_16.png);
   background-position: 1px 1px;
 }
+.icon.lock {
+  background-image: url(/images/embed/icons/lock.png);
+}
 
 .icon.plus, .icon.minus {
   display: block;

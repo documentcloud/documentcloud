@@ -211,6 +211,7 @@ class Document < ActiveRecord::Base
   end
 
   def background_update_asset_access
+    return true if Rails.env.development?
     RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'update_access',
       'inputs'  => [self.id],

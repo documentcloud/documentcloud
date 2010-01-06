@@ -4,7 +4,6 @@ dc.ui.Toolbar = dc.View.extend({
 
   callbacks : [
     ['#delete_document_button',  'click',   '_deleteSelectedDocuments'],
-    // ['#bookmark_button',         'click',   '_bookmarkSelectedDocument'],
     ['#edit_summary_button',     'click',   '_editSelectedSummary']
   ],
 
@@ -12,7 +11,8 @@ dc.ui.Toolbar = dc.View.extend({
     this.base(options);
     _.bindAll(this, '_addSelectedDocuments', '_addLabelWithDocuments', 'display');
     this.downloadMenu = this._createDownloadMenu();
-    this.labelMenu = new dc.ui.LabelMenu({onClick : this._addSelectedDocuments, onAdd : this._addLabelWithDocuments});
+    this.accessMenu   = this._createAccessMenu();
+    this.labelMenu    = new dc.ui.LabelMenu({onClick : this._addSelectedDocuments, onAdd : this._addLabelWithDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
   },
 
@@ -20,8 +20,8 @@ dc.ui.Toolbar = dc.View.extend({
     var el = $(this.el);
     el.html(JST.workspace_toolbar({}));
     $('.download_menu_container', el).append(this.downloadMenu.render().el);
+    $('.access_menu_container', el).append(this.accessMenu.render().el);
     $('.label_menu_container', el).append(this.labelMenu.render().el);
-    // this.bookmarkButton = $('#bookmark_button', el);
     this.summaryButton = $('#edit_summary_button', el);
     this.setCallbacks();
     return this;
@@ -30,7 +30,6 @@ dc.ui.Toolbar = dc.View.extend({
   display : function() {
     var count = $('.document_tile.is_selected').length;
     count > 0 ? this.show() : this.hide();
-    // this.bookmarkButton.toggleClass('disabled', count > 1);
     this.summaryButton.toggleClass('disabled', count > 1);
   },
 
@@ -46,7 +45,7 @@ dc.ui.Toolbar = dc.View.extend({
 
   notifyLabeled : function(labelName, numDocs) {
     var notification = "added " + numDocs + ' ' + Inflector.pluralize('document', numDocs) + ' to "' + labelName + '"';
-    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.labelMenu.el, position : 'center right', left : 7});
+    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.labelMenu.el, position : '-top right', top : -1, left : 7});
   },
 
   _addSelectedDocuments : function(label) {
@@ -72,20 +71,6 @@ dc.ui.Toolbar = dc.View.extend({
     }, this));
   },
 
-  // _bookmarkSelectedDocument : function() {
-  //   var button = this.bookmarkButton;
-  //   if (button.hasClass('disabled')) return false;
-  //   var doc = _.first(Documents.selected());
-  //   dc.ui.Dialog.prompt("Page number to bookmark:", null, function(number) {
-  //     var pageNumber = parseInt(number, 10);
-  //     if (!pageNumber) return false;
-  //     if (pageNumber > doc.get('page_count') || pageNumber < 1) return dc.ui.Dialog.alert('Page ' + pageNumber + ' does not exist in "' + doc.get('title') + '".');
-  //     doc.bookmark(pageNumber);
-  //     var notification = "added bookmark to page " + pageNumber + ' of "' + doc.get('title') + '"';
-  //     dc.ui.notifier.show({mode : 'info', text : notification, anchor : button, position : 'center right', left : 7});
-  //   }, true);
-  // },
-
   _editSelectedSummary : function() {
     if (this.summaryButton.hasClass('disabled')) return false;
     var doc = _.first(Documents.selected());
@@ -94,6 +79,13 @@ dc.ui.Toolbar = dc.View.extend({
       Documents.update(doc, {summary : Inflector.truncate(revised, 255, '')});
       return true;
     });
+  },
+
+  _setSelectedAccess : function(access) {
+    var docs = Documents.selected();
+    _.each(docs, function(doc) { Documents.update(doc, {access : access}); });
+    var notification = 'access updated for ' + docs.length + ' ' + Inflector.pluralize('document', docs.length);
+    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.accessMenu.el, position : '-top right', top : -1, left : 7});
   },
 
   _panel : function() {
@@ -107,6 +99,18 @@ dc.ui.Toolbar = dc.View.extend({
         {title : 'Download Document Viewer', onClick : Documents.downloadSelectedViewers},
         {title : 'Download as PDF',          onClick : Documents.downloadSelectedPDF},
         {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
+      ]
+    });
+  },
+
+  _createAccessMenu : function() {
+    var org = dc.app.organization.name;
+    return new dc.ui.Menu({
+      label : 'access',
+      items : [
+        {title : 'Public',          onClick : _.bind(this._setSelectedAccess, this, dc.access.PUBLIC)},
+        {title : 'Only My Account', onClick : _.bind(this._setSelectedAccess, this, dc.access.PRIVATE)},
+        {title : 'Only ' + org,     onClick : _.bind(this._setSelectedAccess, this, dc.access.ORGANIZATION)}
       ]
     });
   }

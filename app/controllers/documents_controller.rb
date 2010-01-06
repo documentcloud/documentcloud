@@ -16,7 +16,10 @@ class DocumentsController < ApplicationController
   end
 
   def update
-    json current_document(true).update_attributes(pick_params(:summary))
+    current_document(true)
+    access = params[:access].to_i
+    current_document.set_access(access) if current_document.access != access
+    json current_document.update_attributes(pick_params(:summary))
   end
 
   def destroy
