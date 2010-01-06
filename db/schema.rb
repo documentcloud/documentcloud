@@ -1,4 +1,6 @@
-# CRITICAL POSTGRES COST ADJUSTMENT: alter function to_tsvector(regconfig,text) cost 100000;
+# CRITICAL POSTGRES COST ADJUSTMENTS:
+# alter function to_tsvector(regconfig,text) cost 100000;
+# alter function ts_match_vq(tsvector,tsquery) cost 500;
 
 include DC::Store::MigrationHelpers
 
@@ -43,9 +45,12 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer   "access",          :null => false
     t.text      "text",            :null => false
   end
+  add_column "full_text", "text_vector", "tsvector"
 
   add_index "full_text", ["document_id"], :name => "index_full_text_on_document_id", :unique => true
-  execute "create index full_text_fti on full_text using gin(to_tsvector('english', text));"
+  execute "create trigger text_vector_update before insert or update on full_text
+    for each row execute procedure tsvector_update_trigger(text_vector, 'pg_catalog.english', text);"
+  execute "create index full_text_fti on full_text using gin(text_vector);"
 
   create_table "pages", :force => true do |t|
     t.integer   "organization_id",  :null => false
@@ -55,9 +60,12 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer   "page_number",      :null => false
     t.text      "text",             :null => false
   end
+  add_column "pages", "text_vector", "tsvector"
 
   add_index "pages", ["document_id", "page_number"], :name => "index_pages_on_document_id_and_page_number", :unique => true
-  execute "create index page_text_fti on full_text using gin(to_tsvector('english', text));"
+  execute "create trigger page_text_vector_update before insert or update on pages
+    for each row execute procedure tsvector_update_trigger(text_vector, 'pg_catalog.english', text);"
+  execute "create index page_text_fti on pages using gin(text_vector);"
 
   # TODO: Add document indexes.
 
@@ -72,8 +80,11 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string    "calais_id",                        :limit => 40
     t.text      "occurrences"
   end
+  add_column "metadata", "value_vector", "tsvector"
 
-  execute "create index value_fti on metadata using gin(to_tsvector('english', value));"
+  execute "create trigger metadata_vector_update before insert or update on metadata
+    for each row execute procedure tsvector_update_trigger(value_vector, 'pg_catalog.english', value);"
+  execute "create index metadata_value_fti on metadata using gin(value_vector);"
 
   # TODO: Add metadata indexes.
 
@@ -101,9 +112,12 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string    "location",         :limit => 40
     t.timestamps
   end
+  add_column "annotations", "content_vector", "tsvector"
 
   add_index "annotations", ["document_id"], :name => "index_annotations_on_document_id"
-  execute "create index annotations_content_fti on annotations using gin(to_tsvector('english', content));"
+  execute "create trigger annotations_vector_update before insert or update on annotations
+    for each row execute procedure tsvector_update_trigger(content_vector, 'pg_catalog.english', content);"
+  execute "create index annotations_content_fti on annotations using gin(content_vector);"
 
   create_table "processing_jobs", :force => true do |t|
     t.integer "account_id",     :null => false
