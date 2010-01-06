@@ -54,10 +54,15 @@ class Document < ActiveRecord::Base
     self.access == PUBLIC
   end
 
-  # When the access level changes, all asset permissions need to be updated
-  # on S3.
+  # When the access level changes, all sub-resource and asset permissions
+  # need to be updated.
   def set_access(access_level)
-
+    update_attributes(:access => access_level)
+    sql = ["access = #{access_level}", "document_id = #{id}"]
+    FullText.update_all(*sql)
+    Page.update_all(*sql)
+    Metadatum.update_all(*sql)
+    asset_store.set_access(self, access_level)
   end
 
   # Ex: docs/1011
