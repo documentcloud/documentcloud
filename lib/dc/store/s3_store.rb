@@ -4,9 +4,14 @@ module DC
     # An implementation of an AssetStore.
     module S3Store
 
-      BUCKET_NAME = "dcloud_#{RAILS_ENV}"
+      BUCKET_NAME     = "dcloud_#{RAILS_ENV}"
 
-      AUTHORIZATION_PERIOD = 5.minutes
+      AUTH_PERIOD     = 5.minutes
+
+      DEFAULT_ACCESS  = DC::Access::PUBLIC
+
+      ACCESS_TO_ACL   = Hash.new('private')
+      ACCESS_TO_ACL[DC::Access::PUBLIC] = 'public-read'
 
       module ClassMethods
         def asset_root
@@ -22,28 +27,40 @@ module DC
       end
 
       def authorized_url(path)
-        s3.interface.get_link(bucket, path, AUTHORIZATION_PERIOD)
+        s3.interface.get_link(bucket, path, AUTH_PERIOD)
       end
 
-      def save_pdf(document, pdf_path)
-        save_file(pdf_path, document.pdf_path)
+      def save_pdf(document, pdf_path, access=DEFAULT_ACCESS)
+        save_file(pdf_path, document.pdf_path, access)
       end
 
-      def save_thumbnail(document, thumb_path)
-        save_file(thumb_path, document.thumbnail_path)
+      def save_thumbnail(document, thumb_path, access=DEFAULT_ACCESS)
+        save_file(thumb_path, document.thumbnail_path, access)
       end
 
-      def save_full_text(document)
-        save_file(document.text, document.full_text_path, :string => true)
+      def save_full_text(document, access=DEFAULT_ACCESS)
+        save_file(document.text, document.full_text_path, access, :string => true)
       end
 
-      def save_page_images(page, images)
-        save_file(images[:normal_image], page.image_path('normal'))
-        save_file(images[:large_image], page.image_path('large'))
+      def save_page_images(page, images, access=DEFAULT_ACCESS)
+        save_file(images[:normal_image], page.image_path('normal'), access)
+        save_file(images[:large_image], page.image_path('large'), access)
       end
 
-      def save_page_text(page)
-        save_file(page.text, page.text_path, :string => true)
+      def save_page_text(page, access=DEFAULT_ACCESS)
+        save_file(page.text, page.text_path, access, :string => true)
+      end
+
+      # This is going to be *extremely* expensive. We can thread it, but
+      # there must be a better way somehow.
+      def set_access(document, access)
+        save_permissions(document.pdf_path, access)
+        save_permissions(document.full_text_path, access)
+        document.pages.each do |page|
+          save_permissions(page.text_path, access)
+          save_permissions(page.image_path('normal'), access)
+          save_permissions(page.image_path('large'), access)
+        end
       end
 
       def read_pdf(document)
@@ -71,10 +88,14 @@ module DC
       end
 
       # Saves a local file to a location on S3, and returns the public URL.
-      def save_file(file, s3_path, opts={})
+      def save_file(file, s3_path, access, opts={})
         file = opts[:string] ? file : File.open(file)
-        bucket.put(s3_path, file, {}, 'public-read')
+        bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access])
         bucket.key(s3_path).public_link
+      end
+
+      def save_permissions(s3_path, access)
+        bucket.put(s3_path, nil, {}, ACCESS_TO_ACL[access])
       end
 
     end

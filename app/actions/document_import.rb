@@ -29,20 +29,21 @@ class DocumentImport < CloudCrowd::Action
   end
 
   def merge
-    document.update_attributes :access => options['access'] || DC::Access::PUBLIC
+    document.update_attributes :access => access
     document.id
   end
 
   def process_images
     Docsplit.extract_images(@pdf, :format => :jpg, :size => '60x75!', :pages => 1, :output => 'thumbs')
-    asset_store.save_thumbnail(document, "thumbs/#{document.slug}_1.jpg")
+    asset_store.save_thumbnail(document, "thumbs/#{document.slug}_1.jpg", DC::Access::PUBLIC)
     Docsplit.extract_images(@pdf, :format => :gif, :size => ['700x', '1000x'], :output => 'images')
     Dir['images/700x/*.gif'].length.times do |i|
       image = "#{document.slug}_#{i + 1}.gif"
       asset_store.save_page_images(
         Page.new(:document_id => document.id, :page_number => i + 1),
-        :normal_image => "images/700x/#{image}",
-        :large_image => "images/1000x/#{image}"
+        {:normal_image => "images/700x/#{image}",
+        :large_image => "images/1000x/#{image}"},
+        access
       )
     end
   end
@@ -67,7 +68,7 @@ class DocumentImport < CloudCrowd::Action
     document.summary    = document.full_text.summary
     document.save!
     DC::Import::MetadataExtractor.new.extract_metadata(document)
-    asset_store.save_full_text(document)
+    asset_store.save_full_text(document, access)
     document.id
   end
 
@@ -76,7 +77,7 @@ class DocumentImport < CloudCrowd::Action
 
   def save_page_text(text, page_number)
     page = Page.create!(:document => document, :text => text, :page_number => page_number)
-    asset_store.save_page_text(page)
+    asset_store.save_page_text(page, access)
   end
 
   def document
@@ -87,6 +88,10 @@ class DocumentImport < CloudCrowd::Action
 
   def asset_store
     @asset_store ||= DC::Store::AssetStore.new
+  end
+
+  def access
+    options['access'] || DC::Access::PUBLIC
   end
 
   def inputs_for_processing(doc, *tasks)

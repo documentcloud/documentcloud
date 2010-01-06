@@ -151,10 +151,6 @@ class Document < ActiveRecord::Base
     @asset_store ||= DC::Store::AssetStore.new
   end
 
-  def save_assets(assets)
-    asset_store.save(self, assets)
-  end
-
   def delete_assets
     asset_store.destroy(self)
   end

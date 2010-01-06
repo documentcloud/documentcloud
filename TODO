@@ -5,8 +5,9 @@ TODO:
   * Add ts_vector columns to full_text and pages -- index those instead of the
     direct text. Add triggers (or callbacks) to keep them up-to-date.
 
-  * Implement authorized_url in the FilesystemStore, just in
-    case. Implement Document#set_access. Add it to the UI. (Pulldown).
+  * Start access-controlling S3 assets -- this means saving them private
+    and implementing Document#set_access with RightAWS#put with no body 
+    (I think). Add it to the UI as a pulldown.
 
   * Get a real production server setup, and start deploying there as well.
     

@@ -10,7 +10,7 @@ class ImportController < ApplicationController
     return bad_request unless params[:file]
     doc = new_document
     ensure_pdf do |path|
-      DC::Store::AssetStore.new.save_pdf(doc, path)
+      DC::Store::AssetStore.new.save_pdf(doc, path, params[:access].to_i)
     end
     cloud_crowd_import(doc)
   end
