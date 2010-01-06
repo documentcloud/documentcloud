@@ -95,7 +95,8 @@ module DC
       end
 
       def save_permissions(s3_path, access)
-        bucket.put(s3_path, nil, {}, ACCESS_TO_ACL[access])
+        headers = {'x-amz-acl' => ACCESS_TO_ACL[access]}
+        s3.interface.copy(bucket, s3_path, bucket, s3_path, :replace, headers)
       end
 
     end
