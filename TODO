@@ -1,9 +1,6 @@
 TODO:
 
   * Implement http://nlp.stanford.edu/software/CRF-NER.shtml, alongside Calais.
-
-  * Add ts_vector columns to full_text and pages -- index those instead of the
-    direct text. Add triggers (or callbacks) to keep them up-to-date.
     
   * Think about the common filters for searching: Dates, Orgs, Accounts.
   
@@ -52,6 +49,9 @@ AFTER BETA:
       
 
 DONE:
+
+  * Add ts_vector columns to full_text and pages -- index those instead of the
+    direct text. Add triggers (or callbacks) to keep them up-to-date.
 
   * Start access controlling assets on S3. This includes changing permissions
     in bulk, as well as serving different URLs for public and private assets
