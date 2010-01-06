@@ -5,10 +5,6 @@ TODO:
   * Add ts_vector columns to full_text and pages -- index those instead of the
     direct text. Add triggers (or callbacks) to keep them up-to-date.
 
-  * Start access-controlling S3 assets -- this means saving them private
-    and implementing Document#set_access with RightAWS#put with no body 
-    (I think). Add it to the UI as a pulldown.
-
   * Get a real production server setup, and start deploying there as well.
     
   * Think about the common filters for searching: Dates, Orgs, Accounts.
@@ -22,6 +18,12 @@ TODO:
   
   
 WAITING ON DESIGN:
+
+  * Make some pretty 404/500/403 pages.
+  
+  * Start recording some notion of running "update access" jobs. Make
+    subsequent changes to access wait for the job to finish. Perhaps a floating
+    progress bar filled panel?
 
   * Make a query banner for searches.
 
@@ -37,7 +39,7 @@ WAITING ON DESIGN:
     and merge identical dates.
 
   * Show if the currently-selected documents are tagged with the labels in
-  the labels pulldown. Make 'em removable.
+    the labels pulldown. Make 'em removable.
   
 
 AFTER BETA:
@@ -49,6 +51,10 @@ AFTER BETA:
       
 
 DONE:
+
+  * Start access-controlling S3 assets -- this means saving them private
+    and implementing Document#set_access with RightAWS#put with no body 
+    (nope, it's a copy with identical headers). Add it to the UI as a pulldown.
 
   * Fix page text editing -- either by writing a custom jQuery.text method
     that handles the browser differences between different contentEditables,
