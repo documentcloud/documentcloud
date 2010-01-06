@@ -62,7 +62,7 @@ class Document < ActiveRecord::Base
     FullText.update_all(*sql)
     Page.update_all(*sql)
     Metadatum.update_all(*sql)
-    asset_store.set_access(self, access_level)
+    background_update_asset_access
   end
 
   # Ex: docs/1011
@@ -208,6 +208,14 @@ class Document < ActiveRecord::Base
     slugged.downcase!         # ensure lowercase
     slugged.gsub!(' ', '-')   # dasherize spaces
     self.slug = slugged
+  end
+
+  def background_update_asset_access
+    RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+      'action'  => 'update_access',
+      'inputs'  => [self.id],
+      'callback_url' => "#{DC_CONFIG['server_root']}/import/update_access"
+    }.to_json})
   end
 
 end

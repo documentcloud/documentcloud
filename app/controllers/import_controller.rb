@@ -26,6 +26,12 @@ class ImportController < ApplicationController
     render :text => '201 Created', :status => 201
   end
 
+  # CloudCrowd is done changing the document's asset access levels.
+  # 201 created cleans up the job.
+  def update_access
+    render :text => '201 Created', :status => 201
+  end
+
   # Get the current status of an active processing job.
   def job_status
     job = current_account.processing_jobs.find_by_id(params[:id])

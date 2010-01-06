@@ -52,7 +52,7 @@ module DC
       end
 
       # This is going to be *extremely* expensive. We can thread it, but
-      # there must be a better way somehow.
+      # there must be a better way somehow. (running in the background for now)
       def set_access(document, access)
         save_permissions(document.pdf_path, access)
         save_permissions(document.full_text_path, access)
@@ -61,6 +61,7 @@ module DC
           save_permissions(page.image_path('normal'), access)
           save_permissions(page.image_path('large'), access)
         end
+        true
       end
 
       def read_pdf(document)
