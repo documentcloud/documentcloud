@@ -93,7 +93,7 @@ module DC
 
       # Generate the SQL needed to run a full-text search.
       def generate_text_sql
-        @sql << "full_text.text_vector @@ plainto_tsquery(?)"
+        @sql << "full_text_text_vector @@ plainto_tsquery(?)"
         @interpolations << @text
         @joins << :full_text
       end
@@ -102,7 +102,7 @@ module DC
       def generate_fields_sql
         intersections = []
         @fields.each do |field|
-          intersections << "(select document_id from metadata m where (m.kind = ? and m.value_vector @@ plainto_tsquery(?)))"
+          intersections << "(select document_id from metadata m where (m.kind = ? and metadata_value_vector @@ plainto_tsquery(?)))"
           @interpolations += [field.kind, field.value]
         end
         @sql << "documents.id in (#{intersections.join(' intersect ')})"

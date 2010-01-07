@@ -11,7 +11,7 @@ class Page < ActiveRecord::Base
   validates_numericality_of :page_number, :greater_than_or_equal_to => 1
 
   named_scope :search_text, lambda { |query|
-    {:conditions => ["text_vector @@ plainto_tsquery(?)", query], :select => [:page_number]}
+    {:conditions => ["pages_text_vector @@ plainto_tsquery(?)", query], :select => [:page_number]}
   }
 
   delegate :pages_path, :to => :document

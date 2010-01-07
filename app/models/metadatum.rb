@@ -12,7 +12,7 @@ class Metadatum < ActiveRecord::Base
   validates_inclusion_of :kind, :in => DC::VALID_KINDS
 
   named_scope :search_value, lambda { |query|
-    {:conditions => ["value_vector @@ plainto_tsquery(?)", query]}
+    {:conditions => ["metadata_value_vector @@ plainto_tsquery(?)", query]}
   }
 
   named_scope :categories, {:conditions => {:kind => 'category'}}

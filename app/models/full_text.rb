@@ -10,7 +10,7 @@ class FullText < ActiveRecord::Base
 
   # Run a search across the text of the document, using Postgres' native FTS.
   named_scope :search_text, lambda { |query|
-    {:conditions => ["text_vector @@ plainto_tsquery(?)", query]}
+    {:conditions => ["full_text_text_vector @@ plainto_tsquery(?)", query]}
   }
 
   # Generate the highlighted excerpt of the full text for a given search phrase.

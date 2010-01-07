@@ -1,4 +1,8 @@
 TODO:
+
+  * Switch to real migrations. Redo FTI. 
+  
+  * Add appropriate indexes for documents and metadata.
     
   * Think about the common filters for searching: Dates, Orgs, Accounts.
   
