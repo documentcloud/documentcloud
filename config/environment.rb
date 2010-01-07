@@ -18,7 +18,7 @@ Rails::Initializer.run do |config|
   config.gem 'json',                  :version => '>= 1.1.9'
 
   config.gem 'faker',                 :version => '>= 0.3.1'
-  config.gem 'documentcloud-calais',  :version => '>= 0.0.7',       :lib => 'calais'
+  config.gem 'calais',                :version => '>= 0.0.8'
   config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'
   config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
   config.gem 'rubyzip',               :version => '>= 0.9.1',       :lib => 'zip/zip'
