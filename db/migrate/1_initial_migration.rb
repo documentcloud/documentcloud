@@ -1,5 +1,6 @@
 # The base DocumentCloud schema.
 class InitialMigration < ActiveRecord::Migration
+  extend DC::Store::MigrationHelpers
 
   def self.up
     create_table "accounts", :force => true do |t|
