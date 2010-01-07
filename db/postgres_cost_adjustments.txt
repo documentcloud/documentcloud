@@ -1,0 +1,6 @@
+Make these Postgres cost adjustments to give the query planner a more realistic 
+idea of how expensive it is to avoid the full text indexes. You need to log
+in as the root user "postgres", and be on the database in question.
+
+    alter function to_tsvector(regconfig,text) cost 100000;
+    alter function ts_match_vq(tsvector,tsquery) cost 500;

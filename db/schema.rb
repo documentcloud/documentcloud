@@ -1,7 +1,3 @@
-# CRITICAL POSTGRES COST ADJUSTMENTS:
-# alter function to_tsvector(regconfig,text) cost 100000;
-# alter function ts_match_vq(tsvector,tsquery) cost 500;
-
 include DC::Store::MigrationHelpers
 
 ActiveRecord::Schema.define(:version => 1) do
