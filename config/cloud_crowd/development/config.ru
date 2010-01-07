@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # This rackup script can be used to start the central CloudCrowd server
-# using any Rack-compliant server handler. For example, start up three servers 
+# using any Rack-compliant server handler. For example, start up three servers
 # with a specified port number, using Thin:
 #
 # thin start -R config.ru --servers 3
@@ -13,7 +13,7 @@
 
 
 require 'rubygems'
-require '../cloud_crowd/lib/cloud-crowd'
+require 'cloud-crowd'
 
 CloudCrowd.configure(File.dirname(__FILE__) + '/config.yml')
 CloudCrowd.configure_database(File.dirname(__FILE__) + '/database.yml')
