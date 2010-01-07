@@ -1,8 +1,8 @@
 TODO:
-
-  * Implement http://nlp.stanford.edu/software/CRF-NER.shtml, alongside Calais.
     
   * Think about the common filters for searching: Dates, Orgs, Accounts.
+  
+  * Get a real production server setup, and start deploying there as well.
   
   
 WAITING ON DESIGN:
@@ -28,12 +28,7 @@ WAITING ON DESIGN:
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Make 'em removable.
-    
-  
-WAITING ON MIKE'S RESEARCH:
-
-  * Get a real production server setup, and start deploying there as well.
-    
+        
 
 WAITING ON CALAIS SHAKEDOWN:
   
@@ -41,6 +36,8 @@ WAITING ON CALAIS SHAKEDOWN:
   
 
 AFTER BETA:
+
+  * Implement http://nlp.stanford.edu/software/CRF-NER.shtml, alongside Calais.
   
   * Flesh out a more comprehensive API.
   
