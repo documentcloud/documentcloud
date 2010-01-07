@@ -1,29 +1,61 @@
 Until we have full provisioning scripts, keep notes about everything that we
 touch on EC2 in here.
 
+========================= Base DocumentCloud Image ============================
+
+* Use the official Canonical Ubuntu 9.10 Karmic Image: ami-1515f67c
+  Use the us-east-1c availability zone.
+  
+* If bundling an EBS Boot Volume, follow the directions here (mas o menos):
+  http://alestic.com/2010/01/ec2-ebs-boot-ubuntu
+  At step 5, continue with our custom configuration below....
+  At step 6, use a 40 gig EBS, instead of 15.
+
 * Switch to a temporary directory.
 
 * Update aptitude.
 
 * Install these packages:
-  build-essential postgresql postgresql-client postgresql-contrib libpq-dev 
-  sun-java6-bin git-core mercurial scons libexpat-dev libxml2-dev libxslt-dev 
-  postfix ruby ri rdoc irb ruby1.8-dev zlib1g-dev libzlib-ruby sqlite3 
-  libsqlite3-dev libcurl4-dev checkinstall libbz2-dev graphicsmagick pdftk xpdf 
-  libitext-java openoffice.org openoffice.org-java-common libtiff4-dev 
-  libpng12-dev libjpeg62-dev libleptonica-dev tesseract-ocr-dev tesseract-ocr-eng
+  build-essential postgresql postgresql-client postgresql-contrib libpq-dev \
+  sun-java6-bin git-core mercurial scons libexpat-dev libxml2-dev libxslt-dev \
+  postfix ruby ri rdoc irb ruby1.8-dev rubygems1.8 zlib1g-dev libzlib-ruby sqlite3 \
+  libsqlite3-dev libcurl4-dev checkinstall libbz2-dev graphicsmagick pdftk xpdf \
+  libitext-java openoffice.org openoffice.org-java-common libtiff4-dev \
+  libpng12-dev libjpeg62-dev libleptonica-dev tesseract-ocr-dev tesseract-ocr-eng \
+  xfsprogs
   
 * Install RubyGems:
-  wget http://rubyforge.org/frs/download.php/60718/rubygems-1.3.5.tgz
+  wget http://rubyforge.org/frs/download.php/60718/rubygems-1.3.5.tgz && \
   tar xzvf rubygems-1.3.5.tgz
   ruby rubygems-1.3.5/setup.rb
   gem update --system
   ln -s /usr/bin/gem1.8 /usr/local/bin/gem
   
 * Install these gems (--no-ri --no-rdoc):
-  postgres sqlite3-ruby rails passenger sinatra right_aws rest-client rack 
-  bcrypt-ruby rubyzip libxml-ruby nokogiri json hpricot calais 
-  curb daemons cloud-crowd faker yui-compressor
+  postgres sqlite3-ruby rails passenger sinatra right_aws rest-client rack \
+  bcrypt-ruby rubyzip libxml-ruby nokogiri json hpricot calais \
+  curb daemons cloud-crowd faker yui-compressor jammit docsplit
   
+* Install the SSH credentials (for the current user):
+  mkdir -p ~/.ssh (or /root/.ssh)
+  Copy the contents of config/keys/github.pem to .ssh/id_dsa
+  chmod 0600 .ssh/id_dsa
+  
+* Checkout DocumentCloud:
+  mkdir -p /web
+  cd /web
+  git clone git@github.com:documentcloud/document-cloud.git 
+
+* Turn off smtpd_use_tsl in /etc/postfix/main.cf, and restart postfix.
+
+* Use passenger to install nginx, including --with-http_gzip_static_module and
+  --with-http_ssl_module
+  
+* Copy nginx config from config/nginx.
 
 * Clean up the temporary directory.
+
+========================== Postgres EBS ======================================
+
+* sudo modprobe xfs
+  sudo mkfs.xfs /dev/sdh
