@@ -1,9 +1,5 @@
 TODO:
-
-  * Switch to real migrations. Redo FTI. 
-  
-  * Add appropriate indexes for documents and metadata.
-    
+      
   * Think about the common filters for searching: Dates, Orgs, Accounts.
   
   * Get a real production server setup, and start deploying there as well.
@@ -50,6 +46,17 @@ AFTER BETA:
       
 
 DONE:
+  
+  * Add appropriate indexes for documents and metadata.
+
+  * Switch to real migrations. Redo FTI. 
+
+  * Added provisioning notes, for everything you need to do to provision
+    a new server.
+
+  * Added full text search columns on Documents (maybe they should be on 
+    the full_text table instead) for title and source. Title is now searched
+    alongside text.
 
   * Add ts_vector columns to full_text and pages -- index those instead of the
     direct text. Add triggers (or callbacks) to keep them up-to-date.
