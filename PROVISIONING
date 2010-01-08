@@ -42,7 +42,7 @@ touch on EC2 in here.
   
 * Install the SSH credentials (for the current user, root on the EBS chroot):
   mkdir -p ~/.ssh (or /root/.ssh)
-  Copy the contents of config/keys/github.pem to .ssh/id_dsa
+  Copy the contents of config/server/keys/github.pem to .ssh/id_dsa
   chmod 0600 .ssh/id_dsa
   
 * Checkout DocumentCloud:
@@ -55,7 +55,7 @@ touch on EC2 in here.
   with prefix /usr/local/nginx, and including
   --with-http_gzip_static_module and --with-http_ssl_module
   
-* Copy over the nginx.conf config from config/nginx to /usr/local/nginx/conf.
+* Copy over the nginx.conf config from config/server/nginx to /usr/local/nginx/conf.
   Copy over the appropriate environment config to sites-enabled.
   Add /usr/local/nginx/sbin to the PATH in .bashrc.
   mkdir -p /var/log/nginx
@@ -63,7 +63,10 @@ touch on EC2 in here.
 * In /etc/sysctl.conf set
   kernel.shmmax = 852352256 
   
-* Copy over config/postgresql.conf to /etc/postgresql/8.4/main/postgresql.conf
+* Copy over config/server/postgresql.conf to 
+  /etc/postgresql/8.4/main/postgresql.conf
+  
+* Copy over config/server/gitconfig.conf to ~/.gitconfig
 
 * If bundling, move on to Step 6 of Hammond's directions, but ensure that
   EC2_CERT and EC2_PRIVATE_KEY are set correctly, and that the size of the EBS
