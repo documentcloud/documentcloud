@@ -37,7 +37,7 @@
 # Use HTTP Basic Auth for all requests? (Includes all internal worker requests
 # to the central server). If yes, specify the login and password that all
 # requests must provide for authentication.
-:http_authentication: yes
+:http_authentication: no
 :login:               REDACTED
 :password:            REDACTED
 
