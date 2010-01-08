@@ -1,5 +1,5 @@
 defaults: &defaults
-  cloud_crowd_server: http://dev.dcloud.org:9173
+  cloud_crowd_server: http://dev.dcloud.org:8080
   server_root:        http://dev.dcloud.org
   include_highlights: off
 
@@ -11,8 +11,10 @@ staging:
   cloud_crowd_server: http://staging.dcloud.org:8080
   server_root:        http://staging.dcloud.org
 
-test:
-  <<: *defaults
-
 production:
+  <<: *defaults
+  cloud_crowd_server: http://174.129.5.5:8080
+  server_root:        http://production.dcloud.org
+
+test:
   <<: *defaults

@@ -16,6 +16,11 @@ staging:
   host: staging.dcloud.org
   database: dcloud_staging
 
+production:
+  <<: *defaults
+  host: 174.129.5.5
+  database: dcloud_production
+
 test:
   <<: *defaults
   database: dcloud_test
