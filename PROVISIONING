@@ -57,6 +57,8 @@ touch on EC2 in here.
   
 * Copy over the nginx.conf config from config/nginx to /usr/local/nginx/conf.
   Copy over the appropriate environment config to sites-enabled.
+  Add /usr/local/nginx/sbin to the PATH in .bashrc.
+  mkdir -p /var/log/nginx
   
 * In /etc/sysctl.conf set
   kernel.shmmax = 852352256 
