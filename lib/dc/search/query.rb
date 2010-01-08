@@ -93,8 +93,8 @@ module DC
 
       # Generate the SQL needed to run a full-text search.
       def generate_text_sql
-        @sql << "full_text_text_vector @@ plainto_tsquery(?)"
-        @interpolations << @text
+        @sql << "full_text_text_vector @@ plainto_tsquery(?) or documents_title_vector @@ plainto_tsquery(?)"
+        @interpolations += [@text, @text]
         @joins << :full_text
       end
 
@@ -128,7 +128,7 @@ module DC
             @sql << "documents.account_id = ?"
             @interpolations << (account ? account.id : -1)
           else
-            @sql << "documents.#{field.kind} = ?"
+            @sql << "documents_#{field.kind}_vector @@ plainto_tsquery(?)"
             @interpolations << field.value
           end
         end

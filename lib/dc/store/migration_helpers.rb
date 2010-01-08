@@ -34,6 +34,7 @@ module DC
         execute "create trigger #{trigger} before insert or update on #{table}
           for each row execute procedure tsvector_update_trigger(#{vector}, 'pg_catalog.english', #{column});"
         execute "create index #{index} on #{table} using gin(#{vector});"
+        execute "update #{table} set #{vector} = to_tsvector('pg_catalog.english', #{column});"
       end
 
       def remove_full_text_index(table, column)
