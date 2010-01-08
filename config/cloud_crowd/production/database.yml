@@ -8,5 +8,5 @@
 :username: REDACTED
 :password: REDACTED
 :allow_concurrency: true
-:host:     174.129.5.5
+:host:     ec2-174-129-5-5.compute-1.amazonaws.com
 :database: dcloud_crowd_production

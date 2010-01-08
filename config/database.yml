@@ -18,7 +18,7 @@ staging:
 
 production:
   <<: *defaults
-  host: 174.129.5.5
+  host: ec2-174-129-5-5.compute-1.amazonaws.com
   database: dcloud_production
 
 test:
