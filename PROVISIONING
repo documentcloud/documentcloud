@@ -84,5 +84,10 @@ touch on EC2 in here.
 
 ========================== Postgres EBS ======================================
 
-* sudo modprobe xfs
-  sudo mkfs.xfs /dev/sdh
+* Follow the directions here:
+    http://deadprogrammersociety.blogspot.com/2009/08/postgresql-on-ubuntu-on-ec2.html
+  Follow Mike's directions to move the Postgres files to the EBS:
+    http://gist.github.com/272258
+  Copy over configuration from config/server/postgres to /etc/postgresql/8.4/main...
+  pg_ctlcluster 8.4 main start
+  Our postgre DB (volume vol-d4c305bd) is mounted at /data.
