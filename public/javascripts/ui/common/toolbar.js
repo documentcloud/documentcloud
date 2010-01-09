@@ -4,7 +4,8 @@ dc.ui.Toolbar = dc.View.extend({
 
   callbacks : [
     ['#delete_document_button',  'click',   '_deleteSelectedDocuments'],
-    ['#edit_summary_button',     'click',   '_editSelectedSummary']
+    ['#edit_summary_button',     'click',   '_editSelectedSummary'],
+    ['#timeline_button',         'click',   '_showTimeline']
   ],
 
   constructor : function(options) {
@@ -79,6 +80,10 @@ dc.ui.Toolbar = dc.View.extend({
       Documents.update(doc, {summary : Inflector.truncate(revised, 255, '')});
       return true;
     });
+  },
+
+  _showTimeline : function() {
+    new dc.ui.TimelineDialog(Documents.selected());
   },
 
   _setSelectedAccess : function(access) {

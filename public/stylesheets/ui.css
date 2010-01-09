@@ -190,7 +190,7 @@ iframe.hidden_iframe {
   position: relative;
   text-align: center;
 }
-  .form_error > span, #notifier {
+  .form_error > span, #notifier, #tooltip {
     color: #844;
     text-transform: uppercase;
     font: 10px Arial;
@@ -203,15 +203,26 @@ iframe.hidden_iframe {
     -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
   }
 
-#notifier {
+/*--------------------------- Notifier, Tooltip ------------------------------*/
+
+#notifier, #tooltip {
   position: absolute;
   display: none;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 5000;
 }
   #notifier.info_style {
     color: #171;
     border-color: #171;
     background: #cec;
     background: -webkit-gradient(linear, left top, left bottom, from(#beb), to(#ded));
+  }
+  #tooltip {
+    color: #454545;
+    border-width: 0;
+    line-height: 14px;
+    padding: 4px 8px;
+    -webkit-box-shadow: 0 0px 10px #777; -moz-box-shadow: 0 0px 7px #777;
+    background: #dadada;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dfdfdf));
   }

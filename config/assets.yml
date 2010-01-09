@@ -5,6 +5,7 @@ embed_images: on
 javascripts:
   workspace:
     - public/javascripts/application.js
+    - public/javascripts/vendor/jquery-1.3.2.js
     - public/javascripts/vendor/*.js
     - public/javascripts/lib/bindable.js
     - public/javascripts/lib/set.js

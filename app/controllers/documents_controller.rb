@@ -38,6 +38,12 @@ class DocumentsController < ApplicationController
     json 'metadata' => meta
   end
 
+  # TODO: Access-control this:
+  def dates
+    dates = MetadataDate.all(:conditions => {:document_id => params[:ids]})
+    json 'dates' => dates
+  end
+
   def send_pdf
     redirect_to(current_document(true).pdf_url(:direct))
   end

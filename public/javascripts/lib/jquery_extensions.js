@@ -137,16 +137,18 @@ $.fn.extend({
   },
 
   draggable : function() {
-    var draggableTags = ['div', 'p'];
     this.each(function() {
-      var checkEvent = function(e) {
-        var tag = e.target.tagName.toLowerCase();
-        if (!_.include(draggableTags, tag)) return true;
+      var stopEvent = function(e) {
         e.stopPropagation();
         e.preventDefault();
+        return false;
+      };
+      var checkEvent = function(e) {
+        if ($(e.target).css('cursor') !== 'move') return true;
+        return stopEvent(e);
       };
       var drag = _.bind(function(e) {
-        if (checkEvent(e)) return true;
+        if (!this._drag) return stopEvent(e);
         this.style.left = this._drag.left + e.pageX - this._drag.x + 'px';
         this.style.top  = this._drag.top + e.pageY - this._drag.y + 'px';
       }, this);
@@ -154,6 +156,7 @@ $.fn.extend({
         $(document.body).unbind('mouseup', dragEnd);
         $(document.body).unbind('mousemove', drag);
         $(this).removeClass('dragging');
+        this._drag = null;
       }, this);
       var dragStart = _.bind(function(e) {
         if (checkEvent(e)) return true;

@@ -14,4 +14,9 @@ class MetadataDate < ActiveRecord::Base
     end
   end
 
+  def to_json(options=nil)
+    {'document_id'  => document_id,
+     'date'         => date.to_time.to_i }.to_json
+  end
+
 end

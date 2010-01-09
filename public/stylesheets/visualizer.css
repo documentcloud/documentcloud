@@ -106,3 +106,9 @@
   -moz-border-radius: 3px; -webkit-border-radius: 3px;
   -webkit-box-shadow: 0 0px 10px #999; -moz-box-shadow: 0 0px 10px #999;
 }
+
+/*------------------------------ TIMELINE ---------------------------------*/
+
+#timeline_dialog {
+  max-width: none;
+}
