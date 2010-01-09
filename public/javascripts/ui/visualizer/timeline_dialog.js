@@ -13,6 +13,8 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   DATE_FORMAT : "%b %d, %y",
 
+  POINT_COLOR : '#5a5a5a',
+
   id : 'timeline_dialog',
 
   constructor : function(documents) {
@@ -41,11 +43,6 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     return "Timeline for " + this.documents.length + " Documents";
   },
 
-  // Pilfered from http://paulirish.com/2009/random-hex-color-code-snippets/
-  randomColor : function() {
-    return '#' + Math.floor(Math.random() * 16777215).toString(16);
-  },
-
   _loadDates : function() {
     var dates = _.pluck(this.documents, 'id');
     $.getJSON('/documents/dates', {'ids[]' : dates}, _.bind(this._plotDates, this));
@@ -53,14 +50,14 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   // Chart the dates for the selected documents.
   _plotDates : function(resp) {
-    var me = this;
+    var color = this.POINT_COLOR;
     var series = {}, styles = {};
     var seriesCount = 0;
     var data = _.each(resp.dates, function(json) {
       var id = json.document_id;
       if (!series[id]) {
         series[id] = [];
-        styles[id] = {pos : seriesCount++, color : me.randomColor()};
+        styles[id] = {pos : seriesCount++, color : color};
       }
       series[id].push([json.date * 1000, styles[id].pos]);
     });
