@@ -12,6 +12,11 @@ class DocumentsController < ApplicationController
       format.pdf  { redirect_to(current_document.pdf_url) }
       format.text { redirect_to(current_document.full_text_url) }
       format.html { @edits_enabled = true }
+      format.json do
+        @response = current_document.canonical
+        return if jsonp_request?
+        render :json => @response
+      end
     end
   end
 
