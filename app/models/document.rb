@@ -21,7 +21,7 @@ class Document < ActiveRecord::Base
 
   after_destroy :delete_assets
 
-  delegate :text, :to => :full_text
+  delegate :text, :to => :full_text, :allow_nil => true
 
   named_scope :chronological, {:order => 'created_at desc'}
 
