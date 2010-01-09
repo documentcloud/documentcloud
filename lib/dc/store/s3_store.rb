@@ -42,6 +42,10 @@ module DC
         save_file(document.text, document.full_text_path, access, :string => true)
       end
 
+      def save_rdf(document, rdf, access=DEFAULT_ACCESS)
+        save_file(rdf, document.rdf_path, DC::Access::PRIVATE, :string => true)
+      end
+
       def save_page_images(page, images, access=DEFAULT_ACCESS)
         save_file(images[:normal_image], page.image_path('normal'), access)
         save_file(images[:large_image], page.image_path('large'), access)

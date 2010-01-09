@@ -1,8 +1,8 @@
 TODO:
       
   * Think about the common filters for searching: Dates, Orgs, Accounts.
-  
-  * Get a real production server setup, and start deploying there as well.
+    
+  * Figure out our own taxonomy and map all the OpenCalais categories into it.
   
   
 WAITING ON DESIGN:
@@ -28,16 +28,12 @@ WAITING ON DESIGN:
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Make 'em removable.
-        
-
-WAITING ON CALAIS SHAKEDOWN:
-  
-  * Figure out our own taxonomy and map all the OpenCalais categories into it.
   
 
 AFTER BETA:
 
   * Implement http://nlp.stanford.edu/software/CRF-NER.shtml, alongside Calais.
+    Or, perhaps, AlchemyAPI.
   
   * Flesh out a more comprehensive API.
   
@@ -46,6 +42,8 @@ AFTER BETA:
       
 
 DONE:
+
+  * Get a real production server setup, and start deploying there as well.
   
   * Add appropriate indexes for documents and metadata.
 

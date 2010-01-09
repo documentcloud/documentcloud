@@ -29,19 +29,10 @@ class MetadataExtractorTest < ActiveSupport::TestCase
       assert category.document_id == @doc.id
     end
 
-    # Although we really shouldn't be asking Calais for the full text,
-    # it's handy for loading the WikiNews Calais RDF corpus for testing.
-    should "be able to extract the document's full text" do
-      assert @doc.full_text
-      assert @doc.full_text.text[0...30] == "At least 24 states across the "
-      assert @doc.summary == @doc.full_text.text[0...255]
-    end
-
     should "be able to extract the Calais-identified entities" do
-      assert @doc.metadata.length == 33
+      assert @doc.metadata.length == 28
       assert @doc.metadata.map(&:kind).uniq.sort ==
-        %w(category city country facility industry_term natural_feature
-           organization person position province_or_state region technology)
+        %w(category city country organization person place state technology term)
 
       meta = @doc.metadata[-2]
       assert meta.value     == "Pennsylvania Department of Agriculture"

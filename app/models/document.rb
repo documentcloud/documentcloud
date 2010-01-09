@@ -80,6 +80,11 @@ class Document < ActiveRecord::Base
     File.join(path, slug + '.pdf')
   end
 
+  # Ex: docs/1011/sec-madoff-investigation.rdf
+  def rdf_path
+    File.join(path, slug + '.rdf')
+  end
+
   # Ex: docs/1011/sec-madoff-investigation.jpg
   def thumbnail_path
     File.join(path, slug + '.jpg')

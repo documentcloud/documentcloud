@@ -20,7 +20,7 @@ class Metadatum < ActiveRecord::Base
   # We don't pay attention to all kinds of Calais-generated metadata, just
   # most of them. Checks the whitelist.
   def self.acceptable_kind?(kind)
-    DC::CALAIS_KINDS.include? kind.underscore.to_sym
+    !!DC::CALAIS_MAP[kind.underscore.to_sym]
   end
 
   # Instead of having a separate table for occurrences, we serialize them to

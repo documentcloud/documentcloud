@@ -8,12 +8,15 @@ module DC
 
       OVER_CALAIS_QPS = '<h1>403 Developer Over Qps</h1>'
 
+      attr_reader :rdf
+
       # Public API: Pass in a document, either with full_text or rdf already
       # attached.
       def extract_metadata(document, opts={})
         document.metadata = []
-        response = opts[:rdf] ? Calais::Response.new(opts[:rdf]) : fetch_entities(document)
-        extract_full_text(document, response, opts[:rdf])
+        @rdf = opts[:rdf] || fetch_entities(document)
+        response = Calais::Response.new(@rdf)
+        # extract_full_text(document, response, rdf)
         extract_standard_metadata(document, response)
         extract_categories(document, response)
         extract_entities(document, response)
@@ -26,14 +29,17 @@ module DC
       # If the document has full_text, we can go fetch the RDF from Calais.
       def fetch_entities(document)
         begin
-          rdf = DC::Import::CalaisFetcher.new.fetch_rdf(document.text)
-          return Calais::Response.new(rdf)
+          DC::Import::CalaisFetcher.new.fetch_rdf(document.text)
         rescue Calais::Error, Curl::Err => e
           Rails.logger.warn e.message
           return nil if e.message == 'Calais continues to expand its list of supported languages, but does not yet support your submitted content.'
           Rails.logger.warn 'waiting 10 seconds'
           sleep 10
           retry
+        rescue Exception => e
+          puts e.message
+          puts e.class
+          raise e
         end
       end
 
@@ -67,7 +73,7 @@ module DC
           occurrences = entity.instances.map {|i| Occurrence.new(i.offset, i.length) }
           extracted << Metadatum.new(
             :value        => entity.attributes['name'],
-            :kind         => entity.type.underscore,
+            :kind         => DC::CALAIS_MAP[entity.type.underscore.to_sym].to_s,
             :relevance    => entity.relevance,
             :document     => document,
             :occurrences  => Occurrence.to_csv(occurrences),

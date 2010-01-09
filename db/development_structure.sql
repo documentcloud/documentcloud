@@ -169,7 +169,9 @@ CREATE TABLE documents (
     calais_id character varying(40),
     publication_date date,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    documents_title_vector tsvector,
+    documents_source_vector tsvector
 );
 
 
@@ -716,6 +718,20 @@ CREATE INDEX annotations_content_fti ON annotations USING gin (annotations_conte
 
 
 --
+-- Name: documents_source_fti; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX documents_source_fti ON documents USING gin (documents_source_vector);
+
+
+--
+-- Name: documents_title_fti; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX documents_title_fti ON documents USING gin (documents_title_vector);
+
+
+--
 -- Name: fk_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -751,6 +767,20 @@ CREATE INDEX index_bookmarks_on_account_id ON bookmarks USING btree (account_id)
 
 
 --
+-- Name: index_documents_on_access; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_documents_on_access ON documents USING btree (access);
+
+
+--
+-- Name: index_documents_on_account_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_documents_on_account_id ON documents USING btree (account_id);
+
+
+--
 -- Name: index_full_text_on_document_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -762,6 +792,20 @@ CREATE UNIQUE INDEX index_full_text_on_document_id ON full_text USING btree (doc
 --
 
 CREATE INDEX index_labels_on_account_id ON labels USING btree (account_id);
+
+
+--
+-- Name: index_metadata_on_document_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_metadata_on_document_id ON metadata USING btree (document_id);
+
+
+--
+-- Name: index_metadata_on_kind; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_metadata_on_kind ON metadata USING btree (kind);
 
 
 --
@@ -838,6 +882,26 @@ CREATE TRIGGER annotations_content_vector_update
 
 
 --
+-- Name: documents_source_vector_update; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER documents_source_vector_update
+    BEFORE INSERT OR UPDATE ON documents
+    FOR EACH ROW
+    EXECUTE PROCEDURE tsvector_update_trigger('documents_source_vector', 'pg_catalog.english', 'source');
+
+
+--
+-- Name: documents_title_vector_update; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER documents_title_vector_update
+    BEFORE INSERT OR UPDATE ON documents
+    FOR EACH ROW
+    EXECUTE PROCEDURE tsvector_update_trigger('documents_title_vector', 'pg_catalog.english', 'title');
+
+
+--
 -- Name: full_text_text_vector_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -872,3 +936,7 @@ CREATE TRIGGER pages_text_vector_update
 --
 
 INSERT INTO schema_migrations (version) VALUES ('1');
+
+INSERT INTO schema_migrations (version) VALUES ('20100108163304');
+
+INSERT INTO schema_migrations (version) VALUES ('20100108172251');

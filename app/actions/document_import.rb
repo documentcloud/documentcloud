@@ -54,7 +54,9 @@ class DocumentImport < CloudCrowd::Action
     document.full_text  = FullText.new(:text => text, :document => document)
     document.summary    = document.full_text.summary
     document.save!
-    DC::Import::MetadataExtractor.new.extract_metadata(document)
+    meta_extractor      = DC::Import::MetadataExtractor.new
+    meta_extractor.extract_metadata(document)
+    asset_store.save_rdf(document, meta_extractor.rdf, DC::Access::PRIVATE)
     asset_store.save_full_text(document, access)
     document.id
   end

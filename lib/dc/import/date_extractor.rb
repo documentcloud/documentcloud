@@ -35,7 +35,10 @@ module DC
 
       def scan_for(matcher)
         @scanner.reset
-        @dates << to_date(@scanner.matched) while @scanner.scan_until(matcher)
+        while @scanner.scan_until(matcher)
+          date = to_date(@scanner.matched)
+          @dates << date if date
+        end
       end
 
       def to_date(string)

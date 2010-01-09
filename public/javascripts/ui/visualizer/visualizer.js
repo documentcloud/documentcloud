@@ -110,7 +110,7 @@ dc.ui.Visualizer = dc.View.extend({
     var selectedIds = Documents.selectedIds();
     var linear = this.modes.format == 'linear';
 
-    var title = (this._kindFilter ? Metadata.KIND_MAP[this._kindFilter] : 'Most Relevant') + ':';
+    var title = (this._kindFilter ? Inflector.pluralize(Inflector.spacify(this._kindFilter)) : 'Most Relevant') + ':';
     el.append($.el('div', {id : 'visualization_title', 'class' : 'serif'}, title));
 
     var links = $.el('div', {id : 'viz_types'}, '<span id="viz_line">linear</span> | <span id="viz_circle">circular</span>');

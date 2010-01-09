@@ -23,6 +23,10 @@ window.Inflector = {
     return s.replace(/::/g, '/').replace(/([A-Z]+)([A-Z][a-z])/g,'$1_$2').replace(/([a-z\d])([A-Z])/g,'$1_$2').replace(/-/g,'_').toLowerCase();
   },
 
+  spacify: function(s) {
+    return s.replace(/_/g, ' ');
+  },
+
   dasherize: function(s) {
     return s.replace(/_/g,'-');
   },
@@ -31,9 +35,13 @@ window.Inflector = {
     return s.replace(/e?s$/, '');
   },
 
-  // Only works for words that pluralize by adding an 's'.
+  // Only works for words that pluralize by adding an 's', end in a 'y', or
+  // that we've special-cased. Not comprehensive.
   pluralize: function(s, count) {
-    return count != 1 ? s + 's' : s;
+    if (count == 1) return s;
+    if (s == 'person') return 'people';
+    if (s.match(/y$/i)) return s.replace(/y$/i, 'ies');
+    return s + 's';
   },
 
   classify: function(s) {

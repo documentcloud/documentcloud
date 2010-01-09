@@ -36,6 +36,11 @@ module DC
         File.open(local(document.full_text_path), 'w+') {|f| f.write(document.text) }
       end
 
+      def save_rdf(document, rdf, access=nil)
+        ensure_directory(document.path)
+        File.open(local(document.rdf_path), 'w+') {|f| f.write(rdf) }
+      end
+
       def save_page_images(page, images, access=nil)
         ensure_directory(page.pages_path)
         FileUtils.cp(images[:normal_image], local(page.image_path('normal')))

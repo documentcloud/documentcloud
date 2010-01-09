@@ -4,16 +4,31 @@
 # keep the two in sync.
 
 module DC
-  
-  CALAIS_KINDS = [
-    :city, :company, :continent, :country, :email_address, :facility, 
-    :holiday, :industry_term, :natural_feature, :organization, :person,
-    :position, :product, :province_or_state, :published_medium, :region,
-    :technology, :url
+
+  # The normalized list of metadata kinds that DocumentCloud supports.
+  METADATA_KINDS = [
+    :organization, :place, :city, :country, :term, :person, :state,
+    :publication, :technology, :category, :date
   ]
-  
-  CALAIS_KINDS_STRINGS = CALAIS_KINDS.map(&:to_s)
-  
-  VALID_KINDS = CALAIS_KINDS_STRINGS + ['category']
-  
+
+  # Supported metadata kinds as strings for Rails validation.
+  VALID_KINDS = METADATA_KINDS.map(&:to_s)
+
+  # Mapping from OpenCalais metadata kinds into DocumentCloud metadata kinds.
+  # OpenCalais types not on this list don't make the cut.
+  CALAIS_MAP = {
+    :company            => :organization,
+    :organization       => :organization,
+    :facility           => :place,
+    :natural_feature    => :place,
+    :city               => :city,
+    :country            => :country,
+    :industry_term      => :term,
+    :person             => :person,
+    :province_or_state  => :state,
+    :published_medium   => :publication,
+    :technology         => :technology,
+    :category           => :category
+  }
+
 end
