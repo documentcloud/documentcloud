@@ -23,11 +23,13 @@ module DC
         /#{DIGITS}\s+#{MONTHS},?\s+#{DIGITS}/i
       ]
 
+      # Extracts only the unique dates within the text. Duplicate dates are
+      # ignored.
       def extract_dates(text)
-        @dates = []
+        @dates = {}
         @scanner = StringScanner.new(text)
         DATE_MATCHERS.each {|matcher| scan_for(matcher) }
-        @dates
+        @dates.keys
       end
 
 
@@ -37,7 +39,7 @@ module DC
         @scanner.reset
         while @scanner.scan_until(matcher)
           date = to_date(@scanner.matched)
-          @dates << date if date
+          @dates[date] = true if date
         end
       end
 
