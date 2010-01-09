@@ -7,11 +7,12 @@ class Document < ActiveRecord::Base
 
   DEFAULT_TITLE = "Untitled Document"
 
-  has_one  :full_text,    :dependent => :destroy
-  has_many :pages,        :dependent => :destroy
-  has_many :metadata,     :dependent => :destroy
-  has_many :sections,     :dependent => :destroy
-  has_many :annotations,  :dependent => :destroy
+  has_one  :full_text,      :dependent => :destroy
+  has_many :pages,          :dependent => :destroy
+  has_many :metadata,       :dependent => :destroy
+  has_many :metadata_dates, :dependent => :destroy
+  has_many :sections,       :dependent => :destroy
+  has_many :annotations,    :dependent => :destroy
 
   validates_presence_of :organization_id, :account_id, :access, :page_count,
                         :title, :slug

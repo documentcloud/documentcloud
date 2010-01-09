@@ -53,6 +53,7 @@ class DocumentImport < CloudCrowd::Action
     text                = document.combined_page_text
     document.full_text  = FullText.new(:text => text, :document => document)
     document.summary    = document.full_text.summary
+    MetadataDate.refresh(document)
     document.save!
     meta_extractor      = DC::Import::MetadataExtractor.new
     meta_extractor.extract_metadata(document)

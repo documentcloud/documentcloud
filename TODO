@@ -1,9 +1,10 @@
 TODO:
       
   * Think about the common filters for searching: Dates, Orgs, Accounts.
-    
-  * Figure out our own taxonomy and map all the OpenCalais categories into it.
   
+  * Add dates with a special faux-metadata table (date columns, not strings).
+    Migrate all existing documents to store their dates.
+    
   
 WAITING ON DESIGN:
 
@@ -42,6 +43,8 @@ AFTER BETA:
       
 
 DONE:
+
+  * Figure out our own taxonomy and map all the OpenCalais categories into it.
 
   * Get a real production server setup, and start deploying there as well.
   
