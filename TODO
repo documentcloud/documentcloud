@@ -1,9 +1,6 @@
 TODO:
       
   * Think about the common filters for searching: Dates, Orgs, Accounts.
-  
-  * Add dates with a special faux-metadata table (date columns, not strings).
-    Migrate all existing documents to store their dates.
     
   
 WAITING ON DESIGN:
@@ -43,6 +40,9 @@ AFTER BETA:
       
 
 DONE:
+
+  * Add dates with a special faux-metadata table (date columns, not strings).
+    Migrate all existing documents to store their dates.
 
   * Figure out our own taxonomy and map all the OpenCalais categories into it.
 

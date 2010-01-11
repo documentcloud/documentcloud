@@ -62,7 +62,6 @@ module DC
         return   nil unless valid_year?(list.first) || valid_year?(list.last)
         date =   string.gsub(SEP_REGEX, '/').to_time.to_date rescue nil
         date ||= string.gsub(SEP_REGEX, '-').to_time.to_date rescue nil
-        return   nil if date && date.year >= 2038
         date
       end
 

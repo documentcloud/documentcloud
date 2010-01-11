@@ -14,9 +14,11 @@ class MetadataDate < ActiveRecord::Base
     end
   end
 
+  # NB: We use "to_f.to_i" because "to_i" isn't defined for DateTime objects
+  # that fall outside a distance of 30 bits from the regular UNIX Epoch.
   def to_json(options=nil)
     {'document_id'  => document_id,
-     'date'         => date.to_time.to_i }.to_json
+     'date'         => date.to_time.to_f.to_i }.to_json
   end
 
 end
