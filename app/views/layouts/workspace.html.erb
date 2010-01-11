@@ -7,6 +7,9 @@
   <% css = [:app, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
   <%= include_stylesheets *css %>
   <%= include_javascripts :workspace %>
+  <!--[if IE]>
+    <%= include_javascripts :ie_only %>
+  <![endif]-->
   <%= include_templates :complete %>
   <%= render :partial => 'common/bootstrap' %>
 </head>

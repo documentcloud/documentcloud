@@ -12,6 +12,8 @@ javascripts:
     - public/javascripts/lib/*.js
     - public/javascripts/ui/menu.js
     - public/javascripts/**/*.js
+  ie_only:
+    - public/javascripts/ie/*.js
 
 stylesheets:
   app:
