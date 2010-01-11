@@ -1,5 +1,3 @@
-require 'maruku'
-
 class StaticController < ApplicationController
 
   Dir.glob(RAILS_ROOT + '/app/views/static/*.markdown').map do |template|
@@ -10,5 +8,5 @@ class StaticController < ApplicationController
       render :inline => html, :layout => true
     end
   end
-  
+
 end
