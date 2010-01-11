@@ -88,7 +88,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     var format = this.DATE_FORMAT;
     $(this.plot).bind('plothover', function(e, pos, item) {
       if (!item) return dc.ui.tooltip.hide();
-      var title = Documents.get(item.series.docId).get('title');
+      var title = Inflector.truncate(Documents.get(item.series.docId).get('title'), 35);
       var date  = $.plot.formatDate(new Date(item.datapoint[0]), format);
       dc.ui.tooltip.show({
         left : pos.pageX,
