@@ -79,12 +79,12 @@
   min-width: 100px;
 }
 #account_list span.edit_account {
-  opacity: 0;
+  opacity: 0; filter: alpha(opacity=0);
   -webkit-transition: opacity 0.2s linear;
   color: #353566;
 }
   #account_list tbody tr:hover span.edit_account {
-    opacity: 1;
+    opacity: 1; filter: alpha(opacity=100);
   }
 #account_list button.save_changes {
   display: inline-block;

@@ -48,7 +48,7 @@ a {
   }
 
 #save_search {
-  opacity: 0;
+  opacity: 0; filter: alpha(opacity=0);
   position: absolute;
   top: 71px; right: 10px;
 /*  top: 128px; right: 15px;*/
@@ -219,7 +219,7 @@ a {
   #no_uploads .icon {
     position: absolute;
     top: 4px; left: 4px;
-    opacity: 0.75;
+    opacity: 0.75; filter: alpha(opacity=75);
   }
 
 .full_page_background {

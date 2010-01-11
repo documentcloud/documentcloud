@@ -28,7 +28,7 @@
     display: inline;
     cursor: pointer;
     position: absolute;
-    opacity: 0.75;
+    opacity: 0.75; filter: alpha(opacity=75);
     margin-top: -2px;
   }
     .metalist.less_shown .toggle .less,

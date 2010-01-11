@@ -87,11 +87,11 @@
       display: block;
       float: left;
       padding-left: 10px;
-      opacity: 0.5;
+      opacity: 0.5; filter: alpha(opacity=50);
       -webkit-transition: opacity 0.2s linear;
     }
       .document_tile:hover .document_tools {
-        opacity: 1;
+        opacity: 1; filter: alpha(opacity=100);
       }
       .document_tools > div {
         float: left;

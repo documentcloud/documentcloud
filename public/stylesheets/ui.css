@@ -64,7 +64,7 @@ span.text_input {
     background: -webkit-gradient(linear, left top, left bottom, from(#eef), to(#bbe));
   }
   .minibutton.disabled {
-    opacity: 0.33;
+    opacity: 0.33; filter: alpha(opacity=33);
     cursor: default;
   }
     .minibutton.disabled:hover {
@@ -85,7 +85,7 @@ span.text_input {
   width: 150px;
   background: white;
   padding: 4px;
-  opacity: 0.95;
+  opacity: 0.95; filter: alpha(opacity=95);
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   -webkit-box-shadow: 0 3px 7px #777; -moz-box-shadow: 0 3px 7px #777;
 }

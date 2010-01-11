@@ -26,7 +26,7 @@
     #organizer .box .icon.delete {
       display: none;
       position: absolute;
-      opacity: 0.65;
+      opacity: 0.65; filter: alpha(opacity=65);
       top: -8px; left: -8px;
     }
       #organizer .box:hover .icon.delete {
