@@ -3,6 +3,8 @@ TODO:
   * Add a warning about deleting annotations.
   
   * Figure out a reasonable way to do phrase-based searches.
+  
+  * Ask postgres guys about index bloat, phrase search.
         
   
 WAITING ON DESIGN:
