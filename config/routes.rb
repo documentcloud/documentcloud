@@ -16,6 +16,14 @@ ActionController::Routing::Routes.draw do |map|
     main.todo       '/todo',        :action => 'todo'
   end
 
+  # Map the static pages
+  map.with_options :controller => 'static' do |main|
+    Dir.glob(RAILS_ROOT + '/app/views/static/*.markdown').each do |template|
+      base = template.match(/([a-z_\-]*)\.markdown$/i)[1]
+      main.static "/" + base, :action => base
+    end
+  end
+
   # Document representations and (private) sub-resources.
   map.resources  :documents,
                  :collection => {:metadata => :get, :dates => :get},
