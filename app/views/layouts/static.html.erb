@@ -4,17 +4,56 @@
 <head>
   <%= render :partial => 'common/meta_tags' %>
   <title><%= @title %> | DocumentCloud</title>
-  <% css = [:app, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
-  <%= include_stylesheets *css %>
-  <%= include_javascripts :workspace %>
-  <%= include_templates :complete %>
-  <%= render :partial => 'common/bootstrap' %>
+	<style type="text/css">
+
+		body {
+			background: #fff;
+			font-family: Helvetica, "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+			font-size: 13px;
+			color: #222;
+			padding: 0;
+			margin: 0;
+		}
+
+		#container {
+			margin: 10px auto;
+			width: 720px;
+		}
+
+		#content {
+			margin: 30px;
+		}
+			#content ul {
+				list-style: none;
+				padding: 0;
+				margin: 5px 10px;
+			}
+				#content ul li {
+					line-height: 2em;
+				}
+					#content ul li a {
+						font-weight: bold;
+					}
+			#content a:link, #content a:active, #content a:visited {
+				color: #4c8099;
+			}
+			#content a:hover {
+				color: #000;
+			}
+
+
+	</style>
 </head>
 <body>
+
+  <div id="container">
+		<img src="/images/common/document_cloud_logo_large.png" alt="DocumentCloud">
 
     <div id="content">
       <%= yield %>
     </div>
+
+  </div>
 
 </body>
 </html>

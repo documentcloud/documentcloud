@@ -20,7 +20,8 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => 'static' do |main|
     Dir.glob(RAILS_ROOT + '/app/views/static/*.erb').each do |template|
       base = template.match(/([a-z][a-z_\-]*)\.erb$/i)[1]
-      main.static "/" + base, :action => base
+      pretty = base.gsub('_', '-')
+      main.static "/" + pretty, :action => base
     end
   end
 
