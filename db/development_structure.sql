@@ -279,6 +279,39 @@ CREATE TABLE metadata (
 
 
 --
+-- Name: metadata_dates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE metadata_dates (
+    id integer NOT NULL,
+    organization_id integer NOT NULL,
+    account_id integer NOT NULL,
+    document_id integer NOT NULL,
+    access integer NOT NULL,
+    date date NOT NULL
+);
+
+
+--
+-- Name: metadata_dates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE metadata_dates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: metadata_dates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE metadata_dates_id_seq OWNED BY metadata_dates.id;
+
+
+--
 -- Name: metadata_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -560,6 +593,13 @@ ALTER TABLE metadata ALTER COLUMN id SET DEFAULT nextval('metadata_id_seq'::regc
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE metadata_dates ALTER COLUMN id SET DEFAULT nextval('metadata_dates_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE organizations ALTER COLUMN id SET DEFAULT nextval('organizations_id_seq'::regclass);
 
 
@@ -652,6 +692,14 @@ ALTER TABLE ONLY full_text
 
 ALTER TABLE ONLY labels
     ADD CONSTRAINT labels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: metadata_dates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY metadata_dates
+    ADD CONSTRAINT metadata_dates_pkey PRIMARY KEY (id);
 
 
 --
@@ -792,6 +840,13 @@ CREATE UNIQUE INDEX index_full_text_on_document_id ON full_text USING btree (doc
 --
 
 CREATE INDEX index_labels_on_account_id ON labels USING btree (account_id);
+
+
+--
+-- Name: index_metadata_dates_on_document_id_and_date; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_metadata_dates_on_document_id_and_date ON metadata_dates USING btree (document_id, date);
 
 
 --
@@ -940,3 +995,9 @@ INSERT INTO schema_migrations (version) VALUES ('1');
 INSERT INTO schema_migrations (version) VALUES ('20100108163304');
 
 INSERT INTO schema_migrations (version) VALUES ('20100108172251');
+
+INSERT INTO schema_migrations (version) VALUES ('20100109025746');
+
+INSERT INTO schema_migrations (version) VALUES ('20100109035508');
+
+INSERT INTO schema_migrations (version) VALUES ('20100109041445');
