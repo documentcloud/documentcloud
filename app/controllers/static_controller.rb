@@ -1,6 +1,15 @@
 class StaticController < ApplicationController
 
+  # Get the page title from the content of the first line of the template.
+  def set_title(name)
+    File.open(RAILS_ROOT + "/app/views/static/#{name}.erb") do |file|
+      @title = (file.readline.match />(.*)</)[1]
+    end
+  end
+
+
   def code
+    set_title('code')
     @news = [
       [ "2009 Open Source Top Ten",
         "http://ozmm.org/posts/2009_open_source_top_ten.html",
@@ -44,9 +53,11 @@ class StaticController < ApplicationController
   end
 
   def faq
+    set_title('faq')
   end
 
   def document_contributors
+    set_title('document_contributors')
   end
 
 end
