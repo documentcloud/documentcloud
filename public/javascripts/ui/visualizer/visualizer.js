@@ -128,6 +128,7 @@ dc.ui.Visualizer = dc.View.extend({
 
     var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.height()});
     el.append(canvas);
+    if (window.G_vmlCanvasManager) G_vmlCanvasManager.initElement(canvas);
     var ctx = canvas.getContext('2d');
     ctx.lineCap = "round";
 
