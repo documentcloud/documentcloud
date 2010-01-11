@@ -1,7 +1,7 @@
 dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   GRAPH_OPTIONS : {
-    xaxis     : {mode : 'time', minTickSize: [1, "month"]},
+    xaxis     : {mode : 'time', minTickSize: [1, "day"]},
     yaxis     : {ticks: [], min: -0.5},
     selection : {mode : 'x', color: '#bbf'},
     legend    : {show : false},
@@ -79,6 +79,8 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
       return {data : val, color : styles[key].color, docId : key};
     });
     this._options = _.clone(this.GRAPH_OPTIONS);
+    this._options.xaxis.min = null;
+    this._options.xaxis.max = null;
     this._options.yaxis.max = seriesCount - 0.5;
     this.drawPlot();
   },
