@@ -18,8 +18,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # Map the static pages
   map.with_options :controller => 'static' do |main|
-    Dir.glob(RAILS_ROOT + '/app/views/static/*.markdown').each do |template|
-      base = template.match(/([a-z_\-]*)\.markdown$/i)[1]
+    Dir.glob(RAILS_ROOT + '/app/views/static/*.erb').each do |template|
+      base = template.match(/([a-z][a-z_\-]*)\.erb$/i)[1]
       main.static "/" + base, :action => base
     end
   end
