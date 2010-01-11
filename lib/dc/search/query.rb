@@ -93,8 +93,11 @@ module DC
 
       # Generate the SQL needed to run a full-text search.
       def generate_text_sql
+        # quoted = @text[Matchers::QUOTED_VALUE, 1]
+        # like_part = quoted ? ' and text ilike ?' : ''
         @sql << "(full_text_text_vector @@ plainto_tsquery(?) or documents_title_vector @@ plainto_tsquery(?))"
         @interpolations += [@text, @text]
+        # @interpolations << "%#{quoted}%" if quoted
         @joins << :full_text
       end
 
