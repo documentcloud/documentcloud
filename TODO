@@ -1,9 +1,9 @@
 TODO:
       
   * Add a warning about deleting annotations.
-      
-  * Think about the common filters for searching: Dates, Orgs, Accounts.
-    
+  
+  * Figure out a reasonable way to do phrase-based searches.
+        
   
 WAITING ON DESIGN:
 
