@@ -5,6 +5,14 @@ TODO:
   * Figure out a reasonable way to do phrase-based searches.
   
   * Ask postgres guys about index bloat, phrase search.
+  
+  * Think about somehow getting hold of the page numbers on which each piece
+    of metadata occurs, both Metadatum and MetadataDate (we could do this by
+    reading in all of the pages into memory, looking at the page lengths,
+    and making a map) -- then, provide links directly from the workspace to the
+    page where the entity or date occurs.
+    
+  * Merge in latest Aristo CSS.
         
   
 WAITING ON DESIGN:
