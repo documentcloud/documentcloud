@@ -1,0 +1,42 @@
+news:
+  - - 2009 Open Source Top Ten
+    - http://ozmm.org/posts/2009_open_source_top_ten.html
+    - Ones, Zeros, Majors and Minors
+    - 2009-12-17
+  - - "Episode 0.0.5 \xE2\x80\x93 Document Cloud"
+    - http://thechangelog.com/post/272530971/episode-0-0-5-document-cloud
+    - The Changelog
+    - 2009-12-06
+  - - "Scaling Rails \xE2\x80\x93 On The Edge \xE2\x80\x93 Part 3"
+    - http://blog.envylabs.com/2009/11/scaling-rails-part-3/
+    - Envy Labs
+    - 2009-11-25
+  - - "Jammit: Industrial Strength Asset Packaging for Rails Apps"
+    - http://www.railsinside.com/plugins/354-jammit-industrial-strength-asset-packaging-for-rails-apps.html
+    - Rails Inside
+    - 2009-11-17
+  - - "New library gives JS what it should have"
+    - http://ajaxian.com/archives/would-you-like-a-_-with-that-new-library-gives-js-what-it-should-have
+    - Ajaxian
+    - 2009-10-29
+  - - "Ruby5 \xE2\x80\x93 Episode 10"
+    - http://ruby5.envylabs.com/episodes/11-episode-10-september-15-2009/stories/86-cloudcrowd-parallel-processing-for-the-rest-of-us
+    - Ruby5
+    - 2009-09-15
+
+github:
+  - - underscore
+    - http://documentcloud.github.com/underscore/
+    - Functional Programming Aid for Javascript. Works well with jQuery.
+  - - jammit
+    - http://documentcloud.github.com/jammit/
+    - Industrial Strength Asset Packaging for Rails
+  - - docsplit
+    - http://documentcloud.github.com/docsplit/
+    - Break Apart Documents into Images, Text, Pages and PDFs
+  - - cloud-crowd
+    - http://wiki.github.com/documentcloud/cloud-crowd
+    - Parallel Processing for the Rest of Us
+  - - closure-compiler
+    - http://github.com/documentcloud/closure-compiler
+    - A Ruby Wrapper for the Google Closure Compiler

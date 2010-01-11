@@ -30,6 +30,8 @@ stylesheets:
     - public/stylesheets/ui.css
     - public/stylesheets/icons.css
     - public/stylesheets/pages/viewer_editing.css
+  website:
+    - public/stylesheets/pages/website.css
 
 templates:
   complete:

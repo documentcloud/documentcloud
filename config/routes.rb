@@ -5,24 +5,15 @@ ActionController::Routing::Routes.draw do |map|
 
   # API Controller uses default routes, for now.
 
-  # Workspace and surrounding HTML.
+  # Journalist workspace and surrounding HTML.
   map.with_options :controller => 'workspace' do |main|
     main.root
-    main.home       '/home',        :action => 'home'
+    main.home       '/future_home', :action => 'home' # re-enable this route after launch, until then, it's static/home
     main.results    '/results',     :action => 'index'
     main.signup     '/signup',      :action => 'signup'
     main.login      '/login',       :action => 'login'
     main.logout     '/logout',      :action => 'logout'
     main.todo       '/todo',        :action => 'todo'
-  end
-
-  # Map the static pages
-  map.with_options :controller => 'static' do |main|
-    Dir.glob(RAILS_ROOT + '/app/views/static/*.erb').each do |template|
-      base = template.match(/([a-z][a-z_\-]*)\.erb$/i)[1]
-      pretty = base.gsub('_', '-')
-      main.static "/" + pretty, :action => base
-    end
   end
 
   # Document representations and (private) sub-resources.
@@ -54,6 +45,16 @@ ActionController::Routing::Routes.draw do |map|
 
   # Bookmarks.
   map.resources :bookmarks
+
+  # Static pages.
+  map.with_options :controller => 'static' do |static|
+    static.contributors   '/contributors',  :action => 'contributors'
+    static.faq            '/faq',           :action => 'faq'
+    static.faq            '/home',          :action => 'home'
+    static.news           '/news',          :action => 'news'
+    static.opensource     '/opensource',    :action => 'opensource'
+    static.about          '/about',         :action => 'about'
+  end
 
   # Asset packages.
   Jammit::Routes.draw(map)
