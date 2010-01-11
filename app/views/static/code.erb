@@ -3,14 +3,7 @@
 <p>We’re <a href="http://www.pbs.org/idealab/2009/10/documentcloud-going-open-source-every-step-of-the-way302.html">releasing as we go</a>, so please follow our work if you’re interested in what lies under the hood of DocumentCloud.</p>
 
 <h2>Our Code in the News</h2>
-<ul>
-  <% @news.each do |title, url, author, date| %>
-  <li>
-    <a href="<%= h(url) %>"><%= h(title) %></a>
-    (<em><%= h(author) %></em>, <%= date.strftime("%d %B, %Y") %>)
-  </li>
-  <% end %>
-</ul>
+<%= render :partial => "news" %>
 
 <h2>Github Projects</h2>
 <ul>

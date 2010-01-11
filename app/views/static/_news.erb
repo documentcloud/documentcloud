@@ -1,0 +1,8 @@
+<ul>
+  <% @news.each do |title, url, author, date| %>
+  <li>
+    <a href="<%= h(url) %>"><%= h(title) %></a>
+    (<em><%= h(author) %></em>, <%= date.strftime("%B %d, %Y") %>)
+  </li>
+  <% end %>
+</ul>
