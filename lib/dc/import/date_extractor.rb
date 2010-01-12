@@ -40,6 +40,7 @@ module DC
 
       private
 
+      # TODO: Extract the reusable part of this as a UTFStringScanner.
       def scan_for(matcher, text)
         scanner = StringScanner.new(text)
         last_byte, last_char = 0, 0
@@ -62,12 +63,14 @@ module DC
 
       # ActiveRecord's to_time only supports two-digit years up to 2038.
       # (because the UNIX epoch overflows 30 bits at that point, probably).
-      # For now, let's ignore dates without centuries.
+      # For now, let's ignore dates without centuries,
+      # and dates that are too far into the past or future.
       def to_date(string)
         list =   string.split(SPLITTER)
         return   nil unless valid_year?(list.first) || valid_year?(list.last)
         date =   string.gsub(SEP_REGEX, '/').to_time.to_date rescue nil
         date ||= string.gsub(SEP_REGEX, '-').to_time.to_date rescue nil
+        return   nil if date && (date.year < 0 || date.year > 2100)
         date
       end
 
