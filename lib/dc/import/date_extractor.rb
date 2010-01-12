@@ -15,7 +15,7 @@ module DC
 
       # List of cached Regexes we use to do the dirty date extraction work.
 
-      DIGITS      = "(\\d{1,4})"
+      DIGITS      = "(\\b\\d{1,4}\\b)"
       MONTHS      = "(jan(uary)?|feb(ruary)?mar(ch)?|apr(il)?|may|jun(e)?|jul(y)?|aug(ust)?|sep(tember)?|oct(ober)?|nov(ember)?|dec(ember)?)\.?"
       SEP         = "[.\\/-]"
 
@@ -40,7 +40,8 @@ module DC
 
       private
 
-      # TODO: Extract the reusable part of this as a UTFStringScanner.
+      # TODO: Extract the reusable part of this as a UTFStringScanner,
+      # as soon as we need it for another purpose.
       def scan_for(matcher, text)
         scanner = StringScanner.new(text)
         last_byte, last_char = 0, 0
