@@ -58,7 +58,7 @@ module DC
         end
       end
 
-      # Ignoring dates that are outside of two standard deviations ...
+      # Ignoring dates that are outside of three standard deviations ...
       # they're probably errors.
       def reject_outliers
         dates     = @dates.values.map {|d| d[:date] }
@@ -67,7 +67,7 @@ module DC
         nums      = dates.map {|d| d.to_time.to_f.to_i }
         mean      = nums.inject {|a, b| a + b } / count.to_f
         deviation = Math.sqrt(nums.inject(0){|sum, n| sum + (n - mean) ** 2 } / count.to_f)
-        allowed   = ((mean - 2.0 * deviation)..(mean + 2.0 * deviation))
+        allowed   = ((mean - 3.0 * deviation)..(mean + 3.0 * deviation))
         @dates.delete_if {|date, hash| !allowed.include?(date.to_time.to_f) }
       end
 
