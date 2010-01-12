@@ -18,7 +18,18 @@ class MetadataDate < ActiveRecord::Base
   # Instead of having a separate table for occurrences, we serialize them to
   # a CSV format on each Metadatum. Deserializes.
   def split_occurrences
-    Occurrence.from_csv(self.occurrences)
+    @split_occurrences ||= Occurrence.from_csv(self.occurrences)
+  end
+
+  # This method has to read the entire document contents into memory and
+  # convert to UTF8. Only for debugging, please.
+  def occurrence_text(context=0)
+    fragments = []
+    utf = document.text.mb_chars
+    split_occurrences.each do |occur|
+      fragments << utf[occur.offset - context, occur.length + (context * 2)].to_s
+    end
+    fragments
   end
 
   # NB: We use "to_f.to_i" because "to_i" isn't defined for DateTime objects
