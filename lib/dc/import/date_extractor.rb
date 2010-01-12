@@ -34,6 +34,7 @@ module DC
       def extract_dates(text)
         @dates = {}
         scan_for(DATE_MATCH, text)
+        reject_outliers
         @dates.values
       end
 
@@ -55,6 +56,19 @@ module DC
           last_byte, last_char = byte, char
           @dates[date][:occurrences].push(Occurrence.new(char, length))
         end
+      end
+
+      # Ignoring dates that are outside of two standard deviations ...
+      # they're probably errors.
+      def reject_outliers
+        dates     = @dates.values.map {|d| d[:date] }
+        count     = dates.length
+        return true if count < 10 # Not enough dates for detection.
+        nums      = dates.map {|d| d.to_time.to_f.to_i }
+        mean      = nums.inject {|a, b| a + b } / count.to_f
+        deviation = Math.sqrt(nums.inject(0){|sum, n| sum + (n - mean) ** 2 } / count.to_f)
+        allowed   = ((mean - 2.0 * deviation)..(mean + 2.0 * deviation))
+        @dates.delete_if {|date, hash| !allowed.include?(date.to_time.to_f) }
       end
 
       # Is a string a valid 4-digit year?
