@@ -19,8 +19,11 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   id : 'timeline_dialog',
 
   callbacks : [
-    ['.zoom_out',   'click',    '_zoomOut'],
-    ['.ok',         'click',    'confirm']
+    ['.zoom_out',       'click',        '_zoomOut'],
+    ['.ok',             'click',        'confirm'],
+    ['#timeline_plot',  'plothover',    '_showTooltop'],
+    ['#timeline_plot',  'plotselected', '_zoomIn'],
+    ['#timeline_plot',  'plotclick',    '_openPage']
   ],
 
   constructor : function(documents) {
@@ -41,8 +44,6 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     $('.text', this.el).append(this.plot);
     $(this.el).align($('#content')[0] || document.body, null, {top : -100});
     $('.controls', this.el).append($.el('button', {'class' : 'zoom_out'}, 'zoom out'));
-    this._createTooltip();
-    this._enableZooming();
     this.setCallbacks();
     return this;
   },
@@ -76,7 +77,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
       series[id].push([json.date * 1000, styles[id].pos]);
     });
     this._data = _.map(series, function(val, key) {
-      return {data : val, color : styles[key].color, docId : key};
+      return {data : val, color : styles[key].color, docId : parseInt(key, 10)};
     });
     this._options = _.clone(this.GRAPH_OPTIONS);
     this._options.xaxis.min = null;
@@ -86,30 +87,34 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   },
 
   // Create a tooltip to show a hovered date.
-  _createTooltip : function() {
-    var format = this.DATE_FORMAT;
-    $(this.plot).bind('plothover', function(e, pos, item) {
-      if (!item) return dc.ui.tooltip.hide();
-      var title = Inflector.truncate(Documents.get(item.series.docId).get('title'), 35);
-      var date  = $.plot.formatDate(new Date(item.datapoint[0]), format);
-      dc.ui.tooltip.show({
-        left : pos.pageX,
-        top  : pos.pageY,
-        text : title + "<br />" + date
-      });
+  _showTooltop : function(e, pos, item) {
+    if (!item) return dc.ui.tooltip.hide();
+    var title = Inflector.truncate(Documents.get(item.series.docId).get('title'), 35);
+    var date  = $.plot.formatDate(new Date(item.datapoint[0]), this.DATE_FORMAT);
+    dc.ui.tooltip.show({
+      left : pos.pageX,
+      top  : pos.pageY,
+      text : title + "<br />" + date
     });
   },
 
-  // Allow selection of date ranges to zoom in.
-  _enableZooming : function() {
-    this.plot.bind('plotselected', _.bind(function(e, ranges) {
-      this.setMode('on', 'zoom');
-      this._options.xaxis.min = ranges.xaxis.from;
-      this._options.xaxis.max = ranges.xaxis.to;
-      this.drawPlot();
-    }, this));
+  // Allow clicking on date ranges to jump to the page containing the date
+  // in the document.
+  _openPage : function(e, pos, item) {
+    var unixTime = item.datapoint[0] / 1000;
+    var doc = Documents.get(item.series.docId);
+    window.open(doc.get('document_viewer_url') + "?date=" + unixTime);
   },
 
+  // Allow selection of date ranges to zoom in.
+  _zoomIn : function(e, ranges) {
+    this.setMode('on', 'zoom');
+    this._options.xaxis.min = ranges.xaxis.from;
+    this._options.xaxis.max = ranges.xaxis.to;
+    this.drawPlot();
+  },
+
+  // Zoom back out to see the entire timeline.
   _zoomOut : function() {
     this.setMode('off', 'zoom');
     this._options.xaxis.min = null;

@@ -134,8 +134,10 @@ class Document < ActiveRecord::Base
     public? ? public_full_text_url : private_full_text_url
   end
 
-  def document_viewer_url
-    "#{DC_CONFIG['server_root']}/documents/#{id}-#{slug}.html"
+  def document_viewer_url(opts={})
+    suffix = ''
+    suffix = "#document/p#{opts[:page]}" if opts[:page]
+    "#{DC_CONFIG['server_root']}/documents/#{id}-#{slug}.html#{suffix}"
   end
 
   def search_url

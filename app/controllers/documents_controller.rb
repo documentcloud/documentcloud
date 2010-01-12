@@ -11,7 +11,10 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       format.pdf  { redirect_to(current_document.pdf_url) }
       format.text { redirect_to(current_document.full_text_url) }
-      format.html { @edits_enabled = true }
+      format.html do
+        return if date_requested?
+        @edits_enabled = true
+      end
       format.json do
         @response = current_document.canonical
         return if jsonp_request?
@@ -81,6 +84,14 @@ class DocumentsController < ApplicationController
 
 
   private
+
+  def date_requested?
+    return false unless params[:date]
+    date = Time.at(params[:date].to_i).to_date
+    meta = current_document.metadata_dates.first(:conditions => {:date => date})
+    page_number = meta.pages.first.page_number
+    redirect_to current_document.document_viewer_url(:page => page_number)
+  end
 
   def current_document(exists=false)
     @current_document ||= exists ?

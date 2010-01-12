@@ -24,12 +24,18 @@ class MetadataDate < ActiveRecord::Base
   # This method has to read the entire document contents into memory and
   # convert to UTF8. Only for debugging, please.
   def occurrence_text(context=0)
-    fragments = []
     utf = document.text.mb_chars
-    split_occurrences.each do |occur|
-      fragments << utf[occur.offset - context, occur.length + (context * 2)].to_s
+    split_occurrences.map do |occur|
+      utf[occur.offset - context, occur.length + (context * 2)].to_s
     end
-    fragments
+  end
+
+  # The pages on which this date occurs within the document.
+  def pages
+    conds = split_occurrences.map do |occur|
+      "(start_offset <= #{occur.offset} and end_offset > #{occur.offset})"
+    end
+    document.pages.all(:conditions => conds.join(' or '), :select => 'id, page_number')
   end
 
   # NB: We use "to_f.to_i" because "to_i" isn't defined for DateTime objects
