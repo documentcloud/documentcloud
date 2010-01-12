@@ -15,37 +15,43 @@ module DC
 
       # List of cached Regexes we use to do the dirty date extraction work.
 
-      DIGITS  = "(\\d{1,4})"
-      MONTHS  = "(jan(uary)?|feb(ruary)?mar(ch)?|apr(il)?|may|jun(e)?|jul(y)?|aug(ust)?|sep(tember)?|oct(ober)?|nov(ember)?|dec(ember)?)\.?"
-      SEP     = "[.\\/-]"
+      DIGITS      = "(\\d{1,4})"
+      MONTHS      = "(jan(uary)?|feb(ruary)?mar(ch)?|apr(il)?|may|jun(e)?|jul(y)?|aug(ust)?|sep(tember)?|oct(ober)?|nov(ember)?|dec(ember)?)\.?"
+      SEP         = "[.\\/-]"
 
-      DATE_MATCHERS = [
-        /#{DIGITS}#{SEP}#{DIGITS}#{SEP}#{DIGITS}/,
-        /#{MONTHS}\s+#{DIGITS},?\s+#{DIGITS}/i,
-        /#{DIGITS}\s+#{MONTHS},?\s+#{DIGITS}/i
-      ]
+      NUM_MATCH   = "#{DIGITS}#{SEP}#{DIGITS}#{SEP}#{DIGITS}"
+      MDY_MATCH   = "#{MONTHS}\\s+#{DIGITS},?\\s+#{DIGITS}"
+      YMD_MATCH   = "#{DIGITS}\\s+#{MONTHS},?\\s+#{DIGITS}"
 
-      SEP_REGEX = /#{SEP}/
-      SPLITTER  = /#{SEP}|,?\s+/m
-      NUMERIC   = /\A\d+\Z/
+      DATE_MATCH  = /(#{NUM_MATCH}|#{MDY_MATCH}|#{YMD_MATCH})/i
+
+      SEP_REGEX   = /#{SEP}/
+      SPLITTER    = /#{SEP}|,?\s+/m
+      NUMERIC     = /\A\d+\Z/
 
       # Extracts only the unique dates within the text. Duplicate dates are
       # ignored.
       def extract_dates(text)
         @dates = {}
-        @scanner = StringScanner.new(text)
-        DATE_MATCHERS.each {|matcher| scan_for(matcher) }
-        @dates.keys
+        scan_for(DATE_MATCH, text)
+        @dates.values
       end
 
 
       private
 
-      def scan_for(matcher)
-        @scanner.reset
-        while @scanner.scan_until(matcher)
-          date = to_date(@scanner.matched)
-          @dates[date] = true if date
+      def scan_for(matcher, text)
+        scanner = StringScanner.new(text)
+        last_byte, last_char = 0, 0
+        while scanner.scan_until(matcher)
+          date = to_date(scanner.matched)
+          next unless date
+          @dates[date] ||= {:date => date, :occurrences => []}
+          byte    = scanner.pos - scanner.matched.length
+          char    = last_char + text[last_byte..byte].unpack('U*').length - 1
+          length  = scanner.matched.unpack('U*').length
+          last_byte, last_char = byte, char
+          @dates[date][:occurrences].push(Occurrence.new(char, length))
         end
       end
 
