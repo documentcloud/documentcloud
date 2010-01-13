@@ -4,6 +4,7 @@ body {
   background: white;
 }
 a {
+  cursor: pointer;
   color: #536eac;
   text-decoration: none;
 }
@@ -54,7 +55,7 @@ small {
         margin: 0.5em 0;
       }
     #content .screenshot {
-      margin: 1.5em 0;
+      margin: 1em 0;
       position: relative;
       left: -20px;
     }
