@@ -1,7 +1,19 @@
 # TODO: Synchronize staging's old AMI / setup with the new one.
 
-desc "Deploy via Git to EC2"
+desc "Deploy via Git to EC2, including CloudCrowd restarts and migrations"
+task :full_deploy do
+  run_deploy("crowd:server:restart", "crowd:node:restart", "db:migrate", "app:restart", "app:warm")
+end
+
+desc "Deploy via Git to EC2, only the core application"
 task :deploy do
+  run_deploy("app:restart", "app:warm")
+end
+
+
+private
+
+def run_deploy(commands)
   host = "#{RAILS_ENV}.dcloud.org"
   user = 'ubuntu'
   dir  = '~/document-cloud'
@@ -15,6 +27,6 @@ task :deploy do
   todo << "cd #{dir}"
   todo << 'git pull'
   todo << "sudo su www-data -c \"jammit -u http://#{host}\""
-  todo << "rake #{RAILS_ENV} crowd:server:restart crowd:node:restart db:migrate app:restart app:warm"
+  todo << "rake #{RAILS_ENV} #{commands.join(' ')}"
   system "ssh -t -i #{key} #{user}@#{host} '#{todo.join(' && ')}'"
 end
