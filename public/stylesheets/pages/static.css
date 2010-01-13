@@ -61,6 +61,7 @@ small {
     }
     #content img.framed {
       border: 8px solid #ddd;
+      -ms-interpolation-mode: bicubic;
     }
     #content img.headshot {
       border: 3px solid #ddd;
