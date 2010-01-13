@@ -31,9 +31,9 @@ small {
 #container {
   position: relative;
   width: 700px;
-  margin: 2em auto 3em auto;
+  margin: 2em auto 0;
+  padding: 0 0 3em 175px;
   color: black;
-  padding-left: 175px;
 }
   #content {
     padding-bottom: 2em;
