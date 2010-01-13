@@ -7,7 +7,7 @@ a {
   text-decoration: none;
 }
   a:hover {
-    color: black;
+    color: #000055;
   }
 h1, h2, h3, h4, h5, h6 {
   font-size: 1.15em;
@@ -39,6 +39,10 @@ small {
     #content p {
       margin: 0 0 1em 0;
     }
+      #content p.intro {
+        font-size: 1.1em;
+        font-style: italic;
+      }
     #content ul {
       margin: 0 0 0 1.25em;
       list-style-type: circle;
@@ -47,6 +51,10 @@ small {
         color: #777;
         margin: 0.5em 0;
       }
+    #content .screenshot {
+      position: relative;
+      left: -20px;
+    }
 
 #sidebar {
   position: absolute;
@@ -78,3 +86,17 @@ small {
   #navigation a {
     margin-right: 18px;
   }
+
+#extras {
+  margin-top: 3em;
+}
+  #blogposts {
+    width: 400px;
+  }
+  #twitter {
+    position: absolute;
+    right: 0;
+  }
+    #twitter .twtr-ft div * {
+      display: none;
+    }

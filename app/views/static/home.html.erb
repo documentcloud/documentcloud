@@ -1,6 +1,43 @@
-<p>
-  DocumentCloud is a document repository, an index of primary source material 
-  compiled by journalists and researchers, a tool for annotating and organizing 
-  documents. We’re still working on it, though if you want to know where we’re 
-  headed, take a look at our blog and code and frequently asked questions.
+<p class="intro">
+  DocumentCloud is an online repository of primary source documents,<br />
+  a tool for annotating, organizing, and publishing them on the web.
 </p>
+<p>
+  The documents will be contributed by journalists and researchers from 
+  <a href="/contributors">news organizations and nonprofit groups</a>. 
+  To help make them possible to search
+  and analyze, We're partnering with 
+  <a href="http://opencalais.com">OpenCalais</a> to reveal their 
+  structured data &mdash; the people, businesses, dates, and places contained within.
+</p>
+<img class="screenshot" alt="DocumentCloud Screenshot" src="/images/static/screenshot.png" />
+<p>
+  If your organization does document-driven investigations, we'd love to have
+  you <a href="mailto:info@documentcloud.org">join us</a>. 
+  Using the DocumentCloud Workspace, your team can upload documents
+  and get back the full text and a PDF copy, access to a structured search engine 
+  and analytical tools, as well as a downloadable version of the Document Viewer 
+  that easily embeds the document on your website. 
+</p>
+<p>
+  At the moment, we're working towards our initial beta release. As we develop
+  the DocumentCloud application, we're packaging up the components that support
+  it, and releasing them as <a href="/opensource">open-source projects</a>.
+</p>
+
+<div id="extras">
+  <div id="twitter">
+    <%= render :partial => 'twitter' %>
+  </div>
+  <div id="blogposts">
+    <h2>Latest Updates</h2>
+    <ul>
+      <% @posts.each do |title, url, source, date| %>
+      <li>
+        <a href="<%= h(url) %>"><%= h(title) %></a><br />
+        <i><%= h(source) %></i>, <small><%= date.strftime("%b %d, %Y") %></small>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

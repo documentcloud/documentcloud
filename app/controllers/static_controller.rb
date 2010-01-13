@@ -1,5 +1,9 @@
 class StaticController < ApplicationController
 
+  def home
+    @posts = date_sorted(yaml_for('home'))
+  end
+
   def about
   end
 
@@ -19,11 +23,15 @@ class StaticController < ApplicationController
   end
 
   def news
-    @news = yaml_for('news').sort_by {|item| item.last }.reverse
+    @news = date_sorted(yaml_for('news'))
   end
 
 
   private
+
+  def date_sorted(list)
+    list.sort_by {|item| item.last }.reverse
+  end
 
   def yaml_for(action)
     YAML.load_file("#{Rails.root}/app/views/static/#{action}.yml")
