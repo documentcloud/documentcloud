@@ -13,7 +13,7 @@ end
 
 private
 
-def run_deploy(commands)
+def run_deploy(*commands)
   host = "#{RAILS_ENV}.dcloud.org"
   user = 'ubuntu'
   dir  = '~/document-cloud'
