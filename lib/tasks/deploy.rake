@@ -4,9 +4,9 @@ task :deploy do
   dir  = RAILS_ENV == 'staging' ? '/web/document-cloud' : '~/document-cloud'
   host = "#{RAILS_ENV}.dcloud.org"
   todo = []
-  todo << 'cd /web/document-cloud'
+  todo << "cd #{dir}"
   todo << 'git pull'
-  todo << "su www-data -c \"jammit -u http://#{host}\""
+  todo << "sudo su www-data -c \"jammit -u http://#{host}\""
   todo << "rake staging crowd:server:restart crowd:node:restart db:migrate app:restart app:warm"
   system "ssh -t -i config/server/keys/documentcloud.pem #{user}@#{host} '#{todo.join(' && ')}'"
 end
