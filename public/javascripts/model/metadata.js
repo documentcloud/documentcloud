@@ -35,7 +35,7 @@ dc.model.Metadatum = dc.Model.extend({
   // Return a list of all of the currently-loaded documents referencing this
   // Metadatum.
   documents : function() {
-    _(this.documentIds()).map(function(id){ return Documents.get(id); });
+    return _(this.documentIds()).map(function(id){ return Documents.get(id); });
   },
 
   // Compute the average relevance of this Metadatum to the currently loaded

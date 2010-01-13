@@ -5,11 +5,12 @@ dc.ui.MetadataList = dc.View.extend({
   className : 'metadata',
 
   callbacks : [
-    ['.toggle .less',           'click',    'showLess'],
-    ['.toggle .more',           'click',    'showMore'],
-    ['.metalist_title',         'click',    'visualizeKind'],
-    ['.metalist_entry_text',    'click',    'addToSearch'],
-    ['.metalist_entry_text',    'dblclick', 'addThenSearch']
+    ['.toggle .less',       'click',      'showLess'],
+    ['.toggle .more',       'click',      'showMore'],
+    ['.metalist_title',     'click',      'visualizeKind'],
+    ['.add_to_search',      'click',      '_addToSearch'],
+    ['.add_to_search',      'dblclick',   '_addThenSearch'],
+    ['.jump_to',            'click',      '_openDocument']
   ],
 
   // Think about limiting the initially visible metadata to ones that are above
@@ -48,8 +49,8 @@ dc.ui.MetadataList = dc.View.extend({
   },
 
   // TODO: Move this into the appropriate controller.
-  addToSearch : function(e) {
-    var metaId = $(e.target).attr('metadatum_id');
+  _addToSearch : function(e) {
+    var metaId = $(e.target).attr('data-id');
     var meta = Metadata.get(metaId);
     var search = meta.toSearchQuery();
     var searchField = dc.app.searchBox.el;
@@ -59,9 +60,17 @@ dc.ui.MetadataList = dc.View.extend({
   },
 
   // TODO: Move this ''
-  addThenSearch : function(e) {
+  _addThenSearch : function(e) {
     this.addToSearch(e);
     dc.app.searchBox.search($('#search').val());
+  },
+
+  _openDocument : function(e) {
+    var metaId  = $(e.target).attr('data-id');
+    var meta    = Metadata.get(metaId);
+    var inst    = meta.get('instances')[0];
+    var doc     = Documents.get(inst.document_id);
+    window.open(doc.get('document_viewer_url') + "?entity=" + inst.id);
   },
 
   visualizeKind : function(e) {

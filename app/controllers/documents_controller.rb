@@ -13,6 +13,7 @@ class DocumentsController < ApplicationController
       format.text { redirect_to(current_document.full_text_url) }
       format.html do
         return if date_requested?
+        return if entity_requested?
         @edits_enabled = true
       end
       format.json do
@@ -89,6 +90,13 @@ class DocumentsController < ApplicationController
     return false unless params[:date]
     date = Time.at(params[:date].to_i).to_date
     meta = current_document.metadata_dates.first(:conditions => {:date => date})
+    page_number = meta.pages.first.page_number
+    redirect_to current_document.document_viewer_url(:page => page_number)
+  end
+
+  def entity_requested?
+    return false unless params[:entity]
+    meta = current_document.metadata.find(params[:entity])
     page_number = meta.pages.first.page_number
     redirect_to current_document.document_viewer_url(:page => page_number)
   end

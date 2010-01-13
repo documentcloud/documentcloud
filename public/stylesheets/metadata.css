@@ -54,6 +54,15 @@
     .metalist_entry:hover {
       background: #d7d7d7;
     }
-    .metalist_entry > span {
+    .metalist_entry .jump_to {
+      cursor: pointer;
+    }
+    .metalist_entry .add_to_search {
+      display: none;
+      position: absolute;
+      opacity: 0.75; filter: alpha(opacity=75);
       cursor: copy;
     }
+      .metalist_entry:hover .add_to_search {
+        display: inline-block;
+      }

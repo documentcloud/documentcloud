@@ -1,5 +1,6 @@
 <div class="metalist_entry" title="total relevance: <%= meta.displayTotalRelevance() %>">
-  <span class="metalist_entry_text" metadatum_id="<%= meta.id %>">
-    <%= meta.get('value') %>
+  <span class="metalist_entry_text">
+    <span class="jump_to" title="open the page containing '<%= meta.get('value') %>'" data-id="<%= meta.id %>"><%= meta.get('value') %></span>
+    <span class="add_to_search icon plus" data-id="<%= meta.id %>"></span>
   </span>
 </div>

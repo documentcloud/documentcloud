@@ -29,6 +29,15 @@ class Metadatum < ActiveRecord::Base
     Occurrence.from_csv(self.occurrences)
   end
 
+  # The pages on which this entity occurs within the document.
+  def pages
+    return [] unless textual?
+    conds = split_occurrences.map do |occur|
+      "(start_offset <= #{occur.offset} and end_offset > #{occur.offset})"
+    end
+    document.pages.all(:conditions => conds.join(' or '), :select => 'id, page_number')
+  end
+
   # A Metadatum is considered to be textual if it occurs in the body of the text.
   def textual?
     occurrences.present?
