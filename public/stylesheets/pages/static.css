@@ -1,6 +1,7 @@
 body {
   font-size: 62.5%;
   font-family: Helvetica, Arial, sans-serif;
+  background: white;
 }
 a {
   color: #536eac;
@@ -10,12 +11,13 @@ a {
     color: #000055;
   }
 h1, h2, h3, h4, h5, h6 {
-  font-size: 1.15em;
+  font-size: 1.2em;
   margin: 1.5em 0 0.5em 0;
 }
   h1 {
     font-size: 1.25em;
     font-weight: bold;
+    margin-bottom: 1em;
   }
 small {
   font-size: 0.85em;
@@ -40,8 +42,8 @@ small {
       margin: 0 0 1em 0;
     }
       #content p.intro {
-        font-size: 1.1em;
-        font-style: italic;
+        font-size: 1.2em;
+/*        font-style: italic;*/
       }
     #content ul {
       margin: 0 0 0 1.25em;
@@ -52,8 +54,17 @@ small {
         margin: 0.5em 0;
       }
     #content .screenshot {
+      margin: 1.5em 0;
       position: relative;
       left: -20px;
+    }
+    #content img.framed {
+      border: 8px solid #ddd;
+    }
+    #content img.headshot {
+      border: 3px solid #ddd;
+      float: right;
+      margin: 0 20px 20px 20px;
     }
 
 #sidebar {

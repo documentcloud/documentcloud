@@ -25,18 +25,15 @@ news:
     - 2009-09-15
 
 github:
-  - - underscore
-    - http://documentcloud.github.com/underscore/
-    - Functional Programming Aid for Javascript. Works well with jQuery
-  - - jammit
-    - http://documentcloud.github.com/jammit/
-    - Industrial Strength Asset Packaging for Rails
-  - - docsplit
+  - - Docsplit
     - http://documentcloud.github.com/docsplit/
     - Break Apart Documents into Images, Text, Pages and PDFs
-  - - cloud-crowd
+  - - Jammit
+    - http://documentcloud.github.com/jammit/
+    - Industrial Strength Asset Packaging for Rails
+  - - Underscore.js
+    - http://documentcloud.github.com/underscore/
+    - Functional Programming Aid for Javascript. Works well with jQuery
+  - - CloudCrowd
     - http://wiki.github.com/documentcloud/cloud-crowd
     - Parallel Processing for the Rest of Us
-  - - closure-compiler
-    - http://github.com/documentcloud/closure-compiler
-    - A Ruby Wrapper for the Google Closure Compiler
