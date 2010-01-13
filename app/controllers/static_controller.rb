@@ -19,7 +19,7 @@ class StaticController < ApplicationController
   end
 
   def news
-    @news = yaml_for('news')
+    @news = yaml_for('news').sort_by {|item| item.last }.reverse
   end
 
 

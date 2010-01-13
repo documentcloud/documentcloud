@@ -26,12 +26,13 @@ stylesheets:
     - public/stylesheets/pages/empty.css
   docs:
     - public/stylesheets/pages/docs.css
+  static:
+    - public/stylesheets/reset.css
+    - public/stylesheets/pages/static.css
   viewer_editing:
     - public/stylesheets/ui.css
     - public/stylesheets/icons.css
     - public/stylesheets/pages/viewer_editing.css
-  website:
-    - public/stylesheets/pages/website.css
 
 templates:
   complete:

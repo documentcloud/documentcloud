@@ -8,6 +8,7 @@ class WorkspaceController < ApplicationController
   # searching, the home page otherwise.
   def index
     return if (current_organization && current_account) || results_request?
+    return redirect_to('/home') unless request.headers['Authorization']
     render :action => 'home', :layout => 'empty'
   end
 

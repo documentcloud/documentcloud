@@ -11,16 +11,16 @@
   DocumentCloud.
 </p>
 
-<h2>Our Code in the News</h2>
-<%= render :partial => "news" %>
-
-<h2>Github Projects</h2>
+<h2>Projects</h2>
 <ul>
   <% @github.each do |name, url, title| %>
   <li>
     <a href="<%= h(url) %>"><%= h(name) %></a>
-    (<a href="http://github.com/documentcloud/<%= name %>/">code</a>)
-    - <%= h(title) %>
+    <small class="up">(<a href="http://github.com/documentcloud/<%= name %>/">code</a>)</small>
+    &mdash; <%= h(title) %>
   </li>
   <% end %>
 </ul>
+
+<h2>Our Code in the News</h2>
+<%= render :partial => "news" %>

@@ -1,0 +1,80 @@
+body {
+  font-size: 62.5%;
+  font-family: Helvetica, Arial, sans-serif;
+}
+a {
+  color: #536eac;
+  text-decoration: none;
+}
+  a:hover {
+    color: black;
+  }
+h1, h2, h3, h4, h5, h6 {
+  font-size: 1.15em;
+  margin: 1.5em 0 0.5em 0;
+}
+  h1 {
+    font-size: 1.25em;
+    font-weight: bold;
+  }
+small {
+  font-size: 0.85em;
+}
+  small.up {
+    font: 10px Arial, sans-serif;
+    text-transform: uppercase;
+  }
+
+#container {
+  position: relative;
+  width: 700px;
+  margin: 2em auto;
+  color: black;
+  padding-left: 175px;
+}
+  #content {
+    padding-bottom: 2em;
+    font: 1.5em/1.533em 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+  }
+    #content p {
+      margin: 0 0 1em 0;
+    }
+    #content ul {
+      margin: 0 0 0 1.25em;
+      list-style-type: circle;
+    }
+      #content li {
+        color: #777;
+        margin: 0.5em 0;
+      }
+
+#sidebar {
+  position: absolute;
+  width: 155px;
+  min-height: 500px;
+  left: 0;
+}
+  #cloud_edge {
+    position: absolute;
+    top: 2px; left: 80px;
+    width: 67px; height: 30px;
+    background: url(/images/embed/ui/cloud_edge.png) no-repeat;
+  }
+    #wordmark {
+      left: 10px;
+      position: absolute;
+      color: #566eaa;
+      font-size: 16px;
+      top: 16px;
+    }
+
+#navigation {
+  height: 40px;
+  margin-bottom: 2em;
+  font-size: 16px;
+  line-height: 50px;
+  border-bottom: 1px solid #e2e2e2;
+}
+  #navigation a {
+    margin-right: 18px;
+  }
