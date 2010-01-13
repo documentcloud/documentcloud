@@ -28,7 +28,7 @@ small {
 #container {
   position: relative;
   width: 700px;
-  margin: 2em auto;
+  margin: 2em auto 3em auto;
   color: black;
   padding-left: 175px;
 }
@@ -87,15 +87,20 @@ small {
     margin-right: 18px;
   }
 
+#footer {
+  font-size: 1.1em;
+  line-height: 1.5em;
+  color: #777;
+}
+
 #extras {
-  margin-top: 3em;
+  margin: 3em 0 2em 0;
 }
   #blogposts {
     width: 400px;
   }
   #twitter {
-    position: absolute;
-    right: 0;
+    float: right;
   }
     #twitter .twtr-ft div * {
       display: none;
