@@ -75,6 +75,9 @@
     #visualizer .document_tile.bolded .icon {
       -webkit-box-shadow: 0 0px 15px #555; -moz-box-shadow: 0 0px 15px #555;
     }
+    #visualizer .document_tile .icon.lock {
+      display: none;
+    }
   #visualizer .document_tile .summary {
     display: none;
   }

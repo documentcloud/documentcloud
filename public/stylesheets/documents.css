@@ -54,7 +54,7 @@
   }
   .document_tile img.icon {
     position: absolute;
-    -webkit-box-shadow: 0 0px 5px #999; -moz-box-shadow: 0 0px 5px #999;
+    -webkit-box-shadow: 0 0px 5px #777; -moz-box-shadow: 0 0px 5px #777;
     left: 7px;
   }
     body.logged_in .document_tile img.icon {
