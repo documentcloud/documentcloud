@@ -288,7 +288,8 @@ CREATE TABLE metadata_dates (
     account_id integer NOT NULL,
     document_id integer NOT NULL,
     access integer NOT NULL,
-    date date NOT NULL
+    date date NOT NULL,
+    occurrences text
 );
 
 
@@ -374,7 +375,9 @@ CREATE TABLE pages (
     access integer NOT NULL,
     page_number integer NOT NULL,
     text text NOT NULL,
-    pages_text_vector tsvector
+    pages_text_vector tsvector,
+    start_offset integer,
+    end_offset integer
 );
 
 
@@ -1001,3 +1004,5 @@ INSERT INTO schema_migrations (version) VALUES ('20100109025746');
 INSERT INTO schema_migrations (version) VALUES ('20100109035508');
 
 INSERT INTO schema_migrations (version) VALUES ('20100109041445');
+
+INSERT INTO schema_migrations (version) VALUES ('20100112143144');

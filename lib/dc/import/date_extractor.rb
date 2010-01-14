@@ -71,9 +71,9 @@ module DC
         @dates.delete_if {|date, hash| !allowed.include?(date.to_time.to_f) }
       end
 
-      # Is a string a valid 4-digit year?
+      # Is a string a valid 2 or 4-digit year?
       def valid_year?(str)
-        str.match(NUMERIC) && str.length == 4
+        str.match(NUMERIC) && (str.length == 4 || str.length == 2)
       end
 
       # ActiveRecord's to_time only supports two-digit years up to 2038.
@@ -83,8 +83,8 @@ module DC
       def to_date(string)
         list =   string.split(SPLITTER)
         return   nil unless valid_year?(list.first) || valid_year?(list.last)
-        date =   string.gsub(SEP_REGEX, '/').to_time.to_date rescue nil
-        date ||= string.gsub(SEP_REGEX, '-').to_time.to_date rescue nil
+        date =   Date.parse(string.gsub(SEP_REGEX, '/'), true) rescue nil
+        date ||= Date.parse(string.gsub(SEP_REGEX, '-'), true) rescue nil
         return   nil if date && (date.year < 0 || date.year > 2100)
         date
       end
