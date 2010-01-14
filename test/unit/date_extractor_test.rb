@@ -12,7 +12,7 @@ class DateExtractorTest < ActiveSupport::TestCase
     vel illum dolore eu 2247-10-11.
   EOS
 
-  DATES = [Date.parse('2004-12-10'), Date.parse('1419-1-2'), Date.parse('2009-6-1')]
+  DATES = [Date.parse('2004-12-10'), Date.parse('1419-1-2')]
 
   context "The DateExtractor" do
 
