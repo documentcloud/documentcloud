@@ -17,7 +17,6 @@ Rails::Initializer.run do |config|
   # Gems:
   config.gem 'json',                  :version => '>= 1.1.9'
 
-  config.gem 'faker',                 :version => '>= 0.3.1'
   config.gem 'calais',                :version => '>= 0.0.8'
   config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'
   config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
