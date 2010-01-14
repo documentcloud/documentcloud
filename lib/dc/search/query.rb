@@ -105,23 +105,24 @@ module DC
       def generate_text_sql
         # quoted = @text[Matchers::QUOTED_VALUE, 1]
         # like_part = quoted ? ' and text ilike ?' : ''
-        # @sql << "(full_text_text_vector @@ plainto_tsquery(?) or documents_title_vector @@ plainto_tsquery(?))"
-        # @interpolations += [@text, @text]
+        @sql << "(full_text_text_vector @@ plainto_tsquery(?) or documents_title_vector @@ plainto_tsquery(?))"
+        @interpolations += [@text, @text]
         # @interpolations << "%#{quoted}%" if quoted
-        # @joins << :full_text
+        @joins << :full_text
         # TODO: Find the proper way to sanitize the values in active record.
-        @joins << "INNER JOIN (
-          SELECT document_id, sum(rank) AS rank FROM (
-            SELECT id AS document_id, ts_rank_cd(documents_title_vector, query, #{RANK_OPTIONS}) AS rank
-            FROM documents, plainto_tsquery('#{@text.gsub(/'/, "''")}') query
-            WHERE documents_title_vector @@ query
-          UNION
-            SELECT document_id, ts_rank_cd(full_text_text_vector, query, #{RANK_OPTIONS})
-            FROM full_text, plainto_tsquery('#{@text.gsub(/'/, "''")}') query
-            WHERE full_text_text_vector @@ query
-          ) ranks GROUP by document_id
-        ) merged ON document_id = documents.id AND rank > 0.0001
-        "
+        # Phrase-based searches, not working yet:
+        # @joins << "INNER JOIN (
+        #   SELECT document_id, sum(rank) AS rank FROM (
+        #     SELECT id AS document_id, ts_rank_cd(documents_title_vector, query, #{RANK_OPTIONS}) AS rank
+        #     FROM documents, plainto_tsquery('#{@text.gsub(/'/, "''")}') query
+        #     WHERE documents_title_vector @@ query
+        #   UNION
+        #     SELECT document_id, ts_rank_cd(full_text_text_vector, query, #{RANK_OPTIONS})
+        #     FROM full_text, plainto_tsquery('#{@text.gsub(/'/, "''")}') query
+        #     WHERE full_text_text_vector @@ query
+        #   ) ranks GROUP by document_id
+        # ) merged ON document_id = documents.id AND rank > 0.0001
+        # "
       end
 
       # Generate the SQL to search across the fielded metadata.
