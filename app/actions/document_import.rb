@@ -8,7 +8,7 @@ class DocumentImport < CloudCrowd::Action
 
   def process
     @pdf = document.slug + '.pdf'
-    download(asset_store.authorized_url(document.pdf_path), @pdf)
+    File.open(@pdf, 'w+') {|f| f.write(asset_store.read_pdf(document)) }
     case input['task']
     when 'text'   then process_text
     when 'images' then process_images
@@ -21,15 +21,14 @@ class DocumentImport < CloudCrowd::Action
   end
 
   def process_images
-    Docsplit.extract_images(@pdf, :format => :jpg, :size => '60x75!', :pages => 1, :output => 'thumbs')
-    asset_store.save_thumbnail(document, "thumbs/#{document.slug}_1.jpg", DC::Access::PUBLIC)
-    Docsplit.extract_images(@pdf, :format => :gif, :size => ['700x', '1000x'], :output => 'images')
+    Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :output => 'images')
     Dir['images/700x/*.gif'].length.times do |i|
       image = "#{document.slug}_#{i + 1}.gif"
       asset_store.save_page_images(
         Page.new(:document_id => document.id, :page_number => i + 1),
-        {:normal_image => "images/700x/#{image}",
-        :large_image => "images/1000x/#{image}"},
+        {'normal'     => "images/700x/#{image}",
+         'large'      => "images/1000x/#{image}",
+         'thumbnail'  => "images/60x75!/#{image}"},
         access
       )
     end

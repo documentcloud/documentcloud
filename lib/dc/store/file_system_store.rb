@@ -26,11 +26,6 @@ module DC
         FileUtils.cp(pdf_path, local(document.pdf_path))
       end
 
-      def save_thumbnail(document, thumb_path, access=nil)
-        ensure_directory(document.path)
-        FileUtils.cp(thumb_path, local(document.thumbnail_path))
-      end
-
       def save_full_text(document, access=nil)
         ensure_directory(document.path)
         File.open(local(document.full_text_path), 'w+') {|f| f.write(document.text) }
@@ -43,8 +38,9 @@ module DC
 
       def save_page_images(page, images, access=nil)
         ensure_directory(page.pages_path)
-        FileUtils.cp(images[:normal_image], local(page.image_path('normal')))
-        FileUtils.cp(images[:large_image], local(page.image_path('large')))
+        Page::IMAGE_SIZES.keys.each do |size|
+          FileUtils.cp(images[size], local(page.image_path(size))) if images[size]
+        end
       end
 
       def save_page_text(page, access=nil)

@@ -2,6 +2,12 @@
 # in-document searches can be performed.
 class Page < ActiveRecord::Base
 
+  IMAGE_SIZES = {
+    'normal'    => '700x',
+    'large'     => '1000x',
+    'thumbnail' => '60x75!'
+  }
+
   include DC::Store::DocumentResource
   include ActionView::Helpers::SanitizeHelper
   extend ActionView::Helpers::SanitizeHelper::ClassMethods

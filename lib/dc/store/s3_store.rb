@@ -34,10 +34,6 @@ module DC
         save_file(pdf_path, document.pdf_path, access)
       end
 
-      def save_thumbnail(document, thumb_path, access=DEFAULT_ACCESS)
-        save_file(thumb_path, document.thumbnail_path, access)
-      end
-
       def save_full_text(document, access=DEFAULT_ACCESS)
         save_file(document.text, document.full_text_path, access, :string => true)
       end
@@ -47,8 +43,9 @@ module DC
       end
 
       def save_page_images(page, images, access=DEFAULT_ACCESS)
-        save_file(images[:normal_image], page.image_path('normal'), access)
-        save_file(images[:large_image], page.image_path('large'), access)
+        Page::IMAGE_SIZES.keys.each do |size|
+          save_file(images[size], page.image_path(size), access) if images[size]
+        end
       end
 
       def save_page_text(page, access=DEFAULT_ACCESS)
@@ -62,8 +59,9 @@ module DC
         save_permissions(document.full_text_path, access)
         document.pages.each do |page|
           save_permissions(page.text_path, access)
-          save_permissions(page.image_path('normal'), access)
-          save_permissions(page.image_path('large'), access)
+          Page::IMAGE_SIZES.keys.each do |size|
+            save_permissions(page.image_path('size'), access)
+          end
         end
         true
       end

@@ -2,13 +2,13 @@
 :central_server:      http://staging.dcloud.org:8080
 
 # The following settings allow you to control the number of workers that can run
-# on a given node, to prevent the node from becoming overloaded. 'max_workers' 
+# on a given node, to prevent the node from becoming overloaded. 'max_workers'
 # is a simple cap on the maximum number of workers a node is allowed to run
 # concurrently. 'max_load' is the maximum (one-minute) load average, above which
 # a node will refuse to take new work. 'min_free_memory' is the minimum amount
-# of free RAM (in megabytes) a node is allowed to have, below which no new 
+# of free RAM (in megabytes) a node is allowed to have, below which no new
 # workers are run. These settings may be used in any combination.
-:max_workers:         12
+:max_workers:         2
 # :max_load:            5.0
 :min_free_memory:     50
 
@@ -34,8 +34,8 @@
 # The default value if left unspecified is '/tmp/cloud_crowd_storage'.
 :local_storage_path:  /tmp/cloud_crowd_storage
 
-# Use HTTP Basic Auth for all requests? (Includes all internal worker requests 
-# to the central server). If yes, specify the login and password that all 
+# Use HTTP Basic Auth for all requests? (Includes all internal worker requests
+# to the central server). If yes, specify the login and password that all
 # requests must provide for authentication.
 :http_authentication: no
 :login:               [your login name]

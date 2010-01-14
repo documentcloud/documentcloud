@@ -86,11 +86,6 @@ class Document < ActiveRecord::Base
     File.join(path, slug + '.rdf')
   end
 
-  # Ex: docs/1011/sec-madoff-investigation.jpg
-  def thumbnail_path
-    File.join(path, slug + '.jpg')
-  end
-
   # Ex: docs/1011/pages
   def pages_path
     File.join(path, 'pages')
@@ -118,8 +113,9 @@ class Document < ActiveRecord::Base
     DC::Store::AssetStore.new.authorized_url(pdf_path)
   end
 
+  # The URL to the thumbnail of the first page.
   def thumbnail_url
-    File.join(DC::Store::AssetStore.web_root, thumbnail_path)
+    File.join(pages_path, "#{slug}-p1-thumbnail.gif")
   end
 
   def public_full_text_url

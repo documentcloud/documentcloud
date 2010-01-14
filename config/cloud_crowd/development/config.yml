@@ -1,5 +1,5 @@
 :central_server:      http://localhost:8080
-:max_workers:         5
+:max_workers:         2
 :storage:             filesystem
 :actions_path:        app/actions
 :work_unit_retries:   1
