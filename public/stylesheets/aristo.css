@@ -1,10 +1,4 @@
 /*
-aristo.css
-source: http://github.com/maccman/aristo/tree/master
-license: http://creativecommons.org/licenses/by-sa/3.0/us/
-*/
-
-/*
 CSS 3 Docs
 http://qooxdoo.org/documentation/general/webkit_css_styles
 http://trac.webkit.org/browser/trunk/LayoutTests//fast/css
@@ -220,6 +214,7 @@ header, div.header {
   border-bottom: 2px solid #979797;
   background: #d7d7d7;
   background: -webkit-gradient(linear, left top, left bottom, from(#EAEAEA), to(#C2C2C2));
+  background: -moz-linear-gradient(left top, left bottom, from(#EAEAEA), to(#C2C2C2));
   text-shadow: 0px 1px 1px #fff;
   color: #2C2C2C;
 }
@@ -228,6 +223,32 @@ header, div.header {
   -webkit-border-radius: 3px;
   color: #fff;
   background: -webkit-gradient(linear, left top, left bottom, from(#525252), color-stop(0.3, #212121), color-stop(0.33, #1D1D1D), to(#1D1D1D));
+  background: -moz-linear-gradient(left top, left bottom, from(#525252), color-stop(0.3, #212121), color-stop(0.33, #1D1D1D), to(#1D1D1D));
   height: 100px;
   width: 200px;
 }
+
+/*nav, div.nav {
+  display: block;
+  width: 100%;
+  height: 33px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#030303), to(#44474b));
+  background: -moz-linear-gradient(left top, left bottom, from(#030303), to(#44474b));
+  clear: both;
+}
+nav a, div.nav a {
+  display: block;
+  float: left;
+  padding: 10px;
+  color: #A5A5A5;
+  font-size: 11px;
+  font-weight: normal;
+  text-shadow: 0px 1px 1px #000;
+  text-decoration: none;
+}
+nav a:hover, div.nav a:hover, nav a.active, div.nav a.active {
+  background: -webkit-gradient(linear, left top, left bottom, from(#81AFC8), to(#BBE1F7));
+  background: -moz-linear-gradient(left top, left bottom, from(#81AFC8), to(#BBE1F7));
+  color: #1C4257;
+  text-shadow: 0px 1px 1px #FFF;
+}*/

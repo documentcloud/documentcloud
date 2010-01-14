@@ -1,9 +1,7 @@
 TODO:
       
   * Add a warning about deleting annotations.
-    
-  * Merge in latest Aristo CSS.
-        
+          
   
 WAITING ON DESIGN:
 
@@ -42,6 +40,8 @@ AFTER BETA:
       
 
 DONE:
+
+  * Merge in latest Aristo CSS.
 
   * Figure out a reasonable way to do phrase-based searches.
   
