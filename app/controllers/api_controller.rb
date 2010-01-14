@@ -1,3 +1,4 @@
+# The public DocumentCloud API.
 class ApiController < ApplicationController
   include DC::Search::Controller
 
