@@ -13,7 +13,7 @@ staging:
 
 production:
   <<: *defaults
-  cloud_crowd_server: http://production.dcloud.org:8080
+  cloud_crowd_server: http://ec2-174-129-5-5.compute-1.amazonaws.com:8080
   server_root:        http://production.dcloud.org
 
 test:
