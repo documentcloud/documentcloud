@@ -10,6 +10,16 @@ module DC
       attr_reader   :text, :fields, :labels, :attributes, :conditions, :results
       attr_accessor :page, :from, :to, :total
 
+      # tsearch ranking modifiers
+      # 0 (the default) ignores the document length
+      # 1 divides the rank by 1 + the logarithm of the document length
+      # 2 divides the rank by the document length
+      # 4 divides the rank by the mean harmonic distance between extents (this is implemented only by ts_rank_cd)
+      # 8 divides the rank by the number of unique words in document
+      # 16 divides the rank by 1 + the logarithm of the number of unique words in document
+      # 32 divides the rank by itself + 1
+      RANK_OPTIONS = 4 | 2 | 32
+
       # Queries are created by the Search::Parser, which sets them up with the
       # appropriate attributes.
       def initialize(opts={})
@@ -102,11 +112,11 @@ module DC
         # TODO: Find the proper way to sanitize the values in active record.
         @joins << "INNER JOIN (
           SELECT document_id, sum(rank) AS rank FROM (
-            SELECT id AS document_id, ts_rank_cd(documents_title_vector, query, 1|4|16|32) AS rank
+            SELECT id AS document_id, ts_rank_cd(documents_title_vector, query, #{RANK_OPTIONS}) AS rank
             FROM documents, plainto_tsquery('#{@text.gsub(/'/, "''")}') query
             WHERE documents_title_vector @@ query
           UNION
-            SELECT document_id, ts_rank_cd(full_text_text_vector, query, 1|4|16|32)
+            SELECT document_id, ts_rank_cd(full_text_text_vector, query, #{RANK_OPTIONS})
             FROM full_text, plainto_tsquery('#{@text.gsub(/'/, "''")}') query
             WHERE full_text_text_vector @@ query
           ) ranks GROUP by document_id
