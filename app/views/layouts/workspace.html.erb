@@ -4,13 +4,13 @@
 <head>
   <%= render :partial => 'common/meta_tags' %>
   <title><%= @title %> | DocumentCloud</title>
-  <% css = [:app, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
+  <% css = [:v1, :v1_workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
   <%= include_stylesheets *css %>
-  <%= include_javascripts :workspace %>
+  <%= include_javascripts :v1 %>
   <!--[if IE]>
     <%= include_javascripts :ie_only %>
   <![endif]-->
-  <%= include_templates :complete %>
+  <%= include_templates :v1 %>
   <%= render :partial => 'common/bootstrap' %>
 </head>
 <body class="workspace <%= @current_account ? 'logged_in' : '' %> <%= @bodyclass %>">
@@ -30,8 +30,6 @@
     </div>
 
   </div>
-
-  <iframe id="hidden_iframe" name="hidden_iframe" src="about:blank" class="hidden_iframe"></iframe>
 
 </body>
 </html>

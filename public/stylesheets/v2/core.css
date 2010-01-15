@@ -1,0 +1,13 @@
+/* ---- Color Scheme ----------
+dark background:  #5f5a57
+dark open:        #474340
+dark selected:    #3c3835
+dark text:        #fff
+dark text quiet:  #bfbdb1
+light selected:   #f3f1e3
+light text:       #333
+---------------------------- */
+
+body {
+  background: #5f5a57;
+}
