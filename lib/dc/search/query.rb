@@ -10,16 +10,6 @@ module DC
       attr_reader   :text, :fields, :labels, :attributes, :conditions, :results
       attr_accessor :page, :from, :to, :total
 
-      # tsearch ranking modifiers
-      # 0 (the default) ignores the document length
-      # 1 divides the rank by 1 + the logarithm of the document length
-      # 2 divides the rank by the document length
-      # 4 divides the rank by the mean harmonic distance between extents (this is implemented only by ts_rank_cd)
-      # 8 divides the rank by the number of unique words in document
-      # 16 divides the rank by 1 + the logarithm of the number of unique words in document
-      # 32 divides the rank by itself + 1
-      RANK_OPTIONS = 4 | 2 | 32
-
       # Queries are created by the Search::Parser, which sets them up with the
       # appropriate attributes.
       def initialize(opts={})
@@ -101,33 +91,39 @@ module DC
 
       private
 
-      # Phrase-based search is still an issue for generate_text_sql.
-      # Here's a stab using ilike:
-      #
-      # quoted = @text[Matchers::QUOTED_VALUE, 1]
-      # like_part = quoted ? ' and text ilike ?' : ''
-      # @interpolations << "%#{quoted}%" if quoted
-
-      # And here's another try, using ts_rank_cd():
-      #
-      # @joins << "INNER JOIN (
-      #   SELECT document_id, sum(rank) AS rank FROM (
-      #     SELECT id AS document_id, ts_rank_cd(documents_title_vector, query, #{RANK_OPTIONS}) AS rank
-      #     FROM documents, plainto_tsquery('#{@text.gsub(/'/, "''")}') query
-      #     WHERE documents_title_vector @@ query
-      #   UNION
-      #     SELECT document_id, ts_rank_cd(full_text_text_vector, query, #{RANK_OPTIONS})
-      #     FROM full_text, plainto_tsquery('#{@text.gsub(/'/, "''")}') query
-      #     WHERE full_text_text_vector @@ query
-      #   ) ranks GROUP by document_id
-      # ) merged ON document_id = documents.id AND rank > 0.0001
-      # "
-
       # Generate the SQL needed to run a full-text search.
       def generate_text_sql
-        @sql << "(full_text_text_vector @@ plainto_tsquery(?) or documents_title_vector @@ plainto_tsquery(?))"
-        @interpolations += [@text, @text]
-        @joins << :full_text
+
+        # Force the full text search to be in a subquery so that it uses the indexes.
+        @joins << "INNER JOIN (
+            SELECT id AS document_id
+            FROM documents, plainto_tsquery('#{@text.gsub(/'/, "''")}') query
+            WHERE documents_title_vector @@ query
+          UNION
+            SELECT document_id
+            FROM full_text, plainto_tsquery('#{@text.gsub(/'/, "''")}') query
+            WHERE full_text_text_vector @@ query
+          ) text_search ON document_id = documents.id
+        "
+        # TODO: figure out a way to get ActiveRecord to escape values on custom joins
+        # @joins << ["INNER JOIN (
+        #     SELECT id AS document_id
+        #     FROM documents, plainto_tsquery(?) query
+        #     WHERE documents_title_vector @@ query
+        #   UNION
+        #     SELECT document_id
+        #     FROM full_text, plainto_tsquery(?) query
+        #     WHERE full_text_text_vector @@ query
+        #   ) text_search ON document_id = documents.id
+        # ", @text, @text]
+
+        # Post-filter by exact string if quoted match is used.
+        if quoted = @text[Matchers::QUOTED_VALUE, 1]
+          @joins << "INNER JOIN full_text on full_text.document_id = documents.id"
+          @sql << 'text ILIKE ?'
+          @interpolations << "%#{quoted}%"
+        end
+
       end
 
       # Generate the SQL to search across the fielded metadata.
