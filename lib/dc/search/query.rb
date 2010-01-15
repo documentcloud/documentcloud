@@ -91,6 +91,12 @@ module DC
 
       private
 
+      # TODO: Make really sure we know this is safe, or replace it with the
+      # Postgres "E" escape function.
+      def escape_string(string)
+        "'#{string.gsub(/'/, "''")}'"
+      end
+
       # Generate the SQL needed to run a full-text search.
       def generate_text_sql
 
