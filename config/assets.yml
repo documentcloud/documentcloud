@@ -4,6 +4,13 @@ embed_images: on
 
 javascripts:
   v2:
+    - public/javascripts/application.js
+    - public/javascripts/vendor/jquery-1.3.2.js
+    - public/javascripts/vendor/*.js
+    - public/javascripts/lib/bindable.js
+    - public/javascripts/lib/set.js
+    - public/javascripts/lib/*.js
+    - public/javascripts/model/*.js
   v1:
     - public/javascripts/application.js
     - public/javascripts/vendor/jquery-1.3.2.js
@@ -11,8 +18,9 @@ javascripts:
     - public/javascripts/lib/bindable.js
     - public/javascripts/lib/set.js
     - public/javascripts/lib/*.js
-    - public/javascripts/ui/menu.js
-    - public/javascripts/**/*.js
+    - public/javascripts/model/*.js
+    - public/javascripts/v1/ui/menu.js
+    - public/javascripts/v1/**/*.js
   ie_only:
     - public/javascripts/ie/*.js
 

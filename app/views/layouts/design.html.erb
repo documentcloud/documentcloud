@@ -11,24 +11,27 @@
   <%= render :partial => 'common/v2_bootstrap' %>
 </head>
 <body class="<%= @bodyclass %>">
-
-  <%= yield %>
-
-  <!-- <div id="container">
-      <div id="topbar" class="header">
-        <div id="cloud_edge"></div>
-        <div id="wordmark" class="logo_words"><a href="/">DocumentCloud</a></div>
-        <h1 id="title" class="logo_words"><%= @title %></h1>
-        <% if @show_search %>
-          <input id="search" type="search" placeholder="search" autosave="documentcloud" results="10" />
-        <% end %>
-      </div>
-
-      <div id="content">
-        <%# yield %>
-      </div>
-
-    </div> -->
+  
+  <table id="root">
+    <thead>
+      <tr>
+        <th class="left" id="identity"></th>
+        <th class="mid"></th>
+        <th class="right"></th>
+      </tr>
+    <tbody>
+      <tr>
+        <%= yield %>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="left">&nbsp;</td>
+        <td class="mid">&nbsp;</td>
+        <td class="right">&nbsp;</td>
+      </tr>
+    </tfoot>
+  </table>
 
 </body>
 </html>

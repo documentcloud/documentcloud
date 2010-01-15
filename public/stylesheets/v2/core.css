@@ -10,4 +10,23 @@ light text:       #333
 
 body {
   background: #5f5a57;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
 }
+
+#root {
+  width: 100%; height: 100%;
+}
+  #root .left {
+    width: 300px;
+  }
+  #root .right {
+    width: 60px;
+  }
+  #root th {
+    background: #302c29;
+    height: 58px;
+  }
+    th#identity {
+      background: #181310;
+    }
