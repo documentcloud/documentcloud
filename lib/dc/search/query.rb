@@ -45,7 +45,8 @@ module DC
         generate_fields_sql     if has_fields?
         generate_labels_sql     if has_labels?
         generate_attributes_sql if has_attributes?
-        @conditions = [@sql.join(' and ')] + @interpolations
+        sql = @sql.join(' and ')
+        @conditions = @interpolations.empty? ? sql : [sql] + @interpolations
       end
 
       # Runs (at most) two queries -- one to count the total number of results
@@ -91,34 +92,17 @@ module DC
 
       private
 
-      # TODO: Make really sure we know this is safe, or replace it with the
-      # Postgres "E" escape function.
-      def escape_string(string)
-        "'#{string.gsub(/'/, "''")}'"
-      end
-
-      # Generate the SQL needed to run a full-text search.
+      # Generate the SQL needed to run a full-text search. Hits the title,
+      # the text content, and runs a literal ILIKE match over the text, in
+      # case of phrases.
       def generate_text_sql
-
-        quoted = @text[Matchers::QUOTED_VALUE, 1]
-        phrase = quoted ? (" WHERE text ILIKE '%#{Document.connection.quote_string(quoted)}%'") : ""
         query = "plainto_tsquery('#{Document.connection.quote_string(text)}')"
-
-        @joins << "INNER JOIN (
-            SELECT document_id FROM (
-              SELECT id AS document_id, title AS text
-              FROM documents
-              WHERE documents_title_vector @@ #{query}
-            ) title_sub#{phrase}
-          UNION
-            SELECT document_id FROM (
-              SELECT document_id, text
-              FROM full_text
-              WHERE full_text_text_vector @@ #{query}
-            ) text_sub#{phrase}
-          ) text_search ON document_id = documents.id
-        "
-
+        phrases = @text.scan(Matchers::QUOTED_VALUE).map do |match|
+          "text ILIKE '%#{Document.connection.quote_string(match[1] || match[2])}%'"
+        end
+        @sql << "(documents_title_vector @@ #{query} or full_text_text_vector @@ #{query})"
+        @sql += phrases
+        @joins << :full_text
       end
 
       # Generate the SQL to search across the fielded metadata.
