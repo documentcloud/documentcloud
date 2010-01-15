@@ -96,12 +96,12 @@ module DC
       # the text content, and runs a literal ILIKE match over the text, in
       # case of phrases.
       def generate_text_sql
-        query = "plainto_tsquery('#{Document.connection.quote_string(text)}')"
         phrases = @text.scan(Matchers::QUOTED_VALUE).map do |match|
           "text ILIKE '%#{Document.connection.quote_string(match[1] || match[2])}%'"
         end
-        @sql << "(documents_title_vector @@ #{query} or full_text_text_vector @@ #{query})"
+        @sql << "(documents_title_vector @@ plainto_tsquery(?) or full_text_text_vector @@ plainto_tsquery(?))"
         @sql += phrases
+        @interpolations += [@text, @text]
         @joins << :full_text
       end
 
