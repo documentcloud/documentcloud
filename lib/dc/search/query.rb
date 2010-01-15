@@ -95,14 +95,40 @@ module DC
       # Generate the SQL needed to run a full-text search. Hits the title,
       # the text content, and runs a literal ILIKE match over the text, in
       # case of phrases.
+      #
+      # Alternate version that can't seem to use the indexes:
+      # def generate_text_sql
+      #   phrases = @text.scan(Matchers::QUOTED_VALUE).map do |match|
+      #     "text ILIKE '%#{Document.connection.quote_string(match[1] || match[2])}%'"
+      #   end
+      #   @sql << "(documents_title_vector @@ plainto_tsquery(?) or full_text_text_vector @@ plainto_tsquery(?))"
+      #   @sql += phrases
+      #   @interpolations += [@text, @text]
+      #   @joins << :full_text
+      # end
+
+      # Generate the SQL needed to run a full-text search.
       def generate_text_sql
-        phrases = @text.scan(Matchers::QUOTED_VALUE).map do |match|
+        phrases = @text.scan(Matchers::QUOTED_VALUE).map { |match|
           "text ILIKE '%#{Document.connection.quote_string(match[1] || match[2])}%'"
-        end
-        @sql << "(documents_title_vector @@ plainto_tsquery(?) or full_text_text_vector @@ plainto_tsquery(?))"
-        @sql += phrases
-        @interpolations += [@text, @text]
-        @joins << :full_text
+        }.join(" AND ")
+        phrases = " WHERE #{phrases}" unless phrases.empty?
+        query   = "plainto_tsquery('#{Document.connection.quote_string(text)}')"
+
+        @joins << "INNER JOIN (
+            SELECT document_id FROM (
+              SELECT id AS document_id
+              FROM documents
+              WHERE documents_title_vector @@ #{query}
+            ) AS title_sub
+          UNION
+            SELECT document_id FROM (
+              SELECT document_id, text
+              FROM full_text
+              WHERE full_text_text_vector @@ #{query}
+            ) AS text_sub#{phrases}
+          ) AS text_search ON document_id = documents.id
+        "
       end
 
       # Generate the SQL to search across the fielded metadata.
