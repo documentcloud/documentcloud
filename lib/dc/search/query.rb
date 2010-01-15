@@ -91,16 +91,12 @@ module DC
 
       private
 
-      def escape_string(string)
-        "'#{string.gsub(/'/, "''")}'"
-      end
-
       # Generate the SQL needed to run a full-text search.
       def generate_text_sql
 
         quoted = @text[Matchers::QUOTED_VALUE, 1]
-        phrase = quoted ? " WHERE text ILIKE " + escape_string("%#{quoted}%") : ""
-        query = "plainto_tsquery(#{escape_string(text)})"
+        phrase = quoted ? (" WHERE text ILIKE '%#{Document.connection.quote_string(quoted)}%'") : ""
+        query = "plainto_tsquery('#{Document.connection.quote_string(text)}')"
 
         @joins << "INNER JOIN (
             SELECT document_id FROM (
