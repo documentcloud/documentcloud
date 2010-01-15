@@ -33,14 +33,15 @@ module DC
         add_column table, vector, "tsvector"
         execute "create trigger #{trigger} before insert or update on #{table}
           for each row execute procedure tsvector_update_trigger(#{vector}, 'pg_catalog.english', #{column});"
-        execute "create index #{index} on #{table} using gin(#{vector});"
         execute "update #{table} set #{vector} = to_tsvector('pg_catalog.english', #{column});"
+        # disabling fastupdate results in slower inserts/updates, but with more compact indexes (tested on PostgreSQL 8.4.2)
+        execute "create index #{index} on #{table} using gin(#{vector}) with (fastupdate=off);"
       end
 
       def remove_full_text_index(table, column)
         vector, index, trigger = *full_text_index_names(table, column)
         execute "drop index #{index};"
-        execute "drop trigger #{trigger};"
+        execute "drop trigger #{trigger} on #{table};"
         remove_column table, vector
       end
 
