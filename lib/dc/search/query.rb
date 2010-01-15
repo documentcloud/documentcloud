@@ -91,38 +91,31 @@ module DC
 
       private
 
+      def escape_string(string)
+        "'#{string.gsub(/'/, "''")}'"
+      end
+
       # Generate the SQL needed to run a full-text search.
       def generate_text_sql
 
-        # Force the full text search to be in a subquery so that it uses the indexes.
+        quoted = @text[Matchers::QUOTED_VALUE, 1]
+        phrase = quoted ? " WHERE text ILIKE " + escape_string("%#{quoted}%") : ""
+        query = "plainto_tsquery(#{escape_string(text)})"
+
         @joins << "INNER JOIN (
-            SELECT id AS document_id
-            FROM documents, plainto_tsquery('#{@text.gsub(/'/, "''")}') query
-            WHERE documents_title_vector @@ query
+            SELECT document_id FROM (
+              SELECT id AS document_id, title AS text
+              FROM documents
+              WHERE documents_title_vector @@ #{query}
+            ) title_sub#{phrase}
           UNION
-            SELECT document_id
-            FROM full_text, plainto_tsquery('#{@text.gsub(/'/, "''")}') query
-            WHERE full_text_text_vector @@ query
+            SELECT document_id FROM (
+              SELECT document_id, text
+              FROM full_text
+              WHERE full_text_text_vector @@ #{query}
+            ) text_sub#{phrase}
           ) text_search ON document_id = documents.id
         "
-        # TODO: figure out a way to get ActiveRecord to escape values on custom joins
-        # @joins << ["INNER JOIN (
-        #     SELECT id AS document_id
-        #     FROM documents, plainto_tsquery(?) query
-        #     WHERE documents_title_vector @@ query
-        #   UNION
-        #     SELECT document_id
-        #     FROM full_text, plainto_tsquery(?) query
-        #     WHERE full_text_text_vector @@ query
-        #   ) text_search ON document_id = documents.id
-        # ", @text, @text]
-
-        # Post-filter by exact string if quoted match is used.
-        if quoted = @text[Matchers::QUOTED_VALUE, 1]
-          @joins << "INNER JOIN full_text on full_text.document_id = documents.id"
-          @sql << 'text ILIKE ?'
-          @interpolations << "%#{quoted}%"
-        end
 
       end
 
