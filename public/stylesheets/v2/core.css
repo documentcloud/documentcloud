@@ -27,6 +27,26 @@ body {
     background: #302c29;
     height: 58px;
   }
-    th#identity {
+    #root th.identity {
       background: #181310;
     }
+    #root th.avatar {
+      background: #404c29;
+    }
+  #root tfoot td {
+    height: 58px;
+  }
+
+#sidebar {
+  height: 100%;
+  background: #514c48;
+}
+
+#workspace {
+  height: 100%;
+  background: #fff;
+}
+
+#gutter {
+  min-height: 10px;
+}
