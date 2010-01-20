@@ -72,7 +72,7 @@ module DC
           next unless Metadatum.acceptable_kind? entity.type
           occurrences = entity.instances.map {|i| Occurrence.new(i.offset, i.length) }
           extracted << Metadatum.new(
-            :value        => entity.attributes['name'],
+            :value        => entity.attributes['commonname'] || entity.attributes['name'],
             :kind         => DC::CALAIS_MAP[entity.type.underscore.to_sym].to_s,
             :relevance    => entity.relevance,
             :document     => document,

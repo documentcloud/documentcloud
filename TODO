@@ -1,4 +1,6 @@
 TODO:
+  
+  * Make search degrade gracefully in the viewer, when DocumentCloud is down.
 
   * Make notes first-class with documents. Add comprehensive FTS search.
     Translate entity searches in notes into the equivalent FTS search.
@@ -21,6 +23,8 @@ TODO:
           
   
 WAITING ON DESIGN:
+
+  * Upgrade to OpenCalais 4.3
 
   * Make some pretty 404/500/403 pages.
   
