@@ -36,23 +36,23 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     dc.app.editor.notify({mode : 'info', text : 'page saved'});
   },
 
-  bookmarkCurrentPage : function() {
-    var bookmark = new dc.model.Bookmark({
-      title       : DV.Schema.data.title,
-      page_number : DV.api.currentPage(),
-      document_id : dc.app.editor.docId
-    });
-    var openerMarks = (window.opener && window.opener.Bookmarks);
-    Bookmarks.create(bookmark, null, {
-      success : function(model, resp) {
-        bookmark.set(resp);
-        if (openerMarks) openerMarks.add(bookmark);
-        dc.app.editor.notify({mode: 'info', text : 'bookmark saved'});
-      },
-      error : function() {
-        dc.app.editor.notify({mode : 'warn', text : 'bookmark already exists'});
-      }
-    });
-  }
+  // bookmarkCurrentPage : function() {
+  //     var bookmark = new dc.model.Bookmark({
+  //       title       : DV.Schema.data.title,
+  //       page_number : DV.api.currentPage(),
+  //       document_id : dc.app.editor.docId
+  //     });
+  //     var openerMarks = (window.opener && window.opener.Bookmarks);
+  //     Bookmarks.create(bookmark, null, {
+  //       success : function(model, resp) {
+  //         bookmark.set(resp);
+  //         if (openerMarks) openerMarks.add(bookmark);
+  //         dc.app.editor.notify({mode: 'info', text : 'bookmark saved'});
+  //       },
+  //       error : function() {
+  //         dc.app.editor.notify({mode : 'warn', text : 'bookmark already exists'});
+  //       }
+  //     });
+  //   }
 
 });

@@ -14,15 +14,15 @@ TODO:
   * Change "Labels" to "Projects", and add more supporting features -- Projects
     should know statistics about the documents, notes and entities contained
     within. Taggable?
-    
-  * Kill bookmarks.
-  
+      
   * Implement the "publication" workflow. A document should know if it's been
     published, and the URL where. Create a cron/cloudcrowd job that pings each
     published document, ensuring that it's not 404'd.
           
   
 WAITING ON DESIGN:
+
+  * Kill bookmarks.
 
   * Upgrade to OpenCalais 4.3
 

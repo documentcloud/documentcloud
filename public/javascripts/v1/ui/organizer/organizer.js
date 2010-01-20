@@ -72,7 +72,7 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   models : function() {
-    return _.flatten([Labels.models(), Bookmarks.models(), SavedSearches.models()]);
+    return _.flatten([Labels.models(), SavedSearches.models()]);
   },
 
   sortedModels : function() {
@@ -81,7 +81,7 @@ dc.ui.Organizer = dc.View.extend({
 
   // Bind all possible SavedSearch, Bookmark and Label events for rendering.
   _bindToSets : function() {
-    _.each([Labels, Bookmarks, SavedSearches], _.bind(function(set) {
+    _.each([Labels, SavedSearches], _.bind(function(set) {
       set.bind(dc.Set.MODEL_ADDED, this._addSubView);
       set.bind(dc.Set.MODEL_REMOVED, this._removeSubView);
     }, this));

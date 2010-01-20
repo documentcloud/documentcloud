@@ -43,9 +43,6 @@ ActionController::Routing::Routes.draw do |map|
   # Labels.
   map.resources :labels, :member => {:documents => :get}
 
-  # Bookmarks.
-  map.resources :bookmarks
-
   # Static pages.
   map.with_options :controller => 'static' do |static|
     static.contributors   '/contributors',  :action => 'contributors'

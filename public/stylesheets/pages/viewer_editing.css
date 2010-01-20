@@ -49,10 +49,13 @@
         #control_panel .public_annotation .color_block {
           background: #edd134;
         }
+  #control_panel,
   #control_panel .document_only,
   #control_panel .text_only {
     display: none;
   }
+    #DV-docViewer.DV-viewDocument #control_panel,
+    #DV-docViewer.DV-viewText #control_panel,
     #DV-docViewer.DV-viewDocument #control_panel .document_only,
     #DV-docViewer.DV-viewText #control_panel .text_only {
       display: block;

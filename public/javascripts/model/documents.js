@@ -26,10 +26,11 @@ dc.model.Document = dc.Model.extend({
     });
   },
 
-  bookmark : function(pageNumber) {
-    var bookmark = new dc.model.Bookmark({title : this.get('title'), page_number : pageNumber, document_id : this.id});
-    Bookmarks.create(bookmark);
-  },
+  // Bookmarks are deprecated -- to be removed.
+  // bookmark : function(pageNumber) {
+  //   var bookmark = new dc.model.Bookmark({title : this.get('title'), page_number : pageNumber, document_id : this.id});
+  //   Bookmarks.create(bookmark);
+  // },
 
   // Inspect.
   toString : function() {
