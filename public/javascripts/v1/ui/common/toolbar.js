@@ -5,6 +5,7 @@ dc.ui.Toolbar = dc.View.extend({
   callbacks : [
     ['#delete_document_button',  'click',   '_deleteSelectedDocuments'],
     ['#edit_summary_button',     'click',   '_editSelectedSummary'],
+    ['#edit_remote_url_button',     'click',   '_editSelectedRemoteUrl'],
     ['#timeline_button',         'click',   '_showTimeline']
   ],
 
@@ -24,6 +25,7 @@ dc.ui.Toolbar = dc.View.extend({
     $('.access_menu_container', el).append(this.accessMenu.render().el);
     $('.label_menu_container', el).append(this.labelMenu.render().el);
     this.summaryButton = $('#edit_summary_button', el);
+    this.remoteUrlButton = $('#edit_remote_url_button', el);
     this.setCallbacks();
     return this;
   },
@@ -32,6 +34,7 @@ dc.ui.Toolbar = dc.View.extend({
     var count = $('.document_tile.is_selected').length;
     count > 0 ? this.show() : this.hide();
     this.summaryButton.toggleClass('disabled', count > 1);
+    this.remoteUrlButton.toggleClass('disabled', count > 1);
   },
 
   hide : function() {
@@ -78,6 +81,16 @@ dc.ui.Toolbar = dc.View.extend({
     dc.ui.Dialog.prompt("Edit summary:", doc.get('summary'), function(revised) {
       if (!revised) return true;
       Documents.update(doc, {summary : Inflector.truncate(revised, 255, '')});
+      return true;
+    });
+  },
+
+  _editSelectedRemoteUrl : function() {
+    if (this.remoteUrlButton.hasClass('disabled')) return false;
+    var doc = _.first(Documents.selected());
+    dc.ui.Dialog.prompt("Edit remote Url:", doc.get('remote_url'), function(revised) {
+      if (!revised) return true;
+      Documents.update(doc, {remote_url : revised});
       return true;
     });
   },
