@@ -229,10 +229,10 @@ ALTER SEQUENCE full_text_id_seq OWNED BY full_text.id;
 
 
 --
--- Name: labels; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: projects; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE labels (
+CREATE TABLE projects (
     id integer NOT NULL,
     account_id integer NOT NULL,
     title character varying(100) NOT NULL,
@@ -256,7 +256,7 @@ CREATE SEQUENCE labels_id_seq
 -- Name: labels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE labels_id_seq OWNED BY labels.id;
+ALTER SEQUENCE labels_id_seq OWNED BY projects.id;
 
 
 --
@@ -582,13 +582,6 @@ ALTER TABLE full_text ALTER COLUMN id SET DEFAULT nextval('full_text_id_seq'::re
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE labels ALTER COLUMN id SET DEFAULT nextval('labels_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE metadata ALTER COLUMN id SET DEFAULT nextval('metadata_id_seq'::regclass);
 
 
@@ -618,6 +611,13 @@ ALTER TABLE pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regclass);
 --
 
 ALTER TABLE processing_jobs ALTER COLUMN id SET DEFAULT nextval('processing_jobs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE projects ALTER COLUMN id SET DEFAULT nextval('labels_id_seq'::regclass);
 
 
 --
@@ -693,7 +693,7 @@ ALTER TABLE ONLY full_text
 -- Name: labels_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY labels
+ALTER TABLE ONLY projects
     ADD CONSTRAINT labels_pkey PRIMARY KEY (id);
 
 
@@ -842,7 +842,7 @@ CREATE UNIQUE INDEX index_full_text_on_document_id ON full_text USING btree (doc
 -- Name: index_labels_on_account_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_labels_on_account_id ON labels USING btree (account_id);
+CREATE INDEX index_labels_on_account_id ON projects USING btree (account_id);
 
 
 --
@@ -1012,3 +1012,5 @@ INSERT INTO schema_migrations (version) VALUES ('20100114170321');
 INSERT INTO schema_migrations (version) VALUES ('20100114170333');
 
 INSERT INTO schema_migrations (version) VALUES ('20100114170350');
+
+INSERT INTO schema_migrations (version) VALUES ('20100120194128');

@@ -11,9 +11,8 @@ TODO:
   
   * Add a JS NoteView for showing notes (with images) within the workspace.
   
-  * Change "Labels" to "Projects", and add more supporting features -- Projects
-    should know statistics about the documents, notes and entities contained
-    within. Taggable?
+  * Add more supporting features to Projects -- they should know statistics 
+    about the documents, notes and entities contained within. Taggable?
       
   * Implement the "publication" workflow. A document should know if it's been
     published, and the URL where. Create a cron/cloudcrowd job that pings each
@@ -21,10 +20,6 @@ TODO:
           
   
 WAITING ON DESIGN:
-
-  * Kill bookmarks.
-
-  * Upgrade to OpenCalais 4.3
 
   * Make some pretty 404/500/403 pages.
   
@@ -61,6 +56,12 @@ AFTER BETA:
       
 
 DONE:
+
+  * Kill bookmarks.
+
+  * Upgrade to OpenCalais 4.3
+
+  * Change "Labels" to "Projects"
 
   * Start creating thumbnails of every page.
 
