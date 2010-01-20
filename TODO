@@ -1,8 +1,23 @@
 TODO:
 
-  * Add tests until the design comes in.
-        
-  * Add a warning about deleting annotations.
+  * Make notes first-class with documents. Add comprehensive FTS search.
+    Translate entity searches in notes into the equivalent FTS search.
+    
+  * Merge Visualize, Timeline, and Entities into a single "Analyze" UI.
+  
+  * Add lightweight tags for documents and notes (anything searchable).
+  
+  * Add a JS NoteView for showing notes (with images) within the workspace.
+  
+  * Change "Labels" to "Projects", and add more supporting features -- Projects
+    should know statistics about the documents, notes and entities contained
+    within. Taggable?
+    
+  * Kill bookmarks.
+  
+  * Implement the "publication" workflow. A document should know if it's been
+    published, and the URL where. Create a cron/cloudcrowd job that pings each
+    published document, ensuring that it's not 404'd.
           
   
 WAITING ON DESIGN:
