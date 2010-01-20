@@ -40,8 +40,8 @@ ActionController::Routing::Routes.draw do |map|
   # Saved Searches.
   map.resources :saved_searches
 
-  # Labels.
-  map.resources :labels, :member => {:documents => :get}
+  # Projects.
+  map.resources :projects, :member => {:documents => :get}
 
   # Static pages.
   map.with_options :controller => 'static' do |static|

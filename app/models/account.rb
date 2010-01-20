@@ -6,7 +6,7 @@ class Account < ActiveRecord::Base
   # Associations:
   belongs_to  :organization
   has_many    :saved_searches,  :dependent => :destroy
-  has_many    :labels,          :dependent => :destroy
+  has_many    :projects,          :dependent => :destroy
   has_many    :bookmarks,       :dependent => :destroy
   has_many    :processing_jobs, :dependent => :destroy
   has_one     :security_key,    :dependent => :destroy, :as => :securable

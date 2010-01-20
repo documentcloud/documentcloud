@@ -9,7 +9,7 @@ class AccountTest < ActiveSupport::TestCase
     subject { Account.find_by_email(EMAIL) }
 
     should_belong_to :organization
-    should_have_many :labels
+    should_have_many :projects
     should_have_many :saved_searches
     should_have_one  :security_key
 

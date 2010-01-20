@@ -11,10 +11,10 @@ dc.ui.Toolbar = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, '_addSelectedDocuments', '_addLabelWithDocuments', 'display');
+    _.bindAll(this, '_addSelectedDocuments', '_addProjectWithDocuments', 'display');
     this.downloadMenu = this._createDownloadMenu();
     this.accessMenu   = this._createAccessMenu();
-    this.labelMenu    = new dc.ui.LabelMenu({onClick : this._addSelectedDocuments, onAdd : this._addLabelWithDocuments});
+    this.projectMenu    = new dc.ui.ProjectMenu({onClick : this._addSelectedDocuments, onAdd : this._addProjectWithDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
   },
 
@@ -23,7 +23,7 @@ dc.ui.Toolbar = dc.View.extend({
     el.html(JST.workspace_toolbar({}));
     $('.download_menu_container', el).append(this.downloadMenu.render().el);
     $('.access_menu_container', el).append(this.accessMenu.render().el);
-    $('.label_menu_container', el).append(this.labelMenu.render().el);
+    $('.project_menu_container', el).append(this.projectMenu.render().el);
     this.summaryButton = $('#edit_summary_button', el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
     this.setCallbacks();
@@ -43,26 +43,26 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   show : function() {
-    if (!Labels.populated) Labels.populate();
+    if (!Projects.populated) Projects.populate();
     $(this._panel()).setMode('open', 'toolbar');
   },
 
-  notifyLabeled : function(labelName, numDocs) {
-    var notification = "added " + numDocs + ' ' + Inflector.pluralize('document', numDocs) + ' to "' + labelName + '"';
-    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.labelMenu.el, position : '-top right', top : -1, left : 7});
+  notifyProjectChange : function(projectName, numDocs) {
+    var notification = "added " + numDocs + ' ' + Inflector.pluralize('document', numDocs) + ' to "' + projectName + '"';
+    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.projectMenu.el, position : '-top right', top : -1, left : 7});
   },
 
-  _addSelectedDocuments : function(label) {
+  _addSelectedDocuments : function(project) {
     var count = Documents.countSelected();
-    Labels.addSelectedDocuments(label);
-    this.notifyLabeled(label.get('title'), count);
+    Projects.addSelectedDocuments(project);
+    this.notifyProjectChange(project.get('title'), count);
   },
 
-  _addLabelWithDocuments : function(title) {
+  _addProjectWithDocuments : function(title) {
     var ids = Documents.selectedIds();
-    var label = new dc.model.Label({title : title, document_ids : ids.join(',')});
-    Labels.create(label, null, {error : function() { Labels.remove(label); }});
-    this.notifyLabeled(title, ids.length);
+    var project = new dc.model.Project({title : title, document_ids : ids.join(',')});
+    Projects.create(project, null, {error : function() { Projects.remove(project); }});
+    this.notifyProjectChange(title, ids.length);
   },
 
   _deleteSelectedDocuments : function() {

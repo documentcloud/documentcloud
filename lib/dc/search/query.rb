@@ -7,7 +7,7 @@ module DC
     # as unrestricted (pass :unrestricted => true).
     class Query
 
-      attr_reader   :text, :fields, :labels, :attributes, :conditions, :results
+      attr_reader   :text, :fields, :projects, :attributes, :conditions, :results
       attr_accessor :page, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
@@ -16,7 +16,7 @@ module DC
         @text                   = opts[:text]
         @page                   = opts[:page]
         @fields                 = opts[:fields] || []
-        @labels                 = opts[:labels] || []
+        @projects               = opts[:projects] || []
         @attributes             = opts[:attributes] || []
         @from, @to, @total      = nil, nil, nil
         @account, @organization = nil, nil
@@ -27,7 +27,7 @@ module DC
       end
 
       # Series of attribute checks to determine the kind and state of query.
-      %w(text fields labels attributes results).each do |att|
+      %w(text fields projects attributes results).each do |att|
         class_eval "def has_#{att}?; @#{att}.present?; end"
       end
 
@@ -43,7 +43,7 @@ module DC
       def generate_sql
         generate_text_sql       if has_text?
         generate_fields_sql     if has_fields?
-        generate_labels_sql     if has_labels?
+        generate_projects_sql   if has_projects?
         generate_attributes_sql if has_attributes?
         sql = @sql.join(' and ')
         @conditions = @interpolations.empty? ? sql : [sql] + @interpolations
@@ -84,7 +84,7 @@ module DC
           'to'          => @to,
           'total'       => @total,
           'fields'      => @fields,
-          'labels'      => @labels,
+          'projects'    => @projects,
           'attributes'  => @attributes
         }.to_json
       end
@@ -141,11 +141,11 @@ module DC
         @sql << "documents.id in (#{intersections.join(' intersect ')})"
       end
 
-      # Generate the SQL to restrict the search to labeled documents.
-      def generate_labels_sql
+      # Generate the SQL to restrict the search to specific projects.
+      def generate_projects_sql
         return unless @account
-        labels = @account.labels.all(:conditions => {:title => @labels})
-        doc_ids = labels.map(&:split_document_ids).flatten.uniq
+        projects = @account.projects.all(:conditions => {:title => @projects})
+        doc_ids = projects.map(&:split_document_ids).flatten.uniq
         @sql << "documents.id in (?)"
         @interpolations << doc_ids
       end

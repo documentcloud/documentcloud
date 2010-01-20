@@ -52,7 +52,7 @@ dc.ui.Organizer = dc.View.extend({
     $('.box', this.el).show();
   },
 
-  // Filters the visible labels and saved searches, by case-insensitive search.
+  // Filters the visible projects and saved searches, by case-insensitive search.
   // Returns the number of visible items.
   autofilter : function(search, e) {
     if (e && e.keyCode == 13) this.clickSelectedItem();
@@ -72,16 +72,16 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   models : function() {
-    return _.flatten([Labels.models(), SavedSearches.models()]);
+    return _.flatten([Projects.models(), SavedSearches.models()]);
   },
 
   sortedModels : function() {
     return _.sortBy(this.models(), function(m){ return m.sortKey(); });
   },
 
-  // Bind all possible SavedSearch, Bookmark and Label events for rendering.
+  // Bind all possible SavedSearch and Project events for rendering.
   _bindToSets : function() {
-    _.each([Labels, SavedSearches], _.bind(function(set) {
+    _.each([Projects, SavedSearches], _.bind(function(set) {
       set.bind(dc.Set.MODEL_ADDED, this._addSubView);
       set.bind(dc.Set.MODEL_REMOVED, this._removeSubView);
     }, this));

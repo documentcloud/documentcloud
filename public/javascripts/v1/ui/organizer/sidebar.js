@@ -3,9 +3,9 @@ dc.ui.OrganizerSidebar = dc.View.extend({
   id : 'organizer_sidebar',
 
   callbacks : [
-    ['#new_label_button', 'click',    'saveNewLabel'],
-    ['#label_input',      'keyup',    'onLabelInput'],
-    ['#filter_box',       'keyup',    'autofilter']
+    ['#new_project_button', 'click',    'saveNewProject'],
+    ['#project_input',      'keyup',    'onProjectInput'],
+    ['#filter_box',         'keyup',    'autofilter']
   ],
 
   constructor : function(options) {
@@ -15,7 +15,7 @@ dc.ui.OrganizerSidebar = dc.View.extend({
 
   render : function() {
     $(this.el).append(JST.organizer_sidebar({}));
-    this.labelInputEl = $('#label_input', this.el);
+    this.projectInputEl = $('#project_input', this.el);
     this.filterEl = $('#filter_box', this.el);
     this.setCallbacks();
     return this;
@@ -25,25 +25,25 @@ dc.ui.OrganizerSidebar = dc.View.extend({
     this.organizer.autofilter(this.filterEl.val(), e);
   },
 
-  onLabelInput : function(e) {
-    if (e.keyCode && e.keyCode === 13) return this.saveNewLabel(e);
+  onProjectInput : function(e) {
+    if (e.keyCode && e.keyCode === 13) return this.saveNewProject(e);
   },
 
-  saveNewLabel : function(e) {
+  saveNewProject : function(e) {
     var me = this;
-    var input = this.labelInputEl;
+    var input = this.projectInputEl;
     var title = input.val();
     if (!title) return;
-    if (Labels.find(title)) return this.warnAlreadyExists();
+    if (Projects.find(title)) return this.warnAlreadyExists();
     input.val(null);
     input.focus();
     this.organizer.autofilter('');
-    var label = new dc.model.Label({title : title});
-    Labels.create(label, null, {error : function() { Labels.remove(label); }});
+    var project = new dc.model.Project({title : title});
+    Projects.create(project, null, {error : function() { Projects.remove(project); }});
   },
 
   warnAlreadyExists : function() {
-    dc.ui.notifier.show({text : 'label already exists', anchor : this.labelInputEl, position : '-left bottom', top : 6, left : 1});
+    dc.ui.notifier.show({text : 'project already exists', anchor : this.projectInputEl, position : '-left bottom', top : 6, left : 1});
   }
 
 });

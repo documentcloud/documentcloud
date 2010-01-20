@@ -1,10 +1,10 @@
-dc.ui.Label = dc.View.extend({
+dc.ui.Project = dc.View.extend({
 
-  className : 'label box serif',
+  className : 'project box serif',
 
   callbacks : [
     ['el',              'click',    'showDocuments'],
-    ['.icon.delete',    'click',    'deleteLabel']
+    ['.icon.delete',    'click',    'deleteProject']
   ],
 
   constructor : function(options) {
@@ -14,8 +14,8 @@ dc.ui.Label = dc.View.extend({
   },
 
   render : function() {
-    $(this.el).html(JST.organizer_label(this.model.attributes()));
-    this.el.id = "label_" + this.model.cid;
+    $(this.el).html(JST.organizer_project(this.model.attributes()));
+    this.el.id = "project_" + this.model.cid;
     this.setCallbacks();
     return this;
   },
@@ -24,9 +24,9 @@ dc.ui.Label = dc.View.extend({
     dc.app.searchBox.search(this.model.toSearchParam());
   },
 
-  deleteLabel : function(e) {
+  deleteProject : function(e) {
     e.stopPropagation();
-    Labels.destroy(this.model);
+    Projects.destroy(this.model);
   }
 
 });

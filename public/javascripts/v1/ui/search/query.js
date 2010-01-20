@@ -19,11 +19,10 @@ dc.ui.Query = dc.View.extend({
     data = data ? (this.data = data) : this.data;
     var to = Math.min(data.to, data.total);
     var fromPart = (data.total < 2 ? '' : '' + (data.from + 1) + " &ndash; " + to + " of ");
-    var verbPart = (data.labels.length > 0 && !data.text && data.fields.length <= 0 && data.attributes.length <= 0) ? ' labeled ' : ' matching ';
-    var sentence = fromPart + data.total + " document" + (data.total == 1 ? "" : "s") + verbPart;
+    var sentence = fromPart + data.total + " document" + (data.total == 1 ? "" : "s") + ' matching ';
     var fields = data.fields.concat(data.attributes);
     var list = $.map(fields, function(f){ return f.value; });
-    list = list.concat(data.labels);
+    list = list.concat(data.projects);
     if (data.text) list.push(data.text);
     var me = this;
     list = $.map(list, function(s) {
