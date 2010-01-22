@@ -15,7 +15,30 @@ dc.ui.MyDocuments = dc.View.extend({
   },
 
   showDocuments : function() {
-    dc.app.searchBox.search('account: ' + Accounts.current().get('email'));
+    dc.app.searchBox.search('documents: ' + Accounts.current().get('email'));
+  }
+
+});
+
+
+dc.ui.MyNotes = dc.View.extend({
+
+  className : 'my_notes box serif',
+
+  callbacks : [
+    ['el',  'click',  'showNotes']
+  ],
+
+  sortKey : 'My Notes',
+
+  render : function() {
+    $(this.el).html(JST.organizer_my_notes({title : 'My Notes'}));
+    this.setCallbacks();
+    return this;
+  },
+
+  showNotes : function() {
+    dc.app.searchBox.search('notes: ' + Accounts.current().get('email'));
   }
 
 });

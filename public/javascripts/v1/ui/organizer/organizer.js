@@ -20,16 +20,17 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   renderAll : function() {
-    this._renderMyDocuments();
+    this._renderMyDocumentsAndNotes();
     _.each(this.sortedModels(), _.bind(function(model) {
       this._addSubView(null, model);
     }, this));
   },
 
-  _renderMyDocuments : function() {
-    var view = new dc.ui.MyDocuments().render();
-    this.subViews.push(view);
-    $(this.el).prepend(view.el);
+  _renderMyDocumentsAndNotes : function() {
+    var docs      = new dc.ui.MyDocuments().render();
+    var notes     = new dc.ui.MyNotes().render();
+    this.subViews = this.subViews.concat([docs, notes]);
+    $(this.el).prepend($([docs.el, notes.el]));
   },
 
   clickSelectedItem : function() {
