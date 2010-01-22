@@ -20,5 +20,5 @@ chown -R $USERNAME /home/$USERNAME
 
 updatedb &
 
-grep -q '^UseDNS no' $f || echo 'UseDNS no' >> /etc/ssh/sshd_config
+grep -q '^UseDNS no' /etc/ssh/sshd_config || echo 'UseDNS no' >> /etc/ssh/sshd_config
 /etc/init.d/ssh reload
