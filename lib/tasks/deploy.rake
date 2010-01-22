@@ -1,8 +1,12 @@
 # TODO: Synchronize staging's old AMI / setup with the new one.
+# TODO: Figure out a real deployment plan ... Vlad?
 
 desc "Deploy via Git to EC2, including CloudCrowd restarts and migrations"
 task :full_deploy do
-  run_deploy("crowd:server:restart", "crowd:node:restart", "db:migrate", "app:restart", "app:warm")
+  tasks = []
+  tasks += ["crowd:server:restart", "crowd:node:restart"] if RAILS_ENV == 'staging'
+  tasks += ["db:migrate", "app:restart", "app:warm"]
+  run_deploy(*tasks)
 end
 
 desc "Deploy via Git to EC2, only the core application"
