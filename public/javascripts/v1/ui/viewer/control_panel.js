@@ -34,7 +34,7 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     var text = this._page.textWithNewlines();
     $.ajax({url : url, type : 'POST', data : {text : text}, dataType : 'json'});
     dc.app.editor.notify({mode : 'info', text : 'page saved'});
-  },
+  }
 
   // bookmarkCurrentPage : function() {
   //     var bookmark = new dc.model.Bookmark({
