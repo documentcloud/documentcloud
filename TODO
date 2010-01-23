@@ -1,4 +1,6 @@
 TODO:
+
+  * Real deploys -- Vlad?
   
   * Make search degrade gracefully in the viewer, when DocumentCloud is down.
 
