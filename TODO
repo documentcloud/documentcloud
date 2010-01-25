@@ -1,9 +1,7 @@
 TODO:
 
   * Real deploys -- Vlad?
-  
-  * Add a "related documents" search.
-  
+    
   * Make search degrade gracefully in the viewer, when DocumentCloud is down.
   
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
@@ -53,6 +51,8 @@ WAITING ON DESIGN:
   
 
 AFTER BETA:
+
+  * Add a "related documents" search. We need a good algorithm for this.
 
   * Implement http://nlp.stanford.edu/software/CRF-NER.shtml, alongside Calais.
     Or, perhaps, AlchemyAPI.
