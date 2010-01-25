@@ -3,10 +3,11 @@ dc.ui.Toolbar = dc.View.extend({
   id : 'toolbar',
 
   callbacks : [
-    ['#delete_document_button',  'click',   '_deleteSelectedDocuments'],
-    ['#edit_summary_button',     'click',   '_editSelectedSummary'],
-    ['#edit_remote_url_button',     'click',   '_editSelectedRemoteUrl'],
-    ['#timeline_button',         'click',   '_showTimeline']
+    ['#delete_document_button',   'click',   '_deleteSelectedDocuments'],
+    ['#edit_summary_button',      'click',   '_editSelectedSummary'],
+    ['#edit_remote_url_button',   'click',   '_editSelectedRemoteUrl'],
+    ['#timeline_button',          'click',   '_showTimeline'],
+    ['#related_button',           'click',   '_showRelatedDocuments']
   ],
 
   constructor : function(options) {
@@ -97,6 +98,11 @@ dc.ui.Toolbar = dc.View.extend({
 
   _showTimeline : function() {
     new dc.ui.TimelineDialog(Documents.selected());
+  },
+
+  _showRelatedDocuments : function() {
+    ids = _.pluck(Documents.selected(), 'id').join(',');
+    dc.app.searchBox.search("related: " + ids, 1);
   },
 
   _setSelectedAccess : function(access) {

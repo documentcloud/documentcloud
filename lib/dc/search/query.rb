@@ -150,12 +150,27 @@ module DC
         @interpolations << doc_ids
       end
 
+      # Generate SQL for related documents.
+      def generate_related_sql(ids)
+        meta = Metadatum.all(:conditions => {:document_id => ids}, :select => ['value'])
+        search_text = meta.map {|m| m.value }.join(' ').split(/\s+/).join(' | ')
+        query = "to_tsquery('#{Document.connection.quote_string(search_text)}')"
+        @joins << "inner join (select document_id,
+                   ts_rank_cd(full_text_text_vector, #{query}) as rank
+                   from full_text
+                   where full_text_text_vector @@ #{query}
+                   order by rank limit 10)
+                   as related_search on document_id = documents.id"
+      end
+
       # Generate the SQL to match document attributes.
       # TODO: Fix the special-case for "documents", and "notes" by figuring out
       # a way to do arbitrary translations of faux-attributes.
       def generate_attributes_sql
         @attributes.each do |field|
-          if ['documents', 'notes'].include?(field.kind)
+          if field.kind == 'related'
+            generate_related_sql(field.value.split(','))
+          elsif ['documents', 'notes'].include?(field.kind)
             account = Account.find_by_email(field.value)
             @sql << "documents.account_id = ?"
             @interpolations << (account ? account.id : -1)

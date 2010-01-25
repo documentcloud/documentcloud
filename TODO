@@ -2,30 +2,34 @@ TODO:
 
   * Real deploys -- Vlad?
   
+  * Add a "related documents" search.
+  
   * Make search degrade gracefully in the viewer, when DocumentCloud is down.
-
-  * Make notes first-class with documents. Add comprehensive FTS search.
-    Translate entity searches in notes into the equivalent FTS search.
-    
-  * Merge Visualize, Timeline, and Entities into a single "Analyze" UI.
   
-  * Add lightweight tags for documents and notes (anything searchable).
-  
-  * Add a JS NoteView for showing notes (with images) within the workspace.
-  
-  * Add more supporting features to Projects -- they should know statistics 
-    about the documents, notes and entities contained within. Taggable?
+  * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
+    viewing.
       
   * Implement the "publication" workflow. A document should know if it's been
     published, and the URL where. Create a cron/cloudcrowd job that pings each
     published document, ensuring that it's not 404'd.
-    
-  * Add OpenCalais logo to comply with TOS.
-          
+              
   
 WAITING ON DESIGN:
 
+  * Add more supporting features to Projects -- they should know statistics 
+    about the documents, notes and entities contained within. Taggable?
+
+  * Merge Visualize, Timeline, and Entities into a single "Analyze" UI.
+    Add OpenCalais logo to comply with TOS.
+
+  * Add lightweight tags for documents and notes (anything searchable).
+
+  * Add a JS NoteView for showing notes (with images) within the workspace.
+
   * Make some pretty 404/500/403 pages.
+  
+  * Make notes first-class with documents. Add comprehensive FTS search.
+    Translate entity searches in notes into the equivalent FTS search.
   
   * Start recording some notion of running "update access" jobs. Make
     subsequent changes to access wait for the job to finish. Perhaps a floating
