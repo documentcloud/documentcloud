@@ -19,6 +19,8 @@ TODO:
   * Implement the "publication" workflow. A document should know if it's been
     published, and the URL where. Create a cron/cloudcrowd job that pings each
     published document, ensuring that it's not 404'd.
+    
+  * Add OpenCalais logo to comply with TOS.
           
   
 WAITING ON DESIGN:
