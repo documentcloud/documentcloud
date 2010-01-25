@@ -1,7 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
 
   # Internal Search API.
-  map.search '/search.json', :controller => 'search', :action => 'search'
+  # /search/documents.json
+  # /search/notes.json
 
   # API Controller uses default routes, for now.
 

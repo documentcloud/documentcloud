@@ -38,7 +38,7 @@ dc.ui.MyNotes = dc.View.extend({
   },
 
   showNotes : function() {
-    dc.app.searchBox.search('notes: ' + Accounts.current().get('email'));
+    dc.app.searchBox.search('notes: ');
   }
 
 });

@@ -45,7 +45,8 @@ dc.ui.SearchBox = dc.View.extend({
     var params = {q : query};
     this.currentPage = page;
     if (page) params.page = page;
-    $.get('/search.json', params, this.loadSearchResults, 'json');
+    var url = query.match(/notes:/) ? '/search/notes.json' : '/search/documents.json';
+    $.get(url, params, this.loadSearchResults, 'json');
   },
 
   // When searching by the URL's hash value, we need to unescape first.
