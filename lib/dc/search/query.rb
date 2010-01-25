@@ -153,8 +153,10 @@ module DC
       # Generate SQL for related documents.
       def generate_related_sql(ids)
         meta = Metadatum.all(:conditions => {:document_id => ids}, :select => ['value'])
-        search_text = meta.map {|m| m.value }.join(' ').split(/\s+/).join(' | ')
-        query = "to_tsquery('#{Document.connection.quote_string(search_text)}')"
+        query = meta.map {|m| m.value }.join(' ').split(/\s+/).select {|lexeme|
+          lexeme.match(/\A\w+\Z/)
+        }.join(' | ')
+        query = "to_tsquery('#{Document.connection.quote_string(query)}')"
         @joins << "inner join (select document_id,
                    ts_rank_cd(full_text_text_vector, #{query}) as rank
                    from full_text
