@@ -3,7 +3,7 @@ class SearchController < ApplicationController
 
   before_filter :bouncer unless Rails.env.development?
 
-  NOTE_STRIP = /\Anotes:\s+/
+  FIELD_STRIP = /\S+:\s*/
 
   def documents
     perform_search
@@ -11,7 +11,7 @@ class SearchController < ApplicationController
   end
 
   def notes
-    params[:q].sub!(NOTE_STRIP, '')
+    params[:q].gsub!(FIELD_STRIP, '')
     perform_search
     render :json => {'query' => @query, 'documents' => @documents}
   end
