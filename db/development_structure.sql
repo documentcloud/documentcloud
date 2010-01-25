@@ -538,6 +538,67 @@ ALTER SEQUENCE security_keys_id_seq OWNED BY security_keys.id;
 
 
 --
+-- Name: taggings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE taggings (
+    id integer NOT NULL,
+    tag_id integer NOT NULL,
+    taggable_type character varying(40) NOT NULL,
+    taggable_id integer
+);
+
+
+--
+-- Name: taggings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE taggings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: taggings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE taggings_id_seq OWNED BY taggings.id;
+
+
+--
+-- Name: tags; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE tags (
+    id integer NOT NULL,
+    account_id integer NOT NULL,
+    title character varying(255) NOT NULL
+);
+
+
+--
+-- Name: tags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE tags_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE tags_id_seq OWNED BY tags.id;
+
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -640,6 +701,20 @@ ALTER TABLE sections ALTER COLUMN id SET DEFAULT nextval('sections_id_seq'::regc
 --
 
 ALTER TABLE security_keys ALTER COLUMN id SET DEFAULT nextval('security_keys_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE taggings ALTER COLUMN id SET DEFAULT nextval('taggings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclass);
 
 
 --
@@ -760,6 +835,22 @@ ALTER TABLE ONLY sections
 
 ALTER TABLE ONLY security_keys
     ADD CONSTRAINT security_keys_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: taggings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY taggings
+    ADD CONSTRAINT taggings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY tags
+    ADD CONSTRAINT tags_pkey PRIMARY KEY (id);
 
 
 --
@@ -991,6 +1082,22 @@ CREATE TRIGGER pages_text_vector_update
 
 
 --
+-- Name: fk_account_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tags
+    ADD CONSTRAINT fk_account_id FOREIGN KEY (account_id) REFERENCES accounts(id);
+
+
+--
+-- Name: fk_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY taggings
+    ADD CONSTRAINT fk_tag_id FOREIGN KEY (tag_id) REFERENCES tags(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -1017,3 +1124,5 @@ INSERT INTO schema_migrations (version) VALUES ('20100114170350');
 INSERT INTO schema_migrations (version) VALUES ('20100120194128');
 
 INSERT INTO schema_migrations (version) VALUES ('20100120205426');
+
+INSERT INTO schema_migrations (version) VALUES ('20100125165305');
