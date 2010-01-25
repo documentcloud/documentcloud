@@ -50,8 +50,8 @@ module DC
       end
 
       # Runs (at most) two queries -- one to count the total number of results
-      # that match the search, and one that retrieves the documents for the
-      # current page.
+      # that match the search, and one that retrieves the documents or notes
+      # for the current page.
       def run(options={})
         @account, @organization, @unrestricted = options[:account], options[:organization], options[:unrestricted]
         generate_sql
@@ -153,7 +153,6 @@ module DC
       # Generate the SQL to match document attributes.
       # TODO: Fix the special-case for "documents", and "notes" by figuring out
       # a way to do arbitrary translations of faux-attributes.
-      # TODO: Remove sql injection potential in field.kind.
       def generate_attributes_sql
         @attributes.each do |field|
           if ['documents', 'notes'].include?(field.kind)

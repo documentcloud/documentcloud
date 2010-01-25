@@ -1,4 +1,4 @@
-DocumentCloud. How to get a development environment set up:
+How to get a development environment set up:
 
 * Install the dependencies and gems listed in PROVISIONING, as appropriate 
   (ie, don't install Tesseract unless you're planning on doing OCR).
