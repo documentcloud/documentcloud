@@ -1,6 +1,6 @@
 javascript_compressor: closure
 template_function: _.template
-embed_images: on
+embed_assets: on
 
 javascripts:
   v2:
@@ -21,6 +21,7 @@ javascripts:
     - public/javascripts/model/*.js
     - public/javascripts/v1/ui/menu.js
     - public/javascripts/v1/**/*.js
+    - app/views/jst/v1/**/*.jst
   ie_only:
     - public/javascripts/ie/*.js
 
@@ -45,8 +46,3 @@ stylesheets:
     - public/stylesheets/v1/ui.css
     - public/stylesheets/v1/icons.css
     - public/stylesheets/pages/viewer_editing.css
-
-templates:
-  v2:
-  v1:
-    - app/views/jst/v1/**/*.jst
