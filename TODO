@@ -1,6 +1,8 @@
 TODO:
 
   * Real deploys -- Vlad?
+  
+  * Add an admin UI for editing static pages.
     
   * Make search degrade gracefully in the viewer, when DocumentCloud is down.
   
@@ -48,6 +50,8 @@ WAITING ON DESIGN:
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Make 'em removable.
+    
+  * Write out full documentation, with screenshots.
   
 
 AFTER BETA:
