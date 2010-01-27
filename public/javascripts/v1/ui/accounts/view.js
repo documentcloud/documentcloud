@@ -2,7 +2,7 @@
 dc.ui.AccountView = dc.View.extend({
 
   AVATAR_SIZES : {
-    badge : 20,
+    badge : 32,
     row   : 32
   },
 

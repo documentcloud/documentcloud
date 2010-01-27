@@ -1,6 +1,6 @@
 dc.ui.MyDocuments = dc.View.extend({
 
-  className : 'my_documents box serif',
+  className : 'my_documents box',
 
   callbacks : [
     ['el',  'click',  'showDocuments']
@@ -23,7 +23,7 @@ dc.ui.MyDocuments = dc.View.extend({
 
 dc.ui.MyNotes = dc.View.extend({
 
-  className : 'my_notes box serif',
+  className : 'my_notes box',
 
   callbacks : [
     ['el',  'click',  'showNotes']

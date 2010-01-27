@@ -86,10 +86,11 @@ a {
 
 .sidebar {
   position: absolute;
-  top: 0px; left: 0px; bottom: 0px;
+  top: 0px; left: 0px; bottom: 46px;
   background: #eee;
   border-right: 1px solid #ddd;
   width: 310px;
+  -webkit-box-shadow: 0 0 25px #ddd; -moz-box-shadow: 0 0 25px #ddd;
   overflow: hidden;
 }
   .search_query, #paginator {
@@ -118,13 +119,13 @@ a {
 
 .panel_container {
   position: absolute;
-  left: 320px; right: 0px; top: 0px; bottom: 0px;
+  left: 310px; right: 0px; top: 0px; bottom: 0px;
 }
   .panel_content .panel {
     position: absolute;
     overflow-y: auto;
-    top: 21px; left: 0px; right: 0px; bottom: 0px;
-    padding: 10px;
+    top: 0px; left: 0px; right: 0px; bottom: 0px;
+    padding: 10px 10px 10px 15px;
   }
 
 #no_results_container {

@@ -1,6 +1,6 @@
 dc.ui.Project = dc.View.extend({
 
-  className : 'project box serif',
+  className : 'project box',
 
   callbacks : [
     ['el',              'click',    'showDocuments'],

@@ -1,29 +1,27 @@
 .account_view.badge {
   position: absolute;
-  top: 9px; left: 11px;
-  background: #9f9f9f;
-  padding: 4px 10px 4px 5px;
-  border: 1px solid #909090;
-  -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+  left: 0; bottom: 0px;
+  width: 250px; height: 32px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#dfdfdf));
+  padding: 7px 7px 7px 52px;
+  font: 11px/16px Arial;
+  color: #454545;
+  border: 1px solid #ddd;
 }
   .account_view.badge img.avatar {
-    position: absolute;
+    position: absolute; left: 7px;
     border: 1px solid #aaa;
   }
-  .account_view.badge .textual {
-    font: 10px/22px Arial;
-    color: #454545;
-    margin-left: 28px;
+  .account_view.badge .controls {
+    position: absolute;
+    right: 7px; top: 7px;
   }
-    .account_view.badge .pipe {
-      color: #666;
+  .account_view.badge a {
+    color: #353566;
+  }
+    .account_view.badge a:hover {
+      text-decoration: underline;
     }
-    .account_view.badge .textual a {
-      color: #353566;
-    }
-      .account_view.badge .textual a:hover {
-        text-decoration: underline;
-      }
 
 #account_list {
   padding: 0;

@@ -1,8 +1,11 @@
 <img class="avatar" src="<%= account.gravatarURL(size) %>" width="<%= size %>" height="<%= size %>" />
-<div class="textual">
-  <div class="name">
-    <%= account.fullName(true) %>
-    <span class="pipe">&nbsp;|&nbsp;</span>
-    <a href="/logout">Log Out</a>
-  </div>
+<div class="name">
+  <%= account.get('first_name') %>
+  <br />
+  <%= account.get('last_name') %>
+</div>
+<div class="controls">
+  <a href="#">Edit Accounts</a>
+  <br />
+  <a href="/logout">Log Out</a>
 </div>
