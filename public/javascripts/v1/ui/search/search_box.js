@@ -138,7 +138,7 @@ dc.ui.SearchBox = dc.View.extend({
 
   contextSensitiveSaveButton : function(query) {
     if (!this.saveSearchButton) return;
-    $(this.saveSearchButton).css({opacity : !query || SavedSearches.find(query) ? 0 : 1});
+    // $(this.saveSearchButton).css({opacity : !query || SavedSearches.find(query) ? 0 : 1});
   }
 
 });

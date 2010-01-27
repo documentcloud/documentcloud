@@ -39,9 +39,8 @@ a {
     }
   #search {
     position: absolute;
-    right: 15px; top: 15px;
-    font-size: 12px;
-    width: 30%;
+    right: 210px; top: 12px; left: 324px;
+    font-size: 16px;
     color: #333;
     border: 1px solid #999;
     -moz-border-radius: 6px;
@@ -57,8 +56,7 @@ a {
 #spinner {
   display: none;
   position: absolute;
-  margin-right: 30px;
-  top: 17px; right: 30%;
+  top: 15px; right: 10px;
   font-size: 10px;
   text-transform: uppercase;
   background: #efefef;
@@ -81,19 +79,21 @@ a {
   position: absolute;
   bottom: 0px; top: 52px; left: 0; right: 0;
   overflow: hidden;
-  background: #f5f5f5;
+  background: #f7f7f7;
 }
 
 .sidebar {
   position: absolute;
   top: 0px; left: 0px; bottom: 46px;
-  background: #eee;
+  background: #e7e7e7;
   border-right: 1px solid #ddd;
   width: 310px;
   -webkit-box-shadow: 0 0 25px #ddd; -moz-box-shadow: 0 0 25px #ddd;
   overflow: hidden;
+  z-index: 5;
 }
   .search_query, #paginator {
+    display: none;
     position: absolute;
     top: 3px; left: 10px; right: 10px;
     font-size: 10px;

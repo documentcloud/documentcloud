@@ -2,7 +2,7 @@
   position: absolute;
   left: 0; bottom: 0px;
   width: 250px; height: 32px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#dfdfdf));
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dfdfdf));
   padding: 7px 7px 7px 52px;
   font: 11px/16px Arial;
   color: #454545;
