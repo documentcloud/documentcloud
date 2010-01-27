@@ -12,7 +12,7 @@
       font: bold italic 11px Arial;
       color: #666;
     }
-  .document_upload .text_input, 
+  .document_upload .text_input,
   .document_upload input[type="file"],
   .document_upload select {
     margin-bottom: 25px;
@@ -25,10 +25,10 @@
   .document_upload option {
     font: normal 12px Arial;
   }
-  
+
 #upload_progress {
-  position: absolute; 
-  top: 21px; left: 1px; right: 1px; bottom: 21px;
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
   overflow-x: visible; overflow-y: auto;
 }
   #upload_progress_inner {
@@ -42,7 +42,7 @@
       position: relative;
       width: 100%;
       background: #fafafa;
-      -webkit-border-radius: 6px; -moz-border-radius: 6px; 
+      -webkit-border-radius: 6px; -moz-border-radius: 6px;
       -webkit-box-shadow: 0 0 4px #777; -moz-box-shadow: 0 0 4px #777;
     }
       #upload_progress .status_wrap {
@@ -63,4 +63,3 @@
         background: #ddddff;
         background: -webkit-gradient(linear, left top, left bottom, from(#f9f9ff), to(#ddddff));
       }
-    
