@@ -20,7 +20,7 @@
 .document_list {
 }
   .panel_content .panel.documents {
-    padding: 10px;
+    padding: 15px 5px 5px 15px;
     -webkit-transition: top 0.1s linear;
   }
   body.logged_in .panel_content.open_toolbar #document_list_container .panel.documents {

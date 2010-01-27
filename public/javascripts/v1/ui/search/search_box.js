@@ -104,10 +104,11 @@ dc.ui.SearchBox = dc.View.extend({
     Documents.each(function(el) {
       $('#document_list_container .documents').append((new dc.ui.DocumentTile(el)).render().el);
     });
-    if (resp.documents.length == 0) return this.doneSearching(true);
-    dc.ui.spinner.show('gathering metadata');
-    var docIds = _.pluck(resp.documents, 'id');
-    $.get('/documents/metadata.json', {'ids[]' : docIds}, this.loadMetadataResults, 'json');
+    return this.doneSearching();
+    // if (resp.documents.length == 0) return this.doneSearching(true);
+    // dc.ui.spinner.show('gathering metadata');
+    // var docIds = _.pluck(resp.documents, 'id');
+    // $.get('/documents/metadata.json', {'ids[]' : docIds}, this.loadMetadataResults, 'json');
   },
 
   // When the metadata results come back, render the entity list in the sidebar
