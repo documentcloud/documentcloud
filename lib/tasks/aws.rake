@@ -63,11 +63,6 @@ namespace :aws do
       'IdentityFile' => "#{Rails.root}/config/server/keys/documentcloud.pem"
     }
 
-    if RAILS_ENV == 'development'
-      ssh_config['IdentityFile'] = "/home/adler/.ec2/jerseyslicecom.pem"
-      keypair = 'jerseyslice.com'
-    end
-
     File.chmod(0600, ssh_config['IdentityFile'])
 
     new_instance = ec2.run_instances(image_id, instance_count, instance_count, group, keypair, userdata, addressing_type, instance_type, nil, nil, zone)[0]
