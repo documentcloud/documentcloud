@@ -1,5 +1,7 @@
 class StaticController < ApplicationController
 
+  before_filter :bouncer unless Rails.env.development?
+
   def home
     @posts = date_sorted(yaml_for('home'))
   end
