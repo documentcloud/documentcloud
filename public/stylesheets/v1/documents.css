@@ -20,7 +20,7 @@
 .document_list {
 }
   .panel_content .panel.documents {
-    padding: 15px 5px 5px 15px;
+    padding: 15px 10px 5px 15px;
     -webkit-transition: top 0.1s linear;
   }
   body.logged_in .panel_content.open_toolbar #document_list_container .panel.documents {
@@ -30,10 +30,12 @@
 .document_tile {
   position: relative;
   overflow: hidden;
+  border: 1px solid transparent;
 }
   .document_tile.is_selected {
-    background: #eaeafa;
-    background: -webkit-gradient(linear, left top, left bottom, from(#eaeafa), to(#fafaff));
+    border: 1px solid #eea;
+    background: #ffe;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fffffa), to(#ffe));
     -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
   }
   .document_list.large_size .document_tile {
