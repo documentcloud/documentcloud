@@ -39,7 +39,7 @@ a {
     }
   #search {
     position: absolute;
-    right: 210px; top: 12px; left: 324px;
+    right: 15px; top: 12px; left: 325px;
     font-size: 16px;
     color: #333;
     border: 1px solid #999;
@@ -84,7 +84,7 @@ a {
 
 .sidebar {
   position: absolute;
-  top: 0px; left: 0px; bottom: 46px;
+  top: 0px; left: 0px; bottom: 38px;
   background: #e7e7e7;
   border-right: 1px solid #ddd;
   width: 310px;

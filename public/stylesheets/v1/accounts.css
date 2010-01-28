@@ -1,10 +1,10 @@
 .account_view.badge {
   position: absolute;
   left: 0; bottom: 0px;
-  width: 250px; height: 32px;
+  width: 262px; height: 22px;
   background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dfdfdf));
-  padding: 7px 7px 7px 52px;
-  font: 11px/16px Arial;
+  padding: 7px 7px 7px 40px;
+  font: 11px/22px Arial;
   color: #454545;
   border: 1px solid #ddd;
 }
@@ -12,9 +12,12 @@
     position: absolute; left: 7px;
     border: 1px solid #aaa;
   }
+  .account_view.badge .name {
+    font-weight: bold;
+  }
   .account_view.badge .controls {
     position: absolute;
-    right: 7px; top: 7px;
+    right: 10px; top: 7px;
   }
   .account_view.badge a {
     color: #353566;

@@ -72,7 +72,7 @@ dc.ui.Navigation = dc.View.extend({
   // Set the title of the page (both in HTML and the browser window).
   setTitle : function(title) {
     $('h1#title').text(title);
-    document.title = title + ' | DocumentCloud';
+    document.title = title + ' - DocumentCloud';
   }
 
 });

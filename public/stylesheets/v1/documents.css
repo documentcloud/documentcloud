@@ -65,7 +65,7 @@
     color: #002256;
     font-size: 14px;
     font-weight: bold;
-    margin-top: 8px;
+    margin-top: 3px;
     overflow: hidden;
     height: 17px;
   }
@@ -103,7 +103,7 @@
     overflow: hidden;
     height: 10px;
     color: #808080;
-    margin-top: 2px;
+    margin: 2px 0 10px 0;
   }
     .document_list.small_size .source {
       float: left;
@@ -116,6 +116,7 @@
     margin-top: 5px;
     height: 33px;
     overflow: hidden;
+    color: #454546;
   }
     .document_tile .summary b {
       font-size: 12px;
