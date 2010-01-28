@@ -14,7 +14,8 @@ dc.ui.Navigation = dc.View.extend({
     {name : 'search',    title : 'Search'},
     {name : 'upload',    title : 'Upload a Document'},
     {name : 'visualize', title : 'Visualize'},
-    {name : 'admin',  title : 'Manage Accounts'}
+    {name : 'admin',     title : 'Manage Accounts'},
+    {name : 'dashboard', title : 'Dashboard'}
   ],
 
   constructor : function(options) {

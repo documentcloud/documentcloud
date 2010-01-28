@@ -39,6 +39,7 @@ body.logged_in .tab_content {
 }
   body.upload_navigation .upload_tab_content,
   body.search_navigation .search_tab_content,
+  body.dashboard_navigation .dashboard_tab_content,
   body.admin_navigation .admin_tab_content,
   body.visualize_navigation .visualize_tab_content {
     display: block;

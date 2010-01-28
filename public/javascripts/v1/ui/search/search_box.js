@@ -19,7 +19,7 @@ dc.ui.SearchBox = dc.View.extend({
     this.setCallbacks();
     _.bindAll(this, 'loadSearchResults', 'loadMetadataResults', 'searchByHash', 'clearSearch', 'saveCurrentSearch');
     dc.history.register(/^#search\//, this.searchByHash);
-    dc.history.register(/^#home$/, this.clearSearch);
+    dc.history.register(/^#dashboard$/, this.clearSearch);
   },
 
   // Shortcut to the searchbox's value.
@@ -78,10 +78,10 @@ dc.ui.SearchBox = dc.View.extend({
 
   clearSearch : function() {
     this.contextSensitiveSaveButton(false);
-    dc.history.save('home');
+    dc.history.save('dashboard');
     dc.app.workspace.organizer.clear();
     $(document.body).setMode('no', 'search');
-    dc.app.navigation.tab('search');
+    dc.app.navigation.tab('dashboard');
   },
 
   // Hide the spinner and remove the search lock when finished searching.
@@ -104,7 +104,7 @@ dc.ui.SearchBox = dc.View.extend({
     Documents.each(function(el) {
       $('#document_list_container .documents').append((new dc.ui.DocumentTile(el)).render().el);
     });
-    return this.doneSearching();
+    return this.doneSearching(resp.documents.length == 0);
     // if (resp.documents.length == 0) return this.doneSearching(true);
     // dc.ui.spinner.show('gathering metadata');
     // var docIds = _.pluck(resp.documents, 'id');
