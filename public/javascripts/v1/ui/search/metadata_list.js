@@ -28,7 +28,7 @@ dc.ui.MetadataList = dc.View.extend({
   collectMetadata : function() {
     var byKind  = this._byKind = {};
     var max     = this.NUM_INITIALLY_VISIBLE;
-    _(Metadata.selected(true)).each(function(meta) {
+    _(Metadata.models()).each(function(meta) {
       var kind = meta.get('kind');
       var list = byKind[kind] = byKind[kind] || {shown : [], rest : [], title : meta.displayKind()};
       (list.shown.length < max ? list.shown : list.rest).push(meta);
@@ -74,7 +74,7 @@ dc.ui.MetadataList = dc.View.extend({
   },
 
   visualizeKind : function(e) {
-    if (dc.app.navigation.currentTab != 'visualize') return;
+    if (dc.app.navigation.currentTab != 'analyze') return;
     var kind = $(e.target).attr('data-kind');
     dc.app.workspace.visualizer.visualize(kind);
   },

@@ -13,7 +13,7 @@ dc.ui.Navigation = dc.View.extend({
   tabs : [
     {name : 'search',    title : 'Search'},
     {name : 'upload',    title : 'Upload a Document'},
-    {name : 'visualize', title : 'Visualize'},
+    {name : 'analyze',   title : 'Analyze'},
     {name : 'admin',     title : 'Manage Accounts'},
     {name : 'dashboard', title : 'Dashboard'}
   ],

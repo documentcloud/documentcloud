@@ -51,7 +51,7 @@ _.extend(dc.app.workspace, {
     this.panel.add('accounts_panel', this.accountList.render().el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
     this.panel.add('organizer', this.organizer.render().el);
-    this.panel.add('visualizer', this.visualizer.render().el);
+    this.panel.add('analyze', this.visualizer.render().el);
     dc.app.searchBox.addSaveSearchButton();
     this.warnNonWebkit();
   },

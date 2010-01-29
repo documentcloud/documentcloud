@@ -96,6 +96,18 @@ dc.model.MetadataSet = dc.model.SortedSet.extend({
     return m.totalRelevance();
   },
 
+  // Populate the Metadata set from the current documents in the client,
+  // triggering a refresh when loaded.
+  populate : function(callback) {
+    dc.ui.spinner.show('loading metadata');
+    $.get('/documents/metadata.json', {'ids[]' : Documents.getIds()}, function(resp) {
+      _.each(resp.metadata, function(m){ Metadata.addOrCreate(m); });
+      Metadata.sort();
+      dc.ui.spinner.hide();
+      callback();
+    }, 'json');
+  },
+
   // Returns the sorted list of metadata for the currently-selected documents.
   // If "ensure" is passed, return all Metadata when no documents are selected.
   selected : function(ensure) {

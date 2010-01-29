@@ -1,4 +1,4 @@
-#visualizer_sidebar_container {
+#analyze_sidebar_container {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   overflow-y: auto;
@@ -15,7 +15,7 @@
 
 #visualizer, #viz_inner_wrapper {
   position: absolute;
-  top: 21px; bottom: 0; left: 0; right: 0;
+  top: 0; bottom: 0; left: 0; right: 0;
 }
   #viz_inner_wrapper {
     top: 0;

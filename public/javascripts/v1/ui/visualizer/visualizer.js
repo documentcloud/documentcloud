@@ -13,11 +13,11 @@ dc.ui.Visualizer = dc.View.extend({
   ],
 
   constructor : function(options) {
-    _.bindAll(this, 'open', 'renderVisualization', 'highlightDatum', 'highlightOff', 'onResize');
+    _.bindAll(this, 'open', 'visualize', 'gatherMetadata', 'renderVisualization', 'highlightDatum', 'highlightOff', 'onResize');
     this.base(options);
     this.topDocuments = [];
     this.topMetadata = [];
-    dc.app.navigation.register('visualize', this.open);
+    dc.app.navigation.register('analyze', this.open);
     $(window).resize(this.onResize);
     Documents.bind(Documents.SELECTION_CHANGED, this.renderVisualization);
   },
@@ -26,12 +26,13 @@ dc.ui.Visualizer = dc.View.extend({
     this._kindFilter = null;
     this.setMode('linear', 'format');
     this._numMetadata = 10;
-    this.gatherMetadata();
-    _.defer(this.renderVisualization);
+    if (Metadata.empty()) return Metadata.populate(this.visualize);
+    this.visualize();
   },
 
   visualize : function(kind) {
     this._kindFilter = kind;
+    dc.app.metaList.render();
     this.gatherMetadata();
     this.renderVisualization();
   },
@@ -98,7 +99,7 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   onResize : function() {
-    if (dc.app.navigation.currentTab == 'visualize' && !this.empty()) this.renderVisualization();
+    if (dc.app.navigation.currentTab == 'analyze' && !this.empty()) this.renderVisualization();
   },
 
   renderVisualization : function() {
