@@ -10,6 +10,10 @@ span[role="link"] {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
 }
 
+.hidden {
+  display: none;
+}
+
 /*------------------------------ Text Inputs ---------------------------------*/
 span.text_input {
   display: block;

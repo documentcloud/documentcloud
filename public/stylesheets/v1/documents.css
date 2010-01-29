@@ -57,7 +57,7 @@
   .document_tile img.icon {
     position: absolute;
     -webkit-box-shadow: 0 0px 5px #777; -moz-box-shadow: 0 0px 5px #777;
-    left: 7px;
+    left: 7px; top: 6px;
   }
     body.logged_in .document_tile img.icon {
       cursor: pointer;
@@ -66,10 +66,10 @@
     display: block;
     color: #002256;
     font-size: 14px;
+    line-height: 18px;
     font-weight: bold;
-    margin-top: 3px;
     overflow: hidden;
-    height: 17px;
+    height: 18px;
   }
     .document_list.medium_size .title {
       margin-top: 2px;

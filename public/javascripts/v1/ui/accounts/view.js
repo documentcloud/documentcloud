@@ -54,6 +54,7 @@ dc.ui.AccountView = dc.View.extend({
 
   _openAccounts : function(e) {
     e.preventDefault();
+    dc.history.save('admin');
     dc.app.navigation.tab('admin');
   },
 

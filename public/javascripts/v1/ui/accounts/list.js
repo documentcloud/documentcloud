@@ -20,7 +20,7 @@ dc.ui.AccountList = dc.View.extend({
     $(this.el).append(JST.account_list({}));
     this.list = $('#account_list_content', this.el);
     this.setCallbacks();
-    dc.ui.spinner.show('fetching accounts');
+    dc.ui.spinner.show('loading');
     Accounts.populate({success : this.renderAccounts});
   },
 

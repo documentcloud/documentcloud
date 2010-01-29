@@ -4,6 +4,7 @@ dc.ui.SearchBox = dc.View.extend({
   PAGE_MATCHER : (/\/p(\d+)$/),
 
   id            : 'search',
+  className     : 'admin_tab_hidden',
   fragment      : null,
   currentPage   : null,
 

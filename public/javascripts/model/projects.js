@@ -32,7 +32,7 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
   resource : 'projects',
 
   comparator : function(m) {
-    return m.get('title');
+    return m.get('title').toLowerCase();
   },
 
   addSelectedDocuments : function(project) {

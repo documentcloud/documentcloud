@@ -44,16 +44,21 @@ body.logged_in .tab_content {
   body.visualize_navigation .visualize_tab_content {
     display: block;
   }
+  body.upload_navigation .upload_tab_hidden,
+  body.search_navigation .search_tab_hidden,
+  body.dashboard_navigation .dashboard_tab_hidden,
+  body.admin_navigation .admin_tab_hidden,
+  body.visualize_navigation .visualize_tab_hidden {
+    display: none;
+  }
 
 body.search_navigation div.active_search,
 body.search_navigation div.empty_search,
-body.visualize_navigation div.empty_search,
 body.search_navigation div.no_search {
   display: none;
 }
   body.search_navigation.active_search div.active_search,
   body.search_navigation.empty_search div.empty_search,
-  body.visualize_navigation.empty_search div.empty_search,
   body.search_navigation.no_search div.no_search {
     display: block;
   }
