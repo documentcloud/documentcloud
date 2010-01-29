@@ -159,6 +159,10 @@ module DC
             account = Account.find_by_email(field.value)
             @sql << "documents.account_id = ?"
             @interpolations << (account ? account.id : -1)
+          elsif field.kind == 'organization'
+            org = Organization.find_by_slug(field.value)
+            @sql << "documents.organization_id = ?"
+            @interpolations << (org ? org.id : -1)
           else
             @sql << "documents_#{field.kind}_vector @@ plainto_tsquery(?)"
             @interpolations << field.value

@@ -3,28 +3,37 @@ dc.ui.SearchBox = dc.View.extend({
 
   PAGE_MATCHER : (/\/p(\d+)$/),
 
-  fragment : null,
-  currentPage : null,
+  id            : 'search',
+  fragment      : null,
+  currentPage   : null,
 
   callbacks : [
-    ['el',  'keydown',  'maybeSearch'],
-    ['el',  'search',   'searchEvent']
+    ['#search_box',   'keydown',  'maybeSearch'],
+    ['#search_box',   'search',   'searchEvent'],
+    ['#search_type',  'click',    '_setScope']
   ],
 
   // Creating a new SearchBox registers #search page fragments.
-  constructor : function() {
-    this.base({el : $('#search')[0]});
+  constructor : function(options) {
+    this.base(options);
     this.outstandingSearch = false;
-    $(document.body).setMode('no', 'search');
-    this.setCallbacks();
     _.bindAll(this, 'loadSearchResults', 'loadMetadataResults', 'searchByHash', 'clearSearch', 'saveCurrentSearch');
     dc.history.register(/^#search\//, this.searchByHash);
     dc.history.register(/^#dashboard$/, this.clearSearch);
   },
 
+  render : function() {
+    $(this.el).append(JST.search_box({}));
+    this.box  = $('#search_box', this.el);
+    this.menu = $('#search_type', this.el);
+    $(document.body).setMode('no', 'search');
+    this.setCallbacks();
+    return this;
+  },
+
   // Shortcut to the searchbox's value.
   value : function(query) {
-    return $(this.el).val(query);
+    return this.box.val(query);
   },
 
   // Start a search for a query string, updating the page URL.
@@ -47,6 +56,13 @@ dc.ui.SearchBox = dc.View.extend({
     if (page) params.page = page;
     var url = query.match(/notes:/) ? '/search/notes.json' : '/search/documents.json';
     $.get(url, params, this.loadSearchResults, 'json');
+  },
+
+  // Ensure a given prefix for the search, used to scope searches down to
+  // a specific qualifier.
+  scopeSearch : function(prefix) {
+    var search = this.value().replace(/^(organization|documents):\s+\S+ /, '');
+    this.value(prefix + search);
   },
 
   // When searching by the URL's hash value, we need to unescape first.
@@ -140,6 +156,16 @@ dc.ui.SearchBox = dc.View.extend({
   contextSensitiveSaveButton : function(query) {
     if (!this.saveSearchButton) return;
     // $(this.saveSearchButton).css({opacity : !query || SavedSearches.find(query) ? 0 : 1});
+  },
+
+  _setScope : function(e) {
+    var scope = null;
+    switch (this.menu.val()) {
+      case 'all':           scope = '';                                                    break;
+      case 'account':       scope = 'documents: ' + Accounts.current().get('email') + ' '; break;
+      case 'organization':  scope = 'organization: ' + dc.app.organization.slug + ' ';     break;
+    }
+    this.scopeSearch(scope);
   }
 
 });

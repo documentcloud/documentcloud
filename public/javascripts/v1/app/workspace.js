@@ -35,6 +35,7 @@ _.extend(dc.app.workspace, {
 
   // Render all of the existing subviews and place them in the DOM.
   renderSubViews : function() {
+    $('#topbar').append(dc.app.searchBox.render().el);
     var content   = $('#content');
     content.append(this.sidebar.render().el);
     content.append(this.panel.render().el);

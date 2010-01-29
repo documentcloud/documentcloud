@@ -21,7 +21,7 @@ body.empty #logo {
 body.empty #search_container {
   margin-top: 5px;
 }
-  body.empty #search {
+  body.empty #search_box {
     font-size: 16px;
     color: #333;
     border: 1px solid #999;

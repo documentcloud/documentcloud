@@ -62,7 +62,7 @@ dc.ui.MetadataList = dc.View.extend({
   // TODO: Move this ''
   _addThenSearch : function(e) {
     this.addToSearch(e);
-    dc.app.searchBox.search($('#search').val());
+    dc.app.searchBox.search(dc.app.searchBox.value());
   },
 
   _openDocument : function(e) {

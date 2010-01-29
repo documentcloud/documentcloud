@@ -37,13 +37,17 @@ a {
     #title {
       left: 153px;
     }
-  #search {
+  #search_box {
     position: absolute;
-    right: 15px; top: 12px; left: 325px;
+    right: 190px; top: 12px; left: 325px;
+    border: 1px solid #999;
     font-size: 16px;
     color: #333;
-    border: 1px solid #999;
     -moz-border-radius: 6px;
+  }
+  #search_type {
+    position: absolute;
+    right: 15px; top: 14px;
   }
 
 #save_search {
@@ -55,15 +59,16 @@ a {
 
 #spinner {
   display: none;
+  width: 150px;
   position: absolute;
-  top: 15px; right: 10px;
+  top: 15px; right: 15px;
   font-size: 10px;
   text-transform: uppercase;
   background: #efefef;
   color: #878787;
   border: 1px solid #aaa;
   -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-  padding: 4px 5px 3px 5px;
+  padding: 4px 5px 5px 5px;
 }
   #spinner_text {
     float: left;
