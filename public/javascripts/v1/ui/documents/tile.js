@@ -3,14 +3,14 @@ dc.ui.DocumentTile = dc.View.extend({
 
   className : 'document_tile',
 
-  callbacks : [
-    ['.view_document',    'click',  'viewDocument'],
+  callbacks : {
+    '.view_document.click': 'viewDocument',
     // ['.view_pdf',         'click',  'viewPDF'],
     // ['.view_text',        'click',  'viewFullText'],
     // ['.download_viewer',  'click',  'downloadViewer'],
     // ['.delete_document',  'click',  'deleteDocument'],
-    ['.icon',             'click',  'select']
-  ],
+    '.icon.click':  'select'
+  },
 
   constructor : function(doc, mode) {
     this.mode = mode;

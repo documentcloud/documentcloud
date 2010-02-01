@@ -7,10 +7,10 @@ dc.ui.Visualizer = dc.View.extend({
 
   id : 'visualizer',
 
-  callbacks : [
-    ['#viz_circle',     'click',    'renderCircular'],
-    ['#viz_line',       'click',    'renderLinear']
-  ],
+  callbacks : {
+    '#viz_circle.click': 'renderCircular',
+    '#viz_line.click':   'renderLinear'
+  },
 
   constructor : function(options) {
     _.bindAll(this, 'open', 'visualize', 'gatherMetadata', 'renderVisualization', 'highlightDatum', 'highlightOff', 'onResize');

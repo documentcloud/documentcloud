@@ -3,9 +3,9 @@ dc.ui.DocumentUpload = dc.View.extend({
 
   className : 'document_upload panel',
 
-  callbacks : [
-    ['#upload_form',    'submit',   'beginUpload']
-  ],
+  callbacks : {
+    '#upload_form.submit': 'beginUpload'
+  },
 
   constructor : function(options) {
     this.base(options);

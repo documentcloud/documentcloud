@@ -2,10 +2,10 @@ dc.ui.Project = dc.View.extend({
 
   className : 'project box',
 
-  callbacks : [
-    ['el',              'click',    'showDocuments'],
-    ['.icon.delete',    'click',    'deleteProject']
-  ],
+  callbacks : {
+    'el.click':           'showDocuments',
+    '.icon.delete.click': 'deleteProject'
+  },
 
   constructor : function(options) {
     this.base(options);

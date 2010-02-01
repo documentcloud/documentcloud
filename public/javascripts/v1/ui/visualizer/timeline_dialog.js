@@ -18,13 +18,13 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   id : 'timeline_dialog',
 
-  callbacks : [
-    ['.zoom_out',       'click',        '_zoomOut'],
-    ['.ok',             'click',        'confirm'],
-    ['#timeline_plot',  'plothover',    '_showTooltop'],
-    ['#timeline_plot',  'plotselected', '_zoomIn'],
-    ['#timeline_plot',  'plotclick',    '_openPage']
-  ],
+  callbacks : {
+    '.zoom_out.click':              '_zoomOut',
+    '.ok.click':                    'confirm',
+    '#timeline_plot.plothover':     '_showTooltop',
+    '#timeline_plot.plotselected':  '_zoomIn',
+    '#timeline_plot.plotclick':     '_openPage'
+  },
 
   constructor : function(documents) {
     this.documents = documents;

@@ -8,6 +8,9 @@ dc.View = Base.extend({
   className       : 'view',
   tagName         : 'div',
 
+  // Match the last period in a string.
+  LAST_DOT        : /\.(?!\S*\.)/,
+
   constructor : function(options) {
     this.modes = {};
     this.configure(options || {});
@@ -47,16 +50,17 @@ dc.View = Base.extend({
     this.modes[group] = mode;
   },
 
-  // Set callbacks, where this.callbacks is an array of [CSS-selector,
-  // event-name, callback-name] triplets. Callbacks will be bound to the view,
+  // Set callbacks, where this.callbacks is a hash of {selector.event_name,
+  // callback_name] pairs. Callbacks will be bound to the view,
   // with 'this' set properly. Passing a selector of 'el' binds to the view's
   // element.
   setCallbacks : function(callbacks) {
     var me = this;
-    _.each(callbacks || this.callbacks, function(triplet) {
-      var selector = triplet[0], ev = triplet[1], methodName = triplet[2];
+    _.each(callbacks || this.callbacks, function(val, key) {
+      key = key.split(me.LAST_DOT);
+      var selector = key[0], eventName = key[1], methodName = val;
       var method = _.bind(me[methodName], me);
-      (selector == 'el' ? $(me.el) : $(selector, me.el)).bind(ev, method);
+      (selector == 'el' ? $(me.el) : $(selector, me.el)).bind(eventName, method);
     });
   }
 

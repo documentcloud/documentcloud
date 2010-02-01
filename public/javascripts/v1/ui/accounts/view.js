@@ -11,12 +11,12 @@ dc.ui.AccountView = dc.View.extend({
     row   : 'tr'
   },
 
-  callbacks : [
-    ['.edit_account',     'click',  'showEdit'],
-    ['.admin_link',       'click',  '_openAccounts'],
-    ['.save_changes',     'click',  '_doneEditing'],
-    ['.delete_account',   'click',  '_deleteAccount']
-  ],
+  callbacks : {
+    '.edit_account.click':   'showEdit',
+    '.admin_link.click':     '_openAccounts',
+    '.save_changes.click':   '_doneEditing',
+    '.delete_account.click': '_deleteAccount'
+  },
 
   constructor : function(account, kind) {
     this.kind       = kind;

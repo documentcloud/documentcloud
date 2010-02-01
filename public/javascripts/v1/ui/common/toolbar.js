@@ -2,13 +2,13 @@ dc.ui.Toolbar = dc.View.extend({
 
   id : 'toolbar',
 
-  callbacks : [
-    ['#delete_document_button',   'click',   '_deleteSelectedDocuments'],
-    ['#edit_summary_button',      'click',   '_editSelectedSummary'],
-    ['#edit_remote_url_button',   'click',   '_editSelectedRemoteUrl'],
-    ['#timeline_button',          'click',   '_showTimeline'],
-    ['#analyze_button',           'click',   '_openAnalyze']
-  ],
+  callbacks : {
+    '#delete_document_button.click': '_deleteSelectedDocuments',
+    '#edit_summary_button.click':    '_editSelectedSummary',
+    '#edit_remote_url_button.click': '_editSelectedRemoteUrl',
+    '#timeline_button.click':        '_showTimeline',
+    '#analyze_button.click':         '_openAnalyze'
+  },
 
   constructor : function(options) {
     this.base(options);

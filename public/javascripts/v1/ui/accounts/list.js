@@ -4,9 +4,9 @@ dc.ui.AccountList = dc.View.extend({
   className : 'panel',
   rendered  : false,
 
-  callbacks : [
-    ['.new_account',    'click',    'newAccount']
-  ],
+  callbacks : {
+    '.new_account.click': 'newAccount'
+  },
 
   constructor : function(options) {
     this.base(options);

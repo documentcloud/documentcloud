@@ -2,13 +2,13 @@ dc.ui.ViewerControlPanel = dc.View.extend({
 
   id : 'control_panel',
 
-  callbacks : [
-    ['.bookmark_page',      'click',    'bookmarkCurrentPage'],
-    ['.set_sections',       'click',    'openSectionEditor'],
-    ['.public_annotation',  'click',    'togglePublicAnnotation'],
-    ['.private_annotation', 'click',    'togglePrivateAnnotation'],
-    ['.save_text',          'click',    'savePageText']
-  ],
+  callbacks : {
+    '.bookmark_page.click':       'bookmarkCurrentPage',
+    '.set_sections.click':        'openSectionEditor',
+    '.public_annotation.click':   'togglePublicAnnotation',
+    '.private_annotation.click':  'togglePrivateAnnotation',
+    '.save_text.click':           'savePageText'
+  },
 
   render : function() {
     this._page = $('#DV-textContents');

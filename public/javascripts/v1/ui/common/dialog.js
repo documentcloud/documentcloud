@@ -2,10 +2,10 @@ dc.ui.Dialog = dc.View.extend({
 
   className : 'dialog',
 
-  callbacks : [
-    ['.cancel',   'click',   'cancel'],
-    ['.ok',       'click',   'confirm']
-  ],
+  callbacks : {
+    '.cancel.click':  'cancel',
+    '.ok.click':      'confirm'
+  },
 
   constructor : function(options) {
     this.base(options);

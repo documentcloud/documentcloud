@@ -4,14 +4,14 @@ dc.ui.MetadataList = dc.View.extend({
 
   className : 'metadata',
 
-  callbacks : [
-    ['.toggle .less',       'click',      'showLess'],
-    ['.toggle .more',       'click',      'showMore'],
-    ['.metalist_title',     'click',      'visualizeKind'],
-    ['.add_to_search',      'click',      '_addToSearch'],
-    ['.add_to_search',      'dblclick',   '_addThenSearch'],
-    ['.jump_to',            'click',      '_openDocument']
-  ],
+  callbacks : {
+    '.toggle .less.click':      'showLess',
+    '.toggle .more.click':      'showMore',
+    '.metalist_title.click':    'visualizeKind',
+    '.add_to_search.click':     '_addToSearch',
+    '.add_to_search.dblclick':  '_addThenSearch',
+    '.jump_to.click':           '_openDocument'
+  },
 
   // Think about limiting the initially visible metadata to ones that are above
   // a certain relevance threshold, showing at least three, or something along

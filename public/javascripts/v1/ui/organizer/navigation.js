@@ -5,9 +5,9 @@ dc.ui.Navigation = dc.View.extend({
   currentTab    : null,
   tabCallbacks  : {},
 
-  callbacks : [
-    ['el',  'click',  'onTabClick']
-  ],
+  callbacks : {
+    'el.click': 'onTabClick'
+  },
 
   // List of tab names => page titles.
   tabs : [

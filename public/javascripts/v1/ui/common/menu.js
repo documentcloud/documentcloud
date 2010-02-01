@@ -2,9 +2,9 @@ dc.ui.Menu = dc.View.extend({
 
   className : 'minibutton menu',
 
-  callbacks : [
-    ['el',    'click',    'open']
-  ],
+  callbacks : {
+    'el.click': 'open'
+  },
 
   constructor : function(options) {
     _.bindAll(this, 'close', 'autofilter');

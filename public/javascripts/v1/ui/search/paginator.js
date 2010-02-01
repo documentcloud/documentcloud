@@ -6,11 +6,11 @@ dc.ui.Paginator = dc.View.extend({
   query : null,
   page  : null,
 
-  callbacks : [
-    ['.previous_page',    'click',    'previousPage'],
-    ['.next_page',        'click',    'nextPage'],
-    ['.page_link',        'click',    'goToPage']
-  ],
+  callbacks : {
+    '.previous_page.click': 'previousPage',
+    '.next_page.click':     'nextPage',
+    '.page_link.click':     'goToPage'
+  },
 
   constructor : function() {
     this.base();

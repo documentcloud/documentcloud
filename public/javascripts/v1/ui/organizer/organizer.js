@@ -2,7 +2,7 @@ dc.ui.Organizer = dc.View.extend({
 
   id : 'organizer',
 
-  callbacks : [],
+  callbacks : {},
 
   constructor : function(options) {
     this.base(options);

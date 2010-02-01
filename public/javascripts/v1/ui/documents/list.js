@@ -4,11 +4,11 @@ dc.ui.DocumentList = dc.View.extend({
 
   className : 'document_list',
 
-  callbacks : [
-    ['.view_small',   'click',    'viewSmall'],
-    ['.view_medium',  'click',    'viewMedium'],
-    ['.view_large',   'click',    'viewLarge']
-  ],
+  callbacks : {
+    '.view_small.click':  'viewSmall',
+    '.view_medium.click': 'viewMedium',
+    '.view_large.click':  'viewLarge'
+  },
 
   constructor : function(options) {
     this.base(options);

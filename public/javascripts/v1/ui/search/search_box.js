@@ -8,11 +8,11 @@ dc.ui.SearchBox = dc.View.extend({
   fragment      : null,
   currentPage   : null,
 
-  callbacks : [
-    ['#search_box',   'keydown',  'maybeSearch'],
-    ['#search_box',   'search',   'searchEvent'],
-    ['#search_type',  'click',    '_setScope']
-  ],
+  callbacks : {
+    '#search_box.keydown': 'maybeSearch',
+    '#search_box.search':  'searchEvent',
+    '#search_type.click':  '_setScope'
+  },
 
   // Creating a new SearchBox registers #search page fragments.
   constructor : function(options) {

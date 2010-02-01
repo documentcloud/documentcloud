@@ -2,9 +2,9 @@ dc.ui.Notifier = dc.View.extend({
 
   id : 'notifier',
 
-  callbacks : [
-    ['el',   'click',  'hide']
-  ],
+  callbacks : {
+    'el.click': 'hide'
+  },
 
   constructor : function() {
     this.base();

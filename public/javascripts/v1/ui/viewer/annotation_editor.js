@@ -2,9 +2,9 @@ dc.ui.AnnotationEditor = dc.View.extend({
 
   id : 'annotation_editor',
 
-  callbacks : [
-    ['.close',    'click',    'close']
-  ],
+  callbacks : {
+    '.close.click': 'close'
+  },
 
   constructor : function(opts) {
     this.base(opts);

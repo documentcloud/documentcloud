@@ -2,11 +2,11 @@ dc.ui.OrganizerSidebar = dc.View.extend({
 
   id : 'organizer_sidebar',
 
-  callbacks : [
-    ['#new_project_button', 'click',    'saveNewProject'],
-    ['#project_input',      'keyup',    'onProjectInput'],
-    ['#filter_box',         'keyup',    'autofilter']
-  ],
+  callbacks : {
+    '#new_project_button.click': 'saveNewProject',
+    '#project_input.keyup':      'onProjectInput',
+    '#filter_box.keyup':         'autofilter'
+  },
 
   constructor : function(options) {
     this.base(options);

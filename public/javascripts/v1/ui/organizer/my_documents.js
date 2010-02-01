@@ -2,9 +2,9 @@ dc.ui.MyDocuments = dc.View.extend({
 
   className : 'my_documents box',
 
-  callbacks : [
-    ['el',  'click',  'showDocuments']
-  ],
+  callbacks : {
+    'el.click': 'showDocuments'
+  },
 
   sortKey : 'My Documents',
 
@@ -25,9 +25,9 @@ dc.ui.MyNotes = dc.View.extend({
 
   className : 'my_notes box',
 
-  callbacks : [
-    ['el',  'click',  'showNotes']
-  ],
+  callbacks : {
+    'el.click': 'showNotes'
+  },
 
   sortKey : 'My Notes',
 
