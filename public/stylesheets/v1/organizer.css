@@ -56,8 +56,6 @@
       }
 
 #organizer_sidebar_container {
-  position: absolute;
-  top: 0; bottom: 0; left: 0; right: 0;
   overflow-y: auto;
   font-size: 10px;
   line-height: 13px;

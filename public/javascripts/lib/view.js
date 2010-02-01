@@ -9,7 +9,7 @@ dc.View = Base.extend({
   tagName         : 'div',
 
   // Match the last period in a string.
-  LAST_DOT        : /\.(?!\S*\.)/,
+  LAST_DOT        : /\.(?!.*\.)/,
 
   constructor : function(options) {
     this.modes = {};
@@ -59,6 +59,7 @@ dc.View = Base.extend({
     _.each(callbacks || this.callbacks, function(val, key) {
       key = key.split(me.LAST_DOT);
       var selector = key[0], eventName = key[1], methodName = val;
+      console.log(selector);
       var method = _.bind(me[methodName], me);
       (selector == 'el' ? $(me.el) : $(selector, me.el)).bind(eventName, method);
     });

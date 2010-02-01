@@ -59,7 +59,6 @@ dc.util.Bindable = {
         while(i--) {
           var bound = list[i];
           if (bound) {
-            if (bound.message && window.console) console.log(bound.message);
             bound.callback.apply(this, arguments);
           } else {
             thin = true;

@@ -45,8 +45,8 @@ _.extend(dc.app.workspace, {
 
     if (!dc.app.accountId) return $(document.body).setMode('search', 'navigation');
 
-    content.append(dc.app.navigation.render().el);
     content.append(this.accountBadge.render().el);
+    this.sidebar.add('navigation', dc.app.navigation.render().el);
     this.uploadForm.render();
     this.panel.add('accounts_panel', this.accountList.render().el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);

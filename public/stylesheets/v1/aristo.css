@@ -35,7 +35,7 @@ button {
   background: none;
   -webkit-border-image: url(/images/aristo/button-bezel.png) 2 2 2 2 stretch stretch;
   -moz-border-image: url(/images/aristo/button-bezel.png) 2 2 2 2 stretch stretch;
-  padding: 3px 8px;
+  padding: 4px 8px;
   color: #4F4F4F;
   -webkit-transition: -webkit-box-shadow 0.2s linear;
   text-shadow: 0px 1px 1px #fff;

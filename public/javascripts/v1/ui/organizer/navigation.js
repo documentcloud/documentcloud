@@ -2,19 +2,21 @@
 dc.ui.Navigation = dc.View.extend({
 
   id            : 'navigation',
+  className     : 'dashboard_tab_hidden',
   currentTab    : null,
   tabCallbacks  : {},
 
   callbacks : {
+    'button.back.click': 'back'
   },
 
   // List of tab names -> page titles.
   tabs : {
-    search    : {title : 'Search'},
-    upload    : {title : 'Upload a Document'},
-    analyze   : {title : 'Analyze'},
-    accounts  : {title : 'Manage Accounts'},
-    dashboard : {title : 'Dashboard'}
+    search    : {title : 'Search',              back : 'Back to the Dashboard'},
+    upload    : {title : 'Upload a Document',   back : 'Back to the Documents'},
+    analyze   : {title : 'Analyze',             back : 'Back to the Documents'},
+    accounts  : {title : 'Manage Accounts',     back : 'Back to the Dashboard'},
+    dashboard : {title : 'Dashboard',           back : ''}
   },
 
   constructor : function(options) {
@@ -24,6 +26,9 @@ dc.ui.Navigation = dc.View.extend({
 
   // Render the list of tabs that should be shown to the logged-in journalist.
   render : function() {
+    if (!this.currentTab) return this;
+    var content = '&laquo; ' + this.tabs[this.currentTab].back;
+    $(this.el).html($.el('button', {'class': 'back'}, content));
     this.setCallbacks();
     return this;
   },
@@ -34,16 +39,23 @@ dc.ui.Navigation = dc.View.extend({
     this.tabCallbacks[tabName].push(callback);
   },
 
-  // Switch to a tab by name.
-  tab : function(tab) {
+  // Switch to a view by name. If silent, don't save the state change in the
+  // browser's history.
+  tab : function(tab, silent) {
     if (this.currentTab == tab) return;
     this.currentTab = tab;
+    this.render();
     if (this.tabCallbacks[tab]) _.invoke(this.tabCallbacks[tab]);
     var box = dc.app.searchBox;
     var fragment = tab == 'search' && box.fragment ? box.fragment : tab;
-    dc.history.save(fragment);
+    if (!silent) dc.history.save(fragment);
     this.setTitle(this.tabs[tab].title);
     $(document.body).setMode(tab, 'navigation');
+  },
+
+  // Go back out a level from the current tab.
+  back : function() {
+    window.history.back();
   },
 
   // Add all of the tabs as history handlers.

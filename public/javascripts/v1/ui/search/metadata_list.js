@@ -5,8 +5,8 @@ dc.ui.MetadataList = dc.View.extend({
   className : 'metadata',
 
   callbacks : {
-    '.toggle .less.click':      'showLess',
-    '.toggle .more.click':      'showMore',
+    '.icon.less.click':         'showLess',
+    '.icon.more.click':         'showMore',
     '.metalist_title.click':    'visualizeKind',
     '.add_to_search.click':     '_addToSearch',
     '.add_to_search.dblclick':  '_addThenSearch',
@@ -51,17 +51,17 @@ dc.ui.MetadataList = dc.View.extend({
   // TODO: Move this into the appropriate controller.
   _addToSearch : function(e) {
     var metaId = $(e.target).attr('data-id');
-    var meta = Metadata.get(metaId);
+    var meta   = Metadata.get(metaId);
     var search = meta.toSearchQuery();
-    var searchField = dc.app.searchBox.el;
-    if (searchField.value.indexOf(search) > 0) return;
-    var endsWithSpace = !!searchField.value.match(/\s$/);
-    searchField.value += ((endsWithSpace ? '' : ' ') + search);
+    var val    = dc.app.searchBox.value();
+    if (val.indexOf(search) > 0) return;
+    var endsWithSpace = !!val.match(/\s$/);
+    dc.app.searchBox.value(val + ((endsWithSpace ? '' : ' ') + search));
   },
 
   // TODO: Move this ''
   _addThenSearch : function(e) {
-    this.addToSearch(e);
+    this._addToSearch(e);
     dc.app.searchBox.search(dc.app.searchBox.value());
   },
 
