@@ -1,7 +1,7 @@
 // The Sidebar. Switches contexts between different subviews.
 dc.ui.Sidebar = dc.View.extend({
 
-  className : 'sidebar',
+  id : 'sidebar',
 
   // constructor : function(options) {
   //   this.base(options);
