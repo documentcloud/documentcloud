@@ -54,8 +54,7 @@ dc.ui.AccountView = dc.View.extend({
 
   _openAccounts : function(e) {
     e.preventDefault();
-    dc.history.save('admin');
-    dc.app.navigation.tab('admin');
+    dc.app.navigation.tab('accounts');
   },
 
   // When we're done editing an account, it's either a create or update.

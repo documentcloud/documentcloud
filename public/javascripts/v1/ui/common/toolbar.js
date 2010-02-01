@@ -101,7 +101,6 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _openAnalyze : function() {
-    // dc.history.save('analyze');
     dc.app.navigation.tab('analyze');
   },
 

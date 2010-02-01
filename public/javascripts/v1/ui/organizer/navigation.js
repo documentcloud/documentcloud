@@ -6,17 +6,16 @@ dc.ui.Navigation = dc.View.extend({
   tabCallbacks  : {},
 
   callbacks : {
-    'el.click': 'onTabClick'
   },
 
-  // List of tab names => page titles.
-  tabs : [
-    {name : 'search',    title : 'Search'},
-    {name : 'upload',    title : 'Upload a Document'},
-    {name : 'analyze',   title : 'Analyze'},
-    {name : 'admin',     title : 'Manage Accounts'},
-    {name : 'dashboard', title : 'Dashboard'}
-  ],
+  // List of tab names -> page titles.
+  tabs : {
+    search    : {title : 'Search'},
+    upload    : {title : 'Upload a Document'},
+    analyze   : {title : 'Analyze'},
+    accounts  : {title : 'Manage Accounts'},
+    dashboard : {title : 'Dashboard'}
+  },
 
   constructor : function(options) {
     this.base(options);
@@ -25,11 +24,6 @@ dc.ui.Navigation = dc.View.extend({
 
   // Render the list of tabs that should be shown to the logged-in journalist.
   render : function() {
-    var nav = this.el;
-    _.each(this.tabs, function(tab) {
-      var attrs = {id : tab.name + '_nav', tab : tab.name, title : tab.title, 'class' : 'nav'};
-      $(nav).append($.el('div', attrs, Inflector.capitalize(tab.name)));
-    });
     this.setCallbacks();
     return this;
   },
@@ -45,27 +39,17 @@ dc.ui.Navigation = dc.View.extend({
     if (this.currentTab == tab) return;
     this.currentTab = tab;
     if (this.tabCallbacks[tab]) _.invoke(this.tabCallbacks[tab]);
-    var el = $('#' + tab + '_nav', this.el);
-    $('.nav', this.el).removeClass('active');
-    el.addClass('active');
-    this.setTitle(el.attr('title'));
-    $(document.body).setMode(tab, 'navigation');
-  },
-
-  // Switch to a tab as an event callback.
-  onTabClick : function(e) {
-    if (!$(e.target).hasClass('nav')) return;
-    var tab = $(e.target).attr('tab');
     var box = dc.app.searchBox;
     var fragment = tab == 'search' && box.fragment ? box.fragment : tab;
     dc.history.save(fragment);
-    this.tab(tab);
+    this.setTitle(this.tabs[tab].title);
+    $(document.body).setMode(tab, 'navigation');
   },
 
   // Add all of the tabs as history handlers.
   enableTabURLs : function() {
     var me = this;
-    _.each(_.pluck(this.tabs, 'name'), function(tab) {
+    _.each(this.tabs, function(obj, tab) {
       dc.history.register(new RegExp('^#' + tab + '\\b'), _.bind(me.tab, me, tab));
     });
   },

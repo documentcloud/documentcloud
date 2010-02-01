@@ -69,6 +69,8 @@ AFTER BETA:
 
 DONE:
 
+  * Rework dc.View setCallbacks syntax.
+
   * Kill bookmarks.
 
   * Upgrade to OpenCalais 4.3
