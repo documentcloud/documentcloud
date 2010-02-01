@@ -36,10 +36,6 @@ dc.View = Base.extend({
     return this;
   },
 
-  children : function() {
-    return [];
-  },
-
   // Makes the view enter a mode. Modes have both a 'mode' and a 'group',
   // and are mutually exclusive with any other modes in the same group.
   // Setting will update the view's modes hash, as well as set an HTML className
@@ -59,7 +55,6 @@ dc.View = Base.extend({
     _.each(callbacks || this.callbacks, function(val, key) {
       key = key.split(me.LAST_DOT);
       var selector = key[0], eventName = key[1], methodName = val;
-      console.log(selector);
       var method = _.bind(me[methodName], me);
       (selector == 'el' ? $(me.el) : $(selector, me.el)).bind(eventName, method);
     });
