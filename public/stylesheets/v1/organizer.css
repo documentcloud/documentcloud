@@ -1,9 +1,5 @@
 #organizer {
-  position: absolute;
-  top: 0; bottom: 0;
   padding: 10px 10px 10px 15px;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
   #organizer .box {
     position: relative;
@@ -56,7 +52,6 @@
       }
 
 #organizer_sidebar_container {
-  overflow-y: auto;
   font-size: 10px;
   line-height: 13px;
   color: #454545;
