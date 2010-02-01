@@ -21,7 +21,7 @@
       display: block;
     }
   .metalist .toggle {
-    display: inline;
+    display: inline-block;
     cursor: pointer;
     position: absolute;
     opacity: 0.75; filter: alpha(opacity=75);
