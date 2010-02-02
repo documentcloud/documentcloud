@@ -4,8 +4,7 @@ dc.ui.Organizer = dc.View.extend({
 
   callbacks : {
     '#new_project_button.click': 'saveNewProject',
-    '#project_input.keyup':      'onProjectInput',
-    '#filter_box.keyup':         'autofilter'
+    '#project_input.keyup':      'onProjectInput'
   },
 
   constructor : function(options) {
@@ -18,7 +17,6 @@ dc.ui.Organizer = dc.View.extend({
   render : function() {
     $(this.el).append(JST.organizer_sidebar({}));
     this.projectInputEl = $('#project_input', this.el);
-    this.filterEl = $('#filter_box', this.el);
     this.projectList = $('.project_list', this.el);
     this.renderAll();
     this.setCallbacks();
@@ -47,28 +45,7 @@ dc.ui.Organizer = dc.View.extend({
 
   clear : function() {
     this.deselect();
-    this.filterEl.val('');
     $('.box', this.projectList).show();
-  },
-
-  // Filters the visible projects, by case-insensitive search.
-  // Returns the number of visible items.
-  autofilter : function(e) {
-    var search = this.filterEl.val();
-    if (e && e.keyCode == 13) this.clickSelectedItem();
-    var count = 0;
-    var matcher = new RegExp(search, 'i');
-    this.deselect();
-    _.each(this.subViews, _.bind(function(view) {
-      var sortKey = view.sortKey || view.model.sortKey();
-      var selected = !!sortKey.match(matcher);
-      $(view.el).toggle(selected);
-      if (!search || !selected) return;
-      count++;
-      if (!this.selectedItem) this.select(view);
-    }, this));
-    // $(document.body).setMode(count === 0 ? 'empty' : 'no', 'search');
-    return count;
   },
 
   saveNewProject : function(e) {
@@ -79,7 +56,6 @@ dc.ui.Organizer = dc.View.extend({
     if (Projects.find(title)) return this._warnAlreadyExists();
     input.val(null);
     input.focus();
-    this.organizer.autofilter('');
     var project = new dc.model.Project({title : title});
     Projects.create(project, null, {error : function() { Projects.remove(project); }});
   },

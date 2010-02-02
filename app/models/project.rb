@@ -18,8 +18,13 @@ class Project < ActiveRecord::Base
     document_ids.nil? ? [] : document_ids.split(',').map(&:to_i).uniq
   end
 
+  # How many annotations belong to documents belonging to this project?
+  def annotation_count
+    Annotation.count({:conditions => {:account_id => account_id, :document_id => split_document_ids}})
+  end
+
   def to_json(opts={})
-    attributes.to_json
+    attributes.merge(:annotation_count => annotation_count).to_json
   end
 
   private

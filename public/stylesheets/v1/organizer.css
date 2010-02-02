@@ -6,6 +6,7 @@
   }
     #organizer .nametag {
       font: 10px/13px Arial;
+      height: 14px;
       text-transform: uppercase;
       padding: 4px 5px 4px 33px;
       background: #ddd;
@@ -17,48 +18,39 @@
         position: absolute;
         margin: -2px 0 0 -23px;
       }
-      #organizer .minibutton {
-        display: inline-block;
-        position: relative;
-        left: 6px; top: -1px;
-      }
-      #organizer input {
-        margin: 4px 0 0 7px;
-        background: #fcfcfc;
-        border: 1px solid #e0e0e0;
-        -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
-        font-size: 11px;
-        width: 236px;
-        line-height: 13px;
-      }
-        #filter_wrapper input {
-          width: 286px;
-        }
 
   #organizer .project_list {
     position: absolute;
-    top: 150px; bottom: 0px; left: 0; right: 0;
+    top: 53px; bottom: 0px; left: 0; right: 0;
     overflow-y: auto;
     overflow-x: hidden;
   }
-    body.search_navigation #organizer .project_list {
-      top: 192px;
-    }
 
   #organizer .box {
+    position: relative;
     padding: 15px 15px 15px 30px;
     cursor: pointer;
     border-bottom: 1px solid #dadada;
   }
-    #organizer .box:hover, #organizer .box.selected {
-      background: #ffe;
+    #organizer .box:hover {
+      background-color: #ffe;
       background: -webkit-gradient(linear, left top, left bottom, from(#fffffa), to(#ffe));
     }
+    #organizer .box .pointer {
+      width: 10px; height: 19px;
+      position: absolute; right: 15px; top: 50%;
+      margin-top: -10px;
+      background-image: url(/images/embed/ui/pointer.png);
+      display: none;
+    }
+      #organizer .box.is_open .pointer {
+        display: block;
+      }
     #organizer .box .title {
       font: bold 14px Arial;
-      color: #002456;
+      color: #254555;
     }
-    #organizer .box .document_count {
-      font: 10px/14px Arial;
+    #organizer .box .counts {
+      font: 10px/16px Arial;
       color: #777;
     }

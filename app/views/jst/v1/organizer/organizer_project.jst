@@ -1,6 +1,8 @@
+<div class="pointer"></div>
 <div class="title">
   <%= title %>
 </div>
-<div class="document_count">
-  <%= count %> <%= Inflector.pluralize('document', count) %>
+<div class="counts">
+  <%= document_count %> <%= Inflector.pluralize('document', document_count) %>, 
+  <%= note_count %> <%= Inflector.pluralize('note', note_count) %>
 </div>

@@ -14,7 +14,11 @@ dc.ui.Project = dc.View.extend({
   },
 
   render : function() {
-    var data = {title : this.model.get('title'), count : this.model.documentCount()};
+    var data = {
+      title           : this.model.get('title'),
+      document_count  : this.model.documentCount(),
+      note_count      : this.model.get('annotation_count')
+    };
     $(this.el).html(JST.organizer_project(data));
     this.el.id = "project_" + this.model.cid;
     this.setCallbacks();
@@ -22,6 +26,8 @@ dc.ui.Project = dc.View.extend({
   },
 
   showDocuments : function() {
+    $('#organizer .box').setMode('not', 'open');
+    $(this.el).setMode('is', 'open');
     dc.app.searchBox.search(this.model.toSearchParam());
   },
 

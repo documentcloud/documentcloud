@@ -94,7 +94,7 @@ $.fn.extend({
     var mode = (state === null) ? "" : state + "_" + group;
     var name = this[0].className.replace(re, '') + ' ' + mode;
     name = name.replace(/\s\s/g, ' ');
-    this[0].className = name;
+    this.each(function(){ this.className = name; });
     return mode;
   },
 

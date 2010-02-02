@@ -2,7 +2,6 @@
 dc.ui.Navigation = dc.View.extend({
 
   id            : 'navigation',
-  className     : 'dashboard_tab_hidden',
   currentTab    : null,
   tabCallbacks  : {},
 
@@ -28,7 +27,7 @@ dc.ui.Navigation = dc.View.extend({
   render : function() {
     if (!this.currentTab) return this;
     var content = '&laquo; ' + this.tabs[this.currentTab].back;
-    $(this.el).html($.el('button', {'class': 'back'}, content));
+    $(this.el).html();
     this.setCallbacks();
     return this;
   },
