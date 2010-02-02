@@ -3,14 +3,6 @@ template_function: _.template
 embed_assets: on
 
 javascripts:
-  v2:
-    - public/javascripts/application.js
-    - public/javascripts/vendor/jquery-1.3.2.js
-    - public/javascripts/vendor/*.js
-    - public/javascripts/lib/bindable.js
-    - public/javascripts/lib/set.js
-    - public/javascripts/lib/*.js
-    - public/javascripts/model/*.js
   v1:
     - public/javascripts/application.js
     - public/javascripts/vendor/jquery-1.3.2.js
@@ -25,9 +17,6 @@ javascripts:
     - public/javascripts/ie/*.js
 
 stylesheets:
-  v2:
-    - public/stylesheets/common/reset.css
-    - public/stylesheets/v2/core.css
   v1:
     - public/stylesheets/common/reset.css
     - public/stylesheets/v1/aristo.css
@@ -47,6 +36,5 @@ stylesheets:
     - public/stylesheets/pages/viewer_editing.css
 
 templates:
-  v2:
   v1:
     - app/views/jst/v1/**/*.jst
