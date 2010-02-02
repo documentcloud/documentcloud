@@ -26,17 +26,9 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   renderAll : function() {
-    this._renderMyDocumentsAndNotes();
     _.each(this.sortedModels(), _.bind(function(model) {
       this._addSubView(null, model);
     }, this));
-  },
-
-  _renderMyDocumentsAndNotes : function() {
-    var docs      = new dc.ui.MyDocuments().render();
-    var notes     = new dc.ui.MyNotes().render();
-    this.subViews = this.subViews.concat([docs, notes]);
-    $(this.projectList).prepend($([docs.el, notes.el]));
   },
 
   clickSelectedItem : function() {
@@ -59,7 +51,7 @@ dc.ui.Organizer = dc.View.extend({
     $('.box', this.projectList).show();
   },
 
-  // Filters the visible projects and saved searches, by case-insensitive search.
+  // Filters the visible projects, by case-insensitive search.
   // Returns the number of visible items.
   autofilter : function(e) {
     var search = this.filterEl.val();
@@ -93,16 +85,16 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   models : function() {
-    return _.flatten([Projects.models(), SavedSearches.models()]);
+    return _.flatten([Projects.models()]);
   },
 
   sortedModels : function() {
     return _.sortBy(this.models(), function(m){ return m.sortKey(); });
   },
 
-  // Bind all possible SavedSearch and Project events for rendering.
+  // Bind all possible and Project events for rendering.
   _bindToSets : function() {
-    _.each([Projects, SavedSearches], _.bind(function(set) {
+    _.each([Projects], _.bind(function(set) {
       set.bind(dc.Set.MODEL_ADDED, this._addSubView);
       set.bind(dc.Set.MODEL_REMOVED, this._removeSubView);
     }, this));

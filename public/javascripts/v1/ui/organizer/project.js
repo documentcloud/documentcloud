@@ -14,7 +14,8 @@ dc.ui.Project = dc.View.extend({
   },
 
   render : function() {
-    $(this.el).html(JST.organizer_project(this.model.attributes()));
+    var data = {title : this.model.get('title'), count : this.model.documentCount()};
+    $(this.el).html(JST.organizer_project(data));
     this.el.id = "project_" + this.model.cid;
     this.setCallbacks();
     return this;

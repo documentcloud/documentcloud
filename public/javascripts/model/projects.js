@@ -11,6 +11,10 @@ dc.model.Project = dc.Model.extend({
     return this.get('document_ids').split(',');
   },
 
+  documentCount : function() {
+    return this.documentIds().length;
+  },
+
   // Return the title of this project as a search parameter.
   toSearchParam : function() {
     var titlePart = this.get('title');

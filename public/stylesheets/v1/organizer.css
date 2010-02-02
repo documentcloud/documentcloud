@@ -20,7 +20,7 @@
       #organizer .minibutton {
         display: inline-block;
         position: relative;
-        left: 8px; top: -1px;
+        left: 6px; top: -1px;
       }
       #organizer input {
         margin: 4px 0 0 7px;
@@ -28,11 +28,11 @@
         border: 1px solid #e0e0e0;
         -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
         font-size: 11px;
-        width: 229px;
+        width: 236px;
         line-height: 13px;
       }
         #filter_wrapper input {
-          width: 275px;
+          width: 286px;
         }
 
   #organizer .project_list {
@@ -41,49 +41,24 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+    body.search_navigation #organizer .project_list {
+      top: 192px;
+    }
 
   #organizer .box {
-    padding: 10px;
+    padding: 15px 15px 15px 30px;
     cursor: pointer;
-    background-position: 9px center;
-    background-repeat: no-repeat;
-    color: #223355;
-    font-weight: bold;
-    -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
+    border-bottom: 1px solid #dadada;
   }
     #organizer .box:hover, #organizer .box.selected {
-      background-color: #f2f2ff;
-      background: -webkit-gradient(linear, left top, left bottom, from(#fafaff), to(#efefff));
-      -webkit-box-shadow: 0 0px 15px #bbb; -moz-box-shadow: 0 0px 15px #bbb;
+      background: #ffe;
+      background: -webkit-gradient(linear, left top, left bottom, from(#fffffa), to(#ffe));
     }
-    #organizer .box .icon.delete {
-      display: none;
-      position: absolute;
-      opacity: 0.65; filter: alpha(opacity=65);
-      top: -8px; left: -8px;
+    #organizer .box .title {
+      font: bold 14px Arial;
+      color: #002456;
     }
-      #organizer .box:hover .icon.delete {
-        display: block;
-      }
-    #organizer .box .icon.size32 {
-      position: absolute;
+    #organizer .box .document_count {
+      font: 10px/14px Arial;
+      color: #777;
     }
-    #organizer .contents,
-    #organizer .contents > div {
-      height: 32px;
-      line-height: 16px;
-      overflow: hidden;
-      padding-left: 40px;
-    }
-      #organizer .contents > div {
-        height: 16px;
-        padding-left: 0;
-      }
-        #organizer .contents .page_number {
-          font: 10px/16px Arial;
-          color: #777;
-        }
-      #organizer img {
-        float: left;
-        margin-right: 10px;
-      }
