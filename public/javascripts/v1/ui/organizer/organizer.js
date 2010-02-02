@@ -2,20 +2,26 @@ dc.ui.Organizer = dc.View.extend({
 
   id : 'organizer',
 
-  callbacks : {},
+  callbacks : {
+    '#new_project_button.click': 'saveNewProject',
+    '#project_input.keyup':      'onProjectInput',
+    '#filter_box.keyup':         'autofilter'
+  },
 
   constructor : function(options) {
     this.base(options);
     _.bindAll(this, '_addSubView', '_removeSubView');
     this._bindToSets();
-    this.sidebar = new dc.ui.OrganizerSidebar({organizer : this});
     this.subViews = [];
   },
 
   render : function() {
-    dc.app.workspace.sidebar.add('organizer_sidebar', this.sidebar.render().el);
-    this.setCallbacks();
+    $(this.el).append(JST.organizer_sidebar({}));
+    this.projectInputEl = $('#project_input', this.el);
+    this.filterEl = $('#filter_box', this.el);
+    this.projectList = $('.project_list', this.el);
     this.renderAll();
+    this.setCallbacks();
     return this;
   },
 
@@ -30,7 +36,7 @@ dc.ui.Organizer = dc.View.extend({
     var docs      = new dc.ui.MyDocuments().render();
     var notes     = new dc.ui.MyNotes().render();
     this.subViews = this.subViews.concat([docs, notes]);
-    $(this.el).prepend($([docs.el, notes.el]));
+    $(this.projectList).prepend($([docs.el, notes.el]));
   },
 
   clickSelectedItem : function() {
@@ -49,13 +55,14 @@ dc.ui.Organizer = dc.View.extend({
 
   clear : function() {
     this.deselect();
-    this.sidebar.filterEl.val('');
-    $('.box', this.el).show();
+    this.filterEl.val('');
+    $('.box', this.projectList).show();
   },
 
   // Filters the visible projects and saved searches, by case-insensitive search.
   // Returns the number of visible items.
-  autofilter : function(search, e) {
+  autofilter : function(e) {
+    var search = this.filterEl.val();
     if (e && e.keyCode == 13) this.clickSelectedItem();
     var count = 0;
     var matcher = new RegExp(search, 'i');
@@ -70,6 +77,19 @@ dc.ui.Organizer = dc.View.extend({
     }, this));
     // $(document.body).setMode(count === 0 ? 'empty' : 'no', 'search');
     return count;
+  },
+
+  saveNewProject : function(e) {
+    var me = this;
+    var input = this.projectInputEl;
+    var title = input.val();
+    if (!title) return;
+    if (Projects.find(title)) return this._warnAlreadyExists();
+    input.val(null);
+    input.focus();
+    this.organizer.autofilter('');
+    var project = new dc.model.Project({title : title});
+    Projects.create(project, null, {error : function() { Projects.remove(project); }});
   },
 
   models : function() {
@@ -88,13 +108,21 @@ dc.ui.Organizer = dc.View.extend({
     }, this));
   },
 
+  _onProjectInput : function(e) {
+    if (e.keyCode && e.keyCode === 13) return this.saveNewProject(e);
+  },
+
+  _warnAlreadyExists : function() {
+    dc.ui.notifier.show({text : 'project already exists', anchor : this.projectInputEl, position : '-left bottom', top : 6, left : 1});
+  },
+
   _addSubView : function(e, model) {
     var view = new dc.ui[model.viewClass]({model : model}).render();
     this.subViews.push(view);
     var models = this.sortedModels();
     var previous = models[_.indexOf(models, view.model) - 1];
     var previousView = previous && previous.view;
-    if (!previous || !previousView) { return $(this.el).append(view.el); }
+    if (!previous || !previousView) { return $(this.projectList).append(view.el); }
     $(previousView.el).after(view.el);
   },
 

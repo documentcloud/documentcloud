@@ -1,12 +1,49 @@
 #organizer {
-  padding: 10px 10px 10px 15px;
 }
+
+  #organizer .sidebar_section {
+    padding-bottom: 15px;
+  }
+    #organizer .nametag {
+      font: 10px/13px Arial;
+      text-transform: uppercase;
+      padding: 4px 5px 4px 33px;
+      background: #ddd;
+      background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#dadada));
+      border-top: 1px solid #dadada;
+      color: #777;
+    }
+      #organizer .nametag .icon {
+        position: absolute;
+        margin: -2px 0 0 -23px;
+      }
+      #organizer .minibutton {
+        display: inline-block;
+        position: relative;
+        left: 8px; top: -1px;
+      }
+      #organizer input {
+        margin: 4px 0 0 7px;
+        background: #fcfcfc;
+        border: 1px solid #e0e0e0;
+        -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+        font-size: 11px;
+        width: 229px;
+        line-height: 13px;
+      }
+        #filter_wrapper input {
+          width: 275px;
+        }
+
+  #organizer .project_list {
+    position: absolute;
+    top: 150px; bottom: 0px; left: 0; right: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
   #organizer .box {
-    position: relative;
-    float: left;
-    margin: 7px 2px 7px 7px;
-    width: 190px; height: 32px;
-    padding: 7px;
+    padding: 10px;
     cursor: pointer;
     background-position: 9px center;
     background-repeat: no-repeat;
@@ -50,45 +87,3 @@
         float: left;
         margin-right: 10px;
       }
-
-#organizer_sidebar_container {
-  font-size: 10px;
-  line-height: 13px;
-  color: #454545;
-}
-  #organizer_sidebar_container > div {
-    position: relative;
-  }
-  #organizer_sidebar_container .nametag {
-    text-transform: uppercase;
-    padding: 4px 5px 4px 33px;
-    background: #ddd;
-    background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#dadada));
-    border-top: 1px solid #dadada;
-    color: #777;
-  }
-    #organizer_sidebar_container .nametag .icon {
-      position: absolute;
-      margin: -2px 0 0 -23px;
-    }
-    #organizer_sidebar_container .minibutton {
-      display: inline-block;
-      position: relative;
-      left: 8px; top: -1px;
-    }
-    #organizer_sidebar_container input {
-      margin: 4px 0 0 7px;
-      background: #fcfcfc;
-      border: 1px solid #e0e0e0;
-      -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
-      font-size: 11px;
-      width: 229px;
-      line-height: 13px;
-    }
-
-  .sidebar_section {
-    padding-bottom: 15px;
-  }
-/*    #filter_wrapper input {
-      width: 275px;
-    }*/

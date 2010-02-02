@@ -90,8 +90,6 @@ a {
 #sidebar {
   position: absolute;
   top: 0px; left: 0px; bottom: 38px;
-  overflow-y: auto;
-  overflow-x: hidden;
   background: #e7e7e7;
   border-right: 1px solid #ddd;
   width: 310px;
