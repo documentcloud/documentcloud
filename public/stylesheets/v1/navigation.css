@@ -1,6 +1,12 @@
 #navigation {
-  height: 30px;
+  height: 16px;
+  padding: 7px 10px;
+  font: 11px/16px Arial;
+  color: #254555;
 }
+  #navigation a:hover {
+    text-decoration: underline;
+  }
 
 /*------------------------- View-mode visibility -----------------------------*/
 

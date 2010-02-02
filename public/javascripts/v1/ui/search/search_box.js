@@ -18,7 +18,7 @@ dc.ui.SearchBox = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     this.outstandingSearch = false;
-    _.bindAll(this, 'loadSearchResults', 'loadMetadataResults', 'searchByHash', 'clearSearch', 'saveCurrentSearch');
+    _.bindAll(this, 'loadSearchResults', 'searchByHash', 'clearSearch');
     dc.history.register(/^#search\//, this.searchByHash);
     dc.history.register(/^#dashboard$/, this.clearSearch);
   },
@@ -50,7 +50,6 @@ dc.ui.SearchBox = dc.View.extend({
     dc.ui.query.blank();
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');
-    this.contextSensitiveSaveButton(query);
     if (dc.app.toolbar) dc.app.toolbar.hide();
     var params = {q : query};
     this.currentPage = page;
@@ -94,7 +93,6 @@ dc.ui.SearchBox = dc.View.extend({
   },
 
   clearSearch : function() {
-    this.contextSensitiveSaveButton(false);
     dc.history.save('dashboard');
     dc.app.workspace.organizer.clear();
     $(document.body).setMode('no', 'search');
@@ -123,41 +121,6 @@ dc.ui.SearchBox = dc.View.extend({
       $('#document_list_container .documents').append((new dc.ui.DocumentTile(el)).render().el);
     });
     return this.doneSearching(resp.documents.length == 0);
-    // if (resp.documents.length == 0) return this.doneSearching(true);
-    // dc.ui.spinner.show('gathering metadata');
-    // var docIds = _.pluck(resp.documents, 'id');
-    // $.get('/documents/metadata.json', {'ids[]' : docIds}, this.loadMetadataResults, 'json');
-  },
-
-  // When the metadata results come back, render the entity list in the sidebar
-  // afresh.
-  loadMetadataResults : function(resp) {
-    Metadata.refresh();
-    _.each(resp.metadata, function(m){ Metadata.addOrCreate(m); });
-    Metadata.sort();
-    dc.app.metaList.render();
-    this.doneSearching();
-  },
-
-  saveCurrentSearch : function() {
-    var options = {anchor : this.saveSearchButton, position: 'left center', left: -12, top: -1};
-    SavedSearches.create(new dc.model.SavedSearch({query : this.value()}), null, {success : function() {
-      dc.ui.notifier.show(_.extend(options, {mode : 'info', text : 'search saved'}));
-    }, error : function(model) {
-      if (model.view) $(model.view.el).remove();
-      dc.ui.notifier.show(_.extend(options, {text : 'search already saved'}));
-    }});
-  },
-
-  addSaveSearchButton : function() {
-    this.saveSearchButton = $.el('div', {id : 'save_search', 'class' : 'minibutton tab_content search_tab_content'}, 'save this search');
-    $(document.body).append(this.saveSearchButton);
-    $(this.saveSearchButton).bind('click', this.saveCurrentSearch);
-  },
-
-  contextSensitiveSaveButton : function(query) {
-    if (!this.saveSearchButton) return;
-    // $(this.saveSearchButton).css({opacity : !query || SavedSearches.find(query) ? 0 : 1});
   },
 
   _setScope : function(e) {

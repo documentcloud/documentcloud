@@ -20,7 +20,7 @@
 .document_list {
 }
   .panel_content .panel.documents {
-    padding: 15px 10px 5px 15px;
+    padding: 10px 10px 5px 15px;
     -webkit-transition: top 0.1s linear;
   }
   body.logged_in .panel_content.open_toolbar #document_list_container .panel.documents {
@@ -41,7 +41,7 @@
   .document_list.large_size .document_tile {
     height: 77px;
     padding: 5px 30px 5px 77px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
   .document_list.medium_size .document_tile {
     float: left;

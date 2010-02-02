@@ -9,6 +9,10 @@ dc.ui.Navigation = dc.View.extend({
     'button.back.click': 'back'
   },
 
+  home    : $.el('a', {href : '#dashboard'}, 'home'),
+  section : null,
+  inner   : null,
+
   // List of tab names -> page titles.
   tabs : {
     search    : {title : 'Search',              back : 'Back to the Dashboard'},
@@ -25,9 +29,12 @@ dc.ui.Navigation = dc.View.extend({
 
   // Render the list of tabs that should be shown to the logged-in journalist.
   render : function() {
-    if (!this.currentTab) return this;
-    var content = '&laquo; ' + this.tabs[this.currentTab].back;
-    $(this.el).html();
+    var el = $(this.el);
+    el.html('');
+    _.each(_.compact([this.home, this.section, this.inner]), function(part) {
+      el.append(part);
+      el.append(' &raquo; ');
+    });
     this.setCallbacks();
     return this;
   },
