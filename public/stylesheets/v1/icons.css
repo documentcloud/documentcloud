@@ -30,6 +30,9 @@
 .icon.warning_16 {
   background-image: url(/images/embed/icons/warning_16.png);
 }
+.icon.folder {
+  background-image: url(/images/embed/icons/folder.png);
+}
 .icon.folder_add {
   background-image: url(/images/embed/icons/folder_add.png);
 }

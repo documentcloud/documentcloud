@@ -61,7 +61,7 @@
   }
   #organizer_sidebar_container .nametag {
     text-transform: uppercase;
-    padding: 4px 5px 4px 27px;
+    padding: 4px 5px 4px 33px;
     background: #ddd;
     background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#dadada));
     border-top: 1px solid #dadada;
@@ -69,11 +69,12 @@
   }
     #organizer_sidebar_container .nametag .icon {
       position: absolute;
-      margin: -2px 0 0 -20px;
+      margin: -2px 0 0 -23px;
     }
     #organizer_sidebar_container .minibutton {
-      position: absolute;
-      right: 8px; bottom: 2px;
+      display: inline-block;
+      position: relative;
+      left: 8px; top: -1px;
     }
     #organizer_sidebar_container input {
       margin: 4px 0 0 7px;
@@ -85,9 +86,9 @@
       line-height: 13px;
     }
 
-  #filter_wrapper {
+  .sidebar_section {
     padding-bottom: 15px;
   }
-    #filter_wrapper input {
+/*    #filter_wrapper input {
       width: 275px;
-    }
+    }*/

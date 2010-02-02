@@ -17,6 +17,7 @@ dc.ui.OrganizerSidebar = dc.View.extend({
     $(this.el).append(JST.organizer_sidebar({}));
     this.projectInputEl = $('#project_input', this.el);
     this.filterEl = $('#filter_box', this.el);
+    $('.project_list', this.el).append(new dc.ui.ProjectList().render().el);
     this.setCallbacks();
     return this;
   },
