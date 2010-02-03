@@ -5,19 +5,32 @@
     padding-bottom: 15px;
   }
     #organizer .nametag {
-      font: 10px/13px Arial;
-      height: 14px;
+      font: 10px/20px Arial;
+      height: 20px;
       text-transform: uppercase;
-      padding: 4px 10px 4px 15px;
+      padding: 5px 15px 5px 15px;
       background: #ddd;
       background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#dadada));
       border-top: 1px solid #dadada;
       color: #777;
     }
+      #organizer .nametag .new_project {
+        float: right;
+        cursor: pointer;
+      }
+        #organizer .nametag .new_project:hover {
+          color: #454545;
+          text-decoration: underline;
+        }
+        #organizer .nametag .new_project .icon {
+          float: right;
+          opacity: 0.5; filter: alpha(opacity=50);
+          margin: 2px 0 0 4px;
+        }
 
   #organizer .project_list {
     position: absolute;
-    top: 53px; bottom: 0px; left: 0; right: 0;
+    top: 61px; bottom: 0px; left: 0; right: 0;
     overflow-y: auto;
     overflow-x: hidden;
   }

@@ -3,8 +3,7 @@ dc.ui.Organizer = dc.View.extend({
   id : 'organizer',
 
   callbacks : {
-    '#new_project_button.click': 'saveNewProject',
-    '#project_input.keyup':      'onProjectInput'
+    '.new_project.click':   'promptNewProject'
   },
 
   constructor : function(options) {
@@ -48,16 +47,15 @@ dc.ui.Organizer = dc.View.extend({
     $('.box', this.projectList).show();
   },
 
-  saveNewProject : function(e) {
+  promptNewProject : function() {
     var me = this;
-    var input = this.projectInputEl;
-    var title = input.val();
-    if (!title) return;
-    if (Projects.find(title)) return this._warnAlreadyExists();
-    input.val(null);
-    input.focus();
-    var project = new dc.model.Project({title : title});
-    Projects.create(project, null, {error : function() { Projects.remove(project); }});
+    dc.ui.Dialog.prompt('Start a New Project', '', function(title) {
+      if (!title) return;
+      if (Projects.find(title)) return me._warnAlreadyExists();
+      var project = new dc.model.Project({title : title});
+      Projects.create(project, null, {error : function() { Projects.remove(project); }});
+      return true;
+    }, true);
   },
 
   models : function() {
@@ -76,12 +74,9 @@ dc.ui.Organizer = dc.View.extend({
     }, this));
   },
 
-  _onProjectInput : function(e) {
-    if (e.keyCode && e.keyCode === 13) return this.saveNewProject(e);
-  },
-
   _warnAlreadyExists : function() {
-    dc.ui.notifier.show({text : 'project already exists', anchor : this.projectInputEl, position : '-left bottom', top : 6, left : 1});
+    dc.ui.notifier.show({text : 'project already exists', anchor : $('div.dialog input.content'), position : 'bottom -left', top : 16});
+    return false;
   },
 
   _addSubView : function(e, model) {

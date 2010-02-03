@@ -50,7 +50,7 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
 
   // Find a project by title.
   find : function(title) {
-    return _.detect(this.models(), function(m){ return m.get('title') == title; });
+    return _.detect(this.models(), function(m){ return m.get('title').toLowerCase() == title.toLowerCase(); });
   },
 
   // Find all projects starting with a given prefix, for autocompletion.

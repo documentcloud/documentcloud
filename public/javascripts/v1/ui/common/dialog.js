@@ -3,8 +3,9 @@ dc.ui.Dialog = dc.View.extend({
   className : 'dialog',
 
   callbacks : {
-    '.cancel.click':  'cancel',
-    '.ok.click':      'confirm'
+    '.cancel.click':              'cancel',
+    '.ok.click':                  'confirm',
+    'input.content.keypress':  '_maybeConfirm'
   },
 
   constructor : function(options) {
@@ -55,6 +56,10 @@ dc.ui.Dialog = dc.View.extend({
   close : function() {
     if (this.options.onClose) this.options.onClose(this);
     $(this.el).remove();
+  },
+
+  _maybeConfirm : function(e) {
+    if (this.options.mode == 'short_prompt' && e.keyCode == 13) this.confirm();
   }
 
 }, {
