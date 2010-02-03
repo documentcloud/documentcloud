@@ -97,9 +97,9 @@ dc.ui.SearchBox = dc.View.extend({
   },
 
   clearSearch : function() {
-    dc.history.save('dashboard');
-    dc.app.workspace.organizer.clear();
+    this.value('');
     $(document.body).setMode('no', 'search');
+    dc.ui.Project.clearSelection();
     dc.app.navigation.tab('dashboard');
   },
 

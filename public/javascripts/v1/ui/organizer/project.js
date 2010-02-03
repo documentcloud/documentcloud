@@ -35,7 +35,7 @@ dc.ui.Project = dc.View.extend({
   },
 
   showOpen : function() {
-    $('#organizer .box').setMode('not', 'open');
+    dc.ui.Project.clearSelection();
     $(this.el).setMode('is', 'open');
   },
 
@@ -65,5 +65,12 @@ dc.ui.Project = dc.View.extend({
   //   e.preventDefault();
   //   $(this.el).removeClass('hover');
   // }
+
+}, {
+
+  // Clear out all open project boxes.
+  clearSelection : function() {
+    $('#organizer .box').setMode('not', 'open');
+  }
 
 });

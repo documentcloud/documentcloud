@@ -5,7 +5,7 @@ dc.ui.Navigation = dc.View.extend({
   currentTab    : null,
   tabCallbacks  : {},
 
-  home    : {name : 'Home', callback : function(){ dc.app.navigation.tab('dashboard'); }},
+  home    : {name : 'Home', callback : function(){ dc.app.searchBox.clearSearch(); }},
   section : null,
   inner   : null,
 

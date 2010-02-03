@@ -110,7 +110,8 @@ span.text_input {
     }
     .menu_content .menu_item:hover,
     .menu_content .menu_item.selected {
-      background: #f0f0ff;
+      background-color: #ffffe5;
+/*      background: #f0f0ff;*/
     }
   .menu_content .menu_autofilter .icon {
     position: absolute;
