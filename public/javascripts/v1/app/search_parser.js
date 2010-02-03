@@ -2,11 +2,11 @@
 // Used to extract keywords from the free text search.
 dc.app.SearchParser = {
 
-  FIRST_PROJECT : /project:\s?([^'"][^'"]\S*|['"].+?['"])/i,
+  FIRST_PROJECT : /project:\s?(([^'"][^'"]\S*)|['"](.+?)['"])/i,
 
   extractProject : function(query) {
     var project = query.match(this.FIRST_PROJECT);
-    return project && project[1];
+    return project && (project[2] || project[3]);
   }
 
 };

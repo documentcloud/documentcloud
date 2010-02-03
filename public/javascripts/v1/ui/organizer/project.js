@@ -31,9 +31,12 @@ dc.ui.Project = dc.View.extend({
   },
 
   showDocuments : function() {
+    dc.app.searchBox.search(this.model.toSearchParam());
+  },
+
+  showOpen : function() {
     $('#organizer .box').setMode('not', 'open');
     $(this.el).setMode('is', 'open');
-    dc.app.searchBox.search(this.model.toSearchParam());
   },
 
   deleteProject : function(e) {

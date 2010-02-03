@@ -39,7 +39,10 @@ dc.ui.SearchBox = dc.View.extend({
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber) {
-    var sectionName = Inflector.truncate(dc.app.SearchParser.extractProject(query) || query, 30);
+    var projectName = dc.app.SearchParser.extractProject(query);
+    var project = projectName && Projects.find(projectName);
+    if (project) project.view.showOpen();
+    var sectionName = Inflector.truncate(projectName || query, 30);
     var section = {name : sectionName, callback : function(){ dc.app.searchBox.search(query); }};
     if (dc.app.navigation) dc.app.navigation.tab('search', {silent : true, section : section});
     $(document.body).setMode('active', 'search');

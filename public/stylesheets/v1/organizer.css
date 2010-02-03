@@ -43,6 +43,9 @@
       cursor: pointer;
       border-bottom: 1px solid #dadada;
     }
+      #organizer .box.is_open {
+        background-color: #f7f7f7;
+      }
       #organizer .box:hover, #organizer .box.hover {
         background-color: #ffe;
         background: -webkit-gradient(linear, left top, left bottom, from(#fffffa), to(#ffe));
