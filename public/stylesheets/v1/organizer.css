@@ -8,16 +8,12 @@
       font: 10px/13px Arial;
       height: 14px;
       text-transform: uppercase;
-      padding: 4px 5px 4px 33px;
+      padding: 4px 10px 4px 15px;
       background: #ddd;
       background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#dadada));
       border-top: 1px solid #dadada;
       color: #777;
     }
-      #organizer .nametag .icon {
-        position: absolute;
-        margin: -2px 0 0 -23px;
-      }
 
   #organizer .project_list {
     position: absolute;
@@ -25,32 +21,31 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
-
-  #organizer .box {
-    position: relative;
-    padding: 15px 15px 15px 30px;
-    cursor: pointer;
-    border-bottom: 1px solid #dadada;
-  }
-    #organizer .box:hover {
-      background-color: #ffe;
-      background: -webkit-gradient(linear, left top, left bottom, from(#fffffa), to(#ffe));
+    #organizer .box {
+      position: relative;
+      padding: 15px;
+      cursor: pointer;
+      border-bottom: 1px solid #dadada;
     }
-    #organizer .box .pointer {
-      width: 10px; height: 19px;
-      position: absolute; right: 15px; top: 50%;
-      margin-top: -10px;
-      background-image: url(/images/embed/ui/pointer.png);
-      display: none;
-    }
-      #organizer .box.is_open .pointer {
-        display: block;
+      #organizer .box:hover, #organizer .box.hover {
+        background-color: #ffe;
+        background: -webkit-gradient(linear, left top, left bottom, from(#fffffa), to(#ffe));
       }
-    #organizer .box .title {
-      font: bold 14px Arial;
-      color: #254555;
-    }
-    #organizer .box .counts {
-      font: 10px/16px Arial;
-      color: #777;
-    }
+      #organizer .box .pointer {
+        width: 10px; height: 19px;
+        position: absolute; right: 15px; top: 50%;
+        margin-top: -10px;
+        background-image: url(/images/embed/ui/pointer.png);
+        display: none;
+      }
+        #organizer .box.is_open .pointer {
+          display: block;
+        }
+      #organizer .box .title {
+        font: bold 14px Arial;
+        color: #254555;
+      }
+      #organizer .box .counts {
+        font: 10px/16px Arial;
+        color: #777;
+      }

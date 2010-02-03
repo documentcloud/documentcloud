@@ -15,6 +15,10 @@ dc.model.Project = dc.Model.extend({
     return this.documentIds().length;
   },
 
+  addDocument : function(doc) {
+    Projects.update(this, {document_ids : doc.id});
+  },
+
   // Return the title of this project as a search parameter.
   toSearchParam : function() {
     var titlePart = this.get('title');

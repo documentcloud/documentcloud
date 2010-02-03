@@ -20,7 +20,7 @@ a {
   }
   #cloud_edge {
     position: absolute;
-    top: 10px; left: 80px;
+    top: 10px; left: 85px;
     width: 67px; height: 30px;
     background: url(/images/embed/ui/cloud_edge.png) no-repeat;
   }
@@ -32,10 +32,10 @@ a {
   }
     #wordmark {
       cursor: pointer;
-      left: 10px;
+      left: 15px;
     }
     #title {
-      left: 153px;
+      left: 158px;
     }
   #search_box {
     position: absolute;

@@ -3,13 +3,18 @@ dc.ui.Project = dc.View.extend({
   className : 'project box',
 
   callbacks : {
-    'el.click':           'showDocuments',
-    '.icon.delete.click': 'deleteProject'
+    'el.click'           : 'showDocuments',
+    '.icon.delete.click' : 'deleteProject'
+    // 'el.dragenter'       : '_onDragEnter',
+    // 'el.dragover'        : '_onDragEnter',
+    // 'el.drop'            : '_onDrop',
+    // 'el.dragleave'       : '_onDragLeave'
   },
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, 'loadDocuments');
+    _.bindAll(this, 'loadDocuments', 'render');
+    this.model.bind(dc.Model.CHANGED, this.render);
     this.model.view = this;
   },
 
@@ -35,5 +40,27 @@ dc.ui.Project = dc.View.extend({
     e.stopPropagation();
     Projects.destroy(this.model);
   }
+
+  // _onDragEnter : function(e) {
+  //   e.preventDefault();
+  //   $(this.el).addClass('hover');
+  //   try {
+  //     e.dataTransfer.effectAllowed = 'all';
+  //     e.dataTransfer.dropEffect = 'copy';
+  //   } catch(e) {}
+  // },
+  //
+  // _onDrop : function(e) {
+  //   e.preventDefault();
+  //   var url = e.originalEvent.dataTransfer.getData('text/plain');
+  //   var match = url.match(/\/documents\/\d+/);
+  //   if (!match) return false;
+  //   $(this.el).removeClass('hover');
+  // },
+  //
+  // _onDragLeave : function(e) {
+  //   e.preventDefault();
+  //   $(this.el).removeClass('hover');
+  // }
 
 });
