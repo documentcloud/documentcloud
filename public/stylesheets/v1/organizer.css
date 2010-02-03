@@ -25,7 +25,7 @@
         #organizer .nametag .new_project .icon {
           float: right;
           opacity: 0.5; filter: alpha(opacity=50);
-          margin: 2px 0 0 4px;
+          margin: 2px 0 0 3px;
         }
 
   #organizer .project_list {
@@ -58,7 +58,7 @@
         font: bold 14px Arial;
         color: #254555;
       }
-      #organizer .box .counts {
+      #organizer .box .extra, #organizer {
         font: 10px/16px Arial;
         color: #777;
       }
