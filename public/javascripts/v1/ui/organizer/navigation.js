@@ -11,11 +11,11 @@ dc.ui.Navigation = dc.View.extend({
 
   // List of tab names -> page titles.
   tabs : {
-    search    : {title : 'Search',              back : 'Back to the Dashboard'},
-    upload    : {title : 'Upload a Document',   back : 'Back to the Documents'},
-    analyze   : {title : 'Analyze',             back : 'Back to the Documents'},
-    accounts  : {title : 'Manage Accounts',     back : 'Back to the Dashboard'},
-    dashboard : {title : 'Dashboard',           back : ''}
+    search    : 'Search',
+    upload    : 'Upload',
+    analyze   : 'Analyze',
+    accounts  : 'Manage Accounts',
+    dashboard : 'Dashboard'
   },
 
   constructor : function(options) {
@@ -55,13 +55,8 @@ dc.ui.Navigation = dc.View.extend({
     var box = dc.app.searchBox;
     var fragment = tab == 'search' && box.fragment ? box.fragment : tab;
     if (!options.silent) dc.history.save(fragment);
-    this.setTitle(this.tabs[tab].title);
+    this.setTitle(this.tabs[tab]);
     $(document.body).setMode(tab, 'navigation');
-  },
-
-  // Go back out a level from the current tab.
-  back : function() {
-    window.history.back();
   },
 
   // Add all of the tabs as history handlers.

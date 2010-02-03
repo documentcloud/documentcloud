@@ -16,6 +16,7 @@ dc.ui.DocumentUpload = dc.View.extend({
     $(this.el).html(JST.document_upload_form({organization : dc.app.organization.name}));
     $('#document_upload_container').html(this.el);
     $('#upload_progress_container').html(JST.document_progress_container({}));
+    $('#upload_progress_inner').hide();
     this.setCallbacks();
     this._observeUploadProgress();
     return this;
@@ -38,6 +39,7 @@ dc.ui.DocumentUpload = dc.View.extend({
   _onUploadStarted : function(e, model) {
     $('#no_uploads').hide();
     $('#upload_progress_inner').append(JST.document_progress(model.attributes()));
+    $('#upload_progress_inner').show();
     this._updateProgress(e, model);
   },
 

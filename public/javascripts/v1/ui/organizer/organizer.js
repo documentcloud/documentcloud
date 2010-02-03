@@ -3,12 +3,13 @@ dc.ui.Organizer = dc.View.extend({
   id : 'organizer',
 
   callbacks : {
-    '.new_project.click':   'promptNewProject'
+    '.new_project.click':       'promptNewProject',
+    '.upload_documents.click' : 'openUploads'
   },
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, '_addSubView', '_removeSubView');
+    _.bindAll(this, '_addSubView', '_removeSubView', 'openUploads');
     this._bindToSets();
     this.subViews = [];
   },
@@ -64,6 +65,13 @@ dc.ui.Organizer = dc.View.extend({
 
   sortedModels : function() {
     return _.sortBy(this.models(), function(m){ return m.sortKey(); });
+  },
+
+  openUploads : function() {
+    dc.app.navigation.tab('upload', {section : {
+      name : "Upload Documents",
+      callback : this.openUploads
+    }});
   },
 
   // Bind all possible and Project events for rendering.

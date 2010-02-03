@@ -51,7 +51,6 @@ dc.ui.SearchBox = dc.View.extend({
     this.fragment = 'search/' + encodeURIComponent(query);
     dc.history.save(this.fragment + (page ? '/p' + page : ''));
     $('#document_list_container .documents').html('');
-    $('#metadata_container').html('');
     dc.ui.query.blank();
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');

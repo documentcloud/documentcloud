@@ -1,5 +1,5 @@
 .panel_container .document_upload.panel {
-  padding: 18px;
+  padding: 20px 25px 25px 25px;
 }
   .document_upload label {
     font: bold 16px Arial;
@@ -26,40 +26,43 @@
     font: normal 12px Arial;
   }
 
-#upload_progress {
-  position: absolute;
-  top: 0; bottom: 0; left: 0; right: 0;
-  overflow-x: visible; overflow-y: auto;
+#no_uploads {
+  padding: 7px 15px 7px 15px;
+  color: #999;
+  text-transform: uppercase;
+  font: 10px/16px Arial;
 }
-  #upload_progress_inner {
-    position: relative;
-    width: 278px;
-    margin: 10px 10px 0 10px;
-    overflow-x: visible;
+  #no_uploads .icon {
+    float: left;
+    margin-right: 10px;
+    opacity: 0.75; filter: alpha(opacity=75);
   }
-    #upload_progress .document_progress {
-      margin-bottom: 12px;
-      position: relative;
-      width: 100%;
-      background: #fafafa;
-      -webkit-border-radius: 6px; -moz-border-radius: 6px;
-      -webkit-box-shadow: 0 0 4px #777; -moz-box-shadow: 0 0 4px #777;
+
+#upload_progress {
+  position: relative;
+}
+  #upload_progress .document_progress {
+    margin: 15px;
+    position: relative;
+    background: #fafafa;
+    -webkit-border-radius: 6px; -moz-border-radius: 6px;
+    -webkit-box-shadow: 0 0 4px #777; -moz-box-shadow: 0 0 4px #777;
+  }
+    #upload_progress .status_wrap {
+      position: absolute;
+      top: 4px; left: 8px;
+      color: #666;
+      font: 10px/14px Arial;
+      text-transform: uppercase;
     }
-      #upload_progress .status_wrap {
-        color: #666;
-        font: 10px/14px Arial;
-        text-transform: uppercase;
-        position: absolute;
-        left: 6px; top: 4px;
+      #upload_progress .title, #upload_progress .status {
+        line-height: 14px;
+        height: 14px;
+        overflow: hidden;
       }
-        #upload_progress .title, #upload_progress .status {
-          line-height: 14px;
-          height: 14px;
-          overflow: hidden;
-        }
-      #upload_progress .progress_bar {
-        height: 34px;
-        -webkit-border-radius: 6px; -moz-border-radius: 6px;
-        background: #ddddff;
-        background: -webkit-gradient(linear, left top, left bottom, from(#f9f9ff), to(#ddddff));
-      }
+    #upload_progress .progress_bar {
+      height: 34px;
+      -webkit-border-radius: 6px; -moz-border-radius: 6px;
+      background: #ddddff;
+      background: -webkit-gradient(linear, left top, left bottom, from(#f9f9ff), to(#ddddff));
+    }
