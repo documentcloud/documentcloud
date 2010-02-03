@@ -53,7 +53,7 @@ span.text_input {
 }
   .minibutton:hover, .minibutton.is_open {
     color: #222;
-    -webkit-box-shadow: 0 0 4px #333; -moz-box-shadow: 0 0 4px #333;
+    -webkit-box-shadow: 0 0 4px #555; -moz-box-shadow: 0 0 4px #555;
     background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#afafaf));
   }
   .minibutton:active {

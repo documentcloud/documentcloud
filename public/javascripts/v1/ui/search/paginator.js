@@ -1,6 +1,6 @@
 dc.ui.Paginator = dc.View.extend({
 
-  PAGE_SIZE : 10,
+  PAGE_SIZE : 20,
 
   id    : 'paginator',
   query : null,

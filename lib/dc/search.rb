@@ -13,7 +13,7 @@ module DC
       BOOLEAN_OR    = /\s+OR\s+/
     end
 
-    PAGE_SIZE = 10
+    PAGE_SIZE = 20
     QUERY_OR  = ' | '
 
   end
