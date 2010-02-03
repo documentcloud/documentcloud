@@ -39,7 +39,9 @@ dc.ui.SearchBox = dc.View.extend({
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber) {
-    if (dc.app.navigation) dc.app.navigation.tab('search', true);
+    var project = dc.app.SearchParser.extractProject(query);
+    project = project && Inflector.truncate(project, 30);
+    if (dc.app.navigation) dc.app.navigation.tab('search', {silent : true, section : project});
     $(document.body).setMode('active', 'search');
     var page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);

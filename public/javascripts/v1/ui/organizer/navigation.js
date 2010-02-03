@@ -47,14 +47,16 @@ dc.ui.Navigation = dc.View.extend({
 
   // Switch to a view by name. If silent, don't save the state change in the
   // browser's history.
-  tab : function(tab, silent) {
+  tab : function(tab, options) {
+    options = options || {};
+    if (options.section) this.section = $.el('a', {href : '#'}, options.section);
+    this.render();
     if (this.currentTab == tab) return;
     this.currentTab = tab;
-    this.render();
     if (this.tabCallbacks[tab]) _.invoke(this.tabCallbacks[tab]);
     var box = dc.app.searchBox;
     var fragment = tab == 'search' && box.fragment ? box.fragment : tab;
-    if (!silent) dc.history.save(fragment);
+    if (!options.silent) dc.history.save(fragment);
     this.setTitle(this.tabs[tab].title);
     $(document.body).setMode(tab, 'navigation');
   },
