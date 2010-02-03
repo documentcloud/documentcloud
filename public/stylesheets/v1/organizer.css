@@ -14,8 +14,11 @@
       border-top: 1px solid #dadada;
       color: #777;
     }
+      #organizer .nametag .all_projects {
+        float: left;
+      }
       #organizer .nametag .new_project {
-        float: right;
+        float: left;
         cursor: pointer;
       }
         #organizer .nametag .new_project:hover {
@@ -58,7 +61,7 @@
         font: bold 14px Arial;
         color: #254555;
       }
-      #organizer .box .extra, #organizer {
+      #organizer .box .counts {
         font: 10px/16px Arial;
         color: #777;
       }
