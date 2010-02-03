@@ -4,11 +4,12 @@ dc.ui.DocumentUpload = dc.View.extend({
   className : 'document_upload panel',
 
   callbacks : {
-    '#upload_form.submit': 'beginUpload'
+    'button.submit': 'beginUpload'
   },
 
   constructor : function(options) {
     this.base(options);
+    $(document.body).append( $.el("iframe", {id : 'hidden_iframe', name : 'hidden_iframe', src : 'about:blank', 'class' : 'hidden_iframe'}));
     _.bindAll(this, '_onUploadStarted', '_onUploadCompleted', '_updateProgress');
   },
 
@@ -23,7 +24,7 @@ dc.ui.DocumentUpload = dc.View.extend({
   },
 
   beginUpload : function() {
-    dc.ui.spinner.show('uploading document');
+    dc.ui.spinner.show('uploading');
   },
 
   _observeUploadProgress : function() {
