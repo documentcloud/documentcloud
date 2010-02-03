@@ -4,26 +4,33 @@
   #organizer .sidebar_section {
     padding-bottom: 15px;
   }
-    #organizer .nametag .all_projects {
-      float: left;
+    #organizer .nametag.large {
+      position: relative;
+      padding-right: 0;
     }
-    #organizer .nametag .new_project {
-      float: left;
-      cursor: pointer;
-    }
-      #organizer .nametag .new_project:hover {
-        color: #454545;
-        text-decoration: underline;
+      #organizer .nametag .button {
+        float: left;
+        width: 120px;
+        cursor: pointer;
+        color: #254555;
       }
-      #organizer .nametag .new_project .icon {
-        float: right;
-        opacity: 0.5; filter: alpha(opacity=50);
-        margin: 2px 0 0 3px;
-      }
+        #organizer .nametag .button:hover {
+          text-decoration: underline;
+        }
+        #organizer .nametag .button:first-child {
+          border-right: 1px dotted #d0d0d0;
+          padding-right: 15px;
+          margin-right: 15px;
+        }
+        #sidebar .nametag .icon {
+          float: left;
+          margin-right: 10px;
+        }
+
 
   #organizer .project_list {
     position: absolute;
-    top: 61px; bottom: 0px; left: 0; right: 0;
+    top: 73px; bottom: 0px; left: 0; right: 0;
     overflow-y: auto;
     overflow-x: hidden;
   }

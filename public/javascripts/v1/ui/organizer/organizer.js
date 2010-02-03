@@ -50,7 +50,7 @@ dc.ui.Organizer = dc.View.extend({
 
   promptNewProject : function() {
     var me = this;
-    dc.ui.Dialog.prompt('Start a New Project', '', function(title) {
+    dc.ui.Dialog.prompt('Create a New Project', '', function(title) {
       if (!title) return;
       if (Projects.find(title)) return me._warnAlreadyExists();
       var project = new dc.model.Project({title : title});

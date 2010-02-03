@@ -102,13 +102,17 @@ a {
     #sidebar .nametag {
       font: 10px/20px Arial;
       height: 20px;
-      text-transform: uppercase;
+/*      text-transform: uppercase;*/
       padding: 5px 15px 5px 15px;
       background: #ddd;
-      background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#dadada));
+      background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#d5d5d5));
       border-top: 1px solid #dadada;
       color: #777;
     }
+      #sidebar .nametag.large {
+        height: 32px;
+        font: 11px/32px Arial;
+      }
     .search_query, #paginator {
       display: none;
       position: absolute;
