@@ -101,7 +101,11 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _openAnalyze : function() {
-    dc.app.navigation.tab('analyze');
+    dc.app.navigation.tab('analyze', {
+      silent  : true,
+      section : dc.app.navigation.section,
+      inner   : {name : 'Analyze'}
+    });
   },
 
   _setSelectedAccess : function(access) {

@@ -5,11 +5,7 @@ dc.ui.Navigation = dc.View.extend({
   currentTab    : null,
   tabCallbacks  : {},
 
-  callbacks : {
-    'button.back.click': 'back'
-  },
-
-  home    : $.el('a', {href : '#dashboard'}, 'home'),
+  home    : {name : 'Home', callback : function(){ dc.app.navigation.tab('dashboard'); }},
   section : null,
   inner   : null,
 
@@ -31,11 +27,12 @@ dc.ui.Navigation = dc.View.extend({
   render : function() {
     var el = $(this.el);
     el.html('');
-    _.each(_.compact([this.home, this.section, this.inner]), function(part) {
-      el.append(part);
-      el.append(' &raquo; ');
+    _.each(_.compact([this.home, this.section, this.inner]), function(link) {
+      var linkEl = $.el('span', {}, link.name);
+      if (link.callback) $(linkEl).bind('click', link.callback);
+      el.append(linkEl);
+      el.append(' &nbsp;&raquo;&nbsp; ');
     });
-    this.setCallbacks();
     return this;
   },
 
@@ -49,7 +46,8 @@ dc.ui.Navigation = dc.View.extend({
   // browser's history.
   tab : function(tab, options) {
     options = options || {};
-    if (options.section) this.section = $.el('a', {href : '#'}, options.section);
+    this.section = options.section;
+    this.inner   = options.inner;
     this.render();
     if (this.currentTab == tab) return;
     this.currentTab = tab;

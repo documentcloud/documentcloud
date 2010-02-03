@@ -54,7 +54,10 @@ dc.ui.AccountView = dc.View.extend({
 
   _openAccounts : function(e) {
     e.preventDefault();
-    dc.app.navigation.tab('accounts');
+    dc.app.navigation.tab('accounts', {section : {
+      name : 'Accounts',
+      callback : function() { dc.app.navigation.tab('accounts'); }
+    }});
   },
 
   // When we're done editing an account, it's either a create or update.
