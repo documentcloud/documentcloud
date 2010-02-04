@@ -99,7 +99,7 @@ dc.model.MetadataSet = dc.model.SortedSet.extend({
   // Populate the Metadata set from the current documents in the client,
   // triggering a refresh when loaded.
   populate : function(callback) {
-    dc.ui.spinner.show('loading metadata');
+    dc.ui.spinner.show('loading');
     $.get('/documents/metadata.json', {'ids[]' : Documents.getIds()}, function(resp) {
       _.each(resp.metadata, function(m){ Metadata.addOrCreate(m); });
       Metadata.sort();

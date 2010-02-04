@@ -17,7 +17,7 @@
   }
   .account_view.badge .controls {
     position: absolute;
-    right: 10px; top: 7px;
+    right: 15px; top: 7px;
   }
   .account_view.badge a {
     color: #353566;

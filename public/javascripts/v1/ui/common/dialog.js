@@ -30,7 +30,7 @@ dc.ui.Dialog = dc.View.extend({
   defaultOptions : function() {
     return {
       title   : "Untitled Dialog",
-      text    : "The content of the dialog goes here...",
+      text    : null,
       buttons : null
     };
   },

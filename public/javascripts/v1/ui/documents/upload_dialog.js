@@ -1,32 +1,11 @@
-dc.ui.TimelineDialog = dc.ui.Dialog.extend({
+dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
-  GRAPH_OPTIONS : {
-    xaxis     : {mode : 'time', minTickSize: [1, "day"]},
-    yaxis     : {ticks: [], min: -0.5},
-    selection : {mode : 'x', color: '#ffffbb'},
-    legend    : {show : false},
-    series    : {lines : {show : false}, points : {show : true}},
-    grid      : {hoverable : true, clickable : true}
-  },
-
-  ROW_HEIGHT : 50,
-  MIN_HEIGHT : 100,
-
-  DATE_FORMAT : "%b %d, %y",
-
-  POINT_COLOR : '#5a5a5a',
-
-  id : 'timeline_dialog',
+  id : 'upload_dialog',
 
   callbacks : {
-    '.zoom_out.click':              '_zoomOut',
-    '.ok.click':                    'confirm',
-    '#timeline_plot.plothover':     '_showTooltop',
-    '#timeline_plot.plotselected':  '_zoomIn',
-    '#timeline_plot.plotclick':     '_openPage'
   },
 
-  constructor : function(documents) {
+  constructor : function() {
     this.documents = documents;
     this.base({
       mode      : 'custom',
@@ -40,7 +19,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     this.base();
     var height = this.documents.length <= 1 ? this.MIN_HEIGHT : this.ROW_HEIGHT * this.documents.length;
     this.plot = $($.el('div', {id : 'timeline_plot', style : 'width:800px; height:' + height + 'px;'}));
-    $('.custom', this.el).append(this.plot);
+    $('.text', this.el).append(this.plot);
     $(this.el).align($('#content')[0] || document.body, null, {top : -100});
     $('.controls', this.el).append($.el('button', {'class' : 'zoom_out'}, 'zoom out'));
     this.setCallbacks();

@@ -1,6 +1,13 @@
 TODO:
+
+  * Restructure client-side navigation away from tabs.
   
   * The design.
+  
+  * Come up with something reasonable to have on the home screen.
+  
+  * Cleanup and make typography and spacing real consistent. 
+    Perhaps a style guide. Perhaps a grid.
 
   * Switch up projects to use a real join table.
 
@@ -17,9 +24,6 @@ TODO:
     published, and the URL where. Create a cron/cloudcrowd job that pings each
     published document, ensuring that it's not 404'd.
               
-  
-WAITING ON DESIGN:
-
   * Add more supporting features to Projects -- they should know statistics 
     about the documents, notes and entities contained within. Taggable?
 
@@ -39,11 +43,7 @@ WAITING ON DESIGN:
     subsequent changes to access wait for the job to finish. Perhaps a floating
     progress bar filled panel?
 
-  * Make a query banner for searches.
-
-  * Kill the metadata sidebar for searches, and create an organization one
-    to go there instead. Alter the metadata sidebar to go better with
-    the visualizations.
+  * Alter the metadata sidebar to go better with the visualizations.
 
   * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
     Adding a "search pages" feature.
@@ -72,6 +72,9 @@ AFTER BETA:
       
 
 DONE:
+
+  * Kill the metadata sidebar for searches, and create an organization one
+    to go there instead.
 
   * Rework dc.View setCallbacks syntax.
 

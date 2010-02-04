@@ -1,4 +1,3 @@
-// The Sidebar. Switches contexts between different subviews.
 dc.ui.DocumentUpload = dc.View.extend({
 
   className : 'document_upload panel',

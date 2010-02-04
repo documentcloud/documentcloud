@@ -26,17 +26,11 @@
     font: normal 12px Arial;
   }
 
-#no_uploads {
-  padding: 7px 15px 7px 15px;
-  color: #999;
-  text-transform: uppercase;
-  font: 10px/16px Arial;
+#no_uploads .icon {
+  float: left;
+  margin-right: 10px;
+  opacity: 0.75; filter: alpha(opacity=75);
 }
-  #no_uploads .icon {
-    float: left;
-    margin-right: 10px;
-    opacity: 0.75; filter: alpha(opacity=75);
-  }
 
 #upload_progress {
   position: relative;

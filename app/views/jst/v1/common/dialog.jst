@@ -1,6 +1,8 @@
 <div class="title"><%= title %></div>
 <% if (text) { %>
   <div class="text"><%= text %></div>
+<% } else { %>
+  <div class="custom"><%= text %></div>
 <% } %>
 <% if( mode == 'prompt' || mode == 'short_prompt') { %>
   <div class="<%= mode %>">

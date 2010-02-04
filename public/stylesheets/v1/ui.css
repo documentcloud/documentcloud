@@ -143,7 +143,7 @@ div.dialog {
   position: absolute;
   min-width: 300px;
   max-width: 600px;
-  background: #e6e6e6;
+  background: #e7e7e7;
   background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#fff));
   z-index: 1000;
   font: 12px Arial;
@@ -154,14 +154,15 @@ div.dialog {
     background: #e0e0e0;
     padding: 5px 10px;
     font: 14px Arial;
-    color: #4a4445;
+    color: #454545;
     cursor: move;
     border-bottom: 1px solid #949494;
     -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
     -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
     background: -webkit-gradient(linear, left top, left bottom, from(#eaeaea), to(#c2c2c2));
   }
-  div.dialog .text, div.dialog .prompt, div.dialog .short_prompt {
+  div.dialog .text, div.dialog .custom,
+  div.dialog .prompt, div.dialog .short_prompt {
     padding: 10px 10px 25px 10px;
   }
     div.dialog .short_prompt {
@@ -171,7 +172,10 @@ div.dialog {
     float: right;
     margin: 0 10px 8px 0;
   }
-    div.dialog.alert_dialog button.cancel, div.dialog.alert_dialog .minibutton.cancel {
+    div.dialog.alert_dialog button.cancel,
+    div.dialog.alert_dialog .minibutton.cancel,
+    div.dialog.custom_dialog button.cancel,
+    div.dialog.custom_dialog .minibutton.cancel {
       display: none;
     }
   div.dialog .content {
