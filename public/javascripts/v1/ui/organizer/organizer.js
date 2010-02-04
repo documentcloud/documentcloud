@@ -68,10 +68,11 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   openUploads : function() {
-    dc.app.navigation.tab('upload', {section : {
-      name : "Upload Documents",
-      callback : this.openUploads
-    }});
+    dc.ui.UploadDialog.open();
+    // dc.app.navigation.tab('upload', {section : {
+    //   name : "Upload Documents",
+    //   callback : this.openUploads
+    // }});
   },
 
   // Bind all possible and Project events for rendering.

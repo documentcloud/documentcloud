@@ -21,22 +21,36 @@ span.text_input {
   height: 30px;
   background: transparent url(/images/embed/ui/text_input_large_left.png) no-repeat center left;
 }
-  span.text_input > span {
-    display: block;
-    background: transparent url(/images/embed/ui/text_input_large_right.png) no-repeat center right;
-    margin-left: 6px;
-    height: 30px;
+  span.text_input.small {
+    height: 23px;
+    background: transparent url(/images/embed/ui/text_input_small_left.png) no-repeat center left;
   }
-    span.text_input input {
-      display: block;
-      position: absolute;
-      left: 4px; right: 4px; top: 2px;
-      border: none;
-      margin: 0; padding: 0;
-      background: transparent;
-      font-size: 16px;
-      line-height: 20px;
-    }
+span.text_input > span {
+  display: block;
+  background: transparent url(/images/embed/ui/text_input_large_right.png) no-repeat center right;
+  margin-left: 6px;
+  height: 30px;
+}
+  span.text_input.small > span {
+    background: transparent url(/images/embed/ui/text_input_small_right.png) no-repeat center right;
+    margin-left: 5px;
+    height: 23px;
+  }
+span.text_input input {
+  display: block;
+  position: absolute;
+  left: 4px; right: 4px; top: 2px;
+  border: none;
+  margin: 0; padding: 0;
+  background: transparent;
+  font-size: 16px;
+  line-height: 20px;
+}
+  span.text_input.small input {
+    left: 3px; right: 3px; top: 1px;
+    font-size: 12px;
+    line-height: 12px;
+  }
 
 /*----------------------------- Mini Buttons ---------------------------------*/
 .minibutton {
@@ -170,12 +184,10 @@ div.dialog {
     }
   div.dialog .controls button, div.dialog .controls .minibutton {
     float: right;
-    margin: 0 10px 8px 0;
+    margin: 0 15px 13px 0;
   }
     div.dialog.alert_dialog button.cancel,
-    div.dialog.alert_dialog .minibutton.cancel,
-    div.dialog.custom_dialog button.cancel,
-    div.dialog.custom_dialog .minibutton.cancel {
+    div.dialog.alert_dialog .minibutton.cancel {
       display: none;
     }
   div.dialog .content {
