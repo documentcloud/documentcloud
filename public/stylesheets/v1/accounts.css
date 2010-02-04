@@ -17,10 +17,10 @@
   }
   .account_view.badge .controls {
     position: absolute;
-    right: 15px; top: 7px;
+    right: 10px; top: 7px;
   }
   .account_view.badge a {
-    color: #353566;
+    color: #254555;
   }
     .account_view.badge a:hover {
       text-decoration: underline;

@@ -114,30 +114,6 @@ a {
         text-transform: none;
         font: 11px/32px Arial;
       }
-    .search_query, #paginator {
-      display: none;
-      position: absolute;
-      top: 3px; left: 10px; right: 10px;
-      font-size: 10px;
-      line-height: 16px;
-      height: 16px;
-      overflow: hidden;
-      color: #777;
-    }
-      #paginator {
-        top: 2px;
-      }
-      #paginator > span {
-        padding: 0 2px;
-        cursor: pointer;
-      }
-        #paginator > span:hover, #paginator .current {
-          font-weight: bold;
-          color: #555;
-        }
-        #paginator .arrow {
-          font-size: 12px;
-        }
 
 .panel_container {
   position: absolute;
@@ -149,6 +125,9 @@ a {
     top: 0px; left: 0px; right: 0px; bottom: 0px;
     padding: 10px 10px 10px 15px;
   }
+    body.search_navigation.paginated .panel_content .panel {
+      bottom: 38px;
+    }
 
 #no_results_container {
   position: absolute;

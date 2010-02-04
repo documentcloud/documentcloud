@@ -100,11 +100,11 @@
         margin-right: 7px;
       }
   .document_tile .source {
-    font: 10px/14px Arial;
+    font: 11px/14px Arial;
     overflow: hidden;
-    height: 12px;
+    height: 14px;
     color: #808080;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
     .document_list.small_size .source {
       float: left;

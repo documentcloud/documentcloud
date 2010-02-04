@@ -1,0 +1,26 @@
+#paginator {
+  position: absolute;
+  display: none;
+  bottom: 0px; left: 0px; right: 0px;
+  height: 22px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dfdfdf));
+  padding: 7px 15px 7px 20px;
+  font: 11px/22px Arial;
+  color: #777;
+  text-align: center;
+  border: 1px solid #ddd; border-left: 0; border-right: 0;
+}
+  body.paginated #paginator {
+    display: block;
+  }
+  #paginator span.description {
+    position: absolute;
+    left: 20px;
+  }
+  #paginator span.page_link, #paginator span.arrow {
+    cursor: pointer;
+    padding: 0 5px;
+  }
+    #paginator span.page_link:hover, #paginator span.arrow:hover, #paginator span.page_link.current {
+      color: #254555;
+    }

@@ -6,7 +6,6 @@ dc.ui.SearchBox = dc.View.extend({
   id            : 'search',
   className     : 'accounts_tab_hidden',
   fragment      : null,
-  currentPage   : null,
 
   callbacks : {
     '#search_box.keydown': 'maybeSearch',
@@ -51,12 +50,11 @@ dc.ui.SearchBox = dc.View.extend({
     this.fragment = 'search/' + encodeURIComponent(query);
     dc.history.save(this.fragment + (page ? '/p' + page : ''));
     $('#document_list_container .documents').html('');
-    dc.ui.query.blank();
+    // dc.ui.query.blank();
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');
     if (dc.app.toolbar) dc.app.toolbar.hide();
     var params = {q : query};
-    this.currentPage = page;
     if (page) params.page = page;
     var url = query.match(/notes:/) ? '/search/notes.json' : '/search/documents.json';
     $.get(url, params, this.loadSearchResults, 'json');
@@ -119,7 +117,7 @@ dc.ui.SearchBox = dc.View.extend({
     Documents.refresh(_.map(resp.documents, function(m){
       return new dc.model.Document(m);
     }));
-    dc.ui.query.render(resp.query, resp.documents.length);
+    // dc.ui.query.render(resp.query, resp.documents.length);
     $('#document_list_container').html((new dc.ui.DocumentList({set : Documents})).render().el);
     Documents.each(function(el) {
       $('#document_list_container .documents').append((new dc.ui.DocumentTile(el)).render().el);
