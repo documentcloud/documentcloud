@@ -100,12 +100,11 @@
         margin-right: 7px;
       }
   .document_tile .source {
-    text-transform: uppercase;
-    font-size: 10px;
+    font: 10px/14px Arial;
     overflow: hidden;
-    height: 10px;
+    height: 12px;
     color: #808080;
-    margin: 2px 0 10px 0;
+    margin-bottom: 10px;
   }
     .document_list.small_size .source {
       float: left;
