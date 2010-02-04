@@ -2,6 +2,8 @@ TODO:
 
   * Restructure client-side navigation away from tabs.
   
+  * Upgrade the Admin UI to match.
+  
   * The design.
   
   * Come up with something reasonable to have on the home screen.
@@ -10,9 +12,7 @@ TODO:
     Perhaps a style guide. Perhaps a grid.
 
   * Switch up projects to use a real join table.
-  
-  * Create a new paginator.
-      
+        
   * Make search degrade gracefully in the viewer, when DocumentCloud is down.
   
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
@@ -21,9 +21,6 @@ TODO:
   * Implement the "publication" workflow. A document should know if it's been
     published, and the URL where. Create a cron/cloudcrowd job that pings each
     published document, ensuring that it's not 404'd.
-              
-  * Add more supporting features to Projects -- they should know statistics 
-    about the documents, notes and entities contained within. Taggable?
 
   * Merge Visualize, Timeline, and Entities into a single "Analyze" UI.
     Add OpenCalais logo to comply with TOS.
@@ -40,13 +37,6 @@ TODO:
     progress bar filled panel?
 
   * Alter the metadata sidebar to go better with the visualizations.
-
-  * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
-    Adding a "search pages" feature.
-
-  * Start extracting dates (not times) -- integrate the DateExtractor into
-    document import. What to do about relevance? Make sure to record occurrences
-    and merge identical dates.
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Make 'em removable.
@@ -72,8 +62,16 @@ AFTER BETA:
   
   * Add an admin UI for editing static pages.
   
+  * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
+    Adding a "search pages" feature.
+    
+  * Add more supporting features to Projects -- they should know statistics 
+    about the documents, notes and entities contained within. Taggable?
+  
 
 DONE:
+
+  * Create a new paginator.
 
   * Kill the metadata sidebar for searches, and create an organization one
     to go there instead.
@@ -81,6 +79,10 @@ DONE:
   * Rework dc.View setCallbacks syntax.
 
   * Kill bookmarks.
+  
+  * Start extracting dates (not times) -- integrate the DateExtractor into
+    document import. What to do about relevance? Make sure to record occurrences
+    and merge identical dates.
 
   * Upgrade to OpenCalais 4.3
 
