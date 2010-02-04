@@ -118,6 +118,9 @@
   #timeline_dialog .text {
     padding: 3px 3px 20px 3px;
   }
+  #timeline_dialog .cancel {
+    display: none;
+  }
   #timeline_dialog .zoom_out {
     display: none;
     float: left;

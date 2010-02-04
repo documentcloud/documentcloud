@@ -68,7 +68,7 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   openUploads : function() {
-    dc.ui.UploadDialog.open();
+    dc.app.uploader.open();
     // dc.app.navigation.tab('upload', {section : {
     //   name : "Upload Documents",
     //   callback : this.openUploads

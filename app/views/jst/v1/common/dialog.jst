@@ -1,8 +1,9 @@
 <div class="title"><%= title %></div>
 <% if (text) { %>
   <div class="text"><%= text %></div>
-<% } else { %>
-  <div class="custom"><%= text %></div>
+<% } %>
+<% if (mode == 'custom') { %>
+  <div class="custom"></div>
 <% } %>
 <% if( mode == 'prompt' || mode == 'short_prompt') { %>
   <div class="<%= mode %>">
@@ -17,7 +18,7 @@
   <% if (buttons === "mini") { %>
     <div class="minibutton ok"><span>ok</span></div>
     <div class="minibutton cancel"><span>cancel</span></div>
-  <% } else { %>  
+  <% } else { %>
     <button class="ok default">ok</button>
     <button class="cancel">cancel</button>
   <% } %>
