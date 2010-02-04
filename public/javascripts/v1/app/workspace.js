@@ -18,7 +18,6 @@ _.extend(dc.app.workspace, {
     dc.app.metaList   = new dc.ui.MetadataList();
     dc.ui.notifier    = new dc.ui.Notifier();
     dc.ui.tooltip     = new dc.ui.Tooltip();
-    // dc.ui.query       = new dc.ui.Query();
     this.sidebar      = new dc.ui.Sidebar();
     this.panel        = new dc.ui.Panel();
 
@@ -40,7 +39,6 @@ _.extend(dc.app.workspace, {
     content.append(this.sidebar.render().el);
     content.append(this.panel.render().el);
     this.panel.add('pagination', dc.app.paginator.el);
-    // $('#query_container').append(dc.ui.query.el);
     $('#no_results_container').html(JST.no_results({}));
 
     if (!dc.app.accountId) return $(document.body).setMode('search', 'navigation');
