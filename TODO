@@ -10,11 +10,9 @@ TODO:
     Perhaps a style guide. Perhaps a grid.
 
   * Switch up projects to use a real join table.
-
-  * Real deploys -- Vlad?
   
-  * Add an admin UI for editing static pages.
-    
+  * Create a new paginator.
+      
   * Make search degrade gracefully in the viewer, when DocumentCloud is down.
   
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
@@ -29,8 +27,6 @@ TODO:
 
   * Merge Visualize, Timeline, and Entities into a single "Analyze" UI.
     Add OpenCalais logo to comply with TOS.
-
-  * Add lightweight tags for documents and notes (anything searchable).
 
   * Add a JS NoteView for showing notes (with images) within the workspace.
 
@@ -57,6 +53,8 @@ TODO:
     
   * Write out full documentation, with screenshots.
   
+  * Real deploys -- Vlad?
+  
 
 AFTER BETA:
 
@@ -70,6 +68,10 @@ AFTER BETA:
   * Settle the linked data representation of a document with the semantic web
     folks.
       
+  * Add lightweight tags for documents and notes (anything searchable).
+  
+  * Add an admin UI for editing static pages.
+  
 
 DONE:
 
