@@ -55,7 +55,7 @@ _.extend(dc.app.workspace, {
 
   // For now, the prototype only supports webkit-based browsers.
   warnNonWebkit : function() {
-    if (!$.browser.safari) dc.ui.notifier.show({text : 'please use a webkit-based browser'});
+    if (!$.browser.safari) dc.ui.Dialog.alert('Please use a webkit-based browser, for the time being...');
   }
 
 });
