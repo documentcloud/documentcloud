@@ -15,8 +15,10 @@ dc.model.Project = dc.Model.extend({
     return this.documentIds().length;
   },
 
-  addDocument : function(doc) {
-    Projects.update(this, {document_ids : doc.id});
+  addDocuments : function(documents) {
+    var ids = _.pluck(documents, 'id');
+    var newIds = _.uniq(this.documentIds().concat(ids));
+    Projects.update(this, {document_ids : newIds.join(',')});
   },
 
   // Return the title of this project as a search parameter.
@@ -41,11 +43,6 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
 
   comparator : function(m) {
     return m.get('title').toLowerCase();
-  },
-
-  addSelectedDocuments : function(project) {
-    var newIds = _.uniq(project.documentIds().concat(Documents.selectedIds()));
-    this.update(project, {document_ids : newIds.join(',')});
   },
 
   // Find a project by title.

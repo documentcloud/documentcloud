@@ -8,18 +8,18 @@
     width: 32px; height: 32px;
   }
 
-.document_list.large_size .icon.document.generic,
-#no_results .icon.document.generic {
+img.icon.document,
+#no_results .icon.document {
   width: 60px; height: 75px;
   background: url(/images/embed/documents/generic.png);
 }
-.document_list.medium_size .icon.document.generic {
+/*.document_list.medium_size .icon.document.generic {
   width: 24px; height: 30px;
   background: url(/images/embed/documents/generic_small.png);
 }
 .document_list.small_size .icon.document {
   display: none;
-}
+}*/
 
 .icon.delete {
   background-image: url(/images/embed/icons/delete.png);

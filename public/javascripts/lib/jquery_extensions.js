@@ -136,41 +136,63 @@ $.fn.extend({
     }
   },
 
-  draggable : function() {
+  draggable : function(options) {
+    var options = options || {};
     this.each(function() {
+      var el    = this;
+      var ghost = null, xOff = null, yOff = null;
+
       var stopEvent = function(e) {
         e.stopPropagation();
         e.preventDefault();
         return false;
       };
+
       var checkEvent = function(e) {
-        if ($(e.target).css('cursor') !== 'move') return true;
+        if (!e.target.className.match(/draggable/)) return true;
         return stopEvent(e);
       };
+
       var drag = _.bind(function(e) {
-        if (!this._drag) return stopEvent(e);
-        this.style.left = this._drag.left + e.pageX - this._drag.x + 'px';
-        this.style.top  = this._drag.top + e.pageY - this._drag.y + 'px';
-      }, this);
+        if (!el._drag) return stopEvent(e);
+        if (ghost) {
+          ghost.css({top : e.pageY - yOff, left : e.pageX - xOff});
+        } else {
+          el.style.left = el._drag.left + e.pageX - el._drag.x + 'px';
+          el.style.top  = el._drag.top + e.pageY - el._drag.y + 'px';
+        }
+      }, el);
+
       var dragEnd = _.bind(function(e) {
         $(document.body).unbind('mouseup', dragEnd);
         $(document.body).unbind('mousemove', drag);
-        $(this).removeClass('dragging');
-        this._drag = null;
-      }, this);
+        $(ghost || el).removeClass('dragging');
+        if (ghost) $(ghost).remove();
+        el._drag = null;
+        if (options.onDrop) options.onDrop(e);
+      }, el);
+
       var dragStart = _.bind(function(e) {
         if (checkEvent(e)) return true;
-        $(this).addClass('dragging');
-        this._drag = {
-          left : parseInt(this.style.left, 10) || 0,
-          top  : parseInt(this.style.top, 10) || 0,
+        if (options.ghost) {
+          xOff  = $(el).width() / 2;
+          yOff  = $(el).height() / 2;
+          ghost = $(el).clone().css({
+            position : 'absolute', cursor : 'copy', 'z-index' : 1000, top : e.pageY - yOff, left : e.pageX - xOff
+          }).appendTo(document.body);
+        }
+        $(ghost || el).addClass('dragging');
+        el._drag = {
+          left : parseInt(el.style.left, 10) || 0,
+          top  : parseInt(el.style.top, 10) || 0,
           x    : e.pageX,
           y    : e.pageY
         };
         $(document.body).bind('mouseup', dragEnd);
         $(document.body).bind('mousemove', drag);
-      }, this);
-      $(this).bind('mousedown', dragStart);
+      }, el);
+
+      $(el).bind(options.ghost ? 'dragstart' : 'mousedown', dragStart);
     });
   },
 

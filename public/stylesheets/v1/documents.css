@@ -54,12 +54,14 @@
     margin-bottom: 10px;
     height: 14px;
   }
-  .document_tile img.icon {
+  img.document {
     position: absolute;
     -webkit-box-shadow: 0 0px 5px #777; -moz-box-shadow: 0 0px 5px #777;
+  }
+  .document_tile img.document {
     left: 7px; top: 6px;
   }
-    body.logged_in .document_tile img.icon {
+    body.logged_in .document_tile img.document {
       cursor: pointer;
     }
   .document_tile .title {

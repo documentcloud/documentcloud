@@ -17,7 +17,8 @@ dc.ui.DocumentTile = dc.View.extend({
     if (mode) this.className += ' ' + mode;
     this.base({model : doc});
     this.el.id = 'document_' + (mode || 'tile') + '_' + this.model.id;
-    this.model.bind(dc.Model.CHANGED, _.bind(this._onDocumentChange, this));
+    _.bindAll(this, '_onDocumentChange', '_onDrop');
+    this.model.bind(dc.Model.CHANGED, this._onDocumentChange);
   },
 
   render : function() {
@@ -29,6 +30,7 @@ dc.ui.DocumentTile = dc.View.extend({
       summary   : this.model.displaySummary(),
       pub       : this.model.get('access') == dc.access.PUBLIC
     }));
+    $('.document.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.setCallbacks();
     this._setSelected();
     return this;
@@ -69,6 +71,21 @@ dc.ui.DocumentTile = dc.View.extend({
   _onDocumentChange : function() {
     var changed = this.model.hasChanged('summary') || this.model.hasChanged('access');
     changed ? this.render() : this._setSelected();
+  },
+
+  // When the document is dropped onto a project, add it to the project.
+  _onDrop : function(e) {
+    var doc = this.model;
+    var x = e.pageX, y = e.pageY;
+    $('#organizer .project').each(function() {
+      var top = $(this).offset().top, left = $(this).offset().left;
+      var right = left + $(this).outerWidth(), bottom = top + $(this).outerHeight();
+      if (left < x && right > x && top < y && bottom > y) {
+        var project = Projects.getByCid($(this).attr('data-project-cid'));
+        project.addDocuments([doc]);
+        return false;
+      }
+    });
   }
 
 });

@@ -5,10 +5,6 @@ dc.ui.Project = dc.View.extend({
   callbacks : {
     'el.click'           : 'showDocuments',
     '.icon.delete.click' : 'deleteProject'
-    // 'el.dragenter'       : '_onDragEnter',
-    // 'el.dragover'        : '_onDragEnter',
-    // 'el.drop'            : '_onDrop',
-    // 'el.dragleave'       : '_onDragLeave'
   },
 
   constructor : function(options) {
@@ -25,7 +21,7 @@ dc.ui.Project = dc.View.extend({
       note_count      : this.model.get('annotation_count')
     };
     $(this.el).html(JST.organizer_project(data));
-    this.el.id = "project_" + this.model.cid;
+    $(this.el).attr({id : "project_" + this.model.cid, 'data-project-cid' : this.model.cid});
     this.setCallbacks();
     return this;
   },
@@ -43,28 +39,6 @@ dc.ui.Project = dc.View.extend({
     e.stopPropagation();
     Projects.destroy(this.model);
   }
-
-  // _onDragEnter : function(e) {
-  //   e.preventDefault();
-  //   $(this.el).addClass('hover');
-  //   try {
-  //     e.dataTransfer.effectAllowed = 'all';
-  //     e.dataTransfer.dropEffect = 'copy';
-  //   } catch(e) {}
-  // },
-  //
-  // _onDrop : function(e) {
-  //   e.preventDefault();
-  //   var url = e.originalEvent.dataTransfer.getData('text/plain');
-  //   var match = url.match(/\/documents\/\d+/);
-  //   if (!match) return false;
-  //   $(this.el).removeClass('hover');
-  // },
-  //
-  // _onDragLeave : function(e) {
-  //   e.preventDefault();
-  //   $(this.el).removeClass('hover');
-  // }
 
 }, {
 

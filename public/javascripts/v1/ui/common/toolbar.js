@@ -54,9 +54,9 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _addSelectedDocuments : function(project) {
-    var count = Documents.countSelected();
-    Projects.addSelectedDocuments(project);
-    this.notifyProjectChange(project.get('title'), count);
+    var docs = Documents.selected();
+    project.addDocuments(docs);
+    this.notifyProjectChange(project.get('title'), docs.length);
   },
 
   _addProjectWithDocuments : function(title) {
