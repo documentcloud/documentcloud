@@ -24,7 +24,7 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   renderAll : function() {
-    _.each(this.sortedModels(), _.bind(function(model) {
+    _.each(Projects.models(), _.bind(function(model) {
       this._addSubView(null, model);
     }, this));
   },
@@ -59,20 +59,8 @@ dc.ui.Organizer = dc.View.extend({
     }, true);
   },
 
-  models : function() {
-    return _.flatten([Projects.models()]);
-  },
-
-  sortedModels : function() {
-    return _.sortBy(this.models(), function(m){ return m.sortKey(); });
-  },
-
   openUploads : function() {
     dc.app.uploader.open();
-    // dc.app.navigation.tab('upload', {section : {
-    //   name : "Upload Documents",
-    //   callback : this.openUploads
-    // }});
   },
 
   // Bind all possible and Project events for rendering.
@@ -91,7 +79,7 @@ dc.ui.Organizer = dc.View.extend({
   _addSubView : function(e, model) {
     var view = new dc.ui[model.viewClass]({model : model}).render();
     this.subViews.push(view);
-    var models = this.sortedModels();
+    var models = Projects.models();
     var previous = models[_.indexOf(models, view.model) - 1];
     var previousView = previous && previous.view;
     if (!previous || !previousView) { return $(this.projectList).append(view.el); }

@@ -26,10 +26,6 @@ dc.model.Project = dc.Model.extend({
     var titlePart = this.get('title');
     if (titlePart.match(/\s/)) titlePart = '"' + titlePart + '"';
     return 'project: ' + titlePart;
-  },
-
-  sortKey : function() {
-    return this.get('title').toLowerCase();
   }
 
 });

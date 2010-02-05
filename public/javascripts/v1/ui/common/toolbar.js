@@ -5,9 +5,7 @@ dc.ui.Toolbar = dc.View.extend({
   callbacks : {
     '#delete_document_button.click': '_deleteSelectedDocuments',
     '#edit_summary_button.click':    '_editSelectedSummary',
-    '#edit_remote_url_button.click': '_editSelectedRemoteUrl',
-    '#timeline_button.click':        '_showTimeline',
-    '#analyze_button.click':         '_openAnalyze'
+    '#edit_remote_url_button.click': '_editSelectedRemoteUrl'
   },
 
   constructor : function(options) {
@@ -15,7 +13,8 @@ dc.ui.Toolbar = dc.View.extend({
     _.bindAll(this, '_addSelectedDocuments', '_addProjectWithDocuments', 'display');
     this.downloadMenu = this._createDownloadMenu();
     this.accessMenu   = this._createAccessMenu();
-    this.projectMenu    = new dc.ui.ProjectMenu({onClick : this._addSelectedDocuments, onAdd : this._addProjectWithDocuments});
+    this.analyzeMenu  = this._createAnalyzeMenu();
+    this.projectMenu  = new dc.ui.ProjectMenu({onClick : this._addSelectedDocuments, onAdd : this._addProjectWithDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
   },
 
@@ -24,6 +23,7 @@ dc.ui.Toolbar = dc.View.extend({
     el.html(JST.workspace_toolbar({}));
     $('.download_menu_container', el).append(this.downloadMenu.render().el);
     $('.access_menu_container', el).append(this.accessMenu.render().el);
+    $('.analyze_menu_container', el).append(this.analyzeMenu.render().el);
     $('.project_menu_container', el).append(this.projectMenu.render().el);
     this.summaryButton = $('#edit_summary_button', el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
@@ -96,11 +96,11 @@ dc.ui.Toolbar = dc.View.extend({
     });
   },
 
-  _showTimeline : function() {
+  _openTimeline : function() {
     new dc.ui.TimelineDialog(Documents.selected());
   },
 
-  _openAnalyze : function() {
+  _openConnections : function() {
     dc.app.navigation.tab('analyze', {
       silent  : true,
       section : dc.app.navigation.section,
@@ -138,6 +138,17 @@ dc.ui.Toolbar = dc.View.extend({
         {title : 'Public',          onClick : _.bind(this._setSelectedAccess, this, dc.access.PUBLIC)},
         {title : 'Only My Account', onClick : _.bind(this._setSelectedAccess, this, dc.access.PRIVATE)},
         {title : 'Only ' + org,     onClick : _.bind(this._setSelectedAccess, this, dc.access.ORGANIZATION)}
+      ]
+    });
+  },
+
+  _createAnalyzeMenu : function() {
+    return new dc.ui.Menu({
+      label : 'Analyze',
+      items : [
+        {title : 'Entities',    onClick : function(){ dc.ui.Dialog.alert('not yet implemented'); }},
+        {title : 'Connections', onClick : this._openConnections},
+        {title : 'Timeline',    onClick : this._openTimeline}
       ]
     });
   }
