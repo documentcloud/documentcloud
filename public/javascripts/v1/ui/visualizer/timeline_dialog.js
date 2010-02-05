@@ -32,7 +32,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
       mode      : 'custom',
       title     : this.displayTitle()
     });
-    this.render();
+    dc.ui.spinner.show();
     this._loadDates();
   },
 
@@ -64,6 +64,9 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   // Chart the dates for the selected documents.
   _plotDates : function(resp) {
+    dc.ui.spinner.hide();
+    if (resp.dates.length == 0) return this._noDates();
+    this.render();
     var color = this.POINT_COLOR;
     var series = {}, styles = {};
     var seriesCount = 0;
@@ -119,6 +122,15 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     this._options.xaxis.min = null;
     this._options.xaxis.max = null;
     this.drawPlot();
+  },
+
+  // Close, with an error, when no dates are found.
+  _noDates : function() {
+    var count = this.documents.length;
+    this.close();
+    var message = "None of the " + count + " documents contained recognizable dates.";
+    if (count <= 1) message = '"' + this.documents[0].get('title') + '" does not contain any recognizable dates.';
+    dc.ui.Dialog.alert(message);
   }
 
 });
