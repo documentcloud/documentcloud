@@ -11,10 +11,10 @@ dc.ui.Toolbar = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     _.bindAll(this, '_addSelectedDocuments', '_addProjectWithDocuments', 'display');
-    this.downloadMenu = this._createDownloadMenu();
-    this.accessMenu   = this._createAccessMenu();
-    this.analyzeMenu  = this._createAnalyzeMenu();
-    this.projectMenu  = new dc.ui.ProjectMenu({onClick : this._addSelectedDocuments, onAdd : this._addProjectWithDocuments});
+    this.downloadMenu     = this._createDownloadMenu();
+    this.accessMenu       = this._createAccessMenu();
+    this.connectionsMenu  = this._createConnectionsMenu();
+    this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._addSelectedDocuments, onAdd : this._addProjectWithDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
   },
 
@@ -23,7 +23,7 @@ dc.ui.Toolbar = dc.View.extend({
     el.html(JST.workspace_toolbar({}));
     $('.download_menu_container', el).append(this.downloadMenu.render().el);
     $('.access_menu_container', el).append(this.accessMenu.render().el);
-    $('.analyze_menu_container', el).append(this.analyzeMenu.render().el);
+    $('.connections_menu_container', el).append(this.connectionsMenu.render().el);
     $('.project_menu_container', el).append(this.projectMenu.render().el);
     this.summaryButton = $('#edit_summary_button', el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
@@ -100,12 +100,8 @@ dc.ui.Toolbar = dc.View.extend({
     new dc.ui.TimelineDialog(Documents.selected());
   },
 
-  _openConnections : function() {
-    dc.app.navigation.tab('analyze', {
-      silent  : true,
-      section : dc.app.navigation.section,
-      inner   : {name : 'Analyze'}
-    });
+  _openConnections : function(kind) {
+    dc.app.visualizer.open(kind);
   },
 
   _setSelectedAccess : function(access) {
@@ -142,15 +138,17 @@ dc.ui.Toolbar = dc.View.extend({
     });
   },
 
-  _createAnalyzeMenu : function() {
-    return new dc.ui.Menu({
-      label : 'Analyze',
-      items : [
-        {title : 'Entities',    onClick : function(){ dc.ui.Dialog.alert('not yet implemented'); }},
-        {title : 'Connections', onClick : this._openConnections},
-        {title : 'Timeline',    onClick : this._openTimeline}
-      ]
-    });
+  _createConnectionsMenu : function() {
+    var me = this;
+    var items = [
+      {title : 'Entities', onClick : function(){ $(document.body).toggleClass('visualize'); }},
+      {title : 'Timeline', onClick : this._openTimeline, className : 'divider'}
+    ];
+    items = items.concat(_.map(['Category', 'City', 'Country', 'Organization',
+        'Person', 'Place', 'Publication', 'State', 'Technology', 'Term'], function(kind) {
+      return {title : kind, onClick : _.bind(me._openConnections, me, kind.toLowerCase())};
+    }));
+    return new dc.ui.Menu({label : 'Connections', items : items});
   }
 
 });

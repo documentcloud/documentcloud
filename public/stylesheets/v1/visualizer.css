@@ -13,19 +13,18 @@
     margin-left: 2px;
   }
 
-#visualizer, #viz_inner_wrapper {
+#visualizer {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
+  -webkit-transition: top 0.1s linear;
+  display: none;
 }
-  #viz_inner_wrapper {
-    top: 0;
+  body.visualize #visualizer {
+    display: block;
   }
-    #visualizer.linear_format #viz_inner_wrapper {
-      overflow-y: auto;
-    }
-      #visualizer.linear_format #viz_inner {
-        position: relative;
-      }
+  body.logged_in .panel_content.open_toolbar #visualizer {
+    top: 43px;
+  }
 
 #visualizer_canvas {
   position: absolute;
@@ -82,21 +81,6 @@
     display: none;
   }
 
-#visualization_title {
-  position: absolute;
-  top: 15px; left: 15px;
-  font-weight: bold;
-  font-size: 22px;
-  color: #002456;
-  text-shadow: 0px 1px 1px #fff;
-}
-  #visualizer.linear_format #visualization_title {
-    top: 7px; left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 16px;
-  }
-
 #visualizer .datum {
   position: absolute;
   font: bold 11px Arial;
@@ -109,6 +93,20 @@
   -moz-border-radius: 3px; -webkit-border-radius: 3px;
   -webkit-box-shadow: 0 0px 10px #999; -moz-box-shadow: 0 0px 10px #999;
 }
+
+/*------------------------------ ENTITIES ---------------------------------*/
+
+body.visualize .document_list .document_tile {
+  width: 280px; height: 32px;
+  padding: 5px 5px 5px 40px;
+}
+  body.visualize .document_tile .summary {
+    display: none;
+  }
+  body.visualize .document_tile img.document {
+    width: 24px; height: 30px;
+  }
+
 
 /*------------------------------ TIMELINE ---------------------------------*/
 

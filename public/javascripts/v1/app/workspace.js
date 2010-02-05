@@ -26,10 +26,11 @@ _.extend(dc.app.workspace, {
     dc.app.navigation = new dc.ui.Navigation();
     dc.app.toolbar    = new dc.ui.Toolbar({tab : 'search'});
     dc.app.uploader   = new dc.ui.UploadDialog();
+    dc.app.visualizer = new dc.ui.Visualizer();
+    this.documentList = new dc.ui.DocumentList();
     this.accountBadge = new dc.ui.AccountView(Accounts.current(), 'badge');
     this.accountList  = new dc.ui.AccountList();
     this.organizer    = new dc.ui.Organizer();
-    this.visualizer   = new dc.ui.Visualizer();
   },
 
   // Render all of the existing subviews and place them in the DOM.
@@ -46,9 +47,10 @@ _.extend(dc.app.workspace, {
     content.append(this.accountBadge.render().el);
     this.sidebar.add('organizer', this.organizer.render().el);
     dc.app.uploader.render();
+    this.panel.add('document_list', this.documentList.render().el);
+    this.panel.add('document_list', dc.app.visualizer.el);
     this.panel.add('accounts_panel', this.accountList.render().el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
-    this.panel.add('analyze', this.visualizer.render().el);
     this.warnNonWebkit();
   },
 

@@ -57,7 +57,7 @@ dc.ui.Menu = dc.View.extend({
   addItems : function(items) {
     this.items = this.items.concat(items);
     var elements = _(items).map(function(item) {
-      var el = $.el('div', {'class' : 'menu_item'}, item.title);
+      var el = $.el('div', {'class' : 'menu_item ' + (item.className || '')}, item.title);
       item.menuEl = $(el);
       if (item.onClick) $(el).bind('click', item.onClick);
       return el;

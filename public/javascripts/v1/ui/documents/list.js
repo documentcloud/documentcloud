@@ -2,7 +2,7 @@
 // in a number of different sizes.
 dc.ui.DocumentList = dc.View.extend({
 
-  className : 'document_list',
+  className : 'document_list large_size',
 
   callbacks : {
     '.view_small.click':  'viewSmall',
@@ -12,18 +12,27 @@ dc.ui.DocumentList = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    $(this.el).addClass('large_size');
-    this.set.bind(dc.Set.MODEL_REMOVED, this.removeDocument);
+    _.bindAll(this, 'refresh', '_removeDocument');
+    Documents.bind(dc.Set.REFRESHED,     this.refresh);
+    Documents.bind(dc.Set.MODEL_REMOVED, this._removeDocument);
   },
 
   render : function() {
     $(this.el).html(JST.document_list({}));
+    this.docContainer = $('.documents', this.el);
     this.setCallbacks();
     return this;
   },
 
-  removeDocument : function(e, model) {
-    $('#document_tile_' + model.id).remove();
+  refresh : function() {
+    var container = this.docContainer;
+    Documents.each(function(doc) {
+      container.append((new dc.ui.DocumentTile(doc)).render().el);
+    });
+  },
+
+  _removeDocument : function(e, doc) {
+    $('#document_tile_' + doc.id).remove();
   },
 
   viewSmall : function() {

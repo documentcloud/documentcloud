@@ -118,6 +118,9 @@ span.text_input input {
     overflow: hidden;
     border-top: 1px solid #eee;
   }
+    .menu_content .menu_item.divider {
+      border-bottom: 1px solid #c6c6c6;
+    }
     .menu_content .menu_item:first-child {
       border-top: 0;
     }

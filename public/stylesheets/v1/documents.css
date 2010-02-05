@@ -22,6 +22,7 @@
   .panel_content .panel.documents {
     padding: 10px 10px 5px 15px;
     -webkit-transition: top 0.1s linear;
+    z-index: 5;
   }
   body.logged_in .panel_content.open_toolbar #document_list_container .panel.documents {
     top: 43px;

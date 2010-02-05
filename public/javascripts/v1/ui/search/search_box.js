@@ -116,10 +116,6 @@ dc.ui.SearchBox = dc.View.extend({
     Documents.refresh(_.map(resp.documents, function(m){
       return new dc.model.Document(m);
     }));
-    $('#document_list_container').html((new dc.ui.DocumentList({set : Documents})).render().el);
-    Documents.each(function(el) {
-      $('#document_list_container .documents').append((new dc.ui.DocumentTile(el)).render().el);
-    });
     return this.doneSearching(resp.documents.length == 0);
   },
 
