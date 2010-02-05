@@ -92,12 +92,30 @@ span.text_input input {
     }
 
 /*--------------------------------- Menus ------------------------------------*/
-.minibutton.menu > span {
+.minibutton.menu .wrapper {
   position: relative;
-  left: 2px;
-  padding-right: 18px;
-  background: url(/images/embed/icons/bullet_arrow_down.png) no-repeat right center;
 }
+  .minibutton.menu .label {
+    position: relative;
+    display: block;
+    left: 2px;
+    padding-right: 18px;
+    background: url(/images/embed/icons/bullet_arrow_down.png) no-repeat right center;
+  }
+    .minibutton.menu.is_active .label {
+      padding-left: 15px;
+    }
+  .minibutton.menu .closer {
+    position: absolute;
+    left: 3px; top: 0px;
+    font-weight: bold;
+    color: #aa5555;
+    display: none;
+  }
+    .minibutton.menu.is_active .closer {
+      display: block;
+    }
+
 .menu_content {
   display: none;
   position: absolute;

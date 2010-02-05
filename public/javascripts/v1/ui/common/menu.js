@@ -3,7 +3,8 @@ dc.ui.Menu = dc.View.extend({
   className : 'minibutton menu',
 
   callbacks : {
-    'el.click': 'open'
+    'el.click'      : 'open',
+    '.closer.click' : 'deactivate'
   },
 
   constructor : function(options) {
@@ -24,8 +25,8 @@ dc.ui.Menu = dc.View.extend({
   },
 
   render : function() {
-    this._label = $.el('span', {'class' : 'label'}, this.options.label);
-    $(this.el).html(this._label);
+    $(this.el).html(JST.menu_button({label : this.options.label}));
+    this._label = $('.label', this.el);
     $(document.body).append(this.content);
     this.setCallbacks();
     if (this.options.autofilter) this.filter.bind('keyup', this.autofilter);
@@ -34,11 +35,6 @@ dc.ui.Menu = dc.View.extend({
 
   open : function() {
     if (this.modes.open == 'is') return;
-    if (this.modes.active == 'is') {
-      this.setMode('not', 'active');
-      if (this._activateCallback) this._activateCallback();
-      return;
-    }
     this.setMode('is', 'open');
     if (this.options.onOpen) this.options.onOpen(this);
     this.content.show();
@@ -58,6 +54,14 @@ dc.ui.Menu = dc.View.extend({
   activate : function(callback) {
     this._activateCallback = callback;
     this.setMode('is', 'active');
+  },
+
+  deactivate : function(e) {
+    if (this.modes.active == 'is') {
+      this.setMode('not', 'active');
+      if (this._activateCallback) this._activateCallback();
+      return false;
+    }
   },
 
   clear : function() {
