@@ -118,7 +118,7 @@ dc.ui.Visualizer = dc.View.extend({
       metaEl.bind('mouseenter', meta, me.highlightDatum);
       metaEl.bind('mouseleave', meta, me.highlightOff);
       var position = piece * i;
-      var w2 = metaEl.width() / 2, h2 = metaEl.height() / 2;
+      var w2 = metaEl.outerWidth() / 2, h2 = metaEl.outerHeight() / 2;
       metaEl.css({left: 'auto', top: i * 45 + 25, right : 25});
 
       var pos = metaEl.position();
