@@ -57,6 +57,12 @@
         #organizer .box.is_open .pointer {
           display: block;
         }
+      #organizer .box .edit {
+        display: none;
+      }
+/*        #organizer .box:hover .edit {
+          display: inline;
+        }*/
       #organizer .box .title {
         font: bold 14px Arial;
         color: #254555;

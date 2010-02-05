@@ -1,6 +1,7 @@
 span[role="link"] {
   text-decoration: underline;
   cursor: pointer;
+  color: #254555;
 }
 
 .serif, .serif * {
