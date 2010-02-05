@@ -27,57 +27,6 @@
   position: absolute;
 }
 
-#viz_types {
-  position: absolute;
-  top: -16px; right: 7px;
-  font: 10px Arial;
-  color: #777;
-  text-transform: uppercase;
-}
-  #visualizer.linear_format #viz_line,
-  #visualizer.circular_format #viz_circle {
-    font-weight: bold;
-    color: #555;
-  }
-
-#visualizer .document_tile {
-  position: absolute;
-  margin: 0;
-  width: 150px; height: 77px;
-  padding: 5px 5px 5px 77px;
-  overflow: visible;
-  border: 1px solid transparent;
-}
-  #visualizer.linear_format .document_tile {
-    position: relative;
-    top: 0 !important; left: 0 !important;
-    margin: 15px 0 5px 15px;
-  }
-  #visualizer .document_tile.is_selected {
-    border: 1px solid #e0e0fa;
-  }
-  #visualizer .document_tile .title {
-    margin-top: 0;
-    height: auto;
-  }
-  #visualizer .document_tile .source {
-    line-height: 12px;
-    height: auto;
-  }
-  #visualizer .document_tile .icon {
-    width: 60px; height: 75px;
-    -webkit-box-shadow: 0 0px 5px #999; -moz-box-shadow: 0 0px 5px #999;
-  }
-    #visualizer .document_tile.bolded .icon {
-      -webkit-box-shadow: 0 0px 15px #555; -moz-box-shadow: 0 0px 15px #555;
-    }
-    #visualizer .document_tile .icon.lock {
-      display: none;
-    }
-  #visualizer .document_tile .summary {
-    display: none;
-  }
-
 #visualizer .datum {
   position: absolute;
   font: bold 11px Arial;

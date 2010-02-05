@@ -35,6 +35,7 @@ dc.ui.Visualizer = dc.View.extend({
     this._open = false;
     this._menu.setLabel('Connections');
     $(document.body).removeClass('visualize');
+    $(this.el).html('');
   },
 
   gatherMetadata : function() {
@@ -92,8 +93,8 @@ dc.ui.Visualizer = dc.View.extend({
 
     this.setCallbacks();
 
-    var maxHeight = _.max([this.topDocuments.length * 100, this.topMetadata.length * 75]);
-    el.css({height : maxHeight});
+    // var maxHeight = _.max([this.topDocuments.length * 100, this.topMetadata.length * 75]);
+    // el.css({height : maxHeight});
 
     var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.height()});
     el.append(canvas);
