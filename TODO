@@ -2,18 +2,11 @@ TODO:
 
   * Restructure client-side navigation away from tabs.
   
-  * Drag and drop documents into projects.
-  
+  * Upgrade to Rails 3.
+    
   * Upgrade the Admin UI to match.
-  
-  * Move the notifier up to the top.
-  
-  * The design.
-  
+      
   * Come up with something reasonable to have on the home screen.
-  
-  * Cleanup and make typography and spacing real consistent. 
-    Perhaps a style guide. Perhaps a grid.
 
   * Switch up projects to use a real join table.
         
@@ -75,6 +68,8 @@ AFTER BETA:
 
 DONE:
 
+  * Drag and drop documents into projects.
+
   * Create a new paginator.
 
   * Kill the metadata sidebar for searches, and create an organization one
@@ -83,6 +78,11 @@ DONE:
   * Rework dc.View setCallbacks syntax.
 
   * Kill bookmarks.
+  
+  * The design.
+  
+  * Cleanup and make typography and spacing real consistent. 
+    Perhaps a style guide. Perhaps a grid.
   
   * Start extracting dates (not times) -- integrate the DateExtractor into
     document import. What to do about relevance? Make sure to record occurrences
