@@ -4,6 +4,10 @@ TODO:
     Bring entities and analysis in line.
   
   * Upgrade to Rails 3.
+  
+  * Add page counts to the document tiles.
+  
+  * Add the summary as a field prior to upload.
     
   * Upgrade the Admin UI to a dialog.
       
