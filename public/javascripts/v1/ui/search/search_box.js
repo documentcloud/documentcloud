@@ -38,6 +38,7 @@ dc.ui.SearchBox = dc.View.extend({
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber) {
+    dc.app.visualizer.close();
     var projectName = dc.app.SearchParser.extractProject(query);
     var project = projectName && Projects.find(projectName);
     project ? project.view.showOpen() : dc.ui.Project.clearSelection();

@@ -32,6 +32,7 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   close : function(e) {
+    if (!this._open) return;
     this._open = false;
     this._menu.setLabel('Connections');
     $(document.body).removeClass('visualize');
