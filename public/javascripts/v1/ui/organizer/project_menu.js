@@ -3,7 +3,7 @@ dc.ui.ProjectMenu = dc.ui.Menu.extend({
   constructor : function(options) {
     _.bindAll(this, 'renderProjects');
     options = _.extend({
-      label       : 'projects',
+      label       : 'Projects',
       onOpen      : this.renderProjects,
       onClose     : this._shouldClose,
       autofilter  : true,

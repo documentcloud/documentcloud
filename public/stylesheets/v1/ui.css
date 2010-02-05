@@ -55,23 +55,22 @@ span.text_input input {
 /*----------------------------- Mini Buttons ---------------------------------*/
 .minibutton {
   cursor: pointer;
-  font: 10px Arial;
-  text-transform: uppercase;
+  font: 11px Arial;
   text-shadow: 0px 1px 1px #fff;
-  color: #333;
+  color: #254555;
   padding: 4px 5px;
-  background: #ddd;
-  background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#bfbfbf));
+  background: #e3e3e3;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fafaff), to(#cfcfcf));
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   -webkit-box-shadow: 0 0 1px #000; -moz-box-shadow: 0 0 1px #000;
 }
   .minibutton:hover, .minibutton.is_open {
     color: #222;
-    -webkit-box-shadow: 0 0 4px #555; -moz-box-shadow: 0 0 4px #555;
-    background: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#afafaf));
+    -webkit-box-shadow: 0 0 4px #777; -moz-box-shadow: 0 0 4px #777;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fafaff), to(#bfbfbf));
   }
   .minibutton:active {
-    background: -webkit-gradient(linear, left top, left bottom, from(#afafaf), to(#fafafa));
+    background: -webkit-gradient(linear, left top, left bottom, from(#bfbfbf), to(#fafaff));
   }
   .minibutton::selection, .minibutton > span::selection {
     background: transparent;

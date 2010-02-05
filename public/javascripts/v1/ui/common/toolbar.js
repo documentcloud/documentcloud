@@ -121,7 +121,7 @@ dc.ui.Toolbar = dc.View.extend({
 
   _createDownloadMenu : function() {
     return new dc.ui.Menu({
-      label   : 'download',
+      label   : 'Download',
       items   : [
         {title : 'Download Document Viewer', onClick : Documents.downloadSelectedViewers},
         {title : 'Download as PDF',          onClick : Documents.downloadSelectedPDF},
@@ -133,7 +133,7 @@ dc.ui.Toolbar = dc.View.extend({
   _createAccessMenu : function() {
     var org = dc.app.organization.name;
     return new dc.ui.Menu({
-      label : 'access',
+      label : 'Access',
       items : [
         {title : 'Public',          onClick : _.bind(this._setSelectedAccess, this, dc.access.PUBLIC)},
         {title : 'Only My Account', onClick : _.bind(this._setSelectedAccess, this, dc.access.PRIVATE)},

@@ -4,16 +4,18 @@
   height: 0;
   left: 0; right: 0;
   -webkit-transition: height 0.1s linear;
-  background: #e7e7e7;
+  background: #ddd;
+  background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#d5d5d5));
+  border-top: 1px solid #dadada;
 }
   .panel_content.open_toolbar #search_toolbar_container {
     border-left: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-    height: 30px;
+    height: 41px;
   }
 
 #toolbar {
-  padding: 5px 12px;
+  padding: 11px 20px;
 }
   #toolbar .minibutton {
     float: left;

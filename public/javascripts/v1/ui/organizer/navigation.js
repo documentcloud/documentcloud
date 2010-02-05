@@ -5,10 +5,6 @@ dc.ui.Navigation = dc.View.extend({
   currentTab    : null,
   tabCallbacks  : {},
 
-  home    : {name : 'Home', callback : function(){ dc.app.searchBox.clearSearch(); }},
-  section : null,
-  inner   : null,
-
   // List of tab names -> page titles.
   tabs : {
     search    : 'Search',
@@ -18,22 +14,8 @@ dc.ui.Navigation = dc.View.extend({
     dashboard : 'Dashboard'
   },
 
-  constructor : function(options) {
-    this.base(options);
+  constructor : function() {
     this.enableTabURLs();
-  },
-
-  // Render the list of tabs that should be shown to the logged-in journalist.
-  render : function() {
-    var el = $(this.el);
-    el.html('');
-    _.each(_.compact([this.home, this.section, this.inner]), function(link) {
-      var linkEl = $.el('span', {}, link.name);
-      if (link.callback) $(linkEl).bind('click', link.callback);
-      el.append(linkEl);
-      el.append(' &nbsp;&raquo;&nbsp; ');
-    });
-    return this;
   },
 
   // Register tab changes to trigger callbacks.
