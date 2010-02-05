@@ -1,10 +1,11 @@
 TODO:
 
-  * Restructure client-side navigation away from tabs.
+  * Restructure client-side navigation -- no tabs, no breadcrumbs.
+    Bring entities and analysis in line.
   
   * Upgrade to Rails 3.
     
-  * Upgrade the Admin UI to match.
+  * Upgrade the Admin UI to a dialog.
       
   * Come up with something reasonable to have on the home screen.
 
@@ -19,8 +20,7 @@ TODO:
     published, and the URL where. Create a cron/cloudcrowd job that pings each
     published document, ensuring that it's not 404'd.
 
-  * Merge Visualize, Timeline, and Entities into a single "Analyze" UI.
-    Add OpenCalais logo to comply with TOS.
+  * Add OpenCalais logo to comply with TOS.
 
   * Add a JS NoteView for showing notes (with images) within the workspace.
 
@@ -32,8 +32,6 @@ TODO:
   * Start recording some notion of running "update access" jobs. Make
     subsequent changes to access wait for the job to finish. Perhaps a floating
     progress bar filled panel?
-
-  * Alter the metadata sidebar to go better with the visualizations.
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Make 'em removable.
