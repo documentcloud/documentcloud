@@ -144,11 +144,11 @@ dc.ui.Toolbar = dc.View.extend({
       {title : 'Entities', onClick : function(){ $(document.body).toggleClass('visualize'); }},
       {title : 'Timeline', onClick : this._openTimeline, className : 'divider'}
     ];
-    items = items.concat(_.map(['Category', 'City', 'Country', 'Organization',
-        'Person', 'Place', 'Publication', 'State', 'Technology', 'Term'], function(kind) {
-      return {title : kind, onClick : _.bind(me._openConnections, me, kind.toLowerCase())};
+    items = items.concat(_.map(['category', 'city', 'country', 'organization',
+        'person', 'place', 'publication', 'state', 'technology', 'term'], function(kind) {
+      return {title : Metadata.DISPLAY_NAME[kind], onClick : _.bind(me._openConnections, me, kind)};
     }));
-    return new dc.ui.Menu({label : 'Connections', items : items});
+    return new dc.ui.Menu({id : 'connections_menu', label : 'Connections', items : items});
   }
 
 });

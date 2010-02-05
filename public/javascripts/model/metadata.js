@@ -90,6 +90,21 @@ dc.model.Metadatum = dc.Model.extend({
 
 dc.model.MetadataSet = dc.model.SortedSet.extend({
 
+  // Map of kind to display name for titles and the like.
+  DISPLAY_NAME : {
+    category      : 'Categories',
+    city          : 'Cities',
+    country       : 'Countries',
+    date          : 'Dates',
+    organization  : 'Organizations',
+    person        : 'People',
+    place         : 'Places',
+    publication   : 'Publications',
+    state         : 'States',
+    technology    : 'Technologies',
+    term          : 'Terms'
+  },
+
   // Metadata are kept sorted by totalRelevance() of each datum, across its
   // documents.
   comparator : function(m) {

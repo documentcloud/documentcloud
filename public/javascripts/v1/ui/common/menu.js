@@ -24,7 +24,8 @@ dc.ui.Menu = dc.View.extend({
   },
 
   render : function() {
-    $(this.el).html($.el('span', {}, this.options.label));
+    this._label = $.el('span', {'class' : 'label'}, this.options.label);
+    $(this.el).html(this._label);
     $(document.body).append(this.content);
     this.setCallbacks();
     if (this.options.autofilter) this.filter.bind('keyup', this.autofilter);
@@ -33,6 +34,11 @@ dc.ui.Menu = dc.View.extend({
 
   open : function() {
     if (this.modes.open == 'is') return;
+    if (this.modes.active == 'is') {
+      this.setMode('not', 'active');
+      if (this._activateCallback) this._activateCallback();
+      return;
+    }
     this.setMode('is', 'open');
     if (this.options.onOpen) this.options.onOpen(this);
     this.content.show();
@@ -47,11 +53,22 @@ dc.ui.Menu = dc.View.extend({
     return true;
   },
 
+  // Show the menu button as being currently open, with another click required
+  // to close it.
+  activate : function(callback) {
+    this._activateCallback = callback;
+    this.setMode('is', 'active');
+  },
+
   clear : function() {
     this.filter.val('');
     this.items = [];
     $(this.itemsContainer).html('');
     this.content.setMode(null, 'selected');
+  },
+
+  setLabel : function(label) {
+    $(this._label).text(label || this.options.label);
   },
 
   addItems : function(items) {

@@ -24,7 +24,7 @@
     -webkit-transition: top 0.1s linear;
     z-index: 5;
   }
-  body.logged_in .panel_content.open_toolbar #document_list_container .panel.documents {
+  .panel_content.open_toolbar .panel.documents, body.visualize .panel.documents {
     top: 43px;
   }
 

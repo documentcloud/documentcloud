@@ -10,7 +10,7 @@ dc.ui.Visualizer = dc.View.extend({
   callbacks : {},
 
   constructor : function(options) {
-    _.bindAll(this, 'open', 'gatherMetadata', 'renderVisualization', 'highlightDatum', 'highlightOff', 'onResize');
+    _.bindAll(this, 'open', 'close', 'gatherMetadata', 'renderVisualization', 'highlightDatum', 'highlightOff', 'onResize');
     this.base(options);
     this.topDocuments = [];
     this.topMetadata = [];
@@ -19,13 +19,22 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   open : function(kind) {
+    this._menu = this._menu || dc.app.toolbar.connectionsMenu;
     this._open = true;
     this._kindFilter = kind;
+    this._menu.setLabel('Connections: ' + Metadata.DISPLAY_NAME[kind]);
+    this._menu.activate(this.close);
     this.setMode('linear', 'format');
     this._numMetadata = 10;
     $(document.body).addClass('visualize');
     if (Metadata.empty()) return Metadata.populate(this.renderVisualization);
     this.renderVisualization();
+  },
+
+  close : function(e) {
+    this._open = false;
+    this._menu.setLabel('Connections');
+    $(document.body).removeClass('visualize');
   },
 
   gatherMetadata : function() {
@@ -70,7 +79,7 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   onResize : function() {
-    if (!this.empty() && this._open) this.renderVisualization();
+    if (this._open && !this.empty()) this.renderVisualization();
   },
 
   renderVisualization : function() {

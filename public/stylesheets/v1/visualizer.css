@@ -15,15 +15,12 @@
 
 #visualizer {
   position: absolute;
-  top: 0; bottom: 0; left: 0; right: 0;
+  top: 43px; bottom: 0; left: 0; right: 0;
   -webkit-transition: top 0.1s linear;
   display: none;
 }
   body.visualize #visualizer {
     display: block;
-  }
-  body.logged_in .panel_content.open_toolbar #visualizer {
-    top: 43px;
   }
 
 #visualizer_canvas {

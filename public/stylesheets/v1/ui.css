@@ -69,7 +69,7 @@ span.text_input input {
     -webkit-box-shadow: 0 0 4px #777; -moz-box-shadow: 0 0 4px #777;
     background: -webkit-gradient(linear, left top, left bottom, from(#fafaff), to(#bfbfbf));
   }
-  .minibutton:active {
+  .minibutton:active, .minibutton.is_active {
     background: -webkit-gradient(linear, left top, left bottom, from(#bfbfbf), to(#fafaff));
   }
   .minibutton::selection, .minibutton > span::selection {
