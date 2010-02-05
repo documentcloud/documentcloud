@@ -8,7 +8,6 @@
     width: 32px; height: 32px;
   }
 
-img.icon.document,
 #no_results .icon.document {
   width: 60px; height: 75px;
   background: url(/images/embed/documents/generic.png);

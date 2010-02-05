@@ -57,6 +57,7 @@
   }
   img.document {
     position: absolute;
+    width: 60px; height: 75px;
     -webkit-box-shadow: 0 0px 5px #777; -moz-box-shadow: 0 0px 5px #777;
   }
   .document_tile img.document {

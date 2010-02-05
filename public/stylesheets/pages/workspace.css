@@ -134,8 +134,8 @@ a {
 }
   #no_results {
     position: relative;
-    margin: 15px 0 0 15px;
-    padding: 8px 15px 8px 77px;
+    margin: 20px 0 0 25px;
+    padding: 10px 15px 10px 79px;
     height: 77px;
     font-size: 14px;
     line-height: 77px;
@@ -150,7 +150,7 @@ a {
     }
     #no_results .icon {
       position: absolute;
-      top: 8px; left: 8px;
+      top: 10px; left: 10px;
     }
 
 .full_page_background {

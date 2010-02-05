@@ -40,7 +40,7 @@ dc.ui.SearchBox = dc.View.extend({
   search : function(query, pageNumber) {
     var projectName = dc.app.SearchParser.extractProject(query);
     var project = projectName && Projects.find(projectName);
-    if (project) project.view.showOpen();
+    project ? project.view.showOpen() : dc.ui.Project.clearSelection();
     var sectionName = Inflector.truncate(projectName || query, 30);
     var section = {name : sectionName, callback : function(){ dc.app.searchBox.search(query); }};
     if (dc.app.navigation) dc.app.navigation.tab('search', {silent : true, section : section});
