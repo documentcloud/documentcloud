@@ -80,7 +80,7 @@ class DocumentImport < CloudCrowd::Action
   end
 
   def access
-    options['access'] || DC::Access::PUBLIC
+    options['access'] || DC::Access::PRIVATE
   end
 
   def inputs_for_processing(doc, *tasks)
