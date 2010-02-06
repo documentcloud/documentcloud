@@ -1,3 +1,5 @@
+/*--------------------- Account Views (Rows & Badges) ------------------------*/
+
 .account_view.badge {
   position: absolute;
   left: 0; bottom: 0px;
@@ -26,107 +28,97 @@
       text-decoration: underline;
     }
 
-#account_list {
-  padding: 0;
+/*--------------------------- Accounts Dialog --------------------------------*/
+#account_dialog {
+  max-width: none;
+  width: 575px;
 }
-  #account_list table {
+  #account_dialog .custom {
+    padding: 0 0 20px 0;
+  }
+  #account_dialog button.cancel {
+    display: none;
+  }
+  #account_dialog button.new_account {
+    position: absolute;
+    left: 5px; bottom: 3px;
+  }
+  #account_dialog table {
     width: 100%;
   }
-    #account_list tbody tr {
+    #account_dialog tbody tr {
       background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#dfdfdf));
     }
-    #account_list td {
-      padding: 10px 25px 10px 15px;
+    #account_dialog td {
+      padding: 10px;
       vertical-align: middle;
-      padding-left: 15px;
     }
-      #account_list tbody td {
+      #account_dialog tbody td {
         border-bottom: 1px solid #bbb;
-        font: 14px/11px Arial;
-        height: 36px;
+        font: 12px/11px Arial;
+        height: 25px;
         color: #333;
       }
-      #account_list .first { width: 0%; padding-right: 0; }
-      #account_list .name  { width: 0%; }
-      #account_list .email { width: 0%; }
-      #account_list .last  { width: 100%; }
-    #account_list tfoot button {
-      position: relative;
-      left: -6px;
-    }
-#account_list tr .edit, #account_list tr .display {
+      #account_dialog .first { width: 0%; padding-right: 0; }
+      #account_dialog .name  { width: 0%; }
+      #account_dialog .email { width: 0%; }
+      #account_dialog .last  { width: 100%; }
+
+#account_dialog tr .edit, #account_dialog tr .display {
   display: none;
 }
-#account_list tr.edit_view .edit, #account_list tr.display_view .display {
+#account_dialog tr.edit_view .edit, #account_dialog tr.display_view .display {
   display: block;
 }
-#account_list .text_input {
-  width: 200px;
+#account_dialog .text_input {
+  width: 150px;
 }
-  #account_list .text_input input[type="text"] {
-    font: 14px/18px Arial;
-  }
-#account_list .name_wrapper {
+#account_dialog .name_wrapper {
   min-width: 215px;
 }
-  #account_list .name_wrapper .text_input {
+  #account_dialog .name_wrapper .text_input {
     display: inline-block;
     width: 100px;
   }
-    #account_list .name_wrapper .text_input:first-child {
+    #account_dialog .name_wrapper .text_input:first-child {
       margin-right: 10px;
     }
-#account_list .controls_wrapper {
+#account_dialog .controls_wrapper {
   min-width: 100px;
 }
-#account_list span.edit_account {
+#account_dialog span.edit_account {
   opacity: 0; filter: alpha(opacity=0);
   -webkit-transition: opacity 0.2s linear;
   color: #353566;
 }
-  #account_list tbody tr:hover span.edit_account {
+  #account_dialog tbody tr:hover span.edit_account {
     opacity: 1; filter: alpha(opacity=100);
   }
-#account_list button.save_changes {
+#account_dialog button.save_changes {
   display: inline-block;
   position: relative;
   left: -6px;
+  margin: 0 5px;
 }
-#account_list span.delete_account {
+#account_dialog span.delete_account {
   display: inline-block;
   color: #774433;
 }
-#account_list .pending_badge {
+#account_dialog .pending_badge {
   display: none;
   position: absolute;
   margin: 18px 0 0 18px;
 }
-  #account_list .row.pending .pending_badge {
+  #account_dialog .row.pending .pending_badge {
     display: block;
   }
-#account_list tr.row .pending_notification {
+#account_dialog tr.row .pending_notification {
   font: 10px Arial;
   text-transform: uppercase;
   padding-left: 7px;
   color: #999;
   display: none;
 }
-  #account_list .row.pending .pending_notification {
+  #account_dialog .row.pending .pending_notification {
     display: inline;
-  }
-
-#organization_info {
-  padding: 6px 10px;
-  line-height: 21px;
-  font-size: 10px;
-}
-  #organization_info .name {
-    font-size: 18px; font-weight: bold; line-height: 25px;
-    color: #555;
-    text-shadow: 0 1px 1px #fff;
-  }
-  #organization_info .since, #organization_info .counts {
-    line-height: 18px;
-    text-transform: uppercase;
-    color: #777;
   }

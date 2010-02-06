@@ -4,7 +4,6 @@ dc.ui.SearchBox = dc.View.extend({
   PAGE_MATCHER : (/\/p(\d+)$/),
 
   id            : 'search',
-  className     : 'accounts_tab_hidden',
   fragment      : null,
 
   callbacks : {

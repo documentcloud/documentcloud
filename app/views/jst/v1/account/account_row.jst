@@ -7,12 +7,12 @@
     <%= account.fullName(true) %>&nbsp;<span class="pending_notification">(pending)</span>
   </span>
   <div class="edit name_wrapper">
-    <span class="text_input">
+    <span class="text_input small">
       <span>
         <input name="first_name" type="text" placeholder="first name" value="<%= account.get('first_name') %>" />
       </span>
     </span>
-    <span class="text_input">
+    <span class="text_input small">
       <span>
         <input name="last_name" type="text" placeholder="last name" value="<%= account.get('last_name') %>" />
       </span>
@@ -23,7 +23,7 @@
   <span class="display">
     <%= email %>
   </span>
-  <span class="text_input edit">
+  <span class="text_input edit small">
     <span>
       <input name="email" type="text" placeholder="email" value="<%= email %>" />
     </span>

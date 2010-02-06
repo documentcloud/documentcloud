@@ -1,10 +1,13 @@
 TODO:
+  
+  * Make a method for editing and deleting projects, and removing 
+    documents from projects.
+    
+  * Remove the "V1" namespace.
 
   * Restructure client-side navigation -- no tabs, no breadcrumbs.
     Bring entities and analysis in line.
-  
-  * Upgrade to Rails 3.
-  
+    
   * Default to private.
   
   * Making documents private prints warnings on the notes.
@@ -12,9 +15,7 @@ TODO:
   * Add page counts to the document tiles.
   
   * Add the summary as a field prior to upload.
-    
-  * Upgrade the Admin UI to a dialog.
-      
+          
   * Come up with something reasonable to have on the home screen.
 
   * Switch up projects to use a real join table.
@@ -73,6 +74,8 @@ AFTER BETA:
   
 
 DONE:
+
+  * Upgrade the Admin UI to a dialog.
 
   * Drag and drop documents into projects.
 

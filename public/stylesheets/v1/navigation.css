@@ -19,14 +19,12 @@ body.logged_in .tab_content {
   body.upload_navigation .upload_tab_content,
   body.search_navigation .search_tab_content,
   body.dashboard_navigation .dashboard_tab_content,
-  body.accounts_navigation .accounts_tab_content,
   body.analyze_navigation .analyze_tab_content {
     display: block;
   }
   body.upload_navigation .upload_tab_hidden,
   body.search_navigation .search_tab_hidden,
   body.dashboard_navigation .dashboard_tab_hidden,
-  body.accounts_navigation .accounts_tab_hidden,
   body.analyze_navigation .analyze_tab_hidden {
     display: none;
   }

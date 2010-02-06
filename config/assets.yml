@@ -11,7 +11,7 @@ javascripts:
     - public/javascripts/lib/set.js
     - public/javascripts/lib/*.js
     - public/javascripts/model/*.js
-    - public/javascripts/v1/ui/menu.js
+    - public/javascripts/v1/ui/common/*.js
     - public/javascripts/v1/**/*.js
   ie_only:
     - public/javascripts/ie/*.js

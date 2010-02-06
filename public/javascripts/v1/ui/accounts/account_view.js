@@ -3,7 +3,7 @@ dc.ui.AccountView = dc.View.extend({
 
   AVATAR_SIZES : {
     badge : 20,
-    row   : 32
+    row   : 25
   },
 
   TAGS : {
@@ -54,10 +54,7 @@ dc.ui.AccountView = dc.View.extend({
 
   _openAccounts : function(e) {
     e.preventDefault();
-    dc.app.navigation.tab('accounts', {section : {
-      name : 'Accounts',
-      callback : function() { dc.app.navigation.tab('accounts'); }
-    }});
+    dc.app.accounts.open();
   },
 
   // When we're done editing an account, it's either a create or update.
