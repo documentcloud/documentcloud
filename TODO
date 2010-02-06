@@ -3,8 +3,6 @@ TODO:
   * Make a method for editing and deleting projects, and removing 
     documents from projects.
     
-  * Remove the "V1" namespace.
-
   * Restructure client-side navigation -- no tabs, no breadcrumbs.
     Bring entities and analysis in line.
     
@@ -74,6 +72,8 @@ AFTER BETA:
   
 
 DONE:
+
+  * Remove the "V1" namespace.
 
   * Upgrade the Admin UI to a dialog.
 

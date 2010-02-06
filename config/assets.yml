@@ -3,7 +3,7 @@ template_function: _.template
 embed_assets: on
 
 javascripts:
-  v1:
+  core:
     - public/javascripts/application.js
     - public/javascripts/vendor/jquery-1.3.2.js
     - public/javascripts/vendor/*.js
@@ -11,17 +11,18 @@ javascripts:
     - public/javascripts/lib/set.js
     - public/javascripts/lib/*.js
     - public/javascripts/model/*.js
-    - public/javascripts/v1/ui/common/*.js
-    - public/javascripts/v1/**/*.js
+    - public/javascripts/ui/common/*.js
+    - public/javascripts/ui/**/*.js
+    - public/javascripts/app/**/*.js
   ie_only:
     - public/javascripts/ie/*.js
 
 stylesheets:
-  v1:
+  ui:
     - public/stylesheets/common/reset.css
-    - public/stylesheets/v1/aristo.css
-    - public/stylesheets/v1/*.css
-  v1_workspace:
+    - public/stylesheets/ui/aristo.css
+    - public/stylesheets/ui/*.css
+  workspace:
     - public/stylesheets/pages/workspace.css
   empty:
     - public/stylesheets/pages/empty.css
@@ -31,10 +32,10 @@ stylesheets:
     - public/stylesheets/common/reset.css
     - public/stylesheets/pages/static.css
   viewer_editing:
-    - public/stylesheets/v1/ui.css
-    - public/stylesheets/v1/icons.css
+    - public/stylesheets/ui/ui.css
+    - public/stylesheets/ui/icons.css
     - public/stylesheets/pages/viewer_editing.css
 
 templates:
-  v1:
-    - app/views/jst/v1/**/*.jst
+  ui:
+    - app/views/jst/**/*.jst
