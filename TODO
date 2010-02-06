@@ -5,6 +5,10 @@ TODO:
   
   * Upgrade to Rails 3.
   
+  * Default to private.
+  
+  * Making documents private prints warnings on the notes.
+  
   * Add page counts to the document tiles.
   
   * Add the summary as a field prior to upload.
