@@ -142,7 +142,7 @@ dc.ui.Toolbar = dc.View.extend({
   _createConnectionsMenu : function() {
     var me = this;
     var items = [
-      {title : 'Entities', onClick : function(){ $(document.body).toggleClass('visualize'); }},
+      {title : 'Entities', onClick : function(){ dc.ui.Dialog.alert('The entity list is not yet implemented.'); }},
       {title : 'Timeline', onClick : this._openTimeline, className : 'divider'}
     ];
     items = items.concat(_.map(['category', 'city', 'country', 'organization',
