@@ -9,6 +9,7 @@
   color: #777;
   text-align: center;
   border: 1px solid #ddd; border-left: 0; border-right: 0;
+  z-index: 10;
 }
   body.paginated #paginator {
     display: block;

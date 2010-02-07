@@ -1,7 +1,7 @@
 dc.ui.Paginator = dc.View.extend({
 
   // Keep in sync with search.rb on the server.
-  PAGE_SIZE : 20,
+  PAGE_SIZE : 10,
 
   id        : 'paginator',
 
