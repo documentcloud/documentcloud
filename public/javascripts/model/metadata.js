@@ -32,6 +32,11 @@ dc.model.Metadatum = dc.Model.extend({
     return this._docIds = this._docIds || _.pluck(this.get('instances'), 'document_id');
   },
 
+  // Just give us the first id that comes to mind.
+  firstId : function() {
+    return this.documentIds()[0];
+  },
+
   // Return a list of all of the currently-loaded documents referencing this
   // Metadatum.
   documents : function() {

@@ -12,7 +12,6 @@ dc.ui.Visualizer = dc.View.extend({
   constructor : function(options) {
     _.bindAll(this, 'open', 'close', 'gatherMetadata', 'renderVisualization', 'highlightDatum', 'highlightOff', 'onResize');
     this.base(options);
-    this.topDocuments = [];
     this.topMetadata = [];
     $(window).resize(this.onResize);
     Documents.bind(Documents.SELECTION_CHANGED, this.renderVisualization);
@@ -46,10 +45,10 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   gatherMetadata : function() {
-    this.topDocuments = _(Documents.models()).sortBy(function(doc){ return doc.id; });
     var seenKinds = {};
-    var filter = this._kindFilter;
-    var meta = _.uniq(_.flatten(_.map(Documents.selected(), function(doc){ return doc.metadata(); })));
+    var filter    = this._kindFilter;
+    var docIds    = Documents.selectedIds();
+    var meta      = _.uniq(_.flatten(_.map(Documents.selected(), function(doc){ return doc.metadata(); })));
     this.topMetadata = _(meta).chain()
       .sortBy(function(meta){ return meta.instanceCount + meta.totalRelevance(); })
       .reverse()
@@ -57,12 +56,12 @@ dc.ui.Visualizer = dc.View.extend({
         return meta.get('kind') == filter;
       })
       .slice(0, this._numMetadata)
-      .sortBy(function(meta){ return meta.get('instances')[0].document_id; })
+      .sortBy(function(meta){ return docIds.indexOf(meta.firstId()); })
       .value();
   },
 
   empty : function() {
-    return _.isEmpty(this.topMetadata) || _.isEmpty(this.topDocuments);
+    return _.isEmpty(this.topMetadata) || Documents.empty();
   },
 
   highlightDatum : function(e) {
@@ -99,9 +98,6 @@ dc.ui.Visualizer = dc.View.extend({
     var selectedIds = Documents.selectedIds();
 
     this.setCallbacks();
-
-    // var maxHeight = _.max([this.topDocuments.length * 100, this.topMetadata.length * 75]);
-    // el.css({height : maxHeight});
 
     var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.height()});
     el.append(canvas);
