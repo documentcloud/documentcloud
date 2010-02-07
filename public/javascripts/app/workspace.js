@@ -43,6 +43,7 @@ _.extend(dc.app.workspace, {
 
     if (!dc.app.accountId) return $(document.body).setMode('search', 'navigation');
 
+    dc.app.hotkeys.initialize();
     content.append(this.accountBadge.render().el);
     this.sidebar.add('organizer', this.organizer.render().el);
     dc.app.uploader.render();

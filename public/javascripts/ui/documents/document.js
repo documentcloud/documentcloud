@@ -40,6 +40,9 @@ dc.ui.Document = dc.View.extend({
   select : function() {
     if (!dc.app.accountId) return;
     var selected = !this.model.get('selected');
+    if (dc.app.hotkeys.shift) {
+      return selected ? Documents.selectAll() : Documents.deselectAll();
+    }
     this.model.set({selected : selected});
   },
 

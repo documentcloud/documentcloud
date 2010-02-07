@@ -38,6 +38,7 @@ dc.ui.Visualizer = dc.View.extend({
     this._menu.setLabel('Connections');
     $(document.body).removeClass('visualize');
     $(this.el).html('');
+    dc.history.save(dc.app.searchBox.urlFragment());
   },
 
   urlFragment : function() {

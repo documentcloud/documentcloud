@@ -18,8 +18,6 @@ TODO:
     published, and the URL where. Create a cron/cloudcrowd job that pings each
     published document, ensuring that it's not 404'd.
 
-  * Add OpenCalais logo to comply with TOS.
-
   * Make some pretty 404/500/403 pages.
   
   * Start recording some notion of running "update access" jobs. Make
@@ -62,6 +60,8 @@ AFTER BETA:
   
 
 DONE:
+
+  * Add OpenCalais logo to comply with TOS.
 
   * Restructure client-side navigation -- no tabs, no breadcrumbs.
     Bring entities and analysis in line. Flesh out the faux-URLs.
