@@ -19,10 +19,6 @@ TODO:
     published document, ensuring that it's not 404'd.
 
   * Make some pretty 404/500/403 pages.
-  
-  * Start recording some notion of running "update access" jobs. Make
-    subsequent changes to access wait for the job to finish. Perhaps a floating
-    progress bar filled panel?
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Make 'em removable.
