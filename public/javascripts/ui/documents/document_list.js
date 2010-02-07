@@ -2,7 +2,8 @@
 // in a number of different sizes.
 dc.ui.DocumentList = dc.View.extend({
 
-  className : 'document_list',
+  id        : 'document_list',
+  className : 'panel',
 
   callbacks : {},
 
@@ -14,19 +15,17 @@ dc.ui.DocumentList = dc.View.extend({
   },
 
   render : function() {
-    $(this.el).html(JST.document_list({}));
-    this.docContainer = $('.documents', this.el);
-    this.docContainer.append(dc.app.visualizer.el);
+    $(this.el).append(dc.app.visualizer.el);
     this.setCallbacks();
     return this;
   },
 
   refresh : function() {
-    var container = this.docContainer;
-    $('.document', container).remove();
-    Documents.each(function(doc) {
-      container.append((new dc.ui.Document(doc)).render().el);
+    $('.document', this.el).remove();
+    var views = _.map(Documents.models(), function(m){
+      return (new dc.ui.Document(m)).render().el;
     });
+    $(this.el).append(views);
   },
 
   _removeDocument : function(e, doc) {

@@ -1,12 +1,13 @@
-.document_list {
+#document_list {
+  padding: 10px 10px 0px 15px;
+  -webkit-transition: top 0.1s linear;
+  z-index: 5;
 }
-  .panel_content .panel.documents {
-    padding: 10px 10px 5px 15px;
-    -webkit-transition: top 0.1s linear;
-    z-index: 5;
-  }
-  .panel_content.open_toolbar .panel.documents, body.visualize .panel.documents {
+  .open_toolbar #document_list, body.visualize #document_list {
     top: 43px;
+  }
+  body.paginated #document_list {
+    bottom: 38px;
   }
 
 .document {
@@ -24,7 +25,7 @@
     border-color: white;
     background: white;
   }
-  .document_list .document {
+  #document_list .document {
     height: 77px;
     padding: 5px 30px 5px 77px;
     margin-bottom: 15px;
