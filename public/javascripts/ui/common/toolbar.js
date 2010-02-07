@@ -32,7 +32,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   display : function() {
-    var count = $('.document_tile.is_selected').length;
+    var count = $('.document.is_selected').length;
     count > 0 ? this.show() : this.hide();
     this.summaryButton.toggleClass('disabled', count > 1);
     this.remoteUrlButton.toggleClass('disabled', count > 1);

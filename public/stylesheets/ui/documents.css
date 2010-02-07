@@ -28,45 +28,45 @@
     top: 43px;
   }
 
-.document_tile {
+.document {
   position: relative;
   overflow: hidden;
   border: 1px solid transparent;
 }
-  .document_tile.is_selected {
+  .document.is_selected {
     border-color: #eea;
     background: #ffffe5;
     background: -webkit-gradient(linear, left top, left bottom, from(#fffffa), to(#ffe));
     -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
   }
-  .document_list.large_size .document_tile {
+  .document_list.large_size .document {
     height: 77px;
     padding: 5px 30px 5px 77px;
     margin-bottom: 15px;
   }
-  .document_list.medium_size .document_tile {
+  .document_list.medium_size .document {
     float: left;
     width: 250px;
     padding-left: 43px;
     margin: 5px 15px 10px 0;
     height: 35px;
   }
-  .document_list.small_size .document_tile {
+  .document_list.small_size .document {
     margin-bottom: 10px;
     height: 14px;
   }
-  img.document {
+  img.doc {
     position: absolute;
     width: 60px; height: 75px;
     -webkit-box-shadow: 0 0px 5px #777; -moz-box-shadow: 0 0px 5px #777;
   }
-  .document_tile img.document {
+  .document img.doc {
     left: 7px; top: 6px;
   }
-    body.logged_in .document_tile img.document {
+    body.logged_in .document img.doc {
       cursor: pointer;
     }
-  .document_tile .title {
+  .document .title {
     display: block;
     color: #254555;
     font-size: 14px;
@@ -85,7 +85,7 @@
       float: left;
       font-size: 12px;
     }
-    .document_tile .view_document {
+    .document .view_document {
       cursor: pointer;
       float: left;
     }
@@ -96,14 +96,14 @@
       opacity: 0.5; filter: alpha(opacity=50);
       -webkit-transition: opacity 0.2s linear;
     }
-      .document_tile:hover .document_tools {
+      .document:hover .document_tools {
         opacity: 1; filter: alpha(opacity=100);
       }
       .document_tools > div {
         float: left;
         margin-right: 7px;
       }
-  .document_tile .source {
+  .document .source {
     font: 11px/14px Arial;
     overflow: hidden;
     height: 14px;
@@ -116,14 +116,14 @@
       line-height: 13px;
       color: #333;
     }
-  .document_tile .summary {
+  .document .summary {
     line-height: 16px;
     margin-top: 5px;
     height: 33px;
     overflow: hidden;
     color: #454546;
   }
-    .document_tile .summary b {
+    .document .summary b {
       font-size: 12px;
     }
     .document_list.medium_size .summary {

@@ -1,4 +1,4 @@
-// Responsible for rendering a list of DocumentTiles. The tiles can be displayed
+// Responsible for rendering a list of Documents. The tiles can be displayed
 // in a number of different sizes.
 dc.ui.DocumentList = dc.View.extend({
 
@@ -27,12 +27,12 @@ dc.ui.DocumentList = dc.View.extend({
   refresh : function() {
     var container = this.docContainer;
     Documents.each(function(doc) {
-      container.append((new dc.ui.DocumentTile(doc)).render().el);
+      container.append((new dc.ui.Document(doc)).render().el);
     });
   },
 
   _removeDocument : function(e, doc) {
-    $('#document_tile_' + doc.id).remove();
+    $('#document_' + doc.id).remove();
   },
 
   viewSmall : function() {

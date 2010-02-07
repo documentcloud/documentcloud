@@ -77,7 +77,7 @@ dc.ui.Visualizer = dc.View.extend({
     this._selectedMetaId = null;
     // TODO -- separate out the canvas repaint from the DOM redraw.
     // this.redrawCanvas();
-    $('.document_tile', this.el).removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
+    $('.document', this.el).removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
   },
 
   onResize : function() {
@@ -127,7 +127,7 @@ dc.ui.Visualizer = dc.View.extend({
       _.each(meta.get('instances'), function(instance) {
         var docId = instance.document_id;
         if (selectedIds.indexOf(docId) < 0) return;
-        var del   = $('#document_tile_' + docId);
+        var del   = $('#document_' + docId);
         var dpos  = del.position();
         var docx  = dpos.left + del.width() / 4, docy = dpos.top + del.height() / 2;
         ctx.globalAlpha = instance.relevance * 0.5 + 0.25;

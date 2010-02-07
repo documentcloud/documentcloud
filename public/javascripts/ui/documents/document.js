@@ -1,7 +1,7 @@
 // A tile view for previewing a Document in a listing.
-dc.ui.DocumentTile = dc.View.extend({
+dc.ui.Document = dc.View.extend({
 
-  className : 'document_tile',
+  className : 'document',
 
   callbacks : {
     '.view_document.click': 'viewDocument',
@@ -16,7 +16,7 @@ dc.ui.DocumentTile = dc.View.extend({
     this.mode = mode;
     if (mode) this.className += ' ' + mode;
     this.base({model : doc});
-    this.el.id = 'document_' + (mode || 'tile') + '_' + this.model.id;
+    this.el.id = 'document_' + this.model.id;
     _.bindAll(this, '_onDocumentChange', '_onDrop');
     this.model.bind(dc.Model.CHANGED, this._onDocumentChange);
   },

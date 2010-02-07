@@ -5,9 +5,7 @@ TODO:
     
   * Restructure client-side navigation -- no tabs, no breadcrumbs.
     Bring entities and analysis in line.
-      
-  * Making documents private prints warnings on the notes.
-  
+        
   * Add page counts to the document tiles.
   
   * Add the summary as a field prior to upload.

@@ -42,15 +42,15 @@
 
 /*------------------------------ ENTITIES ---------------------------------*/
 
-body.visualize .document_list .document_tile {
+body.visualize .document_list .document {
   width: 280px; height: 32px;
   padding: 5px 5px 5px 40px;
   margin-bottom: 35px;
 }
-  body.visualize .document_tile .summary {
+  body.visualize .document .summary {
     display: none;
   }
-  body.visualize .document_tile img.document {
+  body.visualize .document img.doc {
     width: 24px; height: 30px;
   }
 
