@@ -5,6 +5,8 @@
 
 dc.ui.Visualizer = dc.View.extend({
 
+  METADATA_LIMIT : 15,
+
   id : 'visualizer',
 
   callbacks : {},
@@ -24,7 +26,6 @@ dc.ui.Visualizer = dc.View.extend({
     this._menu.setLabel('Connections: ' + Metadata.DISPLAY_NAME[kind]);
     this._menu.activate(this.close);
     this.setMode('linear', 'format');
-    this._numMetadata = 10;
     $(document.body).addClass('visualize');
     dc.history.save(this.urlFragment());
     if (Metadata.empty()) return Metadata.populate(this.renderVisualization);
@@ -55,7 +56,7 @@ dc.ui.Visualizer = dc.View.extend({
       .select(function(meta){
         return meta.get('kind') == filter;
       })
-      .slice(0, this._numMetadata)
+      .slice(0, this.METADATA_LIMIT)
       .sortBy(function(meta){ return docIds.indexOf(meta.firstId()); })
       .value();
   },
