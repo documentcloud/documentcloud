@@ -53,6 +53,10 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     _.bindAll(this, 'downloadSelectedViewers', 'downloadSelectedPDF', 'downloadSelectedFullText');
   },
 
+  selectAll : function() {
+    _.each(this.models(), function(m){ m.set({selected : true}); });
+  },
+
   selected : function() {
     return _.select(this.models(), function(m){ return m.get('selected'); });
   },

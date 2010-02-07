@@ -1,7 +1,8 @@
 // The search controller is responsible for managing document/metadata search.
 dc.ui.SearchBox = dc.View.extend({
 
-  PAGE_MATCHER : (/\/p(\d+)$/),
+  PAGE_MATCHER        : (/\/p(\d+)$/),
+  CONNECTIONS_MATCHER : (/\/connections\/(\w+)$/),
 
   id            : 'search',
   fragment      : null,
@@ -35,6 +36,10 @@ dc.ui.SearchBox = dc.View.extend({
     return this.box.val(query);
   },
 
+  urlFragment : function() {
+    return this.fragment + (this.page ? '/p' + this.page : '');
+  },
+
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber) {
     dc.app.toolbar.connectionsMenu.deactivate();
@@ -45,16 +50,16 @@ dc.ui.SearchBox = dc.View.extend({
     var section = {name : sectionName, callback : function(){ dc.app.searchBox.search(query); }};
     // if (dc.app.navigation) dc.app.navigation.tab('search', {silent : true, section : section});
     $(document.body).setMode('active', 'search');
-    var page = pageNumber <= 1 ? null : pageNumber;
+    this.page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
     this.fragment = 'search/' + encodeURIComponent(query);
-    dc.history.save(this.fragment + (page ? '/p' + page : ''));
+    dc.history.save(this.urlFragment());
     $('#document_list_container .documents').html('');
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');
     if (dc.app.toolbar) dc.app.toolbar.hide();
     var params = {q : query};
-    if (page) params.page = page;
+    if (this.page) params.page = this.page;
     var url = query.match(/notes:/) ? '/search/notes.json' : '/search/documents.json';
     $.get(url, params, this.loadSearchResults, 'json');
   },
@@ -68,11 +73,16 @@ dc.ui.SearchBox = dc.View.extend({
 
   // When searching by the URL's hash value, we need to unescape first.
   searchByHash : function(hash) {
-    var page = null;
+    var page = null, connection = null;
     var pageMatch = hash.match(this.PAGE_MATCHER);
     if (pageMatch) {
       var page = pageMatch[1];
       hash = hash.replace(this.PAGE_MATCHER, '');
+    }
+    var connMatch = hash.match(this.CONNECTIONS_MATCHER);
+    if (connMatch) {
+      this._connection = connMatch[1];
+      hash = hash.replace(this.CONNECTIONS_MATCHER, '');
     }
     this.search(decodeURIComponent(hash), page);
   },
@@ -97,6 +107,7 @@ dc.ui.SearchBox = dc.View.extend({
     this.value('');
     $(document.body).setMode('no', 'search');
     dc.ui.Project.clearSelection();
+    dc.history.save('dashboard');
   },
 
   // Hide the spinner and remove the search lock when finished searching.
@@ -104,6 +115,11 @@ dc.ui.SearchBox = dc.View.extend({
     if (empty) $(document.body).setMode('empty', 'search');
     dc.ui.spinner.hide();
     this.outstandingSearch = false;
+    if (this._connection) {
+      Documents.selectAll();
+      dc.app.visualizer.open(this._connection);
+      this._connection = null;
+    }
   },
 
   // After the initial search results come back, send out a request for the

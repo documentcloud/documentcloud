@@ -27,6 +27,7 @@ dc.ui.Visualizer = dc.View.extend({
     this.setMode('linear', 'format');
     this._numMetadata = 10;
     $(document.body).addClass('visualize');
+    dc.history.save(this.urlFragment());
     if (Metadata.empty()) return Metadata.populate(this.renderVisualization);
     this.renderVisualization();
   },
@@ -37,6 +38,10 @@ dc.ui.Visualizer = dc.View.extend({
     this._menu.setLabel('Connections');
     $(document.body).removeClass('visualize');
     $(this.el).html('');
+  },
+
+  urlFragment : function() {
+    return dc.app.searchBox.urlFragment() + '/connections/' + this._kindFilter;
   },
 
   gatherMetadata : function() {
