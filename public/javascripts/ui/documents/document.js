@@ -24,11 +24,12 @@ dc.ui.Document = dc.View.extend({
   render : function() {
     var title = this.model.get('title');
     $(this.el).html(JST.document_tile({
-      thumbnail : this.model.get('thumbnail_url'),
-      title     : this.mode == 'viz' ? Inflector.truncate(title, 55) : title,
-      source    : this.model.get('source'),
-      summary   : this.model.displaySummary(),
-      pub       : this.model.get('access') == dc.access.PUBLIC
+      thumbnail   : this.model.get('thumbnail_url'),
+      title       : this.mode == 'viz' ? Inflector.truncate(title, 55) : title,
+      source      : this.model.get('source'),
+      summary     : this.model.displaySummary(),
+      pub         : this.model.get('access') == dc.access.PUBLIC,
+      page_count  : this.model.get('page_count')
     }));
     $('.document.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.setCallbacks();
