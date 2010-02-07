@@ -23,7 +23,6 @@ _.extend(dc.app.workspace, {
 
     if (!dc.app.accountId) return;
 
-    dc.app.navigation = new dc.ui.Navigation();
     dc.app.toolbar    = new dc.ui.Toolbar({tab : 'search'});
     dc.app.uploader   = new dc.ui.UploadDialog();
     dc.app.accounts   = new dc.ui.AccountDialog();

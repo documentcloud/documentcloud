@@ -43,7 +43,7 @@ dc.ui.SearchBox = dc.View.extend({
     project ? project.view.showOpen() : dc.ui.Project.clearSelection();
     var sectionName = Inflector.truncate(projectName || query, 30);
     var section = {name : sectionName, callback : function(){ dc.app.searchBox.search(query); }};
-    if (dc.app.navigation) dc.app.navigation.tab('search', {silent : true, section : section});
+    // if (dc.app.navigation) dc.app.navigation.tab('search', {silent : true, section : section});
     $(document.body).setMode('active', 'search');
     var page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
@@ -97,7 +97,6 @@ dc.ui.SearchBox = dc.View.extend({
     this.value('');
     $(document.body).setMode('no', 'search');
     dc.ui.Project.clearSelection();
-    dc.app.navigation.tab('dashboard');
   },
 
   // Hide the spinner and remove the search lock when finished searching.

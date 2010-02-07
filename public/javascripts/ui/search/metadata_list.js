@@ -74,7 +74,6 @@ dc.ui.MetadataList = dc.View.extend({
   },
 
   visualizeKind : function(e) {
-    if (dc.app.navigation.currentTab != 'analyze') return;
     var kind = $(e.target).attr('data-kind');
     dc.app.visualizer.visualize(kind);
   },

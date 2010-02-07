@@ -4,7 +4,6 @@ dc.ui.Paginator = dc.View.extend({
   PAGE_SIZE : 20,
 
   id        : 'paginator',
-  className : 'tab_content search_tab_content',
 
   query : null,
   page  : null,
