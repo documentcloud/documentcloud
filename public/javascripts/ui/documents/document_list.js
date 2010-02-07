@@ -20,12 +20,14 @@ dc.ui.DocumentList = dc.View.extend({
   render : function() {
     $(this.el).html(JST.document_list({}));
     this.docContainer = $('.documents', this.el);
+    this.docContainer.append(dc.app.visualizer.el);
     this.setCallbacks();
     return this;
   },
 
   refresh : function() {
     var container = this.docContainer;
+    $('.document', container).remove();
     Documents.each(function(doc) {
       container.append((new dc.ui.Document(doc)).render().el);
     });

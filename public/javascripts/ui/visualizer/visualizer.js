@@ -70,20 +70,20 @@ dc.ui.Visualizer = dc.View.extend({
     // TODO -- separate out the canvas repaint from the DOM redraw.
     // this.redrawCanvas();
     var ids = e.data.documentIds();
-    // _.each(this.docViews, function(view) {
-    //       if (_(ids).include(view.model.id)) {
-    //         $(view.el).addClass('bolded');
-    //       } else {
-    //         $(view.el).addClass('muted').animate({opacity : 0.5}, {duration : 'fast', queue : false});
-    //       }
-    //     });
+    _.each(Documents.models(), function(doc) {
+      if (_(ids).include(doc.id)) {
+        $('#document_' + doc.id).addClass('bolded');
+      } else {
+        $('#document_' + doc.id).addClass('muted').animate({opacity : 0.5}, {duration : 'fast', queue : false});
+      }
+    });
   },
 
   highlightOff : function(e) {
     this._selectedMetaId = null;
     // TODO -- separate out the canvas repaint from the DOM redraw.
     // this.redrawCanvas();
-    $('.document', this.el).removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
+    $('div.document').removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
   },
 
   onResize : function() {
@@ -100,7 +100,7 @@ dc.ui.Visualizer = dc.View.extend({
 
     this.setCallbacks();
 
-    var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.height()});
+    var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.parent()[0].scrollHeight});
     el.append(canvas);
     if (window.G_vmlCanvasManager) G_vmlCanvasManager.initElement(canvas);
     var ctx = canvas.getContext('2d');
@@ -123,7 +123,7 @@ dc.ui.Visualizer = dc.View.extend({
       metaEl.bind('mouseleave', meta, me.highlightOff);
       var position = piece * i;
       var w2 = metaEl.outerWidth() / 2, h2 = metaEl.outerHeight() / 2;
-      metaEl.css({left: 'auto', top: i * 45 + 25, right : 25});
+      metaEl.css({left: 'auto', top: i * 40 + 25, right : 25});
 
       var pos = metaEl.position();
 
@@ -132,7 +132,7 @@ dc.ui.Visualizer = dc.View.extend({
         if (selectedIds.indexOf(docId) < 0) return;
         var del   = $('#document_' + docId);
         var dpos  = del.position();
-        var docx  = dpos.left + del.width() / 4, docy = dpos.top + del.height() / 2;
+        var docx  = dpos.left + del.outerWidth() / 2, docy = dpos.top + del.height() / 2;
         ctx.globalAlpha = instance.relevance * 0.5 + 0.25;
         ctx.lineWidth = instance.relevance * 20 + 1;
         ctx.beginPath();

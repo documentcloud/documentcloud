@@ -1,21 +1,6 @@
-#analyze_sidebar_container {
-  position: absolute;
-  top: 0; bottom: 0; left: 0; right: 0;
-  overflow-y: auto;
-  font-size: 10px;
-  line-height: 13px;
-  color: #454545;
-}
-  #visualizer_labels > span {
-    left: 5px;
-  }
-  #visualizer_labels_content {
-    margin-left: 2px;
-  }
-
 #visualizer {
   position: absolute;
-  top: 43px; bottom: 0; left: 0; right: 0;
+  top: 0px; bottom: 0; left: 0; right: 0;
   -webkit-transition: top 0.1s linear;
   display: none;
 }
@@ -29,10 +14,9 @@
 
 #visualizer .datum {
   position: absolute;
-  font: bold 11px Arial;
-  text-transform: uppercase;
-  color: #454545;
-  padding: 4px 8px;
+  font: 11px Arial;
+  color: #254555;
+  padding: 3px 6px;
   background: white;
   cursor: crosshair;
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
