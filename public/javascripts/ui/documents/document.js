@@ -31,7 +31,7 @@ dc.ui.Document = dc.View.extend({
       pub         : this.model.get('access') == dc.access.PUBLIC,
       page_count  : this.model.get('page_count')
     }));
-    $('.document.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
+    $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.setCallbacks();
     this._setSelected();
     return this;

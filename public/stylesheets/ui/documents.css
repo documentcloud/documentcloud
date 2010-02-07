@@ -1,22 +1,3 @@
-/*--- Size Controls are disabled for now -- not useful with pagination. -----*/
-.size_controls {
-  display: none;
-  position: absolute;
-  text-transform: uppercase;
-  color: #777;
-  font-size: 10px;
-  right: 7px; top: 5px;
-  cursor: pointer;
-}
-  body.upload_shown .size_controls {
-    display: none;
-  }
-  .document_list.large_size .view_large,
-  .document_list.medium_size .view_medium,
-  .document_list.small_size .view_small {
-    font-weight: bold;
-  }
-
 .document_list {
 }
   .panel_content .panel.documents {
@@ -43,21 +24,10 @@
     border-color: white;
     background: white;
   }
-  .document_list.large_size .document {
+  .document_list .document {
     height: 77px;
     padding: 5px 30px 5px 77px;
     margin-bottom: 15px;
-  }
-  .document_list.medium_size .document {
-    float: left;
-    width: 250px;
-    padding-left: 43px;
-    margin: 5px 15px 10px 0;
-    height: 35px;
-  }
-  .document_list.small_size .document {
-    margin-bottom: 10px;
-    height: 14px;
   }
   img.doc {
     position: absolute;
@@ -79,16 +49,6 @@
     overflow: hidden;
     height: 18px;
   }
-    .document_list.medium_size .title {
-      margin-top: 2px;
-      font-size: 12px;
-      height: 15px;
-    }
-    .document_list.small_size .title {
-      margin: 0 10px 0 0;
-      float: left;
-      font-size: 12px;
-    }
     .document .view_document {
       cursor: pointer;
       float: left;
@@ -114,12 +74,6 @@
     color: #808080;
     margin-bottom: 8px;
   }
-    .document_list.small_size .source {
-      float: left;
-      margin-right: 10px;
-      line-height: 13px;
-      color: #333;
-    }
   .document .summary {
     line-height: 16px;
     margin-top: 5px;
@@ -129,14 +83,4 @@
   }
     .document .summary b {
       font-size: 12px;
-    }
-    .document_list.medium_size .summary {
-      display: none;
-    }
-    .document_list.small_size .summary {
-      display: inline;
-      margin: 0;
-      position: relative;
-      font-size: 11px;
-      color: #777;
     }

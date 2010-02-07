@@ -2,13 +2,9 @@
 // in a number of different sizes.
 dc.ui.DocumentList = dc.View.extend({
 
-  className : 'document_list large_size',
+  className : 'document_list',
 
-  callbacks : {
-    '.view_small.click':  'viewSmall',
-    '.view_medium.click': 'viewMedium',
-    '.view_large.click':  'viewLarge'
-  },
+  callbacks : {},
 
   constructor : function(options) {
     this.base(options);

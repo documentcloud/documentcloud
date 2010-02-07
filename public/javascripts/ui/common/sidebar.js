@@ -3,11 +3,6 @@ dc.ui.Sidebar = dc.View.extend({
 
   id : 'sidebar',
 
-  // constructor : function(options) {
-  //   this.base(options);
-  //   $(this.el).addClass('large_size');
-  // },
-
   render : function() {
     $(this.el).html(JST.workspace_sidebar({}));
     this.content = $('.sidebar_content', this.el);
