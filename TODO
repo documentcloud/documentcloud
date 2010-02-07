@@ -2,9 +2,6 @@ TODO:
   
   * Make a method for editing and deleting projects, and removing 
     documents from projects.
-    
-  * Restructure client-side navigation -- no tabs, no breadcrumbs.
-    Bring entities and analysis in line. Flesh out the faux-URLs.
           
   * Add the summary as a field prior to upload.
           
@@ -23,12 +20,7 @@ TODO:
 
   * Add OpenCalais logo to comply with TOS.
 
-  * Add a JS NoteView for showing notes (with images) within the workspace.
-
   * Make some pretty 404/500/403 pages.
-  
-  * Make notes first-class with documents. Add comprehensive FTS search.
-    Translate entity searches in notes into the equivalent FTS search.
   
   * Start recording some notion of running "update access" jobs. Make
     subsequent changes to access wait for the job to finish. Perhaps a floating
@@ -38,6 +30,10 @@ TODO:
     the labels pulldown. Make 'em removable.
     
   * Write out full documentation, with screenshots.
+  
+  * Make notes first-class with documents. Add comprehensive FTS search.
+    Add a JS NoteView for showing notes (with images) within the workspace.
+    Translate entity searches in notes into the equivalent FTS search.
   
   * Real deploys -- Vlad?
   
@@ -66,6 +62,9 @@ AFTER BETA:
   
 
 DONE:
+
+  * Restructure client-side navigation -- no tabs, no breadcrumbs.
+    Bring entities and analysis in line. Flesh out the faux-URLs.
 
   * Add page counts to the document tiles.
 

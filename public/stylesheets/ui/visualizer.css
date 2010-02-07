@@ -54,6 +54,24 @@ body.visualize .document_list .document {
     width: 24px; height: 30px;
   }
 
+#calais_credits {
+  display: none;
+  position: absolute;
+  right: 10px; top: 12px;
+  color: #777;
+  width: 140px;
+  font: 10px/16px Arial;
+  cursor: pointer;
+}
+  body.visualize #calais_credits {
+    display: block;
+  }
+  #calais_credits .icon {
+    float: right;
+    margin-left: 8px;
+    -webkit-box-shadow: 0 0px 1px #000; -moz-box-shadow: 0 0px 1px #000;
+  }
+
 
 /*------------------------------ TIMELINE ---------------------------------*/
 

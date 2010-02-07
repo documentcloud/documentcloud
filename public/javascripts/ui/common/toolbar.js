@@ -3,9 +3,10 @@ dc.ui.Toolbar = dc.View.extend({
   id : 'toolbar',
 
   callbacks : {
-    '#delete_document_button.click': '_deleteSelectedDocuments',
-    '#edit_summary_button.click':    '_editSelectedSummary',
-    '#edit_remote_url_button.click': '_editSelectedRemoteUrl'
+    '#delete_document_button.click' : '_deleteSelectedDocuments',
+    '#edit_summary_button.click'    : '_editSelectedSummary',
+    '#edit_remote_url_button.click' : '_editSelectedRemoteUrl',
+    '#calais_credits.click'         : '_openCalais'
   },
 
   constructor : function(options) {
@@ -149,6 +150,10 @@ dc.ui.Toolbar = dc.View.extend({
       return {title : Metadata.DISPLAY_NAME[kind], onClick : _.bind(me._openConnections, me, kind)};
     }));
     return new dc.ui.Menu({id : 'connections_menu', label : 'Connections', items : items});
+  },
+
+  _openCalais : function() {
+    window.open('http://opencalais.com');
   }
 
 });

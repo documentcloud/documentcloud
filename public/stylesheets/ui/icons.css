@@ -60,6 +60,9 @@
 .icon.lock {
   background-image: url(/images/embed/icons/lock.png);
 }
+.icon.calais {
+  background-image: url(/images/embed/icons/calais.jpg);
+}
 
 .icon.plus, .icon.minus {
   display: block;
