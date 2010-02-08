@@ -14,3 +14,11 @@ button {
     filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#BAE0F5', EndColorStr='#84B0CA');
     border: 1px solid #597E93;
   }
+
+/*---------------------- Drop-shadow replacements ----------------------------*/
+img.doc,
+div.dialog,
+.minibutton,
+.menu_content {
+  border: 1px solid #ccc;
+}
