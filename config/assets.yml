@@ -35,6 +35,8 @@ stylesheets:
     - public/stylesheets/ui/ui.css
     - public/stylesheets/ui/icons.css
     - public/stylesheets/pages/viewer_editing.css
+  ie_only:
+    - public/stylesheets/common/ie.css
 
 templates:
   ui:

@@ -7,8 +7,9 @@
   text-transform: uppercase;
   border: 1px solid #979797;
   background: #d7d7d7;
-  background: -webkit-gradient(linear, left top, left bottom, from(#eaeaea), to(#b0b0b0));
-  background: -moz-linear-gradient(top, #eaeaea, #b0b0b0);
+  background: -webkit-gradient(linear, left top, left bottom, from(#EAEAEA), to(#C2C2C2));
+  background: -moz-linear-gradient(top, #EAEAEA, #C2C2C2);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#EAEAEA', EndColorStr='#C2C2C2');
   text-shadow: 0px 1px 1px #fff;
   color: #2C2C2C;
   border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
@@ -32,6 +33,7 @@
     #control_panel .button.open {
       background: -webkit-gradient(linear, left top, left bottom, from(#b0b0b0), to(#eaeaea));
       background: -moz-linear-gradient(top, #b0b0b0, #eaeaea);
+      filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#B0B0B0', EndColorStr='#EAEAEA');
     }
     #control_panel .button:first-child {
       border-top: 0;

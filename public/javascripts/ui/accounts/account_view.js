@@ -21,7 +21,7 @@ dc.ui.AccountView = dc.View.extend({
   constructor : function(account, kind) {
     this.kind       = kind;
     this.tagName    = this.TAGS[kind];
-    this.className  = 'account_view ' + this.kind;
+    this.className  = 'account_view gradient_white ' + this.kind;
     this.base();
     this.account    = account;
     this.template   = JST['account_' + this.kind];

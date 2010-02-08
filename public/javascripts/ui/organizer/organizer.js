@@ -34,12 +34,12 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   select : function(view) {
-    $(view.el).addClass('selected');
+    $(view.el).addClass('gradient_selected');
     this.selectedItem = view;
   },
 
   deselect : function() {
-    if (this.selectedItem) $(this.selectedItem.el).removeClass('selected');
+    if (this.selectedItem) $(this.selectedItem.el).removeClass('gradient_selected');
     this.selectedItem = null;
   },
 

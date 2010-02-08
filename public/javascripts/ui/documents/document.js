@@ -69,7 +69,9 @@ dc.ui.Document = dc.View.extend({
   },
 
   _setSelected : function() {
-    this.setMode(this.model.get('selected') ? 'is' : 'not', 'selected');
+    var sel = this.model.get('selected');
+    this.setMode(sel ? 'is' : 'not', 'selected');
+    $(this.el).toggleClass('gradient_selected', !!sel);
   },
 
   _onDocumentChange : function() {

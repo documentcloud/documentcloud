@@ -8,6 +8,7 @@
   <%= include_stylesheets *css %>
   <%= include_javascripts :core %>
   <!--[if IE]>
+    <%= include_stylesheets :ie_only, :embed_assets => false %>
     <%= include_javascripts :ie_only %>
   <![endif]-->
   <%= include_templates :ui %>
@@ -16,7 +17,7 @@
 <body class="workspace <%= @current_account ? 'logged_in' : '' %> <%= @bodyclass %>">
 
   <div id="container">
-    <div id="topbar" class="header">
+    <div id="topbar" class="header gradient_mid">
       <div id="cloud_edge"></div>
       <div id="wordmark" class="logo_words"><a href="/">DocumentCloud</a></div>
       <h1 id="title" class="logo_words"><%= @title %></h1>

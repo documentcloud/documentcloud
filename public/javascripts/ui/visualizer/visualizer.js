@@ -117,7 +117,7 @@ dc.ui.Visualizer = dc.View.extend({
     piece = Math.PI * 2 / this.topMetadata.length;
 
     _.each(this.topMetadata, function(meta, i) {
-      var metaEl = $($.el('div', {'class' : 'datum'}, meta.get('value')));
+      var metaEl = $($.el('div', {'class' : 'datum gradient_white'}, meta.get('value')));
       el.append(metaEl[0]);
       metaEl.bind('mouseenter', meta, me.highlightDatum);
       metaEl.bind('mouseleave', meta, me.highlightOff);

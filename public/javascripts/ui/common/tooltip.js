@@ -1,6 +1,7 @@
 dc.ui.Tooltip = dc.View.extend({
 
-  id : 'tooltip',
+  id        : 'tooltip',
+  className : 'gradient_white',
 
   OFFSET : 5,
 

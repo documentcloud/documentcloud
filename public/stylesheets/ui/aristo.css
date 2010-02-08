@@ -191,9 +191,6 @@ header, div.header {
   height: 50px;
   text-align: center;
   border-bottom: 2px solid #979797;
-  background: #d7d7d7;
-  background: -webkit-gradient(linear, left top, left bottom, from(#EAEAEA), to(#C2C2C2));
-  background: -moz-linear-gradient(top, #EAEAEA, #C2C2C2);
   text-shadow: 0px 1px 1px #fff;
   color: #2C2C2C;
 }

@@ -4,8 +4,6 @@
   position: absolute;
   left: 0; bottom: 0px;
   width: 255px; height: 22px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dfdfdf));
-  background: -moz-linear-gradient(top, #ffffff, #dfdfdf);
   padding: 7px 7px 7px 47px;
   font: 11px/22px Arial;
   color: #454545;
@@ -47,10 +45,6 @@
   #account_dialog table {
     width: 100%;
   }
-    #account_dialog tbody tr {
-      background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#dfdfdf));
-      background: -moz-linear-gradient(top, #fefefe, #dfdfdf);
-    }
     #account_dialog td {
       padding: 10px;
       vertical-align: middle;
