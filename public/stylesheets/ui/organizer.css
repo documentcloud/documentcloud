@@ -10,7 +10,7 @@
     }
       #organizer .nametag .button {
         float: left;
-        width: 120px;
+        width: 121px;
         cursor: pointer;
         color: #254555;
       }
@@ -19,6 +19,7 @@
         }
         #organizer .nametag .button:first-child {
           border-right: 1px dotted #d0d0d0;
+          width: 115px;
           padding-right: 15px;
           margin-right: 15px;
         }

@@ -169,10 +169,11 @@ span.text_input input {
   }
   .menu_content .autofilter_input {
     font-size: 11px;
+    line-height: 0;
     margin: 0 0 5px 19px;
-    width: 121px; height: 7px;
+    width: 121px; height: 11px;
     border: 1px solid #ddd;
-    padding: 0;
+    padding: 1px 4px 2px 4px !important;
   }
 
 /*------------------------------ Dialog Boxes --------------------------------*/
