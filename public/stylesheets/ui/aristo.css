@@ -48,6 +48,10 @@ button.default {
   -moz-border-image: url(/images/aristo/default-button-bezel.png) 2 2 2 2 stretch stretch;
 }
 
+button.warn {
+  color: #aa3333;
+}
+
 button:hover:not(:disabled) {
   -webkit-box-shadow: 0 0 15px #D4D4D4;
   -moz-box-shadow: 0 0 15px #D4D4D4;

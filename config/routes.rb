@@ -38,9 +38,6 @@ ActionController::Routing::Routes.draw do |map|
     accounts.enable_account '/accounts/enable/:key', :action => 'enable'
   end
 
-  # Saved Searches.
-  map.resources :saved_searches
-
   # Projects.
   map.resources :projects, :member => {:documents => :get}
 

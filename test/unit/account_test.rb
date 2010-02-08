@@ -10,7 +10,6 @@ class AccountTest < ActiveSupport::TestCase
 
     should_belong_to :organization
     should_have_many :projects
-    should_have_many :saved_searches
     should_have_one  :security_key
 
     should "not be able to log in with a bad password" do

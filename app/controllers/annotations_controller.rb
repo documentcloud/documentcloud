@@ -8,7 +8,7 @@ class AnnotationsController < ApplicationController
   def create
     return forbidden unless params[:access].to_i == PRIVATE || current_account.owns?(current_document)
     json current_document.annotations.create(
-      pick_params(:page_number, :title, :content, :location, :access).merge({
+      pick(params, :page_number, :title, :content, :location, :access).merge({
         :account_id => current_account.id, :organization_id => current_organization.id
       })
     )
@@ -17,7 +17,7 @@ class AnnotationsController < ApplicationController
   # You can only alter annotations that you've made yourself.
   def update
     return forbidden unless current_account.owns?(current_annotation)
-    current_annotation.update_attributes(pick_params(:title, :content))
+    current_annotation.update_attributes(pick(params, :title, :content))
     json current_annotation
   end
 

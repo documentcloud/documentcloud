@@ -3,26 +3,26 @@ dc.ui.Dialog = dc.View.extend({
   className : 'dialog',
 
   callbacks : {
-    '.cancel.click':              'cancel',
-    '.ok.click':                  'confirm',
-    'input.content.keypress':  '_maybeConfirm'
+    '.cancel.click':  'cancel',
+    '.ok.click':      'confirm'
   },
 
   constructor : function(options) {
     this.base(options);
     if (this.options.mode) this.setMode(this.options.mode, 'dialog');
-    _.bindAll(this, 'close');
+    _.bindAll(this, 'close', '_maybeConfirm');
   },
 
   render : function() {
     $(this.el).html(JST.dialog(this.options));
     this.contentEl = $('.content', this.el);
     this.controlsEl = $('.controls', this.el);
-    if (this.options.content) this.contentEl.text(this.options.content);
+    if (this.options.content) this.contentEl.val(this.options.content);
     $(document.body).append(this.el);
     $(this.el).align($('#content')[0] || document.body, null, {top : -100});
     $(this.el).draggable();
     this.setCallbacks();
+    if (this._returnCloses()) $(document.body).bind('keypress', this._maybeConfirm);
     if (this.contentEl[0]) this.contentEl.focus();
     return this;
   },
@@ -56,10 +56,15 @@ dc.ui.Dialog = dc.View.extend({
   close : function() {
     if (this.options.onClose) this.options.onClose(this);
     $(this.el).remove();
+    if (this._returnCloses()) $(document.body).unbind('keypress', this._maybeConfirm);
+  },
+
+  _returnCloses : function() {
+    return this.options.mode == 'alert' || this.options.mode == 'short_prompt';
   },
 
   _maybeConfirm : function(e) {
-    if (this.options.mode == 'short_prompt' && e.keyCode == 13) this.confirm();
+    if (e.keyCode == 13) this.confirm();
   }
 
 }, {
@@ -67,18 +72,19 @@ dc.ui.Dialog = dc.View.extend({
   alert : function(text) {
     return new dc.ui.Dialog({
       mode  : 'alert',
-      title : 'Error',
+      title : 'Alert',
       text  : text
     }).render();
   },
 
   prompt : function(text, content, callback, shortPrompt) {
+    var onConfirm = callback && function(dialog){ return callback(dialog.val()); };
     return new dc.ui.Dialog({
       mode      : shortPrompt ? 'short_prompt' : 'prompt',
       title     : text,
       text      : '',
       content   : content,
-      onConfirm : function(dialog){ return callback(dialog.val()); }
+      onConfirm : onConfirm
     }).render();
   },
 

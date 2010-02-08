@@ -17,9 +17,6 @@ TODO:
     published document, ensuring that it's not 404'd.
 
   * Make some pretty 404/500/403 pages.
-  
-  * Take a stance one way or the other on foreign keys -- anecdotal evidence
-    puts their insertion time at 7X greater, so let's turn them off.
 
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Make 'em removable.
@@ -57,6 +54,9 @@ AFTER BETA:
   
 
 DONE:
+
+  * Take a stance one way or the other on foreign keys -- anecdotal evidence
+    puts their insertion time at 7X greater, so let's turn them off.
 
   * Switch up projects to use a real join table.
 

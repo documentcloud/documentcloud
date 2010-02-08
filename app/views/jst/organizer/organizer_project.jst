@@ -3,6 +3,6 @@
   <%= title %>
 </div>
 <div class="counts">
-  <%= document_count %> <%= Inflector.pluralize('document', document_count) %>, 
-  <%= note_count %> <%= Inflector.pluralize('note', note_count) %><span class="edit">, <u>edit</u></span>
+  <%= document_ids.length %> <%= Inflector.pluralize('document', document_ids.length) %>,
+  <%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %><span class="edit">, <u>edit</u></span>
 </div>

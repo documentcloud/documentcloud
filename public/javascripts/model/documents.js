@@ -26,12 +26,6 @@ dc.model.Document = dc.Model.extend({
     });
   },
 
-  // Bookmarks are deprecated -- to be removed.
-  // bookmark : function(pageNumber) {
-  //   var bookmark = new dc.model.Bookmark({title : this.get('title'), page_number : pageNumber, document_id : this.id});
-  //   Bookmarks.create(bookmark);
-  // },
-
   // Inspect.
   toString : function() {
     return 'Document ' + this.id + ' "' + this.get('title') + '"';

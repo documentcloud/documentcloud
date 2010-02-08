@@ -7,11 +7,11 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    json current_account.projects.create(pick_params(:title, :document_ids))
+    json current_account.projects.create(pick(:json, :title, :document_ids))
   end
 
   def update
-    current_project.update_attributes(pick_params(:title, :document_ids))
+    current_project.update_attributes(pick(:json, :title, :document_ids))
     json current_project
   end
 

@@ -4,7 +4,7 @@ dc.ui.Project = dc.View.extend({
 
   callbacks : {
     'el.click'           : 'showDocuments',
-    '.icon.delete.click' : 'deleteProject'
+    '.edit.click'        : 'editProject'
   },
 
   constructor : function(options) {
@@ -15,12 +15,7 @@ dc.ui.Project = dc.View.extend({
   },
 
   render : function() {
-    var data = {
-      title           : this.model.get('title'),
-      document_count  : this.model.documentCount(),
-      note_count      : this.model.get('annotation_count')
-    };
-    $(this.el).html(JST.organizer_project(data));
+    $(this.el).html(JST.organizer_project(this.model.attributes()));
     $(this.el).attr({id : "project_" + this.model.cid, 'data-project-cid' : this.model.cid});
     this.setCallbacks();
     return this;
@@ -35,9 +30,9 @@ dc.ui.Project = dc.View.extend({
     $(this.el).setMode('is', 'open');
   },
 
-  deleteProject : function(e) {
-    e.stopPropagation();
-    Projects.destroy(this.model);
+  editProject : function(e) {
+    $(document.body).append((new dc.ui.ProjectDialog({model : this.model})).render().el);
+    return false;
   }
 
 }, {

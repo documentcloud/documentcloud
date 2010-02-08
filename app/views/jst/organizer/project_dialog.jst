@@ -1,0 +1,13 @@
+<span class="text_input small">
+  <span><input name="title" id="project_title" type="text" value="<%= title %>" /></span>
+</span>
+<label for="project_title">
+  Title:
+</label>
+
+<div class="counts">
+  <%= document_ids.length %> <%= Inflector.pluralize('document', document_ids.length) %>,
+  <%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %>
+</div>
+
+<button class="delete warn">delete</button>

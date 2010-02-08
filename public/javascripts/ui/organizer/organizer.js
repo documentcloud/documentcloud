@@ -53,7 +53,7 @@ dc.ui.Organizer = dc.View.extend({
     dc.ui.Dialog.prompt('Create a New Project', '', function(title) {
       if (!title) return;
       if (Projects.find(title)) return me._warnAlreadyExists();
-      var project = new dc.model.Project({title : title});
+      var project = new dc.model.Project({title : title, annotation_count : 0, document_ids : []});
       Projects.create(project, null, {error : function() { Projects.remove(project); }});
       return true;
     }, true);

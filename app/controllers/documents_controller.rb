@@ -26,9 +26,11 @@ class DocumentsController < ApplicationController
 
   def update
     current_document(true)
-    access = params[:access].to_i
+    json = JSON.parse(params[:json])
+    access = json[:access].to_i
     current_document.set_access(access) if current_document.access != access
-    json current_document.update_attributes(pick_params(:summary))
+    current_document.update_attributes(:summary => json[:summary]) if json[:summary]
+    json current_document
   end
 
   def destroy
@@ -72,7 +74,7 @@ class DocumentsController < ApplicationController
   def set_page_text
     return not_found unless current_page
     return forbidden unless current_account.owns?(current_page)
-    json current_page.update_attributes(pick_params(:text))
+    json current_page.update_attributes(pick(params, :text))
   end
 
   def search

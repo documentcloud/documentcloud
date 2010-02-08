@@ -23,7 +23,7 @@ dc.model.RESTfulSet = dc.Set.extend({
     $.ajax({
       url       : '/' + this.resource,
       type      : 'POST',
-      data      : model.attributes(),
+      data      : {json : JSON.stringify(model.attributes())},
       dataType  : 'json',
       success   : _.bind(this._handleSuccess, this, model, options.success),
       error     : _.bind(this._handleError, this, model, options.error)
@@ -52,7 +52,7 @@ dc.model.RESTfulSet = dc.Set.extend({
     $.ajax({
       url       : '/' + this.resource + '/' + model.id,
       type      : 'POST',
-      data      : _.extend(model.attributes(), {_method : 'put'}),
+      data      : {json : JSON.stringify(model.attributes()), _method : 'put'},
       dataType  : 'json',
       success   : _.bind(this._handleSuccess, this, model, options.success),
       error     : _.bind(this._handleError, this, model, options.error)
