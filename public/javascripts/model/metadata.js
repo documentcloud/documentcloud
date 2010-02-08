@@ -27,7 +27,7 @@ dc.model.Metadatum = dc.Model.extend({
     return instance;
   },
 
-  // Look up and cache the set of documentIds from the metadata instances.
+  // Look up and cache the set of document_ids from the metadata instances.
   documentIds : function() {
     return this._docIds = this._docIds || _.pluck(this.get('instances'), 'document_id');
   },

@@ -145,7 +145,7 @@ module DC
       def generate_projects_sql
         return unless @account
         projects = @account.projects.all(:conditions => {:title => @projects})
-        doc_ids = projects.map(&:split_document_ids).flatten.uniq
+        doc_ids = projects.map(&:document_ids).flatten.uniq
         @sql << "documents.id in (?)"
         @interpolations << doc_ids
       end

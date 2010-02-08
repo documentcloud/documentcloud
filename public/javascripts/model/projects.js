@@ -6,19 +6,14 @@ dc.model.Project = dc.Model.extend({
 
   viewClass : 'Project',
 
-  documentIds : function() {
-    if (!this.get('document_ids')) return [];
-    return this.get('document_ids').split(',');
-  },
-
   documentCount : function() {
-    return this.documentIds().length;
+    return this.get('document_ids').length;
   },
 
   addDocuments : function(documents) {
     var ids = _.pluck(documents, 'id');
-    var newIds = _.uniq(this.documentIds().concat(ids));
-    Projects.update(this, {document_ids : newIds.join(',')});
+    var newIds = _.uniq(this.get('document_ids').concat(ids));
+    Projects.update(this, {document_ids : newIds});
   },
 
   // Return the title of this project as a search parameter.

@@ -6,8 +6,6 @@ TODO:
   * Add the summary as a field prior to upload.
           
   * Come up with something reasonable to have on the home screen.
-
-  * Switch up projects to use a real join table.
         
   * Make search degrade gracefully in the viewer, when DocumentCloud is down.
   
@@ -59,6 +57,8 @@ AFTER BETA:
   
 
 DONE:
+
+  * Switch up projects to use a real join table.
 
   * Add OpenCalais logo to comply with TOS.
 
