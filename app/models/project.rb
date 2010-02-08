@@ -20,7 +20,7 @@ class Project < ActiveRecord::Base
   def to_json(opts={})
     attributes.merge(
       :annotation_count => annotation_count,
-      :document_ids     => document_ids
+      :document_ids     => project_memberships.map {|m| m.document_id }
     ).to_json
   end
 

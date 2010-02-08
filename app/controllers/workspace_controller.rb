@@ -7,7 +7,11 @@ class WorkspaceController < ApplicationController
   # Main documentcloud.org page. Renders the workspace if logged in or
   # searching, the home page otherwise.
   def index
-    return if (current_organization && current_account) || results_request?
+    if current_organization && current_account
+      @projects = current_account.projects.all(:include => ['project_memberships']).to_json
+      @processing_jobs = current_account.processing_jobs.all
+      return
+    end
     return redirect_to('/home') unless request.headers['Authorization']
     render :action => 'home', :layout => 'empty'
   end
