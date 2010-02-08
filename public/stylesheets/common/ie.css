@@ -1,3 +1,7 @@
+html {
+  overflow: auto;
+}
+
 a {
   color: #254555;
 }
