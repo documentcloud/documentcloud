@@ -16,8 +16,7 @@ module DC
 
       def drop_foreign_key(from_table, to_table)
         constraint_name = "fk_#{to_table.singularize}_id"
-        execute "alter table #{from_table} drop foreign key #{constraint_name}"
-        execute "alter table #{from_table} drop key #{constraint_name}"
+        execute "alter table #{from_table} drop constraint #{constraint_name}"
       end
 
       def disable_foreign_keys

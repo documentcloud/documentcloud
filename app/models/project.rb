@@ -4,6 +4,8 @@
 class Project < ActiveRecord::Base
 
   belongs_to :account
+  has_many :project_memberships, :dependent => :destroy
+  # has_many :documents,           :through => :project_memberships
 
   validates_presence_of :title
   validates_uniqueness_of :title, :scope => :account_id
