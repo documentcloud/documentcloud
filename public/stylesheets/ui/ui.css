@@ -5,9 +5,6 @@ span[role="link"] {
 }
 
 .serif, .serif * {
-  font-family: Georgia, serif;
-}
-.super_serif, .super_serif * {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
 }
 
