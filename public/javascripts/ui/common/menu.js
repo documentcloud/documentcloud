@@ -34,13 +34,14 @@ dc.ui.Menu = dc.View.extend({
   },
 
   open : function() {
+    var content = this.content;
     if (this.modes.open == 'is') return;
     this.setMode('is', 'open');
     if (this.options.onOpen) this.options.onOpen(this);
-    this.content.show();
-    this.content.align(this.el, '-left bottom', {top : 1});
-    this.content.autohide({onHide : this.close});
-    if (this.options.autofilter) $('input', this.content).focus();
+    content.show();
+    content.align(this.el, '-left bottom', {top : 1});
+    content.autohide({onHide : this.close});
+    if (this.options.autofilter) _.defer(function(){ $('input', content).focus(); });
   },
 
   close : function(e) {

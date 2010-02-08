@@ -15,15 +15,15 @@ dc.ui.Dialog = dc.View.extend({
 
   render : function() {
     $(this.el).html(JST.dialog(this.options));
-    this.contentEl = $('.content', this.el);
+    var cel = this.contentEl = $('.content', this.el);
     this.controlsEl = $('.controls', this.el);
-    if (this.options.content) this.contentEl.val(this.options.content);
+    if (this.options.content) cel.val(this.options.content);
     $(document.body).append(this.el);
     $(this.el).align($('#content')[0] || document.body, null, {top : -100});
     $(this.el).draggable();
     this.setCallbacks();
     if (this._returnCloses()) $(document.body).bind('keypress', this._maybeConfirm);
-    if (this.contentEl[0]) this.contentEl.focus();
+    if (cel[0]) _.defer(function(){ cel.focus(); });
     return this;
   },
 

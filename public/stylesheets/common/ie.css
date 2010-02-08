@@ -16,9 +16,17 @@ button {
   }
 
 /*---------------------- Drop-shadow replacements ----------------------------*/
+.minibutton {
+  border: 1px solid #ccc;
+}
+
 img.doc,
 div.dialog,
-.minibutton,
 .menu_content {
-  border: 1px solid #ccc;
+  margin: -6px 0 0 -6px;
+  filter:
+    progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=45,strength=3)
+    progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=135,strength=3)
+    progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=225,strength=3)
+    progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=315,strength=3);
 }
