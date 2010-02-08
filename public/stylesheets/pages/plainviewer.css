@@ -15,6 +15,7 @@
     border: 0;
     background: #d7d7d7;
     background: -webkit-gradient(linear, left top, left bottom, from(#EAEAEA), to(#C2C2C2));
+    background: -moz-linear-gradient(top, #EAEAEA, #C2C2C2);
     text-shadow: 0px 1px 1px #fff;
     color: #2C2C2C;
   }
@@ -30,6 +31,7 @@
       border: 1px solid #999;
       border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
       background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#c4c4c4));
+      background: -moz-linear-gradient(top, #fefefe, #c4c4c4);
       text-shadow: 0px 1px 1px #fff;
       cursor: pointer;
     }
@@ -55,6 +57,7 @@
   background: #e3e3e3;
   color: black !important;
   background: -webkit-gradient(linear, left top, left bottom, from(#E3E3E3), to(#C2C2C2));
+  background: -moz-linear-gradient(top, #E3E3E3, #C2C2C2);
 }
   .DV-views #DV-documentView a {
     -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
@@ -67,4 +70,5 @@
   .DV-viewText .DV-views #DV-textView a,
   .DV-viewSearch .DV-views #DV-textView a {
     background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#a0a0a0));
+    background: -moz-linear-gradient(top, #fff, #a0a0a0);
   }

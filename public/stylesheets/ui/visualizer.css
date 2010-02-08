@@ -20,6 +20,7 @@
   background: white;
   cursor: crosshair;
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+  background: -moz-linear-gradient(top, #fff, #eee);
   -moz-border-radius: 3px; -webkit-border-radius: 3px;
   -webkit-box-shadow: 0 0px 10px #999; -moz-box-shadow: 0 0px 10px #999;
 }

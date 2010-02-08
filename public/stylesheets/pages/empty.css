@@ -2,7 +2,6 @@ body.empty #container {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background: #e9e9e9;
-  background: -webkit-gradient(radial, center top, 0, 0 0, 1500, from(rgb(245,245,245)), to(rgb(155,155,155)));
   overflow-y: auto;
 }
   body.empty #content {

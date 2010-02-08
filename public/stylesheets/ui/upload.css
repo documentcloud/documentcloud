@@ -80,4 +80,5 @@
       -webkit-border-radius: 6px; -moz-border-radius: 6px;
       background: #ddddff;
       background: -webkit-gradient(linear, left top, left bottom, from(#f9f9ff), to(#ddddff));
+      background: -moz-linear-gradient(top, #f9f9ff, #ddddff);
     }

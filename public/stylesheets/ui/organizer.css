@@ -46,6 +46,7 @@
       #organizer .box:hover, #organizer .box.hover {
         background-color: #ffffe5;
         background: -webkit-gradient(linear, left top, left bottom, from(#fffffa), to(#ffe));
+        background: -moz-linear-gradient(top, #fffffa, #ffe);
       }
       #organizer .box .pointer {
         width: 10px; height: 19px;

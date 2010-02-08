@@ -92,9 +92,9 @@ $.fn.extend({
     group = group || 'mode';
     var re = new RegExp("\\w+_" + group + "(\\s|$)", 'g');
     var mode = (state === null) ? "" : state + "_" + group;
-    var name = this[0].className.replace(re, '') + ' ' + mode;
-    name = name.replace(/\s\s/g, ' ');
-    this.each(function(){ this.className = name; });
+    this.each(function(){
+      this.className = (this.className.replace(re, '') + ' ' + mode).replace(/\s\s/g, ' ');
+    });
     return mode;
   },
 

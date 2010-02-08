@@ -49,12 +49,6 @@ _.extend(dc.app.workspace, {
     dc.app.uploader.render();
     this.panel.add('document_list', this.documentList.render().el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
-    this.warnNonWebkit();
-  },
-
-  // For now, the prototype only supports webkit-based browsers.
-  warnNonWebkit : function() {
-    if (!$.browser.safari) dc.ui.Dialog.alert('Please use a webkit-based browser, for the time being...');
   }
 
 });
