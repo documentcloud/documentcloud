@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   def pick(hash, *keys)
     hash = JSON.parse(params[:json]) if hash == :json
     filtered = {}
-    hash.each {|key, value| filtered[key] = value if keys.include?(key.to_sym) }
+    hash.each {|key, value| filtered[key.to_sym] = value if keys.include?(key.to_sym) }
     filtered
   end
 

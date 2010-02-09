@@ -26,9 +26,9 @@ class DocumentsController < ApplicationController
 
   def update
     current_document(true)
-    json = JSON.parse(params[:json])
-    access = json[:access].to_i
-    current_document.set_access(access) if current_document.access != access
+    json = JSON.parse(params[:json]).symbolize_keys
+    access = json[:access] && json[:access].to_i
+    current_document.set_access(access) if access && current_document.access != access
     current_document.update_attributes(:summary => json[:summary]) if json[:summary]
     json current_document
   end
