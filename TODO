@@ -1,6 +1,6 @@
 TODO:
 
-  * Do the cross-browser hurly-burly runaround.
+  * Add an "invisible" access level for takedowns.
           
   * Add the summary as a field prior to upload.
           
@@ -54,6 +54,8 @@ AFTER BETA:
   
 
 DONE:
+
+  * Do the cross-browser hurly-burly runaround.
 
   * Make some pretty 404/500/403 pages.
   
