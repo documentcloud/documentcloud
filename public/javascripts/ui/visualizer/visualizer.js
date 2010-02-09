@@ -12,11 +12,11 @@ dc.ui.Visualizer = dc.View.extend({
   callbacks : {},
 
   constructor : function(options) {
-    _.bindAll(this, 'open', 'close', 'gatherMetadata', 'renderVisualization', 'highlightDatum', 'highlightOff', 'onResize');
+    _.bindAll(this, 'open', 'close', 'gatherMetadata', 'lazyRender', 'highlightDatum', 'highlightOff', 'onResize');
     this.base(options);
     this.topMetadata = [];
     $(window).resize(this.onResize);
-    Documents.bind(Documents.SELECTION_CHANGED, this.renderVisualization);
+    Documents.bind(Documents.SELECTION_CHANGED, this.lazyRender);
   },
 
   open : function(kind) {
@@ -28,8 +28,8 @@ dc.ui.Visualizer = dc.View.extend({
     this.setMode('linear', 'format');
     $(document.body).addClass('visualize');
     dc.history.save(this.urlFragment());
-    if (Metadata.empty()) return Metadata.populate(this.renderVisualization);
-    this.renderVisualization();
+    if (Metadata.empty()) return Metadata.populate(this.lazyRender);
+    this.lazyRender();
   },
 
   close : function(e) {
@@ -57,7 +57,7 @@ dc.ui.Visualizer = dc.View.extend({
         return meta.get('kind') == filter;
       })
       .slice(0, this.METADATA_LIMIT)
-      .sortBy(function(meta){ return docIds.indexOf(meta.firstId()); })
+      .sortBy(function(meta){ return _.indexOf(docIds, meta.firstId()); })
       .value();
   },
 
@@ -87,10 +87,20 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   onResize : function() {
-    if (this._open && !this.empty()) this.renderVisualization();
+    if (this._open && !this.empty()) this._renderVisualization();
   },
 
-  renderVisualization : function() {
+  // Prevent multiple calls to render from actually drawing more than once.
+  lazyRender : function() {
+    var me = this;
+    if (me._timeout) clearTimeout(me._timeout);
+    me._timeout = setTimeout(function() {
+      me._renderVisualization();
+      me._timeout = null;
+    }, 100);
+  },
+
+  _renderVisualization : function() {
     this.gatherMetadata();
     var me = this;
     var el = $(this.el);
@@ -129,7 +139,7 @@ dc.ui.Visualizer = dc.View.extend({
 
       _.each(meta.get('instances'), function(instance) {
         var docId = instance.document_id;
-        if (selectedIds.indexOf(docId) < 0) return;
+        if (_.indexOf(selectedIds, docId) < 0) return;
         var del   = $('#document_' + docId);
         var dpos  = del.position();
         var docx  = dpos.left + del.outerWidth() / 2, docy = dpos.top + del.height() / 2;
