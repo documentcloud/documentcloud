@@ -29,6 +29,7 @@
     margin-bottom: 15px;
   }
   img.doc {
+    background: white;
     position: absolute;
     width: 60px; height: 75px;
     -webkit-box-shadow: 0 0px 5px #777; -moz-box-shadow: 0 0px 5px #777;
