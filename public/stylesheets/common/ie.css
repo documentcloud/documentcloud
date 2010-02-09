@@ -36,7 +36,8 @@ button {
 
 img.doc,
 div.dialog .dialog_background,
-.menu_content {
+.menu_content,
+#tooltip_background {
   margin: -6px 0 0 -6px;
   filter:
     progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=45,strength=3)
@@ -44,7 +45,8 @@ div.dialog .dialog_background,
     progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=225,strength=3)
     progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=315,strength=3);
 }
-  div.dialog .dialog_background {
+  div.dialog .dialog_background,
+  #tooltip_background {
     top: 0; left: 0;
     right: 6px; bottom: 6px;
   }

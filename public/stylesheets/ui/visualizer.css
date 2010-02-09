@@ -59,6 +59,7 @@ body.visualize #document_list .document {
 
 #timeline_dialog {
   max-width: none;
+  width: 820px;
 }
   #timeline_dialog .text {
     padding: 3px 3px 20px 3px;

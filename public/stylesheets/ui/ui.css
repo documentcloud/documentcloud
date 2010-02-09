@@ -226,7 +226,8 @@ div.dialog {
   z-index: 1000;
   font: 12px Arial;
 }
-  div.dialog.short_prompt_dialog {
+  div.dialog.short_prompt_dialog,
+  div.dialog.alert_dialog {
     width: 300px;
   }
   div.dialog .dialog_background {
@@ -310,6 +311,11 @@ iframe.hidden_iframe {
     border-width: 0;
     padding: 4px 8px;
     font: 11px/14px Arial;
-    -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
-    -webkit-box-shadow: 0 0px 10px #777; -moz-box-shadow: 0 0px 7px #777;
   }
+    #tooltip_background {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: -1;
+      -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
+      -webkit-box-shadow: 0 0px 10px #777; -moz-box-shadow: 0 0px 7px #777;
+    }
