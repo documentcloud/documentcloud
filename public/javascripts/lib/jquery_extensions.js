@@ -164,6 +164,7 @@ $.fn.extend({
       }, el);
 
       var dragEnd = _.bind(function(e) {
+        $(document.body).unbind('selectstart', stopEvent);
         $(document.body).unbind('mouseup', dragEnd);
         $(document.body).unbind('mousemove', drag);
         $(ghost || el).removeClass('dragging');
@@ -188,6 +189,7 @@ $.fn.extend({
           x    : e.pageX,
           y    : e.pageY
         };
+        $(document.body).bind('selectstart', stopEvent);
         $(document.body).bind('mouseup', dragEnd);
         $(document.body).bind('mousemove', drag);
       }, el);

@@ -80,12 +80,17 @@ a {
 #sidebar {
   position: absolute;
   top: 0px; left: 0px; bottom: 38px;
-  background: #e5e5e5;
   border-right: 1px solid #ddd;
   width: 310px;
-  -webkit-box-shadow: 0 0 25px #ddd; -moz-box-shadow: 0 0 25px #ddd;
   z-index: 5;
 }
+  #sidebar_background {
+    background: #e5e5e5;
+    position: absolute;
+    top: 0; left: 0; bottom: -38px; right: 0;
+    -webkit-box-shadow: 0 0 25px #ddd;
+    -moz-box-shadow: 0 0 25px #ddd;
+  }
   #sidebar_content {
 
   }

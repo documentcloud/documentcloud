@@ -6,6 +6,11 @@ a {
   color: #254555;
 }
 
+select {
+  font-size: 11px;
+  height: 20px !important;
+}
+
 button {
   border: 1px solid #bbb;
   font: bold 12px Arial;
@@ -24,8 +29,13 @@ button {
   border: 1px solid #ccc;
 }
 
+#sidebar_background {
+  filter:
+    progid:DXImageTransform.Microsoft.Shadow(color=#EAEAEA,direction=90,strength=15);
+}
+
 img.doc,
-div.dialog,
+div.dialog .dialog_background,
 .menu_content {
   margin: -6px 0 0 -6px;
   filter:
@@ -33,4 +43,9 @@ div.dialog,
     progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=135,strength=3)
     progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=225,strength=3)
     progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=315,strength=3);
+}
+
+/*------------------------------ Specific tweaks ---------------------------------*/
+#upload_dialog {
+  width: 530px;
 }

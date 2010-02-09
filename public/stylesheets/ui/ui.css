@@ -191,7 +191,6 @@ div.text_input {
     .menu_content .menu_item:hover,
     .menu_content .menu_item.selected {
       background-color: #ffffe5;
-/*      background: #f0f0ff;*/
     }
   .menu_content .menu_autofilter .icon {
     position: absolute;
@@ -212,7 +211,6 @@ div.text_input {
   }
   .menu_content .autofilter_input {
     font-size: 11px;
-    line-height: 0;
     margin: 0 0 5px 19px;
     width: 121px; height: 11px;
     border: 1px solid #ddd;
@@ -224,13 +222,21 @@ div.dialog {
   position: absolute;
   min-width: 300px;
   max-width: 600px;
-  background: #f7f7f7;
+  padding-top: 27px;
   z-index: 1000;
   font: 12px Arial;
-  -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-  -webkit-box-shadow: 0 5px 50px #888; -moz-box-shadow: 0 5px 50px #888;
 }
+  div.dialog .dialog_background {
+    position: absolute;
+    z-index: -1;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #f7f7f7;
+    -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+    -webkit-box-shadow: 0 5px 50px #888; -moz-box-shadow: 0 5px 50px #888;
+  }
   div.dialog .title {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 16px;
     padding: 5px 10px;
     font: 14px Arial;
     color: #454545;

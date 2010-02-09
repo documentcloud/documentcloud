@@ -8,6 +8,7 @@
   font: 11px/22px Arial;
   color: #454545;
   border: 1px solid #ddd;
+  z-index: 5;
 }
   .account_view.badge img.avatar {
     position: absolute; left: 15px;
