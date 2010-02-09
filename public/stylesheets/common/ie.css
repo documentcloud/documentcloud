@@ -14,7 +14,8 @@ select {
 button {
   border: 1px solid #bbb;
   font: bold 12px Arial;
-  padding: 3px;
+  overflow: visible;
+  padding: 3px 8px;
   color: #454545;
   outline: 0;
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#CCCCCC');
