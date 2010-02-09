@@ -17,33 +17,8 @@
     position: absolute;
     left: 125px;
   }
-
-.panel_container .document_upload.panel {
-  padding: 20px 25px 25px 25px;
-}
-  .document_upload label {
-    font: bold 16px Arial;
-    line-height: 14px;
-    color: #444;
-    display: block;
-    margin-bottom: 7px;
-  }
-    .document_upload label .example {
-      font: bold italic 11px Arial;
-      color: #666;
-    }
-  .document_upload .text_input,
-  .document_upload input[type="file"],
-  .document_upload select {
-    margin-bottom: 25px;
-    width: 350px;
-    display: block;
-  }
-    .document_upload select {
-      width: auto;
-    }
-  .document_upload option {
-    font: normal 12px Arial;
+  #upload_dialog select {
+    margin-top: 4px;
   }
 
 #no_uploads .icon {

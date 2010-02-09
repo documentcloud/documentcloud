@@ -12,6 +12,10 @@ span[role="link"] {
   display: none;
 }
 
+select {
+  height: 15px;
+}
+
 /*------------------------------ Gradients ---------------------------------*/
 .gradient_selected,
 #organizer .box:hover {
@@ -240,7 +244,7 @@ div.dialog {
     padding: 10px 10px 25px 10px;
   }
     div.dialog .short_prompt {
-      padding-bottom: 10px;
+      padding-bottom: 15px;
     }
   div.dialog .controls button, div.dialog .controls .minibutton {
     float: right;
@@ -250,16 +254,13 @@ div.dialog {
     div.dialog.alert_dialog .minibutton.cancel {
       display: none;
     }
-  div.dialog .content {
+  div.dialog textarea.content {
     border: 1px solid #dadada;
     -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
     resize: none;
-    width: 270px;
+    width: 400px; height: 100px;
+    line-height: 16px;
   }
-    div.dialog textarea.content {
-      width: 400px; height: 100px;
-      line-height: 16px;
-    }
 
 /*------------------------------ Hidden Iframes ------------------------------*/
 iframe.hidden_iframe {
