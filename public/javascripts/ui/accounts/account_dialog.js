@@ -14,6 +14,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     });
     _.bindAll(this, '_renderAccounts');
     this._rendered = false;
+    $(this.el).hide();
   },
 
   render : function() {
