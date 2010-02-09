@@ -7,27 +7,33 @@
     <%= account.fullName(true) %>&nbsp;<span class="pending_notification">(pending)</span>
   </span>
   <div class="edit name_wrapper">
-    <span class="text_input small">
-      <span>
-        <input name="first_name" type="text" placeholder="first name" value="<%= account.get('first_name') %>" />
-      </span>
-    </span>
-    <span class="text_input small">
-      <span>
-        <input name="last_name" type="text" placeholder="last name" value="<%= account.get('last_name') %>" />
-      </span>
-    </span>
+    <div class="text_input small">
+      <div class="background">
+        <div class="inner">
+          <input name="first_name" type="text" placeholder="first name" value="<%= account.get('first_name') %>" />
+        </div>
+      </div>
+    </div>
+    <div class="text_input small">
+      <div class="background">
+        <div class="inner">
+          <input name="last_name" type="text" placeholder="last name" value="<%= account.get('last_name') %>" />
+        </div>
+      </div>
+    </div>
   </div>
 </td>
 <td class="email">
   <span class="display">
     <%= email %>
   </span>
-  <span class="text_input edit small">
-    <span>
-      <input name="email" type="text" placeholder="email" value="<%= email %>" />
-    </span>
-  </span>
+  <div class="text_input edit small">
+    <div class="background">
+      <div class="inner">
+        <input name="email" type="text" placeholder="email" value="<%= email %>" />
+      </div>
+    </div>
+  </div>
 </td>
 <td class="last">
   <span class="edit_account display" role="link">edit</span>
