@@ -1,14 +1,14 @@
 require 'test_helper'
 
 class SearchParserTest < ActiveSupport::TestCase
-  
+
   def search(text)
     @parser.parse(text)
   end
-  
+
   context "The search parser" do
     setup { @parser = DC::Search::Parser.new }
-    
+
     should "parse full text searches as phrases" do
       query = search("I'm a full text phrase")
       assert query.is_a? DC::Search::Query
@@ -16,7 +16,7 @@ class SearchParserTest < ActiveSupport::TestCase
       assert query.has_text?
       assert query.text == "I'm a full text phrase"
     end
-    
+
     should "parse fielded searches into fields" do
       query = search("country: england country:russia organization: 'A B C D'")
       assert !query.has_text?
@@ -26,7 +26,7 @@ class SearchParserTest < ActiveSupport::TestCase
       assert query.fields.last.kind == 'organization'
       assert query.fields.last.value == 'A B C D'
     end
-    
+
     should "be able to handle compound searches" do
       query = search("category: food bacon lettuce tomato country:jamaica")
       assert query.has_fields? && query.has_text?
@@ -35,13 +35,13 @@ class SearchParserTest < ActiveSupport::TestCase
       assert query.fields.last.value == 'jamaica'
       assert query.fields.first.value == 'food'
     end
-    
+
     should "transform boolean ORs into Sphinx-compatible ones" do
       query = search("person:peter mike   OR   tom")
       assert query.has_fields? && query.has_text?
       assert query.text == "mike | tom"
     end
-    
+
     should "pull out title and source fielded searches" do
       query = search("title:launch freedom rides source:times title:duty")
       assert query.attributes[0].value == 'launch'
@@ -52,7 +52,7 @@ class SearchParserTest < ActiveSupport::TestCase
       assert query.attributes[2].kind  == 'title'
       assert query.text == 'freedom rides'
     end
-    
+
   end
-  
+
 end

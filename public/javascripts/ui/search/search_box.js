@@ -139,7 +139,7 @@ dc.ui.SearchBox = dc.View.extend({
     switch (this.menu.val()) {
       case 'all':           scope = '';                                                    break;
       case 'account':       scope = 'documents: ' + Accounts.current().get('email') + ' '; break;
-      case 'organization':  scope = 'organization: ' + dc.app.organization.slug + ' ';     break;
+      case 'organization':  scope = 'contributor: ' + dc.app.organization.slug + ' ';     break;
     }
     this.scopeSearch(scope);
   }

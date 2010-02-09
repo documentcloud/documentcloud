@@ -3,7 +3,7 @@ class Document < ActiveRecord::Base
 
   attr_accessor :highlight
 
-  SEARCHABLE_ATTRIBUTES = [:title, :source, :documents, :notes, :organization]
+  SEARCHABLE_ATTRIBUTES = [:title, :source, :documents, :notes, :contributor]
 
   DEFAULT_TITLE = "Untitled Document"
 

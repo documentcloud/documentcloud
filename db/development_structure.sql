@@ -120,38 +120,6 @@ ALTER SEQUENCE app_constants_id_seq OWNED BY app_constants.id;
 
 
 --
--- Name: bookmarks; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE bookmarks (
-    id integer NOT NULL,
-    account_id integer NOT NULL,
-    document_id integer NOT NULL,
-    page_number integer NOT NULL,
-    title character varying(100) NOT NULL
-);
-
-
---
--- Name: bookmarks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE bookmarks_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: bookmarks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE bookmarks_id_seq OWNED BY bookmarks.id;
-
-
---
 -- Name: documents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -236,8 +204,7 @@ ALTER SEQUENCE full_text_id_seq OWNED BY full_text.id;
 CREATE TABLE projects (
     id integer NOT NULL,
     account_id integer NOT NULL,
-    title character varying(100) NOT NULL,
-    document_ids text
+    title character varying(100) NOT NULL
 );
 
 
@@ -433,21 +400,21 @@ ALTER SEQUENCE processing_jobs_id_seq OWNED BY processing_jobs.id;
 
 
 --
--- Name: saved_searches; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: project_memberships; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE saved_searches (
+CREATE TABLE project_memberships (
     id integer NOT NULL,
-    account_id integer NOT NULL,
-    query character varying(255) NOT NULL
+    project_id integer NOT NULL,
+    document_id integer NOT NULL
 );
 
 
 --
--- Name: saved_searches_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: project_memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE saved_searches_id_seq
+CREATE SEQUENCE project_memberships_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MAXVALUE
@@ -456,10 +423,10 @@ CREATE SEQUENCE saved_searches_id_seq
 
 
 --
--- Name: saved_searches_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: project_memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE saved_searches_id_seq OWNED BY saved_searches.id;
+ALTER SEQUENCE project_memberships_id_seq OWNED BY project_memberships.id;
 
 
 --
@@ -538,67 +505,6 @@ ALTER SEQUENCE security_keys_id_seq OWNED BY security_keys.id;
 
 
 --
--- Name: taggings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE taggings (
-    id integer NOT NULL,
-    tag_id integer NOT NULL,
-    taggable_type character varying(40) NOT NULL,
-    taggable_id integer
-);
-
-
---
--- Name: taggings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE taggings_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: taggings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE taggings_id_seq OWNED BY taggings.id;
-
-
---
--- Name: tags; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE tags (
-    id integer NOT NULL,
-    account_id integer NOT NULL,
-    title character varying(255) NOT NULL
-);
-
-
---
--- Name: tags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE tags_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE tags_id_seq OWNED BY tags.id;
-
-
---
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -617,13 +523,6 @@ ALTER TABLE annotations ALTER COLUMN id SET DEFAULT nextval('annotations_id_seq'
 --
 
 ALTER TABLE app_constants ALTER COLUMN id SET DEFAULT nextval('app_constants_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE bookmarks ALTER COLUMN id SET DEFAULT nextval('bookmarks_id_seq'::regclass);
 
 
 --
@@ -679,14 +578,14 @@ ALTER TABLE processing_jobs ALTER COLUMN id SET DEFAULT nextval('processing_jobs
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE projects ALTER COLUMN id SET DEFAULT nextval('labels_id_seq'::regclass);
+ALTER TABLE project_memberships ALTER COLUMN id SET DEFAULT nextval('project_memberships_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE saved_searches ALTER COLUMN id SET DEFAULT nextval('saved_searches_id_seq'::regclass);
+ALTER TABLE projects ALTER COLUMN id SET DEFAULT nextval('labels_id_seq'::regclass);
 
 
 --
@@ -701,20 +600,6 @@ ALTER TABLE sections ALTER COLUMN id SET DEFAULT nextval('sections_id_seq'::regc
 --
 
 ALTER TABLE security_keys ALTER COLUMN id SET DEFAULT nextval('security_keys_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE taggings ALTER COLUMN id SET DEFAULT nextval('taggings_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclass);
 
 
 --
@@ -739,14 +624,6 @@ ALTER TABLE ONLY annotations
 
 ALTER TABLE ONLY app_constants
     ADD CONSTRAINT app_constants_pkey PRIMARY KEY (id);
-
-
---
--- Name: bookmarks_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY bookmarks
-    ADD CONSTRAINT bookmarks_pkey PRIMARY KEY (id);
 
 
 --
@@ -814,11 +691,11 @@ ALTER TABLE ONLY processing_jobs
 
 
 --
--- Name: saved_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: project_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY saved_searches
-    ADD CONSTRAINT saved_searches_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY project_memberships
+    ADD CONSTRAINT project_memberships_pkey PRIMARY KEY (id);
 
 
 --
@@ -835,22 +712,6 @@ ALTER TABLE ONLY sections
 
 ALTER TABLE ONLY security_keys
     ADD CONSTRAINT security_keys_pkey PRIMARY KEY (id);
-
-
---
--- Name: taggings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY taggings
-    ADD CONSTRAINT taggings_pkey PRIMARY KEY (id);
-
-
---
--- Name: tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY tags
-    ADD CONSTRAINT tags_pkey PRIMARY KEY (id);
 
 
 --
@@ -900,13 +761,6 @@ CREATE UNIQUE INDEX index_accounts_on_email ON accounts USING btree (email);
 --
 
 CREATE INDEX index_annotations_on_document_id ON annotations USING btree (document_id);
-
-
---
--- Name: index_bookmarks_on_account_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_bookmarks_on_account_id ON bookmarks USING btree (account_id);
 
 
 --
@@ -984,13 +838,6 @@ CREATE UNIQUE INDEX index_pages_on_document_id_and_page_number ON pages USING bt
 --
 
 CREATE INDEX index_processing_jobs_on_account_id ON processing_jobs USING btree (account_id);
-
-
---
--- Name: index_saved_searches_on_account_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_saved_searches_on_account_id ON saved_searches USING btree (account_id);
 
 
 --
@@ -1082,22 +929,6 @@ CREATE TRIGGER pages_text_vector_update
 
 
 --
--- Name: fk_account_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY tags
-    ADD CONSTRAINT fk_account_id FOREIGN KEY (account_id) REFERENCES accounts(id);
-
-
---
--- Name: fk_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY taggings
-    ADD CONSTRAINT fk_tag_id FOREIGN KEY (tag_id) REFERENCES tags(id);
-
-
---
 -- PostgreSQL database dump complete
 --
 
@@ -1126,3 +957,7 @@ INSERT INTO schema_migrations (version) VALUES ('20100120194128');
 INSERT INTO schema_migrations (version) VALUES ('20100120205426');
 
 INSERT INTO schema_migrations (version) VALUES ('20100125165305');
+
+INSERT INTO schema_migrations (version) VALUES ('20100208131000');
+
+INSERT INTO schema_migrations (version) VALUES ('20100208151651');
