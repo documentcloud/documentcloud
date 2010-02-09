@@ -19,7 +19,7 @@ dc.ui.Dialog = dc.View.extend({
     this.controlsEl = $('.controls', this.el);
     if (this.options.content) cel.val(this.options.content);
     $(document.body).append(this.el);
-    $(this.el).align($('#content')[0] || document.body, null, {top : -100});
+    this.center();
     $(this.el).draggable();
     this.setCallbacks();
     if (this._returnCloses()) $(document.body).bind('keypress', this._maybeConfirm);
@@ -57,6 +57,10 @@ dc.ui.Dialog = dc.View.extend({
     if (this.options.onClose) this.options.onClose(this);
     $(this.el).remove();
     if (this._returnCloses()) $(document.body).unbind('keypress', this._maybeConfirm);
+  },
+
+  center : function() {
+    $(this.el).align($('#content')[0] || document.body, null, {top : -100});
   },
 
   _returnCloses : function() {

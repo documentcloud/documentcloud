@@ -18,6 +18,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
 
   render : function() {
     this.base();
+    this._rendered = true;
     $('.custom', this.el).html(JST.account_dialog({}));
     this.list = $('#account_list_content', this.el);
     this.setCallbacks();
@@ -27,8 +28,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   },
 
   open : function() {
-    if (!this._rendered) this.render();
-    this._rendered = true;
+    if (!this._rendered) return this.render();
     $(this.el).show();
   },
 
@@ -47,6 +47,8 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
       return (new dc.ui.AccountView(account, 'row')).render().el;
     });
     this.list.append(views);
+    $(this.el).show();
+    this.center();
   }
 
 });
