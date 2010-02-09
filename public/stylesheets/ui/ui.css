@@ -13,7 +13,8 @@ span[role="link"] {
 }
 
 select {
-  height: 15px;
+  font-size: 11px;
+  height: 20px;
 }
 
 /*------------------------------ Gradients ---------------------------------*/

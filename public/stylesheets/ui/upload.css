@@ -17,9 +17,6 @@
     position: absolute;
     left: 125px;
   }
-  #upload_dialog select {
-    margin-top: 4px;
-  }
 
 #no_uploads .icon {
   float: left;

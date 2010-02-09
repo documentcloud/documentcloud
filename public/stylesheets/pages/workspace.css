@@ -42,8 +42,8 @@ a {
     right: 190px; top: 16px; left: 311px;
   }
   #search_type {
-    height: 15px;
     position: absolute;
+    width: 158px;
     right: 15px; top: 18px;
   }
 

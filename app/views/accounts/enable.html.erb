@@ -4,7 +4,7 @@
 %>
 
 <div id="full_screen_form" class="full_page_background">
-  <form action="/accounts/enable/<%= params[:key] %>" method="POST">
+  <form action="/accounts/enable/<%= params[:key] %>" method="POST" autocomplete="off">
     <h1>Enable your DocumentCloud Account</h1>
     <% if @failure %>
       <div class="form_error">
