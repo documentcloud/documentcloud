@@ -33,7 +33,12 @@
   width: 575px;
 }
   #account_dialog .custom {
-    padding: 0 0 20px 0;
+    padding: 0;
+    max-height: 250px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-bottom: 1px solid #bbb;
+    margin-bottom: 15px;
   }
   #account_dialog button.cancel {
     display: none;

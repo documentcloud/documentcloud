@@ -241,11 +241,8 @@ div.dialog {
   }
   div.dialog .text, div.dialog .custom,
   div.dialog .prompt, div.dialog .short_prompt {
-    padding: 10px 10px 25px 10px;
+    padding: 10px 10px 15px 10px;
   }
-    div.dialog .short_prompt {
-      padding-bottom: 15px;
-    }
   div.dialog .controls button, div.dialog .controls .minibutton {
     float: right;
     margin: 0 10px 8px 0;
