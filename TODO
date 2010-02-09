@@ -29,6 +29,9 @@ TODO:
 
 AFTER BETA:
 
+  * Add EPUB-formatted downloads of the documents? Make the reader able to load
+    EPUB?
+
   * Add a "related documents" search. We need a good algorithm for this.
 
   * Implement http://nlp.stanford.edu/software/CRF-NER.shtml, alongside Calais.
