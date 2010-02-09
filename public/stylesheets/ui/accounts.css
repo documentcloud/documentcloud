@@ -45,8 +45,8 @@
     display: none;
   }
   #account_dialog button.new_account {
-    position: absolute;
-    left: 5px; bottom: 3px;
+    float: left;
+    margin-left: 10px;
   }
   #account_dialog table {
     width: 100%;
@@ -76,10 +76,10 @@
   width: 150px;
 }
 #account_dialog .name_wrapper {
-  min-width: 215px;
+  width: 215px;
 }
   #account_dialog .name_wrapper .text_input {
-    display: inline-block;
+    float: left;
     width: 100px;
   }
     #account_dialog .name_wrapper .text_input:first-child {

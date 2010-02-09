@@ -226,6 +226,9 @@ div.dialog {
   z-index: 1000;
   font: 12px Arial;
 }
+  div.dialog.short_prompt_dialog {
+    width: 300px;
+  }
   div.dialog .dialog_background {
     position: absolute;
     z-index: -1;

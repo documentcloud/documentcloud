@@ -19,6 +19,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   render : function() {
     this.base();
     $('.custom', this.el).html(JST.project_dialog(this.model.attributes()));
+    this.appendControl($.el('button', {'class' : 'delete warn'}, 'delete'));
     this.setCallbacks();
     return this;
   },

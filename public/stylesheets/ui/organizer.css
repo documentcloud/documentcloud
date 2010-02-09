@@ -71,22 +71,25 @@
         color: #777;
       }
 
-#project_dialog .custom {
-  padding: 15px 15px 25px 15px;
-  width: 340px;
+#project_dialog {
+  width: 375px;
 }
-  #project_dialog label {
-    display: block;
-    font: bold 13px/25px Arial;
-    color: #454545;
-    margin-bottom: 15px;
+  #project_dialog .custom {
+    padding: 15px 15px 25px 15px;
+    width: 340px;
   }
-  #project_dialog .text_input {
-    position: absolute;
-    right: 12px;
-    width: 300px;
-  }
-  #project_dialog .delete {
-    position: absolute;
-    bottom: 3px; left: 7px;
-  }
+    #project_dialog label {
+      display: block;
+      font: bold 13px/25px Arial;
+      color: #454545;
+      margin-bottom: 10px;
+    }
+    #project_dialog .text_input {
+      position: absolute;
+      right: 12px;
+      width: 300px;
+    }
+    #project_dialog .delete {
+      float: left;
+      margin-left: 10px;
+    }
