@@ -18,10 +18,6 @@ TODO:
     
   * Write out full documentation, with screenshots.
   
-  * Make notes first-class with documents. Add comprehensive FTS search.
-    Add a JS NoteView for showing notes (with images) within the workspace.
-    Translate entity searches in notes into the equivalent FTS search.
-  
   * Real deploys -- Vlad?
   
 
@@ -44,6 +40,8 @@ AFTER BETA:
   
   * Add an admin UI for editing static pages.
   
+  * Think about searches over just notes -- is it necessary?
+  
   * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
     Adding a "search pages" feature.
     
@@ -52,6 +50,8 @@ AFTER BETA:
   
 
 DONE:
+  
+  * Add a JS NoteView for showing notes (with images) within the workspace.
 
   * Add an "invisible" access level for takedowns.
 
