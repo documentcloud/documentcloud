@@ -3,7 +3,10 @@ dc.ui.Note = dc.View.extend({
 
   className : 'note',
 
-  callbacks : {},
+  callbacks : {
+    '.note_title.click':  'viewNoteInDocument',
+    '.page_number.click': 'viewNoteInDocument'
+  },
 
   constructor : function(options) {
     this.base(options);
@@ -15,6 +18,11 @@ dc.ui.Note = dc.View.extend({
     $(this.el).html(JST.document_note(data));
     this.setCallbacks();
     return this;
+  },
+
+  viewNoteInDocument : function() {
+    var suffix = '#document/p' + this.model.get('page');
+    window.open(this.model.document().get('document_viewer_url') + suffix);
   }
 
 });
