@@ -157,8 +157,8 @@
             position: absolute;
             z-index: 5;
             background: white;
-            opacity: 0.5;
-            filter: alpha(opacity=50);
+            opacity: 0.75;
+            filter: alpha(opacity=75);
           }
             .note .left_cover {
               left: 0;
