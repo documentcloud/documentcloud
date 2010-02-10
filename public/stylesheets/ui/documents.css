@@ -145,12 +145,12 @@
         border: 1px solid #dadada;
         text-align: center;
         margin-bottom: 10px;
-        overflow: hidden;
       }
         .note .note_excerpt {
           position: relative;
           margin: 0 auto;
           width: 750px;
+          overflow: hidden;
         }
           .note .left_cover,
           .note .right_cover {
