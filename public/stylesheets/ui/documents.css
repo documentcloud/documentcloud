@@ -141,14 +141,31 @@
         color: black;
         float: right;
       }
-      .note .note_excerpt {
-        margin-bottom: 10px;
-        text-align: center;
+      .note .note_excerpt_wrap {
         border: 1px solid #dadada;
+        text-align: center;
+        margin-bottom: 10px;
         overflow: hidden;
-        position: relative;
       }
-      .note .note_image {
-        margin: 0 auto;
-        position: relative;
-      }
+        .note .note_excerpt {
+          position: relative;
+          margin: 0 auto;
+          width: 750px;
+        }
+          .note .left_cover,
+          .note .right_cover {
+            position: absolute;
+            z-index: 5;
+            background: white;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+          }
+            .note .left_cover {
+              left: 0;
+            }
+            .note .right_cover {
+              right: 0;
+            }
+          .note .note_image {
+            position: absolute;
+          }

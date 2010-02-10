@@ -18,6 +18,7 @@ dc.model.Note = dc.Model.extend({
     return this._coordinates = {
       top:    css[0],
       left:   css[3],
+      right:  css[1],
       height: css[2] - css[0],
       width:  css[3] - css[1]
     };
