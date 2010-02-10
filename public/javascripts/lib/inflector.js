@@ -32,7 +32,7 @@ window.Inflector = {
   },
 
   singularize: function(s) {
-    return s.replace(/e?s$/, '');
+    return s.replace(/s$/, '');
   },
 
   // Only works for words that pluralize by adding an 's', end in a 'y', or

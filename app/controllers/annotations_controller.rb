@@ -3,6 +3,12 @@ class AnnotationsController < ApplicationController
 
   before_filter :login_required
 
+  # In the workspace, request a listing of annotations, scoped not to the notes
+  # that you can see, but the notes that you've written yourself.
+  def index
+    json current_document.annotations.owned_by(current_account)
+  end
+
   # Any account can create a private note on any document.
   # Only the owner of the document is allowed to create a public annotation.
   def create

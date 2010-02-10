@@ -5,11 +5,8 @@ dc.ui.Document = dc.View.extend({
 
   callbacks : {
     '.view_document.click': 'viewDocument',
-    // ['.view_pdf',         'click',  'viewPDF'],
-    // ['.view_text',        'click',  'viewFullText'],
-    // ['.download_viewer',  'click',  'downloadViewer'],
-    // ['.delete_document',  'click',  'deleteDocument'],
-    '.icon.click':  'select'
+    '.icon.click'         :  'select',
+    '.show_notes.click'   :  'showNotes'
   },
 
   constructor : function(doc, mode) {
@@ -24,7 +21,7 @@ dc.ui.Document = dc.View.extend({
   render : function() {
     var title = this.model.get('title');
     var notes = this.model.get('annotation_count');
-    var note_count = notes && ', ' + notes + ' ' + Inflector.pluralize('note', notes);
+    var note_count = notes && ', <span class="show_notes">' + notes + ' ' + Inflector.pluralize('note', notes) + '</span>';
     $(this.el).html(JST.document_tile({
       thumbnail   : this.model.get('thumbnail_url'),
       title       : this.mode == 'viz' ? Inflector.truncate(title, 55) : title,
@@ -63,6 +60,11 @@ dc.ui.Document = dc.View.extend({
 
   downloadViewer : function() {
     this.model.downloadViewer();
+  },
+
+  showNotes : function() {
+    this.model.notes.populate({success: function() {
+    }});
   },
 
   deleteDocument : function(e) {

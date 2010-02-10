@@ -85,3 +85,9 @@
     .document .summary b {
       font-size: 12px;
     }
+  .document .show_notes {
+    cursor: pointer;
+  }
+    .document .show_notes:hover {
+      text-decoration: underline;
+    }
