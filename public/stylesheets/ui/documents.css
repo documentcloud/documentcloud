@@ -167,5 +167,6 @@
               right: 0;
             }
           .note .note_image {
+            left: 0;
             position: absolute;
           }
