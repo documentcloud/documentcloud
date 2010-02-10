@@ -11,6 +11,7 @@ module DC
     EXCLUSIVE     = 3   # Published, but exclusive to the owner's organization.
     PUBLIC        = 4   # Free and public to all.
     PENDING       = 5   # The document is being processed (acts as disabled).
+    INVISIBLE     = 6   # The document has been taken down (perhaps temporary).
 
   end
 
