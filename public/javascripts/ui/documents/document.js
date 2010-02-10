@@ -82,14 +82,16 @@ dc.ui.Document = dc.View.extend({
 
   // When the document is dropped onto a project, add it to the project.
   _onDrop : function(e) {
-    var doc = this.model;
+    var docs = [this.model];
+    var selected = Documents.selected();
+    if (selected.length && _.include(selected, this.model)) docs = selected;
     var x = e.pageX, y = e.pageY;
     $('#organizer .project').each(function() {
       var top = $(this).offset().top, left = $(this).offset().left;
       var right = left + $(this).outerWidth(), bottom = top + $(this).outerHeight();
       if (left < x && right > x && top < y && bottom > y) {
         var project = Projects.getByCid($(this).attr('data-project-cid'));
-        project.addDocuments([doc]);
+        project.addDocuments(docs);
         return false;
       }
     });
