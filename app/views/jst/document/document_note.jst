@@ -1,0 +1,10 @@
+<div class="note_background"></div>
+
+<div class="note_contents">
+  <div class="page_number">p. <%= page %></div>
+  <div class="note_title"><%= title %></div>
+  <div class="note_excerpt" style="height: <%= coords.height %>px;">
+    <img class="note_image" src="<%= src %>" alt="" style="top: -<%= coords.top %>px;" />
+  </div>
+  <div class="note_text"><%= content %></div>
+</div>

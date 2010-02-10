@@ -6,7 +6,7 @@ dc.ui.Document = dc.View.extend({
   callbacks : {
     '.view_document.click': 'viewDocument',
     '.icon.click'         :  'select',
-    '.show_notes.click'   :  'showNotes'
+    '.show_notes.click'   :  'toggleNotes'
   },
 
   constructor : function(doc, mode) {
@@ -14,14 +14,14 @@ dc.ui.Document = dc.View.extend({
     if (mode) this.className += ' ' + mode;
     this.base({model : doc});
     this.el.id = 'document_' + this.model.id;
-    _.bindAll(this, '_onDocumentChange', '_onDrop');
+    this.setMode('no', 'notes');
+    _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_onNotesLoaded');
     this.model.bind(dc.Model.CHANGED, this._onDocumentChange);
+    this.model.notes.bind(dc.Set.MODEL_ADDED, this._addNote);
   },
 
   render : function() {
     var title = this.model.get('title');
-    var notes = this.model.get('annotation_count');
-    var note_count = notes && ', <span class="show_notes">' + notes + ' ' + Inflector.pluralize('note', notes) + '</span>';
     $(this.el).html(JST.document_tile({
       thumbnail   : this.model.get('thumbnail_url'),
       title       : this.mode == 'viz' ? Inflector.truncate(title, 55) : title,
@@ -29,9 +29,10 @@ dc.ui.Document = dc.View.extend({
       summary     : this.model.displaySummary(),
       pub         : this.model.get('access') == dc.access.PUBLIC,
       page_count  : this.model.get('page_count'),
-      note_count  : note_count
+      note_count  : this.model.get('annotation_count')
     }));
     $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
+    this.notesEl = $('.notes', this.el);
     this.setCallbacks();
     this._setSelected();
     return this;
@@ -62,9 +63,11 @@ dc.ui.Document = dc.View.extend({
     this.model.downloadViewer();
   },
 
-  showNotes : function() {
-    this.model.notes.populate({success: function() {
-    }});
+  toggleNotes : function() {
+    if (this.modes.notes == 'has') return this.setMode('no', 'notes');
+    if (this.model.notes.populated) return this.setMode('has', 'notes');
+    dc.ui.spinner.show('loading notes');
+    if (!this.model.notes.populated) return this.model.notes.populate({success: this._onNotesLoaded});
   },
 
   deleteDocument : function(e) {
@@ -82,6 +85,15 @@ dc.ui.Document = dc.View.extend({
   _onDocumentChange : function() {
     var changed = this.model.hasChanged('summary') || this.model.hasChanged('access');
     changed ? this.render() : this._setSelected();
+  },
+
+  _onNotesLoaded : function() {
+    dc.ui.spinner.hide();
+    this.setMode('has', 'notes');
+  },
+
+  _addNote : function(e, note) {
+    this.notesEl.append((new dc.ui.Note({model : note})).render().el);
   },
 
   // When the document is dropped onto a project, add it to the project.

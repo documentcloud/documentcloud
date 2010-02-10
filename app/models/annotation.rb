@@ -24,6 +24,8 @@ class Annotation < ActiveRecord::Base
     {:conditions => {:account_id => account.id}}
   }
 
+  named_scope :in_order, {:order => :page_number}
+
   def self.counts_for_documents(owner, docs)
     doc_ids = docs.map {|doc| doc.id }
     self.count(:conditions => {:account_id => owner.id, :document_id => doc_ids}, :group => 'document_id')
@@ -41,7 +43,7 @@ class Annotation < ActiveRecord::Base
   end
 
   def to_json(opts={})
-    canonical.to_json
+    canonical.merge({'document_id' => document_id}).to_json
   end
 
 

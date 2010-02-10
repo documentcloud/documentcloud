@@ -11,5 +11,14 @@
     </div>
   <% } %>
 </div>
-<div class="source">Source: <%= source %>, <%= page_count %> pages<%= note_count %></div>
+<%
+  var notes = '';
+  if (note_count) {
+    notes = note_count + ' ' + Inflector.pluralize('note', note_count);
+    notes = ', <span class="show_notes"><span class="show">show</span><span class="hide">hide</span> ' + notes + '</span>';
+  }
+%>
+<div class="source">Source: <%= source %>, <%= page_count %> pages<%= notes %></div>
 <div class="summary"><%= summary %>&hellip;</div>
+
+<div class="notes"></div>

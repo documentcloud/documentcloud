@@ -6,7 +6,7 @@ class AnnotationsController < ApplicationController
   # In the workspace, request a listing of annotations, scoped not to the notes
   # that you can see, but the notes that you've written yourself.
   def index
-    json current_document.annotations.owned_by(current_account)
+    json current_document.annotations.owned_by(current_account).in_order
   end
 
   # Any account can create a private note on any document.

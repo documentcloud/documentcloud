@@ -166,6 +166,7 @@ class Document < ActiveRecord::Base
     asset_store.destroy(self)
   end
 
+  # TODO: Make the to_json an extended form of the canonical.
   def to_json(options={})
     {
       'id'                  => id,
@@ -182,6 +183,7 @@ class Document < ActiveRecord::Base
       'pdf_url'             => pdf_url,
       'thumbnail_url'       => thumbnail_url,
       'full_text_url'       => full_text_url,
+      'page_image_url'      => page_image_url_template,
       'document_viewer_url' => document_viewer_url,
     }.to_json
   end
