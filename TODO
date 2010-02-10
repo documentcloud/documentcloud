@@ -1,6 +1,4 @@
 TODO:
-
-  * Add an "invisible" access level for takedowns.
           
   * Add the summary as a field prior to upload.
           
@@ -54,6 +52,8 @@ AFTER BETA:
   
 
 DONE:
+
+  * Add an "invisible" access level for takedowns.
 
   * Do the cross-browser hurly-burly runaround.
 
