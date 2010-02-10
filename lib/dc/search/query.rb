@@ -63,6 +63,7 @@ module DC
           options[:offset]  = @from
         end
         @results = doc_proxy.chronological.all(options)
+        populate_annotation_counts
         populate_highlights if DC_CONFIG['include_highlights']
         self
       end
@@ -73,6 +74,13 @@ module DC
         return false unless has_text? and has_results?
         highlights = FullText.highlights(@results, @text)
         @results.each {|doc| doc.highlight = highlights[doc.id] }
+      end
+
+      # Stash the number of notes per-document on the document models.
+      def populate_annotation_counts
+        return false unless has_results?
+        counts = Annotation.counts_for_documents(@account, @results)
+        @results.each {|doc| doc.annotation_count = counts[doc.id] }
       end
 
       # The JSON representation of a query contains all the structured aspects

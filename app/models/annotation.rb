@@ -20,6 +20,11 @@ class Annotation < ActiveRecord::Base
     {:conditions => "(#{access.join(' or ')})"}
   }
 
+  def self.counts_for_documents(owner, docs)
+    doc_ids = docs.map {|doc| doc.id }
+    self.count(:conditions => {:account_id => owner.id, :document_id => doc_ids}, :group => 'document_id')
+  end
+
   def page
     document.pages.find_by_page_number(page_number)
   end

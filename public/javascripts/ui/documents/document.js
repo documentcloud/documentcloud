@@ -29,7 +29,8 @@ dc.ui.Document = dc.View.extend({
       source      : this.model.get('source'),
       summary     : this.model.displaySummary(),
       pub         : this.model.get('access') == dc.access.PUBLIC,
-      page_count  : this.model.get('page_count')
+      page_count  : this.model.get('page_count'),
+      note_count  : this.model.get('annotation_count')
     }));
     $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.setCallbacks();
