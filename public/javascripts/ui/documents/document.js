@@ -23,6 +23,8 @@ dc.ui.Document = dc.View.extend({
 
   render : function() {
     var title = this.model.get('title');
+    var notes = this.model.get('annotation_count');
+    var note_count = notes && ', ' + notes + ' ' + Inflector.pluralize('note', notes);
     $(this.el).html(JST.document_tile({
       thumbnail   : this.model.get('thumbnail_url'),
       title       : this.mode == 'viz' ? Inflector.truncate(title, 55) : title,
@@ -30,7 +32,7 @@ dc.ui.Document = dc.View.extend({
       summary     : this.model.displaySummary(),
       pub         : this.model.get('access') == dc.access.PUBLIC,
       page_count  : this.model.get('page_count'),
-      note_count  : this.model.get('annotation_count')
+      note_count  : note_count
     }));
     $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.setCallbacks();
