@@ -1,3 +1,5 @@
+// DocumentCloud workspace hotkeys. For now, just needs to track if
+// shift is being held down, for shift-clicks.
 dc.app.hotkeys = {
 
   SHIFT : 16,
@@ -5,9 +7,10 @@ dc.app.hotkeys = {
   shift : false,
 
   initialize : function() {
-    _.bindAll(this, 'down', 'up');
+    _.bindAll(this, 'down', 'up', 'blur');
     $(document).bind('keydown', this.down);
     $(document).bind('keyup', this.up);
+    $(window).bind('blur', this.blur);
   },
 
   down : function(e) {
@@ -16,6 +19,10 @@ dc.app.hotkeys = {
 
   up : function(e) {
     if (e.keyCode == this.SHIFT) this.shift = false;
+  },
+
+  blur : function(e) {
+    this.shift = false;
   }
 
 };
