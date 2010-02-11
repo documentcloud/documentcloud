@@ -41,7 +41,7 @@
         }
       #control_panel .color_close {
         position: absolute;
-        left: 2px;
+        left: 1px;
         color: #aa3333;
         font: normal 12px/12px Arial;
         display: none;
