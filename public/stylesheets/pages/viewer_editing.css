@@ -20,7 +20,7 @@
     #control_panel .button:first-child {
       border-top: 0;
     }
-    #control_panel .button:hover {
+    #control_panel .button:hover span {
       text-decoration: underline;
     }
       #control_panel .color_block {
@@ -30,11 +30,24 @@
         margin-top: 2px;
         left: 0px;
       }
+        #control_panel .button.open .color_block {
+          display: none;
+        }
         #control_panel .private_annotation .color_block {
           background: #a4c0ff;
         }
         #control_panel .public_annotation .color_block {
           background: #edd134;
+        }
+      #control_panel .color_close {
+        position: absolute;
+        left: 2px;
+        color: #aa3333;
+        font: normal 12px/12px Arial;
+        display: none;
+      }
+        #control_panel .button.open .color_close {
+          display: block;
         }
   #control_panel,
   #control_panel .document_only,
