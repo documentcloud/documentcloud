@@ -48,7 +48,6 @@
       position: relative;
       padding: 15px;
       cursor: pointer;
-      width: 280px;
       border-bottom: 1px solid #d0d0d0;
     }
       #organizer .box.is_open {
