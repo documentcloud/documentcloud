@@ -85,9 +85,11 @@ dc.ui.AnnotationEditor = dc.View.extend({
       loc.right   = loc.left + loc.width;
       loc.bottom  = loc.top + loc.height;
       var zoom    = DV.api.currentZoom();
-      loc         = [loc.top / zoom, loc.right / zoom, loc.bottom / zoom, loc.left / zoom].join(',');
+      var image   = [loc.top / zoom, loc.right / zoom, loc.bottom / zoom, loc.left / zoom].join(',');
       this.close();
-      DV.api.addAnnotation({location : {image : loc}, page : DV.api.currentPage(), unsaved : true, access : this._kind});
+      if (loc.width > 10 && loc.height > 10) {
+        DV.api.addAnnotation({location : {image : image}, page : DV.api.currentPage(), unsaved : true, access : this._kind});
+      }
     }, this);
     this.pages.bind('mouseup', dragEnd).bind('mousemove', drag);
   },
