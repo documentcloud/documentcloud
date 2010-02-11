@@ -78,13 +78,15 @@
   #section_editor .remove_all {
     font: italic 11px Arial;
     color: #a55;
-    position: absolute;
-    left: 10px; bottom: 10px;
+    float: left;
+    margin: 2px 0 0 10px;
   }
   #section_editor ol {
     margin: 0 0 20px 0;
     padding-right: 25px;
     width: 310px; max-height: 400px;
+    padding-left: 40px;
+    list-style-type: decimal;
     overflow-y: auto;
   }
     #section_editor li {

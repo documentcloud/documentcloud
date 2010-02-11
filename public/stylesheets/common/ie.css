@@ -59,3 +59,9 @@ div.dialog .dialog_background,
 #upload_dialog {
   width: 530px;
 }
+#DV-searchSubmit {
+  padding: 1px;
+}
+#section_editor {
+  width: 380px;
+}

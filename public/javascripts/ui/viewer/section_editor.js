@@ -22,7 +22,7 @@ dc.ui.SectionEditor = dc.View.extend({
     this.removeEl   = $($.el('span', {'class' : 'remove_all', role : 'link'}, 'remove all sections'));
     this.removeEl.bind('click', this.removeAllSections);
     this.dialog.append(this.sectionsEl);
-    this.dialog.append(this.removeEl);
+    this.dialog.appendControl(this.removeEl);
     this.renderSections();
   },
 
