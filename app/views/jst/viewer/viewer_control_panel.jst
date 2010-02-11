@@ -1,14 +1,12 @@
-<% if (isOwner) { %>
-  <div class="set_sections button document_only">edit sections</div>
-<% } %>
 <div class="private_annotation button document_only">
-  private annotation
-  <div class="color_block">&nbsp;&nbsp;</div>
+  <div class="color_block"></div>
+  Add a Private Note
 </div>
 <% if (isOwner) { %>
   <div class="public_annotation button document_only">
-    public annotation
-    <div class="color_block">&nbsp;</div>
+    <div class="color_block"></div>
+    Add a Public Note
   </div>
-  <div class="save_text button text_only">save page text</div>
+  <div class="set_sections button document_only">Edit Sections</div>
+  <div class="save_text button text_only">Save Page Text</div>
 <% } %>

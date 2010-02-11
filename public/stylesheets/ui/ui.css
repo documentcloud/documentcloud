@@ -1,7 +1,7 @@
 span[role="link"] {
   text-decoration: underline;
   cursor: pointer;
-  color: #254555;
+  color: #204055;
 }
 
 .serif, .serif * {
@@ -21,9 +21,9 @@ select {
 .gradient_selected,
 #organizer .box:hover {
   background: #ffffe5;
-  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffe));
-  background: -moz-linear-gradient(top, #ffffff, #ffe);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#FFFFEE');
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffd));
+  background: -moz-linear-gradient(top, #ffffff, #ffd);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#FFFFDD');
 }
 .gradient_blue {
   background: #ddddff;
@@ -41,9 +41,9 @@ select {
 .gradient_light,
 .minibutton:hover, .minibutton.is_open {
   background: #ddd;
-  background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#d5d5d5));
-  background: -moz-linear-gradient(top, #f5f5f5, #d5d5d5);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#F5F5F5', EndColorStr='#D5D5D5');
+  background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#d0d0d0));
+  background: -moz-linear-gradient(top, #f5f5f5, #d0d0d0);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#F5F5F5', EndColorStr='#D0D0D0');
 }
 .gradient_mid {
   background: #d7d7d7;
@@ -118,7 +118,7 @@ div.text_input {
   cursor: pointer;
   font: 11px Arial;
   text-shadow: 0px 1px 1px #fff;
-  color: #254555;
+  color: #204055;
   padding: 4px 5px;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   -webkit-box-shadow: 0 0 1px #000; -moz-box-shadow: 0 0 1px #000;
@@ -177,7 +177,7 @@ div.text_input {
   .menu_content .menu_item {
     cursor: pointer;
     font: 11px/18px Arial;
-    color: #454545;
+    color: #333;
     padding: 0px 3px 3px 3px;
     height: 16px;
     overflow: hidden;
@@ -244,7 +244,7 @@ div.dialog {
     height: 16px;
     padding: 5px 10px;
     font: 14px Arial;
-    color: #454545;
+    color: #333;
     cursor: move;
     border-bottom: 1px solid #bbb;
     -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
@@ -263,7 +263,7 @@ div.dialog {
       display: none;
     }
   div.dialog textarea.content {
-    border: 1px solid #dadada;
+    border: 1px solid #d0d0d0;
     -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
     resize: none;
     width: 400px; height: 100px;
@@ -308,7 +308,7 @@ iframe.hidden_iframe {
     background: #cec;
   }
   #tooltip {
-    color: #454545;
+    color: #333;
     border-width: 0;
     padding: 4px 8px;
     font: 11px/14px Arial;

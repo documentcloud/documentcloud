@@ -1,6 +1,6 @@
 #docs {
   padding: 50px 25px 50px 50px;
-  color: #454545;
+  color: #333;
 }
   #docs h1 {
     font-size: 25px;
@@ -17,7 +17,7 @@
       line-height: 22px;
     }
   #docs a {
-    color: #254555;
+    color: #204055;
     text-decoration: underline;
   }
   #docs #search_results {

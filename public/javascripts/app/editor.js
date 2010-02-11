@@ -22,7 +22,7 @@ _.extend(dc.app.editor, {
   // Render all of the existing subviews and place them in the DOM.
   renderSubViews : function() {
     $('#DV-docViewer').addClass('DV-isEditor');
-    $('#DV-pageCollection').append(this.controlPanel.render().el);
+    $('#DV-well').append(this.controlPanel.render().el);
     if (this.isOwner) $('#DV-textContents').attr({contentEditable : 'true'});
   },
 

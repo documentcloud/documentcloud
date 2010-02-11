@@ -81,12 +81,12 @@ a {
 #sidebar {
   position: absolute;
   top: 0px; left: 0px; bottom: 38px;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #d0d0d0;
   width: 310px;
   z-index: 5;
 }
   #sidebar_background {
-    background: #e5e5e5;
+    background: #e0e0e0;
     position: absolute;
     top: 0; left: 0; bottom: -38px; right: 0;
     -webkit-box-shadow: 0 0 25px #ddd;
@@ -100,7 +100,7 @@ a {
       height: 20px;
       text-transform: uppercase;
       padding: 5px 15px 5px 15px;
-      border-top: 1px solid #dadada;
+      border-top: 1px solid #d0d0d0;
       color: #777;
     }
       #sidebar .nametag.large {
@@ -155,7 +155,7 @@ a {
 }
   .static_error {
     margin: 15px 15px 15px 15px;
-    color: #454545;
+    color: #333;
     font-size: 16px;
     line-height: 25px;
     width: 500px;

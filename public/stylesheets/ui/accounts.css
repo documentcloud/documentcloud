@@ -6,7 +6,7 @@
   width: 255px; height: 22px;
   padding: 7px 7px 7px 47px;
   font: 11px/22px Arial;
-  color: #454545;
+  color: #333;
   border: 1px solid #ddd;
   z-index: 5;
 }
@@ -22,7 +22,7 @@
     right: 10px; top: 7px;
   }
   .account_view.badge a {
-    color: #254555;
+    color: #204055;
   }
     .account_view.badge a:hover {
       text-decoration: underline;

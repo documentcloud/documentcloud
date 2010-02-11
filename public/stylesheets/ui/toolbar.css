@@ -4,7 +4,7 @@
   height: 0;
   left: 0; right: 0;
   -webkit-transition: height 0.1s linear;
-  border-top: 1px solid #dadada;
+  border-top: 1px solid #d0d0d0;
 }
   .panel_content.open_toolbar #search_toolbar_container,
   body.visualize #search_toolbar_container {

@@ -12,7 +12,7 @@
         float: left;
         width: 121px;
         cursor: pointer;
-        color: #254555;
+        color: #204055;
       }
         #organizer .nametag .button:hover {
           text-decoration: underline;
@@ -40,7 +40,7 @@
       padding: 15px;
       cursor: pointer;
       width: 280px;
-      border-bottom: 1px solid #dadada;
+      border-bottom: 1px solid #d0d0d0;
     }
       #organizer .box.is_open {
         background-color: #f7f7f7;
@@ -63,7 +63,7 @@
         }
       #organizer .box .title {
         font: bold 14px Arial;
-        color: #254555;
+        color: #204055;
       }
       #organizer .box .counts,
       #project_dialog .counts {
@@ -81,7 +81,7 @@
     #project_dialog label {
       display: block;
       font: bold 13px/25px Arial;
-      color: #454545;
+      color: #333;
       margin-bottom: 10px;
     }
     #project_dialog .text_input {

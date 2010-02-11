@@ -1,11 +1,14 @@
 TODO:
+
+  * Give all S3 images far-futures expires headers, and content-types?
+
+  * Revisit the in-viewer-editing UI. Firm it up cross-browser.
           
-  * Add the summary as a field prior to upload.
+  * Add the summary as a field prior to upload. Put back a dialog to edit the
+    summary, or have it in the viewer.
           
   * Come up with something reasonable to have on the home screen.
-        
-  * Make search degrade gracefully in the viewer, when DocumentCloud is down.
-  
+          
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
     viewing.
       
@@ -24,6 +27,8 @@ TODO:
   
 
 AFTER BETA:
+
+  * Make search degrade gracefully in the viewer, when DocumentCloud is down.
 
   * Add EPUB-formatted downloads of the documents? Make the reader able to load
     EPUB?
