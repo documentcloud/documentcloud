@@ -1,10 +1,11 @@
 <img class="avatar" src="<%= account.gravatarURL(size) %>" width="<%= size %>" height="<%= size %>" />
 <div class="name">
-  <%= account.get('first_name') %>
-  <%= account.get('last_name') %>
+  <%= Inflector.truncate(account.fullName(), 20) %>
 </div>
 <div class="controls">
-  <a href="#" class="admin_link">Edit Accounts</a>
+  <a href="#" class="admin_link">Accounts</a>
+  &nbsp;|&nbsp;
+  <a href="#help" class="help">Help</a>
   &nbsp;|&nbsp;
   <a href="/logout">Log Out</a>
 </div>

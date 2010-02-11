@@ -59,7 +59,7 @@ dc.history = {
   // Load the history callback associated with the current page fragment. On
   // pages that support history, this method should be called at page load,
   // after all the history callbacks have been registered.
-  loadURL : function() {
+  loadURL : function(fallback) {
     var hash = this.hash = window.location.hash;
     var matched = _.any(this.handlers, function(handler) {
       if (hash.match(handler.matcher)) {
@@ -67,7 +67,9 @@ dc.history = {
         return true;
       }
     });
-    if (!matched && !hash) dc.app.searchBox.clearSearch();
+    if (!matched && !hash) {
+      fallback ? fallback() : dc.app.searchBox.clearSearch();
+    }
   }
 
 };

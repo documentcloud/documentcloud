@@ -1,0 +1,19 @@
+#help {
+  color: #333;
+  padding: 25px 25px;
+  max-width: 550px;
+  font: 14px/18px Arial;
+}
+  #help a {
+    color: #204055;
+  }
+    #help a:hover {
+      text-decoration: underline;
+    }
+  #help h1 {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  #help p {
+    margin: 15px 0;
+  }

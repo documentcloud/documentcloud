@@ -19,7 +19,7 @@ dc.ui.SearchBox = dc.View.extend({
     this.outstandingSearch = false;
     _.bindAll(this, 'loadSearchResults', 'searchByHash', 'clearSearch');
     dc.history.register(/^#search\//, this.searchByHash);
-    dc.history.register(/^#dashboard$/, this.clearSearch);
+    dc.history.register(/^#help$/, this.clearSearch);
   },
 
   render : function() {
@@ -107,7 +107,7 @@ dc.ui.SearchBox = dc.View.extend({
     this.value('');
     $(document.body).setMode('no', 'search');
     dc.ui.Project.clearSelection();
-    dc.history.save('dashboard');
+    dc.history.save('help');
   },
 
   // Hide the spinner and remove the search lock when finished searching.

@@ -14,10 +14,12 @@
 /*------------------------- View-mode visibility -----------------------------*/
 
 div.active_search,
-div.empty_search {
+div.empty_search,
+div.no_search {
   display: none;
 }
   body.active_search div.active_search,
-  body.empty_search div.empty_search {
+  body.empty_search div.empty_search,
+  body.no_search div.no_search {
     display: block;
   }

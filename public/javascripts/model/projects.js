@@ -6,6 +6,10 @@ dc.model.Project = dc.Model.extend({
 
   viewClass : 'Project',
 
+  open : function() {
+    dc.app.searchBox.search(this.toSearchParam());
+  },
+
   documentCount : function() {
     return this.get('document_ids').length;
   },

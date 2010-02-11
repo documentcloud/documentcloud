@@ -22,7 +22,7 @@ dc.ui.Project = dc.View.extend({
   },
 
   showDocuments : function() {
-    dc.app.searchBox.search(this.model.toSearchParam());
+    this.model.open();
   },
 
   showOpen : function() {
