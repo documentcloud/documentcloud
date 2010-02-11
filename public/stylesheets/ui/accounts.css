@@ -6,7 +6,7 @@
   width: 255px; height: 22px;
   padding: 7px 7px 7px 47px;
   font: 11px/22px Arial;
-  color: #333;
+  color: #454545;
   border: 1px solid #ddd;
   z-index: 5;
 }
@@ -59,7 +59,7 @@
         border-bottom: 1px solid #bbb;
         font: 12px/11px Arial;
         height: 25px;
-        color: #333;
+        color: #454545;
       }
       #account_dialog .first { width: 0%; padding-right: 0; }
       #account_dialog .name  { width: 0%; }

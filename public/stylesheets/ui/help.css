@@ -1,5 +1,10 @@
+.help_text {
+  font: 11px/16px Arial;
+  color: #777;
+}
+
 #help {
-  color: #333;
+  color: #454545;
   padding: 25px 25px;
   max-width: 550px;
   font: 14px/18px Arial;
@@ -11,9 +16,10 @@
       text-decoration: underline;
     }
   #help h1 {
+    color: #333;
     font-weight: bold;
     font-size: 16px;
   }
   #help p {
-    margin: 15px 0;
+    margin: 20px 0;
   }
