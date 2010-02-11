@@ -60,22 +60,30 @@ dc.ui.AnnotationEditor = dc.View.extend({
         aleft   = ox + offLeft;
     this.region = $.el('div', {'class' : 'DV-annotationRegion active DV-' + this._kind});
     this.pages.append(this.region);
-    $(this.region).css({left : aleft, top : atop});
+    var coords = function(e) {
+      return {
+        left    : Math.min(aleft, e.pageX + offLeft),
+        top     : Math.min(atop, e.pageY + offTop),
+        width   : Math.abs(e.pageX - ox),
+        height  : Math.abs(e.pageY - oy)
+      };
+    };
     var drag = _.bind(function(e) {
       e.stopPropagation();
       e.preventDefault();
-      $(this.region).css({width : e.pageX - ox, height : e.pageY - oy});
+      $(this.region).css(coords(e));
     }, this);
     var dragEnd = _.bind(function(e) {
       e.stopPropagation();
       e.preventDefault();
       this.pages.unbind('mouseup', dragEnd).unbind('mousemove', drag);
-      atop  -= (offTop + this._activePage.offset().top);
-      aleft -= (offLeft + this._activePage.offset().left);
-      var aright = aleft + $(this.region).width();
-      var abottom = atop + $(this.region).height();
-      var zoom = DV.api.currentZoom();
-      var loc = [atop / zoom, aright / zoom, abottom / zoom, aleft / zoom].join(',');
+      var loc     = coords(e);
+      loc.top     -= (offTop + this._activePage.offset().top);
+      loc.left    -= (offLeft + this._activePage.offset().left);
+      loc.right   = loc.left + loc.width;
+      loc.bottom  = loc.top + loc.height;
+      var zoom    = DV.api.currentZoom();
+      loc         = [loc.top / zoom, loc.right / zoom, loc.bottom / zoom, loc.left / zoom].join(',');
       this.close();
       DV.api.addAnnotation({location : {image : loc}, page : DV.api.currentPage(), unsaved : true, access : this._kind});
     }, this);
