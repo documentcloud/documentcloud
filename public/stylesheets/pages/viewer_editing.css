@@ -17,9 +17,6 @@
     #control_panel .button.open {
       color: black;
     }
-    #control_panel .button:first-child {
-      border-top: 0;
-    }
     #control_panel .button:hover span {
       text-decoration: underline;
     }
