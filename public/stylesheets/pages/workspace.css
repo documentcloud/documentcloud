@@ -13,7 +13,7 @@ a {
 
 #topbar {
   display: block;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid #e0e0e0;
 }
   body.full_page_background #topbar {
     border-bottom-color: #aaa;
@@ -100,7 +100,6 @@ a {
       height: 20px;
       text-transform: uppercase;
       padding: 5px 15px 5px 15px;
-      border-top: 1px solid #d0d0d0;
       color: #777;
     }
       #sidebar .nametag.large {

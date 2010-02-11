@@ -4,7 +4,7 @@
   z-index: 5;
 }
   .open_toolbar #document_list, body.visualize #document_list {
-    top: 43px;
+    top: 42px;
   }
   body.paginated #document_list {
     bottom: 38px;
