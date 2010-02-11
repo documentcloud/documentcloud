@@ -149,7 +149,7 @@ a {
   position: absolute;
   overflow: auto;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: #f2f2f2;
+  background: #f1f1f1;
   background: -webkit-gradient(radial, center top, 0, 0 0, 1500, from(rgb(250,250,250)), to(rgb(155,155,155)));
   background: -moz-radial-gradient(center top, circle cover, rgb(250,250,250) 0%, rgb(155,155,155) 100%);
 }
