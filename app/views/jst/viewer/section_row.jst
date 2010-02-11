@@ -2,17 +2,7 @@
   <div class="icon plus"></div>
   <div class="icon minus"></div>
   <input class="section_title" type="text" placeholder="section title" value="<%= title %>" />
-  <select class="start_page">
-    <% for (var page=1; page<=pageCount; page++) { %>
-      <% var selected = start_page === page ? 'selected="true"' : ''; %>
-      <option value="<%= page %>" <%= selected %>><%= page %></option>
-    <% } %>
-  </select>
-  &ndash;
-  <select class="end_page">
-    <% for (var page=1; page<=pageCount; page++) { %>
-      <% var selected = end_page === page ? 'selected="true"' : ''; %>
-      <option value="<%= page %>" <%= selected %>><%= page %></option>
-    <% } %>
-  </select>
+  <input class="page_number start_page" type="text" placeholder="start" value="<%= start_page %>" />
+  &nbsp;&ndash;&nbsp;
+  <input class="page_number end_page" type="text" placeholder="end" value="<%= end_page %>" />
 </li>

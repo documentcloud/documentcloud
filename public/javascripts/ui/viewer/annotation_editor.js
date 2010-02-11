@@ -23,21 +23,22 @@ dc.ui.AnnotationEditor = dc.View.extend({
     this.page           = $('.DV-page');
     this.page.css({cursor : 'crosshair'});
     this.page.bind('mousedown', this.drawAnnotation);
+    $(document).bind('keydown', this.close);
     this._buttons[kind].addClass('open');
   },
 
-  close : function(kind) {
-    kind = kind || this._kind;
+  close : function() {
     this._open = false;
     this.page.css({cursor : null});
     this.page.unbind('mousedown', this.drawAnnotation);
+    $(document).unbind('keydown', this.close);
     this.clearAnnotation();
-    this._buttons[kind].removeClass('open');
+    this._buttons[this._kind].removeClass('open');
   },
 
   toggle : function(kind) {
     if (this._open) {
-      this.close(this._kind);
+      this.close();
       if (kind === this._kind) return;
     }
     this.open(this._kind = kind);
@@ -76,6 +77,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
     var dragEnd = _.bind(function(e) {
       e.stopPropagation();
       e.preventDefault();
+      $(document).unbind('keydown', this.close);
       this.pages.unbind('mouseup', dragEnd).unbind('mousemove', drag);
       var loc     = coords(e);
       loc.top     -= (offTop + this._activePage.offset().top);

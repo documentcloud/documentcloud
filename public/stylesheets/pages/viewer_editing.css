@@ -82,7 +82,7 @@
     left: 10px; bottom: 10px;
   }
   #section_editor ol {
-    margin: 0 0 25px 0;
+    margin: 0 0 20px 0;
     padding-right: 25px;
     width: 310px; max-height: 400px;
     overflow-y: auto;
@@ -90,6 +90,12 @@
     #section_editor li {
       margin-bottom: 7px;
     }
+      #section_editor .section_title {
+        margin-right: 15px;
+      }
+      #section_editor .page_number {
+        width: 30px;
+      }
       #section_editor .plus, #section_editor .minus {
         float: right;
         margin: 0px 0 0 3px;

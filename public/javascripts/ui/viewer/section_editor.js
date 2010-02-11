@@ -17,6 +17,7 @@ dc.ui.SectionEditor = dc.View.extend({
       onClose   : _.bind(function(){ this.dialog = null; }, this),
       onConfirm : _.bind(function(){ return this.saveSections(this.serializeSections()); }, this)
     }).render();
+    $('.minibutton.ok span', this.dialog.el).text('save');
     this.sectionsEl = $($.el('ol', {id : 'section_rows'}));
     this.removeEl   = $($.el('span', {'class' : 'remove_all', role : 'link'}, 'remove all sections'));
     this.removeEl.bind('click', this.removeAllSections);
@@ -39,7 +40,7 @@ dc.ui.SectionEditor = dc.View.extend({
       data      : {sections : JSON.stringify(sections), document_id : dc.app.editor.docId},
       dataType  : 'json'
     });
-    dc.app.editor.notify({mode: 'info', text : 'sections saved'});
+    // dc.app.editor.notify({mode: 'info', text : 'sections saved'});
     this.updateNavigation(sections);
     return true;
   },
