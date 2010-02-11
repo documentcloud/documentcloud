@@ -294,6 +294,11 @@ iframe.hidden_iframe {
     display: inline;
   }
 
+.help_text {
+  font: italic 11px/16px Arial;
+  color: #777;
+}
+
 /*--------------------------- Notifier, Tooltip ------------------------------*/
 
 #notifier, #tooltip {

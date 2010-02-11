@@ -29,12 +29,21 @@
         }
 
 
-  #organizer .project_list {
+  #organizer .project_list,
+  #organizer .project_help {
     position: absolute;
     top: 43px; bottom: 0px; left: 0; right: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    display: none;
   }
+    #organizer.has_projects .project_list,
+    #organizer.no_projects .project_help {
+      display: block;
+    }
+    #organizer .project_help {
+      padding: 10px 15px;
+    }
     #organizer .box {
       position: relative;
       padding: 15px;
