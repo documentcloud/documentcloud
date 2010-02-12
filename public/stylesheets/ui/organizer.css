@@ -79,6 +79,7 @@
         color: #777;
       }
 
+/*--------------------------- Edit Project Dialog ----------------------------*/
 #project_dialog {
   width: 375px;
 }
@@ -101,3 +102,10 @@
       float: left;
       margin-left: 10px;
     }
+
+/*---------------------------- Projects Menu ---------------------------------*/
+#projects_menu_content {
+
+}
+  #projects_menu_content .menu_item {
+  }

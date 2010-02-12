@@ -1,14 +1,7 @@
 TODO:
 
   * Give all S3 images far-futures expires headers, and content-types?
-
-  * Revisit the in-viewer-editing UI. Firm it up cross-browser.
-          
-  * Add the summary as a field prior to upload. Put back a dialog to edit the
-    summary, or have it in the viewer.
-          
-  * Come up with something reasonable to have on the home screen.
-          
+                    
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
     viewing.
       
@@ -57,6 +50,13 @@ AFTER BETA:
   
 
 DONE:
+
+  * Come up with something reasonable to have on the home screen.
+
+  * Add the summary as a field prior to upload. Put back a dialog to edit the
+    summary, or have it in the viewer.
+
+  * Revisit the in-viewer-editing UI. Firm it up cross-browser.
   
   * Add a JS NoteView for showing notes (with images) within the workspace.
 
