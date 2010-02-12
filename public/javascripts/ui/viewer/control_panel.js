@@ -46,8 +46,10 @@ dc.ui.ViewerControlPanel = dc.View.extend({
   },
 
   savePageText : function() {
-    var url = '/documents/' + dc.app.editor.docId + '/pages/' + DV.Schema.document.id + '-p' + DV.api.currentPage() + '.txt';
+    var page = DV.api.currentPage();
+    var url  = '/documents/' + dc.app.editor.docId + '/pages/' + DV.Schema.document.id + '-p' + page + '.txt';
     var text = this._page.textWithNewlines();
+    DV.api.setPageText(text, page);
     $.ajax({url : url, type : 'POST', data : {text : text}, dataType : 'json'});
     dc.app.editor.notify({mode : 'info', text : 'page saved'});
   }
