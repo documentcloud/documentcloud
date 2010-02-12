@@ -83,8 +83,7 @@ dc.ui.Document = dc.View.extend({
   },
 
   _onDocumentChange : function() {
-    var changed = this.model.hasChanged('access');
-    changed ? this.render() : this._setSelected();
+    this.model.hasChanged('selected') ? this._setSelected() : this.render();
   },
 
   _onNotesLoaded : function() {

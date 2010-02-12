@@ -193,6 +193,7 @@ class Document < ActiveRecord::Base
     doc['id']          = "#{id}-#{slug}"
     doc['title']       = title
     doc['pages']       = page_count
+    doc['description'] = description
     doc['resources']   = res = ActiveSupport::OrderedHash.new
     res['pdf']         = pdf_url
     res['text']        = full_text_url

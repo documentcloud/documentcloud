@@ -2,6 +2,12 @@ dc.ui.Dialog = dc.View.extend({
 
   className : 'dialog',
 
+  DEFAULT_OPTIONS : {
+    title   : "Untitled Dialog",
+    text    : null,
+    buttons : null
+  },
+
   callbacks : {
     '.cancel.click':  'cancel',
     '.ok.click':      'confirm'
@@ -28,11 +34,7 @@ dc.ui.Dialog = dc.View.extend({
   },
 
   defaultOptions : function() {
-    return {
-      title   : "Untitled Dialog",
-      text    : null,
-      buttons : null
-    };
+    return _.clone(this.DEFAULT_OPTIONS);
   },
 
   append : function(el) {

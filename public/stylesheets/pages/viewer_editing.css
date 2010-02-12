@@ -64,7 +64,7 @@
 }
 
 /*---------------------------- The Section Editor ----------------------------*/
-#section_editor, #annotation_editor {
+#section_editor, #annotation_editor, div.dialog {
   z-index: 10000000;
 }
   #section_editor .text {

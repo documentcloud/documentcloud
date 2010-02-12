@@ -121,7 +121,7 @@ div.text_input {
   color: #204055;
   padding: 4px 5px;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
-  -webkit-box-shadow: 0 0 1px #000; -moz-box-shadow: 0 0 1px #000;
+  -webkit-box-shadow: 0 0 2px #000; -moz-box-shadow: 0 0 1px #000;
 }
   .minibutton:hover, .minibutton.is_open {
     color: #222;

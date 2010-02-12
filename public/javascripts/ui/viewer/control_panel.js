@@ -6,6 +6,7 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     '.set_sections.click':        'openSectionEditor',
     '.public_annotation.click':   'togglePublicAnnotation',
     '.private_annotation.click':  'togglePrivateAnnotation',
+    '.edit_description.click':    'editDescription',
     '.save_text.click':           'savePageText'
   },
 
@@ -18,6 +19,22 @@ dc.ui.ViewerControlPanel = dc.View.extend({
 
   openSectionEditor : function() {
     dc.app.editor.sectionEditor.open();
+  },
+
+  editDescription : function() {
+    dc.ui.Dialog.prompt('Description', DV.api.getDescription(), function(desc) {
+      DV.api.setDescription(desc);
+      var id = parseInt(DV.Schema.document.id, 10);
+      var doc = new dc.model.Document({id : id, description : desc});
+      Documents.update(doc);
+      try {
+        var doc = window.opener && window.opener.Documents && window.opener.Documents.get(doc);
+        if (doc) doc.set({description : desc});
+      } catch (e) {
+        // Couldn't access the parent window -- it's ok.
+      }
+      return true;
+    });
   },
 
   togglePublicAnnotation : function() {

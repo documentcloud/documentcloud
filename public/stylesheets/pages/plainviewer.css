@@ -1,6 +1,6 @@
 /* Extra DocViewer override rules go here: */
 
-#DV-headerHat, #DV-title, #DV-description, .DV-contentsHeader {
+#DV-headerHat, #DV-title, .DV-contentsHeader {
   display: none !important;
 }
 #DV-header {
@@ -55,6 +55,14 @@
 }
 #DV-well {
   padding-bottom: 16px;
+}
+#DV-descriptionHead {
+  text-transform: none;
+  color: black;
+}
+#DV-descriptionText {
+  background: white;
+  padding: 5px 14px 10px;
 }
 
 .DV-views div a {
