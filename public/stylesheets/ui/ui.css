@@ -292,6 +292,7 @@ iframe.hidden_iframe {
     background: #fcc;
     margin: 0 auto;
     display: inline;
+    -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   }
 
 /*--------------------------- Notifier, Tooltip ------------------------------*/
