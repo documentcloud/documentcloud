@@ -170,7 +170,7 @@ div.text_input {
   display: none;
   position: absolute;
   z-index: 100;
-  width: 150px;
+  width: 160px;
   background: white;
   padding: 4px;
   opacity: 0.95; filter: alpha(opacity=95);
@@ -216,7 +216,7 @@ div.text_input {
   .menu_content .autofilter_input {
     font-size: 11px;
     margin: 0 0 5px 19px;
-    width: 121px; height: 11px;
+    width: 131px; height: 11px;
     border: 1px solid #ddd;
     padding: 1px 4px 2px 4px !important;
   }
@@ -240,7 +240,7 @@ div.dialog {
     top: 0; left: 0; right: 0; bottom: 0;
     background: #f7f7f7;
     -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-    -webkit-box-shadow: 0 5px 50px #888; -moz-box-shadow: 0 5px 50px #888;
+    -webkit-box-shadow: 0 5px 50px #555; -moz-box-shadow: 0 5px 50px #555;
   }
   div.dialog .title {
     position: absolute; top: 0; left: 0; right: 0;
@@ -256,6 +256,7 @@ div.dialog {
   div.dialog .text, div.dialog .custom,
   div.dialog .prompt, div.dialog .short_prompt {
     padding: 10px 10px 15px 10px;
+    line-height: 16px;
   }
   div.dialog .controls button, div.dialog .controls .minibutton {
     float: right;

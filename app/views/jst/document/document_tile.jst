@@ -19,6 +19,6 @@
   }
 %>
 <div class="source">Source: <%= source %>, <%= page_count + ' ' + Inflector.pluralize('page', page_count) %><%= notes %></div>
-<div class="description"><%= description %>&hellip;</div>
+<div class="description"><%= description %><%= description ? '&hellip;' : '' %></div>
 
 <div class="notes"></div>

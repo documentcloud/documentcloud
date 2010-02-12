@@ -3,16 +3,14 @@ dc.ui.Toolbar = dc.View.extend({
   id : 'toolbar',
 
   callbacks : {
-    '#delete_document_button.click' : '_deleteSelectedDocuments',
-    '#edit_remote_url_button.click' : '_editSelectedRemoteUrl',
     '#calais_credits.click'         : '_openCalais'
   },
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, '_addSelectedDocuments', '_addProjectWithDocuments', 'display');
+    _.bindAll(this, '_addSelectedDocuments', '_addProjectWithDocuments', '_registerDocument', '_deleteSelectedDocuments', 'display');
     this.downloadMenu     = this._createDownloadMenu();
-    this.accessMenu       = this._createAccessMenu();
+    this.manageMenu       = this._createManageMenu();
     this.connectionsMenu  = this._createConnectionsMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._addSelectedDocuments, onAdd : this._addProjectWithDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
@@ -22,7 +20,7 @@ dc.ui.Toolbar = dc.View.extend({
     var el = $(this.el);
     el.html(JST.workspace_toolbar({}));
     $('.download_menu_container', el).append(this.downloadMenu.render().el);
-    $('.access_menu_container', el).append(this.accessMenu.render().el);
+    $('.manage_menu_container', el).append(this.manageMenu.render().el);
     $('.connections_menu_container', el).append(this.connectionsMenu.render().el);
     $('.project_menu_container', el).append(this.projectMenu.render().el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
@@ -33,7 +31,6 @@ dc.ui.Toolbar = dc.View.extend({
   display : function() {
     var count = $('.document.is_selected').length;
     count > 0 ? this.show() : this.hide();
-    this.remoteUrlButton.toggleClass('disabled', count > 1);
   },
 
   hide : function() {
@@ -74,14 +71,14 @@ dc.ui.Toolbar = dc.View.extend({
     }, this));
   },
 
-  _editSelectedRemoteUrl : function() {
-    if (this.remoteUrlButton.hasClass('disabled')) return false;
-    var doc = _.first(Documents.selected());
-    dc.ui.Dialog.prompt("Edit remote Url:", doc.get('remote_url'), function(revised) {
-      if (!revised) return true;
+  _registerDocument : function() {
+    var docs = Documents.selected();
+    if (docs.length > 1) return dc.ui.Dialog.alert('Please register only a single published document at a time.');
+    var doc = docs[0];
+    dc.ui.Dialog.prompt("Enter URL of Published Document", doc.get('remote_url'), function(revised) {
       Documents.update(doc, {remote_url : revised});
       return true;
-    });
+    }, true);
   },
 
   _openTimeline : function() {
@@ -96,7 +93,7 @@ dc.ui.Toolbar = dc.View.extend({
     var docs = Documents.selected();
     _.each(docs, function(doc) { Documents.update(doc, {access : access}); });
     var notification = 'access updated for ' + docs.length + ' ' + Inflector.pluralize('document', docs.length);
-    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.accessMenu.el, position : '-top right', top : -1, left : 7});
+    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.manageMenu.el, position : '-top right', top : -1, left : 7});
   },
 
   _panel : function() {
@@ -114,14 +111,15 @@ dc.ui.Toolbar = dc.View.extend({
     });
   },
 
-  _createAccessMenu : function() {
-    var org = dc.app.organization.name;
+  _createManageMenu : function() {
     return new dc.ui.Menu({
-      label : 'Access',
+      label : 'Manage',
       items : [
-        {title : 'Public',          onClick : _.bind(this._setSelectedAccess, this, dc.access.PUBLIC)},
-        {title : 'Only My Account', onClick : _.bind(this._setSelectedAccess, this, dc.access.PRIVATE)},
-        {title : 'Only ' + org,     onClick : _.bind(this._setSelectedAccess, this, dc.access.ORGANIZATION)}
+        {title : 'Set Public Access',               onClick : _.bind(this._setSelectedAccess, this, dc.access.PUBLIC)},
+        {title : 'Set Private Access',              onClick : _.bind(this._setSelectedAccess, this, dc.access.PRIVATE)},
+        {title : 'Set Private to my Organization',  onClick : _.bind(this._setSelectedAccess, this, dc.access.ORGANIZATION), className : 'divider'},
+        {title : 'Register Published Document',     onClick : this._registerDocument},
+        {title : 'Delete Documents',                onClick : this._deleteSelectedDocuments}
       ]
     });
   },
