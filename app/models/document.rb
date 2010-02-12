@@ -177,7 +177,7 @@ class Document < ActiveRecord::Base
       'title'               => title,
       'slug'                => slug,
       'source'              => source,
-      'summary'             => summary,
+      'description'         => description,
       'highlight'           => highlight,
       'annotation_count'    => annotation_count,
       'pdf_url'             => pdf_url,

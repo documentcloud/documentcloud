@@ -29,7 +29,7 @@ class DocumentsController < ApplicationController
     json = JSON.parse(params[:json]).symbolize_keys
     access = json[:access] && json[:access].to_i
     current_document.set_access(access) if access && current_document.access != access
-    current_document.update_attributes(:summary => json[:summary]) if json[:summary]
+    current_document.update_attributes(:description => json[:description]) if json[:description]
     json current_document
   end
 

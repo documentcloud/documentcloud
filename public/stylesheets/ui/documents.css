@@ -75,14 +75,14 @@
     color: #808080;
     margin-bottom: 8px;
   }
-  .document .summary {
+  .document .description {
     line-height: 16px;
     margin-top: 5px;
     height: 33px;
     overflow: hidden;
     color: #454546;
   }
-    .document .summary b {
+    .document .description b {
       font-size: 12px;
     }
   .document .show_notes {

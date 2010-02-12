@@ -26,7 +26,7 @@ dc.ui.Document = dc.View.extend({
       thumbnail   : this.model.get('thumbnail_url'),
       title       : this.mode == 'viz' ? Inflector.truncate(title, 55) : title,
       source      : this.model.get('source'),
-      summary     : this.model.displaySummary(),
+      description : this.model.displayDescription(),
       pub         : this.model.get('access') == dc.access.PUBLIC,
       page_count  : this.model.get('page_count'),
       note_count  : this.model.get('annotation_count')
@@ -83,7 +83,7 @@ dc.ui.Document = dc.View.extend({
   },
 
   _onDocumentChange : function() {
-    var changed = this.model.hasChanged('summary') || this.model.hasChanged('access');
+    var changed = this.model.hasChanged('access');
     changed ? this.render() : this._setSelected();
   },
 

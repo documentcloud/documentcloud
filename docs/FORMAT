@@ -42,15 +42,15 @@
   attributes : { (optional) In general the supported attributes are the same
                  as the Atom format.
   
-    published : The ISO 8601 formatted date of publication.
+    published   : The ISO 8601 formatted date of publication.
     
-    language  : The ISO 639-1 (or 639-2) language code for the document. The
-                default code is assumed to be 'en'.
+    language    : The ISO 639-1 (or 639-2) language code for the document. The
+                  default code is assumed to be 'en'.
     
-    source    : The name of the source of the document.
+    source      : The name of the source of the document.
     
-    summary   : A brief summary of the document. Summaries over 255 characters
-                may be truncated.
+    description : A brief description of the document. Descriptions over 
+                  255 characters may be truncated.
   
   }
   

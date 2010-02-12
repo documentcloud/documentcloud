@@ -19,8 +19,8 @@ class FullText < ActiveRecord::Base
     connection.select_all(sql).inject({}) {|h, res| h[res['document_id'].to_i] = res['highlight']; h }
   end
 
-  # The default summary of a document is the first 255 characters of the text.
-  def summary
+  # The first 255 characters of the text.
+  def summarize
     text[0...1000].gsub(/\s+/, ' ')[0...255]
   end
 

@@ -92,7 +92,6 @@ module DC
         wrapped = Nokogiri::XML.parse(xml.root.search('//c:document').first.content)
         full_text = wrapped.root.search('//body').first.content.strip
         full_text.gsub!(/(\[\[|\]\]|\{\{|\}\})/, '')
-        document.summary = full_text[0...255]
         document.full_text = FullText.new(:text => full_text, :document => document)
         document.pages = [Page.new(:text => full_text, :document => document, :page_number => 1)]
       end

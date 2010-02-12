@@ -4,7 +4,6 @@ dc.ui.Toolbar = dc.View.extend({
 
   callbacks : {
     '#delete_document_button.click' : '_deleteSelectedDocuments',
-    '#edit_summary_button.click'    : '_editSelectedSummary',
     '#edit_remote_url_button.click' : '_editSelectedRemoteUrl',
     '#calais_credits.click'         : '_openCalais'
   },
@@ -26,7 +25,6 @@ dc.ui.Toolbar = dc.View.extend({
     $('.access_menu_container', el).append(this.accessMenu.render().el);
     $('.connections_menu_container', el).append(this.connectionsMenu.render().el);
     $('.project_menu_container', el).append(this.projectMenu.render().el);
-    this.summaryButton = $('#edit_summary_button', el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
     this.setCallbacks();
     return this;
@@ -35,7 +33,6 @@ dc.ui.Toolbar = dc.View.extend({
   display : function() {
     var count = $('.document.is_selected').length;
     count > 0 ? this.show() : this.hide();
-    this.summaryButton.toggleClass('disabled', count > 1);
     this.remoteUrlButton.toggleClass('disabled', count > 1);
   },
 
@@ -75,16 +72,6 @@ dc.ui.Toolbar = dc.View.extend({
       this.display();
       return true;
     }, this));
-  },
-
-  _editSelectedSummary : function() {
-    if (this.summaryButton.hasClass('disabled')) return false;
-    var doc = _.first(Documents.selected());
-    dc.ui.Dialog.prompt("Edit summary:", doc.get('summary'), function(revised) {
-      if (!revised) return true;
-      Documents.update(doc, {summary : Inflector.truncate(revised, 255, '')});
-      return true;
-    });
   },
 
   _editSelectedRemoteUrl : function() {

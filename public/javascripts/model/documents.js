@@ -8,12 +8,12 @@ dc.model.Document = dc.Model.extend({
     this.notes.resource = 'documents/' + this.id + '/annotations';
   },
 
-  // For display, show either the highlighted search results, or the summary,
+  // For display, show either the highlighted search results, or the description,
   // if no highlights are available.
   // The import process will take care of this in the future, but the inline
-  // version of the summary has all runs of whitespace squeezed out.
-  displaySummary : function() {
-    var text = this.get('highlight') || this.get('summary');
+  // version of the description has all runs of whitespace squeezed out.
+  displayDescription : function() {
+    var text = this.get('highlight') || this.get('description');
     return text ? text.replace(/\s+/g, ' ') : '';
   },
 
