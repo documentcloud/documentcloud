@@ -7,6 +7,7 @@ if CloudCrowd.node?
   require 'logger'
   Object.const_set "RAILS_DEFAULT_LOGGER", Logger.new(STDOUT)
   require 'rubygems'
+  gem 'rails', '~> 2.0'
   require 'active_record'
   require 'config/environment'
 end

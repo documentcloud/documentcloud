@@ -46,6 +46,7 @@ class ImportController < ApplicationController
     Document.create!(
       :title            => params[:title],
       :source           => params[:source],
+      :description      => params[:description],
       :organization_id  => current_organization.id,
       :account_id       => current_account.id,
       :access           => DC::Access::PENDING,

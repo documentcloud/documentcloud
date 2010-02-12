@@ -1,5 +1,5 @@
 #upload_dialog .custom {
-  padding: 15px 15px 25px 15px;
+  padding: 15px;
   width: 500px;
 }
   #upload_dialog label {
@@ -12,6 +12,11 @@
     position: absolute;
     right: 15px;
     width: 390px;
+  }
+  #upload_dialog textarea {
+    float: right;
+    width: 380px; height: 50px;
+    margin-bottom: 10px;
   }
   #document_upload_file, #document_upload_access {
     position: absolute;

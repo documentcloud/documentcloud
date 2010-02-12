@@ -12,6 +12,10 @@ span[role="link"] {
   display: none;
 }
 
+.clear {
+  clear: both;
+}
+
 select {
   font-size: 11px;
   height: 20px;
@@ -25,7 +29,8 @@ select {
   background: -moz-linear-gradient(top, #ffffff, #ffd);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#FFFFDD');
 }
-.gradient_blue {
+.gradient_blue,
+.minibutton.ok {
   background: #ddddff;
   background: -webkit-gradient(linear, left top, left bottom, from(#f9f9ff), to(#ddddff));
   background: -moz-linear-gradient(top, #f9f9ff, #ddddff);
@@ -38,8 +43,7 @@ select {
   background: -moz-linear-gradient(top, #ffffff, #dfdfdf);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#DFDFDF');
 }
-.gradient_light,
-.minibutton:hover, .minibutton.is_open {
+.gradient_light {
   background: #ddd;
   background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#d0d0d0));
   background: -moz-linear-gradient(top, #f5f5f5, #d0d0d0);
@@ -124,8 +128,7 @@ div.text_input {
   -webkit-box-shadow: 0 0 2px #000; -moz-box-shadow: 0 0 1px #000;
 }
   .minibutton:hover, .minibutton.is_open {
-    color: #222;
-    -webkit-box-shadow: 0 0 4px #777; -moz-box-shadow: 0 0 4px #777;
+    -webkit-box-shadow: 0 0 4px #333; -moz-box-shadow: 0 0 4px #333;
   }
   .minibutton::selection, .minibutton > span::selection {
     background: transparent;
