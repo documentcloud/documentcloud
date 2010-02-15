@@ -117,6 +117,13 @@ div.text_input {
       font: 12px/12px Arial;
     }
 
+textarea.text_area {
+  border: 1px solid #d0d0d0;
+  -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+  resize: none;
+  line-height: 16px;
+}
+
 /*----------------------------- Mini Buttons ---------------------------------*/
 .minibutton {
   cursor: pointer;
@@ -267,11 +274,7 @@ div.dialog {
       display: none;
     }
   div.dialog textarea.content {
-    border: 1px solid #d0d0d0;
-    -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
-    resize: none;
     width: 400px; height: 100px;
-    line-height: 16px;
   }
 
 /*------------------------------ Hidden Iframes ------------------------------*/

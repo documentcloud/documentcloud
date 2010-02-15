@@ -1,8 +1,15 @@
 <div class="note_background"></div>
 
 <div class="note_contents">
-  <div class="page_number">p. <%= page %></div>
-  <div class="note_title"><%= title %></div>
+  <div class="page_number display">p. <%= page %></div>
+  <div class="note_title display"><%= title %></div>
+  <div class="note_title_edit edit text_input small">
+    <div class="background">
+      <div class="inner">
+        <input type="text" class="note_title_input" value="<%= title %>" />
+      </div>
+    </div>
+  </div>
   <div class="note_excerpt_wrap">
     <div class="note_excerpt" style="height: <%= coords.height %>px;">
       <div class="left_cover"  style="height: <%= coords.height %>px; width: <%= coords.left %>px;"></div>
@@ -10,5 +17,16 @@
       <img class="note_image" src="<%= src %>" alt="" style="top: -<%= coords.top %>px;" />
     </div>
   </div>
-  <div class="note_text"><%= content %></div>
+  <div class="note_controls display">
+    <span role="link" class="edit_note">edit</span>
+    &nbsp;|&nbsp;
+    <span role="link" class="delete_note">delete</span>
+  </div>
+  <div class="note_controls edit">
+    <span role="link" class="cancel_note">cancel</span>    
+    &nbsp;|&nbsp;
+    <span role="link" class="save_note">save</span>
+  </div>
+  <div class="note_text display"><%= content %></div>
+  <textarea class="note_text_edit text_area edit"><%= content %></textarea>
 </div>

@@ -83,7 +83,9 @@ dc.ui.Document = dc.View.extend({
   },
 
   _onDocumentChange : function() {
-    this.model.hasChanged('selected') ? this._setSelected() : this.render();
+    if (this.model.hasChanged('selected')) return this._setSelected();
+    if (this.model.hasChanged('annotation_count')) return $('span.count', this.el).text(this.model.get('annotation_count'));
+    this.render();
   },
 
   _onNotesLoaded : function() {
@@ -92,7 +94,7 @@ dc.ui.Document = dc.View.extend({
   },
 
   _addNote : function(e, note) {
-    this.notesEl.append((new dc.ui.Note({model : note})).render().el);
+    this.notesEl.append((new dc.ui.Note({model : note, set : this.model.notes})).render().el);
   },
 
   // When the document is dropped onto a project, add it to the project.

@@ -28,6 +28,12 @@ dc.model.Document = dc.Model.extend({
     });
   },
 
+  decrementNotes : function() {
+    var count = this.get('annotation_count');
+    if (count <= 0) return false;
+    this.set({annotation_count : count - 1});
+  },
+
   // Inspect.
   toString : function() {
     return 'Document ' + this.id + ' "' + this.get('title') + '"';

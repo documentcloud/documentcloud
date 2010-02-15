@@ -100,13 +100,13 @@ dc.ui.AnnotationEditor = dc.View.extend({
 
   annotationToParams : function(anno, extra) {
     delete anno.unsaved;
-    return _.extend({
+    return _.extend({ json : JSON.stringify({
       location    : anno.location.image,
       page_number : anno.page,
       content     : anno.text,
       title       : anno.title,
       access      : anno.access == 'private' ? 1 : 4
-    }, extra || {});
+    })}, extra || {});
   },
 
   createAnnotation : function(anno) {
