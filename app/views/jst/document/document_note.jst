@@ -1,7 +1,7 @@
 <div class="note_background"></div>
 
 <div class="note_contents">
-  <div class="page_number display">p. <%= page %></div>
+  <div class="page_number">p. <%= page %></div>
   <div class="note_title display"><%= title %></div>
   <div class="note_title_edit edit text_input small">
     <div class="background">
@@ -28,5 +28,7 @@
     <span role="link" class="save_note">save</span>
   </div>
   <div class="note_text display"><%= content %></div>
-  <textarea class="note_text_edit text_area edit"><%= content %></textarea>
+  <div class="note_text_edit_wrap">
+    <textarea class="note_text_edit text_area edit"><%= content %></textarea>
+  </div>
 </div>

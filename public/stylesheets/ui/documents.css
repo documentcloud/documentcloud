@@ -144,6 +144,7 @@
         margin-bottom: 10px;
       }
       .note .note_title_edit {
+        width: 300px;
         margin-bottom: 10px;
       }
       .note .page_number {
@@ -152,12 +153,14 @@
         color: black;
         float: right;
       }
-      .note .note_text_edit {
-        position: absolute;
-        height: 50px;
-        left: -2px; right: -2px;
-        bottom: 0px;
+      .note .note_text_edit_wrap {
+        position: relative;
+        margin-right: 10px;
       }
+        .note .note_text_edit {
+          height: 50px;
+          width: 100%;
+        }
       .note .note_excerpt_wrap {
         border: 1px solid #d0d0d0;
         text-align: center;
@@ -193,9 +196,6 @@
         opacity: 0;
         -webkit-transition: opacity 0.2s linear;
       }
-        .note.edit_visible .note_controls {
-          margin-bottom: 68px;
-        }
         .note:hover .note_controls {
           opacity: 1;
         }

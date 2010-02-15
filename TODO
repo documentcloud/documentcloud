@@ -10,8 +10,6 @@ TODO:
   * Show if the currently-selected documents are tagged with the labels in
     the labels pulldown. Make 'em removable.
     
-  * Make notes editable within the workspace.
-
   * Write out full documentation, with screenshots.
   
   * Real deploys -- Vlad?
@@ -48,6 +46,8 @@ AFTER BETA:
   
 
 DONE: 
+  
+  * Make notes editable within the workspace.
 
   * Give all S3 images far-futures expires headers, and content-types?
 
