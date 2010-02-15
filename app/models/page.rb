@@ -42,12 +42,12 @@ class Page < ActiveRecord::Base
 
   # Ex: docs/1011/pages/21_large.gif
   def image_path(size)
-    File.join(document.pages_path, "#{document.slug}-p#{page_number}-#{size}.gif")
+    document.page_image_path(page_number, size)
   end
 
   # Ex: docs/1011/pages/21.txt
   def text_path
-    File.join(document.pages_path, "#{document.slug}-p#{page_number}.txt")
+    document.page_text_path(page_number)
   end
 
   def authorized_image_url(size)

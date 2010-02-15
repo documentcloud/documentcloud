@@ -115,9 +115,16 @@ class Document < ActiveRecord::Base
     DC::Store::AssetStore.new.authorized_url(pdf_path)
   end
 
-  # The URL to the thumbnail of the first page.
+  def public_thumbnail_url
+    File.join(DC::Store::AssetStore.web_root, page_image_path(1, 'thumbnail'))
+  end
+
+  def private_thumbail_url
+    DC::Store::AssetStore.new.authorized_url(page_image_path(1, 'thumbnail'))
+  end
+
   def thumbnail_url
-    File.join(pages_path, "#{slug}-p1-thumbnail.gif")
+    public? ? public_thumbnail_url : private_thumbail_url
   end
 
   def public_full_text_url
@@ -140,6 +147,14 @@ class Document < ActiveRecord::Base
 
   def search_url
     "#{DC_CONFIG['server_root']}/documents/#{id}/search.json?q={query}"
+  end
+
+  def page_image_path(page_number, size)
+    File.join(pages_path, "#{slug}-p#{page_number}-#{size}.gif")
+  end
+
+  def page_text_path(page_number)
+    File.join(pages_path, "#{slug}-p#{page_number}.txt")
   end
 
   def public_page_image_template

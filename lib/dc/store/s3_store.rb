@@ -8,6 +8,8 @@ module DC
 
       AUTH_PERIOD     = 5.minutes
 
+      IMAGE_EXT       = /\.(gif|png|jpe?g)\Z/
+
       DEFAULT_ACCESS  = DC::Access::PUBLIC
 
       ACCESS_TO_ACL   = Hash.new('private')
@@ -91,9 +93,12 @@ module DC
       end
 
       # Saves a local file to a location on S3, and returns the public URL.
+      # Set the expires headers for a year, if the file is an image -- text,
+      # HTML and JSON may change.
       def save_file(file, s3_path, access, opts={})
         file = opts[:string] ? file : File.open(file)
-        bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access])
+        headers = s3_path.match(IMAGE_EXT) ? {'Expires' => 1.year.from_now.httpdate} : {}
+        bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access], headers)
         bucket.key(s3_path).public_link
       end
 

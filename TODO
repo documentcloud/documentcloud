@@ -1,6 +1,4 @@
 TODO:
-
-  * Give all S3 images far-futures expires headers, and content-types?
                     
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
     viewing.
@@ -49,7 +47,9 @@ AFTER BETA:
     about the documents, notes and entities contained within. Taggable?
   
 
-DONE:
+DONE: 
+
+  * Give all S3 images far-futures expires headers, and content-types?
 
   * Come up with something reasonable to have on the home screen.
 
