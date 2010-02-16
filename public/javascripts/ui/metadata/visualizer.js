@@ -16,10 +16,12 @@ dc.ui.Visualizer = dc.View.extend({
     this.base(options);
     this.topMetadata = [];
     $(window).resize(this.onResize);
+    $(this.el).hide();
     Documents.bind(Documents.SELECTION_CHANGED, this.lazyRender);
   },
 
   open : function(kind) {
+    dc.app.entities.close();
     this._menu = this._menu || dc.app.toolbar.connectionsMenu;
     this._open = true;
     this._kindFilter = kind;
@@ -27,6 +29,7 @@ dc.ui.Visualizer = dc.View.extend({
     this._menu.activate(this.close);
     this.setMode('linear', 'format');
     $(document.body).addClass('visualize');
+    $(this.el).show();
     dc.history.save(this.urlFragment());
     if (Metadata.empty()) return Metadata.populate(this.lazyRender);
     this.lazyRender();
@@ -37,7 +40,7 @@ dc.ui.Visualizer = dc.View.extend({
     this._open = false;
     this._menu.setLabel('Connections');
     $(document.body).removeClass('visualize');
-    $(this.el).html('');
+    $(this.el).html('').hide();
     dc.history.save(dc.app.searchBox.urlFragment());
   },
 

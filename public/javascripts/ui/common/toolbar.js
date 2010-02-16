@@ -89,6 +89,10 @@ dc.ui.Toolbar = dc.View.extend({
     dc.app.visualizer.open(kind);
   },
 
+  _openEntities : function() {
+    dc.app.entities.open();
+  },
+
   _setSelectedAccess : function(access) {
     var docs = Documents.selected();
     _.each(docs, function(doc) { Documents.update(doc, {access : access}); });
@@ -127,7 +131,7 @@ dc.ui.Toolbar = dc.View.extend({
   _createConnectionsMenu : function() {
     var me = this;
     var items = [
-      {title : 'Entities', onClick : function(){ dc.ui.Dialog.alert('The entity list is not yet implemented.'); }},
+      {title : 'Entities', onClick : this._openEntities},
       {title : 'Timeline', onClick : this._openTimeline, className : 'divider'}
     ];
     items = items.concat(_.map(['category', 'city', 'country', 'organization',

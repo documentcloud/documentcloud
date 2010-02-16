@@ -15,7 +15,7 @@ dc.ui.DocumentList = dc.View.extend({
   },
 
   render : function() {
-    $(this.el).append(dc.app.visualizer.el);
+    $(this.el).append([dc.app.visualizer.el, dc.app.entities.el]);
     this.setCallbacks();
     return this;
   },

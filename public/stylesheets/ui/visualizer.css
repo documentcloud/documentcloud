@@ -2,11 +2,7 @@
   position: absolute;
   top: 0px; bottom: 0; left: 0; right: 0;
   -webkit-transition: top 0.1s linear;
-  display: none;
 }
-  body.visualize #visualizer {
-    display: block;
-  }
 
 #visualizer_canvas {
   position: absolute;
