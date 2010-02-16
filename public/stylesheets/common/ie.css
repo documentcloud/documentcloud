@@ -68,3 +68,9 @@ div.dialog .dialog_background,
 #organizer .box {
   width: 280px;
 }
+.icon.plus:hover {
+  background-image: url(/images/embed/ui/plus.png);
+}
+.icon.minus:hover {
+  background-image: url(/images/embed/ui/minus.png);
+}

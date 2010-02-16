@@ -1,7 +1,5 @@
 TODO:
-  
-  * Build out the entity view.
-  
+    
   * Build an metadata -> document dialog, where you pick the occurrence you'd
     like to view, given a choice of pages.
                     
@@ -51,6 +49,8 @@ AFTER BETA:
   
 
 DONE: 
+
+  * Build out the entity view.
   
   * Make notes editable within the workspace.
 
