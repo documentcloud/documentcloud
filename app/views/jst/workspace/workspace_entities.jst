@@ -1,0 +1,15 @@
+<div class="entity_list less_shown" id="metalist_<%= key %>">
+  <div class="type_title" data-kind="<%= key %>">
+    <%= title %>
+    <% if (rest.length > 0) { %>
+      <div class="toggle">
+        <div class="more icon plus"></div>
+        <div class="less icon minus"></div>
+      </div>
+    <% } %>
+  </div>
+  <span class="list_content shown">
+    <% for (var i=0; i<shown.length; i++) { %><%= i == 0 ? '' : ', ' %><span class="entity" data-id="<%= shown[i].id %>"><%= shown[i].get('value') %></span><% } %></span><span class="list_content rest">,
+    <% for (var i=0; i<rest.length; i++) { %><%= i == 0 ? '' : ', ' %><span class="entity" data-id="<%= rest[i].id %>"><%= rest[i].get('value') %></span><% } %>
+  </span>
+</div>

@@ -1,6 +1,9 @@
 TODO:
   
   * Build out the entity view.
+  
+  * Build an metadata -> document dialog, where you pick the occurrence you'd
+    like to view, given a choice of pages.
                     
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
     viewing.

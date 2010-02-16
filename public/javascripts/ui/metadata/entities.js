@@ -1,17 +1,14 @@
 dc.ui.Entities = dc.View.extend({
 
-  // Think about limiting the initially visible metadata to ones that are above
-  // a certain relevance threshold, showing at least three, or something along
-  // those lines.
-  NUM_INITIALLY_VISIBLE : 5,
+  NUM_INITIALLY_VISIBLE : 20,
 
   id : 'entities',
 
   callbacks : {
-    '.icon.less.click':         'showLess',
-    '.icon.more.click':         'showMore',
-    '.metalist_title.click':    'visualizeKind',
-    '.jump_to.click':           '_openDocument'
+    '.icon.less.click':     'showLess',
+    '.icon.more.click':     'showMore',
+    '.type_title.click':    'visualizeConnections',
+    '.entity.click':        '_openDocument'
   },
 
   constructor : function(options) {
@@ -59,19 +56,27 @@ dc.ui.Entities = dc.View.extend({
 
   // Show only the top metadata for the kind.
   showLess : function(e) {
-    $(e.target).parents('.metalist').setMode('less', 'shown');
+    $(e.target).parents('.entity_list').setMode('less', 'shown');
+    return false;
   },
 
   // Show *all* the metadata for the kind.
   showMore : function(e) {
-    $(e.target).parents('.metalist').setMode('more', 'shown');
+    $(e.target).parents('.entity_list').setMode('more', 'shown');
+    return false;
+  },
+
+  visualizeConnections : function(e) {
+    dc.app.visualizer.open($(e.target).attr('data-kind'));
   },
 
   _renderEntities : function() {
     this.collectEntities();
     $(this.el).html('');
-    var html = _.map(this._byKind, function(value, key) {
-      return JST.workspace_metalist({key : key, value : value});
+    var html = _.map(_.sortBy(this._byKind, function(value, key) {
+      return key.toLowerCase();
+    }), function(obj) {
+      return JST.workspace_entities(obj);
     });
     $(this.el).html(html.join(''));
     this.setCallbacks();
@@ -83,7 +88,7 @@ dc.ui.Entities = dc.View.extend({
     var max     = this.NUM_INITIALLY_VISIBLE;
     _(Metadata.selected()).each(function(meta) {
       var kind = meta.get('kind');
-      var list = byKind[kind] = byKind[kind] || {shown : [], rest : [], title : meta.displayKind()};
+      var list = byKind[kind] = byKind[kind] || {shown : [], rest : [], title : meta.displayKind(), key : kind};
       (list.shown.length < max ? list.shown : list.rest).push(meta);
     });
   },

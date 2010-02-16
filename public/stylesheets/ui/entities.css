@@ -1,47 +1,38 @@
 #entities {
   position: absolute;
-  top: 0px; bottom: 0; left: 355px; right: 0;
+  top: 15px; bottom: 0; left: 370px; right: 15px;
 }
-
-.metalist {
-  margin: 10px 0 0 0;
-  float: left; width: 150px;
-}
-  .metalist_content.rest {
-    display: none;
+  #entities .entity_list {
+    margin-bottom: 15px;
   }
-    .metalist.more_shown .metalist_content.rest {
-      display: block;
+    #entities .toggle {
+      display: inline-block;
+      cursor: pointer;
+      position: absolute;
+      opacity: 0.75; filter: alpha(opacity=75);
+      margin-top: 2px;
     }
-  .metalist .toggle {
-    display: inline-block;
-    cursor: pointer;
-    position: absolute;
-    opacity: 0.75; filter: alpha(opacity=75);
-    margin-top: -2px;
-  }
-    .metalist.less_shown .toggle .less,
-    .metalist.more_shown .toggle .more {
+      #entities .entity_list.less_shown .toggle .less,
+      #entities .entity_list.more_shown .toggle .more {
+        display: none;
+      }
+    #entities .list_content.rest {
       display: none;
     }
-  .metalist_title {
-    font: 10px Arial;
-    text-transform: uppercase;
-    padding: 3px 5px 2px 9px;
-    border-top: 1px solid #d0d0d0;
-    color: #777;
-  }
-  .metalist_entry {
-    padding: 1px 0 1px 19px;
-    line-height: 14px;
-    font-size: 11px;
-  }
-    .metalist_entry:first-child {
-      padding-top: 3px;
-    }
-    .metalist_entry:hover {
-      background: #d7d7d7;
-    }
-    .metalist_entry .jump_to {
+      #entities .more_shown .list_content.rest {
+        display: inline;
+      }
+    #entities .type_title {
+      font: bold 14px/18px Arial;
+      color: #204055;
       cursor: pointer;
     }
+    #entities .entity {
+      cursor: pointer;
+      font: 11px/18px Arial;
+      color: #454545;
+    }
+      #entities .entity:hover {
+        color: #204055;
+        text-decoration: underline;
+      }

@@ -161,11 +161,12 @@ textarea.text_area {
     background: url(/images/embed/icons/bullet_arrow_down.png) no-repeat right center;
   }
     .minibutton.menu.is_active .label {
-      padding-left: 15px;
+      padding-left: 14px;
     }
   .minibutton.menu .closer {
     position: absolute;
-    left: 3px; top: 0px;
+    left: 0; top: 0px;
+    padding-left: 2px;
     font-weight: bold;
     color: #aa5555;
     display: none;
