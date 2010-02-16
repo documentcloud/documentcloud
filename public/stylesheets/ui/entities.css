@@ -1,25 +1,12 @@
-#metadata_container {
+#entities {
   position: absolute;
-  top: 0; bottom: 0; left: 0; right: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
+  top: 0px; bottom: 0; left: 355px; right: 0;
 }
-  .metadata {
-    padding: 0 0 10px 0;
-    font-size: 10px;
-    color: #454545;
-    line-height: 12px;
-  }
 
 .metalist {
   margin: 10px 0 0 0;
+  float: left; width: 150px;
 }
-  .metalist:first-child {
-    margin-top: 0;
-  }
-    .metalist:first-child .metalist_title {
-      padding-top: 7px;
-    }
   .metalist_content.rest {
     display: none;
   }
@@ -38,6 +25,7 @@
       display: none;
     }
   .metalist_title {
+    font: 10px Arial;
     text-transform: uppercase;
     padding: 3px 5px 2px 9px;
     border-top: 1px solid #d0d0d0;
@@ -57,12 +45,3 @@
     .metalist_entry .jump_to {
       cursor: pointer;
     }
-    .metalist_entry .add_to_search {
-      display: none;
-      position: absolute;
-      opacity: 0.75; filter: alpha(opacity=75);
-      cursor: copy;
-    }
-      .metalist_entry:hover .add_to_search {
-        display: inline-block;
-      }

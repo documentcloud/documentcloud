@@ -17,7 +17,6 @@ _.extend(dc.app.workspace, {
   createSubViews : function() {
     dc.app.searchBox  = new dc.ui.SearchBox();
     dc.app.paginator  = new dc.ui.Paginator();
-    dc.app.metaList   = new dc.ui.MetadataList();
     dc.ui.notifier    = new dc.ui.Notifier();
     dc.ui.tooltip     = new dc.ui.Tooltip();
     this.sidebar      = new dc.ui.Sidebar();

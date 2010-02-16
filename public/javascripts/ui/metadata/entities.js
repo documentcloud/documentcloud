@@ -1,11 +1,21 @@
 dc.ui.Entities = dc.View.extend({
 
+  // Think about limiting the initially visible metadata to ones that are above
+  // a certain relevance threshold, showing at least three, or something along
+  // those lines.
+  NUM_INITIALLY_VISIBLE : 5,
+
   id : 'entities',
 
-  callbacks : {},
+  callbacks : {
+    '.icon.less.click':         'showLess',
+    '.icon.more.click':         'showMore',
+    '.metalist_title.click':    'visualizeKind',
+    '.jump_to.click':           '_openDocument'
+  },
 
   constructor : function(options) {
-    _.bindAll(this, 'lazyRender', 'open', 'close');
+    _.bindAll(this, 'lazyRender', 'open', 'close', '_renderEntities');
     this.base(options);
     $(this.el).hide();
     Documents.bind(Documents.SELECTION_CHANGED, this.lazyRender);
@@ -37,115 +47,53 @@ dc.ui.Entities = dc.View.extend({
     return dc.app.searchBox.urlFragment() + '/entities';
   },
 
-  gatherMetadata : function() {
-    var seenKinds = {};
-    var filter    = this._kindFilter;
-    var docIds    = Documents.selectedIds();
-    var meta      = _.uniq(_.flatten(_.map(Documents.selected(), function(doc){ return doc.metadata(); })));
-    this.topMetadata = _(meta).chain()
-      .sortBy(function(meta){ return meta.instanceCount + meta.totalRelevance(); })
-      .reverse()
-      .select(function(meta){
-        return meta.get('kind') == filter;
-      })
-      .slice(0, this.METADATA_LIMIT)
-      .sortBy(function(meta){ return _.indexOf(docIds, meta.firstId()); })
-      .value();
-  },
-
-  empty : function() {
-    return _.isEmpty(this.topMetadata) || Documents.empty();
-  },
-
-  highlightDatum : function(e) {
-    this._selectedMetaId = e.data.id;
-    // TODO -- separate out the canvas repaint from the DOM redraw.
-    // this.redrawCanvas();
-    var ids = e.data.documentIds();
-    _.each(Documents.models(), function(doc) {
-      if (_(ids).include(doc.id)) {
-        $('#document_' + doc.id).addClass('bolded');
-      } else {
-        $('#document_' + doc.id).addClass('muted').animate({opacity : 0.5}, {duration : 'fast', queue : false});
-      }
-    });
-  },
-
-  highlightOff : function(e) {
-    this._selectedMetaId = null;
-    // TODO -- separate out the canvas repaint from the DOM redraw.
-    // this.redrawCanvas();
-    $('div.document').removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
-  },
-
-  onResize : function() {
-    if (this._open && !this.empty()) this._renderVisualization();
-  },
-
   // Prevent multiple calls to render from actually drawing more than once.
   lazyRender : function() {
     var me = this;
     if (me._timeout) clearTimeout(me._timeout);
     me._timeout = setTimeout(function() {
-      me._renderVisualization();
+      me._renderEntities();
       me._timeout = null;
     }, 100);
   },
 
-  _renderVisualization : function() {
-    this.gatherMetadata();
-    var me = this;
-    var el = $(this.el);
-    el.html('');
-    if (!this._open || this.empty()) return;
-    var selectedIds = Documents.selectedIds();
+  // Show only the top metadata for the kind.
+  showLess : function(e) {
+    $(e.target).parents('.metalist').setMode('less', 'shown');
+  },
 
-    this.setCallbacks();
+  // Show *all* the metadata for the kind.
+  showMore : function(e) {
+    $(e.target).parents('.metalist').setMode('more', 'shown');
+  },
 
-    var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.parent()[0].scrollHeight});
-    el.append(canvas);
-    if (window.G_vmlCanvasManager) G_vmlCanvasManager.initElement(canvas);
-    var ctx = canvas.getContext('2d');
-    ctx.lineCap = "round";
-    ctx.strokeStyle = "#bbb";
-
-    var scale = 0.92 - (150 / el.width());
-    var originX = el.width() / 2, originY = el.height() / 2;
-    var width = originX * scale, height = originY * scale;
-    var piece = Math.PI * 2 / Documents.size();
-
-    scale = 0.4 - (100 / el.width());
-    width = originX * scale; height = originY * scale;
-    piece = Math.PI * 2 / this.topMetadata.length;
-
-    _.each(this.topMetadata, function(meta, i) {
-      var metaEl = $($.el('div', {'class' : 'datum gradient_white'}, meta.get('value')));
-      el.append(metaEl[0]);
-      metaEl.bind('mouseenter', meta, me.highlightDatum);
-      metaEl.bind('mouseleave', meta, me.highlightOff);
-      var position = piece * i;
-      var w2 = metaEl.outerWidth() / 2, h2 = metaEl.outerHeight() / 2;
-      metaEl.css({left: 'auto', top: i * 40 + 25, right : 25});
-
-      var pos = metaEl.position();
-
-      _.each(meta.get('instances'), function(instance) {
-        var docId = instance.document_id;
-        if (_.indexOf(selectedIds, docId) < 0) return;
-        var del   = $('#document_' + docId);
-        var dpos  = del.position();
-        var docx  = dpos.left + del.outerWidth() / 2, docy = dpos.top + del.height() / 2;
-        ctx.globalAlpha = instance.relevance * 0.5 + 0.25;
-        ctx.lineWidth = instance.relevance * 20 + 1;
-        ctx.beginPath();
-        ctx.moveTo(pos.left + w2, pos.top + h2);
-        ctx.bezierCurveTo(pos.left + w2 - originX,
-                          pos.top + h2,
-                          docx + originX, docy,
-                          docx, docy);
-        ctx.stroke();
-      });
+  _renderEntities : function() {
+    this.collectEntities();
+    $(this.el).html('');
+    var html = _.map(this._byKind, function(value, key) {
+      return JST.workspace_metalist({key : key, value : value});
     });
+    $(this.el).html(html.join(''));
+    this.setCallbacks();
+  },
+
+  // Process and separate the metadata out into kinds.
+  collectEntities : function() {
+    var byKind  = this._byKind = {};
+    var max     = this.NUM_INITIALLY_VISIBLE;
+    _(Metadata.selected()).each(function(meta) {
+      var kind = meta.get('kind');
+      var list = byKind[kind] = byKind[kind] || {shown : [], rest : [], title : meta.displayKind()};
+      (list.shown.length < max ? list.shown : list.rest).push(meta);
+    });
+  },
+
+  _openDocument : function(e) {
+    var metaId  = $(e.target).attr('data-id');
+    var meta    = Metadata.get(metaId);
+    var inst    = meta.get('instances')[0];
+    var doc     = Documents.get(inst.document_id);
+    window.open(doc.get('document_viewer_url') + "?entity=" + inst.id);
   }
 
 });
