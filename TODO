@@ -1,4 +1,8 @@
 TODO:
+
+  * Checkboxes for document selection?
+  
+  * Build out the entity view.
                     
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
     viewing.
