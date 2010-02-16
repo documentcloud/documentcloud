@@ -23,6 +23,7 @@ dc.ui.Toolbar = dc.View.extend({
     $('.manage_menu_container', el).append(this.manageMenu.render().el);
     $('.connections_menu_container', el).append(this.connectionsMenu.render().el);
     $('.project_menu_container', el).append(this.projectMenu.render().el);
+    this.infoEl = $('#toolbar_info', el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
     this.setCallbacks();
     return this;
@@ -41,6 +42,11 @@ dc.ui.Toolbar = dc.View.extend({
   show : function() {
     if (!Projects.populated) Projects.populate();
     $(this._panel()).setMode('open', 'toolbar');
+  },
+
+  setInfo : function(message) {
+    this.infoEl.toggle(!!message);
+    this.infoEl.html(message || '');
   },
 
   notifyProjectChange : function(projectName, numDocs) {

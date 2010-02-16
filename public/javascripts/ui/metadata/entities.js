@@ -37,6 +37,7 @@ dc.ui.Entities = dc.View.extend({
     this._menu.setLabel('Connections');
     $(document.body).removeClass('visualize');
     $(this.el).html('').hide();
+    dc.app.toolbar.setInfo(null);
     dc.history.save(dc.app.searchBox.urlFragment());
   },
 
@@ -46,6 +47,7 @@ dc.ui.Entities = dc.View.extend({
 
   // Prevent multiple calls to render from actually drawing more than once.
   lazyRender : function() {
+    if (!this._open) return false;
     var me = this;
     if (me._timeout) clearTimeout(me._timeout);
     me._timeout = setTimeout(function() {
@@ -78,7 +80,10 @@ dc.ui.Entities = dc.View.extend({
     }), function(obj) {
       return JST.workspace_entities(obj);
     });
+    var docCount = Documents.countSelected();
     $(this.el).html(html.join(''));
+    var message = "Displaying " + this._metaCount + ' entities from ' + docCount + ' selected ' + Inflector.pluralize('document', docCount) + '.';
+    dc.app.toolbar.setInfo(message);
     this.setCallbacks();
   },
 
@@ -86,7 +91,9 @@ dc.ui.Entities = dc.View.extend({
   collectEntities : function() {
     var byKind  = this._byKind = {};
     var max     = this.NUM_INITIALLY_VISIBLE;
-    _(Metadata.selected()).each(function(meta) {
+    var metas   = Metadata.selected();
+    this._metaCount = metas.length;
+    _(metas).each(function(meta) {
       var kind = meta.get('kind');
       var list = byKind[kind] = byKind[kind] || {shown : [], rest : [], title : meta.displayKind(), key : kind};
       (list.shown.length < max ? list.shown : list.rest).push(meta);
