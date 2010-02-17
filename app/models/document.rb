@@ -142,6 +142,10 @@ class Document < ActiveRecord::Base
   def document_viewer_url(opts={})
     suffix = ''
     suffix = "#document/p#{opts[:page]}" if opts[:page]
+    if ent = opts[:entity]
+      occur = ent.split_occurrences.first
+      suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(ent.value)}/#{occur.page_offset}:#{occur.length}"
+    end
     "#{DC_CONFIG['server_root']}/documents/#{id}-#{slug}.html#{suffix}"
   end
 

@@ -1,7 +1,8 @@
 TODO:
     
-  * Build an metadata -> document dialog, where you pick the occurrence you'd
-    like to view, given a choice of pages.
+  * Build an metadata -> document dialog, where you have: the ability to add
+    the entity to the current search, the ability to delete the entity if you're
+    the owner?, a listing of the pages where the entity occurs, with jump links.
                     
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
     viewing.

@@ -140,7 +140,7 @@ dc.ui.Toolbar = dc.View.extend({
       {title : 'Entities', onClick : this._openEntities},
       {title : 'Timeline', onClick : this._openTimeline, className : 'divider'}
     ];
-    items = items.concat(_.map(['category', 'city', 'country', 'organization',
+    items = items.concat(_.map(['city', 'country', 'organization',
         'person', 'place', 'publication', 'state', 'technology', 'term'], function(kind) {
       return {title : Metadata.DISPLAY_NAME[kind], onClick : _.bind(me._openConnections, me, kind)};
     }));

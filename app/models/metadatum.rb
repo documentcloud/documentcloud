@@ -26,16 +26,16 @@ class Metadatum < ActiveRecord::Base
   # Instead of having a separate table for occurrences, we serialize them to
   # a CSV format on each Metadatum. Deserializes.
   def split_occurrences
-    Occurrence.from_csv(self.occurrences)
+    Occurrence.from_csv(self.occurrences, self)
   end
 
   # The pages on which this entity occurs within the document.
-  def pages
+  def pages(occurs=split_occurrences)
     return [] unless textual?
-    conds = split_occurrences.map do |occur|
+    conds = occurs.map do |occur|
       "(start_offset <= #{occur.offset} and end_offset > #{occur.offset})"
     end
-    document.pages.all(:conditions => conds.join(' or '), :select => 'id, page_number')
+    document.pages.all(:conditions => conds.join(' or '), :select => 'id, page_number, start_offset, end_offset')
   end
 
   # A Metadatum is considered to be textual if it occurs in the body of the text.

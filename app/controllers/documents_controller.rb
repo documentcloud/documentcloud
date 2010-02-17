@@ -41,7 +41,7 @@ class DocumentsController < ApplicationController
 
   # TODO: Access-control this:
   def metadata
-    meta = Metadatum.all(:conditions => {:document_id => params[:ids]})
+    meta = Metadatum.all(:conditions => ["document_id in (#{params[:ids].join(',')}) and not kind = ?", 'category'])
     json 'metadata' => meta
   end
 
@@ -100,8 +100,7 @@ class DocumentsController < ApplicationController
   def entity_requested?
     return false unless params[:entity]
     meta = current_document.metadata.find(params[:entity])
-    page_number = meta.pages.first.page_number
-    redirect_to current_document.document_viewer_url(:page => page_number)
+    redirect_to current_document.document_viewer_url(:entity => meta)
   end
 
   def current_document(exists=false)
