@@ -11,6 +11,7 @@
 #no_results .icon.document {
   width: 60px; height: 75px;
   background: url(/images/embed/documents/generic.png);
+  border: 0;
 }
 
 .icon.delete {
