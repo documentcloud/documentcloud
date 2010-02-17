@@ -139,12 +139,15 @@ class Document < ActiveRecord::Base
     public? ? public_full_text_url : private_full_text_url
   end
 
+  # The offsets that Calais provides us with don't quite match up with
+  # the text when there's non ASCII (non XML?) characters.
   def document_viewer_url(opts={})
     suffix = ''
     suffix = "#document/p#{opts[:page]}" if opts[:page]
     if ent = opts[:entity]
       occur = ent.split_occurrences.first
-      suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(ent.value)}/#{occur.page_offset}:#{occur.length}"
+      # suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(ent.value)}/#{occur.page_offset}:#{occur.length}"
+      suffix = "#search/p#{occur.page.page_number}/#{URI.escape(ent.value)}"
     end
     "#{DC_CONFIG['server_root']}/documents/#{id}-#{slug}.html#{suffix}"
   end
