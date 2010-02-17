@@ -39,9 +39,12 @@ a {
     }
   #search_box_wrapper {
     position: absolute;
-    right: 190px; top: 16px; left: 311px;
+    top: 16px; left: 311px;
+    /*right: 190px;*/
+    right: 12px;
   }
   #search_type {
+    display: none;
     position: absolute;
     width: 158px;
     right: 15px; top: 18px;
@@ -51,16 +54,17 @@ a {
   display: none;
   width: 160px;
   position: absolute;
-  top: 17px; right: 15px;
+  top: 18px; right: 17px;
   font-size: 10px;
   text-transform: uppercase;
-  background: #efefef;
+/*  background: #efefef;*/
   color: #878787;
-  border: 1px solid #aaa;
-  -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+/*  border: 1px solid #aaa;*/
+/*  -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;*/
   padding: 4px 0 5px;
 }
   #spinner_text {
+    display: none;
     margin-left: 5px;
     float: left;
   }
