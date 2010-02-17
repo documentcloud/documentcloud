@@ -18,7 +18,7 @@ class MetadataDate < ActiveRecord::Base
   # Instead of having a separate table for occurrences, we serialize them to
   # a CSV format on each Metadatum. Deserializes.
   def split_occurrences
-    @split_occurrences ||= Occurrence.from_csv(self.occurrences)
+    @split_occurrences ||= Occurrence.from_csv(self.occurrences, self)
   end
 
   # This method has to read the entire document contents into memory and
@@ -31,11 +31,11 @@ class MetadataDate < ActiveRecord::Base
   end
 
   # The pages on which this date occurs within the document.
-  def pages
-    conds = split_occurrences.map do |occur|
+  def pages(occurs=split_occurrences)
+    conds = occurs.map do |occur|
       "(start_offset <= #{occur.offset} and end_offset > #{occur.offset})"
     end
-    document.pages.all(:conditions => conds.join(' or '), :select => 'id, page_number')
+    document.pages.all(:conditions => conds.join(' or '), :select => 'id, page_number, start_offset, end_offset')
   end
 
   # NB: We use "to_f.to_i" because "to_i" isn't defined for DateTime objects

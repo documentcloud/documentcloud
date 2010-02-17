@@ -93,8 +93,7 @@ class DocumentsController < ApplicationController
     return false unless params[:date]
     date = Time.at(params[:date].to_i).to_date
     meta = current_document.metadata_dates.first(:conditions => {:date => date})
-    page_number = meta.pages.first.page_number
-    redirect_to current_document.document_viewer_url(:page => page_number)
+    redirect_to current_document.document_viewer_url(:date => meta)
   end
 
   def entity_requested?

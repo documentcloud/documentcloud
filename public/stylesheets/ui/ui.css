@@ -161,7 +161,7 @@ textarea.text_area {
     background: url(/images/embed/icons/bullet_arrow_down.png) no-repeat right center;
   }
     .minibutton.menu.is_active .label {
-      padding-left: 10px;
+      padding-left: 14px;
     }
   .minibutton.menu .closer {
     position: absolute;
