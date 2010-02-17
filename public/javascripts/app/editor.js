@@ -26,7 +26,7 @@ _.extend(dc.app.editor, {
     $('#DV-well').append(this.controlPanel.render().el);
     var desc = $('#DV-descriptionHead');
     desc.html(desc.html().replace(/Summary/, 'Description'));
-    if (this.isOwner) $('#DV-textContents').attr({contentEditable : 'true'});
+    // if (this.isOwner) $('#DV-textContents').attr({contentEditable : 'true'});
   },
 
   notify : function(options) {

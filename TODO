@@ -6,7 +6,7 @@ TODO:
                     
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
     viewing.
-      
+          
   * Implement the "publication" workflow. A document should know if it's been
     published, and the URL where. Create a cron/cloudcrowd job that pings each
     published document, ensuring that it's not 404'd.
@@ -50,6 +50,8 @@ AFTER BETA:
   
 
 DONE: 
+
+  * Disable changes to the page text, for now.
 
   * Build out the entity view.
   
