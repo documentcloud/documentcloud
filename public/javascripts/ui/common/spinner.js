@@ -5,7 +5,7 @@ dc.ui.spinner = {
   show : function(message) {
     this.ensureElement();
     message = message || "Loading";
-    this.messageContainer.html(message);
+    // this.messageContainer.html(message);
     this.el.fadeIn('fast');
   },
 
@@ -18,7 +18,7 @@ dc.ui.spinner = {
     if (this.el) return;
     $(document.body).append(JST.common_spinner({}));
     this.el = $('#spinner');
-    this.messageContainer = $('#spinner_text', this.el);
+    // this.messageContainer = $('#spinner_text', this.el);
   }
 
 };

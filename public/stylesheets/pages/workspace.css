@@ -52,25 +52,10 @@ a {
 
 #spinner {
   display: none;
-  width: 160px;
   position: absolute;
-  top: 18px; right: 17px;
-  font-size: 10px;
-  text-transform: uppercase;
-/*  background: #efefef;*/
-  color: #878787;
-/*  border: 1px solid #aaa;*/
-/*  -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;*/
-  padding: 4px 0 5px;
+  top: 24px; right: 22px;
 }
-  #spinner_text {
-    display: none;
-    margin-left: 5px;
-    float: left;
-  }
   #spinner_image {
-    float: right;
-    margin: 2px 5px 0 0;
     width: 56px; height: 7px;
     background: url(/images/embed/ui/spinner.gif);
   }
