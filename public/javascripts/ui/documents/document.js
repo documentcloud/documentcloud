@@ -4,7 +4,7 @@ dc.ui.Document = dc.View.extend({
   className : 'document',
 
   callbacks : {
-    '.view_document.click': 'viewDocument',
+    '.view_document.click':  'viewDocument',
     '.icon.click'         :  'select',
     '.show_notes.click'   :  'toggleNotes'
   },
@@ -64,6 +64,7 @@ dc.ui.Document = dc.View.extend({
   },
 
   toggleNotes : function() {
+    if (dc.app.visualizer.isOpen() || dc.app.entities.isOpen()) return;
     if (this.modes.notes == 'has') return this.setMode('no', 'notes');
     if (this.model.notes.populated) return this.setMode('has', 'notes');
     dc.ui.spinner.show('loading notes');

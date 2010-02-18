@@ -32,6 +32,7 @@ body.visualize #document_list .document {
   }
     body.visualize .document:hover .show_notes {
       text-decoration: none;
+      cursor: text;
     }
   body.visualize .document img.doc {
     width: 24px; height: 30px;

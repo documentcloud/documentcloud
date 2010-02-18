@@ -33,6 +33,10 @@ dc.ui.Entities = dc.View.extend({
     this.lazyRender();
   },
 
+  isOpen : function() {
+    return this._open;
+  },
+
   close : function(e) {
     if (!this._open) return;
     this._open = false;
