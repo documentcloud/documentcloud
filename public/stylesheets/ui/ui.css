@@ -288,11 +288,11 @@ iframe.hidden_iframe {
 
 
 /*------------------------------ Error Messages ------------------------------*/
-.form_error {
+.form_error, .form_success {
   position: relative;
   text-align: center;
 }
-  .form_error > span, #notifier {
+  .form_error > span, .form_success > span, #notifier {
     color: #844;
     text-transform: uppercase;
     font: 10px Arial;
@@ -312,7 +312,8 @@ iframe.hidden_iframe {
   cursor: pointer;
   z-index: 5000;
 }
-  #notifier.info_style {
+  #notifier.info_style,
+  .form_success > span {
     color: #171;
     border-color: #171;
     background: #cec;

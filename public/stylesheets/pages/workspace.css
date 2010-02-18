@@ -157,7 +157,8 @@ a {
       font: bold 24px Arial;
       text-shadow: 0px 1px 1px #fff;
     }
-    #full_screen_form .form_error {
+    #full_screen_form .form_error,
+    #full_screen_form .form_success {
       margin-top: 20px;
     }
       #full_screen_form .form_error.login_error {

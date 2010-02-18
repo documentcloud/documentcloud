@@ -36,6 +36,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :accounts
   map.with_options :controller => 'accounts' do |accounts|
     accounts.enable_account '/accounts/enable/:key', :action => 'enable'
+    accounts.reset_password '/reset_password', :action => 'reset'
   end
 
   # Projects.

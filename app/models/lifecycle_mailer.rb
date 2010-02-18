@@ -12,6 +12,15 @@ class LifecycleMailer < ActionMailer::Base
                 :organization_name  => account.organization_name
   end
 
+  # Mail instructions for resetting an active account's password.
+  def reset_request(account)
+    subject     "DocumentCloud Password Reset"
+    from        support_email
+    recipients  [account.rfc_email]
+    body        :account            => account,
+                :key                => account.security_key.key
+  end
+
 
   private
 

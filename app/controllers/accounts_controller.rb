@@ -3,8 +3,8 @@
 class AccountsController < ApplicationController
   layout 'workspace'
 
-  before_filter :login_required, :except => [:enable]
-  before_filter :bouncer, :only => [:enable] unless Rails.env.development?
+  before_filter :login_required, :except => [:enable, :reset]
+  before_filter :bouncer, :only => [:enable, :reset] unless Rails.env.development?
 
   # Enabling an account continues the second half of the signup process,
   # allowing the journalist to set their password, and logging them in.
@@ -18,6 +18,15 @@ class AccountsController < ApplicationController
     account.authenticate(session)
     key.destroy
     redirect_to '/'
+  end
+
+  # Show the "Reset Password" screen for an account holder.
+  def reset
+    return render if request.get?
+    account = Account.find_by_email(params[:email])
+    @failure = true and return render unless account
+    account.send_reset_request
+    @success = true
   end
 
   # Requesting /accounts returns the list of accounts in your logged-in organization.

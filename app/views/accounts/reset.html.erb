@@ -1,0 +1,35 @@
+<%
+  @title      = "Reset Password"
+  @bodyclass  = "full_page_background"
+%>
+
+<div id="full_screen_form" class="full_page_background">
+  <form action="/reset_password" method="POST" autocomplete="off">
+    <h1>Reset your DocumentCloud Password</h1>
+    <% if @failure %>
+      <div class="form_error">
+        <span>No account with that email address could be found.</span>
+      </div>
+    <% end %>
+    <% if @success %>
+      <div class="form_success">
+        <span>Instructions to reset your password have been emailed to you.</span>
+      </div>
+    <% end %>
+    <div class="line">
+      <div class="text_input">
+        <div class="background">
+          <div class="inner">
+            <input type="email" name="email" id="account_email" />
+          </div>
+        </div>
+      </div>
+      <label for="account_email">
+        Email Address:<br /><span class="example">The email you use to log in</span>
+      </label>
+    </div>
+    <div class="line">
+      <button class="default">Send Reset Password Email</button>
+    </div>
+  </form>
+</div>
