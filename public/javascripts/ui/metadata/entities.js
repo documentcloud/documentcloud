@@ -102,6 +102,7 @@ dc.ui.Entities = dc.View.extend({
     });
   },
 
+  // TODO: Make this a choosing dialog.
   _openDocument : function(e) {
     var metaId  = $(e.target).attr('data-id');
     var meta    = Metadata.get(metaId);

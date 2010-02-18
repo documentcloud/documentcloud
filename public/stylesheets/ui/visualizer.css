@@ -12,7 +12,7 @@
   font: 11px Arial;
   color: #204055;
   padding: 3px 6px;
-  cursor: crosshair;
+  cursor: pointer;
   -moz-border-radius: 3px; -webkit-border-radius: 3px;
   -webkit-box-shadow: 0 0px 10px #999; -moz-box-shadow: 0 0px 10px #999;
 }

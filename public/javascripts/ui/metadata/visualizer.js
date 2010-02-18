@@ -9,7 +9,11 @@ dc.ui.Visualizer = dc.View.extend({
 
   id : 'visualizer',
 
-  callbacks : {},
+  callbacks : {
+    '.datum.click':       '_openDocument',
+    '.datum.mouseenter':  '_highlightDatum',
+    '.datum.mouseleave':  '_highlightOff'
+  },
 
   constructor : function(options) {
     _.bindAll(this, 'open', 'close', 'gatherMetadata', 'lazyRender', 'highlightDatum', 'highlightOff', 'onResize');
@@ -68,27 +72,6 @@ dc.ui.Visualizer = dc.View.extend({
     return _.isEmpty(this.topMetadata) || Documents.empty();
   },
 
-  highlightDatum : function(e) {
-    this._selectedMetaId = e.data.id;
-    // TODO -- separate out the canvas repaint from the DOM redraw.
-    // this.redrawCanvas();
-    var ids = e.data.documentIds();
-    _.each(Documents.models(), function(doc) {
-      if (_(ids).include(doc.id)) {
-        $('#document_' + doc.id).addClass('bolded');
-      } else {
-        $('#document_' + doc.id).addClass('muted').animate({opacity : 0.5}, {duration : 'fast', queue : false});
-      }
-    });
-  },
-
-  highlightOff : function(e) {
-    this._selectedMetaId = null;
-    // TODO -- separate out the canvas repaint from the DOM redraw.
-    // this.redrawCanvas();
-    $('div.document').removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
-  },
-
   onResize : function() {
     if (this._open && !this.empty()) this._renderVisualization();
   },
@@ -111,8 +94,6 @@ dc.ui.Visualizer = dc.View.extend({
     if (!this._open || this.empty()) return;
     var selectedIds = Documents.selectedIds();
 
-    this.setCallbacks();
-
     var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.parent()[0].scrollHeight});
     el.append(canvas);
     if (window.G_vmlCanvasManager) G_vmlCanvasManager.initElement(canvas);
@@ -130,10 +111,8 @@ dc.ui.Visualizer = dc.View.extend({
     piece = Math.PI * 2 / this.topMetadata.length;
 
     _.each(this.topMetadata, function(meta, i) {
-      var metaEl = $($.el('div', {'class' : 'datum gradient_white'}, meta.get('value')));
+      var metaEl = $($.el('div', {'class' : 'datum gradient_white', 'data-id' : meta.id}, meta.get('value')));
       el.append(metaEl[0]);
-      metaEl.bind('mouseenter', meta, me.highlightDatum);
-      metaEl.bind('mouseleave', meta, me.highlightOff);
       var position = piece * i;
       var w2 = metaEl.outerWidth() / 2, h2 = metaEl.outerHeight() / 2;
       metaEl.css({left: 'auto', top: i * 40 + 25, right : 25});
@@ -157,6 +136,33 @@ dc.ui.Visualizer = dc.View.extend({
         ctx.stroke();
       });
     });
+
+    this.setCallbacks();
+  },
+
+  // TODO: make this a choosing dialog.
+  _openDocument : function(e) {
+    var metaId  = $(e.target).attr('data-id');
+    var meta    = Metadata.get(metaId);
+    var inst    = meta.get('instances')[0];
+    var doc     = Documents.get(inst.document_id);
+    window.open(doc.get('document_viewer_url') + "?entity=" + inst.id);
+  },
+
+  _highlightDatum : function(e) {
+    var meta = Metadata.get($(e.target).attr('data-id'));
+    var ids = meta.documentIds();
+    _.each(Documents.models(), function(doc) {
+      if (_(ids).include(doc.id)) {
+        $('#document_' + doc.id).addClass('bolded');
+      } else {
+        $('#document_' + doc.id).addClass('muted').animate({opacity : 0.5}, {duration : 'fast', queue : false});
+      }
+    });
+  },
+
+  _highlightOff : function(e) {
+    $('div.document').removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
   }
 
 });
