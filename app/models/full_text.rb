@@ -21,7 +21,7 @@ class FullText < ActiveRecord::Base
 
   # The first 255 characters of the text.
   def summarize
-    text[0...1000].gsub(/\s+/, ' ')[0...255]
+    text[0...1000].gsub(/\s+/, ' ').mb_chars[0...255]
   end
 
   # Refresh the full text index from the contents of the document's pages.
