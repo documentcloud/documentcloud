@@ -21,8 +21,8 @@
     -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
   }
   .document.muted {
-    border-color: white;
-    background: white;
+    border-color: transparent;
+    background: transparent;
   }
   #document_list .document {
     min-height: 77px;

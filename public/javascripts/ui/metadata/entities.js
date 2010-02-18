@@ -8,7 +8,9 @@ dc.ui.Entities = dc.View.extend({
     '.icon.less.click':     'showLess',
     '.icon.more.click':     'showMore',
     '.type_title.click':    'visualizeConnections',
-    '.entity.click':        '_openDocument'
+    '.entity.click':        '_openDocument',
+    '.entity.mouseenter':   '_highlightDatum',
+    '.entity.mouseleave':   '_highlightOff'
   },
 
   constructor : function(options) {
@@ -106,6 +108,23 @@ dc.ui.Entities = dc.View.extend({
     var inst    = meta.get('instances')[0];
     var doc     = Documents.get(inst.document_id);
     window.open(doc.get('document_viewer_url') + "?entity=" + inst.id);
+  },
+
+  _highlightDatum : function(e) {
+    var id      = $(e.target).attr('data-id');
+    var meta    = Metadata.get(id);
+    var docIds  = meta.documentIds();
+    _.each(Documents.models(), function(doc) {
+      if (_(docIds).include(doc.id)) {
+        $('#document_' + doc.id).addClass('bolded');
+      } else {
+        $('#document_' + doc.id).addClass('muted').animate({opacity : 0.5}, {duration : 'fast', queue : false});
+      }
+    });
+  },
+
+  _highlightOff : function(e) {
+    $('div.document').removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
   }
 
 });
