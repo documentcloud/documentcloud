@@ -31,7 +31,7 @@
 /*--------------------------- Accounts Dialog --------------------------------*/
 #account_dialog {
   max-width: none;
-  width: 575px;
+  width: 675px;
 }
   #account_dialog .custom {
     padding: 0;
@@ -82,7 +82,6 @@
   width: 215px;
 }
   #account_dialog .name .display {
-    font-weight: bold;
   }
   #account_dialog .name_wrapper .text_input {
     float: left;
@@ -91,6 +90,10 @@
     #account_dialog .name_wrapper .text_input:first-child {
       margin-right: 10px;
     }
+#account_dialog .role .display {
+  font: italic 10px/18px Arial;
+  color: #777;
+}
 #account_dialog .controls_wrapper {
   min-width: 100px;
 }

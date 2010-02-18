@@ -35,8 +35,19 @@
     </div>
   </div>
 </td>
+<td class="role">
+  <span class="display">
+    role:&nbsp;<%= account.ROLE_NAMES[account.get('role')] %>
+  </span>
+  <span class="edit">
+    <select name="role" class="account_role" <%= current.isAdmin() && account.id != current.id ? '' : 'disabled="disabled"' %>>
+      <option value="1">Administrator</option>
+      <option value="2">Contributor</option>
+    </select>
+  </span>
+</td>
 <td class="last">
-  <% if (account == Accounts.current() || Accounts.current().isAdmin()) { %>
+  <% if (account == current || current.isAdmin()) { %>
   <span class="edit_account display" role="link">edit</span>
   <div class="edit controls_wrapper">
     <button class="save_changes">ok</button>

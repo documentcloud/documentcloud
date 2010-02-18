@@ -6,6 +6,8 @@ dc.model.Account = dc.Model.extend({
 
   CONTRIBUTOR     : 2,
 
+  ROLE_NAMES      : ['', 'administrator', 'contributor'],
+
   GRAVATAR_BASE   : 'http://www.gravatar.com/avatar/',
 
   DEFAULT_AVATAR  : location.protocol + '//' + location.host + '/images/embed/icons/user_blue_32.png',

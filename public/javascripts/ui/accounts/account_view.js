@@ -31,7 +31,7 @@ dc.ui.AccountView = dc.View.extend({
   render : function(viewMode) {
     if (this.modes.view == 'edit') return;
     viewMode = viewMode || 'display';
-    var attrs = {account : this.model, email : this.model.get('email'), size : this.size()};
+    var attrs = {account : this.model, email : this.model.get('email'), size : this.size(), current : Accounts.current()};
     if (this.isRow()) this.setMode(viewMode, 'view');
     $(this.el).html(this.template(attrs));
     if (this.model.get('pending')) $(this.el).addClass('pending');
@@ -49,7 +49,9 @@ dc.ui.AccountView = dc.View.extend({
   },
 
   serialize : function() {
-    return $('input', this.el).serializeJSON();
+    var attrs = $('input, select', this.el).serializeJSON();
+    if (attrs.role) attrs.role = parseInt(attrs.role, 10);
+    return attrs;
   },
 
   showEdit : function() {

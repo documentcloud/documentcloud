@@ -39,7 +39,7 @@ class AccountsController < ApplicationController
   # TODO: We can't sent email from EC2 without it getting flagged as spam.
   def create
     return forbidden unless current_account.admin?
-    attributes = pick(:json, :first_name, :last_name, :email)
+    attributes = pick(:json, :first_name, :last_name, :email, :role)
     account = current_organization.accounts.create(attributes)
     account.send_login_instructions
     json account
@@ -49,8 +49,10 @@ class AccountsController < ApplicationController
   # Think about what the desired level of access control is.
   def update
     account = current_organization.accounts.find(params[:id])
-    return forbidden unless current_account.admin? || current_account.id == account.id
+    return forbidden unless account && (current_account.admin? || current_account.id == account.id)
     account.update_attributes pick(:json, :first_name, :last_name, :email)
+    role = pick(:json, :role)
+    account.update_attributes(role) if !role.empty? && current_account.admin?
     json account
   end
 
