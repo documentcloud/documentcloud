@@ -49,6 +49,9 @@
 <td class="last">
   <% if (account == current || current.isAdmin()) { %>
   <span class="edit_account display" role="link">edit</span>
+  <% if (account == current) { %>
+    <span class="change_password display" role="link">change password</span>
+  <% } %>
   <div class="edit controls_wrapper">
     <button class="save_changes">ok</button>
     <% if (account.id && account.id > 0 && account.id != dc.app.accountId) { %>

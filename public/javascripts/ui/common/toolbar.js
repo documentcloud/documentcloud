@@ -84,7 +84,7 @@ dc.ui.Toolbar = dc.View.extend({
     dc.ui.Dialog.prompt("Enter URL of Published Document", doc.get('remote_url'), function(revised) {
       Documents.update(doc, {remote_url : revised});
       return true;
-    }, true);
+    }, 'short');
   },
 
   _openTimeline : function() {

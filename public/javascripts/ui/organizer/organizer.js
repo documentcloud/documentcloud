@@ -57,7 +57,7 @@ dc.ui.Organizer = dc.View.extend({
       var project = new dc.model.Project({title : title, annotation_count : 0, document_ids : []});
       Projects.create(project, null, {error : function() { Projects.remove(project); }});
       return true;
-    }, true);
+    }, 'short');
   },
 
   openUploads : function() {

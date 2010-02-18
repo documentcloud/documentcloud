@@ -3,9 +3,10 @@ dc.ui.Dialog = dc.View.extend({
   className : 'dialog',
 
   DEFAULT_OPTIONS : {
-    title   : "Untitled Dialog",
-    text    : null,
-    buttons : null
+    title     : "Untitled Dialog",
+    text      : null,
+    buttons   : null,
+    password  : false
   },
 
   callbacks : {
@@ -91,6 +92,7 @@ dc.ui.Dialog = dc.View.extend({
     var onConfirm = callback && function(dialog){ return callback(dialog.val()); };
     return new dc.ui.Dialog({
       mode      : shortPrompt ? 'short_prompt' : 'prompt',
+      password  : shortPrompt == 'password',
       title     : text,
       text      : '',
       content   : content,

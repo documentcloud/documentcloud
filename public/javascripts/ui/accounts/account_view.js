@@ -12,10 +12,11 @@ dc.ui.AccountView = dc.View.extend({
   },
 
   callbacks : {
-    '.edit_account.click':   'showEdit',
-    '.admin_link.click':     '_openAccounts',
-    '.save_changes.click':   '_doneEditing',
-    '.delete_account.click': '_deleteAccount'
+    '.edit_account.click':    'showEdit',
+    '.change_password.click': 'promptPasswordChange',
+    '.admin_link.click':      '_openAccounts',
+    '.save_changes.click':    '_doneEditing',
+    '.delete_account.click':  '_deleteAccount'
   },
 
   constructor : function(options) {
@@ -56,6 +57,21 @@ dc.ui.AccountView = dc.View.extend({
 
   showEdit : function() {
     this.setMode('edit', 'view');
+  },
+
+  promptPasswordChange : function() {
+    var dialog = dc.ui.Dialog.prompt('Enter your new password:', '', _.bind(function(password) {
+      Accounts.update(this.model, {password : password}, {success : _.bind(function() {
+        dc.ui.notifier.show({
+          text      : 'password updated',
+          duration  : 5000,
+          mode      : 'info',
+          anchor    : $('td.last', this.el),
+          position  : '-left'
+        });
+      }, this)});
+      return true;
+    }, this), 'password');
   },
 
   _loadAvatar : function() {

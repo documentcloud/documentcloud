@@ -35,6 +35,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   },
 
   close : function() {
+    dc.ui.notifier.hide();
     $(this.el).hide();
   },
 

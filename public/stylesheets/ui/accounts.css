@@ -35,7 +35,7 @@
 }
   #account_dialog .custom {
     padding: 0;
-    max-height: 250px;
+    max-height: 350px;
     overflow-x: hidden;
     overflow-y: auto;
     border-bottom: 1px solid #bbb;
@@ -54,6 +54,7 @@
     #account_dialog td {
       padding: 10px;
       vertical-align: middle;
+      white-space: nowrap;
     }
       #account_dialog tbody td {
         border-bottom: 1px solid #bbb;
@@ -97,12 +98,16 @@
 #account_dialog .controls_wrapper {
   min-width: 100px;
 }
-#account_dialog span.edit_account {
+#account_dialog span.edit_account,
+#account_dialog span.change_password {
+  float: left;
+  margin-right: 10px;
   opacity: 0; filter: alpha(opacity=0);
   -webkit-transition: opacity 0.2s linear;
   color: #353566;
 }
-  #account_dialog tbody tr:hover span.edit_account {
+  #account_dialog tbody tr:hover span.edit_account,
+  #account_dialog tbody tr:hover span.change_password {
     opacity: 1; filter: alpha(opacity=100);
   }
 #account_dialog button.save_changes {
