@@ -53,6 +53,8 @@ AFTER BETA:
 
 DONE: 
 
+  * Reset Password procedure.
+
   * Disable changes to the page text, for now.
 
   * Build out the entity view.

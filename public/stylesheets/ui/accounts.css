@@ -11,7 +11,8 @@
   z-index: 5;
 }
   .account_view.badge img.avatar {
-    position: absolute; left: 15px; top: 8px;
+    position: absolute; left: 15px;
+    border: 1px solid #ccc;
   }
   .account_view.badge .name {
     font-weight: bold;
@@ -70,6 +71,9 @@
 }
 #account_dialog tr.edit_view .edit, #account_dialog tr.display_view .display {
   display: block;
+}
+#account_dialog img.avatar {
+  border: 1px solid #ccc;
 }
 #account_dialog .text_input {
   width: 150px;
