@@ -49,6 +49,7 @@ ActionController::Routing::Routes.draw do |map|
     static.news           '/news',          :action => 'news'
     static.opensource     '/opensource',    :action => 'opensource'
     static.about          '/about',         :action => 'about'
+    static.contact        '/contact',       :action => 'contact'
   end
 
   # Asset packages.

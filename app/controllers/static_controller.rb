@@ -9,6 +9,9 @@ class StaticController < ApplicationController
   def about
   end
 
+  def contact 
+  end
+
   def contributors
     yaml          = yaml_for('contributors')
     @partners     = yaml['partners']
