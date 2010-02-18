@@ -39,6 +39,11 @@ class Account < ActiveRecord::Base
     resource.account_id == id
   end
 
+  # Is this account an administrator?
+  def admin?
+    role == ADMINISTRATOR
+  end
+
   # When an account is created by a third party, send an email with a secure
   # key to set the password.
   def send_login_instructions
@@ -88,7 +93,7 @@ class Account < ActiveRecord::Base
   # The JSON representation of an account avoids sending down the password,
   # among other things, and includes extra attributes.
   def to_json(options = nil)
-    {'id' => id, 'first_name' => first_name, 'last_name' => last_name,
+    {'id' => id, 'first_name' => first_name, 'last_name' => last_name, 'role' => role,
      'email' => email, 'hashed_email' => hashed_email, 'pending' => pending?}.to_json
   end
 

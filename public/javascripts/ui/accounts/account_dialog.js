@@ -21,7 +21,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this.base();
     this._rendered = true;
     $('.custom', this.el).html(JST.account_dialog({}));
-    this.appendControl($.el('button', {'class': 'new_account'}, 'New Account'));
+    if (Accounts.current().isAdmin()) this.appendControl($.el('button', {'class': 'new_account'}, 'New Account'));
     this.list = $('#account_list_content', this.el);
     this.setCallbacks();
     dc.ui.spinner.show('loading');

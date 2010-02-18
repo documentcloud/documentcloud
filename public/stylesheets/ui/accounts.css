@@ -81,6 +81,9 @@
 #account_dialog .name_wrapper {
   width: 215px;
 }
+  #account_dialog .name .display {
+    font-weight: bold;
+  }
   #account_dialog .name_wrapper .text_input {
     float: left;
     width: 100px;

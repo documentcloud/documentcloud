@@ -36,6 +36,7 @@
   </div>
 </td>
 <td class="last">
+  <% if (account == Accounts.current() || Accounts.current().isAdmin()) { %>
   <span class="edit_account display" role="link">edit</span>
   <div class="edit controls_wrapper">
     <button class="save_changes">ok</button>
@@ -43,4 +44,5 @@
       <span class="delete_account" role="link">delete</span>
     <% } %>
   </div>
+  <% } %>
 </td>

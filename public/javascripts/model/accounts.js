@@ -21,6 +21,10 @@ dc.model.Account = dc.Model.extend({
     return nonbreaking ? name.replace(/\s/g, '&nbsp;') : name;
   },
 
+  isAdmin : function() {
+    return this.get('role') == this.ADMINISTRATOR;
+  },
+
   gravatarUrl : function(size) {
     var hash = this.get('hashed_email');
     var fallback = encodeURIComponent(this.DEFAULT_AVATAR);

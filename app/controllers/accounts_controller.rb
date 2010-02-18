@@ -38,6 +38,7 @@ class AccountsController < ApplicationController
   # instead of a password.
   # TODO: We can't sent email from EC2 without it getting flagged as spam.
   def create
+    return forbidden unless current_account.admin?
     attributes = pick(:json, :first_name, :last_name, :email)
     account = current_organization.accounts.create(attributes)
     account.send_login_instructions
@@ -48,6 +49,7 @@ class AccountsController < ApplicationController
   # Think about what the desired level of access control is.
   def update
     account = current_organization.accounts.find(params[:id])
+    return forbidden unless current_account.admin? || current_account.id == account.id
     account.update_attributes pick(:json, :first_name, :last_name, :email)
     json account
   end
