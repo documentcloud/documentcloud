@@ -62,7 +62,7 @@
         height: 25px;
         color: #454545;
       }
-      #account_dialog .first { width: 0%; padding-right: 0; position: relative; }
+      #account_dialog .first { width: 0%; padding-right: 0; }
       #account_dialog .name  { width: 0%; }
       #account_dialog .email { width: 0%; }
       #account_dialog .last  { width: 100%; }
@@ -120,14 +120,17 @@
   display: inline-block;
   color: #774433;
 }
-#account_dialog .pending_badge {
-  display: none;
-  position: absolute;
-  margin: 15px 0 0 15px;
+#account_dialog .pending_wrap {
+  position: relative;
 }
-  #account_dialog .row.pending .pending_badge {
-    display: block;
+  #account_dialog .pending_badge {
+    display: none;
+    position: absolute;
+    margin: 15px 0 0 15px;
   }
+    #account_dialog .row.pending .pending_badge {
+      display: block;
+    }
 #account_dialog tr.row .pending_notification {
   font: 10px Arial;
   text-transform: uppercase;
