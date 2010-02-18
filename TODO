@@ -1,4 +1,6 @@
 TODO:
+
+  * Build out the account/admin management, according to the specs.
     
   * Build an metadata -> document dialog, where you have: the ability to add
     the entity to the current search, the ability to delete the entity if you're
