@@ -1,4 +1,5 @@
 louis:
+  role: 1
   organization: tribune
   email: lmercier@tribune.org
   first_name: Louis

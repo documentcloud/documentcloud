@@ -3,6 +3,9 @@
 # moment.
 class Account < ActiveRecord::Base
 
+  ADMINISTRATOR = 1
+  CONTRIBUTOR   = 2
+
   # Associations:
   belongs_to  :organization
   has_many    :projects,          :dependent => :destroy

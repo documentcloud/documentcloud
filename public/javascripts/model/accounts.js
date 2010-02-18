@@ -2,11 +2,15 @@
 
 dc.model.Account = dc.Model.extend({
 
-  GRAVATAR_BASE  : 'http://www.gravatar.com/avatar/',
+  ADMINISTRATOR   : 1,
 
-  DEFAULT_AVATAR : location.protocol + '//' + location.host + '/images/embed/icons/user_blue_32.png',
+  CONTRIBUTOR     : 2,
 
-  BLANK_ACCOUNT : {first_name : '', last_name : '', email : ''},
+  GRAVATAR_BASE   : 'http://www.gravatar.com/avatar/',
+
+  DEFAULT_AVATAR  : location.protocol + '//' + location.host + '/images/embed/icons/user_blue_32.png',
+
+  BLANK_ACCOUNT   : {first_name : '', last_name : '', email : ''},
 
   constructor : function(attributes) {
     this.base(attributes || this.BLANK_ACCOUNT);

@@ -27,7 +27,8 @@ CREATE TABLE accounts (
     email character varying(100) NOT NULL,
     hashed_password character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    role integer NOT NULL
 );
 
 
@@ -963,3 +964,5 @@ INSERT INTO schema_migrations (version) VALUES ('20100208131000');
 INSERT INTO schema_migrations (version) VALUES ('20100208151651');
 
 INSERT INTO schema_migrations (version) VALUES ('20100212130932');
+
+INSERT INTO schema_migrations (version) VALUES ('20100218193708');
