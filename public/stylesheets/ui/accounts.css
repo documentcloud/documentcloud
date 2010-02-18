@@ -62,7 +62,7 @@
         height: 25px;
         color: #454545;
       }
-      #account_dialog .first { width: 0%; padding-right: 0; }
+      #account_dialog .first { width: 0%; padding-right: 0; position: relative; }
       #account_dialog .name  { width: 0%; }
       #account_dialog .email { width: 0%; }
       #account_dialog .last  { width: 100%; }
