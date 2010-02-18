@@ -31,11 +31,11 @@
 /*--------------------------- Accounts Dialog --------------------------------*/
 #account_dialog {
   max-width: none;
-  width: 675px;
+  width: 700px;
 }
   #account_dialog .custom {
     padding: 0;
-    max-height: 350px;
+    max-height: 342px;
     overflow-x: hidden;
     overflow-y: auto;
     border-bottom: 1px solid #bbb;
