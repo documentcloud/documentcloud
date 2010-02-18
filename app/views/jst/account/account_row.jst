@@ -41,8 +41,8 @@
   </span>
   <span class="edit">
     <select name="role" class="account_role" <%= current.isAdmin() && account.id != current.id ? '' : 'disabled="disabled"' %>>
-      <option value="1">Administrator</option>
-      <option value="2">Contributor</option>
+      <option class="role_2" value="2">Contributor</option>
+      <option class="role_1" value="1">Administrator</option>
     </select>
   </span>
 </td>

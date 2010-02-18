@@ -56,6 +56,7 @@ dc.ui.AccountView = dc.View.extend({
   },
 
   showEdit : function() {
+    $('option.role_' + this.model.get('role'), this.el).attr({selected : 'selected'});
     this.setMode('edit', 'view');
   },
 
@@ -109,6 +110,7 @@ dc.ui.AccountView = dc.View.extend({
     dc.ui.Dialog.confirm('Really delete ' + this.model.fullName() + '?', _.bind(function() {
       $(this.el).remove();
       Accounts.destroy(this.model);
+      return true;
     }, this));
   },
 
@@ -120,7 +122,7 @@ dc.ui.AccountView = dc.View.extend({
     model.set(resp);
     model.changed();
     if (newAccount) dc.ui.notifier.show({
-      text      : 'login email sent to ' + model.get('email'),
+      text      : 'signup sent to ' + model.get('email'),
       duration  : 5000,
       mode      : 'info',
       anchor    : $('td.last', this.el),

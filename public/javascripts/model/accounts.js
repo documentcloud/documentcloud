@@ -12,7 +12,7 @@ dc.model.Account = dc.Model.extend({
 
   DEFAULT_AVATAR  : location.protocol + '//' + location.host + '/images/embed/icons/user_blue_32.png',
 
-  BLANK_ACCOUNT   : {first_name : '', last_name : '', email : ''},
+  BLANK_ACCOUNT   : {first_name : '', last_name : '', email : '', role : 2},
 
   constructor : function(attributes) {
     this.base(attributes || this.BLANK_ACCOUNT);
