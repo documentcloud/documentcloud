@@ -1,91 +1,98 @@
 partners:
-  - - Gotham Gazette
-    - http://www.gothamgazette.com/
-  - - National Security Archive
-    - http://www.gwu.edu/~nsarchiv/
-  - - New York Times
-    - http://www.nytimes.com/
-  - - ProPublica
-    - http://www.propublica.org/
-  - - Talking Points Memo
-    - http://www.talkingpointsmemo.com/
-
+   - - Gotham Gazette
+     - http://gothamgazette.com
+   - - National Security Archive
+     - http://gwu.edu/~nsarchiv
+   - - New York Times
+     - http://nytimes.com
+   - - ProPublica
+     - http://propublica.org
+   - - Talking Points Memo
+     - http://talkingpointsmemo.com
 contributors:
-  - - ACLU National Security Project
-    - http://www.aclu.org/national-security
-  - - Arizona Republic
-    - http://www.azcentral.com/
-  - - Boston Globe
-    - http://www.boston.com/bostonglobe/
-  - - California Watch
-    - http://www.centerforinvestigativereporting.org/projects/californiawatch/
-  - - Center for Democracy and Technology / OpenCRS
-    - http://opencrs.com/
-    - Congressional Research Service reports, opened.
-  - - Center for Investigative Reporting
-    - http://www.centerforinvestigativereporting.org/
-  - - Center for Public Integrity
-    - http://www.publicintegrity.org/
-  - - Centre for Investigative Journalism, City University London
-    - http://www.city.ac.uk/study/courses/arts/investigative-journalism-ma-diploma
-  - - Chicago Tribune
-    - http://www.chicagotribune.com/
-  - - Circle of Blue
-    - http://www.circleofblue.org/
-  - - Dallas Morning News
-    - http://www.dallasnews.com/
-  - - Forbes
-    - http://www.forbes.com/
-  - - Investigate West
-    - http://invw.org/
-  - - Investigative Reporting Workshop at American University
-    - http://investigativereportingworkshop.org/
-  - - Los Angeles Times
-    - http://www.latimes.com/
-  - - Miami Herald
-    - http://www.miamiherald.com/
-  - - MinnPost
-    - http://www.minnpost.com/
-  - - Mother Jones
-    - http://motherjones.com/
-  - - MSNBC
-    - http://www.msnbc.msn.com/
-  - - National Public Radio
-    - http://www.npr.org
-  - - NewsHour
-    - http://www.pbs.org/newshour/
-  - - Press & Sun-Bulletin
-    - http://Pressconnects.com
-    - Binghamton, NY
-  - - Public Radio International (PRI)
-    - http://pri.org/
-  - - Public.Resource.Org
-    - http://public.resource.org/
-  - - SF Public Press
-    - http://sfpublicpress.org/
-  - - St. Petersburg Times
-    - http://www.tampabay.com/
-  - - Sunlight Foundation
-    - http://www.sunlightfoundation.com/
-  - - The Atlantic
-    - http://www.theatlantic.com/
-  - - The New Yorker
-    - http://www.newyorker.com/
-  - - The Seattle Times
-    - http://seattletimes.nwsource.com
-  - - Thomson Reuters
-    - http://thomsonreuters.com/
-  - - Transactional Records Access Clearinghouse (TRAC)
-    - http://trac.syr.edu/aboutTRACgeneral.html
-  - - UBC School of Journalism
-    - http://www.journalism.ubc.ca/
-  - - UCSF's Legacy Tobacco Documents Library and Drug Industry Document Archive
-    - http://legacy.library.ucsf.edu/
-  - - Vancouver Sun
-    - http://www.vancouversun.com/
-  - - Voice of San Diego
-    - http://www.voiceofsandiego.org/
-  - - Washington Post
-    - http://www.wpost.com
-  - - WNYC Radio
-    - http://www.wnyc.org
+   - - ACLU National Security Project
+     - http://aclu.org/national-security
+   - - Arizona Republic
+     - http://azcentral.com
+   - - Borderzine
+     - http://borderzine.com
+   - - Boston Globe
+     - http://boston.com/bostonglobe
+   - - California Watch
+     - http://californiawatch.org
+   - - Center for Democracy and Technology / OpenCRS
+     - http://opencrs.com
+   - - Center for Investigative Reporting
+     - http://centerforinvestigativereporting.org
+   - - Center for Public Integrity
+     - http://publicintegrity.org
+   - - Centre for Investigative Journalism, City University London
+     - http://city.ac.uk/study/courses/arts/in...
+   - - Chicago Tribune
+     - http://chicagotribune.com
+   - - Circle of Blue
+     - http://circleofblue.org
+   - - Dallas Morning News
+     - http://dallasnews.com
+   - - Forbes
+     - http://forbes.com
+   - - Huffington Post Investigative Fund
+     - http://huffpostfund.org
+   - - Investigate West
+     - http://invw.org
+   - - Investigative Reporting Workshop at American University
+     - http://investigativereportingworkshop.org
+   - - Knight News Challenge
+     - http://newschallenge.org
+   - - Linked Data
+     - http://linkeddata.org
+   - - Los Angeles Times
+     - http://latimes.com
+   - - Miami Herald
+     - http://miamiherald.com
+   - - MinnPost
+     - http://minnpost.com
+   - - Mother Jones
+     - http://motherjones.com
+   - - MSNBC
+     - http://msnbc.msn.com
+   - - National Public Radio
+     - http://npr.org
+   - - NewsHour
+     - http://pbs.org/newshour
+   - - Oakland Local
+     - http://oaklandlocal.com
+   - - Press & Sun-Bulletin
+     - http://Pressconnects.com
+   - - Public Radio International (PRI)
+     - http://pri.org
+   - - Public.Resource.Org
+     - http://public.resource.org
+   - - SF Public Press
+     - http://sfpublicpress.org
+   - - St. Petersburg Times
+     - http://tampabay.com
+   - - Sunlight Foundation
+     - http://sunlightfoundation.com
+   - - The Atlantic
+     - http://theatlantic.com
+   - - The New Yorker
+     - http://newyorker.com
+   - - The Seattle Times
+     - http://seattletimes.nwsource.com
+   - - Thomson Reuters
+     - http://thomsonreuters.com
+   - - Transactional Records Access Clearinghouse (TRAC)
+     - http://trac.syr.edu/aboutTRACgeneral.html
+   - - UBC School of Journalism
+     - http://journalism.ubc.ca
+   - - UCSF's Legacy Tobacco Documents Library and Drug Industry Document Archive
+     - http://legacy.library.ucsf.edu
+   - - Vancouver Sun
+     - http://vancouversun.com
+   - - Voice of San Diego
+     - http://voiceofsandiego.org
+   - - Washington Post
+     - http://wpost.com
+   - - WNYC Radio
+     - http://wnyc.org

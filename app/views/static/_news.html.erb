@@ -2,7 +2,7 @@
   <% @news.each do |title, url, author, date| %>
   <li>
     <a href="<%= h(url) %>"><%= h(title) %></a><br />
-    <i><%= h(author) %></i>, <small><%= date.strftime("%b %d, %Y") %></small>
+    <i><%= h(author) %></i>&mdash;<small><%= date.strftime("%b %d, %Y") %></small>
   </li>
   <% end %>
 </ul>
