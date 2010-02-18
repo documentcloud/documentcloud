@@ -11,8 +11,7 @@
   z-index: 5;
 }
   .account_view.badge img.avatar {
-    position: absolute; left: 15px;
-    border: 1px solid #aaa;
+    position: absolute; left: 15px; top: 8px;
   }
   .account_view.badge .name {
     font-weight: bold;

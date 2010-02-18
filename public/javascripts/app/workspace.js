@@ -30,7 +30,7 @@ _.extend(dc.app.workspace, {
     dc.app.visualizer = new dc.ui.Visualizer();
     dc.app.entities   = new dc.ui.Entities();
     this.documentList = new dc.ui.DocumentList();
-    this.accountBadge = new dc.ui.AccountView(Accounts.current(), 'badge');
+    this.accountBadge = new dc.ui.AccountView({model : Accounts.current(), kind : 'badge'});
     this.organizer    = new dc.ui.Organizer();
   },
 

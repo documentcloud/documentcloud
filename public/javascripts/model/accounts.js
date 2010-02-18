@@ -17,7 +17,7 @@ dc.model.Account = dc.Model.extend({
     return nonbreaking ? name.replace(/\s/g, '&nbsp;') : name;
   },
 
-  gravatarURL : function(size) {
+  gravatarUrl : function(size) {
     var hash = this.get('hashed_email');
     var fallback = encodeURIComponent(this.DEFAULT_AVATAR);
     return this.GRAVATAR_BASE + hash + '.jpg?s=' + size + '&d=' + fallback;

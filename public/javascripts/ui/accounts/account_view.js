@@ -18,26 +18,30 @@ dc.ui.AccountView = dc.View.extend({
     '.delete_account.click': '_deleteAccount'
   },
 
-  constructor : function(account, kind) {
-    this.kind       = kind;
-    this.tagName    = this.TAGS[kind];
+  constructor : function(options) {
+    this.kind       = options.kind;
+    this.tagName    = this.TAGS[this.kind];
     this.className  = 'account_view gradient_white ' + this.kind;
-    this.base();
-    this.account    = account;
+    this.base(options);
     this.template   = JST['account_' + this.kind];
     _.bindAll(this, '_onSuccess', '_onError');
-    this.account.bind(dc.Model.CHANGED, _.bind(this.render, this, 'display'));
+    this.model.bind(dc.Model.CHANGED, _.bind(this.render, this, 'display'));
   },
 
   render : function(viewMode) {
     if (this.modes.view == 'edit') return;
     viewMode = viewMode || 'display';
-    var attrs = {account : this.account, email : this.account.get('email'), size : this.AVATAR_SIZES[this.kind]};
+    var attrs = {account : this.model, email : this.model.get('email'), size : this.size()};
     if (this.isRow()) this.setMode(viewMode, 'view');
     $(this.el).html(this.template(attrs));
-    if (this.account.get('pending')) $(this.el).addClass('pending');
+    if (this.model.get('pending')) $(this.el).addClass('pending');
+    this._loadAvatar();
     this.setCallbacks();
     return this;
+  },
+
+  size : function() {
+    return this.AVATAR_SIZES[this.kind];
   },
 
   isRow : function() {
@@ -52,6 +56,13 @@ dc.ui.AccountView = dc.View.extend({
     this.setMode('edit', 'view');
   },
 
+  _loadAvatar : function() {
+    var img = new Image();
+    var src = this.model.gravatarUrl(this.size());
+    img.onload = _.bind(function() { $('img.avatar', this.el).attr({src : src}); }, this);
+    img.src = src;
+  },
+
   _openAccounts : function(e) {
     e.preventDefault();
     dc.app.accounts.open();
@@ -64,22 +75,22 @@ dc.ui.AccountView = dc.View.extend({
     var me = this;
     var attributes = this.serialize();
     var options = {success : this._onSuccess, error : this._onError};
-    if (this.account.isNew()) {
+    if (this.model.isNew()) {
       if (!attributes.email) return $(this.el).remove();
       dc.ui.spinner.show('saving');
-      Accounts.create(this.account, attributes, options);
-    } else if (!this.account.invalid && !this.account.changedAttributes(attributes)) {
+      Accounts.create(this.model, attributes, options);
+    } else if (!this.model.invalid && !this.model.changedAttributes(attributes)) {
       this.setMode('display', 'view');
     } else {
       dc.ui.spinner.show('saving');
-      Accounts.update(this.account, attributes, options);
+      Accounts.update(this.model, attributes, options);
     }
   },
 
   _deleteAccount : function() {
-    dc.ui.Dialog.confirm('Really delete ' + this.account.fullName() + '?', _.bind(function() {
+    dc.ui.Dialog.confirm('Really delete ' + this.model.fullName() + '?', _.bind(function() {
       $(this.el).remove();
-      Accounts.destroy(this.account);
+      Accounts.destroy(this.model);
     }, this));
   },
 

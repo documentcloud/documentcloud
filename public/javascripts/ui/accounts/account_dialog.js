@@ -39,14 +39,14 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   },
 
   newAccount : function() {
-    var view = new dc.ui.AccountView(new dc.model.Account(), 'row');
+    var view = new dc.ui.AccountView({model : new dc.model.Account(), kind : 'row'});
     this.list.append(view.render('edit').el);
   },
 
   _renderAccounts : function() {
     dc.ui.spinner.hide();
     var views = _.map(Accounts.models(), function(account) {
-      return (new dc.ui.AccountView(account, 'row')).render().el;
+      return (new dc.ui.AccountView({model : account, kind : 'row'})).render().el;
     });
     this.list.append(views);
     $(this.el).show();
