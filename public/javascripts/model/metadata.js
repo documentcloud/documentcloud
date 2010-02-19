@@ -104,9 +104,7 @@ dc.model.MetadataSet = dc.model.SortedSet.extend({
     organization  : 'Organizations',
     person        : 'People',
     place         : 'Places',
-    publication   : 'Publications',
     state         : 'States',
-    technology    : 'Technologies',
     term          : 'Terms'
   },
 

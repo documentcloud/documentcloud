@@ -1,6 +1,6 @@
 dc.ui.Entities = dc.View.extend({
 
-  NUM_INITIALLY_VISIBLE : 20,
+  NUM_INITIALLY_VISIBLE : 30,
 
   id : 'entities',
 
