@@ -14,7 +14,7 @@
       <% @posts.each do |title, url, source, date| %>
       <li>
         <a href="<%= h(url) %>"><%= h(title) %></a><br />
-        <i><%= h(source) %></i>&mdash;<small><%= date.strftime("%b %d, %Y") %></small>
+        <i><%= h(source) %></i> &ndash; <small><%= date.strftime("%b %d, %Y") %></small>
       </li>
       <% end %>
     </ul>
