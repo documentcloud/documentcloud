@@ -2,11 +2,12 @@
 <script>
 new TWTR.Widget({
   version: 2,
-  type: 'search',
+  type: 'faves',
+  rpp: 10,
   search: 'documentcloud',
-  interval: 6000,
-  title: 'DocumentCloud Tweets',
-  subject: '',
+  interval: 8000,
+  title: 'Overheard on Twitter',
+  subject: 'DocumentCloud',
   width: 250,
   height: 300,
   theme: {
