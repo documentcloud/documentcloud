@@ -94,7 +94,7 @@ a {
       #sidebar .nametag.large {
         height: 32px;
         text-transform: none;
-        font: 11px/32px Arial;
+        font: bold 11px/32px Arial;
       }
 
 .panel_container {
