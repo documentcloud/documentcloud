@@ -20,7 +20,7 @@ apt-get update
 apt-get -y upgrade
 
 # sun java wants you to hold its hand
-export DEBIAN_FRONTEND=readline 
+export DEBIAN_FRONTEND=readline
 yes yes| apt-get install -y sun-java6-bin
 export DEBIAN_FRONTEND=noninteractive
 
@@ -34,7 +34,7 @@ libjpeg62-dev libleptonica-dev tesseract-ocr-dev tesseract-ocr-eng
 xfsprogs libpcre3-dev munin munin-node emacs23-nox lzop sysstat
 libopenssl-ruby'
 
-echo $PACKAGES | xargs apt-get install -y 
+echo $PACKAGES | xargs apt-get install -y
 
 GEMS_VERSION=1.3.5
 gem --version 2>/dev/null | grep -q $GEMS_VERSION || {
@@ -48,9 +48,9 @@ gem --version 2>/dev/null | grep -q $GEMS_VERSION || {
 
 GEMS='postgres sqlite3-ruby rails passenger sinatra right_aws
 rest-client rack bcrypt-ruby rubyzip libxml-ruby nokogiri json hpricot
-calais curb daemons cloud-crowd yui-compressor jammit docsplit rack-bug'
+calais curb daemons cloud-crowd yui-compressor jammit docsplit'
 
-echo $GEMS | xargs gem install --no-ri --no-rdoc 
+echo $GEMS | xargs gem install --no-ri --no-rdoc
 
 cd /home/$USERNAME
 
@@ -112,7 +112,7 @@ update-rc.d nginx defaults
 # munin
 cp -v config/server/munin/* /etc/munin/
 sudo cp -v config/server/munin/plugins/* /usr/share/munin/plugins/
-for f in config/server/munin/plugins/*; do 
+for f in config/server/munin/plugins/*; do
     ln -v -sf /usr/share/munin/plugins/$(basename $f) /etc/munin/plugins
 done
 for f in /etc/munin/plugins/{if_err_eth0,postfix_mailqueue,postfix_mailvolume,entropy}; do test -e $f && rm -v $f; done
