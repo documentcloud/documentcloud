@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
     main.root
     main.home       '/future_home', :action => 'home' # re-enable this route after launch, until then, it's static/home
     main.results    '/results',     :action => 'index'
-    main.signup     '/signup',      :action => 'signup'
+    main.signup     '/signup',      :action => 'signup_info'
     main.login      '/login',       :action => 'login'
     main.logout     '/logout',      :action => 'logout'
     main.todo       '/todo',        :action => 'todo'

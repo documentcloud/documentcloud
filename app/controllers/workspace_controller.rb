@@ -22,6 +22,7 @@ class WorkspaceController < ApplicationController
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and
   # its first account. If everthing's kosher, the journalist is logged in.
+  # NB: This needs to stay access controlled by the bouncer throughout the beta.
   def signup
     return render unless request.post?
     org = Organization.create(params[:organization])
@@ -30,6 +31,10 @@ class WorkspaceController < ApplicationController
     return org.destroy && fail(acc.errors.full_messages.first) if acc.errors.any?
     acc.authenticate(session)
     redirect_to '/'
+  end
+
+  # Display the signup information page.
+  def signup_info
   end
 
   # /login handles both the login form and the login request.

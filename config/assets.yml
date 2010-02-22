@@ -26,8 +26,6 @@ stylesheets:
     - public/stylesheets/pages/workspace.css
   empty:
     - public/stylesheets/pages/empty.css
-  docs:
-    - public/stylesheets/pages/docs.css
   static:
     - public/stylesheets/common/reset.css
     - public/stylesheets/pages/static.css
