@@ -180,10 +180,17 @@ a {
         #full_screen_form label {
           width: 170px;
         }
+        .full_page_background label.label_only {
+          line-height: 30px !important;
+        }
         .full_page_background .example {
           font: bold italic 11px Arial;
           color: #666;
         }
+          .full_page_background .example.long {
+            margin-top: 10px;
+            margin-left: 200px;
+          }
       #full_screen_form .text_input {
         display: block;
         position: absolute;
