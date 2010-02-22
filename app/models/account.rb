@@ -2,6 +2,7 @@
 # documents. Accounts have full priviledges for the entire organization, at the
 # moment.
 class Account < ActiveRecord::Base
+  include DC::Access
 
   ADMINISTRATOR = 1
   CONTRIBUTOR   = 2
@@ -34,14 +35,24 @@ class Account < ActiveRecord::Base
     self
   end
 
+  # Is this account an administrator?
+  def admin?
+    role == ADMINISTRATOR
+  end
+
   # An account owns a resource if it's tagged with the account_id.
   def owns?(resource)
     resource.account_id == id
   end
 
-  # Is this account an administrator?
-  def admin?
-    role == ADMINISTRATOR
+  def administers?(resource)
+    admin? &&
+      resource.organization_id == organization_id &&
+      [ORGANIZATION, EXCLUSIVE, PUBLIC].include?(resource.access)
+  end
+
+  def owns_or_administers?(resource)
+    owns?(resource) || administers?(resource)
   end
 
   # When an account is created by a third party, send an email with a secure

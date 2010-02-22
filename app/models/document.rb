@@ -48,6 +48,11 @@ class Document < ActiveRecord::Base
     self.pages.all(:select => [:text]).map(&:text).join('')
   end
 
+  # The description must be truncated to 255 characters as it is set.
+  def description=(desc)
+    write_attribute :description, desc.mb_chars[0...255]
+  end
+
   # Does this document have a title?
   def titled?
     title.present? && (title != DEFAULT_TITLE)

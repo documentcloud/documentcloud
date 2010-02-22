@@ -74,7 +74,7 @@ class DocumentsController < ApplicationController
 
   def set_page_text
     return not_found unless current_page
-    return forbidden unless current_account.owns?(current_page)
+    return forbidden unless current_account.owns_or_administers?(current_page)
     json current_page.update_attributes(pick(params, :text))
   end
 

@@ -9,7 +9,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       var docId = <%= @current_document.id %>;
-      var isOwner = <%= @current_account.owns?(@current_document) %>;
+      var isOwner = <%= @current_account.owns_or_administers?(@current_document) %>;
       dc.app.editor.initialize(docId, isOwner);
     });
   </script>
