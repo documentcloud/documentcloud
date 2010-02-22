@@ -128,7 +128,7 @@ dc.ui.Toolbar = dc.View.extend({
         {title : 'Set Public Access',               onClick : _.bind(this._setSelectedAccess, this, dc.access.PUBLIC)},
         {title : 'Set Private Access',              onClick : _.bind(this._setSelectedAccess, this, dc.access.PRIVATE)},
         {title : 'Set Private to my Organization',  onClick : _.bind(this._setSelectedAccess, this, dc.access.ORGANIZATION), className : 'divider'},
-        {title : 'Register Published Document',     onClick : this._registerDocument},
+        // {title : 'Register Published Document',     onClick : this._registerDocument},
         {title : 'Delete Documents',                onClick : this._deleteSelectedDocuments}
       ]
     });
