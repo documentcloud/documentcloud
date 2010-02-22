@@ -2,7 +2,8 @@ class WorkspaceController < ApplicationController
 
   RESULTS_REQUEST = /\A\/results/
 
-  before_filter :bouncer, :except => :index unless Rails.env.development?
+  before_filter :bounder, :only => :signup  unless Rails.env.development?
+  before_filter :bouncer, :except => :index if Rails.env.staging?
 
   # Main documentcloud.org page. Renders the workspace if logged in or
   # searching, the home page otherwise.

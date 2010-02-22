@@ -4,7 +4,7 @@ class ApiController < ApplicationController
 
   layout 'workspace'
 
-  before_filter :bouncer unless Rails.env.development?
+  before_filter :bouncer if Rails.env.staging?
 
   def index
 

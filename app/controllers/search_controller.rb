@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   include DC::Search::Controller
 
-  before_filter :bouncer unless Rails.env.development?
+  before_filter :bouncer if Rails.env.staging?
 
   FIELD_STRIP = /\S+:\s*/
 

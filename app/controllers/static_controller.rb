@@ -1,6 +1,6 @@
 class StaticController < ApplicationController
 
-  before_filter :bouncer unless Rails.env.development?
+  before_filter :bouncer if Rails.env.staging?
 
   def home
     @posts = date_sorted(yaml_for('home'))
@@ -9,7 +9,7 @@ class StaticController < ApplicationController
   def about
   end
 
-  def contact 
+  def contact
   end
 
   def contributors
