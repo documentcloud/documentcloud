@@ -23,9 +23,6 @@ AFTER BETA:
     EPUB?
 
   * Add a "related documents" search. We need a good algorithm for this.
-
-  * Implement http://nlp.stanford.edu/software/CRF-NER.shtml, alongside Calais.
-    Or, perhaps, AlchemyAPI.
   
   * Flesh out a more comprehensive API.
   
@@ -46,6 +43,9 @@ AFTER BETA:
   
 
 DONE: 
+
+  * Implement http://nlp.stanford.edu/software/CRF-NER.shtml, unfortunately,
+    it's not good enough.
 
   * Build an metadata -> document dialog, where you have: the ability to add
     the entity to the current search, a listing of the pages where the entity
