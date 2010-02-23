@@ -111,7 +111,7 @@ dc.model.MetadataSet = dc.model.SortedSet.extend({
   // Metadata are kept sorted by totalRelevance() of each datum, across its
   // documents.
   comparator : function(m) {
-    return m.totalRelevance();
+    return m.get('value').toLowerCase();
   },
 
   // Populate the Metadata set from the current documents in the client,
