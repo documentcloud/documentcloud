@@ -33,7 +33,7 @@
     background: white;
     position: absolute;
     width: 60px; height: 75px;
-    -webkit-box-shadow: 0 0px 5px #777; -moz-box-shadow: 0 0px 5px #777;
+    -webkit-box-shadow: 0 0px 4px #555; -moz-box-shadow: 0 0px 4px #555;
   }
   .document img.doc {
     left: 7px; top: 6px;
