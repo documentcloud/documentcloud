@@ -6,9 +6,6 @@ TODO:
   * Implement the "publication" workflow. A document should know if it's been
     published, and the URL where. Create a cron/cloudcrowd job that pings each
     published document, ensuring that it's not 404'd.
-
-  * Show if the currently-selected documents are tagged with the labels in
-    the labels pulldown. Make 'em removable.
     
   * Write out full documentation, with screenshots.
   
@@ -43,6 +40,9 @@ AFTER BETA:
   
 
 DONE: 
+
+  * Show if the currently-selected documents are tagged with the projects in
+    the projects pulldown. Make 'em removable.
 
   * Implement http://nlp.stanford.edu/software/CRF-NER.shtml, unfortunately,
     it's not good enough.

@@ -26,7 +26,7 @@
 #projects_menu_content .menu_item.icon {
   padding-left: 19px;
   width: auto; height: 16px;
-  background-position: left center;
+  background-position: 0 1px;
 }
 
 #toolbar_info {
