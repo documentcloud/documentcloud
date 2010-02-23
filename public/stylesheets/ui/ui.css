@@ -25,8 +25,8 @@ select {
 .gradient_selected,
 #organizer .box:hover {
   background: #ffffe5;
-  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffd));
-  background: -moz-linear-gradient(top, #ffffff, #ffd);
+  background: -webkit-gradient(linear, left top, left 50%, from(#fff), to(#ffd));
+  background: -moz-linear-gradient(top, #fff, #ffd 50%);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#FFFFDD');
 }
 .gradient_blue,
