@@ -1,8 +1,4 @@
 TODO:
-    
-  * Build an metadata -> document dialog, where you have: the ability to add
-    the entity to the current search, the ability to delete the entity if you're
-    the owner?, a listing of the pages where the entity occurs, with jump links.
                     
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
     viewing.
@@ -50,6 +46,10 @@ AFTER BETA:
   
 
 DONE: 
+
+  * Build an metadata -> document dialog, where you have: the ability to add
+    the entity to the current search, a listing of the pages where the entity
+    occurs, with jump links.
 
   * Build out the account/admin management, according to the specs.
 

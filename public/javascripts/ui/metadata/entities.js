@@ -106,15 +106,6 @@ dc.ui.Entities = dc.View.extend({
     });
   },
 
-  // TODO: To be removed?
-  _openDocument : function(e) {
-    var metaId  = $(e.target).attr('data-id');
-    var meta    = Metadata.get(metaId);
-    var inst    = meta.get('instances')[0];
-    var doc     = Documents.get(inst.document_id);
-    window.open(doc.get('document_viewer_url') + "?entity=" + inst.id);
-  },
-
   _openEntity : function(e) {
     var meta = Metadata.get($(e.target).attr('data-id'));
     $(document.body).append((new dc.ui.EntityDialog(meta)).render().el);

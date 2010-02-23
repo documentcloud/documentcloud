@@ -93,6 +93,14 @@ dc.ui.SearchBox = dc.View.extend({
     this.search(decodeURIComponent(hash), page);
   },
 
+  // Add a query fragment to the search and search again, if it's not already
+  // present in the current search.
+  addToSearch : function(fragment) {
+    if (this.value().match(fragment)) return;
+    this.value(this.value() + " " + fragment);
+    this.search(this.value());
+  },
+
   // Callback fired on key press in the search box. We search when they hit
   // return.
   maybeSearch : function(e) {
