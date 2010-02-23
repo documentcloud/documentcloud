@@ -1,5 +1,5 @@
-<% if (thumbnail) { %>
-  <img class="icon doc generic draggable" src="<%= thumbnail %>" />
+<% if (thumbnail_url) { %>
+  <img class="icon doc generic draggable" src="<%= thumbnail_url %>" />
 <% } else { %>
   <div class="icon doc generic draggable"></div>
 <% } %>
@@ -13,9 +13,9 @@
 </div>
 <%
   var notes = '';
-  if (note_count) {
-    notes = Inflector.pluralize('note', note_count);
-    notes = ', <span class="show_notes"><span class="show">show</span><span class="hide">hide</span> <span class="count">' + note_count + '</span> ' + notes + '</span>';
+  if (annotation_count) {
+    notes = Inflector.pluralize('note', annotation_count);
+    notes = ', <span class="show_notes"><span class="show">show</span><span class="hide">hide</span> <span class="count">' + annotation_count + '</span> ' + notes + '</span>';
   }
 %>
 <div class="source">Source: <%= source %>, <%= page_count + ' ' + Inflector.pluralize('page', page_count) %><%= notes %></div>

@@ -67,6 +67,11 @@ dc.model.Metadatum = dc.Model.extend({
     return Inflector.capitalize(Inflector.pluralize(Inflector.spacify(this.get('kind'))));
   },
 
+  // Display-ready version of the entity title.
+  displayTitle : function() {
+    return Inflector.capitalize(Inflector.spacify(this.get('kind'))) + ": " + this.get('value');
+  },
+
   // Return the string that one would use to perform a fielded search for this
   // metadatum.
   toSearchQuery : function() {

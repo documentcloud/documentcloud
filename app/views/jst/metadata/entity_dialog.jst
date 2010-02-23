@@ -1,0 +1,8 @@
+<div class="document_count">
+  <% var docs = Documents.countSelected(); %>
+  Occurs in <%= entity.get('instances').length %> out of <%= docs %> selected <%= Inflector.pluralize('document', docs) %>.
+</div>
+
+<div class="document_list">
+  <!-- Render target for the document list -->
+</div>

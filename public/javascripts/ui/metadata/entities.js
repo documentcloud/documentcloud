@@ -8,7 +8,7 @@ dc.ui.Entities = dc.View.extend({
     '.icon.less.click':     'showLess',
     '.icon.more.click':     'showMore',
     '.type_title.click':    'visualizeConnections',
-    '.entity.click':        '_openDocument',
+    '.entity.click':        '_openEntity',
     '.entity.mouseenter':   '_highlightDatum',
     '.entity.mouseleave':   '_highlightOff'
   },
@@ -106,13 +106,18 @@ dc.ui.Entities = dc.View.extend({
     });
   },
 
-  // TODO: Make this a choosing dialog.
+  // TODO: To be removed?
   _openDocument : function(e) {
     var metaId  = $(e.target).attr('data-id');
     var meta    = Metadata.get(metaId);
     var inst    = meta.get('instances')[0];
     var doc     = Documents.get(inst.document_id);
     window.open(doc.get('document_viewer_url') + "?entity=" + inst.id);
+  },
+
+  _openEntity : function(e) {
+    var meta = Metadata.get($(e.target).attr('data-id'));
+    $(document.body).append((new dc.ui.EntityDialog(meta)).render().el);
   },
 
   _highlightDatum : function(e) {

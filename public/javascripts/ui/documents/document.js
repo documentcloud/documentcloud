@@ -9,10 +9,8 @@ dc.ui.Document = dc.View.extend({
     '.show_notes.click'   :  'toggleNotes'
   },
 
-  constructor : function(doc, mode) {
-    this.mode = mode;
-    if (mode) this.className += ' ' + mode;
-    this.base({model : doc});
+  constructor : function(options) {
+    this.base(options);
     this.el.id = 'document_' + this.model.id;
     this.setMode('no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_onNotesLoaded');
@@ -22,18 +20,15 @@ dc.ui.Document = dc.View.extend({
 
   render : function() {
     var title = this.model.get('title');
-    $(this.el).html(JST.document_tile({
-      thumbnail   : this.model.get('thumbnail_url'),
-      title       : this.mode == 'viz' ? Inflector.truncate(title, 55) : title,
-      source      : this.model.get('source'),
+    var data = _.clone(this.model.attributes());
+    data = _.extend(data, {
       description : this.model.displayDescription(),
-      pub         : this.model.get('access') == dc.access.PUBLIC,
-      page_count  : this.model.get('page_count'),
-      note_count  : this.model.get('annotation_count')
-    }));
+      pub         : this.model.get('access') == dc.access.PUBLIC
+    });
+    $(this.el).html(JST.document_tile(data));
     $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.notesEl = $('.notes', this.el);
-    this.setCallbacks();
+    if (!this.options.noCallbacks) this.setCallbacks();
     this._setSelected();
     return this;
   },

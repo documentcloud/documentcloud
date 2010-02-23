@@ -25,8 +25,8 @@
 
 #toolbar_info {
   font: italic 11px/20px Arial;
-  height: 20px; overflow: hidden;
   color: #777;
+  height: 20px; overflow: hidden;
   position: absolute;
   left: 370px; right: 160px;
 }

@@ -36,3 +36,29 @@
         color: #204055;
         text-decoration: underline;
       }
+
+.entity_view {
+
+}
+  .entity_view .document_count {
+    font: italic 11px Arial;
+    color: #777;
+  }
+  .entity_view .document_list {
+    padding-top: 15px;
+  }
+    .entity_view .document {
+      background: none;
+      border: 0;
+      width: 280px; min-height: 32px; height: 32px;
+      padding: 5px 5px 5px 40px;
+      margin-bottom: 10px;
+    }
+    .entity_view .document .title {
+      font-size: 11px;
+      color: #204055;
+      line-height: 18px;
+      font-weight: bold;
+      position: static;
+      left: 0; padding: 0; border: 0;
+    }

@@ -253,9 +253,10 @@ div.dialog {
   }
   div.dialog .title {
     position: absolute; top: 0; left: 0; right: 0;
+    overflow: hidden;
     height: 16px;
     padding: 5px 10px;
-    font: 14px Arial;
+    font: 14px/18px Arial;
     color: #333;
     cursor: move;
     border-bottom: 1px solid #bbb;
