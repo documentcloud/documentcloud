@@ -38,7 +38,7 @@
       }
 
 .entity_view {
-
+  width: 345px;
 }
   .entity_view .document_count {
     font: italic 11px Arial;
@@ -53,6 +53,7 @@
       width: 280px; min-height: 32px; height: 32px;
       padding: 5px 5px 5px 40px;
       margin-bottom: 10px;
+      filter: none !important;
     }
     .entity_view .document .title {
       font-size: 11px;

@@ -112,6 +112,7 @@ dc.ui.Entities = dc.View.extend({
   },
 
   _highlightDatum : function(e) {
+    if ($.browser.msie) return false;
     var id      = $(e.target).attr('data-id');
     var meta    = Metadata.get(id);
     var docIds  = meta.documentIds();
@@ -125,6 +126,7 @@ dc.ui.Entities = dc.View.extend({
   },
 
   _highlightOff : function(e) {
+    if ($.browser.msie) return false;
     $('div.document').removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
   }
 
