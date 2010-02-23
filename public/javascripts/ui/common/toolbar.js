@@ -8,11 +8,11 @@ dc.ui.Toolbar = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, '_addSelectedDocuments', '_addProjectWithDocuments', '_registerDocument', '_deleteSelectedDocuments', 'display');
+    _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments', '_registerDocument', '_deleteSelectedDocuments', 'display');
     this.downloadMenu     = this._createDownloadMenu();
     this.manageMenu       = this._createManageMenu();
     this.connectionsMenu  = this._createConnectionsMenu();
-    this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._addSelectedDocuments, onAdd : this._addProjectWithDocuments});
+    this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
   },
 
@@ -49,15 +49,18 @@ dc.ui.Toolbar = dc.View.extend({
     this.infoEl.html(message || '');
   },
 
-  notifyProjectChange : function(projectName, numDocs) {
-    var notification = "added " + numDocs + ' ' + Inflector.pluralize('document', numDocs) + ' to "' + projectName + '"';
-    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.projectMenu.el, position : '-top right', top : -1, left : 7});
+  notifyProjectChange : function(projectName, numDocs, removal) {
+    var prefix = removal ? 'removed ' : 'added ';
+    var prep   = removal ? ' from "'  : ' to "';
+    var notification = prefix + numDocs + ' ' + Inflector.pluralize('document', numDocs) + prep + projectName + '"';
+    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.projectMenu.el, position : '-top right', top : -1, left : 10});
   },
 
-  _addSelectedDocuments : function(project) {
+  _updateSelectedDocuments : function(project) {
     var docs = Documents.selected();
-    project.addDocuments(docs);
-    this.notifyProjectChange(project.get('title'), docs.length);
+    var removal = project.containsAny(docs);
+    removal ? project.removeDocuments(docs) : project.addDocuments(docs);
+    this.notifyProjectChange(project.get('title'), docs.length, removal);
   },
 
   _addProjectWithDocuments : function(title) {

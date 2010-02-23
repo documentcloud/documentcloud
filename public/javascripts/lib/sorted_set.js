@@ -58,7 +58,7 @@ dc.model.SortedSet = dc.Set.extend({
 
   // Get the index of a model.
   indexOf : function(model) {
-    return this._byIndex.indexOf(model);
+    return _.indexOf(this._byIndex, model);
   },
 
   // Get the model at a specified position.

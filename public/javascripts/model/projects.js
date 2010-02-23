@@ -20,6 +20,24 @@ dc.model.Project = dc.Model.extend({
     Projects.update(this, {document_ids : newIds});
   },
 
+  removeDocuments : function(documents) {
+    var args = _.pluck(documents, 'id');
+    args.unshift(this.get('document_ids'));
+    var newIds = _.without.apply(_, args);
+    Projects.update(this, {document_ids : newIds});
+  },
+
+  // Does this project already contain a given document?
+  contains : function(doc) {
+    return _.indexOf(this.get('document_ids'), doc.id) >= 0;
+  },
+
+  // Does this project already contain any of the given documents?
+  containsAny : function(docs) {
+    var me = this;
+    return _.any(docs, function(doc){ return me.contains(doc); });
+  },
+
   // Return the title of this project as a search parameter.
   toSearchParam : function() {
     var titlePart = this.get('title');

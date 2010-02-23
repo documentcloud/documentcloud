@@ -297,7 +297,7 @@ iframe.hidden_iframe {
     color: #844;
     text-transform: uppercase;
     font: 10px Arial;
-    padding: 4px 8px;
+    padding: 4px 8px 5px;
     border: 1px solid #aa7766;
     background: #fcc;
     margin: 0 auto;

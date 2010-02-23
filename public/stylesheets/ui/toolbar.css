@@ -23,6 +23,12 @@
       margin-left: 0;
     }
 
+#projects_menu_content .menu_item.icon {
+  padding-left: 19px;
+  width: auto; height: 16px;
+  background-position: left center;
+}
+
 #toolbar_info {
   font: italic 11px/20px Arial;
   color: #777;

@@ -15,8 +15,10 @@ dc.ui.ProjectMenu = dc.ui.Menu.extend({
 
   renderProjects : function(menu) {
     menu.clear();
+    var docs = Documents.selected();
     menu.addItems(_.map(Projects.models(), function(project) {
-      return {title : project.get('title'), onClick : _.bind(menu.options.onClick, menu, project)};
+      var className = project.containsAny(docs) ? 'icon bullet_yellow' : 'icon bullet_white';
+      return {title : project.get('title'), className : className, onClick : _.bind(menu.options.onClick, menu, project)};
     }));
   },
 
