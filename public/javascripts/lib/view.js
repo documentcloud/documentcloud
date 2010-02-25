@@ -47,10 +47,10 @@ dc.View = Base.extend({
     this.modes[group] = mode;
   },
 
-  // Set callbacks, where this.callbacks is a hash of {selector.event_name,
-  // callback_name] pairs. Callbacks will be bound to the view,
-  // with 'this' set properly. Passing a selector of 'el' binds to the view's
-  // element.
+  // Set callbacks, where this.callbacks is a hash of
+  //   {selector.event_name, callback_name}
+  // pairs. Callbacks will be bound to the view, with 'this' set properly.
+  // Passing a selector of 'el' binds to the view's root element.
   setCallbacks : function(callbacks) {
     var me = this;
     _.each(callbacks || this.callbacks, function(val, key) {
