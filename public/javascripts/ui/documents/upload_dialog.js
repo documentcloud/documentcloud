@@ -55,8 +55,11 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   _onUploadStarted : function(e, model) {
-    $('#upload_progress').append(JST.document_progress(model.attributes()));
-    $('#upload_progress').show();
+    $('#upload_progress', this.el).append(JST.document_progress(model.attributes()));
+    $('#upload_progress', this.el).show();
+    $('#upload_info', this.el).show();
+    $('input', this.el).val('');
+    $('textarea', this.el).val('');
     this._updateProgress(e, model);
   },
 
