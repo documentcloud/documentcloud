@@ -106,6 +106,7 @@ div.text_input {
   div.text_input input {
     display: block;
     border: none;
+    outline: none;
     margin: 0; padding: 0;
     background: transparent;
     font-size: 16px;
@@ -115,6 +116,7 @@ div.text_input {
     div.text_input.small input,
     div.text_input.search input {
       font: 12px/12px Arial;
+      padding: 4px;
     }
   div.text_input .cancel_search {
     position: absolute;

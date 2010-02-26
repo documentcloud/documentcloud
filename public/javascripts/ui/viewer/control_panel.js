@@ -7,6 +7,7 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     '.public_annotation.click':   'togglePublicAnnotation',
     '.private_annotation.click':  'togglePrivateAnnotation',
     '.edit_description.click':    'editDescription',
+    '.edit_title.click':          'editTitle',
     '.save_text.click':           'savePageText'
   },
 
@@ -21,20 +22,20 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     dc.app.editor.sectionEditor.open();
   },
 
-  editDescription : function() {
-    dc.ui.Dialog.prompt('Description', DV.api.getDescription(), function(desc) {
-      DV.api.setDescription(desc);
-      var id = parseInt(DV.Schema.document.id, 10);
-      var doc = new dc.model.Document({id : id, description : desc});
-      Documents.update(doc);
-      try {
-        var doc = window.opener && window.opener.Documents && window.opener.Documents.get(doc);
-        if (doc) doc.set({description : desc});
-      } catch (e) {
-        // Couldn't access the parent window -- it's ok.
-      }
+  editTitle : function() {
+    dc.ui.Dialog.prompt('Title', DV.api.getTitle(), _.bind(function(title) {
+      DV.api.setTitle(title);
+      this._updateDocument({title : title});
       return true;
-    });
+    }, this), true);
+  },
+
+  editDescription : function() {
+    dc.ui.Dialog.prompt('Description', DV.api.getDescription(), _.bind(function(desc) {
+      DV.api.setDescription(desc);
+      this._updateDocument({description : desc});
+      return true;
+    }, this));
   },
 
   togglePublicAnnotation : function() {
@@ -52,6 +53,18 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     DV.api.setPageText(text, page);
     $.ajax({url : url, type : 'POST', data : {text : text}, dataType : 'json'});
     dc.app.editor.notify({mode : 'info', text : 'page saved'});
+  },
+
+  _updateDocument : function(attrs) {
+    attrs.id = parseInt(DV.Schema.document.id, 10);
+    var doc = new dc.model.Document(attrs);
+    Documents.update(doc);
+    try {
+      var doc = window.opener && window.opener.Documents && window.opener.Documents.get(doc);
+      if (doc) doc.set(attrs);
+    } catch (e) {
+      // Couldn't access the parent window -- it's ok.
+    }
   }
 
 });
