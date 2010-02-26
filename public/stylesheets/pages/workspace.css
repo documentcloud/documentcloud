@@ -53,7 +53,7 @@ a {
 #spinner {
   display: none;
   position: absolute;
-  top: 24px; right: 22px;
+  top: 24px; right: 35px;
 }
   #spinner_image {
     width: 56px; height: 7px;

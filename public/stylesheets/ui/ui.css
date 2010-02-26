@@ -116,6 +116,13 @@ div.text_input {
     div.text_input.search input {
       font: 12px/12px Arial;
     }
+  div.text_input .cancel_search {
+    position: absolute;
+    right: 6px; top: 6px;
+    width: 11px; height: 11px;
+    background: url(/images/embed/ui/cancel_search.png);
+    cursor: pointer;
+  }
 
 textarea.text_area {
   border: 1px solid #d0d0d0;

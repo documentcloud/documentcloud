@@ -9,9 +9,10 @@ dc.ui.SearchBox = dc.View.extend({
   fragment      : null,
 
   callbacks : {
-    '#search_box.keydown': 'maybeSearch',
-    '#search_box.search':  'searchEvent',
-    '#search_type.click':  '_setScope'
+    '#search_box.keydown':  'maybeSearch',
+    '#search_box.search':   'searchEvent',
+    '#search_type.click':   '_setScope',
+    '.cancel_search.click': 'cancelSearch'
   },
 
   // Creating a new SearchBox registers #search page fragments.
@@ -106,7 +107,7 @@ dc.ui.SearchBox = dc.View.extend({
   maybeSearch : function(e) {
     var query = this.value();
     if (!this.outstandingSearch && e.keyCode == 13) {
-      query ? this.search(query) : this.clearSearch();;
+      query ? this.search(query) : this.clearSearch();
     }
   },
 
@@ -117,8 +118,12 @@ dc.ui.SearchBox = dc.View.extend({
     if (!this.outstandingSearch && query) this.search(query);
   },
 
-  clearSearch : function() {
+  cancelSearch : function() {
     this.value('');
+  },
+
+  clearSearch : function() {
+    this.cancelSearch();
     $(document.body).setMode('no', 'search');
     dc.ui.Project.clearSelection();
     dc.history.save('help');
