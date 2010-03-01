@@ -5,6 +5,13 @@ dc.ui.SearchBox = dc.View.extend({
   CONNECTIONS_MATCHER : (/\/connections\/(\w+)$/),
   ENTITIES_MATCHER    : (/\/entities$/),
 
+  // Error messages to display when your search returns no results.
+  NO_RESULTS : {
+    project : "This project does not contain any documents.",
+    account : "This account has not uploaded any documents.",
+    search  : "Your search did not match any documents."
+  },
+
   id            : 'search',
   fragment      : null,
 
@@ -45,12 +52,7 @@ dc.ui.SearchBox = dc.View.extend({
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber) {
     dc.app.toolbar.connectionsMenu.deactivate();
-    var projectName = dc.app.SearchParser.extractProject(query);
-    var project = projectName && Projects.find(projectName);
-    project ? project.view.showOpen() : dc.ui.Project.clearSelection();
-    var sectionName = Inflector.truncate(projectName || query, 30);
-    var section = {name : sectionName, callback : function(){ dc.app.searchBox.search(query); }};
-    // if (dc.app.navigation) dc.app.navigation.tab('search', {silent : true, section : section});
+    dc.ui.Project.highlight(query);
     $(document.body).setMode('active', 'search');
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
@@ -133,11 +135,8 @@ dc.ui.SearchBox = dc.View.extend({
   doneSearching : function(empty) {
     if (empty) {
       $(document.body).setMode('empty', 'search');
-      var isProject = dc.app.SearchParser.projectOnly(this.value());
-      $('#no_results .explanation').text(isProject ?
-        "This project does not contain any documents." :
-        "Your search did not match any documents."
-      );
+      var searchType = dc.app.SearchParser.searchType(this.value());
+      $('#no_results .explanation').text(this.NO_RESULTS[searchType]);
     }
     dc.ui.spinner.hide();
     this.outstandingSearch = false;

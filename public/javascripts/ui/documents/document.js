@@ -104,7 +104,7 @@ dc.ui.Document = dc.View.extend({
       var right = left + $(this).outerWidth(), bottom = top + $(this).outerHeight();
       if (left < x && right > x && top < y && bottom > y) {
         var project = Projects.getByCid($(this).attr('data-project-cid'));
-        project.addDocuments(docs);
+        if (project) project.addDocuments(docs);
         return false;
       }
     });

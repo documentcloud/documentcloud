@@ -4,7 +4,10 @@ dc.model.Project = dc.Model.extend({
 
   resource : 'projects',
 
-  viewClass : 'Project',
+  constructor : function(attrs) {
+    this.base(attrs);
+    this.updateDocumentCount();
+  },
 
   open : function() {
     dc.app.searchBox.search(this.toSearchParam());
@@ -14,9 +17,14 @@ dc.model.Project = dc.Model.extend({
     return this.get('document_ids').length;
   },
 
+  updateDocumentCount : function(count) {
+    this.set({document_count : count || this.documentCount()}, true);
+  },
+
   addDocuments : function(documents) {
     var ids = _.pluck(documents, 'id');
     var newIds = _.uniq(this.get('document_ids').concat(ids));
+    this.updateDocumentCount(newIds.length);
     Projects.update(this, {document_ids : newIds});
   },
 
@@ -24,6 +32,7 @@ dc.model.Project = dc.Model.extend({
     var args = _.pluck(documents, 'id');
     args.unshift(this.get('document_ids'));
     var newIds = _.without.apply(_, args);
+    this.updateDocumentCount(newIds.length);
     Projects.update(this, {document_ids : newIds});
   },
 

@@ -27,6 +27,10 @@ class Document < ActiveRecord::Base
 
   named_scope :chronological, {:order => 'created_at desc'}
 
+  named_scope :owned_by, lambda { |account|
+    {:conditions => {:account_id => account.id}}
+  }
+
   # Restrict accessible documents for a given account/organzation.
   named_scope :accessible, lambda { |account, org|
     access = []

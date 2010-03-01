@@ -25,6 +25,7 @@ dc.ui.Organizer = dc.View.extend({
 
   renderAll : function() {
     if (Projects.empty()) this.setMode('no', 'projects');
+    $(this.projectList).append((new dc.ui.Project()).render().el);
     _.each(Projects.models(), _.bind(function(model) {
       this._addSubView(null, model);
     }, this));
@@ -79,7 +80,7 @@ dc.ui.Organizer = dc.View.extend({
 
   _addSubView : function(e, model) {
     this.setMode('has', 'projects');
-    var view = new dc.ui[model.viewClass]({model : model}).render();
+    var view = new dc.ui.Project({model : model}).render();
     this.subViews.push(view);
     var models = Projects.models();
     var previous = models[_.indexOf(models, view.model) - 1];

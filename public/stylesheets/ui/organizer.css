@@ -29,17 +29,14 @@
         }
 
 
-  #organizer .project_list,
-  #organizer .project_help {
+  #organizer .project_list_wrap {
     position: absolute;
     top: 42px; bottom: 0px; left: 0; right: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    display: none;
   }
-    #organizer.has_projects .project_list,
-    #organizer.no_projects .project_help {
-      display: block;
+    #organizer.has_projects .project_help {
+      display: none;
     }
     #organizer .project_help {
       padding: 10px 15px;
@@ -63,7 +60,8 @@
         #organizer .box.is_open .pointer {
           display: block;
         }
-      #organizer .box .edit {
+      #organizer .box .edit,
+      #organizer .box.uploaded_documents:hover .edit {
         display: none;
       }
         #organizer .box:hover .edit {

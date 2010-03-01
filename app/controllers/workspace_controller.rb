@@ -9,8 +9,10 @@ class WorkspaceController < ApplicationController
   # searching, the home page otherwise.
   def index
     if current_organization && current_account
-      @projects = current_account.projects.all(:include => ['project_memberships'])
-      @processing_jobs = current_account.processing_jobs.all
+      @projects         = current_account.projects.all(:include => ['project_memberships'])
+      @processing_jobs  = current_account.processing_jobs.all
+      @document_count   = Document.owned_by(current_account).count
+      @annotation_count = Annotation.owned_by(current_account).count
       return
     end
     return redirect_to('/home') unless request.headers['Authorization']

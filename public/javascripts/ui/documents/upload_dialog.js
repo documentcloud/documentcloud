@@ -23,15 +23,16 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     }));
     $('.cancel', this.el).text('close');
     $('.ok', this.el).text('upload');
-    this.setCallbacks();
     this._observeUploadProgress();
     return this;
   },
 
   confirm : function() {
     dc.ui.spinner.show('uploading');
+    dc.app.documentCount += 1;
+    dc.ui.Project.uploadedDocuments.render();
     $('#upload_document', this.el).submit();
-    return true;
+    return false;
   },
 
   open : function() {

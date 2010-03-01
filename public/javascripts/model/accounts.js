@@ -18,6 +18,10 @@ dc.model.Account = dc.Model.extend({
     this.base(attributes || this.BLANK_ACCOUNT);
   },
 
+  openDocuments : function() {
+    dc.app.searchBox.search('documents: ' + this.get('email'));
+  },
+
   fullName : function(nonbreaking) {
     var name = this.get('first_name') + ' ' + this.get('last_name');
     return nonbreaking ? name.replace(/\s/g, '&nbsp;') : name;
