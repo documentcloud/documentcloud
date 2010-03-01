@@ -32,7 +32,7 @@ module DC
       def fetch_rdf_from_calais(text)
         client = Calais::Client.new(
           :content                        => text,
-          :content_type                   => :text,
+          :content_type                   => :raw,
           :license_id                     => SECRETS['calais_license'],
           :allow_distribution             => false,
           :allow_search                   => false,

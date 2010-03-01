@@ -1,4 +1,6 @@
 TODO:
+
+  * Try pulling out all non-latin characters, and see if that fixes our Calais troubles.
                     
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
     viewing.
