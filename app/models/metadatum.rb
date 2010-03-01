@@ -52,4 +52,12 @@ class Metadatum < ActiveRecord::Base
     }.to_json
   end
 
+  def canonical
+    {
+      'kind'      => kind,
+      'value'     => value,
+      'relevance' => relevance
+    }
+  end
+
 end

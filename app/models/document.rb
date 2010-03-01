@@ -223,7 +223,7 @@ class Document < ActiveRecord::Base
     }.to_json
   end
 
-  def canonical(account=nil)
+  def canonical(options={})
     doc = ActiveSupport::OrderedHash.new
     doc['id']          = "#{id}-#{slug}"
     doc['title']       = title
@@ -236,7 +236,8 @@ class Document < ActiveRecord::Base
     res['search']      = search_url
     res['page']        = {'image' => page_image_url_template, 'text' => page_text_url_template}
     doc['sections']    = sections.map(&:canonical)
-    doc['annotations'] = annotations.accessible(account).map(&:canonical)
+    doc['annotations'] = annotations.accessible(options[:account]).map(&:canonical)
+    doc['entities']    = metadata.map(&:canonical) if options[:show_entities]
     doc
   end
 

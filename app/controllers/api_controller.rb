@@ -15,10 +15,13 @@ class ApiController < ApplicationController
   end
 
   def search
+    options = {
+      :show_entities => !!params[:entities]
+    }
     perform_search
     respond_to do |format|
       format.json do
-        render :json => {'documents' => @documents.map {|d| d.canonical }}
+        render :json => {'documents' => @documents.map {|d| d.canonical(options) }}
       end
     end
   end
