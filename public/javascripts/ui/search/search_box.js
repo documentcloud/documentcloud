@@ -131,7 +131,14 @@ dc.ui.SearchBox = dc.View.extend({
 
   // Hide the spinner and remove the search lock when finished searching.
   doneSearching : function(empty) {
-    if (empty) $(document.body).setMode('empty', 'search');
+    if (empty) {
+      $(document.body).setMode('empty', 'search');
+      var isProject = dc.app.SearchParser.projectOnly(this.value());
+      $('#no_results .explanation').text(isProject ?
+        "This project does not contain any documents." :
+        "Your search did not match any documents."
+      );
+    }
     dc.ui.spinner.hide();
     this.outstandingSearch = false;
     if (this._connection) {
