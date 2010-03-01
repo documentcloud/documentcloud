@@ -15,8 +15,6 @@ class Metadatum < ActiveRecord::Base
     {:conditions => ["metadata_value_vector @@ plainto_tsquery(?)", query]}
   }
 
-  named_scope :categories, {:conditions => {:kind => 'category'}}
-
   # We don't pay attention to all kinds of Calais-generated metadata, just
   # most of them. Checks the whitelist.
   def self.acceptable_kind?(kind)

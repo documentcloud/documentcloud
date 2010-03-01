@@ -8,18 +8,18 @@ module DC
 
       OVER_CALAIS_QPS = '<h1>403 Developer Over Qps</h1>'
 
-      attr_reader :rdf
+      MAX_TEXT_SIZE = CalaisFetcher::MAX_TEXT_SIZE
 
       # Public API: Pass in a document, either with full_text or rdf already
       # attached.
-      def extract_metadata(document, opts={})
+      def extract_metadata(document)
         document.metadata = []
-        @rdf = opts[:rdf] || fetch_entities(document)
-        response = Calais::Response.new(@rdf)
-        # extract_full_text(document, response, rdf)
-        extract_standard_metadata(document, response)
-        extract_categories(document, response)
-        extract_entities(document, response)
+        chunks = fetch_entities(document)
+        chunks.each_with_index do |chunk, i|
+          response = Calais::Response.new(chunk)
+          extract_standard_metadata(document, response, i) if i == 0
+          extract_entities(document, response, i)
+        end
         document.save
       end
 
@@ -29,7 +29,7 @@ module DC
       # If the document has full_text, we can go fetch the RDF from Calais.
       def fetch_entities(document)
         begin
-          DC::Import::CalaisFetcher.new.fetch_rdf(document.text)
+          CalaisFetcher.new.fetch_rdf(document.text)
         rescue Calais::Error, Curl::Err => e
           Rails.logger.warn e.message
           return nil if e.message == 'Calais continues to expand its list of supported languages, but does not yet support your submitted content.'
@@ -45,32 +45,23 @@ module DC
 
       # Pull out all of the standard, top-level metadata, and add it to our
       # document if it hasn't already been set.
-      def extract_standard_metadata(document, calais)
+      def extract_standard_metadata(document, calais, chunk_number)
         document.title = calais.doc_title unless document.titled?
         document.language = 'en' # TODO: Convert calais.language into an ISO language code.
         document.publication_date ||= calais.doc_date
         document.calais_id = calais.request_id
       end
 
-      # Extract the categories that the Document falls under.
-      def extract_categories(document, calais)
-        document.metadata += calais.categories.map do |cat|
-          Metadatum.new(
-            :value      => cat.name.underscore,
-            :kind       => 'category',
-            :relevance  => cat.score || Metadatum::DEFAULT_RELEVANCE,
-            :document   => document
-          )
-        end
-      end
-
       # Extract the entities that Calais discovers in the document, along with
       # the positions where they occur.
-      def extract_entities(document, calais)
+      def extract_entities(document, calais, chunk_number)
+        offset = chunk_number * MAX_TEXT_SIZE
         extracted = []
         calais.entities.each do |entity|
           next unless Metadatum.acceptable_kind? entity.type
-          occurrences = entity.instances.map {|i| Occurrence.new(i.offset, i.length) }
+          occurrences = entity.instances.map do |instance|
+            Occurrence.new(instance.offset + offset, instance.length)
+          end
           extracted << Metadatum.new(
             :value        => entity.attributes['commonname'] || entity.attributes['name'],
             :kind         => DC::CALAIS_MAP[entity.type.underscore.to_sym].to_s,
@@ -81,19 +72,6 @@ module DC
           )
         end
         document.metadata += extracted
-      end
-
-      # Hopefully we'll never need to use this method, but if you pass in
-      # a document that doesn't have any full_text, we can take it out of
-      # the Calais RDF response.
-      def extract_full_text(document, calais, rdf=nil)
-        return if document.full_text
-        xml = Nokogiri::XML.parse(rdf)
-        wrapped = Nokogiri::XML.parse(xml.root.search('//c:document').first.content)
-        full_text = wrapped.root.search('//body').first.content.strip
-        full_text.gsub!(/(\[\[|\]\]|\{\{|\}\})/, '')
-        document.full_text = FullText.new(:text => full_text, :document => document)
-        document.pages = [Page.new(:text => full_text, :document => document, :page_number => 1)]
       end
 
     end

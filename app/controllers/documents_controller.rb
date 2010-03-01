@@ -42,7 +42,7 @@ class DocumentsController < ApplicationController
 
   # TODO: Access-control this:
   def metadata
-    meta = Metadatum.all(:conditions => ["document_id in (#{params[:ids].join(',')}) and not kind = ?", 'category'])
+    meta = Metadatum.all(:conditions => ["document_id in (#{params[:ids].join(',')})"])
     json 'metadata' => meta
   end
 

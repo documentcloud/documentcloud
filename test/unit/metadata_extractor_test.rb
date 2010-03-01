@@ -21,18 +21,10 @@ class MetadataExtractorTest < ActiveSupport::TestCase
       assert @doc.calais_id == '1897e340-2365-4b63-9c18-40af7df14648'
     end
 
-    should "be able to extract the document's categories" do
-      assert @doc.metadata.categories.count == 1
-      category = @doc.metadata.categories.first
-      assert category.value == 'other'
-      assert !category.textual?
-      assert category.document_id == @doc.id
-    end
-
     should "be able to extract the Calais-identified entities" do
       assert @doc.metadata.length == 28
       assert @doc.metadata.map(&:kind).uniq.sort ==
-        %w(category city country organization person place state technology term)
+        %w(city country organization person place state technology term)
 
       meta = @doc.metadata[-2]
       assert meta.value     == "Pennsylvania Department of Agriculture"

@@ -102,7 +102,6 @@ dc.model.MetadataSet = dc.model.SortedSet.extend({
 
   // Map of kind to display name for titles and the like.
   DISPLAY_NAME : {
-    category      : 'Categories',
     city          : 'Cities',
     country       : 'Countries',
     date          : 'Dates',

@@ -1,32 +1,35 @@
 module DC
   module Import
-    
+
     class CalaisFetcher
-      
-      # Content limit that Calais sets on number of characters.
+
+      # Content limit that Calais sets on number of characters. Minus some
+      # safety padding because Calais was still throwing errors. Perhaps they're
+      # counting bytes?
       MAX_TEXT_SIZE = 99500
-      
-      # If the document has full_text, we can go fetch the RDF from Calais.
-      # If the document is too long for Calais, we just fetch the first chunk.
-      # We can't split it into chunks and then re-merge it, because then our
-      # Metadata positions and relevances are all off.
+
+      # Fetch the RDF from OpenCalais, splitting it into chunks small enough
+      # for Calais to swallow.
       def fetch_rdf(text)
-        fetch_rdf_from_calais(text[0..MAX_TEXT_SIZE])
+        text   = clean_pseudo_html(text)
+        text   = text.mb_chars
+        chunks = split_text(text)
+        chunks.map {|chunk| fetch_rdf_from_calais(chunk) }
       end
-      
-      private
-      
+
       # Divide the text into chunks that pass the size limit.
       # Unused until we have a real RDF merge strategy.
       def split_text(text)
         max = MAX_TEXT_SIZE
         (0..((text.length-1) / max)).map {|i| text[i * max, max]}
       end
-      
+
+      # Calais complains if the content contains HTML tags...
+      def clean_pseudo_html(text)
+        text.gsub(/<\/?[^>]*>/, "")
+      end
+
       def fetch_rdf_from_calais(text)
-        # Calais complains if the content contains HTML tags...
-        # TODO: Fix this in some other way.
-        text.gsub!(/<\/?[^>]*>/, "")
         client = Calais::Client.new(
           :content                        => text,
           :content_type                   => :text,
@@ -38,8 +41,8 @@ module DC
         )
         client.enlighten
       end
-      
+
     end
-    
+
   end
 end
