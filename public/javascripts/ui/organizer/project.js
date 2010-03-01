@@ -3,8 +3,8 @@ dc.ui.Project = dc.View.extend({
   className : 'project box',
 
   callbacks : {
-    'el.click'           : 'showDocuments',
-    '.edit.click'        : 'editProject'
+    'el.click'    : 'showDocuments',
+    '.edit.click' : 'editProject'
   },
 
   constructor : function(options) {

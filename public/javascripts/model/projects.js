@@ -6,7 +6,12 @@ dc.model.Project = dc.Model.extend({
 
   constructor : function(attrs) {
     this.base(attrs);
-    this.updateDocumentCount();
+  },
+
+  set : function(attrs, silent) {
+    if (attrs.document_ids) attrs.document_count = attrs.document_ids.length;
+    this.base(attrs, silent);
+    return this;
   },
 
   open : function() {
@@ -17,14 +22,9 @@ dc.model.Project = dc.Model.extend({
     return this.get('document_ids').length;
   },
 
-  updateDocumentCount : function(count) {
-    this.set({document_count : count || this.documentCount()}, true);
-  },
-
   addDocuments : function(documents) {
     var ids = _.pluck(documents, 'id');
     var newIds = _.uniq(this.get('document_ids').concat(ids));
-    this.updateDocumentCount(newIds.length);
     Projects.update(this, {document_ids : newIds});
   },
 
@@ -32,7 +32,6 @@ dc.model.Project = dc.Model.extend({
     var args = _.pluck(documents, 'id');
     args.unshift(this.get('document_ids'));
     var newIds = _.without.apply(_, args);
-    this.updateDocumentCount(newIds.length);
     Projects.update(this, {document_ids : newIds});
   },
 
