@@ -24,16 +24,37 @@ module DC
       end
 
       def fetch_rdf_from_calais(text)
-        client = Calais::Client.new(
-          :content                        => text,
-          :content_type                   => :raw,
-          :license_id                     => SECRETS['calais_license'],
-          :allow_distribution             => false,
-          :allow_search                   => false,
-          :submitter                      => "DocumentCloud (#{RAILS_ENV})",
-          :omit_outputting_original_text  => true
-        )
-        Calais::Response.new(client.enlighten)
+        retry_calais_errors do
+          client = Calais::Client.new(
+            :content                        => text,
+            :content_type                   => :raw,
+            :license_id                     => SECRETS['calais_license'],
+            :allow_distribution             => false,
+            :allow_search                   => false,
+            :submitter                      => "DocumentCloud (#{RAILS_ENV})",
+            :omit_outputting_original_text  => true
+          )
+          Calais::Response.new(client.enlighten)
+        end
+      end
+
+
+      private
+
+      def retry_calais_errors
+        begin
+          yield
+        rescue Calais::Error, Curl::Err => e
+          Rails.logger.warn e.message
+          return nil if e.message == 'Calais continues to expand its list of supported languages, but does not yet support your submitted content.'
+          Rails.logger.warn 'waiting 10 seconds'
+          sleep 10
+          retry
+        rescue Exception => e
+          puts e.message
+          puts e.class
+          raise e
+        end
       end
 
     end

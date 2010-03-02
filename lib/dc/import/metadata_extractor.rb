@@ -14,7 +14,7 @@ module DC
       # attached.
       def extract_metadata(document)
         document.metadata = []
-        chunks = fetch_entities(document)
+        chunks = CalaisFetcher.new.fetch_rdf(document.text)
         chunks.each_with_index do |chunk, i|
           extract_standard_metadata(document, chunk, i) if i == 0
           extract_entities(document, chunk, i)
@@ -24,23 +24,6 @@ module DC
 
 
       private
-
-      # If the document has full_text, we can go fetch the RDF from Calais.
-      def fetch_entities(document)
-        begin
-          CalaisFetcher.new.fetch_rdf(document.text)
-        rescue Calais::Error, Curl::Err => e
-          Rails.logger.warn e.message
-          return nil if e.message == 'Calais continues to expand its list of supported languages, but does not yet support your submitted content.'
-          Rails.logger.warn 'waiting 10 seconds'
-          sleep 10
-          retry
-        rescue Exception => e
-          puts e.message
-          puts e.class
-          raise e
-        end
-      end
 
       # Pull out all of the standard, top-level metadata, and add it to our
       # document if it hasn't already been set.
