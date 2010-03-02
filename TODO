@@ -1,7 +1,4 @@
 TODO:
-
-  * Try pulling out all non-latin characters, and see if that fixes our Calais troubles.
-    Translit to ASCII, saving the original text on S3, for now.
                     
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
     viewing.
@@ -43,6 +40,9 @@ AFTER BETA:
   
 
 DONE: 
+
+  * Removed our HTML-cleaning phase, which was destroying Calais' offsets.
+    Reprocessed all production documents.
 
   * Show if the currently-selected documents are tagged with the projects in
     the projects pulldown. Make 'em removable.
