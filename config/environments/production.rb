@@ -26,8 +26,8 @@ config.action_view.cache_template_loading            = true
 
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {
-  :address        => 'box260.bluehost.com',
-  :port           => 465,
+  :address        => 'mail.documentcloud.org',
+  :port           => 26,
   :user_name      => 'smtp',
   :password       => SECRETS['smtp_password'],
   :authentication => :login
