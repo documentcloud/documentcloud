@@ -51,6 +51,10 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
+# DocumentCloud-specific configuration.
+SECRETS = YAML.load_file("#{Rails.root}/config/secrets.yml")[RAILS_ENV]
+DC_CONFIG = YAML.load_file("#{Rails.root}/config/document_cloud.yml")[RAILS_ENV]
+
 RightAws::RightAWSParser.xml_lib = 'libxml'
 ActiveRecord::Base.include_root_in_json = false
 ActiveSupport::JSON.backend = 'JSONGem'
