@@ -37,7 +37,7 @@ dc.model.ProcessingJobSet = dc.model.RESTfulSet.extend({
 
   resource : 'processing_jobs',
 
-  UPDATE_INTERVAL : 5000,
+  UPDATE_INTERVAL : 15000,
 
   constructor : function(options) {
     this.base(options);
