@@ -24,14 +24,5 @@ config.action_view.cache_template_loading            = true
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
 
-ActionMailer::Base.delivery_method = :smtp
-ActionMailer::Base.smtp_settings = {
-  :address        => 'mail.documentcloud.org',
-  :port           => 26,
-  :user_name      => 'smtp@documentcloud.org',
-  :password       => SECRETS['smtp_password'],
-  :authentication => :plain
-}
-
 # Enable threaded mode
 # config.threadsafe!
