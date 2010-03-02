@@ -11,7 +11,6 @@ module DC
       # Fetch the RDF from OpenCalais, splitting it into chunks small enough
       # for Calais to swallow.
       def fetch_rdf(text)
-        text   = clean_pseudo_html(text)
         text   = text.mb_chars
         chunks = split_text(text)
         chunks.map {|chunk| fetch_rdf_from_calais(chunk) }
@@ -22,11 +21,6 @@ module DC
       def split_text(text)
         max = MAX_TEXT_SIZE
         (0..((text.length-1) / max)).map {|i| text[i * max, max]}
-      end
-
-      # Calais complains if the content contains HTML tags...
-      def clean_pseudo_html(text)
-        text.gsub(/<\/?[^>]*>/, "")
       end
 
       def fetch_rdf_from_calais(text)

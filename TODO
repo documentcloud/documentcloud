@@ -1,6 +1,7 @@
 TODO:
 
   * Try pulling out all non-latin characters, and see if that fixes our Calais troubles.
+    Translit to ASCII, saving the original text on S3, for now.
                     
   * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
     viewing.
