@@ -33,7 +33,7 @@ module DC
           :submitter                      => "DocumentCloud (#{RAILS_ENV})",
           :omit_outputting_original_text  => true
         )
-        client.enlighten
+        Calais::Response.new(client.enlighten)
       end
 
     end

@@ -16,9 +16,8 @@ module DC
         document.metadata = []
         chunks = fetch_entities(document)
         chunks.each_with_index do |chunk, i|
-          response = Calais::Response.new(chunk)
-          extract_standard_metadata(document, response, i) if i == 0
-          extract_entities(document, response, i)
+          extract_standard_metadata(document, chunk, i) if i == 0
+          extract_entities(document, chunk, i)
         end
         document.save
       end
