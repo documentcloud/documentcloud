@@ -25,8 +25,9 @@ class LifecycleMailer < ActionMailer::Base
   private
 
   def support_email
-    env = Rails.env.production? ? '' : " (#{RAILS_ENV})"
-    "\"DocumentCloud#{env}\" <support@documentcloud.org>"
+    Rails.env.production? ?
+      'support@documentcloud.org' :
+      "\"DocumentCloud (#{RAILS_ENV})\" <support@documentcloud.org>"
   end
 
 end
