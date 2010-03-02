@@ -3,6 +3,10 @@
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
+# DocumentCloud-specific configuration.
+SECRETS   = YAML.load_file("#{Rails.root}/config/secrets.yml")[RAILS_ENV]
+DC_CONFIG = YAML.load_file("#{Rails.root}/config/document_cloud.yml")[RAILS_ENV]
+
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
@@ -50,10 +54,6 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 end
-
-# DocumentCloud-specific configuration.
-SECRETS = YAML.load_file("#{Rails.root}/config/secrets.yml")[RAILS_ENV]
-DC_CONFIG = YAML.load_file("#{Rails.root}/config/document_cloud.yml")[RAILS_ENV]
 
 RightAws::RightAWSParser.xml_lib = 'libxml'
 ActiveRecord::Base.include_root_in_json = false
