@@ -30,7 +30,7 @@ ActionMailer::Base.smtp_settings = {
   :port           => 26,
   :user_name      => 'smtp',
   :password       => SECRETS['smtp_password'],
-  :authentication => :login
+  :authentication => :plain
 }
 
 # Enable threaded mode
