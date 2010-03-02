@@ -15,7 +15,7 @@ module DC
       def extract_metadata(document)
         document.metadata = []
         chunks = CalaisFetcher.new.fetch_rdf(document.text)
-        chunks.each_with_index do |chunk, i|
+        chunks.compact.each_with_index do |chunk, i|
           extract_standard_metadata(document, chunk, i) if i == 0
           extract_entities(document, chunk, i)
         end
