@@ -43,13 +43,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   confirmUpload : function() {
     dc.ui.spinner.hide();
-    $('#upload_info', this.el).hide();
     dc.app.documentCount += 1;
     dc.ui.Project.uploadedDocuments.render();
     this.close();
   },
 
   open : function() {
+    this.render();
     $(this.el).show();
   },
 

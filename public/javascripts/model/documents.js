@@ -147,11 +147,18 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     }, this), 'json');
   },
 
-  // We override add to listen for uploading documents, and to start polling
+  // We override `add` to listen for uploading documents, and to start polling
   // for changes.
   add : function(model, silent) {
     this.base(model, silent);
     this._checkForPending();
+  },
+
+  // We override `refresh` to cancel the polling action if the current set
+  // has no pending documents.
+  refresh : function(models, silent) {
+    this.base(models, silent);
+    if (!this.pending().length) this.stopPolling();
   },
 
   _checkForPending : function() {
