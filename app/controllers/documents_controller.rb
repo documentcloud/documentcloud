@@ -42,7 +42,7 @@ class DocumentsController < ApplicationController
 
   # TODO: Access-control this:
   def metadata
-    meta = Metadatum.all(:conditions => ["document_id in (#{params[:ids].join(',')})"])
+    meta = Metadatum.all(:conditions => {:document_id => params[:ids]})
     json 'metadata' => meta
   end
 
@@ -50,6 +50,12 @@ class DocumentsController < ApplicationController
   def dates
     dates = MetadataDate.all(:conditions => {:document_id => params[:ids]})
     json 'dates' => dates
+  end
+
+  # Allows us to poll for status updates in the in-progress document uploads.
+  def status
+    docs = Document.owned_by(current_account).all(:conditions => {:id => params[:ids]})
+    json 'documents' => docs
   end
 
   def send_pdf

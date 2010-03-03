@@ -22,13 +22,14 @@ dc.ui.Document = dc.View.extend({
     var title = this.model.get('title');
     var data = _.clone(this.model.attributes());
     data = _.extend(data, {
-      description : this.model.displayDescription(),
-      pub         : this.model.get('access') == dc.access.PUBLIC
+      thumbnail_url : this.model.thumbnailURL(),
+      description   : this.model.displayDescription()
     });
     $(this.el).html(JST.document_tile(data));
     $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.notesEl = $('.notes', this.el);
     if (!this.options.noCallbacks) this.setCallbacks();
+    this.setMode('access', this.model.get('access'));
     this._setSelected();
     return this;
   },
@@ -43,18 +44,19 @@ dc.ui.Document = dc.View.extend({
   },
 
   viewDocument : function() {
-    window.open(this.model.get('document_viewer_url'));
+    this.model.openViewer();
   },
 
   viewPDF : function() {
-    window.open(this.model.get('pdf_url'));
+    this.model.openPDF();
   },
 
   viewFullText : function() {
-    window.open(this.model.get('full_text_url'));
+    this.model.openText();
   },
 
   downloadViewer : function() {
+    if (this.checkBusy()) return;
     this.model.downloadViewer();
   },
 

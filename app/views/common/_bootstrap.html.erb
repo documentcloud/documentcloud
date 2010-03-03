@@ -8,6 +8,5 @@ window.SERVER_ROOT = '<%= DC_CONFIG["server_root"] %>';
   dc.app.annotationCount = <%= @annotation_count %>;
   Accounts.add(new dc.model.Account(<%= @current_account.to_json %>));
   Projects.populate(<%= @projects.to_json %>);
-  ProcessingJobs.populate(<%= @processing_jobs.to_json %>);
 <% end %>
 </script>

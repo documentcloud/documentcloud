@@ -2,9 +2,17 @@
 <html>
 <head>
   <script type="text/javascript">
-    var job = new top.dc.model.ProcessingJob(<%= @status.to_json %>);
-    top.ProcessingJobs.add(job);
-    top.ProcessingJobs.startUpdates();
+    <% if @bad_request %>
+
+      top.dc.ui.Dialog.alert('Upload failed. Please make sure you have selected the correct document file to upload.');
+      top.dc.app.uploader.cancelUpload();
+
+    <% else %>
+
+      top.dc.app.uploader.confirmUpload();
+      top.Documents.add(new top.dc.model.Document(<%= @document.to_json %>));
+
+    <% end %>
   </script>
 </head>
 <body>

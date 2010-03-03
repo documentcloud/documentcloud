@@ -9,9 +9,10 @@ dc.ui.DocumentList = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, 'refresh', '_removeDocument');
+    _.bindAll(this, 'refresh', '_removeDocument', '_addDocument');
     Documents.bind(dc.Set.REFRESHED,     this.refresh);
     Documents.bind(dc.Set.MODEL_REMOVED, this._removeDocument);
+    Documents.bind(dc.Set.MODEL_ADDED,   this._addDocument);
   },
 
   render : function() {
@@ -26,6 +27,11 @@ dc.ui.DocumentList = dc.View.extend({
       return (new dc.ui.Document({model : m})).render().el;
     });
     $(this.el).append(views);
+  },
+
+  _addDocument : function(e, doc) {
+    var view = new dc.ui.Document({model : doc});
+    $(this.el).prepend(view.render().el);
   },
 
   _removeDocument : function(e, doc) {

@@ -9,7 +9,11 @@ _.extend(dc.app.workspace, {
     this.renderSubViews();
     dc.history.initialize();
     dc.history.loadURL(function() {
-      if (Projects.first()) Projects.first().open();
+      if (dc.app.documentCount) {
+        Accounts.current().openDocuments();
+      } else if (Projects.first()) {
+        Projects.first().open();
+      }
     });
   },
 

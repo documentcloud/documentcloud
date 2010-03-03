@@ -11,7 +11,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     _.bindAll(this, '_onUploadStarted', '_onUploadCompleted', '_updateProgress');
     this.base({
       mode      : 'custom',
-      title     : "Upload Documents"
+      title     : "Upload a Document"
     });
   },
 
@@ -23,16 +23,30 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     }));
     $('.cancel', this.el).text('close');
     $('.ok', this.el).text('upload');
-    this._observeUploadProgress();
     return this;
   },
 
   confirm : function() {
+    if (!$('#document_upload_title', this.el).val()) {
+      return dc.ui.Dialog.alert('Please enter a title for the document.');
+    };
     dc.ui.spinner.show('uploading');
-    dc.app.documentCount += 1;
-    dc.ui.Project.uploadedDocuments.render();
+    $('#upload_info', this.el).show();
     $('#upload_document', this.el).submit();
     return false;
+  },
+
+  cancelUpload : function() {
+    dc.ui.spinner.hide();
+    $('#upload_info', this.el).hide();
+  },
+
+  confirmUpload : function() {
+    dc.ui.spinner.hide();
+    $('#upload_info', this.el).hide();
+    dc.app.documentCount += 1;
+    dc.ui.Project.uploadedDocuments.render();
+    this.close();
   },
 
   open : function() {
@@ -40,40 +54,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   close : function() {
-    ProcessingJobs.unbindAll();
-    ProcessingJobs.stopUpdates();
     $(this.el).hide();
-  },
-
-  _observeUploadProgress : function() {
-    ProcessingJobs.bind(dc.Set.MODEL_ADDED,   this._onUploadStarted);
-    ProcessingJobs.bind(dc.Set.MODEL_REMOVED, this._onUploadCompleted);
-    ProcessingJobs.bind(dc.Set.MODEL_CHANGED, this._updateProgress);
-    if (ProcessingJobs.size()) {
-      ProcessingJobs.each(_(function(job){ this._onUploadStarted(null, job); }).bind(this));
-      ProcessingJobs.startUpdates();
-    }
-  },
-
-  _onUploadStarted : function(e, model) {
-    $('#upload_progress', this.el).append(JST.document_progress(model.attributes()));
-    $('#upload_progress', this.el).show();
-    $('#upload_info', this.el).show();
-    $('input', this.el).val('');
-    $('textarea', this.el).val('');
-    this._updateProgress(e, model);
-  },
-
-  _onUploadCompleted : function(e, model) {
-    var el = $('#document_progress_' + model.id);
-    $('.progress_bar', el).css({width : '100%'});
-    $('.status', el).html('complete');
-  },
-
-  _updateProgress : function(e, model) {
-    var el = $('#document_progress_' + model.id);
-    $('.status', el).html(model.documentDisplayStatus());
-    $('.progress_bar', el).animate({width : model.get('percent_complete') + '%'});
   }
 
 });

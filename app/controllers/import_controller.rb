@@ -7,12 +7,13 @@ class ImportController < ApplicationController
   before_filter :login_required, :only => [:upload_document]
 
   def upload_document
-    return bad_request unless params[:file]
+    @bad_request = true and return unless params[:file] && params[:title]
     doc = new_document
     ensure_pdf do |path|
       DC::Store::AssetStore.new.save_pdf(doc, path, params[:access].to_i)
     end
     cloud_crowd_import(doc)
+    @document = doc.reload
   end
 
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.
@@ -30,12 +31,6 @@ class ImportController < ApplicationController
   # 201 created cleans up the job.
   def update_access
     render :text => '201 Created', :status => 201
-  end
-
-  # Get the current status of an active processing job.
-  def job_status
-    job = current_account.processing_jobs.find_by_id(params[:id])
-    json job && job.status
   end
 
 
@@ -81,7 +76,6 @@ class ImportController < ApplicationController
       :title          => document.title,
       :remote_job     => job
     )
-    @status = record.status
   end
 
 end

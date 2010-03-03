@@ -68,6 +68,11 @@
         float: left;
         margin-right: 7px;
       }
+      .document_tools .icon.spinner {
+        position: absolute;
+        left: 29px;
+        top: 50px;
+      }
   .document .source {
     font: 11px/14px Arial;
     overflow: hidden;
@@ -75,6 +80,9 @@
     color: #808080;
     margin-bottom: 8px;
   }
+    .document.access_5 .page_count {
+      display: none;
+    }
   .document .description {
     line-height: 16px;
     margin-top: 5px;
