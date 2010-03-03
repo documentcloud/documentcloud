@@ -51,6 +51,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   open : function() {
     this.render();
     $(this.el).show();
+    this.center();
   },
 
   close : function() {
