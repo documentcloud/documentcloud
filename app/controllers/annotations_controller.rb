@@ -12,11 +12,10 @@ class AnnotationsController < ApplicationController
   # Any account can create a private note on any document.
   # Only the owner of the document is allowed to create a public annotation.
   def create
-    return forbidden unless params[:access].to_i == PRIVATE || current_account.owns_or_administers?(current_document)
+    note_attrs = pick(:json, :page_number, :title, :content, :location, :access)
+    return forbidden unless note_attrs[:access].to_i == PRIVATE || current_account.owns_or_administers?(current_document)
     json current_document.annotations.create(
-      pick(:json, :page_number, :title, :content, :location, :access).merge({
-        :account_id => current_account.id, :organization_id => current_organization.id
-      })
+      note_attrs.merge(:account_id => current_account.id, :organization_id => current_organization.id)
     )
   end
 
