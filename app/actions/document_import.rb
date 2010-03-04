@@ -35,6 +35,9 @@ class DocumentImport < CloudCrowd::Action
   end
 
   def process_text
+    # Destroy existing text and pages to make way for the new.
+    document.full_text.destroy if document.full_text
+    document.pages.destroy_all if document.pages.count > 0
     pages = []
     extractor = DC::Import::TextExtractor.new(@pdf)
     if extractor.contains_text?
