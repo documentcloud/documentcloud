@@ -197,6 +197,19 @@ class Document < ActiveRecord::Base
     asset_store.destroy(self)
   end
 
+  def queue_initial_import(eventual_access=PRIVATE)
+    job = JSON.parse(DC::Import::CloudCrowdImporter.new.import([id], {
+      'id'            => id,
+      'access'        => eventual_access
+    }))
+    ProcessingJob.create!(
+      :account_id     => account_id,
+      :cloud_crowd_id => job['id'],
+      :title          => title,
+      :remote_job     => job
+    )
+  end
+
   # TODO: Make the to_json an extended form of the canonical.
   def to_json(options={})
     {

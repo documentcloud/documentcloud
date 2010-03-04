@@ -12,7 +12,7 @@ class ImportController < ApplicationController
     ensure_pdf do |path|
       DC::Store::AssetStore.new.save_pdf(doc, path, params[:access].to_i)
     end
-    cloud_crowd_import(doc)
+    doc.queue_initial_import(params[:access].to_i)
     @document = doc.reload
   end
 
@@ -62,20 +62,6 @@ class ImportController < ApplicationController
       Docsplit.extract_pdf(doc, :output => temp_dir)
       yield(File.join(temp_dir, File.basename(name, ext) + '.pdf'))
     end
-  end
-
-  # Kick off and record a CloudCrowd document import job.
-  def cloud_crowd_import(document)
-    job = JSON.parse(DC::Import::CloudCrowdImporter.new.import([document.id], {
-      'id'            => document.id,
-      'access'        => params[:access].to_i
-    }))
-    record = ProcessingJob.create!(
-      :account        => current_account,
-      :cloud_crowd_id => job['id'],
-      :title          => document.title,
-      :remote_job     => job
-    )
   end
 
 end
