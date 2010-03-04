@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
     after_filter  :debug_api
   end
 
+  if Rails.env.production?
+    around_filter :notify_exceptions
+  end
+
   protected
 
   # Convenience method for responding with JSON. Sets the content type,
@@ -54,6 +58,10 @@ class ApplicationController < ActionController::Base
     logged_in? || forbidden
   end
 
+  def admin_required
+    (logged_in? && current_organization.id == 1) || forbidden
+  end
+
   def current_account
     return nil unless session['account_id']
     @current_account ||= Account.find_by_id(session['account_id'])
@@ -92,6 +100,16 @@ class ApplicationController < ActionController::Base
     authenticate_or_request_with_http_basic("DocumentCloud") do |login, password|
       (login == 'main'  && password == 'REDACTED') ||
       (login == 'guest' && password == 'REDACTED')
+    end
+  end
+
+  # Email production exceptions to us. Once every 2 minutes at most, per process.
+  def notify_exceptions
+    begin
+      yield
+    rescue Exception => e
+      LifecycleMailer.deliver_exception_notification(e)
+      raise e
     end
   end
 
