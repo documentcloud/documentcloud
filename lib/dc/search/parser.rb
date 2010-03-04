@@ -15,8 +15,8 @@ module DC
       def parse(query_string)
         @text, @fields, @projects, @attributes = nil, [], [], []
 
-        bare_fields   = query_string.scan(Matchers::BARE_FIELD)
         quoted_fields = query_string.scan(Matchers::QUOTED_FIELD)
+        bare_fields   = query_string.gsub(Matchers::QUOTED_FIELD, '').scan(Matchers::BARE_FIELD)
         search_text   = query_string.gsub(Matchers::ALL_FIELDS, '').squeeze(' ').strip
 
         process_search_text(search_text)
@@ -34,8 +34,13 @@ module DC
       # Extract the portions of the query that are fields, attributes,
       # and projects.
       def process_fields_and_projects(bare, quoted)
-        bare.map! {|f| f.split(':') }
-        quoted.map! {|f| f.gsub(/['"]/, '').split(/:\s*/) }
+        bare.map! {|f| f.split(/:\s*/) }
+        quoted.map! do |f|
+          plain = f.gsub(/['"]/, '')
+          type  = plain.match(/(.+?):\s*/)[1]
+          value = plain.sub(/(.+?):\s*/, '')
+          [type, value]
+        end
         (bare + quoted).each do |pair|
           type, value = *pair
           type.downcase == 'project' ? process_project(value) : process_field(type, value)
