@@ -29,9 +29,9 @@ class DocumentsController < ApplicationController
     json = JSON.parse(params[:json]).symbolize_keys
     access = json[:access] && json[:access].to_i
     doc.set_access(access) if access && current_document.access != access
-    doc.update_attributes(:description => json[:description].mb_chars[0...255]) if json[:description]
-    doc.update_attributes(:title => json[:title])                               if json[:title]
-    doc.update_attributes(:remote_url => json[:remote_url])                     if json[:remote_url]
+    doc.update_attributes(:description => json[:description]) if json[:description]
+    doc.update_attributes(:title => json[:title])             if json[:title]
+    doc.update_attributes(:remote_url => json[:remote_url])   if json[:remote_url]
     json doc
   end
 
