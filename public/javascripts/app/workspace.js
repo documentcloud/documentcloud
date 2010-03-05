@@ -55,6 +55,7 @@ _.extend(dc.app.workspace, {
     dc.app.uploader.render();
     this.panel.add('document_list', this.documentList.render().el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
+    $('#wordmark a').attr({href : '#help'});
   }
 
 });
