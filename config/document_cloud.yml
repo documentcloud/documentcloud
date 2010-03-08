@@ -3,14 +3,14 @@ defaults: &defaults
   server_root:          http://dev.dcloud.org
   aws_zone:             us-east-1c
   preconfigured_ami_id: ami-f4db369d
-  
-  # Include Postgres-generated highlights of the search query within the 
+
+  # Include Postgres-generated highlights of the search query within the
   # document results (too slow).
   include_highlights:   off
-  
+
   # Search for metadata, rather than jumping to their precise offset?
   entities_via_search:  off
-  
+
 
 development:
   <<: *defaults
@@ -23,7 +23,7 @@ staging:
 production:
   <<: *defaults
   cloud_crowd_server: http://ec2-174-129-5-5.compute-1.amazonaws.com:8080
-  server_root:        http://production.dcloud.org
+  server_root:        http://www.documentcloud.org
 
 test:
   <<: *defaults
