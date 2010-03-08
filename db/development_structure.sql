@@ -134,7 +134,7 @@ CREATE TABLE documents (
     slug character varying(255) NOT NULL,
     source character varying(255),
     language character varying(3),
-    description character varying(255),
+    description text,
     calais_id character varying(40),
     publication_date date,
     created_at timestamp without time zone,
@@ -966,3 +966,9 @@ INSERT INTO schema_migrations (version) VALUES ('20100208151651');
 INSERT INTO schema_migrations (version) VALUES ('20100212130932');
 
 INSERT INTO schema_migrations (version) VALUES ('20100218193708');
+
+INSERT INTO schema_migrations (version) VALUES ('20100219175757');
+
+INSERT INTO schema_migrations (version) VALUES ('20100301200857');
+
+INSERT INTO schema_migrations (version) VALUES ('20100304154343');
