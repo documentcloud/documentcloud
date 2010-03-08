@@ -46,11 +46,20 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => 'static' do |static|
     static.contributors   '/contributors',  :action => 'contributors'
     static.faq            '/faq',           :action => 'faq'
-    static.faq            '/home',          :action => 'home'
+    static.home           '/home',          :action => 'home'
     static.news           '/news',          :action => 'news'
     static.opensource     '/opensource',    :action => 'opensource'
     static.about          '/about',         :action => 'about'
     static.contact        '/contact',       :action => 'contact'
+  end
+
+  # Redirects.
+  map.with_options :controller => 'redirect' do |move|
+    move.faq              '/faq.php',       :url => '/faq'
+    move.who              '/who.php',       :url => '/about'
+    move.partner          '/partner.php',   :url => '/contributors'
+    move.clips            '/clips.php',     :url => '/news'
+    move.blog             '/blog',          :url => 'http://blog.documentcloud.org/'
   end
 
   # Asset packages.
