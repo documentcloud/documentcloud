@@ -79,8 +79,6 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 
   resource : 'documents',
 
-  SELECTION_CHANGED : 'documents:selection_changed',
-
   POLL_INTERVAL : 10000, // 10 seconds.
 
   constructor : function(options) {
@@ -89,28 +87,8 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     _.bindAll(this, 'poll', 'downloadSelectedViewers', 'downloadSelectedPDF', 'downloadSelectedFullText');
   },
 
-  selectAll : function() {
-    _.each(this.models(), function(m){ m.set({selected : true}); });
-  },
-
-  deselectAll : function() {
-    _.each(this.models(), function(m){ m.set({selected : false}); });
-  },
-
-  selected : function() {
-    return _.select(this.models(), function(m){ return m.get('selected'); });
-  },
-
-  selectedIds : function() {
-    return _.pluck(this.selected(), 'id');
-  },
-
   pending : function() {
     return _.select(this.models(), function(doc){ return doc.isPending(); });
-  },
-
-  countSelected : function() {
-    return this.selected().length;
   },
 
   downloadSelectedViewers : function() {
@@ -178,4 +156,5 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 });
 
 // The main set of Documents, used by the search tab.
+dc.model.DocumentSet.implement(dc.model.SelectableSet);
 window.Documents = new dc.model.DocumentSet();

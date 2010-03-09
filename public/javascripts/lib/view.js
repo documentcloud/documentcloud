@@ -53,6 +53,7 @@ dc.View = Base.extend({
   // Passing a selector of 'el' binds to the view's root element.
   setCallbacks : function(callbacks) {
     var me = this;
+    $(me.el).unbind();
     _.each(callbacks || this.callbacks, function(val, key) {
       key = key.split(me.LAST_DOT);
       var selector = key[0], eventName = key[1], methodName = val;

@@ -127,7 +127,7 @@ dc.ui.SearchBox = dc.View.extend({
   clearSearch : function() {
     this.cancelSearch();
     $(document.body).setMode('no', 'search');
-    dc.ui.Project.clearSelection();
+    Project.deselectAll();
     dc.history.save('help');
   },
 

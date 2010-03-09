@@ -22,7 +22,10 @@ dc.ui.Project = dc.View.extend({
   render : function() {
     var data = this.model ? this.model.attributes() : this.defaultProjectAttributes();
     $(this.el).html(JST.organizer_project(data));
-    if (this.model) $(this.el).attr({id : "project_" + this.model.cid, 'data-project-cid' : this.model.cid});
+    if (this.model) {
+      $(this.el).attr({id : "project_" + this.model.cid, 'data-project-cid' : this.model.cid});
+      this.setMode(this.model.get('selected') ? 'is' : 'not', 'selected');
+    }
     this.setCallbacks();
     return this;
   },
@@ -40,10 +43,6 @@ dc.ui.Project = dc.View.extend({
     this.model ? this.model.open() : Accounts.current().openDocuments();
   },
 
-  showOpen : function() {
-    $(this.el).setMode('is', 'open');
-  },
-
   editProject : function(e) {
     $(document.body).append((new dc.ui.ProjectDialog({model : this.model})).render().el);
     return false;
@@ -53,18 +52,14 @@ dc.ui.Project = dc.View.extend({
 
   // (Maybe) hightlight a project box for the current query.
   highlight : function(query) {
-    this.clearSelection();
+    Projects.deselectAll();
+    if (this.uploadedDocuments) $(this.uploadedDocuments.el).setMode('not', 'selected');
     var projectName = dc.app.SearchParser.extractProject(query);
     var project = projectName && Projects.find(projectName);
-    if (project) return project.view.showOpen();
+    if (project) return project.set({selected : true});
     var accountName = dc.app.SearchParser.extractAccount(query);
     var account = accountName && (accountName == Accounts.current().get('email'));
-    if (account) return $(this.uploadedDocuments.el).setMode('is', 'open');
-  },
-
-  // Clear out all open project boxes.
-  clearSelection : function() {
-    $('#organizer .box').setMode('not', 'open');
+    if (account) return $(this.uploadedDocuments.el).setMode('is', 'selected');
   }
 
 });

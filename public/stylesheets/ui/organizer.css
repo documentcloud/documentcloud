@@ -47,7 +47,7 @@
       cursor: pointer;
       border-bottom: 1px solid #d0d0d0;
     }
-      #organizer .box.is_open {
+      #organizer .box.is_selected {
         background-color: #fcfcfc;
       }
       #organizer .box .pointer {
@@ -57,7 +57,7 @@
         background-image: url(/images/embed/ui/pointer.png);
         display: none;
       }
-        #organizer .box.is_open .pointer {
+        #organizer .box.is_selected .pointer {
           display: block;
         }
       #organizer .box .edit,

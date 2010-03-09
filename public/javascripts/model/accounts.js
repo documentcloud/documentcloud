@@ -45,11 +45,17 @@ dc.model.AccountSet = dc.model.RESTfulSet.extend({
 
   resource : 'accounts',
 
+  comparator : function(account) {
+    return account.get('last_name').toLowerCase();
+  },
+
   // Fetch the account of the logged-in journalist.
   current : function() {
     return this.get(dc.app.accountId);
   }
 
 });
+
+dc.model.AccountSet.implement(dc.model.SortedSet);
 
 window.Accounts = new dc.model.AccountSet();
