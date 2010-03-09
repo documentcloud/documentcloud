@@ -1,4 +1,8 @@
-/* Extra DocViewer override rules go here: */
+/* DocumentCloud overrides to the DocViewer CSS go here: */
+
+#DV-docViewer.DV-embedded {
+  border: 1px solid #c3c3c3;
+}
 
 #DV-headerHat, #DV-title, .DV-contentsHeader {
   display: none !important;

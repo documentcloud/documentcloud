@@ -3,6 +3,8 @@ class DocumentsController < ApplicationController
 
   before_filter(:bouncer, :only => [:show]) if Rails.env.staging?
 
+  caches_page :loader
+
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
 
@@ -38,6 +40,10 @@ class DocumentsController < ApplicationController
   def destroy
     current_document(true).destroy
     json nil
+  end
+
+  def loader
+    render :action => 'loader', :content_type => :js
   end
 
   # TODO: Access-control this:
