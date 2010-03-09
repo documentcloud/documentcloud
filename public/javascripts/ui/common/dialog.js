@@ -27,11 +27,15 @@ dc.ui.Dialog = dc.View.extend({
     if (this.options.content) cel.val(this.options.content);
     $(document.body).append(this.el);
     this.center();
-    $(this.el).draggable();
     this.setCallbacks();
     if (this._returnCloses()) $(document.body).bind('keypress', this._maybeConfirm);
     if (cel[0]) _.defer(function(){ cel.focus(); });
     return this;
+  },
+
+  setCallbacks : function(callbacks) {
+    this.base(callbacks);
+    $(this.el).draggable();
   },
 
   defaultOptions : function() {
