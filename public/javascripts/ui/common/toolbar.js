@@ -119,7 +119,7 @@ dc.ui.Toolbar = dc.View.extend({
     return new dc.ui.Menu({
       label   : 'Download',
       items   : [
-        {title : 'Download Document Viewer', onClick : Documents.downloadSelectedViewers},
+        // {title : 'Download Document Viewer', onClick : Documents.downloadSelectedViewers},
         {title : 'Download as PDF',          onClick : Documents.downloadSelectedPDF},
         {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
       ]
