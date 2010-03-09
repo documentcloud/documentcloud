@@ -8,7 +8,7 @@
   .panel_content.open_toolbar #search_toolbar_container,
   body.visualize #search_toolbar_container {
     border-left: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #c6c6c6;
     height: 41px;
   }
 
