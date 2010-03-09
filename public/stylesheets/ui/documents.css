@@ -14,7 +14,7 @@
   position: relative;
   overflow: hidden;
   border: 1px solid transparent;
-  background: #f7f7f7;
+  background: #fcfcfc;
 }
   .document.is_selected {
     border-color: #eea;

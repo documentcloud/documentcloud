@@ -256,7 +256,7 @@ div.dialog {
     position: absolute;
     z-index: -1;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: #f7f7f7;
+    background: #fcfcfc;
     -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
     -webkit-box-shadow: 0 5px 50px #555; -moz-box-shadow: 0 5px 50px #555;
   }
