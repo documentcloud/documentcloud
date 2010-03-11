@@ -69,7 +69,7 @@
   padding: 5px 14px 10px;
 }
 
-.DV-views div a {
+.DV-views div span {
   border-bottom: 0 !important;
   background: #e3e3e3;
   color: black !important;
@@ -77,16 +77,16 @@
   background: -moz-linear-gradient(top, #EAEAEA, #C2C2C2);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#EAEAEA', EndColorStr='#C2C2C2');
 }
-  .DV-views #DV-documentView a {
+  .DV-views #DV-documentView span {
     -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
   }
-  #DV-textView a {
+  #DV-textView span {
     -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
   }
-  .DV-viewDocument .DV-views #DV-documentView a,
-  .DV-viewAnnotations .DV-views #DV-annotationView a,
-  .DV-viewText .DV-views #DV-textView a,
-  .DV-viewSearch .DV-views #DV-textView a {
+  .DV-viewDocument .DV-views #DV-documentView span,
+  .DV-viewAnnotations .DV-views #DV-annotationView span,
+  .DV-viewText .DV-views #DV-textView span,
+  .DV-viewSearch .DV-views #DV-textView span {
     background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#a0a0a0));
     background: -moz-linear-gradient(top, #fff, #a0a0a0);
     filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#A0A0A0');
