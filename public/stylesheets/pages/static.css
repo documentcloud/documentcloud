@@ -44,14 +44,25 @@ small {
     }
       #content p.intro {
         font-size: 1.2em;
-/*        font-style: italic;*/
       }
     #content ul {
       margin: 0 0 0 1.25em;
       list-style-type: circle;
+      color: #777;
     }
+    #content ol {
+      padding-left: 20px;
+    }
+      #content ol.decimal {
+        list-style-type: decimal;
+      }
+      #content ol.lower_alpha {
+        list-style-type: lower-alpha;
+      }
+      #content ol.lower_roman {
+        list-style-type: lower-roman;
+      }
       #content li {
-        color: #777;
         margin: 0.5em 0;
       }
     #content .screenshot {

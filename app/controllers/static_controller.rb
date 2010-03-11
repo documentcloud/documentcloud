@@ -27,6 +27,9 @@ class StaticController < ApplicationController
   def faq
   end
 
+  def tos
+  end
+
   def news
     @news = date_sorted(yaml_for('news'))
   end
