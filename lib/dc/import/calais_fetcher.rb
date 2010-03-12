@@ -24,6 +24,10 @@ module DC
       end
 
       def fetch_rdf_from_calais(text)
+        # Calais complains if the content contains HTML tags.
+        # So we replace everything that looks like a tag with spaces of the
+        # equivalent length before uploading.
+        text.gsub!(/<\/?[^>]*>/) {|m| ' ' * m.length }
         retry_calais_errors do
           client = Calais::Client.new(
             :content                        => text,
