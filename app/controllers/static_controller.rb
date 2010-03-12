@@ -27,7 +27,10 @@ class StaticController < ApplicationController
   def faq
   end
 
-  def tos
+  def terms
+  end
+  
+  def privacy 
   end
 
   def news

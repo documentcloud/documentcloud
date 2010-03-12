@@ -46,7 +46,8 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => 'static' do |static|
     static.contributors   '/contributors',  :action => 'contributors'
     static.faq            '/faq',           :action => 'faq'
-    static.tos            '/tos',           :action => 'tos'
+    static.terms          '/terms',         :action => 'terms'
+    static.privacy        '/privacy',       :action => 'privacy'
     static.home           '/home',          :action => 'home'
     static.news           '/news',          :action => 'news'
     static.opensource     '/opensource',    :action => 'opensource'
