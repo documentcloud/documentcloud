@@ -11,7 +11,7 @@ class SearchController < ApplicationController
   end
 
   def notes
-    params[:q].gsub!(FIELD_STRIP, '')
+    params[:q].gsub!(FIELD_STRIP, '') if params[:q]
     perform_search
     render :json => {'query' => @query, 'documents' => @documents}
   end
