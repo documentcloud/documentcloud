@@ -53,6 +53,11 @@ class SearchParserTest < ActiveSupport::TestCase
       assert query.text == 'freedom rides'
     end
 
+    should "be able to handle fields with quotes in the values" do
+      query = search("project: \"2052: Berkeley's Olympics\"")
+      assert query.projects[0] == "2052: Berkeley's Olympics"
+    end
+
   end
 
 end

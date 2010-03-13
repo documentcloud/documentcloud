@@ -15,7 +15,7 @@ module DC
       def parse(query_string)
         @text, @fields, @projects, @attributes = nil, [], [], []
 
-        quoted_fields = query_string.scan(Matchers::QUOTED_FIELD)
+        quoted_fields = query_string.scan(Matchers::QUOTED_FIELD).map {|m| m[0] }
         bare_fields   = query_string.gsub(Matchers::QUOTED_FIELD, '').scan(Matchers::BARE_FIELD)
         search_text   = query_string.gsub(Matchers::ALL_FIELDS, '').squeeze(' ').strip
 
@@ -36,9 +36,8 @@ module DC
       def process_fields_and_projects(bare, quoted)
         bare.map! {|f| f.split(/:\s*/) }
         quoted.map! do |f|
-          plain = f.gsub(/['"]/, '')
-          type  = plain.match(/(.+?):\s*/)[1]
-          value = plain.sub(/(.+?):\s*/, '')
+          type  = f.match(/(.+?):\s*/)[1]
+          value = f.sub(/(.+?):\s*/, '').gsub(/(^['"]|['"]$)/, '')
           [type, value]
         end
         (bare + quoted).each do |pair|

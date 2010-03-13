@@ -2,20 +2,20 @@
 // Used to extract keywords from the free text search.
 dc.app.SearchParser = {
 
-  FIRST_PROJECT :  /project:\s?(([^'"][^'"]\S*)|['"](.+?)['"])/i,
+  FIRST_PROJECT :  /project:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  FIRST_ACCOUNT :  /documents:\s?(([^'"][^'"]\S*)|['"](.+?)['"])/i,
+  FIRST_ACCOUNT :  /documents:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
   WHITESPACE_ONLY: /^\s*$/,
 
   extractProject : function(query) {
     var project = query.match(this.FIRST_PROJECT);
-    return project && (project[2] || project[3]);
+    return project && (project[2] || project[3] || project[4]);
   },
 
   extractAccount : function(query) {
     var account = query.match(this.FIRST_ACCOUNT);
-    return account && (account[2] || account[3]);
+    return account && (account[2] || account[3] || account[4]);
   },
 
   searchType : function(query) {
