@@ -3,6 +3,9 @@ TODO:
   * Do a first implementation of bulk uploading.
   
   * Check project names with apostrophes and other crazy characters in them.
+  
+  * Public -> Private docs that are already part of a project should be
+    displayed as revoked/locked/blanked.
 
   * Write a phone number extractor, and save those as entities.
 
