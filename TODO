@@ -1,8 +1,8 @@
 TODO:
 
-  * Write a better welcome email.
-
   * Do a first implementation of bulk uploading.
+  
+  * Check project names with apostrophes and other crazy characters in them.
 
   * Write a phone number extractor, and save those as entities.
 
