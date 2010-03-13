@@ -31,6 +31,8 @@ class Document < ActiveRecord::Base
     {:conditions => {:account_id => account.id}}
   }
 
+  named_scope :pending, :conditions => {:access => PENDING}
+
   # Restrict accessible documents for a given account/organzation.
   named_scope :accessible, lambda { |account, org|
     access = []
