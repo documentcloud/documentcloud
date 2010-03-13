@@ -1,15 +1,22 @@
 TODO:
-                    
-  * Change embedded viewers to be hosted on S3, and perhaps iframed, for text
-    viewing.
+
+  * Do a first implementation of bulk uploading.
+
+  * Write a phone number extractor, and save those as entities.
+
+  * Implement the text detection heuristic for the pot report.
+
+  * Add a way to search just the text of your notes. List your notes etc.
+
+  * Fix the description toggle -- hide empty descriptions in the viewer.
           
   * Implement the "publication" workflow. A document should know if it's been
     published, and the URL where. Create a cron/cloudcrowd job that pings each
     published document, ensuring that it's not 404'd.
-    
-  * Write out full documentation, with screenshots.
+      
+  * Real deploys -- Vlad? Deploy more small CC nodes, and move it to the nodes.
   
-  * Real deploys -- Vlad?
+  * Start a suite of Cron scripts, backup being the first.
   
 
 AFTER BETA:
