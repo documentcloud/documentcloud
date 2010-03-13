@@ -62,6 +62,7 @@ ActionController::Routing::Routes.draw do |map|
     move.partner          '/partner.php',   :url => '/contributors'
     move.clips            '/clips.php',     :url => '/news'
     move.blog             '/blog',          :url => 'http://blog.documentcloud.org/'
+    move.blog             '/blog/feed',     :url => 'http://blog.documentcloud.org/feed'
   end
 
   # Asset packages.
