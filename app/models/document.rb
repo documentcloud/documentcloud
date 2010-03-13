@@ -71,7 +71,20 @@ class Document < ActiveRecord::Base
     FullText.update_all(*sql)
     Page.update_all(*sql)
     Metadatum.update_all(*sql)
+    MetadataDate.update_all(*sql)
     background_update_asset_access
+  end
+
+  # If we need to change the ownership of the document, we have to propagate
+  # the change to all associated models.
+  def set_owner(account)
+    org = account.organization
+    update_attributes(:account_id => account.id, :organization_id => org.id)
+    sql = ["account_id = #{account.id}, organization_id = #{org.id}", "document_id = #{id}"]
+    FullText.update_all(*sql)
+    Page.update_all(*sql)
+    Metadatum.update_all(*sql)
+    MetadataDate.update_all(*sql)
   end
 
   # Ex: docs/1011
