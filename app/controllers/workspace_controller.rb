@@ -2,7 +2,6 @@ class WorkspaceController < ApplicationController
 
   RESULTS_REQUEST = /\A\/results/
 
-  before_filter :bouncer, :only => :signup  unless Rails.env.development?
   before_filter :bouncer, :except => :index if Rails.env.staging?
 
   # Main documentcloud.org page. Renders the workspace if logged in or
@@ -20,19 +19,6 @@ class WorkspaceController < ApplicationController
 
   def home
     render :action => 'home', :layout => 'empty'
-  end
-
-  # Attempt a new signup for DocumentCloud -- includes both the organization and
-  # its first account. If everthing's kosher, the journalist is logged in.
-  # NB: This needs to stay access controlled by the bouncer throughout the beta.
-  def signup
-    return render unless request.post?
-    org = Organization.create(params[:organization])
-    return fail(org.errors.full_messages.first) if org.errors.any?
-    acc = Account.create(params[:account].merge({:organization => org, :role => Account::ADMINISTRATOR}))
-    return org.destroy && fail(acc.errors.full_messages.first) if acc.errors.any?
-    acc.authenticate(session)
-    redirect_to '/'
   end
 
   # Display the signup information page.
