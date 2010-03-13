@@ -62,7 +62,7 @@ module DC
         document.pages.each do |page|
           save_permissions(page.text_path, access)
           Page::IMAGE_SIZES.keys.each do |size|
-            save_permissions(page.image_path('size'), access)
+            save_permissions(page.image_path(size), access)
           end
         end
         true
