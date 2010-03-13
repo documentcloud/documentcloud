@@ -43,8 +43,8 @@ dc.ui.Note = dc.View.extend({
   saveNote : function() {
     this.setMode('display', 'visible');
     this.set.update(this.model, {
-      title   : $('.note_title_input').val(),
-      content : $('.note_text_edit').val()
+      title   : $('.note_title_input', this.el).val(),
+      content : $('.note_text_edit', this.el).val()
     });
   },
 
