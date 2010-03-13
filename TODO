@@ -1,5 +1,7 @@
 TODO:
 
+  * Write a better welcome email.
+
   * Do a first implementation of bulk uploading.
 
   * Write a phone number extractor, and save those as entities.

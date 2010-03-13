@@ -1,8 +1,17 @@
 <%= @account.full_name %> --
 
-"<%= @organization_name %>" has registered you for an account on DocumentCloud.
+A DocumentCloud account has been created for you and <%= @organization_name %>.
+
 Please use the following link to set your password and enable your new account.
 
 <%= DC_CONFIG['server_root'] %>/accounts/enable/<%= @key %>
+
+In the future, you'll be able to login at <%= DC_CONFIG['server_root'] %>/login
+
+Help pages, with information on how to use the workspace and add additional
+accounts, are available at http://help.documentcloud.org
+
+If you have any questions, or run into any trouble, let us know at 
+support@documentcloud.org
 
 -- The DocumentCloud Team
