@@ -5,9 +5,7 @@ TODO:
   * Add the TOS linked to the enable page.
 
   * Do a first implementation of bulk uploading.
-  
-  * Check project names with apostrophes and other crazy characters in them.
-  
+    
   * Public -> Private docs that are already part of a project should be
     displayed as revoked/locked/blanked.
 
@@ -32,9 +30,6 @@ AFTER BETA:
 
   * Make search degrade gracefully in the viewer, when DocumentCloud is down.
 
-  * Add EPUB-formatted downloads of the documents? Make the reader able to load
-    EPUB?
-
   * Add a "related documents" search. We need a good algorithm for this.
   
   * Flesh out a more comprehensive API.
@@ -56,6 +51,8 @@ AFTER BETA:
   
 
 DONE: 
+
+  * Check project names with apostrophes and other crazy characters in them.
 
   * Removed our HTML-cleaning phase, which was destroying Calais' offsets.
     Reprocessed all production documents.

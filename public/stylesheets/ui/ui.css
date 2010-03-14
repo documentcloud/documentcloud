@@ -21,6 +21,13 @@ select {
   height: 20px;
 }
 
+.float_left {
+  float: left;
+}
+.float_right {
+  float: right;
+}
+
 /*------------------------------ Gradients ---------------------------------*/
 .gradient_selected,
 #organizer .box:hover {
@@ -183,6 +190,9 @@ textarea.text_area {
     .minibutton.menu.is_active .closer {
       display: block;
     }
+  .minibutton.warn {
+    color: #aa3333;
+  }
 
 .menu_content {
   display: none;

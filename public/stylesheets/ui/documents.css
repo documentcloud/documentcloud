@@ -157,7 +157,7 @@
       }
       .note .page_number {
         cursor: pointer;
-        font: bold 10px Arial;
+        font: bold 10px/12px Arial;
         color: black;
         float: right;
       }
@@ -200,10 +200,20 @@
           }
       .note .note_controls {
         font-size: 11px;
-        margin-bottom: 5px;
         opacity: 0;
         -webkit-transition: opacity 0.2s linear;
       }
+        .note .note_controls.display {
+          float: right;
+          line-height: 12px;
+          margin-right: 10px;
+        }
         .note:hover .note_controls {
           opacity: 1;
         }
+        .note .note_controls button {
+          margin: 10px 0 0 0;
+        }
+          .note .note_controls .cancel_note {
+            margin-right: 10px;
+          }
