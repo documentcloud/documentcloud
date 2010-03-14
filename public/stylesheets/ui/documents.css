@@ -166,7 +166,7 @@
         margin-right: 10px;
       }
         .note .note_text_edit {
-          height: 75px;
+          height: 100px;
           width: 100%;
         }
       .note .note_excerpt_wrap {
@@ -198,22 +198,20 @@
             left: 0;
             position: absolute;
           }
-      .note .note_controls {
+      .note .note_controls.display {
         font-size: 11px;
         opacity: 0;
         -webkit-transition: opacity 0.2s linear;
+        float: right;
+        line-height: 12px;
+        margin-right: 10px;
       }
-        .note .note_controls.display {
-          float: right;
-          line-height: 12px;
-          margin-right: 10px;
-        }
-        .note:hover .note_controls {
+        .note:hover .note_controls.display {
           opacity: 1;
         }
-        .note .note_controls button {
-          margin: 10px 0 0 0;
+      .note .note_controls button {
+        margin: 10px 0 0 0;
+      }
+        .note .note_controls .cancel_note {
+          margin-right: 10px;
         }
-          .note .note_controls .cancel_note {
-            margin-right: 10px;
-          }
