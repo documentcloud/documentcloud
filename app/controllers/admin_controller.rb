@@ -18,6 +18,13 @@ class AdminController < ApplicationController
     # redirect_to '/'
   end
 
+  # Render the TODO.txt out as a web page.
+  def todo
+    @todo_text = File.read("#{Rails.root}/TODO")
+    @todo_text.gsub!(/^(\w+[^\n]+:)/, '</ul><h2>\1</h2><ul>').gsub!(/^\s+\*(.+?)\n\s*\n/m, '<li>\1</li>')
+    render :action => 'todo', :layout => false
+  end
+
   def test_exception_notifier
     1 / 0
   end

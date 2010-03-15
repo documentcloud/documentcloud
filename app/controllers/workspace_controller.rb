@@ -38,14 +38,6 @@ class WorkspaceController < ApplicationController
     redirect_to '/'
   end
 
-  # Render the TODO.txt file out in public.
-  # TODO: (ha!) remove when no longer appropriate.
-  def todo
-    @todo_text = File.read("#{Rails.root}/TODO")
-    @todo_text.gsub!(/^(\w+[^\n]+:)/, '</ul><h2>\1</h2><ul>').gsub!(/^\s+\*(.+?)\n\s*\n/m, '<li>\1</li>')
-    render :action => 'todo', :layout => false
-  end
-
 
   private
 
