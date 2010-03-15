@@ -12,8 +12,6 @@ TODO:
   * Implement the text detection heuristic for the pot report.
 
   * Add a way to search just the text of your notes. List your notes etc.
-
-  * Fix the description toggle -- hide empty descriptions in the viewer.
           
   * Implement the "publication" workflow. A document should know if it's been
     published, and the URL where. Create a cron/cloudcrowd job that pings each
@@ -49,6 +47,8 @@ AFTER BETA:
   
 
 DONE: 
+
+  * Fix the description toggle -- hide empty descriptions in the viewer.
 
   * Add the TOS linked to the enable page.
 
