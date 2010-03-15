@@ -20,9 +20,6 @@ TODO:
   * Real deploys -- Vlad? Deploy more small CC nodes, and move it to the nodes.
   
   * Start a suite of Cron scripts, backup being the first.
-  
-
-AFTER BETA:
 
   * Make search degrade gracefully in the viewer, when DocumentCloud is down.
 

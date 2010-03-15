@@ -1,4 +1,4 @@
-require 'strscan'
+require 'date'
 
 module DC
   module Import
@@ -44,17 +44,11 @@ module DC
       # TODO: Extract the reusable part of this as a UTFStringScanner,
       # as soon as we need it for another purpose.
       def scan_for(matcher, text)
-        scanner = StringScanner.new(text)
-        last_byte, last_char = 0, 0
-        while scanner.scan_until(matcher)
-          date = to_date(scanner.matched)
-          next unless date
+        scanner = TextScanner.new(text)
+        scanner.scan(matcher) do |match, offset, length|
+          next unless date = to_date(match)
           @dates[date] ||= {:date => date, :occurrences => []}
-          byte    = scanner.pos - scanner.matched.length
-          char    = last_char + text[last_byte..byte].unpack('U*').length - 1
-          length  = scanner.matched.unpack('U*').length
-          last_byte, last_char = byte, char
-          @dates[date][:occurrences].push(Occurrence.new(char, length))
+          @dates[date][:occurrences].push(Occurrence.new(offset, length))
         end
       end
 
