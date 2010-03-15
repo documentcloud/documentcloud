@@ -2,8 +2,6 @@ TODO:
 
   * Change production.dcloud.org to redirect to documentcloud.org.
   
-  * Add the TOS linked to the enable page.
-
   * Do a first implementation of bulk uploading.
     
   * Public -> Private docs that are already part of a project should be
@@ -51,6 +49,8 @@ AFTER BETA:
   
 
 DONE: 
+
+  * Add the TOS linked to the enable page.
 
   * Check project names with apostrophes and other crazy characters in them.
 
