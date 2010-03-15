@@ -58,9 +58,8 @@ class DocumentImport < CloudCrowd::Action
     Page.refresh_page_map(document)
     MetadataDate.refresh(document)
     document.save!
-    meta_extractor      = DC::Import::MetadataExtractor.new
+    meta_extractor = DC::Import::MetadataExtractor.new
     meta_extractor.extract_metadata(document)
-    # asset_store.save_rdf(document, meta_extractor.rdf, DC::Access::PRIVATE)
     asset_store.save_full_text(document, access)
     document.id
   end

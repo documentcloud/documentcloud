@@ -1,13 +1,11 @@
 TODO:
 
-  * Change production.dcloud.org to redirect to documentcloud.org.
+  * Write a phone number extractor, and save those as entities.
   
   * Do a first implementation of bulk uploading.
     
   * Public -> Private docs that are already part of a project should be
     displayed as revoked/locked/blanked.
-
-  * Write a phone number extractor, and save those as entities.
 
   * Implement the text detection heuristic for the pot report.
 
