@@ -17,7 +17,7 @@ module DC
 
       DIGITS      = "(\\b\\d{1,4}\\b)"
       MONTHS      = "(jan(uary)?|feb(ruary)?mar(ch)?|apr(il)?|may|jun(e)?|jul(y)?|aug(ust)?|sep(tember)?|oct(ober)?|nov(ember)?|dec(ember)?)\.?"
-      SEP         = "[.\\/-]"
+      SEP         = "[.\\/\\-]"
 
       NUM_MATCH   = "#{DIGITS}#{SEP}#{DIGITS}#{SEP}#{DIGITS}"
       MDY_MATCH   = "#{MONTHS}\\s+#{DIGITS},?\\s+#{DIGITS}"
@@ -29,8 +29,7 @@ module DC
       SPLITTER    = /#{SEP}|,?\s+/m
       NUMERIC     = /\A\d+\Z/
 
-      # Extracts only the unique dates within the text. Duplicate dates are
-      # ignored.
+      # Extract the unique dates within the text.
       def extract_dates(text)
         @dates = {}
         scan_for(DATE_MATCH, text)
@@ -41,8 +40,7 @@ module DC
 
       private
 
-      # TODO: Extract the reusable part of this as a UTFStringScanner,
-      # as soon as we need it for another purpose.
+      # Scans for the regex within the text, saving valid dates and occurrences.
       def scan_for(matcher, text)
         scanner = TextScanner.new(text)
         scanner.scan(matcher) do |match, offset, length|
