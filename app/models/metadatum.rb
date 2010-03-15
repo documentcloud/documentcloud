@@ -4,6 +4,7 @@
 class Metadatum < ActiveRecord::Base
 
   include DC::Store::DocumentResource
+  include DC::Store::MetadataResource
 
   DEFAULT_RELEVANCE = 0.0
 
@@ -21,19 +22,10 @@ class Metadatum < ActiveRecord::Base
     !!DC::CALAIS_MAP[kind.underscore.to_sym]
   end
 
-  # Instead of having a separate table for occurrences, we serialize them to
-  # a CSV format on each Metadatum. Deserializes.
-  def split_occurrences
-    Occurrence.from_csv(self.occurrences, self)
-  end
-
   # The pages on which this entity occurs within the document.
   def pages(occurs=split_occurrences)
     return [] unless textual?
-    conds = occurs.map do |occur|
-      "(start_offset <= #{occur.offset} and end_offset > #{occur.offset})"
-    end
-    document.pages.all(:conditions => conds.join(' or '), :select => 'id, page_number, start_offset, end_offset')
+    super(occurs)
   end
 
   # A Metadatum is considered to be textual if it occurs in the body of the text.

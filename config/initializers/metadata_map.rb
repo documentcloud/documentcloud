@@ -7,7 +7,7 @@ module DC
 
   # The normalized list of metadata kinds that DocumentCloud supports.
   METADATA_KINDS = [
-    :organization, :place, :city, :country, :term, :person, :state, :date
+    :organization, :place, :city, :country, :term, :person, :state, :date, :phone
   ]
 
   # Supported metadata kinds as strings for Rails validation.

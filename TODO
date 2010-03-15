@@ -1,6 +1,10 @@
 TODO:
 
   * Write a phone number extractor, and save those as entities.
+
+  * Upgrade to Rails 3 ?
+  
+  * Upgrade to Ruby 1.9 ?
   
   * Do a first implementation of bulk uploading.
     

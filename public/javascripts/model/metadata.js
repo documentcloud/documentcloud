@@ -105,6 +105,7 @@ dc.model.MetadataSet = dc.model.SortedSet.extend({
     city          : 'Cities',
     country       : 'Countries',
     date          : 'Dates',
+    phone         : 'Phone Numbers',
     organization  : 'Organizations',
     person        : 'People',
     place         : 'Places',
