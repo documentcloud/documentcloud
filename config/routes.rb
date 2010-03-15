@@ -14,7 +14,6 @@ ActionController::Routing::Routes.draw do |map|
     main.signup     '/signup',      :action => 'signup_info'
     main.login      '/login',       :action => 'login'
     main.logout     '/logout',      :action => 'logout'
-    main.todo       '/todo',        :action => 'todo'
   end
 
   # Document representations and (private) sub-resources.
