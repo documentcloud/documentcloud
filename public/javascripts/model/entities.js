@@ -27,6 +27,15 @@ dc.model.Entity = dc.Model.extend({
     return instance;
   },
 
+  // Grab the selected instances of the entity -- the entities within
+  // currently selected documents.
+  selectedInstances : function() {
+    var docIds = Documents.selectedIds();
+    return _.select(this.get('instances'), function(inst) {
+      return _.include(docIds, inst.document_id);
+    });
+  },
+
   // Look up and cache the set of document_ids from the entity instances.
   documentIds : function() {
     return this._docIds = this._docIds || _.pluck(this.get('instances'), 'document_id');

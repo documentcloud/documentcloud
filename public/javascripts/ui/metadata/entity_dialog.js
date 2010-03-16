@@ -17,10 +17,11 @@ dc.ui.EntityDialog = dc.ui.Dialog.extend({
 
   render : function() {
     this.base();
-    $('.custom', this.el).html(JST.entity_dialog({entity : this.model}));
+    var instances = this.model.selectedInstances();
+    $('.custom', this.el).html(JST.entity_dialog({entity : this.model, instances : instances}));
     $('.controls', this.el).append($.el('button', {'class' : 'add_to_search'}, 'add to search'));
     var list = $('.document_list', this.el);
-    var instances = _.sortBy(this.model.get('instances'), function(inst) {
+    var instances = _.sortBy(instances, function(inst) {
       return -inst.relevance;
     });
     _.each(instances, _.bind(function(inst) {
