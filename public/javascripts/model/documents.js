@@ -143,14 +143,6 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     if (this._polling) return false;
     if (!this.pending().length) return false;
     this.startPolling();
-  },
-
-  // We override "_onModelEvent" to fire selection changed events when documents
-  // change their selected state.
-  _onModelEvent : function(e, model) {
-    this.base(e, model);
-    var fire = (e == dc.Model.CHANGED && model.hasChanged('selected'));
-    if (fire) _.defer(_(this.fire).bind(this, this.SELECTION_CHANGED, this));
   }
 
 });

@@ -11,8 +11,6 @@ TODO:
   * Public -> Private docs that are already part of a project should be
     displayed as revoked/locked/blanked.
 
-  * Implement the text detection heuristic for the pot report.
-
   * Add a way to search just the text of your notes. List your notes etc.
           
   * Implement the "publication" workflow. A document should know if it's been

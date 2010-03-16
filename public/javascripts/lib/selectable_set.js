@@ -20,6 +20,14 @@ dc.model.SelectableSet = Base.extend({
 
   countSelected : function() {
     return this.selected().length;
+  },
+
+  // We override "_onModelEvent" to fire selection changed events when models
+  // change their selected state.
+  _onModelEvent : function(e, model) {
+    this.base(e, model);
+    var fire = (e == dc.Model.CHANGED && model.hasChanged('selected'));
+    if (fire) _.defer(_(this.fire).bind(this, this.SELECTION_CHANGED, this));
   }
 
 });
