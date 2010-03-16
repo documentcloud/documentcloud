@@ -3,7 +3,7 @@
 </div>
 
 <form id="upload_document" class="workspace_form" method="POST" action="/import/upload_document" target="hidden_iframe" enctype="multipart/form-data">
-    
+
   <div class="text_input small">
     <div class="background">
       <div class="inner">
@@ -14,7 +14,7 @@
   <label for="document_upload_title">
     Title:
   </label>
-  
+
   <div class="text_input small">
     <div class="background">
       <div class="inner">
@@ -25,18 +25,28 @@
   <label for="document_upload_source">
     Source:
   </label>
-  
+
   <textarea name="description" id="document_upload_description" class="text_area content"></textarea>
   <label for="document_upload_description">
     Description:
   </label>
   <br class="clear" />
-  
+
+  <% if (project) { %>
+    <div id="document_project_title">
+      <%= project.get('title') %>
+    </div>
+    <input name="project_id" id="document_project_id" type="hidden" value="<%= project.id %>" />
+    <label>
+      Project:
+    </label>
+  <% } %>
+
   <input name="file" id="document_upload_file" type="file" />
   <label for="document_upload_file">
     Document File:
   </label>
-  
+
   <select name="access" id="document_upload_access">
     <option value="4">Public</option>
     <option value="1" selected="true">Only my account</option>
@@ -45,7 +55,7 @@
   <label for="document_upload_access">
     Access Level:
   </label>
-    
+
 </form>
 
 <div id="upload_info" style="display:none;">

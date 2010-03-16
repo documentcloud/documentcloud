@@ -18,10 +18,13 @@
     width: 380px; height: 78px;
     margin-bottom: 10px;
   }
-  #document_upload_file, #document_upload_access {
+  #document_upload_file, #document_upload_access, #document_project_title {
     position: absolute;
     left: 125px;
   }
+    #document_project_title {
+      line-height: 28px;
+    }
 
 #no_uploads .icon {
   float: left;

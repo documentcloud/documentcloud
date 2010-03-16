@@ -12,7 +12,7 @@ module DC
 
       # Public API: Pass in a document, either with full_text or rdf already
       # attached.
-      def extract_entities(document)
+      def extract(document)
         document.entities = []
         chunks = CalaisFetcher.new.fetch_rdf(document.text)
         chunks.compact.each_with_index do |chunk, i|

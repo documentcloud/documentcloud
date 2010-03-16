@@ -12,6 +12,10 @@ class Project < ActiveRecord::Base
 
   named_scope :alphabetical, {:order => :title}
 
+  def add_document(document)
+    self.project_memberships.create(:document => document)
+  end
+
   # How many annotations belong to documents belonging to this project?
   def annotation_count
     Annotation.count({:conditions => {:account_id => account_id, :document_id => document_ids}})

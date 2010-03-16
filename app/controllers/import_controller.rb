@@ -38,7 +38,7 @@ class ImportController < ApplicationController
 
   # A new, pending document for the request.
   def new_document
-    Document.create!(
+    doc = Document.create!(
       :title            => params[:title],
       :source           => params[:source],
       :description      => params[:description],
@@ -47,6 +47,10 @@ class ImportController < ApplicationController
       :access           => DC::Access::PENDING,
       :page_count       => 0
     )
+    if params[:project_id]
+      current_account.projects.find(params[:project_id]).add_document(doc)
+    end
+    doc
   end
 
   # Make sure we're dealing with a PDF. If not, it needs to be

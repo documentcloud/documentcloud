@@ -58,7 +58,7 @@ class DocumentImport < CloudCrowd::Action
     Page.refresh_page_map(document)
     EntityDate.refresh(document)
     document.save!
-    DC::Import::EntityExtractor.new.extract_entities(document)
+    DC::Import::EntityExtractor.new.extract(document)
     asset_store.save_full_text(document, access)
     document.id
   end
