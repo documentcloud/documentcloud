@@ -2,7 +2,7 @@ dc.ui.EntityDialog = dc.ui.Dialog.extend({
 
   callbacks : {
     '.ok.click':            'close',
-    '.add_to_search.click': 'addToSearch'
+    '.filter_search.click': 'filterSearch'
   },
 
   constructor : function(entity) {
@@ -19,7 +19,7 @@ dc.ui.EntityDialog = dc.ui.Dialog.extend({
     this.base();
     var instances = this.model.selectedInstances();
     $('.custom', this.el).html(JST.entity_dialog({entity : this.model, instances : instances}));
-    $('.controls', this.el).append($.el('button', {'class' : 'add_to_search'}, 'add to search'));
+    $('.controls', this.el).append($.el('button', {'class' : 'filter_search'}, 'filter search'));
     var list = $('.document_list', this.el);
     var instances = _.sortBy(instances, function(inst) {
       return -inst.relevance;
@@ -36,7 +36,7 @@ dc.ui.EntityDialog = dc.ui.Dialog.extend({
     return this;
   },
 
-  addToSearch : function() {
+  filterSearch : function() {
     dc.app.searchBox.addToSearch(this.model.toSearchQuery());
     this.close();
   },
