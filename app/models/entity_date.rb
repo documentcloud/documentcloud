@@ -1,7 +1,7 @@
-class MetadataDate < ActiveRecord::Base
+class EntityDate < ActiveRecord::Base
 
   include DC::Store::DocumentResource
-  include DC::Store::MetadataResource
+  include DC::Store::EntityResource
 
   belongs_to :document
 
@@ -9,10 +9,10 @@ class MetadataDate < ActiveRecord::Base
   # document after running this method in order to save the dates.
   def self.refresh(document)
     return false unless document.text
-    document.metadata_dates.destroy_all
+    document.entity_dates.destroy_all
     DC::Import::DateExtractor.new.extract_dates(document.text).each do |hash|
       model = self.new(:document => document, :date => hash[:date], :occurrences => Occurrence.to_csv(hash[:occurrences]))
-      document.metadata_dates << model
+      document.entity_dates << model
     end
   end
 

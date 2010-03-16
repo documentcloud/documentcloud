@@ -48,14 +48,13 @@ class DocumentsController < ApplicationController
   end
 
   # TODO: Access-control this:
-  def metadata
-    meta = Metadatum.all(:conditions => {:document_id => params[:ids]})
-    json 'metadata' => meta
+  def entities
+    json 'entities' => Entity.all(:conditions => {:document_id => params[:ids]})
   end
 
   # TODO: Access-control this:
   def dates
-    dates = MetadataDate.all(:conditions => {:document_id => params[:ids]})
+    dates = EntityDate.all(:conditions => {:document_id => params[:ids]})
     json 'dates' => dates
   end
 
@@ -106,13 +105,13 @@ class DocumentsController < ApplicationController
   def date_requested?
     return false unless params[:date]
     date = Time.at(params[:date].to_i).to_date
-    meta = current_document.metadata_dates.first(:conditions => {:date => date})
+    meta = current_document.entity_dates.first(:conditions => {:date => date})
     redirect_to current_document.document_viewer_url(:date => meta)
   end
 
   def entity_requested?
     return false unless params[:entity]
-    meta = current_document.metadata.find(params[:entity])
+    meta = current_document.entities.find(params[:entity])
     redirect_to current_document.document_viewer_url(:entity => meta)
   end
 

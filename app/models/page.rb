@@ -58,7 +58,7 @@ class Page < ActiveRecord::Base
   private
 
   # Make sure that HTML never gets written into the plain text contents.
-  # TODO: Should we go back to Calais and blow away metadata for little edits?
+  # TODO: Should we go back to Calais and blow away entities for little edits?
   def track_text_changes
     return true unless text_changed?
     self.text = strip_tags(text)

@@ -1,11 +1,11 @@
 module DC
   module Store
 
-    # Common functionality shared by our different metadata models.
-    module MetadataResource
+    # Common functionality shared by our different entity models.
+    module EntityResource
 
       # Instead of having a separate table for occurrences, we serialize them to
-      # a CSV format on each Metadatum. Deserializes.
+      # a CSV format on each Entity. Deserializes.
       def split_occurrences
         @split_occurrences ||= Occurrence.from_csv(self.occurrences, self)
       end

@@ -1,10 +1,10 @@
-# A metadatum, for our purposes, is a piece of metadata either about or
+# An **Entity**, for our purposes, is a piece of information either about or
 # contained by a document (i.e., it may have a location within the document's
-# text.) Each valid kind of metadata must be whitelisted.
-class Metadatum < ActiveRecord::Base
+# text.) Each valid kind of entity must be whitelisted.
+class Entity < ActiveRecord::Base
 
   include DC::Store::DocumentResource
-  include DC::Store::MetadataResource
+  include DC::Store::EntityResource
 
   DEFAULT_RELEVANCE = 0.0
 
@@ -13,10 +13,10 @@ class Metadatum < ActiveRecord::Base
   validates_inclusion_of :kind, :in => DC::VALID_KINDS
 
   named_scope :search_value, lambda { |query|
-    {:conditions => ["metadata_value_vector @@ plainto_tsquery(?)", query]}
+    {:conditions => ["entity_value_vector @@ plainto_tsquery(?)", query]}
   }
 
-  # We don't pay attention to all kinds of Calais-generated metadata, just
+  # We don't pay attention to all kinds of Calais-generated entities, just
   # most of them. Checks the whitelist.
   def self.acceptable_kind?(kind)
     !!DC::CALAIS_MAP[kind.underscore.to_sym]
@@ -28,7 +28,7 @@ class Metadatum < ActiveRecord::Base
     super(occurs)
   end
 
-  # A Metadatum is considered to be textual if it occurs in the body of the text.
+  # An Entity is considered to be textual if it occurs in the body of the text.
   def textual?
     occurrences.present?
   end

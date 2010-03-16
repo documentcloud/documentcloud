@@ -5,7 +5,7 @@
 
 dc.ui.Visualizer = dc.View.extend({
 
-  METADATA_LIMIT : 15,
+  ENTITY_LIMIT : 15,
 
   id : 'visualizer',
 
@@ -16,9 +16,9 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   constructor : function(options) {
-    _.bindAll(this, 'open', 'close', 'gatherMetadata', 'lazyRender', 'highlightDatum', 'highlightOff', 'onResize');
+    _.bindAll(this, 'open', 'close', 'gatherEntities', 'lazyRender', 'highlightDatum', 'highlightOff', 'onResize');
     this.base(options);
-    this.topMetadata = [];
+    this.topEntities = [];
     $(window).resize(this.onResize);
     $(this.el).hide();
     Documents.bind(Documents.SELECTION_CHANGED, this.lazyRender);
@@ -29,13 +29,13 @@ dc.ui.Visualizer = dc.View.extend({
     this._menu = this._menu || dc.app.toolbar.connectionsMenu;
     this._open = true;
     this._kindFilter = kind;
-    this._menu.setLabel('Connections: ' + Metadata.DISPLAY_NAME[kind]);
+    this._menu.setLabel('Connections: ' + Entities.DISPLAY_NAME[kind]);
     this._menu.activate(this.close);
     this.setMode('linear', 'format');
     $(document.body).addClass('visualize');
     $(this.el).show();
     dc.history.save(this.urlFragment());
-    if (Metadata.empty()) return Metadata.populate(this.lazyRender);
+    if (Entities.empty()) return Entities.populate(this.lazyRender);
     this.lazyRender();
   },
 
@@ -56,24 +56,24 @@ dc.ui.Visualizer = dc.View.extend({
     return dc.app.searchBox.urlFragment() + '/connections/' + this._kindFilter;
   },
 
-  gatherMetadata : function() {
+  gatherEntities : function() {
     var seenKinds = {};
     var filter    = this._kindFilter;
     var docIds    = Documents.selectedIds();
-    var meta      = _.uniq(_.flatten(_.map(Documents.selected(), function(doc){ return doc.metadata(); })));
-    this.topMetadata = _(meta).chain()
+    var meta      = _.uniq(_.flatten(_.map(Documents.selected(), function(doc){ return doc.entities(); })));
+    this.topEntities = _(meta).chain()
       .sortBy(function(meta){ return meta.instanceCount + meta.totalRelevance(); })
       .reverse()
       .select(function(meta){
         return meta.get('kind') == filter;
       })
-      .slice(0, this.METADATA_LIMIT)
+      .slice(0, this.ENTITY_LIMIT)
       .sortBy(function(meta){ return _.indexOf(docIds, meta.firstId()); })
       .value();
   },
 
   empty : function() {
-    return _.isEmpty(this.topMetadata) || Documents.empty();
+    return _.isEmpty(this.topEntities) || Documents.empty();
   },
 
   onResize : function() {
@@ -91,7 +91,7 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   _renderVisualization : function() {
-    this.gatherMetadata();
+    this.gatherEntities();
     var me = this;
     var el = $(this.el);
     el.html('');
@@ -112,9 +112,9 @@ dc.ui.Visualizer = dc.View.extend({
 
     scale = 0.4 - (100 / el.width());
     width = originX * scale; height = originY * scale;
-    piece = Math.PI * 2 / this.topMetadata.length;
+    piece = Math.PI * 2 / this.topEntities.length;
 
-    _.each(this.topMetadata, function(meta, i) {
+    _.each(this.topEntities, function(meta, i) {
       var metaEl = $($.el('div', {'class' : 'datum gradient_white', 'data-id' : meta.id}, meta.get('value')));
       el.append(metaEl[0]);
       var position = piece * i;
@@ -145,12 +145,12 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   _openEntity : function(e) {
-    var meta = Metadata.get($(e.target).attr('data-id'));
+    var meta = Entities.get($(e.target).attr('data-id'));
     $(document.body).append((new dc.ui.EntityDialog(meta)).render().el);
   },
 
   _highlightDatum : function(e) {
-    var meta = Metadata.get($(e.target).attr('data-id'));
+    var meta = Entities.get($(e.target).attr('data-id'));
     var ids = meta.documentIds();
     _.each(Documents.models(), function(doc) {
       if (_(ids).include(doc.id)) {

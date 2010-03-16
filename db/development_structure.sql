@@ -165,6 +165,40 @@ ALTER SEQUENCE documents_id_seq OWNED BY documents.id;
 
 
 --
+-- Name: entities; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE entities (
+    id integer NOT NULL,
+    organization_id integer NOT NULL,
+    account_id integer NOT NULL,
+    document_id integer NOT NULL,
+    access integer NOT NULL,
+    kind character varying(40) NOT NULL,
+    value character varying(255) NOT NULL,
+    relevance double precision DEFAULT 0.0 NOT NULL,
+    calais_id character varying(40),
+    occurrences text,
+    entity_value_vector tsvector
+);
+
+
+--
+-- Name: entity_dates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE entity_dates (
+    id integer NOT NULL,
+    organization_id integer NOT NULL,
+    account_id integer NOT NULL,
+    document_id integer NOT NULL,
+    access integer NOT NULL,
+    date date NOT NULL,
+    occurrences text
+);
+
+
+--
 -- Name: full_text; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -229,40 +263,6 @@ ALTER SEQUENCE labels_id_seq OWNED BY projects.id;
 
 
 --
--- Name: metadata; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE metadata (
-    id integer NOT NULL,
-    organization_id integer NOT NULL,
-    account_id integer NOT NULL,
-    document_id integer NOT NULL,
-    access integer NOT NULL,
-    kind character varying(40) NOT NULL,
-    value character varying(255) NOT NULL,
-    relevance double precision DEFAULT 0.0 NOT NULL,
-    calais_id character varying(40),
-    occurrences text,
-    metadata_value_vector tsvector
-);
-
-
---
--- Name: metadata_dates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE metadata_dates (
-    id integer NOT NULL,
-    organization_id integer NOT NULL,
-    account_id integer NOT NULL,
-    document_id integer NOT NULL,
-    access integer NOT NULL,
-    date date NOT NULL,
-    occurrences text
-);
-
-
---
 -- Name: metadata_dates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -278,7 +278,7 @@ CREATE SEQUENCE metadata_dates_id_seq
 -- Name: metadata_dates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE metadata_dates_id_seq OWNED BY metadata_dates.id;
+ALTER SEQUENCE metadata_dates_id_seq OWNED BY entity_dates.id;
 
 
 --
@@ -297,7 +297,7 @@ CREATE SEQUENCE metadata_id_seq
 -- Name: metadata_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE metadata_id_seq OWNED BY metadata.id;
+ALTER SEQUENCE metadata_id_seq OWNED BY entities.id;
 
 
 --
@@ -537,21 +537,21 @@ ALTER TABLE documents ALTER COLUMN id SET DEFAULT nextval('documents_id_seq'::re
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE entities ALTER COLUMN id SET DEFAULT nextval('metadata_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE entity_dates ALTER COLUMN id SET DEFAULT nextval('metadata_dates_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE full_text ALTER COLUMN id SET DEFAULT nextval('full_text_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE metadata ALTER COLUMN id SET DEFAULT nextval('metadata_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE metadata_dates ALTER COLUMN id SET DEFAULT nextval('metadata_dates_id_seq'::regclass);
 
 
 --
@@ -655,7 +655,7 @@ ALTER TABLE ONLY projects
 -- Name: metadata_dates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY metadata_dates
+ALTER TABLE ONLY entity_dates
     ADD CONSTRAINT metadata_dates_pkey PRIMARY KEY (id);
 
 
@@ -663,7 +663,7 @@ ALTER TABLE ONLY metadata_dates
 -- Name: metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY metadata
+ALTER TABLE ONLY entities
     ADD CONSTRAINT metadata_pkey PRIMARY KEY (id);
 
 
@@ -796,21 +796,21 @@ CREATE INDEX index_labels_on_account_id ON projects USING btree (account_id);
 -- Name: index_metadata_dates_on_document_id_and_date; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE UNIQUE INDEX index_metadata_dates_on_document_id_and_date ON metadata_dates USING btree (document_id, date);
+CREATE UNIQUE INDEX index_metadata_dates_on_document_id_and_date ON entity_dates USING btree (document_id, date);
 
 
 --
 -- Name: index_metadata_on_document_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_metadata_on_document_id ON metadata USING btree (document_id);
+CREATE INDEX index_metadata_on_document_id ON entities USING btree (document_id);
 
 
 --
 -- Name: index_metadata_on_kind; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_metadata_on_kind ON metadata USING btree (kind);
+CREATE INDEX index_metadata_on_kind ON entities USING btree (kind);
 
 
 --
@@ -852,7 +852,7 @@ CREATE INDEX index_sections_on_document_id ON sections USING btree (document_id)
 -- Name: metadata_value_fti; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX metadata_value_fti ON metadata USING gin (metadata_value_vector);
+CREATE INDEX metadata_value_fti ON entities USING gin (entity_value_vector);
 
 
 --
@@ -914,7 +914,7 @@ CREATE TRIGGER full_text_text_vector_update
 --
 
 CREATE TRIGGER metadata_value_vector_update
-    BEFORE INSERT OR UPDATE ON metadata
+    BEFORE INSERT OR UPDATE ON entities
     FOR EACH ROW
     EXECUTE PROCEDURE tsvector_update_trigger('metadata_value_vector', 'pg_catalog.english', 'value');
 
@@ -972,3 +972,5 @@ INSERT INTO schema_migrations (version) VALUES ('20100219175757');
 INSERT INTO schema_migrations (version) VALUES ('20100301200857');
 
 INSERT INTO schema_migrations (version) VALUES ('20100304154343');
+
+INSERT INTO schema_migrations (version) VALUES ('20100316001441');

@@ -9,8 +9,8 @@ class Document < ActiveRecord::Base
 
   has_one  :full_text,      :dependent => :destroy
   has_many :pages,          :dependent => :destroy
-  has_many :metadata,       :dependent => :destroy
-  has_many :metadata_dates, :dependent => :destroy
+  has_many :entities,       :dependent => :destroy
+  has_many :entity_dates,   :dependent => :destroy
   has_many :sections,       :dependent => :destroy
   has_many :annotations,    :dependent => :destroy
 
@@ -70,8 +70,8 @@ class Document < ActiveRecord::Base
     sql = ["access = #{access_level}", "document_id = #{id}"]
     FullText.update_all(*sql)
     Page.update_all(*sql)
-    Metadatum.update_all(*sql)
-    MetadataDate.update_all(*sql)
+    Entity.update_all(*sql)
+    EntityDate.update_all(*sql)
     background_update_asset_access
   end
 
@@ -83,8 +83,8 @@ class Document < ActiveRecord::Base
     sql = ["account_id = #{account.id}, organization_id = #{org.id}", "document_id = #{id}"]
     FullText.update_all(*sql)
     Page.update_all(*sql)
-    Metadatum.update_all(*sql)
-    MetadataDate.update_all(*sql)
+    Entity.update_all(*sql)
+    EntityDate.update_all(*sql)
   end
 
   # Ex: docs/1011
@@ -262,7 +262,7 @@ class Document < ActiveRecord::Base
     res['page']        = {'image' => page_image_url_template, 'text' => page_text_url_template}
     doc['sections']    = sections.map(&:canonical)
     doc['annotations'] = annotations.accessible(options[:account]).map(&:canonical)
-    doc['entities']    = metadata.map(&:canonical) if options[:show_entities]
+    doc['entities']    = entities.map(&:canonical) if options[:show_entities]
     doc
   end
 

@@ -156,7 +156,7 @@ dc.ui.SearchBox = dc.View.extend({
   // the metadata right alongside the document JSON.
   loadSearchResults : function(resp) {
     dc.app.paginator.setQuery(resp.query);
-    Metadata.refresh();
+    Entities.refresh();
     Documents.refresh(_.map(resp.documents, function(m){
       return new dc.model.Document(m);
     }));

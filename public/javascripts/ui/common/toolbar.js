@@ -147,7 +147,7 @@ dc.ui.Toolbar = dc.View.extend({
     ];
     items = items.concat(_.map(['city', 'country', 'organization',
         'person', 'place', 'state', 'term'], function(kind) {
-      return {title : Metadata.DISPLAY_NAME[kind], onClick : _.bind(me._openConnections, me, kind)};
+      return {title : Entities.DISPLAY_NAME[kind], onClick : _.bind(me._openConnections, me, kind)};
     }));
     return new dc.ui.Menu({id : 'connections_menu', label : 'Connections', items : items});
   },

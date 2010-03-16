@@ -8,7 +8,7 @@ defaults: &defaults
   # document results (too slow).
   include_highlights:   off
 
-  # Search for metadata, rather than jumping to their precise offset?
+  # Search for entities, rather than jumping to their precise offset?
   entities_via_search:  off
 
 

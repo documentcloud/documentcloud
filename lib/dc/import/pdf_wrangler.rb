@@ -1,11 +1,11 @@
 module DC
   module Import
-    
+
     class PDFWrangler
-      
+
       # Number of pages in a parallelized batch.
       DEFAULT_BATCH_SIZE = 5
-      
+
       # Bursts a pdf into individual pages, removing the original file.
       # The double pdftk shuffle fixes the document xrefs.
       def burst(pdf)
@@ -16,7 +16,7 @@ module DC
         pdfs.each {|page| `pdftk #{page} output #{File.basename(page, '.pdf_temp')}.pdf`}
         Dir["*.pdf"]
       end
-      
+
       # Archive a list of PDF pages into TAR archives, grouped by batch_size.
       def archive(pages, batch_size=nil)
         batch_size ||= DEFAULT_BATCH_SIZE
@@ -28,8 +28,8 @@ module DC
         end
         Dir["*.tar"]
       end
-      
+
     end
-    
+
   end
 end

@@ -56,10 +56,9 @@ class DocumentImport < CloudCrowd::Action
     document.full_text   = FullText.new(:text => text, :document => document)
     # document.description = document.full_text.summarize
     Page.refresh_page_map(document)
-    MetadataDate.refresh(document)
+    EntityDate.refresh(document)
     document.save!
-    meta_extractor = DC::Import::MetadataExtractor.new
-    meta_extractor.extract_metadata(document)
+    DC::Import::EntityExtractor.new.extract_entities(document)
     asset_store.save_full_text(document, access)
     document.id
   end

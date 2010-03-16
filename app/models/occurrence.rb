@@ -1,7 +1,7 @@
 # An instance of an entity occurring at a given position in a document.
 class Occurrence
 
-  attr_reader :offset, :length, :metadatum
+  attr_reader :offset, :length, :entity
 
   # When occurrences are stored in the database, they are serialized into CSV
   # of the form: offset:length (ex. 13:5,103:5,376:5).
@@ -10,14 +10,14 @@ class Occurrence
   end
 
   # Parse serialized occurrences back out into objects from a CSV string.
-  def self.from_csv(csv, metadatum=nil)
+  def self.from_csv(csv, entity=nil)
     csv.split(',').map do |pair|
-      Occurrence.new(*[pair.split(':').map{|n| n.to_i }, metadatum].flatten)
+      Occurrence.new(*[pair.split(':').map{|n| n.to_i }, entity].flatten)
     end
   end
 
-  def initialize(offset, length, metadatum=nil)
-    @offset, @length, @metadatum = offset, length, metadatum
+  def initialize(offset, length, entity=nil)
+    @offset, @length, @entity = offset, length, entity
   end
 
   # Return this occurrence's offset relative to its page.
@@ -26,7 +26,7 @@ class Occurrence
   end
 
   def page
-    @page ||= @metadatum.pages([self]).first
+    @page ||= @entity.pages([self]).first
   end
 
 end

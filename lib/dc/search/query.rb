@@ -143,7 +143,7 @@ module DC
       def generate_fields_sql
         intersections = []
         @fields.each do |field|
-          intersections << "(select document_id from metadata m where (m.kind = ? and metadata_value_vector @@ plainto_tsquery(?)))"
+          intersections << "(select document_id from entities m where (m.kind = ? and entity_value_vector @@ plainto_tsquery(?)))"
           @interpolations += [field.kind, field.value]
         end
         @sql << "documents.id in (#{intersections.join(' intersect ')})"

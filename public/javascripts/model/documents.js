@@ -44,11 +44,11 @@ dc.model.Document = dc.Model.extend({
       this.get('thumbnail_url');
   },
 
-  // Return a list of the document's metadata. Think about caching this on the
-  // document by binding to Metadata, instead of on-the-fly.
-  metadata : function() {
+  // Return a list of the document's entities. Think about caching this on the
+  // document by binding to Entities, instead of on-the-fly.
+  entities : function() {
     var docId = this.id;
-    return _.select(Metadata.models(), function(m) {
+    return _.select(Entities.models(), function(m) {
       return _.any(m.get('instances'), function(i){
         return i.document_id == docId;
       });

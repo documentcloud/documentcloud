@@ -29,7 +29,7 @@ dc.ui.Entities = dc.View.extend({
     $(document.body).addClass('visualize');
     $(this.el).show();
     dc.history.save(this.urlFragment());
-    if (Metadata.empty()) return Metadata.populate(this.lazyRender);
+    if (Entities.empty()) return Entities.populate(this.lazyRender);
     this.lazyRender();
   },
 
@@ -62,13 +62,13 @@ dc.ui.Entities = dc.View.extend({
     }, 100);
   },
 
-  // Show only the top metadata for the kind.
+  // Show only the top entities for the kind.
   showLess : function(e) {
     $(e.target).parents('.entity_list').setMode('less', 'shown');
     return false;
   },
 
-  // Show *all* the metadata for the kind.
+  // Show *all* the entities for the kind.
   showMore : function(e) {
     $(e.target).parents('.entity_list').setMode('more', 'shown');
     return false;
@@ -93,11 +93,11 @@ dc.ui.Entities = dc.View.extend({
     this.setCallbacks();
   },
 
-  // Process and separate the metadata out into kinds.
+  // Process and separate the entities out into kinds.
   collectEntities : function() {
     var byKind  = this._byKind = {};
     var max     = this.NUM_INITIALLY_VISIBLE;
-    var metas   = Metadata.selected();
+    var metas   = Entities.selected();
     this._metaCount = metas.length;
     _(metas).each(function(meta) {
       var kind = meta.get('kind');
@@ -107,14 +107,14 @@ dc.ui.Entities = dc.View.extend({
   },
 
   _openEntity : function(e) {
-    var meta = Metadata.get($(e.target).attr('data-id'));
+    var meta = Entities.get($(e.target).attr('data-id'));
     $(document.body).append((new dc.ui.EntityDialog(meta)).render().el);
   },
 
   _highlightDatum : function(e) {
     if ($.browser.msie) return false;
     var id      = $(e.target).attr('data-id');
-    var meta    = Metadata.get(id);
+    var meta    = Entities.get(id);
     var docIds  = meta.documentIds();
     _.each(Documents.models(), function(doc) {
       if (_(docIds).include(doc.id)) {
