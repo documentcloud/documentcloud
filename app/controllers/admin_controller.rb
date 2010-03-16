@@ -18,6 +18,13 @@ class AdminController < ApplicationController
     # redirect_to '/'
   end
 
+  # Login as a given account, without needing a password.
+  def login_as
+    acc = Account.find_by_email(params[:email])
+    acc.authenticate(session)
+    redirect_to '/'
+  end
+
   # Render the TODO.txt out as a web page.
   def todo
     @todo_text = File.read("#{Rails.root}/TODO")
