@@ -116,10 +116,9 @@ class DocumentsController < ApplicationController
   end
 
   def current_document(exists=false)
-    return @current_document ||= Document.new(:id => params[:id]) unless exists
-    @current_document ||= admin? ?
-      Document.find(params[:id]) :
-      Document.accessible(current_account, current_organization).find(params[:id])
+    @current_document ||= exists ?
+      Document.accessible(current_account, current_organization).find(params[:id]) :
+      Document.new(:id => params[:id])
   end
 
   def current_page

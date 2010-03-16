@@ -54,16 +54,12 @@ class ApplicationController < ActionController::Base
     session['account_id'] && session['organization_id']
   end
 
-  def admin?
-    logged_in? && current_organization.id == 1
-  end
-
   def login_required
     logged_in? || forbidden
   end
 
   def admin_required
-    admin? || forbidden
+    (logged_in? && current_organization.id == 1) || forbidden
   end
 
   def current_account
