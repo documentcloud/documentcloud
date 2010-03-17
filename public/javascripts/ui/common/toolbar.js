@@ -77,6 +77,7 @@ dc.ui.Toolbar = dc.View.extend({
       _(docs).each(function(doc){ Documents.destroy(doc); });
       dc.app.documentCount -= docs.length;
       dc.ui.Project.uploadedDocuments.render();
+      Projects.removeDocuments(docs);
       this.display();
       return true;
     }, this));

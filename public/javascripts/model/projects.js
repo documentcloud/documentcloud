@@ -28,11 +28,15 @@ dc.model.Project = dc.Model.extend({
     Projects.update(this, {document_ids : newIds});
   },
 
-  removeDocuments : function(documents) {
+  removeDocuments : function(documents, localOnly) {
     var args = _.pluck(documents, 'id');
     args.unshift(this.get('document_ids'));
     var newIds = _.without.apply(_, args);
-    Projects.update(this, {document_ids : newIds});
+    if (localOnly) {
+      this.set({document_ids : newIds});
+    } else {
+      Projects.update(this, {document_ids : newIds});
+    }
   },
 
   // Does this project already contain a given document?
@@ -75,6 +79,19 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
   startingWith : function(prefix) {
     var matcher = new RegExp('^' + prefix);
     return _.select(this.models(), function(m){ return !!m.get('title').match(matcher); });
+  },
+
+  // Increment the document_count attribute of a given project, by id.
+  incrementCountById : function(id) {
+    var project = this.get(id);
+    project.set({document_count : project.get('document_count') + 1});
+  },
+
+  // When documents are deleted, remove all of their matches.
+  removeDocuments : function(docs) {
+    _.each(this.models(), function(project) {
+      project.removeDocuments(docs, true);
+    });
   }
 
 });

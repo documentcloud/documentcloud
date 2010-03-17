@@ -11,6 +11,9 @@
 
       top.dc.app.uploader.confirmUpload();
       top.Documents.add(new top.dc.model.Document(<%= @document.to_json %>));
+      <% if @project_id %>
+        top.Projects.incrementCountById(<%= @project_id %>);
+      <% end %>
 
     <% end %>
   </script>

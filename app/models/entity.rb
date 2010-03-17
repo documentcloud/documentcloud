@@ -13,7 +13,7 @@ class Entity < ActiveRecord::Base
   validates_inclusion_of :kind, :in => DC::VALID_KINDS
 
   named_scope :search_value, lambda { |query|
-    {:conditions => ["entity_value_vector @@ plainto_tsquery(?)", query]}
+    {:conditions => ["metadata_value_vector @@ plainto_tsquery(?)", query]}
   }
 
   # We don't pay attention to all kinds of Calais-generated entities, just

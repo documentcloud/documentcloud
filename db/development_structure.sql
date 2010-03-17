@@ -179,7 +179,7 @@ CREATE TABLE entities (
     relevance double precision DEFAULT 0.0 NOT NULL,
     calais_id character varying(40),
     occurrences text,
-    entity_value_vector tsvector
+    metadata_value_vector tsvector
 );
 
 
@@ -377,7 +377,8 @@ CREATE TABLE processing_jobs (
     id integer NOT NULL,
     account_id integer NOT NULL,
     cloud_crowd_id integer NOT NULL,
-    title character varying(255) NOT NULL
+    title character varying(255) NOT NULL,
+    document_id integer
 );
 
 
@@ -852,7 +853,7 @@ CREATE INDEX index_sections_on_document_id ON sections USING btree (document_id)
 -- Name: metadata_value_fti; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX metadata_value_fti ON entities USING gin (entity_value_vector);
+CREATE INDEX metadata_value_fti ON entities USING gin (metadata_value_vector);
 
 
 --
@@ -974,3 +975,7 @@ INSERT INTO schema_migrations (version) VALUES ('20100301200857');
 INSERT INTO schema_migrations (version) VALUES ('20100304154343');
 
 INSERT INTO schema_migrations (version) VALUES ('20100316001441');
+
+INSERT INTO schema_migrations (version) VALUES ('20100317145034');
+
+INSERT INTO schema_migrations (version) VALUES ('20100317181051');

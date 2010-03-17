@@ -8,6 +8,7 @@ class ImportController < ApplicationController
 
   def upload_document
     @bad_request = true and return unless params[:file] && params[:title]
+    @project_id  = params[:project_id]
     doc = new_document
     ensure_pdf do |path|
       DC::Store::AssetStore.new.save_pdf(doc, path, params[:access].to_i)
@@ -49,9 +50,7 @@ class ImportController < ApplicationController
       :access           => DC::Access::PENDING,
       :page_count       => 0
     )
-    if params[:project_id]
-      current_account.projects.find(params[:project_id]).add_document(doc)
-    end
+    current_account.projects.find(@project_id).add_document(doc) if @project_id
     doc
   end
 
