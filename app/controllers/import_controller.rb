@@ -22,6 +22,8 @@ class ImportController < ApplicationController
     job = JSON.parse(params[:job])
     if job['status'] != 'succeeded'
       logger.warn("Document import failed: " + job.inspect)
+      doc = ProcessingJob.find_by_cloud_crowd_id(job['id']).document
+      doc.update_attributes :access => DC::Access::ERROR
     end
     ProcessingJob.destroy_all(:cloud_crowd_id => job['id'])
     render :text => '201 Created', :status => 201

@@ -1,6 +1,10 @@
 // A tile view for previewing a Document in a listing.
 dc.ui.Document = dc.View.extend({
 
+  // To display if the document failed to upload.
+  ERROR_MESSAGE : "The document failed to upload successfully. We've been notified of the problem.\
+    You can try deleting this document, re-saving the PDF with Acrobat or Preview, and reducing the file size before uploading again.",
+
   className : 'document',
 
   callbacks : {
@@ -22,14 +26,15 @@ dc.ui.Document = dc.View.extend({
     var title = this.model.get('title');
     var data = _.clone(this.model.attributes());
     data = _.extend(data, {
-      thumbnail_url : this.model.thumbnailURL(),
-      description   : this.model.displayDescription()
+      icon          : this._iconName(),
+      thumbnail_url : this._thumbnailURL(),
+      description   : this._description()
     });
     $(this.el).html(JST.document_tile(data));
     $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.notesEl = $('.notes', this.el);
     if (!this.options.noCallbacks) this.setCallbacks();
-    this.setMode('access', this.model.get('access'));
+    this.setMode(dc.access.NAMES[this.model.get('access')], 'access');
     this._setSelected();
     return this;
   },
@@ -72,6 +77,30 @@ dc.ui.Document = dc.View.extend({
     e.preventDefault();
     var destructor = _.bind(Documents.destroy, Documents, this.model);
     dc.ui.Dialog.confirm('Really delete "' + this.model.get('title') + '" ?', destructor);
+  },
+
+  _iconName : function() {
+    var access = this.model.get('access');
+    switch (access) {
+      case dc.access.PUBLIC:  return null;
+      case dc.access.PENDING: return 'spinner';
+      case dc.access.ERROR:   return 'warning_16';
+      default:                return 'lock';
+    }
+  },
+
+  _thumbnailURL : function() {
+    var access = this.model.get('access');
+    switch (access) {
+      case dc.access.PENDING: return '/images/embed/documents/processing.png';
+      case dc.access.ERROR:   return '/images/embed/documents/failed.png';
+      default:                return this.model.get('thumbnail_url');
+    }
+  },
+
+  _description : function() {
+    if (this.model.get('access') == dc.access.ERROR) return this.ERROR_MESSAGE;
+    return this.model.displayDescription();
   },
 
   _setSelected : function() {

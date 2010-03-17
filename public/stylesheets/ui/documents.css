@@ -80,7 +80,7 @@
     color: #808080;
     margin-bottom: 8px;
   }
-    .document.access_5 .page_count {
+    .document.pending_access .page_count {
       display: none;
     }
   .document .description {
@@ -92,6 +92,10 @@
   }
     .document .description b {
       font-size: 12px;
+    }
+    .document.error_access .description {
+      font-style: italic;
+      color: #844;
     }
   .document .show_notes {
     cursor: pointer;

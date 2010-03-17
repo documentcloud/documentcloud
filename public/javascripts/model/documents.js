@@ -38,12 +38,6 @@ dc.model.Document = dc.Model.extend({
     return text ? text.replace(/\s+/g, ' ') : '';
   },
 
-  thumbnailURL : function() {
-    return this.get('access') == dc.access.PENDING ?
-      '/images/embed/documents/processing.png' :
-      this.get('thumbnail_url');
-  },
-
   // Return a list of the document's entities. Think about caching this on the
   // document by binding to Entities, instead of on-the-fly.
   entities : function() {

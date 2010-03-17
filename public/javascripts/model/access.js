@@ -9,6 +9,18 @@ dc.access = {
   PUBLIC        : 4,   // Free and public to all.
   PENDING       : 5,   // The document is being processed (acts as disabled).
   INVISIBLE     : 6,   // The document has been taken down (perhaps temporary).
-  ERROR         : 7    // The document is broken, or failed to import.
+  ERROR         : 7,   // The document is broken, or failed to import.
+
+  // The inverse mapping, from access levels back to strings.
+  NAMES : {
+    0 : 'deleted',
+    1 : 'private',
+    2 : 'organization',
+    3 : 'exclusive',
+    4 : 'public',
+    5 : 'pending',
+    6 : 'invisible',
+    7 : 'error'
+  }
 
 };

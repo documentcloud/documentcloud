@@ -1,13 +1,9 @@
 <img class="icon doc generic draggable" src="<%= thumbnail_url %>" />
 <div class="title">
   <span class="view_document"><%= title %></span>
-  <% if (access != dc.access.PUBLIC) { %>
+  <% if (icon) { %>
     <div class="document_tools">
-      <% if (access == dc.access.PENDING) { %>
-        <div class="icon spinner"></div>
-      <% } else { %>
-        <div class="icon lock"></div>
-      <% } %>
+      <div class="icon <%= icon %>"></div>
     </div>
   <% } %>
 </div>

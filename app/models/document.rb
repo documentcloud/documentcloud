@@ -220,6 +220,7 @@ class Document < ActiveRecord::Base
       'access'        => eventual_access
     }))
     ProcessingJob.create!(
+      :document_id    => id,
       :account_id     => account_id,
       :cloud_crowd_id => job['id'],
       :title          => title,
