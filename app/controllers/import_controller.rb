@@ -21,7 +21,7 @@ class ImportController < ApplicationController
   def cloud_crowd
     job = JSON.parse(params[:job])
     if job['status'] != 'succeeded'
-      logger.warn("Document import failed: " + job.inspect)
+      logger.error("Document import failed: " + job.inspect)
       doc = ProcessingJob.find_by_cloud_crowd_id(job['id']).document
       doc.update_attributes :access => DC::Access::ERROR
     end
@@ -63,10 +63,15 @@ class ImportController < ApplicationController
       name = params[:file].original_filename
       ext  = File.extname(name)
       return yield(path) if ext == ".pdf"
-      doc  = File.join(temp_dir, name)
-      FileUtils.cp(path, doc)
-      Docsplit.extract_pdf(doc, :output => temp_dir)
-      yield(File.join(temp_dir, File.basename(name, ext) + '.pdf'))
+      begin
+        doc  = File.join(temp_dir, name)
+        FileUtils.cp(path, doc)
+        Docsplit.extract_pdf(doc, :output => temp_dir)
+        yield(File.join(temp_dir, File.basename(name, ext) + '.pdf'))
+      rescue Exception => e
+        logger.error("PDF Conversion Failed: " + e.message + "\n" + e.backtrace.join("\n"))
+        yield path
+      end
     end
   end
 
