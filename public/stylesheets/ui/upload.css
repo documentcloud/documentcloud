@@ -66,3 +66,7 @@
   position: absolute;
   left: 10px; bottom: 10px;
 }
+  #upload_info .spinner {
+    float: right;
+    margin-left: 5px;
+  }
