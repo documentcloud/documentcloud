@@ -34,10 +34,12 @@ class Document < ActiveRecord::Base
   named_scope :pending, :conditions => {:access => PENDING}
 
   # Restrict accessible documents for a given account/organzation.
+  # Either the document itself is public, or it belongs to us, or it belongs to
+  # our organization and we're allowed to see it.
   named_scope :accessible, lambda { |account, org|
     access = []
     access << "(documents.access = #{PUBLIC})"
-    access << "(documents.access in (#{PRIVATE}, #{PENDING}) and documents.account_id = #{account.id})" if account
+    access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}) and documents.account_id = #{account.id})" if account
     access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org
     {:conditions => "(#{access.join(' or ')})"}
   }

@@ -12,6 +12,7 @@ module DC
     PUBLIC        = 4   # Free and public to all.
     PENDING       = 5   # The document is being processed (acts as disabled).
     INVISIBLE     = 6   # The document has been taken down (perhaps temporary).
+    ERROR         = 7   # The document is broken, or failed to import.
 
   end
 
