@@ -1,5 +1,9 @@
 TODO:
 
+  * Update CloudCrowd with a new release.
+  
+  * Bump Underscore to version 1.0.
+
   * Write a phone number extractor, and save those as entities.
 
   * Upgrade to Rails 3 ?
