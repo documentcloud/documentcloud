@@ -60,7 +60,8 @@ ActionController::Routing::Routes.draw do |map|
     move.who              '/who.php',       :url => '/about'
     move.partner          '/partner.php',   :url => '/contributors'
     move.clips            '/clips.php',     :url => '/news'
-    move.blog             '/blog/feed',     :url => 'http://blog.documentcloud.org/feed'
+    move.feed             '/blog/feed',     :url => 'http://blog.documentcloud.org/feed'
+    move.root_feed        '/feed',          :url => 'http://blog.documentcloud.org/feed'
     move.blog             '/blog/*parts',   :url => 'http://blog.documentcloud.org/'
   end
 
