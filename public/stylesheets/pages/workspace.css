@@ -207,10 +207,15 @@ a {
       #full_screen_form .license {
         color: #666;
         width: 355px;
-        padding-left: 195px;
+        padding-left: 250px;
         text-align: justify;
-        font: italic 11px Arial;
+        position: relative;
+        font: italic 11px/16px Arial;
       }
+        #full_screen_form .license input {
+          position: absolute;
+          margin: -2px 0 0 -25px;
+        }
       #full_screen_form button {
         position: relative;
         left: 195px;

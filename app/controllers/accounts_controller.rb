@@ -10,8 +10,9 @@ class AccountsController < ApplicationController
   # allowing the journalist to set their password, and logging them in.
   def enable
     return render if request.get?
+    @failure = 'Please accept the Terms of Service.' and return render unless params[:acceptance]
     key = SecurityKey.find_by_key(params[:key])
-    @failure = true and return render unless key
+    @failure = 'The account is invalid, or has already been activated.' and return render unless key
     account = key.securable
     account.password = params[:password]
     account.save
