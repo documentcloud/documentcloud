@@ -16,8 +16,9 @@ class AccountsController < ApplicationController
     account = key.securable
     account.password = params[:password]
     account.save
-    account.authenticate(session)
+    account.authenticate session
     key.destroy
+    LifecycleMailer.deliver_enabled_notification account
     redirect_to '/'
   end
 

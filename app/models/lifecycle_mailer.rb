@@ -21,6 +21,14 @@ class LifecycleMailer < ActionMailer::Base
                 :key                => account.security_key.key
   end
 
+  # Mail a notification that a new account has been enabled in your organization.
+  def enabled_notification(account)
+    subject     "DocumentCloud Account Enabled: #{account.full_name}"
+    from        support_email
+    recipients  account.organization.admin_emails
+    body        :account => account
+  end
+
   # Mail a notification of an exception that occurred in production.
   def exception_notification(error)
     subject     "DocumentCloud Exception: #{error.class.name}"

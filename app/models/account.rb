@@ -21,6 +21,9 @@ class Account < ActiveRecord::Base
   # Delegations:
   delegate :name, :to => :organization, :prefix => true
 
+  # Scopes:
+  named_scope :admin, {:conditions => {:role => ADMINISTRATOR}}
+
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session)
     account = Account.find_by_email(email)

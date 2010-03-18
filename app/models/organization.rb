@@ -14,6 +14,11 @@ class Organization < ActiveRecord::Base
     Document.count(:conditions => {:organization_id => id})
   end
 
+  # The list of all administrator emails in the organization.
+  def admin_emails
+    self.accounts.admin.all(:select => [:email]).map &:email
+  end
+
   def to_json(options = nil)
     {'name'           => name,
      'slug'           => slug,
