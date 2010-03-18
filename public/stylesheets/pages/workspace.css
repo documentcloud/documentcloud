@@ -37,6 +37,10 @@ a {
     #title {
       left: 158px;
     }
+      #title small {
+        font-size: 9px;
+        text-transform: uppercase;
+      }
   #search_box_wrapper {
     position: absolute;
     top: 16px; left: 311px;
