@@ -5,16 +5,14 @@
 
 <div id="full_screen_form" class="full_page_background">
   <form action="/accounts/enable/<%= params[:key] %>" method="POST" autocomplete="off">
-    <h1>Enable your DocumentCloud Account</h1>
+    <h1>Welcome to DocumentCloud!</h1>
     <% if @failure %>
       <div class="form_error">
         <span><%= @failure %></span>
       </div>
     <% end %>
-    <div class="line license">
-      <input type="checkbox" name="acceptance" id="account_acceptance" />
-      I agree to abide by the
-      <a href="/terms" target="_blank" style="color:#55a;font-weight:bold;">Terms of Service</a>.
+    <div class="line welcome">
+	Please set a password for your DocumentCloud account. Once you log in, you'll be able to add additional accounts for colleagues in your newsroom. 
     </div>
     <div class="line">
       <div class="text_input">
@@ -25,8 +23,13 @@
         </div>
       </div>
       <label for="account_password">
-        Set Password:<br /><span class="example">Use this password to log in</span>
+        Set Password:<br /><span class="example"></span>
       </label>
+    </div>
+    <div class="line license">
+      <input type="checkbox" name="acceptance" id="account_acceptance" />
+      I understand and accept the DocumentCloud  
+      <a href="/terms" target="_blank" style="color:#55a;font-weight:bold;">Terms of Service</a>.
     </div>
     <div class="line">
       <button class="default" type="submit">Enable Account &amp; Log In</button>

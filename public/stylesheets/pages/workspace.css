@@ -208,6 +208,13 @@ a {
           width: 169px;
           margin-left: 380px;
         }
+      #full_screen_form .welcome {
+        color: #666;
+        width: 555px;
+        text-align: justify;
+        position: relative; 
+        font: italic 11px/16px Arial; 
+      }
       #full_screen_form .license {
         color: #666;
         width: 355px;
