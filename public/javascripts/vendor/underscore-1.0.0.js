@@ -45,7 +45,7 @@
     nativeIsArray      = Array.isArray,
     nativeKeys         = Object.keys;
 
-  // Create a safe reference to the Underscore object for reference below.
+  // Create a safe reference to the Underscore object for use below.
   var _ = function(obj) { return new wrapper(obj); };
 
   // Export the Underscore object for CommonJS.
@@ -55,7 +55,7 @@
   root._ = _;
 
   // Current version.
-  _.VERSION = '0.6.0';
+  _.VERSION = '1.0.0';
 
   // ------------------------ Collection Functions: ---------------------------
 
@@ -63,7 +63,6 @@
   // Handles objects implementing forEach, arrays, and raw objects.
   // Delegates to JavaScript 1.6's native forEach if available.
   var each = _.forEach = function(obj, iterator, context) {
-    var index = 0;
     try {
       if (nativeForEach && obj.forEach === nativeForEach) {
         obj.forEach(iterator, context);
@@ -210,7 +209,7 @@
     return result.value;
   };
 
-  // Sort the object's values by a criteria produced by an iterator.
+  // Sort the object's values by a criterion produced by an iterator.
   _.sortBy = function(obj, iterator, context) {
     return _.pluck(_.map(obj, function(value, index, list) {
       return {
@@ -433,10 +432,12 @@
     return _.filter(_.keys(obj), function(key){ return _.isFunction(obj[key]); }).sort();
   };
 
-  // Extend a given object with all of the properties in a source object.
-  _.extend = function(destination, source) {
-    for (var property in source) destination[property] = source[property];
-    return destination;
+  // Extend a given object with all the properties in passed-in object(s).
+  _.extend = function(obj) {
+    each(_.rest(arguments), function(source) {
+      for (var prop in source) obj[prop] = source[prop];
+    });
+    return obj;
   };
 
   // Create a (shallow-cloned) duplicate of an object.
@@ -524,6 +525,11 @@
   // Is a given value a number?
   _.isNumber = function(obj) {
     return (obj === +obj) || (toString.call(obj) === '[object Number]');
+  };
+
+  // Is a given value a boolean?
+  _.isBoolean = function(obj) {
+    return obj === true || obj === false;
   };
 
   // Is a given value a date?
