@@ -1,0 +1,18 @@
+<%
+  @title = "Admin Dashboard"
+  @stylesheets = [:admin]
+  @javascripts = [:admin]
+%>
+
+<script type="text/javascript">
+  window.stats = {};
+  stats.documents_by_access   = <%= @documents_by_access  %>;
+  stats.average_entity_count  = <%= @average_entity_count %>;
+  stats.average_page_count    = <%= @average_page_count   %>;
+  stats.daily_documents       = <%= @daily_documents      %>;
+  stats.daily_pages           = <%= @daily_pages          %>;
+  stats.total_pages           = <%= @total_pages          %>;
+
+  $(function(){ $('#content').append((new dc.ui.Statistics()).render().el); });
+</script>
+

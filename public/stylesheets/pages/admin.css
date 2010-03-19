@@ -1,0 +1,21 @@
+#statistics {
+  margin: 25px 25px 25px 25px;
+}
+  #statistics table {
+    width: 100%;
+  }
+    #statistics td {
+      color: #222;
+      padding: 0 25px 0 0;
+    }
+      #statistics .data td {
+      }
+        #statistics .number {
+          font-size: 55px;
+          border-bottom: 1px solid #131b1d;
+        }
+      #statistics .labels td {
+        font-size: 10px;
+        text-transform: uppercase;
+        padding-top: 5px;
+      }

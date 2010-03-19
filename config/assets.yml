@@ -14,6 +14,8 @@ javascripts:
     - public/javascripts/ui/common/*.js
     - public/javascripts/ui/**/*.js
     - public/javascripts/app/**/*.js
+  admin:
+    - public/javascripts/admin/*.js
   ie_only:
     - public/javascripts/ie/*.js
 
@@ -26,6 +28,8 @@ stylesheets:
     - public/stylesheets/pages/workspace.css
   empty:
     - public/stylesheets/pages/empty.css
+  admin:
+    - public/stylesheets/pages/admin.css
   static:
     - public/stylesheets/common/reset.css
     - public/stylesheets/pages/static.css

@@ -3,6 +3,16 @@ class AdminController < ApplicationController
 
   before_filter :admin_required
 
+  # The Admin Dashboard
+  def index
+    @documents_by_access  = DC::Statistics.documents_by_access.to_json
+    @average_entity_count = DC::Statistics.average_entity_count.to_json
+    @average_page_count   = DC::Statistics.average_page_count.to_json
+    @daily_documents      = DC::Statistics.daily_documents.to_json
+    @daily_pages          = DC::Statistics.daily_pages.to_json
+    @total_pages          = DC::Statistics.total_pages.to_json
+  end
+
   # Attempt a new signup for DocumentCloud -- includes both the organization and
   # its first account. If everthing's kosher, the journalist is logged in.
   # NB: This needs to stay access controlled by the bouncer throughout the beta.

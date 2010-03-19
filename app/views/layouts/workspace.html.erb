@@ -5,8 +5,9 @@
   <%= render :partial => 'common/meta_tags' %>
   <title><%= @title %> - DocumentCloud</title>
   <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
+  <% js  = [:core] + (@javascripts || []) %>
   <%= include_stylesheets *css %>
-  <%= include_javascripts :core %>
+  <%= include_javascripts *js %>
   <!--[if IE]>
     <%= include_stylesheets :ie_only, :embed_assets => false %>
     <%= include_javascripts :ie_only %>
