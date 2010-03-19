@@ -9,8 +9,8 @@ class AdminController < ApplicationController
     @average_entity_count   = DC::Statistics.average_entity_count.to_json
     @average_page_count     = DC::Statistics.average_page_count.to_json
     @total_pages            = DC::Statistics.total_pages.to_json
-    @daily_documents        = keys_to_timestamps(DC::Statistics.daily_documents).to_json
-    @daily_pages            = keys_to_timestamps(DC::Statistics.daily_pages).to_json
+    @daily_documents        = keys_to_timestamps(DC::Statistics.daily_documents(1.month.ago)).to_json
+    @daily_pages            = keys_to_timestamps(DC::Statistics.daily_pages(1.month.ago)).to_json
     @documents_per_account  = DC::Statistics.documents_per_account.to_json
     @pages_per_account      = DC::Statistics.pages_per_account.to_json
     @accounts               = Account.all.to_json
@@ -62,7 +62,11 @@ class AdminController < ApplicationController
   # Pass in the seconds since the epoch, for JavaScript.
   def keys_to_timestamps(hash)
     result = {}
-    hash.each {|k, v| result[Date.parse(k).to_time.to_f.to_i] = v }
+    hash.each do |key, value|
+      time = Date.parse(key).to_time
+      utc  = (time + time.utc_offset).utc
+      result[utc.to_f.to_i] = value
+    end
     result
   end
 

@@ -5,7 +5,7 @@ dc.ui.Statistics = dc.View.extend({
     yaxis     : {},
     legend    : {show : false},
     series    : {lines : {show : true, fill : true}, points : {show : true}},
-    grid      : {borderWidth: 0, labelMargin : 7, hoverable : true, markings : false}
+    grid      : {borderWidth: 1, borderColor: '#222', labelMargin : 7, hoverable : true}
   },
 
   DATE_TRIPLETS : /(\d+)(\d{3})/,
