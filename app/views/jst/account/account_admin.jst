@@ -16,12 +16,7 @@
 </td>
 <td class="organization">
   <span class="display">
-    <%= account.organization().get('name') %>
-  </span>
-</td>
-<td class="role">
-  <span class="display">
-    role:&nbsp;<%= account.ROLE_NAMES[account.get('role')] %>
+    <%= Inflector.truncate(account.organization().get('name'), 40) %>
   </span>
 </td>
 <td class="document_count">
