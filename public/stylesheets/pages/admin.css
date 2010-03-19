@@ -44,23 +44,23 @@
           padding: 5px 0 50px 0;
         }
 
-#account_dialog {
+#account_list {
   border-bottom: 1px solid #131b1d;
 }
-  #account_dialog thead td {
+  #account_list thead td {
     border-bottom: 1px solid #131b1d;
   }
-  #account_dialog tr {
+  #account_list tr {
     background: transparent;
   }
-    #account_dialog tr td {
+    #account_list tr td {
       color: #222;
       padding: 5px 35px 5px 0;
     }
-      #account_dialog img.avatar {
+      #account_list img.avatar {
         margin: 1px 15px 1px 4px;
         border: 0;
       }
-      #account_dialog .document_count .private {
+      #account_list .document_count .private {
         color: #844;
       }

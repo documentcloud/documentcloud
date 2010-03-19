@@ -48,19 +48,6 @@
     </select>
   </span>
 </td>
-<td class="document_count">
-  <span class="display">
-    <% var pub = account.get('public_document_count'), priv = account.get('private_document_count'); %>
-    <span class="public" title="public documents"><%= pub %></span>
-    <%= pub && priv ? '/' : '' %>
-    <span class="private" title="private documents"><%= priv %></span>
-  </span>
-</td>
-<td class="page_count">
-  <span class="display">
-    <%= account.get('page_count') %>
-  </span>
-</td>
 <td class="last">
   <% if (account == current || (current && current.isAdmin())) { %>
   <span class="edit_account display" role="link">edit</span>

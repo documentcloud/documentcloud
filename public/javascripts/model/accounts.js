@@ -18,6 +18,10 @@ dc.model.Account = dc.Model.extend({
     this.base(attributes || this.BLANK_ACCOUNT);
   },
 
+  organization : function() {
+    return Organizations.get(this.get('organization_id'));
+  },
+
   openDocuments : function() {
     dc.app.searchBox.search('documents: ' + this.get('email'));
   },

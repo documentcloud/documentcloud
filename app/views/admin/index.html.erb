@@ -18,7 +18,10 @@
   stats.pages_per_account     = <%= @pages_per_account    %>;
 
   Accounts.populate(<%= @accounts %>);
+  Organizations.populate(<%= @organizations %>);
 
-  $(function(){ $('#content').append((new dc.ui.Statistics()).render().el); });
+  $(function(){
+    $('#content').append((new dc.ui.Statistics()).render().el);
+  });
 </script>
 

@@ -3,12 +3,14 @@ dc.ui.AccountView = dc.View.extend({
 
   AVATAR_SIZES : {
     badge : 20,
-    row   : 25
+    row   : 25,
+    admin : 25
   },
 
   TAGS : {
     badge : 'div',
-    row   : 'tr'
+    row   : 'tr',
+    admin : 'tr'
   },
 
   callbacks : {
@@ -46,7 +48,7 @@ dc.ui.AccountView = dc.View.extend({
   },
 
   isRow : function() {
-    return this.kind == 'row';
+    return this.kind == 'row' || this.kind == 'admin';
   },
 
   serialize : function() {

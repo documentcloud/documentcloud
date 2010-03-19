@@ -1,6 +1,6 @@
 dc.ui.AccountDialog = dc.ui.Dialog.extend({
 
-  id : 'account_dialog',
+  id : 'account_list',
 
   callbacks : {
     '.ok.click'           : 'close',

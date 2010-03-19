@@ -8,10 +8,10 @@ dc.ui.AdminAccounts = dc.View.extend({
 
   render : function() {
     $(this.el).html(JST.admin_accounts({}));
-    var body = $('tbody', this.el);
-    _.each(Accounts.models(), function(account) {
-      body.append((new dc.ui.AccountView({model : account, kind : 'row'})).render().el);
+    var rows = _.map(Accounts.models(), function(account) {
+      return (new dc.ui.AccountView({model : account, kind : 'admin'})).render().el;
     });
+    $('tbody', this.el).append(rows);
     return this;
   }
 

@@ -15,6 +15,7 @@ class AdminController < ApplicationController
     @private_per_account    = DC::Statistics.private_documents_per_account.to_json
     @pages_per_account      = DC::Statistics.pages_per_account.to_json
     @accounts               = Account.all.to_json
+    @organizations          = Organization.all.to_json
   end
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and

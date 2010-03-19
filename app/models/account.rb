@@ -107,8 +107,10 @@ class Account < ActiveRecord::Base
   # The JSON representation of an account avoids sending down the password,
   # among other things, and includes extra attributes.
   def to_json(options = nil)
-    {'id' => id, 'first_name' => first_name, 'last_name' => last_name, 'role' => role,
-     'email' => email, 'hashed_email' => hashed_email, 'pending' => pending?}.to_json
+    attributes.merge({
+      'hashed_email' => hashed_email,
+      'pending'     => pending?
+    }).to_json
   end
 
 end
