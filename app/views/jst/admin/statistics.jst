@@ -1,6 +1,7 @@
 <table>
   <thead></thead>
   <tbody>
+    
     <tr class="data">
       <td><div class="number"><%= total_documents %></div></td>
       <td><div class="number"><%= total_pages %></div></td>
@@ -13,5 +14,23 @@
       <td>Average Pages / Document</td>
       <td>Average Entities / Document</td>
     </tr>
+    
+    <tr class="data">
+      <td colspan="2">
+        <div class="chart_col">
+          <div id="docs_uploaded_chart" class="chart"></div>
+        </div>
+      </td>
+      <td colspan="2">
+        <div class="chart_col">
+          <div id="pages_uploaded_chart" class="chart"></div>
+        </div>
+      </td>
+    </tr>
+    <tr class="labels">
+      <td colspan="2">Documents Uploaded / Day</td>
+      <td colspan="2">Pages Uploaded / Day</td>
+    </tr>
+    
   </tbody>
 </table>

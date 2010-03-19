@@ -6,7 +6,7 @@
   }
     #statistics td {
       color: #222;
-      padding: 0 25px 0 0;
+      padding: 0 35px 0 0;
     }
       #statistics .data td {
       }
@@ -14,8 +14,20 @@
           font-size: 55px;
           border-bottom: 1px solid #131b1d;
         }
+        #statistics .chart_col {
+          position: relative;
+          padding-bottom: 10px;
+          height: 100px;
+        }
+        #statistics .chart {
+          position: absolute;
+          left: 0; right: 0;
+          height: 100px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid #131b1d;
+        }
       #statistics .labels td {
         font-size: 10px;
         text-transform: uppercase;
-        padding-top: 5px;
+        padding: 5px 0 50px 0;
       }

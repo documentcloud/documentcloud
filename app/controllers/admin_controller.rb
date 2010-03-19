@@ -8,9 +8,9 @@ class AdminController < ApplicationController
     @documents_by_access  = DC::Statistics.documents_by_access.to_json
     @average_entity_count = DC::Statistics.average_entity_count.to_json
     @average_page_count   = DC::Statistics.average_page_count.to_json
-    @daily_documents      = DC::Statistics.daily_documents.to_json
-    @daily_pages          = DC::Statistics.daily_pages.to_json
     @total_pages          = DC::Statistics.total_pages.to_json
+    @daily_documents      = keys_to_timestamps(DC::Statistics.daily_documents).to_json
+    @daily_pages          = keys_to_timestamps(DC::Statistics.daily_pages).to_json
   end
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and
@@ -54,6 +54,13 @@ class AdminController < ApplicationController
 
   def fail(message)
     @failure = message
+  end
+
+  # Pass in the seconds since the epoch, for JavaScript.
+  def keys_to_timestamps(hash)
+    result = {}
+    hash.each {|k, v| result[Date.parse(k).to_time.to_f.to_i] = v }
+    result
   end
 
 end
