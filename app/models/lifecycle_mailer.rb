@@ -22,10 +22,10 @@ class LifecycleMailer < ActionMailer::Base
   end
 
   # Mail a notification that a new account has been enabled in your organization.
-  def enabled_notification(account)
+  def enabled_notification(account, emails)
     subject     "DocumentCloud Account Enabled: #{account.full_name}"
     from        support_email
-    recipients  account.organization.other_admin_emails(account)
+    recipients  emails
     body        :account => account
   end
 

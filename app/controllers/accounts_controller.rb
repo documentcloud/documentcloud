@@ -18,7 +18,8 @@ class AccountsController < ApplicationController
     account.save
     account.authenticate session
     key.destroy
-    LifecycleMailer.deliver_enabled_notification account
+    recipients = account.organization.other_admin_emails(account)
+    LifecycleMailer.deliver_enabled_notification(account, recipients) unless recipients.empty?
     redirect_to '/'
   end
 
