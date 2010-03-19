@@ -38,8 +38,11 @@
       #statistics .labels td, #statistics thead td {
         font-size: 10px;
         text-transform: uppercase;
-        padding: 5px 0 50px 0;
+        padding: 5px 35px 5px 0;
       }
+        #statistics .labels td {
+          padding: 5px 0 50px 0;
+        }
 
 #account_dialog {
   border-bottom: 1px solid #131b1d;
