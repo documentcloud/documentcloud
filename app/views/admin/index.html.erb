@@ -13,6 +13,8 @@
   stats.daily_pages           = <%= @daily_pages          %>;
   stats.total_pages           = <%= @total_pages          %>;
 
+  Accounts.populate(<%= @accounts %>);
+
   $(function(){ $('#content').append((new dc.ui.Statistics()).render().el); });
 </script>
 

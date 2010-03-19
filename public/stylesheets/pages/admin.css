@@ -1,3 +1,8 @@
+#signup_button {
+  position: absolute;
+  top: 7px; right: 10px;
+}
+
 #statistics {
   margin: 25px 25px 25px 25px;
 }

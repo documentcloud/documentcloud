@@ -11,6 +11,8 @@ class AdminController < ApplicationController
     @total_pages          = DC::Statistics.total_pages.to_json
     @daily_documents      = keys_to_timestamps(DC::Statistics.daily_documents).to_json
     @daily_pages          = keys_to_timestamps(DC::Statistics.daily_pages).to_json
+
+    @accounts             = Account.all.to_json
   end
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and

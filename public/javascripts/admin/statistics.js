@@ -25,6 +25,7 @@ dc.ui.Statistics = dc.View.extend({
     stats.daily_documents_series = this._series(stats.daily_documents, 'Document');
     stats.daily_pages_series = this._series(stats.daily_pages, 'Page');
     this._tooltip = new dc.ui.Tooltip();
+    $('#topbar').append($.el('a', {id : 'signup_button', href : '/admin/signup'}, $.el('button', {}, 'sign up a new partner &raquo;')));
     $(window).bind('resize', this.renderCharts);
   },
 
@@ -45,7 +46,6 @@ dc.ui.Statistics = dc.View.extend({
     $('.chart', this.el).html('');
     $.plot($('#docs_uploaded_chart'), stats.daily_documents_series, this.GRAPH_OPTIONS);
     $.plot($('#pages_uploaded_chart'), stats.daily_pages_series, this.GRAPH_OPTIONS);
-    console.log($('#docs_uploaded_chart').width(), $('#docs_uploaded_chart canvas').width());
   },
 
   totalDocuments : function() {
