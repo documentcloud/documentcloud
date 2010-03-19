@@ -4,7 +4,7 @@
 }
 
 #statistics {
-  margin: 25px 25px 25px 25px;
+  margin: 35px 0 35px 35px;
 }
   #statistics table {
     width: 100%;
@@ -35,4 +35,18 @@
         font-size: 10px;
         text-transform: uppercase;
         padding: 5px 0 50px 0;
+      }
+
+#account_dialog {
+  border: 1px solid #131b1d; border-left: 0; border-right: 0;
+}
+  #account_dialog tr {
+    background: transparent;
+  }
+    #account_dialog tr td {
+      color: #222;
+      padding: 5px 35px 5px 0;
+    }
+      #account_dialog img.avatar {
+        margin-right: 10px;
       }

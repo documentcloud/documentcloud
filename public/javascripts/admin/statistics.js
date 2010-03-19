@@ -37,6 +37,7 @@ dc.ui.Statistics = dc.View.extend({
       average_entity_count  : this._format(stats.average_entity_count)
     };
     $(this.el).html(JST.statistics(data));
+    $('#accounts_wrapper', this.el).append((new dc.ui.AdminAccounts()).render().el);
     this.setCallbacks();
     _.defer(this.renderCharts);
     return this;
