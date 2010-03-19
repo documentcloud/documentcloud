@@ -17,8 +17,13 @@ module DC
     end
 
     # Count the number of uploaded documents by account.
-    def self.documents_per_account
-      Document.count(:group => 'account_id')
+    def self.public_documents_per_account
+      Document.unrestricted.count(:group => 'account_id')
+    end
+
+    # Count the number of uploaded documents by account.
+    def self.private_documents_per_account
+      Document.restricted.count(:group => 'account_id')
     end
 
     # Count the number of uploaded pages by account.

@@ -58,3 +58,6 @@
         margin: 1px 15px 1px 4px;
         border: 0;
       }
+      #account_dialog .document_count .private {
+        color: #844;
+      }

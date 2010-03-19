@@ -13,7 +13,8 @@
   stats.daily_documents       = <%= @daily_documents      %>;
   stats.daily_pages           = <%= @daily_pages          %>;
   stats.total_pages           = <%= @total_pages          %>;
-  stats.documents_per_account = <%= @documents_per_account%>;
+  stats.public_per_account    = <%= @public_per_account   %>;
+  stats.private_per_account   = <%= @private_per_account  %>;
   stats.pages_per_account     = <%= @pages_per_account    %>;
 
   Accounts.populate(<%= @accounts %>);

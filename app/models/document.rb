@@ -31,7 +31,9 @@ class Document < ActiveRecord::Base
     {:conditions => {:account_id => account.id}}
   }
 
-  named_scope :pending, :conditions => {:access => PENDING}
+  named_scope :pending,       :conditions => {:access => PENDING}
+  named_scope :unrestricted,  :conditions => {:access => PUBLIC}
+  named_scope :restricted,    :conditions => {:access => [PRIVATE, ORGANIZATION, EXCLUSIVE]}
 
   # Restrict accessible documents for a given account/organzation.
   # Either the document itself is public, or it belongs to us, or it belongs to

@@ -103,8 +103,9 @@ dc.ui.Statistics = dc.View.extend({
   _addCountsToAccounts : function() {
     Accounts.each(function(acc) {
       acc.set({
-        document_count : stats.documents_per_account[acc.id],
-        page_count     : stats.pages_per_account[acc.id]
+        public_document_count   : stats.public_per_account[acc.id],
+        private_document_count  : stats.private_per_account[acc.id],
+        page_count              : stats.pages_per_account[acc.id]
       });
     });
   }

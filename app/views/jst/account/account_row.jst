@@ -50,7 +50,10 @@
 </td>
 <td class="document_count">
   <span class="display">
-    <%= account.get('document_count') %>
+    <% var pub = account.get('public_document_count'), priv = account.get('private_document_count'); %>
+    <span class="public"><%= pub %></span>
+    <%= pub && priv ? '/' : '' %>
+    <span class="private"><%= priv %></span>
   </span>
 </td>
 <td class="page_count">
