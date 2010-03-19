@@ -24,7 +24,7 @@ class ImportController < ApplicationController
     if job['status'] != 'succeeded'
       logger.error("Document import failed: " + job.inspect)
       record = ProcessingJob.find_by_cloud_crowd_id(job['id'])
-      record.document.update_attributes :access => DC::Access::ERROR if record
+      record.document.update_attributes(:access => DC::Access::ERROR) if record && record.document
     end
     ProcessingJob.destroy_all(:cloud_crowd_id => job['id'])
     render :text => '201 Created', :status => 201
