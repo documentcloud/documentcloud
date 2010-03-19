@@ -16,6 +16,16 @@ module DC
       Document.sum('page_count', :group => 'date(created_at)', :conditions => ['created_at > ?', since])
     end
 
+    # Count the number of uploaded documents by account.
+    def self.documents_per_account
+      Document.count(:group => 'account_id')
+    end
+
+    # Count the number of uploaded pages by account.
+    def self.pages_per_account
+      Page.count(:group => 'account_id')
+    end
+
     # The total number of pages, period.
     def self.total_pages
       Page.count

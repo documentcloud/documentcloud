@@ -73,6 +73,12 @@
 #account_dialog tr.edit_view .edit, #account_dialog tr.display_view .display {
   display: block;
 }
+#account_dialog td.document_count, #account_dialog td.page_count {
+  display: none;
+}
+  body.admin #account_dialog td.document_count, body.admin #account_dialog td.page_count {
+    display: table-cell;
+  }
 #account_dialog img.avatar {
   border: 1px solid #ccc;
 }

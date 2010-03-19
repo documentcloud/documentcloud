@@ -5,14 +5,15 @@ class AdminController < ApplicationController
 
   # The Admin Dashboard
   def index
-    @documents_by_access  = DC::Statistics.documents_by_access.to_json
-    @average_entity_count = DC::Statistics.average_entity_count.to_json
-    @average_page_count   = DC::Statistics.average_page_count.to_json
-    @total_pages          = DC::Statistics.total_pages.to_json
-    @daily_documents      = keys_to_timestamps(DC::Statistics.daily_documents).to_json
-    @daily_pages          = keys_to_timestamps(DC::Statistics.daily_pages).to_json
-
-    @accounts             = Account.all.to_json
+    @documents_by_access    = DC::Statistics.documents_by_access.to_json
+    @average_entity_count   = DC::Statistics.average_entity_count.to_json
+    @average_page_count     = DC::Statistics.average_page_count.to_json
+    @total_pages            = DC::Statistics.total_pages.to_json
+    @daily_documents        = keys_to_timestamps(DC::Statistics.daily_documents).to_json
+    @daily_pages            = keys_to_timestamps(DC::Statistics.daily_pages).to_json
+    @documents_per_account  = DC::Statistics.documents_per_account.to_json
+    @pages_per_account      = DC::Statistics.pages_per_account.to_json
+    @accounts               = Account.all.to_json
   end
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and

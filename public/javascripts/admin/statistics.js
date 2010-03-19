@@ -25,6 +25,7 @@ dc.ui.Statistics = dc.View.extend({
     stats.daily_documents_series = this._series(stats.daily_documents, 'Document');
     stats.daily_pages_series = this._series(stats.daily_pages, 'Page');
     this._tooltip = new dc.ui.Tooltip();
+    this._addCountsToAccounts();
     $('#topbar').append($.el('a', {id : 'signup_button', href : '/admin/signup'}, $.el('button', {}, 'sign up a new partner &raquo;')));
     $(window).bind('resize', this.renderCharts);
   },
@@ -89,6 +90,15 @@ dc.ui.Statistics = dc.View.extend({
       integer = integer.replace(this.DATE_TRIPLETS, '$1,$2');
     }
     return integer + decimal;
+  },
+
+  _addCountsToAccounts : function() {
+    Accounts.each(function(acc) {
+      acc.set({
+        document_count : stats.documents_per_account[acc.id],
+        page_count     : stats.pages_per_account[acc.id]
+      });
+    });
   }
 
 });

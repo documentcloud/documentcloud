@@ -2,6 +2,7 @@
   @title = "Admin Dashboard"
   @stylesheets = [:admin]
   @javascripts = [:admin]
+  @bodyclass   = 'admin'
 %>
 
 <script type="text/javascript">
@@ -12,6 +13,8 @@
   stats.daily_documents       = <%= @daily_documents      %>;
   stats.daily_pages           = <%= @daily_pages          %>;
   stats.total_pages           = <%= @total_pages          %>;
+  stats.documents_per_account = <%= @documents_per_account%>;
+  stats.pages_per_account     = <%= @pages_per_account    %>;
 
   Accounts.populate(<%= @accounts %>);
 

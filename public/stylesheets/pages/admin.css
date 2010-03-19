@@ -35,15 +35,18 @@
           padding-bottom: 10px;
           border-bottom: 1px solid #131b1d;
         }
-      #statistics .labels td {
+      #statistics .labels td, #statistics thead td {
         font-size: 10px;
         text-transform: uppercase;
         padding: 5px 0 50px 0;
       }
 
 #account_dialog {
-  border: 1px solid #131b1d; border-left: 0; border-right: 0;
+  border-bottom: 1px solid #131b1d;
 }
+  #account_dialog thead td {
+    border-bottom: 1px solid #131b1d;
+  }
   #account_dialog tr {
     background: transparent;
   }
