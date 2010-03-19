@@ -20,18 +20,18 @@
       #statistics .data td {
       }
         #statistics .number {
-          font-size: 55px;
+          font-size: 50px;
           border-bottom: 1px solid #131b1d;
         }
         #statistics .chart_col {
           position: relative;
           padding-bottom: 10px;
-          height: 100px;
+          height: 180px;
         }
         #statistics .chart {
           position: absolute;
           left: 0; right: 0;
-          height: 100px;
+          height: 180px;
           padding-bottom: 10px;
           border-bottom: 1px solid #131b1d;
         }
