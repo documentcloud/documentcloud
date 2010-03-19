@@ -3,6 +3,10 @@
   top: 7px; right: 10px;
 }
 
+#content {
+  overflow-y: auto;
+}
+
 #statistics {
   margin: 35px 0 35px 35px;
 }
@@ -48,5 +52,6 @@
       padding: 5px 35px 5px 0;
     }
       #account_dialog img.avatar {
-        margin-right: 10px;
+        margin: 1px 15px 1px 4px;
+        border: 0;
       }
