@@ -10,14 +10,21 @@ dc.ui.Statistics = dc.View.extend({
 
   DATE_TRIPLETS : /(\d+)(\d{3})/,
 
+  DATE_FORMAT : "%b %d, %y",
+
   id        : 'statistics',
   className : 'serif',
+
+  callbacks : {
+    '.chart.plothover': '_showTooltop'
+  },
 
   constructor : function(options) {
     this.base(options);
     _.bindAll(this, 'renderCharts');
-    stats.daily_documents_series = this._series(stats.daily_documents);
-    stats.daily_pages_series = this._series(stats.daily_pages);
+    stats.daily_documents_series = this._series(stats.daily_documents, 'Document');
+    stats.daily_pages_series = this._series(stats.daily_pages, 'Page');
+    this._tooltip = new dc.ui.Tooltip();
     $(window).bind('resize', this.renderCharts);
   },
 
@@ -29,6 +36,7 @@ dc.ui.Statistics = dc.View.extend({
       average_entity_count  : this._format(stats.average_entity_count)
     };
     $(this.el).html(JST.statistics(data));
+    this.setCallbacks();
     _.defer(this.renderCharts);
     return this;
   },
@@ -46,13 +54,29 @@ dc.ui.Statistics = dc.View.extend({
     });
   },
 
+  // Create a tooltip to show a hovered date.
+  _showTooltop : function(e, pos, item) {
+    if (!item) return this._tooltip.hide();
+    var count = item.datapoint[1];
+    var date  = $.plot.formatDate(new Date(item.datapoint[0]), this.DATE_FORMAT);
+    var title = Inflector.pluralize(item.series.title, count);
+    this._tooltip.show({
+      left : pos.pageX,
+      top  : pos.pageY,
+      text : count + ' ' + title + '<br />' + date
+    });
+  },
+
   // Convert a date-hash into JSON that flot can properly plot.
-  _series : function(data) {
-    return [_.sortBy(_.map(data, function(val, key) {
-      return [parseInt(key, 10) * 1000, val];
-    }), function(pair) {
-      return pair[0];
-    })];
+  _series : function(data, title) {
+    return [{
+      title : title,
+      data : _.sortBy(_.map(data, function(val, key) {
+        return [parseInt(key, 10) * 1000, val];
+      }), function(pair) {
+        return pair[0];
+      })
+    }];
   },
 
   // Format a number by adding commas in all the right places.
