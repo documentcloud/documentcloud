@@ -31,13 +31,7 @@ dc.ui.Statistics = dc.View.extend({
   },
 
   render : function() {
-    var data = {
-      total_documents       : this._format(this.totalDocuments()),
-      total_pages           : this._format(stats.total_pages),
-      average_page_count    : this._format(stats.average_page_count),
-      average_entity_count  : this._format(stats.average_entity_count)
-    };
-    $(this.el).html(JST.statistics(data));
+    $(this.el).html(JST.statistics(this.data()));
     $('#accounts_wrapper', this.el).append((new dc.ui.AdminAccounts()).render().el);
     this.setCallbacks();
     _.defer(this.renderCharts);
@@ -48,6 +42,20 @@ dc.ui.Statistics = dc.View.extend({
     $('.chart', this.el).html('');
     $.plot($('#docs_uploaded_chart'), stats.daily_documents_series, this.GRAPH_OPTIONS);
     $.plot($('#pages_uploaded_chart'), stats.daily_pages_series, this.GRAPH_OPTIONS);
+  },
+
+  data : function() {
+    var acl = stats.documents_by_access, a = dc.access;
+    return {
+      total_documents       : this._format(this.totalDocuments()),
+      total_pages           : this._format(stats.total_pages),
+      average_page_count    : this._format(stats.average_page_count),
+      average_entity_count  : this._format(stats.average_entity_count),
+      public_docs           : this._format(acl[a.PUBLIC] || 0),
+      private_docs          : this._format(acl[a.PRIVATE] || 0 + acl[a.ORGANIZATION] || 0 + acl[a.EXCLUSIVE] || 0),
+      pending_docs          : this._format(acl[a.PENDING] || 0),
+      error_docs            : this._format(acl[a.ERROR] || 0)
+    };
   },
 
   totalDocuments : function() {
