@@ -26,7 +26,7 @@ dc.ui.Statistics = dc.View.extend({
     stats.daily_pages_series = this._series(stats.daily_pages, 'Page');
     this._tooltip = new dc.ui.Tooltip();
     this._addCountsToAccounts();
-    $('#topbar').append($.el('a', {id : 'signup_button', href : '/admin/signup'}, $.el('button', {}, 'sign up a new partner &raquo;')));
+    $('#topbar').append($.el('a', {id : 'signup_button', href : '/admin/signup'}, $.el('button', {}, 'add an organization &raquo;')));
     $(window).bind('resize', this.renderCharts);
   },
 

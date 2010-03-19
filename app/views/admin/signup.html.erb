@@ -1,11 +1,11 @@
 <%
-  @title      = "Partner Sign-up"
+  @title      = "Add a New Organization"
   @bodyclass  = "full_page_background"
 %>
 
 <div id="full_screen_form" class="full_page_background">
   <form action="/admin/signup" method="POST">
-    <h1>Sign up a DocumentCloud Partner</h1>
+    <h1>Add a New Organization</h1>
     <% if @failure %>
       <div class="form_error">
         <span><%= @failure %></span>
