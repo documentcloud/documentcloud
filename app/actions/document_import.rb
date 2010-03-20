@@ -38,23 +38,18 @@ class DocumentImport < CloudCrowd::Action
     # Destroy existing text and pages to make way for the new.
     document.full_text.destroy if document.full_text
     document.pages.destroy_all if document.pages.count > 0
-    pages = []
     extractor = DC::Import::TextExtractor.new(@pdf)
     if extractor.contains_text?
-      Docsplit.extract_text(@pdf, :pages => :all, :output => 'text')
-      Dir['text/*.txt'].length.times do |i|
-        save_page_text(File.read("text/#{document.slug}_#{i + 1}.txt"), i + 1)
+      begin
+        pdf_text
+      rescue Exception => e
+        ocr_text
       end
     else
-      Docsplit.extract_pages(@pdf, :output => 'text')
-      Dir['text/*.pdf'].length.times do |i|
-        text = DC::Import::TextExtractor.new("text/#{document.slug}_#{i + 1}.pdf").text_from_ocr
-        save_page_text(text, i + 1)
-      end
+      ocr_text
     end
-    text                 = document.combined_page_text
-    document.full_text   = FullText.new(:text => text, :document => document)
-    # document.description = document.full_text.summarize
+    text = document.combined_page_text
+    document.full_text = FullText.new(:text => text, :document => document)
     Page.refresh_page_map(document)
     EntityDate.refresh(document)
     document.save!
@@ -65,6 +60,21 @@ class DocumentImport < CloudCrowd::Action
 
 
   private
+
+  def pdf_text
+    Docsplit.extract_text(@pdf, :pages => :all, :output => 'text')
+    Dir['text/*.txt'].length.times do |i|
+      save_page_text(File.read("text/#{document.slug}_#{i + 1}.txt"), i + 1)
+    end
+  end
+
+  def ocr_text
+    Docsplit.extract_pages(@pdf, :output => 'text')
+    Dir['text/*.pdf'].length.times do |i|
+      text = DC::Import::TextExtractor.new("text/#{document.slug}_#{i + 1}.pdf").text_from_ocr
+      save_page_text(text, i + 1)
+    end
+  end
 
   def save_page_text(text, page_number)
     page = Page.create!(:document => document, :text => text, :page_number => page_number)
