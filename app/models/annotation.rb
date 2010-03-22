@@ -26,6 +26,11 @@ class Annotation < ActiveRecord::Base
 
   named_scope :in_order, {:order => :page_number}
 
+  searchable do
+    text :title, :boost => 2.0
+    text :content
+  end
+
   def self.counts_for_documents(owner, docs)
     doc_ids = docs.map {|doc| doc.id }
     self.count(:conditions => {:account_id => owner.id, :document_id => doc_ids}, :group => 'document_id')

@@ -12,6 +12,8 @@ class Entity < ActiveRecord::Base
 
   validates_inclusion_of :kind, :in => DC::VALID_KINDS
 
+  named_scope :kind, lambda {|kind| {:conditions => {:kind => kind}} }
+
   named_scope :search_value, lambda { |query|
     {:conditions => ["metadata_value_vector @@ plainto_tsquery(?)", query]}
   }

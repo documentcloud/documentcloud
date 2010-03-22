@@ -46,6 +46,39 @@ class Document < ActiveRecord::Base
     {:conditions => "(#{access.join(' or ')})"}
   }
 
+  searchable do
+
+    # Full Text...
+    text :title, :default_boost => 2.0
+    text :source
+    text :description
+    text :full_text do
+      self.text
+    end
+    text :entities do
+      self.entities.map {|ent| ent.value }
+    end
+
+    # Attributes...
+    string  :title
+    string  :source
+    integer :access
+    integer :account_id
+    integer :organization_id
+    time    :created_at
+
+    # Entities...
+    # TODO: I think the DSL prevents it, but it would be lovely to have a helper
+    # generate these fields.
+    string(:cities,         :multiple => true) { self.entities.kind('city').all(:select => [:value]).map {|e| e.value } }
+    string(:countries,      :multiple => true) { self.entities.kind('country').all(:select => [:value]).map {|e| e.value } }
+    string(:organizations,  :multiple => true) { self.entities.kind('organization').all(:select => [:value]).map {|e| e.value } }
+    string(:people,         :multiple => true) { self.entities.kind('person').all(:select => [:value]).map {|e| e.value } }
+    string(:places,         :multiple => true) { self.entities.kind('place').all(:select => [:value]).map {|e| e.value } }
+    string(:states,         :multiple => true) { self.entities.kind('state').all(:select => [:value]).map {|e| e.value } }
+    string(:terms,          :multiple => true) { self.entities.kind('term').all(:select => [:value]).map {|e| e.value } }
+  end
+
   # Main document search method -- handles queries.
   def self.search(query, options={})
     query = DC::Search::Parser.new.parse(query) if query.is_a? String

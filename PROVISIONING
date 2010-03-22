@@ -36,7 +36,7 @@ touch on EC2 in here.
 * Install these gems (--no-ri --no-rdoc):
   postgres sqlite3-ruby rails passenger sinatra right_aws rest-client rack \
   bcrypt-ruby rubyzip libxml-ruby nokogiri json hpricot calais \
-  curb daemons cloud-crowd yui-compressor jammit docsplit
+  curb daemons cloud-crowd yui-compressor jammit docsplit sunspot sunspot_rails
   
 * Add the gem bin directory to the path, in .bashrc.
   export PATH="$PATH:/var/lib/gems/1.8/bin"

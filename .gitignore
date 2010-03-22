@@ -13,5 +13,7 @@ raw
 public/docs
 public/asset_store
 public/document-viewer/images/*.psd
+solr/data
+*.pid
 *~
 .#*
