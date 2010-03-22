@@ -62,21 +62,30 @@ class Document < ActiveRecord::Base
     # Attributes...
     string  :title
     string  :source
-    integer :access
+    integer :id
     integer :account_id
     integer :organization_id
+    integer :access
     time    :created_at
 
     # Entities...
     # TODO: I think the DSL prevents it, but it would be lovely to have a helper
     # generate these fields.
-    string(:cities,         :multiple => true) { self.entities.kind('city').all(:select => [:value]).map {|e| e.value } }
-    string(:countries,      :multiple => true) { self.entities.kind('country').all(:select => [:value]).map {|e| e.value } }
-    string(:organizations,  :multiple => true) { self.entities.kind('organization').all(:select => [:value]).map {|e| e.value } }
-    string(:people,         :multiple => true) { self.entities.kind('person').all(:select => [:value]).map {|e| e.value } }
-    string(:places,         :multiple => true) { self.entities.kind('place').all(:select => [:value]).map {|e| e.value } }
-    string(:states,         :multiple => true) { self.entities.kind('state').all(:select => [:value]).map {|e| e.value } }
-    string(:terms,          :multiple => true) { self.entities.kind('term').all(:select => [:value]).map {|e| e.value } }
+    text(:city)         { self.entities.kind('city').all(:select => [:value]).map {|e| e.value } }
+    text(:country)      { self.entities.kind('country').all(:select => [:value]).map {|e| e.value } }
+    text(:organization) { self.entities.kind('organization').all(:select => [:value]).map {|e| e.value } }
+    text(:person)       { self.entities.kind('person').all(:select => [:value]).map {|e| e.value } }
+    text(:place)        { self.entities.kind('place').all(:select => [:value]).map {|e| e.value } }
+    text(:state)        { self.entities.kind('state').all(:select => [:value]).map {|e| e.value } }
+    text(:term)         { self.entities.kind('term').all(:select => [:value]).map {|e| e.value } }
+
+    string(:city,         :multiple => true) { self.entities.kind('city').all(:select => [:value]).map {|e| e.value } }
+    string(:country,      :multiple => true) { self.entities.kind('country').all(:select => [:value]).map {|e| e.value } }
+    string(:organization, :multiple => true) { self.entities.kind('organization').all(:select => [:value]).map {|e| e.value } }
+    string(:person,       :multiple => true) { self.entities.kind('person').all(:select => [:value]).map {|e| e.value } }
+    string(:place,        :multiple => true) { self.entities.kind('place').all(:select => [:value]).map {|e| e.value } }
+    string(:state,        :multiple => true) { self.entities.kind('state').all(:select => [:value]).map {|e| e.value } }
+    string(:term,         :multiple => true) { self.entities.kind('term').all(:select => [:value]).map {|e| e.value } }
   end
 
   # Main document search method -- handles queries.

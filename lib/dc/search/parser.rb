@@ -22,7 +22,7 @@ module DC
         process_search_text(search_text)
         process_fields_and_projects(bare_fields, quoted_fields)
 
-        Query.new(:text => @text, :fields => @fields, :projects => @projects, :attributes => @attributes)
+        SolrQuery.new(:text => @text, :fields => @fields, :projects => @projects, :attributes => @attributes)
       end
 
       # Convert the full-text search into a form that our index can handle.
