@@ -1,18 +1,23 @@
-production:
-  solr:
-    hostname: localhost
-    port: 8983
-    log_level: WARNING
-
 development:
   solr:
     hostname: localhost
     port: 8982
     log_level: INFO
 
+staging:
+  solr:
+    hostname: staging.dcloud.org
+    port: 8983
+    log_level: WARNING
+
+production:
+  solr:
+    hostname: ec2-174-129-5-5.compute-1.amazonaws.com
+    port: 8983
+    log_level: WARNING
+
 test:
   solr:
     hostname: localhost
     port: 8981
     log_level: WARNING
-    
