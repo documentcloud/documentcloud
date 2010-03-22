@@ -33,6 +33,10 @@ class Entity < ActiveRecord::Base
     occurrences.present?
   end
 
+  def value=(val)
+    write_attribute :value, val.mb_chars[0...255].to_s
+  end
+
   def to_json(options=nil)
     {'id'           => id,
      'document_id'  => document_id,
