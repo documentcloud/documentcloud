@@ -1,9 +1,9 @@
 TODO:
 
+  * Switch to Solr.
+
   * Update CloudCrowd with a new release.
   
-  * Bump Underscore to version 1.0.
-
   * Write a phone number extractor, and save those as entities.
 
   * Upgrade to Rails 3 ?
@@ -35,11 +35,7 @@ TODO:
     folks.
       
   * Add lightweight tags for documents and notes (anything searchable).
-  
-  * Add an admin UI for editing static pages.
-  
-  * Think about searches over just notes -- is it necessary?
-  
+      
   * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
     Adding a "search pages" feature.
     
@@ -48,6 +44,8 @@ TODO:
   
 
 DONE: 
+
+  * Bump Underscore to version 1.0.
 
   * Fix the description toggle -- hide empty descriptions in the viewer.
 
