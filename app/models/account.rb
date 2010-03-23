@@ -26,7 +26,7 @@ class Account < ActiveRecord::Base
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session)
-    account = Account.find_by_email(email)
+    account = Account.first(:conditions => ['lower(email) = ?', email.downcase])
     return false unless account && account.password == password
     account.authenticate(session)
   end
