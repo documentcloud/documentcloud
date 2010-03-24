@@ -118,7 +118,7 @@ class DocumentsController < ApplicationController
 
   def current_document(exists=false)
     @current_document ||= exists ?
-      Document.accessible(current_account, current_organization).find_by_id(params[:id]) :
+      Document.accessible(current_account, current_organization).find_by_id(params[:id].to_i) :
       Document.new(:id => params[:id])
   end
 
