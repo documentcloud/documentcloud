@@ -58,18 +58,26 @@ class ApplicationController < ActionController::Base
     logged_in? || forbidden
   end
 
+  def api_login_required
+    authenticate_or_request_with_http_basic("DocumentCloud") do |email, password|
+      return false unless @current_account = Account.log_in(email, password)
+      @current_organization = @current_account.organization
+      true
+    end
+  end
+
   def admin_required
     (logged_in? && current_organization.id == 1) || forbidden
   end
 
   def current_account
-    return nil unless session['account_id']
-    @current_account ||= Account.find_by_id(session['account_id'])
+    @current_account ||=
+      session['account_id'] ? Account.find_by_id(session['account_id']) : nil
   end
 
   def current_organization
-    return nil unless session['organization_id']
-    @current_organization ||= Organization.find_by_id(session['organization_id'])
+    @current_organization ||=
+      session['organization_id'] ? Organization.find_by_id(session['organization_id']) : nil
   end
 
   def bad_request

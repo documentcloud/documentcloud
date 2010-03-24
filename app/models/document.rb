@@ -94,6 +94,25 @@ class Document < ActiveRecord::Base
     query.run(options)
   end
 
+  # Upload a new document, starting the import process.
+  def self.upload(params, account)
+    access = params[:access] ? params[:access].to_i : PRIVATE
+    doc = self.create!(
+      :title            => params[:title],
+      :source           => params[:source],
+      :description      => params[:description],
+      :organization_id  => account.organization_id,
+      :account_id       => account.id,
+      :access           => DC::Access::PENDING,
+      :page_count       => 0
+    )
+    DC::Import::PDFWrangler.new.ensure_pdf(params[:file]) do |path|
+      DC::Store::AssetStore.new.save_pdf(doc, path, access)
+    end
+    doc.queue_initial_import(access)
+    doc.reload
+  end
+
   # Produce the full text of the document by combining the text of each of
   # the pages. Used at initial import.
   def combined_page_text

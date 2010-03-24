@@ -6,6 +6,26 @@ module DC
       # Number of pages in a parallelized batch.
       DEFAULT_BATCH_SIZE = 5
 
+      # Make sure we're dealing with a PDF. If not, it needs to be
+      # converted first. Yields the path to the converted document to a block.
+      def ensure_pdf(file)
+        Dir.mktmpdir do |temp_dir|
+          path = file.path
+          name = file.original_filename
+          ext  = File.extname(name)
+          return yield(path) if ext == ".pdf"
+          begin
+            doc  = File.join(temp_dir, name)
+            FileUtils.cp(path, doc)
+            Docsplit.extract_pdf(doc, :output => temp_dir)
+            yield(File.join(temp_dir, File.basename(name, ext) + '.pdf'))
+          rescue Exception => e
+            logger.error("PDF Conversion Failed: " + e.message + "\n" + e.backtrace.join("\n"))
+            yield path
+          end
+        end
+      end
+
       # Bursts a pdf into individual pages, removing the original file.
       # The double pdftk shuffle fixes the document xrefs.
       def burst(pdf)

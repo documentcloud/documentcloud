@@ -25,10 +25,11 @@ class Account < ActiveRecord::Base
   named_scope :admin, {:conditions => {:role => ADMINISTRATOR}}
 
   # Attempt to log in with an email address and password.
-  def self.log_in(email, password, session)
+  def self.log_in(email, password, session=nil)
     account = Account.first(:conditions => ['lower(email) = ?', email.downcase])
     return false unless account && account.password == password
-    account.authenticate(session)
+    account.authenticate(session) if session
+    account
   end
 
   # Save this account as the current account in the session. Logs a visitor in.

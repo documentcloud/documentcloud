@@ -6,6 +6,8 @@ class ApiController < ApplicationController
 
   before_filter :bouncer if Rails.env.staging?
 
+  before_filter :api_login_required, :only => [:upload]
+
   def index
 
   end
@@ -24,6 +26,13 @@ class ApiController < ApplicationController
         render :json => {'documents' => @documents.map {|d| d.canonical(options) }}
       end
     end
+  end
+
+  # Upload API, similar to our internal upload API for starters. Parameters:
+  # file, title, access, source, description.
+  def upload
+    return bad_request unless params[:file] && params[:title]
+    render :json => Document.upload(params, current_account).canonical
   end
 
 end
