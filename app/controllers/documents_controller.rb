@@ -11,7 +11,7 @@ class DocumentsController < ApplicationController
 
   def show
     return unless request.format.json? || login_required
-    current_document(true)
+    return not_found unless current_document(true)
     respond_to do |format|
       format.pdf  { redirect_to(current_document.pdf_url) }
       format.text { redirect_to(current_document.full_text_url) }
@@ -118,7 +118,7 @@ class DocumentsController < ApplicationController
 
   def current_document(exists=false)
     @current_document ||= exists ?
-      Document.accessible(current_account, current_organization).find(params[:id]) :
+      Document.accessible(current_account, current_organization).find_by_id(params[:id]) :
       Document.new(:id => params[:id])
   end
 
