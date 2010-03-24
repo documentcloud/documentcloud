@@ -14,6 +14,17 @@ module DC
     INVISIBLE     = 6   # The document has been taken down (perhaps temporary).
     ERROR         = 7   # The document is broken, or failed to import.
 
+    ACCESS_MAP = {
+      :deleted      => DELETED,
+      :private      => PRIVATE,
+      :organization => ORGANIZATION,
+      :exclusive    => EXCLUSIVE,
+      :public       => PUBLIC,
+      :pending      => PENDING,
+      :invisible    => INVISIBLE,
+      :error        => ERROR
+    }
+
   end
 
 end

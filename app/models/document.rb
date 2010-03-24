@@ -96,7 +96,7 @@ class Document < ActiveRecord::Base
 
   # Upload a new document, starting the import process.
   def self.upload(params, account)
-    access = params[:access] ? params[:access].to_i : PRIVATE
+    access = params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE
     doc = self.create!(
       :title            => params[:title],
       :source           => params[:source],
