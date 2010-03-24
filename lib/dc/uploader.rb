@@ -6,7 +6,7 @@ module DC
   class Uploader
 
     # The location of the DocumentCloud API.
-    API = 'dev.dcloud.org/api/upload.json'
+    API = 'www.documentcloud.org/api/upload.json'
 
     # Initialize the uploader with the document file, it's title, and the
     # optional access, source, and description...

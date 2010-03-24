@@ -20,7 +20,7 @@ module DC
             Docsplit.extract_pdf(doc, :output => temp_dir)
             yield(File.join(temp_dir, File.basename(name, ext) + '.pdf'))
           rescue Exception => e
-            logger.error("PDF Conversion Failed: " + e.message + "\n" + e.backtrace.join("\n"))
+            Rails.logger.error("PDF Conversion Failed: " + e.message + "\n" + e.backtrace.join("\n"))
             yield path
           end
         end
