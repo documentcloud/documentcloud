@@ -51,7 +51,7 @@ class AdminController < ApplicationController
   end
 
   def test_embedded_viewer
-    render :layout => nil
+    render :layout => false
   end
 
 
