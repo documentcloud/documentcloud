@@ -2,7 +2,7 @@ class DocumentsController < ApplicationController
   layout nil
 
   before_filter(:bouncer, :only => [:show]) if Rails.env.staging?
-  before_filter :login_required
+  before_filter :login_required, :except => [:show]
 
   caches_page :loader
 
@@ -10,6 +10,7 @@ class DocumentsController < ApplicationController
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
 
   def show
+    return unless request.format.json? || login_required
     current_document(true)
     respond_to do |format|
       format.pdf  { redirect_to(current_document.pdf_url) }
