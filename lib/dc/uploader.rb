@@ -17,7 +17,7 @@ module DC
 
     def upload(username, password)
       username, password = CGI.escape(username), CGI.escape(password)
-      attrs = @attributes.map {|key, value| "-F #{key}=\"#{value}\"" }.join(' ')
+      attrs = @attributes.map {|key, value| "-F #{key}=\"#{value.gsub('"', '\\\\"')}\"" }.join(' ')
       url   = "http://#{username}:#{password}@#{API}"
       puts cmd = "curl -F file=@#{@file} #{attrs} #{url}"
       system cmd
