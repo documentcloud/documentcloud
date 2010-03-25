@@ -2,14 +2,11 @@ defaults: &defaults
   cloud_crowd_server:   http://dev.dcloud.org:8080
   server_root:          http://dev.dcloud.org
   aws_zone:             us-east-1c
-  preconfigured_ami_id: ami-f4db369d
+  preconfigured_ami_id: ami-f94ca390
 
   # Include Postgres-generated highlights of the search query within the
   # document results (too slow).
   include_highlights:   off
-
-  # Search for entities, rather than jumping to their precise offset?
-  entities_via_search:  off
 
 
 development:

@@ -228,11 +228,7 @@ class Document < ActiveRecord::Base
     suffix = "#document/p#{opts[:page]}" if opts[:page]
     if ent = opts[:entity]
       occur = ent.split_occurrences.first
-      if DC_CONFIG['entities_via_search']
-        suffix = "#search/p#{occur.page.page_number}/#{URI.escape(ent.value)}"
-      else
-        suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(ent.value)}/#{occur.page_offset}:#{occur.length}"
-      end
+      suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(ent.value)}/#{occur.page_offset}:#{occur.length}"
     end
     if date = opts[:date]
       occur = date.split_occurrences.first
