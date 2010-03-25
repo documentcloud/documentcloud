@@ -95,10 +95,21 @@ module DC
       # Saves a local file to a location on S3, and returns the public URL.
       # Set the expires headers for a year, if the file is an image -- text,
       # HTML and JSON may change.
+      #
+      # We've been seeing some RequestTimeTooSkewed errors, which is strange
+      # because the system clocks are in sync to the millisecond with NTP time.
+      # Retry a couple times instead of failing the entire job.
       def save_file(file, s3_path, access, opts={})
         file = opts[:string] ? file : File.open(file)
         headers = s3_path.match(IMAGE_EXT) ? {'Expires' => 1.year.from_now.httpdate} : {}
-        bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access], headers)
+        attempts = 0
+        begin
+          bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access], headers)
+        rescue RightAws::AwsError => e
+          raise e unless e.include?(/RequestTimeTooSkewed/) && attempts < 3
+          attempts += 1
+          retry
+        end
         bucket.key(s3_path).public_link
       end
 
