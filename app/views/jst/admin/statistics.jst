@@ -53,7 +53,8 @@
             <td>Tag</td>
             <td>ID</td>
             <td>State</td>
-            <td>DNS Name</td>
+            <td>DNS (External)</td>
+            <td>DNS (Internal)</td>
             <td></td>
           </thead>
           <tbody>
@@ -64,6 +65,7 @@
                 <td><%= instance.aws_instance_id %></td>
                 <td><%= instance.aws_state %></td>
                 <td><%= instance.dns_name %></td>
+                <td><%= instance.private_dns_name %></td>
                 <td class="last"></td>
               </tr>
             <% }); %>
