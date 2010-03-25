@@ -58,6 +58,7 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => 'redirect' do |move|
     move.faq              '/faq.php',       :url => '/faq'
     move.who              '/who.php',       :url => '/about'
+    move.who_we_are       '/who-we-are',    :url => '/about'
     move.partner          '/partner.php',   :url => '/contributors'
     move.clips            '/clips.php',     :url => '/news'
     move.feed             '/blog/feed',     :url => 'http://blog.documentcloud.org/feed'
