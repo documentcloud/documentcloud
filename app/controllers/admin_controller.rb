@@ -16,6 +16,7 @@ class AdminController < ApplicationController
     @pages_per_account      = DC::Statistics.pages_per_account.to_json
     @accounts               = Account.all.to_json
     @organizations          = Organization.all.to_json
+    @instances              = DC::AWS.new.describe_instances.to_json
   end
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and

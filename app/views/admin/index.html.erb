@@ -16,6 +16,7 @@
   stats.public_per_account    = <%= @public_per_account   %>;
   stats.private_per_account   = <%= @private_per_account  %>;
   stats.pages_per_account     = <%= @pages_per_account    %>;
+  stats.instances             = <%= @instances %>;
 
   Accounts.populate(<%= @accounts %>);
   Organizations.populate(<%= @organizations %>);

@@ -1,7 +1,7 @@
 <table>
   <thead></thead>
   <tbody>
-    
+
     <tr class="data">
       <td><div class="number"><%= total_documents %></div></td>
       <td><div class="number"><%= total_pages %></div></td>
@@ -14,7 +14,7 @@
       <td>Average Pages / Document</td>
       <td>Average Entities / Document</td>
     </tr>
-    
+
     <tr class="data">
       <td><div class="number"><%= public_docs %></div></td>
       <td><div class="number"><%= private_docs %></div></td>
@@ -27,7 +27,7 @@
       <td>Pending Documents</td>
       <td>Failed or Broken Documents</td>
     </tr>
-    
+
     <tr class="data">
       <td colspan="2" width="50%">
         <div class="chart_col">
@@ -44,7 +44,37 @@
       <td colspan="2">Past Two Weeks: Documents / Day</td>
       <td colspan="2">Past Two Weeks: Pages / Day</td>
     </tr>
-    
+
+    <tr class="data">
+      <td colspan="4">
+        <table id="instances">
+          <thead>
+            <td>Instance Type</td>
+            <td>Tag</td>
+            <td>ID</td>
+            <td>State</td>
+            <td>DNS Name</td>
+            <td></td>
+          </thead>
+          <tbody>
+            <% _.each(stats.instances, function(instance) { %>
+              <tr>
+                <td><%= instance.aws_instance_type %></td>
+                <td><%= instance_tags[instance.aws_instance_id] || '&mdash;' %></td>
+                <td><%= instance.aws_instance_id %></td>
+                <td><%= instance.aws_state %></td>
+                <td><%= instance.dns_name %></td>
+                <td class="last"></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr class="labels">
+      <td colspan="4">Active EC2 Instances</td>
+    </tr>
+
     <tr class="data">
       <td colspan="4">
         <div id="accounts_wrapper">
@@ -54,6 +84,6 @@
     <tr class="labels">
       <td colspan="4">All Accounts and Organizations</td>
     </tr>
-    
+
   </tbody>
 </table>

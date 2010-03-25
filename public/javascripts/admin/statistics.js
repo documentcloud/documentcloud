@@ -12,6 +12,13 @@ dc.ui.Statistics = dc.View.extend({
 
   DATE_FORMAT : "%b %d, %y",
 
+  // Quick tags for the instances we know about. Purely for convenience.
+  INSTANCE_TAGS : {
+    'i-0d4e9065': 'staging',
+    'i-a3466ecb': 'app01',
+    'i-4752792f': 'db01'
+  },
+
   id        : 'statistics',
   className : 'serif',
 
@@ -54,7 +61,8 @@ dc.ui.Statistics = dc.View.extend({
       public_docs           : this._format(acl[a.PUBLIC] || 0),
       private_docs          : this._format(acl[a.PRIVATE] || 0 + acl[a.ORGANIZATION] || 0 + acl[a.EXCLUSIVE] || 0),
       pending_docs          : this._format(acl[a.PENDING] || 0),
-      error_docs            : this._format(acl[a.ERROR] || 0)
+      error_docs            : this._format(acl[a.ERROR] || 0),
+      instance_tags         : this.INSTANCE_TAGS
     };
   },
 
