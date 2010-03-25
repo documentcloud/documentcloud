@@ -6,7 +6,7 @@ module DC
       # Content limit that Calais sets on number of characters. Minus some
       # safety padding because Calais was still throwing errors. Perhaps they're
       # counting bytes?
-      MAX_TEXT_SIZE = 99500
+      MAX_TEXT_SIZE = 98000
 
       # Fetch the RDF from OpenCalais, splitting it into chunks small enough
       # for Calais to swallow.
