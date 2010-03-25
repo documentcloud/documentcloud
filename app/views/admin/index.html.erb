@@ -6,6 +6,8 @@
 %>
 
 <script type="text/javascript">
+  window.CLOUD_CROWD_SERVER   = "<%= DC_CONFIG['cloud_crowd_server'] %>";
+
   window.stats = {};
   stats.documents_by_access   = <%= @documents_by_access  %>;
   stats.average_entity_count  = <%= @average_entity_count %>;

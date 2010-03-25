@@ -16,7 +16,8 @@ dc.ui.Statistics = dc.View.extend({
   INSTANCE_TAGS : {
     'i-0d4e9065': 'staging',
     'i-a3466ecb': 'app01',
-    'i-4752792f': 'db01'
+    'i-4752792f': 'db01',
+    'i-258a344e': 'worker01'
   },
 
   id        : 'statistics',
@@ -28,18 +29,19 @@ dc.ui.Statistics = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, 'renderCharts');
+    _.bindAll(this, 'renderCharts', 'launchWorker');
     stats.daily_documents_series = this._series(stats.daily_documents, 'Document');
     stats.daily_pages_series = this._series(stats.daily_pages, 'Page');
     this._tooltip = new dc.ui.Tooltip();
     this._addCountsToAccounts();
-    $('#topbar').append($.el('a', {id : 'signup_button', href : '/admin/signup'}, $.el('button', {}, 'add an organization &raquo;')));
+    this._actionsMenu = this._createActionsMenu();
     $(window).bind('resize', this.renderCharts);
   },
 
   render : function() {
     $(this.el).html(JST.statistics(this.data()));
     $('#accounts_wrapper', this.el).append((new dc.ui.AdminAccounts()).render().el);
+    $('#topbar').append(this._actionsMenu.render().el);
     this.setCallbacks();
     _.defer(this.renderCharts);
     return this;
@@ -69,6 +71,19 @@ dc.ui.Statistics = dc.View.extend({
   totalDocuments : function() {
     return _.reduce(stats.documents_by_access, 0, function(sum, value) {
       return sum + value;
+    });
+  },
+
+  launchWorker : function() {
+    dc.ui.Dialog.confirm('Are you sure you want to launch a new Medium Compute<br />\
+      EC2 instance for document processing, on <b>production</b>?', function() {
+      $.post('/admin/launch_worker', function() {
+        dc.ui.Dialog.alert(
+          'The worker instance has been launched successfully.\
+          It will be a few minutes before it comes online and registers with CloudCrowd.'
+        );
+      });
+      return true;
     });
   },
 
@@ -106,6 +121,18 @@ dc.ui.Statistics = dc.View.extend({
       integer = integer.replace(this.DATE_TRIPLETS, '$1,$2');
     }
     return integer + decimal;
+  },
+
+  _createActionsMenu : function() {
+    return new dc.ui.Menu({
+      label   : 'Administrative Actions',
+      id      : 'admin_actions',
+      items   : [
+        {title : 'Add an Organization',       onClick : function(){ window.location = '/admin/signup'; }},
+        {title : 'View CloudCrowd Console',   onClick : function(){ window.location = CLOUD_CROWD_SERVER; }},
+        {title : 'Launch a Worker Instance',  onClick : this.launchWorker}
+      ]
+    });
   },
 
   _addCountsToAccounts : function() {

@@ -32,6 +32,19 @@ class AdminController < ApplicationController
     @success = "Account Created. Welcome email sent to #{acc.email}."
   end
 
+  # Spin up a new CloudCrowd medium worker, for processing. It takes a while
+  # to start the worker, so we let it run in a separate thread and return.
+  def launch_worker
+    return bad_request unless request.post?
+    Thread.new do
+      DC::AWS.new.boot_instance({
+        :type => 'c1.medium',
+        :scripts => [DC::AWS::SCRIPTS[:update], DC::AWS::SCRIPTS[:node]]
+      })
+    end
+    json nil
+  end
+
   # Login as a given account, without needing a password.
   def login_as
     acc = Account.find_by_email(params[:email])

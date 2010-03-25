@@ -1,6 +1,8 @@
-#signup_button {
+#admin_actions {
   position: absolute;
-  top: 7px; right: 10px;
+  width: 158px;
+  top: 15px; right: 20px;
+  text-align: left;
 }
 
 #content {

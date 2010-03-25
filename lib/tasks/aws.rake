@@ -3,12 +3,18 @@ namespace :aws do
 
   desc "Launch a new unconfigured EC2 instance and configure it for document-cloud"
   task :new_instance_from_scratch, :instance_type, :needs => :environment do |t,args|
-    DC::AWS.new.boot_instance(nil, args.instance_type, "#{Rails.root}/config/server/config_from_scratch.sh")
+    DC::AWS.new.boot_instance({
+      :type     => args.instance_type,
+      :scripts  => [DC::AWS::SCRIPTS[:scratch]]
+    })
   end
 
   desc "Launch a new preconfigured EC2 instance"
   task :new_instance, :instance_type, :needs => :environment do |t,args|
-    DC::AWS.new.boot_instance(DC_CONFIG['preconfigured_ami_id'], args.instance_type, "#{Rails.root}/config/server/update_preconfigured_instance.sh")
+    DC::AWS.new.boot_instance({
+      :type     => args.instance_type,
+      :scripts  => [DC::AWS::SCRIPTS[:update]]
+    })
   end
 
   desc "Snapshot EBS root and register it as a new AMI"
