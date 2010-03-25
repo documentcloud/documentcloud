@@ -14,7 +14,7 @@ chown -R $USERNAME /home/$USERNAME
 cd /home/$USERNAME/document-cloud
 sudo -u $USERNAME git pull
 # gems:install can take at least a few minutes on m1.small
-rake gems:install
+# rake gems:install
 chown -R $USERNAME /home/$USERNAME
 
 # TODO warm cache
