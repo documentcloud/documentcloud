@@ -85,7 +85,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
       loc.right   = loc.left + loc.width;
       loc.bottom  = loc.top + loc.height;
       var zoom    = DV.api.currentZoom();
-      var image   = [loc.top / zoom, loc.right / zoom, loc.bottom / zoom, loc.left / zoom].join(',');
+      var image   = _.map([loc.top, loc.right, loc.bottom, loc.left], function(l){ return Math.round(l / zoom); }).join(',');
       this.close();
       if (loc.width > 10 && loc.height > 10) {
         DV.api.addAnnotation({location : {image : image}, page : DV.api.currentPage(), unsaved : true, access : this._kind});
