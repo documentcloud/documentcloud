@@ -109,7 +109,7 @@ class Document < ActiveRecord::Base
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file]) do |path|
       DC::Store::AssetStore.new.save_pdf(doc, path, access)
     end
-    doc.queue_initial_import(access)
+    doc.queue_import(access)
     doc.reload
   end
 
@@ -273,7 +273,8 @@ class Document < ActiveRecord::Base
     asset_store.destroy(self)
   end
 
-  def queue_initial_import(eventual_access=PRIVATE)
+  def queue_import(eventual_access=PRIVATE)
+    self.update_attributes(:access => DC::Access::PENDING)
     job = JSON.parse(DC::Import::CloudCrowdImporter.new.import([id], {
       'id'            => id,
       'access'        => eventual_access
