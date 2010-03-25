@@ -32,6 +32,7 @@ class Document < ActiveRecord::Base
   }
 
   named_scope :pending,       :conditions => {:access => PENDING}
+  named_scope :failed,        :conditions => {:access => ERROR}
   named_scope :unrestricted,  :conditions => {:access => PUBLIC}
   named_scope :restricted,    :conditions => {:access => [PRIVATE, ORGANIZATION, EXCLUSIVE]}
 

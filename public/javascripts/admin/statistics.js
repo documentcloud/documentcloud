@@ -29,7 +29,7 @@ dc.ui.Statistics = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, 'renderCharts', 'launchWorker');
+    _.bindAll(this, 'renderCharts', 'launchWorker', 'reprocessFailedDocuments');
     stats.daily_documents_series = this._series(stats.daily_documents, 'Document');
     stats.daily_pages_series = this._series(stats.daily_pages, 'Page');
     this._tooltip = new dc.ui.Tooltip();
@@ -87,6 +87,15 @@ dc.ui.Statistics = dc.View.extend({
     });
   },
 
+  reprocessFailedDocuments : function() {
+    dc.ui.Dialog.confirm('Are you sure you want to re-import all failed documents?', function() {
+      $.post('/admin/reprocess_failed_documents', function() {
+        window.location.reload(true);
+      });
+      return true;
+    });
+  },
+
   // Create a tooltip to show a hovered date.
   _showTooltop : function(e, pos, item) {
     if (!item) return this._tooltip.hide();
@@ -130,6 +139,7 @@ dc.ui.Statistics = dc.View.extend({
       items   : [
         {title : 'Add an Organization',       onClick : function(){ window.location = '/admin/signup'; }},
         {title : 'View CloudCrowd Console',   onClick : function(){ window.location = CLOUD_CROWD_SERVER; }},
+        {title : 'Reprocess Failed Documents',onClick : this.reprocessFailedDocuments},
         {title : 'Launch a Worker Instance',  onClick : this.launchWorker}
       ]
     });

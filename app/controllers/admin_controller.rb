@@ -45,6 +45,13 @@ class AdminController < ApplicationController
     json nil
   end
 
+  def reprocess_failed_documents
+    Document.failed.all(:order => 'created_at DESC').each do |doc|
+      doc.queue_import
+    end
+    json nil
+  end
+
   # Login as a given account, without needing a password.
   def login_as
     acc = Account.find_by_email(params[:email])
