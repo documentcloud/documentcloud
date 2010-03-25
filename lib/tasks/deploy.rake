@@ -1,6 +1,3 @@
-# TODO: Synchronize staging's old AMI / setup with the new one.
-# TODO: Figure out a real deployment plan ... Vlad?
-
 desc "Deploy via Git to EC2, including CloudCrowd restarts and migrations"
 task :full_deploy do
   tasks = []
