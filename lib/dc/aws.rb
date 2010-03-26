@@ -27,6 +27,15 @@ module DC
       @ec2.describe_instances
     end
 
+    # Describe our current snapshots.
+    def describe_snapshots
+      @ec2.describe_snapshots
+    end
+
+    def create_snapshot(volume_id)
+      @ec2.create_snapshot(volume_id)
+    end
+
     # Boot a new instance, given `ami`, `type`, and `scripts` options.
     def boot_instance(options)
       options = DEFAULT_BOOT_OPTIONS.merge(options)

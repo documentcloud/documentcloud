@@ -21,6 +21,7 @@ production:
   <<: *defaults
   cloud_crowd_server: http://ec2-174-129-5-5.compute-1.amazonaws.com:8080
   server_root:        http://www.documentcloud.org
+  db_volume_id:       vol-d4c305bd
 
 test:
   <<: *defaults

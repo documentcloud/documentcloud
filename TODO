@@ -1,6 +1,13 @@
 TODO:
 
-  * Switch to Solr.
+  * iPad compatibility... Viewer and workspace?
+
+  * Related links in the Doc Viewer.
+  
+  * Last 5 documents and pages/minute in the Admin view.
+
+  * Fix RightAWS because they're not going to fix it for us. Deprecation warnings,
+    better retry handling, descriptions on snapshots, etc.
 
   * Update CloudCrowd with a new release.
   
