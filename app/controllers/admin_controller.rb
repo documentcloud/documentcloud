@@ -6,7 +6,7 @@ class AdminController < ApplicationController
   # The Admin Dashboard
   def index
     @documents_by_access    = DC::Statistics.documents_by_access.to_json
-    @average_entity_count   = DC::Statistics.average_entity_count.to_json
+    @pages_per_minute       = DC::Statistics.pages_per_minute.to_json
     @average_page_count     = DC::Statistics.average_page_count.to_json
     @total_pages            = DC::Statistics.total_pages.to_json
     @daily_documents        = keys_to_timestamps(DC::Statistics.daily_documents(2.weeks.ago)).to_json
