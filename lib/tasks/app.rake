@@ -16,9 +16,13 @@ namespace :app do
     sh "curl -s -u guest:docsforall http://localhost:80 > /dev/null"
   end
 
-  desc "Update the Rails application and regenerate static assets"
+  desc "Update the Rails application"
   task :update do
     sh 'git pull'
+  end
+
+  desc "Repackage static assets"
+  task :jammit do
     config = YAML.load_file("#{Rails.root}/config/document_cloud.yml")[RAILS_ENV]
     sh "sudo su www-data -c \"jammit -u #{config['server_root']}\""
   end

@@ -2,14 +2,14 @@ namespace :deploy do
 
   desc "Deploy and migrate the database, then restart CloudCrowd"
   task :full do
-    run_deploy(["app:update", "db:migrate", "app:restart", "app:warm"], app_servers)
-    run_deploy(["crowd:server:restart"], central_servers)
-    run_deploy(["crowd:node:restart"], worker_servers)
+    run_deploy(["app:update", "app:jammit", "db:migrate", "app:restart", "app:warm"], app_servers)
+    run_deploy(["app:update", "crowd:server:restart"], central_servers)
+    run_deploy(["app:update", "crowd:node:restart"], worker_servers)
   end
 
   desc "Deploy the Rails application"
   task :app do
-    run_deploy(["app:update", "app:restart", "app:warm"], app_servers)
+    run_deploy(["app:update", "app:jammit", "app:restart", "app:warm"], app_servers)
   end
 
 end
@@ -45,17 +45,12 @@ def configuration
   end
 end
 
-def host
-  case RAILS_ENV
-  when 'staging'    then 'staging.dcloud.org'
-  when 'production' then 'www.documentcloud.org'
-  end
-end
-
 def run_deploy(commands, machines)
   conf = configuration
   todo = []
   todo << "cd #{conf[:dir]}"
   todo << "rake #{RAILS_ENV} #{commands.join(' ')}"
-  system "ssh -t -i #{conf[:key]} #{conf[:user]}@#{host} '#{todo.join(' && ')}'"
+  machines.each do |host|
+    system "ssh -t -i #{conf[:key]} #{conf[:user]}@#{host} '#{todo.join(' && ')}'"
+  end
 end
