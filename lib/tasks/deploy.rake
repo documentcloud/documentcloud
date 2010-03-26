@@ -1,33 +1,61 @@
-desc "Deploy via Git to EC2, including CloudCrowd restarts and migrations"
-task :full_deploy do
-  tasks = []
-  tasks += ["crowd:server:restart", "crowd:node:restart"] if RAILS_ENV == 'staging'
-  tasks += ["db:migrate", "app:restart", "app:warm"]
-  run_deploy(*tasks)
-end
+namespace :deploy do
 
-desc "Deploy via Git to EC2, only the core application"
-task :deploy do
-  run_deploy("app:restart", "app:warm")
+  desc "Deploy and migrate the database, then restart CloudCrowd"
+  task :full do
+    run_deploy(["app:update", "db:migrate", "app:restart", "app:warm"], app_servers)
+    run_deploy(["crowd:server:restart"], central_servers)
+    run_deploy(["crowd:node:restart"], worker_servers)
+  end
+
+  desc "Deploy the Rails application"
+  task :app do
+    run_deploy(["app:update", "app:restart", "app:warm"], app_servers)
+  end
+
 end
 
 
 private
 
-def run_deploy(*commands)
-  host = "#{RAILS_ENV}.dcloud.org"
-  user = 'ubuntu'
-  dir  = '~/document-cloud'
-  key  = 'config/server/keys/documentcloud.pem'
-  if RAILS_ENV == 'staging'
-    user = 'root'
-    dir  = '/web/document-cloud'
-    key  = 'config/server/keys/staging.pem'
+def app_servers
+  case RAILS_ENV
+  when 'staging'    then ['staging.dcloud.org']
+  when 'production' then ['app01.documentcloud.org']
   end
+end
+
+def central_servers
+  case RAILS_ENV
+  when 'staging'    then ['staging.dcloud.org']
+  when 'production' then ['db01.documentcloud.org']
+  end
+end
+
+def worker_servers
+  case RAILS_ENV
+  when 'staging'    then ['staging.dcloud.org']
+  when 'production' then ['db01.documentcloud.org', 'worker01.documentcloud.org']
+  end
+end
+
+def configuration
+  case RAILS_ENV
+  when 'staging'    then {:user => 'root', :dir => '/web/document-cloud', :key => 'config/server/keys/staging.pem'}
+  when 'production' then {:user => 'ubuntu', :dir => '~/document-cloud', :key => 'config/server/keys/documentcloud.pem'}
+  end
+end
+
+def host
+  case RAILS_ENV
+  when 'staging'    then 'staging.dcloud.org'
+  when 'production' then 'www.documentcloud.org'
+  end
+end
+
+def run_deploy(commands, machines)
+  conf = configuration
   todo = []
-  todo << "cd #{dir}"
-  todo << 'git pull'
-  todo << "sudo su www-data -c \"jammit -u http://#{host}\""
+  todo << "cd #{conf[:dir]}"
   todo << "rake #{RAILS_ENV} #{commands.join(' ')}"
-  system "ssh -t -i #{key} #{user}@#{host} '#{todo.join(' && ')}'"
+  system "ssh -t -i #{conf[:key]} #{conf[:user]}@#{host} '#{todo.join(' && ')}'"
 end
