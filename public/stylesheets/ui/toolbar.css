@@ -29,14 +29,6 @@
   background-position: 0 1px;
 }
 
-#toolbar_info {
-  font: italic 11px/20px Arial;
-  color: #777;
-  height: 20px; overflow: hidden;
-  position: absolute;
-  left: 370px; right: 160px;
-}
-
 #calais_credits {
   display: none;
   position: absolute;

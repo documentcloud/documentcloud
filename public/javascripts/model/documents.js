@@ -23,6 +23,15 @@ dc.model.Document = dc.Model.extend({
     window.open(this.get('pdf_url'));
   },
 
+  // Is the document editable by the current account?
+  allowedToEdit : function() {
+    var acc = Accounts.current();
+    if (this.get('account_id') == acc.id ||
+        (this.get('organization_id') == acc.get('organization_id') && acc.isAdmin())) return true;
+    dc.ui.Dialog.alert("You don't have permission to change \"" + this.get('title') + "\"");
+    return false;
+  },
+
   checkBusy : function() {
     if (!(this.get('access') == dc.access.PENDING)) return false;
     dc.ui.Dialog.alert('"' + this.get('title') + '" is still being processed. Please wait for it to finish.');
@@ -83,6 +92,10 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 
   pending : function() {
     return _.select(this.models(), function(doc){ return doc.isPending(); });
+  },
+
+  allowedToEditSelected : function() {
+    return !_.any(this.selected(), function(doc) { return !doc.allowedToEdit(); });
   },
 
   downloadSelectedViewers : function() {

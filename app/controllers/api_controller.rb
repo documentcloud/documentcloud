@@ -32,7 +32,7 @@ class ApiController < ApplicationController
   # file, title, access, source, description.
   def upload
     return bad_request unless params[:file] && params[:title] && current_account
-    render :json => Document.upload(params, current_account).canonical
+    render :json => Document.upload(params, current_account, current_organization).canonical
   end
 
 end

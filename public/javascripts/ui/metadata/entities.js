@@ -43,7 +43,6 @@ dc.ui.Entities = dc.View.extend({
     this._menu.setLabel('Connections');
     $(document.body).removeClass('visualize');
     $(this.el).html('').hide();
-    dc.app.toolbar.setInfo(null);
     dc.history.save(dc.app.searchBox.urlFragment());
   },
 
@@ -88,8 +87,6 @@ dc.ui.Entities = dc.View.extend({
     });
     var docCount = Documents.countSelected();
     $(this.el).html(html.join(''));
-    var message = "Displaying " + this._metaCount + ' entities from ' + docCount + ' selected ' + Inflector.pluralize('document', docCount) + '.';
-    dc.app.toolbar.setInfo(message);
     this.setCallbacks();
   },
 

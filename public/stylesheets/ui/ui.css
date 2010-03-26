@@ -152,16 +152,16 @@ textarea.text_area {
   -webkit-box-shadow: 0 0 2px #000; -moz-box-shadow: 0 0 1px #000;
 }
   .minibutton:hover, .minibutton.is_open {
-    -webkit-box-shadow: 0 0 4px #333; -moz-box-shadow: 0 0 4px #333;
+    -webkit-box-shadow: 0 0 5px #333; -moz-box-shadow: 0 0 5px #333;
   }
   .minibutton::selection, .minibutton > span::selection {
     background: transparent;
   }
-  .minibutton.disabled {
+  .minibutton.not_enabled {
     opacity: 0.33; filter: alpha(opacity=33);
     cursor: default;
   }
-    .minibutton.disabled:hover {
+    .minibutton.not_enabled:hover {
       -webkit-box-shadow: 0 0 1px #000; -moz-box-shadow: 0 0 1px #000;
     }
 

@@ -8,7 +8,8 @@ dc.ui.Toolbar = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments', '_registerDocument', '_deleteSelectedDocuments', 'display');
+    _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments', '_registerDocument', '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription', 'display');
+    this.editMenu         = this._createEditMenu();
     this.downloadMenu     = this._createDownloadMenu();
     this.manageMenu       = this._createManageMenu();
     this.connectionsMenu  = this._createConnectionsMenu();
@@ -19,11 +20,11 @@ dc.ui.Toolbar = dc.View.extend({
   render : function() {
     var el = $(this.el);
     el.html(JST.workspace_toolbar({}));
+    $('.edit_menu_container', el).append(this.editMenu.render().el);
     $('.download_menu_container', el).append(this.downloadMenu.render().el);
     $('.manage_menu_container', el).append(this.manageMenu.render().el);
     $('.connections_menu_container', el).append(this.connectionsMenu.render().el);
     $('.project_menu_container', el).append(this.projectMenu.render().el);
-    this.infoEl = $('#toolbar_info', el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
     this.setCallbacks();
     return this;
@@ -31,7 +32,9 @@ dc.ui.Toolbar = dc.View.extend({
 
   display : function() {
     var count = $('.document.is_selected').length;
-    count > 0 ? this.show() : this.hide();
+    if (count <= 0) return this.hide();
+    count > 1 ? this.editMenu.disable() : this.editMenu.enable();
+    this.show();
   },
 
   hide : function() {
@@ -44,16 +47,38 @@ dc.ui.Toolbar = dc.View.extend({
     $(this._panel()).setMode('open', 'toolbar');
   },
 
-  setInfo : function(message) {
-    this.infoEl.toggle(!!message);
-    this.infoEl.html(message || '');
-  },
-
   notifyProjectChange : function(projectName, numDocs, removal) {
     var prefix = removal ? 'removed ' : 'added ';
     var prep   = removal ? ' from "'  : ' to "';
     var notification = prefix + numDocs + ' ' + Inflector.pluralize('document', numDocs) + prep + projectName + '"';
     dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.projectMenu.el, position : '-top right', top : -1, left : 10});
+  },
+
+  editTitle : function() {
+    if (!Documents.allowedToEditSelected()) return;
+    var doc = Documents.selected()[0];
+    dc.ui.Dialog.prompt('Title', doc.get('title'), function(title) {
+      Documents.update(doc, {title : title});
+      return true;
+    }, true);
+  },
+
+  editSource : function() {
+    if (!Documents.allowedToEditSelected()) return;
+    var doc = Documents.selected()[0];
+    dc.ui.Dialog.prompt('Source', doc.get('source'), function(source) {
+      Documents.update(doc, {source : source});
+      return true;
+    }, true);
+  },
+
+  editDescription : function() {
+    if (!Documents.allowedToEditSelected()) return;
+    var doc = Documents.selected()[0];
+    dc.ui.Dialog.prompt('Description', doc.get('description'), function(description) {
+      Documents.update(doc, {description : description});
+      return true;
+    });
   },
 
   _updateSelectedDocuments : function(project) {
@@ -71,6 +96,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _deleteSelectedDocuments : function() {
+    if (!Documents.allowedToEditSelected()) return;
     var docs = Documents.selected();
     var message = 'Really delete ' + docs.length + ' ' + Inflector.pluralize('document', docs.length) + '?';
     dc.ui.Dialog.confirm(message, _.bind(function() {
@@ -106,6 +132,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _setSelectedAccess : function(access) {
+    if (!Documents.allowedToEditSelected()) return;
     var docs = Documents.selected();
     _.each(docs, function(doc) { Documents.update(doc, {access : access}); });
     var notification = 'access updated for ' + docs.length + ' ' + Inflector.pluralize('document', docs.length);
@@ -123,6 +150,17 @@ dc.ui.Toolbar = dc.View.extend({
         // {title : 'Download Document Viewer', onClick : Documents.downloadSelectedViewers},
         {title : 'Download as PDF',          onClick : Documents.downloadSelectedPDF},
         {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
+      ]
+    });
+  },
+
+  _createEditMenu : function() {
+    return new dc.ui.Menu({
+      label   : 'Edit',
+      items   : [
+        {title : 'Edit Title',        onClick : this.editTitle},
+        {title : 'Edit Source',       onClick : this.editSource},
+        {title : 'Edit Description',  onClick : this.editDescription}
       ]
     });
   },

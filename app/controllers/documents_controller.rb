@@ -30,17 +30,27 @@ class DocumentsController < ApplicationController
 
   def update
     doc = current_document(true)
+    if !current_account.owns_or_administers?(doc)
+      doc.errors.add_to_base "You don't have permission to update the document."
+      return json(doc, 403)
+    end
     json = JSON.parse(params[:json]).symbolize_keys
     access = json[:access] && json[:access].to_i
     doc.set_access(access) if access && current_document.access != access
     doc.update_attributes(:description => json[:description]) if json[:description]
     doc.update_attributes(:title => json[:title])             if json[:title]
+    doc.update_attributes(:source => json[:source])           if json[:source]
     doc.update_attributes(:remote_url => json[:remote_url])   if json[:remote_url]
     json doc
   end
 
   def destroy
-    current_document(true).destroy
+    doc = current_document(true)
+    if !current_account.owns_or_administers?(doc)
+      doc.errors.add_to_base "You don't have permission to delete the document."
+      return json(doc, 403)
+    end
+    doc.destroy
     json nil
   end
 

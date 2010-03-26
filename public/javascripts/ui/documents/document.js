@@ -23,6 +23,7 @@ dc.ui.Document = dc.View.extend({
   },
 
   render : function() {
+    var me = this;
     var title = this.model.get('title');
     var data = _.clone(this.model.attributes());
     data = _.extend(data, {
@@ -33,6 +34,7 @@ dc.ui.Document = dc.View.extend({
     $(this.el).html(JST.document_tile(data));
     $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.notesEl = $('.notes', this.el);
+    this.model.notes.each(function(note){ me._addNote(null, note); });
     if (!this.options.noCallbacks) this.setCallbacks();
     this.setMode(dc.access.NAMES[this.model.get('access')], 'access');
     this._setSelected();

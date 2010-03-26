@@ -1,5 +1,9 @@
 dc.ui.AdminAccounts = dc.View.extend({
 
+  // Keep in sync with account.rb
+  ADMINISTRATOR : 1,
+  CONTRIBUTOR   : 2,
+
   callbacks : {},
 
   constructor : function(options) {
@@ -13,6 +17,10 @@ dc.ui.AdminAccounts = dc.View.extend({
     });
     $('tbody', this.el).append(rows);
     return this;
+  },
+
+  isAdmin : function() {
+    return this.get('role') == this.ADMINISTRATOR;
   }
 
 });

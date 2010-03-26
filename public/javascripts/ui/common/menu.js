@@ -35,7 +35,8 @@ dc.ui.Menu = dc.View.extend({
 
   open : function() {
     var content = this.content;
-    if (this.modes.open == 'is') return;
+    if (this.modes.enabled == 'not') return false;
+    if (this.modes.open == 'is')     return this.close();
     this.setMode('is', 'open');
     if (this.options.onOpen) this.options.onOpen(this);
     content.show();
@@ -48,6 +49,14 @@ dc.ui.Menu = dc.View.extend({
     if (e && this.options.onClose && !this.options.onClose(e)) return false;
     this.setMode('not', 'open');
     return true;
+  },
+
+  enable : function() {
+    this.setMode('is', 'enabled');
+  },
+
+  disable : function() {
+    this.setMode('not', 'enabled');
   },
 
   // Show the menu button as being currently open, with another click required

@@ -1,11 +1,15 @@
 class Document < ActiveRecord::Base
   include DC::Access
 
-  attr_accessor :highlight, :annotation_count, :organization_name, :account_name
+  attr_accessor :highlight, :annotation_count
+  attr_writer   :organization_name, :account_name
 
   SEARCHABLE_ATTRIBUTES = [:title, :source, :documents, :notes, :contributor]
 
   DEFAULT_TITLE = "Untitled Document"
+
+  belongs_to :account
+  belongs_to :organization
 
   has_one  :full_text,      :dependent => :destroy
   has_many :pages,          :dependent => :destroy
@@ -36,7 +40,7 @@ class Document < ActiveRecord::Base
   named_scope :unrestricted,  :conditions => {:access => PUBLIC}
   named_scope :restricted,    :conditions => {:access => [PRIVATE, ORGANIZATION, EXCLUSIVE]}
 
-  # Restrict accessible documents for a given account/organzation.
+  # Restrict accessible documents for a given account/organization.
   # Either the document itself is public, or it belongs to us, or it belongs to
   # our organization and we're allowed to see it.
   named_scope :accessible, lambda { |account, org|
@@ -96,13 +100,13 @@ class Document < ActiveRecord::Base
   end
 
   # Upload a new document, starting the import process.
-  def self.upload(params, account)
+  def self.upload(params, account, organization)
     access = params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE
     doc = self.create!(
       :title            => params[:title],
       :source           => params[:source],
       :description      => params[:description],
-      :organization_id  => account.organization_id,
+      :organization_id  => organization.id,
       :account_id       => account.id,
       :access           => DC::Access::PENDING,
       :page_count       => 0
@@ -151,6 +155,14 @@ class Document < ActiveRecord::Base
     Page.update_all(*sql)
     Entity.update_all(*sql)
     EntityDate.update_all(*sql)
+  end
+
+  def organization_name
+    @organization_name ||= organization.name
+  end
+
+  def account_name
+    @account_name ||= account.full_name
   end
 
   # Ex: docs/1011
