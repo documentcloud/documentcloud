@@ -2,7 +2,7 @@
 dc.ui.Document = dc.View.extend({
 
   // To display if the document failed to upload.
-  ERROR_MESSAGE : "The document failed to upload successfully. We've been notified of the problem.\
+  ERROR_MESSAGE : "The document failed to import successfully. We've been notified of the problem.\
     You can try deleting this document, re-saving the PDF with Acrobat or Preview, and reducing the file size before uploading again.",
 
   className : 'document',
