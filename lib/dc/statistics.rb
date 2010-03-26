@@ -43,7 +43,7 @@ module DC
       pages_per_minute = docs.map do |doc|
         doc.page_count / ((doc.updated_at - doc.created_at) / 1.minute)
       end
-      (pages_per_minute.inject(0) {|sum, per| sum + per } / 5).round(1)
+      (pages_per_minute.inject(0) {|sum, per| sum + per } / 5).round
     end
 
     # Count the total number of documents, grouped by access level.
