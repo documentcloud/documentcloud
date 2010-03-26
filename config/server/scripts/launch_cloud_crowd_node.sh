@@ -8,4 +8,4 @@ export DEBIAN_FRONTEND=noninteractive
 USERNAME=ubuntu
 
 cd /home/$USERNAME/document-cloud
-rake production crowd:node:start
+su $USERNAME -c "rake production crowd:node:start"
