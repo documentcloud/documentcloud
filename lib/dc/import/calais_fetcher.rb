@@ -54,6 +54,11 @@ module DC
           Rails.logger.warn 'waiting 10 seconds'
           sleep 10
           retry
+        rescue RuntimeError => e
+          return nil if e.message == 'content is too large'
+          puts e.message
+          puts e.class
+          raise e
         rescue Exception => e
           puts e.message
           puts e.class
