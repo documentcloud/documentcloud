@@ -20,9 +20,7 @@ TODO:
   * Implement the "publication" workflow. A document should know if it's been
     published, and the URL where. Create a cron/cloudcrowd job that pings each
     published document, ensuring that it's not 404'd.
-      
-  * Real deploys -- Vlad? Deploy more small CC nodes, and move it to the nodes.
-  
+        
   * Start a suite of Cron scripts, backup being the first.
 
   * Make search degrade gracefully in the viewer, when DocumentCloud is down.
@@ -45,6 +43,8 @@ TODO:
 
 DONE: 
 
+  * Real deploys -- Rake. Deploy more small CC nodes, and move it to the nodes.
+  
   * Bump Underscore to version 1.0.
 
   * Fix the description toggle -- hide empty descriptions in the viewer.
