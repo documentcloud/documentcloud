@@ -5,8 +5,8 @@ PATH=$PATH:/var/lib/gems/1.8/bin/
 
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get update
-apt-get -y upgrade
+# apt-get update
+# apt-get -y upgrade
 
 USERNAME=ubuntu
 
@@ -19,4 +19,4 @@ chown -R $USERNAME /home/$USERNAME
 
 # TODO warm cache
 
-updatedb
+# updatedb
