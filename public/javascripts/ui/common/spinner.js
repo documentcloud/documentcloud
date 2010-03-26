@@ -6,12 +6,12 @@ dc.ui.spinner = {
     this.ensureElement();
     message = message || "Loading";
     // this.messageContainer.html(message);
-    this.el.fadeIn('fast');
+    this.el.stop(true, true).fadeIn('fast');
   },
 
   hide : function() {
     this.ensureElement();
-    this.el.fadeOut('fast', function(){ $(this).css({display : 'none'}); });
+    this.el.stop(true, true).fadeOut('fast', function(){ $(this).css({display : 'none'}); });
   },
 
   ensureElement : function() {

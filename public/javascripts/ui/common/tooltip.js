@@ -34,11 +34,11 @@ dc.ui.Tooltip = dc.View.extend({
   },
 
   fadeIn : function() {
-    $.browser.msie ? $(this.el).show() : $(this.el).fadeIn('fast');
+    $.browser.msie ? $(this.el).show() : $(this.el).stop(true, true).fadeIn('fast');
   },
 
   fadeOut : function() {
-    $.browser.msie ? $(this.el).hide() : $(this.el).fadeOut('fast');
+    $.browser.msie ? $(this.el).hide() : $(this.el).stop(true, true).fadeOut('fast');
   },
 
   defaultOptions : function() {
