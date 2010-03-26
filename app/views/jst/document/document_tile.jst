@@ -15,8 +15,8 @@
   }
 %>
 <div class="source">
-  Source: <%= source %>, 
-  Contributed by: <%= organization_name %><span class="page_count">, <%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span><%= notes %>
+  Source: <%= source %> -
+  Contributed by: <%= account_name %>, <%= organization_name %><span class="page_count"> - <%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span><%= notes %>
 </div>
 <div class="description"><%= description %></div>
 

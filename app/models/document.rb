@@ -1,7 +1,7 @@
 class Document < ActiveRecord::Base
   include DC::Access
 
-  attr_accessor :highlight, :annotation_count, :organization_name
+  attr_accessor :highlight, :annotation_count, :organization_name, :account_name
 
   SEARCHABLE_ATTRIBUTES = [:title, :source, :documents, :notes, :contributor]
 
@@ -304,6 +304,7 @@ class Document < ActiveRecord::Base
       'highlight'           => highlight,
       'annotation_count'    => annotation_count,
       'organization_name'   => organization_name,
+      'account_name'        => account_name,
       'pdf_url'             => pdf_url,
       'thumbnail_url'       => thumbnail_url,
       'full_text_url'       => full_text_url,

@@ -32,6 +32,14 @@ class Account < ActiveRecord::Base
     account
   end
 
+  # Retrieve the names of the contributors for the result set of documents.
+  def self.names_for_documents(docs)
+    ids = docs.map {|doc| doc.account_id }.uniq
+    self.all(:conditions => {:id => ids}, :select => 'id, first_name, last_name').inject({}) do |hash, acc|
+      hash[acc.id] = acc.full_name; hash
+    end
+  end
+
   # Save this account as the current account in the session. Logs a visitor in.
   def authenticate(session)
     session['account_id'] = id
