@@ -64,6 +64,7 @@ module DC
         end
         @results = doc_proxy.chronological.all(options)
         populate_annotation_counts
+        populate_organization_names
         populate_highlights if DC_CONFIG['include_highlights']
         self
       end
@@ -78,9 +79,16 @@ module DC
 
       # Stash the number of notes per-document on the document models.
       def populate_annotation_counts
-        return false unless has_results?
+        return false unless has_results? && @account
         counts = Annotation.counts_for_documents(@account, @results)
         @results.each {|doc| doc.annotation_count = counts[doc.id] }
+      end
+
+      # Stash the name of the organization per-document on the models.
+      def populate_organization_names
+        return false unless has_results?
+        names = Organization.names_for_documents(@results)
+        @results.each {|doc| doc.organization_name = names[doc.organization_id] }
       end
 
       # The JSON representation of a query contains all the structured aspects

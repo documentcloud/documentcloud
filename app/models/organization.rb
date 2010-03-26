@@ -9,6 +9,14 @@ class Organization < ActiveRecord::Base
   validates_uniqueness_of :name, :slug
   validates_format_of :slug, :with => DC::Validators::SLUG
 
+  # Retrieve the names of the organizations for the result set of documents.
+  def self.names_for_documents(docs)
+    ids = docs.map {|doc| doc.organization_id }.uniq
+    self.all(:conditions => {:id => ids}, :select => 'id, name').inject({}) do |hash, org|
+      hash[org.id] = org.name; hash
+    end
+  end
+
   # How many documents have been uploaded across the whole organization?
   def document_count
     Document.count(:conditions => {:organization_id => id})

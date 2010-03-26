@@ -14,7 +14,10 @@
     notes = ', <span class="show_notes"><span class="show">show</span><span class="hide">hide</span> <span class="count">' + annotation_count + '</span> ' + notes + '</span>';
   }
 %>
-<div class="source">Source: <%= source %><span class="page_count">, <%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span><%= notes %></div>
+<div class="source">
+  Source: <%= source %>, 
+  Contributed by: <%= organization_name %><span class="page_count">, <%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span><%= notes %>
+</div>
 <div class="description"><%= description %></div>
 
 <div class="notes"></div>
