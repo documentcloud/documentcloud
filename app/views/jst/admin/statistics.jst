@@ -59,10 +59,11 @@
           </thead>
           <tbody>
             <% _.each(stats.instances, function(instance) { %>
+              <% var id = instance.aws_instance_id; %>
               <tr>
                 <td><%= instance.aws_instance_type %></td>
-                <td><%= instance_tags[instance.aws_instance_id] || '&mdash;' %></td>
-                <td><%= instance.aws_instance_id %></td>
+                <td><%= instance_tags[id] || '<div class="icon minus" data-id="' + id + '"></div>' %></td>
+                <td><%= id %></td>
                 <td><%= instance.aws_state %></td>
                 <td><%= instance.dns_name %></td>
                 <td><%= instance.private_dns_name %></td>

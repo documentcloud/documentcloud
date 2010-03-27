@@ -45,6 +45,13 @@ class AdminController < ApplicationController
     json nil
   end
 
+  # Terminate an EC2 instance.
+  def terminate_instance
+    return bad_request unless request.post? && params[:instance]
+    DC::AWS.new.terminate_instance(params[:instance])
+    json nil
+  end
+
   def reprocess_failed_documents
     Document.failed.all(:order => 'created_at DESC').each do |doc|
       doc.queue_import

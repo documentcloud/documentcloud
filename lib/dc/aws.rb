@@ -87,6 +87,11 @@ module DC
       Rails.logger.info "ssh #{ssh_options} #{new_instance[:dns_name]}"
     end
 
+    # Terminate an instance on EC2
+    def terminate_instance(instance_id)
+      @ec2.terminate_instances([instance_id])
+    end
+
   end
 
 end

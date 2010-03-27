@@ -24,7 +24,8 @@ dc.ui.Statistics = dc.View.extend({
   className : 'serif',
 
   callbacks : {
-    '.chart.plothover': '_showTooltop'
+    '.chart.plothover':        '_showTooltop',
+    '#instances .minus.click': '_terminateInstance'
   },
 
   constructor : function(options) {
@@ -91,6 +92,16 @@ dc.ui.Statistics = dc.View.extend({
     dc.ui.Dialog.confirm('Are you sure you want to re-import all failed documents?', function() {
       $.post('/admin/reprocess_failed_documents', function() {
         window.location.reload(true);
+      });
+      return true;
+    });
+  },
+
+  _terminateInstance : function(e) {
+    var instanceId = $(e.target).attr('data-id');
+    dc.ui.Dialog.confirm('Are you sure you want to terminate instance <b>' + instanceId + '</b>?', function() {
+      $.post('/admin/terminate_instance', {instance: instanceId}, function() {
+        dc.ui.Dialog.alert('Instance <b>' + instanceId + '</b> is shutting down.');
       });
       return true;
     });

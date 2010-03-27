@@ -80,3 +80,8 @@
       #statistics .data table .document_count .private {
         color: #844;
       }
+
+.icon.minus {
+  position: absolute; margin-top: 5px;
+  cursor: pointer;
+}
