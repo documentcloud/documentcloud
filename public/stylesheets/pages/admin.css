@@ -85,7 +85,7 @@
       }
         #statistics #documents td.first {
           width: 30px; height: 37.5px;
-          padding: 7px 15px 7px 0;
+          padding: 7px 0 7px 0;
         }
         #statistics #documents .doc {
           width: 30px; height: 37.5px;
