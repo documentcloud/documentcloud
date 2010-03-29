@@ -80,6 +80,40 @@
 
     <tr class="data">
       <td colspan="4">
+        <table id="documents">
+          <thead>
+            <td class="first">Cover</td>
+            <td>ID</td>
+            <td>Title</td>
+            <td>Contributor</td>
+            <td>Organization</td>
+            <td>Source</td>
+            <td>Pages</td>
+            <td></td>
+          </thead>
+          <tbody>
+            <% _.each(Documents.models(), function(doc) { %>
+              <tr>
+                <td class="first"><img class="doc" src="<%= doc.get('thumbnail_url') %>" /></td>
+                <td><%= doc.get('id') %></td>
+                <td><%= doc.get('title') || '<i>private</i>' %></td>
+                <td><%= doc.get('account_name') %></td>
+                <td><%= doc.get('organization_name') %></td>
+                <td><%= doc.get('source') || '<i>private</i>' %></td>
+                <td><%= doc.get('page_count') %></td>
+                <td class="last"></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr class="labels">
+      <td colspan="4">Most Recent 5 Uploaded Documents</td>
+    </tr>
+
+    <tr class="data">
+      <td colspan="4">
         <div id="accounts_wrapper">
         </div>
       </td>

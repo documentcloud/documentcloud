@@ -80,6 +80,16 @@
       #statistics .data table .document_count .private {
         color: #844;
       }
+      #statistics #documents tbody tr td {
+        line-height: 40px;
+      }
+        #statistics #documents td.first {
+          width: 30px; height: 37.5px;
+          padding: 7px 15px 7px 0;
+        }
+        #statistics #documents .doc {
+          width: 30px; height: 37.5px;
+        }
 
 .icon.minus {
   position: absolute; margin-top: 5px;

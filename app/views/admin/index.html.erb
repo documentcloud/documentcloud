@@ -22,6 +22,7 @@
 
   Accounts.populate(<%= @accounts %>);
   Organizations.populate(<%= @organizations %>);
+  Documents.populate(<%= @documents %>);
 
   $(function(){
     $('#content').append((new dc.ui.Statistics()).render().el);

@@ -39,6 +39,7 @@ class Document < ActiveRecord::Base
   named_scope :failed,        :conditions => {:access => ERROR}
   named_scope :unrestricted,  :conditions => {:access => PUBLIC}
   named_scope :restricted,    :conditions => {:access => [PRIVATE, ORGANIZATION, EXCLUSIVE]}
+  named_scope :finished,      :conditions => {:access => [PUBLIC, PRIVATE, ORGANIZATION, EXCLUSIVE]}
 
   # Restrict accessible documents for a given account/organization.
   # Either the document itself is public, or it belongs to us, or it belongs to
@@ -324,6 +325,19 @@ class Document < ActiveRecord::Base
       'document_viewer_url' => document_viewer_url,
       'remote_url'          => remote_url
     }.to_json
+  end
+
+  # The filtered attributes we're allowed to display in the admin UI.
+  def admin_attributes
+    {
+      'id'                => id,
+      'account_name'      => account_name,
+      'organization_name' => organization_name,
+      'page_count'        => page_count,
+      'thumbnail_url'     => thumbnail_url,
+      'title'             => public? ? title : nil,
+      'source'            => public? ? source : nil
+    }
   end
 
   def canonical(options={})
