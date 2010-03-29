@@ -39,7 +39,7 @@ module DC
     # The pages/per/minute we've processed for the last ten documents.
     # Super-approximate.
     def self.pages_per_minute
-      docs = Document.chronological.all(:limit => 5, :select => 'created_at, updated_at, page_count')
+      docs = Document.finished.chronological.all(:limit => 5, :select => 'created_at, updated_at, page_count')
       pages_per_minute = docs.map do |doc|
         doc.page_count / ((doc.updated_at - doc.created_at) / 1.minute)
       end
