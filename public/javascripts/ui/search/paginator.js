@@ -44,8 +44,10 @@ dc.ui.Paginator = dc.View.extend({
     var from = this.query.from, to = this.query.to;
     links = [];
     links.push($.el('span', {'class' : 'description'}, this.sentence()));
+    var start = this.page > 4 ? this.page - 4 : 1;
+    var end   = this.pageCount() > this.page + 5 ? this.page + 5 : this.pageCount();
     if (from > 0) links.push(this.prevEl);
-    for (var i=1; i<=this.pageCount(); i++) {
+    for (var i=start; i<=end; i++) {
       var pageLink = $.el('span', {'class' : 'page_link ' + (i == this.page ? ' current' : '')}, i);
       pageLink.page = i;
       links.push(pageLink);
