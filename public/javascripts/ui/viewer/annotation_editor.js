@@ -21,10 +21,12 @@ dc.ui.AnnotationEditor = dc.View.extend({
     this._buttons[kind] = $('#control_panel .' + kind + '_annotation');
     this.pages          = $('#DV-pages');
     this.page           = $('.DV-page');
+    this._guide         = this._guide || $('#annotation_guide');
     this.page.css({cursor : 'crosshair'});
     this.page.bind('mousedown', this.drawAnnotation);
     $(document).bind('keydown', this.close);
     this._buttons[kind].addClass('open');
+    this._guide.fadeIn('fast');
   },
 
   close : function() {
@@ -34,6 +36,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
     $(document).unbind('keydown', this.close);
     this.clearAnnotation();
     this._buttons[this._kind].removeClass('open');
+    this._guide.fadeOut('fast');
   },
 
   toggle : function(kind) {
