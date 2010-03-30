@@ -2,8 +2,6 @@ TODO:
 
   * Desktop-style Document icon selection in the workspace...
 
-  * Help text for dragging annotations in the doc viewer.
-
   * iPad compatibility... Viewer and workspace?
 
   * Related article links in the Doc Viewer.
@@ -53,6 +51,8 @@ TODO:
   
 
 DONE: 
+
+  * Help text for dragging annotations in the doc viewer.
 
   * Real deploys -- Rake. Deploy more small CC nodes, and move it to the nodes.
   

@@ -2,7 +2,7 @@ class DocumentsController < ApplicationController
   layout nil
 
   before_filter(:bouncer, :only => [:show]) if Rails.env.staging?
-  before_filter :login_required, :except => [:show]
+  before_filter :login_required, :except => [:show, :send_pdf, :send_page_image, :send_page_text]
 
   caches_page :loader
 
