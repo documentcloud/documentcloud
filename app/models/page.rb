@@ -22,7 +22,7 @@ class Page < ActiveRecord::Base
 
   delegate :pages_path, :to => :document
 
-  default_scope :order => 'page_number'
+  # default_scope :order => 'page_number'
 
   before_update :track_text_changes
 
