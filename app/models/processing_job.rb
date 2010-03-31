@@ -15,7 +15,7 @@ class ProcessingJob < ActiveRecord::Base
 
   # Fetch the current status of the job from CloudCrowd.
   def fetch_job
-    JSON.parse(RestClient.get(url))
+    JSON.parse(RestClient.get(url).body)
   end
 
   # The URL of the Job on CloudCrowd.

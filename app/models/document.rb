@@ -292,7 +292,7 @@ class Document < ActiveRecord::Base
     job = JSON.parse(DC::Import::CloudCrowdImporter.new.import([id], {
       'id'            => id,
       'access'        => eventual_access
-    }))
+    }).body)
     ProcessingJob.create!(
       :document_id    => id,
       :account_id     => account_id,
