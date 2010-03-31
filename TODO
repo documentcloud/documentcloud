@@ -6,8 +6,6 @@ TODO:
 
   * Related article links in the Doc Viewer.
   
-  * Last 5 documents and pages/minute in the Admin view.
-
   * Fix RightAWS because they're not going to fix it for us. Deprecation warnings,
     better retry handling, descriptions on snapshots, etc.
   
@@ -30,25 +28,19 @@ TODO:
         
   * Start a suite of Cron scripts, backup being the first.
 
-  * Make search degrade gracefully in the viewer, when DocumentCloud is down.
-
   * Add a "related documents" search. We need a good algorithm for this.
   
   * Flesh out a more comprehensive API.
   
   * Settle the linked data representation of a document with the semantic web
     folks.
-      
-  * Add lightweight tags for documents and notes (anything searchable).
-      
-  * Think about making search like the Guantanamo docket: http://bit.ly/5UmDty
-    Adding a "search pages" feature.
-    
-  * Add more supporting features to Projects -- they should know statistics 
-    about the documents, notes and entities contained within. Taggable?
   
 
 DONE: 
+
+  * Make search degrade gracefully in the viewer, when DocumentCloud is down.
+
+  * Last 5 documents and pages/minute in the Admin view.
 
   * Update CloudCrowd with a new release (0.4.0).
 
