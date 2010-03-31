@@ -1,5 +1,9 @@
 namespace :crowd do
 
+  task :console do
+    sh "crowd -c config/cloud_crowd/#{RAILS_ENV} -e #{RAILS_ENV} console"
+  end
+
   [:server, :node].each do |resource|
     namespace resource do
 
