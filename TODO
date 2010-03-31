@@ -10,8 +10,6 @@ TODO:
 
   * Fix RightAWS because they're not going to fix it for us. Deprecation warnings,
     better retry handling, descriptions on snapshots, etc.
-
-  * Update CloudCrowd with a new release.
   
   * Write a phone number extractor, and save those as entities.
 
@@ -51,6 +49,8 @@ TODO:
   
 
 DONE: 
+
+  * Update CloudCrowd with a new release (0.4.0).
 
   * Help text for dragging annotations in the doc viewer.
 
