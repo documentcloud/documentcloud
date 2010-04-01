@@ -18,12 +18,12 @@ class SearchParserTest < ActiveSupport::TestCase
     end
 
     should "parse fielded searches into fields" do
-      query = search("country: england country:russia organization: 'A B C D'")
+      query = search("country: england country:russia glump: 'A B C D'")
       assert !query.has_text?
       assert query.has_fields?
       assert query.fields.first.kind == 'country'
       assert query.fields.first.value == 'england'
-      assert query.fields.last.kind == 'organization'
+      assert query.fields.last.kind == 'glump'
       assert query.fields.last.value == 'A B C D'
     end
 
