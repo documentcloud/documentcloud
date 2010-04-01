@@ -22,7 +22,8 @@ module DC
         process_search_text(search_text)
         process_fields_and_projects(bare_fields, quoted_fields)
 
-        SolrQuery.new(:text => @text, :fields => @fields, :projects => @projects, :attributes => @attributes)
+        query_class = @solr ? SolrQuery : Query
+        query_class.new(:text => @text, :fields => @fields, :projects => @projects, :attributes => @attributes)
       end
 
       # Convert the full-text search into a form that our index can handle.
@@ -48,6 +49,8 @@ module DC
 
       # Convert an individual field or attribute search into a DC::Search::Field.
       def process_field(kind, value)
+        # TODO: Remove this if we switch to Solr.
+        return @solr = true if kind == 'solr'
         field = Field.new(match_kind(kind), value.strip)
         (field.attribute? ? @attributes : @fields) << field
       end

@@ -146,7 +146,7 @@ module DC
           else
             @search.build do
               keywords field.value do
-                field.kind
+                fields field.kind
               end
             end
           end
