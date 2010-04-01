@@ -318,6 +318,7 @@ class Document < ActiveRecord::Base
       'annotation_count'    => annotation_count,
       'organization_name'   => organization_name,
       'account_name'        => account_name,
+      'related_article'     => related_article,
       'pdf_url'             => pdf_url,
       'thumbnail_url'       => thumbnail_url,
       'full_text_url'       => full_text_url,

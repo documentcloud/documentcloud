@@ -8,7 +8,9 @@ dc.ui.Toolbar = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments', '_registerDocument', '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription', 'display');
+    _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments',
+      '_registerDocument', '_deleteSelectedDocuments', 'editTitle', 'editSource',
+      'editDescription', 'editRelatedArticle', 'display');
     this.editMenu         = this._createEditMenu();
     this.downloadMenu     = this._createDownloadMenu();
     this.manageMenu       = this._createManageMenu();
@@ -54,30 +56,45 @@ dc.ui.Toolbar = dc.View.extend({
     dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.projectMenu.el, position : '-top right', top : -1, left : 10});
   },
 
-  editTitle : function() {
+  // Wrapper function for safely editing an attribute of a specific document.
+  edit : function(callback) {
     if (!Documents.allowedToEditSelected()) return;
-    var doc = Documents.selected()[0];
-    dc.ui.Dialog.prompt('Title', doc.get('title'), function(title) {
-      Documents.update(doc, {title : title});
-      return true;
-    }, true);
+    return callback(Documents.selected()[0]);
+  },
+
+  editTitle : function() {
+    this.edit(function(doc) {
+      dc.ui.Dialog.prompt('Title', doc.get('title'), function(title) {
+        Documents.update(doc, {title : title});
+        return true;
+      }, true);
+    });
   },
 
   editSource : function() {
-    if (!Documents.allowedToEditSelected()) return;
-    var doc = Documents.selected()[0];
-    dc.ui.Dialog.prompt('Source', doc.get('source'), function(source) {
-      Documents.update(doc, {source : source});
-      return true;
-    }, true);
+    this.edit(function(doc) {
+      dc.ui.Dialog.prompt('Source', doc.get('source'), function(source) {
+        Documents.update(doc, {source : source});
+        return true;
+      }, true);
+    });
   },
 
   editDescription : function() {
-    if (!Documents.allowedToEditSelected()) return;
-    var doc = Documents.selected()[0];
-    dc.ui.Dialog.prompt('Description', doc.get('description'), function(description) {
-      Documents.update(doc, {description : description});
-      return true;
+    this.edit(function(doc) {
+      dc.ui.Dialog.prompt('Description', doc.get('description'), function(description) {
+        Documents.update(doc, {description : description});
+        return true;
+      });
+    });
+  },
+
+  editRelatedArticle : function() {
+    this.edit(function(doc) {
+      dc.ui.Dialog.prompt('Related Article', doc.get('related_article'), function(rel) {
+        Documents.update(doc, {related_article : rel});
+        return true;
+      }, true);
     });
   },
 
@@ -158,9 +175,10 @@ dc.ui.Toolbar = dc.View.extend({
     return new dc.ui.Menu({
       label   : 'Edit',
       items   : [
-        {title : 'Edit Title',        onClick : this.editTitle},
-        {title : 'Edit Source',       onClick : this.editSource},
-        {title : 'Edit Description',  onClick : this.editDescription}
+        {title : 'Edit Title',            onClick : this.editTitle},
+        {title : 'Edit Source',           onClick : this.editSource},
+        {title : 'Edit Description',      onClick : this.editDescription},
+        {title : 'Edit Related Article',  onClick : this.editRelatedArticle}
       ]
     });
   },
