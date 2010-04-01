@@ -343,19 +343,20 @@ class Document < ActiveRecord::Base
 
   def canonical(options={})
     doc = ActiveSupport::OrderedHash.new
-    doc['id']          = "#{id}-#{slug}"
-    doc['title']       = title
-    doc['pages']       = page_count
-    doc['description'] = description
-    doc['resources']   = res = ActiveSupport::OrderedHash.new
-    res['pdf']         = pdf_url
-    res['text']        = full_text_url
-    res['thumbnail']   = thumbnail_url
-    res['search']      = search_url
-    res['page']        = {'image' => page_image_url_template, 'text' => page_text_url_template}
-    doc['sections']    = sections.map(&:canonical)
-    doc['annotations'] = annotations.accessible(options[:account]).map(&:canonical)
-    doc['entities']    = entities.map(&:canonical) if options[:show_entities]
+    doc['id']             = "#{id}-#{slug}"
+    doc['title']          = title
+    doc['pages']          = page_count
+    doc['description']    = description
+    doc['resources']      = res = ActiveSupport::OrderedHash.new
+    res['pdf']            = pdf_url
+    res['text']           = full_text_url
+    res['thumbnail']      = thumbnail_url
+    res['search']         = search_url
+    res['page']           = {'image' => page_image_url_template, 'text' => page_text_url_template}
+    res['related_story']  = related_article
+    doc['sections']       = sections.map(&:canonical)
+    doc['annotations']    = annotations.accessible(options[:account]).map(&:canonical)
+    doc['entities']       = entities.map(&:canonical) if options[:show_entities]
     doc
   end
 
