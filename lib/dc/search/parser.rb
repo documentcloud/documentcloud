@@ -12,7 +12,7 @@ module DC
 
       # Parse a raw query_string, returning a DC::Search::Query that knows
       # about the text, fields, projects, and attributes it's composed of.
-      def parse(query_string)
+      def parse(query_string='')
         @text, @fields, @projects, @attributes = nil, [], [], []
 
         quoted_fields = query_string.scan(Matchers::QUOTED_FIELD).map {|m| m[0] }
