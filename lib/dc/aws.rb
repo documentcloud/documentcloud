@@ -24,7 +24,12 @@ module DC
 
     # Describe the running instances.
     def describe_instances
-      @ec2.describe_instances
+      begin
+        @ec2.describe_instances
+      rescue RightAws::AwsError => e
+        Rails.logger.error e.message
+        []
+      end
     end
 
     # Describe our current snapshots.
