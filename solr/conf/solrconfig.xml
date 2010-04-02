@@ -207,12 +207,11 @@
          maxDocs - number of updates since last commit is greater than this
          maxTime - oldest uncommited update (in ms) is this long ago
          Instead of enabling autoCommit, consider using "commitWithin"
-         when adding documents. http://wiki.apache.org/solr/UpdateXmlMessages
+         when adding documents. http://wiki.apache.org/solr/UpdateXmlMessages -->
     <autoCommit> 
       <maxDocs>10000</maxDocs>
       <maxTime>1000</maxTime> 
     </autoCommit>
-    -->
     <!-- The RunExecutableListener executes an external command from a
       hook such as postCommit or postOptimize.
          exe - the name of the executable to run
@@ -285,7 +284,7 @@
          autowarmCount - the number of entries to prepopulate from
            and old cache.
          -->
-    <filterCache class="solr.FastLRUCache" size="512" initialSize="512" autowarmCount="0"/>
+    <filterCache class="solr.FastLRUCache" size="16384" initialSize="4096" autowarmCount="4096"/>
     <!-- Cache used to hold field values that are quickly accessible
          by document id.  The fieldValueCache is created by default
          even if not configured here.
@@ -379,7 +378,7 @@
     <!-- Maximum number of searchers that may be warming in the background
       concurrently.  An error is returned if this limit is exceeded. Recommend
       1-2 for read-only slaves, higher for masters w/o cache warming. -->
-    <maxWarmingSearchers>2</maxWarmingSearchers>
+    <maxWarmingSearchers>4</maxWarmingSearchers>
   </query>
   <!-- 
     Let the dispatch filter handler /select?qt=XXX

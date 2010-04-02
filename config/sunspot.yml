@@ -5,15 +5,17 @@ development:
     log_level: INFO
 
 staging:
+  auto_commit_after_request: false
   solr:
-    hostname: staging.dcloud.org
-    port: 8983
+    hostname: ec2-75-101-222-118.compute-1.amazonaws.com
+    port: 7377
     log_level: WARNING
 
 production:
+  auto_commit_after_request: false
   solr:
     hostname: ec2-174-129-5-5.compute-1.amazonaws.com
-    port: 8983
+    port: 7377
     log_level: WARNING
 
 test:
