@@ -133,12 +133,12 @@ module DC
       # a way to do arbitrary translations of faux-attributes.
       def build_attributes
         @attributes.each do |field|
-          if ['documents', 'notes'].include?(field.kind)
+          if ['account', 'notes'].include?(field.kind)
             account = Account.find_by_email(field.value)
             @search.build do
               with :account_id, account ? account.id : -1
             end
-          elsif field.kind == 'organization'
+          elsif field.kind == 'group'
             org = Organization.find_by_slug(field.value)
             @search.build do
               with :organization_id, org ? org.id : -1

@@ -23,7 +23,7 @@ dc.model.Account = dc.Model.extend({
   },
 
   openDocuments : function() {
-    dc.app.searchBox.search('documents: ' + this.get('email'));
+    dc.app.searchBox.search('account: ' + this.get('email'));
   },
 
   fullName : function(nonbreaking) {
