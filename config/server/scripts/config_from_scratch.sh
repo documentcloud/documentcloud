@@ -32,7 +32,7 @@ checkinstall libbz2-dev graphicsmagick pdftk xpdf libitext-java
 openoffice.org openoffice.org-java-common libtiff4-dev libpng12-dev
 libjpeg62-dev libleptonica-dev tesseract-ocr-dev tesseract-ocr-eng
 xfsprogs libpcre3-dev munin munin-node emacs23-nox lzop sysstat
-libopenssl-ruby'
+libopenssl-ruby sunspot sunspot_ruby'
 
 echo $PACKAGES | xargs apt-get install -y
 
