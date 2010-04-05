@@ -11,7 +11,7 @@ dc.ui.DocumentList = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, 'refresh', '_removeDocument', '_addDocument');
+    _.bindAll(this, 'refresh', '_removeDocument', '_addDocument', '_onSelect');
     Documents.bind(dc.Set.REFRESHED,     this.refresh);
     Documents.bind(dc.Set.MODEL_REMOVED, this._removeDocument);
     Documents.bind(dc.Set.MODEL_ADDED,   this._addDocument);
@@ -20,6 +20,7 @@ dc.ui.DocumentList = dc.View.extend({
   render : function() {
     $(this.el).append([dc.app.visualizer.el, dc.app.entities.el]);
     this.setCallbacks();
+    $(this.el).selectable({ignore : '.icon.doc', select : '.icon.doc', onSelect : this._onSelect});
     return this;
   },
 
@@ -29,6 +30,13 @@ dc.ui.DocumentList = dc.View.extend({
       return (new dc.ui.Document({model : m})).render().el;
     });
     $(this.el).append(views);
+  },
+
+  _onSelect : function(els) {
+    if (!dc.app.hotkeys.shift) Documents.deselectAll();
+    _.each(els, function(icon) {
+      Documents.get($(icon).attr('data-id')).set({selected : true});
+    });
   },
 
   _deselect : function(e) {

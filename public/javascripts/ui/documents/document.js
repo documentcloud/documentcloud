@@ -47,8 +47,7 @@ dc.ui.Document = dc.View.extend({
     e.stopPropagation();
     if (!dc.app.accountId) return;
     var alreadySelected =  this.model.get('selected');
-    var cmd = dc.app.hotkeys.command;
-    if (cmd) {
+    if (dc.app.hotkeys.command || dc.app.hotkeys.shift) {
       this.model.set({selected : !alreadySelected});
     } else {
       if (alreadySelected) return;

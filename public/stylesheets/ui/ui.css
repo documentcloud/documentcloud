@@ -306,7 +306,6 @@ iframe.hidden_iframe {
   display: none;
 }
 
-
 /*------------------------------ Error Messages ------------------------------*/
 .form_error, .form_success {
   position: relative;
@@ -323,6 +322,17 @@ iframe.hidden_iframe {
     display: inline;
     -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   }
+
+/*------------------------------ Selections ----------------------------------*/
+.selection {
+  position: absolute;
+  background-color: #FFF233;
+  filter: alpha(opacity=30);
+  opacity: 0.3;
+  z-index: 100;
+  border: 1px solid #aaaa00;
+  -webkit-box-shadow: 0 0px 10px #777; -moz-box-shadow: 0 0px 7px #777;
+}
 
 /*--------------------------- Notifier, Tooltip ------------------------------*/
 

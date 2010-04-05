@@ -198,6 +198,53 @@ $.fn.extend({
     });
   },
 
+  // TODO: share common bits of this with the annotation_editor.
+  selectable : function(options) {
+    var selection = $($.el('div', {'class' : 'selection', style : 'display:none;'}));
+    this.append(selection);
+
+    $(this).bind('mousedown', _.bind(function(e) {
+      if (options.ignore && $(e.target).closest(options.ignore).length) return;
+      e.preventDefault();
+      var targets = $(options.select);
+      var offTop  = this.scrollTop() - this.offset().top,
+          offLeft = this.scrollLeft() - this.offset().left;
+      var ox = e.pageX, oy = e.pageY;
+      var atop    = oy + offTop,
+          aleft   = ox + offLeft;
+      var coords = function(e) {
+        return {
+          left    : Math.min(aleft, e.pageX + offLeft),
+          top     : Math.min(atop, e.pageY + offTop),
+          width   : Math.abs(e.pageX - ox),
+          height  : Math.abs(e.pageY - oy)
+        };
+      };
+      var drag = _.bind(function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        selection.show().css(coords(e));
+      }, this);
+      var dragEnd = _.bind(function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        this.unbind('mouseup', dragEnd).unbind('mousemove', drag);
+        if (e.pageX == ox && e.pageY == oy) return;
+        var pos = coords(e);
+        var x1 = pos.left, y1 = pos.top, x2 = pos.left + pos.width, y2 = pos.top + pos.height;
+        var hits = _.select(targets, function(el) {
+          el = $(el);
+          pos = el.offset();
+          var ex1 = pos.left + offLeft, ey1 = pos.top + offTop, ex2 = ex1 + el.outerWidth(), ey2 = ey1 + el.outerHeight();
+          return !(x1 > ex2 || x2 < ex1 || y1 > ey2 || y2 < ey1);
+        });
+        if (options.onSelect) options.onSelect(hits);
+        selection.hide();
+      }, this);
+      this.bind('mouseup', dragEnd).bind('mousemove', drag);
+    }, this));
+  },
+
   // jQuery's default text() method doesn't play nice with contentEditable
   // elements, which insert divs or paras instead of newline characters.
   // Convert them properly.
