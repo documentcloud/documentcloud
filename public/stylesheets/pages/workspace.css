@@ -27,9 +27,12 @@ a {
   .logo_words {
     position: absolute;
     color: #566eaa;
-    font-size: 16px;
+    font: normal 16px Arial;
     top: 23px;
   }
+    .logo_words a {
+      color: #566eaa;
+    }
     #wordmark {
       cursor: pointer;
       left: 15px;
@@ -212,8 +215,8 @@ a {
         color: #666;
         width: 555px;
         text-align: justify;
-        position: relative; 
-        font: italic 11px/16px Arial; 
+        position: relative;
+        font: italic 11px/16px Arial;
       }
       #full_screen_form .license {
         color: #666;
