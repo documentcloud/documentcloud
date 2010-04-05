@@ -5,13 +5,13 @@
   DV.onload = function() {
     /*@cc_on
     /*@if (@_jscript_version < 5.8)
-      DV.api.loadCSS('<%= root %>/document-viewer/viewer.css');
+      DV.api.loadCSS('<%= root %>/viewer/viewer.css');
     @else @*/
-      DV.api.loadCSS('<%= root %>/document-viewer/viewer-datauri.css');
+      DV.api.loadCSS('<%= root %>/viewer/viewer-datauri.css');
     /*@end
     @*/
-    DV.api.loadCSS('<%= root %>/stylesheets/pages/plainviewer.css');
+    DV.api.loadCSS('<%= root %>/viewer/plainviewer.css');
   };
 
-  document.write('<script type="text/javascript" src="<%= root %>/document-viewer/viewer.js"></script>');
+  document.write('<script type="text/javascript" src="<%= root %>/viewer/viewer.js"></script>');
 })();
