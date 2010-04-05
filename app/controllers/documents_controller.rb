@@ -27,7 +27,7 @@ class DocumentsController < ApplicationController
   end
 
   def update
-    doc = current_document(true)
+    return not_found unless doc = current_document(true)
     if !current_account.owns_or_administers?(doc)
       doc.errors.add_to_base "You don't have permission to update the document."
       return json(doc, 403)
@@ -42,7 +42,7 @@ class DocumentsController < ApplicationController
   end
 
   def destroy
-    doc = current_document(true)
+    return not_found unless doc = current_document(true)
     if !current_account.owns_or_administers?(doc)
       doc.errors.add_to_base "You don't have permission to delete the document."
       return json(doc, 403)
