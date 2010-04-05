@@ -4,6 +4,7 @@ dc.app.hotkeys = {
 
   KEYS: {
     shift   : 16,
+    control : 17,
     command : 91
   },
 
@@ -15,7 +16,6 @@ dc.app.hotkeys = {
   },
 
   down : function(e) {
-    // console.log(e.keyCode);
     for (key in this.KEYS) if (e.keyCode == this.KEYS[key]) this[key] = true;
   },
 
