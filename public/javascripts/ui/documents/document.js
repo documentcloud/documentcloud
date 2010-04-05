@@ -48,9 +48,21 @@ dc.ui.Document = dc.View.extend({
     if (!dc.app.accountId) return;
     var alreadySelected =  this.model.get('selected');
     var hk = dc.app.hotkeys;
-    if (hk.command || hk.shift || hk.control) {
+    var anchor = Documents.lastSelection || Documents.selected()[0];
+    if (hk.command || hk.control) {
+      // Toggle.
       this.model.set({selected : !alreadySelected});
+    } else if (hk.shift && anchor) {
+      // Range.
+      var docs = Documents.models();
+      var idx = _.indexOf(docs, this.model), aidx = _.indexOf(docs, anchor);
+      var start = Math.min(idx, aidx), end = Math.max(idx, aidx);
+      console.log(start, end);
+      _.each(docs, function(doc, index) {
+        if (index >= start && index <= end) doc.set({selected : true});
+      });
     } else {
+      // Regular.
       if (alreadySelected) return;
       Documents.deselectAll();
       this.model.set({selected : true});
