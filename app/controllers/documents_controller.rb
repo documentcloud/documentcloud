@@ -4,8 +4,6 @@ class DocumentsController < ApplicationController
   before_filter(:bouncer, :only => [:show]) if Rails.env.staging?
   before_filter :login_required, :only => [:update, :destroy, :entities, :dates]
 
-  caches_page :loader
-
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
 
