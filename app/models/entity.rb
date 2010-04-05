@@ -14,10 +14,6 @@ class Entity < ActiveRecord::Base
 
   named_scope :kind, lambda {|kind| {:conditions => {:kind => kind}} }
 
-  named_scope :search_value, lambda { |query|
-    {:conditions => ["metadata_value_vector @@ plainto_tsquery(?)", query]}
-  }
-
   # We don't pay attention to all kinds of Calais-generated entities, just
   # most of them. Checks the whitelist.
   def self.acceptable_kind?(kind)

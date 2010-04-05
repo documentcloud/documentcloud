@@ -9,10 +9,6 @@ class Annotation < ActiveRecord::Base
 
   before_validation :ensure_title
 
-  named_scope :search_content, lambda { |query|
-    {:conditions => ["annotations_content_vector @@ plainto_tsquery(?)", query]}
-  }
-
   named_scope :accessible, lambda { |account|
     access = []
     access << "(annotations.access = #{PUBLIC})"
