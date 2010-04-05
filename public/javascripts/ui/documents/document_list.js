@@ -5,7 +5,9 @@ dc.ui.DocumentList = dc.View.extend({
   id        : 'document_list',
   className : 'panel',
 
-  callbacks : {},
+  callbacks : {
+    'el.click': '_deselect'
+  },
 
   constructor : function(options) {
     this.base(options);
@@ -27,6 +29,12 @@ dc.ui.DocumentList = dc.View.extend({
       return (new dc.ui.Document({model : m})).render().el;
     });
     $(this.el).append(views);
+  },
+
+  _deselect : function(e) {
+    var tile = $(e.target).closest('.is_selected');
+    if (tile.length) return;
+    Documents.deselectAll();
   },
 
   _addDocument : function(e, doc) {

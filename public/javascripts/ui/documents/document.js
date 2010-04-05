@@ -9,6 +9,7 @@ dc.ui.Document = dc.View.extend({
 
   callbacks : {
     '.view_document.click':  'viewDocument',
+    '.icon.dblclick'      :  'viewDocument',
     '.icon.click'         :  'select',
     '.show_notes.click'   :  'toggleNotes'
   },
@@ -41,16 +42,23 @@ dc.ui.Document = dc.View.extend({
     return this;
   },
 
-  select : function() {
+  // Desktop-style selection.
+  select : function(e) {
+    e.stopPropagation();
     if (!dc.app.accountId) return;
-    var selected = !this.model.get('selected');
-    if (dc.app.hotkeys.shift) {
-      return selected ? Documents.selectAll() : Documents.deselectAll();
+    var alreadySelected =  this.model.get('selected');
+    var cmd = dc.app.hotkeys.command;
+    if (cmd) {
+      this.model.set({selected : !alreadySelected});
+    } else {
+      if (alreadySelected) return;
+      Documents.deselectAll();
+      this.model.set({selected : true});
     }
-    this.model.set({selected : selected});
   },
 
-  viewDocument : function() {
+  viewDocument : function(e) {
+    e.stopPropagation();
     this.model.openViewer();
   },
 
@@ -67,7 +75,8 @@ dc.ui.Document = dc.View.extend({
     this.model.downloadViewer();
   },
 
-  toggleNotes : function() {
+  toggleNotes : function(e) {
+    e.stopPropagation();
     if (dc.app.visualizer.isOpen() || dc.app.entities.isOpen()) return;
     if (this.modes.notes == 'has') return this.setMode('no', 'notes');
     if (this.model.notes.populated) return this.setMode('has', 'notes');

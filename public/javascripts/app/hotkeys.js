@@ -2,9 +2,10 @@
 // shift is being held down, for shift-clicks.
 dc.app.hotkeys = {
 
-  SHIFT : 16,
-
-  shift : false,
+  KEYS: {
+    shift   : 16,
+    command : 91
+  },
 
   initialize : function() {
     _.bindAll(this, 'down', 'up', 'blur');
@@ -14,15 +15,16 @@ dc.app.hotkeys = {
   },
 
   down : function(e) {
-    if (e.keyCode == this.SHIFT) this.shift = true;
+    // console.log(e.keyCode);
+    for (key in this.KEYS) if (e.keyCode == this.KEYS[key]) this[key] = true;
   },
 
   up : function(e) {
-    if (e.keyCode == this.SHIFT) this.shift = false;
+    for (key in this.KEYS) if (e.keyCode == this.KEYS[key]) this[key] = false;
   },
 
   blur : function(e) {
-    this.shift = false;
+    for (key in this.KEYS) this[key] = false;
   }
 
 };
