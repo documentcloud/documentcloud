@@ -356,7 +356,6 @@ class Document < ActiveRecord::Base
     res['related_story']  = related_article
     doc['sections']       = sections.map(&:canonical)
     doc['annotations']    = annotations.accessible(options[:account]).map(&:canonical)
-    doc['entities']       = entities.map(&:canonical) if options[:show_entities]
     doc
   end
 

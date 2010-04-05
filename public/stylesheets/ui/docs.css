@@ -2,11 +2,14 @@
   padding: 30px 25px 30px 50px;
   color: #454545;
 }
-  #docs h1 {
+  #docs h1, #docs h2 {
     font-size: 25px;
     line-height: 50px;
     color: #222;
   }
+    #docs h2 {
+      font-size: 20px;
+    }
   #docs p, #docs form {
     position: relative;
     margin: 0 0 25px 0;
