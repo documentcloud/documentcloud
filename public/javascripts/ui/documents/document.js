@@ -57,7 +57,6 @@ dc.ui.Document = dc.View.extend({
       var docs = Documents.models();
       var idx = _.indexOf(docs, this.model), aidx = _.indexOf(docs, anchor);
       var start = Math.min(idx, aidx), end = Math.max(idx, aidx);
-      console.log(start, end);
       _.each(docs, function(doc, index) {
         if (index >= start && index <= end) doc.set({selected : true});
       });
