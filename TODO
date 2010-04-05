@@ -1,8 +1,6 @@
 TODO:
 
   * Desktop-style Document icon selection in the workspace...
-
-  * iPad compatibility... Viewer and workspace?
   
   * Fix RightAWS because they're not going to fix it for us. Deprecation warnings,
     better retry handling, descriptions on snapshots, etc.
@@ -12,9 +10,7 @@ TODO:
   * Upgrade to Rails 3 ?
   
   * Upgrade to Ruby 1.9 ?
-  
-  * Do a first implementation of bulk uploading.
-    
+      
   * Public -> Private docs that are already part of a project should be
     displayed as revoked/locked/blanked.
 
@@ -34,7 +30,11 @@ TODO:
     folks.
   
 
-DONE: 
+DONE:
+
+  * Do a first implementation of bulk uploading.
+
+  * iPad compatibility... Viewer and workspace?
 
   * Related article links in the Doc Viewer.
 
