@@ -1,5 +1,5 @@
 #docs {
-  padding: 50px 25px 50px 50px;
+  padding: 30px 25px 30px 50px;
   color: #454545;
 }
   #docs h1 {
@@ -30,7 +30,7 @@
   position: absolute;
   display: block;
   margin: 0 0 0 140px;
-  width: 300px;
+  width: 320px;
 }
 #docs button {
   position: absolute;
