@@ -82,6 +82,7 @@ dc.ui.Organizer = dc.View.extend({
     this.setMode('has', 'projects');
     var view = new dc.ui.Project({model : model}).render();
     this.subViews.push(view);
+    Projects.sort();
     var models = Projects.models();
     var previous = models[_.indexOf(models, view.model) - 1];
     var previousView = previous && previous.view;
