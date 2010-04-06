@@ -1,15 +1,6 @@
 TODO:
-
-  * Desktop-style Document icon selection in the workspace...
-  
-  * Fix RightAWS because they're not going to fix it for us. Deprecation warnings,
-    better retry handling, descriptions on snapshots, etc.
   
   * Write a phone number extractor, and save those as entities.
-
-  * Upgrade to Rails 3 ?
-  
-  * Upgrade to Ruby 1.9 ?
       
   * Public -> Private docs that are already part of a project should be
     displayed as revoked/locked/blanked.
@@ -31,6 +22,8 @@ TODO:
   
 
 DONE:
+
+  * Desktop-style Document icon selection in the workspace...
 
   * Do a first implementation of bulk uploading.
 
