@@ -25,6 +25,12 @@ class Annotation < ActiveRecord::Base
   searchable do
     text :title, :boost => 2.0
     text :content
+
+    integer :document_id
+    integer :account_id
+    integer :organization_id
+    integer :access
+    time    :created_at
   end
 
   def self.counts_for_documents(owner, docs)
