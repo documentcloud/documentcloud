@@ -40,7 +40,7 @@ dc.ui.DocumentList = dc.View.extend({
   },
 
   _deselect : function(e) {
-    if (dc.app.entities.isOpen()) return;
+    if (dc.app.visualizer.isOpen() || dc.app.entities.isOpen()) return;
     var tile = $(e.target).closest('.is_selected');
     if (tile.length) return;
     Documents.deselectAll();
