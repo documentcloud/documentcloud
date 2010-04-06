@@ -1,6 +1,6 @@
-<img class="icon doc generic draggable" src="<%= thumbnail_url %>" data-id="<%= id %>" />
+<img class="icon doc generic draggable noselect" src="<%= thumbnail_url %>" data-id="<%= id %>" />
 <div class="title">
-  <span class="view_document"><%= title %></span>
+  <span class="view_document noselect"><%= title %></span>
   <% if (icon) { %>
     <div class="document_tools">
       <div class="icon <%= icon %>"></div>
@@ -15,9 +15,11 @@
   }
 %>
 <div class="source">
-  <% if (source) { %>Source: <%= source %> -<% } %>
-  Contributed by: <%= account_name %>, <%= organization_name %><span class="page_count"> - <%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span><%= notes %>
+  <span class="noselect">
+    <% if (source) { %>Source: <%= source %> -<% } %>
+    Contributed by: <%= account_name %>, <%= organization_name %><span class="page_count"> - <%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span><%= notes %>
+  </span>
 </div>
-<div class="description"><%= description %></div>
+<div class="description"><span class="noselect"><%= description %></span></div>
 
 <div class="notes"></div>

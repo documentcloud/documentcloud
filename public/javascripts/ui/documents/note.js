@@ -1,7 +1,7 @@
 // A tile view for previewing a Document in a listing.
 dc.ui.Note = dc.View.extend({
 
-  className : 'note',
+  className : 'note noselect',
 
   callbacks : {
     '.note_title.click':  'viewNoteInDocument',
