@@ -172,7 +172,7 @@
         .note .note_text_edit {
           height: 100px;
           width: 100%;
-          font: 12px Arial;
+          font: 12px/16px Arial;
         }
       .note .note_excerpt_wrap {
         border: 1px solid #d0d0d0;
