@@ -248,7 +248,11 @@ class Document < ActiveRecord::Base
       occur = date.split_occurrences.first
       suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(date.date.to_s)}/#{occur.page_offset}:#{occur.length}"
     end
-    "#{DC_CONFIG['server_root']}/documents/#{id}-#{slug}.html#{suffix}"
+    canonical_url(:html) + suffix
+  end
+
+  def canonical_url(format = :json)
+    "#{DC_CONFIG['server_root']}/documents/#{id}-#{slug}.#{format}"
   end
 
   def search_url

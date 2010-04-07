@@ -8,7 +8,7 @@ class DocumentsController < ApplicationController
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
 
   def show
-    return unless request.format.json? || login_required
+    return unless request.format.json? || request.format.js? || login_required
     return not_found unless current_document(true)
     respond_to do |format|
       format.pdf  { redirect_to(current_document.pdf_url) }
@@ -22,6 +22,9 @@ class DocumentsController < ApplicationController
         @response = current_document.canonical
         return if jsonp_request?
         render :json => @response
+      end
+      format.js do
+        @response = current_document.canonical
       end
     end
   end

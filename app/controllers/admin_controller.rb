@@ -83,6 +83,10 @@ class AdminController < ApplicationController
     render :layout => false
   end
 
+  def test_s3_viewer
+    render :layout => false
+  end
+
 
   private
 
