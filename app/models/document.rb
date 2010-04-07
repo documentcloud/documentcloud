@@ -191,6 +191,14 @@ class Document < ActiveRecord::Base
     File.join(path, 'pages')
   end
 
+  def canonical_path(format = :json)
+    "documents/#{id}-#{slug}.#{format}"
+  end
+  
+  def canonical_cache_path
+    "/#{canonical_path(:js)}"
+  end
+
   def page_image_template
     File.join(pages_path, "#{slug}-p{page}-{size}.gif")
   end
@@ -252,7 +260,7 @@ class Document < ActiveRecord::Base
   end
 
   def canonical_url(format = :json)
-    "#{DC_CONFIG['server_root']}/documents/#{id}-#{slug}.#{format}"
+    File.join(DC_CONFIG['server_root'], canonical_path(format))
   end
 
   def search_url

@@ -6,6 +6,7 @@ class SectionsController < ApplicationController
     return json(nil) unless sections
     current_document.sections.destroy_all
     sections.each {|s| current_document.sections.create(s) }
+    expire_page current_document.canonical_cache_path
     json nil
   end
 
