@@ -5,6 +5,7 @@ class Document < ActiveRecord::Base
   attr_writer   :organization_name, :account_name
 
   SEARCHABLE_ATTRIBUTES = [:title, :source, :account, :notes, :group]
+  SEARCHABLE_ENTITIES   = [:city, :country, :organization, :person, :place, :state, :term]
 
   DEFAULT_TITLE = "Untitled Document"
 
@@ -75,23 +76,11 @@ class Document < ActiveRecord::Base
     time    :created_at
 
     # Entities...
-    # TODO: I think the DSL prevents it, but it would be lovely to have a helper
-    # generate these fields.
-    text(:city)         { self.entities.kind('city').all(:select => [:value]).map {|e| e.value } }
-    text(:country)      { self.entities.kind('country').all(:select => [:value]).map {|e| e.value } }
-    text(:organization) { self.entities.kind('organization').all(:select => [:value]).map {|e| e.value } }
-    text(:person)       { self.entities.kind('person').all(:select => [:value]).map {|e| e.value } }
-    text(:place)        { self.entities.kind('place').all(:select => [:value]).map {|e| e.value } }
-    text(:state)        { self.entities.kind('state').all(:select => [:value]).map {|e| e.value } }
-    text(:term)         { self.entities.kind('term').all(:select => [:value]).map {|e| e.value } }
+    SEARCHABLE_ENTITIES.each do |entity|
+      text(entity) { self.entity_values(entity) }
+      string(entity, :multiple => true) { self.entity_values(entity) }
+    end
 
-    string(:city,         :multiple => true) { self.entities.kind('city').all(:select => [:value]).map {|e| e.value } }
-    string(:country,      :multiple => true) { self.entities.kind('country').all(:select => [:value]).map {|e| e.value } }
-    string(:organization, :multiple => true) { self.entities.kind('organization').all(:select => [:value]).map {|e| e.value } }
-    string(:person,       :multiple => true) { self.entities.kind('person').all(:select => [:value]).map {|e| e.value } }
-    string(:place,        :multiple => true) { self.entities.kind('place').all(:select => [:value]).map {|e| e.value } }
-    string(:state,        :multiple => true) { self.entities.kind('state').all(:select => [:value]).map {|e| e.value } }
-    string(:term,         :multiple => true) { self.entities.kind('term').all(:select => [:value]).map {|e| e.value } }
   end
 
   # Main document search method -- handles queries.
@@ -123,6 +112,12 @@ class Document < ActiveRecord::Base
   # the pages. Used at initial import.
   def combined_page_text
     self.pages.all(:select => [:text]).map(&:text).join('')
+  end
+
+  # Return an array of all of the document entity values for a given type,
+  # for Solr indexing purposes.
+  def entity_values(kind)
+    self.entities.kind(kind).all(:select => [:value]).map {|e| e.value }
   end
 
   # Does this document have a title?
@@ -194,7 +189,7 @@ class Document < ActiveRecord::Base
   def canonical_path(format = :json)
     "documents/#{id}-#{slug}.#{format}"
   end
-  
+
   def canonical_cache_path
     "/#{canonical_path(:js)}"
   end

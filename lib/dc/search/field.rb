@@ -15,6 +15,10 @@ module DC
         Document::SEARCHABLE_ATTRIBUTES.include? @kind.to_sym
       end
 
+      def entity?
+        Document::SEARCHABLE_ENTITIES.include? @kind.to_sym
+      end
+
       def to_s
         val = @value.match(HAS_WHITESPACE) ? "\"#{@value}\"" : @value
         "#{@kind}:#{val}"

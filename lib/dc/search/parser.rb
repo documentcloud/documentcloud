@@ -49,7 +49,10 @@ module DC
       # Convert an individual field or attribute search into a DC::Search::Field.
       def process_field(kind, value)
         field = Field.new(match_kind(kind), value.strip)
-        (field.attribute? ? @attributes : @fields) << field
+        return @attributes << field if field.attribute?
+        return @fields     << field if field.entity?
+        @text ||= ''
+        @text += " #{field}"
       end
 
       # Convert an individual project search.
