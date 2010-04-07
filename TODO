@@ -4,7 +4,6 @@ TODO:
   * Get the JSON cached for documents, expiring properly.
   * Make sure the the viewer / collapse is bulletproof in IE as well.
   * Set up more sophisticated monitoring/analytics for the big day.
-  * Turn off the Node on db01. Start and reserve worker02 ?
   
   * DocumentCloud:Internal install (Mac mini?).
   
@@ -32,6 +31,8 @@ TODO:
   
 
 DONE:
+
+  * Turn off the Node on db01. Start and reserve worker02 ?
 
   * Desktop-style Document icon selection in the workspace...
 

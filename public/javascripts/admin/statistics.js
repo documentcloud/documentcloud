@@ -17,7 +17,8 @@ dc.ui.Statistics = dc.View.extend({
     'i-0d4e9065': 'staging',
     'i-a3466ecb': 'app01',
     'i-4752792f': 'db01',
-    'i-258a344e': 'worker01'
+    'i-258a344e': 'worker01',
+    'i-ab9808c0': 'worker02'
   },
 
   id        : 'statistics',
