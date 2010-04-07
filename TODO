@@ -3,7 +3,6 @@ TODO:
   * Whitelist the fields.
 
   * LOGO!
-  * Get the JSON cached for documents, expiring properly.
   * Make sure the the viewer / collapse is bulletproof in IE as well.
   * Set up more sophisticated monitoring/analytics for the big day.
   
@@ -33,6 +32,8 @@ TODO:
   
 
 DONE:
+
+  * Get the JSON cached for documents, expiring properly.
 
   * Turn off the Node on db01. Start and reserve worker02 ?
 

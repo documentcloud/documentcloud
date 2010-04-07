@@ -10,7 +10,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   constructor : function() {
     this.base({
       mode      : 'custom',
-      title     : dc.app.organization.name + ' <span class="slug">slug: ' + dc.app.organization.slug + '</span>'
+      title     : dc.app.organization.name + ' <span class="group">group: ' + dc.app.organization.slug + '</span>'
     });
     _.bindAll(this, '_renderAccounts');
     this._rendered = false;
