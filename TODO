@@ -1,7 +1,5 @@
 TODO:
 
-  * Whitelist the fields.
-
   * LOGO!
   * Make sure the the viewer / collapse is bulletproof in IE as well.
   * Set up more sophisticated monitoring/analytics for the big day.
@@ -32,6 +30,8 @@ TODO:
   
 
 DONE:
+
+  * Whitelist the searchable entity field types.
 
   * Get the JSON cached for documents, expiring properly.
 
