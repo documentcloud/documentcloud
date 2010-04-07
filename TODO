@@ -1,4 +1,14 @@
 TODO:
+
+  * LOGO!
+  * Get the JSON cached for documents, expiring properly.
+  * Make sure the the viewer / collapse is bulletproof in IE as well.
+  * Set up more sophisticated monitoring/analytics for the big day.
+  * Turn off the Node on db01. Start and reserve worker02 ?
+  
+  * DocumentCloud:Internal install (Mac mini?).
+  
+  
   
   * Write a phone number extractor, and save those as entities.
       

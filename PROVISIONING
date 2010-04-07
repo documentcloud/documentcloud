@@ -2,7 +2,7 @@ Until we have full provisioning scripts, keep notes about everything that we
 touch on EC2 in here.
 
 ========================= Base DocumentCloud Image ============================
-=================== ami-f4db369d has all the steps below ======================
+====================== dcworker has all the steps below ======================
 ==================== based on the snap-05235d6c snapshot ======================
 
 * Use the official Canonical Ubuntu 9.10 Karmic Image: ami-1515f67c
