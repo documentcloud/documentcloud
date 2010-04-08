@@ -211,12 +211,10 @@ $.fn.extend({
       var offTop  = this.scrollTop(),
           offLeft = this.scrollLeft();
       var ox = e.pageX, oy = e.pageY;
-      var atop    = oy + offTop,
-          aleft   = ox + offLeft;
       var coords = function(e) {
         return {
-          left    : Math.min(aleft, e.pageX + offLeft),
-          top     : Math.min(atop, e.pageY + offTop),
+          left    : Math.min(ox, e.pageX),
+          top     : Math.min(oy, e.pageY),
           width   : Math.abs(e.pageX - ox),
           height  : Math.abs(e.pageY - oy)
         };
@@ -232,7 +230,7 @@ $.fn.extend({
         doc.unbind('mouseup', dragEnd).unbind('mousemove', drag);
         if (e.pageX == ox && e.pageY == oy) return;
         var pos = coords(e);
-        var x1 = pos.left, y1 = pos.top, x2 = pos.left + pos.width, y2 = pos.top + pos.height;
+        var x1 = pos.left + offLeft, y1 = pos.top + offTop, x2 = x1 + pos.width, y2 = y1 + pos.height;
         var hits = _.select(targets, function(el) {
           el = $(el);
           pos = el.offset();
