@@ -3,9 +3,10 @@
 dc.app.hotkeys = {
 
   KEYS: {
-    shift   : 16,
-    control : 17,
-    command : 91
+    '16':  'shift',
+    '17':  'control',
+    '91':  'command',
+    '224': 'command'
   },
 
   initialize : function() {
@@ -16,15 +17,17 @@ dc.app.hotkeys = {
   },
 
   down : function(e) {
-    for (key in this.KEYS) if (e.keyCode == this.KEYS[key]) this[key] = true;
+    var key = this.KEYS[e.keyCode];
+    if (key) this[key] = true;
   },
 
   up : function(e) {
-    for (key in this.KEYS) if (e.keyCode == this.KEYS[key]) this[key] = false;
+    var key = this.KEYS[e.keyCode];
+    if (key) this[key] = false;
   },
 
   blur : function(e) {
-    for (key in this.KEYS) this[key] = false;
+    for (key in this.KEYS) this[this.KEYS[key]] = false;
   }
 
 };
