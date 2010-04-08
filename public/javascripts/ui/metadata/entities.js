@@ -75,6 +75,7 @@ dc.ui.Entities = dc.View.extend({
 
   visualizeConnections : function(e) {
     dc.app.visualizer.open($(e.target).attr('data-kind'));
+    return false;
   },
 
   _renderEntities : function() {
@@ -106,6 +107,7 @@ dc.ui.Entities = dc.View.extend({
   _openEntity : function(e) {
     var meta = Entities.get($(e.target).attr('data-id'));
     $(document.body).append((new dc.ui.EntityDialog(meta)).render().el);
+    return false;
   },
 
   _highlightDatum : function(e) {

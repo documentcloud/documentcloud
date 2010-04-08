@@ -147,6 +147,7 @@ dc.ui.Visualizer = dc.View.extend({
   _openEntity : function(e) {
     var meta = Entities.get($(e.target).attr('data-id'));
     $(document.body).append((new dc.ui.EntityDialog(meta)).render().el);
+    return false;
   },
 
   _highlightDatum : function(e) {
