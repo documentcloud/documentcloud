@@ -1,6 +1,5 @@
 TODO:
 
-  * LOGO!
   * Make sure the the viewer / collapse is bulletproof in IE as well.
   * Set up more sophisticated monitoring/analytics for the big day.
   
@@ -30,6 +29,8 @@ TODO:
   
 
 DONE:
+
+  * Add the logo-ish to the viewer.
 
   * Whitelist the searchable entity field types.
 

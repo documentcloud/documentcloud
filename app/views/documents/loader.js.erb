@@ -13,5 +13,9 @@
     DV.api.loadCSS('<%= root %>/viewer/plainviewer.css');
   };
 
+  DV.afterLoad = function() {
+    $j('#DV-logo').html('<a href="http://documentcloud.org">Powered By DocumentCloud</a>');
+  };
+
   document.write('<script type="text/javascript" src="<%= root %>/viewer/viewer.js"></script>');
 })();
