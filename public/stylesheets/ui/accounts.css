@@ -127,6 +127,7 @@
 }
 #account_list .pending_wrap {
   position: relative;
+  zoom: 1;
 }
   #account_list .pending_badge {
     display: none;
