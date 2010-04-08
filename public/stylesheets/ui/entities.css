@@ -2,6 +2,11 @@
   position: absolute;
   top: 15px; bottom: 0; left: 370px; right: 15px;
 }
+  #entities .emptyviz,
+  #visualizer .emptyviz {
+    color: #777;
+    font: italic 11px Arial;
+  }
   #entities .entity_list {
     margin-bottom: 15px;
   }

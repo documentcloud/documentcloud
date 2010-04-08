@@ -17,6 +17,11 @@
   -webkit-box-shadow: 0 0px 10px #999; -moz-box-shadow: 0 0px 10px #999;
 }
 
+#visualizer .emptyviz {
+  position: absolute;
+  top: 15px; left: 360px;
+}
+
 /*------------------------------ ENTITIES ---------------------------------*/
 
 body.visualize #document_list .document {

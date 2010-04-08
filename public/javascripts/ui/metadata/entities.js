@@ -86,7 +86,7 @@ dc.ui.Entities = dc.View.extend({
     }), function(obj) {
       return JST.workspace_entities(obj);
     });
-    var docCount = Documents.countSelected();
+    if (!Documents.countSelected()) html = ["<div class='emptyviz'>No selected documents.</div>"];
     $(this.el).html(html.join(''));
     this.setCallbacks();
   },

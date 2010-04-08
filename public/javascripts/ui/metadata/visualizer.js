@@ -95,7 +95,8 @@ dc.ui.Visualizer = dc.View.extend({
     var me = this;
     var el = $(this.el);
     el.html('');
-    if (!this._open || this.empty()) return;
+    if (!this._open) return;
+    if (this.empty()) return el.html('<div class="emptyviz">No selected documents.</div>');
     var selectedIds = Documents.selectedIds();
 
     var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.parent()[0].scrollHeight});
