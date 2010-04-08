@@ -262,6 +262,9 @@ div.dialog {
   div.dialog.alert_dialog {
     width: 300px;
   }
+  div.dialog.prompt_dialog {
+    width: 430px;
+  }
   div.dialog .dialog_background {
     position: absolute;
     z-index: -1;
