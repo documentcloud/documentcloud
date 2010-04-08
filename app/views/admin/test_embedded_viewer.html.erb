@@ -1,67 +1,171 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Embedded Viewer Test Page</title>
-  <style type="text/css">
-    #container {
-      margin: 50px auto;
-      width: 1020px;
-    }
-    div.viewer {
-      height: 700px;
-    }
-  </style>
-</head>
+  <head>
+
+
+	<title>Status of the FBI&#8217;s Sentinel Project | ProPublica</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="en-us" />
+	<meta name="description" content="" />
+    <link href="http://www.propublica.org/css/master4.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="http://www.propublica.org/css/watchdog.css" rel="stylesheet" type="text/css" media="screen" />
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+       <script type="text/javascript">
+          google.load("jquery", "1.4.2");
+       </script>
+    <style type="text/css">
+     <style type="text/css">
+       body{
+         text-align: left;
+       }
+
+       #doc{
+       }
+
+       #pp-dv_header{
+         background-color: #105aa2;
+         position: relative;
+         height: 81px;
+         border-bottom: 2px solid #333;
+         margin: 0 0 0 0;
+         width: 100%;
+       }
+
+       #pp-dv_nav{
+         overflow:hidden;
+         width:100%;
+         height: 20px;
+         background-color: #e4e4e4;
+       }
+         #header-topnav li a {
+           margin-bottom: 0px;
+           margin-top: 5px;
+           line-height: inherit;
+         }
+
+       #pp-dv_header #pp-dv_nav{
+         position: absolute;
+         bottom: 0;
+         right: 0;
+       }
+       #pp-dv_header #pp-dv_logo{
+         position: absolute;
+         bottom: 0;
+         left: 0;
+       }
+
+       #pp-dv_header #pp-dv_nav p {
+         font-size:12px;
+         margin: 0;
+         text-align: right;
+         padding-right: 4px;
+       }
+       #pp-dv_title_bar {
+         position: relative;
+       }
+       #pp-dv_title_bar #related_story{
+         position:absolute;
+         right: 0px;
+         top: 6px;
+         font-size:12px;
+         margin-right: 0.5em;
+       }
+       #pp-dv_title_bar h2{
+         width: 75%;
+         margin-left: 3px;
+         margin-top: 7px;
+         margin-bottom: 7px;
+         font-size: 17px;
+        text-align: left;
+
+       }
+       #pp-dv_signup{
+       }
+         #pp-dv_signup #header-newsletter{
+           top: 5px;
+           right: 10px;
+           border-collapse: separate;
+           border-spacing: 5px;
+         }
+         #pp-dv_signup #header-newsletter th{
+           font-size: 1em;
+           font-weight: normal;
+           padding-bottom: 5px;
+         }
+         #pp-dv_signup #header-newsletter th,#pp-dv_signup #header-newsletter td{
+         }
+	.admin-only {
+		color:#AC0CFF !important;
+		font-weight:normal;
+	}
+
+    </style>
+    <!--[if lt IE 7]>
+    <style>
+      #pp-dv_header #pp-dv_nav{top:0px}
+      #header-topnav li a {
+        margin-top:0px;
+        padding:0
+      }
+    </style>
+    <![endif]-->
+  </head>
 <body>
 
-  <div id="container">
+<div id="pp-dv_nav">
+    <ul id="header-topnav" class="right">
+      <li class="first" style="z-index: 10;"><a href="http://www.propublica.org/site/donate/" title="Support our work"><font color="#008811">Donate</font></a></li>
+      <li><a href="http://www.propublica.org/about/" title="Read more about ProPublica">About Us</a></li>
+      <li><a href="http://www.propublica.org/about/contact/" title="">Contact</a></li>
+      <li><a href="http://www.propublica.org/about/steal-our-stories/" title="Steal Our Stories">Steal Our Stories</a></li>
+      <li><a href="http://www.propublica.org/ion/reporting-network/" title="Reporting Network">Reporting Network</a></li>
+    </ul>
+</div>
+<div id="pp-dv_header">
+  <a href="http://www.propublica.org" id="pp-dv_logo"><img src="/images/dv-logo.gif"></a>
+  <form id="pp-dv_signup" action="http://org2.democracyinaction.org/dia/api/process.jsp" method="get">
+  <input type="hidden" value="supporter" name="table">
+  <input type="hidden" value="0" name="key">
+  <input type="hidden" value="Email" name="required">
+  <input type="hidden" value="groups" name="link">
+  <input type="hidden" value="90412" name="linkKey">
+  <input type="hidden" value="http://www.propublica.org/about/thank-you" name="redirect">
+  <input type="hidden" value="3" name="Receive_Email">
+  <input type="hidden" value="6253" name="organization_KEY">
+  <input type="hidden" value="8405" name="email_trigger_KEYS">
+    <table id="header-newsletter">
+      <tbody>
+      <tr>
+        <th colspan="3">Receive our top stories daily</th>
+      </tr>
+      <tr>
+        <td class="label"><label for="email">E-mail</label></td>
+        <td class="white" colspan="2"><input type="text" class="text" value="" name="Email" id="f11" title="Email"></td>
+      </tr>
+      <tr>
+        <td class="label"><label for="zipcode">Zip Code</label></td>
+        <td class="half white"><input type="text" class="text zipcode" maxlength="10" value="" name="Zip" id="f32" title="Zip Code"></td>
+        <td class="half sub"><input type="submit" id="header-subscribe" value="Subscribe" name="subscribe" alt="subscribe" title="subscribe"></td>
+      </tr>
+    </tbody></table>
+  </form>
+</div>
+<div id="pp-dv_title_bar">
+  <h2>Status of the FBI&#8217;s Sentinel Project</h2>
+  </div>
 
-    <h3>
-      Embedded Document Viewer
-    </h3>
-
-    <p>
-      Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-      nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut
-      wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit
-      lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure
-      dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-      dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio
-      dignissim qui blandit praesent.
-    </p>
-
-    <div class="viewer"></div>
-
-    <p>
-      Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-      nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut
-      wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit
-      lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure
-      dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-      dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio
-      dignissim qui blandit praesent.
-    </p>
-
-    <p>
-      Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-      nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut
-      wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit
-      lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure
-      dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-      dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio
-      dignissim qui blandit praesent.
-    </p>
-
+  <div id="doc">
   </div>
 
   <script type="text/javascript" src="/documents/loader.js"></script>
   <script type="text/javascript">
     DV.load("<%= Document.first(:conditions => {:access => DC::Access::PUBLIC}).canonical_url(:js) %>", {
-      container : 'div.viewer',
+      container : '#doc',
       embedded  : true,
       offset    : 160
     });
   </script>
+
 
 </body>
 </html>
