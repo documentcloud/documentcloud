@@ -76,9 +76,16 @@
 }
 
 #DV-logo {
-  font-size: 11px;
+  border-top: 1px solid #ccc;
+  text-transform: uppercase;
+  font-size: 9px;
   font-family: "Arial Unicode MS", "Lucida Grande", Arial, sans-serif;
+  margin-top: 15px;
+  padding: 8px 0 4px;
 }
+  #DV-logo a, #DV-logo a:visited {
+    color: #777;
+  }
 
 .DV-views {
   position: relative;
