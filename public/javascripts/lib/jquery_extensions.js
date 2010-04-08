@@ -200,15 +200,16 @@ $.fn.extend({
 
   // TODO: share common bits of this with the annotation_editor.
   selectable : function(options) {
+    var doc = $(document);
     var selection = $($.el('div', {'class' : 'selection', style : 'display:none;'}));
-    this.append(selection);
+    $(document.body).append(selection);
 
     $(this).bind('mousedown', _.bind(function(e) {
       if (options.ignore && $(e.target).closest(options.ignore).length) return;
       e.preventDefault();
       var targets = $(options.select);
-      var offTop  = this.scrollTop() - this.offset().top,
-          offLeft = this.scrollLeft() - this.offset().left;
+      var offTop  = this.scrollTop(),
+          offLeft = this.scrollLeft();
       var ox = e.pageX, oy = e.pageY;
       var atop    = oy + offTop,
           aleft   = ox + offLeft;
@@ -228,7 +229,7 @@ $.fn.extend({
       var dragEnd = _.bind(function(e) {
         e.stopPropagation();
         e.preventDefault();
-        this.unbind('mouseup', dragEnd).unbind('mousemove', drag);
+        doc.unbind('mouseup', dragEnd).unbind('mousemove', drag);
         if (e.pageX == ox && e.pageY == oy) return;
         var pos = coords(e);
         var x1 = pos.left, y1 = pos.top, x2 = pos.left + pos.width, y2 = pos.top + pos.height;
@@ -241,7 +242,7 @@ $.fn.extend({
         if (options.onSelect) options.onSelect(hits);
         selection.hide();
       }, this);
-      this.bind('mouseup', dragEnd).bind('mousemove', drag);
+      doc.bind('mouseup', dragEnd).bind('mousemove', drag);
     }, this));
   },
 
