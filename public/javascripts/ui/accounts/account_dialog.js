@@ -20,7 +20,8 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   render : function() {
     this.base();
     this._rendered = true;
-    $('.custom', this.el).html(JST.account_dialog({}));
+    this._container = $('.custom', this.el);
+    this._container.html(JST.account_dialog({}));
     if (Accounts.current().isAdmin()) this.appendControl($.el('button', {'class': 'new_account'}, 'New Account'));
     this.list = $('#account_list_content', this.el);
     this.setCallbacks();
@@ -42,6 +43,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   newAccount : function() {
     var view = new dc.ui.AccountView({model : new dc.model.Account(), kind : 'row'});
     this.list.append(view.render('edit').el);
+    this._container[0].scrollTop = this._container[0].scrollHeight;
   },
 
   _renderAccounts : function() {
