@@ -4,7 +4,7 @@ class DocumentsController < ApplicationController
   before_filter(:bouncer, :only => [:show]) if Rails.env.staging?
   before_filter :login_required, :only => [:update, :destroy, :entities, :dates]
 
-  caches_page :show, :if => lambda {|c| c.request.format.js? }
+  # caches_page :show, :if => lambda {|c| c.request.format.js? }
 
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
@@ -26,7 +26,9 @@ class DocumentsController < ApplicationController
         render :json => @response
       end
       format.js do
-        @response = current_document.canonical
+        js = "DV.loadJSON(#{current_document.canonical.to_json});"
+        cache_page js if current_document.cacheable?
+        render :js => js
       end
     end
   end
@@ -43,7 +45,7 @@ class DocumentsController < ApplicationController
     [:description, :title, :source, :remote_url, :related_article].each do |att|
       doc.update_attributes(att => json[att]) if json[att]
     end
-    expire_page doc.canonical_cache_path
+    expire_page doc.canonical_cache_path if doc.cacheable?
     json doc
   end
 
@@ -53,7 +55,7 @@ class DocumentsController < ApplicationController
       doc.errors.add_to_base "You don't have permission to delete the document."
       return json(doc, 403)
     end
-    expire_page doc.canonical_cache_path
+    expire_page doc.canonical_cache_path if doc.cacheable?
     doc.destroy
     json nil
   end

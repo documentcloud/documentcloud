@@ -4,9 +4,10 @@ class SectionsController < ApplicationController
 
   def set
     return json(nil) unless sections
-    current_document.sections.destroy_all
-    sections.each {|s| current_document.sections.create(s) }
-    expire_page current_document.canonical_cache_path
+    doc = current_document
+    doc.sections.destroy_all
+    sections.each {|s| doc.sections.create(s) }
+    expire_page doc.canonical_cache_path if doc.cacheable?
     json nil
   end
 

@@ -129,6 +129,10 @@ class Document < ActiveRecord::Base
     self.access == PUBLIC
   end
 
+  def cacheable?
+    [PUBLIC, EXCLUSIVE].include? access
+  end
+
   # When the access level changes, all sub-resource and asset permissions
   # need to be updated.
   def set_access(access_level)
