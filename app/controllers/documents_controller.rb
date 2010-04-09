@@ -139,7 +139,8 @@ class DocumentsController < ApplicationController
   def current_page
     num = params[:page_name][PAGE_NUMBER_EXTRACTOR, 1]
     return bad_request unless num
-    @current_page ||= current_document(true).pages.find_by_page_number(num.to_i)
+    return not_found unless current_document(true)
+    @current_page ||= current_document.pages.find_by_page_number(num.to_i)
   end
 
 end
