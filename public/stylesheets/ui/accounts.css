@@ -31,7 +31,7 @@
 /*--------------------------- Accounts Dialog --------------------------------*/
 #account_list {
   max-width: none;
-  width: 705px;
+  width: 725px;
 }
   #account_list .group {
     color: #777;
@@ -106,11 +106,13 @@
 #account_list span.edit_account,
 #account_list span.change_password {
   float: left;
-  margin-right: 10px;
   opacity: 0; filter: alpha(opacity=0);
   -webkit-transition: opacity 0.2s linear;
   color: #353566;
 }
+  #account_list tbody span.edit_account {
+    margin-right: 10px;
+  }
   #account_list tbody tr:hover span.edit_account,
   #account_list tbody tr:hover span.change_password {
     opacity: 1; filter: alpha(opacity=100);

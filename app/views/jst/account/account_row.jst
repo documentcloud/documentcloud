@@ -6,7 +6,7 @@
 </td>
 <td class="name">
   <span class="display">
-    <%= account.fullName(true) %>&nbsp;<span class="pending_notification">(pending)</span>
+    <%= Inflector.truncate(account.fullName(true), 25) %>&nbsp;<span class="pending_notification">(pending)</span>
   </span>
   <div class="edit name_wrapper">
     <div class="text_input small">
@@ -27,7 +27,7 @@
 </td>
 <td class="email">
   <span class="display">
-    <%= email %>
+    <%= Inflector.truncate(email, 25) %>
   </span>
   <div class="text_input edit small">
     <div class="background">
