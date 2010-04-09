@@ -25,6 +25,7 @@ _.extend(dc.app.editor, {
     var access = this.isOwner ? 'DV-isOwner' : 'DV-isContributor';
     $('#DV-docViewer').addClass(access);
     $('#DV-well').append(this.controlPanel.render().el);
+    $('#DV-logo').hide();
     // if (this.isOwner) $('#DV-textContents').attr({contentEditable : 'true'});
   },
 
