@@ -8,6 +8,8 @@ TODO:
   * Last 3 failed docs in the Admin UI.
   
   
+  * Add placeholder JS fallback for non HTML5 browsers.
+  
   * Write a phone number extractor, and save those as entities.
       
   * Public -> Private docs that are already part of a project should be
