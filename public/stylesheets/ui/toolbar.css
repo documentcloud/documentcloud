@@ -17,7 +17,7 @@
 }
   #toolbar .minibutton {
     float: left;
-    margin-left: 12px;
+    margin: 0 0 15px 12px;
   }
     #toolbar .project_menu_container .minibutton {
       margin-left: 0;
