@@ -3,12 +3,13 @@ dc.ui.ViewerControlPanel = dc.View.extend({
   id : 'control_panel',
 
   callbacks : {
-    '.set_sections.click':        'openSectionEditor',
-    '.public_annotation.click':   'togglePublicAnnotation',
-    '.private_annotation.click':  'togglePrivateAnnotation',
-    '.edit_description.click':    'editDescription',
-    '.edit_title.click':          'editTitle',
-    '.save_text.click':           'savePageText'
+    '.set_sections.click':          'openSectionEditor',
+    '.public_annotation.click':     'togglePublicAnnotation',
+    '.private_annotation.click':    'togglePrivateAnnotation',
+    '.edit_description.click':      'editDescription',
+    '.edit_title.click':            'editTitle',
+    '.edit_related_article.click':  'editRelatedArticle',
+    '.save_text.click':             'savePageText'
   },
 
   render : function() {
@@ -26,6 +27,14 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     dc.ui.Dialog.prompt('Title', DV.api.getTitle(), _.bind(function(title) {
       DV.api.setTitle(title);
       this._updateDocument({title : title});
+      return true;
+    }, this), true);
+  },
+
+  editRelatedArticle : function() {
+    dc.ui.Dialog.prompt('Related Article', DV.api.getRelatedArticle(), _.bind(function(url) {
+      DV.api.setRelatedArticle(url);
+      this._updateDocument({related_article : url});
       return true;
     }, this), true);
   },
