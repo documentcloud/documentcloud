@@ -48,11 +48,9 @@
   .document .title {
     display: block;
     color: #204055;
-    font-size: 14px;
-    line-height: 18px;
-    font-weight: bold;
+    font: bold 14px/16px Arial;
+    height: 16px;
     overflow: hidden;
-    height: 18px;
   }
     .document .view_document {
       cursor: pointer;
@@ -80,17 +78,17 @@
   .document .source {
     font: 11px/14px Arial;
     overflow: hidden;
-    height: 14px;
+    height: 28px;
     color: #808080;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
     .document.pending_access .page_count {
       display: none;
     }
   .document .description {
-    line-height: 16px;
-    margin-top: 5px;
-    height: 33px;
+    line-height: 14px;
+    margin-top: 0px;
+    height: 28px;
     overflow: hidden;
     color: #222;
   }

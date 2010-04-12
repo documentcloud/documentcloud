@@ -17,8 +17,12 @@
 %>
 <div class="source">
   <span class="noselect">
-    <% if (source) { %>Source: <%= source %> -<% } %>
-    Contributed by: <%= account_name %>, <%= organization_name %><span class="page_count"> - <%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span><%= notes %>
+    <span class="sources">
+      <% if (source) { %>Source: <%= source %> -<% } %>
+      Contributed by: <%= account_name %>, <%= organization_name %>
+      <br />
+    </span>
+    <span class="page_count"><%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span><%= notes %>
   </span>
 </div>
 <div class="description"><span class="noselect"><%= description %></span></div>

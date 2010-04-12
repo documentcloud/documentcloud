@@ -27,12 +27,13 @@
 body.visualize #document_list .document {
   width: 280px; min-height: 32px; height: 32px;
   padding: 5px 5px 5px 40px;
-  margin-bottom: 35px;
+  margin-bottom: 15px;
 }
   body.visualize .document .description,
   body.visualize .document .notes,
   body.visualize .document .show_notes .show,
-  body.visualize .document .show_notes .hide {
+  body.visualize .document .show_notes .hide,
+  body.visualize .document .sources {
     display: none;
   }
     body.visualize .document:hover .show_notes {
