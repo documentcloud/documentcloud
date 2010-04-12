@@ -154,11 +154,13 @@
       overflow: hidden;
     }
       .note .note_title {
-        cursor: pointer;
         color: #204055;
         font-weight: bold;
         margin-bottom: 10px;
       }
+        .note .title_link {
+          cursor: pointer;
+        }
       .note .note_title_edit {
         width: 300px;
         margin-bottom: 10px;

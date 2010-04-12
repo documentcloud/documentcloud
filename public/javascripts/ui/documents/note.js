@@ -4,7 +4,7 @@ dc.ui.Note = dc.View.extend({
   className : 'note noselect',
 
   callbacks : {
-    '.note_title.click':  'viewNoteInDocument',
+    '.title_link.click':  'viewNoteInDocument',
     '.page_number.click': 'viewNoteInDocument',
     '.edit_note.click':   'editNote',
     '.cancel_note.click': 'cancelNote',
