@@ -60,6 +60,9 @@
       margin-bottom: 10px;
       filter: none !important;
     }
+      .entity_view .document .select {
+        display: none;
+      }
     .entity_view .document .title {
       font-size: 11px;
       color: #204055;

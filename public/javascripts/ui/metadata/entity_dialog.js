@@ -17,13 +17,7 @@ dc.ui.EntityDialog = dc.ui.Dialog.extend({
 
   render : function() {
     this.base();
-    var instances = this.model.selectedInstances();
-    var seenMap = {};
-    instances = _.select(instances, function(inst) {
-      var seen = seenMap[inst.document_id];
-      seenMap[inst.document_id] = true;
-      return !seen;
-    });
+    var instances = Entities.uniqueInstancesByDocument(this.model.selectedInstances());
     $('.custom', this.el).html(JST.entity_dialog({entity : this.model, instances : instances}));
     $('.controls', this.el).append($.el('button', {'class' : 'filter_search'}, 'filter search'));
     var list = $('.document_list', this.el);

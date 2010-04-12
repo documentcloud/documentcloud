@@ -104,7 +104,7 @@ dc.ui.Visualizer = dc.View.extend({
     if (window.G_vmlCanvasManager) G_vmlCanvasManager.initElement(canvas);
     var ctx = canvas.getContext('2d');
     ctx.lineCap = "round";
-    ctx.strokeStyle = "#bbb";
+    ctx.strokeStyle = "#c5c5e5";
 
     var scale = 0.92 - (150 / el.width());
     var originX = el.width() / 2, originY = el.height() / 2;
@@ -124,12 +124,12 @@ dc.ui.Visualizer = dc.View.extend({
 
       var pos = metaEl.position();
 
-      _.each(meta.get('instances'), function(instance) {
+      _.each(Entities.uniqueInstancesByDocument(meta.get('instances')), function(instance) {
         var docId = instance.document_id;
         if (_.indexOf(selectedIds, docId) < 0) return;
         var del   = $('#document_' + docId);
         var dpos  = del.position();
-        var docx  = dpos.left + del.outerWidth() / 2, docy = dpos.top + del.height() / 2;
+        var docx  = dpos.left + 20, docy = dpos.top + del.outerHeight() / 2;
         ctx.globalAlpha = instance.relevance * 0.5 + 0.25;
         ctx.lineWidth = instance.relevance * 20 + 1;
         ctx.beginPath();
@@ -152,19 +152,19 @@ dc.ui.Visualizer = dc.View.extend({
   },
 
   _highlightDatum : function(e) {
-    var meta = Entities.get($(e.target).attr('data-id'));
-    var ids = meta.documentIds();
-    _.each(Documents.models(), function(doc) {
-      if (_(ids).include(doc.id)) {
-        $('#document_' + doc.id).addClass('bolded');
-      } else {
-        $('#document_' + doc.id).addClass('muted').animate({opacity : 0.5}, {duration : 'fast', queue : false});
-      }
-    });
+    // var meta = Entities.get($(e.target).attr('data-id'));
+    // var ids = meta.documentIds();
+    // _.each(Documents.models(), function(doc) {
+    //   if (_(ids).include(doc.id)) {
+    //     $('#document_' + doc.id).addClass('bolded');
+    //   } else {
+    //     $('#document_' + doc.id).addClass('muted').animate({opacity : 0.5}, {duration : 'fast', queue : false});
+    //   }
+    // });
   },
 
   _highlightOff : function(e) {
-    $('div.document').removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
+    // $('div.document').removeClass('muted').removeClass('bolded').animate({opacity : 1}, {duration : 'fast', queue : false});
   }
 
 });

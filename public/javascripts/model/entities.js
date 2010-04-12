@@ -150,6 +150,15 @@ dc.model.EntitySet = dc.model.SortedSet.extend({
     });
   },
 
+  uniqueInstancesByDocument : function(instances) {
+    var seenMap = {};
+    return _.select(instances, function(inst) {
+      var seen = seenMap[inst.document_id];
+      seenMap[inst.document_id] = true;
+      return !seen;
+    });
+  },
+
   addOrCreate : function(obj) {
     var id = dc.model.Entity.generateId(obj);
     var ent = this.get(id);
