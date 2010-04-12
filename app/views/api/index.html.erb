@@ -8,16 +8,66 @@
   <h1>The DocumentCloud API</h1>
 
   <p>
-    DocumentCloud includes an API to programmatically search the catalog, as well
-    as access and upload documents directly. This page documents the methods
-    and options available in the current release of the API.
+    DocumentCloud includes an API to programmatically search the full catalog,
+    as well as to access and upload documents directly. This page documents
+    the methods and options available in the current release of the API.
+  </p>
+
+  <p>
+    There is no need to use an API key to access the DocumentCloud API.
+    Performing searches from JavaScript is fair game. However, requests
+    will be rate limited by account and by IP address, per minute, at levels
+    to be determined. Please don't hammer the API.
   </p>
 
   <h2>/api/search.json</h2>
 
   <p>
-    Use the form below to try a search query, and take a look at the format of the
-    returned results.
+    Search the catalog of public documents. This method can be used to scrape
+    the public documents from your account for embedding purposes, or to enable
+    searches of your archive of uploaded documents directly from your own website.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="gradient_light">Parameter</th>
+        <th class="gradient_light">Description</th>
+        <th class="gradient_light">Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="param">q</td>
+        <td class="desc">the search query</td>
+        <td class="ex">group:daily-tribune title:nuclear</td>
+      </tr>
+      <tr class="alt">
+        <td class="param">page</td>
+        <td class="desc">response page number</td>
+        <td class="ex">3 (defaults to 1)</td>
+      </tr>
+      <tr>
+        <td class="param">sections</td>
+        <td class="desc">include document sections in the results</td>
+        <td class="ex">true (defaults to false)</td>
+      </tr>
+      <tr class="alt">
+        <td class="param">annotations</td>
+        <td class="desc">include document annotations in the results</td>
+        <td class="ex">true (defaults to false)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Example</h3>
+
+  <pre>
+/api/search.json?q=obama&amp;page=2</pre>
+
+  <p>
+    Use the search form below to try queries and see what the resulting JSON
+    looks like.
   </p>
 
   <form id="search_form" action="about:blank" autocomplete="off">

@@ -2,38 +2,75 @@
   padding: 30px 25px 30px 50px;
   color: #454545;
 }
-  #docs h1, #docs h2 {
-    font-size: 25px;
-    line-height: 50px;
+  #docs h1, #docs h2, #docs h3 {
+    font: 25px/50px Arial;
     color: #222;
   }
     #docs h2 {
-      font-size: 20px;
+      font: 18px/40px Arial;
     }
-  #docs p, #docs form {
+    #docs h3 {
+      font: 14px/25px Arial;
+    }
+  #docs p, #docs form, #docs pre {
     position: relative;
-    margin: 0 0 25px 0;
-    width: 550px;
+    margin: 0 0 20px 0;
+    width: 600px;
   }
     #docs p, #docs p > * {
-      font-size: 16px;
-      line-height: 22px;
+      font-size: 14px;
+      line-height: 18px;
+    }
+  #docs table {
+    margin: 20px 0 20px 0;
+    width: 600px;
+    border-top: 1px solid #bbb;
+    border-left: 1px solid #bbb;
+  }
+    #docs table th {
+      text-transform: uppercase;
+      font: 10px Arial;
+      color: #222;
+    }
+    #docs th, #docs td {
+      padding: 5px 20px 5px 10px;
+      border-bottom: 1px solid #bbb;
+      border-right: 1px solid #bbb;
+      vertical-align: middle;
+      line-height: 16px;
+    }
+      #docs td {
+        background: #f0f0f0;
+      }
+      #docs tr.alt td {
+        background: #e0eaea;
+      }
+      #docs td.param {
+        font-weight: bold;
+      }
+      #docs td.desc {
+        font: italic 11px Arial;
+        color: #777;
+      }
+    #docs table col.parameter {
+      font-weight: bold;
     }
   #docs a {
     color: #204055;
     text-decoration: underline;
   }
-  #docs #search_results {
-    line-height: 18px;
-    margin: 35px 0 0 0;
-    font-family: "Monaco", monospace;
+  #docs pre, #docs #search_results {
+    font: 12px/18px "Monaco", monospace;
   }
+    #docs #search_results {
+      margin: 35px 0 0 0;
+    }
 
 #docs .text_input {
   position: absolute;
   display: block;
   margin: 0 0 0 140px;
-  width: 320px;
+  width: 370px;
 }
 #docs button {
   position: absolute;
