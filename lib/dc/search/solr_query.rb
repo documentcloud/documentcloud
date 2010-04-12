@@ -32,7 +32,7 @@ module DC
       # Set the page of the search that this query is supposed to access.
       def page=(page)
         @page = page
-        @from = @page * PAGE_SIZE
+        @from = (@page - 1) * PAGE_SIZE
         @to   = @from + PAGE_SIZE
       end
 
@@ -44,7 +44,7 @@ module DC
         build_projects   if     has_projects?
         build_attributes if     has_attributes?
         build_access     unless @unrestricted
-        page, size = @page + 1, PAGE_SIZE
+        page, size = @page, PAGE_SIZE
         @search.build do
           order_by  :created_at, :desc
           paginate  :page => page, :per_page => size
@@ -75,7 +75,7 @@ module DC
 
       # Stash the number of notes per-document on the document models.
       def populate_annotation_counts
-        return false unless has_results?
+        return false unless has_results? && @account
         counts = Annotation.counts_for_documents(@account, @results)
         @results.each {|doc| doc.annotation_count = counts[doc.id] }
       end
@@ -163,13 +163,17 @@ module DC
         @search.build do
           any_of do
             with      :access, PUBLIC
-            all_of do
-              with    :access, [PRIVATE, PENDING, ERROR]
-              with    :account_id, account.id
+            if account
+              all_of do
+                with    :access, [PRIVATE, PENDING, ERROR]
+                with    :account_id, account.id
+              end
             end
-            all_of do
-              with    :access, [ORGANIZATION, EXCLUSIVE]
-              with    :organization_id, organization.id
+            if organization
+              all_of do
+                with    :access, [ORGANIZATION, EXCLUSIVE]
+                with    :organization_id, organization.id
+              end
             end
           end
         end

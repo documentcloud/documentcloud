@@ -19,6 +19,7 @@ namespace :app do
   desc "Update the Rails application"
   task :update do
     sh 'git pull'
+    sleep 0.2
   end
 
   desc "Repackage static assets"

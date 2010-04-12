@@ -11,6 +11,8 @@ class Document < ActiveRecord::Base
 
   DISPLAY_DATE_FORMAT = "%b %d, %Y"
 
+  DEFAULT_CANONICAL_OPTIONS = {:sections => true, :annotations => true}
+
   belongs_to :account
   belongs_to :organization
 
@@ -356,6 +358,7 @@ class Document < ActiveRecord::Base
   end
 
   def canonical(options={})
+    options = DEFAULT_CANONICAL_OPTIONS.merge(options)
     doc = ActiveSupport::OrderedHash.new
     doc['id']             = "#{id}-#{slug}"
     doc['title']          = title
@@ -368,8 +371,8 @@ class Document < ActiveRecord::Base
     res['search']         = search_url
     res['page']           = {'image' => page_image_url_template, 'text' => page_text_url_template}
     res['related_story']  = related_article
-    doc['sections']       = sections.map(&:canonical)
-    doc['annotations']    = annotations.accessible(options[:account]).map(&:canonical)
+    doc['sections']       = sections.map(&:canonical) if options[:sections]
+    doc['annotations']    = annotations.accessible(options[:account]).map(&:canonical) if options[:annotations]
     doc
   end
 

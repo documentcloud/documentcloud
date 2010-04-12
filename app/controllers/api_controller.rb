@@ -8,6 +8,8 @@ class ApiController < ApplicationController
 
   before_filter :api_login_required, :only => [:upload]
 
+  API_OPTIONS = {:sections => false, :annotations => false}
+
   def index
 
   end
@@ -17,12 +19,16 @@ class ApiController < ApplicationController
   end
 
   def search
+    opts = API_OPTIONS.merge(pick(params, :sections, :annotations))
     perform_search
     respond_to do |format|
       format.json do
-        render :json => {
-          'documents' => @documents.map {|d| d.canonical }
-        }
+        r = ActiveSupport::OrderedHash.new
+        r['total']      = @query.total
+        r['page']       = @query.page
+        r['per_page']   = DC::Search::PAGE_SIZE
+        r['documents']  = @documents.map {|d| d.canonical(API_OPTIONS) }
+        render :json => r
       end
     end
   end

@@ -23,7 +23,7 @@ dc.ui.Paginator = dc.View.extend({
 
   setQuery : function(query) {
     this.query = query;
-    this.page = Math.floor(query.from / this.PAGE_SIZE) + 1;
+    this.page  = query.page;
     $(document.body).toggleClass('paginated', this.active());
     this.render();
   },

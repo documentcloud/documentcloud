@@ -141,7 +141,8 @@ CREATE TABLE documents (
     updated_at timestamp without time zone,
     documents_title_vector tsvector,
     documents_source_vector tsvector,
-    remote_url character varying(255)
+    remote_url character varying(255),
+    related_article character varying(255)
 );
 
 
@@ -979,3 +980,5 @@ INSERT INTO schema_migrations (version) VALUES ('20100316001441');
 INSERT INTO schema_migrations (version) VALUES ('20100317145034');
 
 INSERT INTO schema_migrations (version) VALUES ('20100317181051');
+
+INSERT INTO schema_migrations (version) VALUES ('20100401192921');

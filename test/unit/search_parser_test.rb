@@ -11,29 +11,27 @@ class SearchParserTest < ActiveSupport::TestCase
 
     should "parse full text searches as phrases" do
       query = search("I'm a full text phrase")
-      assert query.is_a? DC::Search::Query
+      assert query.is_a? DC::Search::SolrQuery
       assert !query.has_fields?
       assert query.has_text?
       assert query.text == "I'm a full text phrase"
     end
 
     should "parse fielded searches into fields" do
-      query = search("country: england country:russia glump: 'A B C D'")
+      query = search("country: england country:russia")
       assert !query.has_text?
       assert query.has_fields?
       assert query.fields.first.kind == 'country'
       assert query.fields.first.value == 'england'
-      assert query.fields.last.kind == 'glump'
-      assert query.fields.last.value == 'A B C D'
     end
 
     should "be able to handle compound searches" do
-      query = search("category: food bacon lettuce tomato country:jamaica")
+      query = search("state: wyoming bacon lettuce tomato country:jamaica")
       assert query.has_fields? && query.has_text?
       assert query.text == "bacon lettuce tomato"
-      assert query.fields.first.kind == 'category'
+      assert query.fields.first.kind == 'state'
       assert query.fields.last.value == 'jamaica'
-      assert query.fields.first.value == 'food'
+      assert query.fields.first.value == 'wyoming'
     end
 
     should "transform boolean ORs into Sphinx-compatible ones" do
