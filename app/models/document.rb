@@ -9,6 +9,8 @@ class Document < ActiveRecord::Base
 
   DEFAULT_TITLE = "Untitled Document"
 
+  DISPLAY_DATE_FORMAT = "%b %d, %Y"
+
   belongs_to :account
   belongs_to :organization
 
@@ -319,6 +321,7 @@ class Document < ActiveRecord::Base
       'id'                  => id,
       'organization_id'     => organization_id,
       'account_id'          => account_id,
+      'created_at'          => created_at.to_date.strftime(DISPLAY_DATE_FORMAT),
       'access'              => access,
       'page_count'          => page_count,
       'title'               => title,

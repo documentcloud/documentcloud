@@ -4,7 +4,7 @@
   <span class="view_document noselect"><%= title %></span>
   <% if (icon) { %>
     <div class="document_tools">
-      <div class="icon <%= icon %>"></div>
+      <div class="icon <%= icon.className %>" title="<%= icon.title %>"></div>
     </div>
   <% } %>
 </div>
@@ -12,18 +12,18 @@
   var notes = '';
   if (annotation_count) {
     notes = Inflector.pluralize('note', annotation_count);
-    notes = ', <span class="show_notes"><span class="show">show</span><span class="hide">hide</span> <span class="count">' + annotation_count + '</span> ' + notes + '</span>';
+    notes = ' - <span class="show_notes"><span class="show">show</span><span class="hide">hide</span> <span class="count">' + annotation_count + '</span> ' + notes + '</span>';
   }
 %>
-<div class="source">
-  <span class="noselect">
-    <span class="sources">
-      <% if (source) { %>Source: <%= source %> -<% } %>
-      Contributed by: <%= account_name %>, <%= organization_name %>
-      <br />
-    </span>
-    <span class="page_count"><%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span><%= notes %>
-  </span>
+<div class="metalines">
+  <div class="sources metaline">
+    <% if (source) { %>Source: <%= source %> -<% } %>
+    Contributed by: <%= account_name %>, <%= organization_name %>
+  </div>
+  <div class="stats metaline">
+    <span class="page_count"><%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span> -
+    <%= created_at %><%= notes %>
+  </div>
 </div>
 <div class="description"><span class="noselect"><%= description %></span></div>
 

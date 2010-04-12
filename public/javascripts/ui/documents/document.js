@@ -9,8 +9,8 @@ dc.ui.Document = dc.View.extend({
 
   callbacks : {
     '.view_document.click':  'viewDocument',
-    '.icon.dblclick'      :  'viewDocument',
-    '.icon.click'         :  'select',
+    '.icon.doc.dblclick'  :  'viewDocument',
+    '.icon.doc.click'     :  'select',
     '.show_notes.click'   :  'toggleNotes'
   },
 
@@ -28,7 +28,7 @@ dc.ui.Document = dc.View.extend({
     var title = this.model.get('title');
     var data = _.clone(this.model.attributes());
     data = _.extend(data, {
-      icon          : this._iconName(),
+      icon          : this._iconAttributes(),
       thumbnail_url : this._thumbnailURL(),
       description   : this._description()
     });
@@ -101,13 +101,14 @@ dc.ui.Document = dc.View.extend({
     dc.ui.Dialog.confirm('Really delete "' + this.model.get('title') + '" ?', destructor);
   },
 
-  _iconName : function() {
+  _iconAttributes : function() {
     var access = this.model.get('access');
     switch (access) {
-      case dc.access.PUBLIC:  return null;
-      case dc.access.PENDING: return 'spinner';
-      case dc.access.ERROR:   return 'warning_16';
-      default:                return 'lock';
+      case dc.access.PUBLIC:       return null;
+      case dc.access.PENDING:      return {className : 'spinner',    title : 'uploading...'};
+      case dc.access.ERROR:        return {className : 'warning_16', title : 'broken document'};
+      case dc.access.ORGANIZATION: return {className : 'lock',       title : 'private to my organization'};
+      case dc.access.PRIVATE:      return {className : 'lock',       title : 'private'};
     }
   },
 

@@ -75,13 +75,15 @@
         left: 29px;
         top: 50px;
       }
-  .document .source {
-    font: 11px/14px Arial;
-    overflow: hidden;
-    height: 28px;
-    color: #808080;
+  .document .metalines {
     margin-bottom: 6px;
+    font: 11px/14px Arial;
+    color: #808080;
   }
+    .document .metaline {
+      overflow: hidden;
+      height: 14px;
+    }
     .document.pending_access .page_count {
       display: none;
     }
