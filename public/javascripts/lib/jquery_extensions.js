@@ -200,16 +200,19 @@ $.fn.extend({
 
   // TODO: share common bits of this with the annotation_editor.
   selectable : function(options) {
-    var doc = $(document);
+    var doc  = $(document);
+    var edge = 17;
     var selection = $($.el('div', {'class' : 'selection', style : 'display:none;'}));
     $(document.body).append(selection);
 
     $(this).bind('mousedown', _.bind(function(e) {
       if (options.ignore && $(e.target).closest(options.ignore).length) return;
+      var off = this.offset();
+      if ((e.pageX > off.left + this.outerWidth() - edge) ||
+          (e.pageY > off.top + this.outerHeight() - edge)) return;
       e.preventDefault();
       var targets = $(options.select);
-      var offTop  = this.scrollTop(),
-          offLeft = this.scrollLeft();
+      var scrTop  = this.scrollTop(), scrLeft = this.scrollLeft();
       var ox = e.pageX, oy = e.pageY;
       var coords = function(e) {
         return {
@@ -230,11 +233,11 @@ $.fn.extend({
         doc.unbind('mouseup', dragEnd).unbind('mousemove', drag);
         if (e.pageX == ox && e.pageY == oy) return;
         var pos = coords(e);
-        var x1 = pos.left + offLeft, y1 = pos.top + offTop, x2 = x1 + pos.width, y2 = y1 + pos.height;
+        var x1 = pos.left + scrLeft, y1 = pos.top + scrTop, x2 = x1 + pos.width, y2 = y1 + pos.height;
         var hits = _.select(targets, function(el) {
           el = $(el);
           pos = el.offset();
-          var ex1 = pos.left + offLeft, ey1 = pos.top + offTop, ex2 = ex1 + el.outerWidth(), ey2 = ey1 + el.outerHeight();
+          var ex1 = pos.left + scrLeft, ey1 = pos.top + scrTop, ex2 = ex1 + el.outerWidth(), ey2 = ey1 + el.outerHeight();
           return !(x1 > ex2 || x2 < ex1 || y1 > ey2 || y2 < ey1);
         });
         if (options.onSelect) options.onSelect(hits);
