@@ -13,20 +13,13 @@
 .document {
   position: relative;
   overflow: hidden;
-  border: 1px solid transparent;
-  background: #fcfcfc;
 }
-  .document.is_selected {
-    border-color: #eea;
-    -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
-  }
   .document.muted {
-    border-color: transparent;
     background: transparent;
   }
   #document_list .document {
     min-height: 77px;
-    padding: 5px 30px 5px 77px;
+    padding: 5px 30px 5px 80px;
     margin-bottom: 15px;
   }
   img.doc {
@@ -35,6 +28,17 @@
     width: 60px; height: 75px;
     -webkit-box-shadow: 0 0px 4px #555; -moz-box-shadow: 0 0px 4px #555;
   }
+  .document .select {
+    position: absolute;
+    left: 1px; top: 0px;
+    width: 70px; height: 85px;
+    border: 1px solid transparent;
+    -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
+  }
+    .document.is_selected .select {
+      border-color: #eea;
+      background: #ffffd9;
+    }
   .document img.doc {
     left: 7px; top: 6px;
   }

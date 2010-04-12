@@ -42,6 +42,10 @@ body.visualize #document_list .document {
   body.visualize .document img.doc {
     width: 24px; height: 30px;
   }
+  body.visualize .document .select {
+    top: 2px; left: 3px;
+    width: 30px; height: 36px;
+  }
 
 
 /*------------------------------ TIMELINE ---------------------------------*/

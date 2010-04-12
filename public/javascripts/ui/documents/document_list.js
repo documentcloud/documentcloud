@@ -40,8 +40,6 @@ dc.ui.DocumentList = dc.View.extend({
   },
 
   _deselect : function(e) {
-    var tile = $(e.target).closest('.is_selected');
-    if (tile.length) return;
     Documents.deselectAll();
   },
 
