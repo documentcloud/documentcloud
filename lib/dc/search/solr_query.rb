@@ -102,7 +102,7 @@ module DC
       def build_text
         text = @text
         @search.build do
-          keywords text
+          fulltext text
         end
       end
 
@@ -111,7 +111,7 @@ module DC
         fields = @fields
         @search.build do
           fields.each do |field|
-            keywords field.value do
+            fulltext field.value do
               fields field.kind
             end
           end
@@ -146,7 +146,7 @@ module DC
             end
           else
             @search.build do
-              keywords field.value do
+              fulltext field.value do
                 fields field.kind
               end
             end

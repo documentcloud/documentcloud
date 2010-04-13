@@ -8,6 +8,8 @@ class Page < ActiveRecord::Base
     'thumbnail' => '60x75!'
   }
 
+  MAX_PAGE_RESULTS = 1000
+
   include DC::Store::DocumentResource
   include ActionView::Helpers::SanitizeHelper
   extend ActionView::Helpers::SanitizeHelper::ClassMethods
@@ -16,17 +18,32 @@ class Page < ActiveRecord::Base
 
   validates_numericality_of :page_number, :greater_than_or_equal_to => 1
 
-  named_scope :search_text, lambda { |query|
-    {:conditions => ["pages_text_vector @@ plainto_tsquery(?)", query], :select => [:page_number]}
-  }
-
   delegate :pages_path, :to => :document
-
-  # default_scope :order => 'page_number'
 
   before_update :track_text_changes
 
   after_update :refresh_full_text_index
+
+  searchable do
+    text    :text
+    integer :document_id
+    integer :account_id
+    integer :organization_id
+    integer :access
+    integer :page_number, :stored => true
+  end
+
+  def self.search_for_page_numbers(query, document)
+    query ||= ''
+    query = (query =~ DC::Search::Matchers::QUOTED_VALUE ? query : "\"#{query}\"")
+    result = Sunspot.search self do
+      fulltext query
+      with :document_id, document.id
+      order_by :page_number, :asc
+      paginate :page => 1, :per_page => MAX_PAGE_RESULTS
+    end
+    result.hits.map {|hit| hit.stored(:page_number) }
+  end
 
   # The page map is the start and end character (not byte) offset of each
   # page's full text, relative to the combined full text of the entire document.

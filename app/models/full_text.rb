@@ -8,11 +8,6 @@ class FullText < ActiveRecord::Base
 
   belongs_to :document
 
-  # Run a search across the text of the document, using Postgres' native FTS.
-  named_scope :search_text, lambda { |query|
-    {:conditions => ["full_text_text_vector @@ plainto_tsquery(?)", query]}
-  }
-
   # Generate the highlighted excerpt of the full text for a given search phrase.
   def self.highlights(documents, search_phrase)
     sql = "select document_id, ts_headline('english', full_text.text, plainto_tsquery('#{search_phrase}'), 'minWords=50,maxWords=60,maxFragments=1') as highlight from full_text where full_text.document_id in (#{documents.map(&:id).join(',')})"

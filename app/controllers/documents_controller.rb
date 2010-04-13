@@ -109,9 +109,9 @@ class DocumentsController < ApplicationController
   end
 
   def search
-    doc          = current_document(true)
-    page_numbers = doc.pages.search_text(params[:q]).map(&:page_number)
-    @response    = {'query' => params[:q], 'results' => page_numbers}
+    doc       = current_document(true)
+    pages     = Page.search_for_page_numbers(params[:q], doc)
+    @response = {'query' => params[:q], 'results' => pages}
     return if jsonp_request?
     render :json => @response
   end
