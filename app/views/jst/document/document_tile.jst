@@ -21,7 +21,9 @@
     Contributed by: <%= account_name %>, <%= organization_name %>
   </div>
   <div class="stats metaline">
-    <span class="page_count"><%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span> -
+    <% if (page_count) { %>
+      <span class="page_count"><%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span> -
+    <% } %>
     <%= created_at %><%= notes %>
   </div>
 </div>
