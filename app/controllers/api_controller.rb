@@ -8,10 +8,11 @@ class ApiController < ApplicationController
 
   before_filter :api_login_required, :only => [:upload]
 
+  before_filter :login_required, :only => [:index]
+
   API_OPTIONS = {:sections => false, :annotations => false}
 
   def index
-
   end
 
   def signup

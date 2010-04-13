@@ -1,12 +1,6 @@
 TODO:
-
-  * Make sure the the viewer / collapse is bulletproof in IE as well.
-  * Set up more sophisticated monitoring/analytics for the big day.
-  
-  * DocumentCloud:Internal install (Mac mini?).
-  
+    
   * Last 3 failed docs in the Admin UI.
-  
   
   * Add placeholder JS fallback for non HTML5 browsers.
   
@@ -24,14 +18,14 @@ TODO:
   * Start a suite of Cron scripts, backup being the first.
 
   * Add a "related documents" search. We need a good algorithm for this.
-  
-  * Flesh out a more comprehensive API.
-  
+    
   * Settle the linked data representation of a document with the semantic web
     folks.
   
 
 DONE:
+
+  * Flesh out a more comprehensive API.
 
   * Add the logo-ish to the viewer.
 
