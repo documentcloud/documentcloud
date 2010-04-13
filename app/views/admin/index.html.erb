@@ -7,6 +7,7 @@
 
 <script type="text/javascript">
   window.CLOUD_CROWD_SERVER   = "<%= DC_CONFIG['cloud_crowd_server'] %>";
+  window.FailedDocuments      = new dc.model.DocumentSet();
 
   window.stats = {};
   stats.documents_by_access   = <%= @documents_by_access  %>;
@@ -23,6 +24,7 @@
   Accounts.populate(<%= @accounts %>);
   Organizations.populate(<%= @organizations %>);
   Documents.populate(<%= @documents %>);
+  FailedDocuments.populate(<%= @failed_documents %>);
 
   $(function(){
     $('#content').append((new dc.ui.Statistics()).render().el);

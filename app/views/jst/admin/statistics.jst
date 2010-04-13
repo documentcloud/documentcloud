@@ -114,6 +114,42 @@
 
     <tr class="data">
       <td colspan="4">
+        <table id="documents">
+          <thead>
+            <td>ID</td>
+            <td>Title</td>
+            <td>Contributor</td>
+            <td>Organization</td>
+            <td>Source</td>
+            <td>Pages</td>
+            <td></td>
+          </thead>
+          <tbody>
+            <% _.each(FailedDocuments.models(), function(doc) { %>
+              <tr>
+                <td class="first">
+                  <a target="_blank" title="open pdf" href="<%= doc.get('pdf_url') %>">
+                    <%= doc.get('id') %>
+                  </a>
+                </td>
+                <td><%= doc.get('title') || '<i>private</i>' %></td>
+                <td><%= doc.get('account_name') %></td>
+                <td><%= doc.get('organization_name') %></td>
+                <td><%= doc.get('source') || '<i>private</i>' %></td>
+                <td><%= doc.get('page_count') %></td>
+                <td class="last"></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr class="labels">
+      <td colspan="4">Most Recent 3 Failed Uploads</td>
+    </tr>
+
+    <tr class="data">
+      <td colspan="4">
         <div id="accounts_wrapper">
         </div>
       </td>

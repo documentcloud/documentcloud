@@ -1,7 +1,5 @@
 TODO:
-    
-  * Last 3 failed docs in the Admin UI.
-  
+      
   * Add placeholder JS fallback for non HTML5 browsers.
   
   * Write a phone number extractor, and save those as entities.
@@ -24,6 +22,8 @@ TODO:
   
 
 DONE:
+
+  * Added the last 3 failed docs to the Admin UI.
 
   * Flesh out a more comprehensive API.
 

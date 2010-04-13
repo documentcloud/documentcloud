@@ -352,6 +352,7 @@ class Document < ActiveRecord::Base
       'organization_name' => organization_name,
       'page_count'        => page_count,
       'thumbnail_url'     => thumbnail_url,
+      'pdf_url'           => pdf_url,
       'title'             => public? ? title : nil,
       'source'            => public? ? source : nil
     }

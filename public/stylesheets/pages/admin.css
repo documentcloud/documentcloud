@@ -77,6 +77,9 @@
         margin: 1px 15px 1px 4px;
         border: 0;
       }
+      #statistics .data table a {
+        text-decoration: underline;
+      }
       #statistics .data table .document_count .private {
         color: #844;
       }
