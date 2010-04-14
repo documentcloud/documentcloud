@@ -64,14 +64,18 @@ class DocumentImport < CloudCrowd::Action
   def pdf_text
     Docsplit.extract_text(@pdf, :pages => :all, :output => 'text')
     Dir['text/*.txt'].length.times do |i|
-      save_page_text(File.read("text/#{document.slug}_#{i + 1}.txt"), i + 1)
+      path = "text/#{document.slug}_#{i + 1}.txt"
+      next unless File.exists?(path)
+      save_page_text(File.read(path), i + 1)
     end
   end
 
   def ocr_text
     Docsplit.extract_pages(@pdf, :output => 'text')
     Dir['text/*.pdf'].length.times do |i|
-      text = DC::Import::TextExtractor.new("text/#{document.slug}_#{i + 1}.pdf").text_from_ocr
+      path = "text/#{document.slug}_#{i + 1}.pdf"
+      next unless File.exists?(path)
+      text = DC::Import::TextExtractor.new(path).text_from_ocr
       save_page_text(text, i + 1)
     end
   end
