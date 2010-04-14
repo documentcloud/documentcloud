@@ -52,6 +52,11 @@ class AdminController < ApplicationController
     json nil
   end
 
+  def force_backup
+    DC::Store::BackgroundJobs.backup_database
+    json nil
+  end
+
   # Terminate an EC2 instance.
   def terminate_instance
     return bad_request unless request.post? && params[:instance]

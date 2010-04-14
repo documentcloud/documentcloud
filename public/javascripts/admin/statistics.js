@@ -90,11 +90,14 @@ dc.ui.Statistics = dc.View.extend({
   },
 
   vacuumAnalyze : function() {
-    dc.ui.Dialog.confirm('Are you sure you want to "Vacuum Analyze" the entire database?', function() {
-      $.post('/admin/vacuum_analyze', function() {
-        dc.ui.Dialog.alert('The vacuum background job was started successfully.');
-      });
-      return true;
+    $.post('/admin/vacuum_analyze', function() {
+      dc.ui.Dialog.alert('The vacuum background job was started successfully.');
+    });
+  },
+
+  forceBackup : function() {
+    $.post('/admin/force_backup', function() {
+      dc.ui.Dialog.alert('The database backup job was started successfully.');
     });
   },
 
@@ -161,6 +164,7 @@ dc.ui.Statistics = dc.View.extend({
         {title : 'Add an Organization',       onClick : function(){ window.location = '/admin/signup'; }},
         {title : 'View CloudCrowd Console',   onClick : function(){ window.location = CLOUD_CROWD_SERVER; }},
         {title : 'Reprocess Failed Documents',onClick : this.reprocessFailedDocuments},
+        {title : 'Force a DB Backup to S3',   onClick : this.forceBackup},
         {title : 'Vacuum Analyze the DB',     onClick : this.vacuumAnalyze},
         {title : 'Launch a Worker Instance',  onClick : this.launchWorker}
       ]
