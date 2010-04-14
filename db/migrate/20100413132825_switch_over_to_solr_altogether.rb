@@ -21,9 +21,6 @@ class SwitchOverToSolrAltogether < ActiveRecord::Migration
     execute "drop index metadata_value_fti;"
     execute "drop trigger metadata_value_vector_update on entities;"
     remove_column :entities, :metadata_value_vector
-
-    # Spring cleaning for the Postgres DB:
-    execute 'vacuum analyze;'
   end
 
   def self.down
