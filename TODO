@@ -1,9 +1,7 @@
 TODO:
       
   * Add placeholder JS fallback for non HTML5 browsers.
-  
-  * Add "vacuum analyze" to the Admin Actions.
-  
+    
   * Write a phone number extractor, and save those as entities.
       
   * Public -> Private docs that are already part of a project should be
@@ -24,6 +22,8 @@ TODO:
   
 
 DONE:
+
+  * Add "vacuum analyze" to the Admin Actions.
 
   * Added the last 3 failed docs to the Admin UI.
 

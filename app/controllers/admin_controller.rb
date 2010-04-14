@@ -48,8 +48,7 @@ class AdminController < ApplicationController
   end
 
   def vacuum_analyze
-    job = {:action => 'vacuum_analyze', :inputs => [true]}
-    RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => job.to_json})
+    DC::Store::BackgroundJobs.vacuum_analyze
     json nil
   end
 

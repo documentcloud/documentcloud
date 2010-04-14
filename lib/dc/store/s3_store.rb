@@ -54,6 +54,10 @@ module DC
         save_file(page.text, page.text_path, access, :string => true)
       end
 
+      def save_database_backup(path)
+        bucket.put("backups/#{Date.today}.dump", File.open(path))
+      end
+
       # This is going to be *extremely* expensive. We can thread it, but
       # there must be a better way somehow. (running in the background for now)
       def set_access(document, access)
@@ -74,11 +78,6 @@ module DC
 
       def destroy(document)
         bucket.delete_folder(document.path)
-      end
-
-      # Delete the assets store entirely.
-      def delete_database!
-        bucket.delete_folder("docs")
       end
 
 

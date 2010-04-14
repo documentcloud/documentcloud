@@ -48,6 +48,11 @@ module DC
         File.open(local(page.text_path), 'w+') {|f| f.write(page.text) }
       end
 
+      def save_database_backup(path)
+        ensure_directory('backups')
+        FileUtils.cp(path, local("backups/#{Date.today}.dump"))
+      end
+
       def set_access(document, access)
         # No-op for the FileSystemStore.
       end
@@ -59,11 +64,6 @@ module DC
       def destroy(document)
         doc_path = local(document.path)
         FileUtils.rm_r(doc_path) if File.exists?(doc_path)
-      end
-
-      # Delete the assets store entirely.
-      def delete_database!
-        FileUtils.rm_r(AssetStore.asset_root) if File.exists?(AssetStore.asset_root)
       end
 
 
