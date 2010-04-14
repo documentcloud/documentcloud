@@ -335,7 +335,7 @@ class Document < ActiveRecord::Base
       'organization_name'   => organization_name,
       'account_name'        => account_name,
       'related_article'     => related_article,
-      'pdf_url'             => pdf_url,
+      'pdf_url'             => pdf_url(:direct),
       'thumbnail_url'       => thumbnail_url,
       'full_text_url'       => full_text_url,
       'page_image_url'      => page_image_url_template,
