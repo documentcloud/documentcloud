@@ -66,8 +66,7 @@ CREATE TABLE annotations (
     content text,
     location character varying(40),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    annotations_content_vector tsvector
+    updated_at timestamp without time zone
 );
 
 
@@ -139,8 +138,6 @@ CREATE TABLE documents (
     publication_date date,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    documents_title_vector tsvector,
-    documents_source_vector tsvector,
     remote_url character varying(255),
     related_article character varying(255)
 );
@@ -179,8 +176,7 @@ CREATE TABLE entities (
     value character varying(255) NOT NULL,
     relevance double precision DEFAULT 0.0 NOT NULL,
     calais_id character varying(40),
-    occurrences text,
-    metadata_value_vector tsvector
+    occurrences text
 );
 
 
@@ -209,8 +205,7 @@ CREATE TABLE full_text (
     account_id integer NOT NULL,
     document_id integer NOT NULL,
     access integer NOT NULL,
-    text text NOT NULL,
-    full_text_text_vector tsvector
+    text text NOT NULL
 );
 
 
@@ -345,7 +340,6 @@ CREATE TABLE pages (
     access integer NOT NULL,
     page_number integer NOT NULL,
     text text NOT NULL,
-    pages_text_vector tsvector,
     start_offset integer,
     end_offset integer
 );
@@ -718,38 +712,10 @@ ALTER TABLE ONLY security_keys
 
 
 --
--- Name: annotations_content_fti; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX annotations_content_fti ON annotations USING gin (annotations_content_vector);
-
-
---
--- Name: documents_source_fti; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX documents_source_fti ON documents USING gin (documents_source_vector);
-
-
---
--- Name: documents_title_fti; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX documents_title_fti ON documents USING gin (documents_title_vector);
-
-
---
 -- Name: fk_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX fk_organization_id ON accounts USING btree (organization_id);
-
-
---
--- Name: full_text_text_fti; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX full_text_text_fti ON full_text USING gin (full_text_text_vector);
 
 
 --
@@ -851,84 +817,10 @@ CREATE INDEX index_sections_on_document_id ON sections USING btree (document_id)
 
 
 --
--- Name: metadata_value_fti; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX metadata_value_fti ON entities USING gin (metadata_value_vector);
-
-
---
--- Name: pages_text_fti; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX pages_text_fti ON pages USING gin (pages_text_vector);
-
-
---
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
-
-
---
--- Name: annotations_content_vector_update; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER annotations_content_vector_update
-    BEFORE INSERT OR UPDATE ON annotations
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsvector_update_trigger('annotations_content_vector', 'pg_catalog.english', 'content');
-
-
---
--- Name: documents_source_vector_update; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER documents_source_vector_update
-    BEFORE INSERT OR UPDATE ON documents
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsvector_update_trigger('documents_source_vector', 'pg_catalog.english', 'source');
-
-
---
--- Name: documents_title_vector_update; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER documents_title_vector_update
-    BEFORE INSERT OR UPDATE ON documents
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsvector_update_trigger('documents_title_vector', 'pg_catalog.english', 'title');
-
-
---
--- Name: full_text_text_vector_update; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER full_text_text_vector_update
-    BEFORE INSERT OR UPDATE ON full_text
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsvector_update_trigger('full_text_text_vector', 'pg_catalog.english', 'text');
-
-
---
--- Name: metadata_value_vector_update; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER metadata_value_vector_update
-    BEFORE INSERT OR UPDATE ON entities
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsvector_update_trigger('metadata_value_vector', 'pg_catalog.english', 'value');
-
-
---
--- Name: pages_text_vector_update; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER pages_text_vector_update
-    BEFORE INSERT OR UPDATE ON pages
-    FOR EACH ROW
-    EXECUTE PROCEDURE tsvector_update_trigger('pages_text_vector', 'pg_catalog.english', 'text');
 
 
 --
@@ -982,3 +874,5 @@ INSERT INTO schema_migrations (version) VALUES ('20100317145034');
 INSERT INTO schema_migrations (version) VALUES ('20100317181051');
 
 INSERT INTO schema_migrations (version) VALUES ('20100401192921');
+
+INSERT INTO schema_migrations (version) VALUES ('20100413132825');

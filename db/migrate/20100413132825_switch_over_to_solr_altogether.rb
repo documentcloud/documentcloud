@@ -2,6 +2,14 @@ class SwitchOverToSolrAltogether < ActiveRecord::Migration
   extend DC::Store::MigrationHelpers
 
   def self.up
+    # Index with Solr.
+    Page.find_in_batches(:conditions => ['true']) do |pages|
+      Sunspot.index(pages)
+    end
+
+    # Commit the updates.
+    Sunspot.commit
+
     # Remove the Postgres indexes.
     remove_full_text_index :annotations, :content
     remove_full_text_index :documents,   :title
@@ -16,14 +24,6 @@ class SwitchOverToSolrAltogether < ActiveRecord::Migration
 
     # Spring cleaning for the Postgres DB:
     execute 'vacuum analyze;'
-
-    # Index with Solr.
-    Page.find_in_batches(:conditions => ['true']) do |pages|
-      Sunspot.index(pages)
-    end
-
-    # Commit the updates.
-    Sunspot.commit
   end
 
   def self.down
