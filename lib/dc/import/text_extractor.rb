@@ -60,6 +60,7 @@ module DC
       def text_from_ocr
         system "gm convert -density 200x200 -colorspace GRAY #{@pdf_path} #{@tiff_path}"
         system "tesseract #{@tiff_path} #{@base_path} -l eng"
+        return "" unless File.exists?(@text_path)
         ensure_utf8
         full_text = File.read(@text_path)
         File.unlink(@tiff_path, @text_path)
