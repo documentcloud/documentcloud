@@ -31,7 +31,7 @@ dc.ui.Statistics = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, 'renderCharts', 'launchWorker', 'reprocessFailedDocuments');
+    _.bindAll(this, 'renderCharts', 'launchWorker', 'reprocessFailedDocuments', 'vacuumAnalyze');
     stats.daily_documents_series = this._series(stats.daily_documents, 'Document');
     stats.daily_pages_series = this._series(stats.daily_pages, 'Page');
     this._tooltip = new dc.ui.Tooltip();
@@ -84,6 +84,15 @@ dc.ui.Statistics = dc.View.extend({
           'The worker instance has been launched successfully.\
           It will be a few minutes before it comes online and registers with CloudCrowd.'
         );
+      });
+      return true;
+    });
+  },
+
+  vacuumAnalyze : function() {
+    dc.ui.Dialog.confirm('Are you sure you want to "Vacuum Analyze" the entire database?', function() {
+      $.post('/admin/vacuum_analyze', function() {
+        dc.ui.Dialog.alert('The vacuum background job was started successfully.');
       });
       return true;
     });
@@ -152,6 +161,7 @@ dc.ui.Statistics = dc.View.extend({
         {title : 'Add an Organization',       onClick : function(){ window.location = '/admin/signup'; }},
         {title : 'View CloudCrowd Console',   onClick : function(){ window.location = CLOUD_CROWD_SERVER; }},
         {title : 'Reprocess Failed Documents',onClick : this.reprocessFailedDocuments},
+        {title : 'Vacuum Analyze the DB',     onClick : this.vacuumAnalyze},
         {title : 'Launch a Worker Instance',  onClick : this.launchWorker}
       ]
     });

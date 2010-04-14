@@ -47,6 +47,12 @@ class AdminController < ApplicationController
     json nil
   end
 
+  def vacuum_analyze
+    job = {:action => 'vacuum_analyze', :inputs => [true]}
+    RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => job.to_json})
+    json nil
+  end
+
   # Terminate an EC2 instance.
   def terminate_instance
     return bad_request unless request.post? && params[:instance]

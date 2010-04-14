@@ -2,7 +2,7 @@ TODO:
       
   * Add placeholder JS fallback for non HTML5 browsers.
   
-  * Add "vaccum analyze" to the Admin Actions.
+  * Add "vacuum analyze" to the Admin Actions.
   
   * Write a phone number extractor, and save those as entities.
       
