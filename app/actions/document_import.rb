@@ -37,18 +37,18 @@ class DocumentImport < CloudCrowd::Action
   def process_text
     # Destroy existing text and pages to make way for the new.
     document.full_text.destroy if document.full_text
-    document.pages.destroy_all if document.pages.count > 0
     extractor = DC::Import::TextExtractor.new(@pdf)
+    text = nil
     if extractor.contains_text?
       begin
-        pdf_text
+        text = pdf_text
       rescue Exception => e
-        ocr_text
+        text = ocr_text
       end
     else
-      ocr_text
+      text = ocr_text
     end
-    text = document.combined_page_text
+    text = ocr_text unless enough_text_detected?(document, text)
     document.full_text = FullText.new(:text => text, :document => document)
     Page.refresh_page_map(document)
     EntityDate.refresh(document)
@@ -62,27 +62,41 @@ class DocumentImport < CloudCrowd::Action
   private
 
   def pdf_text
+    pages = []
+    document.pages.destroy_all if document.pages.count > 0
     Docsplit.extract_text(@pdf, :pages => :all, :output => 'text')
     Dir['text/*.txt'].length.times do |i|
       path = "text/#{document.slug}_#{i + 1}.txt"
       next unless File.exists?(path)
-      save_page_text(File.read(path), i + 1)
+      text = File.read(path)
+      pages.push text
+      save_page_text(text, i + 1)
     end
+    pages.join('')
   end
 
   def ocr_text
+    pages = []
+    document.pages.destroy_all if document.pages.count > 0
     Docsplit.extract_pages(@pdf, :output => 'text')
     Dir['text/*.pdf'].length.times do |i|
       path = "text/#{document.slug}_#{i + 1}.pdf"
       next unless File.exists?(path)
       text = DC::Import::TextExtractor.new(path).text_from_ocr
+      pages.push text
       save_page_text(text, i + 1)
     end
+    pages.join('')
   end
 
   def save_page_text(text, page_number)
     page = Page.create!(:document => document, :text => text, :page_number => page_number)
     asset_store.save_page_text(page, access)
+  end
+
+  # Our heuristic for this will be ... 20 characters / page.
+  def enough_text_detected?(document, text)
+    text.length > (document.pages.count * 20)
   end
 
   def document
