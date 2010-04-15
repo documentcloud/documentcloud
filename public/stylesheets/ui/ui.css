@@ -44,7 +44,8 @@ select {
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#F9F9FF', EndColorStr='#DDDDFF');
 }
 .gradient_white,
-.minibutton {
+.minibutton,
+.minibutton.not_enabled:active {
   background: #fafafa;
   background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dfdfdf));
   background: -moz-linear-gradient(top, #ffffff, #dfdfdf);
@@ -142,7 +143,8 @@ textarea.text_area {
 }
 
 /*----------------------------- Mini Buttons ---------------------------------*/
-.minibutton {
+.minibutton,
+.minibutton.not_enabled:hover {
   cursor: pointer;
   font: 11px Arial;
   text-shadow: 0px 1px 1px #fff;
@@ -157,13 +159,12 @@ textarea.text_area {
   .minibutton::selection, .minibutton > span::selection {
     background: transparent;
   }
-  .minibutton.not_enabled {
+  .minibutton.not_enabled,
+  .minibutton.not_enabled:active,
+  .minibutton.not_enabled:hover {
     opacity: 0.33; filter: alpha(opacity=33);
     cursor: default;
   }
-    .minibutton.not_enabled:hover {
-      -webkit-box-shadow: 0 0 1px #000; -moz-box-shadow: 0 0 1px #000;
-    }
 
 /*--------------------------------- Menus ------------------------------------*/
 .minibutton.menu .wrapper {

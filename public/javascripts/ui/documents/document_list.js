@@ -2,11 +2,14 @@
 // in a number of different sizes.
 dc.ui.DocumentList = dc.View.extend({
 
+  SLOP      : 3,
+
   id        : 'document_list',
   className : 'panel',
 
   callbacks : {
-    'el.click': '_deselect'
+    'el.mousedown': '_startDeselect',
+    'el.click':     '_endDeselect'
   },
 
   constructor : function(options) {
@@ -39,7 +42,14 @@ dc.ui.DocumentList = dc.View.extend({
     });
   },
 
-  _deselect : function(e) {
+  _startDeselect : function(e) {
+    this._pageX = e.pageX;
+    this._pageY = e.pageY;
+  },
+
+  _endDeselect : function(e) {
+    if ((Math.abs(e.pageX - this._pageX) > this.SLOP) ||
+        (Math.abs(e.pageY - this._pageY) > this.SLOP)) return;
     Documents.deselectAll();
   },
 

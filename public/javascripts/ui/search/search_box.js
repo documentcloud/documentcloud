@@ -61,7 +61,6 @@ dc.ui.SearchBox = dc.View.extend({
     Documents.refresh();
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');
-    if (dc.app.toolbar) dc.app.toolbar.hide();
     var params = {q : query};
     if (this.page) params.page = this.page;
     var url = query.match(/notes:/) ? '/search/notes.json' : '/search/documents.json';

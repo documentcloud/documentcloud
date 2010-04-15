@@ -8,9 +8,10 @@ dc.ui.Document = dc.View.extend({
   className : 'document',
 
   callbacks : {
-    '.view_document.click':  'viewDocument',
-    '.icon.doc.dblclick'  :  'viewDocument',
+    '.doc_title.click'    :  'select',
+    '.doc_title.dblclick' :  'viewDocument',
     '.icon.doc.click'     :  'select',
+    '.icon.doc.dblclick'  :  'viewDocument',
     '.show_notes.click'   :  'toggleNotes'
   },
 

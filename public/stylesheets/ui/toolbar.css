@@ -1,16 +1,13 @@
 #search_toolbar_container {
   position: absolute;
   overflow: hidden;
-  height: 0;
   left: 0; right: 0;
-  -webkit-transition: height 0.1s linear;
+  height: 41px;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #c6c6c6;
+  -webkit-box-shadow: 0 0 25px #ddd;
+  -moz-box-shadow: 0 0 25px #ddd;
 }
-  .panel_content.open_toolbar #search_toolbar_container,
-  body.visualize #search_toolbar_container {
-    border-left: 1px solid #ddd;
-    border-bottom: 1px solid #c6c6c6;
-    height: 41px;
-  }
 
 #toolbar {
   padding: 11px 20px;

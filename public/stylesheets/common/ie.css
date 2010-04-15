@@ -89,6 +89,10 @@ div.dialog .dialog_background {
 #account_list .admin.pending .pending_badge {
   display: none;
 }
-.minibutton.not_enabled {
-  color: #bbb;
+.minibutton.not_enabled,
+.minibutton.not_enabled:hover {
+  color: #ccc;
 }
+  .minibutton.not_enabled div.label {
+    background-image: none;
+  }

@@ -16,6 +16,7 @@ dc.ui.Toolbar = dc.View.extend({
     this.manageMenu       = this._createManageMenu();
     this.connectionsMenu  = this._createConnectionsMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
+    this.display();
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
   },
 
@@ -33,20 +34,11 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   display : function() {
-    var count = $('.document.is_selected').length;
-    if (count <= 0) return this.hide();
-    count > 1 ? this.editMenu.disable() : this.editMenu.enable();
-    this.show();
-  },
-
-  hide : function() {
-    dc.ui.notifier.hide(true);
-    $(this._panel()).setMode('closed', 'toolbar');
-  },
-
-  show : function() {
-    if (!Projects.populated) Projects.populate();
-    $(this._panel()).setMode('open', 'toolbar');
+    var count = Documents.countSelected();
+    count != 1 ? this.editMenu.disable() : this.editMenu.enable();
+    _.each([this.downloadMenu, this.manageMenu, this.connectionsMenu, this.projectMenu], function(menu) {
+      count == 0 ? menu.disable() : menu.enable();
+    });
   },
 
   notifyProjectChange : function(projectName, numDocs, removal) {
