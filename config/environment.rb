@@ -26,7 +26,7 @@ Rails::Initializer.run do |config|
   config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
   config.gem 'rubyzip',               :version => '>= 0.9.1',       :lib => 'zip/zip'
   config.gem 'right_aws',             :version => '>= 1.10.0'
-  config.gem 'postgres',              :version => '>= 0.7.9.2008.01.28'
+  config.gem 'pg',                    :version => '>= 0.9.0'
   config.gem 'jammit',                :version => '>= 0.4.0'
   config.gem 'docsplit',              :version => '>= 0.1.1'
   config.gem 'sunspot_rails',         :version => '>= 1.0.5',       :lib => 'sunspot/rails'

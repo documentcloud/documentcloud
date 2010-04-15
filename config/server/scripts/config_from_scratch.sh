@@ -46,7 +46,7 @@ gem --version 2>/dev/null | grep -q $GEMS_VERSION || {
   rm -rf rubygems-$GEMS_VERSION*
 }
 
-GEMS='postgres sqlite3-ruby rails passenger sinatra right_aws
+GEMS='pg sqlite3-ruby rails passenger sinatra right_aws
 rest-client rack bcrypt-ruby rubyzip libxml-ruby nokogiri json hpricot
 calais curb daemons cloud-crowd yui-compressor jammit docsplit'
 

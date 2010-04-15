@@ -6,6 +6,8 @@ TODO:
       
   * Public -> Private docs that are already part of a project should be
     displayed as revoked/locked/blanked.
+    
+  * Things have stabilized. Time for another batch of tests.
 
   * Add a way to search just the text of your notes. List your notes etc.
           
@@ -13,8 +15,6 @@ TODO:
     published, and the URL where. Create a cron/cloudcrowd job that pings each
     published document, ensuring that it's not 404'd.
         
-  * Start a suite of Cron scripts, backup being the first.
-
   * Add a "related documents" search. We need a good algorithm for this.
     
   * Settle the linked data representation of a document with the semantic web
@@ -22,6 +22,8 @@ TODO:
   
 
 DONE:
+
+  * Start a suite of Cron scripts, backup being the first.
 
   * Add "vacuum analyze" to the Admin Actions.
 
