@@ -94,9 +94,9 @@ class DocumentImport < CloudCrowd::Action
     asset_store.save_page_text(page, access)
   end
 
-  # Our heuristic for this will be ... 20 characters / page.
+  # Our heuristic for this will be ... 100 characters / page.
   def enough_text_detected?(document, text)
-    text.length > (document.pages.count * 20)
+    text.length > (document.pages.count * 100)
   end
 
   def document
