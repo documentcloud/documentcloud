@@ -78,7 +78,7 @@
 #DV-logo {
   border-top: 1px solid #ccc;
   margin-top: 15px;
-  padding: 8px 0 4px;
+  padding: 8px 0 0 0;
 }
   #DV-logo a {
     display: block;
