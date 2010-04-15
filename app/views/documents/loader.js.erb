@@ -14,7 +14,7 @@
   };
 
   DV.afterLoad = function() {
-    $j('#DV-logo').html('<a href="http://www.documentcloud.org">Powered By DocumentCloud</a>');
+    $j('#DV-logoLink').attr({href : 'http://www.documentcloud.org'});
   };
 
   document.write('<script type="text/javascript" src="<%= root %>/viewer/viewer.js"></script>');

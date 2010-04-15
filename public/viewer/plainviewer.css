@@ -77,14 +77,13 @@
 
 #DV-logo {
   border-top: 1px solid #ccc;
-  text-transform: uppercase;
-  font-size: 9px;
-  font-family: "Arial Unicode MS", "Lucida Grande", Arial, sans-serif;
   margin-top: 15px;
   padding: 8px 0 4px;
 }
-  #DV-logo a, #DV-logo a:visited {
-    color: #777;
+  #DV-logo a {
+    display: block;
+    width: 105px; height: 19px;
+    background: url(/viewer/images/dc_inline_logo.png);
   }
 
 .DV-views {
