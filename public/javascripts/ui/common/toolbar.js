@@ -3,7 +3,8 @@ dc.ui.Toolbar = dc.View.extend({
   id : 'toolbar',
 
   callbacks : {
-    '#calais_credits.click'         : '_openCalais'
+    '#calais_credits.click' : '_openCalais',
+    '#open_viewers.click'    : '_openViewers'
   },
 
   constructor : function(options) {
@@ -16,7 +17,6 @@ dc.ui.Toolbar = dc.View.extend({
     this.manageMenu       = this._createManageMenu();
     this.connectionsMenu  = this._createConnectionsMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
-    this.display();
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
   },
 
@@ -29,13 +29,16 @@ dc.ui.Toolbar = dc.View.extend({
     $('.connections_menu_container', el).append(this.connectionsMenu.render().el);
     $('.project_menu_container', el).append(this.projectMenu.render().el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
+    this.openButton      = $('#open_viewers', this.el);
     this.setCallbacks();
+    this.display();
     return this;
   },
 
   display : function() {
     var count = Documents.countSelected();
     count != 1 ? this.editMenu.disable() : this.editMenu.enable();
+    this.openButton.setMode(count == 0 ? 'not' : 'is', 'enabled');
     _.each([this.downloadMenu, this.manageMenu, this.connectionsMenu, this.projectMenu], function(menu) {
       count == 0 ? menu.disable() : menu.enable();
     });
@@ -203,6 +206,10 @@ dc.ui.Toolbar = dc.View.extend({
 
   _openCalais : function() {
     window.open('http://opencalais.com');
+  },
+
+  _openViewers : function() {
+    _.each(Documents.selected(), function(doc){ doc.openViewer(); });
   }
 
 });

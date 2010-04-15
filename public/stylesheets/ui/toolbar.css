@@ -16,7 +16,7 @@
     float: left;
     margin: 0 0 15px 12px;
   }
-    #toolbar .project_menu_container .minibutton {
+    #toolbar #open_viewers {
       margin-left: 0;
     }
 
