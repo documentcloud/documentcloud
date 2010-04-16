@@ -104,7 +104,7 @@ module DC
         attempts = 0
         begin
           bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access], headers)
-        rescue RightAws::AwsError => e
+        rescue Exception => e
           raise e unless e.message.match(/(RequestTimeTooSkewed|RequestTimeout)/) && (attempts < 3)
           attempts += 1
           retry
