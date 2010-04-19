@@ -79,7 +79,7 @@ dc.Set = Base.extend({
     if (already) throw new Error("Can't add the same model to a set twice");
     this._byId[model.id] = model;
     this._byCid[model.cid] = model;
-    model.bind(dc.util.Bindable.ALL, this._boundOnModelEvent, this);
+    model.bind('all', this._boundOnModelEvent);
     this._size++;
     if (!silent) this.fire(dc.Set.MODEL_ADDED, model);
     return model;
@@ -99,7 +99,7 @@ dc.Set = Base.extend({
     if (!model) return null;
     delete this._byId[model.id];
     delete this._byCid[model.cid];
-    model.unbind(null, null, this);
+    model.unbind('all', this._boundOnModelEvent);
     this._size--;
     if (!silent) this.fire(dc.Set.MODEL_REMOVED, model);
     return model;
@@ -150,4 +150,4 @@ dc.Set = Base.extend({
 
 });
 
-dc.Set.implement(dc.util.Bindable.methods);
+dc.Set.implement(dc.util.Observable);
