@@ -31,6 +31,7 @@ dc.model.Note = dc.Model.extend({
 dc.model.NoteSet = dc.model.RESTfulSet.extend({
 
   resource : 'notes',
+  model    : dc.model.Note,
 
   comparator : function(note) {
     return note.get('page');

@@ -48,6 +48,7 @@ dc.model.Account = dc.Model.extend({
 dc.model.AccountSet = dc.model.RESTfulSet.extend({
 
   resource : 'accounts',
+  model    : dc.model.Account,
 
   comparator : function(account) {
     return account.get('last_name').toLowerCase();

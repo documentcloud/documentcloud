@@ -7,6 +7,7 @@ dc.model.Organization = dc.Model.extend({});
 dc.model.OrganizationSet = dc.model.RESTfulSet.extend({
 
   resource : 'organizations',
+  model    : dc.model.Organization,
 
   comparator : function(org) {
     return org.get('name').toLowerCase();
@@ -14,6 +15,6 @@ dc.model.OrganizationSet = dc.model.RESTfulSet.extend({
 
 });
 
-dc.model.AccountSet.implement(dc.model.SortedSet);
+dc.model.OrganizationSet.implement(dc.model.SortedSet);
 
 window.Organizations = new dc.model.OrganizationSet();

@@ -81,6 +81,7 @@ dc.model.Document = dc.Model.extend({
 dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 
   resource : 'documents',
+  model    : dc.model.Document,
 
   POLL_INTERVAL : 10000, // 10 seconds.
 

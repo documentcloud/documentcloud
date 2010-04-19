@@ -9,7 +9,6 @@ dc.model.RESTfulSet = dc.Set.extend({
 
   constructor : function() {
     if (!this.resource) throw new Error('dc.model.RESTfulSet: Unspecified resource');
-    this.modelClass = dc.model[Inflector.classify(this.resource)];
     this.base();
   },
 
@@ -66,7 +65,7 @@ dc.model.RESTfulSet = dc.Set.extend({
     var me = this;
     var onSuccess = function(resp) {
       _.each(resp[me.resource] || resp, function(attrs) {
-        var model = new me.modelClass(attrs);
+        var model = new me.model(attrs);
         if (!me.include(model)) me.add(model);
       });
       if (options.success) options.success();

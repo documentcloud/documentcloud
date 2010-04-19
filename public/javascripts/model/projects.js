@@ -2,8 +2,6 @@
 
 dc.model.Project = dc.Model.extend({
 
-  resource : 'projects',
-
   constructor : function(attrs) {
     this.base(attrs);
   },
@@ -61,10 +59,10 @@ dc.model.Project = dc.Model.extend({
 
 
 // Project Set
-
 dc.model.ProjectSet = dc.model.RESTfulSet.extend({
 
   resource : 'projects',
+  model    : dc.model.Project,
 
   comparator : function(m) {
     return m.get('title').toLowerCase();

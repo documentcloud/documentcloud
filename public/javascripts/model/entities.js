@@ -109,6 +109,8 @@ dc.model.Entity = dc.Model.extend({
 
 dc.model.EntitySet = dc.model.SortedSet.extend({
 
+  model : dc.model.Entity,
+
   // Map of kind to display name for titles and the like.
   DISPLAY_NAME : {
     city          : 'Cities',
