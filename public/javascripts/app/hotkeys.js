@@ -6,6 +6,7 @@ dc.app.hotkeys = {
     '16':  'shift',
     '17':  'control',
     '91':  'command',
+    '93':  'command',
     '224': 'command'
   },
 
