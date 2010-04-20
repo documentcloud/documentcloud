@@ -69,7 +69,10 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   filterFacet : function(e) {
-    var fragment = $(e.target).attr('data-category') + ': ' + $(e.target).attr('data-value');
+    var el = $(e.target);
+    var val = el.attr('data-value');
+    if (val.match(/\s/)) val = '"' + val + '"';
+    var fragment = $(e.target).attr('data-category') + ': ' + val;
     dc.app.searchBox.addToSearch(fragment);
   },
 
