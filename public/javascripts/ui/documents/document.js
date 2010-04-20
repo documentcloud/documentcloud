@@ -8,6 +8,7 @@ dc.ui.Document = dc.View.extend({
   className : 'document',
 
   callbacks : {
+    '.doc_title.mousedown':  '_noSelect',
     '.doc_title.click'    :  'select',
     '.doc_title.dblclick' :  'viewDocument',
     '.icon.doc.click'     :  'select',
@@ -70,8 +71,8 @@ dc.ui.Document = dc.View.extend({
   },
 
   viewDocument : function(e) {
-    e.stopPropagation();
     this.model.openViewer();
+    return false;
   },
 
   viewPDF : function() {
@@ -163,6 +164,10 @@ dc.ui.Document = dc.View.extend({
         return false;
       }
     });
+  },
+
+  _noSelect : function(e) {
+    e.preventDefault();
   }
 
 });
