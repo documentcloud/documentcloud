@@ -58,7 +58,7 @@ module DC
       # that match the search, and one that retrieves the documents or notes
       # for the current page.
       def run(o={})
-        @account, @organization, @unrestricted, @faceted = o[:account], o[:organization], o[:unrestricted], o[:faceted]
+        @account, @organization, @unrestricted, @faceted = o[:account], o[:organization], o[:unrestricted], o[:facets]
         generate_search
         @solr.execute
         @total   = @solr.total
@@ -81,6 +81,15 @@ module DC
         return false unless has_results? && @account
         counts = Annotation.counts_for_documents(@account, @results)
         @results.each {|doc| doc.annotation_count = counts[doc.id] }
+      end
+
+      # Return a hash of facets.
+      def facets
+        return {} unless @faceted
+        @solr.facets.inject({}) do |hash, facet|
+          hash[facet.field_name] = facet.rows.map {|row| {:value => row.value, :count => row.count}}
+          hash
+        end
       end
 
       # The JSON representation of a query contains all the structured aspects
