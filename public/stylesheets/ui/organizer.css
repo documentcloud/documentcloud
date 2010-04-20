@@ -1,5 +1,8 @@
 #organizer {
 }
+  #new_project, #upload_document {
+    margin: 15px 0 15px 15px;
+  }
 
   #organizer .sidebar_section {
     padding-bottom: 15px;
@@ -31,9 +34,9 @@
 
   #organizer .project_list_wrap {
     position: absolute;
-    top: 42px; bottom: 0px; left: 0; right: 0;
+    top: 0px; bottom: 0px; left: 0; right: 0;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: visible;
   }
     #organizer.has_projects .project_help {
       display: none;
@@ -46,9 +49,14 @@
       padding: 15px;
       cursor: pointer;
       border-bottom: 1px solid #d0d0d0;
+      border-right: 6px solid #d7d7d7;
     }
+      #organizer .box:hover {
+        border-right: 0;
+      }
       #organizer .box.is_selected {
         background-color: #fcfcfc;
+        border-right: 0;
       }
       #organizer .box .pointer {
         width: 10px; height: 19px;

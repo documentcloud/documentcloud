@@ -4,7 +4,8 @@ dc.ui.Toolbar = dc.View.extend({
 
   callbacks : {
     '#calais_credits.click' : '_openCalais',
-    '#open_viewers.click'    : '_openViewers'
+    '#open_viewers.click'   : '_openViewers',
+    '#toolbar_upload.click' : '_openUpload'
   },
 
   constructor : function(options) {
@@ -17,6 +18,7 @@ dc.ui.Toolbar = dc.View.extend({
     this.connectionsMenu  = this._createConnectionsMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
+    Documents.bind(dc.Set.REFRESHED, this.display);
   },
 
   render : function() {
@@ -126,7 +128,7 @@ dc.ui.Toolbar = dc.View.extend({
 
   _addProjectWithDocuments : function(title) {
     var ids = Documents.selectedIds();
-    var project = new dc.model.Project({title : title, document_ids : ids.join(',')});
+    var project = new dc.model.Project({title : title, annotation_count : 0, document_ids : ids.join(',')});
     Projects.create(project, null, {error : function() { Projects.remove(project); }});
     this.notifyProjectChange(title, ids.length);
   },
@@ -157,6 +159,10 @@ dc.ui.Toolbar = dc.View.extend({
 
   _openTimeline : function() {
     new dc.ui.TimelineDialog(Documents.selected());
+  },
+
+  _openUpload : function() {
+    dc.app.uploader.open();
   },
 
   _openConnections : function(kind) {

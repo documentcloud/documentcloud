@@ -3,8 +3,8 @@ dc.ui.Organizer = dc.View.extend({
   id : 'organizer',
 
   callbacks : {
-    '.new_project.click':       'promptNewProject',
-    '.upload_documents.click' : 'openUploads'
+    '#new_project.click'      : 'promptNewProject',
+    '#upload_document.click'  : 'openUploads'
   },
 
   constructor : function(options) {

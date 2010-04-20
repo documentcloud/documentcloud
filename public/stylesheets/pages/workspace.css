@@ -13,7 +13,7 @@ a {
 
 #topbar {
   display: block;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid #c2c2c2;
 }
   body.full_page_background #topbar {
     border-bottom-color: #aaa;
@@ -46,8 +46,7 @@ a {
       }
   #search_box_wrapper {
     position: absolute;
-    top: 16px; left: 311px;
-    /*right: 190px;*/
+    top: 16px; left: 326px;
     right: 12px;
   }
   #search_type {
@@ -77,7 +76,7 @@ a {
 #sidebar {
   position: absolute;
   top: 0px; left: 0px; bottom: 38px;
-  border-right: 1px solid #d0d0d0;
+  border-right: 1px solid #c2c2c2;
   width: 310px;
   z-index: 5;
 }

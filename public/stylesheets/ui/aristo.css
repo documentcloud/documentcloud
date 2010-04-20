@@ -43,7 +43,7 @@ button {
 }
 
 button.default {
-  color: #1C4257;
+  color: #204055;
   -webkit-border-image: url(/images/aristo/default-button-bezel.png) 2 2 2 2 stretch stretch;
   -moz-border-image: url(/images/aristo/default-button-bezel.png) 2 2 2 2 stretch stretch;
 }
