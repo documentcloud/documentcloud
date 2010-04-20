@@ -8,7 +8,9 @@ module DC
     class SolrQuery
       include DC::Access
 
-      attr_reader   :text, :fields, :projects, :attributes, :conditions, :results
+      FACET_OPTIONS = {:limit => 5, :sort => :count}
+
+      attr_reader   :text, :fields, :projects, :attributes, :conditions, :results, :solr
       attr_accessor :page, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
@@ -21,7 +23,7 @@ module DC
         @attributes             = opts[:attributes] || []
         @from, @to, @total      = nil, nil, nil
         @account, @organization = nil, nil
-        @search                 = Sunspot.new_search(Document)
+        @solr                   = Sunspot.new_search(Document)
       end
 
       # Series of attribute checks to determine the kind and state of query.
@@ -43,9 +45,10 @@ module DC
         build_fields     if     has_fields?
         build_projects   if     has_projects?
         build_attributes if     has_attributes?
+        build_facets     if     @faceted
         build_access     unless @unrestricted
         page, size = @page, PAGE_SIZE
-        @search.build do
+        @solr.build do
           order_by  :created_at, :desc
           paginate  :page => page, :per_page => size
         end
@@ -54,12 +57,12 @@ module DC
       # Runs (at most) two queries -- one to count the total number of results
       # that match the search, and one that retrieves the documents or notes
       # for the current page.
-      def run(options={})
-        @account, @organization, @unrestricted = options[:account], options[:organization], options[:unrestricted]
+      def run(o={})
+        @account, @organization, @unrestricted, @faceted = o[:account], o[:organization], o[:unrestricted], o[:faceted]
         generate_search
-        @search.execute
-        @total   = @search.total
-        @results = @search.results
+        @solr.execute
+        @total   = @solr.total
+        @results = @solr.results
         populate_annotation_counts
         populate_highlights if DC_CONFIG['include_highlights']
         self
@@ -101,7 +104,7 @@ module DC
       # the text content, the entities, etc.
       def build_text
         text = @text
-        @search.build do
+        @solr.build do
           fulltext text
         end
       end
@@ -109,7 +112,7 @@ module DC
       # Generate the Solr to search across the fielded metadata.
       def build_fields
         fields = @fields
-        @search.build do
+        @solr.build do
           fields.each do |field|
             fulltext field.value do
               fields field.kind
@@ -124,7 +127,7 @@ module DC
         projects = @account.projects.all(:conditions => {:title => @projects})
         doc_ids = projects.map(&:document_ids).flatten.uniq
         doc_ids = [-1] if doc_ids.empty?
-        @search.build do
+        @solr.build do
           with :id, doc_ids
         end
       end
@@ -136,16 +139,16 @@ module DC
         @attributes.each do |field|
           if ['account', 'notes'].include?(field.kind)
             account = Account.find_by_email(field.value)
-            @search.build do
+            @solr.build do
               with :account_id, account ? account.id : -1
             end
           elsif field.kind == 'group'
             org = Organization.find_by_slug(field.value)
-            @search.build do
+            @solr.build do
               with :organization_id, org ? org.id : -1
             end
           else
-            @search.build do
+            @solr.build do
               fulltext field.value do
                 fields field.kind
               end
@@ -154,13 +157,20 @@ module DC
         end
       end
 
+      # Add facet results to the search, if requested.
+      def build_facets
+        @solr.build do
+          args = Document::SEARCHABLE_ENTITIES + [FACET_OPTIONS]
+          facet *args
+        end
+      end
 
       # Restrict accessible documents for a given account/organzation.
       # Either the document itself is public, or it belongs to us, or it belongs to
       # our organization and we're allowed to see it.
       def build_access
         account, organization = @account, @organization
-        @search.build do
+        @solr.build do
           any_of do
             with      :access, PUBLIC
             if account
