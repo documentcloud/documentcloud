@@ -11,7 +11,7 @@ dc.ui.Organizer = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, '_addSubView', '_removeSubView', 'openUploads');
+    _.bindAll(this, '_addSubView', '_removeSubView', 'openUploads', 'filterFacet');
     this._bindToSets();
     $('#logo').remove();
     this.subViews = [];
@@ -20,7 +20,8 @@ dc.ui.Organizer = dc.View.extend({
   render : function() {
     $(this.el).append(JST.organizer_sidebar({}));
     this.projectInputEl = $('#project_input', this.el);
-    this.projectList = $('.project_list', this.el);
+    this.projectList    = $('.project_list', this.el);
+    this.entityList     = $('#organizer_entities', this.el);
     this.renderAll();
     this.showProjects();
     this.setCallbacks();
@@ -43,6 +44,11 @@ dc.ui.Organizer = dc.View.extend({
     this.setMode('entities', 'active');
   },
 
+  renderFacets : function(facets) {
+    this.entityList.html(JST.organizer_entities({entities: facets}));
+    $('.facet', this.entityList).bind('click', this.filterFacet);
+  },
+
   clickSelectedItem : function() {
     $(this.selectedItem.el).trigger('click');
   },
@@ -60,6 +66,11 @@ dc.ui.Organizer = dc.View.extend({
   clear : function() {
     this.deselect();
     $('.box', this.projectList).show();
+  },
+
+  filterFacet : function(e) {
+    var fragment = $(e.target).attr('data-category') + ': ' + $(e.target).attr('data-value');
+    dc.app.searchBox.addToSearch(fragment);
   },
 
   promptNewProject : function() {

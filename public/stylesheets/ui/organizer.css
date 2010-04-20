@@ -18,7 +18,7 @@
       top: 1px;
       border: 1px solid #b0b0b0;
       border-bottom: 0;
-      color: #555;
+      color: #808080;
       -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
       -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
     }
@@ -99,6 +99,34 @@
       #project_dialog .counts {
         font: 10px/16px Arial;
         color: #555;
+      }
+
+/*------------------------------ Entities ---------------------------------*/
+#organizer #organizer_entities {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  overflow-y: auto;
+}
+  #organizer .section {
+    padding: 15px 5px 15px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #fff;
+  }
+    #organizer .category {
+      font: bold 14px Arial;
+      margin-bottom: 2px;
+      color: #555;
+    }
+    #organizer .row {
+      font: 11px/14px Arial;
+    }
+      #organizer .facet {
+        cursor: pointer;
+        color: #204055;
+      }
+      #organizer .count {
+        font-size: 10px;
+        color: #777;
       }
 
 /*--------------------------- Edit Project Dialog ----------------------------*/
