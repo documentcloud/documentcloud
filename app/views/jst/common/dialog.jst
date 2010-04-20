@@ -10,6 +10,12 @@
   <div class="<%= mode %>">
     <% if( mode == 'prompt') { %>
       <textarea class="text_area content"></textarea>
+    <% } else if (choices) { %>
+      <select class="content">
+        <% _.each(choices, function(choice) { %>
+          <option value="<%= choice.value %>" <%= choice.selected ? 'selected="true"' : '' %>><%= choice.text %></option>
+        <% }); %>
+      </select>
     <% } else { %>
       <div class="text_input small">
         <div class="background">

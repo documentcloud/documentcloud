@@ -90,7 +90,10 @@ dc.ui.Menu = dc.View.extend({
     var elements = _(items).map(function(item) {
       var el = $.el('div', {'class' : 'menu_item ' + (item.className || '')}, item.title);
       item.menuEl = $(el);
-      if (item.onClick) $(el).bind('click', item.onClick);
+      if (item.onClick) $(el).bind('click', function(e) {
+        if ($(el).hasClass('disabled')) return false;
+        item.onClick(e);
+      });
       return el;
     });
     $(this.itemsContainer).append(elements);

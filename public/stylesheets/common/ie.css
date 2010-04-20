@@ -28,7 +28,7 @@ button {
 /*---------------------- Drop-shadow replacements ----------------------------*/
 .minibutton,
 #visualizer .datum {
-  border: 1px solid #ccc;
+  border: 1px solid #aaa;
 }
 
 #sidebar_background {

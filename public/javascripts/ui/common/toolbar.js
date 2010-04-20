@@ -11,10 +11,9 @@ dc.ui.Toolbar = dc.View.extend({
     this.base(options);
     _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments',
       '_registerDocument', '_deleteSelectedDocuments', 'editTitle', 'editSource',
-      'editDescription', 'editRelatedArticle', 'display');
+      'editDescription', 'editRelatedArticle', 'editAccess', 'display');
     this.editMenu         = this._createEditMenu();
     this.downloadMenu     = this._createDownloadMenu();
-    this.manageMenu       = this._createManageMenu();
     this.connectionsMenu  = this._createConnectionsMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
@@ -25,7 +24,6 @@ dc.ui.Toolbar = dc.View.extend({
     el.html(JST.workspace_toolbar({}));
     $('.edit_menu_container', el).append(this.editMenu.render().el);
     $('.download_menu_container', el).append(this.downloadMenu.render().el);
-    $('.manage_menu_container', el).append(this.manageMenu.render().el);
     $('.connections_menu_container', el).append(this.connectionsMenu.render().el);
     $('.project_menu_container', el).append(this.projectMenu.render().el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
@@ -37,9 +35,8 @@ dc.ui.Toolbar = dc.View.extend({
 
   display : function() {
     var count = Documents.countSelected();
-    count != 1 ? this.editMenu.disable() : this.editMenu.enable();
     this.openButton.setMode(count == 0 ? 'not' : 'is', 'enabled');
-    _.each([this.downloadMenu, this.manageMenu, this.connectionsMenu, this.projectMenu], function(menu) {
+    _.each([this.downloadMenu, this.editMenu, this.connectionsMenu, this.projectMenu], function(menu) {
       count == 0 ? menu.disable() : menu.enable();
     });
   },
@@ -54,11 +51,12 @@ dc.ui.Toolbar = dc.View.extend({
   // Wrapper function for safely editing an attribute of a specific document.
   edit : function(callback) {
     if (!Documents.allowedToEditSelected()) return;
-    return callback(Documents.selected()[0]);
+    return callback.call(this, Documents.selected());
   },
 
   editTitle : function() {
-    this.edit(function(doc) {
+    this.edit(function(docs) {
+      var doc = docs[0];
       dc.ui.Dialog.prompt('Title', doc.get('title'), function(title) {
         Documents.update(doc, {title : title});
         return true;
@@ -66,17 +64,9 @@ dc.ui.Toolbar = dc.View.extend({
     });
   },
 
-  editSource : function() {
-    this.edit(function(doc) {
-      dc.ui.Dialog.prompt('Source', doc.get('source'), function(source) {
-        Documents.update(doc, {source : source});
-        return true;
-      }, true);
-    });
-  },
-
   editDescription : function() {
-    this.edit(function(doc) {
+    this.edit(function(docs) {
+      var doc = docs[0];
       dc.ui.Dialog.prompt('Description', doc.get('description'), function(description) {
         Documents.update(doc, {description : description});
         return true;
@@ -84,13 +74,47 @@ dc.ui.Toolbar = dc.View.extend({
     });
   },
 
-  editRelatedArticle : function() {
-    this.edit(function(doc) {
-      dc.ui.Dialog.prompt('Related Article', doc.get('related_article'), function(rel) {
-        Documents.update(doc, {related_article : rel});
+  editSource : function() {
+    this.edit(function(docs) {
+      var sources = _.uniq(_.map(docs, function(doc){ return doc.get('source'); }));
+      var current = sources.length > 1 ? '' : sources[0];
+      dc.ui.Dialog.prompt('Source' + this._subtitle(docs.length), current, function(source) {
+        _.each(docs, function(doc) { Documents.update(doc, {source : source}); });
         return true;
       }, true);
     });
+  },
+
+  editRelatedArticle : function() {
+    this.edit(function(docs) {
+      var articles = _.uniq(_.map(docs, function(doc){ return doc.get('related_article'); }));
+      var current  = articles.length > 1 ? '' : articles[0];
+      dc.ui.Dialog.prompt('Related Article' + this._subtitle(docs.length), current, function(rel) {
+        _.each(docs, function(doc) { Documents.update(doc, {related_article : rel}); });
+        return true;
+      }, true);
+    });
+  },
+
+  editAccess : function() {
+    if (!Documents.allowedToEditSelected()) return;
+    var docs    = Documents.selected();
+    var access  = _.uniq(_.map(docs, function(doc){ return doc.get('access'); }));
+    var current = access.length > 1 ? dc.access.PRIVATE : access[0];
+    dc.ui.Dialog.choose('Access Level' + this._subtitle(docs.length), [
+      {text : 'Public Access',              value : dc.access.PUBLIC,       selected : current == dc.access.PUBLIC},
+      {text : 'Private Access',             value : dc.access.PRIVATE,      selected : current == dc.access.PRIVATE},
+      {text : 'Private to my Organization', value : dc.access.ORGANIZATION, selected : current == dc.access.ORGANIZATION}
+    ], _.bind(function(access) {
+      _.each(docs, function(doc) { Documents.update(doc, {access : parseInt(access, 10)}); });
+      var notification = 'access updated for ' + docs.length + ' ' + Inflector.pluralize('document', docs.length);
+      dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.editMenu.el, position : '-top right', top : -1, left : 7});
+      return true;
+    }, this));
+  },
+
+  _subtitle : function(count) {
+    return count > 1 ? ' <span class="subtitle">(' + count + ' Documents)</span>' : '';
   },
 
   _updateSelectedDocuments : function(project) {
@@ -143,14 +167,6 @@ dc.ui.Toolbar = dc.View.extend({
     dc.app.entities.open();
   },
 
-  _setSelectedAccess : function(access) {
-    if (!Documents.allowedToEditSelected()) return;
-    var docs = Documents.selected();
-    _.each(docs, function(doc) { Documents.update(doc, {access : access}); });
-    var notification = 'access updated for ' + docs.length + ' ' + Inflector.pluralize('document', docs.length);
-    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.manageMenu.el, position : '-top right', top : -1, left : 7});
-  },
-
   _panel : function() {
     return this._panelEl = this._panelEl || $(this.el).parents('.panel_content')[0];
   },
@@ -170,24 +186,17 @@ dc.ui.Toolbar = dc.View.extend({
     return new dc.ui.Menu({
       label   : 'Edit',
       items   : [
-        {title : 'Edit Title',            onClick : this.editTitle},
-        {title : 'Edit Source',           onClick : this.editSource},
-        {title : 'Edit Description',      onClick : this.editDescription},
-        {title : 'Edit Related Article',  onClick : this.editRelatedArticle}
-      ]
-    });
-  },
-
-  _createManageMenu : function() {
-    return new dc.ui.Menu({
-      label : 'Manage',
-      items : [
-        {title : 'Set Public Access',               onClick : _.bind(this._setSelectedAccess, this, dc.access.PUBLIC)},
-        {title : 'Set Private Access',              onClick : _.bind(this._setSelectedAccess, this, dc.access.PRIVATE)},
-        {title : 'Set Private to my Organization',  onClick : _.bind(this._setSelectedAccess, this, dc.access.ORGANIZATION), className : 'divider'},
-        // {title : 'Register Published Document',     onClick : this._registerDocument},
-        {title : 'Delete Documents',                onClick : this._deleteSelectedDocuments}
-      ]
+        {title : 'Edit Title',           className : 'singular', onClick : this.editTitle},
+        {title : 'Edit Description',     className : 'singular', onClick : this.editDescription},
+        {title : 'Edit Source',          className : 'multiple', onClick : this.editSource},
+        {title : 'Edit Related Article', className : 'multiple', onClick : this.editRelatedArticle},
+        {title : 'Edit Access Level',    className : 'multiple', onClick : this.editAccess},
+        {title : 'Delete Documents',     className : 'multiple', onClick : this._deleteSelectedDocuments}
+      ],
+      onOpen : function(menu) {
+        var many = Documents.countSelected() > 1;
+        $('.singular', menu.content).toggleClass('disabled', many);
+      }
     });
   },
 

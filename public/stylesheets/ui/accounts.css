@@ -33,11 +33,6 @@
   max-width: none;
   width: 745px;
 }
-  #account_list .group {
-    color: #777;
-    margin-left: 3px;
-    font: italic 10px/18px Arial;
-  }
   #account_list .custom {
     padding: 0;
     max-height: 342px;

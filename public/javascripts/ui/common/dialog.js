@@ -6,6 +6,7 @@ dc.ui.Dialog = dc.View.extend({
     title     : "Untitled Dialog",
     text      : null,
     buttons   : null,
+    choices   : null,
     password  : false
   },
 
@@ -110,6 +111,16 @@ dc.ui.Dialog = dc.View.extend({
       title     : 'Confirm',
       text      : text,
       onConfirm : callback
+    }).render();
+  },
+
+  choose : function(text, choices, callback) {
+    return new dc.ui.Dialog({
+      mode      : 'short_prompt',
+      title     : text,
+      choices   : choices,
+      text      : '',
+      onConfirm : callback && function(dialog){ return callback(dialog.val()); }
     }).render();
   }
 
