@@ -45,6 +45,7 @@ select {
 }
 .gradient_white,
 .minibutton,
+.tab,
 .minibutton.not_enabled:active {
   background: #fafafa;
   background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dfdfdf));
@@ -247,7 +248,7 @@ textarea.text_area {
   .menu_content .auto_add {
     margin: 0 0 4px 19px;
     font: italic 10px Arial;
-    color: #777;
+    color: #555;
   }
   .menu_content .autofilter_input {
     font-size: 11px;
@@ -294,7 +295,7 @@ div.dialog {
     -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
   }
     div.dialog span.subtitle {
-      color: #777;
+      color: #555;
       margin-left: 3px;
       font: italic 10px/18px Arial;
     }

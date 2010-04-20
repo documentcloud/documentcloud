@@ -32,37 +32,9 @@
   opacity: 0.75; filter: alpha(opacity=75);
 }
 
-#upload_progress {
-  position: relative;
-  margin-bottom: 25px;
-}
-  #upload_progress .document_progress {
-    margin: 0 0 15px 0;
-    position: relative;
-    background: #fafafa;
-    -webkit-border-radius: 6px; -moz-border-radius: 6px;
-    -webkit-box-shadow: 0 0 4px #777; -moz-box-shadow: 0 0 4px #777;
-  }
-    #upload_progress .status_wrap {
-      position: absolute;
-      top: 4px; left: 8px;
-      color: #666;
-      font: 10px/14px Arial;
-      text-transform: uppercase;
-    }
-      #upload_progress .doc_title, #upload_progress .status {
-        line-height: 14px;
-        height: 14px;
-        overflow: hidden;
-      }
-    #upload_progress .progress_bar {
-      height: 34px;
-      -webkit-border-radius: 6px; -moz-border-radius: 6px;
-    }
-
 #upload_info {
   font: italic 11px/14px Arial;
-  color: #777;
+  color: #555;
   position: absolute;
   left: 10px; bottom: 10px;
 }

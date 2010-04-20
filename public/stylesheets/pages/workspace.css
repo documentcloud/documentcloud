@@ -13,22 +13,24 @@ a {
 
 #topbar {
   display: block;
-  border-bottom: 2px solid #c2c2c2;
+  border-bottom: 1px solid #aaa;
+  position: relative;
+  height: 40px;
 }
   body.full_page_background #topbar {
     border-bottom-color: #aaa;
   }
   #cloud_edge {
     position: absolute;
-    top: 8px; left: 85px;
+    top: 6px; left: 70px;
     width: 67px; height: 30px;
     background: url(/images/embed/ui/cloud_edge.png) no-repeat;
   }
   .logo_words {
     position: absolute;
     color: #566eaa;
-    font: normal 16px Arial;
-    top: 23px;
+    font: normal 14px Arial;
+    top: 18px;
   }
     .logo_words a {
       color: #566eaa;
@@ -38,7 +40,7 @@ a {
       left: 15px;
     }
     #title {
-      left: 158px;
+      left: 145px;
     }
       #title small {
         font-size: 9px;
@@ -46,8 +48,8 @@ a {
       }
   #search_box_wrapper {
     position: absolute;
-    top: 16px; left: 326px;
-    right: 12px;
+    top: 10px; left: 326px;
+    right: 10px;
   }
   #search_type {
     display: none;
@@ -59,7 +61,7 @@ a {
 #spinner {
   display: none;
   position: absolute;
-  top: 24px; right: 35px;
+  top: 18px; right: 35px;
 }
   #spinner_image {
     width: 56px; height: 7px;
@@ -68,41 +70,24 @@ a {
 
 #content {
   position: absolute;
-  bottom: 0px; top: 52px; left: 0; right: 0;
-  overflow: hidden;
-  background: #fcfcfc;
+  bottom: 0px; top: 41px; left: 0; right: 0;
+  background: #fff;
 }
 
 #sidebar {
   position: absolute;
   top: 0px; left: 0px; bottom: 38px;
-  border-right: 1px solid #c2c2c2;
+  border-right: 1px solid #aaa;
   width: 310px;
   z-index: 5;
 }
   #sidebar_background {
-    background: #e0e0e0;
+    background: #f4f3f1;
     position: absolute;
     top: 0; left: 0; bottom: -38px; right: 0;
     -webkit-box-shadow: 0 0 25px #ddd;
     -moz-box-shadow: 0 0 25px #ddd;
   }
-  #sidebar_content {
-
-  }
-    #sidebar .nametag {
-      font: 10px/20px Arial;
-      height: 20px;
-      text-transform: uppercase;
-      padding: 5px 15px 5px 15px;
-      color: #777;
-    }
-      #sidebar .nametag.large {
-        height: 31px;
-        text-transform: none;
-        font: bold 11px/32px Arial;
-        border-bottom: 1px solid #c6c6c6;
-      }
 
 .panel_container {
   position: absolute;
@@ -128,7 +113,7 @@ a {
     height: 77px;
     font-size: 14px;
     line-height: 77px;
-    color: #777;
+    color: #555;
     border: 1px solid #ccc;
     border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px;
   }

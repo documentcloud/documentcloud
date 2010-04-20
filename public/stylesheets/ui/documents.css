@@ -1,7 +1,7 @@
 #document_list {
-  padding: 10px 10px 0px 15px;
+  padding: 15px 10px 0px 15px;
   -webkit-transition: top 0.1s linear;
-  top: 42px;
+  top: 41px;
   z-index: 5;
 }
   body.paginated #document_list {
@@ -89,7 +89,7 @@
     margin-top: 0px;
     height: 28px;
     overflow: hidden;
-    color: #222;
+    color: #454545;
   }
     .document .description b {
       font-size: 12px;

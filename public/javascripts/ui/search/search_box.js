@@ -61,7 +61,7 @@ dc.ui.SearchBox = dc.View.extend({
     Documents.refresh();
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');
-    var params = {q : query};
+    var params = {q : query, facets : true};
     if (this.page) params.page = this.page;
     var url = query.match(/notes:/) ? '/search/notes.json' : '/search/documents.json';
     $.get(url, params, this.loadSearchResults, 'json');

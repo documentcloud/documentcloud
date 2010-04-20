@@ -4,7 +4,7 @@
 }
   #entities .emptyviz,
   #visualizer .emptyviz {
-    color: #777;
+    color: #555;
     font: italic 11px Arial;
   }
   #entities .entity_list {
@@ -47,7 +47,7 @@
 }
   .entity_view .document_count {
     font: italic 11px Arial;
-    color: #777;
+    color: #555;
   }
   .entity_view .document_list {
     padding-top: 15px;

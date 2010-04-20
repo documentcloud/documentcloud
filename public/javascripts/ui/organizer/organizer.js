@@ -4,13 +4,16 @@ dc.ui.Organizer = dc.View.extend({
 
   callbacks : {
     '#new_project.click'      : 'promptNewProject',
-    '#upload_document.click'  : 'openUploads'
+    '#upload_document.click'  : 'openUploads',
+    '#projects_tab.click'     : 'showProjects',
+    '#entities_tab.click'     : 'showEntities'
   },
 
   constructor : function(options) {
     this.base(options);
     _.bindAll(this, '_addSubView', '_removeSubView', 'openUploads');
     this._bindToSets();
+    $('#logo').remove();
     this.subViews = [];
   },
 
@@ -19,6 +22,7 @@ dc.ui.Organizer = dc.View.extend({
     this.projectInputEl = $('#project_input', this.el);
     this.projectList = $('.project_list', this.el);
     this.renderAll();
+    this.showProjects();
     this.setCallbacks();
     return this;
   },
@@ -29,6 +33,14 @@ dc.ui.Organizer = dc.View.extend({
     _.each(Projects.models(), _.bind(function(model) {
       this._addSubView(null, model);
     }, this));
+  },
+
+  showProjects : function() {
+    this.setMode('projects', 'active');
+  },
+
+  showEntities : function() {
+    this.setMode('entities', 'active');
   },
 
   clickSelectedItem : function() {
