@@ -99,9 +99,10 @@ a {
       color: #777;
     }
       #sidebar .nametag.large {
-        height: 32px;
+        height: 31px;
         text-transform: none;
         font: bold 11px/32px Arial;
+        border-bottom: 1px solid #c6c6c6;
       }
 
 .panel_container {
