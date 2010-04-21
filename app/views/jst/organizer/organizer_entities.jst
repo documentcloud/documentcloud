@@ -1,11 +1,25 @@
+<% var empty = true; %>
 <% _.each(entities, function(list, category) { %>
-  <div class="section">
-    <div class="category"><%= Entities.DISPLAY_NAME[category] %></div>
-    <% _.each(list, function(facet) { %>
-      <div class="row">
-        <span class="facet" data-value="<%= facet.value %>" data-category="<%= category %>"><%= facet.value %></span>
-        <span class="count">(<%= facet.count %>)</span>
+  <% if (list.length) { %>
+    <% empty = false; %>
+    <div class="section">
+      <div class="category"><%= Entities.DISPLAY_NAME[category] %></div>
+      <div class="rows">
+        <% _.each(list, function(facet) { %>
+          <div class="row">
+            <span class="facet" data-value="<%= facet.value %>" data-category="<%= category %>"><%= facet.value %></span>
+            <span class="count">(<%= facet.count %>)</span>
+          </div>
+        <% }); %>
       </div>
-    <% }); %>
-  </div>
+      <% if (list.length >= 5) { %>
+        <div class="more">See more&hellip;</div>
+      <% } %>
+    </div>
+  <% } %>
 <% }); %>
+<% if (empty) { %>
+  <div class="no_results">
+    No entities were found that match your search.
+  </div>
+<% } %>

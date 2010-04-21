@@ -2,21 +2,24 @@
 }
   #organizer #tabs {
     position: absolute;
-    left: 15px;
-    top: -32px;
+    z-index: 3;
+    left: 0px; right: 0;
+    padding-left: 15px;
+    border-bottom: 1px solid white;
+    top: -28px;
   }
     #organizer #tabs .tab {
       position: relative;
-      width: 90px;
-      padding: 10px 0 8px 0;
+      width: 100px;
+      padding: 8px 0 7px 0;
       text-align: center;
       font: bold 11px Arial;
       height: 12px;
       cursor: pointer;
       float: left;
-      margin-right: 4px;
-      top: 1px;
-      border: 1px solid #b0b0b0;
+      margin-right: 5px;
+      top: 0px;
+      border: 1px solid #ccc;
       border-bottom: 0;
       color: #808080;
       -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
@@ -25,8 +28,8 @@
       #organizer.projects_active #projects_tab,
       #organizer.entities_active #entities_tab {
         background: white;
-        bottom: -1px;
         color: #204055;
+        border-color: #aaa;
       }
 
   #new_project, #upload_document {
@@ -90,11 +93,8 @@
         }
       #organizer .box .title {
         font: bold 14px Arial;
-        color: #555;
+        color: #204055;
       }
-        #organizer .box.is_selected .title, #organizer .box:hover .title {
-          color: #204055;
-        }
       #organizer .box .counts,
       #project_dialog .counts {
         font: 10px/16px Arial;
@@ -106,28 +106,36 @@
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   overflow-y: auto;
+  font: 11px/14px Arial;
+  color: #204055;
 }
-  #organizer .section {
+  #organizer_entities .section {
     padding: 15px 5px 15px 15px;
     border-bottom: 1px solid #e0e0e0;
     border-top: 1px solid #fff;
   }
-    #organizer .category {
+    #organizer_entities .category {
       font: bold 14px Arial;
-      margin-bottom: 2px;
       color: #555;
     }
-    #organizer .row {
-      font: 11px/14px Arial;
+    #organizer_entities .rows {
+      margin: 4px 0;
     }
-      #organizer .facet {
+      #organizer_entities .facet {
         cursor: pointer;
-        color: #204055;
       }
-      #organizer .count {
+      #organizer_entities .count {
         font-size: 10px;
-        color: #777;
+        color: #808080;
       }
+    #organizer_entities .more {
+      font-weight: bold;
+      cursor: pointer;
+    }
+  #organizer_entities .no_results {
+    margin: 15px;
+    color: #555;
+  }
 
 /*--------------------------- Edit Project Dialog ----------------------------*/
 #project_dialog {
