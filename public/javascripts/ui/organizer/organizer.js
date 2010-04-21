@@ -89,6 +89,7 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   _loadFacets : function(e) {
+    $(e.target).html('loading &hellip;');
     dc.app.searchBox.loadFacets($(e.target).attr('data-category'));
   },
 
