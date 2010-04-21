@@ -9,9 +9,14 @@ dc.ui.Organizer = dc.View.extend({
     '#entities_tab.click'     : 'showEntities'
   },
 
+  facetCallbacks : {
+    '.facet.click'            : '_filterFacet',
+    '.more.click'             : '_loadFacets'
+  },
+
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, '_addSubView', '_removeSubView', 'openUploads', 'filterFacet');
+    _.bindAll(this, '_addSubView', '_removeSubView', 'openUploads');
     this._bindToSets();
     $('#logo').remove();
     this.subViews = [];
@@ -44,9 +49,16 @@ dc.ui.Organizer = dc.View.extend({
     this.setMode('entities', 'active');
   },
 
+  // Refresh the facets with a new batch.
   renderFacets : function(facets) {
+    this._facets = facets;
     this.entityList.html(JST.organizer_entities({entities: facets}));
-    $('.facet', this.entityList).bind('click', this.filterFacet);
+    this.setCallbacks(this.facetCallbacks);
+  },
+
+  // Just add to the facets, don't blow them away.
+  mergeFacets : function(facets) {
+    this.renderFacets(_.extend(this._facets, facets));
   },
 
   clickSelectedItem : function() {
@@ -68,12 +80,16 @@ dc.ui.Organizer = dc.View.extend({
     $('.box', this.projectList).show();
   },
 
-  filterFacet : function(e) {
+  _filterFacet : function(e) {
     var el = $(e.target);
     var val = el.attr('data-value');
     if (val.match(/\s/)) val = '"' + val + '"';
     var fragment = $(e.target).attr('data-category') + ': ' + val;
     dc.app.searchBox.addToSearch(fragment);
+  },
+
+  _loadFacets : function(e) {
+    dc.app.searchBox.loadFacets($(e.target).attr('data-category'));
   },
 
   promptNewProject : function() {

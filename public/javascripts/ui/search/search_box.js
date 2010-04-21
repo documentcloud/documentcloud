@@ -5,6 +5,8 @@ dc.ui.SearchBox = dc.View.extend({
   CONNECTIONS_MATCHER : (/\/connections\/(\w+)$/),
   ENTITIES_MATCHER    : (/\/entities$/),
 
+  DOCUMENTS_URL : '/search/documents.json',
+
   // Error messages to display when your search returns no results.
   NO_RESULTS : {
     project : "This project does not contain any documents.",
@@ -26,7 +28,7 @@ dc.ui.SearchBox = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     this.outstandingSearch = false;
-    _.bindAll(this, 'loadSearchResults', 'searchByHash', 'clearSearch');
+    _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'clearSearch');
     dc.history.register(/^#search\//, this.searchByHash);
     dc.history.register(/^#help$/, this.clearSearch);
   },
@@ -61,10 +63,16 @@ dc.ui.SearchBox = dc.View.extend({
     Documents.refresh();
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');
-    var params = {q : query, facets : true};
+    var params = {q : query, include_facets : true};
     if (this.page) params.page = this.page;
-    var url = query.match(/notes:/) ? '/search/notes.json' : '/search/documents.json';
-    $.get(url, params, this.loadSearchResults, 'json');
+    $.get(this.DOCUMENTS_URL, params, this._loadSearchResults, 'json');
+  },
+
+  loadFacets : function(facet) {
+    dc.ui.spinner.show('searching');
+    this.outstandingSearch = true;
+    var params = {q : this.value(), include_facets : true, facet : facet};
+    $.get(this.DOCUMENTS_URL, params, this._loadFacetResults, 'json');
   },
 
   // Ensure a given prefix for the search, used to scope searches down to
@@ -153,14 +161,20 @@ dc.ui.SearchBox = dc.View.extend({
   // After the initial search results come back, send out a request for the
   // associated metadata, as long as something was found. Think about returning
   // the metadata right alongside the document JSON.
-  loadSearchResults : function(resp) {
+  _loadSearchResults : function(resp) {
     dc.app.paginator.setQuery(resp.query);
     dc.app.workspace.organizer.renderFacets(resp.facets);
     Entities.refresh();
     Documents.refresh(_.map(resp.documents, function(m){
       return new dc.model.Document(m);
     }));
-    return this.doneSearching(resp.documents.length == 0);
+    this.doneSearching(resp.documents.length == 0);
+  },
+
+  _loadFacetResults : function(resp) {
+    dc.app.workspace.organizer.mergeFacets(resp.facets);
+    dc.ui.spinner.hide();
+    this.outstandingSearch = false;
   },
 
   _setScope : function(e) {

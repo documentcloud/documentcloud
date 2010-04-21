@@ -8,7 +8,7 @@ class SearchController < ApplicationController
   def documents
     perform_search
     results = {'query' => @query, 'documents' => @documents}
-    results['facets'] = @query.facets if params[:facets]
+    results['facets'] = @query.facets if params[:include_facets]
     render :json => results
   end
 

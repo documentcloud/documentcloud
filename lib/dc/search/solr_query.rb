@@ -8,7 +8,10 @@ module DC
     class SolrQuery
       include DC::Access
 
-      FACET_OPTIONS = {:limit => 5, :sort => :count}
+      FACET_OPTIONS = {
+        :all      => {:limit => 5,   :sort => :count},
+        :specific => {:limit => 500, :sort => :count}
+      }
 
       attr_reader   :text, :fields, :projects, :attributes, :conditions, :results, :solr
       attr_accessor :page, :from, :to, :total
@@ -45,9 +48,10 @@ module DC
         build_fields     if     has_fields?
         build_projects   if     has_projects?
         build_attributes if     has_attributes?
-        build_facets     if     @faceted
+        build_facets     if     @include_facets
         build_access     unless @unrestricted
-        page, size = @page, PAGE_SIZE
+        page = @page
+        size = @facet ? 0 : PAGE_SIZE
         @solr.build do
           order_by  :created_at, :desc
           paginate  :page => page, :per_page => size
@@ -58,7 +62,8 @@ module DC
       # that match the search, and one that retrieves the documents or notes
       # for the current page.
       def run(o={})
-        @account, @organization, @unrestricted, @faceted = o[:account], o[:organization], o[:unrestricted], o[:facets]
+        @account, @organization, @unrestricted = o[:account], o[:organization], o[:unrestricted]
+        @include_facets, @facet = o[:include_facets], o[:facet]
         generate_search
         @solr.execute
         @total   = @solr.total
@@ -85,7 +90,7 @@ module DC
 
       # Return a hash of facets.
       def facets
-        return {} unless @faceted
+        return {} unless @include_facets
         @solr.facets.inject({}) do |hash, facet|
           hash[facet.field_name] = facet.rows.map {|row| {:value => row.value, :count => row.count}}
           hash
@@ -168,8 +173,13 @@ module DC
 
       # Add facet results to the search, if requested.
       def build_facets
+        specific = @facet
         @solr.build do
-          args = Document::SEARCHABLE_ENTITIES + [FACET_OPTIONS]
+          if specific
+            args = [specific.to_sym, FACET_OPTIONS[:specific]]
+          else
+            args = Document::SEARCHABLE_ENTITIES + [FACET_OPTIONS[:all]]
+          end
           facet *args
         end
       end

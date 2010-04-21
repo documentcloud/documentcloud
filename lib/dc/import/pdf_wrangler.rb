@@ -11,7 +11,7 @@ module DC
       def ensure_pdf(file)
         Dir.mktmpdir do |temp_dir|
           path = file.path
-          name = file.original_filename
+          name = File.basename(file.original_filename).gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
           ext  = File.extname(name)
           return yield(path) if ext == ".pdf"
           begin

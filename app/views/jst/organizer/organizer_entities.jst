@@ -12,8 +12,8 @@
           </div>
         <% }); %>
       </div>
-      <% if (list.length >= 5) { %>
-        <div class="more">See more&hellip;</div>
+      <% if (list.length == 5) { %>
+        <div class="more" data-category="<%= category %>">See more&hellip;</div>
       <% } %>
     </div>
   <% } %>
