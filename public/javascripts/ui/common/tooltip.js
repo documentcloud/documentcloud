@@ -8,7 +8,7 @@ dc.ui.Tooltip = dc.View.extend({
     this.base();
     this._open = false;
     _.bindAll(this, 'hide', 'show');
-    $(this.el).append($.el('div', {id: 'tooltip_background', 'class' : 'gradient_light'}));
+    $(this.el).append($.el('div', {id: 'tooltip_background', 'class' : 'gradient_white'}));
     $(this.el).append($.el('div', {id: 'tooltip_text'}));
     this.content = $('#tooltip_text', this.el);
     $(document.body).append(this.el);

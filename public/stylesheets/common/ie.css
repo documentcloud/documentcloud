@@ -42,10 +42,10 @@ img.doc,
 .note .note_background {
   margin: -6px 0 0 -6px;
   filter:
-    progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=45,strength=3)
-    progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=135,strength=3)
-    progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=225,strength=3)
-    progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=315,strength=3);
+    progid:DXImageTransform.Microsoft.Shadow(color=#BBBBBB,direction=45,strength=3)
+    progid:DXImageTransform.Microsoft.Shadow(color=#BBBBBB,direction=135,strength=3)
+    progid:DXImageTransform.Microsoft.Shadow(color=#BBBBBB,direction=225,strength=3)
+    progid:DXImageTransform.Microsoft.Shadow(color=#BBBBBB,direction=315,strength=3);
 }
   #tooltip_background,
   .note .note_background {

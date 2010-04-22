@@ -11,6 +11,10 @@ a {
   text-decoration: none;
 }
 
+#container {
+  overflow: hidden;
+}
+
 #topbar {
   display: block;
   border-bottom: 1px solid #aaa;
@@ -77,16 +81,16 @@ a {
 #sidebar {
   position: absolute;
   top: 0px; left: 0px; bottom: 38px;
-  border-right: 1px solid #aaa;
   width: 310px;
   z-index: 5;
 }
   #sidebar_background {
     background: #f4f3f1;
     position: absolute;
-    top: 0; left: 0; bottom: -38px; right: 0;
-    -webkit-box-shadow: 0 0 25px #ddd;
-    -moz-box-shadow: 0 0 25px #ddd;
+    border-right: 1px solid #aaa;
+    top: 0; left: 0; bottom: -38px; right: -1px;
+/*    -webkit-box-shadow: 5px 0px 15px #eee;*/
+/*    -moz-box-shadow: 0 25px 25px #000;*/
   }
 
 .panel_container {
