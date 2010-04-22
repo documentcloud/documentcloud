@@ -5,7 +5,7 @@
   height: 22px;
   padding: 7px 15px 7px 20px;
   font: 11px/22px Arial;
-  color: #454545;
+  color: #4e4e4e;
   text-align: center;
   border: 1px solid #ddd; border-left: 0; border-right: 0;
   z-index: 10;
@@ -22,7 +22,7 @@
     padding: 0 5px;
   }
     #paginator span.page_link:hover, #paginator span.arrow:hover, #paginator span.page_link.current {
-      color: #204055;
+      color: #000;
     }
       #paginator span.page_link.current {
         font-weight: bold;

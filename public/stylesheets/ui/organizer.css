@@ -5,31 +5,23 @@
     z-index: 3;
     left: 0px; right: 0;
     padding-left: 15px;
-    border-bottom: 1px solid white;
-    top: -28px;
+    top: -30px;
   }
     #organizer #tabs .tab {
       position: relative;
-      width: 100px;
-      padding: 8px 0 7px 0;
+      height: 12px; width: 100px;
+      padding: 9px 0 9px 0;
       text-align: center;
       font: bold 11px Arial;
-      height: 12px;
       cursor: pointer;
       float: left;
-      margin-right: 5px;
-      top: 0px;
-      border: 1px solid #ccc;
-      border-bottom: 0;
-      color: #808080;
+      color: #fff;
       -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
       -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
     }
       #organizer.projects_active #projects_tab,
       #organizer.entities_active #entities_tab {
-        background: white;
-        color: #204055;
-        border-color: #aaa;
+        color: #000;
       }
 
   #new_project, #upload_document {
@@ -67,11 +59,14 @@
       border-top: 1px solid #fff;
       border-right: 6px solid #ede9e8;
     }
+      #organizer .box:first-child {
+        border-top: 0;
+      }
       #organizer .box:hover {
+        background-color: #fff;
         border-right: 0;
       }
       #organizer .box.is_selected {
-        background-color: #fff;
         border-right: 0;
       }
       #organizer .box .pointer {
@@ -93,12 +88,16 @@
         }
       #organizer .box .title {
         font: bold 14px Arial;
-        color: #204055;
+        color: #4e4e4e;
       }
+        #organizer .box.is_selected .title,
+        #organizer .box:hover .title {
+          color: #000;
+        }
       #organizer .box .counts,
       #project_dialog .counts {
         font: 10px/16px Arial;
-        color: #555;
+        color: #808080;
       }
 
 /*------------------------------ Entities ---------------------------------*/
@@ -107,16 +106,19 @@
   top: 0; bottom: 0; left: 0; right: 0;
   overflow-y: auto;
   font: 11px/14px Arial;
-  color: #204055;
+  color: #000;
 }
   #organizer_entities .section {
     padding: 15px 5px 15px 15px;
     border-bottom: 1px solid #e0e0e0;
     border-top: 1px solid #fff;
   }
+    #organizer_entities .section:first-child {
+      border-top: 0;
+    }
     #organizer_entities .category {
       font: bold 14px Arial;
-      color: #555;
+      color: #4e4e4e;
     }
     #organizer_entities .rows {
       margin: 4px 0;
@@ -134,7 +136,7 @@
     }
   #organizer_entities .no_results {
     margin: 15px;
-    color: #555;
+    color: #4e4e4e;
   }
 
 /*--------------------------- Edit Project Dialog ----------------------------*/
@@ -148,7 +150,7 @@
     #project_dialog label {
       display: block;
       font: bold 13px/25px Arial;
-      color: #454545;
+      color: #4e4e4e;
       margin-bottom: 10px;
     }
     #project_dialog .text_input {

@@ -5,7 +5,7 @@
   #upload_dialog label {
     display: block;
     font: bold 13px/25px Arial;
-    color: #454545;
+    color: #4e4e4e;
     margin-bottom: 15px;
   }
   #upload_dialog .text_input {
@@ -34,7 +34,7 @@
 
 #upload_info {
   font: italic 11px/14px Arial;
-  color: #555;
+  color: #4e4e4e;
   position: absolute;
   left: 10px; bottom: 10px;
 }

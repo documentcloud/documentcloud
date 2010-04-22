@@ -6,7 +6,7 @@
   width: 255px; height: 22px;
   padding: 7px 7px 7px 47px;
   font: 11px/22px Arial;
-  color: #454545;
+  color: #4e4e4e;
   border: 1px solid #ddd;
   border-right: 1px solid #aaa;
   z-index: 5;
@@ -22,12 +22,9 @@
     position: absolute;
     right: 10px; top: 7px;
   }
-  .account_view.badge a {
-    color: #204055;
+  .account_view.badge a:hover {
+    text-decoration: underline;
   }
-    .account_view.badge a:hover {
-      text-decoration: underline;
-    }
 
 /*--------------------------- Accounts Dialog --------------------------------*/
 #account_list {
@@ -39,7 +36,6 @@
     max-height: 342px;
     overflow-x: hidden;
     overflow-y: auto;
-    border-bottom: 1px solid #bbb;
     margin-bottom: 15px;
   }
   #account_list button.cancel {
@@ -61,7 +57,7 @@
         border-bottom: 1px solid #bbb;
         font: 12px/11px Arial;
         height: 25px;
-        color: #454545;
+        color: #4e4e4e;
       }
       #account_list .first { width: 0%; padding-right: 0; }
       #account_list .name  { width: 0%; }
@@ -94,7 +90,7 @@
     }
 #account_list .role .display {
   font: italic 10px/18px Arial;
-  color: #555;
+  color: #4e4e4e;
 }
 #account_list .controls_wrapper {
   min-width: 100px;

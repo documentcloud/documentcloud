@@ -10,7 +10,7 @@
 #visualizer .datum {
   position: absolute;
   font: 11px Arial;
-  color: #204055;
+  color: #000;
   padding: 3px 6px;
   cursor: pointer;
   -moz-border-radius: 3px; -webkit-border-radius: 3px;

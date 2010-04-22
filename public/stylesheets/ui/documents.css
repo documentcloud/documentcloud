@@ -25,7 +25,7 @@
     background: white;
     position: absolute;
     width: 60px; height: 75px;
-    -webkit-box-shadow: 0 0px 4px #555; -moz-box-shadow: 0 0px 4px #555;
+    -webkit-box-shadow: 0 0px 4px #4e4e4e; -moz-box-shadow: 0 0px 4px #4e4e4e;
   }
   .document .select {
     position: absolute;
@@ -46,7 +46,7 @@
     }
   .document .title {
     display: block;
-    color: #204055;
+    color: #000;
     font: bold 14px/16px Arial;
     height: 18px;
     overflow: hidden;
@@ -89,7 +89,7 @@
     margin-top: 0px;
     height: 28px;
     overflow: hidden;
-    color: #454545;
+    color: #4e4e4e;
   }
     .document .description b {
       font-size: 12px;
@@ -126,7 +126,7 @@
     margin: 20px 0 0 0;
     padding: 15px;
     font: 12px/16px Arial;
-    color: #454545;
+    color: #4e4e4e;
   }
     .note .edit, .note .display {
       display: none;
@@ -151,7 +151,7 @@
       overflow: hidden;
     }
       .note .note_title {
-        color: #204055;
+        color: #000;
         font-weight: bold;
         margin-bottom: 10px;
       }

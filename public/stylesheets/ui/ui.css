@@ -1,7 +1,7 @@
 span[role="link"] {
   text-decoration: underline;
   cursor: pointer;
-  color: #204055;
+  color: #000;
 }
 
 .serif, .serif * {
@@ -30,7 +30,7 @@ select {
 
 /*------------------------------ Gradients ---------------------------------*/
 .gradient_selected,
-#organizer .box:hover {
+#organizer .box.is_selected {
   background: #ffffe5;
   background: -webkit-gradient(linear, left top, left 50%, from(#fff), to(#ffd));
   background: -moz-linear-gradient(top, #fff, #ffd 50%);
@@ -44,25 +44,33 @@ select {
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#F9F9FF', EndColorStr='#DDDDFF');
 }
 .gradient_white,
-.minibutton,
-.tab,
-.minibutton.not_enabled:active {
-  background: #fafafa;
-  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dfdfdf));
-  background: -moz-linear-gradient(top, #ffffff, #dfdfdf);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#DFDFDF');
+#organizer.projects_active #projects_tab,
+#organizer.entities_active #entities_tab {
+  background: #f4f3f1;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f4f3f1));
+  background: -moz-linear-gradient(top, #ffffff, #f4f3f1);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#f4f3f1');
 }
-.gradient_light {
-  background: #ddd;
-  background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#d0d0d0));
-  background: -moz-linear-gradient(top, #f5f5f5, #d0d0d0);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#F5F5F5', EndColorStr='#D0D0D0');
+.gradient_light,
+.minibutton,
+.minibutton.not_enabled:active {
+  background: #f0f0f0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#d0d0d0));
+  background: -moz-linear-gradient(top, #ffffff, #d0d0d0);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#ffffff', EndColorStr='#D0D0D0');
 }
 .gradient_mid {
   background: #d7d7d7;
   background: -webkit-gradient(linear, left top, left bottom, from(#EAEAEA), to(#C2C2C2));
   background: -moz-linear-gradient(top, #EAEAEA, #C2C2C2);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#EAEAEA', EndColorStr='#C2C2C2');
+}
+.gradient_gray,
+.tab {
+  background: #c0c0c0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#b0b0b0));
+  background: -moz-linear-gradient(top, #cccccc, #b0b0b0);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#cccccc', EndColorStr='#b0b0b0');
 }
 .gradient_inverted,
 .minibutton:active, .minibutton.is_active {
@@ -149,7 +157,7 @@ textarea.text_area {
   cursor: pointer;
   font: 11px Arial;
   text-shadow: 0px 1px 1px #fff;
-  color: #204055;
+  color: #000;
   padding: 4px 5px;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   -webkit-box-shadow: 0 0 2px #000; -moz-box-shadow: 0 0 1px #000;
@@ -210,7 +218,7 @@ textarea.text_area {
   .menu_content .menu_item {
     cursor: pointer;
     font: 11px/18px Arial;
-    color: #333;
+    color: #000;
     padding: 0px 3px 3px 3px;
     height: 16px;
     overflow: hidden;
@@ -248,7 +256,7 @@ textarea.text_area {
   .menu_content .auto_add {
     margin: 0 0 4px 19px;
     font: italic 10px Arial;
-    color: #555;
+    color: #4e4e4e;
   }
   .menu_content .autofilter_input {
     font-size: 11px;
@@ -280,7 +288,7 @@ div.dialog {
     top: 0; left: 0; right: 0; bottom: 0;
     background: #fcfcfc;
     -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-    -webkit-box-shadow: 0 5px 50px #555; -moz-box-shadow: 0 5px 50px #555;
+    -webkit-box-shadow: 0 5px 50px #4e4e4e; -moz-box-shadow: 0 5px 50px #4e4e4e;
   }
   div.dialog .title {
     position: absolute; top: 0; left: 0; right: 0;
@@ -288,14 +296,14 @@ div.dialog {
     height: 16px;
     padding: 5px 10px;
     font: 14px/18px Arial;
-    color: #333;
+    color: #000;
     cursor: move;
     border-bottom: 1px solid #bbb;
     -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
     -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
   }
     div.dialog span.subtitle {
-      color: #555;
+      color: #4e4e4e;
       margin-left: 3px;
       font: italic 10px/18px Arial;
     }
@@ -369,7 +377,7 @@ iframe.hidden_iframe {
     background: #cec;
   }
   #tooltip {
-    color: #333;
+    color: #000;
     border-width: 0;
     padding: 4px 8px;
     font: 11px/14px Arial;

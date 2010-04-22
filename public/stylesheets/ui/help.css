@@ -1,16 +1,16 @@
 .help_text {
   font: 11px/16px Arial;
-  color: #555;
+  color: #4e4e4e;
 }
 
 #help {
-  color: #454545;
+  color: #4e4e4e;
   padding: 25px 25px;
   max-width: 550px;
   font: 14px/18px Arial;
 }
   #help a {
-    color: #204055;
+    color: #000;
   }
     #help a:hover {
       text-decoration: underline;

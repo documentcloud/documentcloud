@@ -113,7 +113,7 @@ a {
     height: 77px;
     font-size: 14px;
     line-height: 77px;
-    color: #555;
+    color: #4e4e4e;
     border: 1px solid #ccc;
     border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px;
   }
@@ -135,7 +135,7 @@ a {
 }
   .static_error {
     margin: 15px 15px 15px 15px;
-    color: #333;
+    color: #000;
     font-size: 16px;
     line-height: 25px;
     width: 500px;

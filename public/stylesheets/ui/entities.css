@@ -4,7 +4,7 @@
 }
   #entities .emptyviz,
   #visualizer .emptyviz {
-    color: #555;
+    color: #4e4e4e;
     font: italic 11px Arial;
   }
   #entities .entity_list {
@@ -29,16 +29,16 @@
       }
     #entities .type_title {
       font: bold 14px/18px Arial;
-      color: #204055;
+      color: #000;
       cursor: pointer;
     }
     #entities .entity {
       cursor: pointer;
       font: 11px/18px Arial;
-      color: #454545;
+      color: #4e4e4e;
     }
       #entities .entity:hover {
-        color: #204055;
+        color: #000;
         text-decoration: underline;
       }
 
@@ -47,7 +47,7 @@
 }
   .entity_view .document_count {
     font: italic 11px Arial;
-    color: #555;
+    color: #4e4e4e;
   }
   .entity_view .document_list {
     padding-top: 15px;
@@ -65,7 +65,7 @@
       }
     .entity_view .document .title {
       font-size: 11px;
-      color: #204055;
+      color: #000;
       line-height: 18px;
       font-weight: bold;
       position: static;

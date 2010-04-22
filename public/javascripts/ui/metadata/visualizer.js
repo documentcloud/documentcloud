@@ -116,7 +116,7 @@ dc.ui.Visualizer = dc.View.extend({
     piece = Math.PI * 2 / this.topEntities.length;
 
     _.each(this.topEntities, function(meta, i) {
-      var metaEl = $($.el('div', {'class' : 'datum gradient_white', 'data-id' : meta.id}, meta.get('value')));
+      var metaEl = $($.el('div', {'class' : 'datum gradient_light', 'data-id' : meta.id}, meta.get('value')));
       el.append(metaEl[0]);
       var position = piece * i;
       var w2 = metaEl.outerWidth() / 2, h2 = metaEl.outerHeight() / 2;

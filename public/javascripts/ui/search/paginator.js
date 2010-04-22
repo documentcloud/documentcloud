@@ -4,7 +4,7 @@ dc.ui.Paginator = dc.View.extend({
   PAGE_SIZE : 10,
 
   id        : 'paginator',
-  className : 'gradient_white',
+  className : 'gradient_light',
 
   query : null,
   page  : null,

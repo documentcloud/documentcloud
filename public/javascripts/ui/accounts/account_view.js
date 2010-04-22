@@ -24,7 +24,8 @@ dc.ui.AccountView = dc.View.extend({
   constructor : function(options) {
     this.kind       = options.kind;
     this.tagName    = this.TAGS[this.kind];
-    this.className  = 'account_view gradient_white ' + this.kind;
+    var grad = this.kind == 'badge' ? 'gradient_light' : 'gradient_white';
+    this.className  = 'account_view ' + grad + ' ' + this.kind;
     this.base(options);
     this.template   = JST['account_' + this.kind];
     _.bindAll(this, '_onSuccess', '_onError');

@@ -48,7 +48,7 @@ small {
     #content ul {
       margin: 0 0 0 1.25em;
       list-style-type: circle;
-      color: #555;
+      color: #4e4e4e;
     }
     #content ol {
       padding-left: 20px;
@@ -114,7 +114,7 @@ small {
 #footer {
   font-size: 1.1em;
   line-height: 1.5em;
-  color: #555;
+  color: #4e4e4e;
 }
 
 #extras {
