@@ -11,7 +11,8 @@ dc.ui.Organizer = dc.View.extend({
 
   facetCallbacks : {
     '.facet.click'            : '_filterFacet',
-    '.more.click'             : '_loadFacets'
+    '.more.click'             : '_loadFacets',
+    '.less.click'             : '_showLess'
   },
 
   constructor : function(options) {
@@ -91,6 +92,12 @@ dc.ui.Organizer = dc.View.extend({
   _loadFacets : function(e) {
     $(e.target).html('loading &hellip;');
     dc.app.searchBox.loadFacets($(e.target).attr('data-category'));
+  },
+
+  _showLess : function(e) {
+    var cat = $(e.target).attr('data-category');
+    this._facets[cat].splice(5);
+    this.renderFacets(this._facets);
   },
 
   promptNewProject : function() {
