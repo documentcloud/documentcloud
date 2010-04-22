@@ -209,7 +209,7 @@ dc.ui.Toolbar = dc.View.extend({
   _createConnectionsMenu : function() {
     var me = this;
     var items = [
-      {title : 'Entities', onClick : this._openEntities},
+      // {title : 'Entities', onClick : this._openEntities},
       {title : 'Timeline', onClick : this._openTimeline, className : 'divider'}
     ];
     items = items.concat(_.map(['city', 'country', 'organization',
