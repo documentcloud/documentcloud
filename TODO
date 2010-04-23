@@ -3,6 +3,8 @@ TODO:
   * DocumentCloud Solo.
       
   * Normalize uppercase OpenCalais entity names.
+  
+  * Disallow annotating outside of the page border.
 
   * Add placeholder JS fallback for non HTML5 browsers.
     

@@ -97,10 +97,10 @@
     filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#EAEAEA', EndColorStr='#C2C2C2');
   }
     .DV-views #DV-documentView span {
-      -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
+      border-top-left-radius: 5px; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
     }
     #DV-textView span {
-      -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
+      border-top-right-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
     }
     .DV-viewDocument .DV-views #DV-documentView span,
     .DV-viewAnnotations .DV-views #DV-annotationView span,

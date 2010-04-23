@@ -3,8 +3,7 @@
   #organizer #tabs {
     position: absolute;
     z-index: 3;
-    left: 0px; right: 0;
-    padding-left: 15px;
+    left: 15px;
     top: -30px;
   }
     #organizer #tabs .tab {
@@ -16,8 +15,8 @@
       cursor: pointer;
       float: left;
       color: #fff;
-      -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
-      -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
+      border-top-left-radius: 5px; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
+      border-top-right-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
     }
       #organizer.projects_active #projects_tab,
       #organizer.entities_active #entities_tab {
