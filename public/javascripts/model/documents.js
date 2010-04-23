@@ -6,7 +6,7 @@ dc.model.Document = dc.Model.extend({
     this.base(attributes);
     this.notes = new dc.model.NoteSet();
     this.notes.resource = 'documents/' + this.id + '/annotations';
-    this.entities = new dc.model.EntitySet();
+    this.pageEntities = new dc.model.EntitySet();
   },
 
   openViewer : function() {

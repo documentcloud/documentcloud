@@ -27,7 +27,7 @@ dc.ui.Document = dc.View.extend({
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderPages', '_onNotesLoaded');
     this.model.bind(dc.Model.CHANGED, this._onDocumentChange);
     this.model.notes.bind(dc.Set.MODEL_ADDED, this._addNote);
-    this.model.entities.bind(dc.Set.REFRESHED, this._renderPages);
+    this.model.pageEntities.bind(dc.Set.REFRESHED, this._renderPages);
   },
 
   render : function() {

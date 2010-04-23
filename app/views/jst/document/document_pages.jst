@@ -1,11 +1,11 @@
 <%
-  var pages = _.sortBy(_.flatten(_.map(doc.entities.models(), function(ent) {
+  var pages = _.sortBy(_.flatten(_.map(doc.pageEntities.models(), function(ent) {
     return _.map(ent.get('pages'), function(num){ return {id : ent.id, page : num}; });
   })), function(pair) {
     return pair.page;
   });
 %>
-<% var value = doc.entities.first().get('value'); %>
+<% var value = doc.pageEntities.first().get('value'); %>
 <div class="pages_title">
   <%= pages.length %>
   <%= Inflector.pluralize('page', pages.length) %>
