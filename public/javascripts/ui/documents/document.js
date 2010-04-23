@@ -8,21 +8,26 @@ dc.ui.Document = dc.View.extend({
   className : 'document',
 
   callbacks : {
-    '.doc_title.mousedown':  '_noSelect',
-    '.doc_title.click'    :  'select',
-    '.doc_title.dblclick' :  'viewDocument',
-    '.icon.doc.click'     :  'select',
-    '.icon.doc.dblclick'  :  'viewDocument',
-    '.show_notes.click'   :  'toggleNotes'
+    '.doc_title.mousedown': '_noSelect',
+    '.doc_title.click'    : 'select',
+    '.doc_title.dblclick' : 'viewDocument',
+    '.icon.doc.click'     : 'select',
+    '.icon.doc.dblclick'  : 'viewDocument',
+    '.show_notes.click'   : 'toggleNotes'
+  },
+
+  pageCallbacks : {
+    '.page.click'         : '_openEntityOnPage'
   },
 
   constructor : function(options) {
     this.base(options);
     this.el.id = 'document_' + this.model.id;
     this.setMode('no', 'notes');
-    _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_onNotesLoaded');
+    _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderPages', '_onNotesLoaded');
     this.model.bind(dc.Model.CHANGED, this._onDocumentChange);
     this.model.notes.bind(dc.Set.MODEL_ADDED, this._addNote);
+    this.model.entities.bind(dc.Set.REFRESHED, this._renderPages);
   },
 
   render : function() {
@@ -37,6 +42,7 @@ dc.ui.Document = dc.View.extend({
     $(this.el).html(JST.document_tile(data));
     $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.notesEl = $('.notes', this.el);
+    this.pagesEl = $('.pages', this.el);
     this.model.notes.each(function(note){ me._addNote(null, note); });
     if (!this.options.noCallbacks) this.setCallbacks();
     this.setMode(dc.access.NAMES[this.model.get('access')], 'access');
@@ -147,6 +153,18 @@ dc.ui.Document = dc.View.extend({
 
   _addNote : function(e, note) {
     this.notesEl.append((new dc.ui.Note({model : note, set : this.model.notes})).render().el);
+  },
+
+  _renderPages : function() {
+    this.pagesEl.html(JST.document_pages({doc : this.model}));
+    this.setCallbacks(this.pageCallbacks);
+  },
+
+  _openEntityOnPage : function(e) {
+    var el    = $(e.target).closest('.page');
+    var id    = el.attr('data-id');
+    var page  = el.attr('data-page');
+    window.open(this.model.get('document_viewer_url') + "?entity=" + id + '&page=' + page);
   },
 
   // When the document is dropped onto a project, add it to the project.

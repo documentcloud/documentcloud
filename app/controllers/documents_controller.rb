@@ -70,6 +70,15 @@ class DocumentsController < ApplicationController
   end
 
   # TODO: Access-control this:
+  def entity
+    json({'entities' => Entity.all({:conditions => {
+      :document_id  => params[:ids],
+      :kind         => params[:kind],
+      :value        => params[:value]
+    }})}.to_json(:include_pages => true))
+  end
+
+  # TODO: Access-control this:
   def dates
     dates = EntityDate.all(:conditions => {:document_id => params[:ids]})
     json 'dates' => dates
@@ -130,7 +139,7 @@ class DocumentsController < ApplicationController
   def entity_requested?
     return false unless params[:entity]
     meta = current_document.entities.find(params[:entity])
-    redirect_to current_document.document_viewer_url(:entity => meta)
+    redirect_to current_document.document_viewer_url(:entity => meta, :page => params[:page])
   end
 
   def current_document(exists=false)

@@ -1,0 +1,19 @@
+<%
+  var pages = _.sortBy(_.flatten(_.map(doc.entities.models(), function(ent) {
+    return _.map(ent.get('pages'), function(num){ return {id : ent.id, page : num}; });
+  })), function(pair) {
+    return pair.page;
+  });
+%>
+<% var value = doc.entities.first().get('value'); %>
+<div class="pages_title">
+  <%= pages.length %>
+  <%= Inflector.pluralize('page', pages.length) %>
+  mentioning "<%= value %>"
+</div>
+<% _.each(pages, function(pair) { %>
+  <div class="page" data-page="<%= pair.page %>" data-id="<%= pair.id %>">
+    <img class="page_image" alt="page <%= pair.page %>" src="<%= doc.pageThumbnailURL(pair.page) %>" />
+    <div class="page_number">p. <%= pair.page %></div>
+  </div>
+<% }); %>

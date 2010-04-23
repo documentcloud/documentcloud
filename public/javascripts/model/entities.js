@@ -3,6 +3,8 @@
 // An Entity, on the client, should be the aggregate of all of the occurrences
 // of a particular entity in the currently-viewed documents. To that end,
 // it has an averageRelevance() over its documents()...
+dc.model.PureEntity = dc.Model.extend({});
+
 dc.model.Entity = dc.Model.extend({
 
   // Create a new entity from an instance(s) raw object.
@@ -139,6 +141,15 @@ dc.model.EntitySet = dc.model.SortedSet.extend({
       Entities.sort();
       dc.ui.spinner.hide();
       callback();
+    }, 'json');
+  },
+
+  // Fetch a single entity across a set of visible documents.
+  fetch : function(kind, value, callback) {
+    dc.ui.spinner.show('loading');
+    $.get('/documents/entity.json', {'ids[]' : Documents.getIds(), kind : kind, value : value}, function(resp) {
+      callback(_.map(resp.entities, function(obj){ return new dc.model.PureEntity(obj); }));
+      dc.ui.spinner.hide();
     }, 'json');
   },
 

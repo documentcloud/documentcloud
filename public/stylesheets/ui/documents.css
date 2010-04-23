@@ -27,6 +27,10 @@
     width: 60px; height: 75px;
     -webkit-box-shadow: 0 0px 4px #4e4e4e; -moz-box-shadow: 0 0px 4px #4e4e4e;
   }
+    img.page_image {
+      width: 40px; height: 50px;
+      -webkit-box-shadow: 0 0px 3px #4e4e4e; -moz-box-shadow: 0 0px 3px #4e4e4e;
+    }
   .document .select {
     position: absolute;
     left: 1px; top: 0px;
@@ -112,6 +116,21 @@
       .document.has_notes .hide {
         display: inline;
       }
+
+/*---------------------------- Page References -------------------------------*/
+.document .pages_title {
+  margin: 15px 0 0 0;
+}
+.document .page {
+  float: left;
+  margin: 10px 15px 0px 0;
+  text-align: center;
+  cursor: pointer;
+}
+  .document .page_number {
+    color: #4e4e4e;
+  }
+
 
 /*------------------------------ ANNOTATIONS ---------------------------------*/
 .document .notes {

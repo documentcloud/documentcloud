@@ -35,13 +35,16 @@ class Entity < ActiveRecord::Base
     write_attribute :value, val.mb_chars[0...255].to_s
   end
 
-  def to_json(options=nil)
-    {'id'           => id,
+  def to_json(options={})
+    data = {
+     'id'           => id,
      'document_id'  => document_id,
      'kind'         => kind,
      'value'        => value,
      'relevance'    => relevance
-    }.to_json
+    }
+    data['pages']   =  pages.map {|p| p.page_number } if options[:include_pages]
+    data.to_json
   end
 
   def canonical

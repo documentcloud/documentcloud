@@ -18,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Document representations and (private) sub-resources.
   map.resources  :documents,
-                 :collection => {:entities => :get, :dates => :get, :status => :get, :loader => :get},
+                 :collection => {:entities => :get, :entity => :get, :dates => :get, :status => :get, :loader => :get},
                  :member     => {:search => :get},
                  :has_many   => [:annotations]
   map.pdf        "/documents/:id/:slug.pdf",      :controller => :documents, :action => :send_pdf

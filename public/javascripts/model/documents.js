@@ -6,6 +6,7 @@ dc.model.Document = dc.Model.extend({
     this.base(attributes);
     this.notes = new dc.model.NoteSet();
     this.notes.resource = 'documents/' + this.id + '/annotations';
+    this.entities = new dc.model.EntitySet();
   },
 
   openViewer : function() {
@@ -21,6 +22,10 @@ dc.model.Document = dc.Model.extend({
   openPDF : function() {
     if (this.checkBusy()) return;
     window.open(this.get('pdf_url'));
+  },
+
+  pageThumbnailURL : function(page) {
+    return this.get('page_image_url').replace('{size}', 'thumbnail').replace('{page}', page);
   },
 
   // Is the document editable by the current account?

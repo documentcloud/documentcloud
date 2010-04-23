@@ -253,7 +253,8 @@ class Document < ActiveRecord::Base
     suffix = "#document/p#{opts[:page]}" if opts[:page]
     if ent = opts[:entity]
       occur = ent.split_occurrences.first
-      suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(ent.value)}/#{occur.page_offset}:#{occur.length}" if occur.page
+      occur = ent.split_occurrences.detect {|o| o.page.page_number == opts[:page].to_i } if opts[:page]
+      suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(ent.value)}/#{occur.page_offset}:#{occur.length}"
     end
     if date = opts[:date]
       occur = date.split_occurrences.first

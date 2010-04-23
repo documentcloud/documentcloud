@@ -10,10 +10,11 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   facetCallbacks : {
-    '.facet.click'            : '_filterFacet',
+    '.row.click'              : '_filterFacet',
     '.cancel_search.click'    : '_removeFacet',
     '.more.click'             : '_loadFacets',
-    '.less.click'             : '_showLess'
+    '.less.click'             : '_showLess',
+    '.show_pages.click'       : '_showPages'
   },
 
   constructor : function(options) {
@@ -88,32 +89,6 @@ dc.ui.Organizer = dc.View.extend({
     $('.box', this.projectList).show();
   },
 
-  _facetStringFor : function(el) {
-    var row = $(el).closest('.row');
-    var val = row.attr('data-value');
-    if (val.match(/\s/)) val = '"' + val + '"';
-    return row.attr('data-category') + ': ' + val;
-  },
-
-  _filterFacet : function(e) {
-    dc.app.searchBox.addToSearch(this._facetStringFor(e.target));
-  },
-
-  _removeFacet : function(e) {
-    dc.app.searchBox.removeFromSearch(this._facetStringFor(e.target));
-  },
-
-  _loadFacets : function(e) {
-    $(e.target).html('loading &hellip;');
-    dc.app.searchBox.loadFacets($(e.target).attr('data-category'));
-  },
-
-  _showLess : function(e) {
-    var cat = $(e.target).attr('data-category');
-    this._facets[cat].splice(5);
-    this.renderFacets(this._facets);
-  },
-
   promptNewProject : function() {
     var me = this;
     dc.ui.Dialog.prompt('Create a New Project', '', function(title) {
@@ -127,6 +102,49 @@ dc.ui.Organizer = dc.View.extend({
 
   openUploads : function() {
     dc.app.uploader.open();
+  },
+
+  _facetStringFor : function(el) {
+    var row = $(el).closest('.row');
+    var val = row.attr('data-value');
+    if (val.match(/\s/)) val = '"' + val + '"';
+    return row.attr('data-category') + ': ' + val;
+  },
+
+  _filterFacet : function(e) {
+    dc.app.searchBox.addToSearch(this._facetStringFor(e.target));
+  },
+
+  _removeFacet : function(e) {
+    $(e.target).closest('.row').removeClass('active');
+    dc.app.searchBox.removeFromSearch(this._facetStringFor(e.target));
+    return false;
+  },
+
+  _loadFacets : function(e) {
+    $(e.target).html('loading &hellip;');
+    dc.app.searchBox.loadFacets($(e.target).attr('data-category'));
+  },
+
+  _showLess : function(e) {
+    var cat = $(e.target).attr('data-category');
+    this._facets[cat].splice(5);
+    this.renderFacets(this._facets);
+  },
+
+  _showPages : function(e) {
+    var el = $(e.target).closest('.row');
+    Entities.fetch(el.attr('data-category'), el.attr('data-value'), function(entities) {
+      var sets = _.reduce(entities, {}, function(memo, ent) {
+        var docId = ent.get('document_id');
+        memo[docId] = memo[docId] || [];
+        memo[docId].push(ent);
+        return memo;
+      });
+      _.each(sets, function(set) {
+        Documents.get(set[0].get('document_id')).entities.refresh(set);
+      });
+    });
   },
 
   // Bind all possible and Project events for rendering.
