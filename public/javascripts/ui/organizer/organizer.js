@@ -142,7 +142,7 @@ dc.ui.Organizer = dc.View.extend({
         return memo;
       });
       _.each(sets, function(set) {
-        Documents.get(set[0].get('document_id')).entities.refresh(set);
+        Documents.get(set[0].get('document_id')).pageEntities.refresh(set);
       });
     });
   },
