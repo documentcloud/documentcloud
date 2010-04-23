@@ -108,7 +108,7 @@
   color: #000;
 }
   #organizer_entities .section {
-    padding: 15px 5px 15px 15px;
+    padding: 15px 0;
     border-bottom: 1px solid #e0e0e0;
     border-top: 1px solid #fff;
   }
@@ -117,19 +117,38 @@
     }
     #organizer_entities .category {
       font: bold 14px Arial;
+      padding-left: 15px;
       color: #4e4e4e;
     }
     #organizer_entities .rows {
       margin: 4px 0;
     }
-      #organizer_entities .facet {
-        cursor: pointer;
+      #organizer_entities .row {
+        padding-left: 15px;
+        border: 1px solid transparent;
+        border-left: 0; border-right: 0;
       }
-      #organizer_entities .count {
-        font-size: 10px;
-        color: #808080;
-      }
+        #organizer_entities .row.active {
+          border-top-color: #fff;
+          border-bottom-color: #e0e0e0;
+        }
+        #organizer_entities .facet {
+          cursor: pointer;
+        }
+        #organizer_entities .count {
+          font-size: 10px;
+          color: #808080;
+        }
+        #organizer_entities .cancel_search {
+          float: right;
+          margin: 2px 5px 0 0;
+          display: none;
+        }
+          #organizer_entities .row:hover .cancel_search {
+            display: block;
+          }
     #organizer_entities .more, #organizer_entities .less {
+      padding-left: 15px;
       font-weight: bold;
       cursor: pointer;
     }

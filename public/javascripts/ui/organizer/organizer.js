@@ -11,6 +11,7 @@ dc.ui.Organizer = dc.View.extend({
 
   facetCallbacks : {
     '.facet.click'            : '_filterFacet',
+    '.cancel_search.click'    : '_removeFacet',
     '.more.click'             : '_loadFacets',
     '.less.click'             : '_showLess'
   },
@@ -52,8 +53,14 @@ dc.ui.Organizer = dc.View.extend({
 
   // Refresh the facets with a new batch.
   renderFacets : function(facets) {
+    var filtered  = dc.app.SearchParser.extractEntities(dc.app.searchBox.value());
+    var filterMap = _.reduce(filtered, {}, function(memo, item) {
+      memo[item.type] = memo[item.type] || {};
+      memo[item.type][item.value] = true;
+      return memo;
+    });
     this._facets = facets;
-    this.entityList.html(JST.organizer_entities({entities: facets}));
+    this.entityList.html(JST.organizer_entities({entities: facets, active : filterMap}));
     this.setCallbacks(this.facetCallbacks);
   },
 
@@ -81,12 +88,19 @@ dc.ui.Organizer = dc.View.extend({
     $('.box', this.projectList).show();
   },
 
-  _filterFacet : function(e) {
-    var el = $(e.target);
-    var val = el.attr('data-value');
+  _facetStringFor : function(el) {
+    var row = $(el).closest('.row');
+    var val = row.attr('data-value');
     if (val.match(/\s/)) val = '"' + val + '"';
-    var fragment = $(e.target).attr('data-category') + ': ' + val;
-    dc.app.searchBox.addToSearch(fragment);
+    return row.attr('data-category') + ': ' + val;
+  },
+
+  _filterFacet : function(e) {
+    dc.app.searchBox.addToSearch(this._facetStringFor(e.target));
+  },
+
+  _removeFacet : function(e) {
+    dc.app.searchBox.removeFromSearch(this._facetStringFor(e.target));
   },
 
   _loadFacets : function(e) {

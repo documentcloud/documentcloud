@@ -30,7 +30,8 @@ select {
 
 /*------------------------------ Gradients ---------------------------------*/
 .gradient_selected,
-#organizer .box.is_selected {
+#organizer .box.is_selected,
+#organizer .row.active {
   background: #fffbd0;
   background: -webkit-gradient(linear, left top, left 50%, from(#fff), to(#ffd));
   background: -moz-linear-gradient(top, #fff, #ffd 50%);
@@ -138,9 +139,6 @@ div.text_input {
   div.text_input .cancel_search {
     position: absolute;
     right: 6px; top: 6px;
-    width: 11px; height: 11px;
-    background: url(/images/embed/ui/cancel_search.png);
-    cursor: pointer;
   }
 
 textarea.text_area {

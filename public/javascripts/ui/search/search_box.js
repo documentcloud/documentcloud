@@ -111,6 +111,14 @@ dc.ui.SearchBox = dc.View.extend({
     this.search(this.value());
   },
 
+  // Remove a query fragment from the search and search again, only if it's
+  // present in the current search.
+  removeFromSearch : function(fragment) {
+    if (!this.value().match(fragment)) return;
+    this.value(this.value().replace(' ' + fragment, ''));
+    this.search(this.value());
+  },
+
   // Callback fired on key press in the search box. We search when they hit
   // return.
   maybeSearch : function(e) {

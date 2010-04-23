@@ -6,8 +6,12 @@
       <div class="category"><%= Entities.DISPLAY_NAME[category] %></div>
       <div class="rows">
         <% _.each(list, function(facet) { %>
-          <div class="row">
-            <span class="facet" data-value="<%= facet.value %>" data-category="<%= category %>"><%= facet.value %></span>
+          <% var isActive = active[category] && active[category][facet.value]; %>
+          <div class="row <%= isActive ? 'active' : '' %>" data-value="<%= facet.value %>" data-category="<%= category %>">
+            <% if (isActive) { %>
+              <div class="icon cancel_search"></div>
+            <% } %>
+            <span class="facet"><%= facet.value %></span>
             <span class="count">(<%= facet.count %>)</span>
           </div>
         <% }); %>

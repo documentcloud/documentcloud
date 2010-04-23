@@ -6,6 +6,10 @@ dc.app.SearchParser = {
 
   FIRST_ACCOUNT :  /account:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
+  ONE_ENTITY    : /(city|country|term|state|person|place|organization):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+
+  ALL_ENTITIES  : /(city|country|term|state|person|place|organization):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
+
   WHITESPACE_ONLY: /^\s*$/,
 
   extractProject : function(query) {
@@ -16,6 +20,15 @@ dc.app.SearchParser = {
   extractAccount : function(query) {
     var account = query.match(this.FIRST_ACCOUNT);
     return account && (account[2] || account[3] || account[4]);
+  },
+
+  extractEntities : function(query) {
+    var all = this.ALL_ENTITIES, one = this.ONE_ENTITY;
+    var entities = query.match(all) || [];
+    return _.map(entities, function(ent){
+      var match = ent.match(one);
+      return {type : match[1], value : match[3] || match[4] || match[5]};
+    });
   },
 
   searchType : function(query) {
