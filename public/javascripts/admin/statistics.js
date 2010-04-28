@@ -35,8 +35,8 @@ dc.ui.Statistics = dc.View.extend({
 
   ACCOUNT_COMPARATORS : {
     name           : dc.model.AccountSet.prototype.comparator,
-    email          : function(account){ return account.get('email'); },
-    organization   : function(account){ return account.organization().get('name'); },
+    email          : function(account){ return account.get('email').toLowerCase(); },
+    organization   : function(account){ return account.organization().get('name').toLowerCase(); },
     document_count : function(account){ return -(account.get('public_document_count') + account.get('private_document_count')) || 0; },
     page_count     : function(account){ return -account.get('page_count') || 0; }
   },
