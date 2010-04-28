@@ -121,7 +121,7 @@ class Document < ActiveRecord::Base
   # Return an array of all of the document entity values for a given type,
   # for Solr indexing purposes.
   def entity_values(kind)
-    self.entities.kind(kind).all(:select => [:value]).map {|e| e.value }
+    self.entities.kind(kind.to_s).all(:select => [:value]).map {|e| e.value }
   end
 
   # Does this document have a title?
