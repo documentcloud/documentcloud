@@ -25,8 +25,20 @@ dc.ui.Statistics = dc.View.extend({
   className : 'serif',
 
   callbacks : {
-    '.chart.plothover':        '_showTooltop',
-    '#instances .minus.click': '_terminateInstance'
+    '.chart.plothover':           '_showTooltop',
+    '#instances .minus.click':    '_terminateInstance'
+  },
+
+  accountCallbacks : {
+    '#account_list .sort.click':  '_sortAccounts'
+  },
+
+  ACCOUNT_COMPARATORS : {
+    name           : dc.model.AccountSet.prototype.comparator,
+    email          : function(account){ return account.get('email'); },
+    organization   : function(account){ return account.organization().get('name'); },
+    document_count : function(account){ return -(account.get('public_document_count') + account.get('private_document_count')) || 0; },
+    page_count     : function(account){ return -account.get('page_count') || 0; }
   },
 
   constructor : function(options) {
@@ -42,7 +54,7 @@ dc.ui.Statistics = dc.View.extend({
 
   render : function() {
     $(this.el).html(JST.statistics(this.data()));
-    $('#accounts_wrapper', this.el).append((new dc.ui.AdminAccounts()).render().el);
+    this.renderAccounts();
     $('#topbar').append(this._actionsMenu.render().el);
     this.setCallbacks();
     _.defer(this.renderCharts);
@@ -53,6 +65,11 @@ dc.ui.Statistics = dc.View.extend({
     $('.chart', this.el).html('');
     $.plot($('#docs_uploaded_chart'), stats.daily_documents_series, this.GRAPH_OPTIONS);
     $.plot($('#pages_uploaded_chart'), stats.daily_pages_series, this.GRAPH_OPTIONS);
+  },
+
+  renderAccounts : function() {
+    $('#accounts_wrapper', this.el).html((new dc.ui.AdminAccounts()).render().el);
+    this.setCallbacks(this.accountCallbacks);
   },
 
   data : function() {
@@ -118,6 +135,14 @@ dc.ui.Statistics = dc.View.extend({
       });
       return true;
     });
+  },
+
+  _sortAccounts : function(e) {
+    var sort = $(e.target).attr('data-sort');
+    var comparator = this.ACCOUNT_COMPARATORS[sort];
+    Accounts.setComparator(comparator);
+    this.renderAccounts();
+    $('#account_list .sort_' + sort).addClass('active');
   },
 
   // Create a tooltip to show a hovered date.

@@ -45,6 +45,15 @@
         #statistics .labels td {
           padding: 5px 0 50px 0;
         }
+        #statistics td .sort {
+          cursor: pointer;
+        }
+          #statistics td .sort.active {
+            font-weight: bold;
+          }
+          #statistics td .sort:hover {
+            text-decoration: underline;
+          }
 
 #statistics .data table {
   border-bottom: 1px solid #131b1d;
