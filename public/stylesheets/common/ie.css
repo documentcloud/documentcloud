@@ -31,11 +31,6 @@ button {
   border: 1px solid #aaa;
 }
 
-#sidebar_background {
-  filter:
-    progid:DXImageTransform.Microsoft.Shadow(color=#EAEAEA,direction=90,strength=15);
-}
-
 img.doc,
 .menu_content,
 #tooltip_background,

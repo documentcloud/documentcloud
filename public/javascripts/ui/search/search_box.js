@@ -35,8 +35,9 @@ dc.ui.SearchBox = dc.View.extend({
 
   render : function() {
     $(this.el).append(JST.search_box({}));
-    this.box  = $('#search_box', this.el);
-    this.menu = $('#search_type', this.el);
+    this.box      = $('#search_box', this.el);
+    this.menu     = $('#search_type', this.el);
+    this.titleBox = $('#title_box', this.el);
     $(document.body).setMode('no', 'search');
     this.setCallbacks();
     return this;
@@ -58,6 +59,7 @@ dc.ui.SearchBox = dc.View.extend({
     $(document.body).setMode('active', 'search');
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
+    this.entitle(query);
     this.fragment = 'search/' + encodeURIComponent(query);
     dc.history.save(this.urlFragment());
     Documents.refresh();
@@ -144,6 +146,18 @@ dc.ui.SearchBox = dc.View.extend({
     $(document.body).setMode('no', 'search');
     Project.deselectAll();
     dc.history.save('help');
+  },
+
+  entitle : function(query) {
+    var projectName = dc.app.SearchParser.extractProject(query);
+    var accountName = dc.app.SearchParser.extractAccount(query);
+    if (projectName) {
+      this.titleBox.text(projectName);
+    } else if (accountName == Accounts.current().get('email')) {
+      this.titleBox.text('My Uploaded Documents');
+    } else {
+      this.titleBox.text('All Documents');
+    }
   },
 
   // Hide the spinner and remove the search lock when finished searching.

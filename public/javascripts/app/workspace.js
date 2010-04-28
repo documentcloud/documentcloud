@@ -40,17 +40,17 @@ _.extend(dc.app.workspace, {
 
   // Render all of the existing subviews and place them in the DOM.
   renderSubViews : function() {
-    $('#topbar').append(dc.app.searchBox.render().el);
     var content   = $('#content');
     content.append(this.sidebar.render().el);
     content.append(this.panel.render().el);
+    this.panel.add('search_box', dc.app.searchBox.render().el);
     this.panel.add('pagination', dc.app.paginator.el);
     $('#no_results_container').html(JST.no_results({}));
 
     if (!dc.app.accountId) return $(document.body).setMode('search', 'navigation');
 
     dc.app.hotkeys.initialize();
-    content.append(this.accountBadge.render().el);
+    this.sidebar.add('account_badge', this.accountBadge.render().el);
     this.sidebar.add('organizer', this.organizer.render().el);
     dc.app.uploader.render();
     this.panel.add('document_list', this.documentList.render().el);

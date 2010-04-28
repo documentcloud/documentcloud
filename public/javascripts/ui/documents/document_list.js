@@ -5,7 +5,6 @@ dc.ui.DocumentList = dc.View.extend({
   SLOP      : 3,
 
   id        : 'document_list',
-  className : 'panel',
 
   callbacks : {
     'el.mousedown': '_startDeselect',

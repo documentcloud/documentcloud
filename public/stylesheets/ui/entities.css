@@ -1,6 +1,4 @@
 #entities {
-  position: absolute;
-  top: 15px; bottom: 0; left: 370px; right: 15px;
 }
   #entities .emptyviz,
   #visualizer .emptyviz {

@@ -21,7 +21,6 @@ dc.ui.Organizer = dc.View.extend({
     this.base(options);
     _.bindAll(this, '_addSubView', '_removeSubView', 'openUploads');
     this._bindToSets();
-    $('#logo').remove();
     this.subViews = [];
   },
 

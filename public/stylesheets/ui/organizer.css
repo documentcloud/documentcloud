@@ -39,10 +39,6 @@
       display: block;
     }
   #organizer .project_list_wrap {
-    position: absolute;
-    top: 0px; bottom: 0px; left: 0; right: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
   }
     #organizer.has_projects .project_help {
       display: none;
@@ -61,18 +57,16 @@
       #organizer .box:first-child {
         border-top: 0;
       }
-      #organizer .box:hover {
-        background-color: #fff;
+      #organizer .box.is_selected,
+      #organizer .box.is_selected:hover {
         border-right: 0;
-      }
-      #organizer .box.is_selected {
-        border-right: 0;
+        width: 280px;
+        background: #fff;
       }
       #organizer .box .pointer {
         width: 10px; height: 19px;
         position: absolute; right: 15px; top: 50%;
         margin-top: -10px;
-        background-image: url(/images/embed/ui/pointer.png);
         display: none;
       }
         #organizer .box.is_selected .pointer {

@@ -4,7 +4,7 @@ html {
   font-size: 12px;
 }
 body {
-  overflow: hidden;
+  background: #ccc;
 }
 a {
   color: inherit;
@@ -21,6 +21,9 @@ a {
   position: relative;
   height: 40px;
 }
+  body.workspace #topbar {
+    display: none;
+  }
   body.full_page_background #topbar {
     border-bottom-color: #aaa;
   }
@@ -51,9 +54,13 @@ a {
         text-transform: uppercase;
       }
   #search_box_wrapper {
-    position: absolute;
-    top: 10px; left: 326px;
-    right: 10px;
+    margin: 0 20px 30px;
+  }
+  #title_box {
+    text-align: center;
+    font: bold 22px Arial;
+    color: #000;
+    padding: 40px 20px 30px;
   }
   #search_type {
     display: none;
@@ -73,39 +80,24 @@ a {
   }
 
 #content {
-  position: absolute;
-  bottom: 0px; top: 41px; left: 0; right: 0;
-  background: #fff;
+  margin: 70px 20px 20px 20px;
 }
 
 #sidebar {
+  width: 308px;
   position: absolute;
-  top: 0px; left: 0px; bottom: 38px;
-  width: 310px;
-  z-index: 5;
+  border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+  background: #f4f3f1;
 }
-  #sidebar_background {
-    background: #f4f3f1;
-    position: absolute;
-    border-right: 1px solid #aaa;
-    top: 0; left: 0; bottom: -38px; right: -1px;
-/*    -webkit-box-shadow: 5px 0px 15px #eee;*/
-/*    -moz-box-shadow: 0 25px 25px #000;*/
-  }
 
 .panel_container {
-  position: absolute;
-  left: 310px; right: 0px; top: 0px; bottom: 0px;
+  margin-left: 310px;
+  border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+  background: #fff;
 }
-  .panel_content .panel {
-    position: absolute;
-    overflow-y: auto;
-    top: 0px; left: 0px; right: 0px; bottom: 0px;
-    padding: 10px 10px 10px 15px;
+  .panel_content {
+    position: relative;
   }
-    body.search_navigation.paginated .panel_content .panel {
-      bottom: 38px;
-    }
 
 #no_results_container {
   position: absolute;

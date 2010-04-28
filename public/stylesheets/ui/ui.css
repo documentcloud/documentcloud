@@ -30,7 +30,7 @@ select {
 
 /*------------------------------ Gradients ---------------------------------*/
 .gradient_selected,
-#organizer .box.is_selected,
+#organizer .box:hover,
 #organizer .row.active {
   background: #fffbd0;
   background: -webkit-gradient(linear, left top, left 50%, from(#fff), to(#ffd));
@@ -69,17 +69,17 @@ select {
 .gradient_gray,
 .tab,
 .minibutton {
-  background: #c0c0c0;
-  background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#999999));
-  background: -moz-linear-gradient(top, #cccccc, #999999);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#cccccc', EndColorStr='#999999');
+  background: #aaaaaa;
+  background: -webkit-gradient(linear, left top, left bottom, from(#b0b0b0), to(#888888));
+  background: -moz-linear-gradient(top, #b0b0b0, #888888);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#b0b0b0', EndColorStr='#888888');
 }
 .gradient_inverted,
 .minibutton:active, .minibutton.is_active {
-  background: #c0c0c0;
-  background: -webkit-gradient(linear, left top, left bottom, from(#999999), to(#cccccc));
-  background: -moz-linear-gradient(top, #999999, #cccccc);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#999999', EndColorStr='#cccccc');
+  background: #aaaaaa;
+  background: -webkit-gradient(linear, left top, left bottom, from(#888888), to(#b0b0b0));
+  background: -moz-linear-gradient(top, #888888, #b0b0b0);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#888888', EndColorStr='#b0b0b0');
 }
 
 
@@ -160,7 +160,7 @@ textarea.text_area {
   width: 50px;
   text-align: center;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
-  border: 1px solid #aaa;
+  border: 1px solid #999;
 }
   .minibutton::selection, .minibutton > span::selection {
     background: transparent;

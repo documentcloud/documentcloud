@@ -33,7 +33,7 @@ dc.ui.Project = dc.View.extend({
   // Attributes for the default "Uploaded Documents" project.
   defaultProjectAttributes : function() {
     return {
-      title             : 'Uploaded Documents',
+      title             : 'My Uploaded Documents',
       document_count    : dc.app.documentCount,
       annotation_count  : dc.app.annotationCount
     };

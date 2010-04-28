@@ -1,15 +1,11 @@
 /*--------------------- Account Views (Rows & Badges) ------------------------*/
 
 .account_view.badge {
-  position: absolute;
-  left: 0; bottom: 0px;
-  width: 255px; height: 22px;
   padding: 7px 7px 7px 47px;
   font: 11px/22px Arial;
   color: #4e4e4e;
-  border: 1px solid #ddd;
-  border-right: 1px solid #aaa;
-  z-index: 5;
+  height: 22px;
+  border-top: 1px solid #ddd;
 }
   .account_view.badge img.avatar {
     position: absolute; left: 15px;
@@ -17,10 +13,10 @@
   }
   .account_view.badge .name {
     font-weight: bold;
+    float: left;
   }
   .account_view.badge .controls {
-    position: absolute;
-    right: 10px; top: 7px;
+    float: right;
   }
   .account_view.badge a:hover {
     text-decoration: underline;
