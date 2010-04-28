@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/support/setup'
 
 class DocumentImport < CloudCrowd::Action
 
-  # 25 pages per image batch shell-out.
+  # 50 pages per image batch shell-out.
   IMAGE_BATCH_SIZE = 50
 
   def split
