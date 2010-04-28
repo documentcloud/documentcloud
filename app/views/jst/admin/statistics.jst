@@ -132,10 +132,10 @@
                     <%= doc.get('id') %>
                   </a>
                 </td>
-                <td><%= Inflector.truncate(doc.get('title'), 50) || '<i>private</i>' %></td>
+                <td><%= Inflector.truncate(doc.get('title') || '<i>private</i>', 50) %></td>
                 <td><%= doc.get('account_name') %></td>
                 <td><%= doc.get('organization_name') %></td>
-                <td><%= Inflector.truncate(doc.get('source'), 25) || '<i>private</i>' %></td>
+                <td><%= Inflector.truncate(doc.get('source')  || '<i>private</i>', 25) %></td>
                 <td><%= doc.get('page_count') %></td>
                 <td class="last"></td>
               </tr>
