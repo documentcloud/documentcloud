@@ -2,6 +2,9 @@ require File.dirname(__FILE__) + '/support/setup'
 
 class DocumentImport < CloudCrowd::Action
 
+  # 25 pages per image batch shell-out.
+  IMAGE_BATCH_SIZE = 50
+
   def split
     inputs_for_processing(document, 'images', 'text')
   end
@@ -21,8 +24,14 @@ class DocumentImport < CloudCrowd::Action
   end
 
   def process_images
-    Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :output => 'images')
-    Dir['images/700x/*.gif'].length.times do |i|
+    pages = Docsplit.extract_length(@pdf)
+    batches = (1..pages).to_a.in_groups_of(IMAGE_BATCH_SIZE)
+    batches.each do |batch|
+      batch.reject! {|n| n.nil? }
+      range = Range.new(batch.first, batch.last)
+      Docsplit.extract_images(@pdf, :format => :gif, :pages => range, :size => Page::IMAGE_SIZES.values, :output => 'images')
+    end
+    pages.times do |i|
       image = "#{document.slug}_#{i + 1}.gif"
       asset_store.save_page_images(
         Page.new(:document_id => document.id, :page_number => i + 1),
