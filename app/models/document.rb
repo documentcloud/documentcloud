@@ -253,11 +253,11 @@ class Document < ActiveRecord::Base
     suffix = "#document/p#{opts[:page]}" if opts[:page]
     if ent = opts[:entity]
       occur = ent.split_occurrences.first
-      suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(ent.value)}/#{occur.page_offset}:#{occur.length}"
+      suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(ent.value)}/#{occur.page_offset}:#{occur.length}" if occur.page
     end
     if date = opts[:date]
       occur = date.split_occurrences.first
-      suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(date.date.to_s)}/#{occur.page_offset}:#{occur.length}"
+      suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(date.date.to_s)}/#{occur.page_offset}:#{occur.length}" if occur.page
     end
     canonical_url(:html) + suffix
   end
