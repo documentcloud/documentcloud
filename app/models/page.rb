@@ -50,8 +50,8 @@ class Page < ActiveRecord::Base
   def self.refresh_page_map(document)
     pos = -1
     result = self.connection.execute("select id, length(text) from pages where document_id = #{document.id} order by page_number asc;")
-    result.each do |cols|
-      id, length = cols[0].to_i, cols[1].to_i
+    result.each do |item|
+      id, length = item['id'], item['length']
       Page.update_all("start_offset = #{pos + 1}, end_offset = #{pos + length}", "id = #{id}")
       pos = pos + length
     end
