@@ -84,7 +84,11 @@ module DC
       private
 
       def s3
-        @s3 ||= RightAws::S3.new(@key, @secret, :protocol => 'http', :port => 80)
+        @s3 ||= create_s3
+      end
+
+      def create_s3
+        RightAws::S3.new(@key, @secret, :protocol => 'http', :port => 80)
       end
 
       def bucket
@@ -107,6 +111,9 @@ module DC
         rescue Exception => e
           raise e if attempts >= 3
           attempts += 1
+          sleep 1
+          @s3 = create_s3
+          @bucket = s3.bucket(BUCKET_NAME)
           retry
         end
         bucket.key(s3_path).public_link
