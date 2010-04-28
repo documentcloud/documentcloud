@@ -51,7 +51,7 @@ class Page < ActiveRecord::Base
     pos = -1
     result = self.connection.execute("select id, length(text) from pages where document_id = #{document.id} order by page_number asc;")
     result.each do |item|
-      id, length = item['id'], item['length']
+      id, length = item['id'].to_i, item['length'].to_i
       Page.update_all("start_offset = #{pos + 1}, end_offset = #{pos + length}", "id = #{id}")
       pos = pos + length
     end
