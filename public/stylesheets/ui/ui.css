@@ -67,18 +67,19 @@ select {
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#EAEAEA', EndColorStr='#C2C2C2');
 }
 .gradient_gray,
-.tab {
+.tab,
+.minibutton {
   background: #c0c0c0;
-  background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#b0b0b0));
-  background: -moz-linear-gradient(top, #cccccc, #b0b0b0);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#cccccc', EndColorStr='#b0b0b0');
+  background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#999999));
+  background: -moz-linear-gradient(top, #cccccc, #999999);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#cccccc', EndColorStr='#999999');
 }
 .gradient_inverted,
 .minibutton:active, .minibutton.is_active {
-  background: #ddd;
-  background: -webkit-gradient(linear, left top, left bottom, from(#C2C2C2), to(#F5F5F5));
-  background: -moz-linear-gradient(top, #C2C2C2, #F5F5F5);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#C2C2C2', EndColorStr='#F5F5F5');
+  background: #c0c0c0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#999999), to(#cccccc));
+  background: -moz-linear-gradient(top, #999999, #cccccc);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#999999', EndColorStr='#cccccc');
 }
 
 
@@ -153,17 +154,14 @@ textarea.text_area {
 .minibutton,
 .minibutton.not_enabled:hover {
   cursor: pointer;
-  font: 11px/11px Arial;
-  height: 11px;
-  text-shadow: 0px 1px 1px #fff;
-  color: #000;
-  padding: 4px 5px;
+  font: bold 11px Arial;
+  color: #fff;
+  padding: 4px 10px;
+  width: 50px;
+  text-align: center;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
-  -webkit-box-shadow: 0 0 2px #000; -moz-box-shadow: 0 0 1px #000;
+  border: 1px solid #aaa;
 }
-  .minibutton:hover, .minibutton.is_open {
-    -webkit-box-shadow: 0 0 5px #333; -moz-box-shadow: 0 0 5px #333;
-  }
   .minibutton::selection, .minibutton > span::selection {
     background: transparent;
   }
@@ -175,15 +173,19 @@ textarea.text_area {
   }
 
 /*--------------------------------- Menus ------------------------------------*/
+.minibutton.menu {
+  width: auto;
+  text-align: left;
+  padding: 4px 5px 4px 8px;
+}
 .minibutton.menu .wrapper {
   position: relative;
 }
   .minibutton.menu .label {
     position: relative;
     display: block;
-    left: 2px;
-    padding-right: 18px;
-    background: url(/images/embed/icons/bullet_arrow_down.png) no-repeat right center;
+    padding-right: 25px;
+    background: url(/images/embed/icons/menu_down.png) no-repeat right center;
   }
     .minibutton.menu.is_active .label {
       padding-left: 14px;

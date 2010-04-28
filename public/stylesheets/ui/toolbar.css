@@ -4,7 +4,8 @@
   left: 0; right: 0;
   height: 40px;
   border-left: 1px solid #ddd;
-  border-bottom: 1px solid #aaa;
+  background: none;
+/*  border-bottom: 1px solid #aaa;*/
 /*  -webkit-box-shadow: 0 0 25px #ccc;*/
 /*  -moz-box-shadow: 0 0 25px #ccc;*/
 }
