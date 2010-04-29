@@ -65,6 +65,7 @@ dc.ui.SearchBox = dc.View.extend({
     Documents.refresh();
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');
+    dc.app.paginator.hide();
     var params = {q : query, include_facets : true};
     if (this.page) params.page = this.page;
     $.get(this.DOCUMENTS_URL, params, this._loadSearchResults, 'json');

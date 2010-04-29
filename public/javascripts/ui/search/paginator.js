@@ -28,6 +28,10 @@ dc.ui.Paginator = dc.View.extend({
     this.render();
   },
 
+  hide : function() {
+    $(document.body).removeClass('paginated');
+  },
+
   pageCount : function() {
     return Math.ceil(this.query.total / this.PAGE_SIZE);
   },
