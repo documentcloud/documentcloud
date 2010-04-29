@@ -24,7 +24,7 @@ dc.ui.Document = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     this.el.id = 'document_' + this.model.id;
-    this.setMode('no', 'notes');
+    this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderPages', '_onNotesLoaded');
     this.model.bind(dc.Model.CHANGED, this._onDocumentChange);
     this.model.notes.bind(dc.Set.MODEL_ADDED, this._addNote);
@@ -98,7 +98,7 @@ dc.ui.Document = dc.View.extend({
   toggleNotes : function(e) {
     e.stopPropagation();
     if (dc.app.visualizer.isOpen() || dc.app.entities.isOpen()) return;
-    if (this.modes.notes == 'has') return this.setMode('no', 'notes');
+    if (this.modes.notes == 'has') return this.setMode('owns', 'notes');
     if (this.model.notes.populated) return this.setMode('has', 'notes');
     dc.ui.spinner.show('loading notes');
     if (!this.model.notes.populated) return this.model.notes.populate({success: this._onNotesLoaded});
