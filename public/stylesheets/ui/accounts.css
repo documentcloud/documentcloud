@@ -10,7 +10,7 @@
   .account_view.badge img.avatar {
     border: 1px solid #ccc;
     float: left;
-    margin-right: 8px;
+    margin-right: 10px;
   }
   .account_view.badge .name {
     font-weight: bold;

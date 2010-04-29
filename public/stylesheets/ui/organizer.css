@@ -93,13 +93,16 @@
 #organizer #organizer_entities {
   font: 11px/14px Arial;
   color: #000;
-  border-top: 1px solid #e0e0e0;
+  border: 1px solid #e0e0e0; border-left: 0; border-right: 0;
+  position: absolute; top: 15px; bottom: 15px; left: 0; right: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #f4f3f1;
 }
   #organizer_entities .section {
     padding: 15px 0;
     border-bottom: 1px solid #e0e0e0;
     border-top: 1px solid #fff;
-    background: #f4f3f1;
     border-right: 6px solid #ede9e8;
   }
     #organizer_entities .section:first-child {
@@ -127,8 +130,8 @@
         }
           #organizer_entities .row.active,
           #organizer_entities .row.active:hover {
-            width: 280px;
             background: #fff;
+            width: 280px;
           }
         #organizer_entities .count,
         #organizer_entities .show_pages {
