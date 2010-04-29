@@ -57,12 +57,19 @@
     }
       #organizer .box:first-child {
         border-top: 0;
+        border-top-left-radius: 6px; -webkit-border-top-left-radius: 6px; -moz-border-radius-topleft: 6px;
+        border-top-right-radius: 6px; -webkit-border-top-right-radius: 6px; -moz-border-radius-topright: 6px;
       }
+        #organizer .box.is_selected:first-child,
+        #organizer .box.is_selected:first-child:hover {
+          width: 283px;
+        }
       #organizer .box.is_selected,
       #organizer .box.is_selected:hover {
         border-right: 0;
         width: 280px;
         background: #fff;
+        border-top-right-radius: 0; -webkit-border-top-right-radius: 0; -moz-border-radius-topright: 0;
       }
       #organizer .box .pointer {
         width: 10px; height: 19px;

@@ -98,11 +98,13 @@ a {
 
 #content {
   margin: 70px 20px 20px 20px;
+  position: relative;
 }
 
 #sidebar {
   width: 308px;
   position: absolute;
+  top: 0; bottom: 0; left: 0;
   border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
   background: #f4f3f1;
 }
