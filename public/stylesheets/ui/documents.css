@@ -1,6 +1,9 @@
-#document_list {
+#document_list_container {
   padding: 30px 25px 10px;
 }
+  #document_list {
+    position: relative;
+  }
 
 .document {
   position: relative;

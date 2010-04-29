@@ -99,7 +99,7 @@ dc.ui.Visualizer = dc.View.extend({
     if (this.empty()) return el.html('<div class="emptyviz">No selected documents.</div>');
     var selectedIds = Documents.selectedIds();
 
-    var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : el.parent()[0].scrollHeight});
+    var canvas = $.el('canvas', {id : 'visualizer_canvas', width : el.width(), height : $('.panel_container').height()});
     el.append(canvas);
     if (window.G_vmlCanvasManager) G_vmlCanvasManager.initElement(canvas);
     var ctx = canvas.getContext('2d');
