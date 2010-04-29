@@ -50,9 +50,7 @@ select {
   background: -moz-linear-gradient(top, #ffffff, #f4f3f1);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#f4f3f1');
 }
-.gradient_light,
-.minibutton,
-.minibutton.not_enabled:active {
+.gradient_light {
   background: #e5e5e5;
   background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#d0d0d0));
   background: -moz-linear-gradient(top, #ffffff, #d0d0d0);
@@ -66,14 +64,15 @@ select {
 }
 .gradient_gray,
 .tab,
-.minibutton {
+.minibutton,
+.minibutton.not_enabled:active {
   background: #aaaaaa;
   background: -webkit-gradient(linear, left top, left bottom, from(#b0b0b0), to(#888888));
   background: -moz-linear-gradient(top, #b0b0b0, #888888);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#b0b0b0', EndColorStr='#888888');
 }
 .gradient_inverted,
-.minibutton:active, .minibutton.is_active {
+.minibutton:active, .minibutton.is_active, .minibutton.is_open {
   background: #aaaaaa;
   background: -webkit-gradient(linear, left top, left bottom, from(#888888), to(#b0b0b0));
   background: -moz-linear-gradient(top, #888888, #b0b0b0);
@@ -207,38 +206,47 @@ textarea.text_area {
   position: absolute;
   z-index: 100;
   width: 160px;
-  background: white;
-  padding: 4px;
+  background: #161616;
+  padding: 4px 0;
   opacity: 0.95; filter: alpha(opacity=95);
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   -webkit-box-shadow: 0 3px 7px #777; -moz-box-shadow: 0 3px 7px #777;
 }
   .menu_content .menu_item {
     cursor: pointer;
-    font: 11px/18px Arial;
-    color: #000;
-    padding: 0px 3px 3px 3px;
-    height: 16px;
+    font: 11px Arial;
+    color: #ccc;
+    padding: 7px 10px;
     overflow: hidden;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #333;
   }
     .menu_content .menu_item.divider {
-      border-bottom: 1px solid #c6c6c6;
+      border-bottom: 1px solid #333;
     }
     .menu_content .menu_item:first-child {
       border-top: 0;
     }
     .menu_content .menu_item:hover,
     .menu_content .menu_item.selected {
-      background-color: #ffffe5;
+      background-color: #333;
+      color: #fff;
     }
-      .menu_content .menu_item.disabled {
-        color: #ccc;
-        cursor: default;
-      }
+    .menu_content .menu_item.disabled {
+      color: #333;
+      cursor: default;
+    }
+    .menu_content .menu_item.checked {
+      padding-right: 25px;
+      background-image: url(/images/embed/icons/dark_check.png);
+      background-repeat: no-repeat;
+      background-position: 140px center;
+    }
       .menu_content .menu_item.disabled:hover {
         background-color: transparent;
       }
+    .menu_content .menu_item.warn {
+      color: #fa0018;
+    }
   .menu_content .menu_autofilter .icon {
     position: absolute;
   }

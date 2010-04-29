@@ -12,12 +12,6 @@
     margin-left: 0;
   }
 
-#projects_menu_content .menu_item.icon {
-  padding-left: 19px;
-  width: auto; height: 16px;
-  background-position: 0 1px;
-}
-
 #calais_credits {
   display: none;
   position: absolute;

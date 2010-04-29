@@ -197,7 +197,7 @@ dc.ui.Toolbar = dc.View.extend({
         {title : 'Edit Source',          className : 'multiple', onClick : this.editSource},
         {title : 'Edit Related Article', className : 'multiple', onClick : this.editRelatedArticle},
         {title : 'Edit Access Level',    className : 'multiple', onClick : this.editAccess},
-        {title : 'Delete Documents',     className : 'multiple', onClick : this._deleteSelectedDocuments}
+        {title : 'Delete Documents',     className : 'multiple warn', onClick : this._deleteSelectedDocuments}
       ],
       onOpen : function(menu) {
         var many = Documents.countSelected() > 1;

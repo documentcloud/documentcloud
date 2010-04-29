@@ -39,6 +39,7 @@ dc.ui.DocumentList = dc.View.extend({
     _.each(els, function(icon) {
       Documents.get($(icon).attr('data-id')).set({selected : true});
     });
+    if (!els.length) $(this.el).trigger('click');
   },
 
   _startDeselect : function(e) {
