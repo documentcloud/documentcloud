@@ -2,7 +2,7 @@
 dc.ui.AccountView = dc.View.extend({
 
   AVATAR_SIZES : {
-    badge : 20,
+    badge : 30,
     row   : 25,
     admin : 25
   },
@@ -24,7 +24,7 @@ dc.ui.AccountView = dc.View.extend({
   constructor : function(options) {
     this.kind       = options.kind;
     this.tagName    = this.TAGS[this.kind];
-    var grad = this.kind == 'badge' ? 'gradient_light' : 'gradient_white';
+    var grad = this.kind == 'badge' ? '' : 'gradient_white';
     this.className  = 'account_view ' + grad + ' ' + this.kind;
     this.base(options);
     this.template   = JST['account_' + this.kind];
