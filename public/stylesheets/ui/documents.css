@@ -1,9 +1,6 @@
 #document_list {
-  padding: 0 25px;
+  padding: 0 25px 10px;
 }
-  body.paginated #document_list {
-    bottom: 38px;
-  }
 
 .document {
   position: relative;
@@ -115,12 +112,28 @@
       }
 
 /*---------------------------- Page References -------------------------------*/
+.document .pages {
+  overflow: auto;
+}
 .document .pages_title {
   margin: 15px 0 0 0;
+  line-height: 11px;
 }
+  .document .pages .pages_title_inner {
+    float: left;
+    margin-right: 10px;
+  }
+  .document .pages .cancel_search {
+    float: left;
+    cursor: pointer;
+    display: none;
+  }
+    .document .pages:hover .cancel_search {
+      display: block;
+    }
 .document .page {
   float: left;
-  margin: 10px 15px 0px 0;
+  margin: 10px 15px 0px 3px;
   text-align: center;
   cursor: pointer;
 }

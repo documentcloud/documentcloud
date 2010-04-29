@@ -113,12 +113,10 @@ a {
 .panel_container {
   margin-left: 310px;
   padding: 15px 0 15px 0;
+  position: relative;
   border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
   background: #fff;
 }
-  .panel_content {
-    position: relative;
-  }
 
 #no_results_container {
   position: absolute;

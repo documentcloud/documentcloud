@@ -7,13 +7,18 @@
 %>
 <% var value = doc.pageEntities.first().get('value'); %>
 <div class="pages_title">
-  <%= pages.length %>
-  <%= Inflector.pluralize('page', pages.length) %>
-  mentioning "<%= value %>"
+  <span class="pages_title_inner">
+    <%= pages.length %>
+    <%= Inflector.pluralize('page', pages.length) %>
+    mentioning "<%= value %>"
+  </span>
+  <div class="icon cancel_search"></div>
 </div>
+<br class="clear" />
 <% _.each(pages, function(pair) { %>
   <div class="page" data-page="<%= pair.page %>" data-id="<%= pair.id %>">
     <img class="page_image" alt="page <%= pair.page %>" src="<%= doc.pageThumbnailURL(pair.page) %>" />
     <div class="page_number">p. <%= pair.page %></div>
   </div>
 <% }); %>
+<br class="clear" />

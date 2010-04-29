@@ -1,14 +1,11 @@
 #paginator {
-  position: absolute;
   display: none;
-  bottom: 0px; left: 0px; right: 0px;
   height: 22px;
   padding: 7px 15px 7px 20px;
   font: 11px/22px Arial;
   color: #4e4e4e;
   text-align: center;
-  border: 1px solid #ddd; border-left: 0; border-right: 0;
-  z-index: 10;
+  border: 1px solid #e0e0e0; border-left: 0; border-right: 0;
 }
   body.paginated #paginator {
     display: block;

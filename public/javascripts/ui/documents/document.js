@@ -17,7 +17,8 @@ dc.ui.Document = dc.View.extend({
   },
 
   pageCallbacks : {
-    '.page.click'         : '_openEntityOnPage'
+    '.page.click'         : '_openEntityOnPage',
+    '.cancel_search.click': '_hidePages'
   },
 
   constructor : function(options) {
@@ -158,6 +159,10 @@ dc.ui.Document = dc.View.extend({
   _renderPages : function() {
     this.pagesEl.html(JST.document_pages({doc : this.model}));
     this.setCallbacks(this.pageCallbacks);
+  },
+
+  _hidePages : function() {
+    this.pagesEl.html('');
   },
 
   _openEntityOnPage : function(e) {
