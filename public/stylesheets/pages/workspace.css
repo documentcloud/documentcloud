@@ -22,8 +22,15 @@ a {
   height: 40px;
 }
   body.workspace #topbar {
-    display: none;
+    background: transparent;
+    position: absolute;
+    border: 0;
+    width: 120px;
+    right: 50px; top: 15px;
   }
+    body.workspace #topbar #title {
+      display: none;
+    }
   body.full_page_background #topbar {
     border-bottom-color: #aaa;
   }
@@ -33,6 +40,10 @@ a {
     width: 67px; height: 30px;
     background: url(/images/embed/ui/cloud_edge.png) no-repeat;
   }
+    body.workspace #cloud_edge {
+      left: 55px;
+      background: url(/images/embed/ui/cloud_edge_dark.png) no-repeat;
+    }
   .logo_words {
     position: absolute;
     color: #566eaa;
@@ -42,10 +53,16 @@ a {
     .logo_words a {
       color: #566eaa;
     }
+      body.workspace .logo_words a {
+        color: #4e4e4e;
+      }
     #wordmark {
       cursor: pointer;
       left: 15px;
     }
+      body.workspace #wordmark {
+        left: 0;
+      }
     #title {
       left: 145px;
     }
@@ -54,7 +71,7 @@ a {
         text-transform: uppercase;
       }
   #search_box_wrapper {
-    margin: 0 20px 30px;
+    margin: 0 30px 30px;
   }
   #title_box {
     text-align: center;

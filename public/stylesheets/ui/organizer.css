@@ -21,6 +21,7 @@
       #organizer.projects_active #projects_tab,
       #organizer.entities_active #entities_tab {
         color: #000;
+        text-shadow: 0px 1px 1px #fff;
       }
 
   #new_project, #upload_document {
@@ -95,9 +96,6 @@
 
 /*------------------------------ Entities ---------------------------------*/
 #organizer #organizer_entities {
-  position: absolute;
-  top: 0; bottom: 0; left: 0; right: 0;
-  overflow-y: auto;
   font: 11px/14px Arial;
   color: #000;
 }
