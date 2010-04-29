@@ -31,7 +31,7 @@ select {
 /*------------------------------ Gradients ---------------------------------*/
 .gradient_selected,
 #organizer .box:hover,
-#organizer .row.active {
+#organizer .row:hover {
   background: #fffbd0;
   background: -webkit-gradient(linear, left top, left 50%, from(#fff), to(#ffd));
   background: -moz-linear-gradient(top, #fff, #ffd 50%);
@@ -44,9 +44,7 @@ select {
   background: -moz-linear-gradient(top, #f9f9ff, #ddddff);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#F9F9FF', EndColorStr='#DDDDFF');
 }
-.gradient_white,
-#organizer.projects_active #projects_tab,
-#organizer.entities_active #entities_tab {
+.gradient_white {
   background: #f4f3f1;
   background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f4f3f1));
   background: -moz-linear-gradient(top, #ffffff, #f4f3f1);
@@ -151,8 +149,7 @@ textarea.text_area {
 }
 
 /*----------------------------- Mini Buttons ---------------------------------*/
-.minibutton,
-.minibutton.not_enabled:hover {
+.minibutton {
   cursor: pointer;
   font: bold 11px Arial;
   color: #fff;
