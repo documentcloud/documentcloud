@@ -6,6 +6,9 @@ html {
 body {
   background: #ccc;
 }
+  body.workspace {
+    overflow-y: scroll;
+  }
 a {
   color: inherit;
   text-decoration: none;
@@ -89,11 +92,11 @@ a {
 #spinner {
   display: none;
   position: absolute;
-  top: 18px; right: 35px;
+  top: 80px; left: 340px;
 }
   #spinner_image {
-    width: 56px; height: 7px;
-    background: url(/images/embed/ui/spinner.gif);
+    width: 16px; height: 16px;
+    background: url(/images/embed/ui/spinner_circle.gif);
   }
 
 #content {
