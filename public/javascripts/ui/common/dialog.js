@@ -72,7 +72,7 @@ dc.ui.Dialog = dc.View.extend({
   },
 
   center : function() {
-    $(this.el).align(document.body, null, {top : -100});
+    $(this.el).align(window);
   },
 
   _returnCloses : function() {

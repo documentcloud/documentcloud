@@ -221,7 +221,7 @@ textarea.text_area {
     border-top: 1px solid #333;
   }
     .menu_content .menu_item.divider {
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid #4e4e4e;
     }
     .menu_content .menu_item:first-child {
       border-top: 0;

@@ -19,7 +19,6 @@ $.fn.extend({
   // You can pass an optional offset object with top and left offsets specified.
   align : function(target, pos, offset) {
     var el = this;
-    target = $(target);
     pos = pos || '';
     offset = offset || {};
     var scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
@@ -27,14 +26,23 @@ $.fn.extend({
     var clientWidth = document.documentElement.clientWidth;
     var clientHeight = document.documentElement.clientHeight;
 
-    // var targPos = target.position();
-    var targOff = target.offset();
-    var b = {
-      left : targOff.left - scrollLeft,
-      top : targOff.top - scrollTop,
-      width : target.innerWidth(),
-      height : target.innerHeight()
-    };
+    if (target == window) {
+      var b = {
+        left    : scrollLeft,
+        top     : scrollTop,
+        width   : $(window).width(),
+        height  : $(window).height()
+      };
+    } else {
+      target = $(target);
+      var targOff = target.offset();
+      var b = {
+        left    : targOff.left,
+        top     : targOff.top,
+        width   : target.innerWidth(),
+        height  : target.innerHeight()
+      };
+    }
 
     var elb = {
       width : el.innerWidth(),
