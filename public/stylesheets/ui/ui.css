@@ -294,10 +294,11 @@ textarea.text_area {
     color: #000;
     background: #fff;
     text-shadow: 0px 1px 1px #fff;
+    filter: none;
   }
 
 /*------------------------------ Dialog Boxes --------------------------------*/
-div.dialog {
+.dialog {
   position: absolute;
   min-width: 300px;
   max-width: 600px;
@@ -305,14 +306,14 @@ div.dialog {
   z-index: 1000;
   font: 12px Arial;
 }
-  div.dialog.short_prompt_dialog,
-  div.dialog.alert_dialog {
+  .dialog.short_prompt_dialog,
+  .dialog.alert_dialog {
     width: 300px;
   }
-  div.dialog.prompt_dialog {
+  .dialog.prompt_dialog {
     width: 430px;
   }
-  div.dialog .dialog_background {
+  .dialog .dialog_background {
     position: absolute;
     z-index: -1;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -320,7 +321,7 @@ div.dialog {
     -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
     -webkit-box-shadow: 0 5px 50px #4e4e4e; -moz-box-shadow: 0 5px 25px #4e4e4e;
   }
-  div.dialog .title {
+  .dialog .title {
     position: absolute; top: 0; left: 0; right: 0;
     overflow: hidden;
     height: 16px;
@@ -332,28 +333,28 @@ div.dialog {
     border-top-left-radius: 5px; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
     border-top-right-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
   }
-    div.dialog span.subtitle {
+    .dialog span.subtitle {
       color: #4e4e4e;
       margin-left: 3px;
       font: italic 10px/18px Arial;
     }
-  div.dialog .text, div.dialog .custom,
-  div.dialog .prompt, div.dialog .short_prompt {
+  .dialog .text, div.dialog .custom,
+  .dialog .prompt, div.dialog .short_prompt {
     padding: 10px 10px 15px 10px;
     line-height: 16px;
   }
-  div.dialog .controls button, div.dialog .controls .minibutton {
+  .dialog .controls button, div.dialog .controls .minibutton {
     float: right;
     margin: 0 10px 8px 0;
   }
-    div.dialog.alert_dialog button.cancel,
-    div.dialog.alert_dialog .minibutton.cancel {
+    .dialog.alert_dialog button.cancel,
+    .dialog.alert_dialog .minibutton.cancel {
       display: none;
     }
-  div.dialog.short_prompt_dialog select {
+  .dialog.short_prompt_dialog select {
     width: 100%;
   }
-  div.dialog textarea.content {
+  .dialog textarea.content {
     width: 400px; height: 100px;
   }
 

@@ -15,7 +15,8 @@
   .account_view.badge .name {
     font-weight: bold;
   }
-  .account_view.badge .controls {
+  .account_view.badge .controls,
+  .account_view.badge .controls a {
     color: #808080;
   }
   .account_view.badge a:hover {

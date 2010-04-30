@@ -25,6 +25,7 @@ a {
 }
   body.workspace #topbar {
     background: transparent;
+    filter: none;
     position: absolute;
     border: 0;
     width: 120px;
