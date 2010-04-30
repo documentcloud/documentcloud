@@ -53,6 +53,7 @@ _.extend(dc.app.workspace, {
     this.sidebar.add('account_badge', this.accountBadge.render().el);
     this.sidebar.add('organizer', this.organizer.render().el);
     dc.app.uploader.render();
+    this.panel.add('document_list', dc.app.visualizer.el);
     this.panel.add('document_list', this.documentList.render().el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
     $('#wordmark a').attr({href : '#help'});

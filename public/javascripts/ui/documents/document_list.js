@@ -20,7 +20,6 @@ dc.ui.DocumentList = dc.View.extend({
   },
 
   render : function() {
-    $(this.el).append([dc.app.visualizer.el, dc.app.entities.el]);
     this.setCallbacks();
     $(this.el).selectable({ignore : '.noselect', select : '.icon.doc', onSelect : this._onSelect});
     return this;
