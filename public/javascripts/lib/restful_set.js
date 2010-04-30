@@ -88,7 +88,7 @@ dc.model.RESTfulSet = dc.Set.extend({
   _handleError : function(model, callback, resp) {
     var json = eval('(' + resp.responseText + ')');
     if (callback) return callback(model, json);
-    dc.ui.notifier.show({text : json.errors[0]});
+    dc.ui.notifier.show({text :json.errors[0]});
   }
 
 });

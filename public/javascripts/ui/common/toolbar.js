@@ -44,10 +44,10 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   notifyProjectChange : function(projectName, numDocs, removal) {
-    var prefix = removal ? 'removed ' : 'added ';
+    var prefix = removal ? 'Removed ' : 'Added ';
     var prep   = removal ? ' from "'  : ' to "';
     var notification = prefix + numDocs + ' ' + Inflector.pluralize('document', numDocs) + prep + projectName + '"';
-    dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.projectMenu.el, position : '-top right', top : -1, left : 10});
+    dc.ui.notifier.show({mode : 'info', text : notification});
   },
 
   // Wrapper function for safely editing an attribute of a specific document.
@@ -109,8 +109,8 @@ dc.ui.Toolbar = dc.View.extend({
       {text : 'Private to my Organization', value : dc.access.ORGANIZATION, selected : current == dc.access.ORGANIZATION}
     ], _.bind(function(access) {
       _.each(docs, function(doc) { Documents.update(doc, {access : parseInt(access, 10)}); });
-      var notification = 'access updated for ' + docs.length + ' ' + Inflector.pluralize('document', docs.length);
-      dc.ui.notifier.show({mode : 'info', text : notification, anchor : this.editMenu.el, position : '-top right', top : -1, left : 7});
+      var notification = 'Access updated for ' + docs.length + ' ' + Inflector.pluralize('document', docs.length);
+      dc.ui.notifier.show({mode : 'info', text : notification});
       return true;
     }, this));
   },

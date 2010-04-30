@@ -86,3 +86,11 @@
     .icon.minus:hover {
       background-image: url(/images/embed/ui/minus_lit.png);
     }
+
+#notifier.warn_style {
+  background-image: url(/images/embed/icons/bullet_red.png);
+}
+#notifier.info_style,
+.menu_content .menu_item.checked {
+  background-image: url(/images/embed/icons/dark_check.png);
+}

@@ -67,11 +67,9 @@ dc.ui.AccountView = dc.View.extend({
     var dialog = dc.ui.Dialog.prompt('Enter your new password:', '', _.bind(function(password) {
       Accounts.update(this.model, {password : password}, {success : _.bind(function() {
         dc.ui.notifier.show({
-          text      : 'password updated',
+          text      : 'Password updated',
           duration  : 5000,
-          mode      : 'info',
-          anchor    : $('td.last', this.el),
-          position  : '-left'
+          mode      : 'info'
         });
       }, this)});
       return true;
@@ -125,11 +123,9 @@ dc.ui.AccountView = dc.View.extend({
     model.set(resp);
     model.changed();
     if (newAccount) dc.ui.notifier.show({
-      text      : 'signup sent to ' + model.get('email'),
+      text      : 'Signup sent to ' + model.get('email'),
       duration  : 5000,
-      mode      : 'info',
-      anchor    : $('td.last', this.el),
-      position  : '-left'
+      mode      : 'info'
     });
   },
 
@@ -138,11 +134,7 @@ dc.ui.AccountView = dc.View.extend({
     dc.ui.spinner.hide();
     this.showEdit();
     dc.ui.notifier.show({
-      text      : resp.errors[0],
-      anchor    : $('button', this.el),
-      position  : 'right',
-      left      : 18,
-      top       : 2
+      text : resp.errors[0]
     });
   }
 

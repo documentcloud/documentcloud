@@ -1,9 +1,7 @@
-#document_list_container {
+#document_list {
+  position: relative;
   padding: 30px 25px 10px;
 }
-  #document_list {
-    position: relative;
-  }
 
 .document {
   position: relative;
@@ -37,7 +35,7 @@
     left: 1px; top: 0px;
     width: 70px; height: 85px;
     border: 1px solid transparent;
-    -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;
+    -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
   }
     .document.is_selected .select {
       border-color: #eea;

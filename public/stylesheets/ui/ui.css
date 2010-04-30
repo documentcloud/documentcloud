@@ -235,9 +235,8 @@ textarea.text_area {
       color: #333;
       cursor: default;
     }
-    .menu_content .menu_item.checked {
+    .menu_content .menu_item.checked{
       padding-right: 25px;
-      background-image: url(/images/embed/icons/dark_check.png);
       background-repeat: no-repeat;
       background-position: 140px center;
     }
@@ -245,7 +244,7 @@ textarea.text_area {
         background-color: transparent;
       }
     .menu_content .menu_item.warn {
-      color: #fa0018;
+      color: #ff0022;
     }
   .menu_content .menu_autofilter .icon {
     position: absolute;
@@ -370,7 +369,7 @@ iframe.hidden_iframe {
   position: relative;
   text-align: center;
 }
-  .form_error > span, .form_success > span, #notifier {
+  .form_error > span, .form_success > span {
     color: #844;
     text-transform: uppercase;
     font: 10px Arial;
@@ -380,6 +379,11 @@ iframe.hidden_iframe {
     margin: 0 auto;
     display: inline;
     -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+  }
+  .form_success > span {
+    color: #171;
+    border-color: #171;
+    background: #cec;
   }
 
 /*------------------------------ Selections ----------------------------------*/
@@ -401,12 +405,23 @@ iframe.hidden_iframe {
   cursor: pointer;
   z-index: 5000;
 }
-  #notifier.info_style,
-  .form_success > span {
-    color: #171;
-    border-color: #171;
-    background: #cec;
+  #notifier {
+    background: #161616 no-repeat;
+    padding: 7px 10px 7px 50px;
+    color: #ccc;
+    font: 11px/13px Arial;
+    opacity: 0.95; filter: alpha(opacity=95);
+    border: 1px solid #555; border-top: 0; border-left: 0;
+    border-bottom-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px;
+    -webkit-box-shadow: 0 3px 10px #777; -moz-box-shadow: 0 3px 10px #777;
   }
+    #notifier.info_style {
+      background-position: 28px 6px;
+    }
+    #notifier.warn_style {
+      background-position: 30px 6px;
+      color: #ff0022;
+    }
   #tooltip {
     color: #000;
     border-width: 0;
@@ -417,6 +432,6 @@ iframe.hidden_iframe {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       z-index: -1;
-      -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
+      -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
       -webkit-box-shadow: 0 0px 10px #777; -moz-box-shadow: 0 0px 7px #777;
     }

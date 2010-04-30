@@ -92,7 +92,7 @@ dc.ui.Organizer = dc.View.extend({
     var me = this;
     dc.ui.Dialog.prompt('Create a New Project', '', function(title) {
       if (!title) return;
-      if (Projects.find(title)) return me._warnAlreadyExists();
+      if (Projects.find(title)) return me._warnAlreadyExists(title);
       var project = new dc.model.Project({title : title, annotation_count : 0, document_ids : []});
       Projects.create(project, null, {error : function() { Projects.remove(project); }});
       return true;
@@ -154,8 +154,8 @@ dc.ui.Organizer = dc.View.extend({
     }, this));
   },
 
-  _warnAlreadyExists : function() {
-    dc.ui.notifier.show({text : 'project already exists', anchor : $('div.dialog input.content'), position : 'bottom -left', top : 16});
+  _warnAlreadyExists : function(title) {
+    dc.ui.notifier.show({text : 'A project named "' + title + '" already exists'});
     return false;
   },
 

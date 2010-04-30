@@ -30,12 +30,7 @@ _.extend(dc.app.editor, {
   },
 
   notify : function(options) {
-    dc.ui.notifier.show(_.extend({
-      anchor    : $('#control_panel'),
-      position  : 'bottom -left',
-      left      : 14,
-      top       : 10
-    }, options));
+    dc.ui.notifier.show(options);
   }
 
 });
