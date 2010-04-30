@@ -1,12 +1,12 @@
+body {
+  background: #fff;
+}
+
 #admin_actions {
   position: absolute;
   width: 158px;
   top: 10px; right: 10px;
-  text-align: left;
-}
-
-#content {
-  overflow-y: auto;
+  text-shadow: none;
 }
 
 #statistics {
