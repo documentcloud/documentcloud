@@ -94,3 +94,6 @@
 .menu_content .menu_item.checked {
   background-image: url(/images/embed/icons/dark_check.png);
 }
+.menu_content .menu_item.plus {
+  background-image: url(/images/embed/icons/dark_plus.png);
+}

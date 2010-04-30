@@ -12,11 +12,17 @@ dc.ui.ProjectMenu = dc.ui.Menu.extend({
 
   renderProjects : function(menu) {
     menu.clear();
-    var docs = Documents.selected();
-    menu.addItems(_.map(Projects.models(), function(project) {
+    var docs  = Documents.selected();
+    var last  = Projects.size() - 1;
+    var items = _.map(Projects.models(), function(project, i) {
       var className = project.containsAny(docs) ? 'checked' : '';
+      if (i == last) className += ' divider';
       return {title : project.get('title'), className : className, onClick : _.bind(menu.options.onClick, menu, project)};
-    }));
+    });
+    items.push({title : 'New Project', className : 'plus', onClick : function() {
+      dc.app.workspace.organizer.promptNewProject();
+    }});
+    menu.addItems(items);
   }
 
 });

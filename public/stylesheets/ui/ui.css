@@ -235,14 +235,18 @@ textarea.text_area {
       color: #333;
       cursor: default;
     }
-    .menu_content .menu_item.checked{
+    .menu_content .menu_item.checked,
+    .menu_content .menu_item.plus {
       padding-right: 25px;
       background-repeat: no-repeat;
       background-position: 140px center;
     }
-      .menu_content .menu_item.disabled:hover {
-        background-color: transparent;
+      .menu_content .menu_item.plus {
+        background-position: 141px center;
       }
+    .menu_content .menu_item.disabled:hover {
+      background-color: transparent;
+    }
     .menu_content .menu_item.warn {
       color: #ff0022;
     }
