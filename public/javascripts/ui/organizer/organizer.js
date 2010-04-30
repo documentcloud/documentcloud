@@ -20,6 +20,8 @@ dc.ui.Organizer = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     _.bindAll(this, '_addSubView', '_removeSubView', 'openUploads');
+    this.showProjects = _.bind(this.showTab, this, 'projects');
+    this.showEntities = _.bind(this.showTab, this, 'entities');
     this._bindToSets();
     this.subViews = [];
   },
@@ -43,12 +45,10 @@ dc.ui.Organizer = dc.View.extend({
     }, this));
   },
 
-  showProjects : function() {
-    this.setMode('projects', 'active');
-  },
-
-  showEntities : function() {
-    this.setMode('entities', 'active');
+  showTab : function(kind) {
+    this.setMode(kind, 'active');
+    $('.tab', this.el).removeClass('active');
+    $('#' + kind + '_tab', this.el).addClass('active');
   },
 
   // Refresh the facets with a new batch.

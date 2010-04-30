@@ -1,35 +1,10 @@
 #organizer {
-}
-  #organizer #tabs {
-    position: absolute;
-    z-index: 3;
-    left: 30px;
-    top: -30px;
-  }
-    #organizer #tabs .tab {
-      position: relative;
-      height: 12px; width: 100px;
-      padding: 9px 0 9px 0;
-      text-align: center;
-      font: bold 11px Arial;
-      cursor: pointer;
-      float: left;
-      color: #fff;
-      border-top-left-radius: 5px; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
-      border-top-right-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
-    }
-      #organizer.projects_active #projects_tab,
-      #organizer.entities_active #entities_tab {
-        color: #000;
-        background: #fff;
-        text-shadow: 0px 1px 1px #fff;
-      }
 
+}
   #project_controls {
     border-bottom: 1px solid #e0e0e0;
     padding: 15px 15px 15px 30px;
   }
-
   #organizer .sidebar_section {
     padding-bottom: 15px;
   }
