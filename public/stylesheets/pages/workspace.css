@@ -28,8 +28,8 @@ a {
     filter: none;
     position: absolute;
     border: 0;
-    width: 120px;
-    right: 55px; top: 15px;
+    width: 140px;
+    right: 55px; top: 21px;
   }
     body.workspace #topbar #title {
       display: none;
@@ -41,8 +41,10 @@ a {
     background: url(/images/embed/ui/cloud_edge.png) no-repeat;
   }
     body.workspace #cloud_edge {
-      left: 55px;
-      background: url(/images/embed/ui/cloud_edge_dark.png) no-repeat;
+      left: 0; top: 0;
+      width: 140px; height: 27px;
+      background: url(/images/common/logo_gray.png) no-repeat;
+      cursor: pointer;
     }
   .logo_words {
     position: absolute;
@@ -54,7 +56,7 @@ a {
       color: #566eaa;
     }
       body.workspace .logo_words a {
-        color: #4e4e4e;
+        display: none;
       }
     #wordmark {
       cursor: pointer;

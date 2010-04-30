@@ -31,6 +31,7 @@ dc.ui.SearchBox = dc.View.extend({
     _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'clearSearch');
     dc.history.register(/^#search\//, this.searchByHash);
     dc.history.register(/^#help$/, this.clearSearch);
+    $('#cloud_edge').click(this.clearSearch);
   },
 
   render : function() {
@@ -155,7 +156,7 @@ dc.ui.SearchBox = dc.View.extend({
     if (projectName) {
       this.titleBox.text(projectName);
     } else if (accountName == Accounts.current().get('email')) {
-      this.titleBox.text('My Uploaded Documents');
+      this.titleBox.text('Uploaded Documents');
     } else {
       this.titleBox.text('All Documents');
     }
