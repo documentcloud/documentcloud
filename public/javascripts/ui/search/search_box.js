@@ -109,7 +109,7 @@ dc.ui.SearchBox = dc.View.extend({
   // Add a query fragment to the search and search again, if it's not already
   // present in the current search.
   addToSearch : function(fragment) {
-    if (this.value().match(fragment)) return;
+    if (this.value().toLowerCase().match(fragment.toLowerCase())) return;
     this.value(this.value() + " " + fragment);
     this.search(this.value());
   },

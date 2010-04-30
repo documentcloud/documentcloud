@@ -56,7 +56,7 @@ dc.ui.Organizer = dc.View.extend({
     var filtered  = dc.app.SearchParser.extractEntities(dc.app.searchBox.value());
     var filterMap = _.reduce(filtered, {}, function(memo, item) {
       memo[item.type] = memo[item.type] || {};
-      memo[item.type][item.value] = true;
+      memo[item.type][item.value.toLowerCase()] = true;
       return memo;
     });
     this._facets = facets;

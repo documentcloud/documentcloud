@@ -32,7 +32,7 @@ select {
 .gradient_selected,
 #organizer .box:hover,
 #organizer .row:hover {
-  background: #fffbd0;
+  background: #ffffdd;
   background: -webkit-gradient(linear, left top, left 50%, from(#fff), to(#ffd));
   background: -moz-linear-gradient(top, #fff, #ffd 50%);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#FFFFDD');
@@ -51,7 +51,7 @@ select {
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#f4f3f1');
 }
 .gradient_light {
-  background: #e5e5e5;
+  background: #d7d7d7;
   background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#d0d0d0));
   background: -moz-linear-gradient(top, #ffffff, #d0d0d0);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#ffffff', EndColorStr='#D0D0D0');
@@ -66,7 +66,7 @@ select {
 .tab,
 .minibutton,
 .minibutton.not_enabled:active {
-  background: #aaaaaa;
+  background: #999;
   background: -webkit-gradient(linear, left top, left bottom, from(#b0b0b0), to(#888888));
   background: -moz-linear-gradient(top, #b0b0b0, #888888);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#b0b0b0', EndColorStr='#888888');
@@ -150,10 +150,10 @@ textarea.text_area {
 /*----------------------------- Mini Buttons ---------------------------------*/
 .minibutton {
   cursor: pointer;
-  font: bold 11px Arial;
+  font: bold 11px/12px Arial;
   color: #fff;
   padding: 4px 10px;
-  width: 50px;
+  width: 50px; height: 12px;
   text-align: center;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   border: 1px solid #999;
@@ -318,7 +318,7 @@ div.dialog {
     top: 0; left: 0; right: 0; bottom: 0;
     background: #fcfcfc;
     -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-    -webkit-box-shadow: 0 5px 50px #4e4e4e; -moz-box-shadow: 0 5px 50px #4e4e4e;
+    -webkit-box-shadow: 0 5px 50px #4e4e4e; -moz-box-shadow: 0 5px 25px #4e4e4e;
   }
   div.dialog .title {
     position: absolute; top: 0; left: 0; right: 0;
