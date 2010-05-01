@@ -13,7 +13,6 @@ dc.ui.SectionEditor = dc.View.extend({
       text      : 'Please choose a title and page range for each section:',
       id        : 'section_editor',
       mode      : 'confirm',
-      buttons   : 'mini',
       onClose   : _.bind(function(){ this.dialog = null; }, this),
       onConfirm : _.bind(function(){ return this.saveSections(this.serializeSections()); }, this)
     }).render();

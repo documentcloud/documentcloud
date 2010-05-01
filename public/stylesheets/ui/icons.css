@@ -68,6 +68,10 @@
   background: url(/images/embed/icons/cancel_search.png);
   cursor: pointer;
 }
+.icon.white_plus {
+  width: 10px; height: 10px;
+  background-image: url(/images/embed/icons/plus.png);;
+}
 
 .icon.plus, .icon.minus {
   display: block;

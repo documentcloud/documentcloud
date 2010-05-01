@@ -243,7 +243,7 @@
         .note:hover .note_controls.display {
           opacity: 1;
         }
-      .note .note_controls button {
+      .note .note_controls .minibutton {
         margin: 10px 0 0 0;
       }
         .note .note_controls .cancel_note {

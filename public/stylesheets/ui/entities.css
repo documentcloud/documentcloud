@@ -69,6 +69,6 @@
       position: static;
       left: 0; padding: 0; border: 0;
     }
-  .entity_view button.cancel {
+  .entity_view .minibutton.cancel {
     display: none;
   }

@@ -35,10 +35,10 @@
     overflow-y: auto;
     margin-bottom: 15px;
   }
-  #account_list button.cancel {
+  #account_list .minibutton.cancel {
     display: none;
   }
-  #account_list button.new_account {
+  #account_list .minibutton.new_account {
     float: left;
     margin-left: 10px;
   }
@@ -106,7 +106,7 @@
   #account_list tbody tr:hover span.change_password {
     opacity: 1; filter: alpha(opacity=100);
   }
-#account_list button.save_changes {
+#account_list .save_changes {
   display: inline-block;
   position: relative;
   left: -6px;

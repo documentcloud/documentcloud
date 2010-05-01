@@ -7,20 +7,6 @@ select {
   height: 20px !important;
 }
 
-button {
-  border: 1px solid #bbb;
-  font: bold 12px Arial;
-  overflow: visible;
-  padding: 3px 8px;
-  color: #4e4e4e;
-  outline: 0;
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#CCCCCC');
-}
-  button.default {
-    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#BAE0F5', EndColorStr='#84B0CA');
-    border: 1px solid #597E93;
-  }
-
 /*---------------------- Drop-shadow replacements ----------------------------*/
 img.doc,
 img.page_image,

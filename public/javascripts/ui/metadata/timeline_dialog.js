@@ -41,7 +41,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     var height = this.documents.length <= 1 ? this.MIN_HEIGHT : this.ROW_HEIGHT * this.documents.length;
     this.plot = $($.el('div', {id : 'timeline_plot', style : 'width:800px; height:' + height + 'px;'}));
     $('.custom', this.el).append(this.plot);
-    $('.controls', this.el).append($.el('button', {'class' : 'zoom_out'}, 'zoom out'));
+    $('.controls', this.el).append($.el('div', {'class' : 'minibutton zoom_out'}, 'Zoom Out'));
     this.setCallbacks();
     this.center();
     return this;

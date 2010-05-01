@@ -22,6 +22,7 @@ a {
   display: block;
   border-bottom: 1px solid #aaa;
   height: 40px;
+  text-shadow: 0 1px 1px #fff;
 }
   body.workspace #topbar {
     background: transparent;
@@ -30,6 +31,7 @@ a {
     border: 0;
     width: 140px;
     right: 55px; top: 21px;
+    text-shadow: none;
   }
     body.workspace #topbar #title {
       display: none;
@@ -231,7 +233,8 @@ div.full_page_background {
           position: absolute;
           margin: -2px 0 0 -25px;
         }
-      #full_screen_form button {
+      #full_screen_form .minibutton {
+        display: inline-block;
         position: relative;
         left: 195px;
         margin: 0;

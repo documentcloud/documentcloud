@@ -70,10 +70,10 @@
   position: absolute;
   display: block;
   margin: 0 0 0 140px;
-  width: 370px;
+  width: 380px;
 }
-#docs button {
+#docs .minibutton {
   position: absolute;
   right: 5px;
-  margin-top: 1px;
+  margin-top: 3px;
 }

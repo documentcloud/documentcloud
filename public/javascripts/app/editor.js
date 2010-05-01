@@ -21,7 +21,6 @@ _.extend(dc.app.editor, {
 
   // Render all of the existing subviews and place them in the DOM.
   renderSubViews : function() {
-    dc.ui.Dialog.prototype.DEFAULT_OPTIONS.buttons = 'mini';
     var access = this.isOwner ? 'DV-isOwner' : 'DV-isContributor';
     $('#DV-docViewer').addClass(access);
     $('#DV-well').append(this.controlPanel.render().el);

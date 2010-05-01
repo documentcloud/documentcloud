@@ -71,7 +71,7 @@
   </p>
 
   <form id="search_form" action="about:blank" autocomplete="off">
-    <button id="run_search" class="default">Search</button>
+    <div id="run_search" class="minibutton default">Search</div>
     <div class="text_input">
       <div class="background">
         <div class="inner">
@@ -94,6 +94,9 @@
       $.getJSON('/api/search', {q : $('#q').val()}, function(resp) {
         $('#search_results').text(JSON.stringify(resp, null, 2));
       });
+    });
+    $('#run_search').click(function() {
+      $('#search_form').submit();
     });
   });
 </script>

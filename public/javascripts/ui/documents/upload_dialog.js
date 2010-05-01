@@ -22,8 +22,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     $('.custom', this.el).html(JST.upload_dialog({
       project : this._project
     }));
-    $('.cancel', this.el).text('close');
-    $('.ok', this.el).text('upload');
+    $('.cancel', this.el).text('Close');
+    $('.ok', this.el).text('Upload');
     return this;
   },
 

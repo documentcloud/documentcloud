@@ -28,12 +28,7 @@
   </div>
 <% } %>
 <div class="controls">
-  <% var saveText = (mode == 'prompt' || mode == 'short_prompt') ? 'save' : 'ok'; %>
-  <% if (buttons === "mini") { %>
-    <div class="minibutton ok"><span><%= saveText %></span></div>
-    <div class="minibutton cancel"><span>cancel</span></div>
-  <% } else { %>
-    <button class="ok default"><%= saveText %></button>
-    <button class="cancel">cancel</button>
-  <% } %>
+  <% var saveText = (mode == 'prompt' || mode == 'short_prompt') ? 'Save' : 'OK'; %>
+  <div class="minibutton ok default"><span><%= saveText %></span></div>
+  <div class="minibutton cancel"><span>Cancel</span></div>
 </div>

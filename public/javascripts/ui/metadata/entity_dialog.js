@@ -19,7 +19,7 @@ dc.ui.EntityDialog = dc.ui.Dialog.extend({
     this.base();
     var instances = Entities.uniqueInstancesByDocument(this.model.selectedInstances());
     $('.custom', this.el).html(JST.entity_dialog({entity : this.model, instances : instances}));
-    $('.controls', this.el).append($.el('button', {'class' : 'filter_search'}, 'filter search'));
+    $('.controls', this.el).append($.el('div', {'class' : 'minibutton filter_search'}, 'Filter Search'));
     var list = $('.document_list', this.el);
     var instances = _.sortBy(instances, function(inst) {
       return -inst.relevance;
