@@ -26,7 +26,7 @@ dc.ui.Toolbar = dc.View.extend({
     el.html(JST.workspace_toolbar({}));
     $('.edit_menu_container', el).append(this.editMenu.render().el);
     $('.download_menu_container', el).append(this.downloadMenu.render().el);
-    $('.connections_menu_container', el).append(this.connectionsMenu.render().el);
+    // $('.connections_menu_container', el).append(this.connectionsMenu.render().el);
     $('.project_menu_container', el).append(this.projectMenu.render().el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
     this.openButton      = $('#open_viewers', this.el);
