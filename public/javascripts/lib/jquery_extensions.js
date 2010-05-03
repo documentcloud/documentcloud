@@ -285,7 +285,7 @@ var mouseWheelHandler = function(event) {
     event = $.event.fix(event || window.event);
     event.type = "mousewheel";
     if (event.wheelDelta) delta = event.wheelDelta/120;
-    if (event.detail)     delta = -event.detail/3;
+    if (event.detail)     delta = -event.detail * 5;
     args.unshift(event, delta);
     return $.event.handle.apply(this, args);
 };
