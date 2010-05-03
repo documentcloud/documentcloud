@@ -71,11 +71,8 @@ class DocumentsController < ApplicationController
 
   # TODO: Access-control this:
   def entity
-    json({'entities' => Entity.all({:conditions => {
-      :document_id  => params[:ids],
-      :kind         => params[:kind],
-      :value        => params[:value]
-    }})}.to_json(:include_pages => true))
+    entities = Entity.search_in_documents(params[:kind], params[:value], params[:ids])
+    json({'entities' => entities}.to_json(:include_pages => true))
   end
 
   # TODO: Access-control this:

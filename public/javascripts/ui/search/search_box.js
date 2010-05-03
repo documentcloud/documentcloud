@@ -117,9 +117,9 @@ dc.ui.SearchBox = dc.View.extend({
 
   // Remove a query fragment from the search and search again, only if it's
   // present in the current search.
-  removeFromSearch : function(fragment) {
-    if (!this.value().match(fragment)) return;
-    this.value(this.value().replace(' ' + fragment, ''));
+  removeFromSearch : function(regex) {
+    if (!this.value().match(regex)) return;
+    this.value(this.value().replace(regex, ''));
     this.search(this.value());
   },
 

@@ -20,6 +20,16 @@ class Entity < ActiveRecord::Base
     !!DC::CALAIS_MAP[kind.underscore.to_sym]
   end
 
+  def self.search_in_documents(kind, value, ids)
+    entities = self.all(:conditions => {:document_id => ids, :kind => kind, :value => value})
+    if entities.empty?
+      entities = self.all({:conditions => [
+        "document_id in (?) and kind = ? and value ilike '%#{Entity.connection.quote_string(value)}%'", ids, kind
+      ]})
+    end
+    entities
+  end
+
   # The pages on which this entity occurs within the document.
   def pages(occurs=split_occurrences)
     return [] unless textual?

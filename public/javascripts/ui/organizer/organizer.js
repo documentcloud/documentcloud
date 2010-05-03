@@ -122,13 +122,20 @@ dc.ui.Organizer = dc.View.extend({
     return row.attr('data-category') + ': ' + val;
   },
 
+  _facetMatcherFor : function(el) {
+    var row = $(el).closest('.row');
+    var val = row.attr('data-value');
+    var cat = row.attr('data-category');
+    return new RegExp('\\s*' + cat + ':\\s*[\'"]?' + val + '[\'"]?', 'ig');
+  },
+
   _filterFacet : function(e) {
     dc.app.searchBox.addToSearch(this._facetStringFor(e.target));
   },
 
   _removeFacet : function(e) {
     $(e.target).closest('.row').removeClass('active');
-    dc.app.searchBox.removeFromSearch(this._facetStringFor(e.target));
+    dc.app.searchBox.removeFromSearch(this._facetMatcherFor(e.target));
     return false;
   },
 
@@ -156,6 +163,7 @@ dc.ui.Organizer = dc.View.extend({
         Documents.get(set[0].get('document_id')).pageEntities.refresh(set);
       });
     });
+    return false;
   },
 
   // Bind all possible and Project events for rendering.
