@@ -48,7 +48,7 @@ dc.ui.Scroll = dc.View.extend({
     var over = this.hasOverflow();
     if (over == this._overflow) return;
     this._overflow = over;
-    $(this.el).setMode(over ? 'is' : 'not', 'active');
+    this.setMode(over ? 'is' : 'not', 'active');
     this.setPosition(this.content[0].scrollTop);
   },
 
@@ -60,10 +60,14 @@ dc.ui.Scroll = dc.View.extend({
     var mode = scrollTop <= 0 ? 'top' :
       scrollTop + this.content.innerHeight() >= this.content[0].scrollHeight ? 'bottom' :
       'middle';
-    $(this.el).setMode(mode, 'position');
+    if (this.modes.position == mode) return;
+    this.setMode(mode, 'position');
   },
 
   _mouseScroll : function(e, distance) {
+    if (this.modes.active == 'not' ||
+       (distance >= 0 && this.modes.position == 'top') ||
+       (distance <= 0 && this.modes.position == 'bottom')) return;
     var top = this.content[0].scrollTop - distance;
     this.content[0].scrollTop = top;
     this.setPosition(top);
