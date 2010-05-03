@@ -40,7 +40,7 @@
       border-right: 2px solid #ccc;
       background: #f4f3f1;
     }
-      #organizer .box, #organizer_entities .section {
+      #organizer .box, #organizer_entities .row {
         background-image: url(/images/embed/ui/box_back.png);
         background-repeat: repeat-y;
         background-position: right top;
@@ -48,8 +48,8 @@
       #organizer .box.is_selected,
       #organizer .box.is_selected:hover {
         border-right: 0;
-        width: 265px;
         background: #fff;
+        filter: none;
         border-top-right-radius: 0; -webkit-border-top-right-radius: 0; -moz-border-radius-topright: 0;
       }
       #organizer .box .edit,
@@ -77,13 +77,12 @@
 #organizer #organizer_entities {
   font: 11px/14px Arial;
   color: #000;
-  background: #f4f3f1;
+  background: #f4f3f1 url(/images/embed/ui/box_back_wide.png) repeat-y right top;
 }
   #organizer_entities .section {
     padding: 15px 0;
     border-bottom: 1px solid #e0e0e0;
     border-top: 1px solid #fff;
-    border-right: 2px solid #ccc;
   }
     #organizer_entities .section:first-child {
       border-top: 0;
@@ -99,7 +98,8 @@
       #organizer_entities .row {
         padding: 0 10px 0 30px;
         border: 1px solid transparent;
-        border-left: 0; border-right: 0;
+        border-right: 2px solid #ccc;
+        border-left: 0;
         cursor: pointer;
         position: relative;
       }
@@ -111,11 +111,11 @@
           #organizer_entities .row.active,
           #organizer_entities .row.active:hover {
             background: #fff;
-            width: 280px;
+            border-right: 0;
           }
         #organizer_entities .count,
         #organizer_entities .show_pages {
-          font-size: 10px;
+          font: 10px/10px Arial;
           color: #808080;
         }
         #organizer_entities .show_pages {
