@@ -96,7 +96,7 @@
       margin: 4px 0;
     }
       #organizer_entities .row {
-        padding: 0 10px 0 30px;
+        padding: 1px 10px 1px 30px;
         border: 1px solid transparent;
         border-right: 2px solid #ccc;
         border-left: 0;
@@ -120,14 +120,22 @@
         }
         #organizer_entities .show_pages {
           margin-left: 3px;
+          display: none;
         }
+          #organizer_entities .row.active .show_pages {
+            display: inline;
+          }
           #organizer_entities .show_pages:hover {
             text-decoration: underline;
           }
         #organizer_entities .cancel_search {
           position: absolute;
           top: 2px; left: 10px;
+          display: none;
         }
+          #organizer_entities .row.active .cancel_search {
+            display: block;
+          }
     #organizer_entities .more, #organizer_entities .less {
       padding-left: 30px;
       font-weight: bold;

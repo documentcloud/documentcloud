@@ -119,8 +119,11 @@ dc.ui.SearchBox = dc.View.extend({
   // present in the current search.
   removeFromSearch : function(regex) {
     if (!this.value().match(regex)) return;
-    this.value(this.value().replace(regex, ''));
-    this.search(this.value());
+    var next = this.value().replace(regex, '');
+    if (next == this.value()) return false;
+    this.value(next);
+    this.search(next);
+    return true;
   },
 
   // Callback fired on key press in the search box. We search when they hit
