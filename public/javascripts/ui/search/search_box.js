@@ -146,7 +146,8 @@ dc.ui.SearchBox = dc.View.extend({
   clearSearch : function() {
     this.cancelSearch();
     $(document.body).setMode('no', 'search');
-    Project.deselectAll();
+    Projects.deselectAll();
+    dc.app.workspace.organizer.renderFacets({});
     dc.history.save('help');
   },
 

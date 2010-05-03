@@ -1,8 +1,7 @@
 #paginator {
   display: none;
-  height: 22px;
-  padding: 7px 15px 7px 20px;
-  font: 11px/22px Arial;
+  padding: 11px 15px 11px 20px;
+  font: 11px/13px Arial;
   color: #4e4e4e;
   text-align: center;
   border: 1px solid #e0e0e0; border-left: 0; border-right: 0;
@@ -12,6 +11,7 @@
   }
   #paginator span.description {
     position: absolute;
+    padding: 0;
     left: 20px;
   }
   #paginator span.page_link, #paginator span.arrow {

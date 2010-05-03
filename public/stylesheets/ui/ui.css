@@ -341,7 +341,8 @@ textarea.text_area {
   font: 12px Arial;
 }
   .dialog.short_prompt_dialog,
-  .dialog.alert_dialog {
+  .dialog.alert_dialog,
+  .dialog.confirm_dialog {
     width: 300px;
   }
   .dialog.prompt_dialog {

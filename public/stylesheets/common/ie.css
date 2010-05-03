@@ -1,10 +1,13 @@
 a {
   color: #000;
 }
-
 select {
   font-size: 11px;
   height: 20px !important;
+}
+.clear {
+  display: inline-block;
+  display: block;
 }
 
 /*---------------------- Drop-shadow replacements ----------------------------*/
@@ -51,9 +54,6 @@ body.workspace {
 }
 #section_editor {
   width: 380px;
-}
-#organizer .box {
-  width: 280px;
 }
 #entities {
   right: 25px;

@@ -14,11 +14,12 @@
   </span>
   <div class="icon cancel_search"></div>
 </div>
-<br class="clear" />
+<div class="clear"></div>
 <% _.each(pages, function(pair) { %>
   <div class="page" data-page="<%= pair.page %>" data-id="<%= pair.id %>">
     <img class="page_image" alt="page <%= pair.page %>" src="<%= doc.pageThumbnailURL(pair.page) %>" />
     <div class="page_number">p. <%= pair.page %></div>
   </div>
 <% }); %>
-<br class="clear" />
+<div class="clear"></div>
+

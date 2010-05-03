@@ -28,7 +28,8 @@
       display: none;
     }
     #organizer .project_help {
-      margin: 15px 10px 0 30px;
+      padding: 15px 10px 15px 30px;
+      border-bottom: 1px solid #e0e0e0;
     }
     #organizer .box {
       position: relative;
@@ -133,7 +134,10 @@
       cursor: pointer;
     }
   #organizer_entities .no_results {
-    margin: 15px;
+    border-right: 2px solid #ccc;
+    padding: 15px 15px 15px 30px;
+    border-bottom: 1px solid #e0e0e0;
+    background: #fff;
     color: #4e4e4e;
   }
 

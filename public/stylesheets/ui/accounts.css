@@ -108,13 +108,13 @@
     opacity: 1; filter: alpha(opacity=100);
   }
 #account_list .save_changes {
-  display: inline-block;
+  float: left;
   position: relative;
   left: -6px;
   margin: 0 5px;
 }
 #account_list span.delete_account {
-  display: inline-block;
+  float: left;
   color: #774433;
 }
 #account_list .pending_wrap {
