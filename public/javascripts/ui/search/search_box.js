@@ -188,7 +188,7 @@ dc.ui.SearchBox = dc.View.extend({
   // the metadata right alongside the document JSON.
   _loadSearchResults : function(resp) {
     dc.app.paginator.setQuery(resp.query);
-    dc.app.workspace.organizer.renderFacets(resp.facets, resp.query.total);
+    dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
     Entities.refresh();
     Documents.refresh(_.map(resp.documents, function(m){
       return new dc.model.Document(m);
@@ -197,7 +197,7 @@ dc.ui.SearchBox = dc.View.extend({
   },
 
   _loadFacetResults : function(resp) {
-    dc.app.workspace.organizer.mergeFacets(resp.facets, resp.query.total);
+    dc.app.workspace.organizer.mergeFacets(resp.facets, 500, resp.query.total);
     dc.ui.spinner.hide();
     this.outstandingSearch = false;
   },

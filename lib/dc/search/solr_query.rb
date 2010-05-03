@@ -9,7 +9,7 @@ module DC
       include DC::Access
 
       FACET_OPTIONS = {
-        :all      => {:limit => 5,   :sort => :count},
+        :all      => {:limit => 6,   :sort => :count},
         :specific => {:limit => 500, :sort => :count}
       }
 

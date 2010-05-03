@@ -51,13 +51,9 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   // Refresh the facets with a new batch.
-  renderFacets : function(facets, docCount) {
-    var filtered  = dc.app.SearchParser.extractEntities(dc.app.searchBox.value());
-    var filterMap = _.reduce(filtered, {}, function(memo, item) {
-      memo[item.type] = memo[item.type] || {};
-      memo[item.type][item.value.toLowerCase()] = true;
-      return memo;
-    });
+  renderFacets : function(facets, limit, docCount) {
+    this._docCount = docCount;
+    var filtered   = dc.app.SearchParser.extractEntities(dc.app.searchBox.value());
     _.each(filtered, function(filter) {
       var list  = facets[filter.type];
       var index = null;
@@ -75,14 +71,14 @@ dc.ui.Organizer = dc.View.extend({
       facets[filter.type].unshift(facet);
     });
     this._facets = facets;
-    this.entityList.html(JST.organizer_entities({entities: facets}));
+    this.entityList.html(JST.organizer_entities({entities : facets, limit : limit}));
     this.setCallbacks(this.facetCallbacks);
     dc.app.scroller.check();
   },
 
   // Just add to the facets, don't blow them away.
-  mergeFacets : function(facets, docCount) {
-    this.renderFacets(_.extend(this._facets, facets), docCount);
+  mergeFacets : function(facets, limit, docCount) {
+    this.renderFacets(_.extend(this._facets, facets), limit, docCount);
   },
 
   clickSelectedItem : function() {
@@ -143,8 +139,8 @@ dc.ui.Organizer = dc.View.extend({
 
   _showLess : function(e) {
     var cat = $(e.target).attr('data-category');
-    this._facets[cat].splice(5);
-    this.renderFacets(this._facets);
+    this._facets[cat].splice(6);
+    this.renderFacets(this._facets, 5, this._docCount);
   },
 
   _showPages : function(e) {
