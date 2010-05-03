@@ -51,22 +51,38 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   // Refresh the facets with a new batch.
-  renderFacets : function(facets) {
+  renderFacets : function(facets, docCount) {
     var filtered  = dc.app.SearchParser.extractEntities(dc.app.searchBox.value());
     var filterMap = _.reduce(filtered, {}, function(memo, item) {
       memo[item.type] = memo[item.type] || {};
       memo[item.type][item.value.toLowerCase()] = true;
       return memo;
     });
+    _.each(filtered, function(filter) {
+      var list  = facets[filter.type];
+      var index = null;
+      var facet = _.detect(list, function(f, i) {
+        index = i;
+        return f.value.toLowerCase() == filter.value.toLowerCase();
+      });
+      if (facet) {
+        facet.active = true;
+        list.splice(index, 1);
+      } else {
+        facet = {value : filter.value, count : docCount, active : true};
+        list.pop();
+      }
+      facets[filter.type].unshift(facet);
+    });
     this._facets = facets;
-    this.entityList.html(JST.organizer_entities({entities: facets, active : filterMap}));
+    this.entityList.html(JST.organizer_entities({entities: facets}));
     this.setCallbacks(this.facetCallbacks);
     dc.app.scroller.check();
   },
 
   // Just add to the facets, don't blow them away.
-  mergeFacets : function(facets) {
-    this.renderFacets(_.extend(this._facets, facets));
+  mergeFacets : function(facets, docCount) {
+    this.renderFacets(_.extend(this._facets, facets), docCount);
   },
 
   clickSelectedItem : function() {

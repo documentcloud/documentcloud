@@ -28,7 +28,7 @@
       display: none;
     }
     #organizer .project_help {
-      padding: 10px 15px;
+      margin: 15px 10px 0 30px;
     }
     #organizer .box {
       position: relative;

@@ -25,10 +25,12 @@ dc.app.SearchParser = {
   extractEntities : function(query) {
     var all = this.ALL_ENTITIES, one = this.ONE_ENTITY;
     var entities = query.match(all) || [];
-    return _.map(entities, function(ent){
+    return _.sortBy(_.map(entities, function(ent){
       var match = ent.match(one);
       return {type : match[1], value : match[3] || match[4] || match[5]};
-    });
+    }), function(ent) {
+      return ent.value.toLowerCase();
+    }).reverse();
   },
 
   searchType : function(query) {
