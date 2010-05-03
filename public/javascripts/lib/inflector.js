@@ -52,6 +52,19 @@ window.Inflector = {
     length = length || 30;
     truncation = _.isUndefined(truncation) ? '...' : truncation;
     return s.length > length ? s.slice(0, length - truncation.length) + truncation : s;
+  },
+
+  commify : function(list, options) {
+    var words = [];
+    _.each(list, function(word, i) {
+      if (options.quote) word = '"' + word + '"';
+      words.push(word);
+      var end = i == list.length - 1 ? '' :
+               (i == list.length - 2) && options.conjunction ? ', ' + options.conjunction + ' ' :
+               ', ';
+      words.push(end);
+    });
+    return words.join('');
   }
 
 };

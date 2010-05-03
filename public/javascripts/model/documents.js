@@ -63,6 +63,10 @@ dc.model.Document = dc.Model.extend({
     });
   },
 
+  uniquePageEntityValues : function() {
+    return _.uniq(_.map(this.pageEntities.models(), function(m){ return m.get('value'); }));
+  },
+
   isPending : function() {
     return this.get('access') == dc.access.PENDING;
   },
