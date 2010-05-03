@@ -126,6 +126,9 @@ dc.model.EntitySet = dc.model.SortedSet.extend({
     term          : 'Terms'
   },
 
+  // When rendering entities in a list, use this order:
+  ORDER : ['person', 'organization', 'term', 'place', 'city', 'state', 'country'],
+
   // Entities are kept sorted by totalRelevance() of each datum, across its
   // documents.
   comparator : function(m) {

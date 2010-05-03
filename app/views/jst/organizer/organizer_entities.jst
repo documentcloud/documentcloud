@@ -1,5 +1,6 @@
 <% var empty = true; %>
-<% _.each(entities, function(list, category) { %>
+<% _.each(Entities.ORDER, function(category) { %>
+  <% var list = entities[category] || []; %>
   <% if (list.length) { %>
     <% empty = false; %>
     <div class="section">
