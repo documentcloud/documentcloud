@@ -5,6 +5,7 @@ dc.ui.Toolbar = dc.View.extend({
   callbacks : {
     '#calais_credits.click' : '_openCalais',
     '#open_viewers.click'   : '_openViewers',
+    '#open_timeline.click'  : '_openTimeline',
     '#toolbar_upload.click' : '_openUpload'
   },
 
@@ -15,7 +16,7 @@ dc.ui.Toolbar = dc.View.extend({
       'editDescription', 'editRelatedArticle', 'editAccess', 'display');
     this.editMenu         = this._createEditMenu();
     this.downloadMenu     = this._createDownloadMenu();
-    this.connectionsMenu  = this._createConnectionsMenu();
+    // this.connectionsMenu  = this._createConnectionsMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
     Documents.bind(dc.Set.REFRESHED, this.display);
@@ -30,6 +31,7 @@ dc.ui.Toolbar = dc.View.extend({
     $('.project_menu_container', el).append(this.projectMenu.render().el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
     this.openButton      = $('#open_viewers', this.el);
+    this.timelineButton  = $('#open_timeline', this.el);
     this.setCallbacks();
     this.display();
     return this;
@@ -37,8 +39,10 @@ dc.ui.Toolbar = dc.View.extend({
 
   display : function() {
     var count = Documents.countSelected();
-    this.openButton.setMode(count == 0 ? 'not' : 'is', 'enabled');
-    _.each([this.downloadMenu, this.editMenu, this.connectionsMenu, this.projectMenu], function(menu) {
+    var mode  = count == 0 ? 'not' : 'is';
+    this.openButton.setMode(mode, 'enabled');
+    this.timelineButton.setMode(mode, 'enabled');
+    _.each([this.downloadMenu, this.editMenu, this.projectMenu], function(menu) {
       count == 0 ? menu.disable() : menu.enable();
     });
   },
@@ -158,7 +162,9 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _openTimeline : function() {
-    new dc.ui.TimelineDialog(Documents.selected());
+    var docs = Documents.selected();
+    if (!docs.length) return;
+    new dc.ui.TimelineDialog(docs);
   },
 
   _openUpload : function() {

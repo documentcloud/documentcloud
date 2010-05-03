@@ -55,7 +55,7 @@ dc.ui.SearchBox = dc.View.extend({
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber) {
-    dc.app.toolbar.connectionsMenu.deactivate();
+    // dc.app.toolbar.connectionsMenu.deactivate();
     dc.ui.Project.highlight(query);
     $(document.body).setMode('active', 'search');
     this.page = pageNumber <= 1 ? null : pageNumber;
