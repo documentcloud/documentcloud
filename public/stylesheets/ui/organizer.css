@@ -96,7 +96,7 @@
       margin: 4px 0;
     }
       #organizer_entities .row {
-        padding-left: 30px;
+        padding: 0 10px 0 30px;
         border: 1px solid transparent;
         border-left: 0; border-right: 0;
         cursor: pointer;
@@ -161,9 +161,38 @@
       margin-left: 10px;
     }
 
-/*---------------------------- Projects Menu ---------------------------------*/
-#projects_menu_content {
-
+/*------------------------------- Scrolling ----------------------------------*/
+.scroll {
+  position: absolute;
+  top: 5px; bottom: 5px; left: 0; right: 0;
 }
-  #projects_menu_content .menu_item {
+  .scroll.not_active {
+    top: 15px; bottom: 15px;
   }
+  .scroll_content {
+    position: absolute;
+    top: 20px; bottom: 20px; left: 0; right: 0;
+    overflow-y: hidden;
+  }
+    .scroll.not_active .scroll_content {
+      top: 0; bottom: 0;
+    }
+  .scroll_up, .scroll_down {
+    height: 19px;
+    cursor: pointer;
+    position: absolute;
+    width: 308px;
+    z-index: 10;
+  }
+    .scroll_up {
+      background: #fff url(/images/embed/ui/page_up.png) no-repeat;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .scroll_down {
+      background: #fff url(/images/embed/ui/page_down.png) no-repeat;
+      bottom: 0px;
+      border-top: 1px solid #e0e0e0;
+    }
+    .scroll.not_active .scroll_up, .scroll.not_active .scroll_down {
+      display: none;
+    }

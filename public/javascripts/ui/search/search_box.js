@@ -180,6 +180,7 @@ dc.ui.SearchBox = dc.View.extend({
       dc.app.entities.open();
       this._entities = null;
     }
+    dc.app.scroller.check();
   },
 
   // After the initial search results come back, send out a request for the

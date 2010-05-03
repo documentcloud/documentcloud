@@ -5,7 +5,8 @@ dc.ui.Sidebar = dc.View.extend({
 
   render : function() {
     $(this.el).html(JST.workspace_sidebar({}));
-    this.content = $('.sidebar_content', this.el);
+    this.content  = $('#sidebar_content', this.el);
+    dc.app.scroller = (new dc.ui.Scroll(this.content)).render();
     return this;
   },
 

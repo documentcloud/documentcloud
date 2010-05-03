@@ -123,11 +123,6 @@ body.workspace #content {
     height: 1px; width: 308px;
     background: #e0e0e0;
   }
-  #sidebar_content {
-    position: absolute;
-    top: 15px; bottom: 15px; left: 0; right: 0;
-    overflow-y: hidden;
-  }
 
 .panel_container {
   margin-left: 310px;
