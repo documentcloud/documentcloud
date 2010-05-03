@@ -193,6 +193,10 @@
       bottom: 0px;
       border-top: 1px solid #e0e0e0;
     }
-    .scroll.not_active .scroll_up, .scroll.not_active .scroll_down {
-      display: none;
-    }
+      .scroll.not_active .scroll_up, .scroll.not_active .scroll_down {
+        display: none;
+      }
+      .scroll.top_position .scroll_up, .scroll.bottom_position .scroll_down {
+        background: #fff;
+        cursor: default;
+      }

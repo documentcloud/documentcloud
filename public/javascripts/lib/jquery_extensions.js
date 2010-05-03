@@ -1,3 +1,4 @@
+(function($) {
 // Extend the JQuery namespace with core utility methods for DOM manipulation.
 $.extend({
 
@@ -275,3 +276,35 @@ $.fn.extend({
   }
 
 });
+
+// Add mousewheel support:
+var types = ['DOMMouseScroll', 'mousewheel'];
+
+var mouseWheelHandler = function(event) {
+    var args = [].slice.call( arguments, 1 ), delta = 0, returnValue = true;
+    event = $.event.fix(event || window.event);
+    event.type = "mousewheel";
+    if (event.wheelDelta) delta = event.wheelDelta/120;
+    if (event.detail)     delta = -event.detail/3;
+    args.unshift(event, delta);
+    return $.event.handle.apply(this, args);
+};
+
+$.event.special.mousewheel = {
+  setup: function() {
+    if (this.addEventListener) {
+      for (var i=types.length; i;) this.addEventListener(types[--i], mouseWheelHandler, false);
+    } else {
+      this.onmousewheel = mouseWheelHandler;
+    }
+  },
+  teardown: function() {
+    if (this.removeEventListener) {
+      for (var i=types.length; i;) this.removeEventListener(types[--i], mouseWheelHandler, false);
+    } else {
+      this.onmousewheel = null;
+    }
+  }
+};
+
+})(jQuery);

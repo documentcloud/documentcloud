@@ -8,7 +8,8 @@ dc.ui.Scroll = dc.View.extend({
 
   callbacks : {
     '.scroll_up.click'    : 'scrollUp',
-    '.scroll_down.click'  : 'scrollDown'
+    '.scroll_down.click'  : 'scrollDown',
+    'el.mousewheel'       : '_mouseScroll'
   },
 
   // Given a div with overflow:hidden, make the div scrollable by inserting
@@ -33,14 +34,14 @@ dc.ui.Scroll = dc.View.extend({
 
   scrollUp : function() {
     var distance = this.content.innerHeight() - this.OVERLAP_MARGIN;
-    // var top = this.content[0].scrollTop;
-    // if (top - distance < 0) distance = top;
-    this.content.animate({scrollTop : this.content[0].scrollTop - distance}, this.SPEED);
+    var top = this.content[0].scrollTop - distance;
+    this.content.animate({scrollTop : top}, this.SPEED, null, _.bind(this.setPosition, this, top));
   },
 
   scrollDown : function() {
     var distance = this.content.innerHeight() + this.OVERLAP_MARGIN;
-    this.content.animate({scrollTop : this.content[0].scrollTop + distance}, this.SPEED);
+    var top = this.content[0].scrollTop + distance;
+    this.content.animate({scrollTop : top}, this.SPEED, null, _.bind(this.setPosition, this, top));
   },
 
   check : function() {
@@ -48,10 +49,25 @@ dc.ui.Scroll = dc.View.extend({
     if (over == this._overflow) return;
     this._overflow = over;
     $(this.el).setMode(over ? 'is' : 'not', 'active');
+    this.setPosition(this.content[0].scrollTop);
   },
 
   hasOverflow : function() {
     return this.content.innerHeight() < this.content[0].scrollHeight;
+  },
+
+  setPosition : function(scrollTop) {
+    var mode = scrollTop <= 0 ? 'top' :
+      scrollTop + this.content.innerHeight() >= this.content[0].scrollHeight ? 'bottom' :
+      'middle';
+    $(this.el).setMode(mode, 'position');
+  },
+
+  _mouseScroll : function(e, distance) {
+    var top = this.content[0].scrollTop - distance;
+    this.content[0].scrollTop = top;
+    this.setPosition(top);
+    return false;
   }
 
 });
