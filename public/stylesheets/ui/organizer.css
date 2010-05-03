@@ -175,11 +175,12 @@
   }
   .scroll_content {
     position: absolute;
-    top: 20px; bottom: 20px; left: 0; right: 0;
+    top: 0; bottom: 0;
+    width: 310px;
     overflow-y: hidden;
   }
-    .scroll.not_active .scroll_content {
-      top: 0; bottom: 0;
+    .scroll.is_active .scroll_content {
+      top: 20px; bottom: 20px;
     }
   .scroll_up, .scroll_down {
     height: 19px;

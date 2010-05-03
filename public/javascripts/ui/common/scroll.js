@@ -19,6 +19,7 @@ dc.ui.Scroll = dc.View.extend({
     this.content    = $(el);
     this.upButton   = $.el('div', {'class' : 'scroll_up'});
     this.downButton = $.el('div', {'class' : 'scroll_down'});
+    _.bindAll(this, 'check');
   },
 
   render : function() {
@@ -27,7 +28,7 @@ dc.ui.Scroll = dc.View.extend({
     this.el = $(this.content).closest('.scroll')[0];
     this.content.before(this.upButton);
     this.content.after(this.downButton);
-    $(window).resize(_.bind(this.check, this));
+    $(window).resize(this.check);
     this.setCallbacks();
     return this;
   },
@@ -47,7 +48,12 @@ dc.ui.Scroll = dc.View.extend({
   check : function() {
     var over = this.hasOverflow();
     this.setMode(over ? 'is' : 'not', 'active');
+    if (!over) this.setMode(null, 'position');
     this.setPosition(this.content[0].scrollTop);
+  },
+
+  checkLater : function() {
+    _.defer(this.check);
   },
 
   hasOverflow : function() {

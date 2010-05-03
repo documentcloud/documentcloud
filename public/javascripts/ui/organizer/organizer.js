@@ -73,7 +73,7 @@ dc.ui.Organizer = dc.View.extend({
     this._facets = facets;
     this.entityList.html(JST.organizer_entities({entities : facets, limit : limit}));
     this.setCallbacks(this.facetCallbacks);
-    dc.app.scroller.check();
+    dc.app.scroller.checkLater();
   },
 
   // Just add to the facets, don't blow them away.
@@ -180,13 +180,13 @@ dc.ui.Organizer = dc.View.extend({
     var previousView = previous && previous.view;
     if (!previous || !previousView) { return $(this.projectList).append(view.el); }
     $(previousView.el).after(view.el);
-    dc.app.scroller.check();
+    dc.app.scroller.checkLater();
   },
 
   _removeSubView : function(e, model) {
     this.subViews = _.without(this.subViews, model.view);
     $(model.view.el).remove();
-    dc.app.scroller.check();
+    dc.app.scroller.checkLater();
   }
 
 });
