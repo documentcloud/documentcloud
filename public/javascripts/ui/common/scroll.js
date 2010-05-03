@@ -46,8 +46,6 @@ dc.ui.Scroll = dc.View.extend({
 
   check : function() {
     var over = this.hasOverflow();
-    if (over == this._overflow) return;
-    this._overflow = over;
     this.setMode(over ? 'is' : 'not', 'active');
     this.setPosition(this.content[0].scrollTop);
   },
