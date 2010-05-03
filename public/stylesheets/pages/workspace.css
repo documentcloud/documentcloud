@@ -106,13 +106,28 @@ body.workspace #content {
 }
 
 #sidebar {
-  width: 308px;
+  width: 310px;
   position: absolute;
   padding-top: 15px;
   top: 0; bottom: 0; left: 0;
-  border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-  background: #fff;
 }
+  #sidebar_background {
+    position: absolute;
+    top: 0; left: 0; right: 2px; bottom: 0;
+    border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+    background: #fff;
+  }
+  #sidebar_line {
+    position: absolute;
+    top: 14px;
+    height: 1px; width: 308px;
+    background: #e0e0e0;
+  }
+  #sidebar_content {
+    position: absolute;
+    top: 15px; bottom: 15px; left: 0; right: 0;
+    overflow-y: hidden;
+  }
 
 .panel_container {
   margin-left: 310px;

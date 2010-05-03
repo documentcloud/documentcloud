@@ -4,9 +4,7 @@ dc.ui.Organizer = dc.View.extend({
 
   callbacks : {
     '#new_project.click'      : 'promptNewProject',
-    '#upload_document.click'  : 'openUploads',
-    '#projects_tab.click'     : 'showProjects',
-    '#entities_tab.click'     : 'showEntities'
+    '#upload_document.click'  : 'openUploads'
   },
 
   facetCallbacks : {
@@ -20,8 +18,6 @@ dc.ui.Organizer = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     _.bindAll(this, '_addSubView', '_removeSubView', 'openUploads');
-    this.showProjects = _.bind(this.showTab, this, 'projects');
-    this.showEntities = _.bind(this.showTab, this, 'entities');
     this._bindToSets();
     this.subViews = [];
   },
@@ -32,8 +28,10 @@ dc.ui.Organizer = dc.View.extend({
     this.projectList    = $('.project_list', this.el);
     this.entityList     = $('#organizer_entities', this.el);
     this.renderAll();
-    this.showProjects();
+    this.showTab('projects');
     this.setCallbacks();
+    $('#projects_tab').click(_.bind(this.showTab, this, 'projects'));
+    $('#entities_tab').click(_.bind(this.showTab, this, 'entities'));
     return this;
   },
 
@@ -47,8 +45,8 @@ dc.ui.Organizer = dc.View.extend({
 
   showTab : function(kind) {
     this.setMode(kind, 'active');
-    $('.tab', this.el).removeClass('active');
-    $('#' + kind + '_tab', this.el).addClass('active');
+    $('.sidebar_tab').removeClass('active');
+    $('#' + kind + '_tab').addClass('active');
   },
 
   // Refresh the facets with a new batch.

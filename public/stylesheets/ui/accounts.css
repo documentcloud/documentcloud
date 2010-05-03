@@ -1,7 +1,8 @@
 /*--------------------- Account Views (Rows & Badges) ------------------------*/
 
 .account_view.badge {
-  margin-left: 30px;
+  position: relative;
+  margin: 15px 0 0 30px;
   font: 11px/16px Arial;
   color: #4e4e4e;
   border-bottom-left-radius: 6px; -webkit-border-bottom-left-radius: 6px; -moz-border-radius-bottomleft: 6px;

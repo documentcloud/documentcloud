@@ -1,9 +1,9 @@
 #organizer {
-
 }
   #project_controls {
     border-bottom: 1px solid #e0e0e0;
     padding: 15px 15px 15px 30px;
+    margin-right: 2px;
   }
     #project_controls .minibutton {
       float: left;
@@ -14,7 +14,9 @@
   }
   #organizer #organizer_projects,
   #organizer #organizer_entities {
+    position: relative;
     display: none;
+    overflow: hidden;
   }
     #organizer.projects_active #organizer_projects,
     #organizer.entities_active #organizer_entities {
@@ -28,61 +30,59 @@
     #organizer .project_help {
       padding: 10px 15px;
     }
-    #organizer .project_list {
-      border-top: 1px solid #e0e0e0;
+    #organizer .box {
+      position: relative;
+      padding: 15px 15px 15px 30px;
+      cursor: pointer;
+      border-bottom: 1px solid #e0e0e0;
+      border-top: 1px solid #fff;
+      border-right: 2px solid #ccc;
+      background: #f4f3f1;
     }
-      #organizer .box {
-        position: relative;
-        padding: 15px 15px 15px 30px;
-        cursor: pointer;
-        border-bottom: 1px solid #e0e0e0;
-        border-top: 1px solid #fff;
-        border-right: 6px solid #ede9e8;
-        background: #f4f3f1;
+      #organizer .box, #organizer_entities .section {
+        background-image: url(/images/embed/ui/box_back.png);
+        background-repeat: repeat-y;
+        background-position: right top;
       }
-        #organizer .box.is_selected,
-        #organizer .box.is_selected:hover {
-          border-right: 0;
-          width: 265px;
-          background: #fff;
-          border-top-right-radius: 0; -webkit-border-top-right-radius: 0; -moz-border-radius-topright: 0;
+      #organizer .box.is_selected,
+      #organizer .box.is_selected:hover {
+        border-right: 0;
+        width: 265px;
+        background: #fff;
+        border-top-right-radius: 0; -webkit-border-top-right-radius: 0; -moz-border-radius-topright: 0;
+      }
+      #organizer .box .edit,
+      #organizer .box.uploaded_documents:hover .edit {
+        display: none;
+      }
+        #organizer .box:hover .edit {
+          display: inline;
         }
-        #organizer .box .edit,
-        #organizer .box.uploaded_documents:hover .edit {
-          display: none;
+      #organizer .box .title {
+        font: bold 14px Arial;
+        color: #4e4e4e;
+      }
+        #organizer .box.is_selected .title,
+        #organizer .box:hover .title {
+          color: #000;
         }
-          #organizer .box:hover .edit {
-            display: inline;
-          }
-        #organizer .box .title {
-          font: bold 14px Arial;
-          color: #4e4e4e;
-        }
-          #organizer .box.is_selected .title,
-          #organizer .box:hover .title {
-            color: #000;
-          }
-        #organizer .box .counts,
-        #project_dialog .counts {
-          font: 10px/16px Arial;
-          color: #808080;
-        }
+      #organizer .box .counts,
+      #project_dialog .counts {
+        font: 10px/16px Arial;
+        color: #808080;
+      }
 
 /*------------------------------ Entities ---------------------------------*/
 #organizer #organizer_entities {
   font: 11px/14px Arial;
   color: #000;
-  border: 1px solid #e0e0e0; border-left: 0; border-right: 0;
-  position: absolute; top: 15px; bottom: 15px; left: 0; right: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
   background: #f4f3f1;
 }
   #organizer_entities .section {
     padding: 15px 0;
     border-bottom: 1px solid #e0e0e0;
     border-top: 1px solid #fff;
-    border-right: 6px solid #ede9e8;
+    border-right: 2px solid #ccc;
   }
     #organizer_entities .section:first-child {
       border-top: 0;
