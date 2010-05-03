@@ -107,6 +107,14 @@
     .document .show_notes:hover {
       text-decoration: underline;
     }
+    .document .show_notes .cancel_search {
+      float: left;
+      margin-top: 1px;
+      display: none;
+    }
+      .document.has_notes .show_notes .cancel_search {
+        display: block;
+      }
 
 /*---------------------------- Page References -------------------------------*/
 .document .pages {
