@@ -1,6 +1,6 @@
 dc.ui.Scroll = dc.View.extend({
 
-  OVERLAP_MARGIN : 100,
+  OVERLAP_MARGIN : 50,
 
   SPEED: 500,
 
@@ -39,7 +39,7 @@ dc.ui.Scroll = dc.View.extend({
   },
 
   scrollDown : function() {
-    var distance = this.content.innerHeight() + this.OVERLAP_MARGIN;
+    var distance = this.content.innerHeight() - this.OVERLAP_MARGIN;
     var top = this.content[0].scrollTop + distance;
     this.content.animate({scrollTop : top}, this.SPEED, null, _.bind(this.setPosition, this, top));
   },
