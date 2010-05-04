@@ -56,6 +56,7 @@ dc.ui.Organizer = dc.View.extend({
     var filtered   = dc.app.SearchParser.extractEntities(dc.app.searchBox.value());
     _.each(filtered, function(filter) {
       var list  = facets[filter.type];
+      if (!list) return;
       var index = null;
       var facet = _.detect(list, function(f, i) {
         index = i;

@@ -8,13 +8,7 @@ _.extend(dc.app.workspace, {
     this.createSubViews();
     this.renderSubViews();
     dc.history.initialize();
-    dc.history.loadURL(function() {
-      if (dc.app.documentCount) {
-        Accounts.current().openDocuments();
-      } else if (Projects.first()) {
-        Projects.first().open();
-      }
-    });
+    dc.history.loadURL(dc.app.searchBox.loadDefault);
   },
 
   // Create all of the requisite subviews.

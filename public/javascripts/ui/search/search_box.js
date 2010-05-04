@@ -28,10 +28,9 @@ dc.ui.SearchBox = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     this.outstandingSearch = false;
-    _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'clearSearch');
+    _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'clearSearch', 'loadDefault');
     dc.history.register(/^#search\//, this.searchByHash);
     dc.history.register(/^#help$/, this.clearSearch);
-    $('#cloud_edge').click(this.clearSearch);
   },
 
   render : function() {
@@ -41,6 +40,9 @@ dc.ui.SearchBox = dc.View.extend({
     this.titleBox = $('#title_box', this.el);
     $(document.body).setMode('no', 'search');
     this.setCallbacks();
+    $('#cloud_edge').click(this.clearSearch);
+    (this._helpTab = $('#help_tab')).click(this.clearSearch);
+    (this._documentsTab = $('#documents_tab')).click(this.loadDefault);
     return this;
   },
 
@@ -53,16 +55,33 @@ dc.ui.SearchBox = dc.View.extend({
     return this.fragment + (this.page ? '/p' + this.page : '');
   },
 
+  // Load the default starting-point search.
+  loadDefault : function() {
+    if (!Documents.empty()) return this.showDocuments();
+    if (this.value()) {
+      this.search(this.value());
+    } else if (dc.app.documentCount) {
+      Accounts.current().openDocuments();
+    } else if (Projects.first()) {
+      Projects.first().open();
+    }
+  },
+
+  showDocuments : function() {
+    $(document.body).setMode('active', 'search');
+    this._helpTab.removeClass('active');
+    this._documentsTab.addClass('active');
+    dc.history.save(this.urlFragment());
+  },
+
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber) {
-    // dc.app.toolbar.connectionsMenu.deactivate();
     dc.ui.Project.highlight(query);
-    $(document.body).setMode('active', 'search');
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
     this.entitle(query);
     this.fragment = 'search/' + encodeURIComponent(query);
-    dc.history.save(this.urlFragment());
+    this.showDocuments();
     Documents.refresh();
     this.outstandingSearch = true;
     dc.ui.spinner.show('searching');
@@ -130,15 +149,12 @@ dc.ui.SearchBox = dc.View.extend({
   // return.
   maybeSearch : function(e) {
     var query = this.value();
-    if (!this.outstandingSearch && e.keyCode == 13) {
-      query ? this.search(query) : this.clearSearch();
-    }
+    if (!this.outstandingSearch && e.keyCode == 13) this.search(query);
   },
 
   // Webkit knows how to fire a real "search" event.
   searchEvent : function(e) {
     var query = this.value();
-    if (!query) return this.clearSearch();
     if (!this.outstandingSearch && query) this.search(query);
   },
 
@@ -147,10 +163,11 @@ dc.ui.SearchBox = dc.View.extend({
   },
 
   clearSearch : function() {
-    this.cancelSearch();
     $(document.body).setMode('no', 'search');
-    Projects.deselectAll();
-    dc.app.workspace.organizer.renderFacets({});
+    // Projects.deselectAll();
+    // dc.app.workspace.organizer.renderFacets({});
+    this._documentsTab.removeClass('active');
+    this._helpTab.addClass('active');
     dc.history.save('help');
   },
 
