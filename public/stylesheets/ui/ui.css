@@ -40,17 +40,17 @@ select {
 .gradient_blue,
 .minibutton.ok,
 .minibutton.default {
-  background: #48add8;
-  background: -webkit-gradient(linear, left top, left bottom, from(#66cfef), to(#35a0cf));
-  background: -moz-linear-gradient(top, #66cfef, #35a0cf);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#66cfef', EndColorStr='#35a0cf');
+  background: #5588aa;
+  background: -webkit-gradient(linear, left top, left bottom, from(#55aacc), to(#557799));
+  background: -moz-linear-gradient(top, #55aacc, #557799);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#55aacc', EndColorStr='#557799');
 }
 .gradient_blue_inverted,
 .minibutton.default:active, .minibutton.default.is_active, .minibutton.default.is_open {
-  background: #48add8;
-  background: -webkit-gradient(linear, left top, left bottom, from(#35a0cf), to(#66cfef));
-  background: -moz-linear-gradient(top, #35a0cf, #66cfef);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#35a0cf', EndColorStr='#66cfef');
+  background: #5588aa;
+  background: -webkit-gradient(linear, left top, left bottom, from(#557799), to(#55aacc));
+  background: -moz-linear-gradient(top, #557799, #55aacc);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#557799', EndColorStr='#55aacc');
 }
 .gradient_red,
 .minibutton.warn {
@@ -228,7 +228,7 @@ textarea.text_area {
     border-color: #ae554f;
   }
   .minibutton.default {
-    border-color: #6499af;
+    border-color: #557799;
   }
 
 .menu_content {
