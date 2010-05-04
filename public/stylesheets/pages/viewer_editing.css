@@ -68,7 +68,7 @@
   z-index: 10000000;
 }
   #section_editor {
-    width: 450px;
+    width: 365px;
   }
   #section_editor .text {
     font: italic 11px Arial;
@@ -94,7 +94,11 @@
     }
       #section_editor .section_title {
         margin-right: 15px;
+<<<<<<< HEAD
         width: 230px;
+=======
+        width: 150px;
+>>>>>>> 0684465... fixing the section editor, making sure that the removed aristo still works for the viewer...
       }
       #section_editor .page_number {
         width: 30px;
