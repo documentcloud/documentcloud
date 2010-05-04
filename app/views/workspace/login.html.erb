@@ -37,7 +37,14 @@
       </label>
     </div>
     <div class="line">
-      <div class="minibutton default" onclick="$('#full_screen_form form').submit();">Log in</div>
+      <div class="minibutton default">Log in</div>
     </div>
   </form>
 </div>
+
+<script type="text/javascript">
+  $('#full_screen_form form').keypress(function(e) {
+    if (e.keyCode == 13) this.submit();
+  });
+  $('.minibutton.default').click(function(){ $('#full_screen_form form').submit(); });
+</script>
