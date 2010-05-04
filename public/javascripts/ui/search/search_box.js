@@ -28,9 +28,9 @@ dc.ui.SearchBox = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     this.outstandingSearch = false;
-    _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'clearSearch', 'loadDefault');
+    _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'showHelp', 'loadDefault');
     dc.history.register(/^#search\//, this.searchByHash);
-    dc.history.register(/^#help$/, this.clearSearch);
+    dc.history.register(/^#help$/, this.showHelp);
   },
 
   render : function() {
@@ -40,8 +40,8 @@ dc.ui.SearchBox = dc.View.extend({
     this.titleBox = $('#title_box', this.el);
     $(document.body).setMode('no', 'search');
     this.setCallbacks();
-    $('#cloud_edge').click(this.clearSearch);
-    (this._helpTab = $('#help_tab')).click(this.clearSearch);
+    $('#cloud_edge').click(this.showHelp);
+    (this._helpTab = $('#help_tab')).click(this.showHelp);
     (this._documentsTab = $('#documents_tab')).click(this.loadDefault);
     return this;
   },
@@ -71,7 +71,15 @@ dc.ui.SearchBox = dc.View.extend({
     $(document.body).setMode('active', 'search');
     this._helpTab.removeClass('active');
     this._documentsTab.addClass('active');
+    this.entitle(this.value());
     dc.history.save(this.urlFragment());
+  },
+
+  showHelp : function() {
+    $(document.body).setMode('no', 'search');
+    this._documentsTab.removeClass('active');
+    this._helpTab.addClass('active');
+    dc.history.save('help');
   },
 
   // Start a search for a query string, updating the page URL.
@@ -79,7 +87,6 @@ dc.ui.SearchBox = dc.View.extend({
     dc.ui.Project.highlight(query);
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
-    this.entitle(query);
     this.fragment = 'search/' + encodeURIComponent(query);
     this.showDocuments();
     Documents.refresh();
@@ -160,15 +167,6 @@ dc.ui.SearchBox = dc.View.extend({
 
   cancelSearch : function() {
     this.value('');
-  },
-
-  clearSearch : function() {
-    $(document.body).setMode('no', 'search');
-    // Projects.deselectAll();
-    // dc.app.workspace.organizer.renderFacets({});
-    this._documentsTab.removeClass('active');
-    this._helpTab.addClass('active');
-    dc.history.save('help');
   },
 
   entitle : function(query) {

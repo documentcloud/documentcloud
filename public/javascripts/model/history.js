@@ -68,7 +68,7 @@ dc.history = {
       }
     });
     if (!matched && !hash) {
-      fallback ? fallback() : dc.app.searchBox.clearSearch();
+      fallback ? fallback() : dc.app.searchBox.showHelp();
     }
   }
 
