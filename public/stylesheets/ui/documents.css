@@ -107,9 +107,12 @@
     .document .show_notes:hover {
       text-decoration: underline;
     }
+    .document.has_notes .show_notes {
+      text-align: left;
+    }
     .document .show_notes .cancel_search {
       float: left;
-      margin-top: 1px;
+      margin: 2px 5px 0 0;
       display: none;
     }
       .document.has_notes .show_notes .cancel_search {
