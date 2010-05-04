@@ -238,6 +238,11 @@ div.full_page_background {
           position: absolute;
           margin: -2px 0 0 -25px;
         }
+        #full_screen_form .license input[type="checkbox"] {
+          position: relative;
+          margin-right: 10px;
+          left: 0px;
+        }
       #full_screen_form .minibutton {
         float: left;
         position: relative;
