@@ -308,7 +308,25 @@ textarea.text_area {
     background: #fff;
     text-shadow: 0px 1px 1px #fff;
     filter: none;
+    z-index: 5;
   }
+  .tabs .tab_corner {
+    position: absolute;
+    bottom: 0;
+    width: 3px; height: 3px;
+    display: none;
+  }
+    .tabs .tab.active .tab_corner {
+      display: block;
+    }
+    .tabs .tab_corner.left {
+      left: -3px;
+      background: url(/images/embed/ui/tab_corner_left.png);
+    }
+    .tabs .tab_corner.right {
+      right: -3px;
+      background: url(/images/embed/ui/tab_corner_right.png);
+    }
 
 /*------------------------------ Dialog Boxes --------------------------------*/
 .dialog {
