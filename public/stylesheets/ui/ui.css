@@ -35,10 +35,10 @@ select {
 .gradient_selected,
 #organizer .box:hover,
 #organizer .row:hover {
-  background: #ffffdd;
-  background: -webkit-gradient(linear, left top, left 50%, from(#fff), to(#ffd));
-  background: -moz-linear-gradient(top, #fff, #ffd 50%);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#FFFFDD');
+  background: #ffc;
+/*  background: -webkit-gradient(linear, left top, left 50%, from(#fff), to(#ffd));*/
+/*  background: -moz-linear-gradient(top, #fff, #ffd 50%);*/
+/*  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#FFFFDD');*/
 }
 .gradient_blue,
 .minibutton.ok,
