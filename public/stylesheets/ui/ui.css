@@ -360,7 +360,7 @@ textarea.text_area {
     overflow: hidden;
     height: 16px;
     padding: 5px 10px;
-    font: 14px/18px Arial;
+    font: bold 12px/18px sans-serif;
     color: #000;
     cursor: move;
     border-bottom: 1px solid #bbb;
