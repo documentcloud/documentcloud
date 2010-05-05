@@ -25,8 +25,6 @@ _.extend(dc.app.workspace, {
     dc.app.toolbar    = new dc.ui.Toolbar({tab : 'search'});
     dc.app.uploader   = new dc.ui.UploadDialog();
     dc.app.accounts   = new dc.ui.AccountDialog();
-    dc.app.visualizer = new dc.ui.Visualizer();
-    dc.app.entities   = new dc.ui.Entities();
     this.documentList = new dc.ui.DocumentList();
     this.accountBadge = new dc.ui.AccountView({model : Accounts.current(), kind : 'badge'});
     this.organizer    = new dc.ui.Organizer();
@@ -47,7 +45,6 @@ _.extend(dc.app.workspace, {
     this.sidebar.add('account_badge', this.accountBadge.render().el);
     this.sidebar.add('organizer', this.organizer.render().el);
     dc.app.uploader.render();
-    this.panel.add('document_list', dc.app.visualizer.el);
     this.panel.add('document_list', this.documentList.render().el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
     $('#wordmark a').attr({href : '#help'});

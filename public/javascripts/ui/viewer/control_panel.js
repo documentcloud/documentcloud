@@ -8,8 +8,7 @@ dc.ui.ViewerControlPanel = dc.View.extend({
     '.private_annotation.click':    'togglePrivateAnnotation',
     '.edit_description.click':      'editDescription',
     '.edit_title.click':            'editTitle',
-    '.edit_related_article.click':  'editRelatedArticle',
-    '.save_text.click':             'savePageText'
+    '.edit_related_article.click':  'editRelatedArticle'
   },
 
   render : function() {
@@ -53,15 +52,6 @@ dc.ui.ViewerControlPanel = dc.View.extend({
 
   togglePrivateAnnotation : function() {
     dc.app.editor.annotationEditor.toggle('private');
-  },
-
-  savePageText : function() {
-    var page = DV.api.currentPage();
-    var url  = '/documents/' + dc.app.editor.docId + '/pages/' + DV.Schema.document.id + '-p' + page + '.txt';
-    var text = this._page.textWithNewlines();
-    DV.api.setPageText(text, page);
-    $.ajax({url : url, type : 'POST', data : {text : text}, dataType : 'json'});
-    dc.app.editor.notify({mode : 'info', text : 'page saved'});
   },
 
   _updateDocument : function(attrs) {

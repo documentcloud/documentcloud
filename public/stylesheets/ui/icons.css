@@ -14,35 +14,14 @@
   border: 0;
 }
 
-.icon.page_white_get {
-  background-image: url(/images/embed/icons/page_white_get.png);
-}
-.icon.page_text_add_32 {
-  background-image: url(/images/embed/icons/page_text_add_32.png);
-}
 .icon.warning_16 {
   background-image: url(/images/embed/icons/warning_16.png);
-}
-.icon.folder {
-  background-image: url(/images/embed/icons/folder.png);
-}
-.icon.folder_add {
-  background-image: url(/images/embed/icons/folder_add.png);
-}
-.icon.folder_32 {
-  background-image: url(/images/embed/icons/folder_32.png);
 }
 .icon.search_button_16 {
   background-image: url(/images/embed/icons/search_button_16.png);
 }
-.icon.search_32 {
-  background-image: url(/images/embed/icons/search_32.png);
-}
 .icon.spinner {
   background-image: url(/images/embed/icons/spinner.gif);
-}
-.icon.page_text_32 {
-  background-image: url(/images/embed/icons/page_text_32.png);
 }
 .icon.note {
   background-image: url(/images/embed/icons/note.png);
@@ -53,12 +32,6 @@
 }
 .icon.lock {
   background-image: url(/images/embed/icons/lock.png);
-}
-.icon.bullet_yellow {
-  background-image: url(/images/embed/icons/bullet_yellow.png);
-}
-.icon.bullet_white {
-  background-image: url(/images/embed/icons/bullet_white.png);
 }
 .icon.calais {
   background-image: url(/images/embed/icons/calais.jpg);

@@ -94,11 +94,9 @@ a {
   display: none;
   position: absolute;
   top: 80px; left: 340px;
+  width: 16px; height: 16px;
+  background: url(/images/embed/ui/spinner_circle.gif);
 }
-  #spinner_image {
-    width: 16px; height: 16px;
-    background: url(/images/embed/ui/spinner_circle.gif);
-  }
 
 body.workspace #content {
   margin: 70px 20px 20px 20px;
@@ -267,4 +265,16 @@ div.full_page_background {
     line-height: 16px;
     color: #222;
     margin-bottom: 15px;
+  }
+
+/*------------------------- View-mode visibility -----------------------------*/
+div.active_search,
+div.empty_search,
+div.no_search {
+  display: none;
+}
+  body.active_search div.active_search,
+  body.empty_search div.empty_search,
+  body.no_search div.no_search {
+    display: block;
   }

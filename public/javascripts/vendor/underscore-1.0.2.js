@@ -55,7 +55,7 @@
   root._ = _;
 
   // Current version.
-  _.VERSION = '1.0.0';
+  _.VERSION = '1.0.2';
 
   // ------------------------ Collection Functions: ---------------------------
 
@@ -485,13 +485,13 @@
     // Different object sizes?
     if (aKeys.length != bKeys.length) return false;
     // Recursive comparison of contents.
-    for (var key in a) if (!_.isEqual(a[key], b[key])) return false;
+    for (var key in a) if (!(key in b) || !_.isEqual(a[key], b[key])) return false;
     return true;
   };
 
   // Is a given array or object empty?
   _.isEmpty = function(obj) {
-    if (_.isArray(obj)) return obj.length === 0;
+    if (_.isArray(obj) || _.isString(obj)) return obj.length === 0;
     for (var key in obj) if (hasOwnProperty.call(obj, key)) return false;
     return true;
   };
@@ -504,12 +504,12 @@
   // Is a given value an array?
   // Delegates to ECMA5's native Array.isArray
   _.isArray = nativeIsArray || function(obj) {
-    return !!(obj && obj.concat && obj.unshift);
+    return !!(obj && obj.concat && obj.unshift && !obj.callee);
   };
 
   // Is a given variable an arguments object?
   _.isArguments = function(obj) {
-    return obj && _.isNumber(obj.length) && !obj.concat && !obj.substr && !obj.apply && !propertyIsEnumerable.call(obj, 'length');
+    return obj && obj.callee;
   };
 
   // Is a given value a function?

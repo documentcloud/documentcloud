@@ -1,9 +1,0 @@
-<div id="organization_info">
-  <div class="name"><%= name %></div>
-  <div class="since">Joined <%= since %> ago</div>
-  <% var documents    = Inflector.pluralize("document", document_count); %>
-  <% var contributors = Inflector.pluralize("contributor", account_count); %>
-  <div class="counts">
-    <%= account_count %> <%= contributors %>&nbsp;&nbsp;/&nbsp;&nbsp;<%= document_count %> <%= documents %>
-  </div>
-</div>

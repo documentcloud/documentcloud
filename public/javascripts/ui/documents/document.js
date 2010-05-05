@@ -97,7 +97,6 @@ dc.ui.Document = dc.View.extend({
 
   toggleNotes : function(e) {
     e.stopPropagation();
-    if (dc.app.visualizer.isOpen() || dc.app.entities.isOpen()) return;
     if (this.modes.notes == 'has') return this.setMode('owns', 'notes');
     if (this.model.notes.populated) return this.setMode('has', 'notes');
     dc.ui.spinner.show('loading notes');

@@ -1,5 +1,5 @@
-// DocumentCloud workspace hotkeys. For now, just needs to track if
-// shift is being held down, for shift-clicks.
+// DocumentCloud workspace hotkeys. To tell if a key is currently being pressed,
+// just ask: `dc.app.hotkeys.control`
 dc.app.hotkeys = {
 
   KEYS: {

@@ -43,9 +43,6 @@ body.workspace {
   overflow: auto;
 }
 .minibutton,
-#visualizer .datum {
-  border: 1px solid #aaa;
-}
 #upload_dialog {
   width: 530px;
 }

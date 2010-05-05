@@ -2,8 +2,6 @@
 dc.ui.SearchBox = dc.View.extend({
 
   PAGE_MATCHER        : (/\/p(\d+)$/),
-  CONNECTIONS_MATCHER : (/\/connections\/(\w+)$/),
-  ENTITIES_MATCHER    : (/\/entities$/),
 
   DOCUMENTS_URL : '/search/documents.json',
 
@@ -120,16 +118,6 @@ dc.ui.SearchBox = dc.View.extend({
       var page = pageMatch[1];
       hash = hash.replace(this.PAGE_MATCHER, '');
     }
-    var connMatch = hash.match(this.CONNECTIONS_MATCHER);
-    if (connMatch) {
-      this._connection = connMatch[1];
-      hash = hash.replace(this.CONNECTIONS_MATCHER, '');
-    }
-    var entitiesMatch = hash.match(this.ENTITIES_MATCHER);
-    if (entitiesMatch) {
-      this._entities = true;
-      hash = hash.replace(this.ENTITIES_MATCHER, '');
-    }
     this.search(decodeURIComponent(hash), page);
   },
 
@@ -190,15 +178,6 @@ dc.ui.SearchBox = dc.View.extend({
     }
     dc.ui.spinner.hide();
     this.outstandingSearch = false;
-    if (this._connection) {
-      Documents.selectAll();
-      dc.app.visualizer.open(this._connection);
-      this._connection = null;
-    } else if (this._entities) {
-      Documents.selectAll();
-      dc.app.entities.open();
-      this._entities = null;
-    }
   },
 
   // After the initial search results come back, send out a request for the

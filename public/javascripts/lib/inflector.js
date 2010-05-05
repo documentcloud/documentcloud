@@ -1,4 +1,4 @@
-// Snagged from Prototype
+// Naive English transformations on words.
 window.Inflector = {
 
   camelize: function(s) {

@@ -16,7 +16,6 @@ dc.ui.Toolbar = dc.View.extend({
       'editDescription', 'editRelatedArticle', 'editAccess', 'display');
     this.editMenu         = this._createEditMenu();
     this.downloadMenu     = this._createDownloadMenu();
-    // this.connectionsMenu  = this._createConnectionsMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
     Documents.bind(dc.Set.REFRESHED, this.display);
@@ -27,7 +26,6 @@ dc.ui.Toolbar = dc.View.extend({
     el.html(JST.workspace_toolbar({}));
     $('.edit_menu_container', el).append(this.editMenu.render().el);
     $('.download_menu_container', el).append(this.downloadMenu.render().el);
-    // $('.connections_menu_container', el).append(this.connectionsMenu.render().el);
     $('.project_menu_container', el).append(this.projectMenu.render().el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
     this.openButton      = $('#open_viewers', this.el);
@@ -171,10 +169,6 @@ dc.ui.Toolbar = dc.View.extend({
     dc.app.uploader.open();
   },
 
-  _openConnections : function(kind) {
-    dc.app.visualizer.open(kind);
-  },
-
   _openEntities : function() {
     dc.app.entities.open();
   },
@@ -210,19 +204,6 @@ dc.ui.Toolbar = dc.View.extend({
         $('.singular', menu.content).toggleClass('disabled', many);
       }
     });
-  },
-
-  _createConnectionsMenu : function() {
-    var me = this;
-    var items = [
-      // {title : 'Entities', onClick : this._openEntities},
-      {title : 'Timeline', onClick : this._openTimeline, className : 'divider'}
-    ];
-    items = items.concat(_.map(['city', 'country', 'organization',
-        'person', 'place', 'state', 'term'], function(kind) {
-      return {title : Entities.DISPLAY_NAME[kind], onClick : _.bind(me._openConnections, me, kind)};
-    }));
-    return new dc.ui.Menu({id : 'connections_menu', label : 'Connections', items : items});
   },
 
   _openCalais : function() {

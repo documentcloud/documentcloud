@@ -39,7 +39,6 @@ dc.ui.SectionEditor = dc.View.extend({
       data      : {sections : JSON.stringify(sections), document_id : dc.app.editor.docId},
       dataType  : 'json'
     });
-    // dc.app.editor.notify({mode: 'info', text : 'sections saved'});
     this.updateNavigation(sections);
     return true;
   },
