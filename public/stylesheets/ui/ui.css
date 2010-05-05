@@ -148,13 +148,13 @@ textarea.text_area {
   height: 12px;
   text-align: center;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
-  box-shadow: 0 1px 2px #ccc; -webkit-box-shadow: 0 1px 2px #ccc; -moz-box-shadow: 0 1px 2px #ccc;
+  box-shadow: 0 1px 2px #c4c4c4; -webkit-box-shadow: 0 1px 2px #c4c4c4; -moz-box-shadow: 0 1px 2px #c4c4c4;
   border: 1px solid #aaa;
   background: url(/images/embed/ui/button_bg.gif) repeat-x left top;
 }
   .minibutton:active {
     position: relative;
-    box-shadow: 0 0 1px #ccc; -webkit-box-shadow: 0 0 1px #ccc; -moz-box-shadow: 0 0 1px #ccc;
+    box-shadow: 0 0 1px #c4c4c4; -webkit-box-shadow: 0 0 1px #c4c4c4; -moz-box-shadow: 0 0 1px #c4c4c4;
     top: 1px;
   }
   .minibutton::selection, .minibutton > span::selection {
@@ -163,6 +163,7 @@ textarea.text_area {
   .minibutton.not_enabled,
   .minibutton.not_enabled:active,
   .minibutton.not_enabled:hover {
+    top: 0px;
     opacity: 0.33; filter: alpha(opacity=33);
     cursor: default;
   }
