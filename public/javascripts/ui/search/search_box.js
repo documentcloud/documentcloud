@@ -70,6 +70,7 @@ dc.ui.SearchBox = dc.View.extend({
     this._helpTab.removeClass('active');
     this._documentsTab.addClass('active');
     this.entitle(this.value());
+    dc.app.scroller.check();
     dc.history.save(this.urlFragment());
   },
 
@@ -77,6 +78,7 @@ dc.ui.SearchBox = dc.View.extend({
     $(document.body).setMode('no', 'search');
     this._documentsTab.removeClass('active');
     this._helpTab.addClass('active');
+    dc.app.scroller.check();
     dc.history.save('help');
   },
 
