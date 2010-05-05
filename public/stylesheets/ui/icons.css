@@ -45,6 +45,10 @@
   width: 10px; height: 10px;
   background-image: url(/images/embed/icons/plus.png);;
 }
+.icon.edit_glyph {
+  width: 11px; height: 11px;
+  background-image: url(/images/embed/icons/edit_glyph.png);;
+}
 
 .icon.plus, .icon.minus {
   display: block;

@@ -60,12 +60,15 @@
           background: #fff;
           border-right: 2px solid #ccc;
         }
-      #organizer .box .edit,
-      #organizer .box.uploaded_documents:hover .edit {
+      #organizer .box .edit_glyph,
+      #organizer .box.uploaded_documents:hover .edit_glyph {
         display: none;
       }
-        #organizer .box:hover .edit {
+        #organizer .box:hover .edit_glyph {
           display: inline;
+          vertical-align: top;
+          padding-right: 11px;
+          margin-left: 5px;
         }
       #organizer .box .title {
         font: bold 14px Arial;

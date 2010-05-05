@@ -4,7 +4,7 @@ dc.ui.Project = dc.View.extend({
 
   callbacks : {
     'el.click'    : 'showDocuments',
-    '.edit.click' : 'editProject'
+    '.edit_glyph.click' : 'editProject'
   },
 
   constructor : function(options) {
