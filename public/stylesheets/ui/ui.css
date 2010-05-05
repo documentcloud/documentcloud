@@ -317,10 +317,10 @@ textarea.text_area {
 }
   .tabs .tab {
     position: relative;
-    height: 12px; width: 100px;
-    padding: 9px 0 9px 0;
+    height: 12px; width: 105px;
+    padding: 8px 0 10px 0;
     text-align: center;
-    font: bold 11px Arial;
+    font: bold 12px Arial;
     cursor: pointer;
     float: left;
     color: #fff;
@@ -328,7 +328,7 @@ textarea.text_area {
     border-top-right-radius: 3px; -webkit-border-top-right-radius: 3px; -moz-border-radius-topright: 3px;
   }
   .tabs .tab.active {
-    color: #000;
+    color: #999;
     background: #fff;
     text-shadow: 0px 1px 1px #fff;
     filter: none;
