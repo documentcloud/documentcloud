@@ -1,10 +1,10 @@
 .help_text {
   font: 11px/16px Arial;
-  color: #4e4e4e;
+  color: #555;
 }
 
 #help {
-  color: #4e4e4e;
+  color: #555;
   padding: 15px 30px 30px;
   max-width: 550px;
   font: 14px/18px Arial;

@@ -86,7 +86,7 @@
     }
   .document .description {
     font: 12px/18px Arial;
-    color: #4e4e4e;
+    color: #555;
     margin-bottom: 5px;
   }
     .document .description b {
@@ -146,7 +146,7 @@
   cursor: pointer;
 }
   .document .page_number {
-    color: #4e4e4e;
+    color: #555;
   }
 
 
@@ -163,7 +163,7 @@
     margin: 20px 0 0 0;
     padding: 15px;
     font: 12px/18px Arial;
-    color: #4e4e4e;
+    color: #555;
   }
     .note .edit, .note .display {
       display: none;

@@ -72,7 +72,7 @@
   }
   #section_editor .text {
     font: italic 11px Arial;
-    color: #4e4e4e;
+    color: #555;
     padding-bottom: 15px;
   }
   #section_editor .remove_all {
@@ -138,7 +138,7 @@
 #annotation_guide {
   margin: 0 14px 12px 14px;
   font: italic 11px Arial;
-  color: #4e4e4e;
+  color: #555;
 }
 
 .DV-annotationTextArea {

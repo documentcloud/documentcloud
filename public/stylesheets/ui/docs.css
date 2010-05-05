@@ -1,6 +1,6 @@
 #docs {
   padding: 30px 25px 30px 50px;
-  color: #4e4e4e;
+  color: #555;
 }
   #docs h1, #docs h2, #docs h3 {
     font: 25px/50px Arial;
@@ -50,7 +50,7 @@
       }
       #docs td.desc {
         font: italic 11px Arial;
-        color: #4e4e4e;
+        color: #555;
       }
     #docs table col.parameter {
       font-weight: bold;

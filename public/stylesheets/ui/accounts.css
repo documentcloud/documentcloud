@@ -4,7 +4,7 @@
   position: relative;
   margin: 15px 0 15px 30px;
   font: 11px/16px Arial;
-  color: #4e4e4e;
+  color: #555;
   border-bottom-left-radius: 6px; -webkit-border-bottom-left-radius: 6px; -moz-border-radius-bottomleft: 6px;
   border-bottom-right-radius: 6px; -webkit-border-bottom-right-radius: 6px; -moz-border-radius-bottomright: 6px;
 }
@@ -55,7 +55,7 @@
         border-bottom: 1px solid #bbb;
         font: 12px/11px Arial;
         height: 25px;
-        color: #4e4e4e;
+        color: #555;
       }
       #account_list .first { width: 0%; padding-right: 0; }
       #account_list .name  { width: 0%; }
@@ -88,7 +88,7 @@
     }
 #account_list .role .display {
   font: italic 10px/18px Arial;
-  color: #4e4e4e;
+  color: #555;
 }
 #account_list .controls_wrapper {
   min-width: 100px;

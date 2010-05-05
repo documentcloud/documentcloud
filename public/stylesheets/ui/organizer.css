@@ -66,7 +66,7 @@
         }
       #organizer .box .title {
         font: bold 14px Arial;
-        color: #4e4e4e;
+        color: #555;
       }
         #organizer .box.is_selected .title,
         #organizer .box:hover .title {
@@ -74,7 +74,7 @@
         }
       #organizer .box .counts,
       #project_dialog .counts {
-        font: 10px/16px Arial;
+        font: 11px/16px Arial;
         color: #808080;
       }
 
@@ -95,7 +95,7 @@
     #organizer_entities .category {
       font: bold 14px Arial;
       padding-left: 30px;
-      color: #4e4e4e;
+      color: #555;
     }
     #organizer_entities .rows {
       margin: 4px 0;
@@ -120,7 +120,7 @@
           }
         #organizer_entities .count,
         #organizer_entities .show_pages {
-          font: 10px/10px Arial;
+          font: 11px/11px Arial;
           color: #808080;
         }
         #organizer_entities .show_pages {
@@ -151,7 +151,7 @@
     padding: 15px 15px 15px 30px;
     border-bottom: 1px solid #e0e0e0;
     background: #fff;
-    color: #4e4e4e;
+    color: #555;
   }
 
 /*--------------------------- Edit Project Dialog ----------------------------*/
@@ -165,7 +165,7 @@
     #project_dialog label {
       display: block;
       font: bold 13px/25px Arial;
-      color: #4e4e4e;
+      color: #555;
       margin-bottom: 10px;
     }
     #project_dialog .text_input {
