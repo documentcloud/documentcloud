@@ -324,8 +324,8 @@ textarea.text_area {
     cursor: pointer;
     float: left;
     color: #fff;
-    border-top-left-radius: 5px; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
-    border-top-right-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
+    border-top-left-radius: 3px; -webkit-border-top-left-radius: 3px; -moz-border-radius-topleft: 3px;
+    border-top-right-radius: 3px; -webkit-border-top-right-radius: 3px; -moz-border-radius-topright: 3px;
   }
   .tabs .tab.active {
     color: #000;
