@@ -114,6 +114,7 @@
 #account_list span.delete_account {
   float: left;
   color: #774433;
+  line-height: 24px;
 }
 #account_list .pending_wrap {
   position: relative;

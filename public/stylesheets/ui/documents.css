@@ -242,15 +242,18 @@
             left: 0;
             position: absolute;
           }
-      .note .note_controls.display {
-        font-size: 11px;
+      .note .edit_note {
+        display: inline;
+        vertical-align: top;
+        cursor: pointer;
         opacity: 0;
         -webkit-transition: opacity 0.2s linear;
-        float: right;
-        line-height: 12px;
-        margin-right: 10px;
+        padding-right: 11px;
+        margin-left: 5px;
+        position: relative;
+        top: -1px;
       }
-        .note:hover .note_controls.display {
+        .note:hover .edit_note {
           opacity: 1;
         }
       .note .note_controls .minibutton {
