@@ -166,7 +166,7 @@ dc.ui.SearchBox = dc.View.extend({
     if (projectName) {
       this.titleBox.text(projectName);
     } else if (accountName == Accounts.current().get('email')) {
-      this.titleBox.text('Uploaded Documents');
+      this.titleBox.text('All Uploads');
     } else {
       this.titleBox.text('All Documents');
     }

@@ -115,12 +115,6 @@ body.workspace #content {
     border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
     background: #fff;
   }
-  #sidebar_line {
-    position: absolute;
-    top: 14px;
-    height: 1px; width: 308px;
-    background: #e0e0e0;
-  }
 
 .panel_container {
   margin-left: 310px;

@@ -50,8 +50,13 @@
         border-right: 0;
         background: #fff;
         filter: none;
-        border-top-right-radius: 0; -webkit-border-top-right-radius: 0; -moz-border-radius-topright: 0;
       }
+        #organizer .box.uploaded_documents,
+        #organizer .box.uploaded_documents.is_selected,
+        #organizer .box.uploaded_documents.is_selected:hover {
+          background: #fff;
+          border-right: 2px solid #ccc;
+        }
       #organizer .box .edit,
       #organizer .box.uploaded_documents:hover .edit {
         display: none;
@@ -179,7 +184,7 @@
   top: 5px; bottom: 5px; left: 0; right: 0;
 }
   .scroll.not_active {
-    top: 15px; bottom: 15px;
+    top: 5px; bottom: 15px;
   }
   .scroll_content {
     position: absolute;
