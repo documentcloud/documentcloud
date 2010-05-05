@@ -40,11 +40,17 @@
       border-right: 2px solid #ccc;
       background: #f4f3f1;
     }
-      #organizer .box, #organizer_entities .row {
+      #organizer .box,
+      #organizer_entities .row {
         background-image: url(/images/embed/ui/box_back.png);
         background-repeat: repeat-y;
         background-position: right top;
       }
+        #organizer .box:hover,
+        #organizer_entities .row:hover,
+        .document.is_selected .select {
+          background: #ffc;
+        }
       #organizer .box.is_selected,
       #organizer .box.is_selected:hover {
         border-right: 0;

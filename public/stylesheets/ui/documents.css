@@ -38,8 +38,7 @@
     -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
   }
     .document.is_selected .select {
-      border-color: #eea;
-      background: #ffffd9;
+      border-color: #dd9;
     }
   .document img.doc {
     left: 7px; top: 6px;

@@ -32,14 +32,6 @@ select {
 }
 
 /*------------------------------ Gradients ---------------------------------*/
-.gradient_selected,
-#organizer .box:hover,
-#organizer .row:hover {
-  background: #ffc;
-/*  background: -webkit-gradient(linear, left top, left 50%, from(#fff), to(#ffd));*/
-/*  background: -moz-linear-gradient(top, #fff, #ffd 50%);*/
-/*  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#FFFFDD');*/
-}
 .gradient_blue,
 .minibutton.ok,
 .minibutton.default {
@@ -48,26 +40,12 @@ select {
   background: -moz-linear-gradient(top, #55aacc, #557799);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#55aacc', EndColorStr='#557799');
 }
-.gradient_blue_inverted,
-.minibutton.default:active, .minibutton.default.is_active, .minibutton.default.is_open {
-  background: #5588aa;
-  background: -webkit-gradient(linear, left top, left bottom, from(#557799), to(#55aacc));
-  background: -moz-linear-gradient(top, #557799, #55aacc);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#557799', EndColorStr='#55aacc');
-}
 .gradient_red,
 .minibutton.warn {
   background: #ce3f37;
   background: -webkit-gradient(linear, left top, left bottom, from(#e1756c), to(#bd5a52));
   background: -moz-linear-gradient(top, #e1756c, #bd5a52);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#e1756c', EndColorStr='#bd5a52');
-}
-.gradient_red_inverted,
-.minibutton.warn:active, .minibutton.warn.is_active, .minibutton.warn.is_open {
-  background: #ce3f37;
-  background: -webkit-gradient(linear, left top, left bottom, from(#bd5a52), to(#e1756c));
-  background: -moz-linear-gradient(top, #bd5a52, #e1756c);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#bd5a52', EndColorStr='#e1756c');
 }
 .gradient_white {
   background: #f4f3f1;
@@ -95,14 +73,6 @@ select {
   background: -moz-linear-gradient(top, #b0b0b0, #888888);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#b0b0b0', EndColorStr='#888888');
 }
-.gradient_inverted,
-.minibutton:active, .minibutton.is_active, .minibutton.is_open {
-  background: #aaaaaa;
-  background: -webkit-gradient(linear, left top, left bottom, from(#888888), to(#b0b0b0));
-  background: -moz-linear-gradient(top, #888888, #b0b0b0);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#888888', EndColorStr='#b0b0b0');
-}
-
 
 /*------------------------------ Text Inputs ---------------------------------*/
 div.text_input {
@@ -180,8 +150,14 @@ textarea.text_area {
   height: 12px;
   text-align: center;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+  box-shadow: 0 1px 1px #555; -webkit-box-shadow: 0 1px 1px #555; -moz-box-shadow: 0 1px 1px #555;
   border: 1px solid #999;
 }
+  .minibutton:active {
+    position: relative;
+    box-shadow: 0 0 1px #555; -webkit-box-shadow: 0 0 1px #555; -moz-box-shadow: 0 0 1px #555;
+    top: 1px;
+  }
   .minibutton::selection, .minibutton > span::selection {
     background: transparent;
   }

@@ -82,25 +82,6 @@ dc.ui.Organizer = dc.View.extend({
     this.renderFacets(_.extend(this._facets, facets), limit, docCount);
   },
 
-  clickSelectedItem : function() {
-    $(this.selectedItem.el).trigger('click');
-  },
-
-  select : function(view) {
-    $(view.el).addClass('gradient_selected');
-    this.selectedItem = view;
-  },
-
-  deselect : function() {
-    if (this.selectedItem) $(this.selectedItem.el).removeClass('gradient_selected');
-    this.selectedItem = null;
-  },
-
-  clear : function() {
-    this.deselect();
-    $('.box', this.projectList).show();
-  },
-
   promptNewProject : function() {
     var me = this;
     dc.ui.Dialog.prompt('Create a New Project', '', function(title) {
