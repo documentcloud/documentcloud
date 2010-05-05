@@ -5,10 +5,6 @@ select {
   font-size: 11px;
   height: 20px !important;
 }
-.clear {
-  display: inline-block;
-  display: block;
-}
 
 /*---------------------- Drop-shadow replacements ----------------------------*/
 img.doc,
@@ -17,10 +13,10 @@ img.page_image,
 .note .note_background {
   margin: -6px 0 0 -6px;
   filter:
-    progid:DXImageTransform.Microsoft.Shadow(color=#BBBBBB,direction=45,strength=3)
-    progid:DXImageTransform.Microsoft.Shadow(color=#BBBBBB,direction=135,strength=3)
-    progid:DXImageTransform.Microsoft.Shadow(color=#BBBBBB,direction=225,strength=3)
-    progid:DXImageTransform.Microsoft.Shadow(color=#BBBBBB,direction=315,strength=3);
+    progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=45,strength=3)
+    progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=135,strength=3)
+    progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=225,strength=3)
+    progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=315,strength=3);
 }
   #tooltip_background,
   .note .note_background {
@@ -54,6 +50,9 @@ body.workspace {
 #entities {
   right: 25px;
 }
+#project_controls {
+  padding-right: 15px;
+}
 .icon.plus:hover {
   background-image: url(/images/embed/ui/plus.png);
 }
@@ -63,4 +62,18 @@ body.workspace {
 #account_list .row.pending .pending_badge,
 #account_list .admin.pending .pending_badge {
   display: none;
+}
+#organizer .box {
+  background-image: url(/images/embed/ui/box_back_wide.png);
+}
+  #organizer .box:hover .edit_glyph {
+    position: absolute;
+    margin: 4px 11px 0 0;
+  }
+.note .edit_note {
+  position: absolute;
+  margin: 5px 11px 0 0;
+}
+#organizer_entities .row {
+  width: 268px;
 }

@@ -168,11 +168,9 @@ textarea.text_area {
     cursor: default;
   }
   .minibutton .icon.white_plus {
-    display: inline;
-    vertical-align: top;
-    padding-right: 11px;
+    float: left;
     position: relative;
-    margin: 1px 6px 0 -4px;
+    margin: 1px 6px 0 -3px;
   }
 
 /*--------------------------------- Menus ------------------------------------*/
