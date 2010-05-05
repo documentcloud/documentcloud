@@ -75,7 +75,7 @@
       #organizer .box .counts,
       #project_dialog .counts {
         font: 11px/16px Arial;
-        color: #808080;
+        color: #999;
       }
 
 /*------------------------------ Entities ---------------------------------*/
@@ -121,7 +121,7 @@
         #organizer_entities .count,
         #organizer_entities .show_pages {
           font: 11px/11px Arial;
-          color: #808080;
+          color: #999;
         }
         #organizer_entities .show_pages {
           margin-left: 3px;

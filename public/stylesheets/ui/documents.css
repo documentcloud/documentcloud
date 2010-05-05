@@ -79,7 +79,7 @@
       }
   .document .metalines {
     margin-bottom: 4px;
-    color: #808080;
+    color: #999;
   }
     .document.pending_access .page_count {
       display: none;
@@ -98,7 +98,7 @@
     }
   .document .show_notes {
     cursor: pointer;
-    color: #808080;
+    color: #999;
     position: absolute;
     left: 7px; top: 90px;
     width: 60px;

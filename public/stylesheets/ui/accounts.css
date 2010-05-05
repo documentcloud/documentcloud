@@ -18,7 +18,7 @@
   }
   .account_view.badge .controls,
   .account_view.badge .controls a {
-    color: #808080;
+    color: #999;
   }
   .account_view.badge a:hover {
     text-decoration: underline;
