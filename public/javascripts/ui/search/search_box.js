@@ -80,6 +80,7 @@ dc.ui.SearchBox = dc.View.extend({
     this._helpTab.addClass('active');
     dc.app.scroller.check();
     dc.history.save('help');
+    return false;
   },
 
   // Start a search for a query string, updating the page URL.
