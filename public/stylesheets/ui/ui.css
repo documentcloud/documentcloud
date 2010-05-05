@@ -357,9 +357,9 @@ textarea.text_area {
     padding: 10px 10px 15px 10px;
     line-height: 16px;
   }
-  .dialog .controls button, div.dialog .controls .minibutton {
+  .dialog .controls .minibutton {
     float: right;
-    margin: 0 10px 8px 0;
+    margin: 0 8px 8px 0;
   }
     .dialog.alert_dialog .minibutton.cancel {
       display: none;

@@ -2,13 +2,9 @@
 }
   #project_controls {
     border-bottom: 1px solid #e0e0e0;
-    padding: 20px 0px 20px 30px;
+    padding: 20px 30px 20px 30px;
     margin-right: 2px;
   }
-    #project_controls .minibutton {
-      float: left;
-      margin-right: 10px;
-    }
   #organizer .sidebar_section {
     padding-bottom: 15px;
   }
