@@ -65,9 +65,7 @@ select {
   background: -moz-linear-gradient(top, #EAEAEA, #C2C2C2);
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#EAEAEA', EndColorStr='#C2C2C2');
 }
-.gradient_gray,
-.minibutton,
-.minibutton.not_enabled:active {
+.gradient_gray {
   background: #999;
   background: -webkit-gradient(linear, left top, left bottom, from(#b0b0b0), to(#888888));
   background: -moz-linear-gradient(top, #b0b0b0, #888888);
@@ -151,7 +149,8 @@ textarea.text_area {
   text-align: center;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
 /*  box-shadow: 0 1px 1px #555; -webkit-box-shadow: 0 1px 1px #555; -moz-box-shadow: 0 1px 0px #777;*/
-  border: 1px solid #999;
+  border: 1px solid #aaa;
+  background: url(/images/embed/ui/button_bg.gif) repeat-x left top;
 }
   .minibutton:active {
     position: relative;
