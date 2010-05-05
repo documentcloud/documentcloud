@@ -14,8 +14,8 @@
     display: none;
     overflow: hidden;
   }
-    #organizer.projects_active #organizer_projects,
-    #organizer.entities_active #organizer_entities {
+    #sidebar.projects_active #organizer_projects,
+    #sidebar.entities_active #organizer_entities {
       display: block;
     }
   #organizer .project_list_wrap {
@@ -82,12 +82,21 @@
       }
 
 /*------------------------------ Entities ---------------------------------*/
-#organizer #organizer_entities {
+#organizer_entities {
   font: 11px/14px Arial;
   color: #000;
   background: #f4f3f1 url(/images/embed/ui/box_back_wide.png) repeat-y right top;
 }
+  #entities_line {
+    display: none;
+    background: #e0e0e0;
+    height: 1px; width: 308px;
+  }
+    .scroll.not_active #entities_line {
+      display: block;
+    }
   #organizer_entities .section {
+    margin-right: 2px;
     padding: 15px 0;
     border-bottom: 1px solid #e0e0e0;
     border-top: 1px solid #fff;
@@ -107,6 +116,7 @@
         padding: 1px 10px 1px 30px;
         border: 1px solid transparent;
         border-right: 2px solid #ccc;
+        width: 268px;
         border-left: 0;
         cursor: pointer;
         position: relative;
@@ -120,6 +130,7 @@
           #organizer_entities .row.active:hover {
             background: #fff;
             border-right: 0;
+            width: 270px;
           }
         #organizer_entities .count,
         #organizer_entities .show_pages {
@@ -189,6 +200,9 @@
   .scroll.not_active {
     top: 5px; bottom: 15px;
   }
+    #sidebar.entities_active .scroll.not_active {
+      top: 15px;
+    }
   .scroll_content {
     position: absolute;
     top: 0; bottom: 0;

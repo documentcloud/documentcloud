@@ -20,6 +20,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     this.base();
     $('.custom', this.el).html(JST.project_dialog(this.model.attributes()));
     this.appendControl($.el('div', {'class' : 'minibutton delete warn'}, 'Delete'));
+    $('.minibutton.ok span', this.el).text('Save');
     this.setCallbacks();
     return this;
   },

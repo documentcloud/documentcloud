@@ -27,6 +27,7 @@ dc.ui.Organizer = dc.View.extend({
     this.projectInputEl = $('#project_input', this.el);
     this.projectList    = $('.project_list', this.el);
     this.entityList     = $('#organizer_entities', this.el);
+    this.sidebar        = $('#sidebar');
     this.renderAll();
     this.showTab('projects');
     this.setCallbacks();
@@ -44,7 +45,7 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   showTab : function(kind) {
-    this.setMode(kind, 'active');
+    this.sidebar.setMode(kind, 'active');
     $('.sidebar_tab').removeClass('active');
     $('#' + kind + '_tab').addClass('active');
     dc.app.scroller.check();
