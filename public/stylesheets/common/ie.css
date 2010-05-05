@@ -42,7 +42,6 @@ div.dialog .dialog_background {
 body.workspace {
   overflow: auto;
 }
-.minibutton,
 #upload_dialog {
   width: 530px;
 }
