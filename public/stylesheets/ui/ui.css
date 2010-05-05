@@ -148,13 +148,13 @@ textarea.text_area {
   height: 12px;
   text-align: center;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
-/*  box-shadow: 0 1px 1px #555; -webkit-box-shadow: 0 1px 1px #555; -moz-box-shadow: 0 1px 0px #777;*/
+  box-shadow: 0 1px 2px #afafaf; -webkit-box-shadow: 0 1px 2px #afafaf; -moz-box-shadow: 0 1px 2px #afafaf;
   border: 1px solid #aaa;
   background: url(/images/embed/ui/button_bg.gif) repeat-x left top;
 }
   .minibutton:active {
     position: relative;
-/*    box-shadow: 0 0 1px #555; -webkit-box-shadow: 0 0 1px #555; -moz-box-shadow: 0 0 0px #777;*/
+    box-shadow: 0 0 1px #afafaf; -webkit-box-shadow: 0 0 1px #afafaf; -moz-box-shadow: 0 0 1px #afafaf;
     top: 1px;
   }
   .minibutton::selection, .minibutton > span::selection {
