@@ -144,6 +144,7 @@ textarea.text_area {
   cursor: pointer;
   font: bold 10px/12px sans-serif;
   color: #fff;
+  text-shadow: #aaa 0 -1px 0;
   padding: 5px 10px;
   height: 12px;
   text-align: center;
@@ -172,6 +173,15 @@ textarea.text_area {
     position: relative;
     margin: 1px 6px 0 -3px;
   }
+  .minibutton.warn {
+    border-color: #ae554f;
+    text-shadow: #ae554f 0 -1px 0;
+  }
+  .minibutton.default {
+    border-color: #557799;
+    text-shadow: #557799 0 -1px 0;
+  }
+
 
 /*--------------------------------- Menus ------------------------------------*/
 .minibutton.menu {
@@ -202,12 +212,6 @@ textarea.text_area {
     .minibutton.menu.is_active .closer {
       display: block;
     }
-  .minibutton.warn {
-    border-color: #ae554f;
-  }
-  .minibutton.default {
-    border-color: #557799;
-  }
 
 .menu_content {
   display: none;
