@@ -5,22 +5,22 @@
   <% if (list.length) { %>
     <% empty = false; %>
     <div class="section">
-      <div class="category"><%= Entities.DISPLAY_NAME[category] %></div>
+      <div class="category interface"><%= Entities.DISPLAY_NAME[category] %></div>
       <div class="rows">
         <% _.each(list.slice(0, limit), function(facet) { %>
           <div class="row <%= facet.active ? 'active' : '' %>" data-value="<%= facet.value %>" data-category="<%= category %>">
-            <span class="facet"><%= facet.value %></span>&nbsp;<span class="count">(<%= facet.count %>)</span>
+            <span class="facet interface"><%= facet.value %></span>&nbsp;<span class="count">(<%= facet.count %>)</span>
             <% if (facet.active) { %>
-              <span class="show_pages">show pages</span>
+              <span class="show_pages interface">show pages</span>
               <div class="icon cancel_search" title="remove this entity from your search"></div>
             <% } %>
           </div>
         <% }); %>
       </div>
       <% if (list.length == 6) { %>
-        <div class="more" data-category="<%= category %>">Show more&hellip;</div>
+        <div class="more interface" data-category="<%= category %>">Show more&hellip;</div>
       <% } else if (list.length > 6) { %>
-        <div class="less" data-category="<%= category %>">Show less&hellip;</div>
+        <div class="less interface" data-category="<%= category %>">Show less&hellip;</div>
       <% } %>
     </div>
   <% } %>
