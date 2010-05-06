@@ -2,7 +2,7 @@
 <img class="icon doc generic draggable noselect" src="<%= thumbnail_url %>" data-id="<%= id %>" />
 <% if (annotation_count) { %>
   <div class="show_notes">
-    <div class="icon cancel_search"></div>
+    <div class="icon cancel_search" title="hide notes"></div>
     <%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %>
   </div>
 <% } %>

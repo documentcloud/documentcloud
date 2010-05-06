@@ -11,7 +11,7 @@
     <%= Inflector.pluralize('page', pages.length) %>
     mentioning <%= Inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>
   </span>
-  <div class="icon cancel_search"></div>
+  <div class="icon cancel_search" title="hide pages"></div>
 </div>
 <div class="clear"></div>
 <% _.each(pages, function(pair) { %>
