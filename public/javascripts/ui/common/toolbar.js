@@ -3,7 +3,6 @@ dc.ui.Toolbar = dc.View.extend({
   id : 'toolbar',
 
   callbacks : {
-    '#calais_credits.click' : '_openCalais',
     '#open_viewers.click'   : '_openViewers',
     '#open_timeline.click'  : '_openTimeline',
     '#toolbar_upload.click' : '_openUpload'
@@ -204,10 +203,6 @@ dc.ui.Toolbar = dc.View.extend({
         $('.singular', menu.content).toggleClass('disabled', many);
       }
     });
-  },
-
-  _openCalais : function() {
-    window.open('http://opencalais.com');
   },
 
   _openViewers : function() {
