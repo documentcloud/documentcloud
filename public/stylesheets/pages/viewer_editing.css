@@ -67,6 +67,9 @@
 #section_editor, #annotation_editor, div.dialog {
   z-index: 10000000;
 }
+  #section_editor {
+    width: 450px;
+  }
   #section_editor .text {
     font: italic 11px Arial;
     color: #777;
@@ -81,7 +84,7 @@
   #section_editor ol {
     margin: 0 0 20px 0;
     padding-right: 25px;
-    width: 310px; max-height: 400px;
+    width: 395px; max-height: 400px;
     padding-left: 40px;
     list-style-type: decimal;
     overflow-y: auto;
@@ -91,6 +94,7 @@
     }
       #section_editor .section_title {
         margin-right: 15px;
+        width: 230px;
       }
       #section_editor .page_number {
         width: 30px;
