@@ -6,12 +6,10 @@
     <%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %>
   </div>
 <% } %>
-<div class="title">
+<div class="title noselect">
   <span class="doc_title noselect"><%= title %></span>
   <% if (icon) { %>
-    <div class="document_tools">
-      <div class="icon <%= icon.className %>" title="<%= icon.title %>"></div>
-    </div>
+    <div class="icon document_tool <%= icon.className %>" title="<%= icon.title %>"></div>
   <% } %>
 </div>
 <div class="description"><span class="noselect"><%= description %></span></div>

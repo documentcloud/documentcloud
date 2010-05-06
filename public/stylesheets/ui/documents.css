@@ -49,32 +49,29 @@
   .document .title {
     display: block;
     color: #000;
-    font: bold 16px/16px Arial;
-    margin-bottom: 10px;
-    min-height: 16px;
+    font: bold 16px/20px Arial;
+    margin-bottom: 6px;
+    min-height: 20px;
   }
     .document .doc_title {
-      float: left;
       cursor: pointer;
     }
-    .document_tools {
-      display: block;
-      float: left;
-      padding-left: 10px;
+    .document .document_tool {
+      display: inline;
+      vertical-align: top;
+      margin-left: 8px;
+      padding-right: 12px;
       opacity: 0.5;
       -webkit-transition: opacity 0.2s linear;
     }
-      .document:hover .document_tools {
+      .document:hover .document_tool {
         opacity: 1;
       }
-      .document_tools > div {
-        float: left;
-        margin-right: 7px;
-      }
-      .document_tools .icon.spinner {
+      .document .document_tool.spinner {
+        display: block;
+        margin: 0; padding: 0;
         position: absolute;
-        left: 29px;
-        top: 50px;
+        left: 29px; top: 50px;
       }
   .document .metalines {
     margin-bottom: 4px;

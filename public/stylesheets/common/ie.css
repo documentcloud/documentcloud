@@ -70,6 +70,10 @@ body.workspace {
     position: absolute;
     margin: 4px 11px 0 0;
   }
+.document .document_tool {
+  position: absolute;
+  margin: 2px 14px 0 0;
+}
 .note .edit_note {
   position: absolute;
   margin: 5px 11px 0 0;
