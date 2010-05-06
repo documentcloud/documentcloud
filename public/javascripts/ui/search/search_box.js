@@ -38,7 +38,7 @@ dc.ui.SearchBox = dc.View.extend({
     this.titleBox = $('#title_box', this.el);
     $(document.body).setMode('no', 'search');
     this.setCallbacks();
-    $('#cloud_edge').click(this.showHelp);
+    $('#cloud_edge').click(function(){ window.location = '/home'; });
     (this._helpTab = $('#help_tab')).click(this.showHelp);
     (this._documentsTab = $('#documents_tab')).click(this.loadDefault);
     return this;

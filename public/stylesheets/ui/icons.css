@@ -33,9 +33,6 @@
 .icon.lock {
   background-image: url(/images/embed/icons/lock.png);
 }
-.icon.calais {
-  background-image: url(/images/embed/icons/calais.jpg);
-}
 .icon.cancel_search {
   width: 11px; height: 11px;
   background: url(/images/embed/icons/cancel_search.png);
@@ -67,6 +64,11 @@
     .icon.minus:hover {
       background-image: url(/images/embed/ui/minus_lit.png);
     }
+
+.icon.calais_30 {
+  width: 30px; height: 30px;
+  background-image: url(/images/embed/icons/calais_30.png);
+}
 
 #notifier.warn_style {
   background-image: url(/images/embed/icons/bullet_red.png);

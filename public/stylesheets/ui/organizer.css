@@ -1,13 +1,26 @@
 #organizer {
 }
-  #project_controls {
+  #organizer .block {
+    background: #fff;
+    color: #555;
     border-bottom: 1px solid #e0e0e0;
     padding: 20px 30px 20px 30px;
     margin-right: 2px;
   }
-  #organizer .sidebar_section {
-    padding-bottom: 15px;
-  }
+    #organizer .calais_info {
+      color: #999;
+      margin-top: 15px;
+      line-height: 30px;
+      cursor: pointer;
+      display: block;
+    }
+      #organizer .calais_info:hover {
+        text-decoration: underline;
+      }
+      #organizer .block .calais_30 {
+        float: left;
+        margin-right: 12px;
+      }
   #organizer #organizer_projects,
   #organizer #organizer_entities {
     position: relative;
