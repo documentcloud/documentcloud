@@ -105,13 +105,16 @@ module DC
       def save_file(file, s3_path, access, opts={})
         file = opts[:string] ? file : File.open(file)
         headers = s3_path.match(IMAGE_EXT) ? {'Expires' => 1.year.from_now.httpdate} : {}
+        attempts = 0
         begin
+          attempts += 1
           bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access], headers)
         rescue Exception => e
-          sleep 3
+          sleep 5
           @s3 = create_s3
           @bucket = s3.bucket(BUCKET_NAME)
-          bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access], headers)
+          retry if attempts <= 3
+          raise e
         end
         bucket.key(s3_path).public_link
       end
