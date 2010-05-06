@@ -142,11 +142,13 @@ textarea.text_area {
 /*----------------------------- Mini Buttons ---------------------------------*/
 .minibutton {
   cursor: pointer;
-  font: bold 10px/12px sans-serif;
   color: #fff;
   text-shadow: #aaa 0 -1px 0;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 11px;
   padding: 5px 10px;
-  height: 12px;
+  height: 11px;
   text-align: center;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   box-shadow: 0 1px 2px #c4c4c4; -webkit-box-shadow: 0 1px 2px #c4c4c4; -moz-box-shadow: 0 1px 2px #c4c4c4;
@@ -171,7 +173,7 @@ textarea.text_area {
   .minibutton .icon.white_plus {
     float: left;
     position: relative;
-    margin: 1px 6px 0 -3px;
+    margin: 0px 6px 0 -3px;
   }
   .minibutton.warn {
     border-color: #ae554f;
@@ -226,7 +228,7 @@ textarea.text_area {
 }
   .menu_content .menu_item {
     cursor: pointer;
-    font: 11px Arial;
+    font-size: 11px;
     color: #ccc;
     padding: 7px 10px;
     overflow: hidden;
