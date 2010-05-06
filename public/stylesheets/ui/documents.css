@@ -92,6 +92,9 @@
       font-style: italic;
       color: #844;
     }
+      .document.error_access .email {
+        color: #000;
+      }
   .document .show_notes {
     cursor: pointer;
     color: #999;

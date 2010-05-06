@@ -2,8 +2,10 @@
 dc.ui.Document = dc.View.extend({
 
   // To display if the document failed to upload.
-  ERROR_MESSAGE : "The document failed to import successfully. We've been notified of the problem.\
-    You can try deleting this document, re-saving the PDF with Acrobat or Preview, and reducing the file size before uploading again.",
+  ERROR_MESSAGE : "The document failed to import successfully. We've been notified of the problem, \
+    and periodically review failed documents. You can try deleting this document, \
+    re-saving the PDF with Acrobat or Preview, and reducing the file size before uploading again.\
+    For direct help, email us at <span class=\"email\">support@documentcloud.org</span>",
 
   className : 'document',
 
