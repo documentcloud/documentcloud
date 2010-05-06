@@ -1,26 +1,28 @@
 #paginator {
   display: none;
-  padding: 11px 15px 11px 20px;
-  font: 11px/13px Arial;
-  color: #555;
-  text-align: center;
-  border: 1px solid #e0e0e0; border-left: 0; border-right: 0;
+  position: absolute;
+  bottom: 20px; left: 30px; right: 30px;
+  padding: 12px 0 10px;
+  font-size: 11px;
+  color: #999;
+  text-align: right;
+  border-top: 1px solid #e0e0e0;
 }
   body.paginated #paginator {
     display: block;
   }
-  #paginator span.description {
-    position: absolute;
-    padding: 0;
-    left: 20px;
+  #paginator .description {
+    float: left;
   }
-  #paginator span.page_link, #paginator span.arrow {
-    cursor: pointer;
-    padding: 0 5px;
-  }
-    #paginator span.page_link:hover, #paginator span.arrow:hover, #paginator span.page_link.current {
-      color: #000;
+    #paginator .range {
+      font-weight: bold;
     }
-      #paginator span.page_link.current {
-        font-weight: bold;
-      }
+  #paginator .prev, #paginator .next {
+    cursor: pointer;
+  }
+    #paginator .text {
+      text-decoration: underline;
+    }
+  #paginator .enumeration {
+    margin: 0 8px;
+  }
