@@ -170,11 +170,14 @@ textarea.text_area {
     opacity: 0.33; filter: alpha(opacity=33);
     cursor: default;
   }
-  .minibutton .icon.white_plus {
-    float: left;
+  .minibutton.plus {
     position: relative;
-    margin: 0px 6px 0 -3px;
+    padding-left: 24px;
   }
+    .minibutton .icon.white_plus {
+      position: absolute;
+      top: 5px; left: 7px;
+    }
   .minibutton.warn {
     border-color: #ae554f;
     text-shadow: #ae554f 0 -1px 0;

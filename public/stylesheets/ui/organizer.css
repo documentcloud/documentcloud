@@ -57,6 +57,7 @@
         #organizer .box.uploaded_documents:hover,
         #organizer .box.uploaded_documents.is_selected,
         #organizer .box.uploaded_documents.is_selected:hover {
+          border-top: 0;
           background: #fff;
           border-right: 2px solid #ccc;
         }
