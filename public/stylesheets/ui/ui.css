@@ -432,7 +432,8 @@ iframe.hidden_iframe {
   position: absolute;
   z-index: 100;
   border: 2px solid #09f;
-  background: transparent;
+  background: url(/images/embed/ui/semiwhite.png);
+  box-shadow: 0 0 20px #ddd; -webkit-box-shadow: 0 0 20px #ddd; -moz-box-shadow: 0 0 20px #ddd;
 
 /*  background-color: #09f;
   filter: alpha(opacity=30);
