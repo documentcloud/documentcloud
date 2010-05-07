@@ -430,11 +430,11 @@ iframe.hidden_iframe {
 /*------------------------------ Selections ----------------------------------*/
 .selection {
   position: absolute;
-  background-color: #FFF233;
+  background-color: #09f;
   filter: alpha(opacity=30);
   opacity: 0.3;
   z-index: 100;
-  border: 1px solid #aaaa00;
+  border: 1px solid #047;
   -webkit-box-shadow: 0 0px 10px #777; -moz-box-shadow: 0 0px 7px #777;
 }
 

@@ -56,9 +56,8 @@
         background-position: right top;
       }
         #organizer .box:hover,
-        #organizer_entities .row:hover,
-        .document.is_selected .select {
-          background: #ffc;
+        #organizer_entities .row:hover {
+          background: #ede9e8;
         }
       #organizer .box.is_selected,
       #organizer .box.is_selected:hover {

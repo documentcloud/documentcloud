@@ -3,7 +3,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   GRAPH_OPTIONS : {
     xaxis     : {mode : 'time', minTickSize: [1, "day"]},
     yaxis     : {ticks: [], min: -0.5},
-    selection : {mode : 'x', color: '#ffff88'},
+    selection : {mode : 'x', color: '#0099ff'},
     legend    : {show : false},
     series    : {lines : {show : false}, points : {show : true}},
     grid      : {hoverable : true, clickable : true}
