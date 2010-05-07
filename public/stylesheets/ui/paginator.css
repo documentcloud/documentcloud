@@ -27,10 +27,10 @@
     margin: 0 8px;
   }
   #paginator #size_toggle {
-    width: 48px; height: 24px;
+    width: 47px; height: 24px;
     position: absolute;
     left: 50%; top: 10px;
-    margin-left: -12px;
+    margin-left: -24px;
     cursor: pointer;
     background: url(/images/embed/ui/size_toggle_full.png);
   }
