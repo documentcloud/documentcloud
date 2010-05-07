@@ -18,7 +18,7 @@ dc.ui.Paginator = dc.View.extend({
 
   constructor : function() {
     this.base();
-    this.setSize(dc.app.cookies.read('document_size') == 'mini');
+    this.setSize(dc.app.preferences.get('paginator_mini') || false);
   },
 
   setQuery : function(query) {
@@ -62,7 +62,7 @@ dc.ui.Paginator = dc.View.extend({
 
   toggleSize: function(callback) {
     this.setSize(!this.mini);
-    dc.app.cookies.write('document_size', this.mini ? 'mini' : 'normal', true);
+    dc.app.preferences.set({paginator_mini : this.mini});
     callback = _.isFunction(callback) ? callback : null;
     var page = Math.floor(((this.page || 1) - 1) / this.pageFactor()) + 1;
     dc.app.searchBox.search(dc.app.searchBox.value(), page, callback);
