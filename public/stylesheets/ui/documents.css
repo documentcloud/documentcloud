@@ -104,6 +104,7 @@
         left: 29px; top: 50px;
       }
   .document .metalines {
+    font-size: 10px;
     margin-bottom: 4px;
     color: #999;
   }
@@ -116,7 +117,7 @@
   .document .description {
     font: 13px/18px Georgia;
     color: #555;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
   }
     body.minidocs .document .description {
       display: none;
