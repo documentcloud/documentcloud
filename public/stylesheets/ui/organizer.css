@@ -57,7 +57,7 @@
       }
         #organizer .box:hover,
         #organizer_entities .row:hover {
-          background: #fcfcfc;
+          background: #f9f9f9;
         }
       #organizer .box.is_selected,
       #organizer .box.is_selected:hover {
