@@ -18,7 +18,7 @@ dc.ui.Paginator = dc.View.extend({
 
   constructor : function() {
     this.base();
-    this.mini = false;
+    this.setSize(dc.app.cookies.read('document_size') == 'mini');
   },
 
   setQuery : function(query) {
@@ -55,12 +55,17 @@ dc.ui.Paginator = dc.View.extend({
     return this;
   },
 
+  setSize : function(mini) {
+    this.mini = mini;
+    $(document.body).toggleClass('minidocs', this.mini);
+  },
+
   toggleSize: function(callback) {
-    this.mini = !this.mini;
+    this.setSize(!this.mini);
+    dc.app.cookies.write('document_size', this.mini ? 'mini' : 'normal', true);
     callback = _.isFunction(callback) ? callback : null;
     var page = Math.floor(((this.page || 1) - 1) / this.pageFactor()) + 1;
     dc.app.searchBox.search(dc.app.searchBox.value(), page, callback);
-    $(document.body).toggleClass('minidocs', this.mini);
   },
 
   // TODO: Move all these into the searchBox and clean it up.

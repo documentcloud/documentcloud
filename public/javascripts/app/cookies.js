@@ -10,11 +10,11 @@ dc.app.cookies = {
   },
 
   // Write a cookie's value, and keep it only for the session (default), or
-  // forever (5 years).
+  // forever (2 years).
   write : function(name, value, keep) {
     var expiration = keep ? new Date() : null;
     if (expiration) keep == 'remove' ? expiration.setYear(expiration.getFullYear() - 1) :
-                                       expiration.setYear(expiration.getFullYear() + 5);
+                                       expiration.setYear(expiration.getFullYear() + 2);
     var date = expiration ? '; expires=' + expiration.toUTCString() : '';
     document.cookie = name + '=' + encodeURIComponent(value) + '; path=/' + date;
   },
