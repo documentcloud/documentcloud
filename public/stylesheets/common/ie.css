@@ -81,3 +81,9 @@ body.workspace {
 body.minidocs .document img.doc {
   margin-left: 49px;
 }
+body.minidocs .document .document_tool {
+  left: 125px;
+}
+.document .page {
+  margin-top: 0;
+}

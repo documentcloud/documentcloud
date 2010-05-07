@@ -150,10 +150,10 @@
 
 /*---------------------------- Page References -------------------------------*/
 .document .pages {
-  overflow: auto;
+  overflow: hidden;
 }
 .document .pages_title {
-  margin: 15px 0 0 0;
+  margin: 15px 0 15px 0;
   line-height: 11px;
 }
   .document .pages .pages_title_inner {
@@ -170,7 +170,7 @@
     }
 .document .page {
   float: left;
-  margin: 15px 20px 0px 3px;
+  margin: 0 20px 15px 3px;
   text-align: center;
   cursor: pointer;
 }
