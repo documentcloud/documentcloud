@@ -57,7 +57,7 @@
       }
         #organizer .box:hover,
         #organizer_entities .row:hover {
-          background: #ede9e8;
+          background: #fcfcfc;
         }
       #organizer .box.is_selected,
       #organizer .box.is_selected:hover {
@@ -138,16 +138,13 @@
         position: relative;
       }
         #organizer_entities .row.active,
-        #organizer_entities .row:hover {
-          border-top-color: #fff;
+        #organizer_entities .row.active:hover {
           border-bottom-color: #e0e0e0;
+          border-top-color: #fff;
+          background: #fff;
+          border-right: 0;
+          width: 270px;
         }
-          #organizer_entities .row.active,
-          #organizer_entities .row.active:hover {
-            background: #fff;
-            border-right: 0;
-            width: 270px;
-          }
         #organizer_entities .count,
         #organizer_entities .show_pages {
           font: 11px/11px Arial;
