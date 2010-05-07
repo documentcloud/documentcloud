@@ -147,7 +147,7 @@ textarea.text_area {
   font-weight: bold;
   font-size: 11px;
   line-height: 11px;
-  padding: 4px 10px 6px;
+  padding: 5px 10px 6px;
   height: 11px;
   text-align: center;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
@@ -192,7 +192,7 @@ textarea.text_area {
 .minibutton.menu {
   width: auto;
   text-align: left;
-  padding: 4px 5px 6px 8px;
+  padding: 5px 5px 6px 8px;
 }
 .minibutton.menu .wrapper {
   position: relative;
