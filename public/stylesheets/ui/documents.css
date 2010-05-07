@@ -79,6 +79,9 @@
     .document .doc_title {
       cursor: pointer;
     }
+      .document .doc_title:hover {
+        text-decoration: underline;
+      }
     .document .document_tool {
       display: inline;
       vertical-align: top;
