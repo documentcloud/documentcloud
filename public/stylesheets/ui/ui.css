@@ -433,7 +433,7 @@ iframe.hidden_iframe {
   z-index: 100;
   border: 2px solid #09f;
   background: url(/images/embed/ui/semiwhite.png);
-  box-shadow: 0 0 20px #ddd; -webkit-box-shadow: 0 0 20px #ddd; -moz-box-shadow: 0 0 20px #ddd;
+  box-shadow: 0 0 20px #eee; -webkit-box-shadow: 0 0 20px #eee; -moz-box-shadow: 0 0 20px #eee;
 
 /*  background-color: #09f;
   filter: alpha(opacity=30);
