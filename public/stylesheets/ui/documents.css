@@ -38,7 +38,7 @@
     -webkit-box-shadow: 0 0px 4px #222; -moz-box-shadow: 0 0px 4px #222;
   }
     body.minidocs .document img.doc {
-      left: 50%; margin-left: -30px;
+      margin-left: 55px;
     }
     img.page_image {
       width: 40px; height: 50px;

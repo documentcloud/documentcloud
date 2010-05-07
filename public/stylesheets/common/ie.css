@@ -47,9 +47,6 @@ body.workspace {
 #section_editor {
   width: 380px;
 }
-#entities {
-  right: 25px;
-}
 #project_controls {
   padding-right: 15px;
 }
@@ -80,4 +77,7 @@ body.workspace {
 }
 #organizer_entities .row {
   width: 268px;
+}
+body.minidocs .document img.doc {
+  margin-left: 49px;
 }
