@@ -15,7 +15,7 @@
   }
   #document_list .document {
     min-height: 77px;
-    padding: 5px 30px 5px 90px;
+    padding: 5px 30px 5px 92px;
     margin-bottom: 20px;
     font: 11px/14px Arial;
   }
@@ -32,13 +32,15 @@
       min-height: 93px;
     }
   img.doc {
-    background: white;
+    background: #fff;
     position: absolute;
     width: 60px; height: 75px;
-    -webkit-box-shadow: 0 0px 4px #222; -moz-box-shadow: 0 0px 4px #222;
+    padding: 1px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 0 #ededed; -webkit-box-shadow: 2px 2px 0 #ededed; -moz-box-shadow: 2px 2px 0 #ededed;
   }
     body.minidocs .document img.doc {
-      margin-left: 55px;
+      margin-left: 54px;
     }
     img.page_image {
       width: 40px; height: 50px;
@@ -47,19 +49,22 @@
   .document .select {
     position: absolute;
     left: 1px; top: 0px;
-    width: 70px; height: 85px;
+    width: 72px; height: 87px;
     border: 1px solid transparent;
-    -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
+    -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
   }
     body.minidocs .document .select {
-      margin-left: 55px;
+      margin-left: 54px;
     }
     .document.is_selected .select {
       border-color: #dd9;
     }
   .document img.doc {
-    left: 7px; top: 6px;
+    left: 6px; top: 5px;
   }
+    .document.is_selected img.doc {
+      box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none;
+    }
   .document .title {
     display: block;
     color: #000;

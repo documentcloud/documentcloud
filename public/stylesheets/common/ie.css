@@ -7,8 +7,6 @@ select {
 }
 
 /*---------------------- Drop-shadow replacements ----------------------------*/
-img.doc,
-img.page_image,
 #tooltip_background,
 .note .note_background {
   margin: -6px 0 0 -6px;
@@ -77,12 +75,6 @@ body.workspace {
 }
 #organizer_entities .row {
   width: 268px;
-}
-body.minidocs .document img.doc {
-  margin-left: 49px;
-}
-body.minidocs .document .document_tool {
-  left: 125px;
 }
 .document .page {
   margin-top: 0;
