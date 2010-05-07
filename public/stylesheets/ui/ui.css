@@ -147,12 +147,12 @@ textarea.text_area {
   font-weight: bold;
   font-size: 11px;
   line-height: 11px;
-  padding: 5px 10px;
+  padding: 4px 10px 6px;
   height: 11px;
   text-align: center;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   box-shadow: 0 1px 2px #c4c4c4; -webkit-box-shadow: 0 1px 2px #c4c4c4; -moz-box-shadow: 0 1px 2px #c4c4c4;
-  border: 1px solid #aaa;
+  border: 1px solid #b2b2b2; border-top-color: #c9c9c9; border-bottom-color: #9a9a9a;
   background: url(/images/embed/ui/button_bg.gif) repeat-x left top;
 }
   .minibutton:active {
@@ -192,7 +192,7 @@ textarea.text_area {
 .minibutton.menu {
   width: auto;
   text-align: left;
-  padding: 5px 5px 5px 8px;
+  padding: 4px 5px 6px 8px;
 }
 .minibutton.menu .wrapper {
   position: relative;

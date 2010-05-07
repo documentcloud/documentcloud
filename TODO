@@ -1,5 +1,7 @@
 TODO:
 
+  * Merge identical entities from different OpenCalais chunks (unsafe???). 
+
   * DocumentCloud Solo.
       
   * Normalize uppercase OpenCalais entity names.
