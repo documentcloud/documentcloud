@@ -200,14 +200,14 @@ textarea.text_area {
   width: auto;
   text-align: left;
   padding: 5px 5px 6px 8px;
+  position: relative;
 }
   .minibutton.menu.is_open {
-    color: black;
-    color: #999;
+    color: #ccc;
     background: #222;
-    border: 0;
-    padding: 6px 6px 14px 9px;
     text-shadow: none;
+    border: 0;
+    padding: 6px 6px 15px 9px;
     border-bottom-left-radius: 0; -webkit-border-bottom-left-radius: 0; -moz-border-radius-bottomleft: 0;
     border-bottom-right-radius: 0; -webkit-border-bottom-right-radius: 0; -moz-border-radius-bottomright: 0;
   }
@@ -223,12 +223,22 @@ textarea.text_area {
     .minibutton.menu.is_open .label {
       background: transparent;
     }
+  .minibutton.menu .corner {
+    display: none;
+    position: absolute;
+    width: 3px; height: 3px;
+    bottom: 0px; right: -3px;
+    background: url(/images/embed/ui/round_invert_dark.png);
+  }
+    .minibutton.menu.is_open .corner {
+      display: block;
+    }
 
 .menu_content {
   display: none;
   position: absolute;
   z-index: 100;
-  width: 160px;
+  width: 200px;
   background: #161616;
   padding: 4px 0;
   opacity: 0.95; filter: alpha(opacity=95);
@@ -239,8 +249,9 @@ textarea.text_area {
   .menu_content .menu_item {
     cursor: pointer;
     font-size: 11px;
+    line-height: 14px;
     color: #ccc;
-    padding: 7px 10px;
+    padding: 8px 10px;
     overflow: hidden;
     border-top: 1px solid #333;
   }
@@ -263,10 +274,11 @@ textarea.text_area {
     .menu_content .menu_item.plus {
       padding-right: 25px;
       background-repeat: no-repeat;
-      background-position: 140px center;
+      background-position: 178px center;
     }
       .menu_content .menu_item.plus {
-        background-position: 141px center;
+        background-position: 179px center;
+        color: #0AAF86;
       }
     .menu_content .menu_item.disabled:hover {
       background-color: transparent;
