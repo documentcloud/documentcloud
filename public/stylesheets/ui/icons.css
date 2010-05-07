@@ -46,6 +46,10 @@
   width: 11px; height: 11px;
   background-image: url(/images/embed/icons/edit_glyph.png);;
 }
+.icon.search_glyph {
+  width: 12px; height: 12px;
+  background-image: url(/images/embed/icons/search_glyph.png);;
+}
 
 .icon.plus, .icon.minus {
   display: block;
