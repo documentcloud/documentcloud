@@ -31,9 +31,9 @@ class Entity < ActiveRecord::Base
   end
 
   # The pages on which this entity occurs within the document.
-  def pages(occurs=split_occurrences)
+  def pages(occurs=split_occurrences, options={})
     return [] unless textual?
-    super(occurs)
+    super(occurs, options)
   end
 
   # An Entity is considered to be textual if it occurs in the body of the text.
@@ -53,7 +53,7 @@ class Entity < ActiveRecord::Base
      'value'        => value,
      'relevance'    => relevance
     }
-    data['pages']   =  pages.map {|p| p.page_number } if options[:include_pages]
+    data['pages']   =  pages(split_occurrences, :limit => 200).map {|p| p.page_number } if options[:include_pages]
     data.to_json
   end
 

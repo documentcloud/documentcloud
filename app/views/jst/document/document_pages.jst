@@ -8,6 +8,7 @@
 <% if (pages.length) { %>
   <div class="pages_title">
     <span class="pages_title_inner">
+      <%= pages.length >= 200 ? 'Over ' : '' %>
       <%= pages.length %>
       <%= Inflector.pluralize('page', pages.length) %>
       mentioning <%= Inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>

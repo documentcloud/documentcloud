@@ -11,11 +11,12 @@ module DC
       end
 
       # The pages on which this entity occurs within the document.
-      def pages(occurs=split_occurrences)
+      def pages(occurs=split_occurrences, options={})
         conds = occurs.map do |occur|
           "(start_offset <= #{occur.offset} and end_offset > #{occur.offset})"
         end
-        document.pages.all(:conditions => conds.join(' or '), :select => 'id, page_number, start_offset, end_offset')
+        search = options.merge({:conditions => conds.join(' or '), :select => 'id, page_number, start_offset, end_offset'})
+        document.pages.all(search)
       end
 
       # This method has to read the entire document contents into memory and
