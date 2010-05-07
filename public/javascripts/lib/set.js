@@ -150,4 +150,4 @@ dc.Set = Base.extend({
 
 });
 
-dc.Set.implement(dc.util.Bindable);
+dc.Set.implement(dc.model.Bindable);

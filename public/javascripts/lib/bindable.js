@@ -1,4 +1,4 @@
-dc.util.Bindable = {
+dc.model.Bindable = {
 
   // Bind an event on this object to a given callback.
   bind : function(e, callback) {

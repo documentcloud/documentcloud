@@ -133,4 +133,4 @@ dc.Model = Base.extend({
 
 });
 
-dc.Model.implement(dc.util.Bindable);
+dc.Model.implement(dc.model.Bindable);
