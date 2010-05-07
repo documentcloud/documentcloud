@@ -176,7 +176,7 @@ textarea.text_area {
   }
     .minibutton .icon.white_plus {
       position: absolute;
-      top: 5px; left: 7px;
+      top: 6px; left: 7px;
     }
   .minibutton.warn {
     border-color: #ae554f;
