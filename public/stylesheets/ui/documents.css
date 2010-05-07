@@ -240,6 +240,10 @@
         color: black;
         float: right;
       }
+      .note .note_text {
+        color: #333;
+        font: 13px/18px Georgia;
+      }
       .note .note_text_edit_wrap {
         position: relative;
         margin-right: 10px;
