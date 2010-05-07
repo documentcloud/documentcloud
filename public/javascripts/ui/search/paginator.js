@@ -37,6 +37,11 @@ dc.ui.Paginator = dc.View.extend({
     return this.mini ? this.MINI_PAGE_SIZE : this.DEFAULT_PAGE_SIZE;
   },
 
+  pageFactor : function() {
+    return this.mini ? this.MINI_PAGE_SIZE / this.DEFAULT_PAGE_SIZE :
+                       this.DEFAULT_PAGE_SIZE / this.MINI_PAGE_SIZE;
+  },
+
   pageCount : function() {
     return Math.ceil(this.query.total / this.pageSize());
   },
@@ -53,7 +58,8 @@ dc.ui.Paginator = dc.View.extend({
   toggleSize: function(callback) {
     this.mini = !this.mini;
     callback = _.isFunction(callback) ? callback : null;
-    dc.app.searchBox.search(dc.app.searchBox.value(), this.page || 1, callback);
+    var page = Math.floor(((this.page || 1) - 1) / this.pageFactor()) + 1;
+    dc.app.searchBox.search(dc.app.searchBox.value(), page, callback);
     $(document.body).toggleClass('minidocs', this.mini);
   },
 
