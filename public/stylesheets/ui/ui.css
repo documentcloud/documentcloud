@@ -430,12 +430,15 @@ iframe.hidden_iframe {
 /*------------------------------ Selections ----------------------------------*/
 .selection {
   position: absolute;
-  background-color: #09f;
+  z-index: 100;
+  border: 2px solid #09f;
+  background: transparent;
+
+/*  background-color: #09f;
   filter: alpha(opacity=30);
   opacity: 0.3;
-  z-index: 100;
   border: 1px solid #047;
-  -webkit-box-shadow: 0 0px 10px #777; -moz-box-shadow: 0 0px 7px #777;
+  -webkit-box-shadow: 0 0px 10px #777; -moz-box-shadow: 0 0px 7px #777;*/
 }
 
 /*--------------------------- Notifier, Tooltip ------------------------------*/
