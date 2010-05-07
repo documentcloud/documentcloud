@@ -5,20 +5,22 @@
     return pair.page;
   });
 %>
-<div class="pages_title">
-  <span class="pages_title_inner">
-    <%= pages.length %>
-    <%= Inflector.pluralize('page', pages.length) %>
-    mentioning <%= Inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>
-  </span>
-  <div class="icon cancel_search" title="hide pages"></div>
-</div>
-<div class="clear"></div>
-<% _.each(pages, function(pair) { %>
-  <div class="page" data-page="<%= pair.page %>" data-id="<%= pair.id %>">
-    <img class="page_image" alt="page <%= pair.page %>" src="<%= doc.pageThumbnailURL(pair.page) %>" />
-    <div class="page_number">p. <%= pair.page %></div>
+<% if (pages.length) { %>
+  <div class="pages_title">
+    <span class="pages_title_inner">
+      <%= pages.length %>
+      <%= Inflector.pluralize('page', pages.length) %>
+      mentioning <%= Inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>
+    </span>
+    <div class="icon cancel_search" title="hide pages"></div>
   </div>
-<% }); %>
-<div class="clear"></div>
+  <div class="clear"></div>
+  <% _.each(pages, function(pair) { %>
+    <div class="page" data-page="<%= pair.page %>" data-id="<%= pair.id %>">
+      <img class="page_image" alt="page <%= pair.page %>" src="<%= doc.pageThumbnailURL(pair.page) %>" />
+      <div class="page_number">p. <%= pair.page %></div>
+    </div>
+  <% }); %>
+  <div class="clear"></div>
+<% } %>
 

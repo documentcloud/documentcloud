@@ -14,18 +14,19 @@ module DC
       }
 
       attr_reader   :text, :fields, :projects, :attributes, :conditions, :results, :solr
-      attr_accessor :page, :from, :to, :total
+      attr_accessor :page, :page_size, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
       # appropriate attributes.
       def initialize(opts={})
         @text                   = opts[:text]
         @page                   = opts[:page]
-        @fields                 = opts[:fields] || []
-        @projects               = opts[:projects] || []
-        @attributes             = opts[:attributes] || []
+        @fields                 = opts[:fields]       || []
+        @projects               = opts[:projects]     || []
+        @attributes             = opts[:attributes]   || []
         @from, @to, @total      = nil, nil, nil
         @account, @organization = nil, nil
+        @page_size              = DEFAULT_PAGE_SIZE
         @solr                   = Sunspot.new_search(Document)
       end
 
@@ -37,8 +38,8 @@ module DC
       # Set the page of the search that this query is supposed to access.
       def page=(page)
         @page = page
-        @from = (@page - 1) * PAGE_SIZE
-        @to   = @from + PAGE_SIZE
+        @from = (@page - 1) * @page_size
+        @to   = @from + @page_size
       end
 
       # Generate all of the SQL, including conditions and joins, that is needed
@@ -51,7 +52,7 @@ module DC
         build_facets     if     @include_facets
         build_access     unless @unrestricted
         page = @page
-        size = @facet ? 0 : PAGE_SIZE
+        size = @facet ? 0 : @page_size
         @solr.build do
           order_by  :created_at, :desc
           paginate  :page => page, :per_page => size

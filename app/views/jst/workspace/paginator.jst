@@ -4,6 +4,8 @@
   of <%= q.total %> <%= Inflector.pluralize('document', q.total) %>
 </div>
 
+<div id="size_toggle"></div>
+
 <% if (q.total > page_size) { %>
   <% if (q.page > 1) { %>
     <span class="prev">&larr;&nbsp;&nbsp;<span class="text">Prev</span></span>

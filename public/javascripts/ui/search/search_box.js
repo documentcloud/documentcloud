@@ -84,7 +84,7 @@ dc.ui.SearchBox = dc.View.extend({
   },
 
   // Start a search for a query string, updating the page URL.
-  search : function(query, pageNumber) {
+  search : function(query, pageNumber, callback) {
     dc.ui.Project.highlight(query);
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
@@ -92,9 +92,10 @@ dc.ui.SearchBox = dc.View.extend({
     this.showDocuments();
     Documents.refresh();
     this.outstandingSearch = true;
+    this._afterSearch = callback;
     dc.ui.spinner.show('searching');
     dc.app.paginator.hide();
-    var params = {q : query, include_facets : true};
+    var params = {q : query, include_facets : true, page_size : dc.app.paginator.pageSize()};
     if (this.page) params.page = this.page;
     $.get(this.DOCUMENTS_URL, params, this._loadSearchResults, 'json');
   },
@@ -181,6 +182,7 @@ dc.ui.SearchBox = dc.View.extend({
     }
     dc.ui.spinner.hide();
     this.outstandingSearch = false;
+    if (this._afterSearch) this._afterSearch();
   },
 
   // After the initial search results come back, send out a request for the

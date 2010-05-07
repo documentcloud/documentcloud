@@ -2,7 +2,7 @@
   display: none;
   position: absolute;
   bottom: 20px; left: 30px; right: 30px;
-  padding: 12px 0 10px;
+  padding: 15px 0 8px;
   font-size: 11px;
   color: #999;
   text-align: right;
@@ -26,3 +26,14 @@
   #paginator .enumeration {
     margin: 0 8px;
   }
+  #paginator #size_toggle {
+    width: 48px; height: 24px;
+    position: absolute;
+    left: 50%; top: 10px;
+    margin-left: -12px;
+    cursor: pointer;
+    background: url(/images/embed/ui/size_toggle_full.png);
+  }
+    body.minidocs #paginator #size_toggle {
+      background: url(/images/embed/ui/size_toggle_thumb.png);
+    }

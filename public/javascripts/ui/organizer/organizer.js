@@ -135,17 +135,24 @@ dc.ui.Organizer = dc.View.extend({
 
   _showPages : function(e) {
     var el = $(e.target).closest('.row');
-    Entities.fetch(el.attr('data-category'), el.attr('data-value'), function(entities) {
-      var sets = _.reduce(entities, {}, function(memo, ent) {
-        var docId = ent.get('document_id');
-        memo[docId] = memo[docId] || [];
-        memo[docId].push(ent);
-        return memo;
+    var next = function() {
+      Entities.fetch(el.attr('data-category'), el.attr('data-value'), function(entities) {
+        var sets = _.reduce(entities, {}, function(memo, ent) {
+          var docId = ent.get('document_id');
+          memo[docId] = memo[docId] || [];
+          memo[docId].push(ent);
+          return memo;
+        });
+        _.each(sets, function(set) {
+          Documents.get(set[0].get('document_id')).pageEntities.refresh(set);
+        });
       });
-      _.each(sets, function(set) {
-        Documents.get(set[0].get('document_id')).pageEntities.refresh(set);
-      });
-    });
+    };
+    if (dc.app.paginator.mini) {
+      dc.app.paginator.toggleSize(next);
+    } else {
+      next();
+    }
     return false;
   },
 

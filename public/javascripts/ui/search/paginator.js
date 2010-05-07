@@ -1,7 +1,7 @@
 dc.ui.Paginator = dc.View.extend({
 
-  // Keep in sync with search.rb on the server.
-  PAGE_SIZE : 10,
+  DEFAULT_PAGE_SIZE : 10,
+  MINI_PAGE_SIZE    : 30,
 
   id        : 'paginator',
   className : 'interface',
@@ -12,11 +12,13 @@ dc.ui.Paginator = dc.View.extend({
   callbacks : {
     '.prev.click':          'previousPage',
     '.next.click':          'nextPage',
-    '.enumeration.change':  'goToPage'
+    '.enumeration.change':  'goToPage',
+    '#size_toggle.click':   'toggleSize'
   },
 
   constructor : function() {
     this.base();
+    this.mini = false;
   },
 
   setQuery : function(query) {
@@ -30,17 +32,29 @@ dc.ui.Paginator = dc.View.extend({
     $(document.body).removeClass('paginated');
   },
 
+  // Keep in sync with search.rb on the server.
+  pageSize : function() {
+    return this.mini ? this.MINI_PAGE_SIZE : this.DEFAULT_PAGE_SIZE;
+  },
+
   pageCount : function() {
-    return Math.ceil(this.query.total / this.PAGE_SIZE);
+    return Math.ceil(this.query.total / this.pageSize());
   },
 
   render : function() {
     var el = $(this.el);
     el.html('');
     if (!this.query) return this;
-    el.html(JST.paginator({q : this.query, page_size : this.PAGE_SIZE, page_count : this.pageCount()}));
+    el.html(JST.paginator({q : this.query, page_size : this.pageSize(), page_count : this.pageCount()}));
     this.setCallbacks();
     return this;
+  },
+
+  toggleSize: function(callback) {
+    this.mini = !this.mini;
+    callback = _.isFunction(callback) ? callback : null;
+    dc.app.searchBox.search(dc.app.searchBox.value(), this.page || 1, callback);
+    $(document.body).toggleClass('minidocs', this.mini);
   },
 
   // TODO: Move all these into the searchBox and clean it up.
