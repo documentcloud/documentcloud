@@ -70,7 +70,7 @@
     display: block;
     color: #000;
     font: bold 16px/20px Arial;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
     min-height: 20px;
   }
     body.minidocs .document .title {
@@ -113,7 +113,7 @@
   .document .description {
     font: 13px/18px Georgia;
     color: #555;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
   }
     body.minidocs .document .description {
       display: none;
