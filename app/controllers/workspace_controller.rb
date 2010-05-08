@@ -13,7 +13,7 @@ class WorkspaceController < ApplicationController
       @annotation_count = Annotation.owned_by(current_account).count
       return
     end
-    return redirect_to('/home') unless request.headers['Authorization']
+    return redirect_to('/home') # unless request.headers['Authorization']
     render :action => 'home', :layout => 'empty'
   end
 

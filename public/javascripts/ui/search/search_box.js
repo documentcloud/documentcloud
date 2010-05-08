@@ -26,7 +26,7 @@ dc.ui.SearchBox = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     this.outstandingSearch = false;
-    _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'showHelp', 'loadDefault');
+    _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'showHelp', 'loadDefault', 'loadDefaultSearch');
     dc.history.register(/^#search\//, this.searchByHash);
     dc.history.register(/^#help$/, this.showHelp);
   },
@@ -40,7 +40,7 @@ dc.ui.SearchBox = dc.View.extend({
     this.setCallbacks();
     $('#cloud_edge').click(function(){ window.location = '/home'; });
     (this._helpTab = $('#help_tab')).click(this.showHelp);
-    (this._documentsTab = $('#documents_tab')).click(this.loadDefault);
+    (this._documentsTab = $('#documents_tab')).click(this.loadDefaultSearch);
     return this;
   },
 
@@ -54,7 +54,7 @@ dc.ui.SearchBox = dc.View.extend({
   },
 
   // Load the default starting-point search.
-  loadDefault : function() {
+  loadDefault : function(searchAll) {
     if (!Documents.empty()) return this.showDocuments();
     if (this.value()) {
       this.search(this.value());
@@ -62,7 +62,15 @@ dc.ui.SearchBox = dc.View.extend({
       Accounts.current().openDocuments();
     } else if (Projects.first()) {
       Projects.first().open();
+    } else if (searchAll === true) {
+      this.search('');
+    } else {
+      this.showHelp();
     }
+  },
+
+  loadDefaultSearch : function() {
+    this.loadDefault(true);
   },
 
   showDocuments : function() {
