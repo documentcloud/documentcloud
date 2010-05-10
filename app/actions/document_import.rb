@@ -98,7 +98,7 @@ class DocumentImport < CloudCrowd::Action
 
   # Our heuristic for this will be ... 100 characters / page.
   def enough_text_detected?(document)
-    text_length = Page.calculate :sum, "length(text)", :conditions => {:document_id => document.id}
+    text_length = (Page.calculate(:sum, "length(text)", :conditions => {:document_id => document.id})).to_i
     text_length > (document.pages.count * 100)
   end
 
