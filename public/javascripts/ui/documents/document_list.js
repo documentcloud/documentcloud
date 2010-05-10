@@ -26,7 +26,7 @@ dc.ui.DocumentList = dc.View.extend({
   },
 
   refresh : function() {
-    $('.document', this.el).remove();
+    $(this.el).html('');
     var views = _.map(Documents.models(), function(m){
       return (new dc.ui.Document({model : m})).render().el;
     });

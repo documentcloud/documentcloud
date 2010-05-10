@@ -101,8 +101,11 @@
         display: block;
         margin: 0; padding: 0;
         position: absolute;
-        left: 29px; top: 50px;
+        left: 27px; top: 50px;
       }
+        body.minidocs .document .document_tool.spinner {
+          top: 50px; left: 83px;
+        }
   .document .metalines {
     font-size: 10px;
     margin-bottom: 4px;
