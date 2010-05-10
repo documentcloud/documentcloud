@@ -4,9 +4,7 @@ body {
 
 #admin_actions {
   position: absolute;
-  width: 158px;
-  top: 10px; right: 10px;
-  text-shadow: none;
+  top: 8px; right: 35px;
 }
 
 #statistics {
