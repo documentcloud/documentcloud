@@ -47,18 +47,17 @@ class DocumentImport < CloudCrowd::Action
     # Destroy existing text and pages to make way for the new.
     document.full_text.destroy if document.full_text
     extractor = DC::Import::TextExtractor.new(@pdf)
-    text = nil
     if extractor.contains_text?
       begin
-        text = pdf_text
+        pdf_text
       rescue Exception => e
-        text = ocr_text
+        ocr_text
       end
     else
-      text = ocr_text
+      ocr_text
     end
-    text = ocr_text unless enough_text_detected?(document, text)
-    document.full_text = FullText.new(:text => text, :document => document)
+    ocr_text unless enough_text_detected?(document)
+    document.full_text = FullText.new(:text => document.combined_page_text, :document => document)
     Page.refresh_page_map(document)
     EntityDate.refresh(document)
     document.save!
@@ -71,31 +70,25 @@ class DocumentImport < CloudCrowd::Action
   private
 
   def pdf_text
-    pages = []
     document.pages.destroy_all if document.pages.count > 0
     Docsplit.extract_text(@pdf, :pages => :all, :output => 'text')
     Dir['text/*.txt'].length.times do |i|
       path = "text/#{document.slug}_#{i + 1}.txt"
       next unless File.exists?(path)
       text = File.read(path)
-      pages.push text
       save_page_text(text, i + 1)
     end
-    pages.join('')
   end
 
   def ocr_text
-    pages = []
     document.pages.destroy_all if document.pages.count > 0
     Docsplit.extract_pages(@pdf, :output => 'text')
     Dir['text/*.pdf'].length.times do |i|
       path = "text/#{document.slug}_#{i + 1}.pdf"
       next unless File.exists?(path)
       text = DC::Import::TextExtractor.new(path).text_from_ocr
-      pages.push text
       save_page_text(text, i + 1)
     end
-    pages.join('')
   end
 
   def save_page_text(text, page_number)
@@ -104,8 +97,9 @@ class DocumentImport < CloudCrowd::Action
   end
 
   # Our heuristic for this will be ... 100 characters / page.
-  def enough_text_detected?(document, text)
-    text.length > (document.pages.count * 100)
+  def enough_text_detected?(document)
+    text_length = Page.calculate :sum, "length(text)", :conditions => {:document_id => document.id}
+    text_length > (document.pages.count * 100)
   end
 
   def document
