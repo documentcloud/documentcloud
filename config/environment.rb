@@ -25,7 +25,7 @@ Rails::Initializer.run do |config|
   config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'
   config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
   config.gem 'rubyzip',               :version => '>= 0.9.1',       :lib => 'zip/zip'
-  config.gem 'right_aws',             :version => '>= 1.10.0'
+  config.gem 'right_aws',             :version => '>= 2.0.0'
   config.gem 'pg',                    :version => '>= 0.9.0'
   config.gem 'jammit',                :version => '>= 0.4.0'
   config.gem 'docsplit',              :version => '>= 0.1.1'
