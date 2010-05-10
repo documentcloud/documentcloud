@@ -41,7 +41,8 @@ class Entity < ActiveRecord::Base
   # Needs to happen when the pass the document's text to Calais in chunks.
   def merge(entity)
     self.relevance = (self.relevance + entity.relevance) / 2.0
-    self.occurrences = Occurrence.to_csv(self.split_occurrences + entity.split_occurrences)
+    @split_occurrences = self.split_occurrences + entity.split_occurrences
+    self.occurrences = Occurrence.to_csv(@split_occurrences)
   end
 
   # The pages on which this entity occurs within the document.
