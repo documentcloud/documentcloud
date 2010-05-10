@@ -1,13 +1,9 @@
 TODO:
 
   * Merge identical entities from different OpenCalais chunks (unsafe???). 
-
-  * DocumentCloud Solo.
       
   * Normalize uppercase OpenCalais entity names.
-  
-  * Reprocess entities on Staging.
-  
+    
   * Disallow annotating outside of the page border.
 
   * Add placeholder JS fallback for non HTML5 browsers.
@@ -32,6 +28,8 @@ TODO:
   
 
 DONE:
+
+  * Reprocess entities on Staging.
 
   * Start a suite of Cron scripts, backup being the first.
 
