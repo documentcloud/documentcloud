@@ -8,7 +8,7 @@ class Entity < ActiveRecord::Base
 
   DEFAULT_RELEVANCE = 0.0
 
-  ALL_CAPS = /\A[A-Z\s]+\Z/
+  ALL_CAPS = /\A[A-Z0-9\s.]+\Z/
 
   belongs_to :document
 
