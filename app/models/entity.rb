@@ -8,6 +8,8 @@ class Entity < ActiveRecord::Base
 
   DEFAULT_RELEVANCE = 0.0
 
+  ALL_CAPS = /\A[A-Z\s]+\Z/
+
   belongs_to :document
 
   validates_inclusion_of :kind, :in => DC::VALID_KINDS
@@ -20,6 +22,11 @@ class Entity < ActiveRecord::Base
     !!DC::CALAIS_MAP[kind.underscore.to_sym]
   end
 
+  def self.normalize_value(string)
+    return string unless string.length > 5 && string.match(ALL_CAPS)
+    string.titleize
+  end
+
   def self.search_in_documents(kind, value, ids)
     entities = self.all(:conditions => {:document_id => ids, :kind => kind, :value => value})
     if entities.empty?
@@ -28,6 +35,13 @@ class Entity < ActiveRecord::Base
       ]})
     end
     entities
+  end
+
+  # Merge this entity with another of the "same" entity for the same document.
+  # Needs to happen when the pass the document's text to Calais in chunks.
+  def merge(entity)
+    self.relevance = (self.relevance + entity.relevance) / 2.0
+    self.occurrences = Occurrence.to_csv(self.split_occurrences + entity.split_occurrences)
   end
 
   # The pages on which this entity occurs within the document.

@@ -13,12 +13,13 @@ module DC
       # Public API: Pass in a document, either with full_text or rdf already
       # attached.
       def extract(document)
-        document.entities = []
+        @entities = {}
         chunks = CalaisFetcher.new.fetch_rdf(document.text)
         chunks.compact.each_with_index do |chunk, i|
           extract_information(document, chunk, i) if i == 0
           extract_entities(document, chunk, i)
         end
+        document.entities = @entities.values
         document.save
       end
 
@@ -38,22 +39,25 @@ module DC
       # the positions where they occur.
       def extract_entities(document, calais, chunk_number)
         offset = chunk_number * MAX_TEXT_SIZE
-        extracted = []
         calais.entities.each do |entity|
           next unless Entity.acceptable_kind? entity.type
           occurrences = entity.instances.map do |instance|
             Occurrence.new(instance.offset + offset, instance.length)
           end
-          extracted << Entity.new(
-            :value        => entity.attributes['commonname'] || entity.attributes['name'],
+          model = Entity.new(
+            :value        => Entity.normalize_value(entity.attributes['commonname'] || entity.attributes['name']),
             :kind         => DC::CALAIS_MAP[entity.type.underscore.to_sym].to_s,
             :relevance    => entity.relevance,
             :document     => document,
             :occurrences  => Occurrence.to_csv(occurrences),
             :calais_id    => entity.calais_hash.value
           )
+          if previous = @entities[model.calais_id]
+            previous.merge(model)
+          else
+            @entities[model.calais_id] = model
+          end
         end
-        document.entities += extracted
       end
 
     end
