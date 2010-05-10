@@ -57,8 +57,7 @@ class DocumentImport < CloudCrowd::Action
       ocr_text
     end
     ocr_text unless enough_text_detected?(document)
-    document = document.reload
-    document.full_text = FullText.new(:text => document.combined_page_text, :document => document)
+    FullText.create!(:text => document.combined_page_text, :document => document)
     Page.refresh_page_map(document)
     EntityDate.refresh(document)
     document.save!
