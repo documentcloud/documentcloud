@@ -1,9 +1,5 @@
 TODO:
-
-  * Merge identical entities from different OpenCalais chunks (unsafe???). 
-      
-  * Normalize uppercase OpenCalais entity names.
-    
+          
   * Disallow annotating outside of the page border.
 
   * Add placeholder JS fallback for non HTML5 browsers.
@@ -28,6 +24,10 @@ TODO:
   
 
 DONE:
+
+  * Normalize uppercase OpenCalais entity names.
+  
+  * Merge identical entities from different OpenCalais chunks.
 
   * Reprocess entities on Staging.
 
