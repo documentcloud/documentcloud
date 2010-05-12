@@ -8,7 +8,11 @@
   padding: 15px 30px 30px;
   max-width: 550px;
   font: 14px/18px Arial;
+  display: none;
 }
+  body.help_panel_tab #help {
+    display: block;
+  }
   #help a {
     color: #000;
   }

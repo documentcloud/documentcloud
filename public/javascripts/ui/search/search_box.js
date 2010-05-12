@@ -26,9 +26,9 @@ dc.ui.SearchBox = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     this.outstandingSearch = false;
-    _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'showHelp', 'loadDefault', 'loadDefaultSearch');
+    _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'loadDefault', 'hideSearch', 'loadDefaultSearch');
     dc.history.register(/^#search\//, this.searchByHash);
-    dc.history.register(/^#help$/, this.showHelp);
+    dc.history.register(/^#help$/, function(){ dc.app.navigation.open('help'); });
   },
 
   render : function() {
@@ -39,8 +39,8 @@ dc.ui.SearchBox = dc.View.extend({
     $(document.body).setMode('no', 'search');
     this.setCallbacks();
     $('#cloud_edge').click(function(){ window.location = '/home'; });
-    dc.app.navigation.bind('help', this.showHelp);
     dc.app.navigation.bind('documents', this.loadDefaultSearch);
+    dc.app.navigation.bind('help', this.hideSearch);
     return this;
   },
 
@@ -65,12 +65,16 @@ dc.ui.SearchBox = dc.View.extend({
     } else if (searchAll === true) {
       this.search('');
     } else {
-      this.showHelp();
+      dc.app.navigation.open('help');
     }
   },
 
   loadDefaultSearch : function() {
     this.loadDefault(true);
+  },
+
+  hideSearch : function() {
+    $(document.body).setMode(null, 'search');
   },
 
   showDocuments : function() {
@@ -79,14 +83,9 @@ dc.ui.SearchBox = dc.View.extend({
     dc.history.save(this.urlFragment());
   },
 
-  showHelp : function() {
-    $(document.body).setMode('no', 'search');
-    dc.history.save('help');
-    return false;
-  },
-
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
+    dc.app.navigation.open('documents');
     dc.ui.Project.highlight(query);
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);

@@ -23,6 +23,11 @@ dc.ui.Navigation = dc.View.extend({
     return this;
   },
 
+  open : function(name) {
+    if (this.modes[this.SECTIONS[name] + '_tab'] == name) return false;
+    this.tabs[name].click();
+  },
+
   bind : function(name, callback) {
     this.tabs[name].click(callback);
   },
