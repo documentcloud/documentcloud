@@ -15,6 +15,7 @@ _.extend(dc.app.workspace, {
   createSubViews : function() {
     dc.app.searchBox  = new dc.ui.SearchBox();
     dc.app.paginator  = new dc.ui.Paginator();
+    dc.app.navigation = new dc.ui.Navigation();
     dc.ui.notifier    = new dc.ui.Notifier();
     dc.ui.tooltip     = new dc.ui.Tooltip();
     this.sidebar      = new dc.ui.Sidebar();
@@ -35,6 +36,7 @@ _.extend(dc.app.workspace, {
     var content   = $('#content');
     content.append(this.sidebar.render().el);
     content.append(this.panel.render().el);
+    dc.app.navigation.render();
     this.panel.add('search_box', dc.app.searchBox.render().el);
     this.panel.add('pagination', dc.app.paginator.el);
     $('#no_results_container').html(JST.no_results({}));

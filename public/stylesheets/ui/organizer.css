@@ -21,14 +21,14 @@
         float: left;
         margin-right: 12px;
       }
-  #organizer #organizer_projects,
-  #organizer #organizer_entities {
+  #organizer_projects,
+  #organizer_entities {
     position: relative;
     display: none;
     overflow: hidden;
   }
-    #sidebar.projects_active #organizer_projects,
-    #sidebar.entities_active #organizer_entities {
+    body.projects_sidebar_tab #organizer_projects,
+    body.entities_sidebar_tab #organizer_entities {
       display: block;
     }
   #organizer .project_list_wrap {
@@ -213,7 +213,7 @@
   .scroll.not_active {
     top: 5px; bottom: 15px;
   }
-    #sidebar.entities_active .scroll.not_active {
+    body.entities_sidebar_tab .scroll.not_active {
       top: 15px;
     }
   .scroll_content {

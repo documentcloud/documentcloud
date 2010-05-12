@@ -39,8 +39,8 @@ dc.ui.SearchBox = dc.View.extend({
     $(document.body).setMode('no', 'search');
     this.setCallbacks();
     $('#cloud_edge').click(function(){ window.location = '/home'; });
-    (this._helpTab = $('#help_tab')).click(this.showHelp);
-    (this._documentsTab = $('#documents_tab')).click(this.loadDefaultSearch);
+    dc.app.navigation.bind('help', this.showHelp);
+    dc.app.navigation.bind('documents', this.loadDefaultSearch);
     return this;
   },
 
@@ -75,18 +75,12 @@ dc.ui.SearchBox = dc.View.extend({
 
   showDocuments : function() {
     $(document.body).setMode('active', 'search');
-    this._helpTab.removeClass('active');
-    this._documentsTab.addClass('active');
     this.entitle(this.value());
-    dc.app.scroller.check();
     dc.history.save(this.urlFragment());
   },
 
   showHelp : function() {
     $(document.body).setMode('no', 'search');
-    this._documentsTab.removeClass('active');
-    this._helpTab.addClass('active');
-    dc.app.scroller.check();
     dc.history.save('help');
     return false;
   },

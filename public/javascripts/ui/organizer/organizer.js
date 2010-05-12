@@ -29,10 +29,7 @@ dc.ui.Organizer = dc.View.extend({
     this.entityList     = $('#organizer_entities', this.el);
     this.sidebar        = $('#sidebar');
     this.renderAll();
-    this.showTab(dc.app.preferences.get('sidebar_tab') || 'projects');
     this.setCallbacks();
-    $('#projects_tab').click(_.bind(this.showTab, this, 'projects'));
-    $('#entities_tab').click(_.bind(this.showTab, this, 'entities'));
     return this;
   },
 
@@ -42,14 +39,6 @@ dc.ui.Organizer = dc.View.extend({
     _.each(Projects.models(), _.bind(function(model) {
       this._addSubView(null, model);
     }, this));
-  },
-
-  showTab : function(kind) {
-    this.sidebar.setMode(kind, 'active');
-    $('.sidebar_tab').removeClass('active');
-    $('#' + kind + '_tab').addClass('active');
-    dc.app.preferences.set({sidebar_tab : kind});
-    dc.app.scroller.check();
   },
 
   // Refresh the facets with a new batch.
