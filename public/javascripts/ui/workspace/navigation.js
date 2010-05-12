@@ -20,6 +20,7 @@ dc.ui.Navigation = dc.View.extend({
     this.tabs[dc.app.preferences.get('sidebar_tab') || 'projects'].click();
     this.bind('projects', _.bind(this._saveSidebarPreference, this, 'projects'));
     this.bind('entities', _.bind(this._saveSidebarPreference, this, 'entities'));
+    this.setMode('documents', 'panel_tab');
     return this;
   },
 
