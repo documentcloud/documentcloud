@@ -64,10 +64,8 @@ class AdminController < ApplicationController
     json nil
   end
 
-  def reprocess_failed_documents
-    Document.failed.all(:order => 'created_at DESC').each do |doc|
-      doc.queue_import
-    end
+  def reprocess_failed_document
+    Document.failed.last.queue_import
     json nil
   end
 

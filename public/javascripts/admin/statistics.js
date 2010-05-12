@@ -43,7 +43,7 @@ dc.ui.Statistics = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, 'renderCharts', 'launchWorker', 'reprocessFailedDocuments', 'vacuumAnalyze');
+    _.bindAll(this, 'renderCharts', 'launchWorker', 'reprocessFailedDocument', 'vacuumAnalyze');
     stats.daily_documents_series = this._series(stats.daily_documents, 'Document');
     stats.daily_pages_series = this._series(stats.daily_pages, 'Page');
     this._tooltip = new dc.ui.Tooltip();
@@ -118,9 +118,9 @@ dc.ui.Statistics = dc.View.extend({
     });
   },
 
-  reprocessFailedDocuments : function() {
-    dc.ui.Dialog.confirm('Are you sure you want to re-import all failed documents?', function() {
-      $.post('/admin/reprocess_failed_documents', function() {
+  reprocessFailedDocument : function() {
+    dc.ui.Dialog.confirm('Are you sure you want to re-import the last failed document?', function() {
+      $.post('/admin/reprocess_failed_document', function() {
         window.location.reload(true);
       });
       return true;
@@ -188,7 +188,7 @@ dc.ui.Statistics = dc.View.extend({
       items   : [
         {title : 'Add an Organization',       onClick : function(){ window.location = '/admin/signup'; }},
         {title : 'View CloudCrowd Console',   onClick : function(){ window.location = CLOUD_CROWD_SERVER; }},
-        {title : 'Reprocess Failed Documents',onClick : this.reprocessFailedDocuments},
+        {title : 'Reprocess Last Failed Doc', onClick : this.reprocessFailedDocument},
         {title : 'Force a DB Backup to S3',   onClick : this.forceBackup},
         {title : 'Vacuum Analyze the DB',     onClick : this.vacuumAnalyze},
         {title : 'Launch a Worker Instance',  onClick : this.launchWorker}
