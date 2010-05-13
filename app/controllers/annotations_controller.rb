@@ -23,6 +23,7 @@ class AnnotationsController < ApplicationController
 
   # You can only alter annotations that you've made yourself.
   def update
+    return not_found unless current_annotation
     return forbidden unless current_account.owns_or_administers?(current_annotation)
     current_annotation.update_attributes(pick(:json, :title, :content))
     expire_page current_document.canonical_cache_path if current_document.cacheable?
@@ -30,6 +31,7 @@ class AnnotationsController < ApplicationController
   end
 
   def destroy
+    return not_found unless current_annotation
     return forbidden unless current_account.owns_or_administers?(current_annotation)
     current_annotation.destroy
     expire_page current_document.canonical_cache_path if current_document.cacheable?
@@ -40,7 +42,7 @@ class AnnotationsController < ApplicationController
   private
 
   def current_annotation
-    @current_annotation ||= current_document.annotations.find(params[:id])
+    @current_annotation ||= current_document.annotations.find_by_id(params[:id])
   end
 
   def current_document
