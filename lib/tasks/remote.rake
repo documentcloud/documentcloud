@@ -9,6 +9,13 @@ namespace :remote do
 
 end
 
+# SSH into a given remote machine. Need to pass the environment.
+rule(/^ssh:/) do |t|
+  conf = configuration
+  host = t.name.split(':').last
+  exec "ssh -i #{conf[:key]} #{conf[:user]}@#{host}.documentcloud.org"
+end
+
 def app_servers
   case RAILS_ENV
   when 'staging'    then ['staging.dcloud.org']
