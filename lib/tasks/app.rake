@@ -16,6 +16,10 @@ namespace :app do
     sh "curl -s -u guest:docsforall http://localhost:80 > /dev/null"
   end
 
+  task :console do
+    exec "script/console #{RAILS_ENV}"
+  end
+
   desc "Update the Rails application"
   task :update do
     sh 'git pull'
