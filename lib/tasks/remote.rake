@@ -7,9 +7,14 @@ namespace :remote do
     remote "app:console", central_servers
   end
 
+  task :start do
+    remote "app:start", app_servers
+  end
+
   desc "Start all resources, on all servers"
   task :start_all do
-    remote ["db:start", "sunspot:solr:start"], central_servers
+    remote "db:start", central_servers
+    remote "sunspot:solr:start", central_servers
     remote "crowd:server:start", central_servers
     remote "crowd:node:start", worker_servers
     remote "app:start", app_servers
