@@ -1,11 +1,11 @@
 namespace :app do
 
   task :start do
-    sh "sudo nginx"
+    sh "sudo /etc/init.d/nginx start"
   end
 
   task :stop do
-    sh "sudo kill #{File.read(nginx_pid)}" if nginx_pid
+    sh "sudo /etc/init.d/nginx stop"
   end
 
   task :restart do

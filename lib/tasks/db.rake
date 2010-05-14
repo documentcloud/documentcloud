@@ -5,4 +5,9 @@ namespace :db do
     DC::Store::BackgroundJobs.backup_database
   end
 
+  desc "Start Postgrest on Ubuntu"
+  task :start do
+    sh "sudo /etc/init.d/postgresql-8.4 start"
+  end
+
 end
