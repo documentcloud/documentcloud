@@ -17,6 +17,7 @@ namespace :remote do
     remote "sunspot:solr:start", central_servers
     remote "crowd:server:start", central_servers
     remote "crowd:node:start", worker_servers
+    remote "openoffice:start", app_servers
     remote "app:start", app_servers
   end
 
