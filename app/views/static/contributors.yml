@@ -18,6 +18,8 @@ contributors:
      - http://azcentral.com
    - - Atlanta Journal-Constitution
      - http://ajc.com
+   - - The Atlantic
+     - http://theatlantic.com
    - - Borderzine
      - http://borderzine.com
    - - Boston Globe
@@ -94,6 +96,8 @@ contributors:
      - http://npr.org
    - - NewsHour
      - http://pbs.org/newshour
+   - - The New Yorker
+     - http://newyorker.com
    - - The Oaklahoman
      - http://www.newsok.com
    - - Oakland Local
@@ -102,6 +106,10 @@ contributors:
      - http://openfile.ca
    - - Ottowa Citizen
      - http://www.ottawacitizen.com
+   - - Pioneer Press
+     - http://twincities.com 
+   - - Pittsburg Post-Gazette
+     - http://post-gazette.com/
    - - Politico.ie
      - http://politico.ie
    - - Press & Sun-Bulletin
@@ -116,24 +124,20 @@ contributors:
      - http://www.sandiegoreader.com
    - - Sarasota Herald-Tribune
      - http://www.heraldtribune.com
+   - - The Seattle Times
+     - http://seattletimes.nwsource.com     
    - - SF Public Press
      - http://sfpublicpress.org
    - - Statesman Journal
      - http://statesmanjournal.com
    - - The Story
-     - http://thestory.ie
+     - http://thestory.ie   
    - - St. Petersburg Times
      - http://tampabay.com
    - - Sunlight Foundation
      - http://sunlightfoundation.com
    - - Texas Tribune
      - http://www.texastribune.com
-   - - The Atlantic
-     - http://theatlantic.com
-   - - The New Yorker
-     - http://newyorker.com
-   - - The Seattle Times
-     - http://seattletimes.nwsource.com
    - - Thomson Reuters
      - http://thomsonreuters.com
    - - Transactional Records Access Clearinghouse
