@@ -178,10 +178,10 @@ dc.ui.Toolbar = dc.View.extend({
 
   _createDownloadMenu : function() {
     return new dc.ui.Menu({
-      label   : 'Download',
+      label   : 'Download &amp; Embed',
       items   : [
-        // {title : 'Download Document Viewer', onClick : Documents.downloadSelectedViewers},
-        {title : 'Download as PDF',          onClick : Documents.downloadSelectedPDF},
+        {title : 'Download Document Viewer', onClick : Documents.downloadSelectedViewers},
+        {title : 'Download Original PDF',    onClick : Documents.downloadSelectedPDF},
         {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
       ]
     });
