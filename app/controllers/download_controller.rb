@@ -39,6 +39,7 @@ class DownloadController < ApplicationController
     assets = Dir["#{base}viewer/**/*"]
     package("#{package_name}.zip") do |zip|
       assets.each {|asset| zip.add(asset.sub(base, ''), asset) }
+      @current_account = nil
       @documents.each do |doc|
         asset_store.list(doc.pages_path).each do |page|
           name = File.basename(page)
