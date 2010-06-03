@@ -245,7 +245,7 @@ textarea.text_area {
   opacity: 0.95; filter: alpha(opacity=95);
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   border-top-left-radius: 0; -webkit-border-top-left-radius: 0; -moz-border-radius-topleft: 0;
-  box-shadow: 0 3px 3px #777; -webkit-box-shadow: 0 3px 3px #777; -moz-box-shadow: 0 3px 3px #777;
+  box-shadow: 3px 4px 5px -2px #777; -webkit-box-shadow: 3px 4px 5px -2px #777; -moz-box-shadow: 3px 4px 5px -2px #777;
 }
   .menu_content .menu_item {
     cursor: pointer;
