@@ -1,0 +1,21 @@
+<div class="explanation interface">
+  Drop the following snippet of HTML into a web page to create a document viewer.
+</div>
+
+<textarea class="snippet">
+&lt;script src="http://s3.documentcloud.org/viewer/loader.js"&gt;&lt;/script&gt;&#10;
+&lt;script&gt;&#10;
+  DV.load('<%= doc.get("document_viewer_js") %>;', {&#10;
+    container : '#viewer',&#10;
+    embedded  : true&#10;
+  });&#10;
+&lt;/script&gt;
+</textarea>
+
+<div class="explanation interface">
+  Your page should be fluid-width, with a fixed header and no footer.
+  <br />
+  <a href="http://www.pbs.org/newshour/rundown/conservative-libdem-agreement.html" target="_blank">
+    Click here to view an example of an embed.
+  </a>
+</div>

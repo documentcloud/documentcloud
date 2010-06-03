@@ -15,3 +15,27 @@
     margin-left: 0;
   }
 
+.embed_code {
+  width: 520px;
+}
+  .embed_code .cancel {
+    display: none;
+  }
+  .embed_code .explanation {
+    color: #555;
+    line-height: 18px;
+  }
+    .embed_code .explanation a {
+      color: black;
+    }
+      .embed_code .explanation a:hover {
+        text-decoration: underline;
+      }
+  .embed_code .snippet {
+    margin: 10px 0;
+    border: 1px solid #dedede;
+    padding: 8px;
+    width: 482px; height: 110px;
+    resize: none;
+    font-family: Menlo, Consolas, Monaco, Courier, monospace;
+  }

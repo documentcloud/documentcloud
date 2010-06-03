@@ -343,6 +343,7 @@ class Document < ActiveRecord::Base
       'full_text_url'       => full_text_url,
       'page_image_url'      => page_image_url_template,
       'document_viewer_url' => document_viewer_url,
+      'document_viewer_js'  => canonical_url(:js),
       'remote_url'          => remote_url
     }.to_json
   end

@@ -24,6 +24,7 @@ dc.ui.Dialog = dc.View.extend({
     $(this.el).html(JST.dialog(this.options));
     var cel = this.contentEl = $('.content', this.el);
     this.controlsEl = $('.controls', this.el);
+    if (this.options.width) $(this.el).css({width : this.options.width});
     if (this.options.content) cel.val(this.options.content);
     $(document.body).append(this.el);
     this.center();

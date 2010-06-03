@@ -12,7 +12,8 @@ dc.ui.Toolbar = dc.View.extend({
     this.base(options);
     _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments',
       '_registerDocument', '_deleteSelectedDocuments', 'editTitle', 'editSource',
-      'editDescription', 'editRelatedArticle', 'editAccess', 'display');
+      'editDescription', 'editRelatedArticle', 'editAccess', 'display',
+      'displayEmbedSnippet');
     this.editMenu         = this._createEditMenu();
     this.downloadMenu     = this._createDownloadMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
@@ -116,6 +117,10 @@ dc.ui.Toolbar = dc.View.extend({
     }, this));
   },
 
+  displayEmbedSnippet : function() {
+    new dc.ui.EmbedDialog(Documents.selected()[0]);
+  },
+
   _subtitle : function(count) {
     return count > 1 ? ' <span class="subtitle">(' + count + ' Documents)</span>' : '';
   },
@@ -180,6 +185,7 @@ dc.ui.Toolbar = dc.View.extend({
     return new dc.ui.Menu({
       label   : 'Download &amp; Embed',
       items   : [
+        {title : 'Embed Document Viewer',    onClick : this.displayEmbedSnippet},
         {title : 'Download Document Viewer', onClick : Documents.downloadSelectedViewers},
         {title : 'Download Original PDF',    onClick : Documents.downloadSelectedPDF},
         {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
