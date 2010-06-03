@@ -74,10 +74,12 @@
           border-right: 2px solid #ccc;
         }
       #organizer .box .edit_glyph,
-      #organizer .box.uploaded_documents:hover .edit_glyph {
+      #organizer .box.uploaded_documents:hover .edit_glyph,
+      #organizer .box.uploaded_documents.is_selected .edit_glyph {
         display: none;
       }
-        #organizer .box:hover .edit_glyph {
+        #organizer .box:hover .edit_glyph,
+        #organizer .box.is_selected .edit_glyph {
           display: inline;
           vertical-align: top;
           padding-right: 11px;
