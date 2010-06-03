@@ -15,7 +15,7 @@ dc.ui.Toolbar = dc.View.extend({
       'editDescription', 'editRelatedArticle', 'editAccess', 'display',
       'displayEmbedSnippet');
     this.editMenu         = this._createEditMenu();
-    this.downloadMenu     = this._createDownloadMenu();
+    this.publishMenu      = this._createPublishMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
     Documents.bind(Documents.SELECTION_CHANGED, this.display);
     Documents.bind(dc.Set.REFRESHED, this.display);
@@ -24,9 +24,9 @@ dc.ui.Toolbar = dc.View.extend({
   render : function() {
     var el = $(this.el);
     el.html(JST.workspace_toolbar({}));
-    $('.edit_menu_container', el).append(this.editMenu.render().el);
-    $('.download_menu_container', el).append(this.downloadMenu.render().el);
     $('.project_menu_container', el).append(this.projectMenu.render().el);
+    $('.edit_menu_container', el).append(this.editMenu.render().el);
+    $('.publish_menu_container', el).append(this.publishMenu.render().el);
     this.remoteUrlButton = $('#edit_remote_url_button', el);
     this.openButton      = $('#open_viewers', this.el);
     this.timelineButton  = $('#open_timeline', this.el);
@@ -40,7 +40,7 @@ dc.ui.Toolbar = dc.View.extend({
     var mode  = count == 0 ? 'not' : 'is';
     this.openButton.setMode(mode, 'enabled');
     this.timelineButton.setMode(mode, 'enabled');
-    _.each([this.downloadMenu, this.editMenu, this.projectMenu], function(menu) {
+    _.each([this.publishMenu, this.editMenu, this.projectMenu], function(menu) {
       count == 0 ? menu.disable() : menu.enable();
     });
   },
@@ -183,9 +183,9 @@ dc.ui.Toolbar = dc.View.extend({
     return this._panelEl = this._panelEl || $(this.el).parents('.panel_content')[0];
   },
 
-  _createDownloadMenu : function() {
+  _createPublishMenu : function() {
     return new dc.ui.Menu({
-      label   : 'Download &amp; Embed',
+      label   : 'Publish',
       items   : [
         {title : 'Embed Document Viewer',    onClick : this.displayEmbedSnippet},
         {title : 'Download Document Viewer', onClick : Documents.downloadSelectedViewers},
