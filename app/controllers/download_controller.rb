@@ -19,7 +19,7 @@ class DownloadController < ApplicationController
 
   # TODO: Figure out a more efficient way to package PDFs.
   def send_pdfs
-    package("document_pdfs.zip") do |zip|
+    package("#{package_name}.zip") do |zip|
       @documents.each do |doc|
         zip.get_output_stream("#{doc.slug}.pdf") {|f| f.write(asset_store.read_pdf(doc)) }
       end
@@ -27,7 +27,7 @@ class DownloadController < ApplicationController
   end
 
   def send_text
-    package("document_text.zip") do |zip|
+    package("#{package_name}.zip") do |zip|
       @documents.each do |doc|
         zip.get_output_stream("#{doc.slug}.txt") {|f| f.write(doc.text) }
       end
@@ -35,8 +35,8 @@ class DownloadController < ApplicationController
   end
 
   def send_viewer
-    assets  = Dir["#{Rails.root}/public/viewer/*"]
-    package("document_viewer.zip") do |zip|
+    assets = Dir["#{Rails.root}/public/viewer/**/*"]
+    package("#{package_name}.zip") do |zip|
       assets.each {|asset| zip.add("viewer/#{File.basename(asset)}", asset) }
       @documents.each do |doc|
         @current_document = doc
@@ -46,6 +46,10 @@ class DownloadController < ApplicationController
         zip.get_output_stream("#{doc.slug}.html") {|f| f.write(html) }
       end
     end
+  end
+
+  def package_name
+    @documents.length == 1 ? @documents.first.slug : 'document_viewers'
   end
 
   def asset_store
