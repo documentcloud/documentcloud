@@ -118,7 +118,9 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   displayEmbedSnippet : function() {
-    new dc.ui.EmbedDialog(Documents.selected()[0]);
+    this.edit(function(docs) {
+      new dc.ui.EmbedDialog(docs[0]);
+    });
   },
 
   _subtitle : function(count) {
