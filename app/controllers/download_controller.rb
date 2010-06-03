@@ -40,7 +40,13 @@ class DownloadController < ApplicationController
     package("#{package_name}.zip") do |zip|
       assets.each {|asset| zip.add(asset.sub(base, ''), asset) }
       @documents.each do |doc|
+        asset_store.list(doc.pages_path).each do |page|
+          name = File.basename(page)
+          contents = asset_store.read(page)
+          zip.get_output_stream("#{doc.slug}/#{name}") {|f| f.write(contents) }
+        end
         @current_document = doc
+        @local = true
         html = ERB.new(File.read("#{Rails.root}/app/views/documents/show.html.erb")).result(binding)
         html.gsub!(/\="\/viewer\//, '="viewer/')
         zip.get_output_stream("#{doc.slug}.html") {|f| f.write(html) }

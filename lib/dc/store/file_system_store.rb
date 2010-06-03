@@ -17,8 +17,16 @@ module DC
         FileUtils.mkdir_p(AssetStore.asset_root) unless File.exists?(AssetStore.asset_root)
       end
 
+      def read(path)
+        File.read(local(path))
+      end
+
       def authorized_url(path)
         File.join(self.class.web_root, path)
+      end
+
+      def list(path)
+        Dir[local("#{path}/**/*")].map {|f| f.sub(AssetStore.asset_root + '/', '') }
       end
 
       def save_pdf(document, pdf_path, access=nil)
@@ -58,7 +66,7 @@ module DC
       end
 
       def read_pdf(document)
-        File.read(local(document.pdf_path))
+        read document.pdf_path
       end
 
       def destroy(document)

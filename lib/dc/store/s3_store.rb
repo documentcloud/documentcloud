@@ -28,8 +28,16 @@ module DC
         @key, @secret = SECRETS['aws_access_key'], SECRETS['aws_secret_key']
       end
 
+      def read(path)
+        bucket.get(path)
+      end
+
       def authorized_url(path)
         s3.interface.get_link(bucket, path, AUTH_PERIOD)
+      end
+
+      def list(path)
+        bucket.keys(:prefix => path).map {|key| key.name }
       end
 
       def save_pdf(document, pdf_path, access=DEFAULT_ACCESS)
@@ -73,7 +81,7 @@ module DC
       end
 
       def read_pdf(document)
-        bucket.get(document.pdf_path)
+        read document.pdf_path
       end
 
       def destroy(document)

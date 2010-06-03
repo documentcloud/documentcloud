@@ -203,11 +203,11 @@ class Document < ActiveRecord::Base
   end
 
   def page_image_template
-    File.join(pages_path, "#{slug}-p{page}-{size}.gif")
+    "#{slug}-p{page}-{size}.gif"
   end
 
   def page_text_template
-    File.join(pages_path, "#{slug}-p{page}.txt")
+    "#{slug}-p{page}.txt"
   end
 
   def public_pdf_url
@@ -280,19 +280,21 @@ class Document < ActiveRecord::Base
   end
 
   def public_page_image_template
-    File.join(DC::Store::AssetStore.web_root, page_image_template)
+    File.join(DC::Store::AssetStore.web_root, File.join(pages_path, page_image_template))
   end
 
   def private_page_image_template
-    File.join(DC_CONFIG['server_root'], page_image_template)
+    File.join(DC_CONFIG['server_root'], File.join(pages_path, page_image_template))
   end
 
-  def page_image_url_template
+  def page_image_url_template(opts={})
+    return File.join(slug, page_image_template) if opts[:local]
     public? || Rails.env.development? ? public_page_image_template : private_page_image_template
   end
 
-  def page_text_url_template
-    File.join(DC_CONFIG['server_root'], page_text_template)
+  def page_text_url_template(opts={})
+    return File.join(slug, page_text_template) if opts[:local]
+    File.join(DC_CONFIG['server_root'], File.join(pages_path, page_text_template))
   end
 
   def asset_store
@@ -371,7 +373,9 @@ class Document < ActiveRecord::Base
     res['text']            = full_text_url
     res['thumbnail']       = thumbnail_url
     res['search']          = search_url
-    res['page']            = {'image' => page_image_url_template, 'text' => page_text_url_template}
+    res['page']            = {}
+    res['page']['image']   = page_image_url_template(:local => options[:local])
+    res['page']['text']    = page_text_url_template(:local => options[:local])
     res['related_article'] = related_article
     doc['sections']        = sections.map(&:canonical) if options[:sections]
     doc['annotations']     = annotations.accessible(options[:account]).map(&:canonical) if options[:annotations]

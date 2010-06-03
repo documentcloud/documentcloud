@@ -20,7 +20,7 @@
 </head>
 <body>
   <script type="text/javascript">
-    DV.load(<%= @current_document.canonical({:account => @current_account}).to_json %>);
+    DV.load(<%= @current_document.canonical({:account => @current_account, :local => @local}).to_json %>);
   </script>
 </body>
 </html>
