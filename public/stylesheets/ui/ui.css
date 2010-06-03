@@ -143,6 +143,7 @@ textarea.text_area {
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   resize: none;
   line-height: 16px;
+  padding-left: 4px; padding-right: 4px;
   overflow: auto;
 }
 
