@@ -14,7 +14,11 @@
 <div class="explanation interface">
   Your page should be fluid-width, with a fixed header and no footer. The "container"
   option specifies the element in which you'd like the viewer to appear.
-  <br />
+  <br /><br />
+  <% if (!doc.get('related_article')) { %>
+    Please consider adding a "Related Article" link to this document before publishing it.
+    <br />
+  <% } %>
   <a href="http://www.pbs.org/newshour/rundown/conservative-libdem-agreement.html" target="_blank">
     Click here to view an example of an embed.
   </a>
