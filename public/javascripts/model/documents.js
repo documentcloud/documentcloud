@@ -33,7 +33,7 @@ dc.model.Document = dc.Model.extend({
     var acc = Accounts.current();
     if (this.get('account_id') == acc.id ||
         (this.get('organization_id') == acc.get('organization_id') && acc.isAdmin())) return true;
-    dc.ui.Dialog.alert("You don't have permission to change \"" + this.get('title') + "\".");
+    dc.ui.Dialog.alert("You don't have permission to edit \"" + this.get('title') + "\".");
     return false;
   },
 
