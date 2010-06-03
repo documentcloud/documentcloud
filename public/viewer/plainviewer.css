@@ -81,7 +81,7 @@
   #DV-logo a {
     display: block;
     width: 105px; height: 19px;
-    background: url(/viewer/images/dc_inline_logo.png);
+    background: url(images/dc_inline_logo.png);
   }
 
 .DV-views {
