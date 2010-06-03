@@ -37,5 +37,5 @@
     padding: 8px;
     width: 512px; height: 100px;
     resize: none;
-    font-family: Menlo, Consolas, Monaco, Courier, monospace;
+    font: 11px Menlo, Consolas, Monaco, Courier, monospace;
   }
