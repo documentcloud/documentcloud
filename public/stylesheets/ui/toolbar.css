@@ -16,7 +16,7 @@
   }
 
 .embed_code {
-  width: 520px;
+  width: 550px;
 }
   .embed_code .cancel {
     display: none;
@@ -35,7 +35,7 @@
     margin: 10px 0;
     border: 1px solid #dedede;
     padding: 8px;
-    width: 482px; height: 110px;
+    width: 512px; height: 100px;
     resize: none;
     font-family: Menlo, Consolas, Monaco, Courier, monospace;
   }

@@ -1,6 +1,6 @@
 /* DocumentCloud overrides to the DocViewer CSS go here: */
 
-#DV-docViewer.DV-embedded {
+#DV-docViewer {
   border: 1px solid #aaa;
 }
 

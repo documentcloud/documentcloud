@@ -151,9 +151,7 @@
   <script type="text/javascript" src="/documents/loader.js"></script>
   <script type="text/javascript">
     DV.load("<%= Document.first(:conditions => {:access => DC::Access::PUBLIC}).canonical_url(:js) %>", {
-      container : '#doc',
-      embedded  : true,
-      offset    : 160
+      container : '#doc'
     });
   </script>
 
