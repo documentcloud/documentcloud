@@ -2,6 +2,7 @@
 
 #DV-docViewer {
   border: 1px solid #aaa;
+  line-height: normal;
 }
 
 #DV-headerHat, #DV-title, .DV-contentsHeader {
