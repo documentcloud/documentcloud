@@ -89,7 +89,8 @@
   position: relative;
   z-index: 10;
 }
-  .DV-views div span {
+  .DV-views span.DV-trigger {
+    display: block;
     border-bottom: 0 !important;
     background: #e3e3e3;
     color: black !important;
