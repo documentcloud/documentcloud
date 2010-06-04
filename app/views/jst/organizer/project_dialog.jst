@@ -1,11 +1,9 @@
-<div class="text_input dark">
-  <input name="title" id="project_title" type="text" value="<%= title %>" />
-</div>
-<label for="project_title">
-  Title:
-</label>
-
 <div class="counts">
   <%= document_ids.length %> <%= Inflector.pluralize('document', document_ids.length) %>,
   <%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %>
 </div>
+
+<div class="text_input dark">
+  <input name="title" id="project_title" type="text" value="<%= title %>" />
+</div>
+

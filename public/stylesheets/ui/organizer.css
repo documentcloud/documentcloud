@@ -186,25 +186,10 @@
 #project_dialog {
   width: 375px;
 }
-  #project_dialog .custom {
-    padding: 15px 15px 25px 15px;
-    width: 340px;
+  #project_dialog .counts {
+    position: absolute;
+    top: 31px; right: 30px;
   }
-    #project_dialog label {
-      display: block;
-      font: bold 13px/25px Arial;
-      color: #555;
-      margin-bottom: 10px;
-    }
-    #project_dialog .text_input {
-      position: absolute;
-      right: 12px;
-      width: 300px;
-    }
-    #project_dialog .delete {
-      float: left;
-      margin-left: 10px;
-    }
 
 /*------------------------------- Scrolling ----------------------------------*/
 .scroll {

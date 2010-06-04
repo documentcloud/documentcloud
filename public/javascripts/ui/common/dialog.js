@@ -6,7 +6,8 @@ dc.ui.Dialog = dc.View.extend({
     title     : "Untitled Dialog",
     text      : null,
     choices   : null,
-    password  : false
+    password  : false,
+    editor    : false
   },
 
   callbacks : {
@@ -22,7 +23,7 @@ dc.ui.Dialog = dc.View.extend({
 
   render : function(opts) {
     opts = opts || {};
-    $(this.el).html(JST.dialog(this.options));
+    $(this.el).html(JST.dialog(_.extend({}, this.options, opts)));
     var cel = this.contentEl = $('.content', this.el);
     this.controlsEl = $('.controls', this.el);
     if (this.options.width) $(this.el).css({width : this.options.width});
@@ -91,7 +92,7 @@ dc.ui.Dialog = dc.View.extend({
   alert : function(text) {
     return new dc.ui.Dialog({
       mode  : 'alert',
-      title : 'Alert',
+      title : null,
       text  : text
     }).render();
   },
@@ -111,7 +112,7 @@ dc.ui.Dialog = dc.View.extend({
   confirm : function(text, callback) {
     return new dc.ui.Dialog({
       mode      : 'confirm',
-      title     : 'Confirm',
+      title     : null,
       text      : text,
       onConfirm : callback
     }).render();

@@ -1,13 +1,15 @@
-<div class="dialog_background"></div>
-<div class="title draggable"><%= title %></div>
+<div class="dialog_background draggable"></div>
+<% if (title) { %>
+  <div class="title draggable"><%= title %></div>
+<% } %>
 <% if (text) { %>
-  <div class="text"><%= text %></div>
+  <div class="text draggable"><%= text %></div>
 <% } %>
 <% if (mode == 'custom') { %>
-  <div class="custom"></div>
+  <div class="custom draggable"></div>
 <% } %>
 <% if( mode == 'prompt' || mode == 'short_prompt') { %>
-  <div class="<%= mode %>">
+  <div class="<%= mode %> draggable">
     <% if( mode == 'prompt') { %>
       <textarea class="text_area content"></textarea>
     <% } else if (choices) { %>
@@ -23,10 +25,13 @@
     <% } %>
   </div>
 <% } %>
-<div class="controls">
+<div class="controls draggable">
   <div class="controls_inner">
-    <% var saveText = (mode == 'prompt' || mode == 'short_prompt') ? 'Save' : 'OK'; %>
-    <div class="minibutton ok default"><span><%= saveText %></span></div>
-    <div class="minibutton cancel dark"><span>Cancel</span></div>
+    <% var saveText = (editor || mode == 'prompt' || mode == 'short_prompt') ? 'Save' : 'OK'; %>
+    <div class="minibutton ok default"><%= saveText %></div>
+    <div class="minibutton cancel dark">Cancel</div>
+    <% if (editor) { %>
+      <div class="minibutton delete warn">Delete</div>
+    <% } %>
   </div>
 </div>

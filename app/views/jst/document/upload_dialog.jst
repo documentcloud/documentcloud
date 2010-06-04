@@ -1,60 +1,64 @@
 <form id="upload_document" class="workspace_form" method="POST" action="/import/upload_document" target="hidden_iframe" enctype="multipart/form-data">
 
-  <div class="text_input small">
-    <div class="background">
-      <div class="inner">
-        <input name="title" id="document_upload_title" type="text" />
-      </div>
+  <div class="row draggable">
+    <div class="text_input dark">
+      <input name="title" id="document_upload_title" type="text" />
     </div>
+    <label for="document_upload_title">
+      Title:
+    </label>
   </div>
-  <label for="document_upload_title">
-    Title:
-  </label>
 
-  <div class="text_input small">
-    <div class="background">
-      <div class="inner">
-        <input name="source" id="document_upload_source" type="text" />
-      </div>
+  <div class="row draggable">
+    <div class="text_input dark">
+      <input name="source" id="document_upload_source" type="text" />
     </div>
+    <label for="document_upload_source">
+      Source:
+    </label>
   </div>
-  <label for="document_upload_source">
-    Source:
-  </label>
-
-  <textarea name="description" id="document_upload_description" class="text_area content"></textarea>
-  <label for="document_upload_description">
-    Description:
-  </label>
-  <div class="clear"></div>
+  
+  <div class="row draggable">
+    <textarea name="description" id="document_upload_description" class="text_area content dark"></textarea>
+    <label for="document_upload_description">
+      Description:
+    </label>
+    <div class="clear"></div>
+  </div>
 
   <% if (project) { %>
-    <div id="document_project_title">
-      <%= project.get('title') %>
+    <div class="row draggable">
+      <div id="document_project_title">
+        <%= project.get('title') %>
+      </div>
+      <input name="project_id" id="document_project_id" type="hidden" value="<%= project.id %>" />
+      <label>
+        Project:
+      </label>
     </div>
-    <input name="project_id" id="document_project_id" type="hidden" value="<%= project.id %>" />
-    <label>
-      Project:
-    </label>
   <% } %>
 
-  <input name="file" id="document_upload_file" type="file" />
-  <label for="document_upload_file">
-    Document File:
-  </label>
+  <div class="row draggable">
+    <input name="file" id="document_upload_file" type="file" />
+    <label for="document_upload_file">
+      Document File:
+    </label>
+  </div>
 
-  <select name="access" id="document_upload_access">
-    <option value="public">Public Access</option>
-    <option value="private" selected="true">Private Access</option>
-    <option value="organization">Private to my Organization</option>
-  </select>
-  <label for="document_upload_access">
-    Access Level:
-  </label>
+  <div class="row draggable last">
+    <select name="access" id="document_upload_access">
+      <option value="public">Public Access</option>
+      <option value="private" selected="true">Private Access</option>
+      <option value="organization">Private to my Organization</option>
+    </select>
+    <label for="document_upload_access">
+      Access Level:
+    </label>
+  </div>
+  
+  <div id="upload_info" class="row draggable" style="display:none;">
+    <div class="icon spinner_dark"></div>
+    Document is uploading, please leave this window open.
+  </div>
 
 </form>
-
-<div id="upload_info" style="display:none;">
-  <div class="icon spinner"></div>
-  Document is uploading, please leave this window open.
-</div>
