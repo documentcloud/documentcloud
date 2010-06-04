@@ -33,6 +33,9 @@ news:
     - 2009-09-15
 
 github:
+  - - "NY Times' Document Viewer"
+    - http://github.com/NYTimes/document-viewer
+    - "We're collaborating with the New York Times on their document viewer technology, a key component of DocumentCloud."
   - - Docsplit
     - http://documentcloud.github.com/docsplit/
     - Break Apart Documents into Images, Text, Pages and PDFs
