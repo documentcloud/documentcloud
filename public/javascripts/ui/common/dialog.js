@@ -20,7 +20,8 @@ dc.ui.Dialog = dc.View.extend({
     _.bindAll(this, 'close', '_maybeConfirm');
   },
 
-  render : function() {
+  render : function(opts) {
+    opts = opts || {};
     $(this.el).html(JST.dialog(this.options));
     var cel = this.contentEl = $('.content', this.el);
     this.controlsEl = $('.controls', this.el);
@@ -31,6 +32,7 @@ dc.ui.Dialog = dc.View.extend({
     this.setCallbacks();
     if (this._returnCloses()) $(document.body).bind('keypress', this._maybeConfirm);
     if (cel[0]) _.defer(function(){ cel.focus(); });
+    if (!opts.noOverlay) $(document.body).addClass('overlay');
     return this;
   },
 
@@ -69,6 +71,7 @@ dc.ui.Dialog = dc.View.extend({
     if (this.options.onClose) this.options.onClose(this);
     $(this.el).remove();
     if (this._returnCloses()) $(document.body).unbind('keypress', this._maybeConfirm);
+    $(document.body).removeClass('overlay');
   },
 
   center : function() {

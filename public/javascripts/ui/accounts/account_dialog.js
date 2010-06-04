@@ -32,12 +32,14 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
 
   open : function() {
     if (!this._rendered) return this.render();
+    $(document.body).addClass('overlay');
     $(this.el).show();
   },
 
   close : function() {
     dc.ui.notifier.hide();
     $(this.el).hide();
+    $(document.body).removeClass('overlay');
   },
 
   newAccount : function() {

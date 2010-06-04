@@ -17,7 +17,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   render : function() {
     $(this.el).hide();
-    this.base();
+    this.base({noOverlay : true});
     this._project = Projects.selected()[0];
     $('.custom', this.el).html(JST.upload_dialog({
       project : this._project
@@ -52,11 +52,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   open : function() {
     this.render();
     $(this.el).show();
+    $(document.body).addClass('overlay');
     this.center();
   },
 
   close : function() {
     $(this.el).hide();
+    $(document.body).removeClass('overlay');
   }
 
 });

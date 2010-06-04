@@ -427,6 +427,8 @@ textarea.text_area {
         float: right;
         margin-left: 8px;
         width: 60px;
+        height: 13px;
+        line-height: 13px;
         border: 0;
         box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none;
       }
