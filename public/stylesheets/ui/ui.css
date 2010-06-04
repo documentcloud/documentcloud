@@ -7,7 +7,7 @@ span[role="link"] {
 .serif, .serif * {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
 }
-.interface, .minibutton, input {
+.interface, .dialog, .minibutton, input {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif !important;
 }
 
@@ -32,14 +32,6 @@ select {
 }
 
 /*------------------------------ Gradients ---------------------------------*/
-.gradient_blue,
-.minibutton.ok,
-.minibutton.default {
-  background: #5588aa;
-  background: -webkit-gradient(linear, left top, left bottom, from(#55aacc), to(#557799));
-  background: -moz-linear-gradient(top, #55aacc, #557799);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#55aacc', EndColorStr='#557799');
-}
 .gradient_red,
 .minibutton.warn {
   background: #ce3f37;
@@ -82,6 +74,11 @@ div.text_input {
     height: 23px;
     background: transparent url(/images/embed/ui/text_input_small_left.png) no-repeat center left;
   }
+  div.text_input.dark {
+    height: auto;
+    background: none;
+    margin-right: 16px;
+  }
   div.text_input .background {
     background: transparent url(/images/embed/ui/text_input_large_right.png) no-repeat center right;
     margin-left: 6px;
@@ -113,6 +110,19 @@ div.text_input {
       font: 12px/12px Arial;
       padding: 4px;
     }
+    div.text_input.dark input {
+      font-size: 14px;
+      padding: 3px 6px;
+      color: #999;
+      background: #1e1e1e;
+      border: 2px solid #333;
+      border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
+    }
+      div.text_input.dark input:focus {
+        border-color: #fff;
+        background: #fff;
+        color: #333;
+      }
   div.text_input.search {
     height: 28px;
     background: transparent;
@@ -178,6 +188,15 @@ textarea.text_area {
     opacity: 0.33; filter: alpha(opacity=33);
     cursor: default;
   }
+  .minibutton.ok,
+  .minibutton.default {
+    background-image: url(/images/embed/ui/button_bg_green.gif);
+    text-shadow: none;
+  }
+  .minibutton.dark {
+    background-image: url(/images/embed/ui/button_bg_dark.gif);
+    text-shadow: none;
+  }
   .minibutton.plus {
     position: relative;
     padding-left: 24px;
@@ -189,10 +208,6 @@ textarea.text_area {
   .minibutton.warn {
     border-color: #ae554f;
     text-shadow: #ae554f 0 -1px 0;
-  }
-  .minibutton.default {
-    border-color: #557799;
-    text-shadow: #557799 0 -1px 0;
   }
 
 
@@ -362,9 +377,9 @@ textarea.text_area {
   position: absolute;
   min-width: 300px;
   max-width: 600px;
-  padding-top: 27px;
+  padding: 29px 30px 30px 30px;
   z-index: 1000;
-  font: 12px Arial;
+  text-align: center;
 }
   .dialog.short_prompt_dialog,
   .dialog.alert_dialog,
@@ -378,21 +393,17 @@ textarea.text_area {
     position: absolute;
     z-index: -1;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: #fcfcfc;
-    -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-    -webkit-box-shadow: 0 5px 50px #555; -moz-box-shadow: 0 5px 25px #555;
+    background: #000;
+    opacity: 0.95; filter: alpha(opacity=95);
+    -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
+    box-shadow: 1px 2px 7px #777; -webkit-box-shadow: 1px 2px 7px #777; -moz-box-shadow: 1px 2px 7px #777;
   }
   .dialog .title {
-    position: absolute; top: 0; left: 0; right: 0;
-    overflow: hidden;
-    height: 16px;
-    padding: 5px 10px;
-    font: bold 12px/18px sans-serif;
-    color: #000;
+    margin-bottom: 29px;
+    font-size: 16px;
+    color: #fff;
+    text-align: left;
     cursor: move;
-    border-bottom: 1px solid #bbb;
-    border-top-left-radius: 5px; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
-    border-top-right-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
   }
     .dialog span.subtitle {
       color: #555;
@@ -401,16 +412,27 @@ textarea.text_area {
     }
   .dialog .text, div.dialog .custom,
   .dialog .prompt, div.dialog .short_prompt {
-    padding: 10px 10px 15px 10px;
-    line-height: 16px;
   }
-  .dialog .controls .minibutton {
+  .dialog .controls {
     float: right;
-    margin: 0 8px 8px 0;
+    position: relative;
+    left: -50%;
+    margin-top: 30px;
   }
-    .dialog.alert_dialog .minibutton.cancel {
-      display: none;
+    .dialog .controls_inner {
+      position: relative;
+      left: 50%;
     }
+      .dialog .controls .minibutton {
+        float: right;
+        margin-left: 8px;
+        width: 60px;
+        border: 0;
+        box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none;
+      }
+        .dialog.alert_dialog .minibutton.cancel {
+          display: none;
+        }
   .dialog.short_prompt_dialog select {
     width: 100%;
   }

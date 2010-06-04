@@ -1,5 +1,5 @@
 <div class="dialog_background"></div>
-<div class="title interface draggable gradient_light"><%= title %></div>
+<div class="title draggable"><%= title %></div>
 <% if (text) { %>
   <div class="text"><%= text %></div>
 <% } %>
@@ -17,18 +17,16 @@
         <% }); %>
       </select>
     <% } else { %>
-      <div class="text_input small">
-        <div class="background">
-          <div class="inner">
-            <input class="content" type="<%= password ? 'password' : 'text' %>" value="" />
-          </div>
-        </div>
+      <div class="text_input dark">
+        <input class="content" type="<%= password ? 'password' : 'text' %>" value="" />
       </div>
     <% } %>
   </div>
 <% } %>
 <div class="controls">
-  <% var saveText = (mode == 'prompt' || mode == 'short_prompt') ? 'Save' : 'OK'; %>
-  <div class="minibutton ok default"><span><%= saveText %></span></div>
-  <div class="minibutton cancel"><span>Cancel</span></div>
+  <div class="controls_inner">
+    <% var saveText = (mode == 'prompt' || mode == 'short_prompt') ? 'Save' : 'OK'; %>
+    <div class="minibutton ok default"><span><%= saveText %></span></div>
+    <div class="minibutton cancel dark"><span>Cancel</span></div>
+  </div>
 </div>
