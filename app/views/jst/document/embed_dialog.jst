@@ -12,8 +12,10 @@
 </textarea>
 
 <div class="explanation interface">
-  Your page should be fluid-width, with a fixed header and no footer. The "container"
-  option specifies the element in which you'd like the viewer to appear.
+  <% if (!doc.isPublic()) { %>
+    The document must be made public before anyone else is able to view it.
+  <% } %>
+  The "container" option specifies the element in which you'd like the viewer to appear.
   <br /><br />
   <% if (!doc.get('related_article')) { %>
     Please consider adding a "Related Article" link to this document before publishing it.

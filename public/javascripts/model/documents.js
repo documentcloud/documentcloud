@@ -71,6 +71,10 @@ dc.model.Document = dc.Model.extend({
     return this.get('access') == dc.access.PENDING;
   },
 
+  isPublic : function() {
+    return this.get('access') == dc.access.PUBLIC;
+  },
+
   decrementNotes : function() {
     var count = this.get('annotation_count');
     if (count <= 0) return false;
