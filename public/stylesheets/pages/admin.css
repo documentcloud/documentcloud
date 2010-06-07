@@ -65,6 +65,7 @@ body {
     #statistics .data tr td {
       color: #222;
       white-space: nowrap;
+      font-size: 12px;
     }
       #statistics .data tbody tr td {
         padding: 5px 35px 5px 0;
@@ -91,7 +92,7 @@ body {
         color: #844;
       }
       #statistics #documents tbody tr td {
-        line-height: 40px;
+        line-height: 45px;
       }
         #statistics #documents td.first {
           width: 30px; height: 37.5px;
