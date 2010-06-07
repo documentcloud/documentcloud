@@ -408,7 +408,7 @@ textarea.text_area {
     background: #000;
     opacity: 0.95; filter: alpha(opacity=95);
     -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-    box-shadow: 1px 2px 7px #777; -webkit-box-shadow: 1px 2px 7px #777; -moz-box-shadow: 1px 2px 7px #777;
+    box-shadow: 1px 2px 7px #333; -webkit-box-shadow: 1px 2px 7px #333; -moz-box-shadow: 1px 2px 7px #333;
   }
   .dialog .title {
     margin-bottom: 29px;
