@@ -29,9 +29,6 @@
 }
   #account_list .custom {
     padding: 0;
-    max-height: 342px;
-    overflow-x: hidden;
-    overflow-y: auto;
     margin-bottom: 15px;
   }
   #account_list .minibutton.cancel {
