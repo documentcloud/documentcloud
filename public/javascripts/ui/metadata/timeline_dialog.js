@@ -40,10 +40,10 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     this.base();
     var height = this.documents.length <= 1 ? this.MIN_HEIGHT : this.ROW_HEIGHT * this.documents.length;
     this.plot = $($.el('div', {id : 'timeline_plot', style : 'width:800px; height:' + height + 'px;'}));
-    var info = $.el('div', {'class' : 'information'}, 'Drag a range of dates to zoom in.');
-    $('.custom', this.el).append($([this.plot[0], info]));
+    $('.custom', this.el).append(this.plot);
     this._zoomButton = $.el('div', {'class' : 'minibutton zoom_out dark not_enabled'}, 'Zoom Out');
     $('.controls_inner', this.el).append(this._zoomButton);
+    $(this.el).append($.el('div', {'class' : 'information'}, 'Drag a range of dates to zoom in.'));
     this.setCallbacks();
     this.center();
     return this;
