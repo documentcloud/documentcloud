@@ -59,15 +59,9 @@
   .icon.plus {
     background-image: url(/images/embed/ui/plus.png);
   }
-    .icon.plus:hover {
-      background-image: url(/images/embed/ui/plus_lit.png);
-    }
   .icon.minus {
     background-image: url(/images/embed/ui/minus.png);
   }
-    .icon.minus:hover {
-      background-image: url(/images/embed/ui/minus_lit.png);
-    }
 
 .icon.calais_30 {
   width: 30px; height: 30px;

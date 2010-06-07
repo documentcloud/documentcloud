@@ -9,16 +9,16 @@ dc.ui.SectionEditor = dc.View.extend({
     if (this.dialog) return false;
     this.sections = _.sortBy(DV.api.getSections(), function(s){ return parseInt(s.pageNumber, 10); });
     this.dialog = new dc.ui.Dialog({
-      title     : 'Edit Sections',
-      text      : 'Please choose a title and page range for each section:',
-      id        : 'section_editor',
-      mode      : 'confirm',
-      onClose   : _.bind(function(){ this.dialog = null; }, this),
-      onConfirm : _.bind(function(){ return this.saveSections(this.serializeSections()); }, this)
+      title       : 'Edit Sections',
+      information : 'Please choose a title and page range for each section.',
+      id          : 'section_editor',
+      mode        : 'confirm',
+      onClose     : _.bind(function(){ this.dialog = null; }, this),
+      onConfirm   : _.bind(function(){ return this.saveSections(this.serializeSections()); }, this)
     }).render();
     $('.minibutton.ok span', this.dialog.el).text('save');
     this.sectionsEl = $($.el('ol', {id : 'section_rows'}));
-    this.removeEl   = $($.el('span', {'class' : 'remove_all', role : 'link'}, 'remove all sections'));
+    this.removeEl   = $($.el('div', {'class' : 'minibutton warn remove_all'}, 'Remove All'));
     this.removeEl.bind('click', this.removeAllSections);
     this.dialog.append(this.sectionsEl);
     this.dialog.appendControl(this.removeEl);

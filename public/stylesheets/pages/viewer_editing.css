@@ -68,40 +68,49 @@
   z-index: 10000000;
 }
   #section_editor {
-    width: 365px;
-  }
-  #section_editor .text {
-    font: italic 11px Arial;
-    color: #555;
-    padding-bottom: 15px;
+    width: 430px;
+    text-align: left;
+    font-size: 12px;
   }
   #section_editor .remove_all {
-    font: italic 11px Arial;
-    color: #a55;
-    float: left;
-    margin: 2px 0 0 10px;
+    width: 80px;
   }
   #section_editor ol {
-    margin: 0 0 20px 0;
+    margin: 0;
     padding-right: 25px;
-    width: 395px; max-height: 400px;
-    padding-left: 40px;
+    width: 410px; max-height: 400px;
+    padding-left: 20px;
     list-style-type: decimal;
     overflow-y: auto;
   }
     #section_editor li {
-      margin-bottom: 7px;
+      margin-top: 7px;
+      height: 25px;
+      color: #ccc;
+      line-height: 25px;
+      width: 410px;
     }
+      #section_editor li:first-child {
+        margin-top: 0;
+      }
+      #section_editor .text_input, #section_editor .dash {
+        float: left;
+        margin-right: 10px;
+      }
       #section_editor .section_title {
         margin-right: 15px;
+<<<<<<< HEAD
 <<<<<<< HEAD
         width: 230px;
 =======
         width: 150px;
 >>>>>>> 0684465... fixing the section editor, making sure that the removed aristo still works for the viewer...
+=======
+        width: 220px;
+>>>>>>> 10a1f16... fixed the in-viewer editing dialogs as well.
       }
       #section_editor .page_number {
-        width: 30px;
+        width: 27px;
       }
       #section_editor .plus, #section_editor .minus {
         float: right;

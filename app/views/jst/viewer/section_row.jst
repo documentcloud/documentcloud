@@ -1,8 +1,17 @@
 <li class="section_row">
-  <div class="icon plus"></div>
-  <div class="icon minus"></div>
-  <input class="section_title" type="text" placeholder="section title" value="" />
-  <input class="page_number start_page" type="text" placeholder="start" value="<%= start_page %>" />
-  &nbsp;&ndash;&nbsp;
-  <input class="page_number end_page" type="text" placeholder="end" value="<%= end_page %>" />
+  <div style="position:relative;">
+    <div class="icon plus"></div>
+    <div class="icon minus"></div>
+    <div class="text_input dark small">
+      <input class="section_title" type="text" placeholder="section title" value="" />
+    </div>
+    <div class="text_input dark small">
+      <input class="page_number start_page" type="text" placeholder="start" value="<%= start_page %>" />
+    </div>
+    <div class="dash">&ndash;</div>
+    <div class="text_input dark small">
+      <input class="page_number end_page" type="text" placeholder="end" value="<%= end_page %>" />
+    </div>
+    <br class="clear" />
+  </div>
 </li>
