@@ -201,6 +201,7 @@ textarea.text_area {
   .minibutton.ok,
   .minibutton.default {
     background-image: url(/images/embed/ui/button_bg_green.gif);
+    border-color: #55ae4f;
     text-shadow: none;
   }
   .minibutton.dark {
