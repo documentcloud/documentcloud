@@ -29,11 +29,12 @@ dc.model.Document = dc.Model.extend({
   },
 
   // Is the document editable by the current account?
-  allowedToEdit : function() {
+  allowedToEdit : function(message) {
+    message = message || "You don't have permission to edit \"" + this.get('title') + "\".";
     var acc = Accounts.current();
     if (this.get('account_id') == acc.id ||
         (this.get('organization_id') == acc.get('organization_id') && acc.isAdmin())) return true;
-    dc.ui.Dialog.alert("You don't have permission to edit \"" + this.get('title') + "\".");
+    dc.ui.Dialog.alert(message);
     return false;
   },
 
@@ -108,8 +109,8 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     return _.select(this.models(), function(doc){ return doc.isPending(); });
   },
 
-  allowedToEditSelected : function() {
-    return !_.any(this.selected(), function(doc) { return !doc.allowedToEdit(); });
+  allowedToEditSelected : function(message) {
+    return !_.any(this.selected(), function(doc) { return !doc.allowedToEdit(message); });
   },
 
   downloadSelectedViewers : function() {

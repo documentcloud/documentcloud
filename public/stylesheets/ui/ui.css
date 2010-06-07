@@ -421,7 +421,7 @@ textarea.text_area {
       font: italic 10px/18px Arial;
     }
   .dialog .text, .dialog .custom {
-    font-size: 16px;
+    font-size: 16px; line-height: 18px;
   }
   .dialog .information {
     position: absolute;

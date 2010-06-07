@@ -53,8 +53,8 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   // Wrapper function for safely editing an attribute of a specific document.
-  edit : function(callback) {
-    if (!Documents.allowedToEditSelected()) return;
+  edit : function(callback, message) {
+    if (!Documents.allowedToEditSelected(message)) return;
     return callback.call(this, Documents.selected());
   },
 
@@ -120,7 +120,7 @@ dc.ui.Toolbar = dc.View.extend({
   displayEmbedSnippet : function() {
     this.edit(function(docs) {
       new dc.ui.EmbedDialog(docs[0]);
-    });
+    }, 'At this stage in the DocumentCloud beta, you can\'t yet embed documents that you haven\'t uploaded yourself.');
   },
 
   _subtitle : function(count) {
