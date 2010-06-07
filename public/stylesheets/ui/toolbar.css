@@ -22,11 +22,12 @@
     display: none;
   }
   .embed_code .explanation {
-    color: #555;
-    line-height: 18px;
+    color: #ccc;
+    font-size: 11px; line-height: 18px;
+    text-align: left;
   }
     .embed_code .explanation a {
-      color: black;
+      color: white;
     }
       .embed_code .explanation a:hover {
         text-decoration: underline;
@@ -35,7 +36,7 @@
     margin: 10px 0;
     border: 1px solid #dedede;
     padding: 8px;
-    width: 512px; height: 100px;
+    width: 532px; height: 100px;
     resize: none;
     font: 11px Menlo, Consolas, Monaco, Courier, monospace;
   }
