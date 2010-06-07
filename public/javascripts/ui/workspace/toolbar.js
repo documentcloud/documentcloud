@@ -118,6 +118,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   displayEmbedSnippet : function() {
+    if (dc.app.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to embed document viewers.');
     this.edit(function(docs) {
       new dc.ui.EmbedDialog(docs[0]);
     }, 'At this stage in the DocumentCloud beta, you can\'t yet embed documents that you haven\'t uploaded yourself.');

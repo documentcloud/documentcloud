@@ -35,6 +35,7 @@ class Organization < ActiveRecord::Base
   def to_json(options = nil)
     {'name'           => name,
      'slug'           => slug,
+     'demo'           => demo,
      'id'             => id,
      'since'          => time_ago_in_words(created_at),
      'document_count' => document_count,
