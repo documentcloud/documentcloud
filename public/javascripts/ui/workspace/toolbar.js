@@ -64,7 +64,7 @@ dc.ui.Toolbar = dc.View.extend({
       dc.ui.Dialog.prompt('Title', doc.get('title'), function(title) {
         Documents.update(doc, {title : title});
         return true;
-      }, true);
+      }, {mode : 'short_prompt'});
     });
   },
 
@@ -82,10 +82,10 @@ dc.ui.Toolbar = dc.View.extend({
     this.edit(function(docs) {
       var sources = _.uniq(_.map(docs, function(doc){ return doc.get('source'); }));
       var current = sources.length > 1 ? '' : sources[0];
-      dc.ui.Dialog.prompt('Source' + this._subtitle(docs.length), current, function(source) {
+      dc.ui.Dialog.prompt('Source', current, function(source) {
         _.each(docs, function(doc) { Documents.update(doc, {source : source}); });
         return true;
-      }, true);
+      }, {mode : 'short_prompt', information : this._subtitle(docs.length)});
     });
   },
 
@@ -93,10 +93,10 @@ dc.ui.Toolbar = dc.View.extend({
     this.edit(function(docs) {
       var articles = _.uniq(_.map(docs, function(doc){ return doc.get('related_article'); }));
       var current  = articles.length > 1 ? '' : articles[0];
-      dc.ui.Dialog.prompt('Related Article' + this._subtitle(docs.length), current, function(rel) {
+      dc.ui.Dialog.prompt('Related Article', current, function(rel) {
         _.each(docs, function(doc) { Documents.update(doc, {related_article : rel}); });
         return true;
-      }, true);
+      }, {mode : 'short_prompt', information : this._subtitle(docs.length)});
     });
   },
 
@@ -105,7 +105,7 @@ dc.ui.Toolbar = dc.View.extend({
     var docs    = Documents.selected();
     var access  = _.uniq(_.map(docs, function(doc){ return doc.get('access'); }));
     var current = access.length > 1 ? dc.access.PRIVATE : access[0];
-    dc.ui.Dialog.choose('Access Level' + this._subtitle(docs.length), [
+    dc.ui.Dialog.choose('Access Level', [
       {text : 'Public Access',              value : dc.access.PUBLIC,       selected : current == dc.access.PUBLIC},
       {text : 'Private Access',             value : dc.access.PRIVATE,      selected : current == dc.access.PRIVATE},
       {text : 'Private to my Organization', value : dc.access.ORGANIZATION, selected : current == dc.access.ORGANIZATION}
@@ -114,7 +114,7 @@ dc.ui.Toolbar = dc.View.extend({
       var notification = 'Access updated for ' + docs.length + ' ' + Inflector.pluralize('document', docs.length);
       dc.ui.notifier.show({mode : 'info', text : notification});
       return true;
-    }, this));
+    }, this), {information : this._subtitle(docs.length)});
   },
 
   displayEmbedSnippet : function() {
@@ -124,7 +124,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _subtitle : function(count) {
-    return count > 1 ? ' <span class="subtitle">(' + count + ' Documents)</span>' : '';
+    return count > 1 ? count + ' Documents' : '';
   },
 
   _updateSelectedDocuments : function(project) {

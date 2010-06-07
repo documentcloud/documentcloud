@@ -25,7 +25,7 @@
 /*--------------------------- Accounts Dialog --------------------------------*/
 #account_list {
   max-width: none;
-  width: 745px;
+  width: 800px;
 }
   #account_list .custom {
     padding: 0;
@@ -43,6 +43,7 @@
   }
   #account_list table {
     width: 100%;
+    border-top: 1px solid #222;
   }
     #account_list td {
       padding: 10px;
@@ -50,12 +51,12 @@
       white-space: nowrap;
     }
       #account_list tbody td {
-        border-bottom: 1px solid #bbb;
-        font: 12px/11px Arial;
+        border-bottom: 1px solid #222;
+        font-size: 11px; line-height: 11px;
         height: 25px;
-        color: #555;
+        color: #ccc;
       }
-      #account_list .first { width: 0%; padding-right: 0; }
+      #account_list .first { width: 0%; padding: 0; }
       #account_list .name  { width: 0%; }
       #account_list .email { width: 0%; }
       #account_list .last  { width: 100%; padding-right: 0; }
@@ -67,13 +68,13 @@
   display: block;
 }
 #account_list img.avatar {
-  border: 1px solid #ccc;
+  border: 1px solid #555;
 }
 #account_list .text_input {
   width: 150px;
 }
 #account_list .name_wrapper {
-  width: 215px;
+  width: 240px;
 }
   #account_list .name .display {
   }
@@ -82,7 +83,7 @@
     width: 100px;
   }
     #account_list .name_wrapper .text_input:first-child {
-      margin-right: 10px;
+      margin-right: 20px;
     }
 #account_list .role .display {
   font: italic 10px/18px Arial;
@@ -96,7 +97,7 @@
   float: left;
   opacity: 0; filter: alpha(opacity=0);
   -webkit-transition: opacity 0.2s linear;
-  color: #353566;
+  color: #ccc;
 }
   #account_list tbody span.edit_account {
     margin-right: 10px;
@@ -111,10 +112,8 @@
   left: -6px;
   margin: 0 5px;
 }
-#account_list span.delete_account {
+#account_list .delete_account {
   float: left;
-  color: #774433;
-  line-height: 24px;
 }
 #account_list .pending_wrap {
   position: relative;

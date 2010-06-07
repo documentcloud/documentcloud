@@ -3,11 +3,12 @@ dc.ui.Dialog = dc.View.extend({
   className : 'dialog',
 
   DEFAULT_OPTIONS : {
-    title     : "Untitled Dialog",
-    text      : null,
-    choices   : null,
-    password  : false,
-    editor    : false
+    title       : "Untitled Dialog",
+    text        : null,
+    information : null,
+    choices     : null,
+    password    : false,
+    editor      : false
   },
 
   callbacks : {
@@ -26,6 +27,7 @@ dc.ui.Dialog = dc.View.extend({
     $(this.el).html(JST.dialog(_.extend({}, this.options, opts)));
     var cel = this.contentEl = $('.content', this.el);
     this.controlsEl = $('.controls', this.el);
+    this.controlsInner = $('.controls_inner', this.el);
     if (this.options.width) $(this.el).css({width : this.options.width});
     if (this.options.content) cel.val(this.options.content);
     $(document.body).append(this.el);
@@ -51,7 +53,7 @@ dc.ui.Dialog = dc.View.extend({
   },
 
   appendControl : function(el) {
-    this.controlsEl.append(el);
+    this.controlsInner.append(el);
   },
 
   val : function() {
@@ -89,43 +91,43 @@ dc.ui.Dialog = dc.View.extend({
 
 }, {
 
-  alert : function(text) {
-    return new dc.ui.Dialog({
+  alert : function(text, options) {
+    return new dc.ui.Dialog(_.extend({
       mode  : 'alert',
       title : null,
       text  : text
-    }).render();
+    }, options)).render();
   },
 
-  prompt : function(text, content, callback, shortPrompt) {
+  prompt : function(text, content, callback, options) {
     var onConfirm = callback && function(dialog){ return callback(dialog.val()); };
-    return new dc.ui.Dialog({
-      mode      : shortPrompt ? 'short_prompt' : 'prompt',
-      password  : shortPrompt == 'password',
+    return new dc.ui.Dialog(_.extend({
+      mode      : 'prompt',
+      password  : !!(options && options.password),
       title     : text,
       text      : '',
       content   : content,
       onConfirm : onConfirm
-    }).render();
+    }, options)).render();
   },
 
-  confirm : function(text, callback) {
-    return new dc.ui.Dialog({
+  confirm : function(text, callback, options) {
+    return new dc.ui.Dialog(_.extend({
       mode      : 'confirm',
       title     : null,
       text      : text,
       onConfirm : callback
-    }).render();
+    }, options)).render();
   },
 
-  choose : function(text, choices, callback) {
-    return new dc.ui.Dialog({
+  choose : function(text, choices, callback, options) {
+    return new dc.ui.Dialog(_.extend({
       mode      : 'short_prompt',
       title     : text,
       choices   : choices,
       text      : '',
       onConfirm : callback && function(dialog){ return callback(dialog.val()); }
-    }).render();
+    }, options)).render();
   }
 
 });

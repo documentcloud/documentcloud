@@ -9,19 +9,11 @@
     <%= Inflector.truncate(account.fullName(true), 25) %>&nbsp;<span class="pending_notification">(pending)</span>
   </span>
   <div class="edit name_wrapper">
-    <div class="text_input small">
-      <div class="background">
-        <div class="inner">
-          <input name="first_name" type="text" placeholder="first name" value="<%= account.get('first_name') %>" />
-        </div>
-      </div>
+    <div class="text_input dark small">
+      <input name="first_name" type="text" placeholder="first name" value="<%= account.get('first_name') %>" />
     </div>
-    <div class="text_input small">
-      <div class="background">
-        <div class="inner">
-          <input name="last_name" type="text" placeholder="last name" value="<%= account.get('last_name') %>" />
-        </div>
-      </div>
+    <div class="text_input dark small">
+      <input name="last_name" type="text" placeholder="last name" value="<%= account.get('last_name') %>" />
     </div>
   </div>
 </td>
@@ -29,12 +21,8 @@
   <span class="display">
     <%= Inflector.truncate(email, 25) %>
   </span>
-  <div class="text_input edit small">
-    <div class="background">
-      <div class="inner">
-        <input name="email" type="text" placeholder="email" value="<%= email %>" />
-      </div>
-    </div>
+  <div class="text_input edit dark small">
+    <input name="email" type="text" placeholder="email" value="<%= email %>" />
   </div>
 </td>
 <td class="role">
@@ -57,7 +45,7 @@
   <div class="edit controls_wrapper">
     <div class="minibutton default save_changes">OK</div>
     <% if (account.id && account.id > 0 && account.id != dc.app.accountId) { %>
-      <span class="delete_account" role="link">delete</span>
+      <div class="minibutton warn delete_account">Delete</div>
     <% } %>
   </div>
   <% } %>

@@ -29,8 +29,9 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   constructor : function(documents) {
     this.documents = documents;
     this.base({
-      mode      : 'custom',
-      title     : this.displayTitle()
+      mode        : 'custom',
+      title       : this.displayTitle(),
+      information : 'Drag a range of dates to zoom in.'
     });
     dc.ui.spinner.show();
     this._loadDates();

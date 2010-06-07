@@ -9,8 +9,9 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
 
   constructor : function() {
     this.base({
-      mode      : 'custom',
-      title     : dc.app.organization.name + ' <span class="subtitle">group: ' + dc.app.organization.slug + '</span>'
+      mode          : 'custom',
+      title         : dc.app.organization.name,
+      information   : 'group: ' + dc.app.organization.slug
     });
     _.bindAll(this, '_renderAccounts');
     this._rendered = false;
@@ -22,7 +23,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this._rendered = true;
     this._container = $('.custom', this.el);
     this._container.html(JST.account_dialog({}));
-    if (Accounts.current().isAdmin()) this.appendControl($.el('div', {'class': 'minibutton new_account'}, 'New Account'));
+    if (Accounts.current().isAdmin()) this.appendControl($.el('div', {'class': 'minibutton dark new_account', style : 'width: 80px;'}, 'New Account'));
     this.list = $('#account_list_content', this.el);
     this.setCallbacks();
     dc.ui.spinner.show('loading');

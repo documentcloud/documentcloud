@@ -111,6 +111,11 @@ div.text_input {
       border: 2px solid #333;
       border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
     }
+      div.text_input.dark.small input {
+        font-size: 11px; line-height: 14px;
+        padding: 4px 4px;
+        border-width: 1px;
+      }
       div.text_input.dark input:focus {
         border-color: #fff;
         background: #fff;
@@ -424,6 +429,13 @@ textarea.text_area {
     font-size: 10px;
     color: #999;
   }
+  .dialog .minibutton {
+    width: 60px;
+    height: 13px;
+    line-height: 13px;
+    border: 0;
+    box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none;
+  }
   .dialog .controls {
     float: right;
     position: relative;
@@ -437,11 +449,6 @@ textarea.text_area {
       .dialog .controls .minibutton {
         float: right;
         margin-left: 8px;
-        width: 60px;
-        height: 13px;
-        line-height: 13px;
-        border: 0;
-        box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none;
       }
         .dialog.alert_dialog .minibutton.cancel {
           display: none;

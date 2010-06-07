@@ -24,8 +24,7 @@ dc.ui.AccountView = dc.View.extend({
   constructor : function(options) {
     this.kind       = options.kind;
     this.tagName    = this.TAGS[this.kind];
-    var grad = this.kind == 'badge' ? '' : 'gradient_white';
-    this.className  = 'account_view ' + grad + ' ' + this.kind;
+    this.className  = 'account_view ' + this.kind;
     this.base(options);
     this.template   = JST['account_' + this.kind];
     _.bindAll(this, '_onSuccess', '_onError');
@@ -64,6 +63,7 @@ dc.ui.AccountView = dc.View.extend({
   },
 
   promptPasswordChange : function() {
+    dc.app.accounts.close();
     var dialog = dc.ui.Dialog.prompt('Enter your new password:', '', _.bind(function(password) {
       Accounts.update(this.model, {password : password}, {success : _.bind(function() {
         dc.ui.notifier.show({
@@ -73,7 +73,7 @@ dc.ui.AccountView = dc.View.extend({
         });
       }, this)});
       return true;
-    }, this), 'password');
+    }, this), {password : true, mode : 'short_prompt'});
   },
 
   _loadAvatar : function() {

@@ -27,7 +27,7 @@ dc.ui.ViewerControlPanel = dc.View.extend({
       DV.api.setTitle(title);
       this._updateDocument({title : title});
       return true;
-    }, this), true);
+    }, this), {mode : 'short_prompt'});
   },
 
   editRelatedArticle : function() {
@@ -35,7 +35,7 @@ dc.ui.ViewerControlPanel = dc.View.extend({
       DV.api.setRelatedArticle(url);
       this._updateDocument({related_article : url});
       return true;
-    }, this), true);
+    }, this), {mode : 'short_prompt'});
   },
 
   editDescription : function() {
