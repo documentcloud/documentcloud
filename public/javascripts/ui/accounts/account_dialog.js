@@ -23,7 +23,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this._rendered = true;
     this._container = $('.custom', this.el);
     this._container.html(JST.account_dialog({}));
-    if (Accounts.current().isAdmin()) this.appendControl($.el('div', {'class': 'minibutton dark new_account', style : 'width: 80px;'}, 'New Account'));
+    if (Accounts.current().isAdmin()) this.appendControl($.el('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, 'New Account'));
     this.list = $('#account_list_content', this.el);
     this.setCallbacks();
     dc.ui.spinner.show('loading');
@@ -34,6 +34,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   open : function() {
     if (!this._rendered) return this.render();
     $(document.body).addClass('overlay');
+    this.center();
     $(this.el).show();
   },
 

@@ -87,11 +87,11 @@
         top = Math.max(scrollTop, Math.min(top, scrollTop + clientHeight - elb.height));
       }
 
-      var offParent;
-      if (offParent = el.offsetParent()) {
-        left -= offParent.offset().left;
-        top -= offParent.offset().top;
-      }
+      // var offParent;
+      // if (offParent = el.offsetParent()) {
+      //   left -= offParent.offset().left;
+      //   top -= offParent.offset().top;
+      // }
 
       $(el).css({position : 'absolute', left : left + 'px', top : top + 'px'});
       return el;

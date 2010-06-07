@@ -34,10 +34,6 @@
   #account_list .minibutton.cancel {
     display: none;
   }
-  #account_list .minibutton.new_account {
-    float: left;
-    margin-left: 10px;
-  }
   #account_list table {
     width: 100%;
     border-top: 1px solid #222;
