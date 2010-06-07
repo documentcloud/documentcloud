@@ -10,7 +10,8 @@
   #timeline_dialog .cancel {
     display: none;
   }
-  #timeline_plot {
+  #timeline_dialog .timeline_plot {
+    width: 800px;
     cursor: default;
   }
   #timeline_dialog .tickLabel {

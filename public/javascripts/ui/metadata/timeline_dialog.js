@@ -21,9 +21,9 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   callbacks : {
     '.zoom_out.click':              '_zoomOut',
     '.ok.click':                    'confirm',
-    '#timeline_plot.plothover':     '_showTooltop',
-    '#timeline_plot.plotselected':  '_zoomIn',
-    '#timeline_plot.plotclick':     '_openPage'
+    '.timeline_plot.plothover':     '_showTooltop',
+    '.timeline_plot.plotselected':  '_zoomIn',
+    '.timeline_plot.plotclick':     '_openPage'
   },
 
   constructor : function(documents) {
@@ -38,12 +38,9 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   render : function() {
     this.base();
-    var height = this.documents.length <= 1 ? this.MIN_HEIGHT : this.ROW_HEIGHT * this.documents.length;
-    this.plot = $($.el('div', {id : 'timeline_plot', style : 'width:800px; height:' + height + 'px;'}));
-    $('.custom', this.el).append(this.plot);
+    $('.custom', this.el).html(JST.timeline({docs : this.documents, minHeight : this.MIN_HEIGHT, rowHeight : this.ROW_HEIGHT}));
     this._zoomButton = $.el('div', {'class' : 'minibutton zoom_out dark not_enabled'}, 'Zoom Out');
     $('.controls_inner', this.el).append(this._zoomButton);
-    $(this.el).append($.el('div', {'class' : 'information'}, 'Drag a range of dates to zoom in.'));
     this.setCallbacks();
     this.center();
     return this;
@@ -56,7 +53,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   // Redraw the Flot Plot.
   drawPlot : function() {
-    $.plot(this.plot, this._data, this._options);
+    $.plot($('.timeline_plot', this.el), this._data, this._options);
   },
 
   _loadDates : function() {
