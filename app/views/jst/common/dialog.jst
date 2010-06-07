@@ -11,7 +11,7 @@
 <% if( mode == 'prompt' || mode == 'short_prompt') { %>
   <div class="<%= mode %> draggable">
     <% if( mode == 'prompt') { %>
-      <textarea class="text_area content"></textarea>
+      <textarea class="text_area dark content"></textarea>
     <% } else if (choices) { %>
       <select class="content">
         <% _.each(choices, function(choice) { %>

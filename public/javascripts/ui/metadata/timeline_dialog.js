@@ -3,10 +3,10 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   GRAPH_OPTIONS : {
     xaxis     : {mode : 'time', minTickSize: [1, "day"]},
     yaxis     : {ticks: [], min: -0.5},
-    selection : {mode : 'x', color: '#0099ff'},
+    selection : {mode : 'x', color: '#09f'},
     legend    : {show : false},
     series    : {lines : {show : false}, points : {show : true}},
-    grid      : {hoverable : true, clickable : true}
+    grid      : {backgroundColor: '#222', borderColor: '#444', tickColor: '#282828', borderWidth: 1, hoverable : true, clickable : true}
   },
 
   ROW_HEIGHT : 50,
@@ -14,7 +14,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   DATE_FORMAT : "%b %d, %y",
 
-  POINT_COLOR : '#5a5a5a',
+  POINT_COLOR : '#777',
 
   id : 'timeline_dialog',
 
@@ -40,8 +40,10 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     this.base();
     var height = this.documents.length <= 1 ? this.MIN_HEIGHT : this.ROW_HEIGHT * this.documents.length;
     this.plot = $($.el('div', {id : 'timeline_plot', style : 'width:800px; height:' + height + 'px;'}));
-    $('.custom', this.el).append(this.plot);
-    $('.controls', this.el).append($.el('div', {'class' : 'minibutton zoom_out'}, 'Zoom Out'));
+    var info = $.el('div', {'class' : 'information'}, 'Drag a range of dates to zoom in.');
+    $('.custom', this.el).append($([this.plot[0], info]));
+    this._zoomButton = $.el('div', {'class' : 'minibutton zoom_out dark not_enabled'}, 'Zoom Out');
+    $('.controls_inner', this.el).append(this._zoomButton);
     this.setCallbacks();
     this.center();
     return this;
@@ -110,7 +112,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   // Allow selection of date ranges to zoom in.
   _zoomIn : function(e, ranges) {
-    this.setMode('on', 'zoom');
+    $(this._zoomButton).setMode('is', 'enabled');
     this._options.xaxis.min = ranges.xaxis.from;
     this._options.xaxis.max = ranges.xaxis.to;
     this.drawPlot();
@@ -118,7 +120,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   // Zoom back out to see the entire timeline.
   _zoomOut : function() {
-    this.setMode('off', 'zoom');
+    $(this._zoomButton).setMode('not', 'enabled');
     this._options.xaxis.min = null;
     this._options.xaxis.max = null;
     this.drawPlot();

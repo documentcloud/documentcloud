@@ -53,13 +53,14 @@
 }
 
 #upload_info.row {
-  font: italic 11px/25px Arial;
-  color: #555;
+  font-size: 10px;
+  line-height: 25px;
+  color: #ccc;
   text-align: left;
   margin: 15px 0 0 0;
 }
   #upload_info .spinner_dark {
     position: absolute;
     margin-top: 4px;
-    left: 275px;
+    left: 280px;
   }

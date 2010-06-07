@@ -92,8 +92,7 @@
         #organizer .box:hover .title {
           color: #000;
         }
-      #organizer .box .counts,
-      #project_dialog .counts {
+      #organizer .box .counts {
         font: 11px/17px Arial;
         color: #999;
       }

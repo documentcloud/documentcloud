@@ -2,7 +2,7 @@
 
 #timeline_dialog {
   max-width: none;
-  width: 820px;
+  width: 800px;
 }
   #timeline_dialog .text {
     padding: 3px 3px 20px 3px;
@@ -10,11 +10,10 @@
   #timeline_dialog .cancel {
     display: none;
   }
-  #timeline_dialog .zoom_out {
-    display: none;
-    float: left;
-    margin-left: 10px;
+  #timeline_plot {
+    cursor: default;
   }
-    #timeline_dialog.on_zoom .zoom_out {
-      display: block;
-    }
+  #timeline_dialog .tickLabel {
+    font-size: 11px;
+    color: #777;
+  }

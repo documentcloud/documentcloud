@@ -394,7 +394,7 @@ textarea.text_area {
     width: 300px;
   }
   .dialog.prompt_dialog {
-    width: 430px;
+    width: 417px;
   }
   .dialog .dialog_background {
     position: absolute;
@@ -417,6 +417,12 @@ textarea.text_area {
     }
   .dialog .text, .dialog .custom {
     font-size: 16px;
+  }
+  .dialog .information {
+    position: absolute;
+    top: 34px; right: 30px;
+    font-size: 10px;
+    color: #999;
   }
   .dialog .controls {
     float: right;
