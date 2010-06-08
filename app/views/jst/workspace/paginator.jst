@@ -1,7 +1,10 @@
 <% var to = Math.min(q.to, q.total); %>
 <div class="description">
-  <span class="range"><%= q.total < 2 ? '' : '' + (q.from + 1) %> &ndash; <%= to %></span>
-  of <%= q.total %> <%= Inflector.pluralize('document', q.total) %>
+  <% if (q.total > page_size) { %>
+    <span class="range"><%= '' + (q.from + 1) %> &ndash; <%= to %></span>
+    of
+  <% } %>
+  <%= q.total %> <%= Inflector.pluralize('document', q.total) %>
 </div>
 
 <div id="size_toggle"></div>
