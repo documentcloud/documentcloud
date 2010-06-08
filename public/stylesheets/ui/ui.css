@@ -141,17 +141,19 @@ div.text_input {
     border: 2px solid #e2e2e2;
     border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
   }
-    div.text_input.search input {
-      position: absolute;
-      width: auto;
-      left: 27px; right: 27px; top: 0px;
-      padding: 5px 0;
-      color: #999;
-      font: 13px/18px Arial;
+    div.text_input .search_inner {
+      position: relative;
+      margin: 0 27px;
     }
-      div.text_input.search input:focus {
-        color: #000;
+      div.text_input.search input {
+        width: 100%;
+        padding: 5px 0;
+        color: #999;
+        font: 13px/18px Arial;
       }
+        div.text_input.search input:focus {
+          color: #000;
+        }
     div.text_input .search_glyph {
       position: absolute;
       left: 8px; top: 8px;
