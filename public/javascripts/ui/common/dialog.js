@@ -65,6 +65,10 @@ dc.ui.Dialog = dc.View.extend({
     this.close();
   },
 
+  error : function(message) {
+    $('.information', this.el).addClass('error').text(message);
+  },
+
   confirm : function() {
     if (this.options.onConfirm && !this.options.onConfirm(this)) return false;
     this.close();

@@ -4,7 +4,7 @@
   <script type="text/javascript">
     <% if @bad_request %>
 
-      top.dc.ui.Dialog.alert('Upload failed. Please make sure you have selected the correct document file to upload.');
+      top.dc.app.uploader.error('Upload failed. Please check the document file.');
       top.dc.app.uploader.cancelUpload();
 
     <% else %>

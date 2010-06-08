@@ -29,7 +29,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   confirm : function() {
     if (!$('#document_upload_title', this.el).val()) {
-      return dc.ui.Dialog.alert('Please enter a title for the document.');
+      return this.error('Please enter a title for the document.');
     };
     dc.ui.spinner.show('uploading');
     $('#upload_info', this.el).show();

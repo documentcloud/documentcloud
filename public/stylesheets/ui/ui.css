@@ -445,6 +445,9 @@ textarea.text_area {
     font-size: 10px;
     color: #999;
   }
+    .dialog .information.error {
+      color: #f00;
+    }
   .dialog .minibutton {
     width: 60px;
     height: 13px;
