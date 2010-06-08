@@ -547,6 +547,5 @@ iframe.hidden_iframe {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       z-index: -1;
-      -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-      -webkit-box-shadow: 0 0px 10px #777; -moz-box-shadow: 0 0px 7px #777;
+      -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
     }
