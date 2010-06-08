@@ -5,8 +5,11 @@
     color: #555;
     border-bottom: 1px solid #e0e0e0;
     padding: 20px 30px 20px 30px;
-    margin-right: 2px;
   }
+    #organizer .block.explanation {
+      border-top: 1px solid #e0e0e0;
+      margin-top: 20px;
+    }
     #organizer .calais_info {
       color: #999;
       margin-top: 15px;
