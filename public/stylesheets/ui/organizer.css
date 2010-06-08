@@ -132,7 +132,8 @@
         #organizer_entities .row:hover,
         #organizer_entities .row.active {
           border-color: #d9d9d9;
-          background: #f5f3f2;
+          background: #f9f9f9;
+          margin-top: -1px; padding-top: 1px;
         }
         #organizer_entities .count {
           color: #999;
@@ -161,14 +162,13 @@
           }
         #organizer_entities .cancel_search {
           position: absolute;
-          top: 3px; left: 10px;
+          top: 4px; left: 10px;
           display: none;
         }
           #organizer_entities .row.active .cancel_search {
             display: block;
           }
   #organizer_entities .no_results {
-    border-right: 2px solid #ccc;
     padding: 15px 15px 15px 30px;
     border-bottom: 1px solid #e0e0e0;
     background: #fff;
