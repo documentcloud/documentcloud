@@ -143,6 +143,7 @@ div.text_input {
   }
     div.text_input.search input {
       position: absolute;
+      width: auto;
       left: 27px; right: 27px; top: 0px;
       padding: 5px 0;
       color: #999;
