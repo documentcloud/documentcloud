@@ -134,20 +134,30 @@
           border-color: #d9d9d9;
           background: #f5f3f2;
         }
-        #organizer_entities .count,
-        #organizer_entities .show_pages {
-          font: 11px/11px Arial;
+        #organizer_entities .count {
           color: #999;
         }
-        #organizer_entities .show_pages {
-          margin-left: 3px;
-          display: none;
+        #organizer_entities .text_link {
+          color: #999;
+          cursor: pointer;
         }
+          #organizer_entities .text_link:hover {
+            color: #000;
+            text-decoration: underline;
+          }
+          #organizer_entities .text_link:active {
+            color: #333;
+          }
+          #organizer_entities .more, #organizer_entities .less {
+            padding-left: 30px;
+            text-decoration: underline;
+          }
+          #organizer_entities .show_pages {
+            margin-left: 3px;
+            display: none;
+          }
           #organizer_entities .row.active .show_pages {
             display: inline;
-          }
-          #organizer_entities .show_pages:hover {
-            text-decoration: underline;
           }
         #organizer_entities .cancel_search {
           position: absolute;
@@ -157,12 +167,6 @@
           #organizer_entities .row.active .cancel_search {
             display: block;
           }
-    #organizer_entities .more, #organizer_entities .less {
-      padding-left: 30px;
-      color: #999;
-      text-decoration: underline;
-      cursor: pointer;
-    }
   #organizer_entities .no_results {
     border-right: 2px solid #ccc;
     padding: 15px 15px 15px 30px;
@@ -198,7 +202,7 @@
     overflow-y: hidden;
   }
     .scroll.is_active .scroll_content {
-      top: 20px; bottom: 20px;
+      top: 10px; bottom: 20px;
     }
   .scroll_up, .scroll_down {
     height: 19px;
@@ -216,6 +220,9 @@
       bottom: 0px;
       border-top: 1px solid #e0e0e0;
     }
+      .scroll.top_position .scroll_up, .scroll_up.bottom_position .scroll_down {
+        border-color: transparent;
+      }
       .scroll.not_active .scroll_up, .scroll.not_active .scroll_down {
         display: none;
       }
