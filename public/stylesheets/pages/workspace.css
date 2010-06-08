@@ -107,7 +107,6 @@ a {
   position: absolute;
   top: 80px; left: 340px;
   width: 16px; height: 16px;
-  background: url(/images/embed/ui/spinner_circle.gif);
 }
 
 body.workspace #content {

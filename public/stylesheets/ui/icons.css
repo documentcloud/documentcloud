@@ -20,7 +20,8 @@
 .icon.search_button_16 {
   background-image: url(/images/embed/icons/search_button_16.png);
 }
-.icon.spinner {
+.icon.spinner,
+#spinner {
   background-image: url(/images/embed/ui/spinner_circle.gif);
 }
 .icon.spinner_dark {
