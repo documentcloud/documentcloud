@@ -28,14 +28,14 @@
         Email Address:
       </label>
       <div class="example long">
-        Not sure what email address you use to log in? 
-        Here's a tip: any one else in your office with a 
+        Not sure what email address you use to log in?
+        Here's a tip: any one else in your office with a
         DocumentCloud account can look up your email address under 'Accounts'.
       </div>
     </div>
     <div class="line">
       <a href="/login"><div class="minibutton" style="margin-right: 15px;">&laquo; Return to Login</div></a>
-      <div class="minibutton">Send Reset Password Email</div>
+      <div class="minibutton submit">Send Reset Password Email</div>
     </div>
   </form>
 </div>
@@ -44,5 +44,5 @@
   $('#full_screen_form form').keypress(function(e) {
     if (e.keyCode == 13) this.submit();
   });
-  $('.minibutton.default').click(function(){ $('#full_screen_form form').submit(); });
+  $('.minibutton.submit').click(function(){ $('#full_screen_form form').submit(); });
 </script>

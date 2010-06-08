@@ -37,7 +37,7 @@
       </label>
     </div>
     <div class="line">
-      <div class="minibutton">Log in</div>
+      <div class="minibutton submit">Log in</div>
     </div>
   </form>
 </div>
@@ -46,5 +46,5 @@
   $('#full_screen_form form').keypress(function(e) {
     if (e.keyCode == 13) this.submit();
   });
-  $('.minibutton.default').click(function(){ $('#full_screen_form form').submit(); });
+  $('.minibutton.submit').click(function(){ $('#full_screen_form form').submit(); });
 </script>
