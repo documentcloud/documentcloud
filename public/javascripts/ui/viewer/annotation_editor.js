@@ -126,6 +126,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
   },
 
   deleteAnnotation : function(anno) {
+    if (!anno.server_id) return;
     var url = this._baseURL + '/' + anno.server_id;
     $.ajax({url : url, type : 'POST', data : {_method : 'delete'}, dataType : 'json'});
   }
