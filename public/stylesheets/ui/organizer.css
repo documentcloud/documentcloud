@@ -34,6 +34,9 @@
     body.entities_sidebar_tab #organizer_entities {
       display: block;
     }
+  #organizer #project_controls {
+    margin-right: 2px;
+  }
   #organizer .project_list_wrap {
   }
     #organizer.has_projects .project_help {
@@ -100,7 +103,7 @@
 
 /*------------------------------ Entities ---------------------------------*/
 #organizer_entities {
-  font: 11px/17px Arial;
+  font: 11px/15px Arial;
   color: #555;
   background: #fff;
   margin-right: 2px;
@@ -123,7 +126,7 @@
     }
       #organizer_entities .row {
         width: 268px;
-        padding: 0px 10px 0px 30px;
+        padding: 0px 10px 1px 30px;
         border: 1px solid transparent;
         border-left: 0; border-right: 0;
         cursor: pointer;
@@ -133,7 +136,8 @@
         #organizer_entities .row.active {
           border-color: #d9d9d9;
           background: #f9f9f9;
-          margin-top: -1px; padding-top: 1px;
+          margin-top: -1px; padding-bottom: 0px;
+          line-height: 17px;
         }
         #organizer_entities .count {
           color: #999;
@@ -162,7 +166,7 @@
           }
         #organizer_entities .cancel_search {
           position: absolute;
-          top: 4px; left: 10px;
+          top: 3px; left: 10px;
           display: none;
         }
           #organizer_entities .row.active .cancel_search {
