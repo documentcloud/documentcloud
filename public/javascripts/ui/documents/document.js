@@ -38,6 +38,7 @@ dc.ui.Document = dc.View.extend({
     var title = this.model.get('title');
     var data = _.clone(this.model.attributes());
     data = _.extend(data, {
+      created_at    : data.created_at.replace(/\s/g, '&nbsp;'),
       icon          : this._iconAttributes(),
       thumbnail_url : this._thumbnailURL(),
       description   : this._description()
