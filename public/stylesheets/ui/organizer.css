@@ -49,14 +49,12 @@
       border-right: 2px solid #ccc;
       background: #f4f3f1;
     }
-      #organizer .box,
-      #organizer_entities .row {
+      #organizer .box {
         background-image: url(/images/embed/ui/box_back.png);
         background-repeat: repeat-y;
         background-position: right top;
       }
-        #organizer .box:hover,
-        #organizer_entities .row:hover {
+        #organizer .box:hover {
           background: #f9f9f9;
         }
       #organizer .box.is_selected,
@@ -99,51 +97,39 @@
 
 /*------------------------------ Entities ---------------------------------*/
 #organizer_entities {
-  font: 11px/14px Arial;
-  color: #000;
-  background: #f4f3f1 url(/images/embed/ui/box_back_wide.png) repeat-y right top;
+  font: 11px/19px Arial;
+  color: #555;
+  background: #fff;
+  margin-right: 2px;
 }
-  #entities_line {
-    display: none;
-    background: #e0e0e0;
-    height: 1px; width: 308px;
-  }
-    .scroll.not_active #entities_line {
-      display: block;
-    }
   #organizer_entities .section {
     width: 308px;
-    padding: 15px 0;
-    border-bottom: 1px solid #e0e0e0;
-    border-top: 1px solid #fff;
+    margin: 30px 0 0 0;
   }
     #organizer_entities .section:first-child {
       border-top: 0;
+      margin-top: 10px;
     }
     #organizer_entities .category {
-      font: bold 14px Arial;
+      font: bold 12px Arial;
       padding-left: 30px;
-      color: #555;
+      color: #000;
     }
     #organizer_entities .rows {
-      margin: 4px 0;
+      margin: 4px 0 0 0;
     }
       #organizer_entities .row {
-        padding: 1px 10px 1px 30px;
-        border: 1px solid transparent;
-        border-right: 2px solid #ccc;
         width: 268px;
-        border-left: 0;
+        padding: 0px 10px 0px 30px;
+        border: 1px solid transparent;
+        border-left: 0; border-right: 0;
         cursor: pointer;
         position: relative;
       }
-        #organizer_entities .row.active,
-        #organizer_entities .row.active:hover {
-          border-bottom-color: #e0e0e0;
-          border-top-color: #fff;
-          background: #fff;
-          border-right: 0;
-          width: 270px;
+        #organizer_entities .row:hover,
+        #organizer_entities .row.active {
+          border-color: #d9d9d9;
+          background: #f5f3f2;
         }
         #organizer_entities .count,
         #organizer_entities .show_pages {
@@ -162,7 +148,7 @@
           }
         #organizer_entities .cancel_search {
           position: absolute;
-          top: 2px; left: 10px;
+          top: 5px; left: 10px;
           display: none;
         }
           #organizer_entities .row.active .cancel_search {
@@ -170,7 +156,8 @@
           }
     #organizer_entities .more, #organizer_entities .less {
       padding-left: 30px;
-      font-weight: bold;
+      color: #999;
+      text-decoration: underline;
       cursor: pointer;
     }
   #organizer_entities .no_results {
