@@ -21,12 +21,12 @@
   }
   #upload_dialog textarea {
     float: right;
-    width: 375px; height: 78px;
+    width: 371px; height: 78px;
     margin-bottom: 10px;
   }
   #document_upload_file, #document_upload_access, #document_project_title {
     position: absolute;
-    left: 108px; top: 3px;
+    left: 112px; top: 3px;
   }
     #document_upload_file {
       color: #ccc;
