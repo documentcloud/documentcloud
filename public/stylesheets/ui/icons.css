@@ -63,6 +63,11 @@
     background-image: url(/images/embed/ui/minus.png);
   }
 
+.icon.mini_note {
+  width: 12px; height: 7px;
+  background-image: url(/images/embed/icons/mini_note.png);
+}
+
 .icon.calais_30 {
   width: 30px; height: 30px;
   background-image: url(/images/embed/icons/calais_30.png);

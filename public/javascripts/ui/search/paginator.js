@@ -60,11 +60,12 @@ dc.ui.Paginator = dc.View.extend({
     $(document.body).toggleClass('minidocs', this.mini);
   },
 
-  toggleSize: function(callback) {
+  toggleSize: function(callback, doc) {
     this.setSize(!this.mini);
     dc.app.preferences.set({paginator_mini : this.mini});
     callback = _.isFunction(callback) ? callback : null;
     var page = Math.floor(((this.page || 1) - 1) / this.pageFactor()) + 1;
+    if (doc) page += Math.floor(_.indexOf(Documents.models(), doc) / this.pageSize());
     dc.app.searchBox.search(dc.app.searchBox.value(), page, callback);
   },
 

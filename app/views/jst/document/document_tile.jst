@@ -1,17 +1,18 @@
 <div class="select"></div>
 <img class="icon doc generic draggable noselect" src="<%= thumbnail_url %>" data-id="<%= id %>" />
-<% if (annotation_count) { %>
-  <div class="show_notes">
-    <div class="icon cancel_search" title="hide notes"></div>
-    <span class="text_link"><%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %></span>
-  </div>
-<% } %>
 <div class="title">
   <span class="doc_title noselect"><%= title %></span>
   <% if (icon) { %>
     <div class="icon document_tool <%= icon.className %>" title="<%= icon.title %>"></div>
   <% } %>
 </div>
+<% if (annotation_count) { %>
+  <div class="show_notes">
+    <div class="icon cancel_search" title="hide notes"></div>
+    <span class="text_link"><%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %></span>
+  </div>
+  <div class="icon mini_note"></div>
+<% } %>
 <div class="description"><span class="noselect"><%= description %></span></div>
 <div class="metalines interface">
   <span class="noselect">

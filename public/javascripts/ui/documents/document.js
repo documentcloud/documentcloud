@@ -27,7 +27,7 @@ dc.ui.Document = dc.View.extend({
     this.base(options);
     this.el.id = 'document_' + this.model.id;
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
-    _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderPages', '_onNotesLoaded');
+    _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderPages');
     this.model.bind(dc.Model.CHANGED, this._onDocumentChange);
     this.model.notes.bind(dc.Set.MODEL_ADDED, this._addNote);
     this.model.pageEntities.bind(dc.Set.REFRESHED, this._renderPages);
@@ -100,10 +100,15 @@ dc.ui.Document = dc.View.extend({
 
   toggleNotes : function(e) {
     e.stopPropagation();
-    if (this.modes.notes == 'has') return this.setMode('owns', 'notes');
-    if (this.model.notes.populated) return this.setMode('has', 'notes');
-    dc.ui.spinner.show('loading notes');
-    if (!this.model.notes.populated) return this.model.notes.populate({success: this._onNotesLoaded});
+    var next = _.bind(function() {
+      var model = Documents.get(this.model.id);
+      if (this.modes.notes == 'has') return this.setMode('owns', 'notes');
+      if (model.notes.populated) return this.setMode('has', 'notes');
+      dc.ui.spinner.show('loading notes');
+      window.scroll(0, $('#document_' + model.id).offset().top - 10);
+      model.notes.populate({success: dc.ui.spinner.hide });
+    }, this);
+    dc.app.paginator.mini ? dc.app.paginator.toggleSize(next, this.model) : next();
   },
 
   deleteDocument : function(e) {
@@ -148,13 +153,9 @@ dc.ui.Document = dc.View.extend({
     this.render();
   },
 
-  _onNotesLoaded : function() {
-    dc.ui.spinner.hide();
-    this.setMode('has', 'notes');
-  },
-
   _addNote : function(e, note) {
     this.notesEl.append((new dc.ui.Note({model : note, set : this.model.notes})).render().el);
+    this.setMode('has', 'notes');
   },
 
   _renderPages : function() {
