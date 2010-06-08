@@ -1,10 +1,12 @@
 <div class="select"></div>
-<img class="icon doc generic draggable noselect" src="<%= thumbnail_url %>" data-id="<%= id %>" />
-<div class="title">
-  <span class="doc_title noselect"><%= title %></span>
-  <% if (icon) { %>
-    <div class="icon document_tool <%= icon.className %>" title="<%= icon.title %>"></div>
-  <% } %>
+<div class="hoverable">
+  <img class="icon doc generic draggable noselect" src="<%= thumbnail_url %>" data-id="<%= id %>" />
+  <div class="title">
+    <span class="doc_title noselect"><%= title %></span>
+    <% if (icon) { %>
+      <div class="icon document_tool <%= icon.className %>" title="<%= icon.title %>"></div>
+    <% } %>
+  </div>
 </div>
 <% if (annotation_count) { %>
   <div class="show_notes">

@@ -31,6 +31,7 @@
       min-height: 96px;
     }
   img.doc {
+    cursor: pointer;
     background: #fff;
     position: absolute;
     width: 60px; height: 75px;
@@ -48,7 +49,7 @@
     }
   .document .mini_note {
     position: absolute;
-    top: 10px; left: -3px;
+    top: 13px; left: -3px;
   }
     body.minidocs .document .mini_note {
       left: 53px;
@@ -89,7 +90,7 @@
     .document .doc_title {
       cursor: pointer;
     }
-      .document .doc_title:hover {
+      .document .hoverable:hover .doc_title {
         text-decoration: underline;
       }
     .document .document_tool {
