@@ -83,7 +83,7 @@ div.text_input {
   div.text_input.dark {
     height: auto;
     background: none;
-    margin-right: 16px;
+    margin-right: 12px;
   }
   div.text_input .background {
     background: transparent url(/images/embed/ui/text_input_large_right.png) no-repeat center right;
@@ -118,7 +118,7 @@ div.text_input {
     }
     div.text_input.dark input {
       font-size: 14px; line-height: 18px; height: 18px;
-      padding: 3px 6px;
+      padding: 3px 4px;
       color: #999;
       background: #1e1e1e;
       border: 2px solid #333;
