@@ -39,7 +39,7 @@ dc.ui.Menu = dc.View.extend({
     this.setMode('is', 'open');
     if (this.options.onOpen) this.options.onOpen(this);
     content.show();
-    content.align(this.el, '-left bottom');
+    content.align(this.el, '-left bottom no-constraint');
     content.autohide({onHide : this.close});
     if (this.options.autofilter) _.defer(function(){ $('input', content).focus(); });
   },
