@@ -11,15 +11,10 @@
       margin-top: 20px;
     }
     #organizer .calais_info {
-      color: #999;
       margin-top: 15px;
       line-height: 30px;
-      cursor: pointer;
       display: block;
     }
-      #organizer .calais_info:hover {
-        text-decoration: underline;
-      }
       #organizer .block .calais_30 {
         float: left;
         margin-right: 12px;
@@ -142,27 +137,19 @@
         #organizer_entities .count {
           color: #999;
         }
-        #organizer_entities .text_link {
-          color: #999;
-          cursor: pointer;
+        #organizer_entities .more, #organizer_entities .less {
+          padding-left: 30px;
         }
-          #organizer_entities .text_link:hover {
-            color: #000;
+        #organizer_entities .show_pages {
+          margin-left: 3px;
+          display: none;
+        }
+        #organizer_entities .row.active .show_pages {
+          display: inline;
+          text-decoration: none;
+        }
+          #organizer_entities .row.active .show_pages:hover {
             text-decoration: underline;
-          }
-          #organizer_entities .text_link:active {
-            color: #333;
-          }
-          #organizer_entities .more, #organizer_entities .less {
-            padding-left: 30px;
-            text-decoration: underline;
-          }
-          #organizer_entities .show_pages {
-            margin-left: 3px;
-            display: none;
-          }
-          #organizer_entities .row.active .show_pages {
-            display: inline;
           }
         #organizer_entities .cancel_search {
           position: absolute;

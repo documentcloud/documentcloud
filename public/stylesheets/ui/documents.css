@@ -137,7 +137,6 @@
       }
   .document .show_notes {
     cursor: pointer;
-    color: #999;
     position: absolute;
     left: 7px; top: 90px;
     width: 60px;
@@ -145,9 +144,6 @@
   }
     body.minidocs .document .show_notes {
       display: none;
-    }
-    .document .show_notes:hover {
-      text-decoration: underline;
     }
     .document.has_notes .show_notes {
       text-align: left;

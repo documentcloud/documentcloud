@@ -11,7 +11,7 @@
 
 <% if (q.total > page_size) { %>
   <% if (q.page > 1) { %>
-    <span class="prev">&larr;&nbsp;&nbsp;<span class="text">Prev</span></span>
+    <span class="prev">&larr;&nbsp;&nbsp;<span class="text_link">Prev</span></span>
   <% } %>
   <select class="enumeration">
     <% for (var i = 1; i <= page_count; i++) { %>
@@ -19,6 +19,6 @@
     <% } %>
   </select>
   <% if (q.page < page_count) { %>
-    <span class="next"><span class="text">Next</span>&nbsp;&nbsp;&rarr;</span>
+    <span class="next"><span class="text_link">Next</span>&nbsp;&nbsp;&rarr;</span>
   <% } %>
 <% } %>

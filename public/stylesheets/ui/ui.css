@@ -57,6 +57,19 @@ select {
   filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#b0b0b0', EndColorStr='#888888');
 }
 
+/*------------------------------ Text Links ---------------------------------*/
+.text_link {
+  color: #999;
+  cursor: pointer;
+  text-decoration: underline;
+}
+  .text_link:hover {
+    color: #000;
+  }
+  .text_link:active {
+    color: #333;
+  }
+
 /*------------------------------ Text Inputs ---------------------------------*/
 div.text_input {
   position: relative;

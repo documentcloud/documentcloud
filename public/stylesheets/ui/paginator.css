@@ -17,12 +17,6 @@
     #paginator .range {
       font-weight: bold;
     }
-  #paginator .prev, #paginator .next {
-    cursor: pointer;
-  }
-    #paginator .text {
-      text-decoration: underline;
-    }
   #paginator .enumeration {
     margin: 0 8px;
   }
