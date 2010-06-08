@@ -478,6 +478,9 @@ textarea.text_area {
   .dialog textarea.content {
     width: 400px; height: 100px;
   }
+  .dialog.progress_dialog .spinner_dark {
+    margin: 0 auto 20px;
+  }
 
 /*------------------------------ Hidden Iframes ------------------------------*/
 iframe.hidden_iframe {

@@ -132,6 +132,14 @@ dc.ui.Dialog = dc.View.extend({
       text      : '',
       onConfirm : callback && function(dialog){ return callback(dialog.val()); }
     }, options)).render();
+  },
+
+  progress : function(text, options) {
+    return new dc.ui.Dialog(_.extend({
+      mode  : 'progress',
+      text  : text,
+      title : null
+    }, options)).render();
   }
 
 });

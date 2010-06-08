@@ -51,16 +51,3 @@
   margin-right: 10px;
   opacity: 0.75; filter: alpha(opacity=75);
 }
-
-#upload_info.row {
-  font-size: 10px;
-  line-height: 25px;
-  color: #ccc;
-  text-align: left;
-  margin: 15px 0 0 0;
-}
-  #upload_info .spinner_dark {
-    position: absolute;
-    margin-top: 4px;
-    left: 280px;
-  }

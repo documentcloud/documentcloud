@@ -3,6 +3,9 @@
   <div class="title draggable"><%= title %></div>
 <% } %>
 <div class="information"><%= information || '' %></div>
+<% if (mode == 'progress') { %>
+  <div class="icon spinner_dark"></div>
+<% } %>
 <% if (text) { %>
   <div class="text draggable"><%= text %></div>
 <% } %>
@@ -11,7 +14,7 @@
 <% } %>
 <% if( mode == 'prompt' || mode == 'short_prompt') { %>
   <div class="<%= mode %> draggable">
-    <% if( mode == 'prompt') { %>
+    <% if (mode == 'prompt') { %>
       <textarea class="text_area dark content"></textarea>
     <% } else if (choices) { %>
       <select class="content">
@@ -26,13 +29,15 @@
     <% } %>
   </div>
 <% } %>
-<div class="controls draggable">
-  <div class="controls_inner">
-    <% var saveText = (editor || mode == 'prompt' || mode == 'short_prompt') ? 'Save' : 'OK'; %>
-    <div class="minibutton ok default"><%= saveText %></div>
-    <div class="minibutton cancel dark">Cancel</div>
-    <% if (editor) { %>
-      <div class="minibutton delete warn">Delete</div>
-    <% } %>
+<% if (mode != 'progress') { %>
+  <div class="controls draggable">
+    <div class="controls_inner">
+      <% var saveText = (editor || mode == 'prompt' || mode == 'short_prompt') ? 'Save' : 'OK'; %>
+      <div class="minibutton ok default"><%= saveText %></div>
+      <div class="minibutton cancel dark">Cancel</div>
+      <% if (editor) { %>
+        <div class="minibutton delete warn">Delete</div>
+      <% } %>
+    </div>
   </div>
-</div>
+<% } %>

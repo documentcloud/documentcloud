@@ -31,22 +31,21 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     if (!$('#document_upload_title', this.el).val()) {
       return this.error('Please enter a title for the document.');
     };
-    dc.ui.spinner.show('uploading');
-    $('#upload_info', this.el).show();
     $('#upload_document', this.el).submit();
-    return false;
+    _.defer(_.bind(function(){
+      this._progressDialog = dc.ui.Dialog.progress('The document is uploading, please leave this window open.');
+    }, this));
+    this.close();
   },
 
   cancelUpload : function() {
-    dc.ui.spinner.hide();
-    $('#upload_info', this.el).hide();
+    if (this._progressDialog) this._progressDialog.close();
   },
 
   confirmUpload : function() {
-    dc.ui.spinner.hide();
+    if (this._progressDialog) this._progressDialog.close();
     dc.app.documentCount += 1;
     dc.ui.Project.uploadedDocuments.render();
-    this.close();
   },
 
   open : function() {
