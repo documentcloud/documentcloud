@@ -100,7 +100,7 @@
 
 /*------------------------------ Entities ---------------------------------*/
 #organizer_entities {
-  font: 11px/19px Arial;
+  font: 11px/17px Arial;
   color: #555;
   background: #fff;
   margin-right: 2px;
@@ -151,7 +151,7 @@
           }
         #organizer_entities .cancel_search {
           position: absolute;
-          top: 5px; left: 10px;
+          top: 3px; left: 10px;
           display: none;
         }
           #organizer_entities .row.active .cancel_search {
