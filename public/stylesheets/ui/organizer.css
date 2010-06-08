@@ -77,12 +77,12 @@
       #organizer .box.uploaded_documents:hover .edit_glyph,
       #organizer .box.uploaded_documents.is_selected .edit_glyph {
         display: none;
+        position: absolute;
+        left: 11px; top: 18px;
       }
         #organizer .box:hover .edit_glyph,
         #organizer .box.is_selected .edit_glyph {
           display: block;
-          position: absolute;
-          left: 11px; top: 18px;
         }
       #organizer .box .title {
         font: bold 14px Arial;

@@ -7,20 +7,6 @@ select {
 }
 
 /*---------------------- Drop-shadow replacements ----------------------------*/
-#tooltip_background,
-.note .note_background {
-  margin: -6px 0 0 -6px;
-  filter:
-    progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=45,strength=3)
-    progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=135,strength=3)
-    progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=225,strength=3)
-    progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=315,strength=3);
-}
-  #tooltip_background,
-  .note .note_background {
-    top: 0; left: 0;
-    right: 6px; bottom: 6px;
-  }
 div.dialog .dialog_background {
   top: 0; left: 0;
   right: 8px; bottom: 8px;
