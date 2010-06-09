@@ -217,7 +217,7 @@ textarea.text_area {
   .minibutton.ok,
   .minibutton.default {
     background-image: url(/images/embed/ui/button_bg_green.gif);
-    border-color: #4ba47c;
+    border-color: #4ba47c; border-top-color: #53b388; border-bottom-color: #459671;
     text-shadow: none;
   }
   .minibutton.dark {
@@ -234,7 +234,7 @@ textarea.text_area {
     }
   .minibutton.warn {
     background-image: url(/images/embed/ui/button_bg_red.gif);
-    border-color: #e5364c;
+    border-color: #e5364c; border-bottom-color: #9c1f32;
     text-shadow: none;
   }
 
