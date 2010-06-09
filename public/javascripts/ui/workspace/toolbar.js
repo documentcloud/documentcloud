@@ -14,7 +14,7 @@ dc.ui.Toolbar = dc.View.extend({
     _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments',
       '_registerDocument', '_deleteSelectedDocuments', 'editTitle', 'editSource',
       'editDescription', 'editRelatedArticle', 'editAccess', 'display',
-      'displayEmbedSnippet', '_checkFloat');
+      'displayEmbedSnippet', 'checkFloat');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
@@ -32,7 +32,7 @@ dc.ui.Toolbar = dc.View.extend({
     this.openButton      = $('#open_viewers', this.el);
     this.timelineButton  = $('#open_timeline', this.el);
     this.floatEl         = $('#floating_toolbar', this.el);
-    $(window).scroll(this._checkFloat);
+    $(window).scroll(this.checkFloat);
     this.setCallbacks();
     this.display();
     return this;
@@ -127,6 +127,13 @@ dc.ui.Toolbar = dc.View.extend({
     }, 'At this stage in the DocumentCloud beta, you can\'t yet embed documents that you haven\'t uploaded yourself.');
   },
 
+  checkFloat : function() {
+    var floating = $(window).scrollTop() > 198;
+    if (this._floating == floating) return;
+    $(document.body).toggleClass('floating_toolbar', this._floating = floating);
+    if (!floating) $(document.body).trigger('click');
+  },
+
   _subtitle : function(count) {
     return count > 1 ? count + ' Documents' : '';
   },
@@ -185,13 +192,6 @@ dc.ui.Toolbar = dc.View.extend({
 
   _panel : function() {
     return this._panelEl = this._panelEl || $(this.el).parents('.panel_content')[0];
-  },
-
-  _checkFloat : function() {
-    var floating = $(window).scrollTop() > 198;
-    if (this._floating == floating) return;
-    $(document.body).toggleClass('floating_toolbar', this._floating = floating);
-    if (!floating) $(document.body).trigger('click');
   },
 
   _createPublishMenu : function() {
