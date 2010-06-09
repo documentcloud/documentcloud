@@ -188,7 +188,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _checkFloat : function() {
-    var floating = $(window).scrollTop() > 208;
+    var floating = $(window).scrollTop() > 198;
     if (this._floating == floating) return;
     this.floatEl.toggleClass('float', this._floating = floating);
   },
