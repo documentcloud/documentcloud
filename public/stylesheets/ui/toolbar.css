@@ -12,12 +12,13 @@
     position: fixed;
     top: 0px; right: 20px; left: 330px;
     padding: 30px 0 0 0px;
-    height: 55px;
+    height: 53px;
     background: white;
     z-index: 10;
   }
     #floating_toolbar.float #floating_line {
-      margin: 0 30px 0 30px;
+      margin: 0 20px 0 20px;
+      padding: 0 10px 0 10px;
       border-bottom: 1px solid #ccc;
       height: 53px;
     }
