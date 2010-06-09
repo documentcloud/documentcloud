@@ -131,8 +131,7 @@
         #organizer_entities .row.active {
           border-color: #d9d9d9;
           background: #f9f9f9;
-          margin-top: -1px; padding-bottom: 0px;
-          line-height: 17px;
+          margin-top: -1px; padding: 1px 10px 1px 30px;
         }
         #organizer_entities .count {
           color: #999;
@@ -153,7 +152,7 @@
           }
         #organizer_entities .cancel_search {
           position: absolute;
-          top: 3px; left: 10px;
+          top: 50%; left: 10px; margin-top: -6px;
           display: none;
         }
           #organizer_entities .row.active .cancel_search {
