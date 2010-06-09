@@ -5,15 +5,26 @@
   position: relative;
 }
 
-#toolbar .minibutton {
-  float: left;
-  position: relative;
-  margin: 0 0 22px 8px;
-  z-index: 1;
+#toolbar {
+  height: 46px;
 }
-  #toolbar #open_viewers {
-    margin-left: 0;
+  #floating_toolbar.float {
+    position: fixed;
+    top: 0px; right: 20px; left: 330px;
+    padding: 20px 0 0 30px;
+    height: 40px;
+    background: white;
+    z-index: 10;
   }
+  #toolbar .minibutton {
+    float: left;
+    position: relative;
+    margin: 0 0 22px 8px;
+    z-index: 1;
+  }
+    #toolbar #open_viewers {
+      margin-left: 0;
+    }
 
 .embed_code {
   width: 550px;

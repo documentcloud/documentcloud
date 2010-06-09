@@ -9,11 +9,12 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   constructor : function(options) {
+    this._floating = false;
     this.base(options);
     _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments',
       '_registerDocument', '_deleteSelectedDocuments', 'editTitle', 'editSource',
       'editDescription', 'editRelatedArticle', 'editAccess', 'display',
-      'displayEmbedSnippet');
+      'displayEmbedSnippet', '_checkFloat');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
@@ -30,6 +31,8 @@ dc.ui.Toolbar = dc.View.extend({
     this.remoteUrlButton = $('#edit_remote_url_button', el);
     this.openButton      = $('#open_viewers', this.el);
     this.timelineButton  = $('#open_timeline', this.el);
+    this.floatEl         = $('#floating_toolbar', this.el);
+    $(window).scroll(this._checkFloat);
     this.setCallbacks();
     this.display();
     return this;
@@ -182,6 +185,12 @@ dc.ui.Toolbar = dc.View.extend({
 
   _panel : function() {
     return this._panelEl = this._panelEl || $(this.el).parents('.panel_content')[0];
+  },
+
+  _checkFloat : function() {
+    var floating = $(window).scrollTop() > 208;
+    if (this._floating == floating) return;
+    this.floatEl.toggleClass('float', this._floating = floating);
   },
 
   _createPublishMenu : function() {
