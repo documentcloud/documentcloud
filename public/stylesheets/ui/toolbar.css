@@ -3,6 +3,7 @@
   height: 32px;
   margin: 0 10px 0 30px;
   position: relative;
+  z-index: 2;
 }
 
 #toolbar {

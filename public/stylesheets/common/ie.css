@@ -65,3 +65,10 @@ body.workspace {
 .document .page {
   margin-top: 0;
 }
+.dialog .controls {
+  left: auto;
+  right: 100%;
+}
+  .dialog .controls_inner {
+    left: 100%;
+  }
