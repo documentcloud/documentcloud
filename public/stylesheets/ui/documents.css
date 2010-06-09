@@ -50,7 +50,7 @@
   .document .mini_note {
     position: absolute;
     top: 13px; left: -3px;
-    opacity: 0.85; filter: alpha(opacity=85);
+    opacity: 0.85;
   }
     body.minidocs .document .mini_note {
       left: 53px;
