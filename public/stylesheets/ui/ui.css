@@ -290,6 +290,10 @@ textarea.text_area {
   border-top-left-radius: 0; -webkit-border-top-left-radius: 0; -moz-border-radius-topleft: 0;
   box-shadow: 3px 4px 5px -2px #777; -webkit-box-shadow: 3px 4px 5px -2px #777; -moz-box-shadow: 3px 4px 5px -2px #777;
 }
+  body.floating_toolbar .menu_content {
+    position: fixed !important;
+    top: 62px !important;
+  }
   .menu_content .menu_item {
     cursor: pointer;
     font-size: 11px;

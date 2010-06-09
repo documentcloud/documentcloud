@@ -8,14 +8,14 @@
 #toolbar {
   height: 46px;
 }
-  #floating_toolbar.float {
+  body.floating_toolbar #floating_toolbar {
     position: fixed;
     top: 0px; right: 20px; left: 330px;
     padding: 30px 30px 0;
     height: 53px;
     z-index: 10;
   }
-    #floating_toolbar.float #floating_line {
+    body.floating_toolbar #floating_line {
       position: absolute;
       top: 0; left: 20px; right: 20px; bottom: 0;
       background: white;
