@@ -377,7 +377,7 @@ class Document < ActiveRecord::Base
     res['page']            = {}
     res['page']['image']   = page_image_url_template(:local => options[:local])
     res['page']['text']    = page_text_url_template(:local => options[:local])
-    res['related_article'] = related_article
+    res['related_article'] = related_article if related_article
     doc['sections']        = sections.map(&:canonical) if options[:sections]
     doc['annotations']     = annotations.accessible(options[:account]).map(&:canonical) if options[:annotations]
     doc

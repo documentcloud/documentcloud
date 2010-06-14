@@ -4,13 +4,11 @@ class DocumentsController < ApplicationController
   before_filter(:bouncer, :only => [:show]) if Rails.env.staging?
   before_filter :login_required, :only => [:update, :destroy, :entities, :dates]
 
-  # caches_page :show, :if => lambda {|c| c.request.format.js? }
-
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
 
   def show
-    return unless request.format.json? || request.format.js? || login_required
+    return unless request.format.json? || request.format.xml? || request.format.js? || login_required
     return not_found unless current_document(true)
     respond_to do |format|
       format.pdf  { redirect_to(current_document.pdf_url) }
@@ -29,6 +27,9 @@ class DocumentsController < ApplicationController
         js = "DV.loadJSON(#{current_document.canonical.to_json});"
         cache_page js if current_document.cacheable?
         render :js => js
+      end
+      format.xml do
+        render :xml => current_document.canonical.to_xml(:root => 'document')
       end
     end
   end
