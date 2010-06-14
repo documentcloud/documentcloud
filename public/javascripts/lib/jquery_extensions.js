@@ -285,8 +285,11 @@
       var args = [].slice.call( arguments, 1 ), delta = 0, returnValue = true;
       event = $.event.fix(event || window.event);
       event.type = "mousewheel";
-      if (event.wheelDelta) delta = $.browser.msie ? event.wheelDelta / 5 : event.wheelDelta / 120;
-      if (event.detail)     delta = -event.detail * 5;
+      if (event.wheelDelta) {
+        delta = event.wheelDelta / 5;
+      } else if (event.detail) {
+        delta = -event.detail * 5;
+      }
       args.unshift(event, delta);
       return $.event.handle.apply(this, args);
   };
