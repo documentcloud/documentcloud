@@ -283,7 +283,7 @@
           .note .left_cover,
           .note .right_cover {
             position: absolute;
-            z-index: 5;
+            z-index: 2;
             background: white;
             opacity: 0.68;
             filter: alpha(opacity=68);
