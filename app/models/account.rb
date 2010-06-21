@@ -26,7 +26,7 @@ class Account < ActiveRecord::Base
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session=nil)
-    account = Account.first(:conditions => ['lower(email) = ?', email.downcase])
+    account = Account.find_by_case_insensitive_email(email)
     return false unless account && account.password == password
     account.authenticate(session) if session
     account
@@ -38,6 +38,10 @@ class Account < ActiveRecord::Base
     self.all(:conditions => {:id => ids}, :select => 'id, first_name, last_name').inject({}) do |hash, acc|
       hash[acc.id] = acc.full_name; hash
     end
+  end
+
+  def self.find_by_case_insensitive_email(email)
+    Account.first(:conditions => ['lower(email) = ?', email.downcase])
   end
 
   # Save this account as the current account in the session. Logs a visitor in.

@@ -26,7 +26,7 @@ class AccountsController < ApplicationController
   # Show the "Reset Password" screen for an account holder.
   def reset
     return render if request.get?
-    account = Account.find_by_email(params[:email])
+    account = Account.find_by_case_insensitive_email(params[:email])
     @failure = true and return render unless account
     account.send_reset_request
     @success = true
