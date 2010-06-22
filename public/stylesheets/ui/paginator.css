@@ -11,9 +11,19 @@
   body.paginated #paginator {
     display: block;
   }
-  #paginator .description {
+  #paginator .description,
+  #paginator .sorter {
     float: left;
   }
+    #paginator .sorter {
+      color: #bbb;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+      #paginator .sorter:hover {
+        color: #999;
+        text-decoration: underline;
+      }
     #paginator .range {
       font-weight: bold;
     }

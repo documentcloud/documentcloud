@@ -14,7 +14,7 @@ module DC
       }
 
       attr_reader   :text, :fields, :projects, :attributes, :conditions, :results, :solr
-      attr_accessor :page, :page_size, :from, :to, :total
+      attr_accessor :page, :page_size, :order, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
       # appropriate attributes.
@@ -27,6 +27,7 @@ module DC
         @from, @to, @total      = nil, nil, nil
         @account, @organization = nil, nil
         @page_size              = DEFAULT_PAGE_SIZE
+        @order                  = DEFAULT_ORDER
         @solr                   = Sunspot.new_search(Document)
       end
 
@@ -51,10 +52,12 @@ module DC
         build_attributes if     has_attributes?
         build_facets     if     @include_facets
         build_access     unless @unrestricted
-        page = @page
-        size = @facet ? 0 : @page_size
+        page      = @page
+        size      = @facet ? 0 : @page_size
+        order     = @order.to_sym
+        direction = order == :created_at ? :desc : :asc
         @solr.build do
-          order_by  :created_at, :desc
+          order_by  order, direction
           paginate  :page => page, :per_page => size
         end
       end

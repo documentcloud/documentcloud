@@ -14,7 +14,8 @@ module DC
     end
 
     DEFAULT_PAGE_SIZE = 10
-    QUERY_OR  = ' | '
+    DEFAULT_ORDER = 'created_at'
+    QUERY_OR = ' | '
 
   end
 

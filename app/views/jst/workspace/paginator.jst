@@ -7,6 +7,10 @@
   <%= q.total %> <%= Inflector.pluralize('document', q.total) %>
 </div>
 
+<div class="sorter">
+  (<%= sort_text %>)
+</div>
+
 <div id="size_toggle"></div>
 
 <% if (q.total > page_size) { %>
