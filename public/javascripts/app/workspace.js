@@ -13,6 +13,7 @@ _.extend(dc.app.workspace, {
 
   // Create all of the requisite subviews.
   createSubViews : function() {
+    Projects.seed();
     dc.app.searchBox  = new dc.ui.SearchBox();
     dc.app.paginator  = new dc.ui.Paginator();
     dc.app.navigation = new dc.ui.Navigation();

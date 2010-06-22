@@ -79,14 +79,15 @@ dc.ui.SearchBox = dc.View.extend({
 
   showDocuments : function() {
     $(document.body).setMode('active', 'search');
-    this.entitle(this.value());
+    var query = this.value();
+    var type = this.entitle(query);
+    dc.ui.Project.highlight(query, type);
     dc.history.save(this.urlFragment());
   },
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
     dc.app.navigation.open('documents');
-    dc.ui.Project.highlight(query);
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
     this.fragment = 'search/' + encodeURIComponent(query);
@@ -164,15 +165,23 @@ dc.ui.SearchBox = dc.View.extend({
   },
 
   entitle : function(query) {
+    var title, ret;
     var projectName = dc.app.SearchParser.extractProject(query);
     var accountName = dc.app.SearchParser.extractAccount(query);
+    var groupName   = dc.app.SearchParser.extractGroup(query);
     if (projectName) {
-      this.titleBox.text(projectName);
+      title = projectName;
     } else if (accountName == Accounts.current().get('email')) {
-      this.titleBox.text('All Uploads');
+      title = 'My Documents';
+      ret = 'my_documents';
+    } else if (groupName == dc.app.organization.slug) {
+      title = Inflector.possessivize(dc.app.organization.name) + " Documents";
+      ret = 'org_documents';
     } else {
-      this.titleBox.text('All Documents');
+      title = 'All Documents';
     }
+    this.titleBox.text(title);
+    return ret;
   },
 
   // Hide the spinner and remove the search lock when finished searching.

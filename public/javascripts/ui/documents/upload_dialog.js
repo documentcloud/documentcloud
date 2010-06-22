@@ -45,7 +45,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   confirmUpload : function() {
     if (this._progressDialog) this._progressDialog.close();
     dc.app.documentCount += 1;
-    dc.ui.Project.uploadedDocuments.render();
   },
 
   open : function() {

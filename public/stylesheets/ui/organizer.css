@@ -64,17 +64,17 @@
         background: #fff;
         filter: none;
       }
-        #organizer .box.uploaded_documents,
-        #organizer .box.uploaded_documents:hover,
-        #organizer .box.uploaded_documents.is_selected,
-        #organizer .box.uploaded_documents.is_selected:hover {
+        #organizer .box.special_project,
+        #organizer .box.special_project:hover,
+        #organizer .box.special_project.is_selected,
+        #organizer .box.special_project.is_selected:hover {
           border-top: 0;
           background: #fff;
           border-right: 2px solid #ccc;
         }
       #organizer .box .edit_glyph,
-      #organizer .box.uploaded_documents:hover .edit_glyph,
-      #organizer .box.uploaded_documents.is_selected .edit_glyph {
+      #organizer .box.special_project:hover .edit_glyph,
+      #organizer .box.special_project.is_selected .edit_glyph {
         display: none;
         position: absolute;
         left: 11px; top: 18px;

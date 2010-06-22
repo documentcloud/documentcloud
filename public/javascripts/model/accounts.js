@@ -26,6 +26,10 @@ dc.model.Account = dc.Model.extend({
     dc.app.searchBox.search('account: ' + this.get('email'));
   },
 
+  openOrganizationDocuments : function() {
+    dc.app.searchBox.search('group: ' + dc.app.organization.slug);
+  },
+
   fullName : function(nonbreaking) {
     var name = this.get('first_name') + ' ' + this.get('last_name');
     return nonbreaking ? name.replace(/\s/g, '&nbsp;') : name;

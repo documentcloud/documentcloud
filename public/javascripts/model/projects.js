@@ -90,6 +90,17 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
     _.each(this.models(), function(project) {
       project.removeDocuments(docs, true);
     });
+  },
+
+  seed : function() {
+    this.myDocuments = new dc.model.Project({
+      title   : 'My Documents',
+      special : 'my_documents'
+    });
+    this.orgDocuments = new dc.model.Project({
+      title   : Inflector.possessivize(dc.app.organization.name) + " Documents",
+      special : 'org_documents'
+    });
   }
 
 });

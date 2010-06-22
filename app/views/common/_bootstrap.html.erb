@@ -4,8 +4,6 @@ window.SERVER_ROOT = '<%= DC_CONFIG["server_root"] %>';
 <% if @current_account %>
   dc.app.organization = <%= @current_organization.to_json %>;
   dc.app.accountId = <%= @current_account.id %>;
-  dc.app.documentCount = <%= @document_count %>;
-  dc.app.annotationCount = <%= @annotation_count %>;
   Accounts.add(new dc.model.Account(<%= @current_account.to_json %>));
   Projects.populate(<%= @projects.to_json %>);
 <% end %>

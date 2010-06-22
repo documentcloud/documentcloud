@@ -9,38 +9,26 @@ dc.ui.Project = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    if (!this.model) {
-      this.setMode('uploaded', 'documents');
-      dc.ui.Project.uploadedDocuments = this;
-      return;
-    }
+    if (this.model.get('special')) return this.setMode('special', 'project');
     _.bindAll(this, 'render');
     this.model.bind(dc.Model.CHANGED, this.render);
     this.model.view = this;
   },
 
   render : function() {
-    var data = this.model ? this.model.attributes() : this.defaultProjectAttributes();
-    $(this.el).html(JST.organizer_project(data));
-    if (this.model) {
-      $(this.el).attr({id : "project_" + this.model.cid, 'data-project-cid' : this.model.cid});
-      this.setMode(this.model.get('selected') ? 'is' : 'not', 'selected');
-    }
+    $(this.el).html(JST.organizer_project(this.model.attributes()));
+    $(this.el).attr({id : "project_" + this.model.cid, 'data-project-cid' : this.model.cid});
+    this.setMode(this.model.get('selected') ? 'is' : 'not', 'selected');
     this.setCallbacks();
     return this;
   },
 
-  // Attributes for the default "All Uploads" project.
-  defaultProjectAttributes : function() {
-    return {
-      title             : 'All Uploads',
-      document_count    : dc.app.documentCount,
-      annotation_count  : dc.app.annotationCount
-    };
-  },
-
   showDocuments : function() {
-    this.model ? this.model.open() : Accounts.current().openDocuments();
+    switch (this.model.get('special')) {
+      case 'my_documents':  return Accounts.current().openDocuments();
+      case 'org_documents': return Accounts.current().openOrganizationDocuments();
+      default:              return this.model.open();
+    }
   },
 
   editProject : function(e) {
@@ -51,15 +39,15 @@ dc.ui.Project = dc.View.extend({
 }, {
 
   // (Maybe) hightlight a project box for the current query.
-  highlight : function(query) {
+  highlight : function(query, type) {
     Projects.deselectAll();
-    if (this.uploadedDocuments) $(this.uploadedDocuments.el).setMode('not', 'selected');
+    if (this.myDocuments)  $(this.myDocuments.el).setMode('not', 'selected');
+    if (this.orgDocuments) $(this.orgDocuments.el).setMode('not', 'selected');
     var projectName = dc.app.SearchParser.extractProject(query);
     var project = projectName && Projects.find(projectName);
     if (project) return project.set({selected : true});
-    var accountName = dc.app.SearchParser.extractAccount(query);
-    var account = accountName && (accountName == Accounts.current().get('email'));
-    if (account) return $(this.uploadedDocuments.el).setMode('is', 'selected');
+    if (type == 'my_documents')  return $(this.myDocuments.el).setMode('is', 'selected');
+    if (type == 'org_documents') return $(this.orgDocuments.el).setMode('is', 'selected');
   }
 
 });
