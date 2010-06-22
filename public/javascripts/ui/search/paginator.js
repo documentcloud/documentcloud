@@ -78,7 +78,7 @@ dc.ui.Paginator = dc.View.extend({
   },
 
   chooseSort : function() {
-    dc.ui.Dialog.choose('Sort Documents By&hellip;', [
+    dc.ui.Dialog.choose('Order Documents By&hellip;', [
       {text : 'Date Uploaded',  value : 'created_at', selected : this.sortOrder == 'created_at'},
       {text : 'Title',          value : 'title',      selected : this.sortOrder == 'title'},
       {text : 'Source',         value : 'source',     selected : this.sortOrder == 'source'}
