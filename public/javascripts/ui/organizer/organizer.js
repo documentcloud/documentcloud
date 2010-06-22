@@ -20,7 +20,7 @@ dc.ui.Organizer = dc.View.extend({
     _.bindAll(this, '_addSubView', '_removeSubView', 'openUploads');
     this._bindToSets();
     this.subViews = [];
-    dc.ui.Project.myDocuments = new dc.ui.Project({model : Projects.myDocuments});
+    dc.ui.Project.allDocuments = new dc.ui.Project({model : Projects.allDocuments});
   },
 
   render : function() {
@@ -36,7 +36,7 @@ dc.ui.Organizer = dc.View.extend({
 
   renderAll : function() {
     if (Projects.empty()) this.setMode('no', 'projects');
-    $(this.projectList).append(dc.ui.Project.myDocuments.render().el);
+    $(this.projectList).append(dc.ui.Project.allDocuments.render().el);
     _.each(Projects.models(), _.bind(function(model) {
       this._addSubView(null, model);
     }, this));

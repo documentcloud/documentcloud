@@ -92,11 +92,11 @@
           color: #000;
         }
       #organizer .box .counts,
-      #organizer .box .org_docs {
+      #organizer .box .text_link {
         font: 11px/17px Arial;
         color: #999;
       }
-        #organizer .box .org_docs:hover {
+        #organizer .box .text_link:hover {
           color: black;
         }
 

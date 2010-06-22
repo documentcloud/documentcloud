@@ -3,6 +3,7 @@
 dc.model.Project = dc.Model.extend({
 
   constructor : function(attrs) {
+    attrs = _.extend({current : null, special : false}, attrs);
     this.base(attrs);
   },
 
@@ -93,9 +94,9 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
   },
 
   seed : function() {
-    this.myDocuments = new dc.model.Project({
-      title   : 'My Documents',
-      special : 'my_documents'
+    this.allDocuments = new dc.model.Project({
+      title   : 'All Documents',
+      current : 'all_documents'
     });
   }
 

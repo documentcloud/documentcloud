@@ -1,16 +1,24 @@
 dc.ui.Project = dc.View.extend({
 
+  TOP_LEVEL_SEARCHES : {
+    all_documents : 'showAllDocuments',
+    your_uploads  : 'showYourUploads',
+    org_documents : 'showOrganizationDocuments'
+  },
+
   className : 'project box',
 
   callbacks : {
-    'el.click'          : 'showDocuments',
-    '.org_docs.click'   : 'showOrganizationDocuments',
-    '.edit_glyph.click' : 'editProject'
+    'el.click'            : 'showDocuments',
+    '.all_docs.click'     : 'showAllDocuments',
+    '.org_docs.click'     : 'showOrganizationDocuments',
+    '.your_uploads.click' : 'showYourUploads',
+    '.edit_glyph.click'   : 'editProject'
   },
 
   constructor : function(options) {
     this.base(options);
-    if (this.model.get('special')) return this.setMode('special', 'project');
+    if (this.model.get('current')) return this.setMode('special', 'project');
     _.bindAll(this, 'render');
     this.model.bind(dc.Model.CHANGED, this.render);
     this.model.view = this;
@@ -25,11 +33,23 @@ dc.ui.Project = dc.View.extend({
   },
 
   showDocuments : function() {
-    this.model.get('special') ? Accounts.current().openDocuments() : this.model.open();
+    var current = this.model.get('current');
+    if (!current) return this.model.open();
+    this[this.TOP_LEVEL_SEARCHES[current]]();
   },
 
   showOrganizationDocuments : function() {
     Accounts.current().openOrganizationDocuments();
+    return false;
+  },
+
+  showAllDocuments : function() {
+    dc.app.searchBox.search('');
+    return false;
+  },
+
+  showYourUploads : function() {
+    Accounts.current().openDocuments();
     return false;
   },
 
@@ -43,12 +63,14 @@ dc.ui.Project = dc.View.extend({
   // (Maybe) hightlight a project box for the current query.
   highlight : function(query, type) {
     Projects.deselectAll();
-    if (this.myDocuments) $(this.myDocuments.el).setMode('not', 'selected');
+    if (this.allDocuments) $(this.allDocuments.el).setMode('not', 'selected');
     var projectName = dc.app.SearchParser.extractProject(query);
     var project = projectName && Projects.find(projectName);
     if (project) return project.set({selected : true});
-    if (type == 'my_documents' || type == 'org_documents') {
-      return $(this.myDocuments.el).setMode('is', 'selected');
+    if (type == 'your_uploads' || type == 'org_documents' || type == 'all_documents') {
+      this.allDocuments.model.set({current : type});
+      this.allDocuments.render();
+      this.allDocuments.setMode('is', 'selected');
     }
   }
 

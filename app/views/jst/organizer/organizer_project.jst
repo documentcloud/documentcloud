@@ -3,13 +3,21 @@
   <%= title %>
   <div class="icon edit_glyph"></div>
 </div>
-<% if (typeof special == 'undefined') { %>
+<% if (!current) { %>
   <div class="counts interface">
     <%= document_count %> <%= Inflector.pluralize('document', document_count) %>,
     <%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %>
   </div>
 <% } else { %>
-  <div class="org_docs interface text_link">
-    <%= Inflector.possessivize(dc.app.organization.name) %> Documents
-  </div>
+  <% if (current != 'all_documents') { %>
+    <div><span class="all_docs interface text_link">All Documents</span></div>
+  <% } %>
+  <% if (current != 'your_uploads') { %>
+    <div><span class="your_uploads interface text_link">Your Uploads</span></div>
+  <% } %>
+  <% if (current != 'org_documents') { %>
+    <div><span class="org_docs interface text_link">
+      <%= Inflector.possessivize(dc.app.organization.name) %> Documents
+    </span></div>
+  <% } %>
 <% } %>
