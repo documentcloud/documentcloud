@@ -56,6 +56,16 @@ dc.model.Project = dc.Model.extend({
     return 'project: ' + titlePart;
   }
 
+}, {
+
+  topLevelTitle : function(type) {
+    switch (type) {
+      case 'all_documents': return 'All Documents';
+      case 'your_uploads':  return 'Your Uploads';
+      case 'org_documents': return Inflector.possessivize(dc.app.organization.name) + " Documents";
+    }
+  }
+
 });
 
 
@@ -94,9 +104,10 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
   },
 
   seed : function() {
+    var current = dc.app.preferences.get('top_level_search') || 'all_documents';
     this.allDocuments = new dc.model.Project({
-      title   : 'All Documents',
-      current : 'all_documents'
+      title   : dc.model.Project.topLevelTitle(current),
+      current : current
     });
   }
 

@@ -9,11 +9,11 @@ dc.ui.Project = dc.View.extend({
   className : 'project box',
 
   callbacks : {
-    'el.click'            : 'showDocuments',
-    '.all_docs.click'     : 'showAllDocuments',
-    '.org_docs.click'     : 'showOrganizationDocuments',
-    '.your_uploads.click' : 'showYourUploads',
-    '.edit_glyph.click'   : 'editProject'
+    'el.click'              : 'showDocuments',
+    '.all_documents.click'  : 'showAllDocuments',
+    '.org_documents.click'  : 'showOrganizationDocuments',
+    '.your_uploads.click'   : 'showYourUploads',
+    '.edit_glyph.click'     : 'editProject'
   },
 
   constructor : function(options) {
@@ -68,6 +68,7 @@ dc.ui.Project = dc.View.extend({
     var project = projectName && Projects.find(projectName);
     if (project) return project.set({selected : true});
     if (type == 'your_uploads' || type == 'org_documents' || type == 'all_documents') {
+      dc.app.preferences.set({top_level_search : type});
       this.allDocuments.model.set({current : type});
       this.allDocuments.render();
       this.allDocuments.setMode('is', 'selected');

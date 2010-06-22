@@ -172,15 +172,13 @@ dc.ui.SearchBox = dc.View.extend({
     if (projectName) {
       title = projectName;
     } else if (accountName == Accounts.current().get('email')) {
-      title = 'Your Uploads';
       ret = 'your_uploads';
     } else if (groupName == dc.app.organization.slug) {
-      title = Inflector.possessivize(dc.app.organization.name) + " Documents";
       ret = 'org_documents';
     } else {
-      title = 'All Documents';
       ret = 'all_documents';
     }
+    title = title || dc.model.Project.topLevelTitle(ret);
     this.titleBox.text(title);
     Projects.allDocuments.set({title : title});
     return ret;
