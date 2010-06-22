@@ -3,7 +3,8 @@ dc.ui.Project = dc.View.extend({
   className : 'project box',
 
   callbacks : {
-    'el.click'    : 'showDocuments',
+    'el.click'          : 'showDocuments',
+    '.org_docs.click'   : 'showOrganizationDocuments',
     '.edit_glyph.click' : 'editProject'
   },
 
@@ -24,11 +25,12 @@ dc.ui.Project = dc.View.extend({
   },
 
   showDocuments : function() {
-    switch (this.model.get('special')) {
-      case 'my_documents':  return Accounts.current().openDocuments();
-      case 'org_documents': return Accounts.current().openOrganizationDocuments();
-      default:              return this.model.open();
-    }
+    this.model.get('special') ? Accounts.current().openDocuments() : this.model.open();
+  },
+
+  showOrganizationDocuments : function() {
+    Accounts.current().openOrganizationDocuments();
+    return false;
   },
 
   editProject : function(e) {
@@ -41,13 +43,13 @@ dc.ui.Project = dc.View.extend({
   // (Maybe) hightlight a project box for the current query.
   highlight : function(query, type) {
     Projects.deselectAll();
-    if (this.myDocuments)  $(this.myDocuments.el).setMode('not', 'selected');
-    if (this.orgDocuments) $(this.orgDocuments.el).setMode('not', 'selected');
+    if (this.myDocuments) $(this.myDocuments.el).setMode('not', 'selected');
     var projectName = dc.app.SearchParser.extractProject(query);
     var project = projectName && Projects.find(projectName);
     if (project) return project.set({selected : true});
-    if (type == 'my_documents')  return $(this.myDocuments.el).setMode('is', 'selected');
-    if (type == 'org_documents') return $(this.orgDocuments.el).setMode('is', 'selected');
+    if (type == 'my_documents' || type == 'org_documents') {
+      return $(this.myDocuments.el).setMode('is', 'selected');
+    }
   }
 
 });

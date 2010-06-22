@@ -97,10 +97,6 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
       title   : 'My Documents',
       special : 'my_documents'
     });
-    this.orgDocuments = new dc.model.Project({
-      title   : Inflector.possessivize(dc.app.organization.name) + " Documents",
-      special : 'org_documents'
-    });
   }
 
 });

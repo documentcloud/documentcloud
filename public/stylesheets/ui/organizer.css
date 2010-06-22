@@ -91,10 +91,14 @@
         #organizer .box:hover .title {
           color: #000;
         }
-      #organizer .box .counts {
+      #organizer .box .counts,
+      #organizer .box .org_docs {
         font: 11px/17px Arial;
         color: #999;
       }
+        #organizer .box .org_docs:hover {
+          color: black;
+        }
 
 /*------------------------------ Entities ---------------------------------*/
 #organizer_entities {
