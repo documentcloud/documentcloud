@@ -9,7 +9,7 @@
     <%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %>
   </div>
 <% } else { %>
-  <% _.each(['all_documents', 'your_uploads', 'org_documents'], function(item) { %>
+  <% _.each(['all_documents', 'your_documents', 'org_documents'], function(item) { %>
     <% if (current != item) { %>
       <div><span class="<%= item %> interface text_link"><%= dc.model.Project.topLevelTitle(item) %></span></div>
     <% } %>

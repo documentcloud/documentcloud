@@ -60,9 +60,9 @@ dc.model.Project = dc.Model.extend({
 
   topLevelTitle : function(type) {
     switch (type) {
-      case 'all_documents': return 'All Documents';
-      case 'your_uploads':  return 'Your Uploads';
-      case 'org_documents': return Inflector.possessivize(dc.app.organization.name) + " Documents";
+      case 'all_documents':   return 'All Documents';
+      case 'your_documents':  return 'Your Documents';
+      case 'org_documents':   return Inflector.possessivize(dc.app.organization.name) + " Documents";
     }
   }
 

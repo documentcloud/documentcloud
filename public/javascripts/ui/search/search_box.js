@@ -172,7 +172,7 @@ dc.ui.SearchBox = dc.View.extend({
     if (projectName) {
       title = projectName;
     } else if (accountName == Accounts.current().get('email')) {
-      ret = 'your_uploads';
+      ret = 'your_documents';
     } else if (groupName == dc.app.organization.slug) {
       ret = 'org_documents';
     } else {

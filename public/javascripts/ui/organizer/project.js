@@ -1,9 +1,9 @@
 dc.ui.Project = dc.View.extend({
 
   TOP_LEVEL_SEARCHES : {
-    all_documents : 'showAllDocuments',
-    your_uploads  : 'showYourUploads',
-    org_documents : 'showOrganizationDocuments'
+    all_documents   : 'showAllDocuments',
+    your_documents  : 'showYourDocuments',
+    org_documents   : 'showOrganizationDocuments'
   },
 
   className : 'project box',
@@ -12,7 +12,7 @@ dc.ui.Project = dc.View.extend({
     'el.click'              : 'showDocuments',
     '.all_documents.click'  : 'showAllDocuments',
     '.org_documents.click'  : 'showOrganizationDocuments',
-    '.your_uploads.click'   : 'showYourUploads',
+    '.your_documents.click' : 'showYourDocuments',
     '.edit_glyph.click'     : 'editProject'
   },
 
@@ -48,7 +48,7 @@ dc.ui.Project = dc.View.extend({
     return false;
   },
 
-  showYourUploads : function() {
+  showYourDocuments : function() {
     Accounts.current().openDocuments();
     return false;
   },
@@ -67,7 +67,7 @@ dc.ui.Project = dc.View.extend({
     var projectName = dc.app.SearchParser.extractProject(query);
     var project = projectName && Projects.find(projectName);
     if (project) return project.set({selected : true});
-    if (type == 'your_uploads' || type == 'org_documents' || type == 'all_documents') {
+    if (type == 'your_documents' || type == 'org_documents' || type == 'all_documents') {
       dc.app.preferences.set({top_level_search : type});
       this.allDocuments.model.set({current : type});
       this.allDocuments.render();
