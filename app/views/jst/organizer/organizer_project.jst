@@ -3,15 +3,8 @@
   <%= title %>
   <div class="icon edit_glyph"></div>
 </div>
-<% if (!current) { %>
-  <div class="counts interface">
-    <%= document_count %> <%= Inflector.pluralize('document', document_count) %>,
-    <%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %>
-  </div>
-<% } else { %>
-  <% _.each(['all_documents', 'your_documents', 'org_documents'], function(item) { %>
-    <% if (current != item) { %>
-      <div><span class="<%= item %> interface text_link"><%= dc.model.Project.topLevelTitle(item) %></span></div>
-    <% } %>
-  <% }); %>
-<% } %>
+<div class="counts interface">
+  <%= document_count %> <%= Inflector.pluralize('document', document_count) %>,
+  <%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %>
+</div>
+

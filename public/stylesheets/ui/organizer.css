@@ -41,7 +41,8 @@
       padding: 15px 10px 15px 30px;
       border-bottom: 1px solid #e0e0e0;
     }
-    #organizer .box {
+    #organizer .box,
+    #organizer .top_level_search {
       position: relative;
       padding: 15px 15px 15px 30px;
       cursor: pointer;
@@ -64,17 +65,7 @@
         background: #fff;
         filter: none;
       }
-        #organizer .box.special_project,
-        #organizer .box.special_project:hover,
-        #organizer .box.special_project.is_selected,
-        #organizer .box.special_project.is_selected:hover {
-          border-top: 0;
-          background: #fff;
-          border-right: 2px solid #ccc;
-        }
-      #organizer .box .edit_glyph,
-      #organizer .box.special_project:hover .edit_glyph,
-      #organizer .box.special_project.is_selected .edit_glyph {
+      #organizer .box .edit_glyph {
         display: none;
         position: absolute;
         left: 11px; top: 18px;
@@ -92,13 +83,18 @@
           color: #000;
         }
       #organizer .box .counts,
-      #organizer .box .text_link {
+      #organizer .top_level_search .text_link {
         font: 11px/17px Arial;
         color: #999;
       }
-        #organizer .box .text_link:hover {
+        #organizer .top_level_search .text_link:hover {
           color: black;
         }
+      #organizer .top_level_search {
+        border-top: 0;
+        background: #fff;
+        border-right: 2px solid #ccc;
+      }
 
 /*------------------------------ Entities ---------------------------------*/
 #organizer_entities {

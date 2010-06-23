@@ -4,7 +4,10 @@ dc.ui.Organizer = dc.View.extend({
 
   callbacks : {
     '#new_project.click'      : 'promptNewProject',
-    '#upload_document.click'  : 'openUploads'
+    '#upload_document.click'  : 'openUploads',
+    '.all_documents.click'    : 'showAllDocuments',
+    '.your_documents.click'   : 'showYourDocuments',
+    '.org_documents.click'    : 'showOrganizationDocuments'
   },
 
   facetCallbacks : {
@@ -20,7 +23,6 @@ dc.ui.Organizer = dc.View.extend({
     _.bindAll(this, '_addSubView', '_removeSubView', 'openUploads');
     this._bindToSets();
     this.subViews = [];
-    dc.ui.Project.allDocuments = new dc.ui.Project({model : Projects.allDocuments});
   },
 
   render : function() {
@@ -36,7 +38,6 @@ dc.ui.Organizer = dc.View.extend({
 
   renderAll : function() {
     if (Projects.empty()) this.setMode('no', 'projects');
-    $(this.projectList).append(dc.ui.Project.allDocuments.render().el);
     _.each(Projects.models(), _.bind(function(model) {
       this._addSubView(null, model);
     }, this));
@@ -87,6 +88,18 @@ dc.ui.Organizer = dc.View.extend({
 
   openUploads : function() {
     dc.app.uploader.open();
+  },
+
+  showAllDocuments : function() {
+    dc.app.searchBox.search('');
+  },
+
+  showYourDocuments : function() {
+    Accounts.current().openDocuments();
+  },
+
+  showOrganizationDocuments : function() {
+    Accounts.current().openOrganizationDocuments();
   },
 
   _facetStringFor : function(el) {

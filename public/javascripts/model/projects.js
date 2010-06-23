@@ -2,11 +2,6 @@
 
 dc.model.Project = dc.Model.extend({
 
-  constructor : function(attrs) {
-    attrs = _.extend({current : null, special : false}, attrs);
-    this.base(attrs);
-  },
-
   set : function(attrs, silent) {
     if (attrs.document_ids) attrs.document_count = attrs.document_ids.length;
     this.base(attrs, silent);
@@ -100,14 +95,6 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
   removeDocuments : function(docs) {
     _.each(this.models(), function(project) {
       project.removeDocuments(docs, true);
-    });
-  },
-
-  seed : function() {
-    var current = dc.app.preferences.get('top_level_search') || 'all_documents';
-    this.allDocuments = new dc.model.Project({
-      title   : dc.model.Project.topLevelTitle(current),
-      current : current
     });
   }
 

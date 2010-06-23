@@ -80,8 +80,8 @@ dc.ui.SearchBox = dc.View.extend({
   showDocuments : function() {
     $(document.body).setMode('active', 'search');
     var query = this.value();
-    var type = this.entitle(query);
-    dc.ui.Project.highlight(query, type);
+    this.entitle(query);
+    dc.ui.Project.highlight(query);
     dc.history.save(this.urlFragment());
   },
 
@@ -180,8 +180,6 @@ dc.ui.SearchBox = dc.View.extend({
     }
     title = title || dc.model.Project.topLevelTitle(ret);
     this.titleBox.text(title);
-    Projects.allDocuments.set({title : title});
-    return ret;
   },
 
   // Hide the spinner and remove the search lock when finished searching.

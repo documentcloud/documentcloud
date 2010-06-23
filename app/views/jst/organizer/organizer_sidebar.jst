@@ -1,6 +1,13 @@
 <div id="organizer_projects" class="project_list_container">
   
   <div class="project_list_wrap">
+    
+    <div class="top_level_search">
+      <% _.each(['all_documents', 'your_documents', 'org_documents'], function(item) { %>
+        <div><span class="<%= item %> interface text_link"><%= dc.model.Project.topLevelTitle(item) %></span></div>
+      <% }); %>
+    </div>
+    
     <div class="project_list">
       <!-- Render target for projects. -->
     </div>
