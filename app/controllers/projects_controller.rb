@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   before_filter :login_required
 
   def index
-    json 'projects' => current_account.projects.alphabetical
+    json 'projects' => Project.accessible(current_account)
   end
 
   def create

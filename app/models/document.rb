@@ -48,12 +48,14 @@ class Document < ActiveRecord::Base
 
   # Restrict accessible documents for a given account/organization.
   # Either the document itself is public, or it belongs to us, or it belongs to
-  # our organization and we're allowed to see it.
+  # our organization and we're allowed to see it, or it belongs to a project
+  # that's been shared with us.
   named_scope :accessible, lambda { |account, org|
     access = []
     access << "(documents.access = #{PUBLIC})"
     access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}) and documents.account_id = #{account.id})" if account
     access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org
+    access << "(documents.id in (#{account.shared_document_ids.join(', ')}))"
     {:conditions => "(#{access.join(' or ')})"}
   }
 

@@ -143,7 +143,7 @@ module DC
       # Generate the Solr to restrict the search to specific projects.
       def build_projects
         return unless @account
-        projects = @account.projects.all(:conditions => {:title => @projects})
+        projects = Project.accessible(@account).all(:conditions => {:title => @projects})
         doc_ids = projects.map(&:document_ids).flatten.uniq
         doc_ids = [-1] if doc_ids.empty?
         @solr.build do
@@ -191,12 +191,14 @@ module DC
 
       # Restrict accessible documents for a given account/organzation.
       # Either the document itself is public, or it belongs to us, or it belongs to
-      # our organization and we're allowed to see it.
+      # our organization and we're allowed to see it, or if it belongs to a
+      # project that's been shared with us.
       def build_access
         account, organization = @account, @organization
+        shared_ids = account && account.shared_document_ids
         @solr.build do
           any_of do
-            with      :access, PUBLIC
+            with        :access, PUBLIC
             if account
               all_of do
                 with    :access, [PRIVATE, PENDING, ERROR]
@@ -208,6 +210,9 @@ module DC
                 with    :access, [ORGANIZATION, EXCLUSIVE]
                 with    :organization_id, organization.id
               end
+            end
+            if shared_ids && shared_ids.present?
+              with      :id, shared_ids
             end
           end
         end

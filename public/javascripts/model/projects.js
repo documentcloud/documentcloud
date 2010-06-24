@@ -3,7 +3,9 @@
 dc.model.Project = dc.Model.extend({
 
   set : function(attrs, silent) {
-    if (attrs.document_ids) attrs.document_count = attrs.document_ids.length;
+    if (attrs.document_ids)       attrs.document_count = attrs.document_ids.length;
+    if (attrs.account_id)         attrs.owner = attrs.account_id == dc.app.accountId;
+    if (attrs.shared_account_ids) attrs.shares_count = attrs.shared_account_ids.length;
     this.base(attrs, silent);
     return this;
   },

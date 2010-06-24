@@ -87,6 +87,9 @@
         font: 11px/17px Arial;
         color: #999;
       }
+        #organizer .box .counts {
+          line-height: 14px; margin: 2px 0 1px 0;
+        }
         #organizer .top_level_search .text_link:hover {
           color: black;
         }

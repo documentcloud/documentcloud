@@ -9,9 +9,11 @@ class Account < ActiveRecord::Base
 
   # Associations:
   belongs_to  :organization
-  has_many    :projects,        :dependent => :destroy
-  has_many    :processing_jobs, :dependent => :destroy
-  has_one     :security_key,    :dependent => :destroy, :as => :securable
+  has_many    :projects,          :dependent => :destroy
+  has_many    :project_sharings,  :dependent => :destroy
+  has_many    :processing_jobs,   :dependent => :destroy
+  has_one     :security_key,      :dependent => :destroy, :as => :securable
+  has_many    :shared_projects,   :through => :project_sharings
 
   # Validations:
   validates_presence_of   :first_name, :last_name, :email
@@ -69,6 +71,18 @@ class Account < ActiveRecord::Base
 
   def owns_or_administers?(resource)
     owns?(resource) || administers?(resource)
+  end
+
+  # The ids of all the documents that have been shared with this account through
+  # shared projects.
+  def shared_document_ids
+    @shared_document_ids ||= ProjectMembership.connection.select_values(<<-EOS
+      select document_id from project_memberships
+      inner join project_sharings
+        on (project_memberships.project_id = project_sharings.project_id)
+      where account_id = #{id}
+    EOS
+    ).map {|doc_id| doc_id.to_i }
   end
 
   # When an account is created by a third party, send an email with a secure
