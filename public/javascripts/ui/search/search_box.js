@@ -201,7 +201,8 @@ dc.ui.SearchBox = dc.View.extend({
     dc.app.paginator.setQuery(resp.query);
     dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
     Entities.refresh();
-    Documents.refresh(_.map(resp.documents, function(m){
+    Documents.refresh(_.map(resp.documents, function(m, i){
+      m.index = i;
       return new dc.model.Document(m);
     }));
     this.doneSearching(resp.documents.length == 0);

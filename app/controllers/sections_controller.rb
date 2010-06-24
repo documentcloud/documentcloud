@@ -5,7 +5,7 @@ class SectionsController < ApplicationController
   def set
     return json(nil) unless sections
     doc = current_document
-    return json(nil, 403) unless current_account.owns_or_administers?(doc)
+    return json(nil, 403) unless current_account.allowed_to_edit?(doc)
     doc.sections.destroy_all
     sections.each {|s| doc.sections.create(s) }
     expire_page doc.canonical_cache_path if doc.cacheable?

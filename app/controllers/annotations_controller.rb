@@ -14,7 +14,7 @@ class AnnotationsController < ApplicationController
   def create
     note_attrs = pick(:json, :page_number, :title, :content, :location, :access)
     doc = current_document
-    return forbidden unless note_attrs[:access].to_i == PRIVATE || current_account.owns_or_administers?(doc)
+    return forbidden unless note_attrs[:access].to_i == PRIVATE || current_account.allowed_to_edit?(doc)
     expire_page doc.canonical_cache_path if doc.cacheable?
     json doc.annotations.create(
       note_attrs.merge(:account_id => current_account.id, :organization_id => current_organization.id)
@@ -24,7 +24,7 @@ class AnnotationsController < ApplicationController
   # You can only alter annotations that you've made yourself.
   def update
     return not_found unless current_annotation
-    return forbidden unless current_account.owns_or_administers?(current_annotation)
+    return forbidden unless current_account.allowed_to_edit?(current_annotation)
     current_annotation.update_attributes(pick(:json, :title, :content))
     expire_page current_document.canonical_cache_path if current_document.cacheable?
     json current_annotation
@@ -32,7 +32,7 @@ class AnnotationsController < ApplicationController
 
   def destroy
     return not_found unless current_annotation
-    return forbidden unless current_account.owns_or_administers?(current_annotation)
+    return forbidden unless current_account.allowed_to_edit?(current_annotation)
     current_annotation.destroy
     expire_page current_document.canonical_cache_path if current_document.cacheable?
     json nil

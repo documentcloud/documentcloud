@@ -69,8 +69,12 @@ class Account < ActiveRecord::Base
       [ORGANIZATION, EXCLUSIVE, PUBLIC].include?(resource.access)
   end
 
-  def owns_or_administers?(resource)
-    owns?(resource) || administers?(resource)
+  def shared?(resource)
+    shared_document_ids.include?(resource.document_id)
+  end
+
+  def allowed_to_edit?(resource)
+    owns?(resource) || administers?(resource) || shared?(resource)
   end
 
   # The ids of all the documents that have been shared with this account through
@@ -133,8 +137,8 @@ class Account < ActiveRecord::Base
 
   # The JSON representation of an account avoids sending down the password,
   # among other things, and includes extra attributes.
-  def to_json(options=nil)
-    { 'id'              => id,
+  def to_json(options={})
+    attrs = { 'id'              => id,
       'email'           => email,
       'first_name'      => first_name,
       'last_name'       => last_name,
@@ -142,7 +146,9 @@ class Account < ActiveRecord::Base
       'role'            => role,
       'hashed_email'    => hashed_email,
       'pending'         => pending?
-    }.to_json
+    }
+    attrs['shared_document_ids'] = shared_document_ids if options[:include_shared]
+    attrs.to_json
   end
 
 end

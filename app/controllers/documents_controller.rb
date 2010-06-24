@@ -36,7 +36,7 @@ class DocumentsController < ApplicationController
 
   def update
     return not_found unless doc = current_document(true)
-    if !current_account.owns_or_administers?(doc)
+    if !current_account.allowed_to_edit?(doc)
       doc.errors.add_to_base "You don't have permission to update the document."
       return json(doc, 403)
     end
@@ -52,7 +52,7 @@ class DocumentsController < ApplicationController
 
   def destroy
     return not_found unless doc = current_document(true)
-    if !current_account.owns_or_administers?(doc)
+    if !current_account.allowed_to_edit?(doc)
       doc.errors.add_to_base "You don't have permission to delete the document."
       return json(doc, 403)
     end
@@ -112,7 +112,7 @@ class DocumentsController < ApplicationController
 
   def set_page_text
     return not_found unless current_page
-    return forbidden unless current_account.owns_or_administers?(current_page)
+    return forbidden unless current_account.allowed_to_edit?(current_page)
     json current_page.update_attributes(pick(params, :text))
   end
 

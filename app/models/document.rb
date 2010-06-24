@@ -55,8 +55,8 @@ class Document < ActiveRecord::Base
     access << "(documents.access = #{PUBLIC})"
     access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}) and documents.account_id = #{account.id})" if account
     access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org
-    access << "(documents.id in (#{account.shared_document_ids.join(', ')}))"
-    {:conditions => "(#{access.join(' or ')})"}
+    access << "(documents.id in (?))"
+    {:conditions => ["(#{access.join(' or ')})", account.shared_document_ids]}
   }
 
   searchable do
@@ -112,6 +112,11 @@ class Document < ActiveRecord::Base
     end
     doc.queue_import(access)
     doc.reload
+  end
+
+  # For polymorphism on access control with Note and Section:
+  def document_id
+    id
   end
 
   # Produce the full text of the document by combining the text of each of

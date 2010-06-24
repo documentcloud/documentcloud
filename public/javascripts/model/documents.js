@@ -32,8 +32,9 @@ dc.model.Document = dc.Model.extend({
   allowedToEdit : function(message) {
     message = message || "You don't have permission to edit \"" + this.get('title') + "\".";
     var acc = Accounts.current();
-    if (this.get('account_id') == acc.id ||
-        (this.get('organization_id') == acc.get('organization_id') && acc.isAdmin())) return true;
+    if (this.get('account_id') == acc.id) return true;
+    if (this.get('organization_id') == acc.get('organization_id') && acc.isAdmin()) return true;
+    if (_.include(acc.get('shared_document_ids'), this.id)) return true;
     dc.ui.Dialog.alert(message);
     return false;
   },
@@ -105,6 +106,10 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     _.bindAll(this, 'poll', 'downloadSelectedViewers', 'downloadSelectedPDF', 'downloadSelectedFullText');
   },
 
+  comparator : function(doc) {
+    return doc.get('index');
+  },
+
   pending : function() {
     return _.select(this.models(), function(doc){ return doc.isPending(); });
   },
@@ -170,5 +175,6 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 });
 
 // The main set of Documents, used by the search tab.
+dc.model.DocumentSet.implement(dc.model.SortedSet);
 dc.model.DocumentSet.implement(dc.model.SelectableSet);
 window.Documents = new dc.model.DocumentSet();
