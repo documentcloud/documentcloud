@@ -3,10 +3,11 @@
 </div>
 
 <textarea class="snippet">
+&lt;div id="document-viewer"&gt;&lt;/div&gt;&#10;
 &lt;script src="http://s3.documentcloud.org/viewer/loader.js"&gt;&lt;/script&gt;&#10;
 &lt;script&gt;&#10;
-  DV.load('<%= doc.get("document_viewer_js") %>;', {&#10;
-    container : 'div#viewer'&#10;
+  DV.load('<%= doc.get("document_viewer_js") %>', {&#10;
+    container : '#document-viewer'&#10;
   });&#10;
 &lt;/script&gt;
 </textarea>
