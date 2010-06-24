@@ -2,19 +2,14 @@
 <html>
 <head>
   <script type="text/javascript">
+    top.dc.app.uploader.closeUpload();
     <% if @bad_request %>
-
-      top.dc.app.uploader.cancelUpload();
       top.dc.ui.Dialog.alert('Upload failed. Please check the document file.');
-
     <% else %>
-
-      top.dc.app.uploader.confirmUpload();
       top.Documents.add(new top.dc.model.Document(<%= @document.to_json %>));
       <% if @project_id %>
         top.Projects.incrementCountById(<%= @project_id %>);
       <% end %>
-
     <% end %>
   </script>
 </head>

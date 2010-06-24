@@ -38,13 +38,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this.close();
   },
 
-  cancelUpload : function() {
+  closeUpload : function() {
     if (this._progressDialog) this._progressDialog.close();
-  },
-
-  confirmUpload : function() {
-    if (this._progressDialog) this._progressDialog.close();
-    dc.app.documentCount += 1;
   },
 
   open : function() {

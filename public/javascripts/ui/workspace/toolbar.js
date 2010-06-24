@@ -158,7 +158,6 @@ dc.ui.Toolbar = dc.View.extend({
     var message = 'Really delete ' + docs.length + ' ' + Inflector.pluralize('document', docs.length) + '?';
     dc.ui.Dialog.confirm(message, _.bind(function() {
       _(docs).each(function(doc){ Documents.destroy(doc); });
-      dc.app.documentCount -= docs.length;
       Projects.removeDocuments(docs);
       this.display();
       return true;

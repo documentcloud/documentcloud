@@ -9,6 +9,7 @@ class WorkspaceController < ApplicationController
   def index
     if current_organization && current_account
       @projects = Project.owned_by(current_account)
+      @has_documents = Document.owned_by(current_account).count(:limit => 1) > 0
       return
     end
     return redirect_to('/home') # unless request.headers['Authorization']

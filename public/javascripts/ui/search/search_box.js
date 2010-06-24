@@ -58,7 +58,7 @@ dc.ui.SearchBox = dc.View.extend({
     if (!Documents.empty()) return this.showDocuments();
     if (this.value()) {
       this.search(this.value());
-    } else if (dc.app.documentCount) {
+    } else if (dc.app.hasDocuments) {
       Accounts.current().openDocuments();
     } else if (Projects.first()) {
       Projects.first().open();
