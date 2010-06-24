@@ -59,6 +59,7 @@ module DC
         @solr.build do
           order_by  order, direction
           paginate  :page => page, :per_page => size
+          data_accessor_for(Document).include = [:organization, :account]
         end
       end
 
