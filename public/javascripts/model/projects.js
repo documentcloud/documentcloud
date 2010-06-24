@@ -7,6 +7,8 @@ dc.model.Project = dc.Model.extend({
     if (attrs.account_id)       attrs.owner = attrs.account_id == dc.app.accountId;
     if (attrs.collaborator_ids) attrs.collaborator_count = attrs.collaborator_ids.length;
     this.base(attrs, silent);
+    this.collaborators = new dc.model.AccountSet();
+    this.collaborators.resource = '/projects/' + this.id + '/collaborators';
     return this;
   },
 
