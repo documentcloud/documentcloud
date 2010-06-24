@@ -12,19 +12,32 @@ class Project < ActiveRecord::Base
 
   named_scope :alphabetical, {:order => :title}
 
+  attr_writer :annotation_count
+
+  # Load all of the projects belonging to an account in one fell swoop.
+  def self.owned_by(account)
+    account.projects.all(:include => ['project_memberships'])
+  end
+
   def add_document(document)
     self.project_memberships.create(:document => document)
   end
 
+  def document_ids
+    @document_ids ||= project_memberships.map {|m| m.document_id }
+  end
+
   # How many annotations belong to documents belonging to this project?
   def annotation_count
-    Annotation.count({:conditions => {:account_id => account_id, :document_id => document_ids}})
+    @annotation_count ||= Annotation.count(
+      {:conditions => {:account_id => account_id, :document_id => document_ids}}
+    )
   end
 
   def to_json(opts={})
     attributes.merge(
       :annotation_count => annotation_count,
-      :document_ids     => project_memberships.map {|m| m.document_id }
+      :document_ids     => document_ids
     ).to_json
   end
 

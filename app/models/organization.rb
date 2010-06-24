@@ -36,10 +36,7 @@ class Organization < ActiveRecord::Base
     {'name'           => name,
      'slug'           => slug,
      'demo'           => demo,
-     'id'             => id,
-     'since'          => time_ago_in_words(created_at),
-     'document_count' => document_count,
-     'account_count'  => accounts.count}.to_json
+     'id'             => id }.to_json
   end
 
 end
