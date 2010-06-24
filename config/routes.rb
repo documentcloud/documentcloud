@@ -39,7 +39,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # Projects.
-  map.resources :projects, :member => {:documents => :get}
+  map.resources :projects, :member => {:documents => :get, :add_collaborator => :post, :remove_collaborator => :delete}
 
   # Static pages.
   map.with_options :controller => 'static' do |static|

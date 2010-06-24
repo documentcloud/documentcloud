@@ -454,6 +454,13 @@ textarea.text_area {
     .dialog .information.error {
       color: #f00;
     }
+  .dialog .text_link {
+    font-size: 11px;
+    line-height: 14px;
+  }
+    .dialog .text_link:hover {
+      color: #fff;
+    }
   .dialog .minibutton {
     width: 60px;
     height: 13px;
@@ -484,9 +491,14 @@ textarea.text_area {
   .dialog textarea.content {
     width: 400px; height: 100px;
   }
-  .dialog.progress_dialog .spinner_dark {
-    margin: 0 auto 20px;
+  .dialog .spinner_dark {
+    position: absolute;
+    bottom: 30px; right: 30px;
   }
+    .dialog.progress_dialog .spinner_dark {
+      position: static;
+      margin: 0 auto 20px;
+    }
 
 /*------------------------------ Hidden Iframes ------------------------------*/
 iframe.hidden_iframe {

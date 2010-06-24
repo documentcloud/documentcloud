@@ -10,10 +10,10 @@ class Account < ActiveRecord::Base
   # Associations:
   belongs_to  :organization
   has_many    :projects,          :dependent => :destroy
-  has_many    :project_sharings,  :dependent => :destroy
+  has_many    :collaborations,  :dependent => :destroy
   has_many    :processing_jobs,   :dependent => :destroy
   has_one     :security_key,      :dependent => :destroy, :as => :securable
-  has_many    :shared_projects,   :through => :project_sharings
+  has_many    :shared_projects,   :through => :collaborations
 
   # Validations:
   validates_presence_of   :first_name, :last_name, :email
@@ -28,7 +28,7 @@ class Account < ActiveRecord::Base
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session=nil)
-    account = Account.find_by_case_insensitive_email(email)
+    account = Account.lookup(email)
     return false unless account && account.password == password
     account.authenticate(session) if session
     account
@@ -42,7 +42,7 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def self.find_by_case_insensitive_email(email)
+  def self.lookup(email)
     Account.first(:conditions => ['lower(email) = ?', email.downcase])
   end
 
@@ -82,8 +82,8 @@ class Account < ActiveRecord::Base
   def shared_document_ids
     @shared_document_ids ||= ProjectMembership.connection.select_values(<<-EOS
       select document_id from project_memberships
-      inner join project_sharings
-        on (project_memberships.project_id = project_sharings.project_id)
+      inner join collaborations
+        on (project_memberships.project_id = collaborations.project_id)
       where account_id = #{id}
     EOS
     ).map {|doc_id| doc_id.to_i }

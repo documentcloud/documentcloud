@@ -157,7 +157,7 @@ module DC
       def build_attributes
         @attributes.each do |field|
           if ['account', 'notes'].include?(field.kind)
-            account = Account.find_by_case_insensitive_email(field.value)
+            account = Account.lookup(field.value)
             @solr.build do
               with :account_id, account ? account.id : -1
             end

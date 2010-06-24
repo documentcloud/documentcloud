@@ -6,12 +6,9 @@
   <% } %>
 </div>
 <div class="counts interface">
+  <%= statistics %>
   <% if (!owner) { %>
-    Shared with you by <%= account_full_name %><br />
-  <% } %>
-  <%= document_count %> <%= Inflector.pluralize('document', document_count) %>,
-  <%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %><% if (owner && shares_count) { %>,
-    shared with <%= shares_count %> <%= Inflector.pluralize('account', shares_count) %>
+    <br />Shared with you by <%= account_full_name %>
   <% } %>
 </div>
 

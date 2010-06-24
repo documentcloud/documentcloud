@@ -5,7 +5,7 @@ class Project < ActiveRecord::Base
 
   belongs_to :account
   has_many :project_memberships, :dependent => :destroy
-  has_many :project_sharings,    :dependent => :destroy
+  has_many :collaborations,    :dependent => :destroy
   has_many :documents,           :through => :project_memberships
 
   validates_presence_of :title
@@ -14,7 +14,7 @@ class Project < ActiveRecord::Base
   named_scope :alphabetical, {:order => :title}
 
   named_scope :accessible, lambda {|account|
-    {:conditions => ['account_id = ? or id in (select project_id from project_sharings where account_id = ?)', account.id, account.id]}
+    {:conditions => ['account_id = ? or id in (select project_id from collaborations where account_id = ?)', account.id, account.id]}
   }
 
   delegate :full_name, :to => :account, :prefix => true
@@ -23,11 +23,15 @@ class Project < ActiveRecord::Base
 
   # Load all of the projects belonging to an account in one fell swoop.
   def self.load_for(account)
-    self.accessible(account).all(:include => ['account', 'project_memberships', 'project_sharings'])
+    self.accessible(account).all(:include => ['account', 'project_memberships', 'collaborations'])
   end
 
-  def share_with(account)
-    self.project_sharings.create(:account => account)
+  def add_collaborator(account)
+    self.collaborations.create(:account => account)
+    if @collaborator_ids
+      @collaborator_ids.push account.id
+      @collaborator_ids.uniq!
+    end
   end
 
   def add_document(document)
@@ -38,8 +42,8 @@ class Project < ActiveRecord::Base
     @document_ids ||= project_memberships.map {|m| m.document_id }
   end
 
-  def shared_account_ids
-    @shared_account_ids ||= project_sharings.map {|m| m.account_id }
+  def collaborator_ids
+    @collaborator_ids ||= collaborations.map {|m| m.account_id }
   end
 
   # How many annotations belong to documents belonging to this project?
@@ -54,7 +58,7 @@ class Project < ActiveRecord::Base
       :account_full_name  => account_full_name,
       :annotation_count   => annotation_count,
       :document_ids       => document_ids,
-      :shared_account_ids => shared_account_ids
+      :collaborator_ids   => collaborator_ids
     ).to_json
   end
 

@@ -15,7 +15,8 @@ dc.ui.Project = dc.View.extend({
   },
 
   render : function() {
-    $(this.el).html(JST.organizer_project(this.model.attributes()));
+    var data = _.extend(this.model.attributes(), {statistics : this.model.statistics()});
+    $(this.el).html(JST.organizer_project(data));
     $(this.el).attr({id : "project_" + this.model.cid, 'data-project-cid' : this.model.cid});
     this.setMode(this.model.get('selected') ? 'is' : 'not', 'selected');
     this.setCallbacks();

@@ -3,9 +3,8 @@
   <div class="title draggable"><%= title %></div>
 <% } %>
 <div class="information"><%= information || '' %></div>
-<% if (mode == 'progress') { %>
-  <div class="icon spinner_dark"></div>
-<% } %>
+<% var spinner_style = mode == 'progress' ? '' : 'display:none;'; %>
+<div class="icon spinner_dark" style="<%= spinner_style %>"></div>
 <% if (text) { %>
   <div class="text draggable"><%= text %></div>
 <% } %>

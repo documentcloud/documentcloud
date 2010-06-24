@@ -71,7 +71,7 @@ class AdminController < ApplicationController
 
   # Login as a given account, without needing a password.
   def login_as
-    acc = Account.find_by_case_insensitive_email(params[:email])
+    acc = Account.lookup(params[:email])
     return not_found unless acc
     acc.authenticate(session)
     redirect_to '/'

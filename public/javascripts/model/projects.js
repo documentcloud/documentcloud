@@ -3,9 +3,9 @@
 dc.model.Project = dc.Model.extend({
 
   set : function(attrs, silent) {
-    if (attrs.document_ids)       attrs.document_count = attrs.document_ids.length;
-    if (attrs.account_id)         attrs.owner = attrs.account_id == dc.app.accountId;
-    if (attrs.shared_account_ids) attrs.shares_count = attrs.shared_account_ids.length;
+    if (attrs.document_ids)     attrs.document_count = attrs.document_ids.length;
+    if (attrs.account_id)       attrs.owner = attrs.account_id == dc.app.accountId;
+    if (attrs.collaborator_ids) attrs.collaborator_count = attrs.collaborator_ids.length;
     this.base(attrs, silent);
     return this;
   },
@@ -22,6 +22,18 @@ dc.model.Project = dc.Model.extend({
     var ids = _.pluck(documents, 'id');
     var newIds = _.uniq(this.get('document_ids').concat(ids));
     Projects.update(this, {document_ids : newIds});
+  },
+
+  addCollaborator : function(email, success, error) {
+    onSuccess = _.bind(function(response){ this.set(response); success(); }, this);
+    $.ajax({
+      url       : '/projects/' + this.id + '/add_collaborator',
+      type      : 'POST',
+      data      : {email : email},
+      dataType  : 'json',
+      success   : onSuccess,
+      error     : error
+    });
   },
 
   removeDocuments : function(documents, localOnly) {
@@ -51,6 +63,15 @@ dc.model.Project = dc.Model.extend({
     var titlePart = this.get('title');
     if (titlePart.match(/\s/)) titlePart = '"' + titlePart + '"';
     return 'project: ' + titlePart;
+  },
+
+  statistics : function() {
+    var docCount    = this.get('document_count');
+    var noteCount   = this.get('annotation_count');
+    var shareCount  = this.get('collaborator_count');
+    return docCount + ' ' + Inflector.pluralize('document', docCount)
+      + ', ' + noteCount + ' ' + Inflector.pluralize('note', noteCount)
+      + (shareCount ? ', ' + shareCount + ' ' + Inflector.pluralize('collaborator', shareCount) : '');
   }
 
 }, {

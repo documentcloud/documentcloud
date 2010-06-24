@@ -68,7 +68,7 @@
       #organizer .box .edit_glyph {
         display: none;
         position: absolute;
-        left: 11px; top: 18px;
+        left: 8px; top: 15px;
       }
         #organizer .box:hover .edit_glyph,
         #organizer .box.is_selected .edit_glyph {
@@ -170,11 +170,22 @@
 
 /*--------------------------- Edit Project Dialog ----------------------------*/
 #project_dialog {
-  width: 375px;
+  width: 425px;
 }
-  #project_dialog .counts {
+  #project_dialog .collaborators {
+    margin: 25px 0 20px;
+    text-align: left;
+  }
+  #project_dialog .enter_email .minibutton {
+    float: right;
+  }
+  #project_dialog .enter_email label {
+    font-size: 12px;
+    line-height: 25px;
+  }
+  #project_dialog .enter_email .text_input {
     position: absolute;
-    top: 31px; right: 30px;
+    left: 170px; right: 128px;
   }
 
 /*------------------------------- Scrolling ----------------------------------*/

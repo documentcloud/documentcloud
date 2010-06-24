@@ -85,6 +85,14 @@ dc.ui.Dialog = dc.View.extend({
     $(this.el).align(window, '', {top : -50});
   },
 
+  showSpinner : function() {
+    $('.spinner_dark', this.el).show();
+  },
+
+  hideSpinner : function() {
+    $('.spinner_dark', this.el).hide();
+  },
+
   _returnCloses : function() {
     return this.options.mode == 'alert' || this.options.mode == 'short_prompt';
   },

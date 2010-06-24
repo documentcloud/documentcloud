@@ -1,9 +1,22 @@
-<div class="information">
-  <%= document_ids.length %> <%= Inflector.pluralize('document', document_ids.length) %>,
-  <%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %>
-</div>
-
 <div class="text_input dark">
   <input name="title" id="project_title" type="text" value="<%= title %>" />
 </div>
+
+<div class="collaborators">
+  <div class="collaborator_list">
+    
+  </div>
+  <div class="collaborator_management">
+    <div class="add_collaborator text_link">Add a collaborator to this project</div>
+    <div class="enter_email" style="display:none;">
+      <div class="text_input dark small">
+        <input name="collaborator_email" id="collaborator_email" type="text" value="" />
+      </div>
+      <div class="minibutton default add">Add</div>
+      <label for="collaborator_email">Enter email address:</label>
+    </div>
+  </div>
+</div>
+
+
 
