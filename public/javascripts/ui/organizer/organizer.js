@@ -80,7 +80,7 @@ dc.ui.Organizer = dc.View.extend({
     dc.ui.Dialog.prompt('Create a New Project', '', function(title) {
       if (!title) return;
       if (Projects.find(title)) return me._warnAlreadyExists(title);
-      var project = new dc.model.Project({title : title, annotation_count : 0, document_ids : []});
+      var project = new dc.model.Project({title : title, annotation_count : 0, document_ids : [], owner : true});
       Projects.create(project, null, {error : function() { Projects.remove(project); }});
       return true;
     }, {mode : 'short_prompt'});
@@ -177,11 +177,15 @@ dc.ui.Organizer = dc.View.extend({
     this.setMode('has', 'projects');
     var view = new dc.ui.Project({model : model}).render();
     this.subViews.push(view);
-    var models = Projects.models();
-    var previous = models[_.indexOf(models, view.model) - 1];
-    var previousView = previous && previous.view;
-    if (!previous || !previousView) { return $(this.projectList).append(view.el); }
-    $(previousView.el).after(view.el);
+    var models        = Projects.models();
+    var index         = _.indexOf(models, view.model);
+    var previous      = models[index - 1];
+    var previousView  = previous && previous.view;
+    if (index == 0 || !previous || !previousView) {
+      $(this.projectList).prepend(view.el);
+    } else {
+      $(previousView.el).after(view.el);
+    }
     dc.app.scroller.checkLater();
   },
 

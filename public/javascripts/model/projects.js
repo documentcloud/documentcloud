@@ -5,7 +5,7 @@ dc.model.Project = dc.Model.extend({
   constructor : function(options) {
     this.base(options);
     this.collaborators = new dc.model.AccountSet();
-    this.collaborators.resource = 'projects/' + this.id + '/collaborators';
+    this._setCollaboratorsResource();
   },
 
   set : function(attrs, silent) {
@@ -13,6 +13,7 @@ dc.model.Project = dc.Model.extend({
     if (attrs.account_id)       attrs.owner = attrs.account_id == dc.app.accountId;
     if (attrs.collaborator_ids) attrs.collaborator_count = attrs.collaborator_ids.length;
     this.base(attrs, silent);
+    if (attrs.id) this._setCollaboratorsResource();
     return this;
   },
 
@@ -66,6 +67,10 @@ dc.model.Project = dc.Model.extend({
     return docCount + ' ' + Inflector.pluralize('document', docCount)
       + ', ' + noteCount + ' ' + Inflector.pluralize('note', noteCount)
       + (shareCount ? ', ' + shareCount + ' ' + Inflector.pluralize('collaborator', shareCount) : '');
+  },
+
+  _setCollaboratorsResource : function() {
+    if (this.collaborators && this.id) this.collaborators.resource = 'projects/' + this.id + '/collaborators';
   }
 
 }, {
