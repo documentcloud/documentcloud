@@ -84,9 +84,7 @@ class Account < ActiveRecord::Base
       select document_id from project_memberships
       inner join collaborations
         on project_memberships.project_id = collaborations.project_id
-      inner join projects
-        on project_memberships.project_id = projects.id
-      where collaborations.account_id = #{id} or projects.account_id = #{id}
+      where collaborations.account_id = #{id}
     EOS
     ).map {|doc_id| doc_id.to_i }
   end
@@ -140,7 +138,8 @@ class Account < ActiveRecord::Base
   # The JSON representation of an account avoids sending down the password,
   # among other things, and includes extra attributes.
   def to_json(options={})
-    attrs = { 'id'              => id,
+    attrs = {
+      'id'              => id,
       'email'           => email,
       'first_name'      => first_name,
       'last_name'       => last_name,
@@ -149,6 +148,7 @@ class Account < ActiveRecord::Base
       'hashed_email'    => hashed_email,
       'pending'         => pending?
     }
+    attrs['organization_name']   = organization_name   if options[:include_organization]
     attrs['shared_document_ids'] = shared_document_ids if options[:include_shared]
     attrs.to_json
   end

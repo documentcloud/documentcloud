@@ -4,9 +4,13 @@
 <td class="name draggable">
   <%= Inflector.truncate(account.fullName(true), 25) %>
 </td>
-<td class="email draggable">
-  <%= Inflector.truncate(account.get('email'), 25) %>
+<td class="organization_name draggable">
+  <%= Inflector.truncate(account.get('organization_name'), 25) %>
 </td>
-<td>
-  <span class="remove text_link" data-id="<%= account.id %>">remove</span>
+<td class="last">
+  <% if (account.id != project.get('account_id')) { %>
+    <span class="remove text_link" data-id="<%= account.id %>">remove</span>
+  <% } else { %>
+    (project owner)
+  <% } %>
 </td>

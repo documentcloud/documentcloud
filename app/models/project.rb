@@ -7,10 +7,11 @@ class Project < ActiveRecord::Base
   has_many :project_memberships, :dependent => :destroy
   has_many :collaborations,      :dependent => :destroy
   has_many :documents,           :through => :project_memberships
-  has_many :collaborators,       :through => :collaborations, :source => :account
 
   validates_presence_of :title
   validates_uniqueness_of :title, :scope => :account_id
+
+  after_create :create_default_collaboration
 
   named_scope :alphabetical, {:order => :title}
 
@@ -29,15 +30,21 @@ class Project < ActiveRecord::Base
 
   def add_collaborator(account)
     self.collaborations.create(:account => account)
-    if @collaborator_ids
-      @collaborator_ids.push account.id
-      @collaborator_ids.uniq!
-    end
+    @collaborator_ids = nil
   end
 
   def remove_collaborator(account)
     self.collaborations.owned_by(account).first.destroy
-    @collaborator_ids -= [account.id] if @collaborator_ids
+    @collaborator_ids = nil
+  end
+
+  def create_default_collaboration
+    add_collaborator self.account
+  end
+
+  def other_collaborators(account)
+    collaborations = self.collaborations.not_owned_by(account).all(:select => ['account_id'])
+    Account.all(:conditions => {:id => collaborations.map {|c| c.account_id }})
   end
 
   def add_document(document)
@@ -49,7 +56,7 @@ class Project < ActiveRecord::Base
   end
 
   def collaborator_ids
-    @collaborator_ids ||= collaborations.map {|m| m.account_id }
+    @collaborator_ids ||= collaborations.not_owned_by(account).map {|m| m.account_id }
   end
 
   # How many annotations belong to documents belonging to this project?

@@ -46,9 +46,10 @@
         color: #ccc;
       }
       #account_list .first, .collaborator_list .first { width: 0%; padding: 0; }
-      #account_list .name  { width: 0%; }
-      #account_list .email { width: 0%; }
-      #account_list .last  { width: 100%; padding-right: 0; }
+      #account_list .name                             { width: 0%; }
+      #account_list .email                            { width: 0%; }
+      #account_list .last, .collaborator_list .last   { padding-right: 0; }
+      #account_list .last                             { width: 100%; }
 
 #account_list tr .edit, #account_list tr .display {
   display: none;

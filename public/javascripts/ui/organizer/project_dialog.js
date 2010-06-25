@@ -25,6 +25,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     if (!noHide) $(this.el).hide();
     this.base({editor : true, information : this.model.statistics()});
     $('.custom', this.el).html(JST.project_dialog(this.model.attributes()));
+    if (!this.model.get('owner')) $('.minibutton.delete', this.el).hide();
     if (this.model.collaborators.populated) {
       this._finishRender();
     } else {
@@ -42,9 +43,9 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   _finishRender : function() {
     dc.ui.spinner.hide();
     if (this.model.collaborators.size()) {
-      var views = _.map(this.model.collaborators.models(), function(account) {
-        return (new dc.ui.AccountView({model : account, kind : 'collaborator'})).render().el;
-      });
+      var views = _.map(this.model.collaborators.models(), _.bind(function(account) {
+        return (new dc.ui.AccountView({model : account, kind : 'collaborator'})).render(null, {project : this.model}).el;
+      }, this));
       $('.collaborator_list tbody', this.el).append(views);
       $('.collaborators', this.el).show();
     }

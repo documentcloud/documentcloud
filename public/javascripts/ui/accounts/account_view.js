@@ -33,10 +33,11 @@ dc.ui.AccountView = dc.View.extend({
     this.model.bind(dc.Model.CHANGED, _.bind(this.render, this, 'display'));
   },
 
-  render : function(viewMode) {
+  render : function(viewMode, options) {
     if (this.modes.view == 'edit') return;
     viewMode = viewMode || 'display';
-    var attrs = {account : this.model, email : this.model.get('email'), size : this.size(), current : Accounts.current()};
+    options  = options || {};
+    var attrs = _.extend({account : this.model, email : this.model.get('email'), size : this.size(), current : Accounts.current()}, options);
     if (this.isRow()) this.setMode(viewMode, 'view');
     $(this.el).html(this.template(attrs));
     if (this.model.get('pending')) $(this.el).addClass('pending');
