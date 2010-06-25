@@ -102,12 +102,6 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
     return _.select(this.models(), function(m){ return !!m.get('title').match(matcher); });
   },
 
-  // Find the first selected project that's owned by the current account.
-  firstOwnedAndSelected : function() {
-    var proj = _.first(Projects.selected());
-    return proj && proj.get('owner') ? proj : null;
-  },
-
   // Increment the document_count attribute of a given project, by id.
   incrementCountById : function(id) {
     var project = this.get(id);

@@ -83,8 +83,10 @@ class Account < ActiveRecord::Base
     @shared_document_ids ||= ProjectMembership.connection.select_values(<<-EOS
       select document_id from project_memberships
       inner join collaborations
-        on (project_memberships.project_id = collaborations.project_id)
-      where account_id = #{id}
+        on project_memberships.project_id = collaborations.project_id
+      inner join projects
+        on project_memberships.project_id = projects.id
+      where collaborations.account_id = #{id} or projects.account_id = #{id}
     EOS
     ).map {|doc_id| doc_id.to_i }
   end

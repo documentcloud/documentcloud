@@ -10,7 +10,7 @@ class ImportController < ApplicationController
     @bad_request = true and return unless params[:file] && params[:title]
     @project_id  = params[:project_id]
     @document    = Document.upload(params, current_account, current_organization)
-    current_account.projects.find(@project_id).add_document(@document) if @project_id
+    Project.accessible(current_account).find(@project_id).add_document(@document) if @project_id
   end
 
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.
