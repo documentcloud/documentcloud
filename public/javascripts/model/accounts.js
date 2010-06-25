@@ -55,7 +55,7 @@ dc.model.AccountSet = dc.model.RESTfulSet.extend({
   model    : dc.model.Account,
 
   comparator : function(account) {
-    return account.get('last_name').toLowerCase() + ' ' + account.get('first_name').toLowerCase();
+    return (account.get('last_name') || '').toLowerCase() + ' ' + (account.get('first_name') || '').toLowerCase();
   },
 
   // Fetch the account of the logged-in journalist.

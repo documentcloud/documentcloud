@@ -172,8 +172,8 @@
 #project_dialog {
   width: 425px;
 }
-  #project_dialog .collaborators {
-    margin: 25px 0 20px;
+  #project_dialog .collaboration {
+    margin: 30px 0 10px;
     text-align: left;
   }
   #project_dialog .enter_email .minibutton {
@@ -185,8 +185,19 @@
   }
   #project_dialog .enter_email .text_input {
     position: absolute;
-    left: 170px; right: 128px;
+    left: 170px; right: 125px;
   }
+  #project_dialog .collaborators_title {
+  }
+  #project_dialog .collaborator_list {
+    margin: 15px 0 15px;
+  }
+    #project_dialog .account_view {
+      padding: 10px 0;
+      height: 27px;
+      font: 11px/27px Arial;
+      border-bottom: 1px solid #222;
+    }
 
 /*------------------------------- Scrolling ----------------------------------*/
 .scroll {

@@ -24,19 +24,6 @@ class ProjectsController < ApplicationController
     json 'documents' => current_project.loaded_documents
   end
 
-  def add_collaborator
-    account = Account.lookup(params[:email])
-    if !account || account == current_account
-      return render :text => 'No account could be found with that email address.', :status => 404
-    end
-    current_project.add_collaborator account
-    json current_project
-  end
-
-  def remove_collaborator
-
-  end
-
 
   private
 

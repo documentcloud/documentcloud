@@ -26,7 +26,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     if (Accounts.current().isAdmin()) this.appendControl($.el('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, 'New Account'));
     this.list = $('#account_list_content', this.el);
     this.setCallbacks();
-    dc.ui.spinner.show('loading');
+    dc.ui.spinner.show();
     Accounts.populate({success : this._renderAccounts});
     return this;
   },

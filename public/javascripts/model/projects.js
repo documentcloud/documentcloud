@@ -2,13 +2,17 @@
 
 dc.model.Project = dc.Model.extend({
 
+  constructor : function(options) {
+    this.base(options);
+    this.collaborators = new dc.model.AccountSet();
+    this.collaborators.resource = 'projects/' + this.id + '/collaborators';
+  },
+
   set : function(attrs, silent) {
     if (attrs.document_ids)     attrs.document_count = attrs.document_ids.length;
     if (attrs.account_id)       attrs.owner = attrs.account_id == dc.app.accountId;
     if (attrs.collaborator_ids) attrs.collaborator_count = attrs.collaborator_ids.length;
     this.base(attrs, silent);
-    this.collaborators = new dc.model.AccountSet();
-    this.collaborators.resource = '/projects/' + this.id + '/collaborators';
     return this;
   },
 
@@ -24,18 +28,6 @@ dc.model.Project = dc.Model.extend({
     var ids = _.pluck(documents, 'id');
     var newIds = _.uniq(this.get('document_ids').concat(ids));
     Projects.update(this, {document_ids : newIds});
-  },
-
-  addCollaborator : function(email, success, error) {
-    onSuccess = _.bind(function(response){ this.set(response); success(); }, this);
-    $.ajax({
-      url       : '/projects/' + this.id + '/add_collaborator',
-      type      : 'POST',
-      data      : {email : email},
-      dataType  : 'json',
-      success   : onSuccess,
-      error     : error
-    });
   },
 
   removeDocuments : function(documents, localOnly) {

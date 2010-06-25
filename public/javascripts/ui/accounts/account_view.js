@@ -2,15 +2,17 @@
 dc.ui.AccountView = dc.View.extend({
 
   AVATAR_SIZES : {
-    badge : 30,
-    row   : 25,
-    admin : 25
+    badge         : 30,
+    row           : 25,
+    admin         : 25,
+    collaborator  : 25
   },
 
   TAGS : {
-    badge : 'div',
-    row   : 'tr',
-    admin : 'tr'
+    badge         : 'div',
+    row           : 'tr',
+    admin         : 'tr',
+    collaborator  : 'tr'
   },
 
   callbacks : {

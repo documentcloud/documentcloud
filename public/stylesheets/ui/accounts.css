@@ -27,22 +27,25 @@
   #account_list .minibutton.cancel {
     display: none;
   }
-  #account_list table {
+  #account_list table,
+  .collaborator_list {
     width: 100%;
     border-top: 1px solid #222;
   }
-    #account_list td {
+    #account_list td,
+    .collaborator_list td {
       padding: 10px;
       vertical-align: middle;
       white-space: nowrap;
     }
-      #account_list tbody td {
+      #account_list tbody td,
+      .collaborator_list tbody td {
         border-bottom: 1px solid #222;
         font-size: 11px; line-height: 11px;
         height: 25px;
         color: #ccc;
       }
-      #account_list .first { width: 0%; padding: 0; }
+      #account_list .first, .collaborator_list .first { width: 0%; padding: 0; }
       #account_list .name  { width: 0%; }
       #account_list .email { width: 0%; }
       #account_list .last  { width: 100%; padding-right: 0; }
@@ -53,7 +56,8 @@
 #account_list tr.edit_view .edit, #account_list tr.display_view .display {
   display: block;
 }
-#account_list img.avatar {
+#account_list img.avatar,
+.collaborator_list img.avatar {
   border: 1px solid #555;
 }
 #account_list .text_input {

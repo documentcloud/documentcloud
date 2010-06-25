@@ -5,8 +5,9 @@ class Project < ActiveRecord::Base
 
   belongs_to :account
   has_many :project_memberships, :dependent => :destroy
-  has_many :collaborations,    :dependent => :destroy
+  has_many :collaborations,      :dependent => :destroy
   has_many :documents,           :through => :project_memberships
+  has_many :collaborators,       :through => :collaborations, :source => :account
 
   validates_presence_of :title
   validates_uniqueness_of :title, :scope => :account_id
@@ -32,6 +33,11 @@ class Project < ActiveRecord::Base
       @collaborator_ids.push account.id
       @collaborator_ids.uniq!
     end
+  end
+
+  def remove_collaborator(account)
+    self.collaborations.owned_by(account).first.destroy
+    @collaborator_ids -= [account.id] if @collaborator_ids
   end
 
   def add_document(document)

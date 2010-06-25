@@ -1,0 +1,12 @@
+<td class="first draggable">
+  <img class="avatar" src="<%= account.DEFAULT_AVATAR %>" width="<%= size %>" height="<%= size %>" />
+</td>
+<td class="name draggable">
+  <%= Inflector.truncate(account.fullName(true), 25) %>
+</td>
+<td class="email draggable">
+  <%= Inflector.truncate(account.get('email'), 25) %>
+</td>
+<td>
+  <span class="remove text_link" data-id="<%= account.id %>">remove</span>
+</td>
