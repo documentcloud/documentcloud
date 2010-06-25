@@ -61,7 +61,7 @@
         }
       #organizer .box.is_selected,
       #organizer .box.is_selected:hover {
-        border-right: 0;
+        border-right-color: transparent;
         background: #fff;
         filter: none;
       }
@@ -183,7 +183,7 @@
     font-size: 12px;
     line-height: 25px;
   }
-  #project_dialog .enter_email .text_input {
+  #project_dialog .enter_email .text_input {ad
     position: absolute;
     left: 170px; right: 125px;
   }
