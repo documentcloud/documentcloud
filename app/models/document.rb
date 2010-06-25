@@ -173,7 +173,7 @@ class Document < ActiveRecord::Base
   end
 
   def account_name
-    @account_name ||= account.full_name
+    @account_name ||= (account ? account.full_name : 'Unattributed')
   end
 
   # Ex: docs/1011
