@@ -18,7 +18,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   render : function() {
     $(this.el).hide();
     this.base({noOverlay : true});
-    this._project = Projects.selected()[0];
+    this._project = Projects.firstOwnedAndSelected();
     $('.custom', this.el).html(JST.upload_dialog({
       project : this._project
     }));
