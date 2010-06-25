@@ -68,7 +68,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     this.showSpinner();
     this.model.collaborators.create(new dc.model.Account({email : email}), null, {
       success : _.bind(function(acc, resp){ acc.set(resp); this.model.collaborators.sort(); this.model.set({collaborator_count : this.model.get('collaborator_count') + 1}); this.render(true);}, this),
-      error   : _.bind(function(){ this.hideSpinner(); this.error('No account could be found with that email address.'); }, this)
+      error   : _.bind(function(acc){ this.hideSpinner(); this.model.collaborators.remove(acc); this.error('No account could be found with that email address.'); }, this)
     });
   },
 
