@@ -20,8 +20,6 @@ class Annotation < ActiveRecord::Base
     {:conditions => {:account_id => account.id}}
   }
 
-  named_scope :in_order, {:order => :page_number}
-
   searchable do
     text :title, :boost => 2.0
     text :content
@@ -33,9 +31,9 @@ class Annotation < ActiveRecord::Base
     time    :created_at
   end
 
-  def self.counts_for_documents(owner, docs)
+  def self.counts_for_documents(account, docs)
     doc_ids = docs.map {|doc| doc.id }
-    self.count(:conditions => {:account_id => owner.id, :document_id => doc_ids}, :group => 'document_id')
+    self.accessible(account).count(:conditions => {:document_id => doc_ids}, :group => 'document_id')
   end
 
   def page
@@ -50,7 +48,11 @@ class Annotation < ActiveRecord::Base
   end
 
   def to_json(opts={})
-    canonical.merge({'document_id' => document_id}).to_json
+    canonical.merge({
+      'document_id'     => document_id,
+      'account_id'      => account_id,
+      'organization_id' => organization_id
+    }).to_json
   end
 
 

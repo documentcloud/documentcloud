@@ -64,10 +64,10 @@ dc.model.RESTfulSet = dc.Set.extend({
     options = options || {};
     var me = this;
     var onSuccess = function(resp) {
-      _.each(resp[me.resource] || resp, function(attrs) {
-        var model = new me.model(attrs);
-        if (!me.include(model)) me.add(model);
+      var models = _.map(resp[me.resource] || resp, function(attrs) {
+        return new me.model(attrs);
       });
+      me.refresh(models);
       if (options.success) options.success();
     };
     this.populated = true;

@@ -27,9 +27,10 @@ dc.ui.Document = dc.View.extend({
     this.base(options);
     this.el.id = 'document_' + this.model.id;
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
-    _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderPages');
+    _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes', '_renderPages');
     this.model.bind(dc.Model.CHANGED, this._onDocumentChange);
     this.model.notes.bind(dc.Set.MODEL_ADDED, this._addNote);
+    this.model.notes.bind(dc.Set.REFRESHED, this._renderNotes);
     this.model.pageEntities.bind(dc.Set.REFRESHED, this._renderPages);
   },
 
@@ -153,8 +154,12 @@ dc.ui.Document = dc.View.extend({
     this.render();
   },
 
-  _addNote : function(e, note) {
+  _addNote : function(note) {
     this.notesEl.append((new dc.ui.Note({model : note, set : this.model.notes})).render().el);
+  },
+
+  _renderNotes : function() {
+    _.each(this.model.notes.models(), this._addNote);
     this.setMode('has', 'notes');
   },
 

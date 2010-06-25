@@ -4,7 +4,9 @@
   <div class="page_number">p. <%= page %></div>
   <div class="note_title display">
     <span class="title_link"><%= title %></span>
-    <div class="edit_note icon edit_glyph"></div>
+    <% if (note.allowedToEdit()) { %>
+      <div class="edit_note icon edit_glyph"></div>
+    <% } %>
   </div>
   <div class="note_title_edit edit text_input small">
     <div class="background">
@@ -17,7 +19,7 @@
     <div class="note_excerpt" style="height: <%= coords.height %>px;">
       <div class="left_cover"  style="height: <%= coords.height %>px; width: <%= coords.left %>px;"></div>
       <div class="right_cover" style="height: <%= coords.height %>px; width: <%= 750 - coords.right %>px;"></div>
-      <img class="note_image" src="<%= src %>" alt="" style="top: -<%= coords.top %>px;" />
+      <img class="note_image" src="<%= note.imageUrl() %>" alt="" style="top: -<%= coords.top %>px;" />
     </div>
   </div>
   <div class="note_text display"><%= content %></div>
@@ -27,6 +29,6 @@
   <div class="note_controls edit">
     <div class="minibutton warn delete_note float_left">Delete</div>
     <div class="minibutton default save_note float_right">Save</div>
-    <div class="minibutton cancel_note float_right">Cancel</div>    
+    <div class="minibutton cancel_note float_right">Cancel</div>
   </div>
 </div>

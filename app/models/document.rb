@@ -328,7 +328,7 @@ class Document < ActiveRecord::Base
   end
 
   # TODO: Make the to_json an extended form of the canonical.
-  def to_json(options={})
+  def to_json(opts={})
     {
       'id'                  => id,
       'organization_id'     => organization_id,

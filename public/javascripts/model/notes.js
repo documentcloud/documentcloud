@@ -6,6 +6,14 @@ dc.model.Note = dc.Model.extend({
     return this._document = this._document || Documents.get(this.get('document_id'));
   },
 
+  allowedToEdit : function() {
+    var acc = Accounts.current();
+    if (this.get('account_id') == acc.id) return true;
+    if (this.get('organization_id') == acc.get('organization_id') && acc.isAdmin()) return true;
+    if (_.include(acc.get('shared_document_ids'), this.get('document_id'))) return true;
+    return false;
+  },
+
   imageUrl : function() {
     return this._imageUrl = this._imageUrl ||
       this.document().get('page_image_url').replace('{size}', 'normal').replace('{page}', this.get('page'));
@@ -34,7 +42,7 @@ dc.model.NoteSet = dc.model.RESTfulSet.extend({
   model    : dc.model.Note,
 
   comparator : function(note) {
-    return note.get('page');
+    return note.get('page') * 10000 + note.coordinates().top;
   }
 
 });
