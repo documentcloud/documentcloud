@@ -6,6 +6,6 @@ window.SERVER_ROOT = '<%= DC_CONFIG["server_root"] %>';
   dc.app.organization = <%= @current_organization.to_json %>;
   dc.app.accountId    = <%= @current_account.id %>;
   Accounts.add(new dc.model.Account(<%= @current_account.to_json(:include_shared => true) %>));
-  Projects.populate(<%= @projects.to_json %>);
+  Projects.populate(<%= @projects.to_json({:account => @current_account}) %>);
 <% end %>
 </script>

@@ -53,16 +53,18 @@ class Project < ActiveRecord::Base
   end
 
   # How many annotations belong to documents belonging to this project?
-  def annotation_count
-    @annotation_count ||= Annotation.count(
-      {:conditions => {:account_id => account_id, :document_id => document_ids}}
+  # How many of those annotations are accessible to a given account?
+  def annotation_count(account=nil)
+    account ||= self.account
+    @annotation_count ||= Annotation.accessible(account).count(
+      {:conditions => {:document_id => document_ids}}
     )
   end
 
   def to_json(opts={})
     attributes.merge(
       :account_full_name  => account_full_name,
-      :annotation_count   => annotation_count,
+      :annotation_count   => annotation_count(opts[:account]),
       :document_ids       => document_ids,
       :collaborator_ids   => collaborator_ids
     ).to_json
