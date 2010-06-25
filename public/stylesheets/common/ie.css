@@ -47,10 +47,6 @@ body.workspace {
 #organizer .box {
   background-image: url(/images/embed/ui/box_back_wide.png);
 }
-  #organizer .box:hover .edit_glyph {
-    position: absolute;
-    margin: 1px 8px 0 0;
-  }
 .document .document_tool {
   position: absolute;
   margin: 2px 14px 0 0;
