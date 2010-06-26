@@ -25,7 +25,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     if (!noHide) $(this.el).hide();
     this.base({editor : true, information : this.model.statistics()});
     $('.custom', this.el).html(JST.project_dialog(this.model.attributes()));
-    if (!this.model.get('owner')) $('.minibutton.delete', this.el).hide();
+    if (!this.model.get('owner')) $('.minibutton.delete', this.el).text("Remove");
     if (this.model.collaborators.populated) {
       this._finishRender();
     } else {
@@ -54,8 +54,18 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     this.setCallbacks();
   },
 
+  // If we don't own it, a request to remove the project is a request to remove
+  // ourselves as a collaborator.
   _deleteProject : function() {
-    Projects.destroy(this.model);
+    var wasOpen = Projects.selected()[0] == this.model;
+    var finish  = function(){ if (wasOpen) dc.app.searchBox.loadDefault({clear : true}); };
+    if (!this.model.get('owner')) {
+      this.model.collaborators.destroy(Accounts.current(), {
+        success : _.bind(function(){ Projects.remove(this.model); finish(); }, this)
+      });
+    } else {
+      Projects.destroy(this.model, {success : finish});
+    }
     this.close();
   },
 

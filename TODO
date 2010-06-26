@@ -1,6 +1,11 @@
 TODO:
-          
+
+  * Re-enable public documents for non-logged-in visitors.
+
   * Disallow annotating outside of the page border.
+  
+  
+  
 
   * Add placeholder JS fallback for non HTML5 browsers.
     

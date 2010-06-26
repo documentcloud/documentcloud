@@ -54,7 +54,12 @@ dc.ui.SearchBox = dc.View.extend({
   },
 
   // Load the default starting-point search.
-  loadDefault : function(searchAll) {
+  loadDefault : function(options) {
+    options = options || {};
+    if (options.clear) {
+      Documents.refresh();
+      this.value('');
+    }
     if (!Documents.empty()) return this.showDocuments();
     if (this.value()) {
       this.search(this.value());
@@ -62,15 +67,15 @@ dc.ui.SearchBox = dc.View.extend({
       Accounts.current().openDocuments();
     } else if (Projects.first()) {
       Projects.first().open();
-    } else if (searchAll === true) {
-      this.search('');
-    } else {
+    } else if (options.showHelp) {
       dc.app.navigation.open('help');
+    } else {
+      this.search('');
     }
   },
 
   loadDefaultSearch : function() {
-    this.loadDefault(true);
+    this.loadDefault({showHelp : true});
   },
 
   hideSearch : function() {

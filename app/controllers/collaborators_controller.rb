@@ -13,7 +13,7 @@ class CollaboratorsController < ApplicationController
 
   def destroy
     account = Account.find(params[:id])
-    current_project.remove_collaborator account if current_project.account_id != account.id
+    current_project.remove_collaborator account
     json nil
   end
 
