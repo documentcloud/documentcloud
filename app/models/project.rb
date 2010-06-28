@@ -7,6 +7,7 @@ class Project < ActiveRecord::Base
   has_many :project_memberships, :dependent => :destroy
   has_many :collaborations,      :dependent => :destroy
   has_many :documents,           :through => :project_memberships
+  has_many :collaborators,       :through => :collaborations, :source => :account
 
   validates_presence_of :title
   validates_uniqueness_of :title, :scope => :account_id

@@ -13,7 +13,7 @@ class Account < ActiveRecord::Base
   has_many    :collaborations,  :dependent => :destroy
   has_many    :processing_jobs,   :dependent => :destroy
   has_one     :security_key,      :dependent => :destroy, :as => :securable
-  has_many    :shared_projects,   :through => :collaborations
+  has_many    :shared_projects,   :through => :collaborations, :source => :project
 
   # Validations:
   validates_presence_of   :first_name, :last_name, :email
@@ -70,7 +70,18 @@ class Account < ActiveRecord::Base
   end
 
   def shared?(resource)
-    shared_document_ids.include?(resource.document_id)
+    return false unless shared_document_ids.include?(resource.document_id)
+    projects = Project.find_by_sql(<<-EOS
+      select distinct project_memberships.project_id as id from project_memberships
+      inner join collaborations
+        on project_memberships.project_id = collaborations.project_id
+      where collaborations.account_id = #{id}
+      and project_memberships.document_id = #{resource.document_id}
+    EOS
+    )
+    projects.map {|project| project.collaborators }.flatten.any? do |account|
+      account.owns?(resource) || account.administers?(resource)
+    end
   end
 
   def allowed_to_edit?(resource)
