@@ -25,7 +25,7 @@ dc.model.RESTfulSet = dc.Set.extend({
       data      : {json : JSON.stringify(model.attributes())},
       dataType  : 'json',
       success   : _.bind(this._handleSuccess, this, model, options.success),
-      error     : _.bind(this._handleError, this, model, options.error)
+      error     : _.bind(this._handleError, this, model, options.error, null)
     });
   },
 
@@ -39,7 +39,7 @@ dc.model.RESTfulSet = dc.Set.extend({
       data      : {_method : 'delete'},
       dataType  : 'json',
       success   : function(resp) { if (options.success) options.success(model, resp); },
-      error     : _.bind(this._handleError, this, model, options.error)
+      error     : _.bind(this._handleError, this, model, options.error, null)
     });
   },
 
@@ -47,6 +47,7 @@ dc.model.RESTfulSet = dc.Set.extend({
   // Pass only a model to persist its current attributes to the server.
   update : function(model, attributes, options) {
     options = options || {};
+    var previous = attributes ? model.attributes() : null;
     if (attributes) model.set(attributes);
     $.ajax({
       url       : '/' + this.resource + '/' + model.id,
@@ -54,7 +55,7 @@ dc.model.RESTfulSet = dc.Set.extend({
       data      : {json : JSON.stringify(model.attributes()), _method : 'put'},
       dataType  : 'json',
       success   : _.bind(this._handleSuccess, this, model, options.success),
-      error     : _.bind(this._handleError, this, model, options.error)
+      error     : _.bind(this._handleError, this, model, options.error, previous)
     });
   },
 
@@ -85,10 +86,11 @@ dc.model.RESTfulSet = dc.Set.extend({
     model.set(resp);
   },
 
-  _handleError : function(model, callback, resp) {
+  _handleError : function(model, callback, previous, resp) {
     var json = eval('(' + resp.responseText + ')');
     if (callback) return callback(model, json);
-    dc.ui.notifier.show({text :json.errors[0]});
+    if (previous) model.set(previous);
+    dc.ui.notifier.show({text : json.errors[0]});
   }
 
 });
