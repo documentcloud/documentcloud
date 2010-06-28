@@ -51,9 +51,10 @@ dc.ui.Note = dc.View.extend({
 
   deleteNote : function() {
     dc.ui.Dialog.confirm('Are you sure you want to delete this note?', _.bind(function() {
-      $(this.el).remove();
-      this.set.destroy(this.model);
-      this.model.document().decrementNotes();
+      this.set.destroy(this.model, {success : _.bind(function() {
+        $(this.el).remove();
+        this.model.document().decrementNotes();
+      }, this)});
       return true;
     }, this));
   }

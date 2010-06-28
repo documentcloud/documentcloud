@@ -23,17 +23,23 @@ class AnnotationsController < ApplicationController
 
   # You can only alter annotations that you've made yourself.
   def update
-    return not_found unless current_annotation
-    return forbidden unless current_account.allowed_to_edit?(current_annotation)
-    current_annotation.update_attributes(pick(:json, :title, :content))
+    return not_found unless anno = current_annotation
+    if !current_account.allowed_to_edit?(anno)
+      anno.errors.add_to_base "You don't have permission to update the note."
+      return json(anno, 403)
+    end
+    anno.update_attributes(pick(:json, :title, :content))
     expire_page current_document.canonical_cache_path if current_document.cacheable?
-    json current_annotation
+    json anno
   end
 
   def destroy
-    return not_found unless current_annotation
-    return forbidden unless current_account.allowed_to_edit?(current_annotation)
-    current_annotation.destroy
+    return not_found unless anno = current_annotation
+    if !current_account.allowed_to_edit?(anno)
+      anno.errors.add_to_base "You don't have permission to delete the note."
+      return json(anno, 403)
+    end
+    anno.destroy
     expire_page current_document.canonical_cache_path if current_document.cacheable?
     json nil
   end

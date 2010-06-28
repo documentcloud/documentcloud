@@ -5,6 +5,8 @@ TODO:
   * Disallow annotating outside of the page border.
   
   
+  * Make collaborators accept the collaboration request before really adding
+    them (thereby keeping unwanted adds from getting edit access).
 
   * Add placeholder JS fallback for non HTML5 browsers.
     
