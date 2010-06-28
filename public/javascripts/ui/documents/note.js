@@ -34,6 +34,8 @@ dc.ui.Note = dc.View.extend({
 
   editNote : function() {
     if (!this.model.allowedToEdit()) return dc.ui.Dialog.alert("You don't have permission to edit this note.");
+    $('.note_title_input', this.el).val(this.model.get('title'));
+    $('.note_text_edit', this.el).val(this.model.get('content'));
     this.setMode('edit', 'visible');
   },
 
