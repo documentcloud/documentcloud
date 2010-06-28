@@ -55,8 +55,10 @@ class Document < ActiveRecord::Base
     access << "(documents.access = #{PUBLIC})"
     access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}) and documents.account_id = #{account.id})" if account
     access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org
-    access << "(documents.id in (?))"
-    {:conditions => ["(#{access.join(' or ')})", account.shared_document_ids]}
+    access << "(documents.id in (?))" if account
+    conditions = ["(#{access.join(' or ')})"]
+    conditions.push(account.shared_document_ids) if account
+    {:conditions => conditions}
   }
 
   searchable do
