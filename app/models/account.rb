@@ -69,33 +69,42 @@ class Account < ActiveRecord::Base
       [ORGANIZATION, EXCLUSIVE, PUBLIC].include?(resource.access)
   end
 
+  # Heavy-duty SQL.
+  # A document is shared with you if it's in any project of yours, and that
+  # project is in collaboration with an owner or and administrator of the document.
   def shared?(resource)
-    return false unless shared_document_ids.include?(resource.document_id)
-    projects = Project.find_by_sql(<<-EOS
-      select distinct project_memberships.project_id as id from project_memberships
-      inner join collaborations
-        on project_memberships.project_id = collaborations.project_id
-      where collaborations.account_id = #{id}
-      and project_memberships.document_id = #{resource.document_id}
+    collaborators = Account.find_by_sql(<<-EOS
+      select distinct on (a.id)
+      a.id as id, a.organization_id as organization_id, a.role as role
+      from accounts as a
+      inner join collaborations as c1
+        on c1.account_id = a.id
+      inner join collaborations as c2
+        on c2.account_id = #{id} and c2.project_id = c1.project_id
+      inner join project_memberships as p
+        on p.project_id = c1.project_id and p.document_id = #{resource.document_id}
+      where a.id != #{id}
     EOS
     )
-    projects.map {|project| project.collaborators }.flatten.any? do |account|
-      account.owns?(resource) || account.administers?(resource)
-    end
+    collaborators.any? {|account| account.owns_or_administers?(resource) }
+  end
+
+  def owns_or_administers?(resource)
+    owns?(resource) || administers?(resource)
   end
 
   def allowed_to_edit?(resource)
-    owns?(resource) || administers?(resource) || shared?(resource)
+    owns_or_administers?(resource) || shared?(resource)
   end
 
   # The ids of all the documents that have been shared with this account through
   # shared projects.
   def shared_document_ids
     @shared_document_ids ||= ProjectMembership.connection.select_values(<<-EOS
-      select document_id from project_memberships
-      inner join collaborations
-        on project_memberships.project_id = collaborations.project_id
-      where collaborations.account_id = #{id}
+      select document_id from project_memberships as p
+      inner join collaborations as c
+        on p.project_id = c.project_id
+      where c.account_id = #{id}
     EOS
     ).map {|doc_id| doc_id.to_i }
   end
