@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   layout 'workspace'
 
-  before_filter :admin_required
+  before_filter :admin_required, :except => [:save_analytics]
 
   # The Admin Dashboard
   def index
@@ -32,6 +32,17 @@ class AdminController < ApplicationController
     return org.destroy && fail(acc.errors.full_messages.first) if acc.errors.any?
     acc.send_login_instructions
     @success = "Account Created. Welcome email sent to #{acc.email}."
+  end
+
+  # Endpoint for our pixel-ping application, to save our analytic data every
+  # so often.
+  def save_analytics
+    data = JSON.parse(params[:json])
+    data.each do |key, hits|
+      doc_id, url = *key.split('|||')
+      RemoteUrl.record_hits(doc_id.to_i, url, hits)
+    end
+    json nil
   end
 
   # Spin up a new CloudCrowd medium worker, for processing. It takes a while

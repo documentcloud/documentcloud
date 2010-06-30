@@ -16,8 +16,10 @@
   DV.afterLoad = function() {
     $j('#DV-logoLink').attr({href : 'http://www.documentcloud.org'});
     var loc = window.location;
-    var url = encodeURIComponent(loc.protocol + '//' + loc.host + '/' + loc.pathname);
-    $j(document.body).append('<img alt="" width="1" height="1" src="<%= root %>/pixel.gif?key=' + url + '" />');
+    var url = loc.protocol + '//' + loc.host + '/' + loc.pathname;
+    var id  = parseInt(DV.Schema.document.id, 10);
+    var key = encodeURIComponent(id + '|||' + url);
+    $j(document.body).append('<img alt="" width="1" height="1" src="<%= root %>/pixel.gif?key=' + key + '" />');
   };
 
   document.write('<script type="text/javascript" src="<%= root %>/viewer/viewer.js"></script>');
