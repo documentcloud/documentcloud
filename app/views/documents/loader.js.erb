@@ -18,7 +18,7 @@
     var loc = window.location;
     var url = loc.protocol + '//' + loc.host + '/' + loc.pathname;
     var id  = parseInt(DV.Schema.document.id, 10);
-    var key = encodeURIComponent(id + '|||' + url);
+    var key = encodeURIComponent(id + ':' + url);
     $j(document.body).append('<img alt="" width="1" height="1" src="<%= root %>/pixel.gif?key=' + key + '" />');
   };
 

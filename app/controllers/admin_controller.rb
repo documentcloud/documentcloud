@@ -39,7 +39,7 @@ class AdminController < ApplicationController
   def save_analytics
     data = JSON.parse(params[:json])
     data.each do |key, hits|
-      doc_id, url = *key.split('|||')
+      doc_id, url = *key.split(':', 2)
       RemoteUrl.record_hits(doc_id.to_i, url, hits)
     end
     json nil
