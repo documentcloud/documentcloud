@@ -37,7 +37,7 @@ class AdminController < ApplicationController
   # Endpoint for our pixel-ping application, to save our analytic data every
   # so often.
   def save_analytics
-    return forbidden unless request.env['REMOTE_ADDR'] == '127.0.0.1'
+    return forbidden unless params[:secret] == SECRETS['pixel_ping']
     data = JSON.parse(params[:json])
     data.each do |key, hits|
       doc_id, url = *key.split(':', 2)
