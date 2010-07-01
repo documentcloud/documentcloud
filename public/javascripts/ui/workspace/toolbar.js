@@ -13,12 +13,10 @@ dc.ui.Toolbar = dc.View.extend({
     this.base(options);
     _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'display', 'displayEmbedSnippet', 'checkFloat');
+      'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'checkFloat');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
-    Documents.bind(Documents.SELECTION_CHANGED, this.display);
-    Documents.bind(dc.Set.REFRESHED, this.display);
   },
 
   render : function() {
@@ -32,18 +30,7 @@ dc.ui.Toolbar = dc.View.extend({
     this.floatEl         = $('#floating_toolbar', this.el);
     $(window).scroll(this.checkFloat);
     this.setCallbacks();
-    this.display();
     return this;
-  },
-
-  display : function() {
-    var count = Documents.countSelected();
-    var mode  = count == 0 ? 'not' : 'is';
-    this.openButton.setMode(mode, 'enabled');
-    this.timelineButton.setMode(mode, 'enabled');
-    _.each([this.publishMenu, this.editMenu, this.projectMenu], function(menu) {
-      count == 0 ? menu.disable() : menu.enable();
-    });
   },
 
   notifyProjectChange : function(projectName, numDocs, removal) {
@@ -157,14 +144,13 @@ dc.ui.Toolbar = dc.View.extend({
     dc.ui.Dialog.confirm(message, _.bind(function() {
       _(docs).each(function(doc){ Documents.destroy(doc); });
       Projects.removeDocuments(docs);
-      this.display();
       return true;
     }, this));
   },
 
   _openTimeline : function() {
     var docs = Documents.selected();
-    if (!docs.length) return;
+    if (!docs.length) return dc.ui.Dialog.alert("In order to view a timeline, please select some documents.");
     new dc.ui.TimelineDialog(docs);
   },
 
@@ -188,7 +174,10 @@ dc.ui.Toolbar = dc.View.extend({
         {title : 'Download Document Viewer', onClick : Documents.downloadSelectedViewers},
         {title : 'Download Original PDF',    onClick : Documents.downloadSelectedPDF},
         {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
-      ]
+      ],
+      onOpen : function(menu) {
+        $('.menu_item', menu.content).toggleClass('disabled', !Documents.countSelected());
+      }
     });
   },
 
@@ -204,13 +193,19 @@ dc.ui.Toolbar = dc.View.extend({
         {title : 'Delete Documents',     className : 'multiple warn', onClick : this._deleteSelectedDocuments}
       ],
       onOpen : function(menu) {
-        var many = Documents.countSelected() > 1;
-        $('.singular', menu.content).toggleClass('disabled', many);
+        var count = Documents.countSelected();
+        if (count == 0) {
+          $('.menu_item', menu.content).addClass('disabled');
+        } else {
+          $('.menu_item', menu.content).removeClass('disabled');
+          $('.singular', menu.content).toggleClass('disabled', count > 1);
+        }
       }
     });
   },
 
   _openViewers : function() {
+    if (!Documents.countSelected()) return dc.ui.Dialog.alert('Please select a document to open.');
     _.each(Documents.selected(), function(doc){ doc.openViewer(); });
   }
 

@@ -314,10 +314,6 @@ textarea.text_area {
       background-color: #333;
       color: #fff;
     }
-    .menu_content .menu_item.disabled {
-      color: #333;
-      cursor: default;
-    }
     .menu_content .menu_item.checked,
     .menu_content .menu_item.plus {
       padding-right: 25px;
@@ -328,12 +324,16 @@ textarea.text_area {
         background-position: 179px center;
         color: #0AAF86;
       }
-    .menu_content .menu_item.disabled:hover {
-      background-color: transparent;
-    }
     .menu_content .menu_item.warn {
       color: #ff0022;
     }
+    .menu_content .menu_item.disabled {
+      color: #333;
+      cursor: default;
+    }
+      .menu_content .menu_item.disabled:hover {
+        background-color: transparent;
+      }
   .menu_content .menu_autofilter .icon {
     position: absolute;
   }

@@ -12,12 +12,13 @@ dc.ui.ProjectMenu = dc.ui.Menu.extend({
 
   renderProjects : function(menu) {
     menu.clear();
-    var docs  = Documents.selected();
-    var items = _.map(Projects.models(), function(project, i) {
-      var className = project.containsAny(docs) ? 'checked' : '';
+    var docs      = Documents.selected();
+    var disabled  = !docs.length ? ' disabled' : '';
+    var items     = _.map(Projects.models(), function(project, i) {
+      var className = (project.containsAny(docs) ? 'checked' : '') + disabled;
       return {title : project.get('title'), className : className, onClick : _.bind(menu.options.onClick, menu, project)};
     });
-    items.push({title : 'New Project', className : 'plus', onClick : function() {
+    items.push({title : 'New Project', className : 'plus' + disabled, onClick : function() {
       dc.app.workspace.organizer.promptNewProject();
     }});
     menu.addItems(items);
