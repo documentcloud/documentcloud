@@ -6,13 +6,14 @@
   <title><%= @title %> - DocumentCloud</title>
   <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
   <% js  = [:core] + (@javascripts || []) %>
+  <% jst = [:ui] + (@templates || []) %>
   <%= include_stylesheets *css %>
   <%= include_javascripts *js %>
   <!--[if IE]>
     <%= include_stylesheets :ie_only, :embed_assets => false %>
     <%= include_javascripts :ie_only %>
   <![endif]-->
-  <%= include_templates :ui %>
+  <%= include_templates *jst %>
   <%= render :partial => 'common/bootstrap' %>
 </head>
 <body class="<%= @bodyclass %> <%= @current_account ? 'logged_in' : '' %>">

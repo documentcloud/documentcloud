@@ -2,11 +2,13 @@
   @title = "Admin Dashboard"
   @stylesheets = [:admin]
   @javascripts = [:admin]
+  @templates   = [:admin]
   @bodyclass   = 'admin'
 %>
 
 <script type="text/javascript">
   window.CLOUD_CROWD_SERVER   = "<%= DC_CONFIG['cloud_crowd_server'] %>";
+  window.TopDocuments         = new dc.model.DocumentSet();
   window.FailedDocuments      = new dc.model.DocumentSet();
 
   window.stats = {};
@@ -24,6 +26,7 @@
   Accounts.populate(<%= @accounts %>);
   Organizations.populate(<%= @organizations %>);
   Documents.populate(<%= @documents %>);
+  TopDocuments.populate(<%= @top_documents %>);
   FailedDocuments.populate(<%= @failed_documents %>);
 
   $(function(){

@@ -15,6 +15,7 @@ class AdminController < ApplicationController
     @private_per_account    = DC::Statistics.private_documents_per_account.to_json
     @pages_per_account      = DC::Statistics.pages_per_account.to_json
     @documents              = Document.finished.chronological.all(:limit => 5).map {|d| d.admin_attributes }.to_json
+    @top_documents          = RemoteUrl.top_documents(:limit => 5).to_json
     @failed_documents       = Document.failed.chronological.all(:limit => 3).map {|d| d.admin_attributes }.to_json
     @accounts               = Account.all.to_json
     @organizations          = Organization.all.to_json

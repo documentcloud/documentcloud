@@ -1,7 +1,7 @@
 class Document < ActiveRecord::Base
   include DC::Access
 
-  attr_accessor :highlight, :annotation_count
+  attr_accessor :highlight, :annotation_count, :remote_url, :hits
   attr_writer   :organization_name, :account_name
 
   SEARCHABLE_ATTRIBUTES = [:title, :source, :account, :notes, :group]
@@ -353,7 +353,8 @@ class Document < ActiveRecord::Base
       'page_image_url'      => page_image_url_template,
       'document_viewer_url' => document_viewer_url,
       'document_viewer_js'  => canonical_url(:js),
-      'remote_url'          => remote_url
+      'remote_url'          => remote_url,
+      'hits'                => hits
     }.to_json
   end
 

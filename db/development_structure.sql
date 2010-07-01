@@ -120,6 +120,36 @@ ALTER SEQUENCE app_constants_id_seq OWNED BY app_constants.id;
 
 
 --
+-- Name: collaborations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE collaborations (
+    id integer NOT NULL,
+    project_id integer NOT NULL,
+    account_id integer NOT NULL
+);
+
+
+--
+-- Name: collaborations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE collaborations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: collaborations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE collaborations_id_seq OWNED BY collaborations.id;
+
+
+--
 -- Name: documents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -138,7 +168,6 @@ CREATE TABLE documents (
     publication_date date,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    remote_url character varying(255),
     related_article character varying(255)
 );
 
@@ -305,7 +334,8 @@ CREATE TABLE organizations (
     name character varying(100) NOT NULL,
     slug character varying(100) NOT NULL,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    demo boolean DEFAULT false NOT NULL
 );
 
 
@@ -427,6 +457,37 @@ ALTER SEQUENCE project_memberships_id_seq OWNED BY project_memberships.id;
 
 
 --
+-- Name: remote_urls; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE remote_urls (
+    id integer NOT NULL,
+    document_id integer NOT NULL,
+    url character varying(255) NOT NULL,
+    hits integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- Name: remote_urls_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE remote_urls_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: remote_urls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE remote_urls_id_seq OWNED BY remote_urls.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -526,6 +587,13 @@ ALTER TABLE app_constants ALTER COLUMN id SET DEFAULT nextval('app_constants_id_
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE collaborations ALTER COLUMN id SET DEFAULT nextval('collaborations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE documents ALTER COLUMN id SET DEFAULT nextval('documents_id_seq'::regclass);
 
 
@@ -589,6 +657,13 @@ ALTER TABLE projects ALTER COLUMN id SET DEFAULT nextval('labels_id_seq'::regcla
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE remote_urls ALTER COLUMN id SET DEFAULT nextval('remote_urls_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE sections ALTER COLUMN id SET DEFAULT nextval('sections_id_seq'::regclass);
 
 
@@ -621,6 +696,14 @@ ALTER TABLE ONLY annotations
 
 ALTER TABLE ONLY app_constants
     ADD CONSTRAINT app_constants_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: collaborations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY collaborations
+    ADD CONSTRAINT collaborations_pkey PRIMARY KEY (id);
 
 
 --
@@ -693,6 +776,14 @@ ALTER TABLE ONLY processing_jobs
 
 ALTER TABLE ONLY project_memberships
     ADD CONSTRAINT project_memberships_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: remote_urls_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY remote_urls
+    ADD CONSTRAINT remote_urls_pkey PRIMARY KEY (id);
 
 
 --
@@ -851,6 +942,8 @@ INSERT INTO schema_migrations (version) VALUES ('20100120194128');
 
 INSERT INTO schema_migrations (version) VALUES ('20100120205426');
 
+INSERT INTO schema_migrations (version) VALUES ('20100607182008');
+
 INSERT INTO schema_migrations (version) VALUES ('20100125165305');
 
 INSERT INTO schema_migrations (version) VALUES ('20100208131000');
@@ -876,3 +969,11 @@ INSERT INTO schema_migrations (version) VALUES ('20100317181051');
 INSERT INTO schema_migrations (version) VALUES ('20100401192921');
 
 INSERT INTO schema_migrations (version) VALUES ('20100413132825');
+
+INSERT INTO schema_migrations (version) VALUES ('20100624142442');
+
+INSERT INTO schema_migrations (version) VALUES ('20100625143140');
+
+INSERT INTO schema_migrations (version) VALUES ('20100630131224');
+
+INSERT INTO schema_migrations (version) VALUES ('20100701132413');

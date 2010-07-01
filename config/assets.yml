@@ -42,3 +42,5 @@ stylesheets:
 templates:
   ui:
     - app/views/jst/**/*.jst
+  admin:
+    - app/views/admin/*.jst

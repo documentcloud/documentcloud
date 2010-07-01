@@ -12,9 +12,8 @@ dc.ui.Toolbar = dc.View.extend({
     this._floating = false;
     this.base(options);
     _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments',
-      '_registerDocument', '_deleteSelectedDocuments', 'editTitle', 'editSource',
-      'editDescription', 'editRelatedArticle', 'editAccess', 'display',
-      'displayEmbedSnippet', 'checkFloat');
+      '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
+      'editRelatedArticle', 'editAccess', 'display', 'displayEmbedSnippet', 'checkFloat');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
@@ -28,7 +27,6 @@ dc.ui.Toolbar = dc.View.extend({
     $('.project_menu_container', el).append(this.projectMenu.render().el);
     $('.edit_menu_container', el).append(this.editMenu.render().el);
     $('.publish_menu_container', el).append(this.publishMenu.render().el);
-    this.remoteUrlButton = $('#edit_remote_url_button', el);
     this.openButton      = $('#open_viewers', this.el);
     this.timelineButton  = $('#open_timeline', this.el);
     this.floatEl         = $('#floating_toolbar', this.el);
@@ -162,16 +160,6 @@ dc.ui.Toolbar = dc.View.extend({
       this.display();
       return true;
     }, this));
-  },
-
-  _registerDocument : function() {
-    var docs = Documents.selected();
-    if (docs.length > 1) return dc.ui.Dialog.alert('Please register only a single published document at a time.');
-    var doc = docs[0];
-    dc.ui.Dialog.prompt("Enter URL of Published Document", doc.get('remote_url'), function(revised) {
-      Documents.update(doc, {remote_url : revised});
-      return true;
-    }, 'short');
   },
 
   _openTimeline : function() {

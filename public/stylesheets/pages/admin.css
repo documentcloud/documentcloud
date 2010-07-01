@@ -35,7 +35,7 @@ body {
           padding-bottom: 10px;
           border-bottom: 1px solid #131b1d;
         }
-      #statistics .labels td, #statistics thead tr td {
+      #statistics .labels td, #statistics .data thead tr td {
         font-size: 10px;
         text-transform: uppercase;
         padding: 5px 35px 5px 0;
@@ -91,14 +91,14 @@ body {
       #statistics .data table .document_count .private {
         color: #844;
       }
-      #statistics #documents tbody tr td {
+      #statistics .documents tbody tr td {
         line-height: 45px;
       }
-        #statistics #documents td.first {
+        #statistics .documents td.first {
           width: 30px; height: 37.5px;
           padding: 7px 0 7px 0;
         }
-        #statistics #documents .doc {
+        #statistics .documents .doc {
           width: 30px; height: 37.5px;
         }
 
