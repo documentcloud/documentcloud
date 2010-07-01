@@ -51,10 +51,6 @@ body.workspace {
   position: absolute;
   margin: 2px 14px 0 0;
 }
-.note .edit_note {
-  position: absolute;
-  margin: 5px 11px 0 0;
-}
 #organizer_entities .row {
   width: 268px;
 }

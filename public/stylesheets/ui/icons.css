@@ -47,8 +47,12 @@
   background-image: url(/images/embed/icons/plus.png);;
 }
 .icon.edit_glyph {
-  background-image: url(/images/embed/icons/edit.gif);;
+  background-position: center 0;
+  background-image: url(/images/embed/icons/twopencils.png);;
 }
+  .icon.edit_glyph:hover {
+    background-position: center -16px;
+  }
 .icon.search_glyph {
   width: 12px; height: 12px;
   background-image: url(/images/embed/icons/search_glyph.png);;

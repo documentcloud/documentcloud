@@ -99,12 +99,7 @@
       vertical-align: top;
       margin-left: 8px;
       padding-right: 16px;
-      opacity: 0.5;
-      -webkit-transition: opacity 0.2s linear;
     }
-      .document:hover .document_tool {
-        opacity: 1;
-      }
       body.minidocs .document .document_tool {
         position: absolute;
         top: 8px; left: 118px;
@@ -212,9 +207,12 @@
   .note {
     position: relative;
     margin: 20px 0 0 0;
-    padding: 15px;
+    padding: 10px;
     font: 12px/18px Arial;
     color: #555;
+    border: 3px solid #ffe325;
+    -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
+    box-shadow: 1px 2px 7px #ddd; -webkit-box-shadow: 1px 2px 7px #ddd; -moz-box-shadow: 1px 2px 7px #ddd;
   }
     .note .edit, .note .display {
       display: none;
@@ -222,17 +220,6 @@
       .note.display_visible .display,
       .note.edit_visible .edit {
         display: block;
-      }
-    .note .note_background {
-      position: absolute;
-      background: white;
-      top: 0; left: 0; bottom: 0; right: 0;
-      border: 5px solid #efd12d;
-      -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
-      -webkit-box-shadow: 0 0px 15px #777; -moz-box-shadow: 0 0px 15px #777;
-    }
-      .note.private_access .note_background {
-        border-color: #68d5ef;
       }
     .note .note_contents {
       position: relative;
@@ -242,6 +229,8 @@
         color: #000;
         font-weight: bold;
         margin-bottom: 10px;
+        float: left;
+        margin-right: 10px;
       }
         .note .title_link {
           cursor: pointer;
@@ -251,10 +240,9 @@
         margin-bottom: 10px;
       }
       .note .page_number {
-        cursor: pointer;
-        font: bold 10px/12px Arial;
-        color: black;
-        float: right;
+        color: #777;
+        font-weight: normal;
+        margin-left: 3px;
       }
       .note .note_text {
         color: #333;
@@ -262,10 +250,10 @@
       }
       .note .note_text_edit_wrap {
         position: relative;
-        margin-right: 10px;
+        margin-right: 14px;
       }
         .note .note_text_edit {
-          height: 100px;
+          height: 110px;
           width: 100%;
           font: 12px/18px Arial;
         }
@@ -298,20 +286,15 @@
             left: 0;
             position: absolute;
           }
-      .note .edit_note {
-        display: inline;
-        vertical-align: top;
-        cursor: pointer;
-        opacity: 0;
-        -webkit-transition: opacity 0.2s linear;
-        padding-right: 11px;
-        margin-left: 5px;
-        position: relative;
-        top: -1px;
+      .note .lock {
+        float: left;
       }
-        .note:hover .edit_note {
-          opacity: 1;
-        }
+      .note .edit_note {
+        position: absolute;
+        cursor: pointer;
+        top: 7px; right: 7px;
+        z-index: 2;
+      }
       .note .note_controls {
         height: 36px;
       }

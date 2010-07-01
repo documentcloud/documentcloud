@@ -1,28 +1,28 @@
-<div class="note_background"></div>
-
+<% if (note.allowedToEdit()) { %>
+  <div class="edit_note icon edit_glyph display"></div>
+<% } %>
 <div class="note_contents">
-  <div class="page_number">p. <%= page %></div>
   <div class="note_title display">
-    <span class="title_link"><%= title %></span>
-    <% if (note.allowedToEdit()) { %>
-      <div class="edit_note icon edit_glyph"></div>
-    <% } %>
+    <span class="title_link"><%= note.get('title') %> <span class="page_number">(p. <%= note.get('page') %>)</span></span>
   </div>
-  <div class="note_title_edit edit text_input small">
-    <div class="background">
-      <div class="inner">
-        <input type="text" class="note_title_input" value="" />
-      </div>
+  <% if (note.get('access') == 'private') { %>
+    <div class="icon lock display" title="Private note"></div>
+  <% } %>
+  <br class="clear display" />
+  <div class="note_title_edit edit text_input light">
+    <div class="inner">
+      <input type="text" class="note_title_input" value="" />
     </div>
   </div>
   <div class="note_excerpt_wrap">
+    <% var coords = note.coordinates(); %>
     <div class="note_excerpt" style="height: <%= coords.height %>px;">
       <div class="left_cover"  style="height: <%= coords.height %>px; width: <%= coords.left %>px;"></div>
       <div class="right_cover" style="height: <%= coords.height %>px; width: <%= 750 - coords.right %>px;"></div>
       <img class="note_image" src="<%= note.imageUrl() %>" alt="" style="top: -<%= coords.top %>px;" />
     </div>
   </div>
-  <div class="note_text display"><%= content %></div>
+  <div class="note_text display"><%= note.get('content') %></div>
   <div class="note_text_edit_wrap">
     <textarea class="note_text_edit text_area edit"></textarea>
   </div>
