@@ -6,7 +6,7 @@ namespace :build do
     Dir.chdir '../document-viewer'
 
     FileUtils.rm_r('build') if File.exists?('build')
-    sh "jammit -o build"
+    sh "jammit -f -o build"
     sh "rm build/*.gz"
     Dir['build/*.css'].each do |css_file|
       File.open(css_file, 'r+') do |file|
