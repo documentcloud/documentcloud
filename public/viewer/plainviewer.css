@@ -61,6 +61,40 @@
   background: #bbb;
 }
 
+.DV-showEdit {
+  width: 16px; height: 16px;
+  float: left;
+  margin: -2px 0 0 10px;
+  margin-left: 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.DV-annotationTitleInput,
+.DV-annotationTextArea {
+  border: 1px solid #D0D0D0;
+  -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+  font: 12px/12px Arial;
+  outline: 0;
+}
+  .DV-annotationTextArea {
+    padding: 7px;
+    margin: 10px 0;
+    height: 110px;
+    outline: 0;
+    resize: none;
+  }
+  .DV-annotationTitleInput {
+    padding: 4px;
+    width: 300px;
+  }
+.DV-annotationEditControls .minibutton {
+  width: 60px;
+}
+  .DV-cancelEdit {
+    margin-right: 10px;
+  }
+
 #DV-overlay {
   left: 0; right: 282px; bottom: 0;
 }

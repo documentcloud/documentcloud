@@ -46,11 +46,13 @@
   width: 10px; height: 10px;
   background-image: url(/images/embed/icons/plus.png);;
 }
-.icon.edit_glyph {
+.icon.edit_glyph,
+.DV-showEdit {
   background-position: center 0;
   background-image: url(/images/embed/icons/twopencils.png);;
 }
-  .icon.edit_glyph:hover {
+  .icon.edit_glyph:hover,
+  .DV-showEdit:hover {
     background-position: center -16px;
   }
 .icon.search_glyph {
