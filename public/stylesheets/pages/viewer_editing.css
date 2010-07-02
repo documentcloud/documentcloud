@@ -144,7 +144,7 @@
     width: 450px; height: 75px;
   }
 
-#annotation_guide {
+.note_guide {
   margin: 0 14px 12px 14px;
   font: italic 11px Arial;
   color: #555;

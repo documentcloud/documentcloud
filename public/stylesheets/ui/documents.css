@@ -214,6 +214,9 @@
     -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
     box-shadow: 1px 2px 7px #ddd; -webkit-box-shadow: 1px 2px 7px #ddd; -moz-box-shadow: 1px 2px 7px #ddd;
   }
+    .note.private_access {
+      border-color: #6BC2F8;
+    }
     .note .edit, .note .display {
       display: none;
     }
@@ -292,7 +295,7 @@
       .note .edit_note {
         position: absolute;
         cursor: pointer;
-        top: 7px; right: 7px;
+        top: -1px; right: -1px;
         z-index: 2;
       }
       .note .note_controls {

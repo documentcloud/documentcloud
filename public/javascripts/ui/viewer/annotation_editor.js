@@ -21,7 +21,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
     this._buttons[kind] = $('#control_panel .' + kind + '_annotation');
     this.pages          = $('#DV-pages');
     this.page           = $('.DV-page');
-    this._guide         = this._guide || $('#annotation_guide');
+    this._guide         = $(kind == 'public' ? '#public_note_guide' : '#private_note_guide');
     this.page.css({cursor : 'crosshair'});
     this.page.bind('mousedown', this.drawAnnotation);
     $(document).bind('keydown', this.close);
@@ -36,7 +36,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
     $(document).unbind('keydown', this.close);
     this.clearAnnotation();
     this._buttons[this._kind].removeClass('open');
-    this._guide.fadeOut('fast');
+    this._guide.hide();
   },
 
   toggle : function(kind) {
@@ -62,7 +62,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
     var ox = e.pageX, oy = e.pageY;
     var atop    = oy + offTop,
         aleft   = ox + offLeft;
-    this.region = $.el('div', {'class' : 'DV-annotationRegion active DV-' + this._kind});
+    this.region = $.el('div', {'class' : 'DV-annotationRegion active DV-' + this._kind, style:'position:absolute;'});
     this.pages.append(this.region);
     var coords = function(e) {
       return {

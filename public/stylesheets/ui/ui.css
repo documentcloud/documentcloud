@@ -179,6 +179,7 @@ textarea.text_area {
   line-height: 16px;
   padding: 3px 6px;
   overflow: auto;
+  outline: 0;
 }
   textarea.text_area.dark {
     border: 2px solid #333;
