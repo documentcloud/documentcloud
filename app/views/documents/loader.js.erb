@@ -14,6 +14,7 @@
   };
 
   DV.afterLoad = function() {
+    // Nasty hack to fix viewer for embeds that had position:relative set.
     var cont = $j(DV.options.container);
     if (cont.length && (cont.css('position') == 'relative') && (cont.height() < 50)) {
       cont.css({position : 'static'});
