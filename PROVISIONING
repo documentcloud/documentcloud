@@ -41,6 +41,8 @@ touch on EC2 in here.
 * Add the gem bin directory to the path, in .bashrc.
   export PATH="$PATH:/var/lib/gems/1.8/bin"
   
+* Install Node.js (from source, unfortunately): Nodejs.org (v0.1.99)
+  
 * Install the SSH credentials (for the current user, root on the EBS chroot):
   mkdir -p ~/.ssh (or /root/.ssh)
   Copy the contents of config/server/keys/github.pem to .ssh/id_dsa
@@ -48,6 +50,9 @@ touch on EC2 in here.
   
 * Checkout DocumentCloud:
   git clone git@github.com:documentcloud/document-cloud.git ~/document-cloud
+  
+* Checkout Pixel Ping:
+  git clone git@github.com:documentcloud/pixel-ping.git ~/pixel-ping
 
 * Turn off smtpd_use_tsl in /etc/postfix/main.cf.
 
