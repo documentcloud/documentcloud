@@ -73,6 +73,7 @@ module DC
         @solr.execute
         @total   = @solr.total
         @results = @solr.results
+        Rails.logger.warn @total
         populate_annotation_counts
         populate_highlights if DC_CONFIG['include_highlights']
         self
@@ -146,6 +147,11 @@ module DC
         projects = Project.accessible(@account).all(:conditions => {:title => @projects})
         doc_ids = projects.map(&:document_ids).flatten.uniq
         doc_ids = [-1] if doc_ids.empty?
+        if doc_ids.present?
+          @populated_projects = true
+        else
+          doc_ids = [-1]
+        end
         @solr.build do
           with :id, doc_ids
         end
@@ -194,8 +200,9 @@ module DC
       # our organization and we're allowed to see it, or if it belongs to a
       # project that's been shared with us.
       def build_access
+        return if @populated_projects
         account, organization = @account, @organization
-        shared_ids = account && account.shared_document_ids
+        shared_ids = has_projects? ? nil : (account && account.shared_document_ids)
         @solr.build do
           any_of do
             with        :access, PUBLIC
