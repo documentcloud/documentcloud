@@ -27,7 +27,7 @@ end
 rule(/^ssh:/) do |t|
   conf = configuration
   host = t.name.split(':').last
-  exec "ssh -i #{conf[:key]} #{conf[:user]}@#{host}.documentcloud.org"
+  exec "ssh -A -i #{conf[:key]} #{conf[:user]}@#{host}.documentcloud.org"
 end
 
 def app_servers
@@ -65,6 +65,6 @@ def remote(commands, machines)
   todo << "cd #{conf[:dir]}"
   todo << "rake #{RAILS_ENV} #{commands.join(' ')}"
   machines.each do |host|
-    system "ssh -t -i #{conf[:key]} #{conf[:user]}@#{host} '#{todo.join(' && ')}'"
+    system "ssh -A -t -i #{conf[:key]} #{conf[:user]}@#{host} '#{todo.join(' && ')}'"
   end
 end
