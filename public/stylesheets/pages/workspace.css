@@ -57,7 +57,7 @@ a {
     body.workspace #cloud_edge {
       left: 0; top: 0;
       width: 140px; height: 27px;
-      background: url(/images/common/logo_gray.png) no-repeat;
+      background: url(/images/embed/ui/logo_gray.png) no-repeat;
       cursor: pointer;
     }
   .logo_words {
