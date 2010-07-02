@@ -21,7 +21,7 @@ dc.ui.SectionEditor = dc.View.extend({
     this.removeEl   = $($.el('div', {'class' : 'minibutton warn remove_all'}, 'Remove All'));
     this.removeEl.bind('click', this.removeAllSections);
     this.dialog.append(this.sectionsEl);
-    this.dialog.appendControl(this.removeEl);
+    this.dialog.addControl(this.removeEl);
     this.renderSections();
   },
 

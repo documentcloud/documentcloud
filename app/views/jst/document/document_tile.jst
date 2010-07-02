@@ -2,7 +2,7 @@
 <div class="hoverable">
   <img class="icon doc generic draggable noselect" src="<%= thumbnail_url %>" data-id="<%= id %>" />
   <div class="title">
-    <span class="doc_title noselect"><%= title %></span>
+    <a href="<%= document_viewer_url %>" class="doc_title noselect"><%= title %></a>
     <% if (icon) { %>
       <div class="icon document_tool <%= icon.className %>" title="<%= icon.title %>"></div>
     <% } %>

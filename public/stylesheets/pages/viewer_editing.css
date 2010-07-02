@@ -7,7 +7,7 @@
   border-top: 1px solid #ccc;
   color: #004276;
 }
-  #DV-docViewer.DV-viewAnnotations #control_panel {
+  .DV-viewAnnotations #control_panel {
     display: none;
   }
   #control_panel .button {
@@ -85,10 +85,10 @@
   }
     #section_editor li {
       margin-top: 7px;
-      height: 25px;
+      width: 410px; height: 25px;
       color: #ccc;
       line-height: 25px;
-      width: 410px;
+      position: relative;
     }
       #section_editor li:first-child {
         margin-top: 0;
@@ -96,6 +96,7 @@
       #section_editor .text_input, #section_editor .dash {
         float: left;
         margin-right: 10px;
+        height: 24px;
       }
       #section_editor .section_title {
         margin-right: 15px;
@@ -114,14 +115,15 @@
       }
       #section_editor .plus, #section_editor .minus {
         float: right;
-        margin: 0px 0 0 3px;
-        position: relative;
-        top: 7px;
+        margin: 5px 0 0 3px;
         cursor: pointer;
       }
-      #section_editor li:first-child .minus {
-        display: none;
-      }
+        #section_editor .minus {
+          margin-left: 0;
+        }
+        #section_editor li:first-child .minus {
+          display: none;
+        }
 
 /*-------------------------- The Annotation Editor ---------------------------*/
 #annotation_editor {

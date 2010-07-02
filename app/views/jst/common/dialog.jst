@@ -32,11 +32,11 @@
   <div class="controls draggable">
     <div class="controls_inner">
       <% var saveText = (editor || mode == 'prompt' || mode == 'short_prompt') ? 'Save' : 'OK'; %>
-      <div class="minibutton ok default"><%= saveText %></div>
-      <div class="minibutton cancel dark">Close</div>
       <% if (editor) { %>
         <div class="minibutton delete warn">Delete</div>
       <% } %>
+      <div class="minibutton cancel dark">Close</div>
+      <div class="minibutton ok default"><%= saveText %></div>
     </div>
   </div>
 <% } %>

@@ -40,7 +40,7 @@ dc.history = {
     var next = hash ? '#' + hash : '';
     if (this.hash == next) return;
     window.location.hash = this.hash = next;
-    if (this.USE_IFRAME && (this.hash != this.iframe.location.hash)) {
+    if (this.USE_IFRAME && (this.iframe && (this.hash != this.iframe.location.hash))) {
       this.iframe.document.open().close();
       this.iframe.location.hash = this.hash;
     }

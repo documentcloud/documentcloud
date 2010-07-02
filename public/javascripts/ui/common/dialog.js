@@ -52,8 +52,8 @@ dc.ui.Dialog = dc.View.extend({
     this.controlsEl.before(el);
   },
 
-  appendControl : function(el) {
-    this.controlsInner.append(el);
+  addControl : function(el) {
+    this.controlsInner.prepend(el);
   },
 
   val : function() {

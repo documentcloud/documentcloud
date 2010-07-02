@@ -84,9 +84,9 @@ dc.ui.AnnotationEditor = dc.View.extend({
       this.pages.unbind('mouseup', dragEnd).unbind('mousemove', drag);
       var loc     = coords(e);
       loc.top     -= (offTop + this._activePage.offset().top);
-      loc.left    -= (offLeft + this._activePage.offset().left);
-      loc.right   = loc.left + loc.width;
-      loc.bottom  = loc.top + loc.height;
+      loc.left    -= (offLeft + this._activePage.offset().left - 2);
+      loc.right   = loc.left + loc.width + 13;
+      loc.bottom  = loc.top + loc.height + 3;
       var zoom    = DV.api.currentZoom();
       var image   = _.map([loc.top, loc.right, loc.bottom, loc.left], function(l){ return Math.round(l / zoom); }).join(',');
       this.close();

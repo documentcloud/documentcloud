@@ -41,7 +41,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     this.base();
     $('.custom', this.el).html(JST.timeline({docs : this.documents, minHeight : this.MIN_HEIGHT, rowHeight : this.ROW_HEIGHT}));
     this._zoomButton = $.el('div', {'class' : 'minibutton zoom_out dark not_enabled'}, 'Zoom Out');
-    $('.controls_inner', this.el).append(this._zoomButton);
+    $('.controls_inner', this.el).prepend(this._zoomButton);
     this.setCallbacks();
     this.center();
     return this;

@@ -29,8 +29,18 @@ body.workspace {
   padding: 1px;
 }
 #section_editor {
-  width: 380px;
+  width: 440px;
 }
+  #section_editor ol {
+    width: 420px;
+    list-style-type: none;
+  }
+    #section_editor li {
+      width: 420px;
+    }
+  #section_editor .section_title {
+    margin-right: 0;
+  }
 #project_controls {
   padding-right: 15px;
 }
@@ -58,9 +68,9 @@ body.workspace {
   margin-top: 0;
 }
 .dialog .controls {
-  left: auto;
-  right: 100%;
+  float: right;
+  left: 0;
 }
   .dialog .controls_inner {
-    left: 100%;
+    left: 0;
   }

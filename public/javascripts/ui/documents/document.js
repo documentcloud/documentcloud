@@ -57,7 +57,7 @@ dc.ui.Document = dc.View.extend({
 
   // Desktop-style selection.
   select : function(e) {
-    e.stopPropagation();
+    e.preventDefault();
     if (!dc.app.accountId) return;
     var alreadySelected =  this.model.get('selected');
     var hk = dc.app.hotkeys;
@@ -79,9 +79,11 @@ dc.ui.Document = dc.View.extend({
       Documents.deselectAll();
       this.model.set({selected : true});
     }
+    return false;
   },
 
   viewDocument : function(e) {
+    e.preventDefault();
     this.model.openViewer();
     return false;
   },

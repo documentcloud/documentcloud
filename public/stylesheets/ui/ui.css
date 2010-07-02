@@ -488,9 +488,12 @@ textarea.text_area {
       left: 50%;
     }
       .dialog .controls .minibutton {
-        float: right;
+        float: left;
         margin-left: 8px;
       }
+        .dialog .controls .minibutton:first-child {
+          margin-left: 0;
+        }
         .dialog.alert_dialog .minibutton.cancel {
           display: none;
         }
