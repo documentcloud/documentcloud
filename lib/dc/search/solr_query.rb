@@ -73,7 +73,6 @@ module DC
         @solr.execute
         @total   = @solr.total
         @results = @solr.results
-        Rails.logger.warn @total
         populate_annotation_counts
         populate_highlights if DC_CONFIG['include_highlights']
         self
