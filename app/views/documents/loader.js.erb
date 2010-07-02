@@ -14,6 +14,10 @@
   };
 
   DV.afterLoad = function() {
+    var cont = $j(DV.options.container);
+    if (cont.length && (cont.css('position') == 'relative') && (cont.height() < 50)) {
+      cont.css({position : 'static'});
+    }
     $j('#DV-logoLink').attr({href : 'http://www.documentcloud.org'});
     var loc = window.location;
     var url = loc.protocol + '//' + loc.host + loc.pathname;
