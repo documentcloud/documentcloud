@@ -59,11 +59,12 @@ dc.ui.Navigation = dc.View.extend({
       id      : 'how_to_menu',
       label   : 'Guides &amp; How To\'s',
       items   : [
-        {title : 'Search Documents',    attrs: {'data-rel' : 'search'},   onClick : open},
-        {title : 'Add Users',           attrs: {'data-rel' : 'add_users'},onClick : open},
-        {title : 'Upload Documents',    attrs: {'data-rel' : 'import'},   onClick : open},
-        {title : 'Annotate',            attrs: {'data-rel' : 'notes'},    onClick : open},
-        {title : 'Embed &amp; Publish', attrs: {'data-rel' : 'publish'},  onClick : open}
+        {title : 'Search Documents',        attrs: {'data-rel' : 'search'},       onClick : open},
+        {title : 'Add Users',               attrs: {'data-rel' : 'add_users'},    onClick : open},
+        {title : 'Upload Documents',        attrs: {'data-rel' : 'import'},       onClick : open},
+        {title : 'Annotate',                attrs: {'data-rel' : 'notes'},        onClick : open},
+        {title : 'Embed &amp; Publish',     attrs: {'data-rel' : 'publish'},      onClick : open},
+        {title : 'Troubleshoot Documents',  attrs: {'data-rel' : 'troubleshoot'}, onClick : open}
       ]
     });
   }

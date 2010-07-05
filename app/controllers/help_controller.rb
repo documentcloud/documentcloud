@@ -2,24 +2,8 @@ class HelpController < ApplicationController
 
   layout false
 
-  def add_users
-    markdown :add_users
-  end
-
-  def notes
-    markdown :notes
-  end
-
-  def publish
-    markdown :publish
-  end
-
-  def search
-    markdown :search
-  end
-
-  def import
-    markdown :import
+  [:add_users, :notes, :publish, :search, :import, :troubleshoot].each do |resource|
+    class_eval "def #{resource}; markdown(:#{resource}); end"
   end
 
 
