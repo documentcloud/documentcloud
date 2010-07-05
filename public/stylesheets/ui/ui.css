@@ -257,7 +257,7 @@ textarea.text_area {
 }
   .minibutton.menu.is_open {
     color: #ccc;
-    background: #222;
+    background: #1e1e1e;
     text-shadow: none;
     border: 0;
     padding: 6px 6px 15px 9px;
@@ -294,7 +294,7 @@ textarea.text_area {
   width: 200px;
   background: #161616;
   padding: 4px 0;
-  opacity: 0.95; filter: alpha(opacity=95);
+  opacity: 0.97; filter: alpha(opacity=97);
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   border-top-left-radius: 0; -webkit-border-top-left-radius: 0; -moz-border-radius-topleft: 0;
   box-shadow: 3px 4px 5px -2px #777; -webkit-box-shadow: 3px 4px 5px -2px #777; -moz-box-shadow: 3px 4px 5px -2px #777;
@@ -437,7 +437,7 @@ textarea.text_area {
     z-index: -1;
     top: 0; left: 0; right: 0; bottom: 0;
     background: #000;
-    opacity: 0.95; filter: alpha(opacity=95);
+    opacity: 0.97; filter: alpha(opacity=97);
     -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
     box-shadow: 1px 2px 7px #333; -webkit-box-shadow: 1px 2px 7px #333; -moz-box-shadow: 1px 2px 7px #333;
   }
@@ -562,7 +562,7 @@ iframe.hidden_iframe {
     padding: 7px 10px 7px 50px;
     color: #ccc;
     font: 11px/13px Arial;
-    opacity: 0.95; filter: alpha(opacity=95);
+    opacity: 0.97; filter: alpha(opacity=97);
     border: 1px solid #555; border-top: 0; border-left: 0;
     border-bottom-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px;
     -webkit-box-shadow: 0 3px 10px #777; -moz-box-shadow: 0 3px 10px #777;

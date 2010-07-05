@@ -38,10 +38,12 @@ dc.ui.Menu = dc.View.extend({
     if (this.modes.open == 'is')     return this.close();
     this.setMode('is', 'open');
     if (this.options.onOpen) this.options.onOpen(this);
-    content.show();
-    content.align(this.el, '-left bottom no-constraint');
-    content.autohide({onHide : this.close});
-    if (this.options.autofilter) _.defer(function(){ $('input', content).focus(); });
+    _.defer(_.bind(function() {
+      content.show();
+      content.align(this.el, '-left bottom no-constraint');
+      content.autohide({onHide : this.close});
+      if (this.options.autofilter) _.defer(function(){ $('input', content).focus(); });
+    }, this));
   },
 
   close : function(e) {
@@ -87,7 +89,9 @@ dc.ui.Menu = dc.View.extend({
   addItems : function(items) {
     this.items = this.items.concat(items);
     var elements = _(items).map(function(item) {
-      var el = $.el('div', {'class' : 'menu_item ' + (item.className || '')}, item.title);
+      var attrs = item.attrs || {};
+      _.extend(attrs, {'class' : 'menu_item ' + attrs['class']});
+      var el = $.el('div', attrs, item.title);
       item.menuEl = $(el);
       if (item.onClick) $(el).bind('click', function(e) {
         if ($(el).hasClass('disabled')) return false;

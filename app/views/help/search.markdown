@@ -1,10 +1,10 @@
 Currently searches of the repository are only available to registered beta users. If you'd like to be one, [contact us](http://documentcloud.org/contact).
  
-## API Searches
+# API Searches
 
 If you're currently logged-in, you can review our search API at [www.documentcloud.org/api](http://www.documentcloud.org/api)
  
-## Workspace Searches
+# Workspace Searches
 
 By default, a DocumentCloud search looks for your search terms in the document itself. You can, however, ask DocumentCloud to search other fields:
    

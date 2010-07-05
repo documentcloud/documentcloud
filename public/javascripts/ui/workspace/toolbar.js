@@ -185,12 +185,12 @@ dc.ui.Toolbar = dc.View.extend({
     return new dc.ui.Menu({
       label   : 'Edit',
       items   : [
-        {title : 'Edit Title',           className : 'singular', onClick : this.editTitle},
-        {title : 'Edit Description',     className : 'singular', onClick : this.editDescription},
-        {title : 'Edit Source',          className : 'multiple', onClick : this.editSource},
-        {title : 'Edit Related Article', className : 'multiple', onClick : this.editRelatedArticle},
-        {title : 'Edit Access Level',    className : 'multiple', onClick : this.editAccess},
-        {title : 'Delete Documents',     className : 'multiple warn', onClick : this._deleteSelectedDocuments}
+        {title : 'Edit Title',           attrs: {'class' : 'singular'}, onClick : this.editTitle},
+        {title : 'Edit Description',     attrs: {'class' : 'singular'}, onClick : this.editDescription},
+        {title : 'Edit Source',          attrs: {'class' : 'multiple'}, onClick : this.editSource},
+        {title : 'Edit Related Article', attrs: {'class' : 'multiple'}, onClick : this.editRelatedArticle},
+        {title : 'Edit Access Level',    attrs: {'class' : 'multiple'}, onClick : this.editAccess},
+        {title : 'Delete Documents',     attrs: {'class' : 'multiple warn'}, onClick : this._deleteSelectedDocuments}
       ],
       onOpen : function(menu) {
         var count = Documents.countSelected();

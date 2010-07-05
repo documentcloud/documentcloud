@@ -1,8 +1,8 @@
-## Scanning
+# Scanning
  
 The better your scan quality, the better our OCR will be able to read your document. However, the bigger your file size, the longer your document will take to process. We've found that reducing a document in Acrobat or Preview (both of which have a "ready for web" option) we can process your document much more quickly. Their default web resolution seems to be good enough that it doesn't interfere with OCR. Need more help [troubleshooting docs](#)?
  
-## OCR
+# OCR
 
 If you have access to high quality OCR, we recommend that you OCR your document before you upload it to DocumentCloud. 
  

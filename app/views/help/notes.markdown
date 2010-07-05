@@ -1,4 +1,4 @@
-# Document Notes
+# Annotating Documents
 
 You have two options as you're preparing documents for publication (or just working with them) ... you can create a table of contents by organizing the documents into sections, and you can add notes to specific areas of a document.
 

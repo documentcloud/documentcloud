@@ -20,6 +20,7 @@
       text-decoration: underline;
     }
   #help h1 {
+    margin: 30px 0 15px 0;
     color: #000;
     font-weight: bold;
     font-size: 16px;
@@ -27,3 +28,12 @@
   #help p {
     margin: 20px 0;
   }
+  #help_toolbar {
+    height: 30px;
+    margin-bottom: 20px;
+  }
+    #help_toolbar .minibutton {
+      width: 140px;
+      float: left;
+      margin-right: 8px;
+    }
