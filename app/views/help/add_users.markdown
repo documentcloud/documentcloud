@@ -1,11 +1,10 @@
-# Adding Users
+# How to Add Accounts
 
-As the first user, you're probably going to want to add the rest of your newsroom to DocumentCloud. Luckily, that is easy to do. Once you're logged in, you'll see a link to "show all accounts" at the lower left. Click it.
+If you have the first account in your organization, you're probably going to want to add the rest of your newsroom to DocumentCloud. Luckily, that's easy to do. At the bottom of the sidebar, click the "[Show All Accounts][]" link.
 
-**IMAGE**
+The dialog that opens up contains a list of all of the accounts in your organization, as well as a "New Account" button. There are two categories of users that you can add to your organization. The most notable difference between a "contributor"  and an "administrator" is that only administrators are allowed to add new users. An administrator will also be able to edit the public notes and metadata (including the title, source and description) of any documents that belong to the publication. 
 
-There, you'll find a screen where you can add new accounts by clicking the "New Account" button. There are two categories of users. The most notable difference between a "contributor"  and an "administrator" is that only administrators can add new users. An administrator will also be able to edit the public notes and document metadata (including the title, source and description) of any user who is part of the same publication. 
+You can also tweak your name here (did we call you "David" when really your bylines say "Dave"?) or change the email address you use to log in. We're pulling thumbnail images from [Gravatar][] currently. You can create an account there if you like, but for the time being your avatar won't appear outside of the workspace, and it's not a big deal if you leave it blank.
 
-**IMAGE**
-
-You can also tweak your name here (did we call you "David" when really your bylines say "Dave"?) or change the email address you use to log in. We're pulling thumbnail images from [Gravatar](http://gravatar.com) currently. You can create an account there if you really want to, but for the time being your avatar won't appear outside of the workspace. So no one but you ever actually sees it.
+[Show All Accounts]: javascript:dc.app.accounts.open()
+[Gravatar]: http://gravatar.com

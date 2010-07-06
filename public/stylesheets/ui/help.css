@@ -13,6 +13,9 @@
   body.help_panel_tab #help {
     display: block;
   }
+  #help code, #help tt, #help pre {
+    font: 11px Menlo, Consolas, Monaco, Courier, monospace;
+  }
   #help a {
     color: #000;
   }
