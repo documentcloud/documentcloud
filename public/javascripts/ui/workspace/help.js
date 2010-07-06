@@ -18,8 +18,9 @@ dc.ui.Help = dc.View.extend({
 
   openContactDialog : function() {
     dc.ui.Dialog.prompt('Contact Us', '', function(message) {
-      alert('TODO: implement me.');
-      dc.ui.notifier.show({mode : 'info', text : 'Your message was sent successfully.'});
+      $.post('/help/contact_us', {message : message}, function() {
+        dc.ui.notifier.show({mode : 'info', text : 'Your message was sent successfully.'});
+      });
       return true;
     }, {information : "Send a message and we'll email you back.", saveText : 'Send'});
   },
