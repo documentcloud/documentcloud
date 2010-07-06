@@ -31,7 +31,7 @@
 <% if (mode != 'progress') { %>
   <div class="controls draggable">
     <div class="controls_inner">
-      <% var saveText = (editor || mode == 'prompt' || mode == 'short_prompt') ? 'Save' : 'OK'; %>
+      <% var saveText = saveText || ((editor || mode == 'prompt' || mode == 'short_prompt') ? 'Save' : 'OK'); %>
       <% if (editor) { %>
         <div class="minibutton delete warn">Delete</div>
       <% } %>

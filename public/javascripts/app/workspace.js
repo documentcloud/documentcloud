@@ -20,6 +20,7 @@ _.extend(dc.app.workspace, {
     dc.ui.tooltip     = new dc.ui.Tooltip();
     this.sidebar      = new dc.ui.Sidebar();
     this.panel        = new dc.ui.Panel();
+    this.help         = new dc.ui.Help();
 
     if (!dc.app.accountId) return;
 
@@ -37,6 +38,7 @@ _.extend(dc.app.workspace, {
     content.append(this.sidebar.render().el);
     content.append(this.panel.render().el);
     dc.app.navigation.render();
+    this.help.render();
     this.panel.add('search_box', dc.app.searchBox.render().el);
     this.panel.add('pagination', dc.app.paginator.el);
     $('#no_results_container').html(JST.no_results({}));
