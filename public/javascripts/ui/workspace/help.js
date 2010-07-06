@@ -39,8 +39,8 @@ dc.ui.Help = dc.View.extend({
         {onClick : _.bind(this.openPage, this, 'search'),       title : 'Searching Documents'},
         {onClick : _.bind(this.openPage, this, 'add_users'),    title : 'Adding Accounts'},
         {onClick : _.bind(this.openPage, this, 'import'),       title : 'Uploading Documents'},
-        {onClick : _.bind(this.openPage, this, 'notes'),        title : 'Annotations'},
-        {onClick : _.bind(this.openPage, this, 'publish'),      title : 'Embed &amp; Publish'},
+        {onClick : _.bind(this.openPage, this, 'notes'),        title : 'Editing Notes and Sections'},
+        {onClick : _.bind(this.openPage, this, 'publish'),      title : 'Embedding &amp; Publishing'},
         {onClick : _.bind(this.openPage, this, 'troubleshoot'), title : 'Troubleshooting Failed Uploads'}
       ]
     });
