@@ -1,28 +1,48 @@
-Currently searches of the repository are only available to registered beta users. If you'd like to be one, [contact us](http://documentcloud.org/contact).
- 
-# API Searches
+# Searching in the Workspace
 
-If you're currently logged-in, you can review our search API at [www.documentcloud.org/api](http://www.documentcloud.org/api)
- 
-# Workspace Searches
+This guide lists the different types of searches you can perform with DocumentCloud. You can click any of the examples to run the search and try it out.
 
-By default, a DocumentCloud search looks for your search terms in the document itself. You can, however, ask DocumentCloud to search other fields:
+By default, a search looks for all of the words you enter within the full text of the document itself. For example: [John Yoo detainee][]. You can, however, ask DocumentCloud to search the contents of specific other fields.
+
+When entering a fielded search, if the phrase you're searching for contains spaces, use quotation marks to surround the phrase. If there are no spaces, quotes aren't necessary.
    
 Term                        | Description 
 ----------------------------|---------------------
-account (was "documents")   | Specify an email address to see documents uploaded by a single user. For example: account:amanda@documentcloud.org
-description                 | Search for documents that contain the search term in the document description. 
-group (was "organization")  | If you know the short name of an organization, you can search for documents uploaded by that newsroom or organization. For example: group:propublica or group:dcloud.
-project                     | Search within a single project
-source                      | Will search for documents that contain the search terms in the "source" field. For example: source:defense will identify documents attributed to "Department of Defense" or "Defense Department" or the "Civil Defense Museum."
-title                       |	Will search for documents by titles, as provided by the user who uploaded it. By default, DocumentCloud search does not look in document titles for search terms. A search for title:conyers will find a document called "This is not about John Conyers" even if his name appears no where in that document.
+account                     | Specify an email address to see documents uploaded by a single user. For example: [account: scott.klein@propublica.org][].
+group                       | If you know the short name of an organization, you can search for documents uploaded by anyone in that newsroom. For example: [group: chicago-tribune][].
+project                     | Restrict your search to just the documents in one of your projects. This is the same as clicking on the project in the "Projects" tab.
+title                       |	Will search for documents by title, as provided by the person who uploaded it. For example: [title: deepwater][]
+source                      | When you upload a document, you have the opportunity to identify the source. This provides a way to search that field. For example: [source: supreme][] will identify documents attributed to "U.S. Supreme Court" as well as "New York State Supreme Court."
  
-You can also search for specific entities identified by OpenCalais.
+# Searching with Entities
+ 
+For each document we store a list of entities identified by [OpenCalais][]. These are the same entities that appear in the "Entities" tab on the left. After searching for an entity, you can click on "show pages" to display links to the specific pages in each document that mention the person, place or thing you're searching for.
 
 Term                        | Description 
 ----------------------------|-------------------------
-person                      | The name of a human being. If you're looking for documents that reference a person named "June" but keep getting date references, try narrowing your search to person:June
-place                       | Almost any place. This is our broadest geographical search and will search OpenCalais entites for any geographic reference, including states and countries which you can also specify. Eg. place:"Rockefeller Plaza" or place:"New York"
-city, state and country	    | In addition to the broader "place" search, you can also search for cities, US states and countries explicitly. Eg. city:"New Orleans" or country:China
-term                        | Terms might include "investment banks" or "law enforcement." The results will be comparable to searching for the terms directly. 
-organization                | Organizations include businesses and government agencies. eg. organization: "US Army"
+person                      | The name of a human being. If you're looking for documents that reference a person with the last name of "Lee", but keep getting swamped with unrelated words, try narrowing your search to [person: Lee][].
+organization                | Organizations include businesses, government agencies, and other types of institutions. For example: [organization: "Department of Defense"][].
+term                        | Searches for terms might include [term: "nuclear energy"][] or [term: "gross domestic product"][] The results will be comparable to searching for the terms directly.
+place                       | Addresses, names of buildings and landmarks, regions, or geographical landmarks. For example: [place: "World Trade Center"][] or [place: "Gulf of Mexico"][].
+city                        | For example: [city: "New Orleans"][]
+state                       | (Includes provinces, in countries that have provinces instead of states.) For example: [state: Arizona][]
+country                     | For example: [country: Iran][]
+
+Still have questions about search? [Contact us][].
+
+[John Yoo detainee]: #search/John%20Yoo%20detainee
+[account: scott.klein@propublica.org]: #search/account%3A%20scott.klein%40propublica.org
+[group: chicago-tribune]: #search/group%3A%20chicago-tribune
+[title: deepwater]: #search/title%3A%20deepwater
+[source: supreme]: #search/source%3A%20supreme
+[OpenCalais]: http://www.opencalais.com/
+[person: Lee]: #search/person%3A%20Lee
+[organization: "Department of Defense"]: #search/organization%3A%20%22Department%20of%20Defense%22
+[term: "nuclear energy"]: #search/term%3A%20%22nuclear%20energy%22
+[term: "gross domestic product"]: #search/term%3A%20%22gross%20domestic%20product%22
+[place: "World Trade Center"]: #search/place%3A%20%22World%20Trade%20Center%22
+[place: "Gulf of Mexico"]: #search/place%3A%20%22Gulf%20of%20Mexico%22
+[city: "New Orleans"]: #search/city%3A%20%22New%20Orleans%22
+[state: Arizona]: #search/state%3A%20Arizona
+[country: Iran]: #search/country%3A%20Iran
+[Contact us]: javascript:dc.app.workspace.help.openContactDialog()

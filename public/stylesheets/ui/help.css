@@ -37,3 +37,15 @@
       float: left;
       margin-right: 8px;
     }
+  #help td, #help th {
+    padding: 0 15px 15px 0;
+    font-size: 12px;
+  }
+    #help th {
+      color: #000;
+      font-weight: bold;
+    }
+    #help td:first-child {
+      min-width: 75px;
+      font-weight: bold;
+    }

@@ -1,8 +1,12 @@
 TODO:
 
-  * Re-enable public documents for non-logged-in visitors.
-
   * Disallow annotating outside of the page border.
+  
+  * Switch up the way we do access control. Remove the complexity from the
+    queries, and start caching the list of (allowed to see / edit) users on 
+    the document itself.
+    
+  * Make a new lock icon -- remove last vestiges of Silk.
   
   
   * Make collaborators accept the collaboration request before really adding

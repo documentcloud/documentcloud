@@ -36,12 +36,12 @@ dc.ui.Help = dc.View.extend({
       id      : 'how_to_menu',
       label   : 'Guides &amp; How To\'s',
       items   : [
-        {title : 'Search Documents',       onClick : _.bind(this.openPage, this, 'search')},
-        {title : 'Add Users',              onClick : _.bind(this.openPage, this, 'add_users')},
-        {title : 'Upload Documents',       onClick : _.bind(this.openPage, this, 'import')},
-        {title : 'Annotate',               onClick : _.bind(this.openPage, this, 'notes')},
-        {title : 'Embed &amp; Publish',    onClick : _.bind(this.openPage, this, 'publish')},
-        {title : 'Troubleshoot Documents', onClick : _.bind(this.openPage, this, 'troubleshoot')}
+        {onClick : _.bind(this.openPage, this, 'search'),       title : 'Searching Documents'},
+        {onClick : _.bind(this.openPage, this, 'add_users'),    title : 'Adding Accounts'},
+        {onClick : _.bind(this.openPage, this, 'import'),       title : 'Uploading Documents'},
+        {onClick : _.bind(this.openPage, this, 'notes'),        title : 'Annotations'},
+        {onClick : _.bind(this.openPage, this, 'publish'),      title : 'Embed &amp; Publish'},
+        {onClick : _.bind(this.openPage, this, 'troubleshoot'), title : 'Troubleshooting Failed Uploads'}
       ]
     });
   }
