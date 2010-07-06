@@ -14,8 +14,10 @@ javascripts:
     - public/javascripts/ui/common/*.js
     - public/javascripts/ui/**/*.js
     - public/javascripts/app/**/*.js
+    - app/views/jst/**/*.jst
   admin:
     - public/javascripts/admin/*.js
+    - app/views/admin/*.jst
   ie_only:
     - public/javascripts/ie/*.js
 
@@ -38,9 +40,3 @@ stylesheets:
     - public/stylesheets/pages/viewer_editing.css
   ie_only:
     - public/stylesheets/common/ie.css
-
-templates:
-  ui:
-    - app/views/jst/**/*.jst
-  admin:
-    - app/views/admin/*.jst
