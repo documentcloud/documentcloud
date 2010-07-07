@@ -20,6 +20,11 @@ class WorkspaceController < ApplicationController
     render :action => 'home', :layout => 'empty'
   end
 
+  # Page for unsupported browsers, to request an upgrade.
+  def upgrade
+    render :layout => false
+  end
+
   # Display the signup information page.
   def signup_info
   end

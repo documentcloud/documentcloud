@@ -8,6 +8,9 @@
   <% js  = [:core] + (@javascripts || []) %>
   <%= include_stylesheets *css %>
   <%= include_javascripts *js %>
+  <!--[if lte IE 6]>
+    <script>window.location = '/workspace/upgrade';</script>
+  <![endif]-->
   <!--[if IE]>
     <%= include_stylesheets :ie_only, :embed_assets => false %>
     <%= include_javascripts :ie_only %>

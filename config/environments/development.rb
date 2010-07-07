@@ -6,8 +6,8 @@
 
 # We've been running into *serious* common issues with
 # "A copy of [some_class] has been removed from the module tree but is still active!"
-# Caching classes until there's a patch to Rails 2.3 for it.
-config.cache_classes = true
+# Caching classes until there's a patch to Rails 2.3.3 for it.
+config.cache_classes = false
 
 # Log error messages when you accidentally call methods on nil.
 config.whiny_nils = true
