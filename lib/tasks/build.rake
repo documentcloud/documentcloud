@@ -21,8 +21,8 @@ namespace :build do
 
     # Export back to DocumentCloud
     FileUtils.cp_r('build/images', '../dcloud/public/viewer')
-    `cat build/viewer.js build/viewer.jst > build/viewer_new.js`
-    FileUtils.rm_r(['build/viewer.js', 'build/viewer.jst'])
+    `cat build/viewer.js build/templates.js > build/viewer_new.js`
+    FileUtils.rm_r(['build/viewer.js', 'build/templates.js'])
     FileUtils.mv 'build/viewer_new.js', 'build/viewer.js'
     Dir['build/viewer*'].each do |asset|
       FileUtils.cp(asset, "../dcloud/public/viewer/#{File.basename(asset)}")
