@@ -20,6 +20,9 @@
     float: right;
     margin-left: 15px;
   }
+  #help em {
+    font-style: italic;
+  }
   #help a {
     color: #000;
   }
