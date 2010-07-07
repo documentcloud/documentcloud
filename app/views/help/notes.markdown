@@ -8,4 +8,6 @@ Although the viewer won't complain if you try &mdash; it's not recommended to tr
  
 Currently you can't resize a note, you have to copy the contents, delete the existing note and redraw it.
 
+You can view and the notes that you add to a document become viewable 
+
 # Adding Sections &amp; Navigation
