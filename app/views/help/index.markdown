@@ -11,6 +11,8 @@ The workspace is your tool to work with DocumentCloud. Using it, you can:
 
 Get started by searching the documents already in the repository. Click on the "[Documents][]" tab, above, and try a regular full-text search, such as "[obama health care][]", or a more specific fielded search, such as "[person:geithner term:regulator][]".
 
+For more information on specific topics, open the "Guides &amp; How To's" menu above.
+
 [Search]: #help/searching
 [Upload document files]: #help/uploading
 [Annotate documents]: #help/notes
