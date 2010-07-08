@@ -175,6 +175,5 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 });
 
 // The main set of Documents, used by the search tab.
-dc.model.DocumentSet.implement(dc.model.SortedSet);
-dc.model.DocumentSet.implement(dc.model.SelectableSet);
+dc.model.DocumentSet.implement(dc.model.SortedSet, dc.model.SelectableSet);
 window.Documents = new dc.model.DocumentSet();

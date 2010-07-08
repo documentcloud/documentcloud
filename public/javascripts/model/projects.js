@@ -122,7 +122,6 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
 
 });
 
-dc.model.ProjectSet.implement(dc.model.SelectableSet);
-dc.model.ProjectSet.implement(dc.model.SortedSet);
+dc.model.ProjectSet.implement(dc.model.SelectableSet, dc.model.SortedSet);
 
 window.Projects = new dc.model.ProjectSet();

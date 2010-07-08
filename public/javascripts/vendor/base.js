@@ -11,13 +11,13 @@ var Base = function() {
 
 Base.extend = function(_instance, _static) { // subclass
   var extend = Base.prototype.extend;
-  
+
   // build the prototype
   Base._prototyping = true;
   var proto = new this;
   extend.call(proto, _instance);
   delete Base._prototyping;
-  
+
   // create the wrapper for the constructor function
   //var constructor = proto.constructor.valueOf(); //-dean
   var constructor = proto.constructor;
@@ -32,7 +32,7 @@ Base.extend = function(_instance, _static) { // subclass
       }
     }
   };
-  
+
   // build the class interface
   klass.ancestor = this;
   klass.extend = this.extend;
@@ -50,7 +50,7 @@ Base.extend = function(_instance, _static) { // subclass
   return klass;
 };
 
-Base.prototype = {  
+Base.prototype = {
   extend: function(source, value) {
     if (arguments.length > 1) { // extending with a name/value pair
       var ancestor = this[source];
@@ -94,7 +94,9 @@ Base.prototype = {
       }
       // copy each of the source object's properties to this object
       for (var key in source) {
-        if (!proto[key]) extend.call(this, key, source[key]);
+        if (source.hasOwnProperty(key)) {
+          if (!proto[key]) extend.call(this, key, source[key]);
+        }
       }
     }
     return this;
@@ -113,7 +115,7 @@ Base = Base.extend({
 }, {
   ancestor: Object,
   version: "1.1",
-  
+
   forEach: function(object, block, context) {
     for (var key in object) {
       if (this.prototype[key] === undefined) {
@@ -121,7 +123,7 @@ Base = Base.extend({
       }
     }
   },
-    
+
   implement: function() {
     for (var i = 0; i < arguments.length; i++) {
       if (typeof arguments[i] == "function") {
@@ -134,7 +136,7 @@ Base = Base.extend({
     }
     return this;
   },
-  
+
   toString: function() {
     return String(this.valueOf());
   }
