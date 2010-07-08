@@ -32,9 +32,9 @@ dc.ui.Help = dc.View.extend({
 
   openPage : function(page) {
     var noChange = !_.include(this.PAGES, page) || (page === this.currentPage);
-    if (noChange) return dc.app.navigation.open('help');
     this.currentPage = page;
     this.saveHistory();
+    if (noChange) return dc.app.navigation.open('help');
     $.get("/help/" + (page || 'index') + '.html', function(resp) {
       $('#help_content').html(resp);
     });

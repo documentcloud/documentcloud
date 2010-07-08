@@ -38,6 +38,13 @@
   #help p {
     margin: 20px 0;
   }
+  #help ul {
+    list-style-type: disc;
+    padding-left: 25px;
+  }
+    #help ul li {
+      margin-bottom: 5px;
+    }
   #help_toolbar {
     height: 26px;
     margin-bottom: 20px;

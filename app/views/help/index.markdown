@@ -1,18 +1,21 @@
-# Welcome to DocumentCloud
+# Welcome to the DocumentCloud Workspace
 
-Get started by searching the documents already in the repository or by 
-uploading some of your own.
+The workspace is your tool to work with DocumentCloud. Using it, you can:
 
-Once you've uploaded a document, click on its thumbnail to select it, or
-shift-click the thumbnail to select all of the documents. Clicking the
-title of a document will open a document viewer, where you can read
-and annotate it. Keep your documents organized by creating projects 
-and dragging documents into them.
+  * [Search][] the existing repository of public documents.
+  * [Upload document files][] of your own.
+  * View lists of entities mentioned by documents, and search for specific entities by name.
+  * [Annotate documents][] with notes and navigation.
+  * Organize projects of documents and notes, and [share them][] with collaborators.
+  * [Publish documents][] by embedding them on your web site.
 
-You can also search the rest of the repository using the search box in
-the "Documents" tab, above.
-Try a regular full-text search, such as
-<a href="#search/obama%20health%20care">"obama health care"</a>, or a more
-specific fielded search, such as 
-<a href="#search/person%3Ageithner%20term%3Aregulator">"person:geithner term:regulator"</a>.
+Get started by searching the documents already in the repository. Click on the "[Documents][]" tab, above, and try a regular full-text search, such as "[obama health care][]", or a more specific fielded search, such as "[person:geithner term:regulator][]".
 
+[Search]: #help/searching
+[Upload document files]: #help/uploading
+[Annotate documents]: #help/notes
+[share them]: #help/collaboration
+[Publish documents]: #help/publishing
+[Documents]: #search/
+[obama health care]: #search/obama%20health%20care
+[person:geithner term:regulator]: #search/person%3Ageithner%20term%3Aregulator
