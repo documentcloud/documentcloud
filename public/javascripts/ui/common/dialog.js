@@ -57,7 +57,8 @@ dc.ui.Dialog = dc.View.extend({
   },
 
   val : function() {
-    return this.contentEl.val();
+    return (this.options.choices && this.options.mode == 'prompt') ?
+      $('input:radio:checked', this.el).val() : this.contentEl.val();
   },
 
   cancel : function() {
@@ -134,7 +135,7 @@ dc.ui.Dialog = dc.View.extend({
 
   choose : function(text, choices, callback, options) {
     return new dc.ui.Dialog(_.extend({
-      mode      : 'short_prompt',
+      mode      : 'prompt',
       title     : text,
       choices   : choices,
       text      : '',

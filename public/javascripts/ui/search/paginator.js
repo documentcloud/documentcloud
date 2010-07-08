@@ -88,7 +88,7 @@ dc.ui.Paginator = dc.View.extend({
       $('.sorter', this.el).text(this.SORT_TEXT[this.sortOrder]);
       dc.app.searchBox.search(dc.app.searchBox.value(), this.page || 1);
       return true;
-    }, this));
+    }, this), {mode : 'short_prompt'});
   },
 
   // TODO: Move all these into the searchBox and clean it up.

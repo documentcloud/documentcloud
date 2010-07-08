@@ -13,14 +13,22 @@
 <% } %>
 <% if( mode == 'prompt' || mode == 'short_prompt') { %>
   <div class="<%= mode %> draggable">
-    <% if (mode == 'prompt') { %>
-      <textarea class="text_area dark content"></textarea>
-    <% } else if (choices) { %>
+    <% if (choices && mode == 'short_prompt') { %>
       <select class="content">
         <% _.each(choices, function(choice) { %>
           <option value="<%= choice.value %>" <%= choice.selected ? 'selected="true"' : '' %>><%= choice.text %></option>
         <% }); %>
       </select>
+    <% } else if (choices) { %>
+      <div class="choices draggable">
+        <% _.each(choices, function(choice, i) { %>
+          <input class="input" type="radio" name="choice" id="choice_<%= i %>" value="<%= choice.value %>" <%= choice.selected ? 'checked="true"' : '' %>/>
+          <label for="choice_<%= i %>"><%= choice.text %></label>
+          <div class="description"><%= choice.description %></div>
+        <% }); %>
+      </div>
+    <% } else if (mode == 'prompt') { %>
+      <textarea class="text_area dark content"></textarea>
     <% } else { %>
       <div class="text_input dark">
         <input class="content" type="<%= password ? 'password' : 'text' %>" value="" />

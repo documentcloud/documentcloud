@@ -503,6 +503,14 @@ textarea.text_area {
   .dialog textarea.content {
     width: 400px; height: 100px;
   }
+  .dialog .choices {
+    text-align: left;
+  }
+    .dialog .description {
+      font-size: 10px;
+      color: #999;
+      padding: 0 0 10px 22px;
+    }
   .dialog .spinner_dark {
     position: absolute;
     bottom: 30px; right: 30px;
