@@ -1,6 +1,6 @@
 class HelpController < ApplicationController
 
-  PAGES = [:add_users, :notes, :publish, :search, :import, :collaboration, :troubleshoot]
+  PAGES = [:index, :accounts, :notes, :publishing, :searching, :uploading, :collaboration, :troubleshooting]
 
   layout false
 

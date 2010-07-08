@@ -28,7 +28,6 @@ dc.ui.SearchBox = dc.View.extend({
     this.outstandingSearch = false;
     _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'loadDefault', 'hideSearch', 'loadDefaultSearch');
     dc.history.register(/^#search\//, this.searchByHash);
-    dc.history.register(/^#help$/, function(){ dc.app.navigation.open('help'); });
   },
 
   render : function() {
