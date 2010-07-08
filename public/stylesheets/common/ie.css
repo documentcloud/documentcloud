@@ -74,3 +74,6 @@ body.workspace {
   .dialog .controls_inner {
     left: 0;
   }
+#help_toolbar .minibutton {
+  width: 155px;
+}
