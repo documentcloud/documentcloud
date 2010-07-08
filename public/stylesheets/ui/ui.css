@@ -506,6 +506,9 @@ textarea.text_area {
   .dialog .choices {
     text-align: left;
   }
+    .dialog .choices label {
+      line-height: 18px;
+    }
     .dialog .description {
       font-size: 10px;
       color: #999;
