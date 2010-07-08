@@ -1,4 +1,4 @@
-# Document Import Failed
+# Troubleshooting Failed Document Uploads
 
 We're always (with your help) discovering new and different ways to break our document importer. That is a good thing: it is one of the ways you're helping us make DocumentCloud better. In some cases, resolving a document import issue is as simple as opening the document in Adobe Acrobat or Apple Preview, optimizing it for web use and re-saving it.
 

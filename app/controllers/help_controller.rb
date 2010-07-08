@@ -1,5 +1,7 @@
 class HelpController < ApplicationController
 
+  PAGES = [:add_users, :notes, :publish, :search, :import, :collaboration, :troubleshoot]
+
   layout false
 
   before_filter :login_required
@@ -9,7 +11,7 @@ class HelpController < ApplicationController
     json nil
   end
 
-  [:add_users, :notes, :publish, :search, :import, :troubleshoot].each do |resource|
+  PAGES.each do |resource|
     class_eval "def #{resource}; markdown(:#{resource}); end"
   end
 

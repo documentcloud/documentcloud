@@ -41,6 +41,7 @@ dc.ui.Help = dc.View.extend({
         {onClick : _.bind(this.openPage, this, 'import'),       title : 'Uploading Documents'},
         {onClick : _.bind(this.openPage, this, 'notes'),        title : 'Editing Notes and Sections'},
         {onClick : _.bind(this.openPage, this, 'publish'),      title : 'Publishing &amp; Embedding'},
+        {onClick : _.bind(this.openPage, this, 'collaboration'),title : 'Collaboration'},
         {onClick : _.bind(this.openPage, this, 'troubleshoot'), title : 'Troubleshooting Failed Uploads'}
       ]
     });
