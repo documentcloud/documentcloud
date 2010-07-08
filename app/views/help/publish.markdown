@@ -39,15 +39,34 @@ To publish a document, you'll need to make it public, if it isn't already. Selec
  
 *Note: once you change a document to "public" other users of DocumentCloud will be able to find it in searches of the repository. Don't make sensitive documents public in advance of publication.*
  
-# Step 4: Copy and Paste the Embed Code into Your Template
+# Step 4: Copy and Paste the Embed Code onto the Page
 
-Select a document and then look at the Publish menu for options. Note: at this stage, you can only embed documents you own.
+![Embed Menu][]
 
-You won't be able to access your public documents directly on our site unless you are logged in, but you will be able to post a viewer in your template. Here's some sample viewer HTML. You'll notice, if you study it closely, that the URL for the document javascript looks remarkably like the document's own URL: only the file extension is changed, from html to js.
+When working with embedded documents, at first you can try out the embed code in your template while the document is still private, but the document viewer won't load if you log out of your account.
+
+To get the embed code, select your document, open the "Publish" menu, and click "Embed Document Viewer". A dialog appears containing a bit of HTML, which will look something like this:
+
+    <div id="document-viewer"></div>
+    <script src="http://s3.documentcloud.org/viewer/loader.js"></script>
+    <script>
+      DV.load('http://www.documentcloud.org/documents/10-general-report.js', {
+        container : '#document-viewer'
+      });
+    </script>
+
+You'll notice, if you study it closely, that the URL for the document's JavaScript looks remarkably like the document's own URL: only the file extension is changed, from `html` to `js`.
+
+The `DV.load` call has a couple of options. The only required one is `container`, which uses a selector to specify the element on the page into which you'd like to place the viewer. If you use a different element, feel free to remove the `div` from the top of the snippet.
+
+The other option you can currently use is `zoom`, which will set the initial zoom level of the viewer. The allowed zoom levels are `500`, `700`, `800`, `900`, and `1000` pixels wide. `700` is the default.
  
 # Step 5: Stay in Touch
 
-[Let us know][] about your reporting. Even if it is "just a little local story" -- we're interested in all the reporting you do with DocumentCloud, not just work with national significance.
+[Let us know][] about your reporting. Even if it is "just a little local story" -- we're interested in all the reporting you do with DocumentCloud.
+
+[NewsHour Example]: /images/help/newshour.jpg
+[Embed Menu]: /images/help/embed_menu.png
 
 [favorite embedded documents]: http://documentcloud.pbworks.com/Document-Dives
 [let us know]: javascript:dc.app.workspace.help.openContactDialog()
@@ -58,5 +77,4 @@ You won't be able to access your public documents directly on our site unless yo
 [Arizona Republic]: http://www.azdatapages.com/sb1070.html
 [Chicago Tribune]: http://media.apps.chicagotribune.com/docs/obama-subpoena.html
 [ProPublica]: http://www.propublica.org/documents/item/magnetars-responses-to-our-questions
-[NewsHour Example]: /images/help/newshour.jpg
 [this document from the Commercial Appeal]: http://www.commercialappeal.com/data/documents/bass-pro-lease/
