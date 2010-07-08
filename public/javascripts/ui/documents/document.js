@@ -79,7 +79,6 @@ dc.ui.Document = dc.View.extend({
       Documents.deselectAll();
       this.model.set({selected : true});
     }
-    return false;
   },
 
   viewDocument : function(e) {

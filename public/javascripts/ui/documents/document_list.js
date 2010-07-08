@@ -47,6 +47,7 @@ dc.ui.DocumentList = dc.View.extend({
   },
 
   _endDeselect : function(e) {
+    if ($(e.target).hasClass('doc_title') || $(e.target).hasClass('doc')) return;
     if ((Math.abs(e.pageX - this._pageX) > this.SLOP) ||
         (Math.abs(e.pageY - this._pageY) > this.SLOP)) return;
     Documents.deselectAll();
