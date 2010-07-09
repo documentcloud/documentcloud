@@ -51,7 +51,7 @@ dc.ui.Help = dc.View.extend({
   },
 
   _createHelpMenu : function() {
-    return this._helpMenu = new dc.ui.Menu({
+    return this.menu = new dc.ui.Menu({
       id      : 'how_to_menu',
       label   : 'Guides &amp; How To\'s',
       items   : [
