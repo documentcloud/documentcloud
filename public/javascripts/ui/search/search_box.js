@@ -26,7 +26,7 @@ dc.ui.SearchBox = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     this.outstandingSearch = false;
-    _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'loadDefault', 'hideSearch', 'loadDefaultSearch');
+    _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'loadDefault', 'hideSearch');
     dc.history.register(/^#search\//, this.searchByHash);
   },
 
@@ -38,7 +38,7 @@ dc.ui.SearchBox = dc.View.extend({
     $(document.body).setMode('no', 'search');
     this.setCallbacks();
     $('#cloud_edge').click(function(){ window.location = '/home'; });
-    dc.app.navigation.bind('documents', this.loadDefaultSearch);
+    dc.app.navigation.bind('documents', this.loadDefault);
     dc.app.navigation.bind('help', this.hideSearch);
     return this;
   },
@@ -71,10 +71,6 @@ dc.ui.SearchBox = dc.View.extend({
     } else {
       this.search('');
     }
-  },
-
-  loadDefaultSearch : function() {
-    this.loadDefault({showHelp : true});
   },
 
   hideSearch : function() {

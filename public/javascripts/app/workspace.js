@@ -8,7 +8,7 @@ _.extend(dc.app.workspace, {
     this.createSubViews();
     this.renderSubViews();
     dc.history.initialize();
-    dc.history.loadURL(dc.app.searchBox.loadDefault);
+    dc.history.loadURL(_.bind(dc.app.searchBox.loadDefault, null, {showHelp: true}));
   },
 
   // Create all of the requisite subviews.
