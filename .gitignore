@@ -17,3 +17,4 @@ solr
 *.swp
 *~
 .#*
+cloud_crowd.db
