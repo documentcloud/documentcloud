@@ -1,6 +1,6 @@
 # Searching in the Workspace
 
-This guide lists the different types of searches you can perform with DocumentCloud. You can click any of the examples to run the search and try it out.
+This guide lists the different types of searches you can perform with DocumentCloud. You can click any of the linked examples to run the search and try it out.
 
 By default, a search looks for all of the words you enter within the full text of the document itself. For example: [John Yoo detainee][]. You can, however, ask DocumentCloud to search the contents of specific other fields.
 
@@ -10,7 +10,7 @@ Term                        | Description
 ----------------------------|---------------------
 account                     | Specify an email address to see documents uploaded by a single user. For example: [account: scott.klein@propublica.org][].
 group                       | If you know the short name of an organization, you can search for documents uploaded by anyone in that newsroom. For example: [group: chicago-tribune][].
-project                     | Restrict your search to just the documents in one of your projects. This is the same as clicking on the project in the "Projects" tab.
+project                     | Restrict your search to just the documents in one of your projects, by entering the title. This is the same as clicking on the project in the "Projects" tab.
 title                       |	Will search for documents by title, as provided by the person who uploaded it. For example: [title: deepwater][]
 source                      | When you upload a document, you have the opportunity to identify the source. This provides a way to search that field. For example: [source: supreme][] will identify documents attributed to "U.S. Supreme Court" as well as "New York State Supreme Court."
  
