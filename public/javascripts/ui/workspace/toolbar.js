@@ -176,7 +176,7 @@ dc.ui.Toolbar = dc.View.extend({
         {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
       ],
       onOpen : function(menu) {
-        $('.menu_item', menu.content).toggleClass('disabled', !Documents.countSelected());
+        $('.menu_item', menu.content).toggleClass('disabled', !Documents.selectedCount);
       }
     });
   },
@@ -193,7 +193,7 @@ dc.ui.Toolbar = dc.View.extend({
         {title : 'Delete Documents',     attrs: {'class' : 'multiple warn'}, onClick : this._deleteSelectedDocuments}
       ],
       onOpen : function(menu) {
-        var count = Documents.countSelected();
+        var count = Documents.selectedCount;
         if (count == 0) {
           $('.menu_item', menu.content).addClass('disabled');
         } else {
@@ -205,7 +205,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _openViewers : function() {
-    if (!Documents.countSelected()) return dc.ui.Dialog.alert('Please select a document to open.');
+    if (!Documents.selectedCount) return dc.ui.Dialog.alert('Please select a document to open.');
     _.each(Documents.selected(), function(doc){ doc.openViewer(); });
   }
 

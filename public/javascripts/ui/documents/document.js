@@ -61,7 +61,7 @@ dc.ui.Document = dc.View.extend({
     if (!dc.app.accountId) return;
     var alreadySelected =  this.model.get('selected');
     var hk = dc.app.hotkeys;
-    var anchor = Documents.lastSelection || Documents.selected()[0];
+    var anchor = Documents.firstSelection || Documents.selected()[0];
     if (hk.command || hk.control) {
       // Toggle.
       this.model.set({selected : !alreadySelected});
@@ -71,11 +71,10 @@ dc.ui.Document = dc.View.extend({
       var idx = _.indexOf(docs, this.model), aidx = _.indexOf(docs, anchor);
       var start = Math.min(idx, aidx), end = Math.max(idx, aidx);
       _.each(docs, function(doc, index) {
-        if (index >= start && index <= end) doc.set({selected : true});
+        doc.set({selected : index >= start && index <= end});
       });
     } else {
       // Regular.
-      if (alreadySelected) return;
       Documents.deselectAll();
       this.model.set({selected : true});
     }

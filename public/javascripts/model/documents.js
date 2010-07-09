@@ -123,12 +123,12 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   },
 
   downloadSelectedPDF : function() {
-    if (this.countSelected() <= 1) return this.selected()[0].openPDF();
+    if (this.selectedCount <= 1) return this.selected()[0].openPDF();
     dc.app.download('/download/' + this.selectedIds().join('/') + '/document_pdfs.zip');
   },
 
   downloadSelectedFullText : function() {
-    if (this.countSelected() <= 1) return this.selected()[0].openText();
+    if (this.selectedCount <= 1) return this.selected()[0].openText();
     dc.app.download('/download/' + this.selectedIds().join('/') + '/document_text.zip');
   },
 
