@@ -9,7 +9,7 @@ class LifecycleMailer < ActionMailer::Base
   def login_instructions(account)
     subject     "Welcome to DocumentCloud"
     from        SUPPORT
-    recipients  [account.rfc_email]
+    recipients  [account.email]
     body        :account            => account,
                 :key                => account.security_key.key,
                 :organization_name  => account.organization_name
@@ -19,7 +19,7 @@ class LifecycleMailer < ActionMailer::Base
   def reset_request(account)
     subject     "DocumentCloud Password Reset"
     from        SUPPORT
-    recipients  [account.rfc_email]
+    recipients  [account.email]
     body        :account            => account,
                 :key                => account.security_key.key
   end
