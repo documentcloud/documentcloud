@@ -43,8 +43,8 @@ namespace :openoffice do
 
 end
 
-def nginx_pid
-  pid_locations = ['/var/run/nginx.pid', '/usr/local/nginx/logs/nginx.pid']
-  @nginx_pid ||= pid_locations.detect {|pid| File.exists?(pid) }
-end
+# def nginx_pid
+#   pid_locations = ['/var/run/nginx.pid', '/usr/local/nginx/logs/nginx.pid', '/opt/nginx/logs/nginx.pid']
+#   @nginx_pid ||= pid_locations.detect {|pid| File.exists?(pid) }
+# end
 

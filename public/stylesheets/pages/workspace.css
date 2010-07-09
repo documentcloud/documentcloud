@@ -13,6 +13,9 @@ a {
   color: inherit;
   text-decoration: none;
 }
+label {
+  cursor: pointer;
+}
 
 #overlay {
   background: black;
@@ -243,8 +246,14 @@ div.full_page_background {
         }
         #full_screen_form .license input[type="checkbox"] {
           position: relative;
-          margin-right: 10px;
+          margin-right: 5px;
           left: 0px;
+        }
+        #full_screen_form .license .account_acceptance_label {
+          width: auto;
+          font-size: 11px;
+          text-align: left;
+          display: inline;
         }
       #full_screen_form .minibutton {
         float: left;

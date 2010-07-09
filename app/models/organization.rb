@@ -24,7 +24,7 @@ class Organization < ActiveRecord::Base
 
   # The list of all administrator emails in the organization.
   def admin_emails
-    self.accounts.admin.all(:select => [:email]).map &:email
+    self.accounts.admin.all(:select => [:email]).map {|acc| acc.email }
   end
 
   # The list of all administrator email addresses, excluding mine.
