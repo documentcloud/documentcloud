@@ -16,7 +16,6 @@ dc.Model = Base.extend({
     attributes.id = attributes.id || -_.uniqueId();
     this.set(attributes, true);
     this.cid = _.uniqueId('c');
-    this._changed - false;
     this._formerAttributes = this.attributes();
   },
 

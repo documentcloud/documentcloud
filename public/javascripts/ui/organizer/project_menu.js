@@ -18,7 +18,7 @@ dc.ui.ProjectMenu = dc.ui.Menu.extend({
       var className = (project.containsAny(docs) ? 'checked' : '') + disabled;
       return {title : project.get('title'), attrs : {'class': className}, onClick : _.bind(menu.options.onClick, menu, project)};
     });
-    items.push({title : 'New Project', attrs : {'class' : 'plus' + disabled}, onClick : function() {
+    items.push({title : 'New Project', attrs : {'class' : 'plus'}, onClick : function() {
       dc.app.workspace.organizer.promptNewProject();
     }});
     menu.addItems(items);

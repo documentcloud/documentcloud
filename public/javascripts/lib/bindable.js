@@ -7,7 +7,7 @@ dc.model.Bindable = {
     list.push(callback);
   },
 
-  // Remove one or more callbacks.
+  // Remove one callback.
   unbind : function(e, callback) {
     var calls = this._callbacks;
     if (!calls) return;
@@ -15,8 +15,12 @@ dc.model.Bindable = {
       if (e != ev) continue;
       var list = calls[ev];
       for (var i = 0, l = list.length; i < l; i++) {
-        if (callback == list[i]) list.splice(i, 1);
+        if (callback == list[i]) {
+          list.splice(i, 1);
+          break;
+        }
       }
+      break;
     }
   },
 
