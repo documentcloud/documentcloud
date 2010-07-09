@@ -55,6 +55,7 @@ dc.ui.Help = dc.View.extend({
       id      : 'how_to_menu',
       label   : 'Guides &amp; How To\'s',
       items   : [
+        {onClick : _.bind(this.openPage, this, ''),               title : 'Introduction'},
         {onClick : _.bind(this.openPage, this, 'searching'),      title : 'Searching Documents'},
         {onClick : _.bind(this.openPage, this, 'accounts'),       title : 'Adding Accounts'},
         {onClick : _.bind(this.openPage, this, 'uploading'),      title : 'Uploading Documents'},
