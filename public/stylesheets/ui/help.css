@@ -3,6 +3,16 @@
   color: #555;
 }
 
+#contact_us .text {
+  font-size: 10px;
+  margin-bottom: 30px;
+  color: #999;
+}
+  #contact_us .text a {
+    color: #999;
+    text-decoration: underline;
+  }
+
 #help {
   color: #555;
   padding: 15px 30px 30px;
