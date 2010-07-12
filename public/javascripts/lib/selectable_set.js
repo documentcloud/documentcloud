@@ -23,14 +23,14 @@ dc.model.SelectableSet = Base.extend({
   },
 
   _add : function(model, silent) {
-    model.set({'selected': !!model.get('selected')}, true);
+    if (model._attributes.selected == null) model._attributes.selected = false;
     this.base(model, silent);
     if (model.get('selected')) this.selectedCount += 1;
   },
 
   _remove : function(model, silent) {
     this.base(model, silent);
-    if (model.get('selected')) this.selectedCount -= 1;
+    if (this.selectedCount > 0 && model.get('selected')) this.selectedCount -= 1;
   },
 
   // We override "_onModelEvent" to fire selection changed events when models

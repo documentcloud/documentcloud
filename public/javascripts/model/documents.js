@@ -3,6 +3,7 @@
 dc.model.Document = dc.Model.extend({
 
   constructor : function(attributes) {
+    attributes.selected = false;
     this.base(attributes);
     this.notes = new dc.model.NoteSet();
     this.notes.resource = 'documents/' + this.id + '/annotations';
