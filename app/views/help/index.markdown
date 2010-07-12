@@ -1,6 +1,8 @@
 # Welcome to DocumentCloud
 
-From here, you can:
+If you're just looking to get started, try our [guided tour][], or take a look at [what other reporters are doing with DocumentCloud][].
+
+Find out how to:
 
   * [Search][] the existing repository of public documents.
   * [Upload document files][] of your own.
@@ -10,7 +12,6 @@ From here, you can:
   * [Publish documents][] by embedding them on your web site.
   * [Walk through a guided tour][] of the workspace.
 
-If you're just looking to get started, try our [guided tour][], or take a look at [what other reporters are doing with DocumentCloud][].
 
 ## Finding Your Way Around the Workspace
 
