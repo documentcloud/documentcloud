@@ -32,11 +32,9 @@ Don't have access to Acrobat or Preview? There's a [world of great PDF editors][
   
 Still having trouble with a document? Don't hesitate to [contact us][].
 
-[contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [Reduce File Size]: /images/help/reduce_file_size.jpg
 [PDF Optimizer]: /images/help/pdf_optimizer.jpg
 [GraphicsMagick]: http://www.graphicsmagick.org/
-[let us know]: javascript:dc.app.workspace.help.openContactDialog()
 [world of great PDF editors]: http://en.wikipedia.org/wiki/List_of_PDF_software
 [pdftk]: http://www.accesspdf.com/pdftk/
 [PDFill]: http://pdfill.com/

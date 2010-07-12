@@ -133,3 +133,25 @@ small {
     #twitter .twtr-ft div * {
       display: none;
     }
+    
+#help_navigation {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+  #help_navigation li {
+    list-style: none;
+    float: left;
+    padding: 2px 8px;
+    margin: 0;
+  }
+    #help_navigation li.active a {
+      color: black;
+      text-decoration: none;
+    }
+#help table th {
+  font-weight: bold;
+}
+#help table td {
+  padding: 0 16px 8px 0;
+}

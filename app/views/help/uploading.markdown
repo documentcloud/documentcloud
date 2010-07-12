@@ -20,13 +20,9 @@ We're using an OCR program called [Tesseract][]. For an absolutely free tool, it
 
 Still have questions about uploading documents? Don't hesitate to [contact us][].
 
-For information about our bulk upload API, check out our documentation at [documentcloud.org/api][].
-
-[contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [use Preview to reduce the size of your file]: http://www.ehow.com/how_4499823_reduce-file-size-pdf-using.html
 [that works as well]: http://www.ehow.com/how_5874491_decrease-size-pdf.html
 [New Document]: javascript:dc.app.uploader.open()
-[Your Documents]: javascript:Accounts.current().openDocuments()
 [OCR]: http://en.wikipedia.org/wiki/Optical_character_recognition
 [Tesseract]: http://code.google.com/p/tesseract-ocr/
 [documentcloud.org/api]: http://www.documentcloud.org/api

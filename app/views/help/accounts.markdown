@@ -11,7 +11,4 @@ You can also tweak your name here (did we call you "David" when really your byli
 Still have questions about accounts? Don't hesitate to [contact us][].
 
 [All Accounts Image]: /images/help/show_all_accounts.jpg
-
-[Show All Accounts]: javascript:dc.app.accounts.open()
 [Gravatar]: http://gravatar.com
-[contact us]: javascript:dc.app.workspace.help.openContactDialog()

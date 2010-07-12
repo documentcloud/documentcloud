@@ -69,11 +69,7 @@ Still have questions about publishing documents? Don't hesitate to [contact us][
 
 [NewsHour Example]: /images/help/newshour.jpg
 [Embed Menu]: /images/help/embed_menu.png
-
-[contact us]: javascript:dc.app.workspace.help.openContactDialog()
-[favorite embedded documents]: /featured
-[let us know]: javascript:dc.app.workspace.help.openContactDialog()
-[Let us know]: javascript:dc.app.workspace.help.openContactDialog()
+[favorite embedded documents]: http://documentcloud.pbworks.com/Document-Dives
 [terms and conditions]: /terms
 [plenty more]: /featured
 [NewsHour]: http://www.pbs.org/newshour/rundown/stevens-testimony.html

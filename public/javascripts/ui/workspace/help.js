@@ -59,7 +59,7 @@ dc.ui.Help = dc.View.extend({
     this.currentPage = page;
     this.saveHistory();
     if (noChange) return dc.app.navigation.open('help');
-    $.get("/help/" + (page || 'index') + '.html', function(resp) {
+    $.get("/ajax_help/" + (page || 'index') + '.html', function(resp) {
       $('#help_content').html(resp);
     });
     dc.app.navigation.open('help');

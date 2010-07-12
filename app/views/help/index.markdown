@@ -20,16 +20,3 @@ If you're looking at a list of documents (search results, your documents, a sing
 Double-click a document's title to launch a viewer, where you can edit and annotate the document, if it belongs to you.
 
 For more information on specific topics, open the "[Guides &amp; How To's][]" menu at the top of the page.
-
-[Search]: #help/searching
-[Upload document files]: #help/uploading
-[Annotate documents]: #help/notes
-[share them]: #help/collaboration
-[Publish documents]: #help/publishing
-[Walk through a guided tour]: #help/tour
-[guided tour]: #help/tour
-[what other reporters are doing with DocumentCloud]: /featured
-[Documents]: #search/
-[obama health care]: #search/obama%20health%20care
-[person:geithner term:regulator]: #search/person%3Ageithner%20term%3Aregulator
-[Guides &amp; How To's]: javascript:dc.app.workspace.help.menu.open();

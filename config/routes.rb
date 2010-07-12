@@ -53,6 +53,8 @@ ActionController::Routing::Routes.draw do |map|
     static.opensource     '/opensource',    :action => 'opensource'
     static.about          '/about',         :action => 'about'
     static.contact        '/contact',       :action => 'contact'
+    static.help           '/help',          :action => 'help'
+    static.help           '/help/:page',    :action => 'help'
   end
 
   # Redirects.

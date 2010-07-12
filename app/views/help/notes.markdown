@@ -18,6 +18,5 @@ To help highlight different sections of a long document, you can add navigation 
 
 Still have questions about annotating documents? Don't hesitate to [contact us][].
 
-[contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [Annotations]: /images/help/document_annotations.jpg
 [Notes Link]: /images/help/notes_link.jpg

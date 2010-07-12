@@ -12,5 +12,4 @@ The next time your partner logs in to DocumentCloud, the project you shared will
 
 Still have questions about collaboration? Don't hesitate to [contact us][].
 
-[contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [Show Collaborator]: /images/help/show_collaborator.png
