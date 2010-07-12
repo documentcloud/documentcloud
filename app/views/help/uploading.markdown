@@ -16,7 +16,7 @@ Before you start the upload, you can enter a title for the document, as well as 
 
 If you have access to high quality [OCR][], we recommend that you OCR your document before you upload it to DocumentCloud. 
 
-We're using an OCR program called [Tesseract][]. For an absolutely free tool, it is actually pretty impressive, but you'll get better results with some of the fancier proprietary services like Abbyy or Nuance. Many of the fancier office photocopiers have built-in OCR these days, so that's another option if you have some documents that are difficult to read.
+We're using an OCR program called [Tesseract][]. For an absolutely free tool, it is actually pretty impressive, but you'll get better results with some of the fancier proprietary services like Abbyy or Nuance. Many office photocopiers have built-in OCR these days, so that's another option if you have documents that are difficult to read.
  
 # Bulk Uploading via the API
 

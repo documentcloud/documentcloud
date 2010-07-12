@@ -12,7 +12,7 @@ In Acrobat, open the PDF and choose "Advanced > PDF Optimizer". You'll see a win
 
 # Noise in Documents
 
-Ever so very occasionally, we find that documents containing government redactions will look like they're covered in a dark gray fog of pixels. GraphicsMagick, which we use to break out images of each page in your document, seems to sometimes smear these redactions across the page. We've found that re-saving a document in Acrobat or Preview can fix this. If that isn't working, [let us know][] and we'll help you figure it out.
+Ever so very occasionally, we find that documents containing government redactions will look like they're covered in a dark gray fog of pixels. [GraphicsMagick][], which we use to break out images of each page in your document, seems to sometimes smear these redactions across the page. We've found that re-saving a document in Acrobat or Preview can fix this. If that isn't working, [let us know][] and we'll help you figure it out.
  
 # No Text At All
 
@@ -20,7 +20,7 @@ If you've got high quality text already embedded in your PDF, we don't want to r
  
 # Encrypted or Secured Documents 
 
-It is not unheard of for government agencies to release public documents that make use of usage restriction or monitoring capacities of PDFs. DocumentCloud can process some locked or password protected PDFs, but not all of them. If your operating system or print dialog includes a "Print to file" or "Print to PDF" option, you should be able to print a new document which DocumentCloud will be able to work with.
+It is not unheard of for government agencies to release public documents that make use of usage restriction or monitoring capacities of PDFs. DocumentCloud can process some locked or password protected PDFs, but if we can't unlock a document for you, you may still be able to get around such restrictions. If your operating system or print dialog includes a "Print to file" or "Print to PDF" option, you should be able to print a new document which DocumentCloud will be able to work with.
 
 # More Tools
 
@@ -35,6 +35,7 @@ Still having trouble with a document? Don't hesitate to [contact us][].
 [contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [Reduce File Size]: /images/help/reduce_file_size.jpg
 [PDF Optimizer]: /images/help/pdf_optimizer.jpg
+[GraphicsMagick]: http://www.graphicsmagick.org/
 [let us know]: javascript:dc.app.workspace.help.openContactDialog()
 [world of great PDF editors]: http://en.wikipedia.org/wiki/List_of_PDF_software
 [pdftk]: http://www.accesspdf.com/pdftk/
