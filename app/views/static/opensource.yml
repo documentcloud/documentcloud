@@ -35,16 +35,21 @@ news:
 github:
   - - "NY Times' Document Viewer"
     - http://github.com/NYTimes/document-viewer
+    - http://github.com/NYTimes/document-viewer
     - "We're collaborating with the New York Times on their document viewer technology, a key component of DocumentCloud."
   - - Docsplit
     - http://documentcloud.github.com/docsplit/
+    - http://github.com/documentcloud/docsplit/
     - Break Apart Documents into Images, Text, Pages and PDFs
   - - Jammit
     - http://documentcloud.github.com/jammit/
+    - http://github.com/documentcloud/jammit/
     - Industrial Strength Asset Packaging for Rails
   - - Underscore.js
     - http://documentcloud.github.com/underscore/
+    - http://github.com/documentcloud/underscore/
     - Functional Programming Aid for Javascript. Works well with jQuery
   - - CloudCrowd
     - http://wiki.github.com/documentcloud/cloud-crowd
+    - http://github.com/documentcloud/cloud-crowd
     - Parallel Processing for the Rest of Us

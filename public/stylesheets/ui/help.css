@@ -20,6 +20,9 @@
   font: 14px/18px Helvetica, Arial;
   display: none;
 }
+  #help .static-only {
+    display: none;
+  }
   body.help_panel_tab #help {
     display: block;
   }

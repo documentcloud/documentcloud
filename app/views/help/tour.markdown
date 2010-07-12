@@ -8,7 +8,7 @@ Use the "New Project" button on the left to create a project called "Demo Docume
 
 ## Try a search of public documents.
 
-Search for [gulf oil spill][]
+Search for [gulf oil spill][].
 
 This will search all documents made public by any DocumentCloud user for documents with "gulf," "oil" and "spill" in the text or title. You can [refine your search by special criteria][], as well. Your results should include a number of documents relating to the British Petroleum oil spill in the Gulf of Mexico. Drag one or two of these documents into your "Demo Documents" project. 
 
@@ -22,7 +22,7 @@ Double-click on one of your documents to open it. If the contributing reporter m
 
 DocumentCloud gives you access to a great set of analytic tools for working with large and small documents. When a document is uploaded, we run it through OCR, which extracts letters and words from the documents' image. But that's not all. 
  
-Search for [source: "House Committee on the Judiciary"][]
+Search for [source: "House Committee on the Judiciary"][].
  
 Your results will include a handful of documents related to a DOJ report on Bush administration interrogation policies. Select all 8 of the interrogation documents and click the "Timeline" button:
 
@@ -46,4 +46,3 @@ Questions? Don't hesitate to [contact us][]. And as you go, feel free to [reques
 [Timeline]: /images/help/timeline.jpg
 [Show Pages]: /images/help/show_pages.png
 [request features and report bugs]: http://documentcloud.uservoice.com
-[gulf oil spill]: #search/gulf%20oil%20spill
