@@ -1,6 +1,6 @@
 # How to Add Accounts
 
-Managing your organization's DocumentCloud accounts is done through a single panel: at the bottom of the sidebar, click the "<a href="#" onclick="dc.app.accounts.open();">Show All Accounts</a>" link.
+Managing your organization's DocumentCloud accounts is done through a single panel: at the bottom of the sidebar, click the "[Show All Accounts][]" link.
 
 The dialog that opens up contains a list of all of the accounts in your organization, as well as a "New Account" button. There are two categories of users that you can add to your organization: "contributor" and "administrator". The most notable difference between the two is that only administrators are allowed to add new users. An administrator will also be able to edit the public notes and metadata (including the title, source and description) of any documents that belong to the publication. 
 
@@ -8,5 +8,6 @@ You can also tweak your name here (did we call you "David" when really your byli
 
 Still have questions about accounts? Don't hesitate to [contact us][].
 
+[Show All Accounts]: javascript:dc.app.accounts.open()
 [Gravatar]: http://gravatar.com
 [contact us]: javascript:dc.app.workspace.help.openContactDialog()

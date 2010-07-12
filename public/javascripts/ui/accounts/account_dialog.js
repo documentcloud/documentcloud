@@ -32,7 +32,10 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   },
 
   open : function() {
-    if (!this._rendered) return this.render();
+    if (!this._rendered) {
+      this.render();
+      return;
+    }
     $(document.body).addClass('overlay');
     this.center();
     $(this.el).show();

@@ -1,7 +1,7 @@
 // The Help tab.
 dc.ui.Help = dc.View.extend({
 
-  PAGES : ['', 'searching', 'accounts', 'uploading', 'notes', 'publishing', 'collaboration', 'troubleshooting'],
+  PAGES : ['', 'searching', 'accounts', 'uploading', 'notes', 'publishing', 'privacy', 'collaboration', 'troubleshooting'],
 
   callbacks : {
     '.contact_us.click':  'openContactDialog',
@@ -72,6 +72,7 @@ dc.ui.Help = dc.View.extend({
         {onClick : _.bind(this.openPage, this, 'notes'),          title : 'Editing Notes and Sections'},
         {onClick : _.bind(this.openPage, this, 'publishing'),     title : 'Publishing &amp; Embedding'},
         {onClick : _.bind(this.openPage, this, 'collaboration'),  title : 'Collaboration'},
+        {onClick : _.bind(this.openPage, this, 'privacy'),        title : 'Privacy'},
         {onClick : _.bind(this.openPage, this, 'troubleshooting'),title : 'Troubleshooting Failed Uploads'}
       ]
     });
