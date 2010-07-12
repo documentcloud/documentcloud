@@ -1,28 +1,49 @@
 # Guided Tour
- 
-Create a project called "Demo Documents". Projects keep documents organized, allowing you to restrict your searches to a limited group of documents, and making it possible to collaborate on sets of documents with other reporters.
 
-Run an example search for [gulf oil spill][]
-  
-This will return a list of documents with all of the three words present in the text or title of the document. You can [refine your search by special criteria][], as well.
- 
-Your results should include a number of documents relating to the British Petroleum oil spill in the Gulf of Mexico. You can drag a number of these documents into your "Demo Documents" project to keep them handy for future reference. Double-click the document title to launch it in a viewer.
+DocumentCloud is a tool for organizing and working with large documents and document collections, a document viewer that makes it easier for reporters to share source material with readers and a publicly accessible repository of primary source documents that were used in journalists' investigations. If you're new to DocumentCloud, here's a walk through that we hope will help you get your bearings. 
 
-If the document has public notes, made by the contributing reporter, you'll be able to see them here. You can make [your own private notes][] on the document, and those won't be visible to anyone but you.
+## Create your first project.
+
+Use the "New Project" button on the left to create a project called "Demo Documents". Projects keep documents organized, allow you to restrict your searches to a limited group of documents and make it possible to collaborate on documents with other reporters.
+
+## Try a search of public documents.
+
+Search for [gulf oil spill][]
+
+This will search all documents made public by any DocumentCloud user for documents with "gulf," "oil" and "spill" in the text or title. You can [refine your search by special criteria][], as well. Your results should include a number of documents relating to the British Petroleum oil spill in the Gulf of Mexico. Drag one or two of these documents into your "Demo Documents" project. 
+
+Click on "Demo Documents" to open your project. You should see your documents listed there.
+
+## Make some notes.
+
+Double-click on one of your documents to open it. If the contributing reporter made public notes on the document, you'll be able to see them here. You can make [your own private notes][] on the document: those won't be visible to anyone but you.
+
+## Try our analytic tools.
+
+DocumentCloud gives you access to a great set of analytic tools for working with large and small documents. When a document is uploaded, we run it through OCR, which extracts letters and words from the documents' image. But that's not all. 
  
-Try searching for [source: "House Committee on the Judiciary"][]
+Search for [source: "House Committee on the Judiciary"][]
  
-This should pull up a handful of documents related to a DOJ report on Bush administration interrogation policies. When a document is uploaded, we run it through OCR and a handful of other processing tools. If you select all 8 of the interrogation documents and click the "Timeline" button, you can see all the dates named in these documents plotted on a timeline. Hover over a dot to see the exact date mentioned, and click on a dot to view the date in the text of the document.
+Your results will include a handful of documents related to a DOJ report on Bush administration interrogation policies. Select all 8 of the interrogation documents and click the "Timeline" button:
 
 ![Timeline][]
 
 &nbsp;
+
+All of the dates named in these documents are plotted on a timeline. Hover over any dot to see the exact date mentioned, and click on a dot to view the date in the text of the document.
  
-Close the timeline and click over to the "Entities" tab, at the top left of the screen. This will show you a series of expandable lists of the **people**, **organizations**, **places**, and **terms** mentioned in the documents. You'll see "John Yoo" at the top of the list, with the counter `(8)` next to his name, because he's named in all eight of the documents. Click his name to refine your search, and then click the "show pages" link that appears right next to it. Underneath each document, you'll now see thumbnails of each page that mentions John Yoo, and can click on any of the thumbnails to jump directly to his name on that particular page.
+Close the timeline and click the "Entities" tab, at the top left of the screen. This will show you a series of expandable lists of the **people**, **organizations**, **places**, and **terms** mentioned in the documents. You'll see "John Yoo" at the top of the list, with the counter `(8)` next to his name, because he's named in all eight of the documents. Click his name to refine your search, and then click the "show pages" link that appears right next to it. Underneath each document, you'll now see thumbnails of each page that mentions John Yoo, and can click on any of the thumbnails to jump directly to his name on that particular page.
 
 ![Show Pages][]
 
 &nbsp;
+
+## Get to work.
+
+Make sure you understand document [privacy][] and get started [uploading][], [annotating][] and [publishing][] documents. 
+
+Questions? Don't hesitate to [contact us][]. And as you go, feel free to [request features and report bugs][].
+
 
 [Timeline]: /images/help/timeline.jpg
 [Show Pages]: /images/help/show_pages.png
@@ -31,3 +52,9 @@ Close the timeline and click over to the "Entities" tab, at the top left of the 
 [refine your search by special criteria]: #help/searching
 [your own private notes]: #help/notes
 [source: "House Committee on the Judiciary"]: #search/source%3A%20%22House%20Committee%20on%20the%20Judiciary%22
+[privacy]: #help/privacy
+[annotating]: #help/notes
+[publishing]: #help/publishing
+[uploading]: #help/uploading
+[request features and report bugs]: http://documentcloud.uservoice.com
+[contact us]: javascript:dc.app.workspace.help.openContactDialog()
