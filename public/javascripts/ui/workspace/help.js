@@ -27,8 +27,8 @@ dc.ui.Help = dc.View.extend({
 
   render : function() {
     dc.history.register(/^#help\//, _.bind(this.openPage, this));
-    dc.history.register(/^#help$/, _.bind(this.openPage, this, ''));
-    dc.app.navigation.bind('help', _.bind(this.openHelpTab, this));
+    dc.history.register(/^#help$/,  _.bind(this.openPage, this, ''));
+    dc.app.navigation.bind('help',  _.bind(this.openHelpTab, this));
     this._toolbar = $('#help_toolbar');
     this._toolbar.prepend(this._createHelpMenu().render().el);
     this.setCallbacks();

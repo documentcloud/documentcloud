@@ -48,12 +48,17 @@ dc.history = {
 
   // Check the current URL hash against the recorded one, firing callbacks.
   checkURL : function() {
-    var current = (this.USE_IFRAME ? this.iframe : window).location.hash;
+    var current = window.location.hash;
+    if (current == this.hash && this.USE_IFRAME) {
+      current = this.iframe.location.hash;
+    }
     if (!current ||
         current == this.hash ||
         '#' + current == this.hash ||
         current == decodeURIComponent(this.hash)) return false;
-    if (this.USE_IFRAME) window.location.hash = current;
+    if (this.USE_IFRAME) {
+      window.location.hash = this.iframe.location.hash = current;
+    }
     this.loadURL();
   },
 
