@@ -71,11 +71,11 @@ Still have questions about publishing documents? Don't hesitate to [contact us][
 [Embed Menu]: /images/help/embed_menu.png
 
 [contact us]: javascript:dc.app.workspace.help.openContactDialog()
-[favorite embedded documents]: http://documentcloud.pbworks.com/Document-Dives
+[favorite embedded documents]: /featured
 [let us know]: javascript:dc.app.workspace.help.openContactDialog()
 [Let us know]: javascript:dc.app.workspace.help.openContactDialog()
 [terms and conditions]: /terms
-[plenty more]: http://documentcloud.pbworks.com/Document-Dives
+[plenty more]: /featured
 [NewsHour]: http://www.pbs.org/newshour/rundown/stevens-testimony.html
 [Arizona Republic]: http://www.azdatapages.com/sb1070.html
 [Chicago Tribune]: http://media.apps.chicagotribune.com/docs/obama-subpoena.html
