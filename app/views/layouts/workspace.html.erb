@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
-  <title><%= @title %> - DocumentCloud</title>
+  <title><%= @title ? @title + ' - ' : '' %>DocumentCloud</title>
   <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
   <% js  = [:core] + (@javascripts || []) %>
   <%= include_stylesheets *css %>

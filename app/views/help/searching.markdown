@@ -1,4 +1,4 @@
-# Searching in the Workspace
+# Searching for Documents
 
 This guide lists the different types of searches you can perform with DocumentCloud. You can click any of the linked examples to run the search and try it out.
 

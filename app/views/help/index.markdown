@@ -1,4 +1,4 @@
-# Welcome to the DocumentCloud Workspace
+# Welcome to DocumentCloud
 
 From here, you can:
 
