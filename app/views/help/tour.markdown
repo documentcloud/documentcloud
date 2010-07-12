@@ -26,23 +26,17 @@ Search for [source: "House Committee on the Judiciary"][].
  
 Your results will include a handful of documents related to a DOJ report on Bush administration interrogation policies. Select all 8 of the interrogation documents and click the "Timeline" button:
 
-![Timeline][]
-
-&nbsp;
+<img src="/images/help/timeline.jpg" class="full_line" />
 
 All of the dates named in these documents are plotted on a timeline. Hover over any dot to see the exact date mentioned, and click on a dot to view the date in the text of the document.
  
 Close the timeline and click the "Entities" tab, at the top left of the screen. This will show you a series of expandable lists of the **people**, **organizations**, **places**, and **terms** mentioned in the documents. You'll see "John Yoo" at the top of the list, with the counter `(8)` next to his name, because he's named in all eight of the documents. Click his name to refine your search, and then click the "show pages" link that appears right next to it. Underneath each document, you'll now see thumbnails of each page that mentions John Yoo, and can click on any of the thumbnails to jump directly to his name on that particular page.
 
-![Show Pages][]
-
-&nbsp;
+<img src="/images/help/show_pages.png" class="full_line" />
 
 Make sure you understand document [privacy][] and get started [uploading][], [annotating][] and [publishing][] documents. 
 
 Questions? Don't hesitate to [contact us][]. And as you go, feel free to [request features and report bugs][].
 
 
-[Timeline]: /images/help/timeline.jpg
-[Show Pages]: /images/help/show_pages.png
 [request features and report bugs]: http://documentcloud.uservoice.com

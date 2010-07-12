@@ -32,6 +32,11 @@
   #help img {
     float: right;
     margin-left: 15px;
+  }  
+  #help img.full_line {
+    display: block;
+    margin: 0 auto;
+    float: none;
   }
   #help em {
     font-style: italic;

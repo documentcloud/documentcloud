@@ -161,7 +161,7 @@ small {
   font: inherit;
   display: block;
   padding: 0;
-  max-width: auto;
+  max-width: inherit;
   color: #000;
 }
   #content.static #help ul {

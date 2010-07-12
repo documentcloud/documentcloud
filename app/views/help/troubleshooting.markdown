@@ -6,9 +6,7 @@ In Preview, open the PDF and choose "File > Save As". Choose "Reduce File Size" 
 
 In Acrobat, open the PDF and choose "Advanced > PDF Optimizer". You'll see a window with a list of categories of optimizations on the left. Click through the list, and make sure that all of the possible optimizations are checked. When you're ready, click "Ok" to save the PDF.
 
-![PDF Optimizer][]
-
-&nbsp;
+<img src="/images/help/pdf_optimizer.jpg" class="full_line" />
 
 # Noise in Documents
 
@@ -33,7 +31,6 @@ Don't have access to Acrobat or Preview? There's a [world of great PDF editors][
 Still having trouble with a document? Don't hesitate to [contact us][].
 
 [Reduce File Size]: /images/help/reduce_file_size.jpg
-[PDF Optimizer]: /images/help/pdf_optimizer.jpg
 [GraphicsMagick]: http://www.graphicsmagick.org/
 [world of great PDF editors]: http://en.wikipedia.org/wiki/List_of_PDF_software
 [pdftk]: http://www.accesspdf.com/pdftk/

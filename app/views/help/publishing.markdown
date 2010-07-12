@@ -16,7 +16,7 @@ If you want your readers to view a document, you'll need to embed it on your web
  
 Here are some live examples worth checking out: [NewsHour][], [Arizona Republic][], [Chicago Tribune][], [ProPublica][], but there are [plenty more][].
 
-![NewsHour Example][]
+<img src="/images/help/newshour.jpg" class="full_line" />
 
 If you'd prefer to fit the document into an existing layout, and not have the viewer be full-screen, this can be accomplished by using CSS to set the style of the document's containing element to "relative", and giving the containing element a width and height of your choosing. For an example of this style of embed, take a look at [this document from the Commercial Appeal][].
  
@@ -67,7 +67,6 @@ The other option you can currently use is `zoom`, which will set the initial zoo
 
 Still have questions about publishing documents? Don't hesitate to [contact us][].
 
-[NewsHour Example]: /images/help/newshour.jpg
 [Embed Menu]: /images/help/embed_menu.png
 [favorite embedded documents]: http://documentcloud.pbworks.com/Document-Dives
 [terms and conditions]: /terms
