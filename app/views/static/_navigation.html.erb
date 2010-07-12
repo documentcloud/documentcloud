@@ -1,10 +1,19 @@
+<%
+  nav = [
+    ['login', '/login', 'Login'],
+    ['blog', 'http://blog.documentcloud.org/', 'Blog'],
+    ['contributors', '/contributors', 'Contributors'],
+    ['faq', '/faq', 'FAQ'],
+    ['help', '/help', 'Help'],
+    ['opensource', '/opensource', 'Open Source'],
+    ['news', '/news', 'In the News'],
+    ['about', '/about', 'Who We Are']
+  ]
+%>
+
 <div id="navigation">
-  <a href="/login">Login</a>
-  <a href="http://blog.documentcloud.org/">Blog</a>
-  <a href="/contributors">Contributors</a>
-  <a href="/faq">FAQ</a>
-  <a href="/help">Help</a>
-  <a href="/opensource">Open Source</a>
-  <a href="/news">In the News</a>
-  <a href="/about">Who We Are</a>
+  <% nav.each do |item| %>
+    <% action, url, title = *item %>
+    <a href="<%= url %>" class="<%= params[:action] == action ? "active" : "" %>"><%= title %></a>
+  <% end %>
 </div>

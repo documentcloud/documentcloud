@@ -114,7 +114,10 @@ small {
   #navigation a {
     margin-right: 18px;
   }
-
+    #navigation .active {
+      color: #005;
+    }
+  
 #footer {
   font-size: 1.1em;
   line-height: 1.5em;
@@ -154,28 +157,36 @@ small {
       text-decoration: none;
     }
     
-#content #help {
+#content.static #help {
   font: inherit;
   display: block;
   padding: 0;
   max-width: auto;
+  color: #000;
 }
-  #content #help h1 {
+  #content.static #help ul {
+    margin-left: 0;
+    padding-left: 15px;
+  }
+    #content.static #help ul li {
+      padding-left: 5px;
+    }
+  #content.static #help h1 {
     font-size: 1.25em;
   }
-  #content #help a {
+  #content.static #help a {
     color: #536eac;
   }
-  #content #help a:hover {
+  #content.static #help a:hover {
     color: #000055;
     text-decoration: none;
   }
-  #help table td, #help table th {
+  #content.static #help table td, #help table th {
     font-size: 14px;
   }
-    #help .ajax-only {
+    #content.static #help .ajax_only {
       display: none;
     }
-    #content #help .static-only {
+    #content.static #help .static_only {
       display: inline;
     }

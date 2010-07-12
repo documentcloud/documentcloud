@@ -20,7 +20,7 @@
   font: 14px/18px Helvetica, Arial;
   display: none;
 }
-  #help .static-only {
+  #help .static_only {
     display: none;
   }
   body.help_panel_tab #help {
