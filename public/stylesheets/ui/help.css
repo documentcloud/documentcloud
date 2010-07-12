@@ -29,11 +29,14 @@
     #help a:hover {
       text-decoration: underline;
     }
-  #help h1 {
+  #help h1, #help h2 {
     margin: 30px 0 15px 0;
     color: #000;
     font-weight: bold;
     font-size: 16px;
+  }
+  #help h2 {
+    font-size: 14px;
   }
   #help p {
     margin: 20px 0;

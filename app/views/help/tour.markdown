@@ -38,8 +38,6 @@ Close the timeline and click the "Entities" tab, at the top left of the screen. 
 
 &nbsp;
 
-## Get to work.
-
 Make sure you understand document [privacy][] and get started [uploading][], [annotating][] and [publishing][] documents. 
 
 Questions? Don't hesitate to [contact us][]. And as you go, feel free to [request features and report bugs][].
