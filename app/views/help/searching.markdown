@@ -30,6 +30,8 @@ country                     | For example: [country: Iran][]
 
 Still have questions about how to search? Don't hesitate to [contact us][].
 
+To see the details of how to use our search API, visit the API documentation at [documentcloud.org/api][].
+
 [contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [John Yoo detainee]: #search/John%20Yoo%20detainee
 [account: scott.klein@propublica.org]: #search/account%3A%20scott.klein%40propublica.org
@@ -46,3 +48,4 @@ Still have questions about how to search? Don't hesitate to [contact us][].
 [city: "New Orleans"]: #search/city%3A%20%22New%20Orleans%22
 [state: Arizona]: #search/state%3A%20Arizona
 [country: Iran]: #search/country%3A%20Iran
+[documentcloud.org/api]: http://www.documentcloud.org/api

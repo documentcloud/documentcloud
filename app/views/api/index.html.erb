@@ -19,8 +19,8 @@
     will be rate limited by account and by IP address, per minute, at levels
     to be determined. Please don't hammer the API.
   </p>
-
-  <h2>/api/search.json</h2>
+  
+  <h2>GET /api/search.json</h2>
 
   <p>
     Search the catalog of public documents. This method can be used to scrape
@@ -85,6 +85,62 @@
   </form>
 
   <pre id="search_results"></pre>
+  
+  <h2>POST /api/upload.json</h2>
+  
+  <p>
+    We offer a rudimentary API for bulk uploads. It exposes the same API that
+    we use internally, but wraps it in HTTP Basic Authentication. The documents 
+    will be uploaded into the authenticated account.
+  </p>
+  
+  <table>
+    <thead>
+      <tr>
+        <th class="gradient_light">Parameter</th>
+        <th class="gradient_light">Description</th>
+        <th class="gradient_light">Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="param">file</td>
+        <td class="desc">(required) the document file itself</td>
+        <td class="ex"></td>
+      </tr>
+      <tr class="alt">
+        <td class="param">title</td>
+        <td class="desc">(required) the document's canonical title</td>
+        <td class="ex">2008 Blagojevich Tax Return</td>
+      </tr>
+      <tr>
+        <td class="param">source</td>
+        <td class="desc">(optional) the source who produced the document</td>
+        <td class="ex">U.S. Attorney's Office</td>
+      </tr>
+      <tr class="alt">
+        <td class="param">description</td>
+        <td class="desc">(optional) a paragraph of detailed description</td>
+        <td class="ex">This prosecution exhibit is the 2008 joint tax return for Rod and Patti Blagojevich. It shows their total income for the year was $284,000.</td>
+      </tr>
+      <tr>
+        <td class="param">access</td>
+        <td class="desc">(optional) one of "public", "private", "organization", defaults to "private"</td>
+        <td class="ex">public</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    You'll definitely want to review your uploaded files and add a source or 
+    description once they're up. 
+  </p>
+
+  <p>
+    Note that we don't yet support SSL uploads, so your username, password 
+    and documents are being sent in cleartext. So don't try this on unencrypted 
+    wireless (or any network you don't trust).
+  </p>
 
 </div>
 <script type="text/javascript">

@@ -12,29 +12,15 @@ All documents you upload are available by clicking on the "[Your Documents][]" l
  
 Before you start the upload, you can enter a title for the document, as well as a source and description &mdash; all of which will appear when the document is found in search results. You can also decide in advance whether the document should stay private, be shared in your newsroom, or be made public immediately.
  
-# OCR
+## Suggestions for OCR
 
 If you have access to high quality [OCR][], we recommend that you OCR your document before you upload it to DocumentCloud. 
 
 We're using an OCR program called [Tesseract][]. For an absolutely free tool, it is actually pretty impressive, but you'll get better results with some of the fancier proprietary services like Abbyy or Nuance. Many office photocopiers have built-in OCR these days, so that's another option if you have documents that are difficult to read.
- 
-# Bulk Uploading via the API
-
-We offer a rudimentary API for bulk uploads. It exposes the same API that we use internally, but wraps it in HTTP Basic Authentication. The documents will be uploaded into the authenticated account. You'll want to post to: `http://documentcloud.org/api/upload.json`
- 
-Request Params | &nbsp;
----------------|----------------
-file           | (required) the document file itself
-title          | (required) 
-source         | (optional)
-description    | (optional)
-access         | (optional) one of "public", "private", "organization"
- 
-You'll definitely want to review your uploaded files and add a source or description once they're up. 
- 
-Note that we don't yet support SSL uploads, so your username, password and documents are being sent in cleartext. So don't try this on unencrypted wireless (or any network you don't trust).
 
 Still have questions about uploading documents? Don't hesitate to [contact us][].
+
+For information about our bulk upload API, check out our documentation at [documentcloud.org/api][].
 
 [contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [use Preview to reduce the size of your file]: http://www.ehow.com/how_4499823_reduce-file-size-pdf-using.html
@@ -43,3 +29,4 @@ Still have questions about uploading documents? Don't hesitate to [contact us][]
 [Your Documents]: javascript:Accounts.current().openDocuments()
 [OCR]: http://en.wikipedia.org/wiki/Optical_character_recognition
 [Tesseract]: http://code.google.com/p/tesseract-ocr/
+[documentcloud.org/api]: http://www.documentcloud.org/api
