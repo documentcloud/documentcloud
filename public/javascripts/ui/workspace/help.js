@@ -4,7 +4,8 @@ dc.ui.Help = dc.View.extend({
   PAGES : ['', 'searching', 'accounts', 'uploading', 'notes', 'publishing', 'collaboration', 'troubleshooting'],
 
   callbacks : {
-    '.contact_us.click': 'openContactDialog'
+    '.contact_us.click':  'openContactDialog',
+    '.uservoice.click':   'openUserVoice'
   },
 
   constructor : function() {
@@ -28,7 +29,14 @@ dc.ui.Help = dc.View.extend({
         dc.ui.notifier.show({mode : 'info', text : 'Your message was sent successfully.'});
       });
       return true;
-    }, {information : "Send a message and we'll email you back.", saveText : 'Send'});
+    }, {
+      text     : 'Use this form (or email to <a href="mailto:support@documentcloud.org">support@documentcloud.org</a>) to contact us for assistance. You can reach Amanda Hickman, our Program Director, at (646) 450-2162.',
+      saveText : 'Send'
+    });
+  },
+
+  openUserVoice : function() {
+    window.open('http://documentcloud.uservoice.com');
   },
 
   openPage : function(page) {

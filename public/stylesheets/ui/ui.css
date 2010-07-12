@@ -454,15 +454,20 @@ textarea.text_area {
   .dialog .text, .dialog .custom {
     font-size: 16px; line-height: 18px;
   }
-  .dialog .information {
-    position: absolute;
-    top: 34px; right: 30px;
+  .dialog .text, .dialog .information {
     font-size: 10px;
     color: #999;
   }
-    .dialog .information.error {
-      color: #f00;
+    .dialog .text {
+      margin: 0 0 30px 0;
     }
+    .dialog .information {
+      position: absolute;
+      top: 34px; right: 30px;
+    }
+      .dialog .information.error {
+        color: #f00;
+      }
   .dialog .text_link {
     font-size: 11px;
     line-height: 14px;
