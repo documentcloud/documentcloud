@@ -8,6 +8,7 @@ From here, you can:
   * [Annotate documents][] with notes and navigation.
   * Organize projects of documents and notes, and [share them][] with collaborators.
   * [Publish documents][] by embedding them on your web site.
+  * [Walk through a guided tour][] of the workspace.
 
 If you're just looking to get started, try searching the documents already in the repository. Click on the "[Documents][]" tab, above, and try a regular full-text search, such as "[obama health care][]", or a more specific fielded search, such as "[person:geithner term:regulator][]".
 
@@ -18,6 +19,7 @@ For more information on specific topics, open the "[Guides &amp; How To's][]" me
 [Annotate documents]: #help/notes
 [share them]: #help/collaboration
 [Publish documents]: #help/publishing
+[Walk through a guided tour]: #help/tour
 [Documents]: #search/
 [obama health care]: #search/obama%20health%20care
 [person:geithner term:regulator]: #search/person%3Ageithner%20term%3Aregulator
