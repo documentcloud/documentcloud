@@ -4,11 +4,19 @@ Most users will be uploading PDFs to DocumentCloud, but we can work with any fil
  
 With large files (anything over 10 MB) you might find you get better results and faster uploads if you optimize the size of the document first. If you're on a Mac, you can [use Preview to reduce the size of your file][]. If you've got a copy of Adobe Acrobat, [that works as well][]. If you don't have Acrobat or Preview, our tips on troubleshooting documents might help.
 
+<div class="minibutton float_right plus new_document" style="margin: 0 0 20px 20px;" onclick="javascript:dc.app.uploader.open();"><div class="icon white_plus"></div>New Document</div>
+
 Uploading Documents is straightforward. Open the Upload dialog by clicking on the "[New Document][]" button in the sidebar.
  
 All documents you upload are available by clicking on the "[Your Documents][]" link at the top left. If you've started a project, and you click on "[New Document][]" while you have that project open, your document will be added to the project automatically. 
  
 Before you start the upload, you can enter a title for the document, as well as a source and description &mdash; all of which will appear when the document is found in search results. You can also decide in advance whether the document should stay private, be shared in your newsroom, or be made public immediately.
+ 
+# OCR
+
+If you have access to high quality [OCR][], we recommend that you OCR your document before you upload it to DocumentCloud. 
+
+We're using an OCR program called [Tesseract][]. For an absolutely free tool, it is actually pretty impressive, but you'll get better results with some of the fancier proprietary services like Abbyy or Nuance. Many of the fancier office photocopiers have built-in OCR these days, so that's another option if you have some documents that are difficult to read.
  
 # Bulk Uploading via the API
 
@@ -30,3 +38,5 @@ Note that we don't yet support SSL uploads, so your username, password and docum
 [that works as well]: http://www.ehow.com/how_5874491_decrease-size-pdf.html
 [New Document]: javascript:dc.app.uploader.open()
 [Your Documents]: javascript:Accounts.current().openDocuments()
+[OCR]: http://en.wikipedia.org/wiki/Optical_character_recognition
+[Tesseract]: http://code.google.com/p/tesseract-ocr/
