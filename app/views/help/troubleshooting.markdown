@@ -22,6 +22,9 @@ If you've got high quality text already embedded in your PDF, we don't want to r
 
 It is not unheard of for government agencies to release public documents that make use of usage restriction or monitoring capacities of PDFs. DocumentCloud can process some locked or password protected PDFs, but not all of them. If your operating system or print dialog includes a "Print to file" or "Print to PDF" option, you should be able to print a new document which DocumentCloud will be able to work with.
 
+Still having trouble with a document? Don't hesitate to [contact us][].
+
+[contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [Reduce File Size]: /images/help/reduce_file_size.jpg
 [PDF Optimizer]: /images/help/pdf_optimizer.jpg
 [let us know]: javascript:dc.app.workspace.help.openContactDialog()

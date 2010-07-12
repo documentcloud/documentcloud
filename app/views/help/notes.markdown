@@ -16,5 +16,8 @@ The notes that you add to a document become visible in the workspace as well. Cl
 
 To help highlight different sections of a long document, you can add navigation links to the sidebar. Inside of the document viewer, click on "Edit Sections" to open up the Section Editor dialog, which contains a numbered list of sections. For each section, enter the title, the page number of the start of the section, and the page number of the end. If you need to add or remove sections, click on the plus and minus icons. When you're finished, hit "Save", and the navigation will update.
 
+Still have questions about annotating documents? Don't hesitate to [contact us][].
+
+[contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [Annotations]: /images/help/document_annotations.jpg
 [Notes Link]: /images/help/notes_link.jpg

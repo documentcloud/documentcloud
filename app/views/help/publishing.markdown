@@ -65,9 +65,12 @@ The other option you can currently use is `zoom`, which will set the initial zoo
 
 [Let us know][] about your reporting. Even if it is "just a little local story" -- we're interested in all the reporting you do with DocumentCloud.
 
+Still have questions about publishing documents? Don't hesitate to [contact us][].
+
 [NewsHour Example]: /images/help/newshour.jpg
 [Embed Menu]: /images/help/embed_menu.png
 
+[contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [favorite embedded documents]: http://documentcloud.pbworks.com/Document-Dives
 [let us know]: javascript:dc.app.workspace.help.openContactDialog()
 [Let us know]: javascript:dc.app.workspace.help.openContactDialog()

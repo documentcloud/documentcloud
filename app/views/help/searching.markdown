@@ -28,8 +28,9 @@ city                        | For example: [city: "New Orleans"][]
 state                       | (Includes provinces, in countries that have provinces instead of states.) For example: [state: Arizona][]
 country                     | For example: [country: Iran][]
 
-Still have questions about search? [Contact us][].
+Still have questions about how to search? Don't hesitate to [contact us][].
 
+[contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [John Yoo detainee]: #search/John%20Yoo%20detainee
 [account: scott.klein@propublica.org]: #search/account%3A%20scott.klein%40propublica.org
 [group: chicago-tribune]: #search/group%3A%20chicago-tribune
@@ -45,4 +46,3 @@ Still have questions about search? [Contact us][].
 [city: "New Orleans"]: #search/city%3A%20%22New%20Orleans%22
 [state: Arizona]: #search/state%3A%20Arizona
 [country: Iran]: #search/country%3A%20Iran
-[Contact us]: javascript:dc.app.workspace.help.openContactDialog()

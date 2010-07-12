@@ -10,4 +10,7 @@ If you have a project you'd like to share, click on it's edit icon <span class="
 
 The next time your partner logs in to DocumentCloud, the project you shared will show up in their sidebar. Your partner can now view, edit, and annotate all of the documents inside of it. If they add documents of their own to the project, you'll be able to see and edit those documents as well.
 
+Still have questions about collaboration? Don't hesitate to [contact us][].
+
+[contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [Show Collaborator]: /images/help/show_collaborator.png

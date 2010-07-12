@@ -34,6 +34,9 @@ You'll definitely want to review your uploaded files and add a source or descrip
  
 Note that we don't yet support SSL uploads, so your username, password and documents are being sent in cleartext. So don't try this on unencrypted wireless (or any network you don't trust).
 
+Still have questions about uploading documents? Don't hesitate to [contact us][].
+
+[contact us]: javascript:dc.app.workspace.help.openContactDialog()
 [use Preview to reduce the size of your file]: http://www.ehow.com/how_4499823_reduce-file-size-pdf-using.html
 [that works as well]: http://www.ehow.com/how_5874491_decrease-size-pdf.html
 [New Document]: javascript:dc.app.uploader.open()
