@@ -23,4 +23,3 @@ Your "private" notes will always be private. Public notes, on the other hand, ar
 Users identified as administrators can't view your private notes but can edit the public notes of any document that is public to your whole organization. You can see who is an administrator at your organization by clicking the "[Show All Accounts]" link.
 
 [terms of service]: http://www.opencalais.com/terms
-[Show All Accounts]: javascript:dc.app.accounts.open()
