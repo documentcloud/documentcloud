@@ -1,7 +1,18 @@
 // The Help tab.
 dc.ui.Help = dc.View.extend({
 
-  PAGES : ['', 'searching', 'accounts', 'uploading', 'notes', 'publishing', 'privacy', 'collaboration', 'troubleshooting'],
+  PAGES : [
+    {url : '',                 title : 'Introduction'},
+    {url : 'searching',        title : 'Searching Documents'},
+    {url : 'accounts',         title : 'Adding Accounts'},
+    {url : 'uploading',        title : 'Uploading Documents'},
+    {url : 'notes',            title : 'Editing Notes and Sections'},
+    {url : 'publishing',       title : 'Publishing &amp; Embedding'},
+    {url : 'collaboration',    title : 'Collaboration'},
+    {url : 'privacy',          title : 'Privacy'},
+    {url : 'troubleshooting',  title : 'Troubleshooting Failed Uploads'},
+    {url : 'tour',             title : 'Guided Tour'}
+  ],
 
   callbacks : {
     '.contact_us.click':  'openContactDialog',
@@ -11,6 +22,7 @@ dc.ui.Help = dc.View.extend({
   constructor : function() {
     this.el = $('#help')[0];
     this.currentPage = null;
+    this.PAGE_URLS = _.pluck(this.PAGES, 'url');
   },
 
   render : function() {
@@ -42,7 +54,7 @@ dc.ui.Help = dc.View.extend({
   },
 
   openPage : function(page) {
-    var noChange = !_.include(this.PAGES, page) || (page === this.currentPage);
+    var noChange = !_.include(this.PAGE_URLS, page) || (page === this.currentPage);
     this.currentPage = page;
     this.saveHistory();
     if (noChange) return dc.app.navigation.open('help');
@@ -64,17 +76,9 @@ dc.ui.Help = dc.View.extend({
     return this.menu = new dc.ui.Menu({
       id      : 'how_to_menu',
       label   : 'Guides &amp; How To\'s',
-      items   : [
-        {onClick : _.bind(this.openPage, this, ''),               title : 'Introduction'},
-        {onClick : _.bind(this.openPage, this, 'searching'),      title : 'Searching Documents'},
-        {onClick : _.bind(this.openPage, this, 'accounts'),       title : 'Adding Accounts'},
-        {onClick : _.bind(this.openPage, this, 'uploading'),      title : 'Uploading Documents'},
-        {onClick : _.bind(this.openPage, this, 'notes'),          title : 'Editing Notes and Sections'},
-        {onClick : _.bind(this.openPage, this, 'publishing'),     title : 'Publishing &amp; Embedding'},
-        {onClick : _.bind(this.openPage, this, 'collaboration'),  title : 'Collaboration'},
-        {onClick : _.bind(this.openPage, this, 'privacy'),        title : 'Privacy'},
-        {onClick : _.bind(this.openPage, this, 'troubleshooting'),title : 'Troubleshooting Failed Uploads'}
-      ]
+      items   : _.map(this.PAGES, _.bind(function(page) {
+        return {onClick : _.bind(this.openPage, this, page.url), title : page.title};
+      }, this))
     });
   }
 
