@@ -20,6 +20,10 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
     margin-bottom: 1em;
   }
+  h3 {
+    font-size: 1em; line-height: 1.3em;
+    font-weight: bold;
+  }
 small {
   font-size: 0.85em;
 }

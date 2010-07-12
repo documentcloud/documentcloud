@@ -46,6 +46,7 @@ ActionController::Routing::Routes.draw do |map|
     static.contributors   '/contributors',  :action => 'contributors'
     static.faq            '/faq',           :action => 'faq'
     static.terms          '/terms',         :action => 'terms'
+    static.featured       '/featured',      :action => 'featured'
     static.privacy        '/privacy',       :action => 'privacy'
     static.home           '/home',          :action => 'home'
     static.news           '/news',          :action => 'news'

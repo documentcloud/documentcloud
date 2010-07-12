@@ -29,8 +29,11 @@ class StaticController < ApplicationController
 
   def terms
   end
-  
-  def privacy 
+
+  def privacy
+  end
+
+  def featured
   end
 
   def news
