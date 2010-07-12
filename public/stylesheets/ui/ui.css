@@ -461,6 +461,9 @@ textarea.text_area {
     .dialog .text {
       margin: 0 0 30px 0;
     }
+      .dialog .text a {
+        text-decoration: underline;
+      }
     .dialog .information {
       position: absolute;
       top: 34px; right: 30px;

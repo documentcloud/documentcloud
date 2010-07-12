@@ -30,7 +30,9 @@ dc.ui.Help = dc.View.extend({
       });
       return true;
     }, {
-      text     : 'Use this form (or email to <a href="mailto:support@documentcloud.org">support@documentcloud.org</a>) to contact us for assistance. You can reach Amanda Hickman, our Program Director, at (646) 450-2162.',
+      text     : 'Use this form (or email to <a href="mailto:support@documentcloud.org">support@documentcloud.org</a>) to contact us for assistance. \
+                  If you need to speak to someone immediately, you can call us at (646) 450-2162.<br /> \
+                  See <a href="http://www.documentcloud.org/contact">documentcloud.org/contact</a> for more ways to get in touch.',
       saveText : 'Send'
     });
   },
