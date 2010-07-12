@@ -4,15 +4,15 @@
   color: #555;
 }
   #docs h1, #docs h2, #docs h3 {
-    font: 25px Arial;
+    font: 25px/50px Helvetica, Arial;
     color: #222;
     margin: 30px 0 10px 0;
   }
     #docs h2 {
-      font: 18px Arial;
+      font: 18px/40px Helvetica, Arial;
     }
     #docs h3 {
-      font: 14px Arial;
+      font: 14px/25px Helvetica, Arial;
     }
   #docs p, #docs form, #docs pre {
     position: relative;
@@ -31,7 +31,7 @@
   }
     #docs table th {
       text-transform: uppercase;
-      font: 10px Arial;
+      font: 10px Helvetica, Arial;
       color: #222;
     }
     #docs th, #docs td {
@@ -51,7 +51,7 @@
         font-weight: bold;
       }
       #docs td.desc {
-        font: italic 11px Arial;
+        font: italic 11px Helvetica, Arial;
         color: #555;
       }
     #docs table col.parameter {

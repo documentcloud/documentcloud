@@ -145,13 +145,25 @@ small {
     padding: 2px 8px;
     margin: 0;
   }
-    #help_navigation li.active a {
+    #help #help_navigation li.active a {
       color: black;
       text-decoration: none;
     }
-#help table th {
-  font-weight: bold;
+    
+#content #help {
+  font: inherit;
+  display: block;
 }
-#help table td {
-  padding: 0 16px 8px 0;
-}
+  #content #help a {
+    color: #536eac;
+  }
+  #content #help a:hover {
+    color: #000055;
+    text-decoration: none;
+  }
+  #help table td, #help table th {
+    font-size: 14px;
+  }
+    #help .ajax-only {
+      display: none;
+    }

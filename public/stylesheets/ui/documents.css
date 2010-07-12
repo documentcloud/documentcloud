@@ -16,7 +16,7 @@
     min-height: 80px;
     padding: 2px 30px 5px 90px;
     margin-bottom: 20px;
-    font: 11px/14px Arial;
+    font: 11px/14px Helvetica, Arial;
   }
     body.minidocs #document_list .document {
       float: left;
@@ -77,12 +77,12 @@
   .document .title {
     display: block;
     color: #000;
-    font: bold 16px/20px Arial;
+    font: bold 16px/20px Helvetica, Arial;
     margin-bottom: 10px;
     min-height: 20px;
   }
     body.minidocs .document .title {
-      font: bold 11px/14px Arial;
+      font: bold 11px/14px Helvetica, Arial;
       overflow: hidden;
       min-height: 14px;
       max-height: 28px;
@@ -208,7 +208,7 @@
     position: relative;
     margin: 20px 0 0 0;
     padding: 10px;
-    font: 12px/18px Arial;
+    font: 12px/18px Helvetica, Arial;
     color: #555;
     border: 3px solid #ffe325;
     -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
@@ -258,7 +258,7 @@
         .note .note_text_edit {
           height: 110px;
           width: 100%;
-          font: 12px/18px Arial;
+          font: 12px/18px Helvetica, Arial;
         }
       .note .note_excerpt_wrap {
         border: 1px solid #d0d0d0;

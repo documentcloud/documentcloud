@@ -34,6 +34,8 @@ stylesheets:
   static:
     - public/stylesheets/common/reset.css
     - public/stylesheets/pages/static.css
+    - public/stylesheets/ui/icons.css
+    - public/stylesheets/ui/help.css
   viewer_editing:
     - public/stylesheets/ui/ui.css
     - public/stylesheets/ui/icons.css

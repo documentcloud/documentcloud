@@ -8,7 +8,7 @@ span[role="link"] {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
 }
 .interface, .dialog, .minibutton, input {
-  font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif !important;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif !important;
 }
 
 .hidden {
@@ -120,10 +120,10 @@ div.text_input {
     width: 100%;
   }
     div.text_input.small input {
-      font: 12px/12px Arial;
+      font: 12px/12px Helvetica, Arial;
     }
     div.text_input.light input {
-      font: 12px/12px Arial;
+      font: 12px/12px Helvetica, Arial;
     }
     div.text_input.dark input {
       font-size: 14px; line-height: 18px; height: 18px;
@@ -158,7 +158,7 @@ div.text_input {
         width: 100%;
         padding: 5px 0;
         color: #999;
-        font: 13px/18px Arial;
+        font: 13px/18px Helvetica, Arial;
       }
         div.text_input.search input:focus {
           color: #000;
@@ -357,7 +357,7 @@ textarea.text_area {
     }
   .menu_content .auto_add {
     margin: 0 0 4px 19px;
-    font: italic 10px Arial;
+    font: italic 10px Helvetica, Arial;
     color: #555;
   }
   .menu_content .autofilter_input {
@@ -380,7 +380,7 @@ textarea.text_area {
     height: 12px; width: 105px;
     padding: 8px 0 10px 0;
     text-align: center;
-    font: bold 12px Arial;
+    font: bold 12px Helvetica, Arial;
     cursor: pointer;
     float: left;
     color: #fff;
@@ -449,7 +449,7 @@ textarea.text_area {
     .dialog span.subtitle {
       color: #555;
       margin-left: 3px;
-      font: italic 10px/18px Arial;
+      font: italic 10px/18px Helvetica, Arial;
     }
   .dialog .text, .dialog .custom {
     font-size: 16px; line-height: 18px;
@@ -538,7 +538,7 @@ iframe.hidden_iframe {
   .form_error > span, .form_success > span {
     color: #844;
     text-transform: uppercase;
-    font: 10px Arial;
+    font: 10px Helvetica, Arial;
     padding: 4px 8px 5px;
     border: 1px solid #aa7766;
     background: #fcc;
@@ -572,7 +572,7 @@ iframe.hidden_iframe {
     background: #161616 no-repeat;
     padding: 7px 10px 7px 50px;
     color: #ccc;
-    font: 11px/13px Arial;
+    font: 11px/13px Helvetica, Arial;
     opacity: 0.97; filter: alpha(opacity=97);
     border: 1px solid #555; border-top: 0; border-left: 0;
     border-bottom-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px;
@@ -589,7 +589,7 @@ iframe.hidden_iframe {
     color: #000;
     border-width: 0;
     padding: 4px 8px;
-    font: 11px/14px Arial;
+    font: 11px/14px Helvetica, Arial;
   }
     #tooltip_background {
       position: absolute;

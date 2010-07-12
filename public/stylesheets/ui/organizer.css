@@ -75,7 +75,7 @@
           display: block;
         }
       #organizer .box .title {
-        font: bold 14px Arial;
+        font: bold 14px Helvetica, Arial;
         color: #555;
       }
         #organizer .box.is_selected .title,
@@ -84,7 +84,7 @@
         }
       #organizer .box .counts,
       #organizer .top_level_search .text_link {
-        font: 11px/17px Arial;
+        font: 11px/17px Helvetica, Arial;
         color: #999;
       }
         #organizer .box .counts {
@@ -101,7 +101,7 @@
 
 /*------------------------------ Entities ---------------------------------*/
 #organizer_entities {
-  font: 11px/15px Arial;
+  font: 11px/15px Helvetica, Arial;
   color: #555;
   background: #fff;
   margin-right: 2px;
@@ -115,7 +115,7 @@
       margin-top: 10px;
     }
     #organizer_entities .category {
-      font: bold 12px Arial;
+      font: bold 12px Helvetica, Arial;
       padding-left: 30px;
       color: #000;
     }
@@ -194,7 +194,7 @@
     #project_dialog .account_view {
       padding: 10px 0;
       height: 27px;
-      font: 11px/27px Arial;
+      font: 11px/27px Helvetica, Arial;
       border-bottom: 1px solid #222;
     }
 
