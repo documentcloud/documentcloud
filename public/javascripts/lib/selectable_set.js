@@ -3,7 +3,7 @@ dc.model.SelectableSet = Base.extend({
   SELECTION_CHANGED : 'set:selection_changed',
 
   firstSelection : null,
-  
+
   selectedCount : 0,
 
   selectAll : function() {
@@ -27,7 +27,7 @@ dc.model.SelectableSet = Base.extend({
     this.base(model, silent);
     if (model.get('selected')) this.selectedCount += 1;
   },
-  
+
   _remove : function(model, silent) {
     this.base(model, silent);
     if (model.get('selected')) this.selectedCount -= 1;
