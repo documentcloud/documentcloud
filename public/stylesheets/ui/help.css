@@ -52,8 +52,11 @@
     #help_toolbar .minibutton {
       width: 150px;
       float: left;
-      margin-right: 8px;
+      margin: 0 8px 8px 0;
     }
+  #help_content {
+    clear: both;
+  }
   #help td, #help th {
     padding: 0 15px 15px 0;
     font-size: 12px;
