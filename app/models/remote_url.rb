@@ -3,7 +3,7 @@ class RemoteUrl < ActiveRecord::Base
   belongs_to :document
 
   def self.record_hits(doc_id, url, hits)
-    row = self.find_or_create_by_document_id_and_url(doc_id, url)
+    row = self.find_or_create_by_document_id_and_url_and_date(doc_id, url, Time.now.utc.to_date)
     row.update_attributes :hits => row.hits + hits
   end
 
