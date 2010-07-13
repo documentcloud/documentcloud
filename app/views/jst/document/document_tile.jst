@@ -11,7 +11,7 @@
 <% if (annotation_count) { %>
   <div class="show_notes">
     <div class="icon cancel_search" title="hide notes"></div>
-    <span class="text_link"><%= annotation_count %> <%= Inflector.pluralize('note', annotation_count) %></span>
+    <span class="text_link"><span class="note_count"><%= annotation_count %></span> <%= Inflector.pluralize('note', annotation_count) %></span>
   </div>
   <div class="icon mini_note"></div>
 <% } %>

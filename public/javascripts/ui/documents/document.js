@@ -150,7 +150,7 @@ dc.ui.Document = dc.View.extend({
 
   _onDocumentChange : function() {
     if (this.model.hasChanged('selected')) return this._setSelected();
-    if (this.model.hasChanged('annotation_count')) return $('span.count', this.el).text(this.model.get('annotation_count'));
+    if (this.model.hasChanged('annotation_count')) return $('span.note_count', this.el).text(this.model.get('annotation_count'));
     this.render();
   },
 
