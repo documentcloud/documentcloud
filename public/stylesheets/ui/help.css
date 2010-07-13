@@ -36,6 +36,12 @@
       border: 1px solid #dedede;
       white-space: nowrap;
     }
+      #help pre code {
+        background: none;
+        border: 0;
+        padding: 0;
+        white-space: pre;
+      }
   #help img {
     float: right;
     margin-left: 15px;

@@ -13,6 +13,8 @@ DocumentCloud is still actively in beta. That means a lot of things, but when it
 ## Step 1: Create a Template
 
 If you want your readers to view a document, you'll need to embed it on your website. For that, you need a template, with your own logo, links, analytics, and advertising. We recommend that the layout be fluid-width, with just a header -- the viewer will take up the rest of the page.
+
+Make sure that your template has a proper doctype, and passes the [HTML validator][]. Templates that throw Internet Explorer into quirks mode will cause the viewer to display incorrectly.
  
 Here are some live examples worth checking out: [NewsHour][], [Arizona Republic][], [Chicago Tribune][], [ProPublica][], but there are [plenty more][].
 
@@ -71,6 +73,7 @@ Still have questions about publishing documents? Don't hesitate to [contact us][
 [favorite embedded documents]: http://documentcloud.pbworks.com/Document-Dives
 [terms and conditions]: /terms
 [plenty more]: /featured
+[HTML validator]: http://validator.w3.org/
 [NewsHour]: http://www.pbs.org/newshour/rundown/stevens-testimony.html
 [Arizona Republic]: http://www.azdatapages.com/sb1070.html
 [Chicago Tribune]: http://media.apps.chicagotribune.com/docs/obama-subpoena.html
