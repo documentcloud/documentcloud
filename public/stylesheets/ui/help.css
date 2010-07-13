@@ -29,10 +29,17 @@
   #help code, #help tt, #help pre {
     font: 11px Menlo, Consolas, Monaco, Courier, monospace;
   }
+    #help code, #help tt {
+      padding: 1px 3px;
+      color: #444;
+      background: #f8f8ff;
+      border: 1px solid #dedede;
+      white-space: nowrap;
+    }
   #help img {
     float: right;
     margin-left: 15px;
-  }  
+  }
   #help img.full_line {
     display: block;
     margin: 0 auto;

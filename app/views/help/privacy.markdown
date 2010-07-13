@@ -12,11 +12,11 @@ If you are concerned about the secrecy of documents you have uploaded to Documen
   
 All of that said, we're doing our best to ensure that private material is and remains private.
 
-# DocumentCloud's Privacy Settings
+## DocumentCloud's Privacy Settings
 
 When you upload a document, you can decide whether or not you're ready to make it public. By default, no one but you will be able to see documents you've uploaded to DocumentCloud. When you're ready to share your materials, you can select them and use the "Edit Access Level" options in the "Edit" menu to make them public.
  
-# Who Can Read Notes?
+## Who Can Read Notes?
 
 Your "private" notes will always be private. Public notes, on the other hand, are as public as the document. If access to the document is limited to your newsroom, your "public" notes will also be limited to others in your newsroom. When you make a document public, your public notes become visible to other DocumentCloud users along with it.
  

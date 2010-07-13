@@ -4,13 +4,13 @@ To publish one of your documents from DocumentCloud on to your web site, you can
 
 For live examples, we're keeping a list of some of our [favorite embedded documents][], though it is by no means comprehensive.  If you've done some great reporting that isn't there, [let us know][] about it. 
  
-# Caveats
+## Caveats
 
 First, a note about public documents. Right now, no one can see your "public" documents unless they're a registered user who is part of our beta. Soon, we'll be opening the archive to the general public, and "public" documents will be available to anyone who searches for them.
 
 DocumentCloud is still actively in beta. That means a lot of things, but when it comes to embedding documents it means this: First, you are reliant on our servers. This means that if our servers go down your document goes down. You can host documents yourself, but you'll miss out on bug fixes, and will have to manually upgrade to newer versions of the viewer. Second, we can't make any promises. We test our work well, but we are actively working on this software and vulnerable to hosting glitches. Take a look at our [terms and conditions][] for a fuller disclaimer of liability.
  
-# Step 1: Create a Template
+## Step 1: Create a Template
 
 If you want your readers to view a document, you'll need to embed it on your website. For that, you need a template, with your own logo, links, analytics, and advertising. We recommend that the layout be fluid-width, with just a header -- the viewer will take up the rest of the page.
  
@@ -20,7 +20,7 @@ Here are some live examples worth checking out: [NewsHour][], [Arizona Republic]
 
 If you'd prefer to fit the document into an existing layout, and not have the viewer be full-screen, this can be accomplished by using CSS to set the style of the document's containing element to "relative", and giving the containing element a width and height of your choosing. For an example of this style of embed, take a look at [this document from the Commercial Appeal][].
  
-# Step 2: Check Your Metadata
+## Step 2: Check Your Metadata
 
 Before you embed a document on your site, we encourage you to use the workspace to fill out a few bits of extra information about the document.
  
@@ -33,13 +33,13 @@ Related&nbsp;Article | It's important to supply the URL for the related article 
  
 Almost all of these fields can be edited as a batch: select as many documents as you're getting ready to publish and click on the "edit" menu. (Each document's title and description must be edited separately.)
  
-# Step 3: Make Your Documents Public
+## Step 3: Make Your Documents Public
 
 To publish a document, you'll need to make it public, if it isn't already. Select the document (or documents) and then pick "Edit Access Level" from the menu "Edit" menu. Change the access level to "Public". For large documents, it will take a couple minutes to upload all of the image files with the new permissions.
  
 *Note: once you change a document to "public" other users of DocumentCloud will be able to find it in searches of the repository. Don't make sensitive documents public in advance of publication.*
  
-# Step 4: Copy and Paste the Embed Code onto the Page
+## Step 4: Copy and Paste the Embed Code onto the Page
 
 ![Embed Menu][]
 
@@ -61,7 +61,7 @@ The `DV.load` call has a couple of options. The only required one is `container`
 
 The other option you can currently use is `zoom`, which will set the initial zoom level of the viewer. The allowed zoom levels are `500`, `700`, `800`, `900`, and `1000` pixels wide. `700` is the default.
  
-# Step 5: Stay in Touch
+## Step 5: Stay in Touch
 
 [Let us know][] about your reporting. Even if it is "just a little local story" -- we're interested in all the reporting you do with DocumentCloud.
 

@@ -1,5 +1,4 @@
 body {
-  font-size: 62.5%;
   font-family: Arial, sans-serif;
   background: white;
 }
@@ -12,20 +11,25 @@ a {
     color: #000055;
   }
 h1, h2, h3, h4, h5, h6 {
-  font-size: 1.2em;
-  margin: 1.5em 0 0.5em 0;
+  font-size: 16px;
+  line-height: 22px;
+  margin: 22px 0 11px 0;
 }
-  h1 {
-    font-size: 1.25em;
+  h1, #content.static #help h1 {
+    font-size: 20px;
     font-weight: bold;
-    margin-bottom: 1em;
+    margin: 30px 0 22px 0;
   }
-  h3 {
-    font-size: 1em; line-height: 1.3em;
+  h2, #content.static #help h2 {
+    font-size: 16px;
     font-weight: bold;
+    margin: 22px 0 11px 0;
+  }
+  h3, #content.static #help h3 {
+    font-size: 15px;
   }
 small {
-  font-size: 0.85em;
+  font-size: 12px; line-height: 22px;
 }
   small.up {
     font: 10px Arial, sans-serif;
@@ -35,22 +39,22 @@ small {
 #container {
   position: relative;
   width: 700px;
-  margin: 2em auto 0;
-  padding: 0 0 3em 175px;
+  margin: 20px auto 0;
+  padding: 0 0 50px 175px;
   color: black;
 }
   #content {
-    padding-bottom: 2em;
-    font: 1.5em/1.533em 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+    padding-bottom: 50px;
+    font: 15px/22px 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
   }
-    #content p {
-      margin: 0 0 1em 0;
+    #content p, #content.static #help p {
+      margin: 22px 0;
     }
       #content p.intro {
-        font-size: 1.2em;
+        font-size: 18px;
       }
-    #content ul {
-      margin: 0 0 0 1.25em;
+    #content ul, #content.static #help ul {
+      margin: 0 0 0 22px;
       list-style-type: circle;
       color: #555;
     }
@@ -66,11 +70,16 @@ small {
       #content ol.lower_roman {
         list-style-type: lower-roman;
       }
-      #content li {
-        margin: 0.5em 0;
+      #content li, #content.static #help li {
+        margin: 11px 0;
       }
+    #content .home_splash {
+      margin-top: 30px;
+      font-size: 18px;
+      line-height: 22px;
+    }
     #content .screenshot {
-      margin: 1em 0;
+      margin: 22px 0;
       position: relative;
       left: -20px;
     }
@@ -106,7 +115,7 @@ small {
 
 #navigation {
   height: 40px;
-  margin-bottom: 2em;
+  margin-bottom: 20px;
   font-size: 16px;
   line-height: 50px;
   border-bottom: 1px solid #e2e2e2;
@@ -117,15 +126,15 @@ small {
     #navigation .active {
       color: #005;
     }
-  
+
 #footer {
-  font-size: 1.1em;
-  line-height: 1.5em;
+  font-size: 11px;
+  line-height: 14px;
   color: #555;
 }
 
 #extras {
-  margin: 3em 0 2em 0;
+  margin: 44px 0 22px 0;
 }
   #blogposts {
     width: 400px;
@@ -136,27 +145,24 @@ small {
     #twitter .twtr-ft div * {
       display: none;
     }
-    
+
 #content #help #help_navigation {
-  overflow: hidden;
   margin: 0;
   padding: 0;
   position: absolute;
   left: 0px;
   width: 150px;
 }
-  #help_navigation li {
-    line-height: 19px;
+  #content.static #help_navigation li {
     list-style: none;
-    float: left;
-    padding: 2px 8px;
-    margin: 0;
+    line-height: 18px;
+    margin: 0 0 15px 0;
   }
     #help #help_navigation li.active a {
       color: black;
       text-decoration: none;
     }
-    
+
 #content.static #help {
   font: inherit;
   display: block;
@@ -167,12 +173,13 @@ small {
   #content.static #help ul {
     margin-left: 0;
     padding-left: 15px;
+    color: #000;
   }
     #content.static #help ul li {
       padding-left: 5px;
     }
   #content.static #help h1 {
-    font-size: 1.25em;
+    font-size: 18px;
   }
   #content.static #help a {
     color: #536eac;

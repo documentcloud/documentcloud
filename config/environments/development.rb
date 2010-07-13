@@ -9,6 +9,9 @@
 # Caching classes until there's a patch to Rails 2.3 for it.
 config.cache_classes = true
 
+# But, we can still live-load templates by using this setting:
+config.action_view.cache_template_loading = false
+
 # Log error messages when you accidentally call methods on nil.
 config.whiny_nils = true
 
