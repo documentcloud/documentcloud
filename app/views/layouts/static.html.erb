@@ -26,6 +26,8 @@
 
   </div>
 
-<%= render :partial => 'google' %>
+<% if Rails.env.production? %>
+  <%= render :partial => 'google' %>
+<% end %>
 </body>
 </html>
