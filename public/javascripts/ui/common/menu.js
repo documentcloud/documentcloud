@@ -11,7 +11,7 @@ dc.ui.Menu = dc.View.extend({
     options.id = options.id || null;
     this.base(options);
     this.items          = [];
-    this.content        = $(JST.menu(this.options));
+    this.content        = $(JST['common/menu'](this.options));
     this.itemsContainer = $('.menu_items', this.content);
     this.filter         = $('.autofilter_input', this.content);
     this.addIcon        = $('.bullet_add', this.content);
@@ -24,7 +24,7 @@ dc.ui.Menu = dc.View.extend({
   },
 
   render : function() {
-    $(this.el).html(JST.menu_button({label : this.options.label}));
+    $(this.el).html(JST['common/menubutton']({label : this.options.label}));
     this._label = $('.label', this.el);
     $(document.body).append(this.content);
     this.setCallbacks();

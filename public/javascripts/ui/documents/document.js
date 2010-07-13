@@ -44,7 +44,7 @@ dc.ui.Document = dc.View.extend({
       thumbnail_url : this._thumbnailURL(),
       description   : this._description()
     });
-    $(this.el).html(JST.document_tile(data));
+    $(this.el).html(JST['document/tile'](data));
     $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.notesEl = $('.notes', this.el);
     this.pagesEl = $('.pages', this.el);
@@ -164,7 +164,7 @@ dc.ui.Document = dc.View.extend({
   },
 
   _renderPages : function() {
-    this.pagesEl.html(JST.document_pages({doc : this.model}));
+    this.pagesEl.html(JST['document/pages']({doc : this.model}));
     this.setCallbacks(this.pageCallbacks);
   },
 

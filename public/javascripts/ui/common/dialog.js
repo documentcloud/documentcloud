@@ -24,7 +24,7 @@ dc.ui.Dialog = dc.View.extend({
 
   render : function(opts) {
     opts = opts || {};
-    $(this.el).html(JST.dialog(_.extend({}, this.options, opts)));
+    $(this.el).html(JST['common/dialog'](_.extend({}, this.options, opts)));
     var cel = this.contentEl = $('.content', this.el);
     this.controlsEl = $('.controls', this.el);
     this.controlsInner = $('.controls_inner', this.el);

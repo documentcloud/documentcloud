@@ -1,0 +1,52 @@
+<td class="first draggable">
+  <div class="pending_wrap">
+    <div class="pending_badge icon warning_16"></div>
+  </div>
+  <img class="avatar" src="<%= account.DEFAULT_AVATAR %>" width="<%= size %>" height="<%= size %>" />
+</td>
+<td class="name draggable">
+  <span class="display">
+    <%= Inflector.truncate(account.fullName(true), 25) %>&nbsp;<span class="pending_notification">(pending)</span>
+  </span>
+  <div class="edit name_wrapper">
+    <div class="text_input dark small">
+      <input name="first_name" type="text" placeholder="first name" value="<%= account.get('first_name') %>" />
+    </div>
+    <div class="text_input dark small">
+      <input name="last_name" type="text" placeholder="last name" value="<%= account.get('last_name') %>" />
+    </div>
+  </div>
+</td>
+<td class="email draggable">
+  <span class="display">
+    <%= Inflector.truncate(email, 25) %>
+  </span>
+  <div class="text_input edit dark small">
+    <input name="email" type="text" placeholder="email" value="<%= email %>" />
+  </div>
+</td>
+<td class="role draggable">
+  <span class="display">
+    role:&nbsp;<%= account.ROLE_NAMES[account.get('role')] %>
+  </span>
+  <span class="edit">
+    <select name="role" class="account_role" <%= current && current.isAdmin() && account.id != current.id ? '' : 'disabled="disabled"' %>>
+      <option class="role_2" value="2">Contributor</option>
+      <option class="role_1" value="1">Administrator</option>
+    </select>
+  </span>
+</td>
+<td class="last draggable">
+  <% if (account == current || (current && current.isAdmin())) { %>
+  <span class="edit_account display" role="link">edit</span>
+  <% if (account == current) { %>
+    <span class="change_password display" role="link">change password</span>
+  <% } %>
+  <div class="edit controls_wrapper">
+    <div class="minibutton default save_changes">OK</div>
+    <% if (account.id && account.id > 0 && account.id != dc.app.accountId) { %>
+      <div class="minibutton warn delete_account">Delete</div>
+    <% } %>
+  </div>
+  <% } %>
+</td>

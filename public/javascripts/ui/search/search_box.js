@@ -31,7 +31,7 @@ dc.ui.SearchBox = dc.View.extend({
   },
 
   render : function() {
-    $(this.el).append(JST.search_box({}));
+    $(this.el).append(JST['workspace/search_box']({}));
     this.box      = $('#search_box', this.el);
     this.menu     = $('#search_type', this.el);
     this.titleBox = $('#title_box', this.el);

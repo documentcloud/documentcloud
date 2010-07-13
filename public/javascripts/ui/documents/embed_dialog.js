@@ -20,7 +20,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
   render : function() {
     this.base();
     this._container = $('.custom', this.el);
-    this._container.html(JST.embed_dialog({doc : this.doc}));
+    this._container.html(JST['document/embed_dialog']({doc : this.doc}));
     this.setCallbacks();
     this.center();
     return this;

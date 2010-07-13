@@ -21,7 +21,7 @@ dc.ui.Note = dc.View.extend({
 
   render : function() {
     var data = _.extend(this.model.attributes(), {note : this.model});
-    $(this.el).html(JST.document_note(data));
+    $(this.el).html(JST['document/note'](data));
     this.setMode('display', 'visible');
     this.setCallbacks();
     return this;

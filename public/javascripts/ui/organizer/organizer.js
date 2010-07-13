@@ -26,7 +26,7 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   render : function() {
-    $(this.el).append(JST.organizer_sidebar({}));
+    $(this.el).append(JST['organizer/sidebar']({}));
     this.projectInputEl = $('#project_input', this.el);
     this.projectList    = $('.project_list', this.el);
     this.entityList     = $('#organizer_entities', this.el);
@@ -65,7 +65,7 @@ dc.ui.Organizer = dc.View.extend({
       facets[filter.type].unshift(facet);
     });
     this._facets = facets;
-    this.entityList.html(JST.organizer_entities({entities : facets, limit : limit}));
+    this.entityList.html(JST['organizer/entities']({entities : facets, limit : limit}));
     this.setCallbacks(this.facetCallbacks);
     dc.app.scroller.checkLater();
   },

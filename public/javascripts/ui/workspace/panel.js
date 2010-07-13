@@ -4,7 +4,7 @@ dc.ui.Panel = dc.View.extend({
   className : 'panel_container',
 
   render : function() {
-    $(this.el).html(JST.workspace_panel({}));
+    $(this.el).html(JST['workspace/panel']({}));
     this.content = $('.panel_content', this.el);
     this._setMinHeight();
     $(window).resize(_.bind(this._setMinHeight, this));

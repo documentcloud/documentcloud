@@ -1,0 +1,30 @@
+<div class="select"></div>
+<div class="hoverable">
+  <img class="icon doc generic draggable noselect" src="<%= thumbnail_url %>" data-id="<%= id %>" />
+  <div class="title">
+    <a href="<%= document_viewer_url %>" class="doc_title noselect"><%= title %></a>
+    <% if (icon) { %>
+      <div class="icon document_tool <%= icon.className %>" title="<%= icon.title %>"></div>
+    <% } %>
+  </div>
+</div>
+<% if (annotation_count) { %>
+  <div class="show_notes">
+    <div class="icon cancel_search" title="hide notes"></div>
+    <span class="text_link"><span class="note_count"><%= annotation_count %></span> <%= Inflector.pluralize('note', annotation_count) %></span>
+  </div>
+  <div class="icon mini_note"></div>
+<% } %>
+<div class="description"><span class="noselect"><%= description %></span></div>
+<div class="metalines interface">
+  <span class="noselect">
+    <% if (page_count) { %>
+      <span class="page_count"><%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span> -
+    <% } %>
+    <% if (source) { %>Source: <%= source %> -<% } %>
+    Contributed by: <%= account_name %>, <%= organization_name %> -
+    <%= created_at %>
+  </span>
+</div>
+<div class="pages"></div>
+<div class="notes"></div>

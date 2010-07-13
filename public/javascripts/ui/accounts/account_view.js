@@ -28,7 +28,7 @@ dc.ui.AccountView = dc.View.extend({
     this.tagName    = this.TAGS[this.kind];
     this.className  = 'account_view ' + this.kind;
     this.base(options);
-    this.template   = JST['account_' + this.kind];
+    this.template   = JST['account/' + this.kind];
     _.bindAll(this, '_onSuccess', '_onError');
     this.model.bind(dc.Model.CHANGED, _.bind(this.render, this, 'display'));
   },

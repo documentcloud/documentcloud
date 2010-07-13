@@ -75,7 +75,7 @@ dc.ui.SectionEditor = dc.View.extend({
 
   addRow : function(options) {
     options = _.extend({pageCount : DV.api.numberOfPages(), title : '', start_page : '', end_page : ''}, options);
-    var row = $(JST.section_row(options));
+    var row = $(JST['viewer/section_row'](options));
     $('.section_title', row).val(options.title);
     $('.minus', row).bind('click', function(){ row.remove(); });
     $('.plus', row).bind('click', _.bind(function(){ this.addRow({after : row}); }, this));

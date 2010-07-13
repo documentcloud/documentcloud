@@ -45,7 +45,7 @@ _.extend(dc.app.workspace, {
     this.help.render();
     this.panel.add('search_box', dc.app.searchBox.render().el);
     this.panel.add('pagination', dc.app.paginator.el);
-    $('#no_results_container').html(JST.no_results({}));
+    $('#no_results_container').html(JST['workspace/no_results']({}));
 
     if (!dc.app.accountId) return $(document.body).setMode('search', 'navigation');
 

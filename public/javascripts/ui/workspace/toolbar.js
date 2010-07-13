@@ -21,7 +21,7 @@ dc.ui.Toolbar = dc.View.extend({
 
   render : function() {
     var el = $(this.el);
-    el.html(JST.workspace_toolbar({}));
+    el.html(JST['workspace/toolbar']({}));
     $('.project_menu_container', el).append(this.projectMenu.render().el);
     $('.edit_menu_container', el).append(this.editMenu.render().el);
     $('.publish_menu_container', el).append(this.publishMenu.render().el);

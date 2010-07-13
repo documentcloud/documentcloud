@@ -58,7 +58,7 @@ dc.ui.Paginator = dc.View.extend({
     var el = $(this.el);
     el.html('');
     if (!this.query) return this;
-    el.html(JST.paginator({q : this.query, sort_text : this.SORT_TEXT[this.sortOrder], page_size : this.pageSize(), page_count : this.pageCount()}));
+    el.html(JST['workspace/paginator']({q : this.query, sort_text : this.SORT_TEXT[this.sortOrder], page_size : this.pageSize(), page_count : this.pageCount()}));
     this.setCallbacks();
     return this;
   },
