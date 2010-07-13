@@ -10,6 +10,9 @@ dc.history = {
 
   // The ordered list of history handlers matchers and callbacks.
   handlers : [],
+  
+  // Every URL change fires these callbacks
+  callbacks: [],
 
   // The current recorded window.location.hash.
   hash : window.location.hash,
@@ -29,9 +32,14 @@ dc.history = {
 
   // Register a history handler. Pass a regular expression that can be used to
   // match your URLs, and the callback to be invoked with the remainder of the
-  // hash, when matched.
+  // hash, when matched. Optionally pass a callback that will be fired on every
+  // hash change. This can be used for Google Analytics AJAX calls.
   register : function(matcher, callback) {
-    this.handlers.push({matcher : matcher, callback : callback});
+    if (_.isFunction(callback)) {
+      this.handlers.push({matcher : matcher, callback : callback});
+    } else {
+      this.callbacks.push(matcher);
+    }
   },
 
   // Save a moment into browser history. Make sure you've registered a handler
@@ -44,6 +52,7 @@ dc.history = {
       this.iframe.document.open().close();
       this.iframe.location.hash = this.hash;
     }
+    this.fireCallbacks(hash);
   },
 
   // Check the current URL hash against the recorded one, firing callbacks.
@@ -75,6 +84,14 @@ dc.history = {
     });
     if (!matched && !hash) {
       fallback ? fallback() : dc.app.searchBox.showHelp();
+    }
+    this.fireCallbacks(hash);
+  },
+  
+  // Fires all callbacks after a history event is recorded
+  fireCallbacks : function(hash) {
+    for (var c=0, l=this.callbacks.length; c < l; c++) {
+      this.callbacks[c](hash);
     }
   }
 
