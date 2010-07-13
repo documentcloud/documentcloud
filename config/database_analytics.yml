@@ -1,0 +1,26 @@
+defaults: &defaults
+  adapter: postgresql
+  encoding: unicode
+  schema_search_path: public
+  pool: 5
+  username: REDACTED
+  password: REDACTED
+  allow_concurrency: true
+
+development:
+  <<: *defaults
+  database: dcloud_analytics_development
+
+staging:
+  <<: *defaults
+  host: staging.dcloud.org
+  database: dcloud_analytics_staging
+
+production:
+  <<: *defaults
+  host: ec2-174-129-5-5.compute-1.amazonaws.com
+  database: dcloud_analytics_production
+
+test:
+  <<: *defaults
+  database: dcloud_analytics_test
