@@ -21,6 +21,9 @@ dc.analytics = {
   // This is the callback that is fired when the history changes. Use this to send an event
   // to Google Analytics.
   trackEvent : function(hash) {
+    if (hash.indexOf('search/') != -1) {
+      hash = 'search';
+    }
     _gaq.push(['_trackEvent', 'hash', hash]);
     console.log(['Analytics event', _gaq, hash]);
   }
