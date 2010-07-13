@@ -38,6 +38,10 @@ class ApiController < ApplicationController
   # file, title, access, source, description.
   def upload
     return bad_request unless params[:file] && params[:title] && current_account
+    if !params[:file].respond_to? :path
+      return render({:json => {:message => "The file parameter must be the contents of a file."}, 
+                    :status => 400})
+    end
     render :json => Document.upload(params, current_account, current_organization).canonical
   end
 
