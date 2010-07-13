@@ -3,7 +3,7 @@ dc.analytics = {
   // Initializes the Google Analytics script asynchronously
   initialize : function() {
     window._gaq = window._gaq || [];
-    _gaq.push(['_setAccount', 'UA-XXXXX-X']);
+    _gaq.push(['_setAccount', 'UA-9312438-1']);
     _gaq.push(['_trackPageview']);
 
     (function() {
@@ -25,7 +25,6 @@ dc.analytics = {
       hash = 'search';
     }
     _gaq.push(['_trackEvent', 'hash', hash]);
-    console.log(['Analytics event', _gaq, hash]);
   }
   
 };

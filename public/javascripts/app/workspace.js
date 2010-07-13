@@ -8,8 +8,10 @@ _.extend(dc.app.workspace, {
     this.createSubViews();
     this.renderSubViews();
     dc.history.initialize();
-    dc.analytics.initialize();
-    dc.analytics.register();
+    if (window.RAILS_ENV == 'production') {
+      dc.analytics.initialize();
+      dc.analytics.register();
+    }
     dc.history.loadURL(_.bind(dc.app.searchBox.loadDefault, null, {showHelp: true}));
   },
 
