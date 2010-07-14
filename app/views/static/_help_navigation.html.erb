@@ -1,4 +1,4 @@
-<ul id="help_navigation">
+<ul id="help_navigation" class="sidebar_nav">
   <% @help_pages.each do |help_item| %>
     <li <% if @page == help_item %>class="active"<% end %>>
       <% options = help_item == 'index' ? {} : {:page => help_item} %>

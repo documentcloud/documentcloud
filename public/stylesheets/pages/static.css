@@ -52,7 +52,7 @@ small {
       #content p.intro {
         font-size: 18px;
       }
-      
+
       #content #login {
         border: 1px solid #536eac;
         background: #EEE;
@@ -64,8 +64,8 @@ small {
 
       #content #login p {
         margin: 5px 0;
-      }      
-      
+      }
+
     #content ul, #content.static #help ul {
       margin: 0 0 0 22px;
       list-style-type: circle;
@@ -163,7 +163,7 @@ small {
   margin: 0;
   padding: 0;
   position: absolute;
-  left: 0px;
+  left: 5px;
   width: 150px;
 }
   #content.static #help_navigation li {

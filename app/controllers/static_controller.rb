@@ -9,6 +9,7 @@ class StaticController < ApplicationController
   MARKDOWN_LINK_REPLACER = /\[([^\]]*?)\]\[\]/i
 
   def home
+    current_account
     @posts = date_sorted(yaml_for('home'))
   end
 
