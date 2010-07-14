@@ -47,6 +47,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     $(this.el).show();
     $(document.body).addClass('overlay');
     this.center();
+    $('#document_upload_title', this.el).focus();
   },
 
   close : function() {
