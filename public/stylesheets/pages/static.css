@@ -52,6 +52,20 @@ small {
       #content p.intro {
         font-size: 18px;
       }
+      
+      #content #login {
+        border: 1px solid #536eac;
+        background: #EEE;
+        float: right;
+        width: 140px;
+        padding: 10px;
+        margin: 0 5px;
+      }
+
+      #content #login p {
+        margin: 5px 0;
+      }      
+      
     #content ul, #content.static #help ul {
       margin: 0 0 0 22px;
       list-style-type: circle;
