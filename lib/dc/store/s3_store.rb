@@ -118,10 +118,10 @@ module DC
           attempts += 1
           bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access], headers)
         rescue Exception => e
-          sleep 5
+          sleep 10
           @s3 = create_s3
           @bucket = s3.bucket(BUCKET_NAME)
-          retry if attempts <= 3
+          retry if attempts <= 6
           raise e
         end
         bucket.key(s3_path).public_link
