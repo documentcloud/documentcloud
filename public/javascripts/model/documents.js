@@ -32,10 +32,7 @@ dc.model.Document = dc.Model.extend({
   // Is the document editable by the current account?
   allowedToEdit : function(message) {
     message = message || "You don't have permission to edit \"" + this.get('title') + "\".";
-    var acc = Accounts.current();
-    if (this.get('account_id') == acc.id) return true;
-    if (this.get('organization_id') == acc.get('organization_id') && acc.isAdmin()) return true;
-    if (_.include(acc.get('shared_document_ids'), this.id)) return true;
+    if (Accounts.current().allowedToEdit(this)) return true;
     dc.ui.Dialog.alert(message);
     return false;
   },
@@ -163,8 +160,9 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   // We override `refresh` to cancel the polling action if the current set
   // has no pending documents.
   refresh : function(models, silent) {
-    this.base(models, silent);
+    this._resetSelection();
     if (!this.pending().length) this.stopPolling();
+    this.base(models, silent);
   },
 
   _checkForPending : function() {

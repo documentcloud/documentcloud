@@ -143,16 +143,15 @@ module DC
       # Generate the Solr to restrict the search to specific projects.
       def build_projects
         return unless @account
-        projects = Project.accessible(@account).all(:conditions => {:title => @projects})
-        doc_ids = projects.map(&:document_ids).flatten.uniq
-        doc_ids = [-1] if doc_ids.empty?
-        if doc_ids.present?
+        projects = Project.accessible(@account).all(:conditions => {:title => @projects}, :select => [:id])
+        project_ids = projects.map {|p| p.id }
+        if project_ids.present?
           @populated_projects = true
         else
-          doc_ids = [-1]
+          project_ids = [-1]
         end
         @solr.build do
-          with :id, doc_ids
+          with :project_ids, project_ids
         end
       end
 
@@ -201,7 +200,7 @@ module DC
       def build_access
         return if @populated_projects
         account, organization = @account, @organization
-        shared_ids = has_projects? ? nil : (account && account.shared_document_ids)
+        accessible_project_ids = has_projects? ? [] : (account && account.accessible_project_ids)
         @solr.build do
           any_of do
             with        :access, PUBLIC
@@ -217,8 +216,8 @@ module DC
                 with    :organization_id, organization.id
               end
             end
-            if shared_ids && shared_ids.present?
-              with      :id, shared_ids
+            if accessible_project_ids.present?
+              with      :project_ids, accessible_project_ids
             end
           end
         end

@@ -97,16 +97,17 @@ class Account < ActiveRecord::Base
     owns_or_administers?(resource) || shared?(resource)
   end
 
-  # The ids of all the documents that have been shared with this account through
-  # shared projects.
-  def shared_document_ids
-    @shared_document_ids ||= ProjectMembership.connection.select_values(<<-EOS
-      select document_id from project_memberships as p
-      inner join collaborations as c
-        on p.project_id = c.project_id
-      where c.account_id = #{id}
-    EOS
-    ).map {|doc_id| doc_id.to_i }
+  def accessible_document_ids
+    @accessible_document_ids ||= ProjectMembership.all(
+      :conditions => {:project_id => accessible_project_ids}, :select => [:document_id]
+    ).map {|m| m.document_id }
+  end
+
+  # The list of all of the projects that have been shared with this account
+  # through collaboration.
+  def accessible_project_ids
+    @accessible_project_ids ||=
+      Collaboration.owned_by(self).all(:select => [:project_id]).map {|c| c.project_id }
   end
 
   # When an account is created by a third party, send an email with a secure
@@ -168,8 +169,7 @@ class Account < ActiveRecord::Base
       'hashed_email'    => hashed_email,
       'pending'         => pending?
     }
-    attrs['organization_name']   = organization_name   if options[:include_organization]
-    attrs['shared_document_ids'] = shared_document_ids if options[:include_shared]
+    attrs['organization_name'] = organization_name if options[:include_organization]
     attrs.to_json
   end
 

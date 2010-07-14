@@ -13,8 +13,10 @@ class ProjectsController < ApplicationController
   # TODO: Ensure that the document ids you're adding are for documents you
   # have access to.
   def update
-    current_project.update_attributes(pick(:json, :title, :document_ids))
-    json current_project
+    data = pick(:json, :title, :document_ids)
+    current_project.update_attributes(:title => data[:title]) if data[:title]
+    current_project.set_documents(data[:document_ids])
+    json current_project.reload
   end
 
   def destroy

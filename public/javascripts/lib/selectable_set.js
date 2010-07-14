@@ -22,6 +22,11 @@ dc.model.SelectableSet = Base.extend({
     return _.pluck(this.selected(), 'id');
   },
 
+  _resetSelection : function() {
+    this.firstSelection = null;
+    this.selectedCount = 0;
+  },
+
   _add : function(model, silent) {
     if (model._attributes.selected == null) model._attributes.selected = false;
     this.base(model, silent);

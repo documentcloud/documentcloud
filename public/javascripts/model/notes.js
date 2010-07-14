@@ -7,11 +7,7 @@ dc.model.Note = dc.Model.extend({
   },
 
   allowedToEdit : function() {
-    var acc = Accounts.current();
-    if (this.get('account_id') == acc.id) return true;
-    if (this.get('organization_id') == acc.get('organization_id') && acc.isAdmin()) return true;
-    if (_.include(acc.get('shared_document_ids'), this.get('document_id'))) return true;
-    return false;
+    return Accounts.current().allowedToEdit(this);
   },
 
   imageUrl : function() {

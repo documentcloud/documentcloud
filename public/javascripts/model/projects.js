@@ -118,6 +118,14 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
     _.each(this.models(), function(project) {
       project.removeDocuments(docs, true);
     });
+  },
+
+  isDocumentIdShared : function(id) {
+    var projects = this.models();
+    for (var i=0, l=projects.length; i<l; i++) {
+      if (_.include(projects[i].get('document_ids'), id)) return true;
+    }
+    return false;
   }
 
 });

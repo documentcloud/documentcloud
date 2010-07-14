@@ -1,3 +1,5 @@
+require 'set'
+
 # A Project, (or Folder, Bucket, Tag, Collection, Notebook, etc.) is a
 # name under which to group a set of related documents, purely for
 # organizational purposes.
@@ -29,6 +31,14 @@ class Project < ActiveRecord::Base
     self.accessible(account).all(:include => ['account', 'project_memberships', 'collaborations'])
   end
 
+  def set_documents(new_ids)
+    new_ids = new_ids.to_set
+    doc_ids = self.document_ids.to_set
+    ProjectMembership.destroy_all(:project_id => id, :document_id => doc_ids - new_ids)
+    (new_ids - doc_ids).each {|doc_id| self.project_memberships.create(:document_id => doc_id) }
+    @document_ids = nil
+  end
+
   def add_collaborator(account)
     self.collaborations.create(:account => account)
     @collaborator_ids = nil
@@ -50,6 +60,7 @@ class Project < ActiveRecord::Base
 
   def add_document(document)
     self.project_memberships.create(:document => document)
+    @document_ids = nil
   end
 
   def document_ids

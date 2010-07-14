@@ -27,7 +27,7 @@ dc.Set = Base.extend({
 
   // What are the ids for every model in the set?
   getIds : function() {
-    return _.keys(this._byId);
+    return _.map(_.keys(this._byId), function(key){ return parseInt(key, 10); });
   },
 
   // What are the client ids for every model in the set?

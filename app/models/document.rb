@@ -57,10 +57,11 @@ class Document < ActiveRecord::Base
     access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org
     access << "(documents.id in (?))" if account
     conditions = ["(#{access.join(' or ')})"]
-    conditions.push(account.shared_document_ids) if account
+    conditions.push(account.accessible_document_ids) if account
     {:conditions => conditions}
   }
 
+  # The definition of the Solr search index. Via sunspot-rails.
   searchable do
 
     # Full Text...
@@ -77,11 +78,14 @@ class Document < ActiveRecord::Base
     # Attributes...
     string  :title
     string  :source
+    time    :created_at
     integer :id
     integer :account_id
     integer :organization_id
     integer :access
-    time    :created_at
+    integer :project_ids, :multiple => true do
+      self.project_memberships.map {|m| m.project_id }
+    end
 
     # Entities...
     SEARCHABLE_ENTITIES.each do |entity|
