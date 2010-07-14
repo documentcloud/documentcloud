@@ -75,7 +75,7 @@ module DC
       ssh_options = ssh_config.collect {|k,v| "-o #{k}=#{v}"}.join " "
       while true do
         sleep 2
-        break if system "ssh -o ConnectTimeout=20 #{ssh_options} #{new_instance[:dns_name]} exit 0 2>/dev/null"
+        break if system "ssh -o ConnectTimeout=10 #{ssh_options} #{new_instance[:dns_name]} exit 0 2>/dev/null"
         Rails.logger.info "waiting for instance #{new_instance[:aws_instance_id]} / #{new_instance[:dns_name]} to start sshd "
       end
 
