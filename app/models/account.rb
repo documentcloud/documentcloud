@@ -66,7 +66,7 @@ class Account < ActiveRecord::Base
   def administers?(resource)
     admin? &&
       resource.organization_id == organization_id &&
-      [ORGANIZATION, EXCLUSIVE, PUBLIC].include?(resource.access)
+      [ORGANIZATION, EXCLUSIVE, PUBLIC, PENDING, ERROR].include?(resource.access)
   end
 
   # Heavy-duty SQL.
