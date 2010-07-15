@@ -13,7 +13,7 @@ module DC
         :specific => {:limit => 500, :sort => :count}
       }
 
-      attr_reader   :text, :fields, :projects, :attributes, :conditions, :results, :solr
+      attr_reader   :text, :fields, :projects, :project_ids, :access, :attributes, :conditions, :results, :solr
       attr_accessor :page, :page_size, :order, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
@@ -21,6 +21,7 @@ module DC
       def initialize(opts={})
         @text                   = opts[:text]
         @page                   = opts[:page]
+        @access                 = opts[:access]
         @fields                 = opts[:fields]       || []
         @projects               = opts[:projects]     || []
         @project_ids            = opts[:project_ids]  || []
@@ -33,7 +34,7 @@ module DC
       end
 
       # Series of attribute checks to determine the kind and state of query.
-      [:text, :fields, :projects, :project_ids, :attributes, :results].each do |att|
+      [:text, :fields, :projects, :project_ids, :attributes, :results, :access].each do |att|
         class_eval "def has_#{att}?; @#{att}.present?; end"
       end
 
@@ -209,6 +210,12 @@ module DC
       # project that's been shared with us, or it belongs to a project that
       # *hasn't* been shared with us, but is public.
       def build_access
+        if has_access?
+          access = @access
+          @solr.build do
+            with :access, access
+          end
+        end
         return if @populated_projects
         account, organization  = @account, @organization
         accessible_project_ids = has_projects? || has_project_ids? ? [] : (account && account.accessible_project_ids)

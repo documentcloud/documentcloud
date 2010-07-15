@@ -9,11 +9,12 @@ module DC
     # We should try to adopt Google conventions, if possible, after:
     # http://www.google.com/help/cheatsheet.html
     class Parser
+      include DC::Access
 
       # Parse a raw query_string, returning a DC::Search::Query that knows
       # about the text, fields, projects, and attributes it's composed of.
       def parse(query_string='')
-        @text = nil
+        @text, @access = nil, nil
         @fields, @projects, @project_ids, @attributes = [], [], [], []
 
         quoted_fields = query_string.scan(Matchers::QUOTED_FIELD).map {|m| m[0] }
@@ -23,7 +24,7 @@ module DC
         process_search_text(search_text)
         process_fields_and_projects(bare_fields, quoted_fields)
 
-        SolrQuery.new(:text => @text, :fields => @fields, :projects => @projects, :project_ids => @project_ids, :attributes => @attributes)
+        SolrQuery.new(:text => @text, :fields => @fields, :projects => @projects, :project_ids => @project_ids, :attributes => @attributes, :access => @access)
       end
 
       # Convert the full-text search into a form that our index can handle.
@@ -43,9 +44,12 @@ module DC
         end
         (bare + quoted).each do |pair|
           type, value = *pair
-          if type.downcase == 'project'
+          type = type.downcase
+          if type == 'access'
+            @access = ACCESS_MAP[value.strip.to_sym]
+          elsif type == 'project'
             @projects << value.strip
-          elsif type.downcase == 'projectid'
+          elsif type == 'projectid'
             @project_ids << value.to_i
           else
             process_field(type, value)
