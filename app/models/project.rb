@@ -34,7 +34,7 @@ class Project < ActiveRecord::Base
   def set_documents(new_ids)
     new_ids = new_ids.to_set
     doc_ids = self.document_ids.to_set
-    ProjectMembership.destroy_all(:project_id => id, :document_id => doc_ids - new_ids)
+    ProjectMembership.destroy_all(:project_id => id, :document_id => (doc_ids - new_ids).to_a)
     (new_ids - doc_ids).each {|doc_id| self.project_memberships.create(:document_id => doc_id) }
     @document_ids = nil
   end
