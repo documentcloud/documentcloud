@@ -16,7 +16,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: remote_urls; Type: TABLE; Schema: public; Owner: documentcloud; Tablespace: 
+-- Name: remote_urls; Type: TABLE; Schema: public; Owner: documentcloud; Tablespace:
 --
 
 DROP TABLE IF EXISTS remote_urls;
@@ -69,15 +69,7 @@ ALTER TABLE remote_urls ALTER COLUMN id SET DEFAULT nextval('remote_urls_id_seq'
 
 
 --
--- Data for Name: remote_urls; Type: TABLE DATA; Schema: public; Owner: documentcloud
---
-
-COPY remote_urls (id, document_id, url, hits, date_recorded, created_at, updated_at) FROM stdin;
-\.
-
-
---
--- Name: remote_urls_pkey; Type: CONSTRAINT; Schema: public; Owner: documentcloud; Tablespace: 
+-- Name: remote_urls_pkey; Type: CONSTRAINT; Schema: public; Owner: documentcloud; Tablespace:
 --
 
 ALTER TABLE ONLY remote_urls

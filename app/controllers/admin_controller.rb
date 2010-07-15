@@ -19,8 +19,7 @@ class AdminController < ApplicationController
     @accounts               = Account.all.to_json
     @organizations          = Organization.all.to_json
     @instances              = DC::AWS.new.describe_instances.to_json
-    top_documents_ids       = RemoteUrl.top_documents(days=7, options={:limit => 5})
-    @top_documents          = Document.documents_from_ids(top_documents_ids).to_json
+    @top_documents          = RemoteUrl.top_documents(7, :limit => 5).to_json
   end
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and

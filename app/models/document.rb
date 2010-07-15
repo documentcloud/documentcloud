@@ -119,23 +119,12 @@ class Document < ActiveRecord::Base
     doc.queue_import(access)
     doc.reload
   end
-  
-  # Retrieve documents from an array of ids. Used by RemoteUrl, whcih is on a
-  # separate database, so it only knows the document ids.
-  def self.documents_from_ids(document_ids)
-    document_ids.map do |d|
-      doc = Document.find(d.document_id)
-      doc.hits = d.hits
-      doc.remote_url = d.remote_url
-      doc
-    end
-  end
 
   # For polymorphism on access control with Note and Section:
   def document_id
     id
   end
-  
+
   # Produce the full text of the document by combining the text of each of
   # the pages. Used at initial import.
   def combined_page_text
