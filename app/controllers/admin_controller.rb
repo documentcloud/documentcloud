@@ -15,11 +15,12 @@ class AdminController < ApplicationController
     @private_per_account    = DC::Statistics.private_documents_per_account.to_json
     @pages_per_account      = DC::Statistics.pages_per_account.to_json
     @documents              = Document.finished.chronological.all(:limit => 5).map {|d| d.admin_attributes }.to_json
-    @top_documents          = RemoteUrl.top_documents(:limit => 5).to_json
     @failed_documents       = Document.failed.chronological.all(:limit => 3).map {|d| d.admin_attributes }.to_json
     @accounts               = Account.all.to_json
     @organizations          = Organization.all.to_json
     @instances              = DC::AWS.new.describe_instances.to_json
+    top_documents_ids       = RemoteUrl.top_documents(days=7, options={:limit => 5})
+    @top_documents          = Document.documents_from_ids(top_documents_ids).to_json
   end
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and
