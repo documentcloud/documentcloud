@@ -13,7 +13,8 @@ module DC
       # Parse a raw query_string, returning a DC::Search::Query that knows
       # about the text, fields, projects, and attributes it's composed of.
       def parse(query_string='')
-        @text, @fields, @projects, @attributes = nil, [], [], []
+        @text = nil
+        @fields, @projects, @project_ids, @attributes = [], [], [], []
 
         quoted_fields = query_string.scan(Matchers::QUOTED_FIELD).map {|m| m[0] }
         bare_fields   = query_string.gsub(Matchers::QUOTED_FIELD, '').scan(Matchers::BARE_FIELD)
@@ -22,7 +23,7 @@ module DC
         process_search_text(search_text)
         process_fields_and_projects(bare_fields, quoted_fields)
 
-        SolrQuery.new(:text => @text, :fields => @fields, :projects => @projects, :attributes => @attributes)
+        SolrQuery.new(:text => @text, :fields => @fields, :projects => @projects, :project_ids => @project_ids, :attributes => @attributes)
       end
 
       # Convert the full-text search into a form that our index can handle.
@@ -42,7 +43,13 @@ module DC
         end
         (bare + quoted).each do |pair|
           type, value = *pair
-          type.downcase == 'project' ? process_project(value) : process_field(type, value)
+          if type.downcase == 'project'
+            @projects << value.strip
+          elsif type.downcase == 'projectid'
+            @project_ids << value.to_i
+          else
+            process_field(type, value)
+          end
         end
       end
 
@@ -53,11 +60,6 @@ module DC
         return @fields     << field if field.entity?
         @text ||= ''
         @text += " #{field}"
-      end
-
-      # Convert an individual project search.
-      def process_project(title)
-        @projects << title.strip
       end
 
       # Convert a field kind string into its canonical form, by searching

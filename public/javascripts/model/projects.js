@@ -17,6 +17,11 @@ dc.model.Project = dc.Model.extend({
     return this;
   },
 
+  // Generate the canonical slug for this Project. Usable by API calls.
+  slug : function() {
+    return this.id + '-' + Inflector.sluggify(this.get('title'));
+  },
+
   open : function() {
     dc.app.searchBox.search(this.toSearchParam());
   },

@@ -59,6 +59,13 @@ window.Inflector = {
     return s.length > length ? s.slice(0, length - truncation.length) + truncation : s;
   },
 
+  // Convert a string (usually a title), to something appropriate for use in a URL.
+  // Apostrophes and quotes are removed, non-word-chars become spaces, whitespace
+  // is trimmed, lowercased, and spaces become dashes.
+  sluggify : function(s) {
+    return $.trim(s.replace(/['"]+/g, '').replace(/\W+/g, ' ')).toLowerCase().replace(/\s+/g, '-');
+  },
+
   commify : function(list, options) {
     var words = [];
     _.each(list, function(word, i) {

@@ -20,7 +20,6 @@ class ApiController < ApplicationController
   end
 
   def search
-    opts = API_OPTIONS.merge(pick(params, :sections, :annotations))
     perform_search
     respond_to do |format|
       format.json do
@@ -39,7 +38,7 @@ class ApiController < ApplicationController
   def upload
     return bad_request unless params[:file] && params[:title] && current_account
     if !params[:file].respond_to? :path
-      return render({:json => {:message => "The file parameter must be the contents of a file."}, 
+      return render({:json => {:message => "The file parameter must be the contents of a file."},
                     :status => 400})
     end
     render :json => Document.upload(params, current_account, current_organization).canonical

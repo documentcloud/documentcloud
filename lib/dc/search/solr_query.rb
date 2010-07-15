@@ -23,6 +23,7 @@ module DC
         @page                   = opts[:page]
         @fields                 = opts[:fields]       || []
         @projects               = opts[:projects]     || []
+        @project_ids            = opts[:project_ids]  || []
         @attributes             = opts[:attributes]   || []
         @from, @to, @total      = nil, nil, nil
         @account, @organization = nil, nil
@@ -32,7 +33,7 @@ module DC
       end
 
       # Series of attribute checks to determine the kind and state of query.
-      %w(text fields projects attributes results).each do |att|
+      [:text, :fields, :projects, :project_ids, :attributes, :results].each do |att|
         class_eval "def has_#{att}?; @#{att}.present?; end"
       end
 
@@ -46,12 +47,13 @@ module DC
       # Generate all of the SQL, including conditions and joins, that is needed
       # to run the query.
       def generate_search
-        build_text       if     has_text?
-        build_fields     if     has_fields?
-        build_projects   if     has_projects?
-        build_attributes if     has_attributes?
-        build_facets     if     @include_facets
-        build_access     unless @unrestricted
+        build_text        if     has_text?
+        build_fields      if     has_fields?
+        build_projects    if     has_projects?
+        build_project_ids if     has_project_ids?
+        build_attributes  if     has_attributes?
+        build_facets      if     @include_facets
+        build_access      unless @unrestricted
         page      = @page
         size      = @facet ? 0 : @page_size
         order     = @order.to_sym
@@ -112,6 +114,7 @@ module DC
           'total'       => @total,
           'fields'      => @fields,
           'projects'    => @projects,
+          'project_ids' => @project_ids,
           'attributes'  => @attributes
         }.to_json
       end
@@ -152,6 +155,13 @@ module DC
         end
         @solr.build do
           with :project_ids, project_ids
+        end
+      end
+
+      def build_project_ids
+        ids = @project_ids
+        @solr.build do
+          with :project_ids, ids
         end
       end
 
@@ -196,11 +206,12 @@ module DC
       # Restrict accessible documents for a given account/organzation.
       # Either the document itself is public, or it belongs to us, or it belongs to
       # our organization and we're allowed to see it, or if it belongs to a
-      # project that's been shared with us.
+      # project that's been shared with us, or it belongs to a project that
+      # *hasn't* been shared with us, but is public.
       def build_access
         return if @populated_projects
-        account, organization = @account, @organization
-        accessible_project_ids = has_projects? ? [] : (account && account.accessible_project_ids)
+        account, organization  = @account, @organization
+        accessible_project_ids = has_projects? || has_project_ids? ? [] : (account && account.accessible_project_ids)
         @solr.build do
           any_of do
             with        :access, PUBLIC

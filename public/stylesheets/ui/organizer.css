@@ -189,7 +189,7 @@
   #project_dialog .collaborators_title {
   }
   #project_dialog .collaborator_list {
-    margin: 15px 0 15px;
+    margin: 15px 0;
   }
     #project_dialog .account_view {
       padding: 10px 0;
@@ -197,6 +197,12 @@
       font: 11px/27px Helvetica, Arial;
       border-bottom: 1px solid #222;
     }
+  #project_dialog .slug {
+    margin: 3px 0 0;
+    font-size: 10px;
+    text-align: left;
+    color: #999;
+  }
 
 /*------------------------------- Scrolling ----------------------------------*/
 .scroll {

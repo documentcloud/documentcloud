@@ -24,7 +24,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   render : function(noHide) {
     if (!noHide) $(this.el).hide();
     this.base({editor : true, information : this.model.statistics()});
-    $('.custom', this.el).html(JST['organizer/project_dialog'](this.model.attributes()));
+    $('.custom', this.el).html(JST['organizer/project_dialog']({model : this.model}));
     $('#project_title', this.el).val(this.model.get('title'));
     if (!this.model.get('owner')) $('.minibutton.delete', this.el).text("Remove");
     if (this.model.collaborators.populated) {
