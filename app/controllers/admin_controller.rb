@@ -5,21 +5,27 @@ class AdminController < ApplicationController
 
   # The Admin Dashboard
   def index
-    @documents_by_access    = DC::Statistics.documents_by_access.to_json
-    @pages_per_minute       = DC::Statistics.pages_per_minute.to_json
-    @average_page_count     = DC::Statistics.average_page_count.to_json
-    @total_pages            = DC::Statistics.total_pages.to_json
-    @daily_documents        = keys_to_timestamps(DC::Statistics.daily_documents(2.weeks.ago)).to_json
-    @daily_pages            = keys_to_timestamps(DC::Statistics.daily_pages(2.weeks.ago)).to_json
-    @public_per_account     = DC::Statistics.public_documents_per_account.to_json
-    @private_per_account    = DC::Statistics.private_documents_per_account.to_json
-    @pages_per_account      = DC::Statistics.pages_per_account.to_json
-    @documents              = Document.finished.chronological.all(:limit => 5).map {|d| d.admin_attributes }.to_json
-    @failed_documents       = Document.failed.chronological.all(:limit => 3).map {|d| d.admin_attributes }.to_json
-    @accounts               = Account.all.to_json
-    @organizations          = Organization.all.to_json
-    @instances              = DC::AWS.new.describe_instances.to_json
-    @top_documents          = RemoteUrl.top_documents(7, :limit => 5).to_json
+    @documents_by_access           = DC::Statistics.documents_by_access.to_json
+    @pages_per_minute              = DC::Statistics.pages_per_minute.to_json
+    @average_page_count            = DC::Statistics.average_page_count.to_json
+    @total_pages                   = DC::Statistics.total_pages.to_json
+    @daily_documents               = keys_to_timestamps(DC::Statistics.daily_documents(2.weeks.ago)).to_json
+    @daily_pages                   = keys_to_timestamps(DC::Statistics.daily_pages(2.weeks.ago)).to_json
+    @public_per_account            = DC::Statistics.public_documents_per_account.to_json
+    @private_per_account           = DC::Statistics.private_documents_per_account.to_json
+    @pages_per_account             = DC::Statistics.pages_per_account.to_json
+    @documents                     = Document.finished.chronological.all(:limit => 5).map {|d| d.admin_attributes }.to_json
+    @failed_documents              = Document.failed.chronological.all(:limit => 3).map {|d| d.admin_attributes }.to_json
+    @accounts                      = Account.all.to_json
+    @organizations                 = Organization.all.to_json
+    @instances                     = DC::AWS.new.describe_instances.to_json
+    @top_documents                 = RemoteUrl.top_documents(7, :limit => 5).to_json
+    @remote_url_hits_last_week     = DC::Statistics.remote_url_hits_last_week.to_json
+    @remote_url_hits_last_year     = DC::Statistics.remote_url_hits_last_year.to_json
+    @count_organizations_embedding = DC::Statistics.count_organizations_embedding.to_json
+    @count_total_collaborators     = DC::Statistics.count_total_collaborators.to_json
+
+
   end
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and

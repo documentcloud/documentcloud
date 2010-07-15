@@ -61,7 +61,24 @@ module DC
       result = Entity.connection.execute('select avg(c) from (select count(*) as c from entities group by document_id) as entity_counts')
       result[0][0].to_f.round
     end
-
+    
+    def self.remote_url_hits_last_week
+      RemoteUrl.sum(:hits, :conditions => ['date_recorded > ?', 7.days.ago])
+    end
+    
+    def self.remote_url_hits_last_year
+      RemoteUrl.sum(:hits, :conditions => ['date_recorded > ?', 365.days.ago])
+    end
+    
+    def self.count_organizations_embedding
+      document_ids = RemoteUrl.all(:select => 'document_id', :group => 'document_id').map &:document_id
+      Document.find(document_ids).map {|d| d.organization.id }.uniq.length
+    end
+    
+    def self.count_total_collaborators
+      Collaboration.count - Project.count
+    end
+    
   end
 
 end

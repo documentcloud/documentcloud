@@ -75,15 +75,20 @@ dc.ui.Statistics = dc.View.extend({
   data : function() {
     var acl = stats.documents_by_access, a = dc.access;
     return {
-      total_documents    : this._format(this.totalDocuments()),
-      total_pages        : this._format(stats.total_pages),
-      average_page_count : this._format(stats.average_page_count),
-      pages_per_minute   : this._format(stats.pages_per_minute),
-      public_docs        : this._format(acl[a.PUBLIC] || 0),
-      private_docs       : this._format((acl[a.PRIVATE] || 0) + (acl[a.ORGANIZATION] || 0) + (acl[a.EXCLUSIVE] || 0)),
-      pending_docs       : this._format(acl[a.PENDING] || 0),
-      error_docs         : this._format(acl[a.ERROR] || 0),
-      instance_tags      : this.INSTANCE_TAGS
+      total_documents               : this._format(this.totalDocuments()),
+      total_pages                   : this._format(stats.total_pages),
+      average_page_count            : this._format(stats.average_page_count),
+      pages_per_minute              : this._format(stats.pages_per_minute),
+      public_docs                   : this._format(acl[a.PUBLIC] || 0),
+      private_docs                  : this._format((acl[a.PRIVATE] || 0) + (acl[a.ORGANIZATION] || 0) + (acl[a.EXCLUSIVE] || 0)),
+      pending_docs                  : this._format(acl[a.PENDING] || 0),
+      error_docs                    : this._format(acl[a.ERROR] || 0),
+      instance_tags                 : this.INSTANCE_TAGS,
+      remote_url_hits_last_week     : this._format(stats.remote_url_hits_last_week),
+      remote_url_hits_last_year     : this._format(stats.remote_url_hits_last_year),
+      count_organizations_embedding : this._format(stats.count_organizations_embedding),
+      count_total_collaborators     : this._format(stats.count_total_collaborators)
+
     };
   },
 
