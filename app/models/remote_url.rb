@@ -18,7 +18,7 @@ class RemoteUrl < ActiveRecord::Base
   end
   
   def self.top_documents(days=7, options={})
-    self.all({:select => 'sum(hits) AS hits, document_id, url', 
+    self.all({:select => 'sum(hits) AS hits, document_id, url AS remote_url', 
               :conditions => ['date_recorded > ?', days.days.ago], 
               :group => 'document_id, url', 
               :order => 'hits desc'}.merge(options))

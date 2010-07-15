@@ -124,7 +124,10 @@ class Document < ActiveRecord::Base
   # separate database, so it only knows the document ids.
   def self.documents_from_ids(document_ids)
     document_ids.map do |d|
-      d['document'] = Document.find(d.document_id)
+      doc = Document.find(d.document_id)
+      doc.hits = d.hits
+      doc.remote_url = d.remote_url
+      doc
     end
   end
 
