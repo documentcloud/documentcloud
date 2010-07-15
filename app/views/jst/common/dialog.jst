@@ -24,7 +24,7 @@
         <% _.each(choices, function(choice, i) { %>
           <input class="input" type="radio" name="choice" id="choice_<%= i %>" value="<%= choice.value %>" <%= choice.selected ? 'checked="true"' : '' %>/>
           <label for="choice_<%= i %>"><%= choice.text %></label>
-          <div class="description"><%= choice.description %></div>
+          <div class="description selectable_text"><%= choice.description %></div>
         <% }); %>
       </div>
     <% } else if (mode == 'prompt') { %>

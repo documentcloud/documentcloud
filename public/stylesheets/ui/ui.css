@@ -24,6 +24,10 @@ select {
   height: 20px;
 }
 
+.selectable_text {
+  cursor: text;
+}
+
 .float_left {
   float: left;
 }
