@@ -14,7 +14,7 @@ class RemoteUrl < ActiveRecord::Base
       :group => 'document_id, url',
       :order => 'hits desc'
     }.merge(options))
-    docs = Document.find(urls.map {|u| u.document_id }).inject({}) do |memo, doc|
+    docs = Document.find_all_by_id(urls.map {|u| u.document_id }).inject({}) do |memo, doc|
       memo[doc.id] = doc
       memo
     end
