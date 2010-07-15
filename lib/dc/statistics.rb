@@ -72,7 +72,7 @@ module DC
     
     def self.count_organizations_embedding
       document_ids = RemoteUrl.all(:select => 'document_id', :group => 'document_id').map &:document_id
-      Document.find(document_ids).map {|d| d.organization.id }.uniq.length
+      Organization.count_by_sql("SELECT COUNT(DISTINCT o.id) FROM organizations AS o INNER JOIN documents AS d ON d.organization_id = o.id WHERE d.id IN (#{document_ids.join(",")})")
     end
     
     def self.count_total_collaborators
