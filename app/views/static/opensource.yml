@@ -34,8 +34,8 @@ news:
 
 github:
   - - "NY Times' Document Viewer"
-    - http://github.com/NYTimes/document-viewer
-    - http://github.com/NYTimes/document-viewer
+    - http://github.com/documentcloud/document-viewer
+    - http://github.com/documentcloud/document-viewer
     - "We're collaborating with the New York Times on their document viewer technology, a key component of DocumentCloud."
   - - Docsplit
     - http://documentcloud.github.com/docsplit/
