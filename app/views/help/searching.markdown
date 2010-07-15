@@ -8,11 +8,13 @@ When entering a fielded search, if the phrase you're searching for contains spac
    
 Term                        | Description 
 ----------------------------|---------------------
+title                       |	Will search for documents by title, as provided by the person who uploaded it. For example: [title: deepwater][].
+source                      | When you upload a document, you have the opportunity to identify the source. This provides a way to search that field. For example: [source: supreme][] will identify documents attributed to "U.S. Supreme Court" as well as "New York State Supreme Court."
 account                     | Specify an email address to see documents uploaded by a single user. For example: [account: scott.klein@propublica.org][].
 group                       | If you know the short name of an organization, you can search for documents uploaded by anyone in that newsroom. For example: [group: chicago-tribune][].
 project                     | Restrict your search to just the documents in one of your projects, by entering the title. This is the same as clicking on the project in the "Projects" tab.
-title                       |	Will search for documents by title, as provided by the person who uploaded it. For example: [title: deepwater][].
-source                      | When you upload a document, you have the opportunity to identify the source. This provides a way to search that field. For example: [source: supreme][] will identify documents attributed to "U.S. Supreme Court" as well as "New York State Supreme Court."
+projectid                   | Restrict your search to a particular project, by a project's canonical identifier. Useful for filtering public API calls. You can view this ID by opening the project's edit dialog. For example: [projectid: 6-the-financial-crisis][]
+access                      | Search for only documents that have a particular access level (one of "public", "private", or "organization"). For example, to view all of your private documents: [access: private][]
  
 ## Searching with Entities
  
