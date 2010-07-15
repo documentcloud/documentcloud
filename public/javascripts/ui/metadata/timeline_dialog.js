@@ -48,7 +48,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   },
 
   displayTitle : function() {
-    if (this.documents.length == 1) return 'Timeline for "' + this.documents[0].get('title') + '"';
+    if (this.documents.length == 1) return 'Timeline for "' + Inflector.truncate(this.documents[0].get('title'), 55) + '"';
     return "Timeline for " + this.documents.length + " Documents";
   },
 
