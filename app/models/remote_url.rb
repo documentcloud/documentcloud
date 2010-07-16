@@ -18,7 +18,7 @@ class RemoteUrl < ActiveRecord::Base
       memo[doc.id] = doc
       memo
     end
-    urls.map do |url|
+    urls.select {|url| !!docs[url.document_id] }.map do |url|
       url_attrs = url.attributes
       url_attrs['id'] = "#{url.document_id}:#{url.remote_url}"
       docs[url.document_id].admin_attributes.merge(url_attrs)
