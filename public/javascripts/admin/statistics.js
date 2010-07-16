@@ -26,7 +26,8 @@ dc.ui.Statistics = dc.View.extend({
 
   callbacks : {
     '.chart.plothover':           '_showTooltop',
-    '#instances .minus.click':    '_terminateInstance'
+    '#instances .minus.click':    '_terminateInstance',
+    '.more_top_documents.click':  '_loadMoreTopDocuments'
   },
 
   accountCallbacks : {
@@ -162,7 +163,19 @@ dc.ui.Statistics = dc.View.extend({
       text : count + ' ' + title + '<br />' + date
     });
   },
-
+  
+  // Loads the top 100 embedded documents, sorted by number of hits in the past year.
+  _loadMoreTopDocuments : function(e) {
+    e.preventDefault();
+    $.getJSON('/admin/hits_on_documents', {}, _.bind(this._displayMoreTopDocuments, this));
+  },
+  
+  // Displays all top documents, retrieved through AJAX.
+  _displayMoreTopDocuments : function(data) {
+    console.log(['Displaying', data]);
+    TopDocuments.populate(data);
+  },
+  
   // Convert a date-hash into JSON that flot can properly plot.
   _series : function(data, title) {
     return [{
