@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
 
+  before_filter :set_ssl
+
   if Rails.env.development?
     around_filter :perform_profile
     after_filter  :debug_api
@@ -109,6 +111,10 @@ class ApplicationController < ActionController::Base
       (login == 'main'  && password == 'REDACTED') ||
       (login == 'guest' && password == 'REDACTED')
     end
+  end
+
+  def set_ssl
+    Thread.current[:ssl] = request.ssl?
   end
 
   # Email production exceptions to us. Once every 2 minutes at most, per process.

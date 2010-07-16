@@ -20,7 +20,7 @@ module DC
           Rails.env.production? ? "http://s3.documentcloud.org" : "http://s3.amazonaws.com/#{BUCKET_NAME}"
         end
         def web_root
-          asset_root
+          Thread.current[:ssl] ? "https://s3.amazonaws.com/#{BUCKET_NAME}" : asset_root
         end
       end
 
