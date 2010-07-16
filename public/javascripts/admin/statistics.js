@@ -171,11 +171,9 @@ dc.ui.Statistics = dc.View.extend({
   
   // Displays all top documents, retrieved through AJAX.
   _displayMoreTopDocuments : function(data) {
-    console.log(['Displaying', {'data': data}, this.el]);
-    TopDocuments.refresh([]);
     TopDocuments.populate(data);
     $('.top_documents_list', this.el).replaceWith(JST['top_documents']({}));
-    $('.top_documents_label_year', this.el).css({'display': 'block'});
+    $('.top_documents_label_year', this.el).css({'display': 'table-row'});
     $('.top_documents_label_week', this.el).css({'display': 'none'});
   },
   

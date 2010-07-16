@@ -27,7 +27,7 @@ class AdminController < ApplicationController
   end
   
   def hits_on_documents
-    json RemoteUrl.top_documents(365, :limit => 100).to_json
+    json RemoteUrl.top_documents(365, :limit => 1000).to_json
   end
   
   # Attempt a new signup for DocumentCloud -- includes both the organization and

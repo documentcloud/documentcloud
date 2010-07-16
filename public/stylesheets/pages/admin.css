@@ -46,9 +46,6 @@ body {
           #statistics .labels.top_documents_label_year {
             display: none;
           }
-          #statistics .labels.top_documents_label_year td {
-            white-space: nowrap;
-          }
         #statistics td .sort {
           cursor: pointer;
         }
