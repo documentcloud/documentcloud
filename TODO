@@ -1,5 +1,8 @@
 TODO:
 
+  * Publicly indexable documents so Google can see them and link to 
+    the DocumentViewer.
+  
   * Disallow annotating outside of the page border.  
   
   * Make collaborators accept the collaboration request before really adding

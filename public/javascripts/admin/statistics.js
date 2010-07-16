@@ -166,14 +166,17 @@ dc.ui.Statistics = dc.View.extend({
   
   // Loads the top 100 embedded documents, sorted by number of hits in the past year.
   _loadMoreTopDocuments : function(e) {
-    e.preventDefault();
     $.getJSON('/admin/hits_on_documents', {}, _.bind(this._displayMoreTopDocuments, this));
   },
   
   // Displays all top documents, retrieved through AJAX.
   _displayMoreTopDocuments : function(data) {
-    console.log(['Displaying', data]);
+    console.log(['Displaying', {'data': data}, this.el]);
+    TopDocuments.refresh([]);
     TopDocuments.populate(data);
+    $('.top_documents_list', this.el).replaceWith(JST['top_documents']({}));
+    $('.top_documents_label_year', this.el).css({'display': 'block'});
+    $('.top_documents_label_week', this.el).css({'display': 'none'});
   },
   
   // Convert a date-hash into JSON that flot can properly plot.

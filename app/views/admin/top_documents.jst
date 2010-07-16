@@ -1,0 +1,33 @@
+
+<tr class="data top_documents_list">
+  <td colspan="4">
+    <table class="documents">
+      <thead>
+        <td>Cover</td>
+        <td>ID</td>
+        <td>Title</td>
+        <td>Contributor</td>
+        <td>Organization</td>
+        <td>Source</td>
+        <td>Pages</td>
+        <td>Hits</td>
+        <td></td>
+      </thead>
+      <tbody>
+        <% _.each(_.sortBy(TopDocuments.models(), function(doc){ return -doc.get('hits')}), function(doc) { %>
+          <tr>
+            <td class="first"><img class="doc" src="<%= doc.get('thumbnail_url') %>" /></td>
+            <td><%= doc.get('document_id') %></td>
+            <td><a href="<%= doc.get('remote_url') %>"><%= Inflector.truncate(doc.get('title') || '<i>private</i>', 50) %></a></td>
+            <td><%= doc.get('account_name') %></td>
+            <td><%= doc.get('organization_name') %></td>
+            <td><%= Inflector.truncate(doc.get('source') || '<i>private</i>', 25) %></td>
+            <td><%= doc.get('page_count') %></td>
+            <td><%= doc.get('hits') %></td>
+            <td class="last"></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </td>
+</tr>

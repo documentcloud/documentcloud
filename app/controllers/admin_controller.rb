@@ -24,8 +24,6 @@ class AdminController < ApplicationController
     @remote_url_hits_last_year     = DC::Statistics.remote_url_hits_last_year.to_json
     @count_organizations_embedding = DC::Statistics.count_organizations_embedding.to_json
     @count_total_collaborators     = DC::Statistics.count_total_collaborators.to_json
-
-
   end
   
   def hits_on_documents

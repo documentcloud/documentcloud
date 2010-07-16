@@ -125,42 +125,16 @@
       <td colspan="4">Most Recent 5 Uploaded Documents</td>
     </tr>
 
-    <tr class="data">
+    <%= JST['top_documents']({}) %>
+    <tr class="labels top_documents_label_week">
       <td colspan="4">
-        <table class="documents">
-          <thead>
-            <td>Cover</td>
-            <td>ID</td>
-            <td>Title</td>
-            <td>Contributor</td>
-            <td>Organization</td>
-            <td>Source</td>
-            <td>Pages</td>
-            <td>Hits</td>
-            <td></td>
-          </thead>
-          <tbody>
-            <% _.each(_.sortBy(TopDocuments.models(), function(doc){ return -doc.get('hits')}), function(doc) { %>
-              <tr>
-                <td class="first"><img class="doc" src="<%= doc.get('thumbnail_url') %>" /></td>
-                <td><%= doc.get('id') %></td>
-                <td><a href="<%= doc.get('remote_url') %>"><%= Inflector.truncate(doc.get('title') || '<i>private</i>', 50) %></a></td>
-                <td><%= doc.get('account_name') %></td>
-                <td><%= doc.get('organization_name') %></td>
-                <td><%= Inflector.truncate(doc.get('source') || '<i>private</i>', 25) %></td>
-                <td><%= doc.get('page_count') %></td>
-                <td><%= doc.get('hits') %></td>
-                <td class="last"></td>
-              </tr>
-            <% }); %>
-          </tbody>
-        </table>
+        <div class="float_right more_top_documents text_link">Top 100 Documents</a></div>
+        Top 5 Most Popular Embedded Documents - Past 7 days
       </td>
     </tr>
-    <tr class="labels">
+    <tr class="labels top_documents_label_year">
       <td colspan="4">
-        <div class="float_right"><a href="#" class="more_top_documents">Top 100 documents</a></div>
-        Top 5 Most Popular Embedded Documents - Past 7 days
+        Top 100 Most Popular Embedded Documents - Past year
       </td>
     </tr>
 

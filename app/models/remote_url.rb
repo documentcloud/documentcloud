@@ -9,7 +9,7 @@ class RemoteUrl < ActiveRecord::Base
 
   def self.top_documents(days=7, options={})
     urls = self.all({
-      :select => 'sum(hits) AS hits, document_id, url',
+      :select => '0 AS id, sum(hits) AS hits, document_id, url AS remote_url',
       :conditions => ['date_recorded > ?', days.days.ago],
       :group => 'document_id, url',
       :order => 'hits desc'
@@ -18,14 +18,11 @@ class RemoteUrl < ActiveRecord::Base
       memo[doc.id] = doc
       memo
     end
-    urls.map {|url| url.populate(docs[url.document_id]) }
-  end
-
-  # Populate the hits and remote_url of a document, from the current model.
-  def populate(doc)
-    doc.hits = self.hits
-    doc.remote_url = self.url
-    doc
+    urls.map do |url|
+      url_attrs = url.attributes
+      url_attrs['id'] = url.remote_url
+      docs[url.document_id].admin_attributes.merge(url_attrs)
+    end
   end
 
 end
