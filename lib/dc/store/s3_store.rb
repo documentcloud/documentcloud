@@ -33,7 +33,7 @@ module DC
       end
 
       def authorized_url(path)
-        s3.interface.generate_link('GET', {:url => File.join(web_root, path)}, AUTH_PERIOD)
+        s3.interface.generate_link('GET', {:url => File.join(AssetStore.web_root, path)}, AUTH_PERIOD)
       end
 
       def list(path)
