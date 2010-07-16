@@ -27,7 +27,7 @@ dc.Set = Base.extend({
 
   // What are the ids for every model in the set?
   getIds : function() {
-    return _.map(_.keys(this._byId), function(key){ return parseInt(key, 10); });
+    return _.keys(this._byId);
   },
 
   // What are the client ids for every model in the set?
@@ -76,7 +76,7 @@ dc.Set = Base.extend({
   // Internal implementation of adding a single model to the set.
   _add : function(model, silent) {
     var already = this.get(model);
-    if (already) throw new Error("Can't add the same model to a set twice");
+    if (already) throw new Error(["Can't add the same model to a set twice", already.id]);
     this._byId[model.id] = model;
     this._byCid[model.cid] = model;
     model.bind('all', this._boundOnModelEvent);
