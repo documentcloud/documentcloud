@@ -20,6 +20,10 @@ class Section < ActiveRecord::Base
     "#{start_page}-#{end_page}"
   end
 
+  def canonical_url
+    document.canonical_url(:html) + '#document/p' + start_page.to_s
+  end
+
 
   private
 

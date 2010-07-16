@@ -31,6 +31,9 @@ class DocumentsController < ApplicationController
       format.xml do
         render :xml => current_document.canonical.to_xml(:root => 'document')
       end
+      format.rdf do
+        @doc = current_document
+      end
     end
   end
 

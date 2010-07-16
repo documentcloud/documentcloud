@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF PUBLIC "-//DUBLIN CORE//DCMES DTD 2002/07/31//EN"
+    "http://dublincore.org/documents/2002/07/31/dcmes-xml/dcmes-xml-dtd.dtd">
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc ="http://purl.org/dc/terms/">
+  <rdf:Description rdf:about="<%= @doc.canonical_url(:html) %>">
+    <dc:identifier><%= @doc.canonical_id %></dc:identifier>
+    <dc:title><%= @doc.title %></dc:title>
+    <dc:extent><%= @doc.page_count %> pages</dc:extent>
+    <dc:description><%= @doc.description %></dc:description>
+    <dc:format>text/html</dc:format>
+    <dc:relation rdf:parseType="Collection">
+      <rdf:Description rdf:about="<%= @doc.pdf_url %>">
+        <dc:description>The document's original PDF.</dc:description>
+        <dc:format>application/pdf</dc:format>
+        <dc:type>Text</dc:type>
+      </rdf:Description>
+      <rdf:Description rdf:about="<%= @doc.full_text_url %>">
+        <dc:description>The complete plain text of the document.</dc:description>
+        <dc:format>text/plain</dc:format>
+        <dc:type>Text</dc:type>
+      </rdf:Description>
+      <rdf:Description rdf:about="<%= @doc.search_url %>">
+        <dc:description>API endpoint to search the contents of this document.</dc:description>
+        <dc:format>application/json</dc:format>
+        <dc:type>Service</dc:type>
+      </rdf:Description>
+      <rdf:Description rdf:about="<%= @doc.thumbnail_url %>">
+        <dc:description>60x75 thumbnail image of the document's cover.</dc:description>
+        <dc:format>image/gif</dc:format>
+        <dc:type>Image</dc:type>
+      </rdf:Description>
+      <rdf:Description rdf:about="<%= @doc.page_image_url_template %>">
+        <dc:description>URI Template for the image of any page in the document.</dc:description>
+        <dc:format>image/gif</dc:format>
+        <dc:conformsTo>http://tools.ietf.org/html/draft-gregorio-uritemplate-04</dc:conformsTo>
+        <dc:type>Text</dc:type>
+      </rdf:Description>
+      <rdf:Description rdf:about="<%= @doc.page_text_url_template %>">
+        <dc:description>URI Template for the plain text of any page in the document.</dc:description>
+        <dc:format>text/plain</dc:format>
+        <dc:conformsTo>http://tools.ietf.org/html/draft-gregorio-uritemplate-04</dc:conformsTo>
+        <dc:type>Text</dc:type>
+      </rdf:Description>
+<% if @doc.related_article -%>
+      <rdf:Description rdf:about="<%= @doc.related_article %>">
+        <dc:description>The original article that references this document.</dc:description>
+        <dc:format>text/html</dc:format>
+        <dc:type>Text</dc:type>
+      </rdf:Description>
+<% end -%>
+    </dc:relation>
+<% sections = @doc.sections -%>
+<% if sections.present? -%>
+    <dc:tableOfContents rdf:parseType="Collection">
+<% sections.each do |section| -%>
+      <rdf:Description rdf:about="<%= section.canonical_url %>">
+        <dc:title><%= section.title %></dc:title>
+        <dc:coverage>page <%= section.page_range %></dc:coverage>
+      </rdf:Description>
+<% end -%>
+    </dc:tableOfContents>
+<% end -%>
+<% notes = @doc.annotations.accessible(nil) -%>
+<% if notes.present? -%>
+    <dc:Collection rdf:parseType="Collection">
+<% notes.each do |note| -%>
+      <rdf:Description rdf:about="<%= note.canonical_url %>">
+        <dc:title><%= note.title %></dc:title>
+<% location = note.location ? " [#{note.location}]" : '' -%>
+        <dc:coverage>page <%= note.page_number %><%= location %></dc:coverage>
+        <dc:description><%= note.content %></dc:description>
+      </rdf:Description>
+<% end -%>
+    </dc:Collection>
+<% end -%>
+  </rdf:Description>
+</rdf:RDF>

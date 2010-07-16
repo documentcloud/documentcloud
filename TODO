@@ -1,13 +1,6 @@
 TODO:
 
-  * Disallow annotating outside of the page border.
-  
-  * Switch up the way we do access control. Remove the complexity from the
-    queries, and start caching the list of (allowed to see / edit) users on 
-    the document itself.
-    
-  * Make a new lock icon -- remove last vestiges of Silk.
-  
+  * Disallow annotating outside of the page border.  
   
   * Make collaborators accept the collaboration request before really adding
     them (thereby keeping unwanted adds from getting edit access).
@@ -22,18 +15,18 @@ TODO:
   * Things have stabilized. Time for another batch of tests.
 
   * Add a way to search just the text of your notes. List your notes etc.
-          
-  * Implement the "publication" workflow. A document should know if it's been
-    published, and the URL where. Create a cron/cloudcrowd job that pings each
-    published document, ensuring that it's not 404'd.
         
-  * Add a "related documents" search. We need a good algorithm for this.
-    
-  * Settle the linked data representation of a document with the semantic web
-    folks.
+  * Add a "related documents" search, via Solr's MoreLikeThis handler.
   
 
 DONE:
+
+  * Added a valid RDF representation of every document.
+
+  * Make a new lock icon -- remove last vestiges of Silk.
+
+  * Switch up the way we do access control. Remove the complexity from the
+    queries, and start caching the list of project_ids on the document itself.
 
   * Make allowed_to_edit? more efficient and optionally on the client-side
     as well.

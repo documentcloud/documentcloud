@@ -40,6 +40,10 @@ class Annotation < ActiveRecord::Base
     document.pages.find_by_page_number(page_number)
   end
 
+  def canonical_url
+    document.canonical_url(:html) + '#document/' + page_number.to_s
+  end
+
   def canonical
     data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content}
     data['location'] = {'image' => location} if location

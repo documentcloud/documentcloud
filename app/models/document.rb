@@ -207,8 +207,12 @@ class Document < ActiveRecord::Base
     File.join(path, 'pages')
   end
 
+  def canonical_id
+    "#{id}-#{slug}"
+  end
+
   def canonical_path(format = :json)
-    "documents/#{id}-#{slug}.#{format}"
+    "documents/#{canonical_id}.#{format}"
   end
 
   def canonical_cache_path
@@ -379,7 +383,7 @@ class Document < ActiveRecord::Base
   def canonical(options={})
     options = DEFAULT_CANONICAL_OPTIONS.merge(options)
     doc = ActiveSupport::OrderedHash.new
-    doc['id']              = "#{id}-#{slug}"
+    doc['id']              = canonical_id
     doc['title']           = title
     doc['pages']           = page_count
     doc['description']     = description
