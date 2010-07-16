@@ -23,12 +23,13 @@ class ApiController < ApplicationController
     perform_search
     respond_to do |format|
       format.json do
-        r = ActiveSupport::OrderedHash.new
-        r['total']      = @query.total
-        r['page']       = @query.page
-        r['per_page']   = DC::Search::DEFAULT_PAGE_SIZE
-        r['documents']  = @documents.map {|d| d.canonical(API_OPTIONS) }
-        render :json => r
+        @response = ActiveSupport::OrderedHash.new
+        @response['total']      = @query.total
+        @response['page']       = @query.page
+        @response['per_page']   = DC::Search::DEFAULT_PAGE_SIZE
+        @response['documents']  = @documents.map {|d| d.canonical(API_OPTIONS) }
+        return if jsonp_request?
+        render :json => @response
       end
     end
   end
@@ -41,7 +42,9 @@ class ApiController < ApplicationController
       return render({:json => {:message => "The file parameter must be the contents of a file."},
                     :status => 400})
     end
-    render :json => Document.upload(params, current_account, current_organization).canonical
+    @response = Document.upload(params, current_account, current_organization).canonical
+    return if jsonp_request?
+    render :json => @response
   end
 
 end
