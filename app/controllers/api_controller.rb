@@ -22,7 +22,7 @@ class ApiController < ApplicationController
   def search
     perform_search
     respond_to do |format|
-      format.json do
+      format.any(:js, :json) do
         @response = ActiveSupport::OrderedHash.new
         @response['total']      = @query.total
         @response['page']       = @query.page
