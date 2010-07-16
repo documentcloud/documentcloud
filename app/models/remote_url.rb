@@ -12,6 +12,7 @@ class RemoteUrl < ActiveRecord::Base
       :select => 'sum(hits) AS hits, document_id, url AS remote_url',
       :conditions => ['date_recorded > ?', days.days.ago],
       :group => 'document_id, url',
+      :having => ['sum(hits) > 0'],
       :order => 'hits desc'
     }.merge(options))
     docs = Document.find_all_by_id(urls.map {|u| u.document_id }).inject({}) do |memo, doc|
