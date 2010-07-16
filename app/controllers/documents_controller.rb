@@ -7,8 +7,10 @@ class DocumentsController < ApplicationController
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
 
+  OPEN_FORMATS = ['json', 'xml', 'js', 'rdf']
+
   def show
-    return unless request.format.json? || request.format.xml? || request.format.js? || login_required
+    return unless OPEN_FORMATS.include?(request.format) || login_required
     return not_found unless current_document(true)
     respond_to do |format|
       format.pdf  { redirect_to(current_document.pdf_url) }
