@@ -9,7 +9,7 @@ class StaticController < ApplicationController
   MARKDOWN_LINK_REPLACER = /\[([^\]]*?)\]\[\]/i
 
   def home
-    current_account
+    return redirect_to(DC.server_root(:ssl => false) + '/home') if request.ssl?
     @posts = date_sorted(yaml_for('home'))
   end
 
