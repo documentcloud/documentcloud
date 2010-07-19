@@ -14,8 +14,11 @@
   border: 0;
 }
 
-.icon.warning_16 {
-  background-image: url(/images/embed/icons/warning_16.png);
+.icon.alert_gray {
+  background-image: url(/images/embed/icons/alert_gray.png);
+}
+.icon.alert_yellow {
+  background-image: url(/images/embed/icons/alert_yellow.png);
 }
 .icon.search_button_16 {
   background-image: url(/images/embed/icons/search_button_16.png);

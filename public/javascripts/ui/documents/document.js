@@ -123,7 +123,7 @@ dc.ui.Document = dc.View.extend({
     switch (access) {
       case dc.access.PUBLIC:       return null;
       case dc.access.PENDING:      return {className : 'spinner',    title : 'uploading...'};
-      case dc.access.ERROR:        return {className : 'warning_16', title : 'broken document'};
+      case dc.access.ERROR:        return {className : 'alert_gray', title : 'broken document'};
       case dc.access.ORGANIZATION: return {className : 'lock',       title : 'private to my organization'};
       case dc.access.PRIVATE:      return {className : 'lock',       title : 'private'};
     }
