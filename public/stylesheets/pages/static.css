@@ -114,22 +114,22 @@ small {
 }
   #cloud_edge {
     position: absolute;
-    top: 2px; left: 80px;
+    top: 3px; left: 80px;
     width: 67px; height: 30px;
     background: url(/images/embed/ui/cloud_edge.png) no-repeat;
   }
     #wordmark {
-      left: 10px;
+      left: 18px;
       position: absolute;
       color: #566eaa;
-      font-size: 16px;
-      top: 16px;
+      font-size: 15px;
+      top: 17px;
     }
 
 #navigation {
   height: 40px;
   margin-bottom: 20px;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 50px;
   border-bottom: 1px solid #e2e2e2;
 }
@@ -163,7 +163,7 @@ small {
   margin: 0;
   padding: 0;
   position: absolute;
-  left: 5px;
+  left: 12px;
   width: 150px;
 }
   #content.static #help_navigation li {
