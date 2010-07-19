@@ -1,12 +1,12 @@
 <%= @account.full_name %> --
 
-Someone (probably you) asked to reset your DocumentCloud password. You can use the link below to do just that: 
+Someone (probably you) asked to reset your DocumentCloud password. You can use the link below to do just that:
 
-<%= DC_CONFIG['server_root'] %>/accounts/enable/<%= @key %>
+<%= DC.server_root(:ssl => false) %>/accounts/enable/<%= @key %>
 
 Enjoy,
 
 Jeremy & Amanda
 DocumentCloud
 
-PS. If you need help using DocumentCloud, take a look at http://help.documentcloud.org or write to support@documentcloud.org. 
+PS. If you need help using DocumentCloud, take a look at http://help.documentcloud.org or write to support@documentcloud.org.

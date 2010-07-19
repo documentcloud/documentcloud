@@ -1,6 +1,6 @@
 <script type="text/javascript">
 window.RAILS_ENV = '<%= RAILS_ENV %>';
-window.SERVER_ROOT = '<%= DC_CONFIG["server_root"] %>';
+window.SERVER_ROOT = '<%= DC.server_root %>';
 <% if @current_account %>
   dc.app.hasDocuments = <%= @has_documents.to_json %>;
   dc.app.organization = <%= @current_organization.to_json %>;

@@ -232,7 +232,7 @@ class Document < ActiveRecord::Base
   end
 
   def private_pdf_url
-    File.join(DC_CONFIG['server_root'], pdf_path)
+    File.join(DC.server_root, pdf_path)
   end
 
   def pdf_url(direct=false)
@@ -258,7 +258,7 @@ class Document < ActiveRecord::Base
   end
 
   def private_full_text_url
-    File.join(DC_CONFIG['server_root'], full_text_path)
+    File.join(DC.server_root, full_text_path)
   end
 
   def full_text_url
@@ -281,11 +281,11 @@ class Document < ActiveRecord::Base
   end
 
   def canonical_url(format = :json)
-    File.join(DC_CONFIG['server_root'], canonical_path(format))
+    File.join(DC.server_root(:ssl => false), canonical_path(format))
   end
 
   def search_url
-    "#{DC_CONFIG['server_root']}/documents/#{id}/search.json?q={query}"
+    "#{DC.server_root}/documents/#{id}/search.json?q={query}"
   end
 
   def page_image_path(page_number, size)
@@ -301,7 +301,7 @@ class Document < ActiveRecord::Base
   end
 
   def private_page_image_template
-    File.join(DC_CONFIG['server_root'], File.join(pages_path, page_image_template))
+    File.join(DC.server_root, File.join(pages_path, page_image_template))
   end
 
   def page_image_url_template(opts={})
@@ -311,7 +311,7 @@ class Document < ActiveRecord::Base
 
   def page_text_url_template(opts={})
     return File.join(slug, page_text_template) if opts[:local]
-    File.join(DC_CONFIG['server_root'], File.join(pages_path, page_text_template))
+    File.join(DC.server_root, File.join(pages_path, page_text_template))
   end
 
   def asset_store
@@ -421,7 +421,7 @@ class Document < ActiveRecord::Base
     RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'update_access',
       'inputs'  => [self.id],
-      'callback_url' => "#{DC_CONFIG['server_root']}/import/update_access"
+      'callback_url' => "#{DC.server_root(:ssl => false)}/import/update_access"
     }.to_json})
   end
 

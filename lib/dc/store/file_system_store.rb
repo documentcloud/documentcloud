@@ -9,7 +9,7 @@ module DC
           "#{Rails.root}/public/asset_store"
         end
         def web_root
-          File.join(DC_CONFIG['server_root'], 'asset_store')
+          File.join(DC.server_root, 'asset_store')
         end
       end
 

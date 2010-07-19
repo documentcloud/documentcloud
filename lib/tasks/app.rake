@@ -29,7 +29,7 @@ namespace :app do
   desc "Repackage static assets"
   task :jammit do
     config = YAML.load_file("#{Rails.root}/config/document_cloud.yml")[RAILS_ENV]
-    sh "sudo su www-data -c \"jammit -u #{config['server_root']}\""
+    sh "sudo su www-data -c \"jammit -u http://#{config['server_root']}\""
   end
 
 end

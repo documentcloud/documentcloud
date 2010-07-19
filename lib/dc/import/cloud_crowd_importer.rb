@@ -15,7 +15,7 @@ module DC
           'action'  => 'document_import',
           'inputs'  => urls,
           'options' => DEFAULT_OPTIONS.merge(options),
-          'callback_url' => "#{DC_CONFIG['server_root']}/import/cloud_crowd"
+          'callback_url' => "#{DC.server_root(:ssl => false)}/import/cloud_crowd"
         }.to_json})
       end
 

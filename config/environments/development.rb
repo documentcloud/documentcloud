@@ -7,7 +7,7 @@
 # We've been running into *serious* common issues with
 # "A copy of [some_class] has been removed from the module tree but is still active!"
 # Caching classes until there's a patch to Rails 2.3 for it.
-config.cache_classes = true
+config.cache_classes = false
 
 # But, we can still live-load templates by using this setting:
 config.action_view.cache_template_loading = false

@@ -1,5 +1,5 @@
 (function() {
-  <% root = DC_CONFIG['server_root'] %>
+  <% root = DC.server_root(:ssl => false) %>
   window.DV = window.DV || {};
 
   DV.onload = function() {

@@ -2,11 +2,11 @@
 
 A DocumentCloud account has been created for you and <%= @organization_name %>.
 
-Set your password and get started with our beta at: 
+Set your password and get started with our beta at:
 
-<%= DC_CONFIG['server_root'] %>/accounts/enable/<%= @key %>
+<%= DC.server_root(:ssl => false) %>/accounts/enable/<%= @key %>
 
-Once you've set your password, you can login at <%= DC_CONFIG['server_root'] %>/login using <%= @account.email %> as your username.
+Once you've set your password, you can login at <%= DC.server_root(:ssl => false) %>/login using <%= @account.email %> as your username.
 
 We're always adding new features and listening to your requests. Keep an eye on our blog for updates and let us know what you need from DocumentCloud: http://documentcloud.uservoice.com
 

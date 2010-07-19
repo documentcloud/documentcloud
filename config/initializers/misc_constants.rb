@@ -4,3 +4,4 @@
 
 ANALYTICS_DB = YAML.load_file("#{Rails.root}/config/database_analytics.yml")[Rails.env]
 MAIN_DB = YAML.load_file("#{Rails.root}/config/database.yml")[Rails.env]
+require 'lib/dc'
