@@ -101,7 +101,7 @@ module DC
       end
 
       def secure_s3
-        @secure_s3 ||= RightAws::S3.new(@key, @secret, :protocol => 'https', :port => 443, :no_subdomains => true)
+        @secure_s3 ||= RightAws::S3.new(@key, @secret, :protocol => 'https', :no_subdomains => true)
       end
 
       def bucket
