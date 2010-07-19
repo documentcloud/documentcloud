@@ -37,7 +37,7 @@ dc.ui.Help = dc.View.extend({
 
   openContactDialog : function() {
     dc.ui.Dialog.prompt('Contact Us', '', function(message) {
-      $.post('/help/contact_us', {message : message}, function() {
+      $.post('/ajax_help/contact_us', {message : message}, function() {
         dc.ui.notifier.show({mode : 'info', text : 'Your message was sent successfully.'});
       });
       return true;
