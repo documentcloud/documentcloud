@@ -10,9 +10,16 @@ dc.model.Document = dc.Model.extend({
     this.pageEntities = new dc.model.EntitySet();
   },
 
+  // Generate the canonical URL for opening this document, over SSL if we're
+  // currently secured.
+  url : function() {
+    var base = this.get('document_viewer_url').replace(/^http:/, '');
+    return window.location.protocol + base;
+  },
+
   openViewer : function() {
     if (this.checkBusy()) return;
-    window.open(this.get('document_viewer_url'));
+    window.open(this.url());
   },
 
   openText : function() {

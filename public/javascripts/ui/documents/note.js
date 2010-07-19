@@ -29,7 +29,7 @@ dc.ui.Note = dc.View.extend({
 
   viewNoteInDocument : function() {
     var suffix = '#document/p' + this.model.get('page');
-    window.open(this.model.document().get('document_viewer_url') + suffix);
+    window.open(this.model.document().url() + suffix);
   },
 
   editNote : function() {

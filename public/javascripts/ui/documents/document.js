@@ -176,7 +176,7 @@ dc.ui.Document = dc.View.extend({
     var el    = $(e.target).closest('.page');
     var id    = el.attr('data-id');
     var page  = el.attr('data-page');
-    window.open(this.model.get('document_viewer_url') + "?entity=" + id + '&page=' + page);
+    window.open(this.model.url() + "?entity=" + id + '&page=' + page);
   },
 
   // When the document is dropped onto a project, add it to the project.
