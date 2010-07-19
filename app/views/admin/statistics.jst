@@ -128,7 +128,8 @@
     <%= JST['top_documents']({}) %>
     <tr class="labels top_documents_label_week">
       <td colspan="4">
-        <div class="float_right more_top_documents text_link">All Embedded Documents</a></div>
+        <div class="float_right more_top_documents text_link">All Embedded Documents</div>
+        <a class="float_right download_csv text_link" href="/admin/top_documents_csv">Download CSV</a></div>
         Top 5 Most Popular Embedded Documents - Past 7 days
       </td>
     </tr>
@@ -181,7 +182,10 @@
       </td>
     </tr>
     <tr class="labels">
-      <td colspan="4">All Accounts and Organizations</td>
+      <td colspan="4">
+        <a class="float_right download_csv text_link" href="/admin/accounts_csv">Download CSV</a>
+        All Accounts and Organizations
+      </td>
     </tr>
 
   </tbody>
