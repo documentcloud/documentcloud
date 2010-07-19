@@ -13,7 +13,7 @@ dc.ui.Organizer = dc.View.extend({
   facetCallbacks : {
     '.row.click'              : '_filterFacet',
     '.cancel_search.click'    : '_removeFacet',
-    '.more.click'             : '_loadFacets',
+    '.more.click'             : '_loadFacet',
     '.less.click'             : '_showLess',
     '.show_pages.click'       : '_showPages'
   },
@@ -126,9 +126,9 @@ dc.ui.Organizer = dc.View.extend({
     return false;
   },
 
-  _loadFacets : function(e) {
+  _loadFacet : function(e) {
     $(e.target).html('loading &hellip;');
-    dc.app.searchBox.loadFacets($(e.target).attr('data-category'));
+    dc.app.searchBox.loadFacet($(e.target).attr('data-category'));
   },
 
   _showLess : function(e) {

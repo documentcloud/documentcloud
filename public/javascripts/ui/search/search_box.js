@@ -4,6 +4,8 @@ dc.ui.SearchBox = dc.View.extend({
   PAGE_MATCHER        : (/\/p(\d+)$/),
 
   DOCUMENTS_URL : '/search/documents.json',
+  
+  FACETS_URL : '/search/facets.json',
 
   // Error messages to display when your search returns no results.
   NO_RESULTS : {
@@ -19,14 +21,15 @@ dc.ui.SearchBox = dc.View.extend({
     '#search_box.keydown':  'maybeSearch',
     '#search_box.search':   'searchEvent',
     '#search_type.click':   '_setScope',
-    '.cancel_search.click': 'cancelSearch'
+    '.cancel_search.click': 'cancelSearch',
+    '#entities_tab.click':  'loadFacets'
   },
 
   // Creating a new SearchBox registers #search page fragments.
   constructor : function(options) {
     this.base(options);
     this.outstandingSearch = false;
-    _.bindAll(this, '_loadSearchResults', '_loadFacetResults', 'searchByHash', 'loadDefault', 'hideSearch');
+    _.bindAll(this, '_loadSearchResults', '_loadFacetsResults', '_loadFacetResults', 'searchByHash', 'loadDefault', 'hideSearch');
     dc.history.register(/^#search\//, this.searchByHash);
   },
 
@@ -98,16 +101,36 @@ dc.ui.SearchBox = dc.View.extend({
     dc.ui.spinner.show('searching');
     dc.app.paginator.hide();
     _.defer(dc.app.toolbar.checkFloat);
-    var params = {q : query, include_facets : true, page_size : dc.app.paginator.pageSize(), order : dc.app.paginator.sortOrder};
+    var params = {
+      q : query, 
+      page_size : dc.app.paginator.pageSize(), 
+      order : dc.app.paginator.sortOrder
+    };
     if (this.page) params.page = this.page;
     $.get(this.DOCUMENTS_URL, params, this._loadSearchResults, 'json');
   },
 
-  loadFacets : function(facet) {
+  loadFacets : function() {
+    var query = this.value() || '';
     dc.ui.spinner.show('searching');
     this.outstandingSearch = true;
-    var params = {q : this.value(), include_facets : true, facet : facet};
-    $.get(this.DOCUMENTS_URL, params, this._loadFacetResults, 'json');
+    Entities.refresh();
+    var params = {
+      q : query,
+      include_facets : true
+    };
+    $.get(this.FACETS_URL, params, this._loadFacetsResults, 'json');
+  },
+  
+  loadFacet : function(facet) {
+    dc.ui.spinner.show('searching');
+    this.outstandingSearch = true;
+    var params = {
+      q : this.value(), 
+      include_facets : true, 
+      facet : facet
+    };
+    $.get(this.FACETS_URL, params, this._loadFacetResults, 'json');
   },
 
   // Ensure a given prefix for the search, used to scope searches down to
@@ -199,8 +222,10 @@ dc.ui.SearchBox = dc.View.extend({
   // the metadata right alongside the document JSON.
   _loadSearchResults : function(resp) {
     dc.app.paginator.setQuery(resp.query);
-    dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
-    Entities.refresh();
+    if ('facets' in resp) {
+      dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
+      Entities.refresh();
+    }
     Documents.refresh(_.map(resp.documents, function(m, i){
       m.index = i;
       return new dc.model.Document(m);
@@ -208,6 +233,13 @@ dc.ui.SearchBox = dc.View.extend({
     this.doneSearching(resp.documents.length == 0);
   },
 
+  _loadFacetsResults : function(resp) {
+    dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
+    Entities.refresh();  
+    dc.ui.spinner.hide();
+    this.outstandingSearch = false;
+  },
+  
   _loadFacetResults : function(resp) {
     dc.app.workspace.organizer.mergeFacets(resp.facets, 500, resp.query.total);
     dc.ui.spinner.hide();

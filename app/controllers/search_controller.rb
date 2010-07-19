@@ -9,9 +9,15 @@ class SearchController < ApplicationController
     perform_search
     results = {'query' => @query, 'documents' => @documents}
     results['facets'] = @query.facets if params[:include_facets]
-    render :json => results
+    json results
   end
 
+  def facets
+    perform_search
+    results = {'query' => @query, 'facets' => @query.facets}
+    json results
+  end
+  
   def notes
     params[:q].gsub!(FIELD_STRIP, '') if params[:q]
     perform_search
