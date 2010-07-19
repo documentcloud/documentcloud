@@ -25,31 +25,23 @@ class AdminController < ApplicationController
     @count_organizations_embedding = DC::Statistics.count_organizations_embedding.to_json
     @count_total_collaborators     = DC::Statistics.count_total_collaborators.to_json
   end
-  
+
   def hits_on_documents
     json RemoteUrl.top_documents(365, :limit => 1000).to_json
   end
-  
+
   def top_documents_csv
     documents = RemoteUrl.top_documents(365, :limit => 1000)
-    
-    csv = DC::CSV::generate_csv(documents)
-    send_data csv, :type => 'text/csv; charset=iso-8859-1; header=present',
-                   :disposition => "attachment; filename=documents.csv"
-  end
-  
-  def accounts_csv
-    accounts = []
-    model_accounts = Account.all
-    model_accounts.each {|account| accounts.push account.attributes }
-    keys = ["id", "first_name", "last_name", "organization_id", "email", "role", 
-            "created_at", "updated_at"]
 
-    csv = DC::CSV::generate_csv(accounts, keys)
-    send_data csv, :type => 'text/csv; charset=iso-8859-1; header=present',
-                   :disposition => "attachment; filename=accounts.csv"
+    csv = DC::CSV::generate_csv(documents)
+    send_data csv, :type => :csv, :filename => 'documents.csv'
   end
-  
+
+  def accounts_csv
+    csv = DC::CSV::generate_csv(Account.all, Account.column_names)
+    send_data csv, :type => :csv, :filename => 'documents.csv'
+  end
+
   # Attempt a new signup for DocumentCloud -- includes both the organization and
   # its first account. If everthing's kosher, the journalist is logged in.
   # NB: This needs to stay access controlled by the bouncer throughout the beta.
