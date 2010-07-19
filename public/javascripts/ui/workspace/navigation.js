@@ -18,19 +18,26 @@ dc.ui.Navigation = dc.View.extend({
       return memo;
     }, this));
     this.tabs[dc.app.preferences.get('sidebar_tab') || 'projects'].click();
+    this.bind('entities', function() {
+      _.defer(dc.app.searchBox.loadFacets);
+    });
     this.bind('projects', _.bind(this._saveSidebarPreference, this, 'projects'));
     this.bind('entities', _.bind(this._saveSidebarPreference, this, 'entities'));
     this.setMode('documents', 'panel_tab');
     return this;
   },
 
-  open : function(name) {
-    if (this.modes[this.SECTIONS[name] + '_tab'] == name) return false;
-    this.tabs[name].click();
+  open : function(tab_name) {
+    if (this.isOpen(tab_name)) return false;
+    this.tabs[tab_name].click();
+  },
+  
+  isOpen : function(tab_name) {
+    return this.modes[this.SECTIONS[tab_name] + '_tab'] == tab_name;
   },
 
-  bind : function(name, callback) {
-    this.tabs[name].click(callback);
+  bind : function(tab_name, callback) {
+    this.tabs[tab_name].click(callback);
   },
 
   _switchTab : function(e) {

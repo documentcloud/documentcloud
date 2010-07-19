@@ -3,9 +3,7 @@ module DC
 
     module Controller
 
-      def perform_search
-        opts                  = {}
-        opts[:include_facets] = true if params[:include_facets]
+      def perform_search(opts={})
         opts[:facet]          = params[:facet]
         opts.merge!({:account => current_account, :organization => current_organization}) if logged_in?
         @query            = DC::Search::Parser.new.parse(params[:q] || '')

@@ -16,20 +16,22 @@ dc.ui.SearchBox = dc.View.extend({
 
   id            : 'search',
   fragment      : null,
-
+  
+  flags : {},
+  
   callbacks : {
     '#search_box.keydown':  'maybeSearch',
     '#search_box.search':   'searchEvent',
     '#search_type.click':   '_setScope',
-    '.cancel_search.click': 'cancelSearch',
-    '#entities_tab.click':  'loadFacets'
+    '.cancel_search.click': 'cancelSearch'
   },
 
   // Creating a new SearchBox registers #search page fragments.
   constructor : function(options) {
     this.base(options);
-    this.outstandingSearch = false;
-    _.bindAll(this, '_loadSearchResults', '_loadFacetsResults', '_loadFacetResults', 'searchByHash', 'loadDefault', 'hideSearch');
+    this.flags['hasEntities'] = false;
+    this.flags['outstandingSearch'] = false;
+    _.bindAll(this, '_loadSearchResults', '_loadFacetsResults', '_loadFacetResults', 'searchByHash', 'loadDefault', 'hideSearch', 'loadFacets');
     dc.history.register(/^#search\//, this.searchByHash);
   },
 
@@ -96,7 +98,8 @@ dc.ui.SearchBox = dc.View.extend({
     this.fragment = 'search/' + encodeURIComponent(query);
     this.showDocuments();
     Documents.refresh();
-    this.outstandingSearch = true;
+    this.flags['hasEntities'] = false;
+    this.flags['outstandingSearch'] = true;
     this._afterSearch = callback;
     dc.ui.spinner.show('searching');
     dc.app.paginator.hide();
@@ -106,28 +109,30 @@ dc.ui.SearchBox = dc.View.extend({
       page_size : dc.app.paginator.pageSize(), 
       order : dc.app.paginator.sortOrder
     };
+    if (dc.app.navigation.isOpen('entities')) {
+      params['include_facets'] = true;
+    }
     if (this.page) params.page = this.page;
     $.get(this.DOCUMENTS_URL, params, this._loadSearchResults, 'json');
   },
 
   loadFacets : function() {
+    if (this.flags['hasEntities']) return;
     var query = this.value() || '';
     dc.ui.spinner.show('searching');
-    this.outstandingSearch = true;
+    this.flags['outstandingSearch'] = true;
     Entities.refresh();
     var params = {
-      q : query,
-      include_facets : true
+      q : query
     };
     $.get(this.FACETS_URL, params, this._loadFacetsResults, 'json');
   },
   
   loadFacet : function(facet) {
     dc.ui.spinner.show('searching');
-    this.outstandingSearch = true;
+    this.flags['outstandingSearch'] = true;
     var params = {
       q : this.value(), 
-      include_facets : true, 
       facet : facet
     };
     $.get(this.FACETS_URL, params, this._loadFacetResults, 'json');
@@ -174,13 +179,13 @@ dc.ui.SearchBox = dc.View.extend({
   // return.
   maybeSearch : function(e) {
     var query = this.value();
-    if (!this.outstandingSearch && e.keyCode == 13) this.search(query);
+    if (!this.flags['outstandingSearch'] && e.keyCode == 13) this.search(query);
   },
 
   // Webkit knows how to fire a real "search" event.
   searchEvent : function(e) {
     var query = this.value();
-    if (!this.outstandingSearch && query) this.search(query);
+    if (!this.flags['outstandingSearch'] && query) this.search(query);
   },
 
   cancelSearch : function() {
@@ -213,7 +218,7 @@ dc.ui.SearchBox = dc.View.extend({
       $('#no_results .explanation').text(this.NO_RESULTS[searchType]);
     }
     dc.ui.spinner.hide();
-    this.outstandingSearch = false;
+    this.flags['outstandingSearch'] = false;
     if (this._afterSearch) this._afterSearch();
   },
 
@@ -225,6 +230,7 @@ dc.ui.SearchBox = dc.View.extend({
     if ('facets' in resp) {
       dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
       Entities.refresh();
+      this.flags['hasEntities'] = true;
     }
     Documents.refresh(_.map(resp.documents, function(m, i){
       m.index = i;
@@ -237,13 +243,14 @@ dc.ui.SearchBox = dc.View.extend({
     dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
     Entities.refresh();  
     dc.ui.spinner.hide();
-    this.outstandingSearch = false;
+    this.flags['outstandingSearch'] = false;
+    this.flags['hasEntities'] = true;
   },
   
   _loadFacetResults : function(resp) {
     dc.app.workspace.organizer.mergeFacets(resp.facets, 500, resp.query.total);
     dc.ui.spinner.hide();
-    this.outstandingSearch = false;
+    this.flags['outstandingSearch'] = false;
   },
 
   _setScope : function(e) {

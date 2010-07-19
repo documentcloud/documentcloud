@@ -13,6 +13,8 @@ module DC
         :specific => {:limit => 500, :sort => :count}
       }
 
+      EMPTY_PAGINATION = {:page => 1, :per_page => 0}
+
       attr_reader   :text, :fields, :projects, :project_ids, :access, :attributes, :conditions, :results, :solr
       attr_accessor :page, :page_size, :order, :from, :to, :total
 
@@ -59,9 +61,12 @@ module DC
         size      = @facet ? 0 : @page_size
         order     = @order.to_sym
         direction = order == :created_at ? :desc : :asc
+        pagination = {:page => page, :per_page => size}
+        pagination = EMPTY_PAGINATION if @exclude_documents
+
         @solr.build do
           order_by  order, direction
-          paginate  :page => page, :per_page => size
+          paginate  pagination
           data_accessor_for(Document).include = [:organization, :account]
         end
       end
@@ -72,6 +77,7 @@ module DC
       def run(o={})
         @account, @organization, @unrestricted = o[:account], o[:organization], o[:unrestricted]
         @include_facets, @facet = o[:include_facets], o[:facet]
+        @exclude_documents = o[:exclude_documents]
         generate_search
         @solr.execute
         @total   = @solr.total

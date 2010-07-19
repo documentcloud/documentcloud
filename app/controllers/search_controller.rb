@@ -6,14 +6,15 @@ class SearchController < ApplicationController
   FIELD_STRIP = /\S+:\s*/
 
   def documents
-    perform_search
+    perform_search :include_facets => params[:include_facets]
     results = {'query' => @query, 'documents' => @documents}
     results['facets'] = @query.facets if params[:include_facets]
     json results
   end
 
   def facets
-    perform_search
+    perform_search :exclude_documents => true, 
+                   :include_facets => true
     results = {'query' => @query, 'facets' => @query.facets}
     json results
   end
