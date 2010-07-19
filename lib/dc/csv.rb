@@ -1,12 +1,10 @@
-require 'FasterCSV'
-
 module DC
-  
+
   module CSV
-    
+
     def self.generate_csv(records, keys=nil)
       keys ||= records.first.keys
-    
+
       csv_string = FasterCSV.generate do |csv|
         csv << keys
         records.each do |record|
@@ -18,7 +16,7 @@ module DC
 
       return csv_string
     end
-    
+
   end
-  
+
 end
