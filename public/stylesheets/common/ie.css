@@ -59,8 +59,11 @@ body.workspace {
 }
 .document .document_tool {
   position: absolute;
-  margin: 2px 14px 0 0;
+  margin: 4px 14px 0 0;
 }
+  body.minidocs .document .document_tool {
+    left: 122px;
+  }
 #organizer_entities .row {
   width: 268px;
 }
