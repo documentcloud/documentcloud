@@ -1,6 +1,6 @@
 javascript_compressor: closure
 template_function: _.template
-embed_assets: on
+embed_assets: datauri
 
 javascripts:
   core:
