@@ -23,6 +23,7 @@
     DV.load(<%= @current_document.canonical({:account => @current_account, :local => @local}).to_json %>);
   </script>
   <% if Rails.env.production? %>
+    <% @pageview_url = '/documents/show' %>
     <%= render :partial => 'common/google' %>
   <% end %>
 </body>
