@@ -8,4 +8,7 @@ window.SERVER_ROOT = '<%= DC_CONFIG["server_root"] %>';
   Accounts.add(new dc.model.Account(<%= @current_account.to_json %>));
   Projects.populate(<%= @projects.to_json({:account => @current_account}) %>);
 <% end %>
+<% if @additional_js %>
+  <%= @additional_js %>
+<% end %>
 </script>

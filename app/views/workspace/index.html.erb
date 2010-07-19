@@ -1,8 +1,5 @@
 <%
-  @show_search = true
-  @bodyclass = 'workspace'
+  @show_search    = true
+  @bodyclass      = 'workspace'
+  @additional_js  = '$(document).ready(function() { dc.app.workspace.initialize(); });'
 %>
-
-<script type="text/javascript">
-  $(document).ready(function() { dc.app.workspace.initialize(); });
-</script>
