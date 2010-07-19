@@ -30,6 +30,19 @@ rule(/^ssh:/) do |t|
   exec "ssh -A -i #{conf[:key]} #{conf[:user]}@#{host}.documentcloud.org"
 end
 
+rule(/^remote:gem:install/) do |t|
+  task_name = t.name.sub(/^remote:/, '')
+  remote task_name, central_servers + worker_servers + app_servers
+end
+
+rule(/^gem:install/) do |t|
+  # rake gem:install:jammit/0.5.1
+  full_gem = t.name.split(':').last
+  gem_name, gem_version = *full_gem.split('/')
+  version = gem_version ? "--version #{gem_version}" : ""
+  sh "sudo gem install --no-ri --no-rdoc #{gem_name} #{version}"
+end
+
 def app_servers
   case RAILS_ENV
   when 'staging'    then ['staging.dcloud.org']
