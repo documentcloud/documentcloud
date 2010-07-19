@@ -33,7 +33,8 @@ module DC
       end
 
       def authorized_url(path)
-        s3.interface.get_link(bucket, path, AUTH_PERIOD)
+        interface = Thread.current[:ssl] ? secure_s3.interface : s3.interface
+        interface.generate_link 'GET', {:url => "#{BUCKET_NAME}/#{CGI::escape(path)}"}, AUTH_PERIOD
       end
 
       def list(path)
@@ -97,6 +98,10 @@ module DC
 
       def create_s3
         RightAws::S3.new(@key, @secret, :protocol => 'http', :port => 80)
+      end
+
+      def secure_s3
+        @secure_s3 ||= RightAws::S3.new(@key, @secret, :protocol => 'https', :port => 443)
       end
 
       def bucket
