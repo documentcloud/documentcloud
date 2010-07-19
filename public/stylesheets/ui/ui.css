@@ -4,7 +4,7 @@ span[role="link"] {
   color: #000;
 }
 
-.serif, .serif * {
+.serif {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
 }
 .interface, .dialog, .minibutton, input {
@@ -510,7 +510,7 @@ textarea.text_area {
   .dialog .choices {
     text-align: left;
   }
-    .dialog .choices label {
+    .dialog .choices > label {
       line-height: 18px;
     }
     .dialog .description {

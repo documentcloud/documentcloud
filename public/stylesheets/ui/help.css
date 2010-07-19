@@ -8,7 +8,7 @@
   margin-bottom: 30px;
   color: #999;
 }
-  #contact_us .text a {
+  #contact_us a {
     color: #999;
     text-decoration: underline;
   }
@@ -40,7 +40,7 @@
       clear: both;
       padding: 8px;
     }
-      #help pre code {
+      #help pre > code {
         background: none;
         border: 0;
         padding: 0;
@@ -80,7 +80,7 @@
     list-style-type: disc;
     padding-left: 25px;
   }
-    #help ul li {
+    #help li {
       margin-bottom: 5px;
     }
   #help_toolbar {

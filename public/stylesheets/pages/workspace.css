@@ -72,7 +72,7 @@ label {
     .logo_words a {
       color: #566eaa;
     }
-      body.workspace .logo_words a {
+      body.workspace .logo_words > a {
         display: none;
       }
     #wordmark {
@@ -240,11 +240,11 @@ div.full_page_background {
         position: relative;
         font: italic 11px/16px Arial;
       }
-        #full_screen_form .license input {
+        #full_screen_form .license > input {
           position: absolute;
           margin: -2px 0 0 -25px;
         }
-        #full_screen_form .license input[type="checkbox"] {
+        #full_screen_form .license > input[type="checkbox"] {
           position: relative;
           margin-right: 5px;
           left: 0px;
@@ -261,25 +261,6 @@ div.full_page_background {
         left: 195px;
         margin: 0;
       }
-
-.sidebar .help {
-  position: absolute;
-  overflow-y: auto;
-  padding: 10px;
-  width: 280px;
-}
-  .sidebar .help h4 {
-    font: bold 10px Arial;
-    text-transform: uppercase;
-    color: #4d4d4d;
-    margin: 0 0 7px 0;
-  }
-  .sidebar .help p {
-    font: 11px;
-    line-height: 16px;
-    color: #222;
-    margin-bottom: 15px;
-  }
 
 /*------------------------- View-mode visibility -----------------------------*/
 div.active_search,

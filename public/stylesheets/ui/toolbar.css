@@ -44,10 +44,10 @@
     font-size: 11px; line-height: 18px;
     text-align: left;
   }
-    .embed_code .explanation a {
+    .embed_code .explanation > a {
       color: white;
     }
-      .embed_code .explanation a:hover {
+      .embed_code .explanation > a:hover {
         text-decoration: underline;
       }
   .embed_code .snippet {

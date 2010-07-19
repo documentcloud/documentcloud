@@ -179,7 +179,7 @@
   #project_dialog .enter_email .minibutton {
     float: right;
   }
-  #project_dialog .enter_email label {
+  #project_dialog .enter_email_label {
     font-size: 12px;
   }
   #project_dialog .enter_email .text_input {

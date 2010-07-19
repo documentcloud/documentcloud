@@ -134,7 +134,7 @@
     body.minidocs .document .description {
       display: none;
     }
-    .document .description b {
+    .document .description > b {
       font-size: 12px;
     }
     .document.error_access .description {
