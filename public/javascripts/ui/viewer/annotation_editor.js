@@ -11,9 +11,11 @@ dc.ui.AnnotationEditor = dc.View.extend({
     this._open    = false;
     this._buttons = {};
     this._baseURL = '/documents/' + dc.app.editor.docId + '/annotations';
-    _.bindAll(this, 'open', 'close', 'drawAnnotation', 'saveAnnotation', 'deleteAnnotation');
+    this._inserts = $('.DV-pageNoteInsert');
+    _.bindAll(this, 'open', 'close', 'drawAnnotation', 'saveAnnotation', 'deleteAnnotation', 'createPageNote');
     DV.api.onAnnotationSave(this.saveAnnotation);
     DV.api.onAnnotationDelete(this.deleteAnnotation);
+    this._inserts.click(this.createPageNote);
   },
 
   open : function(kind) {
@@ -23,6 +25,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
     this.page           = $('.DV-page');
     this._guide         = $(kind == 'public' ? '#public_note_guide' : '#private_note_guide');
     this.page.css({cursor : 'crosshair'});
+    this._inserts.filter('.visible').show().addClass('DV-' + kind);
     this.page.bind('mousedown', this.drawAnnotation);
     $(document).bind('keydown', this.close);
     this._buttons[kind].addClass('open');
@@ -35,6 +38,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
     this.page.unbind('mousedown', this.drawAnnotation);
     $(document).unbind('keydown', this.close);
     this.clearAnnotation();
+    this._inserts.hide().removeClass('DV-public DV-private');
     this._buttons[this._kind].removeClass('open');
     this._guide.hide();
   },
@@ -49,6 +53,14 @@ dc.ui.AnnotationEditor = dc.View.extend({
 
   clearAnnotation : function() {
     if (this.region) $(this.region).remove();
+  },
+
+  // When a page note insert line is clicked, create a page annotation above
+  // the corresponding page.
+  createPageNote : function(e) {
+    var set = $(e.target).closest('.DV-set');
+    var pageNumber = DV.api.getPageNumberForId(set.attr('id'));
+    DV.api.addAnnotation({page : pageNumber, unsaved : true, access : this._kind || 'public'});
   },
 
   // TODO: Clean up!
@@ -98,18 +110,21 @@ dc.ui.AnnotationEditor = dc.View.extend({
   },
 
   saveAnnotation : function(anno) {
+    if (!anno.location) DV.api.redraw(true);
     this[anno.unsaved ? 'createAnnotation' : 'updateAnnotation'](anno);
   },
 
+  // Convert an annotation object into serializable params understood by us.
   annotationToParams : function(anno, extra) {
     delete anno.unsaved;
-    return _.extend({ json : JSON.stringify({
-      location    : anno.location.image,
+    var params = {
       page_number : anno.page,
       content     : anno.text,
       title       : anno.title,
       access      : anno.access == 'private' ? 1 : 4
-    })}, extra || {});
+    };
+    if (anno.location) params.location = anno.location.image;
+    return _.extend({ json : JSON.stringify(params)}, extra || {});
   },
 
   createAnnotation : function(anno) {
