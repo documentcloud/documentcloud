@@ -5,21 +5,27 @@ TODO:
   
   * Disallow annotating outside of the page border.  
   
+  * Page annotations need to be able to edit.
+  
   * Make collaborators accept the collaboration request before really adding
     them (thereby keeping unwanted adds from getting edit access).
 
   * Add placeholder JS fallback for non HTML5 browsers.
     
-  * Write a phone number extractor, and save those as entities.
-      
-  * Public -> Private docs that are already part of a project should be
-    displayed as revoked/locked/blanked.
+  * Write a phone number extractor, and save those as entities, currency amounts
+    as well.
     
   * Things have stabilized. Time for another batch of tests.
 
   * Add a way to search just the text of your notes. List your notes etc.
+  
+  * Fix incorrect entity offsets. Document #486 on production, searching for
+    "organization: 'Department of Defense'".
         
-  * Add a "related documents" search, via Solr's MoreLikeThis handler.
+  * Add a "related documents" search, via Solr's MoreLikeThis handler. Grep
+    the Sunspot source for "MoreLikeThis".
+    
+  * Include OCR via tesseract in DocSplit.
   
 
 DONE:

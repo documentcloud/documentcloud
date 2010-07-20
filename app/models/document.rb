@@ -1,6 +1,8 @@
 class Document < ActiveRecord::Base
   include DC::Access
 
+  # Accessors and constants:
+
   attr_accessor :highlight, :annotation_count, :remote_url, :hits
   attr_writer   :organization_name, :account_name
 
@@ -12,6 +14,8 @@ class Document < ActiveRecord::Base
   DISPLAY_DATE_FORMAT = "%b %d, %Y"
 
   DEFAULT_CANONICAL_OPTIONS = {:sections => true, :annotations => true}
+
+  # DB Associations:
 
   belongs_to :account
   belongs_to :organization
@@ -33,6 +37,8 @@ class Document < ActiveRecord::Base
   after_destroy :delete_assets
 
   delegate :text, :to => :full_text, :allow_nil => true
+
+  # Named scopes:
 
   named_scope :chronological, {:order => 'created_at desc'}
 
