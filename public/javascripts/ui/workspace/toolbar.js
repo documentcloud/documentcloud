@@ -25,9 +25,10 @@ dc.ui.Toolbar = dc.View.extend({
     $('.project_menu_container', el).append(this.projectMenu.render().el);
     $('.edit_menu_container', el).append(this.editMenu.render().el);
     $('.publish_menu_container', el).append(this.publishMenu.render().el);
-    this.openButton      = $('#open_viewers', this.el);
-    this.timelineButton  = $('#open_timeline', this.el);
-    this.floatEl         = $('#floating_toolbar', this.el);
+    this.openButton              = $('#open_viewers', this.el);
+    this.timelineButton          = $('#open_timeline', this.el);
+    this.floatEl                 = $('#floating_toolbar', this.el);
+    this.relatedDocumentsButton  = $('#open_related_documents', this.el);
     $(window).scroll(this.checkFloat);
     this.setCallbacks();
     return this;
@@ -103,6 +104,12 @@ dc.ui.Toolbar = dc.View.extend({
       dc.ui.notifier.show({mode : 'info', text : notification});
       return true;
     }, this), {information : this._subtitle(docs.length)});
+  },
+  
+  enableToolbarButtons : function() {
+    var selected = Documents.selected().length ? 'is' : 'not';
+    this.timelineButton.setMode(selected, 'enabled');
+    this.relatedDocumentsButton.setMode(selected, 'enabled');
   },
 
   displayEmbedSnippet : function() {

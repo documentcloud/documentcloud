@@ -78,6 +78,7 @@ dc.ui.Document = dc.View.extend({
       Documents.deselectAll();
       this.model.set({selected : true});
     }
+    dc.app.toolbar.enableToolbarButtons();
   },
 
   viewDocument : function(e) {
