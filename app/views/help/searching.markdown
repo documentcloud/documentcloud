@@ -2,9 +2,9 @@
 
 This guide lists the different types of searches you can perform with DocumentCloud. You can click any of the linked examples to run the search and try it out.
 
-By default, a search looks for all of the words you enter within the full text of the document itself. For example: [John Yoo detainee][]. You can, however, ask DocumentCloud to search the contents of specific other fields.
+By default, a search looks for all of the words you enter within the title and full text of the document itself. For example: [John Yoo detainee][]. You can, however, ask DocumentCloud to search the contents of specific fields.
 
-When entering a fielded search, if the phrase you're searching for contains spaces, use quotation marks to surround the phrase. If there are no spaces, quotes aren't necessary.
+You can enclose your search terms in quotes of you want to search for a specific, multi-word phrase or name, or use "NOT" or "-" to exclude a term from your search. For example: [geithner -madoff][] and [geithner NOT madoff][] will both look for documents that mention "Geithner" and do not also mention "Madoff." 
    
 Term                        | Description 
 ----------------------------|---------------------
