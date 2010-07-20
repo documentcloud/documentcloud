@@ -25,13 +25,16 @@ If you'd prefer to fit the document into an existing layout, and not have the vi
 ## Step 2: Check Your Metadata
 
 Before you embed a document on your site, we encourage you to use the workspace to fill out a few bits of extra information about the document.
+
+
+<img src="/images/help/publish_metadata.png" /> 
  
-Metadata        | &nbsp;
+ Metadata   | &nbsp;
 ----------------|--------------------
 Title           | Does the title in DocumentCloud jibe with the title you're planning for the article?
 Description     | Some visitors will come straight to the document rather than finding it through an article, so be sure the description field has enough information to put the document in context.
 Source          | Currently, DocumentCloud's embeddable viewer doesn't include the information from the "source" field, but it does appear in search results, and should be accurate.
-Related&nbsp;Article | It's important to supply the URL for the related article so that readers can find their way back to the original reporting.
+Related&nbsp;Article | It's important to supply the URL for the related article so that readers can find their way back to your original reporting.
  
 Almost all of these fields can be edited as a batch: select as many documents as you're getting ready to publish and click on the "edit" menu. (Each document's title and description must be edited separately.)
  
