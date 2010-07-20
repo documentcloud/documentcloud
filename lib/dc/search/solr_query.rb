@@ -32,7 +32,6 @@ module DC
         @account, @organization = nil, nil
         @page_size              = DEFAULT_PAGE_SIZE
         @order                  = DEFAULT_ORDER
-        @solr                   = Sunspot.new_search(Document)
       end
 
       # Series of attribute checks to determine the kind and state of query.
@@ -50,24 +49,25 @@ module DC
       # Generate all of the SQL, including conditions and joins, that is needed
       # to run the query.
       def generate_search
-        build_text        if     has_text?
-        build_fields      if     has_fields?
-        build_projects    if     has_projects?
-        build_project_ids if     has_project_ids?
-        build_attributes  if     has_attributes?
-        build_facets      if     @include_facets
-        build_access      unless @unrestricted
+        build_text         if     has_text? && !@related
+        build_fields       if     has_fields? && !@related
+        build_projects     if     has_projects?
+        build_project_ids  if     has_project_ids?
+        build_attributes   if     has_attributes? && !@related
+        build_facets       if     @include_facets
+        build_access       unless @unrestricted
         page      = @page
         size      = @facet ? 0 : @page_size
         order     = @order.to_sym
         direction = order == :created_at ? :desc : :asc
         pagination = {:page => page, :per_page => size}
         pagination = EMPTY_PAGINATION if @exclude_documents
-
+        
+        related = @related
         @solr.build do
           order_by  order, direction
           paginate  pagination
-          data_accessor_for(Document).include = [:organization, :account]
+          data_accessor_for(Document).include = [:organization, :account] unless related
         end
       end
 
@@ -75,6 +75,10 @@ module DC
       # that match the search, and one that retrieves the documents or notes
       # for the current page.
       def run(o={})
+        @related = !!o[:related_document]
+        @solr = @related ? 
+          Sunspot.new_more_like_this(o[:related_document], Document) : 
+          Sunspot.new_search(Document)
         @account, @organization, @unrestricted = o[:account], o[:organization], o[:unrestricted]
         @include_facets, @facet = o[:include_facets], o[:facet]
         @exclude_documents = o[:exclude_documents]
@@ -137,7 +141,7 @@ module DC
           fulltext text
         end
       end
-
+            
       # Generate the Solr to search across the fielded metadata.
       def build_fields
         fields = @fields

@@ -261,6 +261,18 @@
     <!-- *** This dynamicField is used by Sunspot! *** -->
     <!-- *** This dynamicField is used by Sunspot! *** -->
     <dynamicField name="*_dtms" stored="true" type="tdate" multiValued="true" indexed="true"/>
+    <!-- *** This dynamicField is used by Sunspot! *** -->
+    <dynamicField name="*_textv" multiValued="true" stored="false" termVectors="true" indexed="true" type="text"/>
+    <!-- *** This dynamicField is used by Sunspot! *** -->
+    <dynamicField name="*_textsv" multiValued="true" stored="true" termVectors="true" indexed="true" type="text"/>
+    <!-- *** This dynamicField is used by Sunspot! *** -->
+    <dynamicField name="*_et" multiValued="false" stored="false" termVectors="true" indexed="true" type="tdouble"/>
+    <!-- *** This dynamicField is used by Sunspot! *** -->
+    <dynamicField name="*_etm" multiValued="true" stored="false" termVectors="true" indexed="true" type="tdouble"/>
+    <!-- *** This dynamicField is used by Sunspot! *** -->
+    <dynamicField name="*_ets" multiValued="false" stored="true" termVectors="true" indexed="true" type="tdouble"/>
+    <!-- *** This dynamicField is used by Sunspot! *** -->
+    <dynamicField name="*_etms" multiValued="true" stored="true" termVectors="true" indexed="true" type="tdouble"/>
   </fields>
   <!-- Field to use to determine and enforce document uniqueness. 
       Unless this field is marked with required="false", it will be a required field

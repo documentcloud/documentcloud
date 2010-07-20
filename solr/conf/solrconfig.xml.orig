@@ -15,16 +15,16 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<!-- 
-     For more details about configurations options that may appear in this 
+<!--
+     For more details about configurations options that may appear in this
      file, see http://wiki.apache.org/solr/SolrConfigXml.
 
      Specifically, the Solr Config can support XInclude, which may make it easier to manage
      the configuration.  See https://issues.apache.org/jira/browse/SOLR-1167
 -->
 <config>
-  <!-- Set this to 'false' if you want solr to continue working after it has 
-       encountered an severe configuration error.  In a production environment, 
+  <!-- Set this to 'false' if you want solr to continue working after it has
+       encountered an severe configuration error.  In a production environment,
        you may want solr to keep working even if one handler is mis-configured.
 
        You may also set this to false using by setting the system property:
@@ -39,7 +39,7 @@
 
        If a "./lib" directory exists in your instanceDir, all files found in it
        are included as if you had used the following syntax...
-       
+
               <lib dir="./lib" />
     -->
   <!-- A dir option by itself adds any files found in the directory to the
@@ -60,7 +60,7 @@
   <lib dir="/total/crap/dir/ignored"/>
   <!-- an exact path can be used to specify a specific file.  This will cause
        a serious error to be logged if it can't be loaded.
-  <lib path="../a-jar-that-does-not-exist.jar" /> 
+  <lib path="../a-jar-that-does-not-exist.jar" />
   -->
   <!-- Used to specify an alternate directory to hold all index data
        other than the default ./data under the Solr home.
@@ -114,7 +114,7 @@
     <!--<mergeScheduler class="org.apache.lucene.index.ConcurrentMergeScheduler"/>-->
     <!--
       This option specifies which Lucene LockFactory implementation to use.
-      
+
       single = SingleInstanceLockFactory - suggested for a read-only index
                or when there is no possibility of another process trying
                to modify the index.
@@ -139,7 +139,7 @@
     <!--<maxBufferedDocs>1000</maxBufferedDocs>-->
     <!--<maxMergeDocs>2147483647</maxMergeDocs>-->
     <!-- inherit from indexDefaults <maxFieldLength>10000</maxFieldLength> -->
-    <!-- If true, unlock any held write or commit locks on startup. 
+    <!-- If true, unlock any held write or commit locks on startup.
          This defeats the locking mechanism that allows multiple
          processes to safely access a lucene index, and should be
          used with care.
@@ -174,7 +174,7 @@
       <!--
           Delete all commit points once they have reached the given age.
           Supports DateMathParser syntax e.g.
-          
+
           <str name="maxCommitAge">30MINUTES</str>
           <str name="maxCommitAge">1DAY</str>
       -->
@@ -207,12 +207,11 @@
          maxDocs - number of updates since last commit is greater than this
          maxTime - oldest uncommited update (in ms) is this long ago
          Instead of enabling autoCommit, consider using "commitWithin"
-         when adding documents. http://wiki.apache.org/solr/UpdateXmlMessages
-    <autoCommit> 
+         when adding documents. http://wiki.apache.org/solr/UpdateXmlMessages -->
+    <autoCommit>
       <maxDocs>10000</maxDocs>
-      <maxTime>1000</maxTime> 
+      <maxTime>1000</maxTime>
     </autoCommit>
-    -->
     <!-- The RunExecutableListener executes an external command from a
       hook such as postCommit or postOptimize.
          exe - the name of the executable to run
@@ -261,8 +260,8 @@
   </indexReaderFactory >-->
   <query>
     <!-- Maximum number of clauses in a boolean query... in the past, this affected
-        range or prefix queries that expanded to big boolean queries - built in Solr 
-        query parsers no longer create queries with this limitation. 
+        range or prefix queries that expanded to big boolean queries - built in Solr
+        query parsers no longer create queries with this limitation.
         An exception is thrown if exceeded.  -->
     <maxBooleanClauses>1024</maxBooleanClauses>
     <!-- There are two implementations of cache available for Solr,
@@ -285,7 +284,7 @@
          autowarmCount - the number of entries to prepopulate from
            and old cache.
          -->
-    <filterCache class="solr.FastLRUCache" size="512" initialSize="512" autowarmCount="0"/>
+    <filterCache class="solr.FastLRUCache" size="16384" initialSize="4096" autowarmCount="4096"/>
     <!-- Cache used to hold field values that are quickly accessible
          by document id.  The fieldValueCache is created by default
          even if not configured here.
@@ -379,9 +378,9 @@
     <!-- Maximum number of searchers that may be warming in the background
       concurrently.  An error is returned if this limit is exceeded. Recommend
       1-2 for read-only slaves, higher for masters w/o cache warming. -->
-    <maxWarmingSearchers>2</maxWarmingSearchers>
+    <maxWarmingSearchers>4</maxWarmingSearchers>
   </query>
-  <!-- 
+  <!--
     Let the dispatch filter handler /select?qt=XXX
     handleSelect=true will use consistent error handling for /select and /update
     handleSelect=false will use solr1.1 style error formatting
@@ -390,7 +389,7 @@
     <!--Make sure your system has some authentication before enabling remote streaming!  -->
     <requestParsers enableRemoteStreaming="true" multipartUploadLimitInKB="2048000"/>
     <!-- Set HTTP caching related parameters (for proxy caches and clients).
-          
+
          To get the behaviour of Solr 1.2 (ie: no caching related headers)
          use the never304="true" option and do not specify a value for
          <cacheControl>
@@ -426,7 +425,7 @@
   </requestDispatcher>
   <!-- requestHandler plugins... incoming queries will be dispatched to the
      correct handler based on the path or the qt (query type) param.
-     Names starting with a '/' are accessed with the a path equal to the 
+     Names starting with a '/' are accessed with the a path equal to the
      registered name.  Names without a leading '/' are accessed with:
       http://host/app/select?qt=name
      If no qt is defined, the requestHandler that declares default="true"
@@ -464,7 +463,7 @@
   <!-- DisMaxRequestHandler allows easy searching across multiple fields
        for simple user-entered phrases.  It's implementation is now
        just the standard SearchHandler with a default query type
-       of "dismax". 
+       of "dismax".
        see http://wiki.apache.org/solr/DisMaxRequestHandler
    -->
   <requestHandler name="dismax" class="solr.SearchHandler">
@@ -555,16 +554,16 @@
   </requestHandler>
   <!--
    Search components are registered to SolrCore and used by Search Handlers
-   
+
    By default, the following components are avaliable:
-    
+
    <searchComponent name="query"     class="org.apache.solr.handler.component.QueryComponent" />
    <searchComponent name="facet"     class="org.apache.solr.handler.component.FacetComponent" />
    <searchComponent name="mlt"       class="org.apache.solr.handler.component.MoreLikeThisComponent" />
    <searchComponent name="highlight" class="org.apache.solr.handler.component.HighlightComponent" />
    <searchComponent name="stats"     class="org.apache.solr.handler.component.StatsComponent" />
    <searchComponent name="debug"     class="org.apache.solr.handler.component.DebugComponent" />
-   
+
    Default configuration in a requestHandler would look like:
     <arr name="components">
       <str>query</str>
@@ -577,11 +576,11 @@
 
     If you register a searchComponent to one of the standard names, that will be used instead.
     To insert components before or after the 'standard' components, use:
-    
+
     <arr name="first-components">
       <str>myFirstComponentName</str>
     </arr>
-    
+
     <arr name="last-components">
       <str>myLastComponentName</str>
     </arr>
@@ -613,7 +612,7 @@
     </lst>
     -->
   </searchComponent>
-  <!-- A request handler utilizing the spellcheck component.  
+  <!-- A request handler utilizing the spellcheck component.
   #############################################################################
   NOTE: This is purely as an example.  The whole purpose of the
   SpellCheckComponent is to hook it into the request handler that handles (i.e.
@@ -661,16 +660,16 @@
     <lst name="engine">
       <!-- The name, only one can be named "default" -->
       <str name="name">default</str>
-      <!-- 
+      <!--
            Class name of Carrot2 clustering algorithm. Currently available algorithms are:
-           
+
            * org.carrot2.clustering.lingo.LingoClusteringAlgorithm
            * org.carrot2.clustering.stc.STCClusteringAlgorithm
-           
+
            See http://project.carrot2.org/algorithms.html for the algorithm's characteristics.
         -->
       <str name="carrot.algorithm">org.carrot2.clustering.lingo.LingoClusteringAlgorithm</str>
-      <!-- 
+      <!--
            Overriding values for Carrot2 default algorithm attributes. For a description
            of all available attributes, see: http://download.carrot2.org/stable/manual/#chapter.components.
            Use attribute key as name attribute of str elements below. These can be further
@@ -746,7 +745,7 @@
       <str>elevator</str>
     </arr>
   </requestHandler>
-  <!-- Update request handler.  
+  <!-- Update request handler.
 
        Note: Since solr1.1 requestHandlers requires a valid content type header if posted in
        the body. For example, curl now requires: -H 'Content-type:text/xml; charset=utf-8'
@@ -804,22 +803,22 @@
   <requestHandler name="/analysis/field" class="solr.FieldAnalysisRequestHandler"/>
   <!-- CSV update handler, loaded on demand -->
   <requestHandler name="/update/csv" class="solr.CSVRequestHandler" startup="lazy"/>
-  <!-- 
-   Admin Handlers - This will register all the standard admin RequestHandlers.  Adding 
+  <!--
+   Admin Handlers - This will register all the standard admin RequestHandlers.  Adding
    this single handler is equivalent to registering:
-   
+
   <requestHandler name="/admin/luke"       class="org.apache.solr.handler.admin.LukeRequestHandler" />
   <requestHandler name="/admin/system"     class="org.apache.solr.handler.admin.SystemInfoHandler" />
   <requestHandler name="/admin/plugins"    class="org.apache.solr.handler.admin.PluginInfoHandler" />
   <requestHandler name="/admin/threads"    class="org.apache.solr.handler.admin.ThreadDumpHandler" />
   <requestHandler name="/admin/properties" class="org.apache.solr.handler.admin.PropertiesRequestHandler" />
   <requestHandler name="/admin/file"       class="org.apache.solr.handler.admin.ShowFileRequestHandler" >
-  
+
   If you wish to hide files under ${solr.home}/conf, explicitly register the ShowFileRequestHandler using:
   <requestHandler name="/admin/file" class="org.apache.solr.handler.admin.ShowFileRequestHandler" >
     <lst name="invariants">
-     <str name="hidden">synonyms.txt</str> 
-     <str name="hidden">anotherfile.txt</str> 
+     <str name="hidden">synonyms.txt</str>
+     <str name="hidden">anotherfile.txt</str>
     </lst>
   </requestHandler>
   -->
@@ -870,14 +869,14 @@
   <!-- An example dedup update processor that creates the "id" field on the fly
        based on the hash code of some other fields.  This example has overwriteDupes
        set to false since we are using the id field as the signatureField and Solr
-       will maintain uniqueness based on that anyway. 
-       
+       will maintain uniqueness based on that anyway.
+
        You have to link the chain to an update handler above to use it ie:
          <requestHandler name="/update "class="solr.XmlUpdateRequestHandler">
            <lst name="defaults">
              <str name="update.processor">dedupe</str>
            </lst>
-         </requestHandler>  
+         </requestHandler>
   -->
   <!--
   <updateRequestProcessorChain name="dedupe">
@@ -895,7 +894,7 @@
   <!-- queryResponseWriter plugins... query responses will be written using the
     writer specified by the 'wt' request parameter matching the name of a registered
     writer.
-    The "default" writer is the default and will be used if 'wt' is not specified 
+    The "default" writer is the default and will be used if 'wt' is not specified
     in the request. XMLResponseWriter will be used if nothing is specified here.
     The json, python, and ruby writers are also available by default.
 
@@ -910,7 +909,7 @@
   -->
   <!-- XSLT response writer transforms the XML output by any xslt file found
        in Solr's conf/xslt directory.  Changes to xslt files are checked for
-       every xsltCacheLifetimeSeconds.  
+       every xsltCacheLifetimeSeconds.
    -->
   <queryResponseWriter name="xslt" class="org.apache.solr.request.XSLTResponseWriter">
     <int name="xsltCacheLifetimeSeconds">5</int>
@@ -918,7 +917,7 @@
   <!-- example of registering a query parser
   <queryParser name="lucene" class="org.apache.solr.search.LuceneQParserPlugin"/>
   -->
-  <!-- example of registering a custom function parser 
+  <!-- example of registering a custom function parser
   <valueSourceParser name="myfunc" class="com.mycompany.MyValueSourceParser" />
   -->
   <!-- config for the admin interface -->
