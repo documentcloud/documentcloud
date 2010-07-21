@@ -1,0 +1,9 @@
+#related_documents_container {
+  display: none;
+}
+  body.related_documents #related_documents_container {
+    display: block;
+  }
+  body.related_documents #search_box_container {
+      display: none;
+  }

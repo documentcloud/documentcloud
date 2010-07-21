@@ -3,9 +3,10 @@ dc.ui.Toolbar = dc.View.extend({
   id : 'toolbar',
 
   callbacks : {
-    '#open_viewers.click'   : '_openViewers',
-    '#open_timeline.click'  : '_openTimeline',
-    '#toolbar_upload.click' : '_openUpload'
+    '#open_viewers.click'            : '_openViewers',
+    '#open_timeline.click'           : '_openTimeline',
+    '#open_related_documents.click'  : '_openRelatedDocuments',
+    '#toolbar_upload.click'          : '_openUpload'
   },
 
   constructor : function(options) {
@@ -109,7 +110,8 @@ dc.ui.Toolbar = dc.View.extend({
   enableToolbarButtons : function() {
     var selected = Documents.selected().length ? 'is' : 'not';
     this.timelineButton.setMode(selected, 'enabled');
-    this.relatedDocumentsButton.setMode(selected, 'enabled');
+    var selectedOne = Documents.selected().length == 1 ? 'is' : 'not';
+    this.relatedDocumentsButton.setMode(selectedOne, 'enabled');
   },
 
   displayEmbedSnippet : function() {
@@ -161,6 +163,12 @@ dc.ui.Toolbar = dc.View.extend({
     new dc.ui.TimelineDialog(docs);
   },
 
+  _openRelatedDocuments : function() {
+    var docs = Documents.selected();
+    if (docs.length != 1) return dc.ui.Dialog.alert("In order to view related documents, please select a single document.");
+    (new dc.ui.RelatedDocumentsPanel(docs[0])).render();
+  },
+  
   _openUpload : function() {
     dc.app.uploader.open();
   },

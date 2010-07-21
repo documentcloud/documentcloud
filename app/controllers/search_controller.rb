@@ -25,4 +25,16 @@ class SearchController < ApplicationController
     render :json => {'query' => @query, 'documents' => @documents}
   end
 
+  def related_documents
+    query = {
+      :page_size => params[:page_size] ? params[:page_size].to_i : DEFAULT_PAGE_SIZE,
+      :order => params[:order] || DEFAULT_ORDER,
+      :page => params[:page] ? params[:page].to_i : 1
+    }
+    document = Document.find(params[:document_id].to_i)
+    documents = Document.search("", {:related_document => document}).results
+    results = {:query => query, :documents => documents}
+    json results
+  end
+  
 end
