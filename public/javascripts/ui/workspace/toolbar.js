@@ -122,7 +122,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   checkFloat : function() {
-    var floating = $(window).scrollTop() > 198;
+    var floating = $(window).scrollTop() > $(this.el).offset().top - 30;
     if (this._floating == floating) return;
     $(document.body).toggleClass('floating_toolbar', this._floating = floating);
     if (!floating) $(document.body).trigger('click');
@@ -166,7 +166,7 @@ dc.ui.Toolbar = dc.View.extend({
   _openRelatedDocuments : function() {
     var docs = Documents.selected();
     if (docs.length != 1) return dc.ui.Dialog.alert("In order to view related documents, please select a single document.");
-    (new dc.ui.RelatedDocumentsPanel(docs[0])).render();
+    dc.app.relatedDocumentsPanel = (new dc.ui.RelatedDocumentsPanel(docs[0])).render();
   },
   
   _openUpload : function() {

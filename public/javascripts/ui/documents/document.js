@@ -8,7 +8,7 @@ dc.ui.Document = dc.View.extend({
     For direct help, email us at <span class=\"email\">support@documentcloud.org</span>",
 
   className : 'document',
-
+  
   callbacks : {
     '.doc_title.mousedown': '_noSelect',
     '.doc_title.click'    : 'select',
@@ -76,6 +76,7 @@ dc.ui.Document = dc.View.extend({
     } else {
       // Regular.
       Documents.deselectAll();
+      dc.app.relatedDocumentsPanel && dc.app.relatedDocumentsPanel.deselect();
       this.model.set({selected : true});
     }
     dc.app.toolbar.enableToolbarButtons();

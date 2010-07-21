@@ -1,9 +1,17 @@
 #related_documents_container {
   display: none;
+  padding: 25px 27px 0;
 }
   body.related_documents #related_documents_container {
     display: block;
   }
   body.related_documents #search_box_container {
       display: none;
+  }
+  
+  #related_documents_container .document {
+      font: 11px/14px Helvetica,Arial;
+      margin-bottom: 20px;
+      min-height: 80px;
+      padding: 2px 30px 5px 90px;
   }

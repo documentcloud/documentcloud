@@ -12,10 +12,15 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
     
     this.showRelatedDocumentInHeader();
     this.loadRelatedDocuments();
+    
+    return this;
   },
   
   showRelatedDocumentInHeader : function() {
-    
+    console.log(['showRelatedDocumentInHeader', this.$el, this.doc]);
+    this.documentInHeader = (new dc.ui.Document({model : this.doc}));
+    this.doc.set({'selected': false});
+    this.$el.html(this.documentInHeader.render().el);
   },
   
   loadRelatedDocuments : function() {
@@ -23,6 +28,8 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
     
     dc.ui.spinner.show('searching');
     _.defer(dc.app.toolbar.checkFloat);
+    // Documents.refresh();
+    // dc.app.toolbar.enableToolbarButtons();
     
     var params = {
       document_id : this.doc.id, 
@@ -42,6 +49,12 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
       m.index = i;
       return new dc.model.Document(m);
     }));
+    
+    dc.app.toolbar.enableToolbarButtons();
+  },
+  
+  deselect : function() {
+    this.doc.set({'selected': false});
   },
   
   close : function() {

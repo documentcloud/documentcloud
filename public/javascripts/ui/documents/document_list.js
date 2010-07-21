@@ -52,6 +52,7 @@ dc.ui.DocumentList = dc.View.extend({
     if ((Math.abs(e.pageX - this._pageX) > this.SLOP) ||
         (Math.abs(e.pageY - this._pageY) > this.SLOP)) return;
     Documents.deselectAll();
+    dc.app.relatedDocumentsPanel && dc.app.relatedDocumentsPanel.deselect();
     dc.app.toolbar.enableToolbarButtons();
   },
 
