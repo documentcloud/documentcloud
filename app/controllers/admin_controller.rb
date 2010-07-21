@@ -46,7 +46,11 @@ class AdminController < ApplicationController
   # its first account. If everthing's kosher, the journalist is logged in.
   # NB: This needs to stay access controlled by the bouncer throughout the beta.
   def signup
+    unless request.post?
+      @params = {:organization => {}, :account => {}}
+    end
     return render unless request.post?
+    @params = params
     org = Organization.create(params[:organization])
     return fail(org.errors.full_messages.first) if org.errors.any?
     acc = Account.create(params[:account].merge({:organization => org, :role => Account::ADMINISTRATOR}))

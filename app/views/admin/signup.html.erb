@@ -20,7 +20,7 @@
       <div class="text_input">
         <div class="background">
           <div class="inner">
-            <input type="text" name="organization[name]" id="organization_name" />
+            <input type="text" name="organization[name]" id="organization_name" value="<%= @params[:organization][:name] %>" />
           </div>
         </div>
       </div>
@@ -32,7 +32,7 @@
       <div class="text_input">
         <div class="background">
           <div class="inner">
-            <input type="text" name="organization[slug]" id="organization_slug" />
+            <input type="text" name="organization[slug]" id="organization_slug" value="<%= @params[:organization][:slug] %>" />
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@
       <div class="text_input">
         <div class="background">
           <div class="inner">
-            <input type="text" name="account[email]" id="account_email" />
+            <input type="text" name="account[email]" id="account_email" value="<%= @params[:account][:email] %>" />
           </div>
         </div>
       </div>
@@ -56,14 +56,14 @@
       <div class="text_input left_half">
         <div class="background">
           <div class="inner">
-            <input type="text" name="account[first_name]" />
+            <input type="text" name="account[first_name]" value="<%= @params[:account][:first_name] %>" />
           </div>
         </div>
       </div>
       <div class="text_input right_half">
         <div class="background">
           <div class="inner">
-            <input type="text" name="account[last_name]" />
+            <input type="text" name="account[last_name]" value="<%= @params[:account][:last_name] %>" />
           </div>
         </div>
       </div>
