@@ -22,8 +22,10 @@ TODO:
   * Fix incorrect entity offsets. Document #486 on production, searching for
     "organization: 'Department of Defense'".
         
-  * Add a "related documents" search, via Solr's MoreLikeThis handler. Grep
-    the Sunspot source for "MoreLikeThis".
+  * Add a "related documents" search, via Solr's MoreLikeThis handler.
+    - Still needs restrictions to projects, access levels, etc. Right now it pulls globally.
+    - Also need to have the document in header considered a document in the document list,
+      so it can be modified with the Edit menu when selected.
     
   * Include OCR via tesseract in DocSplit.
   

@@ -31,9 +31,8 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
     // dc.app.toolbar.enableToolbarButtons();
     
     var params = {
-      document_id : this.doc.id, 
-      page_size : dc.app.paginator.pageSize(), 
-      order : dc.app.paginator.sortOrder,
+      document_id : this.doc.id,
+      page_size : dc.app.paginator.pageSize(),
       page : page
     };    
     
