@@ -20,12 +20,12 @@ namespace :build do
     FileUtils.cp_r('public/images', 'build/images')
 
     # Export back to DocumentCloud
-    FileUtils.cp_r('build/images', '../dcloud/public/viewer')
+    FileUtils.cp_r('build/images', '../document-cloud/public/viewer')
     `cat build/viewer.js build/templates.js > build/viewer_new.js`
     FileUtils.rm_r(['build/viewer.js', 'build/templates.js'])
     FileUtils.mv 'build/viewer_new.js', 'build/viewer.js'
     Dir['build/viewer*'].each do |asset|
-      FileUtils.cp(asset, "../dcloud/public/viewer/#{File.basename(asset)}")
+      FileUtils.cp(asset, "../document-cloud/public/viewer/#{File.basename(asset)}")
     end
     FileUtils.rm_r('build') if File.exists?('build')
 
