@@ -21,7 +21,7 @@ namespace :deploy do
       puts "uploading #{file}"
       bucket.put("viewer/#{file.gsub('public/viewer/', '')}", File.open(file), {}, 'public-read')
     end
-    DC_CONFIG['server_root'] = 'http://s3.documentcloud.org'
+    DC_CONFIG['server_root'] = 's3.documentcloud.org'
     contents = ERB.new(File.read('app/views/documents/loader.js.erb')).result(binding)
     bucket.put('viewer/loader.js', contents, {}, 'public-read')
   end
