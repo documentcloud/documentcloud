@@ -34,7 +34,10 @@ dc.ui.DocumentList = dc.View.extend({
   },
 
   _onSelect : function(els) {
-    if (!dc.app.hotkeys.shift) Documents.deselectAll();
+    if (!dc.app.hotkeys.shift && !dc.app.hotkeys.command) {
+      Documents.deselectAll();
+      dc.app.relatedDocumentsPanel.deselect();
+    }
     _.each(els, function(icon) {
       Documents.get($(icon).attr('data-id')).set({selected : true});
     });
@@ -52,7 +55,7 @@ dc.ui.DocumentList = dc.View.extend({
     if ((Math.abs(e.pageX - this._pageX) > this.SLOP) ||
         (Math.abs(e.pageY - this._pageY) > this.SLOP)) return;
     Documents.deselectAll();
-    dc.app.relatedDocumentsPanel && dc.app.relatedDocumentsPanel.deselect();
+    dc.app.relatedDocumentsPanel.deselect();
     dc.app.toolbar.enableToolbarButtons();
   },
 

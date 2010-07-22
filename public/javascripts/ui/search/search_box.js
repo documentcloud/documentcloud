@@ -92,6 +92,7 @@ dc.ui.SearchBox = dc.View.extend({
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
+    dc.app.relatedDocumentsPanel.close();
     dc.app.navigation.open('documents');
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
@@ -226,7 +227,7 @@ dc.ui.SearchBox = dc.View.extend({
   // associated metadata, as long as something was found. Think about returning
   // the metadata right alongside the document JSON.
   _loadSearchResults : function(resp) {
-    dc.app.paginator.setQuery(resp.query);
+    dc.app.paginator.setQuery(resp.query, this);
     if ('facets' in resp) {
       dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
       Entities.refresh();

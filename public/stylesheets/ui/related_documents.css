@@ -2,7 +2,7 @@
   display: none;
   padding: 25px 27px 0;
 }
-  body.related_documents #related_documents_container {
+  body.related_documents.documents_panel_tab #related_documents_container {
     display: block;
   }
   body.related_documents #search_box_container {

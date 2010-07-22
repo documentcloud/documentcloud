@@ -18,7 +18,7 @@ dc.ui.Paginator = dc.View.extend({
   callbacks : {
     '.prev.click':          'previousPage',
     '.next.click':          'nextPage',
-    '.enumeration.change':  'goToPage',
+    '.enumeration.change':  'changePage',
     '.sorter.click':        'chooseSort',
     '#size_toggle.click':   'toggleSize'
   },
@@ -29,9 +29,10 @@ dc.ui.Paginator = dc.View.extend({
     this.sortOrder = dc.app.preferences.get('sort_order') || 'created_at';
   },
 
-  setQuery : function(query) {
+  setQuery : function(query, view) {
     this.query = query;
     this.page  = query.page;
+    this.view = view;
     $(document.body).addClass('paginated');
     this.render();
   },
@@ -74,7 +75,7 @@ dc.ui.Paginator = dc.View.extend({
     callback = _.isFunction(callback) ? callback : null;
     var page = Math.floor(((this.page || 1) - 1) / this.pageFactor()) + 1;
     if (doc) page += Math.floor(_.indexOf(Documents.models(), doc) / this.pageSize());
-    dc.app.searchBox.search(dc.app.searchBox.value(), page, callback);
+    this.goToPage(page, callback);
   },
 
   chooseSort : function() {
@@ -86,7 +87,7 @@ dc.ui.Paginator = dc.View.extend({
       this.sortOrder = order;
       dc.app.preferences.set({sort_order : order});
       $('.sorter', this.el).text(this.SORT_TEXT[this.sortOrder]);
-      dc.app.searchBox.search(dc.app.searchBox.value(), this.page || 1);
+      this.goToPage();
       return true;
     }, this), {mode : 'short_prompt'});
   },
@@ -94,15 +95,28 @@ dc.ui.Paginator = dc.View.extend({
   // TODO: Move all these into the searchBox and clean it up.
 
   previousPage : function() {
-    dc.app.searchBox.search(dc.app.searchBox.value(), (this.page || 1) - 1);
+    var page = (this.page || 1) - 1;
+    this.goToPage(page);
   },
 
   nextPage : function() {
-    dc.app.searchBox.search(dc.app.searchBox.value(), (this.page || 1) + 1);
+    var page = (this.page || 1) + 1;
+    this.goToPage(page);
+  },
+  
+  changePage : function(e) {
+    var page = $(e.target).val();
+    this.goToPage(page);
   },
 
-  goToPage : function(e) {
-    dc.app.searchBox.search(dc.app.searchBox.value(), $(e.target).val());
+  goToPage : function(page, callback) {
+    page = page || this.page || 1;
+    
+    if (this.view == dc.app.relatedDocumentsPanel) {
+      dc.app.relatedDocumentsPanel.loadRelatedDocuments(page, callback);
+    } else if (this.view = dc.app.searchBox) {
+      dc.app.searchBox.search(dc.app.searchBox.value(), page, callback);
+    }
   }
 
 });

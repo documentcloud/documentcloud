@@ -28,7 +28,7 @@ dc.app.hotkeys = {
   },
 
   blur : function(e) {
-    for (key in this.KEYS) this[this.KEYS[key]] = false;
+    for (var key in this.KEYS) this[this.KEYS[key]] = false;
   }
 
 };

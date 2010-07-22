@@ -70,13 +70,14 @@ dc.ui.Document = dc.View.extend({
       var docs = Documents.models();
       var idx = _.indexOf(docs, this.model), aidx = _.indexOf(docs, anchor);
       var start = Math.min(idx, aidx), end = Math.max(idx, aidx);
+      dc.app.relatedDocumentsPanel.deselect();
       _.each(docs, function(doc, index) {
         doc.set({selected : index >= start && index <= end});
       });
     } else {
       // Regular.
       Documents.deselectAll();
-      dc.app.relatedDocumentsPanel && dc.app.relatedDocumentsPanel.deselect();
+      dc.app.relatedDocumentsPanel.deselect();
       this.model.set({selected : true});
     }
     dc.app.toolbar.enableToolbarButtons();
