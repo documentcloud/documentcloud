@@ -2,7 +2,7 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
   
   fragment      : null,
   searchDocumentId : null,
-  page : 1,
+  page : null,
   
   constructor : function(options) {
     this.base(options);
@@ -24,7 +24,7 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
   search : function(query, page, callback) {
     var relatedDocumentId = parseInt(dc.app.SearchParser.extractRelatedDocumentId(query), 10);
     var doc = Documents.get(relatedDocumentId);
-    this.page = page || this.page;
+    this.page = page <= 1 ? null : page;
     this.searchDocumentId = relatedDocumentId;
     this.fragment = 'search/' + encodeURIComponent(query);
     this.render(doc);
@@ -51,8 +51,6 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
     $(document.body).setMode('active', 'search');
     // Documents.refresh();
     // dc.app.toolbar.enableToolbarButtons();
-    
-    this.page = this.page <= 1 ? null : this.page;
     
     var params = {
       document_id : this._documentId(),
