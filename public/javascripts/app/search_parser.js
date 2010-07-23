@@ -8,6 +8,8 @@ dc.app.SearchParser = {
 
   FIRST_GROUP   :  /group:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
+  FIRST_RELATED :  /related:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+
   ONE_ENTITY    : /(city|country|term|state|person|place|organization):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
   ALL_ENTITIES  : /(city|country|term|state|person|place|organization):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
@@ -40,6 +42,11 @@ dc.app.SearchParser = {
     }).reverse();
   },
 
+  extractRelatedDocumentId : function(query) {
+    var relatedDocument = query.match(this.FIRST_RELATED);
+    return relatedDocument && (relatedDocument[2] || relatedDocument[3] || relatedDocument[4]);
+  },
+  
   searchType : function(query) {
     if (query.replace(this.FIRST_PROJECT, '').match(this.WHITESPACE_ONLY)) return 'project';
     if (query.replace(this.FIRST_ACCOUNT, '').match(this.WHITESPACE_ONLY)) return 'account';

@@ -120,7 +120,7 @@ dc.ui.Paginator = dc.View.extend({
     page = page || this.page || 1;
     
     if (this.view == dc.app.relatedDocumentsPanel) {
-      dc.app.relatedDocumentsPanel.loadRelatedDocuments(page, callback);
+      dc.app.relatedDocumentsPanel.search(dc.app.searchBox.value(), page, callback);
     } else if (this.view = dc.app.searchBox) {
       dc.app.searchBox.search(dc.app.searchBox.value(), page, callback);
     }

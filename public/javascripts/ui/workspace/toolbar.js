@@ -166,7 +166,7 @@ dc.ui.Toolbar = dc.View.extend({
   _openRelatedDocuments : function() {
     var docs = Documents.selected();
     if (docs.length != 1) return dc.ui.Dialog.alert("In order to view related documents, please select a single document.");
-    dc.app.relatedDocumentsPanel.render(docs[0]);
+    dc.app.searchBox.search('related: ' + docs[0].id + '-' + docs[0].attributes().slug);
   },
   
   _openUpload : function() {

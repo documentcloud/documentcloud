@@ -85,6 +85,12 @@ dc.ui.SearchBox = dc.View.extend({
   showDocuments : function() {
     $(document.body).setMode('active', 'search');
     var query = this.value();
+    
+    if (query.indexOf('related:') != -1) {
+      dc.app.relatedDocumentsPanel.search(query, this.page);
+      return;
+    }
+    
     this.entitle(query);
     dc.ui.Project.highlight(query);
     dc.history.save(this.urlFragment());
@@ -94,8 +100,14 @@ dc.ui.SearchBox = dc.View.extend({
   search : function(query, pageNumber, callback) {
     dc.app.relatedDocumentsPanel.close();
     dc.app.navigation.open('documents');
-    this.page = pageNumber <= 1 ? null : pageNumber;
     this.value(query);
+    
+    if (query.indexOf('related:') != -1) {
+      dc.app.relatedDocumentsPanel.search(query, pageNumber, callback);
+      return;
+    }
+    
+    this.page = pageNumber <= 1 ? null : pageNumber;
     this.fragment = 'search/' + encodeURIComponent(query);
     this.showDocuments();
     Documents.refresh();

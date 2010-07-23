@@ -29,6 +29,8 @@ class SearchController < ApplicationController
     document = Document.find(params[:document_id].to_i)
     perform_search :related_document => document
     results = {:query => @query, :documents => @documents}
+    results[:original_document] = document if params.include? :need_original_document
+    
     json results
   end
   

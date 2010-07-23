@@ -177,7 +177,7 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     if (!this.pending().length) return false;
     this.startPolling();
   }
-
+  
 });
 
 dc.model.DocumentSet.implement(dc.model.SortedSet);

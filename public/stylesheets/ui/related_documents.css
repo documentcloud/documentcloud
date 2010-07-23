@@ -15,3 +15,6 @@
       min-height: 80px;
       padding: 2px 30px 5px 90px;
   }
+  #related_documents_container .show_notes {
+      display: none;
+  }
