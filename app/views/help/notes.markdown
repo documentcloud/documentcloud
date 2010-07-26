@@ -4,6 +4,10 @@
 
 There are two kinds of notes: public and private. Public notes are always displayed to everyone who as access to your document. Private notes are only  visible to you. You can distinguish the two by color: public notes appear in yellow, while private ones are blue, with a lock. While you're viewing a document, you can add a note by selecting one of the two links ("Add a public note" or "Add a private note"). Your cursor should change to crosshairs: click and drag to select the area you'd like to highlight. When you release the mouse you will be able to edit and save your note.
 
+If you'd like to add a note not to a particular region of a page, but to a page *in general*, hover the crosshair in the gutter between pages. You will see a note tab and a dotted line appear &mdash; click near the line to create a note that sits in between the pages.
+
+<img alt="" src="/images/help/add_page_note.jpg" class="full_line" />
+
 Although the viewer won't complain if you try &mdash; it's not recommended to try and annotate across multiple pages at once.
  
 Currently you can't resize a note, you have to copy the contents, delete the existing note and redraw it.
