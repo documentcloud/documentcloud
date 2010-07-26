@@ -27,14 +27,11 @@ class Entity < ActiveRecord::Base
     string.titleize
   end
 
+  # TODO: Make this not use an ilike, Solr, preferably.
   def self.search_in_documents(kind, value, ids)
-    entities = self.all(:conditions => {:document_id => ids, :kind => kind, :value => value})
-    if entities.empty?
-      entities = self.all({:conditions => [
-        "document_id in (?) and kind = ? and value ilike '%#{Entity.connection.quote_string(value)}%'", ids, kind
-      ]})
-    end
-    entities
+    self.all({:conditions => [
+      "document_id in (?) and kind = ? and value ilike '%#{Entity.connection.quote_string(value)}%'", ids, kind
+    ]})
   end
 
   # Merge this entity with another of the "same" entity for the same document.
