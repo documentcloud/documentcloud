@@ -49,14 +49,15 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
     dc.ui.spinner.show('searching');
     _.defer(dc.app.toolbar.checkFloat);
     $(document.body).setMode('active', 'search');
-    // Documents.refresh();
-    // dc.app.toolbar.enableToolbarButtons();
     
     var params = {
-      document_id : this._documentId(),
+      q : dc.app.searchBox.value(),
       page_size : dc.app.paginator.pageSize()
     };    
 
+    if (dc.app.navigation.isOpen('entities')) {
+      params['include_facets'] = true;
+    }
     if (this.page) params['page'] = this.page;
     if (!this.doc) params['need_original_document'] = true;
     
@@ -80,6 +81,11 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
       this.showRelatedDocumentInHeader();
     }
 
+    if ('facets' in resp) {
+      dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
+      Entities.refresh();
+      dc.app.searchBox.flags['hasEntities'] = true;
+    }
     Documents.refresh(_.map(resp.documents, function(m, i){
       m.index = i;
       return new dc.model.Document(m);

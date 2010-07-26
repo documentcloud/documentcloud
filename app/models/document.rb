@@ -77,9 +77,6 @@ class Document < ActiveRecord::Base
     text :full_text, {:more_like_this => true} do
       self.text
     end
-    text :entities do
-      self.entities.map {|ent| ent.value }
-    end
 
     # Attributes...
     string  :title
