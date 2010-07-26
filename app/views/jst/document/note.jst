@@ -14,14 +14,16 @@
       <input type="text" class="note_title_input" value="" />
     </div>
   </div>
-  <div class="note_excerpt_wrap">
-    <% var coords = note.coordinates(); %>
-    <div class="note_excerpt" style="height: <%= coords.height %>px;">
-      <div class="left_cover"  style="height: <%= coords.height %>px; width: <%= coords.left %>px;"></div>
-      <div class="right_cover" style="height: <%= coords.height %>px; width: <%= 750 - coords.right %>px;"></div>
-      <img class="note_image" src="<%= note.imageUrl() %>" alt="" style="top: -<%= coords.top %>px;" />
+  <% var coords = note.coordinates(); %>
+  <% if (coords) { %>
+    <div class="note_excerpt_wrap">
+      <div class="note_excerpt" style="height: <%= coords.height %>px;">
+        <div class="left_cover"  style="height: <%= coords.height %>px; width: <%= coords.left %>px;"></div>
+        <div class="right_cover" style="height: <%= coords.height %>px; width: <%= 750 - coords.right %>px;"></div>
+        <img class="note_image" src="<%= note.imageUrl() %>" alt="" style="top: -<%= coords.top %>px;" />
+      </div>
     </div>
-  </div>
+  <% } %>
   <div class="note_text display"><%= note.get('content') %></div>
   <div class="note_text_edit_wrap">
     <textarea class="note_text_edit text_area edit"></textarea>

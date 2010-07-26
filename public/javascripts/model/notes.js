@@ -17,8 +17,9 @@ dc.model.Note = dc.Model.extend({
 
   coordinates : function() {
     if (this._coordinates) return this._coordinates;
-    var serialized = this.get('location').image;
-    var css = _.map(serialized.split(','), function(num){ return parseInt(num, 10); });
+    var loc = this.get('location');
+    if (!loc) return null;
+    var css = _.map(loc.image.split(','), function(num){ return parseInt(num, 10); });
     return this._coordinates = {
       top:    css[0],
       left:   css[3],
@@ -38,7 +39,8 @@ dc.model.NoteSet = dc.model.RESTfulSet.extend({
   model    : dc.model.Note,
 
   comparator : function(note) {
-    return note.get('page') * 10000 + note.coordinates().top;
+    var coords = note.coordinates();
+    return note.get('page') * 10000 + (coords ? coords.top : 0);
   }
 
 });

@@ -158,7 +158,10 @@
 }
   .DV-pageNoteInsert:hover {
     opacity: 1;
-    filter: alpha(opacity=100);
+    filter: none;
+  }
+  .DV-coverVisible .DV-pageNoteInsert {
+    display: none !important;
   }
   .DV-pageNoteInsert .DV-annotationTab {
     top: 0; left: -40px;
