@@ -4,9 +4,7 @@ TODO:
     the DocumentViewer.
   
   * Disallow annotating outside of the page border.  
-  
-  * Page annotations need to be able to edit.
-  
+    
   * Make collaborators accept the collaboration request before really adding
     them (thereby keeping unwanted adds from getting edit access).
 
@@ -31,6 +29,8 @@ TODO:
   
 
 DONE:
+
+  * Page annotations need to be able to edit.
 
   * Added a valid RDF representation of every document.
 
