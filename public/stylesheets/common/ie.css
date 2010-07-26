@@ -64,6 +64,9 @@ body.workspace {
   body.minidocs .document .document_tool {
     left: 122px;
   }
+  body.minidocs #document_list .document {
+    margin-bottom: 0px;
+  }
 #organizer_entities .row {
   width: 268px;
 }
