@@ -19,3 +19,9 @@
   #related_documents_container .description {
       display: none;
   }
+  #related_documents_container .related_documents_header {
+    color:#000000;
+    font:bold 22px Helvetica, Arial;
+    padding:0 20px 20px;
+    text-align:center;
+  }

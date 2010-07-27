@@ -41,7 +41,9 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
     if (this.doc) {
       this.documentInHeader = new dc.ui.Document({model : this.doc});
       this.doc.set({'selected': false});
-      this.$el.html(this.documentInHeader.render().el);
+      this.doc.set({'selectable': false});
+      this.$el.html(JST['workspace/related_document_header']({'doc': this.doc}));
+      $('.related_documents_document', this.$el).html(this.documentInHeader.render().el);
     }
   },
   

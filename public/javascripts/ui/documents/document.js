@@ -22,6 +22,8 @@ dc.ui.Document = dc.View.extend({
     '.page.click'         : '_openEntityOnPage',
     '.cancel_search.click': '_hidePages'
   },
+  
+  flags: {},
 
   constructor : function(options) {
     this.base(options);
@@ -54,11 +56,12 @@ dc.ui.Document = dc.View.extend({
     this._setSelected();
     return this;
   },
-
+  
   // Desktop-style selection.
   select : function(e) {
     e.preventDefault();
     if (!dc.app.accountId) return;
+    if (!this.model.get('selectable')) return;
     var alreadySelected =  this.model.get('selected');
     var hk = dc.app.hotkeys;
     var anchor = Documents.firstSelection || Documents.selected()[0];

@@ -4,6 +4,7 @@ dc.model.Document = dc.Model.extend({
 
   constructor : function(attributes) {
     attributes.selected = false;
+    attributes.selectable = true;
     this.base(attributes);
     this.notes = new dc.model.NoteSet();
     this.notes.resource = 'documents/' + this.id + '/annotations';
@@ -86,6 +87,10 @@ dc.model.Document = dc.Model.extend({
     var count = this.get('annotation_count');
     if (count <= 0) return false;
     this.set({annotation_count : count - 1});
+  },
+  
+  selectable : function() {
+    return this.selectable;
   },
 
   // Inspect.

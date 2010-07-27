@@ -50,6 +50,7 @@ module DC
       # Generate all of the SQL, including conditions and joins, that is needed
       # to run the query.
       def generate_search
+        build_related      if     @related
         build_text         if     has_text? && !@related
         build_fields       if     has_fields?
         build_projects     if     has_projects?
@@ -134,6 +135,16 @@ module DC
 
       private
 
+      # Build the Solr needed to pass options to the MoreLikeThis DSL
+      def build_related
+        @solr.build do
+          minimum_term_frequency 30
+          minimum_document_frequency 2
+          minimum_word_length 5
+          boost_by_relevance true
+        end
+      end
+      
       # Build the Solr needed to run a full-text search. Hits the title,
       # the text content, the entities, etc.
       def build_text
