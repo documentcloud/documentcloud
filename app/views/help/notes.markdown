@@ -7,8 +7,6 @@ There are two kinds of notes: public and private. Public notes are always displa
 If you'd like to add a note not to a particular region of a page, but to a page *in general*, hover the crosshair in the gutter between pages. You will see a note tab and a dotted line appear &mdash; click near the line to create a note that sits in between the pages.
 
 <img alt="" src="/images/help/add_page_note.jpg" class="full_line" />
-
-Although the viewer won't complain if you try &mdash; it's not recommended to try and annotate across multiple pages at once.
  
 Currently you can't resize a note, you have to copy the contents, delete the existing note and redraw it.
 
