@@ -94,9 +94,9 @@ dc.ui.Statistics = dc.View.extend({
   },
 
   totalDocuments : function() {
-    return _.reduce(stats.documents_by_access, 0, function(sum, value) {
+    return _.reduce(stats.documents_by_access, function(sum, value) {
       return sum + value;
-    });
+    }, 0);
   },
 
   launchWorker : function() {
@@ -163,12 +163,12 @@ dc.ui.Statistics = dc.View.extend({
       text : count + ' ' + title + '<br />' + date
     });
   },
-  
+
   // Loads the top 100 embedded documents, sorted by number of hits in the past year.
   _loadMoreTopDocuments : function(e) {
     $.getJSON('/admin/hits_on_documents', {}, _.bind(this._displayMoreTopDocuments, this));
   },
-  
+
   // Displays all top documents, retrieved through AJAX.
   _displayMoreTopDocuments : function(data) {
     TopDocuments.populate(data);
@@ -176,7 +176,7 @@ dc.ui.Statistics = dc.View.extend({
     $('.top_documents_label_year', this.el).css({'display': 'table-row'});
     $('.top_documents_label_week', this.el).css({'display': 'none'});
   },
-  
+
   // Convert a date-hash into JSON that flot can properly plot.
   _series : function(data, title) {
     return [{

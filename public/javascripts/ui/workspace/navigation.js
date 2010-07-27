@@ -13,10 +13,10 @@ dc.ui.Navigation = dc.View.extend({
   },
 
   render : function() {
-    this.tabs = _.reduce($('div.tab'), {}, _.bind(function(memo, el) {
+    this.tabs = _.reduce($('div.tab'), _.bind(function(memo, el) {
       memo[$(el).attr('data-tab')] = $(el).click(this._switchTab);
       return memo;
-    }, this));
+    }, this), {});
     this.tabs[dc.app.preferences.get('sidebar_tab') || 'projects'].click();
     this.bind('entities', function() {
       _.defer(dc.app.searchBox.loadFacets);
@@ -31,7 +31,7 @@ dc.ui.Navigation = dc.View.extend({
     if (this.isOpen(tab_name)) return false;
     this.tabs[tab_name].click();
   },
-  
+
   isOpen : function(tab_name) {
     return this.modes[this.SECTIONS[tab_name] + '_tab'] == tab_name;
   },
