@@ -121,7 +121,7 @@ dc.ui.Paginator = dc.View.extend({
     
     if (this.view == dc.app.relatedDocumentsPanel) {
       dc.app.relatedDocumentsPanel.search(dc.app.searchBox.value(), page, callback);
-    } else if (this.view = dc.app.searchBox) {
+    } else if (this.view == dc.app.searchBox) {
       dc.app.searchBox.search(dc.app.searchBox.value(), page, callback);
     }
   }

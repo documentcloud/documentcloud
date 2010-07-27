@@ -89,10 +89,6 @@ dc.model.Document = dc.Model.extend({
     this.set({annotation_count : count - 1});
   },
   
-  selectable : function() {
-    return this.selectable;
-  },
-
   // Inspect.
   toString : function() {
     return 'Document ' + this.id + ' "' + this.get('title') + '"';

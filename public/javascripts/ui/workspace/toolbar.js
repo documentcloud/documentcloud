@@ -14,10 +14,12 @@ dc.ui.Toolbar = dc.View.extend({
     this.base(options);
     _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'checkFloat');
+      'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'checkFloat',
+      'enableToolbarButtons');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
+    Documents.bind(Documents.SELECTION_CHANGED, this.enableToolbarButtons);
   },
 
   render : function() {
@@ -108,9 +110,9 @@ dc.ui.Toolbar = dc.View.extend({
   },
   
   enableToolbarButtons : function() {
-    var selected = Documents.selected().length ? 'is' : 'not';
+    var selected = Documents.selectedCount ? 'is' : 'not';
     this.timelineButton.setMode(selected, 'enabled');
-    var selectedOne = Documents.selected().length == 1 ? 'is' : 'not';
+    var selectedOne = Documents.selectedCount == 1 ? 'is' : 'not';
     this.relatedDocumentsButton.setMode(selectedOne, 'enabled');
   },
 
