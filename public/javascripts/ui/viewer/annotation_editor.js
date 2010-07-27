@@ -112,7 +112,9 @@ dc.ui.AnnotationEditor = dc.View.extend({
       var image   = _.map([loc.top, loc.right, loc.bottom, loc.left], function(l){ return Math.round(l / zoom); }).join(',');
       this.close();
       if (loc.width > 10 && loc.height > 10) {
-        DV.api.addAnnotation({location : {image : image}, page : DV.api.currentPage(), unsaved : true, access : this._kind});
+        var set = $(this._activePage).closest('.DV-set');
+        var pageNumber = DV.api.getPageNumberForId(set.attr('id'));
+        DV.api.addAnnotation({location : {image : image}, page : pageNumber, unsaved : true, access : this._kind});
       }
       return false;
     }, this);
