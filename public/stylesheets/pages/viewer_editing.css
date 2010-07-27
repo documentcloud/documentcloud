@@ -20,25 +20,17 @@
     #control_panel .button:hover span {
       text-decoration: underline;
     }
-      #control_panel .color_block {
-        width: 6px; height: 6px;
-        border: 1px solid #aaa;
+      #control_panel .button .icon {
         position: absolute;
-        margin-top: 2px;
-        left: 0px;
+        margin-top: 3px;
+        left: -3px;
       }
-        #control_panel .button.open .color_block {
+        #control_panel .button.open .icon {
           display: none;
-        }
-        #control_panel .private_annotation .color_block {
-          background: #a4c0ff;
-        }
-        #control_panel .public_annotation .color_block {
-          background: #edd134;
         }
       #control_panel .color_close {
         position: absolute;
-        left: 1px;
+        left: 0px;
         color: #aa3333;
         font: normal 12px/12px Arial;
         display: none;

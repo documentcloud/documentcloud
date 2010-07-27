@@ -30,13 +30,6 @@
 .icon.spinner_dark {
   background-image: url(/images/embed/ui/spinner_circle_dark.gif);
 }
-.icon.note {
-  background-image: url(/images/embed/icons/note.png);
-}
-.icon.add_16 {
-  background-image: url(/images/embed/icons/add_16.png);
-  background-position: 1px 1px;
-}
 .icon.lock,
 .DV-privateLock {
   background-image: url(/images/embed/icons/lock.png);
@@ -76,10 +69,13 @@
     background-image: url(/images/embed/ui/minus.png);
   }
 
-.icon.mini_note {
+.icon.mini_note, .icon.mini_note_private {
   width: 12px; height: 7px;
   background-image: url(/images/embed/icons/mini_note.png);
 }
+  .icon.mini_note_private {
+    background-image: url(/images/embed/icons/mini_note_private.png);
+  }
 
 .icon.calais_30 {
   width: 30px; height: 30px;

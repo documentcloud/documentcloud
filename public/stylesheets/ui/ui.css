@@ -347,30 +347,6 @@ textarea.text_area {
       .menu_content .menu_item.disabled:hover {
         background-color: transparent;
       }
-  .menu_content .menu_autofilter .icon {
-    position: absolute;
-  }
-    .menu_content .add_16,
-    .menu_content .auto_add,
-    .menu_content.none_selected .search_button_16 {
-      display: none;
-    }
-    .menu_content.none_selected .add_16,
-    .menu_content.none_selected .auto_add {
-      display: block;
-    }
-  .menu_content .auto_add {
-    margin: 0 0 4px 19px;
-    font: italic 10px Helvetica, Arial;
-    color: #555;
-  }
-  .menu_content .autofilter_input {
-    font-size: 11px;
-    margin: 0 0 5px 19px;
-    width: 131px; height: 11px;
-    border: 1px solid #ddd;
-    padding: 1px 4px 2px 4px !important;
-  }
 
 /*---------------------------------- Tabs ---------------------------------*/
 .tabs {

@@ -7,20 +7,19 @@ dc.ui.Menu = dc.View.extend({
   },
 
   constructor : function(options) {
-    _.bindAll(this, 'close', 'autofilter');
+    _.bindAll(this, 'close');
     options.id = options.id || null;
     this.base(options);
     this.items          = [];
     this.content        = $(JST['common/menu'](this.options));
     this.itemsContainer = $('.menu_items', this.content);
-    this.filter         = $('.autofilter_input', this.content);
     this.addIcon        = $('.bullet_add', this.content);
     this.modes.open     = 'not';
     if (options.items) this.addItems(options.items);
   },
 
   defaultOptions : function() {
-    return {id : null, autofilter : false};
+    return {id : null};
   },
 
   render : function() {
@@ -28,7 +27,6 @@ dc.ui.Menu = dc.View.extend({
     this._label = $('.label', this.el);
     $(document.body).append(this.content);
     this.setCallbacks();
-    if (this.options.autofilter) this.filter.bind('keyup', this.autofilter);
     return this;
   },
 
@@ -42,7 +40,6 @@ dc.ui.Menu = dc.View.extend({
       content.show();
       content.align(this.el, '-left bottom no-constraint');
       content.autohide({onHide : this.close});
-      if (this.options.autofilter) _.defer(function(){ $('input', content).focus(); });
     }, this));
   },
 
@@ -76,7 +73,6 @@ dc.ui.Menu = dc.View.extend({
   },
 
   clear : function() {
-    this.filter.val('');
     this.items = [];
     $(this.itemsContainer).html('');
     this.content.setMode(null, 'selected');
@@ -117,23 +113,6 @@ dc.ui.Menu = dc.View.extend({
     if (this.selectedItem) return this.selectedItem.onClick();
     var val = this.filter.val();
     if (val) this.options.onAdd(val);
-  },
-
-  autofilter : function(e) {
-    if (e.keyCode == 27) return this.content.forceHide();
-    if (e.keyCode == 13) return this.clickSelectedItem();
-    var count   = 0;
-    var search  = this.filter.val();
-    var matcher = new RegExp(this.filter.val(), 'i');
-    this.deselect();
-    _.each(this.items, _.bind(function(item) {
-      var selected = !!item.title.match(matcher);
-      item.menuEl.toggle(selected);
-      if (!selected) return;
-      count++;
-      if (!this.selectedItem) this.select(item);
-    }, this));
-    this.content.setMode(count ? 'some' : 'none', 'selected');
   }
 
 });
