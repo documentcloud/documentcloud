@@ -21,7 +21,11 @@ class RemoteUrl < ActiveRecord::Base
     end
     urls.select {|url| !!docs[url.document_id] }.map do |url|
       url_attrs = url.attributes
-      url_attrs['id'] = "#{url.document_id}:#{url.remote_url}"
+      url_attrs[:id] = "#{url.document_id}:#{url.remote_url}"
+      first_hit = RemoteUrl.first(:select => 'created_at',
+                                  :conditions => {:document_id => url['document_id']},
+                                  :order => 'created_at ASC')
+      url_attrs[:first_recorded_date] = first_hit[:created_at].strftime "%a %b %d, %Y"
       docs[url.document_id].admin_attributes.merge(url_attrs)
     end
   end

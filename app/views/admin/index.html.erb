@@ -32,7 +32,7 @@
   Documents.populate(<%= @documents %>);
   TopDocuments.populate(<%= @top_documents %>);
   FailedDocuments.populate(<%= @failed_documents %>);
-
+  
   $(function(){
     $('#content').append((new dc.ui.Statistics()).render().el);
   });
