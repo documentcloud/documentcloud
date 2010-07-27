@@ -102,8 +102,8 @@ dc.ui.SearchBox = dc.View.extend({
     dc.app.navigation.open('documents');
     this.value(query);
     this.flags['hasEntities'] = false;
-    
-    if (query.indexOf('related:') != -1) {
+
+    if (query && query.indexOf('related:') != -1) {
       dc.app.relatedDocumentsPanel.search(query, pageNumber, callback);
       return;
     }

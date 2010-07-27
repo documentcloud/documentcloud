@@ -1,8 +1,10 @@
 dc.ui.RelatedDocumentsPanel = dc.View.extend({
   
-  fragment      : null,
+  fragment         : null,
   searchDocumentId : null,
-  page : null,
+  page             : null,
+  
+  flags : {},
   
   constructor : function(options) {
     this.base(options);
@@ -46,6 +48,8 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
   loadRelatedDocuments : function() {
     var self = this;
     
+    this.flags['showing'] = true;
+    
     dc.ui.spinner.show('searching');
     _.defer(dc.app.toolbar.checkFloat);
     $(document.body).setMode('active', 'search');
@@ -62,6 +66,10 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
     if (!this.doc) params['need_original_document'] = true;
     
     $.get('/search/related_documents', params, _.bind(this._renderRelatedDocuments, this), 'json');
+  },
+  
+  showing : function() {
+    return this.flags['showing'];
   },
   
   _documentId : function() {
@@ -102,6 +110,7 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
   
   close : function() {
     this.doc = null;
+    this.flags['showing'] = false;
     $(document.body).removeClass('related_documents');
   }
 

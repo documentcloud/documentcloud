@@ -24,7 +24,6 @@ module DC
         process_search_text(search_text)
         process_fields_and_projects(bare_fields, quoted_fields)
         
-        Rails.logger.info "Facet: #{@fields}"
         SolrQuery.new(:text => @text, :fields => @fields, :projects => @projects, :project_ids => @project_ids, :attributes => @attributes, :access => @access, :related_document => @related_document)
       end
 
