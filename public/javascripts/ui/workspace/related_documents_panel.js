@@ -6,6 +6,8 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
   
   flags : {},
   
+  NO_RESULTS : 'There are no documents related to this document.',
+  
   constructor : function(options) {
     this.base(options);
   },
@@ -83,7 +85,6 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
   },
   
   _renderRelatedDocuments : function(resp) {
-    dc.ui.spinner.hide();
     dc.app.paginator.setQuery(resp.query, this);
     
     if (!this.doc && 'original_document' in resp) {
@@ -101,6 +102,15 @@ dc.ui.RelatedDocumentsPanel = dc.View.extend({
       return new dc.model.Document(m);
     }));
     
+    this.doneSearching(resp.documents.length == 0);
+  },
+  
+  doneSearching : function(empty) {
+    if (empty) {
+      $(document.body).setMode('empty', 'search');
+      $('#no_results .explanation').text(this.NO_RESULTS);
+    }
+    dc.ui.spinner.hide();
   },
   
   deselect : function() {
