@@ -58,6 +58,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
   // When a page note insert line is clicked, create a page annotation above
   // the corresponding page.
   createPageNote : function(e) {
+    this.close();
     var set = $(e.target).closest('.DV-set');
     var pageNumber = DV.api.getPageNumberForId(set.attr('id'));
     DV.api.addAnnotation({page : pageNumber, unsaved : true, access : this._kind || 'public'});
@@ -69,34 +70,42 @@ dc.ui.AnnotationEditor = dc.View.extend({
     e.preventDefault();
     this._activePage = $(e.target);
     this.clearAnnotation();
-    var offTop  = this.pages.scrollTop() - this.pages.offset().top,
-        offLeft = this.pages.scrollLeft() - this.pages.offset().left;
-    var ox = e.pageX, oy = e.pageY;
-    var atop    = oy + offTop,
-        aleft   = ox + offLeft;
+    var offTop        = this.pages.scrollTop() - this.pages.offset().top,
+        offLeft       = this.pages.scrollLeft() - this.pages.offset().left,
+        ox            = e.pageX + offLeft,
+        oy            = e.pageY + offTop,
+        borderTop     = offTop + this._activePage.offset().top,
+        borderLeft    = offLeft + this._activePage.offset().left,
+        borderBottom  = borderTop + this._activePage.height() - 6,
+        borderRight   = borderLeft + this._activePage.width() - 6;
     this.region = $.el('div', {'class' : 'DV-annotationRegion active DV-' + this._kind, style:'position:absolute;'});
     this.pages.append(this.region);
+    var contained = function(e) {
+      return e.pageX > borderLeft && e.pageX < borderRight &&
+        e.pageY > borderTop && e.pageY < borderBottom;
+    };
     var coords = function(e) {
+      var x = e.pageX + offLeft,
+          y = e.pageY + offTop;
+      x = x < borderLeft ? borderLeft : (x > borderRight ? borderRight : x);
+      y = y < borderTop ? borderTop : (y > borderBottom ? borderBottom : y);
       return {
-        left    : Math.min(aleft, e.pageX + offLeft),
-        top     : Math.min(atop, e.pageY + offTop),
-        width   : Math.abs(e.pageX - ox),
-        height  : Math.abs(e.pageY - oy)
+        left    : Math.min(ox, x),
+        top     : Math.min(oy, y),
+        width   : Math.abs(x - ox),
+        height  : Math.abs(y - oy)
       };
     };
     var drag = _.bind(function(e) {
-      e.stopPropagation();
-      e.preventDefault();
       $(this.region).css(coords(e));
+      return false;
     }, this);
     var dragEnd = _.bind(function(e) {
-      e.stopPropagation();
-      e.preventDefault();
       $(document).unbind('keydown', this.close);
       this.pages.unbind('mouseup', dragEnd).unbind('mousemove', drag);
       var loc     = coords(e);
-      loc.top     -= (offTop + this._activePage.offset().top);
-      loc.left    -= (offLeft + this._activePage.offset().left - 2);
+      loc.top     -= borderTop;
+      loc.left    -= (borderLeft - 2);
       loc.right   = loc.left + loc.width + 13;
       loc.bottom  = loc.top + loc.height + 3;
       var zoom    = DV.api.currentZoom();
@@ -105,6 +114,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
       if (loc.width > 10 && loc.height > 10) {
         DV.api.addAnnotation({location : {image : image}, page : DV.api.currentPage(), unsaved : true, access : this._kind});
       }
+      return false;
     }, this);
     this.pages.bind('mouseup', dragEnd).bind('mousemove', drag);
   },
