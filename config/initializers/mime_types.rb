@@ -7,4 +7,3 @@
 Mime::Type.register 'application/pdf',      :pdf
 Mime::Type.register 'application/zip',      :zip
 Mime::Type.register 'application/rdf+xml',  :rdf
-Mime::Type.register 'text/csv',             :csv
