@@ -8,7 +8,7 @@
     .docalog .row.last {
       margin-bottom: 0;
     }
-  .docalog .changed {
+  .docalog input.changed, .docalog textarea.changed {
     border-color: #2a955c !important;
   }
   .docalog label {

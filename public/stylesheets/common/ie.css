@@ -44,12 +44,6 @@ body.workspace {
 #project_controls {
   padding-right: 15px;
 }
-.icon.plus:hover {
-  background-image: url(/images/embed/ui/plus.png);
-}
-.icon.minus:hover {
-  background-image: url(/images/embed/ui/minus.png);
-}
 #account_list .row.pending .pending_badge,
 #account_list .admin.pending .pending_badge {
   display: none;
@@ -57,16 +51,9 @@ body.workspace {
 #organizer .box {
   background-image: url(/images/embed/ui/box_back_wide.png);
 }
-.document .document_tool {
-  position: absolute;
-  margin: 4px 14px 0 0;
+body.minidocs #document_list .document {
+  margin-bottom: 0px;
 }
-  body.minidocs .document .document_tool {
-    left: 122px;
-  }
-  body.minidocs #document_list .document {
-    margin-bottom: 0px;
-  }
 #organizer_entities .row {
   width: 268px;
 }

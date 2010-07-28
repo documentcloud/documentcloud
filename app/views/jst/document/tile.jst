@@ -4,10 +4,10 @@
   <div class="title">
     <a href="<%= document_viewer_url %>" class="doc_title noselect"><%= title %></a>
     <% if (icon) { %>
-      <div class="icon document_tool <%= icon.className %>" title="<%= icon.title %>"></div>
+      <span class="icon document_tool <%= icon.className %>" title="<%= icon.title %>">&#65279;</span>
     <% } %>
     <% if (editable) { %>
-      <div class="icon document_tool edit_glyph" title="Edit Document"></div>
+      <span class="icon document_tool edit_glyph" title="Edit Document">&#65279;</span>
     <% } %>
   </div>
 </div>

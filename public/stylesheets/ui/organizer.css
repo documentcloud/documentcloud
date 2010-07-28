@@ -66,17 +66,14 @@
         filter: none;
       }
       #organizer .box .edit_glyph {
-        display: inline;
-        opacity: 0;
-        filter: alpha(opacity=0);
+        display: none;
         vertical-align: text-bottom;
         padding-right: 11px;
         margin-left: 6px;
       }
         #organizer .box:hover .edit_glyph,
         #organizer .box.is_selected .edit_glyph {
-          opacity: 1;
-          filter: none;
+          display: inline;
         }
       #organizer .box .title {
         font: bold 14px Helvetica, Arial;

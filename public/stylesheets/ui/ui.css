@@ -7,7 +7,7 @@ span[role="link"] {
 .serif {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
 }
-.interface, .dialog, .minibutton, input {
+.interface, .dialog, .minibutton, input, .text_area {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif !important;
 }
 
@@ -181,6 +181,7 @@ textarea.text_area {
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   resize: none;
   line-height: 16px;
+  font-size: 11px;
   padding: 3px 6px;
   overflow: auto;
   outline: 0;
