@@ -96,9 +96,7 @@
       }
     .document .document_tool {
       display: inline;
-      vertical-align: top;
-      position: relative;
-      top: -1px;
+      vertical-align: text-bottom;
       margin-left: 8px;
       padding-right: 16px;
     }
