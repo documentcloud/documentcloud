@@ -8,7 +8,7 @@ dc.ui.Document = dc.View.extend({
     For direct help, email us at <span class=\"email\">support@documentcloud.org</span>",
 
   className : 'document',
-  
+
   callbacks : {
     '.doc_title.mousedown': '_noSelect',
     '.doc_title.click'    : 'select',
@@ -22,7 +22,7 @@ dc.ui.Document = dc.View.extend({
     '.page.click'         : '_openEntityOnPage',
     '.cancel_search.click': '_hidePages'
   },
-  
+
   constructor : function(options) {
     this.base(options);
     this.el.id = 'document_' + this.model.id;
@@ -48,13 +48,13 @@ dc.ui.Document = dc.View.extend({
     $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.notesEl = $('.notes', this.el);
     this.pagesEl = $('.pages', this.el);
-    this.model.notes.each(function(note){ me._addNote(null, note); });
+    this.model.notes.each(function(note){ me._addNote(note); });
     if (!this.options.noCallbacks) this.setCallbacks();
     this.setMode(dc.access.NAMES[this.model.get('access')], 'access');
     this._setSelected();
     return this;
   },
-  
+
   // Desktop-style selection.
   select : function(e) {
     e.preventDefault();

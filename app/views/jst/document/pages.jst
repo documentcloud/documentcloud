@@ -7,13 +7,13 @@
 %>
 <% if (pages.length) { %>
   <div class="pages_title">
-    <span class="pages_title_inner">
+    <div class="pages_title_inner">
+      <span class="icon cancel_search" title="hide pages"></span>
       <%= pages.length >= 200 ? 'Over ' : '' %>
       <%= pages.length %>
       <%= Inflector.pluralize('page', pages.length) %>
       mentioning <%= Inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>
-    </span>
-    <div class="icon cancel_search" title="hide pages"></div>
+    </div>
     <div class="clear"> </div>
   </div>
   <% _.each(pages, function(pair) { %>

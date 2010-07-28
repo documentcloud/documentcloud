@@ -36,7 +36,7 @@
 }
 .icon.cancel_search {
   width: 11px; height: 11px;
-  background: url(/images/embed/icons/cancel_search.png);
+  background-image: url(/images/embed/icons/cancel_search.png);
   cursor: pointer;
 }
 .icon.white_plus {

@@ -169,24 +169,24 @@
 
 /*---------------------------- Page References -------------------------------*/
 .document .pages {
-  overflow: hidden;
 }
 .document .pages_title {
   margin: 15px 0 15px 0;
-  line-height: 11px;
+  line-height: 15px;
 }
   .document .pages .pages_title_inner {
-    float: left;
+    position: relative;
     margin-right: 10px;
   }
   .document .pages .cancel_search {
-    float: left;
     cursor: pointer;
-    display: none;
+    display: inline;
+    position: relative;
+/*    top: -2px;*/
+    vertical-align: top;
+    padding-left: 11px;
+    margin-right: 5px;
   }
-    .document .pages:hover .cancel_search {
-      display: block;
-    }
 .document .page {
   float: left;
   margin: 0 20px 15px 3px;
