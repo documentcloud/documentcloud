@@ -14,12 +14,10 @@ dc.ui.Toolbar = dc.View.extend({
     this.base(options);
     _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'checkFloat',
-      'enableToolbarButtons');
+      'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'checkFloat');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
-    Documents.bind(Documents.SELECTION_CHANGED, this.enableToolbarButtons);
   },
 
   render : function() {
@@ -108,13 +106,6 @@ dc.ui.Toolbar = dc.View.extend({
       return true;
     }, this), {information : this._subtitle(docs.length)});
   },
-  
-  enableToolbarButtons : function() {
-    var selected = Documents.selectedCount ? 'is' : 'not';
-    this.timelineButton.setMode(selected, 'enabled');
-    var selectedOne = Documents.selectedCount == 1 ? 'is' : 'not';
-    this.relatedDocumentsButton.setMode(selectedOne, 'enabled');
-  },
 
   displayEmbedSnippet : function() {
     if (dc.app.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to embed document viewers.');
@@ -167,16 +158,12 @@ dc.ui.Toolbar = dc.View.extend({
 
   _openRelatedDocuments : function() {
     var docs = Documents.selected();
-    if (docs.length != 1) return dc.ui.Dialog.alert("In order to view related documents, please select a single document.");
+    if (docs.length != 1) return dc.ui.Dialog.alert("Please select a single document, in order to view related documents.");
     dc.app.searchBox.search('related: ' + docs[0].id + '-' + docs[0].attributes().slug);
   },
-  
+
   _openUpload : function() {
     dc.app.uploader.open();
-  },
-
-  _openEntities : function() {
-    dc.app.entities.open();
   },
 
   _panel : function() {
