@@ -10,12 +10,13 @@ dc.ui.Document = dc.View.extend({
   className : 'document',
 
   callbacks : {
-    '.doc_title.mousedown': '_noSelect',
-    '.doc_title.click'    : 'select',
-    '.doc_title.dblclick' : 'viewDocument',
-    '.icon.doc.click'     : 'select',
-    '.icon.doc.dblclick'  : 'viewDocument',
-    '.show_notes.click'   : 'toggleNotes'
+    '.doc_title.mousedown'    : '_noSelect',
+    '.doc_title.click'        : 'select',
+    '.doc_title.dblclick'     : 'viewDocument',
+    '.icon.doc.click'         : 'select',
+    '.icon.doc.dblclick'      : 'viewDocument',
+    '.show_notes.click'       : 'toggleNotes',
+    '.title .edit_glyph.click': 'openDialog'
   },
 
   pageCallbacks : {
@@ -40,6 +41,7 @@ dc.ui.Document = dc.View.extend({
     var data = _.clone(this.model.attributes());
     data = _.extend(data, {
       created_at    : data.created_at.replace(/\s/g, '&nbsp;'),
+      editable      : this.model.allowedToEdit(),
       icon          : this._iconAttributes(),
       thumbnail_url : this._thumbnailURL(),
       description   : this._description()
@@ -100,6 +102,14 @@ dc.ui.Document = dc.View.extend({
     this.model.downloadViewer();
   },
 
+  // Open an edit dialog for the currently selected documents, if this
+  // document is among them. Otherwise, open the dialog just for this document.
+  openDialog : function() {
+    var docs = Documents.selected();
+    docs = _.include(docs, this.model) ? docs : [this.model];
+    new dc.ui.DocumentDialog(docs);
+  },
+
   toggleNotes : function(e) {
     e.stopPropagation();
     var next = _.bind(function() {
@@ -123,10 +133,10 @@ dc.ui.Document = dc.View.extend({
     var access = this.model.get('access');
     switch (access) {
       case dc.access.PUBLIC:       return null;
-      case dc.access.PENDING:      return {className : 'spinner',    title : 'uploading...'};
-      case dc.access.ERROR:        return {className : 'alert_gray', title : 'broken document'};
-      case dc.access.ORGANIZATION: return {className : 'lock',       title : 'private to my organization'};
-      case dc.access.PRIVATE:      return {className : 'lock',       title : 'private'};
+      case dc.access.PENDING:      return {className : 'spinner',    title : 'Uploading...'};
+      case dc.access.ERROR:        return {className : 'alert_gray', title : 'Broken document'};
+      case dc.access.ORGANIZATION: return {className : 'lock',       title : 'Private to my organization'};
+      case dc.access.PRIVATE:      return {className : 'lock',       title : 'Private'};
     }
   },
 

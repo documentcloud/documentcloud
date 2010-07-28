@@ -6,8 +6,8 @@ dc.model.Note = dc.Model.extend({
     return this._document = this._document || Documents.get(this.get('document_id'));
   },
 
-  allowedToEdit : function() {
-    return Accounts.current().allowedToEdit(this);
+  checkAllowedToEdit : function() {
+    return Accounts.current().checkAllowedToEdit(this);
   },
 
   imageUrl : function() {

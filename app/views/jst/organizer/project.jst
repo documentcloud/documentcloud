@@ -1,7 +1,11 @@
 <div class="pointer"></div>
 <div class="title interface">
-  <%= title %>
-  <div class="icon edit_glyph"></div>
+  <% var words = title.split(' '); %>
+  <%= words.slice(0, words.length - 1).join(' ') %>
+  <span class="last_word">
+    <%= words.slice(words.length - 1).join(' ') %>
+    <div class="icon edit_glyph"></div>
+  </span>
 </div>
 <div class="counts interface">
   <%= statistics %>

@@ -1,6 +1,7 @@
 dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   id : 'upload_dialog',
+  className: 'dialog docalog',
 
   callbacks : {
     '.ok.click':      'confirm',

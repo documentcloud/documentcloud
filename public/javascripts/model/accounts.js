@@ -30,7 +30,7 @@ dc.model.Account = dc.Model.extend({
     dc.app.searchBox.search('group: ' + dc.app.organization.slug);
   },
 
-  allowedToEdit: function(resource) {
+  checkAllowedToEdit: function(resource) {
     var resourceId = resource.get('document_id') || resource.id;
     if (resource.get('account_id') == this.id) return true;
     if (resource.get('organization_id') == this.get('organization_id') && this.isAdmin()) return true;

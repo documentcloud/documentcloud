@@ -5,7 +5,7 @@
   <% if (note.get('access') == 'private') { %>
     <div class="icon lock display" title="Private note"></div>
   <% } %>
-  <% if (note.allowedToEdit()) { %>
+  <% if (note.checkAllowedToEdit()) { %>
     <div class="edit_note icon edit_glyph display"></div>
   <% } %>
   <br class="clear display" />

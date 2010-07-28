@@ -1,0 +1,47 @@
+<% if (!multiple) { %>
+  <div class="row draggable">
+    <div class="text_input dark">
+      <input name="title" id="document_edit_title" class="attribute" type="text" />
+    </div>
+    <label for="document_edit_title" title="Title of the document">
+      Title:
+    </label>
+  </div>
+<% } %>
+
+<div class="row draggable">
+  <div class="text_input dark">
+    <input name="source" id="document_edit_source" class="attribute" type="text" />
+  </div>
+  <label for="document_edit_source" title="The source from which you obtained the document">
+    Source:
+  </label>
+</div>
+
+<div class="row draggable">
+  <div class="text_input dark">
+    <input name="related_article" id="document_edit_related_article" class="attribute" type="text" />
+  </div>
+  <label for="document_edit_related_article" title="URL of the web article that refers to the document">
+    Related Article:
+  </label>
+</div>
+
+<div class="row draggable">
+  <textarea name="description" id="document_edit_description" class="text_area dark content attribute"></textarea>
+  <label for="document_edit_description" title="Paragraph description of the document">
+    Description:
+  </label>
+  <div class="clear"></div>
+</div>
+
+<div class="row draggable last">
+  <select name="access" class="document_access attribute" id="document_edit_access">
+    <option value="4">Public Access</option>
+    <option value="1">Private Access</option>
+    <option value="2">Private to my Organization</option>
+  </select>
+  <label for="document_edit_access">
+    Access Level:
+  </label>
+</div>

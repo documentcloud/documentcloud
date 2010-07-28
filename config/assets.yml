@@ -24,6 +24,7 @@ javascripts:
 stylesheets:
   ui:
     - public/stylesheets/common/reset.css
+    - public/stylesheets/ui/ui.css
     - public/stylesheets/ui/*.css
   workspace:
     - public/stylesheets/pages/workspace.css

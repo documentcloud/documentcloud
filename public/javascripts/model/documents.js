@@ -37,10 +37,14 @@ dc.model.Document = dc.Model.extend({
     return this.get('page_image_url').replace('{size}', 'thumbnail').replace('{page}', page);
   },
 
+  allowedToEdit : function() {
+    return Accounts.current().checkAllowedToEdit(this);
+  },
+
   // Is the document editable by the current account?
-  allowedToEdit : function(message) {
+  checkAllowedToEdit : function(message) {
     message = message || "You don't have permission to edit \"" + this.get('title') + "\".";
-    if (Accounts.current().allowedToEdit(this)) return true;
+    if (this.allowedToEdit()) return true;
     dc.ui.Dialog.alert(message);
     return false;
   },
@@ -88,7 +92,7 @@ dc.model.Document = dc.Model.extend({
     if (count <= 0) return false;
     this.set({annotation_count : count - 1});
   },
-  
+
   // Inspect.
   toString : function() {
     return 'Document ' + this.id + ' "' + this.get('title') + '"';
@@ -120,8 +124,15 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     return _.select(this.models(), function(doc){ return doc.isPending(); });
   },
 
+  // Given a list of documents and an attribute, return the value of the
+  // attribute if identical, or null if divergent.
+  sharedAttribute : function(docs, attr) {
+    var attrs = _.uniq(_.map(docs, function(doc){ return doc.get(attr); }));
+    return attrs.length > 1 ? false : attrs[0];
+  },
+
   allowedToEditSelected : function(message) {
-    return !_.any(this.selected(), function(doc) { return !doc.allowedToEdit(message); });
+    return !_.any(this.selected(), function(doc) { return !doc.checkAllowedToEdit(message); });
   },
 
   downloadSelectedViewers : function() {
@@ -158,6 +169,18 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     }, this), 'json');
   },
 
+  // Destroy the currently selected documents, after asking for confirmation.
+  destroySelected : function() {
+    if (!Documents.allowedToEditSelected()) return;
+    var docs = Documents.selected();
+    var message = 'Really delete ' + docs.length + ' ' + Inflector.pluralize('document', docs.length) + '?';
+    dc.ui.Dialog.confirm(message, _.bind(function() {
+      _(docs).each(function(doc){ Documents.destroy(doc); });
+      Projects.removeDocuments(docs);
+      return true;
+    }, this));
+  },
+
   // We override `add` to listen for uploading documents, and to start polling
   // for changes.
   add : function(model, silent) {
@@ -178,7 +201,7 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     if (!this.pending().length) return false;
     this.startPolling();
   }
-  
+
 });
 
 dc.model.DocumentSet.implement(dc.model.SortedSet);

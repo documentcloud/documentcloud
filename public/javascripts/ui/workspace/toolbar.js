@@ -70,8 +70,7 @@ dc.ui.Toolbar = dc.View.extend({
 
   editSource : function() {
     this.edit(function(docs) {
-      var sources = _.uniq(_.map(docs, function(doc){ return doc.get('source'); }));
-      var current = sources.length > 1 ? '' : sources[0];
+      var current = Documents.sharedAttribute(docs, 'source') || '';
       dc.ui.Dialog.prompt('Source', current, function(source) {
         _.each(docs, function(doc) { Documents.update(doc, {source : source}); });
         return true;
@@ -81,8 +80,7 @@ dc.ui.Toolbar = dc.View.extend({
 
   editRelatedArticle : function() {
     this.edit(function(docs) {
-      var articles = _.uniq(_.map(docs, function(doc){ return doc.get('related_article'); }));
-      var current  = articles.length > 1 ? '' : articles[0];
+      var current = Documents.sharedAttribute(docs, 'related_article') || '';
       dc.ui.Dialog.prompt('Related Article', current, function(rel) {
         _.each(docs, function(doc) { Documents.update(doc, {related_article : rel}); });
         return true;
@@ -93,8 +91,7 @@ dc.ui.Toolbar = dc.View.extend({
   editAccess : function() {
     if (!Documents.allowedToEditSelected()) return;
     var docs    = Documents.selected();
-    var access  = _.uniq(_.map(docs, function(doc){ return doc.get('access'); }));
-    var current = access.length > 1 ? dc.access.PRIVATE : access[0];
+    var current = Documents.sharedAttribute(docs, 'access') || dc.access.PRIVATE;
     dc.ui.Dialog.choose('Access Level', [
       {text : 'Public Access',              description : 'Anyone on the internet can search for and view the document.',              value : dc.access.PUBLIC,       selected : current == dc.access.PUBLIC},
       {text : 'Private Access',             description : 'Only people explicitly granted permission (via collaboration) may access.', value : dc.access.PRIVATE,      selected : current == dc.access.PRIVATE},
@@ -140,14 +137,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _deleteSelectedDocuments : function() {
-    if (!Documents.allowedToEditSelected()) return;
-    var docs = Documents.selected();
-    var message = 'Really delete ' + docs.length + ' ' + Inflector.pluralize('document', docs.length) + '?';
-    dc.ui.Dialog.confirm(message, _.bind(function() {
-      _(docs).each(function(doc){ Documents.destroy(doc); });
-      Projects.removeDocuments(docs);
-      return true;
-    }, this));
+    Documents.destroySelected();
   },
 
   _openTimeline : function() {

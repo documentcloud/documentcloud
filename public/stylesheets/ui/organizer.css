@@ -66,13 +66,17 @@
         filter: none;
       }
       #organizer .box .edit_glyph {
-        display: none;
-        position: absolute;
-        left: 8px; top: 15px;
+        display: inline;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        vertical-align: text-bottom;
+        padding-right: 11px;
+        margin-left: 6px;
       }
         #organizer .box:hover .edit_glyph,
         #organizer .box.is_selected .edit_glyph {
-          display: block;
+          opacity: 1;
+          filter: none;
         }
       #organizer .box .title {
         font: bold 14px Helvetica, Arial;
@@ -81,6 +85,9 @@
         #organizer .box.is_selected .title,
         #organizer .box:hover .title {
           color: #000;
+        }
+        #organizer .box .last_word {
+          white-space: nowrap;
         }
       #organizer .box .counts,
       #organizer .top_level_search .text_link {

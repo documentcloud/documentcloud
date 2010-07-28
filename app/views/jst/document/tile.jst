@@ -6,6 +6,9 @@
     <% if (icon) { %>
       <div class="icon document_tool <%= icon.className %>" title="<%= icon.title %>"></div>
     <% } %>
+    <% if (editable) { %>
+      <div class="icon document_tool edit_glyph" title="Edit Document"></div>
+    <% } %>
   </div>
 </div>
 <% if (annotation_count) { %>
