@@ -181,9 +181,7 @@
   .document .pages .cancel_search {
     cursor: pointer;
     display: inline;
-    position: relative;
-/*    top: -2px;*/
-    vertical-align: top;
+    vertical-align: text-bottom;
     padding-left: 11px;
     margin-right: 5px;
   }
