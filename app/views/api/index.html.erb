@@ -96,7 +96,7 @@
     <tbody>
       <tr>
         <td class="param">file</td>
-        <td class="desc">(required) the document file itself</td>
+        <td class="desc">(required) the path to the document itself</td>
         <td class="ex"></td>
       </tr>
       <tr class="alt">
@@ -121,18 +121,26 @@
       </tr>
     </tbody>
   </table>
+  
+  
+  <h3>Tips</h3>
 
-  <p>
-    Please ensure that you send the request properly encoded as "multipart/form-data".
-    You'll definitely want to review your uploaded files and add a source or 
-    description once they're up. 
-  </p>
+    <p>* Please ensure that you send the request properly encoded as "multipart/form-data".</p>
+    <p>* Review your uploaded files and add a source and description if you didn't .</p>
+    <p>* Unless you are using SSL, your username, password and documents are sent in cleartext. Use <code>https://</code> to ensure that your connection is encrypted.</p>
+  
+  <h3>Example</h3>
+  <p>Using Ruby's RestClient library you could do:</p>
+  <pre>
+    RestClient.post('http://YOURNAME%40EXAMPLE.COM:YOURPASSWORD@www.documentcloud.org/api/upload.json',
+      :file => File.new('/full/path/to/document/document.pdf','rb'),
+      :title => "2008 Blagojevich Tax Return",
+      :source => "U.S. Attorney's Office",
+      :access => 'private'
+    )
+    </pre>
 
-  <p>
-    Note that we don't yet support SSL uploads, so your username, password 
-    and documents are being sent in cleartext. So don't try this on unencrypted 
-    wireless (or any network you don't trust).
-  </p>
+
 
 </div>
 <script type="text/javascript">
