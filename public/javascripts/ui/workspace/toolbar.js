@@ -4,7 +4,6 @@ dc.ui.Toolbar = dc.View.extend({
 
   callbacks : {
     '#open_viewers.click'            : '_openViewers',
-    '#open_related_documents.click'  : '_openRelatedDocuments',
     '#toolbar_upload.click'          : '_openUpload'
   },
 
@@ -31,7 +30,6 @@ dc.ui.Toolbar = dc.View.extend({
     }, this));
     this.openButton              = $('#open_viewers', this.el);
     this.floatEl                 = $('#floating_toolbar', this.el);
-    this.relatedDocumentsButton  = $('#open_related_documents', this.el);
     $(window).scroll(this.checkFloat);
     this.setCallbacks();
     return this;
@@ -202,7 +200,7 @@ dc.ui.Toolbar = dc.View.extend({
       items   : [
         {title: 'View Entities', onClick : null},
         {title: 'View Timeline', onClick : this._openTimeline},
-        {title: 'Find Related Documents', attrs: {'class' : 'singular'}, onClick : null}
+        {title: 'Find Related Documents', attrs: {'class' : 'singular'}, onClick : this._openRelatedDocuments}
       ]
     });
   },
