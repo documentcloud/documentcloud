@@ -161,7 +161,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _enableMenuItems : function(menu) {
-    $('.menu_item', menu.content).toggleClass('disabled', !Documents.selectedCount);
+    $('.menu_item:not(.plus)', menu.content).toggleClass('disabled', !Documents.selectedCount);
     $('.singular', menu.content).toggleClass('disabled', !(Documents.selectedCount == 1));
   },
 
@@ -183,6 +183,7 @@ dc.ui.Toolbar = dc.View.extend({
       label   : 'Edit',
       onOpen  : this._enableMenuItems,
       items   : [
+        {title : 'New Document',         attrs: {'class' : 'plus'},     onClick : function(){ dc.app.uploader.open(); }},
         {title : 'Edit Title',           attrs: {'class' : 'singular'}, onClick : this.editTitle},
         {title : 'Edit Description',     attrs: {'class' : 'singular'}, onClick : this.editDescription},
         {title : 'Edit Source',          attrs: {'class' : 'multiple'}, onClick : this.editSource},
