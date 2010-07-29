@@ -80,6 +80,14 @@ class Project < ActiveRecord::Base
     )
   end
 
+  def canonical
+    data = ActiveSupport::OrderedHash.new
+    data['id']            = id
+    data['title']         = title
+    data['document_ids']  = self.documents.all(:select => 'documents.id, slug').map {|doc| doc.canonical_id }
+    data
+  end
+
   def to_json(opts={})
     attributes.merge(
       :account_full_name  => account_full_name,

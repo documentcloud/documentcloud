@@ -6,7 +6,7 @@ class ApiController < ApplicationController
 
   before_filter :bouncer if Rails.env.staging?
 
-  before_filter :api_login_required, :only => [:upload]
+  before_filter :api_login_required, :only => [:upload, :projects]
 
   before_filter :login_required, :only => [:index]
 
@@ -43,6 +43,14 @@ class ApiController < ApplicationController
                     :status => 400})
     end
     @response = Document.upload(params, current_account, current_organization).canonical
+    return if jsonp_request?
+    render :json => @response
+  end
+
+  # Retrieve a listing of your projects, including document id.
+  def projects
+    return bad_request unless current_account and (request.format.json? or request.format.js?)
+    @response = {'projects' => Project.accessible(current_account).map {|p| p.canonical } }
     return if jsonp_request?
     render :json => @response
   end
