@@ -49,6 +49,9 @@ TODO:
       so it can be modified with the Edit menu when selected.
     
   * Include OCR via tesseract in DocSplit.
+    - Burst PDFs into individual pages to extract text and use OCR if individual pages fail.
+      (Necessary for PDFs with mixed text pages and ocr pages)
+    - Also need to burst PDFs so we can split the workload across multiple cloud crowd nodes.
   
 
 DONE:

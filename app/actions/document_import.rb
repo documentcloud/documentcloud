@@ -71,7 +71,7 @@ class DocumentImport < CloudCrowd::Action
 
   def pdf_text
     document.pages.destroy_all if document.pages.count > 0
-    Docsplit.extract_text(@pdf, :pages => :all, :output => 'text')
+    Docsplit.extract_text(@pdf, :pages => 'all', :output => 'text')
     Dir['text/*.txt'].length.times do |i|
       path = "text/#{document.slug}_#{i + 1}.txt"
       next unless File.exists?(path)
