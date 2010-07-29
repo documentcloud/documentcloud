@@ -1,4 +1,29 @@
+ARON'S LIST:
+
+  * The top of the projects nav should be moved to the documents tab. Keep 
+    projects tab for projects only. Put the editing dialog on the document
+    itself. Perhaps condense/remove the current toolbar.
+    
+  * Document forking / duplicate detection.
+  
+  * A document-viewer generator on the public site.
+  
+  * Autoscale document processing with CloudCrowd / EC2.
+  
+  * Publishing workflow in a new tab. Includes list of published documents
+    with statistics, wizard to walk you though editing annotations, ensuring
+    related article, scheduling a release, should work with federation,
+    keep public/private notes clearly separated, etc.
+    
+  * Document Federation: we should be able to pull from the Times, based on the
+    canonical document format.
+    
+  * Visualizations tab.
+  
+
 TODO:
+
+  * Start cron backups of the analytics DB to S3.
 
   * Publicly indexable documents so Google can see them and link to 
     the DocumentViewer.
@@ -13,7 +38,7 @@ TODO:
     
   * Things have stabilized. Time for another batch of tests.
 
-  * Add a way to search just the text of your notes. List your notes etc.
+  * Notes view: add a way to search just the text of your notes, list them etc.
   
   * Fix incorrect entity offsets. Document #486 on production, searching for
     "organization: 'Department of Defense'".
