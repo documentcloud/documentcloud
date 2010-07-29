@@ -4,30 +4,32 @@ dc.ui.Toolbar = dc.View.extend({
 
   callbacks : {
     '#open_viewers.click'            : '_openViewers',
-    '#open_timeline.click'           : '_openTimeline',
     '#open_related_documents.click'  : '_openRelatedDocuments',
     '#toolbar_upload.click'          : '_openUpload'
   },
+
+  MENUS : ['project', 'edit', 'publish', 'analyze'],
 
   constructor : function(options) {
     this._floating = false;
     this.base(options);
     _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'checkFloat');
+      'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'checkFloat',
+      '_openTimeline');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
+    this.analyzeMenu      = this._createAnalyzeMenu();
     this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
   },
 
   render : function() {
     var el = $(this.el);
     el.html(JST['workspace/toolbar']({}));
-    $('.project_menu_container', el).append(this.projectMenu.render().el);
-    $('.edit_menu_container', el).append(this.editMenu.render().el);
-    $('.publish_menu_container', el).append(this.publishMenu.render().el);
+    _.each(this.MENUS, _.bind(function(menu){
+      $('.' + menu + '_menu_container', el).append(this[menu + 'Menu'].render().el);
+    }, this));
     this.openButton              = $('#open_viewers', this.el);
-    this.timelineButton          = $('#open_timeline', this.el);
     this.floatEl                 = $('#floating_toolbar', this.el);
     this.relatedDocumentsButton  = $('#open_related_documents', this.el);
     $(window).scroll(this.checkFloat);
@@ -160,24 +162,28 @@ dc.ui.Toolbar = dc.View.extend({
     return this._panelEl = this._panelEl || $(this.el).parents('.panel_content')[0];
   },
 
+  _enableMenuItems : function(menu) {
+    $('.menu_item', menu.content).toggleClass('disabled', !Documents.selectedCount);
+    $('.singular', menu.content).toggleClass('disabled', !(Documents.selectedCount == 1));
+  },
+
   _createPublishMenu : function() {
     return new dc.ui.Menu({
       label   : 'Publish',
+      onOpen  : this._enableMenuItems,
       items   : [
         {title : 'Embed Document Viewer',    onClick : this.displayEmbedSnippet},
         {title : 'Download Document Viewer', onClick : Documents.downloadSelectedViewers},
         {title : 'Download Original PDF',    onClick : Documents.downloadSelectedPDF},
         {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
-      ],
-      onOpen : function(menu) {
-        $('.menu_item', menu.content).toggleClass('disabled', !Documents.selectedCount);
-      }
+      ]
     });
   },
 
   _createEditMenu : function() {
     return new dc.ui.Menu({
       label   : 'Edit',
+      onOpen  : this._enableMenuItems,
       items   : [
         {title : 'Edit Title',           attrs: {'class' : 'singular'}, onClick : this.editTitle},
         {title : 'Edit Description',     attrs: {'class' : 'singular'}, onClick : this.editDescription},
@@ -185,16 +191,19 @@ dc.ui.Toolbar = dc.View.extend({
         {title : 'Edit Related Article', attrs: {'class' : 'multiple'}, onClick : this.editRelatedArticle},
         {title : 'Edit Access Level',    attrs: {'class' : 'multiple'}, onClick : this.editAccess},
         {title : 'Delete Documents',     attrs: {'class' : 'multiple warn'}, onClick : this._deleteSelectedDocuments}
-      ],
-      onOpen : function(menu) {
-        var count = Documents.selectedCount;
-        if (count == 0) {
-          $('.menu_item', menu.content).addClass('disabled');
-        } else {
-          $('.menu_item', menu.content).removeClass('disabled');
-          $('.singular', menu.content).toggleClass('disabled', count > 1);
-        }
-      }
+      ]
+    });
+  },
+
+  _createAnalyzeMenu : function() {
+    return new dc.ui.Menu({
+      label   : 'Analyze',
+      onOpen  : this._enableMenuItems,
+      items   : [
+        {title: 'View Entities', onClick : null},
+        {title: 'View Timeline', onClick : this._openTimeline},
+        {title: 'Find Related Documents', attrs: {'class' : 'singular'}, onClick : null}
+      ]
     });
   },
 
