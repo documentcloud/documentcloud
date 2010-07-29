@@ -15,7 +15,7 @@ module DC
 
       EMPTY_PAGINATION = {:page => 1, :per_page => 0}
 
-      attr_reader   :text, :fields, :projects, :project_ids, :doc_ids, :access, :attributes, :conditions, :results, :solr, :related_document
+      attr_reader   :text, :fields, :projects, :project_ids, :doc_ids, :access, :attributes, :conditions, :results, :solr, :source_document
       attr_accessor :page, :page_size, :order, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
@@ -29,7 +29,7 @@ module DC
         @project_ids            = opts[:project_ids]  || []
         @doc_ids                = opts[:doc_ids]      || []
         @attributes             = opts[:attributes]   || []
-        @related_document       = opts[:related_document]
+        @source_document        = opts[:source_document]
         @from, @to, @total      = nil, nil, nil
         @account, @organization = nil, nil
         @page_size              = DEFAULT_PAGE_SIZE
@@ -37,7 +37,7 @@ module DC
       end
 
       # Series of attribute checks to determine the kind and state of query.
-      [:text, :fields, :projects, :project_ids, :doc_ids, :attributes, :results, :access, :related_document].each do |att|
+      [:text, :fields, :projects, :project_ids, :doc_ids, :attributes, :results, :access, :source_document].each do |att|
         class_eval "def has_#{att}?; @#{att}.present?; end"
       end
 
@@ -79,9 +79,9 @@ module DC
       # that match the search, and one that retrieves the documents or notes
       # for the current page.
       def run(o={})
-        @related = !!@related_document
+        @related = !!@source_document
         @solr = @related ?
-          Sunspot.new_more_like_this(@related_document, Document) :
+          Sunspot.new_more_like_this(@source_document, Document) :
           Sunspot.new_search(Document)
         @account, @organization, @unrestricted = o[:account], o[:organization], o[:unrestricted]
         @include_facets, @facet = o[:include_facets], o[:facet]

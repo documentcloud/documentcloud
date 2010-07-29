@@ -46,8 +46,9 @@ dc.app.SearchParser = {
     var relatedDocument = query.match(this.FIRST_RELATED);
     return relatedDocument && (relatedDocument[2] || relatedDocument[3] || relatedDocument[4]);
   },
-  
+
   searchType : function(query) {
+    if (query.replace(this.FIRST_RELATED, '').match(this.WHITESPACE_ONLY)) return 'related';
     if (query.replace(this.FIRST_PROJECT, '').match(this.WHITESPACE_ONLY)) return 'project';
     if (query.replace(this.FIRST_ACCOUNT, '').match(this.WHITESPACE_ONLY)) return 'account';
     return 'search';

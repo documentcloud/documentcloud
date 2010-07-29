@@ -20,15 +20,11 @@ _.extend(dc.app.workspace, {
     dc.app.searchBox             = new dc.ui.SearchBox();
     dc.app.paginator             = new dc.ui.Paginator();
     dc.app.navigation            = new dc.ui.Navigation();
-    dc.app.relatedDocumentsPanel = new dc.ui.RelatedDocumentsPanel();
     dc.ui.notifier               = new dc.ui.Notifier();
     dc.ui.tooltip                = new dc.ui.Tooltip();
     this.sidebar                 = new dc.ui.Sidebar();
     this.panel                   = new dc.ui.Panel();
     this.help                    = new dc.ui.Help();
-
-
-
 
     if (!dc.app.accountId) return;
 

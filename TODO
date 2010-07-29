@@ -23,6 +23,8 @@ ARON'S LIST:
 
 TODO:
 
+  * Add account information on all notes, when you're in the workspace.
+
   * Scroll the Accounts List, already.
 
   * Start cron backups of the analytics DB to S3.

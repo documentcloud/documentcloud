@@ -11,7 +11,8 @@ dc.ui.SearchBox = dc.View.extend({
   NO_RESULTS : {
     project : "This project does not contain any documents.",
     account : "This account has not uploaded any documents.",
-    search  : "Your search did not match any documents."
+    search  : "Your search did not match any documents.",
+    related : "There are no documents related to this document."
   },
 
   id            : 'search',
@@ -29,8 +30,8 @@ dc.ui.SearchBox = dc.View.extend({
   // Creating a new SearchBox registers #search page fragments.
   constructor : function(options) {
     this.base(options);
-    this.flags['hasEntities'] = false;
-    this.flags['outstandingSearch'] = false;
+    this.flags.hasEntities = false;
+    this.flags.outstandingSearch = false;
     _.bindAll(this, '_loadSearchResults', '_loadFacetsResults', '_loadFacetResults', 'searchByHash', 'loadDefault', 'hideSearch', 'loadFacets');
     dc.history.register(/^#search\//, this.searchByHash);
   },
@@ -85,12 +86,6 @@ dc.ui.SearchBox = dc.View.extend({
   showDocuments : function() {
     $(document.body).setMode('active', 'search');
     var query = this.value();
-
-    if (query.indexOf('related:') != -1) {
-      dc.app.relatedDocumentsPanel.search(query, this.page);
-      return;
-    }
-
     this.entitle(query);
     dc.ui.Project.highlight(query);
     dc.history.save(this.urlFragment());
@@ -98,42 +93,32 @@ dc.ui.SearchBox = dc.View.extend({
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
-    dc.app.relatedDocumentsPanel.close();
     dc.app.navigation.open('documents');
     this.value(query);
-    this.flags['hasEntities'] = false;
-
-    if (query && query.indexOf('related:') != -1) {
-      dc.app.relatedDocumentsPanel.search(query, pageNumber, callback);
-      return;
-    }
-
+    this.flags.related = query.indexOf('related:') >= 0;
+    this.flags.hasEntities = false;
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.fragment = 'search/' + encodeURIComponent(query);
+    this.populateRelatedDocument();
     this.showDocuments();
     Documents.refresh();
-    this.flags['outstandingSearch'] = true;
+    this.flags.outstandingSearch = true;
     this._afterSearch = callback;
     dc.ui.spinner.show('searching');
     dc.app.paginator.hide();
     _.defer(dc.app.toolbar.checkFloat);
-    var params = {
-      q : query,
-      page_size : dc.app.paginator.pageSize(),
-      order : dc.app.paginator.sortOrder
-    };
-    if (dc.app.navigation.isOpen('entities')) {
-      params['include_facets'] = true;
-    }
-    if (this.page) params.page = this.page;
+    var params = _.extend(dc.app.paginator.queryParams(), {q : query});
+    if (this.flags.related && !this._relatedDoc)  params.include_source_document = true;
+    if (dc.app.navigation.isOpen('entities'))     params.include_facets = true;
+    if (this.page)                                params.page = this.page;
     $.get(this.DOCUMENTS_URL, params, this._loadSearchResults, 'json');
   },
 
   loadFacets : function() {
-    if (this.flags['hasEntities']) return;
+    if (this.flags.hasEntities) return;
     var query = this.value() || '';
     dc.ui.spinner.show('searching');
-    this.flags['outstandingSearch'] = true;
+    this.flags.outstandingSearch = true;
     Entities.refresh();
     var params = {
       q : query
@@ -143,7 +128,7 @@ dc.ui.SearchBox = dc.View.extend({
 
   loadFacet : function(facet) {
     dc.ui.spinner.show('searching');
-    this.flags['outstandingSearch'] = true;
+    this.flags.outstandingSearch = true;
     var params = {
       q : this.value(),
       facet : facet
@@ -192,13 +177,13 @@ dc.ui.SearchBox = dc.View.extend({
   // return.
   maybeSearch : function(e) {
     var query = this.value();
-    if (!this.flags['outstandingSearch'] && e.keyCode == 13) this.search(query);
+    if (!this.flags.outstandingSearch && e.keyCode == 13) this.search(query);
   },
 
   // Webkit knows how to fire a real "search" event.
   searchEvent : function(e) {
     var query = this.value();
-    if (!this.flags['outstandingSearch'] && query) this.search(query);
+    if (!this.flags.outstandingSearch && query) this.search(query);
   },
 
   cancelSearch : function() {
@@ -225,14 +210,24 @@ dc.ui.SearchBox = dc.View.extend({
 
   // Hide the spinner and remove the search lock when finished searching.
   doneSearching : function(empty) {
+    if (this.flags.related) {
+      this.titleBox.text(Inflector.pluralize('Document', dc.app.paginator.query.total) +
+        ' Related to "' + Inflector.truncate(this._relatedDoc.get('title'), 100) + '"');
+    }
     if (empty) {
       $(document.body).setMode('empty', 'search');
       var searchType = dc.app.SearchParser.searchType(this.value());
       $('#no_results .explanation').text(this.NO_RESULTS[searchType]);
     }
     dc.ui.spinner.hide();
-    this.flags['outstandingSearch'] = false;
+    this.flags.outstandingSearch = false;
     if (this._afterSearch) this._afterSearch();
+  },
+
+  populateRelatedDocument : function() {
+    this._relatedDoc = null;
+    var id = parseInt(dc.app.SearchParser.extractRelatedDocumentId(this.value()), 10);
+    this._relatedDoc = Documents.get(id);
   },
 
   // After the initial search results come back, send out a request for the
@@ -240,15 +235,18 @@ dc.ui.SearchBox = dc.View.extend({
   // the metadata right alongside the document JSON.
   _loadSearchResults : function(resp) {
     dc.app.paginator.setQuery(resp.query, this);
-    if ('facets' in resp) {
+    if (resp.facets) {
       dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
       Entities.refresh();
-      this.flags['hasEntities'] = true;
+      this.flags.hasEntities = true;
     }
     Documents.refresh(_.map(resp.documents, function(m, i){
       m.index = i;
       return new dc.model.Document(m);
     }));
+    if (this.flags.related && !this._relatedDoc) {
+      this._relatedDoc = new dc.model.Document(resp.source_document);
+    }
     this.doneSearching(resp.documents.length == 0);
   },
 
@@ -256,14 +254,14 @@ dc.ui.SearchBox = dc.View.extend({
     dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
     Entities.refresh();
     dc.ui.spinner.hide();
-    this.flags['outstandingSearch'] = false;
-    this.flags['hasEntities'] = true;
+    this.flags.outstandingSearch = false;
+    this.flags.hasEntities = true;
   },
 
   _loadFacetResults : function(resp) {
     dc.app.workspace.organizer.mergeFacets(resp.facets, 500, resp.query.total);
     dc.ui.spinner.hide();
-    this.flags['outstandingSearch'] = false;
+    this.flags.outstandingSearch = false;
   },
 
   _setScope : function(e) {
