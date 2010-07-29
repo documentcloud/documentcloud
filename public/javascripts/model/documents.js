@@ -18,6 +18,11 @@ dc.model.Document = dc.Model.extend({
     return window.location.protocol + base;
   },
 
+  // Generate the canonical id for this document.
+  canonicalId : function() {
+    return this.id + '-' + this.get('slug');
+  },
+
   openViewer : function() {
     if (this.checkBusy()) return;
     window.open(this.url());

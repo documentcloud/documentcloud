@@ -4,7 +4,7 @@ dc.ui.SearchBox = dc.View.extend({
   PAGE_MATCHER        : (/\/p(\d+)$/),
 
   DOCUMENTS_URL : '/search/documents.json',
-  
+
   FACETS_URL : '/search/facets.json',
 
   // Error messages to display when your search returns no results.
@@ -16,9 +16,9 @@ dc.ui.SearchBox = dc.View.extend({
 
   id            : 'search',
   fragment      : null,
-  
+
   flags : {},
-  
+
   callbacks : {
     '#search_box.keydown':  'maybeSearch',
     '#search_box.search':   'searchEvent',
@@ -43,8 +43,8 @@ dc.ui.SearchBox = dc.View.extend({
     $(document.body).setMode('no', 'search');
     this.setCallbacks();
     $('#cloud_edge').click(function(){ window.location = '/home'; });
-    dc.app.navigation.bind('documents', this.loadDefault);
-    dc.app.navigation.bind('help', this.hideSearch);
+    dc.app.navigation.bind('tab:documents', this.loadDefault);
+    dc.app.navigation.bind('tab:help', this.hideSearch);
     return this;
   },
 
@@ -85,12 +85,12 @@ dc.ui.SearchBox = dc.View.extend({
   showDocuments : function() {
     $(document.body).setMode('active', 'search');
     var query = this.value();
-    
+
     if (query.indexOf('related:') != -1) {
       dc.app.relatedDocumentsPanel.search(query, this.page);
       return;
     }
-    
+
     this.entitle(query);
     dc.ui.Project.highlight(query);
     dc.history.save(this.urlFragment());
@@ -107,7 +107,7 @@ dc.ui.SearchBox = dc.View.extend({
       dc.app.relatedDocumentsPanel.search(query, pageNumber, callback);
       return;
     }
-    
+
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.fragment = 'search/' + encodeURIComponent(query);
     this.showDocuments();
@@ -118,8 +118,8 @@ dc.ui.SearchBox = dc.View.extend({
     dc.app.paginator.hide();
     _.defer(dc.app.toolbar.checkFloat);
     var params = {
-      q : query, 
-      page_size : dc.app.paginator.pageSize(), 
+      q : query,
+      page_size : dc.app.paginator.pageSize(),
       order : dc.app.paginator.sortOrder
     };
     if (dc.app.navigation.isOpen('entities')) {
@@ -140,12 +140,12 @@ dc.ui.SearchBox = dc.View.extend({
     };
     $.get(this.FACETS_URL, params, this._loadFacetsResults, 'json');
   },
-  
+
   loadFacet : function(facet) {
     dc.ui.spinner.show('searching');
     this.flags['outstandingSearch'] = true;
     var params = {
-      q : this.value(), 
+      q : this.value(),
       facet : facet
     };
     $.get(this.FACETS_URL, params, this._loadFacetResults, 'json');
@@ -254,12 +254,12 @@ dc.ui.SearchBox = dc.View.extend({
 
   _loadFacetsResults : function(resp) {
     dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
-    Entities.refresh();  
+    Entities.refresh();
     dc.ui.spinner.hide();
     this.flags['outstandingSearch'] = false;
     this.flags['hasEntities'] = true;
   },
-  
+
   _loadFacetResults : function(resp) {
     dc.app.workspace.organizer.mergeFacets(resp.facets, 500, resp.query.total);
     dc.ui.spinner.hide();

@@ -15,7 +15,7 @@ module DC
       # about the text, fields, projects, and attributes it's composed of.
       def parse(query_string='')
         @text, @access, @related_document = nil, nil, nil
-        @fields, @projects, @project_ids, @attributes = [], [], [], []
+        @fields, @projects, @project_ids, @doc_ids, @attributes = [], [], [], [], []
 
         quoted_fields = query_string.scan(Matchers::QUOTED_FIELD).map {|m| m[0] }
         bare_fields   = query_string.gsub(Matchers::QUOTED_FIELD, '').scan(Matchers::BARE_FIELD)
@@ -23,8 +23,10 @@ module DC
 
         process_search_text(search_text)
         process_fields_and_projects(bare_fields, quoted_fields)
-        
-        SolrQuery.new(:text => @text, :fields => @fields, :projects => @projects, :project_ids => @project_ids, :attributes => @attributes, :access => @access, :related_document => @related_document)
+
+        SolrQuery.new(:text => @text, :fields => @fields, :projects => @projects,
+          :project_ids => @project_ids, :doc_ids => @doc_ids, :attributes => @attributes,
+          :access => @access, :related_document => @related_document)
       end
 
       # Convert the full-text search into a form that our index can handle.
@@ -51,6 +53,8 @@ module DC
             @projects << value.strip
           elsif type == 'projectid'
             @project_ids << value.to_i
+          elsif type == 'docid'
+            @doc_ids << value.to_i
           elsif type == 'related'
             @related_document = Document.find(value.to_i)
           else

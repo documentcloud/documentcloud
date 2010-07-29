@@ -15,7 +15,7 @@ module DC
 
       EMPTY_PAGINATION = {:page => 1, :per_page => 0}
 
-      attr_reader   :text, :fields, :projects, :project_ids, :access, :attributes, :conditions, :results, :solr, :related_document
+      attr_reader   :text, :fields, :projects, :project_ids, :doc_ids, :access, :attributes, :conditions, :results, :solr, :related_document
       attr_accessor :page, :page_size, :order, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
@@ -27,6 +27,7 @@ module DC
         @fields                 = opts[:fields]       || []
         @projects               = opts[:projects]     || []
         @project_ids            = opts[:project_ids]  || []
+        @doc_ids                = opts[:doc_ids]      || []
         @attributes             = opts[:attributes]   || []
         @related_document       = opts[:related_document]
         @from, @to, @total      = nil, nil, nil
@@ -36,7 +37,7 @@ module DC
       end
 
       # Series of attribute checks to determine the kind and state of query.
-      [:text, :fields, :projects, :project_ids, :attributes, :results, :access, :related_document].each do |att|
+      [:text, :fields, :projects, :project_ids, :doc_ids, :attributes, :results, :access, :related_document].each do |att|
         class_eval "def has_#{att}?; @#{att}.present?; end"
       end
 
@@ -55,6 +56,7 @@ module DC
         build_fields       if     has_fields?
         build_projects     if     has_projects?
         build_project_ids  if     has_project_ids?
+        build_doc_ids      if     has_doc_ids?
         build_attributes   if     has_attributes? && !@related
         build_facets       if     @include_facets
         build_access       unless @unrestricted
@@ -64,7 +66,7 @@ module DC
         direction = order == :created_at ? :desc : :asc
         pagination = {:page => page, :per_page => size}
         pagination = EMPTY_PAGINATION if @exclude_documents
-        
+
         related = @related
         @solr.build do
           order_by  order, direction
@@ -78,8 +80,8 @@ module DC
       # for the current page.
       def run(o={})
         @related = !!@related_document
-        @solr = @related ? 
-          Sunspot.new_more_like_this(@related_document, Document) : 
+        @solr = @related ?
+          Sunspot.new_more_like_this(@related_document, Document) :
           Sunspot.new_search(Document)
         @account, @organization, @unrestricted = o[:account], o[:organization], o[:unrestricted]
         @include_facets, @facet = o[:include_facets], o[:facet]
@@ -128,6 +130,7 @@ module DC
           'fields'      => @fields,
           'projects'    => @projects,
           'project_ids' => @project_ids,
+          'doc_ids'     => @doc_ids,
           'attributes'  => @attributes
         }.to_json
       end
@@ -144,7 +147,7 @@ module DC
           boost_by_relevance true
         end
       end
-      
+
       # Build the Solr needed to run a full-text search. Hits the title,
       # the text content, the entities, etc.
       def build_text
@@ -153,7 +156,7 @@ module DC
           fulltext text
         end
       end
-            
+
       # Generate the Solr to search across the fielded metadata.
       def build_fields
         fields = @fields
@@ -191,6 +194,13 @@ module DC
         ids = @project_ids
         @solr.build do
           with :project_ids, ids
+        end
+      end
+
+      def build_doc_ids
+        ids = @doc_ids
+        @solr.build do
+          with :id, ids
         end
       end
 

@@ -15,7 +15,7 @@ dc.ui.Toolbar = dc.View.extend({
     _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'checkFloat',
-      '_openTimeline');
+      '_openTimeline', '_viewEntities');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
     this.analyzeMenu      = this._createAnalyzeMenu();
@@ -152,6 +152,13 @@ dc.ui.Toolbar = dc.View.extend({
     dc.app.searchBox.search('related: ' + docs[0].id + '-' + docs[0].attributes().slug);
   },
 
+  _viewEntities : function() {
+    var docs = Documents.selected();
+    if (!docs.length) return dc.ui.Dialog.alert("In order to view entities, please select some documents.");
+    dc.app.navigation.open('entities', true);
+    dc.app.searchBox.search(_.map(docs, function(doc){ return 'docid: ' + doc.canonicalId(); }).join(' '));
+  },
+
   _openUpload : function() {
     dc.app.uploader.open();
   },
@@ -199,7 +206,7 @@ dc.ui.Toolbar = dc.View.extend({
       label   : 'Analyze',
       onOpen  : this._enableMenuItems,
       items   : [
-        {title: 'View Entities', onClick : null},
+        {title: 'View Entities', onClick : this._viewEntities},
         {title: 'View Timeline', onClick : this._openTimeline},
         {title: 'Find Related Documents', attrs: {'class' : 'singular'}, onClick : this._openRelatedDocuments}
       ]
