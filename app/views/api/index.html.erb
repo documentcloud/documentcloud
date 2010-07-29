@@ -5,10 +5,12 @@
 
 <div id="docs" class="full_page_background">
 
-  <h1>DocumentCloud APIs</h1>
+  <h1>The DocumentCloud API</h1>
 
   <p>
-    Search the full DocumentCloud index or batch upload your documents directly with our APIs, no key required. Performing searches from JavaScript is fair game, but please don't hammer the API. 
+    Search the full DocumentCloud index or batch upload your documents directly 
+    with our API, no key required. Performing searches from JavaScript is fair 
+    game, but please be considerate, and don't hammer our servers. 
   </p>
   
   <h2>GET /api/search.json</h2>
@@ -139,6 +141,30 @@
       :access => 'private'
     )
     </pre>
+    
+    
+  <h2>GET /api/projects.json</h2>
+  
+  <p>
+    Retrieve a list of project names and document ids. You must
+    use HTTP Basic Authentication (preferably over SSL) in order to make this 
+    request. The projects listed belong to the authenticated account.
+  </p>
+  
+  <h3>Example Response</h3>
+  
+  <pre>
+{"projects": [
+  { 
+    "id": 5,
+    "title": "Literate Programming",
+    "document_ids":[
+      "103-literate-programming-a-practioners-view",
+      "104-reverse-literate-programming"
+    ] 
+  },
+  ...
+]}</pre>
 
 
 
