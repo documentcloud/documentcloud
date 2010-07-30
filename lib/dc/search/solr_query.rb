@@ -141,9 +141,9 @@ module DC
       # Build the Solr needed to pass options to the MoreLikeThis DSL
       def build_related
         @solr.build do
-          minimum_term_frequency 50
-          minimum_document_frequency 3
-          minimum_word_length 5
+          minimum_term_frequency 15
+          minimum_document_frequency 2
+          minimum_word_length 8
           boost_by_relevance true
         end
       end
