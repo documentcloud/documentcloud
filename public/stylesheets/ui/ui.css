@@ -317,6 +317,9 @@ textarea.text_area {
     overflow: hidden;
     border-top: 1px solid #333;
   }
+    .menu_content .menu_item.indent {
+      padding-left: 25px;
+    }
     .menu_content .menu_item.divider {
       border-bottom: 1px solid #555;
     }

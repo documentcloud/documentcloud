@@ -72,4 +72,12 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     }, this), {});
   }
 
+}, {
+
+  open : function(doc) {
+    var docs = Documents.selected();
+    docs = !doc || _.include(docs, doc) ? docs : [doc];
+    new dc.ui.DocumentDialog(docs);
+  }
+
 });

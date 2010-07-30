@@ -115,7 +115,6 @@ dc.ui.Toolbar = dc.View.extend({
     var floating = $(window).scrollTop() > $(this.el).offset().top - 30;
     if (this._floating == floating) return;
     $(document.body).toggleClass('floating_toolbar', this._floating = floating);
-    if (!floating) $(document.body).trigger('click');
   },
 
   _subtitle : function(count) {
@@ -190,13 +189,14 @@ dc.ui.Toolbar = dc.View.extend({
       label   : 'Edit',
       onOpen  : this._enableMenuItems,
       items   : [
-        {title : 'New Document',         attrs: {'class' : 'plus'},     onClick : function(){ dc.app.uploader.open(); }},
-        {title : 'Edit Title',           attrs: {'class' : 'singular'}, onClick : this.editTitle},
-        {title : 'Edit Description',     attrs: {'class' : 'singular'}, onClick : this.editDescription},
-        {title : 'Edit Source',          attrs: {'class' : 'multiple'}, onClick : this.editSource},
-        {title : 'Edit Related Article', attrs: {'class' : 'multiple'}, onClick : this.editRelatedArticle},
-        {title : 'Edit Access Level',    attrs: {'class' : 'multiple'}, onClick : this.editAccess},
-        {title : 'Delete Documents',     attrs: {'class' : 'multiple warn'}, onClick : this._deleteSelectedDocuments}
+        {title : 'New Document',         attrs: {'class' : 'plus'},            onClick : function(){ dc.app.uploader.open(); }},
+        {title : 'Edit All Fields',      attrs: {'class' : 'multiple'},        onClick : function(){ dc.ui.DocumentDialog.open(); }},
+        {title : 'Edit Title',           attrs: {'class' : 'singular indent'}, onClick : this.editTitle},
+        {title : 'Edit Description',     attrs: {'class' : 'singular indent'}, onClick : this.editDescription},
+        {title : 'Edit Source',          attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
+        {title : 'Edit Related Article', attrs: {'class' : 'multiple indent'}, onClick : this.editRelatedArticle},
+        {title : 'Edit Access Level',    attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
+        {title : 'Delete Documents',     attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
       ]
     });
   },

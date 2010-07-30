@@ -105,9 +105,7 @@ dc.ui.Document = dc.View.extend({
   // Open an edit dialog for the currently selected documents, if this
   // document is among them. Otherwise, open the dialog just for this document.
   openDialog : function() {
-    var docs = Documents.selected();
-    docs = _.include(docs, this.model) ? docs : [this.model];
-    new dc.ui.DocumentDialog(docs);
+    dc.ui.DocumentDialog.open(this.model);
   },
 
   toggleNotes : function(e) {
