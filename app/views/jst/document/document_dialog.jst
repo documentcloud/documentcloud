@@ -39,7 +39,7 @@
   <select name="access" class="document_access attribute" id="document_edit_access">
     <option value="4">Public Access</option>
     <option value="1">Private Access</option>
-    <option value="2">Private to my Organization</option>
+    <option value="2">Private to <%= dc.app.organization.name %></option>
   </select>
   <label for="document_edit_access">
     Access Level:

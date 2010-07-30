@@ -17,7 +17,7 @@
       Source:
     </label>
   </div>
-  
+
   <div class="row draggable">
     <textarea name="description" id="document_upload_description" class="text_area content dark interface"></textarea>
     <label for="document_upload_description">
@@ -49,7 +49,7 @@
     <select name="access" class="document_access" id="document_upload_access">
       <option value="public">Public Access</option>
       <option value="private" selected="true">Private Access</option>
-      <option value="organization">Private to my Organization</option>
+      <option value="organization">Private to <%= dc.app.organization.name %></option>
     </select>
     <label for="document_upload_access">
       Access Level:

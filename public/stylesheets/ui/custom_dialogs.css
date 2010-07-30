@@ -38,15 +38,6 @@
       font-size: 14px;
       color: #999;
     }
-  #upload_dialog .controls {
-    position: absolute;
-    margin: 0;
-    right: 30px; bottom: 30px;
-    left: auto;
-  }
-    #upload_dialog .controls_inner {
-      left: auto;
-    }
 
 #no_uploads .icon {
   float: left;

@@ -133,7 +133,7 @@ dc.ui.Document = dc.View.extend({
       case dc.access.PUBLIC:       return null;
       case dc.access.PENDING:      return {className : 'spinner',    title : 'Uploading...'};
       case dc.access.ERROR:        return {className : 'alert_gray', title : 'Broken document'};
-      case dc.access.ORGANIZATION: return {className : 'lock',       title : 'Private to my organization'};
+      case dc.access.ORGANIZATION: return {className : 'lock',       title : 'Private to ' + dc.app.organization.name};
       case dc.access.PRIVATE:      return {className : 'lock',       title : 'Private'};
     }
   },
