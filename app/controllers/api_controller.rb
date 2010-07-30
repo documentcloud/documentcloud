@@ -10,7 +10,7 @@ class ApiController < ApplicationController
   before_filter :api_login_optional, :only => [:documents, :search]
   before_filter :login_required, :only => [:index]
 
-  API_OPTIONS = {:sections => false, :annotations => false}
+  API_OPTIONS = {:sections => false, :annotations => false, :access => true}
 
   def index
   end
