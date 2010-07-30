@@ -167,7 +167,9 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _enableMenuItems : function(menu) {
-    $('.menu_item:not(.plus,.always)', menu.content).toggleClass('disabled', !Documents.selectedCount);
+    $('.menu_item:not(.plus,.always)', menu.content)
+      .toggleClass('disabled', !Documents.selectedCount)
+      .attr('title', Documents.selectedCount ? '' : 'No documents selected');
     $('.singular', menu.content).toggleClass('disabled', !(Documents.selectedCount == 1));
   },
 
