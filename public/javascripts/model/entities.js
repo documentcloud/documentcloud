@@ -26,7 +26,7 @@ dc.model.EntitySet = dc.Set.extend({
 
   // Fetch a single entity across a set of visible documents.
   fetch : function(kind, value, callback) {
-    dc.ui.spinner.show('loading');
+    dc.ui.spinner.show();
     $.get('/documents/entity.json', {'ids[]' : Documents.getIds(), kind : kind, value : value}, function(resp) {
       callback(_.map(resp.entities, function(obj){ return new dc.model.Entity(obj); }));
       dc.ui.spinner.hide();

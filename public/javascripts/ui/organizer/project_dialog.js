@@ -59,7 +59,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   // ourselves as a collaborator.
   _deleteProject : function() {
     var wasOpen = Projects.selected()[0] == this.model;
-    var finish  = function(){ if (wasOpen) dc.app.searchBox.loadDefault({clear : true}); };
+    var finish  = function(){ if (wasOpen) dc.app.searcher.loadDefault({clear : true}); };
     if (!this.model.get('owner')) {
       this.model.collaborators.destroy(Accounts.current(), {
         success : _.bind(function(){ Projects.remove(this.model); finish(); }, this)

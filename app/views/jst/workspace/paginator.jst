@@ -7,11 +7,9 @@
   <%= q.total %> <%= Inflector.pluralize('document', q.total) %>
 </div>
 
-<% if (view == dc.app.searchBox) { %>
-  <div class="sorter">
-    (<%= sort_text %>)
-  </div>
-<% } %>
+<div class="sorter">
+  (<%= sort_text %>)
+</div>
 
 <div id="size_toggle"></div>
 

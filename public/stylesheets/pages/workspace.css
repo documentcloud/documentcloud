@@ -98,12 +98,6 @@ label {
     color: #000;
     padding: 25px 20px 30px;
   }
-  #search_type {
-    display: none;
-    position: absolute;
-    width: 158px;
-    right: 15px; top: 18px;
-  }
 
 #spinner {
   display: none;

@@ -23,11 +23,11 @@ dc.model.Account = dc.Model.extend({
   },
 
   openDocuments : function() {
-    dc.app.searchBox.search('account: ' + this.get('email'));
+    dc.app.searcher.search('account: ' + this.get('email'));
   },
 
   openOrganizationDocuments : function() {
-    dc.app.searchBox.search('group: ' + dc.app.organization.slug);
+    dc.app.searcher.search('group: ' + dc.app.organization.slug);
   },
 
   checkAllowedToEdit: function(resource) {

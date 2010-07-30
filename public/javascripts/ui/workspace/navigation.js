@@ -20,7 +20,7 @@ dc.ui.Navigation = dc.View.extend({
     this.tabs[dc.app.preferences.get('sidebar_tab') || 'projects'].click();
     this.bind('tab:projects', _.bind(this._saveSidebarPreference, this, 'projects'));
     this.bind('tab:entities', _.bind(this._saveSidebarPreference, this, 'entities'));
-    this.bind('tab:entities', function() { _.defer(dc.app.searchBox.loadFacets); });
+    this.bind('tab:entities', function() { _.defer(dc.app.searcher.loadFacets); });
     this.setMode('documents', 'panel_tab');
     return this;
   },

@@ -149,14 +149,14 @@ dc.ui.Toolbar = dc.View.extend({
   _openRelatedDocuments : function() {
     var docs = Documents.selected();
     if (docs.length != 1) return dc.ui.Dialog.alert("Please select a single document, in order to view related documents.");
-    dc.app.searchBox.search('related: ' + docs[0].id + '-' + docs[0].attributes().slug);
+    dc.app.searcher.search('related: ' + docs[0].id + '-' + docs[0].attributes().slug);
   },
 
   _viewEntities : function() {
     var docs = Documents.selected();
     if (!docs.length) return dc.ui.Dialog.alert("In order to view entities, please select some documents.");
     dc.app.navigation.open('entities', true);
-    dc.app.searchBox.search(_.map(docs, function(doc){ return 'docid: ' + doc.canonicalId(); }).join(' '));
+    dc.app.searcher.search(_.map(docs, function(doc){ return 'docid: ' + doc.canonicalId(); }).join(' '));
   },
 
   _openUpload : function() {

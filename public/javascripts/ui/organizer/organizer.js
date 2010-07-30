@@ -91,7 +91,7 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   showAllDocuments : function() {
-    dc.app.searchBox.search('');
+    dc.app.searcher.search('');
   },
 
   showYourDocuments : function() {
@@ -117,18 +117,18 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   _filterFacet : function(e) {
-    dc.app.searchBox.addToSearch(this._facetStringFor(e.target));
+    dc.app.searcher.addToSearch(this._facetStringFor(e.target));
   },
 
   _removeFacet : function(e) {
     $(e.target).closest('.row').removeClass('active');
-    dc.app.searchBox.removeFromSearch(this._facetMatcherFor(e.target));
+    dc.app.searcher.removeFromSearch(this._facetMatcherFor(e.target));
     return false;
   },
 
   _loadFacet : function(e) {
     $(e.target).html('loading &hellip;');
-    dc.app.searchBox.loadFacet($(e.target).attr('data-category'));
+    dc.app.searcher.loadFacet($(e.target).attr('data-category'));
   },
 
   _showLess : function(e) {

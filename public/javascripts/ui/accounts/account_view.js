@@ -100,12 +100,12 @@ dc.ui.AccountView = dc.View.extend({
     var options = {success : this._onSuccess, error : this._onError};
     if (this.model.isNew()) {
       if (!attributes.email) return $(this.el).remove();
-      dc.ui.spinner.show('saving');
+      dc.ui.spinner.show();
       Accounts.create(this.model, attributes, options);
     } else if (!this.model.invalid && !this.model.changedAttributes(attributes)) {
       this.setMode('display', 'view');
     } else {
-      dc.ui.spinner.show('saving');
+      dc.ui.spinner.show();
       Accounts.update(this.model, attributes, options);
     }
   },

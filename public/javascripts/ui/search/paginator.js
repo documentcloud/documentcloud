@@ -33,7 +33,6 @@ dc.ui.Paginator = dc.View.extend({
   setQuery : function(query, view) {
     this.query = query;
     this.page  = query.page;
-    this.view = view;
     $(document.body).addClass('paginated');
     this.render();
   },
@@ -68,11 +67,10 @@ dc.ui.Paginator = dc.View.extend({
     el.html('');
     if (!this.query) return this;
     el.html(JST['workspace/paginator']({
-      q : this.query,
-      sort_text : this.SORT_TEXT[this.sortOrder],
-      page_size : this.pageSize(),
-      page_count : this.pageCount(),
-      view : this.view
+      q           : this.query,
+      sort_text   : this.SORT_TEXT[this.sortOrder],
+      page_size   : this.pageSize(),
+      page_count  : this.pageCount()
     }));
     this.setCallbacks();
     return this;
@@ -125,12 +123,7 @@ dc.ui.Paginator = dc.View.extend({
 
   goToPage : function(page, callback) {
     page = page || this.page || 1;
-
-    if (this.view == dc.app.relatedDocumentsPanel) {
-      dc.app.relatedDocumentsPanel.search(dc.app.searchBox.value(), page, callback);
-    } else if (this.view == dc.app.searchBox) {
-      dc.app.searchBox.search(dc.app.searchBox.value(), page, callback);
-    }
+    dc.app.searcher.search(dc.app.searchBox.value(), page, callback);
   }
 
 });

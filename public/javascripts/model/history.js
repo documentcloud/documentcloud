@@ -10,7 +10,7 @@ dc.history = {
 
   // The ordered list of history handlers matchers and callbacks.
   handlers : [],
-  
+
   // Every URL change fires these callbacks
   callbacks: [],
 
@@ -83,11 +83,11 @@ dc.history = {
       }
     });
     if (!matched && !hash) {
-      fallback ? fallback() : dc.app.searchBox.showHelp();
+      fallback ? fallback() : dc.app.searcher.loadDefault({showHelp : true});
     }
     this.fireCallbacks(hash);
   },
-  
+
   // Fires all callbacks after a history event is recorded
   fireCallbacks : function(hash) {
     for (var c=0, l=this.callbacks.length; c < l; c++) {

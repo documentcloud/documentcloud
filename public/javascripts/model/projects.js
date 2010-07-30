@@ -23,7 +23,7 @@ dc.model.Project = dc.Model.extend({
   },
 
   open : function() {
-    dc.app.searchBox.search(this.toSearchParam());
+    dc.app.searcher.search(this.toSearchParam());
   },
 
   documentCount : function() {

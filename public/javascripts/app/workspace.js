@@ -8,11 +8,12 @@ _.extend(dc.app.workspace, {
     this.createSubViews();
     this.renderSubViews();
     dc.history.initialize();
+    dc.app.searcher.initialize();
     if (window.RAILS_ENV == 'production') {
       dc.analytics.initialize();
       dc.analytics.register();
     }
-    dc.history.loadURL(_.bind(dc.app.searchBox.loadDefault, null, {showHelp: true}));
+    dc.history.loadURL(_.bind(dc.app.searcher.loadDefault, null, {showHelp: true}));
   },
 
   // Create all of the requisite subviews.
