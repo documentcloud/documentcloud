@@ -25,7 +25,6 @@
   .docalog textarea.content {
     float: right;
     width: 371px; height: 78px;
-    margin-bottom: 10px;
   }
   .docalog .document_access, #document_upload_file, #document_project_title {
     position: absolute;
