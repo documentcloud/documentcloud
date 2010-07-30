@@ -50,7 +50,8 @@ class ApiController < ApplicationController
   # Retrieve a document's canonical JSON.
   def documents
     return bad_request unless params[:id] and request.format.json? || request.format.js?
-    doc = Document.accessible(current_account, current_organization).find(params[:id].to_i)
+    doc = Document.accessible(current_account, current_organization).find_by_id(params[:id].to_i)
+    return not_found if doc.nil?
     @response = {'document' => doc.canonical(:access => true, :sections => true, :annotations => true) }
     return if jsonp_request?
     render :json => @response
