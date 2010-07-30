@@ -389,6 +389,7 @@ class Document < ActiveRecord::Base
     doc = ActiveSupport::OrderedHash.new
     doc['id']              = canonical_id
     doc['title']           = title
+    doc['access']          = ACCESS_NAMES[access] if options[:access]
     doc['pages']           = page_count
     doc['description']     = description
     doc['resources']       = res = ActiveSupport::OrderedHash.new

@@ -25,6 +25,8 @@ module DC
       :error        => ERROR
     }
 
+    ACCESS_NAMES = ACCESS_MAP.invert
+
   end
 
 end
