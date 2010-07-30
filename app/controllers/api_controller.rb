@@ -47,10 +47,12 @@ class ApiController < ApplicationController
     render :json => @response
   end
 
-  # Retrieve a document from
+  # Retrieve a document's canonical JSON.
   def documents
     return bad_request unless params[:id] and request.format.json? || request.format.js?
-
+    doc = Document.accessible(current_account, current_organization).find(params[:id].to_i)
+    @response = {'document' => doc.canonical(:sections => true, :annotations => true) }
+    render :json => @response
   end
 
   # Retrieve a listing of your projects, including document id.
