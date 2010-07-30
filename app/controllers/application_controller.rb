@@ -2,10 +2,11 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  helper :all # include all helpers, all the time
-  # protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  # Scrub sensitive parameters from your log
+  BasicAuth = ActionController::HttpAuthentication::Basic
+
+  helper :all
+
   filter_parameter_logging :password
 
   before_filter :set_ssl
@@ -53,7 +54,8 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_in?
-    session['account_id'] && session['organization_id']
+    (@current_account && @current_organization) ||
+      (session['account_id'] && session['organization_id'])
   end
 
   def login_required
@@ -66,6 +68,12 @@ class ApplicationController < ActionController::Base
       @current_organization = @current_account.organization
       true
     end
+  end
+
+  def api_login_optional
+    return if BasicAuth.authorization(request).blank?
+    return unless @current_account = Account.log_in(*BasicAuth.user_name_and_password(request))
+    @current_organization = @current_account.organization
   end
 
   def admin_required
