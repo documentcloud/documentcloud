@@ -3,7 +3,7 @@
   @bodyclass    = "documentation"
 %>
 
-<div id="docs" class="full_page_background">
+<div id="docs" class="">
 
   <h1>The DocumentCloud API</h1>
 
@@ -141,6 +141,39 @@
       :access => 'private'
     )
     </pre>
+    
+    
+  <h2>GET /api/documents/[id].json</h2>
+
+  <p>
+    Retrieve the canonical JSON representation of a particular document, as 
+    specified by the document id (usually something like: <b>218-madoff-sec-report</b>).
+  </p>
+
+  <h3>Example Response</h3>
+
+  <pre>
+{
+   "document":{
+      "id":"207-american-academy-v-napolitano",
+      "title":"American Academy v. Napolitano",
+      "pages":52,
+      "description":"Appeal from the judgment of the United States District Court, granting summary judgment...",
+      "resources":{
+         "pdf":"http://s3.documentcloud.org/documents/207/american-academy-v-napolitano.pdf",
+         "text":"http://s3.documentcloud.org/documents/207/american-academy-v-napolitano.txt",
+         "thumbnail":"http://s3.documentcloud.org/documents/207/pages/american-academy-v-napolitano-p1-thumbnail.gif",
+         "search":"http://s3.documentcloud.org/207/search.json?q={query}",
+         "page":{
+            "text":"http://s3.documentcloud.org/documents/207/pages/american-academy-v-napolitano-p{page}.txt",
+            "image":"http://s3.documentcloud.org/asset_store/documents/207/pages/american-academy-v-napolitano-p{page}-{size}.gif"
+         },
+         "related_article":"http://example.com/article.html"
+      },
+      "sections":[],
+      "annotations":[]
+   }
+}</pre>
     
     
   <h2>GET /api/projects.json</h2>

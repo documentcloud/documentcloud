@@ -2,6 +2,7 @@
   position: static;
   padding: 30px 25px 30px 50px;
   color: #555;
+  background: #fff;
 }
   #docs h1, #docs h2, #docs h3 {
     font: 25px/50px Helvetica, Arial;
