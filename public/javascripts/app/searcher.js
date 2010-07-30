@@ -66,7 +66,7 @@ dc.app.searcher.extend({
     this._afterSearch = callback;
     this.box.startSearch();
     var params = _.extend(dc.app.paginator.queryParams(), {q : query});
-    if (this.flags.related && !this._relatedDoc)  params.include_source_document = true;
+    if (this.flags.related && !this.relatedDoc)  params.include_source_document = true;
     if (dc.app.navigation.isOpen('entities'))     params.include_facets = true;
     if (this.page)                                params.page = this.page;
     $.get(this.DOCUMENTS_URL, params, this._loadSearchResults, 'json');
@@ -120,9 +120,9 @@ dc.app.searcher.extend({
   },
 
   populateRelatedDocument : function() {
-    this._relatedDoc = null;
+    this.relatedDoc = null;
     var id = parseInt(dc.app.SearchParser.extractRelatedDocumentId(this.box.value()), 10);
-    this._relatedDoc = Documents.get(id);
+    this.relatedDoc = Documents.get(id);
   },
 
   // After the initial search results come back, send out a request for the
@@ -135,8 +135,8 @@ dc.app.searcher.extend({
       m.index = i;
       return new dc.model.Document(m);
     }));
-    if (this.flags.related && !this._relatedDoc) {
-      this._relatedDoc = new dc.model.Document(resp.source_document);
+    if (this.flags.related && !this.relatedDoc) {
+      this.relatedDoc = new dc.model.Document(resp.source_document);
     }
     this.box.doneSearching(resp.documents.length == 0);
     this.flags.outstandingSearch = false;
