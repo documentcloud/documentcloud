@@ -89,6 +89,11 @@ class AdminController < ApplicationController
     json nil
   end
 
+  def optimize_solr
+    RestClient.get Sunspot.config.solr.url + '/update?optimize=true&waitFlush=false'
+    json nil
+  end
+
   def force_backup
     DC::Store::BackgroundJobs.backup_database
     json nil

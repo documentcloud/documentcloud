@@ -1,4 +1,4 @@
-dc.ui.Statistics = dc.View.extend({
+dc.ui.Admin = dc.View.extend({
 
   GRAPH_OPTIONS : {
     xaxis     : {mode : 'time', minTickSize: [1, "day"]},
@@ -44,7 +44,7 @@ dc.ui.Statistics = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, 'renderCharts', 'launchWorker', 'reprocessFailedDocument', 'vacuumAnalyze');
+    _.bindAll(this, 'renderCharts', 'launchWorker', 'reprocessFailedDocument', 'vacuumAnalyze', 'optimizeSolr');
     stats.daily_documents_series = this._series(stats.daily_documents, 'Document');
     stats.daily_pages_series = this._series(stats.daily_pages, 'Page');
     this._tooltip = new dc.ui.Tooltip();
@@ -115,6 +115,12 @@ dc.ui.Statistics = dc.View.extend({
   vacuumAnalyze : function() {
     $.post('/admin/vacuum_analyze', function() {
       dc.ui.Dialog.alert('The vacuum background job was started successfully.');
+    });
+  },
+
+  optimizeSolr : function() {
+    $.post('/admin/optimize_solr', function() {
+      dc.ui.Dialog.alert('The Solr optimization task was started successfully.');
     });
   },
 
@@ -210,6 +216,7 @@ dc.ui.Statistics = dc.View.extend({
         {title : 'Reprocess Last Failed Doc', onClick : this.reprocessFailedDocument},
         {title : 'Force a DB Backup to S3',   onClick : this.forceBackup},
         {title : 'Vacuum Analyze the DB',     onClick : this.vacuumAnalyze},
+        {title : 'Optimize the Solr Index',   onClick : this.optimizeSolr},
         {title : 'Launch a Worker Instance',  onClick : this.launchWorker}
       ]
     });
