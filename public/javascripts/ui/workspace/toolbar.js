@@ -153,7 +153,7 @@ dc.ui.Toolbar = dc.View.extend({
 
   _viewEntities : function() {
     var docs = Documents.selected();
-    if (!docs.length) return dc.ui.Dialog.alert("In order to view entities, please select some documents.");
+    if (!docs.length) return dc.app.navigation.open('entities');
     dc.app.navigation.open('entities', true);
     dc.app.searcher.search(_.map(docs, function(doc){ return 'docid: ' + doc.canonicalId(); }).join(' '));
   },
@@ -167,7 +167,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _enableMenuItems : function(menu) {
-    $('.menu_item:not(.plus)', menu.content).toggleClass('disabled', !Documents.selectedCount);
+    $('.menu_item:not(.plus,.always)', menu.content).toggleClass('disabled', !Documents.selectedCount);
     $('.singular', menu.content).toggleClass('disabled', !(Documents.selectedCount == 1));
   },
 
@@ -206,8 +206,8 @@ dc.ui.Toolbar = dc.View.extend({
       label   : 'Analyze',
       onOpen  : this._enableMenuItems,
       items   : [
-        {title: 'View Entities', onClick : this._viewEntities},
-        {title: 'View Timeline', onClick : this._openTimeline},
+        {title: 'View Entities',          attrs: {'class' : 'always'},   onClick : this._viewEntities},
+        {title: 'View Timeline',                                         onClick : this._openTimeline},
         {title: 'Find Related Documents', attrs: {'class' : 'singular'}, onClick : this._openRelatedDocuments}
       ]
     });
