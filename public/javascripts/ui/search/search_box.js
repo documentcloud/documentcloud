@@ -96,6 +96,9 @@ dc.ui.SearchBox = dc.View.extend({
     if (dc.app.searcher.flags.related) {
       this.titleBox.text(Inflector.pluralize('Document', dc.app.paginator.query.total) +
       ' Related to "' + Inflector.truncate(this.searcher.relatedDoc.get('title'), 100) + '"');
+    } else if (dc.app.searcher.flags.specific) {
+      var count = dc.app.paginator.query.total;
+      this.titleBox.text(count + ' ' + Inflector.pluralize('Document', count));
     }
     if (empty) {
       $(document.body).setMode('empty', 'search');

@@ -54,7 +54,8 @@ dc.app.searcher.extend({
   search : function(query, pageNumber, callback) {
     dc.app.navigation.open('documents');
     this.box.value(query);
-    this.flags.related = query.indexOf('related:') >= 0;
+    this.flags.related  = query.indexOf('related:') >= 0;
+    this.flags.specific = query.indexOf('docid:') >= 0;
     this.flags.hasEntities = false;
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.fragment = 'search/' + encodeURIComponent(query);
@@ -66,9 +67,9 @@ dc.app.searcher.extend({
     this._afterSearch = callback;
     this.box.startSearch();
     var params = _.extend(dc.app.paginator.queryParams(), {q : query});
-    if (this.flags.related && !this.relatedDoc)  params.include_source_document = true;
-    if (dc.app.navigation.isOpen('entities'))     params.include_facets = true;
-    if (this.page)                                params.page = this.page;
+    if (this.flags.related && !this.relatedDoc) params.include_source_document = true;
+    if (dc.app.navigation.isOpen('entities'))   params.include_facets = true;
+    if (this.page)                              params.page = this.page;
     $.get(this.DOCUMENTS_URL, params, this._loadSearchResults, 'json');
   },
 
@@ -121,7 +122,7 @@ dc.app.searcher.extend({
 
   populateRelatedDocument : function() {
     this.relatedDoc = null;
-    var id = parseInt(dc.app.SearchParser.extractRelatedDocumentId(this.box.value()), 10);
+    var id = parseInt(dc.app.SearchParser.extractRelatedDocId(this.box.value()), 10);
     this.relatedDoc = Documents.get(id);
   },
 

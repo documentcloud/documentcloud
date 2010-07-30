@@ -4,6 +4,8 @@ dc.app.SearchParser = {
 
   FIRST_PROJECT :  /project:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
+  FIRST_DOC     :  /docid:\s?(\d+-\S+)/i,
+
   FIRST_ACCOUNT :  /account:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
   FIRST_GROUP   :  /group:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
@@ -42,9 +44,14 @@ dc.app.SearchParser = {
     }).reverse();
   },
 
-  extractRelatedDocumentId : function(query) {
+  extractRelatedDocId : function(query) {
     var relatedDocument = query.match(this.FIRST_RELATED);
     return relatedDocument && (relatedDocument[2] || relatedDocument[3] || relatedDocument[4]);
+  },
+
+  extractSpecificDocId : function(query) {
+    var id = query.match(this.FIRST_DOC);
+    return id && id[1];
   },
 
   searchType : function(query) {
