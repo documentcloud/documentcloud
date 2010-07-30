@@ -12,14 +12,14 @@ dc.ui.Toolbar = dc.View.extend({
   constructor : function(options) {
     this._floating = false;
     this.base(options);
-    _.bindAll(this, '_updateSelectedDocuments', '_addProjectWithDocuments',
+    _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'checkFloat',
       '_openTimeline', '_viewEntities');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
     this.analyzeMenu      = this._createAnalyzeMenu();
-    this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments, onAdd : this._addProjectWithDocuments});
+    this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments});
   },
 
   render : function() {
@@ -126,13 +126,6 @@ dc.ui.Toolbar = dc.View.extend({
     var removal = project.containsAny(docs);
     removal ? project.removeDocuments(docs) : project.addDocuments(docs);
     this.notifyProjectChange(project.get('title'), docs.length, removal);
-  },
-
-  _addProjectWithDocuments : function(title) {
-    var ids = Documents.selectedIds();
-    var project = new dc.model.Project({title : title, annotation_count : 0, document_ids : ids.join(',')});
-    Projects.create(project, null, {error : function() { Projects.remove(project); }});
-    this.notifyProjectChange(title, ids.length);
   },
 
   _deleteSelectedDocuments : function() {

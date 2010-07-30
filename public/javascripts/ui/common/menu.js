@@ -106,13 +106,6 @@ dc.ui.Menu = dc.View.extend({
   deselect : function() {
     if (this.selectedItem) this.selectedItem.menuEl.removeClass('selected');
     this.selectedItem = null;
-  },
-
-  clickSelectedItem : function() {
-    this.content.forceHide();
-    if (this.selectedItem) return this.selectedItem.onClick();
-    var val = this.filter.val();
-    if (val) this.options.onAdd(val);
   }
 
 });
