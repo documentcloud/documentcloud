@@ -112,7 +112,8 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   checkFloat : function() {
-    var floating = $(window).scrollTop() > $(this.el).offset().top - 30;
+    var open = dc.app.navigation.isOpen('documents');
+    var floating = open && ($(window).scrollTop() > $(this.el).offset().top - 30);
     if (this._floating == floating) return;
     $(document.body).toggleClass('floating_toolbar', this._floating = floating);
   },
