@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>247</string>
+	<key>AMApplicationVersion</key>
+	<string>2.1</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<false/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.0</string>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>outputDirectory</key>
+					<dict>
+						<key>isPathPopUp</key>
+						<true/>
+						<key>variableUUIDsInMenu</key>
+						<array/>
+					</dict>
+					<key>outputName</key>
+					<dict/>
+					<key>outputNamingMode</key>
+					<dict/>
+					<key>replaceExistingOutput</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>AMRequiredResources</key>
+				<array/>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/PDF to Images.action</string>
+				<key>ActionName</key>
+				<string>PDF to Images</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>outputDirectory</key>
+					<string>~/Desktop</string>
+					<key>outputName</key>
+					<string>PDF to Images Output</string>
+					<key>outputNamingMode</key>
+					<integer>0</integer>
+					<key>replaceExistingOutput</key>
+					<true/>
+				</dict>
+				<key>Application</key>
+				<array>
+					<string>Preview</string>
+				</array>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.PDFtoImages</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<true/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryPDFs</string>
+				</array>
+				<key>Class Name</key>
+				<string>SeparatePages</string>
+				<key>InputUUID</key>
+				<string>C43EBDA8-95E6-465C-BF18-E5E9BFEB0EA0</string>
+				<key>Keywords</key>
+				<array/>
+				<key>OutputUUID</key>
+				<string>909A177B-D988-4A7B-A3A8-898A2059E9DE</string>
+				<key>UUID</key>
+				<string>7C492097-DA55-471B-A89C-2EFD8CE5168A</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Preview</string>
+				</array>
+				<key>arguments</key>
+				<dict/>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>309.500000:619.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/PDF to Images.action/Contents/Resources/English.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<false/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.0</string>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>outputDirectory</key>
+					<dict>
+						<key>isPathPopUp</key>
+						<true/>
+						<key>variableUUIDsInMenu</key>
+						<array/>
+					</dict>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>AMRequiredResources</key>
+				<array/>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Extract PDF Text.action</string>
+				<key>ActionName</key>
+				<string>Extract PDF Text</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>addFooterFlag</key>
+					<false/>
+					<key>addHeaderFlag</key>
+					<false/>
+					<key>footerTemplate</key>
+					<string>--- ##Page ---</string>
+					<key>headerTemplate</key>
+					<string>--- ##Page ---</string>
+					<key>outputDirectory</key>
+					<string>~/Desktop</string>
+					<key>outputName</key>
+					<string>Extract Text Output</string>
+					<key>outputNamingMode</key>
+					<integer>0</integer>
+					<key>outputTextKind</key>
+					<integer>0</integer>
+					<key>replaceExistingOutput</key>
+					<true/>
+				</dict>
+				<key>Application</key>
+				<array>
+					<string>Preview</string>
+				</array>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.ExtractPDFText</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<true/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryPDFs</string>
+				</array>
+				<key>Class Name</key>
+				<string>ExtractText</string>
+				<key>InputUUID</key>
+				<string>595D9EDC-CEAF-42EA-BA06-0F24B2C1936C</string>
+				<key>Keywords</key>
+				<array/>
+				<key>OutputUUID</key>
+				<string>0188304F-D097-4986-8E80-77B989651F34</string>
+				<key>UUID</key>
+				<string>6DB05E26-854F-48E1-B003-EC79283935EE</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Preview</string>
+				</array>
+				<key>arguments</key>
+				<dict/>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>309.500000:435.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Extract PDF Text.action/Contents/Resources/English.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict>
+		<key>9AF13841-1BC1-45D7-B0BC-8C3F5B371484</key>
+		<dict>
+			<key>from</key>
+			<string>7C492097-DA55-471B-A89C-2EFD8CE5168A - 7C492097-DA55-471B-A89C-2EFD8CE5168A</string>
+			<key>to</key>
+			<string>6DB05E26-854F-48E1-B003-EC79283935EE - 6DB05E26-854F-48E1-B003-EC79283935EE</string>
+		</dict>
+	</dict>
+	<key>state</key>
+	<dict>
+		<key>AMLogTabViewSelectedIndex</key>
+		<integer>1</integer>
+		<key>libraryState</key>
+		<dict>
+			<key>actionsMajorSplitViewState</key>
+			<dict>
+				<key>expandedPosition</key>
+				<real>0.0</real>
+				<key>subviewState</key>
+				<array>
+					<string>0.000000, 0.000000, 381.000000, 515.000000, NO</string>
+					<string>0.000000, 516.000000, 381.000000, 239.000000, NO</string>
+				</array>
+			</dict>
+			<key>actionsMinorSplitViewState</key>
+			<dict>
+				<key>expandedPosition</key>
+				<real>0.0</real>
+				<key>subviewState</key>
+				<array>
+					<string>0.000000, 0.000000, 163.000000, 515.000000, NO</string>
+					<string>164.000000, 0.000000, 217.000000, 515.000000, NO</string>
+				</array>
+			</dict>
+			<key>variablesMajorSplitViewState</key>
+			<dict>
+				<key>expandedPosition</key>
+				<real>0.0</real>
+				<key>subviewState</key>
+				<array>
+					<string>0.000000, 0.000000, 381.000000, 555.000000, NO</string>
+					<string>0.000000, 556.000000, 381.000000, 199.000000, NO</string>
+				</array>
+			</dict>
+			<key>variablesMinorSplitViewState</key>
+			<dict>
+				<key>expandedPosition</key>
+				<real>0.0</real>
+				<key>subviewState</key>
+				<array>
+					<string>0.000000, 0.000000, 163.000000, 555.000000, NO</string>
+					<string>164.000000, 0.000000, 217.000000, 555.000000, NO</string>
+				</array>
+			</dict>
+		</dict>
+		<key>majorSplitViewState</key>
+		<dict>
+			<key>expandedPosition</key>
+			<real>0.0</real>
+			<key>subviewState</key>
+			<array>
+				<string>0.000000, 0.000000, 381.000000, 800.000000, NO</string>
+				<string>382.000000, 0.000000, 619.000000, 800.000000, NO</string>
+			</array>
+		</dict>
+		<key>minorSplitViewState</key>
+		<dict>
+			<key>expandedPosition</key>
+			<real>0.0</real>
+			<key>subviewState</key>
+			<array>
+				<string>0.000000, 0.000000, 619.000000, 609.000000, NO</string>
+				<string>0.000000, 619.000000, 619.000000, 162.000000, NO</string>
+			</array>
+		</dict>
+		<key>windowFrame</key>
+		<string>{{249, 1}, {1000, 877}}</string>
+		<key>workflowViewScrollPosition</key>
+		<string>{{0, 0}, {619, 609}}</string>
+	</dict>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.workflow</string>
+	</dict>
+</dict>
+</plist>
