@@ -2,11 +2,10 @@
 # in-document searches can be performed.
 class Page < ActiveRecord::Base
 
-  IMAGE_SIZES = {
-    'normal'    => '700x',
-    'large'     => '1000x',
-    'thumbnail' => '60x75!'
-  }
+  IMAGE_SIZES = ActiveSupport::OrderedHash.new
+  IMAGE_SIZES['large']      = '1000x'
+  IMAGE_SIZES['normal']     = '700x'
+  IMAGE_SIZES['thumbnail']  = '60x75!'
 
   MAX_PAGE_RESULTS = 1000
 
