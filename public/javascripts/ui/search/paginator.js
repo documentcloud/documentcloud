@@ -4,6 +4,7 @@ dc.ui.Paginator = dc.View.extend({
   MINI_PAGE_SIZE    : 30,
 
   SORT_TEXT : {
+    score       : 'by relevance',
     title       : 'by title',
     created_at  : 'by date',
     source      : 'by source'
@@ -27,7 +28,7 @@ dc.ui.Paginator = dc.View.extend({
   constructor : function() {
     this.base();
     this.setSize(dc.app.preferences.get('paginator_mini') || false);
-    this.sortOrder = dc.app.preferences.get('sort_order') || 'created_at';
+    this.sortOrder = dc.app.preferences.get('sort_order') || 'score';
   },
 
   setQuery : function(query, view) {
@@ -92,6 +93,7 @@ dc.ui.Paginator = dc.View.extend({
 
   chooseSort : function() {
     dc.ui.Dialog.choose('Order Documents By&hellip;', [
+      {text : 'Relevance',      value : 'score',      selected : this.sortOrder == 'score'},
       {text : 'Date Uploaded',  value : 'created_at', selected : this.sortOrder == 'created_at'},
       {text : 'Title',          value : 'title',      selected : this.sortOrder == 'title'},
       {text : 'Source',         value : 'source',     selected : this.sortOrder == 'source'}

@@ -60,16 +60,17 @@ module DC
         build_attributes   if     has_attributes? && !@related
         build_facets       if     @include_facets
         build_access       unless @unrestricted
-        page      = @page
-        size      = @facet ? 0 : @page_size
-        order     = @order.to_sym
-        direction = order == :created_at ? :desc : :asc
+        page       = @page
+        size       = @facet ? 0 : @page_size
+        order      = @order.to_sym
+        direction  = (order == :created_at || order == :score) ? :desc : :asc
         pagination = {:page => page, :per_page => size}
         pagination = EMPTY_PAGINATION if @exclude_documents
 
         related = @related
         @solr.build do
           order_by  order, direction
+          order_by  :created_at, :desc if order != :created_at
           paginate  pagination
           data_accessor_for(Document).include = [:organization, :account] unless related
         end
