@@ -51,6 +51,10 @@ body.workspace {
 #organizer .box {
   background-image: url(/images/embed/ui/box_back_wide.png);
 }
+#account_list img.avatar,
+.collaborator_list img.avatar {
+  position: static;
+}
 body.minidocs #document_list .document {
   margin-bottom: 0px;
 }

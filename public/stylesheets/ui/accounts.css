@@ -38,8 +38,7 @@
       vertical-align: middle;
       white-space: nowrap;
       border-bottom: 1px solid #222;
-      font-size: 11px; line-height: 11px;
-      height: 25px;
+      font-size: 11px; line-height: 25px;
       color: #ccc;
     }
       #account_list .first, .collaborator_list .first { width: 0%; padding: 0; }
@@ -56,6 +55,8 @@
 }
 #account_list img.avatar,
 .collaborator_list img.avatar {
+  position: relative;
+  top: 4px;
   border: 1px solid #555;
 }
 #account_list .text_input {
