@@ -21,6 +21,8 @@
   width: 800px;
 }
   #account_list .custom {
+    max-height: 323px;
+    overflow: auto;
     padding: 0;
     margin-bottom: 15px;
   }
