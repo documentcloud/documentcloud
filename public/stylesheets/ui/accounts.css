@@ -22,7 +22,7 @@
 }
   #account_list .custom {
     max-height: 323px;
-    overflow: auto;
+    overflow-y: auto; overflow-x: hidden;
     padding: 0;
     margin-bottom: 15px;
   }
