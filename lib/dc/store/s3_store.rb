@@ -122,7 +122,7 @@ module DC
         begin
           attempts += 1
           bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access], headers)
-        rescue Exception => e
+        rescue RightAws::AwsError, Exception => e
           sleep 10
           @s3 = create_s3
           @bucket = s3.bucket(BUCKET_NAME)
