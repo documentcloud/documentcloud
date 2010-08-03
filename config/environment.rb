@@ -58,6 +58,9 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
+# Tell RightAWS to always reset the connection after failure.
+RightAws::AWSErrorHandler.close_on_4xx_probability = 100
+
 RightAws::RightAWSParser.xml_lib = 'libxml'
 ActiveRecord::Base.include_root_in_json = false
 ActiveSupport::JSON.backend = 'JSONGem'
