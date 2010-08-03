@@ -66,7 +66,7 @@ class DocumentImport < CloudCrowd::Action
     Dir['text/*.txt'].length.times do |i|
       path = "text/#{document.slug}_#{i + 1}.txt"
       next unless File.exists?(path)
-      text = @iconv.iconv(File.read(path))
+      text = iconv.iconv(File.read(path))
       save_page_text(text, i + 1)
     end
   end
@@ -77,7 +77,7 @@ class DocumentImport < CloudCrowd::Action
     Dir['text/*.pdf'].length.times do |i|
       path = "text/#{document.slug}_#{i + 1}.pdf"
       next unless File.exists?(path)
-      text = @iconv.iconv(DC::Import::TextExtractor.new(path).text_from_ocr)
+      text = iconv.iconv(DC::Import::TextExtractor.new(path).text_from_ocr)
       save_page_text(text, i + 1)
     end
   end
