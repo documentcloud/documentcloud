@@ -17,6 +17,7 @@ Rails::Initializer.run do |config|
   require 'digest/md5'
   require 'tmpdir'
   require 'fileutils'
+  require 'iconv'
 
   # Gems:
   config.gem 'json',                  :version => '>= 1.1.9'
