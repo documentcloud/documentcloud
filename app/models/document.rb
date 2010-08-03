@@ -109,18 +109,19 @@ class Document < ActiveRecord::Base
   def self.upload(params, account, organization)
     access = params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE
     doc = self.create!(
-      :title            => params[:title],
-      :source           => params[:source],
-      :description      => params[:description],
       :organization_id  => organization.id,
       :account_id       => account.id,
       :access           => DC::Access::PENDING,
       :page_count       => 0
     )
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file]) do |path|
-      DC::Store::AssetStore.new.save_pdf(doc, path, access)
+      title = Docsplit.extract_title(path)
+      doc.update_attributes({:title => title}) if title.present?
+      Thread.new do
+        DC::Store::AssetStore.new.save_pdf(doc, path, access)
+        doc.queue_import(access)
+      end
     end
-    doc.queue_import(access)
     doc.reload
   end
 

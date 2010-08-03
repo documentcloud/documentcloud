@@ -25,6 +25,17 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     }));
     $('.cancel', this.el).text('Close');
     $('.ok', this.el).text('Upload');
+    $('.document_upload_browse').uploadify({
+      uploader     : '/flash/uploadify.swf',
+      script       : '/import/upload_document',
+      auto         : true,
+      multi        : true,
+      wmode        : 'transparent',
+      fileDataName : 'file',
+      scriptData   : { 
+        'session_key' : dc.app.cookies.get('document_cloud_session')
+      }
+    });
     return this;
   },
 

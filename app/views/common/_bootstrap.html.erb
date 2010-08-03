@@ -2,6 +2,7 @@
 window.RAILS_ENV = '<%= RAILS_ENV %>';
 window.SERVER_ROOT = '<%= DC.server_root %>';
 <% if @current_account %>
+  dc.app.sessionId    = '<%= session.session_id %>';
   dc.app.hasDocuments = <%= @has_documents.to_json %>;
   dc.app.organization = <%= @current_organization.to_json %>;
   dc.app.accountId    = <%= @current_account.id %>;

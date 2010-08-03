@@ -10,6 +10,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 SECRETS   = YAML.load_file("#{Rails.root}/config/secrets.yml")[RAILS_ENV]
 DC_CONFIG = YAML.load_file("#{Rails.root}/config/document_cloud.yml")[RAILS_ENV]
 
+
 # Settings in config/initializers take precedence over this.
 Rails::Initializer.run do |config|
 
@@ -33,6 +34,9 @@ Rails::Initializer.run do |config|
   config.gem 'sunspot_rails',         :version => '>= 1.1.0',       :lib => 'sunspot/rails'
   config.gem 'rdiscount',             :version => '>= 1.6.5'
   config.gem 'fastercsv',             :version => '>= 1.5.3'
+
+  # Middleware
+  config.load_paths << "#{RAILS_ROOT}/app/middleware"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
