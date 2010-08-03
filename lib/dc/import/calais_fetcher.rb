@@ -9,11 +9,17 @@ module DC
       MAX_TEXT_SIZE = 95000
 
       # Fetch the RDF from OpenCalais, splitting it into chunks small enough
-      # for Calais to swallow.
+      # for Calais to swallow. Run the chunks in parallel.
       def fetch_rdf(text)
-        text   = text.mb_chars
-        chunks = split_text(text)
-        chunks.map {|chunk| fetch_rdf_from_calais(chunk) }
+        text    = text.mb_chars
+        chunks  = split_text(text)
+        threads, rdfs = [], []
+        chunks.each_with_index do |chunk, i|
+          thread = Thread.new { rdfs[i] = fetch_rdf_from_calais(chunk) }
+          threads.push thread
+        end
+        threads.each {|t| t.join }
+        rdfs
       end
 
       # Divide the text into chunks that pass the size limit.
