@@ -66,7 +66,7 @@ class DocumentImport < CloudCrowd::Action
     Dir['text/*.txt'].length.times do |i|
       path = "text/#{document.slug}_#{i + 1}.txt"
       next unless File.exists?(path)
-      text = iconv.iconv(File.read(path))
+      text = Iconv.iconv('ascii//ignore//translit', 'utf-8', File.read(path))
       save_page_text(text, i + 1)
     end
   end
@@ -77,7 +77,8 @@ class DocumentImport < CloudCrowd::Action
     Dir['text/*.pdf'].length.times do |i|
       path = "text/#{document.slug}_#{i + 1}.pdf"
       next unless File.exists?(path)
-      text = iconv.iconv(DC::Import::TextExtractor.new(path).text_from_ocr)
+      text = DC::Import::TextExtractor.new(path).text_from_ocr
+      text = Iconv.iconv('ascii//ignore//translit', 'utf-8', text)
       save_page_text(text, i + 1)
     end
   end
@@ -101,10 +102,6 @@ class DocumentImport < CloudCrowd::Action
 
   def asset_store
     @asset_store ||= DC::Store::AssetStore.new
-  end
-
-  def iconv
-    @iconv ||= Iconv.new("ASCII//TRANSLIT//IGNORE", "UTF8")
   end
 
   def access
