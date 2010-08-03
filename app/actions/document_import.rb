@@ -21,7 +21,7 @@ class DocumentImport < CloudCrowd::Action
   end
 
   def process_images
-    Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :resize => true, :output => 'images')
+    Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :rolling => true, :output => 'images')
     Dir['images/700x/*.gif'].length.times do |i|
       image = "#{document.slug}_#{i + 1}.gif"
       asset_store.save_page_images(

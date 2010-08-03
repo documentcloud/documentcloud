@@ -130,9 +130,6 @@
     body.minidocs #document_list .document .metalines {
       display: none;
     }
-    .document.pending_access .page_count {
-      display: none;
-    }
   .document .description {
     font: 13px/18px Georgia;
     color: #555;
