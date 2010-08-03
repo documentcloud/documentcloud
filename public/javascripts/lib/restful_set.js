@@ -32,13 +32,17 @@ dc.model.RESTfulSet = dc.Set.extend({
   // Destroy a model on the server and remove it from the set.
   destroy : function(model, options) {
     options = options || {};
+    this.remove(model);
     $.ajax({
       url       : '/' + this.resource + '/' + model.id,
       type      : 'POST',
       data      : {_method : 'delete'},
       dataType  : 'json',
-      success   : _.bind(function(resp) { this.remove(model); if (options.success) options.success(model, resp); }, this),
-      error     : _.bind(this._handleError, this, model, options.error, null)
+      success   : function(resp) { if (options.success) options.success(model, resp); },
+      error     : _.bind(function(resp) {
+        this.add(model);
+        this._handleError(model, options.error, null, resp);
+      }, this)
     });
   },
 
