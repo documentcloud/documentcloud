@@ -100,7 +100,6 @@
             <td>Title</td>
             <td>Contributor</td>
             <td>Organization</td>
-            <td>Source</td>
             <td>Pages</td>
             <td></td>
           </thead>
@@ -112,7 +111,6 @@
                 <td><%= doc.get('public') ? Inflector.truncate(doc.get('title') || '', 50) : '<i>private</i>' %></td>
                 <td><%= doc.get('account_name') %></td>
                 <td><%= doc.get('organization_name') %></td>
-                <td><%= doc.get('public') ? Inflector.truncate(doc.get('source') || '', 25) : '<i>private</i>' %></td>
                 <td><%= doc.get('page_count') %></td>
                 <td class="last"></td>
               </tr>
