@@ -1,0 +1,44 @@
+#upload_dialog .minibutton.ok {
+  padding-left: 28px;
+  padding-right: 28px;
+  width: auto;
+}
+
+#upload_dialog .upload_document_tiles {
+  margin: 0 -18px 0 0;
+  max-height: 350px;
+  overflow-y: auto;
+  padding: 0 12px 0 0;
+}
+
+#upload_dialog .row {
+  border-bottom: 1px solid #262626;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+}
+
+#upload_dialog input.error {
+  border-color: #991612;
+}
+
+#upload_dialog .upload_file {
+  font-size: 13px;
+  text-align: left;
+}
+  #upload_dialog .upload_file .upload_close {
+    background: transparent url('/images/embed/icons/cancel_search.png') no-repeat 0 0;
+    width: 11px;
+    height: 11px;
+    float: right;
+    margin: 4px 1px 0 0;
+    cursor: pointer;
+  }
+  #upload_dialog .upload_file .text_input {
+    margin-right: 0;
+  }
+  #upload_dialog .upload_file .upload_file_size {
+    font-size: 11px;
+    color: #D6D6D6;
+    padding-right: 6px;
+    white-space: nowrap;
+  }

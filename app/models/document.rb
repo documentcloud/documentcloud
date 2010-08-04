@@ -107,6 +107,7 @@ class Document < ActiveRecord::Base
 
   # Upload a new document, starting the import process.
   def self.upload(params, account, organization)
+    Rails.logger.info "UPLOOOOOOOAD Params; #{params}"
     access = params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE
     doc = self.create!(
       :organization_id  => organization.id,
@@ -114,13 +115,11 @@ class Document < ActiveRecord::Base
       :access           => DC::Access::PENDING,
       :page_count       => 0
     )
-    DC::Import::PDFWrangler.new.ensure_pdf(params[:file]) do |path|
-      title = Docsplit.extract_title(path)
+    DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
+      title = params[:title] || Docsplit.extract_title(path)
       doc.update_attributes({:title => title}) if title.present?
-      Thread.new do
-        DC::Store::AssetStore.new.save_pdf(doc, path, access)
-        doc.queue_import(access)
-      end
+      DC::Store::AssetStore.new.save_pdf(doc, path, access)
+      doc.queue_import(access)
     end
     doc.reload
   end

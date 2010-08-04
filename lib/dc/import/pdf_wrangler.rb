@@ -8,11 +8,17 @@ module DC
 
       # Make sure we're dealing with a PDF. If not, it needs to be
       # converted first. Yields the path to the converted document to a block.
-      def ensure_pdf(file)
+      def ensure_pdf(file, filename=nil)
         Dir.mktmpdir do |temp_dir|
           path = file.path
-          name = File.basename(file.original_filename).gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
+          original_filename = filename || file.original_filename
+          name = File.basename(original_filename).gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
           ext  = File.extname(name)
+          if ext == ".pdf" && File.extname(path) != ".pdf"
+            new_path = File.join(temp_dir, name)
+            FileUtils.mv(path, new_path)
+            path = new_path
+          end
           return yield(path) if ext == ".pdf"
           begin
             doc  = File.join(temp_dir, name)

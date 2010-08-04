@@ -19,7 +19,7 @@ label {
 
 #overlay {
   background: black;
-  opacity: 0.08; filter: alpha(opacity=8);
+  opacity: 0.20; filter: alpha(opacity=20);
   position: fixed;
   left: 0; right: 0; top: 0; bottom: 0;
   z-index: 100;

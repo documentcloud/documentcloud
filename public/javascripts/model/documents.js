@@ -214,3 +214,4 @@ dc.model.DocumentSet.implement(dc.model.SelectableSet);
 
 // The main set of Documents, used by the search tab.
 window.Documents = new dc.model.DocumentSet();
+window.UploadedDocuments = new dc.model.DocumentSet();

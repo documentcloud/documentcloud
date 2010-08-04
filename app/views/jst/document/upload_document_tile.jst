@@ -1,0 +1,27 @@
+<div class="row draggable queued_file">
+
+  <div class="upload_file">
+    <div class="upload_close"></div>
+    <div class="text_input dark">
+      <span class="upload_file_name">
+        <%= documentFileObj['name'] %>
+      </span>
+      <span class="upload_file_size">
+        (<%= $.bytesToMB(documentFileObj['size']) %>)
+      </span>
+    </div>
+    <label for="document_upload_title">
+      Original file:
+    </label>
+  </div>
+  
+  <div class="upload_title">
+    <div class="text_input dark">
+      <input name="title" id="document_upload_title_<%= documentQueueId %>" type="text" value="<%= documentFileObj['name'].replace(/\.[^.]+$/, '') %>"/>
+    </div>
+    <label for="document_upload_title">
+      Title:
+    </label>
+  </div>
+  
+</div>
