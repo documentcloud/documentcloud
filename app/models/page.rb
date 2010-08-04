@@ -13,11 +13,9 @@ class Page < ActiveRecord::Base
   include ActionView::Helpers::SanitizeHelper
   extend ActionView::Helpers::SanitizeHelper::ClassMethods
 
-  belongs_to :document, :counter_cache => :page_count
+  belongs_to :document
 
   validates_numericality_of :page_number, :greater_than_or_equal_to => 1
-
-  delegate :pages_path, :to => :document
 
   before_update :track_text_changes
 
@@ -56,18 +54,8 @@ class Page < ActiveRecord::Base
     end
   end
 
-  # Ex: docs/1011/pages/21_large.gif
-  def image_path(size)
-    document.page_image_path(page_number, size)
-  end
-
-  # Ex: docs/1011/pages/21.txt
-  def text_path
-    document.page_text_path(page_number)
-  end
-
   def authorized_image_url(size)
-    DC::Store::AssetStore.new.authorized_url(image_path(size))
+    DC::Store::AssetStore.new.authorized_url(document.page_image_path(page_number, size))
   end
 
 
@@ -78,7 +66,7 @@ class Page < ActiveRecord::Base
   def track_text_changes
     return true unless text_changed?
     self.text = strip_tags(text)
-    DC::Store::AssetStore.new.save_page_text(self, access)
+    DC::Store::AssetStore.new.save_page_text(self.document, self.page_number, self.text, access)
     @text_changed = true
   end
 

@@ -7,9 +7,9 @@ class RegenerateThumbnails < CloudCrowd::Action
     File.open(@pdf, 'w+') {|f| f.write(asset_store.read_pdf(document)) }
     Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES['thumbnail'], :output => 'images')
     puts "Regenerating Thumbnails: #{document.title}"
-    document.pages(:select => 'id').each do |page|
-      image = "images/#{document.slug}_#{page.page_number}.gif"
-      asset_store.save_page_images(page, {'thumbnail'  => image}, document.access)
+    document.page_count.times do |i|
+      image = "images/#{document.slug}_#{i + 1}.gif"
+      asset_store.save_page_images(document, i + 1, {'thumbnail'  => image}, document.access)
     end
     input
   end

@@ -53,14 +53,14 @@ module DC
         save_file(rdf, document.rdf_path, DC::Access::PRIVATE, :string => true)
       end
 
-      def save_page_images(page, images, access=DEFAULT_ACCESS)
+      def save_page_images(document, page_number, images, access=DEFAULT_ACCESS)
         Page::IMAGE_SIZES.keys.each do |size|
-          save_file(images[size], page.image_path(size), access) if images[size]
+          save_file(images[size], document.page_image_path(page_number, size), access) if images[size]
         end
       end
 
-      def save_page_text(page, access=DEFAULT_ACCESS)
-        save_file(page.text, page.text_path, access, :string => true)
+      def save_page_text(document, page_number, text, access=DEFAULT_ACCESS)
+        save_file(text, document.page_text_path(page_number), access, :string => true)
       end
 
       def save_database_backup(path)
@@ -73,9 +73,9 @@ module DC
         save_permissions(document.pdf_path, access)
         save_permissions(document.full_text_path, access)
         document.pages.each do |page|
-          save_permissions(page.text_path, access)
+          save_permissions(document.page_text_path(page.page_number), access)
           Page::IMAGE_SIZES.keys.each do |size|
-            save_permissions(page.image_path(size), access)
+            save_permissions(document.page_image_path(page.page_number, size), access)
           end
         end
         true
@@ -97,11 +97,11 @@ module DC
       end
 
       def create_s3
-        RightAws::S3.new(@key, @secret, :protocol => 'http', :port => 80)
+        RightAws::S3.new(@key, @secret, :protocol => 'http', :port => 80, :multi_thread => true)
       end
 
       def secure_s3
-        @secure_s3 ||= RightAws::S3.new(@key, @secret, :protocol => 'https', :no_subdomains => true)
+        @secure_s3 ||= RightAws::S3.new(@key, @secret, :protocol => 'https', :no_subdomains => true, :multi_thread => true)
       end
 
       def bucket

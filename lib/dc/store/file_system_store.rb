@@ -44,16 +44,16 @@ module DC
         File.open(local(document.rdf_path), 'w+') {|f| f.write(rdf) }
       end
 
-      def save_page_images(page, images, access=nil)
-        ensure_directory(page.pages_path)
+      def save_page_images(document, page_number, images, access=nil)
+        ensure_directory(document.pages_path)
         Page::IMAGE_SIZES.keys.each do |size|
-          FileUtils.cp(images[size], local(page.image_path(size))) if images[size]
+          FileUtils.cp(images[size], local(document.page_image_path(page_number, size))) if images[size]
         end
       end
 
-      def save_page_text(page, access=nil)
-        ensure_directory(page.pages_path)
-        File.open(local(page.text_path), 'w+') {|f| f.write(page.text) }
+      def save_page_text(document, page_number, text, access=nil)
+        ensure_directory(document.pages_path)
+        File.open(local(document.page_text_path(page_number)), 'w+') {|f| f.write(text) }
       end
 
       def save_database_backup(path)
