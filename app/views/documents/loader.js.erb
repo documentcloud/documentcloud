@@ -2,15 +2,25 @@
   <% root = DC.server_root(:ssl => false) %>
   window.DV = window.DV || {};
 
+  var loadCSS = function(url) {
+    var link  = document.createElement('link');
+    link.rel  = 'stylesheet';
+    link.type = 'text/css';
+    link.href = url;
+    var head  = document.getElementsByTagName('head')[0];
+    head.appendChild(link);
+  };
+
+  /*@cc_on
+  /*@if (@_jscript_version < 5.8)
+    loadCSS('<%= root %>/viewer/viewer.css');
+  @else @*/
+    loadCSS('<%= root %>/viewer/viewer-datauri.css');
+  /*@end
+  @*/
+  loadCSS('<%= root %>/viewer/plainviewer.css');
+
   DV.onload = function() {
-    /*@cc_on
-    /*@if (@_jscript_version < 5.8)
-      DV.api.loadCSS('<%= root %>/viewer/viewer.css');
-    @else @*/
-      DV.api.loadCSS('<%= root %>/viewer/viewer-datauri.css');
-    /*@end
-    @*/
-    DV.api.loadCSS('<%= root %>/viewer/plainviewer.css');
     // Nasty hack to fix viewer for embeds that had position:relative set.
     if (DV.options && DV.options.container) {
       var cont = $j(DV.options.container);
