@@ -68,7 +68,7 @@ class DocumentImport < CloudCrowd::Action
     Dir['text/*.txt'].length.times do |i|
       path = "text/#{document.slug}_#{i + 1}.txt"
       next unless File.exists?(path)
-      text = Iconv.iconv('ascii//ignore//translit', 'utf-8', File.read(path)).first
+      text = Iconv.iconv('ascii//translit//ignore', 'utf-8', File.read(path)).first
       queue_page_text(text, i + 1)
     end
   end
@@ -80,7 +80,7 @@ class DocumentImport < CloudCrowd::Action
       path = "text/#{document.slug}_#{i + 1}.pdf"
       next unless File.exists?(path)
       text = DC::Import::TextExtractor.new(path).text_from_ocr
-      text = Iconv.iconv('ascii//ignore//translit', 'utf-8', text).first
+      text = Iconv.iconv('ascii//translit//ignore', 'utf-8', text).first
       queue_page_text(text, i + 1)
     end
   end
