@@ -56,9 +56,9 @@ module DC
         File.open(local(document.page_text_path(page_number)), 'w+') {|f| f.write(text) }
       end
 
-      def save_database_backup(path)
-        ensure_directory('backups')
-        FileUtils.cp(path, local("backups/#{Date.today}.dump"))
+      def save_database_backup(name, path)
+        ensure_directory("backups/#{name}")
+        FileUtils.cp(path, local("backups/#{name}/#{Date.today}.dump"))
       end
 
       def set_access(document, access)

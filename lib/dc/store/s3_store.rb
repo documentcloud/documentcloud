@@ -63,8 +63,8 @@ module DC
         save_file(text, document.page_text_path(page_number), access, :string => true)
       end
 
-      def save_database_backup(path)
-        bucket.put("backups/#{Date.today}.dump", File.open(path))
+      def save_database_backup(name, path)
+        bucket.put("backups/#{name}/#{Date.today}.dump", File.open(path))
       end
 
       # This is going to be *extremely* expensive. We can thread it, but

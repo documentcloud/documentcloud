@@ -12,7 +12,11 @@ class BackupDatabase < CloudCrowd::Action
     Dir.mktmpdir do |temp_dir|
       dump    = File.join(temp_dir, "#{db}.dump")
       system "PGPASSWORD=\"#{pass}\" pg_dump -U #{username} #{host} -Fc #{db} > #{dump}"
-      DC::Store::AssetStore.new.save_database_backup(dump)
+      DC::Store::AssetStore.new.save_database_backup('dcloud', dump)
+      db      = ANALYTICS_DB[Rails.env]
+      dump    = File.join(temp_dir, "#{db}.dump")
+      system "PGPASSWORD=\"#{pass}\" pg_dump -U #{username} #{host} -Fc #{db} > #{dump}"
+      DC::Store::AssetStore.new.save_database_backup('analytics', dump)
     end
     true
   end
