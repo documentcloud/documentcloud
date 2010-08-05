@@ -27,11 +27,6 @@ class Organization < ActiveRecord::Base
     self.accounts.admin.all(:select => [:email]).map {|acc| acc.email }
   end
 
-  # The list of all administrator email addresses, excluding mine.
-  def other_admin_emails(account)
-    admin_emails - [account.email]
-  end
-
   def to_json(options = nil)
     {'name'           => name,
      'slug'           => slug,
