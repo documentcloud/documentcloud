@@ -51,6 +51,7 @@ if(jQuery)(
 					onCheck        : function() {}, // Function to run when script checks for duplicate files on the server
 					onCancel       : function() {}, // Function to run when an item is cleared from the queue
 					onError        : function() {}, // Function to run when an upload item returns an error
+					onStarted      : function() {}, // Function to run when an upload is started
 					onProgress     : function() {}, // Function to run each time the upload progress is updated
 					onComplete     : function() {}, // Function to run when an upload is completed
 					onAllComplete  : function() {}  // Functino to run when all uploads are completed
@@ -99,6 +100,9 @@ if(jQuery)(
 				}
 				if (typeof(settings.onOpen) == 'function') {
 					jQuery(this).bind("uploadifyOpen", settings.onOpen);
+				}
+				if (typeof(settings.onStarted) == 'function') {
+					jQuery(this).bind("uploadifyStarted", settings.onStarted);
 				}
 				jQuery(this).bind("uploadifySelect", {'action': settings.onSelect, 'queueID': settings.queueID}, function(event, ID, fileObj) {
 					if (event.data.action(event, ID, fileObj) !== false) {

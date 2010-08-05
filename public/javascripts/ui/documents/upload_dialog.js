@@ -11,7 +11,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function() {
-     _.bindAll(this, '_onSelect', '_onSelectOnce', '_onCancel', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
+     _.bindAll(this, '_onSelect', '_onSelectOnce', '_onCancel', '_onStarted', '_onProgress', '_onComplete', '_onAllComplete');
     this.base({
       mode      : 'custom',
       title     : "Upload Documents"
@@ -47,7 +47,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       onSelect      : this._onSelect,
       onSelectOnce  : this._onSelectOnce,
       onCancel      : this._onCancel,
-      onOpen        : this._onOpen,
+      onStarted     : this._onStarted,
       onProgress    : this._onProgress,
       onComplete    : this._onComplete,
       onAllComplete : this._onAllComplete
@@ -73,7 +73,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._onSelectOnce(e, data);
   },
   
-  _onOpen : function(e, queueId, fileObj) {
+  _onStarted : function(e, queueId) {
     var title = $('input[name=title]', this.uploadDocumentTiles[queueId].el).val();
     
     console.log(['Uploading', title, queueId, this.uploadDocumentTiles[queueId]]);
@@ -82,6 +82,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   
   _onProgress : function(e, queueId, fileObj, data) {
     console.log(['Progress', queueId, data]);
+    
+    // Return false so uploadify doesn't try to update missing fields (from onSelect)
+    return false;
   },
   
   _onComplete : function(e, queueId, fileObj, response, data) {
