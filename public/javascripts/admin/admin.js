@@ -27,7 +27,8 @@ dc.ui.Admin = dc.View.extend({
   callbacks : {
     '.chart.plothover':           '_showTooltop',
     '#instances .minus.click':    '_terminateInstance',
-    '.more_top_documents.click':  '_loadMoreTopDocuments'
+    '.more_top_documents.click':  '_loadMoreTopDocuments',
+    '#load_all_accounts.click':   '_loadAllAccounts'
   },
 
   accountCallbacks : {
@@ -55,7 +56,6 @@ dc.ui.Admin = dc.View.extend({
 
   render : function() {
     $(this.el).html(JST.statistics(this.data()));
-    this.renderAccounts();
     $('#topbar').append(this._actionsMenu.render().el);
     this.setCallbacks();
     _.defer(this.renderCharts);
@@ -168,6 +168,15 @@ dc.ui.Admin = dc.View.extend({
       top  : pos.pageY,
       text : count + ' ' + title + '<br />' + date
     });
+  },
+
+  _loadAllAccounts : function() {
+    $('#load_all_accounts').hide();
+    $.getJSON('/admin/all_accounts', {}, _.bind(function(resp) {
+      Accounts.populate(resp.accounts);
+      this.renderAccounts();
+    }, this));
+    $('tr.accounts_row').show();
   },
 
   // Loads the top 100 embedded documents, sorted by number of hits in the past year.

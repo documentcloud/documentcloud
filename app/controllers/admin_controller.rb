@@ -16,7 +16,6 @@ class AdminController < ApplicationController
     @pages_per_account             = DC::Statistics.pages_per_account.to_json
     @documents                     = Document.finished.chronological.all(:limit => 5).map {|d| d.admin_attributes }.to_json
     @failed_documents              = Document.failed.chronological.all(:limit => 3).map {|d| d.admin_attributes }.to_json
-    @accounts                      = Account.all.to_json
     @organizations                 = Organization.all.to_json
     @instances                     = DC::AWS.new.describe_instances.to_json
     @top_documents                 = RemoteUrl.top_documents(7, :limit => 5).to_json
@@ -28,6 +27,10 @@ class AdminController < ApplicationController
 
   def hits_on_documents
     json RemoteUrl.top_documents(365, :limit => 1000).to_json
+  end
+
+  def all_accounts
+    json({'accounts' => Account.all})
   end
 
   def top_documents_csv
