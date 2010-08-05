@@ -437,6 +437,9 @@ textarea.text_area {
   .dialog .text, .dialog .custom {
     font-size: 16px; line-height: 18px;
   }
+    .dialog.alert_dialog .text a {
+      text-decoration: underline;
+    }
   .dialog .information {
     position: absolute;
     top: 34px; right: 30px;

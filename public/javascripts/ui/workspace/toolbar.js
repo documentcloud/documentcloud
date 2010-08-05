@@ -14,8 +14,8 @@ dc.ui.Toolbar = dc.View.extend({
     this.base(options);
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'checkFloat',
-      '_openTimeline', '_viewEntities');
+      'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'requestDownloadViewers',
+      'checkFloat', '_openTimeline', '_viewEntities');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
     this.analyzeMenu      = this._createAnalyzeMenu();
@@ -105,10 +105,15 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   displayEmbedSnippet : function() {
-    if (dc.app.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. Or take a look at <a href="g/#help/publishing">our help pages</a> for a sample of the embed snippet.');
+    if (dc.app.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.');
     this.edit(function(docs) {
       new dc.ui.EmbedDialog(docs[0]);
     }, 'At this stage in the DocumentCloud beta, you can\'t yet embed documents that you haven\'t uploaded yourself.');
+  },
+
+  requestDownloadViewers : function() {
+    if (dc.app.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to download viewers. <a href="/contact">Contact us</a> if you need a full featured account.');
+    Documents.downloadSelectedViewers();
   },
 
   checkFloat : function() {
@@ -173,7 +178,7 @@ dc.ui.Toolbar = dc.View.extend({
       onOpen  : this._enableMenuItems,
       items   : [
         {title : 'Embed Document Viewer',    onClick : this.displayEmbedSnippet},
-        {title : 'Download Document Viewer', onClick : Documents.downloadSelectedViewers},
+        {title : 'Download Document Viewer', onClick : this.requestDownloadViewers},
         {title : 'Download Original PDF',    onClick : Documents.downloadSelectedPDF},
         {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
       ]

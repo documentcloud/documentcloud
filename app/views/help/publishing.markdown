@@ -44,7 +44,7 @@ To publish a document, you'll need to make it public, if it isn't already. Selec
  
 *Note: once you change a document to "public" other users of DocumentCloud will be able to find it in searches of the repository. Don't make sensitive documents public in advance of publication.*
  
-## Step 4: Copy and Paste the Embed Code onto the Page
+## <span id="step_4">Step 4</span>: Copy and Paste the Embed Code onto the Page
 
 ![Embed Menu][]
 
