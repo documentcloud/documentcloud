@@ -59,8 +59,11 @@ class DocumentImport < CloudCrowd::Action
     Page.refresh_page_map(document)
     EntityDate.refresh(document)
     document.save!
+    pages = document.reload.pages
+    Sunspot.index pages
+    Sunspot.commit
     DC::Import::EntityExtractor.new.extract(document)
-    upload_text_assets!
+    upload_text_assets(pages)
     document.id
   end
 
@@ -80,8 +83,7 @@ class DocumentImport < CloudCrowd::Action
 
   # Spin up a deferred thread to upload the assets to S3 while the worker goes
   # returns the document to perform more work.
-  def upload_text_assets!
-    pages = document.reload.pages
+  def upload_text_assets(pages)
     Thread.new do
       asset_store.save_full_text(document, access)
       pages.each do |page|
