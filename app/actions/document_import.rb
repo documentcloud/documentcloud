@@ -84,11 +84,9 @@ class DocumentImport < CloudCrowd::Action
   # Spin up a deferred thread to upload the assets to S3 while the worker goes
   # returns the document to perform more work.
   def upload_text_assets(pages)
-    Thread.new do
-      asset_store.save_full_text(document, access)
-      pages.each do |page|
-        asset_store.save_page_text(document, page.page_number, page.text, access)
-      end
+    asset_store.save_full_text(document, access)
+    pages.each do |page|
+      asset_store.save_page_text(document, page.page_number, page.text, access)
     end
   end
 
