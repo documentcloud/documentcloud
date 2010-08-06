@@ -18,24 +18,4 @@
     </div>
   <% } %>
 
-  <div class="row draggable">
-    <label for="document_upload_source">
-      Source:
-    </label>
-    <div class="text_input dark">
-      <input name="source" id="document_upload_source" type="text" />
-    </div>
-  </div>
-
-  <div class="row draggable last">
-    <label for="document_upload_access">
-      Access Level:
-    </label>
-    <select name="access" class="document_access" id="document_upload_access">
-      <option value="public">Public Access</option>
-      <option value="private" selected="true">Private Access</option>
-      <option value="organization">Private to <%= dc.app.organization.name %></option>
-    </select>
-  </div>  
-
 </form>

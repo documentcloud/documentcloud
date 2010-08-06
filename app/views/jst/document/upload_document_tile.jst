@@ -1,42 +1,50 @@
-<div class="draggable queued_file">
+<div class="queued_file row">
 
-  <div class="upload_file">
-    <label for="document_upload_title">
-      File:
-    </label>
-    <div class="text_input dark">
-      <div class="upload_close"></div>
-      <span class="upload_file_name">
-        <%= documentFileObj['name'] %>
-      </span>
-      <span class="upload_file_size">
-        (<%= $.bytesToMB(documentFileObj['size']) %>)
-      </span>
+  <div class="upload_title">
+    <div class="icon cancel_search"></div>
+    <div class="icon edit_glyph open_edit"></div>
+    <div class="upload_file_size">
+      (<%= $.bytesToMB(documentFileObj['size']) %>)
     </div>
-    <div class="text_input upload_progress_bar_container">
-      <div class="upload_progress_bar"></div>
+    <label class="upload_icon upload_icon_<%= extension %>" for="document_upload_title_<%= documentQueueId %>" title="<%= documentFileObj['name'] %>"></label>
+    <div class="text_input small dark">
+      <input name="title" id="document_upload_title_<%= documentQueueId %>" type="text" value="<%= filename %>"/>
     </div>
   </div>
-  
-  <div class="row upload_title">
-    <label for="document_upload_title_<%= documentQueueId %>">
-      Title:
-    </label>
-    <div class="text_input dark">
-      <input name="title" id="document_upload_title_<%= documentQueueId %>" type="text" value="<%= documentFileObj['name'].replace(/\.[^.]+$/, '') %>"/>
+
+  <div class="upload_progress_bar_container">
+    <div class="upload_progress_bar"></div>
+  </div>      
+
+  <div class="upload_edit">
+    <div class="upload_description">
+      <div class="upload_description_row">
+        <label for="document_upload_description_<%= documentQueueId %>">
+          Description:
+        </label>
+        <textarea name="description" id="document_upload_description_<%= documentQueueId %>" class="text_area content dark interface"></textarea>
+      </div>
     </div>
-  </div>
-  
-  <div class="row upload_description">
-    <div class="open_description text_input dark">
-      Edit description
-    </div>
-    <div class="upload_description_row">
-      <label for="document_upload_description_<%= documentQueueId %>">
-        Description:
+
+    <div class="upload_source">
+      <label for="document_upload_source">
+        Source:
       </label>
-      <textarea name="description" id="document_upload_description_<%= documentQueueId %>" class="text_area content dark interface"></textarea>
+      <div class="text_input small dark">
+        <input name="source" id="document_upload_source" type="text" />
+      </div>
     </div>
+
+    <div class="upload_access last">
+      <label for="document_upload_access">
+        Access Level:
+      </label>
+      <select name="access" class="document_access" id="document_upload_access">
+        <option value="public">Public Access</option>
+        <option value="private" selected="true">Private Access</option>
+        <option value="organization">Private to <%= dc.app.organization.name %></option>
+      </select>
+    </div>  
   </div>
 
 </div>

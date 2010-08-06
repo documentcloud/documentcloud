@@ -35,6 +35,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       this.scriptData['project_id'] = this._project.id;
     }
     
+    $('.ok', this.el).setMode('not', 'enabled');
+    
     this.$uploadify = $('#document_upload_browse', this.el);
     this.$uploadify.uploadify({
       uploader      : '/flash/uploadify.swf',
@@ -67,7 +69,20 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
   
   _onSelectOnce : function(e, data) {
-    $('.ok', this.el).text('Upload ' + data.fileCount + Inflector.pluralize(' Document', data.fileCount));
+    var $submit = $('.ok', this.el);
+    
+    if (data.fileCount > 0) {
+      $submit.setMode('is', 'enabled');
+      if (data.fileCount == 1) {
+        $submit.text('Upload Document');
+      } else {
+        $submit.text('Upload ' + data.fileCount + ' Documents');
+      }
+    } else {
+      $submit.setMode('not', 'enabled');
+      $submit.text('Upload Documents');
+    }
+    
     this.center(); // TODO: Take me out.
   },
   
@@ -142,6 +157,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       return this.error(error_text);
     };
     
+    $('.ok', this.el).text('Uploading...');
+    $('.ok', this.el).setMode('not', 'enabled');
     this.$uploadify.uploadifyUpload();
   },
 
@@ -170,8 +187,10 @@ dc.ui.UploadDocumentTile = dc.View.extend({
   
   callbacks : {
     '.upload_close.click' : 'removeUploadFile',
-    '.open_description.click' : 'openDescription'
+    '.open_edit.click' : 'openEdit'
   },
+  
+  FILE_EXTENSION_MATCHER : /\.([^.]+)$/,
   
   constructor : function(options) {
     _.bindAll(this, 'removeUploadFile');
@@ -181,9 +200,18 @@ dc.ui.UploadDocumentTile = dc.View.extend({
   },
   
   render : function() {
+    var filename = this.fileObj['name'].replace(this.FILE_EXTENSION_MATCHER, '');
+    console.log(['render', filename]);
+    var match = this.fileObj['name'].match(this.FILE_EXTENSION_MATCHER);
+    var extension = match && match[1];
+    
+    console.log(['render', filename, match, extension]);
+    
     $(this.el).html(JST['document/upload_document_tile']({
       'documentQueueId' : this.queueId,
-      'documentFileObj' : this.fileObj
+      'documentFileObj' : this.fileObj,
+      'filename': filename,
+      'extension': extension
     }));
     $('.upload_document_tiles').append(this.el);
     
@@ -199,12 +227,12 @@ dc.ui.UploadDocumentTile = dc.View.extend({
     }, this)});
   },
   
-  openDescription : function() {
-    var $desc = $('.upload_description_row', this.el);
-    var $descButton = $('.open_description', this.el);
+  openEdit : function() {
+    var $edit = $('.upload_edit', this.el);
+    var $editButton = $('.open_edit', this.el);
     
-    $desc.slideToggle(200);
-    $descButton.toggleClass('active');
+    $edit.slideToggle(200);
+    $editButton.toggleClass('active');
   }
   
 });
