@@ -133,7 +133,10 @@ module DC
       end
 
       def save_permissions(s3_path, access)
-        headers = {'x-amz-acl' => ACCESS_TO_ACL[access]}
+        headers = {
+          'x-amz-acl' => ACCESS_TO_ACL[access],
+          'Expires' => 1.year.from_now.httpdate
+        }
         s3.interface.copy(bucket, s3_path, bucket, s3_path, :replace, headers)
       end
 

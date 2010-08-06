@@ -7,10 +7,14 @@ class ImportController < ApplicationController
   before_filter :login_required, :only => [:upload_document]
 
   def upload_document
-    @bad_request = true and return unless params[:file]
-    @project_id  = params[:project_id]
-    @document    = Document.upload(params, current_account, current_organization)
-    Project.accessible(current_account).find(@project_id).add_document(@document) if @project_id
+    return json :bad_request => true unless params[:file]
+    
+    document = Document.upload(params, current_account, current_organization)
+    
+    project_id = params[:project_id]
+    Project.accessible(current_account).find(project_id).add_document(document) if project_id
+    
+    json :document => document
   end
 
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.

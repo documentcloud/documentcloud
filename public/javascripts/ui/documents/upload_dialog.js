@@ -57,10 +57,11 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
   
   _onSelect : function(e, queueId, fileObj) {
-    this.uploadDocumentTiles[queueId] = (new dc.ui.UploadDocumentTile({'queueId': queueId, 'fileObj': fileObj})).render();
-    var title = $('input[name=title]', this.uploadDocumentTiles[queueId].el).val();
-    console.log(['Select', title, queueId]);
-    this.$uploadify.uploadifySettings('scriptData', {'title': title});
+    this.uploadDocumentTiles[queueId] = (new dc.ui.UploadDocumentTile({
+      'queueId': queueId, 
+      'fileObj': fileObj
+    })).render();
+    
     // Return false so that Uploadify does not create it's own progress bars.
     return false;
   },
@@ -75,13 +76,22 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   
   _onStarted : function(e, queueId) {
     var title = $('input[name=title]', this.uploadDocumentTiles[queueId].el).val();
+    var description = $('textarea[name=description]', this.uploadDocumentTiles[queueId].el).val();
+    var source = $('input[name=source]', this.el).val();
+    var access = $('input[name=access]', this.el).val();
     
-    console.log(['Uploading', title, queueId, this.uploadDocumentTiles[queueId]]);
-    this.$uploadify.uploadifySettings('scriptData', {'title': title});
+    this.$uploadify.uploadifySettings('scriptData', {
+      'title': title,
+      'source': source,
+      'description': description,
+      'access': access
+    });
   },
   
   _onProgress : function(e, queueId, fileObj, data) {
     console.log(['Progress', queueId, data]);
+    var $progress = $('.upload_progress_bar', this.uploadDocumentTiles[queueId].el);
+    $progress.css({'width': data.percentage + '%'});
     
     // Return false so uploadify doesn't try to update missing fields (from onSelect)
     return false;
@@ -89,7 +99,26 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   
   _onComplete : function(e, queueId, fileObj, response, data) {
     console.log(['Complete', e, queueId, fileObj, response, data]);
-    $('#hidden_iframe').html(response);
+    response = eval('(' + response + ')');
+    
+    if (response['bad_request']) {
+      var title = $('input[name=title]', this.uploadDocumentTiles[queueId].el).val();
+      dc.ui.Dialog.alert('Upload failed. Please check the document: ' + title);
+    } else {
+      var doc = new top.dc.model.Document(response['document']);
+      Documents.add(doc);
+      if (this._project) {
+        Projects.incrementCountById(this._project.id);
+      }
+    }
+    
+    var $file = $(this.uploadDocumentTiles[queueId].el);
+    $file.animate({opacity: 0}, {
+      duration: 300, 
+      complete: function() {
+        $file.slideUp(200);
+      }
+    });
   },
   
   _onAllComplete : function(e, data) {
@@ -130,15 +159,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   close : function() {
     $(this.el).hide();
     $(document.body).removeClass('overlay');
-  },
-  
-  _addDocument : function(e, doc) {
-    var view = new dc.ui.Document({model : doc});
-    $(this.el).prepend(view.render().el);
-  },
-
-  _removeDocument : function(e, doc) {
-    $('#document_' + doc.id).remove();
   }
 
 });

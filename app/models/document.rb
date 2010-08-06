@@ -113,7 +113,9 @@ class Document < ActiveRecord::Base
       :account_id       => account.id,
       :access           => DC::Access::PENDING,
       :page_count       => 0,
-      :title            => params[:title]
+      :title            => params[:title],
+      :description      => params[:description],
+      :source           => params[:source]
     )
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
       DC::Store::AssetStore.new.save_pdf(doc, path, access)

@@ -21,6 +21,11 @@
   border-color: #991612;
 }
 
+#upload_dialog .upload_title {
+  overflow: hidden;
+  clear: both;
+}
+
 #upload_dialog .upload_file {
   font-size: 13px;
   text-align: left;
@@ -42,3 +47,13 @@
     padding-right: 6px;
     white-space: nowrap;
   }
+  #upload_dialog .upload_file .upload_progress_bar_container {
+    width: 387px;
+    float: right;
+    margin: -6px 0 0 0;
+  }
+    #upload_dialog .upload_file .upload_progress_bar_container .upload_progress_bar {
+      height: 1px;
+      width: 0%;
+      background-color: #3349D2;
+    }
