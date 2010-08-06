@@ -68,6 +68,17 @@ dc.model.AccountSet = dc.model.RESTfulSet.extend({
   // Fetch the account of the logged-in journalist.
   current : function() {
     return this.get(dc.app.accountId);
+  },
+
+  // Override populate to preserve the already-loaded current account.
+  populate : function(options) {
+    var current = this.current();
+    var success = options.success;
+    this.base(_.extend(options, { success : _.bind(function() {
+      this.remove(this.get(current.id), true);
+      this.add(current, true);
+      if (success) success();
+    }, this)}));
   }
 
 });
