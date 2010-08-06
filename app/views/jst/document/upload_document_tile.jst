@@ -1,8 +1,11 @@
-<div class="row draggable queued_file">
+<div class="draggable queued_file">
 
   <div class="upload_file">
-    <div class="upload_close"></div>
+    <label for="document_upload_title">
+      File:
+    </label>
     <div class="text_input dark">
+      <div class="upload_close"></div>
       <span class="upload_file_name">
         <%= documentFileObj['name'] %>
       </span>
@@ -10,30 +13,30 @@
         (<%= $.bytesToMB(documentFileObj['size']) %>)
       </span>
     </div>
-    <label for="document_upload_title">
-      File:
-    </label>
-    <div class="upload_progress_bar_container">
+    <div class="text_input upload_progress_bar_container">
       <div class="upload_progress_bar"></div>
     </div>
   </div>
   
-  <div class="upload_title">
+  <div class="row upload_title">
+    <label for="document_upload_title_<%= documentQueueId %>">
+      Title:
+    </label>
     <div class="text_input dark">
       <input name="title" id="document_upload_title_<%= documentQueueId %>" type="text" value="<%= documentFileObj['name'].replace(/\.[^.]+$/, '') %>"/>
     </div>
-    <label for="document_upload_title">
-      Title:
-    </label>
   </div>
   
-  <!--   
-    <div class="row draggable">
-      <textarea name="description" id="document_upload_description" class="text_area content dark interface"></textarea>
-      <label for="document_upload_description">
+  <div class="row upload_description">
+    <div class="open_description text_input dark">
+      Edit description
+    </div>
+    <div class="upload_description_row">
+      <label for="document_upload_description_<%= documentQueueId %>">
         Description:
       </label>
-      <div class="clear"></div>
+      <textarea name="description" id="document_upload_description_<%= documentQueueId %>" class="text_area content dark interface"></textarea>
     </div>
--->
+  </div>
+
 </div>

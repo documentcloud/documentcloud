@@ -1,47 +1,47 @@
 <% if (!multiple) { %>
   <div class="row draggable">
-    <div class="text_input dark">
-      <input name="title" id="document_edit_title" class="attribute" type="text" />
-    </div>
     <label for="document_edit_title" title="Title of this document">
       Title:
     </label>
+    <div class="text_input dark">
+      <input name="title" id="document_edit_title" class="attribute" type="text" />
+    </div>
   </div>
 <% } %>
 
 <div class="row draggable">
-  <div class="text_input dark">
-    <input name="source" id="document_edit_source" class="attribute" type="text" />
-  </div>
   <label for="document_edit_source" title="The source from which you obtained this document">
     Source:
   </label>
+  <div class="text_input dark">
+    <input name="source" id="document_edit_source" class="attribute" type="text" />
+  </div>
 </div>
 
 <div class="row draggable">
-  <div class="text_input dark">
-    <input name="related_article" id="document_edit_related_article" class="attribute" type="text" />
-  </div>
   <label for="document_edit_related_article" title="URL of the web article that refers to this document">
     Related Article:
   </label>
+  <div class="text_input dark">
+    <input name="related_article" id="document_edit_related_article" class="attribute" type="text" />
+  </div>
 </div>
 
 <div class="row draggable">
-  <textarea name="description" id="document_edit_description" class="text_area dark content attribute"></textarea>
   <label for="document_edit_description" title="Paragraph description of this document">
     Description:
   </label>
+  <textarea name="description" id="document_edit_description" class="text_area dark content attribute"></textarea>
   <div class="clear"></div>
 </div>
 
 <div class="row draggable last">
+  <label for="document_edit_access">
+    Access Level:
+  </label>
   <select name="access" class="document_access attribute" id="document_edit_access">
     <option value="4">Public Access</option>
     <option value="1">Private Access</option>
     <option value="2">Private to <%= dc.app.organization.name %></option>
   </select>
-  <label for="document_edit_access">
-    Access Level:
-  </label>
 </div>

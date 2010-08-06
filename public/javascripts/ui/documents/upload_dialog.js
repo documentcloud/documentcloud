@@ -68,6 +68,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   
   _onSelectOnce : function(e, data) {
     $('.ok', this.el).text('Upload ' + data.fileCount + Inflector.pluralize(' Document', data.fileCount));
+    this.center(); // TODO: Take me out.
   },
   
   _onCancel : function(e, queueId, fileObj, data) {
@@ -91,7 +92,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   _onProgress : function(e, queueId, fileObj, data) {
     console.log(['Progress', queueId, data]);
     var $progress = $('.upload_progress_bar', this.uploadDocumentTiles[queueId].el);
-    $progress.css({'width': data.percentage + '%'});
+    $progress.animate({'width': data.percentage + '%'}, {'queue': false, 'duration': 150});
     
     // Return false so uploadify doesn't try to update missing fields (from onSelect)
     return false;
@@ -168,7 +169,8 @@ dc.ui.UploadDocumentTile = dc.View.extend({
   className : 'upload_document_queue',
   
   callbacks : {
-    '.upload_close.click' : 'removeUploadFile'
+    '.upload_close.click' : 'removeUploadFile',
+    '.open_description.click' : 'openDescription'
   },
   
   constructor : function(options) {
@@ -191,11 +193,18 @@ dc.ui.UploadDocumentTile = dc.View.extend({
   },
   
   removeUploadFile : function() {
-    var self = this;
     dc.app.uploader.$uploadify.uploadifyCancel(this.queueId);
-    $(this.el).animate({opacity: 0}, {duration: 300, complete: function() {
-      $(self.el).slideUp(200);
-    }});
+    $(this.el).animate({opacity: 0}, {duration: 300, complete: _.bind(function() {
+      $(this.el).slideUp(200);
+    }, this)});
+  },
+  
+  openDescription : function() {
+    var $desc = $('.upload_description_row', this.el);
+    var $descButton = $('.open_description', this.el);
+    
+    $desc.slideToggle(200);
+    $descButton.toggleClass('active');
   }
   
 });

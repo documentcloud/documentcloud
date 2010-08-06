@@ -17,13 +17,15 @@
     font-size: 12px;
     color: #ccc;
     text-align: left;
+    float: left;
+    clear: left;
   }
   .docalog .text_input {
-    float: right;
+    margin-left: 125px;
     width: 375px;
   }
   .docalog textarea.content {
-    float: right;
+    margin-left: 125px;
     width: 371px; height: 78px;
   }
   .docalog .document_access, #document_upload_file, #document_project_title {

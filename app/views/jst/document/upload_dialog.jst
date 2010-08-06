@@ -1,6 +1,6 @@
 <form id="upload_document" class="workspace_form" method="POST" action="/import/upload_document" target="hidden_iframe" enctype="multipart/form-data">
 
-  <div class="row draggable">
+  <div class="upload_browse_container">
     <div id="document_upload_browse" />
   </div>
   
@@ -8,34 +8,34 @@
 
   <% if (project) { %>
     <div class="row draggable">
+      <label>
+        Project:
+      </label>
       <div id="document_project_title">
         <%= project.get('title') %>
       </div>
       <input name="project_id" id="document_project_id" type="hidden" value="<%= project.id %>" />
-      <label>
-        Project:
-      </label>
     </div>
   <% } %>
 
   <div class="row draggable">
-    <div class="text_input dark">
-      <input name="source" id="document_upload_source" type="text" />
-    </div>
     <label for="document_upload_source">
       Source:
     </label>
+    <div class="text_input dark">
+      <input name="source" id="document_upload_source" type="text" />
+    </div>
   </div>
 
   <div class="row draggable last">
+    <label for="document_upload_access">
+      Access Level:
+    </label>
     <select name="access" class="document_access" id="document_upload_access">
       <option value="public">Public Access</option>
       <option value="private" selected="true">Private Access</option>
       <option value="organization">Private to <%= dc.app.organization.name %></option>
     </select>
-    <label for="document_upload_access">
-      Access Level:
-    </label>
   </div>  
 
 </form>

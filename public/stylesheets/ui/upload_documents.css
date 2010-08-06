@@ -1,3 +1,9 @@
+#upload_dialog .upload_browse_container {
+  position:absolute;
+  top: 20px;
+  right: 24px;
+}
+
 #upload_dialog .minibutton.ok {
   padding-left: 28px;
   padding-right: 28px;
@@ -5,27 +11,76 @@
 }
 
 #upload_dialog .upload_document_tiles {
-  margin: 0 -18px 0 0;
-  max-height: 350px;
+  margin: 0 -18px 8px 0;
+  max-height: 320px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 0 12px 0 0;
 }
 
 #upload_dialog .row {
-  border-bottom: 1px solid #262626;
+  border-bottom: 1px solid #363636;
   margin-bottom: 8px;
   padding-bottom: 8px;
+  text-align: left;
 }
 
 #upload_dialog input.error {
   border-color: #991612;
 }
 
-#upload_dialog .upload_title {
+#upload_dialog .row {
   overflow: hidden;
   clear: both;
 }
+  #upload_dialog .row label {
+    float: left;
+  }
+  #upload_dialog .row .text_input {
+    width: auto;
+  }
+  #upload_dialog .row .text_input input {
+    width: 324px;
+  }
+  #upload_dialog .row .text_area {
+    width: 320px; /* Damn textareas! */
+    display: block;
+  }
 
+#upload_dialog .upload_title {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+#upload_dialog .upload_description {
+  padding-bottom: 0;
+}
+  #upload_dialog .upload_description .open_description {
+    text-align: left;
+    text-transform: uppercase;
+    color: #A0A0A0;
+    font-size: 11px;
+    padding: 0 0 8px 18px;
+    cursor: pointer;
+    background: transparent url('/images/embed/icons/bullet_arrow_right.png') no-repeat 0 2px;
+  }
+    #upload_dialog .upload_description .open_description:hover {
+      color: #E0E0E0;
+    }
+  #upload_dialog .upload_description label {
+    margin-top: 0;
+  }
+  #upload_dialog .upload_description textarea.text_area {
+    margin-top: 0;
+  }
+  #upload_dialog .upload_description .upload_description_row {
+    display: none;
+    margin-bottom: 8px;
+  }
+  #upload_dialog .upload_description .open_description.active {
+    background-image: url('/images/embed/icons/bullet_arrow_down.png');
+  }
+  
 #upload_dialog .upload_file {
   font-size: 13px;
   text-align: left;
@@ -35,7 +90,7 @@
     width: 11px;
     height: 11px;
     float: right;
-    margin: 4px 1px 0 0;
+    margin: 4px 14px 0 0;
     cursor: pointer;
   }
   #upload_dialog .upload_file .text_input {
@@ -48,12 +103,21 @@
     white-space: nowrap;
   }
   #upload_dialog .upload_file .upload_progress_bar_container {
-    width: 387px;
-    float: right;
-    margin: -6px 0 0 0;
+    background:none repeat scroll 0 0 transparent;
+    height:1px;
+    margin:2px 0 0 125px;
+    width: 336px;
   }
     #upload_dialog .upload_file .upload_progress_bar_container .upload_progress_bar {
       height: 1px;
       width: 0%;
       background-color: #3349D2;
     }
+    
+#upload_dialog select {
+  display: block;
+  margin: 4px 0 0 125px;
+  position: static;
+  left: 0;
+  top: 0;
+}
