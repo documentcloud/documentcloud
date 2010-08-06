@@ -73,6 +73,7 @@ dc.model.AccountSet = dc.model.RESTfulSet.extend({
   // Override populate to preserve the already-loaded current account.
   populate : function(options) {
     var current = this.current();
+    if (!current) return this.base(options);
     var success = options.success;
     this.base(_.extend(options, { success : _.bind(function() {
       this.remove(this.get(current.id), true);
