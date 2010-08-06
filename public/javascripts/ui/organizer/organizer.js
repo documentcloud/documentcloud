@@ -4,7 +4,7 @@ dc.ui.Organizer = dc.View.extend({
 
   callbacks : {
     '#new_project.click'      : 'promptNewProject',
-    '#upload_document.click'  : 'openUploads',
+    '#new_document.click'     : 'openUploads',
     '.all_documents.click'    : 'showAllDocuments',
     '.your_documents.click'   : 'showYourDocuments',
     '.org_documents.click'    : 'showOrganizationDocuments'
