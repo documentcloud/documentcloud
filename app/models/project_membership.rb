@@ -9,7 +9,7 @@ class ProjectMembership < ActiveRecord::Base
   after_destroy :reindex_document
 
   def reindex_document
-    self.document.index
+    self.document.index if self.document
   end
 
 end
