@@ -170,8 +170,24 @@ dc.ui.Toolbar = dc.View.extend({
       .toggleClass('disabled', !Documents.selectedCount)
       .attr('title', Documents.selectedCount ? '' : 'No documents selected');
     $('.singular', menu.content).toggleClass('disabled', !(Documents.selectedCount == 1));
+    
+    // Move new document transparent button over to cover the New Document button.
+    var $newDocumentMenuItem = $('.new_document', menu.content);
+    if ($newDocumentMenuItem.length) {
+      var $button = $('#new_documentUploader');
+      $('#new_documentUploader', $newDocumentMenuItem).remove();
+      $newDocumentMenuItem.append($button.clone());
+    }
   },
 
+  _closeEditMenu : function(e) {
+    var $button = $('#new_documentUploader');
+    var $newDocumentButton = $('#new_document');
+    $newDocumentButton.after($button);
+    
+    return true;
+  },
+  
   _createPublishMenu : function() {
     return new dc.ui.Menu({
       label   : 'Publish',
@@ -189,8 +205,9 @@ dc.ui.Toolbar = dc.View.extend({
     return new dc.ui.Menu({
       label   : 'Edit',
       onOpen  : this._enableMenuItems,
+      // onClose : this._closeEditMenu,
       items   : [
-        {title : 'New Document',         attrs: {'class' : 'plus'},            onClick : function(){ dc.app.uploader.open(); }},
+        {title : 'New Document',         attrs: {'class' : 'new_document plus'}},
         {title : 'Edit All Fields',      attrs: {'class' : 'multiple'},        onClick : function(){ dc.ui.DocumentDialog.open(); }},
         {title : 'Edit Title',           attrs: {'class' : 'singular indent'}, onClick : this.editTitle},
         {title : 'Edit Description',     attrs: {'class' : 'singular indent'}, onClick : this.editDescription},

@@ -91,7 +91,7 @@ if(jQuery)(
 				if (settings.fileDataName) data.fileDataName = settings.fileDataName;
 				if (settings.queueID)      data.queueID      = settings.queueID;
 				if (settings.onInit() !== false) {
-					jQuery(this).css('display','none');
+          // jQuery(this).css('display','none');
 					jQuery(this).after('<div id="' + jQuery(this).attr('id') + 'Uploader"></div>');
 					swfobject.embedSWF(settings.uploader, settings.id + 'Uploader', settings.width, settings.height, '9.0.24', settings.expressInstall, data, {'quality':'high','wmode':settings.wmode,'allowScriptAccess':settings.scriptAccess});
 					if (settings.queueID == false) {

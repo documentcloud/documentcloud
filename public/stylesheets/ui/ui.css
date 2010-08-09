@@ -340,6 +340,13 @@ textarea.text_area {
         background-position: 179px center;
         color: #0AAF86;
       }
+      .menu_content #new_documentUploader {
+        width: 100%;
+        height: 30px;
+        position: absolute;
+        top: 4px;
+        left: 0;
+      }
     .menu_content .menu_item.warn {
       color: #ff0022;
     }

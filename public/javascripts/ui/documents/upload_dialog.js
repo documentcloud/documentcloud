@@ -11,11 +11,40 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function() {
-     _.bindAll(this, '_onSelect', '_onSelectOnce', '_onCancel', '_onStarted', '_onProgress', '_onComplete', '_onAllComplete');
+     _.bindAll(this, '_onInit', '_onSelect', '_onSelectOnce', '_onCancel', '_onStarted', '_onProgress', '_onComplete', '_onAllComplete');
     this.base({
       mode      : 'custom',
-      title     : "Upload Documents"
+      title     : 'Upload Documents'
     });
+  },
+  
+  setupUploadify : function(options) {
+    this.$uploadify = $('#new_document');
+    
+    var defaults = {
+      uploader      : '/flash/uploadify.swf',
+      script        : '/import/upload_document',
+      auto          : false,
+      multi         : true,
+      wmode         : 'transparent',
+      fileDataName  : 'file',
+      buttonImg     : '/images/embed/ui/spacer.png',
+      buttonImg     : '/images/help/drag_select.png',
+      width         : 126,
+      height        : 26,
+      scriptData    : this.scriptData,
+      onInit        : this._onInit,
+      onSelect      : this._onSelect,
+      onSelectOnce  : this._onSelectOnce,
+      onCancel      : this._onCancel,
+      onStarted     : this._onStarted,
+      onProgress    : this._onProgress,
+      onComplete    : this._onComplete,
+      onAllComplete : this._onAllComplete
+    };
+    var uploadifyOptions = $.extend({}, defaults, options);
+    
+    this.$uploadify.uploadify(uploadifyOptions);
   },
 
   render : function() {
@@ -28,6 +57,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     $('.cancel', this.el).text('Cancel');
     $('.ok', this.el).text('Upload');
     
+    this.uploadDocumentTiles = {};
+    
     this.scriptData = { 
       'session_key' : dc.app.cookies.get('document_cloud_session')
     };
@@ -37,25 +68,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     
     $('.ok', this.el).setMode('not', 'enabled');
     
-    this.$uploadify = $('#document_upload_browse', this.el);
-    this.$uploadify.uploadify({
-      uploader      : '/flash/uploadify.swf',
-      script        : '/import/upload_document',
-      auto          : false,
-      multi         : true,
-      wmode         : 'transparent',
-      fileDataName  : 'file',
-      scriptData    : this.scriptData,
-      onSelect      : this._onSelect,
-      onSelectOnce  : this._onSelectOnce,
-      onCancel      : this._onCancel,
-      onStarted     : this._onStarted,
-      onProgress    : this._onProgress,
-      onComplete    : this._onComplete,
-      onAllComplete : this._onAllComplete
-    });
+    this.setupUploadify();
     
     return this;
+  },
+  
+  _onInit : function() {
+    
   },
   
   _onSelect : function(e, queueId, fileObj) {
@@ -83,11 +102,17 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       $submit.text('Upload Documents');
     }
     
+    this.open();
     this.center(); // TODO: Take me out.
   },
   
   _onCancel : function(e, queueId, fileObj, data) {
+    console.log(['Cancel', e, queueId, fileObj, data, this]);
+    
+    delete this.uploadDocumentTiles[queueId];
     this._onSelectOnce(e, data);
+    
+    return false;
   },
   
   _onStarted : function(e, queueId) {
@@ -162,7 +187,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   open : function() {
-    this.render();
     $(this.el).show();
     $(document.body).addClass('overlay');
     this.center();
@@ -170,7 +194,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
   
   cancel : function() {
-    this.$uploadify.uploadifyCancel();
+    if (_.keys(this.uploadDocumentTiles).length) {
+      this.$uploadify.uploadifyClearQueue();
+      $('.upload_document_queue').remove();
+    }
     this.close();
   },
   
@@ -186,7 +213,7 @@ dc.ui.UploadDocumentTile = dc.View.extend({
   className : 'upload_document_queue',
   
   callbacks : {
-    '.upload_close.click' : 'removeUploadFile',
+    '.remove_queue.click' : 'removeUploadFile',
     '.open_edit.click' : 'openEdit'
   },
   
@@ -228,7 +255,7 @@ dc.ui.UploadDocumentTile = dc.View.extend({
     var $edit = $('.upload_edit', this.el);
     var $editButton = $('.open_edit', this.el);
     
-    $edit.slideToggle(200);
+    $edit.toggle();
     $editButton.toggleClass('active');
   }
   

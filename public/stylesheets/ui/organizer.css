@@ -31,7 +31,13 @@
     }
   #organizer #project_controls {
     margin-right: 2px;
+    position: relative;
   }
+    #organizer #project_controls #new_documentUploader {
+      position: absolute;
+      left: 30px;
+      top: 20px;
+    }
   #organizer .project_list_wrap {
   }
     #organizer.has_projects .project_help {
