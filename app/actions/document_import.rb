@@ -11,12 +11,18 @@ class DocumentImport < CloudCrowd::Action
   # Process runs either the text extraction or image generation, depending on
   # the input.
   def process
-    @pdf = document.slug + '.pdf'
-    File.open(@pdf, 'w+') {|f| f.write(asset_store.read_pdf(document)) }
-    case input['task']
-    when 'text'   then process_text
-    when 'images' then process_images
+    begin
+      @pdf = document.slug + '.pdf'
+      File.open(@pdf, 'w+') {|f| f.write(asset_store.read_pdf(document)) }
+      case input['task']
+      when 'text'   then process_text
+      when 'images' then process_images
+      end
+    rescue Exception => e
+      LifecycleMailer.deliver_exception_notification(e)
+      raise e
     end
+    document.id
   end
 
   # When both sides are done, update the document to mark it as finished.
