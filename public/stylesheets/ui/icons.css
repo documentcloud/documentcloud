@@ -48,6 +48,11 @@
   background-position: center 0;
   background-image: url(/images/embed/icons/twopencils.png);;
 }
+  .icon.edit_glyph_light,
+  .DV-showEdit {
+    background-position: center 0;
+    background-image: url(/images/embed/icons/twopencils_light.png);;
+  }
   .icon.edit_glyph:hover,
   .DV-showEdit:hover {
     background-position: center -16px;

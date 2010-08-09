@@ -7,7 +7,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   callbacks : {
     '.ok.click':      'confirm',
-    '.cancel.click':  'close'
+    '.cancel.click':  'cancel'
   },
 
   constructor : function() {
@@ -25,7 +25,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     $('.custom', this.el).html(JST['document/upload_dialog']({
       project : this._project
     }));
-    $('.cancel', this.el).text('Close');
+    $('.cancel', this.el).text('Cancel');
     $('.ok', this.el).text('Upload');
     
     this.scriptData = { 
@@ -105,8 +105,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
   
   _onProgress : function(e, queueId, fileObj, data) {
-    console.log(['Progress', queueId, data]);
-    var $progress = $('.upload_progress_bar', this.uploadDocumentTiles[queueId].el);
+    var $progress = $('.upload_progress_bar_container', this.uploadDocumentTiles[queueId].el);
     $progress.animate({'width': data.percentage + '%'}, {'queue': false, 'duration': 150});
     
     // Return false so uploadify doesn't try to update missing fields (from onSelect)
@@ -162,10 +161,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this.$uploadify.uploadifyUpload();
   },
 
-  closeUpload : function() {
-    if (this._progressDialog) this._progressDialog.close();
-  },
-
   open : function() {
     this.render();
     $(this.el).show();
@@ -173,7 +168,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this.center();
     $('#document_upload_title', this.el).focus();
   },
-
+  
+  cancel : function() {
+    this.$uploadify.uploadifyCancel();
+    this.close();
+  },
+  
   close : function() {
     $(this.el).hide();
     $(document.body).removeClass('overlay');
@@ -201,11 +201,8 @@ dc.ui.UploadDocumentTile = dc.View.extend({
   
   render : function() {
     var filename = this.fileObj['name'].replace(this.FILE_EXTENSION_MATCHER, '');
-    console.log(['render', filename]);
     var match = this.fileObj['name'].match(this.FILE_EXTENSION_MATCHER);
     var extension = match && match[1];
-    
-    console.log(['render', filename, match, extension]);
     
     $(this.el).html(JST['document/upload_document_tile']({
       'documentQueueId' : this.queueId,

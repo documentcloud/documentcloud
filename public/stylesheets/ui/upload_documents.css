@@ -29,6 +29,10 @@
   border-color: #991612;
 }
 
+#upload_dialog .queued_file {
+  position: relative;
+}
+
 #upload_dialog .row {
   overflow: hidden;
   clear: both;
@@ -65,6 +69,7 @@
   #upload_dialog .upload_title .icon.edit_glyph {
     float: right;
     margin: 5px 4px 0 4px;
+    cursor: pointer;
   }
   #upload_dialog .upload_title .icon.cancel_search {
     float: right;
@@ -99,7 +104,7 @@
     margin: 8px 0 0 0;
     float: none;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 11px;
   }
   #upload_dialog .upload_edit .text_input {
     margin: 8px 0 0 0;
@@ -117,15 +122,19 @@
     left: 0;
     top: 0;
   }
+  
 
 #upload_dialog .upload_progress_bar_container {
   background:none repeat scroll 0 0 transparent;
-  height:1px;
-  margin:2px 0 0 125px;
-  width: 336px;
+  height:30px;
+  width: 0%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: .3;
 }
   #upload_dialog .upload_progress_bar_container .upload_progress_bar {
-    height: 1px;
-    width: 0%;
+    height: 30px;
+    width: 100%;
     background-color: #3349D2;
   }
