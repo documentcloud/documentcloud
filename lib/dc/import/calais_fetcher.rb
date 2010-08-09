@@ -18,7 +18,11 @@ module DC
           thread = Thread.new { rdfs[i] = fetch_rdf_from_calais(chunk) }
           threads.push thread
         end
-        threads.each {|t| t.join }
+        begin
+          threads.each {|t| t.join }
+        rescue Exception => e
+          LifecycleMailer.deliver_exception_notification(e)
+        end
         rdfs
       end
 
