@@ -28,10 +28,7 @@ dc.ui.Admin = dc.View.extend({
     '.chart.plothover':           '_showTooltop',
     '#instances .minus.click':    '_terminateInstance',
     '.more_top_documents.click':  '_loadMoreTopDocuments',
-    '#load_all_accounts.click':   '_loadAllAccounts'
-  },
-
-  accountCallbacks : {
+    '#load_all_accounts.click':   '_loadAllAccounts',
     '#account_list .sort.click':  '_sortAccounts'
   },
 
@@ -70,7 +67,6 @@ dc.ui.Admin = dc.View.extend({
 
   renderAccounts : function() {
     $('#accounts_wrapper', this.el).html((new dc.ui.AdminAccounts()).render().el);
-    this.setCallbacks(this.accountCallbacks);
   },
 
   data : function() {

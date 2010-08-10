@@ -23,7 +23,8 @@ dc.ui.Project = dc.View.extend({
     return this;
   },
 
-  showDocuments : function() {
+  showDocuments : function(e) {
+    if ($(e.target).hasClass('edit_glyph')) return false;
     this.model.open();
   },
 

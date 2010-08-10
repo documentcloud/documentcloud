@@ -58,7 +58,7 @@ dc.View = Base.extend({
       key = key.split(me.LAST_DOT);
       var selector = key[0], eventName = key[1], methodName = val;
       var method = _.bind(me[methodName], me);
-      (selector == 'el' ? $(me.el) : $(selector, me.el)).bind(eventName, method);
+      (selector == 'el') ? $(me.el).bind(eventName, method) : $(me.el).delegate(selector, eventName, method);
     });
   }
 

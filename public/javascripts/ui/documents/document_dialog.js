@@ -6,12 +6,9 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   className : 'dialog docalog',
 
   callbacks : {
-    '.cancel.click' : 'close',
-    '.ok.click'     : 'save',
-    '.delete.click' : 'destroy'
-  },
-
-  formCallbacks : {
+    '.cancel.click'     : 'close',
+    '.ok.click'         : 'save',
+    '.delete.click'     : 'destroy',
     '.attribute.change' : '_markChanged'
   },
 
@@ -35,7 +32,6 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     _.each(this.ATTRIBUTES, _.bind(function(attr) {
       $('#document_edit_' + attr).val(attrs[attr] || '');
     }, this));
-    this.setCallbacks(this.formCallbacks);
     this.center();
     return this;
   },

@@ -7,10 +7,7 @@ dc.ui.Organizer = dc.View.extend({
     '#new_document.click'     : 'openUploads',
     '.all_documents.click'    : 'showAllDocuments',
     '.your_documents.click'   : 'showYourDocuments',
-    '.org_documents.click'    : 'showOrganizationDocuments'
-  },
-
-  facetCallbacks : {
+    '.org_documents.click'    : 'showOrganizationDocuments',
     '.row.click'              : '_filterFacet',
     '.cancel_search.click'    : '_removeFacet',
     '.more.click'             : '_loadFacet',
@@ -66,7 +63,6 @@ dc.ui.Organizer = dc.View.extend({
     });
     this._facets = facets;
     this.entityList.html(JST['organizer/entities']({entities : facets, limit : limit}));
-    this.setCallbacks(this.facetCallbacks);
     dc.app.scroller.checkLater();
   },
 

@@ -16,12 +16,9 @@ dc.ui.Document = dc.View.extend({
     '.icon.doc.click'         : 'select',
     '.icon.doc.dblclick'      : 'viewDocument',
     '.show_notes.click'       : 'toggleNotes',
-    '.title .edit_glyph.click': 'openDialog'
-  },
-
-  pageCallbacks : {
-    '.page.click'         : '_openEntityOnPage',
-    '.cancel_search.click': '_hidePages'
+    '.title .edit_glyph.click': 'openDialog',
+    '.page.click'             : '_openEntityOnPage',
+    '.cancel_search.click'    : '_hidePages'
   },
 
   constructor : function(options) {
@@ -174,7 +171,6 @@ dc.ui.Document = dc.View.extend({
 
   _renderPages : function() {
     this.pagesEl.html(JST['document/pages']({doc : this.model}));
-    this.setCallbacks(this.pageCallbacks);
   },
 
   _hidePages : function() {
