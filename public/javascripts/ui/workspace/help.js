@@ -20,12 +20,12 @@ dc.ui.Help = dc.View.extend({
   },
 
   constructor : function() {
-    this.el = $('#help')[0];
     this.currentPage = null;
     this.PAGE_URLS = _.pluck(this.PAGES, 'url');
   },
 
   render : function() {
+    this.el = $('#help')[0];
     dc.history.register(/^#help\//,     _.bind(this.openPage, this));
     dc.history.register(/^#help$/,      _.bind(this.openPage, this, ''));
     dc.app.navigation.bind('tab:help',  _.bind(this.openHelpTab, this));
