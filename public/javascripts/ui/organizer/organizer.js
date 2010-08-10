@@ -77,8 +77,12 @@ dc.ui.Organizer = dc.View.extend({
 
   promptNewProject : function() {
     var me = this;
-    dc.ui.Dialog.prompt('Create a New Project', '', function(title) {
-      if (!title) return;
+    dc.ui.Dialog.prompt('Create a New Project', '', function(title, dialog) {
+      title = Inflector.trim(title);
+      if (!title) {
+        dialog.error('Please enter a title.');
+        return;
+      }
       if (Projects.find(title)) return me._warnAlreadyExists(title);
       var count = _.inject(Documents.selected(), function(memo, doc){ return memo + doc.get('annotation_count'); }, 0);
       var project = new dc.model.Project({title : title, annotation_count : count, document_ids : Documents.selectedIds(), owner : true});

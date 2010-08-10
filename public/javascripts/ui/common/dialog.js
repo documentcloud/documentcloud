@@ -113,7 +113,7 @@ dc.ui.Dialog = dc.View.extend({
   },
 
   prompt : function(text, content, callback, options) {
-    var onConfirm = callback && function(dialog){ return callback(dialog.val()); };
+    var onConfirm = callback && function(dialog){ return callback(dialog.val(), dialog); };
     return new dc.ui.Dialog(_.extend({
       mode      : 'prompt',
       password  : !!(options && options.password),

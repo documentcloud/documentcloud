@@ -9,6 +9,7 @@ dc.model.Project = dc.Model.extend({
   },
 
   set : function(attrs, silent) {
+    if (attrs.title)            attrs.title = Inflector.trim(attrs.title);
     if (attrs.document_ids)     attrs.document_count = attrs.document_ids.length;
     if (attrs.account_id)       attrs.owner = attrs.account_id == dc.app.accountId;
     if (attrs.collaborator_ids) attrs.collaborator_count = attrs.collaborator_ids.length;

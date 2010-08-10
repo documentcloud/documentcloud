@@ -1,6 +1,11 @@
 // Naive English transformations on words.
 window.Inflector = {
 
+  // Delegate to the ECMA5 String.prototype.trim function, if available.
+  trim : function(s) {
+    return s.trim ? s.trim() : s.replace(/^\s+|\s+$/g, '');
+  },
+
   camelize : function(s) {
     var parts = s.split('-'), len = parts.length;
     if (len == 1) return parts[0];
