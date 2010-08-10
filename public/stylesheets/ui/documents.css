@@ -163,12 +163,12 @@
       text-align: left;
     }
     .document .show_notes .cancel_search {
-      float: left;
-      margin: 2px 5px 0 0;
+      margin-right: 5px;
+      vertical-align: text-top;
       display: none;
     }
       .document.has_notes .show_notes .cancel_search {
-        display: block;
+        display: inline-block;
       }
 
 /*---------------------------- Page References -------------------------------*/
@@ -176,17 +176,16 @@
 }
 .document .pages_title {
   margin: 15px 0 15px 0;
-  line-height: 15px;
 }
   .document .pages .pages_title_inner {
     position: relative;
+    line-height: 11px;
     margin-right: 10px;
   }
   .document .pages .cancel_search {
     cursor: pointer;
-    display: inline;
-    vertical-align: text-bottom;
-    padding-left: 11px;
+    display: inline-block;
+    vertical-align: text-top;
     margin-right: 5px;
   }
 .document .page {
