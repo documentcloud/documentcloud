@@ -5,7 +5,10 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   callbacks : {
     '.ok.click'                     : 'confirm',
     '.cancel.click'                 : 'close',
-    '.delete.click'                 : '_deleteProject',
+    '.delete.click'                 : '_deleteProject'
+  },
+
+  customCallbacks : {
     '.add_collaborator.click'       : '_showEnterEmail',
     '.minibutton.add.click'         : '_addCollaborator',
     '#collaborator_email.keypress'  : '_maybeAddCollaborator',
@@ -52,7 +55,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     }
     $(this.el).show();
     this.center();
-    this.setCallbacks();
+    this.setCallbacks(this.customCallbacks);
   },
 
   // If we don't own it, a request to remove the project is a request to remove
