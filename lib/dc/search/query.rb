@@ -1,11 +1,15 @@
 module DC
   module Search
 
-    # A Search::SolrQuery is the structured form of a fielded search, and knows
+    # A Search::Query is the structured form of a fielded search, and knows
     # how to generate all of the Solr needed to run and paginate the search.
     # Queries can be run authenticated as an account/organization, as well
     # as unrestricted (pass :unrestricted => true).
-    class SolrQuery
+    #
+    # If the query doesn't need to hit Solr -- if we're just looking at all
+    # documents in a specific project, or all documents belonging to an account,
+    # just use Postgres.
+    class Query
       include DC::Access
 
       FACET_OPTIONS = {
@@ -95,6 +99,14 @@ module DC
         populate_highlights if DC_CONFIG['include_highlights']
         self
       end
+      
+      # Does this query require the Solr index?
+      # def needs_solr?
+      #   :text, :fields, :projects, :project_ids, :doc_ids, :attributes, :results, :access, :source_document
+      #   has_text? || has_fields? || has_source_document? ||
+      #     (has_attributes? &&)
+      #   has_attributes?
+      # end
 
       # If we've got a full text search with results, we can get Postgres to
       # generate the text highlights for our search results.

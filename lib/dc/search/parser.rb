@@ -24,7 +24,7 @@ module DC
         process_search_text(search_text)
         process_fields_and_projects(bare_fields, quoted_fields)
 
-        SolrQuery.new(:text => @text, :fields => @fields, :projects => @projects,
+        Query.new(:text => @text, :fields => @fields, :projects => @projects,
           :project_ids => @project_ids, :doc_ids => @doc_ids, :attributes => @attributes,
           :access => @access, :source_document => @source_document)
       end
@@ -50,7 +50,7 @@ module DC
           if type == 'access'
             @access = ACCESS_MAP[value.strip.to_sym]
           elsif type == 'project'
-            @projects << value.strip
+            @projects << value
           elsif type == 'projectid'
             @project_ids << value.to_i
           elsif type == 'docid'
