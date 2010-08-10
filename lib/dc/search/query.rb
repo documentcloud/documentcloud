@@ -85,7 +85,7 @@ module DC
 
       # Does this query require the Solr index to run?
       def needs_solr?
-        @needs_solr ||= (has_text? || has_fields? || has_source_document? || has_attributes?)
+        @needs_solr ||= (@include_facets || has_text? || has_fields? || has_source_document? || has_attributes?)
       end
 
       # If we've got a full text search with results, we can get Postgres to
