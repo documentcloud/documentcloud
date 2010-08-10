@@ -77,3 +77,6 @@ body.minidocs #document_list .document {
 #help_toolbar .minibutton {
   width: 155px;
 }
+div.text_input.search input {
+  line-height: 16px;
+}
