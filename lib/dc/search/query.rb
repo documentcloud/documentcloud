@@ -19,7 +19,7 @@ module DC
 
       EMPTY_PAGINATION = {:page => 1, :per_page => 0}
 
-      attr_reader   :text, :fields, :projects, :project_ids, :doc_ids, :access, :attributes, :conditions, :results, :solr, :source_document
+      attr_reader   :text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :access, :attributes, :conditions, :results, :solr, :source_document
       attr_accessor :page, :page_size, :order, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
@@ -29,6 +29,8 @@ module DC
         @page                   = opts[:page]
         @access                 = opts[:access]
         @fields                 = opts[:fields]       || []
+        @accounts               = opts[:accounts]     || []
+        @groups                 = opts[:groups]       || []
         @projects               = opts[:projects]     || []
         @project_ids            = opts[:project_ids]  || []
         @doc_ids                = opts[:doc_ids]      || []
@@ -41,7 +43,7 @@ module DC
       end
 
       # Series of attribute checks to determine the kind and state of query.
-      [:text, :fields, :projects, :project_ids, :doc_ids, :attributes, :results, :access, :source_document].each do |att|
+      [:text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :attributes, :results, :access, :source_document].each do |att|
         class_eval "def has_#{att}?; @#{att}.present?; end"
       end
 
@@ -58,6 +60,8 @@ module DC
         build_related      if     @related
         build_text         if     has_text? && !@related
         build_fields       if     has_fields?
+        build_accounts     if     has_accounts?
+        build_groups       if     has_groups?
         build_projects     if     has_projects?
         build_project_ids  if     has_project_ids?
         build_doc_ids      if     has_doc_ids?
@@ -99,7 +103,7 @@ module DC
         populate_highlights if DC_CONFIG['include_highlights']
         self
       end
-      
+
       # Does this query require the Solr index?
       # def needs_solr?
       #   :text, :fields, :projects, :project_ids, :doc_ids, :attributes, :results, :access, :source_document
@@ -142,6 +146,8 @@ module DC
           'total'       => @total,
           'fields'      => @fields,
           'projects'    => @projects,
+          'accounts'    => @accounts,
+          'groups'      => @groups,
           'project_ids' => @project_ids,
           'doc_ids'     => @doc_ids,
           'attributes'  => @attributes
@@ -217,26 +223,30 @@ module DC
         end
       end
 
+      def build_accounts
+        accounts = @accounts.map {|email| Account.lookup(email) }
+        ids      = accounts.map {|acc| acc ? acc.id : -1 }
+        @solr.build do
+          with :account_id, ids
+        end
+      end
+
+      def build_groups
+        organzations = @groups.map {|slug| Organization.find_by_slug(slug, :select => 'id') }
+        ids          = organzations.map {|org| org ? org.id : -1 }
+        @solr.build do
+          with :organization_id, ids
+        end
+      end
+
       # Generate the SQL to match document attributes.
       # TODO: Fix the special-case for "documents", and "notes" by figuring out
       # a way to do arbitrary translations of faux-attributes.
       def build_attributes
         @attributes.each do |field|
-          if ['account', 'notes'].include?(field.kind)
-            account = Account.lookup(field.value)
-            @solr.build do
-              with :account_id, account ? account.id : -1
-            end
-          elsif field.kind == 'group'
-            org = Organization.find_by_slug(field.value)
-            @solr.build do
-              with :organization_id, org ? org.id : -1
-            end
-          else
-            @solr.build do
-              fulltext field.value do
-                fields field.kind
-              end
+          @solr.build do
+            fulltext field.value do
+              fields field.kind
             end
           end
         end
@@ -251,7 +261,7 @@ module DC
           else
             args = Document::SEARCHABLE_ENTITIES + [FACET_OPTIONS[:all]]
           end
-          facet *args
+          facet(*args)
         end
       end
 
