@@ -44,7 +44,7 @@ module DC
 
       # Series of attribute checks to determine the kind and state of query.
       [:text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :attributes, :results, :access, :source_document].each do |att|
-        class_eval "def has_#{att}?; @#{att}.present?; end"
+        class_eval "def has_#{att}?; @has_#{att} ||= @#{att}.present?; end"
       end
 
       # Set the page of the search that this query is supposed to access.
@@ -57,60 +57,36 @@ module DC
       # Generate all of the SQL, including conditions and joins, that is needed
       # to run the query.
       def generate_search
-        build_related      if     @related
-        build_text         if     has_text? && !@related
+        build_related      if     has_source_document?
+        build_text         if     has_text? && !has_source_document?
         build_fields       if     has_fields?
         build_accounts     if     has_accounts?
         build_groups       if     has_groups?
-        build_projects     if     has_projects?
         build_project_ids  if     has_project_ids?
+        build_projects     if     has_projects?
         build_doc_ids      if     has_doc_ids?
-        build_attributes   if     has_attributes? && !@related
+        build_attributes   if     has_attributes? && !has_source_document?
         build_facets       if     @include_facets
         build_access       unless @unrestricted
-        page       = @page
-        size       = @facet ? 0 : @page_size
-        order      = @order.to_sym
-        direction  = (order == :created_at || order == :score) ? :desc : :asc
-        pagination = {:page => page, :per_page => size}
-        pagination = EMPTY_PAGINATION if @exclude_documents
-
-        related = @related
-        @solr.build do
-          order_by  order, direction
-          order_by  :created_at, :desc if order != :created_at
-          paginate  pagination
-          data_accessor_for(Document).include = [:organization, :account] unless related
-        end
       end
 
       # Runs (at most) two queries -- one to count the total number of results
       # that match the search, and one that retrieves the documents or notes
       # for the current page.
       def run(o={})
-        @related = !!@source_document
-        @solr = @related ?
-          Sunspot.new_more_like_this(@source_document, Document) :
-          Sunspot.new_search(Document)
         @account, @organization, @unrestricted = o[:account], o[:organization], o[:unrestricted]
         @include_facets, @facet = o[:include_facets], o[:facet]
         @exclude_documents = o[:exclude_documents]
-        generate_search
-        @solr.execute
-        @total   = @solr.total
-        @results = @solr.results
+        needs_solr? ? run_solr : run_database
         populate_annotation_counts
         populate_highlights if DC_CONFIG['include_highlights']
         self
       end
 
-      # Does this query require the Solr index?
-      # def needs_solr?
-      #   :text, :fields, :projects, :project_ids, :doc_ids, :attributes, :results, :access, :source_document
-      #   has_text? || has_fields? || has_source_document? ||
-      #     (has_attributes? &&)
-      #   has_attributes?
-      # end
+      # Does this query require the Solr index to run?
+      def needs_solr?
+        @needs_solr ||= (has_text? || has_fields? || has_source_document? || has_attributes?)
+      end
 
       # If we've got a full text search with results, we can get Postgres to
       # generate the text highlights for our search results.
@@ -157,6 +133,49 @@ module DC
 
       private
 
+      def run_solr
+        @solr = has_source_document? ?
+          Sunspot.new_more_like_this(@source_document, Document) :
+          Sunspot.new_search(Document)
+        generate_search
+        build_pagination
+        @solr.execute
+        @total   = @solr.total
+        @results = @solr.results
+      end
+
+      def run_database
+        @sql, @interpolations, @joins = [], [], []
+        @proxy = Document
+        generate_search
+        conditions        = [@sql.join(' and ')] + @interpolations
+        order             = "documents.created_at desc"
+        order             = "documents.#{@order} asc, #{order}" unless [:created_at, :score].include?(@order.to_sym)
+        options           = {:conditions => conditions, :joins => @joins}
+        @total            = @proxy.count(options)
+        options[:order]   = order
+        options[:limit]   = @page_size
+        options[:offset]  = @from
+        @results          = @proxy.all(options)
+      end
+
+      # Construct the correct pagination for the current query.
+      def build_pagination
+        page       = @page
+        size       = @facet ? 0 : @page_size
+        order      = @order.to_sym
+        direction  = (order == :created_at || order == :score) ? :desc : :asc
+        pagination = {:page => page, :per_page => size}
+        pagination = EMPTY_PAGINATION if @exclude_documents
+        related    = has_source_document?
+        @solr.build do
+          order_by  order, direction
+          order_by  :created_at, :desc if order != :created_at
+          paginate  pagination
+          data_accessor_for(Document).include = [:organization, :account] unless related
+        end
+      end
+
       # Build the Solr needed to pass options to the MoreLikeThis DSL
       def build_related
         @solr.build do
@@ -179,7 +198,7 @@ module DC
       # Generate the Solr to search across the fielded metadata.
       def build_fields
         fields = @fields
-        related = @related
+        related = has_source_document?
         @solr.build do
           fields.each do |field|
             if related
@@ -204,38 +223,65 @@ module DC
         else
           project_ids = [-1]
         end
-        @solr.build do
-          with :project_ids, project_ids
+        if needs_solr?
+          @solr.build do
+            with :project_ids, project_ids
+          end
+        else
+          @project_ids = project_ids
+          build_project_ids
         end
       end
 
       def build_project_ids
         ids = @project_ids
-        @solr.build do
-          with :project_ids, ids
+        if needs_solr?
+          @solr.build do
+            with :project_ids, ids
+          end
+        else
+          @sql << 'projects.id in (?)'
+          @interpolations << @project_ids
+          @joins << 'inner join project_memberships ON documents.id = document_id
+                     inner join projects on project_id = projects.id'
         end
       end
 
       def build_doc_ids
         ids = @doc_ids
-        @solr.build do
-          with :id, ids
+        if needs_solr?
+          @solr.build do
+            with :id, ids
+          end
+        else
+          @sql << 'documents.id in (?)'
+          @interpolations << ids
         end
       end
 
       def build_accounts
         accounts = @accounts.map {|email| Account.lookup(email) }
         ids      = accounts.map {|acc| acc ? acc.id : -1 }
-        @solr.build do
-          with :account_id, ids
+        if needs_solr?
+          @solr.build do
+            with :account_id, ids
+          end
+        else
+          @sql << 'documents.account_id in (?)'
+          @interpolations << ids
         end
       end
 
       def build_groups
         organzations = @groups.map {|slug| Organization.find_by_slug(slug, :select => 'id') }
         ids          = organzations.map {|org| org ? org.id : -1 }
-        @solr.build do
-          with :organization_id, ids
+        if needs_solr?
+          @solr.build do
+            with :organization_id, ids
+          end
+        else
+          @sql << 'documents.organization_id in (?)'
+          @interpolations << ids
         end
       end
 
@@ -271,12 +317,19 @@ module DC
       # project that's been shared with us, or it belongs to a project that
       # *hasn't* been shared with us, but is public.
       def build_access
+        @proxy = Document.accessible(@account, @organization) unless needs_solr?
         if has_access?
           access = @access
-          @solr.build do
-            with :access, access
+          if needs_solr?
+            @solr.build do
+              with :access, access
+            end
+          else
+            @sql << 'documents.access = ?'
+            @interpolations << access
           end
         end
+        return unless needs_solr?
         return if @populated_projects
         account, organization  = @account, @organization
         accessible_project_ids = has_projects? || has_project_ids? ? [] : (account && account.accessible_project_ids)

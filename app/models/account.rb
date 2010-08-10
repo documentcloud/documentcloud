@@ -98,9 +98,10 @@ class Account < ActiveRecord::Base
   end
 
   def accessible_document_ids
-    @accessible_document_ids ||= ProjectMembership.all(
-      :conditions => {:project_id => accessible_project_ids}, :select => [:document_id]
-    ).map {|m| m.document_id }
+    return [] unless accessible_project_ids
+    @accessible_document_ids ||= ProjectMembership.connection.select_values(
+      "select distinct document_id from project_memberships where project_id in (#{accessible_project_ids.join(',')})"
+    ).map {|id| id.to_i }
   end
 
   # The list of all of the projects that have been shared with this account
