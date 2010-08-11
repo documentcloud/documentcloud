@@ -10,7 +10,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function() {
-     _.bindAll(this, '_onInit', '_onSelect', '_onSelectOnce', '_onCancel', '_onStarted', '_onProgress', '_onComplete', '_onAllComplete');
+     _.bindAll(this, '_onSelect', '_onSelectOnce', '_onCancel', '_onStarted', '_onProgress', '_onComplete', '_onAllComplete');
     this.base({
       mode  : 'custom',
       title : 'Upload Documents'
@@ -33,11 +33,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   _renderDocumentTiles : function() {
-    _.each(UploadDocuments.models(), _.bind(function(model) {
+    var tiles = this._tiles;
+    _.each(UploadDocuments.models(), function(model) {
       var view = new dc.ui.UploadDocumentTile({model : model});
-      this._tiles[uploadDocumentModel.id] = view.render();
-    }, this));
-    var viewEls = _.pluck(_.values(this._tiles), 'el');
+      tiles[model.id] = view.render();
+    });
+    var viewEls = _.pluck(_.values(tiles), 'el');
     $('.upload_document_tiles', this.el).append(viewEls);
   },
 
