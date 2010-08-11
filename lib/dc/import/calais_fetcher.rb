@@ -14,12 +14,10 @@ module DC
         text    = text.mb_chars
         chunks  = split_text(text)
         threads, rdfs = [], []
-        chunks.each_with_index do |chunk, i|
-          thread = Thread.new { rdfs[i] = fetch_rdf_from_calais(chunk) }
-          threads.push thread
-        end
         begin
-          threads.each {|t| t.join }
+          chunks.each_with_index do |chunk, i|
+            rdfs[i] = fetch_rdf_from_calais(chunk)
+          end
         rescue Exception => e
           LifecycleMailer.deliver_exception_notification(e)
         end
