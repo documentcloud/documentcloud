@@ -14,6 +14,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       mode      : 'custom',
       title     : 'Upload Documents'
     });
+    UploadDocuments.bind(dc.Set.MODEL_ADDED, this.countDocuments);
+    UploadDocuments.bind(dc.Set.MODEL_REMOVED, this.countDocuments);
+    UploadDocuments.bind(dc.Set.MODEL_CHANGED, this.countDocuments);
+    UploadDocuments.bind(dc.Set.REFRESHED, this.countDocuments);
   },
 
   render : function() {
@@ -28,6 +32,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     $('.cancel', this.el).text('Cancel');
     
     this._renderDocumentTiles();
+    this.countDocuments();
     
     return this;
   },
@@ -44,7 +49,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     var views = _.pluck(_.values(this.uploadDocumentTiles), 'el');
     console.log(['render views', views]);
     $tiles.append(views);
-      
   },
   
   setupUploadify : function() {
@@ -144,6 +148,24 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this.close();
   },
 
+  countDocuments : function() {
+    var $submit = $('.ok', this.el);
+    var count = UploadDocuments.size();
+    
+    if (count > 0) {
+      $submit.setMode('is', 'enabled');
+      if (count == 1) {
+        $submit.text('Upload Document');
+      } else {
+        $submit.text('Upload ' + count + ' Documents');
+      }
+    } else {
+      $submit.setMode('not', 'enabled');
+      $submit.text('Upload Documents');
+    }
+
+  },
+  
   confirm : function() {
     var failed = _.select(this.uploadDocumentTiles, function(view) {
       return view.ensureTitle();
@@ -173,8 +195,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   
   close : function() {
     UploadDocuments.refresh();
-    $(this.el).hide();
-    $(document.body).removeClass('overlay');
+    this.base();
   }
 
 });
@@ -214,6 +235,7 @@ dc.ui.UploadDocumentTile = dc.View.extend({
     console.log(['Remove file', dc.app.uploader.$uploadify, this.queueId, this.el]);
     dc.app.uploader.$uploadify.uploadifyCancel(this.model.id);
     this.hide();
+    UploadDocuments.remove(this.model);
   },
   
   openEdit : function() {    
