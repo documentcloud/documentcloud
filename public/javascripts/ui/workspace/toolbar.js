@@ -3,8 +3,7 @@ dc.ui.Toolbar = dc.View.extend({
   id : 'toolbar',
 
   callbacks : {
-    '#open_viewers.click'            : '_openViewers',
-    '#toolbar_upload.click'          : '_openUpload'
+    '#open_viewers.click'            : '_openViewers'
   },
 
   MENUS : ['project', 'edit', 'publish', 'analyze'],
@@ -15,7 +14,7 @@ dc.ui.Toolbar = dc.View.extend({
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'requestDownloadViewers',
-      'checkFloat', '_openTimeline', '_viewEntities', '_closeEditMenu');
+      'checkFloat', '_openTimeline', '_viewEntities');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
     this.analyzeMenu      = this._createAnalyzeMenu();
@@ -157,10 +156,6 @@ dc.ui.Toolbar = dc.View.extend({
     dc.app.searcher.search(_.map(docs, function(doc){ return 'docid: ' + doc.canonicalId(); }).join(' '));
   },
 
-  _openUpload : function() {
-    dc.app.uploader.open();
-  },
-
   _panel : function() {
     return this._panelEl = this._panelEl || $(this.el).parents('.panel_content')[0];
   },
@@ -170,24 +165,8 @@ dc.ui.Toolbar = dc.View.extend({
       .toggleClass('disabled', !Documents.selectedCount)
       .attr('title', Documents.selectedCount ? '' : 'No documents selected');
     $('.singular', menu.content).toggleClass('disabled', !(Documents.selectedCount == 1));
-    
-    // Move new document transparent button over to cover the New Document button.
-    var $newDocumentMenuItem = $('.new_document', menu.content);
-    if ($newDocumentMenuItem.length) {
-      var $button = $('#new_documentUploader');
-      $newDocumentMenuItem.append($button);
-      // $('#account_badge_container').after($button);
-    }
   },
 
-  _closeEditMenu : function(e) {
-    console.log(['close menu', this.el, this]);
-    var $button = $('#new_documentUploader');
-    $('#new_document').after($button);
-    
-    return true;
-  },
-  
   _createPublishMenu : function() {
     return new dc.ui.Menu({
       label   : 'Publish',
@@ -205,9 +184,7 @@ dc.ui.Toolbar = dc.View.extend({
     return new dc.ui.Menu({
       label   : 'Edit',
       onOpen  : this._enableMenuItems,
-      onClose : this._closeEditMenu,
       items   : [
-        {title : 'New Document',         attrs: {'class' : 'new_document plus'}, onClick : function() { console.log(['Click new document', this]); }},
         {title : 'Edit All Fields',      attrs: {'class' : 'multiple'},        onClick : function(){ dc.ui.DocumentDialog.open(); }},
         {title : 'Edit Title',           attrs: {'class' : 'singular indent'}, onClick : this.editTitle},
         {title : 'Edit Description',     attrs: {'class' : 'singular indent'}, onClick : this.editDescription},

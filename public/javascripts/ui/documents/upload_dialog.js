@@ -16,8 +16,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     });
     UploadDocuments.bind(dc.Set.MODEL_ADDED, this.countDocuments);
     UploadDocuments.bind(dc.Set.MODEL_REMOVED, this.countDocuments);
-    UploadDocuments.bind(dc.Set.MODEL_CHANGED, this.countDocuments);
-    UploadDocuments.bind(dc.Set.REFRESHED, this.countDocuments);
   },
 
   render : function() {
@@ -51,8 +49,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     $tiles.append(views);
   },
   
-  setupUploadify : function() {
-    this.$uploadify = $('#new_document');
+  setupUploadify : function($uploadify) {
+    this.$uploadify = $uploadify || $('#new_document');
     
     var options = {
       uploader      : '/flash/uploadify.swf',
@@ -62,7 +60,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       wmode         : 'transparent',
       fileDataName  : 'file',
       buttonImg     : '/images/embed/ui/spacer.png',
-      buttonImg     : '/images/help/drag_select.png',
+      // buttonImg     : '/images/help/drag_select.png',
       width         : 126,
       height        : 26,
       scriptData    : {},
@@ -80,7 +78,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
   
   _onInit : function() {
-    
+    console.log(['Init']);
   },
   
   _onSelect : function(e, queueId, fileObj) {
@@ -97,6 +95,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
   
   _onSelectOnce : function(e, data) {
+    console.log(['onSelectOnce', e, data]);
     this.render();
   },
   
@@ -227,7 +226,7 @@ dc.ui.UploadDocumentTile = dc.View.extend({
       title: $('input[name=title]', this.el).val(),
       description: $('textarea[name=description]', this.el).val(),
       source: $('input[name=source]', this.el).val(),
-      access: $('input[name=access]', this.el).val()
+      access: $('select[name=access]', this.el).val()
     };
   },
   

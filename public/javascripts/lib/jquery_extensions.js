@@ -125,7 +125,7 @@
       options = _.extend({clickable : null, onHide : null}, options || {});
       me._autoignore = true;
       setTimeout(function(){ delete me._autoignore; }, 0);
-
+      
       if (!me._autohider) {
         me.forceHide = function(e) {
           if (!e && options.onHide) options.onHide();
