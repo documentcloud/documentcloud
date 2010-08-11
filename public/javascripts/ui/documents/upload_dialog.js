@@ -19,14 +19,14 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   render : function() {
-    this.base();
     this.uploadDocumentTiles = {};
     this._project = _.first(Projects.selected());
+    this.base({
+      'information': 'Project: ' + this._project.get('title')
+    });
     console.log(['render', this._project]);
 
-    $('.custom', this.el).html(JST['document/upload_dialog']({
-      project : this._project
-    }));
+    $('.custom', this.el).html(JST['document/upload_dialog']({}));
     $('.cancel', this.el).text('Cancel');
     
     this._renderDocumentTiles();
@@ -117,6 +117,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     }
     
     this.$uploadify.uploadifySettings('scriptData', options);
+    this.showSpinner();
   },
   
   _onProgress : function(e, queueId, fileObj, data) {
@@ -144,6 +145,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
   
   _onAllComplete : function(e, data) {
+    this.hideSpinner();
     this.close();
   },
 
