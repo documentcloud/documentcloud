@@ -5,6 +5,19 @@
   cursor: pointer;
 }
 
+#upload_dialog .upload_document_project {
+  position:absolute;
+  top: 26px;
+  right: 24px;
+}
+  #upload_dialog .upload_document_project .upload_document_project_label {
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  #upload_dialog .upload_document_project .upload_document_project_title {
+    font-size: 14px;
+  }
+
 #upload_dialog .minibutton.ok {
   padding-left: 28px;
   padding-right: 28px;

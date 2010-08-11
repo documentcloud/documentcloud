@@ -4,18 +4,13 @@
     <div id="document_upload_browse" />
   </div>
   
-  <div class="upload_document_tiles"></div>
-
   <% if (project) { %>
-    <div class="row draggable">
-      <label>
-        Project:
-      </label>
-      <div id="document_project_title">
-        <%= project.get('title') %>
-      </div>
-      <input name="project_id" id="document_project_id" type="hidden" value="<%= project.id %>" />
+    <div class="upload_document_project">
+      <div class="upload_document_project_label">Project:</div>
+      <div class="upload_document_project_title"><%= project.get('title') %></div>
     </div>
   <% } %>
+  
+  <div class="upload_document_tiles"></div>
 
 </form>

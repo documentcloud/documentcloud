@@ -57,7 +57,11 @@ dc.View = Base.extend({
     _.each(callbacks || this.callbacks, function(val, key) {
       key = key.split(me.LAST_DOT);
       var selector = key[0], eventName = key[1], methodName = val;
-      var method = _.bind(me[methodName], me);
+      var method = function() { 
+        console.log(['callback', selector, eventName, methodName, me]); 
+        me[methodName].apply(me, arguments); 
+      };
+      // var method = _.bind(me[methodName], me);
       (selector == 'el') ? $(me.el).bind(eventName, method) : $(me.el).delegate(selector, eventName, method);
     });
   }

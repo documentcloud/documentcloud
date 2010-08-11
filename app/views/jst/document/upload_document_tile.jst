@@ -4,11 +4,11 @@
     <div class="icon remove_queue cancel_search"></div>
     <div class="icon edit_glyph edit_glyph_light open_edit" title="Edit details"></div>
     <div class="upload_file_size draggable">
-      (<%= $.bytesToMB(documentFileObj['size']) %>)
+      (<%= Inflector.bytesToMB(model.get('size')) %>)
     </div>
-    <label class="upload_icon upload_icon_<%= extension %>" for="document_upload_title_<%= documentQueueId %>" title="<%= documentFileObj['name'] %>"></label>
+    <label class="upload_icon upload_icon_<%= model.get('extension') %>" for="document_upload_title_<%= model.id %>" title="<%= model.get('name') %>"></label>
     <div class="text_input small dark">
-      <input name="title" id="document_upload_title_<%= documentQueueId %>" type="text" value="<%= filename %>"/>
+      <input name="title" id="document_upload_title_<%= model.id %>" type="text" value="<%= model.get('name') %>"/>
     </div>
   </div>
 
@@ -19,27 +19,27 @@
   <div class="upload_edit">
     <div class="upload_description">
       <div class="upload_description_row">
-        <label for="document_upload_description_<%= documentQueueId %>">
+        <label for="document_upload_description_<%= model.id %>">
           Description:
         </label>
-        <textarea name="description" id="document_upload_description_<%= documentQueueId %>" class="text_area content dark interface"></textarea>
+        <textarea name="description" id="document_upload_description_<%= model.id %>" class="text_area content dark interface"></textarea>
       </div>
     </div>
 
     <div class="upload_source">
-      <label for="document_upload_source_<%= documentQueueId %>">
+      <label for="document_upload_source_<%= model.id %>">
         Source:
       </label>
       <div class="text_input small dark">
-        <input name="source" id="document_upload_source_<%= documentQueueId %>" type="text" />
+        <input name="source" id="document_upload_source_<%= model.id %>" type="text" />
       </div>
     </div>
 
     <div class="upload_access last">
-      <label for="document_upload_access_<%= documentQueueId %>">
+      <label for="document_upload_access_<%= model.id %>">
         Access Level:
       </label>
-      <select name="access" class="document_access" id="document_upload_access_<%= documentQueueId %>">
+      <select name="access" class="document_access" id="document_upload_access_<%= model.id %>">
         <option value="public">Public Access</option>
         <option value="private" selected="true">Private Access</option>
         <option value="organization">Private to <%= dc.app.organization.name %></option>
