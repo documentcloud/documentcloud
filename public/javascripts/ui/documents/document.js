@@ -159,7 +159,6 @@ dc.ui.Document = dc.View.extend({
     if (this.model.hasChanged('selected'))         return this._setSelected();
     if (this.model.hasChanged('annotation_count')) return $('span.note_count', this.el).text(this.model.get('annotation_count'));
     if (this.model.hasChanged('access'))           return $('.main_icon', this.el).attr(this._iconAttributes());
-    console.log(this.model.changedAttributes());
     this.render();
   },
 
