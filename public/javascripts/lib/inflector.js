@@ -93,7 +93,7 @@ window.Inflector = {
       suffix = 'MB';
     }
     var sizeParts = byteSize.toString().split('.');
-    byteSize = sizeParts[0] + (sizeParts.length > 1 ? sizeParts[1].substr(0,2) : '');
+    byteSize = sizeParts[0] + (sizeParts.length > 1 ? '.' + sizeParts[1].substr(0,1) : '');
     return byteSize + ' ' + suffix;
   }
 

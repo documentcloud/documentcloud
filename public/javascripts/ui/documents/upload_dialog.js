@@ -118,7 +118,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   countDocuments : function() {
     var num = UploadDocuments.size();
-    $('.ok', this.el).text('Upload ' + (num > 1 ? num : '') + Inflector.pluralize('Document', num));
+    $('.ok', this.el).text('Upload ' + (num > 1 ? num : '') + Inflector.pluralize(' Document', num));
   },
 
   confirm : function() {
