@@ -6,7 +6,7 @@ require 'set'
 class Project < ActiveRecord::Base
 
   belongs_to :account
-  has_many :project_memberships
+  has_many :project_memberships, :dependent => :destroy
   has_many :collaborations,      :dependent => :destroy
   has_many :documents,           :through => :project_memberships
   has_many :collaborators,       :through => :collaborations, :source => :account
@@ -14,9 +14,10 @@ class Project < ActiveRecord::Base
   validates_presence_of :title
   validates_uniqueness_of :title, :scope => :account_id
 
-  after_create :create_default_collaboration
-
-  before_destroy :remove_project_memberships
+  after_create    :create_default_collaboration
+  after_create    :reindex_documents
+  before_destroy  :document_ids
+  after_destroy   :reindex_documents
 
   named_scope :alphabetical, {:order => :title}
 
@@ -103,14 +104,9 @@ class Project < ActiveRecord::Base
 
   private
 
-  def reindex_documents(ids)
+  def reindex_documents(ids=nil)
+    ids ||= self.document_ids
     Document.all(:conditions => ["id in (?)", ids]).each {|doc| doc.index }
-  end
-
-  def remove_project_memberships
-    doc_ids = self.document_ids
-    self.project_memberships.destroy_all
-    reindex_documents doc_ids
   end
 
 end
