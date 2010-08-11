@@ -83,22 +83,17 @@ window.Inflector = {
     });
     return words.join('');
   },
-    
+
   // Convert bytes into KB or MB
   bytesToMB : function(bytes) {
-    var byteSize = Math.round(bytes / 1024 * 100) * .01;
+    var byteSize = Math.round(bytes / 1024 * 100) * 0.01;
     var suffix = 'KB';
     if (byteSize > 1000) {
-      byteSize = Math.round(byteSize *.001 * 100) * .01;
+      byteSize = Math.round(byteSize * 0.001 * 100) * 0.01;
       suffix = 'MB';
     }
     var sizeParts = byteSize.toString().split('.');
-    if (sizeParts.length > 1) {
-      byteSize = sizeParts[0] + '.' + sizeParts[1].substr(0,2);
-    } else {
-      byteSize = sizeParts[0];
-    }
-  
+    byteSize = sizeParts[0] + (sizeParts.length > 1 ? sizeParts[1].substr(0,2) : '');
     return byteSize + ' ' + suffix;
   }
 

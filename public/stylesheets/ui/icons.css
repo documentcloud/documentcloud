@@ -41,17 +41,17 @@
 }
 .icon.white_plus {
   width: 10px; height: 10px;
-  background-image: url(/images/embed/icons/plus.png);;
+  background-image: url(/images/embed/icons/plus.png);
 }
 .icon.edit_glyph,
 .DV-showEdit {
   background-position: center 0;
-  background-image: url(/images/embed/icons/twopencils.png);;
+  background-image: url(/images/embed/icons/twopencils.png);
 }
   .icon.edit_glyph_light,
   .DV-showEdit {
     background-position: center 0;
-    background-image: url(/images/embed/icons/twopencils_light.png);;
+    background-image: url(/images/embed/icons/twopencils_light.png);
   }
   .icon.edit_glyph:hover,
   .DV-showEdit:hover {
@@ -59,7 +59,7 @@
   }
 .icon.search_glyph {
   width: 12px; height: 12px;
-  background-image: url(/images/embed/icons/search_glyph.png);;
+  background-image: url(/images/embed/icons/search_glyph.png);
 }
 
 .icon.plus, .icon.minus {
@@ -73,6 +73,12 @@
   .icon.minus {
     background-image: url(/images/embed/ui/minus.png);
   }
+
+.icon.upload {
+  height: 32px;
+  width: 32px;
+  background-image: url(/images/embed/icons/page_text_32.png);
+}
 
 .icon.mini_note, .icon.mini_note_private {
   width: 12px; height: 7px;

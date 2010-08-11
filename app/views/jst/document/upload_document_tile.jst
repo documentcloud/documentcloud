@@ -6,7 +6,7 @@
     <div class="upload_file_size draggable">
       (<%= Inflector.bytesToMB(model.get('size')) %>)
     </div>
-    <label class="upload_icon upload_icon_<%= model.get('extension') %>" for="document_upload_title_<%= model.id %>" title="<%= model.get('name') %>"></label>
+    <label class="icon upload upload_icon_<%= model.get('extension') %>" for="document_upload_title_<%= model.id %>" title="<%= model.get('name') %>"></label>
     <div class="text_input small dark">
       <input name="title" id="document_upload_title_<%= model.id %>" type="text" value="<%= model.get('name') %>"/>
     </div>
