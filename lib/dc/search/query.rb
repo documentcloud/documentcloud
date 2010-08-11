@@ -133,6 +133,7 @@ module DC
 
       private
 
+      # Run the search, using the Solr index.
       def run_solr
         @solr = has_source_document? ?
           Sunspot.new_more_like_this(@source_document, Document) :
@@ -144,6 +145,7 @@ module DC
         @results = @solr.results
       end
 
+      # Run the search using Postgres.
       def run_database
         @sql, @interpolations, @joins = [], [], []
         @proxy = Document
@@ -212,7 +214,7 @@ module DC
         end
       end
 
-      # Generate the Solr to restrict the search to specific projects.
+      # Lookup projects by title, and delegate to `build_project_ids`.
       def build_projects
         return unless @account
         projects = Project.accessible(@account).all(:conditions => {:title => @projects})
@@ -223,16 +225,11 @@ module DC
         else
           project_ids = [-1]
         end
-        if needs_solr?
-          @solr.build do
-            with :project_ids, project_ids
-          end
-        else
-          @project_ids = project_ids
-          build_project_ids
-        end
+        @project_ids = project_ids
+        build_project_ids
       end
 
+      # Generate the Solr or SQL to restrict the search to specific projects.
       def build_project_ids
         ids = @project_ids
         if needs_solr?
@@ -247,6 +244,7 @@ module DC
         end
       end
 
+      # Generate the Solr or SQL to restrict the search to specific documents.
       def build_doc_ids
         ids = @doc_ids
         if needs_solr?
@@ -259,6 +257,7 @@ module DC
         end
       end
 
+      # Generate the Solr or SQL to restrict the search to specific acounts.
       def build_accounts
         accounts = @accounts.map {|email| Account.lookup(email) }
         ids      = accounts.map {|acc| acc ? acc.id : -1 }
@@ -272,6 +271,7 @@ module DC
         end
       end
 
+      # Generate the Solr or SQL to restrict the search to specific organizations.
       def build_groups
         organzations = @groups.map {|slug| Organization.find_by_slug(slug, :select => 'id') }
         ids          = organzations.map {|org| org ? org.id : -1 }
@@ -285,9 +285,7 @@ module DC
         end
       end
 
-      # Generate the SQL to match document attributes.
-      # TODO: Fix the special-case for "documents", and "notes" by figuring out
-      # a way to do arbitrary translations of faux-attributes.
+      # Generate the Solr to match document attributes.
       def build_attributes
         @attributes.each do |field|
           @solr.build do
@@ -298,7 +296,7 @@ module DC
         end
       end
 
-      # Add facet results to the search, if requested.
+      # Add facet results to the Solr search, if requested.
       def build_facets
         specific = @facet
         @solr.build do
