@@ -20,7 +20,7 @@ dc.app.searcher.extend({
     this.flags.outstandingSearch = false;
     _.bindAll(this, '_loadSearchResults', '_loadFacetsResults', '_loadFacetResults', 'searchByHash', 'loadDefault', 'loadFacets');
     dc.history.register(/^#search\//, this.searchByHash);
-    dc.app.navigation.bind('tab:documents', this.loadDefault);
+    dc.app.navigation.bind('tab:search', this.loadDefault);
     dc.app.navigation.bind('tab:help', this.box.hideSearch);
   },
 
@@ -52,7 +52,7 @@ dc.app.searcher.extend({
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
-    dc.app.navigation.open('documents');
+    dc.app.navigation.open('search');
     this.box.value(query);
     this.flags.related  = query.indexOf('related:') >= 0;
     this.flags.specific = query.indexOf('docid:') >= 0;

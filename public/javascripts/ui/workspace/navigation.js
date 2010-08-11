@@ -1,10 +1,15 @@
 dc.ui.Navigation = dc.View.extend({
 
   SECTIONS : {
-    projects  : 'sidebar',
+    documents : 'sidebar',
     entities  : 'sidebar',
-    documents : 'panel',
+    search    : 'panel',
     help      : 'panel'
+  },
+
+  VALID : {
+    sidebar : ['documents', 'entities'],
+    panel   : ['search', 'help']
   },
 
   constructor : function() {
@@ -17,11 +22,11 @@ dc.ui.Navigation = dc.View.extend({
       memo[name] = el.click(_.bind(this._switchTab, this, name));
       return memo;
     }, this), {});
-    this.tabs[dc.app.preferences.get('sidebar_tab') || 'projects'].click();
-    this.bind('tab:projects', _.bind(this._saveSidebarPreference, this, 'projects'));
-    this.bind('tab:entities', _.bind(this._saveSidebarPreference, this, 'entities'));
+    this.tabs[dc.app.preferences.get('sidebar_tab', this.VALID.sidebar) || 'documents'].click();
+    this.bind('tab:documents',  _.bind(this._saveSidebarPreference, this, 'documents'));
+    this.bind('tab:entities',   _.bind(this._saveSidebarPreference, this, 'entities'));
     this.bind('tab:entities', function() { _.defer(dc.app.searcher.loadFacets); });
-    this.setMode('documents', 'panel_tab');
+    this.setMode('search', 'panel_tab');
     return this;
   },
 

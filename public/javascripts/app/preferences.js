@@ -28,8 +28,9 @@ dc.app.cookies = {
 
 dc.app.preferences = {
 
-  get : function(name) {
-    return this._prefs()[name];
+  get : function(name, valid) {
+    var value = this._prefs()[name];
+    return (!value || (valid && !_.include(valid, value))) ? null : value;
   },
 
   set : function(obj) {
