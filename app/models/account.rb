@@ -98,7 +98,7 @@ class Account < ActiveRecord::Base
   end
 
   def accessible_document_ids
-    return [] unless accessible_project_ids
+    return [] if accessible_project_ids.empty?
     @accessible_document_ids ||= ProjectMembership.connection.select_values(
       "select distinct document_id from project_memberships where project_id in (#{accessible_project_ids.join(',')})"
     ).map {|id| id.to_i }
