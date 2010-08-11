@@ -58,18 +58,16 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   // ourselves as a collaborator.
   _deleteProject : function() {
     var wasOpen = Projects.selected()[0] == this.model;
-    var finish  = function(){
-      if (!wasOpen || dc.app.searcher.flags.outstandingSearch) return;
-      dc.app.searcher.loadDefault({clear : true});
-    };
     if (!this.model.get('owner')) {
-      this.model.collaborators.destroy(Accounts.current(), {
-        success : _.bind(function(){ Projects.remove(this.model); finish(); }, this)
-      });
+      Projects.remove(this.model);
+      this.model.collaborators.destroy(Accounts.current());
     } else {
-      Projects.destroy(this.model, {success : finish});
+      Projects.destroy(this.model);
     }
     this.close();
+    if (wasOpen && !dc.app.searcher.flags.outstandingSearch) {
+      dc.app.searcher.loadDefault({clear : true});
+    }
   },
 
   _maybeAddCollaborator : function(e) {
