@@ -6,7 +6,7 @@ require 'set'
 class Project < ActiveRecord::Base
 
   belongs_to :account
-  has_many :project_memberships, :dependent => :destroy
+  has_many :project_memberships
   has_many :collaborations,      :dependent => :destroy
   has_many :documents,           :through => :project_memberships
   has_many :collaborators,       :through => :collaborations, :source => :account
@@ -15,6 +15,8 @@ class Project < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => :account_id
 
   after_create :create_default_collaboration
+
+  before_destroy :remove_project_memberships
 
   named_scope :alphabetical, {:order => :title}
 
@@ -33,9 +35,10 @@ class Project < ActiveRecord::Base
 
   def set_documents(new_ids)
     new_ids = new_ids.to_set
-    doc_ids = self.document_ids.to_set
-    ProjectMembership.destroy_all(:project_id => id, :document_id => (doc_ids - new_ids).to_a)
-    (new_ids - doc_ids).each {|doc_id| self.project_memberships.create(:document_id => doc_id) }
+    old_ids = self.document_ids.to_set
+    ProjectMembership.destroy_all(:project_id => id, :document_id => (old_ids - new_ids).to_a)
+    (new_ids - old_ids).each {|doc_id| self.project_memberships.create(:document_id => doc_id) }
+    reindex_documents new_ids ^ old_ids
     @document_ids = nil
   end
 
@@ -95,6 +98,19 @@ class Project < ActiveRecord::Base
       :document_ids       => document_ids,
       :collaborator_ids   => collaborator_ids
     ).to_json
+  end
+
+
+  private
+
+  def reindex_documents(ids)
+    Document.all(:conditions => ["id in (?)", ids]).each {|doc| doc.index }
+  end
+
+  def remove_project_memberships
+    doc_ids = self.document_ids
+    self.project_memberships.destroy_all
+    reindex_documents doc_ids
   end
 
 end
