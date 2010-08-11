@@ -12,7 +12,7 @@ span[role="link"] {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .clear {

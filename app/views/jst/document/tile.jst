@@ -3,9 +3,7 @@
   <img class="icon doc generic draggable noselect" src="<%= thumbnail_url %>" data-id="<%= id %>" />
   <div class="title">
     <a href="<%= document_viewer_url %>" class="doc_title noselect"><%= title %></a>
-    <% if (icon) { %>
-      <span class="<%= icon["class"] %>" title="<%= icon.title %>">&#65279;</span>
-    <% } %>
+    <span class="<%= icon["class"] %>" title="<%= icon.title %>">&#65279;</span>
     <% if (editable) { %>
       <span class="icon document_tool edit_glyph" title="Edit Document">&#65279;</span>
     <% } %>

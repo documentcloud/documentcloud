@@ -128,11 +128,11 @@ dc.ui.Document = dc.View.extend({
     var access = this.model.get('access');
     var base = 'icon main_icon document_tool ';
     switch (access) {
-      case dc.access.PUBLIC:       return null;
       case dc.access.PENDING:      return {'class' : base + 'spinner',    title : 'Uploading...'};
       case dc.access.ERROR:        return {'class' : base + 'alert_gray', title : 'Broken document'};
       case dc.access.ORGANIZATION: return {'class' : base + 'lock',       title : 'Private to ' + dc.app.organization.name};
       case dc.access.PRIVATE:      return {'class' : base + 'lock',       title : 'Private'};
+      default:                     return {'class' : base + 'hidden'};
     }
   },
 
@@ -159,6 +159,7 @@ dc.ui.Document = dc.View.extend({
     if (this.model.hasChanged('selected'))         return this._setSelected();
     if (this.model.hasChanged('annotation_count')) return $('span.note_count', this.el).text(this.model.get('annotation_count'));
     if (this.model.hasChanged('access'))           return $('.main_icon', this.el).attr(this._iconAttributes());
+    console.log(this.model.changedAttributes());
     this.render();
   },
 
