@@ -51,12 +51,18 @@ class DocumentImport < CloudCrowd::Action
     # Destroy existing text and pages to make way for the new.
     document.full_text.destroy if document.full_text
     document.pages.destroy_all if document.pages.count > 0
-    Docsplit.extract_text(@pdf, :pages => 'all', :output => 'text')
+    begin
+      Docsplit.extract_text(@pdf, :pages => 'all', :output => 'text')
+    rescue Exception => e
+      LifecycleMailer.deliver_exception_notification(e)
+    end
     Docsplit.extract_length(@pdf).times do |i|
       page_number = i + 1
       path = "text/#{document.slug}_#{page_number}.txt"
-      next unless File.exists?(path)
-      text = Iconv.iconv('ascii//translit//ignore', 'utf-8', File.read(path)).first
+      text = ''
+      if File.exists?(path)
+        text = Iconv.iconv('ascii//translit//ignore', 'utf-8', File.read(path)).first
+      end
       queue_page_text(text, page_number)
     end
     save_page_text!
