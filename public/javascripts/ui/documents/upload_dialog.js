@@ -108,7 +108,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this.set.get(queueId).set(attrs);
     attrs.session_key = dc.app.cookies.get('document_cloud_session');
     if (this._project) attrs.project_id = this._project.id;
-    this._uploadify.uploadifySettings('scriptData', attrs);
+    this._uploadify.uploadifySettings('scriptData', attrs, true);
     this.showSpinner();
     this._list[0].scrollTop = 0;
   },
@@ -187,10 +187,10 @@ dc.ui.UploadDocumentTile = dc.View.extend({
 
   serialize : function() {
     return {
-      title: this._title.val(),
-      description: $('textarea[name=description]', this.el).val(),
-      source: $('input[name=source]', this.el).val(),
-      access: $('select[name=access]', this.el).val()
+      title       : this._title.val(),
+      description : $('textarea[name=description]', this.el).val(),
+      source      : $('input[name=source]', this.el).val(),
+      access      : $('select[name=access]', this.el).val()
     };
   },
 
