@@ -77,11 +77,23 @@
     background-image: url(/images/embed/ui/minus.png);
   }
 
-.icon.upload {
+.icon.file {
   height: 32px;
   width: 32px;
-  background-image: url(/images/embed/icons/page_text_32.png);
+  background-image: url(/images/rare/file.png);
 }
+  .icon.file_pdf {
+    background-image: url(/images/rare/file_acrobat.png);
+  }
+  .icon.file_doc, .icon.file_docx, .icon.file_wps {
+    background-image: url(/images/rare/file_word.png);
+  }
+  .icon.file_ppt, .icon.file_pptx {
+    background-image: url(/images/rare/file_powerpoint.png);
+  }
+  .icon.file_xls, .icon.file_xlsx, .icon.file_csv {
+    background-image: url(/images/rare/file_excel.png);
+  }
 
 .icon.mini_note, .icon.mini_note_private {
   width: 12px; height: 7px;
