@@ -22,7 +22,7 @@ div.dialog .dialog_background {
 body.workspace {
   overflow: auto;
 }
-#upload_dialog, #edit_document_dialog {
+#edit_document_dialog {
   width: 530px;
 }
 #new_document {
