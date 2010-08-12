@@ -199,6 +199,9 @@ textarea.text_area {
       background: #fff;
       color: #333;
     }
+  textarea.text_area.small {
+    border-width: 1px;
+  }
 
 /*----------------------------- Mini Buttons ---------------------------------*/
 .minibutton {

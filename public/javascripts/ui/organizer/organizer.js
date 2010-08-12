@@ -4,7 +4,6 @@ dc.ui.Organizer = dc.View.extend({
 
   callbacks : {
     '#new_project.click'      : 'promptNewProject',
-    '#new_document.click'     : 'openUploads',
     '.all_documents.click'    : 'showAllDocuments',
     '.your_documents.click'   : 'showYourDocuments',
     '.org_documents.click'    : 'showOrganizationDocuments',
@@ -17,7 +16,7 @@ dc.ui.Organizer = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, '_addSubView', '_removeSubView', 'openUploads');
+    _.bindAll(this, '_addSubView', '_removeSubView');
     this._bindToSets();
     this.subViews = [];
   },
@@ -85,10 +84,6 @@ dc.ui.Organizer = dc.View.extend({
       Projects.create(project, null, {error : function() { Projects.remove(project); }});
       return true;
     }, {mode : 'short_prompt'});
-  },
-
-  openUploads : function() {
-    dc.app.uploader.open();
   },
 
   showAllDocuments : function() {

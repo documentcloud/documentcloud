@@ -47,26 +47,3 @@
   margin-right: 10px;
   opacity: 0.75; filter: alpha(opacity=75);
 }
-
-#document_upload_browseQueue .uploadifyQueueItem {
-  text-align: left;
-  font-size: 13px;
-  padding: 10px 0 0;
-  width: 100%;
-}
-#document_upload_browseQueue .uploadifyError {
-  border: 2px solid #FBCBBC !important;
-  background-color: #FDE5DD !important;
-}
-#document_upload_browseQueue .uploadifyQueueItem .cancel {
-  float: right;
-}
-#document_upload_browseQueue .uploadifyProgress {
-  margin-top: 4px;
-  width: 100%;
-}
-#document_upload_browseQueue .uploadifyProgressBar {
-  background-color: #0099FF;
-  width: 1px;
-  height: 3px;
-}

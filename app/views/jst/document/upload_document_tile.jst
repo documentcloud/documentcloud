@@ -1,5 +1,5 @@
 <div class="upload_title">
-  <div class="icon remove_queue cancel_search"></div>
+  <div class="icon remove_queue cancel_search" title="Remove file"></div>
   <div class="icon edit_glyph edit_glyph_light open_edit" title="Edit details"></div>
   <div class="upload_file_size draggable">
     (<%= Inflector.bytesToMB(model.get('size')) %>)
@@ -20,7 +20,7 @@
       <label for="document_upload_description_<%= model.id %>">
         Description:
       </label>
-      <textarea name="description" id="document_upload_description_<%= model.id %>" class="text_area content dark interface"></textarea>
+      <textarea name="description" id="document_upload_description_<%= model.id %>" class="text_area content dark small interface"></textarea>
     </div>
   </div>
 
@@ -32,7 +32,7 @@
       <input name="source" id="document_upload_source_<%= model.id %>" type="text" />
     </div>
   </div>
-
+  
   <div class="upload_access last">
     <label for="document_upload_access_<%= model.id %>">
       Access Level:
@@ -43,4 +43,5 @@
       <option value="organization">Private to <%= dc.app.organization.name %></option>
     </select>
   </div>  
+  
 </div>

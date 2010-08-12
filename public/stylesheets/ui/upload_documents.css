@@ -1,29 +1,18 @@
-#upload_dialog .upload_browse_container {
-  position:absolute;
-  top: 20px;
-  right: 24px;
-  cursor: pointer;
-}
+#upload_dialog {
 
-#upload_dialog .minibutton.ok {
-  padding-left: 28px;
-  padding-right: 28px;
-  width: auto;
 }
 
 #upload_dialog .upload_document_tiles {
-  margin: 0 -28px 0 0;
-  max-height: 400px;
+  max-height: 372px;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0 12px 0 0;
 }
 
 #upload_dialog .row {
   position: relative;
   width: 500px;
   border-bottom: 1px solid #222;
-  padding: 8px 0;
+  padding: 10px 0px 10px 0;
   margin: 0;
   text-align: left;
   overflow: hidden;
@@ -37,14 +26,13 @@
     line-height: 12px;
   }
   #upload_dialog .text_input {
-    width: 340px;
-    float: left;
+    width: 315px;
   }
   #upload_dialog .text_input input {
-    width: 324px;
+    width: 315px;
   }
   #upload_dialog .text_area {
-    width: 320px; /* Damn textareas! */
+    width: 311px; /* Damn textareas! */
     display: block;
   }
 
@@ -54,52 +42,42 @@
 }
   #upload_dialog .upload_title .text_input {
     margin: 3px 0 0 10px;
+    float: left;
   }
   #upload_dialog .upload_title .upload_file_size {
     float: right;
     font-size: 10px;
     color: #808080;
-    margin: 5px 4px 0 4px;
+    margin: 6px 4px 0 4px;
   }
   #upload_dialog .upload_title .icon.edit_glyph {
     float: right;
-    margin: 5px 4px 0 4px;
+    margin: 7px 4px 0 4px;
     cursor: pointer;
   }
   #upload_dialog .upload_title .icon.cancel_search {
     float: right;
-    margin: 7px 4px 0 4px;
+    margin: 9px 4px 0 4px;
   }
 
 #upload_dialog .upload_edit {
-  padding-bottom: 0;
-  margin: 0 0 0 44px;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 15px;
+  margin: 0 0 0 42px;
   clear: both;
   display: none;
 }
-  #upload_dialog .upload_edit .upload_description {
-    overflow: hidden;
-  }
-  #upload_dialog .upload_edit .upload_source {
-    overflow: hidden;
-  }
-  #upload_dialog .upload_edit .upload_access {
-    overflow: hidden;
-    text-align: left;
-  }
   #upload_dialog .upload_edit label {
-    margin: 8px 0 0 0;
+    margin: 10px 0 0 0;
     float: none;
     font-size: 12px;
   }
   #upload_dialog .upload_edit .text_input {
     margin: 8px 0 0 0;
   }
-  #upload_dialog .upload_edit textarea.text_area {
+  #upload_dialog .upload_edit .text_area {
     margin: 8px 0 0 0;
-  }
-  #upload_dialog .upload_edit .upload_description_row {
-    margin-bottom: 8px;
   }
   #upload_dialog .upload_edit select {
     display: block;
@@ -108,7 +86,6 @@
     left: 0;
     top: 0;
   }
-
 
 #upload_dialog .upload_progress_bar_container {
   background:none repeat scroll 0 0 transparent;

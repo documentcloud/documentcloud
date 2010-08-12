@@ -10,13 +10,16 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function() {
-     _.bindAll(this, '_onSelect', '_onSelectOnce', '_onCancel', '_onStarted', '_onProgress', '_onComplete', '_onAllComplete');
+     _.bindAll(this, 'countDocuments', '_onSelect', '_onSelectOnce', '_onCancel',
+               '_onStarted', '_onProgress', '_onComplete', '_onAllComplete');
     this.base({
-      mode  : 'custom',
-      title : 'Upload Documents'
+      set       : UploadDocuments,
+      mode      : 'custom',
+      title     : 'Upload Documents',
+      saveText  : 'Upload'
     });
-    UploadDocuments.bind(dc.Set.MODEL_ADDED, this.countDocuments);
-    UploadDocuments.bind(dc.Set.MODEL_REMOVED, this.countDocuments);
+    this.set.bind(dc.Set.MODEL_ADDED, this.countDocuments);
+    this.set.bind(dc.Set.MODEL_REMOVED, this.countDocuments);
   },
 
   render : function() {
@@ -29,12 +32,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     $('.cancel', this.el).text('Cancel');
     this._renderDocumentTiles();
     this.countDocuments();
+    this.center();
     return this;
   },
 
   _renderDocumentTiles : function() {
     var tiles = this._tiles;
-    _.each(UploadDocuments.models(), function(model) {
+    _.each(this.set.models(), function(model) {
       var view = new dc.ui.UploadDocumentTile({model : model});
       tiles[model.id] = view.render();
     });
@@ -51,9 +55,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       multi         : true,
       wmode         : 'transparent',
       fileDataName  : 'file',
-      buttonImg     : '/images/embed/ui/spacer.png',
-      width         : 126,
-      height        : 26,
+      hideButton    : true,
+      width         : this._uploadify.outerWidth(true),
+      height        : this._uploadify.outerHeight(true),
       scriptData    : {},
       onSelect      : this._onSelect,
       onSelectOnce  : this._onSelectOnce,
@@ -67,16 +71,26 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Return false so that Uploadify does not create its own progress bars.
   _onSelect : function(e, queueId, fileObj) {
-    UploadDocuments.add(new dc.model.UploadDocument({
+    this.set.add(new dc.model.UploadDocument({
       id        : queueId,
       file      : fileObj,
-      position  : UploadDocuments.size()
+      position  : this.set.size()
     }));
     return false;
   },
 
   _onSelectOnce : function(e, data) {
     this.render();
+  },
+
+  // Cancel an upload by file queue id.
+  cancelUpload : function(id) {
+    if (this.set.size() <= 1) {
+      this.error('You must upload at least one document.');
+      return false;
+    }
+    this._uploadify.uploadifyCancel(id);
+    return true;
   },
 
   // Return false so that Uploadify does not try to use its own progress bars.
@@ -86,7 +100,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   _onStarted : function(e, queueId) {
     var attrs = this._tiles[queueId].serialize();
-    UploadDocuments.get(queueId).set(attrs);
+    this.set.get(queueId).set(attrs);
     attrs.session_key = dc.app.cookies.get('document_cloud_session');
     if (this._project) attrs.project_id = this._project.id;
     this._uploadify.uploadifySettings('scriptData', attrs);
@@ -117,24 +131,18 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   countDocuments : function() {
-    var num = UploadDocuments.size();
-    $('.ok', this.el).text('Upload ' + (num > 1 ? num : '') + Inflector.pluralize(' Document', num));
+    var num = this.set.size();
+    this.title('Upload ' + (num > 1 ? num : '') + Inflector.pluralize(' Document', num));
   },
 
   confirm : function() {
     var failed = _.select(this._tiles, function(tile) { return tile.ensureTitle(); });
     if (failed.length) {
-      var num = UploadDocuments.size();
+      var num = this.set.size();
       return this.error('Please enter a title for ' + (num == 1 ? 'the document.' : 'all documents.'));
     }
     $('.ok', this.el).text('Uploading...').setMode('not', 'enabled');
     this._uploadify.uploadifyUpload();
-  },
-
-  open : function() {
-    $(this.el).show();
-    $(document.body).addClass('overlay');
-    this.center();
   },
 
   cancel : function() {
@@ -143,7 +151,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   close : function() {
-    UploadDocuments.refresh();
+    this.set.refresh();
     this.base();
   }
 
@@ -176,9 +184,10 @@ dc.ui.UploadDocumentTile = dc.View.extend({
   },
 
   removeUploadFile : function() {
-    dc.app.uploader.$uploadify.uploadifyCancel(this.model.id);
-    this.hide();
-    UploadDocuments.remove(this.model);
+    if (dc.app.uploader.cancelUpload(this.model.id)) {
+      this.hide();
+      UploadDocuments.remove(this.model);
+    }
   },
 
   openEdit : function() {
@@ -197,11 +206,7 @@ dc.ui.UploadDocumentTile = dc.View.extend({
   },
 
   hide : function() {
-    var el = $(this.el);
-    el.animate({opacity: 0}, {
-      duration: 300,
-      complete: function() { el.slideUp(200); }
-    });
+    $(this.el).animate({opacity: 0}, 200).slideUp(200, function(){ $(this).remove(); });
   }
 
 });

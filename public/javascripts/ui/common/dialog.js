@@ -61,6 +61,10 @@ dc.ui.Dialog = dc.View.extend({
       $('input:radio:checked', this.el).val() : this.contentEl.val();
   },
 
+  title : function(title) {
+    $('.title', this.el).text(title);
+  },
+
   cancel : function() {
     if (this.options.onCancel) this.options.onCancel(this);
     this.close();
