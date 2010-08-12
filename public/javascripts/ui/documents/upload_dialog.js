@@ -152,7 +152,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       var num = this.set.size();
       return this.error('Please enter a title for ' + (num == 1 ? 'the document.' : 'all documents.'));
     }
-    $('.ok', this.el).text('Uploading...').setMode('not', 'enabled');
+    $('.ok', this.el).setMode('not', 'enabled');
     this._uploadify.uploadifyUpload();
   },
 

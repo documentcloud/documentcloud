@@ -4,9 +4,9 @@ Most users will be uploading PDFs to DocumentCloud, but we can work with any fil
  
 With large files (anything over 10 MB) you might find you get better results and faster uploads if you optimize the size of the document first. If you're on a Mac, you can [use Preview to reduce the size of your file][]. If you've got a copy of Adobe Acrobat, [that works as well][]. If you don't have Acrobat or Preview, our tips on troubleshooting documents might help.
 
-Uploading Documents is straightforward. Open the Upload dialog by clicking on the "[New Document][]" button in the sidebar.
+Uploading Documents is straightforward. Open the Upload dialog by clicking on the "[New Documents][]" button in the sidebar.
  
-All documents you upload are available by clicking on the "[Your Documents][]" link at the top left. If you've started a project, and you click on "[New Document][]" while you have that project open, your document will be added to the project automatically. 
+All documents you upload are available by clicking on the "[Your Documents][]" link at the top left. If you've started a project, and you click on "[New Documents][]" while you have that project open, your document will be added to the project automatically. 
  
 Before you start the upload, you can enter a title for the document, as well as a source and description &mdash; all of which will appear when the document is found in search results. You can also decide in advance whether the document should stay private, be shared in your newsroom, or be made public immediately.
  
