@@ -13,7 +13,7 @@
 
 <div class="upload_edit">
   <div class="upload_description">
-    <div class="upload_description_row">
+    <div class="upload_description_row draggable">
       <label for="document_upload_description_<%= model.id %>">
         Description:
       </label>
@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="upload_source">
+  <div class="upload_source draggable">
     <label for="document_upload_source_<%= model.id %>">
       Source:
     </label>
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div class="upload_access last">
+  <div class="upload_access draggable last">
     <label for="document_upload_access_<%= model.id %>">
       Access Level:
     </label>
