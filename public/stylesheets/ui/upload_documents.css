@@ -1,20 +1,18 @@
-#upload_dialog {
-
-}
-
-#upload_dialog .upload_document_tiles {
+#upload_dialog .custom {
+  position: relative;
   max-height: 372px;
   overflow-y: auto;
   overflow-x: hidden;
+  text-align: left;
+  width: 522px;
 }
 
 #upload_dialog .row {
   position: relative;
   width: 500px;
   border-bottom: 1px solid #222;
-  padding: 10px 0px 10px 0;
+  padding: 10px 0 10px 0;
   margin: 0;
-  text-align: left;
   overflow: hidden;
   clear: both;
 }

@@ -21,6 +21,7 @@
   width: 800px;
 }
   #account_list .custom {
+    position: relative;
     max-height: 323px;
     overflow-y: auto; overflow-x: hidden;
     padding: 0;

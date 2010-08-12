@@ -25,6 +25,9 @@ body.workspace {
 #upload_dialog, #edit_document_dialog {
   width: 530px;
 }
+#new_document {
+  margin-right: 12px;
+}
 #DV-searchSubmit {
   padding: 1px;
 }

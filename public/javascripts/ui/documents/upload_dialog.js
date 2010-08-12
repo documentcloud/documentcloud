@@ -28,8 +28,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     var data = {};
     if (this._project) data.information = 'Project: ' + this._project.get('title');
     this.base(data);
-    $('.custom', this.el).html(JST['document/upload_dialog']({}));
-    $('.cancel', this.el).text('Cancel');
     this._renderDocumentTiles();
     this.countDocuments();
     this.center();
@@ -43,7 +41,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       tiles[model.id] = view.render();
     });
     var viewEls = _.pluck(_.values(tiles), 'el');
-    $('.upload_document_tiles', this.el).append(viewEls);
+    $('.custom', this.el).append(viewEls);
   },
 
   setupUploadify : function(uploadify) {
@@ -71,6 +69,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Return false so that Uploadify does not create its own progress bars.
   _onSelect : function(e, queueId, fileObj) {
+    dc.ui.spinner.show();
     this.set.add(new dc.model.UploadDocument({
       id        : queueId,
       file      : fileObj,
@@ -81,6 +80,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   _onSelectOnce : function(e, data) {
     this.render();
+    dc.ui.spinner.hide();
   },
 
   // Cancel an upload by file queue id.
