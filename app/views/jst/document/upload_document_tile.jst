@@ -1,50 +1,46 @@
-<div class="queued_file row draggable">
+<div class="upload_title">
+  <div class="icon remove_queue cancel_search"></div>
+  <div class="icon edit_glyph edit_glyph_light open_edit" title="Edit details"></div>
+  <div class="upload_file_size draggable">
+    (<%= Inflector.bytesToMB(model.get('size')) %>)
+  </div>
+  <label class="icon upload upload_icon_<%= model.get('extension') %>" for="document_upload_title_<%= model.id %>" title="<%= model.get('name') %>"></label>
+  <div class="text_input small dark">
+    <input name="title" id="document_upload_title_<%= model.id %>" type="text" value="<%= model.get('name') %>"/>
+  </div>
+</div>
 
-  <div class="upload_title">
-    <div class="icon remove_queue cancel_search"></div>
-    <div class="icon edit_glyph edit_glyph_light open_edit" title="Edit details"></div>
-    <div class="upload_file_size draggable">
-      (<%= Inflector.bytesToMB(model.get('size')) %>)
+<div class="upload_progress_bar_container">
+  <div class="upload_progress_bar"></div>
+</div>      
+
+<div class="upload_edit">
+  <div class="upload_description">
+    <div class="upload_description_row">
+      <label for="document_upload_description_<%= model.id %>">
+        Description:
+      </label>
+      <textarea name="description" id="document_upload_description_<%= model.id %>" class="text_area content dark interface"></textarea>
     </div>
-    <label class="icon upload upload_icon_<%= model.get('extension') %>" for="document_upload_title_<%= model.id %>" title="<%= model.get('name') %>"></label>
+  </div>
+
+  <div class="upload_source">
+    <label for="document_upload_source_<%= model.id %>">
+      Source:
+    </label>
     <div class="text_input small dark">
-      <input name="title" id="document_upload_title_<%= model.id %>" type="text" value="<%= model.get('name') %>"/>
+      <input name="source" id="document_upload_source_<%= model.id %>" type="text" />
     </div>
   </div>
 
-  <div class="upload_progress_bar_container">
-    <div class="upload_progress_bar"></div>
-  </div>      
-
-  <div class="upload_edit">
-    <div class="upload_description">
-      <div class="upload_description_row">
-        <label for="document_upload_description_<%= model.id %>">
-          Description:
-        </label>
-        <textarea name="description" id="document_upload_description_<%= model.id %>" class="text_area content dark interface"></textarea>
-      </div>
-    </div>
-
-    <div class="upload_source">
-      <label for="document_upload_source_<%= model.id %>">
-        Source:
-      </label>
-      <div class="text_input small dark">
-        <input name="source" id="document_upload_source_<%= model.id %>" type="text" />
-      </div>
-    </div>
-
-    <div class="upload_access last">
-      <label for="document_upload_access_<%= model.id %>">
-        Access Level:
-      </label>
-      <select name="access" class="document_access" id="document_upload_access_<%= model.id %>">
-        <option value="public">Public Access</option>
-        <option value="private" selected="true">Private Access</option>
-        <option value="organization">Private to <%= dc.app.organization.name %></option>
-      </select>
-    </div>  
-  </div>
-
+  <div class="upload_access last">
+    <label for="document_upload_access_<%= model.id %>">
+      Access Level:
+    </label>
+    <select name="access" class="document_access" id="document_upload_access_<%= model.id %>">
+      <option value="public">Public Access</option>
+      <option value="private" selected="true">Private Access</option>
+      <option value="organization">Private to <%= dc.app.organization.name %></option>
+    </select>
+  </div>  
 </div>

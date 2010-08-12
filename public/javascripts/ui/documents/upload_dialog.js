@@ -125,7 +125,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     var failed = _.select(this._tiles, function(tile) { return tile.ensureTitle(); });
     if (failed.length) {
       var num = UploadDocuments.size();
-      return this.error('Please enter a title for ' + num == 1 ? 'the document.' : 'all documents.');
+      return this.error('Please enter a title for ' + (num == 1 ? 'the document.' : 'all documents.'));
     }
     $('.ok', this.el).text('Uploading...').setMode('not', 'enabled');
     this._uploadify.uploadifyUpload();
@@ -151,11 +151,11 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
 dc.ui.UploadDocumentTile = dc.View.extend({
 
-  className : 'upload_document_queue',
+  className : 'row draggable',
 
   callbacks : {
     '.remove_queue.click' : 'removeUploadFile',
-    '.open_edit.click' : 'openEdit'
+    '.open_edit.click'    : 'openEdit'
   },
 
   render : function() {
@@ -192,7 +192,7 @@ dc.ui.UploadDocumentTile = dc.View.extend({
 
   ensureTitle : function() {
     var noTitle = Inflector.trim(this._title.val()) == '';
-    this._title.toggleClass('error', noTitle);
+    this._title.closest('.text_input').toggleClass('error', noTitle);
     return noTitle;
   },
 

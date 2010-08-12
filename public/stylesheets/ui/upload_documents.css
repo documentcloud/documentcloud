@@ -12,35 +12,26 @@
 }
 
 #upload_dialog .upload_document_tiles {
-  margin: 0 -28px 8px 0;
-  max-height: 320px;
+  margin: 0 -28px 0 0;
+  max-height: 400px;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 0 12px 0 0;
 }
-  #upload_dialog .upload_document_tiles .upload_document_queue {
-    width: 500px;
-  }
 
 #upload_dialog .row {
-  border-bottom: 1px solid #363636;
-  margin-bottom: 8px;
-  padding-bottom: 8px;
-  text-align: left;
-}
-
-#upload_dialog input.error {
-  border-color: #991612;
-}
-
-#upload_dialog .queued_file {
   position: relative;
-}
-
-#upload_dialog .row {
+  width: 500px;
+  border-bottom: 1px solid #222;
+  padding: 8px 0;
+  margin: 0;
+  text-align: left;
   overflow: hidden;
   clear: both;
 }
+  #upload_dialog .row:first-child {
+    border-top: 1px solid #222;
+  }
   #upload_dialog label {
     float: left;
     line-height: 12px;
