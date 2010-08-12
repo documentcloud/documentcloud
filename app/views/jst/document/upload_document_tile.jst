@@ -4,10 +4,10 @@
   <div class="upload_file_size draggable">
     (<%= Inflector.bytesToMB(model.get('size')) %>)
   </div>
-  <label class="icon upload upload_icon_<%= model.get('extension') %>" for="document_upload_title_<%= model.id %>" title="<%= model.get('name') %>"></label>
+  <label class="icon upload upload_icon_<%= model.get('extension') %>" for="document_upload_title_<%= model.id %>" title="<%= model.get('title') %>"></label>
   <div class="text_input small dark">
     <div class="progress_bar" style="display:none;"></div>
-    <input name="title" id="document_upload_title_<%= model.id %>" type="text" value="<%= model.get('name') %>"/>
+    <input name="title" id="document_upload_title_<%= model.id %>" type="text" value="<%= model.get('title') %>"/>
   </div>
 </div>
 
