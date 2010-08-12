@@ -54,6 +54,9 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
 
   destroy : function() {
     this.close();
+    if (Documents.selected().length == 0) {
+        this.docs[0].set({'selected': true});
+    }
     Documents.destroySelected();
   },
 
