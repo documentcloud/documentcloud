@@ -28,7 +28,7 @@
     line-height: 12px;
   }
   #upload_dialog .text_input {
-    width: 315px;
+    width: 321px;
   }
   #upload_dialog .text_input input {
     width: 315px;
@@ -43,9 +43,20 @@
   margin-bottom: 0;
 }
   #upload_dialog .upload_title .text_input {
+    position: relative;
     margin: 3px 0 0 10px;
     float: left;
   }
+    #upload_dialog .progress_bar {
+      position: absolute;
+      top: 1px; left: 1px; bottom: 1px;
+      border: 1px solid transparent;
+      border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px;
+      width: 0%;
+      background: #fff;
+      opacity: 0.1; filter: alpha(opacity=30);
+      z-index: 5;
+    }
   #upload_dialog .upload_title .upload_file_size {
     float: right;
     font-size: 10px;
@@ -87,19 +98,4 @@
     position: static;
     left: 0;
     top: 0;
-  }
-
-#upload_dialog .upload_progress_bar_container {
-  background:none repeat scroll 0 0 transparent;
-  height:30px;
-  width: 0%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: .3;
-}
-  #upload_dialog .upload_progress_bar_container .upload_progress_bar {
-    height: 30px;
-    width: 100%;
-    background-color: #3349D2;
   }

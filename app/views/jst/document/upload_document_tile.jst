@@ -6,13 +6,10 @@
   </div>
   <label class="icon upload upload_icon_<%= model.get('extension') %>" for="document_upload_title_<%= model.id %>" title="<%= model.get('name') %>"></label>
   <div class="text_input small dark">
+    <div class="progress_bar" style="display:none;"></div>
     <input name="title" id="document_upload_title_<%= model.id %>" type="text" value="<%= model.get('name') %>"/>
   </div>
 </div>
-
-<div class="upload_progress_bar_container">
-  <div class="upload_progress_bar"></div>
-</div>      
 
 <div class="upload_edit">
   <div class="upload_description">

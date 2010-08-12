@@ -11,7 +11,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   constructor : function() {
      _.bindAll(this, 'countDocuments', '_onSelect', '_onSelectOnce', '_onCancel',
-               '_onStarted', '_onProgress', '_onComplete', '_onAllComplete');
+               '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
     this.base({
       set       : UploadDocuments,
       mode      : 'custom',
@@ -26,8 +26,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._tiles = {};
     this._project = _.first(Projects.selected());
     var data = {};
-    if (this._project) data.information = 'Project: ' + this._project.get('title');
+    if (this._project) {
+      var title = Inflector.truncate(this._project.get('title'), 35);
+      data.information = 'Project: ' + title;
+    }
     this.base(data);
+    this._list = $('.custom', this.el);
     this._renderDocumentTiles();
     this.countDocuments();
     this.center();
@@ -41,7 +45,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       tiles[model.id] = view.render();
     });
     var viewEls = _.pluck(_.values(tiles), 'el');
-    $('.custom', this.el).append(viewEls);
+    this._list.append(viewEls);
   },
 
   setupUploadify : function(uploadify) {
@@ -61,6 +65,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       onSelectOnce  : this._onSelectOnce,
       onCancel      : this._onCancel,
       onStarted     : this._onStarted,
+      onOpen        : this._onOpen,
       onProgress    : this._onProgress,
       onComplete    : this._onComplete,
       onAllComplete : this._onAllComplete
@@ -105,6 +110,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     if (this._project) attrs.project_id = this._project.id;
     this._uploadify.uploadifySettings('scriptData', attrs);
     this.showSpinner();
+    this._list[0].scrollTop = 0;
+  },
+
+  // Show the progress bar when the uploads start.
+  _onOpen : function(e, queueId, fileObj) {
+    this._tiles[queueId].startProgress();
   },
 
   // Return false so Uploadify doesn't try to update missing fields (from onSelect).
@@ -169,7 +180,7 @@ dc.ui.UploadDocumentTile = dc.View.extend({
   render : function() {
     $(this.el).html(JST['document/upload_document_tile']({model : this.model}));
     this._title    = $('input[name=title]', this.el);
-    this._progress = $('.upload_progress_bar_container', this.el);
+    this._progress = $('.progress_bar', this.el);
     this.setCallbacks();
     return this;
   },
@@ -195,8 +206,15 @@ dc.ui.UploadDocumentTile = dc.View.extend({
     $('.open_edit', this.el).toggleClass('active');
   },
 
+  startProgress : function() {
+    this._percentage = 0;
+    this._progress.show();
+  },
+
   setProgress : function(percentage) {
-    this._progress.animate({width: percentage + '%'}, {queue: false, duration: 150});
+    if (percentage <= this._percentage) return;
+    this._percentage = percentage;
+    this._progress.stop(true).css({width: percentage + '%'}, {queue: false, duration: 150});
   },
 
   ensureTitle : function() {
