@@ -36,11 +36,15 @@
 }
 .icon.cancel_search, .icon.cancel_search_dark {
   width: 11px; height: 11px;
+  background-position: center 0;
   background-image: url(/images/embed/icons/cancel_search.png);
   cursor: pointer;
 }
   .icon.cancel_search_dark {
     background-image: url(/images/embed/icons/cancel_search_dark.png);
+  }
+  .icon.cancel_search:hover, .icon.cancel_search_dark:hover {
+    background-position: center -11px;
   }
 .icon.white_plus {
   width: 10px; height: 10px;
