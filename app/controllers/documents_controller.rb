@@ -11,30 +11,32 @@ class DocumentsController < ApplicationController
 
   def show
     return unless OPEN_FORMATS.include?(request.format) || login_required
-    return not_found unless current_document(true)
+    doc = current_document(true)
+    return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
+    return not_found unless doc
     respond_to do |format|
-      format.pdf  { redirect_to(current_document.pdf_url) }
-      format.text { redirect_to(current_document.full_text_url) }
+      format.pdf  { redirect_to(doc.pdf_url) }
+      format.text { redirect_to(doc.full_text_url) }
       format.html do
         return if date_requested?
         return if entity_requested?
         @edits_enabled = true
       end
       format.json do
-        @response = current_document.canonical
+        @response = doc.canonical
         return if jsonp_request?
         render :json => @response
       end
       format.js do
-        js = "DV.loadJSON(#{current_document.canonical.to_json});"
-        cache_page js if current_document.cacheable?
+        js = "DV.loadJSON(#{doc.canonical.to_json});"
+        cache_page js if doc.cacheable?
         render :js => js
       end
       format.xml do
-        render :xml => current_document.canonical.to_xml(:root => 'document')
+        render :xml => doc.canonical.to_xml(:root => 'document')
       end
       format.rdf do
-        @doc = current_document
+        @doc = doc
       end
     end
   end
@@ -148,7 +150,7 @@ class DocumentsController < ApplicationController
   def current_document(exists=false)
     @current_document ||= exists ?
       Document.accessible(current_account, current_organization).find_by_id(params[:id].to_i) :
-      Document.new(:id => params[:id])
+      Document.new(:id => params[:id].to_i)
   end
 
   def current_page

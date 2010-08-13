@@ -157,21 +157,27 @@ class Account < ActiveRecord::Base
     self.hashed_password = @password
   end
 
+  def canonical(options={})
+    attrs = {
+      'id'                => id,
+      'email'             => email,
+      'first_name'        => first_name,
+      'last_name'         => last_name,
+      'organization_id'   => organization_id,
+      'role'              => role,
+      'hashed_email'      => hashed_email,
+      'pending'           => pending?,
+      'public_documents'  => Document.unrestricted.find_all_by_account_id(id).count,
+      'private_documents' => Document.restricted.find_all_by_account_id(id).count
+    }
+    attrs['organization_name'] = organization_name if options[:include_organization]
+    attrs
+  end
+
   # The JSON representation of an account avoids sending down the password,
   # among other things, and includes extra attributes.
   def to_json(options={})
-    attrs = {
-      'id'              => id,
-      'email'           => email,
-      'first_name'      => first_name,
-      'last_name'       => last_name,
-      'organization_id' => organization_id,
-      'role'            => role,
-      'hashed_email'    => hashed_email,
-      'pending'         => pending?
-    }
-    attrs['organization_name'] = organization_name if options[:include_organization]
-    attrs.to_json
+    canonical(options).to_json
   end
 
 end
