@@ -167,6 +167,7 @@ dc.ui.Admin = dc.View.extend({
 
   _loadAllAccounts : function() {
     $('#load_all_accounts').hide();
+    $('.minibutton.download_csv').hide();
     $.getJSON('/admin/all_accounts', {}, _.bind(function(resp) {
       Accounts.populate(resp.accounts);
       this.renderAccounts();

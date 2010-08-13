@@ -41,8 +41,11 @@ class AdminController < ApplicationController
   end
 
   def accounts_csv
-    accounts = Account.all.map {|a| a.canonical}
-    columns = Account.column_names | Account.first.canonical.keys
+    return not_found unless request.format.csv?
+
+    accounts = Account.all.map {|a| a.canonical(:include_document_counts => true) }
+    columns  = accounts.first.keys.sort_by {|key| Account.column_names.index(key) || 1000 }
+    # columns = Account.column_names | Account.first.canonical(:include_document_counts => true).keys
     csv = DC::CSV::generate_csv(accounts, columns)
     send_data csv, :type => :csv, :filename => 'documents.csv'
   end

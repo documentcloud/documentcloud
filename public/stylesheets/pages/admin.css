@@ -10,6 +10,9 @@ body {
 #statistics {
   margin: 35px 0 35px 35px;
 }
+  #statistics .download_csv {
+    margin-left: 12px;
+  }
   #statistics .float_right.text_link {
     padding-left: 8px;
   }

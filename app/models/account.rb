@@ -166,11 +166,13 @@ class Account < ActiveRecord::Base
       'organization_id'   => organization_id,
       'role'              => role,
       'hashed_email'      => hashed_email,
-      'pending'           => pending?,
-      'public_documents'  => Document.unrestricted.find_all_by_account_id(id).count,
-      'private_documents' => Document.restricted.find_all_by_account_id(id).count
+      'pending'           => pending?
     }
     attrs['organization_name'] = organization_name if options[:include_organization]
+    if options[:include_document_counts]
+      attrs['public_documents'] = Document.unrestricted.count(:conditions => {:account_id => id})
+      attrs['private_documents'] = Document.restricted.count(:conditions => {:account_id => id})
+    end
     attrs
   end
 
