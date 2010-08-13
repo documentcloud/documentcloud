@@ -113,7 +113,8 @@
   #account_list .pending_badge {
     display: none;
     position: absolute;
-    margin: 15px 0 0 15px;
+    margin: 19px 0 0 17px;
+    z-index: 5;
   }
     #account_list .row.pending .pending_badge,
     #account_list .admin.pending .pending_badge {
