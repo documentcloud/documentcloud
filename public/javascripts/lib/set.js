@@ -66,7 +66,7 @@ dc.Set = Base.extend({
   },
 
   // Add a model, or list of models to the set. Pass silent to avoid firing
-  // the MODEL_ADDED event for every new model.
+  // the `set:added` event for every new model.
   add : function(models, silent) {
     if (!_.isArray(models)) return this._add(models, silent);
     for (var i=0; i<models.length; i++) this._add(models[i], silent);
@@ -81,12 +81,12 @@ dc.Set = Base.extend({
     this._byCid[model.cid] = model;
     model.bind('all', this._boundOnModelEvent);
     this._size++;
-    if (!silent) this.fire(dc.Set.MODEL_ADDED, model);
+    if (!silent) this.fire('set:added', model);
     return model;
   },
 
   // Remove a model, or a list of models from the set. Pass silent to avoid
-  // firing the MODEL_REMOVED event for every model removed.
+  // firing the `set:removed` event for every model removed.
   remove : function(models, silent) {
     if (!_.isArray(models)) return this._remove(models, silent);
     for (var i=0; i<models.length; i++) this._remove(models[i], silent);
@@ -101,29 +101,29 @@ dc.Set = Base.extend({
     delete this._byCid[model.cid];
     model.unbind('all', this._boundOnModelEvent);
     this._size--;
-    if (!silent) this.fire(dc.Set.MODEL_REMOVED, model);
+    if (!silent) this.fire('set:removed', model);
     return model;
   },
 
   // When you have more items than you want to add or remove individually,
   // you can refresh the entire set with a new list of models, without firing
-  // any MODEL_ADDED or MODEL_REMOVED events. Fires REFRESHED when finished.
+  // any `set:added` or `set:removed` events. Fires `set:refreshed` when finished.
   refresh : function(models, silent) {
     models = models || [];
     this._initialize();
     this.add(models, true);
-    if (!silent) this.fire(dc.Set.REFRESHED);
+    if (!silent) this.fire('set:refreshed');
   },
 
   // Internal method called every time a model in the set fires an event.
   // Sets need to update their indexes when models change ids.
   _onModelEvent : function(e, model) {
-    if (e == dc.Model.CHANGED) {
+    if (e == 'change') {
       if (model.hasChanged('id')) {
         delete this._byId[model.formerValue('id')];
         this._byId[model.id] = model;
       }
-      this.fire(dc.Set.MODEL_CHANGED, model);
+      this.fire('change', model);
     }
   },
 
@@ -131,22 +131,6 @@ dc.Set = Base.extend({
   toString : function() {
     return 'Set (' + this._size + " models)";
   }
-
-}, {
-
-  // Event fired when an individual model inside the set has changed.
-  MODEL_CHANGED : 'set:model_changed',
-
-  // Event fired when a model has been added to the set.
-  MODEL_ADDED : 'set:model_added',
-
-  // Event fired when a model has been removed from the set.
-  MODEL_REMOVED : 'set:model_removed',
-
-  // Event fired when enough of the set has changed that it wouldn't be
-  // efficient to go through every change individually. Views probably want
-  // to handle this event by refreshing themselves.
-  REFRESHED : 'set:refreshed'
 
 });
 

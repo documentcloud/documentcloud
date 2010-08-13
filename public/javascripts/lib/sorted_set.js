@@ -17,7 +17,7 @@ dc.model.SortedSet = dc.Set.extend({
   },
 
   // Specify the comparator by which to sort this set. Invokes sort().
-  // Sorting the set will fire REFRESHED unless you choose to silence it.
+  // Sorting the set will fire `set:refreshed` unless you choose to silence it.
   setComparator : function(comparator, silent) {
     comparator = comparator || dc.Model.ID_COMPARATOR;
     if (this.comparator == comparator) return;
@@ -29,7 +29,7 @@ dc.model.SortedSet = dc.Set.extend({
   // circumstances, as the set will maintain sort order as each item is added.
   sort : function(silent) {
     this._byIndex = _.sortBy(this._byIndex, this.comparator);
-    if (!silent) this.fire(dc.Set.REFRESHED);
+    if (!silent) this.fire('set:refreshed');
   },
 
   // Overridden. Add an item to the SortedSet, keeping sort order.
@@ -37,7 +37,7 @@ dc.model.SortedSet = dc.Set.extend({
     if (model = this.base(model, true)) {
       var index = _.sortedIndex(this._byIndex, model, this.comparator);
       this._byIndex.splice(index, 0, model);
-      if (!silent) this.fire(dc.Set.MODEL_ADDED, model);
+      if (!silent) this.fire('set:added', model);
     }
     return model;
   },
@@ -46,7 +46,7 @@ dc.model.SortedSet = dc.Set.extend({
   _remove : function(model, silent) {
     if (model = this.base(model, true)) {
       this._byIndex = _.without(this._byIndex, model);
-      if (!silent) this.fire(dc.Set.MODEL_REMOVED, model);
+      if (!silent) this.fire('set:removed', model);
     }
     return model;
   },

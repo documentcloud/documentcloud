@@ -159,8 +159,8 @@ dc.ui.Organizer = dc.View.extend({
   // Bind all possible and Project events for rendering.
   _bindToSets : function() {
     _.each([Projects], _.bind(function(set) {
-      set.bind(dc.Set.MODEL_ADDED, this._addSubView);
-      set.bind(dc.Set.MODEL_REMOVED, this._removeSubView);
+      set.bind('set:added',   this._addSubView);
+      set.bind('set:removed', this._removeSubView);
     }, this));
   },
 

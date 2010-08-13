@@ -14,9 +14,9 @@ dc.ui.DocumentList = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     _.bindAll(this, 'refresh', '_removeDocument', '_addDocument', '_onSelect');
-    Documents.bind(dc.Set.REFRESHED,     this.refresh);
-    Documents.bind(dc.Set.MODEL_REMOVED, this._removeDocument);
-    Documents.bind(dc.Set.MODEL_ADDED,   this._addDocument);
+    Documents.bind('set:refreshed', this.refresh);
+    Documents.bind('set:removed',   this._removeDocument);
+    Documents.bind('set:added',     this._addDocument);
   },
 
   render : function() {

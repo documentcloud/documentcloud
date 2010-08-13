@@ -30,7 +30,7 @@ dc.ui.AccountView = dc.View.extend({
     this.base(options);
     this.template   = JST['account/' + this.kind];
     _.bindAll(this, '_onSuccess', '_onError');
-    this.model.bind(dc.Model.CHANGED, _.bind(this.render, this, 'display'));
+    this.model.bind('change', _.bind(this.render, this, 'display'));
   },
 
   render : function(viewMode, options) {

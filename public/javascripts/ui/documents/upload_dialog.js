@@ -18,8 +18,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       title     : 'Upload Documents',
       saveText  : 'Upload'
     });
-    this.set.bind(dc.Set.MODEL_ADDED, this.countDocuments);
-    this.set.bind(dc.Set.MODEL_REMOVED, this.countDocuments);
+    this.set.bind('set:added',   this.countDocuments);
+    this.set.bind('set:removed', this.countDocuments);
   },
 
   render : function() {

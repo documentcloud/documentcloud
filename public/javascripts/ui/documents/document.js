@@ -26,10 +26,10 @@ dc.ui.Document = dc.View.extend({
     this.el.id = 'document_' + this.model.id;
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes', '_renderPages');
-    this.model.bind(dc.Model.CHANGED, this._onDocumentChange);
-    this.model.notes.bind(dc.Set.MODEL_ADDED, this._addNote);
-    this.model.notes.bind(dc.Set.REFRESHED, this._renderNotes);
-    this.model.pageEntities.bind(dc.Set.REFRESHED, this._renderPages);
+    this.model.bind('change', this._onDocumentChange);
+    this.model.notes.bind('set:added', this._addNote);
+    this.model.notes.bind('set:refreshed', this._renderNotes);
+    this.model.pageEntities.bind('set:refreshed', this._renderPages);
   },
 
   render : function() {

@@ -1,7 +1,5 @@
 dc.model.SelectableSet = Base.extend({
 
-  SELECTION_CHANGED : 'set:selection_changed',
-
   firstSelection : null,
 
   selectedCount : 0,
@@ -42,7 +40,7 @@ dc.model.SelectableSet = Base.extend({
   // change their selected state.
   _onModelEvent : function(e, model) {
     this.base(e, model);
-    var sel = (e == dc.Model.CHANGED && model.hasChanged('selected'));
+    var sel = (e == 'model:changed' && model.hasChanged('selected'));
     if (sel) {
       var selected = model.get('selected');
       if (selected && this.selectedCount == 0) {
@@ -51,7 +49,7 @@ dc.model.SelectableSet = Base.extend({
         this.firstSelection = null;
       }
       this.selectedCount += selected ? 1 : -1;
-      _.defer(_(this.fire).bind(this, this.SELECTION_CHANGED, this));
+      _.defer(_(this.fire).bind(this, 'model:selected', this));
     }
   }
 
