@@ -31,6 +31,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       data.information = 'Project: ' + title;
     }
     this.base(data);
+    $('.cancel', this.el).text('Cancel');
     this._list = $('.custom', this.el);
     this._renderDocumentTiles();
     this.countDocuments();
@@ -48,8 +49,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._list.append(viewEls);
   },
 
-  setupUploadify : function(uploadify) {
-    this._uploadify = uploadify || $('#new_document');
+  setupUploadify : function() {
+    this._uploadify = $('#new_document');
     this._uploadify.uploadify({
       uploader      : '/flash/uploadify.swf',
       script        : '/import/upload_document',
