@@ -55,12 +55,12 @@
   background-position: center 0;
   background-image: url(/images/embed/icons/twopencils.png);
 }
-  .icon.edit_glyph_light,
-  .DV-showEdit {
+  .icon.edit_glyph_dark {
     background-position: center 0;
-    background-image: url(/images/embed/icons/twopencils_light.png);
+    background-image: url(/images/embed/icons/twopencils_dark.png);
   }
   .icon.edit_glyph:hover,
+  .icon.edit_glyph_dark:hover,
   .DV-showEdit:hover {
     background-position: center -16px;
   }

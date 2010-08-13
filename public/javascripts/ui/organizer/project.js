@@ -10,7 +10,7 @@ dc.ui.Project = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     _.bindAll(this, 'render');
-    this.model.bind('change', this.render);
+    this.model.bind('model:changed', this.render);
     this.model.view = this;
   },
 

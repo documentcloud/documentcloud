@@ -1,9 +1,3 @@
-span[role="link"] {
-  text-decoration: underline;
-  cursor: pointer;
-  color: #000;
-}
-
 .serif {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
 }

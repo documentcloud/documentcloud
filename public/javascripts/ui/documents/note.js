@@ -16,7 +16,7 @@ dc.ui.Note = dc.View.extend({
     this.base(options);
     this.setMode(this.model.get('access'), 'access');
     _.bindAll(this, 'render');
-    this.model.bind('change', this.render);
+    this.model.bind('model:changed', this.render);
   },
 
   render : function() {

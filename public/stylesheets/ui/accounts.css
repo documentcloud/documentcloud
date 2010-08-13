@@ -84,20 +84,13 @@
 #account_list .controls_wrapper {
   min-width: 100px;
 }
-#account_list span.edit_account,
-#account_list span.change_password {
+#account_list .change_password,
+#account_list .edit_account {
   float: left;
-  opacity: 0; filter: alpha(opacity=0);
-  -webkit-transition: opacity 0.2s linear;
+  margin: 0 15px 0 0;
+  cursor: pointer;
   color: #ccc;
 }
-  #account_list tbody span.edit_account {
-    margin-right: 10px;
-  }
-  #account_list tbody tr:hover span.edit_account,
-  #account_list tbody tr:hover span.change_password {
-    opacity: 1; filter: alpha(opacity=100);
-  }
 #account_list .save_changes {
   float: left;
   position: relative;

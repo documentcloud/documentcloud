@@ -38,9 +38,9 @@
 </td>
 <td class="last draggable">
   <% if (account == current || (current && current.isAdmin())) { %>
-  <span class="edit_account display" role="link">edit</span>
+  <div class="edit_account icon edit_glyph_dark display"></div>
   <% if (account == current) { %>
-    <span class="change_password display" role="link">change password</span>
+    <span class="change_password display text_link">change password</span>
   <% } %>
   <div class="edit controls_wrapper">
     <div class="minibutton default save_changes">OK</div>

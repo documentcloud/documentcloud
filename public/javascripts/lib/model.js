@@ -2,10 +2,10 @@
 dc.Model = Base.extend({
 
   // A snapshot of the model's previous attributes, taken immediately
-  // after the last `change` event was fired.
+  // after the last `model:changed` event was fired.
   _formerAttributes : null,
 
-  // Has the item been changed since the last `change` event?
+  // Has the item been changed since the last `model:changed` event?
   _changed : false,
 
   // Create a new model, with defined attributes.
@@ -35,15 +35,15 @@ dc.Model = Base.extend({
     return this.id < 0;
   },
 
-  // Call this method to fire manually fire a `change` event for this model.
+  // Call this method to fire manually fire a `model:changed` event for this model.
   // Calling this will cause all objects observing the model to update.
   changed : function() {
-    this.fire('change', this);
+    this.fire('model:changed', this);
     this._formerAttributes = this.attributes();
     this._changed = false;
   },
 
-  // Determine if the model has changed since the last `change` event.
+  // Determine if the model has changed since the last `model:changed` event.
   // If you specify an attribute name, determine if that attribute has changed.
   hasChanged : function(attr) {
     if (attr) return this._formerAttributes[attr] != this._attributes[attr];
@@ -51,14 +51,14 @@ dc.Model = Base.extend({
   },
 
   // Get the previous value of an attribute, recorded at the time the last
-  // `change` event was fired.
+  // `model:changed` event was fired.
   formerValue : function(attr) {
     if (!attr || !this._formerAttributes) return null;
     return this._formerAttributes[attr];
   },
 
   // Get all of the attributes of the model at the time of the previous
-  // `change` event.
+  // `model:changed` event.
   formerAttributes : function() {
     return this._formerAttributes;
   },
@@ -78,7 +78,7 @@ dc.Model = Base.extend({
     return changed;
   },
 
-  // Set a hash of model attributes on the object, firing `change` unless you
+  // Set a hash of model attributes on the object, firing `model:changed` unless you
   // choose to silence it.
   set : function(next, silent) {
     if (!next) return this;
@@ -100,7 +100,7 @@ dc.Model = Base.extend({
     return this._attributes[attr];
   },
 
-  // Remove an attribute from the model, firing `change` unless you choose to
+  // Remove an attribute from the model, firing `model:changed` unless you choose to
   // silence it.
   unset : function(attr, silent) {
     var value = this._attributes[attr];
