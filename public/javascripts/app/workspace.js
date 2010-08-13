@@ -55,7 +55,6 @@ _.extend(dc.app.workspace, {
     this.sidebar.add('organizer', this.organizer.render().el);
     this.panel.add('document_list', this.documentList.render().el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
-    dc.app.uploader.setupUploadify();
     $('#wordmark a').attr({href : '#help'});
   }
 

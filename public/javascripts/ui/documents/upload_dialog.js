@@ -10,14 +10,16 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function() {
-     _.bindAll(this, 'countDocuments', '_onSelect', '_onSelectOnce', '_onCancel',
-               '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
+    _.bindAll(this, 'setupUploadify', 'countDocuments', '_onSelect', '_onSelectOnce',
+      '_onCancel', '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
     this.base({
       set       : UploadDocuments,
       mode      : 'custom',
       title     : 'Upload Documents',
       saveText  : 'Upload'
     });
+    var uploadify = this.setupUploadify;
+    dc.app.navigation.bind('tab:documents', function(){ _.defer(uploadify); });
     this.set.bind('set:added',   this.countDocuments);
     this.set.bind('set:removed', this.countDocuments);
   },
@@ -49,7 +51,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._list.append(viewEls);
   },
 
+  // Be careful to only set up Uploadify once, when the "Documents" tab is open.
   setupUploadify : function() {
+    if (this._uploadify || !dc.app.navigation.isOpen('documents')) return;
     this._uploadify = $('#new_document');
     this._uploadify.uploadify({
       uploader      : '/flash/uploadify.swf',
