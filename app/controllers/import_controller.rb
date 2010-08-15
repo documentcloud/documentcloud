@@ -7,7 +7,7 @@ class ImportController < ApplicationController
   before_filter :login_required, :only => [:upload_document]
 
   def upload_document
-    @bad_request = true and return unless params[:file] && params[:title]
+    @bad_request = true and return unless params[:file] && params[:title] && params[:title].is_a? String
     @project_id  = params[:project_id]
     @document    = Document.upload(params, current_account, current_organization)
     Project.accessible(current_account).find(@project_id).add_document(@document) if @project_id
