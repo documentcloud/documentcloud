@@ -80,7 +80,8 @@ dc.model.RESTfulSet = dc.Set.extend({
       url       : '/' + this.resource,
       type      : 'GET',
       dataType  : 'json',
-      success   : onSuccess
+      success   : onSuccess,
+      error     : Accounts.forceLogout
     });
   },
 

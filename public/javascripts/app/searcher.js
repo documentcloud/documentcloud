@@ -18,7 +18,8 @@ dc.app.searcher.extend({
     this.box = dc.app.searchBox;
     this.flags.hasEntities = false;
     this.flags.outstandingSearch = false;
-    _.bindAll(this, '_loadSearchResults', '_loadFacetsResults', '_loadFacetResults', 'searchByHash', 'loadDefault', 'loadFacets');
+    _.bindAll(this, '_loadSearchResults', '_loadFacetsResults', '_loadFacetResults',
+      'searchByHash', 'loadDefault', 'loadFacets');
     dc.history.register(/^#search\//, this.searchByHash);
     dc.app.navigation.bind('tab:search', this.loadDefault);
     dc.app.navigation.bind('tab:help', this.box.hideSearch);
@@ -70,7 +71,13 @@ dc.app.searcher.extend({
     if (this.flags.related && !this.relatedDoc) params.include_source_document = true;
     if (dc.app.navigation.isOpen('entities'))   params.include_facets = true;
     if (this.page)                              params.page = this.page;
-    $.get(this.DOCUMENTS_URL, params, this._loadSearchResults, 'json');
+    $.ajax({
+      url:      this.DOCUMENTS_URL,
+      data:     params,
+      success:  this._loadSearchResults,
+      error:    Accounts.forceLogout,
+      dataType: 'json'
+    });
   },
 
   loadFacets : function() {
