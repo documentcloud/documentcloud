@@ -10,7 +10,7 @@ Uploading Documents in bulk is straightforward. Click the "New Documents" button
 
 <img src="/images/help/upload_dialog.png" class="full_line" />
  
-Before you start the upload, make sure that each document has an appropriate title. Click on the pencil icon to expand the edit details, where you can add a description and source, and set the access level to decide in advance whether the document should stay private, be shared in your newsroom, or be made public immediately. If you have a large number of files to upload at once, click on the link titled: "Apply this Description, Source, and Access Level to All Files", to copy your changes to all of the documents at once.
+Before you start the upload, make sure that each document has an appropriate title. Click on the pencil icon to expand the edit details, where you can add a description and source, and set the access level to decide in advance whether the document should stay private, be shared in your newsroom, or be made public immediately. If you have a large number of files to upload at once, click on the link titled: "Apply to All Files", to copy your changes to all of the documents at once.
 
 Once you click the "Upload" button, you'll notice the files uploading one at a time, and the dialog will close when all files have begun their processing.
  
