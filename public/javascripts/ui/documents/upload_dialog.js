@@ -179,7 +179,8 @@ dc.ui.UploadDocumentTile = dc.View.extend({
 
   callbacks : {
     '.remove_queue.click' : 'removeUploadFile',
-    '.open_edit.click'    : 'openEdit'
+    '.open_edit.click'    : 'openEdit',
+    '.apply_all.click'    : 'applyAll'
   },
 
   render : function() {
@@ -204,6 +205,16 @@ dc.ui.UploadDocumentTile = dc.View.extend({
       this.hide();
       UploadDocuments.remove(this.model);
     }
+  },
+
+  // Apply the current file's attributes to all files in the upload.
+  applyAll : function() {
+    var dialog = dc.app.uploader.el;
+    var attrs  = this.serialize();
+    $('textarea[name=description]', dialog).val(attrs.description);
+    $('input[name=source]',         dialog).val(attrs.source);
+    $('select[name=access]',        dialog).val(attrs.access);
+    dc.app.uploader.info('Update applied to all files.');
   },
 
   openEdit : function() {

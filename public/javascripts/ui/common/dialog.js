@@ -26,8 +26,9 @@ dc.ui.Dialog = dc.View.extend({
     opts = opts || {};
     $(this.el).html(JST['common/dialog'](_.extend({}, this.options, opts)));
     var cel = this.contentEl = $('.content', this.el);
-    this.controlsEl = $('.controls', this.el);
-    this.controlsInner = $('.controls_inner', this.el);
+    this._controls = $('.controls', this.el);
+    this._controlsInner = $('.controls_inner', this.el);
+    this._information = $('.information', this.el);
     if (this.options.width) $(this.el).css({width : this.options.width});
     if (this.options.content) cel.val(this.options.content);
     $(document.body).append(this.el);
@@ -49,11 +50,11 @@ dc.ui.Dialog = dc.View.extend({
   },
 
   append : function(el) {
-    this.controlsEl.before(el);
+    this._controls.before(el);
   },
 
   addControl : function(el) {
-    this.controlsInner.prepend(el);
+    this._controlsInner.prepend(el);
   },
 
   val : function() {
@@ -70,8 +71,14 @@ dc.ui.Dialog = dc.View.extend({
     this.close();
   },
 
+  info : function(message) {
+    this._information.removeClass('error').text(message).show();
+    this._information.delay(3000).fadeOut();
+  },
+
   error : function(message) {
-    $('.information', this.el).addClass('error').text(message);
+    this._information.addClass('error').text(message).show();
+    this._information.delay(3000).fadeOut();
   },
 
   confirm : function() {

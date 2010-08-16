@@ -87,6 +87,9 @@
     float: none;
     font-size: 12px;
   }
+  #upload_dialog .upload_edit .apply_all {
+    margin-top: 10px;
+  }
   #upload_dialog .upload_edit .text_input {
     margin: 8px 0 0 0;
   }

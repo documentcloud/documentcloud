@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div class="upload_access draggable last">
+  <div class="upload_access draggable">
     <label for="document_upload_access_<%= model.id %>">
       Access Level:
     </label>
@@ -39,6 +39,10 @@
       <option value="private" selected="true">Private Access</option>
       <option value="organization">Private to <%= dc.app.organization.name %></option>
     </select>
+  </div>
+  
+  <div class="apply_all draggable">
+    <span class="text_link">Apply this Description, Source, and Access Level to All Files</span>
   </div>
 
 </div>
