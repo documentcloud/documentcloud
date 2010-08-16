@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   layout 'workspace'
 
-  before_filter :admin_required, :except => [:save_analytics]
+  before_filter :admin_required, :except => [:save_analytics, :queue_length]
 
   # The Admin Dashboard
   def index
@@ -77,6 +77,12 @@ class AdminController < ApplicationController
       RemoteUrl.record_hits(doc_id.to_i, url, hits)
     end
     json nil
+  end
+
+  # Ensure that the length of the pending document queue is ok.
+  def queue_length
+    ok = Document.pending.count <= Document::WARN_QUEUE_LENGTH
+    render :text => ok ? 'OK' : 'OVERLOADED'
   end
 
   # Spin up a new CloudCrowd medium worker, for processing. It takes a while
