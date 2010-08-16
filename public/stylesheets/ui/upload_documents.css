@@ -58,7 +58,7 @@
 }
   #upload_dialog .upload_title .text_input {
     position: relative;
-    margin: 3px 0 0 10px;
+    margin: 3px 0 0 0;
     float: left;
   }
     #upload_dialog .progress_bar {
@@ -72,6 +72,9 @@
       opacity: 0.1; filter: alpha(opacity=30);
       z-index: 5;
     }
+  #upload_dialog .icon.file {
+    margin-right: 10px;
+  }
   #upload_dialog .upload_title .upload_file_size {
     float: right;
     font-size: 10px;

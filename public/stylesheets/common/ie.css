@@ -83,3 +83,6 @@ body.minidocs #document_list .document {
 div.text_input.search input {
   line-height: 16px;
 }
+#upload_dialog .line {
+  display: none;
+}
