@@ -33,8 +33,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       data.information = 'Project: ' + title;
     }
     this.base(data);
+    $('.custom', this.el).html(JST['document/upload_dialog']());
+    this._list = $('.upload_list', this.el);
     $('.cancel', this.el).text('Cancel');
-    this._list = $('.custom', this.el);
     this._renderDocumentTiles();
     this.countDocuments();
     this.center();

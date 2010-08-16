@@ -72,13 +72,11 @@ dc.ui.Dialog = dc.View.extend({
   },
 
   info : function(message) {
-    this._information.removeClass('error').text(message).show();
-    this._information.delay(3000).fadeOut();
+    this._information.removeClass('error').text(message).show().delay(3000).fadeOut();
   },
 
   error : function(message) {
-    this._information.addClass('error').text(message).show();
-    this._information.delay(3000).fadeOut();
+    this._information.addClass('error').text(message).show().delay(3000).fadeOut();
   },
 
   confirm : function() {

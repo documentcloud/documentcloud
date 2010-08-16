@@ -4,24 +4,38 @@
 
 #upload_dialog .custom {
   position: relative;
+}
+#upload_dialog .upload_list {
+  position: relative;
   max-height: 372px;
   overflow-y: auto;
   overflow-x: hidden;
   text-align: left;
   width: 522px;
 }
+#upload_dialog .line {
+  position: absolute;
+  height: 1px; width: 500px;
+  background: #222;
+}
+  #upload_dialog .line.top {
+    top: 0;
+  }
+  #upload_dialog .line.bottom {
+    bottom: 0;
+  }
 
 #upload_dialog .row {
   position: relative;
   width: 500px;
-  border-bottom: 1px solid #222;
+  border-top: 1px solid #222;
   padding: 10px 0 10px 0;
   margin: 0;
   overflow: hidden;
   clear: both;
 }
   #upload_dialog .row:first-child {
-    border-top: 1px solid #222;
+    border-top: 0;
   }
   #upload_dialog label {
     float: left;
@@ -96,6 +110,9 @@
   #upload_dialog .upload_edit .text_area {
     margin: 8px 0 0 0;
   }
+    #upload_dialog .upload_edit textarea {
+      height: 50px;
+    }
   #upload_dialog .upload_edit select {
     display: block;
     margin: 8px 0 0 0;
