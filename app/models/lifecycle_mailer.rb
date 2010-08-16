@@ -6,9 +6,10 @@ class LifecycleMailer < ActionMailer::Base
 
   # Mail instructions for a new account, with a secure link to activate,
   # set their password, and log in.
-  def login_instructions(account)
+  def login_instructions(account, admin=nil)
     subject     "Welcome to DocumentCloud"
     from        SUPPORT
+    reply_to    [SUPPORT, admin && admin.email].compact
     recipients  [account.email]
     body        :account            => account,
                 :key                => account.security_key.key,
