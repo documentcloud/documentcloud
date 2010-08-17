@@ -118,7 +118,8 @@ class Document < ActiveRecord::Base
       :page_count       => 0,
       :title            => params[:title],
       :description      => params[:description],
-      :source           => params[:source]
+      :source           => params[:source],
+      :related_article  => params[:related_article]
     )
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
       DC::Store::AssetStore.new.save_pdf(doc, path, access)
