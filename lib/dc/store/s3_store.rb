@@ -12,6 +12,9 @@ module DC
 
       DEFAULT_ACCESS  = DC::Access::PUBLIC
 
+      # 60 seconds for persistent connections.
+      S3_PARAMS       = {:connection_lifetime => 60}
+
       ACCESS_TO_ACL   = Hash.new('private')
       ACCESS_TO_ACL[DC::Access::PUBLIC] = 'public-read'
 
@@ -97,11 +100,11 @@ module DC
       end
 
       def create_s3
-        RightAws::S3.new(@key, @secret, :protocol => 'http', :port => 80, :multi_thread => true)
+        RightAws::S3.new(@key, @secret, S3_PARAMS.merge(:protocol => 'http', :port => 80))
       end
 
       def secure_s3
-        @secure_s3 ||= RightAws::S3.new(@key, @secret, :protocol => 'https', :no_subdomains => true, :multi_thread => true)
+        @secure_s3 ||= RightAws::S3.new(@key, @secret, S3_PARAMS.merge(:protocol => 'https', :no_subdomains => true))
       end
 
       def bucket

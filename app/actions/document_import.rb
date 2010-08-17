@@ -13,7 +13,8 @@ class DocumentImport < CloudCrowd::Action
   def process
     begin
       @pdf = document.slug + '.pdf'
-      File.open(@pdf, 'w+') {|f| f.write(asset_store.read_pdf(document)) }
+      pdf_contents = asset_store.read_pdf document
+      File.open(@pdf, 'w+') {|f| f.write(pdf_contents) }
       case input['task']
       when 'text'   then process_text
       when 'images' then process_images
