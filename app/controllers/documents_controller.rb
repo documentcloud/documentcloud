@@ -43,14 +43,9 @@ class DocumentsController < ApplicationController
 
   def update
     return not_found unless doc = current_document(true)
-    if !current_account.allowed_to_edit?(doc)
-      doc.errors.add_to_base "You don't have permission to update the document."
-      return json(doc, 403)
-    end
     attrs = pick(:json, :access, :title, :description, :source, :related_article)
-    access = attrs[:access] && attrs[:access].to_i
-    doc.set_access(access) if access && doc.access != access
-    doc.update_attributes attrs
+    success = doc.secure_update attrs, current_account
+    return json doc, 403 unless success
     expire_page doc.canonical_cache_path if doc.cacheable?
     json doc
   end

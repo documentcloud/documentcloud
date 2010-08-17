@@ -3,6 +3,7 @@
   padding: 20px 25px 30px 50px;
   color: #555;
   background: #fff;
+  font: 14px/18px Helvetica, Arial;
 }
   #docs h1, #docs h2, #docs h3 {
     font: 25px/50px Helvetica, Arial;
@@ -13,16 +14,21 @@
       font: 18px/40px Helvetica, Arial;
     }
     #docs h3 {
-      font: 14px/25px Helvetica, Arial;
+      margin-top: 25px;
+      font: 14px Helvetica, Arial;
     }
   #docs p, #docs form, #docs pre {
     position: relative;
     margin: 0 0 20px 0;
     width: 600px;
   }
-    #docs p {
-      font-size: 14px;
-      line-height: 18px;
+  #docs ul {
+    list-style: disc;
+    padding-left: 20px;
+  }
+    #docs li {
+      margin-bottom: 10px;
+      width: 580px;
     }
   #docs table {
     margin: 20px 0 20px 0;
@@ -43,10 +49,11 @@
       line-height: 16px;
     }
       #docs td {
-        background: #f0f0f0;
+        font-size: 12px;
+        background: #f0fafa;
       }
       #docs .alt > td {
-        background: #e0eaea;
+        background: #f4f4f4;
       }
       #docs .param {
         font-weight: bold;
@@ -62,7 +69,10 @@
     color: #000;
     text-decoration: underline;
   }
-  #docs pre, #docs #search_results {
+  #docs label {
+    font: 12px/12px Helvetica, Arial;
+  }
+  #docs pre, #docs tt, #docs #search_results {
     font: 12px/18px "Monaco", monospace;
   }
     #docs #search_results {

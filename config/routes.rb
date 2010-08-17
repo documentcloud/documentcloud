@@ -4,8 +4,6 @@ ActionController::Routing::Routes.draw do |map|
   # /search/documents.json
   # /search/notes.json
 
-  # API Controller uses default routes, for now.
-
   # Journalist workspace and surrounding HTML.
   map.with_options :controller => 'workspace' do |main|
     main.root
@@ -27,6 +25,10 @@ ActionController::Routing::Routes.draw do |map|
   map.set_text   "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :set_page_text,  :conditions => {:method => :post}
   map.page_image "/documents/:id/pages/:page_name.gif", :controller => :documents, :action => :send_page_image
 
+  # API.
+  map.with_options :controller => 'api' do |api|
+    api.update '/api/documents/:id.:format', :action => 'update', :conditions => {:method => :put}
+  end
 
   # Bulk downloads.
   map.bulk_download '/download/*args.zip', :controller => 'download', :action => 'bulk_download'

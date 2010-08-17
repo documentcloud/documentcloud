@@ -128,6 +128,18 @@ class Document < ActiveRecord::Base
     doc.reload
   end
 
+  # Update a document, with S3 permission fixing, cache expiry, and access control.
+  def secure_update(attrs, account)
+    if !account.allowed_to_edit?(self)
+      self.errors.add_to_base "You don't have permission to update the document."
+      return false
+    end
+    access = attrs[:access] && attrs[:access].to_i
+    set_access(access) if access && self.access != access
+    update_attributes attrs
+    true
+  end
+
   # For polymorphism on access control with Note and Section:
   def document_id
     id

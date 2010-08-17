@@ -132,9 +132,11 @@
   
   <h3>Tips</h3>
 
-    <p>* Please ensure that you send the request properly encoded as "multipart/form-data".</p>
-    <p>* Review your uploaded files and add a source and description if you didn't .</p>
-    <p>* Unless you are using SSL, your username, password and documents are sent in cleartext. Use <code>https://</code> to ensure that your connection is encrypted.</p>
+  <ul>
+    <li>Please ensure that you send the request properly encoded as "multipart/form-data".</li>
+    <li>Review your uploaded files and add a source and description if you didn't .</li>
+    <li>Unless you are using SSL, your username, password and documents are sent in cleartext. Use <b>https://</b> to ensure that your connection is encrypted.</li>
+  </ul>
   
   <h3>Example</h3>
   <p>Using Ruby's RestClient library you could do:</p>
@@ -144,9 +146,7 @@
       :title => "2008 Blagojevich Tax Return",
       :source => "U.S. Attorney's Office",
       :access => 'private'
-    )
-    </pre>
-    
+    )</pre>
     
   <h2>GET /api/documents/[id].json</h2>
 
@@ -178,6 +178,64 @@
   "annotations":[]
 }}</pre>
     
+  <h2>PUT /api/documents/[id].json</h2>
+  
+  <p>
+    Update a document's <b>title</b>, <b>source</b>, <b>description</b>,
+    <b>related article</b>, or <b>access level</b> with this method. Reference
+    your document by its id (usually something like: <b>218-madoff-sec-report</b>).
+  </p>
+  
+  <table>
+    <thead>
+      <tr>
+        <th class="gradient_light">Parameter</th>
+        <th class="gradient_light">Description</th>
+        <th class="gradient_light">Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="alt">
+        <td class="param">title</td>
+        <td class="desc">(optional) the document's canonical title</td>
+        <td class="ex">2008 Blagojevich Tax Return</td>
+      </tr>
+      <tr>
+        <td class="param">source</td>
+        <td class="desc">(optional) the source who produced the document</td>
+        <td class="ex">U.S. Attorney's Office</td>
+      </tr>
+      <tr class="alt">
+        <td class="param">description</td>
+        <td class="desc">(optional) a paragraph of detailed description</td>
+        <td class="ex">This prosecution exhibit is the 2008 joint tax return for Rod and Patti Blagojevich. It shows their total income for the year was $284,000.</td>
+      </tr>
+      <tr>
+        <td class="param">related_article</td>
+        <td class="desc">(optional) the URL of the article associated with the document</td>
+        <td class="ex">http://example.com/news/blago/2010-5-3.html</td>
+      </tr>
+      <tr class="alt">
+        <td class="param">access</td>
+        <td class="desc">(optional) one of "public", "private", "organization"</td>
+        <td class="ex">public</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <p>
+    The response value of this method will be the JSON representation of your
+    document (as seen in the GET method above), with all updates applied.
+  </p>
+  
+  <h3>Tips</h3>
+
+  <ul>
+    <li>
+      If your HTTP client is unable to create a PUT request, you can send it as
+      a POST, and add an extra parameter: <tt>_method=put</tt>
+    </li>
+  </ul>
     
   <h2>GET /api/projects.json</h2>
   

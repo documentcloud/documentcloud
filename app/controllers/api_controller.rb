@@ -1,12 +1,13 @@
 # The public DocumentCloud API.
 class ApiController < ApplicationController
+  include DC::Access
   include DC::Search::Controller
 
   layout 'workspace'
 
   before_filter :bouncer if Rails.env.staging?
 
-  before_filter :api_login_required, :only => [:upload, :projects]
+  before_filter :api_login_required, :only => [:upload, :projects, :update]
   before_filter :api_login_optional, :only => [:documents, :search]
   before_filter :login_required, :only => [:index]
 
@@ -50,9 +51,19 @@ class ApiController < ApplicationController
   # Retrieve a document's canonical JSON.
   def documents
     return bad_request unless params[:id] and request.format.json? || request.format.js?
-    doc = Document.accessible(current_account, current_organization).find_by_id(params[:id].to_i)
-    return not_found if doc.nil?
-    @response = {'document' => doc.canonical(:access => true, :sections => true, :annotations => true) }
+    @response = {'document' => current_document.canonical(:access => true, :sections => true, :annotations => true)}
+    return if jsonp_request?
+    render :json => @response
+  end
+
+  def update
+    doc = current_document
+    attrs = pick(params, :access, :title, :description, :source, :related_article)
+    attrs[:access] = ACCESS_MAP[attrs[:access].to_sym] if attrs[:access]
+    success = doc.secure_update attrs, current_account
+    return json(doc, 403) unless success
+    expire_page doc.canonical_cache_path if doc.cacheable?
+    @response = {'document' => doc.canonical(:access => true, :sections => true, :annotations => true)}
     return if jsonp_request?
     render :json => @response
   end
@@ -63,6 +74,13 @@ class ApiController < ApplicationController
     @response = {'projects' => Project.accessible(current_account).map {|p| p.canonical } }
     return if jsonp_request?
     render :json => @response
+  end
+
+
+  private
+
+  def current_document
+    @current_document ||= Document.accessible(current_account, current_organization).find(params[:id].to_i)
   end
 
 end
