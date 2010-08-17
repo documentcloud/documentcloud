@@ -6,7 +6,7 @@ window.Inflector = {
 
   // Titleize function by John Resig after John Gruber. MIT Licensed.
 	titleize : function(s) {
-	  s = s.replace(/[-.\/_]/g, ' ');
+	  s = s.replace(/[-.\/_]/g, ' ').replace(/\s+/gm, ' ');
 	  var cap = this.capitalize;
 		var parts = [], split = /[:.;?!] |(?: |^)["Ò]/g, index = 0;
 		while (true) {

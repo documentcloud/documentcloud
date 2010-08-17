@@ -1,15 +1,15 @@
 # This is a standard ActiveRecord database.yml file. You can configure it 
 # to use any database that ActiveRecord supports.
 
-:adapter:  mysql
-:encoding: utf8
-:username: root
-:password:
-:socket:   /tmp/mysql.sock
-:database: cloud_crowd
+# :adapter:  mysql
+# :encoding: utf8
+# :username: root
+# :password:
+# :socket:   /tmp/mysql.sock
+# :database: cloud_crowd
 
 # If you'd prefer to use an SQLite database instead, the following configuration
 # will do nicely:
-#
-# :adapter:  sqlite3
-# :database: cloud_crowd.db
+
+:adapter:  sqlite3
+:database: cloud_crowd.db
