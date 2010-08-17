@@ -47,12 +47,10 @@ class DocumentsController < ApplicationController
       doc.errors.add_to_base "You don't have permission to update the document."
       return json(doc, 403)
     end
-    json = JSON.parse(params[:json]).symbolize_keys
-    access = json[:access] && json[:access].to_i
-    doc.set_access(access) if access && current_document.access != access
-    [:description, :title, :source, :related_article].each do |att|
-      doc.update_attributes(att => json[att]) if json[att]
-    end
+    attrs = pick(:json, :access, :title, :description, :source, :related_article)
+    access = attrs[:access] && attrs[:access].to_i
+    doc.set_access(access) if access && doc.access != access
+    doc.update_attributes attrs
     expire_page doc.canonical_cache_path if doc.cacheable?
     json doc
   end
