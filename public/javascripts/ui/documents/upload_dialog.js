@@ -16,7 +16,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       set       : UploadDocuments,
       mode      : 'custom',
       title     : 'Upload Documents',
-      saveText  : 'Upload'
+      saveText  : 'Upload',
+      closeText : 'Cancel'
     });
     var uploadify = this.setupUploadify;
     dc.app.navigation.bind('tab:documents', function(){ _.defer(uploadify); });
@@ -35,7 +36,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this.base(data);
     $('.custom', this.el).html(JST['document/upload_dialog']());
     this._list = $('.upload_list', this.el);
-    $('.cancel', this.el).text('Cancel');
     this._renderDocumentTiles();
     this.countDocuments();
     this.center();
