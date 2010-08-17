@@ -6,7 +6,7 @@ class Document < ActiveRecord::Base
   attr_accessor :highlight, :annotation_count, :remote_url, :hits
   attr_writer   :organization_name, :account_name
 
-  SEARCHABLE_ATTRIBUTES = [:title, :description, :source, :account, :notes, :group]
+  SEARCHABLE_ATTRIBUTES = [:title, :description, :source, :account, :group]
   SEARCHABLE_ENTITIES   = [:city, :country, :organization, :person, :place, :state, :term]
 
   DEFAULT_TITLE = "Untitled Document"
