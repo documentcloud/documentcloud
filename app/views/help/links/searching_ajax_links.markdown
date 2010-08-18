@@ -6,5 +6,6 @@
 [group: chicago-tribune]: #search/group%3A%20chicago-tribune
 [title: deepwater]: #search/title%3A%20deepwater
 [source: supreme]: #search/source%3A%20supreme
+[description: manifesto]: #search/description%3A%20manifesto
 [projectid: 6-the-financial-crisis]: #search/projectid%3A%206-the-financial-crisis
 [access: private]: #search/access%3A%20private

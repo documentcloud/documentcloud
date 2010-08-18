@@ -10,6 +10,7 @@ Term                        | Description
 ----------------------------|---------------------
 title                       |	Will search for documents by title, as provided by the person who uploaded it. For example: [title: deepwater][].
 source                      | When you upload a document, you have the opportunity to identify the source. This provides a way to search that field. For example: [source: supreme][] will identify documents attributed to "U.S. Supreme Court" as well as "New York State Supreme Court."
+description                 | Search for a word or phrase within a document's description. For example: [description: manifesto][].
 account                     | Specify an email address to see documents uploaded by a single user. For example: [account: scott.klein@propublica.org][].
 group                       | If you know the short name of an organization, you can search for documents uploaded by anyone in that newsroom. For example: [group: chicago-tribune][].
 project                     | Restrict your search to just the documents in one of your projects, by entering the title. This is the same as clicking on the project in the "Documents" tab.
