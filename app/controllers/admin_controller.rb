@@ -6,11 +6,11 @@ class AdminController < ApplicationController
   # The Admin Dashboard
   def index
     @documents_by_access           = DC::Statistics.documents_by_access.to_json
-    @pages_per_minute              = DC::Statistics.pages_per_minute.to_json
     @average_page_count            = DC::Statistics.average_page_count.to_json
+    @embedded_documents            = DC::Statistics.embedded_document_count.to_json
     @total_pages                   = DC::Statistics.total_pages.to_json
-    @daily_documents               = keys_to_timestamps(DC::Statistics.daily_documents(2.weeks.ago)).to_json
-    @daily_pages                   = keys_to_timestamps(DC::Statistics.daily_pages(2.weeks.ago)).to_json
+    @daily_documents               = keys_to_timestamps(DC::Statistics.daily_documents(1.month.ago)).to_json
+    @daily_pages                   = keys_to_timestamps(DC::Statistics.daily_pages(1.month.ago)).to_json
     @public_per_account            = DC::Statistics.public_documents_per_account.to_json
     @private_per_account           = DC::Statistics.private_documents_per_account.to_json
     @pages_per_account             = DC::Statistics.pages_per_account.to_json
@@ -35,7 +35,7 @@ class AdminController < ApplicationController
 
   def top_documents_csv
     return not_found unless request.format.csv?
-    
+
     documents = RemoteUrl.top_documents(365, :limit => 1000)
 
     csv = DC::CSV::generate_csv(documents)

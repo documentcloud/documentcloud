@@ -72,9 +72,9 @@ dc.ui.Admin = dc.View.extend({
     var acl = stats.documents_by_access, a = dc.access;
     return {
       total_documents               : this._format(this.totalDocuments()),
+      embedded_documents            : this._format(stats.embedded_documents),
       total_pages                   : this._format(stats.total_pages),
       average_page_count            : this._format(stats.average_page_count),
-      pages_per_minute              : this._format(stats.pages_per_minute),
       public_docs                   : this._format(acl[a.PUBLIC] || 0),
       private_docs                  : this._format((acl[a.PRIVATE] || 0) + (acl[a.ORGANIZATION] || 0) + (acl[a.EXCLUSIVE] || 0)),
       pending_docs                  : this._format(acl[a.PENDING] || 0),

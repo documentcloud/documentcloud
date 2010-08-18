@@ -61,24 +61,28 @@ module DC
       result = Entity.connection.execute('select avg(c) from (select count(*) as c from entities group by document_id) as entity_counts')
       result[0][0].to_f.round
     end
-    
+
+    def self.embedded_document_count
+      RemoteUrl.count :document_id, :distinct => true
+    end
+
     def self.remote_url_hits_last_week
       RemoteUrl.sum(:hits, :conditions => ['date_recorded > ?', 7.days.ago])
     end
-    
+
     def self.remote_url_hits_last_year
       RemoteUrl.sum(:hits, :conditions => ['date_recorded > ?', 365.days.ago])
     end
-    
+
     def self.count_organizations_embedding
       document_ids = RemoteUrl.all(:select => 'document_id', :group => 'document_id').map &:document_id
       Organization.count_by_sql("SELECT COUNT(DISTINCT o.id) FROM organizations AS o INNER JOIN documents AS d ON d.organization_id = o.id WHERE d.id IN (#{document_ids.join(",")})")
     end
-    
+
     def self.count_total_collaborators
       Collaboration.count - Project.count
     end
-    
+
   end
 
 end
