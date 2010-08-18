@@ -68,6 +68,7 @@ class AdminController < ApplicationController
     return org.destroy && fail(acc.errors.full_messages.first) if acc.errors.any?
     acc.send_login_instructions
     @success = "Account Created. Welcome email sent to #{acc.email}."
+    @params = {:organization => {}, :account => {}}
   end
 
   # Endpoint for our pixel-ping application, to save our analytic data every

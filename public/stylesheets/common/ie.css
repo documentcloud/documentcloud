@@ -44,7 +44,7 @@ body.workspace {
   #section_editor .section_title {
     margin-right: 0;
   }
-#project_controls {
+#organizer #project_controls {
   padding-right: 15px;
 }
 #account_list .row.pending .pending_badge,
@@ -62,8 +62,15 @@ body.minidocs #document_list .document {
   margin-bottom: 0px;
 }
 #organizer_entities .row {
-  width: 268px;
+  margin-top: 0;
+  margin-bottom: -1px;
 }
+  #organizer_entities .row:hover,
+  #organizer_entities .row.active {
+    padding-top: 0px;
+    margin-bottom: -1px;
+    margin-top: -1px;
+  }
 .document .page {
   margin-top: 0;
 }
