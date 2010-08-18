@@ -38,8 +38,10 @@
     border-top: 0;
   }
   #upload_dialog label {
+    display: block;
     float: left;
     line-height: 12px;
+    color: #ccc;
   }
   #upload_dialog .text_input {
     width: 321px;

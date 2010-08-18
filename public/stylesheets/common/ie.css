@@ -64,9 +64,6 @@ body.minidocs #document_list .document {
 #organizer_entities .row {
   width: 268px;
 }
-.docalog .document_access, #document_upload_file, #document_project_title {
-  top: 0;
-}
 .document .page {
   margin-top: 0;
 }

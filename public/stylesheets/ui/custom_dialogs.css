@@ -2,9 +2,13 @@
   width: 500px;
 }
   .docalog .row {
+    height: 30px;
     margin-bottom: 15px;
     position: relative;
   }
+    .docalog .row.tall {
+      height: 90px;
+    }
     .docalog .row.last {
       margin-bottom: 0;
     }
@@ -17,33 +21,21 @@
     font-size: 12px;
     color: #ccc;
     text-align: left;
-    float: left;
-    clear: left;
+    position: absolute;
+    left: 0;
   }
   .docalog .text_input {
-    margin-left: 125px;
+    position: absolute;
+    right: 0;
     width: 375px;
   }
   .docalog textarea.content {
-    margin-left: 125px;
+    float: right;
     width: 371px; height: 78px;
     display: block;
   }
-  .docalog .document_access, #document_upload_file, #document_project_title {
-    position: absolute;
-    left: 112px; top: 3px;
+  .docalog .document_access {
+    position: relative;
+    margin: 0;
+    left: -25px; top: 4px;
   }
-    #document_upload_file {
-      color: #ccc;
-    }
-    #document_project_title {
-      line-height: 21px;
-      font-size: 14px;
-      color: #999;
-    }
-
-#no_uploads .icon {
-  float: left;
-  margin-right: 10px;
-  opacity: 0.75; filter: alpha(opacity=75);
-}
