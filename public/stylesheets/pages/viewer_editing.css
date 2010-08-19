@@ -2,8 +2,7 @@
 #control_panel {
   position: relative;
   font: 12px Arial;
-  margin: 0 10px 0 10px;
-  padding-top: 0px;
+  padding-top: 15px;
   border-top: 1px solid #ccc;
   color: #004276;
 }
@@ -16,7 +15,7 @@
     color: black;
   }
   #control_panel .note_guide {
-    margin: 0 14px 15px 14px;
+    margin: 10px 24px 15px 24px;
     font-size: 11px;
     color: #333;
   }
@@ -26,11 +25,17 @@
     }
   #control_panel .button {
     cursor: pointer;
-    font-size: 11px;
-    margin: 0 0 10px 14px;
+    position: relative;
+    font: 11px/17px Arial;
+    padding-left: 24px;
+    margin: 0 0 6px 0px;
+    border: 1px solid transparent;
+    border-left: 0; border-right: 0;
   }
     #control_panel .button.open {
       color: black;
+      background: #f9f9f9;
+      border-color: #d9d9d9;
     }
     #control_panel .button:hover span {
       text-decoration: underline;
@@ -38,19 +43,17 @@
       #control_panel .button .icon {
         position: absolute;
         margin-top: 3px;
-        left: -3px;
+        left: 7px; top: 2px;
       }
         #control_panel .button.open .icon {
           display: none;
         }
-      #control_panel .color_close {
+      #control_panel .button .cancel_search {
         position: absolute;
-        left: 0px;
-        color: #aa3333;
-        font: normal 12px/12px Arial;
+        top: 0px;
         display: none;
       }
-        #control_panel .button.open .color_close {
+        #control_panel .button.open .cancel_search {
           display: block;
         }
   #control_panel,
@@ -182,4 +185,10 @@
 
 .DV-annotationTextArea {
   border: 1px solid #ccc;
+}
+
+.DV-annotationWarning {
+  float: right;
+  color: #999;
+  font: 11px/26px Arial;
 }

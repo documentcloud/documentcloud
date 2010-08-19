@@ -1,31 +1,29 @@
-<div class="divider">Public Edits</div>
 <% if (isOwner) { %>
   <div class="public_annotation button document_only">
     <div class="icon mini_note"></div>
-    <div class="color_close">x</div>
+    <div class="icon cancel_search"></div>
     <span>Add a Public Note</span>
   </div>
   <div id="public_note_guide" class="note_guide" style="display:none;">
     <span class="warn">Public notes are visible to everyone who views this document.</span>
     <br /><br />
-    To add a note, click and drag the portion of the page you'd like to annotate,
-    or click in between pages to create a page note.
+    Highlight a portion of the page, or click between pages to create a note.
   </div>
+<% } %>
+<div class="private_annotation button document_only">
+  <div class="icon mini_note_private"></div>
+  <div class="icon cancel_search"></div>
+  <span>Add a Private Note</span>
+</div>
+<div id="private_note_guide" class="note_guide" style="display:none;">
+  <span class="warn">No one apart from you is ever allowed to view your private notes.</span>
+  <br /><br />
+  Highlight a portion of the page, or click between pages to create a note.
+</div>
+<% if (isOwner) { %>
   <div class="set_sections button document_only"><span>Edit Sections</span></div>
   <div class="edit_title button"><span>Edit Title</span></div>
   <div class="edit_description button"><span>Edit Description</span></div>
   <div class="edit_related_article button"><span>Edit Related Article</span></div>
   <div class="hidden save_text button text_only"><span>Save Page Text</span></div>
 <% } %>
-<div class="divider">Private Edits</div>
-<div class="private_annotation button document_only">
-  <div class="icon mini_note_private"></div>
-  <div class="color_close">x</div>
-  <span>Add a Private Note</span>
-</div>
-<div id="private_note_guide" class="note_guide" style="display:none;">
-  <span class="warn">No one apart from you is ever allowed to view your private notes.</span>
-  <br /><br />
-  To add a note, click and drag the portion of the page you'd like to annotate,
-  or click in between pages to create a page note.
-</div>
