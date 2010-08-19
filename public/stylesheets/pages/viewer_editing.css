@@ -1,18 +1,33 @@
 /*-------------------------- Main edit buttons --------------------------------*/
 #control_panel {
   position: relative;
-  font: bold 12px Arial;
+  font: 12px Arial;
   margin: 0 10px 0 10px;
-  padding-top: 15px;
+  padding-top: 0px;
   border-top: 1px solid #ccc;
   color: #004276;
 }
   .DV-viewAnnotations #control_panel {
     display: none;
   }
+  #control_panel .divider {
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+    color: black;
+  }
+  #control_panel .note_guide {
+    margin: 0 14px 15px 14px;
+    font-size: 11px;
+    color: #333;
+  }
+    #control_panel .note_guide span.warn {
+      font-style: italic;
+      color: #844;
+    }
   #control_panel .button {
     cursor: pointer;
-    margin: 0 0 12px 14px;
+    font-size: 11px;
+    margin: 0 0 10px 14px;
   }
     #control_panel .button.open {
       color: black;
@@ -164,12 +179,6 @@
     height: 0px;
     border-bottom: 1px dashed #eee;
   }
-
-.note_guide {
-  margin: 0 14px 12px 14px;
-  font: italic 11px Arial;
-  color: #555;
-}
 
 .DV-annotationTextArea {
   border: 1px solid #ccc;
