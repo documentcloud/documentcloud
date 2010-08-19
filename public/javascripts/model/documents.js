@@ -60,15 +60,6 @@ dc.model.Document = dc.Model.extend({
     return true;
   },
 
-  // For display, show either the highlighted search results, or the description,
-  // if no highlights are available.
-  // The import process will take care of this in the future, but the inline
-  // version of the description has all runs of whitespace squeezed out.
-  displayDescription : function() {
-    var text = this.get('highlight') || this.get('description');
-    return text ? text.replace(/\s+/g, ' ') : '';
-  },
-
   // Return a list of the document's entities. Think about caching this on the
   // document by binding to Entities, instead of on-the-fly.
   entities : function() {

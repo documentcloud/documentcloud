@@ -40,10 +40,10 @@ dc.ui.Document = dc.View.extend({
       created_at    : data.created_at.replace(/\s/g, '&nbsp;'),
       editable      : this.model.allowedToEdit(),
       icon          : this._iconAttributes(),
-      thumbnail_url : this._thumbnailURL(),
-      description   : this._description()
+      thumbnail_url : this._thumbnailURL()
     });
     $(this.el).html(JST['document/tile'](data));
+    this._displayDescription();
     $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
     this.notesEl = $('.notes', this.el);
     this.pagesEl = $('.pages', this.el);
@@ -145,9 +145,11 @@ dc.ui.Document = dc.View.extend({
     }
   },
 
-  _description : function() {
-    if (this.model.get('access') == dc.access.ERROR) return this.ERROR_MESSAGE;
-    return this.model.displayDescription();
+  // Use $.text to sanitize HTML descriptions for the workspace.
+  _displayDescription : function() {
+    var el = $('.description_text', this.el);
+    if (this.model.get('access') == dc.access.ERROR) return el.html(this.ERROR_MESSAGE);
+    el.text(this.model.get('description'));
   },
 
   _setSelected : function() {
