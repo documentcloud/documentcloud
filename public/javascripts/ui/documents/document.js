@@ -145,11 +145,11 @@ dc.ui.Document = dc.View.extend({
     }
   },
 
-  // Use $.text to sanitize HTML descriptions for the workspace.
+  // HTML descriptions need to be sanitized for the workspace.
   _displayDescription : function() {
     var el = $('.description_text', this.el);
     if (this.model.get('access') == dc.access.ERROR) return el.html(this.ERROR_MESSAGE);
-    el.text(this.model.get('description'));
+    el.text(Inflector.stripTags(this.model.get('description') || ''));
   },
 
   _setSelected : function() {

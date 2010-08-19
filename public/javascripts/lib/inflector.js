@@ -129,6 +129,11 @@ window.Inflector = {
     var sizeParts = byteSize.toString().split('.');
     byteSize = sizeParts[0] + (sizeParts.length > 1 ? '.' + sizeParts[1].substr(0,1) : '');
     return byteSize + ' ' + suffix;
+  },
+
+  // From Prototype.js. Strip out HTML tags.
+  stripTags : function(s) {
+    return s.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
   }
 
 };
