@@ -22,7 +22,6 @@ dc.app.searcher.extend({
       'searchByHash', 'loadDefault', 'loadFacets');
     dc.history.register(/^#search\//, this.searchByHash);
     dc.app.navigation.bind('tab:search', this.loadDefault);
-    dc.app.navigation.bind('tab:help', this.box.hideSearch);
   },
 
   urlFragment : function() {

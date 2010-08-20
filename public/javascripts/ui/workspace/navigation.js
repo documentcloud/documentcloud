@@ -4,12 +4,13 @@ dc.ui.Navigation = dc.View.extend({
     documents : 'sidebar',
     entities  : 'sidebar',
     search    : 'panel',
-    help      : 'panel'
+    help      : 'panel',
+    publish   : 'panel'
   },
 
   VALID : {
     sidebar : ['documents', 'entities'],
-    panel   : ['search', 'help']
+    panel   : ['search', 'publish', 'help']
   },
 
   constructor : function() {
