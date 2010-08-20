@@ -20,7 +20,7 @@ dc.ui.Notifier = dc.View.extend({
     options = _.extend(this.defaultOptions(), options);
     this.setMode(options.mode, 'style');
     $(this.el).text(options.text).fadeIn('fast');
-    $(this.el).align(window, '-top -left');
+    $(this.el).show();
     if (this.timeout) clearTimeout(this.timeout);
     if (!options.leaveOpen) this.timeout = setTimeout(this.hide, options.duration);
   },

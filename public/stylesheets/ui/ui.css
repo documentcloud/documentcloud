@@ -562,6 +562,8 @@ iframe.hidden_iframe {
   z-index: 5000;
 }
   #notifier {
+    position: fixed;
+    top: 0; left: 0;
     background: #161616 no-repeat;
     padding: 7px 10px 7px 50px;
     color: #ccc;
