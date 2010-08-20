@@ -103,16 +103,11 @@ dc.ui.Toolbar = dc.View.extend({
     }, this), {information : this._subtitle(docs.length)});
   },
 
-  openPublishTab : function() {
-    if (dc.app.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.');
-
-    var docs = Documents.selected();
-    if (docs.length == 1) {
-      dc.app.navigation.open('publish');
-      dc.app.publish.renderDocumentLivePreview(docs[0]);
-    } else {
-      dc.ui.Dialog.alert('Please select a single document to embed.');
-    }
+  displayEmbedSnippet : function() {
+    if (dc.app.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account or find an <a href="/help/publishing#embed">example of the embed code</a> in our help pages.');
+    this.edit(function(docs) {
+      new dc.ui.EmbedDialog(docs[0]);
+    }, 'At this stage in the DocumentCloud beta, you can\'t yet embed documents that you haven\'t uploaded yourself.');
   },
 
   requestDownloadViewers : function() {
