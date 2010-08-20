@@ -2,10 +2,13 @@
 #control_panel {
   position: relative;
   font: 12px Arial;
-  padding-top: 15px;
-  border-top: 1px solid #ccc;
   color: #004276;
 }
+  #control_panel .control_panel_top {
+    margin: 0 10px;
+    border-top: 1px solid #ccc;
+    height: 15px;
+  }
   .DV-viewAnnotations #control_panel {
     display: none;
   }
@@ -15,12 +18,11 @@
     color: black;
   }
   #control_panel .note_guide {
-    margin: 10px 24px 15px 24px;
+    margin: 8px 24px 15px 24px;
     font-size: 11px;
     color: #333;
   }
     #control_panel .note_guide span.warn {
-      font-style: italic;
       color: #844;
     }
   #control_panel .button {
@@ -28,14 +30,10 @@
     position: relative;
     font: 11px/17px Arial;
     padding-left: 24px;
-    margin: 0 0 6px 0px;
-    border: 1px solid transparent;
-    border-left: 0; border-right: 0;
+    margin: 0 0 8px 0px;
   }
     #control_panel .button.open {
       color: black;
-      background: #f9f9f9;
-      border-color: #d9d9d9;
     }
     #control_panel .button:hover span {
       text-decoration: underline;
