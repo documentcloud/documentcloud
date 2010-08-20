@@ -15,6 +15,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     });
     _.bindAll(this, '_renderAccounts');
     this._rendered = false;
+    this._open = false;
     $(this.el).hide();
   },
 
@@ -32,6 +33,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   },
 
   open : function() {
+    this._open = true;
     if (!this._rendered) {
       this.render();
       return;
@@ -45,6 +47,11 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     dc.ui.notifier.hide();
     $(this.el).hide();
     $(document.body).removeClass('overlay');
+    this._open = false;
+  },
+
+  isOpen : function() {
+    return this._open;
   },
 
   newAccount : function() {

@@ -111,6 +111,7 @@ dc.ui.AccountView = dc.View.extend({
   },
 
   _deleteAccount : function() {
+    if (dc.app.accounts.isOpen()) dc.app.accounts.close();
     dc.ui.Dialog.confirm('Really delete ' + this.model.fullName() + '?', _.bind(function() {
       $(this.el).remove();
       Accounts.destroy(this.model);
