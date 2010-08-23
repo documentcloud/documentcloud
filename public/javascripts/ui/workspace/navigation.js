@@ -26,7 +26,13 @@ dc.ui.Navigation = dc.View.extend({
     this.tabs[dc.app.preferences.get('sidebar_tab', this.VALID.sidebar) || 'documents'].click();
     this.bind('tab:documents',  _.bind(this._saveSidebarPreference, this, 'documents'));
     this.bind('tab:entities',   _.bind(this._saveSidebarPreference, this, 'entities'));
-    this.bind('tab:entities', function() { _.defer(dc.app.searcher.loadFacets); });
+    this.bind('tab:entities', _.bind(function() {
+      if (!this.isOpen('search')) this.open('search');
+      _.defer(dc.app.searcher.loadFacets);
+    }, this));
+    this.bind('tab:publish', _.bind(function() {
+      if (!this.isOpen('documents')) this.open('documents');
+    }, this));
     this.setMode('search', 'panel_tab');
     return this;
   },

@@ -38,76 +38,74 @@
       left: 30px;
       top: 20px;
     }
-  #organizer .project_list_wrap {
+  #organizer.has_projects .project_help {
+    display: none;
   }
-    #organizer.has_projects .project_help {
+  #organizer .project_help {
+    padding: 15px 10px 15px 30px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  #organizer .box,
+  #organizer .top_level_search {
+    position: relative;
+    padding: 15px 15px 15px 30px;
+    cursor: pointer;
+    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #fff;
+    border-right: 2px solid #ccc;
+    background: #f4f3f1;
+  }
+    #organizer .box {
+      background-image: url(/images/embed/ui/box_back.png);
+      background-repeat: repeat-y;
+      background-position: right top;
+    }
+      #organizer .box:hover {
+        background: #f9f9f9;
+      }
+    #organizer .box.is_selected,
+    #organizer .box.is_selected:hover {
+      border-right-color: transparent;
+      background: #fff;
+      filter: none;
+    }
+    #organizer .box .edit_glyph {
       display: none;
+      vertical-align: text-bottom;
+      padding-right: 11px;
+      margin-left: 6px;
     }
-    #organizer .project_help {
-      padding: 15px 10px 15px 30px;
-      border-bottom: 1px solid #e0e0e0;
+      #organizer .box:hover .edit_glyph,
+      #organizer .box.is_selected .edit_glyph {
+        display: inline;
+      }
+    #organizer .box .title {
+      font: bold 14px Helvetica, Arial;
+      color: #555;
     }
-    #organizer .box,
+      #organizer .box.is_selected .title,
+      #organizer .box:hover .title {
+        color: #000;
+      }
+      #organizer .box .last_word {
+        white-space: nowrap;
+      }
+    #organizer .box .counts,
+    #organizer .top_level_search .text_link {
+      font: 11px/17px Helvetica, Arial;
+      color: #999;
+    }
+      #organizer .box .counts {
+        line-height: 14px; margin: 2px 0 1px 0;
+      }
+      #organizer .top_level_search .text_link:hover {
+        color: black;
+      }
     #organizer .top_level_search {
-      position: relative;
-      padding: 15px 15px 15px 30px;
-      cursor: pointer;
-      border-bottom: 1px solid #e0e0e0;
-      border-top: 1px solid #fff;
+      border-top: 0;
+      background: #fff;
       border-right: 2px solid #ccc;
-      background: #f4f3f1;
     }
-      #organizer .box {
-        background-image: url(/images/embed/ui/box_back.png);
-        background-repeat: repeat-y;
-        background-position: right top;
-      }
-        #organizer .box:hover {
-          background: #f9f9f9;
-        }
-      #organizer .box.is_selected,
-      #organizer .box.is_selected:hover {
-        border-right-color: transparent;
-        background: #fff;
-        filter: none;
-      }
-      #organizer .box .edit_glyph {
-        display: none;
-        vertical-align: text-bottom;
-        padding-right: 11px;
-        margin-left: 6px;
-      }
-        #organizer .box:hover .edit_glyph,
-        #organizer .box.is_selected .edit_glyph {
-          display: inline;
-        }
-      #organizer .box .title {
-        font: bold 14px Helvetica, Arial;
-        color: #555;
-      }
-        #organizer .box.is_selected .title,
-        #organizer .box:hover .title {
-          color: #000;
-        }
-        #organizer .box .last_word {
-          white-space: nowrap;
-        }
-      #organizer .box .counts,
-      #organizer .top_level_search .text_link {
-        font: 11px/17px Helvetica, Arial;
-        color: #999;
-      }
-        #organizer .box .counts {
-          line-height: 14px; margin: 2px 0 1px 0;
-        }
-        #organizer .top_level_search .text_link:hover {
-          color: black;
-        }
-      #organizer .top_level_search {
-        border-top: 0;
-        background: #fff;
-        border-right: 2px solid #ccc;
-      }
 
 /*------------------------------ Entities ---------------------------------*/
 #organizer_entities {

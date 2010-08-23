@@ -1,14 +1,13 @@
-<div id="organizer_projects" class="project_list_container">
-  
-  <div class="project_list_wrap">
-    
-    <div class="top_level_search">
+<div class="search_tab_content help_tab_content">
+  <div id="organizer_projects" class="project_list_container">
+        
+    <div class="top_level_search search_tab_content help_tab_content">
       <% _.each(['all_documents', 'your_documents', 'org_documents'], function(item) { %>
         <div><span class="<%= item %> interface text_link"><%= dc.model.Project.topLevelTitle(item) %></span></div>
       <% }); %>
     </div>
     
-    <div class="project_list">
+    <div class="project_list search_tab_content">
       <!-- Render target for projects. -->
     </div>
     
@@ -24,10 +23,21 @@
         To start one, click on the "New Project" button above.
       </p>
     </div>
+    
   </div>
   
+  <div id="organizer_entities"></div>
 </div>
 
-<div id="organizer_entities">
+<div id="publish_sidebar" class="publish_tab_content">
+  
+  <div class="top_level_search">
+    <div><span class="your_published interface text_link">Your Published Documents</span></div>
+    <div><span class="your_unpublished interface text_link">Your Unpublished Documents</span></div>
+  </div>
+  
+  <div class="publish_doc_list">
+    <!-- Render target for published / unpublished documents. -->
+  </div>
   
 </div>

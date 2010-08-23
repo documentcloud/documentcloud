@@ -25,6 +25,7 @@ dc.ui.Organizer = dc.View.extend({
     $(this.el).append(JST['organizer/sidebar']({}));
     this.projectInputEl = $('#project_input', this.el);
     this.projectList    = $('.project_list', this.el);
+    this.docList        = $('.publish_doc_list', this.el);
     this.entityList     = $('#organizer_entities', this.el);
     this.sidebar        = $('#sidebar');
     this.renderAll();
