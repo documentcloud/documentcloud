@@ -44,9 +44,6 @@ body.workspace {
   #section_editor .section_title {
     margin-right: 0;
   }
-#organizer #project_controls {
-  padding-right: 15px;
-}
 #account_list .row.pending .pending_badge,
 #account_list .admin.pending .pending_badge {
   display: none;
@@ -81,9 +78,6 @@ body.minidocs #document_list .document {
   .dialog .controls_inner {
     left: 0;
   }
-#help_toolbar .minibutton {
-  width: 155px;
-}
 div.text_input.search input {
   line-height: 16px;
 }
