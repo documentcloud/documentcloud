@@ -123,6 +123,10 @@ class DocumentsController < ApplicationController
     return if jsonp_request?
     render :json => @response
   end
+  
+  def preview
+    render :action => 'show'
+  end
 
 
   private

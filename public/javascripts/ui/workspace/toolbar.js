@@ -13,7 +13,7 @@ dc.ui.Toolbar = dc.View.extend({
     this.base(options);
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'displayEmbedSnippet', 'requestDownloadViewers',
+      'editRelatedArticle', 'editAccess', 'openPublishTab', 'requestDownloadViewers',
       'checkFloat', '_openTimeline', '_viewEntities');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
@@ -103,11 +103,16 @@ dc.ui.Toolbar = dc.View.extend({
     }, this), {information : this._subtitle(docs.length)});
   },
 
-  displayEmbedSnippet : function() {
+  openPublishTab : function() {
     if (dc.app.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.');
-    this.edit(function(docs) {
-      new dc.ui.EmbedDialog(docs[0]);
-    }, 'At this stage in the DocumentCloud beta, you can\'t yet embed documents that you haven\'t uploaded yourself.');
+
+    var docs = Documents.selected();
+    if (docs.length == 1) {
+      dc.app.navigation.open('publish');
+      dc.app.publish.renderDocumentLivePreview(docs[0]);
+    } else {
+      dc.ui.Dialog.alert('Please select a single document to embed.');
+    }
   },
 
   requestDownloadViewers : function() {
@@ -172,7 +177,7 @@ dc.ui.Toolbar = dc.View.extend({
       label   : 'Publish',
       onOpen  : this._enableMenuItems,
       items   : [
-        {title : 'Embed Document Viewer',    onClick : this.displayEmbedSnippet},
+        {title : 'Embed Document Viewer',    onClick : this.openPublishTab},
         {title : 'Download Document Viewer', onClick : this.requestDownloadViewers},
         {title : 'Download Original PDF',    onClick : Documents.downloadSelectedPDF},
         {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}

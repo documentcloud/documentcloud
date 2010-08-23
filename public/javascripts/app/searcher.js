@@ -95,14 +95,14 @@ dc.app.searcher.extend({
   },
 
   // When searching by the URL's hash value, we need to unescape first.
-  searchByHash : function(hash) {
+  searchByHash : function(hash, callback) {
     var page = null, connection = null;
     var pageMatch = hash.match(this.PAGE_MATCHER);
     if (pageMatch) {
       var page = pageMatch[1];
       hash = hash.replace(this.PAGE_MATCHER, '');
     }
-    this.search(decodeURIComponent(hash), page);
+    this.search(decodeURIComponent(hash), page, callback);
   },
 
   // Add a query fragment to the search and search again, if it's not already

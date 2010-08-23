@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="ClearType" content="true" />
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <title><%= @current_document.title %></title>
+  <title><%= @current_document && @current_document.title %></title>
 
   <!--[if (!IE)|(gte IE 8)]><!-->
     <link href="/viewer/viewer-datauri.css" media="screen" rel="stylesheet" type="text/css" />
@@ -19,9 +19,11 @@
 </head>
 <body style="margin:0; padding:0;">
   <script type="text/javascript">
-    DV.load(<%= @current_document.canonical({:account => @current_account, :local => @local}).to_json %>);
+    <% if @current_document %>
+      DV.load(<%= @current_document.canonical({:account => @current_account, :local => @local}).to_json %>);
+    <% end %>
   </script>
-  <% if Rails.env.production? %>
+  <% if Rails.env.production? && @current_document %>
     <% @pageview_url = '/documents/show' %>
     <%= render :partial => 'common/google' %>
   <% end %>

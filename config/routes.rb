@@ -16,14 +16,27 @@ ActionController::Routing::Routes.draw do |map|
 
   # Document representations and (private) sub-resources.
   map.resources  :documents,
-                 :collection => {:entities => :get, :entity => :get, :dates => :get, :status => :get, :loader => :get},
+                 :collection => {:entities => :get, 
+                                 :entity => :get, 
+                                 :dates => :get, 
+                                 :status => :get, 
+                                 :loader => :get,
+                                 :preview => :get
+                                },
                  :member     => {:search => :get},
                  :has_many   => [:annotations]
-  map.pdf        "/documents/:id/:slug.pdf",      :controller => :documents, :action => :send_pdf
-  map.full_text  "/documents/:id/:slug.txt",      :controller => :documents, :action => :send_full_text
-  map.page_text  "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :send_page_text, :conditions => {:method => :get}
-  map.set_text   "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :set_page_text,  :conditions => {:method => :post}
-  map.page_image "/documents/:id/pages/:page_name.gif", :controller => :documents, :action => :send_page_image
+  map.pdf        "/documents/:id/:slug.pdf",      :controller => :documents, 
+                                                  :action => :send_pdf
+  map.full_text  "/documents/:id/:slug.txt",      :controller => :documents, 
+                                                  :action => :send_full_text
+  map.page_text  "/documents/:id/pages/:page_name.txt", :controller => :documents, 
+                                                        :action => :send_page_text, 
+                                                        :conditions => {:method => :get}
+  map.set_text   "/documents/:id/pages/:page_name.txt", :controller => :documents, 
+                                                        :action => :set_page_text,  
+                                                        :conditions => {:method => :post}
+  map.page_image "/documents/:id/pages/:page_name.gif", :controller => :documents, 
+                                                        :action => :send_page_image
 
   # API.
   map.with_options :controller => 'api' do |api|

@@ -1,0 +1,42 @@
+<div class="publish_live_preview_container">
+
+  <div class="publish_document"></div>
+
+  <div class="publish_embed_code"></div>
+
+  <div class="publish_options_container">
+    <form class="publish_options">
+
+      <div class="publish_option">
+        Zoom:
+        <input type="radio" name="zoom" value="auto" id="publish_option_zoom_auto" checked /> <label for="publish_option_zoom_auto">Auto</label>
+        <input type="radio" name="zoom" value="specific" id="publish_option_zoom_specific"/> <label for="publish_option_zoom_specific"><input type="text" name="zoom_specific" /></label>
+      </div>
+
+      <div class="publish_option">
+        <label for="publish_option_sidebar"><input id="publish_option_sidebar" type="checkbox" name="showSidebar" checked /> Show sidebar</label>
+      </div>
+
+      <div class="publish_option">
+        <label for="publish_option_text"><input id="publish_option_text" type="checkbox" name="showText" checked /> Show text tab</label>
+      </div>      
+      <div class="publish_option">
+        <label for="publish_option_search"><input id="publish_option_search" type="checkbox" name="showSearch" checked /> Show search</label>
+      </div>      
+      <div class="publish_option">
+        <label for="publish_option_header"><input id="publish_option_header" type="checkbox" name="showHeader" checked /> Show header</label>
+      </div>      
+      <div class="publish_option">
+        <label for="publish_option_url"><input id="publish_option_url" type="checkbox" name="enableUrlChanges" checked /> Enable URL changes</label>
+      </div>      
+   
+
+    </div>
+  </div>
+
+  <div class="publish_embed_preview">
+    <h2>Preview Embedded Document</h2>
+    <iframe src="/documents/preview/" id="documentViewerPreview"></iframe>
+  </div>
+
+</div>
