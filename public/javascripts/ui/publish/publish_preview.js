@@ -17,13 +17,22 @@ dc.ui.PublishPreview = dc.View.extend({
   render : function(doc) {
     this.embedDoc = doc;
     this.el = $('#publish_preview_container')[0];
-    _.bindAll(this, '_rerenderDocumentLivePreview');
+    _.bindAll(this, '_rerenderDocumentLivePreview', '_loadIFramePreview');
     $(this.el).html(JST['workspace/publish_preview']({}));
     dc.history.save('publish/' + doc.id + '-' + doc.attributes().slug);
     this._renderDocumentHeader();
     this._renderEmbedCode();
+    _.defer(this._loadIFramePreview);
     this.setCallbacks();
     return this;
+  },
+  
+  _loadIFramePreview : function() {
+    var $iframe = $('iframe#documentViewerPreview');
+    
+    $iframe.load(_.bind(function() {
+      this._rerenderDocumentLivePreview();
+    }, this));
   },
   
   _rerenderDocumentLivePreview : function() {
@@ -45,7 +54,6 @@ dc.ui.PublishPreview = dc.View.extend({
     });
     delete userOpts['zoom_specific'];
     var options = $.extend({}, this.DEFAULT_VIEWER_OPTIONS, userOpts);
-    console.log([options, userOpts, this.DEFAULT_VIEWER_OPTIONS]);
     
     $('iframe#documentViewerPreview')[0].contentWindow.DV.load(docUrl, options);
     dc.ui.spinner.hide();
