@@ -2,16 +2,21 @@ dc.ui.Organizer = dc.View.extend({
 
   id : 'organizer',
 
+  TOP_LEVEL_SEARCHES: [
+    'all_documents', 'your_documents', 'published_documents', 'org_documents'
+  ],
+
   callbacks : {
-    '#new_project.click'      : 'promptNewProject',
-    '.all_documents.click'    : 'showAllDocuments',
-    '.your_documents.click'   : 'showYourDocuments',
-    '.org_documents.click'    : 'showOrganizationDocuments',
-    '.row.click'              : '_filterFacet',
-    '.cancel_search.click'    : '_removeFacet',
-    '.more.click'             : '_loadFacet',
-    '.less.click'             : '_showLess',
-    '.show_pages.click'       : '_showPages'
+    '#new_project.click'          : 'promptNewProject',
+    '.all_documents.click'        : 'showAllDocuments',
+    '.your_documents.click'       : 'showYourDocuments',
+    '.org_documents.click'        : 'showOrganizationDocuments',
+    '.published_documents.click'  : 'showPublishedDocuments',
+    '.row.click'                  : '_filterFacet',
+    '.cancel_search.click'        : '_removeFacet',
+    '.more.click'                 : '_loadFacet',
+    '.less.click'                 : '_showLess',
+    '.show_pages.click'           : '_showPages'
   },
 
   constructor : function(options) {
@@ -24,7 +29,7 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   render : function() {
-    $(this.el).append(JST['organizer/sidebar']({}));
+    $(this.el).append(JST['organizer/sidebar']({searches : this.TOP_LEVEL_SEARCHES}));
     this.projectInputEl = $('#project_input', this.el);
     this.projectList    = $('.project_list', this.el);
     this.docList        = $('.publish_doc_list', this.el);
@@ -95,6 +100,10 @@ dc.ui.Organizer = dc.View.extend({
 
   showYourDocuments : function() {
     Accounts.current().openDocuments();
+  },
+
+  showPublishedDocuments : function() {
+    Accounts.current().openDocuments({published : true});
   },
 
   showOrganizationDocuments : function() {

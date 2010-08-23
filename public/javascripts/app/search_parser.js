@@ -2,21 +2,23 @@
 // Used to extract keywords from the free text search.
 dc.app.SearchParser = {
 
-  FIRST_PROJECT :  /project:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  FIRST_PROJECT   : /project:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  FIRST_DOC     :  /docid:\s?(\d+-\S+)/i,
+  FIRST_DOC       : /docid:\s?(\d+-\S+)/i,
 
-  FIRST_ACCOUNT :  /account:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  FIRST_ACCOUNT   : /account:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  FIRST_GROUP   :  /group:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  FIRST_PUBLISHED : /published:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  FIRST_RELATED :  /related:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  FIRST_GROUP     : /group:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  ONE_ENTITY    : /(city|country|term|state|person|place|organization):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  FIRST_RELATED   : /related:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  ALL_ENTITIES  : /(city|country|term|state|person|place|organization):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
+  ONE_ENTITY      : /(city|country|term|state|person|place|organization):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  WHITESPACE_ONLY: /^\s*$/,
+  ALL_ENTITIES    : /(city|country|term|state|person|place|organization):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
+
+  WHITESPACE_ONLY : /^\s*$/,
 
   extractProject : function(query) {
     var project = query.match(this.FIRST_PROJECT);
@@ -25,6 +27,11 @@ dc.app.SearchParser = {
 
   extractAccount : function(query) {
     var account = query.match(this.FIRST_ACCOUNT);
+    return account && (account[2] || account[3] || account[4]);
+  },
+
+  extractPublished : function(query) {
+    var account = query.match(this.FIRST_PUBLISHED);
     return account && (account[2] || account[3] || account[4]);
   },
 
@@ -58,6 +65,7 @@ dc.app.SearchParser = {
     if (query.replace(this.FIRST_RELATED, '').match(this.WHITESPACE_ONLY)) return 'related';
     if (query.replace(this.FIRST_PROJECT, '').match(this.WHITESPACE_ONLY)) return 'project';
     if (query.replace(this.FIRST_ACCOUNT, '').match(this.WHITESPACE_ONLY)) return 'account';
+    if (query.replace(this.FIRST_PUBLISHED, '').match(this.WHITESPACE_ONLY)) return 'published';
     return 'search';
   }
 

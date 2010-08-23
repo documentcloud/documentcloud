@@ -3,10 +3,11 @@ dc.ui.SearchBox = dc.View.extend({
 
   // Error messages to display when your search returns no results.
   NO_RESULTS : {
-    project : "This project does not contain any documents.",
-    account : "This account has not uploaded any documents.",
-    search  : "Your search did not match any documents.",
-    related : "There are no documents related to this document."
+    project   : "This project does not contain any documents.",
+    account   : "This account has not uploaded any documents.",
+    published : "This does not have any published documents.",
+    search    : "Your search did not match any documents.",
+    related   : "There are no documents related to this document."
   },
 
   id  : 'search',
@@ -75,13 +76,16 @@ dc.ui.SearchBox = dc.View.extend({
 
   entitle : function(query) {
     var title, ret;
-    var projectName = dc.app.SearchParser.extractProject(query);
-    var accountName = dc.app.SearchParser.extractAccount(query);
-    var groupName   = dc.app.SearchParser.extractGroup(query);
+    var projectName   = dc.app.SearchParser.extractProject(query);
+    var accountName   = dc.app.SearchParser.extractAccount(query);
+    var publishedName = dc.app.SearchParser.extractPublished(query);
+    var groupName     = dc.app.SearchParser.extractGroup(query);
     if (projectName) {
       title = projectName;
     } else if (accountName == Accounts.current().get('email')) {
       ret = 'your_documents';
+    } else if (publishedName == Accounts.current().get('email')) {
+      ret = 'published_documents';
     } else if (groupName == dc.app.organization.slug) {
       ret = 'org_documents';
     } else {
