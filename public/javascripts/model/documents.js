@@ -203,6 +203,6 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 dc.model.DocumentSet.implement(dc.model.SortedSet);
 dc.model.DocumentSet.implement(dc.model.SelectableSet);
 
-// The main set of Documents, used by the search tab.
-window.Documents = new dc.model.DocumentSet();
-window.UploadedDocuments = new dc.model.DocumentSet();
+// The main sets of Documents, used by the search tab, and the publish tab.
+window.Documents          = new dc.model.DocumentSet();
+window.PublishDocuments   = new dc.model.DocumentSet();

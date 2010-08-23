@@ -16,8 +16,10 @@ dc.ui.Organizer = dc.View.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, '_addSubView', '_removeSubView');
+    this._populatedDocs = false;
+    _.bindAll(this, '_addSubView', '_removeSubView', '_ensurePublishedDocs');
     this._bindToSets();
+    dc.app.navigation.bind('tab:publish', this._ensurePublishedDocs);
     this.subViews = [];
   },
 
@@ -159,10 +161,20 @@ dc.ui.Organizer = dc.View.extend({
 
   // Bind all possible and Project events for rendering.
   _bindToSets : function() {
-    _.each([Projects], _.bind(function(set) {
-      set.bind('set:added',   this._addSubView);
-      set.bind('set:removed', this._removeSubView);
-    }, this));
+    Projects.bind('set:added',    this._addSubView);
+    Projects.bind('set:removed',  this._removeSubView);
+  },
+
+  _ensurePublishedDocs : function() {
+    if (this._populatedDocs) return;
+    // $.ajax({
+    //       url:      '/documents/unpublished.json',
+    //       data:     {},
+    //       success:  function(){ alert('yo'); },
+    //       error:    Accounts.forceLogout,
+    //       dataType: 'json'
+    //     });
+    this._populatedDocs = true;
   },
 
   _warnAlreadyExists : function(title) {

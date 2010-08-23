@@ -2,7 +2,7 @@ class DocumentsController < ApplicationController
   layout nil
 
   before_filter(:bouncer, :only => [:show]) if Rails.env.staging?
-  before_filter :login_required, :only => [:update, :destroy, :entities, :dates]
+  before_filter :login_required, :only => [:update, :destroy, :entities, :dates, :published, :unpublished]
 
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
@@ -39,6 +39,16 @@ class DocumentsController < ApplicationController
         @doc = doc
       end
     end
+  end
+
+  def published
+    docs = Document.published.owned_by(current_account).all(:limit => 10)
+    json :documents => docs
+  end
+
+  def unpublished
+    docs = Document.unpublished.owned_by(current_account).all(:limit => 10)
+    json :documents => docs
   end
 
   def update
@@ -123,7 +133,7 @@ class DocumentsController < ApplicationController
     return if jsonp_request?
     render :json => @response
   end
-  
+
   def preview
     render :action => 'show'
   end

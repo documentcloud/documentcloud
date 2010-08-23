@@ -3,7 +3,7 @@ class Document < ActiveRecord::Base
 
   # Accessors and constants:
 
-  attr_accessor :highlight, :annotation_count, :remote_url, :hits
+  attr_accessor :highlight, :annotation_count, :hits
   attr_writer   :organization_name, :account_name
 
   SEARCHABLE_ATTRIBUTES = [:title, :description, :source, :account, :group]
@@ -49,6 +49,9 @@ class Document < ActiveRecord::Base
   named_scope :owned_by, lambda { |account|
     {:conditions => {:account_id => account.id}}
   }
+
+  named_scope :published,     :conditions => 'remote_url is not null or detected_remote_url is not null'
+  named_scope :unpublished,   :conditions => 'remote_url is null and detected_remote_url is null'
 
   named_scope :pending,       :conditions => {:access => PENDING}
   named_scope :failed,        :conditions => {:access => ERROR}
@@ -381,7 +384,6 @@ class Document < ActiveRecord::Base
       'page_image_url'      => page_image_url_template,
       'document_viewer_url' => document_viewer_url,
       'document_viewer_js'  => canonical_url(:js),
-      'remote_url'          => remote_url,
       'hits'                => hits
     }.to_json
   end
