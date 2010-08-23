@@ -1,10 +1,14 @@
 /* DocumentCloud overrides to the DocViewer CSS go here: */
 
-#DV-docViewer {
-  border: 1px solid #aaa;
-  line-height: normal;
+/* Global rules, default for the plain style. */
+body, html {
+  margin: 0;
+  padding: 0;
 }
 
+#DV-docViewer {
+  border: 1px solid #c3c3c3;
+}
 #DV-headerHat, #DV-title, .DV-contentsHeader {
   display: none !important;
 }
@@ -13,7 +17,7 @@
   border-bottom: 2px solid #979797;
   position: relative;
   z-index: 20000;
-  box-shadow: 0 0 25px #777; -webkit-box-shadow: 0 0 25px #777; -moz-box-shadow: 0 0 25px #777;
+  box-shadow: 0 0 25px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 25px rgba(0,0,0,.5); -moz-box-shadow: 0 0 25px rgba(0,0,0,.5);
 }
   #DV-Controls {
     margin-top: 0;
@@ -27,10 +31,9 @@
     overflow: hidden;
   }
     #DV-searchInput {
-      width: 170px;
       border: 1px solid #999;
-      padding: 3px 3px;
-      -moz-border-radius: 4px;
+      -moz-border-radius: 16px;
+      border-radius: 16px;
     }
     #DV-searchSubmit {
       background: #e7e7e7;
@@ -45,7 +48,7 @@
       filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FEFEFE', EndColorStr='#C4C4C4');
       text-shadow: 0px 1px 1px #fff;
       cursor: pointer;
-      font-size: 11px;
+      font-size:11px;
     }
       div.DV-ie #DV-searchSubmit {
         font-size: 10px;
@@ -57,47 +60,9 @@
   border: 0;
 }
 #DV-pages {
-  padding-bottom: 16px;
   background: #bbb;
 }
 
-.DV-privateLock, .DV-showEdit {
-  width: 16px; height: 16px;
-  float: left;
-  margin: -2px 0 0 10px;
-  margin-left: 10px;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-.DV-annotationTitleInput,
-.DV-annotationTextArea {
-  border: 1px solid #D0D0D0;
-  -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
-  font: 12px/15px Arial;
-  outline: 0;
-}
-  .DV-annotationTextArea {
-    padding: 7px;
-    margin: 10px 0;
-    height: 110px;
-    outline: 0;
-    resize: none;
-  }
-  .DV-annotationTitleInput {
-    padding: 4px;
-    width: 300px;
-  }
-.DV-annotationEditControls .minibutton {
-  width: 60px;
-}
-  .DV-cancelEdit {
-    margin-right: 10px;
-  }
-
-#DV-overlay {
-  left: 0; right: 282px; bottom: 0;
-}
 #DV-well {
   padding-bottom: 16px;
 }
@@ -110,33 +75,23 @@
   padding: 5px 14px 10px;
 }
 
-#DV-logo {
-  margin-top: 16px;
-}
-  #DV-logo a {
-    display: block;
-    width: 105px; height: 19px;
-    background: url(images/dc_inline_logo.png);
-  }
-
 .DV-views {
   position: relative;
   z-index: 10;
 }
-  .DV-views span.DV-trigger {
-    display: block;
+  .DV-views div span {
     border-bottom: 0 !important;
     background: #e3e3e3;
     color: black !important;
-    background: -webkit-gradient(linear, left top, left bottom, from(#EAEAEA), to(#C2C2C2));
+    background: -webkit-gradient(linear, left top, left bottom, from(#E3E3E3), to(#C2C2C2));
     background: -moz-linear-gradient(top, #EAEAEA, #C2C2C2);
     filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#EAEAEA', EndColorStr='#C2C2C2');
   }
-    .DV-views #DV-documentView span {
-      border-top-left-radius: 5px; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
+    .DV-views .DV-first span {
+      -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;
     }
-    #DV-textView span {
-      border-top-right-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
+    .DV-views .DV-last span {
+      -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
     }
     .DV-viewDocument .DV-views #DV-documentView span,
     .DV-viewAnnotations .DV-views #DV-annotationView span,
