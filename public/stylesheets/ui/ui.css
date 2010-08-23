@@ -374,17 +374,19 @@ textarea.text_area {
     cursor: pointer;
     float: left;
     color: #fff;
-    background: url(/images/embed/ui/tab_bg.gif) repeat-x left top;
-    border-top-left-radius: 3px; -webkit-border-top-left-radius: 3px; -moz-border-radius-topleft: 3px;
-    border-top-right-radius: 3px; -webkit-border-top-right-radius: 3px; -moz-border-radius-topright: 3px;
+    background: url(/images/embed/ui/tab_bg.png) no-repeat left top;
+    background-position: 0 -60px;
   }
-  .tabs .tab.active {
-    color: #999;
-    background: #fff;
-    text-shadow: 0px 1px 1px #fff;
-    filter: none;
-    z-index: 5;
-  }
+    .tabs .tab.trailing {
+      background-position: 0 -30px;
+    }
+    .tabs .tab.active {
+      color: #999;
+      background-position: 0 0;
+      text-shadow: 0px 1px 1px #fff;
+      filter: none;
+      z-index: 5;
+    }
   .tabs .tab_corner {
     position: absolute;
     bottom: 0;
