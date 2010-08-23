@@ -1,46 +1,58 @@
-.publish_live_preview_container {
+/* ===================== */
+/* = Publish Workspace = */
+/* ===================== */
+
+.publish_container {
+  
+}
+
+/* =================== */
+/* = Publish Preview = */
+/* =================== */
+
+.publish_preview_container {
   margin: 15px 30px 30px;
 }
 
-.publish_live_preview_container .publish_document .document {
+.publish_preview_container .publish_document .document {
   font: 11px/14px Helvetica,Arial;
   margin-bottom: 20px;
   min-height: 80px;
   padding: 2px 30px 5px 90px;
 }
 
-.publish_live_preview_container .publish_options_container {
+.publish_preview_container .publish_options_container {
   float: left;
   width: 45%;
 }
-  .publish_live_preview_container form.publish_options {
+  .publish_preview_container form.publish_options {
     display: block;
   }
 
-.publish_live_preview_container .publish_embed_code {
+.publish_preview_container .publish_embed_code {
   float: right;
   clear: both;
   width: 45%;
   padding: 15px;
   background-color: #EFEFEF;
 }
-  .publish_live_preview_container .publish_embed_code textarea {
+  .publish_preview_container .publish_embed_code textarea {
     width: 100%;
     height: 120px;
   }
 
 
-.publish_live_preview_container .publish_embed_preview {
+.publish_preview_container .publish_embed_preview {
   margin: 12px 0;
 }
-  .publish_live_preview_container .publish_embed_preview h2 {
+  .publish_preview_container .publish_embed_preview h2 {
     text-align: center;
     background-color: #EFEFEF;
     padding: 12px 0;
     margin: 12px 0 ;
     clear: both;
   }
-  .publish_live_preview_container .publish_embed_preview iframe {
+  .publish_preview_container .publish_embed_preview iframe {
     width: 100%;
     height: 500px;
   }
