@@ -10,49 +10,54 @@
 /* = Publish Preview = */
 /* =================== */
 
-#publish_preview_container {
-  margin: 15px 30px 30px;
+.embed_dialog {
+  max-width: none;
+}
+.publish_preview_container {
+  margin: 0;
+  text-align: left;
 }
 
-#publish_preview_container .publish_document .document {
+.publish_preview_container .publish_document .document {
   font: 11px/14px Helvetica,Arial;
   margin-bottom: 20px;
   min-height: 80px;
   padding: 2px 30px 5px 90px;
 }
 
-#publish_preview_container .publish_options_container {
-  float: left;
-  width: 45%;
+.publish_preview_container .publish_options_container {
 }
-  #publish_preview_container form.publish_options {
+  .publish_preview_container form.publish_options {
     display: block;
   }
 
-#publish_preview_container .publish_embed_code {
-  float: right;
-  clear: both;
-  width: 45%;
-  padding: 15px;
-  background-color: #EFEFEF;
+.publish_preview_container .publish_preview_left {
+  float: left;
+  width: 300px;
 }
-  #publish_preview_container .publish_embed_code textarea {
+
+.publish_preview_container .publish_embed_code {
+  padding: 15px;
+  background-color: #202020;
+}
+  .publish_preview_container .publish_embed_code textarea {
     width: 100%;
     height: 120px;
   }
 
 
-#publish_preview_container .publish_embed_preview {
-  margin: 12px 0;
+.publish_preview_container .publish_embed_preview {
+  float: right;
+  width: 600px;
 }
-  #publish_preview_container .publish_embed_preview h2 {
+  .publish_preview_container .publish_embed_preview h2 {
     text-align: center;
-    background-color: #EFEFEF;
+    background-color: #202020;
     padding: 12px 0;
     margin: 12px 0 ;
     clear: both;
   }
-  #publish_preview_container .publish_embed_preview iframe {
+  .publish_preview_container .publish_embed_preview iframe {
     clear: both;
     width: 100%;
     height: 500px;

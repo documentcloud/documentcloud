@@ -23,7 +23,6 @@ _.extend(dc.app.workspace, {
     dc.app.navigation            = new dc.ui.Navigation();
     dc.ui.notifier               = new dc.ui.Notifier();
     dc.ui.tooltip                = new dc.ui.Tooltip();
-    dc.app.publish               = new dc.ui.Publish();
     this.sidebar                 = new dc.ui.Sidebar();
     this.panel                   = new dc.ui.Panel();
     this.help                    = new dc.ui.Help();
@@ -44,7 +43,6 @@ _.extend(dc.app.workspace, {
     content.append(this.sidebar.render().el);
     content.append(this.panel.render().el);
     dc.app.navigation.render();
-    dc.app.publish.render();
     this.help.render();
     this.panel.add('search_box', dc.app.searchBox.render().el);
     this.panel.add('pagination', dc.app.paginator.el);

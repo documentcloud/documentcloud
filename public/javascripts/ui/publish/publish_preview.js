@@ -22,19 +22,19 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       title       : this.displayTitle(),
       information : ''
     });
+    this.setMode('embed', 'dialog');
     this.render();
     dc.ui.spinner.show();
   },
   
   render : function() {
-    this.el = $('#publish_preview_container')[0];
+    this.base({
+      width: '90%'
+    });
     _.bindAll(this, '_rerenderDocumentLivePreview', '_loadIFramePreview');
-    $(this.el).html(JST['workspace/publish_preview']({}));
-    dc.history.save('publish/' + this.embedDoc.id + '-' + this.embedDoc.attributes().slug);
-    this._renderDocumentHeader();
+    $('.custom', this.el).html(JST['workspace/publish_preview']({}));
     this._renderEmbedCode();
     _.defer(this._loadIFramePreview);
-    this.base();
     dc.ui.spinner.hide();
     return this;
   },
@@ -73,12 +73,6 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     
     $('iframe#documentViewerPreview')[0].contentWindow.DV.load(docUrl, options);
     dc.ui.spinner.hide();
-  },
-  
-  _renderDocumentHeader : function(doc) {
-    Documents.deselectAll();
-    var view = new dc.ui.Document({model : this.embedDoc});
-    $('.publish_document', this.el).html(view.render().el);
   },
   
   _renderEmbedCode : function(doc) {
