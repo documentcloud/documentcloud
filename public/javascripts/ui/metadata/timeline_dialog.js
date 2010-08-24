@@ -64,20 +64,21 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   // Chart the dates for the selected documents.
   _plotDates : function(resp) {
-    var excerpts = this._excerpts = {};
     dc.ui.spinner.hide();
     if (resp.dates.length == 0) return this._noDates();
     this.render();
     var color = this.POINT_COLOR;
-    var series = {}, styles = {};
+    var series = {}, styles = {}, excerpts = this._excerpts = {};
     _.each(this.documents, function(doc, i) {
-      series[doc.id] = [];
-      styles[doc.id] = {pos : i, color : color};
+      series[doc.id]   = [];
+      styles[doc.id]   = {pos : i, color : color};
+      excerpts[doc.id] = {};
     });
     _.each(resp.dates, function(json) {
+      var id = json.document_id;
       var date = json.date * 1000;
-      excerpts[date] = json.excerpts;
-      series[json.document_id].push([date, styles[json.document_id].pos]);
+      excerpts[id][date] = json.excerpts;
+      series[id].push([date, styles[id].pos]);
     });
     this._data = _.map(series, function(val, key) {
       return {data : val, color : styles[key].color, docId : parseInt(key, 10)};
@@ -95,8 +96,9 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   // Create a tooltip to show a hovered date.
   _showTooltop : function(e, pos, item) {
     if (!item) return dc.ui.tooltip.hide();
-    var title   = Inflector.truncate(Documents.get(item.series.docId).get('title'), 50);
-    var excerpt = Inflector.trimExcerpt(this._excerpts[item.datapoint[0]][0].excerpt);
+    var id      = item.series.docId;
+    var title   = Inflector.truncate(Documents.get(id).get('title'), 50);
+    var excerpt = Inflector.trimExcerpt(this._excerpts[id][item.datapoint[0]][0].excerpt);
     dc.ui.tooltip.show({
       left  : pos.pageX,
       top   : pos.pageY,
