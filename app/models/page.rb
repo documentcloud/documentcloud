@@ -54,6 +54,10 @@ class Page < ActiveRecord::Base
     end
   end
 
+  def contains?(occurrence)
+    start_offset <= occurrence.offset && end_offset > occurrence.offset
+  end
+
   def authorized_image_url(size)
     DC::Store::AssetStore.new.authorized_url(document.page_image_path(page_number, size))
   end

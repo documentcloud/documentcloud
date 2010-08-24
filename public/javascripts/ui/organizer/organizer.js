@@ -139,7 +139,7 @@ dc.ui.Organizer = dc.View.extend({
   _showPages : function(e) {
     var el = $(e.target).closest('.row');
     var next = function() {
-      Entities.fetch(el.attr('data-category'), el.attr('data-value'), function(entities) {
+      dc.model.Entity.fetch(el.attr('data-category'), el.attr('data-value'), function(entities) {
         var sets = _.reduce(entities, function(memo, ent) {
           var docId = ent.get('document_id');
           memo[docId] = memo[docId] || [];

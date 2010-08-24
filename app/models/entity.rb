@@ -12,6 +12,8 @@ class Entity < ActiveRecord::Base
 
   belongs_to :document
 
+  has_one :full_text, :through => :document
+
   validates_inclusion_of :kind, :in => DC::VALID_KINDS
 
   named_scope :kind, lambda {|kind| {:conditions => {:kind => kind}} }
@@ -29,9 +31,9 @@ class Entity < ActiveRecord::Base
 
   # TODO: Make this not use an ilike, Solr, preferably.
   def self.search_in_documents(kind, value, ids)
-    self.all({:conditions => [
+    entities = self.all({:conditions => [
       "document_id in (?) and kind = ? and value ilike '%#{Entity.connection.quote_string(value)}%'", ids, kind
-    ]})
+    ], :include => [:full_text]})
   end
 
   # Merge this entity with another of the "same" entity for the same document.
@@ -65,7 +67,7 @@ class Entity < ActiveRecord::Base
      'value'        => value,
      'relevance'    => relevance
     }
-    data['pages']   =  pages(split_occurrences, :limit => 200).map {|p| p.page_number } if options[:include_pages]
+    data['excerpts'] = excerpts(150, :limit => 200) if options[:include_excerpts]
     data.to_json
   end
 

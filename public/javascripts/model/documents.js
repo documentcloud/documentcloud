@@ -60,17 +60,6 @@ dc.model.Document = dc.Model.extend({
     return true;
   },
 
-  // Return a list of the document's entities. Think about caching this on the
-  // document by binding to Entities, instead of on-the-fly.
-  entities : function() {
-    var docId = this.id;
-    return _.select(Entities.models(), function(m) {
-      return _.any(m.get('instances'), function(i){
-        return i.document_id == docId;
-      });
-    });
-  },
-
   uniquePageEntityValues : function() {
     return _.uniq(_.map(this.pageEntities.models(), function(m){ return m.get('value'); }));
   },

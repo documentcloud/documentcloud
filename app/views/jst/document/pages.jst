@@ -1,8 +1,10 @@
 <%
   var pages = _.sortBy(_.flatten(_.map(doc.pageEntities.models(), function(ent) {
-    return _.map(ent.get('pages'), function(num){ return {id : ent.id, page : num}; });
-  })), function(pair) {
-    return pair.page;
+    return _.map(ent.get('excerpts'), function(obj) {
+      return {id : ent.id, page_number : obj.page_number, excerpt : obj.excerpt};
+    });
+  })), function(page) {
+    return page.page_number;
   });
 %>
 <% if (pages.length) { %>
@@ -15,10 +17,14 @@
     </div>
     <div class="clear"> </div>
   </div>
-  <% _.each(pages, function(pair) { %>
-    <div class="page" data-page="<%= pair.page %>" data-id="<%= pair.id %>">
-      <img class="page_image" alt="page <%= pair.page %>" src="<%= doc.pageThumbnailURL(pair.page) %>" />
-      <div class="page_number">p. <%= pair.page %></div>
+  <% _.each(pages, function(page) { %>
+    <div class="page" data-page="<%= page.page_number %>" data-id="<%= page.id %>">
+      <div class="page_icon">
+        <img class="page_image" alt="page <%= page.page_number %>" src="<%= doc.pageThumbnailURL(page.page_number) %>" />
+        <div class="page_number">p. <%= page.page_number %></div>
+      </div>
+      <div class="page_excerpt noselect"><%= Inflector.trimExcerpt(page.excerpt) %></div>
+      <div class="clear"></div>
     </div>
   <% }); %>
   <div class="clear"></div>

@@ -5,6 +5,8 @@ class EntityDate < ActiveRecord::Base
 
   belongs_to :document
 
+  has_one :full_text, :through => :document
+
   # Destroy and recreate all of a document's dates, from the text. Save the
   # document after running this method in order to save the dates.
   def self.refresh(document)

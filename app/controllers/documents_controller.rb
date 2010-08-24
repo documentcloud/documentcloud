@@ -83,7 +83,7 @@ class DocumentsController < ApplicationController
   # TODO: Access-control this:
   def entity
     entities = Entity.search_in_documents(params[:kind], params[:value], params[:ids])
-    json({'entities' => entities}.to_json(:include_pages => true))
+    json({'entities' => entities}.to_json(:include_excerpts => true))
   end
 
   # TODO: Access-control this:

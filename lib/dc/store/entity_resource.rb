@@ -15,16 +15,26 @@ module DC
         conds = occurs.map do |occur|
           "(start_offset <= #{occur.offset} and end_offset > #{occur.offset})"
         end
-        search = options.merge({:conditions => conds.join(' or '), :select => 'id, page_number, start_offset, end_offset'})
-        document.pages.all(search)
+        search = options.merge({:conditions => conds.join(' or ')})
+        @pages ||= document.pages.all(search)
+        @page_map = occurs.inject({}) do |memo, occur|
+          memo[occur] = @pages.detect {|page| page.contains?(occur) }
+          memo
+        end
+        @pages
       end
 
-      # This method has to read the entire document contents into memory and
-      # convert to UTF8. Only for debugging, please.
-      def occurrence_text(context=0)
-        utf = document.text.mb_chars
-        split_occurrences.map do |occur|
-          utf[occur.offset - context, occur.length + (context * 2)].to_s
+      def excerpts(context=50, options={})
+        pages(split_occurrences, options)
+        @page_map.map do |occur, page|
+          utf   = page.text.mb_chars
+          open  = occur.offset - page.start_offset
+          close = open + occur.length
+          excerpt =
+            utf[open - context, context].to_s + '<span class="occurrence">' +
+            utf[open, occur.length].to_s      + '</span>' +
+            utf[close, context].to_s
+          {:page_number => page.page_number, :excerpt => excerpt}
         end
       end
 

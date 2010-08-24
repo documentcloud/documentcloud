@@ -17,7 +17,8 @@ dc.ui.Document = dc.View.extend({
     '.icon.doc.dblclick'      : 'viewDocument',
     '.show_notes.click'       : 'toggleNotes',
     '.title .edit_glyph.click': 'openDialog',
-    '.page.click'             : '_openEntityOnPage',
+    '.page_icon.click'        : '_openEntityOnPage',
+    '.occurrence.click'       : '_openEntityOnPage',
     '.cancel_search.click'    : '_hidePages'
   },
 

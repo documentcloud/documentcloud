@@ -42,11 +42,6 @@
     body.minidocs #document_list .document img.doc {
       margin-left: 56px;
     }
-    img.page_image {
-      width: 40px; height: 50px;
-      border: 1px solid #b4b4b4;
-      box-shadow: 2px 2px 0 #e7e7e7; -webkit-box-shadow: 2px 2px 0 #e7e7e7; -moz-box-shadow: 2px 2px 0 #e7e7e7;
-    }
   .document .mini_note {
     position: absolute;
     top: 13px; left: -3px;
@@ -175,28 +170,49 @@
 .document .pages {
 }
 .document .pages_title {
-  margin: 15px 0 15px 0;
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 18px;
+  margin: 20px 0 15px 0;
 }
   .document .pages .pages_title_inner {
     position: relative;
-    line-height: 11px;
     margin-right: 10px;
   }
   .document .pages .cancel_search {
     cursor: pointer;
     display: inline-block;
-    vertical-align: text-top;
+    vertical-align: -1px;
     margin-right: 5px;
   }
 .document .page {
-  float: left;
-  margin: 0 20px 15px 3px;
-  text-align: center;
-  cursor: pointer;
+  padding-bottom: 15px;
 }
-  .document .page_number {
+  .document .page_icon {
+    float: left;
+    margin: 0 20px 0 0;
+    text-align: center;
+    cursor: pointer;
+  }
+    .document img.page_image {
+      width: 40px; height: 50px;
+      border: 1px solid #b4b4b4;
+      box-shadow: 2px 2px 0 #e7e7e7; -webkit-box-shadow: 2px 2px 0 #e7e7e7; -moz-box-shadow: 2px 2px 0 #e7e7e7;
+    }
+    .document .page_number {
+      color: #555;
+    }
+  .document .page_excerpt {
+    font: 12px/18px Georgia;
     color: #555;
   }
+  .document .occurrence {
+    color: #000;
+    cursor: pointer;
+  }
+    .document .occurrence:hover {
+      text-decoration: underline;
+    }
 
 
 /*------------------------------ Annotations ---------------------------------*/

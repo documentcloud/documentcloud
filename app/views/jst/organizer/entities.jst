@@ -1,10 +1,10 @@
 <% var empty = true; %>
-<% _.each(Entities.ORDER, function(category) { %>
+<% _.each(dc.model.Entity.ORDER, function(category) { %>
   <% var list = entities[category] || []; %>
   <% if (list.length) { %>
     <% empty = false; %>
     <div class="section">
-      <div class="category interface"><%= Entities.DISPLAY_NAME[category] %></div>
+      <div class="category interface"><%= dc.model.Entity.DISPLAY_NAME[category] %></div>
       <div class="rows">
         <% _.each(list.slice(0, limit), function(facet) { %>
           <div class="row <%= facet.active ? 'active' : '' %>" data-value="<%= facet.value %>" data-category="<%= category %>">

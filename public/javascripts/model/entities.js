@@ -1,12 +1,8 @@
 // Entity Model
 
-dc.model.Entity = dc.Model.extend({});
+dc.model.Entity = dc.Model.extend({
 
-// Entity Set
-
-dc.model.EntitySet = dc.Set.extend({
-
-  model : dc.model.Entity,
+}, {
 
   // Map of kind to display name for titles and the like.
   DISPLAY_NAME : {
@@ -35,4 +31,17 @@ dc.model.EntitySet = dc.Set.extend({
 
 });
 
-window.Entities = new dc.model.EntitySet();
+// Entity Set
+
+dc.model.EntitySet = dc.Set.extend({
+
+  model : dc.model.Entity,
+
+  comparator : function(entity) {
+    var pages = _.pluck(entity.get('excerpts'), 'page_number');
+    return Math.min.apply(Math, pages);
+  }
+
+});
+
+dc.model.EntitySet.implement(dc.model.SortedSet);

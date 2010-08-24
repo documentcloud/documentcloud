@@ -84,7 +84,6 @@ dc.app.searcher.extend({
     var query = this.box.value() || '';
     dc.ui.spinner.show();
     this.flags.outstandingSearch = true;
-    Entities.refresh();
     $.get(this.FACETS_URL, {q: query}, this._loadFacetsResults, 'json');
   },
 
@@ -152,7 +151,6 @@ dc.app.searcher.extend({
 
   _loadFacetsResults : function(resp) {
     dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
-    Entities.refresh();
     dc.ui.spinner.hide();
     this.flags.outstandingSearch = false;
     this.flags.hasEntities = true;

@@ -36,6 +36,11 @@ window.Inflector = {
     return s.trim ? s.trim() : s.replace(/^\s+|\s+$/g, '');
   },
 
+  // Trim leading and trailing non-whitespace characters, and add ellipses.
+  trimExcerpt : function(s) {
+    return '&hellip;' + s.replace(/(^\S+|\S+$)/, '') + '&hellip;';
+  },
+
   camelize : function(s) {
     var parts = s.split('-'), len = parts.length;
     if (len == 1) return parts[0];
