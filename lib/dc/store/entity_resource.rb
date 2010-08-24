@@ -18,7 +18,8 @@ module DC
         search = options.merge({:conditions => conds.join(' or ')})
         @pages ||= document.pages.all(search)
         @page_map = occurs.inject({}) do |memo, occur|
-          memo[occur] = @pages.detect {|page| page.contains?(occur) }
+          page = @pages.detect {|page| page.contains?(occur) }
+          memo[occur] = page if page
           memo
         end
         @pages

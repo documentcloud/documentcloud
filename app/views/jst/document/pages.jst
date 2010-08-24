@@ -1,19 +1,24 @@
 <%
+  var numbers = [];
   var pages = _.sortBy(_.flatten(_.map(doc.pageEntities.models(), function(ent) {
     return _.map(ent.get('excerpts'), function(obj) {
+      numbers.push(obj.page_number);
       return {id : ent.id, page_number : obj.page_number, excerpt : obj.excerpt};
     });
   })), function(page) {
     return page.page_number;
   });
+  var pageCount = _.uniq(numbers).length;
 %>
-<% if (pages.length) { %>
+<% if (pageCount) { %>
   <div class="pages_title">
     <div class="pages_title_inner">
-      <span class="icon cancel_search" title="hide pages"></span><%= pages.length >= 200 ? 'Over ' : '' %>
-      <%= pages.length %>
-      <%= Inflector.pluralize('page', pages.length) %>
-      mentioning <%= Inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>
+      <span class="icon cancel_search" title="hide pages"></span>
+      <%= pages.length %> <%= Inflector.pluralize('mention', pages.length) %>
+      of <%= Inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>
+      in <%= pageCount >= 200 ? 'over ' : '' %>
+      <%= pageCount %>
+      <%= Inflector.pluralize('page', pageCount) %>
     </div>
     <div class="clear"> </div>
   </div>
