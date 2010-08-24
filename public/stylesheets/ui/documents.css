@@ -207,6 +207,7 @@
     color: #555;
   }
   .document .occurrence {
+    white-space: nowrap;
     color: #000;
     cursor: pointer;
   }
