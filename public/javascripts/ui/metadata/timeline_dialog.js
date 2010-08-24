@@ -82,9 +82,12 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
       return {data : val, color : styles[key].color, docId : parseInt(key, 10)};
     });
     this._options = _.clone(this.GRAPH_OPTIONS);
-    this._options.xaxis.min = null;
-    this._options.xaxis.max = null;
-    this._options.yaxis.max = seriesCount - 0.5;
+    this._options.xaxis.min   = null;
+    this._options.xaxis.max   = null;
+    this._options.yaxis.max   = seriesCount - 0.5;
+    this._options.yaxis.ticks = _.map(this.documents, function(doc){
+      return [styles[doc.id].pos, Inflector.truncate(doc.get('title'), 25)];
+    });
     this.drawPlot();
   },
 
@@ -103,6 +106,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   // Allow clicking on date ranges to jump to the page containing the date
   // in the document.
   _openPage : function(e, pos, item) {
+    if (!item) return;
     var unixTime = item.datapoint[0] / 1000;
     var doc = Documents.get(item.series.docId);
     window.open(doc.url() + "?date=" + unixTime);
