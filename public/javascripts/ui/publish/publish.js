@@ -2,10 +2,6 @@ dc.ui.Publish = dc.View.extend({
   
   callbacks : {},
   
-  constructor : function() {
-    dc.app.publishPreview = new dc.ui.PublishPreview();
-  },
-  
   render : function() {
     this.el = $('#publish_container')[0];
     dc.history.register(/^#publish$/,    _.bind(this.openPublishTab, this));

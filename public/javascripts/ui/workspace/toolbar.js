@@ -108,8 +108,7 @@ dc.ui.Toolbar = dc.View.extend({
 
     var docs = Documents.selected();
     if (docs.length == 1) {
-      dc.app.navigation.open('publish');
-      dc.app.publish.renderDocumentPreview(docs[0]);
+      dc.app.publishPreview = new dc.ui.PublishPreview(docs[0]);
     } else {
       dc.ui.Dialog.alert('Please select a single document to embed.');
     }

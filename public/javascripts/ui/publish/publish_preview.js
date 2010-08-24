@@ -1,4 +1,4 @@
-dc.ui.PublishPreview = dc.View.extend({
+dc.ui.PublishPreview = dc.ui.Dialog.extend({
   
   callbacks : {
     'input.change' : '_rerenderDocumentLivePreview'
@@ -14,17 +14,33 @@ dc.ui.PublishPreview = dc.View.extend({
     enableUrlChanges: false
   },
   
-  render : function(doc) {
+  constructor : function(doc) {
+    console.log(['PublishPreview constructor', doc]);
     this.embedDoc = doc;
+    this.base({
+      mode        : 'custom',
+      title       : this.displayTitle(),
+      information : ''
+    });
+    this.render();
+    dc.ui.spinner.show();
+  },
+  
+  render : function() {
     this.el = $('#publish_preview_container')[0];
     _.bindAll(this, '_rerenderDocumentLivePreview', '_loadIFramePreview');
     $(this.el).html(JST['workspace/publish_preview']({}));
-    dc.history.save('publish/' + doc.id + '-' + doc.attributes().slug);
+    dc.history.save('publish/' + this.embedDoc.id + '-' + this.embedDoc.attributes().slug);
     this._renderDocumentHeader();
     this._renderEmbedCode();
     _.defer(this._loadIFramePreview);
-    this.setCallbacks();
+    this.base();
+    dc.ui.spinner.hide();
     return this;
+  },
+  
+  displayTitle : function() {
+    return 'Embed ' + this.embedDoc.attributes().title;
   },
   
   _loadIFramePreview : function() {
