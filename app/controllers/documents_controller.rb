@@ -89,7 +89,7 @@ class DocumentsController < ApplicationController
   # TODO: Access-control this:
   def dates
     dates = EntityDate.all(:conditions => {:document_id => params[:ids]})
-    json 'dates' => dates
+    json({'dates' => dates}.to_json(:include_excerpts => true))
   end
 
   # Allows us to poll for status updates in the in-progress document uploads.

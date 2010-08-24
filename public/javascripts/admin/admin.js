@@ -161,7 +161,8 @@ dc.ui.Admin = dc.View.extend({
     this._tooltip.show({
       left : pos.pageX,
       top  : pos.pageY,
-      text : count + ' ' + title + '<br />' + date
+      title: count + ' ' + title,
+      text : date
     });
   },
 

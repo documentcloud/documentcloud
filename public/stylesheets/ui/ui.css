@@ -565,6 +565,7 @@ iframe.hidden_iframe {
   display: none;
   cursor: pointer;
   z-index: 5000;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.33); -webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.33); -moz-box-shadow: 0 3px 10px rgba(0,0,0,0.33);
 }
   #notifier {
     position: fixed;
@@ -576,7 +577,6 @@ iframe.hidden_iframe {
     opacity: 0.97; filter: alpha(opacity=97);
     border: 1px solid #555; border-top: 0; border-left: 0;
     border-bottom-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px;
-    -webkit-box-shadow: 0 3px 10px #777; -moz-box-shadow: 0 3px 10px #777;
   }
     #notifier.info_style {
       background-position: 28px 6px;
@@ -586,15 +586,23 @@ iframe.hidden_iframe {
       color: #ff0022;
     }
   #tooltip {
-    color: #000;
-    border-width: 0;
-    padding: 4px 8px;
-    font: 11px/14px Helvetica, Arial;
+    padding: 8px 10px;
+    font-size: 11px;
+    line-height: 14px;
+    max-width: 300px;
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   }
-    #tooltip_background {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      z-index: -1;
-      border: 1px solid #ccc;
-      -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+    #tooltip_title {
+      font-weight: bold;
+      color: #000;
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+    #tooltip_text .occurrence {
+      color: #000;
+      white-space: nowrap;
+      font-weight: bold;
     }

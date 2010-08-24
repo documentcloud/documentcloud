@@ -1,6 +1,7 @@
 dc.ui.Tooltip = dc.View.extend({
 
   id        : 'tooltip',
+  className : 'interface',
 
   OFFSET : 5,
 
@@ -8,9 +9,9 @@ dc.ui.Tooltip = dc.View.extend({
     this.base();
     this._open = false;
     _.bindAll(this, 'hide', 'show');
-    $(this.el).append($.el('div', {id: 'tooltip_background', 'class' : 'gradient_white'}));
-    $(this.el).append($.el('div', {id: 'tooltip_text'}));
-    this.content = $('#tooltip_text', this.el);
+    $(this.el).html(JST['common/tooltip']());
+    this._title   = $('#tooltip_title', this.el);
+    this._content = $('#tooltip_text', this.el);
     $(document.body).append(this.el);
   },
 
@@ -19,7 +20,8 @@ dc.ui.Tooltip = dc.View.extend({
     options.left += this.OFFSET;
     options.top  += this.OFFSET;
     this.setMode(options.mode, 'style');
-    this.content.html(options.text);
+    this._title.html(options.title);
+    this._content.html(options.text);
     $(this.el).css({top : options.top, left : options.left});
     if (!this._open) this.fadeIn();
     $(document).bind('mouseover', this.hide);
