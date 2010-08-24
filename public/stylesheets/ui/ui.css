@@ -577,6 +577,7 @@ iframe.hidden_iframe {
   display: none;
   cursor: pointer;
   z-index: 5000;
+  overflow: hidden;
   box-shadow: 0 3px 10px rgba(0,0,0,0.33); -webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.33); -moz-box-shadow: 0 3px 10px rgba(0,0,0,0.33);
 }
   #notifier {
