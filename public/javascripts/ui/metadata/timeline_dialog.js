@@ -70,16 +70,14 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     this.render();
     var color = this.POINT_COLOR;
     var series = {}, styles = {};
-    var seriesCount = 0;
+    _.each(this.documents, function(doc, i) {
+      series[doc.id] = [];
+      styles[doc.id] = {pos : i, color : color};
+    });
     _.each(resp.dates, function(json) {
-      var id = json.document_id;
       var date = json.date * 1000;
-      if (!series[id]) {
-        series[id] = [];
-        styles[id] = {pos : seriesCount++, color : color};
-      }
       excerpts[date] = json.excerpts;
-      series[id].push([date, styles[id].pos]);
+      series[json.document_id].push([date, styles[json.document_id].pos]);
     });
     this._data = _.map(series, function(val, key) {
       return {data : val, color : styles[key].color, docId : parseInt(key, 10)};
@@ -87,9 +85,9 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     this._options = _.clone(this.GRAPH_OPTIONS);
     this._options.xaxis.min   = null;
     this._options.xaxis.max   = null;
-    this._options.yaxis.max   = seriesCount - 0.5;
+    this._options.yaxis.max   = this.documents.length - 0.5;
     this._options.yaxis.ticks = _.map(this.documents, function(doc){
-      return [styles[doc.id].pos, Inflector.truncate(doc.get('title'), 25)];
+      return [styles[doc.id].pos, Inflector.truncate(doc.get('title'), 30)];
     });
     this.drawPlot();
   },
@@ -97,7 +95,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   // Create a tooltip to show a hovered date.
   _showTooltop : function(e, pos, item) {
     if (!item) return dc.ui.tooltip.hide();
-    var title   = Inflector.truncate(Documents.get(item.series.docId).get('title'), 35);
+    var title   = Inflector.truncate(Documents.get(item.series.docId).get('title'), 50);
     var excerpt = Inflector.trimExcerpt(this._excerpts[item.datapoint[0]][0].excerpt);
     dc.ui.tooltip.show({
       left  : pos.pageX,

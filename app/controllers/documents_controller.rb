@@ -88,7 +88,7 @@ class DocumentsController < ApplicationController
 
   # TODO: Access-control this:
   def dates
-    dates = EntityDate.all(:conditions => {:document_id => params[:ids]})
+    dates = EntityDate.find_all_by_document_id(params[:ids], :include => [:document])
     json({'dates' => dates}.to_json(:include_excerpts => true))
   end
 
