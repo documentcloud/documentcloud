@@ -84,3 +84,6 @@ div.text_input.search input {
 #upload_dialog .line {
   display: none;
 }
+#tooltip {
+  border: 1px solid #ccc;
+}

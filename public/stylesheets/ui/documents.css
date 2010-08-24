@@ -206,16 +206,6 @@
     font: 12px/18px Georgia;
     color: #555;
   }
-  .document .occurrence {
-    font-weight: bold;
-    white-space: nowrap;
-    color: #000;
-    cursor: pointer;
-  }
-    .document .occurrence:hover {
-      text-decoration: underline;
-    }
-
 
 /*------------------------------ Annotations ---------------------------------*/
 .document .notes {
