@@ -38,8 +38,8 @@ window.Inflector = {
 
   // Trim leading and trailing non-whitespace characters, and add ellipses.
   trimExcerpt : function(s) {
-    s = s.replace(/^([\S\s]{0,50}?[.,!]|\S+)/g, '');
-    s = s.replace(/(([.,!])[\S\s]{0,50}?|\S+)$/g, '$2');
+    s = s.replace(/^([\S\s]{0,100}?[.,!]|\S+)/g, '');
+    s = s.replace(/(([.,!]\s?)[\S\s]{0,100}?|\S+)$/g, '$2');
     return '&hellip;' + s + '&hellip;';
   },
 
