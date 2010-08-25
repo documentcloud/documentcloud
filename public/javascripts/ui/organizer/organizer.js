@@ -137,26 +137,37 @@ dc.ui.Organizer = dc.View.extend({
   },
 
   _showPages : function(e) {
-    var el = $(e.target).closest('.row');
-    var next = function() {
-      dc.model.Entity.fetch(el.attr('data-category'), el.attr('data-value'), function(entities) {
-        var sets = _.reduce(entities, function(memo, ent) {
-          var docId = ent.get('document_id');
-          memo[docId] = memo[docId] || [];
-          memo[docId].push(ent);
-          return memo;
-        }, {});
-        _.each(sets, function(set) {
-          Documents.get(set[0].get('document_id')).pageEntities.refresh(set);
-        });
-      });
-    };
+    var el        = $(e.target).closest('.row');
+    var kind      = el.attr('data-category');
+    var value     = el.attr('data-value');
+    var active    = el.hasClass('active');
+    var fetch     = _.bind(function() {
+      dc.model.Entity.fetch(kind, value, this._connectExcerpts);
+    }, this);
+    var next = fetch;
+    if (!active) {
+      next = _.bind(function() {
+        dc.app.searcher.addToSearch(this._facetStringFor(el), fetch);
+      }, this);
+    }
     if (dc.app.paginator.mini) {
       dc.app.paginator.toggleSize(next);
     } else {
       next();
     }
     return false;
+  },
+
+  _connectExcerpts : function(entities) {
+    var sets = _.reduce(entities, function(memo, ent) {
+      var docId = ent.get('document_id');
+      memo[docId] = memo[docId] || [];
+      memo[docId].push(ent);
+      return memo;
+    }, {});
+    _.each(sets, function(set) {
+      Documents.get(set[0].get('document_id')).pageEntities.refresh(set);
+    });
   },
 
   // Bind all possible and Project events for rendering.

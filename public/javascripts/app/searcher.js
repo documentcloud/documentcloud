@@ -106,11 +106,11 @@ dc.app.searcher.extend({
 
   // Add a query fragment to the search and search again, if it's not already
   // present in the current search.
-  addToSearch : function(fragment) {
+  addToSearch : function(fragment, callback) {
     var val = this.box.value();
     if (val.toLowerCase().match(fragment.toLowerCase())) return;
     this.box.value(val = (val + " " + fragment));
-    this.search(val);
+    this.search(val, null, callback);
   },
 
   // Remove a query fragment from the search and search again, only if it's

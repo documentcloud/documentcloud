@@ -16,7 +16,7 @@
       <span class="icon cancel_search" title="hide pages"></span>
       <%= pages.length %> <%= Inflector.pluralize('mention', pages.length) %>
       of <%= Inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>
-      in <%= pageCount >= 200 ? 'over ' : '' %>
+      from <%= pageCount >= 200 ? 'over ' : '' %>
       <%= pageCount %>
       <%= Inflector.pluralize('page', pageCount) %>
     </div>
