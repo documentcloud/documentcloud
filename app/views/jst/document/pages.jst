@@ -12,14 +12,11 @@
 %>
 <% if (pageCount) { %>
   <div class="pages_title">
-    <div class="pages_title_inner">
-      <span class="icon cancel_search" title="hide pages"></span>
-      <%= pageCount >= 200 ? 'over ' : '' %> <%= pages.length %> <%= Inflector.pluralize('mention', pages.length) %>
-      of <%= Inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>
-      on <%= pageCount %>
-      <%= Inflector.pluralize('page', pageCount) %>
-    </div>
-    <div class="clear"> </div>
+    <span class="icon cancel_search" title="hide pages"></span>
+    <%= pageCount >= 200 ? 'over ' : '' %> <%= pages.length %> <%= Inflector.pluralize('mention', pages.length) %>
+    of <%= Inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>
+    on <%= pageCount %>
+    <%= Inflector.pluralize('page', pageCount) %>
   </div>
   <% _.each(pages, function(page) { %>
     <div class="page" data-page="<%= page.page_number %>" data-id="<%= page.id %>">

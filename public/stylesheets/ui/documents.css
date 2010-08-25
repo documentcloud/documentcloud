@@ -170,20 +170,17 @@
 .document .pages {
 }
 .document .pages_title {
+  position: relative;
   font-weight: bold;
   font-size: 13px;
   line-height: 18px;
-  margin: 20px 0 15px 0;
+  padding-left: 20px;
+  margin: 20px 10px 15px 0;
 }
-  .document .pages .pages_title_inner {
-    position: relative;
-    margin-right: 10px;
-  }
   .document .pages .cancel_search {
+    position: absolute;
+    left: 0; top: 3px;
     cursor: pointer;
-    display: inline-block;
-    vertical-align: -1px;
-    margin-right: 5px;
   }
 .document .page {
   padding-bottom: 15px;

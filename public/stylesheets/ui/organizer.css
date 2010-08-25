@@ -79,16 +79,30 @@
       #organizer .box.is_selected .edit_glyph {
         display: inline;
       }
-    #organizer .box .title {
-      font: bold 14px Helvetica, Arial;
-      color: #555;
-    }
-      #organizer .box.is_selected .title,
-      #organizer .box:hover .title {
-        color: #000;
+        #organizer .box:hover {
+          background: #f9f9f9;
+        }
+      #organizer .box.is_selected,
+      #organizer .box.is_selected:hover {
+        border-right-color: transparent;
+        background: #fff;
+        filter: none;
       }
-      #organizer .box .last_word {
-        white-space: nowrap;
+      #organizer .box .edit_glyph {
+        display: inline;
+        vertical-align: baseline;
+        padding-right: 11px;
+        margin-left: 6px;
+        zoom: 1;
+        opacity: 0; filter: alpha(opacity=0);
+      }
+        #organizer .box:hover .edit_glyph,
+        #organizer .box.is_selected .edit_glyph {
+          opacity: 1; filter: alpha(opacity=100);
+        }
+      #organizer .box .title {
+        font: bold 14px Helvetica, Arial;
+        color: #555;
       }
     #organizer .box .counts,
     #organizer .top_level_search .text_link {
@@ -152,12 +166,13 @@
         }
         #organizer_entities .show_pages {
           margin-left: 3px;
-          display: none;
+          zoom: 1;
+          opacity: 0; filter: alpha(opacity=0);
         }
-        #organizer_entities .row.active .show_pages,
-        #organizer_entities .row:hover .show_pages {
-          display: inline;
-        }
+          #organizer_entities .row.active .show_pages,
+          #organizer_entities .row:hover .show_pages {
+            opacity: 1; filter: alpha(opacity=100);
+          }
         #organizer_entities .cancel_search {
           position: absolute;
           top: 50%; left: 10px; margin-top: -6px;

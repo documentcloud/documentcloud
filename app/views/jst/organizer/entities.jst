@@ -8,8 +8,7 @@
       <div class="rows">
         <% _.each(list.slice(0, limit), function(facet) { %>
           <div class="row <%= facet.active ? 'active' : '' %>" data-value="<%= facet.value %>" data-category="<%= category %>">
-            <span class="facet interface"><%= facet.value %></span>&nbsp;<span class="count" title="Mentioned in <%= facet.count %> documents">(<%= facet.count %>)</span>
-            <span class="show_pages text_link interface">show&nbsp;pages</span>
+            <span class="facet interface"><%= facet.value %></span>&nbsp;<span class="count" title="Mentioned in <%= facet.count %> documents">(<%= facet.count %>)</span>&nbsp;<span class="show_pages text_link interface">show&nbsp;pages</span>
             <% if (facet.active) { %>
               <div class="icon cancel_search" title="remove this entity from your search"></div>
             <% } %>
