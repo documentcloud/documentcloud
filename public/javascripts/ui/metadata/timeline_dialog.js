@@ -68,17 +68,16 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     if (resp.dates.length == 0) return this._noDates();
     this.render();
     var color = this.POINT_COLOR;
-    var series = {}, styles = {}, excerpts = this._excerpts = {};
+    var series = {}, styles = {}, ids = this._dateIds = {};
     _.each(this.documents, function(doc, i) {
       series[doc.id]   = [];
       styles[doc.id]   = {pos : i, color : color};
-      excerpts[doc.id] = {};
     });
     _.each(resp.dates, function(json) {
-      var id = json.document_id;
-      var date = json.date * 1000;
-      excerpts[id][date] = json.excerpts;
-      series[id].push([date, styles[id].pos]);
+      var docId = json.document_id;
+      var date  = json.date * 1000;
+      ids[date] = json.id;
+      series[docId].push([date, styles[docId].pos]);
     });
     this._data = _.map(series, function(val, key) {
       return {data : val, color : styles[key].color, docId : parseInt(key, 10)};
@@ -95,16 +94,22 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   // Create a tooltip to show a hovered date.
   _showTooltop : function(e, pos, item) {
+    if (this._request) return;
     if (!item) return dc.ui.tooltip.hide();
-    var id      = item.series.docId;
-    var title   = Inflector.truncate(Documents.get(id).get('title'), 50);
-    var excerpt = Inflector.trimExcerpt(this._excerpts[id][item.datapoint[0]][0].excerpt);
-    dc.ui.tooltip.show({
-      left  : pos.pageX,
-      top   : pos.pageY,
-      title : title,
-      text  : excerpt
-    });
+    var docId = item.series.docId;
+    var id    = this._dateIds[item.datapoint[0]];
+    this._request = $.getJSON('/documents/dates', {id : id}, _.bind(function(resp) {
+      delete this._request;
+      if (!resp) return;
+      var title   = Inflector.truncate(Documents.get(docId).get('title'), 50);
+      var excerpt = resp.date.excerpts[0];
+      dc.ui.tooltip.show({
+        left  : pos.pageX,
+        top   : pos.pageY,
+        title : title,
+        text  : '<b>p.' + excerpt.page_number + '</b> ' + Inflector.trimExcerpt(excerpt.excerpt)
+      });
+    }, this));
   },
 
   // Allow clicking on date ranges to jump to the page containing the date

@@ -22,6 +22,7 @@ class EntityDate < ActiveRecord::Base
   # that fall outside a distance of 30 bits from the regular UNIX Epoch.
   def to_json(options={})
     data = {
+      'id'           => id,
       'document_id'  => document_id,
       'date'         => date.to_time.to_f.to_i
     }
