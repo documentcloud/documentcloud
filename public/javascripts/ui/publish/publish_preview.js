@@ -1,21 +1,27 @@
 dc.ui.PublishPreview = dc.ui.Dialog.extend({
   
   callbacks : {
-    'input.change' : '_rerenderDocumentLivePreview'
+    'input.change'  : '_renderEmbedCode',
+    'select.change' : '_renderEmbedCode',
+    'input.keyup'   : '_renderEmbedCode',
+    'input.focus'   : '_renderEmbedCode',
+    'input.click'   : '_renderEmbedCode',
+    'input[name=zoom_specific].focus' : '_selectZoomSpecific'
   },
   
   DEFAULT_VIEWER_OPTIONS : {
-    container: '#DV-container',
+    container: '#document-viewer',
+    viewer_size: 'full',
+    width: 600,
+    height: 800,
     zoom: 'auto',
     showSidebar: false,
     showText: true,
-    showSearch: true,
     showHeader: true,
     enableUrlChanges: false
   },
   
   constructor : function(doc) {
-    console.log(['PublishPreview constructor', doc]);
     this.embedDoc = doc;
     this.base({
       mode        : 'custom',
@@ -31,34 +37,27 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     this.base({
       width: '90%'
     });
-    _.bindAll(this, '_rerenderDocumentLivePreview', '_loadIFramePreview');
+    _.bindAll(this, '_renderEmbedCode', '_selectZoomSpecific');
     $('.custom', this.el).html(JST['workspace/publish_preview']({}));
     this._renderEmbedCode();
-    _.defer(this._loadIFramePreview);
     dc.ui.spinner.hide();
+    this.center();
     return this;
   },
   
   displayTitle : function() {
     return 'Embed ' + this.embedDoc.attributes().title;
   },
-  
-  _loadIFramePreview : function() {
-    var $iframe = $('iframe#documentViewerPreview');
     
-    $iframe.load(_.bind(function() {
-      this._rerenderDocumentLivePreview();
-    }, this));
-  },
-  
-  _rerenderDocumentLivePreview : function() {
+  _renderEmbedCode : function(doc) {
     dc.ui.spinner.show();
 
-    var docUrl = this.embedDoc.attributes()['document_viewer_js'] + 'on';
     var userOpts = $('form.publish_options', this.el).serializeJSON();
-    _.each(this.DEFAULT_VIEWER_OPTIONS, function(v, k) {
+    _.each(this.DEFAULT_VIEWER_OPTIONS, _.bind(function(v, k) {
       if (!(k in userOpts)) userOpts[k] = false;
       else if (userOpts[k] == 'on') userOpts[k] = true;
+
+      // Zoom override
       if (k == 'zoom' && userOpts[k] == 'specific') {
         var zoom = parseInt(userOpts['zoom_specific'], 10);
         if (zoom >= 100) {
@@ -66,17 +65,32 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
         } else {
           userOpts['zoom'] = 'auto';
         }
-      };
-    });
-    delete userOpts['zoom_specific'];
+      }
+      
+      // Viewer size override
+      if (k == 'viewer_size' && userOpts[k] == 'fixed') {
+        userOpts['width'] = parseInt(userOpts['width'], 10);
+        userOpts['height'] = parseInt(userOpts['height'], 10);
+      }
+    }, this));
     var options = $.extend({}, this.DEFAULT_VIEWER_OPTIONS, userOpts);
+
+    if (options['viewer_size'] == 'full') {
+      delete options['width'];
+      delete options['height'];
+    }
+    delete options['viewer_size'];
+    delete options['zoom_specific'];
     
-    $('iframe#documentViewerPreview')[0].contentWindow.DV.load(docUrl, options);
+    $('.publish_embed_code', this.el).html(JST['document/embed_dialog']({
+      doc: this.embedDoc,
+      options: options
+    }));
     dc.ui.spinner.hide();
   },
   
-  _renderEmbedCode : function(doc) {
-    $('.publish_embed_code', this.el).html(JST['document/embed_dialog']({doc: this.embedDoc}));
+  _selectZoomSpecific : function() {
+    $('input#publish_option_zoom_specific', this.el).attr('checked', true);
   }
   
 });

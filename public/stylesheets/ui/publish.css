@@ -2,27 +2,35 @@
 /* = Publish Workspace = */
 /* ===================== */
 
-.publish_container {
-  
+.embed_dialog .title {
+  text-align: center;
 }
 
 /* =================== */
 /* = Publish Preview = */
 /* =================== */
 
-.embed_dialog {
-  max-width: none;
-}
 .publish_preview_container {
   margin: 0;
   text-align: left;
+  font-size: 12px;
+  clear: both;
 }
 
-.publish_preview_container .publish_document .document {
-  font: 11px/14px Helvetica,Arial;
-  margin-bottom: 20px;
-  min-height: 80px;
-  padding: 2px 30px 5px 90px;
+.publish_preview_container h2 {
+  clear: both;
+  background-color: #303030;
+  padding: 5px;
+  margin: 12px 0;
+  font-size: 14px;
+  text-shadow: 1px 1px 0 #000000;
+}
+
+.publish_preview_container h2 .publish_prefix {
+  color: #808080;
+  text-transform: uppercase;
+  font-size: 12px;
+  text-shadow: 0 1px 0 #000;
 }
 
 .publish_preview_container .publish_options_container {
@@ -30,35 +38,29 @@
   .publish_preview_container form.publish_options {
     display: block;
   }
-
-.publish_preview_container .publish_preview_left {
-  float: left;
-  width: 300px;
-}
-
+  .publish_preview_container .publish_options_group {
+    float: left;
+    width: 45%;
+    margin: 0 24px 0 0;
+  }
+  .publish_preview_container .publish_option {
+    margin: 0 0 8px;
+  }
+  .publish_preview_container .publish_option label {
+  }
+  .publish_preview_container .publish_option input[type=checkbox] {
+    float: left;
+    margin: 2px 4px 0 0;
+  }
+  .publish_preview_container .publish_option input[type=text] {
+    width: 40px;
+  }
 .publish_preview_container .publish_embed_code {
+  clear: both;
   padding: 15px;
   background-color: #202020;
 }
   .publish_preview_container .publish_embed_code textarea {
     width: 100%;
     height: 120px;
-  }
-
-
-.publish_preview_container .publish_embed_preview {
-  float: right;
-  width: 600px;
-}
-  .publish_preview_container .publish_embed_preview h2 {
-    text-align: center;
-    background-color: #202020;
-    padding: 12px 0;
-    margin: 12px 0 ;
-    clear: both;
-  }
-  .publish_preview_container .publish_embed_preview iframe {
-    clear: both;
-    width: 100%;
-    height: 500px;
   }

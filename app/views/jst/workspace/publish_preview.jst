@@ -1,43 +1,59 @@
 <div class="publish_preview_container">
 
-  <div class="publish_preview_left">
-    <div class="publish_options_container">
-      <form class="publish_options">
-
+  <h2><span class="publish_prefix">Step 1:</span> Configure embedded viewer options</h2>
+  
+  <div class="publish_options_container">
+    <form class="publish_options">
+      <div class="publish_options_group">
         <div class="publish_option">
-          Zoom:
-          <input type="radio" name="zoom" value="auto" id="publish_option_zoom_auto" checked /> <label for="publish_option_zoom_auto">Auto</label>
-          <input type="radio" name="zoom" value="specific" id="publish_option_zoom_specific"/> <label for="publish_option_zoom_specific"><input type="text" name="zoom_specific" /></label>
+          <label for="publish_option_viewer_size">Viewer size:</label>
+          <select id="publish_option_viewer_size" name="viewer_size">
+            <option value="full" selected="selected">Full page</option>
+            <option value="fixed">Fixed size</option>
+          </select>
         </div>
-
-        <div class="publish_option">
-          <label for="publish_option_sidebar"><input id="publish_option_sidebar" type="checkbox" name="showSidebar" checked /> Show sidebar</label>
+        <div class="publish_option publish_option_dimension">
+          <label for="publish_option_width">Width: </label>
+          <input id="publish_option_width" type="text" name="width" value="600" />
         </div>
-
+        <div class="publish_option publish_option_dimension">
+          <label for="publish_option_height">Height: </label>
+          <input id="publish_option_height" type="text" name="height" value="800" />
+        </div>
         <div class="publish_option">
-          <label for="publish_option_text"><input id="publish_option_text" type="checkbox" name="showText" checked /> Show text tab</label>
+          <label>Initial Zoom:</label>
+          <div class="zoom_option">
+            <input type="radio" name="zoom" value="auto" id="publish_option_zoom_auto" checked /> <label for="publish_option_zoom_auto">Auto</label>
+            <input type="radio" name="zoom" value="specific" id="publish_option_zoom_specific"/>
+            <input type="text" name="zoom_specific" value="700" />
+          </div>
+        </div>
+      </div>
+      <div class="publish_options_group">
+        <div class="publish_option">
+          <input id="publish_option_sidebar" type="checkbox" name="showSidebar" checked /> 
+          <label for="publish_option_sidebar">Show sidebar</label>
+        </div>
+        <div class="publish_option">
+          <input id="publish_option_header" type="checkbox" name="showHeader" checked />
+          <label for="publish_option_header">Show header</label>
         </div>      
         <div class="publish_option">
-          <label for="publish_option_search"><input id="publish_option_search" type="checkbox" name="showSearch" checked /> Show search</label>
+          <input id="publish_option_text" type="checkbox" name="showText" checked />
+          <label for="publish_option_text">Show text tab</label>
         </div>      
         <div class="publish_option">
-          <label for="publish_option_header"><input id="publish_option_header" type="checkbox" name="showHeader" checked /> Show header</label>
+          <input id="publish_option_url" type="checkbox" name="enableUrlChanges" checked />
+          <label for="publish_option_url">Enable URL changes</label>
         </div>      
-        <div class="publish_option">
-          <label for="publish_option_url"><input id="publish_option_url" type="checkbox" name="enableUrlChanges" checked /> Enable URL changes</label>
-        </div>      
-   
-
       </div>
     </div>
-
-    <div class="publish_embed_code"></div>
-
   </div>
-
-  <div class="publish_embed_preview">
-    <h2>Preview Embedded Document</h2>
-    <iframe src="/documents/preview/" id="documentViewerPreview"></iframe>
-  </div>
+  
+  <h2><span class="publish_prefix">Step 2:</span> Preview embedded viewer</h2>
+  
+  <h2><span class="publish_prefix">Step 3:</span> Use embed code</h2>
+  
+  <div class="publish_embed_code"></div>
 
 </div>

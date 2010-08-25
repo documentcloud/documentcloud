@@ -7,7 +7,10 @@
 &lt;script src="http://s3.documentcloud.org/viewer/loader.js"&gt;&lt;/script&gt;&#10;
 &lt;script&gt;&#10;
   DV.load('<%= doc.get("document_viewer_js") %>', {&#10;
-    container : '#document-viewer'&#10;
+    <% _.each(options, function(value, key) { %>
+<%= key %>: <% if (typeof value == 'string') { %>"<%= value %>"<% } else { %><%= value %><% } %>,&#10;
+    <% }); %>
+embed : true&#10;
   });&#10;
 &lt;/script&gt;
 </textarea>
