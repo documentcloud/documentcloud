@@ -1,13 +1,8 @@
 /* DocumentCloud overrides to the DocViewer CSS go here: */
 
-/* Global rules, default for the plain style. */
-body, html {
-  margin: 0;
-  padding: 0;
-}
-
 #DV-docViewer {
-  border: 1px solid #c3c3c3;
+  border: 1px solid #aaa;
+  line-height: normal;
 }
 #DV-headerHat, #DV-title, .DV-contentsHeader {
   display: none !important;
@@ -63,6 +58,44 @@ body, html {
   background: #bbb;
 }
 
+.DV-privateLock, .DV-showEdit {
+  width: 16px; height: 16px;
+  float: left;
+  margin: -2px 0 0 10px;
+  margin-left: 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.DV-annotationTitleInput,
+.DV-annotationTextArea {
+  border: 1px solid #D0D0D0;
+  -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+  font: 12px/15px Arial;
+  outline: 0;
+}
+  .DV-annotationTextArea {
+    padding: 7px;
+    margin: 10px 0;
+    height: 110px;
+    outline: 0;
+    resize: none;
+  }
+  .DV-annotationTitleInput {
+    padding: 4px;
+    width: 300px;
+  }
+.DV-annotationEditControls .minibutton {
+  width: 60px;
+}
+  .DV-cancelEdit {
+    margin-right: 10px;
+  }
+
+#DV-overlay {
+  left: 0; right: 282px; bottom: 0;
+}
+
 #DV-well {
   padding-bottom: 16px;
 }
@@ -74,6 +107,15 @@ body, html {
   background: white;
   padding: 5px 14px 10px;
 }
+
+#DV-logo {
+  margin-top: 16px;
+}
+  #DV-logo a {
+    display: block;
+    width: 105px; height: 19px;
+    background: url(images/dc_inline_logo.png);
+  }
 
 .DV-views {
   position: relative;
