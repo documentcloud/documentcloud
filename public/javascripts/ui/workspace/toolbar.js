@@ -144,6 +144,7 @@ dc.ui.Toolbar = dc.View.extend({
   _openTimeline : function() {
     var docs = Documents.selected();
     if (!docs.length) return dc.ui.Dialog.alert("In order to view a timeline, please select some documents.");
+    if (docs.length > 10) return dc.ui.Dialog.alert("You can only view a timeline for ten documents at a time.");
     new dc.ui.TimelineDialog(docs);
   },
 
