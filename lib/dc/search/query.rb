@@ -153,7 +153,7 @@ module DC
         conditions        = [@sql.join(' and ')] + @interpolations
         order             = "documents.created_at desc"
         order             = "documents.#{@order} asc, #{order}" unless [:created_at, :score].include?(@order.to_sym)
-        options           = {:conditions => conditions, :joins => @joins}
+        options           = {:conditions => conditions, :joins => @joins, :include => [:account, :organization]}
         @total            = @proxy.count(options)
         options[:order]   = order
         options[:limit]   = @page_size

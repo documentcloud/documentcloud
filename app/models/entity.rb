@@ -33,7 +33,7 @@ class Entity < ActiveRecord::Base
   def self.search_in_documents(kind, value, ids)
     entities = self.all({:conditions => [
       "document_id in (?) and kind = ? and value ilike '%#{Entity.connection.quote_string(value)}%'", ids, kind
-    ], :include => [:full_text]})
+    ], :include => :document})
   end
 
   # Merge this entity with another of the "same" entity for the same document.
