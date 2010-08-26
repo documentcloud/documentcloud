@@ -39,7 +39,6 @@ dc.ui.Document = dc.View.extend({
     var data = _.clone(this.model.attributes());
     data = _.extend(data, {
       created_at    : data.created_at.replace(/\s/g, '&nbsp;'),
-      editable      : this.model.allowedToEdit(),
       icon          : this._iconAttributes(),
       thumbnail_url : this._thumbnailURL()
     });
@@ -51,6 +50,7 @@ dc.ui.Document = dc.View.extend({
     this.model.notes.each(function(note){ me._addNote(note); });
     if (!this.options.noCallbacks) this.setCallbacks();
     this.setMode(dc.access.NAMES[this.model.get('access')], 'access');
+    this.setMode(this.model.allowedToEdit() ? 'is' : 'not', 'editable');
     this._setSelected();
     return this;
   },
@@ -102,7 +102,8 @@ dc.ui.Document = dc.View.extend({
 
   // Open an edit dialog for the currently selected documents, if this
   // document is among them. Otherwise, open the dialog just for this document.
-  openDialog : function() {
+  openDialog : function(e) {
+    if (!(this.modes.editable == 'is')) return;
     dc.ui.DocumentDialog.open(this.model);
   },
 
