@@ -176,13 +176,13 @@ class Document < ActiveRecord::Base
   # When the access level changes, all sub-resource and asset permissions
   # need to be updated.
   def set_access(access_level)
-    update_attributes(:access => access_level)
+    update_attributes(:access => PENDING)
     sql = ["access = #{access_level}", "document_id = #{id}"]
     FullText.update_all(*sql)
     Page.update_all(*sql)
     Entity.update_all(*sql)
     EntityDate.update_all(*sql)
-    background_update_asset_access
+    background_update_asset_access(access_level)
   end
 
   # If we need to change the ownership of the document, we have to propagate
@@ -440,11 +440,12 @@ class Document < ActiveRecord::Base
     self.slug = slugged
   end
 
-  def background_update_asset_access
-    return true if Rails.env.development?
+  def background_update_asset_access(access_level)
+    return update_attributes(:access => access_level) if Rails.env.development?
     RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'update_access',
       'inputs'  => [self.id],
+      'options' => {'access' => access_level},
       'callback_url' => "#{DC.server_root(:ssl => false)}/import/update_access"
     }.to_json})
   end

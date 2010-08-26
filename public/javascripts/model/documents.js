@@ -98,7 +98,8 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   constructor : function(options) {
     this.base(options);
     this._polling = false;
-    _.bindAll(this, 'poll', 'downloadSelectedViewers', 'downloadSelectedPDF', 'downloadSelectedFullText');
+    _.bindAll(this, 'poll', 'downloadSelectedViewers', 'downloadSelectedPDF', 'downloadSelectedFullText', '_onModelChanged');
+    this.bind('model:changed', this._onModelChanged);
   },
 
   comparator : function(doc) {
@@ -179,6 +180,12 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     this._resetSelection();
     if (!this.pending().length) this.stopPolling();
     this.base(models, silent);
+  },
+
+  // When one of our models has changed, if it has changed its access level
+  // to pending, start polling.
+  _onModelChanged : function(e, doc) {
+    if (doc.hasChanged('access') && doc.isPending()) this._checkForPending();
   },
 
   _checkForPending : function() {
