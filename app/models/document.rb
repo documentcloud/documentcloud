@@ -137,7 +137,8 @@ class Document < ActiveRecord::Base
       self.errors.add_to_base "You don't have permission to update the document."
       return false
     end
-    access = attrs[:access] && attrs[:access].to_i
+    access = attrs.delete(:access)
+    access &&= access.to_i
     set_access(access) if access && self.access != access
     update_attributes attrs
     true
