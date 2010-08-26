@@ -39,7 +39,7 @@
 <% if (mode != 'progress') { %>
   <div class="controls draggable">
     <div class="controls_inner">
-      <% var saveText = saveText || ((editor || mode == 'prompt' || mode == 'short_prompt') ? 'Save' : (mode == 'alert') ? 'OK' : 'Close'); %>
+      <% var saveText = saveText || ((editor || mode == 'prompt' || mode == 'short_prompt') ? 'Save' : (mode == 'alert' || mode == 'confirm') ? 'OK' : 'Close'); %>
       <% var closeText = closeText || (mode == 'confirm' || saveText == 'Close' ? 'Cancel' : 'Close'); %>
       <% if (editor) { %>
         <div class="minibutton delete warn">Delete</div>

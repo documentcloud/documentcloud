@@ -15,7 +15,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   constructor : function(docs) {
     this.docs = docs;
     this.multiple = docs.length > 1;
-    var title = "Edit " + (this.multiple ? docs.length + ' Documents' : '"' + docs[0].get('title') + '"');
+    var title = "Edit " + this._title();
     this.base({mode : 'custom', title : title, editor : true});
     this.render();
     $(document.body).append(this.el);
@@ -58,6 +58,11 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
         this.docs[0].set({'selected': true});
     }
     Documents.destroySelected();
+  },
+
+  _title : function() {
+    if (this.multiple) return this.docs.length + ' Documents';
+    return '"' + Inflector.truncate(this.docs[0].get('title'), 50) + '"';
   },
 
   _markChanged : function(e) {

@@ -6,24 +6,12 @@ select {
   height: 20px !important;
 }
 
-/*---------------------- Drop-shadow replacements ----------------------------*/
-div.dialog .dialog_background {
-  top: 0; left: 0;
-  right: 8px; bottom: 8px;
-  margin: -8px 0 0 -8px;
-  filter:
-    progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=45,strength=4)
-    progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=135,strength=4)
-    progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=225,strength=4)
-    progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=315,strength=4);
-}
-
 /*------------------------------ Specific tweaks ---------------------------------*/
 body.workspace {
   overflow: auto;
 }
 #edit_document_dialog {
-  width: 530px;
+  width: 500px;
 }
 #new_document {
   margin-right: 12px;
