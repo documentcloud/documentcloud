@@ -419,10 +419,12 @@ textarea.text_area {
   color: #fff;
   cursor: move;
 }
-  .dialog.short_prompt_dialog,
   .dialog.alert_dialog,
   .dialog.confirm_dialog {
     width: 300px;
+  }
+  .dialog.short_prompt_dialog {
+    width: 350px;
   }
   .dialog.prompt_dialog {
     width: 417px;

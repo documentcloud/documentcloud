@@ -60,7 +60,7 @@ body.minidocs #document_list .document {
   margin-top: 0;
 }
 .dialog .controls {
-  float: right;
+  float: left;
   left: 0;
 }
   .dialog .controls_inner {
