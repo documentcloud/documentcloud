@@ -86,7 +86,7 @@ dc.model.AccountSet = dc.model.RESTfulSet.extend({
   // force the logout here.
   forceLogout : function() {
     dc.ui.Dialog.alert('You are no longer logged in to DocumentCloud.', {onClose : function() {
-      window.location = '/login';
+      window.location = '/logout';
     }});
   }
 
