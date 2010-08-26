@@ -35,6 +35,17 @@
 
 .publish_preview_container .publish_options_container {
 }
+  .publish_preview_container .publish_options_group_left label {
+    clear: both;
+    width: 100px;
+    float: left;
+    display: block;
+  }
+    .publish_preview_container .publish_options_group_left label.publish_option_label_inline {
+      float: none;
+      width: auto;
+      display: inline;
+    }
   .publish_preview_container form.publish_options {
     display: block;
   }
@@ -54,7 +65,12 @@
   }
   .publish_preview_container .publish_option input[type=text] {
     width: 40px;
+    padding: 2px 4px;
+    border: 1px solid #505050;
   }
+    .publish_preview_container .publish_option input[type=text].disabled {
+      background-color: #C0C0C0;
+    }
 .publish_preview_container .publish_embed_code {
   clear: both;
   padding: 15px;

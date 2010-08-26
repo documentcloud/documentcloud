@@ -4,7 +4,7 @@
   
   <div class="publish_options_container">
     <form class="publish_options">
-      <div class="publish_options_group">
+      <div class="publish_options_group publish_options_group_left">
         <div class="publish_option">
           <label for="publish_option_viewer_size">Viewer size:</label>
           <select id="publish_option_viewer_size" name="viewer_size">
@@ -23,7 +23,7 @@
         <div class="publish_option">
           <label>Initial Zoom:</label>
           <div class="zoom_option">
-            <input type="radio" name="zoom" value="auto" id="publish_option_zoom_auto" checked /> <label for="publish_option_zoom_auto">Auto</label>
+            <input type="radio" name="zoom" value="auto" id="publish_option_zoom_auto" checked /> <label for="publish_option_zoom_auto" class="publish_option_label_inline">Auto</label>
             <input type="radio" name="zoom" value="specific" id="publish_option_zoom_specific"/>
             <input type="text" name="zoom_specific" value="700" />
           </div>
@@ -43,7 +43,7 @@
           <label for="publish_option_text">Show text tab</label>
         </div>      
         <div class="publish_option">
-          <input id="publish_option_url" type="checkbox" name="enableUrlChanges" checked />
+          <input id="publish_option_url" type="checkbox" name="enableUrlChanges" />
           <label for="publish_option_url">Enable URL changes</label>
         </div>      
       </div>
@@ -52,6 +52,10 @@
   
   <h2><span class="publish_prefix">Step 2:</span> Preview embedded viewer</h2>
   
+    <div class="publish_options_container">
+      <a href="#" class="publish_preview_new_window_link">Preview the document viewer &raquo;</a>
+    </div>
+    
   <h2><span class="publish_prefix">Step 3:</span> Use embed code</h2>
   
   <div class="publish_embed_code"></div>
