@@ -178,11 +178,6 @@ class Document < ActiveRecord::Base
   # need to be updated.
   def set_access(access_level)
     update_attributes(:access => PENDING)
-    sql = ["access = #{access_level}", "document_id = #{id}"]
-    FullText.update_all(*sql)
-    Page.update_all(*sql)
-    Entity.update_all(*sql)
-    EntityDate.update_all(*sql)
     background_update_asset_access(access_level)
   end
 
