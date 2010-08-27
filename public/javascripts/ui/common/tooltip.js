@@ -17,21 +17,18 @@ dc.ui.Tooltip = dc.View.extend({
   },
 
   show : function(options) {
-    var limit = $(window).width() - this.OFFSET - this.MAX_WIDTH;
     options       = _.extend(this.defaultOptions(), options);
     options.top  += this.OFFSET;
-    if (options.left < limit) {
-      options.left += this.OFFSET;
-    } else {
-      options.left -= (this.MAX_WIDTH);
-    }
     this.setMode(options.mode, 'style');
     this._title.html(options.title);
     this._content.html(options.text);
+    var outerWidth = $(this.el).outerWidth();
+    var limit = $(window).width() - this.OFFSET - outerWidth;
+    options.left += options.left < limit ? this.OFFSET : -(outerWidth + 2);
     $(this.el).css({top : options.top, left : options.left});
     if (!this._open) this.fadeIn();
     $(document).bind('mouseover', this.hide);
-    this._open    = true;
+    this._open = true;
   },
 
   hide : function() {
