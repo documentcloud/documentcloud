@@ -17,8 +17,8 @@ dc.ui.Document = dc.View.extend({
     '.icon.doc.dblclick'      : 'viewDocument',
     '.show_notes.click'       : 'toggleNotes',
     '.title .edit_glyph.click': 'openDialog',
-    '.page_icon.click'        : '_openEntityOnPage',
-    '.occurrence.click'       : '_openEntityOnPage',
+    '.page_icon.click'        : '_openEntity',
+    '.occurrence.click'       : '_openEntity',
     '.cancel_search.click'    : '_hidePages'
   },
 
@@ -182,11 +182,12 @@ dc.ui.Document = dc.View.extend({
     this.pagesEl.html('');
   },
 
-  _openEntityOnPage : function(e) {
-    var el    = $(e.target).closest('.page');
-    var id    = el.attr('data-id');
-    var page  = el.attr('data-page');
-    window.open(this.model.url() + "?entity=" + id + '&page=' + page);
+  _openEntity : function(e) {
+    var el      = $(e.target).closest('.page');
+    var id      = el.attr('data-id');
+    var page    = el.attr('data-page');
+    var offset  = el.attr('data-offset');
+    window.open(this.model.url() + "?entity=" + id + '&page=' + page + '&offset=' + offset);
   },
 
   // When the document is dropped onto a project, add it to the project.

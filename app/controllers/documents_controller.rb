@@ -152,7 +152,7 @@ class DocumentsController < ApplicationController
   def entity_requested?
     return false unless params[:entity]
     meta = current_document.entities.find(params[:entity])
-    redirect_to current_document.document_viewer_url(:entity => meta, :page => params[:page])
+    redirect_to current_document.document_viewer_url(:entity => meta, :page => params[:page], :offset => params[:offset])
   end
 
   def current_document(exists=false)

@@ -39,8 +39,8 @@ window.Inflector = {
   // Trim leading and trailing non-whitespace characters, and add ellipses.
   // Try to find natural breaks in the sentence, and avoid breaking HTML fragments.
   trimExcerpt : function(s) {
-    s = s.replace(/^([^<>]{0,100}?[.,!]|\S+)/g, '');
-    s = s.replace(/(([.,!]\s?)[^<>]{0,100}?|\S+)$/g, '$2');
+    s = s.replace(/^([^<>]{0,100}?[.,!]|[^<>\s]+)/g, '');
+    s = s.replace(/(([.,!]\s?)[^<>]{0,100}?|[^<>\s]+)$/g, '$2');
     return '&hellip;' + s + '&hellip;';
   },
 

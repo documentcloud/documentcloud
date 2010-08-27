@@ -31,11 +31,14 @@ module DC
           utf   = page.text.mb_chars
           open  = occur.offset - page.start_offset
           close = open + occur.length
-          excerpt =
-            utf[open - context, context].to_s + '<span class="occurrence">' +
-            utf[open, occur.length].to_s      + '</span>' +
-            utf[close, context].to_s
-          {:page_number => page.page_number, :excerpt => excerpt}
+          start = open - context
+          if start < 0
+            excerpt = utf[0, open].to_s
+          else
+            excerpt = utf[start, context].to_s
+          end
+          excerpt += "<span class=\"occurrence\">#{ utf[open, occur.length].to_s }</span>#{ utf[close, context].to_s }"
+          {:page_number => page.page_number, :excerpt => excerpt, :offset => occur.offset}
         end
       end
 

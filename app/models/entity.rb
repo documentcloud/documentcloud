@@ -67,7 +67,7 @@ class Entity < ActiveRecord::Base
      'value'        => value,
      'relevance'    => relevance
     }
-    data['excerpts'] = excerpts(150, :limit => 200) if options[:include_excerpts]
+    data['excerpts'] = excerpts(150, :limit => 200)if options[:include_excerpts]
     data.to_json
   end
 

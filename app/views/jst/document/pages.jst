@@ -1,9 +1,11 @@
 <%
   var numbers = [];
-  var pages = _.sortBy(_.flatten(_.map(doc.pageEntities.models(), function(ent) {
-    return _.map(ent.get('excerpts'), function(obj) {
+  var mentions = _.sortBy(_.flatten(_.map(doc.pageEntities.models(), function(ent) {
+    return _.map(_.sortBy(ent.get('excerpts'), function(obj) {
+      return obj.offset;
+    }), function(obj) {
       numbers.push(obj.page_number);
-      return {id : ent.id, page_number : obj.page_number, excerpt : obj.excerpt};
+      return {id : ent.id, page_number : obj.page_number, excerpt : obj.excerpt, offset : obj.offset};
     });
   })), function(page) {
     return page.page_number;
@@ -13,18 +15,18 @@
 <% if (pageCount) { %>
   <div class="pages_title">
     <span class="icon cancel_search" title="hide pages"></span>
-    <%= pageCount >= 200 ? 'over ' : '' %> <%= pages.length %> <%= Inflector.pluralize('mention', pages.length) %>
+    <%= pageCount >= 200 ? 'over ' : '' %> <%= mentions.length %> <%= Inflector.pluralize('mention', mentions.length) %>
     of <%= Inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>
     on <%= pageCount %>
     <%= Inflector.pluralize('page', pageCount) %>
   </div>
-  <% _.each(pages, function(page) { %>
-    <div class="page" data-page="<%= page.page_number %>" data-id="<%= page.id %>">
+  <% _.each(mentions, function(mention) { %>
+    <div class="page" data-page="<%= mention.page_number %>" data-id="<%= mention.id %>" data-offset="<%= mention.offset %>">
       <div class="page_icon">
-        <img class="page_image" alt="page <%= page.page_number %>" src="<%= doc.pageThumbnailURL(page.page_number) %>" />
-        <div class="page_number">p. <%= page.page_number %></div>
+        <img class="page_image" alt="page <%= mention.page_number %>" src="<%= doc.pageThumbnailURL(mention.page_number) %>" />
+        <div class="page_number">p. <%= mention.page_number %></div>
       </div>
-      <div class="page_excerpt noselect"><%= Inflector.trimExcerpt(page.excerpt) %></div>
+      <div class="page_excerpt noselect"><%= Inflector.trimExcerpt(mention.excerpt) %></div>
       <div class="clear"></div>
     </div>
   <% }); %>
