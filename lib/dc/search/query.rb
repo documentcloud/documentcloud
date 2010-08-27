@@ -19,7 +19,7 @@ module DC
 
       EMPTY_PAGINATION = {:page => 1, :per_page => 0}
 
-      attr_reader   :text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :access, :attributes, :conditions, :results, :solr, :source_document
+      attr_reader   :text, :fields, :projects, :accounts, :published, :groups, :project_ids, :doc_ids, :access, :attributes, :conditions, :results, :solr, :source_document
       attr_accessor :page, :page_size, :order, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
@@ -30,6 +30,7 @@ module DC
         @access                 = opts[:access]
         @fields                 = opts[:fields]       || []
         @accounts               = opts[:accounts]     || []
+        @published              = opts[:published]    || []
         @groups                 = opts[:groups]       || []
         @projects               = opts[:projects]     || []
         @project_ids            = opts[:project_ids]  || []
@@ -43,7 +44,7 @@ module DC
       end
 
       # Series of attribute checks to determine the kind and state of query.
-      [:text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :attributes, :results, :access, :source_document].each do |att|
+      [:text, :fields, :projects, :accounts, :published, :groups, :project_ids, :doc_ids, :attributes, :results, :access, :source_document].each do |att|
         class_eval "def has_#{att}?; @has_#{att} ||= @#{att}.present?; end"
       end
 
@@ -61,6 +62,7 @@ module DC
         build_text         if     has_text? && !has_source_document?
         build_fields       if     has_fields?
         build_accounts     if     has_accounts?
+        build_published    if     has_published?
         build_groups       if     has_groups?
         build_project_ids  if     has_project_ids?
         build_projects     if     has_projects?
@@ -123,6 +125,7 @@ module DC
           'fields'      => @fields,
           'projects'    => @projects,
           'accounts'    => @accounts,
+          'published'   => @published,
           'groups'      => @groups,
           'project_ids' => @project_ids,
           'doc_ids'     => @doc_ids,
@@ -260,7 +263,7 @@ module DC
       # Generate the Solr or SQL to restrict the search to specific acounts.
       def build_accounts
         accounts = @accounts.map {|email| Account.lookup(email) }
-        ids      = accounts.map {|acc| acc ? acc.id : -1 }
+        ids      = accounts.map  {|acc| acc ? acc.id : -1 }
         if needs_solr?
           @solr.build do
             with :account_id, ids
@@ -269,6 +272,10 @@ module DC
           @sql << 'documents.account_id in (?)'
           @interpolations << ids
         end
+      end
+
+      def build_published
+        # TBD
       end
 
       # Generate the Solr or SQL to restrict the search to specific organizations.
