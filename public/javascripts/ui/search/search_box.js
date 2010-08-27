@@ -5,7 +5,7 @@ dc.ui.SearchBox = dc.View.extend({
   NO_RESULTS : {
     project   : "This project does not contain any documents.",
     account   : "This account has not uploaded any documents.",
-    published : "This does not have any published documents.",
+    published : "This account does not have any published documents.",
     search    : "Your search did not match any documents.",
     related   : "There are no documents related to this document."
   },
