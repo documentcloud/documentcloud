@@ -56,7 +56,17 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   
   previewEmbedNewWindow : function(e) {
     e.preventDefault();
-    console.log(['params', $.param(this.embedOptions)]);
+    
+    var previewUrl = [
+      '/documents/',
+      this.embedDoc.id,
+      '-',
+      this.embedDoc.get('slug'),
+      '/preview/?options=',
+      JSON.stringify(this.embedOptions)
+    ].join('');
+    
+    window.open(previewUrl);
   },
   
   _renderEmbedCode : function(doc) {
