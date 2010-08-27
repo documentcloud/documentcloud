@@ -28,9 +28,9 @@ Your results will include a handful of documents related to a DOJ report on Bush
 
 <img src="/images/help/timeline.jpg" class="full_line" />
 
-All of the dates named in these documents are plotted on a timeline. Hover over any dot to see the exact date mentioned, and click on a dot to view the date in the text of the document.
+All of the dates named in these documents are plotted on a timeline. Hover over any dot to see the exact date, along with an excerpt of the text where the date is mentioned. Click on the dot to open up a document viewer, jumping directly to the location of the date in the text.
  
-Close the timeline and click the "Entities" tab, at the top left of the screen. This will show you a series of expandable lists of the **people**, **organizations**, **places**, and **terms** mentioned in the documents. You'll see "John Yoo" at the top of the list, with the counter `(8)` next to his name, because he's named in all eight of the documents. Click his name to refine your search, and then click the "show pages" link that appears right next to it. Underneath each document, you'll now see thumbnails of each page that mentions John Yoo, and can click on any of the thumbnails to jump directly to his name on that particular page.
+Close the timeline and click the "Entities" tab, at the top left of the screen. This will show you a series of expandable lists of the **people**, **organizations**, **places**, and **terms** mentioned in the documents. You'll see "John Yoo" at the top of the list, with the counter `(8)` next to his name, because he's named in all eight of the documents. Click his name to refine your search, and then click the "show pages" link that appears right next to it. Underneath each document, you'll now see each page that contains a mention of John Yoo, along with an excerpt. Click on any of the thumbnails, or on the highlighted link, to jump directly to his name on that particular page.
 
 <img src="/images/help/show_pages.png" class="full_line" />
 
