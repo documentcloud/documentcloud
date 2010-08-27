@@ -2,11 +2,11 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   
   callbacks : {
     '.ok.click'     : 'confirm',
-    'input.change'  : '_renderEmbedCode',
-    'select.change' : '_renderEmbedCode',
-    'input.keyup'   : '_renderEmbedCode',
-    'input.focus'   : '_renderEmbedCode',
-    'input.click'   : '_renderEmbedCode',
+    'input.change'  : 'update',
+    'select.change' : 'update',
+    'input.keyup'   : 'update',
+    'input.focus'   : 'update',
+    'input.click'   : 'update',
     'input[name=zoom_specific].focus' : '_selectZoomSpecific',
     'publish_preview_new_window_link.click' : 'previewEmbedNewWindow'
   },
@@ -32,7 +32,6 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     });
     this.setMode('embed', 'dialog');
     this.render();
-    dc.ui.spinner.show();
   },
   
   render : function() {
@@ -44,9 +43,10 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
                     '_setWidthHeightInputs', 
                     'previewEmbedNewWindow');
     $('.custom', this.el).html(JST['workspace/publish_preview']({}));
-    this._renderEmbedCode();
-    this._setWidthHeightInputs();
-    dc.ui.spinner.hide();
+    if (dc.app.preferences.get('embed_options')) {
+      this._loadPreferences();
+    }
+    this.update();
     this.center();
     return this;
   },
@@ -70,12 +70,44 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     window.open(previewUrl);
   },
   
-  _renderEmbedCode : function(doc) {
-    dc.ui.spinner.show();
-    
+  update : function() {
+    this._savePreferences();
+    this._renderEmbedCode();
     this._setWidthHeightInputs();
     this._enableTextTabOption();
+  },
+  
+  _savePreferences : function() {
+    var userOpts = $('form.publish_options', this.el).serializeJSON();
+    dc.app.preferences.set({'embed_options': JSON.stringify(userOpts)});
+  },
+  
+  _loadPreferences : function() {
+    var userOpts = JSON.parse(dc.app.preferences.get('embed_options')) || {};
+    var $form = $('form', this.el);
+    var $formElements = $('input, select', $form);
     
+    $formElements.each(function(i) {
+      var $this = $(this);
+      if ($this.attr('name') in userOpts) {
+        if ($this.is('input[type=radio]')) {
+          if ($this.val() == userOpts[$this.attr('name')]) {
+            $this.attr('checked', true);
+          }
+        } else {
+          $this.val(userOpts[$this.attr('name')]);
+        }
+      } else {
+        if ($this.is('input[type=checkbox]')) {
+          $this.removeAttr('checked');
+        } else if ($this.is('input[type=text]')) {
+          $this.val('');
+        }
+      }
+    });
+  },
+  
+  _renderEmbedCode : function() {
     var userOpts = $('form.publish_options', this.el).serializeJSON();
     _.each(this.DEFAULT_VIEWER_OPTIONS, _.bind(function(v, k) {
       if (!(k in userOpts)) userOpts[k] = false;
@@ -112,8 +144,6 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     }));
     
     this.embedOptions = options;
-    
-    dc.ui.spinner.hide();
   },
   
   _setWidthHeightInputs : function() {
