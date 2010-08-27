@@ -141,10 +141,13 @@ dc.ui.Toolbar = dc.View.extend({
     Documents.destroySelected();
   },
 
+  // Open up a Timeline. Limit the number of documents to ten. If no documents
+  // are selected, choose the first ten docs.
   _openTimeline : function() {
     var docs = Documents.selected();
-    if (!docs.length) return dc.ui.Dialog.alert("In order to view a timeline, please select some documents.");
     if (docs.length > 10) return dc.ui.Dialog.alert("You can only view a timeline for ten documents at a time.");
+    if (docs.length <= 0) docs = Documents.models().slice(0, 10);
+    if (docs.length <= 0) return dc.ui.Dialog.alert("In order to view a timeline, please select some documents.");
     new dc.ui.TimelineDialog(docs);
   },
 
@@ -207,7 +210,7 @@ dc.ui.Toolbar = dc.View.extend({
       onOpen  : this._enableMenuItems,
       items   : [
         {title: 'View Entities',          attrs: {'class' : 'always'},   onClick : this._viewEntities},
-        {title: 'View Timeline',                                         onClick : this._openTimeline},
+        {title: 'View Timeline',          attrs: {'class' : 'always'},   onClick : this._openTimeline},
         {title: 'Find Related Documents', attrs: {'class' : 'singular'}, onClick : this._openRelatedDocuments}
       ]
     });
