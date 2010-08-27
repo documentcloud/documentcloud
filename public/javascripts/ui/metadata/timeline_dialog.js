@@ -70,13 +70,14 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     var color = this.POINT_COLOR;
     var series = {}, styles = {}, ids = this._dateIds = {};
     _.each(this.documents, function(doc, i) {
+      ids[doc.id]      = {};
       series[doc.id]   = [];
       styles[doc.id]   = {pos : i, color : color};
     });
     _.each(resp.dates, function(json) {
-      var docId = json.document_id;
-      var date  = json.date * 1000;
-      ids[date] = json.id;
+      var docId         = json.document_id;
+      var date          = json.date * 1000;
+      ids[docId][date]  = json.id;
       series[docId].push([date, styles[docId].pos]);
     });
     this._data = _.map(series, function(val, key) {
@@ -97,7 +98,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     if (this._request) return;
     if (!item) return dc.ui.tooltip.hide();
     var docId = item.series.docId;
-    var id    = this._dateIds[item.datapoint[0]];
+    var id    = this._dateIds[docId][item.datapoint[0]];
     var model = EntityDates.get(id);
     if (model) return this._renderTooltip(model, pos);
     this._request = $.getJSON('/documents/dates', {id : id}, _.bind(function(resp) {
