@@ -35,7 +35,7 @@ module DC
           last    =  close + context
           excerpt =  first < 0 ? utf[0, open].to_s : utf[first, context].to_s
           excerpt += "<span class=\"occurrence\">#{ utf[open, occur.length].to_s }</span>"
-          excerpt += utf[close, last < utf.length ? context : utf.length - close].to_s
+          excerpt += utf[close, last < utf.length - 1 ? context : utf.length - 1 - close].to_s
           {:page_number => page.page_number, :excerpt => excerpt, :offset => occur.offset}
         end
       end
