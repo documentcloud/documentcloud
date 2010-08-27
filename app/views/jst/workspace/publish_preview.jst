@@ -15,10 +15,12 @@
         <div class="publish_option publish_option_dimension">
           <label for="publish_option_width">Width: </label>
           <input id="publish_option_width" type="text" name="width" value="600" />
+          <span class="publish_option_size_label">px</span>
         </div>
         <div class="publish_option publish_option_dimension">
           <label for="publish_option_height">Height: </label>
           <input id="publish_option_height" type="text" name="height" value="800" />
+          <span class="publish_option_size_label">px</span>
         </div>
         <div class="publish_option">
           <label>Initial Zoom:</label>
@@ -26,10 +28,11 @@
             <input type="radio" name="zoom" value="auto" id="publish_option_zoom_auto" checked /> <label for="publish_option_zoom_auto" class="publish_option_label_inline">Auto</label>
             <input type="radio" name="zoom" value="specific" id="publish_option_zoom_specific"/>
             <input type="text" name="zoom_specific" value="700" />
+            <span class="publish_option_size_label">px</span>
           </div>
         </div>
       </div>
-      <div class="publish_options_group">
+      <div class="publish_options_group publish_options_group_right">
         <div class="publish_option">
           <input id="publish_option_sidebar" type="checkbox" name="showSidebar" checked /> 
           <label for="publish_option_sidebar">Show sidebar</label>

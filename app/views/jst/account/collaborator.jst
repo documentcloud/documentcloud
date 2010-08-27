@@ -1,10 +1,10 @@
 <td class="first">
   <img class="avatar" src="<%= account.DEFAULT_AVATAR %>" width="<%= size %>" height="<%= size %>" />
 </td>
-<td class="name">
+<td class="name selectable_text">
   <%= Inflector.truncate(account.fullName(true), 25) %>
 </td>
-<td class="organization_name">
+<td class="organization_name selectable_text">
   <%= Inflector.truncate(account.get('organization_name'), 25) %>
 </td>
 <td class="last">

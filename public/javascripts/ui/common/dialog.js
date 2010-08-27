@@ -20,7 +20,7 @@ dc.ui.Dialog = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     if (this.options.mode) this.setMode(this.options.mode, 'dialog');
-    if (this.options.draggable) this.setMode('on', 'draggable');
+    if (this.options.draggable) this.setMode('is', 'draggable');
     _.bindAll(this, 'close', '_maybeConfirm');
   },
 

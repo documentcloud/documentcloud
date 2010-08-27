@@ -159,12 +159,10 @@
         };
 
         var checkEvent = function(e) {
-          var isNonDraggable = $(e.target).is('input, select, textarea, label, a, canvas, .minibutton, .text_link, .selectable_text, .off_draggable');
+          var isNonDraggable = $(e.target).is('input, select, textarea, label, a, canvas, .minibutton, .text_link, .selectable_text, .not_draggable');
           if (isNonDraggable) return true;
           
-          var draggableParent = _.any($(e.target).parents().andSelf(), function(parent) { 
-            return parent.className.match(/on_draggable/);
-          });
+          var draggableParent = $(e.target).parents('.is_draggable').andSelf().length;
           if (!draggableParent) return true;
           
           return stopEvent(e);

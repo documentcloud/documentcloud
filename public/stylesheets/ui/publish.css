@@ -58,6 +58,10 @@
     width: 50%;
     margin: 0;
   }
+  .publish_preview_container .publish_options_group_right {
+    width: 35%;
+    margin-left: 15%;
+  }
   .publish_preview_container .publish_option {
     min-height: 20px;
     margin: 0 0 8px;
@@ -70,12 +74,18 @@
   }
   .publish_preview_container .publish_option input[type=text] {
     width: 30px;
-    padding: 2px 4px;
+    padding: 1px 4px;
     border: 1px solid #505050;
   }
     .publish_preview_container .publish_option input[type=text].disabled {
       background-color: #C0C0C0;
     }
+  .publish_preview_container .publish_option input[type=radio] {
+  }
+  .publish_preview_container .publish_option .publish_option_size_label {
+    font-size: 10px;
+    color: #C0C0C0;
+  }
 .publish_preview_container .publish_embed_code {
   clear: both;
   padding: 15px;

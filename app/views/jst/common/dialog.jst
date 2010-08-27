@@ -2,7 +2,7 @@
 <% if (title) { %>
   <div class="title"><%= title %></div>
 <% } %>
-<div class="information"><%= information || '' %></div>
+<div class="information selectable_text"><%= information || '' %></div>
 <% var spinner_style = mode == 'progress' ? '' : 'display:none;'; %>
 <div class="icon spinner_dark" style="<%= spinner_style %>"></div>
 <% if (text) { %>

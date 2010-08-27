@@ -64,7 +64,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       '-',
       this.embedDoc.get('slug'),
       '/preview/?options=',
-      JSON.stringify(this.embedOptions)
+      encodeURIComponent(JSON.stringify(this.embedOptions))
     ].join('');
     
     window.open(previewUrl);
@@ -74,6 +74,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     dc.ui.spinner.show();
     
     this._setWidthHeightInputs();
+    this._enableTextTabOption();
     
     var userOpts = $('form.publish_options', this.el).serializeJSON();
     _.each(this.DEFAULT_VIEWER_OPTIONS, _.bind(function(v, k) {
@@ -123,6 +124,15 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       $dimensions.addClass('disabled').attr('disabled', true);
     } else {
       $dimensions.removeClass('disabled').removeAttr('disabled');
+    }
+  },
+  
+  _enableTextTabOption : function() {
+    var $texttab = $('input[name=showText]', this.el);
+    if ($('input[name=showHeader]', this.el).attr('checked')) {
+      $texttab.removeClass('disabled').removeAttr('disabled');
+    } else {
+      $texttab.addClass('disabled').attr('disabled', true);
     }
   },
   
