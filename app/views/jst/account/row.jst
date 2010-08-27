@@ -1,10 +1,10 @@
-<td class="first draggable">
+<td class="first">
   <div class="pending_wrap">
     <div class="pending_badge icon alert_yellow"></div>
   </div>
   <img class="avatar" src="<%= account.DEFAULT_AVATAR %>" width="<%= size %>" height="<%= size %>" />
 </td>
-<td class="name draggable">
+<td class="name">
   <span class="display">
     <%= Inflector.truncate(account.fullName(true), 25) %>&nbsp;<span class="pending_notification">(pending)</span>
   </span>
@@ -17,7 +17,7 @@
     </div>
   </div>
 </td>
-<td class="email draggable">
+<td class="email">
   <span class="display">
     <%= Inflector.truncate(email, 25) %>
   </span>
@@ -25,7 +25,7 @@
     <input name="email" type="text" placeholder="email" value="<%= email %>" />
   </div>
 </td>
-<td class="role draggable">
+<td class="role">
   <span class="display">
     role:&nbsp;<%= account.ROLE_NAMES[account.get('role')] %>
   </span>
@@ -36,7 +36,7 @@
     </select>
   </span>
 </td>
-<td class="last draggable">
+<td class="last">
   <% if (account == current || (current && current.isAdmin())) { %>
   <div class="edit_account icon edit_glyph_dark display"></div>
   <% if (account == current) { %>

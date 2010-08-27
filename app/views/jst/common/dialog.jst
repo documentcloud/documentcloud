@@ -1,6 +1,6 @@
-<div class="dialog_background draggable"></div>
+<div class="dialog_background"></div>
 <% if (title) { %>
-  <div class="title draggable"><%= title %></div>
+  <div class="title"><%= title %></div>
 <% } %>
 <div class="information"><%= information || '' %></div>
 <% var spinner_style = mode == 'progress' ? '' : 'display:none;'; %>
@@ -12,7 +12,7 @@
   <div class="custom"></div>
 <% } %>
 <% if( mode == 'prompt' || mode == 'short_prompt') { %>
-  <div class="<%= mode %> draggable">
+  <div class="<%= mode %>">
     <% if (choices && mode == 'short_prompt') { %>
       <select class="content">
         <% _.each(choices, function(choice) { %>
@@ -20,7 +20,7 @@
         <% }); %>
       </select>
     <% } else if (choices) { %>
-      <div class="choices draggable">
+      <div class="choices">
         <% _.each(choices, function(choice, i) { %>
           <input class="input" type="radio" name="choice" id="choice_<%= i %>" value="<%= choice.value %>" <%= choice.selected ? 'checked="true"' : '' %>/>
           <label for="choice_<%= i %>"><%= choice.text %></label>
@@ -37,7 +37,7 @@
   </div>
 <% } %>
 <% if (mode != 'progress') { %>
-  <div class="controls draggable">
+  <div class="controls">
     <div class="controls_inner">
       <% var saveText = saveText || ((editor || mode == 'prompt' || mode == 'short_prompt') ? 'Save' : (mode == 'alert' || mode == 'confirm') ? 'OK' : 'Close'); %>
       <% var closeText = closeText || (mode == 'confirm' || saveText == 'Close' ? 'Cancel' : 'Close'); %>

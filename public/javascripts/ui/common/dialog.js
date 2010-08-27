@@ -8,7 +8,8 @@ dc.ui.Dialog = dc.View.extend({
     information : null,
     choices     : null,
     password    : false,
-    editor      : false
+    editor      : false,
+    draggable   : true
   },
 
   callbacks : {
@@ -19,6 +20,7 @@ dc.ui.Dialog = dc.View.extend({
   constructor : function(options) {
     this.base(options);
     if (this.options.mode) this.setMode(this.options.mode, 'dialog');
+    if (this.options.draggable) this.setMode('on', 'draggable');
     _.bindAll(this, 'close', '_maybeConfirm');
   },
 
@@ -42,7 +44,7 @@ dc.ui.Dialog = dc.View.extend({
 
   setCallbacks : function(callbacks) {
     this.base(callbacks);
-    $(this.el).draggable();
+    if (this.options.draggable) $(this.el).draggable();
   },
 
   defaultOptions : function() {

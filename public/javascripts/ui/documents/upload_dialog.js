@@ -176,7 +176,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
 dc.ui.UploadDocumentTile = dc.View.extend({
 
-  className : 'row draggable',
+  className : 'row',
 
   callbacks : {
     '.remove_queue.click' : 'removeUploadFile',

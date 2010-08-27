@@ -1,10 +1,10 @@
-<td class="first draggable">
+<td class="first">
   <img class="avatar" src="<%= account.DEFAULT_AVATAR %>" width="<%= size %>" height="<%= size %>" />
 </td>
-<td class="name draggable">
+<td class="name">
   <%= Inflector.truncate(account.fullName(true), 25) %>
 </td>
-<td class="organization_name draggable">
+<td class="organization_name">
   <%= Inflector.truncate(account.get('organization_name'), 25) %>
 </td>
 <td class="last">

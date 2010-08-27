@@ -1,6 +1,7 @@
 dc.ui.PublishPreview = dc.ui.Dialog.extend({
   
   callbacks : {
+    '.ok.click'     : 'confirm',
     'input.change'  : '_renderEmbedCode',
     'select.change' : '_renderEmbedCode',
     'input.keyup'   : '_renderEmbedCode',

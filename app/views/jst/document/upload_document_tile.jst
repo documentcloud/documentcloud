@@ -1,7 +1,7 @@
 <div class="upload_title">
-  <div class="icon remove_queue cancel_search_dark" title="Remove file"></div>
-  <div class="icon edit_glyph_dark open_edit" title="Edit details"></div>
-  <div class="upload_file_size draggable">
+  <div class="icon remove_queue cancel_search_dark off_draggable" title="Remove file"></div>
+  <div class="icon edit_glyph_dark open_edit off_draggable" title="Edit details"></div>
+  <div class="upload_file_size">
     (<%= Inflector.bytesToMB(model.get('size')) %>)
   </div>
   <label class="icon file file_<%= model.get('extension') %>" for="document_upload_title_<%= model.id %>" title="<%= model.get('title') %>"></label>
@@ -13,7 +13,7 @@
 
 <div class="upload_edit">
   <div class="upload_description">
-    <div class="upload_description_row draggable">
+    <div class="upload_description_row">
       <label for="document_upload_description_<%= model.id %>">
         Description:
       </label>
@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="upload_source draggable">
+  <div class="upload_source">
     <label for="document_upload_source_<%= model.id %>">
       Source:
     </label>
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div class="upload_access draggable">
+  <div class="upload_access">
     <label for="document_upload_access_<%= model.id %>">
       Access Level:
     </label>
@@ -41,7 +41,7 @@
     </select>
   </div>
   
-  <div class="apply_all draggable" title="Apply this description, source, and access level to all files">
+  <div class="apply_all" title="Apply this description, source, and access level to all files">
     <span class="text_link">Apply to All Files</span>
   </div>
 
