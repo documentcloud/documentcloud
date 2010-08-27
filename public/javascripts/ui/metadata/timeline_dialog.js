@@ -95,27 +95,28 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   // Create a tooltip to show a hovered date.
   _showTooltop : function(e, pos, item) {
+    this._pos = pos;
     if (this._request) return;
     if (!item) return dc.ui.tooltip.hide();
     var docId = item.series.docId;
     var id    = this._dateIds[docId][item.datapoint[0]];
     var model = EntityDates.get(id);
-    if (model) return this._renderTooltip(model, pos);
+    if (model) return this._renderTooltip(model);
     this._request = $.getJSON('/documents/dates', {id : id}, _.bind(function(resp) {
       delete this._request;
       if (!resp) return;
       var model   = new dc.model.Entity(resp.date);
       EntityDates.add(model);
-      this._renderTooltip(model, pos);
+      this._renderTooltip(model);
     }, this));
   },
 
-  _renderTooltip : function(date, pos) {
+  _renderTooltip : function(date) {
     var title   = Inflector.truncate(Documents.get(date.get('document_id')).get('title'), 50);
     var excerpt = date.get('excerpts')[0];
     dc.ui.tooltip.show({
-      left  : pos.pageX,
-      top   : pos.pageY,
+      left  : this._pos.pageX,
+      top   : this._pos.pageY,
       title : title,
       text  : '<b>p.' + excerpt.page_number + '</b> ' + Inflector.trimExcerpt(excerpt.excerpt)
     });

@@ -3,7 +3,8 @@ dc.ui.Tooltip = dc.View.extend({
   id        : 'tooltip',
   className : 'interface',
 
-  OFFSET : 5,
+  OFFSET    : 5,
+  MAX_WIDTH : 320,
 
   constructor : function() {
     this.base();
@@ -16,9 +17,14 @@ dc.ui.Tooltip = dc.View.extend({
   },
 
   show : function(options) {
+    var limit = $(window).width() - this.OFFSET - this.MAX_WIDTH;
     options       = _.extend(this.defaultOptions(), options);
-    options.left += this.OFFSET;
     options.top  += this.OFFSET;
+    if (options.left < limit) {
+      options.left += this.OFFSET;
+    } else {
+      options.left -= (this.MAX_WIDTH);
+    }
     this.setMode(options.mode, 'style');
     this._title.html(options.title);
     this._content.html(options.text);
