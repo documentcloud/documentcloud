@@ -112,7 +112,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   },
 
   _renderTooltip : function(date) {
-    var title   = Inflector.truncate(Documents.get(date.get('document_id')).get('title'), 50);
+    var title   = Inflector.truncate(Documents.get(date.get('document_id')).get('title'), 45);
     var excerpt = date.get('excerpts')[0];
     dc.ui.tooltip.show({
       left  : this._pos.pageX,
