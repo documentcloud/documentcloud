@@ -53,35 +53,57 @@
   .publish_preview_container form.publish_options {
     display: block;
   }
-  .publish_preview_container .publish_options_group {
+  .publish_preview_container .publish_options_group_left {
+    clear: both;
     float: left;
     width: 50%;
     margin: 0;
   }
   .publish_preview_container .publish_options_group_right {
+    float: left;
     width: 35%;
-    margin-left: 15%;
+    margin: 0 0 0 15%;
   }
   .publish_preview_container .publish_option {
     min-height: 20px;
     margin: 0 0 8px;
   }
-  .publish_preview_container .publish_option label {
-  }
-  .publish_preview_container .publish_option input[type=checkbox] {
+  .publish_preview_container .publish_option label.publish_option_label {
+    width: 100px;
     float: left;
-    margin: 2px 4px 0 0;
+    text-align: right;
   }
+  .publish_preview_container .publish_option .publish_option_inputs {
+    margin-left: 106px;
+  }
+    .publish_preview_container .publish_option .publish_option_inputs input[type=radio],
+    .publish_preview_container .publish_option .publish_option_inputs input[type=checkbox] {
+      float: left;
+      margin: 2px 4px;
+      float: left;
+    }
+    .publish_preview_container .publish_option .publish_option_inputs label {
+      margin-left: 26px;
+      display: block;
+    }
+    .publish_preview_container .publish_option_dimensions {
+      margin-left: 26px;
+    }
+      .publish_preview_container .publish_option .publish_option_dimensions label {
+        width: 46px;
+        float: left;
+        display: block;
+        margin-left: 0;
+      }
   .publish_preview_container .publish_option input[type=text] {
     width: 30px;
     padding: 1px 4px;
     border: 1px solid #505050;
+    margin-left: 4px;
   }
     .publish_preview_container .publish_option input[type=text].disabled {
       background-color: #C0C0C0;
     }
-  .publish_preview_container .publish_option input[type=radio] {
-  }
   .publish_preview_container .publish_option .publish_option_size_label {
     font-size: 10px;
     color: #C0C0C0;
