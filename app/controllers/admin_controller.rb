@@ -78,6 +78,8 @@ class AdminController < ApplicationController
     data = JSON.parse(params[:json])
     data.each do |key, hits|
       doc_id, url = *key.split(':', 2)
+      doc = Document.find(doc_id)
+      next unless doc && doc.publicly_accessible?
       RemoteUrl.record_hits(doc_id.to_i, url, hits)
     end
     json nil

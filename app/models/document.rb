@@ -171,9 +171,10 @@ class Document < ActiveRecord::Base
     self.access == PUBLIC
   end
 
-  def cacheable?
+  def publicly_accessible?
     [PUBLIC, EXCLUSIVE].include? access
   end
+  alias_method :cacheable?, :publicly_accessible?
 
   def published?
     remote_url.present? || detected_remote_url.present?
