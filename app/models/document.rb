@@ -341,11 +341,17 @@ class Document < ActiveRecord::Base
     asset_store.destroy(self)
   end
 
-  def queue_import(eventual_access=PRIVATE)
-    self.update_attributes(:access => DC::Access::PENDING)
+  def reprocess_text
+    queue_import self.access, true
+  end
+
+  def queue_import(eventual_access=nil, text_only=false)
+    eventual_access ||= self.access || PRIVATE
+    self.update_attributes :access => PENDING
     job = JSON.parse(DC::Import::CloudCrowdImporter.new.import([id], {
       'id'            => id,
-      'access'        => eventual_access
+      'access'        => eventual_access,
+      'text_only'     => text_only
     }).body)
     ProcessingJob.create!(
       :document_id    => id,

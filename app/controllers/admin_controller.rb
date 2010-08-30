@@ -125,7 +125,8 @@ class AdminController < ApplicationController
   end
 
   def reprocess_failed_document
-    Document.failed.last.queue_import
+    doc = Document.failed.last
+    doc.queue_import doc.access
     json nil
   end
 

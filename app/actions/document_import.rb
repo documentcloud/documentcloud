@@ -5,7 +5,9 @@ class DocumentImport < CloudCrowd::Action
   # Split a document import job into two parallel parts ... one for the image
   # generation and one for the text extraction.
   def split
-    inputs_for_processing(document, 'images', 'text')
+    tasks = [{'task' => 'text'  }]
+    tasks << {'task' => 'images'} unless options['text_only']
+    tasks
   end
 
   # Process runs either the text extraction or image generation, depending on
@@ -121,10 +123,6 @@ class DocumentImport < CloudCrowd::Action
 
   def access
     options['access'] || DC::Access::PRIVATE
-  end
-
-  def inputs_for_processing(doc, *tasks)
-    tasks.map {|t| {:task => t, :id => doc.id} }
   end
 
 end
