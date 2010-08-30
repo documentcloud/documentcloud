@@ -408,22 +408,23 @@ class Document < ActiveRecord::Base
   def canonical(options={})
     options = DEFAULT_CANONICAL_OPTIONS.merge(options)
     doc = ActiveSupport::OrderedHash.new
-    doc['id']              = canonical_id
-    doc['title']           = title
-    doc['access']          = ACCESS_NAMES[access] if options[:access]
-    doc['pages']           = page_count
-    doc['description']     = description
-    doc['resources']       = res = ActiveSupport::OrderedHash.new
-    res['pdf']             = pdf_url
-    res['text']            = full_text_url
-    res['thumbnail']       = thumbnail_url
-    res['search']          = search_url
-    res['page']            = {}
-    res['page']['image']   = page_image_url_template(:local => options[:local])
-    res['page']['text']    = page_text_url_template(:local => options[:local])
-    res['related_article'] = related_article if related_article
-    doc['sections']        = sections.map(&:canonical) if options[:sections]
-    doc['annotations']     = annotations.accessible(options[:account]).map(&:canonical) if options[:annotations]
+    doc['id']                 = canonical_id
+    doc['title']              = title
+    doc['access']             = ACCESS_NAMES[access] if options[:access]
+    doc['pages']              = page_count
+    doc['description']        = description
+    doc['resources']          = res = ActiveSupport::OrderedHash.new
+    res['pdf']                = pdf_url
+    res['text']               = full_text_url
+    res['thumbnail']          = thumbnail_url
+    res['search']             = search_url
+    res['page']               = {}
+    res['page']['image']      = page_image_url_template(:local => options[:local])
+    res['page']['text']       = page_text_url_template(:local => options[:local])
+    res['related_article']    = related_article if related_article
+    doc['sections']           = sections.map(&:canonical) if options[:sections]
+    doc['annotations']        = annotations.accessible(options[:account]).map(&:canonical) if options[:annotations]
+    doc['canonical_url']      = canonical_url(:html)
     doc
   end
 
