@@ -275,7 +275,17 @@ module DC
       end
 
       def build_published
-        # TBD
+        accounts = @accounts.map {|email| Account.lookup(email) }
+        ids      = accounts.map  {|acc| acc ? acc.id : -1 }
+        if needs_solr?
+          @solr.build do
+            with :account_id, ids
+            with :published, true
+          end
+        else
+          @sql << 'documents.account_id in (?) and (remote_url is not null or detected_remote_url is not null)'
+          @interpolations << ids
+        end
       end
 
       # Generate the Solr or SQL to restrict the search to specific organizations.

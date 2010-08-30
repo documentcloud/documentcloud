@@ -89,6 +89,7 @@ class Document < ActiveRecord::Base
     string  :title
     string  :source
     time    :created_at
+    boolean :published, :using => :published?
     integer :id
     integer :account_id
     integer :organization_id
@@ -172,6 +173,10 @@ class Document < ActiveRecord::Base
 
   def cacheable?
     [PUBLIC, EXCLUSIVE].include? access
+  end
+
+  def published?
+    remote_url.present? || detected_remote_url.present?
   end
 
   # When the access level changes, all sub-resource and asset permissions
