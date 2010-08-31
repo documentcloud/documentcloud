@@ -3,12 +3,44 @@
 /* ================== */
 
 .embed_dialog .title {
-  text-align: center;
 }
 
-.embed_dialog .cancel {
+
+.publish_step {
+  display: none;
+  width: 500px;
+}
+
+.publish_step.not_enabled {
   display: none;
 }
+
+.publish_step.is_enabled {
+  display: block;
+}
+
+.embed_dialog .controls {
+  display: none;
+}
+
+.embed_dialog .publish_wizard_controls {
+  margin: 24px 0 0 0;
+}
+
+.embed_dialog .publish_wizard_controls .cancel {
+  float: left;
+}
+
+.embed_dialog .publish_wizard_controls .next,
+.embed_dialog .publish_wizard_controls .previous {
+  float: right;
+  margin-left: 12px;
+  width: 85px;
+}
+
+/* ================== */
+/* = Publish Step 1 = */
+/* ================== */
 
 /* =================== */
 /* = Publish Preview = */
@@ -128,6 +160,7 @@
   color: #A0A0A0;
   cursor: pointer;
   padding: 2px 0 2px 16px;
+  margin-left: 10px;
   background: transparent url(/images/embed/icons/bullet_arrow_right.png) no-repeat 0 4px;
 }
 .publish_preview_container .publish_advanced.active {

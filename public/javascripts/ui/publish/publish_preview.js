@@ -7,13 +7,19 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     'input[name=height].focus'               : '_selectViewerFixed',
     '.publish_preview_new_window_link.click' : 'previewEmbedNewWindow',
     '.publish_advanced.click'                : '_showAdvancedOptions',
-    '.ok.click'                              : 'confirm',
     'input.change'                           : 'update',
     'select.change'                          : 'update',
     'input.keyup'                            : 'update',
     'input.focus'                            : 'update',
-    'input.click'                            : 'update'
+    'input.click'                            : 'update',
+    
+    '.next.click'                            : 'nextStep',
+    '.previous.click'                        : 'previousStep',
+    '.close.click'                           : 'confirm'
   },
+  
+  totalSteps  : 3,
+  currentStep : 1,
   
   VIEWER_DEFAULTS : {
     zoom             : 700,
@@ -73,6 +79,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     }
     this.update();
     this.center();
+    this.setStepButtons();
     _.bindAll(this, '_showAdvancedOptions');
     return this;
   },
@@ -128,6 +135,8 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
           } else if ($this.val() == opts[inputName]) {
             $this.attr('checked', true);
           }
+        } else if ($this.is('input[type=checkbox]')) {
+          $this.attr('checked', opts[$this.attr('name')]);
         } else {
           $this.val(opts[$this.attr('name')]);
         }
@@ -180,12 +189,12 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       }
     }, this));
     
-    options = _.map(options, function(value, key) {
+    var renderedOptions = _.map(options, function(value, key) {
       return key + ": " + (typeof value == 'string' ? "\""+value+"\"" : value);
     });
     $('.publish_embed_code', this.el).html(JST['document/embed_dialog']({
       doc: this.embedDoc,
-      options: options.join(',&#10;    ')
+      options: renderedOptions.join(',&#10;    ')
     }));
     
     this.embedOptions = options;
@@ -246,6 +255,37 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     } else {
       $advancedLink.addClass('active');
       $advancedOptions.slideDown(250);
+    }
+  },
+  
+  nextStep : function() {
+    if (this.currentStep < this.totalSteps) this.currentStep += 1;
+    this.setStepButtons();
+  },
+  
+  previousStep : function() {
+    if (this.currentStep > 1) this.currentStep -= 1;
+    this.setStepButtons();
+  },
+  
+  setStepButtons : function() {
+    var $next = $('.next', this.el);
+    var $previous = $('.previous', this.el);
+    
+    $('.publish_step', this.el).setMode('not', 'enabled');
+    $('.publish_step_'+this.currentStep, this.el).setMode('is', 'enabled');
+    
+    $('.information', this.el).text('Step ' + this.currentStep + ' of ' + this.totalSteps);
+    
+    if (this.currentStep == 1) {
+      $next.setMode('is', 'enabled');
+      $previous.setMode('not', 'enabled');
+    } else if (1 < this.currentStep && this.currentStep < this.totalSteps) {
+      $next.setMode('is', 'enabled');
+      $previous.setMode('is', 'enabled');
+    } else if (this.currentStep == this.totalSteps) {
+      $next.setMode('not', 'enabled');
+      $previous.setMode('is', 'enabled');
     }
   }
   

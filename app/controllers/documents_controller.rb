@@ -7,10 +7,7 @@ class DocumentsController < ApplicationController
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
 
-  OPEN_FORMATS = ['json', 'xml', 'js', 'rdf']
-
   def show
-    return unless OPEN_FORMATS.include?(request.format) || login_required
     doc = current_document(true)
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
     return not_found unless doc
