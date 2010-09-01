@@ -81,6 +81,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   open : function(doc) {
     var docs = Documents.selected();
     docs = !doc || _.include(docs, doc) ? docs : [doc];
+    if (_.any(docs, function(doc){ return doc.checkBusy(); })) return;
     new dc.ui.DocumentDialog(docs);
   }
 
