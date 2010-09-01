@@ -186,7 +186,7 @@ class Document < ActiveRecord::Base
   def published?
     remote_url.present? || detected_remote_url.present?
   end
-
+  
   # When the access level changes, all sub-resource and asset permissions
   # need to be updated.
   def set_access(access_level)
@@ -399,6 +399,8 @@ class Document < ActiveRecord::Base
       'page_image_url'      => page_image_url_template,
       'document_viewer_url' => document_viewer_url,
       'document_viewer_js'  => canonical_url(:js),
+      'remote_url'          => remote_url,
+      'detected_remote_url' => detected_remote_url,
       'hits'                => hits
     }.to_json
   end

@@ -255,6 +255,21 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
   
   saveUpdatedAttributes : function() {
+    var changes = {};
+    
+    var relatedArticle = $('input[name=related_article]', this.el).val() || null;
+    var isPublic = $('input[name=access_level]', this.el).is(':checked');
+    var remoteUrl = $('input[name=remote_url]', this.el).val() || null;
+    
+    if (this.embedDoc.get('related_article') != relatedArticle) {
+      changes['related_article'] = relatedArticle;
+    }
+    if (this.embedDoc.get('access') != dc.access.PUBLIC && isPublic) {
+      changes['access'] = dc.access.PUBLIC;
+    }
+    if (this.embedDoc.get('remote_url') != remoteUrl) {
+      changes['remote_url'] = remoteUrl;
+    }
     
     if (!_.isEmpty(changes)) {
       var $next = $('.next', this.el);
@@ -263,19 +278,19 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
       var options = {
         success: _.bind(function() {
-          console.log(['Success!']);
           $next.text('Next Step');
-          this.nextStep(true);
+          dc.ui.spinner.hide();
+          this.nextStep(null, true);
         }, this)
       };
-      _.each(this.docs, function(doc){ Documents.update(doc, changes, options); });
-      dc.ui.notifier.show({mode : 'info', text : 'Updated ' + this.docs.length + ' ' + Inflector.pluralize('document', this.docs.length)});
+      dc.ui.spinner.show();
+      Documents.update(this.embedDoc, changes, options);
     } else {
-      this.nextStep(true);
+      this.nextStep(null, true);
     }
   },
   
-  nextStep : function(skipSave) {
+  nextStep : function(e, skipSave) {
     if (!skipSave && this.currentStep == 1) {
       this.saveUpdatedAttributes();
       return;
