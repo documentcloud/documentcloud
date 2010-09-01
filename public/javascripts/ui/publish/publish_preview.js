@@ -2,6 +2,8 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
   callbacks : {
     'input[name=zoom_specific].focus'        : '_selectZoomSpecific',
+    '#publish_option_zoom_specific.click'    : '_setZoom',
+    'input[name=zoom_specific].click'        : '_setZoom',
     'input[name=viewer_size].change'         : '_selectViewerSize',
     'input[name=width].focus'                : '_selectViewerFixed',
     'input[name=height].focus'               : '_selectViewerFixed',
@@ -223,6 +225,11 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     $('input#publish_option_zoom_specific', this.el).attr('checked', true);
   },
 
+  _setZoom : function() {
+    var el = $('input[name=zoom_specific]', this.el);
+    if (!el.val()) el.val(this.fullscreenOptions['zoom']);
+  },
+
   _selectViewerFixed : function() {
     var $viewerFixed = $('input#publish_option_viewer_size_fixed', this.el);
     if (!$viewerFixed.attr('checked')) {
@@ -239,8 +246,8 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       $('input[name=zoom_specific]', this.el).val(this.fullscreenOptions['zoom']);
     } else if (viewer == 'full') {
       this.setOptions(this.fullscreenOptions);
-      $('input#publish_option_zoom_specific', this.el).attr('checked', true);
-      $('input[name=zoom_specific]', this.el).val(this.fullscreenOptions['zoom']);
+      this._selectZoomSpecific();
+      this._setZoom();
     }
   },
 
