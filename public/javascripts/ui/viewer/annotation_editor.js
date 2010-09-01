@@ -60,7 +60,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
   createPageNote : function(e) {
     this.close();
     var set = $(e.target).closest('.DV-set');
-    var pageNumber = currentDocument.api.getPageNumberForId(set.attr('id'));
+    var pageNumber = currentDocument.api.getPageNumberForId(set.attr('data-id'));
     currentDocument.api.addAnnotation({page : pageNumber, unsaved : true, access : this._kind || 'public'});
   },
 
@@ -113,7 +113,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
       this.close();
       if (loc.width > 10 && loc.height > 10) {
         var set = $(this._activePage).closest('.DV-set');
-        var pageNumber = currentDocument.api.getPageNumberForId(set.attr('id'));
+        var pageNumber = currentDocument.api.getPageNumberForId(set.attr('data-id'));
         currentDocument.api.addAnnotation({location : {image : image}, page : pageNumber, unsaved : true, access : this._kind});
       }
       return false;
