@@ -5,6 +5,7 @@
     height: 30px;
     margin-bottom: 15px;
     position: relative;
+    text-align: left;
   }
     .docalog .row.tall {
       height: 90px;
@@ -35,7 +36,6 @@
     display: block;
   }
   .docalog .document_access {
-    position: relative;
-    margin: 0;
-    left: -25px; top: 4px;
+    position: absolute;
+    left: 115px; top: 5px;
   }
