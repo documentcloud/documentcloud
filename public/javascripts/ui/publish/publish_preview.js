@@ -19,43 +19,46 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
 
   totalSteps  : 3,
-  currentStep : 1,
 
-  VIEWER_DEFAULTS : {
-    zoom             : 700,
-    showSidebar      : true,
-    showText         : true,
-    showSearch       : true,
-    showHeader       : true,
-    enableUrlChanges : true
-  },
-
-  DEFAULT_FULLSCREEN_OPTIONS : {
-    container        : '#document-viewer',
-    viewer_size      : 'full',
-    width            : 600,
-    height           : 800,
-    zoom             : 700,
-    showSidebar      : true,
-    showText         : true,
-    showHeader       : true,
-    enableUrlChanges : true
-  },
-
-  DEFAULT_FIXED_OPTIONS : {
-    container        : '#document-viewer',
-    viewer_size      : 'fixed',
-    width            : 600,
-    height           : 800,
-    zoom             : 'auto',
-    showSidebar      : false,
-    showText         : true,
-    showHeader       : true,
-    enableUrlChanges : false
+  VIEWER_OPTIONS : {
+    DEFAULT : {
+      zoom             : 700,
+      width            : null,
+      height           : null,
+      showSidebar      : true,
+      showText         : true,
+      showSearch       : true,
+      showHeader       : true,
+      enableUrlChanges : true
+    },
+    FIXED : {
+      viewer_size      : 'fixed',
+      width            : 600,
+      height           : 800,
+      zoom             : 'auto',
+      showSidebar      : false,
+      showText         : true,
+      showHeader       : true,
+      enableUrlChanges : false
+    },
+    FULLSCREEN : {
+      viewer_size      : 'full',
+      width            : 600,
+      height           : 800,
+      zoom             : 700,
+      showSidebar      : true,
+      showText         : true,
+      showHeader       : true,
+      enableUrlChanges : true
+    }
   },
 
   constructor : function(doc) {
     this.embedDoc = doc;
+    this.currentStep = 1;
+    this.fullscreenOptions = _.clone(this.VIEWER_OPTIONS.FULLSCREEN);
+    this.fixedOptions      = _.clone(this.VIEWER_OPTIONS.FIXED);
+    this.fullscreenOptions.container = this.fixedOptions.container = '#' + this.embedDoc.canonicalId();
     this.base({
       mode        : 'custom',
       title       : this.displayTitle(),
@@ -152,8 +155,8 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
     userOpts['viewer_size'] = $('input[name=viewer_size]:checked', $form).val();
     if (userOpts['viewer_size'] == 'fixed') {
-      userOpts['width'] = parseInt($('input[name=width]', $form).val(), 10);
-      userOpts['height'] = parseInt($('input[name=height]', $form).val(), 10);
+      userOpts['width'] = parseInt($('input[name=width]', $form).val(), 10)   || null;
+      userOpts['height'] = parseInt($('input[name=height]', $form).val(), 10) || null;
     }
     if ($('input[name=zoom]:checked', $form).val() == 'auto') {
       userOpts['zoom'] = 'auto';
@@ -166,8 +169,8 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     userOpts['enableUrlChanges'] = $('input[name=enableUrlChanges]').attr('checked');
 
     var defaultOptions = userOpts['viewer_size'] == 'fixed' ?
-                         this.DEFAULT_FIXED_OPTIONS :
-                         this.DEFAULT_FULLSCREEN_OPTIONS;
+                         this.fixedOptions :
+                         this.fullscreenOptions;
 
     var options = $.extend({}, defaultOptions, userOpts);
 
@@ -180,7 +183,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
     // Remove options that are the same as defaults
     _.each(options, _.bind(function(v, k) {
-      if (typeof v == 'boolean' && v == this.VIEWER_DEFAULTS[k]) {
+      if (typeof v == 'boolean' && v == this.VIEWER_OPTIONS.DEFAULT[k]) {
         delete options[k];
       }
     }, this));
@@ -232,12 +235,12 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     var viewer = $('input[name=viewer_size]:checked').val();
 
     if (viewer == 'fixed') {
-      this.setOptions(this.DEFAULT_FIXED_OPTIONS);
-      $('input[name=zoom_specific]', this.el).val(this.DEFAULT_FULLSCREEN_OPTIONS['zoom']);
+      this.setOptions(this.fixedOptions);
+      $('input[name=zoom_specific]', this.el).val(this.fullscreenOptions['zoom']);
     } else if (viewer == 'full') {
-      this.setOptions(this.DEFAULT_FULLSCREEN_OPTIONS);
+      this.setOptions(this.fullscreenOptions);
       $('input#publish_option_zoom_specific', this.el).attr('checked', true);
-      $('input[name=zoom_specific]', this.el).val(this.DEFAULT_FULLSCREEN_OPTIONS['zoom']);
+      $('input[name=zoom_specific]', this.el).val(this.fullscreenOptions['zoom']);
     }
   },
 

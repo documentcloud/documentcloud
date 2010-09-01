@@ -18,11 +18,13 @@
   <script src="/viewer/viewer.js" type="text/javascript"></script>
 </head>
 <body style="margin:0; padding:0;">
-  <script type="text/javascript">
-    <% if @current_document %>
-      DV.load(<%= @current_document.canonical({:account => @current_account, :local => @local}).to_json %>, <%= @options %>);
-    <% end %>
-  </script>
+  <% canonical = @current_document.canonical({:account => @current_account, :local => @local}) if @current_document %>
+  <% if canonical %>
+    <div id="<%= canonical['id'] %>"></div>
+    <script type="text/javascript">
+        window.currentDocument = DV.load(<%= canonical.to_json %>, <%= @options %>);
+    </script>
+  <% end %>
   <% if Rails.env.production? && @current_document %>
     <% @pageview_url = '/documents/show' %>
     <%= render :partial => 'common/google' %>
