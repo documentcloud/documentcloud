@@ -106,6 +106,9 @@
         .document.is_editable:hover .edit_glyph {
           visibility: visible;
         }
+        .document.pending_access:hover .edit_glyph {
+          visibility: hidden;
+        }
       body.minidocs #document_list .document .document_tool {
         position: absolute;
         top: 8px; left: 118px;
