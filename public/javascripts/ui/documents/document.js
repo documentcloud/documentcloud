@@ -104,6 +104,7 @@ dc.ui.Document = dc.View.extend({
   // document is among them. Otherwise, open the dialog just for this document.
   openDialog : function(e) {
     if (!(this.modes.editable == 'is')) return;
+    if (this.model.checkBusy()) return;
     dc.ui.DocumentDialog.open(this.model);
   },
 
