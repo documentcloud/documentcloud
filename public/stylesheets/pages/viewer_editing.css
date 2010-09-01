@@ -59,10 +59,10 @@
   #control_panel .text_only {
     display: none;
   }
-    #DV-docViewer.DV-viewDocument #control_panel,
-    #DV-docViewer.DV-viewText #control_panel,
-    #DV-docViewer.DV-viewDocument #control_panel .document_only,
-    #DV-docViewer.DV-viewText #control_panel .text_only {
+    .DV-docViewer.DV-viewDocument #control_panel,
+    .DV-docViewer.DV-viewText #control_panel,
+    .DV-docViewer.DV-viewDocument #control_panel .document_only,
+    .DV-docViewer.DV-viewText #control_panel .text_only {
       display: block;
     }
 

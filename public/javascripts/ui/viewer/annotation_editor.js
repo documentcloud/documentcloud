@@ -13,8 +13,8 @@ dc.ui.AnnotationEditor = dc.View.extend({
     this._baseURL = '/documents/' + dc.app.editor.docId + '/annotations';
     this._inserts = $('.DV-pageNoteInsert');
     _.bindAll(this, 'open', 'close', 'drawAnnotation', 'saveAnnotation', 'deleteAnnotation', 'createPageNote');
-    DV.api.onAnnotationSave(this.saveAnnotation);
-    DV.api.onAnnotationDelete(this.deleteAnnotation);
+    currentDocument.api.onAnnotationSave(this.saveAnnotation);
+    currentDocument.api.onAnnotationDelete(this.deleteAnnotation);
     this._inserts.click(this.createPageNote);
   },
 
@@ -60,8 +60,8 @@ dc.ui.AnnotationEditor = dc.View.extend({
   createPageNote : function(e) {
     this.close();
     var set = $(e.target).closest('.DV-set');
-    var pageNumber = DV.api.getPageNumberForId(set.attr('id'));
-    DV.api.addAnnotation({page : pageNumber, unsaved : true, access : this._kind || 'public'});
+    var pageNumber = currentDocument.api.getPageNumberForId(set.attr('id'));
+    currentDocument.api.addAnnotation({page : pageNumber, unsaved : true, access : this._kind || 'public'});
   },
 
   // TODO: Clean up!
@@ -108,13 +108,13 @@ dc.ui.AnnotationEditor = dc.View.extend({
       loc.left    -= (borderLeft - 2);
       loc.right   = loc.left + loc.width + 13;
       loc.bottom  = loc.top + loc.height + 3;
-      var zoom    = DV.api.currentZoom();
+      var zoom    = currentDocument.api.currentZoom();
       var image   = _.map([loc.top, loc.right, loc.bottom, loc.left], function(l){ return Math.round(l / zoom); }).join(',');
       this.close();
       if (loc.width > 10 && loc.height > 10) {
         var set = $(this._activePage).closest('.DV-set');
-        var pageNumber = DV.api.getPageNumberForId(set.attr('id'));
-        DV.api.addAnnotation({location : {image : image}, page : pageNumber, unsaved : true, access : this._kind});
+        var pageNumber = currentDocument.api.getPageNumberForId(set.attr('id'));
+        currentDocument.api.addAnnotation({location : {image : image}, page : pageNumber, unsaved : true, access : this._kind});
       }
       return false;
     }, this);
@@ -122,7 +122,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
   },
 
   saveAnnotation : function(anno) {
-    if (!anno.location) DV.api.redraw(true);
+    if (!anno.location) currentDocument.api.redraw(true);
     this[anno.unsaved ? 'createAnnotation' : 'updateAnnotation'](anno);
   },
 

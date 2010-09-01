@@ -20,7 +20,7 @@
 <body style="margin:0; padding:0;">
   <script type="text/javascript">
     <% if @current_document %>
-      DV.load(<%= @current_document.canonical({:account => @current_account, :local => @local}).to_json %>);
+      window.currentDocument = DV.load(<%= @current_document.canonical({:account => @current_account, :local => @local}).to_json %>);
     <% end %>
   </script>
   <% if Rails.env.production? && @current_document %>

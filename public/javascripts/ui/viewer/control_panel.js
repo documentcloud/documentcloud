@@ -23,24 +23,24 @@ dc.ui.ViewerControlPanel = dc.View.extend({
   },
 
   editTitle : function() {
-    dc.ui.Dialog.prompt('Title', DV.api.getTitle(), _.bind(function(title) {
-      DV.api.setTitle(title);
+    dc.ui.Dialog.prompt('Title', currentDocument.api.getTitle(), _.bind(function(title) {
+      currentDocument.api.setTitle(title);
       this._updateDocument({title : title});
       return true;
     }, this), {mode : 'short_prompt'});
   },
 
   editRelatedArticle : function() {
-    dc.ui.Dialog.prompt('Related Article', DV.api.getRelatedArticle(), _.bind(function(url) {
-      DV.api.setRelatedArticle(url);
+    dc.ui.Dialog.prompt('Related Article', currentDocument.api.getRelatedArticle(), _.bind(function(url) {
+      currentDocument.api.setRelatedArticle(url);
       this._updateDocument({related_article : url});
       return true;
     }, this), {mode : 'short_prompt'});
   },
 
   editDescription : function() {
-    dc.ui.Dialog.prompt('Description', DV.api.getDescription(), _.bind(function(desc) {
-      DV.api.setDescription(desc);
+    dc.ui.Dialog.prompt('Description', currentDocument.api.getDescription(), _.bind(function(desc) {
+      currentDocument.api.setDescription(desc);
       this._updateDocument({description : desc});
       return true;
     }, this));
@@ -55,7 +55,7 @@ dc.ui.ViewerControlPanel = dc.View.extend({
   },
 
   _updateDocument : function(attrs) {
-    attrs.id = parseInt(DV.Schema.document.id, 10);
+    attrs.id = parseInt(currentDocument.api.getId(), 10);
     var doc = new dc.model.Document(attrs);
     Documents.update(doc);
     try {

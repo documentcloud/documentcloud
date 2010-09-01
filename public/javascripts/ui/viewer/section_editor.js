@@ -7,7 +7,7 @@ dc.ui.SectionEditor = dc.View.extend({
 
   open : function() {
     if (this.dialog) return false;
-    this.sections = _.sortBy(DV.api.getSections(), function(s){ return parseInt(s.pageNumber, 10); });
+    this.sections = _.sortBy(currentDocument.api.getSections(), function(s){ return parseInt(s.pageNumber, 10); });
     this.dialog = new dc.ui.Dialog({
       title       : 'Edit Sections',
       information : 'Please choose a title and page range for each section.',
@@ -70,11 +70,11 @@ dc.ui.SectionEditor = dc.View.extend({
 
   updateNavigation : function(sections) {
     sections = _.map(sections, function(s){ return _.extend({pages : '' + s.start_page + '-' + s.end_page}, s); });
-    DV.api.setSections(sections);
+    currentDocument.api.setSections(sections);
   },
 
   addRow : function(options) {
-    options = _.extend({pageCount : DV.api.numberOfPages(), title : '', start_page : '', end_page : ''}, options);
+    options = _.extend({pageCount : currentDocument.api.numberOfPages(), title : '', start_page : '', end_page : ''}, options);
     var row = $(JST['viewer/section_row'](options));
     $('.section_title', row).val(options.title);
     $('.minus', row).bind('click', function(){ row.remove(); });

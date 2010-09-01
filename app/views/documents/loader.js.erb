@@ -20,23 +20,13 @@
   @*/
   loadCSS('<%= root %>/viewer/plainviewer.css');
 
-  DV.onload = function() {
-    // Nasty hack to fix viewer for embeds that had position:relative set.
-    if (DV.options && DV.options.container) {
-      var cont = $j(DV.options.container);
-      if (cont.length && (cont.css('position') == 'relative') && (cont.height() < 50)) {
-        cont.css({position : 'static'});
-      }
-    }
-  };
-
-  DV.afterLoad = function() {
+  DV.afterLoad = function(viewer) {
     $j('#DV-logoLink').attr({href : 'http://www.documentcloud.org'});
     var loc = window.location;
     var url = loc.protocol + '//' + loc.host + loc.pathname;
     if (url.match(/^file:/)) return false;
     url = url.replace(/[\/]+$/, '');
-    var id  = parseInt(DV.Schema.document.id, 10);
+    var id  = parseInt(viewer.api.getId(), 10);
     var key = encodeURIComponent(id + ':' + url);
     $j(document.body).append('<img alt="" width="1" height="1" src="<%= root.sub("s3", "www") %>/pixel.gif?key=' + key + '" />');
   };

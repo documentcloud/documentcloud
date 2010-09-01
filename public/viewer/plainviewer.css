@@ -1,20 +1,20 @@
 /* DocumentCloud overrides to the DocViewer CSS go here: */
 
-#DV-docViewer {
+.DV-docViewer {
   border: 1px solid #aaa;
   line-height: normal;
 }
-#DV-headerHat, #DV-title, .DV-contentsHeader {
+.DV-headerHat, .DV-title, .DV-contentsHeader {
   display: none !important;
 }
-#DV-header {
+.DV-header {
   padding: 0;
   border-bottom: 2px solid #979797;
   position: relative;
   z-index: 20000;
   box-shadow: 0 0 25px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 25px rgba(0,0,0,.5); -moz-box-shadow: 0 0 25px rgba(0,0,0,.5);
 }
-  #DV-Controls {
+  .DV-controls {
     margin-top: 0;
     border: 0;
     background: #d7d7d7;
@@ -25,36 +25,17 @@
     color: #2C2C2C;
     overflow: hidden;
   }
-    #DV-searchInput {
+    .DV-searchInput {
       border: 1px solid #999;
       -moz-border-radius: 16px;
       border-radius: 16px;
     }
-    #DV-searchSubmit {
-      background: #e7e7e7;
-      color: #4F4F4F;
-      height: auto;
-      padding: 3px 10px;
-      font-weight: bold;
-      border: 1px solid #999;
-      border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
-      background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#c4c4c4));
-      background: -moz-linear-gradient(top, #fefefe, #c4c4c4);
-      filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FEFEFE', EndColorStr='#C4C4C4');
-      text-shadow: 0px 1px 1px #fff;
-      cursor: pointer;
-      font-size:11px;
-    }
-      div.DV-ie #DV-searchSubmit {
-        font-size: 10px;
-        padding: 4px 3px 3px;
-      }
 
-#DV-docViewer-Container {
+.DV-docViewer-Container {
   margin: 0;
   border: 0;
 }
-#DV-pages {
+.DV-pages {
   background: #bbb;
 }
 
@@ -92,26 +73,26 @@
     margin-right: 10px;
   }
 
-#DV-overlay {
+.DV-overlay {
   left: 0; right: 282px; bottom: 0;
 }
 
-#DV-well {
+.DV-well {
   padding-bottom: 16px;
 }
-#DV-descriptionHead {
+.DV-descriptionHead {
   text-transform: none;
   color: black;
 }
-#DV-descriptionText {
+.DV-descriptionText {
   background: white;
   padding: 5px 14px 10px;
 }
 
-#DV-logo {
+.DV-logo {
   margin-top: 16px;
 }
-  #DV-logo a {
+  .DV-logo a {
     display: block;
     width: 105px; height: 19px;
     background: url(images/dc_inline_logo.png);
@@ -135,10 +116,10 @@
     .DV-views .DV-last span {
       -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
     }
-    .DV-viewDocument .DV-views #DV-documentView span,
-    .DV-viewAnnotations .DV-views #DV-annotationView span,
-    .DV-viewText .DV-views #DV-textView span,
-    .DV-viewSearch .DV-views #DV-textView span {
+    .DV-viewDocument .DV-views .DV-documentView span,
+    .DV-viewAnnotations .DV-views .DV-annotationView span,
+    .DV-viewText .DV-views .DV-textView span,
+    .DV-viewSearch .DV-views .DV-textView span {
       background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#a0a0a0));
       background: -moz-linear-gradient(top, #fff, #a0a0a0);
       filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFF', EndColorStr='#A0A0A0');
