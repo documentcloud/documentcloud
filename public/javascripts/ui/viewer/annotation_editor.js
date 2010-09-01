@@ -21,7 +21,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
   open : function(kind) {
     this._open          = true;
     this._buttons[kind] = $('#control_panel .' + kind + '_annotation');
-    this.pages          = $('#DV-pages');
+    this.pages          = $('.DV-pages');
     this.page           = $('.DV-page');
     this._guide         = $(kind == 'public' ? '#public_note_guide' : '#private_note_guide');
     this.page.css({cursor : 'crosshair'});

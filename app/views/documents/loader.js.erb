@@ -1,4 +1,7 @@
 (function() {
+  // If the viewer is already loaded, don't repeat the process.
+  if (window.DV && window.DV.loaded) return;
+
   <% root = DC.server_root(:ssl => false) %>
   window.DV = window.DV || {};
 
@@ -21,15 +24,19 @@
   loadCSS('<%= root %>/viewer/plainviewer.css');
 
   DV.afterLoad = function(viewer) {
-    $j('#DV-logoLink').attr({href : 'http://www.documentcloud.org'});
+    DV.jQuery('.DV-logoLink').attr({href : 'http://www.documentcloud.org'});
     var loc = window.location;
     var url = loc.protocol + '//' + loc.host + loc.pathname;
     if (url.match(/^file:/)) return false;
     url = url.replace(/[\/]+$/, '');
     var id  = parseInt(viewer.api.getId(), 10);
     var key = encodeURIComponent(id + ':' + url);
-    $j(document.body).append('<img alt="" width="1" height="1" src="<%= root.sub("s3", "www") %>/pixel.gif?key=' + key + '" />');
+    DV.jQuery(document.body).append('<img alt="" width="1" height="1" src="<%= root.sub("s3", "www") %>/pixel.gif?key=' + key + '" />');
   };
 
+  // Record the fact that the viewer is loaded.
+  DV.loaded = true;
+
+  // Request the viewer JavaScript.
   document.write('<script type="text/javascript" src="<%= root %>/viewer/viewer.js"></script>');
 })();

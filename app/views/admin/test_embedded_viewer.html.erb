@@ -147,7 +147,7 @@
 
   <script type="text/javascript" src="/documents/loader.js"></script>
   <script type="text/javascript">
-    DV.load("<%= Document.first(:conditions => {:access => DC::Access::PUBLIC}, :order => 'random()').canonical_url(:js) %>", {
+    DV.load("<%= Document.unrestricted.random.canonical_url(:js) %>", {
       container : '#doc'
     });
   </script>

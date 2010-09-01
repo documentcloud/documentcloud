@@ -132,6 +132,13 @@ class Document < ActiveRecord::Base
     doc.reload
   end
 
+  # Retrieve a random document.
+  def self.random
+    uncached do
+      first(:order => 'random()')
+    end
+  end
+
   # Update a document, with S3 permission fixing, cache expiry, and access control.
   def secure_update(attrs, account)
     if !account.allowed_to_edit?(self)
