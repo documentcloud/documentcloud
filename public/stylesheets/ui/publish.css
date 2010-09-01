@@ -42,6 +42,16 @@
 /* = Publish Step 1 = */
 /* ================== */
 
+.publish_step_1 form {
+  margin: 12px 0 0;
+}
+  
+  .publish_step_1 input[type=text] {
+    width: 250px;
+  }
+  .publish_step_1 label {
+    margin: 0 4px 0 0;
+  }
 /* =================== */
 /* = Publish Preview = */
 /* =================== */
@@ -55,7 +65,7 @@
 
 .publish_preview_container h2 {
   clear: both;
-  background-color: #303030;
+  background-color: #404040;
   padding: 5px;
   margin: 12px 0;
   font-size: 14px;
@@ -140,10 +150,11 @@
     font-size: 10px;
     color: #C0C0C0;
   }
-.publish_preview_container .publish_embed_code {
+.publish_preview_container .publish_section {
   clear: both;
   padding: 15px;
-  background-color: #202020;
+  margin: 12px 0;
+  background-color: #1C1C1C;
 }
   .publish_preview_container .publish_embed_code textarea {
     width: 100%;

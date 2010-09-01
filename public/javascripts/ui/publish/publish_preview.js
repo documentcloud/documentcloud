@@ -20,7 +20,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   
   totalSteps  : 3,
   currentStep : 1,
-  
+    
   VIEWER_DEFAULTS : {
     zoom             : 700,
     showSidebar      : true,
@@ -66,14 +66,10 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
   
   render : function() {
-    this.base({
-      width: '90%'
-    });
-    _.bindAll(this, '_renderEmbedCode', 
-                    '_selectZoomSpecific', 
-                    '_setWidthHeightInputs', 
-                    'previewEmbedNewWindow');
-    $('.custom', this.el).html(JST['workspace/publish_preview']({}));
+    this.base();
+    $('.custom', this.el).html(JST['workspace/publish_preview']({
+      'doc': this.embedDoc
+    }));
     if (dc.app.preferences.get('embed_options')) {
       this._loadPreferences();
     }
@@ -122,7 +118,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
   
   setOptions : function(opts) {
-    var $form = $('form', this.el);
+    var $form = $('form.publish_options', this.el);
     var $formElements = $('input, select', $form);
     
     $formElements.each(function(i) {
@@ -258,7 +254,32 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     }
   },
   
-  nextStep : function() {
+  saveUpdatedAttributes : function() {
+    
+    if (!_.isEmpty(changes)) {
+      var $next = $('.next', this.el);
+      $next.text('Saving...');
+      $next.setMode('not', 'enabled');
+
+      var options = {
+        success: _.bind(function() {
+          console.log(['Success!']);
+          $next.text('Next Step');
+          this.nextStep(true);
+        }, this)
+      };
+      _.each(this.docs, function(doc){ Documents.update(doc, changes, options); });
+      dc.ui.notifier.show({mode : 'info', text : 'Updated ' + this.docs.length + ' ' + Inflector.pluralize('document', this.docs.length)});
+    } else {
+      this.nextStep(true);
+    }
+  },
+  
+  nextStep : function(skipSave) {
+    if (!skipSave && this.currentStep == 1) {
+      this.saveUpdatedAttributes();
+      return;
+    }
     if (this.currentStep < this.totalSteps) this.currentStep += 1;
     this.setStepButtons();
   },
