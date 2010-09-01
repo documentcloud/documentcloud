@@ -1,5 +1,5 @@
 dc.ui.PublishPreview = dc.ui.Dialog.extend({
-  
+
   callbacks : {
     'input[name=zoom_specific].focus'        : '_selectZoomSpecific',
     'input[name=viewer_size].change'         : '_selectViewerSize',
@@ -12,15 +12,15 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     'input.keyup'                            : 'update',
     'input.focus'                            : 'update',
     'input.click'                            : 'update',
-    
+
     '.next.click'                            : 'nextStep',
     '.previous.click'                        : 'previousStep',
     '.close.click'                           : 'confirm'
   },
-  
+
   totalSteps  : 3,
   currentStep : 1,
-    
+
   VIEWER_DEFAULTS : {
     zoom             : 700,
     showSidebar      : true,
@@ -29,7 +29,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     showHeader       : true,
     enableUrlChanges : true
   },
-  
+
   DEFAULT_FULLSCREEN_OPTIONS : {
     container        : '#document-viewer',
     viewer_size      : 'full',
@@ -41,7 +41,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     showHeader       : true,
     enableUrlChanges : true
   },
-  
+
   DEFAULT_FIXED_OPTIONS : {
     container        : '#document-viewer',
     viewer_size      : 'fixed',
@@ -53,7 +53,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     showHeader       : true,
     enableUrlChanges : false
   },
-  
+
   constructor : function(doc) {
     this.embedDoc = doc;
     this.base({
@@ -64,7 +64,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     this.setMode('embed', 'dialog');
     this.render();
   },
-  
+
   render : function() {
     this.base();
     $('.custom', this.el).html(JST['workspace/publish_preview']({
@@ -79,14 +79,14 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     _.bindAll(this, '_showAdvancedOptions');
     return this;
   },
-  
+
   displayTitle : function() {
-    return 'Embed ' + this.embedDoc.attributes().title;
+    return 'Embed "' + Inflector.truncate(this.embedDoc.get('title'), 40) + '"';
   },
-  
+
   previewEmbedNewWindow : function(e) {
     e.preventDefault();
-    
+
     var previewUrl = [
       '/documents/',
       this.embedDoc.id,
@@ -95,32 +95,32 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       '/preview/?options=',
       encodeURIComponent(JSON.stringify(this.embedOptions))
     ].join('');
-    
+
     window.open(previewUrl);
   },
-  
+
   update : function() {
     this._savePreferences();
     this._renderEmbedCode();
     this._setWidthHeightInputs();
     this._enableTextTabOption();
   },
-  
+
   _savePreferences : function() {
     var userOpts = $('form.publish_options', this.el).serializeJSON();
     dc.app.preferences.set({'embed_options': JSON.stringify(userOpts)});
   },
-  
+
   _loadPreferences : function() {
     var userOpts = JSON.parse(dc.app.preferences.get('embed_options')) || {};
-    
+
     this.setOptions(userOpts);
   },
-  
+
   setOptions : function(opts) {
     var $form = $('form.publish_options', this.el);
     var $formElements = $('input, select', $form);
-    
+
     $formElements.each(function(i) {
       var $this = $(this);
       var inputName = $this.attr('name');
@@ -145,11 +145,11 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       }
     });
   },
-  
+
   _renderEmbedCode : function() {
     var $form = $('form.publish_options', this.el);
     var userOpts = {};
-    
+
     userOpts['viewer_size'] = $('input[name=viewer_size]:checked', $form).val();
     if (userOpts['viewer_size'] == 'fixed') {
       userOpts['width'] = parseInt($('input[name=width]', $form).val(), 10);
@@ -168,7 +168,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     var defaultOptions = userOpts['viewer_size'] == 'fixed' ?
                          this.DEFAULT_FIXED_OPTIONS :
                          this.DEFAULT_FULLSCREEN_OPTIONS;
-    
+
     var options = $.extend({}, defaultOptions, userOpts);
 
     if (options['viewer_size'] == 'full') {
@@ -177,14 +177,14 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     }
     delete options['viewer_size'];
     delete options['zoom_specific'];
-    
+
     // Remove options that are the same as defaults
     _.each(options, _.bind(function(v, k) {
       if (typeof v == 'boolean' && v == this.VIEWER_DEFAULTS[k]) {
         delete options[k];
       }
     }, this));
-    
+
     var renderedOptions = _.map(options, function(value, key) {
       return key + ": " + (typeof value == 'string' ? "\""+value+"\"" : value);
     });
@@ -192,10 +192,10 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       doc: this.embedDoc,
       options: renderedOptions.join(',&#10;    ')
     }));
-    
+
     this.embedOptions = options;
   },
-  
+
   _setWidthHeightInputs : function() {
     var $view = $('select[name=viewer_size]', this.el);
     var $dimensions = $('input[name=width],input[name=height]', this.el);
@@ -206,7 +206,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       $dimensions.removeClass('disabled').removeAttr('disabled');
     }
   },
-  
+
   _enableTextTabOption : function() {
     var $texttab = $('input[name=showText]', this.el);
     if ($('input[name=showHeader]', this.el).attr('checked')) {
@@ -215,11 +215,11 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       $texttab.addClass('disabled').attr('disabled', true);
     }
   },
-  
+
   _selectZoomSpecific : function() {
     $('input#publish_option_zoom_specific', this.el).attr('checked', true);
   },
-  
+
   _selectViewerFixed : function() {
     var $viewerFixed = $('input#publish_option_viewer_size_fixed', this.el);
     if (!$viewerFixed.attr('checked')) {
@@ -227,7 +227,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       this._selectViewerSize();
     }
   },
-  
+
   _selectViewerSize : function() {
     var viewer = $('input[name=viewer_size]:checked').val();
 
@@ -240,11 +240,11 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       $('input[name=zoom_specific]', this.el).val(this.DEFAULT_FULLSCREEN_OPTIONS['zoom']);
     }
   },
-  
+
   _showAdvancedOptions : function() {
     var $advancedLink = $('.publish_advanced', this.el);
     var $advancedOptions = $('.publish_options_group_advanced', this.el);
-    
+
     if ($advancedLink.hasClass('active')) {
       $advancedLink.removeClass('active');
       $advancedOptions.slideUp(250);
@@ -253,14 +253,14 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       $advancedOptions.slideDown(250);
     }
   },
-  
+
   saveUpdatedAttributes : function() {
     var changes = {};
-    
+
     var relatedArticle = $('input[name=related_article]', this.el).val() || null;
     var isPublic = $('input[name=access_level]', this.el).is(':checked');
     var remoteUrl = $('input[name=remote_url]', this.el).val() || null;
-    
+
     if (this.embedDoc.get('related_article') != relatedArticle) {
       changes['related_article'] = relatedArticle;
     }
@@ -270,7 +270,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     if (this.embedDoc.get('remote_url') != remoteUrl) {
       changes['remote_url'] = remoteUrl;
     }
-    
+
     if (!_.isEmpty(changes)) {
       var $next = $('.next', this.el);
       $next.text('Saving...');
@@ -289,7 +289,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       this.nextStep(null, true);
     }
   },
-  
+
   nextStep : function(e, skipSave) {
     if (!skipSave && this.currentStep == 1) {
       this.saveUpdatedAttributes();
@@ -298,21 +298,21 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     if (this.currentStep < this.totalSteps) this.currentStep += 1;
     this.setStepButtons();
   },
-  
+
   previousStep : function() {
     if (this.currentStep > 1) this.currentStep -= 1;
     this.setStepButtons();
   },
-  
+
   setStepButtons : function() {
     var $next = $('.next', this.el);
     var $previous = $('.previous', this.el);
-    
+
     $('.publish_step', this.el).setMode('not', 'enabled');
     $('.publish_step_'+this.currentStep, this.el).setMode('is', 'enabled');
-    
+
     $('.information', this.el).text('Step ' + this.currentStep + ' of ' + this.totalSteps);
-    
+
     if (this.currentStep == 1) {
       $next.setMode('is', 'enabled');
       $previous.setMode('not', 'enabled');
@@ -323,6 +323,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       $next.setMode('not', 'enabled');
       $previous.setMode('is', 'enabled');
     }
+    this.center();
   }
-  
+
 });
