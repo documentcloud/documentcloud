@@ -37,7 +37,9 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   },
 
   confirm : function() {
-    Projects.update(this.model, {title : $('#project_title', this.el).val()});
+    var title = $('#project_title', this.el).val();
+    if (!title) return this.error("Please specify a project title.");
+    Projects.update(this.model, {title : title});
     this.close();
   },
 

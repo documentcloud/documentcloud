@@ -85,9 +85,11 @@ dc.Model = Base.extend({
     next = next._attributes || next;
     var now = this._attributes;
     for (var attr in next) {
-      if (!_.isEqual(now[attr], next[attr])) {
+      var val = next[attr];
+      if (val === '') val = null;
+      if (!_.isEqual(now[attr], val)) {
         if (!silent) this._changed = true;
-        now[attr] = next[attr];
+        now[attr] = val;
       }
     }
     if (next.id) this.id = next.id;
