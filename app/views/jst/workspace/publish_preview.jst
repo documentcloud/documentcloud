@@ -31,9 +31,9 @@
       <label for="publish_prepare_access_level">Document is Public:</label>
       <p class="publish_info interface">
         In order for readers to view the embedded document,
-        its access level must be set to "public". If you leave it private, you'll
+        it must first be made public. If you leave it private, you'll
         be able to test the embed as long as you're logged in to DocumentCloud
-        &mdash; but remember to come back and set it "public" before you go live.
+        &mdash; but remember to set it "public" before you go live.
       </p>
     </div>
 
@@ -41,51 +41,26 @@
 
   <div class="publish_step publish_step_2">
 
-    <form class="publish_options publish_section">
-      <div class="publish_options_group">
-        <div class="publish_option">
-          <label>Viewer size:</label>
-          <select name="viewer_size">
-            <option value="full" selected="selected">Full Screen</option>
-            <option value="fixed">Fixed Size</option>
-          </select>
-          <span class="dimensions">
-            <label for="publish_option_width">Width: </label>
-            <input id="publish_option_width" type="text" name="width" value="" />
-            <span class="publish_option_size_label">px</span>
-            &nbsp;&nbsp;
-            <label for="publish_option_height">Height: </label>
-            <input id="publish_option_height" type="text" name="height" value="" />
-            <span class="publish_option_size_label">px</span>
-          </span>
-        </div>
-      </div>
-        
-      <div class="publish_options_group_advanced">
-        <div class="publish_options_group">
+    <div class="publish_section">
+      <label>Viewer size:</label>
+      <select name="viewer_size">
+        <option value="full" selected="selected">Full Screen</option>
+        <option value="fixed">Fixed Size</option>
+      </select>
+      <span class="dimensions">
+        <label for="publish_option_width">Width: </label>
+        <input id="publish_option_width" type="text" name="width" value="" />px
+        &nbsp;&nbsp;
+        <label for="publish_option_height">Height: </label>
+        <input id="publish_option_height" type="text" name="height" value="" />px
+      </span> 
+    </div> 
+      
+    <div class="publish_section">    
+      <input id="publish_option_sidebar" type="checkbox" name="showSidebar" checked />
+      <label for="publish_option_sidebar">Show sidebar</label>
+    </div>
     
-          <div class="publish_option">
-            <label>Initial Zoom:</label>
-            <input type="radio" name="zoom" value="auto" id="publish_option_zoom_auto" checked /> <label for="publish_option_zoom_auto">Auto</label>
-            <input type="radio" name="zoom" value="specific" id="publish_option_zoom_specific"/>
-            <input type="text" name="zoom_specific" value="700" />
-            <span class="publish_option_size_label">px</span>
-          </div>
-          <div class="publish_option">
-            <label>Options:</label>
-            <input id="publish_option_sidebar" type="checkbox" name="showSidebar" checked />
-            <label for="publish_option_sidebar">Show sidebar</label>
-            <input id="publish_option_header" type="checkbox" name="showHeader" checked />
-            <label for="publish_option_header">Show header</label>
-            <input id="publish_option_text" type="checkbox" name="showText" checked />
-            <label for="publish_option_text">Show text tab</label>
-            <input id="publish_option_url" type="checkbox" name="enableUrlChanges" />
-            <label for="publish_option_url">Enable URL changes</label>
-          </div>
-        </div>
-      </div>
-    
-    </form>
     
     <div class="publish_section">
       <a href="#" class="publish_preview_new_window_link">Preview the document viewer &raquo;</a>

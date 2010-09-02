@@ -5,15 +5,17 @@
 .embed_dialog {
   width: 500px;
   height: 400px;
+  font-size: 12px;
+  text-align: left;
 }
+  .embed_dialog .custom {
+    font-size: 12px;
+  }
 
 .publish_step {
   display: none;
   width: 500px;
 }
-  .publish_step.not_enabled {
-    display: none;
-  }
   .publish_step.is_enabled {
     display: block;
   }
@@ -41,6 +43,7 @@
 /* ================== */
 
 .embed_dialog .publish_section {
+  position: relative;
   margin-bottom: 20px;
 }
   .embed_dialog .publish_info {
@@ -55,14 +58,18 @@
         text-decoration: underline;
       }
   .embed_dialog .text_input,
-  .embed_dialog .publish_step_1 input[type="checkbox"] {
+  .embed_dialog input[type="checkbox"],
+  .embed_dialog select {
     position: absolute;
-    left: 175px;
+    left: 145px;
   }
     .embed_dialog .text_input {
-      right: 30px;
+      right: 0px;
     }
-    .embed_dialog .publish_step_1 input[type="checkbox"] {
+    .embed_dialog select {
+      margin-top: 5px;
+    }
+    .embed_dialog input[type="checkbox"] {
       margin-top: 7px;
     }
   .embed_dialog label {
@@ -72,62 +79,21 @@
     margin-bottom: 10px;
   }
   .embed_dialog .dimensions {
-    margin-left: 20px;
+    position: absolute;
+    right: 5px;
+    top: 1px;
   }
-
-/* =================== */
-/* = Publish Preview = */
-/* =================== */
-
-.publish_preview_container {
-  margin: 0;
-  text-align: left;
-  font-size: 12px;
-  clear: both;
-}
-  .embed_dialog .publish_options_group_left label {
-    clear: both;
-    width: 100px;
-    float: left;
-    display: block;
-  }
-  .embed_dialog form.publish_options {
-    display: block;
-  }
-  .embed_dialog .publish_options_group_left {
-    clear: both;
-    float: left;
-    width: 50%;
-    margin: 0;
-  }
-  .embed_dialog .publish_options_group_right {
-    float: left;
-    width: 35%;
-    margin: 0 0 0 15%;
-  }
-  .embed_dialog .publish_option {
-    min-height: 20px;
-    margin: 0 0 8px;
-  }
-  .embed_dialog .publish_option input[type=text] {
-    width: 30px;
-    padding: 1px 4px;
-    border: 1px solid #505050;
-    margin-left: 4px;
-  }
-    .embed_dialog .publish_option input[type=text].disabled {
-      background-color: #C0C0C0;
+    .embed_dialog .dimensions input {
+      margin: 0 5px;
+      width: 30px;
     }
-  .embed_dialog .publish_option .publish_option_size_label {
-    font-size: 10px;
-    color: #C0C0C0;
+
+  .embed_dialog textarea.snippet {
+    width: 484px;
+    height: 190px;
+    border: 1px solid #dedede;
+    font: 11px Menlo, Consolas, Monaco, Courier, monospace;
+    margin: 10px 0px;
+    padding: 8px;
+    resize: none;
   }
-.embed_dialog .publish_embed_code textarea {
-  width: 484px;
-  height: 190px;
-  border: 1px solid #dedede;
-  font: 11px Menlo, Consolas, Monaco, Courier, monospace;
-  margin: 10px 0px;
-  padding: 8px;
-  resize: none;
-}

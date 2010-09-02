@@ -15,7 +15,8 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     'input.click'                            : 'update',
     '.next.click'                            : 'nextStep',
     '.previous.click'                        : 'previousStep',
-    '.close.click'                           : 'confirm'
+    '.close.click'                           : 'confirm',
+    '.snippet.click'                         : 'selectSnippet'
   },
 
   totalSteps  : 3,
@@ -299,6 +300,10 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       this._next.setMode('not', 'enabled');
       this._previous.setMode('is', 'enabled');
     }
+  },
+
+  selectSnippet : function() {
+    $('.snippet', this.el).select();
   }
 
 });
