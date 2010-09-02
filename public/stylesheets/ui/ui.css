@@ -131,7 +131,7 @@ div.text_input {
       padding: 3px 4px;
       color: #999;
       background: #1e1e1e;
-      border: 2px solid #333;
+      border: 2px solid #393939;
       border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
     }
       div.text_input.dark.small input {
@@ -187,7 +187,7 @@ textarea.text_area {
   outline: 0;
 }
   textarea.text_area.dark {
-    border: 2px solid #333;
+    border: 2px solid #393939;
     color: #999;
     background: #1e1e1e;
   }

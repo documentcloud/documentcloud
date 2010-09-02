@@ -44,7 +44,6 @@
 }
   .embed_dialog .publish_info {
     font-size: 11px;
-    width: 450px;
     color: #ccc;
   }
   .embed_dialog .text_input,
@@ -85,7 +84,7 @@
 
   .embed_dialog textarea.snippet {
     width: 484px;
-    height: 190px;
+    height: 200px;
     border: 1px solid #dedede;
     font: 11px Menlo, Consolas, Monaco, Courier, monospace;
     margin: 10px 0px;

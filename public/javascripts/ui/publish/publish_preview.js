@@ -18,8 +18,8 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
   STEPS : [
     'Step One: Prepare Document for Publication',
-    'Step Two: Configure Document Viewer',
-    'Step Three: Get Embed Code'
+    'Step Two: Configure the Document Viewer',
+    'Step Three: Cut and Paste the Embed Code'
   ],
 
   constructor : function(doc) {
