@@ -180,7 +180,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     var last = this.currentStep == this.totalSteps;
 
     this._previous.setMode(first ? 'not' : 'is', 'enabled');
-    this._next.html(last ? 'Finish' : 'Next &raquo;');
+    this._next.html(last ? 'Finish' : 'Next &raquo;').setMode('is', 'enabled');
   },
 
   selectSnippet : function() {
