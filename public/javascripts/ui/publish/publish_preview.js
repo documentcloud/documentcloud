@@ -63,7 +63,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     _.bindAll(this, '_showAdvancedOptions');
     this.base({
       mode        : 'custom',
-      title       : this.displayTitle(),
+      title       : 'Step One: Prepare Document for Publication',
       information : ''
     });
     this.setMode('embed', 'dialog');

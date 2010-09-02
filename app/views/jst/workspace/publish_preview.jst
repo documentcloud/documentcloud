@@ -1,34 +1,46 @@
 <div class="publish_preview_container">
   
   <div class="publish_step publish_step_1 is_enabled">
-    <h2><span class="publish_prefix">Step 1:</span> Prepare your document</h2>
     
     <div class="publish_section">
-      <b>Related Article:</b> This is a link to the article which the embedded document corresponds to. This URL is displayed in the embedded document's sidebar, as well as linked to from the DocumentCloud workspace.
-      <form class="publish_prepare_form">
-        <label for="publish_prepare_related_article">Related Article URL: </label> <input type="text" name="related_article" value="<%= doc.get('related_article') %>" id="publish_prepare_related_article" />
-      </form>
+      <div class="text_input dark small">
+        <input type="text" name="related_article" value="<%= doc.get('related_article') %>" id="publish_prepare_related_article" />
+      </div>
+      <label for="publish_prepare_related_article">Related Article URL:</label>
+      <p class="publish_info">
+        If you already know the URL of the article that references this document, please
+        enter it now. A "Related Article" link will be displayed in the viewer.
+      </p>
+    </div>
+    
+    <div class="publish_section">
+      <div class="text_input dark small">
+        <input type="text" name="remote_url" value="<%= doc.get('remote_url') %>" id="publish_prepare_remote_url" />
+      </div>
+      <label for="publish_prepare_remote_url">Embed Page URL:</label>
+      <p class="publish_info">
+        Please enter the canonical URL of the page on which you plan to embed this
+        document. If specified, DocumentCloud will start sending traffic 
+        from search results for this document directly to the page.
+      </p>
     </div>
     
     <% if (!doc.isPublic()) { %>
       <div class="publish_section">
-        <b>Public:</b> In order for readers to view your embedded document, the document's access level must be set to public.
-        <form class="publish_prepare_form">
-          <input type="checkbox" name="access_level" id="publish_prepare_access_level" checked /> <label for="publish_prepare_access_level">Set access level to Public</label>
-        </form>
+        <input type="checkbox" name="access_level" id="publish_prepare_access_level" />
+        <label for="publish_prepare_access_level">Make Document Public:</label>
+        <p class="publish_info">
+          In order for readers to view the embedded document, 
+          its access level must be set to "public". If you leave it private, you'll
+          be able to test the embed as long as you're logged in to DocumentCloud 
+          &mdash; but remember to come back and set it "public" before you go live.
+        </p>
       </div>
     <% } %>
     
-    <div class="publish_section">
-      <b>Remote URL:</b> This is the URL that the document will be embedded on. In the workspace, double-clicking the document will link to this URL.
-      <form class="publish_prepare_form">
-        <label for="publish_prepare_remote_url">Remote URL: </label> <input type="text" name="remote_url" value="<%= doc.get('remote_url') %>" id="publish_prepare_remote_url" />
-      </form>
-    </div>
   </div>
   
   <div class="publish_step publish_step_2">
-    <h2><span class="publish_prefix">Step 2:</span> Configure embedded viewer options</h2>
   
     <div class="publish_options_container">
       <form class="publish_options publish_section">
@@ -108,9 +120,7 @@
   
   </div>
     
-  <div class="publish_step publish_step_3">
-    <h2><span class="publish_prefix">Step 3:</span> Use the embed code</h2>
-  
+  <div class="publish_step publish_step_3">  
     <div class="publish_embed_code publish_section"></div>
   </div>
   

@@ -40,16 +40,32 @@
 /* = Publish Step 1 = */
 /* ================== */
 
-.publish_step_1 form {
-  margin: 12px 0 0;
+.embed_dialog .publish_section {
+  margin-bottom: 20px;
 }
+  .embed_dialog .publish_info {
+    font-size: 11px;
+    width: 450px;
+    color: #999;
+  }
+  .embed_dialog .text_input,
+  .embed_dialog .publish_step_1 input[type="checkbox"] {
+    position: absolute;
+    left: 180px;
+  }
+    .embed_dialog .text_input {
+      right: 30px;
+    }
+    .embed_dialog .publish_step_1 input[type="checkbox"] {
+      margin-top: 7px;
+    }
+  .embed_dialog label {
+    display: inline-block;
+    font-weight: bold;
+    line-height: 25px;
+    margin-bottom: 10px;
+  }
 
-  .publish_step_1 input[type=text] {
-    width: 250px;
-  }
-  .publish_step_1 label {
-    margin: 0 4px 0 0;
-  }
 /* =================== */
 /* = Publish Preview = */
 /* =================== */
@@ -61,109 +77,87 @@
   clear: both;
 }
 
-.publish_preview_container h2 {
-  clear: both;
-  background-color: #404040;
-  padding: 5px;
-  margin: 12px 0;
-  font-size: 14px;
-  text-shadow: 1px 1px 0 #000000;
+.embed_dialog .publish_options_container {
 }
-
-.publish_preview_container h2 .publish_prefix {
-  color: #808080;
-  text-transform: uppercase;
-  font-size: 12px;
-  text-shadow: 0 1px 0 #000;
-}
-
-.publish_preview_container .publish_options_container {
-}
-  .publish_preview_container .publish_options_group_left label {
+  .embed_dialog .publish_options_group_left label {
     clear: both;
     width: 100px;
     float: left;
     display: block;
   }
-    .publish_preview_container .publish_options_group_left label.publish_option_label_inline {
+    .embed_dialog .publish_options_group_left label.publish_option_label_inline {
       float: none;
       width: auto;
       display: inline;
     }
-  .publish_preview_container form.publish_options {
+  .embed_dialog form.publish_options {
     display: block;
   }
-  .publish_preview_container .publish_options_group_left {
+  .embed_dialog .publish_options_group_left {
     clear: both;
     float: left;
     width: 50%;
     margin: 0;
   }
-  .publish_preview_container .publish_options_group_right {
+  .embed_dialog .publish_options_group_right {
     float: left;
     width: 35%;
     margin: 0 0 0 15%;
   }
-  .publish_preview_container .publish_option {
+  .embed_dialog .publish_option {
     min-height: 20px;
     margin: 0 0 8px;
   }
-  .publish_preview_container .publish_option label.publish_option_label {
+  .embed_dialog .publish_option label.publish_option_label {
     width: 100px;
     float: left;
     text-align: right;
   }
-  .publish_preview_container .publish_option .publish_option_inputs {
+  .embed_dialog .publish_option .publish_option_inputs {
     margin-left: 106px;
   }
-    .publish_preview_container .publish_option .publish_option_inputs input[type=radio],
-    .publish_preview_container .publish_option .publish_option_inputs input[type=checkbox] {
+    .embed_dialog .publish_option .publish_option_inputs input[type=radio],
+    .embed_dialog .publish_option .publish_option_inputs input[type=checkbox] {
       float: left;
       margin: 2px 4px;
       float: left;
     }
-    .publish_preview_container .publish_option .publish_option_inputs label {
+    .embed_dialog .publish_option .publish_option_inputs label {
       margin-left: 26px;
       display: block;
     }
-    .publish_preview_container .publish_option_dimensions {
+    .embed_dialog .publish_option_dimensions {
       margin-left: 26px;
     }
-      .publish_preview_container .publish_option .publish_option_dimensions label {
+      .embed_dialog .publish_option .publish_option_dimensions label {
         width: 46px;
         float: left;
         display: block;
         margin-left: 0;
       }
-  .publish_preview_container .publish_option input[type=text] {
+  .embed_dialog .publish_option input[type=text] {
     width: 30px;
     padding: 1px 4px;
     border: 1px solid #505050;
     margin-left: 4px;
   }
-    .publish_preview_container .publish_option input[type=text].disabled {
+    .embed_dialog .publish_option input[type=text].disabled {
       background-color: #C0C0C0;
     }
-  .publish_preview_container .publish_option .publish_option_size_label {
+  .embed_dialog .publish_option .publish_option_size_label {
     font-size: 10px;
     color: #C0C0C0;
   }
-.publish_preview_container .publish_section {
-  clear: both;
-  padding: 15px;
-  margin: 12px 0;
-  background-color: #1C1C1C;
+.embed_dialog .publish_embed_code textarea {
+  width: 100%;
+  height: 120px;
 }
-  .publish_preview_container .publish_embed_code textarea {
-    width: 100%;
-    height: 120px;
-  }
 
-.publish_preview_container .publish_options_group_advanced {
+.embed_dialog .publish_options_group_advanced {
   display: none;
 }
 
-.publish_preview_container .publish_advanced {
+.embed_dialog .publish_advanced {
   text-transform: uppercase;
   font-size: 12px;
   color: #A0A0A0;
@@ -172,6 +166,6 @@
   margin-left: 10px;
   background: transparent url(/images/embed/icons/bullet_arrow_right.png) no-repeat 0 4px;
 }
-.publish_preview_container .publish_advanced.active {
+.embed_dialog .publish_advanced.active {
   background: transparent url(/images/embed/icons/bullet_arrow_down.png) no-repeat 0 3px;
 }
