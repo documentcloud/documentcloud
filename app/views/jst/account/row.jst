@@ -5,8 +5,8 @@
   <img class="avatar" src="<%= account.DEFAULT_AVATAR %>" width="<%= size %>" height="<%= size %>" />
 </td>
 <td class="name">
-  <span class="display">
-    <%= Inflector.truncate(account.fullName(true), 25) %>&nbsp;<span class="pending_notification">(pending)</span>
+  <span class="display selectable_text">
+    <%= Inflector.truncate(account.fullName(true) || '', 25) %>&nbsp;<span class="pending_notification">(pending)</span>
   </span>
   <div class="edit name_wrapper">
     <div class="text_input dark small">
@@ -18,8 +18,8 @@
   </div>
 </td>
 <td class="email">
-  <span class="display">
-    <%= Inflector.truncate(email, 25) %>
+  <span class="display selectable_text">
+    <%= Inflector.truncate(email || '', 25) %>
   </span>
   <div class="text_input edit dark small">
     <input name="email" type="text" placeholder="email" value="<%= email %>" />
