@@ -73,12 +73,14 @@ dc.ui.Dialog = dc.View.extend({
     this.close();
   },
 
-  info : function(message) {
-    this._information.removeClass('error').text(message).show().delay(3000).fadeOut();
+  info : function(message, leaveOpen) {
+    this._information.removeClass('error').text(message).show();
+    if (!leaveOpen) this._information.delay(3000).fadeOut();
   },
 
-  error : function(message) {
-    this._information.addClass('error').text(message).show().delay(3000).fadeOut();
+  error : function(message, leaveOpen) {
+    this._information.addClass('error').text(message).show();
+    if (!leaveOpen) this._information.delay(3000).fadeOut();
   },
 
   confirm : function() {

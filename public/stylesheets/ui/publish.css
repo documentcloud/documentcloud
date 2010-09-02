@@ -51,7 +51,7 @@
   .embed_dialog .text_input,
   .embed_dialog .publish_step_1 input[type="checkbox"] {
     position: absolute;
-    left: 180px;
+    left: 175px;
   }
     .embed_dialog .text_input {
       right: 30px;
@@ -75,9 +75,6 @@
   text-align: left;
   font-size: 12px;
   clear: both;
-}
-
-.embed_dialog .publish_options_container {
 }
   .embed_dialog .publish_options_group_left label {
     clear: both;

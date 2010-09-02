@@ -21,6 +21,12 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
   totalSteps  : 3,
 
+  STEPS : [
+    'Step One: Prepare Document for Publication',
+    'Step Two: Configure Document Viewer',
+    'Step Three: Get Embed Code'
+  ],
+
   VIEWER_OPTIONS : {
     DEFAULT : {
       zoom             : 700,
@@ -61,11 +67,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     this.fixedOptions      = _.clone(this.VIEWER_OPTIONS.FIXED);
     this.fullscreenOptions.container = this.fixedOptions.container = '#' + this.embedDoc.canonicalId();
     _.bindAll(this, '_showAdvancedOptions');
-    this.base({
-      mode        : 'custom',
-      title       : 'Step One: Prepare Document for Publication',
-      information : ''
-    });
+    this.base({mode : 'custom', title : this.STEPS[0]});
     this.setMode('embed', 'dialog');
     this.render();
   },
@@ -303,12 +305,10 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
 
   setStepButtons : function() {
-
-
     $('.publish_step', this.el).setMode('not', 'enabled');
     $('.publish_step_'+this.currentStep, this.el).setMode('is', 'enabled');
-
-    $('.information', this.el).text('Step ' + this.currentStep + ' of ' + this.totalSteps);
+    this.title(this.STEPS[this.currentStep - 1]);
+    this.info('Step ' + this.currentStep + ' of ' + this.totalSteps, true);
 
     if (this.currentStep == 1) {
       this._next.setMode('is', 'enabled');
