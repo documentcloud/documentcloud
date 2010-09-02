@@ -38,10 +38,6 @@
     margin-left: 8px;
   }
 
-/* ================== */
-/* = Publish Step 1 = */
-/* ================== */
-
 .embed_dialog .publish_section {
   position: relative;
   margin-bottom: 20px;
@@ -49,14 +45,8 @@
   .embed_dialog .publish_info {
     font-size: 11px;
     width: 450px;
-    color: #999;
+    color: #ccc;
   }
-    .embed_dialog .publish_info a {
-      color: #ccc;
-    }
-      .embed_dialog .publish_info a:hover {
-        text-decoration: underline;
-      }
   .embed_dialog .text_input,
   .embed_dialog input[type="checkbox"],
   .embed_dialog select {
@@ -79,10 +69,14 @@
     margin-bottom: 10px;
   }
   .embed_dialog .dimensions {
+    font-size: 11px;
     position: absolute;
-    right: 5px;
+    left: 250px;
     top: 1px;
   }
+    .embed_dialog .dimensions label {
+      font-weight: normal;
+    }
     .embed_dialog .dimensions input {
       margin: 0 5px;
       width: 30px;

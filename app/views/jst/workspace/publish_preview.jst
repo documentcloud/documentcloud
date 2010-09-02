@@ -42,9 +42,9 @@
   <div class="publish_step publish_step_2">
 
     <div class="publish_section">
-      <label>Viewer size:</label>
+      <label>Viewer Size:</label>
       <select name="viewer_size">
-        <option value="full" selected="selected">Full Screen</option>
+        <option value="full" selected="selected">Full Page</option>
         <option value="fixed">Fixed Size</option>
       </select>
       <span class="dimensions">
@@ -53,17 +53,31 @@
         &nbsp;&nbsp;
         <label for="publish_option_height">Height: </label>
         <input id="publish_option_height" type="text" name="height" value="" />px
-      </span> 
+      </span>
+      <p class="publish_info interface">
+        Depending on where you're planning to place the document on your website,
+        choose either a "full page" or "fixed size" document viewer. Full page viewers
+        require a template with a fluid-width layout. Fixed size viewers can be
+        embedded within an article or blog post.
+      </p> 
     </div> 
       
     <div class="publish_section">    
       <input id="publish_option_sidebar" type="checkbox" name="showSidebar" checked />
-      <label for="publish_option_sidebar">Show sidebar</label>
+      <label for="publish_option_sidebar">Show the Sidebar:</label>
+      <p class="publish_info interface">
+        If you're using a fixed size viewer, and space is limited 
+        (less than 800 pixels wide), you probably want to hide the sidebar by
+        unchecking this box.
+      </p>
     </div>
     
-    
     <div class="publish_section">
-      <a href="#" class="publish_preview_new_window_link">Preview the document viewer &raquo;</a>
+      <p class="publish_info interface">
+        Before continuing, please take a moment to
+        <span class="text_link preview">preview the document viewer</span>, 
+        and make sure that the layout is correct.
+      </p>
     </div>
 
   </div>

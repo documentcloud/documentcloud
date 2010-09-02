@@ -1,22 +1,22 @@
 dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
   callbacks : {
-    'input[name=zoom_specific].focus'        : '_selectZoomSpecific',
-    '#publish_option_zoom_specific.click'    : '_setZoom',
-    'input[name=zoom_specific].click'        : '_setZoom',
-    'input[name=viewer_size].change'         : '_selectViewerSize',
-    'input[name=width].focus'                : '_selectViewerFixed',
-    'input[name=height].focus'               : '_selectViewerFixed',
-    '.publish_preview_new_window_link.click' : 'previewEmbedNewWindow',
-    'input.change'                           : 'update',
-    'select.change'                          : 'update',
-    'input.keyup'                            : 'update',
-    'input.focus'                            : 'update',
-    'input.click'                            : 'update',
-    '.next.click'                            : 'nextStep',
-    '.previous.click'                        : 'previousStep',
-    '.close.click'                           : 'confirm',
-    '.snippet.click'                         : 'selectSnippet'
+    'input[name=zoom_specific].focus'     : '_selectZoomSpecific',
+    '#publish_option_zoom_specific.click' : '_setZoom',
+    'input[name=zoom_specific].click'     : '_setZoom',
+    'input[name=viewer_size].change'      : '_selectViewerSize',
+    'input[name=width].focus'             : '_selectViewerFixed',
+    'input[name=height].focus'            : '_selectViewerFixed',
+    '.preview.click'                      : 'preview',
+    'input.change'                        : 'update',
+    'select.change'                       : 'update',
+    'input.keyup'                         : 'update',
+    'input.focus'                         : 'update',
+    'input.click'                         : 'update',
+    '.next.click'                         : 'nextStep',
+    '.previous.click'                     : 'previousStep',
+    '.close.click'                        : 'close',
+    '.snippet.click'                      : 'selectSnippet'
   },
 
   totalSteps  : 3,
@@ -78,7 +78,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     this.update();
     this._next = $('.next', this.el);
     this._previous = $('.previous', this.el);
-    this.setStepButtons();
+    this.setStep();
     this.center();
     return this;
   },
@@ -87,7 +87,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     return 'Embed "' + Inflector.truncate(this.embedDoc.get('title'), 40) + '"';
   },
 
-  previewEmbedNewWindow : function(e) {
+  preview : function() {
     var options = encodeURIComponent(JSON.stringify(this.embedOptions));
     var url = '/documents/' + this.embedDoc.canonicalId() + '/preview?options=' + options;
     window.open(url);
@@ -275,31 +275,28 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       this.saveUpdatedAttributes();
       return;
     }
-    if (this.currentStep < this.totalSteps) this.currentStep += 1;
-    this.setStepButtons();
+    if (this.currentStep >= this.totalSteps) return this.close();
+    this.currentStep += 1;
+    this.setStep();
   },
 
   previousStep : function() {
     if (this.currentStep > 1) this.currentStep -= 1;
-    this.setStepButtons();
+    this.setStep();
   },
 
-  setStepButtons : function() {
+  setStep : function() {
     $('.publish_step', this.el).setMode('not', 'enabled');
     $('.publish_step_'+this.currentStep, this.el).setMode('is', 'enabled');
+
     this.title(this.STEPS[this.currentStep - 1]);
     this.info('Step ' + this.currentStep + ' of ' + this.totalSteps, true);
 
-    if (this.currentStep == 1) {
-      this._next.setMode('is', 'enabled');
-      this._previous.setMode('not', 'enabled');
-    } else if (1 < this.currentStep && this.currentStep < this.totalSteps) {
-      this._next.setMode('is', 'enabled');
-      this._previous.setMode('is', 'enabled');
-    } else if (this.currentStep == this.totalSteps) {
-      this._next.setMode('not', 'enabled');
-      this._previous.setMode('is', 'enabled');
-    }
+    var first = this.currentStep == 1;
+    var last = this.currentStep == this.totalSteps;
+
+    this._previous.setMode(first ? 'not' : 'is', 'enabled');
+    this._next.html(last ? 'Finish' : 'Next &raquo;');
   },
 
   selectSnippet : function() {
