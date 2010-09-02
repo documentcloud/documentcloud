@@ -1,12 +1,7 @@
 dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
   callbacks : {
-    'input[name=zoom_specific].focus'     : '_selectZoomSpecific',
-    '#publish_option_zoom_specific.click' : '_setZoom',
-    'input[name=zoom_specific].click'     : '_setZoom',
     'input[name=viewer_size].change'      : '_selectViewerSize',
-    'input[name=width].focus'             : '_selectViewerFixed',
-    'input[name=height].focus'            : '_selectViewerFixed',
     '.preview.click'                      : 'preview',
     'input.change'                        : 'update',
     'select.change'                       : 'update',
@@ -27,33 +22,9 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     'Step Three: Get Embed Code'
   ],
 
-  VIEWER_OPTIONS : {
-    DEFAULT : {
-      width            : null,
-      height           : null,
-      zoom             : 700,
-      sidebar          : true
-    },
-    FIXED : {
-      width            : 600,
-      height           : 500,
-      zoom             : 'auto',
-      sidebar          : false
-    },
-    FULLSCREEN : {
-      width            : 600,
-      height           : 500,
-      zoom             : 700,
-      sidebar          : true
-    }
-  },
-
   constructor : function(doc) {
     this.embedDoc = doc;
     this.currentStep = 1;
-    this.fullscreenOptions = _.clone(this.VIEWER_OPTIONS.FULLSCREEN);
-    this.fixedOptions      = _.clone(this.VIEWER_OPTIONS.FIXED);
-    this.fullscreenOptions.container = this.fixedOptions.container = '#' + this.embedDoc.canonicalId();
     this.base({mode : 'custom', title : this.STEPS[0]});
     this.setMode('embed', 'dialog');
     this.render();
@@ -83,50 +54,20 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
 
   update : function() {
+    this._toggleDimensions();
     this._savePreferences();
     this._renderEmbedCode();
-    this._setWidthHeightInputs();
     this._enableTextTabOption();
   },
 
   _savePreferences : function() {
-    var userOpts = $('form.publish_options', this.el).serializeJSON();
-    dc.app.preferences.set({'embed_options': JSON.stringify(userOpts)});
+    // var userOpts = $('form.publish_options', this.el).serializeJSON();
+    // dc.app.preferences.set({'embed_options': JSON.stringify(userOpts)});
   },
 
   _loadPreferences : function() {
-    var userOpts = JSON.parse(dc.app.preferences.get('embed_options')) || {};
-
-    this.setOptions(userOpts);
-  },
-
-  setOptions : function(opts) {
-    var $form = $('form.publish_options', this.el);
-    var $formElements = $('input, select', $form);
-
-    $formElements.each(function(i) {
-      var $this = $(this);
-      var inputName = $this.attr('name');
-      if (inputName in opts) {
-        if ($this.is('input[type=radio]')) {
-          if (inputName == 'zoom' && opts[inputName] != 'auto' && $this.val() == 'specific') {
-           $this.attr('checked', true);
-          } else if ($this.val() == opts[inputName]) {
-            $this.attr('checked', true);
-          }
-        } else if ($this.is('input[type=checkbox]')) {
-          $this.attr('checked', opts[$this.attr('name')]);
-        } else {
-          $this.val(opts[$this.attr('name')]);
-        }
-      } else {
-        if ($this.is('input[type=checkbox]')) {
-          $this.removeAttr('checked');
-        } else if ($this.is('input[type=text]')) {
-          $this.val('');
-        }
-      }
-    });
+    // var userOpts = JSON.parse(dc.app.preferences.get('embed_options')) || {};
+    // this.setOptions(userOpts);
   },
 
   _renderEmbedCode : function() {
@@ -158,15 +99,6 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       delete options['width'];
       delete options['height'];
     }
-    delete options['viewer_size'];
-    delete options['zoom_specific'];
-
-    // Remove options that are the same as defaults
-    _.each(options, _.bind(function(v, k) {
-      if (typeof v == 'boolean' && v == this.VIEWER_OPTIONS.DEFAULT[k]) {
-        delete options[k];
-      }
-    }, this));
 
     var renderedOptions = _.map(options, function(value, key) {
       return key + ": " + (typeof value == 'string' ? "\""+value+"\"" : value);
@@ -179,7 +111,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     this.embedOptions = options;
   },
 
-  _setWidthHeightInputs : function() {
+  _toggleDimensions : function() {
     var view = $('select[name=viewer_size]', this.el);
     $('.dimensions', this.el).toggle(view.val() == 'fixed');
   },
@@ -193,34 +125,8 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     }
   },
 
-  _selectZoomSpecific : function() {
-    $('input#publish_option_zoom_specific', this.el).attr('checked', true);
-  },
-
-  _setZoom : function() {
-    var el = $('input[name=zoom_specific]', this.el);
-    if (!el.val()) el.val(this.fullscreenOptions['zoom']);
-  },
-
-  _selectViewerFixed : function() {
-    var $viewerFixed = $('input#publish_option_viewer_size_fixed', this.el);
-    if (!$viewerFixed.attr('checked')) {
-      $viewerFixed.attr('checked', true);
-      this._selectViewerSize();
-    }
-  },
-
   _selectViewerSize : function() {
     var viewer = $('input[name=viewer_size]:checked').val();
-
-    if (viewer == 'fixed') {
-      this.setOptions(this.fixedOptions);
-      $('input[name=zoom_specific]', this.el).val(this.fullscreenOptions['zoom']);
-    } else if (viewer == 'full') {
-      this.setOptions(this.fullscreenOptions);
-      this._selectZoomSpecific();
-      this._setZoom();
-    }
   },
 
   saveUpdatedAttributes : function() {
