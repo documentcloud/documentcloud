@@ -135,6 +135,7 @@ div.text_input {
       border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
     }
       div.text_input.dark.small input {
+        border-color: #444;
         font-size: 11px; line-height: 14px;
         height: 14px;
         padding: 4px 4px;
@@ -192,13 +193,16 @@ textarea.text_area {
     background: #1e1e1e;
   }
     textarea.text_area.dark:focus {
-      border-color: #fff;
+      border-color: #fff !important;
       background: #fff;
       color: #333;
     }
   textarea.text_area.small {
     border-width: 1px;
   }
+    textarea.text_area.dark.small {
+      border-color: #444;
+    }
 
 /*----------------------------- Mini Buttons ---------------------------------*/
 .minibutton {
