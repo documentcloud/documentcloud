@@ -7,7 +7,7 @@
         <input type="text" name="related_article" value="<%= doc.get('related_article') %>" id="publish_prepare_related_article" />
       </div>
       <label for="publish_prepare_related_article">Related Article URL:</label>
-      <p class="publish_info">
+      <p class="publish_info interface">
         If you already know the URL of the article that references this document, please
         enter it now. A "Related Article" link will be displayed in the viewer.
       </p>
@@ -18,7 +18,7 @@
         <input type="text" name="remote_url" value="<%= doc.get('remote_url') %>" id="publish_prepare_remote_url" />
       </div>
       <label for="publish_prepare_remote_url">Embed Page URL:</label>
-      <p class="publish_info">
+      <p class="publish_info interface">
         Please enter the canonical URL of the page on which you plan to embed this
         document. If specified, DocumentCloud will start sending traffic
         from search results for this document directly to the page.
@@ -29,7 +29,7 @@
       <% var checked = doc.isPublic() ? 'checked="checked"' : '' ; %>
       <input type="checkbox" name="access_level" id="publish_prepare_access_level" <%= checked %> />
       <label for="publish_prepare_access_level">Document is Public:</label>
-      <p class="publish_info">
+      <p class="publish_info interface">
         In order for readers to view the embedded document,
         its access level must be set to "public". If you leave it private, you'll
         be able to test the embed as long as you're logged in to DocumentCloud
