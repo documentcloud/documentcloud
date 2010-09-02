@@ -57,7 +57,6 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     this._toggleDimensions();
     this._savePreferences();
     this._renderEmbedCode();
-    this._enableTextTabOption();
   },
 
   _savePreferences : function() {
@@ -114,15 +113,6 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   _toggleDimensions : function() {
     var view = $('select[name=viewer_size]', this.el);
     $('.dimensions', this.el).toggle(view.val() == 'fixed');
-  },
-
-  _enableTextTabOption : function() {
-    var $texttab = $('input[name=showText]', this.el);
-    if ($('input[name=showHeader]', this.el).attr('checked')) {
-      $texttab.removeClass('disabled').removeAttr('disabled');
-    } else {
-      $texttab.addClass('disabled').attr('disabled', true);
-    }
   },
 
   _selectViewerSize : function() {
