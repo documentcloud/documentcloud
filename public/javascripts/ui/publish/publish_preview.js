@@ -29,34 +29,22 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
   VIEWER_OPTIONS : {
     DEFAULT : {
-      zoom             : 700,
       width            : null,
       height           : null,
-      showSidebar      : true,
-      showText         : true,
-      showSearch       : true,
-      showHeader       : true,
-      enableUrlChanges : true
+      zoom             : 700,
+      sidebar          : true
     },
     FIXED : {
-      viewer_size      : 'fixed',
       width            : 600,
       height           : 500,
       zoom             : 'auto',
-      showSidebar      : false,
-      showText         : true,
-      showHeader       : true,
-      enableUrlChanges : false
+      sidebar          : false
     },
     FULLSCREEN : {
-      viewer_size      : 'full',
       width            : 600,
       height           : 500,
       zoom             : 700,
-      showSidebar      : true,
-      showText         : true,
-      showHeader       : true,
-      enableUrlChanges : true
+      sidebar          : true
     }
   },
 
