@@ -71,6 +71,9 @@
     line-height: 25px;
     margin-bottom: 10px;
   }
+  .embed_dialog .dimensions {
+    margin-left: 20px;
+  }
 
 /* =================== */
 /* = Publish Preview = */
@@ -88,11 +91,6 @@
     float: left;
     display: block;
   }
-    .embed_dialog .publish_options_group_left label.publish_option_label_inline {
-      float: none;
-      width: auto;
-      display: inline;
-    }
   .embed_dialog form.publish_options {
     display: block;
   }
@@ -111,33 +109,6 @@
     min-height: 20px;
     margin: 0 0 8px;
   }
-  .embed_dialog .publish_option label.publish_option_label {
-    width: 100px;
-    float: left;
-    text-align: right;
-  }
-  .embed_dialog .publish_option .publish_option_inputs {
-    margin-left: 106px;
-  }
-    .embed_dialog .publish_option .publish_option_inputs input[type=radio],
-    .embed_dialog .publish_option .publish_option_inputs input[type=checkbox] {
-      float: left;
-      margin: 2px 4px;
-      float: left;
-    }
-    .embed_dialog .publish_option .publish_option_inputs label {
-      margin-left: 26px;
-      display: block;
-    }
-    .embed_dialog .publish_option_dimensions {
-      margin-left: 26px;
-    }
-      .embed_dialog .publish_option .publish_option_dimensions label {
-        width: 46px;
-        float: left;
-        display: block;
-        margin-left: 0;
-      }
   .embed_dialog .publish_option input[type=text] {
     width: 30px;
     padding: 1px 4px;
@@ -159,21 +130,4 @@
   margin: 10px 0px;
   padding: 8px;
   resize: none;
-}
-
-.embed_dialog .publish_options_group_advanced {
-  display: none;
-}
-
-.embed_dialog .publish_advanced {
-  text-transform: uppercase;
-  font-size: 12px;
-  color: #A0A0A0;
-  cursor: pointer;
-  padding: 2px 0 2px 16px;
-  margin-left: 10px;
-  background: transparent url(/images/embed/icons/bullet_arrow_right.png) no-repeat 0 4px;
-}
-.embed_dialog .publish_advanced.active {
-  background: transparent url(/images/embed/icons/bullet_arrow_down.png) no-repeat 0 3px;
 }

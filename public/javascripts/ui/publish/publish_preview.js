@@ -8,7 +8,6 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     'input[name=width].focus'                : '_selectViewerFixed',
     'input[name=height].focus'               : '_selectViewerFixed',
     '.publish_preview_new_window_link.click' : 'previewEmbedNewWindow',
-    '.publish_advanced.click'                : '_showAdvancedOptions',
     'input.change'                           : 'update',
     'select.change'                          : 'update',
     'input.keyup'                            : 'update',
@@ -41,7 +40,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     FIXED : {
       viewer_size      : 'fixed',
       width            : 600,
-      height           : 800,
+      height           : 500,
       zoom             : 'auto',
       showSidebar      : false,
       showText         : true,
@@ -51,7 +50,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     FULLSCREEN : {
       viewer_size      : 'full',
       width            : 600,
-      height           : 800,
+      height           : 500,
       zoom             : 700,
       showSidebar      : true,
       showText         : true,
@@ -66,7 +65,6 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     this.fullscreenOptions = _.clone(this.VIEWER_OPTIONS.FULLSCREEN);
     this.fixedOptions      = _.clone(this.VIEWER_OPTIONS.FIXED);
     this.fullscreenOptions.container = this.fixedOptions.container = '#' + this.embedDoc.canonicalId();
-    _.bindAll(this, '_showAdvancedOptions');
     this.base({mode : 'custom', title : this.STEPS[0]});
     this.setMode('embed', 'dialog');
     this.render();
@@ -193,14 +191,8 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
 
   _setWidthHeightInputs : function() {
-    var $view = $('select[name=viewer_size]', this.el);
-    var $dimensions = $('input[name=width],input[name=height]', this.el);
-
-    if ($view.val() == 'full') {
-      $dimensions.addClass('disabled').attr('disabled', true);
-    } else {
-      $dimensions.removeClass('disabled').removeAttr('disabled');
-    }
+    var view = $('select[name=viewer_size]', this.el);
+    $('.dimensions', this.el).toggle(view.val() == 'fixed');
   },
 
   _enableTextTabOption : function() {
@@ -239,19 +231,6 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       this.setOptions(this.fullscreenOptions);
       this._selectZoomSpecific();
       this._setZoom();
-    }
-  },
-
-  _showAdvancedOptions : function() {
-    var $advancedLink = $('.publish_advanced', this.el);
-    var $advancedOptions = $('.publish_options_group_advanced', this.el);
-
-    if ($advancedLink.hasClass('active')) {
-      $advancedLink.removeClass('active');
-      $advancedOptions.slideUp(250);
-    } else {
-      $advancedLink.addClass('active');
-      $advancedOptions.slideDown(250);
     }
   },
 

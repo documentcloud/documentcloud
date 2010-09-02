@@ -3,7 +3,7 @@
 </div>
 
 <textarea class="snippet">
-&lt;div id="document-viewer"&gt;&lt;/div&gt;&#10;
+&lt;div id="<%= doc.canonicalId() %>"&gt;&lt;/div&gt;&#10;
 &lt;script src="http://s3.documentcloud.org/viewer/loader.js"&gt;&lt;/script&gt;&#10;
 &lt;script&gt;&#10;
   DV.load('<%= doc.get("document_viewer_js") %>', {&#10;
@@ -13,7 +13,7 @@
 </textarea>
 
 <div class="publish_info interface">
-  To see an example of an embedded viewer in a full-page template, 
+  To see an example of an embedded viewer in a full-page template,
   <a href="http://www.pbs.org/newshour/rundown/documents/mark-twain-concerning-the-interview.html" target="_blank">
     see this essay on PBS NewsHour
   </a>. To see a an example of a fixed-size embed,
