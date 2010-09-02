@@ -7,7 +7,7 @@
         <input type="text" name="related_article" value="<%= doc.get('related_article') %>" id="publish_prepare_related_article" />
       </div>
       <label for="publish_prepare_related_article">Related Article URL:</label>
-      <p class="publish_info interface">
+      <p class="publish_info selectable_text interface">
         If you already know the URL of the article that references this document, please
         enter it now. A "Related Article" link will be displayed in the viewer.
       </p>
@@ -18,7 +18,7 @@
         <input type="text" name="remote_url" value="<%= doc.get('remote_url') %>" id="publish_prepare_remote_url" />
       </div>
       <label for="publish_prepare_remote_url">Document URL:</label>
-      <p class="publish_info interface">
+      <p class="publish_info selectable_text interface">
         Please enter the canonical URL of the page on which you plan to embed this
         document. If specified, DocumentCloud will start sending traffic
         from search results for this document directly to the page.
@@ -29,7 +29,7 @@
       <% var checked = doc.isPublic() ? 'checked="checked"' : '' ; %>
       <input type="checkbox" name="access_level" id="publish_prepare_access_level" <%= checked %> />
       <label for="publish_prepare_access_level">Document is Public:</label>
-      <p class="publish_info interface">
+      <p class="publish_info selectable_text interface">
         In order for readers to view the embedded document,
         it must first be made public. If you leave it private, you'll
         be able to test the embed as long as you're logged in to DocumentCloud
@@ -54,7 +54,7 @@
         <label for="publish_option_height">Height: </label>
         <input id="publish_option_height" type="text" name="height" value="" />px
       </span>
-      <p class="publish_info interface">
+      <p class="publish_info selectable_text interface">
         If you're planning to embed your document in a fluid-width template, 
         <a class="text_link" href="http://www.propublica.org/documents/item/memo-on-goldman-sachs-timberwolf-cdo-nov.-10-2006" target="_blank">like this one</a>,
         choose a "full page" viewer. Choose a "fixed size" viewer if you're going
@@ -65,7 +65,7 @@
     <div class="publish_section">    
       <input id="publish_option_sidebar" type="checkbox" name="showSidebar" checked />
       <label for="publish_option_sidebar">Show the Sidebar:</label>
-      <p class="publish_info interface">
+      <p class="publish_info selectable_text interface">
         If you're using a fixed size viewer, and space is limited 
         (less than 800 pixels wide), you probably want to uncheck this box
         and hide the sidebar to save space.
@@ -73,7 +73,7 @@
     </div>
     
     <div class="publish_section">
-      <p class="publish_info interface">
+      <p class="publish_info selectable_text interface">
         Before continuing, please take a moment to
         <span class="text_link preview">preview the document viewer</span>, 
         and make sure that the layout is correct.
