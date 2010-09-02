@@ -105,13 +105,9 @@ dc.ui.Toolbar = dc.View.extend({
 
   openPublishTab : function() {
     if (dc.app.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.');
-
     var docs = Documents.selected();
-    if (docs.length == 1) {
-      dc.app.publishPreview = new dc.ui.PublishPreview(docs[0]);
-    } else {
-      dc.ui.Dialog.alert('Please select a single document to embed.');
-    }
+    if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document to embed.');
+    dc.app.publishPreview = new dc.ui.PublishPreview(docs[0]);
   },
 
   requestDownloadViewers : function() {

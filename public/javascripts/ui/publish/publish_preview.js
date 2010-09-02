@@ -14,7 +14,6 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     'input.keyup'                            : 'update',
     'input.focus'                            : 'update',
     'input.click'                            : 'update',
-
     '.next.click'                            : 'nextStep',
     '.previous.click'                        : 'previousStep',
     '.close.click'                           : 'confirm'
@@ -61,6 +60,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     this.fullscreenOptions = _.clone(this.VIEWER_OPTIONS.FULLSCREEN);
     this.fixedOptions      = _.clone(this.VIEWER_OPTIONS.FIXED);
     this.fullscreenOptions.container = this.fixedOptions.container = '#' + this.embedDoc.canonicalId();
+    _.bindAll(this, '_showAdvancedOptions');
     this.base({
       mode        : 'custom',
       title       : this.displayTitle(),
@@ -72,16 +72,13 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
   render : function() {
     this.base();
-    $('.custom', this.el).html(JST['workspace/publish_preview']({
-      'doc': this.embedDoc
-    }));
-    if (dc.app.preferences.get('embed_options')) {
-      this._loadPreferences();
-    }
+    $('.custom', this.el).html(JST['workspace/publish_preview']({doc: this.embedDoc}));
+    if (dc.app.preferences.get('embed_options')) this._loadPreferences();
     this.update();
-    this.center();
+    this._next = $('.next', this.el);
+    this._previous = $('.previous', this.el);
     this.setStepButtons();
-    _.bindAll(this, '_showAdvancedOptions');
+    this.center();
     return this;
   },
 
@@ -90,18 +87,10 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
 
   previewEmbedNewWindow : function(e) {
-    e.preventDefault();
-
-    var previewUrl = [
-      '/documents/',
-      this.embedDoc.id,
-      '-',
-      this.embedDoc.get('slug'),
-      '/preview/?options=',
-      encodeURIComponent(JSON.stringify(this.embedOptions))
-    ].join('');
-
-    window.open(previewUrl);
+    var options = encodeURIComponent(JSON.stringify(this.embedOptions));
+    var url = '/documents/' + this.embedDoc.canonicalId() + '/preview?options=' + options;
+    window.open(url);
+    return false;
   },
 
   update : function() {
@@ -282,13 +271,12 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     }
 
     if (!_.isEmpty(changes)) {
-      var $next = $('.next', this.el);
-      $next.text('Saving...');
-      $next.setMode('not', 'enabled');
+      this._next.text('Saving...');
+      this._next.setMode('not', 'enabled');
 
       var options = {
         success: _.bind(function() {
-          $next.text('Next Step');
+          this._next.text('Next Step');
           dc.ui.spinner.hide();
           this.nextStep(null, true);
         }, this)
@@ -315,8 +303,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
 
   setStepButtons : function() {
-    var $next = $('.next', this.el);
-    var $previous = $('.previous', this.el);
+
 
     $('.publish_step', this.el).setMode('not', 'enabled');
     $('.publish_step_'+this.currentStep, this.el).setMode('is', 'enabled');
@@ -324,16 +311,15 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     $('.information', this.el).text('Step ' + this.currentStep + ' of ' + this.totalSteps);
 
     if (this.currentStep == 1) {
-      $next.setMode('is', 'enabled');
-      $previous.setMode('not', 'enabled');
+      this._next.setMode('is', 'enabled');
+      this._previous.setMode('not', 'enabled');
     } else if (1 < this.currentStep && this.currentStep < this.totalSteps) {
-      $next.setMode('is', 'enabled');
-      $previous.setMode('is', 'enabled');
+      this._next.setMode('is', 'enabled');
+      this._previous.setMode('is', 'enabled');
     } else if (this.currentStep == this.totalSteps) {
-      $next.setMode('not', 'enabled');
-      $previous.setMode('is', 'enabled');
+      this._next.setMode('not', 'enabled');
+      this._previous.setMode('is', 'enabled');
     }
-    this.center();
   }
 
 });

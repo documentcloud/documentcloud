@@ -2,41 +2,39 @@
 /* = Publish Dialog = */
 /* ================== */
 
-.embed_dialog .title {
+.embed_dialog {
+  width: 500px;
+  height: 400px;
 }
-
 
 .publish_step {
   display: none;
   width: 500px;
 }
-
-.publish_step.not_enabled {
-  display: none;
-}
-
-.publish_step.is_enabled {
-  display: block;
-}
+  .publish_step.not_enabled {
+    display: none;
+  }
+  .publish_step.is_enabled {
+    display: block;
+  }
 
 .embed_dialog .controls {
   display: none;
 }
 
 .embed_dialog .publish_wizard_controls {
-  margin: 24px 0 0 0;
+  position: absolute;
+  bottom: 30px;
+  width: 500px;
 }
-
-.embed_dialog .publish_wizard_controls .cancel {
-  float: left;
-}
-
-.embed_dialog .publish_wizard_controls .next,
-.embed_dialog .publish_wizard_controls .previous {
-  float: right;
-  margin-left: 12px;
-  width: 85px;
-}
+  .embed_dialog .publish_wizard_controls .cancel {
+    float: left;
+  }
+  .embed_dialog .publish_wizard_controls .next,
+  .embed_dialog .publish_wizard_controls .previous {
+    float: right;
+    margin-left: 8px;
+  }
 
 /* ================== */
 /* = Publish Step 1 = */
@@ -45,7 +43,7 @@
 .publish_step_1 form {
   margin: 12px 0 0;
 }
-  
+
   .publish_step_1 input[type=text] {
     width: 250px;
   }

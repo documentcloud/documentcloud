@@ -253,6 +253,10 @@ textarea.text_area {
     border-color: #e5364c; border-bottom-color: #9c1f32;
     text-shadow: none;
   }
+  .minibutton .text_arrow {
+    font-size: 13px;
+    line-height: 11px;
+  }
 
 
 /*--------------------------------- Menus ------------------------------------*/
