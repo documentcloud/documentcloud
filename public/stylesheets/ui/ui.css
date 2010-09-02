@@ -216,6 +216,14 @@ textarea.text_area {
   border: 1px solid #b2b2b2; border-top-color: #c9c9c9; border-bottom-color: #9a9a9a;
   background: url(/images/embed/ui/button_bg.gif) repeat-x left top;
 }
+
+  .minibutton ::selection {
+    background: transparent !important;
+  }
+
+  .minibutton ::-moz-selection {
+    background: transparent !important;
+  }
   .minibutton:active {
     border-color: #aaa;
     box-shadow: 0 1px 2px #e4e4e4; -webkit-box-shadow: 0 1px 2px #e4e4e4; -moz-box-shadow: 0 1px 2px #e4e4e4;
