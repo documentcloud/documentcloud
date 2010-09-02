@@ -51,7 +51,7 @@
   .embed_dialog input[type="checkbox"],
   .embed_dialog select {
     position: absolute;
-    left: 145px;
+    left: 150px;
   }
     .embed_dialog .text_input {
       right: 0px;
