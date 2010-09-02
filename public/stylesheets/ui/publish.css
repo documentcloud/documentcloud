@@ -71,11 +71,12 @@
   .embed_dialog .dimensions {
     font-size: 11px;
     position: absolute;
-    left: 250px;
+    left: 245px;
     top: 1px;
   }
     .embed_dialog .dimensions label {
       font-weight: normal;
+      margin-left: 10px;
     }
     .embed_dialog .dimensions input {
       margin: 0 5px;
