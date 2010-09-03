@@ -21,7 +21,8 @@ dc.ui.Document = dc.View.extend({
     '.occurrence.click'         : '_openEntity',
     '.cancel_search.click'      : '_hidePages',
     '.search_account.click'     : 'searchAccount',
-    '.search_group.click'       : 'searchOrganization'
+    '.search_group.click'       : 'searchOrganization',
+    '.search_source.click'      : 'searchSource'
   },
 
   constructor : function(options) {
@@ -130,13 +131,15 @@ dc.ui.Document = dc.View.extend({
   },
 
   searchAccount : function() {
-    var id = $('.search_account', this.el).attr('data-id');
-    dc.app.searcher.addToSearch('account: ' + id);
+    dc.app.searcher.addToSearch('account: ' + this.model.get('account_slug'));
   },
 
   searchOrganization : function() {
-    var id = $('.search_group', this.el).attr('data-id');
-    dc.app.searcher.addToSearch('group: ' + id);
+    dc.app.searcher.addToSearch('group: ' + this.model.get('organization_slug'));
+  },
+
+  searchSource : function() {
+    dc.app.searcher.addToSearch('source: "' + this.model.get('source').replace(/"/g, '\\"') + '"');
   },
 
   _iconAttributes : function() {
