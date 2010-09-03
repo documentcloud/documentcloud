@@ -1,20 +1,19 @@
 dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
   callbacks : {
-    'input[name=viewer_size].change'      : '_selectViewerSize',
-    '.preview.click'                      : 'preview',
-    'input.change'                        : 'update',
-    'select.change'                       : 'update',
-    'input.keyup'                         : 'update',
-    'input.focus'                         : 'update',
-    'input.click'                         : 'update',
-    '.next.click'                         : 'nextStep',
-    '.previous.click'                     : 'previousStep',
-    '.close.click'                        : 'close',
-    '.snippet.click'                      : 'selectSnippet'
+    '.preview.click'  : 'preview',
+    'input.change'    : 'update',
+    'select.change'   : 'update',
+    'input.keyup'     : 'update',
+    'input.focus'     : 'update',
+    'input.click'     : 'update',
+    '.next.click'     : 'nextStep',
+    '.previous.click' : 'previousStep',
+    '.close.click'    : 'close',
+    '.snippet.click'  : 'selectSnippet'
   },
 
-  totalSteps  : 3,
+  totalSteps : 3,
 
   STEPS : [
     'Step One: Prepare Document for Publication',
@@ -33,10 +32,14 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   render : function() {
     this.base();
     $('.custom', this.el).html(JST['workspace/publish_preview']({doc: this.embedDoc}));
+    this._next          = $('.next', this.el);
+    this._previous      = $('.previous', this.el);
+    this._widthEl       = $('input[name=width]', this.el);
+    this._heightEl      = $('input[name=height]', this.el);
+    this._viewerSizeEl  = $('select[name=viewer_size]', this.el);
+    this._sidebarEl     = $('input[name=sidebar]', this.el);
     if (dc.app.preferences.get('embed_options')) this._loadPreferences();
     this.update();
-    this._next = $('.next', this.el);
-    this._previous = $('.previous', this.el);
     this.setStep();
     this.center();
     return this;
@@ -47,7 +50,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
 
   preview : function() {
-    var options = encodeURIComponent(JSON.stringify(this.embedOptions));
+    var options = encodeURIComponent(JSON.stringify(this.embedOptions()));
     var url = '/documents/' + this.embedDoc.canonicalId() + '/preview?options=' + options;
     window.open(url);
     return false;
@@ -59,106 +62,59 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     this._renderEmbedCode();
   },
 
+  embedOptions : function() {
+    var options = {};
+    if (this._viewerSizeEl.val() == 'fixed') {
+      var width   = parseInt(this._widthEl.val(), 10);
+      var height  = parseInt(this._heightEl.val(), 10);
+      if (width)  options.width  = width;
+      if (height) options.height = height;
+    }
+    if (!this._sidebarEl.is(':checked')) options.sidebar = false;
+    return options;
+  },
+
   _savePreferences : function() {
-    // var userOpts = $('form.publish_options', this.el).serializeJSON();
-    // dc.app.preferences.set({'embed_options': JSON.stringify(userOpts)});
+    dc.app.preferences.set({embed_options : JSON.stringify(this.embedOptions())});
   },
 
   _loadPreferences : function() {
-    // var userOpts = JSON.parse(dc.app.preferences.get('embed_options')) || {};
-    // this.setOptions(userOpts);
+    var options = JSON.parse(dc.app.preferences.get('embed_options') || this.DEFAULT_OPTIONS);
+    if (options.width || options.height) this._viewerSizeEl.val('fixed');
+    this._widthEl.val(options.width);
+    this._heightEl.val(options.height);
+    this._sidebarEl.attr('checked', options.sidebar === false ? false : true);
   },
 
   _renderEmbedCode : function() {
-    var $form = $('form.publish_options', this.el);
-    var userOpts = {};
-
-    userOpts['viewer_size'] = $('input[name=viewer_size]:checked', $form).val();
-    if (userOpts['viewer_size'] == 'fixed') {
-      userOpts['width'] = parseInt($('input[name=width]', $form).val(), 10)   || null;
-      userOpts['height'] = parseInt($('input[name=height]', $form).val(), 10) || null;
-    }
-    if ($('input[name=zoom]:checked', $form).val() == 'auto') {
-      userOpts['zoom'] = 'auto';
-    } else {
-      userOpts['zoom'] = parseInt($('input[name=zoom_specific]', $form).val(), 10);
-    }
-    userOpts['showSidebar'] = $('input[name=showSidebar]').attr('checked');
-    userOpts['showText'] = $('input[name=showText]').attr('checked');
-    userOpts['showHeader'] = $('input[name=showHeader]').attr('checked');
-    userOpts['enableUrlChanges'] = $('input[name=enableUrlChanges]').attr('checked');
-
-    var defaultOptions = userOpts['viewer_size'] == 'fixed' ?
-                         this.fixedOptions :
-                         this.fullscreenOptions;
-
-    var options = $.extend({}, defaultOptions, userOpts);
-
-    if (options['viewer_size'] == 'full') {
-      delete options['width'];
-      delete options['height'];
-    }
-
-    var renderedOptions = _.map(options, function(value, key) {
-      return key + ": " + (typeof value == 'string' ? "\""+value+"\"" : value);
-    });
+    var options       = this.embedOptions();
+    options.container = '"#' + this.embedDoc.canonicalId() + '"';
+    var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
     $('.publish_embed_code', this.el).html(JST['document/embed_dialog']({
       doc: this.embedDoc,
-      options: renderedOptions.join(',&#10;    ')
+      options: serialized.join(',&#10;    ')
     }));
-
-    this.embedOptions = options;
   },
 
   _toggleDimensions : function() {
-    var view = $('select[name=viewer_size]', this.el);
-    $('.dimensions', this.el).toggle(view.val() == 'fixed');
-  },
-
-  _selectViewerSize : function() {
-    var viewer = $('input[name=viewer_size]:checked').val();
+    $('.dimensions', this.el).toggle(this._viewerSizeEl.val() == 'fixed');
   },
 
   saveUpdatedAttributes : function() {
-    var changes = {};
-
-    var relatedArticle = $('input[name=related_article]', this.el).val() || null;
-    var isPublic = $('input[name=access_level]', this.el).is(':checked');
-    var remoteUrl = $('input[name=remote_url]', this.el).val() || null;
-
-    if (this.embedDoc.get('related_article') != relatedArticle) {
-      changes['related_article'] = relatedArticle;
-    }
-    if (this.embedDoc.get('access') != dc.access.PUBLIC && isPublic) {
-      changes['access'] = dc.access.PUBLIC;
-    }
-    if (this.embedDoc.get('remote_url') != remoteUrl) {
-      changes['remote_url'] = remoteUrl;
-    }
-
-    if (!_.isEmpty(changes)) {
-      this._next.text('Saving...');
-      this._next.setMode('not', 'enabled');
-
-      var options = {
-        success: _.bind(function() {
-          this._next.text('Next Step');
-          dc.ui.spinner.hide();
-          this.nextStep(null, true);
-        }, this)
-      };
+    var access = $('input[name=access_level]', this.el).is(':checked') ? dc.access.PUBLIC : this.embedDoc.get('access');
+    var attrs = {
+      access          : access,
+      related_article : $('input[name=related_article]', this.el).val() || null,
+      remote_url      : $('input[name=remote_url]', this.el).val()      || null
+    };
+    if (attrs = this.embedDoc.changedAttributes(attrs)) {
       dc.ui.spinner.show();
-      Documents.update(this.embedDoc, changes, options);
-    } else {
-      this.nextStep(null, true);
+      Documents.update(this.embedDoc, attrs, {success : function(){ dc.ui.spinner.hide(); }});
     }
   },
 
-  nextStep : function(e, skipSave) {
-    if (!skipSave && this.currentStep == 1) {
-      this.saveUpdatedAttributes();
-      return;
-    }
+  nextStep : function() {
+    if (this.currentStep == 1) this.saveUpdatedAttributes();
     if (this.currentStep >= this.totalSteps) return this.close();
     this.currentStep += 1;
     this.setStep();
