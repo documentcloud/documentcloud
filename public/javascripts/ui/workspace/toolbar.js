@@ -157,7 +157,7 @@ dc.ui.Toolbar = dc.View.extend({
     var docs = Documents.selected();
     if (!docs.length) return dc.app.navigation.open('entities');
     dc.app.navigation.open('entities', true);
-    dc.app.searcher.search(_.map(docs, function(doc){ return 'docid: ' + doc.canonicalId(); }).join(' '));
+    dc.app.searcher.search(_.map(docs, function(doc){ return 'document: ' + doc.canonicalId(); }).join(' '));
   },
 
   _panel : function() {

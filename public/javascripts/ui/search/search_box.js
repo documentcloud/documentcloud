@@ -82,7 +82,7 @@ dc.ui.SearchBox = dc.View.extend({
     var groupName     = dc.app.SearchParser.extractGroup(query);
     if (projectName) {
       title = projectName;
-    } else if (accountName == Accounts.current().get('email')) {
+    } else if (accountName == Accounts.current().get('slug')) {
       ret = 'your_documents';
     } else if (publishedName == Accounts.current().get('email')) {
       ret = 'published_documents';

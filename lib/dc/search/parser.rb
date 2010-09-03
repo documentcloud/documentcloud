@@ -50,13 +50,12 @@ module DC
           type, value = *pair
           type = type.downcase
           case type
-          when 'account'    then @accounts << value
-          when 'published'  then @published << value
+          when 'account'    then @accounts << value.to_i
           when 'group'      then @groups << value
           when 'access'     then @access = ACCESS_MAP[value.strip.to_sym]
           when 'project'    then @projects << value
           when 'projectid'  then @project_ids << value.to_i
-          when 'docid'      then @doc_ids << value.to_i
+          when 'document'   then @doc_ids << value.to_i
           when 'related'    then @source_document = Document.find(value.to_i)
           else
             process_field(type, value)

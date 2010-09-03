@@ -4,7 +4,7 @@ dc.app.SearchParser = {
 
   FIRST_PROJECT   : /project:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  FIRST_DOC       : /docid:\s?(\d+-\S+)/i,
+  FIRST_DOC     :  /document:\s?(\d+-\S+)/i,
 
   FIRST_ACCOUNT   : /account:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 

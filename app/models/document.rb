@@ -4,7 +4,7 @@ class Document < ActiveRecord::Base
   # Accessors and constants:
 
   attr_accessor :highlight, :annotation_count, :hits
-  attr_writer   :organization_name, :account_name
+  attr_writer   :organization_name, :organization_slug, :account_name, :account_slug
 
   SEARCHABLE_ATTRIBUTES = [:title, :description, :source, :account, :group]
   SEARCHABLE_ENTITIES   = [:city, :country, :organization, :person, :place, :state, :term]
@@ -40,7 +40,9 @@ class Document < ActiveRecord::Base
 
   after_destroy :delete_assets
 
-  delegate :text, :to => :full_text, :allow_nil => true
+  delegate :text, :to => :full_text,    :allow_nil => true
+  delegate :slug, :to => :organization, :allow_nil => true, :prefix => true
+  delegate :slug, :to => :account,      :allow_nil => true, :prefix => true
 
   # Named scopes:
 
@@ -391,7 +393,9 @@ class Document < ActiveRecord::Base
       'highlight'           => highlight,
       'annotation_count'    => annotation_count,
       'organization_name'   => organization_name,
+      'organization_slug'   => organization_slug,
       'account_name'        => account_name,
+      'account_slug'        => account_slug,
       'related_article'     => related_article,
       'pdf_url'             => pdf_url,
       'thumbnail_url'       => thumbnail_url,

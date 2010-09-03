@@ -18,7 +18,9 @@
       <span class="page_count"><%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span> -
     <% } %>
     <% if (source) { %>Source: <%= source %> -<% } %>
-    Contributed by: <%= account_name %>, <%= organization_name %> -
+    Contributed by: 
+    <span class="quiet_link search_account" data-id="<%= account_slug %>"><%= account_name %></span>, 
+    <span class="quiet_link search_group" data-id="<%= organization_slug %>"><%= organization_name %></span> -
     <%= created_at %>
   </span>
 </div>

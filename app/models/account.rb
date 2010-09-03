@@ -53,6 +53,10 @@ class Account < ActiveRecord::Base
     self
   end
 
+  def slug
+    @slug ||= "#{id}-#{first_name.downcase.gsub(/\W/, '')}-#{last_name.downcase.gsub(/\W/, '')}"
+  end
+
   # Is this account an administrator?
   def admin?
     role == ADMINISTRATOR
@@ -160,6 +164,7 @@ class Account < ActiveRecord::Base
   def canonical(options={})
     attrs = {
       'id'                => id,
+      'slug'              => slug,
       'email'             => email,
       'first_name'        => first_name,
       'last_name'         => last_name,

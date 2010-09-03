@@ -56,7 +56,7 @@ dc.app.searcher.extend({
     dc.app.navigation.open('search');
     this.box.value(query);
     this.flags.related  = query.indexOf('related:') >= 0;
-    this.flags.specific = query.indexOf('docid:') >= 0;
+    this.flags.specific = query.indexOf('document:') >= 0;
     this.flags.hasEntities = false;
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.fragment = 'search/' + encodeURIComponent(query);

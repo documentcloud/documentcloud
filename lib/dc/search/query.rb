@@ -262,8 +262,7 @@ module DC
 
       # Generate the Solr or SQL to restrict the search to specific acounts.
       def build_accounts
-        accounts = @accounts.map {|email| Account.lookup(email) }
-        ids      = accounts.map  {|acc| acc ? acc.id : -1 }
+        ids = @accounts
         if needs_solr?
           @solr.build do
             with :account_id, ids

@@ -10,16 +10,18 @@ dc.ui.Document = dc.View.extend({
   className : 'document',
 
   callbacks : {
-    '.doc_title.mousedown'    : '_noSelect',
-    '.doc_title.click'        : 'select',
-    '.doc_title.dblclick'     : 'viewDocument',
-    '.icon.doc.click'         : 'select',
-    '.icon.doc.dblclick'      : 'viewDocument',
-    '.show_notes.click'       : 'toggleNotes',
-    '.title .edit_glyph.click': 'openDialog',
-    '.page_icon.click'        : '_openEntity',
-    '.occurrence.click'       : '_openEntity',
-    '.cancel_search.click'    : '_hidePages'
+    '.doc_title.mousedown'      : '_noSelect',
+    '.doc_title.click'          : 'select',
+    '.doc_title.dblclick'       : 'viewDocument',
+    '.icon.doc.click'           : 'select',
+    '.icon.doc.dblclick'        : 'viewDocument',
+    '.show_notes.click'         : 'toggleNotes',
+    '.title .edit_glyph.click'  : 'openDialog',
+    '.page_icon.click'          : '_openEntity',
+    '.occurrence.click'         : '_openEntity',
+    '.cancel_search.click'      : '_hidePages',
+    '.search_account.click'     : 'searchAccount',
+    '.search_group.click'       : 'searchOrganization'
   },
 
   constructor : function(options) {
@@ -125,6 +127,16 @@ dc.ui.Document = dc.View.extend({
     e.preventDefault();
     var destructor = _.bind(Documents.destroy, Documents, this.model);
     dc.ui.Dialog.confirm('Really delete "' + this.model.get('title') + '" ?', destructor);
+  },
+
+  searchAccount : function() {
+    var id = $('.search_account', this.el).attr('data-id');
+    dc.app.searcher.addToSearch('account: ' + id);
+  },
+
+  searchOrganization : function() {
+    var id = $('.search_group', this.el).attr('data-id');
+    dc.app.searcher.addToSearch('group: ' + id);
   },
 
   _iconAttributes : function() {
