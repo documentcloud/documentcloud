@@ -152,7 +152,7 @@ div.text_input {
   div.text_input.search {
     height: 28px;
     background: transparent;
-    border: 2px solid #e2e2e2;
+    border: 2px solid #ccc;
     border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
   }
     div.text_input .search_inner {

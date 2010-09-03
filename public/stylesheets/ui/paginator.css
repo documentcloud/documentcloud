@@ -6,7 +6,7 @@
   font-size: 11px;
   color: #999;
   text-align: right;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #ccc;
 }
   body.paginated #paginator {
     display: block;
@@ -16,12 +16,11 @@
     float: left;
   }
     #paginator .sorter {
-      color: #bbb;
+      color: #999;
       cursor: pointer;
       margin-left: 5px;
     }
       #paginator .sorter:hover {
-        color: #999;
         text-decoration: underline;
       }
     #paginator .range {

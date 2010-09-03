@@ -36,8 +36,8 @@
     position: absolute;
     width: 60px; height: 75px;
     padding: 1px;
-    border: 1px solid #b4b4b4;
-    box-shadow: 2px 2px 0 #e7e7e7; -webkit-box-shadow: 2px 2px 0 #e7e7e7; -moz-box-shadow: 2px 2px 0 #e7e7e7;
+    border: 1px solid #aaa;
+    box-shadow: 2px 2px 0 #e0e0e0; -webkit-box-shadow: 2px 2px 0 #e0e0e0; -moz-box-shadow: 2px 2px 0 #e0e0e0;
   }
     body.minidocs #document_list .document img.doc {
       margin-left: 56px;
@@ -274,7 +274,7 @@
           font: 12px/18px Helvetica, Arial;
         }
       .note .note_excerpt_wrap {
-        border: 1px solid #d0d0d0;
+        border: 1px solid #ccc;
         text-align: center;
         margin-bottom: 10px;
       }

@@ -80,13 +80,12 @@
         display: inline;
       }
         #organizer .box:hover {
-          background: #f9f9f9;
+          background: #fff;
         }
       #organizer .box.is_selected,
       #organizer .box.is_selected:hover {
         border-right-color: transparent;
         background: #fff;
-        filter: none;
       }
       #organizer .box .edit_glyph {
         display: inline;
