@@ -4,11 +4,12 @@
 
 .embed_dialog {
   width: 500px;
-  height: 400px;
   font-size: 12px;
   text-align: left;
 }
   .embed_dialog .custom {
+    height: 360px;
+    position: relative;
     font-size: 12px;
   }
 
@@ -26,8 +27,9 @@
 
 .embed_dialog .publish_wizard_controls {
   position: absolute;
-  bottom: 30px;
+  bottom: 0px;
   width: 500px;
+  height: 24px;
 }
   .embed_dialog .publish_wizard_controls .cancel {
     float: left;

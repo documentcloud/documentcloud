@@ -13,6 +13,12 @@ body.workspace {
 #edit_document_dialog {
   width: 500px;
 }
+.embed_dialog {
+  height: 465px;
+}
+  .embed_dialog label {
+    font-weight: normal;
+  }
 #new_document {
   margin-right: 12px;
 }
