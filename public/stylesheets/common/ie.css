@@ -10,6 +10,9 @@ select {
 body.workspace {
   overflow: auto;
 }
+.minibutton {
+  line-height: 12px;
+}
 .document .metalines {
   font-size: 11px;
 }
