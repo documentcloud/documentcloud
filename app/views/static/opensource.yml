@@ -53,3 +53,7 @@ github:
     - http://wiki.github.com/documentcloud/cloud-crowd
     - http://github.com/documentcloud/cloud-crowd
     - "A parallel processing system that we use to farm out PDF conversion across a number of servers on EC2."
+  - - Pixel Ping
+    - http://github.com/documentcloud/pixel-ping
+    - http://github.com/documentcloud/pixel-ping
+    - "A lightweight pixel-tracking server that we use to keep tabs on embedded documents, and send traffic to contributing organizations."
