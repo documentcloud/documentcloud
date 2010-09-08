@@ -80,6 +80,8 @@
       margin-left: 10px;
     }
     .embed_dialog .dimensions input {
+      font-size: 11px;
+      line-height: 11px;
       margin: 0 5px;
       width: 30px;
     }
