@@ -10,6 +10,9 @@ select {
 body.workspace {
   overflow: auto;
 }
+.document .metalines {
+  font-size: 11px;
+}
 #edit_document_dialog {
   width: 500px;
 }
@@ -18,6 +21,9 @@ body.workspace {
 }
   .embed_dialog label {
     font-weight: normal;
+  }
+  .embed_dialog input[type="checkbox"] {
+    margin-top: 4px;
   }
 #new_document {
   margin-right: 12px;
