@@ -237,34 +237,30 @@
             height  : Math.abs(e.pageY - oy)
           };
         };
+        var selectTargets = function(e) {
+          if (e.pageX == ox && e.pageY == oy) return;
+          var pos = coords(e);
+          var x1 = pos.left + scrLeft, y1 = pos.top + scrTop, x2 = x1 + pos.width, y2 = y1 + pos.height;
+          var hits = [];
+          for (var i=0; i<targets.length; i++) {
+            var el = $(targets[i]);
+            pos = el.offset();
+            var ex1 = pos.left + scrLeft, ey1 = pos.top + scrTop, ex2 = ex1 + el.outerWidth(), ey2 = ey1 + el.outerHeight();
+            if (!(x1 > ex2 || x2 < ex1 || y1 > ey2 || y2 < ey1)) hits.push(el);
+          }
+          if (options.onSelect) options.onSelect(hits);
+        };
         var drag = _.bind(function(e) {
           e.stopPropagation();
           e.preventDefault();
-          var pos = coords(e);
-          selection.show().css(pos);
-          var x1 = pos.left + scrLeft, y1 = pos.top + scrTop, x2 = x1 + pos.width, y2 = y1 + pos.height;
-          var hits = _.select(targets, function(el) {
-            el = $(el);
-            pos = el.offset();
-            var ex1 = pos.left + scrLeft, ey1 = pos.top + scrTop, ex2 = ex1 + el.outerWidth(), ey2 = ey1 + el.outerHeight();
-            return !(x1 > ex2 || x2 < ex1 || y1 > ey2 || y2 < ey1);
-          });
-          if (options.onSelect) options.onSelect(hits);
+          selection.show().css(coords(e));
+          selectTargets(e);
         }, this);
         var dragEnd = _.bind(function(e) {
           e.stopPropagation();
           e.preventDefault();
           doc.unbind('mouseup', dragEnd).unbind('mousemove', drag);
-          if (e.pageX == ox && e.pageY == oy) return;
-          var pos = coords(e);
-          var x1 = pos.left + scrLeft, y1 = pos.top + scrTop, x2 = x1 + pos.width, y2 = y1 + pos.height;
-          var hits = _.select(targets, function(el) {
-            el = $(el);
-            pos = el.offset();
-            var ex1 = pos.left + scrLeft, ey1 = pos.top + scrTop, ex2 = ex1 + el.outerWidth(), ey2 = ey1 + el.outerHeight();
-            return !(x1 > ex2 || x2 < ex1 || y1 > ey2 || y2 < ey1);
-          });
-          if (options.onSelect) options.onSelect(hits);
+          selectTargets(e);
           selection.hide();
         }, this);
         doc.bind('mouseup', dragEnd).bind('mousemove', drag);
