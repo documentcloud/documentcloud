@@ -10,6 +10,7 @@ dc.model.Entity = dc.Model.extend({
     country       : 'Countries',
     date          : 'Dates',
     phone         : 'Phone Numbers',
+    email         : 'Email Addresses',
     organization  : 'Organizations',
     person        : 'People',
     place         : 'Places',
@@ -18,7 +19,7 @@ dc.model.Entity = dc.Model.extend({
   },
 
   // When rendering entities in a list, use this order:
-  ORDER : ['person', 'organization', 'term', 'place', 'city', 'state', 'country'],
+  ORDER : ['person', 'organization', 'place', 'term', 'email', 'phone', 'city', 'state', 'country'],
 
   // Fetch a single entity across a set of visible documents.
   fetch : function(kind, value, callback) {

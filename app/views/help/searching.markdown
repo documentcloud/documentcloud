@@ -25,8 +25,10 @@ Term                        | Description
 ----------------------------|-------------------------
 person                      | The name of a human being. If you're looking for documents that reference a person with the last name of "Lee", but keep getting swamped with unrelated words, try narrowing your search to [person: Lee][].
 organization                | Organizations include businesses, government agencies, and other types of institutions. For example: [organization: "Department of Defense"][].
-term                        | Searches for terms might include [term: "nuclear energy"][] or [term: "gross domestic product"][]. The results will be comparable to searching for the terms directly.
 place                       | Addresses, names of buildings and landmarks, regions, or geographical landmarks. For example: [place: "World Trade Center"][] or [place: "Gulf of Mexico"][].
+term                        | Searches for terms might include [term: "nuclear energy"][] or [term: "gross domestic product"][]. The results will be comparable to searching for the terms directly.
+email                       | Complete email addresses.
+phone                       | Telephone or Fax numbers.
 city                        | For example: [city: "New Orleans"][].
 state                       | (Includes provinces, in countries that have provinces instead of states.) For example: [state: Arizona][].
 country                     | For example: [country: Iran][].

@@ -14,9 +14,9 @@ dc.app.SearchParser = {
 
   FIRST_RELATED   : /related:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  ONE_ENTITY      : /(city|country|term|state|person|place|organization):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  ONE_ENTITY      : /(city|country|term|state|person|place|organization|email|phone):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  ALL_ENTITIES    : /(city|country|term|state|person|place|organization):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
+  ALL_ENTITIES    : /(city|country|term|state|person|place|organization|email|phone):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
 
   WHITESPACE_ONLY : /^\s*$/,
 
