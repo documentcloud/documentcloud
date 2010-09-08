@@ -6,7 +6,7 @@
   <title>DocumentCloud</title>
   <% css = [:ui, :empty] + (@stylesheets || []) + [{:media => 'all'}] %>
   <%= include_stylesheets *css %>
-  <!--[if IE]>
+  <!--[if lt IE 9]>
     <%= include_stylesheets :ie_only, :embed_assets => false %>
   <![endif]-->
   <%= include_javascripts :core %>
