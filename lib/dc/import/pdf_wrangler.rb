@@ -13,7 +13,7 @@ module DC
           path = file.path
           original_filename = filename || file.original_filename
           name = File.basename(original_filename).gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
-          ext  = File.extname(name)
+          ext  = File.extname(name).downcase
           if ext == ".pdf" && File.extname(path) != ".pdf"
             new_path = File.join(temp_dir, name)
             FileUtils.mv(path, new_path)
