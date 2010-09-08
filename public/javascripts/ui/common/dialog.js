@@ -13,8 +13,12 @@ dc.ui.Dialog = dc.View.extend({
   },
 
   callbacks : {
-    '.cancel.click':  'cancel',
-    '.ok.click':      'confirm'
+    '.cancel.click'   : 'cancel',
+    '.ok.click'       : 'confirm',
+    'input.focus'     : '_addFocus',
+    'textarea.focus'  : '_addFocus',
+    'input.blur'      : '_removeFocus',
+    'textarea.blur'   : '_removeFocus'
   },
 
   constructor : function(options) {
@@ -113,6 +117,15 @@ dc.ui.Dialog = dc.View.extend({
 
   _maybeConfirm : function(e) {
     if (e.keyCode == 13) this.confirm();
+  },
+
+  _addFocus : function(e) {
+    $(e.target).addClass('focus');
+    $(this.el).css({zoom : 1});
+  },
+
+  _removeFocus : function(e) {
+    $(e.target).removeClass('focus');
   }
 
 }, {

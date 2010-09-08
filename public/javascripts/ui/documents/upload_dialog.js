@@ -4,11 +4,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   id        : 'upload_dialog',
   className : 'dialog',
 
-  callbacks : {
-    '.ok.click'     : 'confirm',
-    '.cancel.click' : 'cancel'
-  },
-
   constructor : function() {
     _.bindAll(this, 'setupUploadify', 'countDocuments', '_onSelect', '_onSelectOnce',
       '_onCancel', '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');

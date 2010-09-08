@@ -8,6 +8,10 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   callbacks : {
     '.cancel.click'     : 'close',
     '.ok.click'         : 'save',
+    'input.focus'       : '_addFocus',
+    'textarea.focus'    : '_addFocus',
+    'input.blur'        : '_removeFocus',
+    'textarea.blur'     : '_removeFocus',
     '.delete.click'     : 'destroy',
     '.attribute.change' : '_markChanged'
   },
