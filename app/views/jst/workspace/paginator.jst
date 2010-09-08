@@ -1,5 +1,5 @@
 <% var to = Math.min(q.to, q.total); %>
-<div class="description">
+<div class="description noselect">
   <% if (q.total > page_size) { %>
     <span class="range"><%= '' + (q.from + 1) %> &ndash; <%= to %></span>
     of
@@ -7,7 +7,7 @@
   <%= q.total %> <%= Inflector.pluralize('document', q.total) %>
 </div>
 
-<div class="sorter">
+<div class="sorter noselect">
   (<%= sort_text %>)
 </div>
 

@@ -112,7 +112,7 @@
         }
       body.minidocs #document_list .document .document_tool {
         position: absolute;
-        top: 8px; left: 118px;
+        top: 8px; left: 125px;
       }
       .document .document_tool.spinner {
         display: block;

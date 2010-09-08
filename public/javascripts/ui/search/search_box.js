@@ -30,7 +30,7 @@ dc.ui.SearchBox = dc.View.extend({
   render : function() {
     $(this.el).append(JST['workspace/search_box']({}));
     this.box      = $('#search_box', this.el);
-    this.titleBox = $('#title_box', this.el);
+    this.titleBox = $('#title_box_inner', this.el);
     $(document.body).setMode('no', 'search');
     this.setCallbacks();
     $('#cloud_edge').click(function(){ window.location = '/home'; });

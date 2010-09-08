@@ -125,7 +125,7 @@
       options = _.extend({clickable : null, onHide : null}, options || {});
       me._autoignore = true;
       setTimeout(function(){ delete me._autoignore; }, 0);
-      
+
       if (!me._autohider) {
         me.forceHide = function(e) {
           if (!e && options.onHide) options.onHide();
@@ -161,10 +161,10 @@
         var checkEvent = function(e) {
           var isNonDraggable = $(e.target).is('input, select, textarea, label, a, canvas, .minibutton, .text_link, .selectable_text, .not_draggable');
           if (isNonDraggable) return true;
-          
+
           var draggableParent = $(e.target).parents('.is_draggable').andSelf().length;
           if (!draggableParent) return true;
-          
+
           return stopEvent(e);
         };
 
@@ -240,7 +240,16 @@
         var drag = _.bind(function(e) {
           e.stopPropagation();
           e.preventDefault();
-          selection.show().css(coords(e));
+          var pos = coords(e);
+          selection.show().css(pos);
+          var x1 = pos.left + scrLeft, y1 = pos.top + scrTop, x2 = x1 + pos.width, y2 = y1 + pos.height;
+          var hits = _.select(targets, function(el) {
+            el = $(el);
+            pos = el.offset();
+            var ex1 = pos.left + scrLeft, ey1 = pos.top + scrTop, ex2 = ex1 + el.outerWidth(), ey2 = ey1 + el.outerHeight();
+            return !(x1 > ex2 || x2 < ex1 || y1 > ey2 || y2 < ey1);
+          });
+          if (options.onSelect) options.onSelect(hits);
         }, this);
         var dragEnd = _.bind(function(e) {
           e.stopPropagation();
