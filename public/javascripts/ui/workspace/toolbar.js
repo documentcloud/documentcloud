@@ -43,8 +43,9 @@ dc.ui.Toolbar = dc.View.extend({
 
   // Wrapper function for safely editing an attribute of a specific document.
   edit : function(callback, message) {
-    if (!Documents.allowedToEditSelected(message)) return;
-    return callback.call(this, Documents.selected());
+    var docs = Documents.selected();
+    if (!Documents.allowedToEdit(docs, message)) return;
+    return callback.call(this, docs);
   },
 
   editTitle : function() {
@@ -88,8 +89,8 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   editAccess : function() {
-    if (!Documents.allowedToEditSelected()) return;
     var docs    = Documents.selected();
+    if (!Documents.allowedToEdit(docs)) return;
     var current = Documents.sharedAttribute(docs, 'access') || dc.access.PRIVATE;
     dc.ui.Dialog.choose('Access Level', [
       {text : 'Public Access',  description : 'Anyone on the internet can search for and view the document.', value : dc.access.PUBLIC, selected : current == dc.access.PUBLIC},
@@ -104,10 +105,9 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   openPublishTab : function() {
-    if (dc.app.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.');
     var docs = Documents.selected();
     if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document in order to create the embed.');
-    dc.app.publishPreview = new dc.ui.PublishPreview(docs[0]);
+    (new dc.ui.PublishPreview(docs[0])).render();
   },
 
   requestDownloadViewers : function() {
@@ -134,7 +134,7 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _deleteSelectedDocuments : function() {
-    Documents.destroySelected();
+    Documents.verifyDestroy(Documents.selected());
   },
 
   // Open up a Timeline. Limit the number of documents to ten. If no documents
@@ -156,8 +156,7 @@ dc.ui.Toolbar = dc.View.extend({
   _viewEntities : function() {
     var docs = Documents.selected();
     if (!docs.length) return dc.app.navigation.open('entities');
-    dc.app.navigation.open('entities', true);
-    dc.app.searcher.search(_.map(docs, function(doc){ return 'document: ' + doc.canonicalId(); }).join(' '));
+    dc.app.searcher.viewEntities(docs);
   },
 
   _panel : function() {

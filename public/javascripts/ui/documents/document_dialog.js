@@ -59,9 +59,9 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   destroy : function() {
     this.close();
     if (Documents.selected().length == 0) {
-        this.docs[0].set({'selected': true});
+      this.docs[0].set({'selected': true});
     }
-    Documents.destroySelected();
+    Documents.verifyDestroy(Documents.selected());
   },
 
   _title : function() {
@@ -83,9 +83,8 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
 }, {
 
   open : function(doc) {
-    var docs = Documents.selected();
-    docs = !doc || _.include(docs, doc) ? docs : [doc];
-    if (_.any(docs, function(doc){ return doc.checkBusy(); })) return;
+    var docs = Documents.chosen(doc);
+    if (!docs.length) return;
     new dc.ui.DocumentDialog(docs);
   }
 

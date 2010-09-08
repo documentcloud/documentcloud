@@ -132,6 +132,11 @@ dc.app.searcher.extend({
     this.relatedDoc = Documents.get(id);
   },
 
+  viewEntities : function(docs) {
+    dc.app.navigation.open('entities', true);
+    this.search(_.map(docs, function(doc){ return 'document: ' + doc.canonicalId(); }).join(' '));
+  },
+
   // After the initial search results come back, send out a request for the
   // associated metadata, as long as something was found. Think about returning
   // the metadata right alongside the document JSON.

@@ -12,8 +12,10 @@ dc.ui.Document = dc.View.extend({
   callbacks : {
     '.doc_title.mousedown'      : '_noSelect',
     '.doc_title.click'          : 'select',
+    '.doc_title.contextmenu'    : 'showMenu',
     '.doc_title.dblclick'       : 'viewDocument',
     '.icon.doc.click'           : 'select',
+    '.icon.doc.contextmenu'     : 'showMenu',
     '.icon.doc.dblclick'        : 'viewDocument',
     '.show_notes.click'         : 'toggleNotes',
     '.title .edit_glyph.click'  : 'openDialog',
@@ -29,7 +31,8 @@ dc.ui.Document = dc.View.extend({
     this.base(options);
     this.el.id = 'document_' + this.model.id;
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
-    _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes', '_renderPages');
+    _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
+      '_renderPages', 'viewDocuments', 'openDialog', 'viewEntities', 'deleteDocuments');
     this.model.bind('model:changed', this._onDocumentChange);
     this.model.notes.bind('set:added', this._addNote);
     this.model.notes.bind('set:refreshed', this._renderNotes);
@@ -85,9 +88,14 @@ dc.ui.Document = dc.View.extend({
   },
 
   viewDocument : function(e) {
-    e.preventDefault();
     this.model.openViewer();
     return false;
+  },
+
+  viewDocuments : function() {
+    var docs = Documents.chosen(this.model);
+    if (!docs.length) return;
+    _.each(docs, function(doc){ doc.openViewer(); });
   },
 
   viewPDF : function() {
@@ -96,6 +104,10 @@ dc.ui.Document = dc.View.extend({
 
   viewFullText : function() {
     this.model.openText();
+  },
+
+  viewEntities : function() {
+    dc.app.searcher.viewEntities(Documents.chosen(this.model));
   },
 
   downloadViewer : function() {
@@ -124,10 +136,8 @@ dc.ui.Document = dc.View.extend({
     dc.app.paginator.mini ? dc.app.paginator.toggleSize(next, this.model) : next();
   },
 
-  deleteDocument : function(e) {
-    e.preventDefault();
-    var destructor = _.bind(Documents.destroy, Documents, this.model);
-    dc.ui.Dialog.confirm('Really delete "' + this.model.get('title') + '" ?', destructor);
+  deleteDocuments : function() {
+    Documents.verifyDestroy(Documents.chosen(this.model));
   },
 
   searchAccount : function() {
@@ -140,6 +150,25 @@ dc.ui.Document = dc.View.extend({
 
   searchSource : function() {
     dc.app.searcher.addToSearch('source: "' + this.model.get('source').replace(/"/g, '\\"') + '"');
+  },
+
+  showMenu : function(e) {
+    e.preventDefault();
+    var menu = dc.ui.Document.sharedMenu || (dc.ui.Document.sharedMenu = new dc.ui.Menu({
+      id : 'document_menu',
+      standalone : true
+    }));
+    var count = Documents.chosen(this.model).length;
+    var deleteTitle = Inflector.pluralize('Delete Document', count);
+    menu.clear();
+    menu.addItems([
+      {title : 'Open',                    onClick: this.viewDocuments},
+      {title : 'Edit All Fields',         onClick: this.openDialog},
+      {title : 'View Entities',           onClick: this.viewEntities},
+      {title : 'Embed Document Viewer',   onClick: _.bind(function(){ (new dc.ui.PublishPreview(this.model)).render(); }, this), attrs : {'class' : count > 1 ? 'disabled' : ''}},
+      {title : deleteTitle,               onClick: this.deleteDocuments, attrs : {'class' : 'warn'}}
+    ]);
+    menu.render().open().content.css({top : e.pageY, left : e.pageX});
   },
 
   _iconAttributes : function() {

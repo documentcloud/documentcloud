@@ -16,23 +16,25 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
   totalSteps : 3,
 
-  STEPS : [
-    'Step One: Prepare Document for Publication',
+  STEPS : [null, null,
     'Step Two: Configure the Document Viewer',
     'Step Three: Cut and Paste the Embed Code'
   ],
 
+  DEMO_ERROR : 'Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.',
+
   constructor : function(doc) {
-    this.embedDoc = doc;
+    this.model = doc;
     this.currentStep = 1;
-    this.base({mode : 'custom', title : this.STEPS[0]});
+    this.base({mode : 'custom', title : this.displayTitle()});
     this.setMode('embed', 'dialog');
     this.render();
   },
 
   render : function() {
+    if (dc.app.organization.demo) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     this.base();
-    $('.custom', this.el).html(JST['workspace/publish_preview']({doc: this.embedDoc}));
+    $('.custom', this.el).html(JST['workspace/publish_preview']({doc: this.model}));
     this._next          = $('.next', this.el);
     this._previous      = $('.previous', this.el);
     this._widthEl       = $('input[name=width]', this.el);
@@ -47,12 +49,13 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
 
   displayTitle : function() {
-    return 'Embed "' + Inflector.truncate(this.embedDoc.get('title'), 40) + '"';
+    if (this.currentStep == 1) return 'Step One: Review "' + Inflector.truncate(this.model.get('title'), 30) + '"';
+    return this.STEPS[this.currentStep];
   },
 
   preview : function() {
     var options = encodeURIComponent(JSON.stringify(this.embedOptions()));
-    var url = '/documents/' + this.embedDoc.canonicalId() + '/preview?options=' + options;
+    var url = '/documents/' + this.model.canonicalId() + '/preview?options=' + options;
     window.open(url);
     return false;
   },
@@ -89,10 +92,10 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
   _renderEmbedCode : function() {
     var options       = this.embedOptions();
-    options.container = '"#' + this.embedDoc.canonicalId() + '"';
+    options.container = '"#' + this.model.canonicalId() + '"';
     var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
     $('.publish_embed_code', this.el).html(JST['document/embed_dialog']({
-      doc: this.embedDoc,
+      doc: this.model,
       options: serialized.join(',&#10;    ')
     }));
   },
@@ -102,15 +105,15 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
 
   saveUpdatedAttributes : function() {
-    var access = $('input[name=access_level]', this.el).is(':checked') ? dc.access.PUBLIC : this.embedDoc.get('access');
+    var access = $('input[name=access_level]', this.el).is(':checked') ? dc.access.PUBLIC : this.model.get('access');
     var attrs = {
       access          : access,
       related_article : $('input[name=related_article]', this.el).val() || null,
       remote_url      : $('input[name=remote_url]', this.el).val()      || null
     };
-    if (attrs = this.embedDoc.changedAttributes(attrs)) {
+    if (attrs = this.model.changedAttributes(attrs)) {
       dc.ui.spinner.show();
-      Documents.update(this.embedDoc, attrs, {success : function(){ dc.ui.spinner.hide(); }});
+      Documents.update(this.model, attrs, {success : function(){ dc.ui.spinner.hide(); }});
     }
   },
 
@@ -127,10 +130,10 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
 
   setStep : function() {
+    this.title(this.displayTitle());
+
     $('.publish_step', this.el).setMode('not', 'enabled');
     $('.publish_step_'+this.currentStep, this.el).setMode('is', 'enabled');
-
-    this.title(this.STEPS[this.currentStep - 1]);
     this.info('Step ' + this.currentStep + ' of ' + this.totalSteps, true);
 
     var first = this.currentStep == 1;

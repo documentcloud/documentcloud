@@ -1,5 +1,5 @@
 <% var mid = id ? id + "_content" : ''; %>
-<div class="menu_content interface" id="<%= mid %>">
+<div class="menu_content interface <%= standalone ? 'standalone' : 'attached' %>" id="<%= mid %>">
   <div class="menu_items">
   </div>
 </div>

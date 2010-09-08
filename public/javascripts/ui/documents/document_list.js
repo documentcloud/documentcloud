@@ -21,7 +21,7 @@ dc.ui.DocumentList = dc.View.extend({
 
   render : function() {
     this.setCallbacks();
-    $('.search_tab_content').selectable({ignore : '.noselect', select : '.icon.doc', onSelect : this._onSelect});
+    $('.search_tab_content').selectable({ignore : '.noselect, .minibutton', select : '.icon.doc', onSelect : this._onSelect});
     return this;
   },
 

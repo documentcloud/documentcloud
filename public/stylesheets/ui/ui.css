@@ -324,10 +324,15 @@ textarea.text_area {
   padding: 4px 0;
   opacity: 0.97; filter: alpha(opacity=97);
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
-  border-top-left-radius: 0; -webkit-border-top-left-radius: 0; -moz-border-radius-topleft: 0;
   box-shadow: 3px 4px 5px -2px #777; -webkit-box-shadow: 3px 4px 5px -2px #777; -moz-box-shadow: 3px 4px 5px -2px #777;
 }
-  body.floating_toolbar .menu_content {
+  .menu_content.attached {
+    border-top-left-radius: 0; -webkit-border-top-left-radius: 0; -moz-border-radius-topleft: 0;
+  }
+  .menu_content.standalone {
+    z-index: 20;
+  }
+  body.floating_toolbar .menu_content.attached {
     position: fixed !important;
     top: 62px !important;
   }

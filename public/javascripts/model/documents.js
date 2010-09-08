@@ -117,8 +117,17 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     return attrs.length > 1 ? false : attrs[0];
   },
 
-  allowedToEditSelected : function(message) {
-    return !_.any(this.selected(), function(doc) { return !doc.checkAllowedToEdit(message); });
+  allowedToEdit : function(docs, message) {
+    return !_.any(docs, function(doc) { return !doc.checkAllowedToEdit(message); });
+  },
+
+  // Given a clicked document, and the current selected set, determine which
+  // documents are chosen.
+  chosen : function(doc) {
+    var docs = this.selected();
+    docs = !doc || _.include(docs, doc) ? docs : [doc];
+    if (_.any(docs, function(doc){ return doc.checkBusy(); })) return [];
+    return docs;
   },
 
   downloadSelectedViewers : function() {
@@ -156,9 +165,8 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   },
 
   // Destroy the currently selected documents, after asking for confirmation.
-  destroySelected : function() {
-    if (!Documents.allowedToEditSelected()) return;
-    var docs = Documents.selected();
+  verifyDestroy : function(docs) {
+    if (!this.allowedToEdit(docs)) return;
     var message = 'Really delete ' + docs.length + ' ' + Inflector.pluralize('document', docs.length) + '?';
     dc.ui.Dialog.confirm(message, _.bind(function() {
       _(docs).each(function(doc){ Documents.destroy(doc); });

@@ -3,12 +3,13 @@ dc.ui.Menu = dc.View.extend({
   className : 'minibutton menu',
 
   callbacks : {
-    'el.click'  : 'open'
+    'el.click'        : 'open',
+    'el.selectstart'  : '_stopSelect'
   },
 
   constructor : function(options) {
     _.bindAll(this, 'close');
-    options.id = options.id || null;
+    options = _.extend(this.defaultOptions(), options || {});
     this.base(options);
     this.items          = [];
     this.content        = $(JST['common/menu'](this.options));
@@ -19,7 +20,7 @@ dc.ui.Menu = dc.View.extend({
   },
 
   defaultOptions : function() {
-    return {id : null};
+    return {id : null, standalone : false};
   },
 
   render : function() {
@@ -33,14 +34,13 @@ dc.ui.Menu = dc.View.extend({
   open : function() {
     var content = this.content;
     if (this.modes.enabled == 'not') return false;
-    if (this.modes.open == 'is')     return this.close();
+    if (this.modes.open == 'is' && !this.options.standalone) return this.close();
     this.setMode('is', 'open');
     if (this.options.onOpen) this.options.onOpen(this);
-    _.defer(_.bind(function() {
-      content.show();
-      content.align(this.el, '-left bottom no-constraint');
-      content.autohide({onHide : this.close});
-    }, this));
+    content.show();
+    content.align(this.el, '-left bottom no-constraint');
+    content.autohide({onHide : this.close});
+    return this;
   },
 
   close : function(e) {
@@ -106,6 +106,10 @@ dc.ui.Menu = dc.View.extend({
   deselect : function() {
     if (this.selectedItem) this.selectedItem.menuEl.removeClass('selected');
     this.selectedItem = null;
+  },
+
+  _stopSelect : function(e) {
+    return false;
   }
 
 });
