@@ -148,7 +148,8 @@ div.text_input {
         padding: 4px 4px;
         border-width: 1px;
       }
-      div.text_input.dark input:focus {
+      div.text_input.dark input:focus,
+      div.text_input.dark input.focus {
         border-color: #fff;
         background: #fff;
         color: #333;
@@ -172,7 +173,8 @@ div.text_input {
         color: #999;
         font: 13px/18px Helvetica, Arial;
       }
-        div.text_input.search input:focus {
+        div.text_input.search input:focus,
+        div.text_input.search input.focus {
           color: #000;
         }
     div.text_input .search_glyph {
@@ -199,7 +201,8 @@ textarea.text_area {
     color: #999;
     background: #1e1e1e;
   }
-    textarea.text_area.dark:focus {
+    textarea.text_area.dark:focus,
+    textarea.text_area.dark.focus {
       border-color: #fff !important;
       background: #fff;
       color: #333;

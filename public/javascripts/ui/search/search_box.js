@@ -15,6 +15,8 @@ dc.ui.SearchBox = dc.View.extend({
   callbacks : {
     '#search_box.keydown':  'maybeSearch',
     '#search_box.search':   'searchEvent',
+    '#search_box.focus':    '_addFocus',
+    '#search_box.blur':     '_removeFocus',
     '.cancel_search.click': 'cancelSearch'
   },
 
@@ -110,6 +112,14 @@ dc.ui.SearchBox = dc.View.extend({
       $('#no_results .explanation').text(this.NO_RESULTS[searchType]);
     }
     dc.ui.spinner.hide();
+  },
+
+  _addFocus : function() {
+    $('#search_box', this.el).addClass('focus');
+  },
+
+  _removeFocus : function() {
+    $('#search_box', this.el).removeClass('focus');
   }
 
 });
