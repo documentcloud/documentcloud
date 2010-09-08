@@ -91,6 +91,7 @@
       }
     .document .document_tool {
       display: inline;
+      width: 0;
       vertical-align: text-bottom;
       margin-left: 8px;
       padding-right: 16px;

@@ -89,6 +89,7 @@
       }
       #organizer .box .edit_glyph {
         display: inline;
+        width: 0;
         vertical-align: baseline;
         padding-right: 11px;
         margin-left: 6px;

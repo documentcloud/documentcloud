@@ -48,6 +48,10 @@ body.workspace {
 #organizer .box {
   background-image: url(/images/embed/ui/box_back_wide.png);
 }
+  #organizer .box .edit_glyph {
+    width: 16px;
+    margin: 0;
+  }
 #account_list img.avatar,
 .collaborator_list img.avatar {
   position: static;
