@@ -58,7 +58,7 @@ class ApiController < ApplicationController
 
   def update
     doc = current_document
-    attrs = pick(params, :access, :title, :description, :source, :related_article)
+    attrs = pick(params, :access, :title, :description, :source, :related_article, :remote_url)
     attrs[:access] = ACCESS_MAP[attrs[:access].to_sym] if attrs[:access]
     success = doc.secure_update attrs, current_account
     return json(doc, 403) unless success
