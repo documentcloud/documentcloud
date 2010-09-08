@@ -5,7 +5,8 @@ module DC
 
   # The normalized list of entity types that DocumentCloud supports.
   ENTITY_KINDS = [
-    :organization, :place, :city, :country, :term, :person, :state, :date, :phone
+    :organization, :place, :city, :country, :term, :person, :state,
+    :phone, :email
   ]
 
   # Supported entity kinds as strings for Rails validation.
@@ -22,7 +23,10 @@ module DC
     :country            => :country,
     :industry_term      => :term,
     :person             => :person,
-    :province_or_state  => :state
+    :province_or_state  => :state,
+    :email_address      => :email,
+    :fax_number         => :phone,
+    :phone_number       => :phone
   }
 
 end

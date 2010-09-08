@@ -319,7 +319,7 @@ module DC
           if specific
             args = [specific.to_sym, FACET_OPTIONS[:specific]]
           else
-            args = Document::SEARCHABLE_ENTITIES + [FACET_OPTIONS[:all]]
+            args = Document::DC::ENTITY_KINDS + [FACET_OPTIONS[:all]]
           end
           facet(*args)
         end

@@ -7,7 +7,6 @@ class Document < ActiveRecord::Base
   attr_writer   :organization_name, :organization_slug, :account_name, :account_slug
 
   SEARCHABLE_ATTRIBUTES = [:title, :description, :source, :account, :group]
-  SEARCHABLE_ENTITIES   = [:city, :country, :organization, :person, :place, :state, :term]
 
   DEFAULT_TITLE = "Untitled Document"
 
@@ -101,7 +100,7 @@ class Document < ActiveRecord::Base
     end
 
     # Entities...
-    SEARCHABLE_ENTITIES.each do |entity|
+    DC::ENTITY_KINDS.each do |entity|
       text(entity) { self.entity_values(entity) }
       string(entity, :multiple => true) { self.entity_values(entity) }
     end
@@ -188,7 +187,7 @@ class Document < ActiveRecord::Base
   def published?
     remote_url.present? || detected_remote_url.present?
   end
-  
+
   # When the access level changes, all sub-resource and asset permissions
   # need to be updated.
   def set_access(access_level)
@@ -358,6 +357,13 @@ class Document < ActiveRecord::Base
 
   def reprocess_text
     queue_import self.access, true
+  end
+
+  def reprocess_entities
+    RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+      'action'  => 'reprocess_entities',
+      'inputs'  => [id]
+    }.to_json})
   end
 
   def queue_import(eventual_access=nil, text_only=false)
