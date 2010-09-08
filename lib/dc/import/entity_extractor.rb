@@ -40,13 +40,17 @@ module DC
       def extract_entities(document, calais, chunk_number)
         offset = chunk_number * MAX_TEXT_SIZE
         calais.entities.each do |entity|
-          next unless Entity.acceptable_kind? entity.type
+          kind = Entity.normalize_kind(entity.type)
+          next unless kind
+          value = Entity.normalize_value(entity.attributes['commonname'] || entity.attributes['name'])
+          next if kind == :phone && Validators::PHONE !~ value
+          next if kind == :email && Validators::EMAIL !~ value
           occurrences = entity.instances.map do |instance|
             Occurrence.new(instance.offset + offset, instance.length)
           end
           model = Entity.new(
-            :value        => Entity.normalize_value(entity.attributes['commonname'] || entity.attributes['name']),
-            :kind         => DC::CALAIS_MAP[entity.type.underscore.to_sym].to_s,
+            :value        => value,
+            :kind         => kind.to_s,
             :relevance    => entity.relevance,
             :document     => document,
             :occurrences  => Occurrence.to_csv(occurrences),

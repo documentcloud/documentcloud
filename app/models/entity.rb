@@ -18,10 +18,8 @@ class Entity < ActiveRecord::Base
 
   named_scope :kind, lambda {|kind| {:conditions => {:kind => kind}} }
 
-  # We don't pay attention to all kinds of Calais-generated entities, just
-  # most of them. Checks the whitelist.
-  def self.acceptable_kind?(kind)
-    !!DC::CALAIS_MAP[kind.underscore.to_sym]
+  def self.normalize_kind(string)
+    DC::CALAIS_MAP[string.underscore.to_sym]
   end
 
   def self.normalize_value(string)

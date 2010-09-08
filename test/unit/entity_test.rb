@@ -6,12 +6,6 @@ class EntityTest < ActiveSupport::TestCase
 
     should_belong_to :document
 
-    should "be able to detect acceptable kinds of entities" do
-      ['country', 'person', 'organization'].each do |kind|
-        assert Entity.acceptable_kind?(kind)
-      end
-    end
-
     should "be able to determine if it's present in a document" do
       meta = Entity.new(:kind => 'person', :value => 'Seal', :occurrences => '101:4')
       assert meta.textual?
