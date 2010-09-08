@@ -3,7 +3,7 @@ dc.ui.Toolbar = dc.View.extend({
   id : 'toolbar',
 
   callbacks : {
-    '#open_viewers.click'            : '_openViewers'
+    '#open_viewers.click' : '_openViewers'
   },
 
   MENUS : ['project', 'edit', 'publish', 'analyze'],
@@ -29,7 +29,7 @@ dc.ui.Toolbar = dc.View.extend({
     }, this));
     this.openButton              = $('#open_viewers', this.el);
     this.floatEl                 = $('#floating_toolbar', this.el);
-    $(window).scroll(this.checkFloat);
+    $(window).scroll(_.bind(function(){ _.defer(this.checkFloat); }, this));
     this.setCallbacks();
     return this;
   },
