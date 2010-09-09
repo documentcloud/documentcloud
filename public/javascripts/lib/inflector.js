@@ -142,6 +142,10 @@ window.Inflector = {
   // From Prototype.js. Strip out HTML tags.
   stripTags : function(s) {
     return s.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
+  },
+
+  escapeRegExp : function(s) {
+    return s.replace(/([.*+?^${}()|[\]\/\\])/g, '\\$1');
   }
 
 };

@@ -122,7 +122,7 @@ dc.ui.Organizer = dc.View.extend({
     var row = $(el).closest('.row');
     var val = row.attr('data-value');
     var cat = row.attr('data-category');
-    return new RegExp('\\s*' + cat + ':\\s*[\'"]?' + val + '[\'"]?', 'ig');
+    return new RegExp('\\s*' + cat + ':\\s*[\'"]?' + Inflector.escapeRegExp(val) + '[\'"]?', 'ig');
   },
 
   _filterFacet : function(e) {
