@@ -1,6 +1,6 @@
 dc.ui.DocumentDialog = dc.ui.Dialog.extend({
 
-  ATTRIBUTES : ['title', 'source', 'description', 'related_article', 'access'],
+  ATTRIBUTES : ['title', 'source', 'description', 'related_article', 'remote_url', 'access'],
 
   id        : 'edit_document_dialog',
   className : 'dialog docalog',
