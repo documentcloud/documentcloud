@@ -1,4 +1,7 @@
 /*---------------------------- General Styles --------------------------------*/
+.serif {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
+}
 .interface, .dialog, input, .text_area {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif !important;
 }
