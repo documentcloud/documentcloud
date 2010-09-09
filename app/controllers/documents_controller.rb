@@ -96,6 +96,10 @@ class DocumentsController < ApplicationController
     json 'documents' => docs
   end
 
+  def queue_length
+    json 'queue_length' => Document.pending.count
+  end
+
   def send_pdf
     return not_found unless current_document(true)
     redirect_to(current_document.pdf_url(:direct))

@@ -34,6 +34,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._renderDocumentTiles();
     this.countDocuments();
     this.center();
+    this.checkQueueLength();
     return this;
   },
 
@@ -145,6 +146,15 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   countDocuments : function() {
     var num = this.set.size();
     this.title('Upload ' + (num > 1 ? num : '') + Inflector.pluralize(' Document', num));
+  },
+
+  checkQueueLength : function() {
+    $.getJSON('/documents/queue_length.json', {}, _.bind(function(resp) {
+      var num = resp.queue_length;
+      if (num <= 0) return;
+      var conj = num > 1 ? 'are' : 'is';
+      this.info('There ' + conj + ' ' + num + ' ' + Inflector.pluralize('document', num) + ' ahead of you in line.', true);
+    }, this));
   },
 
   confirm : function() {
