@@ -28,7 +28,7 @@ organization                | Organizations include businesses, government agenc
 place                       | Addresses, names of buildings and landmarks, regions, or geographical landmarks. For example: [place: "World Trade Center"][] or [place: "Gulf of Mexico"][].
 term                        | Searches for terms might include [term: "nuclear energy"][] or [term: "gross domestic product"][]. The results will be comparable to searching for the terms directly.
 email                       | Complete email addresses. Documents that mention the email address of the GAO FraudNet can be found with this search: [email: fraudnet@gao.gov][].
-phone                       | Telephone or Fax numbers.
+phone                       | Telephone or Fax numbers. For example: [phone: "(251) 441-6216"][].
 city                        | For example: [city: "New Orleans"][].
 state                       | (Includes provinces, in countries that have provinces instead of states.) For example: [state: Arizona][].
 country                     | For example: [country: Iran][].
