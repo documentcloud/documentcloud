@@ -8,9 +8,9 @@
 # a node will refuse to take new work. 'min_free_memory' is the minimum amount
 # of free RAM (in megabytes) a node is allowed to have, below which no new
 # workers are run. These settings may be used in any combination.
-:max_workers:         3
+:max_workers:         5
 # :max_load:            5.0
-# :min_free_memory:     10
+:min_free_memory:     10
 
 # The storage back-end that you'd like to use for intermediate and final results
 # of processing. 's3' and 'filesystem' are supported. 'filesystem' should only
