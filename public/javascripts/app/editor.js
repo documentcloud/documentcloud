@@ -7,8 +7,10 @@ _.extend(dc.app.editor, {
     this.el = $('body')[0];
     this.docId = docId;
     this.isOwner = isOwner;
-    this.createSubViews();
-    this.renderSubViews();
+    _.defer(_.bind(function() {
+      this.createSubViews();
+      this.renderSubViews();
+    }, this));
   },
 
   // Create all of the requisite subviews.
