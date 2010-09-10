@@ -8,8 +8,6 @@
         <td>Title</td>
         <td>Contributor</td>
         <td>Organization</td>
-        <td>Source</td>
-        <td>Pages</td>
         <td>Hits</td>
         <td>Embed Date</td>
         <td></td>
@@ -22,8 +20,6 @@
             <td><a href="<%= doc.get('remote_url') %>"><%= doc.get('public') ? Inflector.truncate(doc.get('title') || '', 50) : '<i>private</i>' %></a></td>
             <td><%= doc.get('account_name') %></td>
             <td><%= doc.get('organization_name') %></td>
-            <td><%= doc.get('public') ? Inflector.truncate(doc.get('source') || '', 25) : '<i>private</i>'  %></td>
-            <td><%= doc.get('page_count') %></td>
             <td><%= doc.get('hits') %></td>
             <td><%= doc.get('first_recorded_date') %></td>
             <td class="last"></td>
