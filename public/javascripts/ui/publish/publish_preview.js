@@ -18,7 +18,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
   STEPS : [null, null,
     'Step Two: Configure the Document Viewer',
-    'Step Three: Cut and Paste the Embed Code'
+    'Step Three: Copy and Paste the Embed Code'
   ],
 
   DEMO_ERROR : 'Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.',
@@ -92,7 +92,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
   _renderEmbedCode : function() {
     var options       = this.embedOptions();
-    options.container = '"#' + this.model.canonicalId() + '"';
+    options.container = '"#viewer-' + this.model.canonicalId() + '"';
     var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
     $('.publish_embed_code', this.el).html(JST['document/embed_dialog']({
       doc: this.model,
