@@ -98,7 +98,7 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   constructor : function(options) {
     this.base(options);
     this._polling = false;
-    _.bindAll(this, 'poll', 'downloadSelectedViewers', 'downloadSelectedPDF', 'downloadSelectedFullText', '_onModelChanged');
+    _.bindAll(this, 'poll', 'downloadViewers', 'downloadSelectedPDF', 'downloadSelectedFullText', '_onModelChanged');
     this.bind('model:changed', this._onModelChanged);
   },
 
@@ -130,8 +130,8 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
     return docs;
   },
 
-  downloadSelectedViewers : function() {
-    var ids = this.selectedIds();
+  downloadViewers : function(docs) {
+    var ids = _.map(docs, function(doc){ return doc.id; });
     var dialog = dc.ui.Dialog.progress('Preparing ' + Inflector.pluralize('document', ids.length) + ' for download...');
     dc.app.download('/download/' + ids.join('/') + '/document_viewer.zip', function() {
       dialog.close();

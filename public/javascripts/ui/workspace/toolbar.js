@@ -13,7 +13,7 @@ dc.ui.Toolbar = dc.View.extend({
     this.base(options);
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'openPublishTab', 'requestDownloadViewers',
+      'editRelatedArticle', 'editAccess', 'openEmbedDialog', 'requestDownloadViewers',
       'checkFloat', '_openTimeline', '_viewEntities', 'editDocumentURL');
     this.editMenu         = this._createEditMenu();
     this.publishMenu      = this._createPublishMenu();
@@ -114,15 +114,17 @@ dc.ui.Toolbar = dc.View.extend({
     }, this), {information : this._subtitle(docs.length)});
   },
 
-  openPublishTab : function() {
-    var docs = Documents.selected();
+  openEmbedDialog : function() {
+    var docs = Documents.chosen();
+    if (!docs.length) return;
     if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document in order to create the embed.');
     (new dc.ui.PublishPreview(docs[0])).render();
   },
 
   requestDownloadViewers : function() {
     if (dc.app.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to download viewers. <a href="/contact">Contact us</a> if you need a full featured account.');
-    Documents.downloadSelectedViewers();
+    var docs = Documents.chosen();
+    if (docs.length) Documents.downloadViewers(docs);
   },
 
   checkFloat : function() {
@@ -150,7 +152,8 @@ dc.ui.Toolbar = dc.View.extend({
   // Open up a Timeline. Limit the number of documents to ten. If no documents
   // are selected, choose the first ten docs.
   _openTimeline : function() {
-    var docs = Documents.selected();
+    var docs = Documents.chosen();
+    if (!docs.length && Documents.selectedCount) return;
     if (docs.length > 10) return dc.ui.Dialog.alert("You can only view a timeline for ten documents at a time.");
     if (docs.length <= 0) docs = Documents.models().slice(0, 10);
     if (docs.length <= 0) return dc.ui.Dialog.alert("In order to view a timeline, please select some documents.");
@@ -158,13 +161,15 @@ dc.ui.Toolbar = dc.View.extend({
   },
 
   _openRelatedDocuments : function() {
-    var docs = Documents.selected();
+    var docs = Documents.chosen();
+    if (!docs.length) return;
     if (docs.length != 1) return dc.ui.Dialog.alert("Please select a single document, in order to view related documents.");
     dc.app.searcher.search('related: ' + docs[0].id + '-' + docs[0].attributes().slug);
   },
 
   _viewEntities : function() {
-    var docs = Documents.selected();
+    var docs = Documents.chosen();
+    if (!docs.length && Documents.selectedCount) return;
     if (!docs.length) return dc.app.navigation.open('entities');
     dc.app.searcher.viewEntities(docs);
   },
@@ -185,7 +190,7 @@ dc.ui.Toolbar = dc.View.extend({
       label   : 'Publish',
       onOpen  : this._enableMenuItems,
       items   : [
-        {title : 'Embed Document Viewer',    onClick : this.openPublishTab},
+        {title : 'Embed Document Viewer',    onClick : this.openEmbedDialog},
         {title : 'Download Document Viewer', onClick : this.requestDownloadViewers},
         {title : 'Download Original PDF',    onClick : Documents.downloadSelectedPDF},
         {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
