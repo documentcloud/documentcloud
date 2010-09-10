@@ -49,7 +49,7 @@ dc.ui.DocumentList = dc.View.extend({
   },
 
   _endDeselect : function(e) {
-    if (dc.app.hotkeys.shift) return;
+    if (dc.app.hotkeys.shift || dc.app.hotkeys.command || dc.app.hotkeys.control) return;
     if ($(e.target).hasClass('doc_title') || $(e.target).hasClass('doc') || $(e.target).hasClass('edit_glyph')) return;
     if ((Math.abs(e.pageX - this._pageX) > this.SLOP) ||
         (Math.abs(e.pageY - this._pageY) > this.SLOP)) return;
