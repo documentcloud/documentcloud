@@ -86,8 +86,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   _onSelectOnce : function(e, data) {
-    this.render();
     dc.ui.spinner.hide();
+    if (this.set.any(function(file){ return file.overSizeLimit(); })) {
+      this.close();
+      return dc.ui.Dialog.alert("You can only upload documents less than 200MB in size. Please <a href=\"/help/troubleshooting\">optimize your document</a> before continuing.");
+    }
+    this.render();
   },
 
   // Cancel an upload by file queue id.

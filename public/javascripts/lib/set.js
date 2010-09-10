@@ -55,6 +55,11 @@ dc.Set = Base.extend({
     return _.each(this.models(), iterator, context);
   },
 
+  // Does any element in the set pass a truth test?
+  any : function(iterator, context) {
+    return _.any(this.models(), iterator, context);
+  },
+
   // Grab the first model in the set -- for testing.
   first : function() {
     return _.first(this.models());

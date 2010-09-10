@@ -4,6 +4,8 @@ dc.model.UploadDocument = dc.Model.extend({
 
   FILE_EXTENSION_MATCHER : /\.([^.]+)$/,
 
+  MAX_FILE_SIZE : 209715200, // 200 Megabytes
+
   // When creating an UploadDocument, we pull off some properties that
   // Uploadify provides on the file object, and attach them as attributes.
   set : function(attrs) {
@@ -16,6 +18,10 @@ dc.model.UploadDocument = dc.Model.extend({
       attrs.size      = file.size;
     }
     this.base(attrs);
+  },
+
+  overSizeLimit : function() {
+    return this.get('size') >= this.MAX_FILE_SIZE;
   }
 
 });
