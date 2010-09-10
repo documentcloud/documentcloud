@@ -41,8 +41,9 @@ module DC
         offset = chunk_number * MAX_TEXT_SIZE
         calais.entities.each do |entity|
           kind = Entity.normalize_kind(entity.type)
-          next unless kind
-          value = Entity.normalize_value(entity.attributes['commonname'] || entity.attributes['name'])
+          value = entity.attributes['commonname'] || entity.attributes['name']
+          next unless kind && value
+          value = Entity.normalize_value(value)
           next if kind == :phone && Validators::PHONE !~ value
           next if kind == :email && Validators::EMAIL !~ value
           occurrences = entity.instances.map do |instance|
