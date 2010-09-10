@@ -119,6 +119,7 @@
         margin: 0; padding: 0;
         position: absolute;
         left: 27px; top: 50px;
+        width: 16px;
       }
         body.minidocs #document_list .document .document_tool.spinner {
           top: 50px; left: 83px;
