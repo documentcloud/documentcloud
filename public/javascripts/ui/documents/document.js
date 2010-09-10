@@ -159,6 +159,7 @@ dc.ui.Document = dc.View.extend({
       standalone : true
     }));
     var count = Documents.chosen(this.model).length;
+    if (!count) return;
     var deleteTitle = Inflector.pluralize('Delete Document', count);
     menu.clear();
     menu.addItems([
