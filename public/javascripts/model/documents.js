@@ -131,7 +131,11 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   },
 
   downloadSelectedViewers : function() {
-    dc.app.download('/download/' + this.selectedIds().join('/') + '/document_viewer.zip');
+    var ids = this.selectedIds();
+    var dialog = dc.ui.Dialog.progress('Preparing ' + Inflector.pluralize('document', ids.length) + ' for download...');
+    dc.app.download('/download/' + ids.join('/') + '/document_viewer.zip', function() {
+      dialog.close();
+    });
   },
 
   downloadSelectedPDF : function() {

@@ -3,7 +3,6 @@ class DownloadController < ApplicationController
 
   layout nil
 
-  # TODO: Access control this, but not yet.
   def bulk_download
     @documents = Document.accessible(current_account, current_organization).find_all_by_id(params[:args][0...-1])
     case params[:args].last
