@@ -2,23 +2,23 @@
 // Used to extract keywords from the free text search.
 dc.app.SearchParser = {
 
-  FIRST_PROJECT   : /project:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  FIRST_PROJECT     : /project:\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  FIRST_DOC     :  /document:\s?(\d+-\S+)/i,
+  FIRST_DOC         : /document:\s*(\d+-\S+)/i,
 
-  FIRST_ACCOUNT   : /account:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  FIRST_ACCOUNT     : /account:\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  FIRST_PUBLISHED : /published:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  FIRST_GROUP       : /group:\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  FIRST_GROUP     : /group:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  FIRST_RELATED     : /related:\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  FIRST_RELATED   : /related:\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  ONE_ENTITY        : /(city|country|term|state|person|place|organization|email|phone):\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  ONE_ENTITY      : /(city|country|term|state|person|place|organization|email|phone):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  ALL_ENTITIES      : /(city|country|term|state|person|place|organization|email|phone):\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
 
-  ALL_ENTITIES    : /(city|country|term|state|person|place|organization|email|phone):\s?(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
+  PUBLISHED_ACCESS  : /access:\s*published/i,
 
-  WHITESPACE_ONLY : /^\s*$/,
+  WHITESPACE_ONLY   : /^\s*$/,
 
   extractProject : function(query) {
     var project = query.match(this.FIRST_PROJECT);
@@ -30,14 +30,13 @@ dc.app.SearchParser = {
     return account && (account[2] || account[3] || account[4]);
   },
 
-  extractPublished : function(query) {
-    var account = query.match(this.FIRST_PUBLISHED);
-    return account && (account[2] || account[3] || account[4]);
-  },
-
   extractGroup : function(query) {
     var group = query.match(this.FIRST_GROUP);
     return group && (group[2] || group[3] || group[4]);
+  },
+
+  extractPublished : function(query) {
+    return !!query.match(this.PUBLISHED_ACCESS);
   },
 
   extractEntities : function(query) {
@@ -62,10 +61,10 @@ dc.app.SearchParser = {
   },
 
   searchType : function(query) {
-    if (query.replace(this.FIRST_RELATED, '').match(this.WHITESPACE_ONLY)) return 'related';
-    if (query.replace(this.FIRST_PROJECT, '').match(this.WHITESPACE_ONLY)) return 'project';
-    if (query.replace(this.FIRST_ACCOUNT, '').match(this.WHITESPACE_ONLY)) return 'account';
-    if (query.replace(this.FIRST_PUBLISHED, '').match(this.WHITESPACE_ONLY)) return 'published';
+    if (query.replace(this.FIRST_RELATED, '').match(this.WHITESPACE_ONLY))  return 'related';
+    if (query.replace(this.FIRST_PROJECT, '').match(this.WHITESPACE_ONLY))  return 'project';
+    if (query.replace(this.FIRST_ACCOUNT, '').match(this.WHITESPACE_ONLY))  return 'account';
+    if (query.replace(this.FIRST_ACCOUNT, '').replace(this.PUBLISHED_ACCESS, '').match(this.WHITESPACE_ONLY)) return 'published';
     return 'search';
   }
 

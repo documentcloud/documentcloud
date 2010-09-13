@@ -4,7 +4,7 @@ dc.ui.Organizer = dc.View.extend({
 
   // TODO: add 'published_documents' back, when we support it.
   TOP_LEVEL_SEARCHES: [
-    'all_documents', 'your_documents', 'org_documents'
+    'all_documents', 'your_documents', 'published_documents', 'org_documents'
   ],
 
   callbacks : {

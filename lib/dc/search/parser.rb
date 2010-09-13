@@ -15,8 +15,8 @@ module DC
       # about the text, fields, projects, and attributes it's composed of.
       def parse(query_string='')
         @text, @access, @source_document = nil, nil, nil
-        @fields, @accounts, @published, @groups, @projects, @project_ids, @doc_ids, @attributes =
-          [], [], [], [], [], [], [], []
+        @fields, @accounts, @groups, @projects, @project_ids, @doc_ids, @attributes =
+          [], [], [], [], [], [], []
 
         quoted_fields = query_string.scan(Matchers::QUOTED_FIELD).map {|m| m[0] }
         bare_fields   = query_string.gsub(Matchers::QUOTED_FIELD, '').scan(Matchers::BARE_FIELD)
@@ -28,7 +28,7 @@ module DC
         Query.new(:text => @text, :fields => @fields, :projects => @projects,
           :accounts => @accounts, :groups => @groups, :project_ids => @project_ids,
           :doc_ids => @doc_ids, :attributes => @attributes, :access => @access,
-          :published => @published, :source_document => @source_document)
+          :source_document => @source_document)
       end
 
       # Convert the full-text search into a form that our index can handle.

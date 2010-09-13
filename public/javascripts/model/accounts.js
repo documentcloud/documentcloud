@@ -22,8 +22,10 @@ dc.model.Account = dc.Model.extend({
     return Organizations.get(this.get('organization_id'));
   },
 
-  openDocuments : function() {
-    dc.app.searcher.search('account: ' + this.get('slug'));
+  openDocuments : function(options) {
+    options = options || {};
+    var suffix = options.published ? ' access: published' : '';
+    dc.app.searcher.search('account: ' + this.get('slug') + suffix);
   },
 
   openOrganizationDocuments : function() {

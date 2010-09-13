@@ -22,7 +22,9 @@ module DC
       :public       => PUBLIC,
       :pending      => PENDING,
       :invisible    => INVISIBLE,
-      :error        => ERROR
+      :error        => ERROR,
+      # Faux-access, not represented in the DB:
+      :published    => :published
     }
 
     ACCESS_NAMES = ACCESS_MAP.invert

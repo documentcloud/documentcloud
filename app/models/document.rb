@@ -185,7 +185,7 @@ class Document < ActiveRecord::Base
   alias_method :cacheable?, :publicly_accessible?
 
   def published?
-    remote_url.present? || detected_remote_url.present?
+    publicly_accessible? && (remote_url.present? || detected_remote_url.present?)
   end
 
   # When the access level changes, all sub-resource and asset permissions
