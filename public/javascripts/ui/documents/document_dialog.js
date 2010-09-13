@@ -85,6 +85,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   open : function(doc) {
     var docs = Documents.chosen(doc);
     if (!docs.length) return;
+    if (!Documents.allowedToEdit(docs)) return;
     new dc.ui.DocumentDialog(docs);
   }
 
