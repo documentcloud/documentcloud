@@ -36,7 +36,11 @@
 }
 .icon.published {
   background-image: url(/images/embed/icons/published.png);
+  background-position: center 0;
 }
+  .icon.published:hover {
+    background-position: center -18px;
+  }
 .icon.cancel_search, .icon.cancel_search_dark {
   width: 11px; height: 11px;
   background-position: center 0;

@@ -94,8 +94,12 @@
       width: 0;
       vertical-align: text-bottom;
       margin-left: 8px;
+      line-height: 18px;
       padding-right: 16px;
     }
+      .document .published {
+        cursor: pointer;
+      }
       .document .edit_glyph {
         display: inline;
         background-color: #fff;

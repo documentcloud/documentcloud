@@ -19,6 +19,7 @@ dc.ui.Document = dc.View.extend({
     '.icon.doc.dblclick'        : 'viewDocument',
     '.show_notes.click'         : 'toggleNotes',
     '.title .edit_glyph.click'  : 'openDialog',
+    '.title .published.click'   : 'viewPublishedDocument',
     '.page_icon.click'          : '_openEntity',
     '.occurrence.click'         : '_openEntity',
     '.cancel_search.click'      : '_hidePages',
@@ -90,6 +91,10 @@ dc.ui.Document = dc.View.extend({
   viewDocument : function(e) {
     this.model.openViewer();
     return false;
+  },
+
+  viewPublishedDocument : function() {
+    this.model.openPublishedViewer();
   },
 
   viewDocuments : function() {

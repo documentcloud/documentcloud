@@ -18,6 +18,11 @@ dc.model.Document = dc.Model.extend({
     return window.location.protocol + base;
   },
 
+  // Generate the published URL for opening this document.
+  publishedUrl : function() {
+    return this.get('remote_url') || this.get('detected_remote_url');
+  },
+
   // Generate the canonical id for this document.
   canonicalId : function() {
     return this.id + '-' + this.get('slug');
@@ -26,6 +31,12 @@ dc.model.Document = dc.Model.extend({
   openViewer : function() {
     if (this.checkBusy()) return;
     window.open(this.url());
+  },
+
+  openPublishedViewer : function() {
+    if (this.checkBusy()) return;
+    if (!this.isPublished()) return dc.ui.Dialog.alert('"' + this.get('title') + '" is not published.');
+    window.open(this.publishedUrl());
   },
 
   openText : function() {
@@ -73,7 +84,7 @@ dc.model.Document = dc.Model.extend({
   },
 
   isPublished : function() {
-    return this.isPublic() && (this.get('remote_url') || this.get('detected_remote_url'));
+    return this.isPublic() && this.publishedUrl();
   },
 
   decrementNotes : function() {
