@@ -12,10 +12,6 @@ module DC
         fire_job(:action => 'backup_database', :inputs => [true])
       end
 
-      def self.update_remote_urls
-        fire_job(:action => 'update_remote_urls', :inputs => [true])
-      end
-
 
       private
 
