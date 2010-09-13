@@ -98,6 +98,7 @@
       padding-right: 16px;
     }
       .document .published {
+        zoom: 1;
         cursor: pointer;
       }
       .document .edit_glyph {
