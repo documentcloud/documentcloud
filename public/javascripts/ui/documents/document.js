@@ -19,7 +19,7 @@ dc.ui.Document = dc.View.extend({
     '.icon.doc.dblclick'        : 'viewDocument',
     '.show_notes.click'         : 'toggleNotes',
     '.title .edit_glyph.click'  : 'openDialog',
-    '.title .published.click'   : 'viewPublishedDocument',
+    '.title .published.click'   : 'viewPublishedDocuments',
     '.page_icon.click'          : '_openEntity',
     '.occurrence.click'         : '_openEntity',
     '.cancel_search.click'      : '_hidePages',
@@ -33,7 +33,8 @@ dc.ui.Document = dc.View.extend({
     this.el.id = 'document_' + this.model.id;
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
-      '_renderPages', 'viewDocuments', 'openDialog', 'openEmbed', 'viewEntities', 'deleteDocuments');
+      '_renderPages', 'viewDocuments', 'viewPublishedDocuments', 'openDialog',
+      'openEmbed', 'viewEntities', 'deleteDocuments');
     this.model.bind('model:changed', this._onDocumentChange);
     this.model.notes.bind('set:added', this._addNote);
     this.model.notes.bind('set:refreshed', this._renderNotes);
@@ -93,8 +94,12 @@ dc.ui.Document = dc.View.extend({
     return false;
   },
 
-  viewPublishedDocument : function() {
-    this.model.openPublishedViewer();
+  viewPublishedDocuments : function() {
+    var docs = Documents.chosen(this.model);
+    if (!docs.length) return;
+    _.each(docs, function(doc){
+      if (doc.isPublished()) doc.openPublishedViewer();
+    });
   },
 
   viewDocuments : function() {
@@ -172,17 +177,17 @@ dc.ui.Document = dc.View.extend({
     if (!count) return;
     var deleteTitle = Inflector.pluralize('Delete Document', count);
     menu.clear();
-    menu.addItems([
-      {title : 'Open',                    onClick: this.viewDocuments},
-      {title : 'View Entities',           onClick: this.viewEntities}
-    ]);
+    var items = [{title : 'Open', onClick: this.viewDocuments}];
+    if (this.model.isPublished()) items.push({title : 'Open Published Version', onClick : this.viewPublishedDocuments});
+    items.push({title : 'View Entities', onClick: this.viewEntities});
     if (this.model.allowedToEdit()) {
-      menu.addItems([
+      items = items.concat([
         {title : 'Edit All Fields',         onClick: this.openDialog},
         {title : 'Embed Document Viewer',   onClick: this.openEmbed, attrs : {'class' : count > 1 ? 'disabled' : ''}},
         {title : deleteTitle,               onClick: this.deleteDocuments, attrs : {'class' : 'warn'}}
       ]);
     }
+    menu.addItems(items);
     menu.render().open().content.css({top : e.pageY, left : e.pageX});
   },
 
