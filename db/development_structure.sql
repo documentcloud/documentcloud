@@ -168,7 +168,9 @@ CREATE TABLE documents (
     publication_date date,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    related_article character varying(255)
+    related_article text,
+    detected_remote_url text,
+    remote_url text
 );
 
 
@@ -978,4 +980,4 @@ INSERT INTO schema_migrations (version) VALUES ('20100630131224');
 
 INSERT INTO schema_migrations (version) VALUES ('20100701132413');
 
-INSERT INTO schema_migrations (version) VALUES ('20100713192741');
+INSERT INTO schema_migrations (version) VALUES ('20100823172339');
