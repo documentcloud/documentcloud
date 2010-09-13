@@ -34,6 +34,9 @@
 .DV-privateLock {
   background-image: url(/images/embed/icons/lock.png);
 }
+.icon.published {
+  background-image: url(/images/embed/icons/published.png);
+}
 .icon.cancel_search, .icon.cancel_search_dark {
   width: 11px; height: 11px;
   background-position: center 0;

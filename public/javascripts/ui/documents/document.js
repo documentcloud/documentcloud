@@ -185,7 +185,9 @@ dc.ui.Document = dc.View.extend({
       case dc.access.ERROR:        return {'class' : base + 'alert_gray', title : 'Broken document'};
       case dc.access.ORGANIZATION: return {'class' : base + 'lock',       title : 'Private to ' + dc.app.organization.name};
       case dc.access.PRIVATE:      return {'class' : base + 'lock',       title : 'Private'};
-      default:                     return {'class' : base + 'hidden'};
+      default:
+        if (this.model.isPublished()) return {'class' : base + 'published', title : 'Published'};
+        return {'class' : base + 'hidden'};
     }
   },
 

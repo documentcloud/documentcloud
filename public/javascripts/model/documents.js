@@ -72,6 +72,10 @@ dc.model.Document = dc.Model.extend({
     return this.get('access') == dc.access.PUBLIC;
   },
 
+  isPublished : function() {
+    return this.isPublic() && (this.get('remote_url') || this.get('detected_remote_url'));
+  },
+
   decrementNotes : function() {
     var count = this.get('annotation_count');
     if (count <= 0) return false;
