@@ -321,6 +321,8 @@ module DC
             @solr.build do
               if access == :published
                 with :published, true
+              elsif access == :unpublished
+                with :published, false
               else
                 with :access, access
               end
@@ -329,6 +331,8 @@ module DC
             if access == :published
               @sql << 'documents.access in (?) and (documents.remote_url is not null or documents.detected_remote_url is not null)'
               @interpolations << [PUBLIC, EXCLUSIVE]
+            elsif access == :unpublished
+              @sql << 'documents.remote_url is null and documents.detected_remote_url is null'
             else
               @sql << 'documents.access = ?'
               @interpolations << access

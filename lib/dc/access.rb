@@ -24,7 +24,8 @@ module DC
       :invisible    => INVISIBLE,
       :error        => ERROR,
       # Faux-access, not represented in the DB:
-      :published    => :published
+      :published    => :published,
+      :unpublished  => :unpublished
     }
 
     ACCESS_NAMES = ACCESS_MAP.invert
