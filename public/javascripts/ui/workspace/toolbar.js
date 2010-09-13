@@ -118,7 +118,9 @@ dc.ui.Toolbar = dc.View.extend({
     var docs = Documents.chosen();
     if (!docs.length) return;
     if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document in order to create the embed.');
-    (new dc.ui.PublishPreview(docs[0])).render();
+    var doc = docs[0];
+    if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
+    (new dc.ui.PublishPreview(doc)).render();
   },
 
   requestDownloadViewers : function() {

@@ -32,7 +32,7 @@ dc.ui.Document = dc.View.extend({
     this.el.id = 'document_' + this.model.id;
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
-      '_renderPages', 'viewDocuments', 'openDialog', 'viewEntities', 'deleteDocuments');
+      '_renderPages', 'viewDocuments', 'openDialog', 'openEmbed', 'viewEntities', 'deleteDocuments');
     this.model.bind('model:changed', this._onDocumentChange);
     this.model.notes.bind('set:added', this._addNote);
     this.model.notes.bind('set:refreshed', this._renderNotes);
@@ -123,6 +123,11 @@ dc.ui.Document = dc.View.extend({
     dc.ui.DocumentDialog.open(this.model);
   },
 
+  openEmbed : function() {
+    if (!this.model.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
+    (new dc.ui.PublishPreview(this.model)).render();
+  },
+
   toggleNotes : function(e) {
     e.stopPropagation();
     var next = _.bind(function() {
@@ -166,7 +171,7 @@ dc.ui.Document = dc.View.extend({
       {title : 'Open',                    onClick: this.viewDocuments},
       {title : 'Edit All Fields',         onClick: this.openDialog},
       {title : 'View Entities',           onClick: this.viewEntities},
-      {title : 'Embed Document Viewer',   onClick: _.bind(function(){ (new dc.ui.PublishPreview(this.model)).render(); }, this), attrs : {'class' : count > 1 ? 'disabled' : ''}},
+      {title : 'Embed Document Viewer',   onClick: this.openEmbed, attrs : {'class' : count > 1 ? 'disabled' : ''}},
       {title : deleteTitle,               onClick: this.deleteDocuments, attrs : {'class' : 'warn'}}
     ]);
     menu.render().open().content.css({top : e.pageY, left : e.pageX});

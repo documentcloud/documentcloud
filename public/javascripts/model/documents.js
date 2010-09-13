@@ -93,6 +93,8 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   resource : 'documents',
   model    : dc.model.Document,
 
+  EMBED_FORBIDDEN : "At this stage in the beta, you may only embed documents you've uploaded yourself.",
+
   POLL_INTERVAL : 10000, // 10 seconds.
 
   constructor : function(options) {
