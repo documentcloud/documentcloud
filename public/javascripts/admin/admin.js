@@ -177,7 +177,7 @@ dc.ui.Admin = dc.View.extend({
     $('tr.accounts_row').show();
   },
 
-  // Loads the top 100 embedded documents, sorted by number of hits in the past year.
+  // Loads the top 100 published documents, sorted by number of hits in the past year.
   _loadMoreTopDocuments : function(e) {
     $.getJSON('/admin/hits_on_documents', {}, _.bind(this._displayMoreTopDocuments, this));
   },

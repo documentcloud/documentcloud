@@ -23,7 +23,7 @@
     </tr>
     <tr class="labels">
       <td>Public Documents</td>
-      <td>Embedded Documents</td>
+      <td>Published Documents</td>
       <td>Pending Documents</td>
       <td>Failed or Broken Documents</td>
     </tr>
@@ -35,8 +35,8 @@
       <td width="25%"><div class="number"><%= count_total_collaborators %></div></td>
     </tr>
     <tr class="labels">
-      <td>Hits on embedded documents - past week</td>
-      <td>Hits on embedded documents - past year</td>
+      <td>Hits on published documents - past week</td>
+      <td>Hits on published documents - past year</td>
       <td>Organizations Embedding Documents</td>
       <td>Collaborators on Documents</td>
     </tr>
@@ -126,14 +126,14 @@
     <%= JST['top_documents']({}) %>
     <tr class="labels top_documents_label_week">
       <td colspan="4">
-        <div class="float_right more_top_documents text_link">All Embedded Documents</div>
+        <div class="float_right more_top_documents text_link">All Published Documents</div>
         <a class="float_right download_csv text_link" href="/admin/top_documents_csv.csv">Download CSV</a></div>
-        Top 5 Most Popular Embedded Documents - Past 7 days
+        Top 5 Most Popular Published Documents - Past 7 days
       </td>
     </tr>
     <tr class="labels top_documents_label_year">
       <td colspan="4">
-        Most Popular Embedded Documents - Past year
+        Most Popular Published Documents - Past year
       </td>
     </tr>
 
