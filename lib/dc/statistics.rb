@@ -63,7 +63,7 @@ module DC
     end
 
     def self.embedded_document_count
-      RemoteUrl.count :document_id, :distinct => true
+      Document.unrestricted.published.count
     end
 
     def self.remote_url_hits_last_week
