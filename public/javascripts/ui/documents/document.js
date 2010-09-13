@@ -174,11 +174,15 @@ dc.ui.Document = dc.View.extend({
     menu.clear();
     menu.addItems([
       {title : 'Open',                    onClick: this.viewDocuments},
-      {title : 'Edit All Fields',         onClick: this.openDialog},
-      {title : 'View Entities',           onClick: this.viewEntities},
-      {title : 'Embed Document Viewer',   onClick: this.openEmbed, attrs : {'class' : count > 1 ? 'disabled' : ''}},
-      {title : deleteTitle,               onClick: this.deleteDocuments, attrs : {'class' : 'warn'}}
+      {title : 'View Entities',           onClick: this.viewEntities}
     ]);
+    if (this.model.allowedToEdit()) {
+      menu.addItems([
+        {title : 'Edit All Fields',         onClick: this.openDialog},
+        {title : 'Embed Document Viewer',   onClick: this.openEmbed, attrs : {'class' : count > 1 ? 'disabled' : ''}},
+        {title : deleteTitle,               onClick: this.deleteDocuments, attrs : {'class' : 'warn'}}
+      ]);
+    }
     menu.render().open().content.css({top : e.pageY, left : e.pageX});
   },
 
