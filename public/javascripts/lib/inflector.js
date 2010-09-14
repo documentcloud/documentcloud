@@ -142,6 +142,7 @@ window.Inflector = {
   // Normalize an entered-by-hand url, trimming and adding the protocol, if missing.
   normalizeUrl : function(s) {
     s = Inflector.trim(s);
+    if (!s) return null;
     return (/^https?:\/\//).test(s) ? s : 'http://' + s;
   },
 
