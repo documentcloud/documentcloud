@@ -466,6 +466,12 @@ textarea.text_area {
     .dialog .information.error {
       color: #f00;
     }
+  .dialog .description {
+    text-align: left;
+    font-size: 11px;
+    line-height: 14px;
+    margin-bottom: 10px;
+  }
   .dialog .text_link {
     font-size: 11px;
     line-height: 14px;
@@ -512,7 +518,7 @@ textarea.text_area {
     .dialog .choices > label {
       line-height: 18px;
     }
-    .dialog .description {
+    .dialog .choice_description {
       font-size: 10px;
       color: #999;
       padding: 0 0 10px 22px;

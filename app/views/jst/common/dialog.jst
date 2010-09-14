@@ -5,6 +5,11 @@
 <div class="information selectable_text"><%= information || '' %></div>
 <% var spinner_style = mode == 'progress' ? '' : 'display:none;'; %>
 <div class="icon spinner_dark" style="<%= spinner_style %>"></div>
+<% if (description) { %>
+  <div class="description">
+    <%= description %>
+  </div>
+<% } %>
 <% if (text) { %>
   <div class="text"><%= text %></div>
 <% } %>
@@ -24,7 +29,7 @@
         <% _.each(choices, function(choice, i) { %>
           <input class="input" type="radio" name="choice" id="choice_<%= i %>" value="<%= choice.value %>" <%= choice.selected ? 'checked="true"' : '' %>/>
           <label for="choice_<%= i %>"><%= choice.text %></label>
-          <div class="description selectable_text"><%= choice.description %></div>
+          <div class="choice_description selectable_text"><%= choice.description %></div>
         <% }); %>
       </div>
     <% } else if (mode == 'prompt') { %>

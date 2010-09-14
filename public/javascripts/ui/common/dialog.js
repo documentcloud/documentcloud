@@ -6,6 +6,7 @@ dc.ui.Dialog = dc.View.extend({
     title       : "Untitled Dialog",
     text        : null,
     information : null,
+    description : null,
     choices     : null,
     password    : false,
     editor      : false,

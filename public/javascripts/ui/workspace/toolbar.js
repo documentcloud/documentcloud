@@ -81,10 +81,15 @@ dc.ui.Toolbar = dc.View.extend({
   editRelatedArticle : function() {
     this.edit(function(docs) {
       var current = Documents.sharedAttribute(docs, 'related_article') || '';
+      var suffix  = docs.length > 1 ? 'these documents:' : 'this document:';
       dc.ui.Dialog.prompt('Related Article', current, function(rel) {
         _.each(docs, function(doc) { Documents.update(doc, {related_article : rel}); });
         return true;
-      }, {mode : 'short_prompt', information : this._subtitle(docs.length)});
+      }, {
+        mode        : 'short_prompt',
+        information : this._subtitle(docs.length),
+        description : 'Enter the URL of the article that references ' + suffix
+      });
     });
   },
 
@@ -94,7 +99,10 @@ dc.ui.Toolbar = dc.View.extend({
       dc.ui.Dialog.prompt('Document URL', doc.get('remote_url'), function(url) {
         Documents.update(doc, {remote_url : url});
         return true;
-      }, {mode : 'short_prompt'});
+      }, {
+        mode        : 'short_prompt',
+        description : 'Enter the URL of the page on which this document is embedded:'
+      });
     });
   },
 
