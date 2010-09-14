@@ -84,7 +84,7 @@ dc.ui.Toolbar = dc.View.extend({
       var suffix  = docs.length > 1 ? 'these documents:' : 'this document:';
       dc.ui.Dialog.prompt('Related Article', current, function(rel, dialog) {
         rel = Inflector.normalizeUrl(rel);
-        if (!dialog.validateUrl(rel)) return false;
+        if (rel && !dialog.validateUrl(rel)) return false;
         _.each(docs, function(doc) { Documents.update(doc, {related_article : rel}); });
         return true;
       }, {
@@ -100,7 +100,7 @@ dc.ui.Toolbar = dc.View.extend({
       var doc = docs[0];
       dc.ui.Dialog.prompt('Document URL', doc.get('remote_url'), function(url, dialog) {
         url = Inflector.normalizeUrl(url);
-        if (!dialog.validateUrl(url)) return false;
+        if (url && !dialog.validateUrl(url)) return false;
         Documents.update(doc, {remote_url : url});
         return true;
       }, {
