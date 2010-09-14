@@ -82,7 +82,9 @@ dc.ui.Toolbar = dc.View.extend({
     this.edit(function(docs) {
       var current = Documents.sharedAttribute(docs, 'related_article') || '';
       var suffix  = docs.length > 1 ? 'these documents:' : 'this document:';
-      dc.ui.Dialog.prompt('Related Article', current, function(rel) {
+      dc.ui.Dialog.prompt('Related Article', current, function(rel, dialog) {
+        rel = Inflector.normalizeUrl(rel);
+        if (!dialog.validateUrl(rel)) return false;
         _.each(docs, function(doc) { Documents.update(doc, {related_article : rel}); });
         return true;
       }, {
@@ -96,7 +98,9 @@ dc.ui.Toolbar = dc.View.extend({
   editDocumentURL : function() {
     this.edit(function(docs) {
       var doc = docs[0];
-      dc.ui.Dialog.prompt('Document URL', doc.get('remote_url'), function(url) {
+      dc.ui.Dialog.prompt('Document URL', doc.get('remote_url'), function(url, dialog) {
+        url = Inflector.normalizeUrl(url);
+        if (!dialog.validateUrl(url)) return false;
         Documents.update(doc, {remote_url : url});
         return true;
       }, {

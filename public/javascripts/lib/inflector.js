@@ -139,6 +139,12 @@ window.Inflector = {
     return byteSize + ' ' + suffix;
   },
 
+  // Normalize an entered-by-hand url, trimming and adding the protocol, if missing.
+  normalizeUrl : function(s) {
+    s = Inflector.trim(s);
+    return (/^https?:\/\//).test(s) ? s : 'http://' + s;
+  },
+
   // From Prototype.js. Strip out HTML tags.
   stripTags : function(s) {
     return s.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');

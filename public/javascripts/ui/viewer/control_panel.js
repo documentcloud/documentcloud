@@ -31,7 +31,8 @@ dc.ui.ViewerControlPanel = dc.View.extend({
   },
 
   editRelatedArticle : function() {
-    dc.ui.Dialog.prompt('Related Article', currentDocument.api.getRelatedArticle(), _.bind(function(url) {
+    dc.ui.Dialog.prompt('Related Article', currentDocument.api.getRelatedArticle(), _.bind(function(url, dialog) {
+      if (!dialog.validateUrl(url)) return false;
       currentDocument.api.setRelatedArticle(url);
       this._updateDocument({related_article : url});
       return true;

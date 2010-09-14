@@ -112,6 +112,12 @@ dc.ui.Dialog = dc.View.extend({
     $('.spinner_dark', this.el).hide();
   },
 
+  validateUrl : function(url) {
+    if (dc.app.validator.check(url, 'url')) return true;
+    this.error('Please enter a valid URL.');
+    return false;
+  },
+
   _returnCloses : function() {
     return this.options.mode == 'alert' || this.options.mode == 'short_prompt';
   },
