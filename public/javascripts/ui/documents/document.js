@@ -200,7 +200,7 @@ dc.ui.Document = dc.View.extend({
       case dc.access.ORGANIZATION: return {'class' : base + 'lock',       title : 'Private to ' + dc.app.organization.name};
       case dc.access.PRIVATE:      return {'class' : base + 'lock',       title : 'Private'};
       default:
-        if (this.model.isPublished()) return {'class' : base + 'published', title : 'Published'};
+        if (this.model.isPublished()) return {'class' : base + 'published', title : 'Open Published Version'};
         return {'class' : base + 'hidden'};
     }
   },
