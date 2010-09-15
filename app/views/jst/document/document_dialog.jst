@@ -30,15 +30,17 @@
   <br class="clear" />
 </div>
 
-<div class="row">
-  <label for="document_edit_remote_url" title="URL of the page on your site where this document is embedded">
-    Document URL:
-  </label>
-  <div class="text_input dark small">
-    <input name="remote_url" id="document_edit_remote_url" class="attribute" type="text" />
+<% if (!multiple) { %>
+  <div class="row">
+    <label for="document_edit_remote_url" title="URL of the page on your site where this document is embedded">
+      Document URL:
+    </label>
+    <div class="text_input dark small">
+      <input name="remote_url" id="document_edit_remote_url" class="attribute" type="text" />
+    </div>
+    <br class="clear" />
   </div>
-  <br class="clear" />
-</div>
+<% } %>
 
 <div class="row tall">
   <label for="document_edit_description" title="Paragraph description of this document">

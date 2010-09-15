@@ -45,10 +45,19 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     var changes = {};
     _.each(this.ATTRIBUTES, _.bind(function(attr) {
       var el = $('#document_edit_' + attr, this.el);
+      if (!el.length) return;
       var next = el.val();
       if (attr == 'access') next = parseInt(next, 10);
+      if (attr == 'related_article' || attr == 'remote_url') next = Inflector.normalizeUrl(next);
       if (next != original[attr] && el.hasClass('changed')) changes[attr] = next;
     }, this));
+    var errors = _.any(['related_article', 'remote_url'], _.bind(function(attr) {
+      if (changes[attr] && !this.validateUrl(changes[attr])) {
+        $('#document_edit_' + attr, this.el).addClass('error');
+        return true;
+      }
+    }, this));
+    if (errors) return false;
     this.close();
     if (!_.isEmpty(changes)) {
       _.each(this.docs, function(doc){ Documents.update(doc, changes); });
@@ -66,7 +75,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
 
   _title : function() {
     if (this.multiple) return this.docs.length + ' Documents';
-    return '"' + Inflector.truncate(this.docs[0].get('title'), 50) + '"';
+    return '"' + Inflector.truncate(this.docs[0].get('title'), 35) + '"';
   },
 
   _markChanged : function(e) {

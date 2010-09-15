@@ -138,8 +138,9 @@ div.text_input {
         background: #fff;
         color: #333;
       }
-    div.text_input.error input {
-      border-color: #991612;
+    div.text_input.error input,
+    div.text_input input.error {
+      border-color: #991612 !important;
     }
   div.text_input.search {
     height: 28px;
