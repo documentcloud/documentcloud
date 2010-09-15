@@ -91,22 +91,22 @@
       }
     .document .document_tool {
       display: inline;
-      width: 0;
+      width: 0; height: 18px;
       vertical-align: text-bottom;
       margin-left: 8px;
       line-height: 18px;
       padding-right: 16px;
     }
       .document .published {
+        display: inline-block;
         zoom: 1;
         cursor: pointer;
       }
       .document .edit_glyph {
-        display: inline;
+        display: inline-block;
         background-color: #fff;
         zoom: 1;
         visibility: hidden;
-        line-height: 18px;
         cursor: pointer;
       }
         .document.is_editable:hover .edit_glyph {
