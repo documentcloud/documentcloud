@@ -51,6 +51,8 @@ dc.View = Base.extend({
   //   {selector.event_name, callback_name}
   // pairs. Callbacks will be bound to the view, with 'this' set properly.
   // Passing a selector of 'el' binds to the view's root element.
+  // Change events are not delegated through the view because IE does not bubble
+  // change events at all.
   setCallbacks : function(callbacks) {
     var me = this;
     $(me.el).unbind();
@@ -58,12 +60,11 @@ dc.View = Base.extend({
       key = key.split(me.LAST_DOT);
       var selector = key[0], eventName = key[1], methodName = val;
       var method = _.bind(me[methodName], me);
-      // // Uncomment the following line for instrumentation about every fired callback.
-      // var method = function() {
-      //   console.log(['callback', selector, eventName, methodName, me]);
-      //   me[methodName].apply(me, arguments);
-      // };
-      (selector == 'el') ? $(me.el).bind(eventName, method) : $(me.el).delegate(selector, eventName, method);
+      if (selector == 'el' || eventName == 'change') {
+        $(me.el).bind(eventName, method);
+      } else {
+        $(me.el).delegate(selector, eventName, method);
+      }
     });
   }
 

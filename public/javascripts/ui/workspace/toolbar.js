@@ -60,11 +60,11 @@ dc.ui.Toolbar = dc.View.extend({
 
   editDescription : function() {
     this.edit(function(docs) {
-      var doc = docs[0];
-      dc.ui.Dialog.prompt('Description', doc.get('description'), function(description) {
-        Documents.update(doc, {description : description});
+      var current = Documents.sharedAttribute(docs, 'description') || '';
+      dc.ui.Dialog.prompt('Description', current, function(description) {
+        _.each(docs, function(doc) { Documents.update(doc, {description : description}); });
         return true;
-      });
+      }, {information : this._subtitle(docs.length)});
     });
   },
 
@@ -82,7 +82,7 @@ dc.ui.Toolbar = dc.View.extend({
     this.edit(function(docs) {
       var current = Documents.sharedAttribute(docs, 'related_article') || '';
       var suffix  = docs.length > 1 ? 'these documents:' : 'this document:';
-      dc.ui.Dialog.prompt('Related Article', current, function(rel, dialog) {
+      dc.ui.Dialog.prompt('Related Article URL', current, function(rel, dialog) {
         rel = Inflector.normalizeUrl(rel);
         if (rel && !dialog.validateUrl(rel)) return false;
         _.each(docs, function(doc) { Documents.update(doc, {related_article : rel}); });
@@ -217,14 +217,14 @@ dc.ui.Toolbar = dc.View.extend({
       label   : 'Edit',
       onOpen  : this._enableMenuItems,
       items   : [
-        {title : 'Edit All Fields',      attrs: {'class' : 'multiple'},        onClick : function(){ dc.ui.DocumentDialog.open(); }},
-        {title : 'Edit Title',           attrs: {'class' : 'singular indent'}, onClick : this.editTitle},
-        {title : 'Edit Description',     attrs: {'class' : 'singular indent'}, onClick : this.editDescription},
-        {title : 'Edit Document URL',    attrs: {'class' : 'singular indent'}, onClick : this.editDocumentURL},
-        {title : 'Edit Source',          attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
-        {title : 'Edit Related Article', attrs: {'class' : 'multiple indent'}, onClick : this.editRelatedArticle},
-        {title : 'Edit Access Level',    attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
-        {title : 'Delete Documents',     attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
+        {title : 'Edit All Fields',           attrs: {'class' : 'multiple'},        onClick : function(){ dc.ui.DocumentDialog.open(); }},
+        {title : 'Edit Title',                attrs: {'class' : 'singular indent'}, onClick : this.editTitle},
+        {title : 'Edit Source',               attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
+        {title : 'Edit Description',          attrs: {'class' : 'multiple indent'}, onClick : this.editDescription},
+        {title : 'Edit Related Article URL',  attrs: {'class' : 'multiple indent'}, onClick : this.editRelatedArticle},
+        {title : 'Edit Document URL',         attrs: {'class' : 'singular indent'}, onClick : this.editDocumentURL},
+        {title : 'Edit Access Level',         attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
+        {title : 'Delete Documents',          attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
       ]
     });
   },

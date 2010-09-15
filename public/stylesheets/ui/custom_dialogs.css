@@ -18,8 +18,8 @@
   }
   .docalog label {
     display: block;
-    line-height: 27px;
-    font-size: 12px;
+    line-height: 25px;
+    font-size: 11px;
     color: #ccc;
     text-align: left;
     position: absolute;
@@ -28,11 +28,11 @@
   .docalog .text_input {
     position: absolute;
     right: 0;
-    width: 375px;
+    width: 370px;
   }
   .docalog textarea.content {
     float: right;
-    width: 371px; height: 78px;
+    width: 366px; height: 78px;
     display: block;
   }
   .docalog .document_access {
