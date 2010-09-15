@@ -51,7 +51,7 @@ module DC
           type = type.downcase
           case type
           when 'account'    then @accounts << value.to_i
-          when 'group'      then @groups << value
+          when 'group'      then @groups << value.downcase
           when 'access'     then @access = ACCESS_MAP[value.strip.to_sym]
           when 'project'    then @projects << value
           when 'projectid'  then @project_ids << value.to_i
