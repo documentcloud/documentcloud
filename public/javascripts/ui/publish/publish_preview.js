@@ -49,7 +49,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
 
   displayTitle : function() {
-    if (this.currentStep == 1) return 'Step One: Review "' + Inflector.truncate(this.model.get('title'), 30) + '"';
+    if (this.currentStep == 1) return 'Step One: Review "' + Inflector.truncate(this.model.get('title'), 25) + '"';
     return this.STEPS[this.currentStep];
   },
 
@@ -108,17 +108,25 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     var access = $('input[name=access_level]', this.el).is(':checked') ? dc.access.PUBLIC : this.model.get('access');
     var attrs = {
       access          : access,
-      related_article : $('input[name=related_article]', this.el).val() || null,
-      remote_url      : $('input[name=remote_url]', this.el).val()      || null
+      related_article : Inflector.normalizeUrl($('input[name=related_article]', this.el).removeClass('error').val()),
+      remote_url      : Inflector.normalizeUrl($('input[name=remote_url]', this.el).removeClass('error').val())
     };
     if (attrs = this.model.changedAttributes(attrs)) {
+      var errors = _.any(['related_article', 'remote_url'], _.bind(function(attr) {
+        if (attrs[attr] && !this.validateUrl(attrs[attr])) {
+          $('input[name=' + attr + ']', this.el).addClass('error');
+          return true;
+        }
+      }, this));
+      if (errors) return false;
       dc.ui.spinner.show();
       Documents.update(this.model, attrs, {success : function(){ dc.ui.spinner.hide(); }});
     }
+    return true;
   },
 
   nextStep : function() {
-    if (this.currentStep == 1) this.saveUpdatedAttributes();
+    if (this.currentStep == 1 && !this.saveUpdatedAttributes()) return false;
     if (this.currentStep >= this.totalSteps) return this.close();
     this.currentStep += 1;
     this.setStep();
