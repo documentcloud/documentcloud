@@ -26,7 +26,7 @@
   DV.afterLoad = function(viewer) {
     DV.jQuery('.DV-logoLink').attr({href : 'http://www.documentcloud.org'});
     var loc = window.location;
-    var url = loc.protocol + '//' + loc.host + loc.pathname;
+    var url = loc.protocol + '//' + loc.host + loc.pathname + loc.search;
     if (url.match(/^file:/)) return false;
     url = url.replace(/[\/]+$/, '');
     var id  = parseInt(viewer.api.getId(), 10);
