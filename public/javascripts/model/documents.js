@@ -137,6 +137,10 @@ dc.model.Document = Backbone.Model.extend({
     if (count <= 0) return false;
     this.set({annotation_count : count - 1});
   },
+  
+  removePages : function(pages) {
+    Documents.removePages(this, pages);
+  },
 
   // Inspect.
   toString : function() {
@@ -263,6 +267,25 @@ dc.model.DocumentSet = Backbone.Collection.extend({
       return true;
     }, this));
   },
+  
+  // Removes an array of pages from a document. Forces a reprocessing of
+  // the entire document, which can be expensive.
+  removePages : function(model, pages, options) {
+    options = options || {};
+    
+    $.ajax({
+      url       : '/' + this.resource + '/' + model.id + '/remove_pages',
+      type      : 'POST',
+      data      : { pages : pages },
+      dataType  : 'json',
+      success   : function(resp) { 
+        if (options.success) options.success(model, resp); 
+      },
+      error     : _.bind(function(resp) {
+        this._handleError(model, options.error, null, resp);
+      }, this)
+    });
+  },
 
   editAccess : function(docs) {
     var options = {information: this.subtitle(docs.length)};
@@ -311,5 +334,5 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
 _.extend(dc.model.DocumentSet.prototype, dc.model.Selectable);
 
-// The main set of Documents.
-window.Documents = new dc.model.DocumentSet();
+// The main sets of Documents, used by the search tab, and the publish tab.
+window.Documents          = new dc.model.DocumentSet();

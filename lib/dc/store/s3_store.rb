@@ -91,6 +91,10 @@ module DC
       def destroy(document)
         bucket.delete_folder(document.path)
       end
+      
+      def delete(path)
+        
+      end
 
 
       private
@@ -120,7 +124,7 @@ module DC
       # Retry a couple times instead of failing the entire job.
       def save_file(file, s3_path, access, opts={})
         file = opts[:string] ? file : File.open(file)
-        headers = {}
+        headers = s3_path.match(IMAGE_EXT) ? {'Expires' => 10.year.from_now.httpdate} : {}
         attempts = 0
         begin
           attempts += 1

@@ -2,7 +2,7 @@ class DocumentsController < ApplicationController
   layout nil
 
   before_filter(:bouncer, :only => [:show]) if Rails.env.staging?
-  before_filter :login_required, :only => [:update, :destroy]
+  before_filter :login_required, :only => [:update, :destroy, :entities, :dates, :published, :unpublished, :remove_pages]
 
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
@@ -64,6 +64,12 @@ class DocumentsController < ApplicationController
     expire_page doc.canonical_cache_path if doc.cacheable?
     doc.destroy
     json nil
+  end
+  
+  def remove_pages
+    return not_found unless doc = current_document(true)
+    doc.remove_pages(params[:pages])
+    json params
   end
 
   def loader

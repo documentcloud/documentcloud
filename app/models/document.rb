@@ -402,6 +402,27 @@ class Document < ActiveRecord::Base
       'inputs'  => [id]
     }.to_json})
   end
+  
+  def remove_pages(pages)
+    job = JSON.parse(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+      'action'  => 'document_remove_pages',
+      'inputs'  => [id],
+      'options' => {
+        :id     => id,
+        :pages  => pages,
+        :access => self.access
+      }
+    }.to_json}).body)
+    ProcessingJob.create!(
+      :document_id    => id,
+      :account_id     => account_id,
+      :cloud_crowd_id => job['id'],
+      :title          => title,
+      :remote_job     => job
+    )
+    self.update_attributes :access => PENDING
+    Rails.logger.info job
+  end
 
   def queue_import(eventual_access = nil, text_only = false, email_me = false, force_ocr = false)
     eventual_access ||= self.access || PRIVATE
