@@ -68,11 +68,13 @@ class DocumentRemovePages < CloudCrowd::Action
     # Delete old page texts that are no longer in the document.
     delete_pages.each do |p|
       Page.connection.execute "DELETE FROM pages WHERE document_id = #{document.id} AND page_number = #{p}"
+      Annotation.connection.execute "DELETE FROM annotations WHERE document_id = #{document.id} AND page_number = #{p}"
     end
     
     # Update page numbers to compact down deleted pages
     keep_pages.each_with_index do |p, i|
       Page.connection.execute "UPDATE pages SET page_number = #{i+1} WHERE document_id = #{document.id} AND page_number = #{p};"
+      Annotation.connection.execute "UPDATE annotations SET page_number = #{i+1} WHERE document_id = #{document.id} AND page_number = #{p};"
     end
     
     document.page_count = keep_pages.length
