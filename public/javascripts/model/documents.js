@@ -279,6 +279,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
       data      : { pages : pages },
       dataType  : 'json',
       success   : function(resp) { 
+        model.set(resp);
         if (options.success) options.success(model, resp); 
       },
       error     : _.bind(function(resp) {

@@ -198,6 +198,41 @@
   float: right;
   color: #999;
   font: 11px/26px Arial;
-  margin:0 12px 0;
-  line-height: 17px;
 }
+
+/* ================ */
+/* = Remove Pages = */
+/* ================ */
+
+#remove_pages_container {
+  position: absolute;
+  width: 100%;
+  z-index: 10001;
+}
+  #remove_pages_container .remove_pages {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 282px;
+    background-color: white;
+    border-bottom: 1px solid #505050;
+    height: 120px;
+  }
+  #remove_pages_container .remove_pages_hint {
+    font-size: 16px;
+    color: #D0D0D0;
+    font-weight: bold;
+    margin: 48px 0 0 24px;
+    font-family: 'Lucida Grande', sans-serif;
+    text-transform: uppercase;
+  }
+  
+.DV-pages.remove_pages_viewer {
+  margin-top: 120px;
+}
+  .DV-pages.remove_pages_viewer .DV-page {
+    cursor: pointer;
+  }
+  .DV-pages.remove_pages_viewer .DV-page:hover {
+    opacity: .5;
+  }

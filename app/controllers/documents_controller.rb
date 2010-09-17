@@ -69,7 +69,7 @@ class DocumentsController < ApplicationController
   def remove_pages
     return not_found unless doc = current_document(true)
     doc.remove_pages(params[:pages])
-    json params
+    json doc
   end
 
   def loader

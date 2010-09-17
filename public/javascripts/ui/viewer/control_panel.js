@@ -2,13 +2,14 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   id : 'control_panel',
 
-  events : {
-    'click .set_sections':          'openSectionEditor',
-    'click .public_annotation':     'togglePublicAnnotation',
-    'click .private_annotation':    'togglePrivateAnnotation',
-    'click .edit_description':      'editDescription',
-    'click .edit_title':            'editTitle',
-    'click .edit_related_article':  'editRelatedArticle'
+  callbacks : {
+    '.set_sections.click':          'openSectionEditor',
+    '.public_annotation.click':     'togglePublicAnnotation',
+    '.private_annotation.click':    'togglePrivateAnnotation',
+    '.edit_description.click':      'editDescription',
+    '.edit_title.click':            'editTitle',
+    '.edit_related_article.click':  'editRelatedArticle',
+    '.edit_remove_pages.click':     'editRemovePages'
   },
 
   render : function() {
@@ -50,6 +51,10 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       this._updateDocument({description : desc});
       return true;
     }, this));
+  },
+  
+  editRemovePages : function() {
+    dc.app.editor.removePagesEditor.toggle();
   },
 
   togglePublicAnnotation : function() {

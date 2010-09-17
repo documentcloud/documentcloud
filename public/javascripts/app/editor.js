@@ -20,6 +20,7 @@ _.extend(dc.app.editor, {
     this.controlPanel       = new dc.ui.ViewerControlPanel();
     this.sectionEditor      = new dc.ui.SectionEditor();
     this.annotationEditor   = new dc.ui.AnnotationEditor();
+    this.removePagesEditor  = new dc.ui.RemovePagesEditor();
   },
 
   // Render all of the existing subviews and place them in the DOM.

@@ -43,7 +43,7 @@ class DocumentRemovePages < CloudCrowd::Action
           f.write(asset_store.read(page))
         end
       end
-      asset_store.save_page_images(document, i, sizes, access)
+      asset_store.save_page_images(document, i+1, sizes, access)
       # TODO: Delete orphaned page images on S3
     end
     
