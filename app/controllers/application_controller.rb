@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
   def login_required
     logged_in? || forbidden
   end
-  
+
   def api_login_required
     authenticate_or_request_with_http_basic("DocumentCloud") do |email, password|
       return false unless @current_account = Account.log_in(email, password)
@@ -131,7 +131,7 @@ class ApplicationController < ActionController::Base
       yield
     rescue Exception => e
       ignore = e.is_a?(ActionController::UnknownAction) || e.is_a?(ActionController::RoutingError)
-      LifecycleMailer.deliver_exception_notification(e) unless ignore
+      LifecycleMailer.deliver_exception_notification(e, params) unless ignore
       raise e
     end
   end

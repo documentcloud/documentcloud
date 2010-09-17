@@ -35,11 +35,11 @@ class LifecycleMailer < ActionMailer::Base
   end
 
   # Mail a notification of an exception that occurred in production.
-  def exception_notification(error)
+  def exception_notification(error, params=nil)
     subject     "DocumentCloud Exception (#{Rails.env}): #{error.class.name}"
     from        NO_REPLY
     recipients  ["jashkenas@gmail.com", "samuel@documentcloud.org"]
-    body        :error => error
+    body        :params => params, :error => error
   end
 
 end
