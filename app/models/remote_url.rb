@@ -7,7 +7,9 @@ class RemoteUrl < ActiveRecord::Base
     :group => 'document_id, url'
   }
 
+  # Make sure to truncate the URL to 255 characters...
   def self.record_hits(doc_id, url, hits)
+    url = url.mb_chars[0...255].to_s
     row = self.find_or_create_by_document_id_and_url_and_date_recorded(doc_id, url, Time.now.utc.to_date)
     row.update_attributes :hits => row.hits + hits
   end
