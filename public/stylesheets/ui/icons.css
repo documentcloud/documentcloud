@@ -33,6 +33,7 @@
 .icon.lock,
 .DV-privateLock {
   background-image: url(/images/embed/icons/lock.png);
+  background-position: center 0;
 }
 .icon.published {
   background-image: url(/images/embed/icons/published.png);

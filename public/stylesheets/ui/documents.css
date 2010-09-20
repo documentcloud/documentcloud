@@ -90,17 +90,17 @@
         text-decoration: underline;
       }
     .document .document_tool {
-      display: inline;
+      display: inline-block;
+      zoom: 1;
+      cursor: pointer;
       width: 0; height: 18px;
       vertical-align: text-bottom;
       margin-left: 8px;
       line-height: 18px;
       padding-right: 16px;
     }
-      .document .published {
-        display: inline-block;
-        zoom: 1;
-        cursor: pointer;
+      .document .document_tool.lock:hover {
+        background-position: center -18px;
       }
       .document .edit_glyph {
         display: inline-block;

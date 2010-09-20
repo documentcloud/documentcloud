@@ -112,18 +112,8 @@ dc.ui.Toolbar = dc.View.extend({
 
   editAccess : function() {
     var docs    = Documents.selected();
-    if (!Documents.allowedToEdit(docs)) return;
-    var current = Documents.sharedAttribute(docs, 'access') || dc.access.PRIVATE;
-    dc.ui.Dialog.choose('Access Level', [
-      {text : 'Public Access',  description : 'Anyone on the internet can search for and view the document.', value : dc.access.PUBLIC, selected : current == dc.access.PUBLIC},
-      {text : 'Private Access', description : 'Only people explicitly granted permission (via collaboration) may access.', value : dc.access.PRIVATE, selected : current == dc.access.PRIVATE},
-      {text : 'Private to ' + dc.app.organization.name, description : 'Only the people in your organization may view the document.', value : dc.access.ORGANIZATION, selected : current == dc.access.ORGANIZATION}
-    ], _.bind(function(access) {
-      _.each(docs, function(doc) { Documents.update(doc, {access : parseInt(access, 10)}); });
-      var notification = 'Access updated for ' + docs.length + ' ' + Inflector.pluralize('document', docs.length);
-      dc.ui.notifier.show({mode : 'info', text : notification});
-      return true;
-    }, this), {information : this._subtitle(docs.length)});
+    var options = {information : this._subtitle(docs.length)};
+    Documents.editAccess(docs, options);
   },
 
   openEmbedDialog : function() {

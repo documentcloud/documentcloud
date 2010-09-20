@@ -19,6 +19,7 @@ dc.ui.Document = dc.View.extend({
     '.icon.doc.dblclick'        : 'viewDocument',
     '.show_notes.click'         : 'toggleNotes',
     '.title .edit_glyph.click'  : 'openDialog',
+    '.title .lock.click'        : 'editAccessLevel',
     '.title .published.click'   : 'viewPublishedDocuments',
     '.page_icon.click'          : '_openEntity',
     '.occurrence.click'         : '_openEntity',
@@ -165,6 +166,10 @@ dc.ui.Document = dc.View.extend({
 
   searchSource : function() {
     dc.app.searcher.addToSearch('source: "' + this.model.get('source').replace(/"/g, '\\"') + '"');
+  },
+
+  editAccessLevel : function() {
+    Documents.editAccess([this.model]);
   },
 
   showMenu : function(e) {
