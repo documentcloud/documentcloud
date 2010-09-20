@@ -25,14 +25,18 @@ dc.ui.RemovePagesEditor = dc.View.extend({
       guideButton: $('.edit_remove_pages'),
       page : $('.DV-page'),
       pages : $('.DV-pages'),
-      viewerContainer : $('.DV-docViewer-Container')
+      viewerContainer : $('.DV-docViewer-Container'),
+      holder : null,
+      container : null
     };
     
     this.viewer = DV.viewers[_.first(_.keys(DV.viewers))];
+    this.imageUrl = this.viewer.schema.document.resources.page.image;
   },
   
   open : function() {
     this.findSelectors();
+    this.removePages = [];
     this.flags.open = true;
     this.$s.guide.fadeIn('fast');
     this.$s.guideButton.addClass('open');
@@ -42,10 +46,12 @@ dc.ui.RemovePagesEditor = dc.View.extend({
   
   render : function() {
     $(this.el).html(JST['viewer/remove_pages']({}));
-    console.log(['remove_pages', this.el, this.viewer]);
     this.$s.viewerContainer.append(this.el);
     this.viewer.open('ViewDocument');
     this.$s.pages.addClass('remove_pages_viewer');
+    this.$s.holder = $('.remove_pages_holder', this.el);
+    this.$s.container = $(this.el);
+    this.redrawPages();
   },
   
   setCallbacks : function() {
@@ -56,8 +62,37 @@ dc.ui.RemovePagesEditor = dc.View.extend({
   
   addPageToRemoveSet : function(cover) {
     var $page = $(cover).parents('.DV-page').eq(0);
-    console.log(['page', $page]);
-    $('.remove_pages_holder', this.el).append($page);
+    var imageSrc = $('.DV-pageImage', $page).attr('src');
+    var pageNumber = parseInt(imageSrc.match(/-p(\d+)-\w+.\w+$/)[1], 10);
+    
+    if (!(_.contains(this.removePages, pageNumber))) {
+      this.removePages.push(pageNumber);
+      this.redrawPages();
+    }
+  },
+  
+  removePageFromRemoveSet : function(pageNumber) {
+    this.removePages = _.reject(this.removePages, function(p) { return p == pageNumber; });
+    this.redrawPages();
+  },
+  
+  redrawPages : function() {
+    this.removePages.sort(function(a, b) { return a > b; });
+    this.$s.holder.empty();
+    
+    if (this.removePages.length == 0) {
+      this.$s.container.addClass('empty');
+    } else {
+      this.$s.container.removeClass('empty');
+    }
+    
+    _.each(this.removePages, _.bind(function(pageNumber) {
+      var url = this.imageUrl;
+      url = url.replace(/\{size\}/, 'thumbnail');
+      url = url.replace(/\{page\}/, pageNumber);
+      var $thumbnail = $.el('img', { src: url });
+      this.$s.holder.append($thumbnail);
+    }, this));
   },
   
   close : function() {
