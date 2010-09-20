@@ -149,6 +149,7 @@
             <td>Organization</td>
             <td>Source</td>
             <td>Pages</td>
+            <td>Created</td>
             <td></td>
           </thead>
           <tbody>
@@ -164,6 +165,7 @@
                 <td><%= doc.get('organization_name') %></td>
                 <td><%= doc.get('public') ? Inflector.truncate(doc.get('source') || '', 25) : '<i>private</i>'  %></td>
                 <td><%= doc.get('page_count') %></td>
+                <td><%= doc.get('created_at') %></td>
                 <td class="last"></td>
               </tr>
             <% }); %>

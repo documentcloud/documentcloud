@@ -11,6 +11,7 @@ class Document < ActiveRecord::Base
   DEFAULT_TITLE = "Untitled Document"
 
   DISPLAY_DATE_FORMAT = "%b %d, %Y"
+  DISPLAY_DATETIME_FORMAT = "%H:%M %b %d, %Y"
 
   DEFAULT_CANONICAL_OPTIONS = {:sections => true, :annotations => true}
 
@@ -426,7 +427,8 @@ class Document < ActiveRecord::Base
       'pdf_url'           => pdf_url(:direct),
       'public'            => public?,
       'title'             => public? ? title : nil,
-      'source'            => public? ? source : nil
+      'source'            => public? ? source : nil,
+      'created_at'        => created_at.to_date.strftime(DISPLAY_DATETIME_FORMAT)
     }
   end
 
