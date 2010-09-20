@@ -6,9 +6,14 @@ dc.ui.RemovePagesEditor = dc.View.extend({
     open: false
   },
   
+  callbacks : {
+    '.document_page_tile_remove.click' : 'removePageFromRemoveSet',
+    '.remove_pages_confirm_input.click' : 'confirmRemovePages'
+  },
+  
   constructor : function(opts) {
     this.base(opts);
-    _.bindAll(this);
+    _.bindAll(this, 'confirmRemovePages', 'removePageFromRemoveSet');
   },
 
   toggle : function() {
@@ -41,7 +46,6 @@ dc.ui.RemovePagesEditor = dc.View.extend({
     this.$s.guide.fadeIn('fast');
     this.$s.guideButton.addClass('open');
     this.render();
-    this.setCallbacks();
   },
   
   render : function() {
@@ -52,12 +56,14 @@ dc.ui.RemovePagesEditor = dc.View.extend({
     this.$s.holder = $('.remove_pages_holder', this.el);
     this.$s.container = $(this.el);
     this.redrawPages();
+    this.setCallbacks();
   },
   
-  setCallbacks : function() {
+  setCallbacks : function(callbacks) {
     $('.DV-pageCollection').delegate('.DV-page','click', _.bind(function(e) {
       this.addPageToRemoveSet(e.target);
     }, this));
+    this.base(callbacks);
   },
   
   addPageToRemoveSet : function(cover) {
@@ -71,27 +77,66 @@ dc.ui.RemovePagesEditor = dc.View.extend({
     }
   },
   
-  removePageFromRemoveSet : function(pageNumber) {
+  removePageFromRemoveSet : function(e) {
+    var pageNumber = $(e.target).parents('.document_page_tile').data('pageNumber');
+    this.removePageNumberFromRemoveSet(pageNumber);
+  },
+  
+  removePageNumberFromRemoveSet : function(pageNumber) {
     this.removePages = _.reject(this.removePages, function(p) { return p == pageNumber; });
     this.redrawPages();
   },
   
   redrawPages : function() {
+    var pageCount = this.removePages.length;
     this.removePages.sort(function(a, b) { return a > b; });
-    this.$s.holder.empty();
+    $('.document_page_tile', this.$s.holder).remove();
     
-    if (this.removePages.length == 0) {
+    if (pageCount == 0) {
       this.$s.container.addClass('empty');
     } else {
       this.$s.container.removeClass('empty');
     }
     
+    // Create each page tile and add it to the page holder
     _.each(this.removePages, _.bind(function(pageNumber) {
       var url = this.imageUrl;
       url = url.replace(/\{size\}/, 'thumbnail');
       url = url.replace(/\{page\}/, pageNumber);
-      var $thumbnail = $.el('img', { src: url });
+      var $thumbnail = $(JST['viewer/document_page_tile']({
+        url : url,
+        pageNumber : pageNumber
+      }));
+      $thumbnail.data('pageNumber', pageNumber);
       this.$s.holder.append($thumbnail);
+    }, this));
+    
+    // Update remove button's text
+    var removeText = 'Remove ' + pageCount + Inflector.pluralize(' page', pageCount);
+    $('.remove_pages_confirm_button input[type=button]', this.el).val(removeText);
+    
+    // Set width of container for side-scrolling
+    var width = $('.document_page_tile').length * $('.document_page_tile').eq(0).outerWidth(true);
+    var confirmWidth = $('.remove_pages_confirm', this.el).outerWidth(true);
+    this.$s.holder.width(width + confirmWidth);
+  },
+  
+  confirmRemovePages : function() {
+    var pageCount = this.removePages.length;
+    dc.ui.Dialog.confirm('Removing pages takes a few minutes to complete.<br /><br />Are you sure you want to remove ' + pageCount + Inflector.pluralize(' page', pageCount) + '?', _.bind(function() {
+      $('input.remove_pages_confirm_input', this.el).val('Removing...').attr('disabled', true);
+      this.viewer.api.removePages(this.removePages, {
+        success : function(model_id, resp) {
+          console.log(['success', model_id, resp, window.opener.Documents.get(model_id)]);
+          window.opener && window.opener.Documents && window.opener.Documents.get(model_id).set(resp);
+          dc.ui.Dialog.alert('This process will take a few minutes.<br /><br />This window must close while pages are being removed and the document is being reconstructed.', { 
+            onClose : function() {
+              window.close();
+            }
+          });
+        }
+      });
+      return true;
     }, this));
   },
   

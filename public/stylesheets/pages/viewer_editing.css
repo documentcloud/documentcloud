@@ -206,16 +206,18 @@
 
 #remove_pages_container {
   position: absolute;
-  width: 100%;
   z-index: 10001;
+  top: 0;
+  left: 0;
+  right: 266px;
+  background-color: white;
+  border-bottom: 1px solid #505050;
 }
   #remove_pages_container .remove_pages {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 266px;
-    background-color: white;
-    border-bottom: 1px solid #505050;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 122px;
   }
   #remove_pages_container .remove_pages_hint {
     font-size: 16px;
@@ -231,22 +233,57 @@
   #remove_pages_container.empty .remove_pages_hint {
     display: block;
   }
-  #remove_pages_container .remove_pages_holder {
-    overflow-x: auto;
-    overflow-y: hidden;
-    height: 110px;
-    white-space: nowrap;
+  #remove_pages_container .remove_pages_confirm {
+    float: left;
+    width: 120px;
+    margin: 18px 0 0 12px;
+    padding: 12px 0 0 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+    color: #606060;
+    text-align: center;
+    display: block;
   }
-    #remove_pages_container .remove_pages_holder img {
-      margin: 12px 0 0 12px;
-      border: 1px solid #505050;
-      box-shadow: 1px 1px 1px #D0D0D0;
-      -webkit-box-shadow: 1px 1px 1px #D0D0D0;
-      -moz-box-shadow: 1px 1px 1px #D0D0D0;
+    #remove_pages_container.empty .remove_pages_confirm {
+      display: none;
     }
+    #remove_pages_container .remove_pages_confirm input {
+      margin: 18px 0 0 0;
+    }
+  #remove_pages_container .remove_pages_holder {
+    float: left;
+  }
+    #remove_pages_container .document_page_tile {
+      display: inline;
+      float: left;
+      margin: 12px 0 0 12px;
+      text-align: center;
+    }
+      #remove_pages_container .document_page_tile img {
+        display: block;
+        border: 1px solid #505050;
+        box-shadow: 1px 1px 1px #D0D0D0;
+        -webkit-box-shadow: 1px 1px 1px #D0D0D0;
+        -moz-box-shadow: 1px 1px 1px #D0D0D0;
+      }
+      #remove_pages_container .document_page_tile .document_page_tile_remove {
+        float: left;
+        margin: 4px 0 0 0;
+        display: none;
+      }
+        #remove_pages_container .document_page_tile:hover .document_page_tile_remove {
+          display: block;
+        }
+      #remove_pages_container .document_page_tile .document_page_tile_number {
+        color: #505050;
+        font-weight: bold;
+        font-size: 13px;
+        padding: 4px 16px 0;
+      }
   
 .DV-pages.remove_pages_viewer {
-  margin-top: 110px;
+  margin-top: 122px;
 }
   .DV-pages.remove_pages_viewer .DV-page {
     cursor: pointer;
