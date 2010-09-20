@@ -428,7 +428,7 @@ class Document < ActiveRecord::Base
       'public'            => public?,
       'title'             => public? ? title : nil,
       'source'            => public? ? source : nil,
-      'created_at'        => created_at.to_date.strftime(DISPLAY_DATETIME_FORMAT)
+      'created_at'        => created_at.to_datetime.strftime(DISPLAY_DATETIME_FORMAT)
     }
   end
 
