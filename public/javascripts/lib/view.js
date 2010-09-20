@@ -2,11 +2,11 @@ dc.View = Base.extend({
 
   el              : null,
   model           : null,
-  callbacks       : {},
   modes           : null,
   id              : null,
-  className       : 'view',
+  className       : null,
   tagName         : 'div',
+  callbacks       : {},
 
   // Match the last period in a string.
   LAST_DOT        : /\.(?!.*\.)/,
@@ -14,7 +14,7 @@ dc.View = Base.extend({
   constructor : function(options) {
     this.modes = {};
     this.configure(options || {});
-    this.el = this.options.el || this.make(this.tagName, {id : this.id, 'class' : this.className});
+    this.el = this.options.el || this._createElement();
     return this;
   },
 
@@ -75,6 +75,13 @@ dc.View = Base.extend({
         $(me.el).delegate(selector, eventName, method);
       }
     });
+  },
+
+  _createElement : function() {
+    var attrs = {};
+    if (this.id) attrs.id = this.id;
+    if (this.className) attrs['class'] = this.className;
+    return this.el = this.make(this.tagName, attrs);
   }
 
 });
