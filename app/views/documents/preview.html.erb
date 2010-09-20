@@ -16,6 +16,10 @@
   <link href="/viewer/plainviewer.css" media="screen" rel="stylesheet" type="text/css" />
   <%= render(:partial => 'viewer_editing') if @edits_enabled %>
   <script src="/viewer/viewer.js" type="text/javascript"></script>
+  <% if Rails.env.production? && @current_document %>
+    <% @pageview_url = '/documents/show' %>
+    <%= render :partial => 'common/google' %>
+  <% end %>
 </head>
 <body style="margin:0; padding:0;">
   <% canonical = @current_document.canonical({:account => @current_account, :local => @local}) if @current_document %>
@@ -24,10 +28,6 @@
     <script type="text/javascript">
         window.currentDocument = DV.load(<%= canonical.to_json %>, <%= @options %>);
     </script>
-  <% end %>
-  <% if Rails.env.production? && @current_document %>
-    <% @pageview_url = '/documents/show' %>
-    <%= render :partial => 'common/google' %>
   <% end %>
 </body>
 </html>
