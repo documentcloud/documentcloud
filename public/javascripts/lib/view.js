@@ -14,7 +14,7 @@ dc.View = Base.extend({
   constructor : function(options) {
     this.modes = {};
     this.configure(options || {});
-    this.el = this.options.el || $.el(this.tagName, {id : this.id, 'class' : this.className});
+    this.el = this.options.el || this.make(this.tagName, {id : this.id, 'class' : this.className});
     return this;
   },
 
@@ -34,6 +34,15 @@ dc.View = Base.extend({
 
   render : function() {
     return this;
+  },
+
+  // Quick-create a dom element with attributes.
+  make : function(tagName, attributes, content) {
+    attributes || (attributes = {});
+    var el = document.createElement(tagName);
+    for (key in attributes) el.setAttribute(key, '' + attributes[key]);
+    if (content) el.innerHTML = content;
+    return el;
   },
 
   // Makes the view enter a mode. Modes have both a 'mode' and a 'group',

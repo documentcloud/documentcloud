@@ -1,18 +1,5 @@
 (function($) {
 
-  // Extend the JQuery namespace with core utility methods for DOM manipulation.
-  $.extend({
-
-    // Quick-create a dom element with attributes.
-    el : function(tagName, attributes, content) {
-      var el = document.createElement(tagName);
-      if (attributes) $(el).attr(attributes);
-      if (content) $(el).html(content);
-      return el;
-    }
-
-  });
-
   $.fn.extend({
 
     // Align an element relative to a target element's coordinates. Forces the
@@ -217,8 +204,7 @@
     selectable : function(options) {
       var doc  = $(document);
       var edge = 17;
-      var selection = $($.el('div', {'class' : 'selection', style : 'display:none;'}));
-      $(document.body).append(selection);
+      var selection = $('.selection');
 
       $(this).bind('mousedown', _.bind(function(e) {
         if (options.ignore && $(e.target).closest(options.ignore).length) return;

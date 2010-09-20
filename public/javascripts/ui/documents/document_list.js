@@ -30,7 +30,7 @@ dc.ui.DocumentList = dc.View.extend({
     var views = _.map(Documents.models(), function(m){
       return (new dc.ui.Document({model : m})).render().el;
     });
-    $(this.el).append(views.concat($.el('div', {'class' : 'clear'})));
+    $(this.el).append(views.concat(this.make('div', {'class' : 'clear'})));
   },
 
   _onSelect : function(els) {

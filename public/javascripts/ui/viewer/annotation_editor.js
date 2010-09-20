@@ -78,7 +78,7 @@ dc.ui.AnnotationEditor = dc.View.extend({
         borderLeft    = offLeft + this._activePage.offset().left,
         borderBottom  = borderTop + this._activePage.height() - 6,
         borderRight   = borderLeft + this._activePage.width() - 6;
-    this.region = $.el('div', {'class' : 'DV-annotationRegion active DV-' + this._kind, style:'position:absolute;'});
+    this.region = this.make('div', {'class' : 'DV-annotationRegion active DV-' + this._kind, style:'position:absolute;'});
     this.pages.append(this.region);
     var contained = function(e) {
       return e.pageX > borderLeft && e.pageX < borderRight &&

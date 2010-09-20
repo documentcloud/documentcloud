@@ -14,9 +14,7 @@ dc.ui.spinner = {
   },
 
   ensureElement : function() {
-    if (this.el) return;
-    $(document.body).append($.el('div', {id : 'spinner'}));
-    this.el = $('#spinner');
+    this.el || (this.el = $('#spinner'));
   }
 
 };

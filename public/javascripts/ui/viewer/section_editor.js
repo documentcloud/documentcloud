@@ -17,8 +17,8 @@ dc.ui.SectionEditor = dc.View.extend({
       onClose     : _.bind(function(){ this.dialog = null; }, this),
       onConfirm   : _.bind(function(){ return this.saveSections(this.serializeSections()); }, this)
     }).render();
-    this.sectionsEl = $($.el('ol', {id : 'section_rows'}));
-    this.removeEl   = $($.el('div', {'class' : 'minibutton warn remove_all'}, 'Remove All'));
+    this.sectionsEl = $(this.make('ol', {id : 'section_rows'}));
+    this.removeEl   = $(this.make('div', {'class' : 'minibutton warn remove_all'}, 'Remove All'));
     this.removeEl.bind('click', this.removeAllSections);
     this.dialog.append(this.sectionsEl);
     this.dialog.addControl(this.removeEl);

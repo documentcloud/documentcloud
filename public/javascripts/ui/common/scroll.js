@@ -17,8 +17,8 @@ dc.ui.Scroll = dc.View.extend({
   constructor : function(el) {
     this.base();
     this.content    = $(el);
-    this.upButton   = $.el('div', {'class' : 'scroll_up'});
-    this.downButton = $.el('div', {'class' : 'scroll_down'});
+    this.upButton   = this.make('div', {'class' : 'scroll_up'});
+    this.downButton = this.make('div', {'class' : 'scroll_down'});
     _.bindAll(this, 'check');
   },
 
