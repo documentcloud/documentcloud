@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/support/setup'
+require 'fileutils'
 
 class DocumentRemovePages < CloudCrowd::Action
   
@@ -31,6 +32,7 @@ class DocumentRemovePages < CloudCrowd::Action
     # Rename pages with pdftk, keeping only unremoved pages
     cmd = "pdftk #{@pdf} cat #{keep_pages.join(' ')} output #{document.slug}.pdf_temp"
     `#{cmd}`
+    asset_store.save_pdf(document, "#{@pdf}_temp")
     
     # Pull images from S3, delete old images, then upload renamed images
     keep_pages.each_with_index do |p, i|

@@ -45,6 +45,8 @@ dc.ui.RemovePagesEditor = dc.View.extend({
     this.flags.open = true;
     this.$s.guide.fadeIn('fast');
     this.$s.guideButton.addClass('open');
+    this.viewer.api.enterRemovePagesMode();
+    this.viewer.api.resetRemovedPages();
     this.render();
   },
   
@@ -60,18 +62,22 @@ dc.ui.RemovePagesEditor = dc.View.extend({
   },
   
   setCallbacks : function(callbacks) {
-    $('.DV-pageCollection').delegate('.DV-page','click', _.bind(function(e) {
-      this.addPageToRemoveSet(e.target);
+    $('.DV-pageCollection').delegate('.DV-removeOverlay','click', _.bind(function(e) {
+      var $page = $(e.target).siblings('.DV-page').eq(0);
+      var imageSrc = $('.DV-pageImage', $page).attr('src');
+      var pageNumber = parseInt(imageSrc.match(/-p(\d+)-\w+.\w+$/)[1], 10);
+      if (_.contains(this.removePages, pageNumber)) {
+        this.removePageNumberFromRemoveSet(pageNumber);
+      } else {
+        this.addPageToRemoveSet(pageNumber);
+      }
     }, this));
     this.base(callbacks);
   },
   
-  addPageToRemoveSet : function(cover) {
-    var $page = $(cover).parents('.DV-page').eq(0);
-    var imageSrc = $('.DV-pageImage', $page).attr('src');
-    var pageNumber = parseInt(imageSrc.match(/-p(\d+)-\w+.\w+$/)[1], 10);
-    
+  addPageToRemoveSet : function(pageNumber) {
     if (!(_.contains(this.removePages, pageNumber))) {
+      this.viewer.api.addPageToRemovedPages(pageNumber);
       this.removePages.push(pageNumber);
       this.redrawPages();
     }
@@ -85,6 +91,7 @@ dc.ui.RemovePagesEditor = dc.View.extend({
   removePageNumberFromRemoveSet : function(pageNumber) {
     this.removePages = _.reject(this.removePages, function(p) { return p == pageNumber; });
     this.redrawPages();
+    this.viewer.api.removePageFromRemovedPages(pageNumber);
   },
   
   redrawPages : function() {
@@ -127,7 +134,6 @@ dc.ui.RemovePagesEditor = dc.View.extend({
       $('input.remove_pages_confirm_input', this.el).val('Removing...').attr('disabled', true);
       this.viewer.api.removePages(this.removePages, {
         success : function(model_id, resp) {
-          console.log(['success', model_id, resp, window.opener.Documents.get(model_id)]);
           window.opener && window.opener.Documents && window.opener.Documents.get(model_id).set(resp);
           dc.ui.Dialog.alert('This process will take a few minutes.<br /><br />This window must close while pages are being removed and the document is being reconstructed.', { 
             onClose : function() {
@@ -146,6 +152,7 @@ dc.ui.RemovePagesEditor = dc.View.extend({
     this.$s.guideButton.removeClass('open');
     this.$s.pages.removeClass('remove_pages_viewer');
     $(this.el).remove();
+    this.viewer.api.leaveRemovePagesMode();
     this.base();
   }
 
