@@ -12,7 +12,14 @@ dc.Controller = Base.extend({
   constructor : function(options) {
     this.modes = {};
     this.configure(options || {});
-    this.el = this.options.el || this._createElement();
+    if (this.options.el) {
+      this.el = this.options.el;
+    } else {
+      var attrs = {};
+      if (this.id) attrs.id = this.id;
+      if (this.className) attrs['class'] = this.className;
+      this.el = this.make(this.tagName, attrs);
+    }
     return this;
   },
 
@@ -74,13 +81,6 @@ dc.Controller = Base.extend({
       }
     }
     return this;
-  },
-
-  _createElement : function() {
-    var attrs = {};
-    if (this.id) attrs.id = this.id;
-    if (this.className) attrs['class'] = this.className;
-    return this.el = this.make(this.tagName, attrs);
   }
 
 });
