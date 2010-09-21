@@ -27,8 +27,8 @@ dc.ui.Toolbar = dc.Controller.extend({
     _.each(this.MENUS, _.bind(function(menu){
       $('.' + menu + '_menu_container', el).append(this[menu + 'Menu'].render().el);
     }, this));
-    this.openButton              = $('#open_viewers', this.el);
-    this.floatEl                 = $('#floating_toolbar', this.el);
+    this.openButton              = this.$('#open_viewers');
+    this.floatEl                 = this.$('#floating_toolbar');
     $(window).scroll(_.bind(function(){ _.defer(this.checkFloat); }, this));
     this.setCallbacks();
     return this;

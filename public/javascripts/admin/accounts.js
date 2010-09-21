@@ -15,7 +15,7 @@ dc.ui.AdminAccounts = dc.Controller.extend({
     var rows = _.map(Accounts.models(), function(account) {
       return (new dc.ui.AccountView({model : account, kind : 'admin'})).render().el;
     });
-    $('tbody', this.el).append(rows);
+    this.$('tbody').append(rows);
     return this;
   },
 

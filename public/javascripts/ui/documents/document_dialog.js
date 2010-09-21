@@ -27,7 +27,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
 
   render : function() {
     this.base();
-    this._container = $('.custom', this.el);
+    this._container = this.$('.custom');
     this._container.html(JST['document/document_dialog']({
       docs : this.docs, multiple : this.multiple
     }));
@@ -44,7 +44,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     var original = this._sharedAttributes();
     var changes = {};
     _.each(this.ATTRIBUTES, _.bind(function(attr) {
-      var el = $('#document_edit_' + attr, this.el);
+      var el = this.$('#document_edit_' + attr);
       if (!el.length) return;
       var next = el.val();
       if (attr == 'access') next = parseInt(next, 10);
@@ -53,7 +53,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     }, this));
     var errors = _.any(['related_article', 'remote_url'], _.bind(function(attr) {
       if (changes[attr] && !this.validateUrl(changes[attr])) {
-        $('#document_edit_' + attr, this.el).addClass('error');
+        this.$('#document_edit_' + attr).addClass('error');
         return true;
       }
     }, this));

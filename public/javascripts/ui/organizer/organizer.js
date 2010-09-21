@@ -31,10 +31,10 @@ dc.ui.Organizer = dc.Controller.extend({
 
   render : function() {
     $(this.el).append(JST['organizer/sidebar']({searches : this.TOP_LEVEL_SEARCHES}));
-    this.projectInputEl = $('#project_input', this.el);
-    this.projectList    = $('.project_list', this.el);
-    this.docList        = $('.publish_doc_list', this.el);
-    this.entityList     = $('#organizer_entities', this.el);
+    this.projectInputEl = this.$('#project_input');
+    this.projectList    = this.$('.project_list');
+    this.docList        = this.$('.publish_doc_list');
+    this.entityList     = this.$('#organizer_entities');
     this.sidebar        = $('#sidebar');
     this.renderAll();
     this.setCallbacks();

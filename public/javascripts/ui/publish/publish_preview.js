@@ -34,13 +34,13 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   render : function() {
     if (dc.app.organization.demo) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     this.base();
-    $('.custom', this.el).html(JST['workspace/publish_preview']({doc: this.model}));
-    this._next          = $('.next', this.el);
-    this._previous      = $('.previous', this.el);
-    this._widthEl       = $('input[name=width]', this.el);
-    this._heightEl      = $('input[name=height]', this.el);
-    this._viewerSizeEl  = $('select[name=viewer_size]', this.el);
-    this._sidebarEl     = $('input[name=sidebar]', this.el);
+    this.$('.custom').html(JST['workspace/publish_preview']({doc: this.model}));
+    this._next          = this.$('.next');
+    this._previous      = this.$('.previous');
+    this._widthEl       = this.$('input[name=width]');
+    this._heightEl      = this.$('input[name=height]');
+    this._viewerSizeEl  = this.$('select[name=viewer_size]');
+    this._sidebarEl     = this.$('input[name=sidebar]');
     if (dc.app.preferences.get('embed_options')) this._loadPreferences();
     this.update();
     this.setStep();
@@ -94,27 +94,27 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     var options       = this.embedOptions();
     options.container = '"#viewer-' + this.model.canonicalId() + '"';
     var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
-    $('.publish_embed_code', this.el).html(JST['document/embed_dialog']({
+    this.$('.publish_embed_code').html(JST['document/embed_dialog']({
       doc: this.model,
       options: serialized.join(',&#10;    ')
     }));
   },
 
   _toggleDimensions : function() {
-    $('.dimensions', this.el).toggle(this._viewerSizeEl.val() == 'fixed');
+    this.$('.dimensions').toggle(this._viewerSizeEl.val() == 'fixed');
   },
 
   saveUpdatedAttributes : function() {
-    var access = $('input[name=access_level]', this.el).is(':checked') ? dc.access.PUBLIC : this.model.get('access');
+    var access = this.$('input[name=access_level]').is(':checked') ? dc.access.PUBLIC : this.model.get('access');
     var attrs = {
       access          : access,
-      related_article : Inflector.normalizeUrl($('input[name=related_article]', this.el).removeClass('error').val()),
-      remote_url      : Inflector.normalizeUrl($('input[name=remote_url]', this.el).removeClass('error').val())
+      related_article : Inflector.normalizeUrl(this.$('input[name=related_article]').removeClass('error').val()),
+      remote_url      : Inflector.normalizeUrl(this.$('input[name=remote_url]').removeClass('error').val())
     };
     if (attrs = this.model.changedAttributes(attrs)) {
       var errors = _.any(['related_article', 'remote_url'], _.bind(function(attr) {
         if (attrs[attr] && !this.validateUrl(attrs[attr])) {
-          $('input[name=' + attr + ']', this.el).addClass('error');
+          this.$('input[name=' + attr + ']').addClass('error');
           return true;
         }
       }, this));
@@ -140,8 +140,8 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   setStep : function() {
     this.title(this.displayTitle());
 
-    $('.publish_step', this.el).setMode('not', 'enabled');
-    $('.publish_step_'+this.currentStep, this.el).setMode('is', 'enabled');
+    this.$('.publish_step').setMode('not', 'enabled');
+    this.$('.publish_step_'+this.currentStep).setMode('is', 'enabled');
     this.info('Step ' + this.currentStep + ' of ' + this.totalSteps, true);
 
     var first = this.currentStep == 1;
@@ -152,7 +152,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   },
 
   selectSnippet : function() {
-    $('.snippet', this.el).select();
+    this.$('.snippet').select();
   }
 
 });

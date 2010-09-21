@@ -53,9 +53,9 @@ dc.ui.Document = dc.Controller.extend({
     });
     $(this.el).html(JST['document/tile'](data));
     this._displayDescription();
-    $('.doc.icon', this.el).draggable({ghost : true, onDrop : this._onDrop});
-    this.notesEl = $('.notes', this.el);
-    this.pagesEl = $('.pages', this.el);
+    this.$('.doc.icon').draggable({ghost : true, onDrop : this._onDrop});
+    this.notesEl = this.$('.notes');
+    this.pagesEl = this.$('.pages');
     this.model.notes.each(function(note){ me._addNote(note); });
     if (!this.options.noCallbacks) this.setCallbacks();
     this.setMode(dc.access.NAMES[this.model.get('access')], 'access');
@@ -221,7 +221,7 @@ dc.ui.Document = dc.Controller.extend({
 
   // HTML descriptions need to be sanitized for the workspace.
   _displayDescription : function() {
-    var el = $('.description_text', this.el);
+    var el = this.$('.description_text');
     if (this.model.get('access') == dc.access.ERROR) return el.html(this.ERROR_MESSAGE);
     el.text(Inflector.stripTags(this.model.get('description') || ''));
   },
@@ -233,7 +233,7 @@ dc.ui.Document = dc.Controller.extend({
 
   _onDocumentChange : function() {
     if (this.model.hasChanged('selected'))         return this._setSelected();
-    if (this.model.hasChanged('annotation_count')) return $('span.note_count', this.el).text(this.model.get('annotation_count'));
+    if (this.model.hasChanged('annotation_count')) return this.$('span.note_count').text(this.model.get('annotation_count'));
     this.render();
   },
 

@@ -39,9 +39,9 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   render : function() {
     this.base();
-    $('.custom', this.el).html(JST['document/timeline']({docs : this.documents, minHeight : this.MIN_HEIGHT, rowHeight : this.ROW_HEIGHT}));
+    this.$('.custom').html(JST['document/timeline']({docs : this.documents, minHeight : this.MIN_HEIGHT, rowHeight : this.ROW_HEIGHT}));
     this._zoomButton = this.make('div', {'class' : 'minibutton zoom_out dark not_enabled'}, 'Zoom Out');
-    $('.controls_inner', this.el).prepend(this._zoomButton);
+    this.$('.controls_inner').prepend(this._zoomButton);
     this.setCallbacks();
     this.center();
     return this;
@@ -54,7 +54,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   // Redraw the Flot Plot.
   drawPlot : function() {
-    $.plot($('.timeline_plot', this.el), this._data, this._options);
+    $.plot(this.$('.timeline_plot'), this._data, this._options);
   },
 
   _loadDates : function() {

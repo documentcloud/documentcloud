@@ -100,7 +100,7 @@ dc.ui.Paginator = dc.Controller.extend({
     ], _.bind(function(order) {
       this.sortOrder = order;
       dc.app.preferences.set({sort_order : order});
-      $('.sorter', this.el).text(this.SORT_TEXT[this.sortOrder]);
+      this.$('.sorter').text(this.SORT_TEXT[this.sortOrder]);
       this.goToPage();
       return true;
     }, this), {mode : 'short_prompt'});

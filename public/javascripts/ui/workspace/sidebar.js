@@ -5,13 +5,13 @@ dc.ui.Sidebar = dc.Controller.extend({
 
   render : function() {
     $(this.el).html(JST['workspace/sidebar']({}));
-    this.content  = $('#sidebar_content', this.el);
+    this.content  = this.$('#sidebar_content');
     dc.app.scroller = (new dc.ui.Scroll(this.content)).render();
     return this;
   },
 
   add : function(containerName, view) {
-    $('#' + containerName + '_container', this.el).append(view);
+    this.$('#' + containerName + '_container').append(view);
   }
 
 });

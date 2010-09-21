@@ -11,8 +11,8 @@ dc.ui.Tooltip = dc.Controller.extend({
     this._open = false;
     _.bindAll(this, 'hide', 'show');
     $(this.el).html(JST['common/tooltip']());
-    this._title   = $('#tooltip_title', this.el);
-    this._content = $('#tooltip_text', this.el);
+    this._title   = this.$('#tooltip_title');
+    this._content = this.$('#tooltip_text');
     $(document.body).append(this.el);
   },
 

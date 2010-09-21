@@ -29,8 +29,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       data.information = 'Project: ' + title;
     }
     this.base(data);
-    $('.custom', this.el).html(JST['document/upload_dialog']());
-    this._list = $('.upload_list', this.el);
+    this.$('.custom').html(JST['document/upload_dialog']());
+    this._list = this.$('.upload_list');
     this._renderDocumentTiles();
     this.countDocuments();
     this.center();
@@ -167,7 +167,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       var num = this.set.size();
       return this.error('Please enter a title for ' + (num == 1 ? 'the document.' : 'all documents.'));
     }
-    $('.ok', this.el).setMode('not', 'enabled');
+    this.$('.ok').setMode('not', 'enabled');
     this._uploadify.uploadifyUpload();
   },
 
@@ -195,8 +195,8 @@ dc.ui.UploadDocumentTile = dc.Controller.extend({
 
   render : function() {
     $(this.el).html(JST['document/upload_document_tile']({model : this.model}));
-    this._title    = $('input[name=title]', this.el);
-    this._progress = $('.progress_bar', this.el);
+    this._title    = this.$('input[name=title]');
+    this._progress = this.$('.progress_bar');
     this.setCallbacks();
     return this;
   },
@@ -204,9 +204,9 @@ dc.ui.UploadDocumentTile = dc.Controller.extend({
   serialize : function() {
     return {
       title       : this._title.val(),
-      description : $('textarea[name=description]', this.el).val(),
-      source      : $('input[name=source]', this.el).val(),
-      access      : $('select[name=access]', this.el).val()
+      description : this.$('textarea[name=description]').val(),
+      source      : this.$('input[name=source]').val(),
+      access      : this.$('select[name=access]').val()
     };
   },
 
@@ -228,8 +228,8 @@ dc.ui.UploadDocumentTile = dc.Controller.extend({
   },
 
   openEdit : function() {
-    $('.upload_edit', this.el).toggle();
-    $('.open_edit', this.el).toggleClass('active');
+    this.$('.upload_edit').toggle();
+    this.$('.open_edit').toggleClass('active');
   },
 
   startProgress : function() {

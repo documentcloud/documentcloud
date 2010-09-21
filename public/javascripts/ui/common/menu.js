@@ -25,7 +25,7 @@ dc.ui.Menu = dc.Controller.extend({
 
   render : function() {
     $(this.el).html(JST['common/menubutton']({label : this.options.label}));
-    this._label = $('.label', this.el);
+    this._label = this.$('.label');
     $(document.body).append(this.content);
     this.setCallbacks();
     return this;

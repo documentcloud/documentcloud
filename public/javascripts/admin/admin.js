@@ -59,13 +59,13 @@ dc.ui.Admin = dc.Controller.extend({
   },
 
   renderCharts : function() {
-    $('.chart', this.el).html('');
+    this.$('.chart').html('');
     $.plot($('#docs_uploaded_chart'), stats.daily_documents_series, this.GRAPH_OPTIONS);
     $.plot($('#pages_uploaded_chart'), stats.daily_pages_series, this.GRAPH_OPTIONS);
   },
 
   renderAccounts : function() {
-    $('#accounts_wrapper', this.el).html((new dc.ui.AdminAccounts()).render().el);
+    this.$('#accounts_wrapper').html((new dc.ui.AdminAccounts()).render().el);
   },
 
   data : function() {
@@ -185,9 +185,9 @@ dc.ui.Admin = dc.Controller.extend({
   // Displays all top documents, retrieved through AJAX.
   _displayMoreTopDocuments : function(data) {
     TopDocuments.populate(data);
-    $('.top_documents_list', this.el).replaceWith(JST['top_documents']({}));
-    $('.top_documents_label_year', this.el).css({'display': 'table-row'});
-    $('.top_documents_label_week', this.el).css({'display': 'none'});
+    this.$('.top_documents_list').replaceWith(JST['top_documents']({}));
+    this.$('.top_documents_label_year').css({'display': 'table-row'});
+    this.$('.top_documents_label_week').css({'display': 'none'});
   },
 
   // Convert a date-hash into JSON that flot can properly plot.

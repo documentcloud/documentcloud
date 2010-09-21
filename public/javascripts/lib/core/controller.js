@@ -28,6 +28,11 @@ dc.Controller = Base.extend({
     return this;
   },
 
+  // jQuery lookup, scoped to the current view.
+  $ : function(selector) {
+    return $(selector, this.el);
+  },
+
   // Quick-create a dom element with attributes.
   make : function(tagName, attributes, content) {
     var el = document.createElement(tagName);

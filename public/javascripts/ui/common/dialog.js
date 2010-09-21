@@ -32,10 +32,10 @@ dc.ui.Dialog = dc.Controller.extend({
   render : function(opts) {
     opts = opts || {};
     $(this.el).html(JST['common/dialog'](_.extend({}, this.options, opts)));
-    var cel = this.contentEl = $('.content', this.el);
-    this._controls = $('.controls', this.el);
-    this._controlsInner = $('.controls_inner', this.el);
-    this._information = $('.information', this.el);
+    var cel = this.contentEl = this.$('.content');
+    this._controls = this.$('.controls');
+    this._controlsInner = this.$('.controls_inner');
+    this._information = this.$('.information');
     if (this.options.width) $(this.el).css({width : this.options.width});
     if (this.options.content) cel.val(this.options.content);
     $(document.body).append(this.el);
@@ -66,11 +66,11 @@ dc.ui.Dialog = dc.Controller.extend({
 
   val : function() {
     return (this.options.choices && this.options.mode == 'prompt') ?
-      $('input:radio:checked', this.el).val() : this.contentEl.val();
+      this.$('input:radio:checked').val() : this.contentEl.val();
   },
 
   title : function(title) {
-    $('.title', this.el).text(title);
+    this.$('.title').text(title);
   },
 
   cancel : function() {
@@ -105,11 +105,11 @@ dc.ui.Dialog = dc.Controller.extend({
   },
 
   showSpinner : function() {
-    $('.spinner_dark', this.el).show();
+    this.$('.spinner_dark').show();
   },
 
   hideSpinner : function() {
-    $('.spinner_dark', this.el).hide();
+    this.$('.spinner_dark').hide();
   },
 
   validateUrl : function(url) {

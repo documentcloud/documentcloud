@@ -55,13 +55,13 @@ dc.ui.AccountView = dc.Controller.extend({
   },
 
   serialize : function() {
-    var attrs = $('input, select', this.el).serializeJSON();
+    var attrs = this.$('input, select').serializeJSON();
     if (attrs.role) attrs.role = parseInt(attrs.role, 10);
     return attrs;
   },
 
   showEdit : function() {
-    $('option.role_' + this.model.get('role'), this.el).attr({selected : 'selected'});
+    this.$('option.role_' + this.model.get('role')).attr({selected : 'selected'});
     this.setMode('edit', 'view');
   },
 
@@ -82,7 +82,7 @@ dc.ui.AccountView = dc.Controller.extend({
   _loadAvatar : function() {
     var img = new Image();
     var src = this.model.gravatarUrl(this.size());
-    img.onload = _.bind(function() { $('img.avatar', this.el).attr({src : src}); }, this);
+    img.onload = _.bind(function() { this.$('img.avatar').attr({src : src}); }, this);
     img.src = src;
   },
 

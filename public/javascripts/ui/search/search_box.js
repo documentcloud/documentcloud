@@ -29,8 +29,8 @@ dc.ui.SearchBox = dc.Controller.extend({
 
   render : function() {
     $(this.el).append(JST['workspace/search_box']({}));
-    this.box      = $('#search_box', this.el);
-    this.titleBox = $('#title_box_inner', this.el);
+    this.box      = this.$('#search_box');
+    this.titleBox = this.$('#title_box_inner');
     $(document.body).setMode('no', 'search');
     this.setCallbacks();
     $('#cloud_edge').click(function(){ window.location = '/home'; });
@@ -113,11 +113,11 @@ dc.ui.SearchBox = dc.Controller.extend({
   },
 
   _addFocus : function() {
-    $('#search_box', this.el).addClass('focus');
+    this.$('#search_box').addClass('focus');
   },
 
   _removeFocus : function() {
-    $('#search_box', this.el).removeClass('focus');
+    this.$('#search_box').removeClass('focus');
   }
 
 });

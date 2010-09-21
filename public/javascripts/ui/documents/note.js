@@ -34,8 +34,8 @@ dc.ui.Note = dc.Controller.extend({
 
   editNote : function() {
     if (!this.model.checkAllowedToEdit()) return dc.ui.Dialog.alert("You don't have permission to edit this note.");
-    $('.note_title_input', this.el).val(this.model.get('title'));
-    $('.note_text_edit', this.el).val(this.model.get('content'));
+    this.$('.note_title_input').val(this.model.get('title'));
+    this.$('.note_text_edit').val(this.model.get('content'));
     this.setMode('edit', 'visible');
   },
 
@@ -46,8 +46,8 @@ dc.ui.Note = dc.Controller.extend({
   saveNote : function() {
     this.setMode('display', 'visible');
     this.set.update(this.model, {
-      title   : $('.note_title_input', this.el).val(),
-      content : $('.note_text_edit', this.el).val()
+      title   : this.$('.note_title_input').val(),
+      content : this.$('.note_text_edit').val()
     });
   },
 

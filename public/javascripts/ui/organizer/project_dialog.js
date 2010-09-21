@@ -24,9 +24,9 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   render : function(noHide) {
     if (!noHide) $(this.el).hide();
     this.base({editor : true, information : this.model.statistics()});
-    $('.custom', this.el).html(JST['organizer/project_dialog']({model : this.model}));
-    $('#project_title', this.el).val(this.model.get('title'));
-    if (!this.model.get('owner')) $('.minibutton.delete', this.el).text("Remove");
+    this.$('.custom').html(JST['organizer/project_dialog']({model : this.model}));
+    this.$('#project_title').val(this.model.get('title'));
+    if (!this.model.get('owner')) this.$('.minibutton.delete').text("Remove");
     if (this.model.collaborators.populated) {
       this._finishRender();
     } else {
@@ -37,7 +37,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   },
 
   confirm : function() {
-    var title = $('#project_title', this.el).val();
+    var title = this.$('#project_title').val();
     if (!title) return this.error("Please specify a project title.");
     Projects.update(this.model, {title : title});
     this.close();
@@ -49,8 +49,8 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
       var views = _.map(this.model.collaborators.models(), _.bind(function(account) {
         return (new dc.ui.AccountView({model : account, kind : 'collaborator'})).render(null, {project : this.model}).el;
       }, this));
-      $('.collaborator_list tbody', this.el).append(views);
-      $('.collaborators', this.el).show();
+      this.$('.collaborator_list tbody').append(views);
+      this.$('.collaborators').show();
     }
     $(this.el).show();
     this.center();
@@ -77,7 +77,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   },
 
   _addCollaborator : function() {
-    var email = $('#collaborator_email', this.el).val();
+    var email = this.$('#collaborator_email').val();
     if (!email) return this.error('Please enter an email address.');
     this.showSpinner();
     this.model.collaborators.create(new dc.model.Account({email : email}), null, {
@@ -95,9 +95,9 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   },
 
   _showEnterEmail : function() {
-    $('.add_collaborator', this.el).hide();
-    $('.enter_email', this.el).show();
-    $('#collaborator_email', this.el).focus();
+    this.$('.add_collaborator').hide();
+    this.$('.enter_email').show();
+    this.$('#collaborator_email').focus();
   }
 
 });
