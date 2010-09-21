@@ -1,12 +1,12 @@
 dc.Controller = Base.extend({
 
-  el              : null,
-  model           : null,
-  modes           : null,
-  id              : null,
-  className       : null,
-  tagName         : 'div',
-  callbacks       : {},
+  el        : null,
+  model     : null,
+  modes     : null,
+  id        : null,
+  className : null,
+  tagName   : 'div',
+  callbacks : {},
 
   constructor : function(options) {
     this.modes = {};
@@ -35,10 +35,9 @@ dc.Controller = Base.extend({
 
   // Quick-create a dom element with attributes.
   make : function(tagName, attributes, content) {
-    attributes || (attributes = {});
     var el = document.createElement(tagName);
-    for (key in attributes) el.setAttribute(key, '' + attributes[key]);
-    if (content) el.innerHTML = content;
+    if (attributes) $(el).attr(attributes);
+    if (content) $(el).html(content);
     return el;
   },
 
