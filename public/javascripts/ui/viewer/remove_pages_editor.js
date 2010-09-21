@@ -89,8 +89,8 @@ dc.ui.RemovePagesEditor = dc.View.extend({
   
   redrawPages : function() {
     var pageCount = this.removePages.length;
-    this.removePages.sort(function(a, b) { return a > b; });
-    $('.document_page_tile', this.$s.holder).remove();
+    this.removePages = this.removePages.sort(function(a, b) { return a - b; });
+    $('.document_page_tile', this.$s.holder).empty().remove();
     
     if (pageCount == 0) {
       this.$s.container.addClass('empty');

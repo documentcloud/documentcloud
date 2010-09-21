@@ -236,6 +236,7 @@
   #remove_pages_container .remove_pages_confirm {
     float: left;
     width: 120px;
+    height: 90px;
     margin: 18px 0 0 12px;
     padding: 12px 0 0 0;
     text-transform: uppercase;
@@ -259,6 +260,7 @@
       float: left;
       margin: 12px 0 0 12px;
       text-align: center;
+      height: 90px;
     }
       #remove_pages_container .document_page_tile img {
         display: block;
