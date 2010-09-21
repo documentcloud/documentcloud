@@ -1,4 +1,4 @@
-dc.ui.Project = dc.View.extend({
+dc.ui.Project = dc.Controller.extend({
 
   className : 'project box',
 

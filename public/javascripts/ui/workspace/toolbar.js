@@ -1,4 +1,4 @@
-dc.ui.Toolbar = dc.View.extend({
+dc.ui.Toolbar = dc.Controller.extend({
 
   id : 'toolbar',
 

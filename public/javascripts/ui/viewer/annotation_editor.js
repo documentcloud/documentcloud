@@ -1,4 +1,4 @@
-dc.ui.AnnotationEditor = dc.View.extend({
+dc.ui.AnnotationEditor = dc.Controller.extend({
 
   id : 'annotation_editor',
 

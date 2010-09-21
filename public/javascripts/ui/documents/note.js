@@ -1,5 +1,5 @@
 // A tile view for previewing a Document in a listing.
-dc.ui.Note = dc.View.extend({
+dc.ui.Note = dc.Controller.extend({
 
   className : 'note noselect',
 

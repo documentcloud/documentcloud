@@ -1,4 +1,4 @@
-dc.ui.Paginator = dc.View.extend({
+dc.ui.Paginator = dc.Controller.extend({
 
   DEFAULT_PAGE_SIZE : 10,
   MINI_PAGE_SIZE    : 30,

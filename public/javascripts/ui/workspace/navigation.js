@@ -1,4 +1,4 @@
-dc.ui.Navigation = dc.View.extend({
+dc.ui.Navigation = dc.Controller.extend({
 
   SECTIONS : {
     documents : 'sidebar',

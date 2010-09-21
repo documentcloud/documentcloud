@@ -1,4 +1,4 @@
-dc.ui.Tooltip = dc.View.extend({
+dc.ui.Tooltip = dc.Controller.extend({
 
   id        : 'tooltip',
   className : 'interface',

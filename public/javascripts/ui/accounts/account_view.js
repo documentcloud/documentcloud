@@ -1,5 +1,5 @@
 // A tile view for previewing a Document in a listing.
-dc.ui.AccountView = dc.View.extend({
+dc.ui.AccountView = dc.Controller.extend({
 
   AVATAR_SIZES : {
     badge         : 30,

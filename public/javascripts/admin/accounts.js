@@ -1,4 +1,4 @@
-dc.ui.AdminAccounts = dc.View.extend({
+dc.ui.AdminAccounts = dc.Controller.extend({
 
   // Keep in sync with account.rb
   ADMINISTRATOR : 1,

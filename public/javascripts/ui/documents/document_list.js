@@ -1,6 +1,6 @@
 // Responsible for rendering a list of Documents. The tiles can be displayed
 // in a number of different sizes.
-dc.ui.DocumentList = dc.View.extend({
+dc.ui.DocumentList = dc.Controller.extend({
 
   SLOP      : 3,
 

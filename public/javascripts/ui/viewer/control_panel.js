@@ -1,4 +1,4 @@
-dc.ui.ViewerControlPanel = dc.View.extend({
+dc.ui.ViewerControlPanel = dc.Controller.extend({
 
   id : 'control_panel',
 

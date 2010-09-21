@@ -1,5 +1,5 @@
 // The Sidebar. Switches contexts between different subviews.
-dc.ui.Sidebar = dc.View.extend({
+dc.ui.Sidebar = dc.Controller.extend({
 
   id : 'sidebar',
 

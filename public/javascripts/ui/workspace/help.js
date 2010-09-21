@@ -1,5 +1,5 @@
 // The Help tab.
-dc.ui.Help = dc.View.extend({
+dc.ui.Help = dc.Controller.extend({
 
   PAGES : [
     {url : '',                 title : 'Introduction'},

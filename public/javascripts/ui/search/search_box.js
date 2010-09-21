@@ -1,5 +1,5 @@
 // The search controller is responsible for managing document/metadata search.
-dc.ui.SearchBox = dc.View.extend({
+dc.ui.SearchBox = dc.Controller.extend({
 
   // Error messages to display when your search returns no results.
   NO_RESULTS : {

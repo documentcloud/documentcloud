@@ -1,4 +1,4 @@
-dc.ui.Menu = dc.View.extend({
+dc.ui.Menu = dc.Controller.extend({
 
   className : 'minibutton menu',
 

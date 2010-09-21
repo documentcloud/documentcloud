@@ -183,7 +183,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
 });
 
-dc.ui.UploadDocumentTile = dc.View.extend({
+dc.ui.UploadDocumentTile = dc.Controller.extend({
 
   className : 'row',
 

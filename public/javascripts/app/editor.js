@@ -1,5 +1,5 @@
 // Main controller for the in-viewer document editor. Orchestrates subviews.
-dc.app.editor = new dc.View();
+dc.app.editor = new dc.Controller();
 _.extend(dc.app.editor, {
 
   // Initializes the workspace, binding it to <body>.

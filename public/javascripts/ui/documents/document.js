@@ -1,5 +1,5 @@
 // A tile view for previewing a Document in a listing.
-dc.ui.Document = dc.View.extend({
+dc.ui.Document = dc.Controller.extend({
 
   // To display if the document failed to upload.
   ERROR_MESSAGE : "The document failed to import successfully. We've been notified of the problem, \

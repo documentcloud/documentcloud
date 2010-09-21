@@ -1,5 +1,5 @@
 // Main controller for the journalist workspace. Orchestrates subviews.
-dc.app.workspace = new dc.View();
+dc.app.workspace = new dc.Controller();
 _.extend(dc.app.workspace, {
 
   // Initializes the workspace, binding it to <body>.

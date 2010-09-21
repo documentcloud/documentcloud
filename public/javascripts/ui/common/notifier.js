@@ -1,4 +1,4 @@
-dc.ui.Notifier = dc.View.extend({
+dc.ui.Notifier = dc.Controller.extend({
 
   id : 'notifier',
 

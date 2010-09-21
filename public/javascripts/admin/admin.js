@@ -1,4 +1,4 @@
-dc.ui.Admin = dc.View.extend({
+dc.ui.Admin = dc.Controller.extend({
 
   GRAPH_OPTIONS : {
     xaxis     : {mode : 'time', minTickSize: [1, "day"]},

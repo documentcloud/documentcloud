@@ -1,4 +1,4 @@
-dc.ui.Scroll = dc.View.extend({
+dc.ui.Scroll = dc.Controller.extend({
 
   OVERLAP_MARGIN : 50,
 

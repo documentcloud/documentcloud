@@ -1,4 +1,4 @@
-dc.ui.Dialog = dc.View.extend({
+dc.ui.Dialog = dc.Controller.extend({
 
   className : 'dialog',
 

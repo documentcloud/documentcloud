@@ -1,5 +1,5 @@
 // The main central panel. Switches contexts between different subviews.
-dc.ui.Panel = dc.View.extend({
+dc.ui.Panel = dc.Controller.extend({
 
   className : 'panel_container',
 

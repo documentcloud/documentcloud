@@ -1,4 +1,4 @@
-dc.ui.Organizer = dc.View.extend({
+dc.ui.Organizer = dc.Controller.extend({
 
   id : 'organizer',
 

@@ -1,4 +1,4 @@
-dc.ui.SectionEditor = dc.View.extend({
+dc.ui.SectionEditor = dc.Controller.extend({
 
   constructor : function(opts) {
     this.base(opts);
