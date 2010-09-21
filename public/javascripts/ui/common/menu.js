@@ -2,6 +2,8 @@ dc.ui.Menu = dc.Controller.extend({
 
   className : 'minibutton menu',
 
+  options : {id : null, standalone : false},
+
   callbacks : {
     'el.click'        : 'open',
     'el.selectstart'  : '_stopSelect'
@@ -9,7 +11,6 @@ dc.ui.Menu = dc.Controller.extend({
 
   constructor : function(options) {
     _.bindAll(this, 'close');
-    options = _.extend(this.defaultOptions(), options || {});
     this.base(options);
     this.items          = [];
     this.content        = $(JST['common/menu'](this.options));
@@ -17,10 +18,6 @@ dc.ui.Menu = dc.Controller.extend({
     this.addIcon        = $('.bullet_add', this.content);
     this.modes.open     = 'not';
     if (options.items) this.addItems(options.items);
-  },
-
-  defaultOptions : function() {
-    return {id : null, standalone : false};
   },
 
   render : function() {

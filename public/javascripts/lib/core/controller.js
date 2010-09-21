@@ -6,6 +6,7 @@ dc.Controller = Base.extend({
   id        : null,
   className : null,
   callbacks : null,
+  options   : null,
   tagName   : 'div',
 
   constructor : function(options) {
@@ -16,7 +17,7 @@ dc.Controller = Base.extend({
   },
 
   configure : function(options) {
-    if (this.defaultOptions) options = _.extend(this.defaultOptions(), options);
+    if (this.options) options = _.extend({}, this.options, options);
     if (options.model)      this.model = options.model;
     if (options.set)        this.set = options.set;
     if (options.id)         this.id = options.id;

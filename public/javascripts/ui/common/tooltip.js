@@ -6,8 +6,14 @@ dc.ui.Tooltip = dc.Controller.extend({
   OFFSET    : 5,
   MAX_WIDTH : 320,
 
-  constructor : function() {
-    this.base();
+  options : {
+    text  : 'info',
+    left  : 0,
+    top   : 0
+  },
+
+  constructor : function(options) {
+    this.base(options);
     this._open = false;
     _.bindAll(this, 'hide', 'show');
     $(this.el).html(JST['common/tooltip']());
@@ -17,7 +23,7 @@ dc.ui.Tooltip = dc.Controller.extend({
   },
 
   show : function(options) {
-    options       = _.extend(this.defaultOptions(), options);
+    options       = _.extend(this.options, options);
     options.top  += this.OFFSET;
     this.setMode(options.mode, 'style');
     this._title.html(options.title);
@@ -44,14 +50,6 @@ dc.ui.Tooltip = dc.Controller.extend({
 
   fadeOut : function() {
     $.browser.msie ? $(this.el).hide() : $(this.el).stop(true, true).fadeOut('fast');
-  },
-
-  defaultOptions : function() {
-    return {
-      text      : 'info',
-      left      : 0,
-      top       : 0
-    };
   }
 
 });

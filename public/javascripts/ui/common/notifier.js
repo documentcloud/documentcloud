@@ -6,9 +6,18 @@ dc.ui.Notifier = dc.Controller.extend({
     'el.click': 'hide'
   },
 
-  constructor : function() {
-    this.base();
-    this.defaultAnchor = $('#topbar')[0];
+  options : {
+    position  : 'center center',
+    text      : 'ok',
+    left      : 0,
+    top       : 0,
+    duration  : 2000,
+    leaveOpen : false,
+    mode      : 'warn'
+  },
+
+  constructor : function(options) {
+    this.base(options);
     $(document.body).append(this.el);
     _.bindAll(this, 'show', 'hide');
     this.setCallbacks();
@@ -17,7 +26,7 @@ dc.ui.Notifier = dc.Controller.extend({
   // Display the notifier with a message, positioned relative to an optional
   // anchor element.
   show : function(options) {
-    options = _.extend(this.defaultOptions(), options);
+    options = _.extend({}, this.options, options);
     this.setMode(options.mode, 'style');
     $(this.el).text(options.text).fadeIn('fast');
     $(this.el).show();
@@ -28,19 +37,6 @@ dc.ui.Notifier = dc.Controller.extend({
   hide : function(immediate) {
     this.timeout = null;
     immediate === true ? $(this.el).hide() : $(this.el).fadeOut('fast');
-  },
-
-  defaultOptions : function() {
-    return {
-      anchor    : this.defaultAnchor,
-      position  : 'center center',
-      text      : 'ok',
-      left      : 0,
-      top       : 0,
-      duration  : 2000,
-      leaveOpen : false,
-      mode      : 'warn'
-    };
   }
 
 });

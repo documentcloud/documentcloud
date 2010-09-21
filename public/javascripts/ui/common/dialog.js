@@ -2,7 +2,7 @@ dc.ui.Dialog = dc.Controller.extend({
 
   className : 'dialog',
 
-  DEFAULT_OPTIONS : {
+  options : {
     title       : "Untitled Dialog",
     text        : null,
     information : null,
@@ -50,10 +50,6 @@ dc.ui.Dialog = dc.Controller.extend({
   setCallbacks : function(callbacks) {
     this.base(callbacks);
     if (this.options.draggable) $(this.el).draggable();
-  },
-
-  defaultOptions : function() {
-    return _.clone(this.DEFAULT_OPTIONS);
   },
 
   append : function(el) {
