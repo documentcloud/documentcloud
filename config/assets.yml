@@ -7,9 +7,9 @@ javascripts:
     - public/javascripts/application.js
     - public/javascripts/vendor/jquery-1.4.2.js
     - public/javascripts/vendor/*.js
-    - public/javascripts/lib/bindable.js
-    - public/javascripts/lib/set.js
-    - public/javascripts/lib/*.js
+    - public/javascripts/lib/core/bindable.js
+    - public/javascripts/lib/core/set.js
+    - public/javascripts/lib/**/*.js
     - public/javascripts/model/*.js
     - public/javascripts/ui/common/*.js
     - public/javascripts/ui/**/*.js
