@@ -5,8 +5,8 @@ dc.Controller = Base.extend({
   modes     : null,
   id        : null,
   className : null,
+  callbacks : null,
   tagName   : 'div',
-  callbacks : {},
 
   constructor : function(options) {
     this.modes = {};
@@ -61,7 +61,7 @@ dc.Controller = Base.extend({
   setCallbacks : function(callbacks) {
     var me = this;
     $(me.el).unbind();
-    _.each(callbacks || this.callbacks, function(val, key) {
+    _.each(callbacks || this.callbacks || {}, function(val, key) {
       key = key.split(/\.(?!.*\.)/);
       var selector = key[0], eventName = key[1], methodName = val;
       var method = _.bind(me[methodName], me);
@@ -71,6 +71,7 @@ dc.Controller = Base.extend({
         $(me.el).delegate(selector, eventName, method);
       }
     });
+    return this;
   },
 
   _createElement : function() {
