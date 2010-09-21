@@ -9,7 +9,7 @@ dc.ui.Scroll = dc.Controller.extend({
   callbacks : {
     '.scroll_up.click'    : 'scrollUp',
     '.scroll_down.click'  : 'scrollDown',
-    'el.mousewheel'       : '_mouseScroll'
+    '.mousewheel'       : '_mouseScroll'
   },
 
   // Given a div with overflow:hidden, make the div scrollable by inserting

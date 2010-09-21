@@ -3,7 +3,7 @@ dc.ui.Notifier = dc.Controller.extend({
   id : 'notifier',
 
   callbacks : {
-    'el.click': 'hide'
+    '.click': 'hide'
   },
 
   options : {

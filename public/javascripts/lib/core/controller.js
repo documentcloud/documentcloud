@@ -60,18 +60,19 @@ dc.Controller = Base.extend({
   // Change events are not delegated through the view because IE does not bubble
   // change events at all.
   setCallbacks : function(callbacks) {
-    var me = this;
-    $(me.el).unbind();
-    _.each(callbacks || this.callbacks || {}, function(val, key) {
+    $(this.el).unbind();
+    if (!(callbacks || (callbacks = this.callbacks))) return this;
+    for (key in callbacks) {
+      var methodName = callbacks[key];
       key = key.split(/\.(?!.*\.)/);
-      var selector = key[0], eventName = key[1], methodName = val;
-      var method = _.bind(me[methodName], me);
-      if (selector == 'el' || eventName == 'change') {
-        $(me.el).bind(eventName, method);
+      var selector = key[0], eventName = key[1];
+      var method = _.bind(this[methodName], this);
+      if (selector === '' || eventName == 'change') {
+        $(this.el).bind(eventName, method);
       } else {
-        $(me.el).delegate(selector, eventName, method);
+        $(this.el).delegate(selector, eventName, method);
       }
-    });
+    }
     return this;
   },
 

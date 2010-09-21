@@ -7,8 +7,8 @@ dc.ui.DocumentList = dc.Controller.extend({
   id        : 'document_list',
 
   callbacks : {
-    'el.mousedown': '_startDeselect',
-    'el.click':     '_endDeselect'
+    '.mousedown': '_startDeselect',
+    '.click':     '_endDeselect'
   },
 
   constructor : function(options) {

@@ -5,8 +5,8 @@ dc.ui.Menu = dc.Controller.extend({
   options : {id : null, standalone : false},
 
   callbacks : {
-    'el.click'        : 'open',
-    'el.selectstart'  : '_stopSelect'
+    '.click'        : 'open',
+    '.selectstart'  : '_stopSelect'
   },
 
   constructor : function(options) {

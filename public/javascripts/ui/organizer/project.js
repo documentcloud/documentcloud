@@ -3,7 +3,7 @@ dc.ui.Project = dc.Controller.extend({
   className : 'project box',
 
   callbacks : {
-    'el.click'          : 'showDocuments',
+    '.click'          : 'showDocuments',
     '.edit_glyph.click' : 'editProject'
   },
 
