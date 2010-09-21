@@ -159,7 +159,7 @@ dc.ui.Toolbar = dc.Controller.extend({
     var docs = Documents.chosen();
     if (!docs.length && Documents.selectedCount) return;
     if (docs.length > 10) return dc.ui.Dialog.alert("You can only view a timeline for ten documents at a time.");
-    if (docs.length <= 0) docs = Documents.models().slice(0, 10);
+    if (docs.length <= 0) docs = Documents.models.slice(0, 10);
     if (docs.length <= 0) return dc.ui.Dialog.alert("In order to view a timeline, please select some documents.");
     new dc.ui.TimelineDialog(docs);
   },

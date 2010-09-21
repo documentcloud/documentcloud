@@ -94,6 +94,4 @@ dc.model.AccountSet = dc.model.RESTfulSet.extend({
 
 });
 
-dc.model.AccountSet.implement(dc.model.SortedSet);
-
 window.Accounts = new dc.model.AccountSet();

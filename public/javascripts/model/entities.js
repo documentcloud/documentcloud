@@ -45,8 +45,6 @@ dc.model.EntitySet = dc.Set.extend({
 
 });
 
-dc.model.EntitySet.implement(dc.model.SortedSet);
-
 window.EntityDates = new dc.model.EntitySet();
 
 EntityDates.comparator = function(entity) {

@@ -5,15 +5,15 @@ dc.model.SelectableSet = Base.extend({
   selectedCount : 0,
 
   selectAll : function() {
-    _.each(this.models(), function(m){ m.set({selected : true}); });
+    _.each(this.models, function(m){ m.set({selected : true}); });
   },
 
   deselectAll : function() {
-    _.each(this.models(), function(m){ m.set({selected : false}); });
+    _.each(this.models, function(m){ m.set({selected : false}); });
   },
 
   selected : function() {
-    return _.select(this.models(), function(m){ return m.get('selected'); });
+    return _.select(this.models, function(m){ return m.get('selected'); });
   },
 
   selectedIds : function() {

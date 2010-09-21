@@ -42,8 +42,8 @@ dc.ui.Organizer = dc.Controller.extend({
   },
 
   renderAll : function() {
-    if (Projects.empty()) this.setMode('no', 'projects');
-    _.each(Projects.models(), _.bind(function(model) {
+    if (Projects.isEmpty()) this.setMode('no', 'projects');
+    _.each(Projects.models, _.bind(function(model) {
       this._addSubView(null, model);
     }, this));
   },
@@ -207,7 +207,7 @@ dc.ui.Organizer = dc.Controller.extend({
     this.setMode('has', 'projects');
     var view = new dc.ui.Project({model : model}).render();
     this.subViews.push(view);
-    var models        = Projects.models();
+    var models        = Projects.models;
     var index         = _.indexOf(models, view.model);
     var previous      = models[index - 1];
     var previousView  = previous && previous.view;

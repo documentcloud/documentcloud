@@ -44,5 +44,3 @@ dc.model.NoteSet = dc.model.RESTfulSet.extend({
   }
 
 });
-
-dc.model.NoteSet.implement(dc.model.SortedSet);

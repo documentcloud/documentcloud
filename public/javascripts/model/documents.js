@@ -72,7 +72,7 @@ dc.model.Document = dc.Model.extend({
   },
 
   uniquePageEntityValues : function() {
-    return _.uniq(_.map(this.pageEntities.models(), function(m){ return m.get('value'); }));
+    return _.uniq(_.map(this.pageEntities.models, function(m){ return m.get('value'); }));
   },
 
   isPending : function() {
@@ -124,7 +124,7 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   },
 
   pending : function() {
-    return _.select(this.models(), function(doc){ return doc.isPending(); });
+    return _.select(this.models, function(doc){ return doc.isPending(); });
   },
 
   // Given a list of documents and an attribute, return the value of the
@@ -241,7 +241,6 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 
 });
 
-dc.model.DocumentSet.implement(dc.model.SortedSet);
 dc.model.DocumentSet.implement(dc.model.SelectableSet);
 
 // The main sets of Documents, used by the search tab, and the publish tab.

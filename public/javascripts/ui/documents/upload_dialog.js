@@ -40,7 +40,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   _renderDocumentTiles : function() {
     var tiles = this._tiles;
-    _.each(this.set.models(), function(model) {
+    _.each(this.set.models, function(model) {
       var view = new dc.ui.UploadDocumentTile({model : model});
       tiles[model.id] = view.render();
     });
@@ -80,7 +80,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this.set.add(new dc.model.UploadDocument({
       id        : queueId,
       file      : fileObj,
-      position  : this.set.size()
+      position  : this.set.length
     }));
     return false;
   },
@@ -96,7 +96,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Cancel an upload by file queue id.
   cancelUpload : function(id) {
-    if (this.set.size() <= 1) {
+    if (this.set.length <= 1) {
       this.error('You must upload at least one document.');
       return false;
     }
@@ -148,7 +148,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   countDocuments : function() {
-    var num = this.set.size();
+    var num = this.set.length;
     this.title('Upload ' + (num > 1 ? num : '') + Inflector.pluralize(' Document', num));
   },
 
@@ -164,7 +164,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   confirm : function() {
     var failed = _.select(this._tiles, function(tile) { return tile.ensureTitle(); });
     if (failed.length) {
-      var num = this.set.size();
+      var num = this.set.length;
       return this.error('Please enter a title for ' + (num == 1 ? 'the document.' : 'all documents.'));
     }
     this.$('.ok').setMode('not', 'enabled');

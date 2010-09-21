@@ -106,7 +106,7 @@
             <td></td>
           </thead>
           <tbody>
-            <% _.each(Documents.models().reverse(), function(doc) { %>
+            <% _.each(Documents.models.reverse(), function(doc) { %>
               <tr>
                 <td class="first"><img class="doc" src="<%= doc.get('thumbnail_url') %>" /></td>
                 <td><%= doc.get('id') %></td>
@@ -153,7 +153,7 @@
             <td></td>
           </thead>
           <tbody>
-            <% _.each(FailedDocuments.models().reverse(), function(doc) { %>
+            <% _.each(FailedDocuments.models.reverse(), function(doc) { %>
               <tr>
                 <td class="first">
                   <a target="_blank" title="open pdf" href="<%= doc.get('pdf_url') %>">

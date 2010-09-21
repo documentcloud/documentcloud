@@ -1,6 +1,6 @@
 <%
   var numbers = [];
-  var mentions = _.sortBy(_.flatten(_.map(doc.pageEntities.models(), function(ent) {
+  var mentions = _.sortBy(_.flatten(_.map(doc.pageEntities.models, function(ent) {
     return _.map(_.sortBy(ent.get('excerpts'), function(obj) {
       return obj.offset;
     }), function(obj) {

@@ -35,7 +35,7 @@ dc.app.searcher.extend({
       Documents.refresh();
       this.box.value('');
     }
-    if (!Documents.empty()) {
+    if (!Documents.isEmpty()) {
       dc.history.save(this.urlFragment());
       this.box.showDocuments();
     } else if (this.box.value()) {

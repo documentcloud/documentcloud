@@ -12,7 +12,7 @@ dc.ui.AdminAccounts = dc.Controller.extend({
 
   render : function() {
     $(this.el).html(JST.admin_accounts({}));
-    var rows = _.map(Accounts.models(), function(account) {
+    var rows = _.map(Accounts.models, function(account) {
       return (new dc.ui.AccountView({model : account, kind : 'admin'})).render().el;
     });
     this.$('tbody').append(rows);

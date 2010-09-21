@@ -1,16 +1,18 @@
-// Set provides a standard collection class for our pools of models.
+// **Set** provides a standard collection class for our sets of models, ordered
+// or unordered. If a `comparator` is specified, the Set will maintain its
+// models in sort order.
 dc.Set = Base.extend({
 
   // Create a new dc.Set.
-  constructor : function() {
+  constructor : function(options) {
     this._boundOnModelEvent = _.bind(this._onModelEvent, this);
     this._initialize();
-    // Consider adding filtering to the set.
   },
 
   // Initialize or re-initialize all internal state.
   _initialize : function() {
-    this._size = 0;
+    this.length = 0;
+    this.models = [];
     this._byId = {};
     this._byCid = {};
   },
@@ -35,34 +37,28 @@ dc.Set = Base.extend({
     return _.keys(this._byCid);
   },
 
-  // Simply return the models in the set as an array (useful for debugging).
-  models : function() {
-    return _.values(this._byId);
-  },
-
-  // How many models are in the set?
-  size : function() {
-    return this._size;
-  },
-
   // Is the set empty?
-  empty : function() {
-    return this._size <= 0;
+  isEmpty : function() {
+    return this.length <= 0;
   },
 
   // Convenience to iterate over each model in the set.
   each : function(iterator, context) {
-    return _.each(this.models(), iterator, context);
+    return _.each(this.models, iterator, context);
   },
 
   // Does any element in the set pass a truth test?
   any : function(iterator, context) {
-    return _.any(this.models(), iterator, context);
+    return _.any(this.models, iterator, context);
   },
 
   // Grab the first model in the set -- for testing.
   first : function() {
-    return _.first(this.models());
+    return this.models[0];
+  },
+
+  last : function() {
+    return _.last(this.models);
   },
 
   // Is a given model already present in the set?
@@ -84,8 +80,10 @@ dc.Set = Base.extend({
     if (already) throw new Error(["Can't add the same model to a set twice", already.id]);
     this._byId[model.id] = model;
     this._byCid[model.cid] = model;
+    var index = this.comparator ? _.sortedIndex(this.models, model, this.comparator) : this.length - 1;
+    this.models.splice(index, 0, model);
     model.bind('all', this._boundOnModelEvent);
-    this._size++;
+    this.length++;
     if (!silent) this.fire('set:added', model);
     return model;
   },
@@ -104,8 +102,10 @@ dc.Set = Base.extend({
     if (!model) return null;
     delete this._byId[model.id];
     delete this._byCid[model.cid];
+    var index = _.indexOf(this.models, model);
+    this.models.splice(index, 1);
     model.unbind('all', this._boundOnModelEvent);
-    this._size--;
+    this.length--;
     if (!silent) this.fire('set:removed', model);
     return model;
   },
@@ -117,6 +117,14 @@ dc.Set = Base.extend({
     models = models || [];
     this._initialize();
     this.add(models, true);
+    if (!silent) this.fire('set:refreshed');
+  },
+
+  // Force the set to re-sort itself. You don't need to call this under normal
+  // circumstances, as the set will maintain sort order as each item is added.
+  sort : function(silent) {
+    if (!this.comparator) throw new Error('Cannot sort a set without a comparator');
+    this.models = _.sortBy(this.models, this.comparator);
     if (!silent) this.fire('set:refreshed');
   },
 
@@ -134,7 +142,7 @@ dc.Set = Base.extend({
 
   // Inspect.
   toString : function() {
-    return 'Set (' + this._size + " models)";
+    return 'Set (' + this.length + " models)";
   }
 
 });

@@ -122,13 +122,6 @@ dc.Model = Base.extend({
 
   // Think about adding all of the enumerable methods to Model.
 
-}, {
-
-  // Comparator (the default for SortedSets) that simply compares ids.
-  ID_COMPARATOR : function(m) {
-    return m.id;
-  }
-
 });
 
 dc.Model.implement(dc.model.Bindable);

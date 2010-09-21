@@ -15,6 +15,4 @@ dc.model.OrganizationSet = dc.model.RESTfulSet.extend({
 
 });
 
-dc.model.OrganizationSet.implement(dc.model.SortedSet);
-
 window.Organizations = new dc.model.OrganizationSet();

@@ -77,7 +77,7 @@ dc.ui.Document = dc.Controller.extend({
       this.model.set({selected : !alreadySelected});
     } else if (hk.shift && anchor) {
       // Range.
-      var docs = Documents.models();
+      var docs = Documents.models;
       var idx = _.indexOf(docs, this.model), aidx = _.indexOf(docs, anchor);
       var start = Math.min(idx, aidx), end = Math.max(idx, aidx);
       _.each(docs, function(doc, index) {
@@ -242,7 +242,7 @@ dc.ui.Document = dc.Controller.extend({
   },
 
   _renderNotes : function() {
-    _.each(this.model.notes.models(), this._addNote);
+    _.each(this.model.notes.models, this._addNote);
     this.setMode('has', 'notes');
   },
 

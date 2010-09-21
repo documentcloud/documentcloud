@@ -37,6 +37,4 @@ dc.model.UploadDocumentSet = dc.Set.extend({
 
 });
 
-dc.model.UploadDocumentSet.implement(dc.model.SortedSet);
-
 window.UploadDocuments = new dc.model.UploadDocumentSet();
