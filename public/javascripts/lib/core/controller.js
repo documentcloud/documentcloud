@@ -24,11 +24,6 @@ dc.Controller = Base.extend({
     this.options = options;
   },
 
-  setOptions : function(options) {
-    this.options = _.extend(this.options, options);
-    return this;
-  },
-
   render : function() {
     return this;
   },
