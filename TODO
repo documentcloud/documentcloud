@@ -11,8 +11,6 @@ ARON'S LIST:
 
 TODO:
 
-  * Upgrade to Ghostscript 9.
-
   * Side-by-side annotations, via absolute positioning.
 
   * Add account information on all notes, when you're in the workspace.
@@ -28,6 +26,8 @@ TODO:
           
 
 DONE:
+  
+  * Upgrade to Ghostscript 9.
 
   * Scroll the Accounts List, already.
 

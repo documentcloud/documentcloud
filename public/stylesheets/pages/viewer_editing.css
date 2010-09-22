@@ -181,6 +181,11 @@
     border-bottom: 1px dashed #eee;
   }
 
+/* TODO: Implement resize */
+.DV-annotationEdge, .DV-annotationCorner {
+  display: none;
+}
+
 .DV-annotationTextArea {
   border: 1px solid #ccc;
 }
