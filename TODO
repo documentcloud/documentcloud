@@ -11,8 +11,6 @@ ARON'S LIST:
 
 TODO:
 
-  * Side-by-side annotations, via absolute positioning.
-
   * Add account information on all notes, when you're in the workspace.
 
   * Publicly indexable documents so Google can see them and link to 
@@ -26,6 +24,8 @@ TODO:
           
 
 DONE:
+
+  * Side-by-side annotations, via absolute positioning.
   
   * Upgrade to Ghostscript 9.
 
