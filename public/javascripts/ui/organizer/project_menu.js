@@ -14,7 +14,7 @@ dc.ui.ProjectMenu = dc.ui.Menu.extend({
     menu.clear();
     var docs      = Documents.selected();
     var disabled  = !docs.length ? ' disabled' : '';
-    var items     = _.map(Projects.models, function(project, i) {
+    var items     = Projects.map(function(project, i) {
       var className = (project.containsAny(docs) ? 'checked' : '') + disabled;
       return {title : project.get('title'), attrs : {'class': className}, onClick : _.bind(menu.options.onClick, menu, project)};
     });

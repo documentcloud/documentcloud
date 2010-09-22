@@ -62,7 +62,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
 
   _renderAccounts : function() {
     dc.ui.spinner.hide();
-    var views = _.map(Accounts.models, function(account) {
+    var views = Accounts.map(function(account) {
       return (new dc.ui.AccountView({model : account, kind : 'row'})).render().el;
     });
     this.list.append(views);

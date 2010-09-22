@@ -40,7 +40,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   _renderDocumentTiles : function() {
     var tiles = this._tiles;
-    _.each(this.set.models, function(model) {
+    this.set.each(function(model) {
       var view = new dc.ui.UploadDocumentTile({model : model});
       tiles[model.id] = view.render();
     });

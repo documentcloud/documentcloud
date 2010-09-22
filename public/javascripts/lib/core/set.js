@@ -39,6 +39,11 @@ dc.Set = Base.extend({
     return _.keys(this._byCid);
   },
 
+  // Get the model at the given index.
+  at: function(index) {
+    return this.models[index];
+  },
+
   // Add a model, or list of models to the set. Pass silent to avoid firing
   // the `set:added` event for every new model.
   add : function(models, silent) {
@@ -53,7 +58,7 @@ dc.Set = Base.extend({
     if (already) throw new Error(["Can't add the same model to a set twice", already.id]);
     this._byId[model.id] = model;
     this._byCid[model.cid] = model;
-    var index = this.comparator ? _.sortedIndex(this.models, model, this.comparator) : this.length - 1;
+    var index = this.comparator ? this.sortedIndex(model, this.comparator) : this.length - 1;
     this.models.splice(index, 0, model);
     model.bind('all', this._boundOnModelEvent);
     this.length++;
@@ -75,8 +80,7 @@ dc.Set = Base.extend({
     if (!model) return null;
     delete this._byId[model.id];
     delete this._byCid[model.cid];
-    var index = _.indexOf(this.models, model);
-    this.models.splice(index, 1);
+    this.models.splice(this.indexOf(model), 1);
     model.unbind('all', this._boundOnModelEvent);
     this.length--;
     if (!silent) this.fire('set:removed', model);
@@ -97,7 +101,7 @@ dc.Set = Base.extend({
   // circumstances, as the set will maintain sort order as each item is added.
   sort : function(silent) {
     if (!this.comparator) throw new Error('Cannot sort a set without a comparator');
-    this.models = _.sortBy(this.models, this.comparator);
+    this.models = this.sortBy(this.comparator);
     if (!silent) this.fire('set:refreshed');
   },
 

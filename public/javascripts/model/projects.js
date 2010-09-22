@@ -105,13 +105,13 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
 
   // Find a project by title.
   find : function(title) {
-    return _.detect(this.models, function(m){ return m.get('title').toLowerCase() == title.toLowerCase(); });
+    return this.detect(function(m){ return m.get('title').toLowerCase() == title.toLowerCase(); });
   },
 
   // Find all projects starting with a given prefix, for autocompletion.
   startingWith : function(prefix) {
     var matcher = new RegExp('^' + prefix);
-    return _.select(this.models, function(m){ return !!m.get('title').match(matcher); });
+    return this.select(function(m){ return !!m.get('title').match(matcher); });
   },
 
   // Increment the document_count attribute of a given project, by id.
@@ -122,9 +122,7 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
 
   // When documents are deleted, remove all of their matches.
   removeDocuments : function(docs) {
-    _.each(this.models, function(project) {
-      project.removeDocuments(docs, true);
-    });
+    this.each(function(project) { project.removeDocuments(docs, true); });
   },
 
   isDocumentIdShared : function(id) {

@@ -46,7 +46,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   _finishRender : function() {
     dc.ui.spinner.hide();
     if (this.model.collaborators.length) {
-      var views = _.map(this.model.collaborators.models, _.bind(function(account) {
+      var views = this.model.collaborators.map(_.bind(function(account) {
         return (new dc.ui.AccountView({model : account, kind : 'collaborator'})).render(null, {project : this.model}).el;
       }, this));
       this.$('.collaborator_list tbody').append(views);

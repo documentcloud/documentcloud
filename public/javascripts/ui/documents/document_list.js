@@ -27,7 +27,7 @@ dc.ui.DocumentList = dc.Controller.extend({
 
   refresh : function() {
     $(this.el).html('');
-    var views = _.map(Documents.models, function(m){
+    var views = Documents.map(function(m){
       return (new dc.ui.Document({model : m})).render().el;
     });
     $(this.el).append(views.concat(this.make('div', {'class' : 'clear'})));

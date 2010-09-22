@@ -77,10 +77,9 @@ dc.ui.Document = dc.Controller.extend({
       this.model.set({selected : !alreadySelected});
     } else if (hk.shift && anchor) {
       // Range.
-      var docs = Documents.models;
-      var idx = _.indexOf(docs, this.model), aidx = _.indexOf(docs, anchor);
+      var idx = Documents.indexOf(this.model), aidx = Documents.indexOf(anchor);
       var start = Math.min(idx, aidx), end = Math.max(idx, aidx);
-      _.each(docs, function(doc, index) {
+      Documents.each(function(doc, index) {
         doc.set({selected : index >= start && index <= end});
       });
     } else {
@@ -242,7 +241,7 @@ dc.ui.Document = dc.Controller.extend({
   },
 
   _renderNotes : function() {
-    _.each(this.model.notes.models, this._addNote);
+    this.model.notes.each(this._addNote);
     this.setMode('has', 'notes');
   },
 
