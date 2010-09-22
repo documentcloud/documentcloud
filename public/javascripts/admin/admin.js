@@ -147,8 +147,8 @@ dc.ui.Admin = dc.Controller.extend({
 
   _sortAccounts : function(e) {
     var sort = $(e.target).attr('data-sort');
-    var comparator = this.ACCOUNT_COMPARATORS[sort];
-    Accounts.setComparator(comparator);
+    Accounts.comparator = this.ACCOUNT_COMPARATORS[sort];
+    Accounts.sort();
     this.renderAccounts();
     $('#account_list .sort_' + sort).addClass('active');
   },
