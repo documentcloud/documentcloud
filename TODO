@@ -1,22 +1,8 @@
 ARON'S LIST:
 
-  * The top of the projects nav should be moved to the documents tab. Keep 
-    projects tab for projects only. Put the editing dialog on the document
-    itself. Perhaps condense/remove the current toolbar.
-    
   * Document forking / duplicate detection.
   
   * A document-viewer generator on the public site.
-  
-  * Autoscale document processing with CloudCrowd / EC2.
-  
-  * Publishing workflow in a new tab. Includes list of published documents
-    with statistics, wizard to walk you though editing annotations, ensuring
-    related article, scheduling a release, should work with federation,
-    keep public/private notes clearly separated, etc.
-    
-  * Document Federation: we should be able to pull from the Times, based on the
-    canonical document format.
     
   * Visualizations tab.
   
@@ -29,40 +15,32 @@ TODO:
 
   * Add account information on all notes, when you're in the workspace.
 
-  * Scroll the Accounts List, already.
-
-  * Start cron backups of the analytics DB to S3.
-
   * Publicly indexable documents so Google can see them and link to 
     the DocumentViewer.
-      
-  * Make collaborators accept the collaboration request before really adding
-    them (thereby keeping unwanted adds from getting edit access).
 
   * Add placeholder JS fallback for non HTML5 browsers.
-    
-  * Write a phone number extractor, and save those as entities, currency amounts
-    as well.
     
   * Things have stabilized. Time for another batch of tests.
 
   * Notes view: add a way to search just the text of your notes, list them etc.
-  
+          
+
+DONE:
+
+  * Scroll the Accounts List, already.
+
+  * Save phone numbers and email addresses as entities.
+
   * Fix incorrect entity offsets. Document #486 on production, searching for
     "organization: 'Department of Defense'".
-        
+
   * Add a "related documents" search, via Solr's MoreLikeThis handler.
-    - Still needs restrictions to projects, access levels, etc. Right now it pulls globally.
-    - Also need to have the document in header considered a document in the document list,
-      so it can be modified with the Edit menu when selected.
-    
+
   * Include OCR via tesseract in DocSplit.
     - Burst PDFs into individual pages to extract text and use OCR if individual pages fail.
       (Necessary for PDFs with mixed text pages and ocr pages)
-    - Also need to burst PDFs so we can split the workload across multiple cloud crowd nodes.
-  
 
-DONE:
+  * Start cron backups of the analytics DB to S3.
 
   * Disallow annotating outside of the page border.  
 
