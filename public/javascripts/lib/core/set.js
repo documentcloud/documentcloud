@@ -1,3 +1,5 @@
+(function(){
+
 // **Set** provides a standard collection class for our sets of models, ordered
 // or unordered. If a `comparator` is specified, the Set will maintain its
 // models in sort order.
@@ -35,35 +37,6 @@ dc.Set = Base.extend({
   // What are the client ids for every model in the set?
   getCids : function() {
     return _.keys(this._byCid);
-  },
-
-  // Is the set empty?
-  isEmpty : function() {
-    return this.length <= 0;
-  },
-
-  // Convenience to iterate over each model in the set.
-  each : function(iterator, context) {
-    return _.each(this.models, iterator, context);
-  },
-
-  // Does any element in the set pass a truth test?
-  any : function(iterator, context) {
-    return _.any(this.models, iterator, context);
-  },
-
-  // Grab the first model in the set -- for testing.
-  first : function() {
-    return this.models[0];
-  },
-
-  last : function() {
-    return _.last(this.models);
-  },
-
-  // Is a given model already present in the set?
-  include : function(model) {
-    return !!this._byId[model.id];
   },
 
   // Add a model, or list of models to the set. Pass silent to avoid firing
@@ -147,4 +120,19 @@ dc.Set = Base.extend({
 
 });
 
+// Underscore methods that we want to implement on the Set.
+var methods = ['each', 'map', 'reduce', 'reduceRight', 'detect', 'select',
+  'reject', 'all', 'any', 'include', 'invoke', 'pluck', 'max', 'min', 'sortBy',
+  'sortedIndex', 'toArray', 'size', 'first', 'rest', 'last', 'without',
+  'indexOf', 'lastIndexOf', 'isEmpty'];
+
+// Mix in each Underscore method as a proxy to `Set#models`.
+_.each(methods, function(method) {
+  dc.Set.prototype[method] = function() {
+    return _[method].apply(_, [this.models].concat(_.toArray(arguments)));
+  };
+});
+
 dc.Set.implement(dc.model.Bindable);
+
+})();
