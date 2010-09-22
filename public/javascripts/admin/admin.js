@@ -42,7 +42,7 @@ dc.ui.Admin = dc.Controller.extend({
 
   constructor : function(options) {
     this.base(options);
-    _.bindAll(this, 'renderCharts', 'launchWorker', 'reprocessFailedDocument', 'vacuumAnalyze', 'optimizeSolr');
+    _.bindAll(this, 'renderCharts', 'launchWorker', 'reprocessFailedDocument', 'vacuumAnalyze', 'optimizeSolr', '_loadAllAccounts');
     stats.daily_documents_series = this._series(stats.daily_documents, 'Document');
     stats.daily_pages_series = this._series(stats.daily_pages, 'Page');
     this._tooltip = new dc.ui.Tooltip();
@@ -55,6 +55,7 @@ dc.ui.Admin = dc.Controller.extend({
     $('#topbar').append(this._actionsMenu.render().el);
     this.setCallbacks();
     _.defer(this.renderCharts);
+    if (Accounts.length) _.defer(this._loadAllAccounts);
     return this;
   },
 
@@ -169,12 +170,16 @@ dc.ui.Admin = dc.Controller.extend({
   _loadAllAccounts : function() {
     $('#load_all_accounts').hide();
     $('.minibutton.download_csv').hide();
-    $.getJSON('/admin/all_accounts', {}, _.bind(function(resp) {
-      Accounts.populate(resp.accounts);
+    var finish = _.bind(function() {
       this.renderAccounts();
       this._addCountsToAccounts();
+      $('tr.accounts_row').show();
+    }, this);
+    if (Accounts.length) return finish();
+    $.getJSON('/admin/all_accounts', {}, _.bind(function(resp) {
+      Accounts.populate(resp.accounts);
+      finish();
     }, this));
-    $('tr.accounts_row').show();
   },
 
   // Loads the top 100 published documents, sorted by number of hits in the past year.

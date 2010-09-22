@@ -27,6 +27,7 @@
   stats.count_total_collaborators     = <%= @count_total_collaborators %>;
 
 
+  Accounts.populate(<%= @accounts %>);
   Organizations.populate(<%= @organizations %>);
   Documents.populate(<%= @documents %>);
   TopDocuments.populate(<%= @top_documents %>);
