@@ -26,7 +26,7 @@ class DocumentRemovePages < CloudCrowd::Action
   
   def remove_page(delete_pages)
     # Which pages to keep
-    delete_pages.map! {|p| p.to_i }
+    delete_pages.map! {|p| p.to_i }.sort
     keep_pages = ((1..document.page_count).to_a - delete_pages)
     
     # Rename pages with pdftk, keeping only unremoved pages
@@ -77,6 +77,17 @@ class DocumentRemovePages < CloudCrowd::Action
     keep_pages.each_with_index do |p, i|
       Page.connection.execute "UPDATE pages SET page_number = #{i+1} WHERE document_id = #{document.id} AND page_number = #{p};"
       Annotation.connection.execute "UPDATE annotations SET page_number = #{i+1} WHERE document_id = #{document.id} AND page_number = #{p};"
+    end
+    
+    # Compact, remove, and/or move all sections
+    sections = Section.find_all_by_document_id(document.id)
+    sections.each do |section|
+      delete_pages.reverse.each do |delete_page|
+        section.start_page -= 1 if section.start_page > delete_page
+        section.end_page -= 1   if section.end_page >= delete_page
+      end
+      section.save    if section.changed?
+      section.destroy if section.impossible?
     end
     
     document.page_count = keep_pages.length

@@ -1,4 +1,4 @@
-dc.ui.RemovePagesEditor = dc.View.extend({
+dc.ui.RemovePagesEditor = dc.Controller.extend({
   
   id : 'remove_pages_container',
   

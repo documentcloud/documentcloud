@@ -24,6 +24,9 @@ class Section < ActiveRecord::Base
     document.canonical_url(:html) + '#document/p' + start_page.to_s
   end
 
+  def impossible?
+    start_page > section.end_page
+  end
 
   private
 
