@@ -28,7 +28,7 @@ dc.ui.RemovePagesEditor = dc.Controller.extend({
     this.$s = {
       guide : $('#edit_remove_pages_guide'),
       guideButton: $('.edit_remove_pages'),
-      page : $('.DV-page'),
+      page : $('.DV-page,.DV-thumbnail'),
       pages : $('.DV-pages'),
       viewerContainer : $('.DV-docViewer-Container'),
       holder : null,
@@ -53,7 +53,9 @@ dc.ui.RemovePagesEditor = dc.Controller.extend({
   render : function() {
     $(this.el).html(JST['viewer/remove_pages']({}));
     this.$s.viewerContainer.append(this.el);
-    this.viewer.open('ViewDocument');
+    if (this.viewer.state != 'ViewDocument' && this.viewer.state != 'ViewThumbnails') {
+        this.viewer.open('ViewThumbnails');
+    }
     this.$s.pages.addClass('remove_pages_viewer');
     this.$s.holder = $('.remove_pages_holder', this.el);
     this.$s.container = $(this.el);
@@ -62,9 +64,10 @@ dc.ui.RemovePagesEditor = dc.Controller.extend({
   },
   
   setCallbacks : function(callbacks) {
-    $('.DV-pageCollection').delegate('.DV-removeOverlay','click', _.bind(function(e) {
-      var $page = $(e.target).siblings('.DV-page').eq(0);
-      var imageSrc = $('.DV-pageImage', $page).attr('src');
+    $('.DV-pageCollection,.DV-thumbnails').undelegate('.DV-removeOverlay', 'click').delegate('.DV-removeOverlay','click', _.bind(function(e) {
+      var $this = $(e.target);
+      var $page = $this.siblings('.DV-page,.DV-thumbnail-page').eq(0); 
+      var imageSrc = $('.DV-pageImage,.DV-thumbnail-image img', $page).eq(0).attr('src');
       var pageNumber = parseInt(imageSrc.match(/-p(\d+)-\w+.\w+$/)[1], 10);
       if (_.contains(this.removePages, pageNumber)) {
         this.removePageNumberFromRemoveSet(pageNumber);

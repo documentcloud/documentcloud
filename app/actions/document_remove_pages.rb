@@ -1,24 +1,18 @@
 require File.dirname(__FILE__) + '/support/setup'
 require 'fileutils'
 
-class DocumentRemovePages < CloudCrowd::Action
-  
+class DocumentRemovePages < DocumentModBase
+   
   def process
     begin
-      @pdf = document.slug + '.pdf'
-      File.open(@pdf, 'w+') {|f| f.write(asset_store.read_pdf(document)) }
+      prepare_pdf
       remove_page options['pages']
-      FileUtils.rm @pdf
-      FileUtils.mv @pdf + '_temp', @pdf
     rescue Exception => e
       LifecycleMailer.deliver_exception_notification(e)
       raise e
+    ensure
+      FileUtils.rm @pdf if File.exists? @pdf
     end
-    document.id
-  end
-  
-  def merge
-    document.update_attributes :access => access
     document.id
   end
   
@@ -33,6 +27,7 @@ class DocumentRemovePages < CloudCrowd::Action
     cmd = "pdftk #{@pdf} cat #{keep_pages.join(' ')} output #{document.slug}.pdf_temp"
     `#{cmd}`
     asset_store.save_pdf(document, "#{document.slug}.pdf_temp")
+    FileUtils.rm @pdf + '_temp'
     
     # Pull images from S3, delete old images, then upload renamed images
     keep_pages.each_with_index do |p, i|
@@ -102,27 +97,6 @@ class DocumentRemovePages < CloudCrowd::Action
     Sunspot.commit
     # DC::Import::EntityExtractor.new.extract(document)
     upload_text_assets(pages)    
-  end
-  
-  def upload_text_assets(pages)
-    asset_store.save_full_text(document, access)
-    pages.each do |page|
-      asset_store.save_page_text(document, page.page_number, page.text, access)
-    end
-  end
-  
-  def document
-    return @document if @document
-    ActiveRecord::Base.establish_connection
-    @document = Document.find(options['id'])
-  end
-
-  def asset_store
-    @asset_store ||= DC::Store::AssetStore.new
-  end
-  
-  def access
-    options['access'] || DC::Access::PRIVATE
   end
   
 end
