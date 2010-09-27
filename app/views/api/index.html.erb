@@ -13,7 +13,7 @@
     game, but please be considerate, and don't hammer our servers. 
   </p>
   
-  <h2>GET /api/search.json</h2>
+  <h2><span id="search">GET /api/search.json</span></h2>
 
   <p>
     Search the catalog of public documents. This method can be used to scrape
@@ -79,7 +79,7 @@
 
   <pre id="search_results"></pre>
   
-  <h2>POST /api/upload.json</h2>
+  <h2><span id="upload">POST /api/upload.json</span></h2>
   
   <p>
     We offer a rudimentary API for bulk uploads. It exposes the same API that
@@ -148,7 +148,7 @@
       :access => 'private'
     )</pre>
     
-  <h2>GET /api/documents/[id].json</h2>
+  <h2><span id="docinfo">GET /api/documents/[id].json</span></h2>
 
   <p>
     Retrieve the canonical JSON representation of a particular document, as 
@@ -178,7 +178,7 @@
   "annotations":[]
 }}</pre>
     
-  <h2>PUT /api/documents/[id].json</h2>
+  <h2><span id="update">PUT /api/documents/[id].json</span></h2>
   
   <p>
     Update a document's <b>title</b>, <b>source</b>, <b>description</b>,
@@ -237,7 +237,7 @@
     </li>
   </ul>
     
-  <h2>GET /api/projects.json</h2>
+  <h2><span id="projects">GET /api/projects.json</span></h2>
   
   <p>
     Retrieve a list of project names and document ids. You must
