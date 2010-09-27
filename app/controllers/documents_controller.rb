@@ -71,6 +71,12 @@ class DocumentsController < ApplicationController
     doc.remove_pages(params[:pages])
     json doc
   end
+  
+  def reorder_pages
+    return not_found unless doc = current_document(true)
+    doc.reorder_pages(params[:page_order])
+    json doc
+  end
 
   def loader
     render :action => 'loader', :content_type => :js

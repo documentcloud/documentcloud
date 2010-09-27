@@ -404,13 +404,15 @@ class Document < ActiveRecord::Base
   end
   
   def remove_pages(pages)
+    eventual_access ||= self.access || PRIVATE
+    self.update_attributes :access => PENDING
     job = JSON.parse(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'document_remove_pages',
       'inputs'  => [id],
       'options' => {
         :id     => id,
         :pages  => pages,
-        :access => self.access
+        :access => eventual_access
       }
     }.to_json}).body)
     ProcessingJob.create!(
@@ -420,8 +422,27 @@ class Document < ActiveRecord::Base
       :title          => title,
       :remote_job     => job
     )
+  end
+
+  def reorder_pages(page_order)
+    eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
-    Rails.logger.info job
+    job = JSON.parse(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+      'action'  => 'document_reorder_pages',
+      'inputs'  => [id],
+      'options' => {
+        :id          => id,
+        :page_order  => page_order,
+        :access      => eventual_access
+      }
+    }.to_json}).body)
+    ProcessingJob.create!(
+      :document_id    => id,
+      :account_id     => account_id,
+      :cloud_crowd_id => job['id'],
+      :title          => title,
+      :remote_job     => job
+    )
   end
 
   def queue_import(eventual_access = nil, text_only = false, email_me = false, force_ocr = false)
