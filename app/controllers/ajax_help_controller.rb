@@ -3,15 +3,15 @@ class AjaxHelpController < ApplicationController
   PAGES = [:index, :accounts, :notes, :publishing, :searching, :privacy, :uploading, :collaboration, :troubleshooting, :tour]
   PAGE_TITLES = {
     :index => 'Introduction',
+    :tour => 'Guided Tour',
     :accounts => 'Adding Accounts',
-    :notes => 'Editing Notes and Sections',
-    :publishing => 'Publishing &amp; Embedding',
     :searching => 'Searching Documents',
-    :privacy => 'Privacy',
     :uploading => 'Uploading Documents',
-    :collaboration => 'Collaboration',
     :troubleshooting => 'Troubleshooting Failed Uploads',
-    :tour => 'Guided Tour'
+    :privacy => 'Privacy',
+    :collaboration => 'Collaboration',
+    :notes => 'Editing Notes and Sections',
+    :publishing => 'Publishing &amp; Embedding'
   }
 
   layout false
