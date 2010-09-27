@@ -17,7 +17,7 @@
           <tr>
             <td class="first"><img class="doc" src="<%= doc.get('thumbnail_url') %>" /></td>
             <td><%= doc.get('document_id') %></td>
-            <td><a href="<%= doc.get('remote_url') %>"><%= doc.get('public') ? Inflector.truncate(doc.get('title') || '', 50) : '<i>private</i>' %></a></td>
+            <td><a href="<%= doc.publishedUrl() %>"><%= doc.get('public') ? Inflector.truncate(doc.get('title') || '', 50) : '<i>private</i>' %></a></td>
             <td><%= doc.get('account_name') %></td>
             <td><%= doc.get('organization_name') %></td>
             <td><%= doc.get('hits') %></td>
