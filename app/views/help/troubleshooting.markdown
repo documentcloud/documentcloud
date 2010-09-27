@@ -24,7 +24,7 @@ It is not unheard of for government agencies to release public documents that ma
 
 Don't have access to Acrobat or Preview? There's a [world of great PDF editors][] out there (and no shortage of not so great ones) but here are some we've tested out:
 
-  * **[pdftk][]**: If you're comfortable (or would like to get more comfortable) working with command line tools [pdftk][] is a great resource. You can burst one document into many, merge many into one, rotate pages, and more.
+  * **[pdftk][]**: If you're comfortable (or would like to get comfortable) working with command line tools [pdftk][] is a great resource. You can burst one document into many, merge many into one, rotate pages, and more.
   
   * **[qpdf][]**: Another excellent command line tool, [qpdf][] will, among other things, decrypt locked PDFs and optimize them for the web (using [linearization][]).
   
