@@ -419,16 +419,18 @@ class Document < ActiveRecord::Base
   # The filtered attributes we're allowed to display in the admin UI.
   def admin_attributes
     {
-      'id'                => id,
-      'account_name'      => account_name,
-      'organization_name' => organization_name,
-      'page_count'        => page_count,
-      'thumbnail_url'     => thumbnail_url,
-      'pdf_url'           => pdf_url(:direct),
-      'public'            => public?,
-      'title'             => public? ? title : nil,
-      'source'            => public? ? source : nil,
-      'created_at'        => created_at.to_datetime.strftime(DISPLAY_DATETIME_FORMAT)
+      'id'                  => id,
+      'account_name'        => account_name,
+      'organization_name'   => organization_name,
+      'page_count'          => page_count,
+      'thumbnail_url'       => thumbnail_url,
+      'pdf_url'             => pdf_url(:direct),
+      'public'              => public?,
+      'title'               => public? ? title : nil,
+      'source'              => public? ? source : nil,
+      'created_at'          => created_at.to_datetime.strftime(DISPLAY_DATETIME_FORMAT),
+      'remote_url'          => remote_url,
+      'detected_remote_url' => detected_remote_url
     }
   end
 
