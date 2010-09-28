@@ -68,7 +68,7 @@ dc.ui.AccountView = dc.Controller.extend({
   promptPasswordChange : function() {
     dc.app.accounts.close();
     var dialog = dc.ui.Dialog.prompt('Enter your new password:', '', _.bind(function(password) {
-      Accounts.update(this.model, {password : password}, {success : _.bind(function() {
+      this.model.save({password : password}, {success : _.bind(function() {
         dc.ui.notifier.show({
           text      : 'Password updated',
           duration  : 5000,
@@ -106,7 +106,7 @@ dc.ui.AccountView = dc.Controller.extend({
       this.setMode('display', 'view');
     } else {
       dc.ui.spinner.show();
-      Accounts.update(this.model, attributes, options);
+      this.model.save(attributes, options);
     }
   },
 

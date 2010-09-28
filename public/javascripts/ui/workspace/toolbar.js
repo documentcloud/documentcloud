@@ -52,7 +52,7 @@ dc.ui.Toolbar = dc.Controller.extend({
     this.edit(function(docs) {
       var doc = docs[0];
       dc.ui.Dialog.prompt('Title', doc.get('title'), function(title) {
-        Documents.update(doc, {title : title});
+        doc.save({title : title});
         return true;
       }, {mode : 'short_prompt'});
     });
@@ -62,7 +62,7 @@ dc.ui.Toolbar = dc.Controller.extend({
     this.edit(function(docs) {
       var current = Documents.sharedAttribute(docs, 'description') || '';
       dc.ui.Dialog.prompt('Description', current, function(description) {
-        _.each(docs, function(doc) { Documents.update(doc, {description : description}); });
+        _.each(docs, function(doc) { doc.save({description : description}); });
         return true;
       }, {information : this._subtitle(docs.length)});
     });
@@ -72,7 +72,7 @@ dc.ui.Toolbar = dc.Controller.extend({
     this.edit(function(docs) {
       var current = Documents.sharedAttribute(docs, 'source') || '';
       dc.ui.Dialog.prompt('Source', current, function(source) {
-        _.each(docs, function(doc) { Documents.update(doc, {source : source}); });
+        _.each(docs, function(doc) { doc.save({source : source}); });
         return true;
       }, {mode : 'short_prompt', information : this._subtitle(docs.length)});
     });
@@ -85,7 +85,7 @@ dc.ui.Toolbar = dc.Controller.extend({
       dc.ui.Dialog.prompt('Related Article URL', current, function(rel, dialog) {
         rel = Inflector.normalizeUrl(rel);
         if (rel && !dialog.validateUrl(rel)) return false;
-        _.each(docs, function(doc) { Documents.update(doc, {related_article : rel}); });
+        _.each(docs, function(doc) { doc.save({related_article : rel}); });
         return true;
       }, {
         mode        : 'short_prompt',
@@ -101,7 +101,7 @@ dc.ui.Toolbar = dc.Controller.extend({
       dc.ui.Dialog.prompt('Document URL', doc.get('remote_url'), function(url, dialog) {
         url = Inflector.normalizeUrl(url);
         if (url && !dialog.validateUrl(url)) return false;
-        Documents.update(doc, {remote_url : url});
+        doc.save({remote_url : url});
         return true;
       }, {
         mode        : 'short_prompt',

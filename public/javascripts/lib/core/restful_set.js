@@ -3,7 +3,7 @@
 // destroy  => DELETE   /resource/id
 // update   => PUT      /resource/id
 // populate => GET      /resource
-dc.model.RESTfulSet = dc.Set.extend({
+dc.model.RESTfulSet = dc.Collection.extend({
 
   populated : false,
 

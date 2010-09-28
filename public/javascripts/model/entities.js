@@ -34,7 +34,7 @@ dc.model.Entity = dc.Model.extend({
 
 // Entity Set
 
-dc.model.EntitySet = dc.Set.extend({
+dc.model.EntitySet = dc.Collection.extend({
 
   model : dc.model.Entity,
 

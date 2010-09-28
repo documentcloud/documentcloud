@@ -25,10 +25,10 @@ dc.Controller = Base.extend({
 
   configure : function(options) {
     if (this.options) options = _.extend({}, this.options, options);
-    if (options.model)      this.model = options.model;
-    if (options.set)        this.set = options.set;
-    if (options.id)         this.id = options.id;
-    if (options.className)  this.className = options.className;
+    if (options.model)      this.model      = options.model;
+    if (options.collection) this.collection = options.collection;
+    if (options.id)         this.id         = options.id;
+    if (options.className)  this.className  = options.className;
     this.options = options;
   },
 

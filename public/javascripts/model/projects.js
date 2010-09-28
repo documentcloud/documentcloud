@@ -34,7 +34,7 @@ dc.model.Project = dc.Model.extend({
   addDocuments : function(documents) {
     var ids = _.pluck(documents, 'id');
     var newIds = _.uniq(this.get('document_ids').concat(ids));
-    Projects.update(this, {document_ids : newIds});
+    this.save({document_ids : newIds});
   },
 
   removeDocuments : function(documents, localOnly) {
@@ -44,7 +44,7 @@ dc.model.Project = dc.Model.extend({
     if (localOnly) {
       this.set({document_ids : newIds});
     } else {
-      Projects.update(this, {document_ids : newIds});
+      this.save({document_ids : newIds});
     }
   },
 
@@ -135,6 +135,6 @@ dc.model.ProjectSet = dc.model.RESTfulSet.extend({
 
 });
 
-dc.model.ProjectSet.implement(dc.model.SelectableSet);
+dc.model.ProjectSet.implement(dc.model.SelectableCollection);
 
 window.Projects = new dc.model.ProjectSet();

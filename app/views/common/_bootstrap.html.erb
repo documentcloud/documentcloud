@@ -7,7 +7,7 @@ window.SERVER_ROOT = '<%= DC.server_root %>';
   dc.app.organization = <%= @current_organization.to_json %>;
   dc.app.accountId    = <%= @current_account.id %>;
   Accounts.add(new dc.model.Account(<%= @current_account.to_json %>));
-  Projects.populate(<%= @projects.to_json({:account => @current_account}) %>);
+  Projects.refresh(<%= @projects.to_json({:account => @current_account}) %>);
 <% end %>
 <% if @additional_js %>
   <%= @additional_js %>

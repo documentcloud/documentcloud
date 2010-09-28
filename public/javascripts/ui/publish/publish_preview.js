@@ -120,7 +120,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
       }, this));
       if (errors) return false;
       dc.ui.spinner.show();
-      Documents.update(this.model, attrs, {success : function(){ dc.ui.spinner.hide(); }});
+      this.model.save(attrs, {success : function(){ dc.ui.spinner.hide(); }});
     }
     return true;
   },

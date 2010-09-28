@@ -205,7 +205,7 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
       {text : 'Private Access', description : 'Only people explicitly granted permission (via collaboration) may access.', value : dc.access.PRIVATE, selected : current == dc.access.PRIVATE},
       {text : 'Private to ' + dc.app.organization.name, description : 'Only the people in your organization may view the document.', value : dc.access.ORGANIZATION, selected : current == dc.access.ORGANIZATION}
     ], function(access) {
-      _.each(docs, function(doc) { Documents.update(doc, {access : parseInt(access, 10)}); });
+      _.each(docs, function(doc) { doc.save({access : parseInt(access, 10)}); });
       var notification = 'Access updated for ' + docs.length + ' ' + Inflector.pluralize('document', docs.length);
       dc.ui.notifier.show({mode : 'info', text : notification});
       return true;
@@ -241,7 +241,7 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
 
 });
 
-dc.model.DocumentSet.implement(dc.model.SelectableSet);
+dc.model.DocumentSet.implement(dc.model.SelectableCollection);
 
 // The main sets of Documents, used by the search tab, and the publish tab.
 window.Documents          = new dc.model.DocumentSet();

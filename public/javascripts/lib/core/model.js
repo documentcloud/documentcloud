@@ -80,20 +80,21 @@ dc.Model = Base.extend({
 
   // Set a hash of model attributes on the object, firing `model:changed` unless you
   // choose to silence it.
-  set : function(next, silent) {
-    if (!next) return this;
-    next = next._attributes || next;
+  set : function(attrs, options) {
+    options || (options = {});
+    if (!attrs) return this;
+    attrs = attrs._attributes || attrs;
     var now = this._attributes;
-    for (var attr in next) {
-      var val = next[attr];
+    for (var attr in attrs) {
+      var val = attrs[attr];
       if (val === '') val = null;
       if (!_.isEqual(now[attr], val)) {
-        if (!silent) this._changed = true;
+        if (!options.silent) this._changed = true;
         now[attr] = val;
       }
     }
-    if (next.id) this.id = next.id;
-    if (!silent && this._changed) this.changed();
+    if (attrs.id) this.id = attrs.id;
+    if (!options.silent && this._changed) this.changed();
     return this;
   },
 
@@ -104,11 +105,28 @@ dc.Model = Base.extend({
 
   // Remove an attribute from the model, firing `model:changed` unless you choose to
   // silence it.
-  unset : function(attr, silent) {
+  unset : function(attr, options) {
+    options || (options = {});
     var value = this._attributes[attr];
     delete this._attributes[attr];
-    if (!silent) this.changed();
+    if (!options.silent) this.changed();
     return value;
+  },
+
+  // Set a hash of model attributes, and sync the model to the server.
+  save : function(attrs, options) {
+    this.set(attrs, options);
+    $.ajax({
+      url       : this.resource,
+      type      : 'PUT',
+      data      : {model : JSON.stringify(model.attributes())},
+      dataType  : 'json',
+      success   : function(resp) {
+        model.set(resp.model);
+        if (options.success) options.success(model, resp);
+      },
+      error     : function(resp) { if (options.error) options.error(model, resp); }
+    });
   },
 
   // Return a copy of the model's attributes.
@@ -116,11 +134,50 @@ dc.Model = Base.extend({
     return _.clone(this._attributes);
   },
 
+  // Bind all methods in the list to the model.
+  bindAll : function() {
+    _.bindAll.apply(_, [this].concat(arguments));
+  },
+
   toString : function() {
     return 'Model ' + this.id;
+  },
+
+  // Destroy this model on the server.
+  destroy : function(options) {
+    if (this.collection) this.collection.remove(this);
+    $.ajax({
+      url       : this.resource,
+      type      : 'DELETE',
+      data      : {},
+      dataType  : 'json',
+      success   : function(resp) { if (options.success) options.success(model, resp); },
+      error     : function(resp) { if (options.error) options.error(model, resp); }
+    });
   }
 
-  // Think about adding all of the enumerable methods to Model.
+}, {
+
+  // Create a model on the server and add it to the set.
+  // When the server returns a JSON representation of the model, we update it
+  // on the client.
+  create : function(attributes, options) {
+    options = options || {};
+    var model = new this(attributes);
+    $.ajax({
+      url       : model.set.resource,
+      type      : 'POST',
+      data      : {model : JSON.stringify(model.attributes())},
+      dataType  : 'json',
+      success   : function(resp) {
+        model.set(resp.model);
+        if (options.success) return options.success(model, resp);
+      },
+      error     : function(resp) {
+        if (options.error) options.error(model, resp);
+      }
+    });
+  }
 
 });
 

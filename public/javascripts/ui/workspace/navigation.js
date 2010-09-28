@@ -30,9 +30,6 @@ dc.ui.Navigation = dc.Controller.extend({
       if (!this.isOpen('search')) this.open('search');
       _.defer(dc.app.searcher.loadFacets);
     }, this));
-    this.bind('tab:publish', _.bind(function() {
-      if (!this.isOpen('documents')) this.open('documents');
-    }, this));
     this.setMode('search', 'panel_tab');
     return this;
   },

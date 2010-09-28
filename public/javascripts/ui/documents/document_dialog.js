@@ -60,7 +60,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     if (errors) return false;
     this.close();
     if (!_.isEmpty(changes)) {
-      _.each(this.docs, function(doc){ Documents.update(doc, changes); });
+      _.each(this.docs, function(doc){ doc.save(changes); });
       dc.ui.notifier.show({mode : 'info', text : 'Updated ' + this.docs.length + ' ' + Inflector.pluralize('document', this.docs.length)});
     }
   },

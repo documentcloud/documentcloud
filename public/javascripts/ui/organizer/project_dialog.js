@@ -31,7 +31,8 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
       this._finishRender();
     } else {
       dc.ui.spinner.show();
-      this.model.collaborators.populate({success : this._finishRender});
+      alert('need to populate collaborators...');
+      // this.model.collaborators.populate({success : this._finishRender});
     }
     return this;
   },
@@ -39,7 +40,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   confirm : function() {
     var title = this.$('#project_title').val();
     if (!title) return this.error("Please specify a project title.");
-    Projects.update(this.model, {title : title});
+    this.model.save({title : title});
     this.close();
   },
 

@@ -8,16 +8,16 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     _.bindAll(this, 'setupUploadify', 'countDocuments', '_onSelect', '_onSelectOnce',
       '_onCancel', '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
     this.base({
-      set       : UploadDocuments,
-      mode      : 'custom',
-      title     : 'Upload Documents',
-      saveText  : 'Upload',
-      closeText : 'Cancel'
+      collection  : UploadDocuments,
+      mode        : 'custom',
+      title       : 'Upload Documents',
+      saveText    : 'Upload',
+      closeText   : 'Cancel'
     });
     var uploadify = this.setupUploadify;
     dc.app.navigation.bind('tab:documents', function(){ _.defer(uploadify); });
-    this.set.bind('set:added',   this.countDocuments);
-    this.set.bind('set:removed', this.countDocuments);
+    this.collection.bind('set:added',   this.countDocuments);
+    this.collection.bind('set:removed', this.countDocuments);
   },
 
   render : function() {
@@ -40,7 +40,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   _renderDocumentTiles : function() {
     var tiles = this._tiles;
-    this.set.each(function(model) {
+    this.collection.each(function(model) {
       var view = new dc.ui.UploadDocumentTile({model : model});
       tiles[model.id] = view.render();
     });
@@ -77,17 +77,17 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // Return false so that Uploadify does not create its own progress bars.
   _onSelect : function(e, queueId, fileObj) {
     dc.ui.spinner.show();
-    this.set.add(new dc.model.UploadDocument({
+    this.collection.add(new dc.model.UploadDocument({
       id        : queueId,
       file      : fileObj,
-      position  : this.set.length
+      position  : this.collection.length
     }));
     return false;
   },
 
   _onSelectOnce : function(e, data) {
     dc.ui.spinner.hide();
-    if (this.set.any(function(file){ return file.overSizeLimit(); })) {
+    if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
       this.close();
       return dc.ui.Dialog.alert("You can only upload documents less than 200MB in size. Please <a href=\"/help/troubleshooting\">optimize your document</a> before continuing.");
     }
@@ -96,7 +96,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Cancel an upload by file queue id.
   cancelUpload : function(id) {
-    if (this.set.length <= 1) {
+    if (this.collection.length <= 1) {
       this.error('You must upload at least one document.');
       return false;
     }
@@ -111,7 +111,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   _onStarted : function(e, queueId) {
     var attrs = this._tiles[queueId].serialize();
-    this.set.get(queueId).set(attrs);
+    this.collection.get(queueId).set(attrs);
     attrs.session_key = dc.app.cookies.get('document_cloud_session');
     if (this._project) attrs.project_id = this._project.id;
     this._uploadify.uploadifySettings('scriptData', attrs, true);
@@ -148,7 +148,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   countDocuments : function() {
-    var num = this.set.length;
+    var num = this.collection.length;
     this.title('Upload ' + (num > 1 ? num : '') + Inflector.pluralize(' Document', num));
   },
 
@@ -164,7 +164,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   confirm : function() {
     var failed = _.select(this._tiles, function(tile) { return tile.ensureTitle(); });
     if (failed.length) {
-      var num = this.set.length;
+      var num = this.collection.length;
       return this.error('Please enter a title for ' + (num == 1 ? 'the document.' : 'all documents.'));
     }
     this.$('.ok').setMode('not', 'enabled');
@@ -177,7 +177,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   close : function() {
-    this.set.refresh();
+    this.collection.refresh();
     this.base();
   }
 

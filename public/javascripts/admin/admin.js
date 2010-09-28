@@ -177,7 +177,7 @@ dc.ui.Admin = dc.Controller.extend({
     }, this);
     if (Accounts.length) return finish();
     $.getJSON('/admin/all_accounts', {}, _.bind(function(resp) {
-      Accounts.populate(resp.accounts);
+      Accounts.refresh(resp.accounts);
       finish();
     }, this));
   },
@@ -189,7 +189,7 @@ dc.ui.Admin = dc.Controller.extend({
 
   // Displays all top documents, retrieved through AJAX.
   _displayMoreTopDocuments : function(data) {
-    TopDocuments.populate(data);
+    TopDocuments.refresh(data);
     this.$('.top_documents_list').replaceWith(JST['top_documents']({}));
     this.$('.top_documents_label_year').css({'display': 'table-row'});
     this.$('.top_documents_label_week').css({'display': 'none'});

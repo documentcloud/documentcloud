@@ -28,7 +28,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this.list = this.$('#account_list_content');
     this.setCallbacks();
     dc.ui.spinner.show();
-    Accounts.populate({success : this._renderAccounts});
+    alert('FIXME: need to populate accounts.');
     return this;
   },
 

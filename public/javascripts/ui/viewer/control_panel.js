@@ -59,7 +59,7 @@ dc.ui.ViewerControlPanel = dc.Controller.extend({
   _updateDocument : function(attrs) {
     attrs.id = parseInt(currentDocument.api.getId(), 10);
     var doc = new dc.model.Document(attrs);
-    Documents.update(doc);
+    doc.save();
     try {
       var doc = window.opener && window.opener.Documents && window.opener.Documents.get(doc);
       if (doc) doc.set(attrs);

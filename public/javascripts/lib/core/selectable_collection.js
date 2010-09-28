@@ -1,4 +1,4 @@
-dc.model.SelectableSet = Base.extend({
+dc.model.SelectableCollection = Base.extend({
 
   firstSelection : null,
 

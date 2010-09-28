@@ -146,7 +146,8 @@ dc.ui.Document = dc.Controller.extend({
       if (model.notes.populated) return this.setMode('has', 'notes');
       dc.ui.spinner.show('loading notes');
       window.scroll(0, $('#document_' + model.id).offset().top - 10);
-      model.notes.populate({success: dc.ui.spinner.hide });
+      alert("FIXME: need to populate notes.");
+      // model.notes.populate({success: dc.ui.spinner.hide });
     }, this);
     dc.app.paginator.mini ? dc.app.paginator.toggleSize(next, this.model) : next();
   },
@@ -237,7 +238,7 @@ dc.ui.Document = dc.Controller.extend({
   },
 
   _addNote : function(note) {
-    this.notesEl.append((new dc.ui.Note({model : note, set : this.model.notes})).render().el);
+    this.notesEl.append((new dc.ui.Note({model : note, collection : this.model.notes})).render().el);
   },
 
   _renderNotes : function() {
