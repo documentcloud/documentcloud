@@ -23,7 +23,7 @@ dc.model.Account = dc.Model.extend({
   },
 
   openDocuments : function(options) {
-    options = options || {};
+    options || (options = {});
     var suffix = options.published ? ' access: published' : '';
     dc.app.searcher.search('account: ' + this.get('slug') + suffix);
   },
@@ -58,7 +58,7 @@ dc.model.Account = dc.Model.extend({
 
 // Account Set
 
-dc.model.AccountSet = dc.model.RESTfulSet.extend({
+dc.model.AccountSet = dc.Collection.extend({
 
   resource : 'accounts',
   model    : dc.model.Account,

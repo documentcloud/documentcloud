@@ -94,7 +94,7 @@ dc.model.Project = dc.Model.extend({
 
 
 // Project Set
-dc.model.ProjectSet = dc.model.RESTfulSet.extend({
+dc.model.ProjectSet = dc.Collection.extend({
 
   resource : 'projects',
   model    : dc.model.Project,

@@ -30,7 +30,7 @@ dc.app.searcher.extend({
 
   // Load the default starting-point search.
   loadDefault : function(options) {
-    options = options || {};
+    options || (options = {});
     if (options.clear) {
       Documents.refresh();
       this.box.value('');
@@ -143,10 +143,9 @@ dc.app.searcher.extend({
   _loadSearchResults : function(resp) {
     dc.app.paginator.setQuery(resp.query, this);
     if (resp.facets) this._loadFacetsResults(resp);
-    Documents.refresh(_.map(resp.documents, function(m, i){
-      m.index = i;
-      return new dc.model.Document(m);
-    }));
+    var docs = resp.documents;
+    for (var i = 0, l = docs.length; i < l; i++) docs[i].index = i;
+    Documents.refresh(docs);
     if (this.flags.related && !this.relatedDoc) {
       this.relatedDoc = new dc.model.Document(resp.source_document);
     }

@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
   # Select only a sub-set of passed parameters. Useful for whitelisting
   # attributes from the params hash before performing a mass-assignment.
   def pick(hash, *keys)
-    hash = JSON.parse(params[:json]) if hash == :json
+    hash = JSON.parse(params[:model]) if hash == :model
     filtered = {}
     hash.each {|key, value| filtered[key.to_sym] = value if keys.include?(key.to_sym) }
     filtered

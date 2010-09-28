@@ -85,6 +85,15 @@ dc.Model = Base.extend({
     if (!attrs) return this;
     attrs = attrs._attributes || attrs;
     var now = this._attributes;
+    if (attrs.collection) {
+      this.collection = attrs.collection;
+      delete attrs.collection;
+      this.resource = this.collection.resource + '/' + this.id;
+    }
+    if (attrs.id) {
+      this.id = attrs.id;
+      if (this.collection) this.resource = this.collection.resource + '/' + this.id;
+    }
     for (var attr in attrs) {
       var val = attrs[attr];
       if (val === '') val = null;
@@ -93,7 +102,6 @@ dc.Model = Base.extend({
         now[attr] = val;
       }
     }
-    if (attrs.id) this.id = attrs.id;
     if (!options.silent && this._changed) this.changed();
     return this;
   },
@@ -115,11 +123,14 @@ dc.Model = Base.extend({
 
   // Set a hash of model attributes, and sync the model to the server.
   save : function(attrs, options) {
+    if (!this.resource) throw new Error(this.toString() + " cannot be saved without a resource.");
+    options || (options = {});
     this.set(attrs, options);
+    var model = this;
     $.ajax({
       url       : this.resource,
       type      : 'PUT',
-      data      : {model : JSON.stringify(model.attributes())},
+      data      : {model : JSON.stringify(this.attributes())},
       dataType  : 'json',
       success   : function(resp) {
         model.set(resp.model);
@@ -162,7 +173,7 @@ dc.Model = Base.extend({
   // When the server returns a JSON representation of the model, we update it
   // on the client.
   create : function(attributes, options) {
-    options = options || {};
+    options || (options = {});
     var model = new this(attributes);
     $.ajax({
       url       : model.set.resource,

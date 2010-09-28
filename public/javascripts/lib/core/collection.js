@@ -94,6 +94,7 @@
       models = models || [];
       if (models[0] && !(models[0] instanceof dc.Model)) {
         for (var i = 0, l = models.length; i < l; i++) {
+          models[i].collection = this;
           models[i] = new this.model(models[i]);
         }
       }

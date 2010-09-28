@@ -134,7 +134,7 @@
     },
 
     draggable : function(options) {
-      var options = options || {};
+      options || (options = {});
       this.each(function() {
         var el    = this;
         var ghost = null, xOff = null, yOff = null;

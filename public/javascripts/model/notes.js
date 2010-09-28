@@ -33,7 +33,7 @@ dc.model.Note = dc.Model.extend({
 
 // Note Set
 
-dc.model.NoteSet = dc.model.RESTfulSet.extend({
+dc.model.NoteSet = dc.Collection.extend({
 
   resource : 'notes',
   model    : dc.model.Note,

@@ -4,7 +4,7 @@ dc.model.Organization = dc.Model.extend({});
 
 // Organization Set
 
-dc.model.OrganizationSet = dc.model.RESTfulSet.extend({
+dc.model.OrganizationSet = dc.Collection.extend({
 
   resource : 'organizations',
   model    : dc.model.Organization,

@@ -103,7 +103,7 @@ dc.model.Document = dc.Model.extend({
 
 // Document Set
 
-dc.model.DocumentSet = dc.model.RESTfulSet.extend({
+dc.model.DocumentSet = dc.Collection.extend({
 
   resource : 'documents',
   model    : dc.model.Document,
@@ -197,7 +197,7 @@ dc.model.DocumentSet = dc.model.RESTfulSet.extend({
   },
 
   editAccess : function(docs, options) {
-    options = options || {};
+    options || (options = {});
     if (!this.allowedToEdit(docs)) return;
     var current = this.sharedAttribute(docs, 'access') || dc.access.PRIVATE;
     dc.ui.Dialog.choose('Access Level', [

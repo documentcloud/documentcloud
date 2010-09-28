@@ -12,7 +12,7 @@ class AnnotationsController < ApplicationController
   # Any account can create a private note on any document.
   # Only the owner of the document is allowed to create a public annotation.
   def create
-    note_attrs = pick(:json, :page_number, :title, :content, :location, :access)
+    note_attrs = pick(:model, :page_number, :title, :content, :location, :access)
     doc = current_document
     return forbidden unless note_attrs[:access].to_i == PRIVATE || current_account.allowed_to_edit?(doc)
     expire_page doc.canonical_cache_path if doc.cacheable?
@@ -28,7 +28,7 @@ class AnnotationsController < ApplicationController
       anno.errors.add_to_base "You don't have permission to update the note."
       return json(anno, 403)
     end
-    anno.update_attributes(pick(:json, :title, :content))
+    anno.update_attributes(pick(:model, :title, :content))
     expire_page current_document.canonical_cache_path if current_document.cacheable?
     json anno
   end
