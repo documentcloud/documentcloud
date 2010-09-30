@@ -21,6 +21,8 @@ _.extend(dc.app.editor, {
     this.sectionEditor      = new dc.ui.SectionEditor();
     this.annotationEditor   = new dc.ui.AnnotationEditor();
     this.removePagesEditor  = new dc.ui.RemovePagesEditor();
+    this.reorderPagesEditor = new dc.ui.ReorderPagesEditor();
+    this.editPageTextEditor = new dc.ui.EditPageTextEditor();
   },
 
   // Render all of the existing subviews and place them in the DOM.

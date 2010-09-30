@@ -403,6 +403,46 @@ class Document < ActiveRecord::Base
     }.to_json})
   end
   
+  def save_page_text
+    page_number = params[:page_number]
+    page_text = params[:page_text]
+    
+    # Update page offsets for text
+    offset = 0
+    page_order.each_with_index do |p, i|
+      page = Page.find_by_document_id_and_page_number(document.id, p)
+      page_length = (page.end_offset - page.start_offset)
+      page.end_offset = offset + page_length
+      page.start_offset = offset
+      offset += page_length
+      page.page_number = (i+1) + document.page_count
+      page.save
+    end
+    pages = Page.find_all_by_document_id(document.id)
+    pages.each do |page|
+      page.page_number = page.page_number - document.page_count
+      page.save
+    end
+    
+    # Update annotations
+    annotations = Annotation.find_all_by_document_id(document.id)
+    annotations.each do |annotation|
+      annotation.page_number = page_order.index(annotation.page_number)+1
+      annotation.save
+    end
+    
+    document.access = access
+    text = Page.find_all_by_document_id(document.id).inject('') {|m, p| m + ' ' + p.text }
+    document.full_text.update_attributes({:text => text})
+    Page.refresh_page_map(document)
+    EntityDate.refresh(document)
+    document.save!
+    pages = document.reload.pages
+    Sunspot.index pages
+    # DC::Import::EntityExtractor.new.extract(document)
+    upload_text_assets(pages)
+  end
+  
   def remove_pages(pages)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING

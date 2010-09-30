@@ -9,7 +9,9 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     '.edit_description.click':      'editDescription',
     '.edit_title.click':            'editTitle',
     '.edit_related_article.click':  'editRelatedArticle',
-    '.edit_remove_pages.click':     'editRemovePages'
+    '.edit_remove_pages.click':     'editRemovePages',
+    '.edit_reorder_pages.click':    'editReorderPages',
+    '.edit_page_text.click':        'editPageText'
   },
 
   render : function() {
@@ -49,6 +51,15 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     dc.ui.Dialog.prompt('Description', currentDocument.api.getDescription(), _.bind(function(desc) {
       currentDocument.api.setDescription(desc);
       this._updateDocument({description : desc});
+      return true;
+    }, this));
+  },
+  
+  editPageText : function() {
+    var pageNumber = currentDocument.api.currentPage();
+    dc.ui.Dialog.prompt('Page Text', currentDocument.api.getPageText(pageNumber), _.bind(function(pageText) {
+      currentDocument.api.setPageText(pageText);
+      currentDocument.api.redraw();
       return true;
     }, this));
   },

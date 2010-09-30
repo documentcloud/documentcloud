@@ -94,7 +94,6 @@ class DocumentRemovePages < DocumentModBase
     document.save!
     pages = document.reload.pages
     Sunspot.index pages
-    Sunspot.commit
     # DC::Import::EntityExtractor.new.extract(document)
     upload_text_assets(pages)    
   end
