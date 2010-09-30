@@ -56,12 +56,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
   
   editPageText : function() {
-    var pageNumber = currentDocument.api.currentPage();
-    dc.ui.Dialog.prompt('Page Text', currentDocument.api.getPageText(pageNumber), _.bind(function(pageText) {
-      currentDocument.api.setPageText(pageText);
-      currentDocument.api.redraw();
-      return true;
-    }, this));
+    dc.app.editor.editPageTextEditor.toggle();
   },
   
   editRemovePages : function() {

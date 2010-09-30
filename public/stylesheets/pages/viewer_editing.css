@@ -347,3 +347,53 @@
   .DV-pages.reorder_pages_viewer .DV-page:hover {
     opacity: .5;
   }
+<<<<<<< HEAD
+=======
+  
+/* ================== */
+/* = Edit Page Text = */
+/* ================== */
+
+#edit_page_text_container {
+  position: absolute;
+  z-index: 10001;
+  top: 0;
+  left: 0;
+  right: 266px;
+  background-color: white;
+  border-bottom: 1px solid #505050;
+}
+  #edit_page_text_container.active {
+    background-color: #F37500;
+  }
+  #edit_page_text_container .edit_page_text {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 45px;
+  }
+  #edit_page_text_container .edit_page_text_confirm {
+    padding: 12px 0 0 0;
+    text-transform: uppercase;
+    font-size: 16px;
+    color: #D0D0D0;
+    font-weight: bold;
+    margin: 2px 0 0 8px;
+    overflow: hidden;
+    font-family: 'Lucida Grande', sans-serif;
+  }
+    #edit_page_text_container .edit_page_text_confirm_info {
+      float: left;
+    }
+    #edit_page_text_container .edit_page_text_confirm input {
+      margin: 0 8px;
+      float: left;
+    }
+
+.DV-pages.edit_page_text_viewer {
+  margin-top: 45px;
+}
+.DV-textContents.DV-editing {
+  border: 1px dotted #505050;
+}
+>>>>>>> 0e676d2... Page editing in the viewer. Still need to save modified text correctly, batch multiple pages, and persist text across page changes.

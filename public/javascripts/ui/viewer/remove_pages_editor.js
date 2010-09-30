@@ -20,6 +20,7 @@ dc.ui.RemovePagesEditor = dc.Controller.extend({
     if (this.flags.open) {
       this.close();
     } else {
+      dc.app.editor.closeAllEditors();
       this.open();
     }
   },
