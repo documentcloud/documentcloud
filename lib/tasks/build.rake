@@ -24,6 +24,7 @@ namespace :build do
     `cat build/viewer.js build/templates.js > build/viewer_new.js`
     FileUtils.rm_r(['build/viewer.js', 'build/templates.js'])
     FileUtils.mv 'build/viewer_new.js', 'build/viewer.js'
+    FileUtils.cp 'build/print.css', "../document-cloud/public/viewer/printviewer.css"
     Dir['build/viewer*'].each do |asset|
       FileUtils.cp(asset, "../document-cloud/public/viewer/#{File.basename(asset)}")
     end

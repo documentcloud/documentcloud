@@ -5,12 +5,13 @@
   <% root = DC.server_root(:ssl => false) %>
   window.DV = window.DV || {};
 
-  var loadCSS = function(url) {
-    var link  = document.createElement('link');
-    link.rel  = 'stylesheet';
-    link.type = 'text/css';
-    link.href = url;
-    var head  = document.getElementsByTagName('head')[0];
+  var loadCSS = function(url, media) {
+    var link   = document.createElement('link');
+    link.rel   = 'stylesheet';
+    link.type  = 'text/css';
+    link.media = media || 'screen';
+    link.href  = url;
+    var head   = document.getElementsByTagName('head')[0];
     head.appendChild(link);
   };
 
@@ -22,6 +23,7 @@
   /*@end
   @*/
   loadCSS('<%= root %>/viewer/plainviewer.css');
+  loadCSS('<%= root %>/viewer/printviewer.css', 'print');
 
   DV.afterLoad = function(viewer) {
     DV.jQuery('.DV-logoLink').attr({href : 'http://www.documentcloud.org'});
