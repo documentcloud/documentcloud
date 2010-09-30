@@ -40,7 +40,7 @@
   background-position: center 0;
 }
   .icon.published:hover {
-    background-position: center -18px;
+    background-position: center -28px;
   }
 .icon.cancel_search, .icon.cancel_search_dark {
   width: 11px; height: 11px;
@@ -70,7 +70,7 @@
   .icon.edit_glyph:hover,
   .icon.edit_glyph_dark:hover,
   .DV-showEdit:hover {
-    background-position: center -16px;
+    background-position: center -26px;
   }
 .icon.search_glyph {
   width: 12px; height: 12px;
