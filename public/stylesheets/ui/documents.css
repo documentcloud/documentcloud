@@ -90,7 +90,7 @@
         text-decoration: underline;
       }
     .document .document_tool {
-      display: inline-block;
+      display: inline;
       zoom: 1;
       cursor: pointer;
       width: 0; height: 18px;
@@ -103,7 +103,7 @@
         background-position: center -18px;
       }
       .document .edit_glyph {
-        display: inline-block;
+        display: inline;
         background-color: #fff;
         zoom: 1;
         visibility: hidden;
