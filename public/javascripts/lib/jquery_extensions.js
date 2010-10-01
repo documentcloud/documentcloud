@@ -84,7 +84,7 @@
       return el;
     },
 
-    // See dc.Controller#setMode...
+    // See Backbone.View#setMode...
     setMode : function(state, group) {
       group = group || 'mode';
       var re = new RegExp("\\w+_" + group + "(\\s|$)", 'g');

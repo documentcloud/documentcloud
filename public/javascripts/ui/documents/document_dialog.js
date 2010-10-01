@@ -20,13 +20,13 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     this.docs = docs;
     this.multiple = docs.length > 1;
     var title = "Edit " + this._title();
-    this.base({mode : 'custom', title : title, editor : true});
+    dc.ui.Dialog.call(this, {mode : 'custom', title : title, editor : true});
     this.render();
     $(document.body).append(this.el);
   },
 
   render : function() {
-    this.base();
+    dc.ui.Dialog.prototype.render.call(this);
     this._container = this.$('.custom');
     this._container.html(JST['document/document_dialog']({
       docs : this.docs, multiple : this.multiple
@@ -49,7 +49,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
       var next = el.val();
       if (attr == 'access') next = parseInt(next, 10);
       if (attr == 'related_article' || attr == 'remote_url') next = Inflector.normalizeUrl(next);
-      if (next != original[attr] && el.hasClass('changed')) changes[attr] = next;
+      if (next != original[attr] && el.hasClass('change')) changes[attr] = next;
     }, this));
     var errors = _.any(['related_article', 'remote_url'], _.bind(function(attr) {
       if (changes[attr] && !this.validateUrl(changes[attr])) {
@@ -79,7 +79,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   },
 
   _markChanged : function(e) {
-    $(e.target).addClass('changed');
+    $(e.target).addClass('change');
   },
 
   _sharedAttributes : function() {

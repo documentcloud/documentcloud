@@ -1,4 +1,4 @@
-dc.ui.ViewerControlPanel = dc.Controller.extend({
+dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   id : 'control_panel',
 

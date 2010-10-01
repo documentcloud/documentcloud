@@ -7,7 +7,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   constructor : function() {
     _.bindAll(this, 'setupUploadify', 'countDocuments', '_onSelect', '_onSelectOnce',
       '_onCancel', '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
-    this.base({
+    dc.ui.Dialog.call(this, {
       collection  : UploadDocuments,
       mode        : 'custom',
       title       : 'Upload Documents',
@@ -16,8 +16,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     });
     var uploadify = this.setupUploadify;
     dc.app.navigation.bind('tab:documents', function(){ _.defer(uploadify); });
-    this.collection.bind('set:added',   this.countDocuments);
-    this.collection.bind('set:removed', this.countDocuments);
+    this.collection.bind('add',   this.countDocuments);
+    this.collection.bind('remove', this.countDocuments);
   },
 
   render : function() {
@@ -28,7 +28,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       var title = Inflector.truncate(this._project.get('title'), 35);
       data.information = 'Project: ' + title;
     }
-    this.base(data);
+    dc.ui.Dialog.prototype.render.call(this, data);
     this.$('.custom').html(JST['document/upload_dialog']());
     this._list = this.$('.upload_list');
     this._renderDocumentTiles();
@@ -178,12 +178,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   close : function() {
     this.collection.refresh();
-    this.base();
+    dc.ui.Dialog.prototype.close.call(this);
   }
 
 });
 
-dc.ui.UploadDocumentTile = dc.Controller.extend({
+dc.ui.UploadDocumentTile = Backbone.View.extend({
 
   className : 'row',
 

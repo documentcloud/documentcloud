@@ -175,7 +175,7 @@ DONE:
   * Kill the metadata sidebar for searches, and create an organization one
     to go there instead.
 
-  * Rework dc.Controller setCallbacks syntax.
+  * Rework Backbone.View setCallbacks syntax.
 
   * Kill bookmarks.
   

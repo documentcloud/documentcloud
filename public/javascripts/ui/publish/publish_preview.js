@@ -26,14 +26,14 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
   constructor : function(doc) {
     this.model = doc;
     this.currentStep = 1;
-    this.base({mode : 'custom', title : this.displayTitle()});
+    dc.ui.Dialog.call(this, {mode : 'custom', title : this.displayTitle()});
     this.setMode('embed', 'dialog');
     this.render();
   },
 
   render : function() {
     if (dc.app.organization.demo) return dc.ui.Dialog.alert(this.DEMO_ERROR);
-    this.base();
+    dc.ui.Dialog.prototype.render.call(this);
     this.$('.custom').html(JST['workspace/publish_preview']({doc: this.model}));
     this._next          = this.$('.next');
     this._previous      = this.$('.previous');

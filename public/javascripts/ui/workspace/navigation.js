@@ -1,4 +1,4 @@
-dc.ui.Navigation = dc.Controller.extend({
+dc.ui.Navigation = Backbone.View.extend({
 
   SECTIONS : {
     documents : 'sidebar',
@@ -14,7 +14,7 @@ dc.ui.Navigation = dc.Controller.extend({
   },
 
   constructor : function() {
-    this.base({el : document.body});
+    Backbone.View.call(this, {el : document.body});
   },
 
   render : function() {
@@ -48,7 +48,7 @@ dc.ui.Navigation = dc.Controller.extend({
     $('.tab.active', $(tab).closest('.tabs')).removeClass('active');
     tab.addClass('active');
     this.setMode(name, this.SECTIONS[name] + '_tab');
-    if (!(silent === true)) this.fire('tab:' + name);
+    if (!(silent === true)) this.trigger('tab:' + name);
     _.defer(dc.app.scroller.check);
   },
 
@@ -58,4 +58,4 @@ dc.ui.Navigation = dc.Controller.extend({
 
 });
 
-dc.ui.Navigation.implement(dc.model.Bindable);
+_.extend(dc.ui.Navigation.prototype, Backbone.Bindable);

@@ -1,4 +1,4 @@
-dc.ui.Notifier = dc.Controller.extend({
+dc.ui.Notifier = Backbone.View.extend({
 
   id : 'notifier',
 
@@ -17,7 +17,7 @@ dc.ui.Notifier = dc.Controller.extend({
   },
 
   constructor : function(options) {
-    this.base(options);
+    Backbone.View.call(this, options);
     $(document.body).append(this.el);
     _.bindAll(this, 'show', 'hide');
     this.setCallbacks();

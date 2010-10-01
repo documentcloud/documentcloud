@@ -1,4 +1,4 @@
-dc.ui.Dialog = dc.Controller.extend({
+dc.ui.Dialog = Backbone.View.extend({
 
   className : 'dialog',
 
@@ -22,15 +22,11 @@ dc.ui.Dialog = dc.Controller.extend({
     'textarea.blur'   : '_removeFocus'
   },
 
-  constructor : function(options) {
-    this.base(options);
-    if (this.options.mode) this.setMode(this.options.mode, 'dialog');
-    if (this.options.draggable) this.setMode('is', 'draggable');
-    _.bindAll(this, 'close', '_maybeConfirm');
-  },
-
   render : function(opts) {
     opts = opts || {};
+    if (this.options.mode) this.setMode(this.options.mode, 'dialog');
+    if (this.options.draggable) this.setMode('is', 'draggable');
+    _.bindAll(this, 'close');
     $(this.el).html(JST['common/dialog'](_.extend({}, this.options, opts)));
     var cel = this.contentEl = this.$('.content');
     this._controls = this.$('.controls');
@@ -41,14 +37,14 @@ dc.ui.Dialog = dc.Controller.extend({
     $(document.body).append(this.el);
     this.center();
     this.setCallbacks();
-    if (this._returnCloses()) $(document.body).bind('keypress', this._maybeConfirm);
+    if (this._returnCloses()) $(document.body).bind('keypress', _.bind(this._maybeConfirm, this));
     if (cel[0]) _.defer(function(){ cel.focus(); });
     if (!opts.noOverlay) $(document.body).addClass('overlay');
     return this;
   },
 
   setCallbacks : function(callbacks) {
-    this.base(callbacks);
+    Backbone.View.prototype.setCallbacks.call(this, callbacks);
     if (this.options.draggable) $(this.el).draggable();
   },
 
@@ -131,7 +127,9 @@ dc.ui.Dialog = dc.Controller.extend({
     $(e.target).removeClass('focus');
   }
 
-}, {
+});
+
+_.extend(dc.ui.Dialog, {
 
   alert : function(text, options) {
     return new dc.ui.Dialog(_.extend({

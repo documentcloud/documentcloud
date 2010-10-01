@@ -1,4 +1,4 @@
-dc.ui.Organizer = dc.Controller.extend({
+dc.ui.Organizer = Backbone.View.extend({
 
   id : 'organizer',
 
@@ -21,7 +21,7 @@ dc.ui.Organizer = dc.Controller.extend({
   },
 
   constructor : function(options) {
-    this.base(options);
+    Backbone.View.call(this, options);
     this._populatedDocs = false;
     _.bindAll(this, '_addSubView', '_removeSubView');
     this._bindToSets();
@@ -181,8 +181,8 @@ dc.ui.Organizer = dc.Controller.extend({
 
   // Bind all possible and Project events for rendering.
   _bindToSets : function() {
-    Projects.bind('set:added',    this._addSubView);
-    Projects.bind('set:removed',  this._removeSubView);
+    Projects.bind('add',    this._addSubView);
+    Projects.bind('remove',  this._removeSubView);
   },
 
   _warnAlreadyExists : function(title) {

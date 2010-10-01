@@ -1,4 +1,4 @@
-dc.ui.Project = dc.Controller.extend({
+dc.ui.Project = Backbone.View.extend({
 
   className : 'project box',
 
@@ -8,9 +8,9 @@ dc.ui.Project = dc.Controller.extend({
   },
 
   constructor : function(options) {
-    this.base(options);
+    Backbone.View.call(this, options);
     _.bindAll(this, 'render');
-    this.model.bind('model:changed', this.render);
+    this.model.bind('change', this.render);
     this.model.view = this;
   },
 
@@ -44,3 +44,4 @@ dc.ui.Project = dc.Controller.extend({
   }
 
 });
+

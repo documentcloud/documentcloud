@@ -1,6 +1,6 @@
 // An UploadDocument is an in-progress file upload, currently waiting in the
 // Uploadify queue.
-dc.model.UploadDocument = dc.Model.extend({
+dc.model.UploadDocument = Backbone.Model.extend({
 
   FILE_EXTENSION_MATCHER : /\.([^.]+)$/,
 
@@ -17,7 +17,7 @@ dc.model.UploadDocument = dc.Model.extend({
       attrs.extension = match && match[1];
       attrs.size      = file.size;
     }
-    this.base(attrs);
+    Backbone.Model.prototype.set.call(this, attrs);
   },
 
   overSizeLimit : function() {
@@ -27,7 +27,7 @@ dc.model.UploadDocument = dc.Model.extend({
 });
 
 // The set of UploadDocuments is ordered by the position in which they were added.
-dc.model.UploadDocumentSet = dc.Collection.extend({
+dc.model.UploadDocumentSet = Backbone.Collection.extend({
 
   model : dc.model.UploadDocument,
 

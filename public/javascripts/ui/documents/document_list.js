@@ -1,6 +1,6 @@
 // Responsible for rendering a list of Documents. The tiles can be displayed
 // in a number of different sizes.
-dc.ui.DocumentList = dc.Controller.extend({
+dc.ui.DocumentList = Backbone.View.extend({
 
   SLOP      : 3,
 
@@ -12,11 +12,11 @@ dc.ui.DocumentList = dc.Controller.extend({
   },
 
   constructor : function(options) {
-    this.base(options);
+    Backbone.View.call(this, options);
     _.bindAll(this, 'refresh', '_removeDocument', '_addDocument', '_onSelect');
-    Documents.bind('set:refreshed', this.refresh);
-    Documents.bind('set:removed',   this._removeDocument);
-    Documents.bind('set:added',     this._addDocument);
+    Documents.bind('refresh', this.refresh);
+    Documents.bind('remove',   this._removeDocument);
+    Documents.bind('add',     this._addDocument);
   },
 
   render : function() {

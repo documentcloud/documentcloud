@@ -28,7 +28,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   constructor : function(documents) {
     this.documents = documents;
-    this.base({
+    dc.ui.Dialog.call({
       mode        : 'custom',
       title       : this.displayTitle(),
       information : 'Drag a range of dates to zoom in.'
@@ -38,7 +38,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   },
 
   render : function() {
-    this.base();
+    dc.ui.Dialog.prototype.render.call(this);
     this.$('.custom').html(JST['document/timeline']({docs : this.documents, minHeight : this.MIN_HEIGHT, rowHeight : this.ROW_HEIGHT}));
     this._zoomButton = this.make('div', {'class' : 'minibutton zoom_out dark not_enabled'}, 'Zoom Out');
     this.$('.controls_inner').prepend(this._zoomButton);

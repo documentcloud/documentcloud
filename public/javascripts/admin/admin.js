@@ -1,4 +1,4 @@
-dc.ui.Admin = dc.Controller.extend({
+dc.ui.Admin = Backbone.View.extend({
 
   GRAPH_OPTIONS : {
     xaxis     : {mode : 'time', minTickSize: [1, "day"]},
@@ -40,8 +40,7 @@ dc.ui.Admin = dc.Controller.extend({
     page_count     : function(account){ return -account.get('page_count') || 0; }
   },
 
-  constructor : function(options) {
-    this.base(options);
+  constructor : function() {
     _.bindAll(this, 'renderCharts', 'launchWorker', 'reprocessFailedDocument', 'vacuumAnalyze', 'optimizeSolr', '_loadAllAccounts');
     stats.daily_documents_series = this._series(stats.daily_documents, 'Document');
     stats.daily_pages_series = this._series(stats.daily_pages, 'Page');

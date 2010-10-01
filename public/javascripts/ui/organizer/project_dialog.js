@@ -15,7 +15,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   constructor : function(options) {
     _.bindAll(this, '_finishRender');
     this.model = options.model;
-    this.base({
+    dc.ui.Dialog.call(this, {
       mode        : 'custom',
       title       : 'Edit Project'
     });
@@ -23,7 +23,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
 
   render : function(noHide) {
     if (!noHide) $(this.el).hide();
-    this.base({editor : true, information : this.model.statistics()});
+    dc.ui.Dialog.prototype.render.call(this, {editor : true, information : this.model.statistics()});
     this.$('.custom').html(JST['organizer/project_dialog']({model : this.model}));
     this.$('#project_title').val(this.model.get('title'));
     if (!this.model.get('owner')) this.$('.minibutton.delete').text("Remove");

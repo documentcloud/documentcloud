@@ -1,5 +1,5 @@
 // The search controller is responsible for managing document/metadata search.
-dc.ui.SearchBox = dc.Controller.extend({
+dc.ui.SearchBox = Backbone.View.extend({
 
   // Error messages to display when your search returns no results.
   NO_RESULTS : {
@@ -22,7 +22,7 @@ dc.ui.SearchBox = dc.Controller.extend({
 
   // Creating a new SearchBox registers #search page fragments.
   constructor : function(options) {
-    this.base(options);
+    Backbone.View.call(this, options);
     this.searcher = dc.app.searcher;
     _.bindAll(this, 'hideSearch');
   },

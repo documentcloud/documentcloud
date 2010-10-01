@@ -1,5 +1,5 @@
 // Main controller for the journalist workspace. Orchestrates subviews.
-dc.app.workspace = new dc.Controller();
+dc.app.workspace = new Backbone.View();
 _.extend(dc.app.workspace, {
 
   // Initializes the workspace, binding it to <body>.

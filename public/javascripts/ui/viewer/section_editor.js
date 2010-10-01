@@ -1,7 +1,7 @@
-dc.ui.SectionEditor = dc.Controller.extend({
+dc.ui.SectionEditor = Backbone.View.extend({
 
-  constructor : function(opts) {
-    this.base(opts);
+  constructor : function(options) {
+    Backbone.View.call(this, options);
     _.bindAll(this, 'addRow', 'saveSections', 'removeAllSections');
   },
 

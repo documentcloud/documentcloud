@@ -1,5 +1,5 @@
 // A tile view for previewing a Document in a listing.
-dc.ui.Document = dc.Controller.extend({
+dc.ui.Document = Backbone.View.extend({
 
   // To display if the document failed to upload.
   ERROR_MESSAGE : "The document failed to import successfully. We've been notified of the problem, \
@@ -30,16 +30,16 @@ dc.ui.Document = dc.Controller.extend({
   },
 
   constructor : function(options) {
-    this.base(options);
+    Backbone.View.call(this, options);
     this.el.id = 'document_' + this.model.id;
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
       '_renderPages', 'viewDocuments', 'viewPublishedDocuments', 'openDialog',
       'openEmbed', 'viewEntities', 'deleteDocuments');
-    this.model.bind('model:changed', this._onDocumentChange);
-    this.model.notes.bind('set:added', this._addNote);
-    this.model.notes.bind('set:refreshed', this._renderNotes);
-    this.model.pageEntities.bind('set:refreshed', this._renderPages);
+    this.model.bind('change', this._onDocumentChange);
+    this.model.notes.bind('add', this._addNote);
+    this.model.notes.bind('refresh', this._renderNotes);
+    this.model.pageEntities.bind('refresh', this._renderPages);
   },
 
   render : function() {

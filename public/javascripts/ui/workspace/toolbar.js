@@ -1,4 +1,4 @@
-dc.ui.Toolbar = dc.Controller.extend({
+dc.ui.Toolbar = Backbone.View.extend({
 
   id : 'toolbar',
 
@@ -10,7 +10,7 @@ dc.ui.Toolbar = dc.Controller.extend({
 
   constructor : function(options) {
     this._floating = false;
-    this.base(options);
+    Backbone.View.call(this, options);
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'openEmbedDialog', 'requestDownloadViewers',

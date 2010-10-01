@@ -1,4 +1,4 @@
-dc.ui.AnnotationEditor = dc.Controller.extend({
+dc.ui.AnnotationEditor = Backbone.View.extend({
 
   id : 'annotation_editor',
 
@@ -6,8 +6,8 @@ dc.ui.AnnotationEditor = dc.Controller.extend({
     '.close.click': 'close'
   },
 
-  constructor : function(opts) {
-    this.base(opts);
+  constructor : function(options) {
+    Backbone.View.call(this, options);
     this._open    = false;
     this._buttons = {};
     this._baseURL = '/documents/' + dc.app.editor.docId + '/annotations';

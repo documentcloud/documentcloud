@@ -7,7 +7,7 @@ dc.ui.ProjectMenu = dc.ui.Menu.extend({
       label       : 'Projects',
       onOpen      : this.renderProjects
     }, options);
-    this.base(options);
+    dc.ui.Menu.call(this, options);
   },
 
   renderProjects : function(menu) {

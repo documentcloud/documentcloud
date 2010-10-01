@@ -1,6 +1,6 @@
 // Account Model
 
-dc.model.Account = dc.Model.extend({
+dc.model.Account = Backbone.Model.extend({
 
   ADMINISTRATOR   : 1,
 
@@ -15,7 +15,7 @@ dc.model.Account = dc.Model.extend({
   BLANK_ACCOUNT   : {first_name : '', last_name : '', email : '', role : 2},
 
   constructor : function(attributes) {
-    this.base(attributes || this.BLANK_ACCOUNT);
+    Backbone.Model.call(this, attributes || this.BLANK_ACCOUNT);
   },
 
   organization : function() {
@@ -58,7 +58,7 @@ dc.model.Account = dc.Model.extend({
 
 // Account Set
 
-dc.model.AccountSet = dc.Collection.extend({
+dc.model.AccountSet = Backbone.Collection.extend({
 
   resource : 'accounts',
   model    : dc.model.Account,

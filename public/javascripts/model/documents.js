@@ -1,11 +1,11 @@
 // Document Model
 
-dc.model.Document = dc.Model.extend({
+dc.model.Document = Backbone.Model.extend({
 
   constructor : function(attributes) {
     attributes.selected = false;
     attributes.selectable = true;
-    this.base(attributes);
+    Backbone.Model.call(this, attributes);
     this.notes = new dc.model.NoteSet();
     this.notes.resource = 'documents/' + this.id + '/annotations';
     this.pageEntities = new dc.model.EntitySet();
@@ -103,7 +103,7 @@ dc.model.Document = dc.Model.extend({
 
 // Document Set
 
-dc.model.DocumentSet = dc.Collection.extend({
+dc.model.DocumentSet = Backbone.Collection.extend({
 
   resource : 'documents',
   model    : dc.model.Document,
@@ -113,10 +113,10 @@ dc.model.DocumentSet = dc.Collection.extend({
   POLL_INTERVAL : 10000, // 10 seconds.
 
   constructor : function(options) {
-    this.base(options);
+    Backbone.Collection.call(this, options);
     this._polling = false;
     _.bindAll(this, 'poll', 'downloadViewers', 'downloadSelectedPDF', 'downloadSelectedFullText', '_onModelChanged');
-    this.bind('model:changed', this._onModelChanged);
+    this.bind('change', this._onModelChanged);
   },
 
   comparator : function(doc) {
@@ -215,7 +215,7 @@ dc.model.DocumentSet = dc.Collection.extend({
   // We override `add` to listen for uploading documents, and to start polling
   // for changes.
   add : function(model, silent) {
-    this.base(model, silent);
+    Backbone.Collection.prototype.add.call(this, model, silent);
     this._checkForPending();
   },
 
@@ -224,7 +224,7 @@ dc.model.DocumentSet = dc.Collection.extend({
   refresh : function(models, silent) {
     this._resetSelection();
     if (!this.pending().length) this.stopPolling();
-    this.base(models, silent);
+    Backbone.Collection.prototype.refresh.call(this, models, silent);
   },
 
   // When one of our models has changed, if it has changed its access level
@@ -241,7 +241,7 @@ dc.model.DocumentSet = dc.Collection.extend({
 
 });
 
-dc.model.DocumentSet.implement(dc.model.SelectableCollection);
+_.extend(dc.model.DocumentSet.prototype, dc.model.Selectable);
 
 // The main sets of Documents, used by the search tab, and the publish tab.
 window.Documents          = new dc.model.DocumentSet();

@@ -1,4 +1,4 @@
-dc.ui.Tooltip = dc.Controller.extend({
+dc.ui.Tooltip = Backbone.View.extend({
 
   id        : 'tooltip',
   className : 'interface',
@@ -13,7 +13,7 @@ dc.ui.Tooltip = dc.Controller.extend({
   },
 
   constructor : function(options) {
-    this.base(options);
+    Backbone.View.call(this, options);
     this._open = false;
     _.bindAll(this, 'hide', 'show');
     $(this.el).html(JST['common/tooltip']());

@@ -1,10 +1,10 @@
 // Organization Model
 
-dc.model.Organization = dc.Model.extend({});
+dc.model.Organization = Backbone.Model.extend({});
 
 // Organization Set
 
-dc.model.OrganizationSet = dc.Collection.extend({
+dc.model.OrganizationSet = Backbone.Collection.extend({
 
   resource : 'organizations',
   model    : dc.model.Organization,

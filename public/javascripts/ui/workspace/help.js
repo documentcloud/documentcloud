@@ -1,5 +1,5 @@
 // The Help tab.
-dc.ui.Help = dc.Controller.extend({
+dc.ui.Help = Backbone.View.extend({
 
   PAGES : [
     {url : '',                 title : 'Introduction'},

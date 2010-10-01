@@ -1,4 +1,4 @@
-dc.ui.Menu = dc.Controller.extend({
+dc.ui.Menu = Backbone.View.extend({
 
   className : 'minibutton menu',
 
@@ -11,7 +11,7 @@ dc.ui.Menu = dc.Controller.extend({
 
   constructor : function(options) {
     _.bindAll(this, 'close');
-    this.base(options);
+    Backbone.View.call(this, options);
     this.items          = [];
     this.content        = $(JST['common/menu'](this.options));
     this.itemsContainer = $('.menu_items', this.content);

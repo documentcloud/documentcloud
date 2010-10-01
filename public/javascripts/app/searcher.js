@@ -1,7 +1,7 @@
 // The `dc.app.searcher` is the core controller for running document searches
 // from the client side. It's main "view" is the dc.ui.SearchBox.
-dc.app.searcher = new dc.Model();
-dc.app.searcher.extend({
+dc.app.searcher = new Backbone.Model();
+_.extend(dc.app.searcher, {
 
   PAGE_MATCHER  : (/\/p(\d+)$/),
 

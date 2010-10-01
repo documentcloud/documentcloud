@@ -1,4 +1,4 @@
-dc.ui.Paginator = dc.Controller.extend({
+dc.ui.Paginator = Backbone.View.extend({
 
   DEFAULT_PAGE_SIZE : 10,
   MINI_PAGE_SIZE    : 30,
@@ -25,8 +25,8 @@ dc.ui.Paginator = dc.Controller.extend({
     '#size_toggle.click':   'toggleSize'
   },
 
-  constructor : function() {
-    this.base();
+  constructor : function(options) {
+    Backbone.View.call(this, options);
     this.setSize(dc.app.preferences.get('paginator_mini') || false);
     this.sortOrder = dc.app.preferences.get('sort_order') || 'score';
   },

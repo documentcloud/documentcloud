@@ -1,9 +1,9 @@
 // Project Model
 
-dc.model.Project = dc.Model.extend({
+dc.model.Project = Backbone.Model.extend({
 
   constructor : function(options) {
-    this.base(options);
+    Backbone.Model.call(this, options);
     this.collaborators = new dc.model.AccountSet();
     this._setCollaboratorsResource();
   },
@@ -13,7 +13,7 @@ dc.model.Project = dc.Model.extend({
     if (attrs.document_ids)     attrs.document_count = attrs.document_ids.length;
     if (attrs.account_id)       attrs.owner = attrs.account_id == dc.app.accountId;
     if (attrs.collaborator_ids) attrs.collaborator_count = attrs.collaborator_ids.length;
-    this.base(attrs, silent);
+    Backbone.Model.prototype.set.call(this, attrs, silent);
     if (attrs.id) this._setCollaboratorsResource();
     return this;
   },
@@ -78,23 +78,19 @@ dc.model.Project = dc.Model.extend({
   _setCollaboratorsResource : function() {
     if (this.collaborators && this.id) this.collaborators.resource = 'projects/' + this.id + '/collaborators';
   }
-
-}, {
-
-  topLevelTitle : function(type) {
-    switch (type) {
-      case 'all_documents':       return 'All Documents';
-      case 'your_documents':      return 'Your Documents';
-      case 'published_documents': return 'Your Published Documents';
-      case 'org_documents':       return Inflector.possessivize(dc.app.organization.name) + " Documents";
-    }
-  }
-
 });
 
+dc.model.Project.topLevelTitle = function(type) {
+  switch (type) {
+    case 'all_documents':       return 'All Documents';
+    case 'your_documents':      return 'Your Documents';
+    case 'published_documents': return 'Your Published Documents';
+    case 'org_documents':       return Inflector.possessivize(dc.app.organization.name) + " Documents";
+  }
+};
 
 // Project Set
-dc.model.ProjectSet = dc.Collection.extend({
+dc.model.ProjectSet = Backbone.Collection.extend({
 
   resource : 'projects',
   model    : dc.model.Project,
@@ -135,6 +131,6 @@ dc.model.ProjectSet = dc.Collection.extend({
 
 });
 
-dc.model.ProjectSet.implement(dc.model.SelectableCollection);
+_.extend(dc.model.ProjectSet.prototype, dc.model.Selectable);
 
 window.Projects = new dc.model.ProjectSet();

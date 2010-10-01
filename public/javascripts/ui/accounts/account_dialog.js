@@ -8,7 +8,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function() {
-    this.base({
+    dc.ui.Dialog.call(this, {
       mode          : 'custom',
       title         : dc.app.organization.name,
       information   : 'group: ' + dc.app.organization.slug
@@ -20,7 +20,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   },
 
   render : function() {
-    this.base();
+    dc.ui.Dialog.render.call(this);
     this._rendered = true;
     this._container = this.$('.custom');
     this._container.html(JST['account/dialog']({}));

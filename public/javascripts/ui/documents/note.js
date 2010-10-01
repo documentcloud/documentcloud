@@ -1,5 +1,5 @@
 // A tile view for previewing a Document in a listing.
-dc.ui.Note = dc.Controller.extend({
+dc.ui.Note = Backbone.View.extend({
 
   className : 'note noselect',
 
@@ -13,10 +13,10 @@ dc.ui.Note = dc.Controller.extend({
   },
 
   constructor : function(options) {
-    this.base(options);
+    Backbone.View.call(this, options);
     this.setMode(this.model.get('access'), 'access');
     _.bindAll(this, 'render');
-    this.model.bind('model:changed', this.render);
+    this.model.bind('change', this.render);
   },
 
   render : function() {

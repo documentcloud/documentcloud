@@ -1,5 +1,5 @@
 // A tile view for previewing a Document in a listing.
-dc.ui.AccountView = dc.Controller.extend({
+dc.ui.AccountView = Backbone.View.extend({
 
   AVATAR_SIZES : {
     badge         : 30,
@@ -27,10 +27,10 @@ dc.ui.AccountView = dc.Controller.extend({
     this.kind       = options.kind;
     this.tagName    = this.TAGS[this.kind];
     this.className  = 'account_view ' + this.kind;
-    this.base(options);
+    Backbone.View.call(this, options);
     this.template   = JST['account/' + this.kind];
     _.bindAll(this, '_onSuccess', '_onError');
-    this.model.bind('model:changed', _.bind(this.render, this, 'display'));
+    this.model.bind('change', _.bind(this.render, this, 'display'));
   },
 
   render : function(viewMode, options) {

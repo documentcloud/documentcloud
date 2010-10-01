@@ -1,14 +1,10 @@
-dc.ui.AdminAccounts = dc.Controller.extend({
+dc.ui.AdminAccounts = Backbone.View.extend({
 
   // Keep in sync with account.rb
   ADMINISTRATOR : 1,
   CONTRIBUTOR   : 2,
 
   callbacks : {},
-
-  constructor : function(options) {
-    this.base(options);
-  },
 
   render : function() {
     $(this.el).html(JST.admin_accounts({}));

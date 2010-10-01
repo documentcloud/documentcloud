@@ -1,4 +1,4 @@
-dc.ui.Scroll = dc.Controller.extend({
+dc.ui.Scroll = Backbone.View.extend({
 
   OVERLAP_MARGIN : 50,
 
@@ -15,7 +15,7 @@ dc.ui.Scroll = dc.Controller.extend({
   // Given a div with overflow:hidden, make the div scrollable by inserting
   // "page up" and "page down" divs at the top and bottom.
   constructor : function(el) {
-    this.base();
+    Backbone.View.call(this);
     this.content    = $(el);
     this.upButton   = this.make('div', {'class' : 'scroll_up'});
     this.downButton = this.make('div', {'class' : 'scroll_down'});

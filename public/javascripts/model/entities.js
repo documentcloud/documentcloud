@@ -1,6 +1,6 @@
 // Entity Model
 
-dc.model.Entity = dc.Model.extend({
+dc.model.Entity = Backbone.Model.extend({
 
 }, {
 
@@ -34,7 +34,7 @@ dc.model.Entity = dc.Model.extend({
 
 // Entity Set
 
-dc.model.EntitySet = dc.Collection.extend({
+dc.model.EntitySet = Backbone.Collection.extend({
 
   model : dc.model.Entity,
 
