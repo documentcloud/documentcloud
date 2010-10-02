@@ -50,7 +50,7 @@ dc.model.Selectable = {
         this.firstSelection = null;
       }
       this.selectedCount += selected ? 1 : -1;
-      _.defer(_(this.fire).bind(this, 'select', this));
+      _.defer(_(this.trigger).bind(this, 'select', this));
     }
   }
 
