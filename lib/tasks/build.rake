@@ -1,6 +1,13 @@
 namespace :build do
 
-  # Pull in a new built
+  # Pull in a new build of Backbone.
+  task :backbone do
+    contents = File.read '../backbone/backbone.js'
+    version = contents.match(/VERSION = '(\S+)'/)[1]
+    FileUtils.cp '../backbone/backbone.js', "public/javascripts/vendor/backbone-#{version}.js"
+  end
+
+  # Pull in a new build of the Document Viewer.
   task :viewer do
 
     Dir.chdir '../document-viewer'
