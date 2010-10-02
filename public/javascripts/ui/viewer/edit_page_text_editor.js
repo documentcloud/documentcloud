@@ -10,9 +10,12 @@ dc.ui.EditPageTextEditor = dc.Controller.extend({
     '.edit_page_text_confirm_input.click' : 'confirmEditPageText'
   },
   
+  originalPageText: {},
+  pageText: {},
+  
   constructor : function(opts) {
     this.base(opts);
-    _.bindAll(this, 'confirmEditPageText');
+    _.bindAll(this, 'confirmEditPageText', 'cachePageText');
   },
 
   toggle : function() {
@@ -42,46 +45,59 @@ dc.ui.EditPageTextEditor = dc.Controller.extend({
   },
   
   open : function() {
-    this.findSelectors();
+    this.pageText = {};
     this.flags.open = true;
-    // this.viewer.api.enterEditPageTextMode();
     this.render();
+    this.viewer.api.enterEditPageTextMode();
+  },
+  
+  render : function() {
+    this.findSelectors();
+    $(this.el).html(JST['viewer/edit_page_text']({}));
+    this.$s.viewerContainer.append(this.el);
+    if (this.viewer.state != 'ViewText') {
+        this.viewer.open('ViewText');
+    }
+    this.$s.pages.addClass('edit_page_text_viewer');
+    this.$s.container = $(this.el);
+    this.findSelectors();
+    
     this.$s.guideButton.addClass('open');
     this.$s.guide.fadeIn('fast');
     this.$s.saveButton.attr('disabled', true);
     this.$s.header.removeClass('active');
     this.$s.textContents.attr('contentEditable', true);
     this.$s.textContents.addClass('DV-editing');
-  },
-  
-  render : function() {
-    $(this.el).html(JST['viewer/edit_page_text']({}));
-    this.$s.viewerContainer.append(this.el);
-    this.findSelectors();
-    if (this.viewer.state != 'ViewText') {
-        this.viewer.open('ViewText');
-    }
-    this.$s.pages.addClass('edit_page_text_viewer');
-    this.$s.container = $(this.el);
-    _.defer(_.bind(this.setCallbacks, this));
-  },
-  
-  setCallbacks : function(callbacks) {
-    var self = this;
-    var $thumbnails = this.$s.thumbnails;
     
-    // var pageNumber = currentDocument.api.currentPage();
-    // dc.ui.Dialog.prompt('Page Text', currentDocument.api.getPageText(pageNumber), _.bind(function(pageText) {
-    //   currentDocument.api.setPageText(pageText);
-    //   currentDocument.api.redraw();
-    //   return true;
-    // }, this));
-    this.base(callbacks);
+    this.setCallbacks();
+  },
+
+  setCallbacks : function() {
+    
+    this.$s.textContents.bind('keyup', this.cachePageText);
+    this.$s.textContents.bind('change', this.cachePageText);
+    this.$s.textContents.bind('blur', this.cachePageText);
+    this.base();
+  },
+  
+  getPageNumber : function() {
+    return currentDocument.api.currentPage();
+  },
+  
+  getPageText : function(pageNumber) {
+    pageNumber = pageNumber || this.getPageNumber();
+    
+    return currentDocument.api.getPageText(pageNumber);
+  },
+  
+  setCurrentPageText : function(pageText) {
+    currentDocument.api.setPageText(pageText);
+    currentDocument.api.redraw();
   },
   
   confirmEditPageText : function() {
     dc.ui.Dialog.confirm('Reordering pages takes a few minutes to complete.<br /><br />Are you sure you want to continue?', _.bind(function() {
-      $('input.edit_page_text_confirm_input', this.el).val('Reordering...').attr('disabled', true);
+      $('input.edit_page_text_confirm_input', this.el).val('Saving...').attr('disabled', true);
       var pageOrder = this.serializePageOrder();
       this.viewer.api.reorderPages(pageOrder, {
         success : function(model_id, resp) {
@@ -97,14 +113,11 @@ dc.ui.EditPageTextEditor = dc.Controller.extend({
     }, this));
   },
   
-  serializePageOrder : function() {
-    var pageOrder = [];
-
-    $('.DV-thumbnail', this.$s.thumbnails).each(function() {
-      pageOrder.push($(this).data('pageNumber'));
-    });
-    
-    return pageOrder;
+  cachePageText : function() {
+    var pageNumber = this.getPageNumber();
+    var pageText = this.$s.textContents.text();
+    this.pageText[pageNumber] = pageText;
+    currentDocument.api.setPageText(pageText, pageNumber);
   },
   
   close : function() {
@@ -116,7 +129,7 @@ dc.ui.EditPageTextEditor = dc.Controller.extend({
       this.$s.textContents.attr('contentEditable', false);
       this.$s.textContents.removeClass('DV-editing');
       $(this.el).remove();
-      // this.viewer.api.leaveReorderPagesMode();
+      this.viewer.api.leaveEditPageTextMode();
       this.base();
     }
   }
