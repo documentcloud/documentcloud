@@ -41,7 +41,9 @@
   <div class="edit_account icon edit_glyph_dark display"></div>
   <% if (account == current) { %>
     <span class="change_password display text_link">change password</span>
-  <% } %>
+  <% } else if (account.isPending()) { %>
+    <span class="resend_welcome display text_link">resend welcome email</span>
+   <% } %>
   <div class="edit controls_wrapper">
     <div class="minibutton default save_changes">OK</div>
     <% if (account.id && account.id > 0 && account.id != dc.app.accountId) { %>

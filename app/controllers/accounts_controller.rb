@@ -63,6 +63,14 @@ class AccountsController < ApplicationController
     json account
   end
 
+  # Resend a welcome email for a pending account.
+  def resend_welcome
+    return forbidden unless current_account.admin?
+    account = current_organization.accounts.find(params[:id])
+    LifecycleMailer.deliver_login_instructions account, current_account
+    json nil
+  end
+
   # Removing an account will preserve their uploaded documents, for the
   # moment -- perhaps private docs should be destroyed.
   def destroy

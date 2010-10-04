@@ -48,10 +48,19 @@ dc.model.Account = Backbone.Model.extend({
     return this.get('role') == this.ADMINISTRATOR;
   },
 
+  isPending : function() {
+    return !!this.get('pending');
+  },
+
   gravatarUrl : function(size) {
     var hash = this.get('hashed_email');
     var fallback = encodeURIComponent(this.DEFAULT_AVATAR);
     return this.GRAVATAR_BASE + hash + '.jpg?s=' + size + '&d=' + fallback;
+  },
+
+  resendWelcomeEmail: function(options) {
+    var url = '/accounts/' + this.id + '/resend_welcome';
+    $.ajax(_.extend(options || {}, {type : 'POST', dataType : 'json', url : url}));
   }
 
 });

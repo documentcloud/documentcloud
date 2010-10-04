@@ -44,7 +44,7 @@ ActionController::Routing::Routes.draw do |map|
   map.bulk_download '/download/*args.zip', :controller => 'download', :action => 'bulk_download'
 
   # Accounts and account management.
-  map.resources :accounts
+  map.resources :accounts, :member => {:resend_welcome => :post}
   map.with_options :controller => 'accounts' do |accounts|
     accounts.enable_account '/accounts/enable/:key', :action => 'enable'
     accounts.reset_password '/reset_password', :action => 'reset'

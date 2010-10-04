@@ -18,6 +18,7 @@ dc.ui.AccountView = Backbone.View.extend({
   callbacks : {
     '.edit_account.click':    'showEdit',
     '.change_password.click': 'promptPasswordChange',
+    '.resend_welcome.click':  'resendWelcomeEmail',
     '.admin_link.click':      '_openAccounts',
     '.save_changes.click':    '_doneEditing',
     '.delete_account.click':  '_deleteAccount'
@@ -40,7 +41,7 @@ dc.ui.AccountView = Backbone.View.extend({
     var attrs = _.extend({account : this.model, email : this.model.get('email'), size : this.size(), current : Accounts.current()}, options);
     if (this.isRow()) this.setMode(viewMode, 'view');
     $(this.el).html(this.template(attrs));
-    if (this.model.get('pending')) $(this.el).addClass('pending');
+    if (this.model.isPending()) $(this.el).addClass('pending');
     this._loadAvatar();
     this.setCallbacks();
     return this;
@@ -77,6 +78,16 @@ dc.ui.AccountView = Backbone.View.extend({
       }, this)});
       return true;
     }, this), {password : true, mode : 'short_prompt'});
+  },
+
+  resendWelcomeEmail : function() {
+    dc.ui.spinner.show();
+    var model = this.model;
+    model.resendWelcomeEmail({success : function() {
+      dc.ui.spinner.hide();
+      dc.app.accounts.close();
+      dc.ui.Dialog.alert('A welcome message has been sent to ' + model.get('email') + '.');
+    }});
   },
 
   _loadAvatar : function() {
