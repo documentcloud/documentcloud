@@ -83,17 +83,17 @@
   #section_editor .remove_all {
     width: 80px;
   }
-  #section_editor ol {
+  #section_editor ul {
     margin: 0;
     padding-right: 25px;
     width: 410px; max-height: 400px;
-    padding-left: 20px;
-    list-style-type: decimal;
+    list-style-type: none;
+    padding-left: 0;
     overflow-y: auto;
   }
     #section_editor li {
       margin-top: 7px;
-      width: 410px; height: 25px;
+      width: 430px; height: 25px;
       color: #ccc;
       line-height: 25px;
       position: relative;
@@ -107,19 +107,17 @@
         height: 24px;
       }
       #section_editor .section_title {
-        margin-right: 15px;
-<<<<<<< HEAD
-<<<<<<< HEAD
-        width: 230px;
-=======
-        width: 150px;
->>>>>>> 0684465... fixing the section editor, making sure that the removed aristo still works for the viewer...
-=======
-        width: 220px;
->>>>>>> 10a1f16... fixed the in-viewer editing dialogs as well.
+        margin-right: 22px;
+        width: 300px;
       }
       #section_editor .page_number {
         width: 27px;
+      }
+      #section_editor .page_number_mark {
+        font-size: 11px;
+        color: #999;
+        position: absolute;
+        margin: -1px 0 0 -14px;
       }
       #section_editor .plus, #section_editor .minus {
         float: right;
