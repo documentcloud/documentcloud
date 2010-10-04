@@ -32,18 +32,16 @@ body.workspace {
   margin-right: 12px;
 }
 #section_editor {
-  width: 440px;
+  width: 450px;
 }
-  #section_editor ol {
-    width: 420px;
+  #section_editor ul {
+    width: 455px;
+    padding: 1px 0;
     list-style-type: none;
   }
     #section_editor li {
-      width: 420px;
+      width: 450px;
     }
-  #section_editor .section_title {
-    margin-right: 0;
-  }
 #account_list .row.pending .pending_badge,
 #account_list .admin.pending .pending_badge {
   display: none;

@@ -86,10 +86,11 @@
   #section_editor ul {
     margin: 0;
     padding-right: 25px;
-    width: 410px; max-height: 400px;
+    width: 435px; max-height: 380px;
     list-style-type: none;
     padding-left: 0;
     overflow-y: auto;
+    position: relative;
   }
     #section_editor li {
       margin-top: 7px;
@@ -112,6 +113,7 @@
       }
       #section_editor .page_number {
         width: 27px;
+        margin-right: 10px;
       }
       #section_editor .page_number_mark {
         font-size: 11px;
@@ -120,7 +122,7 @@
         margin: -1px 0 0 -14px;
       }
       #section_editor .plus, #section_editor .minus {
-        float: right;
+        float: left;
         margin: 5px 0 0 3px;
         cursor: pointer;
       }
@@ -128,7 +130,7 @@
           margin-left: 0;
         }
         #section_editor li:first-child .minus {
-          display: none;
+          visibility: hidden;
         }
 
 /*-------------------------- The Annotation Editor ---------------------------*/
