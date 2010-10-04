@@ -110,7 +110,7 @@ dc.ui.SearchBox = Backbone.View.extend({
       var quote = !!dc.app.SearchParser.extractProject(query);
       var title = count + ' ' + Inflector.pluralize('Result', count) + ' in ' +
         (quote ? '“' : '') + this.titleBox.html() + (quote ? '”' : '');
-      this.titleBox.html(Inflector.titleize(title));
+      this.titleBox.html(title);
     }
     if (count <= 0) {
       $(document.body).setMode('empty', 'search');
