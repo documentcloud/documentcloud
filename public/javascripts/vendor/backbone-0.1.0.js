@@ -1,8 +1,7 @@
-// Backbone.js
-// (c) 2010 Jeremy Ashkenas, DocumentCloud Inc.
-// Backbone may be freely distributed under the terms of the MIT license.
-// For all details and documentation:
-// http://documentcloud.github.com/backbone
+//    (c) 2010 Jeremy Ashkenas, DocumentCloud Inc.
+//    Backbone may be freely distributed under the terms of the MIT license.
+//    For all details and documentation:
+//    http://documentcloud.github.com/backbone
 
 (function(){
 
@@ -19,12 +18,11 @@
   (typeof exports !== 'undefined' ? exports : this).Backbone = Backbone;
 
   // Helper function to correctly set up the prototype chain, for subclasses.
+  // Similar to `goog.inherits`, but uses a hash of prototype properties and
+  // static properties to be extended.
   var inherits = function(parent, protoProps, classProps) {
-    if (protoProps.hasOwnProperty('constructor')) {
-      child = protoProps.constructor;
-    } else {
-      child = function(){ return parent.apply(this, arguments); };
-    }
+    var child = protoProps.hasOwnProperty('constructor') ? protoProps.constructor :
+                function(){ return parent.apply(this, arguments); };
     var ctor = function(){};
     ctor.prototype = parent.prototype;
     child.prototype = new ctor();
@@ -38,7 +36,13 @@
   // -----------------
 
   // A module that can be mixed in to any object in order to provide it with
-  // custom events.
+  // custom events. You may `bind` or `unbind` a callback function to an event;
+  // `trigger`-ing an event fires all callbacks in succession.
+  //
+  //    _.extend(object, Backbone.Bindable);
+  //    object.bind('expand', function(){ alert('expanded'); });
+  //    object.trigger('expand');
+  //
   Backbone.Bindable = {
 
     // Bind an event, specified by a string name, `ev`, to a `callback` function.
@@ -57,7 +61,7 @@
       var calls;
       if (!ev) {
         this._callbacks = {};
-      } else if (calls = this.callbacks) {
+      } else if (calls = this._callbacks) {
         if (!callback) {
           calls[ev] = [];
         } else {
@@ -73,7 +77,7 @@
       return this;
     },
 
-    // Trigger an event, firing all bound callbacks
+    // Trigger an event, firing all bound callbacks.
     trigger : function(ev) {
       var calls = this._callbacks;
       for (var i = 0; i < 2; i++) {
@@ -96,7 +100,6 @@
   Backbone.Model = function(attributes) {
     this._attributes = {};
     attributes = attributes || {};
-    attributes.id = attributes.id || -_.uniqueId();
     this.set(attributes, true);
     this.cid = _.uniqueId('c');
     this._formerAttributes = this.attributes();
@@ -147,7 +150,7 @@
     // A model is new if it has never been saved to the server, and has a negative
     // ID.
     isNew : function() {
-      return this.id < 0;
+      return !this.id;
     },
 
     // Call this method to fire manually fire a `changed` event for this model.
@@ -200,11 +203,6 @@
       if (!attrs) return this;
       attrs = attrs._attributes || attrs;
       var now = this._attributes;
-      if (attrs.collection) {
-        this.collection = attrs.collection;
-        delete attrs.collection;
-        this.resource = this.collection.resource + '/' + this.id;
-      }
       if (attrs.id) {
         this.id = attrs.id;
         if (this.collection) this.resource = this.collection.resource + '/' + this.id;
@@ -236,25 +234,6 @@
       return value;
     },
 
-    // Set a hash of model attributes, and sync the model to the server.
-    save : function(attrs, options) {
-      if (!this.resource) throw new Error(this.toString() + " cannot be saved without a resource.");
-      options || (options = {});
-      this.set(attrs, options);
-      var model = this;
-      $.ajax({
-        url       : this.resource,
-        type      : 'PUT',
-        data      : {model : JSON.stringify(this.attributes())},
-        dataType  : 'json',
-        success   : function(resp) {
-          model.set(resp.model);
-          if (options.success) options.success(model, resp);
-        },
-        error     : function(resp) { if (options.error) options.error(model, resp); }
-      });
-    },
-
     // Return a copy of the model's attributes.
     attributes : function() {
       return _.clone(this._attributes);
@@ -269,17 +248,29 @@
       return 'Model ' + this.id;
     },
 
+    // Return the URL used to {save,delete}
+    url : function() {
+      if (!this.id) throw new Error(this.toString() + " has no id.");
+      return this.collection.url() + '/' + this.id;
+    },
+
+    // Set a hash of model attributes, and sync the model to the server.
+    save : function(attrs, options) {
+      options || (options = {});
+      this.set(attrs, options);
+      var model = this;
+      var success = function(resp) {
+        model.set(resp.model);
+        if (options.success) options.success(model, resp);
+      };
+      Backbone.request('PUT', this, success, options.error);
+      return this;
+    },
+
     // Destroy this model on the server.
     destroy : function(options) {
-      if (this.collection) this.collection.remove(this);
-      $.ajax({
-        url       : this.resource,
-        type      : 'DELETE',
-        data      : {},
-        dataType  : 'json',
-        success   : function(resp) { if (options.success) options.success(model, resp); },
-        error     : function(resp) { if (options.error) options.error(model, resp); }
-      });
+      Backbone.request('DELETE', this, options.success, options.error);
+      return this;
     }
 
   });
@@ -290,9 +281,16 @@
   // Provides a standard collection class for our sets of models, ordered
   // or unordered. If a `comparator` is specified, the Collection will maintain
   // its models in sort order, as they're added and removed.
-  Backbone.Collection = function(options) {
+  Backbone.Collection = function(models,options) {
+    if (options && options.comparator) {
+      this.comparator = options.comparator;
+      delete options.comparator;
+    }
     this._boundOnModelEvent = _.bind(this._onModelEvent, this);
     this._initialize();
+    if (models) {
+      this.refresh(models,true);
+    }
   };
 
   // Define the Collection's inheritable methods.
@@ -346,7 +344,7 @@
       if (already) throw new Error(["Can't add the same model to a set twice", already.id]);
       this._byId[model.id] = model;
       this._byCid[model.cid] = model;
-      var index = this.comparator ? this.sortedIndex(model, this.comparator) : this.length - 1;
+      var index = this.comparator ? this.sortedIndex(model, this.comparator) : this.length;
       this.models.splice(index, 0, model);
       model.bind('all', this._boundOnModelEvent);
       this.length++;
@@ -380,11 +378,13 @@
     // any `added` or `removed` events. Fires `refreshed` when finished.
     refresh : function(models, silent) {
       models = models || [];
+      var collection = this;
       if (models[0] && !(models[0] instanceof Backbone.Model)) {
-        for (var i = 0, l = models.length; i < l; i++) {
-          models[i].collection = this;
-          models[i] = new this.model(models[i]);
-        }
+        models = _.map(models, function(attrs, i) {
+          var model = new collection.model(attrs);
+          model.collection = this;
+          return model;
+        });
       }
       this._initialize();
       this.add(models, true);
@@ -431,7 +431,7 @@
     };
   });
 
-  // Backbone View
+  // Backbone.View
   // -------------
 
   Backbone.View = function(options) {
@@ -527,6 +527,18 @@
     var child = inherits(this, protoProps, classProps);
     child.extend = extend;
     return child;
+  };
+
+  // `Backbone.request`...
+  Backbone.request = function(type, model, success, error) {
+    $.ajax({
+      url       : model.url(),
+      type      : type,
+      data      : {model : JSON.stringify(model.attributes())},
+      dataType  : 'json',
+      success   : success,
+      error     : error
+    });
   };
 
 })();
