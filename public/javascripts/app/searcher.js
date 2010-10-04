@@ -149,7 +149,7 @@ _.extend(dc.app.searcher, {
     if (this.flags.related && !this.relatedDoc) {
       this.relatedDoc = new dc.model.Document(resp.source_document);
     }
-    this.box.doneSearching(resp.documents.length == 0);
+    this.box.doneSearching();
     this.flags.outstandingSearch = false;
     if (this._afterSearch) this._afterSearch();
   },

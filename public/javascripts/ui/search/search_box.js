@@ -96,15 +96,15 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
 
   // Hide the spinner and remove the search lock when finished searching.
-  doneSearching : function(empty) {
+  doneSearching : function() {
+    var count = dc.app.paginator.query.total;
+    var documents = Inflector.pluralize('Document', count);
     if (dc.app.searcher.flags.related) {
-      this.titleBox.text(Inflector.pluralize('Document', dc.app.paginator.query.total) +
-      ' Related to "' + Inflector.truncate(this.searcher.relatedDoc.get('title'), 100) + '"');
+      this.titleBox.text(documents + ' Related to "' + Inflector.truncate(this.searcher.relatedDoc.get('title'), 100) + '"');
     } else if (dc.app.searcher.flags.specific) {
-      var count = dc.app.paginator.query.total;
-      this.titleBox.text(count + ' ' + Inflector.pluralize('Document', count));
+      this.titleBox.text(count + ' ' + documents);
     }
-    if (empty) {
+    if (count <= 0) {
       $(document.body).setMode('empty', 'search');
       var searchType = dc.app.SearchParser.searchType(this.value());
       $('#no_results .explanation').text(this.NO_RESULTS[searchType]);
