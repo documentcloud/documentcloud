@@ -11,7 +11,7 @@ class Document < ActiveRecord::Base
   DEFAULT_TITLE = "Untitled Document"
 
   DISPLAY_DATE_FORMAT = "%b %d, %Y"
-  DISPLAY_DATETIME_FORMAT = "%H:%M %b %d, %Y"
+  DISPLAY_DATETIME_FORMAT = "%I:%M %p – %a %b %d, %Y"
 
   DEFAULT_CANONICAL_OPTIONS = {:sections => true, :annotations => true}
 
