@@ -106,11 +106,11 @@ dc.ui.SearchBox = Backbone.View.extend({
       this.titleBox.text(count + ' ' + documents + ' Related to "' + Inflector.truncate(this.searcher.relatedDoc.get('title'), 100) + '"');
     } else if (dc.app.searcher.flags.specific) {
       this.titleBox.text(count + ' ' + documents);
-    } else if (count && (dc.app.SearchParser.searchType(query) == 'search')) {
-      var quote = !!dc.app.SearchParser.extractProject(query);
-      var title = count + ' ' + Inflector.pluralize('Result', count) + ' in ' +
-        (quote ? '“' : '') + this.titleBox.html() + (quote ? '”' : '');
-      this.titleBox.html(title);
+    } else if (dc.app.SearchParser.searchType(query) == 'search') {
+      var quote  = !!dc.app.SearchParser.extractProject(query);
+      var suffix = ' in ' + (quote ? '“' : '') + this.titleBox.html() + (quote ? '”' : '');
+      var prefix = count ? count + ' ' + Inflector.pluralize('Result', count) : 'No Results';
+      this.titleBox.html(prefix + suffix);
     }
     if (count <= 0) {
       $(document.body).setMode('empty', 'search');
