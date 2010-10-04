@@ -61,8 +61,10 @@ dc.app.SearchParser = {
   },
 
   searchType : function(query) {
+    if (query.match(this.WHITESPACE_ONLY))                                  return 'all';
     if (query.replace(this.FIRST_RELATED, '').match(this.WHITESPACE_ONLY))  return 'related';
     if (query.replace(this.FIRST_PROJECT, '').match(this.WHITESPACE_ONLY))  return 'project';
+    if (query.replace(this.FIRST_GROUP, '').match(this.WHITESPACE_ONLY))    return 'group';
     if (query.replace(this.FIRST_ACCOUNT, '').match(this.WHITESPACE_ONLY))  return 'account';
     if (query.replace(this.FIRST_ACCOUNT, '').replace(this.PUBLISHED_ACCESS, '').match(this.WHITESPACE_ONLY)) return 'published';
     return 'search';

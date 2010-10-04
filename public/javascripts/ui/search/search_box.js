@@ -5,8 +5,10 @@ dc.ui.SearchBox = Backbone.View.extend({
   NO_RESULTS : {
     project   : "This project does not contain any documents.",
     account   : "This account has not uploaded any documents.",
+    group     : "This organization has not uploaded any documents.",
     published : "This account does not have any published documents.",
     search    : "Your search did not match any documents.",
+    all       : "There are no documents.",
     related   : "There are no documents related to this document."
   },
 
@@ -92,17 +94,23 @@ dc.ui.SearchBox = Backbone.View.extend({
       ret = 'all_documents';
     }
     title = title || dc.model.Project.topLevelTitle(ret);
-    this.titleBox.text(title);
+    this.titleBox.html(title);
   },
 
   // Hide the spinner and remove the search lock when finished searching.
   doneSearching : function() {
-    var count = dc.app.paginator.query.total;
+    var count     = dc.app.paginator.query.total;
     var documents = Inflector.pluralize('Document', count);
+    var query     = this.value();
     if (dc.app.searcher.flags.related) {
-      this.titleBox.text(documents + ' Related to "' + Inflector.truncate(this.searcher.relatedDoc.get('title'), 100) + '"');
+      this.titleBox.text(count + ' ' + documents + ' Related to "' + Inflector.truncate(this.searcher.relatedDoc.get('title'), 100) + '"');
     } else if (dc.app.searcher.flags.specific) {
       this.titleBox.text(count + ' ' + documents);
+    } else if (count && (dc.app.SearchParser.searchType(query) == 'search')) {
+      var quote = !!dc.app.SearchParser.extractProject(query);
+      var title = count + ' ' + Inflector.pluralize('Result', count) + ' in ' +
+        (quote ? '“' : '') + this.titleBox.html() + (quote ? '”' : '');
+      this.titleBox.html(Inflector.titleize(title));
     }
     if (count <= 0) {
       $(document.body).setMode('empty', 'search');
