@@ -23,6 +23,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     dc.ui.Dialog.render.call(this);
     this._rendered = true;
     this._container = this.$('.custom');
+    this._container.setMode('not', 'draggable');
     this._container.html(JST['account/dialog']({}));
     if (Accounts.current().isAdmin()) this.addControl(this.make('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, 'New Account'));
     this.list = this.$('#account_list_content');

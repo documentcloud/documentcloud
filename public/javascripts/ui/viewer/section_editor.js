@@ -17,7 +17,7 @@ dc.ui.SectionEditor = Backbone.View.extend({
       onClose     : _.bind(function(){ this.dialog = null; }, this),
       onConfirm   : _.bind(function(){ return this.saveSections(this.serializeSections()); }, this)
     }).render();
-    this.sectionsEl = $(this.make('ul', {id : 'section_rows'}));
+    this.sectionsEl = $(this.make('ul', {id : 'section_rows', 'class' : 'not_draggable'}));
     this.removeEl   = $(this.make('div', {'class' : 'minibutton warn remove_all'}, 'Remove All'));
     this.removeEl.bind('click', this.removeAllSections);
     this.dialog.append(this.sectionsEl);
