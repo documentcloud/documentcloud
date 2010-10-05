@@ -186,6 +186,10 @@
   display: none;
 }
 
+.DV-permalink {
+  visibility: visible;
+}
+
 .DV-annotationTextArea {
   border: 1px solid #ccc;
 }
