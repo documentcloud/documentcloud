@@ -92,8 +92,11 @@ dc.model.Project.topLevelTitle = function(type) {
 // Project Set
 dc.model.ProjectSet = Backbone.Collection.extend({
 
-  resource : 'projects',
   model    : dc.model.Project,
+
+  url : function() {
+    return '/projects';
+  },
 
   comparator : function(m) {
     return m.get('title').toLowerCase();

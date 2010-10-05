@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    json current_account.projects.create(pick(:model, :title, :document_ids))
+    json :model => current_account.projects.create(pick(:model, :title, :document_ids))
   end
 
   # TODO: Ensure that the document ids you're adding are for documents you
@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
     data = pick(:model, :title, :document_ids)
     current_project.update_attributes(:title => data[:title]) if data[:title]
     current_project.set_documents(data[:document_ids])
-    json current_project.reload
+    json :model => current_project.reload
   end
 
   def destroy

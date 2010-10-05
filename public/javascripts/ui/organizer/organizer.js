@@ -88,8 +88,12 @@ dc.ui.Organizer = Backbone.View.extend({
       }
       if (Projects.find(title)) return me._warnAlreadyExists(title);
       var count = _.inject(Documents.selected(), function(memo, doc){ return memo + doc.get('annotation_count'); }, 0);
-      var project = new dc.model.Project({title : title, annotation_count : count, document_ids : Documents.selectedIds(), owner : true});
-      Projects.create(project, null, {error : function() { Projects.remove(project); }});
+      Projects.create({
+        title             : title,
+        annotation_count  : count,
+        document_ids      : Documents.selectedIds(),
+        owner             : true
+      });
       return true;
     }, {mode : 'short_prompt'});
   },
