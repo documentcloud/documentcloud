@@ -35,8 +35,11 @@ dc.model.Note = Backbone.Model.extend({
 
 dc.model.NoteSet = Backbone.Collection.extend({
 
-  resource : 'notes',
   model    : dc.model.Note,
+
+  url : function() {
+    return '/notes';
+  },
 
   comparator : function(note) {
     var coords = note.coordinates();

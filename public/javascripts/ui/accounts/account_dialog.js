@@ -13,14 +13,14 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
       title         : dc.app.organization.name,
       information   : 'group: ' + dc.app.organization.slug
     });
-    _.bindAll(this, '_renderAccounts');
+    Accounts.bind('refresh', _.bind(this._renderAccounts, this));
     this._rendered = false;
     this._open = false;
     $(this.el).hide();
   },
 
   render : function() {
-    dc.ui.Dialog.render.call(this);
+    dc.ui.Dialog.prototype.render.call(this);
     this._rendered = true;
     this._container = this.$('.custom');
     this._container.setMode('not', 'draggable');
@@ -29,7 +29,12 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this.list = this.$('#account_list_content');
     this.setCallbacks();
     dc.ui.spinner.show();
-    alert('FIXME: need to populate accounts.');
+    if (!Accounts.populated) {
+      $.getJSON(Accounts.url(), {}, function(resp) {
+        Accounts.refresh(resp.accounts);
+        Accounts.populated = true;
+      });
+    }
     return this;
   },
 
