@@ -38,16 +38,6 @@ class DocumentsController < ApplicationController
     end
   end
 
-  def published
-    docs = Document.published.owned_by(current_account).all(:limit => 10)
-    json :documents => docs
-  end
-
-  def unpublished
-    docs = Document.unpublished.owned_by(current_account).all(:limit => 10)
-    json :documents => docs
-  end
-
   def update
     return not_found unless doc = current_document(true)
     attrs = pick(:model, :access, :title, :description, :source, :related_article, :remote_url)

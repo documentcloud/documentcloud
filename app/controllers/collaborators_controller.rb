@@ -1,7 +1,7 @@
 class CollaboratorsController < ApplicationController
 
   def index
-    json current_project.other_collaborators(current_account).to_json(:include_organization => true)
+    json :models => current_project.other_collaborators(current_account).to_json(:include_organization => true)
   end
 
   def create

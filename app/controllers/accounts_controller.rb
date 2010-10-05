@@ -32,7 +32,7 @@ class AccountsController < ApplicationController
 
   # Requesting /accounts returns the list of accounts in your logged-in organization.
   def index
-    json 'accounts' => current_organization.accounts
+    json :models => current_organization.accounts
   end
 
   # Creating a new account creates a pending account, with a security key

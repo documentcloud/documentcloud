@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   before_filter :login_required
 
   def index
-    json 'projects' => Project.accessible(current_account)
+    json :models => Project.accessible(current_account)
   end
 
   def create
@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
   end
 
   def documents
-    json 'documents' => current_project.loaded_documents
+    json :models => current_project.loaded_documents
   end
 
 

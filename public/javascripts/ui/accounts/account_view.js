@@ -31,7 +31,14 @@ dc.ui.AccountView = Backbone.View.extend({
     Backbone.View.call(this, options);
     this.template   = JST['account/' + this.kind];
     _.bindAll(this, '_onSuccess', '_onError');
-    this.model.bind('change', _.bind(this.render, this, 'display'));
+    this._boundRender = _.bind(this.render, this, 'display');
+    this.observe(this.model);
+  },
+
+  observe : function(model) {
+    if (this.model) this.model.unbind('change', this._boundRender);
+    this.model = model;
+    this.model.bind('change', this._boundRender);
   },
 
   render : function(viewMode, options) {
