@@ -16,7 +16,7 @@ class Document < ActiveRecord::Base
   DEFAULT_CANONICAL_OPTIONS = {:sections => true, :annotations => true, :contributor => true}
 
   # If the Document.pending count is greater than this number, send a warning.
-  WARN_QUEUE_LENGTH = 25
+  WARN_QUEUE_LENGTH = 50
 
   # DB Associations:
 
