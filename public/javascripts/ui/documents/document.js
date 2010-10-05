@@ -144,11 +144,12 @@ dc.ui.Document = Backbone.View.extend({
     var next = _.bind(function() {
       var model = Documents.get(this.model.id);
       if (this.modes.notes == 'has') return this.setMode('owns', 'notes');
-      if (model.notes.populated) return this.setMode('has', 'notes');
+      if (model.notes.length) return this.setMode('has', 'notes');
       dc.ui.spinner.show('loading notes');
-      window.scroll(0, $('#document_' + model.id).offset().top - 10);
-      alert("FIXME: need to populate notes.");
-      // model.notes.populate({success: dc.ui.spinner.hide });
+      model.notes.fetch({success : function() {
+        dc.ui.spinner.hide();
+        window.scroll(0, $('#document_' + model.id).offset().top - 100);
+      }});
     }, this);
     dc.app.paginator.mini ? dc.app.paginator.toggleSize(next, this.model) : next();
   },
