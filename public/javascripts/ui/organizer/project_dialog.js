@@ -27,12 +27,11 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     this.$('.custom').html(JST['organizer/project_dialog']({model : this.model}));
     this.$('#project_title').val(this.model.get('title'));
     if (!this.model.get('owner')) this.$('.minibutton.delete').text("Remove");
-    if (this.model.collaborators.populated) {
+    if (this.model.collaborators.length) {
       this._finishRender();
     } else {
       dc.ui.spinner.show();
-      alert('need to populate collaborators...');
-      // this.model.collaborators.populate({success : this._finishRender});
+      this.model.collaborators.fetch({success : this._finishRender});
     }
     return this;
   },

@@ -6,8 +6,11 @@ dc.model.Document = Backbone.Model.extend({
     attributes.selected = false;
     attributes.selectable = true;
     Backbone.Model.call(this, attributes);
+    var id = this.id;
     this.notes = new dc.model.NoteSet();
-    this.notes.resource = 'documents/' + this.id + '/annotations';
+    this.notes.url = function() {
+      return 'documents/' + id + '/annotations';
+    };
     this.pageEntities = new dc.model.EntitySet();
   },
 
