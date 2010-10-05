@@ -87,7 +87,11 @@ dc.controllers.Searcher = Backbone.Controller.extend({
       url:      this.DOCUMENTS_URL,
       data:     params,
       success:  this._loadSearchResults,
-      error:    Accounts.forceLogout,
+      error:    function(req, textStatus, errorThrown) {
+        if (req.status == 403) {
+          Accounts.forceLogout();
+        }
+      },
       dataType: 'json'
     });
     dc.app.navigation.open('search');
