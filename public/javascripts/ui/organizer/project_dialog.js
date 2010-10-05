@@ -62,9 +62,9 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     var wasOpen = Projects.selected()[0] == this.model;
     if (!this.model.get('owner')) {
       Projects.remove(this.model);
-      this.model.collaborators.destroy(Accounts.current());
+      this.model.collaborators.current().destroy();
     } else {
-      Projects.destroy(this.model);
+      this.model.destroy();
     }
     this.close();
     if (wasOpen && !dc.app.searcher.flags.outstandingSearch) {
@@ -89,7 +89,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   _removeCollaborator : function(e) {
     this.showSpinner();
     var collab = this.model.collaborators.get(parseInt($(e.target).attr('data-id'), 10));
-    this.model.collaborators.destroy(collab, {
+    collab.destroy({
       success : _.bind(function(){ this.model.set({collaborator_count : this.model.get('collaborator_count') - 1}); this.render(true);}, this)
     });
   },

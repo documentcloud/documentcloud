@@ -196,7 +196,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     if (!this.allowedToEdit(docs)) return;
     var message = 'Really delete ' + docs.length + ' ' + Inflector.pluralize('document', docs.length) + '?';
     dc.ui.Dialog.confirm(message, _.bind(function() {
-      _(docs).each(function(doc){ Documents.destroy(doc); });
+      _(docs).each(function(doc){ doc.destroy(); });
       Projects.removeDocuments(docs);
       return true;
     }, this));

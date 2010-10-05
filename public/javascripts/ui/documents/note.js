@@ -53,7 +53,7 @@ dc.ui.Note = Backbone.View.extend({
 
   deleteNote : function() {
     dc.ui.Dialog.confirm('Are you sure you want to delete this note?', _.bind(function() {
-      this.collection.destroy(this.model, {success : _.bind(function() {
+      this.model.destroy({success : _.bind(function() {
         $(this.el).remove();
         this.model.document().decrementNotes();
       }, this)});

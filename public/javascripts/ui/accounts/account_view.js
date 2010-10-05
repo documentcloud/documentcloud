@@ -132,7 +132,7 @@ dc.ui.AccountView = Backbone.View.extend({
     if (dc.app.accounts.isOpen()) dc.app.accounts.close();
     dc.ui.Dialog.confirm('Really delete ' + this.model.fullName() + '?', _.bind(function() {
       $(this.el).remove();
-      Accounts.destroy(this.model);
+      this.model.destroy();
       return true;
     }, this));
   },
