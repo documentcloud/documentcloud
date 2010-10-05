@@ -5,8 +5,8 @@ embed_assets: datauri
 javascripts:
   core:
     - public/javascripts/application.js
-    - public/javascripts/vendor/underscore-1.0.4.js
-    - public/javascripts/vendor/jquery-1.4.2.js
+    - public/javascripts/vendor/underscore-*.js
+    - public/javascripts/vendor/jquery-*.js
     - public/javascripts/vendor/*.js
     - public/javascripts/lib/*.js
     - public/javascripts/model/*.js
