@@ -286,10 +286,15 @@ class Document < ActiveRecord::Base
     "/#{canonical_path(:js)}"
   end
 
+  # Externally used image path, not to be confused with page_image_path()
   def page_image_template
-    "#{slug}-p{page}-{size}.gif"
+    "#{slug}-p{page}-{size}.gif#{cache_buster}"
   end
-
+  
+  def cache_buster
+    "?#{updated_at.to_i}"
+  end
+  
   def page_text_template
     "#{slug}-p{page}.txt"
   end
@@ -309,11 +314,11 @@ class Document < ActiveRecord::Base
   end
 
   def public_thumbnail_url
-    File.join(DC::Store::AssetStore.web_root, page_image_path(1, 'thumbnail'))
+    File.join(DC::Store::AssetStore.web_root, page_image_path(1, 'thumbnail') + cache_buster)
   end
 
   def private_thumbail_url
-    DC::Store::AssetStore.new.authorized_url(page_image_path(1, 'thumbnail'))
+    DC::Store::AssetStore.new.authorized_url(page_image_path(1, 'thumbnail') + cache_buster)
   end
 
   def thumbnail_url
@@ -355,6 +360,7 @@ class Document < ActiveRecord::Base
     "#{DC.server_root}/documents/#{id}/search.json?q={query}"
   end
 
+  # Internally used image path, not to be confused with page_image_template()
   def page_image_path(page_number, size)
     File.join(pages_path, "#{slug}-p#{page_number}-#{size}.gif")
   end

@@ -121,7 +121,6 @@ dc.ui.EditPageTextEditor = dc.Controller.extend({
     }
     this.pageText[pageNumber] = pageText;
     currentDocument.api.setPageText(pageText, pageNumber);
-    console.log(['cachePageText', pageText]);
   },
   
   extractText : function(elems) {
