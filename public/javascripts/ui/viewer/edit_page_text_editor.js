@@ -45,6 +45,7 @@ dc.ui.EditPageTextEditor = dc.Controller.extend({
   },
   
   open : function() {
+    this.originalPageText = {};
     this.pageText = {};
     this.flags.open = true;
     this.render();
@@ -90,34 +91,64 @@ dc.ui.EditPageTextEditor = dc.Controller.extend({
     return currentDocument.api.getPageText(pageNumber);
   },
   
-  setCurrentPageText : function(pageText) {
-    currentDocument.api.setPageText(pageText);
-    currentDocument.api.redraw();
-  },
-  
   confirmEditPageText : function() {
-    dc.ui.Dialog.confirm('Reordering pages takes a few minutes to complete.<br /><br />Are you sure you want to continue?', _.bind(function() {
-      $('input.edit_page_text_confirm_input', this.el).val('Saving...').attr('disabled', true);
-      var pageOrder = this.serializePageOrder();
-      this.viewer.api.reorderPages(pageOrder, {
-        success : function(model_id, resp) {
-          window.opener && window.opener.Documents && window.opener.Documents.get(model_id).set(resp);
-          dc.ui.Dialog.alert('This process will take a few minutes.<br /><br />This window must close while pages are being reordered and the document is being reconstructed.', { 
-            onClose : function() {
-              window.close();
-            }
-          });
-        }
-      });
-      return true;
-    }, this));
+    var modifiedPages = this.getChangedPageTextPages();
+    var documentId = parseInt(this.viewer.api.getId(), 10);
+
+    $('input.edit_page_text_confirm_input', this.el).val('Saving...').attr('disabled', true);
+    
+    $.ajax({
+      url       : '/documents/' + documentId + '/save_page_text',
+      type      : 'POST',
+      data      : { modified_pages : JSON.stringify(modifiedPages) },
+      dataType  : 'json',
+      success   : _.bind(function(resp) {
+        this.viewer.api.resetPageText(true);
+        this.close();
+      }, this)
+    });
   },
   
   cachePageText : function() {
     var pageNumber = this.getPageNumber();
-    var pageText = this.$s.textContents.text();
+    var pageText = Inflector.trim(this.extractText(this.$s.textContents));
+    if (!(pageNumber in this.originalPageText)) {
+      this.originalPageText[pageNumber] = this.getPageText(pageNumber);
+    }
+    if (pageText != this.originalPageText[pageNumber]) {
+      this.$s.header.addClass('active');
+      this.$s.saveButton.removeAttr('disabled');
+    }
     this.pageText[pageNumber] = pageText;
     currentDocument.api.setPageText(pageText, pageNumber);
+    console.log(['cachePageText', pageText]);
+  },
+  
+  extractText : function(elems) {
+    var ret = "", elem;
+
+    _.each(elems, _.bind(function(elem) {
+      if (elem.nodeType == 3 || elem.nodeType == 4) {
+        // Get the text from text nodes and CDATA nodes
+        ret += elem.nodeValue;
+      } else if (elem.nodeType != 8) {
+        // Traverse everything else, except comment nodes
+        ret += this.extractText(elem.childNodes) + '\n';
+      }
+    }, this));
+
+    return ret;
+  },
+  
+  getChangedPageTextPages : function() {
+    var modifiedPages = {};
+    _.each(this.pageText, _.bind(function(pageText, pageNumber) {
+      if (this.originalPageText[pageNumber] != pageText) {
+        modifiedPages[pageNumber] = pageText;
+      }
+    }, this));
+    
+    return modifiedPages;
   },
   
   close : function() {

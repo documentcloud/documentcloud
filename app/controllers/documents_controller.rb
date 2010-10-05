@@ -2,7 +2,7 @@ class DocumentsController < ApplicationController
   layout nil
 
   before_filter(:bouncer, :only => [:show]) if Rails.env.staging?
-  before_filter :login_required, :only => [:update, :destroy, :entities, :dates, :published, :unpublished, :remove_pages]
+  before_filter :login_required, :only => [:update, :destroy, :entities, :dates, :published, :unpublished, :remove_pages, :reorder_pages, :save_page_text]
 
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
@@ -75,6 +75,12 @@ class DocumentsController < ApplicationController
   def reorder_pages
     return not_found unless doc = current_document(true)
     doc.reorder_pages(params[:page_order])
+    json doc
+  end
+  
+  def save_page_text
+    return not_found unless doc = current_document(true)
+    doc.save_page_text(params[:modified_pages])
     json doc
   end
 

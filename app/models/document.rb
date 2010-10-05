@@ -149,17 +149,14 @@ class Document < ActiveRecord::Base
       first(:order => 'random()')
     end
   end
-
-  # Publish all documents with a `publish_at` timestamp that is past due.
-  def self.publish_due_documents
-    Document.restricted.due.find_each {|doc| doc.set_access PUBLIC }
+  
+  def upload_text_assets(pages)
+    asset_store.save_full_text(self, access)
+    pages.each do |page|
+      asset_store.save_page_text(self, page.page_number, page.text, access)
+    end
   end
-
-  # Ensure that titles are stripped of trailing whitespace.
-  def title=(title="Untitled Document")
-    self[:title] = title.strip
-  end
-
+  
   # Update a document, with S3 permission fixing, cache expiry, and access control.
   def secure_update(attrs, account)
     if !account.allowed_to_edit?(self)
@@ -403,44 +400,23 @@ class Document < ActiveRecord::Base
     }.to_json})
   end
   
-  def save_page_text
-    page_number = params[:page_number]
-    page_text = params[:page_text]
-    
-    # Update page offsets for text
-    offset = 0
-    page_order.each_with_index do |p, i|
-      page = Page.find_by_document_id_and_page_number(document.id, p)
-      page_length = (page.end_offset - page.start_offset)
-      page.end_offset = offset + page_length
-      page.start_offset = offset
-      offset += page_length
-      page.page_number = (i+1) + document.page_count
-      page.save
-    end
-    pages = Page.find_all_by_document_id(document.id)
-    pages.each do |page|
-      page.page_number = page.page_number - document.page_count
+  def save_page_text(modified_pages)
+    modified_pages = JSON.parse(modified_pages)
+    modified_pages.each_pair do |page_number, page_text|
+      page = Page.find_by_document_id_and_page_number(id, page_number)
+      page.text = page_text
       page.save
     end
     
-    # Update annotations
-    annotations = Annotation.find_all_by_document_id(document.id)
-    annotations.each do |annotation|
-      annotation.page_number = page_order.index(annotation.page_number)+1
-      annotation.save
-    end
-    
-    document.access = access
-    text = Page.find_all_by_document_id(document.id).inject('') {|m, p| m + ' ' + p.text }
-    document.full_text.update_attributes({:text => text})
-    Page.refresh_page_map(document)
-    EntityDate.refresh(document)
-    document.save!
-    pages = document.reload.pages
+    text = Page.find_all_by_document_id(id).inject('') {|m, p| m + ' ' + p.text }
+    self.full_text.update_attributes({:text => text})
+    Page.refresh_page_map(self)
+    EntityDate.refresh(self)
+    self.save!
+    pages = self.reload.pages
     Sunspot.index pages
     # DC::Import::EntityExtractor.new.extract(document)
-    upload_text_assets(pages)
+    self.upload_text_assets(pages)
   end
   
   def remove_pages(pages)

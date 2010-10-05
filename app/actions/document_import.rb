@@ -82,7 +82,7 @@ class DocumentImport < CloudCrowd::Action
     pages = document.reload.pages
     Sunspot.index pages
     DC::Import::EntityExtractor.new.extract(document)
-    upload_text_assets(pages)
+    document.upload_text_assets(pages)
     document.id
   end
 
@@ -98,15 +98,6 @@ class DocumentImport < CloudCrowd::Action
       "(#{document.organization_id}, #{document.account_id}, #{document.id}, #{access}, #{page[:number]}, '#{PGconn.escape(page[:text])}')"
     end
     Page.connection.execute "insert into pages (organization_id, account_id, document_id, access, page_number, text) values #{rows.join(",\n")};"
-  end
-
-  # Spin up a deferred thread to upload the assets to S3 while the worker goes
-  # returns the document to perform more work.
-  def upload_text_assets(pages)
-    asset_store.save_full_text(document, access)
-    pages.each do |page|
-      asset_store.save_page_text(document, page.page_number, page.text, access)
-    end
   end
 
   # Our heuristic for this will be ... 100 bytes of text / page.
