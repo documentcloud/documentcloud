@@ -13,7 +13,7 @@ class Document < ActiveRecord::Base
   DISPLAY_DATE_FORMAT = "%b %d, %Y"
   DISPLAY_DATETIME_FORMAT = "%I:%M %p – %a %b %d, %Y"
 
-  DEFAULT_CANONICAL_OPTIONS = {:sections => true, :annotations => true}
+  DEFAULT_CANONICAL_OPTIONS = {:sections => true, :annotations => true, :contributor => true}
 
   # If the Document.pending count is greater than this number, send a warning.
   WARN_QUEUE_LENGTH = 25
@@ -454,6 +454,10 @@ class Document < ActiveRecord::Base
     doc['sections']           = sections.map(&:canonical) if options[:sections]
     doc['annotations']        = annotations.accessible(options[:account]).map(&:canonical) if options[:annotations]
     doc['canonical_url']      = canonical_url(:html)
+    if options[:contributor]
+      doc['contributor']      = account_name
+      doc['contributor_organization'] = organization_name
+    end
     doc
   end
 
