@@ -211,8 +211,11 @@
         var val = attrs[attr];
         if (val === '') val = null;
         if (!_.isEqual(now[attr], val)) {
-          if (!options.silent) this._changed = true;
           now[attr] = val;
+          if (!options.silent) {
+            this._changed = true;
+            this.trigger('change:' + attr);
+          }
         }
       }
       if (!options.silent && this._changed) this.changed();

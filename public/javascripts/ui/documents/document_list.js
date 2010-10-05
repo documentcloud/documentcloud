@@ -34,13 +34,17 @@ dc.ui.DocumentList = Backbone.View.extend({
   },
 
   _onSelect : function(els) {
-    if (!dc.app.hotkeys.shift && !dc.app.hotkeys.command) {
-      Documents.deselectAll();
-    }
+    var active = {};
     _.each(els, function(icon) {
-      Documents.get($(icon).attr('data-id')).set({selected : true});
+      var id = $(icon).attr('data-id');
+      active[id] = true;
+      Documents.get(id).set({selected : true});
     });
-    if (!els.length) $(this.el).trigger('click');
+    if (!dc.app.hotkeys.shift && !dc.app.hotkeys.command) {
+      _.each(Documents.selected(), function(doc) {
+        if (!active[doc.id]) doc.set({selected : false});
+      });
+    }
   },
 
   _startDeselect : function(e) {

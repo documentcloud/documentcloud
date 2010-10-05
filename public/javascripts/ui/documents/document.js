@@ -34,9 +34,10 @@ dc.ui.Document = Backbone.View.extend({
     this.el.id = 'document_' + this.model.id;
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
-      '_renderPages', 'viewDocuments', 'viewPublishedDocuments', 'openDialog',
-      'openEmbed', 'viewEntities', 'deleteDocuments');
+      '_renderPages', '_setSelected', 'viewDocuments', 'viewPublishedDocuments',
+      'openDialog', 'openEmbed', 'viewEntities', 'deleteDocuments');
     this.model.bind('change', this._onDocumentChange);
+    this.model.bind('change:selected', this._setSelected);
     this.model.notes.bind('add', this._addNote);
     this.model.notes.bind('refresh', this._renderNotes);
     this.model.pageEntities.bind('refresh', this._renderPages);
@@ -232,7 +233,7 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   _onDocumentChange : function() {
-    if (this.model.hasChanged('selected'))         return this._setSelected();
+    if (this.model.hasChanged('selected')) return;
     if (this.model.hasChanged('annotation_count')) return this.$('span.note_count').text(this.model.get('annotation_count'));
     this.render();
   },
