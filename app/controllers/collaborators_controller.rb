@@ -8,7 +8,7 @@ class CollaboratorsController < ApplicationController
     account = Account.lookup(pick(:model, :email)[:email])
     return json(nil, 404) if !account || account.id == current_account.id
     current_project.add_collaborator account
-    json account.to_json(:include_organization => true)
+    json :model => account.to_json(:include_organization => true)
   end
 
   def destroy

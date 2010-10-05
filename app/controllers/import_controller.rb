@@ -12,7 +12,7 @@ class ImportController < ApplicationController
     document = Document.upload(params, current_account, current_organization)
     project_id = params[:project_id]
     Project.accessible(current_account).find(project_id).add_document(document) if project_id
-    json :document => document
+    json :model => document
   end
 
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.

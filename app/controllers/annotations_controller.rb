@@ -16,7 +16,7 @@ class AnnotationsController < ApplicationController
     doc = current_document
     return forbidden unless note_attrs[:access].to_i == PRIVATE || current_account.allowed_to_edit?(doc)
     expire_page doc.canonical_cache_path if doc.cacheable?
-    json doc.annotations.create(
+    json :model => doc.annotations.create(
       note_attrs.merge(:account_id => current_account.id, :organization_id => current_organization.id)
     )
   end
@@ -30,7 +30,7 @@ class AnnotationsController < ApplicationController
     end
     anno.update_attributes(pick(:model, :title, :content))
     expire_page current_document.canonical_cache_path if current_document.cacheable?
-    json anno
+    json :model => anno
   end
 
   def destroy

@@ -37,13 +37,12 @@ class AccountsController < ApplicationController
 
   # Creating a new account creates a pending account, with a security key
   # instead of a password.
-  # TODO: We can't sent email from EC2 without it getting flagged as spam.
   def create
     return forbidden unless current_account.admin?
     attributes = pick(:model, :first_name, :last_name, :email, :role)
     account = current_organization.accounts.create(attributes)
     account.send_login_instructions(current_account)
-    json account
+    json :model => account
   end
 
   # Journalists are authorized to update any account in the organization.
@@ -60,7 +59,7 @@ class AccountsController < ApplicationController
       account.password = password
       account.save
     end
-    json account
+    json :model => account
   end
 
   # Resend a welcome email for a pending account.

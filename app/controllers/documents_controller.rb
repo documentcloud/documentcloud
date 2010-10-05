@@ -52,9 +52,9 @@ class DocumentsController < ApplicationController
     return not_found unless doc = current_document(true)
     attrs = pick(:model, :access, :title, :description, :source, :related_article, :remote_url)
     success = doc.secure_update attrs, current_account
-    return json doc, 403 unless success
+    return json({:model => doc}, 403) unless success
     expire_page doc.canonical_cache_path if doc.cacheable?
-    json doc
+    json :model => doc
   end
 
   def destroy
