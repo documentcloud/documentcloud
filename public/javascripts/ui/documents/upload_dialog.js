@@ -135,8 +135,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     if (response.bad_request) {
       return this.error("Upload failed.");
     } else {
-      var doc = new top.dc.model.Document(response['document']);
-      Documents.add(doc);
+      Documents.add(new dc.model.Document(response.model));
       if (this._project) Projects.incrementCountById(this._project.id);
     }
     this._tiles[queueId].hide();
