@@ -3,15 +3,15 @@ dc.ui.Help = Backbone.View.extend({
 
   PAGES : [
     {url : '',                 title : 'Introduction'},
-    {url : 'searching',        title : 'Searching Documents'},
+    {url : 'tour',             title : 'Guided Tour'},
     {url : 'accounts',         title : 'Adding Accounts'},
+    {url : 'searching',        title : 'Searching Documents'},
     {url : 'uploading',        title : 'Uploading Documents'},
+    {url : 'troubleshooting',  title : 'Troubleshooting Failed Uploads'},
     {url : 'notes',            title : 'Editing Notes and Sections'},
-    {url : 'publishing',       title : 'Publishing &amp; Embedding'},
     {url : 'collaboration',    title : 'Collaboration'},
     {url : 'privacy',          title : 'Privacy'},
-    {url : 'troubleshooting',  title : 'Troubleshooting Failed Uploads'},
-    {url : 'tour',             title : 'Guided Tour'}
+    {url : 'publishing',       title : 'Publishing &amp; Embedding'}
   ],
 
   callbacks : {
