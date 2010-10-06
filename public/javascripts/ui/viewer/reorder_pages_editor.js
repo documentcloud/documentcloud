@@ -105,17 +105,7 @@ dc.ui.ReorderPagesEditor = dc.Controller.extend({
   confirmReorderPages : function() {
     dc.ui.Dialog.confirm('Reordering pages takes a few minutes to complete.<br /><br />Are you sure you want to continue?', _.bind(function() {
       $('input.reorder_pages_confirm_input', this.el).val('Reordering...').attr('disabled', true);
-      var pageOrder = this.serializePageOrder();
-      this.viewer.api.reorderPages(pageOrder, {
-        success : function(model_id, resp) {
-          window.opener && window.opener.Documents && window.opener.Documents.get(model_id).set(resp);
-          dc.ui.Dialog.alert('This process will take a few minutes.<br /><br />This window must close while pages are being reordered and the document is being reconstructed.', { 
-            onClose : function() {
-              window.close();
-            }
-          });
-        }
-      });
+      this.save();
       return true;
     }, this));
   },
@@ -128,6 +118,26 @@ dc.ui.ReorderPagesEditor = dc.Controller.extend({
     });
     
     return pageOrder;
+  },
+  
+  save : function() {
+    var pageOrder = this.serializePageOrder();
+    var modelId = this.viewer.api.getModelId();
+
+    $.ajax({
+      url       : '/documents/' + modelId + '/reorder_pages',
+      type      : 'POST',
+      data      : { page_order : pageOrder },
+      dataType  : 'json',
+      success   : function(resp) { 
+        window.opener && window.opener.Documents && window.opener.Documents.get(modelId).set(resp);
+        dc.ui.Dialog.alert('This process will take a few minutes.<br /><br />This window must close while pages are being reordered and the document is being reconstructed.', { 
+          onClose : function() {
+            window.close();
+          }
+        });
+      }
+    });
   },
   
   close : function() {

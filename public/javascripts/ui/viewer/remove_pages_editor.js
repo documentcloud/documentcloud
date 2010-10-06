@@ -136,18 +136,28 @@ dc.ui.RemovePagesEditor = dc.Controller.extend({
     var pageCount = this.removePages.length;
     dc.ui.Dialog.confirm('Removing pages takes a few minutes to complete.<br /><br />Are you sure you want to remove ' + pageCount + Inflector.pluralize(' page', pageCount) + '?', _.bind(function() {
       $('input.remove_pages_confirm_input', this.el).val('Removing...').attr('disabled', true);
-      this.viewer.api.removePages(this.removePages, {
-        success : function(model_id, resp) {
-          window.opener && window.opener.Documents && window.opener.Documents.get(model_id).set(resp);
-          dc.ui.Dialog.alert('This process will take a few minutes.<br /><br />This window must close while pages are being removed and the document is being reconstructed.', { 
-            onClose : function() {
-              window.close();
-            }
-          });
-        }
-      });
+      this.save();
       return true;
     }, this));
+  },
+  
+  save : function() {
+    var modelId = this.viewer.api.getModelId();
+
+    $.ajax({
+      url       : '/documents/' + modelId + '/remove_pages',
+      type      : 'POST',
+      data      : { pages : this.removePages },
+      dataType  : 'json',
+      success   : function(resp) { 
+        window.opener && window.opener.Documents && window.opener.Documents.get(modelId).set(resp);
+        dc.ui.Dialog.alert('This process will take a few minutes.<br /><br />This window must close while pages are being removed and the document is being reconstructed.', { 
+          onClose : function() {
+            window.close();
+          }
+        });
+      }
+    });
   },
   
   close : function() {
