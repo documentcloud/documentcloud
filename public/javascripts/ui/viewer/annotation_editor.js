@@ -141,9 +141,10 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
 
   createAnnotation : function(anno) {
     var params = this.annotationToParams(anno);
-    $.ajax({url : this._baseURL, type : 'POST', data : params, dataType : 'json', success : function(resp) {
+    $.ajax({url : this._baseURL, type : 'POST', data : params, dataType : 'json', success : _.bind(function(resp) {
       anno.server_id = resp.id;
-    }});
+      this._adjustNoteCount(1);
+    }, this)});
   },
 
   updateAnnotation : function(anno) {
@@ -155,7 +156,19 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
   deleteAnnotation : function(anno) {
     if (!anno.server_id) return;
     var url = this._baseURL + '/' + anno.server_id;
-    $.ajax({url : url, type : 'POST', data : {_method : 'delete'}, dataType : 'json'});
+    $.ajax({url : url, type : 'POST', data : {_method : 'delete'}, dataType : 'json', success : _.bind(function() {
+      this._adjustNoteCount(-1);
+    }, this)});
+  },
+
+  _adjustNoteCount : function(num) {
+    try {
+      var id = parseInt(currentDocument.api.getId(), 10);
+      var doc = window.opener.Documents.get(id);
+      if (doc) doc.set({annotation_count : doc.get('annotation_count') + num});
+    } catch (e) {
+      // It's ok -- we don't have access to the parent window.
+    }
   }
 
 });

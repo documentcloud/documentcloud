@@ -14,9 +14,15 @@ dc.model.Document = Backbone.Model.extend({
     this.pageEntities = new dc.model.EntitySet();
   },
 
+  // If this document does not belong to a collection, it still has a URL.
+  url : function() {
+    if (!this.collection) return '/documents/' + this.id;
+    return Backbone.Model.prototype.url.call(this);
+  },
+
   // Generate the canonical URL for opening this document, over SSL if we're
   // currently secured.
-  url : function() {
+  viewerUrl : function() {
     var base = this.get('document_viewer_url').replace(/^http:/, '');
     return window.location.protocol + base;
   },
@@ -33,7 +39,7 @@ dc.model.Document = Backbone.Model.extend({
 
   openViewer : function() {
     if (this.checkBusy()) return;
-    window.open(this.url());
+    window.open(this.viewerUrl());
   },
 
   openPublishedViewer : function() {

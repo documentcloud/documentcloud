@@ -261,7 +261,7 @@ dc.ui.Document = Backbone.View.extend({
     var id      = el.attr('data-id');
     var page    = el.attr('data-page');
     var offset  = el.attr('data-offset');
-    window.open(this.model.url() + "?entity=" + id + '&page=' + page + '&offset=' + offset);
+    window.open(this.model.viewerUrl() + "?entity=" + id + '&page=' + page + '&offset=' + offset);
   },
 
   // When the document is dropped onto a project, add it to the project.

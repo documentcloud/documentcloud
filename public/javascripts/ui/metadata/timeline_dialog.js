@@ -128,7 +128,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     if (!item) return;
     var unixTime = item.datapoint[0] / 1000;
     var doc = Documents.get(item.series.docId);
-    window.open(doc.url() + "?date=" + unixTime);
+    window.open(doc.viewerUrl() + "?date=" + unixTime);
   },
 
   // Allow selection of date ranges to zoom in.

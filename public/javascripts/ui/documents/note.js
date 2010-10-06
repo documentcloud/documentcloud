@@ -29,7 +29,7 @@ dc.ui.Note = Backbone.View.extend({
 
   viewNoteInDocument : function() {
     var suffix = '#document/p' + this.model.get('page');
-    window.open(this.model.document().url() + suffix);
+    window.open(this.model.document().viewerUrl() + suffix);
   },
 
   editNote : function() {
