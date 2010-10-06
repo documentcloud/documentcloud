@@ -245,7 +245,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
   // When one of our models has changed, if it has changed its access level
   // to pending, start polling.
-  _onModelChanged : function(e, doc) {
+  _onModelChanged : function(doc) {
     if (doc.hasChanged('access') && doc.isPending()) this._checkForPending();
   },
 

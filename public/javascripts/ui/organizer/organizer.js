@@ -42,9 +42,7 @@ dc.ui.Organizer = Backbone.View.extend({
 
   renderAll : function() {
     if (Projects.isEmpty()) this.setMode('no', 'projects');
-    Projects.each(_.bind(function(model) {
-      this._addSubView(null, model);
-    }, this));
+    Projects.each(this._addSubView);
   },
 
   // Refresh the facets with a new batch.
@@ -194,7 +192,7 @@ dc.ui.Organizer = Backbone.View.extend({
     return false;
   },
 
-  _addSubView : function(e, model) {
+  _addSubView : function(model) {
     this.setMode('has', 'projects');
     var view = new dc.ui.Project({model : model}).render();
     this.subViews.push(view);
@@ -209,7 +207,7 @@ dc.ui.Organizer = Backbone.View.extend({
     dc.app.scroller.checkLater();
   },
 
-  _removeSubView : function(e, model) {
+  _removeSubView : function(model) {
     this.subViews = _.without(this.subViews, model.view);
     $(model.view.el).remove();
     dc.app.scroller.checkLater();

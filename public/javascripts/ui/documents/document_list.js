@@ -60,12 +60,12 @@ dc.ui.DocumentList = Backbone.View.extend({
     Documents.deselectAll();
   },
 
-  _addDocument : function(e, doc) {
+  _addDocument : function(doc) {
     var view = new dc.ui.Document({model : doc});
     $(this.el).prepend(view.render().el);
   },
 
-  _removeDocument : function(e, doc) {
+  _removeDocument : function(doc) {
     $('#document_' + doc.id).remove();
   },
 
