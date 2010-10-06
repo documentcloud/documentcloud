@@ -29,9 +29,11 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this.list = this.$('#account_list_content');
     this.setCallbacks();
     dc.ui.spinner.show();
-    Accounts.fetch({success : function() {
-      dc.app.workspace.accountBadge.observe(Accounts.current());
-    }});
+    if (Accounts.length <= 1) {
+      Accounts.fetch({success : function() {
+        dc.app.workspace.accountBadge.observe(Accounts.current());
+      }});
+    }
     return this;
   },
 

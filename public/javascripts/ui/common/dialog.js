@@ -26,7 +26,7 @@ dc.ui.Dialog = Backbone.View.extend({
     opts = opts || {};
     if (this.options.mode) this.setMode(this.options.mode, 'dialog');
     if (this.options.draggable) this.setMode('is', 'draggable');
-    _.bindAll(this, 'close');
+    _.bindAll(this, 'close', '_maybeConfirm');
     $(this.el).html(JST['common/dialog'](_.extend({}, this.options, opts)));
     var cel = this.contentEl = this.$('.content');
     this._controls = this.$('.controls');
@@ -37,7 +37,7 @@ dc.ui.Dialog = Backbone.View.extend({
     $(document.body).append(this.el);
     this.center();
     this.setCallbacks();
-    if (this._returnCloses()) $(document.body).bind('keypress', _.bind(this._maybeConfirm, this));
+    if (this._returnCloses()) $(document.body).bind('keypress', this._maybeConfirm);
     if (cel[0]) _.defer(function(){ cel.focus(); });
     if (!opts.noOverlay) $(document.body).addClass('overlay');
     return this;
