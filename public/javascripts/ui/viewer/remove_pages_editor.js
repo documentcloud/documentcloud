@@ -69,7 +69,7 @@ dc.ui.RemovePagesEditor = dc.Controller.extend({
       var $this = $(e.target);
       var $page = $this.siblings('.DV-page,.DV-thumbnail-page').eq(0); 
       var imageSrc = $('.DV-pageImage,.DV-thumbnail-image img', $page).eq(0).attr('src');
-      var pageNumber = parseInt(imageSrc.match(/-p(\d+)-\w+.\w+$/)[1], 10);
+      var pageNumber = parseInt(imageSrc.match(/-p(\d+)-\w+.\w+\??\w*?$/)[1], 10);
       if (_.contains(this.removePages, pageNumber)) {
         this.removePageNumberFromRemoveSet(pageNumber);
       } else {
