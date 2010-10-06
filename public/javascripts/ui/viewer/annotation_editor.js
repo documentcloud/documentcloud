@@ -136,7 +136,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       access      : anno.access == 'private' ? 1 : 4
     };
     if (anno.location) params.location = anno.location.image;
-    return _.extend({ json : JSON.stringify(params)}, extra || {});
+    return _.extend({ model : JSON.stringify(params)}, extra || {});
   },
 
   createAnnotation : function(anno) {
