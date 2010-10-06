@@ -1,4 +1,4 @@
-dc.ui.RemovePagesEditor = dc.Controller.extend({
+dc.ui.RemovePagesEditor = Backbone.View.extend({
   
   id : 'remove_pages_container',
   
@@ -12,7 +12,7 @@ dc.ui.RemovePagesEditor = dc.Controller.extend({
   },
   
   constructor : function(opts) {
-    this.base(opts);
+    Backbone.View.call(this, opts);
     _.bindAll(this, 'confirmRemovePages', 'removePageFromRemoveSet');
   },
 
@@ -76,7 +76,8 @@ dc.ui.RemovePagesEditor = dc.Controller.extend({
         this.addPageToRemoveSet(pageNumber);
       }
     }, this));
-    this.base(callbacks);
+    
+    Backbone.View.prototype.setCallbacks.call(this, callbacks);
   },
   
   addPageToRemoveSet : function(pageNumber) {
@@ -161,13 +162,15 @@ dc.ui.RemovePagesEditor = dc.Controller.extend({
   },
   
   close : function() {
-    this.flags.open = false;
-    this.$s.guide.fadeOut('fast');
-    this.$s.guideButton.removeClass('open');
-    this.$s.pages.removeClass('remove_pages_viewer');
-    $(this.el).remove();
-    this.viewer.api.leaveRemovePagesMode();
-    this.base();
+    if (this.flags.open) {
+      $('.DV-currentPage-disabled', this.$s.pages).addClass('DV-currentPage').removeClass('DV-currentPage-disabled');
+      this.flags.open = false;
+      this.$s.guide.fadeOut('fast');
+      this.$s.guideButton.removeClass('open');
+      this.$s.pages.removeClass('remove_pages_viewer');
+      $(this.el).remove();
+      this.viewer.api.leaveRemovePagesMode();
+    }
   }
 
 });

@@ -1,4 +1,4 @@
-dc.ui.EditPageTextEditor = dc.Controller.extend({
+dc.ui.EditPageTextEditor = Backbone.View.extend({
   
   id : 'edit_page_text_container',
   
@@ -14,7 +14,7 @@ dc.ui.EditPageTextEditor = dc.Controller.extend({
   pageText: {},
   
   constructor : function(opts) {
-    this.base(opts);
+    Backbone.View.call(this, opts);
     _.bindAll(this, 'confirmEditPageText', 'cachePageText');
   },
 
@@ -78,7 +78,7 @@ dc.ui.EditPageTextEditor = dc.Controller.extend({
     this.$s.textContents.bind('keyup', this.cachePageText);
     this.$s.textContents.bind('change', this.cachePageText);
     this.$s.textContents.bind('blur', this.cachePageText);
-    this.base();
+    Backbone.View.prototype.setCallbacks.call(this);
   },
   
   getPageNumber : function() {
@@ -93,7 +93,7 @@ dc.ui.EditPageTextEditor = dc.Controller.extend({
   
   confirmEditPageText : function() {
     var modifiedPages = this.getChangedPageTextPages();
-    var documentId = parseInt(this.viewer.api.getId(), 10);
+    var documentId = this.viewer.api.getModelId();
 
     $('input.edit_page_text_confirm_input', this.el).val('Saving...').attr('disabled', true);
     
@@ -160,7 +160,6 @@ dc.ui.EditPageTextEditor = dc.Controller.extend({
       this.$s.textContents.removeClass('DV-editing');
       $(this.el).remove();
       this.viewer.api.leaveEditPageTextMode();
-      this.base();
     }
   }
 

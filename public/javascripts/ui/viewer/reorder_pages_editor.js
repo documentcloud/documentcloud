@@ -1,4 +1,4 @@
-dc.ui.ReorderPagesEditor = dc.Controller.extend({
+dc.ui.ReorderPagesEditor = Backbone.View.extend({
   
   id : 'reorder_pages_container',
   
@@ -11,7 +11,7 @@ dc.ui.ReorderPagesEditor = dc.Controller.extend({
   },
   
   constructor : function(opts) {
-    this.base(opts);
+    Backbone.View.call(this, opts);
     _.bindAll(this, 'confirmReorderPages', 'postOpen');
   },
 
@@ -69,37 +69,32 @@ dc.ui.ReorderPagesEditor = dc.Controller.extend({
     }
     this.$s.pages.addClass('reorder_pages_viewer');
     this.$s.container = $(this.el);
-    _.defer(_.bind(this.setCallbacks, this));
+    this.setCallbacks();
     $('.DV-currentPage', this.$s.thumbnails).removeClass('DV-currentPage')
                                             .addClass('DV-currentPage-disabled');
   },
   
   setCallbacks : function(callbacks) {
-    var self = this;
     var $thumbnails = this.$s.thumbnails;
     
-    this.findThumbnailsInterval = setInterval(function() {
-      if ($('.DV-thumbnail', $thumbnails).length) {
-        clearInterval(self.findThumbnailsInterval);
-        $('.DV-thumbnail', $thumbnails).each(function(i) {
-          $(this).data('pageNumber', i+1);
-        });
-        $('.DV-currentPage', $thumbnails).removeClass('DV-currentPage').addClass('DV-currentPage-disabled');
-        jQuery('.DV-thumbnails').sortable({
-          containment: '.DV-thumbnails',
-          cursor: 'move',
-          scrollSensitivity: 80,
-          scrollSpeed: 15,
-          tolerance: 'pointer',
-          zIndex: 1,
-          stop: function(e, ui) {
-            self.$s.saveButton.removeAttr('disabled');
-            self.$s.header.addClass('active');
-          }
-        });
-      }
-    }, 250);
-    this.base(callbacks);
+    $('.DV-thumbnail', $thumbnails).each(function(i) {
+      $(this).data('pageNumber', i+1);
+    });
+    $('.DV-currentPage', $thumbnails).removeClass('DV-currentPage').addClass('DV-currentPage-disabled');
+    jQuery('.DV-thumbnails').sortable({
+      containment: '.DV-thumbnails',
+      cursor: 'move',
+      scrollSensitivity: 80,
+      scrollSpeed: 15,
+      tolerance: 'pointer',
+      zIndex: 1,
+      stop: _.bind(function(e, ui) {
+        this.$s.saveButton.removeAttr('disabled');
+        this.$s.header.addClass('active');
+      }, this)
+    });
+    
+    Backbone.View.prototype.setCallbacks.call(this, callbacks);
   },
   
   confirmReorderPages : function() {
@@ -141,15 +136,16 @@ dc.ui.ReorderPagesEditor = dc.Controller.extend({
   },
   
   close : function() {
-    $('.DV-currentPage-disabled', this.$s.page).addClass('DV-currentPage').removeClass('DV-currentPage-disabled');
-    this.flags.open = false;
-    jQuery('.DV-thumbnails').sortable('destroy');
-    this.$s.guide.fadeOut('fast');
-    this.$s.guideButton.removeClass('open');
-    this.$s.pages.removeClass('reorder_pages_viewer');
-    $(this.el).remove();
-    this.viewer.api.leaveReorderPagesMode();
-    this.base();
+    if (this.flags.open) {
+      $('.DV-currentPage-disabled', this.$s.page).addClass('DV-currentPage').removeClass('DV-currentPage-disabled');
+      this.flags.open = false;
+      jQuery('.DV-thumbnails').sortable('destroy');
+      this.$s.guide.fadeOut('fast');
+      this.$s.guideButton.removeClass('open');
+      this.$s.pages.removeClass('reorder_pages_viewer');
+      $(this.el).remove();
+      this.viewer.api.leaveReorderPagesMode();
+    }
   }
 
 });
