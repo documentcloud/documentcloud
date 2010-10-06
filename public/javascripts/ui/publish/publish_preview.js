@@ -27,7 +27,6 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     this.model = doc;
     this.currentStep = 1;
     dc.ui.Dialog.call(this, {mode : 'custom', title : this.displayTitle()});
-    this.setMode('embed', 'dialog');
     this.render();
   },
 
@@ -42,6 +41,7 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     this._viewerSizeEl  = this.$('select[name=viewer_size]');
     this._sidebarEl     = this.$('input[name=sidebar]');
     if (dc.app.preferences.get('embed_options')) this._loadPreferences();
+    this.setMode('embed', 'dialog');
     this.update();
     this.setStep();
     this.center();
