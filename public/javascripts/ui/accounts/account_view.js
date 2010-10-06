@@ -143,7 +143,6 @@ dc.ui.AccountView = Backbone.View.extend({
     dc.ui.spinner.hide();
     this.setMode('display', 'view');
     model.set(resp.model);
-    model.changed();
     if (newAccount) dc.ui.notifier.show({
       text      : 'Signup sent to ' + model.get('email'),
       duration  : 5000,
