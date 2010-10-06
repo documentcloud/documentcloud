@@ -80,9 +80,15 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     var email = this.$('#collaborator_email').val();
     if (!email) return this.error('Please enter an email address.');
     this.showSpinner();
-    this.model.collaborators.create(new dc.model.Account({email : email}), null, {
-      success : _.bind(function(acc, resp){ acc.set(resp); this.model.collaborators.sort(); this.model.set({collaborator_count : this.model.get('collaborator_count') + 1}); this.render(true);}, this),
-      error   : _.bind(function(acc){ this.hideSpinner(); this.model.collaborators.remove(acc); this.error('No DocumentCloud account was found with that email.'); }, this)
+    this.model.collaborators.create({email : email}, {
+      success : _.bind(function(acc, resp) {
+        this.model.set({collaborator_count : this.model.get('collaborator_count') + 1});
+        this.render(true);
+      }, this),
+      error   : _.bind(function(acc) {
+        this.hideSpinner();
+        this.error('No DocumentCloud account was found with that email.');
+      }, this)
     });
   },
 
