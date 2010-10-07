@@ -46,9 +46,8 @@ dc.ui.Document = Backbone.View.extend({
   render : function() {
     var me = this;
     var title = this.model.get('title');
-    var data = _.clone(this.model.attributes());
-    data = _.extend(data, {
-      created_at    : data.created_at.replace(/\s/g, '&nbsp;'),
+    var data = _.extend(this.model.attributes(), {
+      created_at    : this.model.get('created_at').replace(/\s/g, '&nbsp;'),
       icon          : this._iconAttributes(),
       thumbnail_url : this._thumbnailURL()
     });
