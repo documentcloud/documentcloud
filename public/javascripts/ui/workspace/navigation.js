@@ -58,4 +58,4 @@ dc.ui.Navigation = Backbone.View.extend({
 
 });
 
-_.extend(dc.ui.Navigation.prototype, Backbone.Bindable);
+_.extend(dc.ui.Navigation.prototype, Backbone.Events);

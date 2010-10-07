@@ -37,10 +37,11 @@ dc.model.Selectable = {
     if (this.selectedCount > 0 && model.get('selected')) this.selectedCount -= 1;
   },
 
-  // We override "_onModelChange" to fire selection changed events when models
+  // We override "_onModelEvent" to fire selection changed events when models
   // change their selected state.
-  _onModelChange : function(model) {
-    Backbone.Collection.prototype._onModelChange.call(this, model);
+  _onModelEvent : function(ev, model, error) {
+    Backbone.Collection.prototype._onModelEvent.call(this, ev, model, error);
+    if (ev != 'changed') return;
     if (model.hasChanged('selected')) {
       var selected = model.get('selected');
       if (selected && this.selectedCount == 0) {
