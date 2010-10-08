@@ -40,6 +40,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   _renderDocumentTiles : function() {
+    console.log(['renderTiles', this.collection]);
     var tiles = this._tiles;
     this.collection.each(function(model) {
       var view = new dc.ui.UploadDocumentTile({model : model});
@@ -64,7 +65,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       width         : this.button.outerWidth(true),
       height        : this.button.outerHeight(true),
       scriptData    : {},
-      onSelect      : this._onSelect,
+      onSelect      : _.bind(this._onSelect, this),
       onSelectOnce  : this._onSelectOnce,
       onCancel      : this._onCancel,
       onStarted     : this._onStarted,
@@ -98,7 +99,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   _onSelectOnce : function(e, data) {
-    dc.ui.spinner.hide();
+    console.log(['_onSelectOnce', e, data]);
     if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
       this.close();
       return dc.ui.Dialog.alert("You can only upload documents less than 200MB in size. Please <a href=\"/help/troubleshooting\">optimize your document</a> before continuing.");
@@ -135,6 +136,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Show the progress bar when the uploads start.
   _onOpen : function(e, queueId, fileObj) {
+    console.log(['_onOpen', e, queueId, fileObj]);
     this._tiles[queueId].startProgress();
   },
 
@@ -208,7 +210,9 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
   },
 
   render : function() {
+    console.log(['render tile 1', this.model]);
     $(this.el).html(JST['document/upload_document_tile']({model : this.model}));
+    console.log(['render tile 2', this.model]);
     this._title    = this.$('input[name=title]');
     this._progress = this.$('.progress_bar');
     return this;

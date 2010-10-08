@@ -38,5 +38,6 @@ stylesheets:
     - public/stylesheets/ui/ui.css
     - public/stylesheets/ui/icons.css
     - public/stylesheets/pages/viewer_editing.css
+    - public/stylesheets/ui/upload_documents.css
   ie_only:
     - public/stylesheets/common/ie.css

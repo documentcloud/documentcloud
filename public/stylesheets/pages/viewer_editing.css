@@ -423,6 +423,11 @@
     margin: 20px 24px 0 0;
   }
   
+  #add_pages_container #new_documentUploader {
+      position: absolute;
+      right: 24px;
+      top: 20px;
+    }
 .DV-pages.add_pages_viewer {
   margin-top: 64px;
 }

@@ -37,7 +37,7 @@
     <select name="access" class="document_access" id="document_upload_access_<%= model.id %>">
       <option value="public">Public Access</option>
       <option value="private" selected="true">Private Access</option>
-      <option value="organization">Private to <%= dc.account.organization.name %></option>
+      <option value="organization">Private to <%= dc.app.organization && dc.app.organization.name %></option>
     </select>
   </div>
   
