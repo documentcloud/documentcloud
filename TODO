@@ -9,6 +9,9 @@ ARON'S LIST:
 
 TODO:
 
+  * Separate Private annotation URLS from public ones ... or else they jump when
+    you publish a document.
+
   * Remove character limit from annotation titles.
 
   * Add a contributor list to the documents tab...
