@@ -11,7 +11,8 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     '.edit_related_article.click':  'editRelatedArticle',
     '.edit_remove_pages.click':     'editRemovePages',
     '.edit_reorder_pages.click':    'editReorderPages',
-    '.edit_page_text.click':        'editPageText'
+    '.edit_page_text.click':        'editPageText',
+    '.edit_add_pages.click':        'editAddPages'
   },
 
   render : function() {
@@ -57,6 +58,10 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   
   editPageText : function() {
     dc.app.editor.editPageTextEditor.toggle();
+  },
+  
+  editAddPages : function() {
+    dc.app.editor.addPagesEditor.toggle();
   },
   
   editRemovePages : function() {

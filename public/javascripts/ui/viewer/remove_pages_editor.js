@@ -65,7 +65,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
   },
   
   setCallbacks : function(callbacks) {
-    $('.DV-pageCollection,.DV-thumbnails').undelegate('.DV-removeOverlay', 'click').delegate('.DV-removeOverlay','click', _.bind(function(e) {
+    $('.DV-pageCollection,.DV-thumbnails').undelegate('.DV-overlay', 'click').delegate('.DV-overlay','click', _.bind(function(e) {
       var $this = $(e.target);
       var $page = $this.siblings('.DV-page,.DV-thumbnail-page').eq(0); 
       var imageSrc = $('.DV-pageImage,.DV-thumbnail-image img', $page).eq(0).attr('src');

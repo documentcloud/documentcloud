@@ -421,7 +421,7 @@ class Document < ActiveRecord::Base
     self.save!
     pages = self.reload.pages
     Sunspot.index pages
-    # DC::Import::EntityExtractor.new.extract(document)
+    self.reprocess_entities
     self.upload_text_assets(pages)
   end
   

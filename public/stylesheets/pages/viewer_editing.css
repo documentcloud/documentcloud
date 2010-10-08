@@ -347,8 +347,6 @@
   .DV-pages.reorder_pages_viewer .DV-page:hover {
     opacity: .5;
   }
-<<<<<<< HEAD
-=======
   
 /* ================== */
 /* = Edit Page Text = */
@@ -396,4 +394,35 @@
 .DV-textContents.DV-editing {
   border: 1px dotted #505050;
 }
->>>>>>> 0e676d2... Page editing in the viewer. Still need to save modified text correctly, batch multiple pages, and persist text across page changes.
+
+/* ============= */
+/* = Add Pages = */
+/* ============= */
+
+#add_pages_container {
+  position: absolute;
+  z-index: 10001;
+  top: 0;
+  left: 0;
+  right: 266px;
+  background-color: white;
+  border-bottom: 1px solid #505050;
+  height: 64px;
+}
+  #add_pages_container .add_pages_hint {
+    font-size: 16px;
+    color: #D0D0D0;
+    font-weight: bold;
+    margin: 24px 0 0 24px;
+    font-family: 'Lucida Grande', sans-serif;
+    text-transform: uppercase;
+    position: absolute;
+    top: 0;
+  }
+  #add_pages_container .add_pages_upload {
+    margin: 20px 24px 0 0;
+  }
+  
+.DV-pages.add_pages_viewer {
+  margin-top: 64px;
+}

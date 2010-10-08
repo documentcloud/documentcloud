@@ -77,7 +77,7 @@ class DocumentReorderPages < DocumentModBase
     document.save!
     pages = document.reload.pages
     Sunspot.index pages
-    # DC::Import::EntityExtractor.new.extract(document)
+    document.reprocess_entities
     document.upload_text_assets(pages)    
   end
   

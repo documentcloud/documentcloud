@@ -158,7 +158,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
   EMBED_FORBIDDEN : "At this stage in the beta, you may only embed documents you've uploaded yourself.",
 
-  POLL_INTERVAL : 10000, // 10 seconds.
+  POLL_INTERVAL : 5 * 1000, // 5 seconds.
 
   url : '/documents',
 

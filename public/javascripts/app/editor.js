@@ -23,6 +23,7 @@ _.extend(dc.app.editor, {
     this.removePagesEditor  = new dc.ui.RemovePagesEditor();
     this.reorderPagesEditor = new dc.ui.ReorderPagesEditor();
     this.editPageTextEditor = new dc.ui.EditPageTextEditor();
+    this.addPagesEditor     = new dc.ui.AddPagesEditor();
   },
 
   // Render all of the existing subviews and place them in the DOM.
@@ -37,6 +38,7 @@ _.extend(dc.app.editor, {
     this.removePagesEditor.close();
     this.reorderPagesEditor.close();
     this.editPageTextEditor.close();
+    this.addPagesEditor.close();
   }
 
 });
