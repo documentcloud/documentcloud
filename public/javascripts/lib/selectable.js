@@ -41,7 +41,7 @@ dc.model.Selectable = {
   // change their selected state.
   _onModelEvent : function(ev, model, error) {
     Backbone.Collection.prototype._onModelEvent.call(this, ev, model, error);
-    if (ev != 'changed') return;
+    if (ev != 'change') return;
     if (model.hasChanged('selected')) {
       var selected = model.get('selected');
       if (selected && this.selectedCount == 0) {
