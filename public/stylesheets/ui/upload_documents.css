@@ -63,6 +63,13 @@
     margin: 3px 0 0 0;
     float: left;
   }
+  #upload_dialog .upload_title .document_title {
+    width: 315px;
+    font-family: 'Lucida Grande';
+    font-size: 12px;
+    margin: 8px 6px;
+  }
+
     #upload_dialog .progress_bar {
       position: absolute;
       top: 1px; left: 1px; bottom: 1px;

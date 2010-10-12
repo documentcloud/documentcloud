@@ -6,18 +6,18 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   constructor : function(options) {
     var defaults = {
-      editable : true
-    };
-    this.opts = $.extend({}, defaults, options);
-    _.bindAll(this, 'setupUploadify', 'countDocuments', '_onSelect', '_onSelectOnce',
-      '_onCancel', '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
-    dc.ui.Dialog.call(this, {
+      editable    : true,
       collection  : UploadDocuments,
       mode        : 'custom',
       title       : 'Upload Documents',
       saveText    : 'Upload',
       closeText   : 'Cancel'
-    });
+    };
+    options = $.extend({}, defaults, options);
+    
+    _.bindAll(this, 'setupUploadify', 'countDocuments', '_onSelect', '_onSelectOnce',
+      '_onCancel', '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
+    dc.ui.Dialog.call(this, options);
     if (dc.app.navigation) {
       dc.app.navigation.bind('tab:documents', _.bind(function(){ _.defer(this.setupUploadify); }, this));
     }
@@ -33,10 +33,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       var title = Inflector.truncate(this._project.get('title'), 35);
       data.information = 'Project: ' + title;
     }
-    console.log(['pre-render', this.opts]);
+    console.log(['pre-render', this.options]);
     dc.ui.Dialog.prototype.render.call(this, data);
     this.$('.custom').html(JST['document/upload_dialog']());
-    console.log(['post-render', this.opts]);
+    console.log(['post-render', this.options]);
     this._list = this.$('.upload_list');
     this._renderDocumentTiles();
     this.countDocuments();
@@ -46,15 +46,19 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   _renderDocumentTiles : function() {
-    console.log(['renderTiles', this.collection]);
+    console.log(['renderTiles', this.collection, this.options.editable]);
     var tiles = this._tiles;
+    var editable = this.options.editable;
+    
     this.collection.each(function(model) {
+      console.log(['rendering tile', model, editable]);
       var view = new dc.ui.UploadDocumentTile({
-        editable : this.opts.editable,
+        editable : editable,
         model : model
       });
       tiles[model.id] = view.render();
     });
+    
     var viewEls = _.pluck(_.values(tiles), 'el');
     this._list.append(viewEls);
   },
@@ -218,16 +222,17 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     'click .apply_all'    : 'applyAll'
   },
   
-  constructor : function() {
-    Backbone.View.call(this);
+  constructor : function(options) {
+    Backbone.View.call(this, options);
   },
 
   render : function() {
-    console.log(['render tile 1', this.model, this.editable]);
-    $(this.el).html(JST['document/upload_document_tile']({
-      options : this.opts,
+    console.log(['render tile 1', this.model, this.options.editable]);
+    var template = JST['document/upload_document_tile']({
+      editable : this.options.editable,
       model : this.model
-    }));
+    });
+    $(this.el).html(template);
     console.log(['render tile 2', this.model]);
     this._title    = this.$('input[name=title]');
     this._progress = this.$('.progress_bar');

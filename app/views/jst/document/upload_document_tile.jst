@@ -1,23 +1,24 @@
 <div class="upload_title">
   <div class="icon remove_queue cancel_search_dark not_draggable" title="Remove file"></div>
-  <div class="icon edit_glyph_dark open_edit not_draggable" title="Edit details"></div>
+  <% if (editable) { %>
+    <div class="icon edit_glyph_dark open_edit not_draggable" title="Edit details"></div>
+  <% } %>
   <div class="upload_file_size">
     (<%= Inflector.bytesToMB(model.get('size')) %>)
   </div>
   <label class="icon file file_<%= model.get('extension') %>" for="document_upload_title_<%= model.id %>" title="<%= model.get('title') %>"></label>
   <div class="text_input small dark">
     <div class="progress_bar" style="display:none;"></div>
-    <%= options.editable %>
-    <% if (options.editable) { %>
+    <% if (editable) { %>
       <input name="title" id="document_upload_title_<%= model.id %>" type="text" value="<%= model.get('title') %>"/>
     <% } else { %>
       <input name="title" id="document_upload_title_<%= model.id %>" type="hidden" value="<%= model.get('title') %>"/>
-      <div class="title"><%= model.get('title') %></div>
+      <div class="document_title"><%= model.get('title') %></div>
     <% } %>
   </div>
 </div>
 
-<% if (options.editable) { %>
+<% if (editable) { %>
   <div class="upload_edit">
     <div class="upload_description">
       <div class="upload_description_row">
