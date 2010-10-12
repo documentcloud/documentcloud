@@ -7,42 +7,49 @@
   <label class="icon file file_<%= model.get('extension') %>" for="document_upload_title_<%= model.id %>" title="<%= model.get('title') %>"></label>
   <div class="text_input small dark">
     <div class="progress_bar" style="display:none;"></div>
-    <input name="title" id="document_upload_title_<%= model.id %>" type="text" value="<%= model.get('title') %>"/>
+    <%= options.editable %>
+    <% if (options.editable) { %>
+      <input name="title" id="document_upload_title_<%= model.id %>" type="text" value="<%= model.get('title') %>"/>
+    <% } else { %>
+      <input name="title" id="document_upload_title_<%= model.id %>" type="hidden" value="<%= model.get('title') %>"/>
+      <div class="title"><%= model.get('title') %></div>
+    <% } %>
   </div>
 </div>
 
-<div class="upload_edit">
-  <div class="upload_description">
-    <div class="upload_description_row">
-      <label for="document_upload_description_<%= model.id %>">
-        Description:
+<% if (options.editable) { %>
+  <div class="upload_edit">
+    <div class="upload_description">
+      <div class="upload_description_row">
+        <label for="document_upload_description_<%= model.id %>">
+          Description:
+        </label>
+        <textarea name="description" id="document_upload_description_<%= model.id %>" class="text_area content dark small interface"></textarea>
+      </div>
+    </div>
+
+    <div class="upload_source">
+      <label for="document_upload_source_<%= model.id %>">
+        Source:
       </label>
-      <textarea name="description" id="document_upload_description_<%= model.id %>" class="text_area content dark small interface"></textarea>
+      <div class="text_input small dark">
+        <input name="source" id="document_upload_source_<%= model.id %>" type="text" />
+      </div>
     </div>
-  </div>
 
-  <div class="upload_source">
-    <label for="document_upload_source_<%= model.id %>">
-      Source:
-    </label>
-    <div class="text_input small dark">
-      <input name="source" id="document_upload_source_<%= model.id %>" type="text" />
+    <div class="upload_access">
+      <label for="document_upload_access_<%= model.id %>">
+        Access Level:
+      </label>
+      <select name="access" class="document_access" id="document_upload_access_<%= model.id %>">
+        <option value="public">Public Access</option>
+        <option value="private" selected="true">Private Access</option>
+        <option value="organization">Private to <%= dc.app.organization && dc.app.organization.name %></option>
+      </select>
     </div>
-  </div>
-
-  <div class="upload_access">
-    <label for="document_upload_access_<%= model.id %>">
-      Access Level:
-    </label>
-    <select name="access" class="document_access" id="document_upload_access_<%= model.id %>">
-      <option value="public">Public Access</option>
-      <option value="private" selected="true">Private Access</option>
-      <option value="organization">Private to <%= dc.app.organization && dc.app.organization.name %></option>
-    </select>
-  </div>
   
-  <div class="apply_all" title="Apply this description, source, and access level to all files">
-    <span class="text_link">Apply to All Files</span>
+    <div class="apply_all" title="Apply this description, source, and access level to all files">
+      <span class="text_link">Apply to All Files</span>
+    </div>
   </div>
-
-</div>
+<% } %>

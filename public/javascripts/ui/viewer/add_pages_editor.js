@@ -58,7 +58,9 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
     this.$s.container = $(this.el);
     this.findSelectors();
     this.setCallbacks();
-    dc.app.uploader = new dc.ui.UploadDialog();
+    dc.app.uploader = new dc.ui.UploadDialog({
+      editable : false
+    });
     dc.app.uploader.setupUploadify();
   },
   

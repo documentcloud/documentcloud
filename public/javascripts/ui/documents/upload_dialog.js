@@ -4,7 +4,11 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   id        : 'upload_dialog',
   className : 'dialog',
 
-  constructor : function() {
+  constructor : function(options) {
+    var defaults = {
+      editable : true
+    };
+    this.opts = $.extend({}, defaults, options);
     _.bindAll(this, 'setupUploadify', 'countDocuments', '_onSelect', '_onSelectOnce',
       '_onCancel', '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
     dc.ui.Dialog.call(this, {
@@ -29,8 +33,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       var title = Inflector.truncate(this._project.get('title'), 35);
       data.information = 'Project: ' + title;
     }
+    console.log(['pre-render', this.opts]);
     dc.ui.Dialog.prototype.render.call(this, data);
     this.$('.custom').html(JST['document/upload_dialog']());
+    console.log(['post-render', this.opts]);
     this._list = this.$('.upload_list');
     this._renderDocumentTiles();
     this.countDocuments();
@@ -43,7 +49,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     console.log(['renderTiles', this.collection]);
     var tiles = this._tiles;
     this.collection.each(function(model) {
-      var view = new dc.ui.UploadDocumentTile({model : model});
+      var view = new dc.ui.UploadDocumentTile({
+        editable : this.opts.editable,
+        model : model
+      });
       tiles[model.id] = view.render();
     });
     var viewEls = _.pluck(_.values(tiles), 'el');
@@ -208,10 +217,17 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     'click .open_edit'    : 'openEdit',
     'click .apply_all'    : 'applyAll'
   },
+  
+  constructor : function() {
+    Backbone.View.call(this);
+  },
 
   render : function() {
-    console.log(['render tile 1', this.model]);
-    $(this.el).html(JST['document/upload_document_tile']({model : this.model}));
+    console.log(['render tile 1', this.model, this.editable]);
+    $(this.el).html(JST['document/upload_document_tile']({
+      options : this.opts,
+      model : this.model
+    }));
     console.log(['render tile 2', this.model]);
     this._title    = this.$('input[name=title]');
     this._progress = this.$('.progress_bar');
