@@ -6,8 +6,8 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
     open: false
   },
   
-  callbacks : {
-    '.edit_page_text_confirm_input.click' : 'confirmEditPageText'
+  events : {
+    'click .edit_page_text_confirm_input' : 'confirmEditPageText'
   },
   
   originalPageText: {},
@@ -70,15 +70,15 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
     this.$s.textContents.attr('contentEditable', true);
     this.$s.textContents.addClass('DV-editing');
     
-    this.setCallbacks();
+    this.handleEvents();
   },
 
-  setCallbacks : function() {
+  handleEvents : function() {
     
     this.$s.textContents.bind('keyup', this.cachePageText);
     this.$s.textContents.bind('change', this.cachePageText);
     this.$s.textContents.bind('blur', this.cachePageText);
-    Backbone.View.prototype.setCallbacks.call(this);
+    Backbone.View.prototype.handleEvents.call(this);
   },
   
   getPageNumber : function() {

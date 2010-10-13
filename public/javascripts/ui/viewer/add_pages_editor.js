@@ -6,8 +6,6 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
     open: false
   },
   
-  callbacks : {},
-  
   constructor : function(options) {
     Backbone.View.call(this, options);
   },
@@ -54,7 +52,7 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
     this.$s.pages.addClass('add_pages_viewer');
     this.$s.container = $(this.el);
     this.findSelectors();
-    this.setCallbacks();
+    this.handleEvents();
     dc.app.uploader = new dc.ui.UploadDialog({
       editable : false,
       insertPages : true,
@@ -63,7 +61,7 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
     dc.app.uploader.setupUploadify();
   },
   
-  setCallbacks : function(callbacks) {
+  handleEvents : function(callbacks) {
     var $thumbnails = this.$s.thumbnails;
     
     $thumbnails.each(function(i) {
@@ -85,7 +83,7 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
       this.confirmPageChoice();
     }, this));
     
-    Backbone.View.prototype.setCallbacks.call(this, callbacks);
+    Backbone.View.prototype.handleEvents.call(this, callbacks);
   },
   
   confirmPageChoice : function() {
