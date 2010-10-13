@@ -34,6 +34,12 @@ module DC
         FileUtils.cp(pdf_path, local(document.pdf_path))
       end
 
+      def save_insert_pdf(document, pdf_path, access=nil)
+        path = File.join(document.path, 'inserts')
+        ensure_directory(path)
+        FileUtils.cp(pdf_path, local(path))
+      end
+
       def save_full_text(document, access=nil)
         ensure_directory(document.path)
         File.open(local(document.full_text_path), 'w+') {|f| f.write(document.text) }

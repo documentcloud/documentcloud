@@ -78,6 +78,12 @@ class DocumentsController < ApplicationController
     json doc
   end
   
+  def upload_insert_document
+    return not_found unless doc = current_document(true)
+    doc.upload_insert_document(params)
+    json doc
+  end
+  
   def save_page_text
     return not_found unless doc = current_document(true)
     doc.save_page_text(params[:modified_pages])

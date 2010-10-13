@@ -4,7 +4,7 @@ class ImportController < ApplicationController
 
   layout nil
 
-  before_filter :login_required, :only => [:upload_document]
+  before_filter :login_required, :only => [:upload_document, :insert_document]
 
   # Internal document upload, called from the workspace.
   def upload_document

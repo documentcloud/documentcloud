@@ -48,6 +48,11 @@ module DC
         save_file(pdf_path, document.pdf_path, access)
       end
 
+      def save_insert_pdf(document, pdf_path, access=DEFAULT_ACCESS)
+        path = File.join(document.path, 'insert')
+        save_file(pdf_path, document.pdf_path, access)
+      end
+
       def save_full_text(document, access=DEFAULT_ACCESS)
         save_file(document.text, document.full_text_path, access, :string => true)
       end

@@ -6,13 +6,10 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
     open: false
   },
   
-  callbacks : {
-    '.document_page_tile_remove.click' : 'removePageFromRemoveSet'
-  },
+  callbacks : {},
   
-  constructor : function(opts) {
-    Backbone.View.call(this, opts);
-    _.bindAll(this, 'confirmAddPages');
+  constructor : function(options) {
+    Backbone.View.call(this, options);
   },
 
   toggle : function() {
@@ -59,7 +56,9 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
     this.findSelectors();
     this.setCallbacks();
     dc.app.uploader = new dc.ui.UploadDialog({
-      editable : false
+      editable : false,
+      insertPages : true,
+      documentId : this.viewer.api.getModelId()
     });
     dc.app.uploader.setupUploadify();
   },
@@ -105,7 +104,9 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
     
     if (state == 'choose' || !_.isNumber(pageNumber)) {
       hint = "Choose where to insert new pages.";
+      $(this.el).setMode('off', 'upload');
     } else if (state == 'upload') {
+      $(this.el).setMode('on', 'upload');
       hint = "Upload documents to insert ";
       if (pageNumber < 1) {
         hint += "before the first page.";
@@ -114,9 +115,16 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
       } else if (pageNumber == pageCount) {
         hint += "after the last page.";
       }
+      this.updateUploader({
+        insertPageAt: pageNumber
+      });
     }
     
     $('.add_pages_hint', this.el).text(hint);
+  },
+  
+  updateUploader : function(attrs) {
+    dc.app.uploader.insertPagesAttrs(attrs);
   },
   
   getPageNumber : function() {

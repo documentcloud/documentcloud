@@ -142,6 +142,37 @@ class Document < ActiveRecord::Base
     end
     doc.reload
   end
+  
+  # Upload a document to later be inserted into another document
+  def upload_insert_document(params)
+    return json :bad_request => true unless params[:file] && params[:title].is_a?(String)
+
+    eventual_access ||= self.access || PRIVATE
+    self.update_attributes :access => PENDING
+    
+    DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:document_number]+'.pdf') do |path|
+      DC::Store::AssetStore.new.save_insert_pdf(self, path)
+        if params[:document_number] == params[:document_count]
+          job = JSON.parse(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+            'action'  => 'document_insert_pages',
+            'inputs'  => [id],
+            'options' => {
+              :id              => id,
+              :insert_page_at  => params[:insert_page_at],
+              :access          => eventual_access
+            }
+          }.to_json}).body)
+          ProcessingJob.create!(
+            :document_id    => id,
+            :account_id     => account_id,
+            :cloud_crowd_id => job['id'],
+            :title          => title,
+            :remote_job     => job
+          )
+        else
+      end
+    end
+  end
 
   # Retrieve a random document.
   def self.random
@@ -485,7 +516,7 @@ class Document < ActiveRecord::Base
       :remote_job     => job
     )
   end
-
+  
   # TODO: Make the to_json an extended form of the canonical.
   def to_json(opts={})
     data = {

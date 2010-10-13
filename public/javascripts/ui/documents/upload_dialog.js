@@ -7,6 +7,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   constructor : function(options) {
     var defaults = {
       editable    : true,
+      insertPages : false,
       collection  : UploadDocuments,
       mode        : 'custom',
       title       : 'Upload Documents',
@@ -33,10 +34,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       var title = Inflector.truncate(this._project.get('title'), 35);
       data.information = 'Project: ' + title;
     }
-    console.log(['pre-render', this.options]);
     dc.ui.Dialog.prototype.render.call(this, data);
     this.$('.custom').html(JST['document/upload_dialog']());
-    console.log(['post-render', this.options]);
     this._list = this.$('.upload_list');
     this._renderDocumentTiles();
     this.countDocuments();
@@ -46,12 +45,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   _renderDocumentTiles : function() {
-    console.log(['renderTiles', this.collection, this.options.editable]);
     var tiles = this._tiles;
     var editable = this.options.editable;
     
     this.collection.each(function(model) {
-      console.log(['rendering tile', model, editable]);
       var view = new dc.ui.UploadDocumentTile({
         editable : editable,
         model : model
@@ -66,10 +63,14 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // Be careful to only set up Uploadify once, when the "Documents" tab is open.
   setupUploadify : function() {
     if (this._uploadify || (dc.app.navigation && !dc.app.navigation.isOpen('documents'))) return;
+    var uploadUrl = '/import/upload_document';
+    if (this.options.insertPages) {
+      uploadUrl = '/documents/' + this.options.documentId + '/upload_insert_document';
+    }
     this._uploadify = $('#new_document');
     this._uploadify.uploadify({
       uploader      : '/flash/uploadify.swf',
-      script        : '/import/upload_document',
+      script        : uploadUrl,
       auto          : false,
       multi         : true,
       wmode         : 'transparent',
@@ -87,17 +88,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       onComplete    : this._onComplete,
       onAllComplete : this._onAllComplete
     });
-    if (!$('object#new_documentUploader').length) this.setupFileInput();
-  },
-
-  // If flash is disabled, we fall back to a regular invisible file input field.
-  setupFileInput : function() {
-    var input = $('#new_document_input');
-    input.show().change(_.bind(function() {
-      this._project = _.first(Projects.selected());
-      $('#new_document_project').val(this._project ? this._project.id : '');
-      $('#new_document_form').submit();
-    }, this));
+    this._uploadIndex = 0;
   },
 
   // Return false so that Uploadify does not create its own progress bars.
@@ -112,7 +103,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   _onSelectOnce : function(e, data) {
-    console.log(['_onSelectOnce', e, data]);
     if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
       this.close();
       return dc.ui.Dialog.alert("You can only upload documents less than 200MB in size. Please <a href=\"/help/troubleshooting\">optimize your document</a> before continuing.");
@@ -135,21 +125,25 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     return false;
   },
 
+  // Called immediately before file to POSTed to server.
   _onStarted : function(e, queueId) {
+    this._uploadIndex++;
     var attrs = this._tiles[queueId].serialize();
     this.collection.get(queueId).set(attrs);
     attrs.session_key = dc.app.cookies.get('document_cloud_session');
     attrs.flash = true;
     if (this._project) attrs.project_id = this._project.id;
-    attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
-    this.button.uploadifySettings('scriptData', attrs, true);
+    if (this.options.insertPageAt) attrs.insert_page_at = this.options.insertPageAt;
+    if (this.options.documentId)   attrs.document_id = this.options.documentId;
+    if (this.options.insertPages)  attrs.document_number = this._uploadIndex;
+    if (this.options.insertPages)  attrs.document_count = this.collection.length;
+    this._uploadify.uploadifySettings('scriptData', attrs, true);
     this.showSpinner();
     this._list[0].scrollTop = 0;
   },
 
   // Show the progress bar when the uploads start.
   _onOpen : function(e, queueId, fileObj) {
-    console.log(['_onOpen', e, queueId, fileObj]);
     this._tiles[queueId].startProgress();
   },
 
@@ -187,6 +181,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       if (num <= 0) return;
       var conj = num > 1 ? 'are' : 'is';
       this.info('There ' + conj + ' ' + num + ' ' + Inflector.pluralize('document', num) + ' ahead of you in line.', true);
+    }, this));
+  },
+  
+  insertPagesAttrs : function(attrs) {
+    _.each(attrs, _.bind(function(value, attr) {
+      this.options[attr] = value;
     }, this));
   },
 
@@ -227,13 +227,11 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
   },
 
   render : function() {
-    console.log(['render tile 1', this.model, this.options.editable]);
     var template = JST['document/upload_document_tile']({
       editable : this.options.editable,
       model : this.model
     });
     $(this.el).html(template);
-    console.log(['render tile 2', this.model]);
     this._title    = this.$('input[name=title]');
     this._progress = this.$('.progress_bar');
     return this;
