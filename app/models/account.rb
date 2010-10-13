@@ -54,7 +54,9 @@ class Account < ActiveRecord::Base
   end
 
   def slug
-    @slug ||= "#{id}-#{first_name.downcase.gsub(/\W/, '')}-#{last_name.downcase.gsub(/\W/, '')}"
+    first = first_name && first_name.downcase.gsub(/\W/, '')
+    last  = last_name && last_name.downcase.gsub(/\W/, '')
+    @slug ||= "#{id}-#{last}-#{last}"
   end
 
   # Is this account an administrator?

@@ -120,7 +120,9 @@ dc.ui.AccountView = Backbone.View.extend({
     if (this.model.isNew()) {
       if (!attributes.email) return $(this.el).remove();
       dc.ui.spinner.show();
-      Accounts.create(this.model, attributes, options);
+      this.model.newRecord = true;
+      this.model.set(attributes);
+      Accounts.create(this.model, options);
     } else if (!this.model.invalid && !this.model.changedAttributes(attributes)) {
       this.setMode('display', 'view');
     } else {
@@ -139,16 +141,18 @@ dc.ui.AccountView = Backbone.View.extend({
   },
 
   _onSuccess : function(model, resp) {
-    var newAccount = model.isNew();
-    model.invalid = false;
-    dc.ui.spinner.hide();
+    this.model.invalid = false;
     this.setMode('display', 'view');
-    model.set(resp.model);
-    if (newAccount) dc.ui.notifier.show({
-      text      : 'Signup sent to ' + model.get('email'),
-      duration  : 5000,
-      mode      : 'info'
-    });
+    this.model.change();
+    dc.ui.spinner.hide();
+    if (this.model.newRecord) {
+      this.model.newRecord = false;
+      dc.ui.notifier.show({
+        text      : 'Signup sent to ' + model.get('email'),
+        duration  : 5000,
+        mode      : 'info'
+      });
+    }
   },
 
   _onError : function(model, resp) {
