@@ -14,12 +14,12 @@ dc.ui.SearchBox = Backbone.View.extend({
 
   id  : 'search',
 
-  callbacks : {
-    '#search_box.keydown':  'maybeSearch',
-    '#search_box.search':   'searchEvent',
-    '#search_box.focus':    '_addFocus',
-    '#search_box.blur':     '_removeFocus',
-    '.cancel_search.click': 'cancelSearch'
+  events : {
+    'keydown #search_box':  'maybeSearch',
+    'search #search_box':   'searchEvent',
+    'focus #search_box':    '_addFocus',
+    'blur #search_box':     '_removeFocus',
+    'click .cancel_search': 'cancelSearch'
   },
 
   // Creating a new SearchBox registers #search page fragments.
@@ -34,7 +34,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.box      = this.$('#search_box');
     this.titleBox = this.$('#title_box_inner');
     $(document.body).setMode('no', 'search');
-    this.setCallbacks();
+    this.handleEvents();
     $('#cloud_edge').click(function(){ window.location = '/home'; });
     return this;
   },

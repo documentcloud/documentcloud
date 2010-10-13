@@ -4,12 +4,13 @@ dc.ui.Menu = Backbone.View.extend({
 
   options : {id : null, standalone : false},
 
-  callbacks : {
-    '.click'        : 'open',
-    '.selectstart'  : '_stopSelect'
+  events : {
+    'click'        : 'open',
+    'selectstart'  : '_stopSelect'
   },
 
   constructor : function(options) {
+    this.modes = {};
     _.bindAll(this, 'close');
     Backbone.View.call(this, options);
     this.items          = [];
@@ -24,7 +25,7 @@ dc.ui.Menu = Backbone.View.extend({
     $(this.el).html(JST['common/menubutton']({label : this.options.label}));
     this._label = this.$('.label');
     $(document.body).append(this.content);
-    this.setCallbacks();
+    this.handleEvents();
     return this;
   },
 

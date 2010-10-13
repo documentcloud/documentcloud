@@ -3,13 +3,13 @@ dc.ui.Note = Backbone.View.extend({
 
   className : 'note noselect',
 
-  callbacks : {
-    '.title_link.click':  'viewNoteInDocument',
-    '.page_number.click': 'viewNoteInDocument',
-    '.edit_note.click':   'editNote',
-    '.cancel_note.click': 'cancelNote',
-    '.save_note.click':   'saveNote',
-    '.delete_note.click': 'deleteNote'
+  events : {
+    'click .title_link':  'viewNoteInDocument',
+    'click .page_number': 'viewNoteInDocument',
+    'click .edit_note':   'editNote',
+    'click .cancel_note': 'cancelNote',
+    'click .save_note':   'saveNote',
+    'click .delete_note': 'deleteNote'
   },
 
   constructor : function(options) {
@@ -20,10 +20,10 @@ dc.ui.Note = Backbone.View.extend({
   },
 
   render : function() {
-    var data = _.extend(this.model.attributes(), {note : this.model});
+    var data = _.extend(this.model.toJSON(), {note : this.model});
     $(this.el).html(JST['document/note'](data));
     this.setMode('display', 'visible');
-    this.setCallbacks();
+    this.handleEvents();
     return this;
   },
 

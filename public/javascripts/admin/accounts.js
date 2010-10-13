@@ -4,8 +4,6 @@ dc.ui.AdminAccounts = Backbone.View.extend({
   ADMINISTRATOR : 1,
   CONTRIBUTOR   : 2,
 
-  callbacks : {},
-
   render : function() {
     $(this.el).html(JST.admin_accounts({}));
     var rows = Accounts.map(function(account) {

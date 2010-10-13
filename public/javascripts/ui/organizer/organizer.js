@@ -7,17 +7,17 @@ dc.ui.Organizer = Backbone.View.extend({
     'all_documents', 'your_documents', 'published_documents', 'org_documents'
   ],
 
-  callbacks : {
-    '#new_project.click'          : 'promptNewProject',
-    '.all_documents.click'        : 'showAllDocuments',
-    '.your_documents.click'       : 'showYourDocuments',
-    '.org_documents.click'        : 'showOrganizationDocuments',
-    '.published_documents.click'  : 'showPublishedDocuments',
-    '.row.click'                  : '_filterFacet',
-    '.cancel_search.click'        : '_removeFacet',
-    '.more.click'                 : '_loadFacet',
-    '.less.click'                 : '_showLess',
-    '.show_pages.click'           : '_showPages'
+  events : {
+    'click #new_project'          : 'promptNewProject',
+    'click .all_documents'        : 'showAllDocuments',
+    'click .your_documents'       : 'showYourDocuments',
+    'click .org_documents'        : 'showOrganizationDocuments',
+    'click .published_documents'  : 'showPublishedDocuments',
+    'click .row'                  : '_filterFacet',
+    'click .cancel_search'        : '_removeFacet',
+    'click .more'                 : '_loadFacet',
+    'click .less'                 : '_showLess',
+    'click .show_pages'           : '_showPages'
   },
 
   constructor : function(options) {
@@ -36,7 +36,7 @@ dc.ui.Organizer = Backbone.View.extend({
     this.entityList     = this.$('#organizer_entities');
     this.sidebar        = $('#sidebar');
     this.renderAll();
-    this.setCallbacks();
+    this.handleEvents();
     return this;
   },
 

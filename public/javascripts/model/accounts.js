@@ -69,11 +69,8 @@ dc.model.Account = Backbone.Model.extend({
 
 dc.model.AccountSet = Backbone.Collection.extend({
 
-  model    : dc.model.Account,
-
-  url : function() {
-    return '/accounts';
-  },
+  model : dc.model.Account,
+  url   : '/accounts',
 
   comparator : function(account) {
     return (account.get('last_name') || '').toLowerCase() + ' ' + (account.get('first_name') || '').toLowerCase();

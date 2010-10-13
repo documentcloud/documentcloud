@@ -9,24 +9,24 @@ dc.ui.Document = Backbone.View.extend({
 
   className : 'document',
 
-  callbacks : {
-    '.doc_title.mousedown'      : '_noSelect',
-    '.doc_title.click'          : 'select',
-    '.doc_title.contextmenu'    : 'showMenu',
-    '.doc_title.dblclick'       : 'viewDocument',
-    '.icon.doc.click'           : 'select',
-    '.icon.doc.contextmenu'     : 'showMenu',
-    '.icon.doc.dblclick'        : 'viewDocument',
-    '.show_notes.click'         : 'toggleNotes',
-    '.title .edit_glyph.click'  : 'openDialog',
-    '.title .lock.click'        : 'editAccessLevel',
-    '.title .published.click'   : 'viewPublishedDocuments',
-    '.page_icon.click'          : '_openEntity',
-    '.occurrence.click'         : '_openEntity',
-    '.cancel_search.click'      : '_hidePages',
-    '.search_account.click'     : 'searchAccount',
-    '.search_group.click'       : 'searchOrganization',
-    '.search_source.click'      : 'searchSource'
+  events : {
+    'mousedown .doc_title'      : '_noSelect',
+    'click .doc_title'          : 'select',
+    'contextmenu .doc_title'    : 'showMenu',
+    'dblclick .doc_title'       : 'viewDocument',
+    'click .icon.doc'           : 'select',
+    'contextmenu .icon.doc'     : 'showMenu',
+    'dblclick .icon.doc'        : 'viewDocument',
+    'click .show_notes'         : 'toggleNotes',
+    'click .title .edit_glyph'  : 'openDialog',
+    'click .title .lock'        : 'editAccessLevel',
+    'click .title .published'   : 'viewPublishedDocuments',
+    'click .page_icon'          : '_openEntity',
+    'click .occurrence'         : '_openEntity',
+    'click .cancel_search'      : '_hidePages',
+    'click .search_account'     : 'searchAccount',
+    'click .search_group'       : 'searchOrganization',
+    'click .search_source'      : 'searchSource'
   },
 
   constructor : function(options) {
@@ -46,7 +46,7 @@ dc.ui.Document = Backbone.View.extend({
   render : function() {
     var me = this;
     var title = this.model.get('title');
-    var data = _.extend(this.model.attributes(), {
+    var data = _.extend(this.model.toJSON(), {
       created_at    : this.model.get('created_at').replace(/\s/g, '&nbsp;'),
       icon          : this._iconAttributes(),
       thumbnail_url : this._thumbnailURL()
@@ -57,7 +57,7 @@ dc.ui.Document = Backbone.View.extend({
     this.notesEl = this.$('.notes');
     this.pagesEl = this.$('.pages');
     this.model.notes.each(function(note){ me._addNote(note); });
-    if (!this.options.noCallbacks) this.setCallbacks();
+    if (!this.options.noCallbacks) this.handleEvents();
     this.setMode(dc.access.NAMES[this.model.get('access')], 'access');
     this.setMode(this.model.allowedToEdit() ? 'is' : 'not', 'editable');
     this._setSelected();

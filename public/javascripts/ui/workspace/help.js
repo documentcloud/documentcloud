@@ -14,9 +14,9 @@ dc.ui.Help = Backbone.View.extend({
     {url : 'publishing',       title : 'Publishing &amp; Embedding'}
   ],
 
-  callbacks : {
-    '.contact_us.click':  'openContactDialog',
-    '.uservoice.click':   'openUserVoice'
+  events : {
+    'click .contact_us':  'openContactDialog',
+    'click .uservoice':   'openUserVoice'
   },
 
   constructor : function() {
@@ -31,7 +31,7 @@ dc.ui.Help = Backbone.View.extend({
     dc.app.navigation.bind('tab:help',  _.bind(this.openHelpTab, this));
     this._toolbar = $('#help_toolbar');
     this._toolbar.prepend(this._createHelpMenu().render().el);
-    this.setCallbacks();
+    this.handleEvents();
     return this;
   },
 

@@ -180,7 +180,7 @@ DONE:
   * Kill the metadata sidebar for searches, and create an organization one
     to go there instead.
 
-  * Rework Backbone.View setCallbacks syntax.
+  * Rework Backbone.View handleEvents syntax.
 
   * Kill bookmarks.
   

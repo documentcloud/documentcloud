@@ -18,12 +18,12 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   id : 'timeline_dialog',
 
-  callbacks : {
-    '.zoom_out.click':              '_zoomOut',
-    '.ok.click':                    'confirm',
-    '.timeline_plot.plothover':     '_showTooltop',
-    '.timeline_plot.plotselected':  '_zoomIn',
-    '.timeline_plot.plotclick':     '_openPage'
+  events : {
+    'click .zoom_out':              '_zoomOut',
+    'click .ok':                    'confirm',
+    'plothover .timeline_plot':     '_showTooltop',
+    'plotselected .timeline_plot':  '_zoomIn',
+    'plotclick .timeline_plot':     '_openPage'
   },
 
   constructor : function(documents) {
@@ -42,7 +42,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     this.$('.custom').html(JST['document/timeline']({docs : this.documents, minHeight : this.MIN_HEIGHT, rowHeight : this.ROW_HEIGHT}));
     this._zoomButton = this.make('div', {'class' : 'minibutton zoom_out dark not_enabled'}, 'Zoom Out');
     this.$('.controls_inner').prepend(this._zoomButton);
-    this.setCallbacks();
+    this.handleEvents();
     this.center();
     return this;
   },

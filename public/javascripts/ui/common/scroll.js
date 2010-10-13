@@ -6,10 +6,10 @@ dc.ui.Scroll = Backbone.View.extend({
 
   className : 'scroll',
 
-  callbacks : {
-    '.scroll_up.click'    : 'scrollUp',
-    '.scroll_down.click'  : 'scrollDown',
-    '.mousewheel'       : '_mouseScroll'
+  events : {
+    'click .scroll_up'    : 'scrollUp',
+    'click .scroll_down'  : 'scrollDown',
+    'mousewheel'          : '_mouseScroll'
   },
 
   // Given a div with overflow:hidden, make the div scrollable by inserting
@@ -29,7 +29,7 @@ dc.ui.Scroll = Backbone.View.extend({
     this.content.before(this.upButton);
     this.content.after(this.downButton);
     $(window).resize(this.check);
-    this.setCallbacks();
+    this.handleEvents();
     return this;
   },
 

@@ -15,16 +15,17 @@ dc.ui.AccountView = Backbone.View.extend({
     collaborator  : 'tr'
   },
 
-  callbacks : {
-    '.edit_account.click':    'showEdit',
-    '.change_password.click': 'promptPasswordChange',
-    '.resend_welcome.click':  'resendWelcomeEmail',
-    '.admin_link.click':      '_openAccounts',
-    '.save_changes.click':    '_doneEditing',
-    '.delete_account.click':  '_deleteAccount'
+  events : {
+    'click .edit_account':    'showEdit',
+    'click .change_password': 'promptPasswordChange',
+    'click .resend_welcome':  'resendWelcomeEmail',
+    'click .admin_link':      '_openAccounts',
+    'click .save_changes':    '_doneEditing',
+    'click .delete_account':  '_deleteAccount'
   },
 
   constructor : function(options) {
+    this.modes      = {};
     this.kind       = options.kind;
     this.tagName    = this.TAGS[this.kind];
     this.className  = 'account_view ' + this.kind;
@@ -50,7 +51,7 @@ dc.ui.AccountView = Backbone.View.extend({
     $(this.el).html(this.template(attrs));
     if (this.model.isPending()) $(this.el).addClass('pending');
     this._loadAvatar();
-    this.setCallbacks();
+    this.handleEvents();
     return this;
   },
 

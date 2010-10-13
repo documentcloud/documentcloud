@@ -6,9 +6,9 @@ dc.ui.DocumentList = Backbone.View.extend({
 
   id        : 'document_list',
 
-  callbacks : {
-    '.mousedown': '_startDeselect',
-    '.click':     '_endDeselect'
+  events : {
+    'mousedown': '_startDeselect',
+    'click':     '_endDeselect'
   },
 
   constructor : function(options) {
@@ -20,7 +20,7 @@ dc.ui.DocumentList = Backbone.View.extend({
   },
 
   render : function() {
-    this.setCallbacks();
+    this.handleEvents();
     $('.search_tab_content').selectable({ignore : '.noselect, .minibutton', select : '.icon.doc', onSelect : this._onSelect});
     return this;
   },

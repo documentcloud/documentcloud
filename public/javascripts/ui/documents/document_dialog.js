@@ -5,15 +5,15 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   id        : 'edit_document_dialog',
   className : 'dialog docalog',
 
-  callbacks : {
-    '.cancel.click'     : 'close',
-    '.ok.click'         : 'save',
-    'input.focus'       : '_addFocus',
-    'textarea.focus'    : '_addFocus',
-    'input.blur'        : '_removeFocus',
-    'textarea.blur'     : '_removeFocus',
-    '.delete.click'     : 'destroy',
-    '.attribute.change' : '_markChanged'
+  events : {
+    'click .cancel'     : 'close',
+    'click .ok'         : 'save',
+    'focus input'       : '_addFocus',
+    'focus textarea'    : '_addFocus',
+    'blur input'        : '_removeFocus',
+    'blur textarea'     : '_removeFocus',
+    'click .delete'     : 'destroy',
+    'change .attribute' : '_markChanged'
   },
 
   constructor : function(docs) {

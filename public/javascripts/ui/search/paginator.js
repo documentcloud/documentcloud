@@ -17,12 +17,12 @@ dc.ui.Paginator = Backbone.View.extend({
   page  : null,
   view  : null,
 
-  callbacks : {
-    '.prev.click':          'previousPage',
-    '.next.click':          'nextPage',
-    '.enumeration.change':  'changePage',
-    '.sorter.click':        'chooseSort',
-    '#size_toggle.click':   'toggleSize'
+  events : {
+    'click .prev':          'previousPage',
+    'click .next':          'nextPage',
+    'change .enumeration':  'changePage',
+    'click .sorter':        'chooseSort',
+    'click #size_toggle':   'toggleSize'
   },
 
   constructor : function(options) {
@@ -73,7 +73,7 @@ dc.ui.Paginator = Backbone.View.extend({
       page_size   : this.pageSize(),
       page_count  : this.pageCount()
     }));
-    this.setCallbacks();
+    this.handleEvents();
     return this;
   },
 

@@ -2,8 +2,8 @@ dc.ui.Toolbar = Backbone.View.extend({
 
   id : 'toolbar',
 
-  callbacks : {
-    '#open_viewers.click' : '_openViewers'
+  events : {
+    'click #open_viewers' : '_openViewers'
   },
 
   MENUS : ['project', 'edit', 'publish', 'analyze'],
@@ -30,7 +30,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     this.openButton              = this.$('#open_viewers');
     this.floatEl                 = this.$('#floating_toolbar');
     $(window).scroll(_.bind(function(){ _.defer(this.checkFloat); }, this));
-    this.setCallbacks();
+    this.handleEvents();
     return this;
   },
 
@@ -168,7 +168,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     var docs = Documents.chosen();
     if (!docs.length) return;
     if (docs.length != 1) return dc.ui.Dialog.alert("Please select a single document, in order to view related documents.");
-    dc.app.searcher.search('related: ' + docs[0].id + '-' + docs[0].attributes().slug);
+    dc.app.searcher.search('related: ' + docs[0].id + '-' + docs[0].toJSON().slug);
   },
 
   _viewEntities : function() {

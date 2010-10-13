@@ -13,16 +13,17 @@ dc.ui.Dialog = Backbone.View.extend({
     draggable   : true
   },
 
-  callbacks : {
-    '.cancel.click'   : 'cancel',
-    '.ok.click'       : 'confirm',
-    'input.focus'     : '_addFocus',
-    'textarea.focus'  : '_addFocus',
-    'input.blur'      : '_removeFocus',
-    'textarea.blur'   : '_removeFocus'
+  events : {
+    'click .cancel'   : 'cancel',
+    'click .ok'       : 'confirm',
+    'focus input'     : '_addFocus',
+    'focus textarea'  : '_addFocus',
+    'blur input'      : '_removeFocus',
+    'blur textarea'   : '_removeFocus'
   },
 
   render : function(opts) {
+    this.modes || (this.modes = {});
     opts = opts || {};
     if (this.options.mode) this.setMode(this.options.mode, 'dialog');
     if (this.options.draggable) this.setMode('is', 'draggable');
@@ -36,15 +37,15 @@ dc.ui.Dialog = Backbone.View.extend({
     if (this.options.content) cel.val(this.options.content);
     $(document.body).append(this.el);
     this.center();
-    this.setCallbacks();
+    this.handleEvents();
     if (this._returnCloses()) $(document.body).bind('keypress', this._maybeConfirm);
     if (cel[0]) _.defer(function(){ cel.focus(); });
     if (!opts.noOverlay) $(document.body).addClass('overlay');
     return this;
   },
 
-  setCallbacks : function(callbacks) {
-    Backbone.View.prototype.setCallbacks.call(this, callbacks);
+  handleEvents : function(callbacks) {
+    Backbone.View.prototype.handleEvents.call(this, callbacks);
     if (this.options.draggable) $(this.el).draggable();
   },
 

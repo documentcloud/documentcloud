@@ -2,9 +2,9 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
 
   id : 'account_list',
 
-  callbacks : {
-    '.ok.click'           : 'close',
-    '.new_account.click'  : 'newAccount'
+  events : {
+    'click .ok'           : 'close',
+    'click .new_account'  : 'newAccount'
   },
 
   constructor : function() {
@@ -27,7 +27,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this._container.html(JST['account/dialog']({}));
     if (Accounts.current().isAdmin()) this.addControl(this.make('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, 'New Account'));
     this.list = this.$('#account_list_content');
-    this.setCallbacks();
+    this.handleEvents();
     dc.ui.spinner.show();
     if (Accounts.length <= 1) {
       Accounts.fetch({success : function() {

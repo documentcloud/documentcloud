@@ -120,9 +120,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
   POLL_INTERVAL : 10000, // 10 seconds.
 
-  url : function() {
-    return '/documents';
-  },
+  url : '/documents',
 
   constructor : function(options) {
     Backbone.Collection.call(this, options);

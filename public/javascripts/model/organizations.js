@@ -7,10 +7,7 @@ dc.model.Organization = Backbone.Model.extend({});
 dc.model.OrganizationSet = Backbone.Collection.extend({
 
   model : dc.model.Organization,
-
-  url : function() {
-    return '/organizations';
-  },
+  url   : '/organizations',
 
   comparator : function(org) {
     return org.get('name').toLowerCase();

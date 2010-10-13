@@ -24,12 +24,12 @@ dc.ui.Admin = Backbone.View.extend({
   id        : 'statistics',
   className : 'serif',
 
-  callbacks : {
-    '.chart.plothover':           '_showTooltop',
-    '#instances .minus.click':    '_terminateInstance',
-    '.more_top_documents.click':  '_loadMoreTopDocuments',
-    '#load_all_accounts.click':   '_loadAllAccounts',
-    '#account_list .sort.click':  '_sortAccounts'
+  events : {
+    'plothover .chart':           '_showTooltop',
+    'click #instances .minus':    '_terminateInstance',
+    'click .more_top_documents':  '_loadMoreTopDocuments',
+    'click #load_all_accounts':   '_loadAllAccounts',
+    'click #account_list .sort':  '_sortAccounts'
   },
 
   ACCOUNT_COMPARATORS : {
@@ -52,7 +52,7 @@ dc.ui.Admin = Backbone.View.extend({
   render : function() {
     $(this.el).html(JST.statistics(this.data()));
     $('#topbar').append(this._actionsMenu.render().el);
-    this.setCallbacks();
+    this.handleEvents();
     _.defer(this.renderCharts);
     if (Accounts.length) _.defer(this._loadAllAccounts);
     return this;

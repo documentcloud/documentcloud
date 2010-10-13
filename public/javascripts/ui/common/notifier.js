@@ -2,8 +2,8 @@ dc.ui.Notifier = Backbone.View.extend({
 
   id : 'notifier',
 
-  callbacks : {
-    '.click': 'hide'
+  events : {
+    'click': 'hide'
   },
 
   options : {
@@ -20,7 +20,7 @@ dc.ui.Notifier = Backbone.View.extend({
     Backbone.View.call(this, options);
     $(document.body).append(this.el);
     _.bindAll(this, 'show', 'hide');
-    this.setCallbacks();
+    this.handleEvents();
   },
 
   // Display the notifier with a message, positioned relative to an optional

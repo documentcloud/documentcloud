@@ -2,13 +2,13 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   id : 'control_panel',
 
-  callbacks : {
-    '.set_sections.click':          'openSectionEditor',
-    '.public_annotation.click':     'togglePublicAnnotation',
-    '.private_annotation.click':    'togglePrivateAnnotation',
-    '.edit_description.click':      'editDescription',
-    '.edit_title.click':            'editTitle',
-    '.edit_related_article.click':  'editRelatedArticle'
+  events : {
+    'click .set_sections':          'openSectionEditor',
+    'click .public_annotation':     'togglePublicAnnotation',
+    'click .private_annotation':    'togglePrivateAnnotation',
+    'click .edit_description':      'editDescription',
+    'click .edit_title':            'editTitle',
+    'click .edit_related_article':  'editRelatedArticle'
   },
 
   render : function() {
@@ -19,7 +19,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     if (contributor && org) {
       currentDocument.$('.DV-contributor').text("Contributed by: " + contributor + ', ' + org);
     }
-    this.setCallbacks();
+    this.handleEvents();
     return this;
   },
 

@@ -2,8 +2,8 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
 
   id : 'annotation_editor',
 
-  callbacks : {
-    '.close.click': 'close'
+  events : {
+    'click .close': 'close'
   },
 
   constructor : function(options) {

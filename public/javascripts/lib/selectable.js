@@ -27,7 +27,7 @@ dc.model.Selectable = {
   },
 
   _add : function(model, options) {
-    if (model._attributes.selected == null) model._attributes.selected = false;
+    if (model.attributes.selected == null) model.attributes.selected = false;
     Backbone.Collection.prototype._add.call(this, model, options);
     if (model.get('selected')) this.selectedCount += 1;
   },

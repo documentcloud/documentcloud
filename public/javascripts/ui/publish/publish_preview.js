@@ -1,17 +1,17 @@
 dc.ui.PublishPreview = dc.ui.Dialog.extend({
 
-  callbacks : {
-    '.preview.click'  : 'preview',
-    'select.change'   : 'update',
-    'select.click'    : 'update',
-    'input.keyup'     : 'update',
-    'input.focus'     : 'update',
-    'input.click'     : 'update',
-    'input.change'    : 'update',
-    '.next.click'     : 'nextStep',
-    '.previous.click' : 'previousStep',
-    '.close.click'    : 'close',
-    '.snippet.click'  : 'selectSnippet'
+  events : {
+    'click .preview'  : 'preview',
+    'change select'   : 'update',
+    'click select'    : 'update',
+    'keyup input'     : 'update',
+    'focus input'     : 'update',
+    'click input'     : 'update',
+    'change input'    : 'update',
+    'click .next'     : 'nextStep',
+    'click .previous' : 'previousStep',
+    'click .close'    : 'close',
+    'click .snippet'  : 'selectSnippet'
   },
 
   totalSteps : 3,

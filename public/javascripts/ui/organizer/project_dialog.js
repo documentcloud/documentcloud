@@ -2,14 +2,14 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
 
   id : 'project_dialog',
 
-  callbacks : {
-    '.ok.click'                     : 'confirm',
-    '.cancel.click'                 : 'close',
-    '.delete.click'                 : '_deleteProject',
-    '.add_collaborator.click'       : '_showEnterEmail',
-    '.minibutton.add.click'         : '_addCollaborator',
-    '#collaborator_email.keypress'  : '_maybeAddCollaborator',
-    '.remove.click'                 : '_removeCollaborator'
+  events : {
+    'click .ok'                     : 'confirm',
+    'click .cancel'                 : 'close',
+    'click .delete'                 : '_deleteProject',
+    'click .add_collaborator'       : '_showEnterEmail',
+    'click .minibutton.add'         : '_addCollaborator',
+    'keypress #collaborator_email'  : '_maybeAddCollaborator',
+    'click .remove'                 : '_removeCollaborator'
   },
 
   constructor : function(options) {

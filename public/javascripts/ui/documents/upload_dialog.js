@@ -186,17 +186,17 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
 
   className : 'row',
 
-  callbacks : {
-    '.remove_queue.click' : 'removeUploadFile',
-    '.open_edit.click'    : 'openEdit',
-    '.apply_all.click'    : 'applyAll'
+  events : {
+    'click .remove_queue' : 'removeUploadFile',
+    'click .open_edit'    : 'openEdit',
+    'click .apply_all'    : 'applyAll'
   },
 
   render : function() {
     $(this.el).html(JST['document/upload_document_tile']({model : this.model}));
     this._title    = this.$('input[name=title]');
     this._progress = this.$('.progress_bar');
-    this.setCallbacks();
+    this.handleEvents();
     return this;
   },
 
