@@ -288,12 +288,6 @@
     // `changed` event.
     previousAttributes : function() {
       return _.clone(this._previousAttributes);
-    },
-
-    // String representation of the model. Override this to provide a nice way
-    // to print models to the console.
-    toString : function() {
-      return 'Model ' + this.id;
     }
 
   });
@@ -409,11 +403,6 @@
         if (options.success) options.success(model, resp);
       };
       return model.save(null, {success : success, error : options.error});
-    },
-
-    // Override this function to get convenient logging in the console.
-    toString : function() {
-      return 'Collection (' + this.length + " models)";
     },
 
     // Initialize or re-initialize all internal state. Called when the
@@ -546,7 +535,7 @@
       return el;
     },
 
-    // Set callbacks, where this.callbacks is a hash of
+    // Set callbacks, where `this.callbacks` is a hash of
     //
     // *{"event selector": "callback"}*
     //
@@ -579,13 +568,14 @@
 
     // Performs the initial configuration of a View with a set of options.
     // Keys with special meaning *(model, collection, id, className)*, are
-    // attatched directly to the view.
+    // attached directly to the view.
     _initialize : function(options) {
       if (this.options) options = _.extend({}, this.options, options);
       if (options.model)      this.model      = options.model;
       if (options.collection) this.collection = options.collection;
       if (options.id)         this.id         = options.id;
       if (options.className)  this.className  = options.className;
+      if (options.tagName)    this.tagName    = options.tagName;
       this.options = options;
     }
 
