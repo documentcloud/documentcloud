@@ -37,6 +37,10 @@ news:
     - 2009-09-15
 
 github:
+  - - Backbone.js
+    - http://documentcloud.github.com/backbone/
+    - http://github.com/documentcloud/backbone/
+    - "A JavaScript library that helps you structure your client-side code with Models, Collections, and Views. Used heavily in the DocumentCloud workspace."
   - - "NY Times' Document Viewer"
     - http://github.com/documentcloud/document-viewer
     - http://github.com/documentcloud/document-viewer
