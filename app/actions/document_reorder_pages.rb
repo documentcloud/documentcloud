@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/support/setup'
+require File.dirname(__FILE__) + '/document_mod_base'
 require 'fileutils'
 
 class DocumentReorderPages < DocumentModBase
@@ -24,7 +25,7 @@ class DocumentReorderPages < DocumentModBase
     # Rewrite PDF with pdftk, using new page order
     cmd = "pdftk #{@pdf} cat #{page_order.join(' ')} output #{document.slug}.pdf_temp"
     `#{cmd}`
-    asset_store.save_pdf(document, "#{document.slug}.pdf_temp")
+    asset_store.save_pdf(document, "#{document.slug}.pdf_temp") if File.exists? "#{document.slug}.pdf_temp"
     FileUtils.rm @pdf + '_temp'
     
     # Pull images from S3, delete old images, then upload renamed images

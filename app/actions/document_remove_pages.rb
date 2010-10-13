@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/support/setup'
+require File.dirname(__FILE__) + '/document_mod_base'
 require 'fileutils'
 
 class DocumentRemovePages < DocumentModBase

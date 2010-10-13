@@ -145,7 +145,7 @@ class Document < ActiveRecord::Base
   
   # Upload a document to later be inserted into another document
   def upload_insert_document(params)
-    return json :bad_request => true unless params[:file] && params[:title].is_a?(String)
+    return json :bad_request => true unless params[:file] && params[:insert_page_at] && params[:title].is_a?(String)
 
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
@@ -159,6 +159,7 @@ class Document < ActiveRecord::Base
             'options' => {
               :id              => id,
               :insert_page_at  => params[:insert_page_at],
+              :pdfs_count      => params[:document_count].to_i,
               :access          => eventual_access
             }
           }.to_json}).body)

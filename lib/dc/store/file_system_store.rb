@@ -39,6 +39,11 @@ module DC
         ensure_directory(path)
         FileUtils.cp(pdf_path, local(path))
       end
+      
+      def delete_insert_pdfs(document)
+        path = local(File.join(document.path, 'inserts'))
+        FileUtils.rm_r(path) if File.exists?(path)
+      end
 
       def save_full_text(document, access=nil)
         ensure_directory(document.path)
@@ -78,8 +83,7 @@ module DC
       end
 
       def destroy(document)
-        doc_path = local(document.path)
-        FileUtils.rm_r(doc_path) if File.exists?(doc_path)
+        delete document.path
       end
 
 
