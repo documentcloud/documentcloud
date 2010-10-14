@@ -8,12 +8,13 @@ dc.model.Project = Backbone.Model.extend({
     this._setCollaboratorsResource();
   },
 
-  set : function(attrs, silent) {
+  set : function(attrs, options) {
+    attrs || (attrs = {});
     if (attrs.title)            attrs.title = Inflector.trim(attrs.title);
     if (attrs.document_ids)     attrs.document_count = attrs.document_ids.length;
     if (attrs.account_id)       attrs.owner = attrs.account_id == dc.app.accountId;
     if (attrs.collaborator_ids) attrs.collaborator_count = attrs.collaborator_ids.length;
-    Backbone.Model.prototype.set.call(this, attrs, silent);
+    Backbone.Model.prototype.set.call(this, attrs, options);
     if (attrs.id) this._setCollaboratorsResource();
     return this;
   },

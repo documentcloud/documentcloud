@@ -228,17 +228,17 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
   // We override `add` to listen for uploading documents, and to start polling
   // for changes.
-  add : function(model, silent) {
-    Backbone.Collection.prototype.add.call(this, model, silent);
+  add : function(model, options) {
+    Backbone.Collection.prototype.add.call(this, model, options);
     this._checkForPending();
   },
 
   // We override `refresh` to cancel the polling action if the current set
   // has no pending documents.
-  refresh : function(models, silent) {
+  refresh : function(models, options) {
     this._resetSelection();
     if (!this.pending().length) this.stopPolling();
-    Backbone.Collection.prototype.refresh.call(this, models, silent);
+    Backbone.Collection.prototype.refresh.call(this, models, options);
   },
 
   // When one of our models has changed, if it has changed its access level
