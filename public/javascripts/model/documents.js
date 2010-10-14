@@ -257,6 +257,5 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
 _.extend(dc.model.DocumentSet.prototype, dc.model.Selectable);
 
-// The main sets of Documents, used by the search tab, and the publish tab.
-window.Documents          = new dc.model.DocumentSet();
-window.PublishDocuments   = new dc.model.DocumentSet();
+// The main set of Documents.
+window.Documents = new dc.model.DocumentSet();
