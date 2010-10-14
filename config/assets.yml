@@ -1,4 +1,3 @@
-javascript_compressor: closure
 template_function: _.template
 embed_assets: datauri
 
