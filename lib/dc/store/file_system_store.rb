@@ -41,8 +41,7 @@ module DC
       end
       
       def delete_insert_pdfs(document)
-        path = local(File.join(document.path, 'inserts'))
-        FileUtils.rm_r(path) if File.exists?(path)
+        delete File.join(document.path, 'inserts')
       end
 
       def save_full_text(document, access=nil)
@@ -84,6 +83,11 @@ module DC
 
       def destroy(document)
         delete document.path
+      end
+      
+      def delete(path)
+        doc_path = local(path)
+        FileUtils.rm_r(doc_path) if File.exists?(doc_path)
       end
 
 
