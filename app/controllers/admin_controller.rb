@@ -31,7 +31,7 @@ class AdminController < ApplicationController
   end
 
   def all_accounts
-    json({'accounts' => Account.all})
+    json({'models' => Account.all})
   end
 
   def top_documents_csv
