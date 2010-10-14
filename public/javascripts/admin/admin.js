@@ -40,7 +40,8 @@ dc.ui.Admin = Backbone.View.extend({
     page_count     : function(account){ return -account.get('page_count') || 0; }
   },
 
-  constructor : function() {
+  constructor : function(options) {
+    Backbone.View.call(this, options);
     _.bindAll(this, 'renderCharts', 'launchWorker', 'reprocessFailedDocument', 'vacuumAnalyze', 'optimizeSolr', '_loadAllAccounts');
     stats.daily_documents_series = this._series(stats.daily_documents, 'Document');
     stats.daily_pages_series = this._series(stats.daily_pages, 'Page');
