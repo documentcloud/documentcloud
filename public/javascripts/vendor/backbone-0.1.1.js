@@ -12,7 +12,7 @@
   var Backbone = {};
 
   // Keep the version here in sync with `package.json`.
-  Backbone.VERSION = '0.1.0';
+  Backbone.VERSION = '0.1.1';
 
   // Export for both CommonJS and the browser.
   (typeof exports !== 'undefined' ? exports : this).Backbone = Backbone;
@@ -20,6 +20,9 @@
   // Require Underscore, if we're on the server, and it's not already present.
   var _ = this._;
   if (!_ && (typeof require !== 'undefined')) _ = require("underscore")._;
+
+  // For Backbone's purposes, jQuery owns the `$` variable.
+  var $ = this.$;
 
   // Helper function to correctly set up the prototype chain, for subclasses.
   // Similar to `goog.inherits`, but uses a hash of prototype properties and
@@ -121,6 +124,7 @@
     this.cid = _.uniqueId('c');
     this.set(attributes || {}, {silent : true});
     this._previousAttributes = _.clone(this.attributes);
+    if (this.initialize) this.initialize(attributes);
   };
 
   // Attach all inheritable methods to the Model prototype.
@@ -305,29 +309,42 @@
       delete options.comparator;
     }
     this._boundOnModelEvent = _.bind(this._onModelEvent, this);
-    this._initialize();
-    if (models) this.refresh(models,true);
+    this._reset();
+    if (models) this.refresh(models, {silent: true});
+    if (this.initialize) this.initialize(models, options);
   };
 
   // Define the Collection's inheritable methods.
   _.extend(Backbone.Collection.prototype, Backbone.Events, {
 
+    // The default model for a collection is just a **Backbone.Model**.
+    // This should be overridden in most cases.
     model : Backbone.Model,
 
     // Add a model, or list of models to the set. Pass **silent** to avoid
     // firing the `added` event for every new model.
     add : function(models, options) {
-      if (!_.isArray(models)) return this._add(models, options);
-      for (var i=0; i<models.length; i++) this._add(models[i], options);
-      return models;
+      if (_.isArray(models)) {
+        for (var i = 0, l = models.length; i < l; i++) {
+          this._add(models[i], options);
+        }
+      } else {
+        this._add(models, options);
+      }
+      return this;
     },
 
     // Remove a model, or a list of models from the set. Pass silent to avoid
     // firing the `removed` event for every model removed.
     remove : function(models, options) {
-      if (!_.isArray(models)) return this._remove(models, options);
-      for (var i=0; i<models.length; i++) this._remove(models[i], options);
-      return models;
+      if (_.isArray(models)) {
+        for (var i = 0, l = models.length; i < l; i++) {
+          this._remove(models[i], options);
+        }
+      } else {
+        this._remove(models, options);
+      }
+      return this;
     },
 
     // Get a model from the set by id.
@@ -364,15 +381,9 @@
     // you can refresh the entire set with a new list of models, without firing
     // any `added` or `removed` events. Fires `refresh` when finished.
     refresh : function(models, options) {
+      models  || (models = []);
       options || (options = {});
-      models = models || [];
-      var collection = this;
-      if (models[0] && !(models[0] instanceof Backbone.Model)) {
-        models = _.map(models, function(attrs, i) {
-          return new collection.model(attrs);
-        });
-      }
-      this._initialize();
+      this._reset();
       this.add(models, {silent: true});
       if (!options.silent) this.trigger('refresh', this);
       return this;
@@ -405,9 +416,8 @@
       return model.save(null, {success : success, error : options.error});
     },
 
-    // Initialize or re-initialize all internal state. Called when the
-    // collection is refreshed.
-    _initialize : function(options) {
+    // Reset all internal state. Called when the collection is refreshed.
+    _reset : function(options) {
       this.length = 0;
       this.models = [];
       this._byId  = {};
@@ -418,7 +428,10 @@
     // hash indexes for `id` and `cid` lookups.
     _add : function(model, options) {
       options || (options = {});
-      var already = this.get(model);
+      if (!(model instanceof Backbone.Model)) {
+        model = new this.model(model);
+      }
+      var already = this.getByCid(model);
       if (already) throw new Error(["Can't add the same model to a set twice", already.id]);
       this._byId[model.id] = model;
       this._byCid[model.cid] = model;
@@ -435,7 +448,7 @@
     // hash indexes for `id` and `cid` lookups.
     _remove : function(model, options) {
       options || (options = {});
-      model = this.get(model);
+      model = this.getByCid(model);
       if (!model) return null;
       delete this._byId[model.id];
       delete this._byCid[model.cid];
@@ -481,10 +494,10 @@
   // Backbone.View
   // -------------
 
-  // Creating a Backbone.View creates its intial element outside of the DOM,
+  // Creating a Backbone.View creates its initial element outside of the DOM,
   // if an existing element is not provided...
   Backbone.View = function(options) {
-    this._initialize(options || {});
+    this._configure(options || {});
     if (this.options.el) {
       this.el = this.options.el;
     } else {
@@ -493,7 +506,7 @@
       if (this.className) attrs.className = this.className;
       this.el = this.make(this.tagName, attrs);
     }
-    return this;
+    if (this.initialize) this.initialize(options);
   };
 
   // jQuery lookup, scoped to DOM elements within the current view.
@@ -569,7 +582,7 @@
     // Performs the initial configuration of a View with a set of options.
     // Keys with special meaning *(model, collection, id, className)*, are
     // attached directly to the view.
-    _initialize : function(options) {
+    _configure : function(options) {
       if (this.options) options = _.extend({}, this.options, options);
       if (options.model)      this.model      = options.model;
       if (options.collection) this.collection = options.collection;

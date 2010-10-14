@@ -27,13 +27,14 @@ dc.model.Selectable = {
   },
 
   _add : function(model, options) {
-    if (model.attributes.selected == null) model.attributes.selected = false;
-    Backbone.Collection.prototype._add.call(this, model, options);
+    var attrs = model.attributes || model;
+    if (attrs.selected == null) attrs.selected = false;
+    model = Backbone.Collection.prototype._add.call(this, model, options);
     if (model.get('selected')) this.selectedCount += 1;
   },
 
   _remove : function(model, options) {
-    Backbone.Collection.prototype._remove.call(this, model, options);
+    model = Backbone.Collection.prototype._remove.call(this, model, options);
     if (this.selectedCount > 0 && model.get('selected')) this.selectedCount -= 1;
   },
 
