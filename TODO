@@ -1,20 +1,13 @@
-ARON'S LIST:
+TODO:
 
   * Document forking / duplicate detection.
       
   * Visualizations tab.
   
   * Add an "Email me when this Job completes or fails." to multi-file upload dialog.
-  
-
-TODO:
-
-  * Investigate jumping annotations in IE.
 
   * Separate Private annotation URLS from public ones ... or else they jump when
     you publish a document.
-
-  * Remove character limit from annotation titles.
 
   * Add a contributor list to the documents tab...
 
@@ -25,12 +18,14 @@ TODO:
 
   * Add placeholder JS fallback for non HTML5 browsers.
     
-  * Things have stabilized. Time for another batch of tests.
-
   * Notes view: add a way to search just the text of your notes, list them etc.
           
 
 DONE:
+
+  * Investigate jumping annotations in IE.
+  
+  * Remove character limit from annotation titles.
 
   * Side-by-side annotations, via absolute positioning.
   
