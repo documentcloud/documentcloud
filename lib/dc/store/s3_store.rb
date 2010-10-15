@@ -49,7 +49,8 @@ module DC
       end
 
       def save_insert_pdf(document, pdf_path, access=DEFAULT_ACCESS)
-        path = File.join(document.path, 'insert', pdf_path)
+        pdf_filename = File.basename(pdf_path)
+        path = File.join(document.path, 'insert', pdf_filename)
         save_file(pdf_path, path, access)
       end
       
