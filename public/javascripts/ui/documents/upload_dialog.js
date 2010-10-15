@@ -157,15 +157,26 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     resp = JSON.parse(resp);
     if (resp.bad_request) {
       return this.error("Upload failed.");
-    } else {
-      Documents.add(new dc.model.Document(resp));
+    } else if (!this.options.insertPages) {
+      Documents.add(new dc.model.Document(response.model));
       if (this._project) Projects.incrementCountById(this._project.id);
+    } else if (this.options.insertPages) {
+      this.documentResponse = response;
     }
     this._tiles[queueId].hide();
   },
 
   _onAllComplete : function(e, data) {
     this.hideSpinner();
+    if (this.options.insertPages) {
+      window.opener && window.opener.Documents &&
+          window.opener.Documents.get(this.options.documentId).set(this.documentResponse);
+      dc.ui.Dialog.alert('This process will take a few minutes.<br /><br />This window must close while pages are being added and the document is being reconstructed.', { 
+        onClose : function() {
+          window.close();
+        }
+      });
+    }
     this.close();
   },
 
