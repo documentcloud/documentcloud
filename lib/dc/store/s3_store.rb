@@ -55,7 +55,7 @@ module DC
       end
       
       def delete_insert_pdfs(document)
-        path = File.join(document.pdf_path, 'inserts', pdf_path)
+        path = File.join(document.pdf_path, 'inserts')
         bucket.delete_folder(path)
       end
 
