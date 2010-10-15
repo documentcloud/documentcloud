@@ -50,12 +50,12 @@ module DC
 
       def save_insert_pdf(document, pdf_path, access=DEFAULT_ACCESS)
         pdf_filename = File.basename(pdf_path)
-        path = File.join(document.path, 'insert', pdf_filename)
+        path = File.join(document.path, 'inserts', pdf_filename)
         save_file(pdf_path, path, access)
       end
       
       def delete_insert_pdfs(document)
-        path = File.join(document.pdf_path, 'insert', pdf_path)
+        path = File.join(document.pdf_path, 'inserts', pdf_path)
         bucket.delete_folder(path)
       end
 
