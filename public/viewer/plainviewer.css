@@ -39,13 +39,22 @@
   background: #bbb;
 }
 
-.DV-privateLock, .DV-showEdit {
+.DV-privateLock, .DV-showEdit, .DV-permalink {
   width: 16px; height: 16px;
   float: left;
   margin: -2px 0 0 10px;
   margin-left: 10px;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+
+.DV-permalink {
+  display: block;
+  width: 16px; height: 16px;
+  float: left;
+  padding: 0;
+  margin-left: 10px;
+  left: 0; top: 0;
 }
 
 .DV-annotationTitleInput,
