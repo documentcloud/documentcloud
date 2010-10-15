@@ -111,6 +111,12 @@ body {
         #statistics .documents .doc {
           width: 30px; height: 37.5px;
         }
+        #statistics .login_as .minibutton {
+          display: none;
+        }
+        #statistics .display_view:hover .login_as .minibutton {
+          display: block;
+        }
 
 .icon.minus {
   position: absolute; margin-top: 5px;

@@ -16,12 +16,13 @@ dc.ui.AccountView = Backbone.View.extend({
   },
 
   events : {
-    'click .edit_account':    'showEdit',
-    'click .change_password': 'promptPasswordChange',
-    'click .resend_welcome':  'resendWelcomeEmail',
-    'click .admin_link':      '_openAccounts',
-    'click .save_changes':    '_doneEditing',
-    'click .delete_account':  '_deleteAccount'
+    'click .edit_account':          'showEdit',
+    'click .change_password':       'promptPasswordChange',
+    'click .resend_welcome':        'resendWelcomeEmail',
+    'click .admin_link':            '_openAccounts',
+    'click .save_changes':          '_doneEditing',
+    'click .delete_account':        '_deleteAccount',
+    'click .login_as .minibutton':  '_loginAsAccount'
   },
 
   constructor : function(options) {
@@ -138,6 +139,10 @@ dc.ui.AccountView = Backbone.View.extend({
       this.model.destroy();
       return true;
     }, this));
+  },
+
+  _loginAsAccount : function() {
+    window.location = "/admin/login_as?email=" + encodeURIComponent(this.model.get('email'));
   },
 
   _onSuccess : function(model, resp) {
