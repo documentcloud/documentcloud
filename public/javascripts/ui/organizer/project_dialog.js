@@ -62,7 +62,9 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     var wasOpen = Projects.selected()[0] == this.model;
     if (!this.model.get('owner')) {
       Projects.remove(this.model);
-      this.model.collaborators.current().destroy();
+      var me = Accounts.current().clone();
+      me.collection = this.model.collaborators;
+      me.destroy();
     } else {
       this.model.destroy();
     }
