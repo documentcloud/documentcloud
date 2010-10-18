@@ -2,8 +2,8 @@ TODO:
 
   * Upgrade to Passenger 3.
   
-  * Do the OCR cleanup pass.
-
+  * Reprocess the text of all OCR'd documents with a cleanup.
+  
   * Document forking / duplicate detection.
       
   * Visualizations tab.
@@ -26,6 +26,8 @@ TODO:
           
 
 DONE:
+
+  * Do the OCR cleanup heuristic.
 
   * Investigate jumping annotations in IE.
   
