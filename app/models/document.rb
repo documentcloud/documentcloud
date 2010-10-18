@@ -319,11 +319,11 @@ class Document < ActiveRecord::Base
 
   # Externally used image path, not to be confused with page_image_path()
   def page_image_template
-    "#{slug}-p{page}-{size}.gif#{cache_buster}"
+    "#{slug}-p{page}-{size}.gif?#{modified_timestamp}"
   end
   
-  def cache_buster
-    "?#{updated_at.to_i}"
+  def modified_timestamp
+    "#{updated_at.to_i}"
   end
   
   def page_text_template
@@ -345,11 +345,11 @@ class Document < ActiveRecord::Base
   end
 
   def public_thumbnail_url
-    File.join(DC::Store::AssetStore.web_root, page_image_path(1, 'thumbnail') + cache_buster)
+    File.join(DC::Store::AssetStore.web_root, page_image_path(1, 'thumbnail'))
   end
 
   def private_thumbail_url
-    DC::Store::AssetStore.new.authorized_url(page_image_path(1, 'thumbnail') + cache_buster)
+    DC::Store::AssetStore.new.authorized_url(page_image_path(1, 'thumbnail'))
   end
 
   def thumbnail_url
@@ -519,36 +519,35 @@ class Document < ActiveRecord::Base
   
   # TODO: Make the to_json an extended form of the canonical.
   def to_json(opts={})
-    data = {
-      :id                  => id,
-      :organization_id     => organization_id,
-      :account_id          => account_id,
-      :created_at          => created_at.to_date.strftime(DISPLAY_DATE_FORMAT),
-      :access              => access,
-      :page_count          => page_count,
-      :title               => title,
-      :slug                => slug,
-      :source              => source,
-      :description         => description,
-      :highlight           => highlight,
-      :organization_name   => organization_name,
-      :organization_slug   => organization_slug,
-      :account_name        => account_name,
-      :account_slug        => account_slug,
-      :related_article     => related_article,
-      :pdf_url             => pdf_url,
-      :thumbnail_url       => thumbnail_url,
-      :full_text_url       => full_text_url,
-      :page_image_url      => page_image_url_template,
-      :document_viewer_url => document_viewer_url,
-      :document_viewer_js  => canonical_url(:js),
-      :remote_url          => remote_url,
-      :detected_remote_url => detected_remote_url,
-      :publish_at          => publish_at.as_json,
-      :hits                => hits
-    }
-    data[:annotation_count] = annotation_count if annotation_count
-    data.to_json
+    {
+      'id'                  => id,
+      'organization_id'     => organization_id,
+      'account_id'          => account_id,
+      'created_at'          => created_at.to_date.strftime(DISPLAY_DATE_FORMAT),
+      'access'              => access,
+      'page_count'          => page_count,
+      'title'               => title,
+      'slug'                => slug,
+      'source'              => source,
+      'description'         => description,
+      'highlight'           => highlight,
+      'annotation_count'    => annotation_count,
+      'organization_name'   => organization_name,
+      'organization_slug'   => organization_slug,
+      'account_name'        => account_name,
+      'account_slug'        => account_slug,
+      'related_article'     => related_article,
+      'pdf_url'             => pdf_url,
+      'modified_timestamp'  => modified_timestamp,
+      'thumbnail_url'       => thumbnail_url,
+      'full_text_url'       => full_text_url,
+      'page_image_url'      => page_image_url_template,
+      'document_viewer_url' => document_viewer_url,
+      'document_viewer_js'  => canonical_url(:js),
+      'remote_url'          => remote_url,
+      'detected_remote_url' => detected_remote_url,
+      'hits'                => hits
+    }.to_json
   end
 
   # The filtered attributes we're allowed to display in the admin UI.

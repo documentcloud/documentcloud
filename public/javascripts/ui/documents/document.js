@@ -225,7 +225,9 @@ dc.ui.Document = Backbone.View.extend({
     switch (access) {
       case dc.access.PENDING: return '/images/embed/documents/processing.png';
       case dc.access.ERROR:   return '/images/embed/documents/failed.png';
-      default:                return this.model.get('thumbnail_url');
+      default:                return [this.model.get('thumbnail_url'),
+                                      '?',
+                                      this.model.get('modified_timestamp')].join('');
     }
   },
 
