@@ -145,14 +145,14 @@ class Document < ActiveRecord::Base
   
   # Upload a document to later be inserted into another document
   def upload_insert_document(params)
-    return json :bad_request => true unless params[:file] && params[:insert_page_at] && params[:title].is_a?(String)
+    return json :bad_request => true unless params[:file] && params[:insert_page_at]
 
-    eventual_access ||= self.access || PRIVATE
-    self.update_attributes :access => PENDING
     
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:document_number]+'.pdf') do |path|
       DC::Store::AssetStore.new.save_insert_pdf(self, path)
       if params[:document_number] == params[:document_count]
+        eventual_access ||= self.access || PRIVATE
+        self.update_attributes :access => PENDING
         job = JSON.parse(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
           'action'  => 'document_insert_pages',
           'inputs'  => [id],
