@@ -1,5 +1,9 @@
 TODO:
 
+  * Upgrade to Passenger 3.
+  
+  * Do the OCR cleanup pass.
+
   * Document forking / duplicate detection.
       
   * Visualizations tab.
