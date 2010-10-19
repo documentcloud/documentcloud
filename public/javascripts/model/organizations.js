@@ -1,6 +1,12 @@
 // Organization Model
 
-dc.model.Organization = Backbone.Model.extend({});
+dc.model.Organization = Backbone.Model.extend({
+
+  groupSearchUrl : function() {
+    return "/#search/" + encodeURIComponent('group: ' + this.get('slug'));
+  }
+
+});
 
 // Organization Set
 
