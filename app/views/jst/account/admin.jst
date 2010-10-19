@@ -16,7 +16,7 @@
 </td>
 <td class="organization">
   <span class="display">
-    <%= Inflector.truncate(account.organization().get('name'), 40) %>
+    <a href="/#search/group:<%=account.organization().get('slug')%>"><%= Inflector.truncate(account.organization().get('name'), 40) %></a>
   </span>
 </td>
 <td class="document_count">
