@@ -8,6 +8,9 @@ class DocumentRemovePages < DocumentModBase
     begin
       prepare_pdf
       remove_page options['pages']
+      if options['replace_pages_start'] and options['insert_document_count']
+        document.insert_documents(options['replace_pages_start'], options['insert_document_count'])
+      end
     rescue Exception => e
       LifecycleMailer.deliver_exception_notification(e)
       raise e

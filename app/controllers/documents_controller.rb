@@ -80,7 +80,21 @@ class DocumentsController < ApplicationController
   
   def upload_insert_document
     return not_found unless doc = current_document(true)
-    doc.upload_insert_document(params)
+    return json :bad_request => true unless params[:file] && (params[:insert_page_at] ||
+                                                              params[:replace_pages_start])
+
+    DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:document_number]+'.pdf') do |path|
+      DC::Store::AssetStore.new.save_insert_pdf(self, path)
+      if params[:document_number] == params[:document_count]
+        if params[:replace_pages_start]
+          range = (params[:replace_pages_start]..params[:replace_pages_end]).to_a
+          doc.remove_pages(range, params[:replace_pages_start].to_i, params[:document_count].to_i)
+        else
+          doc.insert_documents(params[:insert_page_at], params[:document_count].to_i)
+        end
+      end
+    end
+    
     json doc
   end
   

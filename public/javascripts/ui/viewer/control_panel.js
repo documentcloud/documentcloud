@@ -2,17 +2,18 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   id : 'control_panel',
 
-  callbacks : {
-    '.set_sections.click':          'openSectionEditor',
-    '.public_annotation.click':     'togglePublicAnnotation',
-    '.private_annotation.click':    'togglePrivateAnnotation',
-    '.edit_description.click':      'editDescription',
-    '.edit_title.click':            'editTitle',
-    '.edit_related_article.click':  'editRelatedArticle',
-    '.edit_remove_pages.click':     'editRemovePages',
-    '.edit_reorder_pages.click':    'editReorderPages',
-    '.edit_page_text.click':        'editPageText',
-    '.edit_add_pages.click':        'editAddPages'
+  events : {
+    'click .set_sections':          'openSectionEditor',
+    'click .public_annotation':     'togglePublicAnnotation',
+    'click .private_annotation':    'togglePrivateAnnotation',
+    'click .edit_description':      'editDescription',
+    'click .edit_title':            'editTitle',
+    'click .edit_related_article':  'editRelatedArticle',
+    'click .edit_remove_pages':     'editRemovePages',
+    'click .edit_reorder_pages':    'editReorderPages',
+    'click .edit_page_text':        'editPageText',
+    'click .edit_add_pages':        'editAddPages',
+    'click .edit_replace_pages':    'editReplacePages'
   },
 
   render : function() {
@@ -62,6 +63,10 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   
   editAddPages : function() {
     dc.app.editor.addPagesEditor.toggle();
+  },
+  
+  editReplacePages : function() {
+    dc.app.editor.replacePagesEditor.toggle();
   },
   
   editRemovePages : function() {

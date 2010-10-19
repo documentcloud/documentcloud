@@ -439,3 +439,48 @@
 .DV-pages.add_pages_viewer {
   margin-top: 64px;
 }
+
+/* ================= */
+/* = Replace Pages = */
+/* ================= */
+
+#replace_pages_container {
+  position: absolute;
+  z-index: 10001;
+  top: 0;
+  left: 0;
+  right: 266px;
+  background-color: white;
+  border-bottom: 1px solid #505050;
+  height: 64px;
+}
+  #replace_pages_container .replace_pages_hint {
+    font-size: 16px;
+    color: #D0D0D0;
+    font-weight: bold;
+    margin: 24px 0 0 24px;
+    font-family: 'Lucida Grande', sans-serif;
+    text-transform: uppercase;
+    position: absolute;
+    top: 0;
+  }
+  #replace_pages_container .replace_pages_upload {
+    margin: 20px 24px 0 0;
+    visibility: hidden;
+  }
+  #replace_pages_container.on_upload .replace_pages_upload {
+    visibility: visible;
+  }
+  
+  #replace_pages_container #new_documentUploader {
+    position: absolute;
+    right: 24px;
+    top: 20px;
+    display: none;
+  }
+  #replace_pages_container.on_upload #new_documentUploader {
+    display: block;
+  }
+.DV-pages.replace_pages_viewer {
+  margin-top: 64px;
+}

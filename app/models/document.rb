@@ -143,35 +143,27 @@ class Document < ActiveRecord::Base
     doc.reload
   end
   
-  # Upload a document to later be inserted into another document
-  def upload_insert_document(params)
-    return json :bad_request => true unless params[:file] && params[:insert_page_at]
-
-    
-    DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:document_number]+'.pdf') do |path|
-      DC::Store::AssetStore.new.save_insert_pdf(self, path)
-      if params[:document_number] == params[:document_count]
-        eventual_access ||= self.access || PRIVATE
-        self.update_attributes :access => PENDING
-        job = JSON.parse(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-          'action'  => 'document_insert_pages',
-          'inputs'  => [id],
-          'options' => {
-            :id              => id,
-            :insert_page_at  => params[:insert_page_at],
-            :pdfs_count      => params[:document_count].to_i,
-            :access          => eventual_access
-          }
-        }.to_json}).body)
-        ProcessingJob.create!(
-          :document_id    => id,
-          :account_id     => account_id,
-          :cloud_crowd_id => job['id'],
-          :title          => title,
-          :remote_job     => job
-        )
-      end
-    end
+  # Insert all documents that have been previously saved into the document's /inserts
+  def insert_documents(insert_page_at, document_count)
+    eventual_access ||= self.access || PRIVATE
+    self.update_attributes :access => PENDING
+    job = JSON.parse(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+      'action'  => 'document_insert_pages',
+      'inputs'  => [id],
+      'options' => {
+        :id              => id,
+        :insert_page_at  => insert_page_at,
+        :pdfs_count      => document_count,
+        :access          => eventual_access
+      }
+    }.to_json}).body)
+    ProcessingJob.create!(
+      :document_id    => id,
+      :account_id     => account_id,
+      :cloud_crowd_id => job['id'],
+      :title          => title,
+      :remote_job     => job
+    )
   end
 
   # Retrieve a random document.
@@ -456,16 +448,18 @@ class Document < ActiveRecord::Base
     self.upload_text_assets(pages)
   end
   
-  def remove_pages(pages)
+  def remove_pages(pages, replace_pages_start=nil, insert_document_count=nil)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
     job = JSON.parse(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'document_remove_pages',
       'inputs'  => [id],
       'options' => {
-        :id     => id,
-        :pages  => pages,
-        :access => eventual_access
+        :id                    => id,
+        :pages                 => pages,
+        :access                => eventual_access,
+        :replace_pages_start   => replace_pages_start,
+        :insert_document_count => insert_document_count
       }
     }.to_json}).body)
     ProcessingJob.create!(
