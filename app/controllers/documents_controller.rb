@@ -84,7 +84,7 @@ class DocumentsController < ApplicationController
                                                               params[:replace_pages_start])
 
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:document_number]+'.pdf') do |path|
-      DC::Store::AssetStore.new.save_insert_pdf(self, path)
+      DC::Store::AssetStore.new.save_insert_pdf(doc, path)
       if params[:document_number] == params[:document_count]
         if params[:replace_pages_start]
           range = (params[:replace_pages_start]..params[:replace_pages_end]).to_a

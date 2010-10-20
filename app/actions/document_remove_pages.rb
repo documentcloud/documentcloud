@@ -7,9 +7,11 @@ class DocumentRemovePages < DocumentModBase
   def process
     begin
       prepare_pdf
+      @insert_after_remove = options['replace_pages_start'] and options['insert_document_count']
       remove_page options['pages']
-      if options['replace_pages_start'] and options['insert_document_count']
-        document.insert_documents(options['replace_pages_start'], options['insert_document_count'])
+      if @insert_after_remove
+        # -1 because we are inserting BEFORE where the pages were removed.
+        document.insert_documents(options['replace_pages_start']-1, options['insert_document_count'])
       end
     rescue Exception => e
       LifecycleMailer.deliver_exception_notification(e)
@@ -90,16 +92,20 @@ class DocumentRemovePages < DocumentModBase
     end
     
     document.page_count = keep_pages.length
-    document.access = access
-    text = Page.find_all_by_document_id(235).inject('') {|m, p| m + ' ' + p.text }
-    document.full_text.update_attributes({:text => text})
-    Page.refresh_page_map(document)
-    EntityDate.refresh(document)
     document.save!
-    pages = document.reload.pages
-    Sunspot.index pages
-    document.reprocess_entities
-    document.upload_text_assets(pages)    
+
+    if not @insert_after_remove
+      text = Page.find_all_by_document_id(document.id).inject('') {|m, p| m + ' ' + p.text }
+      document.full_text.update_attributes({:text => text})
+      Page.refresh_page_map(document)
+      EntityDate.refresh(document)
+      document.access = access
+      document.save!
+      pages = document.reload.pages
+      Sunspot.index pages
+      document.reprocess_entities
+      document.upload_text_assets(pages)    
+    end
   end
   
 end
