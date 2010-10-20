@@ -57,7 +57,7 @@ touch on EC2 in here.
 * Turn off smtpd_use_tsl in /etc/postfix/main.cf.
 
 * Check out the latest stable nginx source, then use 
-  passenger-install-nginx-module to install a custom nginx, 
+  passenger-install-nginx-module to install a custom nginx (0.8.53), 
   with prefix /usr/local/nginx, and including
   --with-http_gzip_static_module --with-http_ssl_module
   

@@ -1,9 +1,5 @@
 TODO:
-
-  * Upgrade to Passenger 3.
-  
-  * Reprocess the text of all OCR'd documents with a cleanup.
-  
+    
   * Document forking / duplicate detection.
       
   * Visualizations tab.
@@ -26,6 +22,8 @@ TODO:
           
 
 DONE:
+
+  * Upgrade to Passenger 3.
 
   * Add Name -> Search links in the Admin for all Accounts.
 
