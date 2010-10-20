@@ -89,6 +89,15 @@
     background-image: url(/images/embed/ui/minus.png);
   }
 
+.icon.toggle {
+  width: 7px; height: 7px;
+  background-position: 0 -7px;
+  background-image: url(/images/embed/ui/toggle.png);
+}
+  .show_accounts .icon.toggle {
+    background-position: 0 0;
+  }
+
 .icon.file {
   height: 32px;
   width: 32px;

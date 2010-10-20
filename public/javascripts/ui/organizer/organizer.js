@@ -13,6 +13,7 @@ dc.ui.Organizer = Backbone.View.extend({
     'click .your_documents'       : 'showYourDocuments',
     'click .org_documents'        : 'showOrganizationDocuments',
     'click .published_documents'  : 'showPublishedDocuments',
+    'click .toggle_account_links' : 'toggleAccountLinks',
     'click .row'                  : '_filterFacet',
     'click .cancel_search'        : '_removeFacet',
     'click .more'                 : '_loadFacet',
@@ -110,6 +111,11 @@ dc.ui.Organizer = Backbone.View.extend({
 
   showOrganizationDocuments : function() {
     Accounts.current().openOrganizationDocuments();
+  },
+
+  toggleAccountLinks : function() {
+    var mode = this.modes.accounts == 'show' ? 'hide' : 'show';
+    this.setMode(mode, 'accounts');
   },
 
   _facetStringFor : function(el) {

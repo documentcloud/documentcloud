@@ -75,9 +75,14 @@
       padding-right: 11px;
       margin-left: 6px;
     }
-      #organizer .box:hover .edit_glyph,
-      #organizer .box.is_selected .edit_glyph {
-        display: inline;
+      #organizer .toggle_account_links {
+        position: absolute;
+        margin: 6px 0 0 -11px;
+      }
+      #organizer .box {
+        background-image: url(/images/embed/ui/box_back.png);
+        background-repeat: repeat-y;
+        background-position: right top;
       }
         #organizer .box:hover {
           background: #fff;
