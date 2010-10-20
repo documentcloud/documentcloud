@@ -110,10 +110,10 @@
 .DV-footerLogoLink {
   display: block;
 /*  width: 24px; height: 24px;*/
-  width: 33px; height: 15px;
-  background: url(images/dc_mini_logo.png);
+  width: 33px; height: 24px;
+  background: url(images/dc_mini_logo.png) no-repeat center center;
   position: absolute;
-  right: 5px; top: 9px;
+  right: 5px; top: 5px;
 }
 
 .DV-views {
