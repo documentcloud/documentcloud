@@ -65,6 +65,7 @@ class AdminController < ApplicationController
     @params = params
     org = Organization.create(params[:organization])
     return fail(org.errors.full_messages.first) if org.errors.any?
+    params[:account][:email].strip! if params[:account][:email]
     acc = Account.create(params[:account].merge({:organization => org, :role => Account::ADMINISTRATOR}))
     return org.destroy && fail(acc.errors.full_messages.first) if acc.errors.any?
     acc.send_login_instructions

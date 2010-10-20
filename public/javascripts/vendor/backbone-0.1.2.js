@@ -417,12 +417,19 @@
     create : function(model, options) {
       options || (options = {});
       if (!(model instanceof Backbone.Model)) model = new this.model(model);
-      model.collection = this;
-      var success = function(resp) {
-        model.collection.add(model);
-        if (options.success) options.success(model, resp);
+      var coll = model.collection = this;
+      var success = function(nextModel, resp) {
+        coll.add(nextModel);
+        if (options.success) options.success(nextModel, resp);
       };
       return model.save(null, {success : success, error : options.error});
+    },
+
+    // Proxy to _'s chain. Can't be proxied the same way the rest of the
+    // underscore methods are proxied because it relies on the underscore
+    // constructor.
+    chain: function () {
+      return _(this.models).chain();
     },
 
     // Reset all internal state. Called when the collection is refreshed.
@@ -508,14 +515,7 @@
   // if an existing element is not provided...
   Backbone.View = function(options) {
     this._configure(options || {});
-    if (this.options.el) {
-      this.el = this.options.el;
-    } else {
-      var attrs = {};
-      if (this.id) attrs.id = this.id;
-      if (this.className) attrs.className = this.className;
-      this.el = this.make(this.tagName, attrs);
-    }
+    this._ensureElement();
     if (this.initialize) this.initialize(options);
   };
 
@@ -596,10 +596,20 @@
       if (this.options) options = _.extend({}, this.options, options);
       if (options.model)      this.model      = options.model;
       if (options.collection) this.collection = options.collection;
+      if (options.el)         this.el         = options.el;
       if (options.id)         this.id         = options.id;
       if (options.className)  this.className  = options.className;
       if (options.tagName)    this.tagName    = options.tagName;
       this.options = options;
+    },
+
+    // Ensure that the View has a DOM element to render into.
+    _ensureElement : function() {
+      if (this.el) return;
+      var attrs = {};
+      if (this.id) attrs.id = this.id;
+      if (this.className) attrs.className = this.className;
+      this.el = this.make(this.tagName, attrs);
     }
 
   });
