@@ -7,8 +7,14 @@ namespace :remote do
     remote "app:console", central_servers
   end
 
+  desc "Start the app servers"
   task :start do
     remote "app:start", app_servers
+  end
+
+  desc "Restart the app servers"
+  task :restart do
+    remote "app:restart", app_servers
   end
 
   desc "Start all resources, on all servers"
