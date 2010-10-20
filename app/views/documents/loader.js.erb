@@ -26,7 +26,7 @@
   loadCSS('<%= root %>/viewer/printviewer.css', 'print');
 
   DV.afterLoad = function(viewer) {
-    DV.jQuery('.DV-logoLink').attr({href : 'http://www.documentcloud.org'});
+    DV.jQuery('.DV-logoLink, .DV-footerLogoLink').attr({href : 'http://www.documentcloud.org'});
     var loc = window.location;
     var url = loc.protocol + '//' + loc.host + loc.pathname + loc.search;
     if (url.match(/^file:/)) return false;

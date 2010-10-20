@@ -107,6 +107,15 @@
     background: url(images/dc_inline_logo.png);
   }
 
+.DV-footerLogoLink {
+  display: block;
+/*  width: 24px; height: 24px;*/
+  width: 33px; height: 15px;
+  background: url(images/dc_mini_logo.png);
+  position: absolute;
+  right: 5px; top: 9px;
+}
+
 .DV-views {
   position: relative;
   z-index: 10;
