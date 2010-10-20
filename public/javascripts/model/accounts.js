@@ -52,6 +52,10 @@ dc.model.Account = Backbone.Model.extend({
     return !!this.get('pending');
   },
 
+  searchUrl : function() {
+    return "/#search/" + encodeURIComponent("account: " + this.get('slug'));
+  },
+
   gravatarUrl : function(size) {
     var hash = this.get('hashed_email');
     var fallback = encodeURIComponent(this.DEFAULT_AVATAR);

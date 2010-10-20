@@ -6,7 +6,7 @@
 </td>
 <td class="name">
   <span class="display">
-    <%= account.fullName(true) %>&nbsp;<span class="pending_notification">(pending)</span>
+    <a href="<%= account.searchUrl() %>"><%= account.fullName(true) %></a>&nbsp;<span class="pending_notification">(pending)</span>
   </span>
 </td>
 <td class="email">
