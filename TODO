@@ -1,7 +1,5 @@
 TODO:
 
-  * Add Name -> Search links in the Admin for all Accounts.
-
   * Upgrade to Passenger 3.
   
   * Reprocess the text of all OCR'd documents with a cleanup.
@@ -28,6 +26,8 @@ TODO:
           
 
 DONE:
+
+  * Add Name -> Search links in the Admin for all Accounts.
 
   * Do the OCR cleanup heuristic.
 
