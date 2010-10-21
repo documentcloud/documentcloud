@@ -142,7 +142,7 @@ class Document < ActiveRecord::Base
     end
     doc.reload
   end
-  
+
   # Insert all documents that have been previously saved into the document's /inserts
   def insert_documents(insert_page_at, document_count, eventual_access=nil)
     eventual_access ||= self.access || PRIVATE
@@ -172,14 +172,14 @@ class Document < ActiveRecord::Base
       first(:order => 'random()')
     end
   end
-  
+
   def upload_text_assets(pages)
     asset_store.save_full_text(self, access)
     pages.each do |page|
       asset_store.save_page_text(self, page.page_number, page.text, access)
     end
   end
-  
+
   # Update a document, with S3 permission fixing, cache expiry, and access control.
   def secure_update(attrs, account)
     if !account.allowed_to_edit?(self)
@@ -201,7 +201,7 @@ class Document < ActiveRecord::Base
   # Produce the full text of the document by combining the text of each of
   # the pages. Used at initial import.
   def combined_page_text
-    self.pages.all(:select => [:text]).map(&:text).join('')
+    self.pages.all(:select => [:text], :order => 'page_number asc').map(&:text).join('')
   end
 
   # Return an array of all of the document entity values for a given type,
@@ -313,11 +313,11 @@ class Document < ActiveRecord::Base
   def page_image_template
     "#{slug}-p{page}-{size}.gif?#{modified_timestamp}"
   end
-  
+
   def modified_timestamp
     "#{updated_at.to_i}"
   end
-  
+
   def page_text_template
     "#{slug}-p{page}.txt"
   end
@@ -428,7 +428,7 @@ class Document < ActiveRecord::Base
       'inputs'  => [id]
     }.to_json})
   end
-  
+
   def save_page_text(modified_pages)
     modified_pages = JSON.parse(modified_pages)
     modified_pages.each_pair do |page_number, page_text|
@@ -436,9 +436,8 @@ class Document < ActiveRecord::Base
       page.text = page_text
       page.save
     end
-    
-    text = Page.find_all_by_document_id(id).inject('') {|m, p| m + ' ' + p.text }
-    self.full_text.update_attributes({:text => text})
+
+    self.full_text.refresh
     Page.refresh_page_map(self)
     EntityDate.refresh(self)
     self.save!
@@ -447,7 +446,7 @@ class Document < ActiveRecord::Base
     self.reprocess_entities
     self.upload_text_assets(pages)
   end
-  
+
   def remove_pages(pages, replace_pages_start=nil, insert_document_count=nil)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
@@ -510,7 +509,7 @@ class Document < ActiveRecord::Base
       :remote_job     => job
     )
   end
-  
+
   # TODO: Make the to_json an extended form of the canonical.
   def to_json(opts={})
     {

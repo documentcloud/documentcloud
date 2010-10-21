@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/document_mod_base'
 require 'fileutils'
 
 class DocumentReorderPages < DocumentModBase
-   
+
   def process
     begin
       prepare_pdf
@@ -16,18 +16,18 @@ class DocumentReorderPages < DocumentModBase
     end
     document.id
   end
-  
+
   private
-  
+
   def reorder_pages(page_order)
     page_order.map! {|p| p.to_i }
-    
+
     # Rewrite PDF with pdftk, using new page order
     cmd = "pdftk #{@pdf} cat #{page_order.join(' ')} output #{document.slug}.pdf_temp"
     `#{cmd}`
     asset_store.save_pdf(document, "#{document.slug}.pdf_temp") if File.exists? "#{document.slug}.pdf_temp"
     FileUtils.rm @pdf + '_temp'
-    
+
     # Pull images from S3, delete old images, then upload renamed images
     reordered_page_images = {}
     page_order.each_with_index do |p, i|
@@ -36,7 +36,7 @@ class DocumentReorderPages < DocumentModBase
         Page::IMAGE_SIZES.keys.each do |size|
           page = document.page_image_path(p, size)
           reordered_page_images[i+1][size] = "#{document.slug}-p#{i+1}-#{size}.gif"
-          File.open(reordered_page_images[i+1][size], 'w+') do |f| 
+          File.open(reordered_page_images[i+1][size], 'w+') do |f|
             f.write(asset_store.read(page))
           end
         end
@@ -45,7 +45,7 @@ class DocumentReorderPages < DocumentModBase
     reordered_page_images.each do |p, page_sizes|
       asset_store.save_page_images(document, p, page_sizes, access)
     end
-    
+
     # Update page offsets for text
     offset = 0
     page_order.each_with_index do |p, i|
@@ -62,23 +62,22 @@ class DocumentReorderPages < DocumentModBase
       page.page_number = page.page_number - document.page_count
       page.save
     end
-    
+
     # Update annotations
     annotations = Annotation.find_all_by_document_id(document.id)
     annotations.each do |annotation|
       annotation.page_number = page_order.index(annotation.page_number)+1
       annotation.save
     end
-    
-    text = Page.find_all_by_document_id(document.id).inject('') {|m, p| m + ' ' + p.text }
-    document.full_text.update_attributes({:text => text})
+
+    document.full_text.refresh
     Page.refresh_page_map(document)
     EntityDate.refresh(document)
     document.update_attributes :access => access
     pages = document.reload.pages
     Sunspot.index pages
     document.reprocess_entities
-    document.upload_text_assets(pages)    
+    document.upload_text_assets(pages)
   end
-  
+
 end
