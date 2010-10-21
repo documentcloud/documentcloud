@@ -69,62 +69,82 @@
       background: #fff;
       filter: none;
     }
-    #organizer .box .edit_glyph {
-      display: none;
-      vertical-align: text-bottom;
-      padding-right: 11px;
-      margin-left: 6px;
-    }
-      #organizer .toggle_account_links {
-        position: absolute;
-        margin: 6px 0 0 -11px;
-      }
-      #organizer .box {
-        background-image: url(/images/embed/ui/box_back.png);
-        background-repeat: repeat-y;
-        background-position: right top;
-      }
-        #organizer .box:hover {
-          background: #fff;
-        }
-      #organizer .box.is_selected,
-      #organizer .box.is_selected:hover {
-        border-right-color: transparent;
-        background: #fff;
-      }
-      #organizer .box .edit_glyph {
-        display: inline;
-        width: 0;
-        vertical-align: baseline;
-        padding-right: 11px;
-        margin-left: 6px;
-        zoom: 1;
-        visibility: hidden;
-      }
-        #organizer .box:hover .edit_glyph,
-        #organizer .box.is_selected .edit_glyph {
-          visibility: visible;
-        }
-      #organizer .box .title {
-        font: bold 14px Helvetica, Arial;
-        color: #555;
-      }
-    #organizer .box .counts,
-    #organizer .top_level_search .text_link {
-      font: 11px/17px Helvetica, Arial;
-      color: #999;
-    }
-      #organizer .box .counts {
-        line-height: 14px; margin: 2px 0 1px 0;
-      }
-      #organizer .top_level_search .text_link:hover {
-        color: black;
-      }
-    #organizer .top_level_search {
-      border-top: 0;
+
+#organizer .account_links {
+  display: none;
+  color: #999;
+}
+  #organizer.show_accounts .account_links {
+    display: block;
+  }
+  #organizer .toggle_account_links {
+    position: absolute;
+    margin: 4px 0 0 -13px;
+  }
+
+#organizer .box,
+#organizer .top_level_search {
+  position: relative;
+  padding: 15px 15px 15px 30px;
+  cursor: pointer;
+  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid #fff;
+  border-right: 2px solid #ccc;
+  background: #f4f3f1;
+}
+  #organizer .box {
+    background-image: url(/images/embed/ui/box_back.png);
+    background-repeat: repeat-y;
+    background-position: right top;
+  }
+    #organizer .box:hover {
       background: #fff;
-      border-right: 2px solid #ccc;
     }
+  #organizer .box.is_selected,
+  #organizer .box.is_selected:hover {
+    border-right-color: transparent;
+    background: #fff;
+  }
+  #organizer .box .edit_glyph {
+    display: inline;
+    width: 0;
+    vertical-align: baseline;
+    padding-right: 11px;
+    margin-left: 6px;
+    zoom: 1;
+    visibility: hidden;
+  }
+    #organizer .box:hover .edit_glyph,
+    #organizer .box.is_selected .edit_glyph {
+      visibility: visible;
+    }
+  #organizer .box .title {
+    font: bold 14px Helvetica, Arial;
+    color: #555;
+  }
+    #organizer .box.is_selected .title,
+    #organizer .box:hover .title {
+      color: #000;
+    }
+    #organizer .box .last_word {
+      white-space: nowrap;
+    }
+  #organizer .box .counts,
+  #organizer .top_level_search .text_link {
+    font: 11px/17px Helvetica, Arial;
+    color: #999;
+  }
+    #organizer .box .counts {
+      line-height: 14px; margin: 2px 0 1px 0;
+    }
+    #organizer .top_level_search .text_link:hover {
+      color: black;
+    }
+  #organizer .top_level_search {
+    border-top: 0;
+    background: #fff;
+    border-right: 2px solid #ccc;
+  }
 
 /*------------------------------ Entities ---------------------------------*/
 #organizer_entities {

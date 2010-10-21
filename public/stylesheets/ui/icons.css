@@ -90,13 +90,19 @@
   }
 
 .icon.toggle {
-  width: 7px; height: 7px;
-  background-position: 0 -7px;
+  width: 12px; height: 12px;
+  background-position: 0 -12px;
   background-image: url(/images/embed/ui/toggle.png);
 }
+  .icon.toggle:hover {
+    background-position: 0 -36px;
+  }
   .show_accounts .icon.toggle {
     background-position: 0 0;
   }
+    .show_accounts .icon.toggle:hover {
+      background-position: 0 -24px;
+    }
 
 .icon.file {
   height: 32px;

@@ -8,23 +8,24 @@ dc.ui.Organizer = Backbone.View.extend({
   ],
 
   events : {
-    'click #new_project'          : 'promptNewProject',
-    'click .all_documents'        : 'showAllDocuments',
-    'click .your_documents'       : 'showYourDocuments',
-    'click .org_documents'        : 'showOrganizationDocuments',
-    'click .published_documents'  : 'showPublishedDocuments',
-    'click .toggle_account_links' : 'toggleAccountLinks',
-    'click .row'                  : '_filterFacet',
-    'click .cancel_search'        : '_removeFacet',
-    'click .more'                 : '_loadFacet',
-    'click .less'                 : '_showLess',
-    'click .show_pages'           : '_showPages'
+    'click #new_project'              : 'promptNewProject',
+    'click .all_documents'            : 'showAllDocuments',
+    'click .your_documents'           : 'showYourDocuments',
+    'click .org_documents'            : 'showOrganizationDocuments',
+    'click .published_documents'      : 'showPublishedDocuments',
+    'click .account_links .text_link' : 'showAccountDocuments',
+    'click .toggle_account_links'     : 'toggleAccountLinks',
+    'click .row'                      : '_filterFacet',
+    'click .cancel_search'            : '_removeFacet',
+    'click .more'                     : '_loadFacet',
+    'click .less'                     : '_showLess',
+    'click .show_pages'               : '_showPages'
   },
 
   constructor : function(options) {
     Backbone.View.call(this, options);
     this._populatedDocs = false;
-    _.bindAll(this, '_addSubView', '_removeSubView');
+    _.bindAll(this, '_addSubView', '_removeSubView', 'renderAccounts');
     this._bindToSets();
     this.subViews = [];
   },
@@ -36,6 +37,7 @@ dc.ui.Organizer = Backbone.View.extend({
     this.docList        = this.$('.publish_doc_list');
     this.entityList     = this.$('#organizer_entities');
     this.sidebar        = $('#sidebar');
+    this.renderAccounts();
     this.renderAll();
     this.handleEvents();
     return this;
@@ -44,6 +46,10 @@ dc.ui.Organizer = Backbone.View.extend({
   renderAll : function() {
     if (Projects.isEmpty()) this.setMode('no', 'projects');
     Projects.each(this._addSubView);
+  },
+
+  renderAccounts : function() {
+    this.$('.account_links').html(JST['organizer/account_links']());
   },
 
   // Refresh the facets with a new batch.
@@ -105,11 +111,17 @@ dc.ui.Organizer = Backbone.View.extend({
     Accounts.current().openDocuments();
   },
 
+  showAccountDocuments : function(e) {
+    var cid = $(e.target).attr('data-cid');
+    Accounts.getByCid(cid).openDocuments();
+  },
+
   showPublishedDocuments : function() {
     Accounts.current().openDocuments({published : true});
   },
 
   showOrganizationDocuments : function() {
+    this.setMode('show', 'accounts');
     Accounts.current().openOrganizationDocuments();
   },
 
@@ -189,8 +201,9 @@ dc.ui.Organizer = Backbone.View.extend({
 
   // Bind all possible and Project events for rendering.
   _bindToSets : function() {
-    Projects.bind('add',    this._addSubView);
+    Projects.bind('add',     this._addSubView);
     Projects.bind('remove',  this._removeSubView);
+    Accounts.bind('all',     this.renderAccounts);
   },
 
   _warnAlreadyExists : function(title) {

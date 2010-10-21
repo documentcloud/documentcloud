@@ -8,6 +8,7 @@ class WorkspaceController < ApplicationController
   # searching, the home page otherwise.
   def index
     if current_organization && current_account
+      @accounts = current_organization.accounts
       @projects = Project.load_for(current_account)
       @has_documents = Document.owned_by(current_account).count(:limit => 1) > 0
       return

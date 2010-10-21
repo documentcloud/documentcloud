@@ -85,16 +85,11 @@ dc.model.AccountSet = Backbone.Collection.extend({
     return this.get(dc.app.accountId);
   },
 
-  // Override populate to preserve the already-loaded current account.
-  populate : function(options) {
-    var current = this.current();
-    if (!current) return this.base(options);
-    var success = options.success;
-    this.base(_.extend(options, { success : _.bind(function() {
-      this.remove(this.get(current.id), true);
-      this.add(current, true);
-      if (success) success();
-    }, this)}));
+  // All accounts other than yours.
+  others : function() {
+    return this.filter(function(account) {
+      return account.id !== dc.app.accountId;
+    });
   },
 
   // If the contributor has logged-out of the workspace in a different tab,
