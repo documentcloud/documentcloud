@@ -4,8 +4,8 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Error messages to display when your search returns no results.
   NO_RESULTS : {
     project   : "This project does not contain any documents.",
-    account   : "This account has not uploaded any documents.",
-    group     : "This organization has not uploaded any documents.",
+    account   : "This account does not have any documents.",
+    group     : "This organization does not have any documents.",
     published : "This account does not have any published documents.",
     search    : "Your search did not match any documents.",
     all       : "There are no documents.",
