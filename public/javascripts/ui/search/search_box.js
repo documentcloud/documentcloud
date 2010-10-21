@@ -79,15 +79,17 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
 
   entitle : function(query) {
-    var title, ret;
+    var title, ret, account;
     var projectName   = dc.app.SearchParser.extractProject(query);
-    var accountName   = dc.app.SearchParser.extractAccount(query);
+    var accountSlug   = dc.app.SearchParser.extractAccount(query);
     var groupName     = dc.app.SearchParser.extractGroup(query);
     var published     = dc.app.SearchParser.extractPublished(query);
     if (projectName) {
       title = projectName;
-    } else if (accountName == Accounts.current().get('slug')) {
+    } else if (accountSlug == Accounts.current().get('slug')) {
       ret = published ? 'published_documents' : 'your_documents';
+    } else if (account = Accounts.getBySlug(accountSlug)) {
+      title = account.documentsTitle();
     } else if (groupName == dc.app.organization.slug) {
       ret = 'org_documents';
     } else {

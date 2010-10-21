@@ -44,6 +44,10 @@ dc.model.Account = Backbone.Model.extend({
     return nonbreaking ? name.replace(/\s/g, '&nbsp;') : name;
   },
 
+  documentsTitle : function() {
+    return Inflector.possessivize(this.fullName()) + ' Documents';
+  },
+
   isAdmin : function() {
     return this.get('role') == this.ADMINISTRATOR;
   },
@@ -78,6 +82,12 @@ dc.model.AccountSet = Backbone.Collection.extend({
 
   comparator : function(account) {
     return (account.get('last_name') || '').toLowerCase() + ' ' + (account.get('first_name') || '').toLowerCase();
+  },
+
+  getBySlug : function(slug) {
+    return this.detect(function(account) {
+      return account.get('slug') === slug;
+    });
   },
 
   // Fetch the account of the logged-in journalist.
