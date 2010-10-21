@@ -144,7 +144,7 @@ class Document < ActiveRecord::Base
   end
   
   # Insert all documents that have been previously saved into the document's /inserts
-  def insert_documents(insert_page_at, document_count)
+  def insert_documents(insert_page_at, document_count, eventual_access=nil)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
     job = JSON.parse(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {

@@ -39,13 +39,14 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
     this.$s.guideButton.addClass('open');
     this.viewer.api.enterAddPagesMode();
     this.render();
+    this.$s.thumbnails.removeClass('DV-removePage');
     $('.DV-currentPage', this.$s.pages).removeClass('DV-currentPage').addClass('DV-currentPage-disabled');
   },
   
   render : function() {
     $(this.el).html(JST['viewer/add_pages']({}));
     this.$s.viewerContainer.append(this.el);
-    this.updateHint('chooser');
+    this.updateHint('choose');
     if (this.viewer.state != 'ViewThumbnails') {
         this.viewer.open('ViewThumbnails');
     }
@@ -87,13 +88,12 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
   },
   
   confirmPageChoice : function() {
-    this.updateHint('upload');
     this.$s.thumbnails.find('.left_chosen,.right_chosen').removeClass('left_chosen')
                                                          .removeClass('right_chosen');
     $('.left', this.$s.thumbnails).addClass('left_chosen');
     $('.right', this.$s.thumbnails).addClass('right_chosen');
     
-    this.updateHint();
+    this.updateHint('upload');
   },
 
   updateHint : function(state) {

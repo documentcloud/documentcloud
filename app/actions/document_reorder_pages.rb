@@ -70,12 +70,11 @@ class DocumentReorderPages < DocumentModBase
       annotation.save
     end
     
-    document.access = access
     text = Page.find_all_by_document_id(document.id).inject('') {|m, p| m + ' ' + p.text }
     document.full_text.update_attributes({:text => text})
     Page.refresh_page_map(document)
     EntityDate.refresh(document)
-    document.save!
+    document.update_attributes :access => access
     pages = document.reload.pages
     Sunspot.index pages
     document.reprocess_entities

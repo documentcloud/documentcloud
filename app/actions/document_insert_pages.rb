@@ -7,7 +7,7 @@ class DocumentInsertPages < DocumentModBase
   def process
     begin
       prepare_pdf
-      process_concat options['insert_page_at'], options['pdfs_count'], options['access']
+      process_concat options['insert_page_at'], options['pdfs_count']
     rescue Exception => e
       LifecycleMailer.deliver_exception_notification(e)
       raise e
@@ -17,11 +17,11 @@ class DocumentInsertPages < DocumentModBase
     
     # For now, just reimport the entire document.
     # TODO: Only process new images/text from the new pages.
-    document.queue_import(options['access'])
+    document.queue_import access
     document.reload
   end
   
-  def process_concat(insert_page_at, pdfs_count, access)
+  def process_concat(insert_page_at, pdfs_count)
     letters = 'abcdefghijklmnopqrstuvwxyz'.upcase.split('')
     pdf_names = {}
     (1..pdfs_count).to_a.each do |n|

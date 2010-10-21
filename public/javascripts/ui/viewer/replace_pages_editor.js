@@ -34,11 +34,13 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
   },
   
   open : function() {
+    dc.app.hotkeys.initialize();
     this.findSelectors();
     this.flags.open = true;
     this.$s.guideButton.addClass('open');
     this.viewer.api.enterReplacePagesMode();
     this.render();
+    this.$s.thumbnails.removeClass('DV-removePage');
     $('.DV-currentPage', this.$s.pages).removeClass('DV-currentPage').addClass('DV-currentPage-disabled');
   },
   
@@ -51,7 +53,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     this.$s.pages.addClass('replace_pages_viewer');
     this.$s.container = $(this.el);
     this.findSelectors();
-    this.updateHint('chooser');
+    this.updateHint('choose');
     this.handleEvents();
     dc.app.uploader = new dc.ui.UploadDialog({
       editable    : false,
@@ -68,6 +70,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       $(this).data('pageNumber', i+1);
     });
     $thumbnails.bind('click', _.bind(function(e) {
+      e.preventDefault();
       this.confirmPageChoice($(e.currentTarget));
     }, this));
     
@@ -78,7 +81,19 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     var $thumbnails = this.$s.thumbnails;
     
     $thumbnails.removeClass('DV-removePage');
-    $thumbnail.addClass('DV-removePage');
+    if (dc.app.hotkeys.shift && this.$firstPageSelection) {
+        var end = Math.max($thumbnail.data('pageNumber'), this.$firstPageSelection.data('pageNumber'));
+        var start = Math.min($thumbnail.data('pageNumber'), this.$firstPageSelection.data('pageNumber'));
+        $thumbnails = $thumbnails.filter(function() {
+          var page = $(this).data('pageNumber');
+          return start <= page && page <= end;
+        });
+        $thumbnails.addClass('DV-removePage');
+    } else {
+        this.$firstPageSelection = $thumbnail;
+        $thumbnail.addClass('DV-removePage');
+    }
+    
     this.updateHint('upload');
   },
 

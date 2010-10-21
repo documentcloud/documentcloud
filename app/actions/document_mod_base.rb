@@ -4,7 +4,6 @@ require 'fileutils'
 class DocumentModBase < CloudCrowd::Action
   
   def merge
-    document.update_attributes :access => access
     document.id
   end
   

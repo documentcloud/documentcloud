@@ -11,7 +11,9 @@ class DocumentRemovePages < DocumentModBase
       remove_page options['pages']
       if @insert_after_remove
         # -1 because we are inserting BEFORE where the pages were removed.
-        document.insert_documents(options['replace_pages_start']-1, options['insert_document_count'])
+        document.insert_documents(options['replace_pages_start']-1, 
+                                  options['insert_document_count'], 
+                                  options['access'])
       end
     rescue Exception => e
       LifecycleMailer.deliver_exception_notification(e)
@@ -99,8 +101,7 @@ class DocumentRemovePages < DocumentModBase
       document.full_text.update_attributes({:text => text})
       Page.refresh_page_map(document)
       EntityDate.refresh(document)
-      document.access = access
-      document.save!
+      document.update_attributes :access => access
       pages = document.reload.pages
       Sunspot.index pages
       document.reprocess_entities
