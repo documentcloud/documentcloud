@@ -1,43 +1,44 @@
-#organizer {
+#sidebar .block {
+  background: #fff;
+  color: #555;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 20px 30px 20px 30px;
 }
-  #organizer .block {
-    background: #fff;
-    color: #555;
-    border-bottom: 1px solid #e0e0e0;
-    padding: 20px 30px 20px 30px;
+  #sidebar .block.explanation {
+    border-top: 1px solid #e0e0e0;
+    margin-top: 20px;
   }
-    #organizer .block.explanation {
-      border-top: 1px solid #e0e0e0;
-      margin-top: 20px;
-    }
-    #organizer .calais_info {
-      margin-top: 15px;
-      line-height: 30px;
-      display: block;
-    }
-      #organizer .block .calais_30 {
-        float: left;
-        margin-right: 12px;
-      }
-  #organizer_projects,
-  #organizer_entities {
-    position: relative;
-    display: none;
-    overflow: hidden;
+  #sidebar .calais_info {
+    margin-top: 15px;
+    line-height: 30px;
+    display: block;
   }
-    body.documents_sidebar_tab #organizer_projects,
-    body.entities_sidebar_tab #organizer_entities {
-      display: block;
+    #sidebar .block .calais_30 {
+      float: left;
+      margin-right: 12px;
     }
-  #organizer #project_controls {
-    margin-right: 2px;
-    position: relative;
+
+#organizer_projects,
+#entities {
+  position: relative;
+  display: none;
+  overflow: hidden;
+}
+  body.documents_sidebar_tab #organizer_projects,
+  body.entities_sidebar_tab #entities {
+    display: block;
   }
-    #organizer #project_controls #new_documentUploader {
-      position: absolute;
-      left: 30px;
-      top: 20px;
-    }
+#organizer #project_controls {
+  margin-right: 2px;
+  position: relative;
+}
+  #organizer #project_controls #new_documentUploader {
+    position: absolute;
+    left: 30px;
+    top: 20px;
+  }
+#organizer .project_list_wrap {
+}
   #organizer.has_projects .project_help {
     display: none;
   }
@@ -45,30 +46,6 @@
     padding: 15px 10px 15px 30px;
     border-bottom: 1px solid #e0e0e0;
   }
-  #organizer .box,
-  #organizer .top_level_search {
-    position: relative;
-    padding: 15px 15px 15px 30px;
-    cursor: pointer;
-    border-bottom: 1px solid #e0e0e0;
-    border-top: 1px solid #fff;
-    border-right: 2px solid #ccc;
-    background: #f4f3f1;
-  }
-    #organizer .box {
-      background-image: url(/images/embed/ui/box_back.png);
-      background-repeat: repeat-y;
-      background-position: right top;
-    }
-      #organizer .box:hover {
-        background: #f9f9f9;
-      }
-    #organizer .box.is_selected,
-    #organizer .box.is_selected:hover {
-      border-right-color: transparent;
-      background: #fff;
-      filter: none;
-    }
 
 #organizer .account_links {
   display: none;
@@ -147,29 +124,29 @@
   }
 
 /*------------------------------ Entities ---------------------------------*/
-#organizer_entities {
+#entities {
   font: 11px/15px Helvetica, Arial;
   color: #555;
   background: #fff;
   margin-right: 2px;
 }
-  #organizer_entities .section {
+  #entities .section {
     width: 308px;
     margin: 30px 0 0 0;
   }
-    #organizer_entities .section:first-child {
+    #entities .section:first-child {
       border-top: 0;
       margin-top: 10px;
     }
-    #organizer_entities .category {
+    #entities .category {
       font: bold 12px Helvetica, Arial;
       padding-left: 30px;
       color: #000;
     }
-    #organizer_entities .rows {
+    #entities .rows {
       margin: 4px 0 0 0;
     }
-      #organizer_entities .row {
+      #entities .row {
         width: 268px;
         padding: 0px 10px 1px 30px;
         border: 1px solid transparent;
@@ -177,36 +154,36 @@
         cursor: pointer;
         position: relative;
       }
-        #organizer_entities .row:hover,
-        #organizer_entities .row.active {
+        #entities .row:hover,
+        #entities .row.active {
           border-color: #d9d9d9;
           background: #f9f9f9;
           margin-top: -1px; padding: 1px 10px 1px 30px;
         }
-        #organizer_entities .count {
+        #entities .count {
           color: #999;
         }
-        #organizer_entities .more, #organizer_entities .less {
+        #entities .more, #entities .less {
           padding-left: 30px;
         }
-        #organizer_entities .show_pages {
+        #entities .show_pages {
           margin-left: 3px;
           zoom: 1;
           opacity: 0; filter: alpha(opacity=0);
         }
-          #organizer_entities .row.active .show_pages,
-          #organizer_entities .row:hover .show_pages {
+          #entities .row.active .show_pages,
+          #entities .row:hover .show_pages {
             opacity: 1; filter: alpha(opacity=100);
           }
-        #organizer_entities .cancel_search {
+        #entities .cancel_search {
           position: absolute;
           top: 50%; left: 10px; margin-top: -6px;
           display: none;
         }
-          #organizer_entities .row.active .cancel_search {
+          #entities .row.active .cancel_search {
             display: block;
           }
-  #organizer_entities .no_results {
+  #entities .no_results {
     padding: 15px 15px 15px 30px;
     border-bottom: 1px solid #e0e0e0;
     background: #fff;

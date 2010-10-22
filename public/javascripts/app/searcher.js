@@ -155,14 +155,14 @@ _.extend(dc.app.searcher, {
   },
 
   _loadFacetsResults : function(resp) {
-    dc.app.workspace.organizer.renderFacets(resp.facets, 5, resp.query.total);
+    dc.app.workspace.entityList.renderFacets(resp.facets, 5, resp.query.total);
     dc.ui.spinner.hide();
     this.flags.outstandingSearch = false;
     this.flags.hasEntities = true;
   },
 
   _loadFacetResults : function(resp) {
-    dc.app.workspace.organizer.mergeFacets(resp.facets, 500, resp.query.total);
+    dc.app.workspace.entityList.mergeFacets(resp.facets, 500, resp.query.total);
     dc.ui.spinner.hide();
     this.flags.outstandingSearch = false;
   }

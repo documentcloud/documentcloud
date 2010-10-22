@@ -28,6 +28,7 @@ _.extend(dc.app.workspace, {
     this.panel        = new dc.ui.Panel();
     this.help         = new dc.ui.Help();
     this.documentList = new dc.ui.DocumentList();
+    this.entityList   = new dc.ui.EntityList();
 
     if (!dc.account) return;
 
@@ -49,6 +50,7 @@ _.extend(dc.app.workspace, {
     this.panel.add('pagination', dc.app.paginator.el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
     this.panel.add('document_list', this.documentList.render().el);
+    this.sidebar.add('entities', this.entityList.render().el);
     $('#no_results_container').html(JST['workspace/no_results']({}));
 
     if (!dc.account) return;

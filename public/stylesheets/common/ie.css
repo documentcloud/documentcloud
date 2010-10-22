@@ -60,12 +60,12 @@ body.workspace {
 body.minidocs #document_list .document {
   margin-bottom: 0px;
 }
-#organizer_entities .row {
+#entities .row {
   margin-top: 0;
   margin-bottom: -1px;
 }
-  #organizer_entities .row:hover,
-  #organizer_entities .row.active {
+  #entities .row:hover,
+  #entities .row.active {
     padding-top: 0px;
     margin-bottom: -1px;
     margin-top: -1px;
