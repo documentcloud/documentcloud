@@ -1,10 +1,9 @@
 class AnnotationsController < ApplicationController
   include DC::Access
 
-  before_filter :login_required
+  before_filter :login_required, :except => [:index]
 
-  # In the workspace, request a listing of annotations, scoped not to the notes
-  # that you can see, but the notes that you've written yourself.
+  # In the workspace, request a listing of annotations.
   def index
     json :models => current_document.annotations.accessible(current_account)
   end
