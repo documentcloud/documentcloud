@@ -1,7 +1,5 @@
 class WorkspaceController < ApplicationController
 
-  RESULTS_REQUEST = /\A\/results/
-
   before_filter :bouncer, :except => :index if Rails.env.staging?
 
   # Main documentcloud.org page. Renders the workspace if logged in or
@@ -49,10 +47,6 @@ class WorkspaceController < ApplicationController
 
   def fail(message)
     @failure = message
-  end
-
-  def results_request?
-    !!request.path.match(RESULTS_REQUEST)
   end
 
 end
