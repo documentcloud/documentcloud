@@ -13,7 +13,7 @@ class WorkspaceController < ApplicationController
       @has_documents = Document.owned_by(current_account).count(:limit => 1) > 0
       return
     end
-    return redirect_to('/home') # unless request.headers['Authorization']
+    return redirect_to('/home')
     render :action => 'home', :layout => 'empty'
   end
 
