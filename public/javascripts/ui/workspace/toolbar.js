@@ -15,17 +15,20 @@ dc.ui.Toolbar = Backbone.View.extend({
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'openEmbedDialog', 'requestDownloadViewers',
       'checkFloat', '_openTimeline', '_viewEntities', 'editDocumentURL');
-    this.editMenu    = this._createEditMenu();
-    this.publishMenu = this._createPublishMenu();
     this.analyzeMenu = this._createAnalyzeMenu();
-    this.projectMenu = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments});
+    this.publishMenu = this._createPublishMenu();
+    if (dc.account) {
+      this.editMenu    = this._createEditMenu();
+      this.projectMenu = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments});
+    }
   },
 
   render : function() {
     var el = $(this.el);
     el.html(JST['workspace/toolbar']({}));
-    _.each(this.MENUS, _.bind(function(menu){
-      $('.' + menu + '_menu_container', el).append(this[menu + 'Menu'].render().el);
+    _.each(this.MENUS, _.bind(function(menu) {
+      var view = this[menu + 'Menu'];
+      if (view) $('.' + menu + '_menu_container', el).append(view.render().el);
     }, this));
     this.openButton              = this.$('#open_viewers');
     this.floatEl                 = this.$('#floating_toolbar');
@@ -190,15 +193,19 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   _createPublishMenu : function() {
+    var accountItems = [
+      {title : 'Embed Document Viewer',    onClick : this.openEmbedDialog},
+      {title : 'Download Document Viewer', onClick : this.requestDownloadViewers}
+    ];
+    var publicItems = [
+      {title : 'Download Original PDF',    onClick : Documents.downloadSelectedPDF},
+      {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
+    ];
+    var items = dc.account ? accountItems.concat(publicItems) : publicItems;
     return new dc.ui.Menu({
-      label   : 'Publish',
+      label   : dc.account ? 'Publish' : 'Download',
       onOpen  : this._enableMenuItems,
-      items   : [
-        {title : 'Embed Document Viewer',    onClick : this.openEmbedDialog},
-        {title : 'Download Document Viewer', onClick : this.requestDownloadViewers},
-        {title : 'Download Original PDF',    onClick : Documents.downloadSelectedPDF},
-        {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
-      ]
+      items   : items
     });
   },
 

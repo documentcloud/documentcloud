@@ -67,7 +67,6 @@ dc.ui.Document = Backbone.View.extend({
   // Desktop-style selection.
   select : function(e) {
     e.preventDefault();
-    if (!dc.account) return;
     if (!this.model.get('selectable')) return;
     var alreadySelected =  this.model.get('selected');
     var hk = dc.app.hotkeys;

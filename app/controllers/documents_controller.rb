@@ -2,7 +2,7 @@ class DocumentsController < ApplicationController
   layout nil
 
   before_filter(:bouncer, :only => [:show]) if Rails.env.staging?
-  before_filter :login_required, :only => [:update, :destroy, :entities, :dates, :published, :unpublished]
+  before_filter :login_required, :only => [:update, :destroy]
 
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
