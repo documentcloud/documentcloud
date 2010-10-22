@@ -13,8 +13,9 @@ dc.ui.Toolbar = Backbone.View.extend({
     Backbone.View.call(this, options);
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'openEmbedDialog', 'requestDownloadViewers',
-      'checkFloat', '_openTimeline', '_viewEntities', 'editDocumentURL');
+      'editRelatedArticle', 'editAccess', 'openEmbedDialog', 'openPublicationDateDialog',
+      'requestDownloadViewers', 'checkFloat', '_openTimeline', '_viewEntities',
+      'editDocumentURL');
     this.analyzeMenu = this._createAnalyzeMenu();
     this.publishMenu = this._createPublishMenu();
     if (dc.account) {
@@ -127,6 +128,12 @@ dc.ui.Toolbar = Backbone.View.extend({
     (new dc.ui.PublishPreview(doc)).render();
   },
 
+  openPublicationDateDialog : function() {
+    var docs = Documents.chosen();
+    if (!docs.length || !Documents.allowedToEdit(docs)) return;
+    (new dc.ui.PublicationDateDialog(docs)).render();
+  },
+
   requestDownloadViewers : function() {
     if (dc.account.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to download viewers. <a href="/contact">Contact us</a> if you need a full featured account.');
     var docs = Documents.chosen();
@@ -194,6 +201,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   _createPublishMenu : function() {
     var accountItems = [
       {title : 'Embed Document Viewer',    onClick : this.openEmbedDialog},
+      {title : 'Set Publication Date',     onClick : this.openPublicationDateDialog},
       {title : 'Download Document Viewer', onClick : this.requestDownloadViewers}
     ];
     var publicItems = [
