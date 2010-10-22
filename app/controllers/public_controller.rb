@@ -1,6 +1,6 @@
 class PublicController < ApplicationController
 
-  before_filter :bouncer if Rails.env.staging?
+  before_filter :bouncer unless Rails.env.development?
 
   # Public search.
   def index
