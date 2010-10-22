@@ -63,7 +63,8 @@ dc.model.Document = Backbone.Model.extend({
   },
 
   allowedToEdit : function() {
-    return Accounts.current().checkAllowedToEdit(this);
+    var current = Accounts.current();
+    return current && Accounts.current().checkAllowedToEdit(this);
   },
 
   // Is the document editable by the current account?
@@ -217,7 +218,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     dc.ui.Dialog.choose('Access Level', [
       {text : 'Public Access',  description : 'Anyone on the internet can search for and view the document.', value : dc.access.PUBLIC, selected : current == dc.access.PUBLIC},
       {text : 'Private Access', description : 'Only people explicitly granted permission (via collaboration) may access.', value : dc.access.PRIVATE, selected : current == dc.access.PRIVATE},
-      {text : 'Private to ' + dc.app.organization.name, description : 'Only the people in your organization may view the document.', value : dc.access.ORGANIZATION, selected : current == dc.access.ORGANIZATION}
+      {text : 'Private to ' + dc.account.organization.name, description : 'Only the people in your organization may view the document.', value : dc.access.ORGANIZATION, selected : current == dc.access.ORGANIZATION}
     ], function(access) {
       _.each(docs, function(doc) { doc.save({access : parseInt(access, 10)}); });
       var notification = 'Access updated for ' + docs.length + ' ' + Inflector.pluralize('document', docs.length);

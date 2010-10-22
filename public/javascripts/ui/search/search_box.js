@@ -86,11 +86,11 @@ dc.ui.SearchBox = Backbone.View.extend({
     var published     = dc.app.SearchParser.extractPublished(query);
     if (projectName) {
       title = projectName;
-    } else if (accountSlug == Accounts.current().get('slug')) {
+    } else if (dc.account && accountSlug == Accounts.current().get('slug')) {
       ret = published ? 'published_documents' : 'your_documents';
     } else if (account = Accounts.getBySlug(accountSlug)) {
       title = account.documentsTitle();
-    } else if (groupName == dc.app.organization.slug) {
+    } else if (dc.account && groupName == dc.account.organization.slug) {
       ret = 'org_documents';
     } else {
       ret = 'all_documents';

@@ -40,7 +40,7 @@ _.extend(dc.app.searcher, {
       this.box.showDocuments();
     } else if (this.box.value()) {
       this.search(this.box.value());
-    } else if (dc.app.hasDocuments) {
+    } else if (dc.account && dc.account.hasDocuments) {
       Accounts.current().openDocuments();
     } else if (Projects.first()) {
       Projects.first().open();

@@ -29,7 +29,7 @@ dc.model.Account = Backbone.Model.extend({
   },
 
   openOrganizationDocuments : function() {
-    dc.app.searcher.search('group: ' + dc.app.organization.slug);
+    dc.app.searcher.search('group: ' + dc.account.organization.slug);
   },
 
   checkAllowedToEdit: function(resource) {
@@ -92,13 +92,14 @@ dc.model.AccountSet = Backbone.Collection.extend({
 
   // Fetch the account of the logged-in journalist.
   current : function() {
-    return this.get(dc.app.accountId);
+    if (!dc.account) return null;
+    return this.get(dc.account.id);
   },
 
   // All accounts other than yours.
   others : function() {
     return this.filter(function(account) {
-      return account.id !== dc.app.accountId;
+      return account.id !== dc.account.id;
     });
   },
 

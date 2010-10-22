@@ -10,8 +10,8 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   constructor : function() {
     dc.ui.Dialog.call(this, {
       mode          : 'custom',
-      title         : dc.app.organization.name,
-      information   : 'group: ' + dc.app.organization.slug
+      title         : dc.account.organization.name,
+      information   : 'group: ' + dc.account.organization.slug
     });
     Accounts.bind('refresh', _.bind(this._renderAccounts, this));
     this._rendered = false;

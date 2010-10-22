@@ -12,7 +12,7 @@ dc.model.Project = Backbone.Model.extend({
     attrs || (attrs = {});
     if (attrs.title)            attrs.title = Inflector.trim(attrs.title);
     if (attrs.document_ids)     attrs.document_count = attrs.document_ids.length;
-    if (attrs.account_id)       attrs.owner = attrs.account_id == dc.app.accountId;
+    if (attrs.account_id)       attrs.owner = attrs.account_id == dc.account.id;
     if (attrs.collaborator_ids) attrs.collaborator_count = attrs.collaborator_ids.length;
     Backbone.Model.prototype.set.call(this, attrs, options);
     if (attrs.id) this._setCollaboratorsResource();
@@ -90,7 +90,7 @@ dc.model.Project.topLevelTitle = function(type) {
     case 'all_documents':       return 'All Documents';
     case 'your_documents':      return 'Your Documents';
     case 'published_documents': return 'Your Published Documents';
-    case 'org_documents':       return Inflector.possessivize(dc.app.organization.name) + " Documents";
+    case 'org_documents':       return Inflector.possessivize(dc.account.organization.name) + " Documents";
   }
 };
 

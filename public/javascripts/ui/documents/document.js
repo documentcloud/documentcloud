@@ -67,7 +67,7 @@ dc.ui.Document = Backbone.View.extend({
   // Desktop-style selection.
   select : function(e) {
     e.preventDefault();
-    if (!dc.app.accountId) return;
+    if (!dc.account) return;
     if (!this.model.get('selectable')) return;
     var alreadySelected =  this.model.get('selected');
     var hk = dc.app.hotkeys;
@@ -203,7 +203,7 @@ dc.ui.Document = Backbone.View.extend({
     switch (access) {
       case dc.access.PENDING:      return {'class' : base + 'spinner',    title : 'Uploading...'};
       case dc.access.ERROR:        return {'class' : base + 'alert_gray', title : 'Broken document'};
-      case dc.access.ORGANIZATION: return {'class' : base + 'lock',       title : 'Private to ' + dc.app.organization.name};
+      case dc.access.ORGANIZATION: return {'class' : base + 'lock',       title : 'Private to ' + dc.account.organization.name};
       case dc.access.PRIVATE:      return {'class' : base + 'lock',       title : 'Private'};
       default:
         if (this.model.isPublished()) return {'class' : base + 'published', title : 'Open Published Version'};

@@ -15,10 +15,10 @@ dc.ui.Toolbar = Backbone.View.extend({
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'openEmbedDialog', 'requestDownloadViewers',
       'checkFloat', '_openTimeline', '_viewEntities', 'editDocumentURL');
-    this.editMenu         = this._createEditMenu();
-    this.publishMenu      = this._createPublishMenu();
-    this.analyzeMenu      = this._createAnalyzeMenu();
-    this.projectMenu      = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments});
+    this.editMenu    = this._createEditMenu();
+    this.publishMenu = this._createPublishMenu();
+    this.analyzeMenu = this._createAnalyzeMenu();
+    this.projectMenu = new dc.ui.ProjectMenu({onClick : this._updateSelectedDocuments});
   },
 
   render : function() {
@@ -126,7 +126,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   requestDownloadViewers : function() {
-    if (dc.app.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to download viewers. <a href="/contact">Contact us</a> if you need a full featured account.');
+    if (dc.account.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to download viewers. <a href="/contact">Contact us</a> if you need a full featured account.');
     var docs = Documents.chosen();
     if (docs.length) Documents.downloadViewers(docs);
   },

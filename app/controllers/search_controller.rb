@@ -2,7 +2,6 @@ class SearchController < ApplicationController
   include DC::Search::Controller
 
   before_filter :bouncer if Rails.env.staging?
-  before_filter :login_required
 
   FIELD_STRIP = /\S+:\s*/
 
@@ -19,12 +18,6 @@ class SearchController < ApplicationController
                    :include_facets => true
     results = {:query => @query, :facets => @query.facets}
     json results
-  end
-
-  def notes
-    params[:q].gsub!(FIELD_STRIP, '') if params[:q]
-    perform_search
-    render :json => {:query => @query, :documents => @documents}
   end
 
 end

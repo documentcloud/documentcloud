@@ -2,7 +2,6 @@ ActionController::Routing::Routes.draw do |map|
 
   # Internal Search API.
   # /search/documents.json
-  # /search/notes.json
 
   # Journalist workspace and surrounding HTML.
   map.with_options :controller => 'workspace' do |main|
