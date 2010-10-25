@@ -495,20 +495,14 @@
     },
 
     // Internal method called every time a model in the set fires an event.
-    // Sets need to update their indexes when models change ids.
-    _onModelEvent : function(ev, model, error) {
-      switch (ev) {
-        case 'change':
-          if (model.hasChanged('id')) {
-            delete this._byId[model.previous('id')];
-            this._byId[model.id] = model;
-          }
-          this.trigger('change', model);
-          break;
-        case 'error':
-          this.trigger('error', model, error);
-          break;
+    // Sets need to update their indexes when models change ids. All other
+    // events simply proxy through.
+    _onModelEvent : function(ev, model) {
+      if (ev === 'change:id') {
+        delete this._byId[model.previous('id')];
+        this._byId[model.id] = model;
       }
+      this.trigger.apply(this, arguments);
     }
 
   });
@@ -589,8 +583,8 @@
     // pairs. Callbacks will be bound to the view, with `this` set properly.
     // Uses jQuery event delegation for efficiency.
     // Omitting the selector binds the event to `this.el`.
-    // `"change"` events are not delegated through the view because IE does not
-    // bubble change events at all.
+    // This only works for delegate-able events: not `focus`, `blur`, and
+    // not `change`, `submit`, and `reset` in Internet Explorer.
     delegateEvents : function(events) {
       if (!(events || (events = this.events))) return this;
       $(this.el).unbind();
