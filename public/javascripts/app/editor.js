@@ -11,6 +11,7 @@ _.extend(dc.app.editor, {
     _.defer(_.bind(function() {
       this.createSubViews();
       this.renderSubViews();
+      this.setupStateChangeCallbacks();
     }, this));
   },
 
@@ -35,12 +36,20 @@ _.extend(dc.app.editor, {
     $('.DV-logo').hide();
   },
   
-  closeAllEditors : function() {
-    this.removePagesEditor.close();
-    this.reorderPagesEditor.close();
-    this.editPageTextEditor.close();
-    this.addPagesEditor.close();
-    this.replacePagesEditor.close();
+  closeAllEditors : function(state) {
+    if (state != 'ViewThumbnails') {
+      this.removePagesEditor.close();
+      this.reorderPagesEditor.close();
+      this.addPagesEditor.close();
+      this.replacePagesEditor.close();
+    }
+    if (state != 'ViewText') {
+      this.editPageTextEditor.close();
+    }
+  },
+  
+  setupStateChangeCallbacks : function() {
+    currentDocument.api.onChangeState(_.bind(this.closeAllEditors, this));
   }
 
 });
