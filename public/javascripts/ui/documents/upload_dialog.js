@@ -130,12 +130,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     return false;
   },
 
-  _onComplete : function(e, queueId, fileObj, response, data) {
-    response = JSON.parse(response);
-    if (response.bad_request) {
+  _onComplete : function(e, queueId, fileObj, resp, data) {
+    resp = JSON.parse(resp);
+    if (resp.bad_request) {
       return this.error("Upload failed.");
     } else {
-      Documents.add(new dc.model.Document(response.model));
+      Documents.add(new dc.model.Document(resp));
       if (this._project) Projects.incrementCountById(this._project.id);
     }
     this._tiles[queueId].hide();
