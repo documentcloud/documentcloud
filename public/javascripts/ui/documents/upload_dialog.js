@@ -93,7 +93,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Return false so that Uploadify does not create its own progress bars.
   _onSelect : function(e, queueId, fileObj) {
-    dc.ui.spinner.show();
     this.collection.add(new dc.model.UploadDocument({
       id        : queueId,
       file      : fileObj,
