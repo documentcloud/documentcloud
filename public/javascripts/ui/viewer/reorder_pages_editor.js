@@ -71,9 +71,11 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
     this.$s.container = $(this.el);
     $('.DV-currentPage', this.$s.thumbnails).removeClass('DV-currentPage')
                                             .addClass('DV-currentPage-disabled');
+    this.handleEvents();
+    this.initialOrder = this.serializePageOrder();
   },
   
-  delegateEvents : function(callbacks) {
+  handleEvents : function() {
     var $thumbnails = this.$s.thumbnails;
     
     $('.DV-thumbnail', $thumbnails).each(function(i) {
@@ -88,12 +90,21 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
       tolerance: 'pointer',
       zIndex: 1,
       stop: _.bind(function(e, ui) {
-        this.$s.saveButton.removeAttr('disabled');
-        this.$s.header.addClass('active');
+        this.refreshHeader();
       }, this)
     });
-    
-    Backbone.View.prototype.delegateEvents.call(this, callbacks);
+  },
+  
+  refreshHeader : function() {
+    var order = this.serializePageOrder();
+
+    if (_.isEqual(order, this.initialOrder)) {
+      this.$s.saveButton.attr('disabled', true);
+      this.$s.header.removeClass('active');
+    } else {
+      this.$s.saveButton.removeAttr('disabled');
+      this.$s.header.addClass('active');
+    }
   },
   
   confirmReorderPages : function() {

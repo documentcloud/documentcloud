@@ -45,6 +45,7 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
   },
   
   open : function() {
+    this.findSelectors();
     this.originalPageText = {};
     this.pageText = {};
     this.flags.open = true;
@@ -53,7 +54,6 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
   },
   
   render : function() {
-    this.findSelectors();
     $(this.el).html(JST['viewer/edit_page_text']({}));
     this.$s.viewerContainer.append(this.el);
     if (this.viewer.state != 'ViewText') {
@@ -62,21 +62,20 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
     this.$s.pages.addClass('edit_page_text_viewer');
     this.$s.container = $(this.el);
     this.findSelectors();
-    
     this.$s.guideButton.addClass('open');
     this.$s.guide.fadeIn('fast');
     this.$s.saveButton.attr('disabled', true);
     this.$s.header.removeClass('active');
     this.$s.textContents.attr('contentEditable', true);
     this.$s.textContents.addClass('DV-editing');
+
+    this.handleEvents();
   },
 
-  delegateEvents : function() {
-    
+  handleEvents : function() {
     this.$s.textContents.bind('keyup', this.cachePageText);
     this.$s.textContents.bind('change', this.cachePageText);
     this.$s.textContents.bind('blur', this.cachePageText);
-    Backbone.View.prototype.delegateEvents.call(this);
   },
   
   getPageNumber : function() {

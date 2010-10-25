@@ -59,9 +59,11 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
       documentId  : this.viewer.api.getModelId()
     });
     dc.app.uploader.setupUploadify();
+    
+    this.handleEvents();
   },
   
-  delegateEvents : function(callbacks) {
+  handleEvents : function() {
     var $thumbnails = this.$s.thumbnails;
     
     $thumbnails.each(function(i) {
@@ -82,8 +84,6 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
     this.$s.pages.bind('click', _.bind(function() {
       this.confirmPageChoice();
     }, this));
-    
-    Backbone.View.prototype.delegateEvents.call(this, callbacks);
   },
   
   confirmPageChoice : function() {
