@@ -32,7 +32,7 @@ class AccountsController < ApplicationController
 
   # Requesting /accounts returns the list of accounts in your logged-in organization.
   def index
-    json :models => current_organization.accounts
+    json current_organization.accounts
   end
 
   # Creating a new account creates a pending account, with a security key
@@ -42,7 +42,7 @@ class AccountsController < ApplicationController
     attributes = pick(:model, :first_name, :last_name, :email, :role)
     account = current_organization.accounts.create(attributes)
     account.send_login_instructions(current_account)
-    json :model => account
+    json account
   end
 
   # Journalists are authorized to update any account in the organization.
@@ -59,7 +59,7 @@ class AccountsController < ApplicationController
       account.password = password
       account.save
     end
-    json :model => account
+    json account
   end
 
   # Resend a welcome email for a pending account.

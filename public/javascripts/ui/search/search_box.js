@@ -34,7 +34,6 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.box      = this.$('#search_box');
     this.titleBox = this.$('#title_box_inner');
     $(document.body).setMode('no', 'search');
-    this.handleEvents();
     $('#cloud_edge').click(function(){ window.location = '/home'; });
     return this;
   },

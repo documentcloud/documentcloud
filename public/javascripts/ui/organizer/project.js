@@ -19,7 +19,6 @@ dc.ui.Project = Backbone.View.extend({
     $(this.el).html(JST['organizer/project'](data));
     $(this.el).attr({id : "project_" + this.model.cid, 'data-project-cid' : this.model.cid});
     this.setMode(this.model.get('selected') ? 'is' : 'not', 'selected');
-    this.handleEvents();
     return this;
   },
 

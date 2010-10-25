@@ -57,7 +57,6 @@ dc.ui.Document = Backbone.View.extend({
     this.notesEl = this.$('.notes');
     this.pagesEl = this.$('.pages');
     this.model.notes.each(function(note){ me._addNote(note); });
-    if (!this.options.noCallbacks) this.handleEvents();
     this.setMode(dc.access.NAMES[this.model.get('access')], 'access');
     this.setMode(this.model.allowedToEdit() ? 'is' : 'not', 'editable');
     this._setSelected();

@@ -31,7 +31,6 @@ dc.ui.Organizer = Backbone.View.extend({
     this.sidebar        = $('#sidebar');
     this.renderAccounts();
     this.renderAll();
-    this.handleEvents();
     return this;
   },
 

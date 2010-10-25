@@ -23,7 +23,6 @@ dc.ui.Note = Backbone.View.extend({
     var data = _.extend(this.model.toJSON(), {note : this.model});
     $(this.el).html(JST['document/note'](data));
     this.setMode('display', 'visible');
-    this.handleEvents();
     return this;
   },
 

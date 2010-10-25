@@ -52,7 +52,6 @@ dc.ui.AccountView = Backbone.View.extend({
     $(this.el).html(this.template(attrs));
     if (this.model.isPending()) $(this.el).addClass('pending');
     this._loadAvatar();
-    this.handleEvents();
     return this;
   },
 

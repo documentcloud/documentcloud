@@ -5,7 +5,7 @@ class AnnotationsController < ApplicationController
 
   # In the workspace, request a listing of annotations.
   def index
-    json :models => current_document.annotations.accessible(current_account)
+    json current_document.annotations.accessible(current_account)
   end
 
   # Any account can create a private note on any document.
@@ -15,7 +15,7 @@ class AnnotationsController < ApplicationController
     doc = current_document
     return forbidden unless note_attrs[:access].to_i == PRIVATE || current_account.allowed_to_edit?(doc)
     expire_page doc.canonical_cache_path if doc.cacheable?
-    json :model => doc.annotations.create(
+    json doc.annotations.create(
       note_attrs.merge(:account_id => current_account.id, :organization_id => current_organization.id)
     )
   end
@@ -29,7 +29,7 @@ class AnnotationsController < ApplicationController
     end
     anno.update_attributes(pick(:model, :title, :content))
     expire_page current_document.canonical_cache_path if current_document.cacheable?
-    json :model => anno
+    json anno
   end
 
   def destroy

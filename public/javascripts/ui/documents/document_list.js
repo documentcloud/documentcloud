@@ -20,7 +20,6 @@ dc.ui.DocumentList = Backbone.View.extend({
   },
 
   render : function() {
-    this.handleEvents();
     $('.search_tab_content').selectable({ignore : '.noselect, .minibutton', select : '.icon.doc', onSelect : this._onSelect});
     return this;
   },

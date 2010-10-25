@@ -198,7 +198,7 @@
       options || (options = {});
       var model = this;
       var success = function(resp) {
-        if (!model.set(resp.model, options)) return false;
+        if (!model.set(model.parse(resp), options)) return false;
         if (options.success) options.success(model, resp);
       };
       var error = options.error && _.bind(options.error, null, model);
@@ -215,7 +215,7 @@
       if (!this.set(attrs, options)) return false;
       var model = this;
       var success = function(resp) {
-        if (!model.set(resp.model, options)) return false;
+        if (!model.set(model.parse(resp), options)) return false;
         if (options.success) options.success(model, resp);
       };
       var error = options.error && _.bind(options.error, null, model);
@@ -245,6 +245,12 @@
       var base = getUrl(this.collection);
       if (this.isNew()) return base;
       return base + '/' + this.id;
+    },
+
+    // **parse** converts a response into the hash of attributes to be `set` on
+    // the model. The default implementation is just to pass the response along.
+    parse : function(resp) {
+      return resp;
     },
 
     // Create a new model with identical attributes to this one.
@@ -330,6 +336,12 @@
     // This should be overridden in most cases.
     model : Backbone.Model,
 
+    // The JSON representation of a Collection is an array of the
+    // models' attributes.
+    toJSON : function() {
+      return this.map(function(model){ return model.toJSON(); });
+    },
+
     // Add a model, or list of models to the set. Pass **silent** to avoid
     // firing the `added` event for every new model.
     add : function(models, options) {
@@ -404,7 +416,7 @@
       options || (options = {});
       var collection = this;
       var success = function(resp) {
-        collection.refresh(resp.models);
+        collection.refresh(collection.parse(resp));
         if (options.success) options.success(collection, resp);
       };
       var error = options.error && _.bind(options.error, null, collection);
@@ -423,6 +435,12 @@
         if (options.success) options.success(nextModel, resp);
       };
       return model.save(null, {success : success, error : options.error});
+    },
+
+    // **parse** converts a response into a list of models to be added to the
+    // collection. The default implementation is just to pass it through.
+    parse : function(resp) {
+      return resp;
     },
 
     // Proxy to _'s chain. Can't be proxied the same way the rest of the
@@ -516,6 +534,7 @@
   Backbone.View = function(options) {
     this._configure(options || {});
     this._ensureElement();
+    this.delegateEvents();
     if (this.initialize) this.initialize(options);
   };
 
@@ -526,7 +545,7 @@
     return $(selector, this.el);
   };
 
-  // Cached regex to split keys for `handleEvents`.
+  // Cached regex to split keys for `delegate`.
   var eventSplitter = /^(\w+)\s*(.*)$/;
 
   // Set up all inheritable **Backbone.View** properties and methods.
@@ -572,15 +591,15 @@
     // Omitting the selector binds the event to `this.el`.
     // `"change"` events are not delegated through the view because IE does not
     // bubble change events at all.
-    handleEvents : function(events) {
-      $(this.el).unbind();
+    delegateEvents : function(events) {
       if (!(events || (events = this.events))) return this;
+      $(this.el).unbind();
       for (var key in events) {
         var methodName = events[key];
         var match = key.match(eventSplitter);
         var eventName = match[1], selector = match[2];
         var method = _.bind(this[methodName], this);
-        if (selector === '' || eventName == 'change') {
+        if (selector === '') {
           $(this.el).bind(eventName, method);
         } else {
           $(this.el).delegate(selector, eventName, method);

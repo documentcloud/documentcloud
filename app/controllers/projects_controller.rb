@@ -3,11 +3,11 @@ class ProjectsController < ApplicationController
   before_filter :login_required
 
   def index
-    json :models => Project.accessible(current_account)
+    json Project.accessible(current_account)
   end
 
   def create
-    json :model => current_account.projects.create(pick(:model, :title, :document_ids))
+    json current_account.projects.create(pick(:model, :title, :document_ids))
   end
 
   # TODO: Ensure that the document ids you're adding are for documents you
@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
     data = pick(:model, :title, :document_ids)
     current_project.update_attributes(:title => data[:title]) if data[:title]
     current_project.set_documents(data[:document_ids])
-    json :model => current_project.reload
+    json current_project.reload
   end
 
   def destroy
@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
   end
 
   def documents
-    json :models => current_project.loaded_documents
+    json current_project.loaded_documents
   end
 
 

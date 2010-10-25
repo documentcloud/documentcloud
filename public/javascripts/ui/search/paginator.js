@@ -73,7 +73,6 @@ dc.ui.Paginator = Backbone.View.extend({
       page_size   : this.pageSize(),
       page_count  : this.pageCount()
     }));
-    this.handleEvents();
     return this;
   },
 

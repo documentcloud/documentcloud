@@ -25,7 +25,6 @@ dc.ui.Menu = Backbone.View.extend({
     $(this.el).html(JST['common/menubutton']({label : this.options.label}));
     this._label = this.$('.label');
     $(document.body).append(this.content);
-    this.handleEvents();
     return this;
   },
 

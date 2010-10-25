@@ -33,7 +33,6 @@ dc.ui.Toolbar = Backbone.View.extend({
     this.openButton              = this.$('#open_viewers');
     this.floatEl                 = this.$('#floating_toolbar');
     $(window).scroll(_.bind(function(){ _.defer(this.checkFloat); }, this));
-    this.handleEvents();
     return this;
   },
 

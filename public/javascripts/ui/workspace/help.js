@@ -31,7 +31,6 @@ dc.ui.Help = Backbone.View.extend({
     dc.app.navigation.bind('tab:help',  _.bind(this.openHelpTab, this));
     this._toolbar = $('#help_toolbar');
     this._toolbar.prepend(this._createHelpMenu().render().el);
-    this.handleEvents();
     return this;
   },
 

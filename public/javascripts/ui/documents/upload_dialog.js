@@ -196,7 +196,6 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     $(this.el).html(JST['document/upload_document_tile']({model : this.model}));
     this._title    = this.$('input[name=title]');
     this._progress = this.$('.progress_bar');
-    this.handleEvents();
     return this;
   },
 

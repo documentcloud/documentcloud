@@ -52,7 +52,6 @@ dc.ui.Admin = Backbone.View.extend({
   render : function() {
     $(this.el).html(JST.statistics(this.data()));
     $('#topbar').append(this._actionsMenu.render().el);
-    this.handleEvents();
     _.defer(this.renderCharts);
     if (Accounts.length) _.defer(this._loadAllAccounts);
     return this;

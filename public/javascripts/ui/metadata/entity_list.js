@@ -10,10 +10,6 @@ dc.ui.EntityList = Backbone.View.extend({
     'click .show_pages'    : '_showPages'
   },
 
-  initialize : function() {
-    this.handleEvents();
-  },
-
   // Refresh the facets with a new batch.
   renderFacets : function(facets, limit, docCount) {
     this._docCount = docCount;

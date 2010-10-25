@@ -19,7 +19,6 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     if (contributor && org) {
       currentDocument.$('.DV-contributor').text("Contributed by: " + contributor + ', ' + org);
     }
-    this.handleEvents();
     return this;
   },
 
