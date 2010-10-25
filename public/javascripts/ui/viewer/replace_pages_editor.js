@@ -54,7 +54,6 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     this.$s.container = $(this.el);
     this.findSelectors();
     this.updateHint('choose');
-    this.handleEvents();
     dc.app.uploader = new dc.ui.UploadDialog({
       editable    : false,
       insertPages : true,
@@ -63,7 +62,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     dc.app.uploader.setupUploadify();
   },
   
-  handleEvents : function(callbacks) {
+  delegateEvents : function(callbacks) {
     var $thumbnails = this.$s.thumbnails;
     
     $thumbnails.each(function(i) {
@@ -74,7 +73,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       this.confirmPageChoice($(e.currentTarget));
     }, this));
     
-    Backbone.View.prototype.handleEvents.call(this, callbacks);
+    Backbone.View.prototype.delegateEvents.call(this, callbacks);
   },
   
   confirmPageChoice : function($thumbnail) {

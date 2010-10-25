@@ -69,16 +69,14 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
     this.$s.header.removeClass('active');
     this.$s.textContents.attr('contentEditable', true);
     this.$s.textContents.addClass('DV-editing');
-    
-    this.handleEvents();
   },
 
-  handleEvents : function() {
+  delegateEvents : function() {
     
     this.$s.textContents.bind('keyup', this.cachePageText);
     this.$s.textContents.bind('change', this.cachePageText);
     this.$s.textContents.bind('blur', this.cachePageText);
-    Backbone.View.prototype.handleEvents.call(this);
+    Backbone.View.prototype.delegateEvents.call(this);
   },
   
   getPageNumber : function() {
