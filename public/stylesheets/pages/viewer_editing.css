@@ -362,16 +362,19 @@
   border-bottom: 1px solid #505050;
 }
   #edit_page_text_container.active {
-    background-color: #F37500;
+/*    background-color: #F37500;*/
   }
+    #edit_page_text_container.active .edit_page_text_confirm_info {
+      display: none;
+    }
   #edit_page_text_container .edit_page_text {
     position: relative;
     overflow-x: auto;
     overflow-y: hidden;
-    height: 45px;
+    height: 122px;
   }
   #edit_page_text_container .edit_page_text_confirm {
-    padding: 12px 0 0 0;
+    padding: 0;
     text-transform: uppercase;
     font-size: 16px;
     color: #D0D0D0;
@@ -382,14 +385,46 @@
   }
     #edit_page_text_container .edit_page_text_confirm_info {
       float: left;
+      margin: 50px 12px;
     }
     #edit_page_text_container .edit_page_text_confirm input {
-      margin: 0 8px;
+      margin: 50px 8px 0;
       float: left;
     }
-
+  #edit_page_text_container .document_page_tiles {
+    float: left;
+  }
+    #edit_page_text_container .document_page_tile {
+      display: inline;
+      float: left;
+      margin: 12px 6px 0 6px;
+      text-align: center;
+      height: 100px;
+      width: 62px;
+    }
+      #edit_page_text_container .document_page_tile img {
+        display: block;
+        border: 1px solid #505050;
+        box-shadow: 1px 1px 1px #D0D0D0;
+        -webkit-box-shadow: 1px 1px 1px #D0D0D0;
+        -moz-box-shadow: 1px 1px 1px #D0D0D0;
+      }
+      #edit_page_text_container .document_page_tile .document_page_tile_remove {
+        float: left;
+        margin: 6px 0 0 0;
+        display: none;
+      }
+        #edit_page_text_container .document_page_tile:hover .document_page_tile_remove {
+          display: block;
+        }
+      #edit_page_text_container .document_page_tile .document_page_tile_number {
+        color: #505050;
+        font-weight: bold;
+        font-size: 13px;
+        padding: 4px 16px 0;
+      }
 .DV-pages.edit_page_text_viewer {
-  margin-top: 45px;
+  margin-top: 122px;
 }
 .DV-textContents.DV-editing {
   border: 1px dotted #505050;

@@ -7,7 +7,8 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
   },
   
   events : {
-    'click .edit_page_text_confirm_input' : 'confirmEditPageText'
+    'click .edit_page_text_confirm_input' : 'confirmEditPageText',
+    'click .document_page_tile_remove'    : 'resetPage'
   },
   
   originalPageText: {},
@@ -15,7 +16,7 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
   
   constructor : function(opts) {
     Backbone.View.call(this, opts);
-    _.bindAll(this, 'confirmEditPageText', 'cachePageText');
+    _.bindAll(this, 'confirmEditPageText', 'cachePageText', 'resetPage');
   },
 
   toggle : function() {
@@ -37,7 +38,8 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
       viewerContainer : $('.DV-docViewer-Container'),
       header : $('#edit_page_text_container'),
       container : null,
-      saveButton : $('.edit_page_text_confirm_input')
+      saveButton : $('.edit_page_text_confirm_input', this.el),
+      headerTiles : $('.document_page_tiles', this.el)
     };
     
     this.viewer = DV.viewers[_.first(_.keys(DV.viewers))];
@@ -75,17 +77,16 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
   handleEvents : function() {
     this.$s.textContents.bind('keyup', this.cachePageText);
     this.$s.textContents.bind('change', this.cachePageText);
-    this.$s.textContents.bind('blur', this.cachePageText);
   },
   
   getPageNumber : function() {
-    return currentDocument.api.currentPage();
+    return this.viewer.api.currentPage();
   },
   
   getPageText : function(pageNumber) {
     pageNumber = pageNumber || this.getPageNumber();
     
-    return currentDocument.api.getPageText(pageNumber);
+    return this.viewer.api.getPageText(pageNumber);
   },
   
   confirmEditPageText : function() {
@@ -109,15 +110,73 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
   cachePageText : function() {
     var pageNumber = this.getPageNumber();
     var pageText = Inflector.trim(this.extractText(this.$s.textContents));
+
     if (!(pageNumber in this.originalPageText)) {
-      this.originalPageText[pageNumber] = this.getPageText(pageNumber);
+      this.originalPageText[pageNumber] = $.trim(this.getPageText(pageNumber));
     }
+
     if (pageText != this.originalPageText[pageNumber]) {
+      this.pageText[pageNumber] = pageText;
+    } else {
+      delete this.originalPageText[pageNumber];
+      delete this.pageText[pageNumber];
+    }
+
+    this.viewer.api.setPageText(pageText, pageNumber);
+    this.redrawHeader();
+  },
+  
+  resetPage : function(e) {
+    var pageNumber = $(e.currentTarget).parents('.document_page_tile').data('pageNumber');
+    
+    this.viewer.api.setPageText(this.originalPageText[pageNumber], pageNumber);
+    this.viewer.api.enterEditPageTextMode();
+    delete this.originalPageText[pageNumber];
+    delete this.pageText[pageNumber];
+    this.redrawHeader();
+  },
+  
+  redrawHeader : function() {
+    var saveText;
+    var editedPages = _.keys(this.originalPageText);
+    var pageCount = editedPages.length;
+    editedPages = editedPages.sort(function(a, b) { return a - b; });
+    $('.document_page_tile', this.$s.headerTiles).empty().remove();
+    
+    if (pageCount == 0) {
+      this.$s.header.removeClass('active');
+      this.$s.saveButton.attr('disabled', true);
+    } else {
       this.$s.header.addClass('active');
       this.$s.saveButton.removeAttr('disabled');
     }
-    this.pageText[pageNumber] = pageText;
-    currentDocument.api.setPageText(pageText, pageNumber);
+    
+    // Create each page tile and add it to the page holder
+    _.each(editedPages, _.bind(function(pageNumber) {
+      var url = this.imageUrl;
+      url = url.replace(/\{size\}/, 'thumbnail');
+      url = url.replace(/\{page\}/, pageNumber);
+      var $thumbnail = $(JST['viewer/document_page_tile']({
+        url : url,
+        pageNumber : pageNumber
+      }));
+      $thumbnail.data('pageNumber', pageNumber);
+      this.$s.headerTiles.append($thumbnail);
+    }, this));
+    
+    // Update remove button's text
+    if (pageCount == 0) {
+      saveText = 'Save page text';
+    } else {
+      saveText = 'Save ' + pageCount + Inflector.pluralize(' page', pageCount);
+    }
+    $('.edit_page_text_confirm_input', this.el).val(saveText);
+    
+    // Set width of container for side-scrolling
+    var width = $('.document_page_tile').length * $('.document_page_tile').eq(0).outerWidth(true);
+    var confirmWidth = $('.remove_pages_confirm', this.el).outerWidth(true);
+    this.$s.headerTiles.width(width + confirmWidth);
+    Backbone.View.prototype.delegateEvents.call(this);
   },
   
   extractText : function(elems) {
