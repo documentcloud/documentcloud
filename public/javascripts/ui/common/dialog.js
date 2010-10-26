@@ -36,6 +36,7 @@ dc.ui.Dialog = Backbone.View.extend({
     if (this.options.width) $(this.el).css({width : this.options.width});
     if (this.options.content) cel.val(this.options.content);
     $(document.body).append(this.el);
+    this.delegateEvents();
     this.center();
     if (this.options.draggable) $(this.el).draggable();
     if (this._returnCloses()) $(document.body).bind('keypress', this._maybeConfirm);
