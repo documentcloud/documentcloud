@@ -88,9 +88,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
       data:     params,
       success:  this._loadSearchResults,
       error:    function(req, textStatus, errorThrown) {
-        if (req.status == 403) {
-          Accounts.forceLogout();
-        }
+        if (req.status == 403) Accounts.forceLogout();
       },
       dataType: 'json'
     });

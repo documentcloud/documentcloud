@@ -1,11 +1,11 @@
 dc.ui.ReplacePagesEditor = Backbone.View.extend({
-  
+
   id : 'replace_pages_container',
-  
+
   flags : {
     open: false
   },
-  
+
   constructor : function(options) {
     Backbone.View.call(this, options);
   },
@@ -18,7 +18,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       this.open();
     }
   },
-  
+
   findSelectors : function() {
     this.$s = {
       guideButton: $('.edit_replace_pages'),
@@ -28,13 +28,12 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       hint : $(".replace_pages_hint", this.el),
       container : null
     };
-    
+
     this.viewer = DV.viewers[_.first(_.keys(DV.viewers))];
     this.imageUrl = this.viewer.schema.document.resources.page.image;
   },
-  
+
   open : function() {
-    dc.app.hotkeys.initialize();
     this.findSelectors();
     this.flags.open = true;
     this.$s.guideButton.addClass('open');
@@ -43,7 +42,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     this.$s.thumbnails.removeClass('DV-removePage');
     $('.DV-currentPage', this.$s.pages).removeClass('DV-currentPage').addClass('DV-currentPage-disabled');
   },
-  
+
   render : function() {
     $(this.el).html(JST['viewer/replace_pages']({}));
     this.$s.viewerContainer.append(this.el);
@@ -60,13 +59,13 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       documentId  : this.viewer.api.getModelId()
     });
     dc.app.uploader.setupUploadify();
-    
+
     this.handleEvents();
   },
-  
+
   handleEvents : function() {
     var $thumbnails = this.$s.thumbnails;
-    
+
     $thumbnails.each(function(i) {
       $(this).data('pageNumber', i+1);
     });
@@ -75,10 +74,10 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       this.confirmPageChoice($(e.currentTarget));
     }, this));
   },
-  
+
   confirmPageChoice : function($thumbnail) {
     var $thumbnails = this.$s.thumbnails;
-    
+
     $thumbnails.removeClass('DV-removePage');
     if (dc.app.hotkeys.shift && this.$firstPageSelection) {
         var end = Math.max($thumbnail.data('pageNumber'), this.$firstPageSelection.data('pageNumber'));
@@ -92,7 +91,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
         this.$firstPageSelection = $thumbnail;
         $thumbnail.addClass('DV-removePage');
     }
-    
+
     this.updateHint('upload');
   },
 
@@ -117,30 +116,30 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
         replacePagesEnd: range.end
       });
     }
-    
+
     this.$s.hint.text(hint);
   },
-  
+
   updateUploader : function(attrs) {
     dc.app.uploader.insertPagesAttrs(attrs);
   },
-  
+
   getPageRange : function() {
     var $thumbnails = this.$s.thumbnails;
     var $thumbnail = $thumbnails.filter('.DV-removePage');
-    
+
     var range = _.map($thumbnail, function(t) {
       return parseInt($(t).data('pageNumber'), 10);
     });
     var start = _.min(range);
     var end = _.max(range);
-    
+
     return {
       start: start,
       end: end
     };
   },
-  
+
   close : function() {
     if (this.flags.open) {
       $('.DV-currentPage-disabled', this.$s.pages).addClass('DV-currentPage').removeClass('DV-currentPage-disabled');

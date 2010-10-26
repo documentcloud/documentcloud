@@ -4,6 +4,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   id        : 'upload_dialog',
   className : 'dialog',
 
+  INSERT_PAGES_MESSAGE: 'This process will take a few minutes.<br /><br />\
+    This window must close while pages are being added and the document is being reconstructed.',
+
   constructor : function(options) {
     var defaults = {
       editable    : true,
@@ -15,7 +18,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       closeText   : 'Cancel'
     };
     options = $.extend({}, defaults, options);
-    
+
     _.bindAll(this, 'setupUploadify', 'countDocuments', '_onSelect', '_onSelectOnce',
       '_onCancel', '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
     dc.ui.Dialog.call(this, options);
@@ -47,7 +50,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   _renderDocumentTiles : function() {
     var tiles = this._tiles;
     var editable = this.options.editable;
-    
+
     this.collection.each(function(model) {
       var view = new dc.ui.UploadDocumentTile({
         editable : editable,
@@ -55,7 +58,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       });
       tiles[model.id] = view.render();
     });
-    
+
     var viewEls = _.pluck(_.values(tiles), 'el');
     this._list.append(viewEls);
   },
@@ -170,13 +173,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   _onAllComplete : function(e, data) {
     this.hideSpinner();
     if (this.options.insertPages) {
-      window.opener && window.opener.Documents &&
+      try {
+        window.opener && window.opener.Documents &&
           window.opener.Documents.get(this.options.documentId).set(this.documentResponse);
-      dc.ui.Dialog.alert('This process will take a few minutes.<br /><br />This window must close while pages are being added and the document is being reconstructed.', { 
-        onClose : function() {
-          window.close();
-        }
-      });
+      } catch (e) {
+        // No parent window...
+      }
+      dc.ui.Dialog.alert(this.INSERT_PAGES_MESSAGE, {onClose : window.close});
     }
     this.close();
   },
@@ -195,7 +198,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       this.info('There ' + conj + ' ' + num + ' ' + Inflector.pluralize('document', num) + ' ahead of you in line.', true);
     }, this));
   },
-  
+
   insertPagesAttrs : function(attrs) {
     _.each(attrs, _.bind(function(value, attr) {
       this.options[attr] = value;
@@ -233,7 +236,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     'click .open_edit'    : 'openEdit',
     'click .apply_all'    : 'applyAll'
   },
-  
+
   constructor : function(options) {
     Backbone.View.call(this, options);
   },

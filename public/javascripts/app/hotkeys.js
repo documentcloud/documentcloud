@@ -12,9 +12,9 @@ dc.app.hotkeys = {
 
   initialize : function() {
     _.bindAll(this, 'down', 'up', 'blur');
-    $(document).unbind('keydown.dc').bind('keydown.dc', this.down);
-    $(document).unbind('keyup.dc').bind('keyup.dc', this.up);
-    $(window).unbind('blur.dc').bind('blur.dc', this.blur);
+    $(document).bind('keydown', this.down);
+    $(document).bind('keyup', this.up);
+    $(window).bind('blur', this.blur);
   },
 
   down : function(e) {

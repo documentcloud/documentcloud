@@ -9,6 +9,7 @@ _.extend(dc.app.editor, {
     this.isOwner = isOwner;
     this.accountName = accountName;
     _.defer(_.bind(function() {
+      dc.app.hotkeys.initialize();
       this.createSubViews();
       this.renderSubViews();
       this.setupStateChangeCallbacks();
@@ -35,7 +36,7 @@ _.extend(dc.app.editor, {
     $('.DV-well').append(this.controlPanel.render().el);
     $('.DV-logo').hide();
   },
-  
+
   closeAllEditors : function(state) {
     if (state != 'ViewThumbnails') {
       this.removePagesEditor.close();
@@ -47,7 +48,7 @@ _.extend(dc.app.editor, {
       this.editPageTextEditor.close();
     }
   },
-  
+
   setupStateChangeCallbacks : function() {
     currentDocument.api.onChangeState(_.bind(this.closeAllEditors, this));
   }
