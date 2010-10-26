@@ -1,10 +1,13 @@
 # Searching for Documents
 
-This guide lists the different types of searches you can perform with DocumentCloud. You can click any of the linked examples to run the search and try it out.
-
 By default, a search looks for all of the words you enter within the title and full text of the document itself. For example: [John Yoo detainee][]. You can, however, ask DocumentCloud to search the contents of specific fields.
 
-You can enclose your search terms in quotes of you want to search for a specific, multi-word phrase or name, or use "NOT" or "-" to exclude a term from your search. For example: [geithner -madoff][] and [geithner NOT madoff][] will both look for documents that mention "Geithner" and do not also mention "Madoff." 
+## Tips
+Enclose terms in quotes to search for a specific, multi-word phrase.  
+
+Use "NOT" or "-" to exclude a term from your search. For example both: [geithner -madoff][] and [geithner NOT madoff][] will return documents that mention "Geithner" and do not also mention "Madoff." 
+
+## Searching by Metadata Field
    
 Term                        | Description 
 ----------------------------|---------------------
