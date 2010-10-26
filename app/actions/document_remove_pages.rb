@@ -8,7 +8,7 @@ class DocumentRemovePages < DocumentModBase
     begin
       prepare_pdf
       @insert_after_remove = options['replace_pages_start'] && options['insert_document_count']
-      remove_page options['pages']
+      remove_pages options['pages']
       if @insert_after_remove
         # -1 because we are inserting BEFORE where the pages were removed.
         document.insert_documents(options['replace_pages_start']-1,
@@ -24,9 +24,9 @@ class DocumentRemovePages < DocumentModBase
 
   private
 
-  def remove_page(delete_pages)
+  def remove_pages(delete_pages)
     # Which pages to keep
-    delete_pages.map! {|p| p.to_i }.sort
+    delete_pages.sort!
     keep_pages = ((1..document.page_count).to_a - delete_pages)
 
     # Rename pages with pdftk, keeping only unremoved pages

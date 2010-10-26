@@ -18,8 +18,6 @@ class DocumentReorderPages < DocumentModBase
   private
 
   def reorder_pages(page_order)
-    page_order.map! {|p| p.to_i }
-
     # Rewrite PDF with pdftk, using new page order
     cmd = "pdftk #{@pdf} cat #{page_order.join(' ')} output #{document.slug}.pdf_temp"
     `#{cmd}`

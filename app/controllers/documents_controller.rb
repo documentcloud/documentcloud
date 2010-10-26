@@ -65,39 +65,39 @@ class DocumentsController < ApplicationController
     doc.destroy
     json nil
   end
-  
+
   def remove_pages
     return not_found unless doc = current_document(true)
-    doc.remove_pages(params[:pages])
+    doc.remove_pages(params[:pages].map {|p| p.to_i })
     json doc
   end
-  
+
   def reorder_pages
     return not_found unless doc = current_document(true)
-    doc.reorder_pages(params[:page_order])
+    return json(nil, 409) if params[:page_order].length != doc.page_count
+    doc.reorder_pages params[:page_order].map {|p| p.to_i }
     json doc
   end
-  
+
   def upload_insert_document
     return not_found unless doc = current_document(true)
-    return json :bad_request => true unless params[:file] && (params[:insert_page_at] ||
-                                                              params[:replace_pages_start])
+    return json(nil, 409) unless params[:file] && (params[:insert_page_at] || params[:replace_pages_start])
 
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:document_number]+'.pdf') do |path|
       DC::Store::AssetStore.new.save_insert_pdf(doc, path)
       if params[:document_number] == params[:document_count]
         if params[:replace_pages_start]
-          range = (params[:replace_pages_start]..params[:replace_pages_end]).to_a
+          range = (params[:replace_pages_start].to_i..params[:replace_pages_end].to_i).to_a
           doc.remove_pages(range, params[:replace_pages_start].to_i, params[:document_count].to_i)
         else
           doc.insert_documents(params[:insert_page_at], params[:document_count].to_i)
         end
       end
     end
-    
+
     json doc
   end
-  
+
   def save_page_text
     return not_found unless doc = current_document(true)
     doc.save_page_text(params[:modified_pages])

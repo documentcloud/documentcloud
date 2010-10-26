@@ -8,7 +8,7 @@ class ImportController < ApplicationController
 
   # Internal document upload, called from the workspace.
   def upload_document
-    return json :bad_request => true unless params[:file] && params[:title].is_a?(String)
+    return json(nil, 409) unless params[:file] && params[:title].is_a?(String)
     document = Document.upload(params, current_account, current_organization)
     project_id = params[:project_id]
     Project.accessible(current_account).find(project_id.to_i).add_document(document) if project_id
