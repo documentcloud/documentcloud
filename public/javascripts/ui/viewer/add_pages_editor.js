@@ -1,11 +1,11 @@
 dc.ui.AddPagesEditor = Backbone.View.extend({
-  
+
   id : 'add_pages_container',
-  
+
   flags : {
     open: false
   },
-  
+
   constructor : function(options) {
     Backbone.View.call(this, options);
   },
@@ -18,21 +18,21 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
       this.open();
     }
   },
-  
+
   findSelectors : function() {
     this.$s = {
-      guideButton: $('.edit_add_pages'),
-      thumbnails : $('.DV-thumbnail'),
-      pages : $('.DV-pages'),
+      guideButton     : $('.edit_add_pages'),
+      thumbnails      : $('.DV-thumbnail'),
+      pages           : $('.DV-pages'),
       viewerContainer : $('.DV-docViewer-Container'),
-      hint : $(".add_pages_hint", this.el),
-      container : null
+      hint            : $(".add_pages_hint", this.el),
+      container       : null
     };
-    
+
     this.viewer = DV.viewers[_.first(_.keys(DV.viewers))];
     this.imageUrl = this.viewer.schema.document.resources.page.image;
   },
-  
+
   open : function() {
     this.findSelectors();
     this.flags.open = true;
@@ -42,7 +42,7 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
     this.$s.thumbnails.removeClass('DV-removePage');
     $('.DV-currentPage', this.$s.pages).removeClass('DV-currentPage').addClass('DV-currentPage-disabled');
   },
-  
+
   render : function() {
     $(this.el).html(JST['viewer/add_pages']({}));
     this.$s.viewerContainer.append(this.el);
@@ -59,13 +59,13 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
       documentId  : this.viewer.api.getModelId()
     });
     dc.app.uploader.setupUploadify();
-    
+
     this.handleEvents();
   },
-  
+
   handleEvents : function() {
     var $thumbnails = this.$s.thumbnails;
-    
+
     $thumbnails.each(function(i) {
       $(this).data('pageNumber', i+1);
     });
@@ -85,20 +85,20 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
       this.confirmPageChoice();
     }, this));
   },
-  
+
   confirmPageChoice : function() {
     this.$s.thumbnails.find('.left_chosen,.right_chosen').removeClass('left_chosen')
                                                          .removeClass('right_chosen');
     $('.left', this.$s.thumbnails).addClass('left_chosen');
     $('.right', this.$s.thumbnails).addClass('right_chosen');
-    
+
     this.updateHint('upload');
   },
 
   updateHint : function(state) {
     var pageNumber = this.getPageNumber();
     var pageCount = this.viewer.api.numberOfPages();
-    
+
     if (state == 'choose' || !_.isNumber(pageNumber)) {
       hint = "Choose where to insert new pages.";
       $(this.el).setMode('off', 'upload');
@@ -116,25 +116,25 @@ dc.ui.AddPagesEditor = Backbone.View.extend({
         insertPageAt: pageNumber
       });
     }
-    
+
     $('.add_pages_hint', this.el).text(hint);
   },
-  
+
   updateUploader : function(attrs) {
     dc.app.uploader.insertPagesAttrs(attrs);
   },
-  
+
   getPageNumber : function() {
     var $active = this.$s.thumbnails.has('.left,.right');
     var pageNumber = $active.data('pageNumber');
-    
+
     if ($active.find('.left').length) {
       return pageNumber - 1;
     } else if ($active.find('.right').length) {
       return pageNumber;
     }
   },
-  
+
   close : function() {
     if (this.flags.open) {
       $('.DV-currentPage-disabled', this.$s.pages).addClass('DV-currentPage').removeClass('DV-currentPage-disabled');
