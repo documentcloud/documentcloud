@@ -97,14 +97,7 @@ class DocumentRemovePages < DocumentModBase
     document.save!
 
     if not @insert_after_remove
-      document.full_text.refresh
-      Page.refresh_page_map(document)
-      EntityDate.refresh(document)
-      document.update_attributes :access => access
-      pages = document.reload.pages
-      Sunspot.index pages
-      document.reprocess_entities
-      document.upload_text_assets(pages)
+      reindex_all!
     end
   end
 

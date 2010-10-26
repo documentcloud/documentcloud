@@ -11,8 +11,6 @@ class DocumentReorderPages < DocumentModBase
     rescue Exception => e
       LifecycleMailer.deliver_exception_notification(e)
       raise e
-    ensure
-      FileUtils.rm @pdf if File.exists? @pdf
     end
     document.id
   end
@@ -26,27 +24,30 @@ class DocumentReorderPages < DocumentModBase
     cmd = "pdftk #{@pdf} cat #{page_order.join(' ')} output #{document.slug}.pdf_temp"
     `#{cmd}`
     asset_store.save_pdf(document, "#{document.slug}.pdf_temp") if File.exists? "#{document.slug}.pdf_temp"
-    FileUtils.rm @pdf + '_temp'
 
     # Pull images from S3, delete old images, then upload renamed images
     reordered_page_images = {}
-    page_order.each_with_index do |p, i|
-      if p != (i+1)
-        reordered_page_images[i+1] = {}
+    page_order.each_with_index do |old_num, i|
+      new_num = i + 1
+      if old_num != new_num
+        reordered_page_images[new_num] = {}
         Page::IMAGE_SIZES.keys.each do |size|
-          page = document.page_image_path(p, size)
-          reordered_page_images[i+1][size] = "#{document.slug}-p#{i+1}-#{size}.gif"
-          File.open(reordered_page_images[i+1][size], 'w+') do |f|
+          page = document.page_image_path(old_num, size)
+          reordered_page_images[new_num][size] = "#{document.slug}-p#{new_num}-#{size}.gif"
+          File.open(reordered_page_images[new_num][size], 'w+') do |f|
             f.write(asset_store.read(page))
           end
         end
       end
     end
+
+    # We have to wait until all pages have been written out locally, or else
+    # we'll be clobbering existing pages on S3.
     reordered_page_images.each do |p, page_sizes|
       asset_store.save_page_images(document, p, page_sizes, access)
     end
 
-    # Update page offsets for text
+    # Update page offsets for text.
     offset = 0
     page_order.each_with_index do |p, i|
       page = Page.find_by_document_id_and_page_number(document.id, p)
@@ -63,21 +64,14 @@ class DocumentReorderPages < DocumentModBase
       page.save
     end
 
-    # Update annotations
+    # Update annotations.
     annotations = Annotation.find_all_by_document_id(document.id)
     annotations.each do |annotation|
       annotation.page_number = page_order.index(annotation.page_number)+1
       annotation.save
     end
 
-    document.full_text.refresh
-    Page.refresh_page_map(document)
-    EntityDate.refresh(document)
-    document.update_attributes :access => access
-    pages = document.reload.pages
-    Sunspot.index pages
-    document.reprocess_entities
-    document.upload_text_assets(pages)
+    reindex_all!
   end
 
 end
