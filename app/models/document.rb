@@ -143,7 +143,8 @@ class Document < ActiveRecord::Base
     doc.reload
   end
 
-  # Insert all documents that have been previously saved into the document's /inserts
+  # Insert all documents that have been previously saved into the document's
+  # `/inserts` folder in the asset store.
   def insert_documents(insert_page_at, document_count, eventual_access=nil)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
@@ -304,7 +305,7 @@ class Document < ActiveRecord::Base
     "/#{canonical_path(:js)}"
   end
 
-  # Externally used image path, not to be confused with page_image_path()
+  # Externally used image path, not to be confused with `page_image_path()`
   def page_image_template
     "#{slug}-p{page}-{size}.gif?#{modified_timestamp}"
   end
@@ -417,6 +418,18 @@ class Document < ActiveRecord::Base
     queue_import self.access, true, false, force_ocr
   end
 
+  def reindex_all!(access=nil)
+    self.access = access if access
+    full_text.refresh
+    Page.refresh_page_map(self)
+    EntityDate.refresh(self)
+    self.save!
+    pages = self.reload.pages
+    Sunspot.index pages
+    reprocess_entities
+    upload_text_assets(pages)
+  end
+
   def reprocess_entities
     RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'reprocess_entities',
@@ -443,15 +456,7 @@ class Document < ActiveRecord::Base
       page.text = page_text
       page.save
     end
-
-    self.full_text.refresh
-    Page.refresh_page_map(self)
-    EntityDate.refresh(self)
-    self.save!
-    pages = self.reload.pages
-    Sunspot.index pages
-    self.reprocess_entities
-    self.upload_text_assets(pages)
+    reindex_all!
   end
 
   def remove_pages(pages, replace_pages_start=nil, insert_document_count=nil)
@@ -515,7 +520,6 @@ class Document < ActiveRecord::Base
       'account_slug'        => account_slug,
       'related_article'     => related_article,
       'pdf_url'             => pdf_url,
-      'modified_timestamp'  => modified_timestamp,
       'thumbnail_url'       => thumbnail_url,
       'full_text_url'       => full_text_url,
       'page_image_url'      => page_image_url_template,

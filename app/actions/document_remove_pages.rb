@@ -97,7 +97,7 @@ class DocumentRemovePages < DocumentModBase
     document.save!
 
     if not @insert_after_remove
-      reindex_all!
+      document.reindex_all!(access)
     end
   end
 

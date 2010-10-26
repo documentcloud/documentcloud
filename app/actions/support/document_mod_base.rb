@@ -28,15 +28,4 @@ class DocumentModBase < CloudCrowd::Action
     options['access'] || DC::Access::PRIVATE
   end
 
-  def reindex_all!
-    document.full_text.refresh
-    Page.refresh_page_map(document)
-    EntityDate.refresh(document)
-    document.update_attributes :access => access
-    pages = document.reload.pages
-    Sunspot.index pages
-    document.reprocess_entities
-    document.upload_text_assets(pages)
-  end
-
 end

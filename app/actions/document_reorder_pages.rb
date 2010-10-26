@@ -69,7 +69,7 @@ class DocumentReorderPages < DocumentModBase
       annotation.save
     end
 
-    reindex_all!
+    document.reindex_all!(access)
   end
 
 end
