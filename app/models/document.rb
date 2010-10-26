@@ -340,8 +340,12 @@ class Document < ActiveRecord::Base
     DC::Store::AssetStore.new.authorized_url(page_image_path(1, 'thumbnail'))
   end
 
-  def thumbnail_url
+  def raw_thumbnail_url
     public? ? public_thumbnail_url : private_thumbail_url
+  end
+
+  def thumbnail_url
+    "#{raw_thumbnail_url}?#{modified_timestamp}"
   end
 
   def public_full_text_url
