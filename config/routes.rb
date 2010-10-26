@@ -37,6 +37,7 @@ ActionController::Routing::Routes.draw do |map|
   # API.
   map.with_options :controller => 'api' do |api|
     api.update '/api/documents/:id.:format', :action => 'update', :conditions => {:method => :put}
+    api.entities '/api/documents/:id/entities.:format', :action => :entities
   end
 
   # Bulk downloads.

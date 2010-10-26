@@ -56,6 +56,14 @@ class ApiController < ApplicationController
     render :json => @response
   end
 
+  # Retrieve the entities for a document.
+  def entities
+    return bad_request unless params[:id] and request.format.json? || request.format.js?
+    @response = {'entities' => current_document.entities.map {|e| e.canonical }}
+    return if jsonp_request?
+    render :json => @response
+  end
+
   def update
     doc = current_document
     attrs = pick(params, :access, :title, :description, :source, :related_article, :remote_url)
