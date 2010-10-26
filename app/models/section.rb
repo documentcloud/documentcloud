@@ -25,7 +25,7 @@ class Section < ActiveRecord::Base
   end
 
   def impossible?
-    start_page > section.end_page
+    start_page > end_page
   end
 
   private
