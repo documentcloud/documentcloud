@@ -147,7 +147,7 @@ class Document < ActiveRecord::Base
   def insert_documents(insert_page_at, document_count, eventual_access=nil)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
-    job = JSON.parse(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'document_insert_pages',
       'inputs'  => [id],
       'options' => {
@@ -157,13 +157,6 @@ class Document < ActiveRecord::Base
         :access          => eventual_access
       }
     }.to_json}).body)
-    ProcessingJob.create!(
-      :document_id    => id,
-      :account_id     => account_id,
-      :cloud_crowd_id => job['id'],
-      :title          => title,
-      :remote_job     => job
-    )
   end
 
   # Retrieve a random document.
@@ -173,6 +166,8 @@ class Document < ActiveRecord::Base
     end
   end
 
+  # Save all text assets, including the `combined_page_text`, and the text of
+  # each page individually, to the asset store.
   def upload_text_assets(pages)
     asset_store.save_full_text(self, access)
     pages.each do |page|
@@ -429,6 +424,18 @@ class Document < ActiveRecord::Base
     }.to_json})
   end
 
+  # Keep a local ProcessingJob record of this active CloudCrowd Job.
+  def record_job(job_json)
+    job = JSON.parse(job_json)
+    ProcessingJob.create!(
+      :document_id    => id,
+      :account_id     => account_id,
+      :cloud_crowd_id => job['id'],
+      :title          => title,
+      :remote_job     => job
+    )
+  end
+
   def save_page_text(modified_pages)
     modified_pages = JSON.parse(modified_pages)
     modified_pages.each_pair do |page_number, page_text|
@@ -450,7 +457,7 @@ class Document < ActiveRecord::Base
   def remove_pages(pages, replace_pages_start=nil, insert_document_count=nil)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
-    job = JSON.parse(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'document_remove_pages',
       'inputs'  => [id],
       'options' => {
@@ -461,19 +468,12 @@ class Document < ActiveRecord::Base
         :insert_document_count => insert_document_count
       }
     }.to_json}).body)
-    ProcessingJob.create!(
-      :document_id    => id,
-      :account_id     => account_id,
-      :cloud_crowd_id => job['id'],
-      :title          => title,
-      :remote_job     => job
-    )
   end
 
   def reorder_pages(page_order)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
-    job = JSON.parse(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'document_reorder_pages',
       'inputs'  => [id],
       'options' => {
@@ -482,32 +482,16 @@ class Document < ActiveRecord::Base
         :access      => eventual_access
       }
     }.to_json}).body)
-    ProcessingJob.create!(
-      :document_id    => id,
-      :account_id     => account_id,
-      :cloud_crowd_id => job['id'],
-      :title          => title,
-      :remote_job     => job
-    )
   end
 
   def queue_import(eventual_access = nil, text_only = false, email_me = false, force_ocr = false)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
-    job = JSON.parse(DC::Import::CloudCrowdImporter.new.import([id], {
-      'id'         => id,
-      'access'     => eventual_access,
-      'text_only'  => text_only,
-      'force_ocr'  => force_ocr,
-      'email_me'   => email_me
+    record_job(DC::Import::CloudCrowdImporter.new.import([id], {
+      'id'            => id,
+      'access'        => eventual_access,
+      'text_only'     => text_only
     }).body)
-    ProcessingJob.create!(
-      :document_id    => id,
-      :account_id     => account_id,
-      :cloud_crowd_id => job['id'],
-      :title          => title,
-      :remote_job     => job
-    )
   end
 
   # TODO: Make the to_json an extended form of the canonical.

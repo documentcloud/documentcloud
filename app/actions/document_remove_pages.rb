@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/support/setup'
-require File.dirname(__FILE__) + '/document_mod_base'
+require File.dirname(__FILE__) + '/support/document_mod_base'
 require 'fileutils'
 
 class DocumentRemovePages < DocumentModBase
@@ -7,7 +7,7 @@ class DocumentRemovePages < DocumentModBase
   def process
     begin
       prepare_pdf
-      @insert_after_remove = options['replace_pages_start'] and options['insert_document_count']
+      @insert_after_remove = options['replace_pages_start'] && options['insert_document_count']
       remove_page options['pages']
       if @insert_after_remove
         # -1 because we are inserting BEFORE where the pages were removed.
@@ -18,8 +18,6 @@ class DocumentRemovePages < DocumentModBase
     rescue Exception => e
       LifecycleMailer.deliver_exception_notification(e)
       raise e
-    ensure
-      FileUtils.rm @pdf if File.exists? @pdf
     end
     document.id
   end
@@ -35,7 +33,6 @@ class DocumentRemovePages < DocumentModBase
     cmd = "pdftk #{@pdf} cat #{keep_pages.join(' ')} output #{document.slug}.pdf_temp"
     `#{cmd}`
     asset_store.save_pdf(document, "#{document.slug}.pdf_temp")
-    FileUtils.rm @pdf + '_temp'
 
     # Pull images from S3, delete old images, then upload renamed images
     keep_pages.each_with_index do |p, i|
@@ -66,20 +63,23 @@ class DocumentRemovePages < DocumentModBase
           start_offset = previous_page ? previous_page.end_offset + 1 : 0
           end_offset = (this_page.end_offset - this_page.start_offset) + start_offset
         end
-        Page.connection.execute "UPDATE pages SET start_offset = #{start_offset}, end_offset = #{end_offset} WHERE document_id = #{document.id} AND page_number = #{p};"
+        this_page.update_attributes :start_offset => start_offset, :end_offset => end_offset
       end
     end
 
-    # Delete old page texts that are no longer in the document.
+    # Delete old pages and annotations that are no longer in the document.
     delete_pages.each do |p|
-      Page.connection.execute "DELETE FROM pages WHERE document_id = #{document.id} AND page_number = #{p}"
-      Annotation.connection.execute "DELETE FROM annotations WHERE document_id = #{document.id} AND page_number = #{p}"
+      where = "document_id = #{document.id} AND page_number = #{p}"
+      Page.destroy_all where
+      Annotation.destroy_all where
     end
 
-    # Update page numbers to compact down deleted pages
-    keep_pages.each_with_index do |p, i|
-      Page.connection.execute "UPDATE pages SET page_number = #{i+1} WHERE document_id = #{document.id} AND page_number = #{p};"
-      Annotation.connection.execute "UPDATE annotations SET page_number = #{i+1} WHERE document_id = #{document.id} AND page_number = #{p};"
+    # Update page numbers to compact down deleted pages.
+    keep_pages.each_with_index do |old_number, i|
+      new_number = i + 1
+      set = "SET page_number = #{new_number} WHERE document_id = #{document.id} AND page_number = #{old_number};"
+      Page.connection.execute "UPDATE pages #{set}"
+      Annotation.connection.execute "UPDATE annotations #{set}"
     end
 
     # Compact, remove, and/or move all sections
