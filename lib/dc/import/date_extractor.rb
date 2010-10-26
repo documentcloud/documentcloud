@@ -77,7 +77,7 @@ module DC
         return   nil unless valid_year?(list.first) || valid_year?(list.last)
         date =   Date.parse(string.gsub(SEP_REGEX, '/'), true) rescue nil
         date ||= Date.parse(string.gsub(SEP_REGEX, '-'), true) rescue nil
-        return   nil if date && (date.year < 0 || date.year > 2100)
+        return   nil if date && (date.year <= 0 || date.year >= 2100)
         date
       end
 
