@@ -236,6 +236,35 @@
       a POST, and add an extra parameter: <tt>_method=put</tt>
     </li>
   </ul>
+  
+  <h2><span id="docinfo">GET /api/documents/[id]/entities.json</span></h2>
+  
+  <p>
+    Retrieve the JSON for all of the entities that a particular document contains,
+    specified by the document id (usually something like: <b>218-madoff-sec-report</b>).
+    Entities are ordered by their relevance to the document as determined by
+    OpenCalais.
+  </p>
+  
+  <h3>Example Response</h3>
+
+<pre>
+{
+  "entities":{
+    "person":[
+      { "value":"Ramadan Aff", "relevance":0.72 },
+      { "value":"Sarah Normand", "relevance":0.612 },
+      ...
+    ],
+    "organization":[
+      { "value":"Supreme Court", "relevance":0.619 },
+      { "value":"Hamas", "relevance":0.581 },
+      ...
+    ]
+    ...
+  }
+}
+</pre>
     
   <h2><span id="projects">GET /api/projects.json</span></h2>
   
@@ -259,8 +288,6 @@
   },
   ...
 ]}</pre>
-
-
 
 </div>
 <script type="text/javascript">

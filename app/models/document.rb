@@ -171,6 +171,21 @@ class Document < ActiveRecord::Base
     self.entities.kind(kind.to_s).all(:select => [:value]).map {|e| e.value }
   end
 
+  # Return a hash of all the document's entities (for an API response).
+  # The hash is ordered by entity kind, after the sidebar, with individual
+  # entities sorted by relevance.
+  def ordered_entity_hash
+    hash = ActiveSupport::OrderedHash.new
+    DC::VALID_KINDS.each {|kind| hash[kind] = [] }
+    entities.each do |e|
+      hash[e.kind].push :value => e.value, :relevance => e.relevance
+    end
+    hash.each do |key, list|
+      hash[key] = list.sort_by {|e| -e[:relevance] }
+    end
+    hash
+  end
+
   # Does this document have a title?
   def titled?
     title.present? && (title != DEFAULT_TITLE)

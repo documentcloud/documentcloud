@@ -59,7 +59,7 @@ class ApiController < ApplicationController
   # Retrieve the entities for a document.
   def entities
     return bad_request unless params[:id] and request.format.json? || request.format.js?
-    @response = {'entities' => current_document.entities.map {|e| e.canonical }}
+    @response = {'entities' => current_document.ordered_entity_hash}
     return if jsonp_request?
     render :json => @response
   end
