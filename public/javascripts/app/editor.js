@@ -35,6 +35,10 @@ _.extend(dc.app.editor, {
     $('.DV-docViewer').addClass(access);
     $('.DV-well').append(this.controlPanel.render().el);
     $('.DV-logo').hide();
+    var supp = $('.DV-supplemental');
+    if (supp.hasClass('DV-noNavigation')) {
+      supp.removeClass('DV-noNavigation').addClass('DV-noNavigationMargin');
+    }
   },
 
   closeAllEditors : function(state) {

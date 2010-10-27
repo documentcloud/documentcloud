@@ -1193,6 +1193,11 @@
     padding: 0;
     border: 0;
   }
+  .DV-supplemental.DV-noNavigationMargin {
+    margin: 0;
+    padding: 0 0 0 14px;
+    border: 0;
+  }
 
 .DV-storyLink,
 .DV-pdfLink {
