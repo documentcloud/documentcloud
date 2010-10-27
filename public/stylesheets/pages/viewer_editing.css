@@ -9,6 +9,12 @@
     border-top: 1px solid #ccc;
     height: 15px;
   }
+  #control_panel .control_panel_title {
+    font-weight: bold;
+    color: black;
+    margin: 0 0 10px 24px;
+    line-height: 16px;
+  }
   .DV-viewAnnotations #control_panel {
     display: none;
   }
@@ -287,7 +293,7 @@
         font-size: 13px;
         padding: 4px 16px 0;
       }
-  
+
 .DV-pages.remove_pages_viewer {
   margin-top: 122px;
 }
@@ -297,7 +303,7 @@
   .DV-pages.remove_pages_viewer .DV-page:hover {
     opacity: .5;
   }
-  
+
 /* ================= */
 /* = Reorder Pages = */
 /* ================= */
@@ -347,7 +353,7 @@
   .DV-pages.reorder_pages_viewer .DV-page:hover {
     opacity: .5;
   }
-  
+
 /* ================== */
 /* = Edit Page Text = */
 /* ================== */
@@ -461,7 +467,7 @@
   #add_pages_container.on_upload .add_pages_upload {
     visibility: visible;
   }
-  
+
   #add_pages_container #new_documentUploader {
     position: absolute;
     right: 24px;
@@ -506,7 +512,7 @@
   #replace_pages_container.on_upload .replace_pages_upload {
     visibility: visible;
   }
-  
+
   #replace_pages_container #new_documentUploader {
     position: absolute;
     right: 24px;
