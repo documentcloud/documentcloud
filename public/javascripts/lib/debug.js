@@ -25,23 +25,26 @@ jQuery.extend({
         dups[this] += 1;
         if (dups[this] >= 2) console.log('duplicate id found: ' + this, everything[i]);
       });
-    },
-
-    // Reload all of the CSS in each frame.
-    reloadCSS : function(win) {
-      win = win || window;
-      var links = jQuery('link', win.document);
-      links.each(function() {
-        var link = jQuery(this);
-        var url = link.attr('href');
-        if (url && (/stylesheet/i).test(link.attr('rel'))) {
-          var h = url.replace(/(&|%5C?)forceReload=\d+/, '');
-          link.attr('href', h+(h.indexOf('?')>=0?'&':'?')+'forceReload='+(new Date().valueOf()));
-        }
-      });
-      jQuery.each(win.frames, function() { jQuery.debug.reloadCSS(this); });
     }
 
   }
 });
+
+// Reload all of the CSS in each frame on the page.
+function reloadCSS(win) {
+  win = win || window;
+  var links = win.document.getElementsByTagName('link');
+  for (var i = 0, l = links.length; i < l; i++) {
+    var link = links[i];
+    var url = link.href;
+    if (url && (/stylesheet/i).test(link.rel)) {
+      var newUrl = url.replace(/(&|%5C?)forceReload=\d+/, '');
+      var reloader = 'forceReload=' + (new Date().valueOf());
+      link.href = newUrl + (newUrl.indexOf('?') >= 0 ? '&' : '?') + reloader;
+    }
+  }
+  for (var i = 0, l = win.frames.length; i < l; i++) {
+    reloadCSS(win.frames[i]);
+  }
+}
 
