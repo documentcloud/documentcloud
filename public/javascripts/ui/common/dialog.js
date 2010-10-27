@@ -83,7 +83,7 @@ dc.ui.Dialog = Backbone.View.extend({
   },
 
   close : function() {
-    if (this.options.onClose && !this.options.onClose(this)) return false;
+    if (this.options.onClose) this.options.onClose(this);
     $(this.el).remove();
     if (this._returnCloses()) $(document.body).unbind('keypress', this._maybeConfirm);
     $(document.body).removeClass('overlay');
