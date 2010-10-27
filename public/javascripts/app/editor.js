@@ -25,7 +25,6 @@ _.extend(dc.app.editor, {
     this.removePagesEditor  = new dc.ui.RemovePagesEditor();
     this.reorderPagesEditor = new dc.ui.ReorderPagesEditor();
     this.editPageTextEditor = new dc.ui.EditPageTextEditor();
-    this.addPagesEditor     = new dc.ui.AddPagesEditor();
     this.replacePagesEditor = new dc.ui.ReplacePagesEditor();
   },
 
@@ -45,7 +44,6 @@ _.extend(dc.app.editor, {
     if (state != 'ViewThumbnails') {
       this.removePagesEditor.close();
       this.reorderPagesEditor.close();
-      this.addPagesEditor.close();
       this.replacePagesEditor.close();
     }
     if (state != 'ViewText') {

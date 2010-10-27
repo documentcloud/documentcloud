@@ -62,9 +62,10 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
     this.$s.holder = $('.remove_pages_holder', this.el);
     this.$s.container = $(this.el);
     this.redrawPages();
+    this.handleEvents();
   },
   
-  delegateEvents : function(callbacks) {
+  handleEvents : function() {
     $('.DV-pageCollection,.DV-thumbnails').undelegate('.DV-overlay', 'click').delegate('.DV-overlay','click', _.bind(function(e) {
       var $this = $(e.target);
       var $page = $this.siblings('.DV-page,.DV-thumbnail-page').eq(0); 
@@ -76,8 +77,6 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
         this.addPageToRemoveSet(pageNumber);
       }
     }, this));
-    
-    Backbone.View.prototype.delegateEvents.call(this, callbacks);
   },
   
   addPageToRemoveSet : function(pageNumber) {

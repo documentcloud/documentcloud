@@ -80,7 +80,7 @@
 .DV-well .DV-navControls{
   background-color: #fff;
   background-repeat: repeat-x;
-  background-image: url(images/DV/embed/shadow-white.gif?1275567053);
+  background-image: url(images/DV/embed/shadow-white.gif?1279813165);
 }
 
 .DV-pages{
@@ -98,12 +98,12 @@
 }
 
 .DV-pageCollection{
-  cursor:  url(images/DV/grab.cur?1275567053), auto;
+  cursor:  url(images/DV/grab.cur?1279813165), auto;
   cursor: -moz-grab;
 }
 
 .DV-pageCollection.DV-dragging {
-  cursor:  url(images/DV/grabbing.cur?1275567053), auto;
+  cursor:  url(images/DV/grabbing.cur?1279813165), auto;
   cursor: -moz-grabbing;
 }
 
@@ -121,7 +121,7 @@
   font-style:oblique;
   padding-left:24px;
   margin: 10px auto;
-  background:url(images/DV/embed/spinner.gif?1275567053) no-repeat left 8px;
+  background:url(images/DV/embed/spinner.gif?1279813165) no-repeat left 8px;
 }
 
 .DV-loadingDocument strong{
@@ -262,7 +262,7 @@
   }
   .DV-activeAnnotation .DV-annotationClose{
     display:block;
-    background: transparent url(images/DV/embed/close_tab.png?1283455199) no-repeat 6px 7px;
+    background: transparent url(images/DV/embed/close_tab.png?1284480668) no-repeat 6px 7px;
   }
 
   .DV-activeAnnotation.DV-annotation{
@@ -318,7 +318,7 @@
   .DV-permalink {
     zoom: 1;
     font-size: 16px;
-    background: url(images/DV/embed/link.png?1286306488) no-repeat 0 0;
+    background: url(images/DV/embed/link.png?1286308348) no-repeat 0 0;
     padding-left: 16px;
     cursor: pointer;
     position: relative;
@@ -423,7 +423,7 @@
   }
   /* ---------------------------------------------------- tabs */
   .DV-annotationTab{
-    background: url(images/DV/embed/corner.png?1278015420) no-repeat right 0;
+    background: url(images/DV/embed/corner.png?1279813165) no-repeat right 0;
     height:26px;
     position:absolute;
     left: -44px;
@@ -431,7 +431,7 @@
     top:8px;
   }
     .DV-private .DV-annotationTab {
-      background-image: url(images/DV/embed/corner-private.png?1278073670);
+      background-image: url(images/DV/embed/corner-private.png?1279813165);
     }
 
   .DV-activeAnnotation .DV-annotationTab{
@@ -489,7 +489,7 @@
 
 .DV-resultPrevious,
 .DV-annotationPrevious {
-  background: url(images/DV/embed/leftArrow.png?1283455199) no-repeat left 1px;
+  background: url(images/DV/embed/leftArrow.png?1284480668) no-repeat left 1px;
 }
 
 .DV-annotationPrevious{
@@ -511,7 +511,7 @@
 
 .DV-resultNext,
 .DV-annotationNext {
-  background:transparent url(images/DV/embed/rightArrow.png?1283455199) no-repeat right 1px;
+  background:transparent url(images/DV/embed/rightArrow.png?1284480668) no-repeat right 1px;
 }
 
 .DV-annotationNext{
@@ -1052,7 +1052,7 @@
     position: absolute;
     left: 5px; top: 5px;
     width: 24px; height: 24px;
-    background: url(images/DV/embed/fullscreen.png?1283198581) no-repeat 0 0;
+    background: url(images/DV/embed/fullscreen.png?1283198375) no-repeat 0 0;
   }
     .DV-fullscreen:hover {
       background-position: -24px 0;
@@ -1223,7 +1223,7 @@
 }
 
 .DV-previous, .DV-next {
-  background-image:url(images/DV/embed/controlsArrows.png?1282944321);
+  background-image:url(images/DV/embed/controlsArrows.png?1283198375);
   background-repeat: no-repeat;
   width:34px; height:24px;
   position:absolute;
@@ -1368,7 +1368,7 @@
 .DV-hasChildren .DV-annotationMarker{
   margin:0 0 4px;
   padding:0 0 0 8px;
-  background: transparent url(images/DV/embed/bullet4x4.gif?1275567053) no-repeat 0 4px;
+  background: transparent url(images/DV/embed/bullet4x4.gif?1279813165) no-repeat 0 4px;
   font-family:Arial,Helvetica,sans-serif;
   font-size:11px;
   font-weight:normal;
@@ -1423,7 +1423,7 @@
 }
 
 .DV-navigation div.DV-first span.DV-expander{
-  background: url(images/DV/expanders.gif?1275567053) no-repeat 0 -31px;
+  background: url(images/DV/expanders.gif?1279813165) no-repeat 0 -31px;
   width:7px;
   height:13px;
   padding-right:0;
@@ -1434,7 +1434,7 @@
 }
 
 .DV-navigation div.DV-expanded div.DV-first span.DV-expander{
-  background: url(images/DV/expanders.gif?1275567053) no-repeat 0 6px;
+  background: url(images/DV/expanders.gif?1279813165) no-repeat 0 6px;
 }
 
 .DV-navigation div span{
@@ -1470,11 +1470,11 @@
   width:7px;
   height:13px;
   margin-right:6px;
-  background: url(images/DV/expanders.gif?1275567053) no-repeat 0 -31px;
+  background: url(images/DV/expanders.gif?1279813165) no-repeat 0 -31px;
 }
 
 .DV-descriptionToggle.DV-showDescription{
-  background: url(images/DV/expanders.gif?1275567053) no-repeat 0 6px;
+  background: url(images/DV/expanders.gif?1279813165) no-repeat 0 6px;
 }
 
 .DV-descriptionText{
@@ -1544,7 +1544,7 @@
   width:210px;
   font-size: 11px;
   line-height: 14px;
-  background: #FFF url(images/DV/embed/search_icon.png?1282674756) no-repeat 5px 5px;
+  background: #FFF url(images/DV/embed/search_icon.png?1282670360) no-repeat 5px 5px;
   outline: none;
 }
 
@@ -1573,7 +1573,7 @@
   position: absolute;
   right: 12px;
   top: 8px;
-  background: transparent url(images/DV/embed/close.png?1282674756) no-repeat 0 0;
+  background: transparent url(images/DV/embed/close.png?1282670360) no-repeat 0 0;
   width: 11px;
   height: 11px;
   cursor: pointer;
@@ -1597,7 +1597,7 @@
   position: absolute;
   top: 0px; left: 0px; right: 282px;
   height: 50px;
-  background: url(images/DV/embed/shadow.png?1275567053) repeat-x 0 bottom;
+  background: url(images/DV/embed/shadow.png?1279813165) repeat-x 0 bottom;
   font-family: Arial,Helvetica,sans-serif;
   display: none;
 }
@@ -1623,7 +1623,7 @@
 }
 
 .DV-highlightedMatch{
-  background: #f1e90f url(images/DV/embed/highlight.gif?1275567053) repeat-x 0 bottom;
+  background: #f1e90f url(images/DV/embed/highlight.gif?1279813165) repeat-x 0 bottom;
   padding: 3px 3px 2px;
   -moz-border-radius: 3px;
   background-color:#fff;
@@ -1801,7 +1801,7 @@ span.DV-highlighted{
 }
 
 .DV-zoomBox{
-  background: url(images/DV/embed/bar.gif?1275567053) repeat-x 0 88%;
+  background: url(images/DV/embed/bar.gif?1279813165) repeat-x 0 88%;
   height:20px;
   width:85px;
   float: left;
@@ -1809,7 +1809,7 @@ span.DV-highlighted{
   cursor: pointer;
 }
   .DV-narrowControls .DV-zoomBox {
-    background: url(images/DV/embed/bar_small.png?1283455199) repeat-x 0 88%;
+    background: url(images/DV/embed/bar_small.png?1284480668) repeat-x 0 88%;
     width:49px;
   }
 
@@ -1821,7 +1821,7 @@ span.DV-highlighted{
   top:0;
   margin-top:5px;
   margin-left:-5px;
-  background: transparent url(images/DV/embed/slider.png?1280162243) no-repeat 0 0;
+  background: transparent url(images/DV/embed/slider.png?1279814239) no-repeat 0 0;
   outline: none;
 }
 
@@ -1865,13 +1865,13 @@ span.DV-highlighted{
   clear: both;
 }
 .DV-unsupported .DV-safari {
-  background: url(images/DV/browsers/safari.gif?1278523635);
+  background: url(images/DV/browsers/safari.gif?1279813165);
 }
 .DV-unsupported .DV-chrome {
-  background: url(images/DV/browsers/chrome.gif?1278522395);
+  background: url(images/DV/browsers/chrome.gif?1279813165);
 }
 .DV-unsupported .DV-firefox {
-  background: url(images/DV/browsers/firefox.gif?1278522395);
+  background: url(images/DV/browsers/firefox.gif?1279813165);
 }
 .DV-unsupported .DV-after {
   margin-top: 20px;
@@ -2168,8 +2168,7 @@ span.DV-highlighted{
 }
   .DV-thumbnails .DV-thumbnail {
     float: left;
-    padding: 0 8px;
-    margin: 0;
+    padding: 8px 16px;
     text-align: center;
     cursor: pointer;
     position: relative;

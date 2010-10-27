@@ -98,12 +98,12 @@
 }
 
 .DV-pageCollection{
-  cursor:  url(images/DV/grab.cur?1275567053), auto;
+  cursor:  url(images/DV/grab.cur?1279813165), auto;
   cursor: -moz-grab;
 }
 
 .DV-pageCollection.DV-dragging {
-  cursor:  url(images/DV/grabbing.cur?1275567053), auto;
+  cursor:  url(images/DV/grabbing.cur?1279813165), auto;
   cursor: -moz-grabbing;
 }
 
@@ -1423,7 +1423,7 @@
 }
 
 .DV-navigation div.DV-first span.DV-expander{
-  background: url(images/DV/expanders.gif?1275567053) no-repeat 0 -31px;
+  background: url(images/DV/expanders.gif?1279813165) no-repeat 0 -31px;
   width:7px;
   height:13px;
   padding-right:0;
@@ -1434,7 +1434,7 @@
 }
 
 .DV-navigation div.DV-expanded div.DV-first span.DV-expander{
-  background: url(images/DV/expanders.gif?1275567053) no-repeat 0 6px;
+  background: url(images/DV/expanders.gif?1279813165) no-repeat 0 6px;
 }
 
 .DV-navigation div span{
@@ -1470,11 +1470,11 @@
   width:7px;
   height:13px;
   margin-right:6px;
-  background: url(images/DV/expanders.gif?1275567053) no-repeat 0 -31px;
+  background: url(images/DV/expanders.gif?1279813165) no-repeat 0 -31px;
 }
 
 .DV-descriptionToggle.DV-showDescription{
-  background: url(images/DV/expanders.gif?1275567053) no-repeat 0 6px;
+  background: url(images/DV/expanders.gif?1279813165) no-repeat 0 6px;
 }
 
 .DV-descriptionText{
@@ -1865,13 +1865,13 @@ span.DV-highlighted{
   clear: both;
 }
 .DV-unsupported .DV-safari {
-  background: url(images/DV/browsers/safari.gif?1278523635);
+  background: url(images/DV/browsers/safari.gif?1279813165);
 }
 .DV-unsupported .DV-chrome {
-  background: url(images/DV/browsers/chrome.gif?1278522395);
+  background: url(images/DV/browsers/chrome.gif?1279813165);
 }
 .DV-unsupported .DV-firefox {
-  background: url(images/DV/browsers/firefox.gif?1278522395);
+  background: url(images/DV/browsers/firefox.gif?1279813165);
 }
 .DV-unsupported .DV-after {
   margin-top: 20px;
@@ -2168,8 +2168,7 @@ span.DV-highlighted{
 }
   .DV-thumbnails .DV-thumbnail {
     float: left;
-    padding: 0 8px;
-    margin: 0;
+    padding: 8px 16px;
     text-align: center;
     cursor: pointer;
     position: relative;

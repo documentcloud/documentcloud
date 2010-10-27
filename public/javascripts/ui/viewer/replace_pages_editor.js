@@ -41,8 +41,14 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     this.$s.guideButton.addClass('open');
     this.viewer.api.enterReplacePagesMode();
     this.render();
-    this.$s.thumbnails.removeClass('DV-removePage');
+    this.resetSelected();
+  },
+  
+  resetSelected : function() {
     $('.DV-currentPageImage', this.$s.pages).removeClass('DV-currentPageImage').addClass('DV-currentPageImage-disabled');
+    this.$s.thumbnails.removeClass('DV-removePage');
+    this.$s.thumbnails.find('.left_chosen,.right_chosen').removeClass('left_chosen')
+                                                         .removeClass('right_chosen');
   },
 
   render : function() {
@@ -104,43 +110,39 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
   confirmPageChoice : function($thumbnail) {
     var $thumbnails = this.$s.thumbnails;
 
-    // Clear out the old.
-    $thumbnails.removeClass('DV-removePage');
-    $thumbnails.find('.left_chosen,.right_chosen').removeClass('left_chosen')
-                                                  .removeClass('right_chosen');
+    this.resetSelected();
     
     if ($thumbnail.hasClass('DV-hover-image')) {
       if (dc.app.hotkeys.shift && this.$firstPageSelection) {
-          var end = Math.max($thumbnail.data('pageNumber'), this.$firstPageSelection.data('pageNumber'));
-          var start = Math.min($thumbnail.data('pageNumber'), this.$firstPageSelection.data('pageNumber'));
-          $thumbnails = $thumbnails.filter(function() {
-            var page = $(this).data('pageNumber');
-            return start <= page && page <= end;
-          });
-          $thumbnails.addClass('DV-removePage');
+        var firstPageNumber = this.$firstPageSelection.data('pageNumber');
+        var thumbnailPageNumber = $thumbnail.data('pageNumber');
+        var end = Math.max(thumbnailPageNumber, firstPageNumber);
+        var start = Math.min(thumbnailPageNumber, firstPageNumber);
+        $thumbnails = $thumbnails.filter(function() {
+          var page = $(this).data('pageNumber');
+          return start <= page && page <= end;
+        });
+        $thumbnails.addClass('DV-removePage');
       } else {
-          this.$firstPageSelection = $thumbnail;
-          $thumbnail.addClass('DV-removePage');
+        this.$firstPageSelection = $thumbnail;
+        $thumbnail.addClass('DV-removePage');
       }
+      this.updateHint('replace');
     } else {
-      $thumbnails.find('.left_chosen,.right_chosen').removeClass('left_chosen')
-                                                    .removeClass('right_chosen');
       $('.left', $thumbnails).addClass('left_chosen');
       $('.right', $thumbnails).addClass('right_chosen');
+      this.updateHint('insert');
     }
-
-    this.updateHint('upload');
   },
 
   updateHint : function(state) {
-    var range = this.getPageRange();
-    var pageCount = this.viewer.api.numberOfPages();
     var hint;
 
     if (state == 'choose') {
       hint = "Choose which pages to replace.";
       $(this.el).setMode('off', 'upload');
-    } else if (state == 'upload') {
+    } else if (state == 'replace') {
+      var range = this.getPageRange();
       $(this.el).setMode('on', 'upload');
       hint = "Upload documents to replace ";
       if (range.start != range.end) {
@@ -151,6 +153,21 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       this.updateUploader({
         replacePagesStart: range.start,
         replacePagesEnd: range.end
+      });
+    } else if (state == 'insert') {
+      var pageCount = this.viewer.api.numberOfPages();
+      var pageNumber = this.getInsertPageNumber();
+      $(this.el).setMode('on', 'upload');
+      hint = "Upload documents to insert ";
+      if (pageNumber < 1) {
+        hint += "before the first page.";
+      } else if (pageNumber < pageCount) {
+        hint += "between pages " + pageNumber + " and " + (pageNumber + 1) + ".";
+      } else if (pageNumber == pageCount) {
+        hint += "after the last page.";
+      }
+      this.updateUploader({
+        insertPageAt: pageNumber
       });
     }
 
@@ -175,6 +192,17 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       start: start,
       end: end
     };
+  },
+
+  getInsertPageNumber : function() {
+    var $active = this.$s.thumbnails.has('.left,.right');
+    var pageNumber = $active.data('pageNumber');
+
+    if ($active.find('.left').length) {
+      return pageNumber - 1;
+    } else if ($active.find('.right').length) {
+      return pageNumber;
+    }
   },
 
   close : function() {
