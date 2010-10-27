@@ -2162,13 +2162,13 @@ span.DV-highlighted{
 }
 
 .DV-thumbnails {
-  padding: 10px;
+  padding: 12px 4px;
   overflow: hidden;
   display: none;
 }
   .DV-thumbnails .DV-thumbnail {
     float: left;
-    margin: 10px;
+    margin: 8px 16px;
     text-align: center;
     cursor: pointer;
     position: relative;
