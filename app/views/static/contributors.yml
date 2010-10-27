@@ -154,14 +154,16 @@ contributors:
      - http://npr.org
    - - NewsHour
      - http://pbs.org/newshour
+   - - The News Journal
+     - http://www.delawareonline.com
    - - News Northwest
      - http://newsnw.org
    - - The New Yorker
      - http://newyorker.com
-   - - The Oaklahoman
-     - http://www.newsok.com
    - - Oakland Local
      - http://oaklandlocal.com
+   - - The Oklahoman
+     - http://www.newsok.com
    - - OpenFile
      - http://openfile.ca
    - - Omaha World-Herald
@@ -180,10 +182,14 @@ contributors:
      - http://post-gazette.com
    - - Politico.ie
      - http://politico.ie
+   - - Politifact
+     - http://politifact.com/
    - - Press & Sun-Bulletin
      - http://Pressconnects.com
    - - Public Radio International
      - http://pri.org
+   - - Public Insight Journalism
+     - http://americanpublicmedia.org/cij
    - - Public.Resource.Org
      - http://public.resource.org
    - - Reference Tone
@@ -214,6 +220,8 @@ contributors:
      - http://sfpublicpress.org
    - - The Skanner
      - http://www.theskanner.com
+   - - Southern California Public Radio
+     - http://www.scpr.org
    - - Spinwatch
      - http://spinwatch.org
    - - Stabile Center for Investigative Journalism
@@ -238,6 +246,8 @@ contributors:
      - http://thomsonreuters.com
    - - Transactional Records Access Clearinghouse
      - http://trac.syr.edu/
+   - - Tucson Sentinel
+     - http://www.tucsonsentinel.com/
    - - UBC School of Journalism
      - http://journalism.ubc.ca
    - - UCSF Legacy Tobacco Documents Library and Drug Industry Document Archive
@@ -254,6 +264,8 @@ contributors:
      - http://www.northernbroadcasting.com
    - - Washington Post
      - http://wpost.com
+   - - Watchdog Institute
+     - http://www.watchdoginstitute.org
    - - Western Citizen
      - http://www.westerncitizen.com
    - - Wichita Eagle
