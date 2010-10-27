@@ -9204,10 +9204,10 @@ DV.Schema.helpers = {
             !viewer.elements.viewer.hasClass('DV-addPages') &&
             !viewer.elements.viewer.hasClass('DV-replacePages') &&
             !viewer.elements.viewer.hasClass('DV-removePages')) {
-          var pageNumber = $thumbnail.data('pageNumber') - 1;
-          viewer.models.document.setPageIndex(pageNumber);
+          var pageIndex = $thumbnail.data('pageNumber') - 1;
+          viewer.models.document.setPageIndex(pageIndex);
           viewer.open('ViewDocument');
-          viewer.history.save('document/p'+pageNumber);
+          // viewer.history.save('document/p'+pageNumber);
         }
       });
 
