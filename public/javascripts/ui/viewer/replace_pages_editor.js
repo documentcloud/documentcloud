@@ -21,6 +21,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
 
   findSelectors : function() {
     this.$s = {
+      guide: $('#edit_replace_pages_guide'),
       guideButton: $('.edit_replace_pages'),
       thumbnails : $('.DV-thumbnail'),
       pages : $('.DV-pages'),
@@ -36,6 +37,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
   open : function() {
     this.findSelectors();
     this.flags.open = true;
+    this.$s.guide.fadeIn('fast');
     this.$s.guideButton.addClass('open');
     this.viewer.api.enterReplacePagesMode();
     this.render();
@@ -144,6 +146,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     if (this.flags.open) {
       $('.DV-currentPage-disabled', this.$s.pages).addClass('DV-currentPage').removeClass('DV-currentPage-disabled');
       this.flags.open = false;
+      this.$s.guide.hide();
       this.$s.guideButton.removeClass('open');
       this.$s.pages.removeClass('replace_pages_viewer');
       $(this.el).remove();
