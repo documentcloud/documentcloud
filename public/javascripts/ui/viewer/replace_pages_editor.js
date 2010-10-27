@@ -71,10 +71,34 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     $thumbnails.each(function(i) {
       $(this).data('pageNumber', i+1);
     });
-    $thumbnails.bind('click', _.bind(function(e) {
+    
+    $thumbnails.bind('mouseout', function() {
+      $('.DV-overlay', this).removeClass('left').removeClass('right');
+    });
+    $thumbnails.bind('mousemove', function(e) {
+      var $this = $(this);
+      var pageNumber = $this.data('pageNumber');
+      var offset = $this.offset();
+      var width = $this.outerWidth(true);
+      var positionX = e.clientX - offset.left;
+      var side = positionX/width < .5 ? 'left' : 'right';
+      $('.DV-overlay', $this).removeClass('left').removeClass('right').addClass(side);
+    });
+    
+     $('.DV-thumbnail-page', $thumbnails).bind('click', _.bind(function(e) {
       e.preventDefault();
       this.confirmPageChoice($(e.currentTarget));
     }, this));
+    $('.DV-thumbnail-page', $thumbnails).bind('mouseover', function() {
+        $(this).parents('.DV-thumbnail').eq(0).addClass('DV-hover-image');
+    }).bind('mouseout', function() {
+        $(this).parents('.DV-thumbnail').eq(0).removeClass('DV-hover-image');
+    });
+    $thumbnails.bind('mouseenter', function() {
+        $(this).addClass('DV-hover-thumbnail');
+    }).bind('mouseleave', function() {
+        $(this).removeClass('DV-hover-image').removeClass('DV-hover-thumbnail');
+    });
   },
 
   confirmPageChoice : function($thumbnail) {
