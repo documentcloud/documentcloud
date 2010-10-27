@@ -85,37 +85,48 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       $('.DV-overlay', $this).removeClass('left').removeClass('right').addClass(side);
     });
     
-     $('.DV-thumbnail-page', $thumbnails).bind('click', _.bind(function(e) {
+    $thumbnails.bind('click', _.bind(function(e) {
       e.preventDefault();
       this.confirmPageChoice($(e.currentTarget));
     }, this));
     $('.DV-thumbnail-page', $thumbnails).bind('mouseover', function() {
-        $(this).parents('.DV-thumbnail').eq(0).addClass('DV-hover-image');
+      $(this).parents('.DV-thumbnail').eq(0).addClass('DV-hover-image');
     }).bind('mouseout', function() {
-        $(this).parents('.DV-thumbnail').eq(0).removeClass('DV-hover-image');
+      $(this).parents('.DV-thumbnail').eq(0).removeClass('DV-hover-image');
     });
     $thumbnails.bind('mouseenter', function() {
-        $(this).addClass('DV-hover-thumbnail');
+      $(this).addClass('DV-hover-thumbnail');
     }).bind('mouseleave', function() {
-        $(this).removeClass('DV-hover-image').removeClass('DV-hover-thumbnail');
+      $(this).removeClass('DV-hover-image').removeClass('DV-hover-thumbnail');
     });
   },
 
   confirmPageChoice : function($thumbnail) {
     var $thumbnails = this.$s.thumbnails;
 
+    // Clear out the old.
     $thumbnails.removeClass('DV-removePage');
-    if (dc.app.hotkeys.shift && this.$firstPageSelection) {
-        var end = Math.max($thumbnail.data('pageNumber'), this.$firstPageSelection.data('pageNumber'));
-        var start = Math.min($thumbnail.data('pageNumber'), this.$firstPageSelection.data('pageNumber'));
-        $thumbnails = $thumbnails.filter(function() {
-          var page = $(this).data('pageNumber');
-          return start <= page && page <= end;
-        });
-        $thumbnails.addClass('DV-removePage');
+    $thumbnails.find('.left_chosen,.right_chosen').removeClass('left_chosen')
+                                                  .removeClass('right_chosen');
+    
+    if ($thumbnail.hasClass('DV-hover-image')) {
+      if (dc.app.hotkeys.shift && this.$firstPageSelection) {
+          var end = Math.max($thumbnail.data('pageNumber'), this.$firstPageSelection.data('pageNumber'));
+          var start = Math.min($thumbnail.data('pageNumber'), this.$firstPageSelection.data('pageNumber'));
+          $thumbnails = $thumbnails.filter(function() {
+            var page = $(this).data('pageNumber');
+            return start <= page && page <= end;
+          });
+          $thumbnails.addClass('DV-removePage');
+      } else {
+          this.$firstPageSelection = $thumbnail;
+          $thumbnail.addClass('DV-removePage');
+      }
     } else {
-        this.$firstPageSelection = $thumbnail;
-        $thumbnail.addClass('DV-removePage');
+      $thumbnails.find('.left_chosen,.right_chosen').removeClass('left_chosen')
+                                                    .removeClass('right_chosen');
+      $('.left', $thumbnails).addClass('left_chosen');
+      $('.right', $thumbnails).addClass('right_chosen');
     }
 
     this.updateHint('upload');

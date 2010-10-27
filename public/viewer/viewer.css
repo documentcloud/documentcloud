@@ -2168,7 +2168,8 @@ span.DV-highlighted{
 }
   .DV-thumbnails .DV-thumbnail {
     float: left;
-    margin: 8px 16px;
+    padding: 0 8px;
+    margin: 0;
     text-align: center;
     cursor: pointer;
     position: relative;
@@ -2179,6 +2180,9 @@ span.DV-highlighted{
     .DV-addPages .DV-thumbnails .DV-thumbnail:hover {
       background-color: inherit;
       border:1px solid #F0F0F0;
+    }
+    .DV-thumbnails .DV-thumbnail .DV-thumbnail-page {
+      padding: 8px 0;
     }
     .DV-thumbnails .DV-thumbnail .DV-thumbnail-image {
       line-height: 0;

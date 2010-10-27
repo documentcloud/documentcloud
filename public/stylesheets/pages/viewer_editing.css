@@ -553,7 +553,7 @@
 .DV-replacePages .DV-thumbnails .DV-thumbnail.DV-hover-thumbnail .DV-pageNumber {
   text-decoration: none;
 }
-.DV-replacePages .DV-thumbnails .DV-thumbnail.DV-hover-thumbnail .DV-overlay {
+.DV-replacePages .DV-thumbnails .DV-thumbnail .DV-overlay {
   cursor: pointer;
   z-index: 10002;
   position: absolute;
@@ -574,13 +574,13 @@
   right: -3px;
   display: block;
 }
-.DV-replacePages .DV-thumbnails .DV-thumbnail.DV-hover-thumbnail .DV-overlay.left_chosen {
+.DV-replacePages .DV-thumbnails .DV-thumbnail .DV-overlay.left_chosen {
   right: inherit;
   left: -2px;
   display: block;
   background-color: darkred;
 }
-.DV-replacePages .DV-thumbnails .DV-thumbnail.DV-hover-thumbnail .DV-overlay.right_chosen {
+.DV-replacePages .DV-thumbnails .DV-thumbnail .DV-overlay.right_chosen {
   left: inherit;
   right: -3px;
   display: block;
