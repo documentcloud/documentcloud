@@ -42,7 +42,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     this.viewer.api.enterReplacePagesMode();
     this.render();
     this.$s.thumbnails.removeClass('DV-removePage');
-    $('.DV-currentPage', this.$s.pages).removeClass('DV-currentPage').addClass('DV-currentPage-disabled');
+    $('.DV-currentPageImage', this.$s.pages).removeClass('DV-currentPageImage').addClass('DV-currentPageImage-disabled');
   },
 
   render : function() {
@@ -144,7 +144,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
 
   close : function() {
     if (this.flags.open) {
-      $('.DV-currentPage-disabled', this.$s.pages).addClass('DV-currentPage').removeClass('DV-currentPage-disabled');
+      $('.DV-currentPageImage-disabled', this.$s.pages).addClass('DV-currentPageImage').removeClass('DV-currentPageImage-disabled');
       this.flags.open = false;
       this.$s.guide.hide();
       this.$s.guideButton.removeClass('open');

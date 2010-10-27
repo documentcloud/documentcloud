@@ -69,8 +69,8 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
     }
     this.$s.pages.addClass('reorder_pages_viewer');
     this.$s.container = $(this.el);
-    $('.DV-currentPage', this.$s.thumbnails).removeClass('DV-currentPage')
-                                            .addClass('DV-currentPage-disabled');
+    $('.DV-currentPageImage', this.$s.thumbnails).removeClass('DV-currentPageImage')
+                                            .addClass('DV-currentPageImage-disabled');
     this.handleEvents();
     this.initialOrder = this.serializePageOrder();
   },
@@ -81,7 +81,7 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
     $('.DV-thumbnail', $thumbnails).each(function(i) {
       $(this).data('pageNumber', i+1);
     });
-    $('.DV-currentPage', $thumbnails).removeClass('DV-currentPage').addClass('DV-currentPage-disabled');
+    $('.DV-currentPageImage', $thumbnails).removeClass('DV-currentPageImage').addClass('DV-currentPageImage-disabled');
     jQuery('.DV-thumbnails').sortable({
       containment: '.DV-thumbnails',
       cursor: 'move',
@@ -147,7 +147,7 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
   
   close : function() {
     if (this.flags.open) {
-      $('.DV-currentPage-disabled', this.$s.page).addClass('DV-currentPage').removeClass('DV-currentPage-disabled');
+      $('.DV-currentPageImage-disabled', this.$s.page).addClass('DV-currentPageImage').removeClass('DV-currentPageImage-disabled');
       this.flags.open = false;
       jQuery('.DV-thumbnails').sortable('destroy');
       this.$s.guide.fadeOut('fast');

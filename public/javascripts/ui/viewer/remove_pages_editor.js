@@ -49,6 +49,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
     this.viewer.api.enterRemovePagesMode();
     this.viewer.api.resetRemovedPages();
     this.render();
+    $('.DV-currentPageImage', this.$s.pages).removeClass('DV-currentPageImage').addClass('DV-currentPageImage-disabled');
   },
   
   render : function() {
@@ -162,7 +163,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
   
   close : function() {
     if (this.flags.open) {
-      $('.DV-currentPage-disabled', this.$s.pages).addClass('DV-currentPage').removeClass('DV-currentPage-disabled');
+      $('.DV-currentPageImage-disabled', this.$s.pages).addClass('DV-currentPageImage').removeClass('DV-currentPageImage-disabled');
       this.flags.open = false;
       this.$s.guide.fadeOut('fast');
       this.$s.guideButton.removeClass('open');
