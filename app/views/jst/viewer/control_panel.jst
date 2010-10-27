@@ -22,27 +22,24 @@
   <span class="warn">No one apart from you is ever allowed to view your private notes.</span>
 </div>
 <% if (isOwner) { %>
-  <div class="set_sections button document_only"><span>Edit Sections</span></div>
-  <div class="edit_title button"><span>Edit Title</span></div>
-  <div class="edit_description button"><span>Edit Description</span></div>
-  <div class="edit_related_article button"><span>Edit Related Article URL</span></div>
+  <div class="set_sections button document_only thumbnails_only"><span>Edit Sections</span></div>
+  <div class="edit_title button document_only"><span>Edit Title</span></div>
+  <div class="edit_description button document_only"><span>Edit Description</span></div>
+  <div class="edit_related_article button document_only"><span>Edit Related Article URL</span></div>
+  <div class="edit_related_article button document_only"><span>Edit Document URL</span></div>
   <div class="edit_page_text button text_only">
-    <div class="icon mini_note"></div>
     <div class="icon cancel_search"></div>
     <span>Edit Page Text</span>
   </div>
-  <div class="edit_add_pages button document_only thumbnails_only">
-    <div class="icon mini_note"></div>
+  <div class="edit_add_pages button thumbnails_only">
     <div class="icon cancel_search"></div>
     <span>Upload and Insert pages</span>
   </div>
-  <div class="edit_replace_pages button document_only thumbnails_only">
-    <div class="icon mini_note"></div>
+  <div class="edit_replace_pages button thumbnails_only">
     <div class="icon cancel_search"></div>
     <span>Upload and Replace pages</span>
   </div>
-  <div class="edit_remove_pages button document_only thumbnails_only">
-    <div class="icon mini_note"></div>
+  <div class="edit_remove_pages button thumbnails_only">
     <div class="icon cancel_search"></div>
     <span>Remove pages</span>
   </div>
@@ -51,8 +48,7 @@
     <br /><br />
     <span class="warn">Be sure to click on the "Remove Pages" button to ensure removal.</span>
   </div>
-  <div class="edit_reorder_pages button document_only thumbnails_only">
-    <div class="icon mini_note"></div>
+  <div class="edit_reorder_pages button thumbnails_only">
     <div class="icon cancel_search"></div>
     <span>Reorder pages</span>
   </div>
