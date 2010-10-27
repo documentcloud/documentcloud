@@ -1015,76 +1015,6 @@
   z-index:16000 !important;
 }
 
-.DV-removePages .DV-overlay {
-  cursor: pointer;
-  z-index: 10002;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: .2;
-  background-color: yellow;
-}
-.DV-removePages .DV-overlay:hover {
-  background-color: orange;
-}
-
-.DV-removePages .DV-overlay.visible {
-  background-color: red;
-}
-
-.DV-addPages .DV-overlay {
-  cursor: pointer;
-  z-index: 10002;
-  position: absolute;
-  top: 0;
-  width: 3px;
-  height: 100%;
-  opacity: .8;
-  background-color: orange;
-  display: none;
-}
-.DV-addPages .DV-overlay.left {
-  right: inherit;
-  left: -2px;
-  display: block;
-}
-.DV-addPages .DV-overlay.right {
-  left: inherit;
-  right: -3px;
-  display: block;
-}
-.DV-addPages .DV-overlay.left_chosen {
-  right: inherit;
-  left: -2px;
-  display: block;
-  background-color: darkred;
-}
-.DV-addPages .DV-overlay.right_chosen {
-  left: inherit;
-  right: -3px;
-  display: block;
-  background-color: darkred;
-}
-
-.DV-replacePages .DV-thumbnails .DV-thumbnail:hover {
-  background-color: #EEC2B7;
-}
-.DV-replacePages .DV-thumbnails .DV-thumbnail.DV-removePage {
-  background-color: #CA8F7E;
-}
-
-.DV-reorderPages .DV-thumbnails .DV-thumbnail.ui-sortable-helper {
-  border: 1px solid transparent;
-}
-.DV-reorderPages .DV-thumbnails .DV-thumbnail.ui-sortable-helper .DV-thumbnail-image {
-  -webkit-box-shadow: 5px 5px 7px #505050;
-  -moz-box-shadow: 5px 5px 7px #505050;
-  box-shadow: 5px 5px 7px #505050;
-}
-.DV-reorderPages .DV-thumbnails .DV-thumbnail.ui-sortable-placeholder {
-}
 .DV-footer {
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -2223,24 +2153,18 @@ span.DV-highlighted{
 
 .DV-viewThumbnails .DV-thumbnails,
 .DV-viewThumbnails .DV-pages {
-  background-color: #F0F0F0;
   display: block;
 }
 
 .DV-thumbnails {
-  padding: 8px;
+  padding: 10px;
   overflow: hidden;
   display: none;
 }
   .DV-thumbnails .DV-thumbnail {
     float: left;
-    padding: 8px 8px 8px 8px;
-    margin: 0;
+    margin: 10px;
     text-align: center;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border:1px solid #F0F0F0;
     cursor: pointer;
     position: relative;
   }
@@ -2254,11 +2178,17 @@ span.DV-highlighted{
     .DV-thumbnails .DV-thumbnail .DV-thumbnail-image {
       line-height: 0;
       display: block;
-      border: 1px solid #808080;
-      box-shadow: 1px 1px 2px #909090;
-      -webkit-box-shadow: 1px 1px 2px #909090;
-      -moz-box-shadow: 1px 1px 2px #909090;
+      border: 1px solid #999;
+      box-shadow: 2px 2px 0px #aeaeae;
+      -webkit-box-shadow: 2px 2px 0px #aeaeae;;
+      -moz-box-shadow: 2px 2px 0px #aeaeae;
     }
+      .DV-thumbnails .DV-thumbnail:hover .DV-thumbnail-image {
+        border-color: #777;
+        box-shadow: 2px 2px 0px #999;
+        -webkit-box-shadow: 2px 2px 0px #999;;
+        -moz-box-shadow: 2px 2px 0px #999;
+      }
     .DV-thumbnails .DV-thumbnail .DV-thumbnail-image img {
       display: block;
       min-height: 40px;
@@ -2291,5 +2221,4 @@ span.DV-highlighted{
       display: block;
       height: 14px;
       z-index: 0;
-      text-shadow: 1px 1px 0 #F0F0F0;
     }
