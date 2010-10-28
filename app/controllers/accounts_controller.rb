@@ -41,7 +41,7 @@ class AccountsController < ApplicationController
     return forbidden unless current_account.admin?
     attributes = pick(:model, :first_name, :last_name, :email, :role)
     account = current_organization.accounts.create(attributes)
-    account.send_login_instructions(current_account)
+    account.send_login_instructions(current_account) if account.valid?
     json account
   end
 

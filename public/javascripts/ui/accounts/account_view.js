@@ -160,6 +160,7 @@ dc.ui.AccountView = Backbone.View.extend({
   },
 
   _onError : function(model, resp) {
+    resp = JSON.parse(resp.responseText);
     model.invalid = true;
     dc.ui.spinner.hide();
     this.showEdit();
