@@ -119,6 +119,7 @@ dc.ui.SearchBox = Backbone.View.extend({
       $('#no_results .explanation').text(this.NO_RESULTS[searchType]);
     }
     dc.ui.spinner.hide();
+    dc.app.scroller.checkLater();
   },
 
   blur : function() {

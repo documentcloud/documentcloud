@@ -15,7 +15,7 @@ dc.ui.DocumentList = Backbone.View.extend({
     Backbone.View.call(this, options);
     _.bindAll(this, 'refresh', '_removeDocument', '_addDocument', '_onSelect');
     Documents.bind('refresh', this.refresh);
-    Documents.bind('remove',   this._removeDocument);
+    Documents.bind('remove',  this._removeDocument);
     Documents.bind('add',     this._addDocument);
   },
 
@@ -30,7 +30,6 @@ dc.ui.DocumentList = Backbone.View.extend({
       return (new dc.ui.Document({model : m})).render().el;
     });
     $(this.el).append(views.concat(this.make('div', {'class' : 'clear'})));
-    dc.app.scroller.checkLater();
   },
 
   _onSelect : function(els) {
