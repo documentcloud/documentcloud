@@ -91,10 +91,10 @@ dc.ui.AccountView = Backbone.View.extend({
   resendWelcomeEmail : function() {
     dc.ui.spinner.show();
     var model = this.model;
-    model.resendWelcomeEmail({success : function() {
+    model.resendWelcomeEmail({success : _.bind(function() {
       dc.ui.spinner.hide();
       dc.ui.notifier.show({mode : 'info', text : 'A welcome message has been sent to ' + model.get('email') + '.'});
-    }});
+    }, this)});
   },
 
   _loadAvatar : function() {
@@ -163,9 +163,7 @@ dc.ui.AccountView = Backbone.View.extend({
     model.invalid = true;
     dc.ui.spinner.hide();
     this.showEdit();
-    dc.ui.notifier.show({
-      text : resp.errors[0]
-    });
+    dc.app.accounts.error(resp.errors[0]);
   }
 
 });

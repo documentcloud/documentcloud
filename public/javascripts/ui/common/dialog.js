@@ -73,7 +73,7 @@ dc.ui.Dialog = Backbone.View.extend({
   },
 
   error : function(message, leaveOpen) {
-    this._information.addClass('error').text(message).show();
+    this._information.stop().addClass('error').text(message).show();
     if (!leaveOpen) this._information.delay(3000).fadeOut();
   },
 
