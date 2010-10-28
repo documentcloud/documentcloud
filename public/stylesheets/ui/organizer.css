@@ -96,7 +96,9 @@
       visibility: visible;
     }
   #organizer .box .title {
-    font: bold 14px Helvetica, Arial;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: bold;
     color: #555;
   }
     #organizer .box.is_selected .title,
@@ -108,7 +110,8 @@
     }
   #organizer .box .counts,
   #organizer .top_level_search .text_link {
-    font: 11px/17px Helvetica, Arial;
+    font-size: 11px;
+    line-height: 17px;
     color: #999;
   }
     #organizer .box .counts {
