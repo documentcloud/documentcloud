@@ -93,8 +93,7 @@ dc.ui.AccountView = Backbone.View.extend({
     var model = this.model;
     model.resendWelcomeEmail({success : function() {
       dc.ui.spinner.hide();
-      dc.app.accounts.close();
-      dc.ui.Dialog.alert('A welcome message has been sent to ' + model.get('email') + '.');
+      dc.ui.notifier.show({mode : 'info', text : 'A welcome message has been sent to ' + model.get('email') + '.'});
     }});
   },
 
