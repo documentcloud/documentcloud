@@ -112,26 +112,45 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
 
     this.resetSelected();
     
-    if ($thumbnail.hasClass('DV-hover-image')) {
-      if (dc.app.hotkeys.shift && this.$firstPageSelection) {
-        var firstPageNumber = this.$firstPageSelection.data('pageNumber');
-        var thumbnailPageNumber = $thumbnail.data('pageNumber');
-        var end = Math.max(thumbnailPageNumber, firstPageNumber);
-        var start = Math.min(thumbnailPageNumber, firstPageNumber);
-        $thumbnails = $thumbnails.filter(function() {
-          var page = $(this).data('pageNumber');
-          return start <= page && page <= end;
-        });
-        $thumbnails.addClass('DV-removePage');
-      } else {
-        this.$firstPageSelection = $thumbnail;
-        $thumbnail.addClass('DV-removePage');
+    if (dc.app.hotkeys.shift && this.$firstPageSelection) {
+      var firstPageNumber = this.$firstPageSelection.data('pageNumber');
+      var thumbnailPageNumber = $thumbnail.data('pageNumber');
+      var end = Math.max(thumbnailPageNumber, firstPageNumber);
+      var start = Math.min(thumbnailPageNumber, firstPageNumber);
+      var isReverse = firstPageNumber > thumbnailPageNumber;
+      
+      if (!$thumbnail.hasClass('DV-hover-image')) {
+        if ($('.left', $thumbnail).length && !isReverse) {
+          end -= 1;
+        } else if ($('.right', $thumbnail).length && isReverse) {
+          start += 1;
+        }
       }
+      
+      $thumbnails = $thumbnails.filter(function() {
+        var page = $(this).data('pageNumber');
+        return start <= page && page <= end;
+      });
+      $thumbnails.addClass('DV-removePage');
       this.updateHint('replace');
     } else {
-      $('.left', $thumbnails).addClass('left_chosen');
-      $('.right', $thumbnails).addClass('right_chosen');
-      this.updateHint('insert');
+      if ($thumbnail.hasClass('DV-hover-image')) {
+        this.$firstPageSelection = $thumbnail;
+        $thumbnail.addClass('DV-removePage');
+        this.updateHint('replace');
+      } else if ($thumbnail.hasClass('DV-hover-thumbnail')) {
+        var $left = $('.left', $thumbnails);
+        var $right = $('.right', $thumbnails);
+
+        if ($left.length) {
+          $left.addClass('left_chosen');
+          this.$firstPageSelection = $thumbnail;
+        } else if ($right.length) {
+          $right.addClass('right_chosen');
+          this.$firstPageSelection = $thumbnail.next();
+        }
+        this.updateHint('insert');
+      }
     }
   },
 

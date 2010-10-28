@@ -504,6 +504,14 @@
 .DV-removePages .DV-overlay.visible {
   background-color: red;
 }
+.DV-replacePages .DV-thumbnails ::-moz-selection {
+background: transparent;
+} 
+
+.DV-replacePages .DV-thumbnails ::selection {
+background: transparent;
+}
+
 
 .DV-replacePages .DV-thumbnails .DV-thumbnail.DV-hover-thumbnail .DV-pageNumber {
   text-decoration: none;
