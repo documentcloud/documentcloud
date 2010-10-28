@@ -146,12 +146,18 @@ div.text_input {
     height: 28px;
     background: transparent;
     border: 2px solid #ccc;
-    border-radius: 4px; -webkit-border-radius: 16px; -moz-border-radius: 4px;
+    border-radius: 16px; -webkit-border-radius: 16px; -moz-border-radius: 16px;
     background-color: #fafafa;
     -webkit-box-shadow: inset 0px 0px 3px #ccc;
     -moz-box-shadow: inset 0px 0px 3px #ccc;
     box-shadow: inset 0px 0px 3px #ccc;
   }
+    div.text_input.search.focus {
+      border-color: #acf;
+      -webkit-box-shadow: inset 0px 0px 3px #acf;
+      -moz-box-shadow: inset 0px 0px 3px #acf;
+      box-shadow: inset 0px 0px 3px #acf;
+    }
     div.text_input .search_inner {
       position: relative;
       margin: 0 28px;

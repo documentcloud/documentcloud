@@ -17,8 +17,8 @@ dc.ui.SearchBox = Backbone.View.extend({
   events : {
     'keydown #search_box':  'maybeSearch',
     'search #search_box':   'searchEvent',
-    'focus #search_box':    '_addFocus',
-    'blur #search_box':     '_removeFocus',
+    'focus #search_box':    'addFocus',
+    'blur #search_box':     'removeFocus',
     'click .cancel_search': 'cancelSearch'
   },
 
@@ -121,11 +121,16 @@ dc.ui.SearchBox = Backbone.View.extend({
     dc.ui.spinner.hide();
   },
 
-  _addFocus : function() {
+  blur : function() {
+    this.box.blur();
+  },
+
+  addFocus : function() {
+    Documents.deselectAll();
     this.$('.search').addClass('focus');
   },
 
-  _removeFocus : function() {
+  removeFocus : function() {
     this.$('.search').removeClass('focus');
   }
 
