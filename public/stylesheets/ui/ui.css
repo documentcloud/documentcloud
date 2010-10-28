@@ -147,6 +147,10 @@ div.text_input {
     background: transparent;
     border: 2px solid #ccc;
     border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+    background-color: #fafafa;
+    -webkit-box-shadow: inset 0px 0px 3px #ccc;
+    -moz-box-shadow: inset 0px 0px 3px #ccc;
+    box-shadow: inset 0px 0px 3px #ccc;
   }
     div.text_input .search_inner {
       position: relative;
@@ -158,8 +162,7 @@ div.text_input {
         color: #999;
         font: 13px/18px Helvetica, Arial;
       }
-        div.text_input.search input:focus,
-        div.text_input.search input.focus {
+        div.text_input.search.focus input {
           color: #000;
         }
     div.text_input .search_glyph {

@@ -122,11 +122,11 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
 
   _addFocus : function() {
-    this.$('#search_box').addClass('focus');
+    this.$('.search').addClass('focus');
   },
 
   _removeFocus : function() {
-    this.$('#search_box').removeClass('focus');
+    this.$('.search').removeClass('focus');
   }
 
 });
