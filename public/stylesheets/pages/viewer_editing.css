@@ -497,13 +497,14 @@
   opacity: .2;
   background-color: yellow;
 }
-.DV-removePages .DV-overlay:hover {
-  background-color: orange;
+
+.DV-removePages .DV-thumbnails .DV-thumbnail:hover {
+  background-color: #EEC2B7;
+}
+.DV-removePages .DV-thumbnails .DV-thumbnail.DV-removePage {
+  background-color: #CA8F7E;
 }
 
-.DV-removePages .DV-overlay.visible {
-  background-color: red;
-}
 .DV-replacePages .DV-thumbnails ::-moz-selection {
 background: transparent;
 } 
@@ -511,6 +512,7 @@ background: transparent;
 .DV-replacePages .DV-thumbnails ::selection {
 background: transparent;
 }
+
 
 
 .DV-replacePages .DV-thumbnails .DV-thumbnail.DV-hover-thumbnail .DV-pageNumber {

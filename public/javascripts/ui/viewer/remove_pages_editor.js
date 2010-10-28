@@ -29,7 +29,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
     this.$s = {
       guide : $('#edit_remove_pages_guide'),
       guideButton: $('.edit_remove_pages'),
-      page : $('.DV-page,.DV-thumbnail'),
+      thumbnails : $('.DV-thumbnail'),
       pages : $('.DV-pages'),
       viewerContainer : $('.DV-docViewer-Container'),
       holder : null,
@@ -47,9 +47,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
     this.$s.guide.fadeIn('fast');
     this.$s.guideButton.addClass('open');
     this.viewer.api.enterRemovePagesMode();
-    this.viewer.api.resetRemovedPages();
     this.render();
-    $('.DV-currentPageImage', this.$s.pages).removeClass('DV-currentPageImage').addClass('DV-currentPageImage-disabled');
   },
   
   render : function() {
@@ -59,6 +57,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
         this.viewer.open('ViewThumbnails');
     }
     this.$s.pages.addClass('remove_pages_viewer');
+    this.$s.thumbnails.removeClass('DV-removePage');
     this.$s.holder = $('.remove_pages_holder', this.el);
     this.$s.container = $(this.el);
     this.redrawPages();
@@ -66,11 +65,16 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
   },
   
   handleEvents : function() {
-    $('.DV-pageCollection,.DV-thumbnails').undelegate('.DV-overlay', 'click').delegate('.DV-overlay','click', _.bind(function(e) {
-      var $this = $(e.target);
-      var $page = $this.siblings('.DV-page,.DV-thumbnail-page').eq(0); 
-      var imageSrc = $('.DV-pageImage,.DV-thumbnail-image img', $page).eq(0).attr('src');
-      var pageNumber = parseInt(imageSrc.match(/-p(\d+)-\w+.\w+\??\w*?$/)[1], 10);
+    var $thumbnails = this.$s.thumbnails;
+
+    $thumbnails.each(function(i) {
+      $(this).data('pageNumber', i+1);
+    });
+    
+    $thumbnails.unbind('mousedown.dv-remove').bind('mousedown.dv-remove', _.bind(function(e) {
+      var $thumbnail = $(e.currentTarget);
+      var imageSrc = $('.DV-pageImage,.DV-thumbnail-image img', $thumbnail).eq(0).attr('src');
+      var pageNumber = $thumbnail.data('pageNumber');
       if (_.contains(this.removePages, pageNumber)) {
         this.removePageNumberFromRemoveSet(pageNumber);
       } else {
@@ -84,6 +88,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
       this.viewer.api.addPageToRemovedPages(pageNumber);
       this.removePages.push(pageNumber);
       this.redrawPages();
+      this.$s.thumbnails.eq(pageNumber-1).addClass('DV-removePage');
     }
   },
   
@@ -96,6 +101,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
     this.removePages = _.reject(this.removePages, function(p) { return p == pageNumber; });
     this.redrawPages();
     this.viewer.api.removePageFromRemovedPages(pageNumber);
+    this.$s.thumbnails.eq(pageNumber-1).removeClass('DV-removePage');
   },
   
   redrawPages : function() {
@@ -162,7 +168,6 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
   
   close : function() {
     if (this.flags.open) {
-      $('.DV-currentPageImage-disabled', this.$s.pages).addClass('DV-currentPageImage').removeClass('DV-currentPageImage-disabled');
       this.flags.open = false;
       this.$s.guide.fadeOut('fast');
       this.$s.guideButton.removeClass('open');
