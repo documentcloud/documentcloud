@@ -30,6 +30,7 @@ dc.ui.DocumentList = Backbone.View.extend({
       return (new dc.ui.Document({model : m})).render().el;
     });
     $(this.el).append(views.concat(this.make('div', {'class' : 'clear'})));
+    dc.app.scroller.checkLater();
   },
 
   _onSelect : function(els) {

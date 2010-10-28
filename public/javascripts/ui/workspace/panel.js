@@ -3,11 +3,15 @@ dc.ui.Panel = Backbone.View.extend({
 
   className : 'panel_container',
 
+  initialize : function() {
+    _.bindAll(this, '_setMinHeight');
+  },
+
   render : function() {
     $(this.el).html(JST['workspace/panel']({}));
     this.content = this.$('.panel_content');
-    this._setMinHeight();
-    $(window).resize(_.bind(this._setMinHeight, this));
+    $(window).resize(this._setMinHeight);
+    _.defer(this._setMinHeight);
     return this;
   },
 
