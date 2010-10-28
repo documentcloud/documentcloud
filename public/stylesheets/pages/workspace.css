@@ -94,9 +94,9 @@ label {
   }
   #title_box {
     text-align: center;
-    font: bold 22px Arial;
+    font: bold 20px Arial;
     color: #000;
-    padding: 25px 20px 30px;
+    padding: 14px 20px 20px;
   }
 
 #spinner {
