@@ -141,6 +141,11 @@ class Document < ActiveRecord::Base
     end
   end
 
+  # Ensure that titles are stripped of trailing whitespace.
+  def title=(title)
+    self[:title] = title.strip
+  end
+
   # Update a document, with S3 permission fixing, cache expiry, and access control.
   def secure_update(attrs, account)
     if !account.allowed_to_edit?(self)

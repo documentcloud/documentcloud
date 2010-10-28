@@ -11,6 +11,7 @@
 }
   body.floating_toolbar #floating_toolbar {
     position: fixed;
+    overflow: hidden;
     top: 0px; right: 20px; left: 330px;
     padding: 30px 30px 0;
     height: 53px;
@@ -26,7 +27,7 @@
   #toolbar .minibutton {
     float: left;
     position: relative;
-    margin: 0 0 22px 8px;
+    margin: 0 0 30px 8px;
     z-index: 1;
   }
     #toolbar #open_viewers {
