@@ -41,7 +41,9 @@ class DocumentInsertPages < DocumentModBase
     end
     asset_store.delete_insert_pdfs(document)
 
-    annotations = Annotation.after(document.id, insert_page_at.to_i)
+
+    annotations = Annotation.all(:conditions => ["document_id = ? and page_number > ?", 
+                                                 document.id, insert_page_at.to_i])
     annotations.each do |annotation|
       annotation.page_number += pdf_page_offset
       annotation.save

@@ -171,6 +171,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
         hint += "page " + range.start + ".";
       }
       this.updateUploader({
+        insertPageAt: null,
         replacePagesStart: range.start,
         replacePagesEnd: range.end
       });
@@ -187,7 +188,9 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
         hint += "after the last page.";
       }
       this.updateUploader({
-        insertPageAt: pageNumber
+        insertPageAt: pageNumber,
+        replacePagesStart: null,
+        replacePagesEnd: null
       });
     }
 
