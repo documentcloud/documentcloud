@@ -6,7 +6,7 @@ class CollaboratorsController < ApplicationController
   end
 
   def create
-    account = Account.lookup(pick(:model, :email)[:email])
+    account = Account.lookup(pick(params, :email)[:email])
     return json(nil, 404) if !account || account.id == current_account.id
     current_project.add_collaborator account
     json account.to_json(:include_organization => true)

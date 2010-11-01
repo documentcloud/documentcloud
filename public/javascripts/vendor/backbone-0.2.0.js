@@ -27,8 +27,11 @@
   // For Backbone's purposes, jQuery owns the `$` variable.
   var $ = this.jQuery;
 
-  // Turn on `emulateHttp` to fake `"PUT"` and `"DELETE"` requests via
-  // the `_method` parameter.
+  // Turn on `emulateHttp` to use support legacy HTTP servers. Setting this option will
+  // fake `"PUT"` and `"DELETE"` requests via the `_method` parameter and set a
+  // `X-Http-Method-Override` header, will encode the body as
+  // `application/x-www-form-urlencoded` instead of `application/json` and will
+  // send the model in a param named `model`.
   Backbone.emulateHttp = false;
 
   // Backbone.Events
@@ -142,19 +145,8 @@
       if (attrs.attributes) attrs = attrs.attributes;
       var now = this.attributes;
 
-      // Run validation if `validate` is defined. If a specific `error` callback
-      // has been passed, call that instead of firing the general `"error"` event.
-      if (this.validate) {
-        var error = this.validate(attrs);
-        if (error) {
-          if (options.error) {
-            options.error(this, error);
-          } else {
-            this.trigger('error', this, error);
-          }
-          return false;
-        }
-      }
+      // Run validation.
+      if (this.validate && !this._performValidation(attrs, options)) return false;
 
       // Check for changes of `id`.
       if ('id' in attrs) this.id = attrs.id;
@@ -162,7 +154,6 @@
       // Update attributes.
       for (var attr in attrs) {
         var val = attrs[attr];
-        if (val === '') val = null;
         if (!_.isEqual(now[attr], val)) {
           now[attr] = val;
           if (!options.silent) {
@@ -177,18 +168,47 @@
       return this;
     },
 
-    // Remove an attribute from the model, firing `"change"` unless you choose to
-    // silence it.
+    // Remove an attribute from the model, firing `"change"` unless you choose
+    // to silence it.
     unset : function(attr, options) {
       options || (options = {});
       var value = this.attributes[attr];
+
+      // Run validation.
+      var validObj = {};
+      validObj[attr] = void 0;
+      if (this.validate && !this._performValidation(validObj, options)) return false;
+
+      // Remove the attribute.
       delete this.attributes[attr];
       if (!options.silent) {
         this._changed = true;
         this.trigger('change:' + attr, this);
         this.change();
       }
-      return value;
+      return this;
+    },
+
+    // Clear all attributes on the model, firing `"change"` unless you choose
+    // to silence it.
+    clear : function(options) {
+      options || (options = {});
+      var old = this.attributes;
+
+      // Run validation.
+      var validObj = {};
+      for (attr in old) validObj[attr] = void 0;
+      if (this.validate && !this._performValidation(validObj, options)) return false;
+
+      this.attributes = {};
+      if (!options.silent) {
+        this._changed = true;
+        for (attr in old) {
+          this.trigger('change:' + attr, this);
+        }
+        this.change();
+      }
+      return this;
     },
 
     // Fetch the model from the server. If the server's representation of the
@@ -307,6 +327,22 @@
     // `"change"` event.
     previousAttributes : function() {
       return _.clone(this._previousAttributes);
+    },
+
+    // Run validation against a set of incoming attributes, returning `true`
+    // if all is well. If a specific `error` callback has been passed,
+    // call that instead of firing the general `"error"` event.
+    _performValidation : function(attrs, options) {
+      var error = this.validate(attrs);
+      if (error) {
+        if (options.error) {
+          options.error(this, error);
+        } else {
+          this.trigger('error', this, error);
+        }
+        return false;
+      }
+      return true;
     }
 
   });
@@ -655,25 +691,44 @@
   // * Persist models via WebSockets instead of Ajax.
   //
   // Turn on `Backbone.emulateHttp` in order to send `PUT` and `DELETE` requests
-  // as `POST`, with an `_method` parameter containing the true HTTP method.
+  // as `POST`, with a `_method` parameter containing the true HTTP method,
+  // as well as all requests with the body as `application/x-www-form-urlencoded` instead of
+  // `application/json` with the model in a param named `model`.
   // Useful when interfacing with server-side languages like **PHP** that make
   // it difficult to read the body of `PUT` requests.
   Backbone.sync = function(method, model, success, error) {
     var sendModel = method === 'create' || method === 'update';
-    var data = sendModel ? {model : JSON.stringify(model)} : {};
     var type = methodMap[method];
-    if (Backbone.emulateHttp && (type === 'PUT' || type === 'DELETE')) {
-      data._method = type;
-      type = 'POST';
+    var modelJSON = JSON.stringify(model.toJSON());
+
+    // Default JSON-request options.
+    var params = {
+      url:          getUrl(model),
+      type:         type,
+      contentType:  'application/json',
+      data:         sendModel ? modelJSON : {},
+      dataType:     'json',
+      processData:  false,
+      success:      success,
+      error:        error
+    };
+
+    // For older servers, emulate JSON/HTTP by encoding the request into
+    // HTML-form-style, and mimicking the HTTP method with `_method`
+    if (Backbone.emulateHttp) {
+      params.contentType = "application/x-www-form-urlencoded";
+      params.data        = sendModel ? {model : modelJSON} : {};
+      if (type === 'PUT' || type === 'DELETE') {
+        params.data._method = type;
+        params.type = 'POST';
+        params.beforeSend = function(xhr) {
+          xhr.setRequestHeader("X-HTTP-Method-Override", type);
+        };
+      }
     }
-    $.ajax({
-      url       : getUrl(model),
-      type      : type,
-      data      : data,
-      dataType  : 'json',
-      success   : success,
-      error     : error
-    });
+
+    // Make the request.
+    $.ajax(params);
   };
 
   // Helpers
@@ -695,6 +750,7 @@
     _.extend(child.prototype, protoProps);
     if (classProps) _.extend(child, classProps);
     child.prototype.constructor = child;
+    child.__super__ = parent.prototype;
     return child;
   };
 
