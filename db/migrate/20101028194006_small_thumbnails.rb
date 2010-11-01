@@ -4,7 +4,7 @@ class SmallThumbnails < ActiveRecord::Migration
     Document.all.each_with_index do |doc, i|
       begin
         puts " --> #{i+1}/#{total_documents} Starting: [#{doc.page_count} pages] #{doc.title}"
-        asset_store ||= DC::Store::AssetStore.new
+        asset_store = DC::Store::AssetStore.new
         pages = {}
         doc.page_count.times.each do |page|
           pages[page] = "#{page+1}-normal.gif"
@@ -15,7 +15,7 @@ class SmallThumbnails < ActiveRecord::Migration
         end
 
         puts " --> Processing #{doc.page_count} images..."
-        cmd = "OMP_NUM_THREADS=2 gm mogrify -limit memory 256MiB -limit map 512MiB -density 150 -resize #{Page::IMAGE_SIZES['small']} -quality 100 -unsharp 0x0.5+0.75 \"*.gif\" 2>&1"
+        cmd = "OMP_NUM_THREADS=2 gm mogrify -limit memory 256MiB -limit map 512MiB -density 150 -resize 180x -quality 100 -unsharp 0x0.5+0.75 \"*.gif\" 2>&1"
         result = `#{cmd}`
 
         puts " --> Saving #{doc.page_count} images..."
