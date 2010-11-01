@@ -71,17 +71,29 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     this.handleEvents();
   },
 
+  unbindEvents : function() {
+    var $thumbnails = this.$s.thumbnails;
+    $thumbnails.unbind('mouseout.dv-replace')
+               .unbind('mousemove.dv-replace')
+               .unbind('mousedown.dv-replace')
+               .unbind('mouseover.dv-replace')
+               .unbind('mouseenter.dv-replace')
+               .unbind('mouseleave.dv-replace');
+  },
+  
   handleEvents : function() {
     var $thumbnails = this.$s.thumbnails;
 
+    this.unbindEvents();
+    
     $thumbnails.each(function(i) {
       $(this).data('pageNumber', i+1);
     });
     
-    $thumbnails.unbind('mouseout.dv-replace').bind('mouseout.dv-replace', function() {
+    $thumbnails.bind('mouseout.dv-replace', function() {
       $('.DV-overlay', this).removeClass('left').removeClass('right');
     });
-    $thumbnails.unbind('mousemove.dv-replace').bind('mousemove.dv-replace', function(e) {
+    $thumbnails.bind('mousemove.dv-replace', function(e) {
       var $this = $(this);
       var pageNumber = $this.data('pageNumber');
       var offset = $this.offset();
@@ -91,21 +103,11 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       $('.DV-overlay', $this).removeClass('left').removeClass('right').addClass(side);
     });
     
-    $thumbnails.unbind('mousedown.dv-replace').bind('mousedown.dv-replace', _.bind(function(e) {
+    $thumbnails.bind('mousedown.dv-replace', _.bind(function(e) {
       e.preventDefault();
       e.stopPropagation();
       this.confirmPageChoice($(e.currentTarget));
     }, this));
-    $('.DV-thumbnail-page', $thumbnails).unbind('mouseover.dv-replace').bind('mouseover.dv-replace', function() {
-      $(this).parents('.DV-thumbnail').eq(0).addClass('DV-hover-image');
-    }).unbind('mouseout.dv-replace').bind('mouseout.dv-replace', function() {
-      $(this).parents('.DV-thumbnail').eq(0).removeClass('DV-hover-image');
-    });
-    $thumbnails.unbind('mouseenter.dv-replace').bind('mouseenter.dv-replace', function() {
-      $(this).addClass('DV-hover-thumbnail');
-    }).unbind('mouseleave.dv-replace').bind('mouseleave.dv-replace', function() {
-      $(this).removeClass('DV-hover-image').removeClass('DV-hover-thumbnail');
-    });
   },
 
   confirmPageChoice : function($thumbnail) {
@@ -233,6 +235,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       $('.DV-currentPageImage-disabled', this.$s.pages).addClass('DV-currentPageImage').removeClass('DV-currentPageImage-disabled');
       this.flags.open = false;
       this.$s.guide.hide();
+      this.unbindEvents();
       this.$s.guideButton.removeClass('open');
       this.$s.pages.removeClass('replace_pages_viewer');
       $(this.el).remove();

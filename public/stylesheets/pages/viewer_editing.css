@@ -300,9 +300,6 @@
   .DV-pages.remove_pages_viewer .DV-page {
     cursor: pointer;
   }
-  .DV-pages.remove_pages_viewer .DV-page:hover {
-    opacity: .5;
-  }
 
 /* ================= */
 /* = Reorder Pages = */
@@ -349,9 +346,6 @@
 }
   .DV-pages.reorder_pages_viewer .DV-thumbnail {
     cursor: move;
-  }
-  .DV-pages.reorder_pages_viewer .DV-page:hover {
-    opacity: .5;
   }
 
 /* ================== */
@@ -487,32 +481,18 @@
 /* ============== */
 
 .DV-removePages .DV-thumbnails .DV-thumbnail.DV-hover-image .DV-overlay {
-  cursor: pointer;
-  z-index: 10002;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: .2;
-  background-color: yellow;
+  display: none;
 }
 
-.DV-removePages .DV-thumbnails .DV-thumbnail:hover {
+.DV-removePages .DV-thumbnails .DV-thumbnail.DV-hover-thumbnail {
   background-color: #EEC2B7;
 }
 .DV-removePages .DV-thumbnails .DV-thumbnail.DV-removePage {
   background-color: #CA8F7E;
 }
-
-.DV-replacePages .DV-thumbnails ::-moz-selection {
-background: transparent;
-} 
-
-.DV-replacePages .DV-thumbnails ::selection {
-background: transparent;
+.DV-removePages .DV-thumbnails .DV-thumbnail.DV-hover-thumbnail .DV-pageNumber {
+  text-decoration: none;
 }
-
 
 
 .DV-replacePages .DV-thumbnails .DV-thumbnail.DV-hover-thumbnail .DV-pageNumber {

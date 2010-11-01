@@ -64,14 +64,26 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
     this.handleEvents();
   },
   
+  unbindEvents : function() {
+    var $thumbnails = this.$s.thumbnails;
+    $thumbnails.unbind('mouseout.dv-remove')
+               .unbind('mousemove.dv-remove')
+               .unbind('mousedown.dv-remove')
+               .unbind('mouseover.dv-remove')
+               .unbind('mouseenter.dv-remove')
+               .unbind('mouseleave.dv-remove');
+  },
+  
   handleEvents : function() {
     var $thumbnails = this.$s.thumbnails;
-
+    
+    this.unbindEvents();
+    
     $thumbnails.each(function(i) {
       $(this).data('pageNumber', i+1);
     });
     
-    $thumbnails.unbind('mousedown.dv-remove').bind('mousedown.dv-remove', _.bind(function(e) {
+    $thumbnails.bind('mousedown.dv-remove', _.bind(function(e) {
       var $thumbnail = $(e.currentTarget);
       var imageSrc = $('.DV-pageImage,.DV-thumbnail-image img', $thumbnail).eq(0).attr('src');
       var pageNumber = $thumbnail.data('pageNumber');
@@ -172,6 +184,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
       this.$s.guide.fadeOut('fast');
       this.$s.guideButton.removeClass('open');
       this.$s.pages.removeClass('remove_pages_viewer');
+      this.unbindEvents();
       $(this.el).remove();
       this.viewer.api.leaveRemovePagesMode();
     }
