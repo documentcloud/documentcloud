@@ -481,6 +481,9 @@ class Document < ActiveRecord::Base
     doc
   end
 
+  def inspect
+    "<Document: #{title[0..50]} (#{id})>"
+  end
 
   private
 
