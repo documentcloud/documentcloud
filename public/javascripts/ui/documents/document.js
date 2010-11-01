@@ -26,7 +26,8 @@ dc.ui.Document = Backbone.View.extend({
     'click .cancel_search'      : '_hidePages',
     'click .search_account'     : 'searchAccount',
     'click .search_group'       : 'searchOrganization',
-    'click .search_source'      : 'searchSource'
+    'click .search_source'      : 'searchSource',
+    'click .change_publish_at'  : 'editPublishAt'
   },
 
   constructor : function(options) {
@@ -47,6 +48,7 @@ dc.ui.Document = Backbone.View.extend({
     var me = this;
     var title = this.model.get('title');
     var data = _.extend(this.model.toJSON(), {
+      model         : this.model,
       created_at    : this.model.get('created_at').replace(/\s/g, '&nbsp;'),
       icon          : this._iconAttributes(),
       thumbnail_url : this._thumbnailURL()
@@ -169,6 +171,10 @@ dc.ui.Document = Backbone.View.extend({
 
   editAccessLevel : function() {
     Documents.editAccess([this.model]);
+  },
+
+  editPublishAt : function() {
+    (new dc.ui.PublicationDateDialog([this.model])).render();
   },
 
   showMenu : function(e) {

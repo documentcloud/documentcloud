@@ -18,10 +18,15 @@
       <span class="page_count"><%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span> -
     <% } %>
     <% if (source) { %>Source: <span class="quiet_link search_source"><%= source %></span> -<% } %>
-    Contributed by:
+    Contributed by
     <span class="quiet_link search_account"><%= account_name %></span>,
     <span class="quiet_link search_group"><%= organization_name %></span> -
     <%= created_at %>
+    <% if (publish_at) { %>
+      <% var date = model.publishAtDate(); %>
+      - (Public on 
+      <span class="quiet_link change_publish_at"><%= model.formatDay(date) %> at <%= model.formatTime(date) %></span>)
+    <% } %>
   </span>
 </div>
 <div class="notes"></div>

@@ -55,6 +55,7 @@ select {
     color: #333;
   }
 .quiet_link {
+  white-space: nowrap;
   cursor: pointer;
 }
   .quiet_link:hover {
