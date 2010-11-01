@@ -11,6 +11,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     var defaults = {
       editable    : true,
       insertPages : false,
+      autoStart   : false,
       collection  : UploadDocuments,
       mode        : 'custom',
       title       : 'Upload Documents',
@@ -43,7 +44,14 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._renderDocumentTiles();
     this.countDocuments();
     this.center();
-    this.checkQueueLength();
+    if (this.options.autoStart) {
+      this.$('.controls').hide();
+    }
+    if (this.options.insertPages) {
+      this.title($('.replace_pages_hint').text());
+    } else {
+      this.checkQueueLength();
+    }
     return this;
   },
 
@@ -110,6 +118,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       return dc.ui.Dialog.alert("You can only upload documents less than 200MB in size. Please <a href=\"/help/troubleshooting\">optimize your document</a> before continuing.");
     }
     this.render();
+    if (this.options.autostart) {
+      this._uploadify.uploadifyUpload();
+    }
   },
 
   // Cancel an upload by file queue id.

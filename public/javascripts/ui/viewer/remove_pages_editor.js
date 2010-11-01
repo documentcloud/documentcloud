@@ -51,7 +51,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
   },
   
   render : function() {
-    $(this.el).html(JST['viewer/remove_pages']({}));
+    $(this.el).show().html(JST['viewer/remove_pages']({}));
     this.$s.viewerContainer.append(this.el);
     if (this.viewer.state != 'ViewDocument' && this.viewer.state != 'ViewThumbnails') {
         this.viewer.open('ViewThumbnails');
@@ -66,12 +66,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
   
   unbindEvents : function() {
     var $thumbnails = this.$s.thumbnails;
-    $thumbnails.unbind('mouseout.dv-remove')
-               .unbind('mousemove.dv-remove')
-               .unbind('mousedown.dv-remove')
-               .unbind('mouseover.dv-remove')
-               .unbind('mouseenter.dv-remove')
-               .unbind('mouseleave.dv-remove');
+    $thumbnails.unbind('mousedown.dv-remove');
   },
   
   handleEvents : function() {
@@ -185,7 +180,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
       this.$s.guideButton.removeClass('open');
       this.$s.pages.removeClass('remove_pages_viewer');
       this.unbindEvents();
-      $(this.el).remove();
+      $(this.el).empty().hide().remove();
       this.viewer.api.leaveRemovePagesMode();
     }
   }

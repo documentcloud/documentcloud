@@ -64,11 +64,13 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     dc.app.uploader = new dc.ui.UploadDialog({
       editable    : false,
       insertPages : true,
+      autoStart   : true,
       documentId  : this.viewer.api.getModelId()
     });
     dc.app.uploader.setupUploadify();
 
     this.handleEvents();
+    this.delegateEvents();
   },
 
   unbindEvents : function() {
