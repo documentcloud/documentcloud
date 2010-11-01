@@ -20,10 +20,7 @@ class SmallThumbnails < ActiveRecord::Migration
 
         puts " --> Saving #{doc.page_count} images..."
         pages.each_pair do |i, page|
-          asset_store.save_page_images(doc, i + 1,
-            {'small' => page},
-            doc.access
-          )
+          asset_store.send(:save_file, page, doc.page_image_path(i+1, 'small'), doc.access)
           File.delete(page)
         end
       rescue

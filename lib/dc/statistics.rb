@@ -77,7 +77,7 @@ module DC
     def self.count_organizations_embedding
       document_ids = RemoteUrl.all(:select => 'document_id', :group => 'document_id').map &:document_id
       count = 0
-      if document_ids.count > 0:
+      if document_ids.count > 0
         count = Organization.count_by_sql("SELECT COUNT(DISTINCT o.id) FROM organizations AS o INNER JOIN documents AS d ON d.organization_id = o.id WHERE d.id IN (#{document_ids.join(",")})")
       end
       count
