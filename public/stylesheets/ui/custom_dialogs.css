@@ -40,9 +40,15 @@
     left: 115px; top: 5px;
   }
 
-#pubdate_dialog .custom {
-  font-size: 11px;
+#pubdate_dialog {
+  width: 475px;
 }
-  #pubdate_dialog .datetime {
-    margin-right: 10px;
+  #pubdate_dialog .custom {
+    font-size: 11px;
   }
+    #pubdate_dialog .description {
+      margin-bottom: 30px;
+    }
+    #pubdate_dialog .datetime {
+      margin-right: 10px;
+    }

@@ -174,7 +174,7 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   editPublishAt : function() {
-    (new dc.ui.PublicationDateDialog([this.model])).render();
+    new dc.ui.PublicationDateDialog([this.model]);
   },
 
   showMenu : function(e) {

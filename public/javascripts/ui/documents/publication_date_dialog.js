@@ -5,14 +5,20 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
 
   events : {
     'click .cancel' : 'close',
-    'click .ok'     : 'save'
+    'click .ok'     : 'save',
+    'click .delete' : 'removeDate'
   },
 
   constructor : function(docs) {
     this.docs = docs;
     this.multiple = docs.length > 1;
     var title = "Set Publication Date for " + this._title();
-    dc.ui.Dialog.call(this, {mode : 'custom', title : title, saveText : 'Save'});
+    dc.ui.Dialog.call(this, {
+      mode        : 'custom',
+      title       : title,
+      editor      : true,
+      deleteText  : "Remove"
+    });
     this.render();
     $(document.body).append(this.el);
   },
@@ -20,9 +26,18 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
   render : function() {
     dc.ui.Dialog.prototype.render.call(this);
     this._container = this.$('.custom');
-    this._container.html(JST['document/publication_date_dialog']());
+    this._container.html(JST['document/publication_date_dialog']({multiple: this.multiple}));
+    var date = Documents.sharedAttribute(this.docs, 'publish_at');
+    if (date) this.setDate(DateFormatter.parseRfc(date));
     this.center();
     return this;
+  },
+
+  setDate : function(date) {
+    this.$('#date_year').val(date.getFullYear());
+    this.$('#date_month').val(date.getMonth() + 1);
+    this.$('#date_day').val(date.getDate());
+    this.$('#date_hour').val(date.getHours());
   },
 
   getDate : function() {
@@ -37,6 +52,11 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
   save : function() {
     var date = JSON.stringify(this.getDate());
     _.each(this.docs, function(doc){ doc.save({publish_at : date}); });
+    this.close();
+  },
+
+  removeDate : function() {
+    _.each(this.docs, function(doc){ doc.save({publish_at : null}); });
     this.close();
   },
 

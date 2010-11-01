@@ -131,7 +131,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   openPublicationDateDialog : function() {
     var docs = Documents.chosen();
     if (!docs.length || !Documents.allowedToEdit(docs)) return;
-    (new dc.ui.PublicationDateDialog(docs)).render();
+    new dc.ui.PublicationDateDialog(docs);
   },
 
   requestDownloadViewers : function() {

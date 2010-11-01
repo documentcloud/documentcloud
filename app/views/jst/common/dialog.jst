@@ -47,7 +47,8 @@
       <% var saveText = saveText || ((editor || mode == 'prompt' || mode == 'short_prompt') ? 'Save' : (mode == 'alert' || mode == 'confirm') ? 'OK' : 'Close'); %>
       <% var closeText = closeText || (mode == 'confirm' || saveText == 'Close' ? 'Cancel' : 'Close'); %>
       <% if (editor) { %>
-        <div class="minibutton delete warn">Delete</div>
+        <% var deleteText = deleteText || 'Delete'; %>
+        <div class="minibutton delete warn"><%= deleteText %></div>
       <% } %>
       <div class="minibutton cancel dark"><%= closeText %></div>
       <div class="minibutton ok default"><%= saveText %></div>

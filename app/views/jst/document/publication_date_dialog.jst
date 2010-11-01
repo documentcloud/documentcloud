@@ -1,4 +1,11 @@
-Make Public on: 
+<div class="description">
+  As long as <%= multiple ? 'these documents remain' : 'this document remains' %>
+  private, <%= multiple ? 'they are' : 'it is' %> not visible to others. You can 
+  set a date and time at which <%= multiple ? 'they' : 'it' %> will be made 
+  publicly accessible.
+</div>
+
+Make Public on:
 <span class="datetime">
   <%= $('#hidden_date_select').html() %>
 </span>

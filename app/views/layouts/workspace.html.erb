@@ -39,7 +39,7 @@
   </iframe>
 
   <div style="display:none;" id="hidden_date_select">
-    <%= select_date Date.current, :order => [:month, :day, :year] %>
+    <%= select_date Date.current, :order => [:month, :day, :year], :start_year => Date.current.year %>
   </div>
 
   <%= render :partial => 'common/bootstrap' %>
