@@ -120,7 +120,7 @@ module DC
       # Retry a couple times instead of failing the entire job.
       def save_file(file, s3_path, access, opts={})
         file = opts[:string] ? file : File.open(file)
-        headers = s3_path.match(IMAGE_EXT) ? {'Expires' => 1.year.from_now.httpdate} : {}
+        headers = {}
         attempts = 0
         begin
           attempts += 1
@@ -137,8 +137,7 @@ module DC
 
       def save_permissions(s3_path, access)
         headers = {
-          'x-amz-acl' => ACCESS_TO_ACL[access],
-          'Expires' => 1.year.from_now.httpdate
+          'x-amz-acl' => ACCESS_TO_ACL[access]
         }
         s3.interface.copy(bucket, s3_path, bucket, s3_path, :replace, headers)
       end
