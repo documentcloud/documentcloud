@@ -37,6 +37,12 @@ dc.model.Document = Backbone.Model.extend({
     return this.id + '-' + this.get('slug');
   },
 
+  // Generate the date object for this Document's `publish_at`.
+  publishAtDate : function() {
+    var date = this.get('publish_at');
+    return date && DateFormatter.parseRfc(date);
+  },
+
   openViewer : function() {
     if (this.checkBusy()) return;
     window.open(this.viewerUrl());

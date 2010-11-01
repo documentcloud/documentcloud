@@ -1,5 +1,7 @@
 window.DateFormatter = {
 
+  RFC_EXTRACTOR: /(\d{4})-(\d{1,2})-(\d{1,2})(?:T(\d{1,2}):(\d{2}):(\d{2})(?:\.\d+)?(Z|[+-](\d{2}):?(\d{2}))?)?/i,
+
   MONTHS: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
     'August', 'September', 'October', 'November', 'December'],
 
@@ -77,5 +79,32 @@ window.DateFormatter = {
       f = f.replace(o[0], '"\n+ (' + o[1] + ') +\n"');
     });
     return new Function('d', f);
+  },
+
+  // Parse an RFC3339 date string, in any of these formats:
+  //
+  //  * YYYY-MM-DDThh:mm:ss-hh:mm   date, time, offset
+  //  * YYYY-MM-DDThh:mm:ss         date, time  (implicit local offset)
+  // *  YYYY-MM-DD                  date        (implicit midnight, local time)
+  parseRfc: function(dateString) {
+    var d = this.RFC_EXTRACTOR.exec(dateString);
+    if (!d) throw new Error('Invalid RFC3339 Date: "' + dateString + '"');
+    var h = d[4] || 0, m = d[5] || 0, s = d[6] || 0;
+
+    // Default to local timezone, if none is specified.
+    if (!d[7]) return new Date(d[1], d[2]-1, d[3], h, m, s);
+
+    // Compensate for specified timezone.
+    // Adjust for timezone
+    var tzh = (d[8] || 0) * 1, tzm = (d[9] || 0) * 1;
+    if (d[7].indexOf('-') >= 0) {
+      tzh = -tzh;
+      tzm = -tzm;
+    }
+    h = h * 1 - tzh;
+    m = m * 1 - tzm;
+
+    return new Date(Date.UTC(d[1], d[2]-1, d[3], h, m, s));
   }
+
 };

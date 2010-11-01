@@ -40,7 +40,8 @@ class DocumentsController < ApplicationController
 
   def update
     return not_found unless doc = current_document(true)
-    attrs = pick(params, :access, :title, :description, :source, :related_article, :remote_url)
+    attrs = pick(params, :access, :title, :description, :source,
+                         :related_article, :remote_url, :publish_at)
     success = doc.secure_update attrs, current_account
     return json(doc, 403) unless success
     expire_page doc.canonical_cache_path if doc.cacheable?

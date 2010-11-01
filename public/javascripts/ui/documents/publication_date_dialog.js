@@ -35,7 +35,8 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
   },
 
   save : function() {
-    _.each(this.docs, function(doc){ doc.save({publish_at : this.getDate()}); });
+    var date = this.getDate();
+    _.each(this.docs, function(doc){ doc.save({publish_at : date}); });
     this.close();
   },
 
