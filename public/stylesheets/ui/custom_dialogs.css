@@ -39,3 +39,10 @@
     position: absolute;
     left: 115px; top: 5px;
   }
+
+#pubdate_dialog .custom {
+  font-size: 11px;
+}
+  #pubdate_dialog .datetime {
+    margin-right: 10px;
+  }

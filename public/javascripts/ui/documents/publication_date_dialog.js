@@ -11,8 +11,8 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
   constructor : function(docs) {
     this.docs = docs;
     this.multiple = docs.length > 1;
-    var title = "Set Publication Date: " + this._title();
-    dc.ui.Dialog.call(this, {mode : 'custom', title : title});
+    var title = "Set Publication Date for " + this._title();
+    dc.ui.Dialog.call(this, {mode : 'custom', title : title, saveText : 'Save'});
     this.render();
     $(document.body).append(this.el);
   },
@@ -20,11 +20,22 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
   render : function() {
     dc.ui.Dialog.prototype.render.call(this);
     this._container = this.$('.custom');
+    this._container.html(JST['document/publication_date_dialog']());
     this.center();
     return this;
   },
 
+  getDate : function() {
+    return new Date(
+      this.$('#date_year').val(),
+      parseInt(this.$('#date_month').val(), 10) - 1,
+      this.$('#date_day').val(),
+      this.$('#date_hour').val()
+    );
+  },
+
   save : function() {
+    _.each(this.docs, function(doc){ doc.save({publish_at : this.getDate()}); });
     this.close();
   },
 
