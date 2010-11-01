@@ -47,7 +47,7 @@ module DC
       def save_page_images(document, page_number, images, access=nil)
         ensure_directory(document.pages_path)
         Page::IMAGE_SIZES.keys.each do |size|
-          FileUtils.cp(images[size], local(document.page_image_path(page_number, size))) if images[size]
+          save_file(document.page_image_path(page_number, size), images[size]) if images[size]
         end
       end
 
@@ -83,6 +83,12 @@ module DC
 
       def local(path)
         File.join(AssetStore.asset_root, path)
+      end
+      
+      private
+      
+      def save_file(file, path, access=nil)
+        FileUtils.cp(local(path), file)
       end
 
     end

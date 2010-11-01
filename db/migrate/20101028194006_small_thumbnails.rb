@@ -3,7 +3,7 @@ class SmallThumbnails < ActiveRecord::Migration
     total_documents = Document.all.count
     Document.all.each_with_index do |doc, i|
       begin
-        puts " --> #{i+1}/#{total_documents} Starting: [#{doc.page_count} pages] #{doc.title}"
+        puts " --> #{i+1}/#{total_documents} Starting: [#{doc.page_count} pages] #{doc.title} (#{doc.id})"
         asset_store = DC::Store::AssetStore.new
         pages = {}
         doc.page_count.times.each do |page|
