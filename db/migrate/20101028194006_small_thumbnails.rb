@@ -1,7 +1,7 @@
 class SmallThumbnails < ActiveRecord::Migration
   def self.up
     total_documents = Document.all.count
-    Document.all.each_with_index do |doc, i|
+    Document.find(:all, :order => 'id').each_with_index do |doc, i|
       begin
         puts " --> #{i+1}/#{total_documents} Starting: [#{doc.page_count} pages] #{doc.title} (#{doc.id})"
         asset_store = DC::Store::AssetStore.new
