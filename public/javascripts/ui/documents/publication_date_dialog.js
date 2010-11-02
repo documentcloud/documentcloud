@@ -26,26 +26,21 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
   render : function() {
     dc.ui.Dialog.prototype.render.call(this);
     this._container = this.$('.custom');
-    this._container.html(JST['document/publication_date_dialog']({multiple: this.multiple}));
-    var date = Documents.sharedAttribute(this.docs, 'publish_at');
-    if (date) this.setDate(DateFormatter.parseRfc(date));
+    var publishAt = Documents.sharedAttribute(this.docs, 'publish_at');
+    this._container.html(JST['document/publication_date_dialog']({
+      multiple: this.multiple,
+      date:     publishAt ? DateUtils.parseRfc(publishAt) : new Date
+    }));
     this.center();
     return this;
   },
 
-  setDate : function(date) {
-    this.$('#date_year').val(date.getFullYear());
-    this.$('#date_month').val(date.getMonth() + 1);
-    this.$('#date_day').val(date.getDate());
-    this.$('#date_hour').val(date.getHours());
-  },
-
   getDate : function() {
     return new Date(
-      this.$('#date_year').val(),
-      parseInt(this.$('#date_month').val(), 10) - 1,
-      this.$('#date_day').val(),
-      this.$('#date_hour').val()
+      this.$('.date_year').val(),
+      parseInt(this.$('.date_month').val(), 10) - 1,
+      this.$('.date_day').val(),
+      this.$('.date_hour').val()
     );
   },
 

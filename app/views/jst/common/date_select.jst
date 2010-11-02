@@ -1,0 +1,29 @@
+<select class="date_month">
+  <% var monthNum = date.getMonth() + 1; %>
+  <% _.each(DateUtils.MONTHS, function(month, value) { %>
+    <% value += 1; %>
+    <option value="<%= value %>" <%= value === monthNum ? 'selected="selected"' : '' %>>
+      <%= month %>
+    </option>
+  <% }); %>
+</select>
+
+<select class="date_day" name="date[day]">
+  <% var day = date.getDate(); %>
+  <% for (var i = 1; i <= 31; i++) { %>
+    <option value="<%= i %>" <%= i === day ? 'selected="selected"' : '' %>>
+      <%= i %>
+    </option>
+  <% } %>
+</select>
+
+<select class="date_year">
+  <% var year = date.getFullYear(); %>
+  <% var yearStart = (new Date).getFullYear(); %>
+  <% var yearEnd = yearStart + 5; %>
+  <% for (var i = yearStart; i < yearEnd; i++) { %>
+    <option value="<%= i %>" <%= i === year ? 'selected="selected"' : '' %>>
+      <%= i %>
+    </option>
+  <% } %>
+</select>

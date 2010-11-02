@@ -38,10 +38,6 @@
   <iframe src ="about:blank" width="0" height="0" id="hidden_iframe" name="hidden_iframe" class="hidden_iframe">
   </iframe>
 
-  <div style="display:none;" id="hidden_date_select">
-    <%= select_date Date.current, :order => [:month, :day, :year], :start_year => Date.current.year %>
-  </div>
-
   <%= render :partial => 'common/bootstrap' %>
 
 </body>

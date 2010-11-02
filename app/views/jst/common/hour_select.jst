@@ -1,0 +1,8 @@
+<select class="date_hour">
+  <% var hour = date.getHours(); %>
+  <% _.each(DateUtils.HOUR_SELECT, function(time, value) { %>
+    <option value="<%= value %>" <%= value === hour ? 'selected="selected"' : '' %>>
+      <%= time %>
+    </option>
+  <% }); %>
+</select>

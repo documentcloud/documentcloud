@@ -1,4 +1,4 @@
-window.DateFormatter = {
+window.DateUtils = {
 
   RFC_EXTRACTOR: /(\d{4})-(\d{1,2})-(\d{1,2})(?:T(\d{1,2}):(\d{2}):(\d{2})(?:\.\d+)?(Z|[+-](\d{2}):?(\d{2}))?)?/i,
 
@@ -14,26 +14,30 @@ window.DateFormatter = {
 
   AMPM: ['AM', 'PM', 'am', 'pm', 'a', 'p'],
 
+  HOUR_SELECT: ['12 AM', '1 AM', '2 AM', '3 AM', '4 AM', '5 AM', '6 AM', '7 AM',
+    '8 AM', '9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM',
+    '5 PM', '6 PM', '7 PM', '8 PM', '9 PM', '10 PM', '11 PM'],
+
   // Map of syntax tokens (as regexs) to code snippet that does value replacement.
   FORMATS: [
-    [(/%A/g), 'DateFormatter.DAYS[d.getDay()]'],
-    [(/%a/g), 'DateFormatter.SHORT_DAYS[d.getDay()]'],
-    [(/%B/g), 'DateFormatter.MONTHS[d.getMonth()]'],
-    [(/%b/g), 'DateFormatter.SHORT_MONTHS[d.getMonth()]'],
-    [(/%d/g), 'DateFormatter.pad(d.getDate(), 2)'],
+    [(/%A/g), 'DateUtils.DAYS[d.getDay()]'],
+    [(/%a/g), 'DateUtils.SHORT_DAYS[d.getDay()]'],
+    [(/%B/g), 'DateUtils.MONTHS[d.getMonth()]'],
+    [(/%b/g), 'DateUtils.SHORT_MONTHS[d.getMonth()]'],
+    [(/%d/g), 'DateUtils.pad(d.getDate(), 2)'],
     [(/%e/g), 'd.getDate()'],
-    [(/%H/g), 'DateFormatter.pad(d.getHours(), 2)'],
-    [(/%I/g), 'DateFormatter.pad((d.getHours() % 12) || 12, 2)'],
+    [(/%H/g), 'DateUtils.pad(d.getHours(), 2)'],
+    [(/%I/g), 'DateUtils.pad((d.getHours() % 12) || 12, 2)'],
     [(/%k/g), 'd.getHours()'],
     [(/%l/g), '(d.getHours() % 12) || 12'],
-    [(/%M/g), 'DateFormatter.pad(d.getMinutes(), 2)'],
-    [(/%m/g), 'DateFormatter.pad(d.getMonth()+1, 2)'],
+    [(/%M/g), 'DateUtils.pad(d.getMinutes(), 2)'],
+    [(/%m/g), 'DateUtils.pad(d.getMonth()+1, 2)'],
     [(/%n/g), 'd.getMonth()+1'],
-    [(/%P/g), 'd.getHours() < 12 ? DateFormatter.AMPM[0] : DateFormatter.AMPM[1]'],
-    [(/%p/g), 'd.getHours() < 12 ? DateFormatter.AMPM[2] : DateFormatter.AMPM[3]'],
-    [(/%q/g), 'd.getHours() < 12 ? DateFormatter.AMPM[4] : DateFormatter.AMPM[5]'],
-    [(/%S/g), 'DateFormatter.pad(d.getSeconds(), 2)'],
-    [(/%y/g), 'DateFormatter.pad(d.getFullYear() % 100, 2)'],
+    [(/%P/g), 'd.getHours() < 12 ? DateUtils.AMPM[0] : DateUtils.AMPM[1]'],
+    [(/%p/g), 'd.getHours() < 12 ? DateUtils.AMPM[2] : DateUtils.AMPM[3]'],
+    [(/%q/g), 'd.getHours() < 12 ? DateUtils.AMPM[4] : DateUtils.AMPM[5]'],
+    [(/%S/g), 'DateUtils.pad(d.getSeconds(), 2)'],
+    [(/%y/g), 'DateUtils.pad(d.getFullYear() % 100, 2)'],
     [(/%Y/g), 'd.getFullYear()']
   ],
 
@@ -69,7 +73,7 @@ window.DateFormatter = {
   //
   // For example:
   //
-  //     var formatter = DateFormatter.create('%a, %b %e, %Y');
+  //     var formatter = DateUtils.create('%a, %b %e, %Y');
   //     var date = formatter(new Date());
   //
   create: function(f) {
