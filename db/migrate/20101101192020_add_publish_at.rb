@@ -4,6 +4,6 @@ class AddPublishAt < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :documents, :publish_at, :timestamp
+    remove_column :documents, :publish_at
   end
 end
