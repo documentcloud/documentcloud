@@ -31,6 +31,7 @@ class DocumentImport < CloudCrowd::Action
   # When both sides are done, update the document to mark it as finished.
   def merge
     document.update_attributes :access => access
+    email_on_complete(options['documents_email']) if options['documents_email'] > 0
     document.id
   end
 
@@ -109,7 +110,13 @@ class DocumentImport < CloudCrowd::Action
     text_length = @pages.inject(0) {|sum, page| sum + page[:text].length }
     text_length > (@pages.length * 100)
   end
-
+  
+  def email_on_complete(document_count)
+    if Document.owned_by(document.account).pending.count == 0
+      LifecycleMailer.documents_finished_processing(document.account, document_count)
+    end
+  end
+  
   def document
     return @document if @document
     ActiveRecord::Base.establish_connection

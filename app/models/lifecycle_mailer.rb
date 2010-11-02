@@ -42,4 +42,15 @@ class LifecycleMailer < ActionMailer::Base
     body        :params => params, :error => error
   end
 
+  # When a batch of uploaded documents has finished processing, email
+  # the account to let them know.
+  def documents_finished_processing(account, document_count)
+    count_text = '1 document has' if document_count == 1
+    count_text = "#{document_count} documents have" if document_count > 1
+    subject     "DocumentCloud - #{count_text} been processed"
+    from        [SUPPORT, admin && admin.email].compact
+    recipients  [account.email]
+    body        :account            => account,
+                :count_text         => count_text
+  end
 end

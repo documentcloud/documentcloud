@@ -117,6 +117,7 @@ class Document < ActiveRecord::Base
   # Upload a new document, starting the import process.
   def self.upload(params, account, organization)
     access = params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE
+    documents_email = params[:documents_email].to_i
     doc = self.create!(
       :organization_id  => organization.id,
       :account_id       => account.id,
@@ -129,7 +130,7 @@ class Document < ActiveRecord::Base
     )
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
       DC::Store::AssetStore.new.save_pdf(doc, path, access)
-      doc.queue_import(access)
+      doc.queue_import(access, false, documents_email)
     end
     doc.reload
   end
@@ -387,13 +388,14 @@ class Document < ActiveRecord::Base
     }.to_json})
   end
 
-  def queue_import(eventual_access=nil, text_only=false)
+  def queue_import(eventual_access=nil, text_only=false, documents_email=false)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
     job = JSON.parse(DC::Import::CloudCrowdImporter.new.import([id], {
-      'id'            => id,
-      'access'        => eventual_access,
-      'text_only'     => text_only
+      'id'                => id,
+      'access'            => eventual_access,
+      'text_only'         => text_only,
+      'documents_email'   => documents_email
     }).body)
     ProcessingJob.create!(
       :document_id    => id,
@@ -403,7 +405,7 @@ class Document < ActiveRecord::Base
       :remote_job     => job
     )
   end
-
+  
   # TODO: Make the to_json an extended form of the canonical.
   def to_json(opts={})
     {

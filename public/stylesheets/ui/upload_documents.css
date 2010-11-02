@@ -125,3 +125,14 @@
     left: 0;
     top: 0;
   }
+
+#upload_dialog .upload_email {
+  margin: 8px 0 0 4px;
+}
+  #upload_dialog .upload_email input {
+    float: left;
+  }
+  #upload_dialog .upload_email label {
+    font-size: 12px;
+    margin: 4px 0 0 4px;
+  }

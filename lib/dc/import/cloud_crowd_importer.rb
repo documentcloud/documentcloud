@@ -4,10 +4,10 @@ module DC
     class CloudCrowdImporter
 
       DEFAULT_OPTIONS = {
-        'organization_id' => 0,
-        'account_id'      => 0,
-        'source'          => 'Unknown',
-        'access'          => DC::Access::PUBLIC
+        'organization_id'   => 0,
+        'account_id'        => 0,
+        'source'            => 'Unknown',
+        'access'            => DC::Access::PUBLIC
       }
 
       def import(urls, options={})
