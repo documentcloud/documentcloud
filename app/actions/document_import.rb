@@ -113,7 +113,7 @@ class DocumentImport < CloudCrowd::Action
   
   def email_on_complete(document_count)
     if Document.owned_by(document.account).pending.count == 0
-      LifecycleMailer.documents_finished_processing(document.account, document_count)
+      LifecycleMailer.deliver_documents_finished_processing(document.account, document_count)
     end
   end
   
