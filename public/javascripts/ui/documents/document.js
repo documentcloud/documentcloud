@@ -36,7 +36,7 @@ dc.ui.Document = Backbone.View.extend({
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
       '_renderPages', '_setSelected', 'viewDocuments', 'viewPublishedDocuments',
-      'openDialog', 'openEmbed', 'viewEntities', 'deleteDocuments');
+      'openDialog', 'openEmbed', 'setAccessLevelAll', 'viewEntities', 'deleteDocuments');
     this.model.bind('change', this._onDocumentChange);
     this.model.bind('change:selected', this._setSelected);
     this.model.notes.bind('add', this._addNote);
@@ -173,6 +173,10 @@ dc.ui.Document = Backbone.View.extend({
     Documents.editAccess([this.model]);
   },
 
+  setAccessLevelAll : function() {
+    Documents.editAccess(Documents.chosen(this.model));
+  },
+
   editPublishAt : function() {
     new dc.ui.PublicationDateDialog([this.model]);
   },
@@ -193,6 +197,7 @@ dc.ui.Document = Backbone.View.extend({
     if (this.model.allowedToEdit()) {
       items = items.concat([
         {title : 'Edit All Fields',         onClick: this.openDialog},
+        {title : 'Set Access Level',        onClick: this.setAccessLevelAll},
         {title : 'Embed Document Viewer',   onClick: this.openEmbed, attrs : {'class' : count > 1 ? 'disabled' : ''}},
         {title : deleteTitle,               onClick: this.deleteDocuments, attrs : {'class' : 'warn'}}
       ]);

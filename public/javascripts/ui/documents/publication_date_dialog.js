@@ -10,6 +10,11 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function(docs) {
+    var alreadyPublic = _.detect(docs, function(doc){ return doc.isPublic(); });
+    if (alreadyPublic) {
+      dc.ui.Dialog.alert('"' + alreadyPublic.get('title') + '" is already a public document.');
+      return;
+    }
     this.docs = docs;
     this.multiple = docs.length > 1;
     var title = "Set Publication Date for " + this._title();

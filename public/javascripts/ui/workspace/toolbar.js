@@ -67,7 +67,7 @@ dc.ui.Toolbar = Backbone.View.extend({
       dc.ui.Dialog.prompt('Description', current, function(description) {
         _.each(docs, function(doc) { doc.save({description : description}); });
         return true;
-      }, {information : this._subtitle(docs.length)});
+      }, {information : Documents.subtitle(docs.length)});
     });
   },
 
@@ -77,7 +77,7 @@ dc.ui.Toolbar = Backbone.View.extend({
       dc.ui.Dialog.prompt('Source', current, function(source) {
         _.each(docs, function(doc) { doc.save({source : source}); });
         return true;
-      }, {mode : 'short_prompt', information : this._subtitle(docs.length)});
+      }, {mode : 'short_prompt', information : Documents.subtitle(docs.length)});
     });
   },
 
@@ -92,7 +92,7 @@ dc.ui.Toolbar = Backbone.View.extend({
         return true;
       }, {
         mode        : 'short_prompt',
-        information : this._subtitle(docs.length),
+        information : Documents.subtitle(docs.length),
         description : 'Enter the URL of the article that references ' + suffix
       });
     });
@@ -114,9 +114,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   editAccess : function() {
-    var docs    = Documents.selected();
-    var options = {information : this._subtitle(docs.length)};
-    Documents.editAccess(docs, options);
+    Documents.editAccess(Documents.selected());
   },
 
   openEmbedDialog : function() {
@@ -145,10 +143,6 @@ dc.ui.Toolbar = Backbone.View.extend({
     var floating = open && ($(window).scrollTop() > $(this.el).offset().top - 30);
     if (this._floating == floating) return;
     $(document.body).toggleClass('floating_toolbar', this._floating = floating);
-  },
-
-  _subtitle : function(count) {
-    return count > 1 ? count + ' Documents' : '';
   },
 
   _updateSelectedDocuments : function(project) {
@@ -221,14 +215,14 @@ dc.ui.Toolbar = Backbone.View.extend({
       label   : 'Edit',
       onOpen  : this._enableMenuItems,
       items   : [
-        {title : 'Edit All Fields',           attrs: {'class' : 'multiple'},        onClick : function(){ dc.ui.DocumentDialog.open(); }},
-        {title : 'Edit Title',                attrs: {'class' : 'singular indent'}, onClick : this.editTitle},
-        {title : 'Edit Source',               attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
-        {title : 'Edit Description',          attrs: {'class' : 'multiple indent'}, onClick : this.editDescription},
-        {title : 'Edit Related Article URL',  attrs: {'class' : 'multiple indent'}, onClick : this.editRelatedArticle},
-        {title : 'Edit Document URL',         attrs: {'class' : 'singular indent'}, onClick : this.editDocumentURL},
-        {title : 'Edit Access Level',         attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
-        {title : 'Delete Documents',          attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
+        {title : 'Edit All Fields',      attrs: {'class' : 'multiple'},        onClick : function(){ dc.ui.DocumentDialog.open(); }},
+        {title : 'Title',                attrs: {'class' : 'singular indent'}, onClick : this.editTitle},
+        {title : 'Source',               attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
+        {title : 'Description',          attrs: {'class' : 'multiple indent'}, onClick : this.editDescription},
+        {title : 'Related Article URL',  attrs: {'class' : 'multiple indent'}, onClick : this.editRelatedArticle},
+        {title : 'Document URL',         attrs: {'class' : 'singular indent'}, onClick : this.editDocumentURL},
+        {title : 'Access Level',         attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
+        {title : 'Delete Documents',     attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
       ]
     });
   },

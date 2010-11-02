@@ -148,6 +148,10 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     return this.select(function(doc){ return doc.isPending(); });
   },
 
+  subtitle : function(count) {
+    return count > 1 ? count + ' Documents' : '';
+  },
+
   // Given a list of documents and an attribute, return the value of the
   // attribute if identical, or null if divergent.
   sharedAttribute : function(docs, attr) {
@@ -221,8 +225,8 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     }, this));
   },
 
-  editAccess : function(docs, options) {
-    options || (options = {});
+  editAccess : function(docs) {
+    var options = {information: this.subtitle(docs.length)};
     if (!this.allowedToEdit(docs)) return;
     var current = this.sharedAttribute(docs, 'access') || dc.access.PRIVATE;
     dc.ui.Dialog.choose('Access Level', [
