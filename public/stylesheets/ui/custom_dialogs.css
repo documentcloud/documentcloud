@@ -50,5 +50,8 @@
       margin-bottom: 30px;
     }
     #pubdate_dialog .datetime {
-      margin-right: 10px;
+      margin-right: 15px;
     }
+      #pubdate_dialog select {
+        margin-left: 5px;
+      }
