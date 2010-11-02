@@ -19,13 +19,12 @@ dc.ui.Help = Backbone.View.extend({
     'click .uservoice':   'openUserVoice'
   },
 
-  constructor : function() {
+  initialize : function() {
     this.currentPage = null;
     this.PAGE_URLS = _.pluck(this.PAGES, 'url');
   },
 
   render : function() {
-    this.el = $('#help')[0];
     dc.history.register(/^#help\//,     _.bind(this.openPage, this));
     dc.history.register(/^#help$/,      _.bind(this.openPage, this, ''));
     dc.app.navigation.bind('tab:help',  _.bind(this.openHelpTab, this));
