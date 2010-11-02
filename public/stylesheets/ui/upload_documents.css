@@ -2,28 +2,28 @@
   width: 500px;
 }
 
-#upload_dialog .custom {
+#upload_dialog .uploads {
   position: relative;
 }
-#upload_dialog .upload_list {
-  position: relative;
-  max-height: 372px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  text-align: left;
-  width: 522px;
-}
-#upload_dialog .line {
-  position: absolute;
-  height: 1px; width: 500px;
-  background: #222;
-}
-  #upload_dialog .line.top {
-    top: 0;
+  #upload_dialog .upload_list {
+    position: relative;
+    max-height: 372px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: left;
+    width: 522px;
   }
-  #upload_dialog .line.bottom {
-    bottom: 0;
+  #upload_dialog .line {
+    position: absolute;
+    height: 1px; width: 500px;
+    background: #222;
   }
+    #upload_dialog .line.top {
+      top: 0;
+    }
+    #upload_dialog .line.bottom {
+      bottom: 0;
+    }
 
 #upload_dialog .row {
   position: relative;
@@ -127,12 +127,13 @@
   }
 
 #upload_dialog .upload_email {
-  margin: 8px 0 0 4px;
+  text-align: left;
+  margin: 8px 0 0px 4px;
 }
-  #upload_dialog .upload_email input {
-    float: left;
-  }
   #upload_dialog .upload_email label {
-    font-size: 12px;
+    display: inline;
+    float: none;
+    color: #ccc;
+    font-size: 11px;
     margin: 4px 0 0 4px;
   }

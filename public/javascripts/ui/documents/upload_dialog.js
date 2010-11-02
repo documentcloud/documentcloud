@@ -114,9 +114,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this.collection.get(queueId).set(attrs);
     attrs.session_key = dc.app.cookies.get('document_cloud_session');
     if (this._project) attrs.project_id = this._project.id;
-    attrs.documents_email = (this.$('.upload_email input').is(':checked')
-                             ? this.collection.length
-                             : 0);   
+    attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
     this._uploadify.uploadifySettings('scriptData', attrs, true);
     this.showSpinner();
     this._list[0].scrollTop = 0;
@@ -152,6 +150,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   countDocuments : function() {
     var num = this.collection.length;
     this.title('Upload ' + (num > 1 ? num : '') + Inflector.pluralize(' Document', num));
+    this.$('.upload_email_count').text(num == 1 ? 'the document has' : 'all documents have');
   },
 
   checkQueueLength : function() {
