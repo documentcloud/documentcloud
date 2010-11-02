@@ -15,12 +15,13 @@
   // Treat empty strings as `null`, in the context of Backbone Models.
   var oldSet = Backbone.Model.prototype.set;
   Backbone.Model.prototype.set = function(attrs, options) {
+    var copy = {};
     if (attrs) {
       for (var attr in attrs) {
-        if (attrs[attr] === '') attrs[attr] = null;
+        copy[attr] = (attrs[attr] !== '' ? attrs[attr] : null);
       }
     }
-    return oldSet.call(this, attrs, options);
+    return oldSet.call(this, copy, options);
   };
 
 })();
