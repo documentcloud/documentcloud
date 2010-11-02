@@ -48,7 +48,7 @@ module DC
         ensure_directory(document.pages_path)
         Page::IMAGE_SIZES.keys.each do |size|
           if images[size]
-            FileUtils.cp(document.page_image_path(page_number, size), local(images[size]))
+            FileUtils.cp(images[size], local(document.page_image_path(page_number, size)))
           end
         end
       end
