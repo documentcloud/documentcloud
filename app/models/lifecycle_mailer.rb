@@ -45,7 +45,7 @@ class LifecycleMailer < ActionMailer::Base
   # When a batch of uploaded documents has finished processing, email
   # the account to let them know.
   def documents_finished_processing(account, document_count)
-    subject     "DocumentCloud - Your Documents are Ready"
+    subject     "Your Documents are Ready"
     from        SUPPORT
     recipients  [account.email]
     body        :account  => account,
