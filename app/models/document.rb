@@ -61,11 +61,15 @@ class Document < ActiveRecord::Base
   named_scope :restricted,    :conditions => {:access => [PRIVATE, ORGANIZATION, EXCLUSIVE]}
   named_scope :finished,      :conditions => {:access => [PUBLIC, PRIVATE, ORGANIZATION, EXCLUSIVE]}
 
+  named_scope :due, lambda {|time|
+    {:conditions => ["publish_at <= ?", Time.now.utc]}
+  }
+
   # Restrict accessible documents for a given account/organization.
   # Either the document itself is public, or it belongs to us, or it belongs to
   # our organization and we're allowed to see it, or it belongs to a project
   # that's been shared with us.
-  named_scope :accessible, lambda { |account, org|
+  named_scope :accessible, lambda {|account, org|
     access = []
     access << "(documents.access = #{PUBLIC})"
     access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}) and documents.account_id = #{account.id})" if account
@@ -142,6 +146,11 @@ class Document < ActiveRecord::Base
     end
   end
 
+  # Publish all documents with a `publish_at` timestamp that is past due.
+  def self.publish_due_documents
+    Document.restricted.due.find_each {|doc| doc.set_access PUBLIC }
+  end
+
   # Ensure that titles are stripped of trailing whitespace.
   def title=(title)
     self[:title] = title.strip
@@ -213,8 +222,10 @@ class Document < ActiveRecord::Base
   # When the access level changes, all sub-resource and asset permissions
   # need to be updated.
   def set_access(access_level)
-    update_attributes(:access => PENDING)
-    background_update_asset_access(access_level)
+    changes = {:access => PENDING}
+    changes[:publish_at] = nil if access_level == PUBLIC
+    update_attributes changes
+    background_update_asset_access access_level
   end
 
   # If we need to change the ownership of the document, we have to propagate

@@ -45,8 +45,14 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
   },
 
   save : function() {
-    var date = JSON.stringify(this.getDate());
-    _.each(this.docs, function(doc){ doc.save({publish_at : date}); });
+    var date = this.getDate();
+    if (date < new Date) {
+      this.close();
+      dc.ui.Dialog.alert("You can't set a document to be published in the past.");
+      return;
+    }
+    var utc = JSON.stringify(date);
+    _.each(this.docs, function(doc){ doc.save({publish_at : utc}); });
     this.close();
   },
 

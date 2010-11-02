@@ -32,6 +32,11 @@ namespace :app do
     sh "sudo su www-data -c \"jammit -u http://#{config['server_root']}\""
   end
 
+  desc "Publish all documents with expired publish_at timestamps"
+  task :publish, :needs => :environment do
+    Document.publish_due_documents
+  end
+
 end
 
 namespace :openoffice do

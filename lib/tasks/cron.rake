@@ -4,6 +4,10 @@ namespace :cron do
     invoke 'db:backup'
   end
 
+  task :hourly do
+    invoke 'app:publish'
+  end
+
 end
 
 
