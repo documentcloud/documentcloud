@@ -88,7 +88,7 @@ module DC
       end
 
       def save_file(file, path, access=nil)
-        FileUtils.cp(local(path), file)
+        FileUtils.cp(path, local(file))
       end
 
     end
