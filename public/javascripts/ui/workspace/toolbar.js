@@ -186,16 +186,21 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   _enableMenuItems : function(menu) {
+    var publicCount = Documents.selectedPublicCount();
     $('.menu_item:not(.plus,.always)', menu.content)
       .toggleClass('disabled', !Documents.selectedCount)
       .attr('title', Documents.selectedCount ? '' : 'No documents selected');
-    $('.singular', menu.content).toggleClass('disabled', !(Documents.selectedCount == 1));
+    $('.singular', menu.content)
+      .toggleClass('disabled', !(Documents.selectedCount == 1));
+    $('.private_only', menu.content)
+      .toggleClass('disabled', publicCount > 0).
+      attr('title', publicCount > 0 ? "already public" : '');
   },
 
   _createPublishMenu : function() {
     var accountItems = [
       {title : 'Embed Document Viewer',    onClick : this.openEmbedDialog},
-      {title : 'Set Publication Date',     onClick : this.openPublicationDateDialog},
+      {title : 'Set Publication Date',     onClick : this.openPublicationDateDialog, attrs: {'class': 'private_only'}},
       {title : 'Download Document Viewer', onClick : this.requestDownloadViewers}
     ];
     var publicItems = [

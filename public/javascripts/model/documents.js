@@ -159,6 +159,12 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     return attrs.length > 1 ? false : attrs[0];
   },
 
+  selectedPublicCount : function() {
+    return _.reduce(this.selected(), function(memo, doc){
+      return memo + doc.isPublic() ? 1 : 0;
+    }, 0);
+  },
+
   allowedToEdit : function(docs, message) {
     return !_.any(docs, function(doc) { return !doc.checkAllowedToEdit(message); });
   },

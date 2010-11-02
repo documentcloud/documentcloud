@@ -10,11 +10,6 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function(docs) {
-    var alreadyPublic = _.detect(docs, function(doc){ return doc.isPublic(); });
-    if (alreadyPublic) {
-      dc.ui.Dialog.alert('"' + alreadyPublic.get('title') + '" is already a public document.');
-      return;
-    }
     this.docs = docs;
     this.multiple = docs.length > 1;
     var title = "Set Publication Date for " + this._title();
@@ -22,6 +17,7 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
       mode        : 'custom',
       title       : title,
       editor      : true,
+      closeText   : "Cancel",
       deleteText  : "Remove"
     });
     this.render();
@@ -32,9 +28,10 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
     dc.ui.Dialog.prototype.render.call(this);
     this._container = this.$('.custom');
     var publishAt = Documents.sharedAttribute(this.docs, 'publish_at');
+    var oneHour = 60 * 60 * 1000;
     this._container.html(JST['document/publication_date_dialog']({
       multiple: this.multiple,
-      date:     publishAt ? DateUtils.parseRfc(publishAt) : new Date
+      date:     publishAt ? DateUtils.parseRfc(publishAt) : new Date(+(new Date) + oneHour)
     }));
     this.center();
     return this;

@@ -1,16 +1,16 @@
 <div class="description">
-  As long as <%= multiple ? 'these documents remain' : 'this document remains' %>
-  private, <%= multiple ? 'they are' : 'it is' %> not visible to others. You can
-  set a date and time at which <%= multiple ? 'they' : 'it' %> will be made
-  publicly accessible.
+  <%= multiple ? 'These documents are' : 'This document is' %> private.
+  You must make <%= multiple ? 'them' : 'it' %> public before
+  <%= multiple ? 'they' : 'it' %> will be visible on your website or in
+  searches of DocumentCloud's catalog.
 </div>
 
-Make Public on:
+Make public on:
 <span class="datetime">
   <%= JST['common/date_select']({date : date}) %>
 </span>
 
-At:
+at
 <span class="datetime">
   <%= JST['common/hour_select']({date : date}) %>
 </span>
