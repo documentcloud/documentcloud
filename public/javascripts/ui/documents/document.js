@@ -135,7 +135,7 @@ dc.ui.Document = Backbone.View.extend({
 
   openEmbed : function() {
     if (!this.model.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
-    (new dc.ui.PublishPreview(this.model)).render();
+    (new dc.ui.EmbedDialog(this.model)).render();
   },
 
   toggleNotes : function(e) {

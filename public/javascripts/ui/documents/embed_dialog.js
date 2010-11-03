@@ -1,17 +1,18 @@
-dc.ui.PublishPreview = dc.ui.Dialog.extend({
+dc.ui.EmbedDialog = dc.ui.Dialog.extend({
 
   events : {
-    'click .preview'  : 'preview',
-    'change select'   : 'update',
-    'click select'    : 'update',
-    'keyup input'     : 'update',
-    'focus input'     : 'update',
-    'click input'     : 'update',
-    'change input'    : 'update',
-    'click .next'     : 'nextStep',
-    'click .previous' : 'previousStep',
-    'click .close'    : 'close',
-    'click .snippet'  : 'selectSnippet'
+    'click .preview'        : 'preview',
+    'change select'         : 'update',
+    'click select'          : 'update',
+    'keyup input'           : 'update',
+    'focus input'           : 'update',
+    'click input'           : 'update',
+    'change input'          : 'update',
+    'click .next'           : 'nextStep',
+    'click .previous'       : 'previousStep',
+    'click .close'          : 'close',
+    'click .snippet'        : 'selectSnippet',
+    'click .set_publish_at' : 'openPublishAtDialog'
   },
 
   totalSteps : 3,
@@ -76,6 +77,11 @@ dc.ui.PublishPreview = dc.ui.Dialog.extend({
     }
     if (!this._sidebarEl.is(':checked')) options.sidebar = false;
     return options;
+  },
+
+  openPublishAtDialog : function() {
+    this.close();
+    new dc.ui.PublicationDateDialog([this.model]);
   },
 
   _savePreferences : function() {

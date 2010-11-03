@@ -164,8 +164,8 @@ class Document < ActiveRecord::Base
     end
     access = attrs.delete(:access)
     access &&= access.to_i
-    set_access(access) if access && self.access != access
     update_attributes attrs
+    set_access(access) if access && self.access != access
     true
   end
 
@@ -419,7 +419,7 @@ class Document < ActiveRecord::Base
 
   # TODO: Make the to_json an extended form of the canonical.
   def to_json(opts={})
-    {
+    data = {
       :id                  => id,
       :organization_id     => organization_id,
       :account_id          => account_id,
@@ -431,7 +431,6 @@ class Document < ActiveRecord::Base
       :source              => source,
       :description         => description,
       :highlight           => highlight,
-      :annotation_count    => annotation_count,
       :organization_name   => organization_name,
       :organization_slug   => organization_slug,
       :account_name        => account_name,
@@ -447,7 +446,9 @@ class Document < ActiveRecord::Base
       :detected_remote_url => detected_remote_url,
       :publish_at          => publish_at.as_json,
       :hits                => hits
-    }.to_json
+    }
+    data[:annotation_count] = annotation_count if annotation_count
+    data.to_json
   end
 
   # The filtered attributes we're allowed to display in the admin UI.

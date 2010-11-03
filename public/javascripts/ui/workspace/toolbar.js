@@ -123,7 +123,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document in order to create the embed.');
     var doc = docs[0];
     if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
-    (new dc.ui.PublishPreview(doc)).render();
+    (new dc.ui.EmbedDialog(doc)).render();
   },
 
   openPublicationDateDialog : function() {

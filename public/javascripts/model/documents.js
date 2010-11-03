@@ -2,10 +2,11 @@
 
 dc.model.Document = Backbone.Model.extend({
 
-  constructor : function(attributes) {
-    attributes.selected = false;
-    attributes.selectable = true;
-    Backbone.Model.call(this, attributes);
+  constructor : function(attrs) {
+    attrs.selected = false;
+    attrs.selectable = true;
+    if (attrs.annotation_count == null) attrs.annotation_count = 0;
+    Backbone.Model.call(this, attrs);
     var id = this.id;
     this.notes = new dc.model.NoteSet();
     this.notes.url = function() {
