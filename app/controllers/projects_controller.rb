@@ -7,14 +7,15 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    json current_account.projects.create(pick(params, :title, :document_ids))
+    json current_account.projects.create(pick(params, :title, :description, :document_ids))
   end
 
   # TODO: Ensure that the document ids you're adding are for documents you
   # have access to.
   def update
-    data = pick(params, :title, :document_ids)
+    data = pick(params, :title, :description, :document_ids)
     current_project.update_attributes(:title => data[:title]) if data[:title]
+    current_project.update_attributes(:description => data[:description])
     current_project.set_documents(data[:document_ids])
     json current_project.reload
   end

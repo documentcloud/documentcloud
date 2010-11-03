@@ -16,6 +16,7 @@ dc.ui.Project = Backbone.View.extend({
 
   render : function() {
     var data = _.extend(this.model.toJSON(), {statistics : this.model.statistics()});
+    console.log(['render project', data, this.model]);
     $(this.el).html(JST['organizer/project'](data));
     $(this.el).attr({id : "project_" + this.model.cid, 'data-project-cid' : this.model.cid});
     this.setMode(this.model.get('selected') ? 'is' : 'not', 'selected');

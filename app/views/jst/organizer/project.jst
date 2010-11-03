@@ -7,6 +7,11 @@
     <span class="icon edit_glyph">&#65279;</span>
   </span>
 </div>
+<% if (description) { %>
+  <div class="description interface">
+    <%= description %>
+  </div>
+<% } %>
 <div class="counts interface">
   <%= statistics %>
   <% if (!owner) { %>

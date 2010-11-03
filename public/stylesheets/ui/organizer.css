@@ -108,6 +108,13 @@
     #organizer .box .last_word {
       white-space: nowrap;
     }
+  #organizer .box .description {
+    font-size: 10px;
+    line-height: 14px;
+    font-weight: bold;
+    color: #808080;
+    margin: 4px 0;
+  }
   #organizer .box .counts,
   #organizer .top_level_search .text_link {
     font-size: 11px;
@@ -230,6 +237,11 @@
     font-size: 10px;
     text-align: left;
     color: #999;
+  }
+  #project_dialog textarea {
+    margin: 10px 0 0 0;
+    width: 100%;
+    height: 64px;
   }
 
 /*------------------------------- Scrolling ----------------------------------*/

@@ -88,6 +88,7 @@ class Project < ActiveRecord::Base
     data = ActiveSupport::OrderedHash.new
     data['id']            = id
     data['title']         = title
+    data['description']   = description
     data['document_ids']  = self.documents.all(:select => 'documents.id, slug').map {|doc| doc.canonical_id }
     data
   end

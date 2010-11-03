@@ -133,7 +133,10 @@ div.text_input {
         padding: 4px 4px;
         border-width: 1px;
       }
-      div.text_input.dark.small input.placeholder {
+      div.text_input input.placeholder {
+        color: #606060;
+      }
+      div.text_input textarea.placeholder {
         color: #606060;
       }
       div.text_input.dark input:focus,

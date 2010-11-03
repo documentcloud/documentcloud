@@ -26,6 +26,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     dc.ui.Dialog.prototype.render.call(this, {editor : true, information : this.model.statistics()});
     this.$('.custom').html(JST['organizer/project_dialog']({model : this.model}));
     this.$('#project_title').val(this.model.get('title'));
+    this.$('#project_description').val(this.model.get('description'));
     if (!this.model.get('owner')) this.$('.minibutton.delete').text("Remove");
     if (this.model.collaborators.length) {
       this._finishRender();
@@ -33,16 +34,26 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
       dc.ui.spinner.show();
       this.model.collaborators.fetch({success : this._finishRender});
     }
+    this._setPlaceholders();
     return this;
   },
 
   confirm : function() {
     var title = this.$('#project_title').val();
+    var description = this.$('#project_description').val();
+    if (description == this.$('#project_description').attr('placeholder')) description = '';
     if (!title) return this.error("Please specify a project title.");
-    this.model.save({title : title});
+    this.model.save({
+      title       : title,
+      description : description
+    });
     this.close();
   },
 
+  _setPlaceholders : function() {
+    this.$('input[name=title], textarea[name=description]').placeholder();
+  },
+  
   _finishRender : function() {
     dc.ui.spinner.hide();
     if (this.model.collaborators.length) {
