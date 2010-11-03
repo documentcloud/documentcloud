@@ -1,5 +1,8 @@
 (function($) {
 
+  var fakeInput = document.createElement('input');
+  var supportsPlaceholder = 'placeholder' in fakeInput;
+
   $.fn.extend({
 
     // Align an element relative to a target element's coordinates. Forces the
@@ -273,36 +276,26 @@
       return ret;
     },
 
-    placeholder: function(opts) {
-      var defaults = {
-        message: '...',
-        className: 'placeholder'
-      };
-      var options = $.extend({}, defaults, opts);
-
-      var setPlaceholder = function($input) {
-        $input.val($input.attr('placeholder') || options.message);
-        $input.addClass(options.className);
-      };
-
-      return this.each(function() {
-        var $this = $(this);
-
-        if ($this.attr('type') == 'search') return;
-
-        $this.bind('blur', function() {
-          if ($this.val() == '') {
-            setPlaceholder($this);
-          }
-        }).bind('focus', function() {
-          if ($this.val() == ($this.attr('placeholder') || options.message)) {
-            $this.val('');
-          }
-          $this.removeClass(options.className);
+    placeholder: function() {
+      if (supportsPlaceholder) return;
+      var otherEl;
+      this.each(function() {
+        var el = $(this);
+        var message = el.attr('placeholder');
+        var placeholder = $('<div class="placeholder">' + message + '</div>');
+        placeholder.hide().prependTo(el[0].parentNode);
+        el.bind('blur', function(){
+          if (el.val() == '') placeholder.show();
         });
-        _.defer(function(){
-          $this.keyup().blur();
+        el.bind('focus', function(){
+          otherEl = this;
+          placeholder.hide();
         });
+        placeholder.bind('click', function(){
+          $(otherEl).blur();
+          el.focus();
+        });
+        el.blur();
       });
     }
 
