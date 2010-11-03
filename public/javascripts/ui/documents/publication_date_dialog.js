@@ -7,7 +7,7 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
     'click .cancel'     : 'close',
     'click .ok'         : 'save',
     'click .delete'     : 'removeDate',
-    'click .public_now' : 'setPublic'
+    'click .public_now' : 'editAccess'
   },
 
   constructor : function(docs) {
@@ -47,11 +47,9 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
     );
   },
 
-  setPublic : function() {
-    _.each(this.docs, function(doc) { doc.save({access : dc.access.PUBLIC}); });
-    var text = this.docs.length + ' ' + Inflector.pluralize('document', this.docs.length) + ' made public';
-    dc.ui.notifier.show({mode : 'info', text : text});
+  editAccess : function() {
     this.close();
+    Documents.editAccess(this.docs);
   },
 
   save : function() {
