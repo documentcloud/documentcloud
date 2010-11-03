@@ -4,9 +4,10 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
   className : 'dialog',
 
   events : {
-    'click .cancel' : 'close',
-    'click .ok'     : 'save',
-    'click .delete' : 'removeDate'
+    'click .cancel'     : 'close',
+    'click .ok'         : 'save',
+    'click .delete'     : 'removeDate',
+    'click .public_now' : 'setPublic'
   },
 
   constructor : function(docs) {
@@ -44,6 +45,13 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
       this.$('.date_day').val(),
       this.$('.date_hour').val()
     );
+  },
+
+  setPublic : function() {
+    _.each(this.docs, function(doc) { doc.save({access : dc.access.PUBLIC}); });
+    var text = this.docs.length + ' ' + Inflector.pluralize('document', this.docs.length) + ' made public';
+    dc.ui.notifier.show({mode : 'info', text : text});
+    this.close();
   },
 
   save : function() {

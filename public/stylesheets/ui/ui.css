@@ -487,12 +487,10 @@ textarea.text_area {
     margin-bottom: 10px;
   }
   .dialog .text_link {
+    color: #fff;
     font-size: 11px;
     line-height: 14px;
   }
-    .dialog .text_link:hover {
-      color: #fff;
-    }
   .dialog .minibutton {
     width: 60px;
     height: 13px;

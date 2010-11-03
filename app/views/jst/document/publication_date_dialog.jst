@@ -1,8 +1,11 @@
 <div class="description">
+  <% var pronoun = multiple ? 'them' : 'it'; %>
   <%= multiple ? 'These documents are' : 'This document is' %> private.
-  You must make <%= multiple ? 'them' : 'it' %> public before
+  You must make <%= pronoun %> public before
   <%= multiple ? 'they' : 'it' %> will be visible on your website or in
-  searches of DocumentCloud's catalog.
+  searches of DocumentCloud's catalog. You can choose to make <%= pronoun %>
+  public at a future date, or you can
+  <span class="text_link public_now">make <%= pronoun %> public now</span>.
 </div>
 
 Make public on:
