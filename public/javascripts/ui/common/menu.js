@@ -83,7 +83,7 @@ dc.ui.Menu = Backbone.View.extend({
     this.items = this.items.concat(items);
     var elements = _(items).map(_.bind(function(item) {
       var attrs = item.attrs || {};
-      _.extend(attrs, {'class' : 'menu_item ' + attrs['class']});
+      _.extend(attrs, {'class' : 'menu_item ' + (attrs['class'] || '')});
       var el = this.make('div', attrs, item.title);
       item.menuEl = $(el);
       if (item.onClick) $(el).bind('click', function(e) {

@@ -122,7 +122,7 @@ div.text_input {
       font-size: 14px; line-height: 18px; height: 18px;
       padding: 3px 4px;
       color: #999;
-      background: #1e1e1e;
+      background: #222;
       border: 2px solid #393939;
       border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
     }
@@ -197,7 +197,7 @@ textarea.text_area {
   textarea.text_area.dark {
     border: 2px solid #393939;
     color: #999;
-    background: #1e1e1e;
+    background: #222;
   }
     textarea.text_area.dark:focus,
     textarea.text_area.dark.focus {
