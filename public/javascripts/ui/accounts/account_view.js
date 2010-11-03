@@ -52,6 +52,7 @@ dc.ui.AccountView = Backbone.View.extend({
     $(this.el).html(this.template(attrs));
     if (this.model.isPending()) $(this.el).addClass('pending');
     this._loadAvatar();
+    this._setPlaceholders();
     return this;
   },
 
@@ -95,6 +96,10 @@ dc.ui.AccountView = Backbone.View.extend({
       dc.ui.spinner.hide();
       dc.ui.notifier.show({mode : 'info', text : 'A welcome message has been sent to ' + model.get('email') + '.'});
     }, this)});
+  },
+  
+  _setPlaceholders : function() {
+    this.$('input[name=first_name], input[name=last_name], input[name=email]').placeholder();
   },
 
   _loadAvatar : function() {

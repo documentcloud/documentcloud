@@ -486,7 +486,7 @@ class Document < ActiveRecord::Base
     res['page']['text']       = page_text_url_template(:local => options[:local])
     res['related_article']    = related_article if related_article
     doc['sections']           = sections.map(&:canonical) if options[:sections]
-    doc['annotations']        = annotations.accessible(options[:account]).map(&:canonical) if options[:annotations]
+    doc['annotations']        = annotations.accessible(options[:account]).map {|a| a.canonical } if options[:annotations]
     doc['canonical_url']      = canonical_url(:html)
     if options[:contributor]
       doc['contributor']      = account_name
