@@ -23,9 +23,8 @@
     <span class="quiet_link search_group"><%= organization_name %></span> -
     <%= created_at %>
     <% if (publish_at) { %>
-      <% var date = model.publishAtDate(); %>
-      - (Public on 
-      <span class="quiet_link change_publish_at"><%= model.formatDay(date) %> at <%= model.formatTime(date) %></span>)
+      - (Public on
+      <span class="quiet_link change_publish_at"><%= model.formattedPublishAtDate() %></span>)
     <% } %>
   </span>
 </div>

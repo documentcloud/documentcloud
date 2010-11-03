@@ -8,9 +8,9 @@
       </div>
       <label for="publish_prepare_related_article">Related Article URL:</label>
       <p class="publish_info selectable_text interface">
-        Providing the URL of the article or that references this 
+        Providing the URL of the article or that references this
         document will enable a "Related Article" link within the document viewer.
-        Many readers arrive at a document from a web search, and the link helps 
+        Many readers arrive at a document from a web search, and the link helps
         guide them back to the document's original context.
       </p>
     </div>
@@ -21,22 +21,36 @@
       </div>
       <label for="publish_prepare_remote_url">Document URL:</label>
       <p class="publish_info selectable_text interface">
-        When the general public searches DocumentCloud's catalog, we want to 
-        direct them to view the document on your site. To do that reliably, we 
+        When the general public searches DocumentCloud's catalog, we want to
+        direct them to view the document on your site. To do that reliably, we
         need to know your URL for the document.
       </p>
     </div>
 
     <div class="publish_section">
-      <% var checked = doc.isPublic() ? 'checked="checked"' : '' ; %>
-      <input type="checkbox" name="access_level" id="publish_prepare_access_level" <%= checked %> />
-      <label for="publish_prepare_access_level">Make Document Public:</label>
+      <% if (doc.isPublic()) { %>
+        <label>This document is already public.</label>
+      <% } else if (doc.get('publish_at')) { %>
+        <label>This document will be made public on <%= doc.formattedPublishAtDate() %></label>
+      <% } else { %>
+        <% var checked = doc.isPublic() ? 'checked="checked"' : '' ; %>
+        <input type="checkbox" name="access_level" id="publish_prepare_access_level" <%= checked %> />
+        <label for="publish_prepare_access_level">Make Document Public:</label>
+      <% } %>
       <p class="publish_info selectable_text interface">
-        As long as you're logged in to DocumentCloud, you'll be able to view
-        this document embedded on your own site. Before anyone else can view it,
-        however, you'll need to make it public. You may also 
-        <span class="text_link set_publish_at">schedule the document to be
-        made public</span> at a later date.
+        <% if (doc.isPublic()) { %>
+          When you embed this document on your web site, it will be visible
+          to everyone who visits the page. If you're not ready to publish this 
+          document yet, make sure that the page is restricted.
+        <% } else { %>
+          As long as you're logged in to DocumentCloud, you'll be able to view
+          this document embedded on your own site. Before anyone else can view it,
+          however, it must be public.
+          <% if (!doc.get('publish_at')) { %>
+            You may also <span class="text_link set_publish_at">schedule
+            the document to be made public</span> at a later date.
+          <% } %>
+        <% } %>
       </p>
     </div>
 
@@ -52,7 +66,7 @@
       </select>
       <span class="dimensions">
         <label for="publish_option_width">
-          Width: 
+          Width:
           <input id="publish_option_width" type="text" name="width" value="" />px
         </label>
         &nbsp;&nbsp;
@@ -62,27 +76,27 @@
         </label>
       </span>
       <p class="publish_info selectable_text interface">
-        If you're planning to embed your document in a fluid-width template, 
+        If you're planning to embed your document in a fluid-width template,
         <a class="text_link" href="http://www.propublica.org/documents/item/memo-on-goldman-sachs-timberwolf-cdo-nov.-10-2006" target="_blank">like this one</a>,
         choose a "full page" viewer. Choose a "fixed size" viewer if you're going
         to embed the document within an article or blog post.
-      </p> 
-    </div> 
-      
-    <div class="publish_section">    
+      </p>
+    </div>
+
+    <div class="publish_section">
       <input id="publish_option_sidebar" type="checkbox" name="sidebar" checked />
       <label for="publish_option_sidebar">Show the Sidebar:</label>
       <p class="publish_info selectable_text interface">
-        If you're using a fixed size viewer, and space is limited 
+        If you're using a fixed size viewer, and space is limited
         (less than 800 pixels wide), you probably want to uncheck this box
         and hide the sidebar to save space.
       </p>
     </div>
-    
+
     <div class="publish_section">
       <p class="publish_info selectable_text interface">
         Before continuing, please take a moment to
-        <span class="text_link preview">preview the document viewer</span>, 
+        <span class="text_link preview">preview the document viewer</span>,
         and make sure that the layout is correct.
       </p>
     </div>

@@ -48,6 +48,12 @@ dc.model.Document = Backbone.Model.extend({
     return date && DateUtils.parseRfc(date);
   },
 
+  // Standard display of `publish_at`.
+  formattedPublishAtDate : function() {
+    var date = this.publishAtDate();
+    return date && (this.formatDay(date) + ' at ' + this.formatTime(date));
+  },
+
   openViewer : function() {
     if (this.checkBusy()) return;
     window.open(this.viewerUrl());
