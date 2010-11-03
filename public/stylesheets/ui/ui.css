@@ -105,8 +105,8 @@ div.text_input {
   div.text_input .placeholder {
     position: absolute;
     cursor: text;
-    left: 6px;
-    color: #999;
+    left: 6px; top: 5px;
+    color: #777;
   }
   div.text_input input {
     display: block;
@@ -118,11 +118,10 @@ div.text_input {
     line-height: 20px;
     width: 100%;
   }
-    div.text_input.small input {
-      font: 12px/12px Helvetica, Arial;
-    }
-    div.text_input.light input {
-      font: 12px/12px Helvetica, Arial;
+    div.text_input.small input,
+    div.text_input.light input,
+    div.text_input.small .placeholder {
+      font-size: 11px; line-height: 14px;
     }
     div.text_input.dark input {
       font-size: 14px; line-height: 18px; height: 18px;
