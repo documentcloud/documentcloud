@@ -186,15 +186,16 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   _enableMenuItems : function(menu) {
+    var count       = Documents.selectedCount;
     var publicCount = Documents.selectedPublicCount();
     $('.menu_item:not(.plus,.always)', menu.content)
-      .toggleClass('disabled', !Documents.selectedCount)
-      .attr('title', Documents.selectedCount ? '' : 'No documents selected');
+      .toggleClass('disabled', !count)
+      .attr('title', count ? '' : 'No documents selected');
     $('.singular', menu.content)
-      .toggleClass('disabled', !(Documents.selectedCount == 1));
+      .toggleClass('disabled', !(count == 1));
     $('.private_only', menu.content)
-      .toggleClass('disabled', publicCount > 0).
-      attr('title', publicCount > 0 ? "already public" : '');
+      .toggleClass('disabled', !count || publicCount > 0).
+      attr('title', count && publicCount > 0 ? "already public" : '');
   },
 
   _createPublishMenu : function() {
