@@ -65,6 +65,9 @@
 #account_list .text_input {
   width: 150px;
 }
+#account_list .text_link {
+  color: #ccc;
+}
 #account_list .name_wrapper {
   width: 240px;
 }
