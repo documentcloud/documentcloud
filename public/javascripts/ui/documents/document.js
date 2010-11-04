@@ -243,7 +243,10 @@ dc.ui.Document = Backbone.View.extend({
 
   _onDocumentChange : function() {
     if (this.model.hasChanged('selected')) return;
-    if (this.model.hasChanged('annotation_count')) return this.$('span.note_count').text(this.model.get('annotation_count'));
+    var notes = this.model.get('annotation_count');
+    if (this.model.hasChanged('annotation_count') && notes > 0) {
+      return this.$('span.note_count').text(notes);
+    }
     this.render();
   },
 
