@@ -1,8 +1,11 @@
 development:
+  auto_commit_after_request: false
   solr:
     hostname: localhost
     port: 8982
     log_level: INFO
+    min_memory: 20M
+    max_memory: 1G
 
 staging:
   auto_commit_after_request: false
@@ -17,6 +20,8 @@ production:
     hostname: ec2-174-129-5-5.compute-1.amazonaws.com
     port: 7377
     log_level: WARNING
+    min_memory: 200M
+    max_memory: 1G
 
 test:
   solr:
