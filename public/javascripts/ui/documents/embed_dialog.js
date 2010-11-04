@@ -34,7 +34,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
   render : function() {
     if (dc.account.organization.demo) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     dc.ui.Dialog.prototype.render.call(this);
-    this.$('.custom').html(JST['workspace/publish_preview']({doc: this.model}));
+    this.$('.custom').html(JST['workspace/embed_dialog']({doc: this.model}));
     this._next          = this.$('.next');
     this._previous      = this.$('.previous');
     this._widthEl       = this.$('input[name=width]');
