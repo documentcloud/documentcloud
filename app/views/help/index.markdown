@@ -7,7 +7,7 @@ From the workspace, you can:
   * View lists of entities mentioned by documents, and search for specific entities by name.
   * [Annotate documents][] with notes and navigation.
   * Organize projects of documents and notes, and [share them][] with collaborators.
-  * [Publish documents][] by embedding them on your web site.
+  * [Publish documents][] by embedding them on your website.
   * [Walk through a guided tour][] of the workspace.
 
 

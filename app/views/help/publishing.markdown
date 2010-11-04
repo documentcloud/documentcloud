@@ -1,6 +1,6 @@
 # Publishing Documents on your Web Site
 
-To publish a document from DocumentCloud on your web site, you can either download a standalone copy of the viewer, or copy and paste a simple embed code for that document. The instructions that follow assume some basic familiarity with HTML, but we've tried to keep the embedding process as simple as possible.
+To publish a document from DocumentCloud on your website, you can either download a standalone copy of the viewer, or copy and paste a simple embed code for that document. The instructions that follow assume some basic familiarity with HTML, but we've tried to keep the embedding process as simple as possible.
 
 For live examples, we're keeping a list of some of our [favorite embedded documents][].  If you've done some great reporting that isn't there yet, [let us know][] about it.
  
@@ -18,7 +18,7 @@ Before you embed a document on your site, we encourage you to fill in a couple o
 
 Select your document, open the "Publish" menu, and click "Embed Document Viewer", or right-click the document, and select "Embed Document Viewer".
 
-A dialog will appear, asking you to fill in two additional pieces of information: the **Related Article URL**, and the **Document URL**. The **Related Article URL** is the location of the article you've written that uses the document as source material. The **Document URL** is the location of the page on your web site where the document will be embedded. If you know both URLs at this time, please enter them &mdash; if you don't, remember to come back and add them once the document has been published.
+A dialog will appear, asking you to fill in two additional pieces of information: the **Related Article URL**, and the **Document URL**. The **Related Article URL** is the location of the article you've written that uses the document as source material. The **Document URL** is the location of the page on your website where the document will be embedded. If you know both URLs at this time, please enter them &mdash; if you don't, remember to come back and add them once the document has been published.
 
 On step one, you'll also see a checkbox offering to make the document public, if it's not already. It's possible to test the embed code with a private document, but you have to make it public before your readers will be able to see it. For large documents, the process of making the document public may take a couple of minutes.
  
