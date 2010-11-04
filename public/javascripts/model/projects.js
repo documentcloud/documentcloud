@@ -10,7 +10,7 @@ dc.model.Project = Backbone.Model.extend({
 
   set : function(attrs, options) {
     attrs || (attrs = {});
-    if (attrs.title)            attrs.title = Inflector.trim(attrs.title);
+    if (attrs.title)            attrs.title = Inflector.trim(attrs.title).replace(/"/g, '');
     if (attrs.document_ids)     attrs.document_count = attrs.document_ids.length;
     if (attrs.account_id)       attrs.owner = attrs.account_id == dc.account.id;
     if (attrs.collaborator_ids) attrs.collaborator_count = attrs.collaborator_ids.length;
