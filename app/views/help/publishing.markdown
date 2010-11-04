@@ -21,8 +21,8 @@ Select your document, open the "Publish" menu, and click "Embed Document Viewer"
 A dialog will appear, asking you to fill in two additional pieces of information: the **Related Article URL**, and the **Document URL**. The **Related Article URL** is the location of the article you've written that uses the document as source material. The **Document URL** is the location of the page on your website where the document will be embedded. If you know both URLs at this time, please enter them &mdash; if you don't, remember to come back and add them once the document has been published.
 
 On step one, you'll also see a checkbox offering to make the document public, if it's not already. It's possible to test the embed code with a private document, but you have to make it public before your readers will be able to see it. For large documents, the process of making the document public may take a couple of minutes.
- 
-*Note: once you change a document to "public" other users of DocumentCloud will be able to find it in searches of the repository. Don't make sensitive documents public in advance of publication.*
+
+If you're not yet ready to make the document public, you can schedule it to be published at a future date. Click "Set Publication Date" in the "Publish" menu, and choose a date and an hour when you would like the document to be made public. This is useful if you already know when your story is going live, or if your article is running in the middle of the night.
 
 ## Step 2: <span id="template">Configure the Document Viewer</span>
 
