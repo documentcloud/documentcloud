@@ -12,7 +12,8 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     'click .previous'       : 'previousStep',
     'click .close'          : 'close',
     'click .snippet'        : 'selectSnippet',
-    'click .set_publish_at' : 'openPublishAtDialog'
+    'click .set_publish_at' : 'openPublishAtDialog',
+    'click .edit_access'    : 'editAccessLevel'
   },
 
   totalSteps : 3,
@@ -77,6 +78,11 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     }
     if (!this._sidebarEl.is(':checked')) options.sidebar = false;
     return options;
+  },
+
+  editAccessLevel : function() {
+    this.close();
+    Documents.editAccess([this.model]);
   },
 
   openPublishAtDialog : function() {
