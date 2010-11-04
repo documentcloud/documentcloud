@@ -10,8 +10,8 @@
       <p class="publish_info selectable_text interface">
         Providing the URL of the article or that references this
         document will enable a "Related Article" link within the document viewer.
-        Many readers arrive at a document from a web search, and the link helps
-        guide them back to the document's original context.
+        Many readers arrive at a document from a web search--the link guides 
+        them back to the document's original context.
       </p>
     </div>
 
@@ -31,24 +31,27 @@
       <% if (doc.isPublic()) { %>
         <label>This document is already public.</label>
       <% } else if (doc.get('publish_at')) { %>
-        <label>This document will be made public on <%= doc.formattedPublishAtDate() %></label>
+        <label>This document will be public on <%= doc.formattedPublishAtDate() %></label>
       <% } else { %>
         <% var checked = doc.isPublic() ? 'checked="checked"' : '' ; %>
         <input type="checkbox" name="access_level" id="publish_prepare_access_level" <%= checked %> />
-        <label for="publish_prepare_access_level">Make Document Public:</label>
+        <label for="publish_prepare_access_level">Make document public:</label>
       <% } %>
       <p class="publish_info selectable_text interface">
         <% if (doc.isPublic()) { %>
-          When you embed this document on your web site, it will be visible
-          to everyone who visits the page. If you're not ready to publish this 
-          document yet, make sure that the page is restricted.
+          This document is public. It is currently available to users who search 
+          DocumentCloud's catalog and will be visible to the public when you 
+          embed it on your website. Edit access level.
         <% } else { %>
           As long as you're logged in to DocumentCloud, you'll be able to view
           this document embedded on your own site. Before anyone else can view it,
-          however, it must be public.
-          <% if (!doc.get('publish_at')) { %>
-            You may also <span class="text_link set_publish_at">schedule
-            the document to be made public</span> at a later date.
+          however, it must be public. 
+         <% if (doc.get('publish_at')) { %>
+            Edit the <span class="text_link">access level</span> or <span class="text_link
+            set_publish_at">publication date</span>.
+          <% } else if (!doc.get('publish_at')) { %>
+            Edit <span class="text_link">access level</span> or
+            <span class="text_link set_publish_at">set a publication date</span>.
           <% } %>
         <% } %>
       </p>
