@@ -44,6 +44,7 @@ class DocumentImport < CloudCrowd::Action
       asset_store.save_page_images(document, i + 1,
         {'normal'     => "images/700x/#{image}",
          'large'      => "images/1000x/#{image}",
+         'small'      => "images/180x/#{image}",
          'thumbnail'  => "images/60x75!/#{image}"},
         access
       )
