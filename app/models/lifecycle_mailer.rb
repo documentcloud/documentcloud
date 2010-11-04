@@ -17,7 +17,7 @@ class LifecycleMailer < ActionMailer::Base
 
   # Mail instructions for resetting an active account's password.
   def reset_request(account)
-    subject     "DocumentCloud Password Reset"
+    subject     "DocumentCloud password reset"
     from        SUPPORT
     recipients  [account.email]
     body        :account            => account,
@@ -27,7 +27,7 @@ class LifecycleMailer < ActionMailer::Base
   # When someone sends a message through the "Contact Us" form, deliver it to
   # us via email.
   def contact_us(account, message)
-    subject     "DocumentCloud Message from #{account.full_name}"
+    subject     "DocumentCloud message from #{account.full_name}"
     from        NO_REPLY
     recipients  SUPPORT
     body        :account => account, :message => message
@@ -36,7 +36,7 @@ class LifecycleMailer < ActionMailer::Base
 
   # Mail a notification of an exception that occurred in production.
   def exception_notification(error, params=nil)
-    subject     "DocumentCloud Exception (#{Rails.env}): #{error.class.name}"
+    subject     "DocumentCloud exception (#{Rails.env}): #{error.class.name}"
     from        NO_REPLY
     recipients  ["jashkenas@gmail.com", "samuel@documentcloud.org"]
     body        :params => params, :error => error
@@ -45,7 +45,7 @@ class LifecycleMailer < ActionMailer::Base
   # When a batch of uploaded documents has finished processing, email
   # the account to let them know.
   def documents_finished_processing(account, document_count)
-    subject     "Your Documents are Ready"
+    subject     "Your documents are ready"
     from        SUPPORT
     recipients  [account.email]
     body        :account  => account,
