@@ -11,6 +11,7 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function(docs) {
+    if (!Documents.allowedToEdit(docs)) return;
     this.docs = docs;
     this.multiple = docs.length > 1;
     var title = "Set Publication Date for " + this._title();
