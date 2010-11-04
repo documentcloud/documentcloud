@@ -1,7 +1,8 @@
 class SmallThumbnails < ActiveRecord::Migration
   def self.up
+    # total_documents = Document.find(:all, :conditions => ["created_at > ?", 4.days.ago]).count
     total_documents = Document.all.count
-    Document.find(:all, :order => 'id').each_with_index do |doc, i|
+    Document.all.each_with_index do |doc, i|
       begin
         puts " --> #{i+1}/#{total_documents} Starting: [#{doc.page_count} pages] #{doc.title} (#{doc.id})"
         asset_store = DC::Store::AssetStore.new
@@ -20,7 +21,7 @@ class SmallThumbnails < ActiveRecord::Migration
 
         puts " --> Saving #{doc.page_count} images..."
         pages.each_pair do |i, page|
-          asset_store.send(:save_file, doc.page_image_path(i+1, 'small'), page, doc.access)
+          asset_store.send(:save_file, page, doc.page_image_path(i+1, 'small'), doc.access)
         end
       rescue Exception => e
         puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
