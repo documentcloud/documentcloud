@@ -14,10 +14,9 @@ class ProjectsController < ApplicationController
   # have access to.
   def update
     data = pick(params, :title, :description, :document_ids)
-    current_project.title = data[:title] if data[:title]
-    current_project.description = data[:description] if data[:description]
-    current_project.set_documents(data[:document_ids])
-    json current_project.save.reload
+    current_project.set_documents(data.delete(:document_ids))
+    current_project.update_attributes data
+    json current_project.reload
   end
 
   def destroy
