@@ -18,11 +18,10 @@ namespace :deploy do
     bucket = s3.bucket('s3.documentcloud.org')
     Dir['public/viewer/**/*'].each do |file|
       next if File.directory? file
-      mimetype = MIME::Types.type_for(File.extname(file)).to_s
+      mimetype = MIME::Types.type_for(File.extname(file)).first
+      headers = mimetype ? {'Content-type' => mimetype.content_type} : {}
       puts "uploading #{file} (#{mimetype})"
-      bucket.put("viewer/#{file.gsub('public/viewer/', '')}", File.open(file), {}, 'public-read', {
-        'Content-type' => mimetype
-      })
+      bucket.put("viewer/#{file.gsub('public/viewer/', '')}", File.open(file), {}, 'public-read', headers)
     end
     DC_CONFIG['server_root'] = 's3.documentcloud.org'
     contents = ERB.new(File.read('app/views/documents/loader.js.erb')).result(binding)
