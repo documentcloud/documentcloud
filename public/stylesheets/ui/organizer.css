@@ -109,11 +109,10 @@
       white-space: nowrap;
     }
   #organizer .box .description {
-    font-size: 10px;
+    font-size: 11px;
     line-height: 14px;
-    font-weight: bold;
-    color: #808080;
-    margin: 4px 0;
+    margin: 5px 0;
+    color: #555;
   }
   #organizer .box .counts,
   #organizer .top_level_search .text_link {
@@ -240,7 +239,7 @@
   }
   #project_dialog textarea {
     margin: 10px 0 0 0;
-    width: 100%;
+    width: 410px;
     height: 64px;
   }
 
