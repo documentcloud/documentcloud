@@ -62,7 +62,7 @@
 #organizer .box,
 #organizer .top_level_search {
   position: relative;
-  padding: 15px 15px 15px 30px;
+  padding: 15px 20px 15px 30px;
   cursor: pointer;
   border-bottom: 1px solid #e0e0e0;
   border-top: 1px solid #fff;
