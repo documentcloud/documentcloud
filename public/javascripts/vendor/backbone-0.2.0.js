@@ -28,12 +28,16 @@
   // For Backbone's purposes, jQuery owns the `$` variable.
   var $ = this.jQuery;
 
-  // Turn on `emulateHttp` to use support legacy HTTP servers. Setting this option will
+  // Turn on `emulateHTTP` to use support legacy HTTP servers. Setting this option will
   // fake `"PUT"` and `"DELETE"` requests via the `_method` parameter and set a
-  // `X-Http-Method-Override` header, will encode the body as
-  // `application/x-www-form-urlencoded` instead of `application/json` and will
-  // send the model in a param named `model`.
-  Backbone.emulateHttp = false;
+  // `X-Http-Method-Override` header.
+  Backbone.emulateHTTP = false;
+
+  // Turn on `emulateJSON` to support legacy servers that can't deal with direct
+  // `application/json` requests ... will encode the body as
+  // `application/x-www-form-urlencoded` instead and will send the model in a
+  // form param named `model`.
+  Backbone.emulateJSON = false;
 
   // Backbone.Events
   // -----------------
@@ -148,7 +152,7 @@
       var now = this.attributes;
 
       // Run validation.
-      if (this.validate && !this._performValidation(attrs, options)) return false;
+      if (!options.silent && this.validate && !this._performValidation(attrs, options)) return false;
 
       // Check for changes of `id`.
       if ('id' in attrs) this.id = attrs.id;
@@ -179,7 +183,7 @@
       // Run validation.
       var validObj = {};
       validObj[attr] = void 0;
-      if (this.validate && !this._performValidation(validObj, options)) return false;
+      if (!options.silent && this.validate && !this._performValidation(validObj, options)) return false;
 
       // Remove the attribute.
       delete this.attributes[attr];
@@ -200,7 +204,7 @@
       // Run validation.
       var validObj = {};
       for (attr in old) validObj[attr] = void 0;
-      if (this.validate && !this._performValidation(validObj, options)) return false;
+      if (!options.silent && this.validate && !this._performValidation(validObj, options)) return false;
 
       this.attributes = {};
       if (!options.silent) {
@@ -565,7 +569,8 @@
   // Backbone.Controller
   // -------------------
 
-  // Creating a Backbone.Controller sets its `urls` hash, if not set statically.
+  // Controllers map faux-URLs to actions, and fire events when routes are
+  // matched. Creating a new one sets its `routes` hash, if not set statically.
   Backbone.Controller = function(options) {
     options || (options = {});
     if (options.routes) this.routes = options.routes;
@@ -573,12 +578,15 @@
     if (this.initialize) this.initialize(options);
   };
 
+  // Cached regular expressions for matching named param parts and splatted
+  // parts of route strings.
   var namedParam = /:([\w\d]+)/g;
-  var paramMatch = "([^\/]+)";
+  var splatParam = /\*([\w\d]+)/g;
 
   // Set up all inheritable **Backbone.Controller** properties and methods.
   _.extend(Backbone.Controller.prototype, Backbone.Events, {
 
+    // Bind all defined routes to `Backbone.history`.
     bindRoutes : function() {
       if (!this.routes) return;
       for (var route in this.routes) {
@@ -587,26 +595,37 @@
       }
     },
 
+    // Manually bind a single named route to a callback. For example:
+    //
+    //     this.route('search/:query/p:page', 'search', function(query, page) {
+    //       ...
+    //     });
+    //
     route : function(route, name, callback) {
       Backbone.history || (Backbone.history = new Backbone.History);
       if (!_.isRegExp(route)) route = this._routeToRegExp(route);
       Backbone.history.route(route, _.bind(function(fragment) {
-        var args = this._extractArguments(route, fragment);
+        var args = this._extractParameters(route, fragment);
         callback.apply(this, args);
-        var cargs = ['route:' + (name || callback)].concat(args);
-        this.trigger.apply(this, args);
+        this.trigger.apply(this, ['route:' + name].concat(args));
       }, this));
     },
 
+    // Simply proxy to `Backbone.history` to save a fragment into the history.
     save : function(fragment) {
       Backbone.history.save(fragment);
     },
 
+    // Convert a route string into a regular expression, suitable for matching
+    // against `window.location.hash`.
     _routeToRegExp : function(route) {
-      return new RegExp('^#' + route.replace(namedParam, paramMatch) + '$');
+      route = route.replace(namedParam, "([^\/]*)").replace(splatParam, "(.*?)");
+      return new RegExp('^#' + route + '$');
     },
 
-    _extractArguments : function(route, fragment) {
+    // Given a route, and a URL fragment that it matches, return the array of
+    // extracted parameters.
+    _extractParameters : function(route, fragment) {
       return route.exec(fragment).slice(1);
     }
 
@@ -615,22 +634,28 @@
   // Backbone.History
   // ----------------
 
-  // Base class for Backbone History handling.
-  Backbone.History = function(options) {
-    options || (options = {});
-    this.interval = options.interval || 100;
+  // Handles cross-browser history management, based on URL hashes. If the
+  // browser does not support `onhashchange`, falls back to polling.
+  Backbone.History = function() {
     this.handlers = [];
     this.fragment = window.location.hash;
     _.bindAll(this, 'checkUrl');
   };
 
+  // Set up all inheritable **Backbone.History** properties and methods.
   _.extend(Backbone.History.prototype, {
 
+    // The default interval to poll for hash changes in IE is twenty times a second.
+    interval: 50,
+
+    // Start the hash change handling, returning true if the current URL matches
+    // an existing route, and false otherwise.
     start : function() {
       if ($.browser.msie && $.browser.version < 8) {
-        this.iframe = $('<iframe src="javascript:0"/>').hide().appendTo('body')[0].contentWindow;
+        this.iframe = $('<iframe src="javascript:0" tabindex="-1" />').hide().appendTo('body')[0].contentWindow;
       }
-      if ('onhashchange' in window) {
+      var docMode = document.documentMode;
+      if ('onhashchange' in window && (!docMode || docMode > 7)) {
         $(window).bind('hashchange', this.checkUrl);
       } else {
         setInterval(this.checkUrl, this.interval);
@@ -638,10 +663,14 @@
       return this.loadUrl();
     },
 
+    // Add a route to be tested when the hash changes. Routes are matched in the
+    // order they are added.
     route : function(route, callback) {
       this.handlers.push({route : route, callback : callback});
     },
 
+    // Checks the current URL to see if it has changed, and if it has,
+    // calls `loadUrl`.
     checkUrl : function() {
       var current = window.location.hash;
       if (current == this.fragment && this.iframe) {
@@ -657,6 +686,8 @@
       this.loadUrl();
     },
 
+    // Attempt to load the current URL fragment. If no defined route matches
+    // the fragment, returns `false`.
     loadUrl : function() {
       var fragment = this.fragment = window.location.hash;
       var matched = _.any(this.handlers, function(handler) {
@@ -668,6 +699,9 @@
       return matched;
     },
 
+    // Save a fragment into the hash history. You are responsible for properly
+    // URL-encoding the fragment in advance. This does not trigger
+    // a `hashchange` event.
     save : function(fragment) {
       fragment || (fragment = '');
       if (!(fragment.charAt(0) == '#')) fragment = '#' + fragment;
@@ -818,7 +852,7 @@
   // * Send up the models as XML instead of JSON.
   // * Persist models via WebSockets instead of Ajax.
   //
-  // Turn on `Backbone.emulateHttp` in order to send `PUT` and `DELETE` requests
+  // Turn on `Backbone.emulateHTTP` in order to send `PUT` and `DELETE` requests
   // as `POST`, with a `_method` parameter containing the true HTTP method,
   // as well as all requests with the body as `application/x-www-form-urlencoded` instead of
   // `application/json` with the model in a param named `model`.
@@ -841,14 +875,18 @@
       error:        error
     };
 
-    // For older servers, emulate JSON/HTTP by encoding the request into
-    // HTML-form-style, and mimicking the HTTP method with `_method`
-    if (Backbone.emulateHttp) {
+    // For older servers, emulate JSON by encoding the request into an HTML-form.
+    if (Backbone.emulateJSON) {
+      params.contentType = 'application/x-www-form-urlencoded';
       params.processData = true;
-      params.contentType = "application/x-www-form-urlencoded";
       params.data        = sendModel ? {model : modelJSON} : {};
+    }
+
+    // For older servers, emulate HTTP by mimicking the HTTP method with `_method`
+    // And an `X-HTTP-Method-Override` header.
+    if (Backbone.emulateHTTP) {
       if (type === 'PUT' || type === 'DELETE') {
-        params.data._method = type;
+        if (Backbone.emulateJSON) params.data._method = type;
         params.type = 'POST';
         params.beforeSend = function(xhr) {
           xhr.setRequestHeader("X-HTTP-Method-Override", type);
