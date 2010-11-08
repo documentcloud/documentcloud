@@ -13,8 +13,8 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   flags         : {},
 
   routes        : {
-    'search/:query':        'searchByHash',
-    'search/:query/:page':  'searchByHash'
+    'search/:query':         'searchByHash',
+    'search/:query/p:page':  'searchByHash'
   },
 
   // Creating a new SearchBox registers #search page fragments.
@@ -99,7 +99,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
   // When searching by the URL's hash value, we need to unescape first.
   searchByHash : function(query, page) {
-    this.search(decodeURIComponent(query), page);
+    this.search(decodeURIComponent(query), page && parseInt(page, 10));
   },
 
   // Add a query fragment to the search and search again, if it's not already
