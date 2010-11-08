@@ -25,7 +25,6 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Creating a new SearchBox registers #search page fragments.
   constructor : function(options) {
     Backbone.View.call(this, options);
-    this.searcher = dc.app.searcher;
     _.bindAll(this, 'hideSearch');
   },
 
@@ -67,13 +66,13 @@ dc.ui.SearchBox = Backbone.View.extend({
   // return.
   maybeSearch : function(e) {
     var query = this.value();
-    if (!this.searcher.flags.outstandingSearch && e.keyCode == 13) this.searcher.search(query);
+    if (!dc.app.searcher.flags.outstandingSearch && e.keyCode == 13) dc.app.searcher.search(query);
   },
 
   // Webkit knows how to fire a real "search" event.
   searchEvent : function(e) {
     var query = this.value();
-    if (!this.searcher.flags.outstandingSearch && query) this.searcher.search(query);
+    if (!dc.app.searcher.flags.outstandingSearch && query) dc.app.searcher.search(query);
   },
 
   entitle : function(query) {
@@ -103,7 +102,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     var documents = Inflector.pluralize('Document', count);
     var query     = this.value();
     if (dc.app.searcher.flags.related) {
-      this.titleBox.text(count + ' ' + documents + ' Related to "' + Inflector.truncate(this.searcher.relatedDoc.get('title'), 100) + '"');
+      this.titleBox.text(count + ' ' + documents + ' Related to "' + Inflector.truncate(dc.app.searcher.relatedDoc.get('title'), 100) + '"');
     } else if (dc.app.searcher.flags.specific) {
       this.titleBox.text(count + ' ' + documents);
     } else if (dc.app.SearchParser.searchType(query) == 'search') {

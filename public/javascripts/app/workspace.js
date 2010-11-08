@@ -1,17 +1,24 @@
 // Main controller for the journalist workspace. Orchestrates subviews.
-dc.app.workspace = new Backbone.View();
-_.extend(dc.app.workspace, {
+dc.controllers.Workspace = Backbone.Controller.extend({
+
+  routes : {
+    'help/:page': 'help',
+    'help':       'help'
+  },
 
   // Initializes the workspace, binding it to <body>.
   initialize : function() {
     this.el = $('body')[0];
     this.createSubViews();
     this.renderSubViews();
-    dc.history.initialize();
-    dc.app.searcher.initialize();
-    if (!dc.history.loadURL()) {
+    dc.app.searcher = new dc.controllers.Searcher();
+    if (!Backbone.history.start()) {
       dc.app.searcher.loadDefault({showHelp: true});
     }
+  },
+
+  help : function(page) {
+    this.help.openPage(page);
   },
 
   // Create all of the requisite subviews.

@@ -1,5 +1,9 @@
 <%
   @show_search    = true
   @bodyclass      = 'workspace'
-  @additional_js  = '$(document).ready(function() { dc.app.workspace.initialize(); });'
+  @additional_js  = <<-EOS
+    $(document).ready(function() {
+      dc.app.workspace = new dc.controllers.Workspace();
+    });
+    EOS
 %>

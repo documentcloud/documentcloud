@@ -1,7 +1,6 @@
 // The `dc.app.searcher` is the core controller for running document searches
 // from the client side. It's main "view" is the dc.ui.SearchBox.
-dc.app.searcher = new Backbone.Model();
-_.extend(dc.app.searcher, {
+dc.controllers.Searcher = Backbone.Controller.extend({
 
   PAGE_MATCHER  : (/\/p(\d+)$/),
 
@@ -13,14 +12,18 @@ _.extend(dc.app.searcher, {
 
   flags         : {},
 
+  routes        : {
+    'search/:query':        'searchByHash',
+    'search/:query/:page':  'searchByHash'
+  },
+
   // Creating a new SearchBox registers #search page fragments.
   initialize : function() {
     this.box = dc.app.searchBox;
     this.flags.hasEntities = false;
     this.flags.outstandingSearch = false;
     _.bindAll(this, '_loadSearchResults', '_loadFacetsResults', '_loadFacetResults',
-      'searchByHash', 'loadDefault', 'loadFacets');
-    dc.history.register(/^#search\//, this.searchByHash);
+      'loadDefault', 'loadFacets');
     dc.app.navigation.bind('tab:search', this.loadDefault);
   },
 
@@ -36,7 +39,7 @@ _.extend(dc.app.searcher, {
       this.box.value('');
     }
     if (!Documents.isEmpty()) {
-      dc.history.save(this.urlFragment());
+      this.save(this.urlFragment());
       this.box.showDocuments();
     } else if (this.box.value()) {
       this.search(this.box.value());
@@ -62,7 +65,7 @@ _.extend(dc.app.searcher, {
     this.fragment = 'search/' + encodeURIComponent(query);
     this.populateRelatedDocument();
     this.box.showDocuments();
-    dc.history.save(this.urlFragment());
+    this.save(this.urlFragment());
     Documents.refresh();
     this.flags.outstandingSearch = true;
     this._afterSearch = callback;
@@ -95,14 +98,8 @@ _.extend(dc.app.searcher, {
   },
 
   // When searching by the URL's hash value, we need to unescape first.
-  searchByHash : function(hash, callback) {
-    var page = null, connection = null;
-    var pageMatch = hash.match(this.PAGE_MATCHER);
-    if (pageMatch) {
-      var page = pageMatch[1];
-      hash = hash.replace(this.PAGE_MATCHER, '');
-    }
-    this.search(decodeURIComponent(hash), page, callback);
+  searchByHash : function(query, page) {
+    this.search(decodeURIComponent(query), page);
   },
 
   // Add a query fragment to the search and search again, if it's not already
