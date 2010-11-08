@@ -9,9 +9,6 @@ _.extend(dc.app.workspace, {
     this.renderSubViews();
     dc.history.initialize();
     dc.app.searcher.initialize();
-    if (window.RAILS_ENV == 'production') {
-      dc.analytics.initialize();
-    }
     if (!dc.history.loadURL()) {
       dc.app.searcher.loadDefault({showHelp: true});
     }
