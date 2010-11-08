@@ -13,7 +13,9 @@ _.extend(dc.app.workspace, {
       dc.analytics.initialize();
       dc.analytics.register();
     }
-    dc.history.loadURL(_.bind(dc.app.searcher.loadDefault, null, {showHelp: true}));
+    if (!dc.history.loadURL()) {
+      dc.app.searcher.loadDefault({showHelp: true});
+    }
   },
 
   // Create all of the requisite subviews.
