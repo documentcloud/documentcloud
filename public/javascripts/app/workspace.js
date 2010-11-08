@@ -11,7 +11,6 @@ _.extend(dc.app.workspace, {
     dc.app.searcher.initialize();
     if (window.RAILS_ENV == 'production') {
       dc.analytics.initialize();
-      dc.analytics.register();
     }
     if (!dc.history.loadURL()) {
       dc.app.searcher.loadDefault({showHelp: true});
