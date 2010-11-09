@@ -6,6 +6,7 @@ class Account < ActiveRecord::Base
 
   ADMINISTRATOR = 1
   CONTRIBUTOR   = 2
+  REVIEWER      = 3
 
   # Associations:
   belongs_to  :organization

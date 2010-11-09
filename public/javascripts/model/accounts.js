@@ -6,7 +6,9 @@ dc.model.Account = Backbone.Model.extend({
 
   CONTRIBUTOR     : 2,
 
-  ROLE_NAMES      : ['', 'administrator', 'contributor'],
+  REVIEWER        : 3,
+
+  ROLE_NAMES      : ['', 'administrator', 'contributor', 'reviewer'],
 
   GRAVATAR_BASE   : location.protocol + (location.protocol == 'https:' ? '//secure.' : '//www.') + 'gravatar.com/avatar/',
 
@@ -15,6 +17,7 @@ dc.model.Account = Backbone.Model.extend({
   BLANK_ACCOUNT   : {first_name : '', last_name : '', email : '', role : 2},
 
   constructor : function(attributes) {
+    if (attributes) attributes = _.extend(this.BLANK_ACCOUNT, attributes);
     Backbone.Model.call(this, attributes || this.BLANK_ACCOUNT);
   },
 

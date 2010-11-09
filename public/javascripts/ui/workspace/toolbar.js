@@ -15,7 +15,7 @@ dc.ui.Toolbar = Backbone.View.extend({
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'openEmbedDialog', 'openPublicationDateDialog',
       'requestDownloadViewers', 'checkFloat', '_openTimeline', '_viewEntities',
-      'editDocumentURL');
+      'editDocumentURL', 'openShareDialog');
     this.analyzeMenu = this._createAnalyzeMenu();
     this.publishMenu = this._createPublishMenu();
     if (dc.account) {
@@ -126,6 +126,13 @@ dc.ui.Toolbar = Backbone.View.extend({
     (new dc.ui.EmbedDialog(doc)).render();
   },
 
+  openShareDialog : function() {
+    var docs = Documents.chosen();
+    if (!docs.length || !Documents.allowedToEdit(docs)) return;
+    
+    (new dc.ui.ShareDialog({'docs': docs})).render();
+  },
+  
   openPublicationDateDialog : function() {
     var docs = Documents.chosen();
     if (!docs.length || !Documents.allowedToEdit(docs)) return;
@@ -200,13 +207,14 @@ dc.ui.Toolbar = Backbone.View.extend({
 
   _createPublishMenu : function() {
     var accountItems = [
-      {title : 'Embed Document Viewer',    onClick : this.openEmbedDialog,            attrs: {'class': 'singular'}},
-      {title : 'Set Publication Date',     onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
-      {title : 'Download Document Viewer', onClick : this.requestDownloadViewers}
+      {title : 'Embed Document Viewer',          onClick : this.openEmbedDialog,            attrs: {'class': 'singular'}},
+      {title : 'Share Documents with Reviewers', onClick : this.openShareDialog },
+      {title : 'Set Publication Date',           onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
+      {title : 'Download Document Viewer',       onClick : this.requestDownloadViewers}
     ];
     var publicItems = [
-      {title : 'Download Original PDF',    onClick : Documents.downloadSelectedPDF},
-      {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText}
+      {title : 'Download Original PDF',          onClick : Documents.downloadSelectedPDF},
+      {title : 'Download Full Text',             onClick : Documents.downloadSelectedFullText}
     ];
     var items = dc.account ? accountItems.concat(publicItems) : publicItems;
     return new dc.ui.Menu({

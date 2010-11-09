@@ -5,14 +5,16 @@ dc.ui.AccountView = Backbone.View.extend({
     badge         : 30,
     row           : 25,
     admin         : 25,
-    collaborator  : 25
+    collaborator  : 25,
+    reviewer      : 25
   },
 
   TAGS : {
     badge         : 'div',
     row           : 'tr',
     admin         : 'tr',
-    collaborator  : 'tr'
+    collaborator  : 'tr',
+    reviewer      : 'tr'
   },
 
   events : {
@@ -47,9 +49,16 @@ dc.ui.AccountView = Backbone.View.extend({
     if (this.modes.view == 'edit') return;
     viewMode = viewMode || 'display';
     options  = options || {};
-    var attrs = _.extend({account : this.model, email : this.model.get('email'), size : this.size(), current : Accounts.current()}, options);
+    var attrs = _.extend({
+      account : this.model, 
+      email : this.model.get('email'), 
+      size : this.size(), 
+      current : Accounts.current()
+    }, options);
     if (this.isRow()) this.setMode(viewMode, 'view');
     $(this.el).html(this.template(attrs));
+    console.log(['role render', this.model.get('role'), this.model, viewMode]);
+    if (viewMode == 'edit') this.$('option.role_' + this.model.get('role')).attr({selected : 'selected'});
     if (this.model.isPending()) $(this.el).addClass('pending');
     this._loadAvatar();
     this._setPlaceholders();

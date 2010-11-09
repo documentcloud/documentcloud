@@ -42,8 +42,8 @@ body.workspace {
     #section_editor li {
       width: 450px;
     }
-#account_list .row.pending .pending_badge,
-#account_list .admin.pending .pending_badge {
+.account_list .row.pending .pending_badge,
+.account_list .admin.pending .pending_badge {
   display: none;
 }
 #organizer .box {
@@ -53,7 +53,7 @@ body.workspace {
     width: 16px;
     margin: 0;
   }
-#account_list img.avatar,
+.account_list img.avatar,
 .collaborator_list img.avatar {
   position: static;
 }

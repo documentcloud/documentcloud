@@ -16,26 +16,26 @@
   }
 
 /*--------------------------- Accounts Dialog --------------------------------*/
-#account_list {
+.account_list {
   max-width: none;
   width: 800px;
 }
-  #account_list .custom {
+  .account_list .custom {
     position: relative;
     max-height: 323px;
     overflow-y: auto; overflow-x: hidden;
     padding: 0;
     margin-bottom: 15px;
   }
-  #account_list .minibutton.cancel {
+  .account_list .minibutton.cancel {
     display: none;
   }
-  #account_list table,
+  .account_list table,
   .collaborator_list {
     width: 100%;
     border-top: 1px solid #222;
   }
-    #account_list td,
+    .account_list td,
     .collaborator_list td {
       padding: 10px;
       vertical-align: middle;
@@ -44,86 +44,86 @@
       font-size: 11px; line-height: 25px;
       color: #ccc;
     }
-      #account_list .first, .collaborator_list .first { width: 0%; padding: 0; }
-      #account_list .name                             { width: 0%; }
-      #account_list .email                            { width: 0%; }
-      #account_list .last, .collaborator_list .last   { padding-right: 0; }
-      #account_list .last                             { width: 100%; }
+      .account_list .first, .collaborator_list .first { width: 0%; padding: 0; }
+      .account_list .name                             { width: 0%; }
+      .account_list .email                            { width: 0%; }
+      .account_list .last, .collaborator_list .last   { padding-right: 0; }
+      .account_list .last                             { width: 100%; }
 
-#account_list tr .edit, #account_list tr .display {
+.account_list tr .edit, .account_list tr .display {
   display: none;
 }
-#account_list tr.edit_view .edit, #account_list tr.display_view .display {
+.account_list tr.edit_view .edit, .account_list tr.display_view .display {
   display: block;
 }
-#account_list img.avatar,
+.account_list img.avatar,
 .collaborator_list img.avatar {
   position: relative;
   top: 4px;
   border: 1px solid #555;
 }
-#account_list .text_input {
+.account_list .text_input {
   width: 150px;
 }
-#account_list .text_link {
+.account_list .text_link {
   color: #ccc;
 }
-#account_list .name_wrapper {
+.account_list .name_wrapper {
   width: 240px;
 }
-  #account_list .name .display {
+  .account_list .name .display {
   }
-  #account_list .name_wrapper .text_input {
+  .account_list .name_wrapper .text_input {
     float: left;
     width: 100px;
   }
-    #account_list .name_wrapper .text_input:first-child {
+    .account_list .name_wrapper .text_input:first-child {
       margin-right: 20px;
     }
-#account_list .role .display {
+.account_list .role .display {
   font: italic 10px/18px Arial;
   color: #555;
 }
-#account_list .controls_wrapper {
+.account_list .controls_wrapper {
   min-width: 100px;
 }
-#account_list .change_password,
-#account_list .edit_account {
+.account_list .change_password,
+.account_list .edit_account {
   float: left;
   margin: 0 15px 0 0;
   cursor: pointer;
 }
-#account_list .save_changes {
+.account_list .save_changes {
   float: left;
   position: relative;
   left: -6px;
   margin: 0 5px;
 }
-#account_list .delete_account {
+.account_list .delete_account {
   float: left;
 }
-#account_list .pending_wrap {
+.account_list .pending_wrap {
   position: relative;
 }
-  #account_list .pending_badge {
+  .account_list .pending_badge {
     display: none;
     position: absolute;
     margin: 19px 0 0 17px;
     z-index: 5;
   }
-    #account_list .row.pending .pending_badge,
-    #account_list .admin.pending .pending_badge {
+    .account_list .row.pending .pending_badge,
+    .account_list .admin.pending .pending_badge {
       display: block;
     }
-#account_list tr.row .pending_notification,
-#account_list tr.admin .pending_notification {
+.account_list tr.row .pending_notification,
+.account_list tr.admin .pending_notification {
   font: 10px Arial;
   text-transform: uppercase;
   padding-left: 7px;
   color: #999;
   display: none;
 }
-  #account_list .row.pending .pending_notification,
-  #account_list tr.admin.pending .pending_notification {
+  .account_list .row.pending .pending_notification,
+  .account_list tr.admin.pending .pending_notification {
     display: inline;
   }
