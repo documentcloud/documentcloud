@@ -2,8 +2,8 @@
 
 dc.model.Project = Backbone.Model.extend({
 
-  constructor : function(options) {
-    Backbone.Model.call(this, options);
+  constructor : function(attrs, options) {
+    Backbone.Model.call(this, attrs, options);
     this.collaborators = new dc.model.AccountSet();
     this._setCollaboratorsResource();
   },
