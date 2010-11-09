@@ -121,14 +121,16 @@ class Document < ActiveRecord::Base
 
   # Upload a new document, starting the import process.
   def self.upload(params, account, organization)
-    access = params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE
+    name     = params[:file].original_filename
+    title    = params[:title] || File.basename(name, File.extname(name)).titleize
+    access   = params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE
     email_me = params[:email_me] ? params[:email_me].to_i : false
     doc = self.create!(
       :organization_id  => organization.id,
       :account_id       => account.id,
       :access           => DC::Access::PENDING,
       :page_count       => 0,
-      :title            => params[:title],
+      :title            => title,
       :description      => params[:description],
       :source           => params[:source],
       :related_article  => params[:related_article]

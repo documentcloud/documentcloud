@@ -14,8 +14,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       saveText    : 'Upload',
       closeText   : 'Cancel'
     });
-    var uploadify = this.setupUploadify;
-    dc.app.navigation.bind('tab:documents', function(){ _.defer(uploadify); });
+    var setupUploadify = this.setupUploadify;
+    dc.app.navigation.bind('tab:documents', function(){ _.defer(setupUploadify); });
     this.collection.bind('add',   this.countDocuments);
     this.collection.bind('remove', this.countDocuments);
   },
@@ -50,9 +50,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Be careful to only set up Uploadify once, when the "Documents" tab is open.
   setupUploadify : function() {
-    if (this._uploadify || !dc.app.navigation.isOpen('documents')) return;
-    this._uploadify = $('#new_document');
-    this._uploadify.uploadify({
+    if (this.button || !dc.app.navigation.isOpen('documents')) return;
+    this.button = $('#new_document');
+    this.button.uploadify({
       uploader      : '/flash/uploadify.swf',
       script        : '/import/upload_document',
       auto          : false,
@@ -60,8 +60,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       wmode         : 'transparent',
       fileDataName  : 'file',
       hideButton    : true,
-      width         : this._uploadify.outerWidth(true),
-      height        : this._uploadify.outerHeight(true),
+      width         : this.button.outerWidth(true),
+      height        : this.button.outerHeight(true),
       scriptData    : {},
       onSelect      : this._onSelect,
       onSelectOnce  : this._onSelectOnce,
@@ -71,6 +71,15 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       onProgress    : this._onProgress,
       onComplete    : this._onComplete,
       onAllComplete : this._onAllComplete
+    });
+    if (!$('object#new_documentUploader').length) this.setupFileInput();
+  },
+
+  // If flash is disabled, we fall back to a regular invisible file input field.
+  setupFileInput : function() {
+    var input = $('#new_document_input');
+    input.show().change(function(){
+      $('#new_document_form').submit();
     });
   },
 
@@ -100,7 +109,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       this.error('You must upload at least one document.');
       return false;
     }
-    this._uploadify.uploadifyCancel(id);
+    this.button.uploadifyCancel(id);
     return true;
   },
 
@@ -113,9 +122,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     var attrs = this._tiles[queueId].serialize();
     this.collection.get(queueId).set(attrs);
     attrs.session_key = dc.app.cookies.get('document_cloud_session');
+    attrs.flash = true;
     if (this._project) attrs.project_id = this._project.id;
     attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
-    this._uploadify.uploadifySettings('scriptData', attrs, true);
+    this.button.uploadifySettings('scriptData', attrs, true);
     this.showSpinner();
     this._list[0].scrollTop = 0;
   },
@@ -169,11 +179,11 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       return this.error('Please enter a title for ' + (num == 1 ? 'the document.' : 'all documents.'));
     }
     this.$('.ok').setMode('not', 'enabled');
-    this._uploadify.uploadifyUpload();
+    this.button.uploadifyUpload();
   },
 
   cancel : function() {
-    this._uploadify.uploadifyClearQueue();
+    this.button.uploadifyClearQueue();
     this.close();
   },
 

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload</title>
+</head>
+<body>
+  <script>
+    try {
+      window.top.Documents.add(new window.top.dc.model.Document(<%= @document.to_json %>));
+      <% if @project_id %>
+        window.top.Projects.incrementCountById(<%= @project_id %>);
+      <% end %>
+    } catch (e) {
+      // nothing...
+    }
+  </script>
+</body>
+</html>

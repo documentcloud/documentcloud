@@ -9,10 +9,14 @@ class ImportController < ApplicationController
   # Internal document upload, called from the workspace.
   def upload_document
     return json :bad_request => true unless params[:file]
-    document = Document.upload(params, current_account, current_organization)
-    project_id = params[:project_id]
-    Project.accessible(current_account).find(project_id).add_document(document) if project_id
-    json document
+    @document = Document.upload(params, current_account, current_organization)
+    @project_id = params[:project_id]
+    Project.accessible(current_account).find(@project_id).add_document(@document) if @project_id
+    if params[:flash]
+      json @document
+    else
+      # Render the HTML/script...
+    end
   end
 
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.

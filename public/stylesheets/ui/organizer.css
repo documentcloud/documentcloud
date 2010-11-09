@@ -32,7 +32,20 @@
   margin-right: 2px;
   position: relative;
 }
-  #organizer #project_controls #new_documentUploader {
+  #new_document_form {
+    height: 0;
+    overflow: visible;
+  }
+    #new_document_input {
+      position: absolute;
+      cursor: pointer;
+      top: 20px; left: 30px;
+      width: 130px; height: 24px;
+      z-index: 2;
+      opacity: 0;
+      filter: alpha(opacity=0);
+    }
+  #new_documentUploader {
     position: absolute;
     left: 30px;
     top: 20px;
