@@ -39,7 +39,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
       this.box.value('');
     }
     if (!Documents.isEmpty()) {
-      this.save(this.urlFragment());
+      this.saveLocation(this.urlFragment());
       this.box.showDocuments();
     } else if (this.box.value()) {
       this.search(this.box.value());
@@ -65,7 +65,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     this.fragment = 'search/' + encodeURIComponent(query);
     this.populateRelatedDocument();
     this.box.showDocuments();
-    this.save(this.urlFragment());
+    this.saveLocation(this.urlFragment());
     Documents.refresh();
     this.flags.outstandingSearch = true;
     this._afterSearch = callback;

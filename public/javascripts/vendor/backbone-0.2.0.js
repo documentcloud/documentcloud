@@ -574,7 +574,7 @@
   Backbone.Controller = function(options) {
     options || (options = {});
     if (options.routes) this.routes = options.routes;
-    this.bindRoutes();
+    this._bindRoutes();
     if (this.initialize) this.initialize(options);
   };
 
@@ -585,15 +585,6 @@
 
   // Set up all inheritable **Backbone.Controller** properties and methods.
   _.extend(Backbone.Controller.prototype, Backbone.Events, {
-
-    // Bind all defined routes to `Backbone.history`.
-    bindRoutes : function() {
-      if (!this.routes) return;
-      for (var route in this.routes) {
-        var name = this.routes[route];
-        this.route(route, name, this[name]);
-      }
-    },
 
     // Manually bind a single named route to a callback. For example:
     //
@@ -612,15 +603,24 @@
     },
 
     // Simply proxy to `Backbone.history` to save a fragment into the history.
-    save : function(fragment) {
-      Backbone.history.save(fragment);
+    saveLocation : function(fragment) {
+      Backbone.history.saveLocation(fragment);
+    },
+
+    // Bind all defined routes to `Backbone.history`.
+    _bindRoutes : function() {
+      if (!this.routes) return;
+      for (var route in this.routes) {
+        var name = this.routes[route];
+        this.route(route, name, this[name]);
+      }
     },
 
     // Convert a route string into a regular expression, suitable for matching
-    // against `window.location.hash`.
+    // against the current hash state.
     _routeToRegExp : function(route) {
       route = route.replace(namedParam, "([^\/]*)").replace(splatParam, "(.*?)");
-      return new RegExp('^#' + route + '$');
+      return new RegExp('^' + route + '$');
     },
 
     // Given a route, and a URL fragment that it matches, return the array of
@@ -638,9 +638,12 @@
   // browser does not support `onhashchange`, falls back to polling.
   Backbone.History = function() {
     this.handlers = [];
-    this.fragment = window.location.hash;
+    this.fragment = this.getFragment();
     _.bindAll(this, 'checkUrl');
   };
+
+  // Cached regex for cleaning hashes.
+  var hashStrip = /^#*/;
 
   // Set up all inheritable **Backbone.History** properties and methods.
   _.extend(Backbone.History.prototype, {
@@ -648,14 +651,20 @@
     // The default interval to poll for hash changes in IE is twenty times a second.
     interval: 50,
 
+    // Get the cross-browser normalized URL fragment.
+    getFragment : function(loc) {
+      return (loc || window.location).hash.replace(hashStrip, '');
+    },
+
     // Start the hash change handling, returning true if the current URL matches
     // an existing route, and false otherwise.
     start : function() {
-      if ($.browser.msie && $.browser.version < 8) {
+      var docMode = document.documentMode;
+      var oldIE = ($.browser.msie && docMode < 7);
+      if (oldIE) {
         this.iframe = $('<iframe src="javascript:0" tabindex="-1" />').hide().appendTo('body')[0].contentWindow;
       }
-      var docMode = document.documentMode;
-      if ('onhashchange' in window && (!docMode || docMode > 7)) {
+      if ('onhashchange' in window && !oldIE) {
         $(window).bind('hashchange', this.checkUrl);
       } else {
         setInterval(this.checkUrl, this.interval);
@@ -672,13 +681,12 @@
     // Checks the current URL to see if it has changed, and if it has,
     // calls `loadUrl`.
     checkUrl : function() {
-      var current = window.location.hash;
+      var current = this.getFragment();
       if (current == this.fragment && this.iframe) {
-        current = this.iframe.location.hash;
+        current = this.getFragment(this.iframe.location);
       }
       if (!current ||
           current == this.fragment ||
-          '#' + current == this.fragment ||
           current == decodeURIComponent(this.fragment)) return false;
       if (this.iframe) {
         window.location.hash = this.iframe.location.hash = current;
@@ -689,7 +697,7 @@
     // Attempt to load the current URL fragment. If no defined route matches
     // the fragment, returns `false`.
     loadUrl : function() {
-      var fragment = this.fragment = window.location.hash;
+      var fragment = this.fragment = this.getFragment();
       var matched = _.any(this.handlers, function(handler) {
         if (handler.route.test(fragment)) {
           handler.callback(fragment);
@@ -702,12 +710,11 @@
     // Save a fragment into the hash history. You are responsible for properly
     // URL-encoding the fragment in advance. This does not trigger
     // a `hashchange` event.
-    save : function(fragment) {
-      fragment || (fragment = '');
-      if (!(fragment.charAt(0) == '#')) fragment = '#' + fragment;
+    saveLocation : function(fragment) {
+      fragment = (fragment || '').replace(hashStrip, '');
       if (this.fragment == fragment) return;
       window.location.hash = this.fragment = fragment;
-      if (this.iframe && (fragment != this.iframe.location.hash)) {
+      if (this.iframe && (fragment != this.getFragment(this.iframe.location))) {
         this.iframe.document.open().close();
         this.iframe.location.hash = fragment;
       }
