@@ -11,7 +11,7 @@ class ImportController < ApplicationController
     return json :bad_request => true unless params[:file]
     @document = Document.upload(params, current_account, current_organization)
     @project_id = params[:project_id]
-    Project.accessible(current_account).find(@project_id).add_document(@document) if @project_id
+    Project.accessible(current_account).find(@project_id).add_document(@document) unless @project_id.blank?
     if params[:flash]
       json @document
     else

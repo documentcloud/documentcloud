@@ -78,9 +78,11 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // If flash is disabled, we fall back to a regular invisible file input field.
   setupFileInput : function() {
     var input = $('#new_document_input');
-    input.show().change(function(){
+    input.show().change(_.bind(function() {
+      this._project = _.first(Projects.selected());
+      $('#new_document_project').val(this._project ? this._project.id : '');
       $('#new_document_form').submit();
-    });
+    }, this));
   },
 
   // Return false so that Uploadify does not create its own progress bars.
