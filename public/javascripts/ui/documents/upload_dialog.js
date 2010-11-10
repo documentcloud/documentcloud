@@ -18,7 +18,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       saveText    : 'Upload',
       closeText   : 'Cancel'
     };
-    options = $.extend({}, defaults, options);
+    options = _.extend({}, defaults, options);
 
     _.bindAll(this, 'setupUploadify', 'countDocuments', '_onSelect', '_onSelectOnce',
       '_onCancel', '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
@@ -119,7 +119,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     }
     this.render();
     if (this.options.autostart) {
-      this._uploadify.uploadifyUpload();
+      this.button.uploadifyUpload();
     }
   },
 
@@ -152,7 +152,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     if (this.options.documentId)   attrs.document_id = this.options.documentId;
     if (this.options.insertPages)  attrs.document_number = this._uploadIndex;
     if (this.options.insertPages)  attrs.document_count = this.collection.length;
-    this._uploadify.uploadifySettings('scriptData', attrs, true);
+    this.button.uploadifySettings('scriptData', attrs, true);
     this.showSpinner();
     this._list[0].scrollTop = 0;
   },
