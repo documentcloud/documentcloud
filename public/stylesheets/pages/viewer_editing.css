@@ -166,7 +166,7 @@
 .DV-pageNoteInsert {
   opacity: 0;
   filter: alpha(opacity=0);
-  width: 100%;
+  width: 103%;
   height: 30px;
   position: absolute;
   cursor: pointer;
