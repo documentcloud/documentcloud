@@ -387,8 +387,9 @@
       float: left;
       margin: 50px 12px;
     }
-    #edit_page_text_container .edit_page_text_confirm input {
-      margin: 50px 8px 0;
+    #edit_page_text_container .edit_page_text_confirm_input {
+      text-transform: none;
+      margin: 46px 8px 0;
       float: left;
     }
   #edit_page_text_container .document_page_tiles {
