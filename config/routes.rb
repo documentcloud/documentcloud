@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # Document representations and (private) sub-resources.
-  map.resources  :documents, :has_many => [:annotations],
+  map.resources  :documents, :has_many => [:annotations, :reviewers],
                  :member         => {:search => :get},
                  :collection     => {
                    :entities     => :get,

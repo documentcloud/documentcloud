@@ -1,0 +1,12 @@
+<td class="first">
+  <img class="avatar" src="<%= account.DEFAULT_AVATAR %>" width="<%= size %>" height="<%= size %>" />
+</td>
+<td class="name selectable_text">
+  <%= Inflector.truncate(account.fullName(true), 25) %>
+</td>
+<td class="organization_name selectable_text">
+  <%= account.get('email') %>
+</td>
+<td class="last">
+  <span class="remove text_link" data-id="<%= account.id %>">revoke access</span>
+</td>

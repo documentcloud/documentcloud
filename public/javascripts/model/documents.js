@@ -13,12 +13,22 @@ dc.model.Document = Backbone.Model.extend({
       return 'documents/' + id + '/annotations';
     };
     this.pageEntities = new dc.model.EntitySet();
+    this.reviewers = new dc.model.AccountSet();
+    this._setReviewersResource();
   },
 
   // If this document does not belong to a collection, it still has a URL.
   url : function() {
     if (!this.collection) return '/documents/' + this.id;
     return Backbone.Model.prototype.url.call(this);
+  },
+
+  _setReviewersResource : function() {
+    if (!(this.reviewers && this.id)) return;
+    var id = this.id;
+    this.reviewers.url = function(){
+      return 'documents/' + id + '/reviewers';
+    };
   },
 
   // Generate the canonical URL for opening this document, over SSL if we're

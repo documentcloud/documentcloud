@@ -31,6 +31,7 @@ class Document < ActiveRecord::Base
   has_many :annotations,          :dependent => :destroy
   has_many :remote_urls,          :dependent => :destroy
   has_many :project_memberships,  :dependent => :destroy
+  has_many :document_reviewers,   :dependent => :destroy
   has_many :projects,             :through   => :project_memberships
 
   validates_presence_of :organization_id, :account_id, :access, :page_count,
