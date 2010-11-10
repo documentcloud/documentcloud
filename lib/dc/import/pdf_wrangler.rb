@@ -12,8 +12,8 @@ module DC
         Dir.mktmpdir do |temp_dir|
           path = file.path
           original_filename = filename || file.original_filename
-          name = File.basename(original_filename).gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-')
-          ext  = File.extname(name).downcase
+          ext  = File.extname(original_filename).downcase
+          name = File.basename(original_filename, File.extname(original_filename)).gsub(/[^a-zA-Z0-9_\-.]/, '-').gsub(/-+/, '-') + ext
           if ext == ".pdf" && File.extname(path) != ".pdf"
             new_path = File.join(temp_dir, name)
             FileUtils.mv(path, new_path)
