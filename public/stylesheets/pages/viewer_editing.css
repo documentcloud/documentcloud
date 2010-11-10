@@ -213,15 +213,6 @@
 /* = Remove Pages = */
 /* ================ */
 
-#remove_pages_container {
-  position: absolute;
-  z-index: 10001;
-  top: 0;
-  left: 0;
-  right: 266px;
-  background-color: white;
-  border-bottom: 1px solid #505050;
-}
   #remove_pages_container .remove_pages {
     position: relative;
     overflow-x: auto;
@@ -233,7 +224,6 @@
     color: #D0D0D0;
     font-weight: bold;
     margin: 48px 0 0 24px;
-    font-family: 'Lucida Grande', sans-serif;
     text-transform: uppercase;
     position: absolute;
     top: 0;
@@ -264,35 +254,6 @@
   #remove_pages_container .remove_pages_holder {
     float: left;
   }
-    #remove_pages_container .document_page_tile {
-      display: inline;
-      float: left;
-      margin: 12px 6px 0 6px;
-      text-align: center;
-      height: 100px;
-      width: 62px;
-    }
-      #remove_pages_container .document_page_tile img {
-        display: block;
-        border: 1px solid #505050;
-        box-shadow: 1px 1px 1px #D0D0D0;
-        -webkit-box-shadow: 1px 1px 1px #D0D0D0;
-        -moz-box-shadow: 1px 1px 1px #D0D0D0;
-      }
-      #remove_pages_container .document_page_tile .document_page_tile_remove {
-        float: left;
-        margin: 4px 0 0 0;
-        display: none;
-      }
-        #remove_pages_container .document_page_tile:hover .document_page_tile_remove {
-          display: block;
-        }
-      #remove_pages_container .document_page_tile .document_page_tile_number {
-        color: #505050;
-        font-weight: bold;
-        font-size: 13px;
-        padding: 4px 16px 0;
-      }
 
 .DV-pages.remove_pages_viewer {
   margin-top: 122px;
@@ -301,11 +262,38 @@
     cursor: pointer;
   }
 
-/* ================= */
-/* = Reorder Pages = */
-/* ================= */
+/*------------------------- Document Page Tiles ------------------------------*/
+.document_page_tile {
+  float: left;
+  margin: 15px 10px 0 10px;
+  text-align: center;
+  height: 100px;
+  width: 62px;
+}
+  .document_page_tile img {
+    display: block;
+    border: 1px solid #505050;
+    box-shadow: 1px 1px 1px #D0D0D0;
+    -webkit-box-shadow: 1px 1px 1px #D0D0D0;
+    -moz-box-shadow: 1px 1px 1px #D0D0D0;
+  }
+  .document_page_tile .document_page_tile_remove {
+    float: left;
+    margin: 4px 0 0 0;
+    display: none;
+  }
+    .document_page_tile:hover .document_page_tile_remove {
+      display: block;
+    }
+  .document_page_tile .document_page_tile_number {
+    color: #505050;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 4px 16px 0;
+  }
 
-#reorder_pages_container {
+/*---------------------------- Editing Toolbar -------------------------------*/
+.editing_toolbar {
   position: absolute;
   z-index: 10001;
   top: 0;
@@ -314,6 +302,11 @@
   background-color: white;
   border-bottom: 1px solid #505050;
 }
+
+/* ================= */
+/* = Reorder Pages = */
+/* ================= */
+
   #reorder_pages_container.active {
     background-color: #F37500;
   }
@@ -331,7 +324,6 @@
     font-weight: bold;
     margin: 2px 0 0 8px;
     overflow: hidden;
-    font-family: 'Lucida Grande', sans-serif;
   }
     #reorder_pages_container .reorder_pages_confirm_info {
       float: left;
@@ -352,21 +344,9 @@
 /* = Edit Page Text = */
 /* ================== */
 
-#edit_page_text_container {
-  position: absolute;
-  z-index: 10001;
-  top: 0;
-  left: 0;
-  right: 266px;
-  background-color: white;
-  border-bottom: 1px solid #505050;
-}
-  #edit_page_text_container.active {
-/*    background-color: #F37500;*/
+  #edit_page_text_container.active .edit_page_text_confirm_info {
+    display: none;
   }
-    #edit_page_text_container.active .edit_page_text_confirm_info {
-      display: none;
-    }
   #edit_page_text_container .edit_page_text {
     position: relative;
     overflow-x: auto;
@@ -381,7 +361,6 @@
     font-weight: bold;
     margin: 2px 0 0 8px;
     overflow: hidden;
-    font-family: 'Lucida Grande', sans-serif;
   }
     #edit_page_text_container .edit_page_text_confirm_info {
       float: left;
@@ -395,35 +374,7 @@
   #edit_page_text_container .document_page_tiles {
     float: left;
   }
-    #edit_page_text_container .document_page_tile {
-      display: inline;
-      float: left;
-      margin: 12px 6px 0 6px;
-      text-align: center;
-      height: 100px;
-      width: 62px;
-    }
-      #edit_page_text_container .document_page_tile img {
-        display: block;
-        border: 1px solid #505050;
-        box-shadow: 1px 1px 1px #D0D0D0;
-        -webkit-box-shadow: 1px 1px 1px #D0D0D0;
-        -moz-box-shadow: 1px 1px 1px #D0D0D0;
-      }
-      #edit_page_text_container .document_page_tile .document_page_tile_remove {
-        float: left;
-        margin: 6px 0 0 0;
-        display: none;
-      }
-        #edit_page_text_container .document_page_tile:hover .document_page_tile_remove {
-          display: block;
-        }
-      #edit_page_text_container .document_page_tile .document_page_tile_number {
-        color: #505050;
-        font-weight: bold;
-        font-size: 13px;
-        padding: 4px 16px 0;
-      }
+
 .DV-pages.edit_page_text_viewer {
   margin-top: 122px;
 }
@@ -436,13 +387,6 @@
 /* ================= */
 
 #replace_pages_container {
-  position: absolute;
-  z-index: 10001;
-  top: 0;
-  left: 0;
-  right: 266px;
-  background-color: white;
-  border-bottom: 1px solid #505050;
   height: 64px;
 }
   #replace_pages_container .replace_pages_hint {
@@ -450,7 +394,6 @@
     color: #D0D0D0;
     font-weight: bold;
     margin: 24px 0 0 24px;
-    font-family: 'Lucida Grande', sans-serif;
     text-transform: uppercase;
     position: absolute;
     top: 0;

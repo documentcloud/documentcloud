@@ -1,15 +1,16 @@
 dc.ui.ReorderPagesEditor = Backbone.View.extend({
-  
+
   id : 'reorder_pages_container',
-  
+  className : 'editing_toolbar interface',
+
   flags : {
     open: false
   },
-  
+
   events : {
     'click .reorder_pages_confirm_input' : 'confirmReorderPages'
   },
-  
+
   constructor : function(opts) {
     Backbone.View.call(this, opts);
     _.bindAll(this, 'confirmReorderPages', 'postOpen');
@@ -23,7 +24,7 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
       this.open();
     }
   },
-  
+
   findSelectors : function() {
     this.$s = {
       guide : $('#edit_reorder_pages_guide'),
@@ -36,18 +37,18 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
       container : null,
       saveButton : $('.reorder_pages_confirm_input')
     };
-    
+
     this.viewer = DV.viewers[_.first(_.keys(DV.viewers))];
     this.imageUrl = this.viewer.schema.document.resources.page.image;
   },
-  
+
   open : function() {
     this.findSelectors();
     this.$s.guideButton.addClass('loading');
-    $.getScript('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js', 
+    $.getScript('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js',
                 _.bind(this.postOpen, this));
   },
-  
+
   postOpen : function() {
     this.$s.guideButton.removeClass('loading');
     this.flags.open = true;
@@ -59,7 +60,7 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
     this.$s.saveButton.attr('disabled', true);
     this.$s.header.removeClass('active');
   },
-  
+
   render : function() {
     $(this.el).html(JST['viewer/reorder_pages']({}));
     this.$s.viewerContainer.append(this.el);
@@ -74,10 +75,10 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
     this.handleEvents();
     this.initialOrder = this.serializePageOrder();
   },
-  
+
   handleEvents : function() {
     var $thumbnails = this.$s.thumbnails;
-    
+
     $('.DV-thumbnail', $thumbnails).each(function(i) {
       $(this).data('pageNumber', i+1);
     });
@@ -94,7 +95,7 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
       }, this)
     });
   },
-  
+
   refreshHeader : function() {
     var order = this.serializePageOrder();
 
@@ -106,7 +107,7 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
       this.$s.header.addClass('active');
     }
   },
-  
+
   confirmReorderPages : function() {
     dc.ui.Dialog.confirm('Reordering pages takes a few minutes to complete.<br /><br />Are you sure you want to continue?', _.bind(function() {
       $('input.reorder_pages_confirm_input', this.el).val('Reordering...').attr('disabled', true);
@@ -114,17 +115,17 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
       return true;
     }, this));
   },
-  
+
   serializePageOrder : function() {
     var pageOrder = [];
 
     $('.DV-thumbnail', this.$s.thumbnails).each(function() {
       pageOrder.push($(this).data('pageNumber'));
     });
-    
+
     return pageOrder;
   },
-  
+
   save : function() {
     var pageOrder = this.serializePageOrder();
     var modelId = this.viewer.api.getModelId();
@@ -134,9 +135,9 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
       type      : 'POST',
       data      : { page_order : pageOrder },
       dataType  : 'json',
-      success   : function(resp) { 
+      success   : function(resp) {
         window.opener && window.opener.Documents && window.opener.Documents.get(modelId).set(resp);
-        dc.ui.Dialog.alert('This process will take a few minutes.<br /><br />This window must close while pages are being reordered and the document is being reconstructed.', { 
+        dc.ui.Dialog.alert('This process will take a few minutes.<br /><br />This window must close while pages are being reordered and the document is being reconstructed.', {
           onClose : function() {
             window.close();
           }
@@ -144,7 +145,7 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
       }
     });
   },
-  
+
   close : function() {
     if (this.flags.open) {
       $('.DV-currentPageImage-disabled', this.$s.page).addClass('DV-currentPageImage').removeClass('DV-currentPageImage-disabled');

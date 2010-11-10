@@ -1,6 +1,7 @@
 dc.ui.EditPageTextEditor = Backbone.View.extend({
 
   id : 'edit_page_text_container',
+  className : 'editing_toolbar interface',
 
   flags : {
     open: false

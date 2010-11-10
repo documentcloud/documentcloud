@@ -1,6 +1,7 @@
 dc.ui.ReplacePagesEditor = Backbone.View.extend({
 
   id : 'replace_pages_container',
+  className : 'editing_toolbar interface',
 
   flags : {
     open: false
@@ -43,7 +44,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     this.render();
     this.resetSelected();
   },
-  
+
   resetSelected : function() {
     $('.DV-currentPageImage', this.$s.pages).removeClass('DV-currentPageImage').addClass('DV-currentPageImage-disabled');
     this.$s.thumbnails.removeClass('DV-removePage');
@@ -82,16 +83,16 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
                .unbind('mouseenter.dv-replace')
                .unbind('mouseleave.dv-replace');
   },
-  
+
   handleEvents : function() {
     var $thumbnails = this.$s.thumbnails;
 
     this.unbindEvents();
-    
+
     $thumbnails.each(function(i) {
       $(this).data('pageNumber', i+1);
     });
-    
+
     $thumbnails.bind('mouseout.dv-replace', function() {
       $('.DV-overlay', this).removeClass('left').removeClass('right');
     });
@@ -104,7 +105,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       var side = positionX/width < .5 ? 'left' : 'right';
       $('.DV-overlay', $this).removeClass('left').removeClass('right').addClass(side);
     });
-    
+
     $thumbnails.bind('mousedown.dv-replace', _.bind(function(e) {
       e.preventDefault();
       e.stopPropagation();
@@ -116,14 +117,14 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
     var $thumbnails = this.$s.thumbnails;
 
     this.resetSelected();
-    
+
     if (dc.app.hotkeys.shift && this.$firstPageSelection) {
       var firstPageNumber = this.$firstPageSelection.data('pageNumber');
       var thumbnailPageNumber = $thumbnail.data('pageNumber');
       var end = Math.max(thumbnailPageNumber, firstPageNumber);
       var start = Math.min(thumbnailPageNumber, firstPageNumber);
       var isReverse = firstPageNumber > thumbnailPageNumber;
-      
+
       if (!$thumbnail.hasClass('DV-hover-image')) {
         if ($('.left', $thumbnail).length && !isReverse) {
           end -= 1;
@@ -131,7 +132,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
           start += 1;
         }
       }
-      
+
       $thumbnails = $thumbnails.filter(function() {
         var page = $(this).data('pageNumber');
         return start <= page && page <= end;
