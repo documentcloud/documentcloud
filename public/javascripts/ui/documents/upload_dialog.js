@@ -150,7 +150,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   countDocuments : function() {
     var num = this.collection.length;
     this.title('Upload ' + (num > 1 ? num : '') + Inflector.pluralize(' Document', num));
-    this.$('.upload_email_count').text(num == 1 ? 'the document has' : 'all documents have');
+    this.$('.upload_email_count').text(num == 1 ? 'this document has' : 'these documents have');
   },
 
   checkQueueLength : function() {
