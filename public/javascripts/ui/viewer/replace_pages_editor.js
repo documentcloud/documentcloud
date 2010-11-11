@@ -47,7 +47,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
 
   resetSelected : function() {
     $('.DV-currentPageImage', this.$s.pages).removeClass('DV-currentPageImage').addClass('DV-currentPageImage-disabled');
-    this.$s.thumbnails.removeClass('DV-removePage');
+    this.$s.thumbnails.removeClass('DV-selected');
     this.$s.thumbnails.find('.left_chosen,.right_chosen').removeClass('left_chosen')
                                                          .removeClass('right_chosen');
   },
@@ -137,12 +137,12 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
         var page = $(this).data('pageNumber');
         return start <= page && page <= end;
       });
-      $thumbnails.addClass('DV-removePage');
+      $thumbnails.addClass('DV-selected');
       this.updateHint('replace');
     } else {
       if ($thumbnail.hasClass('DV-hover-image')) {
         this.$firstPageSelection = $thumbnail;
-        $thumbnail.addClass('DV-removePage');
+        $thumbnail.addClass('DV-selected');
         this.updateHint('replace');
       } else if ($thumbnail.hasClass('DV-hover-thumbnail')) {
         var $left = $('.left', $thumbnails);
@@ -208,7 +208,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
 
   getPageRange : function() {
     var $thumbnails = this.$s.thumbnails;
-    var $thumbnail = $thumbnails.filter('.DV-removePage');
+    var $thumbnail = $thumbnails.filter('.DV-selected');
 
     var range = _.map($thumbnail, function(t) {
       return parseInt($(t).data('pageNumber'), 10);

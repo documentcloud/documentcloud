@@ -58,7 +58,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
         this.viewer.open('ViewThumbnails');
     }
     this.$s.pages.addClass('remove_pages_viewer');
-    this.$s.thumbnails.removeClass('DV-removePage');
+    this.$s.thumbnails.removeClass('DV-selected');
     this.$s.holder = $('.remove_pages_holder', this.el);
     this.$s.container = $(this.el);
     this.redrawPages();
@@ -96,7 +96,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
       this.viewer.api.addPageToRemovedPages(pageNumber);
       this.removePages.push(pageNumber);
       this.redrawPages();
-      this.$s.thumbnails.eq(pageNumber-1).addClass('DV-removePage');
+      this.$s.thumbnails.eq(pageNumber-1).addClass('DV-selected');
     }
   },
 
@@ -109,7 +109,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
     this.removePages = _.reject(this.removePages, function(p) { return p == pageNumber; });
     this.redrawPages();
     this.viewer.api.removePageFromRemovedPages(pageNumber);
-    this.$s.thumbnails.eq(pageNumber-1).removeClass('DV-removePage');
+    this.$s.thumbnails.eq(pageNumber-1).removeClass('DV-selected');
   },
 
   redrawPages : function() {
