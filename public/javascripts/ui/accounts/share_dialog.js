@@ -1,12 +1,14 @@
 dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
-  id : 'share_documents',
+  id : 'share_dialog',
   
   className : 'account_list dialog',
 
   events : {
-    'click .ok'           : 'close',
-    'click .add_reviewer' : 'addReviewer'
+    'click .ok'                     : 'close',
+    'click .add_reviewer'           : '_showEnterEmail',
+    'click .minibutton.add'         : '_addReviewer',
+    'click .remove'                 : '_removeReviewer'
   },
 
   constructor : function(options) {
@@ -24,7 +26,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
 
   render : function() {
-    dc.ui.Dialog.prototype.render.call(this, {editor : true});
+    dc.ui.Dialog.prototype.render.call(this);
     $(document.body).addClass('overlay');
     this._container = this.$('.custom');
     this._container.setMode('not', 'draggable');
@@ -59,25 +61,39 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     $(this.el).hide();
     $(document.body).removeClass('overlay');
   },
-
-  addReviewer : function() {
-    var view = new dc.ui.AccountView({model : new dc.model.Account({
-      role : dc.model.Account.prototype.REVIEWER
-    }), kind : 'row'});
-    this.list.append(view.render('edit').el);
-    this._container[0].scrollTop = this._container[0].scrollHeight;
+  
+  _showEnterEmail : function() {
+    this.$('.add_reviewer').hide();
+    this.$('.enter_email').show();
+    this.$('#reviewer_email').focus();
+  },
+  
+  _addReviewer : function() {
+    var email = this.$('#reviewer_email').val();
+    if (!email) return this.error('Please enter an email address.');
+    this.showSpinner();
+    this.model.reviewers.create({email : email}, {
+      success : _.bind(function(acc, resp) {
+        // this.model.set({reviewers_count : this.model.get('reviewers_count') + 1});
+        this.render(true);
+      }, this),
+      error   : _.bind(function(acc) {
+        this.hideSpinner();
+        this.error('No DocumentCloud account was found with that email.');
+      }, this)
+    });
   },
 
-  _renderAccounts : function() {
-    dc.ui.spinner.hide();
-    var views = Accounts.filter(function(account) {
-      return account.get('role') == dc.model.Account.prototype.REVIEWER;
-    }).map(function(account) {
-      return (new dc.ui.AccountView({model : account, kind : 'row'})).render().el;
+  _removeReviewer : function(e) {
+    this.showSpinner();
+    var reviewers = this.model.reviewers.get(parseInt($(e.target).attr('data-id'), 10));
+    reviewers.destroy({
+      success : _.bind(function(){ 
+        // this.model.set({reviewer_count : this.model.get('reviewer_count') - 1}); 
+        this.render(true);
+      }, this)
     });
-    this.list.append(views);
-    $(this.el).show();
-    this.center();
   }
+
 
 });

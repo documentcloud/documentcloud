@@ -6,22 +6,25 @@ class ReviewersController < ApplicationController
 
   def create
     account = Account.lookup(pick(params, :email)[:email])
-    return json(nil, 409) if account.id == current_account.id
+    return json(nil, 409) if account and account.id == current_account.id
     if !account
       attributes = {
         :first_name => 'Reviewer',
-        :last_name  => '',
+        :last_name  => '#',
         :email      => params[:email],
         :role       => Account::REVIEWER
       }
       account = current_organization.accounts.create(attributes)
+      Rails.logger.info("Create account: #{account}, #{attributes}")
     end
+    Rails.logger.info("account: #{account.email}")
+    current_document.document_reviewers.create(:account => account)
     json account.to_json
   end
 
   def destroy
     account = Account.find(params[:id])
-    current_document.reviewers.remove_collaborator account
+    current_document.document_reviewers.owned_by(account).first.destroy
     json nil
   end
 
