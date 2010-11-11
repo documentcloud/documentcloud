@@ -10,15 +10,14 @@ class ReviewersController < ApplicationController
     if !account
       attributes = {
         :first_name => 'Reviewer',
-        :last_name  => '#',
+        :last_name  => ' ',
         :email      => params[:email],
         :role       => Account::REVIEWER
       }
       account = current_organization.accounts.create(attributes)
-      Rails.logger.info("Create account: #{account}, #{attributes}")
     end
-    Rails.logger.info("account: #{account.email}")
     current_document.document_reviewers.create(:account => account)
+    account.send_reviewer_instructions(current_document)
     json account.to_json
   end
 

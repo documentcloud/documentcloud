@@ -15,6 +15,18 @@ class LifecycleMailer < ActionMailer::Base
                 :organization_name  => account.organization_name
   end
 
+  # Mail instructions for a document review, with a secure link to the
+  # document viewer, where the user can annotate the document.
+  def reviewer_instructions(reviewer_account, document)
+    Rails.logger.info("Doc: #{document.title}")
+    subject     "Review \"#{document.title}\" on DocumentCloud"
+    from        [SUPPORT, document.account.email].compact
+    recipients  [reviewer_account.email]
+    body        :document           => document,
+                :key                => reviewer_account.security_key.key,
+                :organization_name  => document.account.organization_name
+  end
+
   # Mail instructions for resetting an active account's password.
   def reset_request(account)
     subject     "DocumentCloud password reset"

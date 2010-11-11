@@ -75,11 +75,21 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.model.reviewers.create({email : email}, {
       success : _.bind(function(acc, resp) {
         // this.model.set({reviewers_count : this.model.get('reviewers_count') + 1});
+        dc.ui.notifier.show({
+          text      : 'Document review instructions sent to ' + acc.get('email'),
+          duration  : 5000,
+          mode      : 'info'
+        });
         this.render(true);
       }, this),
-      error   : _.bind(function(acc) {
+      error   : _.bind(function(acc, resp) {
         this.hideSpinner();
-        this.error('No DocumentCloud account was found with that email.');
+        console.log(['error', acc, resp, arguments]);
+        if (resp.status == 409) {
+          this.error('You cannot add yourself as a reviewer.');
+        } else {
+          this.error('Unable to use that email.');
+        }
       }, this)
     });
   },

@@ -8,6 +8,9 @@ class DocumentsController < ApplicationController
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
 
   def show
+    if !current_account && params[:key]
+      Account.login_reviewer params[:key], session
+    end
     doc = current_document(true)
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
     return not_found unless doc

@@ -10,11 +10,13 @@ class Account < ActiveRecord::Base
 
   # Associations:
   belongs_to  :organization
-  has_many    :projects,          :dependent => :destroy
-  has_many    :collaborations,    :dependent => :destroy
-  has_many    :processing_jobs,   :dependent => :destroy
-  has_one     :security_key,      :dependent => :destroy, :as => :securable
-  has_many    :shared_projects,   :through => :collaborations, :source => :project
+  has_many    :projects,             :dependent => :destroy
+  has_many    :collaborations,       :dependent => :destroy
+  has_many    :processing_jobs,      :dependent => :destroy
+  has_one     :security_key,         :dependent => :destroy, :as => :securable
+  has_many    :shared_projects,      :through => :collaborations, :source => :project
+  has_many    :document_reviewers,   :dependent => :destroy
+  has_many    :reviewable_documents, :through => :document_reviewers, :source => :document
 
   # Validations:
   validates_presence_of   :first_name, :last_name, :email
@@ -33,6 +35,15 @@ class Account < ActiveRecord::Base
     return false unless account && account.password == password
     account.authenticate(session) if session
     account
+  end
+  
+  def self.login_reviewer(key, session)
+    security_key = SecurityKey.find_by_key(key)
+    return nil unless security_key
+    account = security_key.securable
+    account.authenticate session
+    account
+    Rails.logger.info("LOGGED IN AS REVIEWER: #{account}")
   end
 
   # Retrieve the names of the contributors for the result set of documents.
@@ -105,10 +116,19 @@ class Account < ActiveRecord::Base
   end
 
   def accessible_document_ids
-    return [] if accessible_project_ids.empty?
-    @accessible_document_ids ||= ProjectMembership.connection.select_values(
-      "select distinct document_id from project_memberships where project_id in (#{accessible_project_ids.join(',')})"
-    ).map {|id| id.to_i }
+    return @accessible_document_ids if not @accessible_document_ids.nil?
+    @accessible_document_ids = []
+    
+    if not accessible_project_ids.empty?
+      @accessible_document_ids ||= ProjectMembership.connection.select_values(
+        "select distinct document_id from project_memberships where project_id in (#{accessible_project_ids.join(',')})"
+      ).map {|id| id.to_i }
+    end
+    
+    reviewable_document_ids = DocumentReviewer.find(:all, :conditions => {:account_id => id}, 
+                                                    :select => [:document_id]).map {|d| d.document_id }
+    @accessible_document_ids << reviewable_document_ids if reviewable_document_ids.count
+    @accessible_document_ids.flatten
   end
 
   # The list of all of the projects that have been shared with this account
@@ -123,6 +143,11 @@ class Account < ActiveRecord::Base
   def send_login_instructions(admin=nil)
     create_security_key if security_key.nil?
     LifecycleMailer.deliver_login_instructions(self, admin)
+  end
+
+  def send_reviewer_instructions(document)
+    create_security_key if security_key.nil?
+    LifecycleMailer.deliver_reviewer_instructions(self, document)
   end
 
   # When a password reset request is made, send an email with a secure key to
