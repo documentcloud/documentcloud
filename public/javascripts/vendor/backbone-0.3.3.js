@@ -542,7 +542,7 @@
       this.models.splice(index, 0, model);
       model.bind('all', this._boundOnModelEvent);
       this.length++;
-      if (!options.silent) model.trigger('add', model, this, options);
+      if (!options.silent) model.trigger('add', model, this);
       return model;
     },
 
@@ -557,7 +557,7 @@
       delete model.collection;
       this.models.splice(this.indexOf(model), 1);
       this.length--;
-      if (!options.silent) model.trigger('remove', model, this, options);
+      if (!options.silent) model.trigger('remove', model, this);
       model.unbind('all', this._boundOnModelEvent);
       return model;
     },
