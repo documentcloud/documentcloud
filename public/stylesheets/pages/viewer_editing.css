@@ -440,7 +440,13 @@
   .DV-thumbnail .DV-overlay.left_chosen .DV-caret {
     display: block;
     position: absolute;
-    top: -12px; left: -6px;
+    top: -12px; left: -6px; right: auto;
+  }
+  .DV-hover-thumbnail .DV-overlay.right .DV-caret,
+  .DV-thumbnail .DV-overlay.right_chosen .DV-caret {
+    display: block;
+    position: absolute;
+    top: -12px; right: -7px; left: auto;
   }
 
 .DV-hover-thumbnail .DV-overlay.left,
@@ -459,6 +465,10 @@
   border-left: none;
   display: block;
 }
+  .DV-thumbnail .DV-overlay.left_chosen,
+  .DV-thumbnail .DV-overlay.right_chosen {
+    border-color: #000;
+  }
 
 .DV-reorderPages .DV-thumbnails .DV-thumbnail.ui-sortable-helper {
   border: 1px solid transparent;

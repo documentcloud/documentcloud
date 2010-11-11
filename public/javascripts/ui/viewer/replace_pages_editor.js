@@ -102,7 +102,8 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       var offset = $this.offset();
       var width = $this.outerWidth(true);
       var positionX = e.clientX - offset.left;
-      var side = positionX/width < .5 ? 'left' : 'right';
+      var amount = positionX / width;
+      var side = amount < 0.2 ? 'left' : amount > 0.8 ? 'right' : '';
       $('.DV-overlay', $this).removeClass('left').removeClass('right').addClass(side);
     });
 
@@ -236,6 +237,8 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
   close : function() {
     if (this.flags.open) {
       $('.DV-currentPageImage-disabled', this.$s.pages).addClass('DV-currentPageImage').removeClass('DV-currentPageImage-disabled');
+      $('.left_chosen').removeClass('left_chosen');
+      $('.right_chosen').removeClass('right_chosen');
       this.flags.open = false;
       this.$s.guide.hide();
       this.unbindEvents();
