@@ -52,7 +52,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
   },
 
   render : function() {
-    $(this.el).show().html(JST['viewer/remove_pages']({}));
+    $(this.el).show().html(JST['remove_pages']({}));
     this.$s.viewerContainer.append(this.el);
     if (this.viewer.state != 'ViewDocument' && this.viewer.state != 'ViewThumbnails') {
         this.viewer.open('ViewThumbnails');
@@ -128,7 +128,7 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
       var url = this.imageUrl;
       url = url.replace(/\{size\}/, 'thumbnail');
       url = url.replace(/\{page\}/, pageNumber);
-      var $thumbnail = $(JST['viewer/document_page_tile']({
+      var $thumbnail = $(JST['document_page_tile']({
         url : url,
         pageNumber : pageNumber
       }));

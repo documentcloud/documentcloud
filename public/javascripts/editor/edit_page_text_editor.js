@@ -57,7 +57,7 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
   },
 
   render : function() {
-    $(this.el).html(JST['viewer/edit_page_text']({}));
+    $(this.el).html(JST['edit_page_text']({}));
     this.$s.viewerContainer.append(this.el);
     if (this.viewer.state != 'ViewText') {
         this.viewer.open('ViewText');
@@ -157,7 +157,7 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
       var url = this.imageUrl;
       url = url.replace(/\{size\}/, 'thumbnail');
       url = url.replace(/\{page\}/, pageNumber);
-      var $thumbnail = $(JST['viewer/document_page_tile']({
+      var $thumbnail = $(JST['document_page_tile']({
         url : url,
         pageNumber : pageNumber
       }));

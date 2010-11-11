@@ -1,11 +1,13 @@
-<%= include_stylesheets :viewer_editing %>
-<!--[if lt IE 9]>
-  <%= include_stylesheets :ie_only, :embed_assets => false %>
-<![endif]-->
-<%= include_javascripts :core %>
-<% if Rails.env.development? %>
-  <script src="/javascripts/lib/debug.js" type="text/javascript"></script>
-<% end %>
+<% if @current_account %>
+  <%= include_stylesheets :viewer_editing %>
+  <!--[if lt IE 9]>
+    <%= include_stylesheets :ie_only, :embed_assets => false %>
+  <![endif]-->
+  <%= include_javascripts :core %>
+  <%= include_javascripts :editor %>
+  <% if Rails.env.development? %>
+    <script src="/javascripts/lib/debug.js" type="text/javascript"></script>
+  <% end %>
 
 <script type="text/javascript">
   $(document).ready(function() {

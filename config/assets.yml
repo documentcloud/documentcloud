@@ -13,7 +13,10 @@ javascripts:
     - public/javascripts/ui/common/*.js
     - public/javascripts/ui/**/*.js
     - public/javascripts/app/**/*.js
-    - app/views/jst/**/*.jst
+    - app/views/jst/workspace/**/*.jst
+  editor:
+    - public/javascripts/editor/*.js
+    - app/views/jst/editor/*.jst
   admin:
     - public/javascripts/admin/*.js
     - app/views/admin/*.jst

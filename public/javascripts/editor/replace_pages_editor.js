@@ -53,7 +53,7 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
   },
 
   render : function() {
-    $(this.el).html(JST['viewer/replace_pages']({}));
+    $(this.el).html(JST['replace_pages']({}));
     this.$s.viewerContainer.append(this.el);
     if (this.viewer.state != 'ViewThumbnails') {
         this.viewer.open('ViewThumbnails');

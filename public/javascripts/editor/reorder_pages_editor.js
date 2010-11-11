@@ -62,7 +62,7 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
   },
 
   render : function() {
-    $(this.el).html(JST['viewer/reorder_pages']({}));
+    $(this.el).html(JST['reorder_pages']({}));
     this.$s.viewerContainer.append(this.el);
     this.findSelectors();
     if (this.viewer.state != 'ViewThumbnails') {
