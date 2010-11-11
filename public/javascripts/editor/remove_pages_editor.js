@@ -1,29 +1,14 @@
-dc.ui.RemovePagesEditor = Backbone.View.extend({
+dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
 
   id : 'remove_pages_container',
-  className : 'editing_toolbar interface',
-
-  flags : {
-    open: false
-  },
 
   events : {
     'click .document_page_tile_remove'  : 'removePageFromRemoveSet',
     'click .remove_pages_confirm_input' : 'confirmRemovePages'
   },
 
-  constructor : function(opts) {
-    Backbone.View.call(this, opts);
+  initialize : function(opts) {
     _.bindAll(this, 'confirmRemovePages', 'removePageFromRemoveSet');
-  },
-
-  toggle : function() {
-    if (this.flags.open) {
-      this.close();
-    } else {
-      dc.app.editor.closeAllEditors();
-      this.open();
-    }
   },
 
   findSelectors : function() {
@@ -36,15 +21,12 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
       holder : null,
       container : null
     };
-
-    this.viewer = DV.viewers[_.first(_.keys(DV.viewers))];
-    this.imageUrl = this.viewer.schema.document.resources.page.image;
   },
 
   open : function() {
     this.findSelectors();
     this.removePages = [];
-    this.flags.open = true;
+    this.setMode('is', 'open');
     this.$s.guide.fadeIn('fast');
     this.$s.guideButton.addClass('open');
     this.viewer.api.enterRemovePagesMode();
@@ -175,8 +157,8 @@ dc.ui.RemovePagesEditor = Backbone.View.extend({
   },
 
   close : function() {
-    if (this.flags.open) {
-      this.flags.open = false;
+    if (this.modes.open == 'is') {
+      this.setMode('not', 'open');
       this.$s.guide.fadeOut('fast');
       this.$s.guideButton.removeClass('open');
       this.$s.pages.removeClass('remove_pages_viewer');

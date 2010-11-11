@@ -55,17 +55,21 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       return true;
     }, this));
   },
-  
+
   editPageText : function() {
-    dc.app.editor.editPageTextEditor.toggle();
+    dc.app.editor.pageTextEditor.toggle();
   },
-    
+
   editReplacePages : function() {
     dc.app.editor.replacePagesEditor.toggle();
   },
-  
+
   editRemovePages : function() {
     dc.app.editor.removePagesEditor.toggle();
+  },
+
+  editReorderPages : function() {
+    dc.app.editor.reorderPagesEditor.toggle();
   },
 
   togglePublicAnnotation : function() {

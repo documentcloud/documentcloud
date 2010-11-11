@@ -24,7 +24,7 @@ _.extend(dc.app.editor, {
     this.annotationEditor   = new dc.ui.AnnotationEditor();
     this.removePagesEditor  = new dc.ui.RemovePagesEditor();
     this.reorderPagesEditor = new dc.ui.ReorderPagesEditor();
-    this.editPageTextEditor = new dc.ui.EditPageTextEditor();
+    this.pageTextEditor     = new dc.ui.PageTextEditor();
     this.replacePagesEditor = new dc.ui.ReplacePagesEditor();
   },
 
@@ -47,7 +47,7 @@ _.extend(dc.app.editor, {
       this.replacePagesEditor.close();
     }
     if (state != 'ViewText') {
-      this.editPageTextEditor.close();
+      this.pageTextEditor.close();
     }
   },
 

@@ -1,28 +1,13 @@
-dc.ui.ReorderPagesEditor = Backbone.View.extend({
+dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
 
   id : 'reorder_pages_container',
-  className : 'editing_toolbar interface',
-
-  flags : {
-    open: false
-  },
 
   events : {
     'click .reorder_pages_confirm_input' : 'confirmReorderPages'
   },
 
-  constructor : function(opts) {
-    Backbone.View.call(this, opts);
+  initialize : function(opts) {
     _.bindAll(this, 'confirmReorderPages', 'postOpen');
-  },
-
-  toggle : function() {
-    if (this.flags.open) {
-      this.close();
-    } else {
-      dc.app.editor.closeAllEditors();
-      this.open();
-    }
   },
 
   findSelectors : function() {
@@ -37,9 +22,6 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
       container : null,
       saveButton : $('.reorder_pages_confirm_input')
     };
-
-    this.viewer = DV.viewers[_.first(_.keys(DV.viewers))];
-    this.imageUrl = this.viewer.schema.document.resources.page.image;
   },
 
   open : function() {
@@ -51,7 +33,7 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
 
   postOpen : function() {
     this.$s.guideButton.removeClass('loading');
-    this.flags.open = true;
+    this.setMode('is', 'open');
     this.viewer.api.enterReorderPagesMode();
     this.viewer.api.resetReorderedPages();
     this.render();
@@ -147,9 +129,9 @@ dc.ui.ReorderPagesEditor = Backbone.View.extend({
   },
 
   close : function() {
-    if (this.flags.open) {
+    if (this.modes.open == 'is') {
       $('.DV-currentPageImage-disabled', this.$s.page).addClass('DV-currentPageImage').removeClass('DV-currentPageImage-disabled');
-      this.flags.open = false;
+      this.setMode('not', 'open');
       jQuery('.DV-thumbnails').sortable('destroy');
       this.$s.guide.fadeOut('fast');
       this.$s.guideButton.removeClass('open');

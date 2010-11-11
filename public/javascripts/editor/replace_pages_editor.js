@@ -1,24 +1,6 @@
-dc.ui.ReplacePagesEditor = Backbone.View.extend({
+dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
 
   id : 'replace_pages_container',
-  className : 'editing_toolbar interface',
-
-  flags : {
-    open: false
-  },
-
-  constructor : function(options) {
-    Backbone.View.call(this, options);
-  },
-
-  toggle : function() {
-    if (this.flags.open) {
-      this.close();
-    } else {
-      dc.app.editor.closeAllEditors();
-      this.open();
-    }
-  },
 
   findSelectors : function() {
     this.$s = {
@@ -30,14 +12,11 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
       hint : $(".replace_pages_hint", this.el),
       container : null
     };
-
-    this.viewer = DV.viewers[_.first(_.keys(DV.viewers))];
-    this.imageUrl = this.viewer.schema.document.resources.page.image;
   },
 
   open : function() {
     this.findSelectors();
-    this.flags.open = true;
+    this.setMode('is', 'open');
     this.$s.guide.fadeIn('fast');
     this.$s.guideButton.addClass('open');
     this.viewer.api.enterReplacePagesMode();
@@ -235,11 +214,11 @@ dc.ui.ReplacePagesEditor = Backbone.View.extend({
   },
 
   close : function() {
-    if (this.flags.open) {
+    if (this.modes.open == 'is') {
       $('.DV-currentPageImage-disabled', this.$s.pages).addClass('DV-currentPageImage').removeClass('DV-currentPageImage-disabled');
       $('.left_chosen').removeClass('left_chosen');
       $('.right_chosen').removeClass('right_chosen');
-      this.flags.open = false;
+      this.setMode('not', 'open');
       this.$s.guide.hide();
       this.unbindEvents();
       this.$s.guideButton.removeClass('open');

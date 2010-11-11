@@ -293,7 +293,7 @@
   }
 
 /*---------------------------- Editing Toolbar -------------------------------*/
-.editing_toolbar {
+.editor_toolbar {
   position: absolute;
   z-index: 10001;
   top: 0;

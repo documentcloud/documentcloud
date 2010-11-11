@@ -1,11 +1,6 @@
-dc.ui.EditPageTextEditor = Backbone.View.extend({
+dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
 
   id : 'edit_page_text_container',
-  className : 'editing_toolbar interface',
-
-  flags : {
-    open: false
-  },
 
   events : {
     'click .edit_page_text_confirm_input' : 'confirmEditPageText',
@@ -15,18 +10,8 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
   originalPageText: {},
   pageText: {},
 
-  constructor : function(opts) {
-    Backbone.View.call(this, opts);
+  initialize : function(opts) {
     _.bindAll(this, 'confirmEditPageText', 'cachePageText', 'resetPage');
-  },
-
-  toggle : function() {
-    if (this.flags.open) {
-      this.close();
-    } else {
-      dc.app.editor.closeAllEditors();
-      this.open();
-    }
   },
 
   findSelectors : function() {
@@ -42,16 +27,13 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
       saveButton : $('.edit_page_text_confirm_input', this.el),
       headerTiles : $('.document_page_tiles', this.el)
     };
-
-    this.viewer = DV.viewers[_.first(_.keys(DV.viewers))];
-    this.imageUrl = this.viewer.schema.document.resources.page.image;
   },
 
   open : function() {
     this.findSelectors();
     this.originalPageText = {};
     this.pageText = {};
-    this.flags.open = true;
+    this.setMode('is', 'open');
     this.render();
     this.viewer.api.enterEditPageTextMode();
   },
@@ -208,8 +190,8 @@ dc.ui.EditPageTextEditor = Backbone.View.extend({
   },
 
   close : function() {
-    if (this.flags.open) {
-      this.flags.open = false;
+    if (this.modes.open == 'is') {
+      this.setMode('not', 'open');
       this.$s.guideButton.removeClass('open');
       this.$s.guide.fadeOut('fast');
       this.$s.pages.removeClass('edit_page_text_viewer');
