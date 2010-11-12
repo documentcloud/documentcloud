@@ -65,7 +65,7 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
       $(this).data('pageNumber', i+1);
     });
     $('.DV-currentPageImage', $thumbnails).removeClass('DV-currentPageImage').addClass('DV-currentPageImage-disabled');
-    jQuery('.DV-thumbnails').sortable({
+    jQuery('.DV-thumbnails > div').sortable({
       containment: '.DV-thumbnails',
       cursor: 'move',
       scrollSensitivity: 80,
