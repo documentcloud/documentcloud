@@ -119,8 +119,8 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
     }, this));
 
     // Update remove button's text
-    var removeText = 'Remove ' + pageCount + Inflector.pluralize(' page', pageCount);
-    $('.remove_pages_confirm_button input[type=button]', this.el).val(removeText);
+    var removeText = 'Remove ' + pageCount + Inflector.pluralize(' Page', pageCount);
+    $('.remove_pages_confirm_input', this.el).text(removeText);
 
     // Set width of container for side-scrolling
     var width = $('.document_page_tile').length * $('.document_page_tile').eq(0).outerWidth(true);
@@ -130,6 +130,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
 
   confirmRemovePages : function() {
     var pageCount = this.removePages.length;
+    if (!pageCount) return;
     dc.ui.Dialog.confirm('Removing pages takes a few minutes to complete.<br /><br />Are you sure you want to remove ' + pageCount + Inflector.pluralize(' page', pageCount) + '?', _.bind(function() {
       $('input.remove_pages_confirm_input', this.el).val('Removing...').attr('disabled', true);
       this.save();

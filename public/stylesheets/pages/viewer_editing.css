@@ -263,13 +263,14 @@
     position: relative;
     overflow-x: auto;
     overflow-y: hidden;
-    height: 122px;
+    padding-left: 10px;
+    height: 132px;
   }
   #remove_pages_container .remove_pages_hint {
     font-size: 16px;
     color: #D0D0D0;
     font-weight: bold;
-    margin: 48px 0 0 24px;
+    margin: 54px 0 0 24px;
     text-transform: uppercase;
     position: absolute;
     top: 0;
@@ -280,15 +281,8 @@
   }
   #remove_pages_container .remove_pages_confirm {
     float: left;
-    width: 120px;
+    padding: 43px 14px 0 12px;
     height: 100px;
-    margin: 18px 0 0 12px;
-    padding: 12px 0 0 0;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 12px;
-    color: #606060;
-    text-align: center;
     display: block;
   }
     #remove_pages_container.empty .remove_pages_confirm {
