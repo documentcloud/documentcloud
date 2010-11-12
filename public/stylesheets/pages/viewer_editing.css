@@ -220,9 +220,17 @@
   border-bottom: 2px solid #979797;
   box-shadow: 0 0 4px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 4px rgba(0,0,0,.5); -moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
 }
-.editor_toolbar .minibutton {
-  text-transform: none;
-}
+  .editor_toolbar .minibutton {
+    text-transform: none;
+  }
+  .editor_toolbar .editor_hint {
+    font-size: 16px;
+    color: #D0D0D0;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: absolute;
+    top: 0;
+  }
 
 /*------------------------- Document Page Tiles ------------------------------*/
 .document_page_tile {
@@ -266,17 +274,11 @@
     padding-left: 10px;
     height: 132px;
   }
-  #remove_pages_container .remove_pages_hint {
-    font-size: 16px;
-    color: #D0D0D0;
-    font-weight: bold;
+  #remove_pages_container .editor_hint {
     margin: 54px 0 0 24px;
-    text-transform: uppercase;
-    position: absolute;
-    top: 0;
     display: none;
   }
-  #remove_pages_container.empty .remove_pages_hint {
+  #remove_pages_container.empty .editor_hint {
     display: block;
   }
   #remove_pages_container .remove_pages_confirm {
@@ -296,7 +298,7 @@
   }
 
 .DV-pages.remove_pages_viewer {
-  margin-top: 122px;
+  margin-top: 134px;
 }
   .DV-pages.remove_pages_viewer .DV-page {
     cursor: pointer;
@@ -309,28 +311,20 @@
     position: relative;
     overflow-x: auto;
     overflow-y: hidden;
-    height: 45px;
+    height: 62px;
   }
-  #reorder_pages_container .reorder_pages_confirm {
-    padding: 10px 0 0 0;
-    text-transform: uppercase;
-    font-size: 16px;
-    color: #D0D0D0;
-    font-weight: bold;
-    margin: 2px 0 0 8px;
-    overflow: hidden;
-  }
-    #reorder_pages_container .reorder_pages_confirm_info {
-      margin-top: 3px;
+    #reorder_pages_container .editor_hint {
+      position: static;
+      margin: 22px 20px 0;
       float: left;
     }
     #reorder_pages_container .reorder_pages_confirm .minibutton {
-      margin: 0 15px;
+      margin: 18px 0 0;
       float: left;
     }
 
 .DV-pages.reorder_pages_viewer {
-  margin-top: 45px;
+  margin-top: 64px;
 }
   .DV-pages.reorder_pages_viewer .DV-thumbnail {
     cursor: move;
@@ -349,24 +343,19 @@
     overflow-y: hidden;
     height: 122px;
   }
-  #edit_page_text_container .edit_page_text_confirm {
-    padding: 0;
-    text-transform: uppercase;
-    font-size: 16px;
-    color: #D0D0D0;
-    font-weight: bold;
-    margin: 2px 0 0 8px;
-    overflow: hidden;
-  }
     #edit_page_text_container .edit_page_text_confirm_info {
       float: left;
       margin: 50px 12px;
     }
     #edit_page_text_container .edit_page_text_confirm_input {
       text-transform: none;
-      margin: 46px 8px 0;
+      margin: 46px 12px 0 20px;
       float: left;
+      display: none;
     }
+      #edit_page_text_container.active .edit_page_text_confirm_input {
+        display: block;
+      }
   #edit_page_text_container .document_page_tiles {
     float: left;
   }
@@ -385,14 +374,8 @@
 #replace_pages_container {
   height: 64px;
 }
-  #replace_pages_container .replace_pages_hint {
-    font-size: 16px;
-    color: #D0D0D0;
-    font-weight: bold;
+  #replace_pages_container .editor_hint {
     margin: 24px 0 0 24px;
-    text-transform: uppercase;
-    position: absolute;
-    top: 0;
   }
   #replace_pages_container .replace_pages_upload {
     margin: 20px 24px 0 0;
@@ -412,7 +395,7 @@
     display: block;
   }
 .DV-pages.replace_pages_viewer {
-  margin-top: 64px;
+  margin-top: 66px;
 }
 
 

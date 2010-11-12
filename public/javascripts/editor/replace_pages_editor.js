@@ -9,7 +9,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
       thumbnails : $('.DV-thumbnail'),
       pages : $('.DV-pages'),
       viewerContainer : $('.DV-docViewer-Container'),
-      hint : $(".replace_pages_hint", this.el),
+      hint : this.$(".editor_hint"),
       container : null
     };
   },
