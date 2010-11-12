@@ -75,8 +75,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
   confirmEditPageText : function() {
     var modifiedPages = this.getChangedPageTextPages();
     var documentId = this.viewer.api.getModelId();
-
-    $('input.edit_page_text_confirm_input', this.el).val('Saving...').setMode('not', 'enabled');
+    var dialog = dc.ui.Dialog.progress("Saving page text&hellip;");
 
     $.ajax({
       url       : '/documents/' + documentId + '/save_page_text',
@@ -86,6 +85,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
       success   : _.bind(function(resp) {
         this.viewer.api.resetPageText(true);
         this.close();
+        dialog.close();
       }, this)
     });
   },
