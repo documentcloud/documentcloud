@@ -144,38 +144,34 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
     var hint;
 
     if (state == 'choose') {
-      hint = "Choose which pages to replace.";
+      hint = "Choose a location to insert pages.";
       $(this.el).setMode('off', 'upload');
-    } else if (state == 'replace') {
-      var range = this.getPageRange();
+    } else {
+      var replace = state == 'replace';
       $(this.el).setMode('on', 'upload');
-      hint = "Upload documents to replace ";
-      if (range.start != range.end) {
-        hint += "pages " + range.start + " through " + range.end + ".";
-      } else {
-        hint += "page " + range.start + ".";
+      hint = "Upload pages to " + (replace ? 'replace ' : 'insert ');
+      if (replace) {
+        var range = this.getPageRange();
+        if (range.start != range.end) {
+          hint += "pages " + range.start + " through " + range.end + ".";
+        } else {
+          hint += "page " + range.start + ".";
+        }
+      } else if (state == 'insert') {
+        var pageCount = this.viewer.api.numberOfPages();
+        var pageNumber = this.getInsertPageNumber();
+        if (pageNumber < 1) {
+          hint += "before the first page.";
+        } else if (pageNumber < pageCount) {
+          hint += "between pages " + pageNumber + " and " + (pageNumber + 1) + ".";
+        } else if (pageNumber >= pageCount) {
+          hint += "after the last page.";
+        }
       }
       this.updateUploader({
-        insertPageAt: null,
-        replacePagesStart: range.start,
-        replacePagesEnd: range.end
-      });
-    } else if (state == 'insert') {
-      var pageCount = this.viewer.api.numberOfPages();
-      var pageNumber = this.getInsertPageNumber();
-      $(this.el).setMode('on', 'upload');
-      hint = "Upload documents to insert ";
-      if (pageNumber < 1) {
-        hint += "before the first page.";
-      } else if (pageNumber < pageCount) {
-        hint += "between pages " + pageNumber + " and " + (pageNumber + 1) + ".";
-      } else if (pageNumber == pageCount) {
-        hint += "after the last page.";
-      }
-      this.updateUploader({
-        insertPageAt: pageNumber,
-        replacePagesStart: null,
-        replacePagesEnd: null
+        insertPageAt:       null,
+        replacePagesStart:  replace ? range.start : null,
+        replacePagesEnd:    replace ? range.end : null
       });
     }
 
