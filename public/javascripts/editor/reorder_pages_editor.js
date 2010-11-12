@@ -30,10 +30,10 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
     this.viewer.api.enterReorderPagesMode();
     this.viewer.api.resetReorderedPages();
     this.render();
+    this.orderChanged = false;
     this.$s.guide.fadeIn('fast');
     this.$s.guideButton.addClass('open');
-    this.$s.saveButton.attr('disabled', true);
-    this.$s.header.removeClass('active');
+    this.$s.saveButton.setMode('not', 'enabled');
   },
 
   render : function() {
@@ -75,15 +75,16 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
     var order = this.serializePageOrder();
 
     if (_.isEqual(order, this.initialOrder)) {
-      this.$s.saveButton.attr('disabled', true);
-      this.$s.header.removeClass('active');
+      this.orderChanged = false;
+      this.$s.saveButton.setMode('not', 'enabled');
     } else {
-      this.$s.saveButton.removeAttr('disabled');
-      this.$s.header.addClass('active');
+      this.orderChanged = true;
+      this.$s.saveButton.setMode('is', 'enabled');
     }
   },
 
   confirmReorderPages : function() {
+    if (!this.orderChanged) return;
     dc.ui.Dialog.confirm('Reordering pages takes a few minutes to complete.<br /><br />Are you sure you want to continue?', _.bind(function() {
       $('input.reorder_pages_confirm_input', this.el).val('Reordering...').attr('disabled', true);
       this.save();

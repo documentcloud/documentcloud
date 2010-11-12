@@ -209,6 +209,52 @@
   font: 11px/26px Arial;
 }
 
+/*---------------------------- Editing Toolbar -------------------------------*/
+.editor_toolbar {
+  position: absolute;
+  z-index: 10001;
+  top: 0;
+  left: 0;
+  right: 266px;
+  background-color: white;
+  border-bottom: 2px solid #979797;
+  box-shadow: 0 0 4px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 4px rgba(0,0,0,.5); -moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
+}
+.editor_toolbar .minibutton {
+  text-transform: none;
+}
+
+/*------------------------- Document Page Tiles ------------------------------*/
+.document_page_tile {
+  float: left;
+  margin: 15px 10px 0 10px;
+  text-align: center;
+  height: 100px;
+  width: 62px;
+}
+  .document_page_tile img {
+    display: block;
+    border: 1px solid #505050;
+    box-shadow: 1px 1px 1px #D0D0D0;
+    -webkit-box-shadow: 1px 1px 1px #D0D0D0;
+    -moz-box-shadow: 1px 1px 1px #D0D0D0;
+  }
+  .document_page_tile .document_page_tile_remove {
+    float: left;
+    margin: 4px 0 0 0;
+    display: none;
+  }
+    .document_page_tile:hover .document_page_tile_remove {
+      display: block;
+    }
+  .document_page_tile .document_page_tile_number {
+    color: #505050;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 4px 16px 0;
+  }
+
+
 /* ================ */
 /* = Remove Pages = */
 /* ================ */
@@ -262,55 +308,9 @@
     cursor: pointer;
   }
 
-/*------------------------- Document Page Tiles ------------------------------*/
-.document_page_tile {
-  float: left;
-  margin: 15px 10px 0 10px;
-  text-align: center;
-  height: 100px;
-  width: 62px;
-}
-  .document_page_tile img {
-    display: block;
-    border: 1px solid #505050;
-    box-shadow: 1px 1px 1px #D0D0D0;
-    -webkit-box-shadow: 1px 1px 1px #D0D0D0;
-    -moz-box-shadow: 1px 1px 1px #D0D0D0;
-  }
-  .document_page_tile .document_page_tile_remove {
-    float: left;
-    margin: 4px 0 0 0;
-    display: none;
-  }
-    .document_page_tile:hover .document_page_tile_remove {
-      display: block;
-    }
-  .document_page_tile .document_page_tile_number {
-    color: #505050;
-    font-weight: bold;
-    font-size: 13px;
-    padding: 4px 16px 0;
-  }
-
-/*---------------------------- Editing Toolbar -------------------------------*/
-.editor_toolbar {
-  position: absolute;
-  z-index: 10001;
-  top: 0;
-  left: 0;
-  right: 266px;
-  background-color: white;
-  border-bottom: 2px solid #979797;
-  box-shadow: 0 0 4px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 4px rgba(0,0,0,.5); -moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
-}
-
 /* ================= */
 /* = Reorder Pages = */
 /* ================= */
-
-  #reorder_pages_container.active {
-    background-color: #F37500;
-  }
   #reorder_pages_container .reorder_pages {
     position: relative;
     overflow-x: auto;
@@ -318,7 +318,7 @@
     height: 45px;
   }
   #reorder_pages_container .reorder_pages_confirm {
-    padding: 12px 0 0 0;
+    padding: 10px 0 0 0;
     text-transform: uppercase;
     font-size: 16px;
     color: #D0D0D0;
@@ -327,10 +327,11 @@
     overflow: hidden;
   }
     #reorder_pages_container .reorder_pages_confirm_info {
+      margin-top: 3px;
       float: left;
     }
-    #reorder_pages_container .reorder_pages_confirm input {
-      margin: 0 8px;
+    #reorder_pages_container .reorder_pages_confirm .minibutton {
+      margin: 0 15px;
       float: left;
     }
 
