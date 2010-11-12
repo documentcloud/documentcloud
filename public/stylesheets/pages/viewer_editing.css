@@ -241,24 +241,25 @@
 }
   .document_page_tile img {
     display: block;
-    border: 1px solid #505050;
-    box-shadow: 1px 1px 1px #D0D0D0;
-    -webkit-box-shadow: 1px 1px 1px #D0D0D0;
-    -moz-box-shadow: 1px 1px 1px #D0D0D0;
+    border: 1px solid #b4b4b4;
+    box-shadow: 2px 2px 0px #e7e7e7;
+    -webkit-box-shadow: 2px 2px 0px #e7e7e7;
+    -moz-box-shadow: 2px 2px 0px #e7e7e7;
   }
   .document_page_tile .document_page_tile_remove {
-    float: left;
-    margin: 4px 0 0 0;
+    position: absolute;
+    margin: 6px 0 0 -1px;
     display: none;
   }
     .document_page_tile:hover .document_page_tile_remove {
       display: block;
     }
   .document_page_tile .document_page_tile_number {
-    color: #505050;
+    text-align: center;
+    color: #555;
+    font-size: 10px;
     font-weight: bold;
-    font-size: 13px;
-    padding: 4px 16px 0;
+    margin-top: 5px;
   }
 
 
