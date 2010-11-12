@@ -26,13 +26,6 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
 
   open : function() {
     this.findSelectors();
-    this.$s.guideButton.addClass('loading');
-    $.getScript('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js',
-                _.bind(this.postOpen, this));
-  },
-
-  postOpen : function() {
-    this.$s.guideButton.removeClass('loading');
     this.setMode('is', 'open');
     this.viewer.api.enterReorderPagesMode();
     this.viewer.api.resetReorderedPages();
