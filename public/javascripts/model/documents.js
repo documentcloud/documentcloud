@@ -64,6 +64,14 @@ dc.model.Document = Backbone.Model.extend({
     return date && (this.formatDay(date) + ' at ' + this.formatTime(date));
   },
 
+  reprocessText : function(forceOCR) {
+    var params = {};
+    if (forceOCR) params.ocr = true;
+    $.ajax({url : this.url() + '/reprocess_text', data: params, type : 'POST', dataType : 'json', success : _.bind(function(resp) {
+      this.set({access : dc.access.PENDING});
+    }, this)});
+  },
+
   openViewer : function() {
     if (this.checkBusy()) return;
     window.open(this.viewerUrl());

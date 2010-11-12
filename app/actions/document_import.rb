@@ -57,7 +57,9 @@ class DocumentImport < CloudCrowd::Action
     document.full_text.destroy if document.full_text
     document.pages.destroy_all if document.pages.count > 0
     begin
-      Docsplit.extract_text(@pdf, :pages => 'all', :output => 'text')
+      opts = {:pages => 'all', :output => 'text'}
+      opts[:ocr] = true if options['force_ocr']
+      Docsplit.extract_text(@pdf, opts)
     rescue Exception => e
       LifecycleMailer.deliver_exception_notification(e)
     end

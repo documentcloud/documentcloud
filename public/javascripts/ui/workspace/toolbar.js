@@ -146,6 +146,21 @@ dc.ui.Toolbar = Backbone.View.extend({
     if (docs.length) Documents.downloadViewers(docs);
   },
 
+  reprocessText : function() {
+    var docs = Documents.chosen();
+    if (!docs.length || !Documents.allowedToEdit(docs)) return;
+    var title = Inflector.pluralize('document', docs.length);
+    var dialog = new dc.ui.Dialog.confirm("This will reprocess the text from the original " + title + ". You may also force the text to be extracted by optical character recognition.", function() {
+      _.each(docs, function(doc){ doc.reprocessText(); });
+      return true;
+    });
+    var force = $(dialog.make('div', {'class':'minibutton dark'}, 'Force OCR')).bind('click', function() {
+      _.each(docs, function(doc){ doc.reprocessText(true); });
+      dialog.close();
+    });
+    dialog.$('.ok').text('Reprocess').before(force);
+  },
+
   checkFloat : function() {
     var open = dc.app.navigation.isOpen('search');
     var floating = open && ($(window).scrollTop() > $(this.el).offset().top - 30);
@@ -237,6 +252,7 @@ dc.ui.Toolbar = Backbone.View.extend({
         {title : 'Related Article URL',  attrs: {'class' : 'multiple indent'}, onClick : this.editRelatedArticle},
         {title : 'Document URL',         attrs: {'class' : 'singular indent'}, onClick : this.editDocumentURL},
         {title : 'Access Level',         attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
+        {title : 'Reprocess Text',       attrs: {'class' : 'multiple'},        onClick : this.reprocessText},
         {title : 'Delete Documents',     attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
       ]
     });

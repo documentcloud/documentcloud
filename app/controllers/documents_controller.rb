@@ -94,6 +94,13 @@ class DocumentsController < ApplicationController
     json 'queue_length' => Document.pending.count
   end
 
+  def reprocess_text
+    return not_found unless doc = current_document(true)
+    return json(nil, 403) unless current_account.allowed_to_edit?(doc)
+    doc.reprocess_text(params[:ocr])
+    json nil
+  end
+
   def send_pdf
     return not_found unless current_document(true)
     redirect_to(current_document.pdf_url(:direct))
