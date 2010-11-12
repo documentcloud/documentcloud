@@ -37,7 +37,7 @@ dc.model.Account = Backbone.Model.extend({
   checkAllowedToEdit: function(resource) {
     var resourceId = resource.get('document_id') || resource.id;
     if (resource.get('account_id') == this.id) return true;
-    if (resource.get('organization_id') == this.get('organization_id') && this.isAdmin()) return true;
+    if (resource.get('organization_id') == this.get('organization_id') && (this.isAdmin() || this.isContributor())) return true;
     if (Projects.isDocumentIdShared(resourceId)) return true;
   },
 
@@ -52,6 +52,10 @@ dc.model.Account = Backbone.Model.extend({
 
   isAdmin : function() {
     return this.get('role') == this.ADMINISTRATOR;
+  },
+
+  isContributor : function() {
+    return this.get('role') == this.CONTRIBUTOR;
   },
 
   isPending : function() {

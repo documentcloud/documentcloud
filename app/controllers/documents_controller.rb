@@ -53,7 +53,7 @@ class DocumentsController < ApplicationController
 
   def destroy
     return not_found unless doc = current_document(true)
-    if !current_account.owns_or_administers?(doc)
+    if !current_account.owns_or_collaborates?(doc)
       doc.errors.add_to_base "You don't have permission to delete the document."
       return json(doc, 403)
     end

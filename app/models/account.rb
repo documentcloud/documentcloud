@@ -76,13 +76,18 @@ class Account < ActiveRecord::Base
     role == ADMINISTRATOR
   end
 
+  # Is this account a contributor?
+  def contributor?
+    role == CONTRIBUTOR
+  end
+
   # An account owns a resource if it's tagged with the account_id.
   def owns?(resource)
     resource.account_id == id
   end
 
-  def administers?(resource)
-    admin? &&
+  def collaborates?(resource)
+    (admin? || contributor?) &&
       resource.organization_id == organization_id &&
       [ORGANIZATION, EXCLUSIVE, PUBLIC, PENDING, ERROR].include?(resource.access)
   end
@@ -104,15 +109,15 @@ class Account < ActiveRecord::Base
       where a.id != #{id}
     EOS
     )
-    collaborators.any? {|account| account.owns_or_administers?(resource) }
+    collaborators.any? {|account| account.owns_or_collaborates?(resource) }
   end
 
-  def owns_or_administers?(resource)
-    owns?(resource) || administers?(resource)
+  def owns_or_collaborates?(resource)
+    owns?(resource) || collaborates?(resource)
   end
 
   def allowed_to_edit?(resource)
-    owns_or_administers?(resource) || shared?(resource)
+    owns_or_collaborates?(resource) || shared?(resource)
   end
 
   def accessible_document_ids
