@@ -225,9 +225,8 @@
   }
   .editor_toolbar .editor_hint {
     font-size: 16px;
-    color: #D0D0D0;
+    color: #999;
     font-weight: bold;
-    text-transform: uppercase;
     position: absolute;
     top: 0;
   }
@@ -311,7 +310,7 @@
     position: relative;
     overflow-x: auto;
     overflow-y: hidden;
-    height: 62px;
+    height: 64px;
   }
     #reorder_pages_container .editor_hint {
       position: static;
@@ -319,12 +318,12 @@
       float: left;
     }
     #reorder_pages_container .reorder_pages_confirm .minibutton {
-      margin: 18px 0 0;
+      margin: 20px 0 0;
       float: left;
     }
 
 .DV-pages.reorder_pages_viewer {
-  margin-top: 64px;
+  margin-top: 66px;
 }
   .DV-pages.reorder_pages_viewer .DV-thumbnail {
     cursor: move;
@@ -341,11 +340,11 @@
     position: relative;
     overflow-x: auto;
     overflow-y: hidden;
-    height: 122px;
+    height: 132px;
   }
     #edit_page_text_container .edit_page_text_confirm_info {
       float: left;
-      margin: 50px 12px;
+      margin: 54px 12px 0 20px;
     }
     #edit_page_text_container .edit_page_text_confirm_input {
       text-transform: none;
@@ -361,7 +360,7 @@
   }
 
 .DV-pages.edit_page_text_viewer {
-  margin-top: 122px;
+  margin-top: 132px;
 }
 .DV-textContents.DV-editing {
   border: 1px dotted #505050;
@@ -375,7 +374,7 @@
   height: 64px;
 }
   #replace_pages_container .editor_hint {
-    margin: 24px 0 0 24px;
+    margin: 23px 0 0 20px;
   }
   #replace_pages_container .replace_pages_upload {
     margin: 20px 24px 0 0;
