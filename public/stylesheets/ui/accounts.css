@@ -144,8 +144,11 @@
   width: 425px;
 }
   #share_dialog .document_reviewers {
-    margin: 30px 0 10px;
+    margin: 0;
     text-align: left;
+    max-height: 280px;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   #share_dialog .enter_email .minibutton {
     float: right;
@@ -159,10 +162,7 @@
   }
   #share_dialog .reviewers_title {
   }
-  #share_dialog .reviewer_list_wrapper {
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: 184px;
+  #share_dialog .reviewer_list {
     margin: 15px 0;
   }
     #share_dialog .account_view {
@@ -171,16 +171,10 @@
       font: 11px/27px Helvetica, Arial;
       border-bottom: 1px solid #222;
     }
-  #share_dialog .slug {
-    margin: 3px 0 0;
-    font-size: 10px;
+  #share_dialog .reviewer_management {
     text-align: left;
-    color: #999;
+    margin-top: 10px;
   }
-  #share_dialog .description_wrap {
-    margin: 10px 0 0 0;
+  #share_dialog .controls {
+    margin-top: 0;
   }
-    #share_dialog #project_description {
-      width: 410px;
-      height: 64px;
-    }

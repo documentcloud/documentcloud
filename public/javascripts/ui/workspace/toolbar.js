@@ -130,7 +130,8 @@ dc.ui.Toolbar = Backbone.View.extend({
     var docs = Documents.chosen();
     if (!docs.length || !Documents.allowedToEdit(docs)) return;
     
-    (new dc.ui.ShareDialog({'docs': docs})).render();
+    dc.app.shareDialog = new dc.ui.ShareDialog({'docs': docs});
+    dc.app.shareDialog.render();
   },
   
   openPublicationDateDialog : function() {

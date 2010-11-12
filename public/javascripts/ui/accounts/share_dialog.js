@@ -4,6 +4,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   
   className : 'account_list dialog',
 
+  commonReviewers : [],
+  renderedCommonReviewers : [],
+  
   events : {
     'click .ok'                     : 'close',
     'click .add_reviewer'           : '_showEnterEmail',
@@ -21,7 +24,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       title         : dc.account.organization.name,
       information   : 'Sharing ' + options.docs.length + Inflector.pluralize(' Document', options.docs.length)
     });
-    this.model = options.docs[0];
+    this.docs = (new Backbone.Collection(options.docs));
+    this.docsUnfetched = this.docs.length;
     $(this.el).hide();
   },
 
@@ -30,32 +34,83 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     $(document.body).addClass('overlay');
     this._container = this.$('.custom');
     this._container.setMode('not', 'draggable');
-    this.addControl(this.make('div', {'class': 'minibutton dark add_reviewer', style : 'width: 90px;'}, 'Add Reviewer'));
-    this.$('.custom').html(JST['account/share_dialog']({model : this.model}));
+    this.renderedCommonReviewers = [];
+    this.addControl(this.make('div', {
+      'class': 'minibutton dark add_reviewer', 
+      style : 'width: 90px;'
+    }, 'Add Reviewer'));
+    this.$('.custom').html(JST['account/share_dialog']({}));
     this.list = this.$('.account_list_content');
-    if (this.model.reviewers.length) {
-      this._finishRender();
+    if (this.docs.all(function(doc) { return doc.reviewers.length; })) {
+      this._finishRender(true);
     } else {
-      dc.ui.spinner.show();
-      this.model.reviewers.fetch({success : this._finishRender});
+      this.showSpinner();
+      this.docs.each(_.bind(function(doc) {
+        if (doc.reviewers.length) {
+          this.docsUnfetched -= 1;
+        } else {
+          doc.reviewers.fetch({success : this._finishRender});
+        }
+      }, this));
     }
     $(this.el).show();
     return this;
   },
   
-  _finishRender : function() {
-    dc.ui.spinner.hide();
-    if (this.model.reviewers.length) {
-      var views = this.model.reviewers.map(_.bind(function(account) {
-        return (new dc.ui.AccountView({model : account, kind : 'reviewer'})).render(null, {doc : this.model}).el;
+  _finishRender : function(loaded) {
+    this.docsUnfetched -= 1;
+    if (this.docsUnfetched <= 0 || loaded) {
+      this.hideSpinner();
+      this.$('.document_reviewers').empty();
+      if (this.docs.length > 1) {
+        this.commonReviewers = Documents.sharedReviewers(this.docs);
+        if (this.commonReviewers.length) {
+          this._renderReviewerGroup('common', 'Common');
+        }
+      }
+      this.docs.each(_.bind(function(doc) {
+        this._renderReviewerGroup(doc.get('id'), doc.get('title'));
+        if (doc.reviewers.length) {
+          doc.reviewers.each(_.bind(function(account) {
+            this._renderReviewer(account, doc);
+          }, this));
+        } else {
+          this.$('.reviewers_'+doc.get('id')+' .reviewer_list').append(this.make('div', { 
+            'class' : 'reviewers_empty'
+          }, 'No reviewers.'));
+        }
+        $(this.el).show();
+        this.center();  
       }, this));
-      this.$('.reviewer_list tbody').append(views);
-      this.$('.reviewers').show();
     }
-    $(this.el).show();
-    this.center();  
   },
-
+  
+  _renderReviewer : function(account, doc) {
+    var isCommon = _.contains(this.commonReviewers, account.get('id'));
+    var group = '.reviewers_' + (isCommon ? 'common' : doc.get('id'));
+    
+    if (isCommon) {
+      if (!_.contains(this.renderedCommonReviewers, account.get('id'))) {
+        this.renderedCommonReviewers.push(account.get('id'));
+      } else {
+        return;
+      }
+    }
+    
+    var view = (new dc.ui.AccountView({
+      model : account, 
+      kind : 'reviewer'
+    })).render(null, {doc : doc}).el;
+    this.$(group + ' .reviewer_list').append(view);
+  },
+  
+  _renderReviewerGroup : function(group, title) {
+    this.$('.document_reviewers').append(JST['account/reviewer_group']({
+      group      : group,
+      groupTitle : title
+    }));
+  },
+  
   close : function() {
     dc.ui.notifier.hide();
     $(this.el).hide();
@@ -72,38 +127,52 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     var email = this.$('#reviewer_email').val();
     if (!email) return this.error('Please enter an email address.');
     this.showSpinner();
-    this.model.reviewers.create({email : email}, {
-      success : _.bind(function(acc, resp) {
-        // this.model.set({reviewers_count : this.model.get('reviewers_count') + 1});
-        dc.ui.notifier.show({
-          text      : 'Document review instructions sent to ' + acc.get('email'),
-          duration  : 5000,
-          mode      : 'info'
-        });
-        this.render(true);
-      }, this),
-      error   : _.bind(function(acc, resp) {
-        this.hideSpinner();
-        console.log(['error', acc, resp, arguments]);
-        if (resp.status == 409) {
-          this.error('You cannot add yourself as a reviewer.');
-        } else {
-          this.error('Unable to use that email.');
-        }
-      }, this)
-    });
+    this.docs.each(_.bind(function(doc) {
+      doc.reviewers.create({email : email}, {
+        success : _.bind(function(acc, resp) {
+          // this.model.set({reviewers_count : this.model.get('reviewers_count') + 1});
+          dc.ui.notifier.show({
+            text      : 'Document review instructions sent to ' + acc.get('email'),
+            duration  : 5000,
+            mode      : 'info'
+          });
+          this.render(true);
+        }, this),
+        error   : _.bind(function(acc, resp) {
+          this.hideSpinner();
+          console.log(['error', acc, resp, arguments]);
+          if (resp.status == 409) {
+            this.error('You cannot add yourself as a reviewer.');
+          } else {
+            this.error('Unable to use that email.');
+          }
+        }, this)
+      });
+    }, this));
   },
 
   _removeReviewer : function(e) {
     this.showSpinner();
-    var reviewers = this.model.reviewers.get(parseInt($(e.target).attr('data-id'), 10));
-    reviewers.destroy({
-      success : _.bind(function(){ 
-        // this.model.set({reviewer_count : this.model.get('reviewer_count') - 1}); 
-        this.render(true);
-      }, this)
-    });
+    var docId = $(e.target).parents('.reviewers').attr('data-doc-id');
+    if (docId == 'common') {
+      var reviewers = this.docs.map(function(doc) {
+        doc.reviewers.get(parseInt($(e.target).attr('data-id'), 10));
+      });
+    } else {
+      var doc = this.docs.detect(function(doc) { return doc.get('id') == parseInt(docId, 10); });
+      var reviewers = [doc.reviewers.get(parseInt($(e.target).attr('data-id'), 10))];
+    }
+    
+    _.each(reviewers, _.bind(function(reviewer) {
+      reviewer.destroy({
+        success : _.bind(function(){ 
+          // this.model.set({reviewer_count : this.model.get('reviewer_count') - 1}); 
+          this.render(true);
+        }, this)
+      });
+    }, this));
   }
 
 
 });
+
