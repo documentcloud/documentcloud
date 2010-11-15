@@ -1,4 +1,7 @@
 <div class="reviewers reviewers_<%= group %> not_draggable" data-doc-id="<%= group %>">
+  <% if (thumbnailUrl) { %>
+    <div class="reviewers_document_image"><img src="<%= thumbnailUrl %>" /></div>
+  <% } %>
   <div class="reviewers_title">
     <%= groupTitle %> Reviewers:
   </div>

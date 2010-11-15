@@ -28,6 +28,7 @@ class Account < ActiveRecord::Base
 
   # Scopes:
   named_scope :admin, {:conditions => {:role => ADMINISTRATOR}}
+  named_scope :contributors, {:conditions => ["role IN (?)", [ADMINISTRATOR, CONTRIBUTOR]]}
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session=nil)

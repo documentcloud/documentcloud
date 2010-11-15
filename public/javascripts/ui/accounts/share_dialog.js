@@ -60,7 +60,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _finishRender : function(loaded) {
     this.docsUnfetched -= 1;
     if (this.docsUnfetched <= 0 || loaded) {
-      this.hideSpinner();
+      $(this.el).hide();
       this.$('.document_reviewers').empty();
       if (this.docs.length > 1) {
         this.commonReviewers = Documents.sharedReviewers(this.docs);
@@ -69,7 +69,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         }
       }
       this.docs.each(_.bind(function(doc) {
-        this._renderReviewerGroup(doc.get('id'), doc.get('title'));
+        this._renderReviewerGroup(doc.get('id'), doc.get('title'), doc.get('thumbnail_url'));
         if (doc.reviewers.length) {
           doc.reviewers.each(_.bind(function(account) {
             this._renderReviewer(account, doc);
@@ -79,9 +79,10 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
             'class' : 'reviewers_empty'
           }, 'No reviewers.'));
         }
-        $(this.el).show();
-        this.center();  
       }, this));
+      $(this.el).show();
+      this.center();  
+      this.hideSpinner();
     }
   },
   
@@ -104,10 +105,11 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.$(group + ' .reviewer_list').append(view);
   },
   
-  _renderReviewerGroup : function(group, title) {
+  _renderReviewerGroup : function(group, title, thumbnailUrl) {
     this.$('.document_reviewers').append(JST['account/reviewer_group']({
-      group      : group,
-      groupTitle : title
+      group        : group,
+      groupTitle   : title,
+      thumbnailUrl : thumbnailUrl
     }));
   },
   

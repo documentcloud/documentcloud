@@ -141,7 +141,7 @@
 
 /*--------------------------- Share Documents Dialog ----------------------------*/
 #share_dialog {
-  width: 425px;
+  width: 525px;
 }
   #share_dialog .document_reviewers {
     margin: 0;
@@ -149,6 +149,9 @@
     max-height: 280px;
     overflow-x: hidden;
     overflow-y: auto;
+  }
+  #share_dialog .reviewers {
+    position: relative;
   }
   #share_dialog .enter_email .minibutton {
     float: right;
@@ -161,10 +164,29 @@
     left: 170px; right: 125px;
   }
   #share_dialog .reviewers_title {
+    font-size: 15px;
+    margin: 0 0 0 42px;
   }
+  #share_dialog .reviewers_document_image {
+    line-height: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+    #share_dialog .reviewers_document_image img {
+      width: 30px;
+      height: 37px;
+      border: 1px solid #303030;
+      margin: 0 6px 0 0;
+    }
   #share_dialog .reviewer_list {
-    margin: 15px 0;
+    margin: 4px 15px 30px 42px;
+    width: auto;
   }
+    #share_dialog .reviewers_empty {
+      font-size: 12px;
+      color: #A0A0A0;
+    }
     #share_dialog .account_view {
       padding: 10px 0;
       height: 27px;
@@ -177,4 +199,10 @@
   }
   #share_dialog .controls {
     margin-top: 0;
+  }
+  #share_dialog .reviewers_common .reviewers_title {
+    margin-left: 0;
+  }
+  #share_dialog .reviewers_common .reviewer_list {
+    margin-left: 0;
   }
