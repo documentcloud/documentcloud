@@ -40,15 +40,11 @@ _.extend(dc.app.editor, {
     }
   },
 
-  closeAllEditors : function(state) {
-    if (state != 'ViewThumbnails') {
-      this.removePagesEditor.close();
-      this.reorderPagesEditor.close();
-      this.replacePagesEditor.close();
-    }
-    if (state != 'ViewText') {
-      this.pageTextEditor.close();
-    }
+  closeAllEditors : function() {
+    this.removePagesEditor.close();
+    this.reorderPagesEditor.close();
+    this.replacePagesEditor.close();
+    this.pageTextEditor.close();
   },
 
   setupStateChangeCallbacks : function() {
