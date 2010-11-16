@@ -4,6 +4,10 @@ namespace :app do
     sh "sudo /etc/init.d/nginx start"
   end
 
+  task :devstart do
+    sh "rake crowd:server:start && rake crowd:node:start && rake sunspot:solr:start && sudo nginx"
+  end
+
   task :stop do
     sh "sudo /etc/init.d/nginx stop"
   end
