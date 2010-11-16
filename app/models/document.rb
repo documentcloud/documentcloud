@@ -307,11 +307,7 @@ class Document < ActiveRecord::Base
 
   # Externally used image path, not to be confused with `page_image_path()`
   def page_image_template
-    "#{slug}-p{page}-{size}.gif?#{modified_timestamp}"
-  end
-
-  def modified_timestamp
-    "#{updated_at.to_i}"
+    "#{slug}-p{page}-{size}.gif"
   end
 
   def page_text_template
@@ -336,16 +332,12 @@ class Document < ActiveRecord::Base
     File.join(DC::Store::AssetStore.web_root, page_image_path(1, 'thumbnail'))
   end
 
-  def private_thumbail_url
+  def private_thumbnail_url
     DC::Store::AssetStore.new.authorized_url(page_image_path(1, 'thumbnail'))
   end
 
-  def raw_thumbnail_url
-    public? ? public_thumbnail_url : private_thumbail_url
-  end
-
   def thumbnail_url
-    "#{raw_thumbnail_url}?#{modified_timestamp}"
+    public? ? public_thumbnail_url : private_thumbnail_url
   end
 
   def public_full_text_url
