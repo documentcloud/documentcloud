@@ -7,6 +7,10 @@
 <td class="organization_name selectable_text">
   <%= account.get('email') %>
 </td>
+<td class="">
+  <span class="remove text_link" data-account-id="<%= account.id %>">revoke access</span>
+</td>
+
 <td class="last">
-  <span class="remove text_link" data-id="<%= account.id %>">revoke access</span>
+  <span class="document_count selectable_text"><%= documentCount %> <%= Inflector.pluralize('document', documentCount) %></span>
 </td>

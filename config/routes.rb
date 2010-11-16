@@ -36,6 +36,7 @@ ActionController::Routing::Routes.draw do |map|
   map.page_text  "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :send_page_text, :conditions => {:method => :get}
   map.set_text   "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :set_page_text,  :conditions => {:method => :post}
   map.page_image "/documents/:id/pages/:page_name.gif", :controller => :documents, :action => :send_page_image
+  map.reviewers  "/documents/reviewers/add",            :controller => :reviewers, :action => :add_reviewer, :conditions => {:method => :post}
 
   # API.
   map.with_options :controller => 'api' do |api|
