@@ -19,7 +19,6 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
       guide : $('#edit_page_text_guide'),
       guideButton: $('.edit_page_text.button'),
       page : $('.DV-text'),
-      textContents : $('.DV-textContents'),
       pages : $('.DV-pages'),
       viewerContainer : $('.DV-docViewer-Container'),
       header : $('#edit_page_text_container'),
@@ -34,8 +33,8 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
     this.originalPageText = {};
     this.pageText = {};
     this.setMode('is', 'open');
-    this.render();
     this.viewer.api.enterEditPageTextMode();
+    this.render();
   },
 
   render : function() {
@@ -51,15 +50,12 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
     this.$s.guide.fadeIn('fast');
     this.$s.saveButton.setMode('not', 'enabled');
     this.$s.header.removeClass('active');
-    this.$s.textContents.attr('contentEditable', true);
-    this.$s.textContents.addClass('DV-editing');
-
+    $('.DV-textContents').attr('contentEditable', true).addClass('DV-editing');
     this.handleEvents();
   },
 
   handleEvents : function() {
-    this.$s.textContents.bind('keyup', this.cachePageText);
-    this.$s.textContents.bind('change', this.cachePageText);
+    $('.DV-textContents').bind('keyup', this.cachePageText).bind('change', this.cachePageText);
   },
 
   getPageNumber : function() {
@@ -92,7 +88,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
 
   cachePageText : function() {
     var pageNumber = this.getPageNumber();
-    var pageText = Inflector.trim(this.$s.textContents.textWithNewlines());
+    var pageText = Inflector.trim($('.DV-textContents').textWithNewlines());
 
     if (!(pageNumber in this.originalPageText)) {
       this.originalPageText[pageNumber] = $.trim(this.getPageText(pageNumber));
@@ -179,8 +175,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
       this.$s.guideButton.removeClass('open');
       this.$s.guide.fadeOut('fast');
       this.$s.pages.removeClass('edit_page_text_viewer');
-      this.$s.textContents.attr('contentEditable', false);
-      this.$s.textContents.removeClass('DV-editing');
+      $('.DV-textContents').attr('contentEditable', false).removeClass('DV-editing');
       $(this.el).remove();
       this.viewer.api.leaveEditPageTextMode();
     }
