@@ -4,8 +4,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   id        : 'upload_dialog',
   className : 'dialog',
 
-  INSERT_PAGES_MESSAGE: 'This process will take a few minutes.<br /><br />\
-    This window must close while pages are being added and the document is being reconstructed.',
+  INSERT_PAGES_MESSAGE: 'Rebuilding the document takes a few minutes. \
+    This window will now close.',
 
   constructor : function(options) {
     var defaults = {
@@ -23,6 +23,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     _.bindAll(this, 'setupUploadify', 'countDocuments', '_onSelect', '_onSelectOnce',
       '_onCancel', '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
     dc.ui.Dialog.call(this, options);
+    if (options.autoStart) $(this.el).addClass('autostart');
     if (dc.app.navigation) {
       dc.app.navigation.bind('tab:documents', _.bind(function(){ _.defer(this.setupUploadify); }, this));
     }
@@ -44,14 +45,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._renderDocumentTiles();
     this.countDocuments();
     this.center();
-    if (this.options.autoStart) {
-      this.$('.controls').hide();
-    }
-    if (this.options.insertPages) {
-      this.title($('.replace_pages_hint').text());
-    } else {
-      this.checkQueueLength();
-    }
+    if (!this.options.insertPages) this.checkQueueLength();
     return this;
   },
 
@@ -118,7 +112,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       return dc.ui.Dialog.alert("You can only upload documents less than 200MB in size. Please <a href=\"/help/troubleshooting\">optimize your document</a> before continuing.");
     }
     this.render();
-    if (this.options.autostart) {
+    if (this.options.autoStart) {
       this.button.uploadifyUpload();
     }
   },
@@ -190,7 +184,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       } catch (e) {
         // No parent window...
       }
-      dc.ui.Dialog.alert(this.INSERT_PAGES_MESSAGE, {onClose : window.close});
+      dc.ui.Dialog.alert(this.INSERT_PAGES_MESSAGE, {onClose : function() { window.close(); }});
     }
     this.close();
   },

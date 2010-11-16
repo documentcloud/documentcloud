@@ -7,7 +7,7 @@ class DocumentInsertPages < DocumentModBase
   def process
     begin
       prepare_pdf
-      process_concat options['insert_page_at'], options['pdfs_count']
+      process_concat options['insert_page_at'].to_i, options['pdfs_count'].to_i
     rescue Exception => e
       LifecycleMailer.deliver_exception_notification(e)
       raise e
@@ -20,7 +20,7 @@ class DocumentInsertPages < DocumentModBase
   end
 
   def process_concat(insert_page_at, pdfs_count)
-    letters = 'abcdefghijklmnopqrstuvwxyz'.upcase.split('')
+    letters = ('A'..'Z').to_a
     pdf_names = {}
     (1..pdfs_count).each do |n|
       letter = letters[n%26]
@@ -29,7 +29,9 @@ class DocumentInsertPages < DocumentModBase
       pdf_names[letter] = "#{letter}=#{n.to_s}.pdf"
     end
 
-    cmd = "pdftk A=#{@pdf} #{pdf_names.values.join(' ')} cat A1-#{insert_page_at} #{pdf_names.keys.join(' ')} A#{insert_page_at.to_i+1}-end output #{document.slug}.pdf_temp"
+    start_part  = insert_page_at <= 0 ? '' : "A1-#{insert_page_at}"
+    end_part    = insert_page_at < document.page_count ? "A#{insert_page_at + 1}-end" : ''
+    cmd = "pdftk A=#{@pdf} #{pdf_names.values.join(' ')} cat #{start_part} #{pdf_names.keys.join(' ')} #{end_part} output #{document.slug}.pdf_temp"
     `#{cmd}`
 
     asset_store.save_pdf(document, "#{document.slug}.pdf_temp", access)
@@ -42,7 +44,7 @@ class DocumentInsertPages < DocumentModBase
     asset_store.delete_insert_pdfs(document)
 
 
-    annotations = Annotation.all(:conditions => ["document_id = ? and page_number > ?", 
+    annotations = Annotation.all(:conditions => ["document_id = ? and page_number > ?",
                                                  document.id, insert_page_at.to_i])
     annotations.each do |annotation|
       annotation.page_number += pdf_page_offset

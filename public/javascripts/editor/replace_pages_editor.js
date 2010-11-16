@@ -141,7 +141,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
   },
 
   updateHint : function(state) {
-    var hint;
+    var hint, range, insertion;
 
     if (state == 'choose') {
       hint = "Choose a location to insert pages.";
@@ -151,7 +151,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
       $(this.el).setMode('on', 'upload');
       hint = "Upload pages to " + (replace ? 'replace ' : 'insert ');
       if (replace) {
-        var range = this.getPageRange();
+        range = this.getPageRange();
         if (range.start != range.end) {
           hint += "pages " + range.start + " through " + range.end + ".";
         } else {
@@ -159,27 +159,23 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
         }
       } else if (state == 'insert') {
         var pageCount = this.viewer.api.numberOfPages();
-        var pageNumber = this.getInsertPageNumber();
-        if (pageNumber < 1) {
+        var insertion = this.getInsertPageNumber();
+        if (insertion < 1) {
           hint += "before the first page.";
-        } else if (pageNumber < pageCount) {
-          hint += "between pages " + pageNumber + " and " + (pageNumber + 1) + ".";
-        } else if (pageNumber >= pageCount) {
+        } else if (insertion < pageCount) {
+          hint += "between pages " + insertion + " and " + (insertion + 1) + ".";
+        } else if (insertion >= pageCount) {
           hint += "after the last page.";
         }
       }
-      this.updateUploader({
-        insertPageAt:       null,
-        replacePagesStart:  replace ? range.start : null,
-        replacePagesEnd:    replace ? range.end : null
+      dc.app.uploader.insertPagesAttrs({
+        insertPageAt:       insertion,
+        replacePagesStart:  range && range.start,
+        replacePagesEnd:    range && range.end
       });
     }
 
     this.$s.hint.text(hint);
-  },
-
-  updateUploader : function(attrs) {
-    dc.app.uploader.insertPagesAttrs(attrs);
   },
 
   getPageRange : function() {
