@@ -27,8 +27,7 @@
 
 #upload_dialog.autostart .controls,
 #upload_dialog.autostart .title,
-#upload_dialog.autostart .upload_email,
-#upload_dialog.autostart .spinner_dark {
+#upload_dialog.autostart .upload_email {
   display: none;
 }
 

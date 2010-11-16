@@ -147,7 +147,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     if (this.options.insertPages)  attrs.document_number = this._uploadIndex;
     if (this.options.insertPages)  attrs.document_count = this.collection.length;
     this.button.uploadifySettings('scriptData', attrs, true);
-    this.showSpinner();
+    if (!this.options.autoStart) this.showSpinner();
     this._list[0].scrollTop = 0;
   },
 
