@@ -92,7 +92,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
 
   cachePageText : function() {
     var pageNumber = this.getPageNumber();
-    var pageText = Inflector.trim(this.extractText(this.$s.textContents));
+    var pageText = Inflector.trim(this.$s.textContents.textWithNewlines());
 
     if (!(pageNumber in this.originalPageText)) {
       this.originalPageText[pageNumber] = $.trim(this.getPageText(pageNumber));
@@ -160,22 +160,6 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
     var confirmWidth = $('.remove_pages_confirm', this.el).outerWidth(true);
     this.$s.headerTiles.width(width + confirmWidth);
     Backbone.View.prototype.delegateEvents.call(this);
-  },
-
-  extractText : function(elems) {
-    var ret = "", elem;
-
-    _.each(elems, _.bind(function(elem) {
-      if (elem.nodeType == 3 || elem.nodeType == 4) {
-        // Get the text from text nodes and CDATA nodes
-        ret += elem.nodeValue;
-      } else if (elem.nodeType != 8) {
-        // Traverse everything else, except comment nodes
-        ret += this.extractText(elem.childNodes) + '\n';
-      }
-    }, this));
-
-    return ret;
   },
 
   getChangedPageTextPages : function() {
