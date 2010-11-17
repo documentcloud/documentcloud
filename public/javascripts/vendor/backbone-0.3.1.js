@@ -1,4 +1,4 @@
-//     Backbone.js 0.3.0
+//     Backbone.js 0.3.1
 //     (c) 2010 Jeremy Ashkenas, DocumentCloud Inc.
 //     Backbone may be freely distributed under the MIT license.
 //     For all details and documentation:
@@ -19,7 +19,7 @@
   }
 
   // Current version of the library. Keep in sync with `package.json`.
-  Backbone.VERSION = '0.3.0';
+  Backbone.VERSION = '0.3.1';
 
   // Require Underscore, if we're on the server, and it's not already present.
   var _ = this._;
@@ -118,7 +118,7 @@
     this.set(attributes || {}, {silent : true});
     this._previousAttributes = _.clone(this.attributes);
     if (options && options.collection) this.collection = options.collection;
-    if (this.initialize) this.initialize(attributes, options);
+    this.initialize(attributes, options);
   };
 
   // Attach all inheritable methods to the Model prototype.
@@ -130,6 +130,10 @@
 
     // Has the item been changed since the last `"change"` event?
     _changed : false,
+
+    // Initialize is an empty function by default. Override it with your own
+    // initialization logic.
+    initialize : function(){},
 
     // Return a copy of the model's `attributes` object.
     toJSON : function() {
@@ -270,7 +274,7 @@
     url : function() {
       var base = getUrl(this.collection);
       if (this.isNew()) return base;
-      return base + '/' + this.id;
+      return base + (base.charAt(base.length - 1) == '/' ? '' : '/') + this.id;
     },
 
     // **parse** converts a response into the hash of attributes to be `set` on
@@ -368,7 +372,7 @@
     this._boundOnModelEvent = _.bind(this._onModelEvent, this);
     this._reset();
     if (models) this.refresh(models, {silent: true});
-    if (this.initialize) this.initialize(models, options);
+    this.initialize(models, options);
   };
 
   // Define the Collection's inheritable methods.
@@ -377,6 +381,10 @@
     // The default model for a collection is just a **Backbone.Model**.
     // This should be overridden in most cases.
     model : Backbone.Model,
+
+    // Initialize is an empty function by default. Override it with your own
+    // initialization logic.
+    initialize : function(){},
 
     // The JSON representation of a Collection is an array of the
     // models' attributes.
@@ -520,7 +528,7 @@
       this.models.splice(index, 0, model);
       model.bind('all', this._boundOnModelEvent);
       this.length++;
-      if (!options.silent) this.trigger('add', model);
+      if (!options.silent) model.trigger('add', model, this);
       return model;
     },
 
@@ -528,15 +536,15 @@
     // hash indexes for `id` and `cid` lookups.
     _remove : function(model, options) {
       options || (options = {});
-      model = this.getByCid(model);
+      model = this.getByCid(model) || this.get(model);
       if (!model) return null;
       delete this._byId[model.id];
       delete this._byCid[model.cid];
       delete model.collection;
       this.models.splice(this.indexOf(model), 1);
-      model.unbind('all', this._boundOnModelEvent);
       this.length--;
-      if (!options.silent) this.trigger('remove', model);
+      if (!options.silent) model.trigger('remove', model, this);
+      model.unbind('all', this._boundOnModelEvent);
       return model;
     },
 
@@ -575,7 +583,7 @@
     options || (options = {});
     if (options.routes) this.routes = options.routes;
     this._bindRoutes();
-    if (this.initialize) this.initialize(options);
+    this.initialize(options);
   };
 
   // Cached regular expressions for matching named param parts and splatted
@@ -585,6 +593,10 @@
 
   // Set up all inheritable **Backbone.Controller** properties and methods.
   _.extend(Backbone.Controller.prototype, Backbone.Events, {
+
+    // Initialize is an empty function by default. Override it with your own
+    // initialization logic.
+    initialize : function(){},
 
     // Manually bind a single named route to a callback. For example:
     //
@@ -687,8 +699,7 @@
       if (current == this.fragment && this.iframe) {
         current = this.getFragment(this.iframe.location);
       }
-      if (!current ||
-          current == this.fragment ||
+      if (current == this.fragment ||
           current == decodeURIComponent(this.fragment)) return false;
       if (this.iframe) {
         window.location.hash = this.iframe.location.hash = current;
@@ -734,7 +745,7 @@
     this._configure(options || {});
     this._ensureElement();
     this.delegateEvents();
-    if (this.initialize) this.initialize(options);
+    this.initialize(options);
   };
 
   // jQuery lookup, scoped to DOM elements within the current view.
@@ -757,10 +768,21 @@
     $       : jQueryDelegate,
     jQuery  : jQueryDelegate,
 
+    // Initialize is an empty function by default. Override it with your own
+    // initialization logic.
+    initialize : function(){},
+
     // **render** is the core function that your view should override, in order
     // to populate its element (`this.el`), with the appropriate HTML. The
     // convention is for **render** to always return `this`.
     render : function() {
+      return this;
+    },
+
+    // Remove this view from the DOM. Note that the view isn't present in the
+    // DOM by default, so calling this method may be a no-op.
+    remove : function() {
+      $(this.el).remove();
       return this;
     },
 
@@ -869,16 +891,16 @@
   // Useful when interfacing with server-side languages like **PHP** that make
   // it difficult to read the body of `PUT` requests.
   Backbone.sync = function(method, model, success, error) {
-    var sendModel = method === 'create' || method === 'update';
     var type = methodMap[method];
-    var modelJSON = JSON.stringify(model.toJSON());
+    var modelJSON = (method === 'create' || method === 'update') ?
+                    JSON.stringify(model.toJSON()) : null;
 
     // Default JSON-request options.
     var params = {
       url:          getUrl(model),
       type:         type,
       contentType:  'application/json',
-      data:         sendModel ? modelJSON : null,
+      data:         modelJSON,
       dataType:     'json',
       processData:  false,
       success:      success,
@@ -889,7 +911,7 @@
     if (Backbone.emulateJSON) {
       params.contentType = 'application/x-www-form-urlencoded';
       params.processData = true;
-      params.data        = sendModel ? {model : modelJSON} : {};
+      params.data        = modelJSON ? {model : modelJSON} : {};
     }
 
     // For older servers, emulate HTTP by mimicking the HTTP method with `_method`

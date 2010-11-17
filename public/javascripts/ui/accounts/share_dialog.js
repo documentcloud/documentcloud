@@ -41,7 +41,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.$('.custom').html(JST['account/share_dialog']({}));
     this.list = this.$('.account_list_content');
     if (this.docs.all(function(doc) { return doc.reviewers.length; })) {
-      this._finishRender(true);
+      this.docsUnfetched = 0;
+      this._finishRender();
     } else {
       this.showSpinner();
       this.docs.each(_.bind(function(doc) {
@@ -56,17 +57,17 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     return this;
   },
   
-  _finishRender : function(loaded) {
+  _finishRender : function() {
     this.docsUnfetched -= 1;
-    
-    if (this.docsUnfetched <= 0 || loaded) {
+    if (this.docsUnfetched <= 0) {
       var views = [];
       // this.commonReviewers = Documents.sharedReviewers(this.docs);
       this._countDocuments();
       this.renderedAccounts = [];
       this.docs.each(_.bind(function(doc) {
         doc.reviewers.each(_.bind(function(account) {
-          views.push(this._renderReviewer(account, doc));
+          var accountView = this._renderReviewer(account);
+          if (accountView) views.push(accountView);
         }, this));
       }, this));
       
@@ -89,15 +90,15 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     }, this));
   },
   
-  _renderReviewer : function(account, doc) {    
-    if (_.contains(this.renderedAccounts, account.get('id'))) return;
-    else this.renderedAccounts.push(account.get('id'));
+  _renderReviewer : function(account) {    
+    if (_.contains(this.renderedAccounts, account.id)) return;
+    else this.renderedAccounts.push(account.id);
     
     var view = (new dc.ui.AccountView({
       model : account, 
       kind : 'reviewer'
     })).render(null, {
-      documentCount : this.accountDocumentCounts[account.get('id')]
+      documentCount : this.accountDocumentCounts[account.id]
     }).el;
     
     return view;
@@ -124,7 +125,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       type : 'POST',
       data : {
         email : email,
-        documents : this.docs.map(function(doc) { return doc.get('id'); })
+        documents : this.docs.map(function(doc) { return doc.id; })
       },
       success: _.bind(function(resp) {
         this.docs.each(_.bind(function(doc) {
@@ -153,32 +154,53 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _removeReviewer : function(e) {
     this.showSpinner();
     var accountId = parseInt($(e.target).attr('data-account-id'), 10);
-    var account;
-    this.removedCount = 0;
     
+    var account;
     this.docs.each(_.bind(function(doc) {
       doc.reviewers.each(_.bind(function(reviewer) {
-        if (reviewer.get('id') == accountId) {
+        if (reviewer.id == accountId) {
           account = reviewer;
-          this.removedCount += 1;
+          _.breakLoop();
         }
       }, this));
+      if (account) _.breakLoop();
     }, this));
-    
-    console.log(['remove', account, accountId, this.removedCount]);
-    this.docs.each(_.bind(function(doc) {
-      if (doc.reviewers.include(account)) {
-        doc.reviewers.get(account).destroy({
-          success : _.bind(function(){
-            this.removedCount -= 1;
-            console.log(['remove success', this.removedCount]);
-            if (this.removedCount == 0) {
-              this.render();
-            }
-          }, this)
-        });
+
+    var documentIds = [];
+    this.docs.each(function(doc) {
+      if (_.contains(doc.reviewers.map(function(r) { return r.id; }), account.id)) {
+        documentIds.push(doc.id);
       }
-    }, this));
+    });
+    
+    console.log(['remove', accountId, account, documentIds]);
+    $.ajax({
+      url : '/documents/reviewers/remove',
+      type : 'POST',
+      data : {
+        account_id : accountId,
+        documents : documentIds
+      },
+      success: _.bind(function(resp) {
+        this.docs.each(_.bind(function(doc) {
+          if (_.contains(documentIds, doc.id)) {
+            doc.reviewers.remove(account);
+          }
+        }, this));
+        dc.ui.notifier.show({
+          text      : account.get('email') + ' is no longer a reviewer on ' + documentIds.length + Inflector.pluralize(' document', documentIds.length),
+          duration  : 5000,
+          mode      : 'info'
+        });
+        this.render(true);
+      }, this),
+      error : _.bind(function(resp) {
+        this.hideSpinner();
+        console.log(['error', resp, arguments]);
+        this.error('There was a problem removing the reviewer.');
+      }, this)
+    });
+    
   }
 
 
