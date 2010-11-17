@@ -23,7 +23,8 @@ Rails::Initializer.run do |config|
   # Gems:
   config.gem 'json',                  :version => '>= 1.1.9'
 
-  config.gem 'calais',                :version => '>= 0.0.8'
+  config.gem 'nokogiri',              :version => '>= 1.4.4'
+  config.gem 'calais',                :version => '>= 0.0.11'
   config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'
   config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
   config.gem 'rubyzip',               :version => '>= 0.9.1',       :lib => 'zip/zip'
