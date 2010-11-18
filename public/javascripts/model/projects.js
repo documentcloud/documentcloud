@@ -126,10 +126,18 @@ dc.model.ProjectSet = Backbone.Collection.extend({
     this.each(function(project) { project.removeDocuments(docs, true); });
   },
 
-  isDocumentIdShared : function(id) {
+  isDocumentShared : function(resource) {
+    var id = resource.get('document_id') || resource.id;
+    var doc = Documents.get(id);
     var projects = this.models;
-    for (var i=0, l=projects.length; i<l; i++) {
-      if (_.include(projects[i].get('document_ids'), id)) return true;
+    for (var i = 0, l = projects.length; i < l; i++) {
+      var project = projects[i];
+      if (_.include(project.get('document_ids'), id)) {
+        for (var j = 0, k = project.collaborators.length; j < k; j++) {
+          var collab = project.collaborators[j];
+          if (collab.ownsOrCollaborates(doc)) return true;
+        }
+      }
     }
     return false;
   }

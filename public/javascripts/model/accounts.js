@@ -34,11 +34,19 @@ dc.model.Account = Backbone.Model.extend({
     dc.app.searcher.search('group: ' + dc.account.organization.slug);
   },
 
-  checkAllowedToEdit: function(resource) {
+  ownsOrCollaborates: function(resource) {
     var resourceId = resource.get('document_id') || resource.id;
     if (resource.get('account_id') == this.id) return true;
     if (resource.get('organization_id') == this.get('organization_id') && (this.isAdmin() || this.isContributor())) return true;
-    if (Projects.isDocumentIdShared(resourceId)) return true;
+    return false;
+  },
+
+  shares: function(resource) {
+    if (Projects.isDocumentShared(resource)) return true;
+  },
+
+  checkAllowedToEdit: function(resource) {
+    return this.ownsOrCollaborates(resource) || this.shares(resource);
   },
 
   fullName : function(nonbreaking) {
