@@ -235,7 +235,7 @@
   #project_dialog .collaborator_list_wrapper {
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 184px;
+    max-height: 185px;
     margin: 15px 0;
   }
     #project_dialog .account_view {

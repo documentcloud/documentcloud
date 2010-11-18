@@ -78,10 +78,7 @@ dc.model.Project = Backbone.Model.extend({
 
   _setCollaboratorsResource : function() {
     if (!(this.collaborators && this.id)) return;
-    var id = this.id;
-    this.collaborators.url = function(){
-      return 'projects/' + id + '/collaborators';
-    };
+    this.collaborators.url = 'projects/' + this.id + '/collaborators';
   }
 });
 
