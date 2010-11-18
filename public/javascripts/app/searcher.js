@@ -54,6 +54,12 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     }
   },
 
+  // Paginate forwards or backwards in the search results.
+  loadPage : function(page, callback) {
+    page = page || this.page || 1;
+    this.search(this.box.value(), page, callback);
+  },
+
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
     dc.app.navigation.open('search');

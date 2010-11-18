@@ -87,7 +87,7 @@ dc.ui.Paginator = Backbone.View.extend({
     callback = _.isFunction(callback) ? callback : null;
     var page = Math.floor(((this.page || 1) - 1) / this.pageFactor()) + 1;
     if (doc) page += Math.floor(Documents.indexOf(doc) / this.pageSize());
-    this.goToPage(page, callback);
+    dc.app.searcher.loadPage(page, callback);
   },
 
   chooseSort : function() {
@@ -100,31 +100,24 @@ dc.ui.Paginator = Backbone.View.extend({
       this.sortOrder = order;
       dc.app.preferences.set({sort_order : order});
       this.$('.sorter').text(this.SORT_TEXT[this.sortOrder]);
-      this.goToPage();
+      dc.app.searcher.loadPage();
       return true;
     }, this), {mode : 'short_prompt'});
   },
 
-  // TODO: Move all these into the searchBox and clean it up.
-
   previousPage : function() {
     var page = (this.page || 1) - 1;
-    this.goToPage(page);
+    dc.app.searcher.loadPage(page);
   },
 
   nextPage : function() {
     var page = (this.page || 1) + 1;
-    this.goToPage(page);
+    dc.app.searcher.loadPage(page);
   },
 
   changePage : function(e) {
     var page = $(e.target).val();
-    this.goToPage(page);
-  },
-
-  goToPage : function(page, callback) {
-    page = page || this.page || 1;
-    dc.app.searcher.search(dc.app.searchBox.value(), page, callback);
+    dc.app.searcher.loadPage(page);
   }
 
 });
