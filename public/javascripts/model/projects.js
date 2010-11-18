@@ -3,8 +3,10 @@
 dc.model.Project = Backbone.Model.extend({
 
   constructor : function(attrs, options) {
+    var collabs = attrs.collaborators || [];
+    delete attrs.collaborators;
     Backbone.Model.call(this, attrs, options);
-    this.collaborators = new dc.model.AccountSet();
+    this.collaborators = new dc.model.AccountSet(collabs);
     this._setCollaboratorsResource();
   },
 
@@ -13,7 +15,6 @@ dc.model.Project = Backbone.Model.extend({
     if (attrs.title)            attrs.title = Inflector.trim(attrs.title).replace(/"/g, '');
     if (attrs.document_ids)     attrs.document_count = attrs.document_ids.length;
     if (attrs.account_id)       attrs.owner = attrs.account_id == dc.account.id;
-    if (attrs.collaborator_ids) attrs.collaborator_count = attrs.collaborator_ids.length;
     Backbone.Model.prototype.set.call(this, attrs, options);
     if (attrs.id) this._setCollaboratorsResource();
     return this;
@@ -70,7 +71,7 @@ dc.model.Project = Backbone.Model.extend({
   statistics : function() {
     var docCount    = this.get('document_count');
     var noteCount   = this.get('annotation_count');
-    var shareCount  = this.get('collaborator_count');
+    var shareCount  = this.collaborators.length;
     return docCount + ' ' + Inflector.pluralize('document', docCount)
       + ', ' + noteCount + ' ' + Inflector.pluralize('note', noteCount)
       + (shareCount ? ', ' + shareCount + ' ' + Inflector.pluralize('collaborator', shareCount) : '');
@@ -80,6 +81,7 @@ dc.model.Project = Backbone.Model.extend({
     if (!(this.collaborators && this.id)) return;
     this.collaborators.url = 'projects/' + this.id + '/collaborators';
   }
+
 });
 
 dc.model.Project.topLevelTitle = function(type) {

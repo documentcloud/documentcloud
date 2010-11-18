@@ -13,7 +13,6 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function(options) {
-    _.bindAll(this, '_finishRender');
     this.model = options.model;
     dc.ui.Dialog.call(this, {
       mode        : 'custom',
@@ -29,11 +28,14 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     this.$('#project_description').val(this.model.get('description') || '');
     if (!this.model.get('owner')) this.$('.minibutton.delete').text("Remove");
     if (this.model.collaborators.length) {
-      this._finishRender();
-    } else {
-      dc.ui.spinner.show();
-      this.model.collaborators.fetch({success : this._finishRender});
+      var views = this.model.collaborators.map(_.bind(function(account) {
+        return (new dc.ui.AccountView({model : account, kind : 'collaborator'})).render(null, {project : this.model}).el;
+      }, this));
+      this.$('.collaborator_list tbody').append(views);
+      this.$('.collaborators').show();
     }
+    $(this.el).show();
+    this.center();
     this._setPlaceholders();
     return this;
   },
@@ -51,19 +53,6 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
 
   _setPlaceholders : function() {
     this.$('#project_title, #project_description').placeholder();
-  },
-
-  _finishRender : function() {
-    dc.ui.spinner.hide();
-    if (this.model.collaborators.length) {
-      var views = this.model.collaborators.map(_.bind(function(account) {
-        return (new dc.ui.AccountView({model : account, kind : 'collaborator'})).render(null, {project : this.model}).el;
-      }, this));
-      this.$('.collaborator_list tbody').append(views);
-      this.$('.collaborators').show();
-    }
-    $(this.el).show();
-    this.center();
   },
 
   // If we don't own it, a request to remove the project is a request to remove
@@ -94,7 +83,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     this.showSpinner();
     this.model.collaborators.create({email : email}, {
       success : _.bind(function(acc, resp) {
-        this.model.set({collaborator_count : this.model.get('collaborator_count') + 1});
+        this.model.change();
         this.render(true);
       }, this),
       error   : _.bind(function(acc) {
@@ -108,7 +97,10 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     this.showSpinner();
     var collab = this.model.collaborators.get(parseInt($(e.target).attr('data-id'), 10));
     collab.destroy({
-      success : _.bind(function(){ this.model.set({collaborator_count : this.model.get('collaborator_count') - 1}); this.render(true);}, this)
+      success : _.bind(function(){
+        this.model.change();
+        this.render(true);
+      }, this)
     });
   },
 

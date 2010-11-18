@@ -1,10 +1,5 @@
 class CollaboratorsController < ApplicationController
 
-  def index
-    collabs = current_project.other_collaborators(current_account)
-    json collabs.to_json(:include_organization => true)
-  end
-
   def create
     account = Account.lookup(pick(params, :email)[:email])
     return json(nil, 404) if !account || account.id == current_account.id

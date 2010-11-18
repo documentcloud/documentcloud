@@ -94,12 +94,16 @@ class Project < ActiveRecord::Base
   end
 
   def to_json(opts={})
-    attributes.merge(
+    acc = opts[:account]
+    attrs = attributes.merge(
       :account_full_name  => account_full_name,
-      :annotation_count   => annotation_count(opts[:account]),
-      :document_ids       => document_ids,
-      :collaborator_ids   => collaborator_ids
-    ).to_json
+      :annotation_count   => annotation_count(acc),
+      :document_ids       => document_ids
+    )
+    if opts[:include_collaborators]
+      attrs[:collaborators] = other_collaborators(acc).map {|c| c.canonical(:include_organization => true) }
+    end
+    attrs.to_json
   end
 
 
