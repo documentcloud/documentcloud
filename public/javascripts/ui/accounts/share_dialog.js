@@ -128,9 +128,11 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         documents : this.docs.map(function(doc) { return doc.id; })
       },
       success: _.bind(function(resp) {
+        var account = new dc.model.Account(resp);
         this.docs.each(_.bind(function(doc) {
-          var account = new dc.model.Account(resp);
-          doc.reviewers.add(account);
+          if (!_.contains(doc.reviewers.map(function(r) { return r.id; }), account.id)) {
+            doc.reviewers.add(account);
+          }
         }, this));
         dc.ui.notifier.show({
           text      : 'Document review instructions sent to ' + resp['email'],
