@@ -18,8 +18,8 @@ dc.ui.Paginator = Backbone.View.extend({
   view  : null,
 
   events : {
-    'click .prev':                'previousPage',
-    'click .next':                'nextPage',
+    'click .arrow.left':          'previousPage',
+    'click .arrow.right':         'nextPage',
     'click .current_placeholder': 'editPage',
     'change .current_page':       'changePage',
     'click .sorter':              'chooseSort',
