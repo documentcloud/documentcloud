@@ -1,6 +1,6 @@
 # How to Add Accounts
 
-Managing your organization's DocumentCloud accounts is done through a single panel: at the bottom of the sidebar, click the "[Show All Accounts][]" link.
+Managing your organization's DocumentCloud accounts is done through a single panel: at the bottom of the sidebar, click the "[Manage Accounts][]" link.
 
 <img src="/images/help/show_all_accounts.jpg" class="full_line" />
 
