@@ -18,11 +18,12 @@ dc.ui.Paginator = Backbone.View.extend({
   view  : null,
 
   events : {
-    'click .prev':          'previousPage',
-    'click .next':          'nextPage',
-    'change .enumeration':  'changePage',
-    'click .sorter':        'chooseSort',
-    'click #size_toggle':   'toggleSize'
+    'click .prev':                'previousPage',
+    'click .next':                'nextPage',
+    'click .current_placeholder': 'editPage',
+    'change .current_page':       'changePage',
+    'click .sorter':              'chooseSort',
+    'click #size_toggle':         'toggleSize'
   },
 
   constructor : function(options) {
@@ -64,6 +65,7 @@ dc.ui.Paginator = Backbone.View.extend({
   },
 
   render : function() {
+    this.setMode('not', 'editing');
     var el = $(this.el);
     el.html('');
     if (!this.query) return this;
@@ -105,6 +107,11 @@ dc.ui.Paginator = Backbone.View.extend({
     }, this), {mode : 'short_prompt'});
   },
 
+  editPage : function() {
+    this.setMode('is', 'editing');
+    this.$('.current_page').focus();
+  },
+
   previousPage : function() {
     var page = (this.page || 1) - 1;
     dc.app.searcher.loadPage(page);
@@ -116,7 +123,7 @@ dc.ui.Paginator = Backbone.View.extend({
   },
 
   changePage : function(e) {
-    var page = $(e.target).val();
+    var page = parseInt($(e.target).val(), 10);
     dc.app.searcher.loadPage(page);
   }
 

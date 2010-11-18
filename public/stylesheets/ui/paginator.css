@@ -27,8 +27,44 @@
       font-weight: bold;
     }
   #paginator .enumeration {
-    margin: 0 8px;
+    float: right;
+    height: 11px;
   }
+    #paginator.is_editing .enumeration {
+      margin-top: -6px;
+    }
+    #paginator .arrow {
+      line-height: 0px;
+      font-size: 16px;
+      position: relative;
+      top: 2px;
+      cursor: pointer;
+    }
+      #paginator .arrow:hover {
+        color: black;
+      }
+    #paginator .current_placeholder {
+      cursor: pointer;
+      font-weight: bold;
+    }
+      #paginator .current_placeholder:hover {
+        text-decoration: underline;
+      }
+      #paginator.is_editing .current_placeholder {
+        display: none;
+      }
+    #paginator .current_page {
+      display: none;
+      width: 25px;
+      text-align: center;
+      color: #999;
+    }
+      #paginator.is_editing .current_page {
+        display: inline;
+      }
+      #paginator .current_page:focus {
+        color: #000;
+      }
   #paginator #size_toggle {
     width: 47px; height: 24px;
     position: absolute;

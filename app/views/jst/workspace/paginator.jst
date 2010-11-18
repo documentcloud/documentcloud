@@ -14,17 +14,15 @@
 <div id="size_toggle"></div>
 
 <% if (q.total > page_size) { %>
-  <span class="noselect">
+  <div class="noselect enumeration">
     <% if (q.page > 1) { %>
-      <span class="prev">&larr;&nbsp;&nbsp;<span class="text_link">Prev</span></span>
+      <span class="prev arrow">&larr;&nbsp;</span>
     <% } %>
-    <select class="enumeration">
-      <% for (var i = 1; i <= page_count; i++) { %>
-        <option value="<%= i %>" <%= i == q.page ? 'selected="true"' : '' %>><%= i %></option>
-      <% } %>
-    </select>
+      Page
+      <input type="text" class="current_page" value="<%= q.page %>" />
+      <span class="current_placeholder"><%= q.page %></span> of <%= page_count %>
     <% if (q.page < page_count) { %>
-      <span class="next"><span class="text_link">Next</span>&nbsp;&nbsp;&rarr;</span>
+      <span class="next arrow">&nbsp;&rarr;</span>
     <% } %>
-  </span>
+  </div>
 <% } %>

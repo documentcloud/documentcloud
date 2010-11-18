@@ -57,6 +57,9 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   // Paginate forwards or backwards in the search results.
   loadPage : function(page, callback) {
     page = page || this.page || 1;
+    var max = dc.app.paginator.pageCount();
+    if (page < 1) page = 1;
+    if (page > max) page = max;
     this.search(this.box.value(), page, callback);
   },
 
