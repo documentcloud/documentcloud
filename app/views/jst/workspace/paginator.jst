@@ -16,13 +16,13 @@
 <% if (q.total > page_size) { %>
   <div class="noselect enumeration">
     <% if (q.page > 1) { %>
-      <div class="icon arrow left"></div>
+      <span class="icon arrow left"></span>
     <% } %>
       Page
       <input type="text" class="current_page" value="<%= q.page %>" />
       <span class="current_placeholder"><%= q.page %></span> of <%= page_count %>
     <% if (q.page < page_count) { %>
-      <div class="icon arrow right"></div>
+      <span class="icon arrow right"></span>
     <% } %>
   </div>
 <% } %>

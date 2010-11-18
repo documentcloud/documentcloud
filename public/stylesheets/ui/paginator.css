@@ -1,10 +1,11 @@
 #paginator {
   display: none;
   position: absolute;
-  bottom: 10px; left: 30px; right: 30px;
-  padding: 15px 0 8px;
+  bottom: 14px; left: 30px; right: 30px;
+  padding: 12px 0 16px;
   font-size: 11px;
-  height: 20px;
+  line-height: 18px;
+  height: 18px;
   color: #999;
   text-align: right;
   border-top: 1px solid #ccc;
@@ -28,27 +29,22 @@
       font-weight: bold;
     }
   #paginator .enumeration {
-    position: absolute;
     height: 20px;
-    padding: 0 25px;
-    right: 0;
   }
     #paginator.is_editing .enumeration {
-      margin-top: -6px;
+      margin-top: -3px;
     }
     #paginator .arrow {
-      position: absolute;
-      top: -1px;
+      display: inline-block;
+      position: relative;
+      width: 16px;
       cursor: pointer;
     }
-      #paginator.is_editing .arrow {
-        top: 5px;
-      }
       #paginator .arrow.left {
-        left: 0;
+        margin-right: 8px;
       }
       #paginator .arrow.right {
-        right: 0;
+        margin-left: 8px;
       }
     #paginator .current_placeholder {
       cursor: pointer;
@@ -62,7 +58,10 @@
       }
     #paginator .current_page {
       display: none;
+      position: relative;
       width: 25px;
+      font-size: 11px;
+      height: 17px;
       text-align: center;
       color: #999;
     }

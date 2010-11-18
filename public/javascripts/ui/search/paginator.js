@@ -124,6 +124,7 @@ dc.ui.Paginator = Backbone.View.extend({
 
   changePage : function(e) {
     var page = parseInt($(e.target).val(), 10);
+    if (page == this.page) return;
     dc.app.searcher.loadPage(page);
   }
 
