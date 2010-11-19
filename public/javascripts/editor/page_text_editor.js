@@ -50,7 +50,6 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
     this.$s.guide.fadeIn('fast');
     this.$s.saveButton.setMode('not', 'enabled');
     this.$s.header.removeClass('active');
-    $('.DV-textContents').attr('contentEditable', true).addClass('DV-editing');
     this.handleEvents();
   },
 
