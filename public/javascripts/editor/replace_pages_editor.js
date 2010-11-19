@@ -69,7 +69,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
     this.unbindEvents();
 
     $thumbnails.each(function(i) {
-      $(this).data('pageNumber', i+1);
+      $(this).attr('data-pageNumber', i+1);
     });
 
     $thumbnails.bind('mouseout.dv-replace', function() {
@@ -77,7 +77,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
     });
     $thumbnails.bind('mousemove.dv-replace', function(e) {
       var $this = $(this);
-      var pageNumber = $this.data('pageNumber');
+      var pageNumber = $this.attr('data-pageNumber');
       var offset = $this.offset();
       var width = $this.outerWidth(true);
       var positionX = e.clientX - offset.left;
@@ -99,8 +99,8 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
     this.resetSelected();
 
     if (dc.app.hotkeys.shift && this.$firstPageSelection) {
-      var firstPageNumber = this.$firstPageSelection.data('pageNumber');
-      var thumbnailPageNumber = $thumbnail.data('pageNumber');
+      var firstPageNumber = this.$firstPageSelection.attr('data-pageNumber');
+      var thumbnailPageNumber = $thumbnail.attr('data-pageNumber');
       var end = Math.max(thumbnailPageNumber, firstPageNumber);
       var start = Math.min(thumbnailPageNumber, firstPageNumber);
       var isReverse = firstPageNumber > thumbnailPageNumber;
@@ -114,7 +114,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
       }
 
       $thumbnails = $thumbnails.filter(function() {
-        var page = $(this).data('pageNumber');
+        var page = $(this).attr('data-pageNumber');
         return start <= page && page <= end;
       });
       $thumbnails.addClass('DV-selected');
@@ -183,7 +183,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
     var $thumbnail = $thumbnails.filter('.DV-selected');
 
     var range = _.map($thumbnail, function(t) {
-      return parseInt($(t).data('pageNumber'), 10);
+      return parseInt($(t).attr('data-pageNumber'), 10);
     });
     var start = _.min(range);
     var end = _.max(range);
@@ -196,7 +196,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
 
   getInsertPageNumber : function() {
     var $active = this.$s.thumbnails.has('.left,.right');
-    var pageNumber = $active.data('pageNumber');
+    var pageNumber = $active.attr('data-pageNumber');
 
     if ($active.find('.left').length) {
       return pageNumber - 1;

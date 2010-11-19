@@ -55,7 +55,7 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
     var $thumbnails = this.$s.thumbnails;
 
     $('.DV-thumbnail', $thumbnails).each(function(i) {
-      $(this).data('pageNumber', i+1);
+      $(this).attr('data-pageNumber', i+1);
     });
     $('.DV-currentPageImage', $thumbnails).removeClass('DV-currentPageImage').addClass('DV-currentPageImage-disabled');
     jQuery('.DV-thumbnails > div').sortable({
@@ -96,7 +96,7 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
     var pageOrder = [];
 
     $('.DV-thumbnail', this.$s.thumbnails).each(function() {
-      pageOrder.push($(this).data('pageNumber'));
+      pageOrder.push($(this).attr('data-pageNumber'));
     });
 
     return pageOrder;

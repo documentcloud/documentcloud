@@ -58,13 +58,13 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
     this.unbindEvents();
 
     $thumbnails.each(function(i) {
-      $(this).data('pageNumber', i+1);
+      $(this).attr('data-pageNumber', i+1);
     });
 
     $thumbnails.bind('mousedown.dv-remove', _.bind(function(e) {
       var $thumbnail = $(e.currentTarget);
       var imageSrc = $('.DV-pageImage,.DV-thumbnail-image img', $thumbnail).eq(0).attr('src');
-      var pageNumber = $thumbnail.data('pageNumber');
+      var pageNumber = $thumbnail.attr('data-pageNumber');
       if (_.contains(this.removePages, pageNumber)) {
         this.removePageNumberFromRemoveSet(pageNumber);
       } else {
@@ -83,7 +83,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
   },
 
   removePageFromRemoveSet : function(e) {
-    var pageNumber = $(e.target).parents('.document_page_tile').data('pageNumber');
+    var pageNumber = $(e.target).parents('.document_page_tile').attr('data-pageNumber');
     this.removePageNumberFromRemoveSet(pageNumber);
   },
 
@@ -114,7 +114,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
         url : url,
         pageNumber : pageNumber
       }));
-      $thumbnail.data('pageNumber', pageNumber);
+      $thumbnail.attr('data-pageNumber', pageNumber);
       this.$s.holder.append($thumbnail);
     }, this));
 

@@ -106,7 +106,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
   },
 
   resetPage : function(e) {
-    var pageNumber = $(e.currentTarget).parents('.document_page_tile').data('pageNumber');
+    var pageNumber = $(e.currentTarget).parents('.document_page_tile').attr('data-pageNumber');
 
     this.viewer.api.setPageText(this.originalPageText[pageNumber], pageNumber);
     this.viewer.api.enterEditPageTextMode();
@@ -139,7 +139,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
         url : url,
         pageNumber : pageNumber
       }));
-      $thumbnail.data('pageNumber', pageNumber);
+      $thumbnail.attr('data-pageNumber', pageNumber);
       this.$s.headerTiles.append($thumbnail);
     }, this));
 
