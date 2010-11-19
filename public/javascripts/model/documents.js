@@ -99,7 +99,7 @@ dc.model.Document = Backbone.Model.extend({
 
   allowedToEdit : function() {
     var current = Accounts.current();
-    return current && Accounts.current().checkAllowedToEdit(this);
+    return current && Accounts.current().allowedToEdit(this);
   },
 
   // Is the document editable by the current account?

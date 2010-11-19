@@ -8,7 +8,7 @@ dc.model.Note = Backbone.Model.extend({
 
   checkAllowedToEdit : function() {
     if (!dc.account) return false;
-    return Accounts.current().checkAllowedToEdit(this);
+    return Accounts.current().allowedToEdit(this);
   },
 
   imageUrl : function() {
