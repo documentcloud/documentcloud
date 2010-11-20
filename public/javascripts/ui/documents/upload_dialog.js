@@ -123,7 +123,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   _onStarted : function(e, queueId) {
     var attrs = this._tiles[queueId].serialize();
     this.collection.get(queueId).set(attrs);
-    attrs.session_key = encodeURIComponent(dc.app.cookies.get('document_cloud_session'));
+    attrs.session_key = dc.app.cookies.get('document_cloud_session');
     attrs.flash = true;
     if (this._project) attrs.project_id = this._project.id;
     attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;

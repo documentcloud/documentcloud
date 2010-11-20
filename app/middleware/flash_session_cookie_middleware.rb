@@ -17,7 +17,7 @@ class FlashSessionCookieMiddleware
   def call(env)
     if env['HTTP_USER_AGENT'] =~ FLASH_MATCHER
       req = Rack::Request.new(env)
-      if req.params['session_key']
+      unless req.params['session_key'].nil?
         env['HTTP_COOKIE'] = "#{@session_key}=#{req.params['session_key']}".freeze
       end
     end
