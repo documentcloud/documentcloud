@@ -57,6 +57,7 @@ class ApplicationController < ActionController::Base
   end
 
   def login_required
+    Rails.logger.info session.inspect
     logged_in? || forbidden
   end
 
