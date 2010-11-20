@@ -53,7 +53,8 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_in?
-    !!current_account
+    (@current_account && @current_organization) ||
+      (session['account_id'] && session['organization_id'])
   end
 
   def login_required
