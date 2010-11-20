@@ -8,7 +8,7 @@ class SaveAnalytics < CloudCrowd::Action
       input.each do |key, hits|
         id, url = *key.split(':', 2)
         id = id.to_i
-        next unless doc = Document.unrestricted.find_by_id(id)
+        next unless url && (doc = Document.unrestricted.find_by_id(id))
         doc_ids << id
         RemoteUrl.record_hits(id, url, hits)
       end
