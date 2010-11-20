@@ -1,5 +1,4 @@
 class AdminController < ApplicationController
-  layout 'workspace'
 
   before_filter :admin_required, :except => [:save_analytics, :queue_length]
 

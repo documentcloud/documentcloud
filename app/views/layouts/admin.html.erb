@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <%= render :partial => 'common/meta_tags' %>
+  <title><%= @title ? @title + ' - ' : '' %>DocumentCloud</title>
+  <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
+  <% js  = [:core] + (@javascripts || []) %>
+  <%= include_stylesheets *css %>
+  <%= include_javascripts *js %>
+</head>
+<body class="<%= @bodyclass %>">
+
+  <div id="container">
+    <div id="topbar" class="header gradient_mid">
+      <div id="logo">
+        <a href="/home"><div id="cloud_edge"></div></a>
+        <div id="wordmark" class="logo_words"><a href="/">DocumentCloud</a></div>
+        <h1 id="title" class="logo_words"><%= @title %></h1>
+      </div>
+    </div>
+    <div id="content">
+      <%= yield %>
+    </div>
+  </div>
+
+</body>
+</html>
