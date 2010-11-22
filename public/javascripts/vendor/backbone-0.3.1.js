@@ -420,7 +420,8 @@
 
     // Get a model from the set by id.
     get : function(id) {
-      return id && this._byId[id.id != null ? id.id : id];
+      if (id == null) return null;
+      return this._byId[id.id != null ? id.id : id];
     },
 
     // Get a model from the set by client id.
@@ -674,7 +675,7 @@
     // an existing route, and `false` otherwise.
     start : function() {
       var docMode = document.documentMode;
-      var oldIE = ($.browser.msie && docMode < 7);
+      var oldIE = ($.browser.msie && docMode <= 7);
       if (oldIE) {
         this.iframe = $('<iframe src="javascript:0" tabindex="-1" />').hide().appendTo('body')[0].contentWindow;
       }
