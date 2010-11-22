@@ -17,9 +17,9 @@
   stats.daily_documents               = <%= @daily_documents      %>;
   stats.daily_pages                   = <%= @daily_pages          %>;
   stats.total_pages                   = <%= @total_pages          %>;
-  stats.public_per_account            = <%= @public_per_account   %>;
-  stats.private_per_account           = <%= @private_per_account  %>;
-  stats.pages_per_account             = <%= @pages_per_account    %>;
+  stats.public_per_account            = <%= @public_per_account   || 'null' %>;
+  stats.private_per_account           = <%= @private_per_account  || 'null' %>;
+  stats.pages_per_account             = <%= @pages_per_account    || 'null' %>;
   stats.instances                     = <%= @instances %>;
   stats.remote_url_hits_last_week     = <%= @remote_url_hits_last_week %>;
   stats.remote_url_hits_last_year     = <%= @remote_url_hits_last_year %>;

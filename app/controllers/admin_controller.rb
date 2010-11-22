@@ -10,9 +10,6 @@ class AdminController < ApplicationController
     @total_pages                   = DC::Statistics.total_pages.to_json
     @daily_documents               = keys_to_timestamps(DC::Statistics.daily_documents(1.month.ago)).to_json
     @daily_pages                   = keys_to_timestamps(DC::Statistics.daily_pages(1.month.ago)).to_json
-    @public_per_account            = DC::Statistics.public_documents_per_account.to_json
-    @private_per_account           = DC::Statistics.private_documents_per_account.to_json
-    @pages_per_account             = DC::Statistics.pages_per_account.to_json
     @documents                     = Document.finished.chronological.all(:limit => 5).map {|d| d.admin_attributes }.to_json
     @failed_documents              = Document.failed.chronological.all(:limit => 3).map {|d| d.admin_attributes }.to_json
     @organizations                 = Organization.all.to_json
@@ -22,7 +19,13 @@ class AdminController < ApplicationController
     @remote_url_hits_last_year     = DC::Statistics.remote_url_hits_last_year.to_json
     @count_organizations_embedding = DC::Statistics.count_organizations_embedding.to_json
     @count_total_collaborators     = DC::Statistics.count_total_collaborators.to_json
-    @accounts                      = (params[:accounts] ? Account.all : []).to_json
+    @accounts                      = [].to_json
+    if params[:accounts]
+      @accounts                    = Account.all.to_json
+      @public_per_account          = DC::Statistics.public_documents_per_account.to_json
+      @private_per_account         = DC::Statistics.private_documents_per_account.to_json
+      @pages_per_account           = DC::Statistics.pages_per_account.to_json
+    end
   end
 
   def hits_on_documents
@@ -30,7 +33,12 @@ class AdminController < ApplicationController
   end
 
   def all_accounts
-    json Account.all
+    json({
+      'public_per_account'  => DC::Statistics.public_documents_per_account,
+      'private_per_account' => DC::Statistics.private_documents_per_account,
+      'pages_per_account'   => DC::Statistics.pages_per_account,
+      'accounts'            => Account.all
+    })
   end
 
   def top_documents_csv

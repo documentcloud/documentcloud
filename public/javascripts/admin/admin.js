@@ -175,7 +175,9 @@ dc.ui.Admin = Backbone.View.extend({
     }, this);
     if (Accounts.length) return finish();
     $.getJSON('/admin/all_accounts', {}, _.bind(function(resp) {
-      Accounts.refresh(resp);
+      Accounts.refresh(resp.accounts);
+      delete resp.accounts;
+      _.extend(stats, resp);
       finish();
     }, this));
   },
