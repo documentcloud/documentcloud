@@ -28,12 +28,12 @@ module DC
 
     # Count the number of uploaded pages by account.
     def self.pages_per_account
-      Page.count(:group => 'account_id')
+      Document.sum('page_count', :group => 'account_id')
     end
 
     # The total number of pages, period.
     def self.total_pages
-      Page.count
+      Document.sum('page_count')
     end
 
     # The pages/per/minute we've processed for the last ten documents.
