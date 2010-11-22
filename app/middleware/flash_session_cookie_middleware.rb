@@ -18,9 +18,8 @@ class FlashSessionCookieMiddleware
     if env['HTTP_USER_AGENT'] =~ FLASH_MATCHER
       req = Rack::Request.new(env)
       if req.params['session_key']
-        base64 = req.params['session_key'].gsub(' ', '+')
+        base64 = req.params['session_key'].gsub(' ', '%2B')
         env['HTTP_COOKIE'] = "#{@session_key}=#{base64}".freeze
-        Rails.logger.info "HTTP_COOKIE: #{base64}"
       end
     end
     @app.call(env)
