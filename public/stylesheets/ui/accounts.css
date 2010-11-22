@@ -141,7 +141,7 @@
 
 /*--------------------------- Share Documents Dialog ----------------------------*/
 #share_dialog {
-  width: 525px;
+  width: 800px;
 }
   #share_dialog .document_reviewers {
     margin: 0;
@@ -156,12 +156,12 @@
   #share_dialog .enter_email .minibutton {
     float: right;
   }
-  #share_dialog .enter_email_label {
+  #share_dialog .enter_email_label,
+  #share_dialog .enter_full_name_label {
     font-size: 12px;
   }
-  #share_dialog .enter_email .text_input {
-    position: absolute;
-    left: 170px; right: 125px;
+  #share_dialog .name input {
+    width: 100px;
   }
   #share_dialog .reviewers_title {
     font-size: 15px;
@@ -196,6 +196,7 @@
   #share_dialog .reviewer_management {
     text-align: left;
     margin-top: 10px;
+    display: none;
   }
   #share_dialog .controls {
     margin-top: 0;
@@ -205,4 +206,9 @@
   }
   #share_dialog .reviewers_common .reviewer_list {
     margin-left: 0;
+  }
+  #share_dialog .enter_full_name_label,
+  #share_dialog input[name=reviewer_first_name],
+  #share_dialog input[name=reviewer_last_name] {
+    display: none;
   }

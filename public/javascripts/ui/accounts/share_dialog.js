@@ -38,7 +38,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       'class': 'minibutton dark add_reviewer', 
       style : 'width: 90px;'
     }, 'Add Reviewer'));
-    this.$('.custom').html(JST['account/share_dialog']({}));
+    this.$('.custom').html(JST['account/share_dialog']({
+      'defaultAvatar' : dc.model.Account.prototype.DEFAULT_AVATAR
+    }));
     this.list = this.$('.account_list_content');
     if (this.docs.all(function(doc) { return doc.reviewers.length; })) {
       this.docsUnfetched = 0;
@@ -53,6 +55,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         }
       }, this));
     }
+    this._setPlaceholders();
     $(this.el).show();
     return this;
   },
@@ -71,10 +74,18 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         }, this));
       }, this));
       
-      this.$('.account_list').empty().append(views);
+      this.$('.account_list tr:not(.reviewer_management)').remove();
+      this.$('.account_list').prepend(views);
       this.center();  
       this.hideSpinner();
     }
+  },
+  
+  _setPlaceholders : function(includeNames) {
+    if (includeNames) {
+      this.$('input[name=reviewer_first_name], input[name=reviewer_last_name]').placeholder();
+    }
+    this.$('input[name=reviewer_email]').placeholder();
   },
   
   _countDocuments : function() {
@@ -111,9 +122,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   _showEnterEmail : function() {
+    this.$('.reviewer_management').show();
     this.$('.add_reviewer').hide();
-    this.$('.enter_email').show();
-    this.$('#reviewer_email').focus();
+    // this.$('#reviewer_email').focus();
   },
   
   _addReviewer : function() {
@@ -125,6 +136,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       type : 'POST',
       data : {
         email : email,
+        first_name : this.$('input[name=reviewer_first_name]').val(),
+        last_name : this.$('input[name=reviewer_last_name]').val(),
         documents : this.docs.map(function(doc) { return doc.id; })
       },
       success: _.bind(function(resp) {
@@ -142,15 +155,26 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         this.render(true);
       }, this),
       error : _.bind(function(resp) {
-        this.hideSpinner();
-        console.log(['error', resp, arguments]);
-        if (resp.status == 409) {
-          this.error('You cannot add yourself as a reviewer.');
+        resp = JSON.parse(resp.responseText);
+        if (_.any(resp.errors, function(error) {
+          error = error.toLowerCase();
+          return error.indexOf("first name") != -1 || error.indexOf("last name") != -1;
+        })) {
+          this._showReviewerNameInputs();
+          this.error("Please enter in the full name for this reviewer.");
         } else {
-          this.error('Unable to use that email.');
+          this.error(resp.errors[0]);
         }
+        this.hideSpinner();
       }, this)
     });
+  },
+  
+  _showReviewerNameInputs : function() {
+    this.$('input[name=reviewer_first_name], input[name=reviewer_last_name]').show();
+    this.$('.enter_full_name_label').show();
+    this.$('.enter_email_label').hide();
+    this._setPlaceholders(true);
   },
 
   _removeReviewer : function(e) {
@@ -175,7 +199,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       }
     });
     
-    console.log(['remove', accountId, account, documentIds]);
     $.ajax({
       url : '/documents/reviewers/remove',
       type : 'POST',

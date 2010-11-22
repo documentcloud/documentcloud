@@ -1,16 +1,36 @@
 <div class="document_reviewers not_draggable">
   <table border="0" cellspacing="0" cellpadding="0">
     <tbody class="account_list">
+      
+      <tr class="reviewer_management">
+        <td class="first">
+          <img class="avatar" src="<%= defaultAvatar %>" width="24" height="24" />
+        </td>
+        <td class="name selectable_text">
+          <div class="name_wrapper">
+            <div class="text_input dark small">
+              <input name="reviewer_first_name" id="reviewer_first_name" type="text" value="" placeholder="First name" />
+            </div>
+            <div class="text_input dark small">
+              <input name="reviewer_last_name" id="reviewer_last_name" type="text" value="" placeholder="Last name" />
+            </div>
+          </div>
+        </td>
+        <td class="enter_email">
+          <div class="text_input dark small">
+            <input name="reviewer_email" id="reviewer_email" type="text" value="" placeholder="Email" />
+          </div>
+          
+        </td>
+
+        <td>
+          <div class="minibutton default add">Add</div>
+        </td>
+        
+        <td class="last"></td>
+      </tr>
+      
+      
     </tbody>
   </table>
-</div>
-
-<div class="reviewer_management">
-  <div class="enter_email" style="display:none;">
-    <div class="text_input dark small">
-      <input name="reviewer_email" id="reviewer_email" type="text" value="" />
-    </div>
-    <div class="minibutton default add">Add</div>
-    <label class="enter_email_label" for="reviewer_email">Enter email address:</label>
-  </div>
 </div>
