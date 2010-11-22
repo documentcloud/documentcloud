@@ -4,7 +4,11 @@ class Annotation < ActiveRecord::Base
   include DC::Access
 
   belongs_to :document
-
+  belongs_to :account # NB: This account is not the owner of the document.
+                      #     Rather, it is the author of the annotation.
+  
+  attr_accessor :author_name
+  
   validates_presence_of :title, :page_number
 
   before_validation :ensure_title
@@ -36,6 +40,14 @@ class Annotation < ActiveRecord::Base
     self.accessible(account).count(:conditions => {:document_id => doc_ids}, :group => 'document_id')
   end
 
+  def self.author_names(doc)
+    accounts = Account.find(:all, :joins => [:annotations], 
+                            :select => "accounts.id, accounts.first_name, accounts.last_name", 
+                            :group => "accounts.id, first_name, last_name", 
+                            :conditions => ["annotations.document_id = ?", doc.id])
+    accounts.inject({}) {|m, a| m[a.id] = a.full_name; m }
+  end
+  
   def page
     document.pages.find_by_page_number(page_number)
   end
@@ -43,11 +55,12 @@ class Annotation < ActiveRecord::Base
   def canonical_url
     document.canonical_url(:html) + '#document/' + page_number.to_s
   end
-
+  
   def canonical
     data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content}
     data['location'] = {'image' => location} if location
     data['access'] = 'private' if access == PRIVATE
+    data['author'] = author_name if author_name
     data
   end
 
@@ -58,7 +71,6 @@ class Annotation < ActiveRecord::Base
       'organization_id' => organization_id
     }).to_json
   end
-
 
   private
 

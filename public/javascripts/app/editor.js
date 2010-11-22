@@ -3,10 +3,11 @@ dc.app.editor = new Backbone.View();
 _.extend(dc.app.editor, {
 
   // Initializes the workspace, binding it to <body>.
-  initialize : function(docId, isOwner) {
+  initialize : function(docId, isOwner, accountName) {
     this.el = $('body')[0];
     this.docId = docId;
     this.isOwner = isOwner;
+    this.accountName = accountName;
     _.defer(_.bind(function() {
       this.createSubViews();
       this.renderSubViews();

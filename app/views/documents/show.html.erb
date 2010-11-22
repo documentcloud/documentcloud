@@ -21,7 +21,7 @@
 <body style="margin:0; padding:0;">
   <script type="text/javascript">
     <% if @current_document %>
-      window.currentDocument = DV.load(<%= @current_document.canonical({:account => @current_account, :local => @local}).to_json %>);
+      window.currentDocument = DV.load(<%= @current_document.canonical({:account => @current_account, :local => @local, :annotation_author_names => @annotation_author_names}).to_json %>);
     <% end %>
   </script>
 </body>

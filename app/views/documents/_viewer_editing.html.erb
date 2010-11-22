@@ -12,7 +12,8 @@
     $(document).ready(function() {
       var docId = <%= @current_document.id %>;
       var isOwner = <%= @current_account.allowed_to_edit?(@current_document) %>;
-      dc.app.editor.initialize(docId, isOwner);
+      var accountName = "<%= @current_account.full_name %>";
+      dc.app.editor.initialize(docId, isOwner, accountName);
     });
   </script>
 <% end %>

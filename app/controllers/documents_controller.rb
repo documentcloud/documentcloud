@@ -20,6 +20,7 @@ class DocumentsController < ApplicationController
       format.html do
         return if date_requested?
         return if entity_requested?
+        @annotation_author_names = Annotation.author_names(doc)
         @edits_enabled = true
       end
       format.json do

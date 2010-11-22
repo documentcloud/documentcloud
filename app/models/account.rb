@@ -11,6 +11,7 @@ class Account < ActiveRecord::Base
   # Associations:
   belongs_to  :organization
   has_many    :projects,             :dependent => :destroy
+  has_many    :annotations
   has_many    :collaborations,       :dependent => :destroy
   has_many    :processing_jobs,      :dependent => :destroy
   has_one     :security_key,         :dependent => :destroy, :as => :securable
