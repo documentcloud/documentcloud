@@ -16,7 +16,7 @@ module DC
       end
 
       def entity?
-        Document::DC::ENTITY_KINDS.include? @kind.to_sym
+        DC::ENTITY_KINDS.include? @kind.to_sym
       end
 
       def to_s

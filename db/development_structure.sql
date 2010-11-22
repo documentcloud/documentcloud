@@ -62,7 +62,7 @@ CREATE TABLE annotations (
     document_id integer NOT NULL,
     page_number integer NOT NULL,
     access integer NOT NULL,
-    title character varying(255) NOT NULL,
+    title text NOT NULL,
     content text,
     location character varying(40),
     created_at timestamp without time zone,
@@ -170,7 +170,8 @@ CREATE TABLE documents (
     updated_at timestamp without time zone,
     related_article text,
     detected_remote_url text,
-    remote_url text
+    remote_url text,
+    publish_at timestamp without time zone
 );
 
 
@@ -266,7 +267,8 @@ ALTER SEQUENCE full_text_id_seq OWNED BY full_text.id;
 CREATE TABLE projects (
     id integer NOT NULL,
     account_id integer NOT NULL,
-    title character varying(100) NOT NULL
+    title text NOT NULL,
+    description text
 );
 
 
@@ -981,3 +983,13 @@ INSERT INTO schema_migrations (version) VALUES ('20100630131224');
 INSERT INTO schema_migrations (version) VALUES ('20100701132413');
 
 INSERT INTO schema_migrations (version) VALUES ('20100823172339');
+
+INSERT INTO schema_migrations (version) VALUES ('20100928204710');
+
+INSERT INTO schema_migrations (version) VALUES ('20101025202334');
+
+INSERT INTO schema_migrations (version) VALUES ('20101028194006');
+
+INSERT INTO schema_migrations (version) VALUES ('20101101192020');
+
+INSERT INTO schema_migrations (version) VALUES ('20101103173409');
