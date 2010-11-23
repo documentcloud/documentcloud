@@ -164,6 +164,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
       this.$s.guide.fadeOut('fast');
       this.$s.guideButton.removeClass('open');
       this.$s.pages.removeClass('remove_pages_viewer');
+      this.$s.thumbnails.removeClass('DV-selected');
       this.unbindEvents();
       $(this.el).empty().hide().remove();
       this.viewer.api.leaveRemovePagesMode();
