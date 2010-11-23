@@ -1,4 +1,4 @@
-//     Backbone.js 0.3.1
+//     Backbone.js 0.3.2
 //     (c) 2010 Jeremy Ashkenas, DocumentCloud Inc.
 //     Backbone may be freely distributed under the MIT license.
 //     For all details and documentation:
@@ -19,7 +19,7 @@
   }
 
   // Current version of the library. Keep in sync with `package.json`.
-  Backbone.VERSION = '0.3.1';
+  Backbone.VERSION = '0.3.2';
 
   // Require Underscore, if we're on the server, and it's not already present.
   var _ = this._;
@@ -113,9 +113,11 @@
   // Create a new model, with defined attributes. A client id (`cid`)
   // is automatically generated and assigned for you.
   Backbone.Model = function(attributes, options) {
+    attributes || (attributes = {});
+    if (this.defaults) attributes = _.extend({}, this.defaults, attributes);
     this.attributes = {};
     this.cid = _.uniqueId('c');
-    this.set(attributes || {}, {silent : true});
+    this.set(attributes, {silent : true});
     this._previousAttributes = _.clone(this.attributes);
     if (options && options.collection) this.collection = options.collection;
     this.initialize(attributes, options);
@@ -232,7 +234,7 @@
         if (options.success) options.success(model, resp);
       };
       var error = options.error && _.bind(options.error, null, model);
-      Backbone.sync('read', this, success, error);
+      (this.sync || Backbone.sync)('read', this, success, error);
       return this;
     },
 
@@ -240,9 +242,8 @@
     // If the server returns an attributes hash that differs, the model's
     // state will be `set` again.
     save : function(attrs, options) {
-      attrs   || (attrs = {});
       options || (options = {});
-      if (!this.set(attrs, options)) return false;
+      if (attrs && !this.set(attrs, options)) return false;
       var model = this;
       var success = function(resp) {
         if (!model.set(model.parse(resp), options)) return false;
@@ -250,7 +251,7 @@
       };
       var error = options.error && _.bind(options.error, null, model);
       var method = this.isNew() ? 'create' : 'update';
-      Backbone.sync(method, this, success, error);
+      (this.sync || Backbone.sync)(method, this, success, error);
       return this;
     },
 
@@ -264,7 +265,7 @@
         if (options.success) options.success(model, resp);
       };
       var error = options.error && _.bind(options.error, null, model);
-      Backbone.sync('delete', this, success, error);
+      (this.sync || Backbone.sync)('delete', this, success, error);
       return this;
     },
 
@@ -471,7 +472,7 @@
         if (options.success) options.success(collection, resp);
       };
       var error = options.error && _.bind(options.error, null, collection);
-      Backbone.sync('read', this, success, error);
+      (this.sync || Backbone.sync)('read', this, success, error);
       return this;
     },
 
