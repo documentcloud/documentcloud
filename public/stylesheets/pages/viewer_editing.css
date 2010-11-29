@@ -414,20 +414,27 @@
 .DV-thumbnail .DV-caret {
   display: none;
 }
-  .DV-hover-thumbnail .DV-overlay.left .DV-caret,
   .DV-thumbnail .DV-overlay.left_chosen .DV-caret {
     display: block;
     position: absolute;
     top: -12px; left: -6px; right: auto;
   }
-  .DV-hover-thumbnail .DV-overlay.right .DV-caret,
   .DV-thumbnail .DV-overlay.right_chosen .DV-caret {
     display: block;
     position: absolute;
     top: -12px; right: -7px; left: auto;
   }
+  .DV-hover-thumbnail .DV-overlay.left .DV-caret {
+    display: block;
+    position: absolute;
+    top: -12px; left: -6px; right: auto;
+  }
+  .DV-hover-thumbnail .DV-overlay.right .DV-caret {
+    display: block;
+    position: absolute;
+    top: -12px; right: -7px; left: auto;
+  }
 
-.DV-hover-thumbnail .DV-overlay.left,
 .DV-thumbnail .DV-overlay.left_chosen {
   right: auto;
   left: -1px;
@@ -435,8 +442,24 @@
   border-right: none;
   display: block;
 }
-.DV-hover-thumbnail .DV-overlay.right,
 .DV-thumbnail .DV-overlay.right_chosen {
+  left: auto;
+  right: 0px;
+  border-right: 1px dashed #eee;
+  border-left: none;
+  display: block;
+}
+.DV-hover-thumbnail {
+  cursor: pointer;
+}
+.DV-hover-thumbnail .DV-overlay.left {
+  right: auto;
+  left: -1px;
+  border-left: 1px dashed #eee;
+  border-right: none;
+  display: block;
+}
+.DV-hover-thumbnail .DV-overlay.right {
   left: auto;
   right: 0px;
   border-right: 1px dashed #eee;

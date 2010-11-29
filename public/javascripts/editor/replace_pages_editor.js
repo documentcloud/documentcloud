@@ -7,6 +7,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
       guide: $('#edit_replace_pages_guide'),
       guideButton: $('.edit_replace_pages'),
       thumbnails : $('.DV-thumbnail'),
+      thumbnailImages : $('.DV-thumbnail .DV-thumbnail-image'),
       pages : $('.DV-pages'),
       viewerContainer : $('.DV-docViewer-Container'),
       hint : this.$(".editor_hint"),
@@ -55,16 +56,20 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
 
   unbindEvents : function() {
     var $thumbnails = this.$s.thumbnails;
+    var $thumbnailImages = this.$s.thumbnailImages;
     $thumbnails.unbind('mouseout.dv-replace')
                .unbind('mousemove.dv-replace')
                .unbind('mousedown.dv-replace')
                .unbind('mouseover.dv-replace')
                .unbind('mouseenter.dv-replace')
                .unbind('mouseleave.dv-replace');
+    $thumbnailImages.unbind('mouseout.dv-replace')
+                    .unbind('mouseover.dv-replace');
   },
 
   handleEvents : function() {
     var $thumbnails = this.$s.thumbnails;
+    var $thumbnailImages = this.$s.thumbnailImages;
 
     this.unbindEvents();
 
@@ -72,18 +77,24 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
       $(this).attr('data-pageNumber', i+1);
     });
 
+    $thumbnails.bind('mouseover.dv-replace', function() {
+      $(this).addClass('DV-hover-thumbnail');
+    });
     $thumbnails.bind('mouseout.dv-replace', function() {
       $('.DV-overlay', this).removeClass('left').removeClass('right');
+      $(this).removeClass('DV-hover-thumbnail');
     });
     $thumbnails.bind('mousemove.dv-replace', function(e) {
       var $this = $(this);
-      var pageNumber = $this.attr('data-pageNumber');
-      var offset = $this.offset();
-      var width = $this.outerWidth(true);
-      var positionX = e.clientX - offset.left;
-      var amount = positionX / width;
-      var side = amount < 0.2 ? 'left' : amount > 0.8 ? 'right' : '';
-      $('.DV-overlay', $this).removeClass('left').removeClass('right').addClass(side);
+      if (!$this.hasClass('DV-hover-image')) {
+        var pageNumber = $this.attr('data-pageNumber');
+        var offset = $this.offset();
+        var width = $this.outerWidth(true);
+        var positionX = e.clientX - offset.left;
+        var amount = positionX / width;
+        var side = amount < 0.2 ? 'left' : amount > 0.8 ? 'right' : '';
+        $('.DV-overlay', $this).removeClass('left').removeClass('right').addClass(side);
+      }
     });
 
     $thumbnails.bind('mousedown.dv-replace', _.bind(function(e) {
@@ -91,37 +102,65 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
       e.stopPropagation();
       this.confirmPageChoice($(e.currentTarget));
     }, this));
+    
+    $thumbnailImages.bind('mouseover.dv-replace', function(e) {
+        $(this).closest('.DV-thumbnail').addClass('DV-hover-image');
+    });
+    
+    $thumbnailImages.bind('mouseout.dv-replace', function(e) {
+        $(this).closest('.DV-thumbnail').removeClass('DV-hover-image');
+    });
   },
 
   confirmPageChoice : function($thumbnail) {
     var $thumbnails = this.$s.thumbnails;
+    var isSingleSelection = true;
 
     this.resetSelected();
 
-    if (dc.app.hotkeys.shift && this.$firstPageSelection) {
-      var firstPageNumber = this.$firstPageSelection.attr('data-pageNumber');
-      var thumbnailPageNumber = $thumbnail.attr('data-pageNumber');
+    if (dc.app.hotkeys.shift && this.$firstPageSelection && this.$firstPageSelection.length) {
+      var firstPageNumber = parseInt(this.$firstPageSelection.attr('data-pageNumber'), 10);
+      var thumbnailPageNumber = parseInt($thumbnail.attr('data-pageNumber'), 10);
       var end = Math.max(thumbnailPageNumber, firstPageNumber);
       var start = Math.min(thumbnailPageNumber, firstPageNumber);
       var isReverse = firstPageNumber > thumbnailPageNumber;
+      var isLeft = $('.DV-overlay', $thumbnail).hasClass('left');
+      var isRight = $('.DV-overlay', $thumbnail).hasClass('right');
+
+      isSingleSelection = false;
 
       if (!$thumbnail.hasClass('DV-hover-image')) {
-        if ($('.left', $thumbnail).length && !isReverse) {
+        if (isLeft && isReverse) {
           end -= 1;
-        } else if ($('.right', $thumbnail).length && isReverse) {
+        } else if (isLeft && !isReverse) {
+          end -= 1;
+        } else if (isRight && isReverse) {
           start += 1;
+          end -= 1;
         }
       }
+      if (!isLeft && !isRight && isReverse) {
+        end -= 1;
+      }
+      if (isReverse && !this.isFirstPageBetween) {
+        end += 1;
+      }
+      if (end < start) isSingleSelection = true;
+      console.log(['confirm', firstPageNumber, thumbnailPageNumber, start, end, isReverse, isLeft, isRight]);
 
-      $thumbnails = $thumbnails.filter(function() {
-        var page = $(this).attr('data-pageNumber');
-        return start <= page && page <= end;
-      });
-      $thumbnails.addClass('DV-selected');
-      this.updateHint('replace');
-    } else {
+      if (!isSingleSelection) {
+        $thumbnails = $thumbnails.filter(function() {
+          var page = $(this).attr('data-pageNumber');
+          return start <= page && page <= end;
+        });
+        $thumbnails.addClass('DV-selected');
+        this.updateHint('replace');
+      }
+    }
+    if (isSingleSelection) {
       if ($thumbnail.hasClass('DV-hover-image')) {
         this.$firstPageSelection = $thumbnail;
+        this.isFirstPageBetween = false;
         $thumbnail.addClass('DV-selected');
         this.updateHint('replace');
       } else if ($thumbnail.hasClass('DV-hover-thumbnail')) {
@@ -134,7 +173,9 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
         } else if ($right.length) {
           $right.addClass('right_chosen');
           this.$firstPageSelection = $thumbnail.next();
+          if (!this.$firstPageSelection.length) this.$firstPageSelection = $thumbnail;
         }
+        this.isFirstPageBetween = true;
         this.updateHint('insert');
       }
     }
@@ -196,7 +237,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
 
   getInsertPageNumber : function() {
     var $active = this.$s.thumbnails.has('.left,.right');
-    var pageNumber = $active.attr('data-pageNumber');
+    var pageNumber = parseInt($active.attr('data-pageNumber'), 10);
 
     if ($active.find('.left').length) {
       return pageNumber - 1;
@@ -210,6 +251,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
       $('.DV-currentPageImage-disabled', this.$s.pages).addClass('DV-currentPageImage').removeClass('DV-currentPageImage-disabled');
       $('.left_chosen').removeClass('left_chosen');
       $('.right_chosen').removeClass('right_chosen');
+      $('.DV-selected').removeClass('DV-selected');
       this.setMode('not', 'open');
       this.$s.guide.hide();
       this.unbindEvents();
