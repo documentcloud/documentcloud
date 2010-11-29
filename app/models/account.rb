@@ -25,7 +25,7 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :email, :case_sensitive => false
 
   # Delegations:
-  delegate :name, :to => :organization, :prefix => true
+  delegate :name, :to => :organization, :prefix => true, :allow_nil => true
 
   # Scopes:
   named_scope :admin, {:conditions => {:role => ADMINISTRATOR}}
