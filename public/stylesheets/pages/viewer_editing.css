@@ -326,10 +326,13 @@
 .DV-pages.reorder_pages_viewer {
   margin-top: 66px;
 }
-  .DV-pages.reorder_pages_viewer .DV-thumbnail {
+  .DV-pages.reorder_pages_viewer .DV-thumbnail,
+  .DV-pages.reorder_pages_viewer .DV-thumbnail-image,
+  .DV-pages.reorder_pages_viewer .DV-thumbnail-page,
+  .DV-pages.reorder_pages_viewer .DV-pageNumber {
     cursor: move;
   }
-
+  
 /* ================== */
 /* = Edit Page Text = */
 /* ================== */
