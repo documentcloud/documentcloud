@@ -155,7 +155,7 @@ class Document < ActiveRecord::Base
   end
 
   # Ensure that titles are stripped of trailing whitespace.
-  def title=(title)
+  def title=(title="Untitled Document")
     self[:title] = title.strip
   end
 
