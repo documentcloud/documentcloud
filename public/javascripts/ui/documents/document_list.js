@@ -13,7 +13,8 @@ dc.ui.DocumentList = Backbone.View.extend({
 
   constructor : function(options) {
     Backbone.View.call(this, options);
-    _.bindAll(this, 'refresh', '_removeDocument', '_addDocument', '_onSelect');
+    _.bindAll(this, 'refresh', '_removeDocument', '_addDocument', '_onSelect', '_maybeSelect');
+    $(document).bind('keypress', this._maybeSelect);
     Documents.bind('refresh', this.refresh);
     Documents.bind('remove',  this._removeDocument);
     Documents.bind('add',     this._addDocument);
@@ -43,6 +44,13 @@ dc.ui.DocumentList = Backbone.View.extend({
       _.each(Documents.selected(), function(doc) {
         if (!active[doc.id]) doc.set({selected : false});
       });
+    }
+  },
+
+  _maybeSelect : function(e) {
+    if (dc.app.hotkeys.command && (e.keyCode == 97)) {
+      Documents.selectAll();
+      return false;
     }
   },
 
