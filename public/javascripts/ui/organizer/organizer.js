@@ -19,7 +19,8 @@ dc.ui.Organizer = Backbone.View.extend({
     'click .featured_documents'       : 'showFeaturedDocuments',
     'click .your_published_documents' : 'showYourPublishedDocuments',
     'click .account_links .text_link' : 'showAccountDocuments',
-    'click .toggle_account_links'     : 'toggleAccountLinks'
+    'click .toggle_account_links'     : 'toggleAccountLinks',
+    'click .organization.box'         : 'showOtherOrgDocuments'
   },
 
   constructor : function(options) {
@@ -41,8 +42,12 @@ dc.ui.Organizer = Backbone.View.extend({
   },
 
   renderAll : function() {
-    if (Projects.isEmpty()) this.setMode('no', 'projects');
-    Projects.each(this._addSubView);
+    if (dc.account) {
+      if (Projects.isEmpty()) this.setMode('no', 'projects');
+      Projects.each(this._addSubView);
+    } else {
+      this.$('.organization_list').html(JST['organizer/organizations']());
+    }
   },
 
   renderAccounts : function() {
@@ -67,6 +72,22 @@ dc.ui.Organizer = Backbone.View.extend({
       });
       return true;
     }, {mode : 'short_prompt'});
+  },
+
+  highlight : function(query) {
+    Projects.deselectAll();
+    this.$('.organization').removeClass('is_selected');
+    if (dc.account) {
+      var projectName = dc.app.SearchParser.extractProject(query);
+      var project = projectName && Projects.find(projectName);
+      if (project) return project.set({selected : true});
+    } else {
+      var group = dc.app.SearchParser.extractGroup(query);
+      var org = group && Organizations.findBySlug(group);
+      if (org) {
+        this.$('#organization_' + org.id).addClass('is_selected');
+      }
+    }
   },
 
   showAllDocuments : function() {
@@ -97,6 +118,11 @@ dc.ui.Organizer = Backbone.View.extend({
   showOrganizationDocuments : function() {
     this.setMode('show', 'accounts');
     Accounts.current().openOrganizationDocuments();
+  },
+
+  showOtherOrgDocuments : function(e) {
+    var el = $(e.currentTarget);
+    Organizations.get(el.attr('data-id')).openDocuments();
   },
 
   toggleAccountLinks : function() {

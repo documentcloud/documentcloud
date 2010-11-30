@@ -19,7 +19,7 @@ dc.ui.ProjectMenu = dc.ui.Menu.extend({
       return {title : project.get('title'), attrs : {'class': className}, onClick : _.bind(menu.options.onClick, menu, project)};
     });
     items.unshift({title : 'New Project', attrs : {'class' : 'plus'}, onClick : function() {
-      dc.app.workspace.organizer.promptNewProject();
+      dc.app.organizer.promptNewProject();
     }});
     menu.addItems(items);
   }

@@ -1,0 +1,13 @@
+<% Organizations.each(function(org) { %>
+
+<div id="organization_<%= org.id %>" class="organization box" data-id="<%= org.id %>">
+  <div class="pointer"></div>
+  <div class="title interface">
+    <%= org.get('name') %>
+  </div>
+  <div class="counts interface">
+    <%= org.statistics() %>
+  </div>
+</div>
+
+<% }); %>

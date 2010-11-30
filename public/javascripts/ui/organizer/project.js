@@ -32,15 +32,5 @@ dc.ui.Project = Backbone.View.extend({
     return false;
   }
 
-}, {
-
-  // (Maybe) hightlight a project box for the current query.
-  highlight : function(query, type) {
-    Projects.deselectAll();
-    var projectName = dc.app.SearchParser.extractProject(query);
-    var project = projectName && Projects.find(projectName);
-    if (project) return project.set({selected : true});
-  }
-
 });
 

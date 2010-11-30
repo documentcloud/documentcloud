@@ -5,9 +5,16 @@
   padding: 20px 30px 20px 30px;
 }
   #sidebar .block.explanation {
+    font: 11px/15px Helvetica, Arial;
+    color: #555;
     border-top: 1px solid #e0e0e0;
     margin-top: 20px;
   }
+    #sidebar .block.first_explanation {
+      margin-top: 0;
+      border-top: 0;
+      border-right: 2px solid #ccc;
+    }
   #sidebar .calais_info {
     margin-top: 15px;
     line-height: 30px;

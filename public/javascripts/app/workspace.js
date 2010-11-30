@@ -27,13 +27,13 @@ dc.controllers.Workspace = Backbone.Controller.extend({
     dc.app.paginator  = new dc.ui.Paginator();
     dc.app.navigation = new dc.ui.Navigation();
     dc.app.toolbar    = new dc.ui.Toolbar();
+    dc.app.organizer  = new dc.ui.Organizer();
     dc.ui.notifier    = new dc.ui.Notifier();
     dc.ui.tooltip     = new dc.ui.Tooltip();
     this.sidebar      = new dc.ui.Sidebar();
     this.panel        = new dc.ui.Panel();
     this.documentList = new dc.ui.DocumentList();
     this.entityList   = new dc.ui.EntityList();
-    this.organizer    = new dc.ui.Organizer();
 
     if (!dc.account) return;
 
@@ -56,7 +56,7 @@ dc.controllers.Workspace = Backbone.Controller.extend({
     this.panel.add('document_list', this.documentList.render().el);
     this.sidebar.add('entities', this.entityList.render().el);
     $('#no_results_container').html(JST['workspace/no_results']({}));
-    this.sidebar.add('organizer', this.organizer.render().el);
+    this.sidebar.add('organizer', dc.app.organizer.render().el);
 
     if (!dc.account) return;
 

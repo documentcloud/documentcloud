@@ -2,6 +2,9 @@
 # accounts and upload documents.
 class Organization < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
+  include DC::Access
+
+  attr_accessor :document_count, :note_count
 
   has_many :accounts, :dependent => :destroy
 
@@ -15,6 +18,19 @@ class Organization < ActiveRecord::Base
     self.all(:conditions => {:id => ids}, :select => 'id, name').inject({}) do |hash, org|
       hash[org.id] = org.name; hash
     end
+  end
+
+  # Retrieve the list of organizations with public documents, including counts.
+  def self.listed
+    filter = {:group => 'organization_id', :conditions => {:access => PUBLIC}}
+    public_doc_counts   = Document.count filter
+    public_note_counts  = Annotation.count filter
+    orgs = self.all(:conditions => {:id => public_doc_counts.keys})
+    orgs.each do |org|
+      org.document_count = public_doc_counts[org.id]  || 0
+      org.note_count     = public_note_counts[org.id] || 0
+    end
+    orgs
   end
 
   # How many documents have been uploaded across the whole organization?
@@ -31,7 +47,9 @@ class Organization < ActiveRecord::Base
     {'name'           => name,
      'slug'           => slug,
      'demo'           => demo,
-     'id'             => id }.to_json
+     'id'             => id,
+     'document_count' => document_count,
+     'note_count'     => note_count}.to_json
   end
 
 end

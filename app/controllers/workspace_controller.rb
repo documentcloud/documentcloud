@@ -8,6 +8,7 @@ class WorkspaceController < ApplicationController
     if logged_in?
       @accounts = current_organization.accounts.contributors
       @projects = Project.load_for(current_account)
+      @organizations = []
       @has_documents = Document.owned_by(current_account).count(:limit => 1) > 0
       return
     end

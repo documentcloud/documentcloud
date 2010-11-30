@@ -6,7 +6,7 @@ class PublicController < ApplicationController
   def index
     return redirect_to("/") if logged_in?
     return redirect_to("/public/") unless request.path.match(/\/$/)
-
+    @organizations = Organization.listed
     render :template => 'workspace/index', :layout => 'workspace'
   end
 

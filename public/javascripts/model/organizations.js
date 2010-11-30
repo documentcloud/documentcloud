@@ -3,7 +3,22 @@
 dc.model.Organization = Backbone.Model.extend({
 
   groupSearchUrl : function() {
-    return "/#search/" + encodeURIComponent('group: ' + this.get('slug'));
+    return "/#search/" + encodeURIComponent(this.query());
+  },
+
+  openDocuments : function() {
+    dc.app.searcher.search(this.query());
+  },
+
+  query : function() {
+    return 'group: ' + this.get('slug');
+  },
+
+  statistics : function() {
+    var docs  = this.get('document_count');
+    var notes = this.get('note_count');
+    return docs + ' ' + Inflector.pluralize('document', docs)
+      + ', ' + notes + ' ' + Inflector.pluralize('note', notes);
   }
 
 });
@@ -16,7 +31,11 @@ dc.model.OrganizationSet = Backbone.Collection.extend({
   url   : '/organizations',
 
   comparator : function(org) {
-    return org.get('name').toLowerCase();
+    return org.get('name').toLowerCase().replace(/^the\s*/, '');
+  },
+
+  findBySlug : function(slug) {
+    return this.detect(function(org){ return org.get('slug') == slug; });
   }
 
 });

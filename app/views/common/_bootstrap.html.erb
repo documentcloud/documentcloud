@@ -10,6 +10,7 @@ window.SERVER_ROOT = '<%= DC.server_root %>';
   Accounts.refresh(<%= @accounts.to_json %>);
   Projects.refresh(<%= @projects.to_json({:account => @current_account, :include_collaborators => true}) %>);
 <% end %>
+Organizations.refresh(<%= @organizations.to_json %>);
 <% if @additional_js %>
   <%= @additional_js %>
 <% end %>

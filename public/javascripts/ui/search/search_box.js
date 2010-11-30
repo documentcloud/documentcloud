@@ -49,7 +49,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     $(document.body).setMode('active', 'search');
     var query = this.value();
     this.entitle(query);
-    dc.ui.Project.highlight(query);
+    dc.app.organizer.highlight(query);
   },
 
   startSearch : function() {
@@ -76,7 +76,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
 
   entitle : function(query) {
-    var title, ret, account;
+    var title, ret, account, org;
     var projectName   = dc.app.SearchParser.extractProject(query);
     var accountSlug   = dc.app.SearchParser.extractAccount(query);
     var groupName     = dc.app.SearchParser.extractGroup(query);
@@ -89,6 +89,8 @@ dc.ui.SearchBox = Backbone.View.extend({
       title = account.documentsTitle();
     } else if (dc.account && groupName == dc.account.organization.slug) {
       ret = 'org_documents';
+    } else if (groupName && (org = Organizations.findBySlug(groupName))) {
+      title = Inflector.possessivize(org.get('name')) + " Documents";
     } else if (published) {
       ret = 'published_documents';
     } else {
