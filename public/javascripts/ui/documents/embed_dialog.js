@@ -42,6 +42,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     this._heightEl      = this.$('input[name=height]');
     this._viewerSizeEl  = this.$('select[name=viewer_size]');
     this._sidebarEl     = this.$('input[name=sidebar]');
+    this._showTextEl    = this.$('input[name=show_text]');
     if (dc.app.preferences.get('embed_options')) this._loadPreferences();
     this.setMode('embed', 'dialog');
     this.update();
@@ -76,7 +77,8 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
       if (width)  options.width  = width;
       if (height) options.height = height;
     }
-    if (!this._sidebarEl.is(':checked')) options.sidebar = false;
+    if (!this._sidebarEl.is(':checked'))  options.sidebar = false;
+    if (!this._showTextEl.is(':checked')) options.text = false;
     return options;
   },
 
@@ -100,6 +102,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     this._widthEl.val(options.width);
     this._heightEl.val(options.height);
     this._sidebarEl.attr('checked', options.sidebar === false ? false : true);
+    this._showTextEl.attr('checked', options.text === false ? false : true);
   },
 
   _renderEmbedCode : function() {
