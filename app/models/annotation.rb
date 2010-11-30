@@ -16,6 +16,7 @@ class Annotation < ActiveRecord::Base
   named_scope :accessible, lambda { |account|
     access = []
     access << "(annotations.access = #{PUBLIC})"
+    access << "(annotations.access = #{EXCLUSIVE} and annotations.organization_id = #{account.organization_id})" if account
     access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
     {:conditions => "(#{access.join(' or ')})"}
   }
@@ -63,6 +64,8 @@ class Annotation < ActiveRecord::Base
     data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content}
     data['location'] = {'image' => location} if location
     data['access'] = 'private' if access == PRIVATE
+    data['access'] = 'exclusive' if access == EXCLUSIVE
+    data['access'] = 'public' if access == PUBLIC
     data['author'] = author_name if author_name
     data
   end

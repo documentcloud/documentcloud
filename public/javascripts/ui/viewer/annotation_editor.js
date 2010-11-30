@@ -129,11 +129,16 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
   // Convert an annotation object into serializable params understood by us.
   annotationToParams : function(anno, extra) {
     delete anno.unsaved;
+    var access;
+    console.log(['annotation', anno, anno.access]);
+    if (anno.access == 'private') access = dc.access.PRIVATE;
+    if (anno.access == 'exclusive') access = dc.access.EXCLUSIVE;
+    if (anno.access == 'public') access = dc.access.PUBLIC;
     var params = {
       page_number : anno.page,
       content     : anno.text,
       title       : anno.title,
-      access      : anno.access == 'private' ? 1 : 4
+      access      : access
     };
     if (anno.location) params.location = anno.location.image;
     return _.extend(params, extra || {});
