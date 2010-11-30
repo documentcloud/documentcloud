@@ -25,7 +25,7 @@ class Organization < ActiveRecord::Base
     filter = {:group => 'organization_id', :conditions => {:access => PUBLIC}}
     public_doc_counts   = Document.count filter
     public_note_counts  = Annotation.count filter
-    orgs = self.all(:conditions => {:id => public_doc_counts.keys})
+    orgs = self.all(:conditions => {:id => public_doc_counts.keys, :demo => false})
     orgs.each do |org|
       org.document_count = public_doc_counts[org.id]  || 0
       org.note_count     = public_note_counts[org.id] || 0
@@ -35,7 +35,7 @@ class Organization < ActiveRecord::Base
 
   # How many documents have been uploaded across the whole organization?
   def document_count
-    Document.count(:conditions => {:organization_id => id})
+    @document_count ||= Document.count(:conditions => {:organization_id => id})
   end
 
   # The list of all administrator emails in the organization.
