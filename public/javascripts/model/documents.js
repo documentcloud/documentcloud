@@ -10,7 +10,7 @@ dc.model.Document = Backbone.Model.extend({
     var id = this.id;
     this.notes = new dc.model.NoteSet();
     this.notes.url = function() {
-      return 'documents/' + id + '/annotations';
+      return '/documents/' + id + '/annotations';
     };
     this.pageEntities = new dc.model.EntitySet();
     this.reviewers = new dc.model.AccountSet();

@@ -2,9 +2,12 @@ dc.ui.Organizer = Backbone.View.extend({
 
   id : 'organizer',
 
-  // TODO: add 'published_documents' back, when we support it.
-  TOP_LEVEL_SEARCHES: [
-    'all_documents', 'your_documents', 'published_documents', 'org_documents'
+  PRIVATE_SEARCHES: [
+    'all_documents', 'your_documents', 'your_published_documents', 'org_documents'
+  ],
+
+  PUBLIC_SEARCHES: [
+    'all_documents', 'featured_documents', 'published_documents'
   ],
 
   events : {
@@ -13,6 +16,8 @@ dc.ui.Organizer = Backbone.View.extend({
     'click .your_documents'           : 'showYourDocuments',
     'click .org_documents'            : 'showOrganizationDocuments',
     'click .published_documents'      : 'showPublishedDocuments',
+    'click .featured_documents'       : 'showFeaturedDocuments',
+    'click .your_published_documents' : 'showYourPublishedDocuments',
     'click .account_links .text_link' : 'showAccountDocuments',
     'click .toggle_account_links'     : 'toggleAccountLinks'
   },
@@ -25,7 +30,8 @@ dc.ui.Organizer = Backbone.View.extend({
   },
 
   render : function() {
-    $(this.el).append(JST['organizer/sidebar']({searches : this.TOP_LEVEL_SEARCHES}));
+    var searches = dc.account ? this.PRIVATE_SEARCHES : this.PUBLIC_SEARCHES;
+    $(this.el).append(JST['organizer/sidebar']({searches : searches}));
     this.projectInputEl = this.$('#project_input');
     this.projectList    = this.$('.project_list');
     this.sidebar        = $('#sidebar');
@@ -71,12 +77,20 @@ dc.ui.Organizer = Backbone.View.extend({
     Accounts.current().openDocuments();
   },
 
+  showPublishedDocuments : function() {
+    dc.app.searcher.search('access: published');
+  },
+
+  showFeaturedDocuments : function() {
+    dc.app.searcher.search('featured');
+  },
+
   showAccountDocuments : function(e) {
     var cid = $(e.target).attr('data-cid');
     Accounts.getByCid(cid).openDocuments();
   },
 
-  showPublishedDocuments : function() {
+  showYourPublishedDocuments : function() {
     Accounts.current().openDocuments({published : true});
   },
 

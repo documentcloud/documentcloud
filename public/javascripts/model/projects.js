@@ -86,10 +86,12 @@ dc.model.Project = Backbone.Model.extend({
 
 dc.model.Project.topLevelTitle = function(type) {
   switch (type) {
-    case 'all_documents':       return 'All Documents';
-    case 'your_documents':      return 'Your Documents';
-    case 'published_documents': return 'Your Published Documents';
-    case 'org_documents':       return Inflector.possessivize(dc.account.organization.name) + " Documents";
+    case 'all_documents':             return 'All Documents';
+    case 'your_documents':            return 'Your Documents';
+    case 'featured_documents':        return 'Featured Documents';
+    case 'published_documents':       return 'Published Documents';
+    case 'your_published_documents':  return 'Your Published Documents';
+    case 'org_documents':             return Inflector.possessivize(dc.account.organization.name) + " Documents";
   }
 };
 
