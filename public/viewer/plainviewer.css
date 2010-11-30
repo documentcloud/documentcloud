@@ -75,6 +75,9 @@
     padding: 4px;
     width: 300px;
   }
+  .DV-zoom-0 .DV-annotationTitleInput {
+    width: 180px;
+  }
 .DV-annotationEditControls .minibutton {
   width: 60px;
 }
