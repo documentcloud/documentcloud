@@ -47,7 +47,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
       Accounts.current().openDocuments();
     } else if (Projects.first()) {
       Projects.first().open();
-    } else if (options.showHelp) {
+    } else if (options.showHelp && dc.account) {
       dc.app.navigation.open('help');
     } else {
       this.search('');
