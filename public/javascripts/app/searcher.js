@@ -38,6 +38,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
       Documents.refresh();
       this.box.value('');
     }
+    if (this.flags.outstandingSearch) return;
     if (!Documents.isEmpty()) {
       this.saveLocation(this.urlFragment());
       this.box.showDocuments();
@@ -65,6 +66,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
+    this.flags.outstandingSearch = true;
     dc.app.navigation.open('search');
     this.box.value(query);
     this.flags.related  = query.indexOf('related:') >= 0;
@@ -76,7 +78,6 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     this.box.showDocuments();
     this.saveLocation(this.urlFragment());
     Documents.refresh();
-    this.flags.outstandingSearch = true;
     this._afterSearch = callback;
     this.box.startSearch();
     var params = _.extend(dc.app.paginator.queryParams(), {q : query});
