@@ -21,7 +21,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   initialize : function() {
     this.box = dc.app.searchBox;
     this.flags.hasEntities = false;
-    this.flags.outstandingSearch = false;
+    this.currentSearch = null;
     _.bindAll(this, '_loadSearchResults', '_loadFacetsResults', '_loadFacetResults',
       'loadDefault', 'loadFacets');
     dc.app.navigation.bind('tab:search', this.loadDefault);
@@ -38,7 +38,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
       Documents.refresh();
       this.box.value('');
     }
-    if (this.flags.outstandingSearch) return;
+    if (this.currentSearch) return;
     if (!Documents.isEmpty()) {
       this.saveLocation(this.urlFragment());
       this.box.showDocuments();
@@ -66,8 +66,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
-    this.flags.outstandingSearch = true;
-    dc.app.navigation.open('search');
+    if (this.currentSearch) this.currentSearch.abort();
     this.box.value(query);
     this.flags.related  = query.indexOf('related:') >= 0;
     this.flags.specific = query.indexOf('document:') >= 0;
@@ -84,27 +83,26 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     if (this.flags.related && !this.relatedDoc) params.include_source_document = true;
     if (dc.app.navigation.isOpen('entities'))   params.include_facets = true;
     if (this.page)                              params.page = this.page;
-    $.ajax({
+    this.currentSearch = $.ajax({
       url:      this.DOCUMENTS_URL,
       data:     params,
       success:  this._loadSearchResults,
       error:    Accounts.forceLogout,
       dataType: 'json'
     });
+    dc.app.navigation.open('search');
   },
 
   loadFacets : function() {
     if (this.flags.hasEntities) return;
     var query = this.box.value() || '';
     dc.ui.spinner.show();
-    this.flags.outstandingSearch = true;
-    $.get(this.FACETS_URL, {q: query}, this._loadFacetsResults, 'json');
+    this.currentSearch = $.get(this.FACETS_URL, {q: query}, this._loadFacetsResults, 'json');
   },
 
   loadFacet : function(facet) {
     dc.ui.spinner.show();
-    this.flags.outstandingSearch = true;
-    $.get(this.FACETS_URL, {q : this.box.value(), facet : facet}, this._loadFacetResults, 'json');
+    this.currentSearch = $.get(this.FACETS_URL, {q : this.box.value(), facet : facet}, this._loadFacetResults, 'json');
   },
 
   // When searching by the URL's hash value, we need to unescape first.
@@ -157,21 +155,21 @@ dc.controllers.Searcher = Backbone.Controller.extend({
       this.relatedDoc = new dc.model.Document(resp.source_document);
     }
     this.box.doneSearching();
-    this.flags.outstandingSearch = false;
+    this.currentSearch = null;
     if (this._afterSearch) this._afterSearch();
   },
 
   _loadFacetsResults : function(resp) {
     dc.app.workspace.entityList.renderFacets(resp.facets, 5, resp.query.total);
     dc.ui.spinner.hide();
-    this.flags.outstandingSearch = false;
+    this.currentSearch = null;
     this.flags.hasEntities = true;
   },
 
   _loadFacetResults : function(resp) {
     dc.app.workspace.entityList.mergeFacets(resp.facets, 500, resp.query.total);
     dc.ui.spinner.hide();
-    this.flags.outstandingSearch = false;
+    this.currentSearch = null;
   }
 
 });
