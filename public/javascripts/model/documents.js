@@ -72,9 +72,9 @@ dc.model.Document = Backbone.Model.extend({
     }, this)});
   },
 
-  openViewer : function() {
+  openViewer : function(suffix) {
     if (this.checkBusy()) return;
-    window.open(this.viewerUrl());
+    return window.open(this.viewerUrl() + (suffix || ''));
   },
 
   openPublishedViewer : function() {
@@ -137,9 +137,13 @@ dc.model.Document = Backbone.Model.extend({
     if (count <= 0) return false;
     this.set({annotation_count : count - 1});
   },
-  
+
   removePages : function(pages) {
     Documents.removePages(this, pages);
+  },
+
+  reorderPages : function(pageOrder) {
+    Documents.reorderPages(this, pageOrder);
   },
 
   // Inspect.
@@ -267,20 +271,40 @@ dc.model.DocumentSet = Backbone.Collection.extend({
       return true;
     }, this));
   },
-  
+
   // Removes an array of pages from a document. Forces a reprocessing of
   // the entire document, which can be expensive.
   removePages : function(model, pages, options) {
     options = options || {};
-    
+
     $.ajax({
       url       : '/' + this.resource + '/' + model.id + '/remove_pages',
       type      : 'POST',
       data      : { pages : pages },
       dataType  : 'json',
-      success   : function(resp) { 
+      success   : function(resp) {
         model.set(resp);
-        if (options.success) options.success(model, resp); 
+        if (options.success) options.success(model, resp);
+      },
+      error     : _.bind(function(resp) {
+        this._handleError(model, options.error, null, resp);
+      }, this)
+    });
+  },
+
+  // Reorders an array of pages from a document. Forces a reprocessing of
+  // the entire document, which can be expensive.
+  reorderPages : function(model, pageOrder, options) {
+    options = options || {};
+
+    $.ajax({
+      url       : '/' + this.resource + '/' + model.id + '/reorder_pages',
+      type      : 'POST',
+      data      : { page_order : pageOrder },
+      dataType  : 'json',
+      success   : function(resp) {
+        model.set(resp);
+        if (options.success) options.success(model, resp);
       },
       error     : _.bind(function(resp) {
         this._handleError(model, options.error, null, resp);

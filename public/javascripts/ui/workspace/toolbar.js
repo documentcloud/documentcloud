@@ -3,7 +3,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   id : 'toolbar',
 
   events : {
-    'click #open_viewers' : '_openViewers'
+    'click #open_viewers' : '_clickOpenViewers'
   },
 
   MENUS : ['project', 'edit', 'publish', 'analyze'],
@@ -13,9 +13,9 @@ dc.ui.Toolbar = Backbone.View.extend({
     Backbone.View.call(this, options);
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'openEmbedDialog', 'openPublicationDateDialog',
-      'requestDownloadViewers', 'checkFloat', '_openTimeline', '_viewEntities',
-      'editDocumentURL', 'openShareDialog');
+      'editRelatedArticle', 'editAccess', 'openPages', 'openEmbedDialog',
+      'openPublicationDateDialog', 'requestDownloadViewers', 'checkFloat',
+      '_openTimeline', '_viewEntities', 'editDocumentURL');
     this.analyzeMenu = this._createAnalyzeMenu();
     this.publishMenu = this._createPublishMenu();
     if (dc.account) {
@@ -115,6 +115,17 @@ dc.ui.Toolbar = Backbone.View.extend({
 
   editAccess : function() {
     Documents.editAccess(Documents.selected());
+  },
+
+  openViewers : function(suffix, afterLoad) {
+    if (!Documents.selectedCount) return dc.ui.Dialog.alert('Please select a document to open.');
+    _.each(Documents.selected(), function(doc){
+      var win = doc.openViewer(suffix);
+      if (afterLoad) {
+        win.DV || (win.DV = {});
+        win.DV.afterLoad = afterLoad;
+      }
+    });
   },
 
   openEmbedDialog : function() {
@@ -250,11 +261,11 @@ dc.ui.Toolbar = Backbone.View.extend({
         {title : 'Source',                    attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
         {title : 'Description',               attrs: {'class' : 'multiple indent'}, onClick : this.editDescription},
         {title : 'Access Level',              attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
-        {title : 'Modify Original Document',  attrs: {'class' : 'singular'},        onClick : _.identity},
-        {title : 'Edit Page Text',            attrs: {'class' : 'singular indent'}, onClick : _.identity},
-        {title : 'Insert/Replace Pages',      attrs: {'class' : 'singular indent'}, onClick : _.identity},
-        {title : 'Remove Pages',              attrs: {'class' : 'singular indent'}, onClick : _.identity},
-        {title : 'Reorder Pages',             attrs: {'class' : 'singular indent'}, onClick : _.identity},
+        {title : 'Modify Original Document',  attrs: {'class' : 'multiple'},        onClick : _.bind(this.openViewers, this)},
+        {title : 'Edit Page Text',            attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#text/p1',  this._openPageTextEditor)},
+        {title : 'Insert/Replace Pages',      attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openInsertEditor)},
+        {title : 'Remove Pages',              attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openRemoveEditor)},
+        {title : 'Reorder Pages',             attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openReorderEditor)},
         {title : 'Reprocess Text',            attrs: {'class' : 'multiple'},        onClick : this.reprocessText},
         {title : 'Delete Documents',          attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
       ]
@@ -273,9 +284,24 @@ dc.ui.Toolbar = Backbone.View.extend({
     });
   },
 
-  _openViewers : function() {
-    if (!Documents.selectedCount) return dc.ui.Dialog.alert('Please select a document to open.');
-    _.each(Documents.selected(), function(doc){ doc.openViewer(); });
+  _openPageTextEditor: function(viewer) {
+    _.defer(function(){ viewer.window.dc.app.editor.pageTextEditor.open(); });
+  },
+
+  _openInsertEditor  : function(viewer) {
+    _.defer(function(){ viewer.window.dc.app.editor.replacePagesEditor.open(); });
+  },
+
+  _openRemoveEditor  : function(viewer) {
+    _.defer(function(){ viewer.window.dc.app.editor.removePagesEditor.open(); });
+  },
+
+  _openReorderEditor : function(viewer) {
+    _.defer(function(){ viewer.window.dc.app.editor.reorderPagesEditor.open(); });
+  },
+
+  _clickOpenViewers : function() {
+    this.openViewers();
   }
 
 });
