@@ -27,7 +27,9 @@ dc.ui.Help = Backbone.View.extend({
   render : function() {
     dc.app.navigation.bind('tab:help',  _.bind(this.openHelpTab, this));
     this._toolbar = $('#help_toolbar');
-    this._toolbar.prepend(this._createHelpMenu().render().el);
+    if (dc.account) {
+      this._toolbar.prepend(this._createHelpMenu().render().el);
+    }
     return this;
   },
 
@@ -55,7 +57,8 @@ dc.ui.Help = Backbone.View.extend({
     this.currentPage = page;
     this.saveHistory();
     if (noChange) return dc.app.navigation.open('help');
-    $.get("/ajax_help/" + (page || 'index') + '.html', function(resp) {
+    page || (page = dc.account ? 'index' : 'public');
+    $.get("/ajax_help/" + page + '.html', function(resp) {
       $('#help_content').html(resp);
     });
     dc.app.navigation.open('help');
