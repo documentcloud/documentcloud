@@ -2,13 +2,25 @@
   <div class="note_title display">
     <span class="title_link"><%= note.get('title') %> <span class="page_number">(p. <%= note.get('page') %>)</span></span>
   </div>
-  <% if (note.get('access') == 'private') { %>
+  <% if (_.contains(['exclusive', 'private'], note.get('access'))) { %>
     <div class="icon lock display" title="Private note"></div>
   <% } %>
   <% if (note.checkAllowedToEdit()) { %>
     <div class="edit_note icon edit_glyph display"></div>
   <% } %>
+  <% if (note.get('access') == 'public') { %>
+    <div class="annotation_access display">This public note is visible to everybody.</div>
+  <% } else if (note.get('access') == 'exclusive') { %>
+    <div class="annotation_access display">This note is only visible to your organization.</div>
+  <% } else { %>
+    <div class="annotation_access display">This private note is only visible to you.</div>
+  <% } %>
   <br class="clear display" />
+  <select class="access_select edit" name="access">
+    <option value="public" <%= note.get('access') == 'public' ? 'selected' : '' %>>Visible to general public</option>
+    <option value="exclusive" <%= note.get('access') == 'exclusive' ? 'selected' : '' %>>Exclusive to collaborators only</option>
+    <option value="private" <%= note.get('access') == 'private' ? 'selected' : '' %>>Only visible to you</option>
+  </select>
   <div class="note_title_edit edit text_input light">
     <div class="inner">
       <input type="text" class="note_title_input" value="" />

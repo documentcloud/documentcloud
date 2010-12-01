@@ -27,12 +27,14 @@ dc.ui.Note = Backbone.View.extend({
   },
 
   viewNoteInDocument : function() {
-    var suffix = '#document/p' + this.model.get('page');
+    var suffix = '#document/p' + this.model.get('page') + '/a' + this.model.get('id');
     window.open(this.model.document().viewerUrl() + suffix);
   },
 
   editNote : function() {
-    if (!this.model.checkAllowedToEdit()) return dc.ui.Dialog.alert("You don't have permission to edit this note.");
+    if (!this.model.checkAllowedToEdit()) {
+      return dc.ui.Dialog.alert("You don't have permission to edit this note.");
+    }
     this.$('.note_title_input').val(this.model.get('title'));
     this.$('.note_text_edit').val(this.model.get('content'));
     this.setMode('edit', 'visible');
@@ -43,11 +45,15 @@ dc.ui.Note = Backbone.View.extend({
   },
 
   saveNote : function() {
-    this.setMode('display', 'visible');
     this.model.save({
       title   : this.$('.note_title_input').val(),
-      content : this.$('.note_text_edit').val()
+      content : this.$('.note_text_edit').val(),
+      access  : this.$('.access_select :selected').val()
     });
+    var data = _.extend(this.model.toJSON(), {note : this.model});
+    $(this.el).html(JST['document/note'](data));
+    this.setMode(this.model.get('access'), 'access');
+    this.setMode('display', 'visible');
   },
 
   deleteNote : function() {

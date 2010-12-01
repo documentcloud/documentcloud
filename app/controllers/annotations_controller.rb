@@ -27,7 +27,9 @@ class AnnotationsController < ApplicationController
       anno.errors.add_to_base "You don't have permission to update the note."
       return json(anno, 403)
     end
-    anno.update_attributes(pick(params, :title, :content, :access))
+    attrs = pick(params, :title, :content, :access)
+    attrs[:access] = DC::Access::ACCESS_MAP[attrs[:access].to_sym]
+    anno.update_attributes(attrs)
     expire_page current_document.canonical_cache_path if current_document.cacheable?
     json anno
   end

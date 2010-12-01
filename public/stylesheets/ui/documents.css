@@ -235,6 +235,15 @@
     -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
     box-shadow: 1px 2px 3px #bbb; -webkit-box-shadow: 1px 2px 3px #bbb; -moz-box-shadow: 1px 2px 3px #bbb;
   }
+    .note .access_select {
+      float: right;
+    }
+    .note .annotation_access {
+      float: left;
+      margin: 0 4px;
+      color: #909090;
+      font-size: 11px;
+    }
     .note.private_access {
       border-color: #6BC2F8;
     }
