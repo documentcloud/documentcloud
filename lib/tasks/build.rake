@@ -1,10 +1,23 @@
 namespace :build do
 
+  BACKBONE   = '../backbone/backbone.js'
+  UNDERSCORE = '../underscore/underscore.js'
+
+  # Figure out the version number of a JS source file.
+  def get_version(string)
+    string.match(/VERSION = '(\S+)'/)[1]
+  end
+
   # Pull in a new build of Backbone.
   task :backbone do
-    contents = File.read '../backbone/backbone.js'
-    version = contents.match(/VERSION = '(\S+)'/)[1]
-    FileUtils.cp '../backbone/backbone.js', "public/javascripts/vendor/backbone-#{version}.js"
+    version = get_version File.read BACKBONE
+    FileUtils.cp BACKBONE, "public/javascripts/vendor/backbone-#{version}.js"
+  end
+
+  # Pull in a new build of Underscore.
+  task :underscore do
+    version = get_version File.read UNDERSCORE
+    FileUtils.cp UNDERSCORE, "public/javascripts/vendor/underscore-#{version}.js"
   end
 
   # Pull in a new build of the Document Viewer.
