@@ -245,15 +245,18 @@ dc.ui.Toolbar = Backbone.View.extend({
       label   : 'Edit',
       onOpen  : this._enableMenuItems,
       items   : [
-        {title : 'Edit All Fields',      attrs: {'class' : 'multiple'},        onClick : function(){ dc.ui.DocumentDialog.open(); }},
-        {title : 'Title',                attrs: {'class' : 'singular indent'}, onClick : this.editTitle},
-        {title : 'Source',               attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
-        {title : 'Description',          attrs: {'class' : 'multiple indent'}, onClick : this.editDescription},
-        {title : 'Related Article URL',  attrs: {'class' : 'multiple indent'}, onClick : this.editRelatedArticle},
-        {title : 'Document URL',         attrs: {'class' : 'singular indent'}, onClick : this.editDocumentURL},
-        {title : 'Access Level',         attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
-        {title : 'Reprocess Text',       attrs: {'class' : 'multiple'},        onClick : this.reprocessText},
-        {title : 'Delete Documents',     attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
+        {title : 'Edit Document Information', attrs: {'class' : 'multiple'},        onClick : function(){ dc.ui.DocumentDialog.open(); }},
+        {title : 'Title',                     attrs: {'class' : 'singular indent'}, onClick : this.editTitle},
+        {title : 'Source',                    attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
+        {title : 'Description',               attrs: {'class' : 'multiple indent'}, onClick : this.editDescription},
+        {title : 'Access Level',              attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
+        {title : 'Modify Original Document',  attrs: {'class' : 'singular'},        onClick : _.identity},
+        {title : 'Edit Page Text',            attrs: {'class' : 'singular indent'}, onClick : _.identity},
+        {title : 'Insert/Replace Pages',      attrs: {'class' : 'singular indent'}, onClick : _.identity},
+        {title : 'Remove Pages',              attrs: {'class' : 'singular indent'}, onClick : _.identity},
+        {title : 'Reorder Pages',             attrs: {'class' : 'singular indent'}, onClick : _.identity},
+        {title : 'Reprocess Text',            attrs: {'class' : 'multiple'},        onClick : this.reprocessText},
+        {title : 'Delete Documents',          attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
       ]
     });
   },
