@@ -78,7 +78,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
         borderLeft    = offLeft + this._activePage.offset().left,
         borderBottom  = borderTop + this._activePage.height() - 6,
         borderRight   = borderLeft + this._activePage.width() - 6;
-    this.region = this.make('div', {'class' : 'DV-annotationRegion active DV-' + this._kind, style:'position:absolute;'});
+    this.region = this.make('div', {'class' : 'DV-annotationRegion active ' + this._accessClass(this._kind), style:'position:absolute;'});
     this.pages.append(this.region);
     var contained = function(e) {
       return e.pageX > borderLeft && e.pageX < borderRight &&
@@ -130,7 +130,6 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
   annotationToParams : function(anno, extra) {
     delete anno.unsaved;
     var access;
-    console.log(['annotation', anno, anno.access]);
     if (anno.access == 'private') access = dc.access.PRIVATE;
     if (anno.access == 'exclusive') access = dc.access.EXCLUSIVE;
     if (anno.access == 'public') access = dc.access.PUBLIC;
@@ -174,6 +173,12 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     } catch (e) {
       // It's ok -- we don't have access to the parent window.
     }
+  },
+  
+  _accessClass : function(kind) {
+    if (kind == 'public')         return 'DV-accessPublic';
+    else if (kind =='exclusive')  return 'DV-accessExclusive';
+    else if (kind =='private')    return 'DV-accessPrivate';
   }
 
 });
