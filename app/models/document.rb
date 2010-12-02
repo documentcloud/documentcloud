@@ -101,6 +101,7 @@ class Document < ActiveRecord::Base
     integer :account_id
     integer :organization_id
     integer :access
+    integer :page_count
     integer :project_ids, :multiple => true do
       self.project_memberships.map {|m| m.project_id }
     end
