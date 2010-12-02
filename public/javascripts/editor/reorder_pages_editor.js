@@ -61,6 +61,7 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
     jQuery('.DV-thumbnails').sortable({
       containment: '.DV-thumbnails',
       items: '.DV-thumbnail',
+      handle: '.DV-thumbnail-page',
       cursor: 'move',
       scrollSensitivity: 80,
       scrollSpeed: 15,
