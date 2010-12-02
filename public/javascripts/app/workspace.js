@@ -8,7 +8,6 @@ dc.controllers.Workspace = Backbone.Controller.extend({
 
   // Initializes the workspace, binding it to <body>.
   initialize : function() {
-    this.el = $('body')[0];
     this.createSubViews();
     this.renderSubViews();
     dc.app.searcher = new dc.controllers.Searcher();
