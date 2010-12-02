@@ -9,6 +9,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .edit_description':      'editDescription',
     'click .edit_title':            'editTitle',
     'click .edit_related_article':  'editRelatedArticle',
+    'click .edit_document_url':     'editPublishedUrl',
     'click .edit_remove_pages':     'editRemovePages',
     'click .edit_reorder_pages':    'editReorderPages',
     'click .edit_page_text':        'editPageText',
@@ -45,7 +46,23 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       currentDocument.api.setRelatedArticle(url);
       this._updateDocument({related_article : url});
       return true;
-    }, this), {mode : 'short_prompt'});
+    }, this), {
+      mode : 'short_prompt',
+      description : 'Enter the URL of the article that references this document:'
+    });
+  },
+
+  editPublishedUrl : function() {
+    dc.ui.Dialog.prompt('Published URL', currentDocument.api.getPublishedUrl(), _.bind(function(url, dialog) {
+      url = Inflector.normalizeUrl(url);
+      if (url && !dialog.validateUrl(url)) return false;
+      currentDocument.api.setPublishedUrl(url);
+      this._updateDocument({remote_url : url});
+      return true;
+    }, this), {
+      mode        : 'short_prompt',
+      description : 'Enter the URL of the page on which this document is embedded:'
+    });
   },
 
   editDescription : function() {
@@ -82,7 +99,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   _updateDocument : function(attrs) {
     attrs.id = parseInt(currentDocument.api.getId(), 10);
-    var doc = new dc.model.Document(attrs);
+    var doc = new dc.model.Document(_.clone(attrs));
     doc.save();
     try {
       var doc = window.opener && window.opener.Documents && window.opener.Documents.get(doc);

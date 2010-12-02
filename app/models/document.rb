@@ -562,6 +562,7 @@ class Document < ActiveRecord::Base
     res['page']['image']      = page_image_url_template(:local => options[:local])
     res['page']['text']       = page_text_url_template(:local => options[:local])
     res['related_article']    = related_article if related_article
+    res['published_url']      = remote_url if remote_url
     doc['sections']           = sections.map(&:canonical) if options[:sections]
     if options[:annotations]
       annotation_author_names = options[:annotation_author_names] || {}

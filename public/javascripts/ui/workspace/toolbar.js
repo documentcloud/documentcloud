@@ -101,7 +101,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   editDocumentURL : function() {
     this.edit(function(docs) {
       var doc = docs[0];
-      dc.ui.Dialog.prompt('Document URL', doc.get('remote_url'), function(url, dialog) {
+      dc.ui.Dialog.prompt('Published URL', doc.get('remote_url'), function(url, dialog) {
         url = Inflector.normalizeUrl(url);
         if (url && !dialog.validateUrl(url)) return false;
         doc.save({remote_url : url});
