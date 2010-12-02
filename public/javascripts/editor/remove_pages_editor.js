@@ -61,8 +61,8 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
       $(this).attr('data-pageNumber', i+1);
     });
 
-    $thumbnails.bind('mousedown.dv-remove', _.bind(function(e) {
-      var $thumbnail = $(e.currentTarget);
+    $thumbnails.delegate('.DV-thumbnail-page', 'mousedown.dv-remove', _.bind(function(e) {
+      var $thumbnail = $(e.currentTarget).closest('.DV-thumbnail');
       var imageSrc = $('.DV-pageImage,.DV-thumbnail-image img', $thumbnail).eq(0).attr('src');
       var pageNumber = $thumbnail.attr('data-pageNumber');
       if (_.contains(this.removePages, pageNumber)) {
