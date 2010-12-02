@@ -8,7 +8,7 @@ To upload one or more documents, click the "New Documents" button in the sidebar
 
 <img src="/images/help/upload_dialog.png" class="full_line" />
  
-The uploader will suggest a title for your document, based on it's file name. You can edit this before you continue, but you'll also be able to edit a documents meta data after you've uploaded it. Consider providing additional data about each document: click on the pencil icon to expand a detailed form, where you can add a description and source for each document and set the access level. If the files you are uploading should share a source and description, click on the link titled: "Apply to All Files." 
+The uploader will suggest a title for your document, based on its file name. You can edit the title before you continue, but you'll also be able to edit each document's metadata after you've uploaded it. Consider providing additional data about each document: click on the pencil icon to expand a detailed form, where you can add a description and source for each document and set the access level. If the files you are uploading should share a source and description, click on the link titled: "Apply to All Files." 
 
 When you're ready, click "Upload." The dialog will close when all files have been uploaded. Before you can work with them, however, DocumentCloud has more processing to do, to prepare your document for our document viewer. Most documents process in less than 30 minutes, but the time it takes to process documents depends heavily on how many other users are working at the same time. If you'd like to be notified when your batch of documents is finished being processed, click the checkbox, and we will send you an email they are ready. If you are uploading many large documents at once, let us know so and we can ensure there's enough computing power available.
  
@@ -16,7 +16,7 @@ You might get better results if you optimize large documents (anything over 10 M
 
 ## API
 
-We also offer a [bulk upload API][], though documentation of our APIs is only accessible ot current users.
+We also offer a [bulk upload API][]. Documentation of our API is only accessible to registered users.
 
 ## Optical Character Recognition
 
