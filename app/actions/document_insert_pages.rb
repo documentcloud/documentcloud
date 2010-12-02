@@ -9,6 +9,7 @@ class DocumentInsertPages < DocumentModBase
       prepare_pdf
       process_concat options['insert_page_at'].to_i, options['pdfs_count'].to_i
     rescue Exception => e
+      fail_document
       LifecycleMailer.deliver_exception_notification(e)
       raise e
     end

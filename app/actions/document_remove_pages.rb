@@ -16,6 +16,7 @@ class DocumentRemovePages < DocumentModBase
                                   options['access'])
       end
     rescue Exception => e
+      fail_document
       LifecycleMailer.deliver_exception_notification(e)
       raise e
     end

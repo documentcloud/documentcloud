@@ -9,6 +9,7 @@ class DocumentReorderPages < DocumentModBase
       prepare_pdf
       reorder_pages options['page_order']
     rescue Exception => e
+      fail_document
       LifecycleMailer.deliver_exception_notification(e)
       raise e
     end

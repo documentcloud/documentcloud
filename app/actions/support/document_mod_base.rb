@@ -28,4 +28,8 @@ class DocumentModBase < CloudCrowd::Action
     options['access'] || DC::Access::PRIVATE
   end
 
+  def fail_document
+    document.update_attributes :access => DC::Access::ERROR
+  end
+
 end
