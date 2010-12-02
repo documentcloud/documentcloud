@@ -173,6 +173,9 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
           $right.addClass('right_chosen');
           this.$firstPageSelection = $thumbnail.next();
           if (!this.$firstPageSelection.length) this.$firstPageSelection = $thumbnail;
+        } else {
+          this.updateHint('choose');
+          return false;
         }
         this.isFirstPageBetween = true;
         this.updateHint('insert');
