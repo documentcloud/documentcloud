@@ -14,7 +14,6 @@ dc.ui.Note = Backbone.View.extend({
 
   constructor : function(options) {
     Backbone.View.call(this, options);
-    this.setMode(this.model.get('access'), 'access');
     _.bindAll(this, 'render');
     this.model.bind('change', this.render);
   },
@@ -23,6 +22,7 @@ dc.ui.Note = Backbone.View.extend({
     var data = _.extend(this.model.toJSON(), {note : this.model});
     $(this.el).html(JST['document/note'](data));
     this.setMode('display', 'visible');
+    this.setMode(this.model.get('access'), 'access');
     return this;
   },
 
@@ -50,10 +50,6 @@ dc.ui.Note = Backbone.View.extend({
       content : this.$('.note_text_edit').val(),
       access  : this.$('.access_select :selected').val()
     });
-    var data = _.extend(this.model.toJSON(), {note : this.model});
-    $(this.el).html(JST['document/note'](data));
-    this.setMode(this.model.get('access'), 'access');
-    this.setMode('display', 'visible');
   },
 
   deleteNote : function() {

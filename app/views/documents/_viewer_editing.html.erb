@@ -1,19 +1,17 @@
-<% if @current_account %>
-  <%= include_stylesheets :viewer_editing %>
-  <!--[if lt IE 9]>
-    <%= include_stylesheets :ie_only, :embed_assets => false %>
-  <![endif]-->
-  <%= include_javascripts :core %>
-  <% if Rails.env.development? %>
-    <script src="/javascripts/lib/debug.js" type="text/javascript"></script>
-  <% end %>
-
-  <script type="text/javascript">
-    $(document).ready(function() {
-      var docId = <%= @current_document.id %>;
-      var isOwner = <%= @current_account.allowed_to_edit?(@current_document) %>;
-      var accountName = "<%= @current_account.full_name %>";
-      dc.app.editor.initialize(docId, isOwner, accountName);
-    });
-  </script>
+<%= include_stylesheets :viewer_editing %>
+<!--[if lt IE 9]>
+  <%= include_stylesheets :ie_only, :embed_assets => false %>
+<![endif]-->
+<%= include_javascripts :core %>
+<% if Rails.env.development? %>
+  <script src="/javascripts/lib/debug.js" type="text/javascript"></script>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var docId = <%= @current_document.id %>;
+    var isOwner = <%= @allowed_to_edit %>;
+    var accountName = "<%= @current_account.full_name %>";
+    dc.app.editor.initialize(docId, isOwner, accountName);
+  });
+</script>

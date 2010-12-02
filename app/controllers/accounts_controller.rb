@@ -40,8 +40,16 @@ class AccountsController < ApplicationController
   def create
     return forbidden unless current_account.admin?
     attributes = pick(params, :first_name, :last_name, :email, :role)
-    account = current_organization.accounts.create(attributes)
-    account.send_login_instructions(current_account) if account.valid?
+    account = Account.lookup(attributes[:email])
+    if not account
+      account = current_organization.accounts.create(attributes)
+    elsif account.role == Account::REVIEWER
+      account.role = attributes[:role]
+      account.organization = current_organization
+      account.save
+      Annotation.update_all("organization_id = #{current_organization.id}", "account_id = #{account.id}")
+    end
+    account.send_login_instructions(current_account) if account.valid? and account.pending?
     json account
   end
 

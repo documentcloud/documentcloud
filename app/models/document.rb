@@ -493,7 +493,7 @@ class Document < ActiveRecord::Base
     doc['sections']           = sections.map(&:canonical) if options[:sections]
     if options[:annotations]
       annotation_author_names = options[:annotation_author_names] || {}
-      doc['annotations']      = annotations.accessible(options[:account]).map do |a|
+      doc['annotations']      = annotations.accessible(options[:account], !!options[:allowed_to_edit]).map do |a|
         if (name = annotation_author_names[a.account_id])
           a.author_name = name 
         end
