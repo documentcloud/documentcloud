@@ -102,11 +102,11 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
       e.stopPropagation();
       this.confirmPageChoice($(e.currentTarget));
     }, this));
-    
+
     $thumbnailImages.bind('mouseover.dv-replace', function(e) {
         $(this).closest('.DV-thumbnail').addClass('DV-hover-image');
     });
-    
+
     $thumbnailImages.bind('mouseout.dv-replace', function(e) {
         $(this).closest('.DV-thumbnail').removeClass('DV-hover-image');
     });
@@ -190,7 +190,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
     } else {
       var replace = state == 'replace';
       $(this.el).setMode('on', 'upload');
-      hint = "Upload pages to " + (replace ? 'replace ' : 'insert ');
+      hint = replace ? 'Replace ' : 'Insert ';
       if (replace) {
         range = this.getPageRange();
         if (range.start != range.end) {
