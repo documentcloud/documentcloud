@@ -146,7 +146,6 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
         end += 1;
       }
       if (end < start) isSingleSelection = true;
-      console.log(['confirm', firstPageNumber, thumbnailPageNumber, start, end, isReverse, isLeft, isRight]);
 
       if (!isSingleSelection) {
         $thumbnails = $thumbnails.filter(function() {
