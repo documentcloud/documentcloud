@@ -70,7 +70,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
   confirmEditPageText : function() {
     var modifiedPages = this.getChangedPageTextPages();
     var documentId = this.viewer.api.getModelId();
-    var dialog = dc.ui.Dialog.progress("Saving page text&hellip;");
+    var dialog = dc.ui.Dialog.progress("Saving text edits&hellip;");
 
     $.ajax({
       url       : '/documents/' + documentId + '/save_page_text',
