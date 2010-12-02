@@ -98,8 +98,8 @@ dc.ui.Paginator = Backbone.View.extend({
       {text : 'Relevance',     value : 'score',      selected : this.sortOrder == 'score'},
       {text : 'Date Uploaded', value : 'created_at', selected : this.sortOrder == 'created_at'},
       {text : 'Title',         value : 'title',      selected : this.sortOrder == 'title'},
-      {text : 'Source',        value : 'source',     selected : this.sortOrder == 'source'}
-      // {text : 'Length',        value : 'page_count', selected : this.sortOrder == 'page_count'}
+      {text : 'Source',        value : 'source',     selected : this.sortOrder == 'source'},
+      {text : 'Length',        value : 'page_count', selected : this.sortOrder == 'page_count'}
     ], _.bind(function(order) {
       this.sortOrder = order;
       dc.app.preferences.set({sort_order : order});
