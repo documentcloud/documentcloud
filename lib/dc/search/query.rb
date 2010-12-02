@@ -152,8 +152,7 @@ module DC
         generate_search
         conditions        = [@sql.join(' and ')] + @interpolations
         order             = "documents.created_at desc"
-        direction         = @order && (@order.to_sym == :page_count) ? 'desc' : 'asc'
-        order             = "documents.#{@order} #{direction}, #{order}" unless [:created_at, :score].include?(@order.to_sym)
+        order             = "documents.#{@order} asc, #{order}" unless [:created_at, :score, :page_count].include?(@order.to_sym)
         options           = {:conditions => conditions, :joins => @joins, :include => [:account, :organization]}
         @total            = @proxy.count(options)
         options[:order]   = order
@@ -167,7 +166,7 @@ module DC
         page       = @page
         size       = @facet ? 0 : @page_size
         order      = @order.to_sym
-        direction  = (order == :created_at || order == :score) ? :desc : :asc
+        direction  = (order == :created_at || order == :score || order == :page_count) ? :desc : :asc
         pagination = {:page => page, :per_page => size}
         pagination = EMPTY_PAGINATION if @exclude_documents
         related    = has_source_document?
