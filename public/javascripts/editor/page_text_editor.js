@@ -54,7 +54,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
   },
 
   handleEvents : function() {
-    $('.DV-textContents').bind('keyup', this.cachePageText).bind('change', this.cachePageText);
+    $('.DV-textContents').parent().delegate('.DV-textContents', 'keyup', this.cachePageText).delegate('.DV-textContents', 'change', this.cachePageText);
   },
 
   getPageNumber : function() {
