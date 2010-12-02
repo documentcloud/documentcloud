@@ -445,6 +445,9 @@ textarea.text_area {
   .dialog.short_prompt_dialog {
     width: 350px;
   }
+  .dialog.short_choice {
+    width: 300px;
+  }
   .dialog.prompt_dialog {
     width: 417px;
   }

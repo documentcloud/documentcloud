@@ -7,7 +7,8 @@ dc.ui.Paginator = Backbone.View.extend({
     score       : 'by relevance',
     title       : 'by title',
     created_at  : 'by date',
-    source      : 'by source'
+    source      : 'by source',
+    page_count  : 'by length'
   },
 
   id        : 'paginator',
@@ -93,11 +94,12 @@ dc.ui.Paginator = Backbone.View.extend({
   },
 
   chooseSort : function() {
-    dc.ui.Dialog.choose('Order Documents By&hellip;', [
-      {text : 'Relevance',      value : 'score',      selected : this.sortOrder == 'score'},
-      {text : 'Date Uploaded',  value : 'created_at', selected : this.sortOrder == 'created_at'},
-      {text : 'Title',          value : 'title',      selected : this.sortOrder == 'title'},
-      {text : 'Source',         value : 'source',     selected : this.sortOrder == 'source'}
+    var dialog = dc.ui.Dialog.choose('Order Documents By&hellip;', [
+      {text : 'Relevance',     value : 'score',      selected : this.sortOrder == 'score'},
+      {text : 'Date Uploaded', value : 'created_at', selected : this.sortOrder == 'created_at'},
+      {text : 'Title',         value : 'title',      selected : this.sortOrder == 'title'},
+      {text : 'Source',        value : 'source',     selected : this.sortOrder == 'source'},
+      {text : 'Length',        value : 'page_count', selected : this.sortOrder == 'page_count'}
     ], _.bind(function(order) {
       this.sortOrder = order;
       dc.app.preferences.set({sort_order : order});
@@ -105,6 +107,7 @@ dc.ui.Paginator = Backbone.View.extend({
       dc.app.searcher.loadPage();
       return true;
     }, this), {mode : 'short_prompt'});
+    $(dialog.el).addClass('short_choice');
   },
 
   editPage : function() {

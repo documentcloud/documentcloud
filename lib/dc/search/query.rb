@@ -152,7 +152,8 @@ module DC
         generate_search
         conditions        = [@sql.join(' and ')] + @interpolations
         order             = "documents.created_at desc"
-        order             = "documents.#{@order} asc, #{order}" unless [:created_at, :score].include?(@order.to_sym)
+        direction         = @order && (@order.to_sym == :page_count) ? 'desc' : 'asc'
+        order             = "documents.#{@order} #{direction}, #{order}" unless [:created_at, :score].include?(@order.to_sym)
         options           = {:conditions => conditions, :joins => @joins, :include => [:account, :organization]}
         @total            = @proxy.count(options)
         options[:order]   = order
