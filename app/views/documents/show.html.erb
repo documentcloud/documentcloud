@@ -19,14 +19,14 @@
   <script src="/viewer/viewer.js" type="text/javascript"></script>
 </head>
 <body style="margin:0; padding:0;">
+  <div id="viewer"></div>
+  <div id="overlay"></div>
   <script type="text/javascript">
     <% if @current_document %>
-      window.currentDocument = DV.load(<%= @current_document.canonical({
-        :account => @current_account, 
-        :local => @local, 
-        :annotation_author_names => @annotation_author_names,
-        :allowed_to_edit => @allowed_to_edit
-      }).to_json %>);
+      window.currentDocument = DV.load(
+        <%= @current_document.canonical({:account => @current_account, :local => @local}).to_json %>,
+        {container: '#viewer'}
+      );
     <% end %>
   </script>
 </body>

@@ -63,6 +63,19 @@ select {
     text-decoration: underline;
   }
 
+/*-------------------------------- Overlay -----------------------------------*/
+#overlay {
+  background: black;
+  opacity: 0.05; filter: alpha(opacity=5);
+  position: fixed;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 100;
+  display: none;
+}
+  body.overlay #overlay {
+    display: block;
+  }
+
 /*------------------------------ Text Inputs ---------------------------------*/
 div.text_input {
   position: relative;
