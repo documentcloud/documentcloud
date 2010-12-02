@@ -13,6 +13,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .edit_remove_pages':     'editRemovePages',
     'click .edit_reorder_pages':    'editReorderPages',
     'click .edit_page_text':        'editPageText',
+    'click .reprocess_text':        'reprocessText',
     'click .edit_replace_pages':    'editReplacePages'
   },
 
@@ -73,6 +74,23 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     }, this));
   },
 
+  reprocessText : function() {
+    var finish = _.bind(function(force) {
+      var doc = this._getDocument();
+      doc.reprocessText(force);
+      this._setOnParent(doc, {access: dc.access.PENDING});
+    }, this);
+    var dialog = new dc.ui.Dialog.confirm("This will reprocess the text from the original document. You may also force the text to be extracted by optical character recognition.<br /><br />While the text is being reprocessed, this window will close.", function() {
+      finish();
+      window.close();
+    });
+    var force = $(dialog.make('div', {'class':'minibutton dark'}, 'Force OCR')).bind('click', function() {
+      finish(true);
+      window.close();
+    });
+    dialog.$('.ok').text('Reprocess').before(force);
+  },
+
   editPageText : function() {
     dc.app.editor.pageTextEditor.toggle();
   },
@@ -97,16 +115,25 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     dc.app.editor.annotationEditor.toggle('private');
   },
 
-  _updateDocument : function(attrs) {
+  _getDocument : function(attrs) {
+    attrs || (attrs = {});
     attrs.id = parseInt(currentDocument.api.getId(), 10);
-    var doc = new dc.model.Document(_.clone(attrs));
-    doc.save();
+    return new dc.model.Document(_.clone(attrs));
+  },
+
+  _setOnParent : function(doc, attrs) {
     try {
       var doc = window.opener && window.opener.Documents && window.opener.Documents.get(doc);
       if (doc) doc.set(attrs);
     } catch (e) {
       // Couldn't access the parent window -- it's ok.
     }
+  },
+
+  _updateDocument : function(attrs) {
+    var doc = this._getDocument(attrs);
+    doc.save();
+    this._setOnParent(doc, attrs);
   }
 
 });
