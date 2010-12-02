@@ -131,6 +131,10 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
   confirmRemovePages : function() {
     var pageCount = this.removePages.length;
     if (!pageCount) return;
+    if (pageCount >= this.viewer.api.numberOfPages()) {
+      dc.ui.Dialog.alert("You can't remove all the pages from this document.");
+      return;
+    }
     dc.ui.Dialog.confirm('Are you sure you want to remove ' + (pageCount == 1 ? 'this page' : 'these pages') + '? While the document is being rebuilt, this window will close.', _.bind(function() {
       $('input.remove_pages_confirm_input', this.el).val('Removing...').attr('disabled', true);
       this.save();
