@@ -165,7 +165,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     try {
       var id = parseInt(currentDocument.api.getId(), 10);
       var doc = window.opener.Documents.get(id);
-      if (doc) doc.set({annotation_count : doc.get('annotation_count') + num});
+      if (doc) doc.set({annotation_count : (doc.get('annotation_count') || 0) + num});
     } catch (e) {
       // It's ok -- we don't have access to the parent window.
     }

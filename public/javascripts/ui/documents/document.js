@@ -146,7 +146,9 @@ dc.ui.Document = Backbone.View.extend({
     var next = _.bind(function() {
       var model = Documents.get(this.model.id);
       if (this.modes.notes == 'has') return this.setMode('owns', 'notes');
-      if (model.notes.length) return this.setMode('has', 'notes');
+      if (model.notes.length && model.notes.length == this.model.get('annotation_count')) {
+        return this.setMode('has', 'notes');
+      }
       dc.ui.spinner.show('loading notes');
       model.notes.fetch({success : function() {
         dc.ui.spinner.hide();
@@ -254,10 +256,6 @@ dc.ui.Document = Backbone.View.extend({
 
   _onDocumentChange : function() {
     if (this.model.hasChanged('selected')) return;
-    var notes = this.model.get('annotation_count');
-    if (this.model.hasChanged('annotation_count') && notes > 0) {
-      return this.$('span.note_count').text(notes);
-    }
     this.render();
   },
 
@@ -266,6 +264,7 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   _renderNotes : function() {
+    this.notesEl.empty();
     this.model.notes.each(this._addNote);
     this.setMode('has', 'notes');
   },
