@@ -2,10 +2,11 @@
 dc.ui.Document = Backbone.View.extend({
 
   // To display if the document failed to upload.
-  ERROR_MESSAGE : "The document failed to process successfully. We've been notified of the problem, \
-    and periodically review failed documents. You can try deleting this document, \
-    re-saving the PDF with Acrobat or Preview, and reducing the file size before uploading again.\
-    For direct help, email us at <span class=\"email\">support@documentcloud.org</span>",
+  ERROR_MESSAGE : "<span class=\"interface\">Our system was unable to process \
+    this document. We've been notified of the problem and periodially review \
+    these errors. Please review our \
+    <span class=\"text_link troubleshoot\">troubleshooting suggestions</span> or \
+    <span class=\"text_link contact_us\">contact us</span> for immediate assistance.</span>",
 
   className : 'document',
 
@@ -27,7 +28,9 @@ dc.ui.Document = Backbone.View.extend({
     'click .search_account'     : 'searchAccount',
     'click .search_group'       : 'searchOrganization',
     'click .search_source'      : 'searchSource',
-    'click .change_publish_at'  : 'editPublishAt'
+    'click .change_publish_at'  : 'editPublishAt',
+    'click .troubleshoot'       : 'openTroubleshooting',
+    'click .contact_us'         : 'openContactUs'
   },
 
   constructor : function(options) {
@@ -179,6 +182,14 @@ dc.ui.Document = Backbone.View.extend({
 
   editPublishAt : function() {
     new dc.ui.PublicationDateDialog([this.model]);
+  },
+
+  openTroubleshooting : function() {
+    dc.app.workspace.help.openPage('troubleshooting');
+  },
+
+  openContactUs : function() {
+    dc.app.workspace.help.openContactDialog();
   },
 
   showMenu : function(e) {

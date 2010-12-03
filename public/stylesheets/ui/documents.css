@@ -149,10 +149,12 @@
       font-size: 12px;
     }
     .document.error_access .description {
+      font-size: 11px;
+      line-height: 16px;
       font-style: italic;
       color: #844;
     }
-      .document.error_access .email {
+      .document.error_access .description .text_link {
         color: #000;
       }
   .document .show_notes {
