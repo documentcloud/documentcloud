@@ -55,7 +55,7 @@ dc.ui.Document = Backbone.View.extend({
     });
     $(this.el).html(JST['document/tile'](data));
     this._displayDescription();
-    this.$('.doc.icon').draggable({ghost : true, onDrop : this._onDrop});
+    if (dc.account) this.$('.doc.icon').draggable({ghost : true, onDrop : this._onDrop});
     this.notesEl = this.$('.notes');
     this.pagesEl = this.$('.pages');
     this.model.notes.each(function(note){ me._addNote(note); });
