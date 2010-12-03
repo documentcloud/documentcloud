@@ -7,7 +7,7 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
   },
 
   initialize : function(opts) {
-    _.bindAll(this, 'confirmReorderPages', 'postOpen');
+    _.bindAll(this, 'postOpen');
   },
 
   findSelectors : function() {
@@ -25,6 +25,7 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
   },
 
   open : function() {
+    $(this.el).show();
     this.findSelectors();
     this.setMode('is', 'open');
     this.viewer.api.enterReorderPagesMode();
@@ -130,10 +131,10 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
       $('.DV-currentPageImage-disabled', this.$s.page).addClass('DV-currentPageImage').removeClass('DV-currentPageImage-disabled');
       this.setMode('not', 'open');
       jQuery('.DV-thumbnails').sortable('destroy');
-      this.$s.guide.fadeOut('fast');
+      this.$s.guide.hide();
       this.$s.guideButton.removeClass('open');
       this.$s.pages.removeClass('reorder_pages_viewer');
-      $(this.el).remove();
+      $(this.el).hide();
       this.viewer.api.leaveReorderPagesMode();
     }
   }

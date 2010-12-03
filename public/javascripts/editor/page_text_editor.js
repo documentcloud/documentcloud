@@ -11,7 +11,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
   pageText: {},
 
   initialize : function(opts) {
-    _.bindAll(this, 'confirmEditPageText', 'cachePageText', 'resetPage');
+    _.bindAll(this, 'cachePageText');
   },
 
   findSelectors : function() {
@@ -29,6 +29,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
   },
 
   open : function() {
+    $(this.el).show();
     this.findSelectors();
     this.originalPageText = {};
     this.pageText = {};
@@ -172,10 +173,10 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
     if (this.modes.open == 'is') {
       this.setMode('not', 'open');
       this.$s.guideButton.removeClass('open');
-      this.$s.guide.fadeOut('fast');
+      this.$s.guide.hide();
       this.$s.pages.removeClass('edit_page_text_viewer');
       $('.DV-textContents').attr('contentEditable', false).removeClass('DV-editing');
-      $(this.el).remove();
+      $(this.el).hide();
       this.viewer.api.leaveEditPageTextMode();
     }
   }

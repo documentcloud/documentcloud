@@ -16,6 +16,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
   },
 
   open : function() {
+    $(this.el).show();
     this.findSelectors();
     this.setMode('is', 'open');
     this.$s.guide.fadeIn('fast');
@@ -259,7 +260,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
       this.unbindEvents();
       this.$s.guideButton.removeClass('open');
       this.$s.pages.removeClass('replace_pages_viewer');
-      $(this.el).remove();
+      $(this.el).hide();
       this.viewer.api.leaveReplacePagesMode();
     }
   }

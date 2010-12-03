@@ -7,10 +7,6 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
     'click .remove_pages_confirm_input' : 'confirmRemovePages'
   },
 
-  initialize : function(opts) {
-    _.bindAll(this, 'confirmRemovePages', 'removePageFromRemoveSet');
-  },
-
   findSelectors : function() {
     this.$s = {
       guide : $('#edit_remove_pages_guide'),
@@ -24,6 +20,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
   },
 
   open : function() {
+    $(this.el).show();
     this.findSelectors();
     this.removePages = [];
     this.setMode('is', 'open');
@@ -165,12 +162,12 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
   close : function() {
     if (this.modes.open == 'is') {
       this.setMode('not', 'open');
-      this.$s.guide.fadeOut('fast');
+      this.$s.guide.hide();
       this.$s.guideButton.removeClass('open');
       this.$s.pages.removeClass('remove_pages_viewer');
       this.$s.thumbnails.removeClass('DV-selected');
       this.unbindEvents();
-      $(this.el).empty().hide().remove();
+      $(this.el).empty().hide();
       this.viewer.api.leaveRemovePagesMode();
     }
   }
