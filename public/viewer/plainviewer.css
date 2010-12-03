@@ -115,7 +115,6 @@
 
 .DV-footerLogoLink {
   display: block;
-/*  width: 24px; height: 24px;*/
   width: 33px; height: 24px;
   background: url(images/dc_mini_logo.png) no-repeat center center;
   position: absolute;
