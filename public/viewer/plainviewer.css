@@ -141,6 +141,7 @@
       -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;
     }
     .DV-viewDocument .DV-views .DV-documentView span,
+    .DV-viewThumbnails .DV-views .DV-thumbnailsView span,
     .DV-viewAnnotations .DV-views .DV-annotationView span,
     .DV-viewText .DV-views .DV-textView span,
     .DV-viewSearch .DV-views .DV-textView span {
