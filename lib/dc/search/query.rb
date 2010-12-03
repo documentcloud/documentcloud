@@ -99,8 +99,7 @@ module DC
       # Stash the number of notes per-document on the document models.
       def populate_annotation_counts
         return false unless has_results?
-        counts = Annotation.counts_for_documents(@account, @results)
-        @results.each {|doc| doc.annotation_count = counts[doc.id] }
+        Document.populate_annotation_counts(@account, @results)
       end
 
       # Return a hash of facets.

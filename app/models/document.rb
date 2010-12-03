@@ -167,6 +167,22 @@ class Document < ActiveRecord::Base
     end
   end
 
+  # Publish all documents with a `publish_at` timestamp that is past due.
+  def self.publish_due_documents
+    Document.restricted.due.find_each {|doc| doc.set_access PUBLIC }
+  end
+
+  # Populate the annotation counts for a list of documents with a single SQL.
+  def self.populate_annotation_counts(account, docs)
+    counts = Annotation.counts_for_documents(account, docs)
+    docs.each {|doc| doc.annotation_count = counts[doc.id] }
+  end
+
+  # Ensure that titles are stripped of trailing whitespace.
+  def title=(title="Untitled Document")
+    self[:title] = title.strip
+  end
+
   # Save all text assets, including the `combined_page_text`, and the text of
   # each page individually, to the asset store.
   def upload_text_assets(pages)
