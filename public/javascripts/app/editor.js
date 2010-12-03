@@ -28,6 +28,8 @@ _.extend(dc.app.editor, {
     $('.DV-docViewer').addClass(access);
     $('.DV-well').append(this.controlPanel.render().el);
     $('.DV-logo').hide();
+    $('.DV-thumbnailsView').show();
+    currentDocument.api.roundTabCorners();
   }
 
 });
