@@ -26,17 +26,17 @@ If you're not yet ready to make the document public, you can schedule it to be p
 
 ## Step 2: <span id="template">Configure the Document Viewer</span>
 
-Depending on how you wish to display the document on your website, you have two choices: You can create a template for a **Full Page** viewer, with your own logo, links, analytics, and advertising; or you can embed a **Fixed Size** viewer directly inside an article, or place multiple **Fixed Size** viewers on a single page.
+Depending on how you wish to display the document on your website, you have two choices: You can create a template for a **full page** viewer, with your own logo, links, analytics and advertising; or you can embed a **fixed size** viewer directly inside an article. You can also embed multiple **fixed size** viewers on a single page.
 
-To create a **Full Page** template, use a fluid-width layout, with just a header &mdash; the viewer will take up the rest of the page. Make sure that your template has a proper doctype, and passes the [HTML validator][]. Templates that throw Internet Explorer into quirks mode will cause the viewer to display incorrectly.
+To create a **full page** template, use a fluid-width layout, with just a header &mdash; the viewer will take up the rest of the page. Make sure that your template has a proper doctype, and passes the [HTML validator][]. Templates that throw Internet Explorer into quirks mode will cause the viewer to display incorrectly.
 
 Here are some live examples worth checking out: [NewsHour][], [Arizona Republic][], [Chicago Tribune][], [ProPublica][], but there are [plenty more][].
 
 <img src="/images/help/newshour.jpg" class="full_line" />
 
-If you choose to make a **Fixed Size** viewer, set the width and height in pixels. Click on the "preview the document viewer" link, and you'll see an example of the viewer rendered at your specified size. If there's not enough space to show the sidebar (usually anything less than 800 pixels wide), click the checkbox to turn the sidebar off, and preview the document again.
+If you choose to make a **fixed size** viewer, set the width and height in pixels. In the embed dialog you can also toggle the sidebar as well as the text tab. We recommend hiding the sidebar in document viewers that are narrower than 800 pixels. If you're embedding handwritten documents or documents with poor OCR results, hiding the text tab is usually a good idea. Use the "preview the document viewer" link to see an example of the viewer rendered to your specifications. 
 
-For a live example of this type of embed, take a look at [this ballot from WNYC][].
+For a live example of a fixed size document with no sidebar, take a look at [this ballot from WNYC][].
 
 <img src="/images/help/wnyc.jpg" class="full_line" />
 
