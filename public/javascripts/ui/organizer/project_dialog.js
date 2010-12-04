@@ -41,9 +41,14 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   },
 
   confirm : function() {
-    var title = this.$('#project_title').val();
+    var project     = this.model;
+    var title       = this.$('#project_title').val();
     var description = this.$('#project_description').val();
-    if (!title) return this.error("Please specify a project title.");
+    var already = Projects.any(function(other) {
+      return (other !== project) && (other.get('title') == title);
+    });
+    if (!title)  return this.error("Please specify a project title.");
+    if (already) return this.error("There is already a project with that title.");
     this.model.save({
       title       : title,
       description : description
