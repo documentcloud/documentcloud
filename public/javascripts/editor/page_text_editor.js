@@ -7,11 +7,14 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
     'click .document_page_tile_remove'    : 'resetPage'
   },
 
-  originalPageText: {},
-  pageText: {},
-
   initialize : function(opts) {
+    this.editor = opts.editor;
     _.bindAll(this, 'cachePageText');
+  },
+
+  _resetState : function() {
+    this.originalPageText = {};
+    this.pageText = {};
   },
 
   findSelectors : function() {
@@ -31,8 +34,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
   open : function() {
     $(this.el).show();
     this.findSelectors();
-    this.originalPageText = {};
-    this.pageText = {};
+    this._resetState();
     this.setMode('is', 'open');
     this.viewer.api.enterEditPageTextMode();
     this.render();
@@ -86,6 +88,10 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
     });
   },
 
+  setSaveState : function() {
+    this.editor.setSaveState(!!_.keys(this.pageText).length);
+  },
+
   cachePageText : function() {
     var pageNumber = this.getPageNumber();
     var pageText = Inflector.trim($('.DV-textContents').textWithNewlines());
@@ -101,6 +107,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
       delete this.pageText[pageNumber];
     }
 
+    this.setSaveState();
     this.viewer.api.setPageText(pageText, pageNumber);
     this.redrawHeader();
   },
@@ -112,6 +119,7 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
     this.viewer.api.enterEditPageTextMode();
     delete this.originalPageText[pageNumber];
     delete this.pageText[pageNumber];
+    this.setSaveState();
     this.redrawHeader();
   },
 
@@ -171,6 +179,8 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
 
   close : function() {
     if (this.modes.open == 'is') {
+      this._resetState();
+      this.setSaveState();
       this.setMode('not', 'open');
       this.$s.guideButton.removeClass('open');
       this.$s.guide.hide();

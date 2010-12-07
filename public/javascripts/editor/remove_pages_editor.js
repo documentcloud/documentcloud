@@ -7,6 +7,10 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
     'click .remove_pages_confirm_input' : 'confirmRemovePages'
   },
 
+  initialize : function(options) {
+    this.editor = options.editor;
+  },
+
   findSelectors : function() {
     this.$s = {
       guide : $('#edit_remove_pages_guide'),
@@ -93,6 +97,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
 
   redrawPages : function() {
     var pageCount = this.removePages.length;
+    this.editor.setSaveState(!!pageCount);
     this.removePages = this.removePages.sort(function(a, b) { return a - b; });
     $('.document_page_tile', this.$s.holder).empty().remove();
 
@@ -161,6 +166,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
 
   close : function() {
     if (this.modes.open == 'is') {
+      this.editor.setSaveState();
       this.setMode('not', 'open');
       this.$s.guide.hide();
       this.$s.guideButton.removeClass('open');

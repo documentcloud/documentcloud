@@ -7,13 +7,26 @@ _.extend(dc.app.editor, {
     this.el = $('body')[0];
     this.docId = docId;
     this.isOwner = isOwner;
-    this.accountName = accountName;
+    _.bindAll(this, 'closeAllEditors', 'confirmStateChange');
     _.defer(_.bind(function() {
       dc.app.hotkeys.initialize();
       this.createSubViews();
       this.renderSubViews();
-      this.setupStateChangeCallbacks();
+      currentDocument.api.onChangeState(this.closeAllEditors);
     }, this));
+  },
+
+  confirmStateChange : function(continuation) {
+    if (this._openDialog) return;
+    this._openDialog = dc.ui.Dialog.confirm('You have unsaved changes. Are you sure you want to leave without saving them?', continuation, {onClose : _.bind(function() {
+      this._openDialog = null;
+    }, this)});
+  },
+
+  setSaveState : function(unsaved) {
+    this.unsavedChanges = unsaved;
+    var confirmation = unsaved ? this.confirmStateChange : null;
+    currentDocument.api.setConfirmStateChange(confirmation);
   },
 
   // Create all of the requisite subviews.
@@ -22,10 +35,10 @@ _.extend(dc.app.editor, {
     this.controlPanel       = new dc.ui.ViewerControlPanel();
     this.sectionEditor      = new dc.ui.SectionEditor();
     this.annotationEditor   = new dc.ui.AnnotationEditor();
-    this.removePagesEditor  = new dc.ui.RemovePagesEditor();
-    this.reorderPagesEditor = new dc.ui.ReorderPagesEditor();
-    this.pageTextEditor     = new dc.ui.PageTextEditor();
-    this.replacePagesEditor = new dc.ui.ReplacePagesEditor();
+    this.removePagesEditor  = new dc.ui.RemovePagesEditor({editor : this});
+    this.reorderPagesEditor = new dc.ui.ReorderPagesEditor({editor : this});
+    this.pageTextEditor     = new dc.ui.PageTextEditor({editor : this});
+    this.replacePagesEditor = new dc.ui.ReplacePagesEditor({editor : this});
   },
 
   // Render all of the existing subviews and place them in the DOM.
@@ -45,10 +58,7 @@ _.extend(dc.app.editor, {
     this.reorderPagesEditor.close();
     this.replacePagesEditor.close();
     this.pageTextEditor.close();
-  },
-
-  setupStateChangeCallbacks : function() {
-    currentDocument.api.onChangeState(_.bind(this.closeAllEditors, this));
+    return true;
   }
 
 });

@@ -6,8 +6,9 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
     'click .reorder_pages_confirm_input' : 'confirmReorderPages'
   },
 
-  initialize : function(opts) {
+  initialize : function(options) {
     _.bindAll(this, 'postOpen');
+    this.editor = options.editor;
   },
 
   findSelectors : function() {
@@ -75,15 +76,10 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
   },
 
   refreshHeader : function() {
-    var order = this.serializePageOrder();
-
-    if (_.isEqual(order, this.initialOrder)) {
-      this.orderChanged = false;
-      this.$s.saveButton.setMode('not', 'enabled');
-    } else {
-      this.orderChanged = true;
-      this.$s.saveButton.setMode('is', 'enabled');
-    }
+    var changed = !_.isEqual(this.serializePageOrder(), this.initialOrder);
+    this.orderChanged = changed;
+    this.$s.saveButton.setMode(changed ? 'is' : 'not', 'enabled');
+    this.editor.setSaveState(changed);
   },
 
   confirmReorderPages : function() {
@@ -128,6 +124,7 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
 
   close : function() {
     if (this.modes.open == 'is') {
+      this.editor.setSaveState();
       $('.DV-currentPageImage-disabled', this.$s.page).addClass('DV-currentPageImage').removeClass('DV-currentPageImage-disabled');
       this.setMode('not', 'open');
       jQuery('.DV-thumbnails').sortable('destroy');

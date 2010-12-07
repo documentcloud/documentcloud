@@ -2,6 +2,10 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
 
   id : 'replace_pages_container',
 
+  initialize : function(options) {
+    this.editor = options.editor;
+  },
+
   findSelectors : function() {
     this.$s = {
       guide: $('#edit_replace_pages_guide'),
