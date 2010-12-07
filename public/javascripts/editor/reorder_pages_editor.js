@@ -85,7 +85,7 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
 
   confirmReorderPages : function() {
     if (!this.orderChanged) return;
-    dc.ui.Dialog.confirm('This window will be closed while the document is reordered. Are you sure you want to proceed?', _.bind(function() {
+    dc.ui.Dialog.confirm("You've reordered the pages in this document. The document will close while it's being rebuilt. Are you sure you're ready to proceed?", _.bind(function() {
       $('input.reorder_pages_confirm_input', this.el).val('Reordering...').attr('disabled', true);
       this.save();
       return true;
