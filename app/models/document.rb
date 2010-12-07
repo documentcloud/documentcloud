@@ -468,6 +468,7 @@ class Document < ActiveRecord::Base
       page.text = page_text
       page.save
     end
+    update_attributes :text_changed => true
     reindex_all!
   end
 
