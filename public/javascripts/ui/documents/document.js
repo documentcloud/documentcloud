@@ -209,10 +209,10 @@ dc.ui.Document = Backbone.View.extend({
     items.push({title : 'View Entities', onClick: this.viewEntities});
     if (this.model.allowedToEdit()) {
       items = items.concat([
-        {title : 'Edit All Fields',         onClick: this.openDialog},
-        {title : 'Set Access Level',        onClick: this.setAccessLevelAll},
-        {title : 'Embed Document Viewer',   onClick: this.openEmbed, attrs : {'class' : count > 1 ? 'disabled' : ''}},
-        {title : deleteTitle,               onClick: this.deleteDocuments, attrs : {'class' : 'warn'}}
+        {title : 'Edit Document Information', onClick: this.openDialog},
+        {title : 'Set Access Level',          onClick: this.setAccessLevelAll},
+        {title : 'Embed Document Viewer',     onClick: this.openEmbed, attrs : {'class' : count > 1 ? 'disabled' : ''}},
+        {title : deleteTitle,                 onClick: this.deleteDocuments, attrs : {'class' : 'warn'}}
       ]);
     }
     menu.addItems(items);
