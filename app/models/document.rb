@@ -570,6 +570,7 @@ class Document < ActiveRecord::Base
     doc['access']             = ACCESS_NAMES[access] if options[:access]
     doc['pages']              = page_count
     doc['description']        = description
+    doc['source']             = source
     doc['resources']          = res = ActiveSupport::OrderedHash.new
     res['pdf']                = pdf_url
     res['text']               = full_text_url

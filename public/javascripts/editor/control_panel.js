@@ -8,6 +8,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .private_annotation':    'togglePrivateAnnotation',
     'click .edit_description':      'editDescription',
     'click .edit_title':            'editTitle',
+    'click .edit_source':           'editSource',
     'click .edit_related_article':  'editRelatedArticle',
     'click .edit_document_url':     'editPublishedUrl',
     'click .edit_remove_pages':     'editRemovePages',
@@ -38,6 +39,14 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       this._updateDocument({title : title});
       return true;
     }, this), {mode : 'short_prompt'});
+  },
+
+  editSource : function() {
+    dc.ui.Dialog.prompt('Source', currentDocument.api.getSource(), _.bind(function(source) {
+      currentDocument.api.setSource(source);
+      this._updateDocument({source : source});
+      return true;
+    }, this), {mode: 'short_prompt'});
   },
 
   editRelatedArticle : function() {
