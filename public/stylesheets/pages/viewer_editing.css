@@ -304,7 +304,7 @@
     display: block;
   }
   #remove_pages_container .remove_pages_holder {
-    float: left;
+    min-width: 400px;
   }
     #remove_pages_container.empty .remove_pages_holder {
       display: none;
