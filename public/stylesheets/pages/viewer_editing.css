@@ -265,9 +265,12 @@
     -webkit-box-shadow: 2px 2px 0px #e7e7e7;
     -moz-box-shadow: 2px 2px 0px #e7e7e7;
   }
+  .document_page_tile .document_page_line {
+    position: relative;
+  }
   .document_page_tile .document_page_tile_remove {
     position: absolute;
-    margin: 6px 0 0 -1px;
+    left: -1px;
     display: none;
   }
     .document_page_tile:hover .document_page_tile_remove {
@@ -300,21 +303,21 @@
   #remove_pages_container.empty .editor_hint {
     display: block;
   }
-  #remove_pages_container .remove_pages_confirm {
-    float: left;
-    padding: 43px 14px 0 12px;
-    height: 100px;
-    display: block;
-  }
-    #remove_pages_container.empty .remove_pages_confirm {
-      display: none;
-    }
-    #remove_pages_container .remove_pages_confirm input {
-      margin: 18px 0 0 0;
-    }
   #remove_pages_container .remove_pages_holder {
     float: left;
   }
+    #remove_pages_container.empty .remove_pages_holder {
+      display: none;
+    }
+    #remove_pages_container .remove_pages_confirm {
+      float: left;
+      padding: 43px 14px 0 12px;
+      height: 100px;
+      display: block;
+    }
+      #remove_pages_container .remove_pages_confirm input {
+        margin: 18px 0 0 0;
+      }
 
 .DV-pages.remove_pages_viewer {
   margin-top: 134px;
