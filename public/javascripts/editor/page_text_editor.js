@@ -101,15 +101,18 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
     }
 
     if (pageText != this.originalPageText[pageNumber]) {
+      if (!(pageNumber in this.pageText)) {
+        this.redrawHeader();
+      }
       this.pageText[pageNumber] = pageText;
     } else {
       delete this.originalPageText[pageNumber];
       delete this.pageText[pageNumber];
+      this.redrawHeader();
     }
 
     this.setSaveState();
     this.viewer.api.setPageText(pageText, pageNumber);
-    this.redrawHeader();
   },
 
   resetPage : function(e) {
