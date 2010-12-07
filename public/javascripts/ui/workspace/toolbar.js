@@ -262,11 +262,11 @@ dc.ui.Toolbar = Backbone.View.extend({
         {title : 'Description',               attrs: {'class' : 'multiple indent'}, onClick : this.editDescription},
         {title : 'Access Level',              attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
         {title : 'Modify Original Document',  attrs: {'class' : 'multiple'},        onClick : _.bind(this.openViewers, this, '#pages', null)},
-        {title : 'Edit Page Text',            attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#text/p1', this._openPageTextEditor)},
         {title : 'Insert/Replace Pages',      attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openInsertEditor)},
         {title : 'Remove Pages',              attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openRemoveEditor)},
         {title : 'Reorder Pages',             attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openReorderEditor)},
-        {title : 'Reprocess Text',            attrs: {'class' : 'multiple'},        onClick : this.reprocessText},
+        {title : 'Edit Page Text',            attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#text/p1', this._openPageTextEditor)},
+        {title : 'Reprocess Text',            attrs: {'class' : 'multiple indent'}, onClick : this.reprocessText},
         {title : 'Delete Documents',          attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
       ]
     });
