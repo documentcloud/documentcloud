@@ -36,6 +36,7 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
     this.$s.guide.fadeIn('fast');
     this.$s.guideButton.addClass('open');
     this.$s.saveButton.setMode('not', 'enabled');
+    this.hideSelectedThumbnail();
   },
 
   render : function() {

@@ -16,6 +16,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
       guide : $('#edit_remove_pages_guide'),
       guideButton: $('.edit_remove_pages'),
       thumbnails : $('.DV-thumbnail'),
+      thumbnailsContainer : $('.DV-thumbnails'),
       pages : $('.DV-pages'),
       viewerContainer : $('.DV-docViewer-Container'),
       holder : null,
@@ -31,6 +32,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
     this.$s.guide.fadeIn('fast');
     this.$s.guideButton.addClass('open');
     this.viewer.api.enterRemovePagesMode();
+    this.hideSelectedThumbnail();
     this.render();
   },
 
@@ -49,21 +51,17 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
   },
 
   unbindEvents : function() {
-    var $thumbnails = this.$s.thumbnails;
-    $thumbnails.unbind('mousedown.dv-remove');
+    this.$s.thumbnailsContainer.unbind('mousedown.dv-remove');
   },
 
   handleEvents : function() {
-    var $thumbnails = this.$s.thumbnails;
-
     this.unbindEvents();
 
-    $thumbnails.each(function(i) {
-      $(this).attr('data-pageNumber', i+1);
-    });
-
-    $thumbnails.delegate('.DV-thumbnail-page', 'mousedown.dv-remove', _.bind(function(e) {
-      var $thumbnail = $(e.currentTarget).closest('.DV-thumbnail');
+    this.$s.thumbnailsContainer.bind('mousedown.dv-remove', _.bind(function(e) {
+      var $target = $(e.target);
+      if ($target.closest('.DV-thumbnail-page').length == 0) return;
+      
+      var $thumbnail = $target.closest('.DV-thumbnail');
       var imageSrc = $('.DV-pageImage,.DV-thumbnail-image img', $thumbnail).eq(0).attr('src');
       var pageNumber = $thumbnail.attr('data-pageNumber');
       if (_.contains(this.removePages, pageNumber)) {
@@ -127,7 +125,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
     // Set width of container for side-scrolling
     var width = $('.document_page_tile').length * $('.document_page_tile').eq(0).outerWidth(true);
     var confirmWidth = $('.remove_pages_confirm', this.el).outerWidth(true);
-    this.$s.holder.width(width + confirmWidth);
+    this.$s.holder.width(width + confirmWidth + 10);
   },
 
   confirmRemovePages : function() {

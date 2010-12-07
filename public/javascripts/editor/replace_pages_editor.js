@@ -27,6 +27,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
     this.$s.guideButton.addClass('open');
     this.viewer.api.enterReplacePagesMode();
     this.render();
+    this.hideSelectedThumbnail();
     this.resetSelected();
   },
 
