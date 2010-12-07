@@ -48,12 +48,11 @@ module DC
         save_file(pdf_path, document.pdf_path, access)
       end
 
-      def save_insert_pdf(document, pdf_path, access=DEFAULT_ACCESS)
-        pdf_filename = File.basename(pdf_path)
-        path = File.join(document.path, 'inserts', pdf_filename)
+      def save_insert_pdf(document, pdf_path, pdf_name, access=DEFAULT_ACCESS)
+        path = File.join(document.path, 'inserts', pdf_name)
         save_file(pdf_path, path, access)
       end
-      
+
       def delete_insert_pdfs(document)
         path = File.join(document.pdf_path, 'inserts')
         bucket.delete_folder(path)
@@ -102,7 +101,7 @@ module DC
       def destroy(document)
         bucket.delete_folder(document.path)
       end
-      
+
 
       private
 

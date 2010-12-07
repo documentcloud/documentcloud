@@ -83,8 +83,8 @@ class DocumentsController < ApplicationController
     return not_found unless doc = current_document(true)
     return json(nil, 409) unless params[:file] && (params[:insert_page_at] || params[:replace_pages_start])
 
-    DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:document_number]+'.pdf') do |path|
-      DC::Store::AssetStore.new.save_insert_pdf(doc, path)
+    DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
+      DC::Store::AssetStore.new.save_insert_pdf(doc, path, params[:document_number]+'.pdf')
       if params[:document_number] == params[:document_count]
         if params[:replace_pages_start]
           range = (params[:replace_pages_start].to_i..params[:replace_pages_end].to_i).to_a

@@ -34,12 +34,12 @@ module DC
         FileUtils.cp(pdf_path, local(document.pdf_path))
       end
 
-      def save_insert_pdf(document, pdf_path, access=nil)
+      def save_insert_pdf(document, pdf_path, pdf_name, access=nil)
         path = File.join(document.path, 'inserts')
         ensure_directory(path)
-        FileUtils.cp(pdf_path, local(path))
+        FileUtils.cp(pdf_path, File.join(local(path), pdf_name))
       end
-      
+
       def delete_insert_pdfs(document)
         delete File.join(document.path, 'inserts')
       end
@@ -84,7 +84,7 @@ module DC
       def destroy(document)
         delete document.path
       end
-      
+
       def delete(path)
         doc_path = local(path)
         FileUtils.rm_r(doc_path) if File.exists?(doc_path)
