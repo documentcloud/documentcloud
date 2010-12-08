@@ -179,16 +179,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _removeReviewer : function(e) {
     this.showSpinner();
     var accountId = parseInt($(e.target).attr('data-account-id'), 10);
-    
-    var account = this.docs.reduce(function(memo, doc) {
-      var reviewers = doc.reviewers.detect(function(reviewer) {
-        if (reviewer.id == accountId) {
-          return reviewer;
-        }
-      });
-      if (reviewers) return reviewers;
-    });
-
+    var accounts  = _.flatten(this.docs.map(function(doc){ return doc.reviewers.models; }));
+    var account   = _.detect(accounts, function(acc){ return acc.id == accountId; });
     var reviewerDocuments = this.docs.select(function(doc) {
       return doc.reviewers.any(function(r) { return r.get('id') == account.get('id'); });
     });
