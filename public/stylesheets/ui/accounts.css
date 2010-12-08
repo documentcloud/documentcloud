@@ -18,7 +18,7 @@
 /*--------------------------- Accounts Dialog --------------------------------*/
 .account_list {
   max-width: none;
-  width: 800px;
+  width: 640px;
 }
   .account_list .custom {
     position: relative;
@@ -141,7 +141,7 @@
 
 /*--------------------------- Share Documents Dialog ----------------------------*/
 #share_dialog {
-  width: 800px;
+  width: 640px;
 }
   #share_dialog .document_reviewers {
     margin: 0;
@@ -153,6 +153,9 @@
   #share_dialog .reviewers {
     position: relative;
   }
+  #share_dialog td {
+    white-space: normal;
+  }
   #share_dialog .enter_email .minibutton {
     float: right;
   }
@@ -160,8 +163,19 @@
   #share_dialog .enter_full_name_label {
     font-size: 12px;
   }
+  #share_dialog .nowrap {
+    white-space: nowrap;
+  }
   #share_dialog .name input {
-    width: 100px;
+    width: 66px;
+  }
+  #share_dialog .name_wrapper,
+  #share_dialog .name {
+    width: 164px;
+    min-width: 164px; /* Table cells in FF */
+  }
+  #share_dialog .name_wrapper .text_input {
+    width: 66px;
   }
   #share_dialog .reviewers_title {
     font-size: 15px;
@@ -211,4 +225,11 @@
   #share_dialog input[name=reviewer_first_name],
   #share_dialog input[name=reviewer_last_name] {
     display: none;
+  }
+  #share_dialog .reviewer_management .last {
+    line-height: 12px;
+    font-size: 10px;
+    white-space: normal;
+    padding: 10px;
+    color: #FF0000;
   }

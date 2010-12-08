@@ -109,16 +109,11 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       model : account, 
       kind : 'reviewer'
     })).render(null, {
-      documentCount : this.accountDocumentCounts[account.id]
+      documentCount  : this.accountDocumentCounts[account.id],
+      documentsCount : this.docs.length
     }).el;
     
     return view;
-  },
-  
-  close : function() {
-    dc.ui.notifier.hide();
-    $(this.el).hide();
-    $(document.body).removeClass('overlay');
   },
   
   _showEnterEmail : function() {
@@ -129,7 +124,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   
   _addReviewer : function() {
     var email = this.$('#reviewer_email').val();
-    if (!email) return this.error('Please enter an email address.');
+    if (!email) return this._showManagementError('Please enter an email address.');
     this.showSpinner();
     $.ajax({
       url : '/documents/reviewers/add',
@@ -161,13 +156,17 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
           return error.indexOf("first name") != -1 || error.indexOf("last name") != -1;
         })) {
           this._showReviewerNameInputs();
-          this.error("Please enter in the full name for this reviewer.");
+          this._showManagementError("Please enter in the full name for this reviewer.");
         } else {
-          this.error(resp.errors[0]);
+          this._showManagementError(resp.errors[0]);
         }
         this.hideSpinner();
       }, this)
     });
+  },
+  
+  _showManagementError : function(error) {
+    this.$('.reviewer_management .last').text(error);
   },
   
   _showReviewerNameInputs : function() {
@@ -181,23 +180,19 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.showSpinner();
     var accountId = parseInt($(e.target).attr('data-account-id'), 10);
     
-    var account;
-    this.docs.each(_.bind(function(doc) {
-      doc.reviewers.each(_.bind(function(reviewer) {
+    var account = this.docs.reduce(function(memo, doc) {
+      var reviewers = doc.reviewers.detect(function(reviewer) {
         if (reviewer.id == accountId) {
-          account = reviewer;
-          _.breakLoop();
+          return reviewer;
         }
-      }, this));
-      if (account) _.breakLoop();
-    }, this));
-
-    var documentIds = [];
-    this.docs.each(function(doc) {
-      if (_.contains(doc.reviewers.map(function(r) { return r.id; }), account.id)) {
-        documentIds.push(doc.id);
-      }
+      });
+      if (reviewers) return reviewers;
     });
+
+    var reviewerDocuments = this.docs.select(function(doc) {
+      return doc.reviewers.any(function(r) { return r.get('id') == account.get('id'); });
+    });
+    var documentIds = _.map(reviewerDocuments, function(d) { return d.get('id'); });
     
     $.ajax({
       url : '/documents/reviewers/remove',
@@ -221,13 +216,16 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       }, this),
       error : _.bind(function(resp) {
         this.hideSpinner();
-        console.log(['error', resp, arguments]);
-        this.error('There was a problem removing the reviewer.');
+        this._showManagementError('There was a problem removing the reviewer.');
       }, this)
     });
     
+  },
+  
+  close : function() {
+    dc.ui.notifier.hide();
+    $(this.el).hide();
+    $(document.body).removeClass('overlay');
   }
 
-
 });
-
