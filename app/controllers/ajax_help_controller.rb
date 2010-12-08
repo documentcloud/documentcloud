@@ -9,7 +9,7 @@ class AjaxHelpController < ApplicationController
     :searching        => 'Searching Documents',
     :uploading        => 'Uploading Documents',
     :troubleshooting  => 'Troubleshooting Failed Uploads',
-    :modifying        => 'Modifying Documents',
+    :modifying        => 'Document Modification',
     :privacy          => 'Privacy',
     :collaboration    => 'Collaboration',
     :notes            => 'Editing Notes and Sections',
