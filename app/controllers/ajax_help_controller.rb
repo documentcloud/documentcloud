@@ -1,6 +1,6 @@
 class AjaxHelpController < ApplicationController
 
-  PAGES = [:index, :tour, :accounts, :searching, :uploading, :troubleshooting, :modifying, :notes, :collaboration, :privacy, :publishing, :public]
+  PAGES = [:index, :tour, :accounts, :searching, :uploading, :troubleshooting, :modification, :notes, :collaboration, :privacy, :publishing, :public]
 
   PAGE_TITLES = {
     :index            => 'Introduction',
@@ -9,7 +9,7 @@ class AjaxHelpController < ApplicationController
     :searching        => 'Searching Documents',
     :uploading        => 'Uploading Documents',
     :troubleshooting  => 'Troubleshooting Failed Uploads',
-    :modifying        => 'Document Modification',
+    :modification     => 'Document Modification',
     :privacy          => 'Privacy',
     :collaboration    => 'Collaboration',
     :notes            => 'Editing Notes and Sections',

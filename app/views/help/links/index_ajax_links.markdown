@@ -5,5 +5,5 @@
 [Publish documents]: #help/publishing
 [Walk through a guided tour]: #help/tour
 [guided tour]: #help/tour
-[Reorder documents]: #help/modifying
-[correct poor OCR]: #help/modifying
+[Reorder documents]: #help/modification
+[correct poor OCR]: #help/modification
