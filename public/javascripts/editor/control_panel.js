@@ -89,10 +89,14 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       doc.reprocessText(force);
       this._setOnParent(doc, {access: dc.access.PENDING});
     }, this);
-    var dialog = new dc.ui.Dialog.confirm("This will reprocess the text from the original document. You may also force the text to be extracted by optical character recognition.<br /><br />While the text is being reprocessed, this window will close.", function() {
+    var dialog = new dc.ui.Dialog.confirm("Reprocess this document to take \
+        advantage of improvements to our text extraction tools. Choose \
+        \"Force OCR\" (optical character recognition) to ignore any embedded \
+        text information and use Tesseract before reprocessing. The document will \
+        close while it's being rebuilt. Are you sure you want to proceed? ", function() {
       finish();
       window.close();
-    });
+    }, {width: 450});
     var force = $(dialog.make('div', {'class':'minibutton dark'}, 'Force OCR')).bind('click', function() {
       finish(true);
       window.close();

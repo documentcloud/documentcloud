@@ -160,11 +160,16 @@ dc.ui.Toolbar = Backbone.View.extend({
   reprocessText : function() {
     var docs = Documents.chosen();
     if (!docs.length || !Documents.allowedToEdit(docs)) return;
-    var title = Inflector.pluralize('document', docs.length);
-    var dialog = new dc.ui.Dialog.confirm("This will reprocess the text from the original " + title + ". You may also force the text to be extracted by optical character recognition.", function() {
+    var docPart = docs.length == 1 ? 'this document' : 'these documents';
+    var message = "Reprocess " + docPart + " to take \
+        advantage of improvements to our text extraction tools. Choose \
+        \"Force OCR\" (optical character recognition) to ignore any embedded \
+        text information and use Tesseract before reprocessing. \
+        Are you sure you want to proceed? ";
+    var dialog = new dc.ui.Dialog.confirm(message, function() {
       _.each(docs, function(doc){ doc.reprocessText(); });
       return true;
-    });
+    }, {width: 450});
     var force = $(dialog.make('div', {'class':'minibutton dark'}, 'Force OCR')).bind('click', function() {
       _.each(docs, function(doc){ doc.reprocessText(true); });
       dialog.close();
