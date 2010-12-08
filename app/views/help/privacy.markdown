@@ -20,4 +20,6 @@ When you upload a document, you can decide whether or not you're ready to make i
 
 Your "private" notes will always be private. Public notes, on the other hand, are as public as the document. If access to the document is limited to your newsroom, your "public" notes will be able to be read and edited by anyone in your newsroom. When you make a document public, your public notes become visible to other DocumentCloud users along with it.
 
+Still have questions about privacy and permissions? Don't hesitate to [contact us][].
+
 [terms of service]: http://www.opencalais.com/terms
