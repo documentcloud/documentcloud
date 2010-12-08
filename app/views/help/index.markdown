@@ -6,6 +6,7 @@ From the workspace, you can:
   * [Upload document files][] of your own.
   * View lists of entities mentioned by documents, and search for specific entities by name.
   * [Annotate documents][] with notes and navigation.
+  * [Reorder documents][], swap out individual pages and [correct poor OCR][].
   * Organize projects of documents and notes, and [share them][] with collaborators.
   * [Publish documents][] by embedding them on your website.
   * [Walk through a guided tour][] of the workspace.
