@@ -146,6 +146,7 @@ dc.ui.Document = Backbone.View.extend({
     var next = _.bind(function() {
       var model = Documents.get(this.model.id);
       if (this.modes.notes == 'has') return this.setMode('owns', 'notes');
+      if (model.checkBusy()) return;
       if (model.notes.length && model.notes.length == this.model.get('annotation_count')) {
         return this.setMode('has', 'notes');
       }
