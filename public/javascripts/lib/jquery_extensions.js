@@ -262,12 +262,11 @@
     // Convert them properly.
     textWithNewlines: function( text ) {
       var ret = "";
-      $.each( text || this, function(){
-        $.each( this.childNodes, function() {
-          if ( this.nodeType != 8 ) {
-            var tagName = this.tagName && this.tagName.toLowerCase();
-            var isBreak = tagName == 'div' || tagName == 'p';
-            if (isBreak) ret += "\n";
+      $.each(text || this, function(){
+        $.each(this.childNodes, function() {
+          if (this.nodeType != 8) {
+            var tag = this.tagName && this.tagName.toLowerCase();
+            if (tag == 'div' || tag == 'p' || tag == 'br') ret += "\n";
             ret += this.nodeType != 1 ? this.nodeValue : $.fn.textWithNewlines([this]);
           }
         });
