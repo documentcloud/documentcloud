@@ -1,23 +1,32 @@
-# Modifying Documents
+# Document Modification
 
-Even after you have finished uploading and annotating a document, DocumentCloud can still help you manipulate and modify the document's content. Individual pages in the document may be inserted, replaced, removed and reordered. If the OCR process has produced incorrect text, the text for any page can be corrected. To get started, open the document and click on the **Pages** tab.
+We don't instinctively think of modifying source documents as something a responsible journalist would do, but there are absolutely times when you need to. Whether you're trying to protect the privacy of a minor by redacting personally identifying information from a foster care incident report, reorganizing a collection of letters or inserting a page that wasn't properly scanned, reporters do sometimes need to re-work source documents in order to display them. Open and document or select any document and look in the "edit menu" for the tool you need.
 
-<img alt="" src="/images/help/pages.jpg" class="full_line" />
+## <span id="pagetools">Page Tools</span>
 
-You'll see a menu of "Page Tools" in the sidebar on the right: "Insert/Replace Pages", "Remove Pages" and "Reorder Pages". Clicking on any of these links will display instructions describing how to proceed. 
+Find the page manipulation options in the right-hand sidebar of the pages tab of any document. As you save any page modifications, the document window will close so DocumentCloud can rebuild your document. Depending on the size of your document and the length of our queue, this can take some time. Changes to the page order will be applied to the PDF available from the "Original Document" link.
 
- * **Insert/Replace pages**: First, choose a location in the document to insert the page (or pages), or select a range of pages that should be replaced. When you're ready, click the **Upload Pages** button, and choose the file to be inserted.
+ * Select **Insert/Replace Pages** and click the space between any two pages to insert pages. Select any page to replace that page. Whether you're inserting or replacing pages, use "upload pages" to select one or more documents to insert between or in place of your selection. 
  
- * **Remove Pages**: Click on all of the pages in the document that you would like to remove. When you're ready, click the **Remove Pages** button.
-
- * **Reorder Pages**: Drag and drop pages to rearrange their location within the document. When you have finished creating the desired ordering, click the **Save Page Order** button.
+<img alt="screenshot of insert process" src="/images/help/insert.jpg" class="full_line" />
  
-All of these operations take some time to rebuild the document. During the processing, the document must be closed, and will then re-appear in your workspace after the operation has finished.
+ * Select **Remove Pages** and click once on each page that should be removed from the document. Click the page thumbnail again to pull it out of the "remove" queue. Use the "Remove Pages" button to save your work.
 
-## Editing Page Text
+ * Use **Reorder Pages** to drag and drop individual pages and reorganize a document. Use "Save Page Order" to save your work.
 
-To edit a document's text, click on the **Text** tab, navigate to the page you wish to change, and click on the "Edit Page Text" link. The text will become editable.
 
-<img alt="" src="/images/help/editable_text.png" class="full_line" />
+## <span id="texttools">Text Tools</span>
 
-You can use the back and forward arrows to page through the document, correcting OCR errors. When you have finished editing the text of every page you wish to change, click the **Save Text** button. DocumentCloud's search index will be updated with the corrected text, and we'll perform another round of entity extraction, to find any entities that may have been missed due to previous misspellings.
+Need to clean up OCR gibberish? Edit the text that appears in DocumentCloud's text tab with the **Edit Page Text** option. As you make changes to individual pages, you'll see a thumbnail in your activity tray. Revert the text of any page by hovering over it in the activity tray and clicking on the "x" at the lower right. Changes made at DocumentCloud's "text" tab will not alter the original PDF. 
+
+<img alt="screenshot of text editing process" src="/images/help/text.jpg" class="full_line" />
+
+You can use the back and forward arrows at the top of the sidebar to page through the document. When you click the "Save Text" button DocumentCloud will store your changes and update the search and entity information for that document. 
+
+Use **Reprocess Text** to take advantage of improvements to DocumentCloud's text processing tools. As we work, DocumentCloud is continually improving the tools we provide to users. If we [improve the quality of our OCR][] tools, you can try processing an old document anew for better results. DocumentCloud won't OCR your document if it already appears to contain significant text information. Use the **Force OCR** option to force DocumentCloud to run your document through Tesseract before reprocessing it.
+
+
+Still have questions about document modification? Don't hesitate to [contact us][].
+
+
+[improve the quality of our OCR]: http://blog.documentcloud.org/blog/2010/11/improving-the-quality-of-ocr/
