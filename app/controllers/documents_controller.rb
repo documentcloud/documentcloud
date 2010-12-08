@@ -152,6 +152,7 @@ class DocumentsController < ApplicationController
   def send_page_image
     return not_found unless current_page
     size = params[:page_name][SIZE_EXTRACTOR, 1]
+    @headers["Cache-Control"] = "no-store"
     redirect_to(current_page.authorized_image_url(size))
   end
 
