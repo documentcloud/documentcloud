@@ -70,6 +70,8 @@ class DocumentReorderPages < DocumentModBase
       annotation.save
     end
 
+    # TODO: Update sections.
+
     document.reindex_all!(access)
   end
 

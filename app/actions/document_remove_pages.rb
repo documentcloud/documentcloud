@@ -84,7 +84,7 @@ class DocumentRemovePages < DocumentModBase
       Annotation.connection.execute "UPDATE annotations #{set}"
     end
 
-    # Compact, remove, and/or move all sections
+    # Compact, remove, and/or move all sections.
     sections = Section.find_all_by_document_id(document.id)
     sections.each do |section|
       delete_pages.reverse.each do |delete_page|
