@@ -66,11 +66,16 @@ class DocumentReorderPages < DocumentModBase
     # Update annotations.
     annotations = Annotation.find_all_by_document_id(document.id)
     annotations.each do |annotation|
-      annotation.page_number = page_order.index(annotation.page_number)+1
+      annotation.page_number = page_order.index(annotation.page_number) + 1
       annotation.save
     end
 
-    # TODO: Update sections.
+    # Update sections.
+    sections = Section.find_all_by_document_id(document.id)
+    sections.each do |section|
+      section.page_number = page_order.index(section.page_number) + 1
+      section.save
+    end
 
     document.reindex_all!(access)
   end

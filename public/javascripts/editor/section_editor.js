@@ -42,11 +42,11 @@ dc.ui.SectionEditor = Backbone.View.extend({
   },
 
   serializeSections : function() {
-    var sections = [], end;
+    var sections = [];
     $('.section_row').each(function(i, row) {
       var title = $('input', row).val();
       var first = parseInt($('.page_number', row).val(), 10);
-      if (title) sections.push({title : title, page_number : first});
+      if (title) sections.push({title : title, page_number : first, page : first});
     });
     return sections;
   },
@@ -55,8 +55,7 @@ dc.ui.SectionEditor = Backbone.View.extend({
     var me = this;
     if (!_.any(this.sections)) return _.each(_.range(3), function(){ me.addRow(); });
     _.each(this.sections, function(sec) {
-      var pages = sec.pages.split('-');
-      me.addRow({title : sec.title, page_number : parseInt(pages[0], 10)});
+      me.addRow({title : sec.title, page_number : sec.page});
     });
   },
 
