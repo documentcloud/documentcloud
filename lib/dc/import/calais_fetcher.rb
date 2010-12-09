@@ -54,14 +54,16 @@ module DC
       private
 
       def retry_calais_errors
+        attempts = 0
         begin
           yield
         rescue Calais::Error, Curl::Err::CurlError, Timeout::Error => e
           Rails.logger.warn e.message
           return nil if e.message == 'Calais continues to expand its list of supported languages, but does not yet support your submitted content.'
           Rails.logger.warn 'waiting 10 seconds'
+          attempts += 1
           sleep 10
-          retry
+          retry if attempts < 5
         rescue RuntimeError => e
           return nil if e.message == 'content is too large'
           puts e.message
