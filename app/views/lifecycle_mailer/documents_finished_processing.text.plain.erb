@@ -1,6 +1,6 @@
 <%= @account.full_name %> --
 
-<%= @count %> <%= @count == 1 ? 'document has' : 'documents have' %> finished processing, and are now ready to be edited and annotated in DocumentCloud.
+<%= @count %> <%= @count == 1 ? 'document has' : 'documents have' %> finished processing, and <%= @count == 1 ? 'is' : 'are' %> now ready to be edited and annotated in DocumentCloud.
 
 <%= DC.server_root(:ssl => false) %>/login
 
