@@ -73,7 +73,7 @@ module DC
       end
 
       def delete_page_images(document, page_number)
-        Page::IMAGE_SIZES.keys.eacy do |size|
+        Page::IMAGE_SIZES.keys.each do |size|
           remove_file(document.page_image_path(page_number, size))
         end
       end
