@@ -42,7 +42,7 @@ class DocumentImport < CloudCrowd::Action
     Dir['images/700x/*.gif'].length.times do |i|
       number = i + 1
       image  = "#{document.slug}_#{number}.gif"
-      DC::Import::Utils.save_page_images(document, number, image, access)
+      DC::Import::Utils.save_page_images(asset_store, document, number, image, access)
     end
   end
 

@@ -37,8 +37,9 @@ class DocumentInsertPages < DocumentModBase
         text_name       = "text/#{pdf_name}_#{number}.txt"
         insert_position = @old_page_count + @insert_page_count + number
         text            = DC::Import::Utils.read_ascii(text_name)
-        DC::Import::Utils.save_page_images(document, insert_position, image_name, access)
+        DC::Import::Utils.save_page_images(asset_store, document, insert_position, image_name, access)
         document.pages.create(:page_number => insert_position, :text => text)
+        Page.refresh_page_map document
       end
 
       # Remove local files from previous iteration.
@@ -55,7 +56,7 @@ class DocumentInsertPages < DocumentModBase
   def new_page_order
     return @new_page_order if @new_page_order
     current_page_order = (1..@old_page_count).to_a
-    new_pages_order    = ((@old_page_count + 1)..(@old_page_count + @insert_page_count + 1)).to_a
+    new_pages_order    = ((@old_page_count + 1)..(@old_page_count + @insert_page_count)).to_a
     @new_pages_order   = current_page_order.insert(@insert_page_at - 1, *new_pages_order)
   end
 
