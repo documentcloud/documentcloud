@@ -25,14 +25,7 @@ dc.ui.SectionEditor = Backbone.View.extend({
     this.renderSections();
   },
 
-  validateSections : function(sections) {
-    var valid = _.all(sections, function(sec) { return sec.start_page <= sec.end_page; });
-    if (!valid) return alert("Sections cannot end before they start.");
-    return true;
-  },
-
   saveSections : function(sections) {
-    if (!this.validateSections(sections)) return false;
     $.ajax({
       url       : '/sections/set',
       type      : 'POST',
@@ -52,13 +45,8 @@ dc.ui.SectionEditor = Backbone.View.extend({
     var sections = [], end;
     $('.section_row').each(function(i, row) {
       var title = $('input', row).val();
-      var first = parseInt($('.start_page', row).val(), 10);
-      if (title) sections.push({title : title, start_page : first});
-    });
-    sections = _.sortBy(sections, function(section){ return -section.start_page; });
-    _.each(sections, function(section, i) {
-      section.end_page = end || currentDocument.api.numberOfPages();
-      end = section.start_page - 1;
+      var first = parseInt($('.page_number', row).val(), 10);
+      if (title) sections.push({title : title, page_number : first});
     });
     return sections;
   },
@@ -68,17 +56,17 @@ dc.ui.SectionEditor = Backbone.View.extend({
     if (!_.any(this.sections)) return _.each(_.range(3), function(){ me.addRow(); });
     _.each(this.sections, function(sec) {
       var pages = sec.pages.split('-');
-      me.addRow({title : sec.title, start_page : parseInt(pages[0], 10)});
+      me.addRow({title : sec.title, page_number : parseInt(pages[0], 10)});
     });
   },
 
   updateNavigation : function(sections) {
-    sections = _.map(sections, function(s){ return _.extend({pages : '' + s.start_page + '-' + s.end_page}, s); });
+    sections = _.map(sections, function(s){ return _.extend({page : s.page_number}, s); });
     currentDocument.api.setSections(sections);
   },
 
   addRow : function(options) {
-    options = _.extend({pageCount : currentDocument.api.numberOfPages(), title : '', start_page : '', end_page : ''}, options);
+    options = _.extend({pageCount : currentDocument.api.numberOfPages(), title : '', page_number : ''}, options);
     var row = $(JST['section_row'](options));
     $('.section_title', row).val(options.title).placeholder();
     $('.minus', row).bind('click', function(){ row.remove(); });

@@ -56,7 +56,7 @@
 <% sections.each do |section| -%>
       <rdf:Description rdf:about="<%= section.canonical_url %>">
         <dc:title><%= section.title %></dc:title>
-        <dc:coverage>page <%= section.page_range %></dc:coverage>
+        <dc:coverage>page <%= section.page_number %></dc:coverage>
       </rdf:Description>
 <% end -%>
     </dc:tableOfContents>

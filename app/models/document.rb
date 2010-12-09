@@ -488,7 +488,7 @@ class Document < ActiveRecord::Base
     }.to_json}).body)
   end
 
-  def reorder_pages(page_order)
+  def reorder_pages(page_order, eventual_access=nil)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
     record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {

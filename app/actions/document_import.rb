@@ -40,15 +40,9 @@ class DocumentImport < CloudCrowd::Action
   def process_images
     Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :rolling => true, :output => 'images')
     Dir['images/700x/*.gif'].length.times do |i|
-      image = "#{document.slug}_#{i + 1}.gif"
-      asset_store.save_page_images(document, i + 1,
-        {'normal'     => "images/700x/#{image}",
-         'small'      => "images/240x/#{image}",
-         'large'      => "images/1000x/#{image}",
-         'small'      => "images/180x/#{image}",
-         'thumbnail'  => "images/60x75!/#{image}"},
-        access
-      )
+      number = i + 1
+      image  = "#{document.slug}_#{number}.gif"
+      DC::Import::Utils.save_page_images(document, number, image, access)
     end
   end
 
@@ -69,7 +63,7 @@ class DocumentImport < CloudCrowd::Action
       path = "text/#{document.slug}_#{page_number}.txt"
       text = ''
       if File.exists?(path)
-        text = Iconv.iconv('ascii//translit//ignore', 'utf-8', File.read(path)).first
+        text = DC::Import::Utils.read_ascii(path)
       end
       queue_page_text(text, page_number)
     end

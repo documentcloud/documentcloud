@@ -88,11 +88,9 @@ class DocumentRemovePages < DocumentModBase
     sections = Section.find_all_by_document_id(document.id)
     sections.each do |section|
       delete_pages.reverse.each do |delete_page|
-        section.start_page -= 1 if section.start_page > delete_page
-        section.end_page -= 1   if section.end_page >= delete_page
+        section.page_number -= 1 if section.page_number > delete_page
       end
       section.save    if section.changed?
-      section.destroy if section.impossible?
     end
 
     document.page_count = keep_pages.length

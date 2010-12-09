@@ -5,70 +5,76 @@ require 'fileutils'
 class DocumentInsertPages < DocumentModBase
 
   def process
+    @old_page_count    = document.page_count
     @pdfs_count        = options['pdfs_count'].to_i
     @insert_page_at    = options['insert_page_at'].to_i
     @insert_page_count = 0
+    @insert_pdfs       = (1..@pdfs_count).map {|n| "#{n}.pdf" }
     begin
       prepare_pdf
       process_concat
-      move_annotations
-      move_sections
+      add_pages
+      document.reorder_pages(new_page_order, access)
     rescue Exception => e
       fail_document
       LifecycleMailer.deliver_exception_notification(e)
       raise e
     end
-
-    # For now, just reimport the entire document.
-    # TODO: Only process new images/text from the new pages.
-    document.queue_import access
-
     document.id
   end
 
-  # Move the annotations forwards in their page references.
-  def move_annotations
-    annotations = Annotation.all(:conditions =>
-      ["document_id = ? and page_number > ?", document.id, @insert_page_at]
-    )
-    annotations.each do |annotation|
-      annotation.page_number += @insert_page_count
-      annotation.save
+  def add_pages
+    @insert_pdfs.each do |pdf|
+      pdf_name       = File.basename(pdf, '.pdf')
+      pdf_page_count = Docsplit.extract_length(pdf)
+
+      # Upload images + text.
+      Docsplit.extract_images(pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :rolling => true, :output => 'images')
+      Docsplit.extract_text(pdf, :pages => 'all', :output => 'text')
+      pdf_page_count.times do |i|
+        number          = i + 1
+        image_name      = "#{pdf_name}_#{number}.gif"
+        text_name       = "text/#{pdf_name}_#{number}.txt"
+        insert_position = @old_page_count + @insert_page_count + number
+        text            = DC::Import::Utils.read_ascii(text_name)
+        DC::Import::Utils.save_page_images(document, insert_position, image_name, access)
+        document.pages.create(:page_number => insert_position, :text => text)
+      end
+
+      # Remove local files from previous iteration.
+      FileUtils.rm_r('images')
+      FileUtils.rm_r('text')
+      @insert_page_count += pdf_page_count
     end
+
+    # We're done. Set the new page count.
+    document.update_attributes(:page_count => @old_page_count + @insert_page_count)
   end
 
-  # Move sections forwards, if the inserted pages affect them.
-  def move_sections
-    sections = Section.find_all_by_document_id(document.id)
-    sections.each do |section|
-      section.start_page += @insert_page_count if section.start_page >= @insert_page_at
-      section.end_page   += @insert_page_count if section.end_page   >= @insert_page_at
-      section.save if section.changed?
-    end
+  # Calculate the new page order (array of page numbers).
+  def new_page_order
+    return @new_page_order if @new_page_order
+    current_page_order = (1..@old_page_count).to_a
+    new_pages_order    = ((@old_page_count + 1)..(@old_page_count + @insert_page_count + 1)).to_a
+    @new_pages_order   = current_page_order.insert(@insert_page_at - 1, *new_pages_order)
   end
 
-  # Rebuilds the PDF from the burst apart pages in the correct order.
+  # Rebuilds the PDF from the burst apart pages in the correct order. Saves
+  # images and text from the to-be-inserted PDFs to the local disk.
   def process_concat
     letters = ('A'..'Z').to_a
     pdf_names = {}
-    (1..@pdfs_count).each do |n|
-      letter = letters[n%26]
-      path = File.join(document.path, 'inserts', "#{n.to_s}.pdf")
-      File.open("#{n.to_s}.pdf", 'w+') {|f| f.write(asset_store.read(path)) }
-      pdf_names[letter] = "#{letter}=#{n.to_s}.pdf"
+    @insert_pdfs.each_with_index do |pdf, i|
+      letter = letters[(i + 1) % 26]
+      path = File.join(document.path, 'inserts', pdf)
+      File.open(pdf, 'w+') {|f| f.write(asset_store.read(path)) }
+      pdf_names[letter] = "#{letter}=#{pdf}"
     end
 
-    start_part  = @insert_page_at <= 0 ? '' : "A1-#{@insert_page_at}"
-    end_part    = @insert_page_at < document.page_count ? "A#{@insert_page_at + 1}-end" : ''
-    cmd = "pdftk A=#{@pdf} #{pdf_names.values.join(' ')} cat #{start_part} #{pdf_names.keys.join(' ')} #{end_part} output #{document.slug}.pdf_temp"
+    cmd = "pdftk A=#{@pdf} #{pdf_names.values.join(' ')} cat A #{pdf_names.keys.join(' ')} output #{document.slug}.pdf_temp"
     `#{cmd}`
 
     asset_store.save_pdf(document, "#{document.slug}.pdf_temp", access)
-
-    (1..@pdfs_count).to_a.each do |n|
-      pdf_path = "#{n.to_s}.pdf"
-      @insert_page_count += Docsplit.extract_length(pdf_path)
-    end
     asset_store.delete_insert_pdfs(document)
   end
 

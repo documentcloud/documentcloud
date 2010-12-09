@@ -32,8 +32,8 @@ class DocumentReorderPages < DocumentModBase
         reordered_page_images[new_num] = {}
         Page::IMAGE_SIZES.keys.each do |size|
           page = document.page_image_path(old_num, size)
-          reordered_page_images[new_num][size] = "#{document.slug}-p#{new_num}-#{size}.gif"
-          File.open(reordered_page_images[new_num][size], 'w+') do |f|
+          image_path = reordered_page_images[new_num][size] = "#{document.slug}-p#{new_num}-#{size}.gif"
+          File.open(image_path, 'w+') do |f|
             f.write(asset_store.read(page))
           end
         end
@@ -42,8 +42,8 @@ class DocumentReorderPages < DocumentModBase
 
     # We have to wait until all pages have been written out locally, or else
     # we'll be clobbering existing pages on S3.
-    reordered_page_images.each do |p, page_sizes|
-      asset_store.save_page_images(document, p, page_sizes, access)
+    reordered_page_images.each do |p, image_paths|
+      asset_store.save_page_images(document, p, image_paths, access)
     end
 
     # Update page offsets for text.
