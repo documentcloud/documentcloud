@@ -72,8 +72,18 @@ module DC
         end
       end
 
+      def delete_page_images(document, page_number)
+        Page::IMAGE_SIZES.keys.eacy do |size|
+          remove_file(document.page_image_path(page_number, size))
+        end
+      end
+
       def save_page_text(document, page_number, text, access=DEFAULT_ACCESS)
         save_file(text, document.page_text_path(page_number), access, :string => true)
+      end
+
+      def delete_page_text(document, page_number)
+        remove_file(document.page_text_path(page_number))
       end
 
       def save_database_backup(name, path)
@@ -124,17 +134,30 @@ module DC
       # Saves a local file to a location on S3, and returns the public URL.
       # Set the expires headers for a year, if the file is an image -- text,
       # HTML and JSON may change.
-      #
+      def save_file(file, s3_path, access, opts={})
+        file = opts[:string] ? file : File.open(file)
+        headers = {}
+        safe_s3_request do
+          bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access], headers)
+        end
+        bucket.key(s3_path).public_link
+      end
+
+      # Remove a file from S3.
+      def remove_file(s3_path)
+        safe_s3_request do
+          bucket.key(s3_path).delete
+        end
+      end
+
       # We've been seeing some RequestTimeTooSkewed errors, which is strange
       # because the system clocks are in sync to the millisecond with NTP time.
       # Retry a couple times instead of failing the entire job.
-      def save_file(file, s3_path, access, opts={})
-        file = opts[:string] ? file : File.open(file)
-        headers = s3_path.match(IMAGE_EXT) ? {'Expires' => 10.year.from_now.httpdate} : {}
+      def safe_s3_request
         attempts = 0
         begin
           attempts += 1
-          bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access], headers)
+          yield
         rescue RightAws::AwsError, Exception => e
           sleep 10
           @s3 = create_s3
@@ -142,13 +165,10 @@ module DC
           retry if attempts <= 6
           raise e
         end
-        bucket.key(s3_path).public_link
       end
 
       def save_permissions(s3_path, access)
-        headers = {
-          'x-amz-acl' => ACCESS_TO_ACL[access]
-        }
+        headers = {'x-amz-acl' => ACCESS_TO_ACL[access]}
         s3.interface.copy(bucket, s3_path, bucket, s3_path, :replace, headers)
       end
 

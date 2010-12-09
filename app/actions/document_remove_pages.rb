@@ -27,8 +27,10 @@ class DocumentRemovePages < DocumentModBase
 
   def remove_pages(delete_pages)
     # Which pages to keep
+    total = document.page_count
     delete_pages.sort!
-    keep_pages = ((1..document.page_count).to_a - delete_pages)
+    keep_pages = ((1..total).to_a - delete_pages)
+    orphaned_pages = ((total - delete_pages.length + 1)..total)
 
     # Rename pages with pdftk, keeping only unremoved pages
     cmd = "pdftk #{@pdf} cat #{keep_pages.join(' ')} output #{document.slug}.pdf_temp"
@@ -47,7 +49,6 @@ class DocumentRemovePages < DocumentModBase
         end
       end
       asset_store.save_page_images(document, i+1, sizes, access)
-      # TODO: Delete orphaned page images on S3
     end
 
     # Update page offsets for text
@@ -96,6 +97,12 @@ class DocumentRemovePages < DocumentModBase
 
     document.page_count = keep_pages.length
     document.save!
+
+    # Remove orphaned page images and text from S3.
+    orphaned_pages.each do |p|
+      asset_store.delete_page_images(document, p)
+      asset_store.delete_page_text(document, p)
+    end
 
     if not @insert_after_remove
       document.reindex_all!(access)

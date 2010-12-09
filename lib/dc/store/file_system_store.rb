@@ -63,9 +63,19 @@ module DC
         end
       end
 
+      def delete_page_images(document, page_number)
+        Page::IMAGE_SIZES.keys.each do |size|
+          FileUtils.rm(local(document.page_image_path(page_number, size)))
+        end
+      end
+
       def save_page_text(document, page_number, text, access=nil)
         ensure_directory(document.pages_path)
         File.open(local(document.page_text_path(page_number)), 'w+') {|f| f.write(text) }
+      end
+
+      def delete_page_text(document, page_number)
+        FileUtils.rm(local(document.page_text_path(page_number)))
       end
 
       def save_database_backup(name, path)
