@@ -209,6 +209,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
       } else if (state == 'insert') {
         var pageCount = this.viewer.api.numberOfPages();
         var insertion = this.getInsertPageNumber();
+        console.log(insertion);
         if (insertion < 1) {
           hint += "before the first page.";
         } else if (insertion < pageCount) {

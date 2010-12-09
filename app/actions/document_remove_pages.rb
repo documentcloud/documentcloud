@@ -85,12 +85,18 @@ class DocumentRemovePages < DocumentModBase
     end
 
     # Compact, remove, and/or move all sections.
-    sections = Section.find_all_by_document_id(document.id)
+    sections = Section.find_all_by_document_id(document.id, :order => 'page_number asc')
+    taken_page_numbers = {}
     sections.each do |section|
       delete_pages.reverse.each do |delete_page|
-        section.page_number -= 1 if section.page_number > delete_page
+        section.page_number -= 1 if section.page_number >= delete_page
       end
-      section.save    if section.changed?
+      if taken_page_numbers[section.page_number]
+        section.destroy
+      else
+        section.save if section.changed?
+        taken_page_numbers[section.page_number] ||= true
+      end
     end
 
     document.page_count = keep_pages.length

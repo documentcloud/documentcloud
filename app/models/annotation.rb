@@ -25,10 +25,6 @@ class Annotation < ActiveRecord::Base
     {:conditions => {:account_id => account.id}}
   }
 
-  named_scope :after, lambda {|doc_id, page_number|
-    {:conditions => ["document_id = ? and page_number > ?", document.id, insert_page_at.to_i]}
-  }
-
   searchable do
     text :title, :boost => 2.0
     text :content

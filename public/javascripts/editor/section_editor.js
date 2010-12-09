@@ -26,6 +26,9 @@ dc.ui.SectionEditor = Backbone.View.extend({
   },
 
   saveSections : function(sections) {
+    var numbers = _.pluck(sections, 'page_number');
+    if (numbers.length > _.uniq(numbers).length) return this.dialog.error("Can't create a duplicate section.");
+    if (this.impossibleSections(sections)) return this.dialog.error("Can't create a section outside the document.");
     $.ajax({
       url       : '/sections/set',
       type      : 'POST',
@@ -39,6 +42,13 @@ dc.ui.SectionEditor = Backbone.View.extend({
   removeAllSections : function() {
     this.saveSections([]);
     this.dialog.close();
+  },
+
+  impossibleSections : function(sections) {
+    var total = currentDocument.api.numberOfPages();
+    return _.any(sections, function(sec) {
+      return (sec.page_number < 1) || (sec.page_number > total);
+    });
   },
 
   serializeSections : function() {

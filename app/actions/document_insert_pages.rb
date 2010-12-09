@@ -57,7 +57,7 @@ class DocumentInsertPages < DocumentModBase
     return @new_page_order if @new_page_order
     current_page_order = (1..@old_page_count).to_a
     new_pages_order    = ((@old_page_count + 1)..(@old_page_count + @insert_page_count)).to_a
-    @new_pages_order   = current_page_order.insert(@insert_page_at - 1, *new_pages_order)
+    @new_pages_order   = current_page_order.insert(@insert_page_at, *new_pages_order)
   end
 
   # Rebuilds the PDF from the burst apart pages in the correct order. Saves

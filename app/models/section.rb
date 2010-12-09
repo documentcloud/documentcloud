@@ -6,6 +6,8 @@ class Section < ActiveRecord::Base
 
   validates_presence_of :title, :page_number
 
+  validates_uniqueness_of :page_number, :scope => :document_id
+
   # The canonical JSON representation of a section.
   def canonical
     {'title' => title, 'page' => page_number}
