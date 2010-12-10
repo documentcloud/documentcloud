@@ -12,8 +12,9 @@ class AnnotationsController < ApplicationController
   # Only the owner of the document is allowed to create a public annotation.
   def create
     note_attrs = pick(params, :page_number, :title, :content, :location, :access)
+    note_attrs[:access] = DC::Access::ACCESS_MAP[note_attrs[:access].to_sym]
     doc = current_document
-    return forbidden unless note_attrs[:access].to_i == PRIVATE || current_account.allowed_to_edit?(doc)
+    return forbidden unless note_attrs[:access] == PRIVATE || current_account.allowed_to_edit?(doc)
     expire_page doc.canonical_cache_path if doc.cacheable?
     json doc.annotations.create(
       note_attrs.merge(:account_id => current_account.id, :organization_id => current_organization.id)
