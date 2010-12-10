@@ -121,8 +121,12 @@ class Account < ActiveRecord::Base
     owns?(resource) || collaborates?(resource)
   end
   
-  def reviewer?(resource)
-    DocumentReviewer.exists?({:account_id => self.id, :document_id => resource.document_id})
+  def reviewer?(resource=nil)
+    if resource
+      DocumentReviewer.exists?({:account_id => self.id, :document_id => resource.document_id})
+    else
+      !hashed_password && role == REVIEWER
+    end
   end
 
   def allowed_to_edit?(resource)

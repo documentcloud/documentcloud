@@ -24,7 +24,8 @@ class LifecycleMailer < ActionMailer::Base
     recipients  [reviewer_account.email]
     body        :document           => document,
                 :key                => reviewer_account.security_key.key,
-                :organization_name  => document.account.organization_name
+                :organization_name  => document.account.organization_name,
+                :account_exists     => !reviewer_account.reviewer?
   end
 
   # Mail instructions for resetting an active account's password.

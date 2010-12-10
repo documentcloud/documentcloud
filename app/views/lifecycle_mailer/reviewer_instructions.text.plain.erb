@@ -1,4 +1,8 @@
+<%- if @account_exists -%>
+A document has been shared with you at <%= @organization_name %>.
+<%- else -%>
 A DocumentCloud reviewer account has been created for you at <%= @organization_name %>.
+<%- end -%>
 
 You can annotate and review "<%= @document.title %>" at:
 <%= DC.server_root(:ssl => false) %>/documents/<%= @document.id %>-<%= @document.slug %>.html?key=<%= @key %>
