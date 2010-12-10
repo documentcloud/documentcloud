@@ -51,6 +51,7 @@ class ApiController < ApplicationController
   # Retrieve a document's canonical JSON.
   def documents
     return bad_request unless params[:id] and request.format.json? || request.format.js?
+    return not_found unless current_document
     @response = {'document' => current_document.canonical(:access => true, :sections => true, :annotations => true)}
     return if jsonp_request?
     render :json => @response
@@ -59,13 +60,15 @@ class ApiController < ApplicationController
   # Retrieve the entities for a document.
   def entities
     return bad_request unless params[:id] and request.format.json? || request.format.js?
+    return not_found unless current_document
     @response = {'entities' => current_document.ordered_entity_hash}
     return if jsonp_request?
     render :json => @response
   end
 
   def update
-    doc = current_document
+    return bad_request unless params[:id] and request.format.json? || request.format.js?
+    return not_found unless doc = current_document
     attrs = pick(params, :access, :title, :description, :source, :related_article, :remote_url)
     attrs[:access] = ACCESS_MAP[attrs[:access].to_sym] if attrs[:access]
     success = doc.secure_update attrs, current_account
@@ -88,7 +91,7 @@ class ApiController < ApplicationController
   private
 
   def current_document
-    @current_document ||= Document.accessible(current_account, current_organization).find(params[:id].to_i)
+    @current_document ||= Document.accessible(current_account, current_organization).find_by_id(params[:id].to_i)
   end
 
 end
