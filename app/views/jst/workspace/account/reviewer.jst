@@ -1,12 +1,15 @@
 <td class="first">
   <img class="avatar" src="<%= account.DEFAULT_AVATAR %>" width="<%= size %>" height="<%= size %>" />
 </td>
+
 <td class="name selectable_text">
   <%= Inflector.truncate(account.fullName(true), 25) %>
 </td>
+
 <td class="organization_name selectable_text">
   <%= account.get('email') %>
 </td>
+
 <td class="nowrap">
   <span class="remove text_link" data-account-id="<%= account.id %>">revoke access</span>
 </td>
@@ -14,5 +17,7 @@
 <td class="last nowrap">
   <% if (documentsCount > 1) { %>
     <span class="document_count selectable_text"><%= documentCount %>/<%= documentsCount %> <%= Inflector.pluralize('document', documentsCount) %></span>
+  <% } else { %>
+    <span class="resend text_link" data-account-id="<%= account.id %>">resend instructions</span>
   <% } %>
 </td>

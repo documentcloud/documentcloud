@@ -37,6 +37,15 @@ class ReviewersController < ApplicationController
     end
     json nil
   end
+  
+  def resend_instructions
+    account = Account.find(params[:account_id])
+    params[:documents].each do |document_id|
+      document = Document.find(document_id)
+      account.send_reviewer_instructions(document)
+    end
+    json nil
+  end
 
 
   private

@@ -11,7 +11,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     'click .ok'                     : 'close',
     'click .add_reviewer'           : '_showEnterEmail',
     'click .minibutton.add'         : '_addReviewer',
-    'click .remove'                 : '_removeReviewer'
+    'click .remove'                 : '_removeReviewer',
+    'click .resend'                 : '_resendInstructions'
   },
 
   constructor : function(options) {
@@ -209,6 +210,38 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       error : _.bind(function(resp) {
         this.hideSpinner();
         this._showManagementError('There was a problem removing the reviewer.');
+      }, this)
+    });
+  },
+  
+  _resendInstructions : function(e) {
+    this.showSpinner();
+    var accountId = parseInt($(e.target).attr('data-account-id'), 10);
+    var accounts  = _.flatten(this.docs.map(function(doc){ return doc.reviewers.models; }));
+    var account   = _.detect(accounts, function(acc){ return acc.id == accountId; });
+    var reviewerDocuments = this.docs.select(function(doc) {
+      return doc.reviewers.any(function(r) { return r.get('id') == account.get('id'); });
+    });
+    var documentIds = _.map(reviewerDocuments, function(d) { return d.get('id'); });
+    
+    $.ajax({
+      url : '/documents/reviewers/resend',
+      type : 'POST',
+      data : {
+        account_id : accountId,
+        documents : documentIds
+      },
+      success: _.bind(function(resp) {
+        this.hideSpinner();
+        dc.ui.notifier.show({
+          text      : account.get('email') + ' has been resent reviewing instructions for ' + documentIds.length + Inflector.pluralize(' document', documentIds.length) + '.',
+          duration  : 5000,
+          mode      : 'info'
+        });
+      }, this),
+      error : _.bind(function(resp) {
+        this.hideSpinner();
+        this._showManagementError('There was a problem resending instructions.');
       }, this)
     });
     
