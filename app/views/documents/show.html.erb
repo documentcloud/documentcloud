@@ -28,9 +28,9 @@
         :local => @local, 
         :annotation_author_names => @annotation_author_names,
         :allowed_to_edit => @allowed_to_edit
-      }, {
-        :container: '#viewer'
-      }).to_json %>);
+      }).to_json %>, {
+        container: '#viewer'
+      });
     <% end %>
   </script>
 </body>
