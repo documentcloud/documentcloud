@@ -8,6 +8,8 @@ class Account < ActiveRecord::Base
   CONTRIBUTOR   = 2
   REVIEWER      = 3
 
+  ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER]
+  
   # Associations:
   belongs_to  :organization
   has_many    :projects,             :dependent => :destroy
@@ -23,6 +25,7 @@ class Account < ActiveRecord::Base
   validates_presence_of   :first_name, :last_name, :email
   validates_format_of     :email, :with => DC::Validators::EMAIL
   validates_uniqueness_of :email, :case_sensitive => false
+  validates_inclusion_of  :role, :in => ROLES
 
   # Delegations:
   delegate :name, :to => :organization, :prefix => true, :allow_nil => true
