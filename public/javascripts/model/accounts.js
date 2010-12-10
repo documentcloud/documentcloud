@@ -96,7 +96,10 @@ dc.model.Account = Backbone.Model.extend({
 
 });
 
-dc.model.Account.COLLABORATOR_ROLES = [dc.model.Account.prototype.ADMINISTRATOR, dc.model.Account.prototype.CONTRIBUTOR];
+dc.model.Account.COLLABORATOR_ROLES = [
+  dc.model.Account.prototype.ADMINISTRATOR, 
+  dc.model.Account.prototype.CONTRIBUTOR
+];
 
 // Account Set
 dc.model.AccountSet = Backbone.Collection.extend({

@@ -5,7 +5,7 @@ class AnnotationsController < ApplicationController
 
   # In the workspace, request a listing of annotations.
   def index
-    json current_document.annotations.accessible(current_account)
+    json current_document.annotations.accessible(current_account, true)
   end
 
   # Any account can create a private note on any document.

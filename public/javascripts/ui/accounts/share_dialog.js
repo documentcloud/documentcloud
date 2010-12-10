@@ -1,11 +1,9 @@
 dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
-  id : 'share_dialog',
-  
-  className : 'account_list dialog',
-
+  id                    : 'share_dialog',
+  className             : 'account_list dialog',
   accountDocumentCounts : {},
-  renderedAccounts : [],
+  renderedAccounts      : [],
   
   events : {
     'click .ok'                     : 'close',

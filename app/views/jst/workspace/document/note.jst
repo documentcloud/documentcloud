@@ -19,7 +19,9 @@
   <select class="access_select edit" name="access">
     <option value="public" <%= note.get('access') == 'public' ? 'selected' : '' %>>Visible to general public</option>
     <option value="exclusive" <%= note.get('access') == 'exclusive' ? 'selected' : '' %>>Exclusive to collaborators only</option>
-    <option value="private" <%= note.get('access') == 'private' ? 'selected' : '' %>>Only visible to you</option>
+    <% if (note.get('access') == 'private' || ownsNote) { %>
+      <option value="private" <%= note.get('access') == 'private' ? 'selected' : '' %>>Only visible to you</option>
+    <% } %>
   </select>
   <div class="note_title_edit edit text_input light">
     <div class="inner">
