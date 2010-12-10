@@ -2,19 +2,19 @@
 
 dc.model.Account = Backbone.Model.extend({
 
-  ADMINISTRATOR   : 1,
+  ADMINISTRATOR      : 1,
 
-  CONTRIBUTOR     : 2,
+  CONTRIBUTOR        : 2,
 
-  REVIEWER        : 3,
+  REVIEWER           : 3,
 
-  ROLE_NAMES      : ['', 'administrator', 'contributor', 'reviewer'],
+  ROLE_NAMES         : ['', 'administrator', 'contributor', 'reviewer'],
+  
+  GRAVATAR_BASE      : location.protocol + (location.protocol == 'https:' ? '//secure.' : '//www.') + 'gravatar.com/avatar/',
 
-  GRAVATAR_BASE   : location.protocol + (location.protocol == 'https:' ? '//secure.' : '//www.') + 'gravatar.com/avatar/',
+  DEFAULT_AVATAR     : location.protocol + '//' + location.host + '/images/embed/icons/user_blue_32.png',
 
-  DEFAULT_AVATAR  : location.protocol + '//' + location.host + '/images/embed/icons/user_blue_32.png',
-
-  BLANK_ACCOUNT   : {first_name : '', last_name : '', email : '', role : 2},
+  BLANK_ACCOUNT      : {first_name : '', last_name : '', email : '', role : 2},
 
   constructor : function(attributes, options) {
     Backbone.Model.call(this, attributes || this.BLANK_ACCOUNT, options);
@@ -96,8 +96,9 @@ dc.model.Account = Backbone.Model.extend({
 
 });
 
-// Account Set
+dc.model.Account.COLLABORATOR_ROLES = [dc.model.Account.prototype.ADMINISTRATOR, dc.model.Account.prototype.CONTRIBUTOR];
 
+// Account Set
 dc.model.AccountSet = Backbone.Collection.extend({
 
   model : dc.model.Account,

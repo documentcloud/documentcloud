@@ -6,6 +6,7 @@ class WorkspaceController < ApplicationController
   # searching, the home page otherwise.
   def index
     if logged_in?
+      return redirect_to('/home') if current_account.reviewer?
       @accounts = current_organization.accounts.contributors
       @projects = Project.load_for(current_account)
       @organizations = []
@@ -31,7 +32,7 @@ class WorkspaceController < ApplicationController
 
   # /login handles both the login form and the login request.
   def login
-    return redirect_to '/' if current_account
+    return redirect_to '/' if current_account && !current_account.reviewer?
     return render unless request.post?
     account = Account.log_in(params[:email], params[:password], session)
     account ? redirect_to('/') : fail(true)

@@ -20,7 +20,11 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   render : function() {
     this._page = currentDocument.$('.DV-textContents');
-    $(this.el).html(JST['control_panel']({isOwner : dc.app.editor.isOwner}));
+    var accessWorkspace = _.contains(dc.model.Account.COLLABORATOR_ROLES, dc.app.editor.accountRole);
+    $(this.el).html(JST['control_panel']({
+      isOwner         : dc.app.editor.isOwner,
+      workspacePrefix : accessWorkspace ? '#' : ''
+    }));
     var contributor = currentDocument.api.getContributor();
     var org = currentDocument.api.getContributorOrganization();
     if (contributor && org) {

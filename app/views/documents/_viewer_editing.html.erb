@@ -10,9 +10,10 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    var docId = <%= @current_document.id %>;
-    var isOwner = <%= @allowed_to_edit %>;
+    var docId       = <%= @current_document.id %>;
+    var isOwner     = <%= @allowed_to_edit %>;
     var accountName = "<%= @current_account.full_name %>";
-    dc.app.editor.initialize(docId, isOwner, accountName);
+    var accountRole = <%= @current_account.role %>;
+    dc.app.editor.initialize(docId, isOwner, accountName, accountRole);
   });
 </script>
