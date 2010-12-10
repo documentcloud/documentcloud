@@ -7,7 +7,7 @@ class ApiController < ApplicationController
 
   before_filter :bouncer if Rails.env.staging?
 
-  before_filter :api_login_required, :only => [:upload, :projects, :update]
+  before_filter :api_login_required, :only => [:upload, :projects, :update, :destroy]
   before_filter :api_login_optional, :only => [:documents, :search]
   before_filter :login_required, :only => [:index]
 
@@ -77,6 +77,14 @@ class ApiController < ApplicationController
     @response = {'document' => doc.canonical(:access => true, :sections => true, :annotations => true)}
     return if jsonp_request?
     render :json => @response
+  end
+
+  def destroy
+    return bad_request unless request.delete?
+    return not_found   unless doc = current_document
+    return forbidden   unless current_account && current_account.owns_or_collaborates?(doc)
+    doc.destroy
+    json nil
   end
 
   # Retrieve a listing of your projects, including document id.

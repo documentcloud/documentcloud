@@ -46,6 +46,7 @@ ActionController::Routing::Routes.draw do |map|
   # API.
   map.with_options :controller => 'api' do |api|
     api.update '/api/documents/:id.:format', :action => 'update', :conditions => {:method => :put}
+    api.destroy '/api/documents/:id.:format', :action => 'destroy', :conditions => {:method => :delete}
     api.entities '/api/documents/:id/entities.:format', :action => :entities
   end
 

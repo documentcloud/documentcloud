@@ -237,6 +237,22 @@
     </li>
   </ul>
   
+  <h2><span id="delete">DELETE /api/documents/[id].json</span></h2>
+  
+  <p>
+    Delete a document from DocumentCloud. You must be authenticated as the
+    owner of the document for this method to work.
+  </p>
+  
+  <h3>Tips</h3>
+
+  <ul>
+    <li>
+      If your HTTP client is unable to create a DELETE request, you can send it as
+      a POST, and add an extra parameter: <tt>_method=delete</tt>
+    </li>
+  </ul>
+  
   <h2><span id="docinfo">GET /api/documents/[id]/entities.json</span></h2>
   
   <p>
