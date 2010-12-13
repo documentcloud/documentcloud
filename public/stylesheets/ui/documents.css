@@ -240,6 +240,12 @@
     .note .access_select {
       float: right;
     }
+    .note .annotation_author {
+      float: right;
+      font-size: 11px;
+      margin: 4px 0 0 0;
+      color: #909090;
+    }
     .note .annotation_access {
       float: left;
       margin: 4px 0 0 0;

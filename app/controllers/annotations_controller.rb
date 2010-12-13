@@ -5,7 +5,12 @@ class AnnotationsController < ApplicationController
 
   # In the workspace, request a listing of annotations.
   def index
-    json current_document.annotations.accessible(current_account, true)
+    annotation_author_names = Annotation.author_names(current_document)
+    annotations = current_document.annotations.accessible(current_account, true).map do |a|
+        a.author_name = annotation_author_names[a.account_id] 
+        a 
+      end
+    json annotations
   end
 
   # Any account can create a private note on any document.

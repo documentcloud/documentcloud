@@ -29,15 +29,16 @@
     </div>
   <% } %>
   <div class="note_text display"><%= note.get('content') %></div>
+  <div class="annotation_author interface display">Contributed by: <%= note.get('author') %></div>
   <% if (note.get('access') == 'public') { %>
-    <div class="annotation_access display">This public note is visible to everybody.</div>
+    <div class="annotation_access interface display">This public note is visible to everybody.</div>
   <% } else if (note.get('access') == 'exclusive') { %>
-    <div class="annotation_access display">
+    <div class="annotation_access interface display">
       <div class="icon lock display" title="Private note"></div>
       This note is only visible to your organization.
     </div>
   <% } else { %>
-    <div class="annotation_access display">
+    <div class="annotation_access interface display">
       <div class="icon lock display" title="Private note"></div>
       This private note is only visible to you.
     </div>

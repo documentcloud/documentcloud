@@ -41,13 +41,13 @@ class Annotation < ActiveRecord::Base
     self.accessible(account, false).count(:conditions => {:document_id => doc_ids}, :group => 'document_id')
   end
 
-  def self.author_names(doc, current_account)
+  def self.author_names(doc)
     accounts = Account.find(:all, :joins => [:annotations], 
                             :select => "accounts.id, accounts.first_name, accounts.last_name", 
                             :group => "accounts.id, first_name, last_name", 
                             :conditions => ["annotations.document_id = ?", doc.id])
     accounts.inject({}) do |m, a| 
-      m[a.id] = a.full_name if a.full_name != current_account.full_name
+      m[a.id] = a.full_name
       m
     end
   end
