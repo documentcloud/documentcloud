@@ -2,18 +2,8 @@
   <div class="note_title display">
     <span class="title_link"><%= note.get('title') %> <span class="page_number">(p. <%= note.get('page') %>)</span></span>
   </div>
-  <% if (_.contains(['exclusive', 'private'], note.get('access'))) { %>
-    <div class="icon lock display" title="Private note"></div>
-  <% } %>
   <% if (note.checkAllowedToEdit()) { %>
     <div class="edit_note icon edit_glyph display"></div>
-  <% } %>
-  <% if (note.get('access') == 'public') { %>
-    <div class="annotation_access display">This public note is visible to everybody.</div>
-  <% } else if (note.get('access') == 'exclusive') { %>
-    <div class="annotation_access display">This note is only visible to your organization.</div>
-  <% } else { %>
-    <div class="annotation_access display">This private note is only visible to you.</div>
   <% } %>
   <br class="clear display" />
   <select class="access_select edit" name="access">
@@ -39,6 +29,19 @@
     </div>
   <% } %>
   <div class="note_text display"><%= note.get('content') %></div>
+  <% if (note.get('access') == 'public') { %>
+    <div class="annotation_access display">This public note is visible to everybody.</div>
+  <% } else if (note.get('access') == 'exclusive') { %>
+    <div class="annotation_access display">
+      <div class="icon lock display" title="Private note"></div>
+      This note is only visible to your organization.
+    </div>
+  <% } else { %>
+    <div class="annotation_access display">
+      <div class="icon lock display" title="Private note"></div>
+      This private note is only visible to you.
+    </div>
+  <% } %>
   <div class="note_text_edit_wrap">
     <textarea class="note_text_edit text_area edit"></textarea>
   </div>
