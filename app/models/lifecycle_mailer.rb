@@ -18,7 +18,6 @@ class LifecycleMailer < ActionMailer::Base
   # Mail instructions for a document review, with a secure link to the
   # document viewer, where the user can annotate the document.
   def reviewer_instructions(reviewer_account, document)
-    Rails.logger.info("Doc: #{document.title}")
     subject     "Review \"#{document.title}\" on DocumentCloud"
     from        [SUPPORT, document.account.email].compact
     recipients  [reviewer_account.email]

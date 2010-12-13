@@ -48,7 +48,6 @@ class Account < ActiveRecord::Base
     account = security_key.securable
     account.authenticate session
     account
-    Rails.logger.info("LOGGED IN AS REVIEWER: #{account}")
   end
 
   # Retrieve the names of the contributors for the result set of documents.
@@ -134,11 +133,11 @@ class Account < ActiveRecord::Base
   end
 
   def accessible_document_ids
-    return @accessible_document_ids if not @accessible_document_ids.nil?
+    return @accessible_document_ids unless @accessible_document_ids.nil?
     @accessible_document_ids = []
     
     if not accessible_project_ids.empty?
-      @accessible_document_ids ||= ProjectMembership.connection.select_values(
+      @accessible_document_ids = ProjectMembership.connection.select_values(
         "select distinct document_id from project_memberships where project_id in (#{accessible_project_ids.join(',')})"
       ).map {|id| id.to_i }
     end
