@@ -11,13 +11,13 @@
 </td>
 
 <td class="nowrap">
-  <span class="remove text_link" data-account-id="<%= account.id %>">revoke access</span>
+  <span class="remove_reviewer text_link" data-account-id="<%= account.id %>">revoke access</span>
 </td>
 
 <td class="last nowrap">
   <% if (documentsCount > 1) { %>
     <span class="document_count selectable_text"><%= documentCount %>/<%= documentsCount %> <%= Inflector.pluralize('document', documentsCount) %></span>
   <% } else { %>
-    <span class="resend text_link" data-account-id="<%= account.id %>">resend instructions</span>
+    <span class="resend_reviewer text_link" data-account-id="<%= account.id %>">resend instructions</span>
   <% } %>
 </td>

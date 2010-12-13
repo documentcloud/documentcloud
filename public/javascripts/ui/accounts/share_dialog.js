@@ -6,11 +6,11 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   renderedAccounts      : [],
   
   events : {
-    'click .ok'                     : 'close',
-    'click .add_reviewer'           : '_showEnterEmail',
-    'click .minibutton.add'         : '_addReviewer',
-    'click .remove'                 : '_removeReviewer',
-    'click .resend'                 : '_resendInstructions'
+    'click .ok':                    'close',
+    'click .add_reviewer':          '_showEnterEmail',
+    'click .minibutton.add':        '_addReviewer',
+    'click .remove_reviewer':       '_removeReviewer',
+    'click .resend_reviewer':       '_resendInstructions'
   },
 
   constructor : function(options) {
@@ -23,7 +23,10 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       title         : dc.account.organization.name,
       information   : 'Sharing ' + options.docs.length + Inflector.pluralize(' Document', options.docs.length)
     });
-    this.docs = (new Backbone.Collection(options.docs));
+    this.docs = new dc.model.DocumentSet(options.docs);
+    this.docs.each(function(doc) {
+      doc.collection = Documents;
+    });
     this.docsUnfetched = this.docs.length;
     $(this.el).hide();
   },

@@ -19,7 +19,6 @@ dc.ui.Note = Backbone.View.extend({
   },
 
   render : function() {
-    console.log(['render note', this.model, dc]);
     var data = _.extend(this.model.toJSON(), {
       note     : this.model,
       ownsNote : true
