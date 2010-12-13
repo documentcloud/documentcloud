@@ -222,12 +222,6 @@
   border: 1px solid #ccc;
 }
 
-.DV-annotationWarning {
-  float: right;
-  color: #999;
-  font: 11px/26px Arial;
-}
-
 /*---------------------------- Editing Toolbar -------------------------------*/
 .editor_toolbar {
   position: absolute;
