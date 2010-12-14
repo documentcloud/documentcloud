@@ -233,3 +233,10 @@
     padding: 10px;
     color: #FF0000;
   }
+  #share_dialog .document_reviewers_empty {
+    overflow: hidden;
+    text-align: left;
+    color: #909090;
+    font-size: 12px;
+    margin: 0 0 12px 0;
+  }

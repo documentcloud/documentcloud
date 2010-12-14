@@ -29,6 +29,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       doc.collection = Documents;
     });
     this.docsUnfetched = this.docs.length;
+    this.renderedAccounts = [];
     $(this.el).hide().empty();
     dc.ui.spinner.show();
     this._loadReviewers();
@@ -66,6 +67,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       
       this.$('.account_list tr:not(.reviewer_management)').remove();
       this.$('.account_list').prepend(views);
+      this.$('.document_reviewers_empty').toggle(!this.renderedAccounts.length);
     }
   },
 
@@ -78,7 +80,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       style : 'width: 90px;'
     }, 'Add Reviewer'));
     this.$('.custom').html(JST['account/share_dialog']({
-      'defaultAvatar' : dc.model.Account.prototype.DEFAULT_AVATAR
+      'defaultAvatar' : dc.model.Account.prototype.DEFAULT_AVATAR,
+      'docCount': this.docs.length
     }));
     this.list = this.$('.account_list_content');
     $(document.body).addClass('overlay');
@@ -131,6 +134,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.$('.add_reviewer').hide();
     $reviewers.attr('scrollTop', $reviewers.attr("scrollHeight")+100);
     this.$('#reviewer_email').focus();
+    this.$('.document_reviewers_empty').hide();
   },
   
   _maybeAddReviewer : function(e) {
