@@ -171,7 +171,8 @@ CREATE TABLE documents (
     related_article text,
     detected_remote_url text,
     remote_url text,
-    publish_at timestamp without time zone
+    publish_at timestamp without time zone,
+    text_changed boolean DEFAULT false NOT NULL
 );
 
 
@@ -510,8 +511,7 @@ CREATE TABLE sections (
     account_id integer NOT NULL,
     document_id integer NOT NULL,
     title character varying(255) NOT NULL,
-    start_page integer NOT NULL,
-    end_page integer NOT NULL,
+    page_number integer NOT NULL,
     access integer NOT NULL
 );
 
@@ -993,3 +993,7 @@ INSERT INTO schema_migrations (version) VALUES ('20101028194006');
 INSERT INTO schema_migrations (version) VALUES ('20101101192020');
 
 INSERT INTO schema_migrations (version) VALUES ('20101103173409');
+
+INSERT INTO schema_migrations (version) VALUES ('20101207203607');
+
+INSERT INTO schema_migrations (version) VALUES ('20101209175540');
