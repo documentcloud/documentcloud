@@ -14,6 +14,7 @@ namespace :import do
         import_document(client, doc)
       rescue Exception => e
         puts e
+        sleep 1
       end
     end
   end
