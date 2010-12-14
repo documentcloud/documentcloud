@@ -155,14 +155,17 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         documents : this.docs.map(function(doc) { return doc.id; })
       },
       success: _.bind(function(resp) {
-        var account = new dc.model.Account(resp);
+        _.each(resp.documents, function(doc) {
+          Documents.get(doc.id).set(doc);
+        });
+        var account = new dc.model.Account(resp.account);
         this.docs.each(_.bind(function(doc) {
           if (!_.contains(doc.reviewers.map(function(r) { return r.id; }), account.id)) {
             doc.reviewers.add(account);
           }
         }, this));
         dc.ui.notifier.show({
-          text      : 'Document review instructions sent to ' + resp['email'],
+          text      : 'Document review instructions sent to ' + resp.account['email'],
           duration  : 5000,
           mode      : 'info'
         });
@@ -213,6 +216,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         documents : documentIds
       },
       success: _.bind(function(resp) {
+        _.each(resp, function(doc) {
+          Documents.get(doc.id).set(doc);
+        });
         this.docs.each(_.bind(function(doc) {
           if (_.contains(documentIds, doc.id)) {
             doc.reviewers.remove(account);

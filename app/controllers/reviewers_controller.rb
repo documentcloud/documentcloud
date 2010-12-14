@@ -5,6 +5,7 @@ class ReviewersController < ApplicationController
   end
   
   def add_reviewer
+    documents = []
     account = Account.lookup(params[:email])
     return json(nil, 409) if account and account.id == current_account.id
     
@@ -19,23 +20,29 @@ class ReviewersController < ApplicationController
     end
 
     if account.id
-      params[:documents].each do |document_id|
+      documents = params[:documents].map do |document_id|
         document = Document.find(document_id)
         document.document_reviewers.create(:account => account)
         account.send_reviewer_instructions(document)
+        document.reload
       end
     end
     
-    json account
+    if not account.errors.empty?
+      json account
+    else
+      json({:account => account, :documents => documents})
+    end
   end
   
   def remove_reviewer
     account = Account.find(params[:account_id])
-    params[:documents].each do |document_id|
+    documents = params[:documents].map do |document_id|
       document = Document.find(document_id)
       document.document_reviewers.owned_by(account).first.destroy
+      document.reload
     end
-    json nil
+    json documents
   end
   
   def resend_instructions

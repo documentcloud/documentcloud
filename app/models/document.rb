@@ -538,7 +538,7 @@ class Document < ActiveRecord::Base
       :page_image_url      => page_image_url_template,
       :document_viewer_url => document_viewer_url,
       :document_viewer_js  => canonical_url(:js),
-      :reviewers_count     => reviewers_count,
+      :reviewers_count     => document_reviewers_count,
       :remote_url          => remote_url,
       :detected_remote_url => detected_remote_url,
       :publish_at          => publish_at.as_json,
