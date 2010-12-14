@@ -9,7 +9,6 @@ namespace :import do
     require 'tmpdir'
     client = Mysql2::Client.new :host => 'localhost', :username => 'root', :database => 'docviewer_prod'
     docs   = client.query 'select * from documents'
-    docs   = docs.select {|d| d['id'] == 511 } # REMOVE
     docs.each do |doc|
       begin
         import_document(client, doc)
@@ -32,8 +31,8 @@ def import_document(client, record)
   access      = record['published_at'] ? DC::Access::PUBLIC : DC::Access::ORGANIZATION
 
   doc = Document.create({
-    :organization_id  => 1, # 20,    # NYTimes
-    :account_id       => 1, # 1159,  # newsdocs@nytimes.com
+    :organization_id  => 20,    # NYTimes
+    :account_id       => 1159,  # newsdocs@nytimes.com
     :access           => DC::Access::PENDING,
     :title            => record['title'],
     :slug             => record['slug'],
