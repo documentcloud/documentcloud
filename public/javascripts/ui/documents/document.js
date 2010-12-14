@@ -23,6 +23,7 @@ dc.ui.Document = Backbone.View.extend({
     'click .title .lock'        : 'editAccessLevel',
     'click .title .published'   : 'viewPublishedDocuments',
     'click .page_icon'          : '_openEntity',
+    'click .reviewers_count'    : '_openShareDialog',
     'click .occurrence'         : '_openEntity',
     'click .cancel_search'      : '_hidePages',
     'click .search_account'     : 'searchAccount',
@@ -39,7 +40,8 @@ dc.ui.Document = Backbone.View.extend({
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
       '_renderPages', '_setSelected', 'viewDocuments', 'viewPublishedDocuments',
-      'openDialog', 'openEmbed', 'setAccessLevelAll', 'viewEntities', 'deleteDocuments');
+      'openDialog', 'openEmbed', 'setAccessLevelAll', 'viewEntities', 'deleteDocuments',
+      '_openShareDialog');
     this.model.bind('change', this._onDocumentChange);
     this.model.bind('change:selected', this._setSelected);
     this.model.notes.bind('add', this._addNote);
@@ -193,6 +195,12 @@ dc.ui.Document = Backbone.View.extend({
 
   openContactUs : function() {
     dc.app.workspace.help.openContactDialog();
+  },
+  
+  _openShareDialog : function() {
+    // if (!Documents.allowedToEdit(this.model)) return;
+    
+    dc.app.shareDialog = new dc.ui.ShareDialog({'docs': this.model});
   },
 
   showMenu : function(e) {

@@ -1,6 +1,6 @@
 class DocumentReviewer < ActiveRecord::Base
 
-  belongs_to :document
+  belongs_to :document, :counter_cache => true
   belongs_to :account
 
   named_scope :owned_by, lambda { |account|
