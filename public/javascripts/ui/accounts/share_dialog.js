@@ -6,15 +6,16 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   renderedAccounts      : [],
   
   events : {
-    'click .ok':                    'close',
-    'click .add_reviewer':          '_showEnterEmail',
-    'click .minibutton.add':        '_addReviewer',
-    'click .remove_reviewer':       '_removeReviewer',
-    'click .resend_reviewer':       '_resendInstructions'
+    'click .ok':                            'close',
+    'click .add_reviewer':                  '_showEnterEmail',
+    'click .minibutton.add':                '_addReviewer',
+    'click .remove_reviewer':               '_removeReviewer',
+    'click .resend_reviewer':               '_resendInstructions',
+    'keypress input[name=reviewer_email]':  '_maybeAddReviewer'
   },
 
   constructor : function(options) {
-    _.bindAll(this, '_finishRender');
+    _.bindAll(this, '_loadReviewer');
     var title = options.docs.length == 1 ?
                 'Sharing "' + options.docs[0].get('title') + '"' :
                 'Sharing ' + options.docs.length + ' Documents';
@@ -28,43 +29,30 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       doc.collection = Documents;
     });
     this.docsUnfetched = this.docs.length;
-    $(this.el).hide();
+    $(this.el).hide().empty();
+    dc.ui.spinner.show();
+    this._loadReviewers();
   },
-
-  render : function() {
-    dc.ui.Dialog.prototype.render.call(this);
-    $(document.body).addClass('overlay');
-    this._container = this.$('.custom');
-    this._container.setMode('not', 'draggable');
-    this.addControl(this.make('div', {
-      'class': 'minibutton dark add_reviewer', 
-      style : 'width: 90px;'
-    }, 'Add Reviewer'));
-    this.$('.custom').html(JST['account/share_dialog']({
-      'defaultAvatar' : dc.model.Account.prototype.DEFAULT_AVATAR
-    }));
-    this.list = this.$('.account_list_content');
+  
+  _loadReviewers : function() {
     if (this.docs.all(function(doc) { return doc.reviewers.length; })) {
       this.docsUnfetched = 0;
-      this._finishRender();
+      this._loadReviewer();
     } else {
-      this.showSpinner();
       this.docs.each(_.bind(function(doc) {
         if (doc.reviewers.length) {
           this.docsUnfetched -= 1;
         } else {
-          doc.reviewers.fetch({success : this._finishRender});
+          doc.reviewers.fetch({success : this._loadReviewer});
         }
       }, this));
     }
-    this._setPlaceholders();
-    $(this.el).show();
-    return this;
   },
   
-  _finishRender : function() {
+  _loadReviewer : function() {
     this.docsUnfetched -= 1;
     if (this.docsUnfetched <= 0) {
+      this.render();
       var views = [];
       // this.commonReviewers = Documents.sharedReviewers(this.docs);
       this._countDocuments();
@@ -78,10 +66,29 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       
       this.$('.account_list tr:not(.reviewer_management)').remove();
       this.$('.account_list').prepend(views);
-      this.center();  
-      this.hideSpinner();
     }
   },
+
+  render : function() {
+    dc.ui.Dialog.prototype.render.call(this);
+    this._container = this.$('.custom');
+    this._container.setMode('not', 'draggable');
+    this.addControl(this.make('div', {
+      'class': 'minibutton dark add_reviewer', 
+      style : 'width: 90px;'
+    }, 'Add Reviewer'));
+    this.$('.custom').html(JST['account/share_dialog']({
+      'defaultAvatar' : dc.model.Account.prototype.DEFAULT_AVATAR
+    }));
+    this.list = this.$('.account_list_content');
+    $(document.body).addClass('overlay');
+    this.center();  
+    $(this.el).show();
+    dc.ui.spinner.hide();
+    this._setPlaceholders();
+    return this;
+  },
+  
   
   _setPlaceholders : function(includeNames) {
     if (includeNames) {
@@ -119,9 +126,15 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   _showEnterEmail : function() {
+    var $reviewers = this.$('.document_reviewers');
     this.$('.reviewer_management').show();
     this.$('.add_reviewer').hide();
-    // this.$('#reviewer_email').focus();
+    $reviewers.attr('scrollTop', $reviewers.attr("scrollHeight")+100);
+    this.$('#reviewer_email').focus();
+  },
+  
+  _maybeAddReviewer : function(e) {
+    if (e.keyCode == 13) this._addReviewer();
   },
   
   _addReviewer : function() {
@@ -149,7 +162,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
           duration  : 5000,
           mode      : 'info'
         });
-        this.render(true);
+        this._loadReviewers();
       }, this),
       error : _.bind(function(resp) {
         resp = JSON.parse(resp.responseText);
@@ -206,7 +219,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
           duration  : 5000,
           mode      : 'info'
         });
-        this.render(true);
+        this._loadReviewers();
       }, this),
       error : _.bind(function(resp) {
         this.hideSpinner();
