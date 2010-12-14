@@ -7,6 +7,7 @@ namespace :import do
   task :nyt, {:needs => :environment} do
     require 'mysql2'
     require 'tmpdir'
+    require 'iconv'
     client = Mysql2::Client.new :host => 'localhost', :username => 'root', :database => 'docviewer_prod'
     docs   = client.query 'select * from documents'
     docs.each do |doc|
@@ -50,9 +51,10 @@ def import_document(client, record)
   page_records = client.query "select * from pages where document_id = #{record['id']} order by page_number asc"
   pages = []
   page_records.each do |page_record|
+    text = Iconv.iconv('ascii//translit//ignore', 'utf-8', page_record['contents']).first
     pages.push doc.pages.create({
       :page_number => page_record['page_number'],
-      :text        => page_record['contents'],
+      :text        => text,
       :access      => access
     })
   end
