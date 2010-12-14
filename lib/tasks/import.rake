@@ -62,6 +62,12 @@ def import_document(client, record)
   doc.page_count = pages.length
   doc.full_text  = FullText.create!(:text => pages.map{|p| p[:text] }.join(''), :document => doc, :access => access)
 
+  if doc.page_count <= 0
+    puts "#{ref} -- zero pages, aborting..."
+    doc.destroy
+    return
+  end
+
   puts "#{ref} -- refreshing page map, extracting dates, indexing..."
 
   Page.refresh_page_map doc
