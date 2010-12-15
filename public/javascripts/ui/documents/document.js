@@ -28,7 +28,7 @@ dc.ui.Document = Backbone.View.extend({
     'click .page_icon'          : '_openPage',
     'click .occurrence'         : '_openPage',
     'click .cancel_search'      : '_hidePages',
-    'click .page_count'         : '_showPageImages',
+    'click .page_count'         : '_togglePageImages',
     'click .search_account'     : 'searchAccount',
     'click .search_group'       : 'searchOrganization',
     'click .search_source'      : 'searchSource',
@@ -43,7 +43,8 @@ dc.ui.Document = Backbone.View.extend({
   constructor : function(options) {
     Backbone.View.call(this, options);
     this.el.id = 'document_' + this.model.id;
-    this.currentPage = 0;
+    this._currentPage = 0;
+    this._showingPages = false;
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
       '_renderPages', '_setSelected', 'viewDocuments', 'viewPublishedDocuments',
@@ -155,12 +156,12 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   previousPage : function() {
-    this.currentPage--;
+    this._currentPage--;
     this._showPageImages();
   },
 
   nextPage : function() {
-    this.currentPage++;
+    this._currentPage++;
     this._showPageImages();
   },
 
@@ -299,8 +300,18 @@ dc.ui.Document = Backbone.View.extend({
     this.setMode('has', 'notes');
   },
 
+  _togglePageImages : function() {
+    if (this._showingPages) {
+      this._hidePages();
+      this._showingPages = false;
+    } else {
+      this._showPageImages();
+      this._showingPages = true;
+    }
+  },
+
   _showPageImages : function() {
-    var start = (this.currentPage * this.PAGE_LIMIT) + 1;
+    var start = (this._currentPage * this.PAGE_LIMIT) + 1;
     var total = this.model.get('page_count');
     this.pagesEl.html(JST['document/page_images']({
       doc   : this.model,
@@ -316,7 +327,7 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   _hidePages : function() {
-    this.currentPage = 0;
+    this._currentPage = 0;
     this.pagesEl.html('');
   },
 
