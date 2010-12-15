@@ -22,9 +22,8 @@ dc.ui.Document = Backbone.View.extend({
     'click .title .edit_glyph'  : 'openDialog',
     'click .title .lock'        : 'editAccessLevel',
     'click .title .published'   : 'viewPublishedDocuments',
-    'click .page_icon'          : '_openEntity',
-    'click .reviewers_count'    : '_openShareDialog',
-    'click .occurrence'         : '_openEntity',
+    'click .page_icon'          : '_openPage',
+    'click .occurrence'         : '_openPage',
     'click .cancel_search'      : '_hidePages',
     'click .page_count'         : '_showPageImages',
     'click .search_account'     : 'searchAccount',
@@ -32,7 +31,8 @@ dc.ui.Document = Backbone.View.extend({
     'click .search_source'      : 'searchSource',
     'click .change_publish_at'  : 'editPublishAt',
     'click .troubleshoot'       : 'openTroubleshooting',
-    'click .contact_us'         : 'openContactUs'
+    'click .contact_us'         : 'openContactUs',
+    'click .open_pages'         : 'openPagesInViewer'
   },
 
   constructor : function(options) {
@@ -142,6 +142,10 @@ dc.ui.Document = Backbone.View.extend({
   openEmbed : function() {
     if (!this.model.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
     (new dc.ui.EmbedDialog(this.model)).render();
+  },
+
+  openPagesInViewer : function() {
+    this.model.openViewer('#pages');
   },
 
   toggleNotes : function(e) {
@@ -291,12 +295,16 @@ dc.ui.Document = Backbone.View.extend({
     this.pagesEl.html('');
   },
 
-  _openEntity : function(e) {
+  _openPage : function(e) {
     var el      = $(e.target).closest('.page');
-    var id      = el.attr('data-id');
     var page    = el.attr('data-page');
+    var id      = el.attr('data-id');
     var offset  = el.attr('data-offset');
-    window.open(this.model.viewerUrl() + "?entity=" + id + '&page=' + page + '&offset=' + offset);
+    if (id) {
+      window.open(this.model.viewerUrl() + "?entity=" + id + '&page=' + page + '&offset=' + offset);
+    } else {
+      this.model.openViewer('#document/p' + page);
+    }
   },
 
   // When the document is dropped onto a project, add it to the project.

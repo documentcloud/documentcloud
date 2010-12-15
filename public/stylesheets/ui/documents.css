@@ -184,14 +184,17 @@
 /*---------------------------- Page References -------------------------------*/
 .document .pages {
 }
-.document .pages_title {
+.document .pages_header {
   position: relative;
-  font-weight: bold;
-  font-size: 13px;
   line-height: 18px;
   padding-left: 20px;
   margin: 20px 10px 15px 0;
 }
+  .document .pages_title {
+    font-weight: bold;
+    font-size: 13px;
+    margin-right: 10px;
+  }
   .document .pages .cancel_search {
     position: absolute;
     left: 0; top: 3px;
@@ -202,10 +205,11 @@
 }
   .document .page_list .page {
     float: left;
+    height: 150px; width: 105px;
+    margin: 0 30px 5px 0;
   }
   .document .page_icon {
     float: left;
-    margin: 0 20px 0 0;
     text-align: center;
     cursor: pointer;
   }
