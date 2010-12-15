@@ -186,7 +186,7 @@
 }
   .document .page_list {
     position: relative;
-    left: 0; right: -30px;
+    margin-right: -55px;
   }
 .document .pages_header {
   position: relative;
