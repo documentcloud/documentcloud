@@ -185,6 +185,7 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   viewPages : function() {
+    this._showingPages = true;
     this.model.ensurePerPageNoteCounts(_.bind(function(noteCounts) {
       var start = (this._currentPage * this.PAGE_LIMIT) + 1;
       var total = this.model.get('page_count');
@@ -324,18 +325,18 @@ dc.ui.Document = Backbone.View.extend({
   _togglePageImages : function() {
     if (this._showingPages) {
       this._hidePages();
-      this._showingPages = false;
     } else {
       this.viewPages();
-      this._showingPages = true;
     }
   },
 
   _renderPages : function() {
+    this._showingPages = false;
     this.pagesEl.html(JST['document/pages']({doc : this.model}));
   },
 
   _hidePages : function() {
+    this._showingPages = false;
     this._currentPage = 0;
     this.pagesEl.html('');
   },
