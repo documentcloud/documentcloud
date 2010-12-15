@@ -216,6 +216,11 @@ class Document < ActiveRecord::Base
     self.pages.all(:select => [:text], :order => 'page_number asc').map(&:text).join('')
   end
 
+  # Determine the number of annotations on each page of this document.
+  def per_page_annotation_counts
+    self.annotations.count(:group => 'page_number')
+  end
+
   # Return an array of all of the document entity values for a given type,
   # for Solr indexing purposes.
   def entity_values(kind)

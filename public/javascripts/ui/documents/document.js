@@ -311,15 +311,18 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   _showPageImages : function() {
-    var start = (this._currentPage * this.PAGE_LIMIT) + 1;
-    var total = this.model.get('page_count');
-    this.pagesEl.html(JST['document/page_images']({
-      doc   : this.model,
-      start : start,
-      end   : Math.min(start + this.PAGE_LIMIT - 1, total),
-      total : total,
-      limit : this.PAGE_LIMIT
-    }));
+    this.model.ensurePerPageNoteCounts(_.bind(function(noteCounts) {
+      var start = (this._currentPage * this.PAGE_LIMIT) + 1;
+      var total = this.model.get('page_count');
+      this.pagesEl.html(JST['document/page_images']({
+        doc     : this.model,
+        start   : start,
+        end     : Math.min(start + this.PAGE_LIMIT - 1, total),
+        total   : total,
+        limit   : this.PAGE_LIMIT,
+        notes   : noteCounts
+      }));
+    }, this));
   },
 
   _renderPages : function() {

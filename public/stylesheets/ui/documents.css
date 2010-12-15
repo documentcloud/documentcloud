@@ -186,7 +186,7 @@
 }
   .document .page_list {
     position: relative;
-    margin-right: -55px;
+    margin-right: -45px;
   }
 .document .pages_header {
   position: relative;
@@ -195,7 +195,7 @@
   margin: 20px 10px 15px 0;
 }
   .document .page_list .pages_header {
-    margin: 20px 10px 15px 0;
+    margin: 20px 10px 12px 0;
   }
   .document .pages_title {
     font-weight: bold;
@@ -224,10 +224,12 @@
   .document .page_list .page {
     float: left;
     height: 150px; width: 105px;
-    margin: 0 30px 2px 0;
+    padding-bottom: 0;
+    margin: 0 20px 5px 0;
   }
   .document .page_icon {
     float: left;
+    position: relative;
     text-align: center;
     margin-right: 20px;
     cursor: pointer;
@@ -235,15 +237,18 @@
     .document .page_list .page_icon {
       margin-right: 0;
     }
+    .document .page_icon .mini_note {
+      left: -6px;
+    }
     .document img.page_image {
       width: 40px; height: 50px;
       border: 1px solid #b4b4b4;
       box-shadow: 2px 2px 0 #e7e7e7; -webkit-box-shadow: 2px 2px 0 #e7e7e7; -moz-box-shadow: 2px 2px 0 #e7e7e7;
     }
     .document .page_list img.page_image {
-      width: 100px; height: auto;
+      width: 90px; height: auto;
       min-height: 40px;
-      max-height: 130px;
+      max-height: 117px;
     }
     .document .page_number {
       color: #555;

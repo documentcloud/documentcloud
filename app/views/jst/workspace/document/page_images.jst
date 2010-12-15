@@ -23,6 +23,9 @@
   <% for (var page = start, l = end; page <= l; page++) { %>
     <div class="page" data-page="<%= page %>">
       <div class="page_icon">
+        <% if (notes[page]) { %>
+          <div class="icon mini_note"></div>
+        <% } %>
         <img class="page_image" alt="" src="<%= doc.pageThumbnailURL(page, 'small') %>" />
         <div class="page_number">p. <%= page %></div>
       </div>

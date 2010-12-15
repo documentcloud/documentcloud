@@ -133,6 +133,16 @@ dc.model.Document = Backbone.Model.extend({
     return this.isPublic() && this.publishedUrl();
   },
 
+  ensurePerPageNoteCounts : function(callback) {
+    if (this.perPageNoteCounts) {
+      callback(this.perPageNoteCounts);
+    } else {
+      $.getJSON('/documents/' + this.id + '/per_page_note_counts', {}, _.bind(function(counts){
+        callback(this.perPageNoteCounts = counts);
+      }, this));
+    }
+  },
+
   decrementNotes : function() {
     var count = this.get('annotation_count');
     if (count <= 0) return false;

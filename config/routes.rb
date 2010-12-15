@@ -20,7 +20,9 @@ ActionController::Routing::Routes.draw do |map|
                    :remove_pages           => :post,
                    :reorder_pages          => :post,
                    :save_page_text         => :post,
-                   :upload_insert_document => :post
+                   :upload_insert_document => :post,
+                   :reprocess_text         => :post,
+                   :per_page_note_counts   => :get
                  },
                  :collection     => {
                    :entities     => :get,
