@@ -20,21 +20,6 @@
 .icon.alert_yellow {
   background-image: url(/images/embed/icons/alert_yellow.png);
 }
-.icon.arrow {
-  background-image: url(/images/embed/icons/arrows.png);
-}
-  .icon.arrow.left {
-    background-position: -16px 0;
-  }
-  .icon.arrow.right {
-    background-position: 0 0;
-  }
-  .icon.arrow.left:hover {
-    background-position: -48px 0;
-  }
-  .icon.arrow.right:hover {
-    background-position: -32px 0;
-  }
 .icon.spinner,
 #spinner {
   background-image: url(/images/embed/ui/spinner_circle.gif);

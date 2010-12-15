@@ -93,3 +93,6 @@ div.text_input.search input {
 #tooltip {
   border: 1px solid #ccc;
 }
+.arrow {
+  top: 0;
+}

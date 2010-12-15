@@ -1,6 +1,9 @@
 // A tile view for previewing a Document in a listing.
 dc.ui.Document = Backbone.View.extend({
 
+  // Number of pages to show at a time.
+  PAGE_LIMIT : 50,
+
   // To display if the document failed to upload.
   ERROR_MESSAGE : "<span class=\"interface\">Our system was unable to process \
     this document. We've been notified of the problem and periodially review \
@@ -32,12 +35,15 @@ dc.ui.Document = Backbone.View.extend({
     'click .change_publish_at'  : 'editPublishAt',
     'click .troubleshoot'       : 'openTroubleshooting',
     'click .contact_us'         : 'openContactUs',
-    'click .open_pages'         : 'openPagesInViewer'
+    'click .open_pages'         : 'openPagesInViewer',
+    'click .page_list .left'    : 'previousPage',
+    'click .page_list .right'   : 'nextPage'
   },
 
   constructor : function(options) {
     Backbone.View.call(this, options);
     this.el.id = 'document_' + this.model.id;
+    this.currentPage = 0;
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
       '_renderPages', '_setSelected', 'viewDocuments', 'viewPublishedDocuments',
@@ -146,6 +152,16 @@ dc.ui.Document = Backbone.View.extend({
 
   openPagesInViewer : function() {
     this.model.openViewer('#pages');
+  },
+
+  previousPage : function() {
+    this.currentPage--;
+    this._showPageImages();
+  },
+
+  nextPage : function() {
+    this.currentPage++;
+    this._showPageImages();
   },
 
   toggleNotes : function(e) {
@@ -284,7 +300,15 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   _showPageImages : function() {
-    this.pagesEl.html(JST['document/page_images']({doc : this.model}));
+    var start = (this.currentPage * this.PAGE_LIMIT) + 1;
+    var total = this.model.get('page_count');
+    this.pagesEl.html(JST['document/page_images']({
+      doc   : this.model,
+      start : start,
+      end   : Math.min(start + this.PAGE_LIMIT - 1, total),
+      total : total,
+      limit : this.PAGE_LIMIT
+    }));
   },
 
   _renderPages : function() {
@@ -292,6 +316,7 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   _hidePages : function() {
+    this.currentPage = 0;
     this.pagesEl.html('');
   },
 

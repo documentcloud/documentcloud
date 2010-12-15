@@ -1,3 +1,21 @@
+.arrow {
+  font-size: 17px;
+  line-height: 11px;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  top: 2px;
+}
+  .arrow:hover {
+    color: #000;
+  }
+  .arrow.left {
+    padding-right: 4px;
+  }
+  .arrow.right {
+    padding-left: 4px;
+  }
+
 #paginator {
   display: none;
   position: absolute;
@@ -34,18 +52,6 @@
     #paginator.is_editing .enumeration {
       margin-top: -3px;
     }
-    #paginator .arrow {
-      display: inline-block;
-      position: relative;
-      width: 16px;
-      cursor: pointer;
-    }
-      #paginator .arrow.left {
-        margin-right: 8px;
-      }
-      #paginator .arrow.right {
-        margin-left: 8px;
-      }
     #paginator .current_placeholder {
       cursor: pointer;
       font-weight: bold;
