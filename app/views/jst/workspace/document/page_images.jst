@@ -1,0 +1,17 @@
+<div class="page_list">
+  <% var pages = doc.get('page_count'); %>
+  <div class="pages_title">
+    <span class="icon cancel_search" title="hide pages"></span>
+    <%= pages %> <%= Inflector.pluralize('page', pages) %>
+  </div>
+  <% for (var page = 1, l = pages; page <= l; page++) { %>
+    <div class="page" data-page="<%= page %>">
+      <div class="page_icon">
+        <img class="page_image" alt="page <%= page %>" src="<%= doc.pageThumbnailURL(page, 'small') %>" />
+        <div class="page_number">p. <%= page %></div>
+      </div>
+    </div>
+  <% } %>
+  <div class="clear"></div>
+</div>
+  

@@ -15,7 +15,7 @@
 <div class="metalines interface">
   <span class="noselect">
     <% if (page_count) { %>
-      <span class="page_count"><%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span> -
+      <span class="quiet_link page_count"><%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span> -
     <% } %>
     <% if (reviewers_count) { %>
       <span class="reviewers_count quiet_link"><%= reviewers_count + ' ' + Inflector.pluralize('reviewer', reviewers_count) %></span> -

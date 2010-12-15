@@ -93,8 +93,9 @@ dc.model.Document = Backbone.Model.extend({
     window.open(this.get('pdf_url'));
   },
 
-  pageThumbnailURL : function(page) {
-    return this.get('page_image_url').replace('{size}', 'thumbnail').replace('{page}', page);
+  pageThumbnailURL : function(page, size) {
+    size || (size = 'thumbnail');
+    return this.get('page_image_url').replace('{size}', size).replace('{page}', page);
   },
 
   allowedToEdit : function() {

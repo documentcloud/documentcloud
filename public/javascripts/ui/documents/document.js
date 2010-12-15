@@ -26,6 +26,7 @@ dc.ui.Document = Backbone.View.extend({
     'click .reviewers_count'    : '_openShareDialog',
     'click .occurrence'         : '_openEntity',
     'click .cancel_search'      : '_hidePages',
+    'click .page_count'         : '_showPageImages',
     'click .search_account'     : 'searchAccount',
     'click .search_group'       : 'searchOrganization',
     'click .search_source'      : 'searchSource',
@@ -276,6 +277,10 @@ dc.ui.Document = Backbone.View.extend({
     this.notesEl.empty();
     this.model.notes.each(this._addNote);
     this.setMode('has', 'notes');
+  },
+
+  _showPageImages : function() {
+    this.pagesEl.html(JST['document/page_images']({doc : this.model}));
   },
 
   _renderPages : function() {

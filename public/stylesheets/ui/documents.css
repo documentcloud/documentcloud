@@ -200,6 +200,9 @@
 .document .page {
   padding-bottom: 15px;
 }
+  .document .page_list .page {
+    float: left;
+  }
   .document .page_icon {
     float: left;
     margin: 0 20px 0 0;
@@ -210,6 +213,9 @@
       width: 40px; height: 50px;
       border: 1px solid #b4b4b4;
       box-shadow: 2px 2px 0 #e7e7e7; -webkit-box-shadow: 2px 2px 0 #e7e7e7; -moz-box-shadow: 2px 2px 0 #e7e7e7;
+    }
+    .document .page_list img.page_image {
+      width: 100px; height: auto;
     }
     .document .page_number {
       color: #555;
