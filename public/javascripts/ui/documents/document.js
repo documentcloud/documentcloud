@@ -48,10 +48,11 @@ dc.ui.Document = Backbone.View.extend({
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
       '_renderPages', '_setSelected', 'viewDocuments', 'viewPublishedDocuments',
-      'openDialog', 'openEmbed', 'setAccessLevelAll', 'viewEntities', 'deleteDocuments',
-      '_openShareDialog');
+      'openDialog', 'openEmbed', 'setAccessLevelAll', 'viewEntities',
+      'viewPages', 'viewChosenPages', 'deleteDocuments');
     this.model.bind('change', this._onDocumentChange);
     this.model.bind('change:selected', this._setSelected);
+    this.model.bind('view:pages', this.viewPages);
     this.model.notes.bind('add', this._addNote);
     this.model.notes.bind('refresh', this._renderNotes);
     this.model.pageEntities.bind('refresh', this._renderPages);
@@ -157,12 +158,12 @@ dc.ui.Document = Backbone.View.extend({
 
   previousPage : function() {
     this._currentPage--;
-    this._showPageImages();
+    this.viewPages();
   },
 
   nextPage : function() {
     this._currentPage++;
-    this._showPageImages();
+    this.viewPages();
   },
 
   toggleNotes : function(e) {
@@ -181,6 +182,25 @@ dc.ui.Document = Backbone.View.extend({
       }});
     }, this);
     dc.app.paginator.mini ? dc.app.paginator.toggleSize(next, this.model) : next();
+  },
+
+  viewPages : function() {
+    this.model.ensurePerPageNoteCounts(_.bind(function(noteCounts) {
+      var start = (this._currentPage * this.PAGE_LIMIT) + 1;
+      var total = this.model.get('page_count');
+      this.pagesEl.html(JST['document/page_images']({
+        doc     : this.model,
+        start   : start,
+        end     : Math.min(start + this.PAGE_LIMIT - 1, total),
+        total   : total,
+        limit   : this.PAGE_LIMIT,
+        notes   : noteCounts
+      }));
+    }, this));
+  },
+
+  viewChosenPages : function() {
+    _.each(Documents.chosen(this.model), function(doc){ doc.trigger('view:pages'); });
   },
 
   deleteDocuments : function() {
@@ -237,6 +257,7 @@ dc.ui.Document = Backbone.View.extend({
     menu.clear();
     var items = [{title : 'Open', onClick: this.viewDocuments}];
     if (this.model.isPublished()) items.push({title : 'Open Published Version', onClick : this.viewPublishedDocuments});
+    items.push({title : 'View Pages', onClick: this.viewChosenPages});
     items.push({title : 'View Entities', onClick: this.viewEntities});
     if (this.model.allowedToEdit()) {
       items = items.concat([
@@ -305,24 +326,9 @@ dc.ui.Document = Backbone.View.extend({
       this._hidePages();
       this._showingPages = false;
     } else {
-      this._showPageImages();
+      this.viewPages();
       this._showingPages = true;
     }
-  },
-
-  _showPageImages : function() {
-    this.model.ensurePerPageNoteCounts(_.bind(function(noteCounts) {
-      var start = (this._currentPage * this.PAGE_LIMIT) + 1;
-      var total = this.model.get('page_count');
-      this.pagesEl.html(JST['document/page_images']({
-        doc     : this.model,
-        start   : start,
-        end     : Math.min(start + this.PAGE_LIMIT - 1, total),
-        total   : total,
-        limit   : this.PAGE_LIMIT,
-        notes   : noteCounts
-      }));
-    }, this));
   },
 
   _renderPages : function() {
