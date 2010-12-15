@@ -302,14 +302,25 @@
   // Add mousewheel support:
   var types = ['DOMMouseScroll', 'mousewheel'];
 
+  // Documenting *insane* feature detection here. On some webkit/mac versions,
+  // `event.wheelDelta` will be precisely 40x too large: multiples of 120,
+  // instead of multiples of 3. Try to detect this behavior, the first time
+  // this event is triggered.
+
+  var hyperactiveWebkit = null;
+
   var mouseWheelHandler = function(event) {
       var args = [].slice.call( arguments, 1 ), delta = 0, returnValue = true;
       event = $.event.fix(event || window.event);
       event.type = "mousewheel";
       if (event.wheelDelta) {
-        delta = event.wheelDelta / 5;
+        if (hyperactiveWebkit === null) {
+          hyperactiveWebkit = (event.wheelDelta % 120) === 0;
+        }
+        delta = event.wheelDelta / 3;
+        if (hyperactiveWebkit) delta /= 40;
       } else if (event.detail) {
-        delta = -event.detail * 5;
+        delta = -event.detail * 3;
       }
       args.unshift(event, delta);
       return $.event.handle.apply(this, args);
