@@ -229,8 +229,12 @@
   .document .page_icon {
     float: left;
     text-align: center;
+    margin-right: 20px;
     cursor: pointer;
   }
+    .document .page_list .page_icon {
+      margin-right: 0;
+    }
     .document img.page_image {
       width: 40px; height: 50px;
       border: 1px solid #b4b4b4;
