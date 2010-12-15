@@ -239,6 +239,7 @@
     .document .page_list img.page_image {
       width: 100px; height: auto;
       min-height: 40px;
+      max-height: 130px;
     }
     .document .page_number {
       color: #555;
