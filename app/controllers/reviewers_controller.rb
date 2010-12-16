@@ -23,7 +23,7 @@ class ReviewersController < ApplicationController
       documents = params[:documents].map do |document_id|
         document = Document.find(document_id)
         document.document_reviewers.create(:account => account)
-        account.send_reviewer_instructions(document)
+        account.send_reviewer_instructions(document, current_account)
         document.reload
       end
     end
@@ -49,7 +49,7 @@ class ReviewersController < ApplicationController
     account = Account.find(params[:account_id])
     params[:documents].each do |document_id|
       document = Document.find(document_id)
-      account.send_reviewer_instructions(document)
+      account.send_reviewer_instructions(document, current_account)
     end
     json nil
   end

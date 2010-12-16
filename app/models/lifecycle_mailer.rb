@@ -17,14 +17,15 @@ class LifecycleMailer < ActionMailer::Base
 
   # Mail instructions for a document review, with a secure link to the
   # document viewer, where the user can annotate the document.
-  def reviewer_instructions(reviewer_account, document)
+  def reviewer_instructions(reviewer_account, document, inviter_account)
     subject     "Review \"#{document.title}\" on DocumentCloud"
     from        [SUPPORT, document.account.email].compact
     recipients  [reviewer_account.email]
-    body        :document           => document,
-                :key                => reviewer_account.security_key.key,
-                :organization_name  => document.account.organization_name,
-                :account_exists     => !reviewer_account.reviewer?
+    body        :document             => document,
+                :key                  => reviewer_account.security_key.key,
+                :organization_name    => document.account.organization_name,
+                :account_exists       => !reviewer_account.reviewer?,
+                :inviter_account      => inviter_account
   end
 
   # Mail instructions for resetting an active account's password.
