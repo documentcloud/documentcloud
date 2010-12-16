@@ -9,7 +9,8 @@ namespace :import do
     require 'tmpdir'
     require 'iconv'
     client = Mysql2::Client.new :host => 'localhost', :username => 'root', :database => 'docviewer_prod'
-    docs   = client.query 'select * from documents'
+    # NB: Resuming after failed connection.
+    docs   = client.query 'select * from documents where id >= 261'
     docs.each do |doc|
       begin
         import_document(client, doc)
