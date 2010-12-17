@@ -16,7 +16,7 @@ class Annotation < ActiveRecord::Base
   named_scope :accessible, lambda { |account, include_exclusive|
     access = []
     access << "(annotations.access = #{PUBLIC})"
-    access << "(annotations.access = #{EXCLUSIVE})" if account && include_exclusive
+    access << "(annotations.access = #{EXCLUSIVE})" if account || include_exclusive
     access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
     {:conditions => "(#{access.join(' or ')})"}
   }
