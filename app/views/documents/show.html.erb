@@ -26,7 +26,7 @@
       window.currentDocument = DV.load(<%= @current_document.canonical({
         :account => @current_account, 
         :local => @local, 
-        :annotation_author_names => @annotation_author_names,
+        :annotation_author_info => @annotation_author_info,
         :allowed_to_edit => @allowed_to_edit
       }).to_json %>, {
         container: '#viewer'

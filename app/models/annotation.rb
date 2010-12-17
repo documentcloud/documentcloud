@@ -7,7 +7,7 @@ class Annotation < ActiveRecord::Base
   belongs_to :account # NB: This account is not the owner of the document.
                       #     Rather, it is the author of the annotation.
   
-  attr_accessor :author_name
+  attr_accessor :author
   
   validates_presence_of :title, :page_number
 
@@ -41,13 +41,18 @@ class Annotation < ActiveRecord::Base
     self.accessible(account, false).count(:conditions => {:document_id => doc_ids}, :group => 'document_id')
   end
 
-  def self.author_names(doc)
-    accounts = Account.find(:all, :joins => [:annotations], 
-                            :select => "accounts.id, accounts.first_name, accounts.last_name", 
-                            :group => "accounts.id, first_name, last_name", 
-                            :conditions => ["annotations.document_id = ?", doc.id])
+  def self.author_info(doc)
+    account_sql = <<-EOS
+      SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name, organizations.name as organization_name 
+      FROM accounts 
+      INNER JOIN "annotations" ON annotations.account_id = accounts.id 
+      INNER JOIN "organizations" ON "organizations".id = "accounts".organization_id 
+      WHERE (annotations.document_id = #{doc.id})
+    EOS
+    accounts = Account.connection.select_all(account_sql)
     accounts.inject({}) do |m, a| 
-      m[a.id] = a.full_name
+      m[a['id'].to_i] = {:full_name => "#{a['first_name']} #{a['last_name']}", 
+                         :organization_name => a['organization_name']}
       m
     end
   end
@@ -63,10 +68,11 @@ class Annotation < ActiveRecord::Base
   def canonical
     data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content}
     data['location'] = {'image' => location} if location
-    data['access'] = 'private' if access == PRIVATE
+    data['access'] = 'private'   if access == PRIVATE
     data['access'] = 'exclusive' if access == EXCLUSIVE
-    data['access'] = 'public' if access == PUBLIC
-    data['author'] = author_name if author_name
+    data['access'] = 'public'    if access == PUBLIC
+    data['author'] = author[:full_name] if author
+    data['author_organization'] = author[:organization_name] if author
     data
   end
 

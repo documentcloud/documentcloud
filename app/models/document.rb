@@ -590,10 +590,10 @@ class Document < ActiveRecord::Base
     res['published_url']      = remote_url if remote_url
     doc['sections']           = sections.map(&:canonical) if options[:sections]
     if options[:annotations]
-      annotation_author_names = options[:annotation_author_names] || {}
+      annotation_author_info = options[:annotation_author_info] || {}
       doc['annotations']      = annotations.accessible(options[:account], !!options[:allowed_to_edit]).map do |a|
-        if (name = annotation_author_names[a.account_id])
-          a.author_name = name 
+        if (author = annotation_author_info[a.account_id])
+          a.author = author
         end
         a.canonical 
       end

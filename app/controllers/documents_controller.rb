@@ -22,7 +22,7 @@ class DocumentsController < ApplicationController
         return if entity_requested?
         if current_account
           @allowed_to_edit = current_account.allowed_to_edit?(current_document)
-          @annotation_author_names = Annotation.author_names(doc)
+          @annotation_author_info = Annotation.author_info(doc)
           @edits_enabled = true
         end
       end

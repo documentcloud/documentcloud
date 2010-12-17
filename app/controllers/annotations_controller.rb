@@ -5,9 +5,9 @@ class AnnotationsController < ApplicationController
 
   # In the workspace, request a listing of annotations.
   def index
-    annotation_author_names = Annotation.author_names(current_document)
+    annotation_author_info = Annotation.author_info(current_document)
     annotations = current_document.annotations.accessible(current_account, true).map do |a|
-        a.author_name = annotation_author_names[a.account_id] 
+        a.author = annotation_author_info[a.account_id]
         a 
       end
     json annotations
