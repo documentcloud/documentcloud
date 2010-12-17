@@ -93,10 +93,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   
-  _setPlaceholders : function(includeNames) {
-    if (includeNames) {
-      this.$('input[name=reviewer_first_name], input[name=reviewer_last_name]').placeholder();
-    }
+  _setPlaceholders : function() {
+    this.$('input[name=reviewer_first_name], input[name=reviewer_last_name]').placeholder();
     this.$('input[name=reviewer_email]').placeholder();
   },
   
@@ -195,7 +193,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.$('input[name=reviewer_first_name], input[name=reviewer_last_name]').show();
     this.$('.enter_full_name_label').show();
     this.$('.enter_email_label').hide();
-    this._setPlaceholders(true);
+    this._setPlaceholders();
   },
 
   _removeReviewer : function(e) {

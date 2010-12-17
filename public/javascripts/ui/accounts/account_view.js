@@ -23,6 +23,7 @@ dc.ui.AccountView = Backbone.View.extend({
     'click .resend_welcome':        'resendWelcomeEmail',
     'click .admin_link':            '_openAccounts',
     'click .save_changes':          '_doneEditing',
+    'click .cancel_changes':        '_cancelEditing',
     'click .delete_account':        '_deleteAccount',
     'click .login_as .minibutton':  '_loginAsAccount'
   },
@@ -70,7 +71,7 @@ dc.ui.AccountView = Backbone.View.extend({
   },
 
   isRow : function() {
-    return this.kind == 'row' || this.kind == 'admin';
+    return this.kind == 'row' || this.kind == 'admin' || this.kind == 'reviewer';
   },
 
   serialize : function() {
@@ -144,6 +145,10 @@ dc.ui.AccountView = Backbone.View.extend({
     }
   },
 
+  _cancelEditing : function() {
+    this.setMode('display', 'view');
+  },
+  
   _deleteAccount : function() {
     if (dc.app.accounts.isOpen()) dc.app.accounts.close();
     dc.ui.Dialog.confirm('Really delete ' + this.model.fullName() + '?', _.bind(function() {

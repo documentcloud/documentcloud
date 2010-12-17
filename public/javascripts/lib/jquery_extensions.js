@@ -283,7 +283,7 @@
         var placeholder = $('<div class="placeholder">' + message + '</div>');
         placeholder.hide().prependTo(el[0].parentNode);
         el.bind('blur', function(){
-          if (el.val() == '') placeholder.show();
+          if (el.val() == '' && el.is(':visible')) placeholder.show();
         });
         el.bind('focus', function(){
           otherEl = this;

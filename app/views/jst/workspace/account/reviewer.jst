@@ -3,21 +3,46 @@
 </td>
 
 <td class="name selectable_text">
-  <%= Inflector.truncate(account.fullName(true), 25) %>
+  <div class="display">
+    <%= Inflector.truncate(account.fullName(true), 40) %>
+    <% if (!_.contains(dc.model.Account.COLLABORATOR_ROLES, account.get('role'))) { %>
+      <span class="text_link edit_account">edit name</span>
+    <% } %>
+  </div>
+  <div class="edit">
+    <div class="name_wrapper">
+      <div class="text_input dark small">
+        <input name="reviewer_first_name" id="reviewer_first_name" type="text" value="" placeholder="First name" value="<%= account.get('first_name') %>" />
+      </div>
+      <div class="text_input dark small">
+        <input name="reviewer_last_name" id="reviewer_last_name" type="text" value="" placeholder="Last name" value="<%= account.get('last_name') %>" />
+      </div>
+    </div>
+  </div>
 </td>
 
-<td class="organization_name selectable_text">
+<td class="email selectable_text">
   <%= account.get('email') %>
 </td>
 
 <td class="nowrap">
-  <span class="remove_reviewer text_link" data-account-id="<%= account.id %>">revoke access</span>
+  <div class="display">
+    <span class="remove_reviewer text_link" data-account-id="<%= account.id %>">revoke access</span>
+  </div>
+  <div class="edit">
+    <div class="minibutton default save_changes">Save</div>
+  </div>
 </td>
 
 <td class="last nowrap">
-  <% if (documentsCount > 1) { %>
-    <span class="document_count selectable_text"><%= documentCount %>/<%= documentsCount %> <%= Inflector.pluralize('document', documentsCount) %></span>
-  <% } else { %>
-    <span class="resend_reviewer text_link" data-account-id="<%= account.id %>">resend instructions</span>
-  <% } %>
+  <div class="display">
+    <% if (documentsCount > 1) { %>
+      <span class="document_count selectable_text"><%= documentCount %>/<%= documentsCount %> <%= Inflector.pluralize('document', documentsCount) %></span>
+    <% } else { %>
+      <span class="resend_reviewer text_link" data-account-id="<%= account.id %>">resend instructions</span>
+    <% } %>
+  </div>
+  <div class="edit">
+    <div class="text_link cancel_changes">cancel</div>
+  </div>
 </td>

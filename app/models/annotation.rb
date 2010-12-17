@@ -43,10 +43,11 @@ class Annotation < ActiveRecord::Base
 
   def self.author_info(doc)
     account_sql = <<-EOS
-      SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name, organizations.name as organization_name 
+      SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name, 
+                      organizations.name as organization_name 
       FROM accounts 
-      INNER JOIN "annotations" ON annotations.account_id = accounts.id 
-      INNER JOIN "organizations" ON "organizations".id = "accounts".organization_id 
+      INNER JOIN annotations   ON annotations.account_id = accounts.id 
+      INNER JOIN organizations ON organizations.id = accounts.organization_id 
       WHERE (annotations.document_id = #{doc.id})
     EOS
     accounts = Account.connection.select_all(account_sql)

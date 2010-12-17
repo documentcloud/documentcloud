@@ -222,8 +222,8 @@
     margin-left: 0;
   }
   #share_dialog .enter_full_name_label,
-  #share_dialog input[name=reviewer_first_name],
-  #share_dialog input[name=reviewer_last_name] {
+  #share_dialog .reviewer_management input[name=reviewer_first_name],
+  #share_dialog .reviewer_management input[name=reviewer_last_name] {
     display: none;
   }
   #share_dialog .reviewer_management .last {
