@@ -13,7 +13,7 @@ namespace :import do
     docs   = client.query 'select * from documents where (id = 292 or id >= 340)'
     docs.each do |doc|
       begin
-        client.reconnect!
+        client.reset!
         import_document(client, doc)
       rescue Exception => e
         puts e
