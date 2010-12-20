@@ -159,6 +159,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
           // It's cool.
         }
         window.close();
+        _.defer(dc.ui.Dialog.alert, "The pages are being removed. Please close this document.");
       }
     });
   },

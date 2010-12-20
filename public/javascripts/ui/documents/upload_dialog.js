@@ -183,7 +183,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       } catch (e) {
         // No parent window...
       }
-      dc.ui.Dialog.alert(this.INSERT_PAGES_MESSAGE, {onClose : function() { window.close(); }});
+      dc.ui.Dialog.alert(this.INSERT_PAGES_MESSAGE, {onClose : function() {
+        window.close();
+        _.defer(dc.ui.Dialog.alert, "The pages are being processed. Please close this document.");
+      }});
     }
     this.close();
   },

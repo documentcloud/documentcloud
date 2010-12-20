@@ -93,6 +93,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       doc.reprocessText(force);
       this._setOnParent(doc, {access: dc.access.PENDING});
     }, this);
+    var closeMessage = "The text is being processed. Please close this document.";
     var dialog = new dc.ui.Dialog.confirm("Reprocess this document to take \
         advantage of improvements to our text extraction tools. Choose \
         \"Force OCR\" (optical character recognition) to ignore any embedded \
@@ -100,10 +101,12 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
         close while it's being rebuilt. Are you sure you want to proceed? ", function() {
       finish();
       window.close();
+      _.defer(dc.ui.Dialog.alert, closeMessage);
     }, {width: 450});
     var force = $(dialog.make('div', {'class':'minibutton dark'}, 'Force OCR')).bind('click', function() {
       finish(true);
       window.close();
+      _.defer(dc.ui.Dialog.alert, closeMessage);
     });
     dialog.$('.ok').text('Reprocess').before(force);
   },

@@ -119,6 +119,7 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
           // It's alright.
         }
         window.close();
+        _.defer(dc.ui.Dialog.alert, "The pages are being reordered. Please close this document.");
       }
     });
   },
