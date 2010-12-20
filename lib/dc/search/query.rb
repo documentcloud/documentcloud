@@ -20,7 +20,7 @@ module DC
       EMPTY_PAGINATION = {:page => 1, :per_page => 0}
 
       attr_reader   :text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :access, :attributes, :conditions, :results, :solr, :source_document
-      attr_accessor :page, :page_size, :order, :from, :to, :total
+      attr_accessor :page, :per_page, :order, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
       # appropriate attributes.
@@ -38,7 +38,7 @@ module DC
         @source_document        = opts[:source_document]
         @from, @to, @total      = nil, nil, nil
         @account, @organization = nil, nil
-        @page_size              = DEFAULT_PAGE_SIZE
+        @per_page               = DEFAULT_PER_PAGE
         @order                  = DEFAULT_ORDER
       end
 
@@ -50,8 +50,8 @@ module DC
       # Set the page of the search that this query is supposed to access.
       def page=(page)
         @page = page
-        @from = (@page - 1) * @page_size
-        @to   = @from + @page_size
+        @from = (@page - 1) * @per_page
+        @to   = @from + @per_page
       end
 
       # Generate all of the SQL, including conditions and joins, that is needed
@@ -156,7 +156,7 @@ module DC
         options           = {:conditions => conditions, :joins => @joins, :include => [:account, :organization]}
         @total            = @proxy.count(options)
         options[:order]   = order
-        options[:limit]   = @page_size
+        options[:limit]   = @per_page
         options[:offset]  = @from
         @results          = @proxy.all(options)
       end
@@ -164,7 +164,7 @@ module DC
       # Construct the correct pagination for the current query.
       def build_pagination
         page       = @page
-        size       = @facet ? 0 : @page_size
+        size       = @facet ? 0 : @per_page
         order      = @order.to_sym
         direction  = (order == :created_at || order == :score || order == :page_count) ? :desc : :asc
         pagination = {:page => page, :per_page => size}

@@ -1,6 +1,6 @@
 <% var to = Math.min(q.to, q.total); %>
 <div class="description noselect">
-  <% if (q.total > page_size) { %>
+  <% if (q.total > per_page) { %>
     <span class="range"><%= '' + (q.from + 1) %> &ndash; <%= to %></span>
     of
   <% } %>
@@ -13,7 +13,7 @@
 
 <div id="size_toggle"></div>
 
-<% if (q.total > page_size) { %>
+<% if (q.total > per_page) { %>
   <div class="noselect enumeration">
     <% if (q.page > 1) { %>
       <span class="arrow left">&larr;</span>

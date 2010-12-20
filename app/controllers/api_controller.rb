@@ -27,7 +27,7 @@ class ApiController < ApplicationController
         @response = ActiveSupport::OrderedHash.new
         @response['total']      = @query.total
         @response['page']       = @query.page
-        @response['per_page']   = DC::Search::DEFAULT_PAGE_SIZE
+        @response['per_page']   = @query.per_page
         @response['documents']  = @documents.map {|d| d.canonical(API_OPTIONS) }
         return if jsonp_request?
         render :json => @response

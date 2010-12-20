@@ -13,9 +13,10 @@ module DC
       BOOLEAN_OR    = /\s+OR\s+/
     end
 
-    DEFAULT_PAGE_SIZE = 10
-    DEFAULT_ORDER = 'created_at'
-    QUERY_OR = ' | '
+    DEFAULT_PER_PAGE  = 10
+    MAX_PER_PAGE      = 1000
+    DEFAULT_ORDER     = 'created_at'
+    QUERY_OR          = ' | '
 
   end
 

@@ -7,12 +7,21 @@ module DC
         opts[:facet]      = params[:facet]
         opts.merge!({:account => current_account, :organization => current_organization}) if logged_in?
         @query            = DC::Search::Parser.new.parse(params[:q] || '')
-        @query.page_size  = params[:page_size] ? params[:page_size].to_i : DEFAULT_PAGE_SIZE
+        @query.per_page   = per_page
         @query.order      = params[:order] || DEFAULT_ORDER
         @query.page       = params[:page] ? params[:page].to_i : 1
         search_results    = Document.search(@query, opts)
         @documents        = search_results.results
         @source_document  = search_results.source_document
+      end
+
+
+      protected
+
+      def per_page
+        num = (params[:per_page] && params[:per_page].to_i) || DEFAULT_PER_PAGE
+        num = DEFAULT_PER_PAGE if num > MAX_PER_PAGE
+        num
       end
 
     end

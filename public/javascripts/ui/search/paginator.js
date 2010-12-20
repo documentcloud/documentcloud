@@ -1,7 +1,7 @@
 dc.ui.Paginator = Backbone.View.extend({
 
-  DEFAULT_PAGE_SIZE : 10,
-  MINI_PAGE_SIZE    : 30,
+  DEFAULT_PER_PAGE : 10,
+  MINI_PER_PAGE    : 30,
 
   SORT_TEXT : {
     score       : 'by relevance',
@@ -42,7 +42,7 @@ dc.ui.Paginator = Backbone.View.extend({
 
   queryParams : function() {
     return {
-      page_size : dc.app.paginator.pageSize(),
+      per_page : dc.app.paginator.pageSize(),
       order     : dc.app.paginator.sortOrder
     };
   },
@@ -53,12 +53,12 @@ dc.ui.Paginator = Backbone.View.extend({
 
   // Keep in sync with search.rb on the server.
   pageSize : function() {
-    return this.mini ? this.MINI_PAGE_SIZE : this.DEFAULT_PAGE_SIZE;
+    return this.mini ? this.MINI_PER_PAGE : this.DEFAULT_PER_PAGE;
   },
 
   pageFactor : function() {
-    return this.mini ? this.MINI_PAGE_SIZE / this.DEFAULT_PAGE_SIZE :
-                       this.DEFAULT_PAGE_SIZE / this.MINI_PAGE_SIZE;
+    return this.mini ? this.MINI_PER_PAGE / this.DEFAULT_PER_PAGE :
+                       this.DEFAULT_PER_PAGE / this.MINI_PER_PAGE;
   },
 
   pageCount : function() {
@@ -73,7 +73,7 @@ dc.ui.Paginator = Backbone.View.extend({
     el.html(JST['workspace/paginator']({
       q           : this.query,
       sort_text   : this.SORT_TEXT[this.sortOrder],
-      page_size   : this.pageSize(),
+      per_page   : this.pageSize(),
       page_count  : this.pageCount()
     }));
     return this;
