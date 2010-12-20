@@ -54,6 +54,8 @@ def import_document(client, record)
   pages = []
   page_records.each do |page_record|
     text = Iconv.iconv('ascii//translit//ignore', 'utf-8', page_record['contents']).first
+    # Some NYT docs have duplicate pages.
+    next if pages.last.page_number == page_record['page_number']
     pages.push doc.pages.create({
       :page_number => page_record['page_number'],
       :text        => text,
