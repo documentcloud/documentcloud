@@ -51,12 +51,13 @@ def import_document(client, record)
   puts "#{ref} -- importing pages..."
 
   page_records = client.query "select * from pages where document_id = #{record['id']} order by page_number asc"
-  pages = []
+  pages        = []
+  prev_page    = nil
   page_records.each do |page_record|
     text = Iconv.iconv('ascii//translit//ignore', 'utf-8', page_record['contents']).first
     # Some NYT docs have duplicate pages.
-    next if pages.last.page_number == page_record['page_number']
-    pages.push doc.pages.create({
+    next if prev_page && (prev_page.page_number == page_record['page_number'])
+    pages.push prev_page = doc.pages.create({
       :page_number => page_record['page_number'],
       :text        => text,
       :access      => access
