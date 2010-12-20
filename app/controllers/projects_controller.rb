@@ -14,7 +14,9 @@ class ProjectsController < ApplicationController
   # have access to.
   def update
     data = pick(params, :title, :description, :document_ids)
-    current_project.set_documents(data.delete(:document_ids))
+    ids  = (data.delete(:document_ids) || []).map(&:to_i)
+    docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => ids}, :select => 'id')
+    current_project.set_documents(docs.map(&:id))
     current_project.update_attributes data
     json current_project.reload
   end

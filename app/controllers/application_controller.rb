@@ -44,6 +44,12 @@ class ApplicationController < ActionController::Base
     true
   end
 
+  # Make a JSONP-aware JSON response, using the contents of `@response`
+  def json_response
+    return if jsonp_request?
+    render :json => @response
+  end
+
   # Select only a sub-set of passed parameters. Useful for whitelisting
   # attributes from the params hash before performing a mass-assignment.
   def pick(hash, *keys)

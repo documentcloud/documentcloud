@@ -7,9 +7,9 @@ class ApiController < ApplicationController
 
   before_filter :bouncer if Rails.env.staging?
 
-  before_filter :api_login_required, :only => [:upload, :projects, :update, :destroy]
+  before_filter :api_login_required, :only => [:upload, :projects, :update, :destroy, :projects, :create_project, :update_project, :destroy_project]
   before_filter :api_login_optional, :only => [:documents, :search]
-  before_filter :login_required, :only => [:index]
+  before_filter :login_required,     :only => [:index]
 
   API_OPTIONS = {:sections => false, :annotations => false, :access => true, :contributor => false}
 
@@ -29,8 +29,7 @@ class ApiController < ApplicationController
         @response['page']       = @query.page
         @response['per_page']   = @query.per_page
         @response['documents']  = @documents.map {|d| d.canonical(API_OPTIONS) }
-        return if jsonp_request?
-        render :json => @response
+        json_response
       end
     end
   end
@@ -44,8 +43,7 @@ class ApiController < ApplicationController
                     :status => 400})
     end
     @response = Document.upload(params, current_account, current_organization).canonical
-    return if jsonp_request?
-    render :json => @response
+    json_response
   end
 
   # Retrieve a document's canonical JSON.
@@ -53,8 +51,7 @@ class ApiController < ApplicationController
     return bad_request unless params[:id] and request.format.json? || request.format.js?
     return not_found unless current_document
     @response = {'document' => current_document.canonical(:access => true, :sections => true, :annotations => true)}
-    return if jsonp_request?
-    render :json => @response
+    json_response
   end
 
   # Retrieve the entities for a document.
@@ -62,8 +59,7 @@ class ApiController < ApplicationController
     return bad_request unless params[:id] and request.format.json? || request.format.js?
     return not_found unless current_document
     @response = {'entities' => current_document.ordered_entity_hash}
-    return if jsonp_request?
-    render :json => @response
+    json_response
   end
 
   def update
@@ -75,8 +71,7 @@ class ApiController < ApplicationController
     return json(doc, 403) unless success
     expire_page doc.canonical_cache_path if doc.cacheable?
     @response = {'document' => doc.canonical(:access => true, :sections => true, :annotations => true)}
-    return if jsonp_request?
-    render :json => @response
+    json_response
   end
 
   def destroy
@@ -89,14 +84,38 @@ class ApiController < ApplicationController
 
   # Retrieve a listing of your projects, including document id.
   def projects
-    return bad_request unless current_account && (request.format.json? || request.format.js?)
     @response = {'projects' => Project.accessible(current_account).map {|p| p.canonical } }
-    return if jsonp_request?
-    render :json => @response
+    json_response
+  end
+
+  def create_project
+    attrs = pick(params, :title, :description)
+    attrs[:document_ids] = (params[:document_ids] || []).map(&:to_i)
+    @response = {'project' => current_account.projects.create(attrs).canonical}
+    json_response
+  end
+
+  def update_project
+    data = pick(params, :title, :description, :document_ids)
+    ids  = (data.delete(:document_ids) || []).map(&:to_i)
+    docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => ids}, :select => 'id')
+    current_project.set_documents(docs.map(&:id))
+    current_project.update_attributes data
+    @response = {'project' => current_project.reload.canonical}
+    json_response
+  end
+
+  def destroy_project
+    current_project.destroy
+    json nil
   end
 
 
   private
+
+  def current_project
+    @current_project ||= current_account.projects.find(params[:id].to_i)
+  end
 
   def current_document
     @current_document ||= Document.accessible(current_account, current_organization).find_by_id(params[:id].to_i)

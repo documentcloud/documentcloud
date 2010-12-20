@@ -28,8 +28,7 @@ class DocumentsController < ApplicationController
       end
       format.json do
         @response = doc.canonical
-        return if jsonp_request?
-        render :json => @response
+        json_response
       end
       format.js do
         js = "DV.loadJSON(#{doc.canonical.to_json});"
@@ -182,8 +181,7 @@ class DocumentsController < ApplicationController
     doc       = current_document(true)
     pages     = Page.search_for_page_numbers(params[:q], doc)
     @response = {'query' => params[:q], 'results' => pages}
-    return if jsonp_request?
-    render :json => @response
+    json_response
   end
 
   def preview
