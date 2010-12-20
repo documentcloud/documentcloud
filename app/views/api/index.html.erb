@@ -291,8 +291,45 @@
   }
 }
 </pre>
+
+  <h2><span id="projects-post">POST /api/projects.json</span></h2>
+  
+  <p>
+    Create a new project for the authenticated account, with a title, optional
+    description, and optional document ids.
+  </p>
+  
+  <table>
+    <thead>
+      <tr>
+        <th class="gradient_light">Parameter</th>
+        <th class="gradient_light">Description</th>
+        <th class="gradient_light">Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="param">title</td>
+        <td class="desc">the projects's title</td>
+        <td class="ex">Drywall Investigation</td>
+      </tr>
+      <tr class="alt">
+        <td class="param">description</td>
+        <td class="desc">(optional) a paragraph of detailed description</td>
+        <td class="ex">A collection of documents from 2007-2009 relating to reports of tainted drywall in Florida.</td>
+      </tr>
+      <tr>
+        <td class="param">document_ids</td>
+        <td class="desc">(optional) a list of documents that the project contains, by id</td>
+        <td class="ex">
+          Note that you have to use the convention for passing an array of strings: <br />
+          <tt>?document_ids[]=28-boumediene-v-bush&amp;document_ids[]=207-american-academy&amp;document_ids[]=30-insider-trading</tt>
+        </td>
+      </tr>
+    </tbody>
+  </table>
     
-  <h2><span id="projects">GET /api/projects.json</span></h2>
+  <h2><span id="projects-get">GET /api/projects.json</span></h2>
   
   <p>
     Retrieve a list of project names and document ids. You must
@@ -314,6 +351,19 @@
   },
   ...
 ]}</pre>
+  
+  <h2><span id="projects-put">PUT /api/projects/[id].json</span></h2>
+  
+  <p>
+    Update an existing project for the current authenticated account. You can
+    set the title, description or list of documents. See POST, above.
+  </p>
+  
+  <h2><span id="projects-delete">DELETE /api/projects/[id].json</span></h2>
+  
+  <p>
+    Delete a project that belongs to the current authenticated account.
+  </p>
 
 </div>
 <script type="text/javascript">
