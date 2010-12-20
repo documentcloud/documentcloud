@@ -11,7 +11,7 @@ namespace :import do
     client = Mysql2::Client.new :host => 'localhost', :username => 'root', :database => 'docviewer_prod'
     # NB: Resuming after failed connection.
     # TODO: Document #292.
-    docs   = client.query 'select * from documents where id >= 340'
+    docs   = client.query 'select * from documents where id in (292, 376, 394, 403, 409, 455, 466) order by id desc'
     docs.each do |doc|
       begin
         import_document(client, doc)
