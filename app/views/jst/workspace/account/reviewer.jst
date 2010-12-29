@@ -4,18 +4,20 @@
 
 <td class="name selectable_text">
   <div class="display">
-    <%= Inflector.truncate(account.fullName(true), 40) %>
+    <span class="account_name">
+      <%= Inflector.truncate(account.fullName(true), 40) %>
+    </span>
     <% if (!_.contains(dc.model.Account.COLLABORATOR_ROLES, account.get('role'))) { %>
-      <span class="text_link edit_account">edit name</span>
+      <span class="edit_account icon edit_glyph_dark"></span>
     <% } %>
   </div>
   <div class="edit">
     <div class="name_wrapper">
       <div class="text_input dark small">
-        <input name="reviewer_first_name" id="reviewer_first_name" type="text" value="" placeholder="First name" value="<%= account.get('first_name') %>" />
+        <input name="first_name" id="reviewer_first_name" type="text" placeholder="First name" value="<%= account.get('first_name') %>" />
       </div>
       <div class="text_input dark small">
-        <input name="reviewer_last_name" id="reviewer_last_name" type="text" value="" placeholder="Last name" value="<%= account.get('last_name') %>" />
+        <input name="last_name" id="reviewer_last_name" type="text" placeholder="Last name" value="<%= account.get('last_name') %>" />
       </div>
     </div>
   </div>
@@ -36,7 +38,7 @@
 
 <td class="last nowrap">
   <div class="display">
-    <% if (documentsCount > 1) { %>
+    <% if (documentsCount && documentsCount > 1) { %>
       <span class="document_count selectable_text"><%= documentCount %>/<%= documentsCount %> <%= Inflector.pluralize('document', documentsCount) %></span>
     <% } else { %>
       <span class="resend_reviewer text_link" data-account-id="<%= account.id %>">resend instructions</span>

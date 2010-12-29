@@ -2,8 +2,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   id                    : 'share_dialog',
   className             : 'account_list dialog',
-  accountDocumentCounts : {},
-  renderedAccounts      : [],
   
   events : {
     'click .ok':                            'close',
@@ -28,8 +26,10 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.docs.each(function(doc) {
       doc.collection = Documents;
     });
-    this.docsUnfetched = this.docs.length;
-    this.renderedAccounts = [];
+    this.docsUnfetched    = this.docs.length;
+    this.renderedAccounts = {};
+    this._boundRender     = [];
+
     $(this.el).hide().empty();
     dc.ui.spinner.show();
     this._loadReviewers();
@@ -57,7 +57,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       var views = [];
       // this.commonReviewers = Documents.sharedReviewers(this.docs);
       this._countDocuments();
-      this.renderedAccounts = [];
+      this.renderedAccounts = {};
       this.docs.each(_.bind(function(doc) {
         doc.reviewers.each(_.bind(function(account) {
           var accountView = this._renderReviewer(account);
@@ -67,7 +67,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       
       this.$('.account_list tr:not(.reviewer_management)').remove();
       this.$('.account_list').prepend(views);
-      this.$('.document_reviewers_empty').toggle(!this.renderedAccounts.length);
+      this.$('.document_reviewers_empty').toggle(!_.keys(this.renderedAccounts).length);
     }
   },
 
@@ -94,7 +94,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   
   
   _setPlaceholders : function() {
-    this.$('input[name=reviewer_first_name], input[name=reviewer_last_name]').placeholder();
+    this.$('input[name=first_name], input[name=last_name]').placeholder();
     this.$('input[name=reviewer_email]').placeholder();
   },
   
@@ -112,18 +112,34 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   _renderReviewer : function(account) {    
-    if (_.contains(this.renderedAccounts, account.id)) return;
-    else this.renderedAccounts.push(account.id);
+    if (account.id in this.renderedAccounts) return;
     
     var view = (new dc.ui.AccountView({
       model : account, 
       kind : 'reviewer'
-    })).render(null, {
+    })).render('display', {
       documentCount  : this.accountDocumentCounts[account.id],
       documentsCount : this.docs.length
-    }).el;
+    });
     
-    return view;
+    this.renderedAccounts[account.id] = view;
+    this._observeReviewer(account, view);
+    
+    return view.el;
+  },
+  
+  _rerenderReviewer : function(account) {
+    this.renderedAccounts[account.id].render('display', {
+      documentCount  : this.accountDocumentCounts[account.id],
+      documentsCount : this.docs.length
+    });
+  },
+
+  _observeReviewer : function(account, view) {
+    account.unbind('change', view._boundRender);
+    if (this._boundRender[account.id]) account.unbind('change', this._boundRender[account.id]);
+    this._boundRender[account.id] = _.bind(this._rerenderReviewer, this, account);
+    account.bind('change', this._boundRender[account.id]);
   },
   
   _showEnterEmail : function() {
@@ -148,8 +164,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       type : 'POST',
       data : {
         email : email,
-        first_name : this.$('input[name=reviewer_first_name]').val(),
-        last_name : this.$('input[name=reviewer_last_name]').val(),
+        first_name : this.$('input[name=first_name]').val(),
+        last_name : this.$('input[name=last_name]').val(),
         documents : this.docs.map(function(doc) { return doc.id; })
       },
       success: _.bind(function(resp) {
@@ -190,7 +206,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   _showReviewerNameInputs : function() {
-    this.$('input[name=reviewer_first_name], input[name=reviewer_last_name]').show();
+    this.$('input[name=first_name], input[name=last_name]').show();
     this.$('.enter_full_name_label').show();
     this.$('.enter_email_label').hide();
     this._setPlaceholders();

@@ -166,17 +166,24 @@
   #share_dialog .nowrap {
     white-space: nowrap;
   }
-  #share_dialog .name input {
-    width: 66px;
-  }
-  #share_dialog .name_wrapper,
-  #share_dialog .name {
-    width: 164px;
-    min-width: 164px; /* Table cells in FF */
-  }
-  #share_dialog .name_wrapper .text_input {
-    width: 66px;
-  }
+  #share_dialog .name {}
+    #share_dialog .name input {
+      width: 66px;
+    }
+    #share_dialog .name_wrapper,
+    #share_dialog .name {
+      width: 164px;
+      min-width: 164px; /* Table cells in FF */
+    }
+    #share_dialog .name_wrapper .text_input {
+      width: 66px;
+    }
+    #share_dialog .name .edit_account {
+      margin: 4px 4px 0 8px;
+    }
+    #share_dialog .name .account_name {
+      float: left;
+    }
   #share_dialog .reviewers_title {
     font-size: 15px;
     margin: 0 0 0 42px;
@@ -222,8 +229,8 @@
     margin-left: 0;
   }
   #share_dialog .enter_full_name_label,
-  #share_dialog .reviewer_management input[name=reviewer_first_name],
-  #share_dialog .reviewer_management input[name=reviewer_last_name] {
+  #share_dialog .reviewer_management input[name=first_name],
+  #share_dialog .reviewer_management input[name=last_name] {
     display: none;
   }
   #share_dialog .reviewer_management .last {

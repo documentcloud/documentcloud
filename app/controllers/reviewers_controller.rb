@@ -54,7 +54,14 @@ class ReviewersController < ApplicationController
     json nil
   end
 
-
+  def update
+    account   = current_organization.accounts.find(params[:id])
+    is_owner  = current_account.id == account.id
+    return forbidden unless account && (current_account.admin? || is_owner)
+    account.update_attributes pick(params, :first_name, :last_name) if account.role == Account::REVIEWER
+    json account
+  end
+  
   private
 
   def current_document
