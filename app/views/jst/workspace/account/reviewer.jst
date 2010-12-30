@@ -3,36 +3,48 @@
 </td>
 
 <td class="name selectable_text">
-  <div class="display">
-    <span class="account_name">
-      <%= Inflector.truncate(account.fullName(true), 40) %>
-    </span>
-    <% if (!_.contains(dc.model.Account.COLLABORATOR_ROLES, account.get('role'))) { %>
-      <span class="edit_account icon edit_glyph_dark"></span>
-    <% } %>
-  </div>
-  <div class="edit">
-    <div class="name_wrapper">
-      <div class="text_input dark small">
-        <input name="first_name" id="reviewer_first_name" type="text" placeholder="First name" value="<%= account.get('first_name') %>" />
-      </div>
-      <div class="text_input dark small">
-        <input name="last_name" id="reviewer_last_name" type="text" placeholder="Last name" value="<%= account.get('last_name') %>" />
+  <% if (isReviewer) { %>
+    <div class="display">
+      <span class="account_name">
+        <%= Inflector.truncate(account.fullName(true), 40) %>
+      </span>
+    </div>
+    <div class="edit">
+      <div class="name_wrapper">
+        <div class="text_input dark small">
+          <input name="first_name" id="reviewer_first_name" type="text" placeholder="First name" value="<%= account.get('first_name') %>" />
+        </div>
+        <div class="text_input dark small">
+          <input name="last_name" id="reviewer_last_name" type="text" placeholder="Last name" value="<%= account.get('last_name') %>" />
+        </div>
       </div>
     </div>
-  </div>
+  <% } else { %>
+    <%= Inflector.truncate(account.fullName(true), 40) %>
+  <% } %>
 </td>
 
 <td class="email selectable_text">
-  <%= account.get('email') %>
+  <% if (isReviewer) { %>
+    <div class="display">
+      <%= account.get('email') %>
+    </div>
+    <div class="edit">
+      <div class="text_input dark small">
+        <input name="email" id="reviewer_email" type="text" placeholder="Email" value="<%= account.get('email') %>" />
+      </div>
+    </div>
+  <% } else { %>
+    <%= account.get('email') %>
+  <% } %>
 </td>
 
-<td class="nowrap">
+<td class="edit_column">
   <div class="display">
-    <span class="remove_reviewer text_link" data-account-id="<%= account.id %>">revoke access</span>
+    <span class="edit_account icon edit_glyph_dark"></span>
   </div>
   <div class="edit">
-    <div class="minibutton default save_changes">Save</div>
+    <div class="cancel_changes icon cancel_search_dark"></div>
   </div>
 </td>
 
@@ -45,6 +57,13 @@
     <% } %>
   </div>
   <div class="edit">
-    <div class="text_link cancel_changes">cancel</div>
+    <div class="minibutton default save_changes">
+      <% if (isReviewer) { %>
+        Save
+      <% } else { %>
+        OK
+      <% } %>
+    </div>
+    <div class="minibutton warn remove_reviewer" data-account-id="<%= account.id %>">Revoke</div>
   </div>
 </td>

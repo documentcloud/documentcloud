@@ -118,6 +118,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       model : account, 
       kind : 'reviewer'
     })).render('display', {
+      isReviewer     : !_.contains(dc.model.Account.COLLABORATOR_ROLES, account.get('role')),
       documentCount  : this.accountDocumentCounts[account.id],
       documentsCount : this.docs.length
     });
@@ -130,6 +131,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   
   _rerenderReviewer : function(account) {
     this.renderedAccounts[account.id].render('display', {
+      isReviewer     : !_.contains(dc.model.Account.COLLABORATOR_ROLES, account.get('role')),
       documentCount  : this.accountDocumentCounts[account.id],
       documentsCount : this.docs.length
     });

@@ -156,6 +156,21 @@
   #share_dialog td {
     white-space: normal;
   }
+  #share_dialog .edit_column {
+    width: 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+    #share_dialog .edit_account {
+      margin: 0;
+    }
+    #share_dialog .cancel_changes {
+      margin: 2px;
+    }
+    #share_dialog .save_changes,
+    #share_dialog .remove_reviewer {
+      float: left;
+    }
   #share_dialog .enter_email .minibutton {
     float: right;
   }

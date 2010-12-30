@@ -57,8 +57,13 @@ class ReviewersController < ApplicationController
   def update
     account   = current_organization.accounts.find(params[:id])
     is_owner  = current_account.id == account.id
+    resend    = account.email != params[:email]
     return forbidden unless account && (current_account.admin? || is_owner)
-    account.update_attributes pick(params, :first_name, :last_name) if account.role == Account::REVIEWER
+    account.update_attributes pick(params, :first_name, :last_name, :email) if account.role == Account::REVIEWER
+    if resend
+      document = Document.find(params[:document_id])
+      account.send_reviewer_instructions(document, current_account)
+    end
     json account
   end
   
