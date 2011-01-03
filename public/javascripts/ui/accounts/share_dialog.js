@@ -9,7 +9,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     'click .minibutton.add':                '_addReviewer',
     'click .remove_reviewer':               '_removeReviewer',
     'click .resend_reviewer':               '_resendInstructions',
-    'keypress input[name=reviewer_email]':  '_maybeAddReviewer'
+    'keypress .reviewer_management input[name=email]':           '_maybeAddReviewer'
   },
 
   constructor : function(options) {
@@ -33,6 +33,27 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     $(this.el).hide().empty();
     dc.ui.spinner.show();
     this._loadReviewers();
+  },
+
+  render : function() {
+    dc.ui.Dialog.prototype.render.call(this);
+    this._container = this.$('.custom');
+    this._container.setMode('not', 'draggable');
+    this.addControl(this.make('div', {
+      'class': 'minibutton dark add_reviewer', 
+      style : 'width: 90px;'
+    }, 'Add Reviewer'));
+    this.$('.custom').html(JST['account/share_dialog']({
+      'defaultAvatar' : dc.model.Account.prototype.DEFAULT_AVATAR,
+      'docCount': this.docs.length
+    }));
+    this.list = this.$('.account_list_content');
+    $(document.body).addClass('overlay');
+    this.center();  
+    $(this.el).show();
+    dc.ui.spinner.hide();
+    this._setPlaceholders();
+    return this;
   },
   
   _loadReviewers : function() {
@@ -70,32 +91,10 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       this.$('.document_reviewers_empty').toggle(!_.keys(this.renderedAccounts).length);
     }
   },
-
-  render : function() {
-    dc.ui.Dialog.prototype.render.call(this);
-    this._container = this.$('.custom');
-    this._container.setMode('not', 'draggable');
-    this.addControl(this.make('div', {
-      'class': 'minibutton dark add_reviewer', 
-      style : 'width: 90px;'
-    }, 'Add Reviewer'));
-    this.$('.custom').html(JST['account/share_dialog']({
-      'defaultAvatar' : dc.model.Account.prototype.DEFAULT_AVATAR,
-      'docCount': this.docs.length
-    }));
-    this.list = this.$('.account_list_content');
-    $(document.body).addClass('overlay');
-    this.center();  
-    $(this.el).show();
-    dc.ui.spinner.hide();
-    this._setPlaceholders();
-    return this;
-  },
-  
   
   _setPlaceholders : function() {
     this.$('input[name=first_name], input[name=last_name]').placeholder();
-    this.$('input[name=reviewer_email]').placeholder();
+    this.$('input[name=email]').placeholder();
   },
   
   _countDocuments : function() {
@@ -116,7 +115,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     
     var view = (new dc.ui.AccountView({
       model : account, 
-      kind : 'reviewer'
+      kind : 'reviewer',
+      dialog: this
     })).render('display', {
       isReviewer     : !_.contains(dc.model.Account.COLLABORATOR_ROLES, account.get('role')),
       documentCount  : this.accountDocumentCounts[account.id],
@@ -149,7 +149,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.$('.reviewer_management').show();
     this.$('.add_reviewer').hide();
     $reviewers.attr('scrollTop', $reviewers.attr("scrollHeight")+100);
-    this.$('#reviewer_email').focus();
+    this.$('.reviewer_management input[name=email]').focus();
     this.$('.document_reviewers_empty').hide();
   },
   
@@ -158,7 +158,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   _addReviewer : function() {
-    var email = this.$('#reviewer_email').val();
+    var email = this.$('.reviewer_management input[name=email]').val();
     if (!email) return this._showManagementError('Please enter an email address.');
     this.showSpinner();
     $.ajax({
@@ -166,8 +166,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       type : 'POST',
       data : {
         email : email,
-        first_name : this.$('input[name=first_name]').val(),
-        last_name : this.$('input[name=last_name]').val(),
+        first_name : this.$('.reviewer_management input[name=first_name]').val(),
+        last_name : this.$('.reviewer_management input[name=last_name]').val(),
         documents : this.docs.map(function(doc) { return doc.id; })
       },
       success: _.bind(function(resp) {

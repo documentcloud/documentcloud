@@ -155,6 +155,11 @@
   }
   #share_dialog td {
     white-space: normal;
+    height: 46px;
+    vertical-align: middle;
+  }
+  #share_dialog .text_input {
+    width: auto;
   }
   #share_dialog .edit_column {
     width: 16px;
@@ -171,13 +176,19 @@
     #share_dialog .remove_reviewer {
       float: left;
     }
-  #share_dialog .enter_email .minibutton {
-    float: right;
+  #share_dialog .enter_email {
+    width: 130px;
   }
-  #share_dialog .enter_email_label,
-  #share_dialog .enter_full_name_label {
-    font-size: 12px;
-  }
+    #share_dialog .enter_email .minibutton {
+      float: right;
+    }
+    #share_dialog .enter_email_label,
+    #share_dialog .enter_full_name_label {
+      font-size: 12px;
+    }
+    #share_dialog .enter_email input[name=email] {
+      width: 130px;
+    }
   #share_dialog .nowrap {
     white-space: nowrap;
   }

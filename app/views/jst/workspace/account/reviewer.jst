@@ -31,7 +31,7 @@
     </div>
     <div class="edit">
       <div class="text_input dark small">
-        <input name="email" id="reviewer_email" type="text" placeholder="Email" value="<%= account.get('email') %>" />
+        <input name="email" type="text" placeholder="Email" value="<%= account.get('email') %>" />
       </div>
     </div>
   <% } else { %>
@@ -57,13 +57,11 @@
     <% } %>
   </div>
   <div class="edit">
-    <div class="minibutton default save_changes">
-      <% if (isReviewer) { %>
+    <% if (isReviewer) { %>
+      <div class="minibutton default save_changes">
         Save
-      <% } else { %>
-        OK
-      <% } %>
-    </div>
+      </div>
+    <% } %>
     <div class="minibutton warn remove_reviewer" data-account-id="<%= account.id %>">Revoke</div>
   </div>
 </td>
