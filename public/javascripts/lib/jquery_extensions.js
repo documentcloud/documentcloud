@@ -281,6 +281,7 @@
         var el = $(this);
         var message = el.attr('placeholder');
         var placeholder = $('<div class="placeholder">' + message + '</div>');
+        el.siblings('.placeholder').remove();
         placeholder.hide().prependTo(el[0].parentNode);
         el.bind('blur', function(){
           if (el.val() == '' && el.is(':visible')) placeholder.show();

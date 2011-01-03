@@ -6,6 +6,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   events : {
     'click .ok':                            'close',
     'click .add_reviewer':                  '_showEnterEmail',
+    'click .cancel_add':                    '_cancelAddReviewer',
     'click .minibutton.add':                '_addReviewer',
     'click .remove_reviewer':               '_removeReviewer',
     'click .resend_reviewer':               '_resendInstructions',
@@ -13,7 +14,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function(options) {
-    _.bindAll(this, '_loadReviewer');
+    _.bindAll(this, '_loadReviewer', '_cancelAddReviewer', '_onAddSuccess', '_onAddError');
     var title = options.docs.length == 1 ?
                 'Sharing "' + options.docs[0].get('title') + '"' :
                 'Sharing ' + options.docs.length + ' Documents';
@@ -153,13 +154,20 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.$('.document_reviewers_empty').hide();
   },
   
+  _cancelAddReviewer : function() {
+    this.$('.add_reviewer').show();
+    this.$('.reviewer_management').hide();
+    this.$('.reviewer_management input').val('');
+    this.$('.document_reviewers_empty').toggle(!_.keys(this.renderedAccounts).length);
+  },
+  
   _maybeAddReviewer : function(e) {
     if (e.keyCode == 13) this._addReviewer();
   },
   
   _addReviewer : function() {
     var email = this.$('.reviewer_management input[name=email]').val();
-    if (!email) return this._showManagementError('Please enter an email address.');
+    if (!email) return this.error('Please enter an email address.');
     this.showSpinner();
     $.ajax({
       url : '/documents/reviewers/add',
@@ -170,41 +178,41 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         last_name : this.$('.reviewer_management input[name=last_name]').val(),
         documents : this.docs.map(function(doc) { return doc.id; })
       },
-      success: _.bind(function(resp) {
-        _.each(resp.documents, function(doc) {
-          Documents.get(doc.id).set(doc);
-        });
-        var account = new dc.model.Account(resp.account);
-        this.docs.each(_.bind(function(doc) {
-          if (!_.contains(doc.reviewers.map(function(r) { return r.id; }), account.id)) {
-            doc.reviewers.add(account);
-          }
-        }, this));
-        dc.ui.notifier.show({
-          text      : 'Document review instructions sent to ' + resp.account['email'],
-          duration  : 5000,
-          mode      : 'info'
-        });
-        this._loadReviewers();
-      }, this),
-      error : _.bind(function(resp) {
-        resp = JSON.parse(resp.responseText);
-        if (_.any(resp.errors, function(error) {
-          error = error.toLowerCase();
-          return error.indexOf("first name") != -1 || error.indexOf("last name") != -1;
-        })) {
-          this._showReviewerNameInputs();
-          this._showManagementError("Please enter in the full name for this reviewer.");
-        } else {
-          this._showManagementError(resp.errors[0]);
-        }
-        this.hideSpinner();
-      }, this)
+      success: this._onAddSuccess,
+      error : this._onAddError
     });
   },
   
-  _showManagementError : function(error) {
-    this.$('.reviewer_management .last').text(error);
+  _onAddSuccess : function(resp) {
+    _.each(resp.documents, function(doc) {
+      Documents.get(doc.id).set(doc);
+    });
+    var account = new dc.model.Account(resp.account);
+    this.docs.each(_.bind(function(doc) {
+      if (!_.contains(doc.reviewers.map(function(r) { return r.id; }), account.id)) {
+        doc.reviewers.add(account);
+      }
+    }, this));
+    dc.ui.notifier.show({
+      text      : 'Document review instructions sent to ' + resp.account['email'],
+      duration  : 5000,
+      mode      : 'info'
+    });
+    this._loadReviewers();
+  },
+  
+  _onAddError : function(resp) {
+    resp = JSON.parse(resp.responseText);
+    if (_.any(resp.errors, function(error) {
+      error = error.toLowerCase();
+      return error.indexOf("first name") != -1 || error.indexOf("last name") != -1;
+    })) {
+      this._showReviewerNameInputs();
+      this.error("Please enter in the full name for this reviewer.");
+    } else {
+      this.error(resp.errors[0]);
+    }
+    this.hideSpinner();
   },
   
   _showReviewerNameInputs : function() {
@@ -249,7 +257,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       }, this),
       error : _.bind(function(resp) {
         this.hideSpinner();
-        this._showManagementError('There was a problem removing the reviewer.');
+        this.error('There was a problem removing the reviewer.');
       }, this)
     });
   },
@@ -281,7 +289,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       }, this),
       error : _.bind(function(resp) {
         this.hideSpinner();
-        this._showManagementError('There was a problem resending instructions.');
+        this.error('There was a problem resending instructions.');
       }, this)
     });
     
