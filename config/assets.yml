@@ -38,6 +38,8 @@ stylesheets:
   static:
     - public/stylesheets/common/reset.css
     - public/stylesheets/pages/static.css
+  home:
+
   viewer_editing:
     - public/stylesheets/pages/viewer_editing.css
   ie_only:
