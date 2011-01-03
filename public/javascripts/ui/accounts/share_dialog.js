@@ -14,7 +14,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function(options) {
-    _.bindAll(this, '_loadReviewer', '_cancelAddReviewer', '_onAddSuccess', '_onAddError');
+    _.bindAll(this, '_loadReviewer', '_cancelAddReviewer', '_onAddSuccess', '_onAddError',
+              '_onRemoveSuccess', '_onRemoveError');
     var title = options.docs.length == 1 ?
                 'Sharing "' + options.docs[0].get('title') + '"' :
                 'Sharing ' + options.docs.length + ' Documents';
@@ -240,26 +241,32 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         documents : documentIds
       },
       success: _.bind(function(resp) {
-        _.each(resp, function(doc) {
-          Documents.get(doc.id).set(doc);
-        });
-        this.docs.each(_.bind(function(doc) {
-          if (_.contains(documentIds, doc.id)) {
-            doc.reviewers.remove(account);
-          }
-        }, this));
-        dc.ui.notifier.show({
-          text      : account.get('email') + ' is no longer a reviewer on ' + documentIds.length + Inflector.pluralize(' document', documentIds.length),
-          duration  : 5000,
-          mode      : 'info'
-        });
-        this._loadReviewers();
+        this._onRemoveSuccess(resp, documentIds, account);
       }, this),
-      error : _.bind(function(resp) {
-        this.hideSpinner();
-        this.error('There was a problem removing the reviewer.');
-      }, this)
+      error : this._onRemoveError
     });
+  },
+  
+  _onRemoveSuccess : function(resp, documentIds, account) {
+    _.each(resp, function(doc) {
+      Documents.get(doc.id).set(doc);
+    });
+    this.docs.each(_.bind(function(doc) {
+      if (_.contains(documentIds, doc.id)) {
+        doc.reviewers.remove(account);
+      }
+    }, this));
+    dc.ui.notifier.show({
+      text      : account.get('email') + ' is no longer a reviewer on ' + documentIds.length + Inflector.pluralize(' document', documentIds.length),
+      duration  : 5000,
+      mode      : 'info'
+    });
+    this._loadReviewers();
+  },
+  
+  _onRemoveError : function(resp) {
+    this.hideSpinner();
+    this.error('There was a problem removing the reviewer.');
   },
   
   _resendInstructions : function(e) {

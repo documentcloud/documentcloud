@@ -176,17 +176,13 @@
     #share_dialog .remove_reviewer {
       float: left;
     }
-  #share_dialog .enter_email {
+  #share_dialog .email {
     width: 130px;
   }
-    #share_dialog .enter_email .minibutton {
+    #share_dialog .email .minibutton {
       float: right;
     }
-    #share_dialog .enter_email_label,
-    #share_dialog .enter_full_name_label {
-      font-size: 12px;
-    }
-    #share_dialog .enter_email input[name=email] {
+    #share_dialog .email input[name=email] {
       width: 130px;
     }
   #share_dialog .nowrap {
