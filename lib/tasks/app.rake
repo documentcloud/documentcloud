@@ -40,6 +40,11 @@ namespace :app do
   task :publish, :needs => :environment do
     Document.publish_due_documents
   end
+  
+  desc "Clears out cached document JS files."
+  task :clearcache do
+    sh "rm ./public/documents/*.js"
+  end
 
 end
 
