@@ -172,11 +172,30 @@ class Document < ActiveRecord::Base
     }.to_json}).body)
   end
 
-  # Retrieve a random document.
-  def self.random
-    uncached do
-      first(:order => 'random()')
+  # Efficiently retrieve a random document (or documents). We do this by
+  # throwing darts at random numeric ids in between 1 and the current max id,
+  # until we have enough documents.
+  def self.random(opts={})
+    docs              = []
+    seen_ids          = {}
+    real_limit        = opts[:limit] || 1
+    opts[:limit]      = real_limit * 3
+    opts[:conditions] ||= {}
+    max_id_query      = "select id from documents order by id desc limit 1"
+    last_id           = Document.connection.select_value(max_id_query).to_i
+    while docs.length < real_limit do
+      uncached do
+        opts[:conditions].merge!(:id => (0...opts[:limit]).map {|i| rand(last_id) })
+        rows = Document.all(opts)
+        rows.each do |row|
+          break if docs.length >= real_limit
+          next  if seen_ids[row.id]
+          docs.push row
+          seen_ids[row.id] = true
+        end
+      end
     end
+    docs
   end
 
   # Publish all documents with a `publish_at` timestamp that is past due.
