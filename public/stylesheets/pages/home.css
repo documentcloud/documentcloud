@@ -11,7 +11,7 @@ Link Under: #66a6ff
 */
 
 body {
-  background: #fff url(/images/embed/home/sky_bg.png) repeat-x 0 60px;
+  background: #fff url(/images/embed/home/stripes.png);
   font: 15px/1.5em Helvetica, Arial, sans-serif;
   color: #232323;
 }
@@ -26,10 +26,6 @@ body {
 
 a, a:visited {
   color: inherit;
-  background: #cce1ff;
-  padding: 0 2px;
-  text-decoration: none;
-  border-bottom: 1px solid #66a6ff;
 }
   a:hover, a:active {
     color: #282d66;
@@ -56,8 +52,7 @@ h2 {
   margin: 0 auto;
   text-align: center;
   font-style: italic;
-  font-size: 15px;
-  line-height: 1.3em;
+  font-size: 16px;
   color: #445056;
 }
   h2 b {
@@ -67,13 +62,21 @@ h3 {
   font-weight: 300;
   font-size: 20px;
   display: inline-block;
-  margin: 13px 10px 15px 0;
+  margin: 15px 10px 15px 0;
 }
 h4 {
   font-style: italic;
   font-size: 15px;
   color: #445056;
   display: inline;
+}
+
+#sky {
+  position: absolute;
+  top: 60px; left: 0; right: 0;
+  height: 350px;
+  background: transparent url(/images/embed/home/sky_bg.png) repeat-x 0 0;
+  z-index: 3;
 }
 
 #toolbar {
@@ -124,6 +127,7 @@ h4 {
   top: 60px;
   left: 50%;
   margin-left: -347px;
+  z-index: 5;
 }
 
 #container {
@@ -141,13 +145,46 @@ h4 {
     margin: 30px auto;
   }
   #content {
-    margin-top: 50px;
+    padding-bottom: 50px;
   }
     #content .graf {
       position: relative;
       padding-left: 60px;
-      margin: 30px 0;
+      margin: 25px 0 15px;
     }
+      #content .graf.section {
+        margin-top: 50px;
+      }
+      #content .graf b {
+        font-weight: normal;
+      }
+    #content .photo {
+      position: relative;
+      display: inline-block;
+      padding: 12px 12px 42px;
+      margin-left: 55px;
+      border: 1px solid #bbb;
+      background: #f9f9fb;
+      box-shadow: 1px 2px 7px #ccc; -webkit-box-shadow: 1px 2px 7px #ccc; -moz-box-shadow: 1px 2px 7px #ccc;
+    }
+      #content .photo img {
+        margin: 0 auto;
+        background: #fff;
+        box-shadow: inset 0px 0px 3px #ccc; -webkit-box-shadow: inset 0px 0px 3px #ccc; -moz-box-shadow: inset 0px 0px 3px #ccc;
+        padding: 15px;
+        border: 1px solid #bbb;
+      }
+        #content .photo.bleed img {
+          padding: 0;
+        }
+      #content .photo .caption {
+        position: absolute;
+        left: 0; right: 0; bottom: 15px;
+        text-align: center;
+        font-size: 13px;
+        font-style: italic;
+        color: #445056;
+      }
 
 .number {
   display: block;
