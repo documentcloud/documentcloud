@@ -14,8 +14,21 @@
   <% end %>
 </head>
 <body class="<%= @bodyclass %>">
-
+  
+  <div id="toolbar">
+    <div id="innerbar">
+      <div id="logo"></div>
+      <ul id="toolmenu" class="sans">
+        <li>What is it?</li>
+        <li>Open Source</li>
+        <li>Search</li>
+        <li>User Guide</li>
+        <li>Contact Us</li>
+      </ul>
+    </div>
+  </div>
+        
   <%= yield %>
-
+    
 </body>
 </html>

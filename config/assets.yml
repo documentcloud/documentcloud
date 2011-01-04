@@ -39,6 +39,7 @@ stylesheets:
     - public/stylesheets/common/reset.css
     - public/stylesheets/pages/static.css
   home:
+    - public/stylesheets/pages/home.css
 
   viewer_editing:
     - public/stylesheets/pages/viewer_editing.css
