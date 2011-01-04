@@ -124,6 +124,7 @@ h4 {
   position: absolute;
   top: 310px; right: 15px;
   background: url(/images/embed/home/knight.png);
+  z-index: 5;
 }
 #document_stack {
   position: absolute;
