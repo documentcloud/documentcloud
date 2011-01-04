@@ -2,6 +2,7 @@
 Colors:
 
 Text Black: #232323
+Link Blue:  #282d66
 */
 
 body {
@@ -15,6 +16,16 @@ body {
 }
 .serif {
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+}
+
+
+h1 {
+  font-weight: 300;
+  font-size: 27px;
+}
+h2 {
+  font-weight: 400;
+  font-size: 16px;
 }
 
 #toolbar {
@@ -65,16 +76,32 @@ body {
     position: absolute;
     top: 60px;
     left: 50%;
-    margin-left: -353px;
+    margin-left: -347px;
   }
   #tagline {
-    font-weight: 300;
     text-align: center;
-    font-size: 27px;
+  }
+  #search_box_wrapper {
+    width: 542px;
+    margin: 25px auto;
   }
   #content {
     margin-top: 50px;
   }
-    #content p {
+    #content .graf {
       margin: 20px 0;
     }
+
+.number {
+  display: block;
+  float: left;
+  margin: 0 10px 10px 0;
+  width: 46px; height: 46px;
+  background: url(/images/embed/home/numbers.png);
+}
+  .number.two {
+    background-position: 0 -50px;
+  }
+  .number.three {
+    background-position: 0 -100px;
+  }

@@ -9,26 +9,27 @@
     <script src="/javascripts/vendor/jquery-1.4.2.js" type="text/javascript"></script>
     <script src="/javascripts/lib/debug.js" type="text/javascript"></script>
   <% end %>
+  <%= include_javascripts :core, :home %>
   <% if Rails.env.production? %>
     <%= render :partial => 'common/google' %>
   <% end %>
 </head>
 <body class="<%= @bodyclass %>">
-  
+
   <div id="toolbar">
     <div id="innerbar">
       <div id="logo"></div>
       <ul id="toolmenu" class="sans">
-        <li>What is it?</li>
-        <li>Open Source</li>
+        <li>The Details</li>
         <li>Search</li>
+        <li>Open Source</li>
         <li>User Guide</li>
         <li>Contact Us</li>
       </ul>
     </div>
   </div>
-        
+
   <%= yield %>
-    
+
 </body>
 </html>

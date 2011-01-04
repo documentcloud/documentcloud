@@ -23,6 +23,8 @@ javascripts:
     - app/views/admin/*.jst
   ie_only:
     - public/javascripts/ie/*.js
+  home:
+    - public/javascripts/home/*.js
 
 stylesheets:
   ui:
