@@ -14,6 +14,7 @@ $(function() {
 
     initialize : function() {
       this.box = $('#search_box');
+      this.box.placeholder();
     },
 
     search : function() {

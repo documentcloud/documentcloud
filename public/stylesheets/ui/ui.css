@@ -118,8 +118,9 @@ div.text_input {
   div.text_input .placeholder {
     position: absolute;
     cursor: text;
-    left: 6px; top: 5px;
-    color: #777;
+    left: 6px; top: 4px;
+    color: #a9a9a9;
+    font-size: 90%;
   }
   div.text_input input {
     display: block;
