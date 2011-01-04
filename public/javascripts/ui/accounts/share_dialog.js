@@ -4,25 +4,27 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   className             : 'account_list dialog',
   
   events : {
-    'click .ok':                            'close',
-    'click .add_reviewer':                  '_showEnterEmail',
-    'click .cancel_add':                    '_cancelAddReviewer',
-    'click .minibutton.add':                '_addReviewer',
-    'click .remove_reviewer':               '_removeReviewer',
-    'click .resend_reviewer':               '_resendInstructions',
-    'keypress .reviewer_management input[name=email]':           '_maybeAddReviewer'
+    'click .close':                                    'close',
+    'click .next':                                     'nextStep',
+    'click .previous':                                 'previousStep',
+    'click .add_reviewer':                             '_showEnterEmail',
+    'click .cancel_add':                               '_cancelAddReviewer',
+    'click .minibutton.add':                           '_addReviewer',
+    'click .remove_reviewer':                          '_removeReviewer',
+    'click .resend_reviewer':                          '_resendInstructions',
+    'keypress .reviewer_management input[name=email]': '_maybeAddReviewer'
   },
+  
+  STEP_TITLES : [
+    "Step One: ",
+    "Step Two: Send emails to reviewers"
+  ],
 
   constructor : function(options) {
     _.bindAll(this, '_loadReviewer', '_cancelAddReviewer', '_onAddSuccess', '_onAddError',
               '_onRemoveSuccess', '_onRemoveError');
-    var title = options.docs.length == 1 ?
-                'Sharing "' + options.docs[0].get('title') + '"' :
-                'Sharing ' + options.docs.length + ' Documents';
     dc.ui.Dialog.call(this, {
-      mode          : 'custom',
-      title         : dc.account.organization.name,
-      information   : 'Sharing ' + options.docs.length + Inflector.pluralize(' Document', options.docs.length)
+      mode : 'custom'
     });
     this.docs = new dc.model.DocumentSet(options.docs);
     this.docs.each(function(doc) {
@@ -31,6 +33,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.docsUnfetched    = this.docs.length;
     this.renderedAccounts = {};
     this._boundRender     = [];
+    this.currentStep      = 1;
 
     $(this.el).hide().empty();
     dc.ui.spinner.show();
@@ -39,22 +42,22 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   render : function() {
     dc.ui.Dialog.prototype.render.call(this);
+    this.setMode('share', 'dialog');
     this._container = this.$('.custom');
     this._container.setMode('not', 'draggable');
-    this.addControl(this.make('div', {
-      'class': 'minibutton dark add_reviewer', 
-      style : 'width: 90px;'
-    }, 'Add Reviewer'));
-    this.$('.custom').html(JST['account/share_dialog']({
+    this._container.html(JST['account/share_dialog']({
       'defaultAvatar' : dc.model.Account.prototype.DEFAULT_AVATAR,
       'docCount': this.docs.length
     }));
+    this._next      = this.$('.next');
+    this._previous  = this.$('.previous');
     this.list = this.$('.account_list_content');
     $(document.body).addClass('overlay');
     this.center();  
     $(this.el).show();
     dc.ui.spinner.hide();
     this._setPlaceholders();
+    this.setStep();
     return this;
   },
   
@@ -149,14 +152,14 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _showEnterEmail : function() {
     var $reviewers = this.$('.document_reviewers');
     this.$('.reviewer_management').show();
-    this.$('.add_reviewer').hide();
+    this.$('.add_reviewer').setMode('on', 'editing');
     $reviewers.attr('scrollTop', $reviewers.attr("scrollHeight")+100);
     this.$('.reviewer_management input[name=email]').focus();
     this.$('.document_reviewers_empty').hide();
   },
   
   _cancelAddReviewer : function() {
-    this.$('.add_reviewer').show();
+    this.$('.add_reviewer').setMode('off', 'editing');
     this.$('.reviewer_management').hide();
     this.$('.reviewer_management input').val('');
     this.$('.document_reviewers_empty').toggle(!_.keys(this.renderedAccounts).length);
@@ -284,14 +287,21 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       type : 'POST',
       data : {
         account_id : accountId,
-        documents : documentIds
+        documents  : documentIds
       },
       success: _.bind(function(resp) {
         this.hideSpinner();
+        var text = [
+          account.get('email'),
+          ' has been resent reviewing instructions for ',
+          documentIds.length,
+          Inflector.pluralize(' document', documentIds.length),
+          '.'
+        ].join('');
         dc.ui.notifier.show({
-          text      : account.get('email') + ' has been resent reviewing instructions for ' + documentIds.length + Inflector.pluralize(' document', documentIds.length) + '.',
-          duration  : 5000,
-          mode      : 'info'
+          text     : text,
+          duration : 5000,
+          mode     : 'info'
         });
       }, this),
       error : _.bind(function(resp) {
@@ -306,6 +316,37 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     dc.ui.notifier.hide();
     $(this.el).hide();
     $(document.body).removeClass('overlay');
+  },
+  
+  setStep : function() {
+    var title = this.displayTitle();
+    this.title(title);
+    var last = this.currentStep == this.STEP_TITLES.length;
+
+    this._next.html(last ? 'Finish' : 'Next &raquo;');
+    this.setMode('p'+this.currentStep, 'step');
+  },
+  
+  displayTitle : function() {
+    var title = '';
+    
+    if (this.currentStep == 1) {
+      title = this.docs.length == 1 ?
+              'Sharing "' + Inflector.truncate(this.docs.first().get('title'), 30) + '"' :
+              'Sharing ' + this.docs.length + ' Documents';
+    }
+    return this.STEP_TITLES[this.currentStep-1] + title;
+  },
+  
+  nextStep : function() {
+    if (this.currentStep >= this.STEP_TITLES.length) return this.close();
+    this.currentStep += 1;
+    this.setStep();
+  },
+
+  previousStep : function() {
+    if (this.currentStep > 1) this.currentStep -= 1;
+    this.setStep();
   }
 
 });

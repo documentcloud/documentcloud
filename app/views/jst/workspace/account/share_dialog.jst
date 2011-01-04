@@ -2,7 +2,7 @@
   <p>There are no reviewers on <% if (docCount == 1) { %>this document<% } else { %>these documents<% }%>.</p>
 </div>
 
-<div class="document_reviewers not_draggable">
+<div class="step_one document_reviewers not_draggable">
   <table border="0" cellspacing="0" cellpadding="0" class="account_list">
     <tbody>
       
@@ -39,4 +39,15 @@
       
     </tbody>
   </table>
+</div>
+
+<div class="step_two">
+  Emails
+</div>
+
+<div class="step_controls">
+  <div class="minibutton next default">Next <span class="text_arrow">&raquo;</span></div>
+  <div class="minibutton previous dark"><span class="text_arrow">&laquo;</span> Back</div>
+  <div class="minibutton close dark">Close</div>
+  <div class="minibutton add_reviewer dark" style="width: 90px;">Add Reviewer</div>
 </div>

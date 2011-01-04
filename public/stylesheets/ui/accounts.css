@@ -140,132 +140,160 @@
   }
 
 /*--------------------------- Share Documents Dialog ----------------------------*/
-#share_dialog {
+.share_dialog {
   width: 640px;
 }
-  #share_dialog .document_reviewers {
+  .share_dialog .custom {
+    max-height: none;
+    margin-bottom: 0;
+  }
+  .share_dialog .controls {
+    display: none;
+  }
+  .share_dialog .document_reviewers {
     margin: 0;
     text-align: left;
     max-height: 280px;
     overflow-x: hidden;
     overflow-y: auto;
   }
-  #share_dialog .reviewers {
+  .share_dialog .reviewers {
     position: relative;
   }
-  #share_dialog td {
+  .share_dialog td {
     white-space: normal;
     height: 46px;
     vertical-align: middle;
   }
-  #share_dialog .text_input {
+  .share_dialog .text_input {
     width: auto;
   }
-  #share_dialog .edit_column {
+  .share_dialog .edit_column {
     width: 16px;
     padding-left: 0;
     padding-right: 0;
   }
-    #share_dialog .edit_account {
+    .share_dialog .edit_account {
       margin: 0;
     }
-    #share_dialog .cancel_changes {
+    .share_dialog .cancel_changes {
       margin: 2px;
     }
-    #share_dialog .save_changes,
-    #share_dialog .remove_reviewer {
+    .share_dialog .save_changes,
+    .share_dialog .remove_reviewer {
       float: left;
     }
-  #share_dialog .email {
+  .share_dialog .email {
     width: 130px;
   }
-    #share_dialog .email .minibutton {
+    .share_dialog .email .minibutton {
       float: right;
     }
-    #share_dialog .email input[name=email] {
+    .share_dialog .email input[name=email] {
       width: 130px;
     }
-  #share_dialog .nowrap {
+  .share_dialog .nowrap {
     white-space: nowrap;
   }
-  #share_dialog .name {}
-    #share_dialog .name input {
+  .share_dialog .name {}
+    .share_dialog .name input {
       width: 66px;
     }
-    #share_dialog .name_wrapper,
-    #share_dialog .name {
+    .share_dialog .name_wrapper,
+    .share_dialog .name {
       width: 164px;
       min-width: 164px; /* Table cells in FF */
     }
-    #share_dialog .name_wrapper .text_input {
+    .share_dialog .name_wrapper .text_input {
       width: 66px;
     }
-    #share_dialog .name .edit_account {
+    .share_dialog .name .edit_account {
       margin: 4px 4px 0 8px;
     }
-    #share_dialog .name .account_name {
+    .share_dialog .name .account_name {
       float: left;
     }
-  #share_dialog .reviewers_title {
+  .share_dialog .reviewers_title {
     font-size: 15px;
     margin: 0 0 0 42px;
   }
-  #share_dialog .reviewers_document_image {
+  .share_dialog .reviewers_document_image {
     line-height: 0;
     position: absolute;
     left: 0;
     top: 0;
   }
-    #share_dialog .reviewers_document_image img {
+    .share_dialog .reviewers_document_image img {
       width: 30px;
       height: 37px;
       border: 1px solid #303030;
       margin: 0 6px 0 0;
     }
-  #share_dialog .reviewer_list {
+  .share_dialog .reviewer_list {
     margin: 4px 15px 30px 42px;
     width: auto;
   }
-    #share_dialog .reviewers_empty {
+    .share_dialog .reviewers_empty {
       font-size: 12px;
       color: #A0A0A0;
     }
-    #share_dialog .account_view {
+    .share_dialog .account_view {
       padding: 10px 0;
       height: 27px;
       font: 11px/27px Helvetica, Arial;
       border-bottom: 1px solid #222;
     }
-  #share_dialog .reviewer_management {
+  .share_dialog .reviewer_management {
     text-align: left;
     margin-top: 10px;
     display: none;
   }
-  #share_dialog .controls {
-    margin-top: 0;
-  }
-  #share_dialog .reviewers_common .reviewers_title {
+  .share_dialog .reviewers_common .reviewers_title {
     margin-left: 0;
   }
-  #share_dialog .reviewers_common .reviewer_list {
+  .share_dialog .reviewers_common .reviewer_list {
     margin-left: 0;
   }
-  #share_dialog .enter_full_name_label,
-  #share_dialog .reviewer_management input[name=first_name],
-  #share_dialog .reviewer_management input[name=last_name] {
+  .share_dialog .enter_full_name_label,
+  .share_dialog .reviewer_management input[name=first_name],
+  .share_dialog .reviewer_management input[name=last_name] {
     display: none;
   }
-  #share_dialog .reviewer_management .last {
+  .share_dialog .reviewer_management .last {
     line-height: 12px;
     font-size: 10px;
     white-space: normal;
     padding: 10px;
     color: #FF0000;
   }
-  #share_dialog .document_reviewers_empty {
+  .share_dialog .document_reviewers_empty {
     overflow: hidden;
     text-align: left;
     color: #909090;
     font-size: 12px;
     margin: 0 0 12px 0;
+  }
+  .share_dialog .add_reviewer.on_editing {
+    display: none;
+  }
+  .share_dialog .step_controls {
+    margin: 24px 0 0 0;
+  }
+    .share_dialog .step_controls .cancel {
+      float: left;
+    }
+    .share_dialog .step_controls .next,
+    .share_dialog .step_controls .close,
+    .share_dialog .step_controls .previous {
+      float: right;
+      margin-left: 8px;
+    }
+    .share_dialog.p1_step .step_controls .previous,
+    .share_dialog.p2_step .step_controls .close,
+    .share_dialog.p2_step .step_controls .add_reviewer {
+      display: none;
+    }
+  .share_dialog.p2_step .step_one,
+  .share_dialog.p1_step .step_two {
+    display: none;
   }
