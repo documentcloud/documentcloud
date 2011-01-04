@@ -12,7 +12,7 @@ Link Under: #66a6ff
 
 body {
   background: #fff url(/images/embed/home/stripes.png);
-  font: 15px/1.5em Helvetica, Arial, sans-serif;
+  font: 15px/22px Helvetica, Arial, sans-serif;
   color: #232323;
 }
 
@@ -35,9 +35,11 @@ a, a:visited {
     border: 0;
   }
 
-b {
-  background: #ffffcc;
-  padding: 0 2px 0;
+h1 b, h3 b {
+  background: #ffffb0;
+  padding: 1px 5px;
+  margin-right: -2px;
+  margin-left: -5px;
 }
 
 
@@ -52,7 +54,8 @@ h2 {
   margin: 0 auto;
   text-align: center;
   font-style: italic;
-  font-size: 16px;
+  font-size: 18px;
+  line-height: 24px;
   color: #445056;
 }
   h2 b {
@@ -66,7 +69,7 @@ h3 {
 }
 h4 {
   font-style: italic;
-  font-size: 15px;
+  font-size: 16px;
   color: #445056;
   display: inline;
 }
@@ -141,8 +144,8 @@ h4 {
   #tagline {
   }
   #search_box_wrapper {
-    width: 542px;
-    margin: 30px auto;
+    width: 587px;
+    margin: 30px auto 25px;
   }
   #content {
     padding-bottom: 50px;
