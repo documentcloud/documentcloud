@@ -27,7 +27,8 @@ dc.ui.AccountView = Backbone.View.extend({
     'click .save_changes':          '_doneEditing',
     'click .cancel_changes':        '_cancelEditing',
     'click .delete_account':        '_deleteAccount',
-    'click .login_as .minibutton':  '_loginAsAccount'
+    'click .login_as .minibutton':  '_loginAsAccount',
+    'click .reviewer_email_remove': '_remove_reviewer_email'
   },
 
   constructor : function(options) {
@@ -158,6 +159,10 @@ dc.ui.AccountView = Backbone.View.extend({
       this.model.destroy();
       return true;
     }, this));
+  },
+  
+  _remove_reviewer_email : function() {
+    this.model.set({needsEmail : false});
   },
 
   _loginAsAccount : function() {

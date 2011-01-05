@@ -323,16 +323,29 @@
         height: auto;
         font-size: 11px;
         line-height: 14px;
+        position: relative;
+        overflow: hidden;
       }
+        .share_dialog .reviewer_email .reviewer_email_remove {
+          position: absolute;
+          right: 0px;
+          top: 12px;
+          display: none;
+          cursor: pointer;
+        }
+        .share_dialog .reviewer_email:hover .reviewer_email_remove {
+          display: block;
+        }
         .share_dialog .reviewer_email .reviewer_email_image {
           float: left;
           margin: 0 8px 0 0;
+          line-height: 0;
         }
         .share_dialog .reviewer_email .reviewer_email_image img {
           top: 0;
         }
         .share_dialog .reviewer_email .reviewer_email_name {
-          margin: 0 0 4px 0;
+          margin: 1px 0 3px;
           font-weight: bold;
         }
         .share_dialog .reviewer_email .reviewer_email_email {

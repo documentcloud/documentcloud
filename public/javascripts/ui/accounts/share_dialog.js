@@ -4,15 +4,15 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   className             : 'account_list dialog',
   
   events : {
-    'click .close':                                    'close',
-    'click .next':                                     'nextStep',
-    'click .previous':                                 'previousStep',
-    'click .add_reviewer':                             '_showEnterEmail',
-    'click .cancel_add':                               '_cancelAddReviewer',
-    'click .minibutton.add':                           '_submitAddReviewer',
-    'click .remove_reviewer':                          '_removeReviewer',
-    'click .resend_reviewer':                          '_resendInstructions',
-    'keypress .reviewer_management input[name=email]': '_maybeAddReviewer'
+    'click .close':                        'close',
+    'click .next':                         'nextStep',
+    'click .previous':                     'previousStep',
+    'click .add_reviewer':                 '_showEnterEmail',
+    'click .cancel_add':                   '_cancelAddReviewer',
+    'click .minibutton.add':               '_submitAddReviewer',
+    'click .remove_reviewer':              '_removeReviewer',
+    'click .resend_reviewer':              '_resendInstructions',
+    'keypress .reviewer_management_email': '_maybeAddReviewer'
   },
   
   STEP_TITLES : [
@@ -20,12 +20,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     "Step Two: Send emails to reviewers"
   ],
 
-  constructor : function(options) {
+  initialize : function(options) {
     _.bindAll(this, '_loadReviewer', '_cancelAddReviewer', '_onAddSuccess', '_onAddError',
               '_onRemoveSuccess', '_onRemoveError', '_showEnterEmail', 'nextStep');
-    dc.ui.Dialog.call(this, {
-      mode : 'custom'
-    });
     this.docs = new dc.model.DocumentSet(options.docs);
     this.docs.each(function(doc) {
       doc.collection = Documents;
@@ -53,7 +50,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this._next     = this.$('.next');
     this._previous = this.$('.previous');
     $(document.body).addClass('overlay');
-    this.center();  
     $(this.el).show();
     dc.ui.spinner.hide();
     this._setPlaceholders();
@@ -86,7 +82,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _loadReviewer : function() {
     this.docsUnfetched -= 1;
     if (this.docsUnfetched <= 0) {
-      this.render();
+      this.render(true);
       var views = [];
       // this.commonReviewers = Documents.sharedReviewers(this.docs);
       this._countDocuments();
@@ -101,6 +97,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       this.$('.account_list tr:not(.reviewer_management)').remove();
       this.$('.account_list').prepend(views);
       this.$('.document_reviewers_empty').toggle(!_.keys(this.renderedAccounts).length);
+      this.center();
     }
   },
   
@@ -125,15 +122,20 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _renderReviewer : function(account) {    
     if (account.id in this.renderedAccounts) return;
     
-    var view = (new dc.ui.AccountView({
+    var view = new dc.ui.AccountView({
       model : account, 
       kind : 'reviewer',
       dialog: this
-    })).render('display', {
+    });
+    
+    view.render('display', {
       isReviewer     : !_.contains(dc.model.Account.COLLABORATOR_ROLES, account.get('role')),
       documentCount  : this.accountDocumentCounts[account.id],
       documentsCount : this.docs.length
     });
+    
+    account.bind('change:needsEmail', _.bind(this._showReviewersToEmail, this));
+    account.bind('change:needsEmail', _.bind(this._enabledNextButton, this));
     
     this.renderedAccounts[account.id] = view;
     this._observeReviewer(account, view);
@@ -164,12 +166,16 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     if (this.showingManagement) return this._submitAddReviewer(this._showEnterEmail);
     
     this.showingManagement = true;
-    var $reviewers = this.$('.document_reviewers');
     this.$('.reviewer_management').show();
+    this.$('.document_reviewers_empty').hide();
+    this._focusEmail();
+    this._enabledNextButton();
+  },
+  
+  _focusEmail : function() {
+    var $reviewers = this.$('.document_reviewers');
     $reviewers.attr('scrollTop', $reviewers.attr("scrollHeight")+100);
     this.$('.reviewer_management input[name=email]').focus();
-    this.$('.document_reviewers_empty').hide();
-    this._enabledNextButton();
   },
   
   _cancelAddReviewer : function() {
@@ -186,7 +192,11 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   
   _submitAddReviewer : function(callback) {
     var email = this.$('.reviewer_management input[name=email]').val();
-    if (!email) return this.$('.reviewer_management .error').text('Please enter an email address.');
+    if (!email) {
+      this._focusEmail();
+      return this.$('.reviewer_management .error').text('Please enter an email address.');
+    }
+    
     this.showSpinner();
     $.ajax({
       url : '/documents/reviewers/add',
@@ -240,6 +250,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       this.$('.reviewer_management .error').text("Please enter in a reviewer's email address.");
     }
     this.hideSpinner();
+    this._focusEmail();
     this._enabledNextButton();
   },
   
@@ -311,6 +322,30 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.nextStep();
   },
   
+  // ====================
+  // = Step Two: Emails =
+  // ====================
+  
+  _showReviewersToEmail : function() {
+    var accounts = new Backbone.Collection();
+    var $list = this.$('.email_reviewers_list').empty();
+    
+    this.docs.each(function(doc) {
+      doc.reviewers.each(function(account) {
+        if (account.get('needsEmail') && !accounts.get(account.id)) {
+          accounts.add(account);
+          var view = (new dc.ui.AccountView({
+            model : account, 
+            kind : 'reviewer_email',
+            dialog: this
+          })).render('display');
+          $list.append(view.el);
+        }
+      });
+    });
+
+  },
+  
   _sendInstructions : function() {
     this.showSpinner();
     
@@ -349,30 +384,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         this.error('There was a problem resending instructions.');
       }, this)
     });
-  },
-  
-  // ====================
-  // = Step Two: Emails =
-  // ====================
-  
-  _showReviewersToEmail : function() {
-    var accounts = new Backbone.Collection();
-    var $list = this.$('.email_reviewers_list').empty();
-    
-    this.docs.each(function(doc) {
-      doc.reviewers.each(function(account) {
-        if (account.get('needsEmail') && !accounts.get(account.id)) {
-          accounts.add(account);
-          var view = (new dc.ui.AccountView({
-            model : account, 
-            kind : 'reviewer_email',
-            dialog: this
-          })).render('display');
-          $list.append(view.el);
-        }
-      });
-    });
-
   },
   
   // =========
