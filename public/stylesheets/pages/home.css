@@ -48,14 +48,10 @@ h1 {
   margin-bottom: 15px;
 }
 h2 {
-  display: none;
   width: 550px;
   margin: 0 auto;
   text-align: center;
-  font-style: italic;
   font-size: 18px;
-  line-height: 24px;
-  color: #445056;
 }
   h2 b {
     color: #3a3a3a;
@@ -75,7 +71,7 @@ h4 {
 
 #sky {
   position: absolute;
-  top: 60px; left: 0; right: 0;
+  top: 70px; left: 0; right: 0;
   height: 350px;
   background: transparent url(/images/embed/home/sky_bg.png) repeat-x 0 0;
   z-index: 3;
@@ -84,54 +80,79 @@ h4 {
 #toolbar {
   position: absolute;
   top: 0;
-  width: 100%; height: 69px;
+  width: 100%; height: 79px;
   z-index: 50;
   background: url(/images/embed/home/toolbar.png);
 }
-  #logo {
+/*  #logo {
     width: 172px;
     height: 30px;
     position: absolute;
-    top: 14px; left: 14px;
+    top: 19px; left: 20px;
     background: url(/images/embed/home/logo.png);
-  }
+  }*/
   #innerbar {
     width: 760px;
     position: relative;
     margin: 0 auto;
   }
-    #toolmenu {
+    #nav {
     }
-      #toolmenu li {
-        height: 20px;
-        font-size: 13px;
-        text-shadow: 1px 1px 1px #fff;
-        padding: 20px;
+      #nav li {
+        width: 170px;
+        height: 70px;
+        margin: 0;
         float: left;
         cursor: pointer;
+        background: url(/images/embed/home/nav.png) no-repeat center 12px;
       }
-        #toolmenu li:hover {
-          color: #282d66;
-          background: url(/images/embed/home/tip.png) no-repeat center bottom;
+        #nav #nav_what {
+          background-position: 24px 12px;
         }
+        #nav #nav_search {
+          background-position: -146px 12px;
+        }
+        #nav #nav_open {
+          background-position: -316px 12px;
+        }
+        #nav #nav_guide {
+          background-position: -486px 12px;
+        }
+        #nav li .mark {
+          height: 70px;
+          width: 170px;
+        }
+          #nav li:hover .mark {
+            background: url(/images/embed/home/tip.png) no-repeat center bottom;
+          }
 
 #knightfdn {
   display: block;
   width: 156px; height: 23px;
   position: absolute;
-  top: 310px; right: 15px;
+  top: 320px; right: 15px;
   background: url(/images/embed/home/knight.png);
   z-index: 5;
 }
 #docs_wrapper {
   position: absolute;
   width: 760px;
-  top: 73px;
+  top: 83px;
   left: 50%;
   margin-left: -380px;
   z-index: 5;
 }
+#logo_dark {
+  position: absolute;
+  width: 180px; height: 38px;
+  background: url(/images/embed/home/logo_dark.png);
+  left: 50%;
+  margin-left: 113px;
+  top: 107px;
+  z-index: 5;
+}
 #motto {
+  display: none;
   font-size: 25px;
   font-weight: 300;
   position: absolute;
@@ -140,7 +161,7 @@ h4 {
   left: 50%;
   color: #eef;
   margin-left: -30px;
-  top: 97px;
+  top: 104px;
 }
   #motto a {
     text-decoration: none;
@@ -165,12 +186,12 @@ h4 {
 }
   body.homepage #container {
     position: relative;
-    margin-top: 450px;
+    margin-top: 460px;
   }
   #tagline {
   }
   #search_box_wrapper {
-    width: 587px;
+    width: 535px;
     margin: 30px auto 25px;
   }
   #content {
