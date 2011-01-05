@@ -2,8 +2,6 @@
   @bodyclass = "homepage"
 %>
 
-<div id="layover"></div>
-
 <a id="knightfdn" class="imagelink" href="http://knightfoundation.org/"></a>
 
 <div id="docs_wrapper">
@@ -12,42 +10,53 @@
 
 <div id="container">
 
-  <div id="search_box_wrapper" class="text_input search noselect">
-    <div class="icon search_glyph"></div>
-    <div class="search_inner">
-      <input placeholder="Search thousands of public documents..." id="search_box" />
+  <div id="sidebar">
+    
+    <div id="search_wrapper" class="gradient_light">
+      <div id="search_desc" class="sans">
+        Search thousands of public documents
+        from newsrooms across the country:
+      </div>
+      <div id="search_box_wrapper" class="text_input search noselect">
+        <div class="icon search_glyph"></div>
+        <div class="search_inner">
+          <input placeholder="Search..." id="search_box" />
+        </div>
+        <div class="icon cancel_search" title="clear search"></div>
+      </div>
     </div>
-    <div class="icon cancel_search" title="clear search"></div>
+    
   </div>
 
   <div id="content">
 
     <div id="analyze" class="graf section">
       <div class="number one"></div>
-      <h3><b>Analyze</b></h3>
-      <h4 class="serif">Discover the people, places, organizations, and dates in your documents.</h4>
-      <br />
+      <h1>Know more about your documents.</h1>
+      <img class="visual left" src="/images/home/entities_small.png" />
       DocumentCloud runs every document you upload through
       <a href="http://www.opencalais.com/">OpenCalais</a>, giving you
       access to extensive information about the people, places and organizations
-      mentioned in each. We find all the dates in a document, and plot them on
-      a timeline for you. We&rsquo;ll even help you find related documents and
-      reporting in our catalog.
+      mentioned in each.
     </div>
-
-    <span class="photo">
-      <img src="/images/home/entities.png" />
-      <span class="caption serif">Listing each page that contains a reference to a specific organization.</span>
-    </span>
+    
+    <div class="graf">
+      <img class="visual" src="/images/home/timeline_small.png" />
+      Reveal all the dates mentioned in a set of documents,
+      and plot them on a timeline. Discover documents related to your story and explore links
+      to the reporting behind them. Run sophisticated searches across the documents
+      in your project, or all of DocumentCloud.
+    </div>
+    
+    <hr />
 
     <div id="annotate" class="graf section">
       <div class="number two"></div>
-      <h3><b>Annotate</b></h3>
-      <h4 class="serif">Highlight what matters.</h4>
-      <br />
-      Annotate documents to highlight key passages. Use <b>private notes</b> to organize
-      your own thoughts. Use <b>public notes</b> to compose annotations that will be part
-      of your published reporting. Every annotation has a unique URL, so you can
+      <h1>Highlight what matters.</h1>
+      <img class="visual left" src="/images/home/note.png" />
+      Annotate documents to highlight key passages. Use public notes to compose 
+      annotations that will be part of your published reporting, and private 
+      notes to organize your own thoughts. Every note has a unique URL, so you can
       point readers right to the passage you want to highlight.
     </div>
 
@@ -59,23 +68,19 @@
       Ernest Withers, had also been working as an FBI  informant, they were able 
       to point readers right to 
       <a href="http://www.commercialappeal.com/withers-exposed/pages-from-foia-reveal-withers-as-informant/#document/p2/a2431">the passage</a>
-      that revealed the identity of confidential informant <b>ME 338-R</b>.
+      that revealed the identity of confidential informant ME 338-R.
     </div>
     
-    <span class="photo bleed">
-      <img src="/images/home/withers.png" />
-      <span class="caption serif">Highlighting the sentence that reveals Withers&rsquo; informant number.</span>
-    </span>
+    <hr />
 
     <div id="publish" class="graf section">
       <div class="number three"></div>
-      <h3><b>Publish</b></h3>
-      <h4 class="serif">Share source documents with your readers.</h4>
-      <br />
+      <h1>Share your work.</h1>
+      <img class="visual" src="/images/home/viewer.png" />
       Everything you upload to DocumentCloud stays private until you're ready 
       to make it public, but once you decide to publish your primary source documents, 
-      they join thousands of other documents in our<br /> <b>public catalog</b>.
-      Use our <b>document viewer</b> to embed documents on your own website and
+      they join thousands of other documents in our public catalog.
+      Use our document viewer to embed documents on your own website and
       introduce your audience to your story&rsquo;s paper trail.
     </div>
 

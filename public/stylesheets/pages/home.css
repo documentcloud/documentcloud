@@ -1,14 +1,3 @@
-#layover {
-  display: none;
-  width: 960px;
-  position: absolute;
-  left: 50%;
-  margin-left: -480px;
-  bottom: 0; top: 0;
-  border: 1px solid #aff; border-top: 0; border-bottom: 0;
-  z-index: 1000;
-}
-
 /*
 Colors:
 
@@ -48,24 +37,10 @@ a, a:visited {
     border: 0;
   }
 
-h1 b, h3 b {
-  background: #ffffb0;
-  padding: 1px 5px;
-  margin-right: -2px;
-  margin-left: -5px;
-}
-
-h3 {
+h1 {
   font-weight: 300;
-  font-size: 20px;
-  display: inline-block;
-  margin: 15px 10px 15px 0;
-}
-h4 {
-  font-style: italic;
-  font-size: 16px;
-  color: #445056;
-  display: inline;
+  font-size: 25px;
+  padding: 3px 0 25px 45px;
 }
 
 #sky {
@@ -83,13 +58,6 @@ h4 {
   z-index: 50;
   background: url(/images/embed/home/toolbar.png);
 }
-/*  #logo {
-    width: 172px;
-    height: 30px;
-    position: absolute;
-    top: 19px; left: 20px;
-    background: url(/images/embed/home/logo.png);
-  }*/
   #innerbar {
     position: absolute;
     left: 50%;
@@ -147,73 +115,68 @@ h4 {
 }
 
 #container {
+  position: relative;
   width: 960px;
-  margin: 0 auto;
+  margin: 420px auto 0;
 }
-  body.homepage #container {
-    position: relative;
-    margin-top: 460px;
+  #sidebar {
+    width: 260px;
+    position: absolute;
   }
-  #tagline {
-  }
-  #search_box_wrapper {
-    display: none;
-    width: 535px;
-    margin: 30px auto 25px;
-  }
+    #search_wrapper {
+      padding: 10px;
+      border-radius: 3px;
+      box-shadow: 0px 0px 3px #ccc; -webkit-box-shadow: 0px 0px 3px #777; -moz-box-shadow: 0px 0px 3px #ccc;
+    }
+      #search_desc {
+        font-weight: bold;
+        text-align: center;
+        font-size: 11px;
+        line-height: 14px;
+        color: #445056;
+        margin-bottom: 12px;
+      }
+      #search_box_wrapper {
+      }
   #content {
+    width: 660px;
+    margin-left: 300px;
     padding-bottom: 50px;
+  }
+  #content hr {
+    border: 0;
+    background: #ccc;
+    height: 1px;
+    margin-top: 25px;
   }
     #content .graf {
       position: relative;
-      padding-left: 60px;
       margin: 25px 0 15px;
     }
       #content .graf.section {
-        margin-top: 50px;
+        margin-top: 25px;
       }
-      #content .graf b {
-        font-weight: normal;
-      }
-    #content .photo {
-      position: relative;
-      display: inline-block;
-      padding: 12px 12px 42px;
-      margin-left: 55px;
-      border: 1px solid #bbb;
-      background: #f9f9fb;
-      box-shadow: 1px 2px 7px #ccc; -webkit-box-shadow: 1px 2px 7px #ccc; -moz-box-shadow: 1px 2px 7px #ccc;
+    #content .visual {
+      float: right;
+      border: 1px solid #ccc;
+      margin: 0 0 0 15px;
+      box-shadow: 0px 0px 3px #ccc; -webkit-box-shadow: 0px 0px 3px #ccc; -moz-box-shadow: 0px 0px 3px #ccc;
     }
-      #content .photo img {
-        margin: 0 auto;
-        background: #fff;
-        box-shadow: inset 0px 0px 3px #ccc; -webkit-box-shadow: inset 0px 0px 3px #ccc; -moz-box-shadow: inset 0px 0px 3px #ccc;
-        padding: 15px;
-        border: 1px solid #bbb;
-      }
-        #content .photo.bleed img {
-          padding: 0;
-        }
-      #content .photo .caption {
-        position: absolute;
-        left: 0; right: 0; bottom: 15px;
-        text-align: center;
-        font-size: 13px;
-        font-style: italic;
-        color: #445056;
+      #content .visual.left {
+        float: left;
+        margin: 0 20px 0 0;
       }
 
 .number {
-  display: block;
   position: absolute;
-  left: 0; top: 0;
-  margin: 0 10px 10px 0;
-  width: 46px; height: 46px;
+  top: 0; left: 0;
+  display: block;
+  width: 28px; height: 28px;
   background: url(/images/embed/home/numbers.png);
 }
   .number.two {
-    background-position: 0 -50px;
+    background-position: 0 -49px;
   }
   .number.three {
-    background-position: 0 -100px;
+    background-position: 0 -99px;
   }
