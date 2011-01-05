@@ -6,8 +6,6 @@ Light Text: #445056
 Link Blue:  #282d66
 
 Highlight:  #ffffcc
-Link Back:  #cce1ff
-Link Under: #66a6ff
 */
 
 body {
@@ -47,9 +45,10 @@ h1 {
   text-align: center;
   font-weight: 300;
   font-size: 27px;
+  margin-bottom: 15px;
 }
 h2 {
-  display: block;
+  display: none;
   width: 550px;
   margin: 0 auto;
   text-align: center;
@@ -83,27 +82,25 @@ h4 {
 }
 
 #toolbar {
-  position: fixed;
+  position: absolute;
   top: 0;
   width: 100%; height: 69px;
   z-index: 50;
   background: url(/images/embed/home/toolbar.png);
 }
+  #logo {
+    width: 172px;
+    height: 30px;
+    position: absolute;
+    top: 14px; left: 14px;
+    background: url(/images/embed/home/logo.png);
+  }
   #innerbar {
     width: 760px;
     position: relative;
     margin: 0 auto;
   }
-    #logo {
-      width: 172px;
-      height: 30px;
-      position: absolute;
-      top: 14px; left: 0px;
-      background: url(/images/embed/home/logo.png);
-    }
     #toolmenu {
-      position: absolute;
-      margin: 0 0 0 200px;
     }
       #toolmenu li {
         height: 20px;
@@ -126,13 +123,41 @@ h4 {
   background: url(/images/embed/home/knight.png);
   z-index: 5;
 }
-#document_stack {
+#docs_wrapper {
   position: absolute;
-  top: 60px;
+  width: 760px;
+  top: 73px;
   left: 50%;
-  margin-left: -347px;
+  margin-left: -380px;
   z-index: 5;
 }
+#motto {
+  font-size: 25px;
+  font-weight: 300;
+  position: absolute;
+  z-index: 7;
+  height: 100px;
+  left: 50%;
+  color: #eef;
+  margin-left: -30px;
+  top: 97px;
+}
+  #motto a {
+    text-decoration: none;
+    text-shadow: 0 0 1px #000;
+  }
+    #motto a:hover {
+      color: #ffffcc;
+    }
+    #motto .first {
+      color: #f5f5ff;
+    }
+    #motto .second {
+      color: #d5d5ff;
+    }
+    #motto .third {
+      color: #b5b5ff;
+    }
 
 #container {
   width: 760px;
