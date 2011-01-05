@@ -276,7 +276,74 @@
   .share_dialog .add_reviewer.on_editing {
     display: none;
   }
+  
+  /* Step Two: Email Reviewers */
+  
+  .share_dialog .step_two {
+    text-align: left;
+    overflow: hidden;
+  }
+  .share_dialog .email_message {
+    float: right;
+    width: 300px;
+    padding: 0 8px;
+  }
+    .share_dialog .email_message .email_message_heading {
+      font-size: 12px;
+      margin: 0 0 2px 0;
+    }
+    .share_dialog .email_message .email_message_heading_optional {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #A0A0A0;
+      float: right;
+    }
+    .share_dialog .email_message textarea {
+      width: 100%;
+      font-size: 11px;
+      padding: 4px;
+      height: 180px;
+    }
+  .share_dialog .email_reviewers {
+    width: 300px;
+    padding: 0 8px;
+  }
+    .share_dialog .email_reviewers .email_reviewers_heading {
+      font-size: 12px;
+      margin: 0 0 2px 0;
+    }
+    .share_dialog .email_reviewers_list {
+      max-height: 200px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+      .share_dialog .reviewer_email {
+        margin: 0;
+        padding: 3px 0;
+        height: auto;
+        font-size: 11px;
+        line-height: 14px;
+      }
+        .share_dialog .reviewer_email .reviewer_email_image {
+          float: left;
+          margin: 0 8px 0 0;
+        }
+        .share_dialog .reviewer_email .reviewer_email_image img {
+          top: 0;
+        }
+        .share_dialog .reviewer_email .reviewer_email_name {
+          margin: 0 0 4px 0;
+          font-weight: bold;
+        }
+        .share_dialog .reviewer_email .reviewer_email_email {
+          margin: 0;
+          color: #C0C0C0;
+        }
+  
+  /* Controls */
+  
   .share_dialog .step_controls {
+    clear: both;
     margin: 24px 0 0 0;
   }
     .share_dialog .step_controls .cancel {

@@ -9,7 +9,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     'click .previous':                                 'previousStep',
     'click .add_reviewer':                             '_showEnterEmail',
     'click .cancel_add':                               '_cancelAddReviewer',
-    'click .minibutton.add':                           '_addReviewer',
+    'click .minibutton.add':                           '_submitAddReviewer',
     'click .remove_reviewer':                          '_removeReviewer',
     'click .resend_reviewer':                          '_resendInstructions',
     'keypress .reviewer_management input[name=email]': '_maybeAddReviewer'
@@ -22,7 +22,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   constructor : function(options) {
     _.bindAll(this, '_loadReviewer', '_cancelAddReviewer', '_onAddSuccess', '_onAddError',
-              '_onRemoveSuccess', '_onRemoveError');
+              '_onRemoveSuccess', '_onRemoveError', '_showEnterEmail', 'nextStep');
     dc.ui.Dialog.call(this, {
       mode : 'custom'
     });
@@ -34,6 +34,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.renderedAccounts = {};
     this._boundRender     = [];
     this.currentStep      = 1;
+    this.newReviewers     = [];
 
     $(this.el).hide().empty();
     dc.ui.spinner.show();
@@ -49,16 +50,22 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       'defaultAvatar' : dc.model.Account.prototype.DEFAULT_AVATAR,
       'docCount': this.docs.length
     }));
-    this._next      = this.$('.next');
-    this._previous  = this.$('.previous');
-    this.list = this.$('.account_list_content');
+    this._next     = this.$('.next');
+    this._previous = this.$('.previous');
     $(document.body).addClass('overlay');
     this.center();  
     $(this.el).show();
     dc.ui.spinner.hide();
     this._setPlaceholders();
     this.setStep();
+    this._enabledNextButton();
     return this;
+  },
+  
+  close : function() {
+    dc.ui.notifier.hide();
+    $(this.el).hide();
+    $(document.body).removeClass('overlay');
   },
   
   _loadReviewers : function() {
@@ -149,29 +156,37 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     account.bind('change', this._boundRender[account.id]);
   },
   
+  // ==================================
+  // = Add/Remove Reviewer Management =
+  // ==================================
+  
   _showEnterEmail : function() {
+    if (this.showingManagement) return this._submitAddReviewer(this._showEnterEmail);
+    
+    this.showingManagement = true;
     var $reviewers = this.$('.document_reviewers');
     this.$('.reviewer_management').show();
-    this.$('.add_reviewer').setMode('on', 'editing');
     $reviewers.attr('scrollTop', $reviewers.attr("scrollHeight")+100);
     this.$('.reviewer_management input[name=email]').focus();
     this.$('.document_reviewers_empty').hide();
+    this._enabledNextButton();
   },
   
   _cancelAddReviewer : function() {
-    this.$('.add_reviewer').setMode('off', 'editing');
+    this.showingManagement = false;
     this.$('.reviewer_management').hide();
     this.$('.reviewer_management input').val('');
     this.$('.document_reviewers_empty').toggle(!_.keys(this.renderedAccounts).length);
+    this._enabledNextButton();
   },
   
   _maybeAddReviewer : function(e) {
-    if (e.keyCode == 13) this._addReviewer();
+    if (e.keyCode == 13) this._submitAddReviewer();
   },
   
-  _addReviewer : function() {
+  _submitAddReviewer : function(callback) {
     var email = this.$('.reviewer_management input[name=email]').val();
-    if (!email) return this.error('Please enter an email address.');
+    if (!email) return this.$('.reviewer_management .error').text('Please enter an email address.');
     this.showSpinner();
     $.ajax({
       url : '/documents/reviewers/add',
@@ -182,19 +197,22 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         last_name : this.$('.reviewer_management input[name=last_name]').val(),
         documents : this.docs.map(function(doc) { return doc.id; })
       },
-      success: this._onAddSuccess,
+      success: _.bind(function(resp) { this._onAddSuccess(resp, callback); }, this),
       error : this._onAddError
     });
   },
   
-  _onAddSuccess : function(resp) {
+  _onAddSuccess : function(resp, callback) {
     _.each(resp.documents, function(doc) {
       Documents.get(doc.id).set(doc);
     });
     var account = new dc.model.Account(resp.account);
     this.docs.each(_.bind(function(doc) {
       if (!_.contains(doc.reviewers.map(function(r) { return r.id; }), account.id)) {
+        account.set({needsEmail: true});
         doc.reviewers.add(account);
+      } else {
+        doc.reviewers.each(function(r) { if (r.id == account.id) { r.set({needsEmail: true}); }});
       }
     }, this));
     dc.ui.notifier.show({
@@ -202,21 +220,27 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       duration  : 5000,
       mode      : 'info'
     });
+    this.showingManagement = false;
     this._loadReviewers();
+    if (callback) callback();
+    this._enabledNextButton();
   },
   
   _onAddError : function(resp) {
     resp = JSON.parse(resp.responseText);
-    if (_.any(resp.errors, function(error) {
+    if (resp.errors && _.any(resp.errors, function(error) {
       error = error.toLowerCase();
       return error.indexOf("first name") != -1 || error.indexOf("last name") != -1;
     })) {
       this._showReviewerNameInputs();
-      this.error("Please enter in the full name for this reviewer.");
+      this.$('.reviewer_management .error').text("Please enter in the full name for this reviewer.");
+    } else if (resp.errors) {
+      this.$('.reviewer_management .error').text(resp.errors[0]);
     } else {
-      this.error(resp.errors[0]);
+      this.$('.reviewer_management .error').text("Please enter in a reviewer's email address.");
     }
     this.hideSpinner();
+    this._enabledNextButton();
   },
   
   _showReviewerNameInputs : function() {
@@ -248,6 +272,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       }, this),
       error : this._onRemoveError
     });
+    this._enabledNextButton();
   },
   
   _onRemoveSuccess : function(resp, documentIds, account) {
@@ -265,16 +290,30 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       mode      : 'info'
     });
     this._loadReviewers();
+    this._enabledNextButton();
   },
   
   _onRemoveError : function(resp) {
     this.hideSpinner();
     this.error('There was a problem removing the reviewer.');
+    this._enabledNextButton();
   },
   
   _resendInstructions : function(e) {
-    this.showSpinner();
     var accountId = parseInt($(e.target).attr('data-account-id'), 10);
+    this.docs.each(function(doc) {
+      doc.reviewers.each(function(account) {
+        if (account.id == accountId) account.set({needsEmail: true});
+      });
+    });
+    
+    this._enabledNextButton();
+    this.nextStep();
+  },
+  
+  _sendInstructions : function() {
+    this.showSpinner();
+    
     var accounts  = _.flatten(this.docs.map(function(doc){ return doc.reviewers.models; }));
     var account   = _.detect(accounts, function(acc){ return acc.id == accountId; });
     var reviewerDocuments = this.docs.select(function(doc) {
@@ -293,7 +332,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         this.hideSpinner();
         var text = [
           account.get('email'),
-          ' has been resent reviewing instructions for ',
+          ' has been sent reviewing instructions for ',
           documentIds.length,
           Inflector.pluralize(' document', documentIds.length),
           '.'
@@ -303,26 +342,62 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
           duration : 5000,
           mode     : 'info'
         });
+        this.close();
       }, this),
       error : _.bind(function(resp) {
         this.hideSpinner();
         this.error('There was a problem resending instructions.');
       }, this)
     });
-    
   },
   
-  close : function() {
-    dc.ui.notifier.hide();
-    $(this.el).hide();
-    $(document.body).removeClass('overlay');
+  // ====================
+  // = Step Two: Emails =
+  // ====================
+  
+  _showReviewersToEmail : function() {
+    var accounts = new Backbone.Collection();
+    var $list = this.$('.email_reviewers_list').empty();
+    
+    this.docs.each(function(doc) {
+      doc.reviewers.each(function(account) {
+        if (account.get('needsEmail') && !accounts.get(account.id)) {
+          accounts.add(account);
+          var view = (new dc.ui.AccountView({
+            model : account, 
+            kind : 'reviewer_email',
+            dialog: this
+          })).render('display');
+          $list.append(view.el);
+        }
+      });
+    });
+
+  },
+  
+  // =========
+  // = Steps =
+  // =========
+  
+  _enabledNextButton : function() {
+    var newAccounts = this.docs.any(function(doc) {
+      return doc.reviewers.any(function(account) {
+        return account.get('needsEmail');
+      });
+    });
+
+    this._next.setMode(newAccounts || this.showingManagement ? 'is' : 'not', 'enabled');
   },
   
   setStep : function() {
     var title = this.displayTitle();
     this.title(title);
     var last = this.currentStep == this.STEP_TITLES.length;
-
+    
+    if (this.currentStep == 2) {
+      this._showReviewersToEmail();
+    }
+    
     this._next.html(last ? 'Finish' : 'Next &raquo;');
     this.setMode('p'+this.currentStep, 'step');
   },
@@ -339,7 +414,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   nextStep : function() {
-    if (this.currentStep >= this.STEP_TITLES.length) return this.close();
+    if (this.showingManagement) return this._submitAddReviewer(this.nextStep);
+    if (this.currentStep >= this.STEP_TITLES.length) return this._sendInstructions();
     this.currentStep += 1;
     this.setStep();
   },

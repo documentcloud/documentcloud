@@ -2,19 +2,21 @@
 dc.ui.AccountView = Backbone.View.extend({
 
   AVATAR_SIZES : {
-    badge         : 30,
-    row           : 25,
-    admin         : 25,
-    collaborator  : 25,
-    reviewer      : 25
+    badge          : 30,
+    row            : 25,
+    admin          : 25,
+    collaborator   : 25,
+    reviewer       : 25,
+    reviewer_email : 30
   },
 
   TAGS : {
-    badge         : 'div',
-    row           : 'tr',
-    admin         : 'tr',
-    collaborator  : 'tr',
-    reviewer      : 'tr'
+    badge          : 'div',
+    row            : 'tr',
+    admin          : 'tr',
+    collaborator   : 'tr',
+    reviewer       : 'tr',
+    reviewer_email : 'div'
   },
 
   events : {
