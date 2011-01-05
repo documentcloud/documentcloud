@@ -93,18 +93,18 @@ h4 {
   #innerbar {
     position: absolute;
     left: 50%;
-    margin-left: -523px;
+    margin-left: -513px;
   }
     #nav {
     }
       #nav li {
-        width: 209px;
+        width: 205px;
         height: 70px;
         margin: 0;
         float: left;
         cursor: pointer;
         background-repeat: no-repeat;
-        background-position: center 13px;
+        background-position: center 12px;
       }
         #nav #nav_overview {
           background-image: url(/images/embed/home/nav_overview.png);
