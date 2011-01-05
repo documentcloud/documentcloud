@@ -1,3 +1,14 @@
+#layover {
+  display: none;
+  width: 960px;
+  position: absolute;
+  left: 50%;
+  margin-left: -480px;
+  bottom: 0; top: 0;
+  border: 1px solid #aff; border-top: 0; border-bottom: 0;
+  z-index: 1000;
+}
+
 /*
 Colors:
 
@@ -22,6 +33,10 @@ body {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
 }
 
+.imagetext {
+  text-indent: -10000px;
+}
+
 a, a:visited {
   color: inherit;
 }
@@ -40,22 +55,6 @@ h1 b, h3 b {
   margin-left: -5px;
 }
 
-
-h1 {
-  text-align: center;
-  font-weight: 300;
-  font-size: 27px;
-  margin-bottom: 15px;
-}
-h2 {
-  width: 550px;
-  margin: 0 auto;
-  text-align: center;
-  font-size: 18px;
-}
-  h2 b {
-    color: #3a3a3a;
-  }
 h3 {
   font-weight: 300;
   font-size: 20px;
@@ -92,42 +91,46 @@ h4 {
     background: url(/images/embed/home/logo.png);
   }*/
   #innerbar {
-    width: 760px;
-    position: relative;
-    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    margin-left: -523px;
   }
     #nav {
     }
       #nav li {
-        width: 170px;
+        width: 209px;
         height: 70px;
         margin: 0;
         float: left;
         cursor: pointer;
-        background: url(/images/embed/home/nav.png) no-repeat center 12px;
+        background-repeat: no-repeat;
+        background-position: center 13px;
       }
-        #nav #nav_what {
-          background-position: 24px 12px;
+        #nav #nav_overview {
+          background-image: url(/images/embed/home/nav_overview.png);
         }
         #nav #nav_search {
-          background-position: -146px 12px;
+          background-image: url(/images/embed/home/nav_search.png);
         }
         #nav #nav_open {
-          background-position: -316px 12px;
+          background-image: url(/images/embed/home/nav_open.png);
         }
         #nav #nav_guide {
-          background-position: -486px 12px;
+          background-image: url(/images/embed/home/nav_guide.png);
+        }
+        #nav #nav_news {
+          background-image: url(/images/embed/home/nav_news.png);
         }
         #nav li .mark {
+          display: block;
           height: 70px;
-          width: 170px;
         }
           #nav li:hover .mark {
             background: url(/images/embed/home/tip.png) no-repeat center bottom;
           }
 
 #knightfdn {
-  display: block;
+  display: none;
   width: 156px; height: 23px;
   position: absolute;
   top: 320px; right: 15px;
@@ -136,52 +139,15 @@ h4 {
 }
 #docs_wrapper {
   position: absolute;
-  width: 760px;
-  top: 83px;
+  width: 996px;
+  top: 99px;
   left: 50%;
-  margin-left: -380px;
+  margin-left: -498px;
   z-index: 5;
 }
-#logo_dark {
-  position: absolute;
-  width: 180px; height: 38px;
-  background: url(/images/embed/home/logo_dark.png);
-  left: 50%;
-  margin-left: 113px;
-  top: 107px;
-  z-index: 5;
-}
-#motto {
-  display: none;
-  font-size: 25px;
-  font-weight: 300;
-  position: absolute;
-  z-index: 7;
-  height: 100px;
-  left: 50%;
-  color: #eef;
-  margin-left: -30px;
-  top: 104px;
-}
-  #motto a {
-    text-decoration: none;
-    text-shadow: 0 0 1px #000;
-  }
-    #motto a:hover {
-      color: #ffffcc;
-    }
-    #motto .first {
-      color: #f5f5ff;
-    }
-    #motto .second {
-      color: #d5d5ff;
-    }
-    #motto .third {
-      color: #b5b5ff;
-    }
 
 #container {
-  width: 760px;
+  width: 960px;
   margin: 0 auto;
 }
   body.homepage #container {
@@ -191,6 +157,7 @@ h4 {
   #tagline {
   }
   #search_box_wrapper {
+    display: none;
     width: 535px;
     margin: 30px auto 25px;
   }
