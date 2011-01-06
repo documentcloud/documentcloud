@@ -1,3 +1,3 @@
-[contact us]: javascript:dc.app.workspace.help.openContactDialog()
-[let us know]: javascript:dc.app.workspace.help.openContactDialog()
-[Let us know]: javascript:dc.app.workspace.help.openContactDialog()
+[contact us]: javascript:dc.ui.Dialog.contact()
+[let us know]: javascript:dc.ui.Dialog.contact()
+[Let us know]: javascript:dc.ui.Dialog.contact()

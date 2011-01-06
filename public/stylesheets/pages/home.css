@@ -183,24 +183,16 @@ h1 {
     border-radius: 3px;
     box-shadow: 0px 0px 3px #ccc; -webkit-box-shadow: 0px 0px 3px #777; -moz-box-shadow: 0px 0px 3px #ccc;
   }
+    #sidebar .minibutton {
+      display: inline-block;
+      margin: 10px auto 0;
+    }
   #search_wrapper {
   }
     #search_desc {
       margin-bottom: 12px;
     }
     #search_box_wrapper {
-    }
-  #join {
-  }
-    #join_button {
-      display: inline-block;
-      margin: 10px auto 0;
-    }
-  #login {
-  }
-    #login_button {
-      display: inline-block;
-      margin: 10px auto 0;
     }
   #news {
     font-size: 11px;

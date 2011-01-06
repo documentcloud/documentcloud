@@ -106,5 +106,5 @@ Questions? Don't hesitate to [contact us][]. And as you go, feel free to [reques
 [country: Iran]: #search/country%3A%20Iran
 [OpenCalais]: http://www.opencalais.com/
 [documentcloud.org/api]: http://www.documentcloud.org/api
-[contact us]: javascript:dc.app.workspace.help.openContactDialog()
+[contact us]: javascript:dc.ui.Dialog.contact()
 [request features and report bugs]: http://documentcloud.uservoice.com

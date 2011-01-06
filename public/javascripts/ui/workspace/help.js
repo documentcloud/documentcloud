@@ -35,18 +35,7 @@ dc.ui.Help = Backbone.View.extend({
   },
 
   openContactDialog : function() {
-    dc.ui.Dialog.prompt('Contact Us', '', function(message) {
-      $.post('/ajax_help/contact_us', {message : message}, function() {
-        dc.ui.notifier.show({mode : 'info', text : 'Your message was sent successfully.'});
-      });
-      return true;
-    }, {
-      id       : 'contact_us',
-      text     : 'Use this form (or email to <a href="mailto:support@documentcloud.org">support@documentcloud.org</a>) to contact us for assistance. \
-                  If you need to speak to someone immediately, you can call us at (646) 450-2162.<br /> \
-                  See <a href="http://www.documentcloud.org/contact">documentcloud.org/contact</a> for more ways to get in touch.',
-      saveText : 'Send'
-    });
+    dc.ui.Dialog.contact();
   },
 
   openUserVoice : function() {

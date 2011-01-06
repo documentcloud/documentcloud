@@ -5,16 +5,21 @@ $(function() {
     el : document.body,
 
     events : {
-      'keydown #search_box':  'maybeSearch',
-      'search #search_box':   'search',
-      'focus #search_box':    'addFocus',
-      'blur #search_box':     'removeFocus',
-      'click .cancel_search': 'cancelSearch'
+      'keydown #search_box':   'maybeSearch',
+      'search #search_box':    'search',
+      'focus #search_box':     'addFocus',
+      'blur #search_box':      'removeFocus',
+      'click .cancel_search':  'cancelSearch',
+      'click #contact_button': 'contact'
     },
 
     initialize : function() {
       this.box = $('#search_box');
       this.box.placeholder();
+    },
+
+    contact : function() {
+      dc.ui.Dialog.contact();
     },
 
     search : function() {

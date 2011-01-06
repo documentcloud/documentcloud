@@ -1,4 +1,4 @@
-[contact us]: javascript:dc.app.workspace.help.openContactDialog()
+[contact us]: javascript:dc.ui.Dialog.contact()
 [John Yoo detainee]: #search/John%20Yoo%20detainee
 [geithner -madoff]: #search/geithner%20-madoff 
 [geithner NOT madoff]: #search/geithner%20NOT%20madoff

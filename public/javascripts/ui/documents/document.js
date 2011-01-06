@@ -237,7 +237,7 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   openContactUs : function() {
-    dc.app.workspace.help.openContactDialog();
+    dc.ui.Dialog.contact();
   },
   
   _openShareDialog : function() {
