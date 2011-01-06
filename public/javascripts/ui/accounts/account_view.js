@@ -144,6 +144,7 @@ dc.ui.AccountView = Backbone.View.extend({
       this.setMode('display', 'view');
     } else {
       dc.ui.spinner.show();
+      console.log(['_doneEditing', this.model, attributes]);
       this.model.save(attributes, options);
     }
   },

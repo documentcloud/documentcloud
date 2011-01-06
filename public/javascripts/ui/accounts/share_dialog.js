@@ -4,15 +4,17 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   className             : 'account_list dialog',
   
   events : {
-    'click .close':                        'close',
-    'click .next':                         'nextStep',
-    'click .previous':                     'previousStep',
-    'click .add_reviewer':                 '_showEnterEmail',
-    'click .cancel_add':                   '_cancelAddReviewer',
-    'click .minibutton.add':               '_submitAddReviewer',
-    'click .remove_reviewer':              '_removeReviewer',
-    'click .resend_reviewer':              '_resendInstructions',
-    'keypress .reviewer_management_email': '_maybeAddReviewer'
+    'click .close':                            'close',
+    'click .next':                             'nextStep',
+    'click .previous':                         'previousStep',
+    'click .add_reviewer':                     '_showEnterEmail',
+    'click .cancel_add':                       '_cancelAddReviewer',
+    'click .minibutton.add':                   '_submitAddReviewer',
+    'click .remove_reviewer':                  '_removeReviewer',
+    'click .resend_reviewer':                  '_resendInstructions',
+    'keypress .reviewer_management_email':     '_maybeAddReviewer',
+    'keypress .reviewer_management_firstname': '_maybeAddReviewer',
+    'keypress .reviewer_management_lastname':  '_maybeAddReviewer'
   },
   
   STEP_TITLES : [
@@ -63,6 +65,10 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     $(this.el).hide();
     $(document.body).removeClass('overlay');
   },
+  
+  // =======================
+  // = Rendering Reviewers =
+  // =======================
   
   _loadReviewers : function() {
     if (this.docs.all(function(doc) { return doc.reviewers.length; })) {
@@ -187,6 +193,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   _maybeAddReviewer : function(e) {
+    // Try to add reviewer on `enter` key
     if (e.keyCode == 13) this._submitAddReviewer();
   },
   
@@ -225,11 +232,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         doc.reviewers.each(function(r) { if (r.id == account.id) { r.set({needsEmail: true}); }});
       }
     }, this));
-    dc.ui.notifier.show({
-      text      : 'Document review instructions sent to ' + resp.account['email'],
-      duration  : 5000,
-      mode      : 'info'
-    });
     this.showingManagement = false;
     this._loadReviewers();
     if (callback) callback();
@@ -327,13 +329,13 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   // ====================
   
   _showReviewersToEmail : function() {
-    var accounts = new Backbone.Collection();
+    this.accountsToEmail = new Backbone.Collection();
     var $list = this.$('.email_reviewers_list').empty();
     
-    this.docs.each(function(doc) {
-      doc.reviewers.each(function(account) {
-        if (account.get('needsEmail') && !accounts.get(account.id)) {
-          accounts.add(account);
+    this.docs.each(_.bind(function(doc) {
+      doc.reviewers.each(_.bind(function(account) {
+        if (account.get('needsEmail') && !this.accountsToEmail.get(account.id)) {
+          this.accountsToEmail.add(account);
           var view = (new dc.ui.AccountView({
             model : account, 
             kind : 'reviewer_email',
@@ -341,30 +343,29 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
           })).render('display');
           $list.append(view.el);
         }
-      });
-    });
+      }, this));
+    }, this));
 
   },
   
   _sendInstructions : function() {
+    var accounts = this.accountsToEmail;
     this.showSpinner();
     
-    var accounts  = _.flatten(this.docs.map(function(doc){ return doc.reviewers.models; }));
-    var account   = _.detect(accounts, function(acc){ return acc.id == accountId; });
-    var reviewerDocuments = this.docs.select(function(doc) {
-      return doc.reviewers.any(function(r) { return r.get('id') == account.get('id'); });
+    var documents = this.docs.select(function(doc) {
+      return doc.reviewers.any(function(r) { return accounts.get(r.get('id')); });
     });
-    var documentIds = _.map(reviewerDocuments, function(d) { return d.get('id'); });
+    var documentIds = _.map(documents, function(d) { return d.get('id'); });
+    var accountIds  = _.map(accounts, function(a) { return a.get('id'); });
     
     $.ajax({
       url : '/documents/reviewers/resend',
       type : 'POST',
       data : {
-        account_id : accountId,
-        documents  : documentIds
+        account_id  : accountIds,
+        document_id : documentIds
       },
       success: _.bind(function(resp) {
-        this.hideSpinner();
         var text = [
           account.get('email'),
           ' has been sent reviewing instructions for ',
@@ -377,6 +378,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
           duration : 5000,
           mode     : 'info'
         });
+        
+        this.hideSpinner();
         this.close();
       }, this),
       error : _.bind(function(resp) {
