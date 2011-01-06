@@ -88,7 +88,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _loadReviewer : function() {
     this.docsUnfetched -= 1;
     if (this.docsUnfetched <= 0) {
-      this.render(true);
+      this.render();
       var views = [];
       // this.commonReviewers = Documents.sharedReviewers(this.docs);
       this._countDocuments();
@@ -223,13 +223,14 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     _.each(resp.documents, function(doc) {
       Documents.get(doc.id).set(doc);
     });
-    var account = new dc.model.Account(resp.account);
+    var newAccount = new dc.model.Account(resp.account);
     this.docs.each(_.bind(function(doc) {
-      if (!_.contains(doc.reviewers.map(function(r) { return r.id; }), account.id)) {
-        account.set({needsEmail: true});
-        doc.reviewers.add(account);
+      var account = doc.reviewers.get(newAccount.id);
+      if (!account) {
+        newAccount.set({needsEmail: true});
+        doc.reviewers.add(newAccount);
       } else {
-        doc.reviewers.each(function(r) { if (r.id == account.id) { r.set({needsEmail: true}); }});
+        account.set({needsEmail: true});
       }
     }, this));
     this.showingManagement = false;
@@ -329,7 +330,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   // ====================
   
   _showReviewersToEmail : function() {
-    this.accountsToEmail = new Backbone.Collection();
+    this.accountsToEmail = new dc.model.AccountSet();
     var $list = this.$('.email_reviewers_list').empty();
     
     this.docs.each(_.bind(function(doc) {

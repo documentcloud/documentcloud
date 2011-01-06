@@ -15,6 +15,7 @@ dc.model.Document = Backbone.Model.extend({
     this.pageEntities = new dc.model.EntitySet();
     this.reviewers = new dc.model.AccountSet();
     this._setReviewersResource();
+    this.bind('change:id', _.bind(this._setReviewersResource, this));
   },
 
   // If this document does not belong to a collection, it still has a URL.
@@ -24,11 +25,8 @@ dc.model.Document = Backbone.Model.extend({
   },
 
   _setReviewersResource : function() {
-    if (!(this.reviewers && this.id)) return;
-    var id = this.id;
-    this.reviewers.url = function(){
-      return 'documents/' + id + '/reviewers';
-    };
+    if (this.isNew()) return;
+    this.reviewers.url = 'documents/' + this.id + '/reviewers';
   },
 
   // Generate the canonical URL for opening this document, over SSL if we're
