@@ -61,7 +61,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   close : function() {
-    dc.ui.notifier.hide();
     $(this.el).hide();
     $(document.body).removeClass('overlay');
   },
@@ -353,25 +352,31 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     var accounts = this.accountsToEmail;
     this.showSpinner();
     
+    this._next.setMode('not', 'enabled');
+    this._next.html('Sending...');
+    
     var documents = this.docs.select(function(doc) {
       return doc.reviewers.any(function(r) { return accounts.get(r.get('id')); });
     });
-    var documentIds = _.map(documents, function(d) { return d.get('id'); });
-    var accountIds  = _.map(accounts, function(a) { return a.get('id'); });
+    var documentIds = _.pluck(documents, 'id');
+    var accountIds  = accounts.pluck('id');
     
     $.ajax({
-      url : '/documents/reviewers/resend',
+      url : '/documents/reviewers/send',
       type : 'POST',
       data : {
-        account_id  : accountIds,
-        document_id : documentIds
+        accounts  : accountIds,
+        documents : documentIds
       },
       success: _.bind(function(resp) {
         var text = [
-          account.get('email'),
-          ' has been sent reviewing instructions for ',
-          documentIds.length,
-          Inflector.pluralize(' document', documentIds.length),
+          accounts.length == 1 ? 
+            accounts.first().get('email') + ' has' : 
+            accounts.length + ' reviewers have',
+          ' been sent reviewing instructions for ',
+          documentIds.length == 1 ? 
+            Inflector.truncate(this.docs.get(documentIds[0]).get('title'), 30, '..') : 
+            documentIds.length + Inflector.pluralize(' document', documentIds.length),
           '.'
         ].join('');
         dc.ui.notifier.show({
@@ -380,12 +385,17 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
           mode     : 'info'
         });
         
+        accounts.each(function(account) {
+          account.set({needsEmail: false});
+        });
         this.hideSpinner();
         this.close();
       }, this),
       error : _.bind(function(resp) {
         this.hideSpinner();
         this.error('There was a problem resending instructions.');
+        this.setStep();
+        this._enabledNextButton();
       }, this)
     });
   },

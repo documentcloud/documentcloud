@@ -43,7 +43,7 @@ ActionController::Routing::Routes.draw do |map|
   map.page_image "/documents/:id/pages/:page_name.gif", :controller => :documents, :action => :send_page_image
   map.reviewers  "/documents/reviewers/add",            :controller => :reviewers, :action => :add_reviewer, :conditions => {:method => :post}
   map.reviewers  "/documents/reviewers/remove",         :controller => :reviewers, :action => :remove_reviewer, :conditions => {:method => :post}
-  map.reviewers  "/documents/reviewers/resend",         :controller => :reviewers, :action => :resend_instructions, :conditions => {:method => :post}
+  map.reviewers  "/documents/reviewers/send",           :controller => :reviewers, :action => :send_instructions, :conditions => {:method => :post}
 
   # API.
   map.with_options :controller => 'api' do |api|
