@@ -93,7 +93,7 @@ h1 {
           display: block;
           height: 70px;
         }
-          #nav li:hover .mark {
+          #nav li:hover .mark, #nav .mark.active {
             background: url(/images/embed/home/tip.png) no-repeat center bottom;
           }
 
@@ -122,25 +122,38 @@ h1 {
   #sidebar {
     width: 260px;
     position: absolute;
+    right: 0;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 14px;
+    color: #445056;
   }
-    #search_wrapper {
+    #sidebar .sidebar_section {
+      margin-bottom: 25px;
       padding: 10px;
+      text-align: center;
+    }
+    #search_wrapper {
       border-radius: 3px;
       box-shadow: 0px 0px 3px #ccc; -webkit-box-shadow: 0px 0px 3px #777; -moz-box-shadow: 0px 0px 3px #ccc;
     }
       #search_desc {
-        font-weight: bold;
-        text-align: center;
-        font-size: 11px;
-        line-height: 14px;
-        color: #445056;
         margin-bottom: 12px;
       }
       #search_box_wrapper {
       }
+    #join {
+    }
+      #join_button {
+        width: 120px;
+        margin: 10px auto 0;
+      }
+    #news {
+      font-size: 11px;
+    }
   #content {
     width: 660px;
-    margin-left: 300px;
+/*    margin-right: 300px;*/
     padding-bottom: 50px;
   }
   #content hr {
