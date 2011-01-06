@@ -30,7 +30,8 @@ body {
 }
 
 a, a:visited {
-  color: inherit;
+  color: #282d66;
+/*  color: inherit;*/
 }
   a:hover, a:active {
     color: #282d66;
@@ -50,7 +51,7 @@ h1 {
   position: absolute;
   top: 70px; left: 0; right: 0;
   height: 350px;
-  background: transparent url(/images/embed/home/sky_bg.png) repeat-x 0 0;
+  background: transparent url(/images/embed/home/sky.png) repeat-x 0 0;
   z-index: 3;
 }
 
@@ -111,7 +112,7 @@ h1 {
 #docs_wrapper {
   position: absolute;
   width: 1009px;
-  top: 75px;
+  top: 72px;
   left: 50%;
   margin-left: -508px;
   z-index: 5;
