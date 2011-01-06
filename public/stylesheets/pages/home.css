@@ -177,12 +177,12 @@ h1 {
   text-align: center;
 }
   #quotes .quote {
-    margin-bottom: 25px;
+    margin-bottom: 50px;
   }
     #quotes .attribution {
       font-size: 15px;
-      position: relative;
-      left: 200px;
+      position: absolute;
+      left: 600px;
     }
   #quotes #quotes_button {
     display: block;
