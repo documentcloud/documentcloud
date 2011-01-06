@@ -31,8 +31,7 @@ body {
 }
 
 a, a:visited {
-  color: #282d66;
-/*  color: inherit;*/
+  color: #344b6c;
 }
   a:hover, a:active {
     color: #282d66;
@@ -238,3 +237,6 @@ h1 {
       right: 0px;
       top: 35px;
     }
+  #footer_links {
+    text-align: center;
+  }
