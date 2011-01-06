@@ -149,7 +149,13 @@ h1 {
   #join {
   }
     #join_button {
-      width: 120px;
+      display: inline-block;
+      margin: 10px auto 0;
+    }
+  #login {
+  }
+    #login_button {
+      display: inline-block;
       margin: 10px auto 0;
     }
   #news {
