@@ -9,6 +9,7 @@ Light Text: #445056
 Link Blue:  #282d66
 
 Highlight:  #ffffcc
+Divider:    #ccc
 */
 
 body {
@@ -63,6 +64,7 @@ h1 {
   background: url(/images/embed/home/toolbar.png);
 }
   #innerbar {
+    width: 1030px;
     position: absolute;
     left: 50%;
     margin-left: -513px;
@@ -124,6 +126,48 @@ h1 {
   margin: 425px auto 0;
 }
 
+#content {
+  width: 650px;
+  padding-bottom: 50px;
+}
+#content hr {
+  border: 0;
+  background: #ccc;
+  height: 1px;
+  margin-top: 30px;
+}
+  #content .graf {
+    position: relative;
+    margin: 30px 0 15px;
+  }
+    #content .graf.section {
+      margin-top: 25px;
+    }
+  #content .visual {
+    float: right;
+    border: 1px solid #ccc;
+    margin: 0 0 0 15px;
+    box-shadow: 0px 0px 3px #ccc; -webkit-box-shadow: 0px 0px 3px #ccc; -moz-box-shadow: 0px 0px 3px #ccc;
+  }
+    #content .visual.left {
+      float: left;
+      margin: 0 20px 0 0;
+    }
+
+.number {
+  position: absolute;
+  top: 0; left: 0;
+  display: block;
+  width: 28px; height: 28px;
+  background: url(/images/embed/home/numbers.png);
+}
+  .number.two {
+    background-position: 0 -49px;
+  }
+  .number.three {
+    background-position: 0 -99px;
+  }
+
 #sidebar {
   width: 260px;
   position: absolute;
@@ -133,7 +177,7 @@ h1 {
   color: #445056;
 }
   #sidebar .sidebar_section {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     padding: 12px 15px;
     text-align: center;
     border-radius: 3px;
@@ -180,44 +224,25 @@ h1 {
           color: #777;
         }
 
-#content {
-  width: 660px;
-  padding-bottom: 50px;
+#footer {
+  position: relative;
+  width: 960px;
+  margin: 0 auto;
+  padding: 25px 0 50px 0;
+  border-top: 1px solid #ccc;
+  font-size: 11px;
+  color: #445056;
 }
-#content hr {
-  border: 0;
-  background: #ccc;
-  height: 1px;
-  margin-top: 25px;
-}
-  #content .graf {
-    position: relative;
-    margin: 25px 0 15px;
+  #logos li {
+    margin-right: 31px;
+    float: left;
   }
-    #content .graf.section {
-      margin-top: 25px;
+    #logos a.propublica {
+      position: relative;
+      top: -4px;
     }
-  #content .visual {
-    float: right;
-    border: 1px solid #ccc;
-    margin: 0 0 0 15px;
-    box-shadow: 0px 0px 3px #ccc; -webkit-box-shadow: 0px 0px 3px #ccc; -moz-box-shadow: 0px 0px 3px #ccc;
-  }
-    #content .visual.left {
-      float: left;
-      margin: 0 20px 0 0;
+    #logos a.more {
+      position: absolute;
+      right: 0px;
+      top: 35px;
     }
-
-.number {
-  position: absolute;
-  top: 0; left: 0;
-  display: block;
-  width: 28px; height: 28px;
-  background: url(/images/embed/home/numbers.png);
-}
-  .number.two {
-    background-position: 0 -49px;
-  }
-  .number.three {
-    background-position: 0 -99px;
-  }
