@@ -31,9 +31,9 @@ select {
 /*------------------------------ Gradients ---------------------------------*/
 .gradient_light {
   background: #d7d7d7;
-  background: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#d0d0d0));
-  background: -moz-linear-gradient(top, #f9f9f9, #d0d0d0);
-  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#f9f9f9', EndColorStr='#D0D0D0');
+  background: -webkit-gradient(linear, left top, left bottom, from(#fcfcfc), to(#ddd));
+  background: -moz-linear-gradient(top, #fcfcfc, #ddd);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#fcfcfc', EndColorStr='#dddddd');
 }
 .gradient_mid {
   background: #d7d7d7;
