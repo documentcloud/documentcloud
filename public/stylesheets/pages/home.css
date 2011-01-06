@@ -127,7 +127,7 @@ h1 {
 
 #content {
   width: 650px;
-  padding-bottom: 50px;
+  padding-bottom: 25px;
 }
 #content hr {
   border: 0;
@@ -165,6 +165,29 @@ h1 {
   }
   .number.three {
     background-position: 0 -99px;
+  }
+
+#quotes {
+  padding: 30px 0 5px;
+  border-top: 1px solid #ccc;
+  width: 960px;
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 300;
+  text-align: center;
+}
+  #quotes .quote {
+    margin-bottom: 25px;
+  }
+    #quotes .attribution {
+      font-size: 15px;
+      position: relative;
+      left: 200px;
+    }
+  #quotes #quotes_button {
+    display: block;
+    width: 120px;
+    margin: 0 auto 25px;
   }
 
 #sidebar {
