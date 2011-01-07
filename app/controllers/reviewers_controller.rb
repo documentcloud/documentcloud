@@ -23,7 +23,6 @@ class ReviewersController < ApplicationController
       documents = params[:documents].map do |document_id|
         document = Document.find(document_id)
         document.document_reviewers.create(:account => account)
-        account.send_reviewer_instructions(document, current_account)
         document.reload
       end
     end
@@ -46,11 +45,12 @@ class ReviewersController < ApplicationController
   end
   
   def send_instructions
+    return json(nil, 400) unless params[:accounts] && params[:documents]
     params[:accounts].each do |account_id|
       account = Account.find(account_id)
       params[:documents].each do |document_id|
         document = Document.find(document_id)
-        account.send_reviewer_instructions(document, current_account)
+        account.send_reviewer_instructions(document, current_account, params[:message])
       end
     end
     json nil
@@ -59,13 +59,8 @@ class ReviewersController < ApplicationController
   def update
     account   = current_organization.accounts.find(params[:id])
     is_owner  = current_account.id == account.id
-    resend    = account.email != params[:email]
     return forbidden unless account && (current_account.admin? || is_owner)
     account.update_attributes pick(params, :first_name, :last_name, :email) if account.role == Account::REVIEWER
-    if resend
-      document = Document.find(params[:document_id])
-      account.send_reviewer_instructions(document, current_account)
-    end
     json account
   end
   

@@ -300,7 +300,8 @@
     }
     .share_dialog .email_message textarea {
       width: 100%;
-      font-size: 11px;
+      font-size: 12px;
+      font-family: inherit;
       padding: 4px;
       height: 180px;
     }

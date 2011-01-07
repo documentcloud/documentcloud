@@ -360,13 +360,15 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     });
     var documentIds = _.pluck(documents, 'id');
     var accountIds  = accounts.pluck('id');
+    var message = $.trim(this.$('.email_message_text').val());
     
     $.ajax({
       url : '/documents/reviewers/send',
       type : 'POST',
       data : {
         accounts  : accountIds,
-        documents : documentIds
+        documents : documentIds,
+        message   : message
       },
       success: _.bind(function(resp) {
         var text = [

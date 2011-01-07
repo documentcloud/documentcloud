@@ -6,5 +6,11 @@ Please do not share this URL. If you have colleagues who you think should also t
 
 <%= @organization_name %> is using DocumentCloud to analyze and annotate source documents. You can find out more about the DocumentCloud project at http://www.documentcloud.org.
 
+<%- if @message && @message.length > 1 -%>
+--
+<%= @message %>  
+--
+
+<%- end -%>
 Jeremy, Amanda & Sam
 DocumentCloud
