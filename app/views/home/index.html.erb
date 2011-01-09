@@ -6,12 +6,15 @@
 
 <div id="docs_wrapper">
   <img id="document_stack" alt="" src="/images/home/art.png" />
+  <a id="featured_document" target="_blank" href="<%= @document.canonical_url(:html) %>">
+    <img width="212" height="276" src="<%= @document.page_image_url(1, 'normal') %>" />
+  </a>
 </div>
 
 <div id="container">
 
   <div id="sidebar" class="sans">
-    
+
     <div id="search_wrapper" class="sidebar_section gradient_light">
       <div id="search_desc">
         Search thousands of public documents<br />
@@ -25,56 +28,56 @@
         <div class="icon cancel_search" title="clear search"></div>
       </div>
     </div>
-    
+
     <div id="join" class="sidebar_section gradient_light">
-      DocumentCloud is a tool for journalists.<br /> 
+      DocumentCloud is a tool for journalists.<br />
       If you're regularly working with primary source documents, we can help.
       <div class="minibutton default" id="join_button">Join DocumentCloud</div>
     </div>
-    
+
     <div id="login" class="sidebar_section gradient_light">
       Already a DocumentCloud member?
       <a href="/login"><div class="minibutton" id="login_button">Log in now</div></a>
     </div>
-    
+
     <div id="news" class="sidebar_section gradient_light">
       <div id="news_desc">
         Latest News
       </div>
       <ul>
         <li>
-          <a href="#">Code Drop: Backbone.js</a> – 
+          <a href="#">Code Drop: Backbone.js</a> –
           <span class="date">Oct 13, 2010</span>
         </li>
         <li>
-          <a href="#">How to: Grab Thumbnail Images</a> – 
+          <a href="#">How to: Grab Thumbnail Images</a> –
           <span class="date">Oct 08, 2010</span>
         </li>
         <li>
-          <a href="#">Questions, Answered</a> – 
+          <a href="#">Questions, Answered</a> –
           <span class="date">Sep 22, 2010</span>
         </li>
         <li>
-          <a href="#">Evaluating Amazon's EC2 Micro Instances</a> – 
+          <a href="#">Evaluating Amazon's EC2 Micro Instances</a> –
           <span class="date">Sep 15, 2010</span>
         </li>
         <li>
-          <a href="#">Mini Document Viewers</a> – 
+          <a href="#">Mini Document Viewers</a> –
           <span class="date">Sep 10, 2010</span>
         </li>
         <li>
-          <a href="#">Code Drop: Pixel Ping</a> – 
+          <a href="#">Code Drop: Pixel Ping</a> –
           <span class="date">Sep 08, 2010</span>
         </li>
       </ul>
     </div>
-    
+
     <div id="contact" class="sidebar_section gradient_light">
       Questions, comments, or concerns?<br />
       Don't hesitate to get in touch.
       <div class="minibutton" id="contact_button">Contact us</div>
     </div>
-    
+
   </div>
 
   <div id="content">
@@ -88,62 +91,62 @@
       access to extensive information about the people, places and organizations
       mentioned in each.
     </div>
-    
+
     <div class="graf">
       <img class="visual" src="/images/home/timeline2.png" />
-      Reveal all the dates mentioned in a set of documents, and plot them on a 
-      timeline. Zoom in to view just the few critical months, or days. Discover 
-      documents related to your story and explore links to the reporting behind 
+      Reveal all the dates mentioned in a set of documents, and plot them on a
+      timeline. Zoom in to view just the few critical months, or days. Discover
+      documents related to your story and explore links to the reporting behind
       them.
     </div>
-    
+
     <hr />
 
     <div id="annotate" class="graf section">
       <div class="number two"></div>
       <h1>Highlight what matters.</h1>
       <a href="http://www.lasvegassun.com/hospital-care/documents/butts-motion/#document/p9/a4632"><img class="visual left" src="/images/home/note.png" /></a>
-      Annotate documents to highlight key passages. Use public notes to compose 
-      annotations that will be part of your published reporting, and private 
+      Annotate documents to highlight key passages. Use public notes to compose
+      annotations that will be part of your published reporting, and private
       notes to organize your own thoughts. Every note has a unique URL, so you can
       point readers right to the passage you want to highlight.
     </div>
 
     <div class="graf">
       When Memphis&rsquo; Commercial Appeal published
-      <a href="http://www.commercialappeal.com/withers-exposed/">Ernest Withers: Exposed</a>, 
-      an extensive investigation which revealed that the photographer responsible 
-      for some of the most iconic photographs of the civil rights movement, 
-      Ernest Withers, had also been working as an FBI  informant, they were able 
-      to point readers right to 
+      <a href="http://www.commercialappeal.com/withers-exposed/">Ernest Withers: Exposed</a>,
+      an extensive investigation which revealed that the photographer responsible
+      for some of the most iconic photographs of the civil rights movement,
+      Ernest Withers, had also been working as an FBI  informant, they were able
+      to point readers right to
       <a href="http://www.commercialappeal.com/withers-exposed/pages-from-foia-reveal-withers-as-informant/#document/p2/a2431">the passage</a>
       that revealed the identity of confidential informant ME 338-R.
     </div>
-    
+
     <hr />
 
     <div id="publish" class="graf section">
       <div class="number three"></div>
       <h1>Share your work.</h1>
       <a href="http://www.pbs.org/newshour/rundown/documents/mark-twain-concerning-the-interview.html"><img class="visual" src="/images/home/viewer.png" /></a>
-      Everything you upload to DocumentCloud stays private until you're ready 
-      to make it public, but once you decide to publish your primary source documents, 
+      Everything you upload to DocumentCloud stays private until you're ready
+      to make it public, but once you decide to publish your primary source documents,
       they join thousands of other documents in our public catalog.
       Use our document viewer to embed documents on your own website and
       introduce your audience to your story&rsquo;s paper trail.
     </div>
 
     <div class="graf">
-      From our catalog, reporters and the public alike can find your documents 
-      and follow links back to your original reporting. DocumentCloud contains 
-      court filings, hearing transcripts, testimony, legislation, lab reports, 
-      memos, meeting minutes, correspondence. See what's 
-      <a href="/public">already in our catalog</a>. 
+      From our catalog, reporters and the public alike can find your documents
+      and follow links back to your original reporting. DocumentCloud contains
+      court filings, hearing transcripts, testimony, legislation, lab reports,
+      memos, meeting minutes, correspondence. See what's
+      <a href="/public">already in our catalog</a>.
       Make your documents part of the cloud.
     </div>
-    
+
   </div>
-  
+
   <div id="quotes">
     <div class="quote">
       &ldquo;DocumentCloud really saved my bacon.&rdquo;

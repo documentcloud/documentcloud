@@ -118,6 +118,11 @@ h1 {
   margin-left: -508px;
   z-index: 5;
 }
+  #featured_document {
+    position: absolute;
+    right: 68px;
+    top: 30px;
+  }
 
 #container {
   position: relative;

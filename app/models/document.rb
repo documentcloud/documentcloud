@@ -386,16 +386,17 @@ class Document < ActiveRecord::Base
     DC::Store::AssetStore.new.authorized_url(pdf_path)
   end
 
-  def public_thumbnail_url
-    File.join(DC::Store::AssetStore.web_root, page_image_path(1, 'thumbnail'))
-  end
-
-  def private_thumbnail_url
-    DC::Store::AssetStore.new.authorized_url(page_image_path(1, 'thumbnail'))
-  end
-
   def thumbnail_url
-    public? ? public_thumbnail_url : private_thumbnail_url
+    page_image_url 1, 'thumbnail'
+  end
+
+  def page_image_url(page, size)
+    path = page_image_path(page, size)
+    if public?
+      File.join DC::Store::AssetStore.web_root, path
+    else
+      DC::Store::AssetStore.new.authorized_url path
+    end
   end
 
   def public_full_text_url
