@@ -16,95 +16,21 @@
 </head>
 <body class="<%= @bodyclass %>">
 
-  <div id="toolbar">
-    <div id="innerbar">
-      <ul id="nav">
-        <li id="nav_overview">
-          <a class="mark imagetext active" href="/home">
-            Overview: A tool for journalists, a document catalog, both.
-          </a>
-        </li>
-        <li id="nav_search">
-          <a class="mark imagetext" href="/public">
-            Search: Our catalog has thousands of newsworthy documents.
-          </a>
-        </li>
-        <li id="nav_open">
-          <a class="mark imagetext" href="/opensource">
-            Our work is open source. Use it in your projects.
-          </a>
-        </li>
-        <li id="nav_guide">
-          <a class="mark imagetext" href="/help">
-            Learn about DocumentCloud's advanced features and API.
-          </a>
-        </li>
-        <li id="nav_news">
-          <a class="mark imagetext" href="/blog">
-            Read the blog to find out about new features.
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  
+  <div id="grid"></div>
+
+  <%= render :partial => 'nav' %>
+
   <div id="sky"></div>
-  
+
+  <% if @bodyclass != 'homepage' %>
+
+    <a id="logo" href="/"><img src="/images/home/logo.png" alt="DocumentCloud" /></a>
+
+  <% end %>
+
   <%= yield %>
-  
-  <div id="footer" class="sans">
-    
-    <ul id="logos">
-      <li>
-        <a href="http://nytimes.com">
-          <img src="/images/embed/home/logos/logo-nyt.png" alt="The New York Times" />
-        </a>
-      </li>
-      <li>
-        <a href="http://propublica.org" class="propublica">
-          <img src="/images/embed/home/logos/logo-pro-publica.png" alt="ProPublica" />
-        </a>
-      </li>
-      <li>
-        <a href="http://pbs.org">
-          <img src="/images/embed/home/logos/logo-pbs.png" alt="PBS" />
-        </a>
-      </li>
-      <li>
-        <a href="http://latimes.com">
-          <img src="/images/embed/home/logos/logo-lat.png" alt="The Lost Angeles Times" />
-        </a>
-      </li>
-      <li>
-        <a href="http://msnbc.com">
-          <img src="/images/embed/home/logos/logo-msnbc.png" alt="MSNBC.com" />
-        </a>
-      </li>
-      <li>
-        <a href="http://chicagotribune.com">
-          <img src="/images/embed/home/logos/logo-trib.png" alt="The Chicago Tribune" />
-        </a>
-      </li>
-      <li>
-        <a href="http://wired.com">
-          <img src="/images/embed/home/logos/logo-wired.png" alt="Wired" />
-        </a>
-      </li>
-      <li>
-        <a href="/contributors" class="more">More&hellip;</a>
-      </li>      
-    </ul>
-    
-    <br class="clear" />
-    
-    <div id="footer_links">
-      <a href="/contact">Contact Us</a> |
-      <a href="/about">Who We Are</a> |
-      <a href="/terms">Terms of Service</a> |
-      <a href="/privacy">Privacy Policy</a>
-    </div>
-    
-  </div>
-    
+
+  <%= render :partial => 'footer' %>
+
 </body>
 </html>

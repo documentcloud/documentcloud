@@ -1,0 +1,67 @@
+news:
+  - - "Interview: Jeremy Ashkenas Talks About CoffeeScript"
+    - http://www.readwriteweb.com/hack/2011/01/interview-coffeescript-jeremy-ashkenas.php
+    - ReadWriteWeb
+    - 2011-01-07
+  - - "Open-Source Spotlight: Underscore.js"
+    - http://fuelyourcoding.com/open-source-spotlight-underscorejs/
+    - Fuel
+    - 2010-04-01
+  - - Ruby + AWS == Easy Map-Reduce
+    - http://defsci.blogspot.com/2010/01/ruby-aws-easy-map-reduce.html
+    - Def Science
+    - 2010-01-22
+  - - 2009 Open Source Top Ten
+    - http://ozmm.org/posts/2009_open_source_top_ten.html
+    - Ones, Zeros, Majors and Minors
+    - 2009-12-17
+  - - "Episode 0.0.5 \xE2\x80\x93 Document Cloud"
+    - http://thechangelog.com/post/272530971/episode-0-0-5-document-cloud
+    - The Changelog
+    - 2009-12-06
+  - - "Scaling Rails \xE2\x80\x93 On The Edge \xE2\x80\x93 Part 3"
+    - http://blog.envylabs.com/2009/11/scaling-rails-part-3/
+    - Envy Labs
+    - 2009-11-25
+  - - "Jammit: Industrial Strength Asset Packaging for Rails Apps"
+    - http://www.railsinside.com/plugins/354-jammit-industrial-strength-asset-packaging-for-rails-apps.html
+    - Rails Inside
+    - 2009-11-17
+  - - "New library gives JS what it should have"
+    - http://ajaxian.com/archives/would-you-like-a-_-with-that-new-library-gives-js-what-it-should-have
+    - Ajaxian
+    - 2009-10-29
+  - - "Ruby5 \xE2\x80\x93 Episode 10"
+    - http://ruby5.envylabs.com/episodes/11-episode-10-september-15-2009/stories/86-cloudcrowd-parallel-processing-for-the-rest-of-us
+    - Ruby5
+    - 2009-09-15
+
+github:
+  - - Backbone.js
+    - http://documentcloud.github.com/backbone/
+    - http://github.com/documentcloud/backbone/
+    - "A JavaScript library that helps you structure your client-side code with Models, Collections, and Views. Used heavily in the DocumentCloud workspace."
+  - - "NY Times' Document Viewer"
+    - http://github.com/documentcloud/document-viewer
+    - http://github.com/documentcloud/document-viewer
+    - "We're collaborating with the New York Times on their document viewer technology, a key component of DocumentCloud."
+  - - Docsplit
+    - http://documentcloud.github.com/docsplit/
+    - http://github.com/documentcloud/docsplit/
+    - "A command-line utility and Ruby library that converts documents into PDFs and breaks them apart into images and text."
+  - - Jammit
+    - http://documentcloud.github.com/jammit/
+    - http://github.com/documentcloud/jammit/
+    - "An asset packaging plugin for Rails, which we use to help the DocumentCloud interface load as fast as possible."
+  - - Underscore.js
+    - http://documentcloud.github.com/underscore/
+    - http://github.com/documentcloud/underscore/
+    - "A library of functional programming helpers for JavaScript, intended to complement jQuery."
+  - - CloudCrowd
+    - http://wiki.github.com/documentcloud/cloud-crowd
+    - http://github.com/documentcloud/cloud-crowd
+    - "A parallel processing system that we use to farm out PDF conversion across a number of servers on EC2."
+  - - Pixel Ping
+    - http://documentcloud.github.com/pixel-ping
+    - http://github.com/documentcloud/pixel-ping
+    - "A lightweight pixel-tracking server that we use to keep tabs on embedded documents, and send traffic to contributing organizations."

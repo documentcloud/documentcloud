@@ -12,6 +12,16 @@ Highlight:  #ffffcc
 Divider:    #ccc
 */
 
+#grid {
+  width: 960px; height: 1000px;
+  position: absolute;
+  left: 50%;
+  margin-left: -480px;
+  border: 1px dotted red;
+  z-index: 1000;
+  display: none;
+}
+
 body {
   background: #fff url(/images/embed/home/stripes.png);
   font: 15px/22px Helvetica, Arial, sans-serif;
@@ -50,9 +60,20 @@ h1 {
 #sky {
   position: absolute;
   top: 70px; left: 0; right: 0;
-  height: 350px;
-  background: transparent url(/images/embed/home/sky.png) repeat-x 0 0;
+  height: 150px;
+  background: transparent url(/images/embed/home/sky_small.png) repeat-x 0 0;
   z-index: 3;
+}
+  body.homepage #sky {
+    height: 350px;
+    background: transparent url(/images/embed/home/sky.png) repeat-x 0 0;
+  }
+
+#logo {
+  position: absolute;
+  left: 50%; top: 86px;
+  margin-left: -479px;
+  z-index: 5;
 }
 
 #toolbar {

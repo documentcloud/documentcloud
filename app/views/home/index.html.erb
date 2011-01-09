@@ -6,8 +6,8 @@
 
 <div id="docs_wrapper">
   <img id="document_stack" alt="" src="/images/home/art.png" />
-  <a id="featured_document" target="_blank" href="<%= @document.canonical_url(:html) %>">
-    <img width="212" height="276" src="<%= @document.page_image_url(1, 'normal') %>" />
+  <a id="featured_document" target="_blank" href="<%= @documents.first.canonical_url(:html) %>">
+    <img width="212" height="276" src="<%= @documents.first.page_image_url(1, 'normal') %>" />
   </a>
 </div>
 
