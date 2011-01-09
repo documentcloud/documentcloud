@@ -44,7 +44,7 @@ namespace :app do
   desc "Clears out cached document JS files."
   task :clearcache do
     files = Dir["./public/documents/*.js"]
-    sh "rm ./public/documents/*.js" if files.length
+    sh "rm ./public/documents/*.js" if files.length > 0
   end
 
 end
