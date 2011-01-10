@@ -43,7 +43,7 @@ namespace :app do
   
   desc "Clears out cached document JS files."
   task :clearcache do
-    sh "rm public/documents/*.js"
+    sh "rm -f public/documents/*.js"
   end
 
 end
