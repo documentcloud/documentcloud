@@ -174,11 +174,18 @@ ol {
             background: url(/images/embed/home/tip.png) no-repeat center bottom;
           }
 
+#workspace_link {
+  display: block;
+  position: absolute;
+  width: 314px; height: 262px;
+  top: 115px; left: 50%;
+  margin-left: -480px;
+  z-index: 6;
+}
 #docs_wrapper {
   position: absolute;
   width: 1009px;
-  top: 72px;
-  left: 50%;
+  top: 72px; left: 50%;
   margin-left: -508px;
   z-index: 5;
 }
