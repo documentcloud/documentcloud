@@ -23,26 +23,23 @@
   <div id="sky"></div>
 
   <% if @bodyclass == 'homepage' %>
-  
     <div id="docs_wrapper">
       <img id="document_stack" alt="" src="/images/home/art.png" />
       <a id="featured_document" target="_blank" href="<%= @documents.first.canonical_url(:html) %>">
         <img width="212" height="276" src="<%= @documents.first.page_image_url(1, 'normal') %>" />
       </a>
     </div>
-  
   <% else %>
-
     <a id="logo" href="/"><img src="/images/home/logo.png" alt="DocumentCloud" /></a>
+  <% end %>
 
+  <% if @header %>
+    <h1><%= @header %></h1>
   <% end %>
 
   <div id="container">
-
     <%= render :partial => 'sidebar' %>
-    
     <%= yield %>
-
   </div>
 
   <%= render :partial => 'footer' %>

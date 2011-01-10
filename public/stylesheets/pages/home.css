@@ -52,15 +52,43 @@ a, a:visited {
   }
 
 h1 {
+  position: absolute;
+  width: 960px;
+  text-align: right;
+  z-index: 5;
+  top: 90px; right: 50%;
+  margin-right: -480px;
+  font-weight: 300;
+  font-size: 19px;
+  color: #fff;
+}
+h2 {
   font-weight: 300;
   font-size: 25px;
-  padding: 3px 0 25px 45px;
+  padding: 15px 0 25px 0px;
 }
+  body.homepage h2 {
+    padding: 3px 0 25px 45px;
+  }
+
+p {
+  margin-bottom: 25px;
+}
+
+ul.bullet {
+  margin: 0 0 25px 16px;
+  list-style-type: circle;
+}
+  ul.bullet li {
+    margin-bottom: 15px;
+    width: 500px;
+    line-height: 20px;
+  }
 
 #sky {
   position: absolute;
   top: 70px; left: 0; right: 0;
-  height: 150px;
+  height: 82px;
   background: transparent url(/images/embed/home/sky_small.png) repeat-x 0 0;
   z-index: 3;
 }
@@ -140,8 +168,11 @@ h1 {
 #container {
   position: relative;
   width: 960px;
-  margin: 425px auto 0;
+  margin: 170px auto 0;
 }
+  body.homepage {
+    margin: 425px auto 0;
+  }
 
 #content {
   width: 650px;

@@ -1,21 +1,20 @@
 <%
-  @title = "Open Source"
-  @nav   = 'opensource'
+  @title  = 'Open Source'
+  @nav    = 'opensource'
+  @header = 'All our work is open source software.'
 %>
 
 <div id="content">
 
-  <h1>Get our Code</h1>
-  
   <p>
     We're
     <a href="http://www.pbs.org/idealab/2009/10/documentcloud-going-open-source-every-step-of-the-way302.html">releasing as we go</a>,
     so please follow our work if you're interested in what lies under the hood of
     DocumentCloud.
   </p>
-  
+
   <h2>Projects</h2>
-  <ul>
+  <ul class="bullet">
     <% @github.each do |name, url, github_url, title| %>
     <li>
       <a href="<%= h(url) %>"><%= h(name) %></a>
@@ -24,7 +23,7 @@
     </li>
     <% end %>
   </ul>
-  
+
   <h2>Our Code in the News</h2>
   <%= render :partial => "news" %>
 
