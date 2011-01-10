@@ -198,32 +198,46 @@ ol {
   }
 
 #content {
-  width: 650px;
+  width: 620px;
   padding-bottom: 25px;
 }
+  body.homepage #content {
+    width: 650px;
+  }
+
 #content hr {
   border: 0;
   background: #ccc;
   height: 1px;
   margin-top: 30px;
 }
-  #content .graf {
-    position: relative;
-    margin: 30px 0 15px;
+#content .graf {
+  position: relative;
+  margin: 30px 0 15px;
+}
+  #content .graf.section {
+    margin-top: 25px;
   }
-    #content .graf.section {
-      margin-top: 25px;
-    }
-  #content .visual {
-    float: right;
-    border: 1px solid #ccc;
-    margin: 0 0 0 15px;
-    box-shadow: 0px 0px 3px #ccc; -webkit-box-shadow: 0px 0px 3px #ccc; -moz-box-shadow: 0px 0px 3px #ccc;
+#content .visual {
+  float: right;
+  border: 1px solid #ccc;
+  margin: 0 0 0 15px;
+  box-shadow: 0px 0px 3px #ccc; -webkit-box-shadow: 0px 0px 3px #ccc; -moz-box-shadow: 0px 0px 3px #ccc;
+}
+  #content .visual.left {
+    float: left;
+    margin: 0 20px 0 0;
   }
-    #content .visual.left {
-      float: left;
-      margin: 0 20px 0 0;
-    }
+#content p.bio {
+  position: relative;
+  padding-left: 100px;
+}
+  #content img.headshot {
+    position: absolute;
+    left: 0;
+    border: 3px solid #ddd;
+    width: 80px; height: 80px;
+  }
 
 .number {
   position: absolute;
