@@ -99,7 +99,7 @@ class ApplicationController < ActionController::Base
   def current_account
     return nil unless request.ssl?
     @current_account ||=
-      session['account_id'] ? Account.find_by_id(session['account_id']) : nil
+      session['account_id'] ? Account.active.find_by_id(session['account_id']) : nil
   end
 
   def current_organization

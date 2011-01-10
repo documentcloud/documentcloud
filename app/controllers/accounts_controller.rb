@@ -33,7 +33,7 @@ class AccountsController < ApplicationController
 
   # Requesting /accounts returns the list of accounts in your logged-in organization.
   def index
-    json current_organization.accounts
+    json current_organization.accounts.active
   end
 
   # Does the current request come from a logged-in account?
@@ -84,10 +84,11 @@ class AccountsController < ApplicationController
     json nil
   end
 
-  # Removing an account will preserve their uploaded documents, for the
-  # moment -- perhaps private docs should be destroyed.
+  # Removing an account only changes their role so that they cannot
+  # login. Ther documents, projects, and name remain.
   def destroy
-    current_organization.accounts.find(params[:id]).destroy
+    account = current_organization.accounts.find(params[:id])
+    account.update_attributes :role => Account::DELETED
     json nil
   end
 

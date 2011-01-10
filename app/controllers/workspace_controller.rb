@@ -33,16 +33,8 @@ class WorkspaceController < ApplicationController
   def login
     return redirect_to '/' if current_account && current_account.refresh_credentials(cookies)
     return render unless request.post?
-    next_url = (params[:next] && CGI.unescape(params[:next])) || '/'
-    return redirect_to next_url if Account.log_in(params[:email], params[:password], session, cookies)
-    flash[:error] = true
-    begin
-      if referrer = request.env["HTTP_REFERER"]
-        redirect_to referrer.sub(/^http:/, 'https:')
-      end
-    rescue RedirectBackError => e
-      # Render...
-    end
+    account = Account.log_in(params[:email], params[:password], session)
+    (account && account.active?) ? redirect_to('/') : fail(true)
   end
 
   # Logging out clears your entire session.
