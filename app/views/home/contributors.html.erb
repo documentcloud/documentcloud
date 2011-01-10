@@ -1,0 +1,30 @@
+<%
+  @title  = 'Document Contributors'
+  @header = 'Document Contributors'
+%>
+
+<div id="content">
+
+  <p>The organizations below have agreed to work with us during our development phase. Check out the <a href="/featured">reporting</a> they've already done with DocumentCloud.</p> 
+  		
+  <p>If you have original documents and you're interested in using DocumentCloud -- it's free -- <a href="/contact">contact us</a>.</p>
+  
+  <h2>Initial Partners</h2>
+  
+  <ul class="bullet">
+    <% @partners.each do |name, url| %>
+      <li><a href="<%= h(url) %>"><%= h(name) %></a></li>
+    <% end %>
+  </ul>
+  
+  <h2>Contributing Organizations</h2>
+  
+  <ul class="bullet">
+    <% @contributors.each do |name, url, title| %>
+      <%= p(name.inspect) %>
+      <li><a href="<%= h(url) %>"<%=if title then " title=\"#{h(title)}\"" end %>><%= h(name) %></a></li>
+    <% end %>
+  </ul>
+  
+</div>
+

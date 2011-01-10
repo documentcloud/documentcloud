@@ -12,6 +12,12 @@ class HomeController < ApplicationController
     @github = yaml['github']
   end
 
+  def contributors
+    yaml          = yaml_for('contributors')
+    @partners     = yaml['partners']
+    @contributors = yaml['contributors']
+  end
+
 
   private
 
