@@ -176,7 +176,7 @@ _.extend(dc.ui.Dialog, {
       id       : 'contact_us',
       text     : 'Use this form (or email to <a href="mailto:support@documentcloud.org">support@documentcloud.org</a>) to contact us for assistance. \
                   If you need to speak to someone immediately, you can call us at (646) 450-2162.<br /> \
-                  See <a href="http://www.documentcloud.org/contact">documentcloud.org/contact</a> for more ways to get in touch.',
+                  See <a href="/contact">documentcloud.org/contact</a> for more ways to get in touch.',
       saveText : 'Send'
     });
   },

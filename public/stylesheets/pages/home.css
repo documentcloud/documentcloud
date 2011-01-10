@@ -69,15 +69,17 @@ h1 {
 h2 {
   font-weight: 300;
   font-size: 22px;
-  padding: 15px 0 25px 0px;
+  margin-top: 30px;
+  padding: 0 0 20px 0px;
 }
   body.homepage h2 {
     font-size: 25px;
+    margin-top: 0;
     padding: 3px 0 25px 45px;
   }
 
 p {
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 ul.bullet {
@@ -188,6 +190,7 @@ ol {
 #container {
   position: relative;
   width: 960px;
+  min-height: 760px;
   margin: 170px auto 0;
 }
   body.homepage {
