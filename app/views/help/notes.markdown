@@ -22,3 +22,4 @@ Still have questions about annotating documents? Don't hesitate to [contact us][
 
 [Annotations]: /images/help/document_annotations.jpg
 [Notes Link]: /images/help/notes_link.jpg
+[contact us]: javascript:dc.ui.Dialog.contact()

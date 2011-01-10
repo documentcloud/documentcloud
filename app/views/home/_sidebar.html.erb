@@ -1,4 +1,6 @@
 <div id="sidebar" class="sans">
+  
+  <%= render :partial => 'help_navigation' if @nav == 'guide' %>
 
   <div id="search_wrapper" class="sidebar_section gradient_light">
     <div id="search_desc">
@@ -26,7 +28,7 @@
   </div>
 
   <div id="news" class="sidebar_section gradient_light">
-    <div id="news_desc">
+    <div class="section_title">
       Latest News
     </div>
     <ul>

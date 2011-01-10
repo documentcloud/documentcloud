@@ -44,10 +44,10 @@ body {
   text-indent: -10000px;
 }
 
-a, a:visited {
+a, a:visited, #help a, #help a:visited {
   color: #344b6c;
 }
-  a:hover, a:active {
+  a:hover, a:active, #help a:hover, #help a:active {
     color: #282d66;
   }
   a.imagelink {
@@ -66,11 +66,12 @@ h1 {
   font-size: 19px;
   color: #fff;
 }
-h2 {
+h2, #help h1, #help h2 {
+  position: static;
   font-weight: 300;
+  text-align: left;
   font-size: 22px;
-  margin-top: 30px;
-  padding: 0 0 20px 0px;
+  margin: 30px 0 20px 0;
 }
   body.homepage h2 {
     font-size: 25px;
@@ -190,7 +191,6 @@ ol {
 #container {
   position: relative;
   width: 960px;
-  min-height: 760px;
   margin: 170px auto 0;
 }
   body.homepage {
@@ -278,8 +278,8 @@ ol {
 
 #sidebar {
   width: 260px;
-  position: absolute;
-  right: 0;
+  float: right;
+  margin-bottom: 25px;
   font-size: 11px;
   line-height: 14px;
   color: #445056;
@@ -291,10 +291,28 @@ ol {
     border-radius: 3px;
     box-shadow: 0px 0px 3px #ccc; -webkit-box-shadow: 0px 0px 3px #777; -moz-box-shadow: 0px 0px 3px #ccc;
   }
-    #sidebar .minibutton {
-      display: inline-block;
-      margin: 10px auto 0;
+  #sidebar .minibutton {
+    display: inline-block;
+    margin: 10px auto 0;
+  }
+  #sidebar .section_title {
+    color: #232323;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  #sidebar ul {
+    text-align: left;
+  }
+    #sidebar li {
+      margin-top: 10px;
     }
+      #sidebar .date {
+        white-space: nowrap;
+        font-size: 9px;
+        text-transform: uppercase;
+        color: #777;
+      }
   #search_wrapper {
   }
     #search_desc {
@@ -302,27 +320,6 @@ ol {
     }
     #search_box_wrapper {
     }
-  #news {
-    font-size: 11px;
-  }
-    #news_desc {
-      color: #232323;
-      font-size: 13px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-    #news ul {
-      text-align: left;
-    }
-      #news li {
-        margin-top: 10px;
-      }
-        #news .date {
-          white-space: nowrap;
-          font-size: 9px;
-          text-transform: uppercase;
-          color: #777;
-        }
 
 #footer {
   position: relative;
@@ -355,3 +352,28 @@ ol {
     margin-top: 25px;
     text-align: center;
   }
+
+#content #help {
+  font: inherit;
+  display: block;
+  padding: 0;
+  max-width: inherit;
+  color: #000;
+}
+  #content #help ul {
+    margin-left: 0;
+    padding-left: 15px;
+    color: #000;
+  }
+    #content #help ul li {
+      padding-left: 5px;
+    }
+  #content #help table td, #help table th {
+    font-size: 14px;
+  }
+    #content #help .ajax_only {
+      display: none;
+    }
+    #content #help .static_only {
+      display: inline;
+    }

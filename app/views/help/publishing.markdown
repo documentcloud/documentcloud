@@ -71,3 +71,4 @@ Still have questions about publishing documents? Don't hesitate to [contact us][
 [ProPublica]: http://www.propublica.org/documents/item/magnetars-responses-to-our-questions
 [this document from the Commercial Appeal]: http://www.commercialappeal.com/data/documents/bass-pro-lease/
 [this ballot from WNYC]: http://beta.wnyc.org/articles/its-free-country/2010/sep/07/new-nyc-ballot-could-cause-confusion/
+[contact us]: javascript:dc.ui.Dialog.contact()

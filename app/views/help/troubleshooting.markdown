@@ -39,3 +39,6 @@ Still having trouble with a document? Don't hesitate to [contact us][].
 [PDFill]: http://pdfill.com/
 [qpdf]: http://qpdf.sourceforge.net/
 [linearization]: http://qpdf.sourceforge.net/files/qpdf-manual.html#ref.linearization
+[contact us]: javascript:dc.ui.Dialog.contact()
+[let us know]: javascript:dc.ui.Dialog.contact()
+

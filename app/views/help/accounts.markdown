@@ -11,3 +11,5 @@ You can also tweak your name here (did we call you "David" when really your byli
 Still have questions about accounts? Don't hesitate to [contact us][].
 
 [Gravatar]: http://gravatar.com
+[contact us]: javascript:dc.ui.Dialog.contact()
+

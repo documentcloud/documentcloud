@@ -34,3 +34,4 @@ Still have questions about uploading documents? Don't hesitate to [contact us][]
 [OCR]: http://en.wikipedia.org/wiki/Optical_character_recognition
 [Tesseract]: http://code.google.com/p/tesseract-ocr/
 [bulk upload API]: http://www.documentcloud.org/api#upload
+[contact us]: javascript:dc.ui.Dialog.contact()

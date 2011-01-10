@@ -23,3 +23,4 @@ Your "private" notes will always be private. Public notes, on the other hand, ar
 Still have questions about privacy and permissions? Don't hesitate to [contact us][].
 
 [terms of service]: http://www.opencalais.com/terms
+[contact us]: javascript:dc.ui.Dialog.contact()

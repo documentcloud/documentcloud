@@ -86,6 +86,12 @@ ActionController::Routing::Routes.draw do |map|
     static.help           '/help/:page',    :action => 'help'
   end
 
+  # Home pages.
+  map.with_options :controller => 'home' do |home|
+    home.help           '/home/help',          :action => 'help'
+    home.help           '/home/help/:page',    :action => 'help'
+  end
+
   # Redirects.
   map.with_options :controller => 'redirect' do |move|
     move.faq              '/faq.php',       :url => '/faq'

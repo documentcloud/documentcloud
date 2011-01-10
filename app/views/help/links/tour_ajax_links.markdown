@@ -6,4 +6,3 @@
 [annotating]: #help/notes
 [publishing]: #help/publishing
 [uploading]: #help/uploading
-[contact us]: javascript:dc.ui.Dialog.contact()

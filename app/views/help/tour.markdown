@@ -40,3 +40,4 @@ Questions? Don't hesitate to [contact us][]. And as you go, feel free to [reques
 
 
 [request features and report bugs]: http://documentcloud.uservoice.com
+[contact us]: javascript:dc.ui.Dialog.contact()
