@@ -45,10 +45,10 @@ body {
 }
 
 a, a:visited, #help a, #help a:visited {
-  color: #344b6c;
+  color: #282d66;
 }
   a:hover, a:active, #help a:hover, #help a:active {
-    color: #282d66;
+    color: #000033;
   }
   a.imagelink {
     padding: 0;
@@ -305,8 +305,8 @@ ol {
     margin: 10px auto 0;
   }
   #sidebar .section_title {
-    color: #232323;
-    font-size: 13px;
+    color: #333;
+    font-size: 12px;
     font-weight: bold;
     margin-bottom: 15px;
   }
@@ -316,12 +316,6 @@ ol {
     #sidebar li {
       margin-top: 10px;
     }
-      #sidebar .date {
-        white-space: nowrap;
-        font-size: 9px;
-        text-transform: uppercase;
-        color: #777;
-      }
   #search_wrapper {
   }
     #search_desc {
@@ -350,15 +344,15 @@ ol {
     #logos a.more {
       position: absolute;
       right: 0px;
-      top: 35px;
+      top: 37px;
     }
   #knight_credit {
     display: block;
     width: 150px; height: 23px;
-    margin: 10px auto 0;
+    margin: 0 auto;
   }
   #footer_links {
-    margin-top: 25px;
+    margin: 8px 0 25px;
     text-align: center;
   }
 
