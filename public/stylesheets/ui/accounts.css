@@ -162,11 +162,17 @@
   }
   .share_dialog td {
     white-space: normal;
-    height: 46px;
+/*    height: 46px;*/
     vertical-align: middle;
   }
   .share_dialog .text_input {
     width: auto;
+  }
+  .share_dialog .email .text_input.dark.small {
+    margin: 0;
+  }
+  .share_dialog .text_input.dark.small input {
+    height: 15px;
   }
   .share_dialog .edit_column {
     width: 16px;
