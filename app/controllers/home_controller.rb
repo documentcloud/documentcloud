@@ -17,6 +17,10 @@ class HomeController < ApplicationController
     @github = yaml['github']
   end
 
+  def news
+    @news = date_sorted(yaml_for('news'))
+  end
+
   def contributors
     yaml          = yaml_for('contributors')
     @partners     = yaml['partners']

@@ -58,10 +58,10 @@ a, a:visited, #help a, #help a:visited {
 h1 {
   position: absolute;
   width: 960px;
-  text-align: right;
+  text-align: left;
   z-index: 5;
-  top: 92px; right: 50%;
-  margin-right: -480px;
+  top: 92px; left: 50%;
+  margin-left: -480px;
   font-weight: 300;
   font-size: 19px;
   color: #fff;
@@ -122,8 +122,8 @@ ol {
 
 #logo {
   position: absolute;
-  left: 50%; top: 86px;
-  margin-left: -479px;
+  right: 50%; top: 86px;
+  margin-right: -479px;
   z-index: 5;
 }
 
