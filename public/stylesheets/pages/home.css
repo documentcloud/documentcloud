@@ -123,14 +123,6 @@ h1 {
             background: url(/images/embed/home/tip.png) no-repeat center bottom;
           }
 
-#knightfdn {
-  display: none;
-  width: 156px; height: 23px;
-  position: absolute;
-  top: 320px; right: 15px;
-  background: url(/images/embed/home/knight.png);
-  z-index: 5;
-}
 #docs_wrapper {
   position: absolute;
   width: 1009px;
