@@ -6,7 +6,6 @@ ActionController::Routing::Routes.draw do |map|
   # Journalist workspace and surrounding HTML.
   map.with_options :controller => 'workspace' do |main|
     main.root
-    main.home       '/future_home', :action => 'home' # re-enable this route after launch, until then, it's static/home
     main.results    '/results',     :action => 'index'
     main.signup     '/signup',      :action => 'signup_info'
     main.login      '/login',       :action => 'login'
