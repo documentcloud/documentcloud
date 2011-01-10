@@ -37,9 +37,6 @@ stylesheets:
     - public/stylesheets/pages/empty.css
   admin:
     - public/stylesheets/pages/admin.css
-  static:
-    - public/stylesheets/common/reset.css
-    - public/stylesheets/pages/static.css
   home:
     - public/stylesheets/pages/home.css
 

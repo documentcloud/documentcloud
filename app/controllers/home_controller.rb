@@ -46,7 +46,7 @@ class HomeController < ApplicationController
   end
 
   def yaml_for(action)
-    YAML.load_file("#{Rails.root}/app/views/static/#{action}.yml")
+    YAML.load_file("#{Rails.root}/app/views/home/#{action}.yml")
   end
 
 end

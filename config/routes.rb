@@ -70,26 +70,20 @@ ActionController::Routing::Routes.draw do |map|
   # Projects.
   map.resources :projects, :has_many => :collaborators, :member => {:documents => :get}
 
-  # Static pages.
-  map.with_options :controller => 'static' do |static|
-    static.contributors   '/contributors',  :action => 'contributors'
-    static.faq            '/faq',           :action => 'faq'
-    static.terms          '/terms',         :action => 'terms'
-    static.featured       '/featured',      :action => 'featured'
-    static.privacy        '/privacy',       :action => 'privacy'
-    static.home           '/home',          :action => 'home'
-    static.news           '/news',          :action => 'news'
-    static.opensource     '/opensource',    :action => 'opensource'
-    static.about          '/about',         :action => 'about'
-    static.contact        '/contact',       :action => 'contact'
-    static.help           '/help',          :action => 'help'
-    static.help           '/help/:page',    :action => 'help'
-  end
-
   # Home pages.
   map.with_options :controller => 'home' do |home|
-    home.help           '/home/help',          :action => 'help'
-    home.help           '/home/help/:page',    :action => 'help'
+    home.contributors   '/contributors',  :action => 'contributors'
+    home.faq            '/faq',           :action => 'faq'
+    home.terms          '/terms',         :action => 'terms'
+    home.featured       '/featured',      :action => 'featured'
+    home.privacy        '/privacy',       :action => 'privacy'
+    home.home           '/home',          :action => 'index'
+    home.news           '/news',          :action => 'news'
+    home.opensource     '/opensource',    :action => 'opensource'
+    home.about          '/about',         :action => 'about'
+    home.contact        '/contact',       :action => 'contact'
+    home.help           '/help',          :action => 'help'
+    home.help           '/help/:page',    :action => 'help'
   end
 
   # Redirects.
