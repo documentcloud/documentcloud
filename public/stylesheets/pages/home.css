@@ -296,7 +296,9 @@ ol {
     padding: 12px 15px;
     text-align: center;
     border-radius: 3px;
-    box-shadow: 0px 0px 3px #777; -webkit-box-shadow: 0px 0px 3px #777; -moz-box-shadow: 0px 0px 3px #777;
+    border: 1px solid #ccc;
+    background: #fff url(/images/embed/home/sidebar.png) repeat-x top left;
+    box-shadow: 0px 0px 3px #ccc; -webkit-box-shadow: 0px 0px 3px #ccc; -moz-box-shadow: 0px 0px 3px #ccc;
   }
   #sidebar .minibutton {
     display: inline-block;
