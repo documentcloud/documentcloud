@@ -102,6 +102,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       this.$('.account_list tr:not(.reviewer_management)').remove();
       this.$('.account_list').prepend(views);
       this.$('.document_reviewers_empty').toggle(!_.keys(this.renderedAccounts).length);
+      this._cancelAddReviewer();
       this.center();
     }
   },
@@ -208,9 +209,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       url : '/documents/reviewers/add',
       type : 'POST',
       data : {
-        email : email,
-        first_name : this.$('.reviewer_management input[name=first_name]').val(),
-        last_name : this.$('.reviewer_management input[name=last_name]').val(),
+        email : Inflector.trim(email),
+        first_name : Inflector.trim(this.$('.reviewer_management input[name=first_name]').val()),
+        last_name : Inflector.trim(this.$('.reviewer_management input[name=last_name]').val()),
         documents : this.docs.map(function(doc) { return doc.id; })
       },
       success: _.bind(function(resp) { this._onAddSuccess(resp, callback); }, this),
@@ -245,7 +246,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       return error.indexOf("first name") != -1 || error.indexOf("last name") != -1;
     })) {
       this._showReviewerNameInputs();
-      this.$('.reviewer_management .error').text("Please enter in the full name for this reviewer.");
+      this.$('.reviewer_management .error').text("Please provide reviewer's full name.");
     } else if (resp.errors) {
       this.$('.reviewer_management .error').text(resp.errors[0]);
     } else {
@@ -368,7 +369,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       data : {
         accounts  : accountIds,
         documents : documentIds,
-        message   : message
+        message   : Inflector.trim(message)
       },
       success: _.bind(function(resp) {
         var text = [
