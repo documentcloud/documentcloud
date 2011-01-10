@@ -24,7 +24,7 @@ Divider:    #ccc
 
 body {
   background: #fff url(/images/embed/home/stripes.png);
-  font: 13px/18px Helvetica, Arial, sans-serif;
+  font: 13px/18px Helvetica, Segoe, "Segoe UI", Arial, sans-serif;
   color: #232323;
 }
   body.homepage {
