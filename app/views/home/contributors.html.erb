@@ -21,7 +21,6 @@
   
   <ul class="bullet">
     <% @contributors.each do |name, url, title| %>
-      <%= p(name.inspect) %>
       <li><a href="<%= h(url) %>"<%=if title then " title=\"#{h(title)}\"" end %>><%= h(name) %></a></li>
     <% end %>
   </ul>
