@@ -24,9 +24,13 @@ Divider:    #ccc
 
 body {
   background: #fff url(/images/embed/home/stripes.png);
-  font: 15px/22px Helvetica, Arial, sans-serif;
+  font: 13px/18px Helvetica, Arial, sans-serif;
   color: #232323;
 }
+  body.homepage {
+    font-size: 15px;
+    line-height: 22px;
+  }
 
 .sans {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
@@ -56,7 +60,7 @@ h1 {
   width: 960px;
   text-align: right;
   z-index: 5;
-  top: 90px; right: 50%;
+  top: 92px; right: 50%;
   margin-right: -480px;
   font-weight: 300;
   font-size: 19px;
@@ -64,10 +68,11 @@ h1 {
 }
 h2 {
   font-weight: 300;
-  font-size: 25px;
+  font-size: 22px;
   padding: 15px 0 25px 0px;
 }
   body.homepage h2 {
+    font-size: 25px;
     padding: 3px 0 25px 45px;
   }
 
@@ -82,7 +87,22 @@ ul.bullet {
   ul.bullet li {
     margin-bottom: 15px;
     width: 500px;
-    line-height: 20px;
+  }
+
+ol {
+  margin: 0 0 25px 16px;
+}
+  ol.decimal {
+    list-style-type: decimal;
+  }
+  ol.lower_alpha {
+    list-style-type: lower-alpha;
+  }
+  ol.lower_roman {
+    list-style-type: lower-roman;
+  }
+  ol li {
+    margin-bottom: 15px;
   }
 
 #sky {
