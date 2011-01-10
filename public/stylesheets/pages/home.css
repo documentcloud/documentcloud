@@ -293,7 +293,7 @@ ol {
 }
   #sidebar .sidebar_section {
     margin-bottom: 30px;
-    padding: 12px 15px;
+    padding: 12px 15px 15px;
     text-align: center;
     border-radius: 3px;
     border: 1px solid #ccc;
