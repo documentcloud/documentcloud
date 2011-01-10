@@ -75,7 +75,7 @@ h2, #help h1, #help h2 {
 }
   body.homepage h2 {
     font-size: 25px;
-    margin-top: 0;
+    margin: 0;
     padding: 3px 0 25px 45px;
   }
 
@@ -170,7 +170,7 @@ ol {
           display: block;
           height: 70px;
         }
-          #nav li:hover .mark, #nav .mark.active {
+          #nav .mark.active {
             background: url(/images/embed/home/tip.png) no-repeat center bottom;
           }
 
@@ -375,12 +375,9 @@ ol {
     #content #help ul li {
       padding-left: 5px;
     }
-  #content #help table td, #help table th {
-    font-size: 14px;
+  #content #help .ajax_only {
+    display: none;
   }
-    #content #help .ajax_only {
-      display: none;
-    }
-    #content #help .static_only {
-      display: inline;
-    }
+  #content #help .static_only {
+    display: inline;
+  }
