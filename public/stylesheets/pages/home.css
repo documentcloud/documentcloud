@@ -278,7 +278,12 @@ h1 {
       right: 0px;
       top: 35px;
     }
+  #knight_credit {
+    display: block;
+    width: 150px; height: 23px;
+    margin: 10px auto 0;
+  }
   #footer_links {
-    margin-top: 15px;
+    margin-top: 25px;
     text-align: center;
   }
