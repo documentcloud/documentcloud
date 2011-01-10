@@ -378,3 +378,7 @@
   .share_dialog.p1_step .step_two {
     display: none;
   }
+  .share_dialog .icon.spinner_dark {
+    top: 30px;
+    bottom: none;
+  }
