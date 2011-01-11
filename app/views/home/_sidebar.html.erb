@@ -16,14 +16,22 @@
     </div>
   </div>
 
-  <div id="join" class="sidebar_section">
-    DocumentCloud is a tool for journalists.<br />
-    If you're regularly working with primary source documents, we can help.
-    <div class="minibutton default" id="join_button">Join DocumentCloud</div>
-  </div>
-
-  <% if !@current_account %>
-    <div id="login" class="sidebar_section">
+  <% if @current_account %>
+  
+    <div class="sidebar_section">
+      Welcome, <%= @current_account.full_name %>. You're already logged in to DocumentCloud.
+      <a href="/"><div class="minibutton default">Enter the Workspace</div></a>
+    </div>
+    
+  <% else %>
+  
+    <div id="join" class="sidebar_section">
+      DocumentCloud is a tool for journalists.<br />
+      If you're regularly working with primary source documents, we can help.
+      <a href="/contact"><div class="minibutton default">Join DocumentCloud</div></a>
+    </div>
+  
+    <div class="sidebar_section">
       <% if flash[:error] %>
         <div class="error">
           Invalid email or password.
@@ -42,10 +50,11 @@
             <input type="password" name="password" placeholder="Password&hellip;" id="account_password" />
           </div>
         </div>
-        <div class="minibutton" id="login_button">Log in now</div>
+        <div class="minibutton" id="login_button">Log in</div>
         <input type="submit" class="hidden_submit" />
       </form>
     </div>
+    
   <% end %>
 
   <div id="news" class="sidebar_section">
@@ -65,7 +74,7 @@
   <div id="contact" class="sidebar_section">
     Questions, comments, or concerns?<br />
     Don't hesitate to get in touch.
-    <div class="minibutton" id="contact_button">Contact us</div>
+    <div class="minibutton" id="contact_button">Contact Us</div>
   </div>
 
 </div>
