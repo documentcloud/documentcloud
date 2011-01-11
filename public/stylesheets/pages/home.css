@@ -310,6 +310,10 @@ ol {
     font-weight: bold;
     margin-bottom: 15px;
   }
+  #sidebar .error {
+    margin: 0 0 15px;
+    color: #aa2222;
+  }
   #sidebar ul {
     text-align: left;
   }

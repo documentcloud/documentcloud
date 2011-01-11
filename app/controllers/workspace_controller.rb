@@ -29,22 +29,19 @@ class WorkspaceController < ApplicationController
   def login
     return redirect_to '/' if current_account && !current_account.reviewer?
     return render unless request.post?
-    account = Account.log_in(params[:email], params[:password], session)
-    return redirect_to '/' if account
-    fail true
+    return redirect_to '/' if Account.log_in(params[:email], params[:password], session)
+    flash[:error] = true
+    begin
+      redirect_to :back
+    rescue RedirectBackError => e
+      # Render...
+    end
   end
 
   # Logging out clears your entire session.
   def logout
     reset_session
     redirect_to '/'
-  end
-
-
-  private
-
-  def fail(message)
-    @failure = message
   end
 
 end

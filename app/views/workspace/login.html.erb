@@ -5,7 +5,7 @@
 
 <div id="full_screen_form" class="full_page_background">
   <form action="/login" method="POST">
-    <% if @failure %>
+    <% if flash[:error] %>
       <div class="form_error login_error">
         <span>
           Incorrect email address or password.
