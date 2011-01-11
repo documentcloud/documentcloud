@@ -30,7 +30,8 @@ class WorkspaceController < ApplicationController
     return redirect_to '/' if current_account && !current_account.reviewer?
     return render unless request.post?
     account = Account.log_in(params[:email], params[:password], session)
-    account ? redirect_to('/') : fail(true)
+    return redirect_to '/' if account
+    fail true
   end
 
   # Logging out clears your entire session.

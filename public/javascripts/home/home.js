@@ -10,12 +10,19 @@ $(function() {
       'focus #search_box':     'addFocus',
       'blur #search_box':      'removeFocus',
       'click .cancel_search':  'cancelSearch',
-      'click #contact_button': 'contact'
+      'click #contact_button': 'contact',
+      'click #login_button':   'login'
     },
 
     initialize : function() {
-      this.box = $('#search_box');
-      this.box.placeholder();
+      this.box            = $('#search_box');
+      this.emailInput     = $('#account_email');
+      this.passwordInput  = $('#account_password');
+      _.invoke([this.box, this.emailInput, this.passwordInput], 'placeholder');
+    },
+
+    login : function() {
+      $('#login_form').submit();
     },
 
     contact : function() {

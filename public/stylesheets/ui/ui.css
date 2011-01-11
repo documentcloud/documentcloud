@@ -93,7 +93,7 @@ div.text_input {
   }
   div.text_input.light {
     height: 23px;
-    background: none;
+    background: #fff;
     border: 1px solid #d0d0d0;
     -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   }

@@ -1,5 +1,5 @@
 <div id="sidebar" class="sans">
-  
+
   <%= render :partial => 'help_navigation' if @nav == 'guide' %>
 
   <div id="search_wrapper" class="sidebar_section">
@@ -23,8 +23,19 @@
   </div>
 
   <div id="login" class="sidebar_section">
-    Already a DocumentCloud member?
-    <a href="/login"><div class="minibutton" id="login_button">Log in now</div></a>
+    <form id="login_form" action="<%= DC.server_root(:ssl => true) %>/login" method="POST">
+      <div class="text_input first light">
+        <div class="inner">
+         <input type="text" name="email" placeholder="Email&hellip;" id="account_email" />
+        </div>
+      </div>
+      <div class="text_input light">
+        <div class="inner">
+          <input type="password" name="password" placeholder="Password&hellip;" id="account_password" />
+        </div>
+      </div>
+      <div class="minibutton" id="login_button">Log in now</div>
+    </form>
   </div>
 
   <div id="news" class="sidebar_section">
