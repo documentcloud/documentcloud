@@ -1,16 +1,16 @@
-<%= @inviter_account.full_name %> at <%= @organization_name %> has invited you to review <%= @document.title %>. Use the URL below to access the document.
+<%= @inviter_account.full_name %> at <%= @organization_name %> has invited you to review "<%= @document.title %>." Use the URL below to access the document.
 
 <%= DC.server_root(:ssl => false) %>/documents/<%= @document.id %>-<%= @document.slug %>.html?key=<%= @key %>
+
+<%- if @message && @message.length > 1 -%>
+<%= @inviter_account.full_name %> provided the following instructions:
+<%= @message %>  
+
+<%- end -%>
 
 Please do not share this URL. If you have colleagues who you think should also take a closer look, you can reach <%= @inviter_account.full_name %> at <%= @inviter_account.email %>.
 
 <%= @organization_name %> is using DocumentCloud to analyze and annotate source documents. You can find out more about the DocumentCloud project at http://www.documentcloud.org.
 
-<%- if @message && @message.length > 1 -%>
---
-<%= @message %>  
---
-
-<%- end -%>
 Jeremy, Amanda & Sam
 DocumentCloud
