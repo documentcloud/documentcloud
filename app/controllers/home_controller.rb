@@ -8,6 +8,7 @@ class HomeController < ApplicationController
   MARKDOWN_LINK_REPLACER = /\[([^\]]*?)\]\[\]/i
 
   before_filter :current_account
+  before_filter :bouncer if Rails.env.staging?
 
   def index
     @documents = Document.random(:conditions => {:access => PUBLIC}, :limit => 1)
