@@ -27,6 +27,13 @@ select {
 .float_right {
   float: right;
 }
+input.hidden_submit {
+  display: block;
+  position: absolute;
+  width: 0; height: 0;
+  visibility: hidden;
+  z-index: -10;
+}
 
 /*------------------------------ Gradients ---------------------------------*/
 .gradient_light {

@@ -15,6 +15,7 @@ $(function() {
     },
 
     initialize : function() {
+      dc.ui.notifier      = new dc.ui.Notifier();
       this.box            = $('#search_box');
       this.emailInput     = $('#account_email');
       this.passwordInput  = $('#account_password');

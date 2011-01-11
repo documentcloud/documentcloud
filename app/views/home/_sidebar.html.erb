@@ -22,28 +22,31 @@
     <div class="minibutton default" id="join_button">Join DocumentCloud</div>
   </div>
 
-  <div id="login" class="sidebar_section">
-    <% if flash[:error] %>
-      <div class="error">
-        Invalid email or password.
-        <br />
-        <a href="/reset_password">Forgot your password?</a>
-      </div>
-    <% end %>
-    <form id="login_form" action="<%= DC.server_root(:ssl => true) %>/login" method="POST">
-      <div class="text_input first light">
-        <div class="inner">
-         <input type="text" name="email" placeholder="Email&hellip;" id="account_email" />
+  <% if !@current_account %>
+    <div id="login" class="sidebar_section">
+      <% if flash[:error] %>
+        <div class="error">
+          Invalid email or password.
+          <br />
+          <a href="/reset_password">Forgot your password?</a>
         </div>
-      </div>
-      <div class="text_input light">
-        <div class="inner">
-          <input type="password" name="password" placeholder="Password&hellip;" id="account_password" />
+      <% end %>
+      <form id="login_form" action="<%= DC.server_root(:ssl => true) %>/login" method="POST">
+        <div class="text_input first light">
+          <div class="inner">
+           <input type="text" name="email" placeholder="Email&hellip;" id="account_email" />
+          </div>
         </div>
-      </div>
-      <div class="minibutton" id="login_button">Log in now</div>
-    </form>
-  </div>
+        <div class="text_input light">
+          <div class="inner">
+            <input type="password" name="password" placeholder="Password&hellip;" id="account_password" />
+          </div>
+        </div>
+        <div class="minibutton" id="login_button">Log in now</div>
+        <input type="submit" class="hidden_submit" />
+      </form>
+    </div>
+  <% end %>
 
   <div id="news" class="sidebar_section">
     <div class="section_title">

@@ -7,6 +7,8 @@ class HomeController < ApplicationController
   # Regex that matches missed markdown links in `[title][]` format.
   MARKDOWN_LINK_REPLACER = /\[([^\]]*?)\]\[\]/i
 
+  before_filter :current_account
+
   def index
     @documents = Document.random(:conditions => {:access => PUBLIC}, :limit => 1)
   end

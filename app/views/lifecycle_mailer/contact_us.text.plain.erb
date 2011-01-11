@@ -1,3 +1,7 @@
+<% if @account -%>
 <%= @account.rfc_email %> from <%= @account.organization_name %> wrote:
+<% else -%>
+<%= @email %> wrote:
+<% end -%>
 
 <%= @message %>

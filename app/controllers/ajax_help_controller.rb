@@ -18,10 +18,8 @@ class AjaxHelpController < ApplicationController
 
   layout false
 
-  before_filter :login_required, :only => [:contact_us]
-
   def contact_us
-    LifecycleMailer.deliver_contact_us(current_account, params[:message])
+    LifecycleMailer.deliver_contact_us(current_account, params)
     json nil
   end
 

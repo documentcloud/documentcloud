@@ -106,6 +106,12 @@ dc.ui.Dialog = Backbone.View.extend({
     return false;
   },
 
+  validateEmail : function(email) {
+    if (dc.app.validator.check(email, 'email')) return true;
+    this.error('Please enter a valid email address.');
+    return false;
+  },
+
   _returnCloses : function() {
     return this.options.mode == 'alert' || this.options.mode == 'short_prompt';
   },
@@ -167,18 +173,30 @@ _.extend(dc.ui.Dialog, {
   },
 
   contact : function() {
-    dc.ui.Dialog.prompt('Contact Us', '', function(message) {
-      $.post('/ajax_help/contact_us', {message : message}, function() {
+    var callback = function(dialog) {
+      var params = {message : dialog.val()};
+      if (!dc.account) {
+        params.email = dialog.$('.contact_email').val();
+        if (!dialog.validateEmail(params.email)) return false;
+      }
+      $.post('/ajax_help/contact_us', params, function() {
         dc.ui.notifier.show({mode : 'info', text : 'Your message was sent successfully.'});
       });
       return true;
-    }, {
-      id       : 'contact_us',
-      text     : 'Use this form (or email to <a href="mailto:support@documentcloud.org">support@documentcloud.org</a>) to contact us for assistance. \
-                  If you need to speak to someone immediately, you can call us at (646) 450-2162.<br /> \
-                  See <a href="/contact">documentcloud.org/contact</a> for more ways to get in touch.',
-      saveText : 'Send'
+    };
+    var dialog = new dc.ui.Dialog({
+      id        : 'contact_us',
+      mode      : 'custom',
+      title     : 'Contact Us',
+      saveText  : 'Send',
+      onConfirm : callback
     });
+    dialog.render();
+    dialog.setMode('prompt', 'dialog');
+    dialog.$('.custom').html(JST['common/contact']());
+    dialog.contentEl = dialog.$('.content');
+    dialog.$('input, textarea').placeholder();
+    dialog.center();
   },
 
   progress : function(text, options) {

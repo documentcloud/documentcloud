@@ -12,6 +12,9 @@
     color: #999;
     text-decoration: underline;
   }
+  #contact_us .contact_email {
+    margin-bottom: 15px;
+  }
 
 #help {
   color: #555;

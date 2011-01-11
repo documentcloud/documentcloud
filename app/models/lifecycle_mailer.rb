@@ -42,12 +42,13 @@ class LifecycleMailer < ActionMailer::Base
 
   # When someone sends a message through the "Contact Us" form, deliver it to
   # us via email.
-  def contact_us(account, message)
-    subject     "DocumentCloud message from #{account.full_name}"
+  def contact_us(account, params)
+    name = account ? account.full_name : params[:email]
+    subject     "DocumentCloud message from #{name}"
     from        NO_REPLY
     recipients  SUPPORT
-    body        :account => account, :message => message
-    @headers['Reply-to'] = account.email
+    body        :account => account, :message => params[:message], :email => params[:email]
+    @headers['Reply-to'] = account ? account.email : params[:email]
   end
 
   # Mail a notification of an exception that occurred in production.
