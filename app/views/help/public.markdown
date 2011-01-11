@@ -55,8 +55,7 @@ account                     | Specify an account id to see documents uploaded by
 group                       | If you know the short name of an organization, you can search for documents uploaded by anyone in that newsroom. For example: [group: chicago-tribune][]. You can also filter by clicking on the organization's name in the document list.
 project                     | Restrict your search to just the documents in one of your projects, by entering the title. This is the same as clicking on the project in the "Documents" tab.
 projectid                   | Restrict your search to a particular project, by a project's canonical identifier. Useful for filtering public API calls. You can view this ID by opening the project's edit dialog. For example: [projectid: 6-the-financial-crisis][]
-access                      | Search for only documents that have a particular access level (one of "public", "private", "organization"). For example, to view all of your private documents: [access: private][]
-filter                      | Filter documents by interesting criteria (one of "published", "unpublished", "annotated", or "popular"). For example, to view all published documents: [filter: published][]
+access                      | Search for only documents that have a particular access level (one of "public", "private", "organization", "published", or "unpublished"). For example, to view all of your private documents: [access: private][]
  
 ## Searching with Entities
  
@@ -92,7 +91,10 @@ Questions? Don't hesitate to [contact us][]. And as you go, feel free to [reques
 [description: manifesto]: #search/description%3A%20manifesto
 [projectid: 6-the-financial-crisis]: #search/projectid%3A%206-the-financial-crisis
 [access: private]: #search/access%3A%20private
+<<<<<<< HEAD
 [filter: published]: #search/filter%3A%20published
+=======
+>>>>>>> cee3b26... bringing back help/public.
 [person: Lee]: #search/person%3A%20Lee
 [organization: "Department of Defense"]: #search/organization%3A%20%22Department%20of%20Defense%22
 [term: "nuclear energy"]: #search/term%3A%20%22nuclear%20energy%22
