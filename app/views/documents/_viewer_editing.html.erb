@@ -11,9 +11,12 @@
 <script type="text/javascript">
   $(document).ready(function() {
     var docId       = <%= @current_document.id %>;
-    var isOwner     = <%= @allowed_to_edit %>;
+    var opts        = {
+      isOwner    : <%= @allowed_to_edit %>,
+      isReviewer : <%= @allowed_to_review %>
+    }
     var accountName = "<%= @current_account.full_name %>";
     var accountRole = <%= @current_account.role %>;
-    dc.app.editor.initialize(docId, isOwner, accountName, accountRole);
+    dc.app.editor.initialize(docId, accountName, accountRole, opts);
   });
 </script>

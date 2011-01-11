@@ -3,10 +3,10 @@ dc.app.editor = new Backbone.View();
 _.extend(dc.app.editor, {
 
   // Initializes the workspace, binding it to <body>.
-  initialize : function(docId, isOwner, accountName, accountRole) {
+  initialize : function(docId, accountName, accountRole, options) {
     this.el = $('body')[0];
     this.docId = docId;
-    this.isOwner = isOwner;
+    this.options = options;
     this.accountName = accountName;
     this.accountRole = accountRole;
     _.bindAll(this, 'closeAllEditors', 'confirmStateChange');
@@ -45,7 +45,7 @@ _.extend(dc.app.editor, {
 
   // Render all of the existing subviews and place them in the DOM.
   renderSubViews : function() {
-    var access = this.isOwner ? 'DV-isOwner' : 'DV-isContributor';
+    var access = this.options.isOwner ? 'DV-isOwner' : 'DV-isContributor';
     $('.DV-docViewer').addClass(access);
     $('.DV-well').append(this.controlPanel.render().el);
     $('.DV-logo').hide();
