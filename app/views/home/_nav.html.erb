@@ -1,29 +1,44 @@
 <div id="toolbar">
   <div id="innerbar">
-    <ul id="nav">
+    <ul id="nav" class="sans">
       <li id="nav_overview">
-        <a class="mark imagetext <%= @nav == 'overview' ? 'active' : '' %>" href="/home">
-          Overview: A tool for journalists, a document catalog, both.
+        <a class="mark <%= @nav == 'overview' ? 'active' : '' %>" href="/home">
+          <div class="nav_title">Overview</div>
+          <div class="nav_subtitle">
+            A tool for journalists, a<br /> document catalog, both.
+          </div>
         </a>
       </li>
       <li id="nav_search">
-        <a class="mark imagetext" href="/public/#search/">
-          Search: Our catalog has thousands of newsworthy documents.
+        <a class="mark" href="/public/#search/">
+          <div class="nav_title">Search</div>
+          <div class="nav_subtitle">
+            Our catalog has thousands<br /> of newsworthy documents.
+          </div>
         </a>
       </li>
       <li id="nav_open">
-        <a class="mark imagetext <%= @nav == 'opensource' ? 'active' : '' %>" href="/opensource">
-          Our work is open source. Use it in your projects.
+        <a class="mark <%= @nav == 'opensource' ? 'active' : '' %>" href="/opensource">
+          <div class="nav_title">Open Source</div>
+          <div class="nav_subtitle">
+            Our work is open source.<br /> Use it in your projects.
+          </div>
         </a>
       </li>
       <li id="nav_guide">
-        <a class="mark imagetext <%= @nav == 'guide' ? 'active' : '' %>" href="/help">
-          Learn about DocumentCloud's advanced features and API.
+        <a class="mark <%= @nav == 'guide' ? 'active' : '' %>" href="/help">
+          <div class="nav_title">User Guide</div>
+          <div class="nav_subtitle">
+            Learn about DocumentCloud's<br /> advanced features and API.
+          </div>
         </a>
       </li>
       <li id="nav_news">
-        <a class="mark imagetext <%= @nav == 'news' ? 'active' : '' %>" href="/blog">
-          Read the blog to find out about new features.
+        <a class="mark <%= @nav == 'news' ? 'active' : '' %>" href="/blog">
+          <div class="nav_title">Latest News</div>
+          <div class="nav_subtitle">
+            Read the blog to find out<br /> about new features.
+          </div>
         </a>
       </li>
     </ul>
