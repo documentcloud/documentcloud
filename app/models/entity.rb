@@ -30,7 +30,7 @@ class Entity < ActiveRecord::Base
   # TODO: Make this not use an ilike, Solr, preferably.
   def self.search_in_documents(kind, value, ids)
     entities = self.all({:conditions => [
-      "document_id in (?) and kind = ? and value ilike '%#{Entity.connection.quote_string(value)}%'", ids, kind
+      "document_id in (?) and kind = ? and lower(value) like lower('%#{Entity.connection.quote_string(value)}%')", ids, kind
     ], :include => :document})
   end
 
