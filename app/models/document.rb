@@ -134,7 +134,8 @@ class Document < ActiveRecord::Base
       :title            => title,
       :description      => params[:description],
       :source           => params[:source],
-      :related_article  => params[:related_article]
+      :related_article  => params[:related_article],
+      :remote_url       => params[:published_url] || params[:remote_url]
     )
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
       DC::Store::AssetStore.new.save_pdf(doc, path, access)
@@ -204,6 +205,7 @@ class Document < ActiveRecord::Base
     end
     access = attrs.delete(:access)
     access &&= access.to_i
+    attrs[:remote_url] ||= attrs[:published_url]
     update_attributes attrs
     set_access(access) if access && self.access != access
     true
