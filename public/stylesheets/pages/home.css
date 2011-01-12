@@ -85,6 +85,11 @@ h2, #help h1, #help h2 {
     margin: 0;
     padding: 3px 0 25px 45px;
   }
+h6 {
+  font-weight: 300;
+  font-size: 16px;
+  margin: 25px 0 10px 0;
+}
 
 p {
   margin-bottom: 18px;
