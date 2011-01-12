@@ -14,6 +14,7 @@ Highlight:      #ffffcc
 Divider:        #ccc
 */
 
+/* 960px wide centered box, for debugging */
 #grid {
   width: 960px; height: 1000px;
   position: absolute;
@@ -38,10 +39,10 @@ body {
 .sans {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
 }
-.serif {
+/*.serif {
   font-family: Georgia, serif;
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
-}
+}*/
 
 .imagetext {
   text-indent: -10000px;
@@ -135,7 +136,7 @@ ol {
 
 #toolbar {
   position: absolute;
-  top: 0;
+  top: 0; left: 0;
   width: 100%; height: 79px;
   z-index: 50;
   background: url(/images/embed/home/toolbar.png);
