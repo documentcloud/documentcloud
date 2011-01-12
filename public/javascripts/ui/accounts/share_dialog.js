@@ -12,6 +12,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     'click .minibutton.add':                   '_submitAddReviewer',
     'click .remove_reviewer':                  '_removeReviewer',
     'click .resend_reviewer':                  '_resendInstructions',
+    'click .show_custom_email':                '_showCustomEmail',
+    'click .hide_custom_email':                '_hideCustomEmail',
     'keypress .reviewer_management_email':     '_maybeAddReviewer',
     'keypress .reviewer_management_firstname': '_maybeAddReviewer',
     'keypress .reviewer_management_lastname':  '_maybeAddReviewer'
@@ -23,13 +25,13 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   ],
 
   initialize : function(options) {
-    _.bindAll(this, '_loadReviewer', '_cancelAddReviewer', '_onAddSuccess', '_onAddError',
-              '_onRemoveSuccess', '_onRemoveError', '_showEnterEmail', 'nextStep');
+    _.bindAll(this, '_renderReviewers', '_refreshReviewers', '_cancelAddReviewer', 
+                    '_onAddSuccess', '_onAddError', '_onRemoveSuccess', '_onRemoveError', 
+                    '_showEnterEmail', 'nextStep');
     this.docs = new dc.model.DocumentSet(options.docs);
     this.docs.each(function(doc) {
       doc.collection = Documents;
     });
-    this.docsUnfetched    = this.docs.length;
     this.renderedAccounts = {};
     this._boundRender     = [];
     this.currentStep      = 1;
@@ -37,7 +39,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
     $(this.el).hide().empty();
     dc.ui.spinner.show();
-    this._loadReviewers();
+    this._fetchReviewers();
   },
 
   render : function() {
@@ -69,42 +71,49 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   // = Rendering Reviewers =
   // =======================
   
-  _loadReviewers : function() {
-    if (this.docs.all(function(doc) { return doc.reviewers.length; })) {
-      this.docsUnfetched = 0;
-      this._loadReviewer();
-    } else {
-      this.docs.each(_.bind(function(doc) {
-        if (doc.reviewers.length) {
-          this.docsUnfetched -= 1;
-        } else {
-          doc.reviewers.fetch({success : this._loadReviewer});
-        }
-      }, this));
-    }
+  _fetchReviewers : function() {
+    $.ajax({
+      url : '/documents/reviewers',
+      type : 'POST',
+      data : {
+        documents : _.compact(this.docs.map(function(doc) { 
+          if (!doc.reviewers.length) return doc.id; 
+        })),
+        fetched_documents : _.compact(this.docs.map(function(doc) { 
+          if (doc.reviewers.length) return doc.id; 
+        }))
+      },
+      success: this._refreshReviewers,
+      error : this._renderReviewers
+    });
   },
   
-  _loadReviewer : function() {
-    this.docsUnfetched -= 1;
-    if (this.docsUnfetched <= 0) {
-      this.render();
-      var views = [];
-      // this.commonReviewers = Documents.sharedReviewers(this.docs);
-      this._countDocuments();
-      this.renderedAccounts = {};
-      this.docs.each(_.bind(function(doc) {
-        doc.reviewers.each(_.bind(function(account) {
-          var accountView = this._renderReviewer(account);
-          if (accountView) views.push(accountView);
-        }, this));
+  _refreshReviewers : function(resp) {
+    _.each(resp.documents, _.bind(function(reviewers, document_id) {
+      this.docs.get(document_id).reviewers.refresh(reviewers);
+    }, this));
+    this.emailBody = resp.email_body.replace(/\n+/g, '<p>');
+    this._renderReviewers();
+  },
+  
+  _renderReviewers : function() {
+    this.render();
+    var views = [];
+    // this.commonReviewers = Documents.sharedReviewers(this.docs);
+    this._countDocuments();
+    this.renderedAccounts = {};
+    this.docs.each(_.bind(function(doc) {
+      doc.reviewers.each(_.bind(function(account) {
+        var accountView = this._renderReviewer(account);
+        if (accountView) views.push(accountView);
       }, this));
-      
-      this.$('.account_list tr:not(.reviewer_management)').remove();
-      this.$('.account_list').prepend(views);
-      this.$('.document_reviewers_empty').toggle(!_.keys(this.renderedAccounts).length);
-      this._cancelAddReviewer();
-      this.center();
-    }
+    }, this));
+    
+    this.$('.account_list tr:not(.reviewer_management)').remove();
+    this.$('.account_list').prepend(views);
+    this.$('.document_reviewers_empty').toggle(!_.keys(this.renderedAccounts).length);
+    this._cancelAddReviewer();
+    this.center();
   },
   
   _setPlaceholders : function() {
@@ -212,7 +221,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         email : Inflector.trim(email),
         first_name : Inflector.trim(this.$('.reviewer_management input[name=first_name]').val()),
         last_name : Inflector.trim(this.$('.reviewer_management input[name=last_name]').val()),
-        documents : this.docs.map(function(doc) { return doc.id; })
+        documents : this.docs.pluck('id')
       },
       success: _.bind(function(resp) { this._onAddSuccess(resp, callback); }, this),
       error : this._onAddError
@@ -234,7 +243,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       }
     }, this));
     this.showingManagement = false;
-    this._loadReviewers();
+    this._renderReviewers();
     if (callback) callback();
     this._enabledNextButton();
   },
@@ -303,7 +312,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       duration  : 5000,
       mode      : 'info'
     });
-    this._loadReviewers();
+    this._renderReviewers();
     this._enabledNextButton();
   },
   
@@ -346,7 +355,34 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         }
       }, this));
     }, this));
+    
+    this._setupEmailBody();
+  },
+  
+  _showCustomEmail : function() {
+    var $custom = this.$('.custom_message');
+    $custom.show();
+    this.$('.step_two').setMode('is', 'custom_email');
+  },
+  
+  _hideCustomEmail : function() {
+    var $custom = this.$('.custom_message');
+    $custom.hide();
+    this.$('.step_two').setMode('not', 'custom_email');
+    this.$('.email_message textarea').val('');
+  },
+  
+  _setupEmailBody : function() {
+    var $body           = this.$('.email_message_body');
+    var $textContainer  = this.$('.email_message_text_container');
+    var $container      = this.$('.email_message');
+    var body            = this.emailBody;
+    $textContainer.appendTo($container);
 
+    $body.empty();
+    $body.html(body);
+    var $message = this.$('.custom_message');
+    $textContainer.appendTo($message);
   },
   
   _sendInstructions : function() {

@@ -162,9 +162,9 @@ class Account < ActiveRecord::Base
     LifecycleMailer.deliver_login_instructions(self, admin)
   end
 
-  def send_reviewer_instructions(document, inviter_account, message=nil)
+  def send_reviewer_instructions(documents, inviter_account, message=nil)
     create_security_key if security_key.nil?
-    LifecycleMailer.deliver_reviewer_instructions(self, document, inviter_account, message)
+    LifecycleMailer.deliver_reviewer_instructions(documents, inviter_account, self, message)
   end
 
   # When a password reset request is made, send an email with a secure key to

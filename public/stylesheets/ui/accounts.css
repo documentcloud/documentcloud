@@ -291,12 +291,12 @@
   }
   .share_dialog .email_message {
     float: right;
-    width: 300px;
+    width: 400px;
     padding: 0 8px;
   }
     .share_dialog .email_message .email_message_heading {
       font-size: 12px;
-      margin: 0 0 2px 0;
+      margin: 0 0 12px 0;
     }
     .share_dialog .email_message .email_message_heading_optional {
       font-size: 10px;
@@ -304,25 +304,57 @@
       color: #A0A0A0;
       float: right;
     }
-    .share_dialog .email_message textarea {
-      width: 100%;
-      font-size: 12px;
-      font-family: inherit;
-      padding: 4px;
-      height: 180px;
+    .share_dialog .email_message .email_message_body {
+      font: 11px/13px Menlo, Consolas, Monaco, Courier, monospace;
+      color: #E0E0E0;
     }
+      .share_dialog .email_message .email_message_body p {
+        margin: 8px 0;
+      }
+      .share_dialog .email_message .email_message_body .custom_message {
+        position: relative;
+      }
+        .share_dialog .email_message .email_message_body .custom_message p {
+          margin: 0;
+        }
+      .share_dialog .email_message .email_message_body .hide_custom_email {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      .share_dialog .email_message .email_message_body textarea {
+        width: 100%;
+        font-size: 12px;
+        font-family: inherit;
+        padding: 4px;
+        height: 40px;
+        margin: 0 0 4px 0;
+      }
   .share_dialog .email_reviewers {
-    width: 300px;
-    padding: 0 8px;
+    width: 215px;
+    float: left;
   }
     .share_dialog .email_reviewers .email_reviewers_heading {
       font-size: 12px;
       margin: 0 0 2px 0;
     }
+    .share_dialog .show_custom_email {
+      margin: 14px 0 20px;
+      color: lightblue;
+    }
+    .share_dialog .is_custom_email .show_custom_email,
+    .share_dialog .not_custom_email .hide_custom_email {
+      display: none;
+    }
+    .share_dialog .not_custom_email .show_custom_email,
+    .share_dialog .is_custom_email .hide_custom_email {
+      display: block;
+    }
     .share_dialog .email_reviewers_list {
-      max-height: 200px;
+      max-height: 270px;
       overflow-y: auto;
       overflow-x: hidden;
+      padding: 0 8px 0 0;
     }
       .share_dialog .reviewer_email {
         margin: 0;

@@ -1,7 +1,24 @@
 class ReviewersController < ApplicationController
-
-  def index
-    json current_document.reviewers.to_json
+  
+  def get_reviewers
+    reviewers = {}
+    email_body = nil
+    documents = []
+    if params[:documents]
+      params[:documents].each do |document_id|
+        doc = Document.find(document_id)
+        documents << doc
+        reviewers[document_id] = doc.reviewers
+      end
+    end
+    if params[:fetched_documents]
+      params[:fetched_documents].each do |document_id|
+        doc = Document.find(document_id)
+        documents << doc
+      end
+    end
+    email_body = LifecycleMailer.create_reviewer_instructions(documents, current_account, nil, "<span />").body
+    json :documents => reviewers, :email_body => email_body
   end
   
   def add_reviewer
@@ -46,12 +63,13 @@ class ReviewersController < ApplicationController
   
   def send_instructions
     return json(nil, 400) unless params[:accounts] && params[:documents]
+    documents = []
+    params[:documents].each do |document_id|
+      documents << Document.find(document_id)
+    end
     params[:accounts].each do |account_id|
       account = Account.find(account_id)
-      params[:documents].each do |document_id|
-        document = Document.find(document_id)
-        account.send_reviewer_instructions(document, current_account, params[:message])
-      end
+      account.send_reviewer_instructions(documents, current_account, params[:message])
     end
     json nil
   end
