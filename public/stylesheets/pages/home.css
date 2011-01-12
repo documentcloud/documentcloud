@@ -57,6 +57,9 @@ a, a:visited, #help a, #help a:visited {
     padding: 0;
     border: 0;
   }
+  a .minibutton {
+    text-decoration: none;
+  }
 
 h1 {
   position: absolute;

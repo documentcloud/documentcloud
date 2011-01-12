@@ -20,7 +20,7 @@
   
     <div class="sidebar_section">
       Welcome, <%= @current_account.full_name %>. You're already logged in to DocumentCloud.
-      <a href="/"><div class="minibutton default">Enter the Workspace</div></a>
+      <a href="/"><span class="minibutton default">Enter the Workspace</span></a>
     </div>
     
   <% else %>
@@ -28,7 +28,7 @@
     <div id="join" class="sidebar_section">
       DocumentCloud is a tool for journalists.<br />
       If you're regularly working with primary source documents, we can help.
-      <a href="/contact"><div class="minibutton default">Join DocumentCloud</div></a>
+      <a href="/contact"><span class="minibutton default">Join DocumentCloud</span></a>
     </div>
   
     <div class="sidebar_section">
@@ -50,7 +50,7 @@
             <input type="password" name="password" placeholder="Password" id="account_password" />
           </div>
         </div>
-        <div class="minibutton" id="login_button">Log in</div>
+        <span class="minibutton" id="login_button">Log in</span>
         <input type="submit" class="hidden_submit" />
       </form>
     </div>
@@ -74,7 +74,7 @@
   <div id="contact" class="sidebar_section">
     Questions, comments, or concerns?<br />
     Don't hesitate to get in touch.
-    <div class="minibutton" id="contact_button">Contact Us</div>
+    <span class="minibutton" id="contact_button">Contact Us</span>
   </div>
 
 </div>
