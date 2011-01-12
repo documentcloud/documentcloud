@@ -17,8 +17,10 @@
   <ul class="bullet">
     <% @github.each do |name, url, github_url, title| %>
     <li>
-      <a href="<%= h(url) %>"><%= h(name) %></a>
-      <small class="up">(<a href="<%= github_url %>">code</a>)</small>
+      <h6>
+        <a href="<%= h(url) %>"><%= h(name) %></a>
+        <small>[<a href="<%= github_url %>">code</a>]</small>
+      </h6>
       &ndash; <%= h(title) %>
     </li>
     <% end %>
