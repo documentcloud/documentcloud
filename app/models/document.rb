@@ -140,6 +140,10 @@ class Document < ActiveRecord::Base
       DC::Store::AssetStore.new.save_pdf(doc, path, access)
       doc.queue_import(access, false, email_me)
     end
+    if params[:project]
+      project = Project.accessible(account).find_by_id(params[:project].to_i)
+      project.add_document(doc) if project
+    end
     doc.reload
   end
 
