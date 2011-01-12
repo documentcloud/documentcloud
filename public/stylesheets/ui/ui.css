@@ -521,25 +521,20 @@ textarea.text_area {
     box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none;
   }
   .dialog .controls {
-    float: right;
     position: relative;
-    left: -50%;
     margin-top: 30px;
+    text-align: center;
   }
-    .dialog .controls_inner {
-      position: relative;
-      left: 50%;
+    .dialog .controls .minibutton {
+      margin-left: 4px;
+      display: inline-block;
     }
-      .dialog .controls .minibutton {
-        float: left;
-        margin-left: 8px;
+      .dialog .controls .minibutton:first-child {
+        margin-left: 0;
       }
-        .dialog .controls .minibutton:first-child {
-          margin-left: 0;
-        }
-        .dialog.alert_dialog .minibutton.cancel {
-          display: none;
-        }
+      .dialog.alert_dialog .minibutton.cancel {
+        display: none;
+      }
   .dialog.short_prompt_dialog select {
     width: 100%;
   }

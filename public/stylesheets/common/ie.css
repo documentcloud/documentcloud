@@ -77,13 +77,6 @@ body.minidocs #document_list .document {
 .document .page {
   margin-top: 0;
 }
-.dialog .controls {
-  float: left;
-  left: 0;
-}
-  .dialog .controls_inner {
-    left: 0;
-  }
 div.text_input.search input {
   line-height: 16px;
 }

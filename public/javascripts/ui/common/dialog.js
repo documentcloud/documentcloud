@@ -31,7 +31,6 @@ dc.ui.Dialog = Backbone.View.extend({
     $(this.el).html(JST['common/dialog'](_.extend({}, this.options, opts)));
     var cel = this.contentEl = this.$('.content');
     this._controls = this.$('.controls');
-    this._controlsInner = this.$('.controls_inner');
     this._information = this.$('.information');
     if (this.options.width) $(this.el).css({width : this.options.width});
     if (this.options.content) cel.val(this.options.content);
@@ -50,7 +49,7 @@ dc.ui.Dialog = Backbone.View.extend({
   },
 
   addControl : function(el) {
-    this._controlsInner.prepend(el);
+    this._controls.prepend(el);
   },
 
   val : function() {

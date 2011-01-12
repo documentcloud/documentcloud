@@ -40,8 +40,8 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   render : function() {
     dc.ui.Dialog.prototype.render.call(this);
     this.$('.custom').html(JST['document/timeline']({docs : this.documents, minHeight : this.MIN_HEIGHT, rowHeight : this.ROW_HEIGHT}));
-    this._zoomButton = this.make('div', {'class' : 'minibutton zoom_out dark not_enabled'}, 'Zoom Out');
-    this.$('.controls_inner').prepend(this._zoomButton);
+    this._zoomButton = this.make('span', {'class' : 'minibutton zoom_out dark not_enabled'}, 'Zoom Out');
+    this.addControl(this._zoomButton);
     this.center();
     return this;
   },
