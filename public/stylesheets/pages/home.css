@@ -88,8 +88,14 @@ h2, #help h1, #help h2 {
 h6 {
   font-weight: 300;
   font-size: 16px;
-  margin: 25px 0 10px 0;
+  line-height: 20px;
+  margin: 25px 0 5px 0;
 }
+  h6 small {
+    font-weight: bold;
+    font-size: 12px;
+    white-space: nowrap;
+  }
 
 p {
   margin-bottom: 18px;
