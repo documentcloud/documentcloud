@@ -168,8 +168,9 @@ class AdminController < ApplicationController
   # Pass in the seconds since the epoch, for JavaScript.
   def keys_to_timestamps(hash)
     result = {}
+    dates = hash.keys.first.is_a? Date
     hash.each do |key, value|
-      time = Date.parse(key).to_time
+      time = (dates ? key : Date.parse(key)).to_time
       utc  = (time + time.utc_offset).utc
       result[utc.to_f.to_i] = value
     end
