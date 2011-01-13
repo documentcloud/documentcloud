@@ -28,12 +28,12 @@ module DC
 
     # Count the number of hits per day for embedded documents.
     def self.daily_hits(since=nil)
-      RemoteUrl.sum :hits, :group => 'date(created_at)', :conditions => since_clause(since)
+      RemoteUrl.sum :hits, :group => 'date_recorded', :conditions => since_clause(since)
     end
 
     # Count the number of hits per week for embedded documents.
     def self.weekly_hits(since=nil)
-      RemoteUrl.sum :hits, :group => "date_trunc('week', created_at)", :conditions => since_clause(since)
+      RemoteUrl.sum :hits, :group => "date_trunc('week', date_recorded)", :conditions => since_clause(since)
     end
 
     # Implementation of default "since" conditions.
