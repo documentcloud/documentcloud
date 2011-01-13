@@ -72,7 +72,7 @@ module DC
       active_acc_ids = Document.connection.select_values "select distinct account_id from documents"
 
       hash = ActiveSupport::OrderedHash.new
-      hash["All Organizations"]         = over_time Organization
+      hash["All Organizations"]     = over_time Organization
       hash["Active Organizations"]  = over_time Organization.scoped(:conditions => {:id => active_org_ids})
       hash["All Accounts"]          = over_time Account
       hash["Active Accounts"]       = over_time Account.scoped(:conditions => {:id => active_acc_ids})
