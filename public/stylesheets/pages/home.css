@@ -39,10 +39,6 @@ body {
 .sans {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
 }
-/*.serif {
-  font-family: Georgia, serif;
-  font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
-}*/
 
 .imagetext {
   text-indent: -10000px;
@@ -353,6 +349,11 @@ ol {
   #sidebar .error {
     margin: 0 0 15px;
     color: #aa2222;
+  }
+  #sidebar .reset_password {
+    position: absolute; right: 15px;
+    font-size: 10px;
+    color: #999;
   }
   #sidebar ul {
     margin-top: 22px;
