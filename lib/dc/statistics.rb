@@ -43,18 +43,23 @@ module DC
 
     # Return `over_time` for Documents, Pages, Accounts, Organizations.
     def self.by_the_numbers
+      active_org_ids = Document.connection.select_values "select distinct organization_id from documents"
+      active_acc_ids = Document.connection.select_values "select distinct account_id from documents"
+
       hash = ActiveSupport::OrderedHash.new
-      hash[:Organizations]  = over_time Organization
-      hash[:Accounts]       = over_time Account
-      hash[:Documents]      = over_time Document
-      hash[:Pages]          = pages_over_time
-      hash[:Notes]          = over_time Annotation
+      hash["All Organizations"]         = over_time Organization
+      hash["Active Organizations"]  = over_time Organization.scoped(:conditions => {:id => active_org_ids})
+      hash["All Accounts"]          = over_time Account
+      hash["Active Accounts"]       = over_time Account.scoped(:conditions => {:id => active_acc_ids})
+      hash["Documents"]             = over_time Document
+      hash["Pages"]                 = pages_over_time
+      hash["Notes"]                 = over_time Annotation
       hash
     end
 
     # Return the number of X created in the past week, past month, past 6 months
     # ... and total.
-    def self.over_time(model)
+    def self.over_time(model, conditions={})
       { :total      => model.count,
         :day        => model.count(:conditions => ['created_at > ?', 1.day.ago]),
         :week       => model.count(:conditions => ['created_at > ?', 1.week.ago]),
