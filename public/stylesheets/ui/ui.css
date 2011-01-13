@@ -71,6 +71,7 @@ input.hidden_submit {
   }
 
 .external_link {
+  padding-right: 14px;
   background: url(/images/embed/ui/external.png) no-repeat right center;
 }
 
