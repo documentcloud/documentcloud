@@ -27,6 +27,11 @@ namespace :remote do
     remote "app:start", app_servers
   end
 
+  desc "Check the current branch on the app server."
+  task :branch do
+    remote "branch", app_servers
+  end
+
 end
 
 # SSH into a given remote machine. Need to pass the environment.
@@ -36,9 +41,14 @@ rule(/^ssh:/) do |t|
   exec "ssh -A -i #{conf[:key]} #{conf[:user]}@#{host}.documentcloud.org"
 end
 
+rule(/^remote:branch:/) do |t|
+  branch = t.name.split(':').last
+  remote "branch:#{branch}", (central_servers + worker_servers + app_servers).uniq
+end
+
 rule(/^remote:gem:install/) do |t|
   task_name = t.name.sub(/^remote:/, '')
-  remote task_name, central_servers + worker_servers + app_servers
+  remote task_name, (central_servers + worker_servers + app_servers).uniq
 end
 
 rule(/^gem:install/) do |t|
