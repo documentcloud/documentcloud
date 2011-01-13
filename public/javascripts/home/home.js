@@ -10,7 +10,6 @@ $(function() {
       'focus #search_box':     'addFocus',
       'blur #search_box':      'removeFocus',
       'click .cancel_search':  'cancelSearch',
-      'click #contact_button': 'contact',
       'click #login_button':   'login'
     },
 
@@ -24,10 +23,6 @@ $(function() {
 
     login : function() {
       $('#login_form').submit();
-    },
-
-    contact : function() {
-      dc.ui.Dialog.contact();
     },
 
     search : function() {
