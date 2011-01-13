@@ -85,9 +85,9 @@ body {
         line-height: 25px;
       }
       #statistics #numbers tbody tr td {
-        line-height: 40px;
-        font-size: 20px;
-        padding-right: 50px;
+        line-height: 50px;
+        font-size: 25px;
+        padding-right: 75px;
       }
         #statistics #numbers td.first {
           font-size: 12px;
