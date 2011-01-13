@@ -3,7 +3,7 @@
     <ul id="nav" class="sans">
       <li id="nav_overview">
         <a class="mark <%= @nav == 'overview' ? 'active' : '' %>" href="/home">
-          <div class="nav_title">Overview</div>
+          <span class="nav_title">Overview</span>
           <div class="nav_subtitle">
             A tool for journalists, a<br /> document catalog, both.
           </div>
@@ -11,7 +11,7 @@
       </li>
       <li id="nav_search">
         <a class="mark" href="/public/#search/">
-          <div class="nav_title">Search</div>
+          <span class="nav_title external_link">Search</span>
           <div class="nav_subtitle">
             Our catalog has thousands<br /> of newsworthy documents.
           </div>
@@ -19,7 +19,7 @@
       </li>
       <li id="nav_open">
         <a class="mark <%= @nav == 'opensource' ? 'active' : '' %>" href="/opensource">
-          <div class="nav_title">Open Source</div>
+          <span class="nav_title">Open Source</span>
           <div class="nav_subtitle">
             Our work is open source.<br /> Use it in your projects.
           </div>
@@ -27,7 +27,7 @@
       </li>
       <li id="nav_guide">
         <a class="mark <%= @nav == 'guide' ? 'active' : '' %>" href="/help">
-          <div class="nav_title">User Guide</div>
+          <span class="nav_title">User Guide</span>
           <div class="nav_subtitle">
             Learn about DocumentCloud's<br /> advanced features and API.
           </div>
@@ -35,7 +35,7 @@
       </li>
       <li id="nav_news">
         <a class="mark <%= @nav == 'news' ? 'active' : '' %>" href="/blog">
-          <div class="nav_title">Latest News</div>
+          <span class="nav_title external_link">Latest News</span>
           <div class="nav_subtitle">
             Read the blog to find out<br /> about new features.
           </div>

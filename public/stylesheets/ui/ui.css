@@ -70,6 +70,10 @@ input.hidden_submit {
     text-decoration: underline;
   }
 
+.external_link {
+  background: url(/images/embed/ui/external.png) no-repeat right center;
+}
+
 /*-------------------------------- Overlay -----------------------------------*/
 #overlay {
   background: black;

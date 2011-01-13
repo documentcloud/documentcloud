@@ -175,9 +175,11 @@ ol {
         line-height: 22px;
       }
         #nav .nav_title {
+          display: inline-block;
           font-size: 14px;
-          padding: 7px 0 0 0;
+          padding: 7px 14px 0;
           text-shadow: 0 1px 0 #fefeff;
+          background-position: right 14px;
         }
         #nav .nav_subtitle {
           font-size: 11px;
