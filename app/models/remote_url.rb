@@ -9,9 +9,13 @@ class RemoteUrl < ActiveRecord::Base
 
   # Make sure to truncate the URL to 255 characters...
   def self.record_hits(doc_id, url, hits)
+    # Write the RemoteUrl row.
     url = url.mb_chars[0...255].to_s
     row = self.find_or_create_by_document_id_and_url_and_date_recorded(doc_id, url, Time.now.utc.to_date)
     row.update_attributes :hits => row.hits + hits
+    # Increment the document's total hits.
+    doc = Document.find_by_id(doc_id)
+    doc.update_attributes(:hit_count => doc.hit_count + hits) if doc
   end
 
   # Using the recorded remote URL hits, correctly set detected remote urls
