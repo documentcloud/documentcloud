@@ -24,13 +24,7 @@
     </div>
     
   <% else %>
-  
-    <div id="join" class="sidebar_section">
-      DocumentCloud is a tool for journalists.<br />
-      If you're regularly working with primary source documents, we can help.
-      <a href="/contact"><span class="minibutton default">Join DocumentCloud</span></a>
-    </div>
-  
+    
     <div class="sidebar_section">
       <% if flash[:error] %>
         <div class="error">
@@ -56,7 +50,7 @@
     </div>
     
   <% end %>
-
+  
   <div id="news" class="sidebar_section">
     <div class="section_title">
       About the Project
@@ -70,6 +64,16 @@
       <li><a href="/contributors">List of Contributing Organizations</a></li>
     </ul>
   </div>
+  
+  <% if !@current_account %>
+    
+    <div id="join" class="sidebar_section">
+      DocumentCloud is a tool for journalists.<br />
+      If you're regularly working with primary source documents, we can help.
+      <a href="/contact"><span class="minibutton default">Join DocumentCloud</span></a>
+    </div>
+  
+  <% end %>
 
   <div id="contact" class="sidebar_section">
     Questions, comments, or concerns?<br />
