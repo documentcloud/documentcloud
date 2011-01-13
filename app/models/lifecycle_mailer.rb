@@ -82,7 +82,7 @@ class LifecycleMailer < ActionMailer::Base
     end
     
     attachment "text/csv" do |a|
-      a.body     = DC::Statistics.top_documents_csv,
+      a.body     = DC::Statistics.top_documents_csv
       a.filename = 'top_documents.csv'
     end
     
