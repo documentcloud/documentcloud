@@ -6,13 +6,6 @@
     <div class="edit_note icon edit_glyph display"></div>
   <% } %>
   <br class="clear display" />
-  <select class="access_select edit" name="access">
-    <option value="public" <%= note.get('access') == 'public' ? 'selected' : '' %>>Visible to general public</option>
-    <option value="exclusive" <%= note.get('access') == 'exclusive' ? 'selected' : '' %>>Exclusive to collaborators only</option>
-    <% if (note.get('access') == 'private' || ownsNote) { %>
-      <option value="private" <%= note.get('access') == 'private' ? 'selected' : '' %>>Only visible to you</option>
-    <% } %>
-  </select>
   <div class="note_title_edit edit text_input light">
     <div class="inner">
       <input type="text" class="note_title_input" value="" />
@@ -48,7 +41,8 @@
   </div>
   <div class="note_controls edit">
     <div class="minibutton warn delete_note float_left">Delete</div>
-    <div class="minibutton default save_note float_right">Save</div>
+    <div class="minibutton default save_note float_right">Publish</div>
+    <div class="minibutton save_draft_note float_right">Save as Draft</div>
     <div class="minibutton cancel_note float_right">Cancel</div>
   </div>
 </div>

@@ -45,7 +45,9 @@ _.extend(dc.app.editor, {
 
   // Render all of the existing subviews and place them in the DOM.
   renderSubViews : function() {
-    var access = this.options.isOwner ? 'DV-isOwner' : 'DV-isContributor';
+    var access = 'DV-isContributor';
+    if (this.options.isReviewer) access = 'DV-isReviewer';
+    if (this.options.isOwner) access = 'DV-isOwner';
     $('.DV-docViewer').addClass(access);
     $('.DV-well').append(this.controlPanel.render().el);
     $('.DV-logo').hide();
