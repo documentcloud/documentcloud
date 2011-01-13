@@ -16,6 +16,11 @@ module DC
       Document.sum('page_count', :group => 'date(created_at)', :conditions => ['created_at > ?', since])
     end
 
+    # Count the total number of uploaded pages since a certain date.
+    def self.pages_since(date)
+      Document.sum('page_count', :conditions => ['created_at > ?', date])
+    end
+
     # Count the number of uploaded documents by account.
     def self.public_documents_per_account
       Document.unrestricted.count(:group => 'account_id')
@@ -42,6 +47,7 @@ module DC
       hash[:Organizations]  = over_time Organization
       hash[:Accounts]       = over_time Account
       hash[:Documents]      = over_time Document
+      hash[:Pages]          = pages_over_time
       hash[:Notes]          = over_time Annotation
       hash
     end
@@ -54,6 +60,16 @@ module DC
         :week       => model.count(:conditions => ['created_at > ?', 1.week.ago]),
         :month      => model.count(:conditions => ['created_at > ?', 1.month.ago]),
         :half_year  => model.count(:conditions => ['created_at > ?', 6.months.ago])
+      }
+    end
+
+    # Special case to calculate the pages over time.
+    def self.pages_over_time
+      { :total      => total_pages,
+        :day        => pages_since(1.day.ago),
+        :week       => pages_since(1.week.ago),
+        :month      => pages_since(1.month.ago),
+        :half_year  => pages_since(6.months.ago)
       }
     end
 
