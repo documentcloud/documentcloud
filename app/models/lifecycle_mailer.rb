@@ -76,13 +76,15 @@ class LifecycleMailer < ActionMailer::Base
     content_type  "multipart/alternative"
     body
     
-    attachment :content_type => "text/csv",
-               :body         => DC::Statistics.accounts_csv,
-               :filename     => 'accounts.csv'
+    attachment "text/csv" do |a|  
+      a.body     = DC::Statistics.accounts_csv
+      a.filename = 'accounts.csv'
+    end
     
-    attachment :content_type => "text/csv",
-               :body         => DC::Statistics.top_documents_csv,
-               :filename     => 'top_documents.csv'
+    attachment "text/csv" do |a|
+      a.body     = DC::Statistics.top_documents_csv,
+      a.filename = 'top_documents.csv'
+    end
     
   end
 end
