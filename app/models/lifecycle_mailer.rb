@@ -68,9 +68,23 @@ class LifecycleMailer < ActionMailer::Base
                 :count    => document_count
   end
   
-  # Accounts and Documents CSVs mailed out every 1st and 15th of the month
-  def account_and_document_csvs
-    subject       "Accounts and Published Documents (CSVs)"
+  # Documents CSVs mailed out every 1st and 15th of the month
+  def document_csvs
+    subject       "Published Documents (CSVs)"
+    from          NO_REPLY
+    recipients    ['samuel@documentcloud.org']
+    content_type  "multipart/alternative"
+    body
+        
+    attachment "text/csv" do |a|
+      a.body     = DC::Statistics.top_documents_csv
+      a.filename = 'top_documents.csv'
+    end
+  end
+  
+  # Accounts CSVs mailed out every 1st and 15th of the month
+  def account_csvs
+    subject       "Accounts (CSVs)"
     from          NO_REPLY
     recipients    ['samuel@documentcloud.org']
     content_type  "multipart/alternative"
@@ -80,11 +94,5 @@ class LifecycleMailer < ActionMailer::Base
       a.body     = DC::Statistics.accounts_csv
       a.filename = 'accounts.csv'
     end
-    
-    attachment "text/csv" do |a|
-      a.body     = DC::Statistics.top_documents_csv
-      a.filename = 'top_documents.csv'
-    end
-    
   end
 end
