@@ -19,7 +19,7 @@ module DC
 
       EMPTY_PAGINATION = {:page => 1, :per_page => 0}
 
-      attr_reader   :text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :access, :attributes, :conditions, :results, :solr, :source_document
+      attr_reader   :text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :filters, :access, :attributes, :conditions, :results, :solr, :source_document
       attr_accessor :page, :per_page, :order, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
@@ -35,6 +35,7 @@ module DC
         @project_ids            = opts[:project_ids]  || []
         @doc_ids                = opts[:doc_ids]      || []
         @attributes             = opts[:attributes]   || []
+        @filters                = opts[:filters]      || []
         @source_document        = opts[:source_document]
         @from, @to, @total      = nil, nil, nil
         @account, @organization = nil, nil
@@ -43,7 +44,7 @@ module DC
       end
 
       # Series of attribute checks to determine the kind and state of query.
-      [:text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :attributes, :results, :access, :source_document].each do |att|
+      [:text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :attributes, :results, :filters, :access, :source_document].each do |att|
         class_eval "def has_#{att}?; @has_#{att} ||= @#{att}.present?; end"
       end
 
@@ -66,6 +67,7 @@ module DC
         build_projects     if     has_projects?
         build_doc_ids      if     has_doc_ids?
         build_attributes   if     has_attributes? && !has_source_document?
+        build_filters      if     has_filters?
         build_facets       if     @include_facets
         build_access       unless @unrestricted
       end
@@ -308,6 +310,31 @@ module DC
         end
       end
 
+      # Filter documents along certain "interesting axes".
+      def build_filters
+        @filters.each do |filter|
+          case filter
+          when :annotated
+            # TODO.
+          when :popular
+            @order = :hit_count
+          when :published
+            if needs_solr?
+              with :published, true
+            else
+              @sql << 'documents.access in (?) and (documents.remote_url is not null or documents.detected_remote_url is not null)'
+              @interpolations << [PUBLIC, EXCLUSIVE]
+            end
+          when :unpublished
+            if needs_solr?
+              with :published, false
+            else
+              @sql << 'documents.remote_url is null and documents.detected_remote_url is null'
+            end
+          end
+        end
+      end
+
       # Restrict accessible documents for a given account/organzation.
       # Either the document itself is public, or it belongs to us, or it belongs to
       # our organization and we're allowed to see it, or if it belongs to a
@@ -317,28 +344,13 @@ module DC
         @proxy = Document.accessible(@account, @organization) unless needs_solr?
         if has_access?
           access = @access
-          if access == :popular
-            @order = :hit_count
-          elsif needs_solr?
+          if needs_solr?
             @solr.build do
-              if access == :published
-                with :published, true
-              elsif access == :unpublished
-                with :published, false
-              else
-                with :access, access
-              end
+              with :access, access
             end
           else
-            if access == :published
-              @sql << 'documents.access in (?) and (documents.remote_url is not null or documents.detected_remote_url is not null)'
-              @interpolations << [PUBLIC, EXCLUSIVE]
-            elsif access == :unpublished
-              @sql << 'documents.remote_url is null and documents.detected_remote_url is null'
-            else
-              @sql << 'documents.access = ?'
-              @interpolations << access
-            end
+            @sql << 'documents.access = ?'
+            @interpolations << access
           end
         end
         return unless needs_solr?

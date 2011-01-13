@@ -16,7 +16,9 @@ dc.app.SearchParser = {
 
   ALL_ENTITIES      : /(city|country|term|state|person|place|organization|email|phone):\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
 
-  PUBLISHED_ACCESS  : /access:\s*published/i,
+  FIRST_FILTER      : /filter:\s*(\w+)/i,
+
+  PUBLISHED_FILTER  : /filter:\s*published/i,
 
   WHITESPACE_ONLY   : /^\s*$/,
 
@@ -36,7 +38,7 @@ dc.app.SearchParser = {
   },
 
   extractPublished : function(query) {
-    return !!query.match(this.PUBLISHED_ACCESS);
+    return !!query.match(this.PUBLISHED_FILTER);
   },
 
   extractEntities : function(query) {
@@ -66,7 +68,7 @@ dc.app.SearchParser = {
     if (query.replace(this.FIRST_PROJECT, '').match(this.WHITESPACE_ONLY))  return 'project';
     if (query.replace(this.FIRST_GROUP, '').match(this.WHITESPACE_ONLY))    return 'group';
     if (query.replace(this.FIRST_ACCOUNT, '').match(this.WHITESPACE_ONLY))  return 'account';
-    if (query.replace(this.FIRST_ACCOUNT, '').replace(this.PUBLISHED_ACCESS, '').match(this.WHITESPACE_ONLY)) return 'published';
+    if (query.replace(this.FIRST_ACCOUNT, '').replace(this.PUBLISHED_FILTER, '').match(this.WHITESPACE_ONLY)) return 'published';
     return 'search';
   }
 
