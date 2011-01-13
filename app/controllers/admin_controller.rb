@@ -12,6 +12,8 @@ class AdminController < ApplicationController
     @daily_pages                   = keys_to_timestamps(DC::Statistics.daily_pages(1.month.ago)).to_json
     @weekly_documents              = keys_to_timestamps(DC::Statistics.weekly_documents).to_json
     @weekly_pages                  = keys_to_timestamps(DC::Statistics.weekly_pages).to_json
+    @daily_hits                    = keys_to_timestamps(DC::Statistics.daily_hits(1.month.ago)).to_json
+    @weekly_hits                   = keys_to_timestamps(DC::Statistics.weekly_hits).to_json
     @documents                     = Document.finished.chronological.all(:limit => 5).map {|d| d.admin_attributes }.to_json
     @failed_documents              = Document.failed.chronological.all(:limit => 3).map {|d| d.admin_attributes }.to_json
     @organizations                 = Organization.all.to_json

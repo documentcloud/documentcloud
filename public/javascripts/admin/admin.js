@@ -57,8 +57,10 @@ dc.ui.Admin = Backbone.View.extend({
 
   renderCharts : function() {
     this.$('.chart').html('');
-    $.plot($('#daily_chart'),  [this._series(stats.daily_documents, 'Document', 1), this._series(stats.daily_pages, 'Page', 2)], this.GRAPH_OPTIONS);
-    $.plot($('#weekly_chart'), [this._series(stats.weekly_documents, 'Document', 1), this._series(stats.weekly_pages, 'Page', 2)], this.GRAPH_OPTIONS);
+    $.plot($('#daily_docs_chart'),  [this._series(stats.daily_documents, 'Document', 1), this._series(stats.daily_pages, 'Page', 2)], this.GRAPH_OPTIONS);
+    $.plot($('#weekly_docs_chart'), [this._series(stats.weekly_documents, 'Document', 1), this._series(stats.weekly_pages, 'Page', 2)], this.GRAPH_OPTIONS);
+    $.plot($('#daily_hits_chart'),  [this._series(stats.daily_hits, 'Hit', 1)], this.GRAPH_OPTIONS);
+    $.plot($('#weekly_hits_chart'), [this._series(stats.weekly_hits, 'Hit', 1)], this.GRAPH_OPTIONS);
   },
 
   // Convert a date-hash into JSON that flot can properly plot.
