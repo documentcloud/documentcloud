@@ -151,7 +151,7 @@ module DC
         generate_search
         conditions        = [@sql.join(' and ')] + @interpolations
         order             = "documents.created_at desc"
-        direction         = @order.to_sym == :page_count ? 'desc' : 'asc'
+        direction         = [:page_count, :hit_count].include?(@order.to_sym) ? 'desc' : 'asc'
         order             = "documents.#{@order} #{direction}, #{order}" unless [:created_at, :score].include?(@order.to_sym)
         options           = {:conditions => conditions, :joins => @joins, :include => [:account, :organization]}
         @total            = @proxy.count(options)
@@ -166,7 +166,7 @@ module DC
         page       = @page
         size       = @facet ? 0 : @per_page
         order      = @order.to_sym
-        direction  = (order == :created_at || order == :score || order == :page_count) ? :desc : :asc
+        direction  = [:created_at, :score, :page_count, :hit_count].include?(order) ? :desc : :asc
         pagination = {:page => page, :per_page => size}
         pagination = EMPTY_PAGINATION if @exclude_documents
         related    = has_source_document?
@@ -317,7 +317,9 @@ module DC
         @proxy = Document.accessible(@account, @organization) unless needs_solr?
         if has_access?
           access = @access
-          if needs_solr?
+          if access == :popular
+            @order = :hit_count
+          elsif needs_solr?
             @solr.build do
               if access == :published
                 with :published, true

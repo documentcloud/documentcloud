@@ -7,7 +7,7 @@ dc.ui.Organizer = Backbone.View.extend({
   ],
 
   PUBLIC_SEARCHES: [
-    'all_documents', 'featured_documents', 'published_documents'
+    'all_documents', 'published_documents', 'popular_documents'
   ],
 
   events : {
@@ -16,7 +16,7 @@ dc.ui.Organizer = Backbone.View.extend({
     'click .your_documents'           : 'showYourDocuments',
     'click .org_documents'            : 'showOrganizationDocuments',
     'click .published_documents'      : 'showPublishedDocuments',
-    'click .featured_documents'       : 'showFeaturedDocuments',
+    'click .popular_documents'        : 'showPopularDocuments',
     'click .your_published_documents' : 'showYourPublishedDocuments',
     'click .account_links .text_link' : 'showAccountDocuments',
     'click .toggle_account_links'     : 'toggleAccountLinks',
@@ -102,8 +102,8 @@ dc.ui.Organizer = Backbone.View.extend({
     dc.app.searcher.search('access: published');
   },
 
-  showFeaturedDocuments : function() {
-    dc.app.searcher.search('featured');
+  showPopularDocuments : function() {
+    dc.app.searcher.search('access: popular');
   },
 
   showAccountDocuments : function(e) {
