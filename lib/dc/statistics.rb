@@ -36,6 +36,27 @@ module DC
       Document.sum('page_count')
     end
 
+    # Return `over_time` for Documents, Pages, Accounts, Organizations.
+    def self.by_the_numbers
+      hash = ActiveSupport::OrderedHash.new
+      hash[:Organizations]  = over_time Organization
+      hash[:Accounts]       = over_time Account
+      hash[:Documents]      = over_time Document
+      hash[:Notes]          = over_time Annotation
+      hash
+    end
+
+    # Return the number of X created in the past week, past month, past 6 months
+    # ... and total.
+    def self.over_time(model)
+      { :total      => model.count,
+        :day        => model.count(:conditions => ['created_at > ?', 1.day.ago]),
+        :week       => model.count(:conditions => ['created_at > ?', 1.week.ago]),
+        :month      => model.count(:conditions => ['created_at > ?', 1.month.ago]),
+        :half_year  => model.count(:conditions => ['created_at > ?', 6.months.ago])
+      }
+    end
+
     # The pages/per/minute we've processed for the last ten documents.
     # Super-approximate.
     def self.pages_per_minute

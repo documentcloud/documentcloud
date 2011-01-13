@@ -60,6 +60,38 @@
 
     <tr class="data">
       <td colspan="4">
+        <table id="numbers">
+          <thead>
+            <td>Model</td>
+            <td>Past Day</td>
+            <td>Past Week</td>
+            <td>Past Month</td>
+            <td>Past 6 Months</td>
+            <td>Total</td>
+            <td></td>
+          </thead>
+          <tbody>
+            <% _.each(stats.numbers, function(numbers, model) { %>
+              <tr>
+                <td class="first"><%= model %></td>
+                <td><%= numbers.day %></td>
+                <td><%= numbers.week %></td>
+                <td><%= numbers.month %></td>
+                <td><%= numbers.half_year %></td>
+                <td><%= numbers.total %></td>
+                <td class="last"></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr class="labels">
+      <td colspan="5">Breakdown by the Numbers</td>
+    </tr>
+
+    <tr class="data">
+      <td colspan="4">
         <table id="instances">
           <thead>
             <td>Instance Type</td>

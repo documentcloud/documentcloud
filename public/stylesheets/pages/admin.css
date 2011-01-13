@@ -84,6 +84,14 @@ body {
       #statistics #instances tbody tr td {
         line-height: 25px;
       }
+      #statistics #numbers tbody tr td {
+        line-height: 40px;
+        font-size: 20px;
+        padding-right: 50px;
+      }
+        #statistics #numbers td.first {
+          font-size: 12px;
+        }
       #statistics .data table tr td.first {
         padding-right: 0;
         vertical-align: top;
