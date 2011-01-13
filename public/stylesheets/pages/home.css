@@ -364,12 +364,11 @@ ol {
   color: #445056;
 }
   #logos li {
-    margin-right: 31px;
+    margin-right: 22px;
     float: left;
   }
-    #logos a.propublica {
+    #logos a {
       position: relative;
-      top: -4px;
     }
     #logos a.more {
       position: absolute;
