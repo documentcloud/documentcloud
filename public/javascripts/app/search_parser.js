@@ -20,6 +20,8 @@ dc.app.SearchParser = {
 
   PUBLISHED_FILTER  : /filter:\s*published/i,
 
+  POPULAR_FILTER    : /filter:\s*popular/i,
+
   WHITESPACE_ONLY   : /^\s*$/,
 
   extractProject : function(query) {
@@ -39,6 +41,10 @@ dc.app.SearchParser = {
 
   extractPublished : function(query) {
     return !!query.match(this.PUBLISHED_FILTER);
+  },
+
+  extractPopular : function(query) {
+    return !!query.match(this.POPULAR_FILTER);
   },
 
   extractEntities : function(query) {
@@ -67,8 +73,10 @@ dc.app.SearchParser = {
     if (query.replace(this.FIRST_RELATED, '').match(this.WHITESPACE_ONLY))  return 'related';
     if (query.replace(this.FIRST_PROJECT, '').match(this.WHITESPACE_ONLY))  return 'project';
     if (query.replace(this.FIRST_GROUP, '').match(this.WHITESPACE_ONLY))    return 'group';
-    if (query.replace(this.FIRST_ACCOUNT, '').match(this.WHITESPACE_ONLY))  return 'account';
-    if (query.replace(this.FIRST_ACCOUNT, '').replace(this.PUBLISHED_FILTER, '').match(this.WHITESPACE_ONLY)) return 'published';
+    var withoutAccount = query.replace(this.FIRST_ACCOUNT, '');
+    if (withoutAccount.match(this.WHITESPACE_ONLY))                         return 'account';
+    if (withoutAccount.replace(this.PUBLISHED_FILTER, '').match(this.WHITESPACE_ONLY)) return 'published';
+    if (withoutAccount.replace(this.POPULAR_FILTER, '').match(this.WHITESPACE_ONLY)) return 'popular';
     return 'search';
   }
 

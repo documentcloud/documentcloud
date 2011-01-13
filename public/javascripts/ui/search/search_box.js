@@ -81,6 +81,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     var accountSlug   = dc.app.SearchParser.extractAccount(query);
     var groupName     = dc.app.SearchParser.extractGroup(query);
     var published     = dc.app.SearchParser.extractPublished(query);
+    var popular       = dc.app.SearchParser.extractPopular(query);
     if (projectName) {
       title = projectName;
     } else if (dc.account && accountSlug == Accounts.current().get('slug')) {
@@ -93,6 +94,8 @@ dc.ui.SearchBox = Backbone.View.extend({
       title = Inflector.possessivize(org.get('name')) + " Documents";
     } else if (published) {
       ret = 'published_documents';
+    } else if (popular) {
+      ret = 'popular_documents';
     } else {
       ret = 'all_documents';
     }
