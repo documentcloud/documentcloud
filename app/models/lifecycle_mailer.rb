@@ -75,11 +75,11 @@ class LifecycleMailer < ActionMailer::Base
     recipients  ['samuel@documentcloud.org']
     body
     
-    attachment :content_type => "application/csv" do |a|
+    attachment :content_type => "text/csv" do |a|
       a.body = DC::Statistics.accounts_csv
     end
     
-    attachment :content_type => "application/csv" do |a|
+    attachment :content_type => "text/csv" do |a|
       a.body = DC::Statistics.top_documents_csv
     end
     
