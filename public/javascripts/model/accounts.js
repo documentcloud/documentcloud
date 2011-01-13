@@ -26,7 +26,7 @@ dc.model.Account = Backbone.Model.extend({
 
   openDocuments : function(options) {
     options || (options = {});
-    var suffix = options.published ? ' access: published' : '';
+    var suffix = options.published ? ' filter: published' : '';
     dc.app.searcher.search('account: ' + this.get('slug') + suffix);
   },
 

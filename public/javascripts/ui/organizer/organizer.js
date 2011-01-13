@@ -99,11 +99,11 @@ dc.ui.Organizer = Backbone.View.extend({
   },
 
   showPublishedDocuments : function() {
-    dc.app.searcher.search('access: published');
+    dc.app.searcher.search('filter: published');
   },
 
   showPopularDocuments : function() {
-    dc.app.searcher.search('access: popular');
+    dc.app.searcher.search('filter: popular');
   },
 
   showAccountDocuments : function(e) {
