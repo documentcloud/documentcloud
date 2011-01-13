@@ -81,7 +81,19 @@ module DC
     def self.count_total_collaborators
       Collaboration.count - Project.count
     end
-
+    
+    def self.top_documents_csv
+      documents = RemoteUrl.top_documents(365, :limit => 1000)
+      DC::CSV::generate_csv(documents)
+    end
+    
+    def self.accounts_csv
+      accounts = Account.all.map {|a| a.canonical(:include_document_counts => true,
+                                                  :include_organization => true) }
+      columns  = accounts.first.keys.sort_by {|key| Account.column_names.index(key) || 1000 }
+      # columns = Account.column_names | Account.first.canonical(:include_document_counts => true).keys
+      DC::CSV::generate_csv(accounts, columns)
+    end
   end
 
 end
