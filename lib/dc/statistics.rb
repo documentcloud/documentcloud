@@ -4,6 +4,8 @@ module DC
   # internal purposes.
   module Statistics
 
+    START_DATE = Date.parse 'March 1, 2010'
+
     # Count the number of uploaded documents for each day in the past week.
     def self.daily_documents(since=nil)
       since ||= 1.month.ago
@@ -18,12 +20,14 @@ module DC
 
     # Count the number of uploaded documents for each day in the past week.
     def self.weekly_documents(since=nil)
-      Document.count(:group => "date_trunc('week', created_at)")
+      since ||= START_DATE
+      Document.count(:group => "date_trunc('week', created_at)", :conditions => ['created_at > ?', since])
     end
 
     # Count the number of uploaded pages for each day in the past week.
     def self.weekly_pages(since=nil)
-      Document.sum('page_count', :group => "date_trunc('week', created_at)")
+      since ||= START_DATE
+      Document.sum('page_count', :group => "date_trunc('week', created_at)", :conditions => ['created_at > ?', since])
     end
 
     # Count the total number of uploaded pages since a certain date.
