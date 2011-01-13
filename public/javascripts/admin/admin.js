@@ -4,7 +4,7 @@ dc.ui.Admin = Backbone.View.extend({
     xaxis     : {mode : 'time', minTickSize: [1, "day"]},
     yaxis     : {},
     legend    : {show : false},
-    series    : {lines : {show : true, fill : true}, points : {show : true}},
+    series    : {lines : {show : true, fill : false}, points : {show : false}},
     grid      : {borderWidth: 1, borderColor: '#222', labelMargin : 7, hoverable : true}
   },
 
@@ -42,8 +42,6 @@ dc.ui.Admin = Backbone.View.extend({
 
   initialize : function(options) {
     _.bindAll(this, 'renderCharts', 'launchWorker', 'reprocessFailedDocument', 'vacuumAnalyze', 'optimizeSolr', '_loadAllAccounts');
-    stats.daily_documents_series = this._series(stats.daily_documents, 'Document');
-    stats.daily_pages_series = this._series(stats.daily_pages, 'Page');
     this._tooltip = new dc.ui.Tooltip();
     this._actionsMenu = this._createActionsMenu();
     $(window).bind('resize', this.renderCharts);
@@ -59,8 +57,22 @@ dc.ui.Admin = Backbone.View.extend({
 
   renderCharts : function() {
     this.$('.chart').html('');
-    $.plot($('#docs_uploaded_chart'), stats.daily_documents_series, this.GRAPH_OPTIONS);
-    $.plot($('#pages_uploaded_chart'), stats.daily_pages_series, this.GRAPH_OPTIONS);
+    $.plot($('#daily_chart'),  [this._series(stats.daily_documents, 'Document', 1), this._series(stats.daily_pages, 'Page', 2)], this.GRAPH_OPTIONS);
+    $.plot($('#weekly_chart'), [this._series(stats.weekly_documents, 'Document', 1), this._series(stats.weekly_pages, 'Page', 2)], this.GRAPH_OPTIONS);
+  },
+
+  // Convert a date-hash into JSON that flot can properly plot.
+  _series : function(data, title, axis) {
+    return {
+      title : title,
+      yaxis : axis,
+      color : axis == 1 ? '#7EC6FE' : '#199aff',
+      data  : _.sortBy(_.map(data, function(val, key) {
+        return [parseInt(key, 10) * 1000, val];
+      }), function(pair) {
+        return pair[0];
+      })
+    };
   },
 
   renderAccounts : function() {
@@ -193,18 +205,6 @@ dc.ui.Admin = Backbone.View.extend({
     this.$('.top_documents_list').replaceWith(JST['top_documents']({}));
     this.$('.top_documents_label_year').css({'display': 'table-row'});
     this.$('.top_documents_label_week').css({'display': 'none'});
-  },
-
-  // Convert a date-hash into JSON that flot can properly plot.
-  _series : function(data, title) {
-    return [{
-      title : title,
-      data : _.sortBy(_.map(data, function(val, key) {
-        return [parseInt(key, 10) * 1000, val];
-      }), function(pair) {
-        return pair[0];
-      })
-    }];
   },
 
   // Format a number by adding commas in all the right places.

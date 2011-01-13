@@ -8,8 +8,10 @@ class AdminController < ApplicationController
     @average_page_count            = DC::Statistics.average_page_count.to_json
     @embedded_documents            = DC::Statistics.embedded_document_count.to_json
     @total_pages                   = DC::Statistics.total_pages.to_json
-    @daily_documents               = keys_to_timestamps(DC::Statistics.daily_documents(1.month.ago)).to_json
-    @daily_pages                   = keys_to_timestamps(DC::Statistics.daily_pages(1.month.ago)).to_json
+    @daily_documents               = keys_to_timestamps(DC::Statistics.daily_documents).to_json
+    @daily_pages                   = keys_to_timestamps(DC::Statistics.daily_pages).to_json
+    @weekly_documents              = keys_to_timestamps(DC::Statistics.weekly_documents).to_json
+    @weekly_pages                  = keys_to_timestamps(DC::Statistics.weekly_pages).to_json
     @documents                     = Document.finished.chronological.all(:limit => 5).map {|d| d.admin_attributes }.to_json
     @failed_documents              = Document.failed.chronological.all(:limit => 3).map {|d| d.admin_attributes }.to_json
     @organizations                 = Organization.all.to_json
