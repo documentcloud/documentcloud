@@ -2,6 +2,8 @@
   <thead></thead>
   <tbody>
 
+    <!-- Big Numbers -->
+
     <tr class="data">
       <td width="25%"><div class="number"><%= total_documents %></div></td>
       <td width="25%"><div class="number"><%= private_docs %></div></td>
@@ -40,6 +42,8 @@
       <td>Organizations Embedding Documents</td>
       <td>Collaborators on Documents</td>
     </tr>
+    
+    <!-- Charts -->
 
     <tr class="data">
       <td colspan="2" width="50%">
@@ -57,7 +61,59 @@
       <td colspan="2">Past Month: Documents / Day</td>
       <td colspan="2">Past Month: Pages / Day</td>
     </tr>
+    
+    <!-- Recent 5 docs -->
 
+    <tr class="data">
+      <td colspan="4">
+        <table class="documents">
+          <thead>
+            <td>Cover</td>
+            <td>ID</td>
+            <td>Title</td>
+            <td>Contributor</td>
+            <td>Organization</td>
+            <td>Pages</td>
+            <td></td>
+          </thead>
+          <tbody>
+            <% _.each(Documents.models.reverse(), function(doc) { %>
+              <tr>
+                <td class="first"><img class="doc" src="<%= doc.get('thumbnail_url') %>" /></td>
+                <td><%= doc.get('id') %></td>
+                <td><%= doc.get('public') ? Inflector.truncate(doc.get('title') || '', 50) : '<i>private</i>' %></td>
+                <td><%= doc.get('account_name') %></td>
+                <td><%= doc.get('organization_name') %></td>
+                <td><%= doc.get('page_count') %></td>
+                <td class="last"></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr class="labels">
+      <td colspan="4">Most Recent 5 Uploaded Documents</td>
+    </tr>
+    
+    <!-- Popular Docs -->
+
+    <%= JST['top_documents']({}) %>
+    <tr class="labels top_documents_label_week">
+      <td colspan="4">
+        <div class="float_right more_top_documents text_link">All Published Documents</div>
+        <a class="float_right download_csv text_link" href="/admin/top_documents_csv.csv">Download CSV</a></div>
+        Top 5 Most Popular Published Documents - Past 7 days
+      </td>
+    </tr>
+    <tr class="labels top_documents_label_year">
+      <td colspan="4">
+        Most Popular Published Documents - Past year
+      </td>
+    </tr>
+    
+    <!-- Breakdown by the numbers -->
+    
     <tr class="data">
       <td colspan="4">
         <table id="numbers">
@@ -89,6 +145,8 @@
     <tr class="labels">
       <td colspan="5">Breakdown by the Numbers</td>
     </tr>
+    
+    <!-- EC2 Instances -->
 
     <tr class="data">
       <td colspan="4">
@@ -122,52 +180,8 @@
     <tr class="labels">
       <td colspan="4">Active EC2 Instances</td>
     </tr>
-
-    <tr class="data">
-      <td colspan="4">
-        <table class="documents">
-          <thead>
-            <td>Cover</td>
-            <td>ID</td>
-            <td>Title</td>
-            <td>Contributor</td>
-            <td>Organization</td>
-            <td>Pages</td>
-            <td></td>
-          </thead>
-          <tbody>
-            <% _.each(Documents.models.reverse(), function(doc) { %>
-              <tr>
-                <td class="first"><img class="doc" src="<%= doc.get('thumbnail_url') %>" /></td>
-                <td><%= doc.get('id') %></td>
-                <td><%= doc.get('public') ? Inflector.truncate(doc.get('title') || '', 50) : '<i>private</i>' %></td>
-                <td><%= doc.get('account_name') %></td>
-                <td><%= doc.get('organization_name') %></td>
-                <td><%= doc.get('page_count') %></td>
-                <td class="last"></td>
-              </tr>
-            <% }); %>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr class="labels">
-      <td colspan="4">Most Recent 5 Uploaded Documents</td>
-    </tr>
-
-    <%= JST['top_documents']({}) %>
-    <tr class="labels top_documents_label_week">
-      <td colspan="4">
-        <div class="float_right more_top_documents text_link">All Published Documents</div>
-        <a class="float_right download_csv text_link" href="/admin/top_documents_csv.csv">Download CSV</a></div>
-        Top 5 Most Popular Published Documents - Past 7 days
-      </td>
-    </tr>
-    <tr class="labels top_documents_label_year">
-      <td colspan="4">
-        Most Popular Published Documents - Past year
-      </td>
-    </tr>
+    
+    <!-- Failed Uploads -->
 
     <tr class="data">
       <td colspan="4">
@@ -206,6 +220,8 @@
     <tr class="labels">
       <td colspan="4">Most Recent 3 Failed Uploads</td>
     </tr>
+    
+    <!-- Accounts -->
 
     <tr class="data accounts_row" style="display:none;">
       <td colspan="4">
