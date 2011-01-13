@@ -77,10 +77,12 @@ class LifecycleMailer < ActionMailer::Base
     body
     
     attachment :content_type => "text/csv",
-               :body => DC::Statistics.accounts_csv
+               :body         => DC::Statistics.accounts_csv,
+               :filename     => 'accounts.csv'
     
     attachment :content_type => "text/csv",
-               :body => DC::Statistics.top_documents_csv
+               :body         => DC::Statistics.top_documents_csv,
+               :filename     => 'top_documents.csv'
     
   end
 end
