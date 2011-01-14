@@ -318,7 +318,8 @@ module DC
           case filter
           when :annotated
             if needs_solr?
-              @solr.build { with(:public_note_count).greater_than(0) }
+              # NB: Solr "greater_than" is actually >=
+              @solr.build { with(:public_note_count).greater_than(1) }
             else
               @sql << 'documents.public_note_count > 0'
             end
