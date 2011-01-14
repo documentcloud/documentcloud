@@ -110,3 +110,13 @@
       min-width: 75px;
       font-weight: bold;
     }
+  #help .help_footer {
+    position: absolute;
+    left: 0; right: 0; bottom: 20px;
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+  }
+    #help .help_footer a {
+      color: #999;
+    }

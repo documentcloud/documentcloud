@@ -77,6 +77,12 @@ To see the details of how to use our search API, visit the API documentation at 
 
 Questions? Don't hesitate to [contact us][]. And as you go, feel free to [request features and report bugs][].
 
+<div class="help_footer">
+  <a class="text_link" href="/contact">Contact Us</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a class="text_link" href="/terms">Terms of Service</a> &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a class="text_link" href="/privacy">Privacy Policy</a>
+</div>
+
 
 [recent news stories that use DocumentCloud for primary source material]: /featured
 [gulf oil spill]: #search/gulf%20oil%20spill
