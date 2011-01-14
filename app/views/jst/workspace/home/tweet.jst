@@ -1,0 +1,11 @@
+<div class="tweet <%= index == 1 ? 'right' : '' %>">
+  <div class="bird"></div>
+  <div class="content">
+    <div class="text">
+      &ldquo;<%= text %>&rdquo;
+    </div>
+    <div class="user sans">
+      &mdash; <a class="name" href="http://twitter.com/<%= user.screen_name %>"><%= user.name %></a>
+    </div>
+  </div>
+</div>

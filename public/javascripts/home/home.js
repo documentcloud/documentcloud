@@ -2,6 +2,8 @@ $(function() {
 
   window.HomePage = Backbone.View.extend({
 
+    FAVORITES_URL : 'http://twitter.com/favorites/documentcloud.json?callback=?',
+
     el : document.body,
 
     events : {
@@ -19,6 +21,7 @@ $(function() {
       this.emailInput     = $('#account_email');
       this.passwordInput  = $('#account_password');
       _.invoke([this.box, this.emailInput, this.passwordInput], 'placeholder');
+      $(_.bind(this.loadTweets, this));
     },
 
     login : function() {
@@ -44,6 +47,18 @@ $(function() {
 
     removeFocus : function() {
       $('#search_box_wrapper').removeClass('focus');
+    },
+
+    loadTweets : function() {
+      $.getJSON(this.FAVORITES_URL, function(json) {
+        var tweets = json.slice(0, 3);
+        console.log(tweets);
+        var html   = "";
+        _.each(tweets, function(tweet, i) {
+          html += JST['home/tweet'](_.extend(tweet, {index: i}));
+        });
+        $('#tweets').html(html);
+      });
     }
 
   });
