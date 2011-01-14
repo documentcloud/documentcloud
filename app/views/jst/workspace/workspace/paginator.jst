@@ -7,11 +7,14 @@
   <%= q.total %> <%= Inflector.pluralize('document', q.total) %>
 </div>
 
-<div class="sorter noselect">
+<div class="sorter noselect quiet_link">
   (<%= sort_text %>)
 </div>
 
-<div id="size_toggle"></div>
+<div class="legal">
+  <a class="quiet_link" href="/terms">Terms of Service</a> &nbsp;&ndash;&nbsp;
+  <a class="quiet_link" href="/privacy">Privacy Policy</a>
+</div>
 
 <% if (q.total > per_page) { %>
   <div class="noselect enumeration">
@@ -20,7 +23,7 @@
     <% } %>
       Page
       <input type="text" class="current_page" value="<%= q.page %>" />
-      <span class="current_placeholder"><%= q.page %></span> of <%= page_count %>
+      <span class="current_placeholder quiet_link"><%= q.page %></span> of <%= page_count %>
     <% if (q.page < page_count) { %>
       <span class="arrow right">&rarr;</span>
     <% } %>

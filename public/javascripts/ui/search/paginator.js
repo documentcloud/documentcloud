@@ -23,8 +23,7 @@ dc.ui.Paginator = Backbone.View.extend({
     'click .arrow.right':         'nextPage',
     'click .current_placeholder': 'editPage',
     'change .current_page':       'changePage',
-    'click .sorter':              'chooseSort',
-    'click #size_toggle':         'toggleSize'
+    'click .sorter':              'chooseSort'
   },
 
   constructor : function(options) {

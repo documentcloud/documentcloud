@@ -9,21 +9,24 @@
 #toolbar {
   height: 46px;
 }
-  body.floating_toolbar #floating_toolbar {
-    position: fixed;
-    overflow: hidden;
-    top: 0px; right: 20px; left: 330px;
-    padding: 30px 30px 0;
-    height: 53px;
-    z-index: 10;
+  #floating_toolbar {
+    padding-right: 20px;
   }
-    body.floating_toolbar #floating_line {
-      position: absolute;
-      top: 0; left: 20px; right: 20px; bottom: 0;
-      background: white;
-      border-bottom: 1px solid #ccc;
-      opacity: 0.95;
+    body.floating_toolbar #floating_toolbar {
+      position: fixed;
+      overflow: hidden;
+      top: 0px; right: 20px; left: 330px;
+      padding: 30px 30px 0 30px;
+      height: 53px;
+      z-index: 10;
     }
+      body.floating_toolbar #floating_line {
+        position: absolute;
+        top: 0; left: 20px; right: 20px; bottom: 0;
+        background: white;
+        border-bottom: 1px solid #ccc;
+        opacity: 0.95;
+      }
   #toolbar .minibutton {
     float: left;
     position: relative;
@@ -32,6 +35,17 @@
   }
     #toolbar #open_viewers {
       margin-left: 0;
+    }
+  #toolbar #size_toggle {
+    float: right;
+    width: 47px; height: 24px;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    background: url(/images/embed/ui/size_toggle_full.png);
+  }
+    body.minidocs #toolbar #size_toggle {
+      background: url(/images/embed/ui/size_toggle_thumb.png);
     }
 
 .embed_code {

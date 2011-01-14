@@ -19,8 +19,8 @@
 #paginator {
   display: none;
   position: absolute;
-  bottom: 14px; left: 30px; right: 30px;
-  padding: 12px 0 16px;
+  bottom: 20px; left: 30px; right: 30px;
+  padding: 15px 0 0;
   font-size: 11px;
   line-height: 18px;
   height: 18px;
@@ -31,18 +31,20 @@
   body.paginated #paginator {
     display: block;
   }
+  #paginator .legal {
+    position: absolute;
+    width: 270px;
+    left: 50%;
+    margin-left: -135px;
+    text-align: center;
+  }
   #paginator .description,
   #paginator .sorter {
     float: left;
   }
     #paginator .sorter {
-      color: #999;
-      cursor: pointer;
       margin-left: 5px;
     }
-      #paginator .sorter:hover {
-        text-decoration: underline;
-      }
     #paginator .range {
       font-weight: bold;
     }
@@ -53,12 +55,8 @@
       margin-top: -3px;
     }
     #paginator .current_placeholder {
-      cursor: pointer;
       font-weight: bold;
     }
-      #paginator .current_placeholder:hover {
-        text-decoration: underline;
-      }
       #paginator.is_editing .current_placeholder {
         display: none;
       }
@@ -77,14 +75,3 @@
       #paginator .current_page:focus {
         color: #000;
       }
-  #paginator #size_toggle {
-    width: 47px; height: 24px;
-    position: absolute;
-    left: 50%; top: 10px;
-    margin-left: -24px;
-    cursor: pointer;
-    background: url(/images/embed/ui/size_toggle_full.png);
-  }
-    body.minidocs #paginator #size_toggle {
-      background: url(/images/embed/ui/size_toggle_thumb.png);
-    }

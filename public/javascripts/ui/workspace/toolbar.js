@@ -3,7 +3,8 @@ dc.ui.Toolbar = Backbone.View.extend({
   id : 'toolbar',
 
   events : {
-    'click #open_viewers' : '_clickOpenViewers'
+    'click #open_viewers' : '_clickOpenViewers',
+    'click #size_toggle'  : '_toggleSize'
   },
 
   MENUS : ['project', 'edit', 'publish', 'analyze'],
@@ -312,6 +313,10 @@ dc.ui.Toolbar = Backbone.View.extend({
 
   _clickOpenViewers : function() {
     this.openViewers();
+  },
+
+  _toggleSize : function() {
+    dc.app.paginator.toggleSize();
   }
 
 });
