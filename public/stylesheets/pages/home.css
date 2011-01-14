@@ -36,7 +36,7 @@ body {
     line-height: 22px;
   }
 
-.sans {
+.sans, h6 small {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
 }
 
@@ -84,13 +84,16 @@ h2, #help h1, #help h2 {
 h6 {
   font-weight: 300;
   font-size: 16px;
-  line-height: 20px;
-  margin: 30px 0 5px 0;
+  line-height: 18px;
+  margin: 30px 0 0 0;
 }
   h6 small {
-    font-weight: bold;
-    font-size: 12px;
+    display: block;
+    color: #445056;
+    font-weight: normal;
+    font-size: 11px;
     white-space: nowrap;
+    margin-bottom: 5px;
   }
 
 p {
