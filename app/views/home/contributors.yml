@@ -1,14 +1,3 @@
-partners:
-   - - Gotham Gazette
-     - http://gothamgazette.com
-   - - National Security Archive
-     - http://gwu.edu/~nsarchiv
-   - - New York Times
-     - http://nytimes.com
-   - - ProPublica
-     - http://propublica.org
-   - - Talking Points Memo
-     - http://talkingpointsmemo.com
 contributors:
    - - 13WMAZ
      - http://wmaz.com
@@ -132,6 +121,8 @@ contributors:
      - http://www.gainesville.com
    - - Gapers Block
      - http://gapersblock.com
+   - - Gotham Gazette
+     - http://gothamgazette.com
    - - Great Falls Tribune
      - http://greatfallstribune.com
    - - Greenwich Time
@@ -198,6 +189,8 @@ contributors:
      - http://www.muckrock.com
    - - National Public Radio
      - http://npr.org
+   - - National Security Archive
+     - http://gwu.edu/~nsarchiv
    - - National Security Journalism Initiative (Medill)
      - http://medillnsj.org/
    - - NewsHour
@@ -208,6 +201,8 @@ contributors:
      - http://newsnw.org
    - - The New Yorker
      - http://newyorker.com
+   - - New York Times
+     - http://nytimes.com
    - - North Coast Journal
      - http://www.northcoastjournal.com/
    - - Oakland Local
@@ -240,6 +235,8 @@ contributors:
      - http://politifact.com/
    - - Press & Sun-Bulletin
      - http://Pressconnects.com
+   - - ProPublica
+     - http://propublica.org
    - - Public Education Center
      - http://DCBureau.org
    - - Public Radio International
@@ -300,6 +297,8 @@ contributors:
      - http://tampabay.com
    - - Sunlight Foundation
      - http://sunlightfoundation.com
+   - - Talking Points Memo
+     - http://talkingpointsmemo.com
    - - TBD
      - http://www.tbd.com/
    - - Texas Tribune

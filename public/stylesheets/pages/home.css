@@ -308,6 +308,24 @@ ol {
     margin: 0 auto 25px;
   }
 
+.columns {
+  margin-top: 30px;
+}
+  .columns .column {
+    width: 174px;
+    float: left;
+    margin-left: 40px;
+  }
+    .columns .column.one {
+      margin-left: 16px;
+    }
+    .columns ul.column li {
+      width: auto;
+      font-size: 11px;
+      line-height: 14px;
+      margin-bottom: 10px;
+    }
+
 #sidebar {
   width: 260px;
   float: right;

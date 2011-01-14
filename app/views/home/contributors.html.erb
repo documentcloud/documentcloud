@@ -5,25 +5,30 @@
 
 <div id="content">
 
-  <p>The organizations below have agreed to work with us during our development phase. Check out the <a href="/featured">reporting</a> they've already done with DocumentCloud.</p> 
-  		
-  <p>If you have original documents and you're interested in using DocumentCloud -- it's free -- <a href="/contact">contact us</a>.</p>
-  
-  <h2>Initial Partners</h2>
-  
-  <ul class="bullet">
-    <% @partners.each do |name, url| %>
-      <li><a href="<%= h(url) %>"><%= h(name) %></a></li>
-    <% end %>
-  </ul>
-  
-  <h2>Contributing Organizations</h2>
-  
-  <ul class="bullet">
-    <% @contributors.each do |name, url, title| %>
+  <p>The organizations below have agreed to work with us during our development phase. Check out the <a href="/featured">reporting</a> they've already done with DocumentCloud.</p>
+
+  <div class="columns sans">
+    <% len = (@contributors.length / 3).ceil %>
+    <ul class="bullet column one">
+    <% @contributors[0...len].each do |name, url, title| %>
       <li><a href="<%= h(url) %>"<%=if title then " title=\"#{h(title)}\"" end %>><%= h(name) %></a></li>
     <% end %>
-  </ul>
+    </ul>
+    <ul class="bullet column two">
+    <% @contributors[len...(len * 2)].each do |name, url, title| %>
+      <li><a href="<%= h(url) %>"<%=if title then " title=\"#{h(title)}\"" end %>><%= h(name) %></a></li>
+    <% end %>
+    </ul>
+    <ul class="bullet column three">
+    <% @contributors[(len * 2)...@contributors.length].each do |name, url, title| %>
+      <li><a href="<%= h(url) %>"<%=if title then " title=\"#{h(title)}\"" end %>><%= h(name) %></a></li>
+    <% end %>
+    </ul>
+  </div>
   
+  <br class="clear" />
+  
+  <p>If you have original documents and you're interested in using DocumentCloud &mdash; it's free &mdash; <a href="/contact">contact us</a>.</p>
+
 </div>
 
