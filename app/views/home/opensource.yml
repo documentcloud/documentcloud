@@ -44,7 +44,7 @@ github:
   - - "NY Times' Document Viewer"
     - http://github.com/documentcloud/document-viewer
     - http://github.com/documentcloud/document-viewer
-    - "We're collaborating with the New York Times on their document viewer technology, a key component of DocumentCloud."
+    - "We collaborate with the New York Times on their HTML5 document viewer, a key component of DocumentCloud."
   - - Docsplit
     - http://documentcloud.github.com/docsplit/
     - http://github.com/documentcloud/docsplit/
@@ -56,7 +56,7 @@ github:
   - - Underscore.js
     - http://documentcloud.github.com/underscore/
     - http://github.com/documentcloud/underscore/
-    - "A library of functional programming helpers for JavaScript, intended to complement jQuery."
+    - "Our most widely-used project: a library of functional programming helpers for JavaScript that fit in nicely alongside jQuery."
   - - CloudCrowd
     - http://wiki.github.com/documentcloud/cloud-crowd
     - http://github.com/documentcloud/cloud-crowd
