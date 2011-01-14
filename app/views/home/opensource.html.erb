@@ -15,12 +15,11 @@
   </p>
 
   <h2>DocumentCloud Projects</h2>
-  <ul class="bullet">
+  <ul class="bullet opensource">
     <% @github.each do |name, url, github_url, title| %>
     <li>
       <h6>
-        <a href="<%= h(url) %>"><%= h(name) %></a>
-        <small><a href="<%= github_url %>" class="github_link"></a></small>
+        <span><a href="<%= h(url) %>"><%= h(name) %></a><a href="<%= github_url %>" class="github_link"></a></span>
       </h6>
       <%= h(title) %>
     </li>

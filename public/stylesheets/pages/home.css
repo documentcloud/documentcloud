@@ -284,10 +284,10 @@ ol {
   }
 
 .github_link {
-  position: absolute;
   display: inline-block;
   width: 16px; height: 16px;
-  margin: 2px 0 0 7px;
+  position: relative;
+  top: 3px; left: 10px;
   background: url(/images/embed/home/github.png);
 }
 
