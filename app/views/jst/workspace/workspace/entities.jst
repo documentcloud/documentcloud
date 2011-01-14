@@ -1,9 +1,9 @@
 <% var empty = true; %>
-<% _.each(dc.model.Entity.ORDER, function(category) { %>
+<% _.each(dc.model.Entity.ORDER, function(category, i) { %>
   <% var list = entities[category] || []; %>
   <% if (list.length) { %>
     <% empty = false; %>
-    <div class="section">
+    <div class="section <%= i == 0 ? 'first' : '' %>">
       <div class="category interface"><%= dc.model.Entity.DISPLAY_NAME[category] %></div>
       <div class="rows">
         <% _.each(list.slice(0, limit), function(facet) { %>

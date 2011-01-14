@@ -163,9 +163,8 @@
     width: 308px;
     margin: 30px 0 0 0;
   }
-    #entities .section:first-child {
-      border-top: 0;
-      margin-top: 10px;
+    #entities .section.first {
+      margin-top: 20px;
     }
     #entities .category {
       font: bold 12px Helvetica, Arial;
@@ -273,9 +272,6 @@
   .scroll.not_active {
     top: 5px; bottom: 15px;
   }
-    body.entities_sidebar_tab .scroll.not_active {
-      top: 15px;
-    }
   .scroll_content {
     position: absolute;
     top: 0; bottom: 0;
@@ -283,7 +279,7 @@
     overflow-y: hidden;
   }
     .scroll.is_active .scroll_content {
-      top: 10px; bottom: 20px;
+      top: 0px; bottom: 20px;
     }
   .scroll_up, .scroll_down {
     height: 19px;
