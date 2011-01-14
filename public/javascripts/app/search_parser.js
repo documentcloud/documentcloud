@@ -18,10 +18,6 @@ dc.app.SearchParser = {
 
   FIRST_FILTER      : /filter:\s*(\w+)/i,
 
-  PUBLISHED_FILTER  : /filter:\s*published/i,
-
-  POPULAR_FILTER    : /filter:\s*popular/i,
-
   WHITESPACE_ONLY   : /^\s*$/,
 
   extractProject : function(query) {
@@ -39,12 +35,9 @@ dc.app.SearchParser = {
     return group && (group[2] || group[3] || group[4]);
   },
 
-  extractPublished : function(query) {
-    return !!query.match(this.PUBLISHED_FILTER);
-  },
-
-  extractPopular : function(query) {
-    return !!query.match(this.POPULAR_FILTER);
+  extractFilter : function(query) {
+    var match = query.match(this.FIRST_FILTER);
+    return match && (match[1].toLowerCase());
   },
 
   extractEntities : function(query) {
@@ -75,8 +68,9 @@ dc.app.SearchParser = {
     if (query.replace(this.FIRST_GROUP, '').match(this.WHITESPACE_ONLY))    return 'group';
     var withoutAccount = query.replace(this.FIRST_ACCOUNT, '');
     if (withoutAccount.match(this.WHITESPACE_ONLY))                         return 'account';
-    if (withoutAccount.replace(this.PUBLISHED_FILTER, '').match(this.WHITESPACE_ONLY)) return 'published';
-    if (withoutAccount.replace(this.POPULAR_FILTER, '').match(this.WHITESPACE_ONLY)) return 'popular';
+    var filter = this.extractFilter(query);
+    var filterOnly = withoutAccount.replace(this.FIRST_FILTER, '').match(this.WHITESPACE_ONLY);
+    if (filter && filterOnly && (filter == 'annotated' || filter == 'published' || filter == 'popular')) return filter;
     return 'search';
   }
 

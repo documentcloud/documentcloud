@@ -104,6 +104,7 @@ class Document < ActiveRecord::Base
     integer :access
     integer :page_count
     integer :hit_count
+    integer :public_note_count
     integer :project_ids, :multiple => true do
       self.project_memberships.map {|m| m.project_id }
     end
@@ -233,6 +234,11 @@ class Document < ActiveRecord::Base
   # for Solr indexing purposes.
   def entity_values(kind)
     self.entities.kind(kind.to_s).all(:select => [:value]).map {|e| e.value }
+  end
+
+  # Reset the cached counter of public notes on the document.
+  def reset_public_note_count
+    update_attributes :public_note_count => annotations.unrestricted.count
   end
 
   # Return a hash of all the document's entities (for an API response).

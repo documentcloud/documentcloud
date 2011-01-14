@@ -317,7 +317,11 @@ module DC
         @filters.each do |filter|
           case filter
           when :annotated
-            # TODO.
+            if needs_solr?
+              @solr.build { with(:public_note_count).greater_than(0) }
+            else
+              @sql << 'documents.public_note_count > 0'
+            end
           when :popular
             @order = :hit_count
             if needs_solr?

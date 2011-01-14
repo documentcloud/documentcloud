@@ -7,7 +7,7 @@ dc.ui.Organizer = Backbone.View.extend({
   ],
 
   PUBLIC_SEARCHES: [
-    'all_documents', 'published_documents', 'popular_documents'
+    'all_documents', 'annotated_documents', 'published_documents', 'popular_documents'
   ],
 
   events : {
@@ -15,6 +15,7 @@ dc.ui.Organizer = Backbone.View.extend({
     'click .all_documents'            : 'showAllDocuments',
     'click .your_documents'           : 'showYourDocuments',
     'click .org_documents'            : 'showOrganizationDocuments',
+    'click .annotated_documents'      : 'showAnnotatedDocuments',
     'click .published_documents'      : 'showPublishedDocuments',
     'click .popular_documents'        : 'showPopularDocuments',
     'click .your_published_documents' : 'showYourPublishedDocuments',
@@ -96,6 +97,10 @@ dc.ui.Organizer = Backbone.View.extend({
 
   showYourDocuments : function() {
     Accounts.current().openDocuments();
+  },
+
+  showAnnotatedDocuments : function() {
+    dc.app.searcher.search('filter: annotated');
   },
 
   showPublishedDocuments : function() {

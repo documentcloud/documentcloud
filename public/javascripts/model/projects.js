@@ -88,6 +88,7 @@ dc.model.Project.topLevelTitle = function(type) {
   switch (type) {
     case 'all_documents':             return 'All Documents';
     case 'your_documents':            return 'Your Documents';
+    case 'annotated_documents':       return 'Annotated Documents';
     case 'popular_documents':         return 'Popular Documents';
     case 'published_documents':       return 'Published Documents';
     case 'your_published_documents':  return 'Your Published Documents';

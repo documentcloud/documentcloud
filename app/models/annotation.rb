@@ -13,6 +13,9 @@ class Annotation < ActiveRecord::Base
 
   before_validation :ensure_title
 
+  after_create  :increment_counter
+  after_destroy :decrement_counter
+
   named_scope :accessible, lambda { |account|
     access = []
     access << "(annotations.access = #{PUBLIC})"
@@ -26,6 +29,8 @@ class Annotation < ActiveRecord::Base
   named_scope :owned_by, lambda { |account|
     {:conditions => {:account_id => account.id}}
   }
+
+  named_scope :unrestricted, :conditions => {:access => PUBLIC}
 
   searchable do
     text :title, :boost => 2.0
@@ -77,6 +82,18 @@ class Annotation < ActiveRecord::Base
     data['author'] = author[:full_name] if author
     data['author_organization'] = author[:organization_name] if author
     data
+  end
+
+  def increment_counter
+    return unless access == PUBLIC
+    document.increment :public_note_count
+    document.save
+  end
+
+  def decrement_counter
+    return unless access == PUBLIC
+    document.decrement :public_note_count
+    document.save
   end
 
   def to_json(opts={})
