@@ -71,13 +71,14 @@ class Document < ActiveRecord::Base
   # our organization and we're allowed to see it, or it belongs to a project
   # that's been shared with us.
   named_scope :accessible, lambda {|account, org|
+    account_memberships = account && account.accessible_document_ids.present?
     access = []
     access << "(documents.access = #{PUBLIC})"
     access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}) and documents.account_id = #{account.id})" if account
     access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org
-    access << "(documents.id in (?))" if account
+    access << "(documents.id in (?))" if account_memberships
     conditions = ["(#{access.join(' or ')})"]
-    conditions.push(account.accessible_document_ids) if account
+    conditions.push(account.accessible_document_ids) if account_memberships
     {:conditions => conditions}
   }
 
@@ -597,7 +598,7 @@ class Document < ActiveRecord::Base
     doc['sections']           = sections.map(&:canonical) if options[:sections]
     if options[:annotations]
       annotation_author_info = options[:annotation_author_info] || {}
-      doc['annotations']      = annotations.accessible(options[:account], !!options[:allowed_to_edit]).map do |a|
+      doc['annotations']      = annotations.accessible(options[:account]).map do |a|
         if (author = annotation_author_info[a.account_id])
           a.author = author
         end

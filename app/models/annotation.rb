@@ -13,12 +13,14 @@ class Annotation < ActiveRecord::Base
 
   before_validation :ensure_title
 
-  named_scope :accessible, lambda { |account, include_exclusive|
+  named_scope :accessible, lambda { |account|
     access = []
     access << "(annotations.access = #{PUBLIC})"
-    access << "(annotations.access = #{EXCLUSIVE})" if account || include_exclusive
+    access << "((annotations.access = #{EXCLUSIVE}) and annotations.organization_id = #{account.organization_id})" if account
     access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
-    {:conditions => "(#{access.join(' or ')})"}
+    access << "((annotations.access = #{EXCLUSIVE}) and annotations.document_id in (#{account.accessible_document_ids}))" if account && account.accessible_document_ids.present?
+    conditions = ["(#{access.join(' or ')})"]
+    {:conditions => conditions}
   }
   
   named_scope :owned_by, lambda { |account|
@@ -38,7 +40,7 @@ class Annotation < ActiveRecord::Base
 
   def self.counts_for_documents(account, docs)
     doc_ids = docs.map {|doc| doc.id }
-    self.accessible(account, false).count(:conditions => {:document_id => doc_ids}, :group => 'document_id')
+    self.accessible(account).count(:conditions => {:document_id => doc_ids}, :group => 'document_id')
   end
 
   def self.author_info(doc)

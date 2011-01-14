@@ -145,7 +145,7 @@ class Account < ActiveRecord::Base
     reviewable_document_ids = DocumentReviewer.find(:all, :conditions => {:account_id => id}, 
                                                     :select => [:document_id]).map {|d| d.document_id }
     @accessible_document_ids << reviewable_document_ids if reviewable_document_ids.count
-    @accessible_document_ids.flatten
+    @accessible_document_ids.flatten!
   end
 
   # The list of all of the projects that have been shared with this account
