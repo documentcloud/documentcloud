@@ -79,7 +79,7 @@ class Project < ActiveRecord::Base
   # How many of those annotations are accessible to a given account?
   def annotation_count(account=nil)
     account ||= self.account
-    @annotation_count ||= Annotation.accessible(account, false).count(
+    @annotation_count ||= Annotation.accessible(account).count(
       {:conditions => {:document_id => document_ids}}
     )
   end

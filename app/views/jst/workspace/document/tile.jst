@@ -17,7 +17,7 @@
     <% if (page_count) { %>
       <span class="quiet_link page_count"><%= page_count + ' ' + Inflector.pluralize('page', page_count) %></span> -
     <% } %>
-    <% if (reviewers_count) { %>
+    <% if (model.allowedToEdit() && reviewers_count) { %>
       <span class="reviewers_count quiet_link"><%= reviewers_count + ' ' + Inflector.pluralize('reviewer', reviewers_count) %></span> -
     <% } %>
     <% if (source) { %>Source: <span class="quiet_link search_source"><%= source %></span> -<% } %>

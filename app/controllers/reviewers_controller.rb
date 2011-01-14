@@ -7,6 +7,7 @@ class ReviewersController < ApplicationController
     if params[:documents]
       params[:documents].each do |document_id|
         doc = Document.find(document_id)
+        return json(nil, 403) unless current_account.allowed_to_edit?(doc)
         documents << doc
         reviewers[document_id] = doc.reviewers
       end
@@ -14,6 +15,7 @@ class ReviewersController < ApplicationController
     if params[:fetched_documents]
       params[:fetched_documents].each do |document_id|
         doc = Document.find(document_id)
+        return json(nil, 403) unless current_account.allowed_to_edit?(doc)
         documents << doc
       end
     end
@@ -39,6 +41,7 @@ class ReviewersController < ApplicationController
     if account.id
       documents = params[:documents].map do |document_id|
         document = Document.find(document_id)
+        return json(nil, 403) unless current_account.allowed_to_edit?(document)
         document.document_reviewers.create(:account => account)
         document.reload
       end
@@ -55,6 +58,7 @@ class ReviewersController < ApplicationController
     account = Account.find(params[:account_id])
     documents = params[:documents].map do |document_id|
       document = Document.find(document_id)
+      return json(nil, 403) unless current_account.allowed_to_edit?(document)
       document.document_reviewers.owned_by(account).first.destroy
       document.reload
     end
@@ -65,7 +69,9 @@ class ReviewersController < ApplicationController
     return json(nil, 400) unless params[:accounts] && params[:documents]
     documents = []
     params[:documents].each do |document_id|
-      documents << Document.find(document_id)
+      document = Document.find(document_id)
+      return json(nil, 403) unless current_account.allowed_to_edit?(document)
+      documents << document
     end
     params[:accounts].each do |account_id|
       account = Account.find(account_id)
@@ -77,7 +83,7 @@ class ReviewersController < ApplicationController
   def update
     account   = current_organization.accounts.find(params[:id])
     is_owner  = current_account.id == account.id
-    return forbidden unless account && (current_account.admin? || is_owner)
+    return json(nil, 403) unless account && (current_account.admin? || is_owner)
     account.update_attributes pick(params, :first_name, :last_name, :email) if account.role == Account::REVIEWER
     json account
   end

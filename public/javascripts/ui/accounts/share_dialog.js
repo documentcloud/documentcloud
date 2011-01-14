@@ -249,6 +249,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   _onAddError : function(resp) {
+    var status = resp.status;
     resp = JSON.parse(resp.responseText);
     if (resp.errors && _.any(resp.errors, function(error) {
       error = error.toLowerCase();
@@ -258,6 +259,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       this.$('.reviewer_management .error').text("Please provide reviewer's full name.");
     } else if (resp.errors) {
       this.$('.reviewer_management .error').text(resp.errors[0]);
+    } else if (status == 403) {
+      this.error('You are not allowed to add reviewers.');
     } else {
       this.$('.reviewer_management .error').text("Please enter in a reviewer's email address.");
     }
@@ -318,7 +321,11 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   
   _onRemoveError : function(resp) {
     this.hideSpinner();
-    this.error('There was a problem removing the reviewer.');
+     if (resp.status == 403) {
+      this.error('You are not allowed to remove reviewers.');
+    } else {
+      this.error('There was a problem removing the reviewer.');
+    }
     this._enabledNextButton();
   },
   
