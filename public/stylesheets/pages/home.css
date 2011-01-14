@@ -368,11 +368,19 @@ ol {
     margin: 0 0 15px;
     color: #aa2222;
   }
-  #sidebar .reset_password {
-    position: absolute; right: 15px;
-    font-size: 10px;
-    color: #999;
+  #sidebar #login_form {
+
   }
+    #sidebar #login_button {
+      float: left;
+    }
+    #sidebar .reset_password {
+      display: block;
+      float: right;
+      margin-top: 21px;
+      font-size: 10px;
+      color: #999;
+    }
   #sidebar ul {
     margin-top: 22px;
     text-align: left;
