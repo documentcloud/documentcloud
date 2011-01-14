@@ -308,6 +308,14 @@ ol {
     margin: 0 auto 25px;
   }
 
+.github_link {
+  position: absolute;
+  display: inline-block;
+  width: 16px; height: 16px;
+  margin: 2px 0 0 7px;
+  background: url(/images/embed/home/github.png);
+}
+
 .columns {
   margin-top: 30px;
 }

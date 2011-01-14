@@ -13,15 +13,15 @@
     DocumentCloud.
   </p>
 
-  <h2>Projects</h2>
+  <h2>DocumentCloud Projects</h2>
   <ul class="bullet">
     <% @github.each do |name, url, github_url, title| %>
     <li>
       <h6>
         <a href="<%= h(url) %>"><%= h(name) %></a>
-        <small>[<a href="<%= github_url %>">code</a>]</small>
+        <small><a href="<%= github_url %>" class="github_link"></a></small>
       </h6>
-      &ndash; <%= h(title) %>
+      <%= h(title) %>
     </li>
     <% end %>
   </ul>
