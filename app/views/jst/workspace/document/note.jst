@@ -2,9 +2,7 @@
   <div class="note_title display">
     <span class="title_link"><%= note.get('title') %> <span class="page_number">(p. <%= note.get('page') %>)</span></span>
   </div>
-  <% if (note.checkAllowedToEdit()) { %>
-    <div class="edit_note icon edit_glyph display"></div>
-  <% } %>
+  <div class="edit_note icon edit_glyph display"></div>
   <br class="clear display" />
   <div class="note_title_edit edit text_input light">
     <div class="inner">
@@ -22,26 +20,28 @@
     </div>
   <% } %>
   <div class="note_text display"><%= note.get('content') %></div>
-  <div class="annotation_author interface display">Written by: <%= note.get('author') %></div>
-  <% if (note.get('access') == 'public') { %>
-    <div class="annotation_access interface display">This public note is visible to everybody.</div>
-  <% } else if (note.get('access') == 'exclusive') { %>
-    <div class="annotation_access interface display">
-      <div class="icon lock display" title="Private note"></div>
-      This note is only visible to your organization.
-    </div>
-  <% } else { %>
-    <div class="annotation_access interface display">
-      <div class="icon lock display" title="Private note"></div>
-      This private note is only visible to you.
-    </div>
-  <% } %>
+  <div class="annotation_meta">
+    <div class="annotation_author interface display">Written by: <%= note.get('author') %></div>
+    <% if (note.get('access') == 'public') { %>
+      <div class="annotation_access interface display">This public note is visible to everybody.</div>
+    <% } else if (note.get('access') == 'exclusive') { %>
+      <div class="annotation_access interface display">
+        <div class="icon lock display" title="Private note"></div>
+        This note is only visible to your organization.
+      </div>
+    <% } else { %>
+      <div class="annotation_access interface display">
+        <div class="icon lock display" title="Private note"></div>
+        This private note is only visible to you.
+      </div>
+    <% } %>
+  </div>
   <div class="note_text_edit_wrap">
     <textarea class="note_text_edit text_area edit"></textarea>
   </div>
   <div class="note_controls edit">
     <div class="minibutton warn delete_note float_left">Delete</div>
-    <div class="minibutton default save_note float_right">Publish</div>
+    <div class="minibutton default save_note float_right">Save</div>
     <div class="minibutton save_draft_note float_right">Save as Draft</div>
     <div class="minibutton cancel_note float_right">Cancel</div>
   </div>

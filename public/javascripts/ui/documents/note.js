@@ -4,12 +4,13 @@ dc.ui.Note = Backbone.View.extend({
   className : 'note noselect',
 
   events : {
-    'click .title_link':  'viewNoteInDocument',
-    'click .page_number': 'viewNoteInDocument',
-    'click .edit_note':   'editNote',
-    'click .cancel_note': 'cancelNote',
-    'click .save_note':   'saveNote',
-    'click .delete_note': 'deleteNote'
+    'click .title_link':       'viewNoteInDocument',
+    'click .page_number':      'viewNoteInDocument',
+    'click .edit_note':        'editNote',
+    'click .cancel_note':      'cancelNote',
+    'click .save_note':        'saveNote',
+    'click .save_draft_note':  'saveNote',
+    'click .delete_note':      'deleteNote'
   },
 
   constructor : function(options) {
@@ -26,6 +27,7 @@ dc.ui.Note = Backbone.View.extend({
     $(this.el).html(JST['document/note'](data));
     this.setMode('display', 'visible');
     this.setMode(this.model.get('access'), 'access');
+    this.setMode(this.model.checkAllowedToEdit() ? 'is' : 'not', 'editable');
     return this;
   },
 
@@ -47,12 +49,14 @@ dc.ui.Note = Backbone.View.extend({
     this.setMode('display', 'visible');
   },
 
-  saveNote : function() {
+  saveNote : function(e) {
+    if ($(e.target).hasClass('save_draft_note'))      this.model.set({'access': 'exclusive'});
+    else if (this.model.get('access') == 'exclusive') this.model.set({'access': 'public'});
     this.model.save({
       title   : this.$('.note_title_input').val(),
-      content : this.$('.note_text_edit').val(),
-      access  : this.$('.access_select :selected').val()
+      content : this.$('.note_text_edit').val()
     });
+    this.render();
   },
 
   deleteNote : function() {

@@ -109,7 +109,8 @@
         visibility: hidden;
         cursor: pointer;
       }
-        .document.is_editable:hover .edit_glyph {
+        .document.is_editable:hover .edit_glyph,
+        .note.is_editable:hover .edit_glyph {
           visibility: visible;
         }
         .document.pending_access:hover .edit_glyph {
@@ -276,6 +277,13 @@
     -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
     box-shadow: 1px 2px 3px #bbb; -webkit-box-shadow: 1px 2px 3px #bbb; -moz-box-shadow: 1px 2px 3px #bbb;
   }
+    .note .edit, .note .display {
+      display: none;
+    }
+      .note.display_visible .display,
+      .note.edit_visible .edit {
+        display: block;
+      }
     .note .access_select {
       float: right;
     }
@@ -284,8 +292,18 @@
       font-size: 11px;
       margin: 4px 0 0 0;
       color: #909090;
+      display: none;
     }
-    .note .annotation_access {
+    .note.not_editable .annotation_meta {
+      display: none;
+    }
+    .note.is_editable .annotation_meta {
+      display: block;
+    }
+    .note.exclusive_access {
+      background: #fff url(/images/embed/ui/note-draft-bg.png) repeat 0 0;
+    }
+    .note .annotation_meta .annotation_access {
       float: left;
       margin: 4px 0 0 0;
       color: #909090;
@@ -294,13 +312,6 @@
     .note.private_access {
       border-color: #6BC2F8;
     }
-    .note .edit, .note .display {
-      display: none;
-    }
-      .note.display_visible .display,
-      .note.edit_visible .edit {
-        display: block;
-      }
     .note .note_contents {
       position: relative;
       overflow: hidden;
@@ -319,6 +330,9 @@
         width: 300px;
         margin-bottom: 10px;
       }
+        .note .note_title_input {
+          background: #fff;
+        }
       .note .page_number {
         color: #777;
         font-weight: normal;
@@ -385,6 +399,13 @@
           margin: 10px 0 0 0;
           width: 60px;
         }
-          .note .note_controls .cancel_note {
+          .note .note_controls .cancel_note,
+          .note .note_controls .save_draft_note {
             margin-right: 10px;
+          }
+          .note.private_access .note_controls .save_draft_note {
+            display: none;
+          }
+          .note .note_controls .save_draft_note {
+            width: 80px;
           }
