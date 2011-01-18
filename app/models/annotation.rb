@@ -13,8 +13,8 @@ class Annotation < ActiveRecord::Base
 
   before_validation :ensure_title
 
-  after_create  :increment_counter
-  after_destroy :decrement_counter
+  after_create  :reset_public_note_count
+  after_destroy :reset_public_note_count
 
   named_scope :accessible, lambda { |account|
     access = []
@@ -84,16 +84,9 @@ class Annotation < ActiveRecord::Base
     data
   end
 
-  def increment_counter
+  def reset_public_note_count
     return unless access == PUBLIC
-    document.increment :public_note_count
-    document.save
-  end
-
-  def decrement_counter
-    return unless access == PUBLIC
-    document.decrement :public_note_count
-    document.save
+    document.reset_public_note_count
   end
 
   def to_json(opts={})
