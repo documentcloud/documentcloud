@@ -2,7 +2,7 @@
   <div class="bird"></div>
   <div class="content">
     <div class="text">
-      &ldquo;<%= text %>&rdquo;
+      &ldquo;<%= Inflector.autolink(text, true) %>&rdquo;
     </div>
     <div class="user sans">
       &mdash; <a class="name" href="http://twitter.com/<%= user.screen_name %>"><%= user.name %></a>

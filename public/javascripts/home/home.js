@@ -52,7 +52,6 @@ $(function() {
     loadTweets : function() {
       $.getJSON(this.FAVORITES_URL, function(json) {
         var tweets = json.slice(0, 3);
-        console.log(tweets);
         var html   = "";
         _.each(tweets, function(tweet, i) {
           html += JST['home/tweet'](_.extend(tweet, {index: i}));

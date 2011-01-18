@@ -126,6 +126,13 @@ window.Inflector = {
     return words.join('');
   },
 
+  // Autolink URLs and (optionally) @twitter ids.
+  autolink : function(text, twitter) {
+    text = text.replace(/(https?:\/\/([a-z0-9]([-a-z0-9]*[a-z0-9])?\.)+([a-zA-z]{2,6})(\/[a-zA-Z0-9$_.+!#*(),;\/?:@&~=%-]*)?)/g, '<a href="$1">$1</a>');
+    if (twitter) text.replace(/\s@(\w{1,15})/g, ' <a href="http://twitter.com/$1">@$1</a>');
+    return text;
+  },
+
   // Convert bytes into KB or MB
   bytesToMB : function(bytes) {
     var byteSize = Math.round(bytes / 1024 * 100) * 0.01;
