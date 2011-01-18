@@ -56,7 +56,7 @@ $(function() {
         _.each(tweets, function(tweet, i) {
           html += JST['home/tweet'](_.extend(tweet, {index: i}));
         });
-        $('#tweets').html(html);
+        $('#tweets').html(html).show();
       });
     }
 
