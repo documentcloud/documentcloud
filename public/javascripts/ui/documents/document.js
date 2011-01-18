@@ -104,7 +104,7 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   viewDocument : function(e) {
-    this.model.openViewer();
+    this.model.openAppropriateVersion();
     return false;
   },
 

@@ -121,7 +121,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   openViewers : function(suffix, afterLoad) {
     if (!Documents.selectedCount) return dc.ui.Dialog.alert('Please select a document to open.');
     _.each(Documents.selected(), function(doc){
-      var win = doc.openViewer(suffix);
+      var win = doc.openAppropriateVersion(suffix);
       if (afterLoad) {
         win.DV || (win.DV = {});
         win.DV.afterLoad = afterLoad;

@@ -78,7 +78,14 @@ dc.model.Document = Backbone.Model.extend({
   openPublishedViewer : function() {
     if (this.checkBusy()) return;
     if (!this.isPublished()) return dc.ui.Dialog.alert('"' + this.get('title') + '" is not published.');
-    window.open(this.publishedUrl());
+    return window.open(this.publishedUrl());
+  },
+
+  // Open the published version, if we're not logged in and the document is
+  // published. Otherwise, open the in-workspace version.
+  openAppropriateVersion : function(suffix) {
+    return (!dc.account && this.isPublished()) ?
+      this.openPublishedViewer() : this.openViewer(suffix);
   },
 
   openText : function() {
