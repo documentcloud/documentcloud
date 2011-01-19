@@ -11,7 +11,7 @@ class HomeController < ApplicationController
   before_filter :bouncer if Rails.env.staging?
 
   def index
-    @documents = Document.random(:conditions => {:access => PUBLIC}, :limit => 1)
+    @documents = Document.published.popular.unrestricted.random(:limit => 1)
   end
 
   def opensource

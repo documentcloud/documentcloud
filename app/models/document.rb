@@ -297,6 +297,10 @@ class Document < ActiveRecord::Base
     publicly_accessible? && (remote_url.present? || detected_remote_url.present?)
   end
 
+  def published_url
+    remote_url || detected_remote_url
+  end
+
   # When the access level changes, all sub-resource and asset permissions
   # need to be updated.
   def set_access(access_level)
