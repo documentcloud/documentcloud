@@ -129,7 +129,7 @@ window.Inflector = {
   // Autolink URLs and (optionally) @twitter ids.
   autolink : function(text, twitter) {
     text = text.replace(/(https?:\/\/([a-z0-9]([-a-z0-9]*[a-z0-9])?\.)+([a-zA-z]{2,6})(\/[a-zA-Z0-9$_.+!#*(),;\/?:@&~=%-]*)?)/g, '<a href="$1">$1</a>');
-    if (twitter) text.replace(/\s@(\w{1,15})/g, ' <a href="http://twitter.com/$1">@$1</a>');
+    if (twitter) text = text.replace(/\s@(\w{1,15})/g, ' <a href="http://twitter.com/$1">@$1</a>');
     return text;
   },
 
