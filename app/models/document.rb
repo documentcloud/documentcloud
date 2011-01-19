@@ -481,7 +481,6 @@ class Document < ActiveRecord::Base
   end
 
   def save_page_text(modified_pages)
-    modified_pages = JSON.parse(modified_pages)
     modified_pages.each_pair do |page_number, page_text|
       page = Page.find_by_document_id_and_page_number(id, page_number)
       page.text = page_text

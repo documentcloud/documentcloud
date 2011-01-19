@@ -113,7 +113,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   editPageText : function() {
-    dc.app.editor.pageTextEditor.toggle();
+    dc.app.editor.editPageTextEditor.toggle();
   },
 
   editReplacePages : function() {

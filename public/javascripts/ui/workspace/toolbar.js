@@ -275,7 +275,7 @@ dc.ui.Toolbar = Backbone.View.extend({
         {title : 'Insert/Replace Pages',      attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openInsertEditor)},
         {title : 'Remove Pages',              attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openRemoveEditor)},
         {title : 'Reorder Pages',             attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openReorderEditor)},
-        {title : 'Edit Page Text',            attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#text/p1', this._openPageTextEditor)},
+        {title : 'Edit Page Text',            attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#text/p1', this._openEditPageTextEditor)},
         {title : 'Reprocess Text',            attrs: {'class' : 'multiple indent'}, onClick : this.reprocessText},
         {title : 'Delete Documents',          attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
       ]
@@ -294,8 +294,8 @@ dc.ui.Toolbar = Backbone.View.extend({
     });
   },
 
-  _openPageTextEditor: function(viewer) {
-    _.defer(function(){ viewer.window.dc.app.editor.pageTextEditor.open(); });
+  _openEditPageTextEditor: function(viewer) {
+    _.defer(function(){ viewer.window.dc.app.editor.editPageTextEditor.open(); });
   },
 
   _openInsertEditor  : function(viewer) {

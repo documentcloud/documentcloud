@@ -295,20 +295,13 @@
 /* = Remove Pages = */
 /* ================ */
 
-#remove_pages_container {  
+#remove_pages_container.empty .editor_hint {
+  display: block;
 }
-  #remove_pages_container.empty .editor_hint {
-    display: block;
-  }
-  #remove_pages_container .editor_hint {
-    display: none;
-  }
-  #remove_pages_container .remove_pages_holder {
-    text-align: center;
-  }
-    #remove_pages_container .remove_pages_confirm {
-    }
-
+#remove_pages_container .editor_hint {
+  display: none;
+}
+  
 .DV-pages.remove_pages_viewer {
   margin-top: 134px;
 }
@@ -332,25 +325,9 @@
 /* = Edit Page Text = */
 /* ================== */
 
-  #edit_page_text_container.active .edit_page_text_confirm_info {
-    display: none;
-  }
-    #edit_page_text_container .edit_page_text_confirm_info {
-      float: left;
-      margin: 54px 12px 0 20px;
-    }
-    #edit_page_text_container .edit_page_text_confirm_input {
-      text-transform: none;
-      margin: 46px 12px 0 20px;
-      float: left;
-      display: none;
-    }
-      #edit_page_text_container.active .edit_page_text_confirm_input {
-        display: block;
-      }
-  #edit_page_text_container .document_page_tiles {
-    float: left;
-  }
+#edit_page_text_container.active .editor_hint {
+  display: none;
+}
 
 .DV-pages.edit_page_text_viewer {
   margin-top: 132px;

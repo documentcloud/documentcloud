@@ -100,7 +100,8 @@ class DocumentsController < ApplicationController
 
   def save_page_text
     return not_found unless doc = current_document(true)
-    doc.save_page_text(params[:modified_pages])
+    modified_pages = JSON.parse(params[:modified_pages])
+    doc.save_page_text(modified_pages) unless modified_pages.empty?
     json doc
   end
 

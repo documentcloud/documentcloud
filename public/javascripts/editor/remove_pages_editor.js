@@ -124,7 +124,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
     }, this));
 
     // Update remove button's text
-    var removeText = 'Remove ' + pageCount + Inflector.pluralize(' Page', pageCount);
+    var removeText = 'Remove ' + (pageCount ? pageCount : '') + Inflector.pluralize(' Page', pageCount);
     this.$('.remove_pages_confirm_input').text(removeText);
 
     // Set width of container for side-scrolling

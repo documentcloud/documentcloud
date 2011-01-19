@@ -1,10 +1,11 @@
-dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
+dc.ui.EditPageTextEditor = dc.ui.EditorToolbar.extend({
 
   id : 'edit_page_text_container',
 
   events : {
     'click .edit_page_text_confirm_input' : 'confirmEditPageText',
-    'click .document_page_tile_remove'    : 'resetPage'
+    'click .document_page_tile_remove'    : 'resetPage',
+    'click .close_editor'                 : 'close'
   },
 
   initialize : function(opts) {
@@ -164,8 +165,8 @@ dc.ui.PageTextEditor = dc.ui.EditorToolbar.extend({
 
     // Set width of container for side-scrolling
     var width = $('.document_page_tile').length * $('.document_page_tile').eq(0).outerWidth(true);
-    var confirmWidth = $('.remove_pages_confirm', this.el).outerWidth(true);
-    this.$s.headerTiles.width(width + confirmWidth);
+    var confirmWidth = $('.editor_toolbar_controls', this.el).outerWidth(true);
+    this.$s.headerTiles.width(width + confirmWidth + 10);
     Backbone.View.prototype.delegateEvents.call(this);
   },
 

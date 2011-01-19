@@ -15,6 +15,7 @@ javascripts:
     - public/javascripts/app/**/*.js
     - app/views/jst/workspace/**/*.jst
   editor:
+    - public/javascripts/editor/editor_toolbar.js
     - public/javascripts/editor/*.js
     - app/views/jst/editor/*.jst
   admin:
