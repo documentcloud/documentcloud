@@ -27,8 +27,8 @@
     <a id="workspace_link" href="/public/#search/"></a>
     <div id="docs_wrapper">
       <img id="document_stack" alt="" src="/images/home/art.png" />
-      <a id="featured_document" target="_blank" title="<%= h @documents.first.title %>" href="<%= @documents.first.published_url %>">
-        <img width="212" height="276" src="<%= @documents.first.page_image_url(1, 'normal') %>" />
+      <a id="featured_document" target="_blank" title="<%= h @document.title %>" href="<%= @document.published_url %>">
+        <img width="212" height="276" src="<%= @document.page_image_url(1, 'normal') %>" />
       </a>
     </div>
   <% else %>

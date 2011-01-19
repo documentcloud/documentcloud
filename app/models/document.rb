@@ -51,6 +51,9 @@ class Document < ActiveRecord::Base
 
   named_scope :chronological, {:order => 'created_at desc'}
 
+  # NB: This is *not* efficient.
+  named_scope :random,        {:order => 'random()'}
+
   named_scope :owned_by, lambda { |account|
     {:conditions => {:account_id => account.id}}
   }
@@ -68,6 +71,10 @@ class Document < ActiveRecord::Base
 
   named_scope :due, lambda {|time|
     {:conditions => ["publish_at <= ?", Time.now.utc]}
+  }
+
+  named_scope :since, lambda {|time|
+    time ? {:conditions => ["created_at >= ?", time]} : {}
   }
 
   # Restrict accessible documents for a given account/organization.
@@ -170,35 +177,6 @@ class Document < ActiveRecord::Base
         :access          => eventual_access
       }
     }.to_json}).body)
-  end
-
-  # Efficiently retrieve a random document (or documents). We do this by
-  # throwing darts at random numeric ids in between 1 and the current max id,
-  # until we have enough documents.
-  def self.random(opts={})
-    docs              = []
-    seen_ids          = {}
-    real_limit        = opts[:limit] || 1
-    opts[:limit]      = real_limit * 3
-    opts[:conditions] ||= {}
-    max_id_query      = "select id from documents order by id desc limit 1"
-    last_id           = Document.connection.select_value(max_id_query).to_i
-    tries             = 0
-    while docs.length < real_limit do
-      uncached do
-        opts[:conditions].merge!(:id => (0...opts[:limit]).map {|i| rand(last_id) })
-        rows = Document.all(opts)
-        rows.each do |row|
-          break if docs.length >= real_limit
-          next  if seen_ids[row.id]
-          docs.push row
-          seen_ids[row.id] = true
-        end
-      end
-      tries += 1
-      raise RuntimeError, "random failed, after too many attempts" if tries > 50
-    end
-    docs
   end
 
   # Publish all documents with a `publish_at` timestamp that is past due.

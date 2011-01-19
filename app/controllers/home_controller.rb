@@ -11,7 +11,8 @@ class HomeController < ApplicationController
   before_filter :bouncer if Rails.env.staging?
 
   def index
-    @documents = Document.published.popular.unrestricted.random(:limit => 1)
+    time = Rails.env.production? ? 2.weeks.ago : nil
+    @document = Document.unrestricted.published.popular.random.since(time).first
   end
 
   def opensource
