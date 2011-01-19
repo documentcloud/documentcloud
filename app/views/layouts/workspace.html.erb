@@ -15,6 +15,9 @@
     <%= include_stylesheets :ie_only, :embed_assets => false %>
     <%= include_javascripts :ie_only %>
   <![endif]-->
+  <% if @include_analytics && Rails.env.production? %>
+    <%= render :partial => 'common/google' %>
+  <% end %>
 </head>
 <body class="<%= @bodyclass %> <%= @current_account ? 'logged_in' : '' %>">
 
