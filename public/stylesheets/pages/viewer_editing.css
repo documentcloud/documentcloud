@@ -224,14 +224,16 @@
 
 /*---------------------------- Editing Toolbar -------------------------------*/
 .editor_toolbar {
-  position: absolute;
   z-index: 10001;
-  top: 0;
-  left: 0;
-  right: 266px;
   background-color: white;
   border-bottom: 2px solid #979797;
-  box-shadow: 0 0 4px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 4px rgba(0,0,0,.5); -moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
+  box-shadow: -2px 0 4px rgba(0,0,0,.5); -webkit-box-shadow: -2px 0 4px rgba(0,0,0,.5); -moz-box-shadow: -2px 0 4px rgba(0,0,0,.5);
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-left: 10px;
+  margin-right: 266px;
+  height: 132px;
 }
   .editor_toolbar .minibutton {
     text-transform: none;
@@ -240,8 +242,19 @@
     font-size: 16px;
     color: #999;
     font-weight: bold;
-    position: absolute;
-    top: 0;
+    float: left;
+    margin: 54px 0 0 24px;
+  }
+  .editor_toolbar .close_editor {
+    margin: 12px 0 0;
+    float: none;
+  }
+  .editor_toolbar .editor_toolbar_controls {
+    float: left;
+    padding: 32px 14px 0 12px;
+    height: 100px;
+    display: block;
+    position: relative;
   }
 
 /*------------------------- Document Page Tiles ------------------------------*/
@@ -278,40 +291,23 @@
     margin-top: 5px;
   }
 
-
 /* ================ */
 /* = Remove Pages = */
 /* ================ */
 
-  #remove_pages_container .remove_pages {
-    position: relative;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-left: 10px;
-    height: 132px;
-  }
-  #remove_pages_container .editor_hint {
-    margin: 54px 0 0 24px;
-    display: none;
-  }
+#remove_pages_container {  
+}
   #remove_pages_container.empty .editor_hint {
     display: block;
   }
-  #remove_pages_container .remove_pages_holder {
-    min-width: 400px;
+  #remove_pages_container .editor_hint {
+    display: none;
   }
-    #remove_pages_container.empty .remove_pages_holder {
-      display: none;
-    }
+  #remove_pages_container .remove_pages_holder {
+    text-align: center;
+  }
     #remove_pages_container .remove_pages_confirm {
-      float: left;
-      padding: 43px 14px 0 12px;
-      height: 100px;
-      display: block;
     }
-      #remove_pages_container .remove_pages_confirm input {
-        margin: 18px 0 0 0;
-      }
 
 .DV-pages.remove_pages_viewer {
   margin-top: 134px;
@@ -323,24 +319,9 @@
 /* ================= */
 /* = Reorder Pages = */
 /* ================= */
-  #reorder_pages_container .reorder_pages {
-    position: relative;
-    overflow-x: auto;
-    overflow-y: hidden;
-    height: 64px;
-  }
-    #reorder_pages_container .editor_hint {
-      position: static;
-      margin: 22px 20px 0;
-      float: left;
-    }
-    #reorder_pages_container .reorder_pages_confirm .minibutton {
-      margin: 20px 0 0;
-      float: left;
-    }
 
 .DV-pages.reorder_pages_viewer {
-  margin-top: 66px;
+  margin-top: 134px;
 }
   .DV-pages.reorder_pages_viewer .DV-thumbnail-page,
   .DV-pages.reorder_pages_viewer .DV-pageNumber {
@@ -353,12 +334,6 @@
 
   #edit_page_text_container.active .edit_page_text_confirm_info {
     display: none;
-  }
-  #edit_page_text_container .edit_page_text {
-    position: relative;
-    overflow-x: auto;
-    overflow-y: hidden;
-    height: 132px;
   }
     #edit_page_text_container .edit_page_text_confirm_info {
       float: left;
@@ -389,31 +364,26 @@
 /* ================= */
 
 #replace_pages_container {
-  height: 64px;
+  height: 132px;
 }
-  #replace_pages_container .editor_hint {
-    margin: 23px 0 0 20px;
+  #replace_pages_container .replace_pages_holder {
   }
-  #replace_pages_container .replace_pages_upload {
-    margin: 20px 24px 0 0;
-    visibility: hidden;
-  }
-  #replace_pages_container.on_upload .replace_pages_upload {
-    visibility: visible;
-  }
-
+    #replace_pages_container.on_upload .replace_pages_upload {
+      visibility: visible;
+    }
   #replace_pages_container #new_documentUploader {
     position: absolute;
-    right: 24px;
-    top: 20px;
+    left: 12px;
+    top: 32px;
     display: none;
   }
   #replace_pages_container.on_upload #new_documentUploader {
     display: block;
   }
 .DV-pages.replace_pages_viewer {
-  margin-top: 66px;
+  margin-top: 134px;
 }
+
 
 
 /* ============== */

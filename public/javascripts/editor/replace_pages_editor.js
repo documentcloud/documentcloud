@@ -2,6 +2,10 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
 
   id : 'replace_pages_container',
 
+  events : {
+    'click .close_editor' : 'close'
+  },
+  
   initialize : function(options) {
     this.editor = options.editor;
   },
@@ -195,9 +199,11 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
     if (state == 'choose') {
       hint = "Choose a location to insert pages.";
       $(this.el).setMode('off', 'upload');
+      this.$('.replace_pages_upload_button').setMode('not', 'enabled');
     } else {
       var replace = state == 'replace';
       $(this.el).setMode('on', 'upload');
+      this.$('.replace_pages_upload_button').setMode('is', 'enabled');
       hint = replace ? 'Replace ' : 'Insert ';
       if (replace) {
         range = this.getPageRange();

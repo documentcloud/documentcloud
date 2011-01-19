@@ -3,7 +3,8 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
   id : 'reorder_pages_container',
 
   events : {
-    'click .reorder_pages_confirm_input' : 'confirmReorderPages'
+    'click .reorder_pages_confirm_input' : 'confirmReorderPages',
+    'click .close_editor'                : 'close'
   },
 
   initialize : function(options) {

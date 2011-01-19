@@ -4,7 +4,8 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
 
   events : {
     'click .document_page_tile_remove'  : 'removePageFromRemoveSet',
-    'click .remove_pages_confirm_input' : 'confirmRemovePages'
+    'click .remove_pages_confirm_input' : 'confirmRemovePages',
+    'click .close_editor'               : 'close'
   },
 
   initialize : function(options) {
@@ -19,6 +20,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
       thumbnailsContainer : $('.DV-thumbnails'),
       pages : $('.DV-pages'),
       viewerContainer : $('.DV-docViewer-Container'),
+      saveButton : this.$('.remove_pages_confirm_input'),
       holder : null,
       container : null
     };
@@ -44,8 +46,9 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
     }
     this.$s.pages.addClass('remove_pages_viewer');
     this.$s.thumbnails.removeClass('DV-selected');
-    this.$s.holder = $('.remove_pages_holder', this.el);
+    this.$s.holder = $('.remove_pages_page_container', this.el);
     this.$s.container = $(this.el);
+    this.$s.saveButton.setMode('not', 'enabled');
     this.redrawPages();
     this.handleEvents();
   },
@@ -101,8 +104,10 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
 
     if (pageCount == 0) {
       this.$s.container.addClass('empty');
+      this.$('.remove_pages_confirm_input').setMode('not', 'enabled');
     } else {
       this.$s.container.removeClass('empty');
+      this.$('.remove_pages_confirm_input').setMode('is', 'enabled');
     }
 
     // Create each page tile and add it to the page holder
@@ -120,11 +125,11 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
 
     // Update remove button's text
     var removeText = 'Remove ' + pageCount + Inflector.pluralize(' Page', pageCount);
-    $('.remove_pages_confirm_input', this.el).text(removeText);
+    this.$('.remove_pages_confirm_input').text(removeText);
 
     // Set width of container for side-scrolling
     var width = $('.document_page_tile').length * $('.document_page_tile').eq(0).outerWidth(true);
-    var confirmWidth = $('.remove_pages_confirm', this.el).outerWidth(true);
+    var confirmWidth = $('.editor_toolbar_controls', this.el).outerWidth(true);
     this.$s.holder.width(width + confirmWidth + 10);
   },
 
@@ -137,7 +142,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
     }
     var message = "You've selected " + pageCount + Inflector.pluralize(' page', pageCount) + " for removal. This document will close while it's being rebuilt. Are you sure you're ready to proceed?";
     dc.ui.Dialog.confirm(message, _.bind(function() {
-      $('input.remove_pages_confirm_input', this.el).val('Removing...').attr('disabled', true);
+      this.$s.saveButton.text('Removing...').attr('disabled', true).setMode('not', 'enabled');
       this.save();
       return true;
     }, this));
