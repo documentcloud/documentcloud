@@ -19,8 +19,6 @@ module DC
 
       EMPTY_PAGINATION = {:page => 1, :per_page => 0}
 
-      MINIMUM_POPULAR = 100
-
       attr_reader   :text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :filters, :access, :attributes, :conditions, :results, :solr, :source_document
       attr_accessor :page, :per_page, :order, :from, :to, :total
 
@@ -326,10 +324,10 @@ module DC
           when :popular
             @order = :hit_count
             if needs_solr?
-              @solr.build { with(:hit_count).greater_than(MINIMUM_POPULAR) }
+              @solr.build { with(:hit_count).greater_than(Document::MINIMUM_POPULAR) }
             else
               @sql << 'documents.hit_count > ?'
-              @interpolations << [MINIMUM_POPULAR]
+              @interpolations << [Document::MINIMUM_POPULAR]
             end
           when :published
             if needs_solr?

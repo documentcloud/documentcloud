@@ -10,6 +10,8 @@ class Document < ActiveRecord::Base
 
   DEFAULT_TITLE = "Untitled Document"
 
+  MINIMUM_POPULAR = 100
+
   DISPLAY_DATE_FORMAT = "%b %d, %Y"
   DISPLAY_DATETIME_FORMAT = "%I:%M %p – %a %b %d, %Y"
 
@@ -61,6 +63,8 @@ class Document < ActiveRecord::Base
   named_scope :unrestricted,  :conditions => {:access => PUBLIC}
   named_scope :restricted,    :conditions => {:access => [PRIVATE, ORGANIZATION, EXCLUSIVE]}
   named_scope :finished,      :conditions => {:access => [PUBLIC, PRIVATE, ORGANIZATION, EXCLUSIVE]}
+
+  named_scope :popular,       :conditions => ["hit_count > ?", MINIMUM_POPULAR]
 
   named_scope :due, lambda {|time|
     {:conditions => ["publish_at <= ?", Time.now.utc]}
