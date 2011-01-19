@@ -183,6 +183,7 @@ class Document < ActiveRecord::Base
     opts[:conditions] ||= {}
     max_id_query      = "select id from documents order by id desc limit 1"
     last_id           = Document.connection.select_value(max_id_query).to_i
+    tries             0
     while docs.length < real_limit do
       uncached do
         opts[:conditions].merge!(:id => (0...opts[:limit]).map {|i| rand(last_id) })
@@ -194,6 +195,8 @@ class Document < ActiveRecord::Base
           seen_ids[row.id] = true
         end
       end
+      tries += 1
+      raise RuntimeError, "random failed, after too many attempts" if tries > 50
     end
     docs
   end
