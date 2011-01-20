@@ -28,12 +28,19 @@
 </div>
 <% if (isOwner) { %>
   <div class="set_sections button document_only"><span>Edit Sections</span></div>
-  <div class="edit_document_info button document_only"><span>Edit Document Info</span></div>
-  <div class="edit_title button document_only"><span>Edit Title</span></div>
-  <div class="edit_source button document_only"><span>Edit Source</span></div>
-  <div class="edit_description button document_only"><span>Edit Description</span></div>
-  <div class="edit_related_article button document_only"><span>Edit Related Article URL</span></div>
-  <div class="edit_document_url button document_only"><span>Edit Published URL</span></div>
+  <div class="document_fields_container">
+    <div class="edit_document_info button document_only">
+      <div class="icon toggle toggle_document_info"></div>
+      <span>Edit Document Info</span>
+    </div>
+    <div class="edit_document_fields">
+      <div class="edit_title button document_only"><span>Edit Title</span></div>
+      <div class="edit_source button document_only"><span>Edit Source</span></div>
+      <div class="edit_description button document_only"><span>Edit Description</span></div>
+      <div class="edit_related_article button document_only"><span>Edit Related Article URL</span></div>
+      <div class="edit_document_url button document_only"><span>Edit Published URL</span></div>
+    </div>
+  </div>
   <div class="edit_page_text button text_only">
     <div class="icon cancel_search"></div>
     <span>Edit Page Text</span>

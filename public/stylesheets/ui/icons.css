@@ -96,10 +96,12 @@
     background-position: 0 -36px;
   }
   .show_accounts .icon.toggle,
+  .icon.toggle.is_enabled,
   .DV-caret {
     background-position: 0 0;
   }
     .show_accounts .icon.toggle:hover,
+    .icon.toggle.is_enabled:hover,
     .left_chosen .DV-caret,
     .right_chosen .DV-caret {
       background-position: 0 -24px;

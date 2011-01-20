@@ -16,7 +16,8 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .edit_reorder_pages':    'editReorderPages',
     'click .edit_page_text':        'editPageText',
     'click .reprocess_text':        'reprocessText',
-    'click .edit_replace_pages':    'editReplacePages'
+    'click .edit_replace_pages':    'editReplacePages',
+    'click .toggle_document_info':  'toggleDocumentInfo'
   },
 
   render : function() {
@@ -39,7 +40,8 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     dc.app.editor.sectionEditor.open();
   },
 
-  editDocumentInfo : function() {
+  editDocumentInfo : function(e) {
+    if ($(e.target).is('.toggle_document_info')) return;
     var doc = this._getDocument({}, true);
     new dc.ui.DocumentDialog([doc]);
   },
@@ -140,6 +142,12 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   togglePrivateAnnotation : function() {
     dc.app.editor.annotationEditor.toggle('private');
+  },
+  
+  toggleDocumentInfo : function() {
+    var showing = $('.edit_document_fields').is(':visible');
+    $('.document_fields_container').setMode(showing ? 'hide' : 'show', 'document_fields');
+    $('.document_fields_container .toggle').setMode(showing ? 'not' : 'is', 'enabled');
   },
 
   _getDocument : function(attrs, full) {

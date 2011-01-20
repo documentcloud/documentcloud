@@ -79,6 +79,22 @@
         #control_panel .button.open .cancel_search {
           display: block;
         }
+  #control_panel .edit_document_info {
+    position: relative;
+  }
+    #control_panel .edit_document_info .toggle {
+      position: absolute;
+      left: 8px;
+      top: 0px;
+      padding: 1px 4px;
+    }
+    #control_panel .edit_document_fields {
+      display: none;
+      margin: 0 0 0 12px;
+    }
+    #control_panel .show_document_fields .edit_document_fields {
+      display: block;
+    }
   #control_panel,
   #control_panel .document_only,
   #control_panel .thumbnails_only,
