@@ -1,11 +1,9 @@
 <div class="control_panel_top"></div>
 <div class="control_panel_title">
-  <span class="document_only">Document Tools</span>
-  <span class="thumbnails_only">Page Tools</span>
-  <span class="text_only">Text Tools</span>
+  <span class="">Document Tools</span>
 </div>
-<% if (isOwner || isReviewer) { %>
-  <div class="public_annotation button document_only">
+<% if (isOwner) { %>
+  <div class="public_annotation button">
     <div class="icon mini_note"></div>
     <div class="icon cancel_search"></div>
     <span>Add a Public Note</span>
@@ -16,7 +14,7 @@
     <span class="warn">Public notes are visible to everyone who views this document.</span>
   </div>
 <% } %>
-<div class="private_annotation button document_only">
+<div class="private_annotation button">
   <div class="icon mini_note_private"></div>
   <div class="icon cancel_search"></div>
   <span>Add a Private Note</span>
@@ -27,38 +25,30 @@
   <span class="warn">No one apart from you is ever allowed to view your private notes.</span>
 </div>
 <% if (isOwner) { %>
-  <div class="set_sections button document_only"><span>Edit Sections</span></div>
+  <div class="set_sections button"><span>Edit Sections</span></div>
   <div class="document_fields_container">
-    <div class="edit_document_info button document_only">
+    <div class="edit_document_info button">
       <div class="icon toggle toggle_document_info"></div>
       <span>Edit Document Info</span>
     </div>
     <div class="edit_document_fields">
-      <div class="edit_title button document_only"><span>Edit Title</span></div>
-      <div class="edit_source button document_only"><span>Edit Source</span></div>
-      <div class="edit_description button document_only"><span>Edit Description</span></div>
-      <div class="edit_related_article button document_only"><span>Edit Related Article URL</span></div>
-      <div class="edit_document_url button document_only"><span>Edit Published URL</span></div>
+      <div class="edit_title button">&ndash;&nbsp; <span>Edit Title</span></div>
+      <div class="edit_source button">&ndash;&nbsp; <span>Edit Source</span></div>
+      <div class="edit_description button">&ndash;&nbsp; <span>Edit Description</span></div>
+      <div class="edit_related_article button">&ndash;&nbsp; <span>Edit Related Article URL</span></div>
+      <div class="edit_document_url button">&ndash;&nbsp; <span>Edit Published URL</span></div>
     </div>
   </div>
-  <div class="edit_page_text button text_only">
-    <div class="icon cancel_search"></div>
-    <span>Edit Page Text</span>
+  
+  <div class="control_panel_top"></div>
+  <div class="control_panel_title">
+    <span class="">Page Tools</span>
   </div>
-  <div id="edit_page_text_guide" class="note_guide text_only" style="display:none;">
-    Edit the text of any page: use the navigation arrows at the top to page 
-    through this document. Editing the text here will not alter the original PDF.
-    <br /><br />
-    When you’re finished revising the text, click the “Save Text” button.
-  </div>
-  <div class="reprocess_text button text_only">
-    <span>Reprocess Text</span>
-  </div>
-  <div class="edit_replace_pages button thumbnails_only">
+  <div class="edit_replace_pages button">
     <div class="icon cancel_search"></div>
     <span>Insert/Replace Pages</span>
   </div>
-  <div id="edit_replace_pages_guide" class="note_guide thumbnails_only" style="display:none;">
+  <div id="edit_replace_pages_guide" class="note_guide" style="display:none;">
     To insert new pages at a specific position within the document, click
     in between the pages above. If you'd like to replace a specific page with a new copy, 
     click on the page you'd like to remove.
@@ -66,24 +56,42 @@
     Hold down the shift key to select multiple pages to replace at once. When
     you're ready, click the "Upload Pages" button.
   </div>
-  <div class="edit_remove_pages button thumbnails_only">
+  <div class="edit_remove_pages button">
     <div class="icon cancel_search"></div>
     <span>Remove Pages</span>
   </div>
-  <div id="edit_remove_pages_guide" class="note_guide thumbnails_only" style="display:none;">
+  <div id="edit_remove_pages_guide" class="note_guide" style="display:none;">
     Click on each page you want to remove from this document.
     <br /><br />
     When you're finished selecting pages, click the "Remove Pages" button.
   </div>
-  <div class="edit_reorder_pages button thumbnails_only">
+  <div class="edit_reorder_pages button">
     <div class="icon cancel_search"></div>
     <span>Reorder Pages</span>
   </div>
-  <div id="edit_reorder_pages_guide" class="note_guide thumbnails_only" style="display:none;">
+  <div id="edit_reorder_pages_guide" class="note_guide" style="display:none;">
     Drag and drop pages to change their position in the document.
     <br /><br />
     When you're finished rearranging, click on the "Reorder Pages" button 
     to save your changes.
+  </div>
+  
+  <div class="control_panel_top"></div>
+  <div class="control_panel_title">
+    <span class="">Text Tools</span>
+  </div>
+  <div class="edit_page_text button">
+    <div class="icon cancel_search"></div>
+    <span>Edit Page Text</span>
+  </div>
+  <div id="edit_page_text_guide" class="note_guide" style="display:none;">
+    Edit the text of any page: use the navigation arrows at the top to page 
+    through this document. Editing the text here will not alter the original PDF.
+    <br /><br />
+    When you’re finished revising the text, click the “Save Text” button.
+  </div>
+  <div class="reprocess_text button">
+    <span>Reprocess Text</span>
   </div>
   
   <div class="control_panel_help">

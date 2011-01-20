@@ -43,11 +43,11 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
   },
 
   render : function() {
-    $(this.el).html(JST['replace_pages']({}));
-    this.$s.viewerContainer.append(this.el);
     if (this.viewer.state != 'ViewThumbnails') {
         this.viewer.open('ViewThumbnails');
     }
+    $(this.el).html(JST['replace_pages']({}));
+    this.$s.viewerContainer.append(this.el);
     this.$s.pages.addClass('replace_pages_viewer');
     this.$s.container = $(this.el);
     this.findSelectors();

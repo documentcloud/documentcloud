@@ -21,17 +21,13 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   render : function() {
-    this._page = currentDocument.$('.DV-textContents');
-    var accessWorkspace = _.contains(dc.model.Account.COLLABORATOR_ROLES, dc.app.editor.accountRole);
-    $(this.el).html(JST['control_panel']({
-      isReviewer      : dc.app.editor.options.isReviewer,
-      isOwner         : dc.app.editor.options.isOwner,
-      workspacePrefix : accessWorkspace ? '#' : ''
-    }));
-    var contributor = currentDocument.api.getContributor();
-    var org = currentDocument.api.getContributorOrganization();
+    this.viewer = currentDocument;
+    this._page = this.viewer.$('.DV-textContents');
+    $(this.el).html(JST['control_panel']({isOwner : dc.app.editor.isOwner}));
+    var contributor = this.viewer.api.getContributor();
+    var org = this.viewer.api.getContributorOrganization();
     if (contributor && org) {
-      currentDocument.$('.DV-contributor').text("Contributed by: " + contributor + ', ' + org);
+      this.viewer.$('.DV-contributor').text("Contributed by: " + contributor + ', ' + org);
     }
     return this;
   },
@@ -47,26 +43,26 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   editTitle : function() {
-    dc.ui.Dialog.prompt('Title', currentDocument.api.getTitle(), _.bind(function(title) {
-      currentDocument.api.setTitle(title);
+    dc.ui.Dialog.prompt('Title', this.viewer.api.getTitle(), _.bind(function(title) {
+      this.viewer.api.setTitle(title);
       this._updateDocument({title : title});
       return true;
     }, this), {mode : 'short_prompt'});
   },
 
   editSource : function() {
-    dc.ui.Dialog.prompt('Source', currentDocument.api.getSource(), _.bind(function(source) {
-      currentDocument.api.setSource(source);
+    dc.ui.Dialog.prompt('Source', this.viewer.api.getSource(), _.bind(function(source) {
+      this.viewer.api.setSource(source);
       this._updateDocument({source : source});
       return true;
     }, this), {mode: 'short_prompt'});
   },
 
   editRelatedArticle : function() {
-    dc.ui.Dialog.prompt('Related Article URL', currentDocument.api.getRelatedArticle(), _.bind(function(url, dialog) {
+    dc.ui.Dialog.prompt('Related Article URL', this.viewer.api.getRelatedArticle(), _.bind(function(url, dialog) {
       url = Inflector.normalizeUrl(url);
       if (url && !dialog.validateUrl(url)) return false;
-      currentDocument.api.setRelatedArticle(url);
+      this.viewer.api.setRelatedArticle(url);
       this._updateDocument({related_article : url});
       return true;
     }, this), {
@@ -76,10 +72,10 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   editPublishedUrl : function() {
-    dc.ui.Dialog.prompt('Published URL', currentDocument.api.getPublishedUrl(), _.bind(function(url, dialog) {
+    dc.ui.Dialog.prompt('Published URL', this.viewer.api.getPublishedUrl(), _.bind(function(url, dialog) {
       url = Inflector.normalizeUrl(url);
       if (url && !dialog.validateUrl(url)) return false;
-      currentDocument.api.setPublishedUrl(url);
+      this.viewer.api.setPublishedUrl(url);
       this._updateDocument({remote_url : url});
       return true;
     }, this), {
@@ -89,8 +85,8 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   editDescription : function() {
-    dc.ui.Dialog.prompt('Description', currentDocument.api.getDescription(), _.bind(function(desc) {
-      currentDocument.api.setDescription(desc);
+    dc.ui.Dialog.prompt('Description', this.viewer.api.getDescription(), _.bind(function(desc) {
+      this.viewer.api.setDescription(desc);
       this._updateDocument({description : desc});
       return true;
     }, this));
@@ -112,7 +108,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       window.close();
       _.defer(dc.ui.Dialog.alert, closeMessage);
     }, {width: 450});
-    var force = $(dialog.make('div', {'class':'minibutton dark'}, 'Force OCR')).bind('click', function() {
+    var force = $(dialog.make('span', {'class':'minibutton dark center_button'}, 'Force OCR')).bind('click', function() {
       finish(true);
       window.close();
       _.defer(dc.ui.Dialog.alert, closeMessage);
@@ -120,19 +116,35 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     dialog.$('.ok').text('Reprocess').before(force);
   },
 
+  openTextTab : function() {
+    if (this.viewer.state != 'ViewText') {
+        this.viewer.open('ViewText');
+    }
+  },
+
+  openThumbnailsTab : function() {
+    if (this.viewer.state != 'ViewThumbnails') {
+        this.viewer.open('ViewThumbnails');
+    }
+  },
+  
   editPageText : function() {
+    this.openTextTab();
     dc.app.editor.editPageTextEditor.toggle();
   },
 
   editReplacePages : function() {
+    this.openThumbnailsTab();
     dc.app.editor.replacePagesEditor.toggle();
   },
 
   editRemovePages : function() {
+    this.openThumbnailsTab();
     dc.app.editor.removePagesEditor.toggle();
   },
 
   editReorderPages : function() {
+    this.openThumbnailsTab();
     dc.app.editor.reorderPagesEditor.toggle();
   },
 
@@ -152,11 +164,11 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   _getDocument : function(attrs, full) {
     if (full) {
-      var schema = currentDocument.api.getSchema();
+      var schema = this.viewer.api.getSchema();
       attrs = _.extend({}, schema, attrs);
     }
     attrs = attrs || {};
-    attrs.id = parseInt(currentDocument.api.getId(), 10);
+    attrs.id = parseInt(this.viewer.api.getId(), 10);
     return new dc.model.Document(_.clone(attrs));
   },
 

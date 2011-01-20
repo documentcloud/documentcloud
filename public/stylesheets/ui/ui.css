@@ -529,6 +529,9 @@ textarea.text_area {
       margin-left: 4px;
       display: inline-block;
     }
+      .dialog .controls .center_button {
+        margin-right: 4px;
+      }
       .dialog .controls .minibutton:first-child {
         margin-left: 0;
       }
