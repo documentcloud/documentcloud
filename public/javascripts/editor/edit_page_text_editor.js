@@ -82,9 +82,15 @@ dc.ui.EditPageTextEditor = dc.ui.EditorToolbar.extend({
       data      : { modified_pages : JSON.stringify(modifiedPages) },
       dataType  : 'json',
       success   : _.bind(function(resp) {
-        this.viewer.api.resetPageText(true);
-        this.close();
+        try {
+          window.opener && window.opener.Documents && window.opener.Documents.get(documentId).set(resp);
+        } catch (e) {
+          // It's cool.
+        }
+        window.close();
         dialog.close();
+        this.viewer.api.resetPageText(true);
+        _.defer(dc.ui.Dialog.alert, "The page text is being saved. Please close this document.");
       }, this)
     });
   },

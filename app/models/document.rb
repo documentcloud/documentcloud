@@ -450,15 +450,15 @@ class Document < ActiveRecord::Base
   end
 
   def reindex_all!(access=nil)
-    self.access = access if access
     full_text.refresh
     Page.refresh_page_map(self)
     EntityDate.refresh(self)
-    self.save!
     pages = self.reload.pages
     Sunspot.index pages
     reprocess_entities
     upload_text_assets(pages)
+    self.access = access if access
+    self.save!
   end
 
   def reprocess_entities
@@ -481,17 +481,28 @@ class Document < ActiveRecord::Base
   end
 
   def save_page_text(modified_pages)
+    eventual_access = self.access || PRIVATE
+    self.update_attributes(
+      :access       => PENDING,
+      :text_changed => true
+    )
     modified_pages.each_pair do |page_number, page_text|
       page = Page.find_by_document_id_and_page_number(id, page_number)
       page.text = page_text
       page.save
     end
-    update_attributes :text_changed => true
-    reindex_all!
+    record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+      'action'  => 'reindex_document',
+      'inputs'  => [id],
+      'options' => {
+        :id      => id,
+        :access  => eventual_access
+      }
+    }.to_json}).body)
   end
 
   def remove_pages(pages, replace_pages_start=nil, insert_document_count=nil)
-    eventual_access ||= self.access || PRIVATE
+    eventual_access = self.access || PRIVATE
     self.update_attributes :access => PENDING
     record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'document_remove_pages',
