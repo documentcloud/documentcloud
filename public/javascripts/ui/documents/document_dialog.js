@@ -29,7 +29,8 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     dc.ui.Dialog.prototype.render.call(this);
     this._container = this.$('.custom');
     this._container.html(JST['document/document_dialog']({
-      docs : this.docs, multiple : this.multiple
+      docs     : this.docs, 
+      multiple : this.multiple
     }));
     var attrs = this._sharedAttributes();
     attrs['access'] = attrs['access'] || dc.access.PRIVATE;

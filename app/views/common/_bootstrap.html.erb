@@ -2,12 +2,8 @@
 window.RAILS_ENV = '<%= RAILS_ENV %>';
 window.SERVER_ROOT = '<%= DC.server_root %>';
 <% if @current_account %>
-  dc.account = {
-    id            : <%= @current_account.id %>,
-    hasDocuments  : <%= @has_documents.to_json %>,
-    organization  : <%= @current_organization.to_json %>,
-    role          : <%= @current_account.role %>
-  };
+  <%= render :partial => 'accounts/current_account.js', :type => :js %>
+using full ui css suite instead of hand-picked css files for viewer_editing.
   Accounts.refresh(<%= @accounts.to_json %>);
   Projects.refresh(<%= @projects.to_json({:account => @current_account, :include_collaborators => true}) %>);
 <% end %>

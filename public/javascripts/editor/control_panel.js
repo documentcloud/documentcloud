@@ -6,6 +6,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .set_sections':          'openSectionEditor',
     'click .public_annotation':     'togglePublicAnnotation',
     'click .private_annotation':    'togglePrivateAnnotation',
+    'click .edit_document_info':    'editDocumentInfo',
     'click .edit_description':      'editDescription',
     'click .edit_title':            'editTitle',
     'click .edit_source':           'editSource',
@@ -36,6 +37,11 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   openSectionEditor : function() {
     dc.app.editor.sectionEditor.open();
+  },
+
+  editDocumentInfo : function() {
+    var doc = this._getDocument({}, true);
+    new dc.ui.DocumentDialog([doc]);
   },
 
   editTitle : function() {
@@ -136,8 +142,12 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     dc.app.editor.annotationEditor.toggle('private');
   },
 
-  _getDocument : function(attrs) {
-    attrs || (attrs = {});
+  _getDocument : function(attrs, full) {
+    if (full) {
+      var schema = currentDocument.api.getSchema();
+      attrs = _.extend({}, schema, attrs);
+    }
+    attrs = attrs || {};
     attrs.id = parseInt(currentDocument.api.getId(), 10);
     return new dc.model.Document(_.clone(attrs));
   },

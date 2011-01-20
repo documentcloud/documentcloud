@@ -1,22 +1,21 @@
-<%= include_stylesheets :viewer_editing %>
-<!--[if lt IE 9]>
-  <%= include_stylesheets :ie_only, :embed_assets => false %>
-<![endif]-->
-<%= include_javascripts :core %>
-<%= include_javascripts :editor %>
-<% if Rails.env.development? %>
-  <script src="/javascripts/lib/debug.js" type="text/javascript"></script>
-<% end %>
+<% if @current_account %>
+  <%= include_stylesheets :ui %>
+  <%= include_stylesheets :viewer_editing %>
+  <!--[if lt IE 9]>
+    <%= include_stylesheets :ie_only, :embed_assets => false %>
+  <![endif]-->
+  <%= include_javascripts :core %>
+  <%= include_javascripts :editor %>
+  <% if Rails.env.development? %>
+    <script src="/javascripts/lib/debug.js" type="text/javascript"></script>
+  <% end %>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-    var docId       = <%= @current_document.id %>;
-    var opts        = {
-      isOwner    : <%= @allowed_to_edit %>,
-      isReviewer : <%= @allowed_to_review %>
-    }
-    var accountName = "<%= @current_account.full_name %>";
-    var accountRole = <%= @current_account.role %>;
-    dc.app.editor.initialize(docId, accountName, accountRole, opts);
-  });
-</script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var docId = <%= @current_document.id %>;
+      var isOwner = <%= @current_account.allowed_to_edit?(@current_document) %>;
+      <%= render :partial => 'accounts/current_account.js', :type => :js %>
+      dc.app.editor.initialize(docId, isOwner);
+    });
+  </script>
+<% end %>
