@@ -16,9 +16,13 @@
   }
   #control_panel .control_panel_title {
     font-weight: bold;
-    color: black;
-    margin: 0 0 10px 24px;
+    color: #303030;
+    margin: 18px 10px 8px;
+    padding: 6px 14px;
     line-height: 16px;
+    background-color: #EFEFEF;
+    font-size: 11px;
+    text-transform: uppercase;
   }
   #control_panel .control_panel_help {
     border-top: 1px solid #ccc;
