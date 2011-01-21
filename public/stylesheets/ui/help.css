@@ -118,7 +118,6 @@
 
 #help table {
   margin: 20px 0 20px 0;
-/*  width: 600px;*/
   border-top: 1px solid #bbb;
   border-left: 1px solid #bbb;
 }
@@ -150,7 +149,7 @@
     }
     #help .desc {
       font: italic 11px Helvetica, Arial;
-      color: #555;
+      color: #445056;
     }
   #help table col.parameter {
     font-weight: bold;

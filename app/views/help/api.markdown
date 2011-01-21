@@ -65,7 +65,7 @@ project | (optional) a numeric Project id, to upload the document into an existi
  * Unless you are using SSL, your username, password and documents are sent in cleartext. Use **https://** to ensure that your connection is encrypted.
 
 ### Example
-  
+
 Using Ruby's RestClient library you could do:
 
     RestClient.post('http://ME%40TEST.COM:PASSWORD@www.documentcloud.org/api/upload.json',
@@ -109,7 +109,7 @@ Parameter     | Description           |  Example
 --------------|-----------------------|--------------
 title | (optional) the document's canonical title | 2008 Blagojevich Tax Return
 source | (optional) the source who produced the document | U.S. Attorney's Office
-description | (optional) a paragraph of detailed description | This prosecution exhibit is the 2008 joint tax return for Rod and Patti Blagojevich. It shows their total income for the year was $284,000. 
+description | (optional) a paragraph of detailed description | This prosecution exhibit is the 2008 joint tax return for Rod and Patti Blagojevich. It shows their total income for the year was $284,000.
 related_article | (optional) the URL of the article associated with the document | http://example.com/news/blago/2010-5-3.html
 published_url | (optional) the URL of the page on which the document will be embedded | http://documents.example.com/blago-transcript.html
 access | (optional) one of "public", "private", "organization" | "public"
@@ -119,7 +119,7 @@ The response value of this method will be the JSON representation of your docume
 ### Tips
 
  * If your HTTP client is unable to create a PUT request, you can send it as a POST, and add an extra parameter: `_method=put`
- 
+
 ## DELETE /api/documents/[id].json
 
 Delete a document from DocumentCloud. You must be authenticated as the owner of the document for this method to work.
@@ -156,7 +156,7 @@ Create a new project for the authenticated account, with a title, optional descr
 
 Parameter     | Description           |  Example
 --------------|-----------------------|--------------
-title | the projects's title | Drywall Complaints
+title | (required) the projects's title | Drywall Complaints
 description | (optional) a paragraph of detailed description | A collection of documents from 2007-2009 relating to reports of tainted drywall in Florida.
 document_ids | (optional) a list of documents that the project contains, by id | 28-rammussen, 207-petersen
 
@@ -195,7 +195,7 @@ Still have questions about the API? Don't hesitate to [contact us][].
 [contact us]: javascript:dc.ui.Dialog.contact()
 
 <script type="text/javascript">
-  $(document).ready(function() {
+  $(function() {
     $('#search_form').submit(function(e) {
       e.preventDefault();
       $.getJSON('/api/search', {q : $('#q').val()}, function(resp) {
@@ -205,5 +205,6 @@ Still have questions about the API? Don't hesitate to [contact us][].
     $('#run_search').click(function() {
       $('#search_form').submit();
     });
+    $('#help table td:nth-child(2n)').addClass('desc');
   });
 </script>
