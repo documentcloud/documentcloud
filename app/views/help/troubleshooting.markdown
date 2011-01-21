@@ -2,7 +2,7 @@
 
 We're always (with your help) discovering new and different ways to break our document importer. That is a good thing: it is one of the ways you're helping us make DocumentCloud better. In some cases, resolving a document import issue is as simple as opening the document in Adobe Acrobat or Apple Preview, optimizing it for web use and re-saving it.
 
-In Preview, open the PDF and choose "File > Save As". Choose "Reduce File Size" from the "Quartz Filter" menu, and click "Save". If that doesn't work, another option is "File > Print", and then, clicking on the "PDF" menu in the lower-left hand corner, using "Save as PDF".
+In Preview, open the PDF and choose "File > Print". When the dialog opens, click on the "PDF" menu in the lower-left hand corner, and use "Save as PDF".
 
 In Acrobat, open the PDF and choose "Advanced > PDF Optimizer". You'll see a window with a list of categories of optimizations on the left. Click through the list, and make sure that all of the possible optimizations are checked. When you're ready, click "Ok" to save the PDF.
 
