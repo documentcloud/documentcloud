@@ -50,6 +50,7 @@ $(function() {
     },
 
     loadTweets : function() {
+      if (!$(document.body).hasClass('homepage')) return;
       var formatDate = DateUtils.create("%b %e, %Y");
       $.getJSON(this.FAVORITES_URL, function(json) {
         var tweets = json.slice(0, 3);

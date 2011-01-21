@@ -22,6 +22,7 @@
   max-width: 550px;
   font: 14px/18px Helvetica, Arial;
   display: none;
+  position: relative;
 }
   #help .static_only {
     display: none;
@@ -31,17 +32,18 @@
   }
   #help code, #help tt, #help pre {
     font: 11px Menlo, Consolas, Monaco, Courier, monospace;
+    line-height: 16px;
+    padding: 1px 3px;
+    color: #444;
+    background: #f8f8ff;
+    border: 1px solid #dedede;
   }
-    #help code, #help tt, #help pre {
-      padding: 1px 3px;
-      color: #444;
-      background: #f8f8ff;
-      border: 1px solid #dedede;
+    #help code, #help tt {
       white-space: nowrap;
     }
     #help pre {
-      clear: both;
       padding: 8px;
+      overflow-x: auto;
     }
       #help pre > code {
         background: none;
@@ -98,18 +100,6 @@
   #help_content {
     clear: both;
   }
-  #help td, #help th {
-    padding: 0 15px 15px 0;
-    font-size: 12px;
-  }
-    #help th {
-      color: #000;
-      font-weight: bold;
-    }
-    #help td:first-child {
-      min-width: 75px;
-      font-weight: bold;
-    }
   #help .help_footer {
     position: absolute;
     left: 0; right: 0; bottom: 20px;
@@ -120,3 +110,63 @@
     #help .help_footer a {
       color: #999;
     }
+
+#help table {
+  margin: 20px 0 20px 0;
+  width: 600px;
+  border-top: 1px solid #bbb;
+  border-left: 1px solid #bbb;
+}
+  #help th {
+    text-transform: uppercase;
+    font: 10px Helvetica, Arial;
+    color: #222;
+  }
+  #help th, #help td {
+    padding: 7px 20px 7px 10px;
+    border-bottom: 1px solid #bbb;
+    border-right: 1px solid #bbb;
+    vertical-align: middle;
+  }
+    #help td {
+      padding: 10px 20px 10px 10px;
+      font-size: 12px;
+      background: #f0fafa;
+    }
+      #help td:first-child {
+        min-width: 75px;
+        font-weight: bold;
+      }
+    #help tr:nth-child(2n) > td {
+      background: #f4f4f4;
+    }
+    #help .param {
+      font-weight: bold;
+    }
+    #help .desc {
+      font: italic 11px Helvetica, Arial;
+      color: #555;
+    }
+  #help table col.parameter {
+    font-weight: bold;
+  }
+
+#help #search_form {
+  margin-bottom: 20px;
+}
+  #help #search_form .text_input {
+    position: absolute;
+    display: block;
+    margin: 0 0 0 140px;
+    width: 400px;
+  }
+  #help #search_form .minibutton {
+    position: absolute;
+    right: 5px;
+    margin-top: 3px;
+  }
+  #help #search_form label {
+    color: #445056;
+    font-size: 12px;
+    line-height: 14px;
+  }

@@ -1,0 +1,207 @@
+The API provides programmatic access to DocumentCloud, for searching, uploading, editing, and organizing documents. No API key is required, so performing searches directly from JavaScript is fair game. *Please be considerate, and don't hammer our servers. If you abuse the API, expect to be blocked without advance warning.*
+
+## GET /api/search.json
+
+Search the catalog of public documents. This method can be used to scrape the public documents from your account for embedding purposes, or to enable searches of your archive of uploaded documents directly from your own website.
+
+Parameter     | Description           |  Example
+--------------|-----------------------|--------------
+q             | the search query      | group:nytimes title:nuclear
+page          | response page number  | 3 (defaults to 1)
+per_page      | the number of documents to return per page | 100 (defaults to 10, max is 1000)
+sections      | include document sections in the results | true (defaults to false)
+annotations   | include document annotations in the results | true (defaults to false)
+
+### Example
+
+    /api/search.json?q=obama&page=2
+
+Use the search form below to try queries and see what the resulting JSON looks like.
+
+<div>
+  <form id="search_form" action="about:blank" autocomplete="off">
+    <div id="run_search" class="minibutton default">Search</div>
+    <div class="text_input">
+      <div class="background">
+        <div class="inner">
+          <input type="text" name="q" id="q" />
+        </div>
+      </div>
+    </div>
+    <label for="q">
+      Search Query:
+      <div>ex: "person:geithner"</div>
+    </label>
+  </form>
+</div>
+
+<pre id="search_results" style="display: none;"></pre>
+
+### Tips
+
+ * If you'd like to get back search results with more than ten documents on a page, pass the `per_page` parameter. A maximum of 1000 documents will be returned at a time.
+
+## POST /api/upload.json
+
+We offer a rudimentary API for bulk uploads. It exposes the same API that we use internally, but wraps it in HTTP Basic Authentication. Documents will be uploaded into the authenticated account.
+
+Parameter     | Description           |  Example
+--------------|-----------------------|--------------
+file | (required) the path to the document itself | --
+title | (required) the document's canonical title | 2008 Blagojevich Tax Return
+source | (optional) the source who produced the document | U.S. Attorney's Office
+description | (optional) a paragraph of detailed description | This prosecution exhibit is the 2008 joint tax return for Rod and Patti Blagojevich. It shows their total income for the year was $284,000.
+related_article | (optional) the URL of the article associated with the document | http://example.com/news/blago/2010-5-3.html
+published_url | (optional) the URL of the page on which the document will be embedded | http://documents.example.com/blago-transcript.html
+access | (optional) one of "public", "private", "organization", defaults to "private" | public
+project | (optional) a numeric Project id, to upload the document into an existing project. | 1012
+
+### Tips
+
+ * Please ensure that you send the request properly encoded as "multipart/form-data"
+ * Review your uploaded files and add a source and description if you didn't .
+ * Unless you are using SSL, your username, password and documents are sent in cleartext. Use **https://** to ensure that your connection is encrypted.
+
+### Example
+  
+Using Ruby's RestClient library you could do:
+
+    RestClient.post('http://ME%40TEST.COM:PASSWORD@www.documentcloud.org/api/upload.json',
+      :file => File.new('/full/path/to/document/document.pdf','rb'),
+      :title => "2008 Blagojevich Tax Return",
+      :source => "U.S. Attorney's Office",
+      :access => 'private'
+    )
+
+## GET /api/documents/[id].json
+
+Retrieve the canonical JSON representation of a particular document, as specified by the document id (usually something like: **218-madoff-sec-report**).
+
+### Example Response
+
+    {"document":{
+      "id":"207-american-academy-v-napolitano",
+      "title":"American Academy v. Napolitano",
+      "pages":52,
+      "description":"Appeal from the judgment of the United States District Court, granting summary judgment...",
+      "resources":{
+        "pdf":"http://s3.documentcloud.org/documents/207/american-academy-v-napolitano.pdf",
+        "text":"http://s3.documentcloud.org/documents/207/american-academy-v-napolitano.txt",
+        "thumbnail":"http://s3.documentcloud.org/documents/207/pages/american-academy-v-napolitano-p1-thumbnail.gif",
+        "search":"http://s3.documentcloud.org/207/search.json?q={query}",
+        "page":{
+          "text":"http://s3.documentcloud.org/documents/207/pages/american-academy-v-napolitano-p{page}.txt",
+          "image":"http://s3.documentcloud.org/asset_store/documents/207/pages/american-academy-v-napolitano-p{page}-{size}.gif"
+        },
+        "related_article":"http://example.com/article.html"
+      },
+      "sections":[],
+      "annotations":[]
+    }}
+
+## PUT /api/documents/[id].json
+
+Update a document's **title**, **source**, **description**, **related article**, or **access level** with this method. Reference your document by its id (usually something like: **218-madoff-sec-report**).
+
+Parameter     | Description           |  Example
+--------------|-----------------------|--------------
+title | (optional) the document's canonical title | 2008 Blagojevich Tax Return
+source | (optional) the source who produced the document | U.S. Attorney's Office
+description | (optional) a paragraph of detailed description | This prosecution exhibit is the 2008 joint tax return for Rod and Patti Blagojevich. It shows their total income for the year was $284,000. 
+related_article | (optional) the URL of the article associated with the document | http://example.com/news/blago/2010-5-3.html
+published_url | (optional) the URL of the page on which the document will be embedded | http://documents.example.com/blago-transcript.html
+access | (optional) one of "public", "private", "organization" | "public"
+
+The response value of this method will be the JSON representation of your document (as seen in the GET method above), with all updates applied.
+
+### Tips
+
+ * If your HTTP client is unable to create a PUT request, you can send it as a POST, and add an extra parameter: `_method=put`
+ 
+## DELETE /api/documents/[id].json
+
+Delete a document from DocumentCloud. You must be authenticated as the owner of the document for this method to work.
+
+### Tips
+
+ * If your HTTP client is unable to create a DELETE request, you can send it as a POST, and add an extra parameter: `_method=delete`
+
+## GET /api/documents/[id]/entities.json
+
+Retrieve the JSON for all of the entities that a particular document contains, specified by the document id (usually something like: **218-madoff-sec-report**). Entities are ordered by their relevance to the document as determined by OpenCalais.
+
+### Example Response
+
+    {
+      "entities":{
+        "person":[
+          { "value":"Ramadan Aff", "relevance":0.72 },
+          { "value":"Sarah Normand", "relevance":0.612 },
+          ...
+        ],
+        "organization":[
+          { "value":"Supreme Court", "relevance":0.619 },
+          { "value":"Hamas", "relevance":0.581 },
+          ...
+        ]
+        ...
+      }
+    }
+
+## POST /api/projects.json
+
+Create a new project for the authenticated account, with a title, optional description, and optional document ids.
+
+Parameter     | Description           |  Example
+--------------|-----------------------|--------------
+title | the projects's title | Drywall Complaints
+description | (optional) a paragraph of detailed description | A collection of documents from 2007-2009 relating to reports of tainted drywall in Florida.
+document_ids | (optional) a list of documents that the project contains, by id | 28-rammussen, 207-petersen
+
+### Tips
+
+ * Note that you have to use the convention for passing an array of strings: `?document_ids[]=28-boumediene&document_ids[]=207-academy&document_ids[]=30-insider-trading`
+
+## GET /api/projects.json
+
+Retrieve a list of project names and document ids. You must use HTTP Basic Authentication (preferably over SSL) in order to make this request. The projects listed belong to the authenticated account.
+
+### Example Response
+
+    {"projects": [
+      {
+        "id": 5,
+        "title": "Literate Programming",
+        "document_ids":[
+          "103-literate-programming-a-practioners-view",
+          "104-reverse-literate-programming"
+        ]
+      },
+      ...
+    ]}
+
+## PUT /api/projects/[id].json
+
+Update an existing project for the current authenticated account. You can set the title, description or list of documents. See POST, above.
+
+## DELETE /api/projects/[id].json
+
+Delete a project that belongs to the current authenticated account.
+
+Still have questions about the API? Don't hesitate to [contact us][].
+
+[contact us]: javascript:dc.ui.Dialog.contact()
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#search_form').submit(function(e) {
+      e.preventDefault();
+      $.getJSON('/api/search', {q : $('#q').val()}, function(resp) {
+        $('#search_results').show().text(JSON.stringify(resp, null, 2));
+      });
+    });
+    $('#run_search').click(function() {
+      $('#search_form').submit();
+    });
+  });
+</script>

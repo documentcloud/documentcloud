@@ -13,6 +13,7 @@ class ApiController < ApplicationController
   API_OPTIONS = {:sections => false, :annotations => false, :access => true, :contributor => false}
 
   def index
+    redirect_to '/help/api'
   end
 
   def signup

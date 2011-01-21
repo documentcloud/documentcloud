@@ -36,7 +36,7 @@ input.hidden_submit {
 }
 
 /*------------------------------ Gradients ---------------------------------*/
-.gradient_light {
+.gradient_light, #help th {
   background: #d7d7d7;
   background: -webkit-gradient(linear, left top, left bottom, from(#fcfcfc), to(#e0e0e0));
   background: -moz-linear-gradient(top, #fcfcfc, #e0e0e0);

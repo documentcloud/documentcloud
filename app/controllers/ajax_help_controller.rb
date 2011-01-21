@@ -1,6 +1,7 @@
 class AjaxHelpController < ApplicationController
 
-  PAGES = [:index, :tour, :accounts, :searching, :uploading, :troubleshooting, :modification, :notes, :collaboration, :privacy, :publishing, :public]
+  PAGES = [:index, :tour, :accounts, :searching, :uploading, :troubleshooting,
+    :modification, :notes, :collaboration, :privacy, :publishing, :public, :api]
 
   PAGE_TITLES = {
     :index            => 'Introduction',
@@ -13,7 +14,8 @@ class AjaxHelpController < ApplicationController
     :privacy          => 'Privacy',
     :collaboration    => 'Collaboration',
     :notes            => 'Editing Notes and Sections',
-    :publishing       => 'Publishing &amp; Embedding'
+    :publishing       => 'Publishing &amp; Embedding',
+    :api              => 'The DocumentCloud API'
   }
 
   layout false
