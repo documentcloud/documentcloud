@@ -20,3 +20,5 @@
 [city: "New Orleans"]: #search/city%3A%20%22New%20Orleans%22
 [state: Arizona]: #search/state%3A%20Arizona
 [country: Iran]: #search/country%3A%20Iran
+
+[API documentation]: #help/api

@@ -81,7 +81,7 @@ h2, #help h1, #help h2 {
     margin: 0;
     padding: 3px 0 25px 45px;
   }
-h3 {
+h3, #help h3 {
   font-weight: 300;
   font-size: 16px;
   margin: 20px 0 10px 0;

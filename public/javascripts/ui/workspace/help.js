@@ -12,7 +12,8 @@ dc.ui.Help = Backbone.View.extend({
     {url : 'notes',            title : 'Editing Notes and Sections'},
     {url : 'collaboration',    title : 'Collaboration'},
     {url : 'privacy',          title : 'Privacy'},
-    {url : 'publishing',       title : 'Publishing &amp; Embedding'}
+    {url : 'publishing',       title : 'Publishing &amp; Embedding'},
+    {url : 'api',              title : 'The DocumentCloud API'}
   ],
 
   events : {

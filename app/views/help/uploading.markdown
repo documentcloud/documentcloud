@@ -33,5 +33,4 @@ Still have questions about uploading documents? Don't hesitate to [contact us][]
 [works as well]: http://www.ehow.com/how_5874491_decrease-size-pdf.html
 [OCR]: http://en.wikipedia.org/wiki/Optical_character_recognition
 [Tesseract]: http://code.google.com/p/tesseract-ocr/
-[bulk upload API]: http://www.documentcloud.org/api#upload
 [contact us]: javascript:dc.ui.Dialog.contact()

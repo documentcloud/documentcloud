@@ -15,7 +15,7 @@ class AjaxHelpController < ApplicationController
     :collaboration    => 'Collaboration',
     :notes            => 'Editing Notes and Sections',
     :publishing       => 'Publishing &amp; Embedding',
-    :api              => 'The DocumentCloud API'
+    :api              => 'API'
   }
 
   layout false

@@ -69,15 +69,19 @@
     #help a:hover {
       text-decoration: underline;
     }
-  #help h1, #help h2 {
+  #help h1, #help h2, #help h3 {
     margin: 30px 0 15px 0;
     color: #000;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
   }
-  #help h2 {
-    font-size: 14px;
-  }
+    #help h2 {
+      font-size: 16px;
+    }
+    #help h3 {
+      font-size: 14px;
+      margin: 20px 0 10px 0;
+    }
   #help p {
     margin: 20px 0;
   }
@@ -99,6 +103,7 @@
     }
   #help_content {
     clear: both;
+    position: relative;
   }
   #help .help_footer {
     position: absolute;
@@ -113,7 +118,7 @@
 
 #help table {
   margin: 20px 0 20px 0;
-  width: 600px;
+/*  width: 600px;*/
   border-top: 1px solid #bbb;
   border-left: 1px solid #bbb;
 }
@@ -159,6 +164,12 @@
     display: block;
     margin: 0 0 0 140px;
     width: 400px;
+  }
+  #help #search_form .text_input {
+    position: absolute;
+    display: block;
+    margin: 0 0 0 130px;
+    width: 340px;
   }
   #help #search_form .minibutton {
     position: absolute;

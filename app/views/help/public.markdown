@@ -73,7 +73,7 @@ city                        | For example: [city: "New Orleans"][].
 state                       | (Includes provinces, in countries that have provinces instead of states.) For example: [state: Arizona][].
 country                     | For example: [country: Iran][].
 
-To see the details of how to use our search API, visit the API documentation at [documentcloud.org/api][].
+To see the details of how to use our search API, visit the API documentation at [documentcloud.org/help/api][].
 
 Questions? Don't hesitate to [contact us][]. And as you go, feel free to [request features and report bugs][].
 
@@ -109,6 +109,6 @@ Questions? Don't hesitate to [contact us][]. And as you go, feel free to [reques
 [state: Arizona]: #search/state%3A%20Arizona
 [country: Iran]: #search/country%3A%20Iran
 [OpenCalais]: http://www.opencalais.com/
-[documentcloud.org/api]: http://www.documentcloud.org/api
+[documentcloud.org/help/api]: http://www.documentcloud.org/help/api
 [contact us]: javascript:dc.ui.Dialog.contact()
 [request features and report bugs]: http://documentcloud.uservoice.com

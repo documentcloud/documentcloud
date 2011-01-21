@@ -1,3 +1,5 @@
+# API Rules and Guidelines
+
 The API provides programmatic access to DocumentCloud, for searching, uploading, editing, and organizing documents. No API key is required, so performing searches directly from JavaScript is fair game. *Please be considerate, and don't hammer our servers. If you abuse the API, expect to be blocked without advance warning.*
 
 ## GET /api/search.json

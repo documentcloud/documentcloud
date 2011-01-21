@@ -39,6 +39,8 @@ country                     | For example: [country: Iran][].
 
 Still have questions about how to search? Don't hesitate to [contact us][].
 
+To see the details of how to use our search API, view the [API documentation][].
+
+
 [OpenCalais]: http://www.opencalais.com/
-[documentcloud.org/api]: http://www.documentcloud.org/api
 [contact us]: javascript:dc.ui.Dialog.contact()
