@@ -325,7 +325,7 @@ ol {
 }
 
 #tweets {
-  padding: 40px 30px 0;
+  padding: 40px 30px 10px;
   border-top: 1px solid #ccc;
 }
   #tweets .bird {
@@ -357,6 +357,17 @@ ol {
       margin-top: 5px;
       font-size: 11px;
     }
+
+#pitch {
+  text-align: center;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 300;
+}
+  #pitch .minibutton {
+    width: 120px;
+    margin: 20px auto;
+  }
 
 #sidebar {
   width: 260px;
