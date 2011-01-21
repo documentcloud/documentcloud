@@ -162,12 +162,6 @@
   #help #search_form .text_input {
     position: absolute;
     display: block;
-    margin: 0 0 0 140px;
-    width: 400px;
-  }
-  #help #search_form .text_input {
-    position: absolute;
-    display: block;
     margin: 0 0 0 130px;
     width: 340px;
   }

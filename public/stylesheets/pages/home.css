@@ -478,4 +478,7 @@ ol {
   #content #help table {
     width: 620px;
   }
-
+  #content #help #search_form .text_input {
+    margin: 0 0 0 140px;
+    width: 400px;
+  }
