@@ -120,6 +120,9 @@
         position: absolute;
         top: 8px; left: 125px;
       }
+        body.minidocs #document_list .document .edit_glyph.bottom {
+          top: 32px;
+        }
       .document .document_tool.spinner {
         display: block;
         margin: 0; padding: 0;

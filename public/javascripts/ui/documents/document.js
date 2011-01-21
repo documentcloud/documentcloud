@@ -285,7 +285,7 @@ dc.ui.Document = Backbone.View.extend({
       case dc.access.PRIVATE:      return {'class' : base + 'lock',       title : 'Private'};
       default:
         if (this.model.isPublished()) return {'class' : base + 'published', title : 'Open Published Version'};
-        return {'class' : base + 'hidden'};
+        return {'class' : base + 'hidden', iconless: true};
     }
   },
 
