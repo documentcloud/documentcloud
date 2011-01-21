@@ -50,11 +50,15 @@ $(function() {
     },
 
     loadTweets : function() {
+      var formatDate = DateUtils.create("%b %e, %Y");
       $.getJSON(this.FAVORITES_URL, function(json) {
         var tweets = json.slice(0, 3);
         var html   = "";
         _.each(tweets, function(tweet, i) {
-          html += JST['home/tweet'](_.extend(tweet, {index: i}));
+          html += JST['home/tweet'](_.extend(tweet, {
+            index: i,
+            date : formatDate(new Date(Date.parse(tweet.created_at)))
+          }));
         });
         $('#tweets').html(html).show();
       });
