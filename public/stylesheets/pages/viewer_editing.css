@@ -261,8 +261,8 @@
     font-size: 16px;
     color: #999;
     font-weight: bold;
-    float: left;
-    margin: 54px 0 0 24px;
+    padding: 54px 132px 0 24px;
+    text-align: center;
   }
   .editor_toolbar .close_editor {
     margin: 12px 0 0;
@@ -347,7 +347,10 @@
 #edit_page_text_container.active .editor_hint {
   display: none;
 }
-
+#edit_page_text_container .editor_hint {
+  padding-top: 32px;
+  line-height: 32px;
+}
 .DV-pages.edit_page_text_viewer {
   margin-top: 132px;
 }

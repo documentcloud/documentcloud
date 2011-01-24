@@ -95,4 +95,12 @@ class LifecycleMailer < ActionMailer::Base
       a.filename = 'accounts.csv'
     end
   end
+  
+  def logging_email(email_subject, args)
+    subject       email_subject
+    from          NO_REPLY
+    recipients    [SUPPORT]
+    body          :args => args,
+                  :line => line
+  end
 end

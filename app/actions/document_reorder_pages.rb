@@ -50,6 +50,14 @@ class DocumentReorderPages < DocumentModBase
     offset = 0
     page_order.each_with_index do |p, i|
       page = Page.find_by_document_id_and_page_number(document.id, p)
+      unless page
+        LifecycleMailer.deliver_logging_email("Reorder pages", {
+          :document_id => document.id, 
+          :document => document, 
+          :page_count => document.page_count, 
+          :page_order => page_order
+        })
+      end
       page_length = (page.end_offset - page.start_offset)
       page.end_offset = offset + page_length
       page.start_offset = offset
