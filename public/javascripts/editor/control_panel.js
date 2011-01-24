@@ -24,11 +24,6 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     this.viewer = currentDocument;
     this._page = this.viewer.$('.DV-textContents');
     $(this.el).html(JST['control_panel']({isOwner : dc.app.editor.isOwner}));
-    var contributor = this.viewer.api.getContributor();
-    var org = this.viewer.api.getContributorOrganization();
-    if (contributor && org) {
-      this.viewer.$('.DV-contributor').text("Contributed by: " + contributor + ', ' + org);
-    }
     return this;
   },
 

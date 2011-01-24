@@ -15,7 +15,6 @@
   <![endif]-->
   <link href="/viewer/plainviewer.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="/viewer/printviewer.css" media="print" rel="stylesheet" type="text/css" />
-  <%= render(:partial => 'viewer_editing') if @edits_enabled %>
   <script src="/viewer/viewer.js" type="text/javascript"></script>
   <% if Rails.env.production? && @current_document %>
     <% @pageview_url = '/documents/show' %>
@@ -30,5 +29,6 @@
         window.currentDocument = DV.load(<%= canonical.to_json %>, <%= @options %>);
     </script>
   <% end %>
+  <%= render(:partial => 'viewer_editing') if @edits_enabled %>
 </body>
 </html>
