@@ -14,11 +14,9 @@ dc.ui.Toolbar = Backbone.View.extend({
     Backbone.View.call(this, options);
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'openEmbedDialog',
-      'openPublicationDateDialog', 'requestDownloadViewers', 'checkFloat',
-      '_openTimeline', '_viewEntities', 'editPublishedUrl', 'openShareDialog',
-      '_markOrder', '_removeFromSelectedProject', '_enableAnalyzeMenu');
-    this.sortMenu    = this._createSortMenu();
+      'editRelatedArticle', 'editAccess', 'openPages', 'openDocumentEmbedDialog',
+      'openSearchEmbedDialog', 'openPublicationDateDialog', 'requestDownloadViewers', 
+      'checkFloat', '_openTimeline', '_viewEntities', 'editDocumentURL');
     this.analyzeMenu = this._createAnalyzeMenu();
     this.publishMenu = this._createPublishMenu();
     if (dc.account) {
@@ -129,13 +127,22 @@ dc.ui.Toolbar = Backbone.View.extend({
     checkEdit ? this.edit(continuation) : continuation(Documents.selected());
   },
 
-  openEmbedDialog : function() {
+  openSearchEmbedDialog : function() {
     var docs = Documents.chosen();
     if (!docs.length) return;
     if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document in order to create the embed.');
     var doc = docs[0];
     if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
-    (new dc.ui.EmbedDialog(doc)).render();
+    (new dc.ui.DocumentEmbedDialog(doc)).render();
+  },
+
+  openDocumentEmbedDialog : function() {
+    var docs = Documents.chosen();
+    if (!docs.length) return;
+    if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document in order to create the embed.');
+    var doc = docs[0];
+    if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
+    (new dc.ui.DocumentEmbedDialog(doc)).render();
   },
 
   openShareDialog : function() {
@@ -248,9 +255,10 @@ dc.ui.Toolbar = Backbone.View.extend({
 
   _createPublishMenu : function() {
     var accountItems = [
-      {title : 'Embed Document Viewer',          onClick : this.openEmbedDialog,            attrs: {'class': 'singular'}},
-      {title : 'Set Publication Date',           onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
-      {title : 'Download Document Viewer',       onClick : this.requestDownloadViewers}
+      {title : 'Embed This Search',        onClick : this.openSearchEmbedDialog,            attrs: {'class': 'always'}},
+      {title : 'Embed Document Viewer',    onClick : this.openDocumentEmbedDialog,            attrs: {'class': 'singular'}},
+      {title : 'Set Publication Date',     onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
+      {title : 'Download Document Viewer', onClick : this.requestDownloadViewers}
     ];
     var publicItems = [
       {title : 'Download Original PDF',          onClick : Documents.downloadSelectedPDF},

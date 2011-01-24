@@ -161,6 +161,10 @@ class AdminController < ApplicationController
     render :layout => false
   end
 
+  def test_embedded_search
+    render :layout => false
+  end
+
 
   private
 

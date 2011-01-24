@@ -1,0 +1,145 @@
+dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
+
+  events : {
+    'click .preview'        : 'preview',
+    'change select'         : 'update',
+    'click select'          : 'update',
+    'keyup input'           : 'update',
+    'focus input'           : 'update',
+    'click input'           : 'update',
+    'change input'          : 'update',
+    'click .next'           : 'nextStep',
+    'click .previous'       : 'previousStep',
+    'click .close'          : 'close',
+    'click .snippet'        : 'selectSnippet',
+    'click .set_publish_at' : 'openPublishAtDialog',
+    'click .edit_access'    : 'editAccessLevel'
+  },
+
+  totalSteps : 3,
+
+  STEPS : [null, null,
+    'Step Two: Configure the Document Viewer',
+    'Step Three: Copy and Paste the Embed Code'
+  ],
+
+  DEMO_ERROR : 'Demo accounts are not allowed to embed searches. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.',
+
+  constructor : function(doc) {
+    this.model = doc;
+    this.currentStep = 1;
+    dc.ui.Dialog.call(this, {mode : 'custom', title : this.displayTitle()});
+    this.render();
+  },
+
+  render : function() {
+    if (dc.account.organization.demo) return dc.ui.Dialog.alert(this.DEMO_ERROR);
+    dc.ui.Dialog.prototype.render.call(this);
+    this.$('.custom').html(JST['search/embed_dialog']({doc: this.model}));
+    this._next          = this.$('.next');
+    this._previous      = this.$('.previous');
+    this._widthEl       = this.$('input[name=width]');
+    this._heightEl      = this.$('input[name=height]');
+    this._viewerSizeEl  = this.$('select[name=viewer_size]');
+    this._sidebarEl     = this.$('input[name=sidebar]');
+    this._showTextEl    = this.$('input[name=show_text]');
+    this.setMode('embed', 'dialog');
+    this.update();
+    this.setStep();
+    this.center();
+    return this;
+  },
+
+  displayTitle : function() {
+    if (this.currentStep == 1) return 'Step One: Review "' + Inflector.truncate(this.model.get('title'), 25) + '"';
+    return this.STEPS[this.currentStep];
+  },
+
+  preview : function() {
+    var options = encodeURIComponent(JSON.stringify(this.embedOptions()));
+    var url = '/documents/' + this.model.canonicalId() + '/preview?options=' + options;
+    window.open(url);
+    return false;
+  },
+
+  update : function() {
+    this._toggleDimensions();
+    this._renderEmbedCode();
+  },
+
+  embedOptions : function() {
+    var options = {};
+    if (this._viewerSizeEl.val() == 'fixed') {
+      var width   = parseInt(this._widthEl.val(), 10);
+      var height  = parseInt(this._heightEl.val(), 10);
+      if (width)  options.width  = width;
+      if (height) options.height = height;
+    }
+    if (!this._sidebarEl.is(':checked'))  options.sidebar = false;
+    if (!this._showTextEl.is(':checked')) options.text = false;
+    return options;
+  },
+
+  editAccessLevel : function() {
+    this.close();
+    Documents.editAccess([this.model]);
+  },
+
+  openPublishAtDialog : function() {
+    this.close();
+    new dc.ui.PublicationDateDialog([this.model]);
+  },
+
+  _loadPreferences : function() {
+    var options = JSON.parse(dc.app.preferences.get('embed_options') || this.DEFAULT_OPTIONS);
+    if (options.width || options.height) this._viewerSizeEl.val('fixed');
+    this._widthEl.val(options.width);
+    this._heightEl.val(options.height);
+    this._sidebarEl.attr('checked', options.sidebar === false ? false : true);
+    this._showTextEl.attr('checked', options.text === false ? false : true);
+  },
+
+  _renderEmbedCode : function() {
+    var options       = this.embedOptions();
+    options.container = '"#viewer-' + this.model.canonicalId() + '"';
+    var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
+    this.$('.publish_embed_code').html(JST['search/embed_code']({
+      doc: this.model,
+      options: serialized.join(',&#10;    ')
+    }));
+  },
+
+  _toggleDimensions : function() {
+    this.$('.dimensions').toggle(this._viewerSizeEl.val() == 'fixed');
+  },
+
+  nextStep : function() {
+    if (this.currentStep >= this.totalSteps) return this.close();
+    this.currentStep += 1;
+    this.setStep();
+  },
+
+  previousStep : function() {
+    if (this.currentStep > 1) this.currentStep -= 1;
+    this.setStep();
+  },
+
+  setStep : function() {
+    this.title(this.displayTitle());
+
+    this.$('.publish_step').setMode('not', 'enabled');
+    this.$('.publish_step_'+this.currentStep).setMode('is', 'enabled');
+    this.info('Step ' + this.currentStep + ' of ' + this.totalSteps, true);
+
+    var first = this.currentStep == 1;
+    var last = this.currentStep == this.totalSteps;
+
+    this._previous.setMode(first ? 'not' : 'is', 'enabled');
+    this._next.html(last ? 'Finish' : 'Next &raquo;').setMode('is', 'enabled');
+  },
+
+  selectSnippet : function() {
+    this.$('.snippet').select();
+  }
+
+});

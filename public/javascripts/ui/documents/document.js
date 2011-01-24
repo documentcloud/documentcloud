@@ -158,7 +158,7 @@ dc.ui.Document = Backbone.View.extend({
   // Renders a single document embed dialog. Checks for permission to embed.
   openEmbed : function() {
     if (!this.model.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
-    (new dc.ui.EmbedDialog(this.model)).render();
+    (new dc.ui.DocumentEmbedDialog(this.model)).render();
   },
 
   openPagesInViewer : function() {

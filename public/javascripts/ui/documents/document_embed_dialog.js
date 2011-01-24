@@ -1,6 +1,4 @@
-// Dialog for embedding a document viewer on a third-party site. Checks the
-// access level, presents [saved] preferences, fetches the document embed code.
-dc.ui.EmbedDialog = dc.ui.Dialog.extend({
+dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
   events : {
     'click .preview'        : 'preview',
@@ -157,7 +155,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     var options       = this.embedOptions();
     options.container = '"#DV-viewer-' + this.model.canonicalId() + '"';
     var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
-    this.$('.publish_embed_code').html(JST['document/embed_dialog']({
+    this.$('.publish_embed_code').html(JST['document/embed_code']({
       doc: this.model,
       options: serialized.join(',&#10;    ')
     }));

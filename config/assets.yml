@@ -18,6 +18,12 @@ javascripts:
     - public/javascripts/editor/editor_toolbar.js
     - public/javascripts/editor/*.js
     - app/views/jst/editor/*.jst
+  search_embed:
+    - public/javascripts/vendor/underscore-*.js
+    - public/javascripts/vendor/jquery-*.js
+    - public/javascripts/vendor/backbone-*.js
+    - public/javascripts/embed/search_embed.js
+    - app/views/jst/embed/*.jst
   admin:
     - public/javascripts/admin/*.js
     - app/views/admin/*.jst
@@ -42,5 +48,8 @@ stylesheets:
 
   viewer_editing:
     - public/stylesheets/pages/viewer_editing.css
+    - public/stylesheets/ui/upload_documents.css
+  search_embed:
+    - public/stylesheets/embed/search_embed.css
   ie_only:
     - public/stylesheets/common/ie.css
