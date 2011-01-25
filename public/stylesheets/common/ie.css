@@ -89,3 +89,6 @@ div.text_input.search input {
 .arrow {
   top: 0;
 }
+ul.bullet, #help ul {
+  list-style-type: none !important;
+}
