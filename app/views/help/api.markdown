@@ -28,26 +28,29 @@ annotations   | include document annotations in the results | true (defaults to 
 
     /api/search.json?q=obama&page=2
 
-Use the search form below to try queries and see what the resulting JSON looks like.
-
-<div>
-  <form id="search_form" action="about:blank" autocomplete="off">
-    <div id="run_search" class="minibutton default">Search</div>
-    <div class="text_input">
-      <div class="background">
-        <div class="inner">
-          <input type="text" name="q" id="q" />
+<div class="api_search_form">
+  <p>
+    Use the search form below to try queries and see what the resulting JSON looks like.
+  </p>
+  <div>
+    <form id="search_form" action="about:blank" autocomplete="off">
+      <div id="run_search" class="minibutton default">Search</div>
+      <div class="text_input">
+        <div class="background">
+          <div class="inner">
+            <input type="text" name="q" id="q" />
+          </div>
         </div>
       </div>
-    </div>
-    <label for="q">
-      Search Query:
-      <div>ex: "person:geithner"</div>
-    </label>
-  </form>
-</div>
+      <label for="q">
+        Search Query:
+        <div>ex: "person:geithner"</div>
+      </label>
+    </form>
+  </div>
 
-<pre id="search_results" style="display: none;"></pre>
+  <pre id="search_results" style="display: none;"></pre>
+</div>
 
 ### Tips
 

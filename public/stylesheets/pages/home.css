@@ -44,7 +44,7 @@ body {
   text-indent: -10000px;
 }
 
-a, a:visited, #help a, #help a:visited {
+a, a:link, a:visited, #help a, #help a:visited {
   color: #282d66;
 }
   a:hover, a:active, #help a:hover, #help a:active {

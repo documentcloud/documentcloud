@@ -92,3 +92,6 @@ div.text_input.search input {
 ul.bullet, #help ul {
   list-style-type: none !important;
 }
+.api_search_form {
+  display: none;
+}
