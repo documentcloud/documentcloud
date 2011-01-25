@@ -245,6 +245,9 @@ ol {
   body.homepage #content {
     width: 650px;
   }
+  #content h1:first-child {
+    margin-top: 0;
+  }
 
 #content hr {
   border: 0;
