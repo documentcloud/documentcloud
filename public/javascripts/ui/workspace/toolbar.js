@@ -7,7 +7,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     'click #size_toggle'  : '_toggleSize'
   },
 
-  MENUS : ['project', 'edit', 'publish', 'analyze'],
+  MENUS : ['edit', 'sort', 'project', 'publish', 'analyze'],
 
   constructor : function(options) {
     this._floating = false;
@@ -16,7 +16,8 @@ dc.ui.Toolbar = Backbone.View.extend({
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'openPages', 'openEmbedDialog',
       'openPublicationDateDialog', 'requestDownloadViewers', 'checkFloat',
-      '_openTimeline', '_viewEntities', 'editDocumentURL');
+      '_openTimeline', '_viewEntities', 'editDocumentURL', '_markOrder');
+    this.sortMenu    = this._createSortMenu();
     this.analyzeMenu = this._createAnalyzeMenu();
     this.publishMenu = this._createPublishMenu();
     if (dc.account) {
@@ -227,6 +228,15 @@ dc.ui.Toolbar = Backbone.View.extend({
     return this._panelEl = this._panelEl || $(this.el).parents('.panel_content')[0];
   },
 
+  _chooseSort : function(e) {
+    dc.app.paginator.setSortOrder($(e.target).attr('data-order'));
+  },
+
+  _markOrder : function(menu) {
+    $('.menu_item', menu.content).removeClass('checked')
+      .filter('[data-order="' + dc.app.paginator.sortOrder + '"]').addClass('checked');
+  },
+
   _enableMenuItems : function(menu) {
     var total       = Documents.length;
     var count       = Documents.selectedCount;
@@ -259,6 +269,20 @@ dc.ui.Toolbar = Backbone.View.extend({
       label   : dc.account ? 'Publish' : 'Download',
       onOpen  : this._enableMenuItems,
       items   : items
+    });
+  },
+
+  _createSortMenu : function() {
+    return new dc.ui.Menu({
+      label   : 'Sort',
+      onOpen  : this._markOrder,
+      items   : [
+        {title: 'Sort by Relevance',     attrs: {'data-order' : 'score'},      onClick : this._chooseSort},
+        {title: 'Sort by Date Uploaded', attrs: {'data-order' : 'created_at'}, onClick : this._chooseSort},
+        {title: 'Sort by Title',         attrs: {'data-order' : 'title'},      onClick : this._chooseSort},
+        {title: 'Sort by Source',        attrs: {'data-order' : 'source'},     onClick : this._chooseSort},
+        {title: 'Sort by Length',        attrs: {'data-order' : 'page_count'}, onClick : this._chooseSort}
+      ]
     });
   },
 

@@ -39,6 +39,13 @@ dc.ui.Paginator = Backbone.View.extend({
     this.render();
   },
 
+  setSortOrder : function(order) {
+    this.sortOrder = order;
+    dc.app.preferences.set({sort_order : order});
+    this.$('.sorter').text(this.SORT_TEXT[this.sortOrder]);
+    dc.app.searcher.loadPage();
+  },
+
   queryParams : function() {
     return {
       per_page : dc.app.paginator.pageSize(),
@@ -100,10 +107,7 @@ dc.ui.Paginator = Backbone.View.extend({
       {text : 'Source',        value : 'source',     selected : this.sortOrder == 'source'},
       {text : 'Length',        value : 'page_count', selected : this.sortOrder == 'page_count'}
     ], _.bind(function(order) {
-      this.sortOrder = order;
-      dc.app.preferences.set({sort_order : order});
-      this.$('.sorter').text(this.SORT_TEXT[this.sortOrder]);
-      dc.app.searcher.loadPage();
+      this.setSortOrder(order);
       return true;
     }, this), {mode : 'short_prompt'});
     $(dialog.el).addClass('short_choice');
