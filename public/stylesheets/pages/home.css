@@ -113,6 +113,9 @@ ul.bullet, #help ul {
     margin-bottom: 15px;
     width: 500px;
   }
+    ul.bullet li h6 {
+      margin-top: 0;
+    }
 
 ol {
   margin: 0 0 25px 16px;
@@ -383,6 +386,9 @@ ol {
     padding: 15px;
     text-align: center;
   }
+    #sidebar .login_section {
+      overflow: hidden;
+    }
   #sidebar .minibutton {
     display: inline-block;
     margin: 15px auto 0;
