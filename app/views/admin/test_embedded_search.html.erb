@@ -2,14 +2,20 @@
 <html>
   <head>
     <title></title>
+    <%= include_stylesheets(:search_embed) %>
+    <%= include_javascripts(:search_embed) %>
   </head>
   <body>
     
     <div id="account-1-sam-claydc"></div>
+    
     <script type="text/javascript" src="/embed/search_loader.js"></script>
-    <script>
-      dc.loadSearchEmbed('http://dev.dcloud.org/search/documents.json?per_page=10&order=score&q=account%3A+1-sam-claydc', {
-        'container': 'account-1-sam-claydc'
+    <script type="text/javascript">
+      dc.loadSearchEmbed('http://dev.dcloud.org/api/search.js', {
+        q: 'account: 1-sam-claydc',
+        per_page: 10,
+        order: 'score',
+        container: 'account-1-sam-claydc'
       });
     </script>
   </body>

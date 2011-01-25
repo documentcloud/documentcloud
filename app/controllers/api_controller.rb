@@ -27,6 +27,7 @@ class ApiController < ApplicationController
         @response['total']      = @query.total
         @response['page']       = @query.page
         @response['per_page']   = @query.per_page
+        @response['q']          = params['q']
         @response['documents']  = @documents.map {|d| d.canonical(API_OPTIONS) }
         @response['entities']   = @query.facets if params[:entities]
         json_response

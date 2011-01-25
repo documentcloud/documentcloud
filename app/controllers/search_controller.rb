@@ -10,7 +10,16 @@ class SearchController < ApplicationController
     results = {:query => @query, :documents => @documents}
     results[:facets] = @query.facets if params[:include_facets]
     results[:source_document] = @source_document if params.include? :include_source_document
-    json results
+    respond_to do |format|
+      format.js do
+        js = "dc.loadJSON(#{results.to_json});"
+        cache_page js
+        render :js => js
+      end
+      format.json do
+        json results
+      end
+    end
   end
 
   def facets
