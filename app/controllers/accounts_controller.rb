@@ -35,6 +35,13 @@ class AccountsController < ApplicationController
     json current_organization.accounts
   end
 
+  # Does the current request come from a logged-in account?
+  def logged_in
+    return bad_request unless request.format.json? or request.format.js?
+    @response = {:logged_in => logged_in?}
+    json_response
+  end
+
   # Creating a new account creates a pending account, with a security key
   # instead of a password.
   def create
