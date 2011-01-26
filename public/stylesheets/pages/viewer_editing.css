@@ -16,12 +16,12 @@
   }
   #control_panel .control_panel_title {
     font-weight: bold;
-    color: #303030;
-    margin: 18px 10px 8px;
-    padding: 6px 14px;
-    line-height: 16px;
-    background-color: #EFEFEF;
-    font-size: 11px;
+    color: #000;
+    margin: 18px 0px 8px;
+    padding: 7px 24px;
+    text-shadow: 0 1px 0 #fff;
+    border-top: 1px solid #ddd; border-bottom: 1px solid #ccc;
+    font-size: 10px;
     text-transform: uppercase;
   }
   #control_panel .control_panel_help {
@@ -66,22 +66,28 @@
     #control_panel .button:hover span {
       text-decoration: underline;
     }
-      #control_panel .button .icon {
-        position: absolute;
-        margin-top: 3px;
-        left: -17px; top: 2px;
+    #control_panel .button .dash {
+      color: #999;
+    }
+      #control_panel .button:hover .dash {
+        text-decoration: none;
       }
-        #control_panel .button.open .icon {
-          display: none;
-        }
-      #control_panel .button .cancel_search {
-        position: absolute;
-        top: 0px;
+    #control_panel .button .icon {
+      position: absolute;
+      margin-top: 3px;
+      left: -17px; top: 2px;
+    }
+      #control_panel .button.open .icon {
         display: none;
       }
-        #control_panel .button.open .cancel_search {
-          display: block;
-        }
+    #control_panel .button .cancel_search {
+      position: absolute;
+      top: 0px;
+      display: none;
+    }
+      #control_panel .button.open .cancel_search {
+        display: block;
+      }
   #control_panel .edit_document_info {
     position: relative;
   }
@@ -321,7 +327,7 @@
 #remove_pages_container .editor_hint {
   display: none;
 }
-  
+
 .DV-pages.remove_pages_viewer {
   margin-top: 134px;
 }
