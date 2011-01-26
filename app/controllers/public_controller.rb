@@ -1,7 +1,5 @@
 class PublicController < ApplicationController
 
-  before_filter :bouncer unless Rails.env.development?
-
   # Public search.
   def index
     return redirect_to("/public/") unless request.path.match(/\/$/)
