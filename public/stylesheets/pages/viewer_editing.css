@@ -107,6 +107,7 @@
     .DV-docViewer.DV-viewDocument #control_panel,
     .DV-docViewer.DV-viewThumbnails #control_panel,
     .DV-docViewer.DV-viewText #control_panel,
+    .DV-docViewer.DV-viewAnnotations #control_panel,
     .DV-docViewer.DV-viewDocument #control_panel .document_only,
     .DV-docViewer.DV-viewThumbnails #control_panel .thumbnails_only,
     .DV-docViewer.DV-viewText #control_panel .text_only {

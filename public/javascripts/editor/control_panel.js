@@ -122,6 +122,12 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
         this.viewer.open('ViewThumbnails');
     }
   },
+
+  openDocumentTab : function() {
+    if (this.viewer.state != 'ViewDocument') {
+        this.viewer.open('ViewDocument');
+    }
+  },
   
   editPageText : function() {
     this.openTextTab();
@@ -144,10 +150,12 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   togglePublicAnnotation : function() {
+    this.openDocumentTab();
     dc.app.editor.annotationEditor.toggle('public');
   },
 
   togglePrivateAnnotation : function() {
+    this.openDocumentTab();
     dc.app.editor.annotationEditor.toggle('private');
   },
   
