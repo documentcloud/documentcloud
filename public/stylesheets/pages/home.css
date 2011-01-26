@@ -262,6 +262,9 @@ ol {
   #content .graf.section {
     margin-top: 25px;
   }
+    #content .graf.section:first-child {
+      margin-top: 0;
+    }
 #content .visual {
   float: right;
   border: 1px solid #ccc;
