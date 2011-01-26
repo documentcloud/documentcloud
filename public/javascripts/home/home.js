@@ -2,7 +2,7 @@ $(function() {
 
   window.HomePage = Backbone.View.extend({
 
-    FAVORITES_URL : 'http://twitter.com/favorites/documentcloud.json?callback=?',
+    FAVORITES_URL : '//twitter.com/favorites/documentcloud.json?callback=?',
 
     el : document.body,
 
