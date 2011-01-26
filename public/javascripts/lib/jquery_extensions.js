@@ -315,13 +315,9 @@
       event = $.event.fix(event || window.event);
       event.type = "mousewheel";
       if (event.wheelDelta) {
-        if (hyperactiveWebkit === null) {
-          hyperactiveWebkit = (event.wheelDelta % 120) === 0;
-        }
         delta = event.wheelDelta / 3;
-        if (hyperactiveWebkit) delta /= 40;
       } else if (event.detail) {
-        delta = -event.detail * 3;
+        delta = -event.detail * 9;
       }
       args.unshift(event, delta);
       return $.event.handle.apply(this, args);
