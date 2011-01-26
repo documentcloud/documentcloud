@@ -100,7 +100,7 @@ dc.ui.Paginator = Backbone.View.extend({
   },
 
   chooseSort : function() {
-    var dialog = dc.ui.Dialog.choose('Order Documents By&hellip;', [
+    var dialog = dc.ui.Dialog.choose('Sort Documents By&hellip;', [
       {text : 'Relevance',     value : 'score',      selected : this.sortOrder == 'score'},
       {text : 'Date Uploaded', value : 'created_at', selected : this.sortOrder == 'created_at'},
       {text : 'Title',         value : 'title',      selected : this.sortOrder == 'title'},
