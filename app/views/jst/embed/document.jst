@@ -1,8 +1,8 @@
-<a href="<%= doc.get('resources')['published_url'] || doc.get('canonical_url') %>" class="DV-document-tile">
+<a href="<%= doc.get('resources')['published_url'] || doc.get('canonical_url') %>" class="DC-document-tile">
 
-  <div class="DV-document-thumbnail-select"></div>
-  <div class="DV-document-thumbnail"><img src="<%= doc.get('resources')['thumbnail'] %>" /></div>
-  <div class="DV-document-title"><%= Inflector.truncate(doc.get('title'), 100) %></div>
-  <div class="DV-document-description"><%= Inflector.truncate(doc.get('description') || "", 80) %></div>
+  <div class="DC-document-thumbnail-select"></div>
+  <div class="DC-document-thumbnail"><img src="<%= doc.get('resources')['thumbnail'] %>" /></div>
+  <div class="DC-document-title"><%= Inflector.truncate(doc.get('title'), 100) %></div>
+  <div class="DC-document-description"><%= Inflector.truncate(doc.get('description') || "", 80) %></div>
   
 </a>

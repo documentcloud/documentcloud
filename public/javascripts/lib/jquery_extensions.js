@@ -1,15 +1,5 @@
 (function($) {
 
-  // First things first, add our special CSRF token to every jQuery Ajax
-  // request.
-  $(document).ajaxSend(function(e, xhr, options) {
-    var token = $("meta[name='csrf-token']").attr("content");
-    xhr.setRequestHeader("X-CSRF-Token", token);
-  });
-
-  var fakeInput = document.createElement('input');
-  var supportsPlaceholder = 'placeholder' in fakeInput;
-
   $.fn.extend({
 
     // Align an element relative to a target element's coordinates. Forces the
@@ -344,30 +334,6 @@
         });
       });
       return ret;
-    },
-
-    placeholder: function() {
-      if (supportsPlaceholder) return;
-      var otherEl;
-      this.each(function() {
-        var el = $(this);
-        var message = el.attr('placeholder');
-        var placeholder = $('<div class="placeholder">' + message + '</div>');
-        el.siblings('.placeholder').remove();
-        placeholder.hide().prependTo(el[0].parentNode);
-        el.bind('blur', function(){
-          if (el.val() == '' && el.is(':visible')) placeholder.show();
-        });
-        el.bind('focus', function(){
-          otherEl = this;
-          placeholder.hide();
-        });
-        placeholder.bind('click', function(){
-          $(otherEl).blur();
-          el.focus();
-        });
-        el.blur();
-      });
     }
 
   });

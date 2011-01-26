@@ -10,6 +10,7 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
   
   dc.embed[query] = {};
   dc.embed[query].options = $.extend({}, defaults, opts);
+  dc.embed[query].searchUrl = searchUrl;
   
   $.getScript(searchUrl + '?' + $.param(dc.embed[query].options));
 };
@@ -35,17 +36,26 @@ dc.EmbedDocumentSet = Backbone.Collection.extend({
 
 dc.EmbedWorkspaceView = Backbone.View.extend({
   
+  events : {
+    'click    .DC-cancel-search' : 'cancelSearch',
+    'keypress #DC-search-box'    : 'performSearch'
+  },
+  
   initialize : function() {
     this.embed     = dc.embed[this.options.id];
     this.container = $('#' + this.options['container']);
 
     this.render();
-    this.renderDocuments();
   },
   
   render : function() {
     $(this.el).html(JST['workspace']({}));
     this.container.html(this.el);
+    
+    this.search    = this.$('#DC-search-box');
+    
+    this.search.placeholder({className: 'DC-placeholder'});
+    this.renderDocuments();
   },
   
   renderDocuments : function() {
@@ -56,6 +66,16 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
       var view = (new dc.EmbedDocumentView({model: doc})).render().el;
       $document_list.append(view);
     }, this));
+  },
+  
+  cancelSearch : function() {
+    this.search.val('').blur();
+  },
+  
+  performSearch : function(e) {
+    if (e.keyCode != 13) return; // Search on `enter` only
+    
+    // $.getScript(this.embed.searchUrl)
   }
   
 });

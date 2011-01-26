@@ -23,6 +23,7 @@ javascripts:
     - public/javascripts/vendor/jquery-*.js
     - public/javascripts/vendor/backbone-*.js
     - public/javascripts/lib/inflector.js
+    - public/javascripts/lib/jquery_placeholder.js
     - public/javascripts/embed/search_embed.js
     - app/views/jst/embed/*.jst
   admin:

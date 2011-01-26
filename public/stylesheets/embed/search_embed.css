@@ -1,4 +1,8 @@
-.DV-document-tile {
+/* ================== */
+/* = Document Tiles = */
+/* ================== */
+
+.DC-document-tile {
   float: left;
   width: 250px;
   border: 1px solid transparent;
@@ -12,10 +16,10 @@
   text-decoration: none;
   outline: none;
 }
-  .DV-document-tile:hover {
+  .DC-document-tile:hover {
     cursor: pointer;
   }
-  .DV-document-thumbnail {
+  .DC-document-thumbnail {
     position: absolute;
     left: 3px;
     top: 3px;
@@ -23,17 +27,17 @@
     width: 70px;
     height: 85px;
   }
-    .DV-document-thumbnail img {
+    .DC-document-thumbnail img {
       border: 1px solid #AAA;
       width: 60px;
       height: 75px;
       padding: 1px;
       background-color: #FFF;
     }
-    .DV-document-tile:hover .DV-document-thumbnail {
+    .DC-document-tile:hover .DC-document-thumbnail {
       border-color: transparent;
     }
-  .DV-document-thumbnail-select {
+  .DC-document-thumbnail-select {
     position: absolute;
     margin: 0 6px 4px 0;
     background-color: #E0E0E0;
@@ -42,7 +46,7 @@
     left: 6px;
     top: 6px;
   }
-    .DV-document-tile:hover .DV-document-thumbnail-select {
+    .DC-document-tile:hover .DC-document-thumbnail-select {
       left: 0;
       top: 0;
       width: 70px;
@@ -52,18 +56,108 @@
       -webkit-border-radius: 3px;
       background-color: #0099FF;
     }
-  .DV-document-title {
+  .DC-document-title {
     color: #303030;
     font-size: 16px;
     font-weight: bold;
     line-height: 20px;
     margin: 2px 0 4px 0;
   }
-    .DV-document-tile:hover .DV-document-title {
+    .DC-document-tile:hover .DC-document-title {
       text-decoration: underline;
     }
-  .DV-document-description {
+  .DC-document-description {
     color: #606060;
     font-size: 12px;
     line-height: 15px;
+  }
+  
+/* ========== */
+/* = Search = */
+/* ========== */
+
+.DC-search {
+  margin: 12px 0 12px;
+}
+.DC-text-input {
+  position: relative;
+  height: 30px;
+  background: transparent url(/images/embed/ui/text_input_large_left.png) no-repeat center left;
+}
+  .DC-text-input .DC-placeholder {
+    position: absolute;
+    cursor: text;
+    left: 1px; 
+    top: 4px;
+    color: #c0c0c0;
+    font: 13px/18px "Lucida Grande","Lucida Sans Unicode", Helvetica, Arial;
+  }  
+  .DC-text-input input {
+    display: block;
+    border: none;
+    outline: none;
+    margin: 0; 
+    padding: 4px;
+    background: transparent;
+    font-size: 16px;
+    line-height: 20px;
+    width: 100%;    
+    color: #999999;
+    font-size: 13px;
+    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif !important;
+    width: 100%;
+  }
+  .DC-text-input.DC-search {
+    height: 28px;
+    background: transparent;
+    border: 2px solid #ccc;
+    border-radius: 16px; -webkit-border-radius: 16px; -moz-border-radius: 16px;
+    background-color: #fafafa;
+    -webkit-box-shadow: inset 0px 0px 3px #ccc;
+    -moz-box-shadow: inset 0px 0px 3px #ccc;
+    box-shadow: inset 0px 0px 3px #ccc;
+  }
+    .DC-text-input.DC-search:focus {
+      border-color: #acf;
+      -webkit-box-shadow: inset 0px 0px 3px #acf;
+      -moz-box-shadow: inset 0px 0px 3px #acf;
+      box-shadow: inset 0px 0px 3px #acf;
+    }
+    .DC-text-input .DC-search-inner {
+      position: relative;
+      margin: 0 28px;
+    }
+      .DC-text-input.DC-search input {
+        width: 100%;
+        padding: 5px 0;
+      }
+        .DC-text-input.DC-search:focus input {
+          color: #000;
+        }
+    .DC-text-input .DC-search-glyph {
+      position: absolute;
+      left: 9px; top: 8px;
+    }
+    .DC-text-input .DC-cancel-search {
+      position: absolute;
+      right: 9px; top: 8px;
+    }
+    
+/* ========= */
+/* = Icons = */
+/* ========= */
+
+.DC-icon.DC-search-glyph {
+  width: 12px; height: 12px;
+  background-image: url(/images/embed/icons/search_glyph.png);
+}
+
+.DC-icon.DC-cancel-search {
+  width: 11px; height: 11px;
+  background-position: center 0;
+  background-image: url(/images/embed/icons/cancel_search.png);
+  cursor: pointer;
+}
+  .DC-icon.DC-cancel-search:hover {
+    background-position: center -11px;
   }
