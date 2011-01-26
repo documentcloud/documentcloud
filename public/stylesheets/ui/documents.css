@@ -86,9 +86,6 @@
     .document .doc_title {
       cursor: pointer;
     }
-      .document .hoverable:hover .doc_title {
-        text-decoration: underline;
-      }
     .document .document_tool {
       display: inline;
       zoom: 1;
