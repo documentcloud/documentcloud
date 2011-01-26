@@ -23,6 +23,7 @@
     border-top: 1px solid #ddd; border-bottom: 1px solid #ccc;
     font-size: 10px;
     text-transform: uppercase;
+    zoom: 1;
   }
   #control_panel .control_panel_help {
     border-top: 1px solid #ccc;
