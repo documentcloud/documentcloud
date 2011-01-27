@@ -23,17 +23,18 @@ dc.loadJSON = function(json) {
   dc.embed[query].workspace = new dc.EmbedWorkspaceView(dc.embed[query].options);
 };
 
-dc.EmbedController = function(query, options) {
-  var addOptions = {
-    q: options.originalQuery + ' ' + query,
+dc.EmbedController = function(query, opts) {
+  var options = {
+    q: opts.originalQuery + ' ' + query,
+    original_query: opts.originalQuery,
     callback: 'dc.EmbedControllerCallback'
   };
-  $.getScript(options.searchUrl + '?' + $.param(_.extend(options, addOptions)));
+  $.getScript(opts.searchUrl + '?' + $.param(options));
 };
 
 dc.EmbedControllerCallback = function(json) {
-  var originalQuery = Inflector.sluggify(json.originalQuery);
-  
+  console.log(['callback', json, dc.embed]);
+  var originalQuery = Inflector.sluggify(json.original_query);
   dc.embed[originalQuery].documents.refresh(json.documents);
   dc.embed[originalQuery].workspace.renderDocuments();
 };

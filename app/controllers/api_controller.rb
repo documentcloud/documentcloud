@@ -24,12 +24,12 @@ class ApiController < ApplicationController
       format.any(:js, :json) do
         perform_search :include_facets => params[:entities] ? :api : false
         @response = ActiveSupport::OrderedHash.new
-        @response['total']      = @query.total
-        @response['page']       = @query.page
-        @response['per_page']   = @query.per_page
-        @response['q']          = params['q']
-        @response['documents']  = @documents.map {|d| d.canonical(API_OPTIONS) }
-        @response['entities']   = @query.facets if params[:entities]
+        @response['total']          = @query.total
+        @response['page']           = @query.page
+        @response['per_page']       = @query.per_page
+        @response['q']              = params['q']
+        @response['original_query'] = params['original_query'] if params['original_query']
+        @response['documents']      = @documents.map {|d| d.canonical(API_OPTIONS) }
         json_response
       end
     end
