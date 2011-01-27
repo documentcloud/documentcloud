@@ -44,7 +44,7 @@ def import_document(client, record)
     :updated_at       => record['updated_at'],
     :related_article  => record['story_url']
   })
-  doc.remote_url = "http://documents.nytimes.com/#{doc.canonical_id}"
+  doc.remote_url = "http://documents.nytimes.com/#{record['slug']}"
 
   puts "#{ref} -- importing pages..."
 
