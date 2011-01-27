@@ -9,7 +9,7 @@ namespace :import do
     require 'tmpdir'
     require 'iconv'
     client = Mysql2::Client.new :host => 'localhost', :username => 'root', :database => 'docviewer_prod'
-    docs   = client.query 'select * from documents where id in (16, 22, 92, 220) or id > 542 order by id desc'
+    docs   = client.query 'select * from documents where id in (16, 22, 92, 220) or (id > 542 and id < 546) order by id desc'
     docs.each do |doc|
       begin
         import_document(client, doc)
