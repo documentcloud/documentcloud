@@ -4,16 +4,18 @@ window.dc.embed = window.dc.embed || {};
   
 dc.loadSearchEmbed = function(searchUrl, opts) {
   var query = Inflector.sluggify(opts['q']);
-  var defaults = {
-    callback : 'dc.loadJSON'
-  };
   
   dc.embed[query] = {};
-  dc.embed[query].options = $.extend({}, defaults, opts);
-  dc.embed[query].options.searchUrl = searchUrl;
-  dc.embed[query].options.originalQuery = opts['q'];
+  dc.embed[query].options = _.extend({}, {
+    searchUrl     : searchUrl,
+    originalQuery : opts['q']
+  }, opts);
   
-  $.getScript(searchUrl + '?' + $.param(dc.embed[query].options));
+  var apiOptions = {
+    q        : opts['q'],
+    callback : 'dc.loadJSON'
+  };
+  $.getScript(searchUrl + '?' + $.param(apiOptions));
 };
 
 dc.loadJSON = function(json) {
@@ -33,18 +35,22 @@ dc.EmbedController = function(query, opts) {
 };
 
 dc.EmbedControllerCallback = function(json) {
-  console.log(['callback', json, dc.embed]);
   var originalQuery = Inflector.sluggify(json.original_query);
   dc.embed[originalQuery].documents.refresh(json.documents);
-  dc.embed[originalQuery].workspace.renderDocuments();
 };
 
 
-dc.EmbedDocument = Backbone.Model.extend({});
+dc.EmbedDocument = Backbone.Model.extend({
+  
+});
 
 dc.EmbedDocumentSet = Backbone.Collection.extend({
 
-  model : dc.EmbedDocument
+  model : dc.EmbedDocument,
+  
+  initialize : function(models) {
+    this.originalModels = models;
+  }
 
 });
 
@@ -54,13 +60,13 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   
   events : {
     'click    .DC-cancel-search' : 'cancelSearch',
-    'keypress .DC-search-box'    : 'performSearch'
+    'keypress .DC-search-box'    : 'maybePerformSearch'
   },
   
   initialize : function() {
     this.embed     = dc.embed[this.options.id];
     this.container = $('#' + this.options['container']);
-
+    this.embed.documents.bind('refresh', _.bind(this.renderDocuments, this));
     this.render();
   },
   
@@ -78,22 +84,36 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     var $document_list = this.$('.DC-document-list');
     $document_list.empty();
     
-    this.embed.documents.each(_.bind(function(doc) {
-      var view = (new dc.EmbedDocumentView({model: doc})).render().el;
-      $document_list.append(view);
-    }, this));
+    if (!this.embed.documents.length) {
+      $document_list.append(JST['no_results']({}));
+    } else {
+      this.embed.documents.each(_.bind(function(doc) {
+        var view = (new dc.EmbedDocumentView({model: doc})).render().el;
+        $document_list.append(view);
+      }, this));
+    }
   },
   
-  cancelSearch : function() {
+  cancelSearch : function(e) {
+    e.preventDefault();
     this.search.val('').blur();
+    this.performSearch();
   },
   
-  performSearch : function(e) {
+  maybePerformSearch : function(e) {
     if (e.keyCode != 13) return; // Search on `enter` only
+    this.performSearch();
+  },
+  
+  performSearch : function() {
     var query = this.$('.DC-search-box').val();
     
-    dc.EmbedController(query, this.embed.options);
-    // $.getScript(this.embed.searchUrl)
+    if (query == '') {
+      // Returning to original query, just use the original response.
+      this.embed.documents.refresh(this.embed.documents.originalModels);
+    } else {
+      dc.EmbedController(query, this.embed.options);
+    }
   }
   
 });

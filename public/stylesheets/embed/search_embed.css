@@ -1,7 +1,26 @@
+/* ========================== */
+/* = Search Embed Workspace = */
+/* ========================== */
+
 .DC-search-embed {
   clear: both;
   overflow: hidden;
+  font: 16px/20px Helvetica,Arial;
 }
+
+.DC-no-results {
+  position: relative;
+  margin: 12px 0 24px 20px;
+  padding: 0 0 0 75px;
+  height: 77px;
+  font-size: 14px;
+  line-height: 90px;
+  color: #555;
+}
+  .DC-no-results .DC-icon {
+    position: absolute;
+    top: 10px; left: 0px;
+  }
 
 /* ================== */
 /* = Document Tiles = */
@@ -16,7 +35,6 @@
   padding: 0 0 0 80px;
   position: relative;
   overflow: hidden;
-  font: 16px/20px Helvetica,Arial;
   background-color: #FFF;
   text-decoration: none;
   outline: none;
@@ -166,3 +184,9 @@
   .DC-icon.DC-cancel-search:hover {
     background-position: center -11px;
   }
+.DC-icon.DC-document {
+  width: 60px; 
+  height: 75px;
+  background: url(/images/embed/documents/generic.png);
+  border: 0;
+}
