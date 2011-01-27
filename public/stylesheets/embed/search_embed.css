@@ -1,3 +1,8 @@
+.DC-search-embed {
+  clear: both;
+  overflow: hidden;
+}
+
 /* ================== */
 /* = Document Tiles = */
 /* ================== */

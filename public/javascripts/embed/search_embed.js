@@ -10,7 +10,8 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
   
   dc.embed[query] = {};
   dc.embed[query].options = $.extend({}, defaults, opts);
-  dc.embed[query].searchUrl = searchUrl;
+  dc.embed[query].options.searchUrl = searchUrl;
+  dc.embed[query].options.originalQuery = opts['q'];
   
   $.getScript(searchUrl + '?' + $.param(dc.embed[query].options));
 };
@@ -22,11 +23,23 @@ dc.loadJSON = function(json) {
   dc.embed[query].workspace = new dc.EmbedWorkspaceView(dc.embed[query].options);
 };
 
-dc.EmbedDocument = Backbone.Model.extend({
+dc.EmbedController = function(query, options) {
+  var addOptions = {
+    q: options.originalQuery + ' ' + query,
+    callback: 'dc.EmbedControllerCallback'
+  };
+  $.getScript(options.searchUrl + '?' + $.param(_.extend(options, addOptions)));
+};
+
+dc.EmbedControllerCallback = function(json) {
+  var originalQuery = Inflector.sluggify(json.originalQuery);
   
-  
-  
-});
+  dc.embed[originalQuery].documents.refresh(json.documents);
+  dc.embed[originalQuery].workspace.renderDocuments();
+};
+
+
+dc.EmbedDocument = Backbone.Model.extend({});
 
 dc.EmbedDocumentSet = Backbone.Collection.extend({
 
@@ -36,9 +49,11 @@ dc.EmbedDocumentSet = Backbone.Collection.extend({
 
 dc.EmbedWorkspaceView = Backbone.View.extend({
   
+  className : 'DC-search-embed',
+  
   events : {
     'click    .DC-cancel-search' : 'cancelSearch',
-    'keypress #DC-search-box'    : 'performSearch'
+    'keypress .DC-search-box'    : 'performSearch'
   },
   
   initialize : function() {
@@ -52,7 +67,7 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     $(this.el).html(JST['workspace']({}));
     this.container.html(this.el);
     
-    this.search    = this.$('#DC-search-box');
+    this.search = this.$('.DC-search-box');
     
     this.search.placeholder({className: 'DC-placeholder'});
     this.renderDocuments();
@@ -74,7 +89,9 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   
   performSearch : function(e) {
     if (e.keyCode != 13) return; // Search on `enter` only
+    var query = this.$('.DC-search-box').val();
     
+    dc.EmbedController(query, this.embed.options);
     // $.getScript(this.embed.searchUrl)
   }
   
