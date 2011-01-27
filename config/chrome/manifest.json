@@ -1,22 +1,19 @@
 {
   "name": "DocumentCloud",
-  "version": "1.0",
+  "version": "1.0.1",
   "description": "Browse the primary source documents behind the news.",
-  "browser_action": {
-    "default_icon": "icon.png"
-  },  
   "icons": { 
     "16": "chrome-logo-16.png",
     "48": "chrome-logo-48.png",
-    "128": "chrome-logo-128.png",
+    "128": "chrome-logo-128.png"
   },
   "permissions": [],
   "app": {
     "urls": [
-      "http://www.documentcloud.org/"
+      "http://www.documentcloud.org/public"
     ],
     "launch": {
-      "web_url": "http://www.documentcloud.org/"
+      "web_url": "http://www.documentcloud.org/public"
     }
   }
 }
