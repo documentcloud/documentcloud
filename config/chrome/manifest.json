@@ -1,0 +1,17 @@
+{
+  "name": "DocumentCloud",
+  "version": "1.0",
+  "description": "Browse the primary source documents behind the news.",
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "permissions": [],
+  "app": {
+    "urls": [
+      "http://www.documentcloud.org/"
+    ],
+    "launch": {
+      "web_url": "http://www.documentcloud.org/"
+    }
+  }
+}
