@@ -6,8 +6,9 @@
     "default_icon": "icon.png"
   },  
   "icons": { 
-    "48": "48.png",
-    "128": "128.png"
+    "16": "chrome-logo-16.png",
+    "48": "chrome-logo-48.png",
+    "128": "chrome-logo-128.png",
   },
   "permissions": [],
   "app": {
