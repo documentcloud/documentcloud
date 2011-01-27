@@ -1,4 +1,4 @@
-# Initial DB import:
+# Initial DB import (Worker02):
 # mysql -u root -p docviewer_prod < docviewer_prod-20101213.sql
 
 namespace :import do
@@ -9,7 +9,7 @@ namespace :import do
     require 'tmpdir'
     require 'iconv'
     client = Mysql2::Client.new :host => 'localhost', :username => 'root', :database => 'docviewer_prod'
-    docs   = client.query 'select * from documents where id > 539 order by id desc'
+    docs   = client.query 'select * from documents where id in (16, 22, 92, 220) or id > 542 order by id desc'
     docs.each do |doc|
       begin
         import_document(client, doc)
