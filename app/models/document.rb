@@ -14,7 +14,6 @@ class Document < ActiveRecord::Base
 
   DISPLAY_DATE_FORMAT     = "%b %d, %Y"
   DISPLAY_DATETIME_FORMAT = "%I:%M %p – %a %b %d, %Y"
-  JS_DATE_FORMAT          = "%a %b %d %X +0000 %Y"
 
   DEFAULT_CANONICAL_OPTIONS = {:sections => true, :annotations => true, :contributor => true}
 
@@ -612,8 +611,8 @@ class Document < ActiveRecord::Base
     doc['pages']              = page_count
     doc['description']        = description
     doc['source']             = source
-    doc['created_at']         = created_at.to_datetime.strftime(JS_DATE_FORMAT)
-    doc['updated_at']         = updated_at.to_datetime.strftime(JS_DATE_FORMAT)
+    doc['created_at']         = created_at.to_formatted_s(:rfc822)
+    doc['updated_at']         = updated_at.to_formatted_s(:rfc822)
     doc['resources']          = res = ActiveSupport::OrderedHash.new
     res['pdf']                = pdf_url
     res['text']               = full_text_url

@@ -99,6 +99,8 @@ Retrieve the canonical JSON representation of a particular document, as specifie
       "title":"American Academy v. Napolitano",
       "pages":52,
       "description":"Appeal from the judgment of the United States District Court, granting summary judgment...",
+      "created_at":"Fri Dec 10 03:43:23 +0000 2010",
+      "updated_at":"Fri Jan 14 14:49:11 +0000 2011",
       "resources":{
         "pdf":"http://s3.documentcloud.org/documents/207/american-academy-v-napolitano.pdf",
         "text":"http://s3.documentcloud.org/documents/207/american-academy-v-napolitano.txt",
