@@ -30,7 +30,7 @@ $(function() {
 
     search : function() {
       var query = this.box.val();
-      if (query) window.location = '/public/#search/' + encodeURIComponent(query);
+      if (query) window.location = (window.serverRoot || '') + '/public/#search/' + encodeURIComponent(query);
     },
 
     cancelSearch : function() {
