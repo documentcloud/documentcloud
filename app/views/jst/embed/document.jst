@@ -1,4 +1,4 @@
-<a href="<%= doc.get('resources')['published_url'] || doc.get('canonical_url') %>" class="DC-document-tile">
+<a href="<%= doc.url() %>" class="DC-document-tile">
 
   <div class="DC-document-thumbnail-select"></div>
   <div class="DC-document-thumbnail"><img src="<%= doc.get('resources')['thumbnail'] %>" /></div>

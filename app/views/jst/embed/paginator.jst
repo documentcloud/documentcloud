@@ -1,0 +1,25 @@
+<% if (total > per_page) { %>
+  <div class="DC-paginator-enumeration">
+    <% if (page > 1) { %>
+      <span class="DC-arrow DC-arrow-left">&larr;</span>
+    <% } %>
+      Page
+      <input type="text" class="DC-paginator-current-page" value="<%= page %>" />
+      <span class="DC-paginator-placeholder"><%= page %></span> of <%= page_count %>
+    <% if (page < page_count) { %>
+      <span class="DC-arrow DC-arrow-right">&rarr;</span>
+    <% } %>
+  </div>
+<% } %>
+
+<div class="DC-paginator-description">
+  <% if (total > per_page) { %>
+    <span class="DC-paginator-range"><%= '' + (from + 1) %> &ndash; <%= to %></span>
+    of
+  <% } %>
+  <%= total %> <%= Inflector.pluralize('document', total) %>
+</div>
+
+<div class="DC-logo">
+  <img src="/images/common/document_cloud_logo.png" height="18" />
+</div>

@@ -6,6 +6,7 @@
   clear: both;
   overflow: hidden;
   font: 16px/20px Helvetica,Arial;
+  margin: 12px 0
 }
 
 .DC-no-results {
@@ -22,6 +23,86 @@
     top: 10px; left: 0px;
   }
 
+.DC-document-list {
+  overflow: hidden;
+}
+
+.DC-interface {
+ font-family: "Lucida Grande","Lucida Sans Unicode", Helvetica, Arial;
+}
+
+/* ========== */
+/* = Search = */
+/* ========== */
+
+.DC-search {
+  margin: 0 0 12px;
+}
+.DC-text-input {
+  position: relative;
+  height: 30px;
+  background: transparent url(/images/embed/ui/text_input_large_left.png) no-repeat center left;
+}
+  .DC-text-input .DC-placeholder {
+    position: absolute;
+    cursor: text;
+    left: 1px; 
+    top: 5px;
+    color: #c0c0c0;
+    font-size: 13px;
+    line-height: 18px;
+  }  
+  .DC-text-input input {
+    display: block;
+    border: none;
+    outline: none;
+    margin: 0; 
+    padding: 4px;
+    background: transparent;
+    font-size: 16px;
+    line-height: 20px;
+    width: 100%;    
+    color: #999999;
+    font-size: 13px;
+    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif !important;
+    width: 100%;
+  }
+  .DC-text-input.DC-search {
+    height: 28px;
+    background: transparent;
+    border: 2px solid #ccc;
+    border-radius: 16px; -webkit-border-radius: 16px; -moz-border-radius: 16px;
+    background-color: #fafafa;
+    -webkit-box-shadow: inset 0px 0px 3px #ccc;
+    -moz-box-shadow: inset 0px 0px 3px #ccc;
+    box-shadow: inset 0px 0px 3px #ccc;
+  }
+    .DC-text-input.DC-search:focus {
+      border-color: #acf;
+      -webkit-box-shadow: inset 0px 0px 3px #acf;
+      -moz-box-shadow: inset 0px 0px 3px #acf;
+      box-shadow: inset 0px 0px 3px #acf;
+    }
+    .DC-text-input .DC-search-inner {
+      position: relative;
+      margin: 0 28px;
+    }
+      .DC-text-input.DC-search input {
+        width: 100%;
+        padding: 5px 0;
+      }
+        .DC-text-input.DC-search:focus input {
+          color: #000;
+        }
+    .DC-text-input .DC-search-glyph {
+      position: absolute;
+      left: 9px; top: 8px;
+    }
+    .DC-text-input .DC-cancel-search {
+      position: absolute;
+      right: 9px; top: 8px;
+    }
+    
 /* ================== */
 /* = Document Tiles = */
 /* ================== */
@@ -94,78 +175,77 @@
     font-size: 12px;
     line-height: 15px;
   }
-  
-/* ========== */
-/* = Search = */
-/* ========== */
 
-.DC-search {
-  margin: 12px 0 12px;
-}
-.DC-text-input {
+/* ============= */
+/* = Paginator = */
+/* ============= */
+
+.DC-arrow {
+  font-size: 17px;
+  line-height: 11px;
   position: relative;
-  height: 30px;
-  background: transparent url(/images/embed/ui/text_input_large_left.png) no-repeat center left;
+  display: inline-block;
+  cursor: pointer;
+  top: 2px;
 }
-  .DC-text-input .DC-placeholder {
+  .DC-arrow:hover {
+    color: #000;
+  }
+  .DC-arrow.DC-arrow-left {
+    padding-right: 4px;
+  }
+  .DC-arrow.DC-arrowright {
+    padding-left: 4px;
+  }
+
+.DC-paginator {
+  padding: 6px 0 0;
+  margin: 4px 0 0 0;
+  font-size: 11px;
+  line-height: 18px;
+  height: 18px;
+  color: #999;
+  text-align: right;
+  border-top: 1px solid #ccc;
+}
+  .DC-paginator .DC-logo {
+  }
+  .DC-paginator .DC-paginator-description {
+    float: left;
+  }
+    .DC-paginator .DC-paginator-range {
+      font-weight: bold;
+    }
+  .DC-paginator .DC-paginator-enumeration {
     position: absolute;
-    cursor: text;
-    left: 1px; 
-    top: 4px;
-    color: #c0c0c0;
-    font: 13px/18px "Lucida Grande","Lucida Sans Unicode", Helvetica, Arial;
-  }  
-  .DC-text-input input {
-    display: block;
-    border: none;
-    outline: none;
-    margin: 0; 
-    padding: 4px;
-    background: transparent;
-    font-size: 16px;
-    line-height: 20px;
-    width: 100%;    
-    color: #999999;
-    font-size: 13px;
-    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif !important;
-    width: 100%;
+    width: 200px;
+    left: 50%;
+    margin-left: -50px;
+    text-align: left;
+    height: 20px;
   }
-  .DC-text-input.DC-search {
-    height: 28px;
-    background: transparent;
-    border: 2px solid #ccc;
-    border-radius: 16px; -webkit-border-radius: 16px; -moz-border-radius: 16px;
-    background-color: #fafafa;
-    -webkit-box-shadow: inset 0px 0px 3px #ccc;
-    -moz-box-shadow: inset 0px 0px 3px #ccc;
-    box-shadow: inset 0px 0px 3px #ccc;
-  }
-    .DC-text-input.DC-search:focus {
-      border-color: #acf;
-      -webkit-box-shadow: inset 0px 0px 3px #acf;
-      -moz-box-shadow: inset 0px 0px 3px #acf;
-      box-shadow: inset 0px 0px 3px #acf;
+    .DC-paginator.is_editing .DC-paginator-enumeration {
+      margin-top: -3px;
     }
-    .DC-text-input .DC-search-inner {
-      position: relative;
-      margin: 0 28px;
+    .DC-paginator .DC-paginator-placeholder {
+      font-weight: bold;
     }
-      .DC-text-input.DC-search input {
-        width: 100%;
-        padding: 5px 0;
+      .DC-paginator.is_editing .DC-paginator-placeholder {
+        display: none;
       }
-        .DC-text-input.DC-search:focus input {
-          color: #000;
-        }
-    .DC-text-input .DC-search-glyph {
-      position: absolute;
-      left: 9px; top: 8px;
+    .DC-paginator .DC-paginator-current-page {
+      display: none;
+      position: relative;
+      width: 25px;
+      font-size: 11px;
+      height: 17px;
+      text-align: center;
+      color: #999;
     }
-    .DC-text-input .DC-cancel-search {
-      position: absolute;
-      right: 9px; top: 8px;
-    }
-    
+      .DC-paginator .DC-paginator-current-page:focus {
+        color: #000;
+      }
+
 /* ========= */
 /* = Icons = */
 /* ========= */

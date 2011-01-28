@@ -6,14 +6,18 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
   var query = Inflector.sluggify(opts['q']);
   
   dc.embed[query] = {};
-  dc.embed[query].options = _.extend({}, {
+  dc.embed[query].options = opts = _.extend({}, {
     searchUrl     : searchUrl,
-    originalQuery : opts['q']
+    originalQuery : opts['q'],
+    per_page      : 12,
+    order         : 'score'
   }, opts);
   
   var apiOptions = {
     q        : opts['q'],
-    callback : 'dc.loadJSON'
+    callback : 'dc.loadJSON',
+    per_page : opts['per_page'],
+    order    : opts['order']
   };
   $.getScript(searchUrl + '?' + $.param(apiOptions));
 };
@@ -21,6 +25,11 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
 dc.loadJSON = function(json) {
   var query = Inflector.sluggify(json.q);
   dc.embed[query].options['id'] = query;
+  dc.embed[query].page = {
+    total    : json.total,
+    per_page : json.per_page,
+    page     : json.page
+  };
   dc.embed[query].documents = new dc.EmbedDocumentSet(json.documents, dc.embed[query].options);
   dc.embed[query].workspace = new dc.EmbedWorkspaceView(dc.embed[query].options);
 };
@@ -36,11 +45,20 @@ dc.EmbedController = function(query, opts) {
 
 dc.EmbedControllerCallback = function(json) {
   var originalQuery = Inflector.sluggify(json.original_query);
+  dc.embed[originalQuery].page = {
+    total    : json.total,
+    per_page : json.per_page,
+    page     : json.page
+  };
   dc.embed[originalQuery].documents.refresh(json.documents);
 };
 
 
 dc.EmbedDocument = Backbone.Model.extend({
+
+  url : function() {
+    return this.get('resources')['published_url'] || this.get('canonical_url');
+  }
   
 });
 
@@ -76,11 +94,12 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     
     this.search = this.$('.DC-search-box');
     
-    this.search.placeholder({className: 'DC-placeholder'});
+    this.search.placeholder({className: 'DC-placeholder DC-interface'});
     this.renderDocuments();
   },
   
   renderDocuments : function() {
+    var page = this.embed.page;
     var $document_list = this.$('.DC-document-list');
     $document_list.empty();
     
@@ -92,6 +111,15 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
         $document_list.append(view);
       }, this));
     }
+
+    this.$('.DC-paginator').html(JST['paginator']({
+      total      : page.total,
+      per_page   : page.per_page,
+      page       : page.page,
+      page_count : Math.ceil(page.total / page.per_page),
+      from       : (page.page-1) * page.per_page,
+      to         : Math.min(page.page * page.per_page, page.total)
+    }));
   },
   
   cancelSearch : function(e) {
