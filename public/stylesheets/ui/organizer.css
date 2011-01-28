@@ -97,8 +97,8 @@
     #organizer .box:hover {
       background: #fff;
     }
-  #organizer .box.is_selected,
-  #organizer .box.is_selected:hover {
+  body.search_panel_tab #organizer .box.is_selected,
+  body.search_panel_tab #organizer .box.is_selected:hover {
     border-right-color: transparent;
     background: #fff;
   }
@@ -112,7 +112,7 @@
     visibility: hidden;
   }
     #organizer .box:hover .edit_glyph,
-    #organizer .box.is_selected .edit_glyph {
+    body.search_panel_tab #organizer .box.is_selected .edit_glyph {
       visibility: visible;
     }
   #organizer .box .title {
@@ -121,7 +121,7 @@
     font-weight: bold;
     color: #555;
   }
-    #organizer .box.is_selected .title,
+    body.search_panel_tab #organizer .box.is_selected .title,
     #organizer .box:hover .title {
       color: #000;
     }
