@@ -281,7 +281,7 @@ dc.ui.Document = Backbone.View.extend({
     switch (access) {
       case dc.access.PENDING:      return {'class' : base + 'spinner',    title : 'Uploading...'};
       case dc.access.ERROR:        return {'class' : base + 'alert_gray', title : 'Broken document'};
-      case dc.access.ORGANIZATION: return {'class' : base + 'lock',       title : 'Private to ' + dc.account.organization.name};
+      case dc.access.ORGANIZATION: return {'class' : base + 'lock',       title : 'Private to ' + (dc.account ? dc.account.organization.name : 'your organization')};
       case dc.access.PRIVATE:      return {'class' : base + 'lock',       title : 'Private'};
       default:
         if (this.model.isPublished()) return {'class' : base + 'published', title : 'Open Published Version'};
