@@ -172,7 +172,9 @@ CREATE TABLE documents (
     detected_remote_url text,
     remote_url text,
     publish_at timestamp without time zone,
-    text_changed boolean DEFAULT false NOT NULL
+    text_changed boolean DEFAULT false NOT NULL,
+    hit_count integer DEFAULT 0 NOT NULL,
+    public_note_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -842,6 +844,27 @@ CREATE INDEX index_documents_on_account_id ON documents USING btree (account_id)
 
 
 --
+-- Name: index_documents_on_hit_count; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_documents_on_hit_count ON documents USING btree (hit_count);
+
+
+--
+-- Name: index_documents_on_public_note_count; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_documents_on_public_note_count ON documents USING btree (public_note_count);
+
+
+--
+-- Name: index_entities_on_value; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_entities_on_value ON entities USING btree (lower((value)::text));
+
+
+--
 -- Name: index_full_text_on_document_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -891,10 +914,24 @@ CREATE UNIQUE INDEX index_organizations_on_slug ON organizations USING btree (sl
 
 
 --
--- Name: index_pages_on_document_id_and_page_number; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_pages_on_document_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE UNIQUE INDEX index_pages_on_document_id_and_page_number ON pages USING btree (document_id, page_number);
+CREATE INDEX index_pages_on_document_id ON pages USING btree (document_id);
+
+
+--
+-- Name: index_pages_on_page_number; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_pages_on_page_number ON pages USING btree (page_number);
+
+
+--
+-- Name: index_pages_on_start_offset_and_end_offset; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_pages_on_start_offset_and_end_offset ON pages USING btree (start_offset, end_offset);
 
 
 --
@@ -997,3 +1034,9 @@ INSERT INTO schema_migrations (version) VALUES ('20101103173409');
 INSERT INTO schema_migrations (version) VALUES ('20101207203607');
 
 INSERT INTO schema_migrations (version) VALUES ('20101209175540');
+
+INSERT INTO schema_migrations (version) VALUES ('20110111192934');
+
+INSERT INTO schema_migrations (version) VALUES ('20110113204915');
+
+INSERT INTO schema_migrations (version) VALUES ('20110114143536');

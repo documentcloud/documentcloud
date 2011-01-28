@@ -48,23 +48,14 @@ class Annotation < ActiveRecord::Base
     self.accessible(account).count(:conditions => {:document_id => doc_ids}, :group => 'document_id')
   end
 
-  def self.author_info(doc)
-    account_sql = <<-EOS
-      SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name, 
-                      organizations.name as organization_name 
-      FROM accounts 
-      INNER JOIN annotations   ON annotations.account_id = accounts.id 
-      INNER JOIN organizations ON organizations.id = accounts.organization_id 
-      WHERE (annotations.document_id = #{doc.id})
-    EOS
-    accounts = Account.connection.select_all(account_sql)
-    accounts.inject({}) do |m, a| 
-      m[a['id'].to_i] = {:full_name => "#{a['first_name']} #{a['last_name']}", 
-                         :organization_name => a['organization_name']}
-      m
-    end
+  def self.public_note_counts_by_organization
+    self.unrestricted.count({
+      :joins      => [:document],
+      :conditions => ["documents.access = ?", PUBLIC],
+      :group      => 'annotations.organization_id'
+    })
   end
-  
+
   def page
     document.pages.find_by_page_number(page_number)
   end

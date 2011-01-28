@@ -22,9 +22,8 @@ class Organization < ActiveRecord::Base
 
   # Retrieve the list of organizations with public documents, including counts.
   def self.listed
-    filter = {:group => 'organization_id', :conditions => {:access => PUBLIC}}
-    public_doc_counts   = Document.count filter
-    public_note_counts  = Annotation.count filter
+    public_doc_counts   = Document.unrestricted.count :group => 'organization_id'
+    public_note_counts  = Annotation.public_note_counts_by_organization
     orgs = self.all(:conditions => {:id => public_doc_counts.keys, :demo => false})
     orgs.each do |org|
       org.document_count = public_doc_counts[org.id]  || 0
