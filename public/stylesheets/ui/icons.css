@@ -69,6 +69,13 @@
   .DV-showEdit:hover {
     background-position: center -26px;
   }
+.icon.permalink {
+  background-position: center 0;
+  background-image: url(/images/embed/icons/link.png);
+}
+  .icon.permalink:hover {
+    background-position: center -32px;
+  }
 .icon.search_glyph {
   width: 12px; height: 12px;
   background-image: url(/images/embed/icons/search_glyph.png);
