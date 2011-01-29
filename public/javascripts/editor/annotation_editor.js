@@ -68,7 +68,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
   drawAnnotation : function(e) {
     e.stopPropagation();
     e.preventDefault();
-    this._activePage = $(e.target);
+    this._activePage = $(e.currentTarget);
     this.clearAnnotation();
     var offTop        = this.pages.scrollTop() - this.pages.offset().top,
         offLeft       = this.pages.scrollLeft() - this.pages.offset().left,
