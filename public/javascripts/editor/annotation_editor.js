@@ -34,7 +34,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
 
   close : function() {
     this._open = false;
-    this.page.css({cursor : null});
+    this.page.css({cursor : ''});
     this.page.unbind('mousedown', this.drawAnnotation);
     $(document).unbind('keydown', this.close);
     this.clearAnnotation();
@@ -102,14 +102,14 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       $(document).unbind('keydown', this.close);
       this.pages.unbind('mouseup', dragEnd).unbind('mousemove', drag);
       var loc     = coords(e);
-      loc.top     -= 1;
-      loc.left    += 1;
-      loc.right   = loc.left + loc.width + 16;
-      loc.bottom  = loc.top + loc.height + 8;
+      loc.top     += 1;
+      loc.left    += 3;
+      loc.right   = loc.left + loc.width + 11;
+      loc.bottom  = loc.top + loc.height + 3;
       var zoom    = currentDocument.api.currentZoom();
       var image   = _.map([loc.top, loc.right, loc.bottom, loc.left], function(l){ return Math.round(l / zoom); }).join(',');
       this.close();
-      if (loc.width > 10 && loc.height > 10) {
+      if (loc.width > 5 && loc.height > 5) {
         var set = $(this._activePage).closest('.DV-set');
         var pageNumber = currentDocument.api.getPageNumberForId(set.attr('data-id'));
         currentDocument.api.addAnnotation({location : {image : image}, page : pageNumber, unsaved : true, access : this._kind});
