@@ -14,6 +14,7 @@ module DC
 
       FACET_OPTIONS = {
         :all      => {:limit => 6,   :sort => :count},
+        :api      => {:limit => 10,  :sort => :count},
         :specific => {:limit => 500, :sort => :count}
       }
 
@@ -299,12 +300,13 @@ module DC
 
       # Add facet results to the Solr search, if requested.
       def build_facets
+        api = @include_facets == :api
         specific = @facet
         @solr.build do
           if specific
             args = [specific.to_sym, FACET_OPTIONS[:specific]]
           else
-            args = DC::ENTITY_KINDS + [FACET_OPTIONS[:all]]
+            args = DC::ENTITY_KINDS + [FACET_OPTIONS[api ? :api : :all]]
           end
           facet(*args)
         end

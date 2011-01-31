@@ -23,6 +23,7 @@ page          | response page number  | 3 (defaults to 1)
 per_page      | the number of documents to return per page | 100 (defaults to 10, max is 1000)
 sections      | include document sections in the results | true (defaults to false)
 annotations   | include document annotations in the results | true (defaults to false)
+entities      | include entities for the search in the results | true (defaults to false)
 
 ### Example
 
