@@ -61,6 +61,10 @@ dc.EmbedDocument = Backbone.Model.extend({
 
   url : function() {
     return this.get('resources')['published_url'] || this.get('canonical_url');
+  },
+  
+  isPrivate : function() {
+    return this.get('access') == 'organization' || this.get('access') == 'private';
   }
   
 });

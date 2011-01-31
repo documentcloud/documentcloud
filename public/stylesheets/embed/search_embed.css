@@ -175,19 +175,16 @@
     font-size: 12px;
     line-height: 15px;
   }
-  .DC-document-access-private {
-    color: #884444;
-    font-style: italic;
-    font-size: 12px;
-    line-height: 16px;
-    position: relative;
-    padding-left: 20px;
-    margin: 6px 0 8px;
+  .DC-document-tile.DC-document-private {
+    opacity: .4;
   }
-    .DC-document-access-private .DC-icon-lock {
-      position: absolute;
-      left: 0;
-      top: 0;
+  .DC-document-tile .DC-icon-lock {
+    display: none;
+  }
+    .DC-document-tile.DC-document-private .DC-icon-lock {
+      display: block;
+      margin-right: 4px;
+      float: left;
     }
 
 /* ============= */
