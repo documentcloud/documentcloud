@@ -175,6 +175,20 @@
     font-size: 12px;
     line-height: 15px;
   }
+  .DC-document-access-private {
+    color: #884444;
+    font-style: italic;
+    font-size: 12px;
+    line-height: 16px;
+    position: relative;
+    padding-left: 20px;
+    margin: 6px 0 8px;
+  }
+    .DC-document-access-private .DC-icon-lock {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
 
 /* ============= */
 /* = Paginator = */
@@ -267,6 +281,11 @@
 .DC-icon.DC-document {
   width: 60px; 
   height: 75px;
-  background: url(/images/embed/documents/generic.png);
+  background-image: url(/images/embed/documents/generic.png);
   border: 0;
+}
+.DC-icon.DC-icon-lock {
+  background: transparent url("/images/embed/icons/lock.png") no-repeat 0 0;
+  width: 18px;
+  height: 18px;
 }

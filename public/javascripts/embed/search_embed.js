@@ -25,31 +25,34 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
 dc.loadJSON = function(json) {
   var query = Inflector.sluggify(json.q);
   dc.embed[query].options['id'] = query;
-  dc.embed[query].page = {
+  _.extend(dc.embed[query].options, {
     total    : json.total,
     per_page : json.per_page,
     page     : json.page
-  };
+  });
   dc.embed[query].documents = new dc.EmbedDocumentSet(json.documents, dc.embed[query].options);
   dc.embed[query].workspace = new dc.EmbedWorkspaceView(dc.embed[query].options);
 };
 
 dc.EmbedController = function(query, opts) {
   var options = {
-    q: opts.originalQuery + ' ' + query,
+    q:              opts.originalQuery + ' ' + query,
     original_query: opts.originalQuery,
-    callback: 'dc.EmbedControllerCallback'
+    callback:       'dc.EmbedControllerCallback',
+    page:           opts.page,
+    per_page:       opts.per_page,
+    order:          opts.order
   };
   $.getScript(opts.searchUrl + '?' + $.param(options));
 };
 
 dc.EmbedControllerCallback = function(json) {
   var originalQuery = Inflector.sluggify(json.original_query);
-  dc.embed[originalQuery].page = {
+  _.extend(dc.embed[originalQuery].options, {
     total    : json.total,
     per_page : json.per_page,
     page     : json.page
-  };
+  });
   dc.embed[originalQuery].documents.refresh(json.documents);
 };
 
@@ -78,6 +81,8 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   
   events : {
     'click    .DC-cancel-search' : 'cancelSearch',
+    'click    .DC-arrow-right'   : 'nextPage',
+    'click    .DC-arrow-left'    : 'previousPage',
     'keypress .DC-search-box'    : 'maybePerformSearch'
   },
   
@@ -99,7 +104,7 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   },
   
   renderDocuments : function() {
-    var page = this.embed.page;
+    var options = this.embed.options;
     var $document_list = this.$('.DC-document-list');
     $document_list.empty();
     
@@ -113,12 +118,12 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     }
 
     this.$('.DC-paginator').html(JST['paginator']({
-      total      : page.total,
-      per_page   : page.per_page,
-      page       : page.page,
-      page_count : Math.ceil(page.total / page.per_page),
-      from       : (page.page-1) * page.per_page,
-      to         : Math.min(page.page * page.per_page, page.total)
+      total      : options.total,
+      per_page   : options.per_page,
+      page       : options.page,
+      page_count : Math.ceil(options.total / options.per_page),
+      from       : (options.page-1) * options.per_page,
+      to         : Math.min(options.page * options.per_page, options.total)
     }));
   },
   
@@ -130,18 +135,30 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   
   maybePerformSearch : function(e) {
     if (e.keyCode != 13) return; // Search on `enter` only
-    this.performSearch();
+    var force = this.embed.options.page != 1;
+    this.embed.options.page = 1;
+    this.performSearch(force);
   },
   
-  performSearch : function() {
+  performSearch : function(force) {
     var query = this.$('.DC-search-box').val();
     
-    if (query == '') {
+    if (query == '' && !force) {
       // Returning to original query, just use the original response.
       this.embed.documents.refresh(this.embed.documents.originalModels);
     } else {
       dc.EmbedController(query, this.embed.options);
     }
+  },
+  
+  nextPage : function() {
+    this.embed.options.page += 1;
+    this.performSearch(true);
+  },
+  
+  previousPage : function() {
+    this.embed.options.page -= 1;
+    this.performSearch(true);
   }
   
 });

@@ -106,6 +106,21 @@ window.Inflector = {
     truncation = _.isUndefined(truncation) ? '...' : truncation;
     return s.length > length ? s.slice(0, length - truncation.length) + truncation : s;
   },
+  
+  truncateWords : function(s, length, truncation) {
+    length = length || 30;
+    truncation = _.isUndefined(truncation) ? '...' : truncation;
+    if (s.length > length) {
+      var reversedString = s.substr(0, length).split('').reverse().join('');
+      var indexWordBoundary = reversedString.search(/\W\w/);
+      if (indexWordBoundary != -1) {
+        s = s.substr(0, length-indexWordBoundary-1) + truncation;
+      } else {
+        s = this.truncate(s, length, truncation);
+      }
+    }
+    return s;
+  },
 
   // Convert a string (usually a title), to something appropriate for use in a URL.
   // Apostrophes and quotes are removed, non-word-chars become spaces, whitespace

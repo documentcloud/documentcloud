@@ -2,7 +2,13 @@
 
   <div class="DC-document-thumbnail-select"></div>
   <div class="DC-document-thumbnail"><img src="<%= doc.get('resources')['thumbnail'] %>" /></div>
-  <div class="DC-document-title"><%= Inflector.truncate(doc.get('title'), 100) %></div>
-  <div class="DC-document-description"><%= Inflector.truncate(doc.get('description') || "", 80) %></div>
+  <div class="DC-document-title"><%= Inflector.truncateWords(doc.get('title'), 50) %></div>
+  <% if (doc.get('access') == 'organization' || doc.get('access') == 'private') { %>
+    <div class="DC-document-access DC-document-access-private">
+      <div class="DC-icon DC-icon-lock"></div>
+      This document is private.
+    </div>
+  <% } %>
+  <div class="DC-document-description"><%= Inflector.truncateWords(doc.get('description') || "", 80) %></div>
   
 </a>
