@@ -110,7 +110,7 @@ window.Inflector = {
   // Apostrophes and quotes are removed, non-word-chars become spaces, whitespace
   // is trimmed, lowercased, and spaces become dashes.
   sluggify : function(s) {
-    return $.trim(s.replace(/['"]+/g, '').replace(/\W+/g, ' ')).toLowerCase().replace(/\s+/g, '-');
+    return this.trim(s.replace(/['"]+/g, '').replace(/\W+/g, ' ')).toLowerCase().replace(/\s+/g, '-');
   },
 
   commify : function(list, options) {
