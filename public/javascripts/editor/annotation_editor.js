@@ -70,28 +70,23 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     e.preventDefault();
     this._activePage = $(e.currentTarget);
     this.clearAnnotation();
-    var offTop        = this.pages.scrollTop() - this.pages.offset().top,
-        offLeft       = this.pages.scrollLeft() - this.pages.offset().left,
-        ox            = e.pageX + offLeft,
-        oy            = e.pageY + offTop,
-        borderTop     = offTop + this._activePage.offset().top,
-        borderLeft    = offLeft + this._activePage.offset().left,
-        borderBottom  = borderTop + this._activePage.height() - 6,
-        borderRight   = borderLeft + this._activePage.width() - 6;
-    this.region = this.make('div', {
-      'class' : 'DV-annotationRegion active ' + this._accessClass(this._kind), 
-      style:'position:absolute;'
-    });
-    this.pages.append(this.region);
+    var offTop        = this._activePage.offset().top,
+        offLeft       = this._activePage.offset().left,
+        ox            = e.pageX - offLeft,
+        oy            = e.pageY - offTop,
+        borderBottom  = this._activePage.height() - 6,
+        borderRight   = this._activePage.width() - 6;
+    this.region = this.make('div', {'class' : 'DV-annotationRegion active DV-' + this._kind, style:'position:absolute;'});
+    this._activePage.append(this.region);
     var contained = function(e) {
-      return e.pageX > borderLeft && e.pageX < borderRight &&
-        e.pageY > borderTop && e.pageY < borderBottom;
+      return e.pageX > 0 && e.pageX < borderRight &&
+             e.pageY > 0 && e.pageY < borderBottom;
     };
     var coords = function(e) {
-      var x = e.pageX + offLeft,
-          y = e.pageY + offTop;
-      x = x < borderLeft ? borderLeft : (x > borderRight ? borderRight : x);
-      y = y < borderTop ? borderTop : (y > borderBottom ? borderBottom : y);
+      var x = e.pageX - offLeft - 3,
+          y = e.pageY - offTop - 3;
+      x = x < 0 ? 0 : (x > borderRight ? borderRight : x);
+      y = y < 0 ? 0 : (y > borderBottom ? borderBottom : y);
       return {
         left    : Math.min(ox, x),
         top     : Math.min(oy, y),
@@ -107,10 +102,10 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       $(document).unbind('keydown', this.close);
       this.pages.unbind('mouseup', dragEnd).unbind('mousemove', drag);
       var loc     = coords(e);
-      loc.top     -= borderTop;
-      loc.left    -= (borderLeft - 2);
-      loc.right   = loc.left + loc.width + 13;
-      loc.bottom  = loc.top + loc.height + 3;
+      loc.top     -= 1;
+      loc.left    -= 0;
+      loc.right   = loc.left + loc.width + 16;
+      loc.bottom  = loc.top + loc.height + 8;
       var zoom    = currentDocument.api.currentZoom();
       var image   = _.map([loc.top, loc.right, loc.bottom, loc.left], function(l){ return Math.round(l / zoom); }).join(',');
       this.close();
