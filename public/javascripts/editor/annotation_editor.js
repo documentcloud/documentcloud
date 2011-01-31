@@ -103,7 +103,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       this.pages.unbind('mouseup', dragEnd).unbind('mousemove', drag);
       var loc     = coords(e);
       loc.top     -= 1;
-      loc.left    -= 0;
+      loc.left    += 1;
       loc.right   = loc.left + loc.width + 16;
       loc.bottom  = loc.top + loc.height + 8;
       var zoom    = currentDocument.api.currentZoom();
