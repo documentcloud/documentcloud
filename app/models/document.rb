@@ -210,9 +210,10 @@ class Document < ActiveRecord::Base
       self.errors.add_to_base "You don't have permission to update the document."
       return false
     end
-    access = attrs.delete(:access)
+    access = attrs.delete :access
     access &&= access.to_i
-    attrs[:remote_url] ||= attrs[:published_url]
+    published_url = attrs.delete :published_url
+    attrs[:remote_url] ||= published_url
     update_attributes attrs
     set_access(access) if access && self.access != access
     true
