@@ -21,8 +21,9 @@ class Annotation < ActiveRecord::Base
     access << "(annotations.access = #{PUBLIC})"
     access << "((annotations.access = #{EXCLUSIVE}) and annotations.organization_id = #{account.organization_id})" if account
     access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
-    access << "((annotations.access = #{EXCLUSIVE}) and annotations.document_id in (#{account.accessible_document_ids}))" if account && account.accessible_document_ids.present?
+    access << "((annotations.access = #{EXCLUSIVE}) and annotations.document_id in (?))" if account && account.accessible_document_ids.present?
     conditions = ["(#{access.join(' or ')})"]
+    conditions.push(account.accessible_document_ids) if account && account.accessible_document_ids.present?
     {:conditions => conditions}
   }
   
