@@ -4,8 +4,8 @@
       <span class="DC-arrow DC-arrow-left">&larr;</span>
     <% } %>
       Page
-      <input type="text" class="DC-paginator-current-page" value="<%= page %>" />
-      <span class="DC-paginator-placeholder"><%= page %></span> of <%= page_count %>
+      <input type="text" class="DC-page-edit" value="<%= page %>" />
+      <span class="DC-page-current"><%= page %></span> of <%= page_count %>
     <% if (page < page_count) { %>
       <span class="DC-arrow DC-arrow-right">&rarr;</span>
     <% } %>

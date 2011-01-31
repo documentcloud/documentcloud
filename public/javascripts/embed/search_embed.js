@@ -87,6 +87,8 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     'click    .DC-cancel-search' : 'cancelSearch',
     'click    .DC-arrow-right'   : 'nextPage',
     'click    .DC-arrow-left'    : 'previousPage',
+    'click    .DC-page-current'  : 'editPage',
+    'change   .DC-page-edit'     : 'changePage',
     'keypress .DC-search-box'    : 'maybePerformSearch'
   },
   
@@ -120,8 +122,8 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
         $document_list.append(view);
       }, this));
     }
-
-    this.$('.DC-paginator').html(JST['paginator']({
+    console.log(['render', this]);
+    this.$('.DC-paginator').removeClass('DC-is-editing').html(JST['paginator']({
       total      : options.total,
       per_page   : options.per_page,
       page       : options.page,
@@ -148,9 +150,11 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     var query = this.$('.DC-search-box').val();
     
     if (query == '' && !force) {
+      this.embed.options = this.embed.originalOptions;
       // Returning to original query, just use the original response.
       this.embed.documents.refresh(this.embed.documents.originalModels);
     } else {
+      this.embed.originalOptions = _.extend({}, this.embed.options);
       dc.EmbedController(query, this.embed.options);
     }
   },
@@ -162,6 +166,21 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   
   previousPage : function() {
     this.embed.options.page -= 1;
+    this.performSearch(true);
+  },
+
+  editPage : function() {
+    console.log(['editPage', this.$('.DC-paginator')]);
+    this.$('.DC-paginator').addClass('DC-is-editing');
+    this.$('.DC-page-edit').focus().select();
+  },
+  
+  changePage : function() {
+    var page = Math.min(
+      parseInt(this.$('.DC-page-edit').val(), 10), 
+      Math.ceil(this.embed.options.total / this.embed.options.per_page)
+    );
+    this.embed.options.page = page;
     this.performSearch(true);
   }
   

@@ -1,3 +1,12 @@
+/* ============ */
+/* = DC Reset = */
+/* ============ */
+
+.DC-search-embed a, .DC-search-embed a:link, .DC-search-embed a:visited, .DC-search-embed a:active {
+  text-decoration: underline;
+  color: #083789;
+}
+
 /* ========================== */
 /* = Search Embed Workspace = */
 /* ========================== */
@@ -11,7 +20,7 @@
 
 .DC-no-results {
   position: relative;
-  margin: 12px 0 24px 20px;
+  margin: 0 0 32px 24px;
   padding: 0 0 0 75px;
   height: 77px;
   font-size: 14px;
@@ -107,7 +116,7 @@
 /* = Document Tiles = */
 /* ================== */
 
-.DC-document-tile {
+.DC-search-embed .DC-document-tile {
   float: left;
   width: 250px;
   border: 1px solid transparent;
@@ -117,9 +126,11 @@
   position: relative;
   overflow: hidden;
   background-color: #FFF;
-  text-decoration: none;
   outline: none;
 }
+  .DC-search-embed a.DC-document-tile {
+    text-decoration: none;
+  }
   .DC-document-tile:hover {
     cursor: pointer;
   }
@@ -138,8 +149,8 @@
       padding: 1px;
       background-color: #FFF;
     }
-    .DC-document-tile:hover .DC-document-thumbnail {
-      border-color: transparent;
+    .DC-document-tile:hover .DC-document-thumbnail img {
+      border-color: #808080;
     }
   .DC-document-thumbnail-select {
     position: absolute;
@@ -151,14 +162,7 @@
     top: 6px;
   }
     .DC-document-tile:hover .DC-document-thumbnail-select {
-      left: 0;
-      top: 0;
-      width: 70px;
-      height: 85px; 
-      border-radius: 3px;
-      -moz-border-radius: 3px;
-      -webkit-border-radius: 3px;
-      background-color: #0099FF;
+    background-color: #C7C7C7;
     }
   .DC-document-title {
     color: #303030;
@@ -169,14 +173,16 @@
   }
     .DC-document-tile:hover .DC-document-title {
       text-decoration: underline;
+      color: #083789;
     }
   .DC-document-description {
-    color: #606060;
+    color: #808080;
+    font-family: Georgia;
     font-size: 12px;
-    line-height: 15px;
+    line-height: 16px;
   }
   .DC-document-tile.DC-document-private {
-    opacity: .4;
+/*    opacity: .3;*/
   }
   .DC-document-tile .DC-icon-lock {
     display: none;
@@ -235,25 +241,27 @@
     text-align: left;
     height: 20px;
   }
-    .DC-paginator.is_editing .DC-paginator-enumeration {
-      margin-top: -3px;
-    }
-    .DC-paginator .DC-paginator-placeholder {
+    .DC-paginator .DC-page-current {
       font-weight: bold;
     }
-      .DC-paginator.is_editing .DC-paginator-placeholder {
+      .DC-paginator.DC-is-editing .DC-page-current {
         display: none;
       }
-    .DC-paginator .DC-paginator-current-page {
+    .DC-paginator .DC-page-edit {
       display: none;
       position: relative;
-      width: 25px;
+      width: 18px;
       font-size: 11px;
-      height: 17px;
+      height: 16px;
       text-align: center;
       color: #999;
+      padding: 0;
+      border: 1px solid #C0C0C0
     }
-      .DC-paginator .DC-paginator-current-page:focus {
+      .DC-paginator.DC-is-editing .DC-page-edit {
+        display: inline;
+      }
+      .DC-paginator .DC-page-edit:focus {
         color: #000;
       }
 
