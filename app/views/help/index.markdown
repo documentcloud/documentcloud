@@ -20,11 +20,15 @@ If you're looking at a list of documents (search results, your documents, a sing
 
 If you're just looking to get started, try searching the documents already in the repository. Click on the "[Documents][]" tab and try a regular full-text search such as "[obama health care][]", or a more specific fielded search, such as "[person:geithner term:regulator][]".
 
+Right-click on a document to open a context menu, showing a list of actions that can be done to the document.
+
+<img src="/images/help/context_menu.png" class="full_line" />
+
 <div class="ajax_only">
   For more information on specific topics, open the "Guides &amp; How To's" menu at the top of the page.
 </div>
 <div class="static_only">
-  For more information on specific topics, see the links on the side bar.
+  For more information on specific topics, see the links in the side bar.
 </div>
 
 [what other reporters are doing with DocumentCloud]: /featured

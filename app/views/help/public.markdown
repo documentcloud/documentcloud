@@ -1,4 +1,4 @@
-# Welcome to DocumentCloud
+# DocumentCloud: The Guided Tour
 
 DocumentCloud is a tool for organizing and working with large documents and document collections, a document viewer that makes it easier for reporters to share source material with readers and a publicly accessible repository of primary source documents that were used in reporters' investigations. If you're new to this, take a look at some [recent news stories that use DocumentCloud for primary source material][].
 

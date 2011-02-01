@@ -38,7 +38,7 @@ class HomeController < ApplicationController
     links_filename  = "#{Rails.root}/app/views/help/links/#{@page}_links.markdown"
     links           = File.exists?(links_filename) ? File.read(links_filename) : ""
     @help_content   = RDiscount.new(contents+links).to_html.gsub MARKDOWN_LINK_REPLACER, '<tt>\1</tt>'
-    @help_pages     = HELP_PAGES - ['public']
+    @help_pages     = HELP_PAGES - ['tour']
     @help_titles    = HELP_TITLES
   end
 
