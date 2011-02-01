@@ -29,7 +29,7 @@ class AnnotationsController < ApplicationController
   # You can only alter annotations that you've made yourself.
   def update
     return not_found unless anno = current_annotation
-    if !current_account.allowed_to_edit?(anno)
+    if !current_account.allowed_to_edit?(anno) && !current_account.reviewer?(anno)
       anno.errors.add_to_base "You don't have permission to update the note."
       return json(anno, 403)
     end

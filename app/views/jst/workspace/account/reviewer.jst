@@ -52,7 +52,7 @@
   <div class="display">
     <% if (documentsCount && documentsCount > 1) { %>
       <span class="document_count selectable_text"><%= documentCount %>/<%= documentsCount %> <%= Inflector.pluralize('document', documentsCount) %></span>
-    <% } else { %>
+    <% } else if (!account.get('needsEmail')) { %>
       <span class="resend_reviewer text_link" data-account-id="<%= account.id %>">resend instructions</span>
     <% } %>
   </div>
