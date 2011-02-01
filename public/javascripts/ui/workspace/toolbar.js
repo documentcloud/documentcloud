@@ -16,7 +16,8 @@ dc.ui.Toolbar = Backbone.View.extend({
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'openPages', 'openEmbedDialog',
       'openPublicationDateDialog', 'requestDownloadViewers', 'checkFloat',
-      '_openTimeline', '_viewEntities', 'editDocumentURL', '_markOrder');
+      '_openTimeline', '_viewEntities', 'editDocumentURL', '_markOrder',
+      '_removeFromSelectedProject');
     this.sortMenu    = this._createSortMenu();
     this.analyzeMenu = this._createAnalyzeMenu();
     this.publishMenu = this._createPublishMenu();
@@ -37,13 +38,6 @@ dc.ui.Toolbar = Backbone.View.extend({
     this.floatEl                 = this.$('#floating_toolbar');
     $(window).scroll(_.bind(function(){ _.defer(this.checkFloat); }, this));
     return this;
-  },
-
-  notifyProjectChange : function(projectName, numDocs, removal) {
-    var prefix = removal ? 'Removed ' : 'Added ';
-    var prep   = removal ? ' from "'  : ' to "';
-    var notification = prefix + numDocs + ' ' + Inflector.pluralize('document', numDocs) + prep + projectName + '"';
-    dc.ui.notifier.show({mode : 'info', text : notification});
   },
 
   // Wrapper function for safely editing an attribute of a specific document.
@@ -189,10 +183,15 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   _updateSelectedDocuments : function(project) {
-    var docs = Documents.selected();
+    var docs    = Documents.selected();
     var removal = project.containsAny(docs);
     removal ? project.removeDocuments(docs) : project.addDocuments(docs);
-    this.notifyProjectChange(project.get('title'), docs.length, removal);
+  },
+
+  _removeFromSelectedProject : function() {
+    var docs    = Documents.selected();
+    var project = Projects.firstSelected();
+    project.removeDocuments(docs);
   },
 
   _deleteSelectedDocuments : function() {
@@ -251,6 +250,8 @@ dc.ui.Toolbar = Backbone.View.extend({
       attr('title', count && publicCount > 0 ? "already public" : '');
     $('.menu_item.always', menu.content)
       .toggleClass('disabled', !total);
+    $('.menu_item.project', menu.content)
+      .toggleClass('hidden', !Projects.firstSelected());
   },
 
   _createPublishMenu : function() {
@@ -302,6 +303,7 @@ dc.ui.Toolbar = Backbone.View.extend({
         {title : 'Reorder Pages',             attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openReorderEditor)},
         {title : 'Edit Page Text',            attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#text/p1', this._openEditPageTextEditor)},
         {title : 'Reprocess Text',            attrs: {'class' : 'multiple indent'}, onClick : this.reprocessText},
+        {title : 'Remove from this Project',  attrs: {'class' : 'multiple project'},onClick : this._removeFromSelectedProject},
         {title : 'Delete Documents',          attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
       ]
     });

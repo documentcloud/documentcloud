@@ -17,6 +17,10 @@ dc.model.Selectable = {
     return this.select(function(m){ return m.get('selected'); });
   },
 
+  firstSelected : function() {
+    return this.detect(function(m){ return m.get('selected'); });
+  },
+
   selectedIds : function() {
     return _.pluck(this.selected(), 'id');
   },

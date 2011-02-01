@@ -49,7 +49,7 @@ dc.ui.Document = Backbone.View.extend({
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
       '_renderPages', '_setSelected', 'viewDocuments', 'viewPublishedDocuments',
       'openDialog', 'openEmbed', 'setAccessLevelAll', 'viewEntities',
-      'viewPages', 'viewChosenPages', 'deleteDocuments');
+      'viewPages', 'viewChosenPages', 'deleteDocuments', 'removeFromProject');
     this.model.bind('change', this._onDocumentChange);
     this.model.bind('change:selected', this._setSelected);
     this.model.bind('view:pages', this.viewPages);
@@ -208,6 +208,10 @@ dc.ui.Document = Backbone.View.extend({
     Documents.verifyDestroy(Documents.chosen(this.model));
   },
 
+  removeFromProject : function() {
+    Projects.firstSelected().removeDocuments(Documents.chosen(this.model));
+  },
+
   searchAccount : function() {
     dc.app.searcher.addToSearch('account: ' + this.model.get('account_slug'));
   },
@@ -270,6 +274,10 @@ dc.ui.Document = Backbone.View.extend({
         {title : 'Embed Document Viewer',     onClick: this.openEmbed, attrs : {'class' : count > 1 ? 'disabled' : ''}},
         {title : deleteTitle,                 onClick: this.deleteDocuments, attrs : {'class' : 'warn'}}
       ]);
+    }
+    if (Projects.firstSelected()) {
+      var index = items.length - (items[items.length - 1].onClick == this.deleteDocuments ? 1 : 0);
+      items.splice(index, 0, {title : 'Remove from this Project', onClick: this.removeFromProject});
     }
     menu.addItems(items);
     menu.render().open().content.css({top : e.pageY, left : e.pageX});

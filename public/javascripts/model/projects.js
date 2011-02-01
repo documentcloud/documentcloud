@@ -37,17 +37,27 @@ dc.model.Project = Backbone.Model.extend({
     var ids = _.pluck(documents, 'id');
     var newIds = _.uniq(this.get('document_ids').concat(ids));
     this.save({document_ids : newIds});
+    this.notifyProjectChange(documents.length, false);
   },
 
   removeDocuments : function(documents, localOnly) {
     var args = _.pluck(documents, 'id');
     args.unshift(this.get('document_ids'));
     var newIds = _.without.apply(_, args);
+    if (Projects.firstSelected() === this) Documents.remove(documents);
     if (localOnly) {
       this.set({document_ids : newIds});
     } else {
       this.save({document_ids : newIds});
+      this.notifyProjectChange(documents.length, true);
     }
+  },
+
+  notifyProjectChange : function(numDocs, removal) {
+    var prefix = removal ? 'Removed ' : 'Added ';
+    var prep   = removal ? ' from "'  : ' to "';
+    var notification = prefix + numDocs + ' ' + Inflector.pluralize('document', numDocs) + prep + this.get('title') + '"';
+    dc.ui.notifier.show({mode : 'info', text : notification});
   },
 
   // Does this project already contain a given document?
@@ -109,7 +119,9 @@ dc.model.ProjectSet = Backbone.Collection.extend({
 
   // Find a project by title.
   find : function(title) {
-    return this.detect(function(m){ return m.get('title').toLowerCase() == title.toLowerCase(); });
+    return this.detect(function(m) {
+      return m.get('title').toLowerCase() == title.toLowerCase();
+    });
   },
 
   // Find all projects starting with a given prefix, for autocompletion.
