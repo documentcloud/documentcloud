@@ -33,11 +33,15 @@
     <div id="toplinks" class="interface">
       <a href="/home" class="text_link">Home</a>    
       &nbsp;/&nbsp;
-      <a href="/accounts" class="text_link">Accounts</a>    
-      &nbsp;/&nbsp;
       <% if @current_account %>
+        <span class="text_link open_contact">Contact</span>    
+        &nbsp;/&nbsp;
+        <span class="text_link open_accounts">Accounts</span>    
+        &nbsp;/&nbsp;
         <a href="/logout" class="text_link">Log Out</a>
       <% else %>
+        <a href="/contact" class="text_link">Join</a>    
+        &nbsp;/&nbsp;
         <a href="/login" class="text_link">Log In</a>
       <% end %>
     </div>

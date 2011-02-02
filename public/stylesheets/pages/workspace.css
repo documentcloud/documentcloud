@@ -39,13 +39,16 @@ label {
     }
 
 #workspace_logo {
-  display: block;
+  display: none;
   width: 115px; height: 29px;
   position: absolute;
   right: 45px; top: 75px;
   z-index: 3;
   background: #fff url(/images/embed/ui/workspace_logo.png) no-repeat center center;
 }
+  body.workspace #workspace_logo {
+    display: block;
+  }
 
 #topbar {
   display: block;
