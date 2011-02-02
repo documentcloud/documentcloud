@@ -29,6 +29,18 @@
         <h1 id="title" class="logo_words"><%= @title %></h1>
       </div>
     </div>
+    <div id="toplinks" class="interface">
+      <a id="workspace_logo" href="/home"></a>
+      <a href="/home" class="text_link">Home</a>    
+      &nbsp;/&nbsp;
+      <a href="/accounts" class="text_link">Accounts</a>    
+      &nbsp;/&nbsp;
+      <% if @current_account %>
+        <a href="/logout" class="text_link">Log Out</a>
+      <% else %>
+        <a href="/login" class="text_link">Log In</a>
+      <% end %>
+    </div>
     <div id="content">
       <%= yield %>
     </div>

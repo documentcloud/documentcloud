@@ -21,6 +21,30 @@ label {
   overflow: hidden;
 }
 
+#toplinks {
+  display: none;
+  position: absolute;
+  top: 18px; right: 150px;
+  font-size: 11px;
+  color: #999;
+}
+  body.workspace #toplinks {
+    display: block;
+  }
+  #toplinks .text_link {
+    color: #777;
+  }
+    #toplinks .text_link:hover {
+      color: #000;
+    }
+  #toplinks #workspace_logo {
+    display: block;
+    width: 105px; height: 19px;
+    position: absolute;
+    right: -125px; top: -6px;
+    background: url(/images/embed/ui/workspace_logo.png);
+  }
+
 #topbar {
   display: block;
   border-bottom: 1px solid #aaa;
@@ -28,13 +52,15 @@ label {
   text-shadow: 0 1px 1px #fff;
 }
   body.workspace #topbar {
+    display: none;
     background: transparent;
     filter: none;
     position: absolute;
     border: 0;
     width: 140px;
-    right: 55px; top: 21px;
+    right: 50px; top: 73px;
     text-shadow: none;
+    z-index: 2;
   }
     body.workspace #topbar #title {
       display: none;
@@ -94,7 +120,7 @@ label {
 }
 
 body.workspace #content {
-  margin: 70px 20px 20px 20px;
+  margin: 50px 20px 20px;
   position: relative;
 }
 
