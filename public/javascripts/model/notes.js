@@ -42,6 +42,10 @@ dc.model.NoteSet = Backbone.Collection.extend({
   comparator : function(note) {
     var coords = note.coordinates();
     return note.get('page') * 10000 + (coords ? coords.top : 0);
+  },
+
+  unrestricted : function() {
+    return this.filter(function(note){ return note.get('access') != 'private'; });
   }
 
 });

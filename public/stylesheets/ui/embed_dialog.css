@@ -1,5 +1,5 @@
 /* ================== */
-/* = Publish Dialog = */
+/* = Embed Dialog = */
 /* ================== */
 
 .embed_dialog {
@@ -52,9 +52,10 @@
   .embed_dialog input[type="checkbox"],
   .embed_dialog select {
     position: absolute;
-    left: 150px;
+    left: 155px;
   }
     .embed_dialog .text_input {
+      left: 135px;
       right: 0px;
     }
     .embed_dialog select {
@@ -93,4 +94,12 @@
     margin: 10px 0px;
     padding: 8px;
     resize: none;
+  }
+
+.embed_dialog .open_to {
+  position: absolute;
+  top: 0; left: 255px;
+}
+  .embed_dialog .open_to select {
+    position: static;
   }

@@ -330,6 +330,7 @@ dc.ui.Document = Backbone.View.extend({
   _renderNotes : function() {
     this.notesEl.empty();
     this.model.notes.each(this._addNote);
+    if (this.model.ignoreNotes) return;
     this.setMode('has', 'notes');
   },
 

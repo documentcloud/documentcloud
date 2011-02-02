@@ -8,6 +8,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     'focus input'           : 'update',
     'click input'           : 'update',
     'change input'          : 'update',
+    'change .viewer_open_to': '_renderOpenTo',
     'click .next'           : 'nextStep',
     'click .previous'       : 'previousStep',
     'click .close'          : 'close',
@@ -43,6 +44,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     this._viewerSizeEl  = this.$('select[name=viewer_size]');
     this._sidebarEl     = this.$('input[name=sidebar]');
     this._showTextEl    = this.$('input[name=show_text]');
+    this._openToEl      = this.$('.open_to');
     if (dc.app.preferences.get('embed_options')) this._loadPreferences();
     this.setMode('embed', 'dialog');
     this.update();
@@ -66,11 +68,12 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
   update : function() {
     this._toggleDimensions();
     this._savePreferences();
-    this._renderEmbedCode();
   },
 
   embedOptions : function() {
     var options = {};
+    var openToPage = this.$('.page_select').val();
+    var openToNote = this.$('.note_select').val();
     if (this._viewerSizeEl.val() == 'fixed') {
       var width   = parseInt(this._widthEl.val(), 10);
       var height  = parseInt(this._heightEl.val(), 10);
@@ -78,7 +81,13 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
       if (height) options.height = height;
     }
     if (!this._sidebarEl.is(':checked'))  options.sidebar = false;
-    if (!this._showTextEl.is(':checked')) options.text = false;
+    if (!this._showTextEl.is(':checked')) options.text    = false;
+    if (openToPage) options.page = parseInt(openToPage, 10);
+    if (openToNote) {
+      var note = this.model.notes.get(parseInt(openToNote, 10));
+      options.page = note.get('page');
+      options.note = note.id;
+    }
     return options;
   },
 
@@ -103,6 +112,21 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     this._heightEl.val(options.height);
     this._sidebarEl.attr('checked', options.sidebar === false ? false : true);
     this._showTextEl.attr('checked', options.text === false ? false : true);
+  },
+
+  _renderOpenTo : function(e) {
+    switch ($(e.currentTarget).val()) {
+      case 'first_page':
+        return this._openToEl.empty();
+      case 'page':
+        return this._openToEl.html(JST['document/page_select']({doc : this.model}));
+      case 'note':
+        this.model.ignoreNotes = true;
+        this.model.notes.fetch({success : _.bind(function() {
+          this._openToEl.html(JST['document/note_select']({doc : this.model}));
+          delete this.model.ignoreNotes;
+        }, this)});
+    }
   },
 
   _renderEmbedCode : function() {
@@ -143,6 +167,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
   nextStep : function() {
     if (this.currentStep == 1 && !this.saveUpdatedAttributes()) return false;
     if (this.currentStep >= this.totalSteps) return this.close();
+    if (this.currentStep == 2) this._renderEmbedCode();
     this.currentStep += 1;
     this.setStep();
   },

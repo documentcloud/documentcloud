@@ -74,10 +74,22 @@
       </label>
     </span>
     <p class="publish_info selectable_text interface">
-      If you're planning to embed your document in a full screen interface,
-      <a class="text_link" href="http://www.propublica.org/documents/item/memo-on-goldman-sachs-timberwolf-cdo-nov.-10-2006" target="_blank">like this one</a>,
-      choose a "full page" viewer. Choose a "fixed size" viewer if you're going
-      to embed the document within an article or blog post.
+      Choose whether to display your document in a 
+      <a class="text_link" href="http://www.propublica.org/documents/item/memo-on-goldman-sachs-timberwolf-cdo-nov.-10-2006" target="_blank">full page layout</a>, 
+      or a <a class="text_link" href="http://voices.washingtonpost.com/thefix/white-house/rahm-emanuel-ruled-ineligible.html" target="_blank">fixed size box</a>.
+    </p>
+  </div>
+  
+  <div class="publish_section">
+    <label for="publish_option_text">Viewer Opens to:</label>
+    <select class="viewer_open_to" name="viewer_open_to">
+      <option value="first_page">First Page</option>
+      <option value="page">Page ...</option>
+      <option value="note">Note ...</option>
+    </select>
+    <div class="open_to"></div>
+    <p class="publish_info selectable_text interface">
+      Tell the viewer to open directly to a specific page or annotation.
     </p>
   </div>
 
@@ -85,9 +97,7 @@
     <input id="publish_option_sidebar" type="checkbox" name="sidebar" checked />
     <label for="publish_option_sidebar">Show the Sidebar:</label>
     <p class="publish_info selectable_text interface">
-      If you're using a fixed size viewer, and space is limited
-      (less than 800 pixels wide), you probably want to uncheck this box
-      and hide the sidebar to save space.
+      If your layout has limited horizontal space, uncheck this box to hide the sidebar.
     </p>
   </div>
   
@@ -95,8 +105,7 @@
     <input id="publish_option_text" type="checkbox" name="show_text" checked />
     <label for="publish_option_text">Show the Text Tab:</label>
     <p class="publish_info selectable_text interface">
-      If the document is mostly handwritten, and has poor text content, you
-      may disable the text tab. Turning off text will also hide the search interface.
+      If the quality of the document's text is poor, uncheck this box to hide the text tab.
     </p>
   </div>
 
