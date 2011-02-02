@@ -95,9 +95,11 @@
   #help_toolbar {
     height: 26px;
     margin-bottom: 20px;
+    position: relative;
+    z-index: 5;
   }
     #help_toolbar .minibutton {
-      width: 150px;
+      width: 145px;
       float: left;
       margin: 0 8px 8px 0;
     }
