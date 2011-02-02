@@ -106,7 +106,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       loc.left    += 3;
       loc.right   = loc.left + loc.width + 11;
       loc.bottom  = loc.top + loc.height + 3;
-      var zoom    = currentDocument.api.currentZoom();
+      var zoom    = currentDocument.api.relativeZoom();
       var image   = _.map([loc.top, loc.right, loc.bottom, loc.left], function(l){ return Math.round(l / zoom); }).join(',');
       this.close();
       if (loc.width > 5 && loc.height > 5) {
