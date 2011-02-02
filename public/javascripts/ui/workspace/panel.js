@@ -20,7 +20,7 @@ dc.ui.Panel = Backbone.View.extend({
   },
 
   _setMinHeight : function() {
-    $(this.el).css({"min-height": $(window).height() - 120});
+    $(this.el).css({"min-height": $(window).height() - 100});
   }
 
 });
