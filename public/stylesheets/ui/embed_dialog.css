@@ -103,3 +103,8 @@
   .embed_dialog .open_to select {
     position: static;
   }
+  .embed_dialog .open_to .error {
+    font-size: 10px;
+    color: #f00;
+    margin-top: 5px;
+  }

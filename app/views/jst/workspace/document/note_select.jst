@@ -1,6 +1,13 @@
-<select class="note_select">
-  <% _.each(doc.notes.unrestricted(), function(note) { %>
-    <% var title = Inflector.truncate(note.get('title'), 30); %>
-    <option value="<%= note.id %>">p.<%= note.get('page') %> &ndash; <%= title %></option>
-  <% }); %>
-</select>
+<% var notes = doc.notes.unrestricted(); %>
+<% if (notes.length) { %>
+  <select class="note_select">
+    <% _.each(doc.notes.unrestricted(), function(note) { %>
+      <% var title = Inflector.truncate(note.get('title'), 30); %>
+      <option value="<%= note.id %>">p.<%= note.get('page') %> &ndash; <%= title %></option>
+    <% }); %>
+  </select>
+<% } else { %>
+  <div class="error">
+    This document has no public notes.
+  </div>
+<% } %>

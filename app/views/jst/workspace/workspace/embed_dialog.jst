@@ -74,18 +74,20 @@
       </label>
     </span>
     <p class="publish_info selectable_text interface">
-      Choose whether to display your document in a 
-      <a class="text_link" href="http://www.propublica.org/documents/item/memo-on-goldman-sachs-timberwolf-cdo-nov.-10-2006" target="_blank">full page layout</a>, 
+      Choose whether to display your document in a
+      <a class="text_link" href="http://www.propublica.org/documents/item/memo-on-goldman-sachs-timberwolf-cdo-nov.-10-2006" target="_blank">full page layout</a>,
       or a <a class="text_link" href="http://voices.washingtonpost.com/thefix/white-house/rahm-emanuel-ruled-ineligible.html" target="_blank">fixed size box</a>.
     </p>
   </div>
-  
+
   <div class="publish_section">
     <label for="publish_option_text">Viewer Opens to:</label>
     <select class="viewer_open_to" name="viewer_open_to">
       <option value="first_page">First Page</option>
       <option value="page">Page ...</option>
-      <option value="note">Note ...</option>
+      <% if (doc.get('annotation_count')) { %>
+        <option value="note">Note ...</option>
+      <% } %>
     </select>
     <div class="open_to"></div>
     <p class="publish_info selectable_text interface">
@@ -100,7 +102,7 @@
       If your layout has limited horizontal space, uncheck this box to hide the sidebar.
     </p>
   </div>
-  
+
   <div class="publish_section">
     <input id="publish_option_text" type="checkbox" name="show_text" checked />
     <label for="publish_option_text">Show the Text Tab:</label>
