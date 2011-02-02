@@ -1,12 +1,16 @@
 # Collaboration
 
-When you're working with other reporters on a project, you can share a set of documents and notes with them, even if they're in a completely different news organization. Collaboration in DocumentCloud is based around projects: sharing a project with someone gives them access to view and edit all of the documents and public notes inside.
+You already know you can <a href="/help/privacy#access">share documents with everyone in your newsroom</a>. You can also organize documents into projects and share them with other DocumentCloud users, whether or not they're in your newsroom. 
 
-If you have a project you'd like to share, click on it's edit icon <span class="icon edit_glyph" style="padding-left:16px;position:relative;top: -2px;">&#65279;</span> to open up the "Edit Project" dialog. Click on the "Add a collaborator to this project" link, and type in the email address of the person you'd like to share the project with. This must be the same email address that they use to log in to DocumentCloud. Click "Add". At this point, you should see them appear, listed under "Collaborators", in the project.
+Collaboration in DocumentCloud is based around projects: sharing a project with another user gives them access to view and edit all of the documents in that project and all the public notes on those documents. Your private notes will still be private. 
+
+To start sharing, you'll need to know the email address that each collaborator uses to log in to DocumentCloud. Click any project's edit icon <span class="icon edit_glyph" style="padding-left:16px;position:relative;top: -2px;">&#65279;</span> and use "Add a collaborator to this project" to enter each email address (you'll need to use the address they use to log in to DocumentCloud). 
 
 <img src="/images/help/show_collaborator.png" class="full_line" />
 
-The next time your partner logs in to DocumentCloud, the project you shared will show up in their sidebar. Your partner can now view, edit, and annotate all of the documents inside of it. If they add documents of their own to the project, you'll be able to see and edit those documents as well.
+Shared projects will appear in each collaborator's sidebar and they will be able to view, edit, and annotate all documents in the project. They'll also be able to add new documents to the project, which will in turn be available to you.
+
+Collaborating with a reporter who isn't on DocumentCloud? They should <a href="/contact">join</a>!
 
 Still have questions about collaboration? Don't hesitate to [contact us][].
 

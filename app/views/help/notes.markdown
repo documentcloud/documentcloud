@@ -8,13 +8,16 @@ If you'd like to add a note not to a particular region of a page, but to a page 
 
 <img alt="" src="/images/help/add_page_note.jpg" class="full_line" />
  
-Currently you can't resize a note, you have to copy the contents, delete the existing note and redraw it.
+Currently you can't resize a note: you have to copy the contents, delete the existing note and redraw it.
 
 ![Notes Link][]
 
 The notes that you add to a document become visible in the workspace as well. Clicking the "notes" link underneath a document will display *all* of the document's notes in a list beneath. Click on a note's title to jump to that note in the document viewer. If you have permission to edit the document, you can also edit the notes from inside the workspace itself. If you're changing notes in the workspace and in the document viewer simultaneously, you may need to refresh the page in order to see all the latest changes.
 
-You can link directly to any existing annotation, [like this one][]. To find the permalink for an annotation, open it, and click on the link icon <span class="icon permalink" style="padding-left:16px;position:relative;top: -2px;">&#65279;</span>. The URL for the annotation will appear in your browser's address bar, where you can copy it.
+## <span id="linking">Linking to Notes</span>
+
+You can link directly to an existing annotation, [like this one][]: to find the URL (or permalink) that will open the document right to a particular annotation, just open the annotation and click on the link icon <span class="icon permalink" style="padding-left:16px;position:relative;top: -2px;">&#65279;</span>. Your browser's address bar will be updated to display the URL of that annotation. The good stuff comes after the # symbol &emdash; in [our example][] the URL of the embedded document ends with <code>#document/p173/a8646</code>, so we know that the annotation is on page 173. The annotation itself is identifed by a random string (in this case "a8646"). 
+
 
 ## Adding Sections for Navigation
 
@@ -25,4 +28,5 @@ Still have questions about annotating documents? Don't hesitate to [contact us][
 [Annotations]: /images/help/document_annotations.jpg
 [Notes Link]: /images/help/notes_link.jpg
 [like this one]: http://www.washingtonpost.com/wp-srv/business/documents/fcic-final-report.html#document/p173/a8646
+[our example]: http://www.washingtonpost.com/wp-srv/business/documents/fcic-final-report.html#document/p173/a8646
 [contact us]: javascript:dc.ui.Dialog.contact()
