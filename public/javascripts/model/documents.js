@@ -263,7 +263,8 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   },
 
   poll : function() {
-    var ids = _.pluck(this.pending(), 'id');
+    var ids = _.compact(_.pluck(this.pending(), 'id'));
+    if (!ids.length) return this.stopPolling();
     $.get('/documents/status.json', {'ids[]' : ids}, _.bind(function(resp) {
       _.each(resp.documents, function(json) {
         var doc = Documents.get(json.id);
