@@ -195,7 +195,7 @@ _.extend(dc.ui.Dialog, {
     dialog.setMode('prompt', 'dialog');
     dialog.$('.custom').html(JST['common/contact']());
     dialog.contentEl = dialog.$('.content');
-    dialog.$('input, textarea').placeholder();
+    dialog.$('input').placeholder();
     dialog.center();
   },
 
