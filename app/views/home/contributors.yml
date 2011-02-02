@@ -15,6 +15,8 @@ contributors:
      - http://azcentral.com
    - - Asbury Park Press
      - http://www.app.com
+   - - Aspen Journalism
+     - http://www.aspenjournalism.org/
    - - Atlanta Journal-Constitution
      - http://ajc.com
    - - The Atlantic
@@ -31,6 +33,8 @@ contributors:
      - http://boston.com/bostonglobe
    - - Boston Review
      - http://bostonreview.net/
+   - - Bozeman Daily Chronicle
+     - http://www.bozemandailychronicle.com
    - - The Bureau of Investigative Journalism
      - http://www.tbij.com
    - - California Watch
@@ -179,8 +183,12 @@ contributors:
      - http://minnesota.publicradio.org/
    - - MinnPost
      - http://minnpost.com
+   - - Monash University Journalism School
+     - http://arts.monash.edu.au/journalism/
    - - Montana Watchdog
      - http://montana.watchdog.org/
+   - - Monterey County Weekly
+     - http://mcweekly.com
    - - Mother Jones
      - http://motherjones.com
    - - msnbc.com
@@ -211,10 +219,12 @@ contributors:
      - http://www.ocala.com/
    - - The Oklahoman
      - http://www.newsok.com
-   - - OpenFile
-     - http://openfile.ca
    - - Omaha World-Herald
      - http://www.omaha.com
+   - - OpenFile
+     - http://openfile.ca
+   - - The Oregonian
+     - http://www.oregonlive.com/oregonian/
    - - Ottawa Citizen
      - http://www.ottawacitizen.com
    - - Ozarks News
@@ -279,6 +289,8 @@ contributors:
      - http://sfpublicpress.org
    - - The Skanner
      - http://www.theskanner.com
+   - - SoCal Connected (KCET)
+     - http://www.kcet.org/socalconnected
    - - Southern California Public Radio
      - http://www.scpr.org
    - - Spinwatch
@@ -289,6 +301,8 @@ contributors:
      - http://StarNewsOnline.com
    - - Statesman Journal
      - http://statesmanjournal.com
+   - - The State Port Pilot
+     - http://stateportpilot.com
    - - The Story
      - http://thestory.ie
    - - St. Louis Post-Dispatch
@@ -301,6 +315,10 @@ contributors:
      - http://talkingpointsmemo.com
    - - TBD
      - http://www.tbd.com/
+   - - TCU Daily Skiff
+     - http://tcudailyskiff.com
+   - - Texas Observer
+     - http://www.texasobserver.org
    - - Texas Tribune
      - http://www.texastribune.com
    - - Thomson Reuters
@@ -337,7 +355,11 @@ contributors:
      - http://www.wisconsinwatch.org/
    - - WNYC Radio
      - http://wnyc.org
+   - - WTVF NewsChannel 5
+     - http://www.newschannel5.com/
    - - WTXF Fox 29
      - http://www.foxtv.com
+   - - WyoFile
+     - http://wyofile.com/
    - - York Daily Record
      - http://www.ydr.com
