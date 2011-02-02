@@ -24,7 +24,8 @@ label {
 #toplinks {
   display: none;
   position: absolute;
-  top: 20px; right: 50px;
+  top: 17px; right: 50px;
+  line-height: 15px;
   font-size: 11px;
   color: #999;
 }
