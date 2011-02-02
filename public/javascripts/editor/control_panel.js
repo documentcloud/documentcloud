@@ -23,8 +23,19 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   render : function() {
     this.viewer = currentDocument;
     this._page = this.viewer.$('.DV-textContents');
-    $(this.el).html(JST['control_panel']({isOwner : dc.app.editor.isOwner}));
+    $(this.el).html(JST['control_panel']({
+      isReviewer      : dc.app.editor.options.isReviewer,
+      isOwner         : dc.app.editor.options.isOwner,
+      workspacePrefix : accessWorkspace ? '#' : ''
+    }));
+    this.showReviewerWelcome();
     return this;
+  },
+  
+  showReviewerWelcome : function() {
+    if (dc.app.editor.accountRole == dc.model.Account.prototype.REVIEWER) {
+      dc.ui.Dialog.alert('Write annotations.', {title: 'Reviewing "'+currentDocument.api.getTitle()+'"'});
+    }
   },
 
   openSectionEditor : function() {
