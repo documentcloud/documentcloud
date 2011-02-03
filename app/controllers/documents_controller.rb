@@ -52,6 +52,7 @@ class DocumentsController < ApplicationController
     success = doc.secure_update attrs, current_account
     return json(doc, 403) unless success
     expire_page doc.canonical_cache_path if doc.cacheable?
+    Document.populate_annotation_counts(current_account, [doc])
     json doc
   end
 
