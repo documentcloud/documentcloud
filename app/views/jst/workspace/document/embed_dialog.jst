@@ -3,7 +3,7 @@
 </div>
 
 <textarea class="snippet">
-&lt;div id="viewer-<%= doc.canonicalId() %>" class="DV-container"&gt;&lt;/div&gt;&#10;
+&lt;div id="DV-viewer-<%= doc.canonicalId() %>" class="DV-container"&gt;&lt;/div&gt;&#10;
 &lt;script src="http://s3.documentcloud.org/viewer/loader.js"&gt;&lt;/script&gt;&#10;
 &lt;script&gt;&#10;
   DV.load('<%= doc.get("document_viewer_js") %>', {&#10;

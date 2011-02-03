@@ -131,7 +131,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
 
   _renderEmbedCode : function() {
     var options       = this.embedOptions();
-    options.container = '"#viewer-' + this.model.canonicalId() + '"';
+    options.container = '"#DV-viewer-' + this.model.canonicalId() + '"';
     var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['document/embed_dialog']({
       doc: this.model,
