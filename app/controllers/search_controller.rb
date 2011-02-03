@@ -21,6 +21,15 @@ class SearchController < ApplicationController
       end
     end
   end
+  
+  def documents_count
+    perform_search
+    counts = {
+      :private_count => 2,
+      :documents_count => @query.total
+    }
+    json counts
+  end
 
   def facets
     perform_search :exclude_documents => true,

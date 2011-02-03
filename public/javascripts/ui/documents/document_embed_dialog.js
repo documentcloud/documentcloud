@@ -25,10 +25,14 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     'Step Three: Copy and Paste the Embed Code'
   ],
 
-  DEMO_ERROR : 'Demo accounts are not allowed to embed documents. ' +
-               '<a href="/contact">Contact us</a> if you need a full ' +
-               'featured account. View an example of the embed code ' +
-               '<a href="/help/publishing">here</a>.',
+  DEMO_ERROR : 'Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.',
+  
+  DEFAULT_OPTIONS : {
+    width   : null,
+    height  : null,
+    sidebar : true,
+    text    : true
+  },
 
   // Can't have an embed dialog without a document.
   constructor : function(doc) {
@@ -42,7 +46,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
   render : function() {
     if (dc.account.organization.demo) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     dc.ui.Dialog.prototype.render.call(this);
-    this.$('.custom').html(JST['workspace/embed_dialog']({doc: this.model}));
+    this.$('.custom').html(JST['workspace/document_embed_dialog']({doc: this.model}));
     this._next          = this.$('.next');
     this._previous      = this.$('.previous');
     this._widthEl       = this.$('input[name=width]');
@@ -50,7 +54,6 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     this._viewerSizeEl  = this.$('select[name=viewer_size]');
     this._sidebarEl     = this.$('input[name=sidebar]');
     this._showTextEl    = this.$('input[name=show_text]');
-    this._showPDFEl     = this.$('input[name=show_pdf]');
     this._openToEl      = this.$('.open_to');
     if (dc.app.preferences.get('embed_options')) this._loadPreferences();
     this.setMode('embed', 'dialog');
@@ -95,7 +98,6 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     }
     if (!this._sidebarEl.is(':checked'))  options.sidebar = false;
     if (!this._showTextEl.is(':checked')) options.text    = false;
-    if (!this._showPDFEl.is(':checked'))  options.pdf     = false;
     if (openToPage) options.page = parseInt(openToPage, 10);
     if (openToNote) {
       var note = this.model.notes.get(parseInt(openToNote, 10));
@@ -125,12 +127,27 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
   // Read serialized embed options from user's cookie so embed options remain consistent
   // between embeds. *Nifty.*
   _loadPreferences : function() {
-    var options = JSON.parse(dc.app.preferences.get('embed_options') || this.DEFAULT_OPTIONS);
+    var options = JSON.parse(dc.app.preferences.get('document_embed_options')) || this.DEFAULT_OPTIONS;
     if (options.width || options.height) this._viewerSizeEl.val('fixed');
     this._widthEl.val(options.width);
     this._heightEl.val(options.height);
-    this._sidebarEl.attr('checked', options.sidebar === false ? false : true);
-    this._showTextEl.attr('checked', options.text === false ? false : true);
+    this._sidebarEl.attr('checked', options.sidebar);
+    this._showTextEl.attr('checked', options.text);
+  },
+
+  _renderOpenTo : function(e) {
+    switch ($(e.currentTarget).val()) {
+      case 'first_page':
+        return this._openToEl.empty();
+      case 'page':
+        return this._openToEl.html(JST['document/page_select']({doc : this.model}));
+      case 'note':
+        this.model.ignoreNotes = true;
+        this.model.notes.fetch({success : _.bind(function() {
+          this._openToEl.html(JST['document/note_select']({doc : this.model}));
+          delete this.model.ignoreNotes;
+        }, this)});
+    }
   },
 
   // Handles user selection of dropdown that controls which page/annotation
@@ -155,7 +172,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     var options       = this.embedOptions();
     options.container = '"#DV-viewer-' + this.model.canonicalId() + '"';
     var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
-    this.$('.publish_embed_code').html(JST['document/embed_code']({
+    this.$('.publish_embed_code').html(JST['document/embed_dialog']({
       doc: this.model,
       options: serialized.join(',&#10;    ')
     }));

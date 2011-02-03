@@ -1,0 +1,18 @@
+<div class="publish_info selectable_text interface">
+  Add the HTML below to your site to create a search embed.
+</div>
+
+<textarea class="snippet">
+&lt;div id="search-<%= query %>"&gt;&lt;/div&gt;&#10;
+&lt;script src="http://s3.documentcloud.org/embed/search_loader.js"&gt;&lt;/script&gt;&#10;
+&lt;script&gt;&#10;
+  dc.loadSearchEmbed('http://dev.dcloud.org/api/search.js', {&#10;
+    <%= options %>&#10;
+  });&#10;
+&lt;/script&gt;
+</textarea>
+
+<div class="publish_info selectable_text interface">
+  You can find plenty of examples of embedded searches on our list of
+  <a class="text_link" href="http://www.documentcloud.org/featured" target="_blank">featured reporting</a>.
+</div>

@@ -128,12 +128,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   openSearchEmbedDialog : function() {
-    var docs = Documents.chosen();
-    if (!docs.length) return;
-    if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document in order to create the embed.');
-    var doc = docs[0];
-    if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
-    (new dc.ui.DocumentEmbedDialog(doc)).render();
+    (new dc.ui.SearchEmbedDialog()).render();
   },
 
   openDocumentEmbedDialog : function() {
