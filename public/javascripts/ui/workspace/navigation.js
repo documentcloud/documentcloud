@@ -31,7 +31,6 @@ dc.ui.Navigation = Backbone.View.extend({
       _.defer(dc.app.searcher.loadFacets);
     }, this));
     $('#toplinks .open_accounts').click(function(){ dc.app.accounts.open(); });
-    $('#toplinks .open_contact').click(function(){  dc.ui.Dialog.contact(); });
     this.setMode('search', 'panel_tab');
     return this;
   },
