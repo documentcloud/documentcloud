@@ -11,13 +11,14 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     'click .next'           : 'nextStep',
     'click .previous'       : 'previousStep',
     'click .close'          : 'close',
-    'click .snippet'        : 'selectSnippet'
+    'click .snippet'        : 'selectSnippet',
+    'click .change_access'  : 'changeAccess'
   },
 
   totalSteps : 3,
 
   STEPS : [null, null,
-    'Step Two: Configure the Document Viewer',
+    'Step Two: Configure the Embedded Search',
     'Step Three: Copy and Paste the Embed Code'
   ],
 
@@ -33,17 +34,17 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     this.currentStep = 1;
     
     dc.ui.Dialog.call(this, {mode : 'custom', title : this.displayTitle()});
+    dc.ui.spinner.show();
     this.fetchCounts();
   },
   
   fetchCounts : function() {
     $.ajax({
-      url  : '/search/documents_count.json',
+      url  : '/search/restricted_count.json',
       data : {q: this.query},
       dataType : 'json',
       success : _.bind(function(resp) {
-        this.privateCount  = resp.private_count;
-        this.documentsCount = resp.documents_count;
+        this.restrictedCount = resp.restricted_count;
         this.render();
       }, this)
     });
@@ -53,9 +54,9 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     if (dc.account.organization.demo) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     dc.ui.Dialog.prototype.render.call(this);
     this.$('.custom').html(JST['workspace/search_embed_dialog']({
-      query          : this.query,
-      privateCount   : this.privateCount,
-      documentsCount : this.documentsCount
+      query           : this.query,
+      restrictedCount : this.restrictedCount,
+      documentsCount  : dc.app.paginator.query.total
     }));
     this._next          = this.$('.next');
     this._previous      = this.$('.previous');
@@ -66,9 +67,11 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     this._openToEl      = this.$('.open_to');
     if (dc.app.preferences.get('search_embed_options')) this._loadPreferences();
     this.setMode('embed', 'dialog');
+    this.setMode('search_embed', 'dialog');
     this.update();
     this.setStep();
     this.center();
+    dc.ui.spinner.hide();
     return this;
   },
 
@@ -150,6 +153,15 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
 
   selectSnippet : function() {
     this.$('.snippet').select();
+  },
+  
+  changeAccess : function() {
+    var restrictedQuery = this.query;
+    if (restrictedQuery.indexOf('filter:restricted') == -1) {
+      restrictedQuery += ' filter:restricted';
+    }
+    dc.app.searcher.search(restrictedQuery);
+    this.close();
   }
 
 });

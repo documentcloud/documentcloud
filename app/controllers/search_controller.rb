@@ -22,11 +22,12 @@ class SearchController < ApplicationController
     end
   end
   
-  def documents_count
+  def restricted_count
+    params[:q] = params[:q] + " filter:restricted"
     perform_search
+    restricted_count = @query.total
     counts = {
-      :private_count => 2,
-      :documents_count => @query.total
+      :restricted_count => restricted_count
     }
     json counts
   end

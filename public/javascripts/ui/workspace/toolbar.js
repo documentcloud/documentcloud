@@ -128,7 +128,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   openSearchEmbedDialog : function() {
-    (new dc.ui.SearchEmbedDialog()).render();
+    new dc.ui.SearchEmbedDialog();
   },
 
   openDocumentEmbedDialog : function() {

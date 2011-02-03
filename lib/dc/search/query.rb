@@ -335,14 +335,21 @@ module DC
             if needs_solr?
               @solr.build { with :published, true }
             else
-              @sql << 'documents.access in (?) and (documents.remote_url is not null or documents.detected_remote_url is not null)'
-              @interpolations << [PUBLIC, EXCLUSIVE]
+              @sql << 'documents.access = ? and (documents.remote_url is not null or documents.detected_remote_url is not null)'
+              @interpolations << PUBLIC
             end
           when :unpublished
             if needs_solr?
               @solr.build { with :published, false }
             else
               @sql << 'documents.remote_url is null and documents.detected_remote_url is null'
+            end
+          when :restricted
+            if needs_solr?
+              @solr.build { with :access, [PRIVATE, ORGANIZATION] }
+            else
+              @sql << 'documents.access in (?)'
+              @interpolations << [PRIVATE, ORGANIZATION]
             end
           end
         end
@@ -381,7 +388,7 @@ module DC
             end
             if organization
               all_of do
-                with    :access, [ORGANIZATION, EXCLUSIVE]
+                with    :access, ORGANIZATION
                 with    :organization_id, organization.id
               end
             end

@@ -86,6 +86,7 @@ window.Inflector = {
   // that we've special-cased. Not comprehensive.
   pluralize : function(s, count) {
     if (count == 1) return s;
+    if (s == 'this') return 'these';
     if (s == 'person') return 'people';
     if (s == 'this') return 'these';
     if (s.match(/y$/i)) return s.replace(/y$/i, 'ies');

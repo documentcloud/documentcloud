@@ -1,13 +1,13 @@
-/* ================== */
-/* = Embed Dialog = */
-/* ================== */
+/* ========================= */
+/* = Document Embed Dialog = */
+/* ========================= */
 
-.embed_dialog {
+.document_embed_dialog {
   width: 500px;
   font-size: 12px;
   text-align: left;
 }
-  .embed_dialog .custom {
+  .document_embed_dialog .custom {
     height: 360px;
     position: relative;
     font-size: 12px;
@@ -21,75 +21,73 @@
     display: block;
   }
 
-.embed_dialog .controls {
+.document_embed_dialog .controls {
   display: none;
 }
 
-.embed_dialog .publish_wizard_controls {
+.document_embed_dialog .publish_wizard_controls {
   position: absolute;
   bottom: 0px;
   width: 500px;
   height: 24px;
 }
-  .embed_dialog .publish_wizard_controls .cancel {
+  .document_embed_dialog .publish_wizard_controls .cancel {
     float: left;
   }
-  .embed_dialog .publish_wizard_controls .next,
-  .embed_dialog .publish_wizard_controls .previous {
+  .document_embed_dialog .publish_wizard_controls .next,
+  .document_embed_dialog .publish_wizard_controls .previous {
     float: right;
     margin-left: 8px;
   }
 
-.embed_dialog .publish_section {
+.document_embed_dialog .publish_section {
   position: relative;
   margin-bottom: 20px;
 }
-  .embed_dialog .publish_step_2 .publish_section {
-    margin-bottom: 14px;
+  .document_embed_dialog .publish_info {
+    font-size: 11px;
+    color: #ccc;
   }
-  .embed_dialog .text_input,
-  .embed_dialog input[type="checkbox"],
-  .embed_dialog select {
+  .document_embed_dialog .text_input,
+  .document_embed_dialog input[type="checkbox"],
+  .document_embed_dialog select {
     position: absolute;
     left: 155px;
   }
-    .embed_dialog .text_input {
+    .document_embed_dialog .text_input {
       left: 135px;
       right: 0px;
     }
-    .embed_dialog select {
+    .document_embed_dialog select {
       margin-top: 5px;
     }
-    .embed_dialog input[type="checkbox"] {
+    .document_embed_dialog input[type="checkbox"] {
       margin-top: 7px;
     }
-  .embed_dialog label {
+  .document_embed_dialog label {
     display: inline-block;
     font-weight: bold;
     line-height: 25px;
     margin-bottom: 10px;
   }
-  .embed_dialog .publish_step_2 label {
-    margin-bottom: 2px;
-  }
-  .embed_dialog .dimensions {
+  .document_embed_dialog .dimensions {
     font-size: 11px;
     position: absolute;
     left: 245px;
     top: 1px;
   }
-    .embed_dialog .dimensions label {
+    .document_embed_dialog .dimensions label {
       font-weight: normal;
       margin-left: 10px;
     }
-    .embed_dialog .dimensions input {
-      font-size: 10px;
+    .document_embed_dialog .dimensions input {
+      font-size: 11px;
       margin: 0 5px;
       width: 30px;
       padding: 0;
     }
 
-  .embed_dialog textarea.snippet {
+  .document_embed_dialog textarea.snippet {
     width: 484px;
     height: 200px;
     border: 1px solid #dedede;
@@ -99,14 +97,124 @@
     resize: none;
   }
 
-.embed_dialog .open_to {
+.document_embed_dialog .open_to {
   position: absolute;
   top: 0; left: 255px;
 }
-  .embed_dialog .open_to select {
+  .document_embed_dialog .open_to select {
     position: static;
   }
-  .embed_dialog .open_to .error {
+  .document_embed_dialog .open_to .error {
+    font-size: 10px;
+    color: #f00;
+    margin-top: 5px;
+  }
+  
+/* ======================= */
+/* = Search Embed Dialog = */
+/* ======================= */
+
+.search_embed_dialog {
+  width: 500px;
+  font-size: 12px;
+  text-align: left;
+}
+  .search_embed_dialog .custom {
+    height: 360px;
+    position: relative;
+    font-size: 12px;
+  }
+
+.publish_step {
+  display: none;
+  width: 500px;
+}
+  .publish_step.is_enabled {
+    display: block;
+  }
+
+.search_embed_dialog .controls {
+  display: none;
+}
+
+.search_embed_dialog .publish_wizard_controls {
+  position: absolute;
+  bottom: 0px;
+  width: 500px;
+  height: 24px;
+}
+  .search_embed_dialog .publish_wizard_controls .cancel {
+    float: left;
+  }
+  .search_embed_dialog .publish_wizard_controls .next,
+  .search_embed_dialog .publish_wizard_controls .previous {
+    float: right;
+    margin-left: 8px;
+  }
+
+.search_embed_dialog .publish_section {
+  position: relative;
+  margin-bottom: 20px;
+}
+  .search_embed_dialog .publish_info {
+    font-size: 11px;
+    color: #ccc;
+  }
+  .search_embed_dialog .publish_prepare_input {
+    margin: 0 0 2px 0;
+    overflow: hidden;
+  }
+    .search_embed_dialog input {
+      float: left;
+      margin: 4px 8px 0 24px;
+      clear: both;
+    }
+    .search_embed_dialog label {
+      float: left;
+    }
+  .search_embed_dialog .dimensions {
+    font-size: 11px;
+    position: absolute;
+    left: 245px;
+    top: 1px;
+  }
+    .search_embed_dialog .dimensions label {
+      font-weight: normal;
+      margin-left: 10px;
+    }
+    .search_embed_dialog .dimensions input {
+      font-size: 11px;
+      margin: 0 5px;
+      width: 30px;
+    }
+
+  .search_embed_dialog textarea.snippet {
+    width: 484px;
+    height: 200px;
+    border: 1px solid #dedede;
+    font: 11px Menlo, Consolas, Monaco, Courier, monospace;
+    margin: 10px 0px;
+    padding: 8px;
+    resize: none;
+  }
+
+.search_embed_dialog .publish_prepare_section {
+  margin: 0 0 16px 0;
+  clear: both;
+  overflow: hidden;
+}
+  .search_embed_dialog .publish_prepare_section_label {
+    font-weight: bold;
+    margin: 0 0 4px 0;
+  }
+.search_embed_dialog .open_to {
+  position: absolute;
+  top: 0; left: 255px;
+}
+  .search_embed_dialog .open_to select {
+    position: static;
+  }
+  .search_embed_dialog .open_to .error {
     font-size: 10px;
     color: #f00;
     margin-top: 5px;

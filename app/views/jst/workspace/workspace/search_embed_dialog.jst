@@ -1,20 +1,36 @@
 <div class="publish_step publish_step_1 is_enabled">
 
   <div class="publish_section">
-    <% if (privateCount == 0) { %>
-      All documents are public.
+    <% if (restrictedCount == 0) { %>
+      <div class="publish_section">
+        This search will contain links to <%= documentsCount %> 
+        <%= Inflector.pluralize('document', documentsCount) %>.
+      </div>
     <% } else { %>
-      <input type="checkbox" name="access_level" id="publish_prepare_access_level" />
-      <label for="publish_prepare_access_level">Make <%= privateCount %>/<%= documentsCount %> <%= Inflector.pluralize('document', privateCount) %> public:</label>
+      <div class="publish_section">
+        This search will only contain links to 
+        <%= documentsCount - restrictedCount %> of <%= documentsCount %> 
+        <%= Inflector.pluralize('document', documentsCount) %>.
+      </div>
+      <div class="publish_section text_link change_access">
+        Change access on <%= Inflector.pluralize('this', restrictedCount) %> <%= restrictedCount %> <%= Inflector.pluralize('document', restrictedCount) %>
+      </div>
+      <div class="publish_section">
+        In order to have all documents show in the embedded search, they 
+        must be made public. You can change the access level for a group 
+        of documents by selecting them and using the Edit menu in the 
+        toolbar.
+      </div>
     <% } %>
     <p class="publish_info selectable_text interface">
-      <% if (privateCount == 0) { %>
+      <% if (restrictedCount == 0) { %>
         <% if (documentsCount == 1) { %>
           This document is
         <% } else { %>
           These documents are
-        <% } %> public. It is currently available to users who search
-        DocumentCloud's catalog and will be visible to the public when you
+        <% } %>
+        public. It is currently available to users who search DocumentCloud's 
+        catalog and will be visible to the public when you
         embed it on your website.
       <% } else { %>
         As long as you're logged in to DocumentCloud, you'll be able to view

@@ -73,8 +73,8 @@ class Document < ActiveRecord::Base
   named_scope :pending,       :conditions => {:access => PENDING}
   named_scope :failed,        :conditions => {:access => ERROR}
   named_scope :unrestricted,  :conditions => {:access => PUBLIC}
-  named_scope :restricted,    :conditions => {:access => [PRIVATE, ORGANIZATION, EXCLUSIVE]}
-  named_scope :finished,      :conditions => {:access => [PUBLIC, PRIVATE, ORGANIZATION, EXCLUSIVE]}
+  named_scope :restricted,    :conditions => {:access => [PRIVATE, ORGANIZATION]}
+  named_scope :finished,      :conditions => {:access => [PUBLIC, PRIVATE, ORGANIZATION]}
 
   named_scope :popular,       :conditions => ["hit_count > ?", MINIMUM_POPULAR]
 
