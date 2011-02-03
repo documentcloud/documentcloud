@@ -63,7 +63,9 @@ class ApplicationController < ActionController::Base
   end
 
   def login_required
-    logged_in? || forbidden
+    return true if logged_in?
+    cookies.delete :dc_logged_in
+    forbidden
   end
 
   def api_login_required
@@ -84,16 +86,20 @@ class ApplicationController < ActionController::Base
     (logged_in? && current_organization.id == 1) || forbidden
   end
 
+  def prefer_secure
+    redirect_to :protocol => 'https://' if !request.ssl? && cookies[:dc_logged_in] == 'true'
+  end
+
   def current_account
     return nil unless request.ssl?
     @current_account ||=
-      session['account_id'] ? Account.find_by_id(session['account_id']) : nil
+      session[:account_id] ? Account.find_by_id(session[:account_id]) : nil
   end
 
   def current_organization
     return nil unless request.ssl?
     @current_organization ||=
-      session['organization_id'] ? Organization.find_by_id(session['organization_id']) : nil
+      session[:organization_id] ? Organization.find_by_id(session[:organization_id]) : nil
   end
 
   def bad_request

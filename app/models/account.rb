@@ -35,10 +35,10 @@ class Account < ActiveRecord::Base
   named_scope :contributors, {:conditions => ["role IN (?)", [ADMINISTRATOR, CONTRIBUTOR]]}
 
   # Attempt to log in with an email address and password.
-  def self.log_in(email, password, session=nil)
+  def self.log_in(email, password, session=nil, cookies=nil)
     account = Account.lookup(email)
     return false unless account && account.password == password
-    account.authenticate(session) if session
+    account.authenticate(session, cookies) if session && cookies
     account
   end
   
@@ -63,9 +63,10 @@ class Account < ActiveRecord::Base
   end
 
   # Save this account as the current account in the session. Logs a visitor in.
-  def authenticate(session)
-    session['account_id'] = id
-    session['organization_id'] = organization_id
+  def authenticate(session, cookies)
+    session[:account_id]      = id
+    session[:organization_id] = organization_id
+    cookies[:dc_logged_in]    = {:value => 'true', :expire_after => 1.month, :httponly => true}
     self
   end
 

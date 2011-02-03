@@ -2,6 +2,8 @@ class WorkspaceController < ApplicationController
 
   before_filter :bouncer, :except => :index if Rails.env.staging?
 
+  before_filter :prefer_secure, :only => [:index, :login]
+
   # Main documentcloud.org page. Renders the workspace if logged in or
   # searching, the home page otherwise.
   def index
@@ -29,7 +31,7 @@ class WorkspaceController < ApplicationController
   def login
     return redirect_to '/' if current_account && !current_account.reviewer?
     return render unless request.post?
-    return redirect_to '/' if Account.log_in(params[:email], params[:password], session)
+    return redirect_to '/' if Account.log_in(params[:email], params[:password], session, cookies)
     flash[:error] = true
     begin
       redirect_to :back
@@ -41,6 +43,7 @@ class WorkspaceController < ApplicationController
   # Logging out clears your entire session.
   def logout
     reset_session
+    cookies.delete :dc_logged_in
     redirect_to '/'
   end
 

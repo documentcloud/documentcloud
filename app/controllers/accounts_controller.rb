@@ -16,7 +16,7 @@ class AccountsController < ApplicationController
     account = key.securable
     account.password = params[:password]
     account.save
-    account.authenticate session
+    account.authenticate(session, cookies)
     key.destroy
     redirect_to '/'
   end

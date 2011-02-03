@@ -19,10 +19,10 @@ class AccountTest < ActiveSupport::TestCase
 
     should "be able to log in" do
       session = {}
-      account = Account.log_in(EMAIL, 'password', session)
+      account = Account.log_in(EMAIL, 'password', session, {})
       assert account
       assert account.email == EMAIL
-      assert session['account_id'] == account.id
+      assert session[:account_id] == account.id
     end
 
     should "be able to generate computed attributes" do

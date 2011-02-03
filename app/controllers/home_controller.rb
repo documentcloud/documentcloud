@@ -7,6 +7,7 @@ class HomeController < ApplicationController
   # Regex that matches missed markdown links in `[title][]` format.
   MARKDOWN_LINK_REPLACER = /\[([^\]]*?)\]\[\]/i
 
+  before_filter :prefer_secure
   before_filter :current_account
   before_filter :bouncer if Rails.env.staging?
 

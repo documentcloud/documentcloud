@@ -138,7 +138,7 @@ class AdminController < ApplicationController
   def login_as
     acc = Account.lookup(params[:email])
     return not_found unless acc
-    acc.authenticate(session)
+    acc.authenticate(session, cookies)
     redirect_to '/'
   end
 
