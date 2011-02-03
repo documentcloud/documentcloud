@@ -198,13 +198,13 @@ class DocumentsController < ApplicationController
     return false unless params[:date]
     date = Time.at(params[:date].to_i).to_date
     meta = current_document.entity_dates.first(:conditions => {:date => date})
-    redirect_to current_document.document_viewer_url(:date => meta)
+    redirect_to current_document.document_viewer_url(:date => meta, :allow_ssl => true)
   end
 
   def entity_requested?
     return false unless params[:entity]
     meta = current_document.entities.find(params[:entity])
-    redirect_to current_document.document_viewer_url(:entity => meta, :page => params[:page], :offset => params[:offset])
+    redirect_to current_document.document_viewer_url(:entity => meta, :page => params[:page], :offset => params[:offset], :allow_ssl => true)
   end
 
   def current_document(exists=false)

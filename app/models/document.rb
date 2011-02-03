@@ -409,11 +409,11 @@ class Document < ActiveRecord::Base
       occur = date.split_occurrences.first
       suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(date.date.to_s)}/#{occur.page_offset}:#{occur.length}" if occur.page
     end
-    canonical_url(:html) + suffix
+    canonical_url(:html, opts[:allow_ssl]) + suffix
   end
 
-  def canonical_url(format = :json)
-    File.join(DC.server_root, canonical_path(format))
+  def canonical_url(format = :json, allow_ssl = false)
+    File.join(DC.server_root(:ssl => allow_ssl), canonical_path(format))
   end
 
   def search_url
