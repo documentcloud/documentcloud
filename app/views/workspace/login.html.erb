@@ -4,7 +4,7 @@
 %>
 
 <div id="full_screen_form" class="full_page_background">
-  <form action="/login" method="POST">
+  <form action="<%= DC.server_root(:force_ssl => true) %>/login" method="POST">
     <% if flash[:error] %>
       <div class="form_error login_error">
         <span>

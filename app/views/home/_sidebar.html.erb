@@ -1,14 +1,14 @@
 <div id="sidebar" class="sans">
 
   <%= render :partial => 'help_navigation' if @nav == 'guide' %>
-  
+
   <% if @current_account %>
 
     <div class="sidebar_section">
       Welcome, <%= @current_account.full_name %>.
       <a href="/"><span class="minibutton default">Start using DocumentCloud</span></a>
     </div>
-    
+
   <% end %>
 
   <div id="search_wrapper" class="sidebar_section">
@@ -33,7 +33,7 @@
           Invalid email or password.
         </div>
       <% end %>
-      <form id="login_form" action="<%= DC.server_root(:ssl => true) %>/login" method="POST">
+      <form id="login_form" action="<%= DC.server_root(:force_ssl => true) %>/login" method="POST">
         <div class="text_input first light">
           <div class="inner">
            <input type="text" name="email" placeholder="Email" id="account_email" />
