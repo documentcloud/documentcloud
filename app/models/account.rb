@@ -64,9 +64,9 @@ class Account < ActiveRecord::Base
 
   # Save this account as the current account in the session. Logs a visitor in.
   def authenticate(session, cookies)
-    session[:account_id]      = id
-    session[:organization_id] = organization_id
-    cookies[:dc_logged_in]    = {:value => 'true', :expire_after => 1.month, :httponly => true}
+    session['account_id']      = id
+    session['organization_id'] = organization_id
+    cookies['dc_logged_in']    = {:value => 'true', :expires => 1.month.from_now, :httponly => true}
     self
   end
 

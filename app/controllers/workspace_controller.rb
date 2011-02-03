@@ -43,7 +43,7 @@ class WorkspaceController < ApplicationController
   # Logging out clears your entire session.
   def logout
     reset_session
-    cookies.delete :dc_logged_in
+    cookies.delete 'dc_logged_in'
     redirect_to '/'
   end
 

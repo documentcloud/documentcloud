@@ -130,7 +130,7 @@ class DocumentsController < ApplicationController
 
   # Allows us to poll for status updates in the in-progress document uploads.
   def status
-    docs = Document.owned_by(current_account).all(:conditions => {:id => params[:ids]})
+    docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => params[:ids]})
     Document.populate_annotation_counts(current_account, docs)
     json 'documents' => docs
   end
