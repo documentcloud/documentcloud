@@ -31,16 +31,16 @@
     </div>
     <a id="workspace_logo" href="/home"></a>
     <div id="toplinks" class="interface">
-      <a href="/home" class="text_link">Home</a>    
+      <a href="/home" class="text_link">Home</a>
       &nbsp;/&nbsp;
       <% if @current_account %>
-        <span class="text_link open_accounts">Accounts</span>    
+        <span class="text_link open_accounts">Accounts</span>
         &nbsp;/&nbsp;
         <a href="/logout" class="text_link">Log Out</a>
       <% else %>
-        <a href="/contact" class="text_link">Join</a>    
+        <a href="/contact" class="text_link">Join</a>
         &nbsp;/&nbsp;
-        <a href="/login" class="text_link">Log In</a>
+        <a href="<%= DC.server_root(:force_ssl => true) %>/login" class="text_link">Log In</a>
       <% end %>
     </div>
     <div id="content">
