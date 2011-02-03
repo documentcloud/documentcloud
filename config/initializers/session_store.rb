@@ -8,11 +8,11 @@ ActionController::Base.session = {
   :key          => 'document_cloud_session',
   :secret       => '83de034b1169753f462be1c8925b62dd10afe9569b5006b685780e28b5851596c34ed5feb0c08c0451d009c537f4bf6eb9e5c8445974471442d5165498178ec7',
   :expire_after => 1.month,
-  :httponly     => true,
-  :secure       => false
+  :httponly     => false,
+  :secure       => true
 }
 
-ActionController::Dispatcher.middleware.insert_before(ActionController::Base.session_store, FlashSessionCookieMiddleware, ActionController::Base.session_options[:key])
+ActionController::Dispatcher.middleware.insert_before(ActionController::Base.session_store, SessionCookieMiddleware, ActionController::Base.session_options[:key])
 
 # Use the database for sessions instead of the cookie-based default,
 # which shouldn't be used to store highly confidential information
