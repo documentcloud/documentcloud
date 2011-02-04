@@ -32,7 +32,7 @@ dc.model.Document = Backbone.Model.extend({
   // Generate the canonical URL for opening this document, over SSL if we're
   // currently secured.
   viewerUrl : function() {
-    var base = this.get('document_viewer_url').replace(/^http:/, '');
+    var base = this.get('document_viewer_url').replace(/^https?:/, '');
     return window.location.protocol + base;
   },
 
