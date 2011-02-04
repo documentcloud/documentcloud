@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
 
+  before_filter :prefer_secure,  :only   => [:index, :signup]
   before_filter :admin_required, :except => [:save_analytics, :queue_length]
 
   # The Admin Dashboard
