@@ -24,7 +24,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     'Step Three: Copy and Paste the Embed Code'
   ],
 
-  DEMO_ERROR : 'Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.',
+  DEMO_ERROR : 'Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="/help/publishing">here</a>.',
 
   constructor : function(doc) {
     this.model = doc;
