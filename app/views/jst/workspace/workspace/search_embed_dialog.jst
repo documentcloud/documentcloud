@@ -3,26 +3,27 @@
   <div class="publish_section">
     <% if (restrictedCount == 0) { %>
       <div class="publish_section">
-        This search will contain links to <%= documentsCount %> 
+        This document set will contain links to <%= documentsCount %> 
         <%= Inflector.pluralize('document', documentsCount) %>.
       </div>
     <% } else { %>
       <div class="publish_section">
-        This search will only contain links to 
-        <%= documentsCount - restrictedCount %> of <%= documentsCount %> 
+        This document set will only contain links to 
+        <%= publicCount %> of <%= documentsCount %> 
         <%= Inflector.pluralize('document', documentsCount) %>.
       </div>
       <div class="publish_section text_link change_access">
-        Change access on <%= Inflector.pluralize('this', restrictedCount) %> <%= restrictedCount %> <%= Inflector.pluralize('document', restrictedCount) %>
+        Change access on <%= Inflector.pluralize('this', restrictedCount) %> 
+        <%= restrictedCount %> <%= Inflector.pluralize('document', restrictedCount) %>
       </div>
       <div class="publish_section">
-        In order to have all documents show in the embedded search, they 
+        In order to have all documents show in the set of documents, they 
         must be made public. You can change the access level for a group 
         of documents by selecting them and using the Edit menu in the 
         toolbar.
       </div>
     <% } %>
-    <p class="publish_info selectable_text interface">
+    <p class="publish_info publish_info_section selectable_text interface">
       <% if (restrictedCount == 0) { %>
         <% if (documentsCount == 1) { %>
           This document is
@@ -46,8 +47,14 @@
 <div class="publish_step publish_step_2">
 
   <div class="publish_section">
-    <label>Document Viewer Size:</label>
-    <select name="viewer_size">
+    <label for="publish_option_input_title">Title: </label>
+    <input id="publish_option_input_title" class="input_title" name="title" />
+    <span class="publish_option_sidelabel">optional</span>
+  </div>
+
+  <div class="publish_section">
+    <label for="publish_option_embed_size">Document Set Size:</label>
+    <select id="publish_option_embed_size" name="embed_size">
       <option value="full" selected="selected">Full Page</option>
       <option value="fixed">Fixed Size</option>
     </select>
@@ -56,51 +63,45 @@
         Width:
         <input id="publish_option_width" type="text" name="width" value="" />px
       </label>
-      &nbsp;&nbsp;
-      <label for="publish_option_height">
-        Height:
-        <input id="publish_option_height" type="text" name="height" value="" />px
-      </label>
     </span>
-    <p class="publish_info selectable_text interface">
-      Choose whether to display your document in a
-      <a class="text_link" href="http://www.propublica.org/documents/item/memo-on-goldman-sachs-timberwolf-cdo-nov.-10-2006" target="_blank">full page layout</a>,
-      or a <a class="text_link" href="http://voices.washingtonpost.com/thefix/white-house/rahm-emanuel-ruled-ineligible.html" target="_blank">fixed size box</a>.
-    </p>
+    <!-- <p class="publish_info selectable_text interface">
+      Choose whether to display your embedded document set in a
+      <a class="text_link" href="/" target="_blank">full width layout</a>,
+      or a <a class="text_link" href="/" target="_blank">fixed size box</a>.
+    </p> -->
   </div>
 
   <div class="publish_section">
-    <label for="publish_option_text">Viewer Opens to:</label>
-    <select class="viewer_open_to" name="viewer_open_to">
-      <option value="first_page">First Page</option>
-      <option value="page">Page ...</option>
+    <label for="publish_option_order">Order documents by:</label>
+    <select id="publish_option_order" class="embed_order" name="order">
+      <option value="score">Relevance</option>
+      <option value="created_at">Date Uploaded</option>
+      <option value="title">Title</option>
+      <option value="source">Source</option>
+      <option value="page_count">Length</option>
     </select>
-    <div class="open_to"></div>
-    <p class="publish_info selectable_text interface">
-      Tell the viewer to open directly to a specific page or annotation.
-    </p>
+  </div>
+  
+  <div class="publish_section">
+    <label>Search Bar:</label>
+    <div class="public_section_input">
+      <input type="radio" name="search_bar" value="true" id="publish_option_search_bar_true" />
+      <label for="publish_option_search_bar_true">Show the search bar, which can be used to further filter the document set</label>
+      <input type="radio" name="search_bar" value="false" id="publish_option_search_bar_false" />
+      <label for="publish_option_search_bar_false">Hide the search bar</label>
+    </div>
   </div>
 
   <div class="publish_section">
-    <input id="publish_option_sidebar" type="checkbox" name="sidebar" checked />
-    <label for="publish_option_sidebar">Show the Sidebar:</label>
-    <p class="publish_info selectable_text interface">
-      If your layout has limited horizontal space, uncheck this box to hide the sidebar.
-    </p>
+    <label for="publish_option_per_page">Documents per page:</label>
+    <input id="publish_option_per_page" class="per_page" name="per_page" type="text" />
+    <span class="publish_option_sidelabel publish_option_perpage_sidelabel"></span>
   </div>
-
+  
   <div class="publish_section">
-    <input id="publish_option_text" type="checkbox" name="show_text" checked />
-    <label for="publish_option_text">Show the Text Tab:</label>
-    <p class="publish_info selectable_text interface">
-      If the quality of the document's text is poor, uncheck this box to hide the text tab.
-    </p>
-  </div>
-
-  <div class="publish_section">
-    <p class="publish_info selectable_text interface">
+    <p class="publish_info publish_info_section selectable_text interface">
       Before continuing, please take a moment to
-      <span class="text_link preview">preview the document viewer</span>.
+      <span class="text_link preview">preview the document set</span>.
     </p>
   </div>
 

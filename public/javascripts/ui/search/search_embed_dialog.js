@@ -18,15 +18,18 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   totalSteps : 3,
 
   STEPS : [null, null,
-    'Step Two: Configure the Embedded Search',
+    'Step Two: Configure the Document Set',
     'Step Three: Copy and Paste the Embed Code'
   ],
 
-  DEMO_ERROR : 'Demo accounts are not allowed to embed searches. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.',
+  DEMO_ERROR : 'Demo accounts are not allowed to embed document sets. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.',
 
   DEFAULT_OPTIONS : {
-    width  : 600,
-    order  : 'score'
+    width      : null,
+    order      : 'page_count',
+    per_page   : 10,
+    search_bar : false,
+    title      : null
   },
   
   constructor : function() {
@@ -45,6 +48,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
       dataType : 'json',
       success : _.bind(function(resp) {
         this.restrictedCount = resp.restricted_count;
+        this.documentsCount  = dc.app.paginator.query.total;
         this.render();
       }, this)
     });
@@ -56,16 +60,18 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     this.$('.custom').html(JST['workspace/search_embed_dialog']({
       query           : this.query,
       restrictedCount : this.restrictedCount,
-      documentsCount  : dc.app.paginator.query.total
+      documentsCount  : this.documentsCount,
+      publicCount     : this.documentsCount - this.restrictedCount
     }));
     this._next          = this.$('.next');
     this._previous      = this.$('.previous');
     this._widthEl       = this.$('input[name=width]');
-    this._viewerSizeEl  = this.$('select[name=viewer_size]');
-    this._sidebarEl     = this.$('input[name=sidebar]');
-    this._showTextEl    = this.$('input[name=show_text]');
-    this._openToEl      = this.$('.open_to');
-    if (dc.app.preferences.get('search_embed_options')) this._loadPreferences();
+    this._embedSizeEl   = this.$('select[name=embed_size]');
+    this._orderEl       = this.$('select[name=order]');
+    this._perPageEl     = this.$('input[name=per_page]');
+    this._titleEl       = this.$('input[name=title]');
+    this._searchBarEl   = this.$('input[name=search_bar]');
+    this._loadPreferences();
     this.setMode('embed', 'dialog');
     this.setMode('search_embed', 'dialog');
     this.update();
@@ -89,41 +95,86 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
 
   update : function() {
     this._toggleDimensions();
+    this._renderPerPageLabel();
     this._renderEmbedCode();
   },
 
   embedOptions : function() {
     var options = {};
-    if (this._viewerSizeEl.val() == 'fixed') {
-      var width   = parseInt(this._widthEl.val(), 10);
-      if (width)  options.width  = width;
+    if (this._embedSizeEl.val() == 'fixed') {
+      var width = parseInt(this._widthEl.val(), 10);
+      if (width) options.width = width;
     }
-    // TODO: Add order
+    options.order      = this._orderEl.val();
+    options.per_page   = this._perPageEl.val();
+    options.search_bar = this._searchBarEl.filter(':checked').val() == 'true';
+    console.log(['embedOptions', options.search_bar]);
     return options;
   },
 
   _savePreferences : function() {
-    dc.app.preferences.set({search_options : JSON.stringify(this.embedOptions())});
+    dc.app.preferences.set({search_embed_options : JSON.stringify(this.embedOptions())});
+  },
+
+  _deletePreferences : function() {
+    dc.app.preferences.remove('search_embed_options');
   },
 
   _loadPreferences : function() {
-    var options = JSON.parse(dc.app.preferences.get('search_embed_options')) || this.DEFAULT_OPTIONS;
-    if (options.width) this._viewerSizeEl.val('fixed');
-    this._widthEl.val(options.width);
+    var options = _.extend({}, this.DEFAULT_OPTIONS, JSON.parse(dc.app.preferences.get('search_embed_options')));
+    if (options.width) {
+      this._embedSizeEl.val('fixed');
+      this._widthEl.val(options.width);
+    } else {
+      this._embedSizeEl.val('full');
+      this._widthEl.val('');
+    }
+    this._orderEl.val(options.order);
+    this._perPageEl.val(options.per_page);
+    this._searchBarEl.val([options.search_bar ? 'true' : 'false']);
+    console.log(['_loadPreferences', options.search_bar]);
   },
 
   _renderEmbedCode : function() {
     var options       = this.embedOptions();
-    options.container = '"#search-' + this.query + '"';
+    var title         = this._titleEl.val();
+    options.container = '"#DC-search-' + Inflector.sluggify(this.query) + '"';
+    options.query     = '"' + this.query + '"';
+    options.order     = '"' + options.order + '"';
+    if (title && title.length) {
+      options.title   = '"' + title.replace(/\"/g, '\\\"') + '"';
+    }
     var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['search/embed_dialog']({
-      query: this.query,
+      query: Inflector.sluggify(this.query),
       options: serialized.join(',&#10;    ')
     }));
   },
 
   _toggleDimensions : function() {
-    this.$('.dimensions').toggle(this._viewerSizeEl.val() == 'fixed');
+    this.$('.dimensions').toggle(this._embedSizeEl.val() == 'fixed');
+  },
+  
+  _renderPerPageLabel : function() {
+    var perPage = this._perPageEl.val();
+    var $label  = this.$('.publish_option_perpage_sidelabel');
+    var label;
+    
+    if (!perPage || !parseInt(perPage, 10)) {
+      label = '';
+    } else {
+      var pages = Math.ceil(this.documentsCount / perPage);
+      var label = [
+        this.documentsCount,
+        Inflector.pluralize(' document', this.documentsCount),
+        ' on ',
+        pages,
+        Inflector.pluralize(' page', pages),
+        '.'
+      ].join('');
+    }
+    
+    $label.text(label);
   },
 
   nextStep : function() {
