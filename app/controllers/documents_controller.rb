@@ -13,7 +13,7 @@ class DocumentsController < ApplicationController
     end
     doc = current_document(true)
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
-    return not_found unless doc
+    return render :file => "#{Rails.root}/public/doc_404.html", :status => 404 unless doc
     respond_to do |format|
       format.pdf  { redirect_to(doc.pdf_url) }
       format.text { redirect_to(doc.full_text_url) }
