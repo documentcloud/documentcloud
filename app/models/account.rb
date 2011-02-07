@@ -42,11 +42,11 @@ class Account < ActiveRecord::Base
     account
   end
   
-  def self.login_reviewer(key, session)
+  def self.login_reviewer(key, session=nil, cookies=nil)
     security_key = SecurityKey.find_by_key(key)
     return nil unless security_key
     account = security_key.securable
-    account.authenticate session
+    account.authenticate(session, cookies) if session && cookies
     account
   end
 
@@ -164,8 +164,12 @@ class Account < ActiveRecord::Base
   end
 
   def send_reviewer_instructions(documents, inviter_account, message=nil)
-    create_security_key if security_key.nil?
-    LifecycleMailer.deliver_reviewer_instructions(documents, inviter_account, self, message)
+    key = nil
+    if self.role == Account::REVIEWER
+      create_security_key if self.security_key.nil?
+      key = '?key=' + self.security_key.key
+    end
+    LifecycleMailer.deliver_reviewer_instructions(documents, inviter_account, self, message, key)
   end
 
   # When a password reset request is made, send an email with a secure key to

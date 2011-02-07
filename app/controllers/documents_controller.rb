@@ -9,7 +9,7 @@ class DocumentsController < ApplicationController
 
   def show
     if !current_account && params[:key]
-      Account.login_reviewer params[:key], session
+      Account.login_reviewer(params[:key], session, cookies)
     end
     doc = current_document(true)
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
