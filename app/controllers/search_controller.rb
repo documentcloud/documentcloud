@@ -2,6 +2,7 @@ class SearchController < ApplicationController
   include DC::Search::Controller
 
   before_filter :bouncer if Rails.env.staging?
+  before_filter :login_required, :only => [:preview]
 
   FIELD_STRIP = /\S+:\s*/
 
@@ -39,4 +40,10 @@ class SearchController < ApplicationController
     json results
   end
 
+  def preview
+    @query   = params[:query]
+    @slug    = params[:slug]
+    @options = params[:options]
+  end
+  
 end

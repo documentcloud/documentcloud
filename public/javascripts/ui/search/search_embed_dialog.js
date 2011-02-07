@@ -87,8 +87,13 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   },
 
   preview : function() {
-    var options = encodeURIComponent(JSON.stringify(this.embedOptions()));
-    var url = '/documents/' + this.query + '/preview?options=' + options;
+    var options = JSON.stringify(this.embedOptions());
+    var params = $.param({
+        query   : this.query,
+        slug    : Inflector.sluggify(this.query),
+        options : options
+    });
+    var url = '/search/preview?' + params;
     window.open(url);
     return false;
   },
@@ -105,10 +110,11 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
       var width = parseInt(this._widthEl.val(), 10);
       if (width) options.width = width;
     }
+    options.q          = this.query;
+    options.container  = 'DC-search-' + Inflector.sluggify(this.query);
     options.order      = this._orderEl.val();
     options.per_page   = this._perPageEl.val();
     options.search_bar = this._searchBarEl.filter(':checked').val() == 'true';
-    console.log(['embedOptions', options.search_bar]);
     return options;
   },
 
