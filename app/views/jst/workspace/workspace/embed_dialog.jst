@@ -42,12 +42,12 @@
         embed it on your website. Change the
         <span class="text_link edit_access">access level</span>.
       <% } else { %>
-        As long as you're logged in to DocumentCloud, you'll be able to view
-        this document embedded on your own site. Before anyone else can view it,
-        however, it must be public.
-        Change the <span class="text_link edit_access">access level</span>
+        This document is currently private, and will not be visible
+        when you embed it on your web site. Before you publish your story, you 
+        need to make the document public.
+        Change the <span class="text_link edit_access">access level</span> now
         or <%= doc.get('publish_at') ? '' : 'set the' %>
-        <span class="text_link set_publish_at">publication date</span>.
+        <span class="text_link set_publish_at">publication date</span> for later.
       <% } %>
     </p>
   </div>
