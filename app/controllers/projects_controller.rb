@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   before_filter :login_required
 
   def index
-    json Project.accessible(current_account)
+    json Project.visible.accessible(current_account)
   end
 
   def create

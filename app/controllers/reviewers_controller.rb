@@ -9,7 +9,9 @@ class ReviewersController < ApplicationController
         doc = Document.find(document_id)
         return json(nil, 403) unless current_account.allowed_to_edit?(doc)
         documents << doc
-        reviewers[document_id] = doc.reviewers
+        if doc.projects.reviewer_project.present?
+          reviewers[document_id] = doc.projects.reviewer_project[0].reviewers
+        end
       end
     end
     if params[:fetched_documents]
@@ -42,7 +44,17 @@ class ReviewersController < ApplicationController
       documents = params[:documents].map do |document_id|
         document = Document.find(document_id)
         return json(nil, 403) unless current_account.allowed_to_edit?(document)
-        document.document_reviewers.create(:account => account)
+        project = Project.find_by_reviewer_document_id(document.id)
+        Rails.logger.info(project)
+        if project.nil?
+          project = Project.create({
+            :reviewer_document_id => document.id,
+            :account_id           => current_account.id
+          })
+          project.save!
+        end
+        project.set_documents([document.id])
+        project.add_collaborator account
         document.reload
       end
     end
@@ -59,7 +71,9 @@ class ReviewersController < ApplicationController
     documents = params[:documents].map do |document_id|
       document = Document.find(document_id)
       return json(nil, 403) unless current_account.allowed_to_edit?(document)
-      document.document_reviewers.owned_by(account).first.destroy
+      if document.projects.reviewer_project.present?
+        document.projects.reviewer_project[0].remove_collaborator(account)
+      end
       document.reload
     end
     json documents

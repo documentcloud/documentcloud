@@ -11,8 +11,8 @@ class Project < ActiveRecord::Base
   has_many :documents,           :through => :project_memberships
   has_many :collaborators,       :through => :collaborations, :source => :account
 
-  validates_presence_of :title
-  validates_uniqueness_of :title, :scope => :account_id
+  validates_presence_of   :title, :unless => :reviewer_project
+  validates_uniqueness_of :title, :scope => :account_id, :unless => :reviewer_project
 
   after_create    :create_default_collaboration
   after_create    :reindex_documents
@@ -20,7 +20,8 @@ class Project < ActiveRecord::Base
   after_destroy   :reindex_documents
 
   named_scope :alphabetical, {:order => :title}
-
+  named_scope :visible, :conditions => ["reviewer_document_id is null"]
+  named_scope :reviewer_project, :conditions => ["reviewer_document_id is not null"]
   named_scope :accessible, lambda {|account|
     {:conditions => ['account_id = ? or id in (select project_id from collaborations where account_id = ?)', account.id, account.id]}
   }
@@ -31,9 +32,17 @@ class Project < ActiveRecord::Base
 
   # Load all of the projects belonging to an account in one fell swoop.
   def self.load_for(account)
-    self.accessible(account).all(:include => ['account', 'project_memberships', 'collaborations'])
+    self.visible.accessible(account).all(:include => ['account', 'project_memberships', 'collaborations'])
   end
-
+  
+  def reviewers
+    Account.all(:conditions => {:id => self.collaborations.map {|c| c.account_id }})
+  end
+  
+  def reviewer_project
+    @reviewer_project ||= !self.reviewer_document_id.nil?
+  end
+  
   def set_documents(new_ids)
     new_ids = new_ids.to_set
     old_ids = self.document_ids.to_set
@@ -45,16 +54,26 @@ class Project < ActiveRecord::Base
 
   def add_collaborator(account)
     self.collaborations.create(:account => account)
+    update_reviewer_counts if reviewer_project
     @collaborator_ids = nil
   end
 
   def remove_collaborator(account)
     self.collaborations.owned_by(account).first.destroy
+    update_reviewer_counts if reviewer_project
     @collaborator_ids = nil
   end
 
+  def update_reviewer_counts
+    if reviewer_project
+      document = Document.find(reviewer_document_id)
+      document.document_reviewers_count = self.collaborations.count
+      document.save
+    end  
+  end
+  
   def create_default_collaboration
-    add_collaborator self.account
+    add_collaborator self.account if not reviewer_project
   end
 
   def other_collaborators(account)

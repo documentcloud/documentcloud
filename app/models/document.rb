@@ -25,16 +25,20 @@ class Document < ActiveRecord::Base
   belongs_to :account
   belongs_to :organization
 
-  has_one  :full_text,            :dependent => :destroy
-  has_many :pages,                :dependent => :destroy
-  has_many :entities,             :dependent => :destroy
-  has_many :entity_dates,         :dependent => :destroy
-  has_many :sections,             :dependent => :destroy
-  has_many :annotations,          :dependent => :destroy
-  has_many :remote_urls,          :dependent => :destroy
-  has_many :project_memberships,  :dependent => :destroy
-  has_many :document_reviewers,   :dependent => :destroy
-  has_many :projects,             :through   => :project_memberships
+  has_one  :full_text,            :dependent   => :destroy
+  has_many :pages,                :dependent   => :destroy
+  has_many :entities,             :dependent   => :destroy
+  has_many :entity_dates,         :dependent   => :destroy
+  has_many :sections,             :dependent   => :destroy
+  has_many :annotations,          :dependent   => :destroy
+  has_many :remote_urls,          :dependent   => :destroy
+  has_many :project_memberships,  :dependent   => :destroy
+  # has_many :document_reviewers,   :dependent  => :destroy
+  has_many :projects,             :through     => :project_memberships
+  # has_many :reviewers,            :through    => :document_reviewers, :source => :account
+  has_one  :reviewer_project,     :through     => :project_memberships, 
+                                  :conditions  => {:reviewer_document_id => self.id},
+                                  :source      => :project
 
   validates_presence_of :organization_id, :account_id, :access, :page_count,
                         :title, :slug
