@@ -143,9 +143,6 @@ class Account < ActiveRecord::Base
       ).map {|id| id.to_i }
     end
     
-    reviewable_document_ids = DocumentReviewer.find(:all, :conditions => {:account_id => id}, 
-                                                    :select => [:document_id]).map {|d| d.document_id }
-    @accessible_document_ids << reviewable_document_ids if reviewable_document_ids.count
     @accessible_document_ids.flatten!
   end
 
