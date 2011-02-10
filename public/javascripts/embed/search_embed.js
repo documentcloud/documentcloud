@@ -10,52 +10,41 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
     searchUrl     : searchUrl,
     originalQuery : opts['q'],
     per_page      : 12,
-    order         : 'score'
+    order         : 'score',
+    search_bar    : true,
+    page          : 1
   }, opts);
   
   var apiOptions = {
-    q        : opts['q'],
-    callback : 'dc.loadJSON',
-    per_page : opts['per_page'],
-    order    : opts['order']
+    q              : opts['q'],
+    original_query : opts['originalQuery'],
+    callback       : 'dc.loadSearchEmbedCallback',
+    per_page       : opts['per_page'],
+    order          : opts['order'],
+    page           : opts['page']
   };
   $.getScript(searchUrl + '?' + $.param(apiOptions));
 };
 
-dc.loadJSON = function(json) {
-  var query = Inflector.sluggify(json.q);
+dc.loadSearchEmbedCallback = function(json) {
+  var query = Inflector.sluggify(json.original_query);
   dc.embed[query].options['id'] = query;
   _.extend(dc.embed[query].options, {
     total    : json.total,
     per_page : json.per_page,
     page     : json.page
   });
-  dc.embed[query].documents = new dc.EmbedDocumentSet(json.documents, dc.embed[query].options);
-  dc.embed[query].workspace = new dc.EmbedWorkspaceView(dc.embed[query].options);
+  
+  if (dc.embed[query].documents) {
+    dc.embed[query].documents.refresh(json.documents);
+  } else {
+    dc.embed[query].documents = new dc.EmbedDocumentSet(json.documents, dc.embed[query].options);
+  }
+  
+  if (!dc.embed[query].workspace) {
+    dc.embed[query].workspace = new dc.EmbedWorkspaceView(dc.embed[query].options);
+  }
 };
-
-dc.EmbedController = function(query, opts) {
-  var options = {
-    q:              opts.originalQuery + ' ' + query,
-    original_query: opts.originalQuery,
-    callback:       'dc.EmbedControllerCallback',
-    page:           opts.page,
-    per_page:       opts.per_page,
-    order:          opts.order
-  };
-  $.getScript(opts.searchUrl + '?' + $.param(options));
-};
-
-dc.EmbedControllerCallback = function(json) {
-  var originalQuery = Inflector.sluggify(json.original_query);
-  _.extend(dc.embed[originalQuery].options, {
-    total    : json.total,
-    per_page : json.per_page,
-    page     : json.page
-  });
-  dc.embed[originalQuery].documents.refresh(json.documents);
-};
-
 
 dc.EmbedDocument = Backbone.Model.extend({
 
@@ -100,7 +89,9 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   },
   
   render : function() {
-    $(this.el).html(JST['workspace']({}));
+    $(this.el).html(JST['workspace']({
+        options : this.embed.options
+    }));
     this.container.html(this.el);
     
     this.search = this.$('.DC-search-box');
@@ -155,7 +146,8 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
       this.embed.documents.refresh(this.embed.documents.originalModels);
     } else {
       this.embed.originalOptions = _.extend({}, this.embed.options);
-      dc.EmbedController(query, this.embed.options);
+      this.embed.options['q'] = this.embed.options['originalQuery'] + ' ' + query;
+      dc.loadSearchEmbed(this.embed.options['searchUrl'], this.embed.options);
     }
   },
   
@@ -170,16 +162,15 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   },
 
   editPage : function() {
-    console.log(['editPage', this.$('.DC-paginator')]);
     this.$('.DC-paginator').addClass('DC-is-editing');
     this.$('.DC-page-edit').focus().select();
   },
   
   changePage : function() {
-    var page = Math.min(
+    var page = Math.max(1, Math.min(
       parseInt(this.$('.DC-page-edit').val(), 10), 
       Math.ceil(this.embed.options.total / this.embed.options.per_page)
-    );
+    ));
     this.embed.options.page = page;
     this.performSearch(true);
   }
