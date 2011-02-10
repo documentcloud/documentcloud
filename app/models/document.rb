@@ -86,6 +86,7 @@ class Document < ActiveRecord::Base
   # our organization and we're allowed to see it, or it belongs to a project
   # that's been shared with us.
   named_scope :accessible, lambda {|account, org|
+    account && account.accessible_document_ids
     account_memberships = account && account.accessible_document_ids.present?
     access = []
     access << "(documents.access = #{PUBLIC})"
