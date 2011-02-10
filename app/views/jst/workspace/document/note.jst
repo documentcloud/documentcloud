@@ -43,8 +43,16 @@
   </div>
   <div class="note_controls edit">
     <div class="minibutton warn delete_note float_left">Delete</div>
-    <div class="minibutton default save_note float_right">Save</div>
-    <div class="minibutton save_draft_note float_right">Save as Draft</div>
+    <div class="minibutton default save_note float_right">
+      <% if (note.get('access') == 'exclusive') { %>
+        Publish
+      <% } else { %>
+        Save
+      <% } %>
+    </div>
+    <% if (_.contains(['public', 'exclusive'], note.get('access'))) { %>
+      <div class="minibutton save_draft_note float_right">Save as Draft</div>
+    <% } %>
     <div class="minibutton cancel_note float_right">Cancel</div>
   </div>
 </div>

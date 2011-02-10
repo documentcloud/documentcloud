@@ -122,8 +122,8 @@ class Account < ActiveRecord::Base
   end
   
   def reviewer?(resource=nil)
-    if resource
-      DocumentReviewer.exists?({:account_id => self.id, :document_id => resource.document_id})
+    if resource && resource.projects.reviewer_project.present?
+      resource.projects.reviewer_project[0].reviewers.any? {|a| a.id == self.id }
     else
       !hashed_password && role == REVIEWER
     end

@@ -112,11 +112,13 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   _refreshReviewers : function(resp) {
+    this.emailBody = resp.email_body.replace(/\n+/g, '<p>');
+    
     if (this.showingEmailDialog) return;
+    
     _.each(resp.documents, _.bind(function(reviewers, document_id) {
       this.docs.get(document_id).reviewers.refresh(reviewers);
     }, this));
-    this.emailBody = resp.email_body.replace(/\n+/g, '<p>');
     this._renderReviewers();
   },
   
@@ -416,6 +418,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     $body.html(body);
     var $message = this.$('.custom_message');
     $textContainer.appendTo($message);
+    this._hideCustomEmail();
   },
   
   _sendInstructions : function() {
