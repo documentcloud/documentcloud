@@ -12,10 +12,10 @@ dc.model.UploadDocument = Backbone.Model.extend({
     var file = attrs.file;
     if (file) {
       delete attrs.file;
-      attrs.title     = Inflector.titleize(file.name.replace(this.FILE_EXTENSION_MATCHER, ''));
-      var match       = file.name.match(this.FILE_EXTENSION_MATCHER);
+      attrs.title     = Inflector.titleize(file.fileName.replace(this.FILE_EXTENSION_MATCHER, ''));
+      var match       = file.fileName.match(this.FILE_EXTENSION_MATCHER);
       attrs.extension = match && match[1];
-      attrs.size      = file.size;
+      attrs.size      = file.fileSize;
     }
     Backbone.Model.prototype.set.call(this, attrs);
   },

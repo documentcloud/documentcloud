@@ -23,8 +23,8 @@
       <div id="project_controls" class="block">
         <form id="new_document_form" action="/import/upload_document" method="POST" enctype="multipart/form-data" target="upload_iframe">
           <input id="new_document_project" name="project_id" type="text" style="display:none;" value="" />
-          <input id="new_document_input" name="file" type="file" style="display:none;" />
-          <iframe id="upload_iframe" name="upload_iframe" src ="about:blank" class="hidden_iframe">
+          <input id="new_document_input" name="file" type="file" multiple />
+          <iframe id="upload_iframe" name="upload_iframe" src="about:blank" class="hidden_iframe">
           </iframe>
         </form>
         <div class="float_left">

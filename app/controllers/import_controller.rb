@@ -11,7 +11,7 @@ class ImportController < ApplicationController
     return json(nil, 409) unless params[:file]
     @document = Document.upload(params, current_account, current_organization)
     @project_id = params[:project]
-    if params[:flash]
+    if params[:in_workspace]
       json @document
     else
       # Render the HTML/script...

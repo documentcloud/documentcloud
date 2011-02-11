@@ -71,6 +71,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     if (this.options.insertPages) {
       uploadUrl = '/documents/' + this.options.documentId + '/upload_insert_document';
     }
+<<<<<<< HEAD
     this._uploadify = $('#new_document');
     this._uploadify.uploadify({
       uploader      : '/flash/uploadify.swf',
@@ -91,38 +92,84 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       onProgress    : this._onProgress,
       onComplete    : this._onComplete,
       onAllComplete : this._onAllComplete
+=======
+    this.button = $('#new_document_form');
+    this.button.fileUpload({
+        url        : uploadUrl,
+        initUpload : this._onSelect,
+        onAbort    : this.cancelUpload,
+        onProgress : this._onProgress,
+        onLoad     : this._onComplete
+>>>>>>> 8022a9c... First stab at using new HTML5 uploader instead of Flash uploadify. Uploads successfully. Still need to check insertPages.
     });
+    // this.button.uploadify({
+    //   uploader      : '/flash/uploadify.swf',
+    //   script        : uploadUrl,
+    //   auto          : false,
+    //   multi         : true,
+    //   wmode         : 'transparent',
+    //   fileDataName  : 'file',
+    //   hideButton    : true,
+    //   width         : this.button.outerWidth(true),
+    //   height        : this.button.outerHeight(true),
+    //   scriptData    : {},
+    //   onSelect      : _.bind(this._onSelect, this),
+    //   onSelectOnce  : this._onSelectOnce,
+    //   onCancel      : this._onCancel,
+    //   onStarted     : this._onStarted,
+    //   onOpen        : this._onOpen,
+    //   onProgress    : this._onProgress,
+    //   onComplete    : this._onComplete,
+    //   onAllComplete : this._onAllComplete
+    // });
     this._uploadIndex = 0;
+<<<<<<< HEAD
+=======
+    // if (!$('object#new_documentUploader').length) this.setupFileInput();
+  },
+
+  // If flash is disabled, we fall back to a regular invisible file input field.
+  setupFileInput : function() {
+    var input = $('#new_document_input');
+    input.show().change(_.bind(function() {
+      this._project = _.first(Projects.selected());
+      $('#new_document_project').val(this._project ? this._project.id : '');
+      $('#new_document_form').submit();
+    }, this));
+>>>>>>> 8022a9c... First stab at using new HTML5 uploader instead of Flash uploadify. Uploads successfully. Still need to check insertPages.
   },
 
   // Return false so that Uploadify does not create its own progress bars.
-  _onSelect : function(e, queueId, fileObj) {
+  _onSelect : function(e, files, index, xhr, handler, callback) {
+    console.log(['select file', files[index], handler]);
+    var file = files[index];
     this.collection.add(new dc.model.UploadDocument({
-      id        : queueId,
-      file      : fileObj,
-      position  : this.collection.length
+      id          : Inflector.sluggify(file.fileName),
+      uploadIndex : index,
+      file        : file,
+      position    : this.collection.length,
+      handler     : handler,
+      startUpload : callback
     }));
-    return false;
-  },
-
-  _onSelectOnce : function(e, data) {
-    if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
-      this.close();
-      return dc.ui.Dialog.alert("You can only upload documents less than 200MB in size. Please <a href=\"/help/troubleshooting\">optimize your document</a> before continuing.");
-    }
-    this.render();
-    if (this.options.autoStart) {
-      this.button.uploadifyUpload();
+    
+    if (index == files.length-1) {
+      if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
+        this.close();
+        return dc.ui.Dialog.alert("You can only upload documents less than 200MB in size. Please <a href=\"/help/troubleshooting\">optimize your document</a> before continuing.");
+      }
+      this.render();
+      if (this.options.autoStart) {
+        callback();
+      }
     }
   },
 
   // Cancel an upload by file queue id.
-  cancelUpload : function(id) {
+  cancelUpload : function(uploadIndex) {
     if (this.collection.length <= 1) {
       this.error('You must upload at least one document.');
       return false;
     }
-    this.button.uploadifyCancel(id);
     return true;
   },
 
@@ -132,12 +179,20 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   // Called immediately before file to POSTed to server.
+<<<<<<< HEAD
   _onStarted : function(e, queueId) {
     this._uploadIndex++;
     var attrs = this._tiles[queueId].serialize();
     this.collection.get(queueId).set(attrs);
     attrs.session_key = encodeURIComponent(dc.app.cookies.get('document_cloud_session'));
     attrs.flash = true;
+=======
+  _uploadData : function(id) {
+    var attrs = this._tiles[id].serialize();
+    this.collection.get(id).set(attrs);
+    attrs.session_key = dc.app.cookies.get('document_cloud_session');
+    attrs.in_workspace = true;
+>>>>>>> 8022a9c... First stab at using new HTML5 uploader instead of Flash uploadify. Uploads successfully. Still need to check insertPages.
     attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
     if (this._project) attrs.project = this._project.id;
     if (_.isNumber(this.options.insertPageAt)) attrs.insert_page_at = this.options.insertPageAt;
@@ -146,9 +201,11 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     if (this.options.documentId)   attrs.document_id = this.options.documentId;
     if (this.options.insertPages)  attrs.document_number = this._uploadIndex;
     if (this.options.insertPages)  attrs.document_count = this.collection.length;
-    this.button.uploadifySettings('scriptData', attrs, true);
     if (!this.options.autoStart) this.showSpinner();
     this._list[0].scrollTop = 0;
+    
+    console.log(['onStarted', id, attrs]);
+    return attrs;
   },
 
   // Show the progress bar when the uploads start.
@@ -157,13 +214,22 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   // Return false so Uploadify doesn't try to update missing fields (from onSelect).
-  _onProgress : function(e, queueId, fileObj, data) {
-    this._tiles[queueId].setProgress(data.percentage);
-    return false;
+  _onProgress : function(e, files, index, xhr, handler) {
+    var id         = Inflector.sluggify(files[index].fileName);
+    var percentage = parseInt((e.loaded / e.total) * 100, 10);
+    console.log(['progress', id, percentage, this._tiles[id]]);
+
+    this._tiles[id].setProgress(percentage);
   },
 
-  _onComplete : function(e, queueId, fileObj, resp, data) {
-    resp = JSON.parse(resp);
+  _onComplete : function(e, files, index, xhr, handler) {
+    console.log(['complete', e, files[index], xhr, handler]);
+    var resp = JSON.parse(xhr.responseText);
+    var id   = Inflector.sluggify(files[index].fileName);
+    console.log(['onComplete', resp]);
+    
+    this._tiles[id].setProgress(100);
+    
     if (resp.bad_request) {
       return this.error("Upload failed.");
     } else if (!this.options.insertPages) {
@@ -172,10 +238,16 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     } else if (this.options.insertPages) {
       this.documentResponse = response;
     }
-    this._tiles[queueId].hide();
+    
+    this._tiles[id].hide();
+    this._uploadIndex -= 1;
+    
+    if (this._uploadIndex <= 0) {
+      this._onAllComplete();
+    }
   },
 
-  _onAllComplete : function(e, data) {
+  _onAllComplete : function() {
     this.hideSpinner();
     if (this.options.insertPages) {
       try {
@@ -220,11 +292,25 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       return this.error('Please enter a title for ' + (num == 1 ? 'the document.' : 'all documents.'));
     }
     this.$('.ok').setMode('not', 'enabled');
-    this.button.uploadifyUpload();
+    this.startUpload();
   },
 
+  startUpload : function() {
+    var i = 0;
+    var tiles = this._tiles;
+    this._uploadIndex = this.collection.length;
+    
+    this.collection.each(_.bind(function(doc) {
+      _.delay(_.bind(function() {
+        doc.get('handler').formData = this._uploadData(doc.get('id'));
+        doc.get('startUpload')();
+        tiles[doc.get('id')].startProgress();
+      }, this), i*500);
+      i += 1;
+    }, this));
+  },
+  
   cancel : function() {
-    this.button.uploadifyClearQueue();
     this.close();
   },
 
@@ -270,7 +356,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
   },
 
   removeUploadFile : function() {
-    if (dc.app.uploader.cancelUpload(this.model.id)) {
+    if (dc.app.uploader.cancelUpload(this.model.get('uploadIndex'))) {
       this.hide();
       UploadDocuments.remove(this.model);
     }
@@ -299,7 +385,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
   setProgress : function(percentage) {
     if (percentage <= this._percentage) return;
     this._percentage = percentage;
-    this._progress.stop(true).css({width: percentage + '%'}, {queue: false, duration: 150});
+    this._progress.stop(true).animate({width: percentage + '%'}, {queue: false, duration: 400});
   },
 
   ensureTitle : function() {
