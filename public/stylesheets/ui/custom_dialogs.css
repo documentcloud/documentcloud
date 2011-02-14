@@ -17,6 +17,7 @@
     border-color: #2a955c !important;
   }
   .docalog label {
+    background-color: #000;
     display: block;
     line-height: 25px;
     font-size: 11px;
