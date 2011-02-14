@@ -21,7 +21,7 @@ class SessionCookieMiddleware
     if env['HTTP_USER_AGENT'] =~ FLASH_MATCHER
       req = Rack::Request.new(env)
       if req.params['session_key']
-        base64 = req.params['session_key'].gsub(' ', '%2B')
+        base64 = req.params['session_key']
         env['HTTP_COOKIE'] = "#{@session_key}=#{base64}".freeze
       end
     end

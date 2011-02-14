@@ -122,6 +122,7 @@ class Project < ActiveRecord::Base
     if opts[:include_collaborators]
       attrs[:collaborators] = other_collaborators(acc).map {|c| c.canonical(:include_organization => true) }
     end
+    attrs['title'] ||= "[Untitled Project]"
     attrs.to_json
   end
 

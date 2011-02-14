@@ -136,7 +136,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._uploadIndex++;
     var attrs = this._tiles[queueId].serialize();
     this.collection.get(queueId).set(attrs);
-    attrs.session_key = dc.app.cookies.get('document_cloud_session');
+    attrs.session_key = encodeURIComponent(dc.app.cookies.get('document_cloud_session'));
     attrs.flash = true;
     attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
     if (this._project) attrs.project = this._project.id;
@@ -262,10 +262,10 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
 
   serialize : function() {
     return {
-      title       : this._title.val(),
-      description : this.$('textarea[name=description]').val(),
-      source      : this.$('input[name=source]').val(),
-      access      : this.$('select[name=access]').val()
+      title       : encodeURIComponent(this._title.val()),
+      description : encodeURIComponent(this.$('textarea[name=description]').val()),
+      source      : encodeURIComponent(this.$('input[name=source]').val()),
+      access      : encodeURIComponent(this.$('select[name=access]').val())
     };
   },
 
