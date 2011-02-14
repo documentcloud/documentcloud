@@ -67,7 +67,7 @@
     </ul>
   </div>
 
-  <% if !@current_account %>
+  <% if !@current_account || @current_account.reviewer? %>
 
     <div id="join" class="sidebar_section">
       DocumentCloud is a tool for journalists.<br />
