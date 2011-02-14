@@ -29,7 +29,7 @@ class WorkspaceController < ApplicationController
 
   # /login handles both the login form and the login request.
   def login
-    return redirect_to '/' if current_account && !current_account.reviewer?
+    return redirect_to '/' if current_account && current_account.refresh_credentials(cookies)
     return render unless request.post?
     return redirect_to '/' if Account.log_in(params[:email], params[:password], session, cookies)
     flash[:error] = true

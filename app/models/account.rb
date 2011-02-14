@@ -66,8 +66,13 @@ class Account < ActiveRecord::Base
   def authenticate(session, cookies)
     session['account_id']      = id
     session['organization_id'] = organization_id
-    cookies['dc_logged_in']    = {:value => 'true', :expires => 1.month.from_now, :httponly => true}
+    refresh_credentials(cookies)
     self
+  end
+
+  # Reset the logged-in cookie.
+  def refresh_credentials(cookies)
+    cookies['dc_logged_in'] = {:value => 'true', :expires => 1.month.from_now, :httponly => true}
   end
 
   def slug
