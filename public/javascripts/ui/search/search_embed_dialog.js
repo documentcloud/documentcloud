@@ -25,7 +25,6 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   DEMO_ERROR : 'Demo accounts are not allowed to embed document sets. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.',
 
   DEFAULT_OPTIONS : {
-    width      : null,
     order      : 'title',
     per_page   : 12,
     search_bar : false,
@@ -33,7 +32,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   },
   
   constructor : function() {
-    this.query       = dc.app.searcher.box.value();
+    this.query       = dc.app.searcher.publicQuery();
     this.currentStep = 1;
     
     dc.ui.Dialog.call(this, {mode : 'custom', title : this.displayTitle()});
@@ -49,6 +48,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
       success : _.bind(function(resp) {
         this.restrictedCount = resp.restricted_count;
         this.documentsCount  = dc.app.paginator.query.total;
+        this.publicCount     = this.documentsCount - this.restrictedCount;
         this.render();
       }, this)
     });
@@ -61,12 +61,10 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
       query           : this.query,
       restrictedCount : this.restrictedCount,
       documentsCount  : this.documentsCount,
-      publicCount     : this.documentsCount - this.restrictedCount
+      publicCount     : this.publicCount
     }));
     this._next          = this.$('.next');
     this._previous      = this.$('.previous');
-    this._widthEl       = this.$('input[name=width]');
-    this._embedSizeEl   = this.$('select[name=embed_size]');
     this._orderEl       = this.$('select[name=order]');
     this._perPageEl     = this.$('input[name=per_page]');
     this._titleEl       = this.$('input[name=title]');
@@ -99,17 +97,12 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   },
 
   update : function() {
-    this._toggleDimensions();
     this._renderPerPageLabel();
     this._renderEmbedCode();
   },
 
   embedOptions : function() {
     var options = {};
-    if (this._embedSizeEl.val() == 'fixed') {
-      var width = parseInt(this._widthEl.val(), 10);
-      if (width) options.width = width;
-    }
     options.q          = this.query;
     options.container  = 'DC-search-' + Inflector.sluggify(this.query);
     options.title      = this._titleEl.val();
@@ -129,13 +122,6 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
 
   _loadPreferences : function() {
     var options = _.extend({}, this.DEFAULT_OPTIONS, JSON.parse(dc.app.preferences.get('search_embed_options')));
-    if (options.width) {
-      this._embedSizeEl.val('fixed');
-      this._widthEl.val(options.width);
-    } else {
-      this._embedSizeEl.val('full');
-      this._widthEl.val('');
-    }
     this._orderEl.val(options.order);
     this._perPageEl.val(options.per_page);
     this._searchBarEl.val([options.search_bar ? 'true' : 'false']);
@@ -158,10 +144,6 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     }));
   },
 
-  _toggleDimensions : function() {
-    this.$('.dimensions').toggle(this._embedSizeEl.val() == 'fixed');
-  },
-  
   _renderPerPageLabel : function() {
     var perPage = this._perPageEl.val();
     var $label  = this.$('.publish_option_perpage_sidelabel');
@@ -170,10 +152,10 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     if (!perPage || !parseInt(perPage, 10)) {
       label = '&nbsp;';
     } else {
-      var pages = Math.ceil(this.documentsCount / perPage);
+      var pages = Math.max(1, Math.ceil(this.publicCount / perPage));
       var label = [
-        this.documentsCount,
-        Inflector.pluralize(' document', this.documentsCount),
+        this.publicCount,
+        Inflector.pluralize(' document', this.publicCount),
         ' on ',
         pages,
         Inflector.pluralize(' page', pages)

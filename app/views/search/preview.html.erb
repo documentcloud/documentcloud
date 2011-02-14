@@ -21,7 +21,7 @@
     <div class="DC-embed-preview-title serif">The Daily Planet</div>
     <div id="DC-search-<%= @slug %>"></div>
     <script>
-      dc.loadSearchEmbed('/api/search.js', <%= @options %>);
+      dc.loadSearchEmbed('<%= DC.server_root :ssl => false %>/api/search.js', <%= @options %>);
     </script>
   </div>
 

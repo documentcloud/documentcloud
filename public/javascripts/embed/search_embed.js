@@ -23,6 +23,7 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
     order          : opts['order'],
     page           : opts['page']
   };
+  // searchUrl = searchUrl + _.map(apiOptions, function(v, k) { return '/' + k + '/' + v; }).join('');
   $.getScript(searchUrl + '?' + $.param(apiOptions));
 };
 

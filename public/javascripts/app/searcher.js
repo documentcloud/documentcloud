@@ -63,6 +63,21 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     if (page > max) page = max;
     this.search(this.searchBox.value(), page, callback);
   },
+  
+  publicQuery : function() {
+    var projectName;
+    var query = this.box.value();
+    
+    // Swap out project
+    var projects = [];
+    while (projectName = dc.app.SearchParser.extractProject(query)) {
+      query = query.replace(dc.app.SearchParser.FIRST_PROJECT, '');
+      projects.push(Projects.find(projectName));
+    }
+    query = _.map(projects, function(p) { return 'projectid: ' + p.slug(); }).join(' ') + query;
+    
+    return query;
+  },
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
