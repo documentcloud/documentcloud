@@ -141,7 +141,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Return false so that Uploadify does not create its own progress bars.
   _onSelect : function(e, files, index, xhr, handler, callback) {
-    console.log(['select file', files[index], handler]);
     var file = files[index];
     this.collection.add(new dc.model.UploadDocument({
       id          : Inflector.sluggify(file.fileName),
@@ -204,7 +203,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     if (!this.options.autoStart) this.showSpinner();
     this._list[0].scrollTop = 0;
     
-    console.log(['onStarted', id, attrs]);
     return attrs;
   },
 
@@ -217,16 +215,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   _onProgress : function(e, files, index, xhr, handler) {
     var id         = Inflector.sluggify(files[index].fileName);
     var percentage = parseInt((e.loaded / e.total) * 100, 10);
-    console.log(['progress', id, percentage, this._tiles[id]]);
 
     this._tiles[id].setProgress(percentage);
   },
 
   _onComplete : function(e, files, index, xhr, handler) {
-    console.log(['complete', e, files[index], xhr, handler]);
     var resp = JSON.parse(xhr.responseText);
     var id   = Inflector.sluggify(files[index].fileName);
-    console.log(['onComplete', resp]);
     
     this._tiles[id].setProgress(100);
     
