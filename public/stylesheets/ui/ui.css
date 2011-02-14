@@ -493,6 +493,7 @@ textarea.text_area {
       font: italic 10px/18px Helvetica, Arial;
     }
   .dialog .text, .dialog .custom {
+    background: #000;
     font-size: 16px; line-height: 18px;
   }
     .dialog.alert_dialog .text,
