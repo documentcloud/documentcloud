@@ -11,7 +11,8 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
     per_page      : 12,
     order         : 'score',
     search_bar    : true,
-    page          : 1
+    page          : 1,
+    title         : null
   }, opts);
   
   var apiOptions = {
@@ -119,7 +120,8 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
       page       : options.page,
       page_count : Math.ceil(options.total / options.per_page),
       from       : (options.page-1) * options.per_page,
-      to         : Math.min(options.page * options.per_page, options.total)
+      to         : Math.min(options.page * options.per_page, options.total),
+      title      : options.title
     }));
   },
   

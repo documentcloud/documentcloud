@@ -26,8 +26,8 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
 
   DEFAULT_OPTIONS : {
     width      : null,
-    order      : 'page_count',
-    per_page   : 10,
+    order      : 'title',
+    per_page   : 12,
     search_bar : false,
     title      : null
   },
@@ -112,6 +112,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     }
     options.q          = this.query;
     options.container  = 'DC-search-' + Inflector.sluggify(this.query);
+    options.title      = this._titleEl.val();
     options.order      = this._orderEl.val();
     options.per_page   = this._perPageEl.val();
     options.search_bar = this._searchBarEl.filter(':checked').val() == 'true';
@@ -167,7 +168,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     var label;
     
     if (!perPage || !parseInt(perPage, 10)) {
-      label = '';
+      label = '&nbsp;';
     } else {
       var pages = Math.ceil(this.documentsCount / perPage);
       var label = [
@@ -175,12 +176,11 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
         Inflector.pluralize(' document', this.documentsCount),
         ' on ',
         pages,
-        Inflector.pluralize(' page', pages),
-        '.'
+        Inflector.pluralize(' page', pages)
       ].join('');
     }
     
-    $label.text(label);
+    $label.html(label);
   },
 
   nextStep : function() {

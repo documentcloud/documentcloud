@@ -17,10 +17,13 @@
 </head>
 <body style="margin:0; padding:0;">
 
-  <div id="DC-search-<%= @slug %>"></div>
-  <script>
-    dc.loadSearchEmbed('/api/search.js', <%= @options %>);
-  </script>
+  <div class="DC-embed-preview">
+    <div class="DC-embed-preview-title serif">The Daily Planet</div>
+    <div id="DC-search-<%= @slug %>"></div>
+    <script>
+      dc.loadSearchEmbed('/api/search.js', <%= @options %>);
+    </script>
+  </div>
 
 </body>
 </html>

@@ -40,6 +40,13 @@
  font-family: "Lucida Grande","Lucida Sans Unicode", Helvetica, Arial;
 }
 
+.DC-title { 
+  font-size: 24px;
+  margin: 6px 0 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
 /* ========== */
 /* = Search = */
 /* ========== */
@@ -118,7 +125,7 @@
 
 .DC-search-embed .DC-document-tile {
   float: left;
-  width: 250px;
+  width: 230px;
   border: 1px solid transparent;
   height: 86px;
   margin: 2px 8px 12px 0;
@@ -225,7 +232,8 @@
   text-align: right;
   border-top: 1px solid #ccc;
 }
-  .DC-paginator .DC-logo {
+  .DC-paginator .DC-logo img {
+    height: 20px;
   }
   .DC-paginator .DC-paginator-description {
     float: left;
@@ -294,3 +302,21 @@
   width: 18px;
   height: 18px;
 }
+
+/* ================= */
+/* = Embed Preview = */
+/* ================= */
+
+.DC-embed-preview {
+  width: 960px;
+  margin: 0 auto;
+}
+  .DC-embed-preview .DC-embed-preview-title {
+    font-size: 76px;
+    text-align: center;
+    padding: 36px 0 24px;
+    font-weight: bold;
+    border-bottom: 2px solid #808080;
+    margin: 0 0 36px 0;
+    text-shadow: 1px 1px 0 #E6E6E6;
+  }
