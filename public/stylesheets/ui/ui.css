@@ -464,6 +464,10 @@ textarea.text_area {
   z-index: 1000;
   text-align: center;
   color: #fff;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, .97);
+  -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+  box-shadow: 1px 2px 7px #333; -webkit-box-shadow: 1px 2px 7px #333; -moz-box-shadow: 1px 2px 7px #333;
   cursor: move;
 }
   .dialog.alert_dialog,
@@ -478,15 +482,6 @@ textarea.text_area {
   }
   .dialog.prompt_dialog {
     width: 417px;
-  }
-  .dialog .dialog_background {
-    position: absolute;
-    z-index: -1;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: #000;
-    opacity: 0.97; filter: alpha(opacity=97);
-    -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
-    box-shadow: 1px 2px 7px #333; -webkit-box-shadow: 1px 2px 7px #333; -moz-box-shadow: 1px 2px 7px #333;
   }
   .dialog .title {
     margin-bottom: 29px;
@@ -513,6 +508,7 @@ textarea.text_area {
     top: 34px; right: 30px;
     font-size: 10px;
     color: #999;
+    background-color: #000;
   }
     .dialog .information.error {
       color: #f00;
