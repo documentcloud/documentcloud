@@ -21,7 +21,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   
   STEP_TITLES : [
     "Step One: ",
-    "Step Two: Send emails to reviewers"
+    "Step Two: Email Your Reviewers"
   ],
 
   initialize : function(options) {
