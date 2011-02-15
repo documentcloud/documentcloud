@@ -68,7 +68,10 @@
       text-decoration: underline;
     }
     #control_panel .button .dash {
+      font-size: 10px;
       color: #999;
+      position: relative;
+      top: -1px;
     }
       #control_panel .button:hover .dash {
         text-decoration: none;
