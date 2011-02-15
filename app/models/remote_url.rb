@@ -7,6 +7,11 @@ class RemoteUrl < ActiveRecord::Base
     :group => 'document_id, url'
   }
 
+  named_scope :by_document, {
+    :select => 'sum(hits) AS hits, document_id',
+    :group => 'document_id'
+  }
+
   # Make sure to truncate the URL to 255 characters...
   def self.record_hits(doc_id, url, hits)
     # Write the RemoteUrl row.
@@ -35,18 +40,19 @@ class RemoteUrl < ActiveRecord::Base
   end
 
   def self.top_documents(days=7, options={})
-    urls = self.aggregated.all({
+    hit_documents = self.by_document.all({
       :conditions => ['date_recorded > ?', days.days.ago],
       :having => ['sum(hits) > 0'],
       :order => 'hits desc'
     }.merge(options))
-    docs = Document.find_all_by_id(urls.map {|u| u.document_id }).inject({}) do |memo, doc|
+    docs = Document.find_all_by_id(hit_documents.map {|u| u.document_id }).inject({}) do |memo, doc|
       memo[doc.id] = doc
       memo
     end
-    urls.select {|url| !!docs[url.document_id] }.map do |url|
+    hit_documents.select {|url| !!docs[url.document_id] }.map do |url|
       url_attrs = url.attributes
-      url_attrs[:id] = "#{url.document_id}:#{url.url}"
+      url_attrs[:url] = docs[url.document_id].published_url
+      url_attrs[:id] = "#{url.document_id}:#{url_attrs[:url]}"
       first_hit = RemoteUrl.first(:select => 'created_at',
                                   :conditions => {:document_id => url['document_id']},
                                   :order => 'created_at ASC')
