@@ -7,7 +7,11 @@ class DocumentReorderPages < DocumentModBase
   def process
     begin
       prepare_pdf
-      reorder_pages options['page_order']
+      if document.assert_page_order(options['page_order'])
+        reorder_pages options['page_order']
+      else
+        raise "Inexplicable page order: #{options.inspect} (#{document.inspect})"
+      end
     rescue Exception => e
       fail_document
       LifecycleMailer.deliver_exception_notification(e)
@@ -17,7 +21,7 @@ class DocumentReorderPages < DocumentModBase
   end
 
   private
-
+  
   def reorder_pages(page_order)
     # Rewrite PDF with pdftk, using new page order
     cmd = "pdftk #{@pdf} cat #{page_order.join(' ')} output #{document.slug}.pdf_temp"
@@ -74,15 +78,25 @@ class DocumentReorderPages < DocumentModBase
     # Update annotations.
     annotations = Annotation.find_all_by_document_id(document.id)
     annotations.each do |annotation|
-      annotation.page_number = page_order.index(annotation.page_number) + 1
-      annotation.save
+      annotation_index = page_order.index(annotation.page_number)
+      if annotation_index
+        annotation.page_number = annotation_index + 1
+        annotation.save
+      else
+        annotation.destroy
+      end
     end
 
     # Update sections.
     sections = Section.find_all_by_document_id(document.id)
     sections.each do |section|
-      section.page_number = page_order.index(section.page_number) + 1
-      section.save
+      section_index = page_order.index(section.page_number)
+      if section_index
+        section.page_number = section_index + 1
+        section.save
+      else
+        section.destroy
+      end
     end
 
     document.reindex_all!(access)

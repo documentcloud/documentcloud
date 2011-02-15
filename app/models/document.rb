@@ -545,6 +545,13 @@ class Document < ActiveRecord::Base
       }
     }.to_json}).body)
   end
+  
+  def assert_page_order(page_order)
+    same_size = page_order.uniq.length == self.page_count
+    same_max  = page_order.max == self.page_count
+    same_min  = page_order.min == 1
+    same_size && same_max && same_min
+  end
 
   def queue_import(eventual_access = nil, text_only = false, email_me = false, force_ocr = false)
     eventual_access ||= self.access || PRIVATE
