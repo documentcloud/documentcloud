@@ -87,7 +87,11 @@ class ApplicationController < ActionController::Base
   end
 
   def prefer_secure
-    redirect_to :protocol => 'https://' if !request.ssl? && cookies['dc_logged_in'] == 'true'
+    secure_only if cookies['dc_logged_in'] == 'true'
+  end
+
+  def secure_only
+    redirect_to :protocol => 'https://' if !request.ssl?
   end
 
   def current_account
