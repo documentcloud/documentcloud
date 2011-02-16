@@ -31,7 +31,8 @@ class WorkspaceController < ApplicationController
   def login
     return redirect_to '/' if current_account && current_account.refresh_credentials(cookies)
     return render unless request.post?
-    return redirect_to '/' if Account.log_in(params[:email], params[:password], session, cookies)
+    next_url = (params[:next] && CGI.unescape(params[:next])) || '/'
+    return redirect_to next_url if Account.log_in(params[:email], params[:password], session, cookies)
     flash[:error] = true
     begin
       redirect_to :back

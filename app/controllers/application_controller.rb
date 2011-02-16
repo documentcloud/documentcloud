@@ -109,6 +109,7 @@ class ApplicationController < ActionController::Base
 
   # Return forbidden when the access is unauthorized.
   def forbidden
+    @next = CGI.escape(request.request_uri)
     render :file => "#{Rails.root}/public/403.html", :status => 403
     false
   end
