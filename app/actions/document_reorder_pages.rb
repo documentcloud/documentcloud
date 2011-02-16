@@ -14,14 +14,14 @@ class DocumentReorderPages < DocumentModBase
       end
     rescue Exception => e
       fail_document
-      LifecycleMailer.deliver_exception_notification(e)
+      LifecycleMailer.deliver_exception_notification(e, options)
       raise e
     end
     document.id
   end
 
   private
-  
+
   def reorder_pages(page_order)
     # Rewrite PDF with pdftk, using new page order
     cmd = "pdftk #{@pdf} cat #{page_order.join(' ')} output #{document.slug}.pdf_temp"
@@ -56,9 +56,9 @@ class DocumentReorderPages < DocumentModBase
       page = Page.find_by_document_id_and_page_number(document.id, p)
       unless page
         LifecycleMailer.deliver_logging_email("Reorder pages", {
-          :document_id => document.id, 
-          :document => document, 
-          :page_count => document.page_count, 
+          :document_id => document.id,
+          :document => document,
+          :page_count => document.page_count,
           :page_order => page_order
         })
       end

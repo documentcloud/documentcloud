@@ -22,7 +22,7 @@ class DocumentImport < CloudCrowd::Action
       when 'images' then process_images
       end
     rescue Exception => e
-      LifecycleMailer.deliver_exception_notification(e)
+      LifecycleMailer.deliver_exception_notification(e, options)
       raise e
     end
     document.id
@@ -56,7 +56,7 @@ class DocumentImport < CloudCrowd::Action
       opts[:ocr] = true if options['force_ocr']
       Docsplit.extract_text(@pdf, opts)
     rescue Exception => e
-      LifecycleMailer.deliver_exception_notification(e)
+      LifecycleMailer.deliver_exception_notification(e, options)
     end
     Docsplit.extract_length(@pdf).times do |i|
       page_number = i + 1

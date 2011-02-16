@@ -17,7 +17,7 @@ class DocumentRemovePages < DocumentModBase
       end
     rescue Exception => e
       fail_document
-      LifecycleMailer.deliver_exception_notification(e)
+      LifecycleMailer.deliver_exception_notification(e, options)
       raise e
     end
     document.id

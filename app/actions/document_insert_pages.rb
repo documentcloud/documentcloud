@@ -17,7 +17,7 @@ class DocumentInsertPages < DocumentModBase
       document.reorder_pages(new_page_order, access)
     rescue Exception => e
       fail_document
-      LifecycleMailer.deliver_exception_notification(e)
+      LifecycleMailer.deliver_exception_notification(e, options)
       raise e
     end
     document.id
