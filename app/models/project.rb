@@ -54,13 +54,16 @@ class Project < ActiveRecord::Base
 
   def add_collaborator(account)
     self.collaborations.create(:account => account)
-    update_reviewer_counts if reviewer_project
+    update_reviewer_counts
     @collaborator_ids = nil
   end
 
   def remove_collaborator(account)
     self.collaborations.owned_by(account).first.destroy
-    update_reviewer_counts if reviewer_project
+    update_reviewer_counts
+    if reviewer_project && self.collaborations.count == 0
+      self.destroy
+    end
     @collaborator_ids = nil
   end
 
@@ -73,7 +76,7 @@ class Project < ActiveRecord::Base
   end
   
   def create_default_collaboration
-    add_collaborator self.account if not reviewer_project
+    add_collaborator self.account unless reviewer_project
   end
 
   def other_collaborators(account)

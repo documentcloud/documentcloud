@@ -35,22 +35,24 @@ dc.model.Account = Backbone.Model.extend({
   },
 
   allowedToEdit: function(model) {
-    return this.ownsOrCollaborates(model) || this.shares(model);
+    return this.ownsOrOrganization(model) || this.collaborates(model);
   },
 
-  ownsOrCollaborates: function(model) {
+  ownsOrOrganization: function(model) {
     return (model.get('account_id') == this.id) ||
-           (model.get('organization_id') == this.get('organization_id') && this.isEditor());
+           (model.get('organization_id') == this.get('organization_id') && 
+            this.isEditor() &&
+            _.contains([dc.access.PUBLIC, dc.access.ORGANIZATION], model.get('access')));
   },
 
-  shares: function(model) {
+  collaborates: function(model) {
     var docId = model.get('document_id') || model.id;
     for (var i = 0, l = Projects.length; i < l; i++) {
       var project = Projects.models[i];
-      if (_.include(project.get('document_ids'), docId)) {
+      if (_.include(project.get('document_ids'), docId) && !project.isReviewerProject()) {
         for (var j = 0, k = project.collaborators.length; j < k; j++) {
           var collab = project.collaborators.models[j];
-          if (collab.ownsOrCollaborates(model)) return true;
+          if (collab.ownsOrOrganization(model)) return true;
         }
       }
     }

@@ -451,7 +451,30 @@ class Document < ActiveRecord::Base
     return File.join(slug, page_text_template) if opts[:local]
     File.join(DC.server_root, File.join(pages_path, page_text_template))
   end
-
+  
+  def reviewers
+    project = Project.find_by_reviewer_document_id(id)
+    return [] unless project
+    project.collaborators
+  end
+  
+  def add_reviewer(account, owner)
+    project = Project.find_by_reviewer_document_id(id)
+    if project.nil?
+      project = Project.create({
+        :reviewer_document_id => id,
+        :account_id           => owner.id
+      })
+    end
+    project.set_documents([id])
+    project.add_collaborator account
+  end
+  
+  def remove_reviewer(account)
+    project = Project.find_by_reviewer_document_id(id)
+    project.remove_collaborator(account)
+  end
+  
   def asset_store
     @asset_store ||= DC::Store::AssetStore.new
   end

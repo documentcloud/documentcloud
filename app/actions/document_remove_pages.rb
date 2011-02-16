@@ -108,9 +108,7 @@ class DocumentRemovePages < DocumentModBase
       asset_store.delete_page_text(document, p)
     end
 
-    if not @insert_after_remove
-      document.reindex_all!(access)
-    end
+    document.reindex_all!(access) unless @insert_after_remove
   end
 
 end
