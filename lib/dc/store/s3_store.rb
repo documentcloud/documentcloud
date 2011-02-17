@@ -35,6 +35,10 @@ module DC
         bucket.get(path)
       end
 
+      def read_size(path)
+        bucket.key(path).size
+      end
+
       def authorized_url(path)
         interface = Thread.current[:ssl] ? secure_s3.interface : s3.interface
         interface.generate_link 'GET', {:url => "#{BUCKET_NAME}/#{CGI::escape(path)}"}, AUTH_PERIOD
