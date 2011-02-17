@@ -150,6 +150,38 @@ ALTER SEQUENCE collaborations_id_seq OWNED BY collaborations.id;
 
 
 --
+-- Name: document_reviewers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE document_reviewers (
+    id integer NOT NULL,
+    account_id integer NOT NULL,
+    document_id integer NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: document_reviewers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE document_reviewers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: document_reviewers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE document_reviewers_id_seq OWNED BY document_reviewers.id;
+
+
+--
 -- Name: documents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -159,9 +191,9 @@ CREATE TABLE documents (
     account_id integer NOT NULL,
     access integer NOT NULL,
     page_count integer DEFAULT 0 NOT NULL,
-    title character varying(255) NOT NULL,
+    title character varying(1000) NOT NULL,
     slug character varying(255) NOT NULL,
-    source character varying(255),
+    source character varying(1000),
     language character varying(3),
     description text,
     calais_id character varying(40),
@@ -174,7 +206,8 @@ CREATE TABLE documents (
     publish_at timestamp without time zone,
     text_changed boolean DEFAULT false NOT NULL,
     hit_count integer DEFAULT 0 NOT NULL,
-    public_note_count integer DEFAULT 0 NOT NULL
+    public_note_count integer DEFAULT 0 NOT NULL,
+    document_reviewers_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -512,7 +545,7 @@ CREATE TABLE sections (
     organization_id integer NOT NULL,
     account_id integer NOT NULL,
     document_id integer NOT NULL,
-    title character varying(255) NOT NULL,
+    title text NOT NULL,
     page_number integer NOT NULL,
     access integer NOT NULL
 );
@@ -594,6 +627,13 @@ ALTER TABLE app_constants ALTER COLUMN id SET DEFAULT nextval('app_constants_id_
 --
 
 ALTER TABLE collaborations ALTER COLUMN id SET DEFAULT nextval('collaborations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE document_reviewers ALTER COLUMN id SET DEFAULT nextval('document_reviewers_id_seq'::regclass);
 
 
 --
@@ -710,6 +750,14 @@ ALTER TABLE ONLY app_constants
 
 ALTER TABLE ONLY collaborations
     ADD CONSTRAINT collaborations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: document_reviewers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY document_reviewers
+    ADD CONSTRAINT document_reviewers_pkey PRIMARY KEY (id);
 
 
 --
@@ -1040,3 +1088,9 @@ INSERT INTO schema_migrations (version) VALUES ('20110111192934');
 INSERT INTO schema_migrations (version) VALUES ('20110113204915');
 
 INSERT INTO schema_migrations (version) VALUES ('20110114143536');
+
+INSERT INTO schema_migrations (version) VALUES ('20101110170100');
+
+INSERT INTO schema_migrations (version) VALUES ('20101214171909');
+
+INSERT INTO schema_migrations (version) VALUES ('20110217161649');

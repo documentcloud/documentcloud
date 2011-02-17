@@ -22,7 +22,9 @@ class Entity < ActiveRecord::Base
     DC::CALAIS_MAP[string.underscore.to_sym]
   end
 
+  # Truncate and titlize the value, if necessary.
   def self.normalize_value(string)
+    string = string.mb_chars[0...255].to_s
     return string unless string.length > 5 && string.match(ALL_CAPS)
     string.titleize
   end

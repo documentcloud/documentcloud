@@ -1,5 +1,6 @@
 class Document < ActiveRecord::Base
   include DC::Access
+  include ActionView::Helpers::TextHelper
 
   # Accessors and constants:
 
@@ -577,7 +578,7 @@ class Document < ActiveRecord::Base
       }
     }.to_json}).body)
   end
-  
+
   def assert_page_order(page_order)
     same_size = page_order.uniq.length == self.page_count
     same_max  = page_order.max == self.page_count
@@ -691,10 +692,11 @@ class Document < ActiveRecord::Base
     slugged = title.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n, '').to_s # As ASCII
     slugged.gsub!(/[']+/, '') # Remove all apostrophes.
     slugged.gsub!(/\W+/, ' ') # All non-word characters become spaces.
-    slugged.strip!            # strip surrounding whitespace
-    slugged.downcase!         # ensure lowercase
-    slugged.gsub!(' ', '-')   # dasherize spaces
-    self.slug = slugged
+    slugged.strip!            # Strip surrounding whitespace.
+    slugged.downcase!         # Ensure lowercase.
+    slugged.gsub!(' ', '-')   # Dasherize spaces.
+    # Truncate to the final dash.
+    self.slug = truncate slugged, :length => 50, :omission => '', :separator => '-'
   end
 
   def background_update_asset_access(access_level)
