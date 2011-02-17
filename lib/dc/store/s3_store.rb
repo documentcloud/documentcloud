@@ -45,6 +45,7 @@ module DC
       end
 
       def save_pdf(document, pdf_path, access=DEFAULT_ACCESS)
+        document.update_attributes :file_size => File.size?(pdf_path)
         save_file(pdf_path, document.pdf_path, access)
       end
 

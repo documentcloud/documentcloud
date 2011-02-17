@@ -31,6 +31,7 @@ module DC
 
       def save_pdf(document, pdf_path, access=nil)
         ensure_directory(document.path)
+        document.update_attributes :file_size => File.size?(pdf_path)
         FileUtils.cp(pdf_path, local(document.pdf_path))
       end
 
