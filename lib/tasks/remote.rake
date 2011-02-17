@@ -76,7 +76,7 @@ end
 def worker_servers
   case RAILS_ENV
   when 'staging'    then ['staging.dcloud.org']
-  when 'production' then ['worker01.documentcloud.org', 'worker02.documentcloud.org']
+  when 'production' then ['worker01.documentcloud.org', 'worker02.documentcloud.org', 'worker03.documentcloud.org', 'worker04.documentcloud.org']
   end
 end
 
