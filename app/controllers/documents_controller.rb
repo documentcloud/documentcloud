@@ -23,7 +23,6 @@ class DocumentsController < ApplicationController
         if current_account
           @allowed_to_edit = current_account.allowed_to_edit?(current_document)
           @allowed_to_review = current_account.reviewer?(current_document)
-          @annotation_author_info = Annotation.author_info(doc)
           @edits_enabled = true
         end
       end

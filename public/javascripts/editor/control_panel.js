@@ -21,6 +21,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   render : function() {
+    var accessWorkspace = _.contains(dc.model.Account.COLLABORATOR_ROLES, dc.account.role);
     this.viewer = currentDocument;
     this._page = this.viewer.$('.DV-textContents');
     $(this.el).html(JST['control_panel']({
@@ -33,7 +34,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
   
   showReviewerWelcome : function() {
-    if (dc.app.editor.accountRole == dc.model.Account.prototype.REVIEWER) {
+    if (dc.account.role == dc.model.Account.prototype.REVIEWER) {
       dc.ui.Dialog.alert('Write annotations.', {title: 'Reviewing "'+currentDocument.api.getTitle()+'"'});
     }
   },

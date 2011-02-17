@@ -3,12 +3,10 @@ dc.app.editor = new Backbone.View();
 _.extend(dc.app.editor, {
 
   // Initializes the workspace, binding it to <body>.
-  initialize : function(docId, accountName, accountRole, options) {
+  initialize : function(docId, options) {
     this.el = $('body')[0];
     this.docId = docId;
     this.options = options;
-    this.accountName = accountName;
-    this.accountRole = accountRole;
     _.bindAll(this, 'closeAllEditors', 'confirmStateChange');
     _.defer(_.bind(function() {
       dc.app.hotkeys.initialize();

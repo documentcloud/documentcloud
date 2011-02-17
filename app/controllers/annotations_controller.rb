@@ -5,12 +5,10 @@ class AnnotationsController < ApplicationController
 
   # In the workspace, request a listing of annotations.
   def index
-    annotation_author_info = Annotation.author_info(current_document)
-    annotations = current_document.annotations.accessible(current_account).map do |a|
-        a.author = annotation_author_info[a.account_id]
-        a 
-      end
-    json annotations
+    annotations = current_document.annotations_with_authors(current_account)
+    json annotations do |a|
+      a.canonical
+    end
   end
 
   # Any account can create a private note on any document.
@@ -21,9 +19,12 @@ class AnnotationsController < ApplicationController
     doc = current_document
     return forbidden unless note_attrs[:access] == PRIVATE || current_account.allowed_to_edit?(doc) || current_account.reviewer?(doc)
     expire_page doc.canonical_cache_path if doc.cacheable?
-    json doc.annotations.create(
+    doc.annotations.create(
       note_attrs.merge(:account_id => current_account.id, :organization_id => current_organization.id)
     )
+    json doc.annotations_with_authors(current_account) do |a|
+      a.canonical
+    end
   end
 
   # You can only alter annotations that you've made yourself.

@@ -12,9 +12,12 @@
   DV.jQuery(function() {
     <% if @current_account %>
       var docId = <%= @current_document.id %>;
-      var isOwner = <%= @current_account.allowed_to_edit?(@current_document) %>;
+      var opts        = {
+        isOwner    : <%= @allowed_to_edit %>,
+        isReviewer : <%= @allowed_to_review %>
+      }
       <%= render :partial => 'accounts/current_account.js', :type => :js %>
-      dc.app.editor.initialize(docId, isOwner);
+      dc.app.editor.initialize(docId, opts);
     <% end %>
     currentDocument.$('.DV-logoLink, .DV-footerLogoLink').attr({
       href  : 'http://www.documentcloud.org',

@@ -239,6 +239,15 @@ class Document < ActiveRecord::Base
   def per_page_annotation_counts
     self.annotations.count(:group => 'page_number')
   end
+  
+  def annotations_with_authors(account)
+    annotation_author_info = Annotation.author_info(self, account)
+    annotations = self.annotations.accessible(account).map do |a|
+      a.author = annotation_author_info[a.account_id]
+      a 
+    end
+    annotations
+  end
 
   # Return an array of all of the document entity values for a given type,
   # for Solr indexing purposes.
@@ -661,12 +670,8 @@ class Document < ActiveRecord::Base
     res['published_url']      = remote_url if remote_url
     doc['sections']           = sections.map(&:canonical) if options[:sections]
     if options[:annotations]
-      annotation_author_info = options[:annotation_author_info] || {}
-      doc['annotations']      = annotations.accessible(options[:account]).map do |a|
-        if (author = annotation_author_info[a.account_id])
-          a.author = author
-        end
-        a.canonical 
+      doc['annotations']      = self.annotations_with_authors(options[:account]).map do |a|
+        a.canonical
       end
     end
     doc['canonical_url']      = canonical_url(:html)

@@ -49,6 +49,27 @@ class Annotation < ActiveRecord::Base
     self.accessible(account).count(:conditions => {:document_id => doc_ids}, :group => 'document_id')
   end
 
+  def self.author_info(doc, current_account=nil)
+    account_sql = <<-EOS
+      SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name, 
+                      organizations.name as organization_name 
+      FROM accounts 
+      INNER JOIN annotations   ON annotations.account_id = accounts.id 
+      INNER JOIN organizations ON organizations.id = accounts.organization_id 
+      WHERE (annotations.document_id = #{doc.id})
+    EOS
+    accounts = Account.connection.select_all(account_sql)
+    accounts = accounts.inject({}) do |m, a| 
+      id = a['id'].to_i
+      m[id] = {:full_name         => "#{a['first_name']} #{a['last_name']}", 
+               :organization_name => a['organization_name'],
+               :account_id        => id }
+      m[id][:owns_note] = current_account.id == id if current_account
+      m
+    end
+    accounts
+  end
+  
   def self.public_note_counts_by_organization
     self.unrestricted.count({
       :joins      => [:document],
@@ -67,11 +88,13 @@ class Annotation < ActiveRecord::Base
   
   def canonical
     data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content}
-    data['location'] = {'image' => location} if location
-    data['access'] = 'private'   if access == PRIVATE
-    data['access'] = 'exclusive' if access == EXCLUSIVE
-    data['access'] = 'public'    if access == PUBLIC
-    data['author'] = author[:full_name] if author
+    data['location']            = {'image' => location} if location
+    data['access']              = 'private'   if access == PRIVATE
+    data['access']              = 'exclusive' if access == EXCLUSIVE
+    data['access']              = 'public'    if access == PUBLIC
+    data['author']              = author[:full_name] if author
+    data['author_id']           = author[:account_id] if author
+    data['owns_note']           = author[:owns_note] if author
     data['author_organization'] = author[:organization_name] if author
     data
   end

@@ -61,7 +61,12 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     this.close();
     var set = $(e.target).closest('.DV-set');
     var pageNumber = currentDocument.api.getPageNumberForId(set.attr('data-id'));
-    currentDocument.api.addAnnotation({page : pageNumber, unsaved : true, access : this._kind || 'public'});
+    currentDocument.api.addAnnotation({
+      page            : pageNumber, 
+      unsaved         : true, 
+      access          : this._kind || 'public',
+      owns_note       : true
+    });
   },
 
   // TODO: Clean up!
@@ -112,7 +117,13 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       if (loc.width > 5 && loc.height > 5) {
         var set = $(this._activePage).closest('.DV-set');
         var pageNumber = currentDocument.api.getPageNumberForId(set.attr('data-id'));
-        currentDocument.api.addAnnotation({location : {image : image}, page : pageNumber, unsaved : true, access : this._kind});
+        currentDocument.api.addAnnotation({
+          location        : {image : image}, 
+          page            : pageNumber, 
+          unsaved         : true, 
+          access          : this._kind,
+          owns_note       : true
+        });
       }
       return false;
     }, this);
