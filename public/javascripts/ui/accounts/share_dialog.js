@@ -27,7 +27,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   initialize : function(options) {
     _.bindAll(this, '_renderReviewers', '_refreshReviewers', '_cancelAddReviewer', 
                     '_onAddSuccess', '_onAddError', '_onRemoveSuccess', '_onRemoveError', 
-                    '_showEnterEmail');
+                    '_showEnterEmail', '_nextStep');
     this.renderedAccounts = {};
     this._boundRender     = [];
     this.currentStep      = 1;
@@ -234,9 +234,13 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     if (e.keyCode == 13) this._submitAddReviewer();
   },
   
-  _submitAddReviewer : function(callback) {
+  _submitAddReviewer : function(callback, dismiss_empty) {
     var email = this.$('.reviewer_management input[name=email]').val();
-    if (!email) {
+    if (!email.length && this.accountsToEmail.length && dismiss_empty) {
+      this._cancelAddReviewer();
+      return callback();
+    }
+    if (!email.length) {
       this._focusEmail();
       return this.$('.reviewer_management .error').text('Please enter an email address.');
     }
@@ -497,12 +501,12 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.title(title);
     var last = this.currentStep == this.STEP_TITLES.length;
     
+    this._next.html(last ? 'Finish' : 'Next &raquo;');
+    this.setMode('p'+this.currentStep, 'step');
+    
     if (this.currentStep == 2) {
       this._showReviewersToEmail();
     }
-    
-    this._next.html(last ? 'Finish' : 'Next &raquo;');
-    this.setMode('p'+this.currentStep, 'step');
   },
   
   _displayTitle : function() {
@@ -517,10 +521,13 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   _nextStep : function() {
-    if (this.showingManagement) return this._submitAddReviewer(this._nextStep);
-    if (this.currentStep >= this.STEP_TITLES.length) return this._sendInstructions();
-    this.currentStep += 1;
-    this._setStep();
+    if (this.showingManagement) return this._submitAddReviewer(this._nextStep, true);
+    if (this.currentStep >= this.STEP_TITLES.length) {
+      this._sendInstructions();
+    } else {
+      this.currentStep += 1;
+      this._setStep();
+    }
   },
 
   _previousStep : function() {
