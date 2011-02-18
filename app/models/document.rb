@@ -589,11 +589,14 @@ class Document < ActiveRecord::Base
   def queue_import(eventual_access = nil, text_only = false, email_me = false, force_ocr = false)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
+    large = self.file_size > 1.megabyte
     record_job(DC::Import::CloudCrowdImporter.new.import([id], {
       'id'            => id,
       'access'        => eventual_access,
-      'text_only'     => text_only
-    }).body)
+      'text_only'     => text_only,
+      'email_me'      => email_me,
+      'force_ocr'     => force_ocr
+    }, large).body)
   end
 
   # TODO: Make the to_json an extended form of the canonical.

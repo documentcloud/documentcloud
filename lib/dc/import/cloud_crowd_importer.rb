@@ -10,9 +10,9 @@ module DC
         'access'            => DC::Access::PUBLIC
       }
 
-      def import(urls, options={})
+      def import(urls, options={}, large=false)
         RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-          'action'  => 'document_import',
+          'action'  => large ? 'large_document_import' : 'document_import',
           'inputs'  => urls,
           'options' => DEFAULT_OPTIONS.merge(options),
           'callback_url' => "#{DC.server_root(:ssl => false)}/import/cloud_crowd"
