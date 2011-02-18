@@ -152,6 +152,8 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     var params = this.annotationToParams(anno);
     $.ajax({url : this._baseURL, type : 'POST', data : params, dataType : 'json', success : _.bind(function(resp) {
       anno.server_id = resp.id;
+      anno.author    = resp.author;
+      anno.owns_note = resp.owns_note;
       this._adjustNoteCount(1);
     }, this)});
   },

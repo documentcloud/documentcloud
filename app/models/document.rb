@@ -240,13 +240,13 @@ class Document < ActiveRecord::Base
     self.annotations.count(:group => 'page_number')
   end
   
-  def annotations_with_authors(account)
+  def annotations_with_authors(account, annotations=nil)
     annotation_author_info = Annotation.author_info(self, account)
-    annotations = self.annotations.accessible(account).map do |a|
+    annotations ||= self.annotations.accessible(account)
+    annotations.map do |a|
       a.author = annotation_author_info[a.account_id]
       a 
     end
-    annotations
   end
 
   # Return an array of all of the document entity values for a given type,
