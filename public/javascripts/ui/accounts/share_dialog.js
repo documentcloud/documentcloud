@@ -20,8 +20,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
   
   STEP_TITLES : [
-    "Step One: ",
-    "Step Two: Email Your Reviewers"
+    "",
+    "Email Your Reviewers"
   ],
 
   initialize : function(options) {
@@ -278,19 +278,21 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   
   _onAddError : function(resp) {
     var status = resp.status;
+    var $error = this.$('.reviewer_management .error').removeClass('error_white');
+    
     resp = JSON.parse(resp.responseText);
     if (resp.errors && _.any(resp.errors, function(error) {
       error = error.toLowerCase();
       return error.indexOf("first name") != -1 || error.indexOf("last name") != -1;
     })) {
       this._showReviewerNameInputs();
-      this.$('.reviewer_management .error').text("Please provide reviewer's full name.");
+      $error.text("Please provide the reviewer's full name.").addClass('error_white');
     } else if (resp.errors) {
-      this.$('.reviewer_management .error').text(resp.errors[0]);
+      $error.text(resp.errors[0]);
     } else if (status == 403) {
       this.error('You are not allowed to add reviewers.');
     } else {
-      this.$('.reviewer_management .error').text("Please enter in the email address of a reviewer.");
+      $error.text("Please enter in the email address of a reviewer.");
     }
     this.hideSpinner();
     this._focusEmail();
@@ -445,13 +447,14 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       },
       success: _.bind(function(resp) {
         var text = [
-          accounts.length == 1 ? 
-            accounts.first().get('email') + ' has' : 
-            accounts.length + ' reviewers have',
-          ' been sent reviewing instructions for ',
+          'Instructions for reviewing ',
           documentIds.length == 1 ? 
-            Inflector.truncate(this.docs.get(documentIds[0]).get('title'), 30, '..') : 
-            documentIds.length + Inflector.pluralize(' document', documentIds.length),
+            '\"' + Inflector.truncate(this.docs.get(documentIds[0]).get('title'), 30, '...') + '\"' : 
+            documentIds.length + ' documents',
+          ' sent to ',
+          accounts.length == 1 ? 
+            accounts.first().get('email'): 
+            accounts.length + ' people',
           '.'
         ].join('');
         dc.ui.notifier.show({

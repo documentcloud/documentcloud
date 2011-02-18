@@ -272,6 +272,9 @@
     padding: 10px;
     color: #FF0000;
   }
+  .share_dialog .reviewer_management .last.error_white {
+    color: #FFF;
+  }
   .share_dialog .document_reviewers_empty {
     overflow: hidden;
     text-align: left;
@@ -306,7 +309,7 @@
     }
     .share_dialog .email_message .email_message_body {
       font: 11px/13px Menlo, Consolas, Monaco, Courier, monospace;
-      color: #E0E0E0;
+      color: #F3F3F3;
     }
       .share_dialog .email_message .email_message_body p {
         margin: 8px 0;
