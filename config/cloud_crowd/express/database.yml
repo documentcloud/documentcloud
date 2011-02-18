@@ -1,0 +1,12 @@
+# This is a standard ActiveRecord database.yml file. You can configure it
+# to use any database that ActiveRecord supports.
+
+:adapter:  postgresql
+:encoding: unicode
+:schema_search_path: public
+:pool:     5
+:username: REDACTED
+:password: REDACTED
+:allow_concurrency: true
+:host:     ec2-174-129-5-5.compute-1.amazonaws.com
+:database: dcloud_crowd_production
