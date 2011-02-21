@@ -5,21 +5,20 @@ namespace :crowd do
   end
 
   [:server, :node].each do |resource|
-    folder = File.exists?('EXPRESS') ? 'express' : RAILS_ENV
     namespace resource do
 
       task :stop do
-        sh "crowd -c config/cloud_crowd/#{folder} -e #{RAILS_ENV} #{resource} stop"
+        sh "crowd -c config/cloud_crowd/#{crowd_folder} -e #{RAILS_ENV} #{resource} stop"
       end
 
       task :run do
         port = (resource == :server) ? '-p 8080' : ''
-        sh "crowd -c config/cloud_crowd/#{folder} -e #{RAILS_ENV} #{port} #{resource} start"
+        sh "crowd -c config/cloud_crowd/#{crowd_folder} -e #{RAILS_ENV} #{port} #{resource} start"
       end
 
       task :start do
         port = (resource == :server) ? '-p 8080' : ''
-        sh "crowd -c config/cloud_crowd/#{folder} -e #{RAILS_ENV} #{port} -d #{resource} start"
+        sh "crowd -c config/cloud_crowd/#{crowd_folder} -e #{RAILS_ENV} #{port} -d #{resource} start"
       end
 
       task :restart => [:stop, :start]
@@ -28,5 +27,10 @@ namespace :crowd do
   end
 
 end
+
+def crowd_folder
+  File.exists?('EXPRESS') ? 'express' : RAILS_ENV
+end
+
 
 
