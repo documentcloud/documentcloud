@@ -4,9 +4,10 @@ unless Rails.env.development?
   ActionMailer::Base.smtp_settings = {
     :address        => 'mail.documentcloud.org',
     :port           => 25,
+    :domain         => 'documentcloud.org',
     :user_name      => 'smtp@documentcloud.org',
     :password       => SECRETS['smtp_password'],
-    :authentication => :plain
+    :authentication => :login
   }
 
 end
