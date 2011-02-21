@@ -8,6 +8,10 @@ namespace :app do
     sh "rake crowd:server:start && rake crowd:node:start && rake sunspot:solr:start && sudo nginx"
   end
 
+  task :restart_solr do
+    sh "rake #{RAILS_ENV} sunspot:solr:stop sunspot:solr:start"
+  end
+
   task :stop do
     sh "sudo /etc/init.d/nginx stop"
   end
