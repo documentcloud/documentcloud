@@ -346,10 +346,10 @@ module DC
             end
           when :restricted
             if needs_solr?
-              @solr.build { with :access, [PRIVATE, ORGANIZATION] }
+              @solr.build { with :access, [PRIVATE, ORGANIZATION, PENDING, INVISIBLE, ERROR, DELETED, EXCLUSIVE] }
             else
               @sql << 'documents.access in (?)'
-              @interpolations << [PRIVATE, ORGANIZATION]
+              @interpolations << [PRIVATE, ORGANIZATION, PENDING, INVISIBLE, ERROR, DELETED, EXCLUSIVE]
             end
           end
         end

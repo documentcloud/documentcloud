@@ -2,6 +2,7 @@ window.dc = window.dc || {};
 window.dc.embed = window.dc.embed || {};
   
 dc.loadSearchEmbed = function(searchUrl, opts) {
+  console.log(['loadSearchEmbed', searchUrl, opts]);
   var query = Inflector.sluggify(opts['q']);
   
   dc.embed[query] = {};
@@ -28,6 +29,7 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
 };
 
 dc.loadSearchEmbedCallback = function(json) {
+  console.log(['loadSearchEmbedCallback', json]);
   var query = Inflector.sluggify(json.original_query);
   dc.embed[query].options['id'] = query;
   _.extend(dc.embed[query].options, {
@@ -114,7 +116,6 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
         $document_list.append(view);
       }, this));
     }
-    console.log(['render', this]);
     this.$('.DC-paginator').removeClass('DC-is-editing').html(JST['paginator']({
       total      : options.total,
       per_page   : options.per_page,
@@ -133,6 +134,7 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   },
   
   maybePerformSearch : function(e) {
+    console.log(['maybePerformSearch', e.keyCode]);
     if (e.keyCode != 13) return; // Search on `enter` only
     var force = this.embed.options.page != 1;
     this.embed.options.page = 1;

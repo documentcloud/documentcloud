@@ -28,7 +28,8 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     order      : 'title',
     per_page   : 12,
     search_bar : false,
-    title      : null
+    title      : null,
+    q          : ''
   },
   
   constructor : function() {
@@ -87,7 +88,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   preview : function() {
     var options = JSON.stringify(this.embedOptions());
     var params = $.param({
-        query   : this.query,
+        q       : this.query,
         slug    : Inflector.sluggify(this.query),
         options : options
     });
@@ -103,7 +104,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
 
   embedOptions : function() {
     var options = {};
-    options.query      = this.query;
+    options.q          = this.query;
     options.container  = 'DC-search-' + Inflector.sluggify(this.query);
     options.title      = this._titleEl.val().replace(/\"/g, '\\\"');
     options.order      = this._orderEl.val();
@@ -125,14 +126,13 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     this._orderEl.val(options.order);
     this._perPageEl.val(options.per_page);
     this._searchBarEl.val([options.search_bar ? 'true' : 'false']);
-    console.log(['_loadPreferences', options.search_bar]);
   },
 
   _renderEmbedCode : function() {
     var options       = this.embedOptions();
     options.title     = '"' + options.title + '"';
-    options.container = '"#DC-search-' + Inflector.sluggify(options.query) + '"';
-    options.query     = '"' + options.query + '"';
+    options.container = '"#DC-search-' + Inflector.sluggify(options.q) + '"';
+    options.q         = '"' + options.q + '"';
     options.order     = '"' + options.order + '"';
     var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['search/embed_dialog']({

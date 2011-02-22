@@ -18,7 +18,7 @@
 <body style="margin:0; padding:0;">
 
   <div class="DC-embed-preview">
-    <div class="DC-embed-preview-title serif">The Daily Planet</div>
+    <div class="DC-embed-preview-title serif"><%= @current_account.organization.name %></div>
     <div id="DC-search-<%= @slug %>"></div>
     <script>
       dc.loadSearchEmbed('<%= DC.server_root :ssl => false %>/api/search.js', <%= @options %>);
