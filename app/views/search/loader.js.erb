@@ -1,6 +1,8 @@
 (function() {
   // If the embed is already loaded, don't repeat the process.
   if (window.dc && window.dc.loaded) return;
+  window.dc = window.dc || {};
+  
   <% root = DC.server_root(:ssl => false) %>
 
   var loadCSS = function(url, media) {
@@ -13,6 +15,14 @@
     head.appendChild(link);
   };
 
+  /*@cc_on
+  /*@if (@_jscript_version < 5.8)
+    loadCSS('<%= root %>/embed/search_embed.css');
+  @else @*/
+    loadCSS('<%= root %>/embed/search_embed-datauri.css');
+  /*@end
+  @*/
+  
   dc.afterLoad = function(viewer) {
     var loc = window.location;
     var url = loc.protocol + '//' + loc.host + loc.pathname + loc.search;
@@ -26,4 +36,6 @@
   // Record the fact that the embed is loaded.
   dc.loaded = true;
 
+  // Request the embed JavaScript.
+  document.write('<script type="text/javascript" src="<%= root %>/embed/search_embed.js"></script>');
 })();

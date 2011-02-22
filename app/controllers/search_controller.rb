@@ -45,5 +45,9 @@ class SearchController < ApplicationController
     @slug    = params[:slug]
     @options = params[:options]
   end
+
+  def loader
+    render :action => 'loader', :content_type => :js
+  end
   
 end

@@ -6,9 +6,6 @@
   <meta http-equiv="ClearType" content="true" />
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <title><%= @query %></title>
-
-  <%= include_stylesheets(:search_embed) %>
-  <%= include_javascripts(:search_embed) %>
   
   <% if Rails.env.production? %>
     <% @pageview_url = '/search/preview' %>
@@ -20,6 +17,7 @@
   <div class="DC-embed-preview">
     <div class="DC-embed-preview-title serif"><%= @current_account.organization.name %></div>
     <div id="DC-search-<%= @slug %>"></div>
+    <script src="<%= DC.server_root(:ssl => false) %>/search/loader.js"></script>
     <script>
       dc.loadSearchEmbed('<%= DC.server_root :ssl => false %>/api/search.js', <%= @options %>);
     </script>
