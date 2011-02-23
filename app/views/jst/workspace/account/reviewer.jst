@@ -2,6 +2,22 @@
   <img class="avatar" src="<%= account.DEFAULT_AVATAR %>" width="<%= size %>" height="<%= size %>" />
 </td>
 
+
+<td class="email selectable_text">
+  <% if (isReviewer) { %>
+    <div class="display">
+      <%= account.get('email') %>
+    </div>
+    <div class="edit">
+      <div class="text_input dark small">
+        <input name="email" type="text" placeholder="Email" value="<%= account.get('email') %>" />
+      </div>
+    </div>
+  <% } else { %>
+    <%= account.get('email') %>
+  <% } %>
+</td>
+
 <td class="name selectable_text">
   <% if (isReviewer) { %>
     <div class="display">
@@ -21,21 +37,6 @@
     </div>
   <% } else { %>
     <%= Inflector.truncate(account.fullName(true), 40) %>
-  <% } %>
-</td>
-
-<td class="email selectable_text">
-  <% if (isReviewer) { %>
-    <div class="display">
-      <%= account.get('email') %>
-    </div>
-    <div class="edit">
-      <div class="text_input dark small">
-        <input name="email" type="text" placeholder="Email" value="<%= account.get('email') %>" />
-      </div>
-    </div>
-  <% } else { %>
-    <%= account.get('email') %>
   <% } %>
 </td>
 

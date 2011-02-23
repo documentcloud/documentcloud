@@ -67,9 +67,10 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   renderEmailDialog : function() {
     var docSize = this.docs.length;
     var title = [
-      'Enter the email address of the person who will review ',
-      Inflector.pluralize('this', docSize),
-      Inflector.pluralize(' document', docSize)
+      'Reviewing ',
+      this.docs.length == 1 ?
+        '\"' + Inflector.trim(this.docs.first().get('title'), 30) + '\"' :
+        this.docs.length + ' documents'
     ].join('');
     this.showingEmailDialog = true;
     dc.ui.Dialog.prompt(title, '', _.bind(function(email) {
@@ -79,7 +80,12 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       this._focusEmail(email);
       this._submitAddReviewer();
       return true;
-    }, this), {mode: 'short_prompt'});
+    }, this), {
+        mode:        'short_prompt',
+        description: 'Start with the email address of your first reviewer:',
+        saveText:    'Next',
+        closeText:   'Cancel'
+    });
   },
   
   close : function() {
