@@ -59,7 +59,7 @@ class ReviewersController < ApplicationController
     documents = params[:documents].map do |document_id|
       document = Document.find(document_id)
       return json(nil, 403) unless current_account.allowed_to_edit?(document)
-      document.remove_collaborator(account)
+      document.remove_reviewer(account)
       document.reload
     end
     json documents

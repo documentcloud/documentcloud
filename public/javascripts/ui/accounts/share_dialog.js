@@ -73,7 +73,10 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         this.docs.length + ' documents'),
       ' with reviewers'
     ].join('');
+
     this.showingEmailDialog = true;
+    dc.ui.spinner.hide();
+
     dc.ui.Dialog.prompt(title, '', _.bind(function(email) {
       this.showingEmailDialog = false;
       this._renderReviewers();
