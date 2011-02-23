@@ -143,6 +143,9 @@
 .share_dialog {
   width: 640px;
 }
+  .share_dialog .title {
+    margin-bottom: 14px;
+  }
   .share_dialog .custom {
     max-height: none;
     margin-bottom: 0;
@@ -296,6 +299,7 @@
     float: right;
     width: 400px;
     padding: 0 8px;
+    margin: 10px 0 0 0;
   }
     .share_dialog .email_message .email_message_heading {
       font-size: 12px;
@@ -304,8 +308,9 @@
     .share_dialog .email_message .email_message_heading_optional {
       font-size: 10px;
       text-transform: uppercase;
-      color: #A0A0A0;
-      float: right;
+      text-decoration: none;
+      color: #606060;
+      padding: 0 4px;
     }
     .share_dialog .email_message .email_message_body {
       font: 11px/13px Menlo, Consolas, Monaco, Courier, monospace;
@@ -336,6 +341,7 @@
   .share_dialog .email_reviewers {
     width: 215px;
     float: left;
+    margin: 10px 0 0 0;
   }
     .share_dialog .email_reviewers .email_reviewers_heading {
       font-size: 12px;
@@ -344,6 +350,7 @@
     .share_dialog .show_custom_email {
       margin: 14px 0 20px;
       color: lightblue;
+      font-weight: bold;
     }
     .share_dialog .is_custom_email .show_custom_email,
     .share_dialog .not_custom_email .hide_custom_email {

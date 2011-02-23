@@ -6,7 +6,9 @@
 <%- end -%>
 <%- if @message && @message.length > 1 -%>
 <%- if !@reviewer_account -%>
-  <div class="show_custom_email text_link">Add custom instructions</div>
+  <div class="show_custom_email text_link interface">
+    <span>Add custom instructions (optional)</span>
+  </div>
   <div class="custom_message">
 <%- end -%>
 <%= @inviter_account.full_name %> provided the following instructions:
