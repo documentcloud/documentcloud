@@ -20,7 +20,7 @@ class LifecycleMailer < ActionMailer::Base
   def reviewer_instructions(documents, inviter_account, reviewer_account=nil, message=nil, key=nil)
     subject     "Review \"#{documents[0].title}\" on DocumentCloud" if documents.count == 1
     subject     "Review #{documents.count} documents on DocumentCloud" if documents.count > 1
-    from        [SUPPORT, inviter_account.email].compact
+    from        ["#{inviter_account.full_name} <#{inviter_account.email}>", "DocumentCloud <#{SUPPORT}>"].compact
     recipients  [reviewer_account.email] if reviewer_account
     body        :documents            => documents,
                 :key                  => key,
