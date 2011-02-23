@@ -485,7 +485,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       }, this),
       error : _.bind(function(resp) {
         this.hideSpinner();
-        this.error('There was a problem resending instructions.');
+        this.error('Your instructions were not sent. Contact support for help troubleshooting sharing.');
         this._setStep();
         this._enabledNextButton();
       }, this)
