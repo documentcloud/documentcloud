@@ -70,8 +70,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       'Share ',
       (this.docs.length == 1 ?
         '\"' + Inflector.trim(this.docs.first().get('title'), 30) + '\"' :
-        this.docs.length + ' documents'),
-      ' with reviewers'
+        this.docs.length + ' Documents'),
+      ' With Reviewers'
     ].join('');
 
     this.showingEmailDialog = true;
