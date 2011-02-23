@@ -67,10 +67,11 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   renderEmailDialog : function() {
     var docSize = this.docs.length;
     var title = [
-      'Reviewing ',
-      this.docs.length == 1 ?
+      'Share ',
+      (this.docs.length == 1 ?
         '\"' + Inflector.trim(this.docs.first().get('title'), 30) + '\"' :
-        this.docs.length + ' documents'
+        this.docs.length + ' documents'),
+      ' with reviewers'
     ].join('');
     this.showingEmailDialog = true;
     dc.ui.Dialog.prompt(title, '', _.bind(function(email) {
