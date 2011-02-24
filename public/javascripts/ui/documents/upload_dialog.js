@@ -4,7 +4,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   id        : 'upload_dialog',
   className : 'dialog',
 
-  INSERT_PAGES_MESSAGE: "This document will close while it's being rebuilt.",
+  INSERT_PAGES_MESSAGE: "This document will close while it's being rebuilt. Long documents may take a long time to rebuild.",
 
   constructor : function(options) {
     var defaults = {
