@@ -2,7 +2,6 @@ window.dc = window.dc || {};
 window.dc.embed = window.dc.embed || {};
   
 dc.loadSearchEmbed = function(searchUrl, opts) {
-  console.log(['loadSearchEmbed', searchUrl, opts]);
   var query = Inflector.sluggify(opts['q']);
   
   dc.embed[query] = {};
@@ -29,7 +28,6 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
 };
 
 dc.loadSearchEmbedCallback = function(json) {
-  console.log(['loadSearchEmbedCallback', json]);
   var query = Inflector.sluggify(json.original_query);
   dc.embed[query].options['id'] = query;
   _.extend(dc.embed[query].options, {
@@ -104,15 +102,15 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   },
   
   renderDocuments : function() {
-    var options = this.embed.options;
-    var $document_list = this.$('.DC-document-list');
-    $document_list.empty();
-    
+    var options        = this.embed.options;
+    var $document_list = this.$('.DC-document-list').empty();
+    var width          = this.calculateTileWidth();
+
     if (!this.embed.documents.length) {
       $document_list.append(JST['no_results']({}));
     } else {
       this.embed.documents.each(_.bind(function(doc) {
-        var view = (new dc.EmbedDocumentView({model: doc})).render().el;
+        var view = (new dc.EmbedDocumentView({model: doc})).render(width).el;
         $document_list.append(view);
       }, this));
     }
@@ -125,6 +123,17 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
       to         : Math.min(options.page * options.per_page, options.total),
       title      : options.title
     }));
+  },
+  
+  calculateTileWidth : function() {
+    var pageWidth = $(this.el).width();
+    var minWidth = 300;
+    var padding = 90;
+    var remainingWidth = pageWidth % minWidth;
+    var tilesPerRow = Math.floor(pageWidth / minWidth);
+    var width = minWidth + Math.floor(remainingWidth/tilesPerRow);
+    console.log(['width', pageWidth, remainingWidth, tilesPerRow, width]);
+    return width - padding;
   },
   
   cancelSearch : function(e) {
@@ -191,8 +200,11 @@ dc.EmbedDocumentView = Backbone.View.extend({
     this.render();
   },
   
-  render : function() {
-    $(this.el).html(JST['document']({doc: this.model}));
+  render : function(width) {
+    $(this.el).html(JST['document']({
+      doc   : this.model,
+      width : width
+    }));
     return this;
   },
   
