@@ -201,12 +201,12 @@
     margin: 3px 5px 0 0;
   }
   #annotation_editor .title_wrapper {
-    background: #eee;
+    background: #777;
   }
   #annotation_editor .annotation_cropper {
     min-width: 100px; min-height: 100px;
     width: 450px; height: 150px;
-    border: 1px solid #aaa;
+    border: 1px solid #777;
   }
   #annotation_editor .annotation_content {
     width: 450px; height: 75px;
@@ -236,7 +236,7 @@
     position: absolute;
     left: 30px; right: 30px; top: 15px;
     height: 0px;
-    border-bottom: 1px dashed #eee;
+    border-bottom: 1px dashed #777;
   }
 
 /* TODO: Implement resize */
@@ -427,14 +427,14 @@
 .DV-thumbnail .DV-overlay.left_chosen {
   right: auto;
   left: -1px;
-  border-left: 1px dashed #eee;
+  border-left: 1px dashed #777;
   border-right: none;
   display: block;
 }
 .DV-thumbnail .DV-overlay.right_chosen {
   left: auto;
   right: 0px;
-  border-right: 1px dashed #eee;
+  border-right: 1px dashed #777;
   border-left: none;
   display: block;
 }
@@ -444,14 +444,14 @@
 .DV-hover-thumbnail .DV-overlay.left {
   right: auto;
   left: -1px;
-  border-left: 1px dashed #eee;
+  border-left: 1px dashed #777;
   border-right: none;
   display: block;
 }
 .DV-hover-thumbnail .DV-overlay.right {
   left: auto;
   right: 0px;
-  border-right: 1px dashed #eee;
+  border-right: 1px dashed #777;
   border-left: none;
   display: block;
 }
