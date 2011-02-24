@@ -35,7 +35,9 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   
   showReviewerWelcome : function() {
     if (dc.account.role == dc.model.Account.prototype.REVIEWER) {
-      dc.ui.Dialog.alert('Write annotations.', {title: 'Reviewing "'+currentDocument.api.getTitle()+'"'});
+      var fullName = dc.app.editor.options.reviewerInviter.fullName;
+      var email = dc.app.editor.options.reviewerInviter.email;
+      dc.ui.Dialog.alert("", {description: "Use the links at the right to annotate the document. Keep in mind that any other reviewers will be able to see public annotations and drafts. Private annotations are for your own reference. Even "+fullName+" can't see them. Contact "+fullName+" at "+email+" if you need any help, or visit http://www.documentcloud.org for more information about DocumentCloud.", title: fullName+' has invited you to review "'+currentDocument.api.getTitle()+'"'});
     }
   },
 

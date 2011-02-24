@@ -478,11 +478,28 @@ class Document < ActiveRecord::Base
     end
     project.set_documents([id])
     project.add_collaborator account
+    DocumentReviewerInviter.create({
+      :reviewer_account_id => account.id,
+      :inviter_account_id  => owner.id,
+      :document            => self
+    })
   end
   
   def remove_reviewer(account)
     project = Project.find_by_reviewer_document_id(id)
     project.remove_collaborator(account)
+    DocumentReviewerInviter.delete(:conditions => {
+      :reviewer_account_id => account.id,
+      :document_id         => id
+    })
+  end
+  
+  def reviewer_inviter(reviewer_account)
+    inviter = DocumentReviewerInviter.find(:all, :conditions => {
+      :reviewer_account_id => reviewer_account.id,
+      :document_id         => id
+    })
+    return Account.find(inviter[0].inviter_account_id) if inviter
   end
   
   def asset_store

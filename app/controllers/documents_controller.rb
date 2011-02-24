@@ -23,6 +23,7 @@ class DocumentsController < ApplicationController
         if current_account
           @allowed_to_edit = current_account.allowed_to_edit?(current_document)
           @allowed_to_review = current_account.reviewer?(current_document)
+          @reviewer_inviter = @allowed_to_review && current_document.reviewer_inviter(current_account) || nil
           @edits_enabled = true
         end
       end

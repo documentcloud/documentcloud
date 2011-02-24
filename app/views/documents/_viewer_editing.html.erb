@@ -13,8 +13,12 @@
     <% if @current_account %>
       var docId = <%= @current_document.id %>;
       var opts        = {
-        isOwner    : <%= @allowed_to_edit %>,
-        isReviewer : <%= @allowed_to_review %>
+        isOwner         : <%= @allowed_to_edit %>,
+        isReviewer      : <%= @allowed_to_review %>,
+        reviewerInviter : {
+          fullName : "<%= @reviewer_inviter.full_name %>",
+          email    : "<%= @reviewer_inviter.email %>"
+        }
       }
       <%= render :partial => 'accounts/current_account.js', :type => :js %>
       dc.app.editor.initialize(docId, opts);
