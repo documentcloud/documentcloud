@@ -201,8 +201,6 @@ dc.EmbedDocumentTile = Backbone.View.extend({
     var titleWidth       = this.fitTitleWidth(width);
     var descriptionWidth = this.fitDescriptionWidth(width);
     
-    console.log(['render', width, titleWidth, descriptionWidth]);
-    
     $(this.el).html(JST['embed_document_tile']({
       doc               : this.model,
       width             : width,
