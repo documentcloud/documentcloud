@@ -110,7 +110,7 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
       $document_list.append(JST['no_results']({}));
     } else {
       this.embed.documents.each(_.bind(function(doc) {
-        var view = (new dc.EmbedDocumentView({model: doc})).render(width).el;
+        var view = (new dc.EmbedDocumentTile({model: doc})).render(width).el;
         $document_list.append(view);
       }, this));
     }
@@ -126,13 +126,13 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   },
   
   calculateTileWidth : function() {
-    var pageWidth = $(this.el).width();
-    var minWidth = 300;
-    var padding = 90;
+    var pageWidth      = $(this.el).width();
+    var minWidth       = 300;
+    var padding        = 90;
     var remainingWidth = pageWidth % minWidth;
-    var tilesPerRow = Math.floor(pageWidth / minWidth);
-    var width = minWidth + Math.floor(remainingWidth/tilesPerRow);
-    console.log(['width', pageWidth, remainingWidth, tilesPerRow, width]);
+    var tilesPerRow    = Math.floor(pageWidth / minWidth);
+    var width          = minWidth + Math.floor(remainingWidth/tilesPerRow);
+
     return width - padding;
   },
   
@@ -143,7 +143,6 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   },
   
   maybePerformSearch : function(e) {
-    console.log(['maybePerformSearch', e.keyCode]);
     if (e.keyCode != 13) return; // Search on `enter` only
     var force = this.embed.options.page != 1;
     this.embed.options.page = 1;
@@ -154,8 +153,8 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     var query = this.$('.DC-search-box').val();
     
     if (query == '' && !force) {
+      // Returning to original query, just use the cached original response.
       this.embed.options = this.embed.originalOptions;
-      // Returning to original query, just use the original response.
       this.embed.documents.refresh(this.embed.documents.originalModels);
     } else {
       this.embed.originalOptions = _.extend({}, this.embed.options);
@@ -190,22 +189,37 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   
 });
 
-dc.EmbedDocumentView = Backbone.View.extend({
+dc.EmbedDocumentTile = Backbone.View.extend({
   
   events : {
     'click' : 'open'
   },
   
-  initialize : function() {
-    this.render();
-  },
+  initialize : function() {},
   
   render : function(width) {
-    $(this.el).html(JST['document']({
-      doc   : this.model,
-      width : width
+    var titleWidth       = this.fitTitleWidth(width);
+    var descriptionWidth = this.fitDescriptionWidth(width);
+    
+    console.log(['render', width, titleWidth, descriptionWidth]);
+    
+    $(this.el).html(JST['embed_document_tile']({
+      doc               : this.model,
+      width             : width,
+      titleWidth        : titleWidth,
+      descriptionWidth  : descriptionWidth
     }));
     return this;
+  },
+  
+  fitTitleWidth : function(width) {
+    // Wolfram Alpha: linear fit (490, 115), (285, 65), (210, 45)
+    return Math.floor(.248711*width - 10);
+  },
+  
+  fitDescriptionWidth : function(width) {
+    // Wolfram Alpha: linear fit (490, 180), (285, 110), (210, 70)
+    return Math.floor(.381991*width - 10);
   },
   
   open : function(e) {

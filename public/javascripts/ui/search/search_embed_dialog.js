@@ -153,7 +153,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
       var label = [
         this.publicCount,
         Inflector.pluralize(' document', this.publicCount),
-        ' on ',
+        pages==1 ? ' on ' : ' over ',
         pages,
         Inflector.pluralize(' page', pages)
       ].join('');

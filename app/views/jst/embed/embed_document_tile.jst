@@ -3,7 +3,7 @@
   <div class="DC-document-thumbnail"><img src="<%= doc.get('resources')['thumbnail'] %>" /></div>
   <div class="DC-document-title">
     <div class="DC-icon DC-icon-lock"></div>
-    <%= Inflector.truncateWords(doc.get('title'), 50) %>
+    <%= Inflector.truncateWords(doc.get('title'), titleWidth) %>
   </div>
-  <div class="DC-document-description"><%= Inflector.truncateWords(doc.get('description') || "", 70) %></div>
+  <div class="DC-document-description"><%= Inflector.truncateWords(doc.get('description') || "", descriptionWidth) %></div>
 </a>

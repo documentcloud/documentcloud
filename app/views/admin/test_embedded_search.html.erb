@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title></title>
-    <%= include_stylesheets(:search_embed) %>
-    <%= include_javascripts(:search_embed) %>
-  </head>
-  <body>
+<head>
+  <title></title>
+  <%= include_stylesheets(:search_embed) %>
+  <%= include_javascripts(:search_embed) %>
+</head>
+<body style="margin:0; padding:0;">
+  <div class="DC-embed-preview">
+
+    <div class="DC-embed-preview-title serif">The Cloud Post</div>
     
-    <div id="account-1-sam-claydc"></div>
+    <div id="embed_1"></div>
     
     <script type="text/javascript" src="/embed/search_loader.js"></script>
     <script type="text/javascript">
       dc.loadSearchEmbed('http://dev.dcloud.org/api/search.js', {
-        q: 'trees',
-        order: 'score',
-        container: 'account-1-sam-claydc'
+        q: 'brooklyn',
+        order: 'title',
+        container: 'embed_1'
       });
     </script>
     
@@ -24,11 +27,12 @@
     <script type="text/javascript" src="/embed/search_loader.js"></script>
     <script type="text/javascript">
       dc.loadSearchEmbed('http://dev.dcloud.org/api/search.js', {
-        q: 'brooklyn',
+        q: 'trees',
         order: 'score',
         container: 'embed_2'
       });
     </script>
     
-  </body>
+  </div>
+</body>
 </html>
