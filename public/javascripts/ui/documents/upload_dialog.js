@@ -19,12 +19,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     };
     options = _.extend({}, defaults, options);
 
-    _.bindAll(this, 'setupUploadify', 'countDocuments', '_onSelect', '_onSelectOnce',
-      '_onCancel', '_onStarted', '_onOpen', '_onProgress', '_onComplete', '_onAllComplete');
+    _.bindAll(this, 'setupUpload', 'countDocuments', 'cancelUpload',
+      '_onSelect', '_onProgress', '_onComplete', '_onAllComplete');
     dc.ui.Dialog.call(this, options);
     if (options.autoStart) $(this.el).addClass('autostart');
     if (dc.app.navigation) {
-      dc.app.navigation.bind('tab:documents', _.bind(function(){ _.defer(this.setupUploadify); }, this));
+      dc.app.navigation.bind('tab:documents', _.bind(function(){ _.defer(this.setupUpload); }, this));
     }
     this.collection.bind('add',   this.countDocuments);
     this.collection.bind('remove', this.countDocuments);
@@ -64,68 +64,23 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._list.append(viewEls);
   },
 
-  // Be careful to only set up Uploadify once, when the "Documents" tab is open.
-  setupUploadify : function() {
-    if (this._uploadify || (dc.app.navigation && !dc.app.navigation.isOpen('documents'))) return;
+  // Be careful to only setup file uploading once, when the "Documents" tab is open.
+  setupUpload : function() {
+    if (this.button || (dc.app.navigation && !dc.app.navigation.isOpen('documents'))) return;
     var uploadUrl = '/import/upload_document';
     if (this.options.insertPages) {
       uploadUrl = '/documents/' + this.options.documentId + '/upload_insert_document';
     }
-<<<<<<< HEAD
-    this._uploadify = $('#new_document');
-    this._uploadify.uploadify({
-      uploader      : '/flash/uploadify.swf',
-      script        : uploadUrl,
-      auto          : false,
-      multi         : true,
-      wmode         : 'transparent',
-      fileDataName  : 'file',
-      hideButton    : true,
-      width         : this.button.outerWidth(true),
-      height        : this.button.outerHeight(true),
-      scriptData    : {},
-      onSelect      : _.bind(this._onSelect, this),
-      onSelectOnce  : this._onSelectOnce,
-      onCancel      : this._onCancel,
-      onStarted     : this._onStarted,
-      onOpen        : this._onOpen,
-      onProgress    : this._onProgress,
-      onComplete    : this._onComplete,
-      onAllComplete : this._onAllComplete
-=======
     this.button = $('#new_document_form');
     this.button.fileUpload({
         url        : uploadUrl,
-        initUpload : this._onSelect,
         onAbort    : this.cancelUpload,
+        initUpload : this._onSelect,
+        beforeSend : this._onBeforeSend,
         onProgress : this._onProgress,
         onLoad     : this._onComplete
->>>>>>> 8022a9c... First stab at using new HTML5 uploader instead of Flash uploadify. Uploads successfully. Still need to check insertPages.
     });
-    // this.button.uploadify({
-    //   uploader      : '/flash/uploadify.swf',
-    //   script        : uploadUrl,
-    //   auto          : false,
-    //   multi         : true,
-    //   wmode         : 'transparent',
-    //   fileDataName  : 'file',
-    //   hideButton    : true,
-    //   width         : this.button.outerWidth(true),
-    //   height        : this.button.outerHeight(true),
-    //   scriptData    : {},
-    //   onSelect      : _.bind(this._onSelect, this),
-    //   onSelectOnce  : this._onSelectOnce,
-    //   onCancel      : this._onCancel,
-    //   onStarted     : this._onStarted,
-    //   onOpen        : this._onOpen,
-    //   onProgress    : this._onProgress,
-    //   onComplete    : this._onComplete,
-    //   onAllComplete : this._onAllComplete
-    // });
     this._uploadIndex = 0;
-<<<<<<< HEAD
-=======
-    // if (!$('object#new_documentUploader').length) this.setupFileInput();
   },
 
   // If flash is disabled, we fall back to a regular invisible file input field.
@@ -136,10 +91,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       $('#new_document_project').val(this._project ? this._project.id : '');
       $('#new_document_form').submit();
     }, this));
->>>>>>> 8022a9c... First stab at using new HTML5 uploader instead of Flash uploadify. Uploads successfully. Still need to check insertPages.
   },
 
-  // Return false so that Uploadify does not create its own progress bars.
+  // Initial load of a document, before uploading is begun.
   _onSelect : function(e, files, index, xhr, handler, callback) {
     var file = files[index];
     this.collection.add(new dc.model.UploadDocument({
@@ -162,8 +116,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       }
     }
   },
+  
+  // Called immediately before a file begins uploading. Used to queue.
+  _onBeforeSend : function(e, files, index, xhr, handler, callback) {
+    
+  },
 
-  // Cancel an upload by file queue id.
+  // Cancel an upload by index.
   cancelUpload : function(uploadIndex) {
     if (this.collection.length <= 1) {
       this.error('You must upload at least one document.');
@@ -172,26 +131,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     return true;
   },
 
-  // Return false so that Uploadify does not try to use its own progress bars.
-  _onCancel : function(e, queueId, fileObj, data) {
-    return false;
-  },
-
   // Called immediately before file to POSTed to server.
-<<<<<<< HEAD
-  _onStarted : function(e, queueId) {
-    this._uploadIndex++;
-    var attrs = this._tiles[queueId].serialize();
-    this.collection.get(queueId).set(attrs);
-    attrs.session_key = encodeURIComponent(dc.app.cookies.get('document_cloud_session'));
-    attrs.flash = true;
-=======
   _uploadData : function(id) {
     var attrs = this._tiles[id].serialize();
     this.collection.get(id).set(attrs);
     attrs.session_key = dc.app.cookies.get('document_cloud_session');
     attrs.in_workspace = true;
->>>>>>> 8022a9c... First stab at using new HTML5 uploader instead of Flash uploadify. Uploads successfully. Still need to check insertPages.
     attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
     if (this._project) attrs.project = this._project.id;
     if (_.isNumber(this.options.insertPageAt)) attrs.insert_page_at = this.options.insertPageAt;
@@ -204,11 +149,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._list[0].scrollTop = 0;
     
     return attrs;
-  },
-
-  // Show the progress bar when the uploads start.
-  _onOpen : function(e, queueId, fileObj) {
-    this._tiles[queueId].startProgress();
   },
 
   // Return false so Uploadify doesn't try to update missing fields (from onSelect).
@@ -237,8 +177,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._tiles[id].hide();
     this._uploadIndex -= 1;
     
+    this.collection.remove(this.collection.first());
+    
     if (this._uploadIndex <= 0) {
       this._onAllComplete();
+    } else {
+      this.startUpload();
     }
   },
 
@@ -291,18 +235,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   startUpload : function() {
-    var i = 0;
     var tiles = this._tiles;
     this._uploadIndex = this.collection.length;
     
-    this.collection.each(_.bind(function(doc) {
-      _.delay(_.bind(function() {
-        doc.get('handler').formData = this._uploadData(doc.get('id'));
-        doc.get('startUpload')();
-        tiles[doc.get('id')].startProgress();
-      }, this), i*500);
-      i += 1;
-    }, this));
+    var doc = this.collection.first();
+    doc.get('handler').formData = this._uploadData(doc.get('id'));
+    doc.get('startUpload')();
+    tiles[doc.get('id')].startProgress();
   },
   
   cancel : function() {
@@ -343,10 +282,10 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
 
   serialize : function() {
     return {
-      title       : encodeURIComponent(this._title.val()),
-      description : encodeURIComponent(this.$('textarea[name=description]').val()),
-      source      : encodeURIComponent(this.$('input[name=source]').val()),
-      access      : encodeURIComponent(this.$('select[name=access]').val())
+      title       : this._title.val(),
+      description : this.$('textarea[name=description]').val(),
+      source      : this.$('input[name=source]').val(),
+      access      : this.$('select[name=access]').val()
     };
   },
 
