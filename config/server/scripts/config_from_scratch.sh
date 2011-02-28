@@ -89,7 +89,7 @@ cp config/server/postgres/pg_hba.conf  /etc/postgresql/8.4/main/pg_hba.conf
 /etc/init.d/postgresql-8.4 reload
 sudo -u postgres createuser -s ubuntu
 sudo -u postgres createuser -s documentcloud
-sudo -u postgres psql -c "alter user documentcloud password 'REDACTED' "
+sudo -u postgres psql -c "alter user documentcloud password 'YOUR_DB_PASSWORD_GOES_HERE' "
 sudo -u postgres createdb dcloud_$RAILS_ENVIRONMENT
 cd /home/$USERNAME/document-cloud
 sudo -u postgres psql -f db/development_structure.sql dcloud_$RAILS_ENVIRONMENT 2>&1|grep ERROR

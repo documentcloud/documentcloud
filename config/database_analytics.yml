@@ -1,10 +1,12 @@
+<% secrets = YAML.load_file('config/secrets.yml')[ENV['RAILS_ENV']] %>
+
 defaults: &defaults
   adapter: postgresql
   encoding: unicode
   schema_search_path: public
   pool: 5
-  username: REDACTED
-  password: REDACTED
+  username: <%= secrets['username'] %>
+  password: <%= secrets['db_password'] %>
   allow_concurrency: true
 
 development:
