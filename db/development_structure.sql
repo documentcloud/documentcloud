@@ -207,7 +207,8 @@ CREATE TABLE documents (
     text_changed boolean DEFAULT false NOT NULL,
     hit_count integer DEFAULT 0 NOT NULL,
     public_note_count integer DEFAULT 0 NOT NULL,
-    document_reviewers_count integer DEFAULT 0 NOT NULL
+    document_reviewers_count integer DEFAULT 0 NOT NULL,
+    file_size integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1094,3 +1095,5 @@ INSERT INTO schema_migrations (version) VALUES ('20101110170100');
 INSERT INTO schema_migrations (version) VALUES ('20101214171909');
 
 INSERT INTO schema_migrations (version) VALUES ('20110217161649');
+
+INSERT INTO schema_migrations (version) VALUES ('20110217171353');
