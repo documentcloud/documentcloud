@@ -88,7 +88,7 @@ touch on EC2 in here.
 
 * Clean up the temporary directory.
 
-========================== Postgres EBS ======================================
+============================= Postgres EBS ===================================
 
 * Follow the directions here:
     http://deadprogrammersociety.blogspot.com/2009/08/postgresql-on-ubuntu-on-ec2.html
@@ -97,3 +97,21 @@ touch on EC2 in here.
   Copy over configuration from config/server/postgres to /etc/postgresql/8.4/main...
   pg_ctlcluster 8.4 main start
   Our postgre DB (volume vol-d4c305bd) is mounted at /data.
+  
+============================= Development ====================================
+
+* Install the dependencies and gems listed in PROVISIONING, as appropriate 
+  (ie, don't install Tesseract unless you're planning on doing OCR).
+
+* Configure Nginx and /etc/hosts to serve dev.dcloud.org locally. An example
+  Nginx configuration is stored in config/server/nginx
+
+* Load the development_structure.sql into Postgres.
+
+* Create your CloudCrowd database, using the config/cloud_crowd/development
+  configuration folder.
+
+* Start a local CloudCrowd server and node, with 
+  `rake crowd:server:start crowd:node:start`
+
+* Start Nginx.
