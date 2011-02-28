@@ -133,8 +133,7 @@ class ApplicationController < ActionController::Base
   # Simple HTTP Basic Auth to make sure folks don't snoop where the shouldn't.
   def bouncer
     authenticate_or_request_with_http_basic("DocumentCloud") do |login, password|
-      (login == 'main'  && password == 'REDACTED') ||
-      (login == 'guest' && password == 'REDACTED')
+      login == 'guest' && password == SECRETS['guest_password']
     end
   end
 
