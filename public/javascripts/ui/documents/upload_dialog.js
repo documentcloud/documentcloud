@@ -136,7 +136,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     var attrs = this._tiles[id].serialize();
     this.collection.get(id).set(attrs);
     attrs.session_key = encodeURIComponent(dc.app.cookies.get('document_cloud_session'));
-    // attrs.in_workspace = true;
+    if (!($.browser.msie || $.browser.opera)) attrs.in_workspace = true;
     attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
     if (this._project) attrs.project = this._project.id;
     if (_.isNumber(this.options.insertPageAt)) attrs.insert_page_at = this.options.insertPageAt;
