@@ -97,7 +97,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   _onSelect : function(e, files, index, xhr, handler, callback) {
     var file = files[index];
     this.collection.add(new dc.model.UploadDocument({
-      id          : Inflector.sluggify(file.fileName),
+      id          : Inflector.sluggify(file.fileName || file.name),
       uploadIndex : index,
       file        : file,
       position    : this.collection.length,
@@ -135,8 +135,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   _uploadData : function(id) {
     var attrs = this._tiles[id].serialize();
     this.collection.get(id).set(attrs);
-    attrs.session_key = dc.app.cookies.get('document_cloud_session');
-    attrs.in_workspace = true;
+    attrs.session_key = encodeURIComponent(dc.app.cookies.get('document_cloud_session'));
+    // attrs.in_workspace = true;
     attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
     if (this._project) attrs.project = this._project.id;
     if (_.isNumber(this.options.insertPageAt)) attrs.insert_page_at = this.options.insertPageAt;
@@ -153,25 +153,25 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Return false so Uploadify doesn't try to update missing fields (from onSelect).
   _onProgress : function(e, files, index, xhr, handler) {
-    var id         = Inflector.sluggify(files[index].fileName);
+    var id         = Inflector.sluggify(files[index].fileName || files[index].name);
     var percentage = parseInt((e.loaded / e.total) * 100, 10);
 
     this._tiles[id].setProgress(percentage);
   },
 
   _onComplete : function(e, files, index, xhr, handler) {
-    var resp = JSON.parse(xhr.responseText);
-    var id   = Inflector.sluggify(files[index].fileName);
+    var id   = Inflector.sluggify(files[index].fileName || files[index].name);
+    var resp = xhr.responseText && JSON.parse(xhr.responseText);
     
     this._tiles[id].setProgress(100);
     
-    if (resp.bad_request) {
+    if (resp && resp.bad_request) {
       return this.error("Upload failed.");
-    } else if (!this.options.insertPages) {
-      Documents.add(new dc.model.Document(response.model));
+    } else if (!this.options.insertPages && resp) {
+      Documents.add(new dc.model.Document(resp));
       if (this._project) Projects.incrementCountById(this._project.id);
-    } else if (this.options.insertPages) {
-      this.documentResponse = response;
+    } else if (this.options.insertPages && resp) {
+      this.documentResponse = resp;
     }
     
     this._tiles[id].hide();

@@ -1,5 +1,4 @@
-// An UploadDocument is an in-progress file upload, currently waiting in the
-// Uploadify queue.
+// An UploadDocument is an in-progress file upload, currently waiting in the queue.
 dc.model.UploadDocument = Backbone.Model.extend({
 
   FILE_EXTENSION_MATCHER : /\.([^.]+)$/,
@@ -12,8 +11,10 @@ dc.model.UploadDocument = Backbone.Model.extend({
     var file = attrs.file;
     if (file) {
       delete attrs.file;
-      attrs.title     = Inflector.titleize(file.fileName.replace(this.FILE_EXTENSION_MATCHER, ''));
-      var match       = file.fileName.match(this.FILE_EXTENSION_MATCHER);
+      var fileName    = file.fileName || file.name;
+      fileName        = fileName.match(/[^\/\\]+$/)[0]; // C:\fakepath\yatta yatta.pdf => yatta yatta.pdf
+      attrs.title     = Inflector.titleize(fileName.replace(this.FILE_EXTENSION_MATCHER, ''));
+      var match       = fileName.match(this.FILE_EXTENSION_MATCHER);
       attrs.extension = match && match[1];
       attrs.size      = file.fileSize;
     }

@@ -40,23 +40,28 @@
   position: relative;
 }
   #new_document_form {
-    height: 0;
-    overflow: visible;
+    position: relative;
+    float: left;
+    height: 30px;
+    overflow: hidden;
+    width: 140px;
   }
-    #new_document_input {
+    #new_document_form input[type=file] {
       position: absolute;
-      cursor: pointer;
-      top: 20px; left: 30px;
-      width: 130px; height: 24px;
-      z-index: 2;
+      top: 0;
+      right: 0;
+      margin: 0;
+      border: 300px solid transparent;
       opacity: 0;
+      -ms-filter: 'alpha(opacity=0)';
       filter: alpha(opacity=0);
+      -o-transform: translate(-300px, -300px) scale(10);
+      -moz-transform: translate(-800px, 0) scale(10);
+      cursor: pointer;
     }
-  #new_documentUploader {
-    position: absolute;
-    left: 30px;
-    top: 20px;
-  }
+    #new_document_form button {
+      display: none;
+    }
 #organizer .project_list_wrap {
 }
   #organizer.has_projects .project_help {
