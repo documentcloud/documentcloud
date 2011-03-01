@@ -1,6 +1,3 @@
-config/secrets.yml
-config/pixel_ping
-config/server/keys
 log/*
 tmp
 db/*.sqlite3
