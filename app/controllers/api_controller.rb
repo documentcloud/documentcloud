@@ -7,6 +7,8 @@ class ApiController < ApplicationController
 
   before_filter :bouncer if Rails.env.staging?
 
+  skip_before_filter :verify_authenticity_token # TODO: Revisit potential CSRF.
+
   before_filter :api_login_required, :only => [:upload, :projects, :update, :destroy, :projects, :create_project, :update_project, :destroy_project]
   before_filter :api_login_optional, :only => [:documents, :search]
 
