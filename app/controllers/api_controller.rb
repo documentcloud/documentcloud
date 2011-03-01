@@ -16,10 +16,6 @@ class ApiController < ApplicationController
     redirect_to '/help/api'
   end
 
-  def signup
-    return render unless request.post?
-  end
-
   def search
     respond_to do |format|
       format.any(:js, :json) do
