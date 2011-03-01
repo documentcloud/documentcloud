@@ -13,7 +13,12 @@ class SearchController < ApplicationController
     results[:source_document] = @source_document if params.include? :include_source_document
     respond_to do |format|
       format.js do
-        js = "dc.loadJSON(#{results.to_json});"
+        results[:query]     = params[:q]
+        results[:total]     = @query.total
+        results[:page]      = @query.page
+        results[:per_page]  = @query.per_page
+        results[:documents] = @documents.map {|d| d.canonical(API_OPTIONS) }
+        js                  = "dc.loadSearchEmbedCallback(#{results.to_json});"
         cache_page js
         render :js => js
       end

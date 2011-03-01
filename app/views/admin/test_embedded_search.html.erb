@@ -12,24 +12,24 @@
     
     <div id="embed_1"></div>
     
-    <script type="text/javascript" src="/embed/search_loader.js"></script>
     <script type="text/javascript">
-      dc.loadSearchEmbed('http://dev.dcloud.org/api/search.js', {
+      dc.loadSearchEmbed('<%= DC.server_root %>/search/documents/', {
         q: 'brooklyn',
         order: 'title',
-        container: 'embed_1'
+        container: 'embed_1',
+        per_page: 12
       });
     </script>
     
         
     <div id="embed_2"></div>
     
-    <script type="text/javascript" src="/embed/search_loader.js"></script>
     <script type="text/javascript">
-      dc.loadSearchEmbed('http://dev.dcloud.org/api/search.js', {
+      dc.loadSearchEmbed('<%= DC.server_root %>/search/documents/', {
         q: 'trees',
         order: 'score',
-        container: 'embed_2'
+        container: 'embed_2',
+        per_page: 12
       });
     </script>
     

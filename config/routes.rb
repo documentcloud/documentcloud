@@ -35,6 +35,8 @@ ActionController::Routing::Routes.draw do |map|
       :unpublished  => :get
     }
 
+  map.search_embed "/search/documents/:q/p/:page/per/:per_page/order/:order.:format", :controller => :search, :action => :documents
+  
   map.pdf        "/documents/:id/:slug.pdf",            :controller => :documents, :action => :send_pdf
   map.full_text  "/documents/:id/:slug.txt",            :controller => :documents, :action => :send_full_text
   map.page_text  "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :send_page_text, :conditions => {:method => :get}

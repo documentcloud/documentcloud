@@ -6,7 +6,7 @@
 &lt;div id="DC-search-<%= query %>"&gt;&lt;/div&gt;&#10;
 &lt;script src="http://s3.documentcloud.org/search/loader.js"&gt;&lt;/script&gt;&#10;
 &lt;script&gt;&#10;
-  dc.loadSearchEmbed('http://dev.dcloud.org/api/search.js', {&#10;
+  dc.loadSearchEmbed('<%= window.SERVER_ROOT %>/search/documents/', {&#10;
     <%= options %>&#10;
   });&#10;
 &lt;/script&gt;

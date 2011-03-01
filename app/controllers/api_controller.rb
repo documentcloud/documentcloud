@@ -13,8 +13,6 @@ class ApiController < ApplicationController
   before_filter :api_login_required, :only => [:upload, :projects, :update, :destroy, :projects, :create_project, :update_project, :destroy_project]
   before_filter :api_login_optional, :only => [:documents, :search]
 
-  API_OPTIONS = {:sections => false, :annotations => false, :access => true, :contributor => false}
-
   def index
     redirect_to '/help/api'
   end
@@ -28,7 +26,6 @@ class ApiController < ApplicationController
         @response['page']           = @query.page
         @response['per_page']       = @query.per_page
         @response['q']              = params['q']
-        @response['original_query'] = params['original_query'] if params['original_query']
         @response['documents']      = @documents.map {|d| d.canonical(API_OPTIONS) }
         json_response
       end
