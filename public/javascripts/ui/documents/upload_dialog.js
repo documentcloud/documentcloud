@@ -8,14 +8,15 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   constructor : function(options) {
     var defaults = {
-      editable    : true,
-      insertPages : false,
-      autoStart   : false,
-      collection  : UploadDocuments,
-      mode        : 'custom',
-      title       : 'Upload Documents',
-      saveText    : 'Upload',
-      closeText   : 'Cancel'
+      editable        : true,
+      insertPages     : false,
+      autoStart       : false,
+      collection      : UploadDocuments,
+      mode            : 'custom',
+      title           : 'Upload Documents',
+      saveText        : 'Upload',
+      closeText       : 'Cancel',
+      multiFileUpload : !($.browser.msie || $.browser.opera)
     };
     options = _.extend({}, defaults, options);
 
@@ -49,13 +50,15 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   _renderDocumentTiles : function() {
-    var tiles = this._tiles;
-    var editable = this.options.editable;
+    var tiles           = this._tiles;
+    var editable        = this.options.editable;
+    var multiFileUpload = this.options.multiFileUpload;
 
     this.collection.each(function(model) {
       var view = new dc.ui.UploadDocumentTile({
-        editable : editable,
-        model : model
+        editable        : editable,
+        model           : model,
+        multiFileUpload : multiFileUpload
       });
       tiles[model.id] = view.render();
     });
@@ -136,7 +139,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     var attrs = this._tiles[id].serialize();
     this.collection.get(id).set(attrs);
     attrs.session_key = encodeURIComponent(dc.app.cookies.get('document_cloud_session'));
-    if (!($.browser.msie || $.browser.opera)) attrs.in_workspace = true;
+    if (this.options.multiFileUpload) attrs.multi_file_upload = true;
     attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
     if (this._project) attrs.project = this._project.id;
     if (_.isNumber(this.options.insertPageAt)) attrs.insert_page_at = this.options.insertPageAt;
@@ -250,7 +253,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this.collection.refresh();
     dc.ui.Dialog.prototype.close.call(this);
   }
-
+  
 });
 
 dc.ui.UploadDocumentTile = Backbone.View.extend({
@@ -269,8 +272,9 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
 
   render : function() {
     var template = JST['document/upload_document_tile']({
-      editable : this.options.editable,
-      model : this.model
+      editable        : this.options.editable,
+      model           : this.model,
+      multiFileUpload : this.options.multiFileUpload
     });
     $(this.el).html(template);
     this._title    = this.$('input[name=title]');
@@ -311,7 +315,9 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
 
   startProgress : function() {
     this._percentage = 0;
-    this._progress.show();
+    if (this.options.multiFileUpload) {
+      this._progress.show();
+    }
   },
 
   setProgress : function(percentage) {

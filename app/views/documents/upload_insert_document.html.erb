@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload</title>
+</head>
+<body>
+  <script>
+      window.top.dc.app.editor.controlPanel.setOnParent(<%= @document.id %>, <%= @document.to_json %>);
+  </script>
+</body>
+</html>

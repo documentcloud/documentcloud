@@ -4,7 +4,11 @@
     <div class="icon edit_glyph_dark open_edit not_draggable" title="Edit details"></div>
   <% } %>
   <div class="upload_file_size">
-    (<%= Inflector.bytesToMB(model.get('size')) %>)
+    <% if (multiFileUpload) { %>
+      (<%= Inflector.bytesToMB(model.get('size')) %>)
+    <% } else { %>
+      <div class="spinner_dark icon"></div>
+    <% } %>
   </div>
   <label class="icon file file_<%= model.get('extension') %>" for="document_upload_title_<%= model.id %>" title="<%= model.get('title') %>"></label>
   <div class="text_input small dark">

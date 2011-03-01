@@ -96,7 +96,12 @@ class DocumentsController < ApplicationController
       end
     end
 
-    json doc
+    if params[:multi_file_upload]
+      json doc
+    else
+      @document = doc
+      Rails.logger.info("!!! #{@document.id} -- #{@document.to_json}")
+    end
   end
 
   def save_page_text

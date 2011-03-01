@@ -377,6 +377,7 @@
   height: 132px;
 }
   #replace_pages_container .replace_pages_holder {
+    width: 140px;
   }
     #replace_pages_container.on_upload .replace_pages_upload {
       visibility: visible;
@@ -390,6 +391,16 @@
   #replace_pages_container.on_upload #new_documentUploader {
     display: block;
   }
+  #replace_pages_container .replace_pages_upload_button {
+/*    width: 140px;*/
+  }
+  #replace_pages_container #new_document_form {
+    height: auto;
+  }
+  #replace_pages_container .minibutton {
+    width: auto;
+  }
+
 .DV-pages.replace_pages_viewer {
   margin-top: 134px;
 }

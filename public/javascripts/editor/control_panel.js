@@ -105,7 +105,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     var finish = _.bind(function(force) {
       var doc = this._getDocument();
       doc.reprocessText(force);
-      this._setOnParent(doc, {access: dc.access.PENDING});
+      this.setOnParent(doc, {access: dc.access.PENDING});
     }, this);
     var closeMessage = "The text is being processed. Please close this document.";
     var dialog = new dc.ui.Dialog.confirm("Reprocess this document to take \
@@ -179,6 +179,15 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     $('.document_fields_container .toggle').setMode(showing ? 'not' : 'is', 'enabled');
   },
 
+  setOnParent : function(doc, attrs) {
+    try {
+      var doc = window.opener && window.opener.Documents && window.opener.Documents.get(doc);
+      if (doc) doc.set(attrs);
+    } catch (e) {
+      // Couldn't access the parent window -- it's ok.
+    }
+  },
+
   _getDocument : function(attrs, full) {
     if (full) {
       var schema = this.viewer.api.getSchema();
@@ -189,19 +198,10 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     return new dc.model.Document(_.clone(attrs));
   },
 
-  _setOnParent : function(doc, attrs) {
-    try {
-      var doc = window.opener && window.opener.Documents && window.opener.Documents.get(doc);
-      if (doc) doc.set(attrs);
-    } catch (e) {
-      // Couldn't access the parent window -- it's ok.
-    }
-  },
-
   _updateDocument : function(attrs) {
     var doc = this._getDocument(attrs);
     doc.save();
-    this._setOnParent(doc, attrs);
+    this.setOnParent(doc, attrs);
   }
 
 });

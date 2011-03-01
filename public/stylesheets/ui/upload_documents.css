@@ -95,7 +95,11 @@
     font-size: 10px;
     color: #808080;
     margin: 6px 4px 0 4px;
+    overflow: hidden;
   }
+    #upload_dialog .upload_title .upload_file_size .icon.spinner_dark {
+      position: static;
+    }
   #upload_dialog .upload_title .icon.edit_glyph_dark {
     float: right;
     margin: 7px 4px 0 4px;
