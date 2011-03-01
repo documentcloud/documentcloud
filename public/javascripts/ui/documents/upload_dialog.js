@@ -138,7 +138,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   _uploadData : function(id) {
     var attrs = this._tiles[id].serialize();
     this.collection.get(id).set(attrs);
-    attrs.session_key = encodeURIComponent(dc.app.cookies.get('document_cloud_session'));
     if (this.options.multiFileUpload) attrs.multi_file_upload = true;
     attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
     if (this._project) attrs.project = this._project.id;
