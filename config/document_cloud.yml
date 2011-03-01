@@ -2,7 +2,7 @@ defaults: &defaults
   cloud_crowd_server:   http://dev.dcloud.org:8080
   server_root:          dev.dcloud.org
   aws_zone:             us-east-1c
-  preconfigured_ami_id: ami-78e51611
+  preconfigured_ami_id: ami-6057a409
 
   # Include Postgres-generated highlights of the search query within the
   # document results (too slow).
