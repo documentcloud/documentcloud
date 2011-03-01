@@ -45,7 +45,7 @@ touch on EC2 in here.
   
 * Install the SSH credentials (for the current user, root on the EBS chroot):
   mkdir -p ~/.ssh (or /root/.ssh)
-  Copy the contents of config/server/keys/github.pem to .ssh/id_dsa
+  Copy the contents of secrets/keys/github.pem to .ssh/id_dsa
   chmod 0600 .ssh/id_dsa
   
 * Checkout DocumentCloud:

@@ -19,7 +19,7 @@
 :storage:             s3
 
 # Please provide your AWS credentials for S3 storage of job output.
-<% secrets = YAML.load_file('config/secrets.yml')[ENV['RAILS_ENV']] %>
+<% secrets = YAML.load_file('secrets/secrets.yml')[ENV['RAILS_ENV']] %>
 :aws_access_key:      <%= secrets['aws_access_key'] %>
 :aws_secret_key:      <%= secrets['aws_secret_key'] %>
 

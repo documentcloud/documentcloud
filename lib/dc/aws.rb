@@ -56,7 +56,7 @@ module DC
         'StrictHostKeyChecking' => 'no',
         'UserKnownHostsFile' => '/dev/null',
         'User' => 'ubuntu',
-        'IdentityFile' => "#{Rails.root}/config/server/keys/documentcloud.pem"
+        'IdentityFile' => "#{Rails.root}/secrets/keys/documentcloud.pem"
       }
 
       File.chmod(0600, ssh_config['IdentityFile'])
@@ -80,7 +80,7 @@ module DC
       end
 
       # configure new instance with ssh key to access github
-      system "ssh #{ssh_options} #{new_instance[:dns_name]} 'test -e .ssh/id_dsa && exit 0; mkdir -p .ssh; while read line; do echo $line; done > .ssh/id_dsa; chmod 0600 .ssh/id_dsa' < #{Rails.root}/config/server/keys/github.pem"
+      system "ssh #{ssh_options} #{new_instance[:dns_name]} 'test -e .ssh/id_dsa && exit 0; mkdir -p .ssh; while read line; do echo $line; done > .ssh/id_dsa; chmod 0600 .ssh/id_dsa' < #{Rails.root}/secrets/keys/github.pem"
 
       # configure new instance
       unless options[:scripts].empty?

@@ -21,7 +21,7 @@ namespace :app do
   end
 
   task :warm do
-    secrets = YAML.load_file("#{Rails.root}/config/secrets.yml")[RAILS_ENV]
+    secrets = YAML.load_file("#{Rails.root}/secrets/secrets.yml")[RAILS_ENV]
     sh "curl -s -u guest:#{secrets['guest_password']} http://localhost:80 > /dev/null"
   end
 
