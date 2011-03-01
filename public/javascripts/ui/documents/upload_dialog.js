@@ -80,11 +80,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
         url        : uploadUrl,
         onAbort    : this.cancelUpload,
         initUpload : this._onSelect,
-        beforeSend : this._onBeforeSend,
         onProgress : this._onProgress,
         onLoad     : this._onComplete
     });
-    this._uploadIndex = 0;
   },
 
   // If flash is disabled, we fall back to a regular invisible file input field.
@@ -104,26 +102,20 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       id          : Inflector.sluggify(file.fileName || file.name),
       uploadIndex : index,
       file        : file,
-      position    : this.collection.length,
+      position    : index,
       handler     : handler,
       startUpload : callback
     }));
 
-    if (index == files.length-1) {
-      if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
-        this.close();
-        return dc.ui.Dialog.alert("You can only upload documents less than 200MB in size. Please <a href=\"/help/troubleshooting\">optimize your document</a> before continuing.");
-      }
-      this.render();
-      if (this.options.autoStart) {
-        this.startUpload();
-      }
+    if (index != files.length - 1) return;
+
+    if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
+      this.close();
+      return dc.ui.Dialog.alert("You can only upload documents less than 200MB in size. Please <a href=\"/help/troubleshooting\">optimize your document</a> before continuing.");
     }
-  },
 
-  // Called immediately before a file begins uploading. Used to queue.
-  _onBeforeSend : function(e, files, index, xhr, handler, callback) {
-
+    this.render();
+    if (this.options.autoStart) this.startUpload(index);
   },
 
   // Cancel an upload by index.
@@ -136,7 +128,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   // Called immediately before file to POSTed to server.
-  _uploadData : function(id) {
+  _uploadData : function(id, index) {
     var attrs = this._tiles[id].serialize();
     this.collection.get(id).set(attrs);
     if (this.options.multiFileUpload) attrs.multi_file_upload = true;
@@ -145,9 +137,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     if (_.isNumber(this.options.insertPageAt)) attrs.insert_page_at = this.options.insertPageAt;
     if (_.isNumber(this.options.replacePagesStart)) attrs.replace_pages_start = this.options.replacePagesStart;
     if (_.isNumber(this.options.replacePagesEnd)) attrs.replace_pages_end = this.options.replacePagesEnd;
-    if (this.options.documentId)   attrs.document_id = this.options.documentId;
-    if (this.options.insertPages)  attrs.document_number = this._uploadIndex;
-    if (this.options.insertPages)  attrs.document_count = this.collection.length;
+    if (this.options.documentId)  attrs.document_id     = this.options.documentId;
+    if (this.options.insertPages) attrs.document_number = index + 1;
+    if (this.options.insertPages) attrs.document_count  = this.collection.length;
     if (!this.options.autoStart) this.showSpinner();
     this._list[0].scrollTop = 0;
     return attrs;
@@ -177,14 +169,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     }
 
     this._tiles[id].hide();
-    this._uploadIndex -= 1;
 
     this.collection.remove(this.collection.first());
 
-    if (this._uploadIndex <= 0) {
+    if (index >= files.length - 1) {
       this._onAllComplete();
     } else {
-      this.startUpload();
+      this.startUpload(index);
     }
   },
 
@@ -233,14 +224,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       return this.error('Please enter a title for ' + (num == 1 ? 'the document.' : 'all documents.'));
     }
     this.$('.ok').setMode('not', 'enabled');
-    this.startUpload();
+    this.startUpload(0);
   },
 
-  startUpload : function() {
+  startUpload : function(index) {
     var tiles = this._tiles;
-    this._uploadIndex = this.collection.length;
     var doc = this.collection.first();
-    doc.get('handler').formData = this._uploadData(doc.get('id'));
+    doc.get('handler').formData = this._uploadData(doc.get('id'), index);
     doc.get('startUpload')();
     tiles[doc.get('id')].startProgress();
   },
