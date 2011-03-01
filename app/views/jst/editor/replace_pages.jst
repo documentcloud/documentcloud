@@ -1,10 +1,12 @@
 <div class="replace_pages">
   
   <div class="editor_toolbar_controls replace_pages_holder">
-    <div id="new_document" class="minibutton plus replace_pages_upload_button default">
-      <div class="icon white_plus"></div>
-      Upload Pages
-    </div>
+    <form id="new_document_form" action="/import/upload_document" method="POST" enctype="multipart/form-data" target="upload_iframe">
+      <div class="minibutton plus replace_pages_upload_button default" id="new_document"><div class="icon white_plus"></div>Upload Pages</div>
+      <button type="submit">Upload Pages</button>
+      <input id="new_document_input" name="file" type="file" multiple />
+      <iframe id="upload_iframe" name="upload_iframe" src="about:blank" class="hidden_iframe"></iframe>
+    </form>
     <div class="minibutton close_editor">Cancel</div>
   </div>
   

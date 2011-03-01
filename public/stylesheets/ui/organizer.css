@@ -41,8 +41,7 @@
 }
   #new_document_form {
     position: relative;
-    float: left;
-    height: 30px;
+    height: 26px;
     overflow: hidden;
     width: 140px;
   }

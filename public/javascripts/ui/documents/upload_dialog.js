@@ -44,7 +44,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._renderDocumentTiles();
     this.countDocuments();
     this.center();
-    if (!this.options.insertPages) this.checkQueueLength();
+    if (!this.options.autostart) this.checkQueueLength();
     return this;
   },
 
@@ -66,13 +66,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Be careful to only setup file uploading once, when the "Documents" tab is open.
   setupUpload : function() {
-    if (this.button || (dc.app.navigation && !dc.app.navigation.isOpen('documents'))) return;
+    if (this.form || (dc.app.navigation && !dc.app.navigation.isOpen('documents'))) return;
     var uploadUrl = '/import/upload_document';
     if (this.options.insertPages) {
       uploadUrl = '/documents/' + this.options.documentId + '/upload_insert_document';
     }
-    this.button = $('#new_document_form');
-    this.button.fileUpload({
+    this.form = $('#new_document_form');
+    this.form.fileUpload({
         url        : uploadUrl,
         onAbort    : this.cancelUpload,
         initUpload : this._onSelect,
@@ -112,7 +112,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       }
       this.render();
       if (this.options.autoStart) {
-        callback();
+        this.startUpload();
       }
     }
   },
@@ -147,7 +147,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     if (this.options.insertPages)  attrs.document_count = this.collection.length;
     if (!this.options.autoStart) this.showSpinner();
     this._list[0].scrollTop = 0;
-    
     return attrs;
   },
 
@@ -237,7 +236,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   startUpload : function() {
     var tiles = this._tiles;
     this._uploadIndex = this.collection.length;
-    
     var doc = this.collection.first();
     doc.get('handler').formData = this._uploadData(doc.get('id'));
     doc.get('startUpload')();

@@ -58,7 +58,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
       autoStart   : true,
       documentId  : this.viewer.api.getModelId()
     });
-
+    dc.app.uploader.setupUpload();
     this.handleEvents();
     this.delegateEvents();
   },
