@@ -2,10 +2,10 @@ window.dc = window.dc || {};
 window.dc.embed = window.dc.embed || {};
   
 dc.loadSearchEmbed = function(searchUrl, opts) {
-  var query = Inflector.sluggify(opts['originalQuery'] || opts['q']);
+  var id = Inflector.sluggify(opts['originalQuery'] || opts['q']);
   
-  dc.embed[query] = {};
-  dc.embed[query].options = opts = _.extend({}, {
+  dc.embed[id] = dc.embed[id] || {};
+  dc.embed[id].options = opts = _.extend({}, {
     searchUrl     : searchUrl,
     originalQuery : opts['originalQuery'] || opts['q'],
     per_page      : 12,
@@ -37,7 +37,7 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
 dc.loadSearchEmbedCallback = function(json) {
   var searchQuery = Inflector.sluggify(json.query);
   var id = _.detect(_.keys(dc.embed), function(q) {
-    if (searchQuery.indexOf(q) != -1) {
+    if (searchQuery.indexOf(q) == 0) {
       return true;
     }
   });
@@ -47,8 +47,6 @@ dc.loadSearchEmbedCallback = function(json) {
     per_page : json.per_page,
     page     : json.page
   });
-  
-  console.log(['callback', json, searchQuery, id, dc.embed[id]]);
   
   if (dc.embed[id].documents) {
     dc.embed[id].documents.refresh(json.documents);
@@ -113,6 +111,7 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     
     this.search.placeholder({className: 'DC-placeholder DC-interface'});
     this.renderDocuments();
+    this.showSearchCancel();
   },
   
   renderDocuments : function() {
@@ -150,6 +149,13 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     return width - padding;
   },
   
+  showSearchCancel : function() {
+    var show = this.embed.options.q == this.embed.options.originalQuery;
+
+    $(this.el).toggleClass('DC-query-original', show);
+    $(this.el).toggleClass('DC-query-search',  !show);
+  },
+  
   cancelSearch : function(e) {
     e.preventDefault();
     this.search.val('').blur();
@@ -175,6 +181,8 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
       this.embed.options['q'] = this.embed.options['originalQuery'] + (query && (' ' + query));
       dc.loadSearchEmbed(this.embed.options['searchUrl'], this.embed.options);
     }
+    
+    this.showSearchCancel();
   },
   
   nextPage : function() {

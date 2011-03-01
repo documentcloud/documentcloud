@@ -19,7 +19,7 @@
     <div id="DC-search-<%= @slug %>"></div>
     <script src="<%= DC.server_root(:ssl => false) %>/search/loader.js"></script>
     <script>
-      dc.loadSearchEmbed("<%= DC.server_root(:ssl => false) %>/api/search.js", <%= @options %>);
+      dc.loadSearchEmbed("<%= DC.server_root(:ssl => false) %>/search/documents/", <%= @options %>);
     </script>
   </div>
 

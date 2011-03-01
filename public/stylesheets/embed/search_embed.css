@@ -118,6 +118,9 @@
       position: absolute;
       right: 9px; top: 8px;
     }
+      .DC-search-embed.DC-query-original .DC-cancel-search {
+        display: none;
+      }
     
 /* ================== */
 /* = Document Tiles = */
