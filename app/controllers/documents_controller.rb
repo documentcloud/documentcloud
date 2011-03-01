@@ -100,7 +100,6 @@ class DocumentsController < ApplicationController
       json doc
     else
       @document = doc
-      Rails.logger.info("!!! #{@document.id} -- #{@document.to_json}")
     end
   end
 
