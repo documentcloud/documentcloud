@@ -5,6 +5,7 @@
 
 <div id="full_screen_form" class="full_page_background">
   <form action="/reset_password" method="POST" autocomplete="off">
+    <%= token_tag %>
     <h1>Reset your DocumentCloud Password</h1>
     <% if @failure %>
       <div class="form_error">

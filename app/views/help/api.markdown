@@ -35,6 +35,7 @@ entities      | include entities for the search in the results | true (defaults 
   </p>
   <div>
     <form id="search_form" action="about:blank" autocomplete="off">
+      <%= token_tag %>
       <div id="run_search" class="minibutton default">Search</div>
       <div class="text_input">
         <div class="background">

@@ -5,6 +5,7 @@
 
 <div id="full_screen_form" class="full_page_background">
   <form action="/api/signup" method="POST">
+    <%= token_tag %>
     <h1>Sign up for the DocumentCloud API </h1>
     <% if @failure %>
       <div class="form_error">

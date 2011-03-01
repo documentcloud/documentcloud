@@ -8,6 +8,7 @@
   <% js  = [:core] + (@javascripts || []) %>
   <%= include_stylesheets *css %>
   <%= include_javascripts *js %>
+  <%= csrf_meta_tag %> 
 </head>
 <body class="<%= @bodyclass %>">
 

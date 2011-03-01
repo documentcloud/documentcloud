@@ -18,6 +18,7 @@
   <% if @include_analytics && Rails.env.production? %>
     <%= render :partial => 'common/google' %>
   <% end %>
+  <%= csrf_meta_tag %> 
 </head>
 <body class="<%= @bodyclass %> <%= @current_account ? 'logged_in' : '' %>">
 

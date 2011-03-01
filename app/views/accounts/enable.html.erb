@@ -5,6 +5,7 @@
 
 <div id="full_screen_form" class="full_page_background">
   <form action="/accounts/enable/<%= params[:key] %>" method="POST" autocomplete="off">
+    <%= token_tag %>
     <h1>Welcome to DocumentCloud</h1>
     <% if @failure %>
       <div class="form_error">

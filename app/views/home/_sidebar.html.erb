@@ -34,6 +34,7 @@
         </div>
       <% end %>
       <form id="login_form" action="<%= DC.server_root(:force_ssl => true) %>/login" method="POST">
+        <%= token_tag %>
         <div class="text_input first light">
           <div class="inner">
            <input type="text" name="email" placeholder="Email" id="account_email" />

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   BasicAuth = ActionController::HttpAuthentication::Basic
 
-  helper :all
+  protect_from_forgery
 
   filter_parameter_logging :password
 
