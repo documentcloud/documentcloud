@@ -22,7 +22,7 @@
 
   <div id="sky"></div>
 
-  <% if @bodyclass == 'homepage' %>
+  <% if (@bodyclass == 'homepage') && @document %>
     <a id="workspace_link" href="/public/#search/"></a>
     <div id="docs_wrapper">
       <img id="document_stack" alt="" src="/images/home/art.png" />
