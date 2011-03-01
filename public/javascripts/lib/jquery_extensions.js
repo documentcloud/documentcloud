@@ -4,7 +4,7 @@
   // request.
   $(document).ajaxSend(function(e, xhr, options) {
     var token = $("meta[name='csrf-token']").attr("content");
-    xhr.setRequestHeader("X-CSRF-Token", token);
+    // xhr.setRequestHeader("X-CSRF-Token", token);
   });
 
   var fakeInput = document.createElement('input');

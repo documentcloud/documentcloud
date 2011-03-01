@@ -4,4 +4,4 @@
 
 <%= @error.message %>
 
-<%= @error.backtrace.join("\n") %>
+<%= (@error.backtrace || []).join("\n") %>
