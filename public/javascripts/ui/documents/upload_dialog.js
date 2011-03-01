@@ -1,4 +1,4 @@
-// The UploadDialog handles bulk upload via the Uploadify jQuery plugin.
+// The UploadDialog handles bulk upload via the HTML5 jQuery file upload plugin.
 dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   id        : 'upload_dialog',
@@ -146,7 +146,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     return attrs;
   },
 
-  // Return false so Uploadify doesn't try to update missing fields (from onSelect).
   _onProgress : function(e, files, index, xhr, handler) {
     var id         = Inflector.sluggify(files[index].fileName || files[index].name);
     var percentage = parseInt((e.loaded / e.total) * 100, 10);

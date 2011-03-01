@@ -6,7 +6,7 @@ dc.model.UploadDocument = Backbone.Model.extend({
   MAX_FILE_SIZE : 209715200, // 200 Megabytes
 
   // When creating an UploadDocument, we pull off some properties that
-  // Uploadify provides on the file object, and attach them as attributes.
+  // are on the file object, and attach them as attributes.
   set : function(attrs) {
     var file = attrs.file;
     if (file) {
