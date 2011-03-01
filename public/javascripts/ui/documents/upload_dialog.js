@@ -16,7 +16,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       title           : 'Upload Documents',
       saveText        : 'Upload',
       closeText       : 'Cancel',
-      multiFileUpload : !($.browser.msie || $.browser.opera)
+      multiFileUpload : window.FileList && ($("input[type=file]")[0].files instanceof FileList)
     };
     options = _.extend({}, defaults, options);
 
@@ -107,7 +107,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       handler     : handler,
       startUpload : callback
     }));
-    
+
     if (index == files.length-1) {
       if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
         this.close();
@@ -119,10 +119,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       }
     }
   },
-  
+
   // Called immediately before a file begins uploading. Used to queue.
   _onBeforeSend : function(e, files, index, xhr, handler, callback) {
-    
+
   },
 
   // Cancel an upload by index.
@@ -163,9 +163,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   _onComplete : function(e, files, index, xhr, handler) {
     var id   = Inflector.sluggify(files[index].fileName || files[index].name);
     var resp = xhr.responseText && JSON.parse(xhr.responseText);
-    
+
     this._tiles[id].setProgress(100);
-    
+
     if (resp && resp.bad_request) {
       return this.error("Upload failed.");
     } else if (!this.options.insertPages && resp) {
@@ -174,12 +174,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     } else if (this.options.insertPages && resp) {
       this.documentResponse = resp;
     }
-    
+
     this._tiles[id].hide();
     this._uploadIndex -= 1;
-    
+
     this.collection.remove(this.collection.first());
-    
+
     if (this._uploadIndex <= 0) {
       this._onAllComplete();
     } else {
@@ -243,7 +243,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     doc.get('startUpload')();
     tiles[doc.get('id')].startProgress();
   },
-  
+
   cancel : function() {
     this.close();
   },
@@ -252,7 +252,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this.collection.refresh();
     dc.ui.Dialog.prototype.close.call(this);
   }
-  
+
 });
 
 dc.ui.UploadDocumentTile = Backbone.View.extend({

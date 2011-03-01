@@ -14,8 +14,8 @@ dc.model.UploadDocument = Backbone.Model.extend({
       var fileName    = file.fileName || file.name;
       fileName        = fileName.match(/[^\/\\]+$/)[0]; // C:\fakepath\yatta yatta.pdf => yatta yatta.pdf
       attrs.title     = Inflector.titleize(fileName.replace(this.FILE_EXTENSION_MATCHER, ''));
-      var match       = fileName.match(this.FILE_EXTENSION_MATCHER);
-      attrs.extension = match && match[1];
+      var extMatch    = fileName.match(this.FILE_EXTENSION_MATCHER);
+      attrs.extension = extMatch && extMatch[1];
       attrs.size      = file.fileSize || null;
     }
     Backbone.Model.prototype.set.call(this, attrs);
