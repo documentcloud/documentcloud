@@ -4,6 +4,8 @@ class ImportController < ApplicationController
 
   layout nil
 
+  skip_before_filter :verify_authenticity_token, :only => [:cloud_crowd, :update_access]
+
   before_filter :login_required, :only => [:upload_document]
 
   # Internal document upload, called from the workspace.

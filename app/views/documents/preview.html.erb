@@ -19,6 +19,7 @@
     <% @pageview_url = '/documents/show' %>
     <%= render :partial => 'common/google' %>
   <% end %>
+  <%= csrf_meta_tag %> 
 </head>
 <body style="margin:0; padding:0;">
   <% canonical = @current_document.canonical({:account => @current_account, :local => @local}) if @current_document %>

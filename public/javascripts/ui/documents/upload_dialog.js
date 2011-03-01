@@ -132,6 +132,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     var attrs = this._tiles[id].serialize();
     this.collection.get(id).set(attrs);
     if (this.options.multiFileUpload) attrs.multi_file_upload = true;
+    attrs.authenticity_token = $("meta[name='csrf-token']").attr("content");
     attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
     if (this._project) attrs.project = this._project.id;
     if (_.isNumber(this.options.insertPageAt)) attrs.insert_page_at = this.options.insertPageAt;
