@@ -106,6 +106,12 @@ class ApplicationController < ActionController::Base
       session['organization_id'] ? Organization.find_by_id(session['organization_id']) : nil
   end
 
+  def handle_unverified_request
+    error = new RuntimeError("CSRF Verification Failed")
+    LifecycleMailer.deliver_exception_notification(error, params)
+    forbidden
+  end
+
   def bad_request
     render :file => "#{Rails.root}/public/400.html", :status => 400
     false
