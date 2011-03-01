@@ -16,7 +16,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       title           : 'Upload Documents',
       saveText        : 'Upload',
       closeText       : 'Cancel',
-      multiFileUpload : window.FileList && ($("input[type=file]")[0].files instanceof FileList)
+      multiFileUpload : false
     };
     options = _.extend({}, defaults, options);
 
@@ -32,6 +32,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   render : function() {
+    this.options.multiFileUpload = window.FileList && ($("input[type=file]")[0].files instanceof FileList);
     this._tiles = {};
     this._project = _.first(Projects.selected());
     var data = {};
