@@ -53,6 +53,7 @@ class LifecycleMailer < ActionMailer::Base
 
   # Mail a notification of an exception that occurred in production.
   def exception_notification(error, params=nil)
+    params.delete(:password) if params
     subject     "DocumentCloud exception (#{Rails.env}): #{error.class.name}"
     from        NO_REPLY
     recipients  [SUPPORT]
@@ -68,18 +69,18 @@ class LifecycleMailer < ActionMailer::Base
     body        :account  => account,
                 :count    => document_count
   end
-  
+
   # Accounts and Document CSVs mailed out every 1st and 15th of the month
   def account_and_document_csvs
     subject       "Accounts (CSVs)"
     from          NO_REPLY
     recipients    ['amanda@documentcloud.org']
     content_type  "multipart/mixed"
-    
-    part :content_type => "text/plain", 
+
+    part :content_type => "text/plain",
          :body => render_message("account_and_document_csvs.text.plain", :date => Time.now)
-    
-    attachment "text/csv" do |a|  
+
+    attachment "text/csv" do |a|
       a.body     = DC::Statistics.accounts_csv
       a.filename = 'accounts.csv'
     end
@@ -89,7 +90,7 @@ class LifecycleMailer < ActionMailer::Base
       a.filename = 'top_documents.csv'
     end
   end
-  
+
   def logging_email(email_subject, args)
     subject       email_subject
     from          NO_REPLY
