@@ -1,5 +1,7 @@
 class WorkspaceController < ApplicationController
 
+  skip_before_filter :verify_authenticity_token, :only => [:login]
+
   before_filter :bouncer, :except => :index if Rails.env.staging?
 
   before_filter :prefer_secure, :only => [:index]
