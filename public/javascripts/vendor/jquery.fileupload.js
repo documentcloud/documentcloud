@@ -7,6 +7,7 @@
  *
  * https://blueimp.net
  * http://www.aquantum.de
+ * GitHub: https://github.com/blueimp/jQuery-File-Upload/wiki
  */
 
 /*jslint browser: true */

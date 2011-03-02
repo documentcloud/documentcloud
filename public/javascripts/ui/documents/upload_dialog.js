@@ -104,6 +104,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       file        : file,
       position    : index,
       handler     : handler,
+      xhr         : xhr,
       startUpload : callback
     }));
 
@@ -172,7 +173,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
     this.collection.remove(this.collection.first());
 
-    if (index >= files.length - 1) {
+    if (this.collection.length == 0) {
       this._onAllComplete();
     } else {
       this.startUpload(index);
@@ -284,6 +285,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
   removeUploadFile : function() {
     if (dc.app.uploader.cancelUpload(this.model.get('uploadIndex'))) {
       this.hide();
+      this.model.get('xhr').abort();
       UploadDocuments.remove(this.model);
     }
   },
