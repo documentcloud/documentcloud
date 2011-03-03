@@ -4,9 +4,10 @@
     <div class="icon edit_glyph_dark open_edit not_draggable" title="Edit details"></div>
   <% } %>
   <div class="upload_file_size">
-    <% if (multiFileUpload) { %>
+    <% if (model.get('size')) { %>
       (<%= Inflector.bytesToMB(model.get('size')) %>)
-    <% } else { %>
+    <% } %>
+    <% if (autostart) { %>
       <div class="spinner_dark icon"></div>
     <% } %>
   </div>
@@ -52,7 +53,7 @@
         <option value="organization">Private to <%= dc.app.organization && dc.app.organization.name %></option>
       </select>
     </div>
-  
+
     <div class="apply_all" title="Apply this description, source, and access level to all files">
       <span class="text_link">Apply to All Files</span>
     </div>

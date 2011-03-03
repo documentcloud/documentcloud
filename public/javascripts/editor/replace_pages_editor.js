@@ -5,7 +5,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
   events : {
     'click .close_editor' : 'close'
   },
-  
+
   initialize : function(options) {
     this.editor = options.editor;
   },
@@ -55,7 +55,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
     dc.app.uploader = new dc.ui.UploadDialog({
       editable    : false,
       insertPages : true,
-      autoStart   : true,
+      autostart   : true,
       documentId  : this.viewer.api.getModelId()
     });
     dc.app.uploader.setupUpload();

@@ -10,7 +10,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     var defaults = {
       editable        : true,
       insertPages     : false,
-      autoStart       : false,
+      autostart       : false,
       collection      : UploadDocuments,
       mode            : 'custom',
       title           : 'Upload Documents',
@@ -23,7 +23,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     _.bindAll(this, 'setupUpload', 'countDocuments', 'cancelUpload',
       '_onSelect', '_onProgress', '_onComplete', '_onAllComplete');
     dc.ui.Dialog.call(this, options);
-    if (options.autoStart) $(this.el).addClass('autostart');
+    if (options.autostart) $(this.el).addClass('autostart');
     if (dc.app.navigation) {
       dc.app.navigation.bind('tab:documents', _.bind(function(){ _.defer(this.setupUpload); }, this));
     }
@@ -116,7 +116,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     }
 
     this.render();
-    if (this.options.autoStart) this.startUpload(index);
+    if (this.options.autostart) this.startUpload(index);
   },
 
   // Cancel an upload by index.
@@ -131,8 +131,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // Called immediately before file to POSTed to server.
   _uploadData : function(id, index) {
     var attrs = this._tiles[id].serialize();
-    this.collection.get(id).set(attrs);
-    if (this.options.multiFileUpload) attrs.multi_file_upload = true;
+    var model = this.collection.get(id);
+    model.set(attrs);
+    if (this.options.multiFileUpload && model.get('size')) attrs.multi_file_upload = true;
     attrs.authenticity_token = $("meta[name='csrf-token']").attr("content");
     attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
     if (this._project) attrs.project = this._project.id;
@@ -142,7 +143,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     if (this.options.documentId)  attrs.document_id     = this.options.documentId;
     if (this.options.insertPages) attrs.document_number = index + 1;
     if (this.options.insertPages) attrs.document_count  = this.collection.length;
-    if (!this.options.autoStart) this.showSpinner();
+    if (!this.options.autostart) this.showSpinner();
     this._list[0].scrollTop = 0;
     return attrs;
   },
@@ -264,6 +265,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
   render : function() {
     var template = JST['document/upload_document_tile']({
       editable        : this.options.editable,
+      autostart       : this.options.autostart,
       model           : this.model,
       multiFileUpload : this.options.multiFileUpload
     });
