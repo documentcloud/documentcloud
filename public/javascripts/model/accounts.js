@@ -42,7 +42,7 @@ dc.model.Account = Backbone.Model.extend({
     return (model.get('account_id') == this.id) ||
            (model.get('organization_id') == this.get('organization_id') && 
             this.isEditor() &&
-            _.contains([dc.access.PUBLIC, dc.access.ORGANIZATION], model.get('access')));
+            _.contains(['public', 'exclusive', 'organization'], model.get('access')));
   },
 
   collaborates: function(model) {
