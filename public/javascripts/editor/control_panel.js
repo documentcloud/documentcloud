@@ -36,8 +36,25 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   showReviewerWelcome : function() {
     if (dc.account.role == dc.model.Account.prototype.REVIEWER) {
       var fullName = dc.app.editor.options.reviewerInviter.fullName;
-      var email = dc.app.editor.options.reviewerInviter.email;
-      dc.ui.Dialog.alert("", {description: "Use the links at the right to annotate the document. Keep in mind that any other reviewers will be able to see public annotations and drafts. Private annotations are for your own reference. Even "+fullName+" can't see them. Contact "+fullName+" at "+email+" if you need any help, or visit http://www.documentcloud.org for more information about DocumentCloud.", title: fullName+' has invited you to review "'+currentDocument.api.getTitle()+'"'});
+      var email    = dc.app.editor.options.reviewerInviter.email;
+      var title    = [
+        fullName,
+        ' has invited you to review "',
+        Inflector.truncate(currentDocument.api.getTitle(), 50),
+        '"'
+      ].join('');
+      var description = "Use the links at the right to annotate the document. \
+                         Keep in mind that any other reviewers will be able to \
+                         see public annotations and drafts. Private annotations \
+                         are for your own reference. Even "+fullName+" can't see \
+                         them.<br><br>Contact "+fullName+" at <a href=\"mailto:"
+                         +email+"\" class=\"text_link\">"+email+"</a> if you need \
+                         any help, or visit <a href=\"http://www.documentcloud.org\" \
+                         class=\"text_link\">http://www.documentcloud.org</a> for more \
+                         information about DocumentCloud.";
+      
+      var dialog = dc.ui.Dialog.alert("", {description: description, title: title});
+      $(dialog.el).addClass('wide_dialog');
     }
   },
 

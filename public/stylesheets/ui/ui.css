@@ -473,6 +473,9 @@ textarea.text_area {
   .dialog.confirm_dialog {
     width: 300px;
   }
+  .dialog.wide_dialog {
+    width: 500px;
+  }
   .dialog.short_prompt_dialog {
     width: 350px;
   }

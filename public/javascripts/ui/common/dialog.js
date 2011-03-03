@@ -135,9 +135,9 @@ _.extend(dc.ui.Dialog, {
 
   alert : function(text, options) {
     return new dc.ui.Dialog(_.extend({
-      mode  : 'alert',
-      title : null,
-      text  : text
+      mode      : 'alert',
+      title     : null,
+      text      : text
     }, options)).render();
   },
 
