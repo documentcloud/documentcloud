@@ -8,6 +8,10 @@ namespace :cron do
   task :hourly do
     invoke 'app:publish'
   end
+  
+  task :minutely do
+    invoke 'app:purge_search_embed_cache' if Time.now.min % 5 == 0 # Every 5 min
+  end
 
 end
 

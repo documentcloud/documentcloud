@@ -51,6 +51,11 @@ namespace :app do
     files = Dir["./public/documents/*.js"]
     sh "rm ./public/documents/*.js" if files.length > 0
   end
+  
+  desc "Purges cached search embeds."
+  task :purge_search_embed_cache do
+    sh "rm -fr ./public/search/documents/*"
+  end
 
 end
 
