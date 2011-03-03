@@ -35,6 +35,7 @@ Rails::Initializer.run do |config|
   config.gem 'sunspot_rails',         :version => '>= 1.1.0',       :lib => 'sunspot/rails'
   config.gem 'rdiscount',             :version => '>= 1.6.5'
   config.gem 'fastercsv',             :version => '>= 1.5.3'
+  config.gem 'sanitize',              :version => '>= 2.0.0'
 
   # Middleware
   paths = config.respond_to?(:autoload_paths) ? config.autoload_paths : config.load_paths
