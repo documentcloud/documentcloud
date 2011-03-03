@@ -1,12 +1,28 @@
 news:
+  - - "A Backbone for JavaScript-Heavy Web UI"
+    - http://www.drdobbs.com/blog/archives/2011/02/a_backbone_for.html
+    - Dr. Dobb's
+    - 2011-02-27
+  - - "CloudEdit: A Backbone.js Tutorial with Rails"
+    - http://www.jamesyu.org/2011/01/27/cloudedit-a-backbone-js-tutorial-by-example/
+    - James Yu
+    - 2011-01-27
   - - "Thought Leaders in the Cloud: Talking with Aron Pilhofer"
     - http://blogs.msdn.com/b/windowsazure/archive/2011/01/18/thought-leaders-in-the-cloud-talking-with-aron-pilhofer-editor-of-interactive-news-technologies-at-the-new-york-times.aspx
     - Windows Azure
     - 2011-01-18
+  - - "Create JavaScript Apps with Backbone.js"
+    - http://thinkvitamin.com/code/create-javascript-apps-with-backbone-js/
+    - Think Vitamin
+    - 2011-01-12
   - - "Interview: Jeremy Ashkenas Talks About CoffeeScript"
     - http://www.readwriteweb.com/hack/2011/01/interview-coffeescript-jeremy-ashkenas.php
     - ReadWriteWeb
     - 2011-01-07
+  - - Episode 0.2.9 - CoffeeScript + DocumentCloud
+    - http://thechangelog.com/post/849754840/episode-0-2-9-coffeescript-with-jeremy-ashkenas
+    - The Changelog
+    - 2010-07-23
   - - "Open-Source Spotlight: Underscore.js"
     - http://fuelyourcoding.com/open-source-spotlight-underscorejs/
     - Fuel
@@ -19,7 +35,7 @@ news:
     - http://ozmm.org/posts/2009_open_source_top_ten.html
     - Ones, Zeros, Majors and Minors
     - 2009-12-17
-  - - "Episode 0.0.5 \xE2\x80\x93 Document Cloud"
+  - - "Episode 0.0.5 \xE2\x80\x93 DocumentCloud"
     - http://thechangelog.com/post/272530971/episode-0-0-5-document-cloud
     - The Changelog
     - 2009-12-06
