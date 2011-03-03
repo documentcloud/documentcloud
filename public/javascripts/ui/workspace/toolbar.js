@@ -15,8 +15,10 @@ dc.ui.Toolbar = Backbone.View.extend({
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'openPages', 'openDocumentEmbedDialog',
-      'openSearchEmbedDialog', 'openPublicationDateDialog', 'requestDownloadViewers', 
-      'checkFloat', '_openTimeline', '_viewEntities', 'editDocumentURL');
+      'openSearchEmbedDialog', 'openPublicationDateDialog', 'requestDownloadViewers',
+      'checkFloat', '_openTimeline', '_viewEntities', 'editDocumentURL', '_markOrder',
+      '_removeFromSelectedProject');
+    this.sortMenu    = this._createSortMenu();
     this.analyzeMenu = this._createAnalyzeMenu();
     this.publishMenu = this._createPublishMenu();
     if (dc.account) {
@@ -250,8 +252,8 @@ dc.ui.Toolbar = Backbone.View.extend({
 
   _createPublishMenu : function() {
     var accountItems = [
-      {title : 'Embed This Search',        onClick : this.openSearchEmbedDialog,            attrs: {'class': 'always'}},
-      {title : 'Embed Document Viewer',    onClick : this.openDocumentEmbedDialog,            attrs: {'class': 'singular'}},
+      {title : 'Embed These Documents',    onClick : this.openSearchEmbedDialog,      attrs: {'class': 'always'}},
+      {title : 'Embed Document Viewer',    onClick : this.openDocumentEmbedDialog,    attrs: {'class': 'singular'}},
       {title : 'Set Publication Date',     onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
       {title : 'Download Document Viewer', onClick : this.requestDownloadViewers}
     ];
