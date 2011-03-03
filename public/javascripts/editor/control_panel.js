@@ -34,7 +34,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
   
   showReviewerWelcome : function() {
-    if (dc.account.role == dc.model.Account.prototype.REVIEWER) {
+    if (dc.account.role == dc.model.Account.prototype.REVIEWER && dc.app.editor.options.reviewerInviter) {
       var fullName = dc.app.editor.options.reviewerInviter.fullName;
       var email    = dc.app.editor.options.reviewerInviter.email;
       var title    = [
