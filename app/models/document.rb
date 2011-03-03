@@ -13,6 +13,8 @@ class Document < ActiveRecord::Base
 
   MINIMUM_POPULAR = 100
 
+  CONCURRENT_UPLOAD_LIMIT = 4
+
   DISPLAY_DATE_FORMAT     = "%b %d, %Y"
   DISPLAY_DATETIME_FORMAT = "%I:%M %p – %a %b %d, %Y"
 
@@ -465,47 +467,13 @@ class Document < ActiveRecord::Base
     return File.join(slug, page_text_template) if opts[:local]
     File.join(DC.server_root, File.join(pages_path, page_text_template))
   end
-  
-  def reviewers
-    project = Project.find_by_reviewer_document_id(id)
-    return [] unless project
-    project.collaborators
+
+  def low_priority?
+    large  = self.file_size > 1.megabyte
+    greedy = Document.owned_by(account).pending.count >= CONCURRENT_UPLOAD_LIMIT
+    large || greedy
   end
-  
-  def add_reviewer(account, owner)
-    project = Project.find_by_reviewer_document_id(id)
-    if project.nil?
-      project = Project.create({
-        :reviewer_document_id => id,
-        :account_id           => owner.id
-      })
-    end
-    project.set_documents([id])
-    project.add_collaborator account
-    DocumentReviewerInviter.create({
-      :reviewer_account_id => account.id,
-      :inviter_account_id  => owner.id,
-      :document            => self
-    })
-  end
-  
-  def remove_reviewer(account)
-    project = Project.find_by_reviewer_document_id(id)
-    project.remove_collaborator(account)
-    DocumentReviewerInviter.delete(:conditions => {
-      :reviewer_account_id => account.id,
-      :document_id         => id
-    })
-  end
-  
-  def reviewer_inviter(reviewer_account)
-    inviter = DocumentReviewerInviter.find(:all, :conditions => {
-      :reviewer_account_id => reviewer_account.id,
-      :document_id         => id
-    })
-    return Account.find(inviter[0].inviter_account_id) if inviter
-  end
-  
+
   def asset_store
     @asset_store ||= DC::Store::AssetStore.new
   end
@@ -610,14 +578,13 @@ class Document < ActiveRecord::Base
   def queue_import(eventual_access = nil, text_only = false, email_me = false, force_ocr = false)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
-    large = self.file_size > 1.megabyte
     record_job(DC::Import::CloudCrowdImporter.new.import([id], {
       'id'            => id,
       'access'        => eventual_access,
       'text_only'     => text_only,
       'email_me'      => email_me,
       'force_ocr'     => force_ocr
-    }, large).body)
+    }, self.low_priority?).body)
   end
 
   # TODO: Make the to_json an extended form of the canonical.
