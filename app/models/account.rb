@@ -27,6 +27,9 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :email, :case_sensitive => false
   validates_inclusion_of  :role, :in => ROLES
 
+  # Sanitizations:
+  text_attr :first_name, :last_name, :email
+
   # Delegations:
   delegate :name, :to => :organization, :prefix => true, :allow_nil => true
 

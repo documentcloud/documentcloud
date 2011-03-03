@@ -16,6 +16,8 @@ class Entity < ActiveRecord::Base
 
   validates_inclusion_of :kind, :in => DC::VALID_KINDS
 
+  text_attr :value
+
   named_scope :kind, lambda {|kind| {:conditions => {:kind => kind}} }
 
   def self.normalize_kind(string)

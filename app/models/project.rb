@@ -19,6 +19,10 @@ class Project < ActiveRecord::Base
   before_destroy  :document_ids
   after_destroy   :reindex_documents
 
+  # Sanitizations:
+  text_attr :title
+  html_attr :description
+
   named_scope :alphabetical, {:order => :title}
   named_scope :visible, :conditions => ["reviewer_document_id is null"]
   named_scope :reviewer_project, :conditions => ["reviewer_document_id is not null"]

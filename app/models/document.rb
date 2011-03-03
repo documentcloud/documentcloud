@@ -48,6 +48,10 @@ class Document < ActiveRecord::Base
 
   after_destroy :delete_assets
 
+  # Sanitizations (title handled separately):
+  text_attr :source, :related_article, :remote_url
+  html_attr :description
+
   delegate :text, :to => :full_text,    :allow_nil => true
   delegate :slug, :to => :organization, :allow_nil => true, :prefix => true
   delegate :slug, :to => :account,      :allow_nil => true, :prefix => true
@@ -198,7 +202,7 @@ class Document < ActiveRecord::Base
 
   # Ensure that titles are stripped of trailing whitespace.
   def title=(title="Untitled Document")
-    self[:title] = title.strip
+    self[:title] = self.strip title.strip
   end
 
   # Save all text assets, including the `combined_page_text`, and the text of

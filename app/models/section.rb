@@ -4,9 +4,11 @@ class Section < ActiveRecord::Base
 
   belongs_to :document
 
-  validates_presence_of :title, :page_number
-
+  validates_presence_of   :title, :page_number
   validates_uniqueness_of :page_number, :scope => :document_id
+
+  # Sanitizations
+  text_attr :title
 
   # The canonical JSON representation of a section.
   def canonical

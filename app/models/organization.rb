@@ -12,6 +12,9 @@ class Organization < ActiveRecord::Base
   validates_uniqueness_of :name, :slug
   validates_format_of :slug, :with => DC::Validators::SLUG
 
+  # Sanitizations:
+  text_attr :name
+
   # Retrieve the names of the organizations for the result set of documents.
   def self.names_for_documents(docs)
     ids = docs.map {|doc| doc.organization_id }.uniq

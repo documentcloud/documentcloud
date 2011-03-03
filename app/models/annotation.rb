@@ -16,6 +16,10 @@ class Annotation < ActiveRecord::Base
   after_create  :reset_public_note_count
   after_destroy :reset_public_note_count
 
+  # Sanitizations:
+  text_attr :title
+  html_attr :content
+
   named_scope :accessible, lambda { |account|
     access = []
     access << "(annotations.access = #{PUBLIC})"
