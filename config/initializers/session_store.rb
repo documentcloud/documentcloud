@@ -8,7 +8,7 @@ ActionController::Base.session = {
   :key          => 'document_cloud_session',
   :secret       => '83de034b1169753f462be1c8925b62dd10afe9569b5006b685780e28b5851596c34ed5feb0c08c0451d009c537f4bf6eb9e5c8445974471442d5165498178ec7',
   :expire_after => 1.month,
-  :httponly     => false,
+  :httponly     => true,
   :secure       => true
 }
 
