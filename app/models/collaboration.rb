@@ -2,6 +2,7 @@ class Collaboration < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :account
+  belongs_to :creator, :class_name => "Account"
 
   named_scope :owned_by, lambda { |account|
     {:conditions => {:account_id => account.id}}

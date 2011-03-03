@@ -36,11 +36,9 @@ class Document < ActiveRecord::Base
   has_many :annotations,          :dependent   => :destroy
   has_many :remote_urls,          :dependent   => :destroy
   has_many :project_memberships,  :dependent   => :destroy
-  # has_many :document_reviewers,   :dependent  => :destroy
   has_many :projects,             :through     => :project_memberships
-  # has_many :reviewers,            :through    => :document_reviewers, :source => :account
   has_one  :reviewer_project,     :through     => :project_memberships, 
-                                  :conditions  => {:reviewer_document_id => self.id},
+                                  :conditions  => {:hidden => true},
                                   :source      => :project
 
   validates_presence_of :organization_id, :account_id, :access, :page_count,
@@ -467,7 +465,37 @@ class Document < ActiveRecord::Base
     return File.join(slug, page_text_template) if opts[:local]
     File.join(DC.server_root, File.join(pages_path, page_text_template))
   end
-
+  
+  def reviewers
+    return [] unless reviewer_project
+    reviewer_project.collaborators
+  end
+  
+  def add_reviewer(account, creator)
+    if reviewer_project.nil?
+      project = Project.create({
+        :hidden     => true,
+        :account_id => creator.id,
+      })
+      project.set_documents([id])
+      reviewer_project.reload
+    end
+    reviewer_project.add_collaborator account, creator
+  end
+  
+  def remove_reviewer(account)
+    reviewer_project.remove_collaborator(account)
+  end
+  
+  def reviewer_inviter(reviewer_account)
+    collab = Collaboration.first(:conditions => [
+      "account_id = ? AND project_id = ? AND creator_id IS NOT NULL",
+      reviewer_account.id,
+      reviewer_project.id
+    ])
+    collab && collab.creator
+  end
+  
   def low_priority?
     large  = self.file_size > 1.megabyte
     greedy = Document.owned_by(account).pending.count >= CONCURRENT_UPLOAD_LIMIT

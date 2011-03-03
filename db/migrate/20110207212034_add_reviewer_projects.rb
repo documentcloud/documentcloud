@@ -1,6 +1,6 @@
 class AddReviewerProjects < ActiveRecord::Migration
   def self.up
-    add_column :projects, :reviewer_document_id, :int, :null => true
+    add_column :projects, :reviewer_document_id, :integer, :null => true
     change_column :projects, :title, :string, :null => true
   end
 

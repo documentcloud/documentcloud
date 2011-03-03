@@ -150,6 +150,39 @@ ALTER SEQUENCE collaborations_id_seq OWNED BY collaborations.id;
 
 
 --
+-- Name: document_reviewer_inviters; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE document_reviewer_inviters (
+    id integer NOT NULL,
+    reviewer_account_id integer NOT NULL,
+    document_id integer NOT NULL,
+    inviter_account_id integer NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: document_reviewer_inviters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE document_reviewer_inviters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+--
+-- Name: document_reviewer_inviters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE document_reviewer_inviters_id_seq OWNED BY document_reviewer_inviters.id;
+
+
+--
 -- Name: document_reviewers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -205,9 +238,9 @@ CREATE TABLE documents (
     remote_url text,
     publish_at timestamp without time zone,
     text_changed boolean DEFAULT false NOT NULL,
+    document_reviewers_count integer DEFAULT 0 NOT NULL,
     hit_count integer DEFAULT 0 NOT NULL,
     public_note_count integer DEFAULT 0 NOT NULL,
-    document_reviewers_count integer DEFAULT 0 NOT NULL,
     file_size integer DEFAULT 0 NOT NULL
 );
 
@@ -304,8 +337,9 @@ ALTER SEQUENCE full_text_id_seq OWNED BY full_text.id;
 CREATE TABLE projects (
     id integer NOT NULL,
     account_id integer NOT NULL,
-    title text NOT NULL,
-    description text
+    title character varying(255),
+    description text,
+    reviewer_document_id integer
 );
 
 
@@ -634,6 +668,13 @@ ALTER TABLE collaborations ALTER COLUMN id SET DEFAULT nextval('collaborations_i
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE document_reviewer_inviters ALTER COLUMN id SET DEFAULT nextval('document_reviewer_inviters_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE document_reviewers ALTER COLUMN id SET DEFAULT nextval('document_reviewers_id_seq'::regclass);
 
 
@@ -754,6 +795,14 @@ ALTER TABLE ONLY collaborations
 
 
 --
+-- Name: document_reviewer_inviters_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY document_reviewer_inviters
+    ADD CONSTRAINT document_reviewer_inviters_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: document_reviewers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -862,6 +911,13 @@ ALTER TABLE ONLY security_keys
 --
 
 CREATE INDEX fk_organization_id ON accounts USING btree (organization_id);
+
+
+--
+-- Name: fk_reviewer_document_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX fk_reviewer_document_id ON projects USING btree (reviewer_document_id);
 
 
 --
@@ -1068,6 +1124,8 @@ INSERT INTO schema_migrations (version) VALUES ('20100630131224');
 
 INSERT INTO schema_migrations (version) VALUES ('20100701132413');
 
+INSERT INTO schema_migrations (version) VALUES ('20100713192741');
+
 INSERT INTO schema_migrations (version) VALUES ('20100823172339');
 
 INSERT INTO schema_migrations (version) VALUES ('20100928204710');
@@ -1080,9 +1138,13 @@ INSERT INTO schema_migrations (version) VALUES ('20101101192020');
 
 INSERT INTO schema_migrations (version) VALUES ('20101103173409');
 
+INSERT INTO schema_migrations (version) VALUES ('20101110170100');
+
 INSERT INTO schema_migrations (version) VALUES ('20101207203607');
 
 INSERT INTO schema_migrations (version) VALUES ('20101209175540');
+
+INSERT INTO schema_migrations (version) VALUES ('20101214171909');
 
 INSERT INTO schema_migrations (version) VALUES ('20110111192934');
 
@@ -1090,10 +1152,12 @@ INSERT INTO schema_migrations (version) VALUES ('20110113204915');
 
 INSERT INTO schema_migrations (version) VALUES ('20110114143536');
 
-INSERT INTO schema_migrations (version) VALUES ('20101110170100');
+INSERT INTO schema_migrations (version) VALUES ('20110207212034');
 
-INSERT INTO schema_migrations (version) VALUES ('20101214171909');
+INSERT INTO schema_migrations (version) VALUES ('20110216180521');
 
 INSERT INTO schema_migrations (version) VALUES ('20110217161649');
 
 INSERT INTO schema_migrations (version) VALUES ('20110217171353');
+
+INSERT INTO schema_migrations (version) VALUES ('20110224153154');

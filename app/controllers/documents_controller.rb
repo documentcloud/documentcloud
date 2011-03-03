@@ -8,7 +8,7 @@ class DocumentsController < ApplicationController
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
 
   def show
-    if !current_account && params[:key]
+    if params[:key]
       Account.login_reviewer(params[:key], session, cookies)
     end
     doc = current_document(true)
