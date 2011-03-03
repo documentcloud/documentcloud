@@ -12,20 +12,25 @@ class SearchController < ApplicationController
     results[:facets] = @query.facets if params[:include_facets]
     results[:source_document] = @source_document if params.include? :include_source_document
     respond_to do |format|
-      format.js do
-        results[:query]     = params[:q]
-        results[:total]     = @query.total
-        results[:page]      = @query.page
-        results[:per_page]  = @query.per_page
-        results[:documents] = @documents.map {|d| d.canonical(API_OPTIONS) }
-        js                  = "dc.loadSearchEmbedCallback(#{results.to_json});"
-        cache_page js
-        render :js => js
-      end
       format.json do
         json results
       end
     end
+  end
+  
+  def embed
+    groups = params[:options].match /p-(\d+)-per-(\d+)-order-(\w+)/
+    _, params[:page], params[:per_page], params[:order] = *groups
+    perform_search :include_facets => params[:include_facets]
+    results             = {:query => @query, :documents => @documents}
+    results[:query]     = params[:q]
+    results[:total]     = @query.total
+    results[:page]      = @query.page
+    results[:per_page]  = @query.per_page
+    results[:documents] = @documents.map {|d| d.canonical(API_OPTIONS) }
+    js                  = "dc.loadSearchEmbedCallback(#{results.to_json});"
+    cache_page js
+    render :js => js
   end
   
   def restricted_count

@@ -20,3 +20,4 @@ solr
 .#*
 cloud_crowd.db
 .DS_Store
+public/search

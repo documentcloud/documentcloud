@@ -23,11 +23,11 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
   };
   var params = [
     encodeURIComponent(api['q']),
-    '/p/',
+    '/p-',
     encodeURIComponent(api['page']),
-    '/per/',
+    '-per-',
     encodeURIComponent(api['per_page']),
-    '/order/',
+    '-order-',
     encodeURIComponent(api['order']),
     '.js'
   ].join('');
