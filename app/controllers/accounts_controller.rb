@@ -3,7 +3,7 @@
 class AccountsController < ApplicationController
   layout 'workspace'
 
-  before_filter :secure_only, :only => [:enable]
+  before_filter :secure_only, :only => [:enable, :reset]
   before_filter :login_required, :except => [:enable, :reset, :logged_in]
   before_filter :bouncer, :only => [:enable, :reset] if Rails.env.staging?
 
