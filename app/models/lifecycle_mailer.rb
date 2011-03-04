@@ -18,13 +18,16 @@ class LifecycleMailer < ActionMailer::Base
   # Mail instructions for a document review, with a secure link to the
   # document viewer, where the user can annotate the document.
   def reviewer_instructions(documents, inviter_account, reviewer_account=nil, message=nil, key=nil)
-    subject     "Review \"#{documents[0].title}\" on DocumentCloud" if documents.count == 1
-    subject     "Review #{documents.count} documents on DocumentCloud" if documents.count > 1
+    if documents.count == 1
+      subject   "Review \"#{documents[0].title}\" on DocumentCloud"
+    else
+      subject   "Review #{documents.count} documents on DocumentCloud"
+    end
     from        ["#{inviter_account.full_name} <#{inviter_account.email}>", "DocumentCloud <#{SUPPORT}>"]
     recipients  [reviewer_account.email] if reviewer_account
     body        :documents            => documents,
                 :key                  => key,
-                :organization_name    => documents[0] && documents[0].account.organization_name,
+                :organization_name    => documents[0].account.organization_name,
                 :account_exists       => reviewer_account && !reviewer_account.reviewer?,
                 :inviter_account      => inviter_account,
                 :reviewer_account     => reviewer_account,
