@@ -117,8 +117,10 @@ class Account < ActiveRecord::Base
         on c1.account_id = a.id
       inner join collaborations as c2
         on c2.account_id = #{id} and c2.project_id = c1.project_id
-      inner join project_memberships as p
-        on p.project_id = c1.project_id and p.document_id = #{resource.document_id}
+      inner join projects as p
+        on p.id = c1.project_id and p.hidden = false
+      inner join project_memberships as pm
+        on pm.project_id = c1.project_id and pm.document_id = #{resource.document_id}
       where a.id != #{id}
     EOS
     )
@@ -129,12 +131,13 @@ class Account < ActiveRecord::Base
     owns?(resource) || collaborates?(resource)
   end
 
-  def reviewer?(resource=nil)
-    if resource && resource.projects.hidden.present?
-      resource.projects.hidden.first.reviewers.any? {|a| a.id == self.id }
-    else
-      !hashed_password && role == REVIEWER
-    end
+  def reviewer?
+    !hashed_password && (role == REVIEWER)
+  end
+
+  def reviews?(resource)
+    project = resource.projects.hidden.first
+    project && project.reviewers.exists? id
   end
 
   def allowed_to_edit?(resource)
