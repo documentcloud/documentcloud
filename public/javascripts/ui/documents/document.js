@@ -246,8 +246,6 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   _openShareDialog : function() {
-    // if (!Documents.allowedToEdit(this.model)) return;
-
     dc.app.shareDialog = new dc.ui.ShareDialog({
       docs: [this.model],
       mode: 'custom'

@@ -55,7 +55,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     }));
     this._next     = this.$('.next');
     this._previous = this.$('.previous');
-    $(document.body).addClass('overlay');
     $(this.el).show();
     dc.ui.spinner.hide();
     this._setPlaceholders();
@@ -90,14 +89,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         saveText:    'Next',
         closeText:   'Cancel'
     });
-  },
-
-  close : function() {
-    this.accountsToEmail.each(function(account) {
-      account.set({needsEmail: false});
-    });
-    $(this.el).hide();
-    $(document.body).removeClass('overlay');
   },
 
   // =======================
