@@ -18,8 +18,6 @@ class Account < ActiveRecord::Base
   has_many    :processing_jobs,      :dependent => :destroy
   has_one     :security_key,         :dependent => :destroy, :as => :securable
   has_many    :shared_projects,      :through => :collaborations, :source => :project
-  has_many    :document_reviewers,   :dependent => :destroy
-  has_many    :reviewable_documents, :through => :document_reviewers, :source => :document
 
   # Validations:
   validates_presence_of   :first_name, :last_name, :email

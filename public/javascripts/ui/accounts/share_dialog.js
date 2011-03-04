@@ -108,7 +108,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     $.ajax({
       url : '/reviewers',
       type : 'GET',
-      data : {document_ids: docs.pluck('id')},
+      data : {document_ids: this.docs.pluck('id')},
       success: this._refreshReviewers,
       error : this._renderReviewers
     });

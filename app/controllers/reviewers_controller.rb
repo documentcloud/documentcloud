@@ -7,7 +7,7 @@ class ReviewersController < ApplicationController
     documents = Document.accessible(current_account, current_organization).find(params[:document_ids])
     documents.each do |doc|
       return json(nil, 403) unless current_account.allowed_to_edit?(doc)
-      reviewers[document_id] = doc.reviewers
+      reviewers[doc.id] = doc.reviewers
     end
     email_body = LifecycleMailer.create_reviewer_instructions(documents, current_account, nil, "<span />").body
     json :reviewers => reviewers, :email_body => email_body
@@ -23,7 +23,7 @@ class ReviewersController < ApplicationController
 
     return json account if account.errors.any?
 
-    documents = Documents.find(params[:document_ids])
+    documents = Document.find(params[:document_ids])
     documents.each do |doc|
       doc.add_reviewer(account, current_account) if current_account.allowed_to_edit? doc
     end
