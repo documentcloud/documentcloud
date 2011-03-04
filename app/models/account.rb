@@ -93,6 +93,10 @@ class Account < ActiveRecord::Base
     role == CONTRIBUTOR
   end
 
+  def reviewer?
+    role == REVIEWER
+  end
+
   # An account owns a resource if it's tagged with the account_id.
   def owns?(resource)
     resource.account_id == id
@@ -128,10 +132,6 @@ class Account < ActiveRecord::Base
 
   def owns_or_collaborates?(resource)
     owns?(resource) || collaborates?(resource)
-  end
-
-  def reviewer?
-    !hashed_password && (role == REVIEWER)
   end
 
   def reviews?(resource)
