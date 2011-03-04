@@ -88,20 +88,25 @@ class Annotation < ActiveRecord::Base
     document.pages.find_by_page_number(page_number)
   end
 
+  def access_name
+    ACCESS_NAMES[access]
+  end
+
   def canonical_url
     document.canonical_url(:html) + '#document/' + page_number.to_s
   end
 
   def canonical
-    data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content}
-    data['location']            = {'image' => location} if location
-    data['access']              = 'private'   if access == PRIVATE
-    data['access']              = 'exclusive' if access == EXCLUSIVE
-    data['access']              = 'public'    if access == PUBLIC
-    data['author']              = author[:full_name] if author
-    data['author_id']           = author[:account_id] if author
-    data['owns_note']           = author[:owns_note] if author
-    data['author_organization'] = author[:organization_name] if author
+    data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content, :access => access_name}
+    data['location'] = {'image' => location} if location
+    if author
+      data.merge!({
+        'author'              => author[:full_name],
+        'author_id']          => author[:account_id],
+        'owns_note']          => author[:owns_note],
+        'author_organization' => author[:organization_name]
+      })
+    end
     data
   end
 
