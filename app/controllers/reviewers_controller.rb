@@ -2,7 +2,6 @@ class ReviewersController < ApplicationController
 
   def index
     reviewers = {}
-    email_body = nil
     documents = []
     if params[:documents]
       params[:documents].each do |document_id|
@@ -24,34 +23,21 @@ class ReviewersController < ApplicationController
   end
 
   def create
-    documents = []
     account = Account.lookup(params[:email])
-    return json(nil, 409) if account and account.id == current_account.id
+    return json(nil, 409) if account && account.id == current_account.id
 
-    if account.nil? || !account.id
-      attributes = {
-        :first_name => params[:first_name],
-        :last_name  => params[:last_name],
-        :email      => params[:email],
-        :role       => Account::REVIEWER
-      }
-      account = current_organization.accounts.create(attributes)
+    account ||= current_organization.accounts.create(
+      pick(params, :first_name, :last_name, :email).merge({:role => Account::REVIEWER})
+    )
+
+    return json account if account.errors.any?
+
+    documents = Documents.find(params[:documents])
+    documents.each do |doc|
+      doc.add_reviewer(account, current_account) if current_account.allowed_to_edit? doc
     end
 
-    if account.id
-      documents = params[:documents].map do |document_id|
-        document = Document.find(document_id)
-        return json(nil, 403) unless current_account.allowed_to_edit?(document)
-        document.add_reviewer(account, current_account)
-        document.reload
-      end
-    end
-
-    if !account.errors.empty?
-      json account
-    else
-      json({:account => account, :documents => documents})
-    end
+    json :account => account, :documents => documents
   end
 
   def destroy
