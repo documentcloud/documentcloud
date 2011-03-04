@@ -4,24 +4,13 @@ class ReviewersController < ApplicationController
 
   def index
     reviewers = {}
-    documents = []
-    if params[:documents]
-      params[:documents].each do |document_id|
-        doc = Document.find(document_id)
-        return json(nil, 403) unless current_account.allowed_to_edit?(doc)
-        documents << doc
-        reviewers[document_id] = doc.reviewers
-      end
-    end
-    if params[:fetched_documents]
-      params[:fetched_documents].each do |document_id|
-        doc = Document.find(document_id)
-        return json(nil, 403) unless current_account.allowed_to_edit?(doc)
-        documents << doc
-      end
+    documents = Document.accessible(current_account, current_organization).find(params[:document_ids])
+    documents.each do |doc|
+      return json(nil, 403) unless current_account.allowed_to_edit?(doc)
+      reviewers[document_id] = doc.reviewers
     end
     email_body = LifecycleMailer.create_reviewer_instructions(documents, current_account, nil, "<span />").body
-    json :documents => reviewers, :email_body => email_body
+    json :reviewers => reviewers, :email_body => email_body
   end
 
   def create

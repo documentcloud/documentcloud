@@ -137,7 +137,7 @@ class Account < ActiveRecord::Base
 
   def reviews?(resource)
     project = resource.projects.hidden.first
-    project && project.reviewers.exists? id
+    project && project.reviewers.exists?(id)
   end
 
   def allowed_to_edit?(resource)

@@ -108,14 +108,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     $.ajax({
       url : '/reviewers',
       type : 'GET',
-      data : {
-        documents : _.compact(this.docs.map(function(doc) {
-          if (!doc.reviewers.length) return doc.id;
-        })),
-        fetched_documents : _.compact(this.docs.map(function(doc) {
-          if (doc.reviewers.length) return doc.id;
-        }))
-      },
+      data : {document_ids: docs.pluck('id')},
       success: this._refreshReviewers,
       error : this._renderReviewers
     });
@@ -126,7 +119,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
     if (this.showingEmailDialog) return;
 
-    _.each(resp.documents, _.bind(function(reviewers, document_id) {
+    _.each(resp.reviewers, _.bind(function(reviewers, document_id) {
       this.docs.get(document_id).reviewers.refresh(reviewers);
     }, this));
     this._renderReviewers();
