@@ -26,6 +26,7 @@ dc.ui.Document = Backbone.View.extend({
     'click .title .lock'        : 'editAccessLevel',
     'click .title .published'   : 'viewPublishedDocuments',
     'click .page_icon'          : '_openPage',
+    'click .reviewer_count'     : '_openShareDialog',
     'click .occurrence'         : '_openPage',
     'click .cancel_search'      : '_hidePages',
     'click .page_count'         : '_togglePageImages',
@@ -243,10 +244,10 @@ dc.ui.Document = Backbone.View.extend({
   openContactUs : function() {
     dc.ui.Dialog.contact();
   },
-  
+
   _openShareDialog : function() {
     // if (!Documents.allowedToEdit(this.model)) return;
-    
+
     dc.app.shareDialog = new dc.ui.ShareDialog({
       docs: [this.model],
       mode: 'custom'

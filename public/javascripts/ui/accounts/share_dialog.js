@@ -39,7 +39,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     dc.ui.spinner.show();
     this.fetchReviewers();
 
-    if (this.docs.all(function(doc) { return doc.get('reviewers_count') == 0; })) {
+    if (this.docs.all(function(doc) { return doc.get('reviewer_count') == 0; })) {
       this.renderEmailDialog();
     }
   },

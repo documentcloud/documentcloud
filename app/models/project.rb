@@ -38,15 +38,15 @@ class Project < ActiveRecord::Base
   def self.load_for(account)
     self.visible.accessible(account).all(:include => ['account', 'project_memberships', 'collaborations'])
   end
-  
+
   def reviewers
     Account.all(:conditions => {:id => self.collaborations.map {|c| c.account_id }})
   end
-  
+
   def hidden?
     hidden
   end
-  
+
   def set_documents(new_ids)
     new_ids = new_ids.to_set
     old_ids = self.document_ids.to_set
@@ -74,11 +74,11 @@ class Project < ActiveRecord::Base
   def update_reviewer_counts
     if hidden?
       document = self.documents.first
-      document.document_reviewers_count = self.collaborations.count
+      document.reviewer_count = self.collaborations.count
       document.save
-    end  
+    end
   end
-  
+
   def create_default_collaboration
     add_collaborator self.account unless hidden?
   end
