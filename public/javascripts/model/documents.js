@@ -14,8 +14,6 @@ dc.model.Document = Backbone.Model.extend({
     };
     this.pageEntities = new dc.model.EntitySet();
     this.reviewers = new dc.model.AccountSet();
-    this._setReviewersResource();
-    this.bind('change:id', _.bind(this._setReviewersResource, this));
   },
 
   // If this document does not belong to a collection, it still has a URL.
