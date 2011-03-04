@@ -148,9 +148,9 @@ class Account < ActiveRecord::Base
     ((self.organization_id == account.organization_id) && (self.admin? || account.reviewer?))
   end
 
-  def accessible_document_ids
-    return @accessible_document_ids if @accessible_document_ids
-    @accessible_document_ids ||= accessible_project_ids.empty? ? [] :
+  def shared_document_ids
+    return @shared_document_ids if @shared_document_ids
+    @shared_document_ids ||= accessible_project_ids.empty? ? [] :
       ProjectMembership.connection.select_values(
         "select distinct document_id from project_memberships where project_id in (#{accessible_project_ids.join(',')})"
       ).map {|id| id.to_i }
