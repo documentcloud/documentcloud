@@ -32,8 +32,9 @@ class Account < ActiveRecord::Base
   delegate :name, :to => :organization, :prefix => true, :allow_nil => true
 
   # Scopes:
-  named_scope :admin, {:conditions => {:role => ADMINISTRATOR}}
-  named_scope :contributors, {:conditions => ["role IN (?)", [ADMINISTRATOR, CONTRIBUTOR]]}
+  named_scope :admin,     {:conditions => {:role => ADMINISTRATOR}}
+  named_scope :real,      {:conditions => ["role in (?)", [ADMINISTRATOR, CONTRIBUTOR]]}
+  named_scope :reviewer,  {:conditions => {:role => REVIEWER}}
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session=nil, cookies=nil)
