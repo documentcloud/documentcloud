@@ -149,16 +149,11 @@ class Account < ActiveRecord::Base
   end
 
   def accessible_document_ids
-    return @accessible_document_ids unless @accessible_document_ids.nil?
-    @accessible_document_ids = []
-
-    if not accessible_project_ids.empty?
-      @accessible_document_ids = ProjectMembership.connection.select_values(
+    return @accessible_document_ids if @accessible_document_ids
+    @accessible_document_ids ||= accessible_project_ids.empty? ? [] :
+      ProjectMembership.connection.select_values(
         "select distinct document_id from project_memberships where project_id in (#{accessible_project_ids.join(',')})"
-      ).map {|id| id.to_i }
-    end
-
-    @accessible_document_ids.flatten!
+      ).map {|id| id.to_i }.flatten
   end
 
   # The list of all of the projects that have been shared with this account
