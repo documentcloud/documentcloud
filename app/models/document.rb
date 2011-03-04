@@ -470,15 +470,14 @@ class Document < ActiveRecord::Base
   end
 
   def add_reviewer(account, creator)
-    if reviewer_project.nil?
+    unless project = reviewer_project
       project = Project.create({
         :hidden     => true,
         :account_id => creator.id,
       })
       project.set_documents([id])
-      reviewer_project.reload
     end
-    reviewer_project.add_collaborator account, creator
+    project.add_collaborator account, creator
   end
 
   def remove_reviewer(account)
