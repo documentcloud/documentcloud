@@ -448,7 +448,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       url : '/reviewers/send',
       type : 'POST',
       data : {
-        accounts      : accountIds,
+        account_ids   : accountIds,
         document_ids  : documentIds,
         message       : Inflector.trim(message)
       },

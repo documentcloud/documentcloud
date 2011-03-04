@@ -1,15 +1,13 @@
 class ReviewersController < ApplicationController
 
-  before_filter :login_required
+  before_filter :login_required, :load_documents
 
   def index
     reviewers = {}
-    documents = Document.accessible(current_account, current_organization).find(params[:document_ids])
-    documents.each do |doc|
-      return json(nil, 403) unless current_account.allowed_to_edit?(doc)
+    @documents.each do |doc|
       reviewers[doc.id] = doc.reviewers
     end
-    email_body = LifecycleMailer.create_reviewer_instructions(documents, current_account, nil, "<span />").body
+    email_body = LifecycleMailer.create_reviewer_instructions(@documents, current_account, nil, "<span />").body
     json :reviewers => reviewers, :email_body => email_body
   end
 
@@ -23,36 +21,25 @@ class ReviewersController < ApplicationController
 
     return json account if account.errors.any?
 
-    documents = Document.find(params[:document_ids])
-    documents.each do |doc|
-      doc.add_reviewer(account, current_account) if current_account.allowed_to_edit? doc
+    @documents.each do |doc|
+      doc.add_reviewer(account, current_account)
     end
 
-    json :account => account, :documents => documents
+    json :account => account, :documents => @documents
   end
 
   def destroy
     account = Account.find(params[:account_id])
-    documents = params[:document_ids].map do |document_id|
-      document = Document.find(document_id)
-      return json(nil, 403) unless current_account.allowed_to_edit?(document)
-      document.remove_reviewer(account)
-      document.reload
+    @documents.each do |doc|
+      doc.remove_reviewer account
+      doc.reload
     end
-    json documents
+    json @documents
   end
 
   def send_email
-    return json(nil, 400) unless params[:accounts] && params[:document_ids]
-    documents = []
-    params[:document_ids].each do |document_id|
-      document = Document.find(document_id)
-      return json(nil, 403) unless current_account.allowed_to_edit?(document)
-      documents << document
-    end
-    params[:accounts].each do |account_id|
-      account = Account.find(account_id)
-      account.send_reviewer_instructions(documents, current_account, params[:message])
+    Accounts.find(params[:account_ids]).each do |account|
+      account.send_reviewer_instructions @documents, current_account, params[:message]
     end
     json nil
   end
@@ -60,8 +47,12 @@ class ReviewersController < ApplicationController
 
   private
 
-  def current_document
-    @document ||= Document.accessible(current_account, current_organization).find(params[:document_id])
+  def load_documents
+    @documents = Document.accessible(current_account, current_organization).find(params[:document_ids])
+    if @documents.any? {|d| !current_account.allowed_to_edit?(d) }
+      json nil, 403
+      false
+    end
   end
 
 end
