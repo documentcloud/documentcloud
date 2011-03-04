@@ -9,7 +9,7 @@ class Account < ActiveRecord::Base
   REVIEWER      = 3
 
   ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER]
-  
+
   # Associations:
   belongs_to  :organization
   has_many    :projects,             :dependent => :destroy
@@ -44,7 +44,7 @@ class Account < ActiveRecord::Base
     account.authenticate(session, cookies) if session && cookies
     account
   end
-  
+
   def self.login_reviewer(key, session=nil, cookies=nil)
     security_key = SecurityKey.find_by_key(key)
     return nil unless security_key
@@ -128,7 +128,7 @@ class Account < ActiveRecord::Base
   def owns_or_collaborates?(resource)
     owns?(resource) || collaborates?(resource)
   end
-  
+
   def reviewer?(resource=nil)
     if resource && resource.projects.hidden.present?
       resource.projects.hidden.first.reviewers.any? {|a| a.id == self.id }
@@ -144,13 +144,13 @@ class Account < ActiveRecord::Base
   def accessible_document_ids
     return @accessible_document_ids unless @accessible_document_ids.nil?
     @accessible_document_ids = []
-    
+
     if not accessible_project_ids.empty?
       @accessible_document_ids = ProjectMembership.connection.select_values(
         "select distinct document_id from project_memberships where project_id in (#{accessible_project_ids.join(',')})"
       ).map {|id| id.to_i }
     end
-    
+
     @accessible_document_ids.flatten!
   end
 
@@ -177,6 +177,13 @@ class Account < ActiveRecord::Base
     LifecycleMailer.deliver_reviewer_instructions(documents, inviter_account, self, message, key)
   end
 
+  # Upgrading a reviewer account to a newsroom account also moves their
+  # notes over to the (potentially different) organization.
+  def upgrade_reviewer_to_real(organization, role)
+    update_attributes :organization => organization, :role => role
+    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{account.id}")
+  end
+
   # When a password reset request is made, send an email with a secure key to
   # reset the password.
   def send_reset_request
@@ -201,7 +208,7 @@ class Account < ActiveRecord::Base
 
   # Has this account been assigned, but never logged into, with no password set?
   def pending?
-    !hashed_password and role != REVIEWER
+    !hashed_password && role != REVIEWER
   end
 
   # It's slo-o-o-w to compare passwords. Which is a mixed bag, but mostly good.

@@ -49,15 +49,12 @@ class AccountsController < ApplicationController
     return forbidden unless current_account.admin?
     attributes = pick(params, :first_name, :last_name, :email, :role)
     account = Account.lookup(attributes[:email])
-    if not account
+    if account.nil?
       account = current_organization.accounts.create(attributes)
-    elsif account.role == Account::REVIEWER
-      account.role = attributes[:role]
-      account.organization = current_organization
-      account.save
-      Annotation.update_all("organization_id = #{current_organization.id}", "account_id = #{account.id}")
+    elsif account.reviewer?
+      account.upgrade_reviewer_to_real(current_organization, attributes[:role])
     end
-    account.send_login_instructions(current_account) if account.valid? and account.pending?
+    account.send_login_instructions(current_account) if account.valid? && account.pending?
     json account
   end
 

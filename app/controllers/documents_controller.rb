@@ -8,9 +8,7 @@ class DocumentsController < ApplicationController
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
 
   def show
-    if params[:key]
-      Account.login_reviewer(params[:key], session, cookies)
-    end
+    Account.login_reviewer(params[:key], session, cookies) if params[:key]
     doc = current_document(true)
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
     return render :file => "#{Rails.root}/public/doc_404.html", :status => 404 unless doc
@@ -18,14 +16,9 @@ class DocumentsController < ApplicationController
       format.pdf  { redirect_to(doc.pdf_url) }
       format.text { redirect_to(doc.full_text_url) }
       format.html do
+        populate_editor_data if current_account
         return if date_requested?
         return if entity_requested?
-        if current_account
-          @allowed_to_edit = current_account.allowed_to_edit?(current_document)
-          @allowed_to_review = current_account.reviewer?(current_document)
-          @reviewer_inviter = @allowed_to_review && current_document.reviewer_inviter(current_account) || nil
-          @edits_enabled = true
-        end
       end
       format.json do
         @response = doc.canonical
@@ -197,6 +190,13 @@ class DocumentsController < ApplicationController
 
 
   private
+
+  def populate_editor_data
+    @edits_enabled = true
+    @allowed_to_edit = current_account.allowed_to_edit?(current_document)
+    @allowed_to_review = current_account.reviewer?(current_document)
+    @reviewer_inviter = @allowed_to_review && current_document.reviewer_inviter(current_account) || nil
+  end
 
   def date_requested?
     return false unless params[:date]

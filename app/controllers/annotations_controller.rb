@@ -6,30 +6,28 @@ class AnnotationsController < ApplicationController
   # In the workspace, request a listing of annotations.
   def index
     annotations = current_document.annotations_with_authors(current_account)
-    json annotations do |a|
-      a.canonical
-    end
+    json annotations
   end
 
   # Any account can create a private note on any document.
   # Only the owner of the document is allowed to create a public annotation.
   def create
     note_attrs = pick(params, :page_number, :title, :content, :location, :access)
-    note_attrs[:access] = DC::Access::ACCESS_MAP[note_attrs[:access].to_sym]
+    note_attrs[:access] = ACCESS_MAP[note_attrs[:access].to_sym]
     doc = current_document
     return forbidden unless note_attrs[:access] == PRIVATE || current_account.allowed_to_edit?(doc) || current_account.reviewer?(doc)
     expire_page doc.canonical_cache_path if doc.cacheable?
-    anno = doc.annotations.create(
-      note_attrs.merge(:account_id => current_account.id, :organization_id => current_organization.id)
-    )
-    anno = current_document.annotations_with_authors(current_account, [anno])
-    json anno
+    anno = doc.annotations.create(note_attrs.merge(
+      :account_id      => current_account.id,
+      :organization_id => current_organization.id
+    ))
+    json current_document.annotations_with_authors(current_account, [anno])
   end
 
   # You can only alter annotations that you've made yourself.
   def update
     return not_found unless anno = current_annotation
-    if !current_account.owns_or_collaborates?(anno) && 
+    if !current_account.owns_or_collaborates?(anno) &&
        (current_account.reviewer?(anno) || !current_account.shared?(anno))
       anno.errors.add_to_base "You don't have permission to update the note."
       return json(anno, 403)

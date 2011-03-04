@@ -37,7 +37,7 @@ class Document < ActiveRecord::Base
   has_many :remote_urls,          :dependent   => :destroy
   has_many :project_memberships,  :dependent   => :destroy
   has_many :projects,             :through     => :project_memberships
-  has_one  :reviewer_project,     :through     => :project_memberships, 
+  has_one  :reviewer_project,     :through     => :project_memberships,
                                   :conditions  => {:hidden => true},
                                   :source      => :project
 
@@ -244,14 +244,12 @@ class Document < ActiveRecord::Base
   def per_page_annotation_counts
     self.annotations.count(:group => 'page_number')
   end
-  
+
   def annotations_with_authors(account, annotations=nil)
     annotation_author_info = Annotation.author_info(self, account)
     annotations ||= self.annotations.accessible(account)
-    annotations.map do |a|
-      a.author = annotation_author_info[a.account_id]
-      a 
-    end
+    annotations.each {|a| a.author = annotation_author_info[a.account_id] }
+    annotations
   end
 
   # Return an array of all of the document entity values for a given type,
@@ -465,12 +463,12 @@ class Document < ActiveRecord::Base
     return File.join(slug, page_text_template) if opts[:local]
     File.join(DC.server_root, File.join(pages_path, page_text_template))
   end
-  
+
   def reviewers
     return [] unless reviewer_project
     reviewer_project.collaborators
   end
-  
+
   def add_reviewer(account, creator)
     if reviewer_project.nil?
       project = Project.create({
@@ -482,11 +480,11 @@ class Document < ActiveRecord::Base
     end
     reviewer_project.add_collaborator account, creator
   end
-  
+
   def remove_reviewer(account)
     reviewer_project.remove_collaborator(account)
   end
-  
+
   def reviewer_inviter(reviewer_account)
     collab = Collaboration.first(:conditions => [
       "account_id = ? AND project_id = ? AND creator_id IS NOT NULL",
@@ -495,7 +493,7 @@ class Document < ActiveRecord::Base
     ])
     collab && collab.creator
   end
-  
+
   def low_priority?
     large  = self.file_size > 1.megabyte
     greedy = Document.owned_by(account).pending.count >= CONCURRENT_UPLOAD_LIMIT
