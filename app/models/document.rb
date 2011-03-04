@@ -13,7 +13,7 @@ class Document < ActiveRecord::Base
 
   MINIMUM_POPULAR = 100
 
-  CONCURRENT_UPLOAD_LIMIT = 4
+  CONCURRENT_UPLOAD_LIMIT = 10
 
   DISPLAY_DATE_FORMAT     = "%b %d, %Y"
   DISPLAY_DATETIME_FORMAT = "%I:%M %p – %a %b %d, %Y"
