@@ -6,9 +6,9 @@ class Annotation < ActiveRecord::Base
   belongs_to :document
   belongs_to :account # NB: This account is not the owner of the document.
                       #     Rather, it is the author of the annotation.
-  
+
   attr_accessor :author
-  
+
   validates_presence_of :title, :page_number
 
   before_validation :ensure_title
@@ -30,7 +30,7 @@ class Annotation < ActiveRecord::Base
     conditions.push(account.shared_document_ids) if account && account.shared_document_ids.present?
     {:conditions => conditions}
   }
-  
+
   named_scope :owned_by, lambda { |account|
     {:conditions => {:account_id => account.id}}
   }
@@ -55,25 +55,27 @@ class Annotation < ActiveRecord::Base
 
   def self.author_info(doc, current_account=nil)
     account_sql = <<-EOS
-      SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name, 
-                      organizations.name as organization_name 
-      FROM accounts 
-      INNER JOIN annotations   ON annotations.account_id = accounts.id 
-      INNER JOIN organizations ON organizations.id = accounts.organization_id 
+      SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name,
+                      organizations.name as organization_name
+      FROM accounts
+      INNER JOIN annotations   ON annotations.account_id = accounts.id
+      INNER JOIN organizations ON organizations.id = accounts.organization_id
       WHERE (annotations.document_id = #{doc.id})
     EOS
-    accounts = Account.connection.select_all(account_sql)
-    accounts = accounts.inject({}) do |m, a| 
+    accounts = {}
+    rows = Account.connection.select_all(account_sql)
+    rows.each do |a|
       id = a['id'].to_i
-      m[id] = {:full_name         => "#{a['first_name']} #{a['last_name']}", 
-               :organization_name => a['organization_name'],
-               :account_id        => id }
-      m[id][:owns_note] = current_account.id == id if current_account
-      m
+      accounts[id] = {
+        :full_name         => "#{a['first_name']} #{a['last_name']}",
+        :organization_name => a['organization_name'],
+        :account_id        => id
+        :owns_note         => current_account && current_account.id == id
+      }
     end
     accounts
   end
-  
+
   def self.public_note_counts_by_organization
     self.unrestricted.count({
       :joins      => [:document],
@@ -89,7 +91,7 @@ class Annotation < ActiveRecord::Base
   def canonical_url
     document.canonical_url(:html) + '#document/' + page_number.to_s
   end
-  
+
   def canonical
     data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content}
     data['location']            = {'image' => location} if location
