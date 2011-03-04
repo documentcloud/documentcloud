@@ -24,11 +24,6 @@ dc.model.Document = Backbone.Model.extend({
     return Backbone.Model.prototype.url.call(this);
   },
 
-  _setReviewersResource : function() {
-    if (this.isNew()) return;
-    this.reviewers.url = 'documents/' + this.id + '/reviewers';
-  },
-
   // Generate the canonical URL for opening this document, over SSL if we're
   // currently secured.
   viewerUrl : function() {
@@ -207,7 +202,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     var attrs = _.uniq(_.map(docs, function(doc){ return doc.get(attr); }));
     return attrs.length > 1 ? false : attrs[0];
   },
-  
+
   sharedReviewers : function(docs) {
     return _.intersect.apply(this, docs.map(function(doc) {
       return _.map(doc.reviewers.models, function(m) {
@@ -335,21 +330,21 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     var current = this.sharedAttribute(docs, 'access') || dc.access.PRIVATE;
     dc.ui.Dialog.choose('Access Level', [
       {
-        text        : 'Public Access',  
-        description : 'Anyone on the internet can search for and view the document.', 
+        text        : 'Public Access',
+        description : 'Anyone on the internet can search for and view the document.',
         value       : dc.access.PUBLIC,
         selected    : current == dc.access.PUBLIC
       },
       {
-        text        : 'Private Access', 
-        description : 'Only people explicitly granted permission (via collaboration) may access.', 
-        value       : dc.access.PRIVATE, 
+        text        : 'Private Access',
+        description : 'Only people explicitly granted permission (via collaboration) may access.',
+        value       : dc.access.PRIVATE,
         selected    : current == dc.access.PRIVATE
       },
       {
-        text        : 'Private to ' + dc.account.organization.name, 
-        description : 'Only the people in your organization may view the document.', 
-        value       : dc.access.ORGANIZATION, 
+        text        : 'Private to ' + dc.account.organization.name,
+        description : 'Only the people in your organization may view the document.',
+        value       : dc.access.ORGANIZATION,
         selected    : current == dc.access.ORGANIZATION
       }
     ], function(access) {
