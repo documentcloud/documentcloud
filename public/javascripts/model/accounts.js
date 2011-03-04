@@ -8,8 +8,8 @@ dc.model.Account = Backbone.Model.extend({
 
   REVIEWER           : 3,
 
-  ROLE_NAMES         : ['', 'administrator', 'contributor', 'reviewer'],
-  
+  ROLE_NAMES         : ['', 'administrator', 'contributor', 'reviewer'], // NB: Indexed by role number.
+
   GRAVATAR_BASE      : location.protocol + (location.protocol == 'https:' ? '//secure.' : '//www.') + 'gravatar.com/avatar/',
 
   DEFAULT_AVATAR     : location.protocol + '//' + location.host + '/images/embed/icons/user_blue_32.png',
@@ -40,8 +40,8 @@ dc.model.Account = Backbone.Model.extend({
 
   ownsOrOrganization: function(model) {
     return (model.get('account_id') == this.id) ||
-           (model.get('organization_id') == this.get('organization_id') && 
-            this.isEditor() &&
+           (model.get('organization_id') == this.get('organization_id') &&
+            this.isReal() &&
             _.contains([
               dc.access.PUBLIC, dc.access.EXCLUSIVE, dc.access.ORGANIZATION,
               'public', 'exclusive', 'organization'
@@ -52,7 +52,7 @@ dc.model.Account = Backbone.Model.extend({
     var docId = model.get('document_id') || model.id;
     for (var i = 0, l = Projects.length; i < l; i++) {
       var project = Projects.models[i];
-      if (_.include(project.get('document_ids'), docId) && !project.isReviewerProject()) {
+      if (_.include(project.get('document_ids'), docId) && !project.get('hidden')) {
         for (var j = 0, k = project.collaborators.length; j < k; j++) {
           var collab = project.collaborators.models[j];
           if (collab.ownsOrOrganization(model)) return true;
@@ -75,7 +75,7 @@ dc.model.Account = Backbone.Model.extend({
     return this.attributes.role == this.ADMINISTRATOR;
   },
 
-  isEditor : function() {
+  isReal : function() {
     var role = this.attributes.role;
     return role == this.ADMINISTRATOR || role == this.CONTRIBUTOR;
   },
@@ -102,7 +102,7 @@ dc.model.Account = Backbone.Model.extend({
 });
 
 dc.model.Account.COLLABORATOR_ROLES = [
-  dc.model.Account.prototype.ADMINISTRATOR, 
+  dc.model.Account.prototype.ADMINISTRATOR,
   dc.model.Account.prototype.CONTRIBUTOR
 ];
 

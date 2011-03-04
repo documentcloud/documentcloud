@@ -86,10 +86,6 @@ dc.model.Project = Backbone.Model.extend({
       + ', ' + noteCount + ' ' + Inflector.pluralize('note', noteCount)
       + (shareCount ? ', ' + shareCount + ' ' + Inflector.pluralize('collaborator', shareCount) : '');
   },
-  
-  isReviewerProject : function() {
-    return !!this.get('reviewer_document_id');
-  },
 
   _setCollaboratorsResource : function() {
     if (!(this.collaborators && this.id)) return;

@@ -62,8 +62,8 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     var set = $(e.target).closest('.DV-set');
     var pageNumber = currentDocument.api.getPageNumberForId(set.attr('data-id'));
     currentDocument.api.addAnnotation({
-      page            : pageNumber, 
-      unsaved         : true, 
+      page            : pageNumber,
+      unsaved         : true,
       access          : this._kind || 'public',
       owns_note       : true
     });
@@ -118,9 +118,9 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
         var set = $(this._activePage).closest('.DV-set');
         var pageNumber = currentDocument.api.getPageNumberForId(set.attr('data-id'));
         currentDocument.api.addAnnotation({
-          location        : {image : image}, 
-          page            : pageNumber, 
-          unsaved         : true, 
+          location        : {image : image},
+          page            : pageNumber,
+          unsaved         : true,
           access          : this._kind,
           owns_note       : true
         });
@@ -181,11 +181,9 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       // It's ok -- we don't have access to the parent window.
     }
   },
-  
+
   _accessClass : function(kind) {
-    if (kind == 'public')         return 'DV-accessPublic';
-    else if (kind =='exclusive')  return 'DV-accessExclusive';
-    else if (kind =='private')    return 'DV-accessPrivate';
+    return 'DV-access' + Inflector.capitalize(kind);
   }
 
 });

@@ -32,30 +32,15 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     this.showReviewerWelcome();
     return this;
   },
-  
+
   showReviewerWelcome : function() {
-    if (dc.account.role == dc.model.Account.prototype.REVIEWER && dc.app.editor.options.reviewerInviter) {
-      var fullName = dc.app.editor.options.reviewerInviter.fullName;
-      var email    = dc.app.editor.options.reviewerInviter.email;
-      var title    = [
-        fullName,
-        ' has invited you to review "',
-        Inflector.truncate(currentDocument.api.getTitle(), 50),
-        '"'
-      ].join('');
-      var description = "Use the links at the right to annotate the document. \
-                         Keep in mind that any other reviewers will be able to \
-                         see public annotations and drafts. Private annotations \
-                         are for your own reference. Even "+fullName+" can't see \
-                         them.<br><br>Contact "+fullName+" at <a href=\"mailto:"
-                         +email+"\" class=\"text_link\">"+email+"</a> if you need \
-                         any help, or visit <a href=\"http://www.documentcloud.org\" \
-                         class=\"text_link\">http://www.documentcloud.org</a> for more \
-                         information about DocumentCloud.";
-      
-      var dialog = dc.ui.Dialog.alert("", {description: description, title: title});
-      $(dialog.el).addClass('wide_dialog');
-    }
+    var inviter = dc.app.editor.options.reviewerInviter;
+    if (!(dc.account.role == dc.model.Account.prototype.REVIEWER && inviter)) return;
+    var title = inviter.fullName + ' has invited you to review "' +
+      Inflector.truncate(currentDocument.api.getTitle(), 50) + '"';
+    var description = JST['reviewer_welcome'](inviter);
+    var dialog = dc.ui.Dialog.alert("", {description: description, title: title});
+    $(dialog.el).addClass('wide_dialog');
   },
 
   openSectionEditor : function() {
@@ -159,7 +144,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
         this.viewer.open('ViewDocument');
     }
   },
-  
+
   editPageText : function() {
     this.openTextTab();
     dc.app.editor.editPageTextEditor.toggle();
@@ -189,7 +174,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     this.openDocumentTab();
     dc.app.editor.annotationEditor.toggle('private');
   },
-  
+
   toggleDocumentInfo : function() {
     var showing = $('.edit_document_fields').is(':visible');
     $('.document_fields_container').setMode(showing ? 'hide' : 'show', 'document_fields');
