@@ -1,4 +1,4 @@
-<%= @inviter_account.full_name %> at <%= @organization_name %> has invited you to review <% if @documents.count > 1 %><%= @documents.count %> documents.<% else %>"<%= @documents[0].title %>."<% end %> Use the URL<% if @documents.count != 1 %>s<% end %> below to access the document<% if @documents.count != 1 %>s<% end %>.
+<%= @inviter_account.full_name %> at <%= @organization_name %> has invited you to review <% if @documents.count > 1 %><%= @documents.count %> documents.<% else %>"<%= @documents[0] && @documents[0].title %>."<% end %> Use the URL<% if @documents.count != 1 %>s<% end %> below to access the document<% if @documents.count != 1 %>s<% end %>.
 <%- @documents.each do |d| -%>
 <%- if @documents.count > 1 -%><%= d.title %><%- end %>
 <%= DC.server_root(:ssl => true) %>/documents/<%= d.id %>-<%= d.slug %>.html<%= @key %>

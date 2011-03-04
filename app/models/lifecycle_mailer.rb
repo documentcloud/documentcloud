@@ -24,7 +24,7 @@ class LifecycleMailer < ActionMailer::Base
     recipients  [reviewer_account.email] if reviewer_account
     body        :documents            => documents,
                 :key                  => key,
-                :organization_name    => documents[0].account.organization_name,
+                :organization_name    => documents[0] && documents[0].account.organization_name,
                 :account_exists       => reviewer_account && !reviewer_account.reviewer?,
                 :inviter_account      => inviter_account,
                 :reviewer_account     => reviewer_account,

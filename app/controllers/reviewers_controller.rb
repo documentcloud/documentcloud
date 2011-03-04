@@ -1,5 +1,7 @@
 class ReviewersController < ApplicationController
 
+  before_filter :login_required
+
   def index
     reviewers = {}
     documents = []
@@ -59,7 +61,7 @@ class ReviewersController < ApplicationController
     json account
   end
 
-  def send
+  def send_email
     return json(nil, 400) unless params[:accounts] && params[:documents]
     documents = []
     params[:documents].each do |document_id|

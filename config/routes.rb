@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   map.page_image "/documents/:id/pages/:page_name.gif", :controller => :documents, :action => :send_page_image
 
   # Reviewers.
-  map.resources :reviewers, :collection => {:send => :post}
+  map.resources :reviewers, :collection => {:send_email => :post}
 
   # API.
   map.with_options :controller => 'api' do |api|
