@@ -53,27 +53,26 @@ class Annotation < ActiveRecord::Base
     self.accessible(account).count(:conditions => {:document_id => doc_ids}, :group => 'document_id')
   end
 
-  def self.author_info(doc, current_account=nil)
+  def self.populate_author_info(notes, current_account=nil)
+    note_map = notes.inject({}) {|memo, n| memo[n.id] = n; memo }
     account_sql = <<-EOS
       SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name,
                       organizations.name as organization_name
       FROM accounts
       INNER JOIN annotations   ON annotations.account_id = accounts.id
       INNER JOIN organizations ON organizations.id = accounts.organization_id
-      WHERE (annotations.document_id = #{doc.id})
+      WHERE annotations.id in (#{notes.map(&:id).join(',')})
     EOS
-    accounts = {}
     rows = Account.connection.select_all(account_sql)
     rows.each do |a|
       id = a['id'].to_i
-      accounts[id] = {
+      note_map[id].author = {
         :full_name         => "#{a['first_name']} #{a['last_name']}",
         :organization_name => a['organization_name'],
-        :account_id        => id
+        :account_id        => id,
         :owns_note         => current_account && current_account.id == id
       }
     end
-    accounts
   end
 
   def self.public_note_counts_by_organization
@@ -102,8 +101,8 @@ class Annotation < ActiveRecord::Base
     if author
       data.merge!({
         'author'              => author[:full_name],
-        'author_id']          => author[:account_id],
-        'owns_note']          => author[:owns_note],
+        'author_id'           => author[:account_id],
+        'owns_note'           => author[:owns_note],
         'author_organization' => author[:organization_name]
       })
     end

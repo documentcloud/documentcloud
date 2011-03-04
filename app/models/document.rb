@@ -91,15 +91,14 @@ class Document < ActiveRecord::Base
   # our organization and we're allowed to see it, or it belongs to a project
   # that's been shared with us.
   named_scope :accessible, lambda {|account, org|
-    account && account.shared_document_ids
-    account_memberships = account && account.shared_document_ids.present?
+    has_shared = account && account.shared_document_ids.present?
     access = []
     access << "(documents.access = #{PUBLIC})"
     access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}) and documents.account_id = #{account.id})" if account
     access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org
-    access << "(documents.id in (?))" if account_memberships
+    access << "(documents.id in (?))" if has_shared
     conditions = ["(#{access.join(' or ')})"]
-    conditions.push(account.shared_document_ids) if account_memberships
+    conditions.push(account.shared_document_ids) if has_shared
     {:conditions => conditions}
   }
 
@@ -246,9 +245,8 @@ class Document < ActiveRecord::Base
   end
 
   def annotations_with_authors(account, annotations=nil)
-    annotation_author_info = Annotation.author_info(self, account)
     annotations ||= self.annotations.accessible(account)
-    annotations.each {|a| a.author = annotation_author_info[a.account_id] }
+    Annotation.populate_author_info(annotations, account)
     annotations
   end
 
