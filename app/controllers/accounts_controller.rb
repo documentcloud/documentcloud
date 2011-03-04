@@ -61,14 +61,13 @@ class AccountsController < ApplicationController
   # Journalists are authorized to update any account in the organization.
   # Think about what the desired level of access control is.
   def update
-    account   = current_organization.accounts.find(params[:id])
-    is_owner  = current_account.id == account.id
-    return forbidden unless account && (current_account.admin? || is_owner)
+    account = current_organization.accounts.find(params[:id])
+    return json(nil, 403) unless account && current_account.allowed_to_edit_account?(account)
     account.update_attributes pick(params, :first_name, :last_name, :email)
     role = pick(params, :role)
     account.update_attributes(role) if !role.empty? && current_account.admin?
     password = pick(params, :password)[:password]
-    if is_owner && password
+    if (current_account.id == account.id) && password
       account.password = password
       account.save
     end

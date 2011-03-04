@@ -142,6 +142,11 @@ class Account < ActiveRecord::Base
     owns_or_collaborates?(resource) || shared?(resource)
   end
 
+  def allowed_to_edit_account?(account)
+    (self.id == account.id) ||
+    ((self.organization_id == account.organization_id) && (self.admin? || account.reviewer?))
+  end
+
   def accessible_document_ids
     return @accessible_document_ids unless @accessible_document_ids.nil?
     @accessible_document_ids = []
