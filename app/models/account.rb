@@ -210,7 +210,7 @@ class Account < ActiveRecord::Base
 
   # Has this account been assigned, but never logged into, with no password set?
   def pending?
-    !hashed_password && role != REVIEWER
+    !hashed_password && !reviewer?
   end
 
   # It's slo-o-o-w to compare passwords. Which is a mixed bag, but mostly good.
