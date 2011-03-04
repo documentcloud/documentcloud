@@ -42,14 +42,6 @@ class ReviewersController < ApplicationController
     json documents
   end
 
-  def update
-    account   = current_organization.accounts.find(params[:id])
-    is_owner  = current_account.id == account.id
-    return json(nil, 403) unless account && (current_account.admin? || is_owner)
-    account.update_attributes pick(params, :first_name, :last_name, :email) if account.role == Account::REVIEWER
-    json account
-  end
-
   def send_email
     return json(nil, 400) unless params[:accounts] && params[:document_ids]
     documents = []
