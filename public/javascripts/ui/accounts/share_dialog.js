@@ -253,10 +253,10 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       url : '/reviewers',
       type : 'POST',
       data : {
-        email : Inflector.trim(email),
-        first_name : Inflector.trim(this.$('.reviewer_management input[name=first_name]').val()),
-        last_name : Inflector.trim(this.$('.reviewer_management input[name=last_name]').val()),
-        documents : this.docs.pluck('id')
+        email         : Inflector.trim(email),
+        first_name    : Inflector.trim(this.$('.reviewer_management input[name=first_name]').val()),
+        last_name     : Inflector.trim(this.$('.reviewer_management input[name=last_name]').val()),
+        document_ids  : this.docs.pluck('id')
       },
       success: _.bind(function(resp) { this._onAddSuccess(resp, callback); }, this),
       error : this._onAddError
@@ -328,7 +328,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       type : 'DELETE',
       data : {
         account_id : accountId,
-        documents : documentIds
+        document_ids : documentIds
       },
       success: _.bind(function(resp) {
         this._onRemoveSuccess(resp, documentIds, account);
@@ -448,9 +448,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       url : '/reviewers/send',
       type : 'POST',
       data : {
-        accounts  : accountIds,
-        documents : documentIds,
-        message   : Inflector.trim(message)
+        accounts      : accountIds,
+        document_ids  : documentIds,
+        message       : Inflector.trim(message)
       },
       success: _.bind(function(resp) {
         var text = [

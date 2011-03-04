@@ -23,7 +23,7 @@ class ReviewersController < ApplicationController
 
     return json account if account.errors.any?
 
-    documents = Documents.find(params[:documents])
+    documents = Documents.find(params[:document_ids])
     documents.each do |doc|
       doc.add_reviewer(account, current_account) if current_account.allowed_to_edit? doc
     end
@@ -33,7 +33,7 @@ class ReviewersController < ApplicationController
 
   def destroy
     account = Account.find(params[:account_id])
-    documents = params[:documents].map do |document_id|
+    documents = params[:document_ids].map do |document_id|
       document = Document.find(document_id)
       return json(nil, 403) unless current_account.allowed_to_edit?(document)
       document.remove_reviewer(account)
@@ -51,9 +51,9 @@ class ReviewersController < ApplicationController
   end
 
   def send_email
-    return json(nil, 400) unless params[:accounts] && params[:documents]
+    return json(nil, 400) unless params[:accounts] && params[:document_ids]
     documents = []
-    params[:documents].each do |document_id|
+    params[:document_ids].each do |document_id|
       document = Document.find(document_id)
       return json(nil, 403) unless current_account.allowed_to_edit?(document)
       documents << document
