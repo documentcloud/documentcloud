@@ -153,7 +153,7 @@ class Account < ActiveRecord::Base
     @accessible_document_ids ||= accessible_project_ids.empty? ? [] :
       ProjectMembership.connection.select_values(
         "select distinct document_id from project_memberships where project_id in (#{accessible_project_ids.join(',')})"
-      ).map {|id| id.to_i }.flatten
+      ).map {|id| id.to_i }
   end
 
   # The list of all of the projects that have been shared with this account
