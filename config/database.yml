@@ -1,4 +1,4 @@
-<% secrets = YAML.load_file('secrets/secrets.yml')[ENV['RAILS_ENV'] || 'development'] %>
+<% secrets = YAML.load_file(File.join(Rails.root, 'secrets/secrets.yml'))[ENV['RAILS_ENV'] || 'development'] %>
 
 defaults: &defaults
   adapter: postgresql
