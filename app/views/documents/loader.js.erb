@@ -4,6 +4,7 @@
 
   <% root = DC.server_root(:ssl => false) %>
   window.DV = window.DV || {};
+  window.DV.recordHit = "<%= root.sub('s3', 'www') %>/pixel.gif";
 
   var loadCSS = function(url, media) {
     var link   = document.createElement('link');
@@ -23,20 +24,6 @@
   /*@end
   @*/
   loadCSS('<%= root %>/viewer/printviewer.css', 'print');
-
-  DV.afterLoad = function(viewer) {
-    DV.jQuery('.DV-logoLink, .DV-footerLogoLink').attr({
-      href  : 'http://www.documentcloud.org',
-      title : 'DocumentCloud'
-    });
-    var loc = window.location;
-    var url = loc.protocol + '//' + loc.host + loc.pathname + loc.search;
-    if (url.match(/^file:/)) return false;
-    url = url.replace(/[\/]+$/, '');
-    var id  = parseInt(viewer.api.getId(), 10);
-    var key = encodeURIComponent(id + ':' + url);
-    DV.jQuery(document.body).append('<img alt="" width="1" height="1" src="<%= root.sub("s3", "www") %>/pixel.gif?key=' + key + '" />');
-  };
 
   // Record the fact that the viewer is loaded.
   DV.loaded = true;

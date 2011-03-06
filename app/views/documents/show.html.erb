@@ -14,7 +14,12 @@
     <link href="/viewer/viewer.css" media="screen" rel="stylesheet" type="text/css" />
   <![endif]-->
   <link href="/viewer/printviewer.css" media="print" rel="stylesheet" type="text/css" />
-  <script src="/viewer/viewer.js" type="text/javascript"></script>
+  <script src="/viewer/viewer.js"></script>
+  <% if Rails.env.production? && !request.ssl? %>
+    <script>
+      window.DV.recordHit = "<%= DC.server_root(:ssl => false).sub('s3', 'www') %>/pixel.gif";
+    </script>
+  <% end %>
   <% unless @local %>
     <%= csrf_meta_tag %>
   <% end %>
