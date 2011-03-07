@@ -22,7 +22,7 @@
   <div class="note_text display"><%= note.get('content') %></div>
   <div class="annotation_meta">
     <% if (note.get('author')) { %>
-      <div class="annotation_author interface display">Added by: <%= note.get('author') %></div>
+      <div class="annotation_author interface display">Written by: <%= note.get('author') %></div>
     <% } %>
     <% if (note.get('access') == 'public') { %>
       <div class="annotation_access interface display">This public note is visible to everyone.</div>
