@@ -118,6 +118,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       this.docs.get(document_id).reviewers.refresh(reviewers);
     }, this));
     this._renderReviewers();
+    this.center();
   },
 
   _renderReviewers : function() {
@@ -134,7 +135,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.$('.account_list').prepend(views);
     this.$('.document_reviewers_empty').toggle(!_.keys(this.renderedAccounts).length);
     this._cancelAddReviewer();
-    this.center();
   },
 
   _setPlaceholders : function() {

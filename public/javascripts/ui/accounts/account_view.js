@@ -35,7 +35,8 @@ dc.ui.AccountView = Backbone.View.extend({
     this.modes      = {};
     this.kind       = options.kind;
     this.tagName    = this.TAGS[this.kind];
-    this.className  = 'account_view ' + this.kind;
+    this.className  = 'account_view ' + this.kind + (this.tagName == 'tr' ? ' not_draggable' : '');
+    this.dialog     = options.dialog || dc.app.accounts;
     Backbone.View.call(this, options);
     this.template   = JST['account/' + this.kind];
     _.bindAll(this, '_onSuccess', '_onError');
@@ -54,9 +55,9 @@ dc.ui.AccountView = Backbone.View.extend({
     viewMode = viewMode || 'display';
     options  = options || {};
     var attrs = _.extend({
-      account : this.model, 
-      email : this.model.get('email'), 
-      size : this.size(), 
+      account : this.model,
+      email : this.model.get('email'),
+      size : this.size(),
       current : Accounts.current()
     }, options);
     if (this.isRow()) this.setMode(viewMode, 'view');
@@ -110,7 +111,7 @@ dc.ui.AccountView = Backbone.View.extend({
       dc.ui.notifier.show({mode : 'info', text : 'A welcome message has been sent to ' + model.get('email') + '.'});
     }, this)});
   },
-  
+
   _setPlaceholders : function() {
     this.$('input[name=first_name], input[name=last_name], input[name=email]').placeholder();
   },
@@ -151,7 +152,7 @@ dc.ui.AccountView = Backbone.View.extend({
   _cancelEditing : function() {
     this.setMode('display', 'view');
   },
-  
+
   _deleteAccount : function() {
     if (dc.app.accounts.isOpen()) dc.app.accounts.close();
     dc.ui.Dialog.confirm('Really delete ' + this.model.fullName() + '?', _.bind(function() {
@@ -160,7 +161,7 @@ dc.ui.AccountView = Backbone.View.extend({
       return true;
     }, this));
   },
-  
+
   _remove_reviewer_email : function() {
     this.model.set({needsEmail : false});
   },

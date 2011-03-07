@@ -18,6 +18,9 @@ select {
   font-size: 11px;
   height: 20px;
 }
+.not_draggable {
+  cursor: default;
+}
 .selectable_text {
   cursor: text;
 }
