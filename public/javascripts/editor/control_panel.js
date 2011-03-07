@@ -21,9 +21,11 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   render : function() {
-    var accessWorkspace = _.contains(dc.model.Account.COLLABORATOR_ROLES, dc.account.role);
-    this.viewer = currentDocument;
-    this._page = this.viewer.$('.DV-textContents');
+    var accountProto    = dc.model.Account.prototype;
+    var accessWorkspace = dc.account.role == accountProto.ADMINISTRATOR ||
+                          dc.account.role == accountProto.CONTRIBUTOR;
+    this.viewer         = currentDocument;
+    this._page          = this.viewer.$('.DV-textContents');
     $(this.el).html(JST['control_panel']({
       isReviewer      : dc.app.editor.options.isReviewer,
       isOwner         : dc.app.editor.options.isOwner,
