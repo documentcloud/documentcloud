@@ -38,7 +38,7 @@ class ReviewersController < ApplicationController
   end
 
   def send_email
-    Accounts.find(params[:account_ids]).each do |account|
+    Account.find(params[:account_ids]).each do |account|
       account.send_reviewer_instructions @documents, current_account, params[:message]
     end
     json nil

@@ -34,7 +34,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this._boundRender     = [];
     this.currentStep      = 1;
     this.newReviewers     = [];
-    this.accountsToEmail  = new dc.model.AccountSet();
     this.docs             = new dc.model.DocumentSet(options.docs);
 
     $(this.el).hide().empty();
@@ -71,9 +70,25 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     }));
   },
 
+  // An array of all the accounts we need to email.
+  accountsToEmail : function() {
+    return _.filter(this.reviewers(), function(acc) {
+      return acc.get('needsEmail');
+    });
+  },
+
   // Run an iterator over each reviewer in our document list.
   eachReviewer : function(iterator) {
     _.each(this.reviewers(), _.bind(iterator, this));
+  },
+
+  // Return a list of documents that have reviewers (by id).
+  docsForReviewers : function(reviewerIds) {
+    return this.docs.select(function(doc) {
+      return _.any(reviewerIds, function(id) {
+        return doc.reviewers.get(id);
+      });
+    });
   },
 
   renderEmailDialog : function() {
@@ -218,7 +233,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   _submitAddReviewer : function(callback, dismissEmpty) {
     var email = this.$('.reviewer_management input[name=email]').val();
-    if (!email.length && this.accountsToEmail.length && dismissEmpty) {
+    if (!email.length && this.accountsToEmail().length && dismissEmpty) {
       this._cancelAddReviewer();
       return callback();
     }
@@ -291,12 +306,10 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   _removeReviewer : function(e) {
     this.showSpinner();
-    var accountId = parseInt($(e.target).attr('data-account-id'), 10);
-    var account   = _.detect(this.reviewers(), function(acc){ return acc.id == accountId; });
-    var reviewerDocuments = this.docs.select(function(doc) {
-      return doc.reviewers.any(function(r) { return r.get('id') == account.get('id'); });
-    });
-    var documentIds = _.pluck(reviewerDocuments, 'id');
+    var accountId    = parseInt($(e.target).attr('data-account-id'), 10);
+    var account      = _.detect(this.reviewers(), function(acc){ return acc.id == accountId; });
+    var reviewerDocs = this.docsForReviewers([account.id]);
+    var documentIds  = _.pluck(reviewerDocs, 'id');
 
     $.ajax({
       url : '/reviewers/' + accountId,
@@ -356,20 +369,15 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   // ====================
 
   _showReviewersToEmail : function() {
-    this.accountsToEmail.refresh();
     var listEl = this.$('.email_reviewers_list').empty();
 
-    this.eachReviewer(function(account) {
-      if (account.get('needsEmail') && !this.accountsToEmail.get(account.id)) {
-        this.accountsToEmail.add(account);
-        var view = (new dc.ui.AccountView({
-          model : account,
-          kind : 'reviewer_email',
-          dialog: this
-        })).render('display');
-        listEl.append(view.el);
-      }
-    });
+    _.each(this.accountsToEmail(), _.bind(function(account) {
+      listEl.append((new dc.ui.AccountView({
+        model : account,
+        kind : 'reviewer_email',
+        dialog: this
+      })).render('display').el);
+    }, this));
 
     this._setupEmailBody();
   },
@@ -402,21 +410,19 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
 
   _sendInstructions : function() {
-    var accounts = this.accountsToEmail;
+    var accounts = this.accountsToEmail();
     this.showSpinner();
 
     this._next.setMode('not', 'enabled');
     this._next.html('Sending...');
 
-    var documents = this.docs.select(function(doc) {
-      return doc.reviewers.any(function(r) { return accounts.get(r.get('id')); });
-    });
+    var accountIds  = _.pluck(accounts, 'id');
+    var documents   = this.docsForReviewers(accountIds);
     var documentIds = _.pluck(documents, 'id');
-    var accountIds  = accounts.pluck('id');
-    var message = $.trim(this.$('.email_message_text').val());
+    var message     = $.trim(this.$('.email_message_text').val());
 
     $.ajax({
-      url : '/reviewers/send',
+      url : '/reviewers/send_email',
       type : 'POST',
       data : {
         account_ids   : accountIds,
@@ -431,7 +437,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
               documentIds.length + ' documents'
             ) + ' sent to ' +
             (accounts.length == 1 ?
-              accounts.first().get('email') :
+              accounts[0].get('email') :
               accounts.length + ' people'
             ) + '.';
 
@@ -441,9 +447,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
           mode     : 'info'
         });
 
-        accounts.each(function(account) {
-          account.set({needsEmail: false});
-        });
+        _.each(accounts, function(acc){ acc.set({needsEmail: false}); });
         this.hideSpinner();
         this.close();
       }, this),
@@ -461,13 +465,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   // =========
 
   _enabledNextButton : function() {
-    var newAccounts = this.docs.any(function(doc) {
-      return doc.reviewers.any(function(account) {
-        return account.get('needsEmail');
-      });
-    });
-
-    this._next.setMode(newAccounts || this.showingManagement ? 'is' : 'not', 'enabled');
+    this._nextEnabled = this.accountsToEmail().length || this.showingManagement;
+    this._next.setMode(this._nextEnabled ? 'is' : 'not', 'enabled');
   },
 
   _setStep : function() {
@@ -492,6 +491,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
 
   _nextStep : function() {
+    if (!this._nextEnabled) return;
     if (this.showingManagement) return this._submitAddReviewer(this._nextStep, true);
     if (this.currentStep >= 2) {
       this._sendInstructions();

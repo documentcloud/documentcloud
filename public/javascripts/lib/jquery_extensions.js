@@ -156,7 +156,7 @@
         };
 
         var checkEvent = function(e) {
-          var isNonDraggable = $(e.target).closest('input, select, textarea, label, a, canvas, .minibutton, .text_link, .selectable_text, .not_draggable').length;
+          var isNonDraggable = $(e.target).closest('input, select, textarea, label, a, canvas, .tickLabel, .minibutton, .text_link, .selectable_text, .not_draggable').length;
           if (isNonDraggable) return true;
 
           var draggableParent = $(e.target).parents('.is_draggable').andSelf().length;
