@@ -290,7 +290,6 @@
     .note .annotation_author {
       float: right;
       font-size: 11px;
-      margin: 4px 0 0 0;
       color: #909090;
       display: none;
     }
@@ -303,9 +302,11 @@
     .note.exclusive_access {
       background: #fff url(/images/embed/ui/note-draft-bg.png) repeat 0 0;
     }
+    .note .annotation_meta {
+      margin: 8px 0 0 0;
+    }
     .note .annotation_meta .annotation_access {
       float: left;
-      margin: 4px 0 0 0;
       color: #909090;
       font-size: 11px;
     }
