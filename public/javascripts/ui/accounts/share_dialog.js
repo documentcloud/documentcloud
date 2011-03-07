@@ -50,7 +50,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     dc.ui.Dialog.prototype.render.call(this);
     this.setMode('share', 'dialog');
     this._container = this.$('.custom');
-    this._container.setMode('not', 'draggable');
     this._container.html(JST['account/share_dialog']({
       'defaultAvatar' : dc.model.Account.prototype.DEFAULT_AVATAR,
       'docCount': this.docs.length
