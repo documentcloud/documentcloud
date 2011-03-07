@@ -204,15 +204,13 @@
     white-space: nowrap;
   }
   .share_dialog .name {}
-    .share_dialog .name input {
-      width: 66px;
+    .share_dialog .name input,
+    .share_dialog .name_wrapper .text_input {
+      width: 88px;
     }
     .share_dialog .name_wrapper {
-      width: 164px;
+      width: 208px;
     }
-      .share_dialog .name_wrapper .text_input {
-        width: 66px;
-      }
     .share_dialog .name .edit_account {
       margin: 4px 4px 0 8px;
     }
