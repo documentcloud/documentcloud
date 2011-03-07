@@ -19,10 +19,12 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     'keypress .reviewer_management_lastname':  '_maybeAddReviewer'
   },
 
-  STEP_TITLES : [
-    "",
-    "Email Your Reviewers"
-  ],
+  EMAIL_DIALOG_OPTIONS : {
+    mode:        'short_prompt',
+    description: 'Start with the email address of your first reviewer:',
+    saveText:    'Next',
+    closeText:   'Cancel'
+  },
 
   initialize : function(options) {
     _.bindAll(this, '_renderReviewers', '_refreshReviewers', '_cancelAddReviewer',
@@ -63,15 +65,23 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     return this;
   },
 
+  // An array of all the reviewers in the selected documents (non-unique).
+  reviewers : function() {
+    return _.flatten(this.docs.map(function(doc) {
+      return doc.reviewers.models;
+    }));
+  },
+
+  // Run an iterator over each reviewer in our document list.
+  eachReviewer : function(iterator) {
+    _.each(this.reviewers(), _.bind(iterator, this));
+  },
+
   renderEmailDialog : function() {
     var docSize = this.docs.length;
-    var title = [
-      'Share ',
-      (this.docs.length == 1 ?
-        '\"' + Inflector.trim(this.docs.first().get('title'), 30) + '\"' :
-        this.docs.length + ' Documents'),
-      ' With Reviewers'
-    ].join('');
+    var title = 'Share ' + (this.docs.length == 1 ?
+        '"' + Inflector.trim(this.docs.first().get('title'), 30) + '"' :
+        this.docs.length + ' Documents') + ' With Reviewers';
 
     this.showingEmailDialog = true;
     dc.ui.spinner.hide();
@@ -83,12 +93,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       this._focusEmail(email);
       this._submitAddReviewer();
       return true;
-    }, this), {
-        mode:        'short_prompt',
-        description: 'Start with the email address of your first reviewer:',
-        saveText:    'Next',
-        closeText:   'Cancel'
-    });
+    }, this), this.EMAIL_DIALOG_OPTIONS);
   },
 
   // =======================
@@ -119,15 +124,12 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _renderReviewers : function() {
     this.render();
     var views = [];
-    // this.commonReviewers = Documents.sharedReviewers(this.docs);
     this._countDocuments();
     this.renderedAccounts = {};
-    this.docs.each(_.bind(function(doc) {
-      doc.reviewers.each(_.bind(function(account) {
-        var accountView = this._renderReviewer(account);
-        if (accountView) views.push(accountView);
-      }, this));
-    }, this));
+    this.eachReviewer(function(account) {
+      var accountView = this._renderReviewer(account);
+      if (accountView) views.push(accountView);
+    });
 
     this.$('.account_list tr:not(.reviewer_management)').remove();
     this.$('.account_list').prepend(views);
@@ -142,38 +144,26 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
 
   _countDocuments : function() {
-    this.accountDocumentCounts = {};
-    this.docs.each(_.bind(function(doc) {
-      doc.reviewers.each(_.bind(function(account) {
-        if (this.accountDocumentCounts[account.id]) {
-          this.accountDocumentCounts[account.id] += 1;
-        } else {
-          this.accountDocumentCounts[account.id] = 1;
-        }
-      }, this));
-    }, this));
+    var counts = this.accountDocumentCounts = {};
+    this.eachReviewer(function(account) {
+      counts[account.id] = (counts[account.id] || 0) + 1;
+    });
   },
 
   _renderReviewer : function(account) {
-    if (account.id in this.renderedAccounts) return;
+    if (this.renderedAccounts[account.id]) return;
 
-    var view = new dc.ui.AccountView({
+    var view = this.renderedAccounts[account.id] = new dc.ui.AccountView({
       model  : account,
       kind   : 'reviewer',
       dialog : this
     });
-
-    view.render('display', {
-      isReviewer     : !_.contains(dc.model.Account.COLLABORATOR_ROLES, account.get('role')),
-      documentCount  : this.accountDocumentCounts[account.id],
-      documentsCount : this.docs.length
-    });
+    this._rerenderReviewer(account);
 
     account.bind('change:needsEmail', _.bind(this._showReviewersToEmail, this));
     account.bind('change:needsEmail', _.bind(this._enabledNextButton, this));
     account.bind('change:needsEmail', _.bind(this._rerenderReviewer, this, account));
 
-    this.renderedAccounts[account.id] = view;
     this._observeReviewer(account, view);
 
     return view.el;
@@ -181,7 +171,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   _rerenderReviewer : function(account) {
     this.renderedAccounts[account.id].render('display', {
-      isReviewer     : !_.contains(dc.model.Account.COLLABORATOR_ROLES, account.get('role')),
       documentCount  : this.accountDocumentCounts[account.id],
       documentsCount : this.docs.length
     });
@@ -223,20 +212,21 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this._enabledNextButton();
   },
 
+  // Try to add reviewer on `enter` key.
   _maybeAddReviewer : function(e) {
-    // Try to add reviewer on `enter` key
     if (e.keyCode == 13) this._submitAddReviewer();
   },
 
-  _submitAddReviewer : function(callback, dismiss_empty) {
+  _submitAddReviewer : function(callback, dismissEmpty) {
     var email = this.$('.reviewer_management input[name=email]').val();
-    if (!email.length && this.accountsToEmail.length && dismiss_empty) {
+    if (!email.length && this.accountsToEmail.length && dismissEmpty) {
       this._cancelAddReviewer();
       return callback();
     }
-    if (!email.length) {
+    if (!dc.app.validator.check(email, 'email')) {
       this._focusEmail();
-      return this.$('.reviewer_management .error').text('Please enter an email address.');
+      this.$('.reviewer_management .error').removeClass('error_white').text('Please enter a valid email address.');
+      return false;
     }
 
     this.showSpinner();
@@ -259,15 +249,11 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       Documents.get(doc.id).set(doc);
     });
     var newAccount = new dc.model.Account(resp.account);
-    this.docs.each(_.bind(function(doc) {
+    this.docs.each(function(doc) {
       var account = doc.reviewers.get(newAccount.id);
-      if (!account) {
-        newAccount.set({needsEmail: true});
-        doc.reviewers.add(newAccount);
-      } else {
-        account.set({needsEmail: true});
-      }
-    }, this));
+      if (!account) doc.reviewers.add(newAccount);
+      (account || newAccount).set({needsEmail: true});
+    });
     this.showingManagement = false;
     this._renderReviewers();
     if (callback) callback();
@@ -276,7 +262,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   _onAddError : function(resp) {
     var status = resp.status;
-    var $error = this.$('.reviewer_management .error').removeClass('error_white');
+    var errorEl = this.$('.reviewer_management .error').removeClass('error_white');
 
     resp = JSON.parse(resp.responseText);
     if (resp.errors && _.any(resp.errors, function(error) {
@@ -284,13 +270,13 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       return error.indexOf("first name") != -1 || error.indexOf("last name") != -1;
     })) {
       this._showReviewerNameInputs();
-      $error.text("Please provide the reviewer's full name.").addClass('error_white');
+      errorEl.text("Please provide the reviewer's full name.").addClass('error_white');
     } else if (resp.errors) {
-      $error.text(resp.errors[0]);
+      errorEl.text(resp.errors[0]);
     } else if (status == 403) {
       this.error('You are not allowed to add reviewers.');
     } else {
-      $error.text("Please enter in the email address of a reviewer.");
+      errorEl.text("Please enter the email address of a reviewer.");
     }
     this.hideSpinner();
     this._focusEmail();
@@ -307,12 +293,11 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _removeReviewer : function(e) {
     this.showSpinner();
     var accountId = parseInt($(e.target).attr('data-account-id'), 10);
-    var accounts  = _.flatten(this.docs.map(function(doc){ return doc.reviewers.models; }));
-    var account   = _.detect(accounts, function(acc){ return acc.id == accountId; });
+    var account   = _.detect(this.reviewers(), function(acc){ return acc.id == accountId; });
     var reviewerDocuments = this.docs.select(function(doc) {
       return doc.reviewers.any(function(r) { return r.get('id') == account.get('id'); });
     });
-    var documentIds = _.map(reviewerDocuments, function(d) { return d.get('id'); });
+    var documentIds = _.pluck(reviewerDocuments, 'id');
 
     $.ajax({
       url : '/reviewers/' + accountId,
@@ -359,10 +344,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   _resendInstructions : function(e) {
     var accountId = parseInt($(e.target).attr('data-account-id'), 10);
-    this.docs.each(function(doc) {
-      doc.reviewers.each(function(account) {
-        if (account.id == accountId) account.set({needsEmail: true});
-      });
+    this.eachReviewer(function(account) {
+      if (account.id == accountId) account.set({needsEmail: true});
     });
 
     this._enabledNextButton();
@@ -375,21 +358,19 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   _showReviewersToEmail : function() {
     this.accountsToEmail.refresh();
-    var $list = this.$('.email_reviewers_list').empty();
+    var listEl = this.$('.email_reviewers_list').empty();
 
-    this.docs.each(_.bind(function(doc) {
-      doc.reviewers.each(_.bind(function(account) {
-        if (account.get('needsEmail') && !this.accountsToEmail.get(account.id)) {
-          this.accountsToEmail.add(account);
-          var view = (new dc.ui.AccountView({
-            model : account,
-            kind : 'reviewer_email',
-            dialog: this
-          })).render('display');
-          $list.append(view.el);
-        }
-      }, this));
-    }, this));
+    this.eachReviewer(function(account) {
+      if (account.get('needsEmail') && !this.accountsToEmail.get(account.id)) {
+        this.accountsToEmail.add(account);
+        var view = (new dc.ui.AccountView({
+          model : account,
+          kind : 'reviewer_email',
+          dialog: this
+        })).render('display');
+        listEl.append(view.el);
+      }
+    });
 
     this._setupEmailBody();
   },
@@ -444,17 +425,17 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         message       : Inflector.trim(message)
       },
       success: _.bind(function(resp) {
-        var text = [
-          'Instructions for reviewing ',
-          documentIds.length == 1 ?
-            '\"' + Inflector.truncate(this.docs.get(documentIds[0]).get('title'), 30, '...') + '\"' :
-            documentIds.length + ' documents',
-          ' sent to ',
-          accounts.length == 1 ?
-            accounts.first().get('email'):
-            accounts.length + ' people',
-          '.'
-        ].join('');
+
+        var text = 'Instructions for reviewing ' +
+            (documentIds.length == 1 ?
+              '"' + Inflector.truncate(this.docs.get(documentIds[0]).get('title'), 30) + '"' :
+              documentIds.length + ' documents'
+            ) + ' sent to ' +
+            (accounts.length == 1 ?
+              accounts.first().get('email') :
+              accounts.length + ' people'
+            ) + '.';
+
         dc.ui.notifier.show({
           text     : text,
           duration : 5000,
@@ -493,30 +474,27 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _setStep : function() {
     var title = this._displayTitle();
     this.title(title);
-    var last = this.currentStep == this.STEP_TITLES.length;
+    var last = this.currentStep == 2;
 
     this._next.html(last ? 'Finish' : 'Next &raquo;');
-    this.setMode('p'+this.currentStep, 'step');
+    this.setMode('p' + this.currentStep, 'step');
 
-    if (this.currentStep == 2) {
-      this._showReviewersToEmail();
-    }
+    if (last) this._showReviewersToEmail();
   },
 
   _displayTitle : function() {
-    var title = '';
-
     if (this.currentStep == 1) {
-      title = this.docs.length == 1 ?
-              'Sharing "' + Inflector.truncate(this.docs.first().get('title'), 30) + '"' :
-              'Sharing ' + this.docs.length + ' Documents';
+      return this.docs.length == 1 ?
+        'Sharing "' + Inflector.truncate(this.docs.first().get('title'), 30) + '"' :
+        'Sharing ' + this.docs.length + ' Documents';
+    } else {
+      return "Email Your Reviewers";
     }
-    return this.STEP_TITLES[this.currentStep-1] + title;
   },
 
   _nextStep : function() {
     if (this.showingManagement) return this._submitAddReviewer(this._nextStep, true);
-    if (this.currentStep >= this.STEP_TITLES.length) {
+    if (this.currentStep >= 2) {
       this._sendInstructions();
     } else {
       this.currentStep += 1;

@@ -201,14 +201,6 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     return attrs.length > 1 ? false : attrs[0];
   },
 
-  sharedReviewers : function(docs) {
-    return _.intersect.apply(this, docs.map(function(doc) {
-      return _.map(doc.reviewers.models, function(m) {
-        return m.get('id');
-      });
-    }));
-  },
-
   selectedPublicCount : function() {
     return _.reduce(this.selected(), function(memo, doc){
       return memo + doc.isPublic() ? 1 : 0;

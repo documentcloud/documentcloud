@@ -4,7 +4,7 @@
 
 
 <td class="email selectable_text">
-  <% if (isReviewer) { %>
+  <% if (account.isReviewer()) { %>
     <div class="display">
       <%= account.get('email') %>
     </div>
@@ -19,7 +19,7 @@
 </td>
 
 <td class="name selectable_text">
-  <% if (isReviewer) { %>
+  <% if (account.isReviewer()) { %>
     <div class="display">
       <span class="account_name">
         <%= Inflector.truncate(account.fullName(true), 40) %>
@@ -58,7 +58,7 @@
     <% } %>
   </div>
   <div class="edit">
-    <% if (isReviewer) { %>
+    <% if (account.isReviewer()) { %>
       <div class="minibutton default save_changes">
         Save
       </div>

@@ -75,6 +75,10 @@ dc.model.Account = Backbone.Model.extend({
     return this.attributes.role == this.ADMINISTRATOR;
   },
 
+  isReviewer : function() {
+    return this.attributes.role == this.REVIEWER;
+  },
+
   isReal : function() {
     var role = this.attributes.role;
     return role == this.ADMINISTRATOR || role == this.CONTRIBUTOR;
@@ -100,11 +104,6 @@ dc.model.Account = Backbone.Model.extend({
   }
 
 });
-
-dc.model.Account.COLLABORATOR_ROLES = [
-  dc.model.Account.prototype.ADMINISTRATOR,
-  dc.model.Account.prototype.CONTRIBUTOR
-];
 
 // Account Set
 dc.model.AccountSet = Backbone.Collection.extend({
