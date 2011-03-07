@@ -291,7 +291,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       return error.indexOf("first name") != -1 || error.indexOf("last name") != -1;
     })) {
       this._showReviewerNameInputs();
-      this.managementError("Please provide the reviewer's full name.");
+      this.managementError("Please provide the reviewer's name.");
     } else if (resp.errors) {
       this.managementError(resp.errors[0], true);
     } else if (status == 403) {

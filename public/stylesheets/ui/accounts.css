@@ -206,10 +206,10 @@
   .share_dialog .name {}
     .share_dialog .name input,
     .share_dialog .name_wrapper .text_input {
-      width: 88px;
+      width: 86px;
     }
     .share_dialog .name_wrapper {
-      width: 208px;
+      width: 204px;
     }
     .share_dialog .name .edit_account {
       margin: 4px 4px 0 8px;
