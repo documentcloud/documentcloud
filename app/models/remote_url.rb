@@ -2,6 +2,8 @@ class RemoteUrl < ActiveRecord::Base
 
   self.establish_connection(ANALYTICS_DB)
 
+  DOCUMENT_CLOUD_URL = /^https?:\/\/(www\.)?documentcloud.org/
+
   named_scope :aggregated, {
     :select => 'sum(hits) AS hits, document_id, url',
     :group => 'document_id, url'
@@ -29,6 +31,7 @@ class RemoteUrl < ActiveRecord::Base
   def self.populate_detected(doc_ids)
     urls = self.aggregated.all(:conditions => {:document_id => doc_ids})
     top  = urls.inject({}) do |memo, url|
+      next if DOCUMENT_CLOUD_URL =~ url.url
       id = url.document_id
       memo[id] = url if !memo[id] || memo[id].hits < url.hits
       memo
