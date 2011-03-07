@@ -179,8 +179,7 @@
   }
   .share_dialog .edit_column {
     width: 16px;
-    padding-left: 0;
-    padding-right: 0;
+    padding-right: 5px;
   }
     .share_dialog .edit_account {
       margin: 0;
@@ -208,14 +207,12 @@
     .share_dialog .name input {
       width: 66px;
     }
-    .share_dialog .name_wrapper,
-    .share_dialog .name {
+    .share_dialog .name_wrapper {
       width: 164px;
-      min-width: 164px; /* Table cells in FF */
     }
-    .share_dialog .name_wrapper .text_input {
-      width: 66px;
-    }
+      .share_dialog .name_wrapper .text_input {
+        width: 66px;
+      }
     .share_dialog .name .edit_account {
       margin: 4px 4px 0 8px;
     }

@@ -55,11 +55,13 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     }));
     this._next     = this.$('.next');
     this._previous = this.$('.previous');
+    this._emailEl  = this.$('.reviewer_management input[name=email]');
     $(this.el).show();
     dc.ui.spinner.hide();
     this._setPlaceholders();
     this._setStep();
     this._enabledNextButton();
+    this.center();
     return this;
   },
 
@@ -110,6 +112,10 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     }, this), this.EMAIL_DIALOG_OPTIONS);
   },
 
+  managementError : function(message, warn) {
+    this.$('.reviewer_management .error').toggleClass('error_white', !warn).text(message);
+  },
+
   // =======================
   // = Rendering Reviewers =
   // =======================
@@ -133,7 +139,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       this.docs.get(document_id).reviewers.refresh(reviewers);
     }, this));
     this._renderReviewers();
-    this.center();
   },
 
   _renderReviewers : function() {
@@ -154,7 +159,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   _setPlaceholders : function() {
     this.$('input[name=first_name], input[name=last_name]').placeholder();
-    this.$('input[name=email]').placeholder();
+    this._emailEl.placeholder();
   },
 
   _countDocuments : function() {
@@ -214,8 +219,11 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _focusEmail : function(email) {
     var $reviewers = this.$('.document_reviewers');
     $reviewers.attr('scrollTop', $reviewers.attr("scrollHeight")+100);
-    this.$('.reviewer_management input[name=email]').focus();
-    if (email) this.$('.reviewer_management input[name=email]').val(email);
+    this._emailEl.focus();
+
+    if (email)  this._emailEl.val(email);
+    var email = this._emailEl.val();
+    if (!email) this.managementError("Please enter an email address.");
   },
 
   _cancelAddReviewer : function() {
@@ -232,14 +240,14 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
 
   _submitAddReviewer : function(callback, dismissEmpty) {
-    var email = this.$('.reviewer_management input[name=email]').val();
+    var email = this._emailEl.val();
     if (!email.length && this.accountsToEmail().length && dismissEmpty) {
       this._cancelAddReviewer();
       return callback();
     }
     if (!dc.app.validator.check(email, 'email')) {
       this._focusEmail();
-      this.$('.reviewer_management .error').removeClass('error_white').text('Please enter a valid email address.');
+      this.managementError('Please enter a valid email address.', true);
       return false;
     }
 
@@ -276,7 +284,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   _onAddError : function(resp) {
     var status = resp.status;
-    var errorEl = this.$('.reviewer_management .error').removeClass('error_white');
 
     resp = JSON.parse(resp.responseText);
     if (resp.errors && _.any(resp.errors, function(error) {
@@ -284,13 +291,13 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       return error.indexOf("first name") != -1 || error.indexOf("last name") != -1;
     })) {
       this._showReviewerNameInputs();
-      errorEl.text("Please provide the reviewer's full name.").addClass('error_white');
+      this.managementError("Please provide the reviewer's full name.");
     } else if (resp.errors) {
-      errorEl.text(resp.errors[0]);
+      this.managementError(resp.errors[0], true);
     } else if (status == 403) {
       this.error('You are not allowed to add reviewers.');
     } else {
-      errorEl.text("Please enter the email address of a reviewer.");
+      this.managementError("Please enter the email address of a reviewer.", true);
     }
     this.hideSpinner();
     this._focusEmail();
