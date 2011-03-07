@@ -301,20 +301,11 @@
     padding: 0 8px;
     margin: 10px 0 0 0;
   }
-    .share_dialog .email_message .email_message_heading {
-      font-size: 12px;
-      margin: 0 0 12px 0;
-    }
-    .share_dialog .email_message .email_message_heading_optional {
-      font-size: 10px;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: #606060;
-      padding: 0 4px;
-    }
     .share_dialog .email_message .email_message_body {
       font: 11px/13px Menlo, Consolas, Monaco, Courier, monospace;
       color: #F3F3F3;
+      max-height: 400px;
+      overflow-y: auto;
     }
       .share_dialog .email_message .email_message_body p {
         margin: 8px 0;
@@ -349,8 +340,7 @@
     }
     .share_dialog .show_custom_email {
       margin: 14px 0 20px;
-      color: lightblue;
-      font-weight: bold;
+      color: #fff;
     }
     .share_dialog .is_custom_email .show_custom_email,
     .share_dialog .not_custom_email .hide_custom_email {

@@ -54,6 +54,7 @@ class Annotation < ActiveRecord::Base
   end
 
   def self.populate_author_info(notes, current_account=nil)
+    return if notes.empty?
     note_map = notes.inject({}) {|memo, n| memo[n.id] = n; memo }
     account_sql = <<-EOS
       SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name,

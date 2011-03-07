@@ -74,9 +74,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   // An array of all the accounts we need to email.
   accountsToEmail : function() {
-    return _.filter(this.reviewers(), function(acc) {
+    return _.uniq(_.filter(this.reviewers(), function(acc) {
       return acc.get('needsEmail');
-    });
+    }));
   },
 
   // Run an iterator over each reviewer in our document list.
@@ -485,6 +485,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.setMode('p' + this.currentStep, 'step');
 
     if (last) this._showReviewersToEmail();
+    this.center();
   },
 
   _displayTitle : function() {
