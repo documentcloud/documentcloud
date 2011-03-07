@@ -37,7 +37,7 @@ class WorkspaceController < ApplicationController
     return redirect_to next_url if Account.log_in(params[:email], params[:password], session, cookies)
     flash[:error] = true
     begin
-      redirect_to :back
+      redirect_to request.env["HTTP_REFERER"].sub(/^http:/, 'https:')
     rescue RedirectBackError => e
       # Render...
     end
