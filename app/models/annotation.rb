@@ -55,7 +55,6 @@ class Annotation < ActiveRecord::Base
 
   def self.populate_author_info(notes, current_account=nil)
     return if notes.empty?
-    note_map = notes.inject({}) {|memo, n| memo[n.account_id] = n; memo }
     account_sql = <<-EOS
       SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name,
                       organizations.name as organization_name
@@ -65,13 +64,14 @@ class Annotation < ActiveRecord::Base
       WHERE annotations.id in (#{notes.map(&:id).join(',')})
     EOS
     rows = Account.connection.select_all(account_sql)
-    rows.each do |a|
-      id = a['id'].to_i
-      note_map[id].author = {
-        :full_name         => "#{a['first_name']} #{a['last_name']}",
-        :organization_name => a['organization_name'],
+    account_map = rows.inject({}) {|memo, acc| memo[acc['id'].to_i] = acc; memo }
+    notes.each do |note|
+      author = account_map[note.account_id]
+      note.author = {
+        :full_name         => "#{author['first_name']} #{author['last_name']}",
+        :organization_name => author['organization_name'],
         :account_id        => id,
-        :owns_note         => current_account && current_account.id == id
+        :owns_note         => current_account && current_account.id == note.account_id
       }
     end
   end

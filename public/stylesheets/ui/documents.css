@@ -26,6 +26,7 @@
       padding: 92px 10px 0 10px;
       margin: 0 20px 30px 0;
     }
+    #document_list .document.owns_notes,
     #document_list .document.has_notes {
       min-height: 96px;
     }
