@@ -46,15 +46,15 @@
       font-size: 11px; line-height: 25px;
       color: #ccc;
     }
-      .account_list .first, 
+      .account_list .first,
       .collaborator_list .first,
-      .reviewer_list .first { 
-        width: 0%; padding: 0; 
+      .reviewer_list .first {
+        width: 0%; padding: 0;
       }
-      .account_list .last, 
+      .account_list .last,
       .collaborator_list .last,
-      .reviewer_list .last { 
-        padding-right: 0; 
+      .reviewer_list .last {
+        padding-right: 0;
       }
       .account_list .name  { width: 0%; }
       .account_list .email { width: 0%; }
@@ -222,6 +222,11 @@
     .share_dialog .name .account_name {
       float: left;
     }
+  .share_dialog .document_count {
+    font-size: 10px;
+    color: #555;
+    font-style: italic;
+  }
   .share_dialog .reviewers_title {
     font-size: 15px;
     margin: 0 0 0 42px;
@@ -288,9 +293,9 @@
   .share_dialog .add_reviewer.on_editing {
     display: none;
   }
-  
+
   /* Step Two: Email Reviewers */
-  
+
   .share_dialog .step_two {
     text-align: left;
     overflow: hidden;
@@ -401,9 +406,9 @@
           margin: 0;
           color: #C0C0C0;
         }
-  
+
   /* Controls */
-  
+
   .share_dialog .step_controls {
     clear: both;
     margin: 24px 0 0 0;
