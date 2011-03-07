@@ -3,28 +3,26 @@
 </td>
 
 
-<td class="email selectable_text">
+<td class="email">
+  <div class="display selectable_text">
+    <%= account.get('email') %>
+  </div>
   <% if (account.isReviewer()) { %>
-    <div class="display">
-      <%= account.get('email') %>
-    </div>
     <div class="edit">
       <div class="text_input dark small">
         <input name="email" type="text" placeholder="Email" value="<%= account.get('email') %>" />
       </div>
     </div>
-  <% } else { %>
-    <%= account.get('email') %>
   <% } %>
 </td>
 
-<td class="name selectable_text">
+<td class="name">
+  <div class="display">
+    <span class="account_name selectable_text">
+      <%= Inflector.truncate(account.fullName(true), 40) %>
+    </span>
+  </div>
   <% if (account.isReviewer()) { %>
-    <div class="display">
-      <span class="account_name">
-        <%= Inflector.truncate(account.fullName(true), 40) %>
-      </span>
-    </div>
     <div class="edit">
       <div class="name_wrapper">
         <div class="text_input dark small">
@@ -35,8 +33,6 @@
         </div>
       </div>
     </div>
-  <% } else { %>
-    <%= Inflector.truncate(account.fullName(true), 40) %>
   <% } %>
 </td>
 
