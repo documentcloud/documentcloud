@@ -30,7 +30,7 @@ class Project < ActiveRecord::Base
     {:conditions => ['account_id = ? or id in (select project_id from collaborations where account_id = ?)', account.id, account.id]}
   }
 
-  delegate :full_name, :to => :account, :prefix => true
+  delegate :full_name, :to => :account, :prefix => true, :allow_nil => true
 
   attr_writer :annotation_count
 

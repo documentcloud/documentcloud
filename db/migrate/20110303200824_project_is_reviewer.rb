@@ -8,6 +8,6 @@ class ProjectIsReviewer < ActiveRecord::Migration
 
   def self.down
     remove_column :projects, :hidden
-    add_column :projects, :reviewer_document_id, :integer, :null => true
+    add_column :projects, :reviewer_document_id, :integer
   end
 end
