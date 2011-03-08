@@ -22,7 +22,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   EMAIL_DIALOG_OPTIONS : {
     mode:        'short_prompt',
-    description: 'Start with the email address of your first reviewer:',
+    description: 'Enter the email address of the first reviewer to invite:',
     saveText:    'Next',
     closeText:   'Cancel'
   },
@@ -97,8 +97,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   renderEmailDialog : function() {
     var docSize = this.docs.length;
     var title = 'Share ' + (this.docs.length == 1 ?
-        '"' + Inflector.trim(this.docs.first().get('title'), 30) + '"' :
-        this.docs.length + ' Documents') + ' With Reviewers';
+        '"' + Inflector.truncate(this.docs.first().get('title'), 35) + '"' :
+        this.docs.length + ' Documents');
 
     this.showingEmailDialog = true;
     dc.ui.spinner.hide();

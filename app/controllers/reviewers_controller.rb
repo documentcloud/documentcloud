@@ -20,6 +20,7 @@ class ReviewersController < ApplicationController
 
     @documents.each do |doc|
       doc.add_reviewer(account, current_account)
+      doc.reload
     end
 
     json :account => account, :documents => @documents

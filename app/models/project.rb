@@ -48,23 +48,23 @@ class Project < ActiveRecord::Base
     old_ids = self.document_ids.to_set
     ProjectMembership.destroy_all(:project_id => id, :document_id => (old_ids - new_ids).to_a)
     (new_ids - old_ids).each {|doc_id| self.project_memberships.create(:document_id => doc_id) }
-    reindex_documents new_ids ^ old_ids
     @document_ids = nil
+    reindex_documents new_ids ^ old_ids
   end
 
   def add_collaborator(account, creator=nil)
     self.collaborations.create(:account => account, :creator => creator)
-    update_reviewer_counts
     @collaborator_ids = nil
+    update_reviewer_counts
   end
 
   def remove_collaborator(account)
     self.collaborations.owned_by(account).first.destroy
+    @collaborator_ids = nil
     update_reviewer_counts
     if hidden? && self.collaborations.count == 0
       self.destroy
     end
-    @collaborator_ids = nil
   end
 
   def update_reviewer_counts

@@ -29,6 +29,10 @@ dc.model.Project = Backbone.Model.extend({
     dc.app.searcher.search(this.toSearchParam());
   },
 
+  edit : function() {
+    $(document.body).append((new dc.ui.ProjectDialog({model : this})).render().el);
+  },
+
   documentCount : function() {
     return this.get('document_ids').length;
   },

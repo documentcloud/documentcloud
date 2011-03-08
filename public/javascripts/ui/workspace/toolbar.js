@@ -16,8 +16,8 @@ dc.ui.Toolbar = Backbone.View.extend({
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'openPages', 'openEmbedDialog',
       'openPublicationDateDialog', 'requestDownloadViewers', 'checkFloat',
-      '_openTimeline', '_viewEntities', 'editDocumentURL', '_markOrder',
-      '_removeFromSelectedProject');
+      '_openTimeline', '_viewEntities', 'editDocumentURL', 'openShareDialog',
+      '_markOrder', '_removeFromSelectedProject', '_enableAnalyzeMenu');
     this.sortMenu    = this._createSortMenu();
     this.analyzeMenu = this._createAnalyzeMenu();
     this.publishMenu = this._createPublishMenu();
@@ -136,13 +136,13 @@ dc.ui.Toolbar = Backbone.View.extend({
   openShareDialog : function() {
     var docs = Documents.chosen();
     if (!docs.length || !Documents.allowedToEdit(docs)) return;
-    
-    dc.app.shareDialog = new dc.ui.ShareDialog({
-      docs: docs,
-      mode: 'custom'
-    });
+    dc.app.shareDialog = new dc.ui.ShareDialog({docs: docs, mode: 'custom'});
   },
-  
+
+  openCurrentProject : function() {
+    Projects.firstSelected().edit();
+  },
+
   openPublicationDateDialog : function() {
     var docs = Documents.chosen();
     if (!docs.length || !Documents.allowedToEdit(docs)) return;
@@ -254,10 +254,16 @@ dc.ui.Toolbar = Backbone.View.extend({
       .toggleClass('hidden', !Projects.firstSelected());
   },
 
+  _enableAnalyzeMenu : function(menu) {
+    this._enableMenuItems(menu);
+    var singular = Documents.selectedCount == 1;
+    $('.share_documents', menu.content).text(singular ? 'Share this Document' : 'Share these Documents');
+    $('.share_project', menu.content).toggleClass('disabled', !Projects.selectedCount);
+  },
+
   _createPublishMenu : function() {
     var accountItems = [
       {title : 'Embed Document Viewer',          onClick : this.openEmbedDialog,            attrs: {'class': 'singular'}},
-      {title : 'Share with Reviewers',           onClick : this.openShareDialog },
       {title : 'Set Publication Date',           onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
       {title : 'Download Document Viewer',       onClick : this.requestDownloadViewers}
     ];
@@ -310,14 +316,19 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   _createAnalyzeMenu : function() {
+    var publicItems = [
+      {title: 'View Entities',          attrs: {'class' : 'always'},   onClick : this._viewEntities},
+      {title: 'View Timeline',          attrs: {'class' : 'always'},   onClick : this._openTimeline},
+      {title: 'Find Related Documents', attrs: {'class' : 'singular'}, onClick : this._openRelatedDocuments}
+    ];
+    var accountItems = [
+      {title: 'Share these Documents',  attrs: {'class' : 'multiple share_documents'}, onClick : this.openShareDialog },
+      {title: 'Share this Project',     attrs: {'class' : 'share_project'},            onClick : this.openCurrentProject }
+    ];
     return new dc.ui.Menu({
       label   : 'Analyze',
-      onOpen  : this._enableMenuItems,
-      items   : [
-        {title: 'View Entities',          attrs: {'class' : 'always'},   onClick : this._viewEntities},
-        {title: 'View Timeline',          attrs: {'class' : 'always'},   onClick : this._openTimeline},
-        {title: 'Find Related Documents', attrs: {'class' : 'singular'}, onClick : this._openRelatedDocuments}
-      ]
+      onOpen  : this._enableAnalyzeMenu,
+      items   : dc.account ? publicItems.concat(accountItems) : publicItems
     });
   },
 

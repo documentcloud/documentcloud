@@ -304,7 +304,7 @@ ALTER SEQUENCE full_text_id_seq OWNED BY full_text.id;
 
 CREATE TABLE projects (
     id integer NOT NULL,
-    account_id integer NOT NULL,
+    account_id integer,
     title character varying(255),
     description text,
     hidden boolean DEFAULT false NOT NULL

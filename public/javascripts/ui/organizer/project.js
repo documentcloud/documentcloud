@@ -28,7 +28,7 @@ dc.ui.Project = Backbone.View.extend({
   },
 
   editProject : function(e) {
-    $(document.body).append((new dc.ui.ProjectDialog({model : this.model})).render().el);
+    this.model.edit();
     return false;
   }
 
