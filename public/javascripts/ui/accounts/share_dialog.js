@@ -158,7 +158,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
 
   _setPlaceholders : function() {
-    this.$('input[name=first_name], input[name=last_name]').placeholder();
+    this.$('input[name=first_name], input[name=last_name], .email_message').placeholder();
     this._emailEl.placeholder();
   },
 
@@ -179,7 +179,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     });
     this._rerenderReviewer(account);
 
-    account.bind('change:needsEmail', _.bind(this._showReviewersToEmail, this));
     account.bind('change:needsEmail', _.bind(this._enabledNextButton, this));
     account.bind('change:needsEmail', _.bind(this._rerenderReviewer, this, account));
 
@@ -375,45 +374,12 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   // = Step Two: Emails =
   // ====================
 
-  _showReviewersToEmail : function() {
-    var listEl = this.$('.email_reviewers_list').empty();
-
-    _.each(this.accountsToEmail(), _.bind(function(account) {
-      listEl.append((new dc.ui.AccountView({
-        model : account,
-        kind : 'reviewer_email',
-        dialog: this
-      })).render('display').el);
-    }, this));
-
-    this._setupEmailBody();
-  },
-
-  _showCustomEmail : function() {
-    var $custom = this.$('.custom_message');
-    $custom.show();
-    this.$('.step_two').setMode('is', 'custom_email');
-  },
-
-  _hideCustomEmail : function() {
-    var $custom = this.$('.custom_message');
-    $custom.hide();
-    this.$('.step_two').setMode('not', 'custom_email');
-    this.$('.email_message textarea').val('');
-  },
-
-  _setupEmailBody : function() {
-    var $body           = this.$('.email_message_body');
-    var $textContainer  = this.$('.email_message_text_container');
-    var $container      = this.$('.email_message');
-    var body            = this.emailBody;
-    $textContainer.appendTo($container);
-
-    $body.empty();
-    $body.html(body);
-    var $message = this.$('.custom_message');
-    $textContainer.appendTo($message);
-    this._hideCustomEmail();
+  _setEmailDescription : function() {
+    var accounts = this.accountsToEmail();
+    var description = "DocumentCloud will email document reviewing instructions to " +
+      Inflector.commify(_.map(accounts, function(a){ return a.fullName(); }), {conjunction: 'and'}) +
+      ". If you wish, you may add a personal message.";
+    this.$('.email_description').text(description);
   },
 
   _sendInstructions : function() {
@@ -426,16 +392,12 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     var accountIds  = _.pluck(accounts, 'id');
     var documents   = this.docsForReviewers(accountIds);
     var documentIds = _.pluck(documents, 'id');
-    var message     = $.trim(this.$('.email_message_text').val());
+    var message     = Inflector.trim(this.$('.email_message').val());
 
     $.ajax({
       url : '/reviewers/send_email',
       type : 'POST',
-      data : {
-        account_ids   : accountIds,
-        document_ids  : documentIds,
-        message       : Inflector.trim(message)
-      },
+      data : {account_ids : accountIds, document_ids : documentIds, message : message},
       success: _.bind(function(resp) {
 
         var text = 'Instructions for reviewing ' +
@@ -454,7 +416,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
           mode     : 'info'
         });
 
-        _.each(accounts, function(acc){ acc.set({needsEmail: false}); });
         this.hideSpinner();
         this.close();
       }, this),
@@ -481,11 +442,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.title(title);
     var last = this.currentStep == 2;
 
-    this._next.html(last ? 'Finish' : 'Next &raquo;');
+    this._next.html(last ? 'Send' : 'Next &raquo;');
     this.setMode('p' + this.currentStep, 'step');
-
-    if (last) this._showReviewersToEmail();
-    this.center();
+    if (last) this._setEmailDescription();
   },
 
   _displayTitle : function() {
@@ -494,7 +453,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
         'Sharing "' + Inflector.truncate(this.docs.first().get('title'), 30) + '"' :
         'Sharing ' + this.docs.length + ' Documents';
     } else {
-      return "Email Your Reviewers";
+      var accounts = this.accountsToEmail();
+      return "Email Instructions to " + (accounts.length > 1 ?
+        accounts.length + " Reviewers" : accounts[0].fullName());
     }
   },
 

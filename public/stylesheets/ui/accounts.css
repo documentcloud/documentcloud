@@ -141,7 +141,7 @@
 
 /*--------------------------- Share Documents Dialog ----------------------------*/
 .share_dialog {
-  width: 640px;
+  width: 600px;
 }
   .share_dialog .title {
     margin-bottom: 14px;
@@ -165,7 +165,6 @@
   }
   .share_dialog td {
     white-space: normal;
-/*    height: 46px;*/
     vertical-align: middle;
   }
   .share_dialog .text_input {
@@ -206,10 +205,10 @@
   .share_dialog .name {}
     .share_dialog .name input,
     .share_dialog .name_wrapper .text_input {
-      width: 86px;
+      width: 66px;
     }
     .share_dialog .name_wrapper {
-      width: 204px;
+      width: 164px;
     }
     .share_dialog .name .edit_account {
       margin: 4px 4px 0 8px;
@@ -293,104 +292,10 @@
 
   .share_dialog .step_two {
     text-align: left;
-    overflow: hidden;
   }
-  .share_dialog .email_message {
-    float: right;
-    width: 400px;
-    padding: 0 8px;
-    margin: 10px 0 0 0;
-  }
-    .share_dialog .email_message .email_message_body {
-      font: 11px/13px Menlo, Consolas, Monaco, Courier, monospace;
-      color: #F3F3F3;
-      max-height: 400px;
-      overflow-y: auto;
+    .share_dialog textarea.email_message {
+      width: 584px;
     }
-      .share_dialog .email_message .email_message_body p {
-        margin: 8px 0;
-      }
-      .share_dialog .email_message .email_message_body .custom_message {
-        position: relative;
-      }
-        .share_dialog .email_message .email_message_body .custom_message p {
-          margin: 0;
-        }
-      .share_dialog .email_message .email_message_body .hide_custom_email {
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
-      .share_dialog .email_message .email_message_body textarea {
-        width: 100%;
-        font-size: 12px;
-        font-family: inherit;
-        padding: 4px;
-        height: 40px;
-        margin: 0 0 4px 0;
-      }
-  .share_dialog .email_reviewers {
-    width: 215px;
-    float: left;
-    margin: 10px 0 0 0;
-  }
-    .share_dialog .email_reviewers .email_reviewers_heading {
-      font-size: 12px;
-      margin: 0 0 2px 0;
-    }
-    .share_dialog .show_custom_email {
-      margin: 14px 0 20px;
-      color: #fff;
-    }
-    .share_dialog .is_custom_email .show_custom_email,
-    .share_dialog .not_custom_email .hide_custom_email {
-      display: none;
-    }
-    .share_dialog .not_custom_email .show_custom_email,
-    .share_dialog .is_custom_email .hide_custom_email {
-      display: block;
-    }
-    .share_dialog .email_reviewers_list {
-      max-height: 270px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding: 0 8px 0 0;
-    }
-      .share_dialog .reviewer_email {
-        margin: 0;
-        padding: 3px 0;
-        height: auto;
-        font-size: 11px;
-        line-height: 14px;
-        position: relative;
-        overflow: hidden;
-      }
-        .share_dialog .reviewer_email .reviewer_email_remove {
-          position: absolute;
-          right: 0px;
-          top: 12px;
-          display: none;
-          cursor: pointer;
-        }
-        .share_dialog .reviewer_email:hover .reviewer_email_remove {
-          display: block;
-        }
-        .share_dialog .reviewer_email .reviewer_email_image {
-          float: left;
-          margin: 0 8px 0 0;
-          line-height: 0;
-        }
-        .share_dialog .reviewer_email .reviewer_email_image img {
-          top: 0;
-        }
-        .share_dialog .reviewer_email .reviewer_email_name {
-          margin: 1px 0 3px;
-          font-weight: bold;
-        }
-        .share_dialog .reviewer_email .reviewer_email_email {
-          margin: 0;
-          color: #C0C0C0;
-        }
 
   /* Controls */
 
