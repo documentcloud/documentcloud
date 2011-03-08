@@ -57,7 +57,7 @@ class Annotation < ActiveRecord::Base
     return if notes.empty?
     account_sql = <<-EOS
       SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name,
-                      organizations.name as organization_name
+                      accounts.role, organizations.name as organization_name
       FROM accounts
       INNER JOIN annotations   ON annotations.account_id = accounts.id
       INNER JOIN organizations ON organizations.id = accounts.organization_id
@@ -69,10 +69,12 @@ class Annotation < ActiveRecord::Base
       author = account_map[note.account_id]
       note.author = {
         :full_name         => "#{author['first_name']} #{author['last_name']}",
-        :organization_name => author['organization_name'],
-        :account_id        => id,
+        :account_id        => author['id'].to_i,
         :owns_note         => current_account && current_account.id == note.account_id
       }
+      if [Account::ADMINISTRATOR, Account::CONTRIBUTOR].include?(author['role'].to_i)
+        note.author[:organization_name] = author['organization_name']
+      end
     end
   end
 
