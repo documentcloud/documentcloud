@@ -14,26 +14,26 @@ ActionController::Routing::Routes.draw do |map|
 
   # Document representations and (private) sub-resources.
   map.resources  :documents, :has_many => [:annotations],
-                 :member         => {
-                   :search                 => :get,
-                   :remove_pages           => :post,
-                   :reorder_pages          => :post,
-                   :save_page_text         => :post,
-                   :upload_insert_document => :post,
-                   :reprocess_text         => :post,
-                   :per_page_note_counts   => :get
-                 },
-                 :collection     => {
-                   :entities     => :get,
-                   :entity       => :get,
-                   :dates        => :get,
-                   :status       => :get,
-                   :queue_length => :get,
-                   :loader       => :get,
-                   :preview      => :get,
-                   :published    => :get,
-                   :unpublished  => :get
-                 }
+    :member => {
+      :search                 => :get,
+      :remove_pages           => :post,
+      :reorder_pages          => :post,
+      :save_page_text         => :post,
+      :upload_insert_document => :post,
+      :reprocess_text         => :post,
+      :per_page_note_counts   => :get
+    },
+    :collection => {
+      :entities     => :get,
+      :entity       => :get,
+      :dates        => :get,
+      :status       => :get,
+      :queue_length => :get,
+      :loader       => :get,
+      :preview      => :get,
+      :published    => :get,
+      :unpublished  => :get
+    }
 
   map.pdf        "/documents/:id/:slug.pdf",            :controller => :documents, :action => :send_pdf
   map.full_text  "/documents/:id/:slug.txt",            :controller => :documents, :action => :send_full_text
@@ -42,7 +42,10 @@ ActionController::Routing::Routes.draw do |map|
   map.page_image "/documents/:id/pages/:page_name.gif", :controller => :documents, :action => :send_page_image
 
   # Reviewers.
-  map.resources :reviewers, :collection => {:send_email => :post}
+  map.resources :reviewers, :collection => {
+    :preview_email => :get,
+    :send_email    => :post
+  }
 
   # API.
   map.with_options :controller => 'api' do |api|

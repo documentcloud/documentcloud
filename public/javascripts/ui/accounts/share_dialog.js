@@ -5,6 +5,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   events : {
     'click .close':                            'close',
+    'click .preview':                          'previewEmail',
     'click .next':                             '_nextStep',
     'click .previous':                         '_previousStep',
     'click .add_reviewer':                     '_showEnterEmail',
@@ -114,6 +115,16 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   managementError : function(message, warn) {
     this.$('.reviewer_management .error').toggleClass('error_white', !warn).text(message);
+  },
+
+  customMessage : function() {
+    return Inflector.trim(this.$('.email_message').val());
+  },
+
+  previewEmail : function() {
+    var docs = this.docsForReviewers(_.pluck(this.accountsToEmail(), 'id'));
+    var ids  = _.map(docs, function(doc){ return 'document_ids[]=' + doc.id; }).join('&');
+    window.open('/reviewers/preview_email?' + ids + '&message=' + encodeURIComponent(this.customMessage()));
   },
 
   // =======================
@@ -390,7 +401,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     var accountIds  = _.pluck(accounts, 'id');
     var documents   = this.docsForReviewers(accountIds);
     var documentIds = _.pluck(documents, 'id');
-    var message     = Inflector.trim(this.$('.email_message').val());
+    var message     = this.customMessage();
 
     $.ajax({
       url : '/reviewers/send_email',

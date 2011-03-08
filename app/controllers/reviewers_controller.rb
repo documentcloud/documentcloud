@@ -34,6 +34,11 @@ class ReviewersController < ApplicationController
     json @documents
   end
 
+  def preview_email
+    @email = LifecycleMailer.create_reviewer_instructions(@documents, current_account, nil, params[:message]).body
+    render :layout => false
+  end
+
   def send_email
     Account.find(params[:account_ids]).each do |account|
       account.send_reviewer_instructions @documents, current_account, params[:message]
