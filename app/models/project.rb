@@ -131,6 +131,7 @@ class Project < ActiveRecord::Base
   def reindex_documents(ids=nil)
     ids ||= self.document_ids
     return if ids.empty?
+    update_reviewer_counts
     Document.all(:conditions => ["id in (?)", ids]).each {|doc| doc.index }
   end
 
