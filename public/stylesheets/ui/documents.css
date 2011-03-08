@@ -299,9 +299,6 @@
     .note.is_editable .annotation_meta {
       display: block;
     }
-    .note.exclusive_access {
-      background: #fff url(/images/embed/ui/note-draft-bg.png) repeat 0 0;
-    }
     .note .annotation_meta {
       margin: 8px 0 0 0;
     }
@@ -386,6 +383,18 @@
       .note .lock {
         float: left;
         margin: 0 6px 0 0;
+      }
+      .note .note_draft_label {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 10px;
+        padding: 1px 4px 0;
+        line-height: 11px;
+        border: 2px solid #830C0D;
+        color: #830C0D;
+        margin: 0 8px 0 12px;
+        text-indent: 0;
+        float: left;
       }
       .note .edit_note {
         position: absolute;

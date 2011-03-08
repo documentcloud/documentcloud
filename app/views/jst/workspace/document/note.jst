@@ -2,6 +2,9 @@
   <div class="note_title display">
     <span class="title_link"><%= note.get('title') %> <span class="page_number">(p. <%= note.get('page') %>)</span></span>
   </div>
+  <% if (note.get('access') == 'exclusive') { %>
+    <div class="note_draft_label interface display">Draft</div>
+  <% } %>
   <div class="edit_note icon edit_glyph display"></div>
   <br class="clear display" />
   <div class="note_title_edit edit text_input light">
