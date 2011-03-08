@@ -6,8 +6,7 @@ dc.ui.AccountView = Backbone.View.extend({
     row            : 25,
     admin          : 25,
     collaborator   : 25,
-    reviewer       : 25,
-    reviewer_email : 30
+    reviewer       : 25
   },
 
   TAGS : {
@@ -15,8 +14,7 @@ dc.ui.AccountView = Backbone.View.extend({
     row            : 'tr',
     admin          : 'tr',
     collaborator   : 'tr',
-    reviewer       : 'tr',
-    reviewer_email : 'div'
+    reviewer       : 'tr'
   },
 
   events : {
@@ -27,8 +25,7 @@ dc.ui.AccountView = Backbone.View.extend({
     'click .save_changes':          '_doneEditing',
     'click .cancel_changes':        '_cancelEditing',
     'click .delete_account':        '_deleteAccount',
-    'click .login_as .minibutton':  '_loginAsAccount',
-    'click .reviewer_email_remove': '_remove_reviewer_email'
+    'click .login_as .minibutton':  '_loginAsAccount'
   },
 
   constructor : function(options) {
@@ -160,10 +157,6 @@ dc.ui.AccountView = Backbone.View.extend({
       this.model.destroy();
       return true;
     }, this));
-  },
-
-  _remove_reviewer_email : function() {
-    this.model.set({needsEmail : false});
   },
 
   _loginAsAccount : function() {

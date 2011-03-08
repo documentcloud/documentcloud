@@ -31,14 +31,12 @@
     display: none;
   }
   .account_list table,
-  .collaborator_list
-  .reviewer_list {
+  .collaborator_list {
     width: 100%;
     border-top: 1px solid #222;
   }
     .account_list td,
-    .collaborator_list td,
-    .reviewer_list td {
+    .collaborator_list td {
       padding: 10px;
       vertical-align: middle;
       white-space: nowrap;
@@ -47,13 +45,11 @@
       color: #ccc;
     }
       .account_list .first,
-      .collaborator_list .first,
-      .reviewer_list .first {
+      .collaborator_list .first {
         width: 0%; padding: 0;
       }
       .account_list .last,
-      .collaborator_list .last,
-      .reviewer_list .last {
+      .collaborator_list .last {
         padding-right: 0;
       }
       .account_list .name  { width: 0%; }
@@ -67,8 +63,7 @@
   display: block;
 }
 .account_list img.avatar,
-.collaborator_list img.avatar,
-.reviewer_list img.avatar {
+.collaborator_list img.avatar {
   position: relative;
   top: 4px;
   border: 1px solid #555;
@@ -218,45 +213,18 @@
     color: #555;
     font-style: italic;
   }
-  .share_dialog .reviewers_title {
-    font-size: 15px;
-    margin: 0 0 0 42px;
+  .share_dialog .account_view {
+    padding: 10px 0;
+    height: 27px;
+    font: 11px/27px Helvetica, Arial;
+    border-bottom: 1px solid #222;
   }
-  .share_dialog .reviewers_document_image {
-    line-height: 0;
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-    .share_dialog .reviewers_document_image img {
-      width: 30px;
-      height: 37px;
-      border: 1px solid #303030;
-      margin: 0 6px 0 0;
-    }
-  .share_dialog .reviewer_list {
-    margin: 4px 15px 30px 42px;
-    width: auto;
-  }
-    .share_dialog .reviewers_empty {
-      font-size: 12px;
-      color: #A0A0A0;
-    }
-    .share_dialog .account_view {
-      padding: 10px 0;
-      height: 27px;
-      font: 11px/27px Helvetica, Arial;
-      border-bottom: 1px solid #222;
-    }
   .share_dialog .reviewer_management {
     text-align: left;
     margin-top: 10px;
     display: none;
   }
   .share_dialog .reviewers_common .reviewers_title {
-    margin-left: 0;
-  }
-  .share_dialog .reviewers_common .reviewer_list {
     margin-left: 0;
   }
   .share_dialog .enter_full_name_label,
@@ -277,7 +245,7 @@
   .share_dialog .document_reviewers_empty {
     overflow: hidden;
     text-align: left;
-    color: #909090;
+    color: #ccc;
     font-size: 12px;
     margin: 0 0 12px 0;
   }
