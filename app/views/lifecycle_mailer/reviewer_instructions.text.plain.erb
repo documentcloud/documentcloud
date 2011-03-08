@@ -5,14 +5,16 @@
 
 <%- end -%>
 <%- if @message && @message.length >= 1 -%>
-<%= @inviter_account.full_name %> provided the following instructions:
+<%= @inviter_account.first_name %> provided the following instructions:
+
 
 <%= @message %>
 
-<%- end -%>
-Please do not share this URL. If you have colleagues who you think should also take a closer look, you can reach <%= @inviter_account.full_name %> at <%= @inviter_account.email %>.
 
-<%= @organization_name %> is using DocumentCloud to analyze and annotate source documents. You can find out more about the DocumentCloud project at http://www.documentcloud.org.
+<%- end -%>
+Please do not share this URL, as it was created specifically for you. If you have colleagues who you think should also take a closer look, you can reach <%= @inviter_account.full_name %> at <%= @inviter_account.email %>.
+
+<%= @organization_name %> is using DocumentCloud to share and annotate source documents. You can learn more at http://www.documentcloud.org.
 
 Jeremy, Amanda & Sam
 DocumentCloud
