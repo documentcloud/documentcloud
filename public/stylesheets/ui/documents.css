@@ -387,13 +387,12 @@
       .note .note_draft_label {
         text-transform: uppercase;
         font-weight: bold;
-        font-size: 10px;
-        padding: 1px 4px 0;
+        font-size: 9px;
+        padding: 0px 1px 0px 2px;
         line-height: 11px;
-        border: 2px solid #830C0D;
-        color: #830C0D;
-        margin: 0 8px 0 12px;
-        text-indent: 0;
+        border: 2px solid #b55;
+        color: #a33;
+        margin: 2px 0 0 3px;
         float: left;
       }
       .note .edit_note {
