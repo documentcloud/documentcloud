@@ -20,6 +20,8 @@
     <%= render :partial => 'common/google' %>
   <% end %>
   <%= csrf_meta_tag %> 
+  
+  <%= render(:partial => 'viewer_editing_head') if @edits_enabled %>
 </head>
 <body style="margin:0; padding:0;">
   <% canonical = @current_document.canonical({:account => @current_account, :local => @local}) if @current_document %>
@@ -29,6 +31,7 @@
         window.currentDocument = DV.load(<%= canonical.to_json %>, <%= @options %>);
     </script>
   <% end %>
+  
   <%= render(:partial => 'viewer_editing') if @edits_enabled %>
 </body>
 </html>

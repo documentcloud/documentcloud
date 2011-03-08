@@ -23,6 +23,8 @@
   <% unless @local %>
     <%= csrf_meta_tag %>
   <% end %>
+  
+  <%= render(:partial => 'viewer_editing_head') if @edits_enabled %>
 </head>
 <body style="margin:0; padding:0;">
   <div id="viewer"></div>
@@ -38,6 +40,7 @@
       });
     <% end %>
   </script>
+  
   <%= render(:partial => 'viewer_editing') if @edits_enabled %>
 </body>
 </html>

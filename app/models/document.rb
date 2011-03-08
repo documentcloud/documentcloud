@@ -681,10 +681,10 @@ class Document < ActiveRecord::Base
     res['related_article']    = related_article if related_article
     res['published_url']      = remote_url if remote_url
     doc['sections']           = sections.map(&:canonical) if options[:sections]
-    if options[:annotations]
-      doc['annotations']      = self.annotations_with_authors(options[:account]).map do |a|
-        a.canonical
-      end
+    if options[:annotations] && options[:allowed_to_edit]
+      doc['annotations']      = self.annotations_with_authors(options[:account]).map {|a| a.canonical}
+    elsif options[:annotations] && !options[:allowed_to_edit]
+      doc['annotations']      = self.annotations.accessible(options[:account]).map {|a| a.canonical}
     end
     doc['canonical_url']      = canonical_url(:html)
     if options[:contributor]

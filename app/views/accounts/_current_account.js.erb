@@ -2,6 +2,10 @@ dc.account = {
   id            : <%= @current_account.id %>,
   hasDocuments  : <%= @has_documents.to_json %>,
   organization  : <%= @current_organization.to_json %>,
+  <% if @allowed_to_edit || @allowed_to_review %>
+  isOwner       : <%= @allowed_to_edit %>,
+  isReviewer    : <%= @allowed_to_review %>,
+  <% end %>
   role          : <%= @current_account.role %>,
   name          : "<%= @current_account.full_name %>"
 };

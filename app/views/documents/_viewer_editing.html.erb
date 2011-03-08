@@ -1,13 +1,3 @@
-<% if @current_account %>
-  <%= include_stylesheets :ui %>
-  <%= include_stylesheets :viewer_editing %>
-  <!--[if lt IE 9]>
-    <%= include_stylesheets :ie_only, :embed_assets => false %>
-  <![endif]-->
-  <%= include_javascripts :core %>
-  <%= include_javascripts :editor %>
-<% end %>
-
 <script type="text/javascript">
   DV.jQuery(function() {
     <% if @current_account %>
@@ -16,13 +6,6 @@
         isOwner         : <%= @allowed_to_edit %>,
         isReviewer      : <%= @allowed_to_review %>
       }
-      <% if @reviewer_inviter %>
-        opts['reviewerInviter'] = {
-          fullName : "<%= @reviewer_inviter.full_name %>",
-          email    : "<%= @reviewer_inviter.email %>"
-        }
-      <% end %>
-      <%= render :partial => 'accounts/current_account.js', :type => :js %>
       dc.app.editor.initialize(docId, opts);
     <% end %>
     currentDocument.$('.DV-logoLink, .DV-footerLogoLink').attr({
