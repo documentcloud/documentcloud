@@ -4,11 +4,8 @@ class ReviewersController < ApplicationController
 
   def index
     reviewers = {}
-    @documents.each do |doc|
-      reviewers[doc.id] = doc.reviewers
-    end
-    email_body = LifecycleMailer.create_reviewer_instructions(@documents, current_account, nil, "<span />").body
-    json :reviewers => reviewers, :email_body => email_body
+    @documents.each {|doc| reviewers[doc.id] = doc.reviewers }
+    json :reviewers => reviewers
   end
 
   def create

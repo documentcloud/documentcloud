@@ -44,10 +44,6 @@
   position: relative;
   margin-bottom: 20px;
 }
-  .embed_dialog .publish_info {
-    font-size: 11px;
-    color: #ccc;
-  }
   .embed_dialog .text_input,
   .embed_dialog input[type="checkbox"],
   .embed_dialog select {

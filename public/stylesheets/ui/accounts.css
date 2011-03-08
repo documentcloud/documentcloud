@@ -143,9 +143,6 @@
 .share_dialog {
   width: 600px;
 }
-  .share_dialog .title {
-    margin-bottom: 14px;
-  }
   .share_dialog .custom {
     max-height: none;
     margin-bottom: 0;
@@ -295,6 +292,7 @@
   }
     .share_dialog textarea.email_message {
       width: 584px;
+      margin: 15px 0;
     }
 
   /* Controls */

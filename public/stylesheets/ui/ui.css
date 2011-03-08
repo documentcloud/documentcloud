@@ -519,6 +519,11 @@ textarea.text_area {
     .dialog .information.error {
       color: #f00;
     }
+  .dialog .dialog_info {
+    font-size: 11px;
+    line-height: 16px;
+    color: #ccc;
+  }
   .dialog .description {
     text-align: left;
     font-size: 11px;

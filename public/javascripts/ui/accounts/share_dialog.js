@@ -1,7 +1,7 @@
 dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   id                    : 'share_dialog',
-  className             : 'account_list dialog',
+  className             : 'dialog',
 
   events : {
     'click .close':                            'close',
@@ -131,8 +131,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
 
   _refreshReviewers : function(resp) {
-    this.emailBody = resp.email_body.replace(/\n+/g, '<p>');
-
     if (this.showingEmailDialog) return;
 
     _.each(resp.reviewers, _.bind(function(reviewers, document_id) {
@@ -151,8 +149,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       if (accountView) views.push(accountView);
     });
 
-    this.$('.account_list tr:not(.reviewer_management)').remove();
-    this.$('.account_list').prepend(views);
+    this.$('.account_list_content tr:not(.reviewer_management)').remove();
+    this.$('.account_list_content').prepend(views);
     this.$('.document_reviewers_empty').toggle(!_.keys(this.renderedAccounts).length);
     this._cancelAddReviewer();
   },
@@ -376,7 +374,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   _setEmailDescription : function() {
     var accounts = this.accountsToEmail();
-    var description = "DocumentCloud will email document reviewing instructions to " +
+    var description = "DocumentCloud will email reviewing instructions to " +
       Inflector.commify(_.map(accounts, function(a){ return a.fullName(); }), {conjunction: 'and'}) +
       ". If you wish, you may add a personal message.";
     this.$('.email_description').text(description);
@@ -421,7 +419,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       }, this),
       error : _.bind(function(resp) {
         this.hideSpinner();
-        this.error('Your instructions were not sent. Contact support for help troubleshooting sharing.');
+        this.error('Your instructions were not sent. Contact support for help troubleshooting.');
         this._setStep();
         this._enabledNextButton();
       }, this)
@@ -450,8 +448,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _displayTitle : function() {
     if (this.currentStep == 1) {
       return this.docs.length == 1 ?
-        'Sharing "' + Inflector.truncate(this.docs.first().get('title'), 30) + '"' :
-        'Sharing ' + this.docs.length + ' Documents';
+        'Share "' + Inflector.truncate(this.docs.first().get('title'), 30) + '"' :
+        'Share ' + this.docs.length + ' Documents';
     } else {
       var accounts = this.accountsToEmail();
       return "Email Instructions to " + (accounts.length > 1 ?

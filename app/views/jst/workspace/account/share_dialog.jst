@@ -2,48 +2,50 @@
   <p>There are no reviewers on <% if (docCount == 1) { %>this document<% } else { %>these documents<% }%>.</p>
 </div>
 
-<div class="step_one document_reviewers not_draggable">
-  <table border="0" cellspacing="0" cellpadding="0" class="account_list">
-    <tbody>
-      <tr class="reviewer_management">
-        
-        <td class="first">
-          <img class="avatar" src="<%= defaultAvatar %>" width="24" height="24" />
-        </td>
-        
-        <td class="email">
+<div class="step_one document_reviewers not_draggable account_list">
+  <table border="0" cellspacing="0" cellpadding="0" class="account_list_content">
+    <tr class="reviewer_management">
+      
+      <td class="first">
+        <img class="avatar" src="<%= defaultAvatar %>" width="24" height="24" />
+      </td>
+      
+      <td class="email">
+        <div class="text_input dark small">
+          <input name="email" type="text" value="" placeholder="Email" class="reviewer_management_email" />
+        </div>
+      </td>
+      
+      <td class="name selectable_text">
+        <div class="name_wrapper">
           <div class="text_input dark small">
-            <input name="email" type="text" value="" placeholder="Email" class="reviewer_management_email" />
+            <input name="first_name" ype="text" value="" placeholder="First name" class="reviewer_management_firstname" />
           </div>
-        </td>
-        
-        <td class="name selectable_text">
-          <div class="name_wrapper">
-            <div class="text_input dark small">
-              <input name="first_name" ype="text" value="" placeholder="First name" class="reviewer_management_firstname" />
-            </div>
-            <div class="text_input dark small">
-              <input name="last_name" type="text" value="" placeholder="Last name" class="reviewer_management_lastname" />
-            </div>
+          <div class="text_input dark small">
+            <input name="last_name" type="text" value="" placeholder="Last name" class="reviewer_management_lastname" />
           </div>
-        </td>
-
-        <td class="edit_column">
-          <div class="cancel_add icon cancel_search_dark"></div>
-        </td>
-        
-        <td class="last error"></td>
-        
-      </tr>
-    </tbody>
+        </div>
+      </td>
+    
+      <td class="edit_column">
+        <div class="cancel_add icon cancel_search_dark"></div>
+      </td>
+      
+      <td class="last error"></td>
+      
+    </tr>
   </table>
 </div>
 
 <div class="step_two is_custom_email">
-  <div class="description email_description">
+  <div class="email_description dialog_info">
   </div>
   <div class="prompt">
     <textarea class="email_message text_area dark content" placeholder="Optional: Include a personal message&hellip;"></textarea>
+  </div>
+  <div class="dialog_info">
+    Before continuing, you can take a moment to 
+    <span class="text_link preview">preview the email message</span>.
   </div>
 </div>
 

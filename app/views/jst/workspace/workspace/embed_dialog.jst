@@ -5,7 +5,7 @@
       <input type="text" name="related_article" value="<%= doc.get('related_article') %>" id="publish_prepare_related_article" />
     </div>
     <label for="publish_prepare_related_article">Related article URL:</label>
-    <p class="publish_info selectable_text interface">
+    <p class="dialog_info selectable_text interface">
       Providing the URL of the article or that references this
       document will enable a "Related Article" link within the document viewer.
       Many readers arrive at a document from a web search &mdash; the link guides
@@ -18,7 +18,7 @@
       <input type="text" name="remote_url" value="<%= doc.get('remote_url') %>" id="publish_prepare_remote_url" />
     </div>
     <label for="publish_prepare_remote_url">Published URL:</label>
-    <p class="publish_info selectable_text interface">
+    <p class="dialog_info selectable_text interface">
       When the general public searches DocumentCloud's catalog, we want to
       direct them to view the document on your site. To do that reliably, we
       need to know your URL for the document.
@@ -35,7 +35,7 @@
       <input type="checkbox" name="access_level" id="publish_prepare_access_level" <%= checked %> />
       <label for="publish_prepare_access_level">Make document public:</label>
     <% } %>
-    <p class="publish_info selectable_text interface">
+    <p class="dialog_info selectable_text interface">
       <% if (doc.isPublic()) { %>
         This document is public. It is currently available to users who search
         DocumentCloud's catalog and will be visible to the public when you
@@ -73,7 +73,7 @@
         <input id="publish_option_height" type="text" name="height" value="" />px
       </label>
     </span>
-    <p class="publish_info selectable_text interface">
+    <p class="dialog_info selectable_text interface">
       Choose whether to display your document in a
       <a class="text_link" href="http://www.propublica.org/documents/item/memo-on-goldman-sachs-timberwolf-cdo-nov.-10-2006" target="_blank">full page layout</a>,
       or a <a class="text_link" href="http://voices.washingtonpost.com/thefix/white-house/rahm-emanuel-ruled-ineligible.html" target="_blank">fixed size box</a>.
@@ -90,7 +90,7 @@
       <% } %>
     </select>
     <div class="open_to"></div>
-    <p class="publish_info selectable_text interface">
+    <p class="dialog_info selectable_text interface">
       Tell the viewer to open directly to a specific page or annotation.
     </p>
   </div>
@@ -98,7 +98,7 @@
   <div class="publish_section">
     <input id="publish_option_sidebar" type="checkbox" name="sidebar" checked />
     <label for="publish_option_sidebar">Show the Sidebar:</label>
-    <p class="publish_info selectable_text interface">
+    <p class="dialog_info selectable_text interface">
       If your layout has limited horizontal space, uncheck this box to hide the sidebar.
     </p>
   </div>
@@ -106,13 +106,13 @@
   <div class="publish_section">
     <input id="publish_option_text" type="checkbox" name="show_text" checked />
     <label for="publish_option_text">Show the Text Tab:</label>
-    <p class="publish_info selectable_text interface">
+    <p class="dialog_info selectable_text interface">
       If the quality of the document's text is poor, uncheck this box to hide the text tab.
     </p>
   </div>
 
   <div class="publish_section">
-    <p class="publish_info selectable_text interface">
+    <p class="dialog_info selectable_text interface">
       Before continuing, please take a moment to
       <span class="text_link preview">preview the document viewer</span>.
     </p>
