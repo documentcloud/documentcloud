@@ -176,7 +176,10 @@
     padding-right: 5px;
   }
     .share_dialog .edit_account {
-      margin: 0;
+      float: none;
+      position: relative;
+      margin: -3px 0 0 0;
+      display: inline-block;
     }
     .share_dialog .cancel_changes {
       margin: 2px;
@@ -207,9 +210,6 @@
     }
     .share_dialog .name .edit_account {
       margin: 4px 4px 0 8px;
-    }
-    .share_dialog .name .account_name {
-      float: left;
     }
   .share_dialog .document_count {
     font-size: 10px;
