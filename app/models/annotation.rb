@@ -104,7 +104,6 @@ class Annotation < ActiveRecord::Base
     if author
       data.merge!({
         'author'              => author[:full_name],
-        'author_id'           => author[:account_id],
         'owns_note'           => author[:owns_note],
         'author_organization' => author[:organization_name]
       })

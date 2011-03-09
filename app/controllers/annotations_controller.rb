@@ -21,7 +21,7 @@ class AnnotationsController < ApplicationController
       :account_id      => current_account.id,
       :organization_id => current_organization.id
     ))
-    json current_document.annotations_with_authors(current_account, [anno])
+    json current_document.annotations_with_authors(current_account, [anno]).first
   end
 
   # You can only alter annotations that you've made yourself.
