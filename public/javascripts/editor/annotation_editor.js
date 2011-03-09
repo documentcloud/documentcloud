@@ -152,9 +152,6 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     var params = this.annotationToParams(anno);
     $.ajax({url : this._baseURL, type : 'POST', data : params, dataType : 'json', success : _.bind(function(resp) {
       anno.server_id = resp.id;
-      anno.author    = resp.author;
-      anno.owns_note = resp.owns_note;
-      this._afterNoteSave(anno);
       this._adjustNoteCount(1);
     }, this)});
   },
@@ -173,13 +170,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       this._adjustNoteCount(-1);
     }, this)});
   },
-
-  // TODO: Should not be talking to a private API.
-  _afterNoteSave : function(anno) {
-    currentDocument.api.redraw(true);
-    if (anno) currentDocument.pageSet.showAnnotation(anno);
-  },
-
+  
   _adjustNoteCount : function(num) {
     try {
       var id = parseInt(currentDocument.api.getId(), 10);
