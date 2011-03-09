@@ -249,9 +249,12 @@
     font-size: 12px;
     margin: 0 0 12px 0;
   }
-  .share_dialog .add_reviewer.on_editing {
-    display: none;
+  .share_dialog .add_reviewer {
+    float: left;
   }
+    .share_dialog .add_reviewer.on_editing {
+      display: none;
+    }
 
   /* Step Two: Email Reviewers */
 
