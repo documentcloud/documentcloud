@@ -3,8 +3,8 @@
     <% if @current_account %>
       var docId = <%= @current_document.id %>;
       var opts        = {
-        isOwner         : <%= @allowed_to_edit %>,
-        isReviewer      : <%= @allowed_to_review %>
+        isOwner         : <%= !!@allowed_to_edit %>,
+        isReviewer      : <%= !!@allowed_to_review %>
       }
       dc.app.editor.initialize(docId, opts);
     <% end %>

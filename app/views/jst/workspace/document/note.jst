@@ -5,6 +5,10 @@
   <% if (note.get('access') == 'exclusive') { %>
     <div class="note_draft_label interface display">Draft</div>
   <% } %>
+  
+  <% if (note.get('access') == 'private') { %>
+    <div class="icon lock display" title="Private note"></div>
+  <% } %>
   <div class="edit_note icon edit_glyph display"></div>
   <br class="clear display" />
   <div class="note_title_edit edit text_input light">
@@ -27,15 +31,12 @@
     <% if (note.get('author')) { %>
       <div class="annotation_author interface display">Written by: <%= note.get('author') %><% if (note.get('author_organization')) { %>, <i><%= note.get('author_organization') %><% } %></i></div>
     <% } %>
-    <% if (note.get('access') == 'public') { %>
-      <div class="annotation_access interface display">This public note is visible to everyone.</div>
-    <% } else if (note.get('access') == 'exclusive') { %>
+    <% if (note.get('access') == 'exclusive') { %>
       <div class="annotation_access interface display">
         This draft is only visible to you and collaborators.
       </div>
-    <% } else { %>
+    <% } else if (note.get('access') == 'private') { %>
       <div class="annotation_access interface display">
-        <div class="icon lock display" title="Private note"></div>
         This private note is only visible to you.
       </div>
     <% } %>
