@@ -43,6 +43,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     var description = JST['reviewer_welcome'](inviter);
     var dialog = dc.ui.Dialog.alert("", {description: description, title: title});
     $(dialog.el).addClass('wide_dialog');
+    dialog.center();
   },
 
   openSectionEditor : function() {
