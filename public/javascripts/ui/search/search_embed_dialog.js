@@ -81,7 +81,8 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   },
 
   displayTitle : function() {
-    if (this.currentStep == 1) return 'Step One: Review "' + Inflector.truncate(this.query, 25) + '"';
+    var title = dc.model.DocumentSet.entitle(this.query);
+    if (this.currentStep == 1) return 'Step One: Review "' + title + '"';
     return this.STEPS[this.currentStep];
   },
 

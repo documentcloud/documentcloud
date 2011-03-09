@@ -123,30 +123,8 @@ dc.ui.SearchBox = Backbone.View.extend({
     if (!dc.app.searcher.flags.outstandingSearch && query) dc.app.searcher.search(query);
   },
 
-  entitle : function(query, facets) {
-    var title, ret, account, org;
-    facets = facets || this.extractFacets(query);
-    
-    if (facets.projectName) {
-      title = facets.projectName;
-    } else if (dc.account && facets.accountSlug == Accounts.current().get('slug')) {
-      ret = (facets.filter == 'published') ? 'your_published_documents' : 'your_documents';
-    } else if (account = Accounts.getBySlug(facets.accountSlug)) {
-      title = account.documentsTitle();
-    } else if (dc.account && facets.groupName == dc.account.organization.slug) {
-      ret = 'org_documents';
-    } else if (facets.groupName && (org = Organizations.findBySlug(facets.groupName))) {
-      title = Inflector.possessivize(org.get('name')) + " Documents";
-    } else if (facets.filter == 'published') {
-      ret = 'published_documents';
-    } else if (facets.filter == 'popular') {
-      ret = 'popular_documents';
-    } else if (facets.filter == 'annotated') {
-      ret = 'annotated_documents';
-    } else {
-      ret = 'all_documents';
-    }
-    title = title || dc.model.Project.topLevelTitle(ret);
+  entitle : function(query) {
+    var title = dc.model.DocumentSet.entitle(query);
     this.titleBox.html(title);
   },
 

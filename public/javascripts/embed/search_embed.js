@@ -102,7 +102,7 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   },
   
   render : function() {
-    $(this.el).html(JST['workspace']({
+    $(this.el).html(JST['embed_workspace']({
         options : this.embed.options
     }));
     this.container.html(this.el);

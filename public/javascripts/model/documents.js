@@ -377,6 +377,36 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     this.startPolling();
   }
 
+}, {
+  
+  entitle : function(query) {
+    var title, ret, account, org;
+    var projectName   = dc.app.SearchParser.extractProject(query);
+    var accountSlug   = dc.app.SearchParser.extractAccount(query);
+    var groupName     = dc.app.SearchParser.extractGroup(query);
+    var filter        = dc.app.SearchParser.extractFilter(query);
+    if (projectName) {
+      title = projectName;
+    } else if (dc.account && accountSlug == Accounts.current().get('slug')) {
+      ret = (filter == 'published') ? 'your_published_documents' : 'your_documents';
+    } else if (account = Accounts.getBySlug(accountSlug)) {
+      title = account.documentsTitle();
+    } else if (dc.account && groupName == dc.account.organization.slug) {
+      ret = 'org_documents';
+    } else if (groupName && (org = Organizations.findBySlug(groupName))) {
+      title = Inflector.possessivize(org.get('name')) + " Documents";
+    } else if (filter == 'published') {
+      ret = 'published_documents';
+    } else if (filter == 'popular') {
+      ret = 'popular_documents';
+    } else if (filter == 'annotated') {
+      ret = 'annotated_documents';
+    } else {
+      ret = 'all_documents';
+    }
+    return title || dc.model.Project.topLevelTitle(ret);
+  }
+  
 });
 
 _.extend(dc.model.DocumentSet.prototype, dc.model.Selectable);
