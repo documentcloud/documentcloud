@@ -167,7 +167,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
 
   _setPlaceholders : function() {
-    this.$('input[name=first_name], input[name=last_name], .email_message').placeholder();
+    this.$('input[name=first_name], input[name=last_name]').placeholder();
     this._emailEl.placeholder();
   },
 
