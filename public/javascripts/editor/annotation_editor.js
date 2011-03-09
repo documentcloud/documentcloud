@@ -154,14 +154,16 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       anno.server_id = resp.id;
       anno.author    = resp.author;
       anno.owns_note = resp.owns_note;
+      this._afterNoteSave(anno);
       this._adjustNoteCount(1);
     }, this)});
   },
 
   updateAnnotation : function(anno) {
-    var url = this._baseURL + '/' + anno.server_id;
-    var params = this.annotationToParams(anno, {_method : 'put'});
-    $.ajax({url : url, type : 'POST', data : params, dataType : 'json'});
+    var url     = this._baseURL + '/' + anno.server_id;
+    var params  = this.annotationToParams(anno, {_method : 'put'});
+    var success = _.bind(this._afterNoteSave, this, currentDocument.activeAnnotation);
+    $.ajax({url : url, type : 'POST', data : params, dataType : 'json', success: success});
   },
 
   deleteAnnotation : function(anno) {
@@ -170,6 +172,12 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     $.ajax({url : url, type : 'POST', data : {_method : 'delete'}, dataType : 'json', success : _.bind(function() {
       this._adjustNoteCount(-1);
     }, this)});
+  },
+
+  // TODO: Should not be talking to a private API.
+  _afterNoteSave : function(anno) {
+    currentDocument.api.redraw(true);
+    if (anno) currentDocument.pageSet.showAnnotation(anno);
   },
 
   _adjustNoteCount : function(num) {
