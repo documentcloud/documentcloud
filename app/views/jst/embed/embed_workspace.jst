@@ -1,0 +1,19 @@
+<% if (options.title && options.title.length) { %>
+  <div class="DC-title">
+    <%= options.title %>
+  </div>
+<% } %>
+
+<% if (options.search_bar) { %>
+  <div class="DC-text-input DC-search">
+    <div class="DC-icon DC-search-glyph"></div>
+    <div class="DC-search-inner">
+      <input placeholder="Search..." class="DC-search-box" />
+    </div>
+    <div class="DC-icon DC-cancel-search" title="clear search"></div>
+  </div>
+<% } %>
+
+<div class="DC-document-list"></div>
+
+<div class="DC-paginator DC-interface"></div>
