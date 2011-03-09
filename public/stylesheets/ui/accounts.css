@@ -138,6 +138,9 @@
 .share_dialog {
   width: 600px;
 }
+  .share_dialog .account_list {
+    width: 100%;
+  }
   .share_dialog .custom {
     max-height: none;
     margin-bottom: 0;
