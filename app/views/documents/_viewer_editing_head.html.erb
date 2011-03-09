@@ -7,12 +7,6 @@
   <%= include_javascripts :core %>
   <%= include_javascripts :editor %>
   <script type="text/javascript">
-    <% if @reviewer_inviter %>
-      opts['reviewerInviter'] = {
-        fullName : "<%= @reviewer_inviter.full_name %>",
-        email    : "<%= @reviewer_inviter.email %>"
-      }
-    <% end %>
     <%= render :partial => 'accounts/current_account.js', :type => :js %>
   </script>
 <% end %>

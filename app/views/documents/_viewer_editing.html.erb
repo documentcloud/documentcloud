@@ -6,6 +6,12 @@
         isOwner         : <%= !!@allowed_to_edit %>,
         isReviewer      : <%= !!@allowed_to_review %>
       }
+      <% if @reviewer_inviter %>
+        opts['reviewerInviter'] = {
+          fullName : "<%= @reviewer_inviter.full_name %>",
+          email    : "<%= @reviewer_inviter.email %>"
+        }
+      <% end %>
       dc.app.editor.initialize(docId, opts);
     <% end %>
     currentDocument.$('.DV-logoLink, .DV-footerLogoLink').attr({
