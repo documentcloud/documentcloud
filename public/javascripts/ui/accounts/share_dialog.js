@@ -387,8 +387,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     var accounts = this.accountsToEmail();
     var description = "DocumentCloud will email reviewing instructions to " +
       Inflector.commify(_.map(accounts, function(a){ return a.fullName(); }), {conjunction: 'and'}) +
-      ". If you wish, you may add a personal message.";
-    this.$('.email_description').text(description);
+      ". If you wish, you may add a personal&nbsp;message.";
+    this.$('.email_description').html(description);
   },
 
   _sendInstructions : function() {
