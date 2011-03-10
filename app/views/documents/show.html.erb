@@ -34,7 +34,8 @@
       window.currentDocument = DV.load(<%= @current_document.canonical({
         :account => @current_account, 
         :local => @local, 
-        :allowed_to_edit => @allowed_to_edit
+        :allowed_to_edit => @allowed_to_edit,
+        :allowed_to_review => @allowed_to_review
       }).to_json %>, {
         container: '#viewer'
       });

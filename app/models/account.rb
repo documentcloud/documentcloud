@@ -96,6 +96,10 @@ class Account < ActiveRecord::Base
   def reviewer?
     role == REVIEWER
   end
+  
+  def real?
+    admin? || contributor?
+  end
 
   # An account owns a resource if it's tagged with the account_id.
   def owns?(resource)
@@ -111,6 +115,7 @@ class Account < ActiveRecord::Base
   # Heavy-duty SQL.
   # A document is shared with you if it's in any project of yours, and that
   # project is in collaboration with an owner or and administrator of the document.
+  # Note that shared? is not the same as reviews?, as it ignores hidden projects.
   def shared?(resource)
     collaborators = Account.find_by_sql(<<-EOS
       select distinct on (a.id)
@@ -134,6 +139,7 @@ class Account < ActiveRecord::Base
     owns?(resource) || collaborates?(resource)
   end
 
+  # Effectively the same as Account#shares?, but for hidden projects used for reviewers.
   def reviews?(resource)
     project = resource.projects.hidden.first
     project && project.collaborators.exists?(id)

@@ -681,9 +681,9 @@ class Document < ActiveRecord::Base
     res['related_article']    = related_article if related_article
     res['published_url']      = remote_url if remote_url
     doc['sections']           = sections.map(&:canonical) if options[:sections]
-    if options[:annotations] && options[:allowed_to_edit]
+    if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
       doc['annotations']      = self.annotations_with_authors(options[:account]).map {|a| a.canonical}
-    elsif options[:annotations] && !options[:allowed_to_edit]
+    elsif options[:annotations]
       doc['annotations']      = self.annotations.accessible(options[:account]).map {|a| a.canonical}
     end
     doc['canonical_url']      = canonical_url(:html)

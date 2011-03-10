@@ -7,5 +7,6 @@ dc.account = {
   isReviewer    : <%= !!@allowed_to_review %>,
   <% end %>
   role          : <%= @current_account.role %>,
+  isReal        : <%= @current_account.real? %>,
   name          : "<%= @current_account.full_name %>"
 };
