@@ -83,7 +83,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_required
-    (logged_in? && current_organization.id == 1 && !reviewer?) || forbidden
+    (logged_in? && current_organization.id == 1 && !current_account.reviewer?) || forbidden
   end
 
   def prefer_secure
