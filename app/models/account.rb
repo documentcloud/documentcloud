@@ -183,7 +183,7 @@ class Account < ActiveRecord::Base
   # notes over to the (potentially different) organization.
   def upgrade_reviewer_to_real(organization, role)
     update_attributes :organization => organization, :role => role
-    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{account.id}")
+    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{id}")
   end
 
   # When a password reset request is made, send an email with a secure key to
