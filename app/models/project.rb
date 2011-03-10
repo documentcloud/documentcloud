@@ -68,8 +68,8 @@ class Project < ActiveRecord::Base
   end
 
   def update_reviewer_counts
-    doc = Document.find(document_ids.first)
-    doc.update_attributes :reviewer_count => collaborations.count if hidden?
+    return false unless hidden?
+    Document.find(document_ids.first).update_attributes :reviewer_count => collaborations.count
   end
 
   def create_default_collaboration
