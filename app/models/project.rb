@@ -53,9 +53,14 @@ class Project < ActiveRecord::Base
   end
 
   def add_collaborator(account, creator=nil)
+    if !hidden? && account.reviewer?
+      account.errors.add_to_base("Please create a real contributor account for this user.")
+      return false
+    end
     self.collaborations.create(:account => account, :creator => creator)
     @collaborator_ids = nil
     update_reviewer_counts
+    true
   end
 
   def remove_collaborator(account)

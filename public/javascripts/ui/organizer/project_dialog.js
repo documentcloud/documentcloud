@@ -91,9 +91,14 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
         this.model.change();
         this.render(true);
       }, this),
-      error   : _.bind(function(acc) {
+      error   : _.bind(function(acc, resp) {
+        errorResp = JSON.parse(resp.responseText);
+        if (errorResp.errors) {
+          this.error(errorResp.errors[0]);
+        } else {
+          this.error('No DocumentCloud account was found with that email.');
+        }
         this.hideSpinner();
-        this.error('No DocumentCloud account was found with that email.');
       }, this)
     });
   },
