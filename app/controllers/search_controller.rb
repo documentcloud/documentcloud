@@ -34,7 +34,7 @@ class SearchController < ApplicationController
   end
   
   def restricted_count
-    params[:q] = params[:q] + " filter:restricted"
+    params[:q] += " filter:restricted"
     perform_search
     restricted_count = @query.total
     counts = {
