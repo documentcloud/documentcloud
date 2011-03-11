@@ -77,11 +77,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     }
     this.form = $('#new_document_form');
     this.form.fileUpload({
-        url        : uploadUrl,
-        onAbort    : this.cancelUpload,
-        initUpload : this._onSelect,
-        onProgress : this._onProgress,
-        onLoad     : this._onComplete
+        url             : uploadUrl,
+        onAbort         : this.cancelUpload,
+        initUpload      : this._onSelect,
+        onProgress      : this._onProgress,
+        onLoad          : this._onComplete,
+        dragDropSupport : true,
+        dropZone        : $('body')
     });
   },
 
