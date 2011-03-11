@@ -79,6 +79,7 @@ module DC
       hash["Documents"]             = over_time Document
       hash["Pages"]                 = pages_over_time
       hash["Notes"]                 = over_time Annotation
+      hash["Reviewers"]             = over_time Account.scoped(:conditions => {:role => Account::REVIEWER})
       hash
     end
 
