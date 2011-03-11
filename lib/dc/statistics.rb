@@ -76,10 +76,10 @@ module DC
       hash["Active Organizations"]  = over_time Organization.scoped(:conditions => {:id => active_org_ids})
       hash["All Accounts"]          = over_time Account
       hash["Active Accounts"]       = over_time Account.scoped(:conditions => {:id => active_acc_ids})
+      hash["Reviewers"]             = over_time Account.scoped(:conditions => {:role => Account::REVIEWER})
       hash["Documents"]             = over_time Document
       hash["Pages"]                 = pages_over_time
       hash["Notes"]                 = over_time Annotation
-      hash["Reviewers"]             = over_time Account.scoped(:conditions => {:role => Account::REVIEWER})
       hash
     end
 
