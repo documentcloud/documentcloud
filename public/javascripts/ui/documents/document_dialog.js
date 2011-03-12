@@ -1,3 +1,5 @@
+// Document dialog shows all user-editable attributes. Can be applied on multiple
+// documents at once, sending a `Backbone.Model#save` per-document.
 dc.ui.DocumentDialog = dc.ui.Dialog.extend({
 
   ATTRIBUTES : ['title', 'source', 'description', 'related_article', 'remote_url', 'access'],
@@ -15,7 +17,9 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     'click .delete'     : 'destroy',
     'change .attribute' : '_markChanged'
   },
-
+  
+  // Takes multiple documents as a collection, since any changes are applied to
+  // all documents.
   constructor : function(docs) {
     this.docs = docs;
     this.multiple = docs.length > 1;
@@ -25,6 +29,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     $(document.body).append(this.el);
   },
 
+  // Renders a single form for multiple documents.
   render : function() {
     dc.ui.Dialog.prototype.render.call(this);
     this._container = this.$('.custom');
@@ -41,6 +46,8 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     return this;
   },
 
+  // For each attributes, if different any of the original attributes of each document,
+  // saves the new attribute to each document using `Backbone.Model#save`.
   save : function() {
     var original = this._sharedAttributes();
     var changes = {};
@@ -62,10 +69,15 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     this.close();
     if (!_.isEmpty(changes)) {
       _.each(this.docs, function(doc){ doc.save(changes); });
-      dc.ui.notifier.show({mode : 'info', text : 'Updated ' + this.docs.length + ' ' + Inflector.pluralize('document', this.docs.length)});
+      dc.ui.notifier.show({
+        mode : 'info', 
+        text : 'Updated ' + this.docs.length + ' ' +
+               Inflector.pluralize('document', this.docs.length)
+      });
     }
   },
 
+  // Confirms deletion of multiple documents.
   destroy : function() {
     this.close();
     if (Documents.selected().length == 0) {
@@ -74,15 +86,21 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     Documents.verifyDestroy(Documents.selected());
   },
 
+  // Sets the dialog title to include the number of documents or title of
+  // the single document being edited.
   _title : function() {
     if (this.multiple) return this.docs.length + ' Documents';
     return '"' + Inflector.truncate(this.docs[0].get('title'), 35) + '"';
   },
 
+  // On change, mark input field as dirty.
   _markChanged : function(e) {
     $(e.target).addClass('change');
   },
 
+  // Find the attributes that are common between all documents. Used to 
+  // display those attributes in the fields. Fields that have different
+  // values will be blank.
   _sharedAttributes : function() {
     return _.reduce(this.ATTRIBUTES, _.bind(function(memo, attr) {
       memo[attr] = Documents.sharedAttribute(this.docs, attr);
@@ -91,7 +109,9 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   }
 
 }, {
-
+  
+  // This static method is used for conveniently opening the dialog for 
+  // any selected documents.
   open : function(doc) {
     var docs = Documents.chosen(doc);
     if (!docs.length) return;

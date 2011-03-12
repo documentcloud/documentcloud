@@ -40,7 +40,9 @@ dc.ui.Document = Backbone.View.extend({
     'click .page_list .left'    : 'previousPage',
     'click .page_list .right'   : 'nextPage'
   },
-
+  
+  // Takes a document model and sets up listeners on the document model, 
+  // its notes, and pageEntities.
   constructor : function(options) {
     Backbone.View.call(this, options);
     this.el.id = 'document_' + this.model.id;
@@ -59,6 +61,7 @@ dc.ui.Document = Backbone.View.extend({
     this.model.pageEntities.bind('refresh', this._renderPages);
   },
 
+  // Render the document tile, setting modes, selected state, and attaches drag events.
   render : function() {
     var me = this;
     var title = this.model.get('title');
@@ -104,11 +107,14 @@ dc.ui.Document = Backbone.View.extend({
     }
   },
 
+  // If the document is published, open the remote url, otherwise open
+  // the local DocumentCloud viewer.
   viewDocument : function(e) {
     this.model.openAppropriateVersion();
     return false;
   },
 
+  // Opens the remote document viewer.
   viewPublishedDocuments : function() {
     var docs = Documents.chosen(this.model);
     if (!docs.length) return;
@@ -117,6 +123,7 @@ dc.ui.Document = Backbone.View.extend({
     });
   },
 
+  // Opens the local document viewer.
   viewDocuments : function() {
     var docs = Documents.chosen(this.model);
     if (!docs.length) return;
@@ -263,15 +270,22 @@ dc.ui.Document = Backbone.View.extend({
     var deleteTitle = Inflector.pluralize('Delete Document', count);
     menu.clear();
     var items = [{title : 'Open', onClick: this.viewDocuments}];
-    if (this.model.isPublished()) items.push({title : 'Open Published Version', onClick : this.viewPublishedDocuments});
+    if (this.model.isPublished()) {
+      items.push({
+        title   : 'Open Published Version', 
+        onClick : this.viewPublishedDocuments
+      });
+    }
     items.push({title : 'View Pages', onClick: this.viewChosenPages});
     items.push({title : 'View Entities', onClick: this.viewEntities});
     if (this.model.allowedToEdit()) {
       items = items.concat([
         {title : 'Edit Document Information', onClick: this.openDialog},
         {title : 'Set Access Level',          onClick: this.setAccessLevelAll},
-        {title : 'Embed Document Viewer',     onClick: this.openEmbed, attrs : {'class' : count > 1 ? 'disabled' : ''}},
-        {title : deleteTitle,                 onClick: this.deleteDocuments, attrs : {'class' : 'warn'}}
+        {title : 'Embed Document Viewer',     onClick: this.openEmbed, 
+                                              attrs : {'class' : count > 1 ? 'disabled' : ''}},
+        {title : deleteTitle,                 onClick: this.deleteDocuments, 
+                                              attrs : {'class' : 'warn'}}
       ]);
     }
     if (Projects.firstSelected()) {
@@ -286,12 +300,19 @@ dc.ui.Document = Backbone.View.extend({
     var access = this.model.get('access');
     var base = 'icon main_icon document_tool ';
     switch (access) {
-      case dc.access.PENDING:      return {'class' : base + 'spinner',    title : 'Uploading...'};
-      case dc.access.ERROR:        return {'class' : base + 'alert_gray', title : 'Broken document'};
-      case dc.access.ORGANIZATION: return {'class' : base + 'lock',       title : 'Private to ' + (dc.account ? dc.account.organization.name : 'your organization')};
-      case dc.access.PRIVATE:      return {'class' : base + 'lock',       title : 'Private'};
+      case dc.access.PENDING:      
+        return {'class' : base + 'spinner',    title : 'Uploading...'};
+      case dc.access.ERROR:        
+        return {'class' : base + 'alert_gray', title : 'Broken document'};
+      case dc.access.ORGANIZATION: 
+        return {'class' : base + 'lock',       title : 'Private to ' + (dc.account ? 
+                                                       dc.account.organization.name : 
+                                                       'your organization')};
+      case dc.access.PRIVATE:      
+        return {'class' : base + 'lock',       title : 'Private'};
       default:
-        if (this.model.isPublished()) return {'class' : base + 'published', title : 'Open Published Version'};
+        if (this.model.isPublished()) 
+          return {'class' : base + 'published', title : 'Open Published Version'};
         return {'class' : base + 'hidden', iconless: true};
     }
   },
@@ -323,7 +344,10 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   _addNote : function(note) {
-    this.notesEl.append((new dc.ui.Note({model : note, collection : this.model.notes})).render().el);
+    this.notesEl.append((new dc.ui.Note({
+      model : note, 
+      collection : this.model.notes
+    })).render().el);
   },
 
   _renderNotes : function() {

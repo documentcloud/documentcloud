@@ -1,3 +1,5 @@
+// Dialog for embedding a document viewer on a third-party site. Checks the
+// access level, presents [saved] preferences, fetches the document embed code.
 dc.ui.EmbedDialog = dc.ui.Dialog.extend({
 
   events : {
@@ -19,13 +21,18 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
 
   totalSteps : 3,
 
+  // Off by 1 to maintain sanity. Additionally, the first step is always custom.
   STEPS : [null, null,
     'Step Two: Configure the Document Viewer',
     'Step Three: Copy and Paste the Embed Code'
   ],
 
-  DEMO_ERROR : 'Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="/help/publishing">here</a>.',
+  DEMO_ERROR : 'Demo accounts are not allowed to embed documents. ' +
+               '<a href="/contact">Contact us</a> if you need a full ' +
+               'featured account. View an example of the embed code ' +
+               '<a href="/help/publishing">here</a>.',
 
+  // Can't have an embed dialog without a document.
   constructor : function(doc) {
     this.model = doc;
     this.currentStep = 1;
@@ -33,6 +40,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     this.render();
   },
 
+  // Sets up all jQuery selectors and shows the first step of the embedding process.
   render : function() {
     if (dc.account.organization.demo) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     dc.ui.Dialog.prototype.render.call(this);
@@ -53,11 +61,14 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     return this;
   },
 
+  // The first step is always custom for the document.
   displayTitle : function() {
-    if (this.currentStep == 1) return 'Step One: Review "' + Inflector.truncate(this.model.get('title'), 25) + '"';
+    if (this.currentStep == 1) return 'Step One: Review "' + 
+                                      Inflector.truncate(this.model.get('title'), 25) + '"';
     return this.STEPS[this.currentStep];
   },
 
+  // Opens the document embed preview (with options) in a new window using a generated URL.
   preview : function() {
     var options = encodeURIComponent(JSON.stringify(this.embedOptions()));
     var url = '/documents/' + this.model.canonicalId() + '/preview?options=' + options;
@@ -65,11 +76,14 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     return false;
   },
 
+  // Called after every keystroke and input change. Used to save selected options
+  // and modify any options that need modifying.
   update : function() {
     this._toggleDimensions();
     this._savePreferences();
   },
 
+  // Returns an object literal with all of the embed options serialized.
   embedOptions : function() {
     var options = {};
     var openToPage = this.$('.page_select').val();
@@ -91,20 +105,25 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     return options;
   },
 
+  // If necessary, let the user change the document's access level before embedding.
   editAccessLevel : function() {
     this.close();
     Documents.editAccess([this.model]);
   },
 
+  // Optionally, set a document `publish_at` time by opening a new dialog.
   openPublishAtDialog : function() {
     this.close();
     new dc.ui.PublicationDateDialog([this.model]);
   },
 
+  // Serialize and stringify embed options so they remain consistent between embeds.
   _savePreferences : function() {
     dc.app.preferences.set({embed_options : JSON.stringify(this.embedOptions())});
   },
 
+  // Read serialized embed options from user's cookie so embed options remain consistent
+  // between embeds. *Nifty.*
   _loadPreferences : function() {
     var options = JSON.parse(dc.app.preferences.get('embed_options') || this.DEFAULT_OPTIONS);
     if (options.width || options.height) this._viewerSizeEl.val('fixed');
@@ -114,6 +133,8 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     this._showTextEl.attr('checked', options.text === false ? false : true);
   },
 
+  // Handles user selection of dropdown that controls which page/annotation
+  // the viewer opens on. Changes form, which is later serialized.
   _renderOpenTo : function(e) {
     switch ($(e.currentTarget).val()) {
       case 'first_page':
@@ -129,6 +150,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     }
   },
 
+  // Collects embed options and renders them using a JST template in a textarea.
   _renderEmbedCode : function() {
     var options       = this.embedOptions();
     options.container = '"#DV-viewer-' + this.model.canonicalId() + '"';
@@ -138,17 +160,23 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
       options: serialized.join(',&#10;    ')
     }));
   },
-
+  
+  // After every keystroke or input change, check if the viewer size has been set.
   _toggleDimensions : function() {
     this.$('.dimensions').toggle(this._viewerSizeEl.val() == 'fixed');
   },
 
+  // On step 1, if a user changes any document attributes, save them and only
+  // continue to step 2 if there are no model errors.
   saveUpdatedAttributes : function() {
-    var access = this.$('input[name=access_level]').is(':checked') ? dc.access.PUBLIC : this.model.get('access');
+    var access = this.$('input[name=access_level]').is(':checked') ? 
+                 dc.access.PUBLIC : this.model.get('access');
+    var relatedArticle = this.$('input[name=related_article]').removeClass('error').val();
+    var remoteUrl      = this.$('input[name=remote_url]').removeClass('error').val();
     var attrs = {
       access          : access,
-      related_article : Inflector.normalizeUrl(this.$('input[name=related_article]').removeClass('error').val()),
-      remote_url      : Inflector.normalizeUrl(this.$('input[name=remote_url]').removeClass('error').val())
+      related_article : Inflector.normalizeUrl(relatedArticle),
+      remote_url      : Inflector.normalizeUrl(remoteUrl)
     };
     if (attrs = this.model.changedAttributes(attrs)) {
       var errors = _.any(['related_article', 'remote_url'], _.bind(function(attr) {
@@ -164,6 +192,8 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     return true;
   },
 
+  // Advances to the next step, checking if any errors are returned beforehand from
+  // steps that have server-side side-effects.
   nextStep : function() {
     if (this.currentStep == 1 && !this.saveUpdatedAttributes()) return false;
     if (this.currentStep >= this.totalSteps) return this.close();
@@ -172,11 +202,14 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     this.setStep();
   },
 
+  // Simply goes backwards.
   previousStep : function() {
     if (this.currentStep > 1) this.currentStep -= 1;
     this.setStep();
   },
 
+  // Regardless of direction, switches the template to only show the active step.
+  // Also updates buttons, titles, and step information.
   setStep : function() {
     this.title(this.displayTitle());
 
@@ -191,6 +224,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     this._next.html(last ? 'Finish' : 'Next &raquo;').setMode('is', 'enabled');
   },
 
+  // Auto-selects the embed code when user clicks on the textarea.
   selectSnippet : function() {
     this.$('.snippet').select();
   }

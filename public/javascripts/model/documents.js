@@ -39,8 +39,10 @@ dc.model.Document = Backbone.Model.extend({
     return this.id + '-' + this.get('slug');
   },
 
+  // Ex: Mar 11, 2011
   formatDay : DateUtils.create('%b %e, %Y'),
 
+  // Ex: 7:14 PM
   formatTime : DateUtils.create('%l:%M %P'),
 
   // Generate the date object for this Document's `publish_at`.
@@ -55,6 +57,7 @@ dc.model.Document = Backbone.Model.extend({
     return date && (this.formatDay(date) + ' at ' + this.formatTime(date));
   },
 
+  // Tell the server to reprocess the text for this document.
   reprocessText : function(forceOCR) {
     var params = {};
     if (forceOCR) params.ocr = true;
