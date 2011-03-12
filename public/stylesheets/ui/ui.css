@@ -670,6 +670,7 @@ iframe.hidden_iframe {
     max-width: 300px;
     background: #fff;
     color: #333;
+    border: 1px solid #999;
     -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   }
     #tooltip_title {

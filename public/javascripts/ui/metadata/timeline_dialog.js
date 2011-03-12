@@ -5,8 +5,8 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     yaxis     : {ticks: [], min: -0.5},
     selection : {mode : 'x', color: '#09f'},
     legend    : {show : false},
-    series    : {lines : {show : false}, points : {show : true}},
-    grid      : {backgroundColor: '#222', borderColor: '#444', tickColor: '#282828', borderWidth: 1, hoverable : true, clickable : true}
+    series    : {lines : {show : false}, points : {show : true, radius: 4, fill: true, fillColor: 'rgba(255, 255, 235, 0.7)'}},
+    grid      : {backgroundColor: '#fff', tickColor: '#ddd', borderWidth: 0, hoverable : true, clickable : true}
   },
 
   ROW_HEIGHT : 50,
@@ -14,7 +14,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
 
   DATE_FORMAT : "%b %d, %y",
 
-  POINT_COLOR : '#777',
+  POINT_COLOR : '#555',
 
   id : 'timeline_dialog',
 
