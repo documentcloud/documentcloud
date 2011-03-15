@@ -1,13 +1,9 @@
-<div class="search_facet">
-  
-  <% if (category) { %>
-    <div class="search_facet_category"><%= category %>:</div>
-  <% } %>
-  
-  <div class="search_facet_input_container">
-    <input type="text" class="search_facet_input" />
-  </div>
-  
-  <div class="search_facet_query"><% if (query) { %><%= query %><% } %></div>
-  
+<% if (category) { %>
+  <div class="search_facet_category"><%= category %>:</div>
+<% } %>
+
+<div class="search_facet_input_container">
+  <input type="text" class="search_facet_input interface" />
 </div>
+
+<div class="search_facet_query interface"><% if (facetQuery) { %><%= facetQuery %><% } %></div>

@@ -197,11 +197,59 @@ div.text_input {
       position: relative;
       margin: 0 28px;
     }
-      div.text_input.search .search_facet {
+      div.text_input.search .search_facets {
         float: left;
       }
+      div.text_input.search .search_facet {
+        float: left;
+        margin: 3px 8px 0 0;
+      }
+        div.text_input.search .search_facet.not_editing .search_facet_input_container {
+          display: none;
+        }
+        div.text_input.search .search_facet.is_editing .search_facet_input_container {
+          display: block;
+        }
+        div.text_input.search .search_facet.not_editing .search_facet_query {
+          display: block;
+        }
+        div.text_input.search .search_facet.is_editing .search_facet_query {
+          display: none;
+        }
+        div.text_input.search .search_facet .search_facet_category {
+          float: left;
+          text-transform: uppercase;
+          font-weight: bold;
+          font-size: 10px;
+          color: #B0B0B0;
+          text-shadow: 1px 1px 0 #FFF;
+          padding: 0 4px 0 0;
+          line-height: 28px;
+        }
+        div.text_input.search .search_facet .search_facet_query {
+          float: left;
+          color: #999;
+          font-size: 13px;
+          line-height: 18px;
+          margin: 0;
+          padding: 4px 0 0 0;
+          height: 16px;
+        }
+        div.text_input.search .search_facet .search_facet_input_container {
+          float: left;
+        }
+        div.text_input.search .search_facet .search_facet_input_container input {
+          margin: 0;
+          padding: 0;
+          color: #202020;
+          font-size: 13px;
+          line-height: 18px;
+          padding: 4px 0 0 0;
+          height: 16px;
+        }
+        
       div.text_input.search input {
-        width: 100%;
+        width: 100px;
         padding: 5px 0;
         float: left;
       }

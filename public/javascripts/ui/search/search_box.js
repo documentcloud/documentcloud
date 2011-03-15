@@ -51,7 +51,9 @@ dc.ui.SearchBox = Backbone.View.extend({
   showDocuments : function() {
     $(document.body).setMode('active', 'search');
     var query = this.value();
-    this.entitle(query);
+    var facets = this.extractFacets(query);
+    this.entitle(query, facets);
+    this.renderFacets(facets);
     dc.app.organizer.highlight(query);
   },
 
@@ -78,27 +80,25 @@ dc.ui.SearchBox = Backbone.View.extend({
     if (!dc.app.searcher.flags.outstandingSearch && query) dc.app.searcher.search(query);
   },
 
-  entitle : function(query) {
+  entitle : function(query, facets) {
     var title, ret, account, org;
-    var projectName   = dc.app.SearchParser.extractProject(query);
-    var accountSlug   = dc.app.SearchParser.extractAccount(query);
-    var groupName     = dc.app.SearchParser.extractGroup(query);
-    var filter        = dc.app.SearchParser.extractFilter(query);
-    if (projectName) {
-      title = projectName;
-    } else if (dc.account && accountSlug == Accounts.current().get('slug')) {
-      ret = (filter == 'published') ? 'your_published_documents' : 'your_documents';
-    } else if (account = Accounts.getBySlug(accountSlug)) {
+    facets = facets || this.extractFacets(query);
+    
+    if (facets.projectName) {
+      title = facets.projectName;
+    } else if (dc.account && facets.accountSlug == Accounts.current().get('slug')) {
+      ret = (facets.filter == 'published') ? 'your_published_documents' : 'your_documents';
+    } else if (account = Accounts.getBySlug(facets.accountSlug)) {
       title = account.documentsTitle();
-    } else if (dc.account && groupName == dc.account.organization.slug) {
+    } else if (dc.account && facets.groupName == dc.account.organization.slug) {
       ret = 'org_documents';
-    } else if (groupName && (org = Organizations.findBySlug(groupName))) {
+    } else if (facets.groupName && (org = Organizations.findBySlug(facets.groupName))) {
       title = Inflector.possessivize(org.get('name')) + " Documents";
-    } else if (filter == 'published') {
+    } else if (facets.filter == 'published') {
       ret = 'published_documents';
-    } else if (filter == 'popular') {
+    } else if (facets.filter == 'popular') {
       ret = 'popular_documents';
-    } else if (filter == 'annotated') {
+    } else if (facets.filter == 'annotated') {
       ret = 'annotated_documents';
     } else {
       ret = 'all_documents';
@@ -107,6 +107,41 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.titleBox.html(title);
   },
 
+  // Renders each facet as a searchFacet view.
+  renderFacets : function(facets) {
+    this.$('.search_facets').empty();
+    if (facets.projectName) this.renderFacet('project', facets.projectName);
+    if (facets.accountSlug) this.renderFacet('account', facets.accountSlug);
+    if (facets.groupName)   this.renderFacet('group', facets.groupName);
+    if (facets.filter)      this.renderFacet('filter', facets.filter);
+  },
+  
+  // Render a single facet, using its category and query value.
+  renderFacet : function(category, facetQuery) {
+    var view = new dc.ui.SearchFacet({
+      category   : category,
+      facetQuery : facetQuery
+    });
+    
+    this.$('.search_facets').append(view.render().el);
+  },
+  
+  // Takes a search query and return all of the facets found in an object.
+  extractFacets : function(query) {
+    var projectName   = dc.app.SearchParser.extractProject(query);
+    var accountSlug   = dc.app.SearchParser.extractAccount(query);
+    var groupName     = dc.app.SearchParser.extractGroup(query);
+    var filter        = dc.app.SearchParser.extractFilter(query);
+    var facets        = {
+      projectName : projectName,
+      accountSlug : accountSlug,
+      groupName   : groupName,
+      filter      : filter
+    };
+    
+    return facets;
+  },
+  
   // Hide the spinner and remove the search lock when finished searching.
   doneSearching : function() {
     var count     = dc.app.paginator.query.total;
