@@ -1,4 +1,5 @@
-// A tile view for previewing a Document in a listing.
+// A tile view for a document's annotations, listed per-document. Allows
+// note editing by those who have permission.
 dc.ui.Note = Backbone.View.extend({
 
   className : 'note noselect',
@@ -13,12 +14,14 @@ dc.ui.Note = Backbone.View.extend({
     'click .delete_note':      'deleteNote'
   },
 
+  // Re-render the note when saved.
   constructor : function(options) {
     Backbone.View.call(this, options);
     _.bindAll(this, 'render');
     this.model.bind('change', this.render);
   },
 
+  // Renders the note, adding classes that show editing controls if allowed.
   render : function() {
     var data = _.extend(this.model.toJSON(), {
       note     : this.model,
@@ -31,11 +34,13 @@ dc.ui.Note = Backbone.View.extend({
     return this;
   },
 
+  // Opens the note in a document in a new window.
   viewNoteInDocument : function() {
     var suffix = '#document/p' + this.model.get('page') + '/a' + this.model.get('id');
     window.open(this.model.document().viewerUrl() + suffix);
   },
 
+  // Checks permissions and turns on note editing.
   editNote : function() {
     if (!this.model.checkAllowedToEdit()) {
       return dc.ui.Dialog.alert("You don't have permission to edit this note.");
@@ -45,10 +50,15 @@ dc.ui.Note = Backbone.View.extend({
     this.setMode('edit', 'visible');
   },
 
+  // Simply turns off note editing.
   cancelNote : function() {
     this.setMode('display', 'visible');
   },
 
+  // Sends a server request by saving the note model on the document. Also sets up
+  // the correct access level based on which submit button was pressed.
+  // The user cna only edit existing notes, not save new notes, hence no
+  // need to update note counts on the parent document.
   saveNote : function(e) {
     if ($(e.target).hasClass('save_draft_note'))      this.model.set({'access': 'exclusive'});
     else if (this.model.get('access') == 'exclusive') this.model.set({'access': 'public'});
@@ -59,6 +69,8 @@ dc.ui.Note = Backbone.View.extend({
     this.render();
   },
 
+  // Sends a server request destroying the note model on the document. Also updates
+  // the document model with [assumed] correct number of notes.
   deleteNote : function() {
     dc.ui.Dialog.confirm('Are you sure you want to delete this note?', _.bind(function() {
       this.model.destroy({success : _.bind(function() {

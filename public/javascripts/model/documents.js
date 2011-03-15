@@ -1,7 +1,9 @@
-// Document Model
-
+// The Document model contains a few sub-models, as well as all the helper
+// methods for dealing with documents.
 dc.model.Document = Backbone.Model.extend({
 
+  // Takes a canonical document representation and creates necessary 
+  // sub-models.
   constructor : function(attrs, options) {
     attrs.selected = false;
     attrs.selectable = true;

@@ -154,7 +154,8 @@ dc.ui.Document = Backbone.View.extend({
     if (this.model.checkBusy()) return;
     dc.ui.DocumentDialog.open(this.model);
   },
-
+  
+  // Renders a single document embed dialog. Checks for permission to embed.
   openEmbed : function() {
     if (!this.model.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
     (new dc.ui.EmbedDialog(this.model)).render();
@@ -174,6 +175,7 @@ dc.ui.Document = Backbone.View.extend({
     this.viewPages();
   },
 
+  // Show the notes attached to the document model. Requires a server fetch.
   toggleNotes : function(e) {
     e.stopPropagation();
     var next = _.bind(function() {
@@ -192,6 +194,7 @@ dc.ui.Document = Backbone.View.extend({
     dc.app.paginator.mini ? dc.app.paginator.toggleSize(next, this.model) : next();
   },
 
+  // Show thumbnails of the pages in the document. Paged using `this._currentPage`.
   viewPages : function() {
     this._showingPages = true;
     this.model.ensurePerPageNoteCounts(_.bind(function(noteCounts) {
@@ -208,50 +211,67 @@ dc.ui.Document = Backbone.View.extend({
     }, this));
   },
 
+  // Document context menu item which triggers the `view:pages` event on each selected
+  // document. This will call `viewPages`, which displays page thumbnails below
+  // the document tile.
   viewChosenPages : function() {
     _.each(Documents.chosen(this.model), function(doc){ doc.trigger('view:pages'); });
   },
 
+  // Document context menu item used to delete multiple selected documents.
   deleteDocuments : function() {
     Documents.verifyDestroy(Documents.chosen(this.model));
   },
 
+  // Document context menu item used to modify multiple selected documents.
   removeFromProject : function() {
     Projects.firstSelected().removeDocuments(Documents.chosen(this.model));
   },
 
+  // Clicking on the contributor's name in the document tile searches for other
+  // documents by this account.
   searchAccount : function() {
     dc.app.searcher.addToSearch('account: ' + this.model.get('account_slug'));
   },
 
+  // Clicking on the organization's name in the document tile searches for other
+  // documents contributed by this organization.
   searchOrganization : function() {
     dc.app.searcher.addToSearch('group: ' + this.model.get('organization_slug'));
   },
 
+  // Clicking on the source in the document tile searches for other documents 
+  // from this source.
   searchSource : function() {
     dc.app.searcher.addToSearch('source: "' + this.model.get('source').replace(/"/g, '\\"') + '"');
   },
 
+  // Context menu item opens access level dialog for a single document.
   editAccessLevel : function() {
     Documents.editAccess([this.model]);
   },
 
+  // Context menu item opens access level dialog for multiple selected documents.
   setAccessLevelAll : function() {
     Documents.editAccess(Documents.chosen(this.model));
   },
 
+  // Opens dialog to change `publish_at` field on document model.
   editPublishAt : function() {
     new dc.ui.PublicationDateDialog([this.model]);
   },
 
+  // Documents that have failed processing show a link to this help page.
   openTroubleshooting : function() {
     dc.app.workspace.help.openPage('troubleshooting');
   },
 
+  // Documents that have failed processing show a link to this contact dialog.
   openContactUs : function() {
     dc.ui.Dialog.contact();
   },
 
+  // Opens the Document Reviewers dialog for a single document.
   _openShareDialog : function() {
     dc.app.shareDialog = new dc.ui.ShareDialog({
       docs: [this.model],
@@ -259,6 +279,8 @@ dc.ui.Document = Backbone.View.extend({
     });
   },
 
+  // Shows the context menu for the document tile. Multiple documents can be selected
+  // and have the context menu items apply to them.
   showMenu : function(e) {
     e.preventDefault();
     var menu = dc.ui.Document.sharedMenu || (dc.ui.Document.sharedMenu = new dc.ui.Menu({
@@ -296,6 +318,7 @@ dc.ui.Document = Backbone.View.extend({
     menu.render().open().content.css({top : e.pageY, left : e.pageX});
   },
 
+  // Helper method for setting which action icons appear next to the document tile.
   _iconAttributes : function() {
     var access = this.model.get('access');
     var base = 'icon main_icon document_tool ';
@@ -317,6 +340,8 @@ dc.ui.Document = Backbone.View.extend({
     }
   },
 
+  // Helper method for getting the right document tile icon URL, based on 
+  // failure status of the document model.
   _thumbnailURL : function() {
     var access = this.model.get('access');
     switch (access) {
@@ -333,16 +358,20 @@ dc.ui.Document = Backbone.View.extend({
     el.text(Inflector.stripTags(this.model.get('description') || ''));
   },
 
+  // Trigger-based method which shows selection highlight on document tile.
   _setSelected : function() {
     var sel = this.model.get('selected');
     this.setMode(sel ? 'is' : 'not', 'selected');
   },
 
+  // Trigger-based method which re-renders the tile if any properties on the model
+  // have changed.
   _onDocumentChange : function() {
     if (this.model.hasChanged('selected')) return;
     this.render();
   },
 
+  // Render each of a document's notes, which have already been fetched.
   _addNote : function(note) {
     this.notesEl.append((new dc.ui.Note({
       model : note, 
@@ -350,6 +379,7 @@ dc.ui.Document = Backbone.View.extend({
     })).render().el);
   },
 
+  // Re-renders the notes when the notes are refreshed.
   _renderNotes : function() {
     this.notesEl.empty();
     this.model.notes.each(this._addNote);
@@ -357,6 +387,8 @@ dc.ui.Document = Backbone.View.extend({
     this.setMode('has', 'notes');
   },
 
+  // Clicking on the page counts in the tile opens up the page thumbnails below
+  // the document tile.
   _togglePageImages : function() {
     if (this._showingPages) {
       this._hidePages();
@@ -364,18 +396,22 @@ dc.ui.Document = Backbone.View.extend({
       this.viewPages();
     }
   },
-
+  
+  // Clicking on entities shows which pages they are found on.
   _renderPages : function() {
     this._showingPages = false;
     this.pagesEl.html(JST['document/pages']({doc : this.model}));
   },
 
+  // Hiding the entity search locations.
   _hidePages : function() {
     this._showingPages = false;
     this._currentPage = 0;
     this.pagesEl.html('');
   },
 
+  // Clicking on either a page thumbnail or an entity in the document tile opens
+  // up the document viewer, set to that page or entity.
   _openPage : function(e) {
     var el      = $(e.target).closest('.page');
     var page    = el.attr('data-page');
@@ -405,6 +441,7 @@ dc.ui.Document = Backbone.View.extend({
     });
   },
 
+  // Prevent tile selection.
   _noSelect : function(e) {
     e.preventDefault();
   }

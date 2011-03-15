@@ -210,6 +210,9 @@
       });
     },
 
+    // Creates a boundary box of selection, used to drag a square lasso 
+    // around objects (specifically, document tiles). On mouse release, 
+    // fire `options.onSelect`.
     // TODO: share common bits of this with the annotation_editor.
     selectable : function(options) {
       var doc  = $(document);
