@@ -39,7 +39,9 @@ dc.ui.SearchBox = Backbone.View.extend({
 
   // Shortcut to the searchbox's value.
   value : function(query) {
-    return query != null ? this.box.val(query) : this.box.val();
+    if (query == null) return this.box.val();
+    
+    this.box.val(query);
   },
 
   hideSearch : function() {

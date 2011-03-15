@@ -197,9 +197,13 @@ div.text_input {
       position: relative;
       margin: 0 28px;
     }
+      div.text_input.search .search_facet {
+        float: left;
+      }
       div.text_input.search input {
         width: 100%;
         padding: 5px 0;
+        float: left;
       }
         div.text_input.search input, div.text_input.search .placeholder {
           color: #999;

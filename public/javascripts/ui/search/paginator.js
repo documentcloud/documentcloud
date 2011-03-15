@@ -79,7 +79,7 @@ dc.ui.Paginator = Backbone.View.extend({
     el.html(JST['workspace/paginator']({
       q           : this.query,
       sort_text   : this.SORT_TEXT[this.sortOrder],
-      per_page   : this.pageSize(),
+      per_page    : this.pageSize(),
       page_count  : this.pageCount()
     }));
     return this;

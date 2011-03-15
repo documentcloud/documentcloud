@@ -1,5 +1,5 @@
 // The `dc.app.searcher` is the core controller for running document searches
-// from the client side. It's main "view" is the dc.ui.SearchBox.
+// from the client side. It's main "view" is the `dc.ui.SearchBox`.
 dc.controllers.Searcher = Backbone.Controller.extend({
 
   PAGE_MATCHER  : (/\/p(\d+)$/),
@@ -19,7 +19,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
   // Creating a new SearchBox registers #search page fragments.
   initialize : function() {
-    this.box = dc.app.searchBox;
+    this.searchBox = dc.app.searchBox;
     this.flags.hasEntities = false;
     this.currentSearch = null;
     _.bindAll(this, '_loadSearchResults', '_loadFacetsResults', '_loadFacetResults',
@@ -36,14 +36,14 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     options || (options = {});
     if (options.clear) {
       Documents.refresh();
-      this.box.value('');
+      this.searchBox.value('');
     }
     if (this.currentSearch) return;
     if (!Documents.isEmpty()) {
       this.saveLocation(this.urlFragment());
-      this.box.showDocuments();
-    } else if (this.box.value()) {
-      this.search(this.box.value());
+      this.searchBox.showDocuments();
+    } else if (this.searchBox.value()) {
+      this.search(this.searchBox.value());
     } else if (dc.account && dc.account.hasDocuments) {
       Accounts.current().openDocuments();
     } else if (Projects.first()) {
@@ -61,24 +61,24 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     var max = dc.app.paginator.pageCount();
     if (page < 1) page = 1;
     if (page > max) page = max;
-    this.search(this.box.value(), page, callback);
+    this.search(this.searchBox.value(), page, callback);
   },
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
     if (this.currentSearch) this.currentSearch.abort();
-    this.box.value(query);
+    this.searchBox.value(query);
     this.flags.related  = query.indexOf('related:') >= 0;
     this.flags.specific = query.indexOf('document:') >= 0;
     this.flags.hasEntities = false;
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.fragment = 'search/' + encodeURIComponent(query);
     this.populateRelatedDocument();
-    this.box.showDocuments();
+    this.searchBox.showDocuments();
     this.saveLocation(this.urlFragment());
     Documents.refresh();
     this._afterSearch = callback;
-    this.box.startSearch();
+    this.searchBox.startSearch();
     var params = _.extend(dc.app.paginator.queryParams(), {q : query});
     if (this.flags.related && !this.relatedDoc) params.include_source_document = true;
     if (dc.app.navigation.isOpen('entities'))   params.include_facets = true;
@@ -97,14 +97,14 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
   loadFacets : function() {
     if (this.flags.hasEntities) return;
-    var query = this.box.value() || '';
+    var query = this.searchBox.value() || '';
     dc.ui.spinner.show();
     this.currentSearch = $.get(this.FACETS_URL, {q: query}, this._loadFacetsResults, 'json');
   },
 
   loadFacet : function(facet) {
     dc.ui.spinner.show();
-    this.currentSearch = $.get(this.FACETS_URL, {q : this.box.value(), facet : facet}, this._loadFacetResults, 'json');
+    this.currentSearch = $.get(this.FACETS_URL, {q : this.searchBox.value(), facet : facet}, this._loadFacetResults, 'json');
   },
 
   // When searching by the URL's hash value, we need to unescape first.
@@ -115,27 +115,27 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   // Add a query fragment to the search and search again, if it's not already
   // present in the current search.
   addToSearch : function(fragment, callback) {
-    var val = this.box.value();
+    var val = this.searchBox.value();
     if (val.toLowerCase().match(fragment.toLowerCase())) return;
-    this.box.value(val = (val + " " + fragment));
+    this.searchBox.value(val = (val + " " + fragment));
     this.search(val, null, callback);
   },
 
   // Remove a query fragment from the search and search again, only if it's
   // present in the current search.
   removeFromSearch : function(regex) {
-    var val = this.box.value();
+    var val = this.searchBox.value();
     if (!val.match(regex)) return;
     var next = val.replace(regex, '');
     if (next == val) return false;
-    this.box.value(next);
+    this.searchBox.value(next);
     this.search(next);
     return true;
   },
 
   populateRelatedDocument : function() {
     this.relatedDoc = null;
-    var id = parseInt(dc.app.SearchParser.extractRelatedDocId(this.box.value()), 10);
+    var id = parseInt(dc.app.SearchParser.extractRelatedDocId(this.searchBox.value()), 10);
     this.relatedDoc = Documents.get(id);
   },
 
@@ -156,7 +156,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     if (this.flags.related && !this.relatedDoc) {
       this.relatedDoc = new dc.model.Document(resp.source_document);
     }
-    this.box.doneSearching();
+    this.searchBox.doneSearching();
     this.currentSearch = null;
     if (this._afterSearch) this._afterSearch();
   },
