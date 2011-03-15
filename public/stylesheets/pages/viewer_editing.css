@@ -396,6 +396,7 @@
   }
   #replace_pages_container #new_document_form {
     height: auto;
+    width: 100%;
   }
   #replace_pages_container .minibutton {
     width: auto;
