@@ -186,12 +186,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
     this._tiles[id].hide();
 
-    this.collection.remove(this.collection.first());
-
-    if (this.collection.length == 0) {
+    if (index == this.collection.length-1) {
       this._onAllComplete();
     } else {
-      this.startUpload(index);
+      this.startUpload(index+1);
     }
   },
 
@@ -254,7 +252,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // Starts the first/next upload. Used by autostart and the Submit button.
   startUpload : function(index) {
     var tiles = this._tiles;
-    var doc = this.collection.first();
+    var doc = this.collection.models[index];
     doc.get('handler').formData = this._uploadData(doc.get('id'), index);
     doc.get('startUpload')();
     tiles[doc.get('id')].startProgress();
