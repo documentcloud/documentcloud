@@ -16,11 +16,12 @@ dc.ui.SearchBox = Backbone.View.extend({
   id  : 'search',
 
   events : {
-    'keydown #search_box':  'maybeSearch',
-    'search #search_box':   'searchEvent',
-    'focus #search_box':    'addFocus',
-    'blur #search_box':     'removeFocus',
-    'click .cancel_search': 'cancelSearch'
+    'keydown #search_box'       : 'maybeSearch',
+    'search #search_box'        : 'searchEvent',
+    'focus #search_box'         : 'addFocus',
+    'blur #search_box'          : 'removeFocus',
+    'click .cancel_search'      : 'cancelSearch',
+    'click #search_box_wrapper' : 'focusSearch'
   },
 
   // Creating a new SearchBox registers #search page fragments.
@@ -34,13 +35,25 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.box      = this.$('#search_box');
     this.titleBox = this.$('#title_box_inner');
     $(document.body).setMode('no', 'search');
+    this.box.autoGrowInput();
     return this;
   },
 
   // Shortcut to the searchbox's value.
   value : function(query) {
-    if (query == null) return this.box.val();
-    
+    if (query == null) return this.getQuery();
+    return this.setQuery(query);
+  },
+  
+  getQuery : function() {
+    return this.box.val();
+  },
+  
+  setQuery : function(query) {
+    var facets = this.extractFacets(query);
+    this.renderFacets(facets);
+    query = this.pareQuery(query);
+    this.renderFacet('text', query);
     this.box.val(query);
   },
 
@@ -53,7 +66,6 @@ dc.ui.SearchBox = Backbone.View.extend({
     var query = this.value();
     var facets = this.extractFacets(query);
     this.entitle(query, facets);
-    this.renderFacets(facets);
     dc.app.organizer.highlight(query);
   },
 
@@ -71,7 +83,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   // return.
   maybeSearch : function(e) {
     var query = this.value();
-    if (!dc.app.searcher.flags.outstandingSearch && e.keyCode == 13) dc.app.searcher.search(query);
+    if (!dc.app.searcher.flags.outstandingSearch && e.keyCode == 13) return this.searchEvent(e);
   },
 
   // Webkit knows how to fire a real "search" event.
@@ -110,20 +122,29 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Renders each facet as a searchFacet view.
   renderFacets : function(facets) {
     this.$('.search_facets').empty();
-    if (facets.projectName) this.renderFacet('project', facets.projectName);
-    if (facets.accountSlug) this.renderFacet('account', facets.accountSlug);
-    if (facets.groupName)   this.renderFacet('group', facets.groupName);
-    if (facets.filter)      this.renderFacet('filter', facets.filter);
+    if (facets.projectName)     this.renderFacet('project', facets.projectName);
+    if (facets.accountSlug)     this.renderFacet('account', facets.accountSlug);
+    if (facets.groupName)       this.renderFacet('group', facets.groupName);
+    if (facets.filter)          this.renderFacet('filter', facets.filter);
+    if (facets.entities.length) console.log(['entities', facets.entities]);
   },
   
   // Render a single facet, using its category and query value.
   renderFacet : function(category, facetQuery) {
     var view = new dc.ui.SearchFacet({
       category   : category,
-      facetQuery : facetQuery
+      facetQuery : Inflector.trim(facetQuery)
     });
     
     this.$('.search_facets').append(view.render().el);
+  },
+  
+  pareQuery : function(query) {
+    query = dc.app.SearchParser.removeProject(query);
+    query = dc.app.SearchParser.removeAccount(query);
+    query = dc.app.SearchParser.removeGroup(query);
+    query = dc.app.SearchParser.removeFilter(query);
+    return query;
   },
   
   // Takes a search query and return all of the facets found in an object.
@@ -132,11 +153,13 @@ dc.ui.SearchBox = Backbone.View.extend({
     var accountSlug   = dc.app.SearchParser.extractAccount(query);
     var groupName     = dc.app.SearchParser.extractGroup(query);
     var filter        = dc.app.SearchParser.extractFilter(query);
+    var entities      = dc.app.SearchParser.extractEntities(query);
     var facets        = {
       projectName : projectName,
       accountSlug : accountSlug,
       groupName   : groupName,
-      filter      : filter
+      filter      : filter,
+      entities    : entities
     };
     
     return facets;
@@ -170,6 +193,12 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.box.blur();
   },
 
+  focusSearch : function(e) {
+    if ($(e.target).is('#search_box_wrapper')) {
+      this.box.focus();
+    }
+  },
+  
   addFocus : function() {
     Documents.deselectAll();
     this.$('.search').addClass('focus');

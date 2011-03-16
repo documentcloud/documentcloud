@@ -266,6 +266,67 @@
         doc.bind('mouseup', dragEnd).bind('mousemove', drag);
       }, this));
     },
+    
+    autoGrowInput: function(opts) {
+
+      var options = $.extend({}, {
+        maxWidth: 1000,
+        minWidth: 0,
+        comfortZone: 2
+      }, opts);
+      
+      this.filter('input:text').each(function() {
+      
+        var minWidth = options.minWidth || $(this).width();
+        var val = '';
+        var input = $(this);
+        var testSubject = $('<div/>').css({
+          position: 'absolute',
+          top: -9999,
+          left: -9999,
+          width: 'auto',
+          fontSize: input.css('fontSize'),
+          fontFamily: input.css('fontFamily'),
+          fontWeight: input.css('fontWeight'),
+          letterSpacing: input.css('letterSpacing'),
+          whiteSpace: 'nowrap'
+        });
+        
+        var check = function() {
+          if (val === (val = input.val())) return;
+        
+          // Enter new content into testSubject
+          var escaped = val.replace(/&/g, '&amp;')
+                           .replace(/\s/g,'&nbsp;')
+                           .replace(/</g, '&lt;')
+                           .replace(/>/g, '&gt;');
+          testSubject.html(escaped);
+        
+          // Calculate new width + whether to change
+          var testerWidth = testSubject.width(),
+          newWidth = (testerWidth + options.comfortZone) >= minWidth ?
+                     testerWidth + options.comfortZone :
+                     minWidth,
+          currentWidth = input.width(),
+          isValidWidthChange = (newWidth < currentWidth && newWidth >= minWidth) || 
+                               (newWidth > minWidth && newWidth < options.maxWidth);
+        
+          // Animate width
+          if (isValidWidthChange) {
+            input.width(newWidth);
+          }
+        
+        };
+        
+        testSubject.insertAfter(input);
+        
+        $(this).bind('keyup keydown blur focus update', check);
+        
+      });
+      
+      return this;
+
+    },
 
     // jQuery's default text() method doesn't play nice with contentEditable
     // elements, which insert divs or paras instead of newline characters.

@@ -24,10 +24,20 @@ dc.app.SearchParser = {
     var project = query.match(this.FIRST_PROJECT);
     return project && (project[2] || project[3] || project[4]);
   },
+  
+  removeProject : function(query) {
+    var project = query.match(this.FIRST_PROJECT);
+    return query.replace(project && project[0], '');
+  },
 
   extractAccount : function(query) {
     var account = query.match(this.FIRST_ACCOUNT);
     return account && (account[2] || account[3] || account[4]);
+  },
+  
+  removeAccount : function(query) {
+    var account = query.match(this.FIRST_ACCOUNT);
+    return query.replace(account && account[0], '');
   },
 
   extractGroup : function(query) {
@@ -35,9 +45,19 @@ dc.app.SearchParser = {
     return group && (group[2] || group[3] || group[4]);
   },
 
+  removeGroup : function(query) {
+    var group = query.match(this.FIRST_GROUP);
+    return query.replace(group && group[0], '');
+  },
+
   extractFilter : function(query) {
     var match = query.match(this.FIRST_FILTER);
     return match && (match[1].toLowerCase());
+  },
+
+  removeFilter : function(query) {
+    var filter = query.match(this.FIRST_FILTER);
+    return query.replace(filter && filter[0], '');
   },
 
   extractEntities : function(query) {

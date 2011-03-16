@@ -19,13 +19,18 @@ dc.ui.SearchFacet = Backbone.View.extend({
       category   : this.options.category,
       facetQuery : this.options.facetQuery
     }));
+    
+    // This is defered so it can be attached to the DOM to get the correct font-size.
+    _.defer(function() {
+      $('input', $el).autoGrowInput();
+    });
     return this;
   },
   
   enableEdit : function() {
     if (!this.$el.hasClass('is_editing')) {
       this.setMode('is', 'editing');
-      this.$('input').val(this.options.facetQuery);
+      this.$('input').val(this.options.facetQuery).focus();
     }
   },
   
@@ -41,6 +46,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       this.options.facetQuery = newFacetQuery;
     }
     this.setMode('not', 'editing');
+    this.render();
   }
    
 });
