@@ -46,15 +46,21 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   getQuery : function() {
-    return this.box.val();
+    var query = "";
+    _.each(dc.app.searchBox.facetViews, function(view) {
+      query += view.serialize();
+    });
+    query += this.box.val();
+    
+    return query;
   },
   
   setQuery : function(query) {
     var facets = this.extractFacets(query);
     this.renderFacets(facets);
     query = this.pareQuery(query);
-    this.renderFacet('text', query);
-    this.box.val(query);
+    if (query) this.renderFacet('text', query);
+    this.box.val('');
   },
 
   hideSearch : function() {
@@ -82,7 +88,6 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Callback fired on key press in the search box. We search when they hit
   // return.
   maybeSearch : function(e) {
-    var query = this.value();
     if (!dc.app.searcher.flags.outstandingSearch && e.keyCode == 13) return this.searchEvent(e);
   },
 
@@ -122,6 +127,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Renders each facet as a searchFacet view.
   renderFacets : function(facets) {
     this.$('.search_facets').empty();
+    this.facetViews = [];
     if (facets.projectName)     this.renderFacet('project', facets.projectName);
     if (facets.accountSlug)     this.renderFacet('account', facets.accountSlug);
     if (facets.groupName)       this.renderFacet('group', facets.groupName);
@@ -136,6 +142,7 @@ dc.ui.SearchBox = Backbone.View.extend({
       facetQuery : Inflector.trim(facetQuery)
     });
     
+    this.facetViews.push(view);
     this.$('.search_facets').append(view.render().el);
   },
   
@@ -187,6 +194,22 @@ dc.ui.SearchBox = Backbone.View.extend({
     }
     dc.ui.spinner.hide();
     dc.app.scroller.checkLater();
+  },
+  
+  focusNextFacet : function(currentView, direction) {
+    var currentFacetIndex;
+    var viewsCount = this.facetViews.length;
+    
+    _.each(this.facetViews, function(facetView, i) {
+      if (currentView == facetView) {
+        currentFacetIndex = i;
+      }
+    });
+    
+    var next = currentFacetIndex + direction;
+    if (next > viewsCount-1) next = 0;
+    if (next < 0) next = viewsCount-1;
+    this.facetViews[next].enableEdit();
   },
 
   blur : function() {

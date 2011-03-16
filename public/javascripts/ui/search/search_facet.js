@@ -2,6 +2,10 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   className : 'search_facet',
   
+  QUOTABLE_CATEGORIES : [
+    'project'
+  ],
+  
   events : {
     'click'         : 'enableEdit',
     'keydown input' : 'maybeDisableEdit',
@@ -27,6 +31,22 @@ dc.ui.SearchFacet = Backbone.View.extend({
     return this;
   },
   
+  serialize : function() {
+    var category = this.options.category;
+    var query    = Inflector.trim(this.options.facetQuery);
+    
+    if (_.contains(this.QUOTABLE_CATEGORIES, category) && query) query = '"' + query + '"';
+    
+    if (category != 'text') {
+      category = category + ': ';
+    } else {
+      category = "";
+    }
+    
+    console.log(['serialize', category, query]);
+    return category + query + ' ';
+  },
+  
   enableEdit : function() {
     if (!this.$el.hasClass('is_editing')) {
       this.setMode('is', 'editing');
@@ -35,8 +55,16 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   maybeDisableEdit : function(e) {
-    if (e.keyCode == 13) {
+    if (e.keyCode == 13) { // Enter key
       this.disableEdit();
+      dc.app.searchBox.searchEvent(e);
+    }
+    if (dc.app.hotkeys.shift && e.keyCode == 9) { // Tab key
+      e.preventDefault();
+      dc.app.searchBox.focusNextFacet(this, -1);
+    } else if (e.keyCode == 9) {
+      e.preventDefault();
+      dc.app.searchBox.focusNextFacet(this, 1);
     }
   },
   
