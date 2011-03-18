@@ -112,6 +112,11 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     this.search.placeholder({className: 'DC-placeholder DC-interface'});
     this.renderDocuments();
     this.showSearchCancel();
+    if (!this.originalHeight) {
+      var $list = $('.DC-document-list', this.el);
+      this.originalHeight = $list.height();
+      $list.height(this.originalHeight);
+    }
   },
   
   renderDocuments : function() {
