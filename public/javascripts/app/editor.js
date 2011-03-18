@@ -8,12 +8,10 @@ _.extend(dc.app.editor, {
     this.docId = docId;
     this.options = options;
     _.bindAll(this, 'closeAllEditors', 'confirmStateChange');
-    _.defer(_.bind(function() {
-      dc.app.hotkeys.initialize();
-      this.createSubViews();
-      this.renderSubViews();
-      currentDocument.api.onChangeState(this.closeAllEditors);
-    }, this));
+    dc.app.hotkeys.initialize();
+    this.createSubViews();
+    this.renderSubViews();
+    currentDocument.api.onChangeState(this.closeAllEditors);
   },
 
   confirmStateChange : function(continuation) {
