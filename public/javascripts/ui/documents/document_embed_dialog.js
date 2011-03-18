@@ -1,3 +1,5 @@
+// Dialog for embedding a document viewer on a third-party site. Checks the
+// access level, presents [saved] preferences, fetches the document embed code.
 dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
   events : {
