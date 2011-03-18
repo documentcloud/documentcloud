@@ -110,6 +110,7 @@ label {
       }
   #search_box_wrapper {
     margin: 0 29px 30px;
+    cursor: text;
   }
   #title_box {
     text-align: center;

@@ -223,7 +223,7 @@ div.text_input {
           font-size: 10px;
           color: #B0B0B0;
           text-shadow: 1px 1px 0 #FFF;
-          padding: 3px 0 0 0;
+          padding: 2px 0 0 0;
           line-height: 28px;
         }
         div.text_input.search .search_facet .search_facet_query {
@@ -232,7 +232,7 @@ div.text_input {
           font-size: 13px;
           line-height: 16px;
           margin: 0;
-          padding: 7px 9px 7px 5px;
+          padding: 6px 9px 7px 5px;
           height: 16px;
         }
         div.text_input.search .search_facet .search_facet_input_container {
@@ -244,14 +244,14 @@ div.text_input {
           color: #202020;
           font-size: 13px;
           line-height: 16px;
-          padding: 7px 8px 7px 4px;
+          padding: 6px 8px 7px 4px;
           height: 16px;
           width: auto;
         }
         
       div.text_input.search input {
         width: 100px;
-        padding: 7px 0 0;
+        padding: 6px 0 0;
         float: left;
       }
         div.text_input.search input, div.text_input.search .placeholder {

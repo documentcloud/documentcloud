@@ -272,7 +272,7 @@
       var options = $.extend({}, {
         maxWidth: 1000,
         minWidth: 0,
-        comfortZone: 2
+        comfortZone: 10
       }, opts);
       
       this.filter('input:text').each(function() {
@@ -312,6 +312,7 @@
                                (newWidth > minWidth && newWidth < options.maxWidth);
         
           // Animate width
+          // console.log(['Grow width', testerWidth, currentWidth, newWidth]);
           if (isValidWidthChange) {
             input.width(newWidth);
           }

@@ -43,7 +43,6 @@ dc.ui.SearchFacet = Backbone.View.extend({
       category = "";
     }
     
-    console.log(['serialize', category, query]);
     return category + query + ' ';
   },
   
@@ -51,6 +50,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     if (!this.$el.hasClass('is_editing')) {
       this.setMode('is', 'editing');
       this.$('input').val(this.options.facetQuery).focus();
+      dc.app.searchBox.addFocus();
     }
   },
   
@@ -75,6 +75,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     }
     this.setMode('not', 'editing');
     this.render();
+    dc.app.searchBox.removeFocus();
   }
    
 });

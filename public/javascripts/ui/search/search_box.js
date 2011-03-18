@@ -14,6 +14,8 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
 
   id  : 'search',
+  
+  PREFIXES : ['project', 'text', 'account', 'document'],
 
   events : {
     'keydown #search_box'       : 'maybeSearch',
@@ -34,11 +36,25 @@ dc.ui.SearchBox = Backbone.View.extend({
     $(this.el).append(JST['workspace/search_box']({}));
     this.box      = this.$('#search_box');
     this.titleBox = this.$('#title_box_inner');
+    _.bindAll(this, 'autocompletePrefixCheck', 'autocompletePrefixSuccess');
     $(document.body).setMode('no', 'search');
     this.box.autoGrowInput();
+    this.autocomplete = new dc.ui.Autocomplete({
+      input           : this.box, 
+      checkCallback   : this.autocompletePrefixCheck, 
+      successCallback : this.autocompletePrefixSuccess
+    });
     return this;
   },
 
+  autocompletePrefixCheck : function(partial) {
+    console.log(['prefix', prefix]);
+  },
+  
+  autocompletePrefixSuccess : function() {
+    
+  },
+  
   // Shortcut to the searchbox's value.
   value : function(query) {
     if (query == null) return this.getQuery();
@@ -47,15 +63,18 @@ dc.ui.SearchBox = Backbone.View.extend({
   
   getQuery : function() {
     var query = "";
-    _.each(dc.app.searchBox.facetViews, function(view) {
-      query += view.serialize();
-    });
-    query += this.box.val();
+    if (dc.app.searchBox.facetViews) {
+      _.each(dc.app.searchBox.facetViews, function(view) {
+        query += view.serialize();
+      });
+      query += this.box.val();
+    }
     
     return query;
   },
   
   setQuery : function(query) {
+    console.log(['query', query]);
     var facets = this.extractFacets(query);
     this.renderFacets(facets);
     query = this.pareQuery(query);
@@ -151,7 +170,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     query = dc.app.SearchParser.removeAccount(query);
     query = dc.app.SearchParser.removeGroup(query);
     query = dc.app.SearchParser.removeFilter(query);
-    return query;
+    return Inflector.trim(query);
   },
   
   // Takes a search query and return all of the facets found in an object.
