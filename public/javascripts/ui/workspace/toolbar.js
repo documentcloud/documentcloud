@@ -113,15 +113,18 @@ dc.ui.Toolbar = Backbone.View.extend({
     Documents.editAccess(Documents.selected());
   },
 
-  openViewers : function(suffix, afterLoad) {
+  openViewers : function(checkEdit, suffix, afterLoad) {
     if (!Documents.selectedCount) return dc.ui.Dialog.alert('Please select a document to open.');
-    _.each(Documents.selected(), function(doc){
-      var win = doc.openAppropriateVersion(suffix);
-      if (afterLoad) {
-        win.DV || (win.DV = {});
-        win.DV.afterLoad = afterLoad;
-      }
-    });
+    var continuation = function(docs) {
+      _.each(docs, function(doc){
+        var win = doc.openAppropriateVersion(suffix);
+        if (afterLoad) {
+          win.DV || (win.DV = {});
+          win.DV.afterLoad = afterLoad;
+        }
+      });
+    };
+    checkEdit ? this.edit(continuation) : continuation(Documents.selected());
   },
 
   openEmbedDialog : function() {
@@ -303,11 +306,11 @@ dc.ui.Toolbar = Backbone.View.extend({
         {title : 'Source',                    attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
         {title : 'Description',               attrs: {'class' : 'multiple indent'}, onClick : this.editDescription},
         {title : 'Access Level',              attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
-        {title : 'Modify Original Document',  attrs: {'class' : 'multiple'},        onClick : _.bind(this.openViewers, this, '#pages', null)},
-        {title : 'Insert/Replace Pages',      attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openInsertEditor)},
-        {title : 'Remove Pages',              attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openRemoveEditor)},
-        {title : 'Reorder Pages',             attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#pages', this._openReorderEditor)},
-        {title : 'Edit Page Text',            attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, '#text/p1', this._openEditPageTextEditor)},
+        {title : 'Modify Original Document',  attrs: {'class' : 'multiple'},        onClick : _.bind(this.openViewers, this, true, '#pages', null)},
+        {title : 'Insert/Replace Pages',      attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, true, '#pages', this._openInsertEditor)},
+        {title : 'Remove Pages',              attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, true, '#pages', this._openRemoveEditor)},
+        {title : 'Reorder Pages',             attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, true, '#pages', this._openReorderEditor)},
+        {title : 'Edit Page Text',            attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, true, '#text/p1', this._openEditPageTextEditor)},
         {title : 'Reprocess Text',            attrs: {'class' : 'multiple indent'}, onClick : this.reprocessText},
         {title : 'Remove from this Project',  attrs: {'class' : 'multiple project'},onClick : this._removeFromSelectedProject},
         {title : 'Delete Documents',          attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
