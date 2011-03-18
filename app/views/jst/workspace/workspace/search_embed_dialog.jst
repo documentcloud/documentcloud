@@ -1,51 +1,28 @@
 <div class="publish_step publish_step_1 is_enabled">
-
-  <div class="publish_section">
+  
+  <div class="publish_section publish_description">
     <% if (restrictedCount == 0) { %>
-      <div class="publish_section">
-        This document set will contain links to <%= documentsCount %> 
-        <%= Inflector.pluralize('document', documentsCount) %>.
-      </div>
+      This document set will contain <%= documentsCount %> 
+      <%= Inflector.pluralize('document', documentsCount) %>.
     <% } else { %>
-      <div class="publish_section">
-        This document set will only contain links to 
-        <%= publicCount %> of <%= documentsCount %> 
-        <%= Inflector.pluralize('document', documentsCount) %>.
-      </div>
-      <div class="publish_section text_link change_access">
-        Change access on <%= Inflector.pluralize('this', restrictedCount) %> 
-        <%= restrictedCount %> <%= Inflector.pluralize('document', restrictedCount) %>
-      </div>
-      <div class="publish_section">
-        In order to have all documents show in the set of documents, they 
+      This document set will show 
+      <%= publicCount %> of <%= documentsCount %> 
+      <%= Inflector.pluralize('document', documentsCount) %>.
+      <span class="publish_section text_link change_access">
+        View the <%= restrictedCount %> private 
+        <%= Inflector.pluralize('document', restrictedCount) %>
+      </span>
+    <% } %>
+    <% if (restrictedCount > 0) { %>
+      <p class="publish_info publish_info_section selectable_text interface">
+        In order to have all documents shown in the set of documents, they 
         must be made public. You can change the access level for a group 
         of documents by selecting them and using the Edit menu in the 
         toolbar.
-      </div>
+      </p>
     <% } %>
-    <p class="publish_info publish_info_section selectable_text interface">
-      <% if (restrictedCount == 0) { %>
-        <% if (documentsCount == 1) { %>
-          This document is
-        <% } else { %>
-          These documents are
-        <% } %>
-        public. It is currently available to users who search DocumentCloud's 
-        catalog and will be visible to the public when you
-        embed it on your website.
-      <% } else { %>
-        As long as you're logged in to DocumentCloud, you'll be able to view
-        both public and private documents embedded on your own site. Public
-        visitors to your site, however, will only be able to see public 
-        documents.
-      <% } %>
-    </p>
   </div>
-
-</div>
-
-<div class="publish_step publish_step_2">
-
+  
   <div class="publish_section">
     <label for="publish_option_input_title">Title: </label>
     <input id="publish_option_input_title" class="input_title" name="title" />
@@ -88,7 +65,7 @@
 
 </div>
 
-<div class="publish_step publish_step_3">
+<div class="publish_step publish_step_2">
   <div class="publish_embed_code publish_section"></div>
 </div>
 

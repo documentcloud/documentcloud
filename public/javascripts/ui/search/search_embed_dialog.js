@@ -8,6 +8,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     'focus input'           : 'update',
     'click input'           : 'update',
     'change input'          : 'update',
+    'blur .per_page'        : '_validatePerPage',
     'click .next'           : 'nextStep',
     'click .previous'       : 'previousStep',
     'click .close'          : 'close',
@@ -15,11 +16,11 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     'click .change_access'  : 'changeAccess'
   },
 
-  totalSteps : 3,
+  totalSteps : 2,
 
-  STEPS : [null, null,
-    'Step Two: Configure the Document Set',
-    'Step Three: Copy and Paste the Embed Code'
+  STEPS : [null,
+    'Step One: Configure the Document Set',
+    'Step Two: Copy and Paste the Embed Code'
   ],
 
   DEMO_ERROR : 'Demo accounts are not allowed to embed document sets. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.',
@@ -27,14 +28,18 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   DEFAULT_OPTIONS : {
     order      : 'title',
     per_page   : 12,
-    search_bar : false,
+    search_bar : true,
     title      : null,
     q          : ''
   },
   
-  constructor : function() {
+  constructor : function(docs) {
     this.query       = dc.app.searcher.publicQuery() || "";
     this.currentStep = 1;
+    this.docs        = docs;
+    if (docs.length) {
+      this.query = _.map(docs, function(doc){ return 'document: ' + doc.canonicalId(); }).join(' ');
+    }
     
     dc.ui.Dialog.call(this, {mode : 'custom', title : this.displayTitle()});
     dc.ui.spinner.show();
@@ -48,7 +53,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
       dataType : 'json',
       success : _.bind(function(resp) {
         this.restrictedCount = resp.restricted_count;
-        this.documentsCount  = dc.app.paginator.query.total;
+        this.documentsCount  = this.docs.length || dc.app.paginator.query.total;
         this.publicCount     = this.documentsCount - this.restrictedCount;
         this.render();
       }, this)
@@ -81,8 +86,6 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   },
 
   displayTitle : function() {
-    var title = dc.model.DocumentSet.entitle(this.query);
-    if (this.currentStep == 1) return 'Step One: Review "' + title + '"';
     return this.STEPS[this.currentStep];
   },
 
@@ -163,9 +166,21 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     $label.html(label);
   },
 
+  _validatePerPage : function() {
+    var $perPage = this.$('input[name=per_page]');
+    var perPage  = $perPage.val();
+    
+    if (perPage.length == 0) perPage = this.DEFAULT_OPTIONS['per_page'];
+    if (perPage <= 0)        perPage = this.DEFAULT_OPTIONS['per_page'];
+    if (perPage > 100)       perPage = 100;
+    
+    $perPage.val(perPage);
+  },
+  
   nextStep : function() {
-    if (this.currentStep >= this.totalSteps) return this.close();
     this.currentStep += 1;
+    if (this.currentStep > this.totalSteps) return this.close();
+    if (this.currentStep == 2) this._renderEmbedCode();
     this.setStep();
   },
 

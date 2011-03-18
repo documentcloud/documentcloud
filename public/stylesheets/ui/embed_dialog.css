@@ -158,6 +158,9 @@
   clear: both;
   overflow: hidden;
 }
+  .search_embed_dialog .publish_description {
+    font-size: 11px;
+  }
   .search_embed_dialog .publish_info {
     font-size: 11px;
     color: #ccc;
@@ -196,7 +199,6 @@
   overflow: hidden;
 }
   .search_embed_dialog .publish_prepare_section_label {
-    font-weight: bold;
     margin: 0 0 4px 0;
   }
 .search_embed_dialog .publish_option_sidelabel {
@@ -206,10 +208,10 @@
   margin: 6px 0 0 6px;
   text-transform: uppercase;
 }
-.search_embed_dialog .publish_step_2 {
+.search_embed_dialog .publish_step_1 {
   
 } 
-  .search_embed_dialog .publish_step_2 label {
+  .search_embed_dialog .publish_step_1 label {
     display: inline-block;
     font-weight: bold;
     line-height: 25px;
@@ -218,23 +220,23 @@
     float: left;
   }
   .search_embed_dialog .public_section_input,
-  .search_embed_dialog .publish_step_2 select,
-  .search_embed_dialog .publish_step_2 input {
+  .search_embed_dialog .publish_step_1 select,
+  .search_embed_dialog .publish_step_1 input {
       margin: 4px 0 0;
       float: left;
   }
-  .search_embed_dialog .publish_step_2 input[type=text] {
+  .search_embed_dialog .publish_step_1 input[type=text] {
     width: 30px;
   }
-  .search_embed_dialog .publish_step_2 input[type=radio] {
+  .search_embed_dialog .publish_step_1 input[type=radio] {
     clear: both;
     float: left;
     margin: 2px 4px 0 0;
   }
-  .search_embed_dialog .publish_step_2 input.input_title {
+  .search_embed_dialog .publish_step_1 input.input_title {
     width: 250px;
   }
-  .search_embed_dialog .publish_step_2 select {
+  .search_embed_dialog .publish_step_1 select {
     width: 120px;
   }
   .search_embed_dialog .public_section_input label {
@@ -243,17 +245,17 @@
     font-weight: normal;
     margin-bottom: 6px;
   }
-  .search_embed_dialog .publish_step_2 .dimensions {
+  .search_embed_dialog .publish_step_1 .dimensions {
     font-size: 11px;
     position: absolute;
     left: 290px;
     top: 1px;
   }
-    .search_embed_dialog .publish_step_2 .dimensions label {
+    .search_embed_dialog .publish_step_1 .dimensions label {
       font-weight: normal;
       margin-left: 10px;
     }
-    .search_embed_dialog .publish_step_2 .dimensions input {
+    .search_embed_dialog .publish_step_1 .dimensions input {
       font-size: 11px;
       margin: 0 5px;
       float: none;
