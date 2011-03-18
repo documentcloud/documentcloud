@@ -60,11 +60,16 @@ dc.ui.Note = Backbone.View.extend({
   // The user cna only edit existing notes, not save new notes, hence no
   // need to update note counts on the parent document.
   saveNote : function(e) {
-    if ($(e.target).hasClass('save_draft_note'))      this.model.set({'access': 'exclusive'});
-    else if (this.model.get('access') == 'exclusive') this.model.set({'access': 'public'});
+    var access = this.model.get('access');
+    if ($(e.target).hasClass('save_draft_note')) {
+      access = 'exclusive';
+    } else if (this.model.get('access') == 'exclusive') {
+      access = 'public';
+    }
     this.model.save({
       title   : this.$('.note_title_input').val(),
-      content : this.$('.note_text_edit').val()
+      content : this.$('.note_text_edit').val(),
+      access  : access
     });
     this.render();
   },
