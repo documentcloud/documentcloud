@@ -16,7 +16,7 @@ dc.ui.Toolbar = Backbone.View.extend({
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'openPages', 'openEmbedDialog',
       'openPublicationDateDialog', 'requestDownloadViewers', 'checkFloat',
-      '_openTimeline', '_viewEntities', 'editDocumentURL', 'openShareDialog',
+      '_openTimeline', '_viewEntities', 'editPublishedUrl', 'openShareDialog',
       '_markOrder', '_removeFromSelectedProject', '_enableAnalyzeMenu');
     this.sortMenu    = this._createSortMenu();
     this.analyzeMenu = this._createAnalyzeMenu();
@@ -94,17 +94,19 @@ dc.ui.Toolbar = Backbone.View.extend({
     });
   },
 
-  editDocumentURL : function() {
+  editPublishedUrl : function() {
     this.edit(function(docs) {
-      var doc = docs[0];
-      dc.ui.Dialog.prompt('Published URL', doc.get('remote_url'), function(url, dialog) {
+      var current = Documents.sharedAttribute(docs, 'remote_url') || '';
+      var suffix  = docs.length > 1 ? 'these documents are' : 'this document is';
+      dc.ui.Dialog.prompt('Published URL', current, function(url, dialog) {
         url = Inflector.normalizeUrl(url);
         if (url && !dialog.validateUrl(url)) return false;
-        doc.save({remote_url : url});
+        _.each(docs, function(doc) { doc.save({remote_url : url}); });
         return true;
       }, {
         mode        : 'short_prompt',
-        description : 'Enter the URL of the page on which this document is embedded:'
+        information : Documents.subtitle(docs.length),
+        description : 'Enter the URL at which ' + suffix + ' embedded:'
       });
     });
   },
@@ -156,26 +158,6 @@ dc.ui.Toolbar = Backbone.View.extend({
     if (dc.account.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to download viewers. <a href="/contact">Contact us</a> if you need a full featured account.');
     var docs = Documents.chosen();
     if (docs.length) Documents.downloadViewers(docs);
-  },
-
-  reprocessText : function() {
-    var docs = Documents.chosen();
-    if (!docs.length || !Documents.allowedToEdit(docs)) return;
-    var docPart = docs.length == 1 ? 'this document' : 'these documents';
-    var message = "Reprocess " + docPart + " to take \
-        advantage of improvements to our text extraction tools. Choose \
-        \"Force OCR\" (optical character recognition) to ignore any embedded \
-        text information and use Tesseract before reprocessing. \
-        Are you sure you want to proceed? ";
-    var dialog = new dc.ui.Dialog.confirm(message, function() {
-      _.each(docs, function(doc){ doc.reprocessText(); });
-      return true;
-    }, {width: 450});
-    var force = $(dialog.make('div', {'class':'minibutton dark'}, 'Force OCR')).bind('click', function() {
-      _.each(docs, function(doc){ doc.reprocessText(true); });
-      dialog.close();
-    });
-    dialog.$('.ok').text('Reprocess').before(force);
   },
 
   checkFloat : function() {
@@ -306,12 +288,9 @@ dc.ui.Toolbar = Backbone.View.extend({
         {title : 'Source',                    attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
         {title : 'Description',               attrs: {'class' : 'multiple indent'}, onClick : this.editDescription},
         {title : 'Access Level',              attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
+        {title : 'Related Article URL',       attrs: {'class' : 'multiple indent'}, onClick : this.editRelatedArticle},
+        {title : 'Published URL',             attrs: {'class' : 'multiple indent'}, onClick : this.editPublishedUrl},
         {title : 'Modify Original Document',  attrs: {'class' : 'multiple'},        onClick : _.bind(this.openViewers, this, true, '#pages', null)},
-        {title : 'Insert/Replace Pages',      attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, true, '#pages', this._openInsertEditor)},
-        {title : 'Remove Pages',              attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, true, '#pages', this._openRemoveEditor)},
-        {title : 'Reorder Pages',             attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, true, '#pages', this._openReorderEditor)},
-        {title : 'Edit Page Text',            attrs: {'class' : 'multiple indent'}, onClick : _.bind(this.openViewers, this, true, '#text/p1', this._openEditPageTextEditor)},
-        {title : 'Reprocess Text',            attrs: {'class' : 'multiple indent'}, onClick : this.reprocessText},
         {title : 'Remove from this Project',  attrs: {'class' : 'multiple project'},onClick : this._removeFromSelectedProject},
         {title : 'Delete Documents',          attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
       ]
