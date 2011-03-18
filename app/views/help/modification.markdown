@@ -1,6 +1,6 @@
 # Document Modification
 
-We don't tend to think of modifying source documents as something a responsible journalist would do, but there are absolutely times when you need to. Whether you're trying to protect the privacy of a minor by redacting personally identifying information from a foster care incident report, reorganizing a collection of letters or inserting a page that wasn't properly scanned, reporters do sometimes need to rework source documents to ready them for publication. That's why DocumentCloud provides tools for modifying documents. Select the document that needs correction, and look in the "Edit" menu for the specific tool you need.
+We don't tend to think of modifying source documents as something a responsible journalist would do, but there are absolutely times when you need to. Whether you're trying to protect the privacy of a minor by redacting personally identifying information from a foster care incident report, reorganizing a collection of letters or inserting a page that wasn't properly scanned, reporters do sometimes need to rework source documents to ready them for publication. That's why DocumentCloud provides tools for modifying documents. Open the document that needs correction, and look in sidebar specific tool you need.
 
 ## <span id="pagetools">Page Tools</span>
 
