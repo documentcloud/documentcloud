@@ -627,7 +627,7 @@ textarea.text_area {
     }
     .dialog .choice_description {
       font-size: 10px;
-      color: #999;
+      color: #ccc;
       padding: 0 0 10px 22px;
     }
   .dialog .spinner_dark {
