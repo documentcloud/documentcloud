@@ -27,7 +27,7 @@
 
 #upload_dialog.autostart .controls,
 #upload_dialog.autostart .title,
-#upload_dialog.autostart .upload_email {
+#upload_dialog.autostart .upload_options {
   display: none;
 }
 
@@ -143,14 +143,17 @@
     top: 0;
   }
 
-#upload_dialog .upload_email {
+#upload_dialog .upload_options {
   text-align: left;
   margin: 8px 0 0px 4px;
 }
-  #upload_dialog .upload_email label {
+  #upload_dialog .upload_options input {
+    margin-left: 0;
+  }
+  #upload_dialog .upload_options label {
     display: inline;
     float: none;
     color: #ccc;
     font-size: 11px;
-    margin: 4px 0 0 4px;
+    margin: 4px 10px 0 0px;
   }

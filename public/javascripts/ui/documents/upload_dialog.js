@@ -35,7 +35,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Documents are already selected and are being drawn in the dialog.
   render : function() {
-    this.options.multiFileUpload = window.FileList && 
+    this.options.multiFileUpload = window.FileList &&
                                    ($("input[type=file]")[0].files instanceof FileList);
     this._tiles = {};
     this._project = _.first(Projects.selected());
@@ -146,7 +146,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     model.set(attrs);
     if (options.multiFileUpload && model.get('size')) attrs.multi_file_upload = true;
     attrs.authenticity_token = $("meta[name='csrf-token']").attr("content");
-    attrs.email_me = this.$('.upload_email input').is(':checked') ? this.collection.length : 0;
+    if (this.$('#make_public').is(':checked')) attrs.make_public = true;
+    attrs.email_me = this.$('#email_on_complete').is(':checked') ? this.collection.length : 0;
     if (this._project) attrs.project = this._project.id;
     if (_.isNumber(options.insertPageAt)) attrs.insert_page_at = options.insertPageAt;
     if (_.isNumber(options.replacePagesStart)) attrs.replace_pages_start = options.replacePagesStart;
@@ -216,7 +217,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   _countDocuments : function() {
     var num = this.collection.length;
     this.title('Upload ' + (num > 1 ? num : '') + Inflector.pluralize(' Document', num));
-    this.$('.upload_email_count').text(num == 1 ? 'this document has' : 'these documents have');
+    var text = Inflector.pluralize('document', num);
+    this.$('.upload_public_count').text(text);
+    this.$('.upload_email_count').text('the ' + text + (num == 1 ? ' has' : ' have'));
   },
 
   // Ask the server how many work units are currently queued.
@@ -225,7 +228,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       var num = resp.queue_length;
       if (num <= 0) return;
       var conj = num > 1 ? 'are' : 'is';
-      this.info('There ' + conj + ' ' + num + ' ' + Inflector.pluralize('document', num) + 
+      this.info('There ' + conj + ' ' + num + ' ' + Inflector.pluralize('document', num) +
                 ' ahead of you in line.', true);
     }, this));
   },
