@@ -159,6 +159,7 @@
   overflow: hidden;
 }
   .search_embed_dialog .publish_description {
+    margin: -10px 0 16px;
     font-size: 11px;
   }
   .search_embed_dialog .publish_info {
@@ -244,6 +245,9 @@
     line-height: 15px;
     font-weight: normal;
     margin-bottom: 6px;
+  }
+  .search_embed_dialog .public_section_input .publish_option_label_checkbox {
+    margin: 3px 0 0 6px;
   }
   .search_embed_dialog .publish_step_1 .dimensions {
     font-size: 11px;

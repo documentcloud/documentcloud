@@ -1,6 +1,17 @@
 /* ============ */
 /* = DC Reset = */
 /* ============ */
+.DC-search-embed div, .DC-search-embed span, .DC-search-embed a {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+}
 
 .DC-search-embed .DC-document-list a, 
 .DC-search-embed .DC-document-list a:link, 
@@ -94,7 +105,7 @@
     padding: 4px;
     background: transparent;
     font-size: 16px;
-    line-height: 20px;
+    line-height: 18px;
     width: 100%;    
     color: #999999;
     font-size: 13px;
@@ -123,6 +134,7 @@
     }
       .DC-search-embed .DC-text-input.DC-search input {
         width: 100%;
+        height: 18px;
         padding: 5px 0;
       }
         .DC-search-embed .DC-text-input.DC-search:focus input {
@@ -130,7 +142,7 @@
         }
     .DC-search-embed .DC-text-input .DC-search-glyph {
       position: absolute;
-      left: 9px; top: 8px;
+      left: 10px; top: 8px;
     }
     .DC-search-embed .DC-text-input .DC-cancel-search {
       position: absolute;
@@ -250,8 +262,8 @@
   line-height: 18px;
   height: 18px;
   color: #999;
-  text-align: right;
   border-top: 1px solid #ccc;
+  position: relative;
 }
   .DC-search-embed .DC-paginator a img {
     border: none;
@@ -260,7 +272,10 @@
     height: 20px;
   }
   .DC-search-embed .DC-paginator .DC-paginator-description {
-    float: left;
+    position: absolute;
+    left: 0;
+    top: 6px;
+    white-space: nowrap;
   }
     .DC-search-embed .DC-paginator .DC-paginator-range {
       font-weight: bold;
@@ -296,6 +311,11 @@
       .DC-search-embed .DC-paginator .DC-page-edit:focus {
         color: #000;
       }
+  .DC-search-embed .DC-paginator .DC-logo {
+    position: absolute;
+    right: 0;
+    top: 4px;
+  }
 
 /* ========= */
 /* = Icons = */
@@ -305,6 +325,13 @@
   width: 12px; height: 12px;
   background-image: url(/images/embed/icons/search_glyph.png);
 }
+  .DC-search-embed .DC-icon.DC-search-glyph.DC-spinner {
+    width: 16px;
+    height: 16px;
+    left: 7px;
+    top: 6px;
+    background-image: url(/images/embed/ui/spinner_circle.gif);
+  }
 
 .DC-search-embed .DC-icon.DC-cancel-search {
   width: 11px; height: 11px;
@@ -333,14 +360,8 @@
 
 .DC-embed-preview {
   width: 900px;
-  margin: 0 auto;
+  margin: 80px auto 40px;
 }
-  .DC-embed-preview .DC-embed-preview-title {
-    font-size: 76px;
-    text-align: center;
-    padding: 36px 0 24px;
-    font-weight: bold;
-    border-bottom: 2px solid #808080;
-    margin: 0 0 36px 0;
-    text-shadow: 1px 1px 0 #E6E6E6;
+  .DC-embed-preview .DC-search-embed {
+    margin: 40px 0;
   }

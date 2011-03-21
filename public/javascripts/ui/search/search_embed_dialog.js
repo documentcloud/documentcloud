@@ -113,7 +113,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     options.title      = this._titleEl.val().replace(/\"/g, '\\\"');
     options.order      = this._orderEl.val();
     options.per_page   = this._perPageEl.val();
-    options.search_bar = this._searchBarEl.filter(':checked').val() == 'true';
+    options.search_bar = this._searchBarEl.is(':checked');
     return options;
   },
 
@@ -129,7 +129,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     var options = _.extend({}, this.DEFAULT_OPTIONS, JSON.parse(dc.app.preferences.get('search_embed_options')));
     this._orderEl.val(options.order);
     this._perPageEl.val(options.per_page);
-    this._searchBarEl.val([options.search_bar ? 'true' : 'false']);
+    this._searchBarEl.attr('checked', !!options.search_bar);
   },
 
   _renderEmbedCode : function() {

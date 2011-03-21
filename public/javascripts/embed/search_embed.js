@@ -124,6 +124,8 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     var options        = this.embed.options;
     var $document_list = this.$('.DC-document-list').empty();
     var width          = this.calculateTileWidth();
+    
+    this.hideSpinner();
 
     if (!this.embed.documents.length) {
       $document_list.append(JST['no_results']({}));
@@ -186,6 +188,7 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
       this.embed.documents.refresh(this.embed.documents.originalModels);
     } else {
       this.embed.options.q = this.embed.options.originalQuery + (query && (' ' + query));
+      this.showSpinner();
       dc.loadSearchEmbed(this.embed.options.searchUrl, this.embed.options);
     }
     
@@ -214,6 +217,14 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     ));
     this.embed.options.page = page;
     this.performSearch(true);
+  },
+  
+  showSpinner : function() {
+    this.$('.DC-search-glyph').addClass('DC-spinner');
+  },
+  
+  hideSpinner : function() {
+    this.$('.DC-search-glyph').removeClass('DC-spinner');
   }
   
 });

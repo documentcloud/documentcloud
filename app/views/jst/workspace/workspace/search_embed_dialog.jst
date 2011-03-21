@@ -15,10 +15,7 @@
     <% } %>
     <% if (restrictedCount > 0) { %>
       <p class="publish_info publish_info_section selectable_text interface">
-        In order to have all documents shown in the set of documents, they 
-        must be made public. You can change the access level for a group 
-        of documents by selecting them and using the Edit menu in the 
-        toolbar.
+        Only public documents will be shown in the document set.
       </p>
     <% } %>
   </div>
@@ -43,10 +40,8 @@
   <div class="publish_section">
     <label>Search Bar:</label>
     <div class="public_section_input">
-      <input type="radio" name="search_bar" value="true" id="publish_option_search_bar_true" />
-      <label for="publish_option_search_bar_true">Show the search bar, which can be used by users to further filter the document set</label>
-      <input type="radio" name="search_bar" value="false" id="publish_option_search_bar_false" />
-      <label for="publish_option_search_bar_false">Hide the search bar</label>
+      <input type="checkbox" name="search_bar" id="publish_option_search_bar" />
+      <label for="publish_option_search_bar" class="publish_option_label_checkbox">Show the search bar, which can be used by users to further filter the document set</label>
     </div>
   </div>
 

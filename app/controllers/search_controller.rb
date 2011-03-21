@@ -23,7 +23,7 @@ class SearchController < ApplicationController
     _, params[:page], params[:per_page], params[:order] = *groups
     perform_search :include_facets => params[:include_facets]
     results             = {:query => @query, :documents => @documents}
-    results[:query]     = params[:q]
+    results[:query]     = params[:q] || ""
     results[:total]     = @query.total
     results[:page]      = @query.page
     results[:per_page]  = @query.per_page
