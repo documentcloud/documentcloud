@@ -142,7 +142,7 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
       to            : Math.min(options.page * options.per_page, options.total),
       title         : options.title,
       dc_url        : options.dc_url,
-      workspace_url : options.dc_url + "/#search/" + options.q
+      workspace_url : options.dc_url + "/#search/" + encodeURIComponent(options.q)
     }));
   },
   
