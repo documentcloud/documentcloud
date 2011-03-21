@@ -8,9 +8,10 @@ class LifecycleMailer < ActionMailer::Base
   # set their password, and log in.
   def login_instructions(account, admin=nil)
     subject     "Welcome to DocumentCloud"
-    from        [SUPPORT, admin && admin.email].compact
+    from        [admin && admin.email, SUPPORT].compact
     recipients  [account.email]
-    body        :account            => account,
+    body        :admin              => admin,
+                :account            => account,
                 :key                => account.security_key.key,
                 :organization_name  => account.organization_name
   end
