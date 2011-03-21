@@ -54,7 +54,7 @@ namespace :app do
   
   desc "Purges cached search embeds."
   task :purge_search_embed_cache do
-    sh "rm -fr ./public/search/documents/*"
+    sh "rm -fr ./public/search/embed/*"
   end
 
 end

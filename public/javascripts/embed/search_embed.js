@@ -2,12 +2,12 @@ window.dc = window.dc || {};
 window.dc.embed = window.dc.embed || {};
   
 dc.loadSearchEmbed = function(searchUrl, opts) {
-  var id = Inflector.sluggify(opts['originalQuery'] || opts['q']);
+  var id = Inflector.sluggify(opts.originalQuery || opts.q);
   
   dc.embed[id] = dc.embed[id] || {};
   dc.embed[id].options = opts = _.extend({}, {
     searchUrl     : searchUrl,
-    originalQuery : opts['originalQuery'] || opts['q'],
+    originalQuery : opts.originalQuery || opts.q,
     per_page      : 12,
     order         : 'score',
     search_bar    : true,
@@ -16,19 +16,19 @@ dc.loadSearchEmbed = function(searchUrl, opts) {
   }, opts);
   
   var api = {
-    q              : opts['q'],
-    per_page       : opts['per_page'],
-    order          : opts['order'],
-    page           : opts['page']
+    q              : opts.q,
+    per_page       : opts.per_page,
+    order          : opts.order,
+    page           : opts.page
   };
   var params = [
-    encodeURIComponent(api['q']),
+    encodeURIComponent(api.q),
     '/p-',
-    encodeURIComponent(api['page']),
+    encodeURIComponent(api.page),
     '-per-',
-    encodeURIComponent(api['per_page']),
+    encodeURIComponent(api.per_page),
     '-order-',
-    encodeURIComponent(api['order']),
+    encodeURIComponent(api.order),
     '.js'
   ].join('');
   $.getScript(searchUrl + params);
@@ -41,28 +41,29 @@ dc.loadSearchEmbedCallback = function(json) {
       return true;
     }
   });
-  dc.embed[id].options['id'] = id;
   _.extend(dc.embed[id].options, {
+    id       : id,
     total    : json.total,
     per_page : json.per_page,
-    page     : json.page
+    page     : json.page,
+    dc_url   : json.dc_url
   });
   
-  if (dc.embed[id].documents) {
+  if (dc.embed[id].isLoaded) {
     dc.embed[id].documents.refresh(json.documents);
   } else {
-    dc.embed[id].documents = new dc.EmbedDocumentSet(json.documents, dc.embed[id].options);
+    dc.embed[id].documents       = new dc.EmbedDocumentSet(json.documents, dc.embed[id].options);
+    dc.embed[id].workspace       = new dc.EmbedWorkspaceView(dc.embed[id].options);
+    dc.embed[id].originalOptions = _.clone(dc.embed[id].options);
+    dc.embed[id].isLoaded        = true;
   }
   
-  if (!dc.embed[id].workspace) {
-    dc.embed[id].workspace = new dc.EmbedWorkspaceView(dc.embed[id].options);
-  }
 };
 
 dc.EmbedDocument = Backbone.Model.extend({
 
   url : function() {
-    return this.get('resources')['published_url'] || this.get('canonical_url');
+    return this.get('resources').published_url || this.get('canonical_url');
   },
   
   isPrivate : function() {
@@ -96,7 +97,7 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
   
   initialize : function() {
     this.embed     = dc.embed[this.options.id];
-    this.container = $('#' + this.options['container']);
+    this.container = $('#' + this.options.container);
     this.embed.documents.bind('refresh', _.bind(this.renderDocuments, this));
     this.render();
   },
@@ -133,13 +134,15 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
       }, this));
     }
     this.$('.DC-paginator').removeClass('DC-is-editing').html(JST['paginator']({
-      total      : options.total,
-      per_page   : options.per_page,
-      page       : options.page,
-      page_count : Math.ceil(options.total / options.per_page),
-      from       : (options.page-1) * options.per_page,
-      to         : Math.min(options.page * options.per_page, options.total),
-      title      : options.title
+      total         : options.total,
+      per_page      : options.per_page,
+      page          : options.page,
+      page_count    : Math.ceil(options.total / options.per_page),
+      from          : (options.page-1) * options.per_page,
+      to            : Math.min(options.page * options.per_page, options.total),
+      title         : options.title,
+      dc_url        : options.dc_url,
+      workspace_url : options.dc_url + "/#search/" + options.q
     }));
   },
   
@@ -179,12 +182,11 @@ dc.EmbedWorkspaceView = Backbone.View.extend({
     
     if (query == '' && !force) {
       // Returning to original query, just use the cached original response.
-      this.embed.options = this.embed.originalOptions;
+      this.embed.options = _.clone(this.embed.originalOptions);
       this.embed.documents.refresh(this.embed.documents.originalModels);
     } else {
-      this.embed.originalOptions = _.extend({}, this.embed.options);
-      this.embed.options['q'] = this.embed.options['originalQuery'] + (query && (' ' + query));
-      dc.loadSearchEmbed(this.embed.options['searchUrl'], this.embed.options);
+      this.embed.options.q = this.embed.options.originalQuery + (query && (' ' + query));
+      dc.loadSearchEmbed(this.embed.options.searchUrl, this.embed.options);
     }
     
     this.showSearchCancel();
@@ -250,7 +252,7 @@ dc.EmbedDocumentTile = Backbone.View.extend({
   open : function(e) {
     e.preventDefault();
 
-    window.open(this.model.get('resources')['published_url'] || this.model.get('canonical_url'));
+    window.open(this.model.get('resources').published_url || this.model.get('canonical_url'));
 
     return false;
   }

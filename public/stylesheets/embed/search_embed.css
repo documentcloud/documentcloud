@@ -2,10 +2,28 @@
 /* = DC Reset = */
 /* ============ */
 
-.DC-search-embed a, .DC-search-embed a:link, .DC-search-embed a:visited, .DC-search-embed a:active {
+.DC-search-embed .DC-document-list a, 
+.DC-search-embed .DC-document-list a:link, 
+.DC-search-embed .DC-document-list a:visited, 
+.DC-search-embed .DC-document-list a:active {
   text-decoration: underline;
   color: #083789;
 }
+
+.DC-search-embed .DC-hidden {
+  visibility: hidden;
+}
+
+.DC-search-embed .DC-quiet-link {
+  white-space: nowrap;
+  cursor: pointer;
+  color: #999;
+  text-decoration: none;
+}
+  .DC-search-embed .DC-quiet-link:hover {
+    color: #000;
+    text-decoration: underline;
+  }
 
 /* ========================== */
 /* = Search Embed Workspace = */
@@ -138,7 +156,7 @@
   background-color: #FFF;
   outline: none;
 }
-  .DC-search-embed a.DC-document-tile {
+  .DC-search-embed .DC-document-list a.DC-document-tile {
     text-decoration: none;
   }
   .DC-search-embed .DC-document-tile:hover {
@@ -235,6 +253,9 @@
   text-align: right;
   border-top: 1px solid #ccc;
 }
+  .DC-search-embed .DC-paginator a img {
+    border: none;
+  }
   .DC-search-embed .DC-paginator .DC-logo img {
     height: 20px;
   }

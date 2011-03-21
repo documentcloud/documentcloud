@@ -1,14 +1,11 @@
 <% if (total > per_page) { %>
   <div class="DC-paginator-enumeration">
-    <% if (page > 1) { %>
-      <span class="DC-arrow DC-arrow-left">&larr;</span>
-    <% } %>
+      <span class="DC-arrow DC-arrow-left <% if (page <= 1) { %>DC-hidden<% } %>">&larr;</span>
       Page
       <input type="text" class="DC-page-edit" value="<%= page %>" />
-      <span class="DC-page-current"><%= page %></span> of <%= page_count %>
-    <% if (page < page_count) { %>
-      <span class="DC-arrow DC-arrow-right">&rarr;</span>
-    <% } %>
+      <span class="DC-page-current DC-quiet-link"><%= page %></span> of 
+      <%= page_count %>
+      <span class="DC-arrow DC-arrow-right <% if (page >= page_count) { %>DC-hidden<% } %>">&rarr;</span>
   </div>
 <% } %>
 
@@ -17,9 +14,13 @@
     <span class="DC-paginator-range"><%= '' + (from + 1) %> &ndash; <%= to %></span>
     of
   <% } %>
-  <%= total %> <%= Inflector.pluralize('document', total) %>
+  <a href="<%= workspace_url %>" title="View these documents on DocumentCloud" class="DC-quiet-link">
+    <%= total %> <%= Inflector.pluralize('document', total) %>
+  </a>
 </div>
 
 <div class="DC-logo">
-  <img src="/images/common/document_cloud_logo.png" />
+  <a href="<%= dc_url %>/home">
+    <img src="/images/common/document_cloud_logo.png" />
+  </a>
 </div>

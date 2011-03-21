@@ -28,6 +28,7 @@ class SearchController < ApplicationController
     results[:page]      = @query.page
     results[:per_page]  = @query.per_page
     results[:documents] = @documents.map {|d| d.canonical(API_OPTIONS) }
+    results[:dc_url]    = "#{DC.server_root(:ssl => false).sub('s3', 'www')}"
     js                  = "dc.loadSearchEmbedCallback(#{results.to_json});"
     cache_page js
     render :js => js

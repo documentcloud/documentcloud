@@ -35,7 +35,7 @@ ActionController::Routing::Routes.draw do |map|
       :unpublished  => :get
     }
 
-  map.search_embed "/search/documents/:q/:options.:format", 
+  map.search_embed "/search/embed/:q/:options.:format", 
                    :controller => :search, :action => :embed, :options => /p-(\d+)-per-(\d+)-order-(\w+)/
   
   map.pdf        "/documents/:id/:slug.pdf",            :controller => :documents, :action => :send_pdf
