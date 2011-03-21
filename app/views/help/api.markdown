@@ -60,7 +60,7 @@ entities      | include entities for the search in the results | true (defaults 
 
 ## POST /api/upload.json
 
-We offer a rudimentary API for bulk uploads. It exposes the same API that we use internally, but wraps it in HTTP Basic Authentication. Documents will be uploaded into the authenticated account.
+We offer a rudimentary API for bulk uploads. It exposes the same API that we use internally, but wraps it in basic authentication over HTTPS. Documents will be uploaded into the authenticated account.
 
 Parameter     | Description           |  Example
 --------------|-----------------------|--------------
@@ -183,7 +183,7 @@ document_ids | (optional) a list of documents that the project contains, by id |
 
 ## GET /api/projects.json
 
-Retrieve a list of project names and document ids. You must use HTTP Basic Authentication (preferably over SSL) in order to make this request. The projects listed belong to the authenticated account.
+Retrieve a list of project names and document ids. You must use basic authentication over HTTPS in order to make this request. The projects listed belong to the authenticated account.
 
 ### Example Response
 
