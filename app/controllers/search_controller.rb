@@ -2,7 +2,6 @@ class SearchController < ApplicationController
   include DC::Search::Controller
 
   before_filter :bouncer if Rails.env.staging?
-  before_filter :login_required, :only => [:preview]
 
   FIELD_STRIP = /\S+:\s*/
 

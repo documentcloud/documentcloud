@@ -16,9 +16,9 @@
 
   <div class="DC-embed-preview">
     <div id="DC-search-<%= @slug %>"></div>
-    <script src="<%= DC.server_root(:ssl => false) %>/search/loader.js"></script>
+    <script src="<%= DC.server_root %>/search/loader.js"></script>
     <script>
-      dc.loadSearchEmbed("<%= DC.server_root(:ssl => false) %>/search/embed/", <%= @options %>);
+      dc.loadSearchEmbed("<%= DC.server_root %>/search/embed/", <%= @options %>);
     </script>
   </div>
 

@@ -3,7 +3,7 @@
   if (window.dc && window.dc.loaded) return;
   window.dc = window.dc || {};
   
-  <% root = DC.server_root(:ssl => false) %>
+  <% root = DC.server_root %>
 
   var loadCSS = function(url, media) {
     var link   = document.createElement('link');
