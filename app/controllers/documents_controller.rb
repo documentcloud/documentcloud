@@ -14,13 +14,13 @@ class DocumentsController < ApplicationController
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
     return render :file => "#{Rails.root}/public/doc_404.html", :status => 404 unless doc
     respond_to do |format|
-      format.pdf  { redirect_to(doc.pdf_url) }
-      format.text { redirect_to(doc.full_text_url) }
       format.html do
         populate_editor_data if current_account
         return if date_requested?
         return if entity_requested?
       end
+      format.pdf  { redirect_to(doc.pdf_url) }
+      format.text { redirect_to(doc.full_text_url) }
       format.json do
         @response = doc.canonical
         json_response
