@@ -91,7 +91,9 @@ class ApplicationController < ActionController::Base
   end
 
   def secure_only
-    redirect_to :protocol => 'https://' if !request.ssl?
+    if !request.ssl? && request.format.html?
+      redirect_to DC.server_root(:force_ssl => true) + request.request_uri
+    end
   end
 
   def current_account
