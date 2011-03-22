@@ -8,7 +8,6 @@ dc.ui.ReorderPagesEditor = dc.ui.EditorToolbar.extend({
   },
 
   initialize : function(options) {
-    _.bindAll(this, 'postOpen');
     this.editor = options.editor;
   },
 
