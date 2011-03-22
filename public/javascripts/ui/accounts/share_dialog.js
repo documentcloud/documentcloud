@@ -13,8 +13,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     'click .minibutton.add':                   '_submitAddReviewer',
     'click .remove_reviewer':                  '_removeReviewer',
     'click .resend_reviewer':                  '_resendInstructions',
-    'click .show_custom_email':                '_showCustomEmail',
-    'click .hide_custom_email':                '_hideCustomEmail',
     'keypress .reviewer_management_email':     '_maybeAddReviewer',
     'keypress .reviewer_management_firstname': '_maybeAddReviewer',
     'keypress .reviewer_management_lastname':  '_maybeAddReviewer'
@@ -28,7 +26,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
 
   initialize : function(options) {
-    _.bindAll(this, '_renderReviewers', '_refreshReviewers', '_cancelAddReviewer',
+    _.bindAll(this, '_renderReviewers', '_refreshReviewers',
                     '_onAddSuccess', '_onAddError', '_onRemoveSuccess', '_onRemoveError',
                     '_showEnterEmail', '_nextStep');
     this.renderedAccounts = {};
