@@ -358,7 +358,8 @@ class Document < ActiveRecord::Base
   end
 
   def canonical_path(format = :json)
-    "documents/#{canonical_id}.#{format}"
+    suffix = format == :html ? '' : ".#{format}"
+    "documents/#{canonical_id}#{suffix}"
   end
 
   def canonical_cache_path
