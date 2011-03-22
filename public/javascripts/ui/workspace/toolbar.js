@@ -14,7 +14,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     Backbone.View.call(this, options);
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'openPages', 'openEmbedDialog',
+      'editRelatedArticle', 'editAccess', 'openEmbedDialog',
       'openPublicationDateDialog', 'requestDownloadViewers', 'checkFloat',
       '_openTimeline', '_viewEntities', 'editPublishedUrl', 'openShareDialog',
       '_markOrder', '_removeFromSelectedProject', '_enableAnalyzeMenu');
