@@ -109,7 +109,7 @@
     color: #f00;
     margin-top: 5px;
   }
-  
+
 /* ======================= */
 /* = Search Embed Dialog = */
 /* ======================= */
@@ -152,36 +152,31 @@
     margin-left: 8px;
   }
 
+.search_embed_dialog .publish_config {
+  margin: 20px 0;
+}
 .search_embed_dialog .publish_section {
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   clear: both;
   overflow: hidden;
 }
-  .search_embed_dialog .publish_description {
-    margin: -10px 0 16px;
-    font-size: 11px;
-  }
   .search_embed_dialog .publish_info {
     font-size: 11px;
     color: #ccc;
-    clear: both;
-    line-height: 15px;
-    margin-left: 150px;
   }
-    .search_embed_dialog .publish_info.publish_info_section {
-      margin-left: 0;
-    }
   .search_embed_dialog .publish_prepare_input {
     margin: 0 0 2px 0;
     overflow: hidden;
   }
     .search_embed_dialog input {
       float: left;
-      margin: 4px 8px 0 24px;
     }
     .search_embed_dialog label {
       float: left;
+      display: inline-block;
+      line-height: 25px;
+      width: 150px;
     }
 
   .search_embed_dialog textarea.snippet {
@@ -202,66 +197,41 @@
   .search_embed_dialog .publish_prepare_section_label {
     margin: 0 0 4px 0;
   }
-.search_embed_dialog .publish_option_sidelabel {
+.search_embed_dialog .sidelabel {
   font-size: 10px;
-  color: #A0A0A0;
-  float: left;
-  margin: 6px 0 0 6px;
-  text-transform: uppercase;
+  line-height: 24px;
+  color: #999;
+  margin: 0 0 0 10px;
+  display: inline;
+  width: auto;
+  float: none;
 }
-.search_embed_dialog .publish_step_1 {
-  
-} 
-  .search_embed_dialog .publish_step_1 label {
-    display: inline-block;
-    font-weight: bold;
-    line-height: 25px;
-    margin-bottom: 4px;
-    width: 150px;
-    float: left;
-  }
-  .search_embed_dialog .public_section_input,
-  .search_embed_dialog .publish_step_1 select,
-  .search_embed_dialog .publish_step_1 input {
-      margin: 4px 0 0;
-      float: left;
-  }
-  .search_embed_dialog .publish_step_1 input[type=text] {
-    width: 30px;
-  }
-  .search_embed_dialog .publish_step_1 input[type=radio] {
-    clear: both;
-    float: left;
-    margin: 2px 4px 0 0;
-  }
-  .search_embed_dialog .publish_step_1 input.input_title {
-    width: 250px;
-  }
-  .search_embed_dialog .publish_step_1 select {
-    width: 120px;
-  }
-  .search_embed_dialog .public_section_input label {
-    width: 300px;
-    line-height: 15px;
+.search_embed_dialog .publish_step_1 input[type=text] {
+  width: 30px;
+}
+.search_embed_dialog input[type="checkbox"] {
+  margin-top: 7px;
+}
+.search_embed_dialog .publish_step_1 input.input_title {
+  width: 250px;
+}
+.search_embed_dialog .publish_step_1 select {
+  margin-top: 5px;
+  width: 120px;
+}
+.search_embed_dialog .publish_step_1 .dimensions {
+  font-size: 11px;
+  position: absolute;
+  left: 290px;
+  top: 1px;
+}
+  .search_embed_dialog .publish_step_1 .dimensions label {
     font-weight: normal;
-    margin-bottom: 6px;
+    margin-left: 10px;
   }
-  .search_embed_dialog .public_section_input .publish_option_label_checkbox {
-    margin: 3px 0 0 6px;
-  }
-  .search_embed_dialog .publish_step_1 .dimensions {
+  .search_embed_dialog .publish_step_1 .dimensions input {
     font-size: 11px;
-    position: absolute;
-    left: 290px;
-    top: 1px;
+    margin: 0 5px;
+    float: none;
+    position: static;
   }
-    .search_embed_dialog .publish_step_1 .dimensions label {
-      font-weight: normal;
-      margin-left: 10px;
-    }
-    .search_embed_dialog .publish_step_1 .dimensions input {
-      font-size: 11px;
-      margin: 0 5px;
-      float: none;
-      position: static;
-    }

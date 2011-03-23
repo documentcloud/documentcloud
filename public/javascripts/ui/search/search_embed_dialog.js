@@ -19,7 +19,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   totalSteps : 2,
 
   STEPS : [null,
-    'Step One: Configure the Document Set',
+    'Step One: Configure the Embedded Documents',
     'Step Two: Copy and Paste the Embed Code'
   ],
 
@@ -32,7 +32,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     title      : null,
     q          : ''
   },
-  
+
   constructor : function(docs) {
     this.query       = dc.app.searcher.publicQuery() || "";
     this.currentStep = 1;
@@ -40,12 +40,12 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     if (docs.length) {
       this.query = _.map(docs, function(doc){ return 'document: ' + doc.canonicalId(); }).join(' ');
     }
-    
+
     dc.ui.Dialog.call(this, {mode : 'custom', title : this.displayTitle()});
     dc.ui.spinner.show();
     this.fetchCounts();
   },
-  
+
   fetchCounts : function() {
     $.ajax({
       url  : '/search/restricted_count.json',
@@ -149,7 +149,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     var perPage = this._perPageEl.val();
     var $label  = this.$('.publish_option_perpage_sidelabel');
     var label;
-    
+
     if (!perPage || !parseInt(perPage, 10)) {
       label = '&nbsp;';
     } else {
@@ -157,26 +157,26 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
       var label = [
         this.publicCount,
         Inflector.pluralize(' document', this.publicCount),
-        pages==1 ? ' on ' : ' over ',
+        ' / ',
         pages,
         Inflector.pluralize(' page', pages)
       ].join('');
     }
-    
+
     $label.html(label);
   },
 
   _validatePerPage : function() {
     var $perPage = this.$('input[name=per_page]');
     var perPage  = $perPage.val();
-    
+
     if (perPage.length == 0) perPage = this.DEFAULT_OPTIONS['per_page'];
     if (perPage <= 0)        perPage = this.DEFAULT_OPTIONS['per_page'];
     if (perPage > 100)       perPage = 100;
-    
+
     $perPage.val(perPage);
   },
-  
+
   nextStep : function() {
     this.currentStep += 1;
     if (this.currentStep > this.totalSteps) return this.close();
@@ -206,7 +206,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   selectSnippet : function() {
     this.$('.snippet').select();
   },
-  
+
   changeAccess : function() {
     var restrictedQuery = this.query;
     if (restrictedQuery.indexOf('filter:restricted') == -1) {

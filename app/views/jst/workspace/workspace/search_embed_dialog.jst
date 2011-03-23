@@ -1,58 +1,60 @@
 <div class="publish_step publish_step_1 is_enabled">
   
-  <div class="publish_section publish_description">
+  <div class="publish_section publish_info">
     <% if (restrictedCount == 0) { %>
-      This document set will contain <%= documentsCount %> 
-      <%= Inflector.pluralize('document', documentsCount) %>.
+      There are <%= documentsCount %> 
+      <%= Inflector.pluralize('document', documentsCount) %>
+      that will be embedded.
     <% } else { %>
-      This document set will show 
+      This set of documents will only show 
       <%= publicCount %> of <%= documentsCount %> 
       <%= Inflector.pluralize('document', documentsCount) %>.
       <span class="publish_section text_link change_access">
         View the <%= restrictedCount %> private 
-        <%= Inflector.pluralize('document', restrictedCount) %>
+        <%= Inflector.pluralize('document', restrictedCount) %>.
       </span>
     <% } %>
-    <% if (restrictedCount > 0) { %>
-      <p class="publish_info publish_info_section selectable_text interface">
-        Only public documents will be shown in the document set.
-      </p>
-    <% } %>
   </div>
   
-  <div class="publish_section">
-    <label for="publish_option_input_title">Title: </label>
-    <input id="publish_option_input_title" class="input_title" name="title" />
-    <span class="publish_option_sidelabel">optional</span>
-  </div>
-
-  <div class="publish_section">
-    <label for="publish_option_order">Order documents by:</label>
-    <select id="publish_option_order" class="embed_order" name="order">
-      <option value="title">Title</option>
-      <option value="score">Relevance</option>
-      <option value="created_at">Date Uploaded</option>
-      <option value="source">Source</option>
-      <option value="page_count">Length</option>
-    </select>
-  </div>
+  <div class="publish_config">
   
-  <div class="publish_section">
-    <label>Search Bar:</label>
-    <div class="public_section_input">
-      <input type="checkbox" name="search_bar" id="publish_option_search_bar" />
-      <label for="publish_option_search_bar" class="publish_option_label_checkbox">Show the search bar, which can be used by users to further filter the document set</label>
+    <div class="publish_section">
+      <label for="publish_option_input_title">Title: </label>
+      <div class="text_input dark small">
+        <input id="publish_option_input_title" class="input_title" name="title" />
+      </div>
+      <span class="sidelabel">(optional)</span>
     </div>
-  </div>
-
-  <div class="publish_section">
-    <label for="publish_option_per_page">Documents per page:</label>
-    <input id="publish_option_per_page" class="per_page" name="per_page" type="text" />
-    <span class="publish_option_sidelabel publish_option_perpage_sidelabel"></span>
+    
+    <div class="publish_section">
+      <label for="publish_option_order">Order documents by:</label>
+      <select id="publish_option_order" class="embed_order" name="order">
+        <option value="title">Title</option>
+        <option value="score">Relevance</option>
+        <option value="created_at">Date Uploaded</option>
+        <option value="source">Source</option>
+        <option value="page_count">Length</option>
+      </select>
+    </div>
+    
+    <div class="publish_section">
+      <label for="publish_option_per_page">Documents per page:</label>
+      <div class="text_input dark small">
+        <input id="publish_option_per_page" class="per_page" name="per_page" type="text" />
+      </div>
+      <span class="sidelabel publish_option_perpage_sidelabel"></span>
+    </div>
+    
+    <div class="publish_section search_bar">
+      <label>Search Bar:</label>
+      <input type="checkbox" name="search_bar" id="publish_option_search_bar" />
+      <label for="publish_option_search_bar" class="sidelabel">Show a search bar for filtering the set of documents</label>
+    </div>
+  
   </div>
   
   <div class="publish_section">
-    <p class="publish_info publish_info_section selectable_text interface">
+    <p class="publish_info selectable_text interface">
       Before continuing, please take a moment to
       <span class="text_link preview">preview the document set</span>.
     </p>
