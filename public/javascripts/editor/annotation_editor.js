@@ -159,8 +159,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
   updateAnnotation : function(anno) {
     var url     = this._baseURL + '/' + anno.server_id;
     var params  = this.annotationToParams(anno, {_method : 'put'});
-    var success = _.bind(this._afterNoteSave, this, currentDocument.activeAnnotation);
-    $.ajax({url : url, type : 'POST', data : params, dataType : 'json', success: success});
+    $.ajax({url : url, type : 'POST', data : params, dataType : 'json'});
   },
 
   deleteAnnotation : function(anno) {
@@ -170,7 +169,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       this._adjustNoteCount(-1);
     }, this)});
   },
-  
+
   _adjustNoteCount : function(num) {
     try {
       var id = parseInt(currentDocument.api.getId(), 10);
