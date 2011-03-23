@@ -2,9 +2,16 @@
 <html>
 <head>
   <title></title>
-  <%= include_stylesheets(:search_embed) %>
+  <link href="/stylesheets/embed/search_embed.css?1300918781" media="screen" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/vendor/underscore-1.1.5.js?1300890908" type="text/javascript"></script>
+  <script src="/javascripts/vendor/jquery-1.5.1.js?1299509288" type="text/javascript"></script>
+  <script src="/javascripts/vendor/backbone-0.3.4pre.js?1300918781" type="text/javascript"></script>
+  <script src="/javascripts/lib/jquery_placeholder.js?1300918780" type="text/javascript"></script>
+  <script src="/javascripts/embed/search_embed.js?1300918780" type="text/javascript"></script>
+  <script>
+    window._ = dc._;
+  </script>
   <%= include_javascripts(:search_embed) %>
-  <% Jammit.load_configuration('config/assets.yml') %>
 </head>
 <body style="margin:0; padding:0;">
   <div class="DC-embed-preview">

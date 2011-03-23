@@ -1,1 +1,0 @@
-dc.jQuery = jQuery.noConflict();

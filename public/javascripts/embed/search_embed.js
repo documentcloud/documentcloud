@@ -1,8 +1,10 @@
 (function() {
-  window.dc = window.dc || {};
+  window.dc   = window.dc || {};
   window.dc.embed = window.dc.embed || {};
-  var _ = dc._;
-  var $ = dc.jQuery;
+
+  var _ = dc._        = window._.noConflict();
+  var $ = dc.jQuery   = window.jQuery.noConflict(true);
+  dc.Backbone         = Backbone.noConflict();
   
   dc.loadSearchEmbed = function(searchUrl, opts) {
     var id = dc.Inflector.sluggify(opts.originalQuery || opts.q);
