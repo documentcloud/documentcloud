@@ -1,0 +1,19 @@
+javascript_compressor: closure
+template_function: dc._.template
+embed_assets: datauri
+
+javascripts:
+  search_embed:
+    - public/javascripts/vendor/underscore-*.js
+    - public/javascripts/vendor/jquery-*.js
+    - public/javascripts/vendor/backbone-*.js
+    - public/javascripts/noconflict/underscore.noconflict.js
+    - public/javascripts/noconflict/jquery.noconflict.js
+    - public/javascripts/noconflict/backbone.noconflict.js
+    - public/javascripts/lib/jquery_placeholder.js
+    - public/javascripts/embed/search_embed.js
+    - app/views/jst/embed/*.jst
+
+stylesheets:
+  search_embed:
+    - public/stylesheets/embed/search_embed.css

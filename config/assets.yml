@@ -22,6 +22,9 @@ javascripts:
     - public/javascripts/vendor/underscore-*.js
     - public/javascripts/vendor/jquery-*.js
     - public/javascripts/vendor/backbone-*.js
+    - public/javascripts/vendor/underscore.noconflict.js
+    - public/javascripts/vendor/jquery.noconflict.js
+    - public/javascripts/vendor/backbone.noconflict.js
     - public/javascripts/lib/inflector.js
     - public/javascripts/lib/jquery_placeholder.js
     - public/javascripts/embed/search_embed.js

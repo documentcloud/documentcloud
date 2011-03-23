@@ -15,7 +15,7 @@
     of
   <% } %>
   <a href="<%= workspace_url %>" title="View these documents on DocumentCloud" class="DC-quiet-link">
-    <%= total %> <%= Inflector.pluralize('document', total) %>
+    <%= total %> <%= total==1 ? 'document' : 'documents' %>
   </a>
 </div>
 
