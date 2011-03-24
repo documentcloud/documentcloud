@@ -20,20 +20,14 @@
       title         : null
     }, opts);
 
-    var api = {
-      q              : opts.q,
-      per_page       : opts.per_page,
-      order          : opts.order,
-      page           : opts.page
-    };
     var params = [
-      encodeURIComponent(api.q),
+      encodeURIComponent(opts.q.replace(/\?/g, '')),
       '/p-',
-      encodeURIComponent(api.page),
+      encodeURIComponent(opts.page),
       '-per-',
-      encodeURIComponent(api.per_page),
+      encodeURIComponent(opts.per_page),
       '-order-',
-      encodeURIComponent(api.order),
+      encodeURIComponent(opts.order),
       '.js'
     ].join('');
     $.getScript(searchUrl + params);
