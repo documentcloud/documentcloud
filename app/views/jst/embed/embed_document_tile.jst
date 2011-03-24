@@ -5,5 +5,7 @@
     <div class="DC-icon DC-icon-lock"></div>
     <%= dc.Inflector.truncateWords(doc.get('title'), titleWidth) %>
   </div>
-  <div class="DC-document-description"><%= dc.Inflector.truncateWords(doc.get('description') || "", descriptionWidth) %></div>
+  <div class="DC-document-description">
+    <%= dc.Inflector.truncateWords(dc.Inflector.stripTags(doc.get('description') || ""), descriptionWidth) %>
+  </div>
 </a>

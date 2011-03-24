@@ -94,6 +94,10 @@
         }
       }
       return s;
+    },
+
+    stripTags : function(s) {
+      return s.replace(/<\w+(\s*("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
     }
 
   };
@@ -290,13 +294,11 @@
     },
 
     fitTitleWidth : function(width) {
-      // Wolfram Alpha: linear fit (490, 115), (285, 65), (210, 45)
-      return Math.floor(.248711*width - 10);
+      return Math.floor(0.28 * width - 10);
     },
 
     fitDescriptionWidth : function(width) {
-      // Wolfram Alpha: linear fit (490, 180), (285, 110), (210, 70)
-      return Math.floor(.381991*width - 10);
+      return Math.floor(0.55 * width - 10);
     },
 
     open : function(e) {

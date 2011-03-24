@@ -18,7 +18,6 @@
 .DC-search-embed .DC-document-list a:visited,
 .DC-search-embed .DC-document-list a:active {
   text-decoration: underline;
-  color: #083789;
 }
 
 .DC-search-embed .DC-hidden {
@@ -28,7 +27,7 @@
 .DC-search-embed .DC-quiet-link {
   white-space: nowrap;
   cursor: pointer;
-  color: #999;
+  color: #777;
   text-decoration: none;
 }
   .DC-search-embed .DC-quiet-link:hover {
@@ -107,7 +106,7 @@
     font-size: 16px;
     line-height: 18px;
     width: 100%;
-    color: #999999;
+    color: #555;
     font-size: 13px;
     font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif !important;
     width: 100%;
@@ -195,34 +194,30 @@
   .DC-search-embed .DC-document-thumbnail-select {
     position: absolute;
     margin: 0 6px 4px 0;
-    background-color: #E0E0E0;
+    background-color: #e0e0e0;
     width: 63px;
     height: 78px;
     left: 6px;
     top: 6px;
   }
     .DC-search-embed .DC-document-tile:hover .DC-document-thumbnail-select {
-    background-color: #C7C7C7;
+    background-color: #c7c7c7;
     }
   .DC-search-embed .DC-document-title {
-    color: #303030;
-    font-size: 16px;
+    color: #333;
+    font-size: 14px;
     font-weight: bold;
-    line-height: 20px;
-    margin: 2px 0 4px 0;
+    line-height: 17px;
+    margin: 2px 0 6px 0;
   }
     .DC-search-embed .DC-document-tile:hover .DC-document-title {
       text-decoration: underline;
-      color: #083789;
     }
   .DC-search-embed .DC-document-description {
-    color: #808080;
+    color: #555;
     font-family: Georgia;
     font-size: 12px;
-    line-height: 16px;
-  }
-  .DC-search-embed .DC-document-tile.DC-document-private {
-/*    opacity: .3;*/
+    line-height: 14px;
   }
   .DC-search-embed .DC-document-tile .DC-icon-lock {
     display: none;
@@ -261,7 +256,7 @@
   font-size: 11px;
   line-height: 18px;
   height: 18px;
-  color: #999;
+  color: #777;
   border-top: 1px solid #ccc;
   position: relative;
 }
@@ -301,7 +296,7 @@
       font-size: 11px;
       height: 16px;
       text-align: center;
-      color: #999;
+      color: #777;
       padding: 0;
       border: 1px solid #C0C0C0
     }

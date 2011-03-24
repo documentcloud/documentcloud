@@ -1,13 +1,7 @@
 <script type="text/javascript">
 window.RAILS_ENV = '<%= RAILS_ENV %>';
 window.SERVER_ROOT = '<%= DC.server_root %>';
-<% if @current_account %>
-  dc.account = {
-    id            : <%= @current_account.id %>,
-    hasDocuments  : <%= @has_documents.to_json %>,
-    organization  : <%= @current_organization.to_json %>
-  };
-<% end %>
+window.SERVER_ROOT_HTTP = '<%= DC.server_root(:ssl => false) %>';
 <% if workspace %>
   Organizations.refresh(<%= @organizations.to_json %>);
   <% if @current_account %>

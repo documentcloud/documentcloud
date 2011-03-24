@@ -6,7 +6,7 @@
   <meta http-equiv="ClearType" content="true" />
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <title><%= @query %></title>
-  
+
   <% if Rails.env.production? %>
     <% @pageview_url = '/search/preview' %>
     <%= render :partial => 'common/google' %>
@@ -16,9 +16,9 @@
 
   <div class="DC-embed-preview">
     <div id="DC-search-<%= @slug %>"></div>
-    <script src="<%= DC.server_root %>/search/loader.js"></script>
+    <script src="<%= DC.server_root(:ssl => false) %>/search/loader.js"></script>
     <script>
-      dc.loadSearchEmbed("<%= DC.server_root %>/search/embed/", <%= @options %>);
+      dc.loadSearchEmbed("<%= DC.server_root(:ssl => false) %>/search/embed/", <%= @options %>);
     </script>
   </div>
 

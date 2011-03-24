@@ -19,7 +19,7 @@
     <div id="embed_1"></div>
 
     <script type="text/javascript">
-      dc.loadSearchEmbed('<%= DC.server_root %>/search/embed/', {
+      dc.loadSearchEmbed('<%= DC.server_root(:ssl => false) %>/search/embed/', {
         q: 'john',
         order: 'title',
         container: 'embed_1',
@@ -31,7 +31,7 @@
     <div id="embed_2"></div>
 
     <script type="text/javascript">
-      dc.loadSearchEmbed('<%= DC.server_root %>/search/embed/', {
+      dc.loadSearchEmbed('<%= DC.server_root(:ssl => false) %>/search/embed/', {
         q: 'states',
         order: 'score',
         container: 'embed_2',
