@@ -27,8 +27,11 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     'Step Three: Copy and Paste the Embed Code'
   ],
 
-  DEMO_ERROR : 'Demo accounts are not allowed to embed documents. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.',
-  
+  DEMO_ERROR : 'Demo accounts are not allowed to embed documents. ' +
+               '<a href="/contact">Contact us</a> if you need a full ' +
+               'featured account. View an example of the embed code ' +
+               '<a href="/help/publishing">here</a>.',
+
   DEFAULT_OPTIONS : {
     width   : null,
     height  : null,
@@ -67,7 +70,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
   // The first step is always custom for the document.
   displayTitle : function() {
-    if (this.currentStep == 1) return 'Step One: Review "' + 
+    if (this.currentStep == 1) return 'Step One: Review "' +
                                       Inflector.truncate(this.model.get('title'), 25) + '"';
     return this.STEPS[this.currentStep];
   },
@@ -174,12 +177,12 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     var options       = this.embedOptions();
     options.container = '"#DV-viewer-' + this.model.canonicalId() + '"';
     var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
-    this.$('.publish_embed_code').html(JST['document/embed_dialog']({
+    this.$('.publish_embed_code').html(JST['document/embed_code']({
       doc: this.model,
       options: serialized.join(',&#10;    ')
     }));
   },
-  
+
   // After every keystroke or input change, check if the viewer size has been set.
   _toggleDimensions : function() {
     this.$('.dimensions').toggle(this._viewerSizeEl.val() == 'fixed');
@@ -188,7 +191,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
   // On step 1, if a user changes any document attributes, save them and only
   // continue to step 2 if there are no model errors.
   saveUpdatedAttributes : function() {
-    var access = this.$('input[name=access_level]').is(':checked') ? 
+    var access = this.$('input[name=access_level]').is(':checked') ?
                  dc.access.PUBLIC : this.model.get('access');
     var relatedArticle = this.$('input[name=related_article]').removeClass('error').val();
     var remoteUrl      = this.$('input[name=remote_url]').removeClass('error').val();
