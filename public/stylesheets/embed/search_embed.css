@@ -17,6 +17,7 @@
 .DC-search-embed .DC-document-list a:link,
 .DC-search-embed .DC-document-list a:visited,
 .DC-search-embed .DC-document-list a:active {
+  color: #555599;
   text-decoration: underline;
 }
 
@@ -52,12 +53,14 @@
   padding: 0 0 0 75px;
   height: 77px;
   font-size: 14px;
-  line-height: 90px;
   color: #555;
 }
   .DC-search-embed .DC-no-results .DC-icon {
     position: absolute;
     top: 10px; left: 0px;
+  }
+  .DC-search-embed .DC-explanation {
+    padding-top: 30px;
   }
 
 .DC-search-embed .DC-document-list {
@@ -106,7 +109,7 @@
     font-size: 16px;
     line-height: 18px;
     width: 100%;
-    color: #555;
+    color: #000;
     font-size: 13px;
     font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif !important;
     width: 100%;
