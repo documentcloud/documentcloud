@@ -63,11 +63,11 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     if (page > max) page = max;
     this.search(this.searchBox.value(), page, callback);
   },
-  
+
   publicQuery : function() {
     var projectName;
     var query = this.box.value();
-    
+
     // Swap out project
     var projects = [];
     while (projectName = dc.app.SearchParser.extractProject(query)) {
@@ -75,7 +75,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
       projects.push(Projects.find(projectName));
     }
     query = _.map(projects, function(p) { return 'projectid: ' + p.slug(); }).join(' ') + query;
-    
+
     return query;
   },
 
