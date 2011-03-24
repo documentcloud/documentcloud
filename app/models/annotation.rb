@@ -64,15 +64,18 @@ class Annotation < ActiveRecord::Base
       WHERE annotations.id in (#{notes.map(&:id).join(',')})
     EOS
     rows = Account.connection.select_all(account_sql)
-    account_map = rows.inject({}) {|memo, acc| memo[acc['id'].to_i] = acc; memo }
+    account_map = rows.inject({}) do |memo, acc| 
+      memo[acc['id'].to_i] = acc unless acc.nil?
+      memo
+    end
     notes.each do |note|
       author = account_map[note.account_id]
       note.author = {
-        :full_name         => "#{author['first_name']} #{author['last_name']}",
-        :account_id        => author['id'].to_i,
+        :full_name         => author ? "#{author['first_name']} #{author['last_name']}" : "Unattributed",
+        :account_id        => note.account_id,
         :owns_note         => current_account && current_account.id == note.account_id
       }
-      if [Account::ADMINISTRATOR, Account::CONTRIBUTOR].include?(author['role'].to_i)
+      if author && [Account::ADMINISTRATOR, Account::CONTRIBUTOR].include?(author['role'].to_i)
         note.author[:organization_name] = author['organization_name']
       end
     end
