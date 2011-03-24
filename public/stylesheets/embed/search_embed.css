@@ -13,9 +13,9 @@
   vertical-align: baseline;
 }
 
-.DC-search-embed .DC-document-list a, 
-.DC-search-embed .DC-document-list a:link, 
-.DC-search-embed .DC-document-list a:visited, 
+.DC-search-embed .DC-document-list a,
+.DC-search-embed .DC-document-list a:link,
+.DC-search-embed .DC-document-list a:visited,
 .DC-search-embed .DC-document-list a:active {
   text-decoration: underline;
   color: #083789;
@@ -69,7 +69,7 @@
  font-family: "Lucida Grande","Lucida Sans Unicode", Helvetica, Arial;
 }
 
-.DC-search-embed .DC-title { 
+.DC-search-embed .DC-title {
   font-size: 24px;
   margin: 6px 0 18px;
   font-weight: bold;
@@ -91,22 +91,22 @@
   .DC-search-embed .DC-text-input .DC-placeholder {
     position: absolute;
     cursor: text;
-    left: 1px; 
+    left: 1px;
     top: 5px;
     color: #c0c0c0;
     font-size: 13px;
     line-height: 18px;
-  }  
+  }
   .DC-search-embed .DC-text-input input {
     display: block;
     border: none;
     outline: none;
-    margin: 0; 
+    margin: 0;
     padding: 4px;
     background: transparent;
     font-size: 16px;
     line-height: 18px;
-    width: 100%;    
+    width: 100%;
     color: #999999;
     font-size: 13px;
     font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif !important;
@@ -151,7 +151,7 @@
       .DC-search-embed.DC-query-original .DC-cancel-search {
         display: none;
       }
-    
+
 /* ================== */
 /* = Document Tiles = */
 /* ================== */
@@ -343,7 +343,7 @@
     background-position: center -11px;
   }
 .DC-icon.DC-document {
-  width: 60px; 
+  width: 60px;
   height: 75px;
   background-image: url(/images/embed/documents/generic.png);
   border: 0;
@@ -360,7 +360,7 @@
 
 .DC-embed-preview {
   width: 900px;
-  margin: 80px auto 40px;
+  margin: 50px auto;
 }
   .DC-embed-preview .DC-search-embed {
     margin: 40px 0;
