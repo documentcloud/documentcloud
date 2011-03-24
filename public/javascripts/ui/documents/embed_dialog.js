@@ -52,6 +52,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     this._viewerSizeEl  = this.$('select[name=viewer_size]');
     this._sidebarEl     = this.$('input[name=sidebar]');
     this._showTextEl    = this.$('input[name=show_text]');
+    this._showPDFEl     = this.$('input[name=show_pdf]');
     this._openToEl      = this.$('.open_to');
     if (dc.app.preferences.get('embed_options')) this._loadPreferences();
     this.setMode('embed', 'dialog');
@@ -96,6 +97,7 @@ dc.ui.EmbedDialog = dc.ui.Dialog.extend({
     }
     if (!this._sidebarEl.is(':checked'))  options.sidebar = false;
     if (!this._showTextEl.is(':checked')) options.text    = false;
+    if (!this._showPDFEl.is(':checked'))  options.pdf     = false;
     if (openToPage) options.page = parseInt(openToPage, 10);
     if (openToNote) {
       var note = this.model.notes.get(parseInt(openToNote, 10));

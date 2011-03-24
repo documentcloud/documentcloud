@@ -57,7 +57,7 @@
 <div class="publish_step publish_step_2">
 
   <div class="publish_section">
-    <label>Document Viewer Size:</label>
+    <label>Document viewer size:</label>
     <select name="viewer_size">
       <option value="full" selected="selected">Full Page</option>
       <option value="fixed">Fixed Size</option>
@@ -81,7 +81,7 @@
   </div>
 
   <div class="publish_section">
-    <label for="publish_option_text">Viewer Opens to:</label>
+    <label for="publish_option_text">Viewer opens to:</label>
     <select class="viewer_open_to" name="viewer_open_to">
       <option value="first_page">First Page</option>
       <option value="page">Page ...</option>
@@ -97,7 +97,7 @@
 
   <div class="publish_section">
     <input id="publish_option_sidebar" type="checkbox" name="sidebar" checked />
-    <label for="publish_option_sidebar">Show the Sidebar:</label>
+    <label for="publish_option_sidebar">Show the sidebar:</label>
     <p class="dialog_info selectable_text interface">
       If your layout has limited horizontal space, uncheck this box to hide the sidebar.
     </p>
@@ -105,9 +105,17 @@
 
   <div class="publish_section">
     <input id="publish_option_text" type="checkbox" name="show_text" checked />
-    <label for="publish_option_text">Show the Text Tab:</label>
+    <label for="publish_option_text">Show the text tab:</label>
     <p class="dialog_info selectable_text interface">
       If the quality of the document's text is poor, uncheck this box to hide the text tab.
+    </p>
+  </div>
+
+  <div class="publish_section">
+    <input id="publish_option_pdf" type="checkbox" name="show_pdf" checked />
+    <label for="publish_option_pdf">Link to the original PDF:</label>
+    <p class="dialog_info selectable_text interface">
+      If this document is sensitive or exclusive, uncheck this box to remove the PDF link.
     </p>
   </div>
 
