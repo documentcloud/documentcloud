@@ -83,7 +83,7 @@
 /* ========== */
 
 .DC-search-embed .DC-search {
-  margin: 0 0 18px;
+  margin: 0 0 15px;
 }
 .DC-search-embed .DC-text-input {
   position: relative;
@@ -164,7 +164,7 @@
   width: 230px;
   border: 1px solid transparent;
   height: 86px;
-  margin: 2px 8px 12px 0;
+  margin: 0 15px 15px 0;
   padding: 0 0 0 80px;
   position: relative;
   overflow: hidden;
@@ -256,7 +256,7 @@
 
 .DC-search-embed .DC-paginator {
   padding: 6px 0 0;
-  margin: 4px 0 0 0;
+  margin: 0;
   font-size: 11px;
   line-height: 18px;
   height: 18px;

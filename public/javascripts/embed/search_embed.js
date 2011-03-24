@@ -149,11 +149,8 @@
       this.search.placeholder({className: 'DC-placeholder DC-interface'});
       this.renderDocuments();
       this.showSearchCancel();
-      if (!this.originalHeight) {
-        var $list = $('.DC-document-list', this.el);
-        this.originalHeight = $list.height();
-        $list.height(this.originalHeight);
-      }
+      var listEl = $('.DC-document-list', this.el);
+      listEl.height(listEl.height());
     },
 
     renderDocuments : function() {
@@ -187,7 +184,7 @@
     calculateTileWidth : function() {
       var pageWidth      = $(this.el).width();
       var minWidth       = 300;
-      var padding        = 90;
+      var padding        = 97;
       var remainingWidth = pageWidth % minWidth;
       var tilesPerRow    = Math.floor(pageWidth / minWidth);
       var width          = minWidth + Math.floor(remainingWidth/tilesPerRow);
