@@ -168,7 +168,7 @@
   padding: 0 0 0 80px;
   position: relative;
   overflow: hidden;
-  background-color: #FFF;
+  background-color: #fff;
   outline: none;
 }
   .DC-search-embed .DC-document-list a.DC-document-tile {
@@ -186,7 +186,7 @@
     height: 85px;
   }
     .DC-search-embed .DC-document-thumbnail img {
-      border: 1px solid #AAA;
+      border: 1px solid #aaa;
       width: 60px;
       height: 75px;
       padding: 1px;

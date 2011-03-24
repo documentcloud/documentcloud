@@ -16,7 +16,7 @@ class SearchController < ApplicationController
       end
     end
   end
-  
+
   def embed
     groups = params[:options].match /p-(\d+)-per-(\d+)-order-(\w+)/
     _, params[:page], params[:per_page], params[:order] = *groups
@@ -32,7 +32,7 @@ class SearchController < ApplicationController
     cache_page js
     render :js => js
   end
-  
+
   def restricted_count
     params[:q] += " filter:restricted"
     perform_search
@@ -59,5 +59,5 @@ class SearchController < ApplicationController
   def loader
     render :action => 'loader', :content_type => :js
   end
-  
+
 end

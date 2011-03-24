@@ -35,17 +35,18 @@ ActionController::Routing::Routes.draw do |map|
       :unpublished  => :get
     }
 
-  search_embed_options_matcher = /p-(\d+)-per-(\d+)-order-(\w+)/
-  map.search_embed "/search/embed/:q/:options.:format", 
-                   :controller => :search, :action => :embed, :options => search_embed_options_matcher
-  map.search_embed "/search/embed/:options.:format", 
-                   :controller => :search, :action => :embed, :options => search_embed_options_matcher
-  
   map.pdf        "/documents/:id/:slug.pdf",            :controller => :documents, :action => :send_pdf
   map.full_text  "/documents/:id/:slug.txt",            :controller => :documents, :action => :send_full_text
   map.page_text  "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :send_page_text, :conditions => {:method => :get}
   map.set_text   "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :set_page_text,  :conditions => {:method => :post}
   map.page_image "/documents/:id/pages/:page_name.gif", :controller => :documents, :action => :send_page_image
+
+  # Search Embeds.
+  map.with_options :controller => :search, :action => :embed do |embed|
+    options = {:q => /[^\/;,?]*/, :options => /p-(\d+)-per-(\d+)-order-(\w+)/}
+    embed.search_embed "/search/embed/:q/:options.:format", options
+    embed.search_embed "/search/embed/:options.:format", options
+  end
 
   # Reviewers.
   map.resources :reviewers, :collection => {
