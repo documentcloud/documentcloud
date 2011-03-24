@@ -274,19 +274,25 @@
 
   dc.EmbedDocumentTile = dc.Backbone.View.extend({
 
+    tagName   : 'a',
+    className : 'DC-document-tile',
+
     events : {
       'click' : 'open'
     },
 
-    initialize : function() {},
+    initialize : function() {
+      $(this.el).attr({href: this.model.url()});
+      if (this.model.isPrivate()) $(this.el).addClass('DC-document-private');
+    },
 
     render : function(width) {
       var titleWidth       = this.fitTitleWidth(width);
       var descriptionWidth = this.fitDescriptionWidth(width);
+      $(this.el).css({width: width});
 
       $(this.el).html(JST['embed_document_tile']({
         doc               : this.model,
-        width             : width,
         titleWidth        : titleWidth,
         descriptionWidth  : descriptionWidth
       }));

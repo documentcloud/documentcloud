@@ -159,6 +159,7 @@
 /* ================== */
 
 .DC-search-embed .DC-document-tile {
+  display: block;
   float: left;
   width: 230px;
   border: 1px solid transparent;
@@ -361,5 +362,5 @@
   margin: 50px auto;
 }
   .DC-embed-preview .DC-search-embed {
-    margin: 40px 0;
+    margin: 50px 0;
   }

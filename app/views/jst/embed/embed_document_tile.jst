@@ -1,11 +1,9 @@
-<a href="<%= doc.url() %>" class="DC-document-tile <% if (doc.isPrivate()) { %>DC-document-private<% } %>" <% if (doc.isPrivate()) { %>title="This document is private. It will not be shown."<% } %> style="width:<%= width %>px">
-  <div class="DC-document-thumbnail-select"></div>
-  <div class="DC-document-thumbnail"><img src="<%= doc.get('resources')['thumbnail'] %>" /></div>
-  <div class="DC-document-title">
-    <div class="DC-icon DC-icon-lock"></div>
-    <%= dc.Inflector.truncateWords(doc.get('title'), titleWidth) %>
-  </div>
-  <div class="DC-document-description">
-    <%= dc.Inflector.truncateWords(dc.Inflector.stripTags(doc.get('description') || ""), descriptionWidth) %>
-  </div>
-</a>
+<div class="DC-document-thumbnail-select"></div>
+<div class="DC-document-thumbnail"><img src="<%= doc.get('resources')['thumbnail'] %>" /></div>
+<div class="DC-document-title">
+  <div class="DC-icon DC-icon-lock"></div>
+  <%= dc.Inflector.truncateWords(doc.get('title'), titleWidth) %>
+</div>
+<div class="DC-document-description">
+  <%= dc.Inflector.truncateWords(dc.Inflector.stripTags(doc.get('description') || ""), descriptionWidth) %>
+</div>
