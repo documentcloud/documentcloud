@@ -133,14 +133,14 @@
   .document .metalines {
     font-size: 10px;
     margin-bottom: 4px;
-    color: #999;
+    color: #808080;
   }
     body.minidocs #document_list .document .metalines {
       display: none;
     }
   .document .description {
     font: 13px/18px Georgia;
-    color: #555;
+    color: #333;
     margin-bottom: 3px;
   }
     body.minidocs #document_list .document .description {
@@ -206,7 +206,7 @@
     .document .page_list .pages_title {
       font-size: 11px;
       font-weight: normal;
-      color: #555;
+      color: #333;
     }
     .document .pages_only {
       color: #000;
@@ -252,11 +252,11 @@
       max-height: 117px;
     }
     .document .page_number {
-      color: #555;
+      color: #333;
     }
   .document .page_excerpt {
     font: 12px/18px Georgia;
-    color: #555;
+    color: #333;
   }
 
 /*------------------------------ Annotations ---------------------------------*/
@@ -272,7 +272,7 @@
     margin: 20px 0 0 0;
     padding: 10px;
     font: 12px/18px Helvetica, Arial;
-    color: #555;
+    color: #333;
     border: 3px solid #ffe325;
     -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
     box-shadow: 1px 2px 3px #bbb; -webkit-box-shadow: 1px 2px 3px #bbb; -moz-box-shadow: 1px 2px 3px #bbb;
@@ -290,7 +290,7 @@
     .note .annotation_author {
       float: right;
       font-size: 11px;
-      color: #909090;
+      color: #808080;
       display: none;
     }
     .note.not_editable .annotation_meta {
@@ -304,7 +304,7 @@
     }
     .note .annotation_meta .annotation_access {
       float: left;
-      color: #909090;
+      color: #808080;
       font-size: 11px;
     }
     .note.private_access {

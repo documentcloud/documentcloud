@@ -54,7 +54,7 @@ input.hidden_submit {
 
 /*------------------------------ Text Links ---------------------------------*/
 .text_link {
-  color: #999;
+  color: #808080;
   cursor: pointer;
   text-decoration: underline;
 }
@@ -255,7 +255,7 @@ div.text_input {
         float: left;
       }
         div.text_input.search input, div.text_input.search .placeholder {
-          color: #999;
+          color: #808080;
           font: 13px/18px Helvetica, Arial;
         }
         div.text_input.search.focus input {
@@ -547,7 +547,7 @@ textarea.text_area {
     text-align: left;
   }
     .dialog span.subtitle {
-      color: #555;
+      color: #333;
       margin-left: 3px;
       font: italic 10px/18px Helvetica, Arial;
     }
@@ -566,7 +566,7 @@ textarea.text_area {
     position: absolute;
     top: 34px; right: 30px;
     font-size: 10px;
-    color: #999;
+    color: #ccc;
     background-color: #000;
   }
     .dialog .information.error {
@@ -706,7 +706,7 @@ iframe.hidden_iframe {
     color: #ccc;
     font: 11px/13px Helvetica, Arial;
     opacity: 0.97; filter: alpha(opacity=97);
-    border: 1px solid #555; border-top: 0; border-left: 0;
+    border: 1px solid #333; border-top: 0; border-left: 0;
     border-bottom-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px;
   }
     #notifier.info_style {
@@ -723,7 +723,7 @@ iframe.hidden_iframe {
     max-width: 300px;
     background: #fff;
     color: #333;
-    border: 1px solid #999;
+    border: 1px solid #808080;
     -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   }
     #tooltip_title {

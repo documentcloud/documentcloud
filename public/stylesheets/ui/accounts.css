@@ -4,7 +4,7 @@
   position: relative;
   margin: 20px 0 20px 30px;
   font: 11px/16px Arial;
-  color: #555;
+  color: #333;
 }
   .account_view.badge img.avatar {
     border: 1px solid #ccc;
@@ -66,7 +66,7 @@
 .collaborator_list img.avatar {
   position: relative;
   top: 4px;
-  border: 1px solid #555;
+  border: 1px solid #333;
 }
 .account_list .text_input {
   width: 150px;
@@ -88,7 +88,7 @@
     }
 .account_list .role .display {
   font: italic 10px/18px Arial;
-  color: #555;
+  color: #333;
 }
 .account_list .controls_wrapper {
   min-width: 100px;
@@ -126,7 +126,7 @@
   font: 10px Arial;
   text-transform: uppercase;
   padding-left: 7px;
-  color: #999;
+  color: #808080;
   display: none;
 }
   .account_list .row.pending .pending_notification,
@@ -213,7 +213,7 @@
     }
   .share_dialog .document_count {
     font-size: 10px;
-    color: #555;
+    color: #333;
     font-style: italic;
   }
   .share_dialog .account_view {

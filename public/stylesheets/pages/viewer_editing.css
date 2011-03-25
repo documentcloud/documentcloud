@@ -69,7 +69,7 @@
     }
     #control_panel .button .dash {
       font-size: 10px;
-      color: #999;
+      color: #808080;
       position: relative;
       top: -1px;
     }
@@ -175,7 +175,7 @@
       }
       #section_editor .page_number_mark {
         font-size: 11px;
-        color: #999;
+        color: #808080;
         position: absolute;
         margin: -1px 0 0 -14px;
       }
@@ -270,7 +270,7 @@
   }
   .editor_toolbar .editor_hint {
     font-size: 16px;
-    color: #999;
+    color: #808080;
     font-weight: bold;
     padding: 54px 132px 0 24px;
     text-align: center;
@@ -315,7 +315,7 @@
     }
   .document_page_tile .document_page_tile_number {
     text-align: center;
-    color: #555;
+    color: #333;
     font-size: 10px;
     font-weight: bold;
     margin-top: 5px;

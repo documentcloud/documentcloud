@@ -24,7 +24,7 @@
   font-size: 11px;
   line-height: 18px;
   height: 18px;
-  color: #999;
+  color: #808080;
   text-align: right;
   border-top: 1px solid #ccc;
 }
@@ -67,7 +67,7 @@
       font-size: 11px;
       height: 17px;
       text-align: center;
-      color: #999;
+      color: #808080;
     }
       #paginator.is_editing .current_page {
         display: inline;

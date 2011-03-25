@@ -4,7 +4,7 @@ html {
   font-size: 12px;
 }
 body {
-  background: #ccc;
+  background: #ccc url(/images/embed/ui/bg.jpg);
 }
   body.workspace {
     overflow-y: scroll;
@@ -27,7 +27,7 @@ label {
   top: 17px; right: 50px;
   line-height: 15px;
   font-size: 11px;
-  color: #999;
+  color: #808080;
 }
   body.workspace #toplinks {
     display: block;
@@ -162,7 +162,7 @@ body.workspace #content {
     height: 77px;
     font-size: 14px;
     line-height: 90px;
-    color: #555;
+    color: #333;
   }
     #no_results .icon {
       position: absolute;
