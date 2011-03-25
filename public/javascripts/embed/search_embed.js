@@ -278,8 +278,10 @@
     },
 
     render : function(width) {
+      var shortened        = !!this.model.get('contributor_organization');
       var titleWidth       = this.fitTitleWidth(width);
-      var descriptionWidth = this.fitDescriptionWidth(width);
+      var descriptionWidth = this.fitDescriptionWidth(width, shortened);
+
       $(this.el).css({width: width});
 
       $(this.el).html(JST['embed_document_tile']({
@@ -294,8 +296,8 @@
       return Math.floor(0.28 * width - 10);
     },
 
-    fitDescriptionWidth : function(width) {
-      return Math.floor(0.55 * width - 10);
+    fitDescriptionWidth : function(width, shortened) {
+      return Math.floor((shortened ? 0.35 : 0.55) * width - 10);
     },
 
     open : function(e) {

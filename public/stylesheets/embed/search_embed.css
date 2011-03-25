@@ -139,6 +139,9 @@
         height: 18px;
         padding: 5px 0;
       }
+        .DC-search-embed .DC-text-input.DC-search input:-moz-placeholder {
+          color: #808080;
+        }
         .DC-search-embed .DC-text-input.DC-search:focus input {
           color: #000;
         }
@@ -212,7 +215,7 @@
     font-size: 14px;
     font-weight: bold;
     line-height: 17px;
-    margin: 2px 0 6px 0;
+    margin: 2px 0 2px 0;
   }
     .DC-search-embed .DC-document-tile:hover .DC-document-title {
       text-decoration: underline;
@@ -225,9 +228,9 @@
   }
   .DC-search-embed .DC-document-organization {
     color: #808080;
-    font-family: Georgia;
-    font-style: italic;
-    font-size: 11px;
+/*    font-family: Georgia;*/
+/*    font-style: italic;*/
+    font-size: 10px;
     line-height: 12px;
     margin: 6px 0 0 0;
   }
