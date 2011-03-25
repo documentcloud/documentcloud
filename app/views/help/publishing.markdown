@@ -3,12 +3,6 @@
 To publish a document from DocumentCloud on your website, you can either download a standalone copy of the viewer, or copy and paste a simple embed code for that document. The instructions that follow assume some basic familiarity with HTML, but we've tried to keep the embedding process as simple as possible.
 
 For live examples, we're keeping a list of some of our [favorite embedded documents][].  If you've done some great reporting that isn't there yet, [let us know][] about it.
- 
-## Caveats
-
-First, a note about public documents. Right now, no one can see your "public" documents unless they're a registered user who is part of our beta. Soon, we'll be opening the archive to the general public, and "public" documents will be available to anyone who searches for them.
-
-DocumentCloud is still actively in beta. That means a lot of things, but when it comes to embedding documents it means this: First, you are reliant on our servers: If our servers go down your document goes down. You can host documents yourself, but you'll miss out on bug fixes, and will have to manually upgrade to newer versions of the viewer. Second, we can't make any promises. We test our work well, but we are actively working on this software and are as vulnerable to hosting glitches as anyone else. Take a look at our [terms and conditions][] for a fuller disclaimer of liability.
 
 ## Step 1: <span id="choose_size">Review your Metadata</span>
 
