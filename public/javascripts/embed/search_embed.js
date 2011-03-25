@@ -8,7 +8,7 @@
 
   dc.loadSearchEmbed = function(searchUrl, opts) {
     var id = dc.inflector.sluggify(opts.originalQuery || opts.q);
-    
+
     dc.embed[id] = dc.embed[id] || {};
     dc.embed[id].options = opts = _.extend({}, {
       searchUrl     : searchUrl,
@@ -19,26 +19,20 @@
       page          : 1,
       title         : null
     }, opts);
-    
+
     var params = encodeURIComponent(opts.q.replace(/\?/g, '')) +
-                 '/p-' +
-                 encodeURIComponent(opts.page) +
-                 '-per-' +
-                 encodeURIComponent(opts.per_page) +
-                 '-order-' +
-                 encodeURIComponent(opts.order) +
-                 '-org-' +
-                 encodeURIComponent(opts.organization) +
-                 '.js';
+                 '/p-'      + encodeURIComponent(opts.page) +
+                 '-per-'    + encodeURIComponent(opts.per_page) +
+                 '-order-'  + encodeURIComponent(opts.order) +
+                 '-org-'    + encodeURIComponent(opts.organization) + '.js';
+
     $.getScript(searchUrl + params);
   };
 
   dc.loadSearchEmbedCallback = function(json) {
     var searchQuery = dc.inflector.sluggify(json.query);
     var id = _.detect(_.keys(dc.embed), function(q) {
-      if (searchQuery.indexOf(q) == 0) {
-        return true;
-      }
+      return searchQuery.indexOf(q) == 0;
     });
     _.extend(dc.embed[id].options, {
       id       : id,
@@ -55,43 +49,6 @@
       dc.embed[id].workspace       = new dc.EmbedWorkspaceView(dc.embed[id].options);
       dc.embed[id].originalOptions = _.clone(dc.embed[id].options);
       dc.embed[id].isLoaded        = true;
-    }
-
-  };
-
-  dc.Inflector = {
-
-    trim : function(s) {
-      return s.trim ? s.trim() : s.replace(/^\s+|\s+$/g, '');
-    },
-
-    sluggify : function(s) {
-      return this.trim(s.replace(/['"]+/g, '').replace(/\W+/g, ' ')).toLowerCase().replace(/\s+/g, '-');
-    },
-
-    truncate : function(s, length, truncation) {
-      length = length || 30;
-      truncation = _.isUndefined(truncation) ? '...' : truncation;
-      return s.length > length ? s.slice(0, length - truncation.length) + truncation : s;
-    },
-
-    truncateWords : function(s, length, truncation) {
-      length = length || 30;
-      truncation = _.isUndefined(truncation) ? '...' : truncation;
-      if (s.length > length) {
-        var reversedString = s.substr(0, length).split('').reverse().join('');
-        var indexWordBoundary = reversedString.search(/\W\w/);
-        if (indexWordBoundary != -1) {
-          s = s.substr(0, length-indexWordBoundary-1) + truncation;
-        } else {
-          s = this.truncate(s, length, truncation);
-        }
-      }
-      return s;
-    },
-
-    stripTags : function(s) {
-      return s.replace(/<\w+(\s*("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
     }
 
   };
