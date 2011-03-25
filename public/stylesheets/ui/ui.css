@@ -37,6 +37,11 @@ input.hidden_submit {
   visibility: hidden;
   z-index: -10;
 }
+.unselectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
 
 /*------------------------------ Gradients ---------------------------------*/
 .gradient_light, #help th {

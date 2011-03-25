@@ -71,6 +71,12 @@
  font-family: "Lucida Grande","Lucida Sans Unicode", Helvetica, Arial;
 }
 
+.DC-search-embed.DC-unselectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
 .DC-search-embed .DC-title {
   font-size: 24px;
   margin: 6px 0 18px;

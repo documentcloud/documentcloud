@@ -77,7 +77,7 @@
 
   dc.EmbedWorkspaceView = dc.Backbone.View.extend({
 
-    className : 'DC-search-embed',
+    className : 'DC-search-embed DC-unselectable',
 
     events : {
       'click    .DC-cancel-search' : 'cancelSearch',
