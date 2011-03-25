@@ -4,9 +4,11 @@
   <div class="DC-icon DC-icon-lock"></div>
   <%= dc.inflector.truncateWords(doc.get('title'), titleWidth) %>
 </div>
-<div class="DC-document-description">
-  <%= dc.inflector.truncateWords(dc.inflector.stripTags(doc.get('description') || ""), descriptionWidth) %>
-</div>
+<% if (doc.get('description')) { %>
+  <div class="DC-document-description">
+    <%= dc.inflector.truncateWords(dc.inflector.stripTags(doc.get('description') || ""), descriptionWidth) %>
+  </div>
+<% } %>
 <div class="DC-document-organization DC-interface">
   <%= doc.get('contributor_organization') %>
 </div>
