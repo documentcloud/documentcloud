@@ -1,16 +1,17 @@
 (function() {
-  window.dc   = window.dc || {};
-  window.dc.embed = window.dc.embed || {};
+  window.dc = window.dc || {};
+  dc.embed = dc.embed || {};
+  var searches = dc.embed.searches = dc.embed.searches || {};
 
   var _ = dc._        = window._.noConflict();
   var $ = dc.jQuery   = window.jQuery.noConflict(true);
   dc.Backbone         = Backbone.noConflict();
 
-  dc.loadSearchEmbed = function(searchUrl, opts) {
+  dc.embed.load = function(searchUrl, opts) {
     var id = dc.inflector.sluggify(opts.originalQuery || opts.q);
 
-    dc.embed[id] = dc.embed[id] || {};
-    dc.embed[id].options = opts = _.extend({}, {
+    searches[id] = searches[id] || {};
+    searches[id].options = opts = _.extend({}, {
       searchUrl     : searchUrl,
       originalQuery : opts.originalQuery || opts.q,
       per_page      : 12,
@@ -29,12 +30,12 @@
     $.getScript(searchUrl + params);
   };
 
-  dc.loadSearchEmbedCallback = function(json) {
+  dc.embed.callback = function(json) {
     var searchQuery = dc.inflector.sluggify(json.query);
-    var id = _.detect(_.keys(dc.embed), function(q) {
+    var id = _.detect(_.keys(dc.embed.searches), function(q) {
       return searchQuery.indexOf(q) == 0;
     });
-    _.extend(dc.embed[id].options, {
+    _.extend(searches[id].options, {
       id       : id,
       total    : json.total,
       per_page : json.per_page,
@@ -42,13 +43,13 @@
       dc_url   : json.dc_url
     });
 
-    if (dc.embed[id].isLoaded) {
-      dc.embed[id].documents.refresh(json.documents);
+    if (searches[id].isLoaded) {
+      searches[id].documents.refresh(json.documents);
     } else {
-      dc.embed[id].documents       = new dc.EmbedDocumentSet(json.documents, dc.embed[id].options);
-      dc.embed[id].workspace       = new dc.EmbedWorkspaceView(dc.embed[id].options);
-      dc.embed[id].originalOptions = _.clone(dc.embed[id].options);
-      dc.embed[id].isLoaded        = true;
+      searches[id].documents       = new dc.EmbedDocumentSet(json.documents, searches[id].options);
+      searches[id].workspace       = new dc.EmbedWorkspaceView(searches[id].options);
+      searches[id].originalOptions = _.clone(searches[id].options);
+      searches[id].isLoaded        = true;
     }
 
   };
@@ -89,16 +90,14 @@
     },
 
     initialize : function() {
-      this.embed     = dc.embed[this.options.id];
+      this.embed     = searches[this.options.id];
       this.container = $('#' + this.options.container);
       this.embed.documents.bind('refresh', _.bind(this.renderDocuments, this));
       this.render();
     },
 
     render : function() {
-      $(this.el).html(JST['embed_workspace']({
-          options : this.embed.options
-      }));
+      $(this.el).html(JST['embed_workspace']({options : this.embed.options}));
       this.container.html(this.el);
 
       this.search = this.$('.DC-search-box');
@@ -110,19 +109,19 @@
     },
 
     renderDocuments : function() {
-      var options        = this.embed.options;
-      var $document_list = this.$('.DC-document-list').empty();
-      var width          = this.calculateTileWidth();
+      var options = this.embed.options;
+      var docList = this.$('.DC-document-list').empty();
+      var width   = this.calculateTileWidth();
 
       this.hideSpinner();
 
       if (!this.embed.documents.length) {
-        $document_list.append(JST['no_results']({}));
+        docList.append(JST['no_results']({}));
       } else {
-        this.embed.documents.each(_.bind(function(doc) {
+        this.embed.documents.each(function(doc) {
           var view = (new dc.EmbedDocumentTile({model: doc})).render(width).el;
-          $document_list.append(view);
-        }, this));
+          docList.append(view);
+        });
       }
       this.$('.DC-paginator').removeClass('DC-is-editing').html(JST['paginator']({
         total         : options.total,
@@ -179,7 +178,7 @@
         this.embed.options.q = this.embed.options.originalQuery + (query && (' ' + query));
         this.showSpinner();
         this.$('.DC-document-list').empty();
-        dc.loadSearchEmbed(this.embed.options.searchUrl, this.embed.options);
+        dc.embed.load(this.embed.options.searchUrl, this.embed.options);
       }
 
       this.showSearchCancel();
@@ -257,10 +256,7 @@
     },
 
     open : function(e) {
-      e.preventDefault();
-
       window.open(this.model.get('resources').published_url || this.model.get('canonical_url'));
-
       return false;
     }
 

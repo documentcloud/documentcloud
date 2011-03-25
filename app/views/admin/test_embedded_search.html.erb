@@ -2,11 +2,12 @@
 <html>
 <head>
   <title></title>
-  <link href="/stylesheets/embed/search_embed.css?1300918781" media="screen" rel="stylesheet" type="text/css" />
-  <script src="/javascripts/vendor/underscore-1.1.5.js?1300890908" type="text/javascript"></script>
-  <script src="/javascripts/vendor/jquery-1.5.1.js?1299509288" type="text/javascript"></script>
-  <script src="/javascripts/vendor/backbone-0.3.3.js?1300918781" type="text/javascript"></script>
-  <script src="/javascripts/embed/search_embed.js?1300918780" type="text/javascript"></script>
+  <link href="/stylesheets/embed/search_embed.css" media="screen" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/vendor/underscore-1.1.5.js" type="text/javascript"></script>
+  <script src="/javascripts/vendor/jquery-1.5.1.js" type="text/javascript"></script>
+  <script src="/javascripts/vendor/backbone-0.3.3.js" type="text/javascript"></script>
+  <script src="/javascripts/lib/inflector.js" type="text/javascript"></script>
+  <script src="/javascripts/embed/search_embed.js" type="text/javascript"></script>
   <script>
     window._ = dc._;
   </script>
@@ -18,7 +19,7 @@
     <div id="embed_1"></div>
 
     <script type="text/javascript">
-      dc.loadSearchEmbed('<%= DC.server_root(:ssl => false) %>/search/embed/', {
+      dc.embed.load('<%= DC.server_root(:ssl => false) %>/search/embed/', {
         q: 'programming',
         order: 'title',
         container: 'embed_1',
@@ -31,7 +32,7 @@
     <div id="embed_2"></div>
 
     <script type="text/javascript">
-      dc.loadSearchEmbed('<%= DC.server_root(:ssl => false) %>/search/embed/', {
+      dc.embed.load('<%= DC.server_root(:ssl => false) %>/search/embed/', {
         q: 'states',
         order: 'score',
         container: 'embed_2',

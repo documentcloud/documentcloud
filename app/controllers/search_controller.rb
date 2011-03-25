@@ -31,7 +31,7 @@ class SearchController < ApplicationController
       d.canonical API_OPTIONS.merge(:contributor => not_owned)
     end
     results[:dc_url]    = "#{DC.server_root(:ssl => false).sub('s3', 'www')}"
-    js                  = "dc.loadSearchEmbedCallback(#{results.to_json});"
+    js                  = "dc.embed.callback(#{results.to_json});"
     cache_page js
     render :js => js
   end
