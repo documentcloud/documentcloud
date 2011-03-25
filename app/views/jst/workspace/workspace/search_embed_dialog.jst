@@ -8,11 +8,9 @@
       This set includes
       <%= publicCount %> of <%= documentsCount %>
       <%= dc.inflector.pluralize('document', documentsCount) %>.
-      The 
       <span class="publish_section text_link change_access"><%= restrictedCount %> private <%= dc.inflector.pluralize('document', restrictedCount) %></span>
-      <%= restrictedCount == 1 ? "is" : "are" %> hidden.
+      will remain hidden until <%= restrictedCount == 1 ? 'it is' : 'they are' %> published.
     <% } %>
-    <br />
     Any documents added to this set in the future will appear in your embed.
   </div>
 
@@ -57,6 +55,7 @@
     <p class="publish_info selectable_text interface">
       Before continuing, please take a moment to
       <span class="text_link preview">preview the document set</span>.
+      <br /><br />
       Documents that have been published will link to that location. Documents
       that have never been published will link to the version on DocumentCloud.org.
     </p>
