@@ -223,6 +223,14 @@
     font-size: 12px;
     line-height: 14px;
   }
+  .DC-search-embed .DC-document-organization {
+    color: #808080;
+    font-family: Georgia;
+    font-style: italic;
+    font-size: 11px;
+    line-height: 12px;
+    margin: 6px 0 0 0;
+  }
   .DC-search-embed .DC-document-tile .DC-icon-lock {
     display: none;
   }

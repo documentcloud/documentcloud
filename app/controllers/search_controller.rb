@@ -18,15 +18,18 @@ class SearchController < ApplicationController
   end
 
   def embed
-    groups = params[:options].match /p-(\d+)-per-(\d+)-order-(\w+)/
-    _, params[:page], params[:per_page], params[:order] = *groups
+    groups = params[:options].match /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)/
+    _, params[:page], params[:per_page], params[:order], params[:organization_id] = *groups
     perform_search :include_facets => params[:include_facets]
     results             = {:query => @query, :documents => @documents}
     results[:query]     = params[:q] || ""
     results[:total]     = @query.total
     results[:page]      = @query.page
     results[:per_page]  = @query.per_page
-    results[:documents] = @documents.map {|d| d.canonical(API_OPTIONS) }
+    results[:documents] = @documents.map do |d| 
+      options = API_OPTIONS.merge(:contributor => d.organization_id != params[:organization_id].to_i) 
+      d.canonical(options)
+    end
     results[:dc_url]    = "#{DC.server_root(:ssl => false).sub('s3', 'www')}"
     js                  = "dc.loadSearchEmbedCallback(#{results.to_json});"
     cache_page js

@@ -7,3 +7,6 @@
 <div class="DC-document-description">
   <%= dc.Inflector.truncateWords(dc.Inflector.stripTags(doc.get('description') || ""), descriptionWidth) %>
 </div>
+<div class="DC-document-organization">
+  <%= doc.get('contributor_organization') %>
+</div>

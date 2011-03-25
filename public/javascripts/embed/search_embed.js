@@ -8,7 +8,7 @@
 
   dc.loadSearchEmbed = function(searchUrl, opts) {
     var id = dc.Inflector.sluggify(opts.originalQuery || opts.q);
-
+    
     dc.embed[id] = dc.embed[id] || {};
     dc.embed[id].options = opts = _.extend({}, {
       searchUrl     : searchUrl,
@@ -19,17 +19,17 @@
       page          : 1,
       title         : null
     }, opts);
-
-    var params = [
-      encodeURIComponent(opts.q.replace(/\?/g, '')),
-      '/p-',
-      encodeURIComponent(opts.page),
-      '-per-',
-      encodeURIComponent(opts.per_page),
-      '-order-',
-      encodeURIComponent(opts.order),
-      '.js'
-    ].join('');
+    
+    var params = encodeURIComponent(opts.q.replace(/\?/g, '')) +
+                 '/p-' +
+                 encodeURIComponent(opts.page) +
+                 '-per-' +
+                 encodeURIComponent(opts.per_page) +
+                 '-order-' +
+                 encodeURIComponent(opts.order) +
+                 '-org-' +
+                 encodeURIComponent(opts.organization) +
+                 '.js';
     $.getScript(searchUrl + params);
   };
 

@@ -133,12 +133,13 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   },
 
   _renderEmbedCode : function() {
-    var options       = this.embedOptions();
-    options.title     = '"' + options.title + '"';
-    options.container = '"#DC-search-' + Inflector.sluggify(options.q) + '"';
-    options.q         = '"' + options.q + '"';
-    options.order     = '"' + options.order + '"';
-    var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
+    var options          = this.embedOptions();
+    options.title        = '"' + options.title + '"';
+    options.container    = '"#DC-search-' + Inflector.sluggify(options.q) + '"';
+    options.q            = '"' + options.q + '"';
+    options.order        = '"' + options.order + '"';
+    options.organization = dc.account.organization.id;
+    var serialized       = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['search/embed_code']({
       query: Inflector.sluggify(this.query),
       options: serialized.join(',&#10;    ')
