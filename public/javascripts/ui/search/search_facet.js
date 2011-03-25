@@ -8,6 +8,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   events : {
     'click'         : 'enableEdit',
+    'focus'         : 'enableEdit',
     'keydown input' : 'maybeDisableEdit',
     'blur input'    : 'disableEdit',
     'change input'  : 'disableEdit'
@@ -15,6 +16,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   initialize : function(options) {
       this.setMode('not', 'editing');
+      _.bindAll(this, 'autocompleteValueCheck', 'autocompleteValueSuccess');
   },
   
   render : function() {
@@ -28,7 +30,21 @@ dc.ui.SearchFacet = Backbone.View.extend({
     _.defer(function() {
       $('input', $el).autoGrowInput();
     });
+
+    this.autocomplete = new dc.ui.Autocomplete({
+      input           : this.$('input'), 
+      checkCallback   : this.autocompleteValueCheck, 
+      successCallback : this.autocompleteValueSuccess
+    });
     return this;
+  },
+  
+  autocompleteValueCheck : function() {
+    
+  },
+  
+  autocompleteValueSuccess : function() {
+    
   },
   
   serialize : function() {
@@ -50,6 +66,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     if (!this.$el.hasClass('is_editing')) {
       this.setMode('is', 'editing');
       this.$('input').val(this.options.facetQuery).focus();
+      
       dc.app.searchBox.addFocus();
     }
   },

@@ -47,8 +47,15 @@ dc.ui.SearchBox = Backbone.View.extend({
     return this;
   },
 
-  autocompletePrefixCheck : function(partial) {
-    console.log(['prefix', prefix]);
+  autocompletePrefixCheck : function(partial, callback) {
+    var values = [
+      'Account',
+      'Organization',
+      'Project',
+      'Filter',
+      'Text'
+    ];
+    callback(values, partial);
   },
   
   autocompletePrefixSuccess : function() {
