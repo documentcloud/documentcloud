@@ -12,6 +12,10 @@ namespace :ping do
     sh "nohup #{launch_command} > log/pixel_ping.log 2>&1 & echo $! > log/pixel_ping.pid"
   end
 
+  task :flush do
+    sh "kill -s USR1 `cat log/pixel_ping.pid`"
+  end
+
   task :restart => [:stop, :start]
 
 end
