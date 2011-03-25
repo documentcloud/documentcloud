@@ -28,7 +28,7 @@
 .DC-search-embed .DC-quiet-link {
   white-space: nowrap;
   cursor: pointer;
-  color: #777;
+  color: #808080;
   text-decoration: none;
 }
   .DC-search-embed .DC-quiet-link:hover {
@@ -53,7 +53,7 @@
   padding: 0 0 0 75px;
   height: 77px;
   font-size: 14px;
-  color: #555;
+  color: #333;
 }
   .DC-search-embed .DC-no-results .DC-icon {
     position: absolute;
@@ -208,7 +208,7 @@
     background-color: #c7c7c7;
     }
   .DC-search-embed .DC-document-title {
-    color: #333;
+    color: #000;
     font-size: 14px;
     font-weight: bold;
     line-height: 17px;
@@ -218,7 +218,7 @@
       text-decoration: underline;
     }
   .DC-search-embed .DC-document-description {
-    color: #555;
+    color: #333;
     font-family: Georgia;
     font-size: 12px;
     line-height: 14px;
@@ -268,7 +268,7 @@
   font-size: 11px;
   line-height: 18px;
   height: 18px;
-  color: #777;
+  color: #808080;
   border-top: 1px solid #ccc;
   position: relative;
 }
@@ -308,7 +308,7 @@
       font-size: 11px;
       height: 16px;
       text-align: center;
-      color: #777;
+      color: #808080;
       padding: 0;
       border: 1px solid #C0C0C0
     }
