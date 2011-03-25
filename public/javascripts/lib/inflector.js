@@ -1,5 +1,5 @@
 // Naive English transformations on words.
-window.Inflector = {
+dc.inflector = {
 
   small : "(a|an|and|as|at|but|by|en|for|if|in|of|on|or|the|to|v[.]?|via|vs[.]?)",
 	punct : "([!\"#$%&'()*+,./:;<=>?@[\\\\\\]^_`{|}~-]*)",
@@ -104,13 +104,13 @@ window.Inflector = {
 
   truncate : function(s, length, truncation) {
     length = length || 30;
-    truncation = _.isUndefined(truncation) ? '...' : truncation;
+    truncation = truncation == null ? '...' : truncation;
     return s.length > length ? s.slice(0, length - truncation.length) + truncation : s;
   },
-  
+
   truncateWords : function(s, length, truncation) {
     length = length || 30;
-    truncation = _.isUndefined(truncation) ? '...' : truncation;
+    truncation = truncation == null ? '...' : truncation;
     if (s.length > length) {
       var reversedString = s.substr(0, length).split('').reverse().join('');
       var indexWordBoundary = reversedString.search(/\W\w/);
@@ -132,14 +132,15 @@ window.Inflector = {
 
   commify : function(list, options) {
     var words = [];
-    _.each(list, function(word, i) {
+    for (var i = 0, l = list.length; i < l; i++) {
+      var word = list[i];
       if (options.quote) word = '"' + word + '"';
       words.push(word);
       var end = i == list.length - 1 ? '' :
                (i == list.length - 2) && options.conjunction ? ', ' + options.conjunction + ' ' :
                ', ';
       words.push(end);
-    });
+    }
     return words.join('');
   },
 
@@ -165,7 +166,7 @@ window.Inflector = {
 
   // Normalize an entered-by-hand url, trimming and adding the protocol, if missing.
   normalizeUrl : function(s) {
-    s = Inflector.trim(s);
+    s = dc.inflector.trim(s);
     if (!s) return null;
     return (/^https?:\/\//).test(s) ? s : 'http://' + s;
   },

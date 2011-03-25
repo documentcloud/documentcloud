@@ -12,7 +12,7 @@ dc.model.Project = Backbone.Model.extend({
 
   set : function(attrs, options) {
     attrs || (attrs = {});
-    if (attrs.title)            attrs.title = Inflector.trim(attrs.title).replace(/"/g, '');
+    if (attrs.title)            attrs.title = dc.inflector.trim(attrs.title).replace(/"/g, '');
     if (attrs.document_ids)     attrs.document_count = attrs.document_ids.length;
     if (attrs.account_id)       attrs.owner = attrs.account_id == dc.account.id;
     Backbone.Model.prototype.set.call(this, attrs, options);
@@ -22,7 +22,7 @@ dc.model.Project = Backbone.Model.extend({
 
   // Generate the canonical slug for this Project. Usable by API calls.
   slug : function() {
-    return this.id + '-' + Inflector.sluggify(this.get('title'));
+    return this.id + '-' + dc.inflector.sluggify(this.get('title'));
   },
 
   open : function() {
@@ -60,7 +60,7 @@ dc.model.Project = Backbone.Model.extend({
   notifyProjectChange : function(numDocs, removal) {
     var prefix = removal ? 'Removed ' : 'Added ';
     var prep   = removal ? ' from "'  : ' to "';
-    var notification = prefix + numDocs + ' ' + Inflector.pluralize('document', numDocs) + prep + this.get('title') + '"';
+    var notification = prefix + numDocs + ' ' + dc.inflector.pluralize('document', numDocs) + prep + this.get('title') + '"';
     dc.ui.notifier.show({mode : 'info', text : notification});
   },
 
@@ -86,9 +86,9 @@ dc.model.Project = Backbone.Model.extend({
     var docCount    = this.get('document_count');
     var noteCount   = this.get('annotation_count');
     var shareCount  = this.collaborators.length;
-    return docCount + ' ' + Inflector.pluralize('document', docCount)
-      + ', ' + noteCount + ' ' + Inflector.pluralize('note', noteCount)
-      + (shareCount ? ', ' + shareCount + ' ' + Inflector.pluralize('collaborator', shareCount) : '');
+    return docCount + ' ' + dc.inflector.pluralize('document', docCount)
+      + ', ' + noteCount + ' ' + dc.inflector.pluralize('note', noteCount)
+      + (shareCount ? ', ' + shareCount + ' ' + dc.inflector.pluralize('collaborator', shareCount) : '');
   },
 
   _setCollaboratorsResource : function() {
@@ -106,7 +106,7 @@ dc.model.Project.topLevelTitle = function(type) {
     case 'popular_documents':         return 'Popular Documents';
     case 'published_documents':       return 'Published Documents';
     case 'your_published_documents':  return 'Your Published Documents';
-    case 'org_documents':             return Inflector.possessivize(dc.account.organization.name) + " Documents";
+    case 'org_documents':             return dc.inflector.possessivize(dc.account.organization.name) + " Documents";
   }
 };
 

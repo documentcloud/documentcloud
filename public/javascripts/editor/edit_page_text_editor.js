@@ -101,7 +101,7 @@ dc.ui.EditPageTextEditor = dc.ui.EditorToolbar.extend({
 
   cachePageText : function() {
     var pageNumber = this.getPageNumber();
-    var pageText = Inflector.trim($('.DV-textContents').textWithNewlines());
+    var pageText = dc.inflector.trim($('.DV-textContents').textWithNewlines());
 
     if (!(pageNumber in this.originalPageText)) {
       this.originalPageText[pageNumber] = $.trim(this.getPageText(pageNumber));
@@ -165,7 +165,7 @@ dc.ui.EditPageTextEditor = dc.ui.EditorToolbar.extend({
     if (pageCount == 0) {
       saveText = 'Save page text';
     } else {
-      saveText = 'Save ' + pageCount + Inflector.pluralize(' page', pageCount);
+      saveText = 'Save ' + pageCount + dc.inflector.pluralize(' page', pageCount);
     }
     $('.edit_page_text_confirm_input', this.el).val(saveText);
 

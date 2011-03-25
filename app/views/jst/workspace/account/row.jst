@@ -6,7 +6,7 @@
 </td>
 <td class="name">
   <span class="display selectable_text">
-    <%= Inflector.truncate(account.fullName(true) || '', 25) %>&nbsp;<span class="pending_notification">(pending)</span>
+    <%= dc.inflector.truncate(account.fullName(true) || '', 25) %>&nbsp;<span class="pending_notification">(pending)</span>
   </span>
   <div class="edit name_wrapper">
     <div class="text_input dark small">
@@ -19,7 +19,7 @@
 </td>
 <td class="email">
   <span class="display selectable_text">
-    <%= Inflector.truncate(email || '', 25) %>
+    <%= dc.inflector.truncate(email || '', 25) %>
   </span>
   <div class="text_input edit dark small">
     <input name="email" type="text" placeholder="email" value="<%= email %>" />

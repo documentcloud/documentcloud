@@ -58,7 +58,7 @@ dc.ui.Organizer = Backbone.View.extend({
   promptNewProject : function() {
     var me = this;
     dc.ui.Dialog.prompt('Create a New Project', '', function(title, dialog) {
-      title = Inflector.trim(title);
+      title = dc.inflector.trim(title);
       if (!title) {
         dialog.error('Please enter a title.');
         return;

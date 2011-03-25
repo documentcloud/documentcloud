@@ -39,7 +39,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     var inviter = dc.app.editor.options.reviewerInviter;
     if (!(dc.account.role == dc.model.Account.prototype.REVIEWER && inviter)) return;
     var title = inviter.fullName + ' has invited you to review "' +
-      Inflector.truncate(currentDocument.api.getTitle(), 50) + '"';
+      dc.inflector.truncate(currentDocument.api.getTitle(), 50) + '"';
     var description = JST['reviewer_welcome'](inviter);
     var dialog = dc.ui.Dialog.alert("", {description: description, title: title});
     $(dialog.el).addClass('wide_dialog');
@@ -74,7 +74,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   editRelatedArticle : function() {
     dc.ui.Dialog.prompt('Related Article URL', this.viewer.api.getRelatedArticle(), _.bind(function(url, dialog) {
-      url = Inflector.normalizeUrl(url);
+      url = dc.inflector.normalizeUrl(url);
       if (url && !dialog.validateUrl(url)) return false;
       this.viewer.api.setRelatedArticle(url);
       this._updateDocument({related_article : url});
@@ -87,7 +87,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   editPublishedUrl : function() {
     dc.ui.Dialog.prompt('Published URL', this.viewer.api.getPublishedUrl(), _.bind(function(url, dialog) {
-      url = Inflector.normalizeUrl(url);
+      url = dc.inflector.normalizeUrl(url);
       if (url && !dialog.validateUrl(url)) return false;
       this.viewer.api.setPublishedUrl(url);
       this._updateDocument({remote_url : url});

@@ -17,8 +17,8 @@ dc.model.Organization = Backbone.Model.extend({
   statistics : function() {
     var docs  = this.get('document_count');
     var notes = this.get('note_count');
-    return docs + ' ' + Inflector.pluralize('document', docs)
-      + ', ' + notes + ' ' + Inflector.pluralize('note', notes);
+    return docs + ' ' + dc.inflector.pluralize('document', docs)
+      + ', ' + notes + ' ' + dc.inflector.pluralize('note', notes);
   }
 
 });

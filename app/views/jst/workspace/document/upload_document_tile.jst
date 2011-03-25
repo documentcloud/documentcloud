@@ -5,7 +5,7 @@
   <% } %>
   <div class="upload_file_size">
     <% if (model.get('size')) { %>
-      (<%= Inflector.bytesToMB(model.get('size')) %>)
+      (<%= dc.inflector.bytesToMB(model.get('size')) %>)
     <% } %>
     <% if (autostart) { %>
       <div class="spinner_dark icon"></div>

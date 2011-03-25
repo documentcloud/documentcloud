@@ -82,7 +82,7 @@ dc.ui.Toolbar = Backbone.View.extend({
       var current = Documents.sharedAttribute(docs, 'related_article') || '';
       var suffix  = docs.length > 1 ? 'these documents:' : 'this document:';
       dc.ui.Dialog.prompt('Related Article URL', current, function(rel, dialog) {
-        rel = Inflector.normalizeUrl(rel);
+        rel = dc.inflector.normalizeUrl(rel);
         if (rel && !dialog.validateUrl(rel)) return false;
         _.each(docs, function(doc) { doc.save({related_article : rel}); });
         return true;
@@ -99,7 +99,7 @@ dc.ui.Toolbar = Backbone.View.extend({
       var current = Documents.sharedAttribute(docs, 'remote_url') || '';
       var suffix  = docs.length > 1 ? 'these documents are' : 'this document is';
       dc.ui.Dialog.prompt('Published URL', current, function(url, dialog) {
-        url = Inflector.normalizeUrl(url);
+        url = dc.inflector.normalizeUrl(url);
         if (url && !dialog.validateUrl(url)) return false;
         _.each(docs, function(doc) { doc.save({remote_url : url}); });
         return true;

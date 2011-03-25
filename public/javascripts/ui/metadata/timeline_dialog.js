@@ -47,7 +47,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   },
 
   displayTitle : function() {
-    if (this.documents.length == 1) return 'Timeline for "' + Inflector.truncate(this.documents[0].get('title'), 55) + '"';
+    if (this.documents.length == 1) return 'Timeline for "' + dc.inflector.truncate(this.documents[0].get('title'), 55) + '"';
     return "Timeline for " + this.documents.length + " Documents";
   },
 
@@ -87,7 +87,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     this._options.xaxis.max   = null;
     this._options.yaxis.max   = this.documents.length - 0.5;
     this._options.yaxis.ticks = _.map(this.documents, function(doc){
-      return [styles[doc.id].pos, Inflector.truncate(doc.get('title'), 30)];
+      return [styles[doc.id].pos, dc.inflector.truncate(doc.get('title'), 30)];
     });
     this.drawPlot();
   },
@@ -111,13 +111,13 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   },
 
   _renderTooltip : function(date) {
-    var title   = Inflector.truncate(Documents.get(date.get('document_id')).get('title'), 45);
+    var title   = dc.inflector.truncate(Documents.get(date.get('document_id')).get('title'), 45);
     var excerpt = date.get('excerpts')[0];
     dc.ui.tooltip.show({
       left  : this._pos.pageX,
       top   : this._pos.pageY,
       title : title,
-      text  : '<b>p.' + excerpt.page_number + '</b> ' + Inflector.trimExcerpt(excerpt.excerpt)
+      text  : '<b>p.' + excerpt.page_number + '</b> ' + dc.inflector.trimExcerpt(excerpt.excerpt)
     });
   },
 

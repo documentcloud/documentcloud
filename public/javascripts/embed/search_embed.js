@@ -7,7 +7,7 @@
   dc.Backbone         = Backbone.noConflict();
 
   dc.loadSearchEmbed = function(searchUrl, opts) {
-    var id = dc.Inflector.sluggify(opts.originalQuery || opts.q);
+    var id = dc.inflector.sluggify(opts.originalQuery || opts.q);
     
     dc.embed[id] = dc.embed[id] || {};
     dc.embed[id].options = opts = _.extend({}, {
@@ -34,7 +34,7 @@
   };
 
   dc.loadSearchEmbedCallback = function(json) {
-    var searchQuery = dc.Inflector.sluggify(json.query);
+    var searchQuery = dc.inflector.sluggify(json.query);
     var id = _.detect(_.keys(dc.embed), function(q) {
       if (searchQuery.indexOf(q) == 0) {
         return true;

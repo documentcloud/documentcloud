@@ -172,7 +172,7 @@ dc.ui.Admin = Backbone.View.extend({
     if (!item) return this._tooltip.hide();
     var count = item.datapoint[1];
     var date  = $.plot.formatDate(new Date(item.datapoint[0]), this.DATE_FORMAT);
-    var title = Inflector.pluralize(item.series.title, count);
+    var title = dc.inflector.pluralize(item.series.title, count);
     this._tooltip.show({
       left : pos.pageX,
       top  : pos.pageY,

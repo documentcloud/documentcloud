@@ -95,7 +95,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   renderEmailDialog : function() {
     var docSize = this.docs.length;
     var title = 'Share ' + (this.docs.length == 1 ?
-        '"' + Inflector.truncate(this.docs.first().get('title'), 35) + '"' :
+        '"' + dc.inflector.truncate(this.docs.first().get('title'), 35) + '"' :
         this.docs.length + ' Documents');
 
     this.showingEmailDialog = true;
@@ -116,7 +116,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   },
 
   customMessage : function() {
-    return Inflector.trim(this.$('.email_message').val());
+    return dc.inflector.trim(this.$('.email_message').val());
   },
 
   previewEmail : function() {
@@ -262,9 +262,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       url : '/reviewers',
       type : 'POST',
       data : {
-        email         : Inflector.trim(email),
-        first_name    : Inflector.trim(this.$('.reviewer_management input[name=first_name]').val()),
-        last_name     : Inflector.trim(this.$('.reviewer_management input[name=last_name]').val()),
+        email         : dc.inflector.trim(email),
+        first_name    : dc.inflector.trim(this.$('.reviewer_management input[name=first_name]').val()),
+        last_name     : dc.inflector.trim(this.$('.reviewer_management input[name=last_name]').val()),
         document_ids  : this.docs.pluck('id')
       },
       success: _.bind(function(resp) { this._onAddSuccess(resp, callback); }, this),
@@ -349,7 +349,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       }
     }, this));
     dc.ui.notifier.show({
-      text      : account.get('email') + ' is no longer a reviewer on ' + documentIds.length + Inflector.pluralize(' document', documentIds.length),
+      text      : account.get('email') + ' is no longer a reviewer on ' + documentIds.length + dc.inflector.pluralize(' document', documentIds.length),
       duration  : 5000,
       mode      : 'info'
     });
@@ -384,7 +384,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _setEmailDescription : function() {
     var accounts = this.accountsToEmail();
     var description = "DocumentCloud will email reviewing instructions to " +
-      Inflector.commify(_.map(accounts, function(a){ return a.fullName(); }), {conjunction: 'and'}) +
+      dc.inflector.commify(_.map(accounts, function(a){ return a.fullName(); }), {conjunction: 'and'}) +
       ". If you wish, you may add a personal&nbsp;message.";
     this.$('.email_description').html(description);
   },
@@ -409,7 +409,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
         var text = 'Instructions for reviewing ' +
             (documentIds.length == 1 ?
-              '"' + Inflector.truncate(this.docs.get(documentIds[0]).get('title'), 30) + '"' :
+              '"' + dc.inflector.truncate(this.docs.get(documentIds[0]).get('title'), 30) + '"' :
               documentIds.length + ' documents'
             ) + ' sent to ' +
             (accounts.length == 1 ?
@@ -457,7 +457,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _displayTitle : function() {
     if (this.currentStep == 1) {
       return this.docs.length == 1 ?
-        'Share "' + Inflector.truncate(this.docs.first().get('title'), 30) + '"' :
+        'Share "' + dc.inflector.truncate(this.docs.first().get('title'), 30) + '"' :
         'Share ' + this.docs.length + ' Documents';
     } else {
       var accounts = this.accountsToEmail();

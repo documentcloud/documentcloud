@@ -100,7 +100,7 @@
               <tr>
                 <td class="first"><img class="doc" src="<%= doc.get('thumbnail_url') %>" /></td>
                 <td><%= doc.get('id') %></td>
-                <td><%= doc.get('public') ? Inflector.truncate(doc.get('title') || '', 50) : '<i>private</i>' %></td>
+                <td><%= doc.get('public') ? dc.inflector.truncate(doc.get('title') || '', 50) : '<i>private</i>' %></td>
                 <td><%= doc.get('account_name') %></td>
                 <td><%= doc.get('organization_name') %></td>
                 <td><%= doc.get('page_count') %></td>
@@ -223,10 +223,10 @@
                     <%= doc.get('id') %>
                   </a>
                 </td>
-                <td><%= doc.get('public') ? Inflector.truncate(doc.get('title') || '', 50) : '<i>private</i>'  %></td>
+                <td><%= doc.get('public') ? dc.inflector.truncate(doc.get('title') || '', 50) : '<i>private</i>'  %></td>
                 <td><%= doc.get('account_name') %></td>
                 <td><%= doc.get('organization_name') %></td>
-                <td><%= doc.get('public') ? Inflector.truncate(doc.get('source') || '', 25) : '<i>private</i>'  %></td>
+                <td><%= doc.get('public') ? dc.inflector.truncate(doc.get('source') || '', 25) : '<i>private</i>'  %></td>
                 <td><%= doc.get('page_count') %></td>
                 <td><%= doc.get('created_at') %></td>
                 <td class="last"></td>

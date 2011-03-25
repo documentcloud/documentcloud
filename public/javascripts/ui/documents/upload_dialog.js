@@ -41,7 +41,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._project = _.first(Projects.selected());
     var data = {};
     if (this._project) {
-      var title = Inflector.truncate(this._project.get('title'), 35);
+      var title = dc.inflector.truncate(this._project.get('title'), 35);
       data.information = 'Project: ' + title;
     }
     dc.ui.Dialog.prototype.render.call(this, data);
@@ -106,7 +106,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   _onSelect : function(e, files, index, xhr, handler, callback) {
     var file = files[index];
     this.collection.add(new dc.model.UploadDocument({
-      id          : Inflector.sluggify(file.fileName || file.name),
+      id          : dc.inflector.sluggify(file.fileName || file.name),
       uploadIndex : index,
       file        : file,
       position    : index,
@@ -162,7 +162,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Update the progress bar based on the browser's determination of upload progress.
   _onProgress : function(e, files, index, xhr, handler) {
-    var id         = Inflector.sluggify(files[index].fileName || files[index].name);
+    var id         = dc.inflector.sluggify(files[index].fileName || files[index].name);
     var percentage = parseInt((e.loaded / e.total) * 100, 10);
 
     this._tiles[id].setProgress(percentage);
@@ -171,7 +171,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // Once done, hide the uploaded document tile and check to see if it's last, so the
   // dialog can close.
   _onComplete : function(e, files, index, xhr, handler) {
-    var id   = Inflector.sluggify(files[index].fileName || files[index].name);
+    var id   = dc.inflector.sluggify(files[index].fileName || files[index].name);
     var resp = xhr.responseText && JSON.parse(xhr.responseText);
 
     this._tiles[id].setProgress(100);
@@ -216,8 +216,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // Update title and fields to match the new count of uploads.
   _countDocuments : function() {
     var num = this.collection.length;
-    this.title('Upload ' + (num > 1 ? num : '') + Inflector.pluralize(' Document', num));
-    var text = Inflector.pluralize('document', num);
+    this.title('Upload ' + (num > 1 ? num : '') + dc.inflector.pluralize(' Document', num));
+    var text = dc.inflector.pluralize('document', num);
     this.$('.upload_public_count').text(text);
     this.$('.upload_email_count').text('the ' + text + (num == 1 ? ' has' : ' have'));
   },
@@ -228,7 +228,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       var num = resp.queue_length;
       if (num <= 0) return;
       var conj = num > 1 ? 'are' : 'is';
-      this.info('There ' + conj + ' ' + num + ' ' + Inflector.pluralize('document', num) +
+      this.info('There ' + conj + ' ' + num + ' ' + dc.inflector.pluralize('document', num) +
                 ' ahead of you in line.', true);
     }, this));
   },
@@ -351,7 +351,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
 
   // Validation used by uploader dialog.
   ensureTitle : function() {
-    var noTitle = Inflector.trim(this._title.val()) == '';
+    var noTitle = dc.inflector.trim(this._title.val()) == '';
     this._title.closest('.text_input').toggleClass('error', noTitle);
     return noTitle;
   },

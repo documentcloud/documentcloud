@@ -13,7 +13,7 @@ dc.model.UploadDocument = Backbone.Model.extend({
       delete attrs.file;
       var fileName    = file.fileName || file.name;
       fileName        = fileName.match(/[^\/\\]+$/)[0]; // C:\fakepath\yatta yatta.pdf => yatta yatta.pdf
-      attrs.title     = Inflector.titleize(fileName.replace(this.FILE_EXTENSION_MATCHER, ''));
+      attrs.title     = dc.inflector.titleize(fileName.replace(this.FILE_EXTENSION_MATCHER, ''));
       var extMatch    = fileName.match(this.FILE_EXTENSION_MATCHER);
       attrs.extension = extMatch && extMatch[1];
       attrs.size      = file.fileSize || null;

@@ -3,15 +3,15 @@
   <div class="publish_section publish_info">
     <% if (restrictedCount == 0) { %>
       There are <%= documentsCount %> 
-      <%= Inflector.pluralize('document', documentsCount) %>
+      <%= dc.inflector.pluralize('document', documentsCount) %>
       that will be embedded.
     <% } else { %>
       This set of documents will only show 
       <%= publicCount %> of <%= documentsCount %> 
-      <%= Inflector.pluralize('document', documentsCount) %>.
+      <%= dc.inflector.pluralize('document', documentsCount) %>.
       <span class="publish_section text_link change_access">
         View the <%= restrictedCount %> private 
-        <%= Inflector.pluralize('document', restrictedCount) %>.
+        <%= dc.inflector.pluralize('document', restrictedCount) %>.
       </span>
     <% } %>
   </div>

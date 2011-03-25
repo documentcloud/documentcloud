@@ -289,7 +289,7 @@ dc.ui.Document = Backbone.View.extend({
     }));
     var count = Documents.chosen(this.model).length;
     if (!count) return;
-    var deleteTitle = Inflector.pluralize('Delete Document', count);
+    var deleteTitle = dc.inflector.pluralize('Delete Document', count);
     menu.clear();
     var items = [{title : 'Open', onClick: this.viewDocuments}];
     if (this.model.isPublished()) {
@@ -355,7 +355,7 @@ dc.ui.Document = Backbone.View.extend({
   _displayDescription : function() {
     var el = this.$('.description_text');
     if (this.model.get('access') == dc.access.ERROR) return el.html(this.ERROR_MESSAGE);
-    el.text(Inflector.stripTags(this.model.get('description') || ''));
+    el.text(dc.inflector.stripTags(this.model.get('description') || ''));
   },
 
   // Trigger-based method which shows selection highlight on document tile.

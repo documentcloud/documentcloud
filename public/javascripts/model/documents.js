@@ -227,7 +227,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
   downloadViewers : function(docs) {
     var ids = _.map(docs, function(doc){ return doc.id; });
-    var dialog = dc.ui.Dialog.progress('Preparing ' + Inflector.pluralize('document', ids.length) + ' for download...');
+    var dialog = dc.ui.Dialog.progress('Preparing ' + dc.inflector.pluralize('document', ids.length) + ' for download...');
     dc.app.download('/download/' + ids.join('/') + '/document_viewer.zip', function() {
       dialog.close();
     });
@@ -267,7 +267,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   // Destroy the currently selected documents, after asking for confirmation.
   verifyDestroy : function(docs) {
     if (!this.allowedToEdit(docs)) return;
-    var message = 'Really delete ' + docs.length + ' ' + Inflector.pluralize('document', docs.length) + '?';
+    var message = 'Really delete ' + docs.length + ' ' + dc.inflector.pluralize('document', docs.length) + '?';
     dc.ui.Dialog.confirm(message, _.bind(function() {
       var counter = docs.length;
       var progress = dc.ui.Dialog.progress('Deleting Documents&hellip;');
@@ -344,7 +344,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
       }
     ], function(access) {
       _.each(docs, function(doc) { doc.save({access : parseInt(access, 10)}); });
-      var notification = 'Access updated for ' + docs.length + ' ' + Inflector.pluralize('document', docs.length);
+      var notification = 'Access updated for ' + docs.length + ' ' + dc.inflector.pluralize('document', docs.length);
       dc.ui.notifier.show({mode : 'info', text : notification});
       return true;
     }, options);
@@ -394,7 +394,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     } else if (dc.account && groupName == dc.account.organization.slug) {
       ret = 'org_documents';
     } else if (groupName && (org = Organizations.findBySlug(groupName))) {
-      title = Inflector.possessivize(org.get('name')) + " Documents";
+      title = dc.inflector.possessivize(org.get('name')) + " Documents";
     } else if (filter == 'published') {
       ret = 'published_documents';
     } else if (filter == 'popular') {

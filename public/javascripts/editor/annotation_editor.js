@@ -181,7 +181,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
   },
 
   _accessClass : function(kind) {
-    return 'DV-access' + Inflector.capitalize(kind);
+    return 'DV-access' + dc.inflector.capitalize(kind);
   }
 
 });

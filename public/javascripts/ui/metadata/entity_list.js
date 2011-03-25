@@ -52,7 +52,7 @@ dc.ui.EntityList = Backbone.View.extend({
     var row = $(el).closest('.row');
     var val = row.attr('data-value');
     var cat = row.attr('data-category');
-    return new RegExp('\\s*' + cat + ':\\s*[\'"]?' + Inflector.escapeRegExp(val) + '[\'"]?', 'ig');
+    return new RegExp('\\s*' + cat + ':\\s*[\'"]?' + dc.inflector.escapeRegExp(val) + '[\'"]?', 'ig');
   },
 
   _filterFacet : function(e) {

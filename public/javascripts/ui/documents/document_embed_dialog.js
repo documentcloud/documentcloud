@@ -71,7 +71,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
   // The first step is always custom for the document.
   displayTitle : function() {
     if (this.currentStep == 1) return 'Step One: Review "' +
-                                      Inflector.truncate(this.model.get('title'), 25) + '"';
+                                      dc.inflector.truncate(this.model.get('title'), 25) + '"';
     return this.STEPS[this.currentStep];
   },
 
@@ -197,8 +197,8 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     var remoteUrl      = this.$('input[name=remote_url]').removeClass('error').val();
     var attrs = {
       access          : access,
-      related_article : Inflector.normalizeUrl(relatedArticle),
-      remote_url      : Inflector.normalizeUrl(remoteUrl)
+      related_article : dc.inflector.normalizeUrl(relatedArticle),
+      remote_url      : dc.inflector.normalizeUrl(remoteUrl)
     };
     if (attrs = this.model.changedAttributes(attrs)) {
       var errors = _.any(['related_article', 'remote_url'], _.bind(function(attr) {

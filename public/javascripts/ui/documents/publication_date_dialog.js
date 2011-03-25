@@ -75,7 +75,7 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
   // Helper method that constructs a title for multiple documents.
   _title : function() {
     if (this.multiple) return this.docs.length + ' Documents';
-    return '"' + Inflector.truncate(this.docs[0].get('title'), 35) + '"';
+    return '"' + dc.inflector.truncate(this.docs[0].get('title'), 35) + '"';
   },
 
   // Helper method that reads the date form fields (month, day, year, time)

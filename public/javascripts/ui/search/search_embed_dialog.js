@@ -93,7 +93,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     var options = JSON.stringify(this.embedOptions());
     var params = $.param({
         q       : this.query,
-        slug    : Inflector.sluggify(this.query),
+        slug    : dc.inflector.sluggify(this.query),
         options : options
     });
     var url = '/search/preview?' + params;
@@ -109,7 +109,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   embedOptions : function() {
     var options = {};
     options.q            = this.query;
-    options.container    = 'DC-search-' + Inflector.sluggify(this.query);
+    options.container    = 'DC-search-' + dc.inflector.sluggify(this.query);
     options.title        = this._titleEl.val().replace(/\"/g, '\\\"');
     options.order        = this._orderEl.val();
     options.per_page     = this._perPageEl.val();
@@ -136,12 +136,12 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   _renderEmbedCode : function() {
     var options          = this.embedOptions();
     options.title        = '"' + options.title + '"';
-    options.container    = '"#DC-search-' + Inflector.sluggify(options.q) + '"';
+    options.container    = '"#DC-search-' + dc.inflector.sluggify(options.q) + '"';
     options.q            = '"' + options.q + '"';
     options.order        = '"' + options.order + '"';
     var serialized       = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['search/embed_code']({
-      query: Inflector.sluggify(this.query),
+      query: dc.inflector.sluggify(this.query),
       options: serialized.join(',&#10;    ')
     }));
   },
@@ -157,10 +157,10 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
       var pages = Math.max(1, Math.ceil(this.publicCount / perPage));
       var label = [
         this.publicCount,
-        Inflector.pluralize(' document', this.publicCount),
+        dc.inflector.pluralize(' document', this.publicCount),
         ' / ',
         pages,
-        Inflector.pluralize(' page', pages)
+        dc.inflector.pluralize(' page', pages)
       ].join('');
     }
 

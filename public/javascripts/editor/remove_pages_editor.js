@@ -124,7 +124,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
     }, this));
 
     // Update remove button's text
-    var removeText = 'Remove ' + (pageCount ? pageCount : '') + Inflector.pluralize(' Page', pageCount);
+    var removeText = 'Remove ' + (pageCount ? pageCount : '') + dc.inflector.pluralize(' Page', pageCount);
     this.$('.remove_pages_confirm_input').text(removeText);
 
     // Set width of container for side-scrolling
@@ -140,7 +140,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
       dc.ui.Dialog.alert("You can't remove all the pages from this document.");
       return;
     }
-    var message = "You've selected " + pageCount + Inflector.pluralize(' page', pageCount) + " for removal. This document will close while it's being rebuilt. Are you sure you're ready to proceed?";
+    var message = "You've selected " + pageCount + dc.inflector.pluralize(' page', pageCount) + " for removal. This document will close while it's being rebuilt. Are you sure you're ready to proceed?";
     dc.ui.Dialog.confirm(message, _.bind(function() {
       this.$s.saveButton.text('Removing...').attr('disabled', true).setMode('not', 'enabled');
       this.save();

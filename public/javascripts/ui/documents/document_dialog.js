@@ -56,7 +56,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
       if (!el.length) return;
       var next = el.val();
       if (attr == 'access') next = parseInt(next, 10);
-      if (attr == 'related_article' || attr == 'remote_url') next = Inflector.normalizeUrl(next);
+      if (attr == 'related_article' || attr == 'remote_url') next = dc.inflector.normalizeUrl(next);
       if (next != original[attr] && el.hasClass('change')) changes[attr] = next;
     }, this));
     var errors = _.any(['related_article', 'remote_url'], _.bind(function(attr) {
@@ -72,7 +72,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
       dc.ui.notifier.show({
         mode : 'info', 
         text : 'Updated ' + this.docs.length + ' ' +
-               Inflector.pluralize('document', this.docs.length)
+               dc.inflector.pluralize('document', this.docs.length)
       });
     }
   },
@@ -90,7 +90,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   // the single document being edited.
   _title : function() {
     if (this.multiple) return this.docs.length + ' Documents';
-    return '"' + Inflector.truncate(this.docs[0].get('title'), 35) + '"';
+    return '"' + dc.inflector.truncate(this.docs[0].get('title'), 35) + '"';
   },
 
   // On change, mark input field as dirty.
