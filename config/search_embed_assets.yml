@@ -7,7 +7,6 @@ javascripts:
     - public/javascripts/vendor/underscore-*.js
     - public/javascripts/vendor/jquery-*.js
     - public/javascripts/vendor/backbone-*.js
-    - public/javascripts/lib/jquery_placeholder.js
     - public/javascripts/embed/search_embed.js
     - app/views/jst/embed/*.jst
 

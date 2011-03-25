@@ -146,7 +146,6 @@
 
       this.search = this.$('.DC-search-box');
 
-      this.search.placeholder({className: 'DC-placeholder DC-interface'});
       this.renderDocuments();
       this.showSearchCancel();
       var listEl = $('.DC-document-list', this.el);
