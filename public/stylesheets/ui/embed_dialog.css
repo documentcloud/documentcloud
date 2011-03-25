@@ -209,7 +209,7 @@
   width: 30px;
 }
 .search_embed_dialog input[type="checkbox"] {
-  margin-top: 7px;
+  margin: 7px 0 0 0;
 }
 .search_embed_dialog .publish_step_1 input.input_title {
   width: 250px;
