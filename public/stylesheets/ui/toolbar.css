@@ -38,7 +38,7 @@
     }
   #toolbar #size_toggle {
     float: right;
-    width: 47px; height: 24px;
+    width: 48px; height: 24px;
     position: relative;
     z-index: 1;
     cursor: pointer;

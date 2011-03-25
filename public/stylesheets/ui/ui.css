@@ -302,7 +302,7 @@ textarea.text_area {
 .minibutton {
   cursor: pointer;
   color: #fff;
-  text-shadow: #aaa 0 -1px 0;
+  text-shadow: #999 0 -1px 0;
   font-weight: bold;
   font-size: 11px;
   line-height: 11px;
@@ -310,9 +310,9 @@ textarea.text_area {
   height: 11px;
   text-align: center;
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
-  box-shadow: 0 1px 2px #c4c4c4; -webkit-box-shadow: 0 1px 2px #c4c4c4; -moz-box-shadow: 0 1px 2px #c4c4c4;
-  border: 1px solid #b2b2b2; border-top-color: #c9c9c9; border-bottom-color: #9a9a9a;
-  background: url(/images/embed/ui/button_bg.gif) repeat-x left top;
+  box-shadow: 0 1px 2px #bababa; -webkit-box-shadow: 0 1px 2px #bababa; -moz-box-shadow: 0 1px 2px #bababa;
+  border: 1px solid #a7a7a7; border-top-color: #b7b7b7; border-bottom-color: #959595;
+  background: url(/images/embed/ui/button_bg.png) repeat-x left top;
 }
   .minibutton:active {
     border-color: #aaa;
