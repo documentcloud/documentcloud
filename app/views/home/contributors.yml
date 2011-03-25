@@ -9,8 +9,12 @@ contributors:
      - http://www.stamfordadvocate.com
    - - Albany Times-Union
      - http://www.timesunion.com
+   - - AllPrinceton
+     - http://allprinceton.com/
    - - AnnArbor.com
      - http://annarbor.com
+   - - A.Q. Miller School of Journalism and Mass Communications
+     - http://jmc.ksu.edu/site/
    - - Arizona Republic
      - http://azcentral.com
    - - Asbury Park Press
@@ -21,6 +25,8 @@ contributors:
      - http://ajc.com
    - - The Atlantic
      - http://theatlantic.com
+   - - Austin American-Statesman
+     - http://www.statesman.com/
    - - The Bay Citizen
      - http://www.baycitizen.org/
    - - Better Government Association
@@ -75,10 +81,14 @@ contributors:
      - http://www.commercialappeal.com
    - - Connecticut Post
      - http://www.ctpost.com
+   - - Co-operative News
+     - http://www.thenews.coop/
    - - Dallas Morning News
      - http://dallasnews.com
    - - The Daily Californian
      - http://www.dailycal.org
+   - - Daily Report
+     - http://www.dailyreportonline.com/
    - - Danbury News-Times
      - http://www.newstimes.com
    - - Dark Acres
@@ -103,6 +113,8 @@ contributors:
      - http://www.eff.org
    - - El Paso Times
      - http://elpasotimes.com
+   - - epiNewswire
+     - http://www.epinews.com/
    - - Epoch Times
      - http://www.theepochtimes.com/
    - - Erie Times-News
@@ -141,6 +153,8 @@ contributors:
      - http://greatfallstribune.com
    - - Greenwich Time
      - http://www.greenwichtime.com
+   - - Greenwire
+     - http://www.eenews.net/gw
    - - Health News Florida
      - http://www.healthnewsflorida.org/
    - - Hearst Papers
@@ -157,6 +171,8 @@ contributors:
      - http://invw.org
    - - Investigative Reporting Workshop at American University
      - http://investigativereportingworkshop.org
+   - - iPolitics
+     - http://ipolitics.ca/
    - - The Journal-Standard
      - http://www.journalstandard.com
    - - JURIST
@@ -197,6 +213,8 @@ contributors:
      - http://arts.monash.edu.au/journalism/
    - - Montana Watchdog
      - http://montana.watchdog.org/
+   - - Montreal Gazette
+     - http://www.montrealgazette.com/
    - - Monterey County Weekly
      - http://mcweekly.com
    - - Mother Jones
@@ -205,6 +223,8 @@ contributors:
      - http://msnbc.msn.com
    - - Muck Rock
      - http://www.muckrock.com
+   - - Naples Daily News
+     - http://www.naplesnews.com/
    - - National Public Radio
      - http://npr.org
    - - National Security Archive
@@ -213,6 +233,8 @@ contributors:
      - http://medillnsj.org/
    - - The Nerve (South Carolina Policy Council)
      - http://www.thenerve.org
+   - - NET Nebraska
+     - http://www.netnebraska.org
    - - NewsHour
      - http://pbs.org/newshour
    - - The News Journal
@@ -241,6 +263,8 @@ contributors:
      - http://www.ottawacitizen.com
    - - Ozarks News
      - http://www.sgfnews.org
+   - - Pacific Northwest Inlander
+     - http://www.inlander.com/
    - - The Palm Beach Post
      - http://www.palmbeachpost.com/
    - - PBS News Navigator
@@ -271,6 +295,12 @@ contributors:
      - http://americanpublicmedia.org/cij
    - - Public.Resource.Org
      - http://public.resource.org
+   - - Rapid City Journal
+     - http://www.rapidcityjournal.com
+   - - Raleigh Public Record
+     - http://www.raleighpublicrecord.org
+   - - Reese News
+     - http://reesenews.org/
    - - Reference Tone
      - http://referencetone.com
    - - The Register-Guard
@@ -313,6 +343,8 @@ contributors:
      - http://spinwatch.org
    - - The Spokesman-Review
      - http://www.spokesman.com/
+   - - Spot.us
+     - http://spot.us/
    - - Stabile Center for Investigative Journalism
      - http://www.stabilecenter.org/
    - - StarNews
@@ -335,12 +367,16 @@ contributors:
      - http://www.tbd.com/
    - - TCU Daily Skiff
      - http://tcudailyskiff.com
+   - - TechPresident
+     - http://techpresident.com/
    - - Texas Observer
      - http://www.texasobserver.org
    - - Texas Tribune
      - http://www.texastribune.com
    - - Thomson Reuters
      - http://thomsonreuters.com
+   - - Times Herald-Record
+     - http://www.recordonline.com
    - - Transactional Records Access Clearinghouse
      - http://trac.syr.edu/
    - - Tucson Sentinel
@@ -355,6 +391,8 @@ contributors:
      - http://www.uslnn.com
    - - Vancouver Sun
      - http://vancouversun.com
+   - - Veritas New Mexico
+     - http://veritasnm.com
    - - Voice of San Diego
      - http://voiceofsandiego.org
    - - Voices of Montana
