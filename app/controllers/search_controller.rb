@@ -18,7 +18,7 @@ class SearchController < ApplicationController
   end
 
   def embed
-    groups = params[:options].match /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)/
+    groups = params[:options].match(/p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)/)
     _, params[:page], params[:per_page], params[:order], params[:organization_id] = *groups
     perform_search :include_facets => params[:include_facets]
     results             = {:query => @query, :documents => @documents}
@@ -26,9 +26,9 @@ class SearchController < ApplicationController
     results[:total]     = @query.total
     results[:page]      = @query.page
     results[:per_page]  = @query.per_page
-    results[:documents] = @documents.map do |d| 
-      options = API_OPTIONS.merge(:contributor => d.organization_id != params[:organization_id].to_i) 
-      d.canonical(options)
+    results[:documents] = @documents.map do |d|
+      not_owned = d.organization_id != params[:organization_id].to_i
+      d.canonical API_OPTIONS.merge(:contributor => not_owned)
     end
     results[:dc_url]    = "#{DC.server_root(:ssl => false).sub('s3', 'www')}"
     js                  = "dc.loadSearchEmbedCallback(#{results.to_json});"
@@ -39,11 +39,7 @@ class SearchController < ApplicationController
   def restricted_count
     params[:q] += " filter:restricted"
     perform_search
-    restricted_count = @query.total
-    counts = {
-      :restricted_count => restricted_count
-    }
-    json counts
+    json :restricted_count => @query.total
   end
 
   def facets
