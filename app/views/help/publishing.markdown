@@ -52,6 +52,10 @@ Place the embed code on your page, in the location where you would like the view
 
 [Let us know][] about your reporting. Even if it is "just a little local story" -- we're interested in all the reporting you do with DocumentCloud.
 
+# Embedding a Document Set
+
+Ever wanted to publish an entire set of documents related to your story? DocumentCloud can provide a short snippet of HTML that allows visitors to your site to search and filter through the tens or hundreds of documents that make up your project.
+
 Still have questions about publishing documents? Don't hesitate to [contact us][].
 
 [Embed Menu]: /images/help/embed_menu.png
