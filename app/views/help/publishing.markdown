@@ -68,7 +68,7 @@ Open the "Publish" menu, and click on "Embed These Documents". You'll see a dial
 Once you're comfortable with your settings, and have previewed the embedded documents, proceed to the next step, where you can copy and paste the embed code. It should look something like this:
 
     <div id="DC-search-projectid-8-epa-flouride"></div>
-    <script src="http://s3.documentcloud.org/search/loader.js"></script>
+    <script src="http://s3.documentcloud.org/embed/loader.js"></script>
     <script>
       dc.embed.load('http://www.documentcloud.org/search/embed/', {
         q: "projectid: 8-epa-flouride",
