@@ -55,7 +55,7 @@
   };
 
   dc.EmbedDocument = dc.Backbone.Model.extend({
-    
+
     url : function() {
       return this.get('resources').published_url || this.get('canonical_url');
     },
@@ -91,7 +91,7 @@
 
     initialize : function() {
       this.embed     = searches[this.options.id];
-      this.container = $('#' + this.options.container);
+      this.container = $(this.options.container);
       this.embed.documents.bind('refresh', _.bind(this.renderDocuments, this));
       this.render();
     },
@@ -237,7 +237,7 @@
       var showOrg          = !!this.model.get('contributor_organization');
       var titleWidth       = this.fitTitleWidth(width);
       var descriptionWidth = this.fitDescriptionWidth(width, showOrg);
-      
+
       el.css({width: width});
       el.toggleClass('DC-show-organization', showOrg);
       el.html(JST['embed_document_tile']({

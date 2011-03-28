@@ -109,7 +109,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   embedOptions : function() {
     var options = {};
     options.q            = this.query;
-    options.container    = 'DC-search-' + dc.inflector.sluggify(this.query);
+    options.container    = '#DC-search-' + dc.inflector.sluggify(this.query);
     options.title        = this._titleEl.val().replace(/\"/g, '\\\"');
     options.order        = this._orderEl.val();
     options.per_page     = this._perPageEl.val();
@@ -136,7 +136,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   _renderEmbedCode : function() {
     var options          = this.embedOptions();
     options.title        = '"' + options.title + '"';
-    options.container    = '"#DC-search-' + dc.inflector.sluggify(options.q) + '"';
+    options.container    = '"' + options.container + '"';
     options.q            = '"' + options.q + '"';
     options.order        = '"' + options.order + '"';
     var serialized       = _.map(options, function(value, key){ return key + ': ' + value; });
