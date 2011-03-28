@@ -7,7 +7,14 @@ dc.app.hotkeys = {
     '17':  'control',
     '91':  'command',
     '93':  'command',
-    '224': 'command'
+    '224': 'command',
+    '13':  'enter',
+    '37':  'left',
+    '38':  'up',
+    '39':  'right',
+    '40':  'down',
+    '46':  'delete',
+    '188': 'comma'
   },
 
   initialize : function() {
@@ -29,6 +36,10 @@ dc.app.hotkeys = {
 
   blur : function(e) {
     for (var key in this.KEYS) this[this.KEYS[key]] = false;
+  },
+  
+  key : function(e) {
+    return this.KEYS[e.keyCode];
   }
 
 };

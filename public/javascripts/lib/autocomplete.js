@@ -16,7 +16,7 @@ dc.ui.Autocomplete = Backbone.View.extend({
   },
   
   checkKeypress : function(e) {
-    if (e.keyCode == 13) {
+    if (dc.app.hotkeys.key(e) == 'enter') {
       this.options.successCallback(this.options.input.val());
     } else {
       this.keypressCallback();
@@ -25,7 +25,6 @@ dc.ui.Autocomplete = Backbone.View.extend({
   
   showValues : function(values, partial) {
     var selectedValues = this.selectValues(values, partial);
-    console.log(['showValues', selectedValues, partial]);
     var $values = this.render(selectedValues, partial);
   },
   
@@ -50,7 +49,6 @@ dc.ui.Autocomplete = Backbone.View.extend({
       values  : selectedValues,
       partial : partial
     }));
-    console.log(['render', $(this.el)]);
     this.options.input.after(this.el);
     $(this.el).align(this.options.input, 'bottom left', {'bottom': 4});
   }

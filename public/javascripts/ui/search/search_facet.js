@@ -15,8 +15,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   initialize : function(options) {
-      this.setMode('not', 'editing');
-      _.bindAll(this, 'autocompleteValueCheck', 'autocompleteValueSuccess');
+    this.setMode('not', 'editing');
+    _.bindAll(this, 'onSelect');
   },
   
   render : function() {
@@ -26,25 +26,53 @@ dc.ui.SearchFacet = Backbone.View.extend({
       facetQuery : this.options.facetQuery
     }));
     
+    this.box = this.$('input');
+    
     // This is defered so it can be attached to the DOM to get the correct font-size.
-    _.defer(function() {
-      $('input', $el).autoGrowInput();
-    });
-
-    this.autocomplete = new dc.ui.Autocomplete({
-      input           : this.$('input'), 
-      checkCallback   : this.autocompleteValueCheck, 
-      successCallback : this.autocompleteValueSuccess
-    });
+    _.defer(_.bind(function() {
+      this.box.autoGrowInput();
+    }, this));
+    
+    this.setupAutocomplete();
+    
     return this;
   },
   
-  autocompleteValueCheck : function() {
+  setupAutocomplete : function() {
+    var lookup = this.lookupValues();
     
+    this.$('input').autocomplete({
+      onSelect : this.onSelect,
+      lookup   : lookup,
+      minChars : 0,
+      width    : 200
+    });
+  },
+
+  lookupValues : function() {
+    var category = this.options.category;
+    var values = [];
+    
+    if (category == 'account') {
+      values = Accounts.map(function(a) { return [a.get('slug'), a.fullName()]; });
+    } else if (category == 'project') {
+      values = Projects.pluck('title');
+    } else if (category == 'filter') {
+      values = ['published', 'annotated', 'public'];
+    }
+    
+    if (_.isArray(values[0])) {
+      values = {
+        'data'        : _.map(values, function(v) { return v[0]; }),
+        'suggestions' : _.map(values, function(v) { return v[1]; })
+      };
+    }
+    
+    return values;
   },
   
-  autocompleteValueSuccess : function() {
-    
+  onSelect : function(value, data) {
+    this.box.val(data || value);
   },
   
   serialize : function() {
@@ -62,10 +90,13 @@ dc.ui.SearchFacet = Backbone.View.extend({
     return category + query + ' ';
   },
   
-  enableEdit : function() {
+  enableEdit : function(clearValue) {
     if (!this.$el.hasClass('is_editing')) {
       this.setMode('is', 'editing');
-      this.$('input').val(this.options.facetQuery).focus();
+      this.box.val(this.options.facetQuery).focus().trigger('update').keyup();
+      _.defer(_.bind(function() {
+        if (clearValue) this.box.val('').keyup();
+      }, this));
       
       dc.app.searchBox.addFocus();
     }

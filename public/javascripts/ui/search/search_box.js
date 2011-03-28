@@ -15,7 +15,7 @@ dc.ui.SearchBox = Backbone.View.extend({
 
   id  : 'search',
   
-  PREFIXES : ['project', 'text', 'account', 'document'],
+  PREFIXES : ['project', 'text', 'account', 'document', 'filter'],
 
   events : {
     'keydown #search_box'       : 'maybeSearch',
@@ -29,37 +29,26 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Creating a new SearchBox registers #search page fragments.
   constructor : function(options) {
     Backbone.View.call(this, options);
-    _.bindAll(this, 'hideSearch');
+    _.bindAll(this, 'hideSearch', 'onSelect');
   },
 
   render : function() {
     $(this.el).append(JST['workspace/search_box']({}));
     this.box      = this.$('#search_box');
     this.titleBox = this.$('#title_box_inner');
-    _.bindAll(this, 'autocompletePrefixCheck', 'autocompletePrefixSuccess');
     $(document.body).setMode('no', 'search');
     this.box.autoGrowInput();
-    this.autocomplete = new dc.ui.Autocomplete({
-      input           : this.box, 
-      checkCallback   : this.autocompletePrefixCheck, 
-      successCallback : this.autocompletePrefixSuccess
+    this.box.autocomplete({
+      lookup    : this.PREFIXES,
+      onSelect  : this.onSelect
     });
     return this;
   },
-
-  autocompletePrefixCheck : function(partial, callback) {
-    var values = [
-      'Account',
-      'Organization',
-      'Project',
-      'Filter',
-      'Text'
-    ];
-    callback(values, partial);
-  },
   
-  autocompletePrefixSuccess : function() {
-    
+  onSelect : function(value, data) {
+    this.box.val('');
+    this.renderFacet(value, ' ');
+    this.focusCategory(value);
   },
   
   // Shortcut to the searchbox's value.
@@ -81,7 +70,6 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   setQuery : function(query) {
-    console.log(['query', query]);
     var facets = this.extractFacets(query);
     this.renderFacets(facets);
     query = this.pareQuery(query);
@@ -114,7 +102,10 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Callback fired on key press in the search box. We search when they hit
   // return.
   maybeSearch : function(e) {
-    if (!dc.app.searcher.flags.outstandingSearch && e.keyCode == 13) return this.searchEvent(e);
+    if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') return this.searchEvent(e);
+    if (_.contains(['colon'], dc.app.hotkeys.key(e))) {
+      console.log(['colon', e]);
+    }
   },
 
   // Webkit knows how to fire a real "search" event.
@@ -214,6 +205,14 @@ dc.ui.SearchBox = Backbone.View.extend({
     if (next > viewsCount-1) next = 0;
     if (next < 0) next = viewsCount-1;
     this.facetViews[next].enableEdit();
+  },
+  
+  focusCategory : function(category) {
+    _.each(this.facetViews, function(facetView) {
+      if (facetView.options.category == category) {
+        facetView.enableEdit(true);
+      }
+    });
   },
 
   blur : function() {

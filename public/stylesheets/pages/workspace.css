@@ -108,8 +108,16 @@ label {
         font-size: 9px;
         text-transform: uppercase;
       }
+  #search_button {
+    float: right;
+    margin: 3px 29px 0 6px;
+  }
+  #search_category_selector {
+    float: left;
+    margin: 3px 0 0 29px;
+  }
   #search_box_wrapper {
-    margin: 0 29px 30px;
+    margin: 0 100px 30px 142px;
     cursor: text;
   }
   #title_box {
@@ -117,6 +125,19 @@ label {
     font: bold 20px Arial;
     color: #000;
     padding: 14px 30px 20px;
+  }
+
+.autocomplete {
+  border: 1px solid #C0C0C0;
+  background-color: #F6F6F6;
+  cursor: pointer;
+}
+  .autocomplete div {
+    padding: 4px 3px;
+  }
+  .autocomplete .selected {
+    background-color: #2A61CD;
+    color: white;
   }
 
 #spinner {
