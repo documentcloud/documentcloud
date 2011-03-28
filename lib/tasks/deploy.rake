@@ -9,7 +9,7 @@ namespace :deploy do
 
   desc "Deploy the Rails application"
   task :app do
-    remote ["app:update", "app:jammit", "app:clearcache", "app:restart", "app:warm"], app_servers
+    remote ["app:update", "app:jammit", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
   end
 
   desc "Deploy the Document Viewer to S3"

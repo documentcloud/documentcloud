@@ -46,15 +46,18 @@ namespace :app do
     Document.publish_due_documents
   end
 
-  desc "Clears out cached document JS files."
-  task :clearcache do
-    files = Dir["./public/documents/*.js"]
-    sh "rm ./public/documents/*.js" if files.length > 0
-  end
-  
-  desc "Purges cached search embeds."
-  task :purge_search_embed_cache do
-    sh "rm -fr ./public/search/embed/*"
+  namespace :clearcache do
+
+    desc "Clears out cached document JS files."
+    task :docs do
+      sh "rm -f ./public/documents/*.js"
+    end
+
+    desc "Purges cached search embeds."
+    task :search do
+      sh "rm -fr ./public/search/embed/*"
+    end
+
   end
 
 end
