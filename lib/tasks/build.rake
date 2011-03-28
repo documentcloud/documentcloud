@@ -60,7 +60,7 @@ namespace :build do
     Dir['build/*.css'].each do |css_file|
       File.open(css_file, 'r+') do |file|
         css = file.read
-        css.gsub!(/(\/)+images/, 'images')
+        css.gsub!('/images/search_embed', 'images')
         file.rewind
         file.write(css)
         file.truncate(css.length)
