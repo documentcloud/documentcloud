@@ -65,6 +65,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     dc.ui.Dialog.prototype.render.call(this);
     this.$('.custom').html(JST['workspace/search_embed_dialog']({
       query           : this.query,
+      projectQuery    : dc.app.SearchParser.searchType(this.query) == 'project',
       restrictedCount : this.restrictedCount,
       documentsCount  : this.documentsCount,
       publicCount     : this.publicCount

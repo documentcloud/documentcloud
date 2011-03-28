@@ -1,17 +1,16 @@
 <div class="publish_step publish_step_1 is_enabled">
 
   <div class="publish_section publish_info selectable_text">
-    <% if (restrictedCount == 0) { %>
-      There <%= documentsCount == 1 ? 'is one document' : 'are ' + documentsCount + ' documents' %>
-      that will be embedded.
-    <% } else { %>
-      This set includes
-      <%= publicCount %> of <%= documentsCount %>
-      <%= dc.inflector.pluralize('document', documentsCount) %>.
+    <%= publicCount %> public <%= dc.inflector.pluralize('document', documentsCount) %>
+    <%= projectQuery ? 'in this project' : 'matching this search' %>
+    will appear in this set.
+    <% if (restrictedCount >= 0) {  %>
       <span class="publish_section text_link change_access"><%= restrictedCount %> private <%= dc.inflector.pluralize('document', restrictedCount) %></span>
-      will remain hidden until <%= restrictedCount == 1 ? 'it is' : 'they are' %> published.
+      will not appear until published.
     <% } %>
-    Any documents added to this set in the future will appear in your embed.
+    Future documents
+    <%= projectQuery ? 'added to this project' : 'matching this search' %>
+    will appear in your embed.
   </div>
 
   <div class="publish_config">
@@ -46,7 +45,7 @@
     <div class="publish_section search_bar">
       <label>Search Bar:</label>
       <input type="checkbox" name="search_bar" id="publish_option_search_bar" />
-      <label for="publish_option_search_bar" class="sidelabel">Allow readers to search this set of documents?</label>
+      <label for="publish_option_search_bar" class="sidelabel">Allow readers to search this set of documents.</label>
     </div>
 
   </div>

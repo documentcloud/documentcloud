@@ -4,6 +4,8 @@ dc.app.SearchParser = {
 
   FIRST_PROJECT     : /project:\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
+  FIRST_PROJECT_ID  : /projectid:\s*(\d+-\S+)/i,
+
   FIRST_DOC         : /document:\s*(\d+-\S+)/i,
 
   FIRST_ACCOUNT     : /account:\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
@@ -17,6 +19,8 @@ dc.app.SearchParser = {
   ALL_ENTITIES      : /(city|country|term|state|person|place|organization|email|phone):\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
 
   FIRST_FILTER      : /filter:\s*(\w+)/i,
+
+  PROJECT_QUERY     : /project(id)?:/,
 
   WHITESPACE_ONLY   : /^\s*$/,
 
@@ -82,12 +86,13 @@ dc.app.SearchParser = {
   },
 
   searchType : function(query) {
-    if (query.match(this.WHITESPACE_ONLY))                                  return 'all';
-    if (query.replace(this.FIRST_RELATED, '').match(this.WHITESPACE_ONLY))  return 'related';
-    if (query.replace(this.FIRST_PROJECT, '').match(this.WHITESPACE_ONLY))  return 'project';
-    if (query.replace(this.FIRST_GROUP, '').match(this.WHITESPACE_ONLY))    return 'group';
+    if (query.match(this.WHITESPACE_ONLY))                                    return 'all';
+    if (query.replace(this.FIRST_RELATED, '').match(this.WHITESPACE_ONLY))    return 'related';
+    if (query.replace(this.FIRST_PROJECT, '').match(this.WHITESPACE_ONLY))    return 'project';
+    if (query.replace(this.FIRST_PROJECT_ID, '').match(this.WHITESPACE_ONLY)) return 'project';
+    if (query.replace(this.FIRST_GROUP, '').match(this.WHITESPACE_ONLY))      return 'group';
     var withoutAccount = query.replace(this.FIRST_ACCOUNT, '');
-    if (withoutAccount.match(this.WHITESPACE_ONLY))                         return 'account';
+    if (withoutAccount.match(this.WHITESPACE_ONLY))                           return 'account';
     var filter = this.extractFilter(query);
     var filterOnly = withoutAccount.replace(this.FIRST_FILTER, '').match(this.WHITESPACE_ONLY);
     if (filter && filterOnly && (filter == 'annotated' || filter == 'published' || filter == 'popular')) return filter;
