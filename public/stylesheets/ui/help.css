@@ -64,11 +64,9 @@
     font-style: italic;
   }
   #help a {
+    text-decoration: underline;
     color: #000;
   }
-    #help a:hover {
-      text-decoration: underline;
-    }
   #help h1, #help h2, #help h3 {
     margin: 30px 0 15px 0;
     color: #000;

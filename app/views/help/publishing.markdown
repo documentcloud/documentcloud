@@ -56,16 +56,16 @@ Place the embed code on your page, in the location where you would like the view
 
 Ever wanted to publish an entire set of documents related to your story? DocumentCloud can provide a short snippet of HTML that allows visitors to your site to search and filter through the tens or hundreds of documents that back up your article.
 
-To get started, find a set of documents you wish to embed -- either by selecting one of your existing projects, or by running a search. Any set of documents that can be found by a search can also be embedded. As documents are added to the project in the future, or new documents are uploaded that match your search, they'll become visible on your website within 5 minutes.
+To get started, find a set of documents you wish to embed -- either by selecting one of your existing projects, or by running a search. Any set of documents that can be found by a search can also be embedded in this fashion. As documents are added to the project in the future, or new documents are uploaded that match your search, they'll become visible on your website within a few minutes.
 
-Open the "Publish" menu, and click on "Embed These Documents". You'll see a dialog appear, providing you with a couple of configuration options you can use to tweak the embed. You can...
+Open the "Publish" menu, and click on "Embed These Documents". You'll see a dialog appear, providing you with a couple of configuration options you can use to tweak the embed. You can:
 
- * Configure the title displayed above the embed.
- * Order documents alphabetically, by date uploaded, and so on.
- * Set the number of documents to display per page. Depending on how tall and wide you wish the final embed to be, you may want to tweak this setting.
- * Show or hide a search bar, so that visitors to your site can filter and search through the set of documents.
+ * Configure the **title** displayed above the set of documents.
+ * **Order** documents alphabetically, by date uploaded, by length, etc.
+ * Set the number of documents to display **per page**. Depending on how tall and wide you wish the final embed to be, you may want to tweak this setting.
+ * Show or hide a **search bar**, so that visitors to your site can filter and search through the set of documents.
  
-Once you're comfortable with your settings, and have previewed the embed, proceed to the next step, where you can copy and paste the embed code. It should look something like this:
+Once you're comfortable with your settings, and have previewed the embedded documents, proceed to the next step, where you can copy and paste the embed code. It should look something like this:
 
     <div id="DC-search-projectid-8-epa-flouride"></div>
     <script src="http://s3.documentcloud.org/search/loader.js"></script>
@@ -82,10 +82,9 @@ Once you're comfortable with your settings, and have previewed the embed, procee
     
 Paste your code into a page on your website, and you'll see the set of documents appear.
 
-
-
 <img src="/images/help/search_embed.png" class="full_line" />
 
+Clicking on a document will open it. If you've previously published the document on your website, we should have automatically detected it, and it will open there. If the document has not yet been published, it will open on DocumentCloud.org. If you're sure that you've published a document but it still opens on DocumentCloud.org, open the "Edit" menu, click "Published URL", and manually set the URL at which the document has been published.
 
 Still have questions about publishing documents? Don't hesitate to [contact us][].
 
