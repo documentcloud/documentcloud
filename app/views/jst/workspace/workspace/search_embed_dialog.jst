@@ -4,7 +4,7 @@
     <%= publicCount %> public <%= dc.inflector.pluralize('document', documentsCount) %>
     <%= projectQuery ? 'in this project' : 'matching this search' %>
     will appear in this set.
-    <% if (restrictedCount >= 0) {  %>
+    <% if (restrictedCount > 0) {  %>
       <span class="publish_section text_link change_access"><%= restrictedCount %> private <%= dc.inflector.pluralize('document', restrictedCount) %></span>
       will not appear until published.
     <% } %>
