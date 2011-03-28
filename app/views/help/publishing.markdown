@@ -54,7 +54,38 @@ Place the embed code on your page, in the location where you would like the view
 
 # Embedding a Document Set
 
-Ever wanted to publish an entire set of documents related to your story? DocumentCloud can provide a short snippet of HTML that allows visitors to your site to search and filter through the tens or hundreds of documents that make up your project.
+Ever wanted to publish an entire set of documents related to your story? DocumentCloud can provide a short snippet of HTML that allows visitors to your site to search and filter through the tens or hundreds of documents that back up your article.
+
+To get started, find a set of documents you wish to embed -- either by selecting one of your existing projects, or by running a search. Any set of documents that can be found by a search can also be embedded. As documents are added to the project in the future, or new documents are uploaded that match your search, they'll become visible on your website within 5 minutes.
+
+Open the "Publish" menu, and click on "Embed These Documents". You'll see a dialog appear, providing you with a couple of configuration options you can use to tweak the embed. You can...
+
+ * Configure the title displayed above the embed.
+ * Order documents alphabetically, by date uploaded, and so on.
+ * Set the number of documents to display per page. Depending on how tall and wide you wish the final embed to be, you may want to tweak this setting.
+ * Show or hide a search bar, so that visitors to your site can filter and search through the set of documents.
+ 
+Once you're comfortable with your settings, and have previewed the embed, proceed to the next step, where you can copy and paste the embed code. It should look something like this:
+
+    <div id="DC-search-projectid-8-epa-flouride"></div>
+    <script src="http://s3.documentcloud.org/search/loader.js"></script>
+    <script>
+      dc.embed.load('http://www.documentcloud.org/search/embed/', {
+        q: "projectid: 8-epa-flouride",
+        container: "#DC-search-projectid-8-epa-flouride",
+        order: "title",
+        per_page: 12,
+        search_bar: true,
+        organization: 117
+      });
+    </script>
+    
+Paste your code into a page on your website, and you'll see the set of documents appear.
+
+
+
+<img src="/images/help/search_embed.png" class="full_line" />
+
 
 Still have questions about publishing documents? Don't hesitate to [contact us][].
 
