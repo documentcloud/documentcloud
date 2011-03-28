@@ -393,9 +393,9 @@ dc.model.DocumentSet = Backbone.Collection.extend({
       title = account.documentsTitle();
     } else if (dc.account && groupName == dc.account.organization.slug) {
       ret = 'org_documents';
-    } else if (groupName && (org = Organizations.findBySlug(groupName))) {
+    } else if (facets.groupName && (org = Organizations.findBySlug(facets.groupName))) {
       title = dc.inflector.possessivize(org.get('name')) + " Documents";
-    } else if (filter == 'published') {
+    } else if (facets.filter == 'published') {
       ret = 'published_documents';
     } else if (filter == 'popular') {
       ret = 'popular_documents';

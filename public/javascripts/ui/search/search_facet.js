@@ -49,7 +49,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   serialize : function() {
     var category = this.options.category;
-    var query    = Inflector.trim(this.options.facetQuery);
+    var query    = dc.inflector.trim(this.options.facetQuery);
     
     if (_.contains(this.QUOTABLE_CATEGORIES, category) && query) query = '"' + query + '"';
     

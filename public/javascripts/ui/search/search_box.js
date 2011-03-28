@@ -143,7 +143,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   renderFacet : function(category, facetQuery) {
     var view = new dc.ui.SearchFacet({
       category   : category,
-      facetQuery : Inflector.trim(facetQuery)
+      facetQuery : dc.inflector.trim(facetQuery)
     });
     
     this.facetViews.push(view);
@@ -155,7 +155,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     query = dc.app.SearchParser.removeAccount(query);
     query = dc.app.SearchParser.removeGroup(query);
     query = dc.app.SearchParser.removeFilter(query);
-    return Inflector.trim(query);
+    return dc.inflector.trim(query);
   },
   
   // Takes a search query and return all of the facets found in an object.
