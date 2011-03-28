@@ -94,7 +94,7 @@
 .DC-search-embed .DC-text-input {
   position: relative;
   height: 30px;
-  background: transparent url(/images/embed/ui/text_input_large_left.png) no-repeat center left;
+  background: transparent url(/images/search_embed/embed/text_input_large_left.png) no-repeat center left;
 }
   .DC-search-embed .DC-text-input .DC-placeholder {
     position: absolute;
@@ -287,9 +287,6 @@
   .DC-search-embed .DC-paginator a img {
     border: none;
   }
-  .DC-search-embed .DC-paginator .DC-logo img {
-    height: 20px;
-  }
   .DC-search-embed .DC-paginator .DC-paginator-description {
     position: absolute;
     left: 0;
@@ -332,8 +329,9 @@
       }
   .DC-search-embed .DC-paginator .DC-logo {
     position: absolute;
-    right: 0;
-    top: 4px;
+    right: 0; top: 4px;
+    width: 105px; height: 19px;
+    background: url(/images/search_embed/embed/dc_inline_logo.png);
   }
 
 /* ========= */
@@ -342,20 +340,20 @@
 
 .DC-search-embed .DC-icon.DC-search-glyph {
   width: 12px; height: 12px;
-  background-image: url(/images/embed/icons/search_glyph.png);
+  background-image: url(/images/search_embed/embed/search_glyph.png);
 }
   .DC-search-embed .DC-icon.DC-search-glyph.DC-spinner {
     width: 16px;
     height: 16px;
     left: 7px;
     top: 6px;
-    background-image: url(/images/embed/ui/spinner_circle.gif);
+    background-image: url(/images/search_embed/embed/spinner_circle.gif);
   }
 
 .DC-search-embed .DC-icon.DC-cancel-search {
   width: 11px; height: 11px;
   background-position: center 0;
-  background-image: url(/images/embed/icons/cancel_search.png);
+  background-image: url(/images/search_embed/embed/cancel_search.png);
   cursor: pointer;
 }
   .DC-search-embed .DC-icon.DC-cancel-search:hover {
@@ -364,11 +362,11 @@
 .DC-icon.DC-document {
   width: 60px;
   height: 75px;
-  background-image: url(/images/embed/documents/generic.png);
+  background-image: url(/images/search_embed/embed/generic.png);
   border: 0;
 }
 .DC-icon.DC-icon-lock {
-  background: transparent url("/images/embed/icons/lock.png") no-repeat 0 0;
+  background: transparent url(/images/search_embed/embed/lock.png) no-repeat 0 0;
   width: 18px;
   height: 18px;
 }

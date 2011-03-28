@@ -51,12 +51,12 @@ namespace :build do
     FileUtils.rm_r('build') if File.exists?('build')
 
   end
-  
+
   task :embed do
     FileUtils.rm_r('build') if File.exists?('build')
     sh "jammit -f -o build -c config/search_embed_assets.yml"
     sh "rm build/*.gz"
-    
+
     Dir['build/*.css'].each do |css_file|
       File.open(css_file, 'r+') do |file|
         css = file.read
@@ -66,10 +66,11 @@ namespace :build do
         file.truncate(css.length)
       end
     end
-    
+    FileUtils.cp_r('public/images/search_embed', 'build/images')
+
     FileUtils.rm_r('public/embed') if File.exists?('public/embed')
     FileUtils.cp_r('build', 'public/embed')
-    
+
     FileUtils.rm_r('build') if File.exists?('build')
   end
 
