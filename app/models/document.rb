@@ -680,7 +680,11 @@ class Document < ActiveRecord::Base
     res['page']['image']      = page_image_url_template(:local => options[:local])
     res['page']['text']       = page_text_url_template(:local => options[:local])
     res['related_article']    = related_article if related_article
-    res['published_url']      = remote_url if remote_url
+    if options[:allow_detected]
+      res['published_url']    = published_url if published_url
+    else
+      res['published_url']      = remote_url if remote_url
+    end
     doc['sections']           = sections.map(&:canonical) if options[:sections]
     if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
       doc['annotations']      = self.annotations_with_authors(options[:account]).map {|a| a.canonical}
