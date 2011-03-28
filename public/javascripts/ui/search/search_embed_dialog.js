@@ -52,7 +52,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
       data : {q: this.query},
       dataType : 'json',
       success : _.bind(function(resp) {
-        this.restrictedCount = resp.restricted_count;
+        this.restrictedCount = parseInt(resp.restricted_count, 10);
         this.documentsCount  = this.docs.length || dc.app.paginator.query.total;
         this.publicCount     = this.documentsCount - this.restrictedCount;
         this.render();
