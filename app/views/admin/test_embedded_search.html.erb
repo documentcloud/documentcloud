@@ -22,7 +22,7 @@
       dc.embed.load('<%= DC.server_root(:ssl => false) %>/search/embed/', {
         q: 'programming',
         order: 'title',
-        container: 'embed_1',
+        container: '#embed_1',
         per_page: 6,
         organization: 1
       });
@@ -35,7 +35,7 @@
       dc.embed.load('<%= DC.server_root(:ssl => false) %>/search/embed/', {
         q: 'states',
         order: 'score',
-        container: 'embed_2',
+        container: '#embed_2',
         per_page: 12,
         organization: 1
       });

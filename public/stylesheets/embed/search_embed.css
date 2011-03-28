@@ -173,8 +173,8 @@
   width: 230px;
   border: 1px solid transparent;
   height: 86px;
-  margin: 0 15px 15px 0;
-  padding: 0 0 0 80px;
+  margin: 0 15px 0 0;
+  padding: 0 0 15px 80px;
   position: relative;
   overflow: hidden;
   background-color: #fff;
