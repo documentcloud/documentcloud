@@ -148,7 +148,8 @@
       font-weight: bold;
     }
     #help .desc {
-      font: italic 11px Helvetica, Arial;
+      font-size: 11px;
+      line-height: 15px;
       color: #445056;
     }
   #help table col.parameter {

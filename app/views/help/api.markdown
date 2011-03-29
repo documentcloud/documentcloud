@@ -72,6 +72,7 @@ related_article | (optional) the URL of the article associated with the document
 published_url | (optional) the URL of the page on which the document will be embedded | http://documents.example.com/blago-transcript.html
 access | (optional) one of "public", "private", "organization", defaults to "private" | public
 project | (optional) a numeric Project id, to upload the document into an existing project. | 1012
+secure | (optional) If you're dealing with a truly sensitive document, pass the "secure" parameter in order to prevent the document from being sent to OpenCalais for entity extraction. | true
 
 ### Tips
 
@@ -82,7 +83,7 @@ project | (optional) a numeric Project id, to upload the document into an existi
 
 Using Ruby's RestClient library you could do:
 
-    RestClient.post('https://ME%40TEST.COM:PASSWORD@www.documentcloud.org/api/upload.json',
+    RestClient.post('https://ME%40TEST.COM:SECRET@www.documentcloud.org/api/upload.json',
       :file => File.new('/full/path/to/document/document.pdf','rb'),
       :title => "2008 Blagojevich Tax Return",
       :source => "U.S. Attorney's Office",
