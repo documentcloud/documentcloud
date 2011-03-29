@@ -60,7 +60,7 @@ entities      | include entities for the search in the results | true (defaults 
 
 ## POST /api/upload.json
 
-We offer a rudimentary API for bulk uploads. It exposes the same API that we use internally, but wraps it in basic authentication over HTTPS. Documents will be uploaded into the authenticated account.
+Our API for bulk uploads exposes the same method that we use internally, but wraps it in basic authentication over HTTPS. Documents will be uploaded into the authenticated account.
 
 Parameter     | Description           |  Example
 --------------|-----------------------|--------------
@@ -77,13 +77,12 @@ project | (optional) a numeric Project id, to upload the document into an existi
 
  * Please ensure that you send the request properly encoded as "multipart/form-data"
  * Review your uploaded files and add a source and description if you didn't .
- * Unless you are using SSL, your username, password and documents are sent in cleartext. Use **https://** to ensure that your connection is encrypted.
 
 ### Example
 
 Using Ruby's RestClient library you could do:
 
-    RestClient.post('http://ME%40TEST.COM:PASSWORD@www.documentcloud.org/api/upload.json',
+    RestClient.post('https://ME%40TEST.COM:PASSWORD@www.documentcloud.org/api/upload.json',
       :file => File.new('/full/path/to/document/document.pdf','rb'),
       :title => "2008 Blagojevich Tax Return",
       :source => "U.S. Attorney's Office",

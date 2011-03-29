@@ -130,7 +130,7 @@ class AdminController < ApplicationController
 
   def reprocess_failed_document
     doc = Document.failed.last
-    doc.queue_import DC::Access::PRIVATE
+    doc.queue_import :access => DC::Access::PRIVATE
     json nil
   end
 

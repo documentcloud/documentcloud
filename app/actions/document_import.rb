@@ -75,7 +75,7 @@ class DocumentImport < CloudCrowd::Action
     document.save!
     pages = document.reload.pages
     Sunspot.index pages
-    DC::Import::EntityExtractor.new.extract(document)
+    DC::Import::EntityExtractor.new.extract(document) unless options['secure']
     document.upload_text_assets(pages)
     document.id
   end
@@ -101,8 +101,8 @@ class DocumentImport < CloudCrowd::Action
   end
 
   # Check if there are no more pending documents, then email the user based on
-  # the original count. This is a bit optimistic, as the first document could 
-  # finish processing before the second document is finished uploading. 
+  # the original count. This is a bit optimistic, as the first document could
+  # finish processing before the second document is finished uploading.
   # In which case, the user would be emailed twice.
   def email_on_complete
     count = options['email_me']

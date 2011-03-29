@@ -18,7 +18,13 @@ class Document < ActiveRecord::Base
   DISPLAY_DATE_FORMAT     = "%b %d, %Y"
   DISPLAY_DATETIME_FORMAT = "%I:%M %p – %a %b %d, %Y"
 
-  DEFAULT_CANONICAL_OPTIONS = {:sections => true, :annotations => true, :contributor => true}
+  DEFAULT_CANONICAL_OPTIONS = {
+    :sections => true, :annotations => true, :contributor => true
+  }
+
+  DEFAULT_IMPORT_OPTIONS = {
+    :access => nil, :text_only => false, :email_me => false, :force_ocr => false, :secure => false
+  }
 
   # If the Document.pending count is greater than this number, send a warning.
   WARN_QUEUE_LENGTH = 50
@@ -163,7 +169,7 @@ class Document < ActiveRecord::Base
     )
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
       DC::Store::AssetStore.new.save_pdf(doc, path, access)
-      doc.queue_import(access, false, email_me)
+      doc.queue_import(:access => access, :email_me => email_me, :secure => params[:secure])
     end
     if params[:project]
       project = Project.accessible(account).find_by_id(params[:project].to_i)
@@ -504,7 +510,7 @@ class Document < ActiveRecord::Base
   end
 
   def reprocess_text(force_ocr = false)
-    queue_import self.access, true, false, force_ocr
+    queue_import :text_only => true, :force_ocr => force_ocr
   end
 
   def reindex_all!(access=nil)
@@ -513,7 +519,7 @@ class Document < ActiveRecord::Base
     EntityDate.refresh(self)
     pages = self.reload.pages
     Sunspot.index pages
-    reprocess_entities
+    reprocess_entities if calais_id
     upload_text_assets(pages)
     self.access = access if access
     self.save!
@@ -596,16 +602,12 @@ class Document < ActiveRecord::Base
     same_size && same_max && same_min
   end
 
-  def queue_import(eventual_access = nil, text_only = false, email_me = false, force_ocr = false)
-    eventual_access ||= self.access || PRIVATE
+  def queue_import(opts={})
+    options = DEFAULT_IMPORT_OPTIONS.merge opts
+    options[:access] ||= self.access || PRIVATE
+    options[:id] = id
     self.update_attributes :access => PENDING
-    record_job(DC::Import::CloudCrowdImporter.new.import([id], {
-      'id'            => id,
-      'access'        => eventual_access,
-      'text_only'     => text_only,
-      'email_me'      => email_me,
-      'force_ocr'     => force_ocr
-    }, self.low_priority?).body)
+    record_job(DC::Import::CloudCrowdImporter.new.import([id], options, self.low_priority?).body)
   end
 
   # TODO: Make the to_json an extended form of the canonical.

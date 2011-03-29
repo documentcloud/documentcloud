@@ -36,13 +36,17 @@ class ApiController < ApplicationController
   # Upload API, similar to our internal upload API for starters. Parameters:
   # file, title, access, source, description.
   def upload
-    return bad_request unless params[:file] && params[:title] && current_account
-    if !params[:file].respond_to? :path
-      return render({:json => {:message => "The file parameter must be the contents of a file."},
-                    :status => 400})
+    secure_silence_logs do
+      return bad_request unless params[:file] && params[:title] && current_account
+      if !params[:file].respond_to? :path
+        return render({
+          :json => {:message => "The file parameter must be the contents of a file."},
+          :status => 400
+        })
+      end
+      @response = Document.upload(params, current_account, current_organization).canonical
+      json_response
     end
-    @response = Document.upload(params, current_account, current_organization).canonical
-    json_response
   end
 
   # Retrieve a document's canonical JSON.
@@ -109,8 +113,21 @@ class ApiController < ApplicationController
     json nil
   end
 
+  # Allow logging of all actions, apart from secure uploads.
+  def logger
+    params[:secure] ? nil : super
+  end
+
 
   private
+
+  def secure_silence_logs
+    if params[:secure]
+      Rails.logger.silence { yield }
+    else
+      yield
+    end
+  end
 
   def current_project
     @current_project ||= current_account.projects.find(params[:id].to_i)
