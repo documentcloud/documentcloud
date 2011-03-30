@@ -32,7 +32,7 @@ class SearchController < ApplicationController
     end
     results[:dc_url]    = "#{DC.server_root(:ssl => false).sub('s3', 'www')}"
     js                  = "dc.embed.callback(#{results.to_json});"
-    cache_page js
+    cache_page js unless request.ssl?
     render :js => js
   end
 
