@@ -14,6 +14,7 @@
     searches[id] = searches[id] || {};
     searches[id].options = opts = _.extend({}, {
       searchUrl     : searchUrl,
+      secure        : secure,
       originalQuery : opts.originalQuery || opts.q,
       per_page      : 12,
       order         : 'score',
@@ -134,7 +135,8 @@
         to            : Math.min(options.page * options.per_page, options.total),
         title         : options.title,
         dc_url        : options.dc_url,
-        workspace_url : options.dc_url + "/public/#search/" + encodeURIComponent(options.q)
+        workspace_url : options.dc_url + (options.secure ? "/#search/" : "/public/#search/") +
+                        encodeURIComponent(options.q)
       }));
     },
 

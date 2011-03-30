@@ -30,8 +30,8 @@ class SearchController < ApplicationController
       not_owned = d.organization_id != params[:organization_id].to_i
       d.canonical API_OPTIONS.merge(:contributor => not_owned, :allow_detected => true)
     end
-    results[:dc_url]    = "#{DC.server_root(:ssl => false).sub('s3', 'www')}"
-    js                  = "dc.embed.callback(#{results.to_json});"
+    results[:dc_url] = "#{DC.server_root}"
+    js = "dc.embed.callback(#{results.to_json});"
     cache_page js unless request.ssl?
     render :js => js
   end
