@@ -120,6 +120,9 @@ label {
     margin: 0 100px 30px 142px;
     cursor: text;
   }
+    #search_box {
+      width: 10px;
+    }
   #title_box {
     text-align: center;
     font: bold 20px Arial;

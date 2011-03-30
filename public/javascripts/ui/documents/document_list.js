@@ -64,7 +64,7 @@ dc.ui.DocumentList = Backbone.View.extend({
 
   // Handle cmd-a for select all.
   _maybeSelect : function(e) {
-    var cmdA = dc.app.hotkeys.command && (e.keyCode == 97);
+    var cmdA = dc.app.hotkeys.command && ((e.keyCode || e.which) == 97);
     if (cmdA && !$(e.target).closest('input, textarea').length) {
       Documents.selectAll();
       return false;

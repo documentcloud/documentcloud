@@ -25,12 +25,12 @@ dc.app.hotkeys = {
   },
 
   down : function(e) {
-    var key = this.KEYS[e.keyCode];
+    var key = this.KEYS[e.keyCode || e.which];
     if (key) this[key] = true;
   },
 
   up : function(e) {
-    var key = this.KEYS[e.keyCode];
+    var key = this.KEYS[e.keyCode || e.which];
     if (key) this[key] = false;
   },
 
@@ -39,7 +39,12 @@ dc.app.hotkeys = {
   },
   
   key : function(e) {
-    return this.KEYS[e.keyCode];
+    return this.KEYS[e.keyCode || e.which];
+  },
+  
+  colon : function(e) {
+    var charCode = e.keyCode || e.which;
+    return charCode && String.fromCharCode(charCode) == ":";
   }
 
 };

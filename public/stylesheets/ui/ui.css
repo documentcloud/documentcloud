@@ -183,7 +183,6 @@ div.text_input {
       border-color: #991612 !important;
     }
   div.text_input.search {
-    height: 28px;
     background: transparent;
     border: 2px solid #ccc;
     border-radius: 16px; -webkit-border-radius: 16px; -moz-border-radius: 16px;
@@ -191,6 +190,8 @@ div.text_input {
     -webkit-box-shadow: inset 0px 0px 3px #ccc;
     -moz-box-shadow: inset 0px 0px 3px #ccc;
     box-shadow: inset 0px 0px 3px #ccc;
+    min-height: 28px;
+    height: auto;
   }
     div.text_input.search.focus {
       border-color: #acf;
@@ -201,9 +202,9 @@ div.text_input {
     div.text_input .search_inner {
       position: relative;
       margin: 0 28px;
+      overflow: hidden;
     }
       div.text_input.search .search_facets {
-        float: left;
       }
       div.text_input.search .search_facet {
         float: left;
@@ -230,8 +231,8 @@ div.text_input {
           font-size: 10px;
           color: #B0B0B0;
           text-shadow: 1px 1px 0 #FFF;
-          padding: 2px 0 0 0;
-          line-height: 28px;
+          padding: 9px 0 0 0;
+          line-height: 14px;
         }
         div.text_input.search .search_facet .search_facet_query {
           float: left;

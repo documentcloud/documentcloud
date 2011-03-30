@@ -40,8 +40,10 @@ dc.ui.SearchFacet = Backbone.View.extend({
     return this;
   },
   
-  remove : function() {
-    
+  remove : function(e) {
+    this.$el.remove();
+    dc.app.searchBox.removeFacet(this);
+    dc.app.searchBox.searchEvent(e);
   },
   
   setupAutocomplete : function() {

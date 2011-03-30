@@ -66,7 +66,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
   publicQuery : function() {
     var projectName;
-    var query = this.box.value();
+    var query = this.searchBox.value();
 
     // Swap out project
     var projects = [];
