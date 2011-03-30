@@ -39,17 +39,18 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   setupAutocomplete : function() {
-    var lookup = this.lookupValues();
+    var data = this.autocompleteValues();
     
-    this.$('input').autocomplete({
-      onSelect : this.onSelect,
-      lookup   : lookup,
-      minChars : 0,
-      width    : 200
+    this.autocomplete = this.box.autocomplete(data, {
+      width     : 200,
+      minChars  : 0,
+      autoFill  : true
     });
+    
+    console.log(['setup', data, this.autocomplete]);
   },
 
-  lookupValues : function() {
+  autocompleteValues : function() {
     var category = this.options.category;
     var values = [];
     
@@ -59,13 +60,6 @@ dc.ui.SearchFacet = Backbone.View.extend({
       values = Projects.pluck('title');
     } else if (category == 'filter') {
       values = ['published', 'annotated', 'public'];
-    }
-    
-    if (_.isArray(values[0])) {
-      values = {
-        'data'        : _.map(values, function(v) { return v[0]; }),
-        'suggestions' : _.map(values, function(v) { return v[1]; })
-      };
     }
     
     return values;
@@ -90,12 +84,12 @@ dc.ui.SearchFacet = Backbone.View.extend({
     return category + query + ' ';
   },
   
-  enableEdit : function(clearValue) {
+  enableEdit : function() {
     if (!this.$el.hasClass('is_editing')) {
       this.setMode('is', 'editing');
       this.box.val(this.options.facetQuery).focus().trigger('update').keyup();
       _.defer(_.bind(function() {
-        if (clearValue) this.box.val('').keyup();
+        if (this.box.val() == '') this.box.keyup();
       }, this));
       
       dc.app.searchBox.addFocus();
@@ -117,13 +111,14 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   disableEdit : function() {
-    var newFacetQuery = this.$('input').val();
+    var newFacetQuery = this.box.val();
     if (newFacetQuery != this.options.facetQuery) {
       this.options.facetQuery = newFacetQuery;
     }
     this.setMode('not', 'editing');
     this.render();
     dc.app.searchBox.removeFocus();
+    this.autocomplete.hide();
   }
    
 });

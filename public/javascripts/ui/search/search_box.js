@@ -38,9 +38,8 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.titleBox = this.$('#title_box_inner');
     $(document.body).setMode('no', 'search');
     this.box.autoGrowInput();
-    this.box.autocomplete({
-      lookup    : this.PREFIXES,
-      onSelect  : this.onSelect
+    this.box.autocomplete(this.PREFIXES, {
+      width : 200
     });
     return this;
   },
@@ -210,7 +209,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   focusCategory : function(category) {
     _.each(this.facetViews, function(facetView) {
       if (facetView.options.category == category) {
-        facetView.enableEdit(true);
+        facetView.enableEdit();
       }
     });
   },

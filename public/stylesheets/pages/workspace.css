@@ -127,15 +127,18 @@ label {
     padding: 14px 30px 20px;
   }
 
-.autocomplete {
+.ac_results {
   border: 1px solid #C0C0C0;
   background-color: #F6F6F6;
   cursor: pointer;
+  z-index: 10000;
 }
-  .autocomplete div {
+  .ac_results ul {
+  }
+  .ac_results li {
     padding: 4px 3px;
   }
-  .autocomplete .selected {
+  .ac_results .ac_over {
     background-color: #2A61CD;
     color: white;
   }
