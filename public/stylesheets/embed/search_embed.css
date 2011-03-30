@@ -248,8 +248,8 @@
   }
     .DC-search-embed .DC-document-tile.DC-document-private .DC-icon-lock {
       display: block;
-      margin-right: 4px;
-      float: left;
+      float: right;
+      margin-left: 4px;
     }
 
 /* ============= */

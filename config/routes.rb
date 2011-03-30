@@ -43,7 +43,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Search Embeds.
   map.with_options :controller => :search, :action => :embed do |embed|
-    options = {:q => /[^\/;,?]*/, :options => /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)/}
+    options = {:q => /[^\/;,?]*/, :options => /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/}
     embed.search_embed "/search/embed/:q/:options.:format", options
     embed.search_embed "/search/embed/:options.:format", options
   end

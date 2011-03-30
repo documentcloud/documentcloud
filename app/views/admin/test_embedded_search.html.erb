@@ -19,7 +19,7 @@
     <div id="embed_1"></div>
 
     <script type="text/javascript">
-      dc.embed.load('<%= DC.server_root(:ssl => false) %>/search/embed/', {
+      dc.embed.load('<%= DC.server_root(:force_ssl => true) %>/search/embed/', {
         q: 'programming',
         order: 'title',
         container: '#embed_1',

@@ -8,6 +8,7 @@
   dc.Backbone         = Backbone.noConflict();
 
   dc.embed.load = function(searchUrl, opts) {
+    var secure = (/^https/).test(searchUrl);
     var id = dc.inflector.sluggify(opts.originalQuery || opts.q);
 
     searches[id] = searches[id] || {};
@@ -25,7 +26,8 @@
                  '/p-'      + encodeURIComponent(opts.page) +
                  '-per-'    + encodeURIComponent(opts.per_page) +
                  '-order-'  + encodeURIComponent(opts.order) +
-                 '-org-'    + encodeURIComponent(opts.organization) + '.js';
+                 '-org-'    + encodeURIComponent(opts.organization) +
+                 (secure ? '-secure' : '') + '.js';
 
     $.getScript(searchUrl + params);
   };
