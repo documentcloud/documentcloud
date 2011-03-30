@@ -207,6 +207,7 @@ $.Autocompleter = function(input, options) {
 		select.unbind();
 		$input.unbind();
 		$(input.form).unbind(".autocomplete");
+		hideResultsNow();
 	});
 	
 	
@@ -611,7 +612,6 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		    input.focus();
 		  }
 		  config.mouseDownOnSelect = false;
-			console.debug(config.mouseDownOnSelect);
 		});
 	
 		list = $("<ul/>").appendTo(element).mouseover( function(event) {

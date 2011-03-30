@@ -22,7 +22,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     'search #search_box'        : 'searchEvent',
     'focus #search_box'         : 'addFocus',
     'blur #search_box'          : 'removeFocus',
-    'click .cancel_search'      : 'cancelSearch',
+    'click .cancel_search_box'  : 'cancelSearch',
     'click #search_box_wrapper' : 'focusSearch'
   },
 
@@ -39,8 +39,14 @@ dc.ui.SearchBox = Backbone.View.extend({
     $(document.body).setMode('no', 'search');
     this.box.autoGrowInput();
     this.box.autocomplete(this.PREFIXES, {
-      width : 200
-    });
+      width     : 100,
+      minChars  : 0
+    }).result(_.bind(function(e, data, formatted) {
+      console.log(['result', e, data, formatted]);
+      var view = this.renderFacet(formatted, '');
+      view.enableEdit();
+      this.box.val('');
+    }, this));
     return this;
   },
   
@@ -138,6 +144,8 @@ dc.ui.SearchBox = Backbone.View.extend({
     
     this.facetViews.push(view);
     this.$('.search_facets').append(view.render().el);
+
+    return view;
   },
   
   pareQuery : function(query) {

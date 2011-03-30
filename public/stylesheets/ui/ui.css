@@ -208,6 +208,8 @@ div.text_input {
       div.text_input.search .search_facet {
         float: left;
         margin: 0 0 0 0;
+        padding: 0 0 0 13px;
+        position: relative;
       }
         div.text_input.search .search_facet.not_editing .search_facet_input_container {
           display: none;
@@ -253,7 +255,22 @@ div.text_input {
           height: 16px;
           width: auto;
         }
-        
+        div.text_input.search .search_facet .search_facet_remove {
+          position: absolute;
+          left: 0;
+          top: 9px;
+          opacity: .5;
+        }
+          div.text_input.search .search_facet .search_facet_remove:hover {
+            opacity: 1;
+          }
+        div.text_input.search .search_facet.is_editing .search_facet_category {
+          color: darkblue;
+        }
+        div.text_input.search .search_facet.search_facet_maybe_delete .search_facet_category,
+        div.text_input.search .search_facet.search_facet_maybe_delete .search_facet_query {
+          color: darkred;
+        }
       div.text_input.search input {
         width: 100px;
         padding: 6px 0;
