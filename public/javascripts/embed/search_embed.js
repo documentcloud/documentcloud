@@ -20,7 +20,8 @@
       order         : 'score',
       search_bar    : true,
       page          : 1,
-      title         : null
+      title         : null,
+      pass_search   : false
     }, opts);
 
     var params = encodeURIComponent(opts.q.replace(/\?/g, '')) +
@@ -121,10 +122,10 @@
       if (!this.embed.documents.length) {
         docList.append(JST['no_results']({}));
       } else {
-        this.embed.documents.each(function(doc) {
-          var view = (new dc.EmbedDocumentTile({model: doc})).render(width).el;
+        this.embed.documents.each(_.bind(function(doc) {
+          var view = (new dc.EmbedDocumentTile({model: doc, embed: this.embed})).render(width).el;
           docList.append(view);
-        });
+        }, this));
       }
       this.$('.DC-paginator').removeClass('DC-is-editing').html(JST['paginator']({
         total         : options.total,
@@ -173,6 +174,7 @@
 
     performSearch : function(force) {
       var query = this.$('.DC-search-box').val();
+      this.embed.query = dc.inflector.trim(query);
 
       if (query == '' && !force) {
         // Returning to original query, just use the cached original response.
@@ -232,6 +234,7 @@
     },
 
     initialize : function() {
+      this.embed = this.options.embed;
       $(this.el).attr({href: this.model.url()});
       if (this.model.isPrivate()) $(this.el).addClass('DC-document-private');
     },
@@ -261,7 +264,10 @@
     },
 
     open : function(e) {
-      window.open(this.model.get('resources').published_url || this.model.get('canonical_url'));
+      var query   = this.embed.options.pass_search && this.embed.query;
+      var suffix  = query ? "#search/p1/" + encodeURIComponent(query) : '';
+      var baseUrl = this.model.get('resources').published_url || this.model.get('canonical_url');
+      window.open((this.model.get('resources').published_url || this.model.get('canonical_url')) + suffix);
       return false;
     }
 

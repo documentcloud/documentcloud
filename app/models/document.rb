@@ -693,7 +693,7 @@ class Document < ActiveRecord::Base
     elsif options[:annotations]
       doc['annotations']      = self.annotations.accessible(options[:account]).map {|a| a.canonical}
     end
-    doc['canonical_url']      = canonical_url(:html)
+    doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
     if options[:contributor]
       doc['contributor']      = account_name
       doc['contributor_organization'] = organization_name

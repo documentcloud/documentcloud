@@ -28,7 +28,7 @@ class SearchController < ApplicationController
     results[:per_page]  = @query.per_page
     results[:documents] = @documents.map do |d|
       not_owned = d.organization_id != params[:organization_id].to_i
-      d.canonical API_OPTIONS.merge(:contributor => not_owned, :allow_detected => true)
+      d.canonical API_OPTIONS.merge(:contributor => not_owned, :allow_detected => true, :allow_ssl => true)
     end
     results[:dc_url] = "#{DC.server_root}"
     js = "dc.embed.callback(#{results.to_json});"
