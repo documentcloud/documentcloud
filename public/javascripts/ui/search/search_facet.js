@@ -53,13 +53,17 @@ dc.ui.SearchFacet = Backbone.View.extend({
       width     : 200,
       minChars  : 0,
       autoFill  : true,
+      clickFire : true,
       formatItem : function(values, i, n) {
         return values.length == 2 ? values[1] : values[0];
       },
       formatResult : function(value) {
         return value[0];
       }
-    });
+    }).result(_.bind(function(e, values, data) {
+      console.log(['result facet', values, data]);
+      this.onSelect(values[0]);
+    }, this));
   },
 
   autocompleteValues : function() {
@@ -77,8 +81,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
     return values;
   },
   
-  onSelect : function(value, data) {
-    this.box.val(data || value);
+  onSelect : function(value) {
+    this.box.val(value);
   },
   
   serialize : function() {
@@ -109,7 +113,6 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   maybeDisableEdit : function(e) {
-    console.log(['facet key', e.keyCode]);
     if (e.keyCode == 13) { // Enter key
       this.disableEdit();
       dc.app.searchBox.searchEvent(e);

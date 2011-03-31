@@ -39,8 +39,9 @@ dc.ui.SearchBox = Backbone.View.extend({
     $(document.body).setMode('no', 'search');
     this.box.autocomplete(this.PREFIXES, {
       width     : 100,
-      minChars  : 0
+      minChars  : 1
     }).result(_.bind(function(e, data, formatted) {
+      e.preventDefault();
       this.addFacet(formatted);
     }, this));
     
@@ -59,6 +60,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   addFacet : function(category, initialQuery) {
+    console.log(['addFacet', category, initialQuery]);
     var view = this.renderFacet(category, initialQuery || '');
     view.enableEdit();
     this.box.val('');
@@ -120,7 +122,9 @@ dc.ui.SearchBox = Backbone.View.extend({
   // return.
   maybeSearch : function(e) {
     console.log(['box key', e.keyCode]);
-    if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') return this.searchEvent(e);
+    if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') {
+      return this.searchEvent(e);
+    }
 
     if (dc.app.hotkeys.colon(e)) {
       this.addFacet(this.box.val());
@@ -128,7 +132,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     }
     if (dc.app.hotkeys.shift && e.keyCode == 9) { // Tab key
       e.preventDefault();
-      this.focusNextFacet(this.facetViews.length, -1);
+      this.focusNextFacet(this.facetViews.length-1, 0);
     } else if (e.keyCode == 9) {
       e.preventDefault();
       this.focusNextFacet(null, 0);
@@ -231,7 +235,6 @@ dc.ui.SearchBox = Backbone.View.extend({
     });
     
     var next = currentFacetIndex + direction;
-    console.log(['focus', next, currentFacetIndex, direction]);
     if (next < 0 || viewsCount-1 < next) {
       // this.facetViews[currentFacetIndex].disableEdit();
       this.box.focus();
