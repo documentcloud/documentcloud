@@ -115,7 +115,7 @@ dc.ui.Dialog = Backbone.View.extend({
   },
 
   _returnCloses : function() {
-    return this.options.mode == 'alert' || this.options.mode == 'short_prompt';
+    return _.include(['alert', 'short_prompt', 'confirm'], this.options.mode);
   },
 
   // Close on escape.
