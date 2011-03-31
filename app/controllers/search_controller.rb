@@ -18,6 +18,7 @@ class SearchController < ApplicationController
   end
 
   def embed
+    return bad_request unless params[:options]
     groups = params[:options].match(/p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)/)
     _, params[:page], params[:per_page], params[:order], params[:organization_id] = *groups
     perform_search :include_facets => params[:include_facets]
