@@ -119,11 +119,19 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Callback fired on key press in the search box. We search when they hit
   // return.
   maybeSearch : function(e) {
+    console.log(['box key', e.keyCode]);
     if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') return this.searchEvent(e);
 
     if (dc.app.hotkeys.colon(e)) {
       this.addFacet(this.box.val());
       return false;
+    }
+    if (dc.app.hotkeys.shift && e.keyCode == 9) { // Tab key
+      e.preventDefault();
+      this.focusNextFacet(this.facetViews.length, -1);
+    } else if (e.keyCode == 9) {
+      e.preventDefault();
+      this.focusNextFacet(null, 0);
     }
   },
 
@@ -213,19 +221,23 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   focusNextFacet : function(currentView, direction) {
-    var currentFacetIndex;
+    var currentFacetIndex = 0;
     var viewsCount = this.facetViews.length;
     
     _.each(this.facetViews, function(facetView, i) {
-      if (currentView == facetView) {
+      if (currentView == facetView || currentView == i) {
         currentFacetIndex = i;
       }
     });
     
     var next = currentFacetIndex + direction;
-    if (next > viewsCount-1) next = 0;
-    if (next < 0) next = viewsCount-1;
-    this.facetViews[next].enableEdit();
+    console.log(['focus', next, currentFacetIndex, direction]);
+    if (next < 0 || viewsCount-1 < next) {
+      // this.facetViews[currentFacetIndex].disableEdit();
+      this.box.focus();
+    } else {
+      this.facetViews[next].enableEdit();
+    }
   },
   
   focusCategory : function(category) {

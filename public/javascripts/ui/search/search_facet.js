@@ -9,7 +9,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   events : {
     'click'                    : 'enableEdit',
     'focus input'              : 'enableEdit',
-    'keydown input'            : 'maybeDisableEdit',
+    'keypress input'           : 'maybeDisableEdit',
     'blur input'               : 'disableEdit',
     'change input'             : 'disableEdit',
     'mouseover .cancel_search' : 'showDelete',
@@ -109,6 +109,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   maybeDisableEdit : function(e) {
+    console.log(['facet key', e.keyCode]);
     if (e.keyCode == 13) { // Enter key
       this.disableEdit();
       dc.app.searchBox.searchEvent(e);
