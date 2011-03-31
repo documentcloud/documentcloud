@@ -27,7 +27,7 @@ dc.ui.Dialog = Backbone.View.extend({
     opts = opts || {};
     if (this.options.mode) this.setMode(this.options.mode, 'dialog');
     if (this.options.draggable) this.setMode('is', 'draggable');
-    _.bindAll(this, 'close', '_maybeConfirm');
+    _.bindAll(this, 'close', '_maybeConfirm', '_maybeClose');
     $(this.el).html(JST['common/dialog'](_.extend({}, this.options, opts)));
     var cel = this.contentEl = this.$('.content');
     this._controls = this.$('.controls');
@@ -39,6 +39,7 @@ dc.ui.Dialog = Backbone.View.extend({
     this.center();
     if (this.options.draggable) $(this.el).draggable();
     if (this._returnCloses()) $(document.body).bind('keypress', this._maybeConfirm);
+    $(document.body).bind('keydown', this._maybeClose);
     if (cel[0]) _.defer(function(){ cel.focus(); });
     if (!opts.noOverlay) $(document.body).addClass('overlay');
     return this;
@@ -85,6 +86,7 @@ dc.ui.Dialog = Backbone.View.extend({
     if (this.options.onClose) this.options.onClose(this);
     $(this.el).remove();
     if (this._returnCloses()) $(document.body).unbind('keypress', this._maybeConfirm);
+    $(document.body).unbind('keydown', this._maybeClose);
     $(document.body).removeClass('overlay');
   },
 
@@ -114,6 +116,11 @@ dc.ui.Dialog = Backbone.View.extend({
 
   _returnCloses : function() {
     return this.options.mode == 'alert' || this.options.mode == 'short_prompt';
+  },
+
+  // Close on escape.
+  _maybeClose : function(e) {
+    if (e.which == 27) this.close();
   },
 
   _maybeConfirm : function(e) {

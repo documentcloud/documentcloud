@@ -18,8 +18,8 @@ dc.ui.DocumentList = Backbone.View.extend({
   constructor : function(options) {
     Backbone.View.call(this, options);
     _.bindAll(this, 'refresh', '_removeDocument', '_addDocument', '_onSelect',
-              '_maybeSelect');
-    $(document).bind('keydown', this._maybeSelect);
+              '_maybeSelectOrDelete');
+    $(document).bind('keydown', this._maybeSelectOrDelete);
     Documents.bind('refresh', this.refresh);
     Documents.bind('remove',  this._removeDocument);
     Documents.bind('add',     this._addDocument);
@@ -63,12 +63,16 @@ dc.ui.DocumentList = Backbone.View.extend({
   },
 
   // Handle cmd-a for select all.
-  _maybeSelect : function(e) {
+  _maybeSelectOrDelete : function(e) {
+    var del  = Documents.selectedCount && (e.which == 8);
     var cmdA = dc.app.hotkeys.command && (e.which == 97 || e.which == 65);
-    if (cmdA && !$(e.target).closest('input, textarea').length) {
+    if (!(cmdA || del) || $(e.target).closest('input, textarea').length) return;
+    if (cmdA) {
       Documents.selectAll();
-      return false;
+    } else if (del) {
+      Documents.verifyDestroy(Documents.selected());
     }
+    return false;
   },
 
   // Called when clicking on the document list but not on a document tile.
