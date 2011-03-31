@@ -25,12 +25,12 @@ dc.app.hotkeys = {
   },
 
   down : function(e) {
-    var key = this.KEYS[e.keyCode || e.which];
+    var key = this.KEYS[e.which];
     if (key) this[key] = true;
   },
 
   up : function(e) {
-    var key = this.KEYS[e.keyCode || e.which];
+    var key = this.KEYS[e.which];
     if (key) this[key] = false;
   },
 

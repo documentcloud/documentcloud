@@ -242,7 +242,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   // Try to add reviewer on `enter` key.
   _maybeAddReviewer : function(e) {
-    if (e.keyCode == 13) this._submitAddReviewer();
+    if (e.which == 13) this._submitAddReviewer();
   },
 
   _submitAddReviewer : function(callback, dismissEmpty) {

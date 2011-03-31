@@ -117,7 +117,7 @@ dc.ui.Dialog = Backbone.View.extend({
   },
 
   _maybeConfirm : function(e) {
-    if (e.keyCode == 13) this.confirm();
+    if (e.which == 13) this.confirm();
   },
 
   _addFocus : function(e) {

@@ -166,7 +166,7 @@
     },
 
     maybePerformSearch : function(e) {
-      if (e.keyCode != 13) return; // Search on `enter` only
+      if (e.which != 13) return; // Search on `enter` only
       var force = this.embed.options.page != 1;
       this.embed.options.page = 1;
       this.performSearch(force);

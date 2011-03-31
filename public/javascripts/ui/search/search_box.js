@@ -121,22 +121,8 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Callback fired on key press in the search box. We search when they hit
   // return.
   maybeSearch : function(e) {
-    console.log(['box key', e.keyCode]);
-    if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') {
-      return this.searchEvent(e);
-    }
-
-    if (dc.app.hotkeys.colon(e)) {
-      this.addFacet(this.box.val());
-      return false;
-    }
-    if (dc.app.hotkeys.shift && e.keyCode == 9) { // Tab key
-      e.preventDefault();
-      this.focusNextFacet(this.facetViews.length-1, 0);
-    } else if (e.keyCode == 9) {
-      e.preventDefault();
-      this.focusNextFacet(null, 0);
-    }
+    var query = this.value();
+    if (!dc.app.searcher.flags.outstandingSearch && e.which == 13) dc.app.searcher.search(query);
   },
 
   // Webkit knows how to fire a real "search" event.

@@ -79,7 +79,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
   },
 
   _maybeAddCollaborator : function(e) {
-    if (e.keyCode == 13) this._addCollaborator();
+    if (e.which == 13) this._addCollaborator();
   },
 
   _addCollaborator : function() {

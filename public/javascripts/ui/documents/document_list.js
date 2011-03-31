@@ -17,9 +17,9 @@ dc.ui.DocumentList = Backbone.View.extend({
   // at load time and when searching.
   constructor : function(options) {
     Backbone.View.call(this, options);
-    _.bindAll(this, 'refresh', '_removeDocument', '_addDocument', '_onSelect', 
+    _.bindAll(this, 'refresh', '_removeDocument', '_addDocument', '_onSelect',
               '_maybeSelect');
-    $(document).bind('keypress', this._maybeSelect);
+    $(document).bind('keydown', this._maybeSelect);
     Documents.bind('refresh', this.refresh);
     Documents.bind('remove',  this._removeDocument);
     Documents.bind('add',     this._addDocument);
@@ -29,9 +29,9 @@ dc.ui.DocumentList = Backbone.View.extend({
   render : function() {
     this.setCallbacks();
     $('.search_tab_content').selectable({
-        ignore : '.noselect, .minibutton', 
-        select : '.icon.doc', 
-        onSelect : this._onSelect
+      ignore : '.noselect, .minibutton',
+      select : '.icon.doc',
+      onSelect : this._onSelect
     });
     return this;
   },
@@ -64,7 +64,7 @@ dc.ui.DocumentList = Backbone.View.extend({
 
   // Handle cmd-a for select all.
   _maybeSelect : function(e) {
-    var cmdA = dc.app.hotkeys.command && ((e.keyCode || e.which) == 97);
+    var cmdA = dc.app.hotkeys.command && (e.which == 97 || e.which == 65);
     if (cmdA && !$(e.target).closest('input, textarea').length) {
       Documents.selectAll();
       return false;
@@ -78,19 +78,19 @@ dc.ui.DocumentList = Backbone.View.extend({
     this._pageY = e.pageY;
   },
 
-  // On mouseup, check if the user is dragging a selection lasso. Has a grace 
-  // (`this.SLOP`) of a few pixels where a drag can still be considered a 
+  // On mouseup, check if the user is dragging a selection lasso. Has a grace
+  // (`this.SLOP`) of a few pixels where a drag can still be considered a
   // deselect.
   _endDeselect : function(e) {
-    if (dc.app.hotkeys.shift || 
-        dc.app.hotkeys.command || 
+    if (dc.app.hotkeys.shift ||
+        dc.app.hotkeys.command ||
         dc.app.hotkeys.control) return;
-    if ($(e.target).hasClass('doc_title') || 
-        $(e.target).hasClass('doc') || 
+    if ($(e.target).hasClass('doc_title') ||
+        $(e.target).hasClass('doc') ||
         $(e.target).hasClass('edit_glyph')) return;
     if ((Math.abs(e.pageX - this._pageX) > this.SLOP) ||
         (Math.abs(e.pageY - this._pageY) > this.SLOP)) return;
-        
+
     Documents.deselectAll();
   },
 

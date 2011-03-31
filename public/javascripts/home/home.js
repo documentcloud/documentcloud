@@ -38,7 +38,7 @@ $(function() {
     },
 
     maybeSearch : function(e) {
-      if (e.keyCode == 13) this.search();
+      if (e.which == 13) this.search();
     },
 
     addFocus : function() {
