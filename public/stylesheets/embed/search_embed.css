@@ -177,7 +177,6 @@
   padding: 0 0 15px 80px;
   position: relative;
   overflow: hidden;
-  background-color: #fff;
   outline: none;
 }
   .DC-search-embed .DC-document-list a.DC-document-tile {
@@ -199,7 +198,7 @@
       width: 60px;
       height: 75px;
       padding: 1px;
-      background-color: #FFF;
+      background-color: #fff;
     }
     .DC-search-embed .DC-document-tile:hover .DC-document-thumbnail img {
       border-color: #808080;
