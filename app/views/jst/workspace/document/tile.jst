@@ -1,7 +1,7 @@
 <div class="select"></div>
 <div class="hoverable">
   <img class="icon doc generic is_draggable <%= dc.account ? 'noselect' : '' %>" src="<%= thumbnail_url %>" data-id="<%= id %>" />
-  <div class="title">
+  <div class="title noselect">
     <a href="<%= document_viewer_url %>" class="doc_title noselect"><%= title %></a>&nbsp;<span class="<%= icon["class"] %>" title="<%= icon.title %>">&#65279;</span>&nbsp;<span class="icon document_tool edit_glyph <%= icon.iconless ? '' : 'bottom' %>" title="Edit Document Information">&#65279;</span>
   </div>
 </div>

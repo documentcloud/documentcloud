@@ -14,7 +14,6 @@ dc.ui.Document = Backbone.View.extend({
   className : 'document',
 
   events : {
-    'mousedown .doc_title'      : '_noSelect',
     'click .doc_title'          : 'select',
     'contextmenu .doc_title'    : 'showMenu',
     'dblclick .doc_title'       : 'viewDocument',
@@ -40,8 +39,8 @@ dc.ui.Document = Backbone.View.extend({
     'click .page_list .left'    : 'previousPage',
     'click .page_list .right'   : 'nextPage'
   },
-  
-  // Takes a document model and sets up listeners on the document model, 
+
+  // Takes a document model and sets up listeners on the document model,
   // its notes, and pageEntities.
   constructor : function(options) {
     Backbone.View.call(this, options);
@@ -154,7 +153,7 @@ dc.ui.Document = Backbone.View.extend({
     if (this.model.checkBusy()) return;
     dc.ui.DocumentDialog.open(this.model);
   },
-  
+
   // Renders a single document embed dialog. Checks for permission to embed.
   openEmbed : function() {
     if (!this.model.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
@@ -240,7 +239,7 @@ dc.ui.Document = Backbone.View.extend({
     dc.app.searcher.addToSearch('group: ' + this.model.get('organization_slug'));
   },
 
-  // Clicking on the source in the document tile searches for other documents 
+  // Clicking on the source in the document tile searches for other documents
   // from this source.
   searchSource : function() {
     dc.app.searcher.addToSearch('source: "' + this.model.get('source').replace(/"/g, '\\"') + '"');
@@ -294,7 +293,7 @@ dc.ui.Document = Backbone.View.extend({
     var items = [{title : 'Open', onClick: this.viewDocuments}];
     if (this.model.isPublished()) {
       items.push({
-        title   : 'Open Published Version', 
+        title   : 'Open Published Version',
         onClick : this.viewPublishedDocuments
       });
     }
@@ -304,9 +303,9 @@ dc.ui.Document = Backbone.View.extend({
       items = items.concat([
         {title : 'Edit Document Information', onClick: this.openDialog},
         {title : 'Set Access Level',          onClick: this.setAccessLevelAll},
-        {title : 'Embed Document Viewer',     onClick: this.openEmbed, 
+        {title : 'Embed Document Viewer',     onClick: this.openEmbed,
                                               attrs : {'class' : count > 1 ? 'disabled' : ''}},
-        {title : deleteTitle,                 onClick: this.deleteDocuments, 
+        {title : deleteTitle,                 onClick: this.deleteDocuments,
                                               attrs : {'class' : 'warn'}}
       ]);
     }
@@ -323,24 +322,24 @@ dc.ui.Document = Backbone.View.extend({
     var access = this.model.get('access');
     var base = 'icon main_icon document_tool ';
     switch (access) {
-      case dc.access.PENDING:      
+      case dc.access.PENDING:
         return {'class' : base + 'spinner',    title : 'Uploading...'};
-      case dc.access.ERROR:        
+      case dc.access.ERROR:
         return {'class' : base + 'alert_gray', title : 'Broken document'};
-      case dc.access.ORGANIZATION: 
-        return {'class' : base + 'lock',       title : 'Private to ' + (dc.account ? 
-                                                       dc.account.organization.name : 
+      case dc.access.ORGANIZATION:
+        return {'class' : base + 'lock',       title : 'Private to ' + (dc.account ?
+                                                       dc.account.organization.name :
                                                        'your organization')};
-      case dc.access.PRIVATE:      
+      case dc.access.PRIVATE:
         return {'class' : base + 'lock',       title : 'Private'};
       default:
-        if (this.model.isPublished()) 
+        if (this.model.isPublished())
           return {'class' : base + 'published', title : 'Open Published Version'};
         return {'class' : base + 'hidden', iconless: true};
     }
   },
 
-  // Helper method for getting the right document tile icon URL, based on 
+  // Helper method for getting the right document tile icon URL, based on
   // failure status of the document model.
   _thumbnailURL : function() {
     var access = this.model.get('access');
@@ -374,7 +373,7 @@ dc.ui.Document = Backbone.View.extend({
   // Render each of a document's notes, which have already been fetched.
   _addNote : function(note) {
     this.notesEl.append((new dc.ui.Note({
-      model : note, 
+      model : note,
       collection : this.model.notes
     })).render().el);
   },
@@ -396,7 +395,7 @@ dc.ui.Document = Backbone.View.extend({
       this.viewPages();
     }
   },
-  
+
   // Clicking on entities shows which pages they are found on.
   _renderPages : function() {
     this._showingPages = false;
@@ -439,11 +438,6 @@ dc.ui.Document = Backbone.View.extend({
         return false;
       }
     });
-  },
-
-  // Prevent tile selection.
-  _noSelect : function(e) {
-    e.preventDefault();
   }
 
 });
