@@ -28,6 +28,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       category   : this.options.category,
       facetQuery : this.options.facetQuery
     }));
+    
     $el.setMode('not', 'editing');
     
     this.box = this.$('input');
@@ -37,13 +38,20 @@ dc.ui.SearchFacet = Backbone.View.extend({
       this.box.autoGrowInput();
     }, this));
     
+    if (this.options.facetQuery) {
+      this.committed = true;
+    }
+    
     return this;
   },
   
   remove : function(e) {
+    console.log(['remove facet', e]);
     this.$el.remove();
     dc.app.searchBox.removeFacet(this);
-    dc.app.searchBox.searchEvent(e);
+    if (this.committed) {
+      dc.app.searchBox.searchEvent(e);
+    }
   },
   
   setupAutocomplete : function() {
@@ -113,7 +121,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   maybeDisableEdit : function(e) {
-    if (e.keyCode == 13) { // Enter key
+    console.log(['disableEdit', e.keyCode]);
+    if (e.keyCode == 13 && this.box.val()) { // Enter key
       this.disableEdit();
       dc.app.searchBox.searchEvent(e);
     }
@@ -135,6 +144,12 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.render();
     dc.app.searchBox.removeFocus();
     this.box.unautocomplete();
+    if (this.options.facetQuery) {
+      this.committed = true;
+    }
+    if (!newFacetQuery) {
+      this.remove();
+    }
   },
   
   showDelete : function() {

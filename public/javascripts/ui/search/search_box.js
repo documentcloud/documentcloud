@@ -19,7 +19,7 @@ dc.ui.SearchBox = Backbone.View.extend({
 
   events : {
     'keypress #search_box'      : 'maybeSearch',
-    'search #search_box'        : 'searchEvent',
+    // 'search #search_box'        : 'searchEvent',
     'focus #search_box'         : 'addFocus',
     'blur #search_box'          : 'removeFocus',
     'click .cancel_search_box'  : 'cancelSearch',
@@ -50,7 +50,24 @@ dc.ui.SearchBox = Backbone.View.extend({
       this.box.autoGrowInput();
     }, this));
     
+    this.createFacetCategoryMenu();
+    
     return this;
+  },
+  
+  createFacetCategoryMenu : function() {
+    var items = [
+      {title: 'Account', onClick: _.bind(this.addFacet, this, 'account', '')},
+      {title: 'Project', onClick: _.bind(this.addFacet, this, 'project', '')},
+      {title: 'Filter', onClick: _.bind(this.addFacet, this, 'filter', '')}
+    ];
+    
+    var menu = new dc.ui.Menu({
+      label   : 'Everything',
+      items   : items
+    });
+    
+    this.$('#search_category_selector').append(menu.render().el);
   },
   
   onSelect : function(value, data) {
@@ -121,13 +138,28 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Callback fired on key press in the search box. We search when they hit
   // return.
   maybeSearch : function(e) {
-    var query = this.value();
-    if (!dc.app.searcher.flags.outstandingSearch && e.which == 13) dc.app.searcher.search(query);
+    console.log(['box key', e.keyCode, dc.app.hotkeys.key(e)]);
+    if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') {
+      return this.searchEvent(e);
+    }
+
+    if (dc.app.hotkeys.colon(e)) {
+      this.addFacet(this.box.val());
+      return false;
+    }
+    if (dc.app.hotkeys.shift && e.keyCode == 9) { // Tab key
+      e.preventDefault();
+      this.focusNextFacet(this.facetViews.length-1, 0);
+    } else if (e.keyCode == 9) {
+      e.preventDefault();
+      this.focusNextFacet(null, 0);
+    }
   },
 
   // Webkit knows how to fire a real "search" event.
   searchEvent : function(e) {
     var query = this.value();
+    console.log(['real searchEvent', e, query]);
     if (!dc.app.searcher.flags.outstandingSearch && query) dc.app.searcher.search(query);
   },
 
