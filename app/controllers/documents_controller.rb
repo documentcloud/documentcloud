@@ -1,10 +1,10 @@
 class DocumentsController < ApplicationController
   layout nil
 
-  before_filter :bouncer,           :only => [:show] if Rails.env.staging?
-  before_filter :login_required,    :only => [:update, :destroy]
-  before_filter :prefer_secure,     :only => [:show]
-  before_filter :api_login_optional :only => [:send_full_text, :send_pdf, :send_page_text, :send_page_image]
+  before_filter :bouncer,             :only => [:show] if Rails.env.staging?
+  before_filter :login_required,      :only => [:update, :destroy]
+  before_filter :prefer_secure,       :only => [:show]
+  before_filter :api_login_optional,  :only => [:send_full_text, :send_pdf, :send_page_text, :send_page_image]
 
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
