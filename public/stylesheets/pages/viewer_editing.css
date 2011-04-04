@@ -42,6 +42,9 @@
   .DV-viewAnnotations #control_panel {
     display: none;
   }
+  #control_panel .minibutton {
+    display: inline-block;
+  }
   #control_panel .divider {
     font-weight: bold;
     margin: 20px 0 10px 0;

@@ -6,6 +6,8 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .set_sections':          'openSectionEditor',
     'click .public_annotation':     'togglePublicAnnotation',
     'click .private_annotation':    'togglePrivateAnnotation',
+    'click .redact_annotation':     'toggleRedaction',
+    'click .save_redactions':       'saveRedactions',
     'click .edit_document_info':    'editDocumentInfo',
     'click .edit_description':      'editDescription',
     'click .edit_title':            'editTitle',
@@ -178,10 +180,20 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     dc.app.editor.annotationEditor.toggle('private');
   },
 
+  toggleRedaction : function() {
+    this.openDocumentTab();
+    dc.app.editor.annotationEditor.toggle('redact');
+  },
+
   toggleDocumentInfo : function() {
     var showing = $('.edit_document_fields').is(':visible');
     $('.document_fields_container').setMode(showing ? 'hide' : 'show', 'document_fields');
     $('.document_fields_container .toggle').setMode(showing ? 'not' : 'is', 'enabled');
+  },
+
+  saveRedactions : function() {
+    console.log(dc.app.editor.annotationEditor.redactions);
+    dc.app.editor.annotationEditor.close();
   },
 
   setOnParent : function(doc, attrs) {

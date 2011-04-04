@@ -12,9 +12,12 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     this._buttons = {};
     this._baseURL = '/documents/' + dc.app.editor.docId + '/annotations';
     this._inserts = $('.DV-pageNoteInsert');
-    _.bindAll(this, 'open', 'close', 'drawAnnotation', 'saveAnnotation', 'deleteAnnotation', 'createPageNote');
+    this.redactions = [];
+    _.bindAll(this, 'open', 'close', 'drawAnnotation', 'saveAnnotation',
+      'deleteAnnotation', 'createPageNote', 'pageChanged');
     currentDocument.api.onAnnotationSave(this.saveAnnotation);
     currentDocument.api.onAnnotationDelete(this.deleteAnnotation);
+    currentDocument.api.onChangePage(this.pageChanged);
     this._inserts.click(this.createPageNote);
   },
 
@@ -23,7 +26,8 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     this._buttons[kind] = $('#control_panel .' + kind + '_annotation');
     this.pages          = $('.DV-pages');
     this.page           = $('.DV-page');
-    this._guide         = $(kind == 'public' ? '#public_note_guide' : '#private_note_guide');
+    this._guide         = $('#' + kind + '_note_guide');
+    this.redactions     = [];
     this.page.css({cursor : 'crosshair'});
     this._inserts.filter('.visible').show().addClass('DV-' + kind);
     this.page.bind('mousedown', this.drawAnnotation);
@@ -69,6 +73,10 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     });
   },
 
+  pageChanged : function() {
+    console.log(currentDocument.models.document.currentPage());
+  },
+
   // TODO: Clean up!
   drawAnnotation : function(e) {
     e.stopPropagation();
@@ -99,6 +107,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
         height  : Math.abs(y - oy)
       };
     };
+    $(this.region).css(coords(e));
     var drag = _.bind(function(e) {
       $(this.region).css(coords(e));
       return false;
@@ -113,17 +122,25 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       loc.bottom  = loc.top + loc.height + 3;
       var zoom    = currentDocument.api.relativeZoom();
       var image   = _.map([loc.top, loc.right, loc.bottom, loc.left], function(l){ return Math.round(l / zoom); }).join(',');
-      this.close();
-      if (loc.width > 5 && loc.height > 5) {
-        var set = $(this._activePage).closest('.DV-set');
-        var pageNumber = currentDocument.api.getPageNumberForId(set.attr('data-id'));
-        currentDocument.api.addAnnotation({
-          location        : {image : image},
-          page            : pageNumber,
-          unsaved         : true,
-          access          : this._kind,
-          owns_note       : true
+      var set = $(this._activePage).closest('.DV-set');
+      var pageNumber = currentDocument.api.getPageNumberForId(set.attr('data-id'));
+      if (this._kind == 'redact') {
+        this.redactions.push({
+          location: image,
+          page: pageNumber
         });
+        this.region = null;
+      } else {
+        this.close();
+        if (loc.width > 5 && loc.height > 5) {
+          currentDocument.api.addAnnotation({
+            location        : {image : image},
+            page            : pageNumber,
+            unsaved         : true,
+            access          : this._kind,
+            owns_note       : true
+          });
+        }
       }
       return false;
     }, this);

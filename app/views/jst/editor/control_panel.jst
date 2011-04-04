@@ -23,6 +23,19 @@
   <br /><br />
   <span class="warn">No one apart from you is ever allowed to view your private notes.</span>
 </div>
+<% if (isOwner || isReviewer) { %>
+  <div class="redact_annotation button">
+    <div class="icon mini_redaction"></div>
+    <div class="icon cancel_search"></div>
+    <span>Redact this Page</span>
+  </div>
+  <div id="redact_note_guide" class="note_guide" style="display:none;">
+    Click and drag to draw a black rectangle over the portions of the page you'd
+    like to redact. The redacted text will be removed.
+    <br /><br />
+    <div class="minibutton save_redactions">Save Redactions</div>
+  </div> 
+<% } %> 
 <% if (isOwner) { %>
   <div class="set_sections button"><span>Edit Sections</span></div>
   <div class="document_fields_container">
