@@ -513,7 +513,7 @@ class Document < ActiveRecord::Base
   end
 
   def reprocess_text(force_ocr = false)
-    queue_import :text_only => true, :force_ocr => force_ocr
+    queue_import :text_only => true, :force_ocr => force_ocr, :secure => !calais_id
   end
 
   def reindex_all!(access=nil)
