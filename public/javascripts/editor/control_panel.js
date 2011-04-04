@@ -117,15 +117,15 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       var doc = self._getDocument();
       doc.reprocessText();
       self.setOnParent(doc, {access: dc.access.PENDING});
-      window.close();
-      _.defer(dc.ui.Dialog.alert, closeMessage);
+      $(dialog.el).remove();
+      _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
     }, {width: 450});
     var forceEl = $(dialog.make('span', {'class':'minibutton dark center_button'}, 'Force OCR')).bind('click', function() {
       var doc = self._getDocument();
       doc.reprocessText(true);
       self.setOnParent(doc, {access: dc.access.PENDING});
-      window.close();
-      _.defer(dc.ui.Dialog.alert, closeMessage);
+      $(dialog.el).remove();
+      _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
     });
     dialog.$('.ok').text('Reprocess').before(forceEl);
   },
