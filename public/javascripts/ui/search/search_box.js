@@ -15,7 +15,8 @@ dc.ui.SearchBox = Backbone.View.extend({
 
   id  : 'search',
   
-  PREFIXES : ['project', 'text', 'account', 'document', 'filter'],
+  PREFIXES : ['project', 'text', 'account', 'document', 'filter', 
+              'group', 'access', 'related', 'projectid'],
 
   events : {
     'keypress #search_box'      : 'maybeSearch',
@@ -23,13 +24,14 @@ dc.ui.SearchBox = Backbone.View.extend({
     'focus #search_box'         : 'addFocus',
     'blur #search_box'          : 'removeFocus',
     'click .cancel_search_box'  : 'cancelSearch',
-    'click #search_box_wrapper' : 'focusSearch'
+    'click #search_box_wrapper' : 'focusSearch',
+    'click #search_button'      : 'searchEvent'
   },
 
   // Creating a new SearchBox registers #search page fragments.
   constructor : function(options) {
     Backbone.View.call(this, options);
-    _.bindAll(this, 'hideSearch', 'onSelect');
+    _.bindAll(this, 'hideSearch');
   },
 
   render : function() {
@@ -42,7 +44,9 @@ dc.ui.SearchBox = Backbone.View.extend({
       minChars  : 1
     }).result(_.bind(function(e, data, formatted) {
       e.preventDefault();
+      console.log(['result', e, data, formatted]);
       this.addFacet(formatted);
+      return false;
     }, this));
     
     // This is defered so it can be attached to the DOM to get the correct font-size.
@@ -59,7 +63,8 @@ dc.ui.SearchBox = Backbone.View.extend({
     var items = [
       {title: 'Account', onClick: _.bind(this.addFacet, this, 'account', '')},
       {title: 'Project', onClick: _.bind(this.addFacet, this, 'project', '')},
-      {title: 'Filter', onClick: _.bind(this.addFacet, this, 'filter', '')}
+      {title: 'Filter', onClick: _.bind(this.addFacet, this, 'filter', '')},
+      {title: 'Access', onClick: _.bind(this.addFacet, this, 'access', '')}
     ];
     
     var menu = new dc.ui.Menu({
@@ -69,18 +74,18 @@ dc.ui.SearchBox = Backbone.View.extend({
     
     this.$('#search_category_selector').append(menu.render().el);
   },
-  
-  onSelect : function(value, data) {
-    this.box.val('');
-    this.renderFacet(value, ' ');
-    this.focusCategory(value);
-  },
-  
+    
   addFacet : function(category, initialQuery) {
     console.log(['addFacet', category, initialQuery]);
-    var view = this.renderFacet(category, initialQuery || '');
-    view.enableEdit();
     this.box.val('');
+    var view = this.renderFacet(category, initialQuery || '');
+    console.log(['addFacet post-render', view]);
+    dc.app.searcher.flags.outstandingSearch = true;
+    _.defer(function() {
+      view.enableEdit();
+      dc.app.searcher.flags.outstandingSearch = false;
+    }, 100);
+    console.log(['addFacet post-enable', view]);
   },
   
   // Shortcut to the searchbox's value.
@@ -160,7 +165,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   searchEvent : function(e) {
     var query = this.value();
     console.log(['real searchEvent', e, query]);
-    if (!dc.app.searcher.flags.outstandingSearch && query) dc.app.searcher.search(query);
+    if (!dc.app.searcher.flags.outstandingSearch) dc.app.searcher.search(query);
   },
 
   entitle : function(query) {
@@ -172,11 +177,15 @@ dc.ui.SearchBox = Backbone.View.extend({
   renderFacets : function(facets) {
     this.$('.search_facets').empty();
     this.facetViews = [];
-    if (facets.projectName)     this.renderFacet('project', facets.projectName);
-    if (facets.accountSlug)     this.renderFacet('account', facets.accountSlug);
-    if (facets.groupName)       this.renderFacet('group', facets.groupName);
-    if (facets.filter)          this.renderFacet('filter', facets.filter);
-    if (facets.entities.length) console.log(['entities', facets.entities]);
+    _.each(facets, _.bind(function(value, category) {
+      if (category && value) {
+        if (category == 'entities') {
+          console.log(['entities', value]);
+        } else {
+          this.renderFacet(category, value);
+        }
+      }
+    }, this));
   },
   
   // Render a single facet, using its category and query value.
@@ -197,6 +206,8 @@ dc.ui.SearchBox = Backbone.View.extend({
     query = dc.app.SearchParser.removeAccount(query);
     query = dc.app.SearchParser.removeGroup(query);
     query = dc.app.SearchParser.removeFilter(query);
+    query = dc.app.SearchParser.removeRelatedDocId(query);
+    query = dc.app.SearchParser.removeAccess(query);
     return dc.inflector.trim(query);
   },
   
@@ -206,12 +217,16 @@ dc.ui.SearchBox = Backbone.View.extend({
     var accountSlug   = dc.app.SearchParser.extractAccount(query);
     var groupName     = dc.app.SearchParser.extractGroup(query);
     var filter        = dc.app.SearchParser.extractFilter(query);
+    var related       = dc.app.SearchParser.extractRelatedDocId(query);
+    var access        = dc.app.SearchParser.extractAccess(query);
     var entities      = dc.app.SearchParser.extractEntities(query);
     var facets        = {
-      projectName : projectName,
-      accountSlug : accountSlug,
-      groupName   : groupName,
+      project     : projectName,
+      account     : accountSlug,
+      group       : groupName,
       filter      : filter,
+      related     : related,
+      access      : access,
       entities    : entities
     };
     
@@ -243,6 +258,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   focusNextFacet : function(currentView, direction) {
+    console.log(['focusNextFacet', currentView, direction]);
     var currentFacetIndex = 0;
     var viewsCount = this.facetViews.length;
     

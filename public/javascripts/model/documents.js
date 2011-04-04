@@ -381,19 +381,16 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   
   entitle : function(query) {
     var title, ret, account, org;
-    var projectName   = dc.app.SearchParser.extractProject(query);
-    var accountSlug   = dc.app.SearchParser.extractAccount(query);
-    var groupName     = dc.app.SearchParser.extractGroup(query);
-    var filter        = dc.app.SearchParser.extractFilter(query);
-    if (projectName) {
-      title = projectName;
-    } else if (dc.account && accountSlug == Accounts.current().get('slug')) {
-      ret = (filter == 'published') ? 'your_published_documents' : 'your_documents';
-    } else if (account = Accounts.getBySlug(accountSlug)) {
+
+    if (facets.project) {
+      title = facets.project;
+    } else if (dc.account && facets.account == Accounts.current().get('slug')) {
+      ret = (facets.filter == 'published') ? 'your_published_documents' : 'your_documents';
+    } else if (account = Accounts.getBySlug(facets.account)) {
       title = account.documentsTitle();
-    } else if (dc.account && groupName == dc.account.organization.slug) {
+    } else if (dc.account && facets.group == dc.account.organization.slug) {
       ret = 'org_documents';
-    } else if (facets.groupName && (org = Organizations.findBySlug(facets.groupName))) {
+    } else if (facets.group && (org = Organizations.findBySlug(facets.group))) {
       title = dc.inflector.possessivize(org.get('name')) + " Documents";
     } else if (facets.filter == 'published') {
       ret = 'published_documents';
@@ -404,6 +401,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     } else {
       ret = 'all_documents';
     }
+    
     return title || dc.model.Project.topLevelTitle(ret);
   }
   

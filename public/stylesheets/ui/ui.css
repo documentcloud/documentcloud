@@ -190,7 +190,7 @@ div.text_input {
     -webkit-box-shadow: inset 0px 0px 3px #ccc;
     -moz-box-shadow: inset 0px 0px 3px #ccc;
     box-shadow: inset 0px 0px 3px #ccc;
-    min-height: 28px;
+    min-height: 29px;
     height: auto;
   }
     div.text_input.search.focus {

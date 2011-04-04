@@ -19,6 +19,8 @@ dc.app.SearchParser = {
   ALL_ENTITIES      : /(city|country|term|state|person|place|organization|email|phone):\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
 
   FIRST_FILTER      : /filter:\s*(\w+)/i,
+  
+  FIRST_ACCESS      : /access:\s*(\w+)/i,
 
   PROJECT_QUERY     : /project(id)?:/,
 
@@ -64,6 +66,16 @@ dc.app.SearchParser = {
     return query.replace(filter && filter[0], '');
   },
 
+  extractAccess : function(query) {
+    var match = query.match(this.FIRST_ACCESS);
+    return match && (match[1].toLowerCase());
+  },
+
+  removeAccess : function(query) {
+    var access = query.match(this.FIRST_ACCESS);
+    return query.replace(access && access[0], '');
+  },
+
   extractEntities : function(query) {
     var all = this.ALL_ENTITIES, one = this.ONE_ENTITY;
     var entities = query.match(all) || [];
@@ -78,6 +90,11 @@ dc.app.SearchParser = {
   extractRelatedDocId : function(query) {
     var relatedDocument = query.match(this.FIRST_RELATED);
     return relatedDocument && (relatedDocument[2] || relatedDocument[3] || relatedDocument[4]);
+  },
+  
+  removeRelatedDocId : function(query) {
+    var relatedDocument = query.match(this.FIRST_RELATED); 
+    return query.replace(relatedDocument && relatedDocument[0], '');
   },
 
   extractSpecificDocId : function(query) {
