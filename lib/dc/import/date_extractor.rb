@@ -20,8 +20,8 @@ module DC
       SEP         = "[.\\/\\-]"
 
       NUM_MATCH   = "#{DIGITS}#{SEP}#{DIGITS}#{SEP}#{DIGITS}"
-      MDY_MATCH   = "#{MONTHS}\\s+#{DIGITS},?\\s+#{DIGITS}"
-      YMD_MATCH   = "#{DIGITS}\\s+#{MONTHS},?\\s+#{DIGITS}"
+      MDY_MATCH   = "#{MONTHS}\\s*#{DIGITS},?\\s+#{DIGITS}"
+      YMD_MATCH   = "#{DIGITS}\\s*#{MONTHS},?\\s*#{DIGITS}"
 
       DATE_MATCH  = /(#{NUM_MATCH}|#{MDY_MATCH}|#{YMD_MATCH})/i
 
