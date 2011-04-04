@@ -2,7 +2,7 @@
 // methods for dealing with documents.
 dc.model.Document = Backbone.Model.extend({
 
-  // Takes a canonical document representation and creates necessary 
+  // Takes a canonical document representation and creates necessary
   // sub-models.
   constructor : function(attrs, options) {
     attrs.selected = false;
@@ -378,7 +378,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   }
 
 }, {
-  
+
   entitle : function(query) {
     var title, ret, account, org;
         
@@ -404,7 +404,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     
     return title || dc.model.Project.topLevelTitle(ret);
   }
-  
+
 });
 
 _.extend(dc.model.DocumentSet.prototype, dc.model.Selectable);

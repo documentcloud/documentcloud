@@ -107,27 +107,27 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   reprocessText : function() {
-    var finish = _.bind(function(force) {
-      var doc = this._getDocument();
-      doc.reprocessText(force);
-      this.setOnParent(doc, {access: dc.access.PENDING});
-    }, this);
+    var self = this;
     var closeMessage = "The text is being processed. Please close this document.";
     var dialog = new dc.ui.Dialog.confirm("Reprocess this document to take \
         advantage of improvements to our text extraction tools. Choose \
         \"Force OCR\" (optical character recognition) to ignore any embedded \
         text information and use Tesseract before reprocessing. The document will \
         close while it's being rebuilt. Are you sure you want to proceed? ", function() {
-      finish();
+      var doc = self._getDocument();
+      doc.reprocessText();
+      self.setOnParent(doc, {access: dc.access.PENDING});
       window.close();
       _.defer(dc.ui.Dialog.alert, closeMessage);
     }, {width: 450});
-    var force = $(dialog.make('span', {'class':'minibutton dark center_button'}, 'Force OCR')).bind('click', function() {
-      finish(true);
+    var forceEl = $(dialog.make('span', {'class':'minibutton dark center_button'}, 'Force OCR')).bind('click', function() {
+      var doc = self._getDocument();
+      doc.reprocessText(true);
+      self.setOnParent(doc, {access: dc.access.PENDING});
       window.close();
       _.defer(dc.ui.Dialog.alert, closeMessage);
     });
-    dialog.$('.ok').text('Reprocess').before(force);
+    dialog.$('.ok').text('Reprocess').before(forceEl);
   },
 
   openTextTab : function() {
