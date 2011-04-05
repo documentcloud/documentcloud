@@ -75,16 +75,14 @@ dc.ui.Organizer = Backbone.View.extend({
     }, {mode : 'short_prompt'});
   },
 
-  highlight : function(query) {
+  highlight : function(projectName, groupName) {
     Projects.deselectAll();
     this.$('.organization').removeClass('is_selected');
     if (dc.account) {
-      var projectName = dc.app.SearchParser.extractProject(query);
       var project = projectName && Projects.find(projectName);
       if (project) return project.set({selected : true});
     } else {
-      var group = dc.app.SearchParser.extractGroup(query);
-      var org = group && Organizations.findBySlug(group);
+      var org = groupName && Organizations.findBySlug(groupName);
       if (org) {
         this.$('#organization_' + org.id).addClass('is_selected');
       }

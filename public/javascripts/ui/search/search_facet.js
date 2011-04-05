@@ -11,7 +11,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     // 'focus input'              : 'enableEdit',
     'keypress input'           : 'maybeDisableEdit',
     'blur input'               : 'disableEdit',
-    // 'change input'             : 'disableEdit',
+    'change input'             : 'disableEdit',
     'mouseover .cancel_search' : 'showDelete',
     'mouseout .cancel_search'  : 'hideDelete',
     'click .cancel_search'     : 'remove'

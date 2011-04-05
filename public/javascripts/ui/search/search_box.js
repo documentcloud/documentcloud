@@ -106,15 +106,22 @@ dc.ui.SearchBox = Backbone.View.extend({
     return query;
   },
   
+  queryWithoutCategory : function(category) {
+    var query = "";
+    _.each(this.facetViews, function(view) {
+      if (view.options.category != category) query += view.serialize();
+    });
+    query += this.box.val();
+    return query;
+  },
+  
   removeFacet : function(view) {
     this.facetViews = _.without(this.facetViews, view);
   },
   
   setQuery : function(query) {
-    var facets = this.extractFacets(query);
-    this.renderFacets(facets);
-    query = this.pareQuery(query);
-    if (query) this.renderFacet('text', query);
+    this.searchQuery = dc.app.SearchParser.query(query);
+    this.renderFacets();
     this.box.val('');
   },
 
@@ -125,9 +132,11 @@ dc.ui.SearchBox = Backbone.View.extend({
   showDocuments : function() {
     $(document.body).setMode('active', 'search');
     var query = this.value();
-    var facets = this.extractFacets(query);
-    this.entitle(query, facets);
-    dc.app.organizer.highlight(query);
+    var title = dc.model.DocumentSet.entitle(query);
+    this.titleBox.html(title);
+    var projectName = this.searchQuery.get('project');
+    var groupName = this.searchQuery.get('group');
+    dc.app.organizer.highlight(projectName, groupName);
   },
 
   startSearch : function() {
@@ -168,22 +177,18 @@ dc.ui.SearchBox = Backbone.View.extend({
     if (!dc.app.searcher.flags.outstandingSearch) dc.app.searcher.search(query);
   },
 
-  entitle : function(query) {
-    var title = dc.model.DocumentSet.entitle(query);
-    this.titleBox.html(title);
-  },
-
   // Renders each facet as a searchFacet view.
-  renderFacets : function(facets) {
+  renderFacets : function() {
     this.$('.search_facets').empty();
     this.facetViews = [];
-    _.each(facets, _.bind(function(value, category) {
-      if (category && value) {
-        if (category == 'entities') {
-          console.log(['entities', value]);
-        } else {
+    var facets = this.searchQuery.getFacets();
+    _.each(facets, _.bind(function(values, category) {
+      if (category == 'entities') {
+        console.log(['entities', values]);
+      } else {
+        _.each(values, _.bind(function(value) {
           this.renderFacet(category, value);
-        }
+        }, this));
       }
     }, this));
   },
@@ -200,58 +205,27 @@ dc.ui.SearchBox = Backbone.View.extend({
 
     return view;
   },
-  
-  pareQuery : function(query) {
-    query = dc.app.SearchParser.removeProject(query);
-    query = dc.app.SearchParser.removeAccount(query);
-    query = dc.app.SearchParser.removeGroup(query);
-    query = dc.app.SearchParser.removeFilter(query);
-    query = dc.app.SearchParser.removeRelatedDocId(query);
-    query = dc.app.SearchParser.removeAccess(query);
-    return dc.inflector.trim(query);
-  },
-  
-  // Takes a search query and return all of the facets found in an object.
-  extractFacets : function(query) {
-    var projectName   = dc.app.SearchParser.extractProject(query);
-    var accountSlug   = dc.app.SearchParser.extractAccount(query);
-    var groupName     = dc.app.SearchParser.extractGroup(query);
-    var filter        = dc.app.SearchParser.extractFilter(query);
-    var related       = dc.app.SearchParser.extractRelatedDocId(query);
-    var access        = dc.app.SearchParser.extractAccess(query);
-    var entities      = dc.app.SearchParser.extractEntities(query);
-    var facets        = {
-      project     : projectName,
-      account     : accountSlug,
-      group       : groupName,
-      filter      : filter,
-      related     : related,
-      access      : access,
-      entities    : entities
-    };
     
-    return facets;
-  },
-  
   // Hide the spinner and remove the search lock when finished searching.
   doneSearching : function() {
-    var count     = dc.app.paginator.query.total;
-    var documents = dc.inflector.pluralize('Document', count);
-    var query     = this.value();
+    var count      = dc.app.paginator.query.total;
+    var documents  = dc.inflector.pluralize('Document', count);
+    var searchType = this.searchQuery.searchType();
+    
     if (dc.app.searcher.flags.related) {
       this.titleBox.text(count + ' ' + documents + ' Related to "' + dc.inflector.truncate(dc.app.searcher.relatedDoc.get('title'), 100) + '"');
     } else if (dc.app.searcher.flags.specific) {
       this.titleBox.text(count + ' ' + documents);
-    } else if (dc.app.SearchParser.searchType(query) == 'search') {
-      var quote  = !!dc.app.SearchParser.extractProject(query);
+    } else if (searchType == 'search') {
+      var quote  = this.searchQuery.has('project');
       var suffix = ' in ' + (quote ? '“' : '') + this.titleBox.html() + (quote ? '”' : '');
       var prefix = count ? count + ' ' + dc.inflector.pluralize('Result', count) : 'No Results';
       this.titleBox.html(prefix + suffix);
     }
     if (count <= 0) {
       $(document.body).setMode('empty', 'search');
-      var searchType = dc.app.SearchParser.searchType(this.value());
-      $('#no_results .explanation').text(this.NO_RESULTS[searchType]);
+      var explanation = this.NO_RESULTS[searchType] || this.NO_RESULTS['search'];
+      $('#no_results .explanation').text(explanation);
     }
     dc.ui.spinner.hide();
     dc.app.scroller.checkLater();

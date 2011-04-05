@@ -2,9 +2,17 @@
 // Used to extract keywords from the free text search.
 dc.app.SearchParser = {
 
-  FIRST_PROJECT     : /project:\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+  BARE_FIELD        : /\w+:\s?[^'"]{2}\S*/g,
+  
+  QUOTED_FIELD      : /(\w+:\s?("(.+?)"|'(.+?)'))/g,
+  
+  ALL_FIELDS        : /\w+:\s?(('.+?'|".+?")|([^'"]{2}\S*))/g,
+  
+  FIELD             : /(.+?):\s*/,
+  
+  ALL_PROJECTS      : /project:\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
 
-  FIRST_PROJECT_ID  : /projectid:\s*(\d+-\S+)/i,
+  ALL_PROJECT_IDS   : /projectid:\s*(\d+-\S+)/ig,
 
   FIRST_DOC         : /document:\s*(\d+-\S+)/i,
 
@@ -26,34 +34,74 @@ dc.app.SearchParser = {
 
   WHITESPACE_ONLY   : /^\s*$/,
 
+  extract : function(query, field) {
+    var fields = this.extractAllFields(query);
+    
+    return fields[field] || [];
+  },
+  
+  query : function(query) {
+    var fields = this.extractAllFields(query);
+    var query = new dc.app.SearchQuery(query, fields);
+    
+    return query;
+  },
+  
+  extractAllFields : function(query) {
+    var quotedFields = this.extractQuotedFields(query);
+    var bareFields   = this.extractBareFields(query);
+    var searchText   = this.extractSearchText(query);
+    
+    bareFields = _.map(bareFields, _.bind(function(field) { return field.split(/\s*:\s*/); }, this));
+    quotedFields = _.map(quotedFields, _.bind(function(field) {
+      var match = field.match(this.FIELD);
+      var type  = match[1];
+      var value = field.replace(match[0], '').replace(/(^['"]|['"]$)/g, '');
+      return [type, value];
+    }, this));
+    var rawFields = bareFields.concat(quotedFields);
+    
+    var fields = {
+      text : searchText && [searchText] || []
+    };
+    _.each(rawFields, _.bind(function(field) {
+      var type  = field[0];
+      var value = field[1];
+      if (!fields[type]) fields[type] = [];
+      fields[type].push(value);
+    }, this));
+    
+    return fields;
+  },
+  
+  extractQuotedFields : function(query) {
+    var fields = query.match(this.QUOTED_FIELD);
+    return fields;
+  },
+  
+  extractBareFields : function(query) {
+    var fields = query.replace(this.QUOTED_FIELD, '').match(this.BARE_FIELD);
+    return fields;
+  },
+  
+  extractSearchText : function(query) {
+    var text = dc.inflector.trim(query.replace(this.ALL_FIELDS, ''));
+    return text;
+  },
+  
   extractProject : function(query) {
-    var project = query.match(this.FIRST_PROJECT);
+    var project = query.match(this.ALL_PROJECTS);
     return project && (project[2] || project[3] || project[4]);
   },
   
-  removeProject : function(query) {
-    var project = query.match(this.FIRST_PROJECT);
-    return query.replace(project && project[0], '');
-  },
-
   extractAccount : function(query) {
     var account = query.match(this.FIRST_ACCOUNT);
     return account && (account[2] || account[3] || account[4]);
   },
   
-  removeAccount : function(query) {
-    var account = query.match(this.FIRST_ACCOUNT);
-    return query.replace(account && account[0], '');
-  },
-
   extractGroup : function(query) {
     var group = query.match(this.FIRST_GROUP);
     return group && (group[2] || group[3] || group[4]);
-  },
-
-  removeGroup : function(query) {
-    var group = query.match(this.FIRST_GROUP);
-    return query.replace(group && group[0], '');
   },
 
   extractFilter : function(query) {
@@ -61,19 +109,9 @@ dc.app.SearchParser = {
     return match && (match[1].toLowerCase());
   },
 
-  removeFilter : function(query) {
-    var filter = query.match(this.FIRST_FILTER);
-    return query.replace(filter && filter[0], '');
-  },
-
   extractAccess : function(query) {
     var match = query.match(this.FIRST_ACCESS);
     return match && (match[1].toLowerCase());
-  },
-
-  removeAccess : function(query) {
-    var access = query.match(this.FIRST_ACCESS);
-    return query.replace(access && access[0], '');
   },
 
   extractEntities : function(query) {
@@ -92,11 +130,6 @@ dc.app.SearchParser = {
     return relatedDocument && (relatedDocument[2] || relatedDocument[3] || relatedDocument[4]);
   },
   
-  removeRelatedDocId : function(query) {
-    var relatedDocument = query.match(this.FIRST_RELATED); 
-    return query.replace(relatedDocument && relatedDocument[0], '');
-  },
-
   extractSpecificDocId : function(query) {
     var id = query.match(this.FIRST_DOC);
     return id && id[1];

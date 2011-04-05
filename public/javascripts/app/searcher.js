@@ -64,17 +64,15 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     this.search(this.searchBox.value(), page, callback);
   },
 
+  // Swap out project
   publicQuery : function() {
-    var projectName;
-    var query = this.searchBox.value();
-
-    // Swap out project
     var projects = [];
-    while (projectName = dc.app.SearchParser.extractProject(query)) {
-      query = query.replace(dc.app.SearchParser.FIRST_PROJECT, '');
+    var projectNames = this.searchBox.searchQuery.all('project');
+    _.each(projectNames, function(projectName) {
       projects.push(Projects.find(projectName));
-    }
-    query = _.map(projects, function(p) { return 'projectid: ' + p.slug(); }).join(' ') + query;
+    });
+    var query = this.searchBox.queryWithoutCategory('project');
+    query = _.map(projects, function(p) { return 'projectid: ' + p.slug(); }).join(' ') + ' ' + query;
 
     return query;
   },
@@ -149,9 +147,8 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   },
 
   populateRelatedDocument : function() {
-    this.relatedDoc = null;
-    var id = parseInt(dc.app.SearchParser.extractRelatedDocId(this.searchBox.value()), 10);
-    this.relatedDoc = Documents.get(id);
+    var id = parseInt(this.searchBox.searchQuery.get('related'), 10);
+    this.relatedDoc = Documents.get(id) || null;
   },
 
   viewEntities : function(docs) {

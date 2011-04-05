@@ -381,22 +381,23 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   
   entitle : function(query) {
     var title, ret, account, org;
-
-    if (facets.project) {
-      title = facets.project;
-    } else if (dc.account && facets.account == Accounts.current().get('slug')) {
-      ret = (facets.filter == 'published') ? 'your_published_documents' : 'your_documents';
-    } else if (account = Accounts.getBySlug(facets.account)) {
+    var searchQuery = dc.app.searchBox.searchQuery;
+    
+    if (searchQuery.has('project') == 1) {
+      title = searchQuery.get('project');
+    } else if (dc.account && searchQuery.get('account') == Accounts.current().get('slug')) {
+      ret = (searchQuery.get('filter') == 'published') ? 'your_published_documents' : 'your_documents';
+    } else if (account = Accounts.getBySlug(searchQuery.get('account'))) {
       title = account.documentsTitle();
-    } else if (dc.account && facets.group == dc.account.organization.slug) {
+    } else if (dc.account && searchQuery.get('group') == dc.account.organization.slug) {
       ret = 'org_documents';
-    } else if (facets.group && (org = Organizations.findBySlug(facets.group))) {
+    } else if (searchQuery.has('group') && (org = Organizations.findBySlug(searchQuery.get('group')))) {
       title = dc.inflector.possessivize(org.get('name')) + " Documents";
-    } else if (facets.filter == 'published') {
+    } else if (searchQuery.get('filter') == 'published') {
       ret = 'published_documents';
-    } else if (filter == 'popular') {
+    } else if (searchQuery.get('filter') == 'popular') {
       ret = 'popular_documents';
-    } else if (filter == 'annotated') {
+    } else if (searchQuery.get('filter') == 'annotated') {
       ret = 'annotated_documents';
     } else {
       ret = 'all_documents';
