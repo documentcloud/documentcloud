@@ -568,9 +568,24 @@ class Document < ActiveRecord::Base
     }.to_json}).body)
   end
 
+  # Redactions is an array of objects: {'page' => 1, 'location' => '30,50,50,10'}
+  def redact_pages(redactions)
+    eventual_access = access || PRIVATE
+    update_attributes :access => PENDING
+    record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+      'action'  => 'redact_pages',
+      'inputs'  => [id],
+      'options' => {
+        :id => id,
+        :redactions => redactions,
+        :access => eventual_access
+      }
+    }.to_json}).body)
+  end
+
   def remove_pages(pages, replace_pages_start=nil, insert_document_count=nil)
-    eventual_access = self.access || PRIVATE
-    self.update_attributes :access => PENDING
+    eventual_access = access || PRIVATE
+    update_attributes :access => PENDING
     record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'document_remove_pages',
       'inputs'  => [id],
@@ -585,8 +600,8 @@ class Document < ActiveRecord::Base
   end
 
   def reorder_pages(page_order, eventual_access=nil)
-    eventual_access ||= self.access || PRIVATE
-    self.update_attributes :access => PENDING
+    eventual_access ||= access || PRIVATE
+    update_attributes :access => PENDING
     record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'document_reorder_pages',
       'inputs'  => [id],

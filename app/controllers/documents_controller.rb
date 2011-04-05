@@ -63,7 +63,8 @@ class DocumentsController < ApplicationController
   end
 
   def redact_pages
-    return not_found unless doc = current_document(true)
+    return not_found unless params[:redactions] && (doc = current_document(true))
+    doc.redact_pages JSON.parse(params[:redactions])
     json doc
   end
 
