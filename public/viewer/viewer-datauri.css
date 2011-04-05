@@ -829,6 +829,10 @@
   overflow:visible;
 }
 
+.DV-pageSpecific {
+  display: none;
+}
+
 .DV-pageImage{
   visibility:hidden;
   position:absolute;

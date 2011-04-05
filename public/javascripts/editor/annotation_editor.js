@@ -14,10 +14,9 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     this._inserts = $('.DV-pageNoteInsert');
     this.redactions = [];
     _.bindAll(this, 'open', 'close', 'drawAnnotation', 'saveAnnotation',
-      'deleteAnnotation', 'createPageNote', 'pageChanged');
+      'deleteAnnotation', 'createPageNote');
     currentDocument.api.onAnnotationSave(this.saveAnnotation);
     currentDocument.api.onAnnotationDelete(this.deleteAnnotation);
-    currentDocument.api.onChangePage(this.pageChanged);
     this._inserts.click(this.createPageNote);
   },
 
@@ -29,7 +28,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     this._guide         = $('#' + kind + '_note_guide');
     this.redactions     = [];
     this.page.css({cursor : 'crosshair'});
-    this._inserts.filter('.visible').show().addClass('DV-' + kind);
+    if (kind != 'redact') this._inserts.filter('.visible').show().addClass('DV-' + kind);
     this.page.bind('mousedown', this.drawAnnotation);
     $(document).bind('keydown', this.close);
     this._buttons[kind].addClass('open');
@@ -42,6 +41,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     this.page.unbind('mousedown', this.drawAnnotation);
     $(document).unbind('keydown', this.close);
     this.clearAnnotation();
+    this.clearRedactions();
     this._inserts.hide().removeClass('DV-public DV-private');
     this._buttons[this._kind].removeClass('open');
     this._guide.hide();
@@ -59,6 +59,10 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     if (this.region) $(this.region).remove();
   },
 
+  clearRedactions : function() {
+    $('.DV-annotationRegion.DV-accessRedact').remove();
+  },
+
   // When a page note insert line is clicked, create a page annotation above
   // the corresponding page.
   createPageNote : function(e) {
@@ -73,15 +77,12 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     });
   },
 
-  pageChanged : function() {
-    console.log(currentDocument.models.document.currentPage());
-  },
-
   // TODO: Clean up!
   drawAnnotation : function(e) {
     e.stopPropagation();
     e.preventDefault();
     this._activePage = $(e.currentTarget);
+    this._activePageNumber = currentDocument.api.getPageNumberForId($(this._activePage).closest('.DV-set').attr('data-id'));
     this.clearAnnotation();
     var offTop        = this._activePage.offset().top,
         offLeft       = this._activePage.offset().left,
@@ -89,8 +90,8 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
         oy            = e.pageY - offTop,
         borderBottom  = this._activePage.height() - 6,
         borderRight   = this._activePage.width() - 6;
-    this.region = this.make('div', {'class' : 'DV-annotationRegion active DV-' + this._kind, style:'position:absolute;'});
-    this._activePage.append(this.region);
+    this.region = this.make('div', {'class' : 'DV-annotationRegion active ' + this._accessClass(this._kind), style:'position:absolute;'});
+    (this._kind == 'redact' ? this._specificPage() : this._activePage).append(this.region);
     var contained = function(e) {
       return e.pageX > 0 && e.pageX < borderRight &&
              e.pageY > 0 && e.pageY < borderBottom;
@@ -122,13 +123,11 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       loc.bottom  = loc.top + loc.height + 3;
       var zoom    = currentDocument.api.relativeZoom();
       var image   = _.map([loc.top, loc.right, loc.bottom, loc.left], function(l){ return Math.round(l / zoom); }).join(',');
-      var set = $(this._activePage).closest('.DV-set');
-      var pageNumber = currentDocument.api.getPageNumberForId(set.attr('data-id'));
       if (this._kind == 'redact') {
         if (loc.width > 5 && loc.height > 5) {
           this.redactions.push({
             location: image,
-            page: pageNumber
+            page: this._activePageNumber
           });
         } else {
           $(this.region).remove();
@@ -139,7 +138,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
         if (loc.width > 5 && loc.height > 5) {
           currentDocument.api.addAnnotation({
             location        : {image : image},
-            page            : pageNumber,
+            page            : this._activePageNumber,
             unsaved         : true,
             access          : this._kind,
             owns_note       : true
@@ -189,6 +188,15 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     $.ajax({url : url, type : 'POST', data : {_method : 'delete'}, dataType : 'json', success : _.bind(function() {
       this._adjustNoteCount(-1);
     }, this)});
+  },
+
+  // Lazily create the page-specific div for persistent elements.
+  _specificPage : function() {
+    var already = $('.DV-pageSpecific-' + this._activePageNumber);
+    if (already.length) return already;
+    var el = this.make('div', {'class' : 'DV-pageSpecific DV-pageSpecific-' + this._activePageNumber});
+    this._activePage.append(el);
+    return $(el);
   },
 
   _adjustNoteCount : function(num) {

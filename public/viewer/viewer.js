@@ -9869,6 +9869,9 @@ DV.Page.prototype.draw = function(argHash) {
   var _types = [];
   var source = this.model_pages.imageURL(this.index);
 
+  // Set the page number as a class, for page-dependent elements.
+  this.el[0].className = this.el[0].className.replace(/\s*DV-page-\d+/, '') + ' DV-page-' + (this.index + 1);
+
   if (this.imgSource != source) {
     this.imgSource = source;
     this.loadImage();
@@ -11975,6 +11978,16 @@ _.extend(DV.Schema.helpers, {
     this.viewer.$('.DV-supplemental').toggleClass('DV-noNavigation', missing);
   },
 
+  renderSpecificPageCss : function() {
+    var classes = [];
+    for (var i = 1, l = this.models.document.totalPages; i <= l; i++) {
+      classes.push('.DV-page-' + i + ' .DV-pageSpecific-' + i);
+    }
+    var css = classes.join(', ') + ' { display: block; }';
+    var stylesheet = '<style type="text/css" media="all">\n' + css +'\n</style>';
+    DV.jQuery(document.head).append(stylesheet);
+  },
+
   renderNavigation : function() {
     var me = this;
     var chapterViews = [], bolds = [], expandIcons = [], expanded = [], navigationExpander = JST.navigationExpander({}),nav=[],notes = [],chapters = [];
@@ -12414,7 +12427,6 @@ DV.Schema.states = {
     this.helpers.renderViewer();
 
     // Assign element references.
-    // window.v = this;
     this.events.elements = this.helpers.elements = this.elements = new DV.Elements(this);
 
     // Render included components, and hide unused portions of the UI.
@@ -12422,6 +12434,9 @@ DV.Schema.states = {
 
     // Render chapters and notes navigation:
     this.helpers.renderNavigation();
+
+    // Render CSS rules for showing/hiding specific pages:
+    this.helpers.renderSpecificPageCss();
 
     // Instantiate pageset and build accordingly
     this.pageSet = new DV.PageSet(this);

@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
     :member => {
       :search                 => :get,
       :remove_pages           => :post,
+      :redact_pages           => :post,
       :reorder_pages          => :post,
       :save_page_text         => :post,
       :upload_insert_document => :post,

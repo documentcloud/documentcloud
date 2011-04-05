@@ -62,6 +62,11 @@ class DocumentsController < ApplicationController
     json nil
   end
 
+  def redact_pages
+    return not_found unless doc = current_document(true)
+    json doc
+  end
+
   def remove_pages
     return not_found unless doc = current_document(true)
     doc.remove_pages(params[:pages].map {|p| p.to_i })

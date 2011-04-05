@@ -192,8 +192,21 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   saveRedactions : function() {
-    console.log(dc.app.editor.annotationEditor.redactions);
-    dc.app.editor.annotationEditor.close();
+    var modelId = this.viewer.api.getModelId();
+    var redactions = dc.app.editor.annotationEditor.redactions;
+    if (!redactions.length) return dc.app.editor.annotationEditor.close();
+    $.ajax({
+      url       : '/documents/' + modelId + '/redact_pages',
+      type      : 'POST',
+      data      : {redactions : JSON.stringify(redactions)},
+      dataType  : 'json',
+      success   : _.bind(function(resp) {
+        this.setOnParent(modelId, resp);
+        _.defer(dc.ui.Dialog.alert, "The pages are being redacted. Please close this document.", {
+          onClose : function(){ window.close(); }
+        });
+      }, this)
+    });
   },
 
   setOnParent : function(doc, attrs) {
