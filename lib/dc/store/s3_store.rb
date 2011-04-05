@@ -136,12 +136,16 @@ module DC
         @bucket ||= (s3.bucket(BUCKET_NAME) || s3.bucket(BUCKET_NAME, true))
       end
 
+      def content_type(s3_path)
+        Mime::Type.lookup_by_extension(File.extname(s3_path)).to_s
+      end
+
       # Saves a local file to a location on S3, and returns the public URL.
       # Set the expires headers for a year, if the file is an image -- text,
       # HTML and JSON may change.
       def save_file(file, s3_path, access, opts={})
         file = opts[:string] ? file : File.open(file)
-        headers = {}
+        headers = {'content-type' => content_type(s3_path)}
         safe_s3_request do
           bucket.put(s3_path, file, {}, ACCESS_TO_ACL[access], headers)
         end
@@ -173,7 +177,7 @@ module DC
       end
 
       def save_permissions(s3_path, access)
-        headers = {'x-amz-acl' => ACCESS_TO_ACL[access]}
+        headers = {'x-amz-acl' => ACCESS_TO_ACL[access], 'content-type' => content_type(s3_path)}
         s3.interface.copy(bucket, s3_path, bucket, s3_path, :replace, headers)
       end
 

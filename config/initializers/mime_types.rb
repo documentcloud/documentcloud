@@ -7,3 +7,5 @@
 Mime::Type.register 'application/pdf',      :pdf
 Mime::Type.register 'application/zip',      :zip
 Mime::Type.register 'application/rdf+xml',  :rdf
+Mime::Type.register 'image/gif',            :gif
+Mime::Type.register 'image/jpeg',           :jpg
