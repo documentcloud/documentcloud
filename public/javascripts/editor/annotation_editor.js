@@ -125,10 +125,14 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       var set = $(this._activePage).closest('.DV-set');
       var pageNumber = currentDocument.api.getPageNumberForId(set.attr('data-id'));
       if (this._kind == 'redact') {
-        this.redactions.push({
-          location: image,
-          page: pageNumber
-        });
+        if (loc.width > 5 && loc.height > 5) {
+          this.redactions.push({
+            location: image,
+            page: pageNumber
+          });
+        } else {
+          $(this.region).remove();
+        }
         this.region = null;
       } else {
         this.close();
