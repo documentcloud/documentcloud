@@ -117,10 +117,16 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       $(document).unbind('keydown', this.close);
       this.pages.unbind('mouseup', dragEnd).unbind('mousemove', drag);
       var loc     = coords(e);
-      loc.top     += 1;
-      loc.left    += 3;
-      loc.right   = loc.left + loc.width + 11;
-      loc.bottom  = loc.top + loc.height + 3;
+      loc.left    -= 1;
+      loc.top     -= 1;
+      loc.right   = loc.left + loc.width;
+      loc.bottom  = loc.top + loc.height;
+      if (this._kind != 'redact') {
+        loc.top     += 2;
+        loc.left    += 5;
+        loc.right   += 15;
+        loc.bottom  += 5;
+      }
       var zoom    = currentDocument.api.relativeZoom();
       var image   = _.map([loc.top, loc.right, loc.bottom, loc.left], function(l){ return Math.round(l / zoom); }).join(',');
       if (this._kind == 'redact') {

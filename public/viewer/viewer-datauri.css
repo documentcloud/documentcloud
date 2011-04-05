@@ -204,7 +204,7 @@
   }
   .DV-accessRedact .DV-annotationRegion, .DV-accessRedact.DV-annotationRegion {
     background: #000;
-    border:3px solid #000;
+    border: 0;
     border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0;
   }
   .DV-coverVisible .DV-accessPrivate .DV-annotationRegion {
