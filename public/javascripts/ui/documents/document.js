@@ -70,6 +70,7 @@ dc.ui.Document = Backbone.View.extend({
       icon          : this._iconAttributes(),
       thumbnail_url : this._thumbnailURL()
     });
+    if (dc.app.paginator.mini) data.title = dc.inflector.truncateWords(data.title, 50);
     $(this.el).html(JST['document/tile'](data));
     this._displayDescription();
     if (dc.account) this.$('.doc.icon').draggable({ghost : true, onDrop : this._onDrop});
