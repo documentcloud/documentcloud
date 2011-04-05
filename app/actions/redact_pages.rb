@@ -5,9 +5,10 @@ require 'fileutils'
 class RedactPages < DocumentModBase
 
   # The zoom ratio at which we'll be drawing redactions.
-  ENLARGEMENT = 1000.0 / 700.0
+  LARGE_FACTOR    = 1000.0 / 700.0
+  ORIGINAL_FACTOR = 1700.0 / 700.0
 
-  GM_ARGS = '-density 150 -limit memory 256MiB -limit map 512MiB'
+  GM_ARGS = '-limit memory 256MiB -limit map 512MiB'
 
   def process
     begin
@@ -28,7 +29,7 @@ class RedactPages < DocumentModBase
     @page_text = {}
     Docsplit.extract_pages @pdf
     FileUtils.rm @pdf
-    redactions_by_page = options['redactions'].group_by {|r| r['page'] }
+    redactions_by_page = options['redactions'].group_by {|r| r['page'].to_i }
     redactions_by_page.each {|page, redactions| redact_page page, redactions }
     rebuild_pdf
     rebuild_text
@@ -51,20 +52,25 @@ class RedactPages < DocumentModBase
       f.write(asset_store.read(document.page_image_path(page, 'large')))
     end
 
-    # Draw black rectangular redactions on it.
-    rectangles = redactions.map { |redaction|
-      pos = redaction['location'].split(/,\s*/).map {|px| (px.to_i * ENLARGEMENT).round }
-      gm_coords = [pos[3], pos[0], pos[1], pos[2]].join(',')
-      "rectangle #{gm_coords}"
-    }.join(' ')
-    `gm mogrify #{GM_ARGS} #{images['large']} -fill black -draw "#{rectangles}" #{images['large']} 2>&1`
+    # Generate the "original" version of the page image.
+    `gm convert #{GM_ARGS} -density 200x200 -resize 1700x #{page_pdf_path} #{page_tiff_path} 2>&1`
 
-    # Downsize it to all smaller image sizes.
+    # Draw black rectangular redactions on both versions.
+    coords = redactions.map do |redaction|
+      pos = redaction['location'].split(/,\s*/)
+      [pos[3], pos[0], pos[1], pos[2]]
+    end
+    original_coords = coords.map {|list| 'rectangle ' + list.map {|px| (px.to_i * ORIGINAL_FACTOR).round }.join(',') }.join(' ')
+    large_coords    = coords.map {|list| 'rectangle ' + list.map {|px| (px.to_i * LARGE_FACTOR).round }.join(',') }.join(' ')
+    `gm mogrify #{GM_ARGS} #{page_tiff_path} -fill black -draw "#{original_coords}" #{page_tiff_path} 2>&1`
+    `gm mogrify #{GM_ARGS} #{images['large']} -fill black -draw "#{large_coords}" #{images['large']} 2>&1`
+
+    # Downsize the large image to all smaller image sizes.
     previous = nil
     Page::IMAGE_SIZES.each do |size, geometry|
       if size != 'large'
         FileUtils.cp previous, images[size]
-        `gm mogrify #{GM_ARGS} -unsharp 0x0.5+0.75 -resize #{geometry} #{images[size]} 2>&1`
+        `gm mogrify #{GM_ARGS} -density 150 -unsharp 0x0.5+0.75 -resize #{geometry} #{images[size]} 2>&1`
       end
       previous = images[size]
     end
@@ -73,8 +79,8 @@ class RedactPages < DocumentModBase
     asset_store.save_page_images(document, page, images, access)
 
     # Write out the new redacted pdf page, and tiff version for OCR.
-    `gm convert #{GM_ARGS} #{images['large']} #{page_pdf_path} 2>&1`
-    `gm convert #{GM_ARGS} -density 200x200 -colorspace GRAY #{images['large']} #{page_tiff_path} 2>&1`
+    `gm convert #{GM_ARGS} #{page_tiff_path} #{page_pdf_path} 2>&1`
+    `gm convert #{GM_ARGS} -colorspace GRAY #{page_tiff_path} #{page_tiff_path} 2>&1`
 
     # OCR the large version of the image.
     `tesseract #{page_tiff_path} #{base} -l eng 2>&1`
