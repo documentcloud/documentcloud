@@ -47,10 +47,12 @@ dc.ui.Paginator = Backbone.View.extend({
   },
 
   queryParams : function() {
-    return {
+    var params = {
       per_page : dc.app.paginator.pageSize(),
-      order     : dc.app.paginator.sortOrder
+      order    : dc.app.paginator.sortOrder
     };
+    if (!this.mini) params.include_mentions = true;
+    return params;
   },
 
   hide : function() {

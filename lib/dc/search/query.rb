@@ -82,7 +82,7 @@ module DC
         @exclude_documents = o[:exclude_documents]
         needs_solr? ? run_solr : run_database
         populate_annotation_counts
-        populate_mentions
+        populate_mentions if o[:include_mentions]
         self
       end
 

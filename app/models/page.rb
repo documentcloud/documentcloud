@@ -11,6 +11,7 @@ class Page < ActiveRecord::Base
   MAX_PAGE_RESULTS = 1000
 
   include DC::Store::DocumentResource
+  include DC::Search::Matchers
   include ActionView::Helpers::SanitizeHelper
   extend ActionView::Helpers::SanitizeHelper::ClassMethods
 
@@ -57,18 +58,33 @@ class Page < ActiveRecord::Base
 
   # Generate the highlighted excerpt of the page text for a given search phrase.
   def self.mentions(doc, search_phrase, limit=3)
-    search = PGconn.escape(search_phrase)
-    sql = <<-EOS
-      select page_number as page,
-        ts_headline('english', text, plainto_tsquery('#{search}'),
-        'startsel="<span class=""occurrence"">",stopsel=</span>,minwords=30,maxwords=50,maxfragments=1') as excerpt
-        from pages
-        where document_id = #{doc.id}
-        and text @@ plainto_tsquery('#{search}')
-        order by page_number
-        limit #{limit}
-    EOS
-    connection.select_all(sql)
+    phrases = search_phrase.scan(QUOTED_VALUE).map {|r| r[1] }
+    words   = search_phrase.gsub(QUOTED_VALUE, '').split(/\s+/)
+    regex   = "(#{(words + phrases).join('|')})"
+    conds   = ["document_id = ? and text ~* ?", doc.id, regex]
+    pages   = Page.all(:conditions => conds, :order => 'page_number asc', :limit => limit)
+    pages.map {|p| {:page => p.page_number, :excerpt => p.excerpt(/#{regex}/)} }
+  end
+
+  def excerpt(regex)
+    # TODO TODO TODO
+
+    # index = text.index regex
+    # excerpt = text[]
+    #
+    # @page_map.map do |occur, page|
+    #    utf     =  page.text.mb_chars
+    #    open    =  occur.offset - page.start_offset
+    #    close   =  open + occur.length
+    #    first   =  open - context
+    #    last    =  close + context
+    #    last    =  last < utf.length ? context : utf.length - close
+    #    excerpt =  first < 0 ? utf[0, open].to_s : utf[first, context].to_s
+    #    excerpt += "<span class=\"occurrence\">#{ utf[open, occur.length].to_s }</span>"
+    #    excerpt += utf[close, last].to_s if close < utf.length
+    #    {:page_number => page.page_number, :excerpt => excerpt, :offset => occur.offset}
+    #  end
+    text
   end
 
   def contains?(occurrence)
