@@ -7,6 +7,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .public_annotation':     'togglePublicAnnotation',
     'click .private_annotation':    'togglePrivateAnnotation',
     'click .redact_annotation':     'toggleRedaction',
+    'click .cancel_redactions':     'toggleRedaction',
     'click .save_redactions':       'saveRedactions',
     'click .edit_document_info':    'editDocumentInfo',
     'click .edit_description':      'editDescription',

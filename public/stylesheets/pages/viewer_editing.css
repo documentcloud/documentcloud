@@ -45,6 +45,9 @@
   #control_panel .minibutton {
     display: inline-block;
   }
+    #control_panel .save_redactions {
+      margin-left: 8px;
+    }
   #control_panel .divider {
     font-weight: bold;
     margin: 20px 0 10px 0;

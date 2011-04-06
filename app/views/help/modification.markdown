@@ -6,7 +6,7 @@ We don't tend to think of modifying source documents as something a responsible 
 
 DocumentCloud is often used to analyze sensitive documents, and many of those documents contain names, phone numbers, social security numbers, or other personal information that must be redacted before publication.
 
-To get started, click **Redact this Document** under "Document Tools" in the sidebar. The cursor will turn into a crosshair. Browse the document, and draw black rectangular redactions over every passage you'd like to remove. If you make a mistake and need to cancel the process, click the close **(x)** icon. When you're done redacting, click the "Save Redactions" button.
+To get started, click **Redact this Document** under "Document Tools" in the sidebar. The cursor will turn into a crosshair. Browse the document, and draw black rectangular redactions over every passage you'd like to remove. When you're done redacting, click the "Save Redactions" button.
 
 <img alt="screenshot of redaction process" src="/images/help/redact.jpg" class="full_line" />
 
