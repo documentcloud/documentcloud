@@ -7,7 +7,10 @@ body {
   background: #ccc url(/images/embed/ui/bg.jpg);
 }
   body.workspace {
+    position: relative;
     overflow-y: scroll;
+    overflow-x: auto;
+    min-width: 937px;
   }
 a {
   color: inherit;
