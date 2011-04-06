@@ -140,10 +140,10 @@
     background-image: url(/images/embed/icons/mini_note_private.png);
   }
 .icon.mini_redaction {
-  width: 8px; height: 5px;
+  width: 8px; height: 4px;
   background: #777;
-  border: 1px solid #555;
-  margin-left: 1px;
+  border: 1px solid #333;
+  margin: 1px 0 0 1px;
 }
 
 .icon.calais_30 {
