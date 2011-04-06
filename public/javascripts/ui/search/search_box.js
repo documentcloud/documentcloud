@@ -6,11 +6,11 @@ dc.ui.SearchBox = Backbone.View.extend({
     project   : "This project does not contain any documents.",
     account   : "This account does not have any documents.",
     group     : "This organization does not have any documents.",
+    related   : "There are no documents related to this document.",
     published : "This account does not have any published documents.",
     annotated : "There are no annotated documents.",
     search    : "Your search did not match any documents.",
-    all       : "There are no documents.",
-    related   : "There are no documents related to this document."
+    all       : "There are no documents."
   },
 
   id  : 'search',
@@ -31,7 +31,8 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Creating a new SearchBox registers #search page fragments.
   constructor : function(options) {
     Backbone.View.call(this, options);
-    _.bindAll(this, 'hideSearch');
+    _.bindAll(this, 'hideSearch', 'renderFacets');
+    SearchQuery.bind('refresh', this.renderFacets);
   },
 
   render : function() {
@@ -44,7 +45,6 @@ dc.ui.SearchBox = Backbone.View.extend({
       minChars  : 1
     }).result(_.bind(function(e, data, formatted) {
       e.preventDefault();
-      console.log(['result', e, data, formatted]);
       this.addFacet(formatted);
       return false;
     }, this));
@@ -74,19 +74,6 @@ dc.ui.SearchBox = Backbone.View.extend({
     
     this.$('#search_category_selector').append(menu.render().el);
   },
-    
-  addFacet : function(category, initialQuery) {
-    console.log(['addFacet', category, initialQuery]);
-    this.box.val('');
-    var view = this.renderFacet(category, initialQuery || '');
-    console.log(['addFacet post-render', view]);
-    dc.app.searcher.flags.outstandingSearch = true;
-    _.defer(function() {
-      view.enableEdit();
-      dc.app.searcher.flags.outstandingSearch = false;
-    }, 100);
-    console.log(['addFacet post-enable', view]);
-  },
   
   // Shortcut to the searchbox's value.
   value : function(query) {
@@ -95,23 +82,22 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   getQuery : function() {
-    var query = "";
-    if (this.facetViews) {
-      _.each(this.facetViews, function(view) {
-        query += view.serialize();
-      });
-      query += this.box.val();
-    }
+    var query = SearchQuery.map(function(facet) {
+      return facet.serialize();
+    }).join(' ');
+
+    query += ' ' + this.box.val();
     
     return query;
   },
   
   queryWithoutCategory : function(category) {
-    var query = "";
-    _.each(this.facetViews, function(view) {
-      if (view.options.category != category) query += view.serialize();
-    });
-    query += this.box.val();
+    var query = SearchQuery.map(function(facet) {
+      if (facet.get('category') != category) return facet.serialize();
+    }).join(' ');
+
+    query += ' ' + this.box.val();
+    
     return query;
   },
   
@@ -120,8 +106,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   setQuery : function(query) {
-    this.searchQuery = dc.app.SearchParser.query(query);
-    this.renderFacets();
+    dc.app.SearchParser.parse(query);
     this.box.val('');
   },
 
@@ -134,8 +119,8 @@ dc.ui.SearchBox = Backbone.View.extend({
     var query = this.value();
     var title = dc.model.DocumentSet.entitle(query);
     this.titleBox.html(title);
-    var projectName = this.searchQuery.get('project');
-    var groupName = this.searchQuery.get('group');
+    var projectName = SearchQuery.find('project');
+    var groupName = SearchQuery.find('group');
     dc.app.organizer.highlight(projectName, groupName);
   },
 
@@ -176,28 +161,39 @@ dc.ui.SearchBox = Backbone.View.extend({
     console.log(['real searchEvent', e, query]);
     if (!dc.app.searcher.flags.outstandingSearch) dc.app.searcher.search(query);
   },
+    
+  addFacet : function(category, initialQuery) {
+    this.box.val('');
+    var model = new dc.model.SearchFacet({
+      category : category,
+      value    : initialQuery
+    });
+    SearchQuery.add(model);
+    var view = this.renderFacet(model);
+    dc.app.searcher.flags.outstandingSearch = true;
+    _.defer(function() {
+      view.enableEdit();
+      dc.app.searcher.flags.outstandingSearch = false;
+    }, 100);
+  },
 
   // Renders each facet as a searchFacet view.
   renderFacets : function() {
     this.$('.search_facets').empty();
     this.facetViews = [];
-    var facets = this.searchQuery.getFacets();
-    _.each(facets, _.bind(function(values, category) {
-      if (category == 'entities') {
-        console.log(['entities', values]);
+    SearchQuery.each(_.bind(function(facet) {
+      if (facet.get('category') == 'entities') {
+        console.log(['entities', facet]);
       } else {
-        _.each(values, _.bind(function(value) {
-          this.renderFacet(category, value);
-        }, this));
+        this.renderFacet(facet);
       }
     }, this));
   },
   
   // Render a single facet, using its category and query value.
-  renderFacet : function(category, facetQuery) {
+  renderFacet : function(facet) {
     var view = new dc.ui.SearchFacet({
-      category   : category,
-      facetQuery : dc.inflector.trim(facetQuery)
+      model : facet
     });
     
     this.facetViews.push(view);
@@ -210,14 +206,14 @@ dc.ui.SearchBox = Backbone.View.extend({
   doneSearching : function() {
     var count      = dc.app.paginator.query.total;
     var documents  = dc.inflector.pluralize('Document', count);
-    var searchType = this.searchQuery.searchType();
+    var searchType = SearchQuery.searchType();
     
     if (dc.app.searcher.flags.related) {
       this.titleBox.text(count + ' ' + documents + ' Related to "' + dc.inflector.truncate(dc.app.searcher.relatedDoc.get('title'), 100) + '"');
     } else if (dc.app.searcher.flags.specific) {
       this.titleBox.text(count + ' ' + documents);
     } else if (searchType == 'search') {
-      var quote  = this.searchQuery.has('project');
+      var quote  = SearchQuery.has('project');
       var suffix = ' in ' + (quote ? '“' : '') + this.titleBox.html() + (quote ? '”' : '');
       var prefix = count ? count + ' ' + dc.inflector.pluralize('Result', count) : 'No Results';
       this.titleBox.html(prefix + suffix);

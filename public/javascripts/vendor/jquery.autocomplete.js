@@ -620,6 +620,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			    $(target(event)).addClass(CLASSES.ACTIVE);            
 	        }
 		}).click(function(event) {
+		  console.log(['click autocomplete', event]);
 			$(target(event)).addClass(CLASSES.ACTIVE);
 			select();
 			if( options.inputFocus )

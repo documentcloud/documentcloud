@@ -1,45 +1,57 @@
-dc.app.SearchQuery = function(query, facets) {
-  this.query  = query;
-  this.facets = facets;
-};
-
-dc.app.SearchQuery.prototype = {
+dc.model.SearchQuery = Backbone.Collection.extend({
   
-  getFacets : function() {
-    return this.facets;
+  model : dc.model.SearchFacet,
+  
+  find : function(category) {
+    var facet = this.detect(function(facet) {
+      return facet.get('category') == category;
+    });
+    return facet && facet.get('value');
   },
   
-  has : function(facet) {
-    return this.facets[facet] && this.facets[facet].length;
+  count : function(category) {
+    // TODO: Underscore.js 1.1.6 has a _.count, which is faster than a _.select.
+    return this.select(function(facet) {
+      return facet.get('category') == category;
+    }).length;
   },
   
-  get : function(facet, defaultValue, index) {
-    if (!index) index = 0;
-    return (this.facets[facet] && this.facets[facet].length && this.facets[facet][index]) || defaultValue;
+  values : function(category) {
+    var facets = this.select(function(facet) {
+      return facet.get('category') == category;
+    });
+    return _.map(facets, function(facet) { return facet.get('value'); });
   },
   
-  all : function(facet) {
-    return (this.facets[facet] && this.facets[facet].length && this.facets[facet]) || [];
+  has : function(category) {
+    return this.any(function(facet) {
+      return facet.get('category') == category;
+    });
   },
   
   searchType : function() {
     var single   = false;
     var multiple = false;
     
-    _.each(this.facets, function(values, facet) {
-      if (values.length) {
+    this.each(function(facet) {
+      var category = facet.get('category');
+      var value    = facet.get('value');
+      
+      if (value) {
         if (!single && !multiple) {
-          single = facet;
+          single = category;
         } else {
           multiple = true;
           single = false;
         }
       }
     });
-    
+
     if (single == 'filter') {
-      return this.facets['filter'][0];
-    } else if (single) {
+      return this.get('value');
+    } else if (single == 'projectid') {
+      return 'project';
+    } else if (_.contains(['project', 'group', 'account'], single)) {
       return single;
     } else if (!single && !multiple) {
       return 'all';
@@ -48,4 +60,6 @@ dc.app.SearchQuery.prototype = {
     return 'search';
   }
   
-};
+});
+
+window.SearchQuery = new dc.model.SearchQuery();

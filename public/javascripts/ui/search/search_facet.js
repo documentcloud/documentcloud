@@ -2,16 +2,12 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   className : 'search_facet',
   
-  QUOTABLE_CATEGORIES : [
-    'project'
-  ],
-  
   events : {
     'click'                    : 'enableEdit',
     // 'focus input'              : 'enableEdit',
     'keypress input'           : 'maybeDisableEdit',
     'blur input'               : 'disableEdit',
-    'change input'             : 'disableEdit',
+    // 'change input'             : 'disableEdit',
     'mouseover .cancel_search' : 'showDelete',
     'mouseout .cancel_search'  : 'hideDelete',
     'click .cancel_search'     : 'remove'
@@ -25,8 +21,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   render : function() {
     var $el = this.$el = $(this.el);
     $el.html(JST['workspace/search_facet']({
-      category   : this.options.category,
-      facetQuery : this.options.facetQuery
+      model   : this.model
     }));
     
     this.setMode('not', 'editing');
@@ -37,10 +32,6 @@ dc.ui.SearchFacet = Backbone.View.extend({
     _.defer(_.bind(function() {
       this.box.autoGrowInput();
     }, this));
-    
-    if (this.options.facetQuery) {
-      this.committed = true;
-    }
     
     return this;
   },
@@ -60,33 +51,38 @@ dc.ui.SearchFacet = Backbone.View.extend({
         return value[0];
       }
     }).result(_.bind(function(e, values, data) {
-      console.log(['result facet', values, data]);
+      console.log(['autocomplete', values, data]);
       e.preventDefault();
-      this.set(values[0]);
+      this.set(values[0], e);
       return false;
     }, this));
   },
   
-  set : function(value) {
-    this.options.facetQuery = value;
+  set : function(value, e) {
+    console.log(['set facet', value, e, this.model]);
+    if (!value) return;
+    this.box.unautocomplete();
     this.render();
-    dc.app.searchBox.searchEvent();
+    if (this.model.get('value') != value) {
+      this.model.set({'value': value});
+      dc.app.searchBox.searchEvent(e);
+    }
   },
   
   enableEdit : function(e) {
-    console.log(['enableEdit', e, this.options.category]);
+    console.log(['enableEdit', e, this.model.get('category'), !this.$el.hasClass('is_editing')]);
     if (!this.$el.hasClass('is_editing')) {
       this.setMode('is', 'editing');
       this.setupAutocomplete();
       if (this.box.val() == '') {
-        this.box.val(this.options.facetQuery).focus().keyup();
+        this.box.val(this.model.get('value')).focus().click();
       }
       dc.app.searchBox.addFocus();
     }
   },
   
   maybeDisableEdit : function(e) {
-    console.log(['disableEdit', e.keyCode]);
+    console.log(['maybeDisableEdit', e.keyCode, this.box.val()]);
     if (e.keyCode == 13 && this.box.val()) { // Enter key
       this.disableEdit(e);
       dc.app.searchBox.searchEvent(e);
@@ -104,15 +100,10 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   disableEdit : function(e) {
     // e.preventDefault();
-    console.log(['disableEdit', e]);
+    console.log(['disableEdit', e, this.box.val()]);
     var newFacetQuery = this.box.val();
-    this.options.facetQuery = newFacetQuery;
-    this.setMode('not', 'editing');
-    dc.app.searchBox.removeFocus();
-    // this.box.unautocomplete();
-    if (this.options.facetQuery) {
-      this.committed = true;
-    }
+    this.set(newFacetQuery);
+    this.box.unautocomplete();
     if (!newFacetQuery) {
       this.remove();
     }
@@ -120,15 +111,16 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   remove : function(e) {
     console.log(['remove facet', e]);
-    this.$el.remove();
-    dc.app.searchBox.removeFacet(this);
-    if (this.committed) {
+    var committed = this.model.has('value');
+    SearchQuery.remove(this.model);
+    Backbone.View.prototype.remove.call(this);
+    if (committed) {
       dc.app.searchBox.searchEvent(e);
     }
   },
 
   autocompleteValues : function() {
-    var category = this.options.category;
+    var category = this.model.get('category');
     var values = [];
     
     if (category == 'account') {
@@ -136,27 +128,12 @@ dc.ui.SearchFacet = Backbone.View.extend({
     } else if (category == 'project') {
       values = Projects.pluck('title');
     } else if (category == 'filter') {
-      values = ['published', 'annotated', 'public'];
+      values = ['published', 'annotated'];
     } else if (category == 'access') {
       values = ['public', 'private', 'organization'];
     }
     
     return values;
-  },
-  
-  serialize : function() {
-    var category = this.options.category;
-    var query    = dc.inflector.trim(this.options.facetQuery);
-    
-    if (_.contains(this.QUOTABLE_CATEGORIES, category) && query) query = '"' + query + '"';
-    
-    if (category != 'text') {
-      category = category + ': ';
-    } else {
-      category = "";
-    }
-    
-    return category + query + ' ';
   },
   
   showDelete : function() {

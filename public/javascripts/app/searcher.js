@@ -67,7 +67,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   // Swap out project
   publicQuery : function() {
     var projects = [];
-    var projectNames = this.searchBox.searchQuery.all('project');
+    var projectNames = SearchQuery.values('project');
     _.each(projectNames, function(projectName) {
       projects.push(Projects.find(projectName));
     });
@@ -147,7 +147,8 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   },
 
   populateRelatedDocument : function() {
-    var id = parseInt(this.searchBox.searchQuery.get('related'), 10);
+    var relatedFacet = SearchQuery.find('related');
+    var id = parseInt(relatedFacet && relatedFacet.get('value'), 10);
     this.relatedDoc = Documents.get(id) || null;
   },
 

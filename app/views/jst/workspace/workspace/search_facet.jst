@@ -1,11 +1,11 @@
-<% if (category) { %>
-  <div class="search_facet_category"><%= category %>:</div>
+<% if (model.has('category')) { %>
+  <div class="search_facet_category"><%= model.get('category') %>:</div>
 <% } %>
 
 <div class="search_facet_input_container">
   <input type="text" class="search_facet_input interface" />
 </div>
 
-<div class="search_facet_query interface"><% if (facetQuery) { %><%= facetQuery %><% } %></div>
+<div class="search_facet_query interface"><% if (model.has('value')) { %><%= model.get('value') %><% } %></div>
 
 <div class="search_facet_remove icon cancel_search"></div>
