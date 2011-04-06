@@ -50,22 +50,22 @@ Place the embed code on your page, in the location where you would like the view
  
 ## Step 4: <span id="intouch">Stay in Touch</span>
 
-[Let us know][] about your reporting. Even if it is "just a little local story" -- we're interested in all the reporting you do with DocumentCloud.
+[Let us know][] about your reporting!
 
 # <span id="docset">Embedding a Document Set</span>
 
-Ever wanted to publish an entire set of documents related to your story? DocumentCloud can provide a short snippet of HTML that allows visitors to your site to search and filter through the tens or hundreds of documents that back up your article.
+If you'd rather embed a complete set of documents, DocumentCloud can provide the html to do that as well. Readers will be able to search or filter through as many documents as you'd like to share with them. 
 
-To get started, find a set of documents you wish to embed -- either by selecting one of your existing projects, or by running a search. Any set of documents that can be found by a search can also be embedded in this fashion. As documents are added to the project in the future, or new documents are uploaded that match your search, they'll become visible on your website within a few minutes.
+You can embed any set of documents, whether or not you uploaded them: any document that has already been published by their contributor will open to the URL at which it originally appeared.
 
-Open the "Publish" menu, and click on "Embed These Documents". You'll see a dialog appear, providing you with a couple of configuration options you can use to tweak the embed. You can:
+To get started, find a set of documents you wish to embed -- either by selecting a project or by running a search. **Note:** future public documents added to the project or matching the search criteria will be added to your embbedded document set. Open the "Publish" menu and select "Embed These Documents." You'll see a dialog which will allow you to configure the embedded set:
 
- * Configure the **title** displayed above the set of documents.
- * **Order** documents alphabetically, by date uploaded, by length, etc.
- * Set the number of documents to display **per page**. Depending on how tall and wide you wish the final embed to be, you may want to tweak this setting.
- * Show or hide a **search bar**, so that visitors to your site can filter and search through the set of documents.
+ * Provide a **title** to be displayed above the embedded set of documents;
+ * **Order** documents alphabetically, by date uploaded, or by length;
+ * Set the number of documents to display **per page** so that the embedded set suits the height and width of the space you have available; 
+ * Hide or reveal a **search bar**, that will allow your readers to search within the embedded set.
  
-Once you're comfortable with your settings, and have previewed the embedded documents, proceed to the next step, where you can copy and paste the embed code. It should look something like this:
+Preview the embedded document set, and you'll be able to copy and paste the embed code which should look something like this:
 
     <div id="DC-search-projectid-8-epa-flouride"></div>
     <script src="http://s3.documentcloud.org/embed/loader.js"></script>
@@ -80,11 +80,11 @@ Once you're comfortable with your settings, and have previewed the embedded docu
       });
     </script>
     
-Paste your code into a page on your website, and you'll see the set of documents appear.
+Paste this code into on your website, and you'll see the set of documents appear.
 
 <img src="/images/help/search_embed.png" class="full_line" />
 
-Clicking on a document will open it. If you've previously published the document on your website, we should have automatically detected it, and it will open there. If the document has not yet been published, it will open on DocumentCloud.org. If you're sure that you've published a document but it still opens on DocumentCloud.org, open the "Edit" menu, click "Published URL", and manually set the URL at which the document has been published.
+Selecting any document to open it. If you've previously published the document on your website, we should have automatically detected its URL, and it will open at that URL. If the document is public but has not yet been published, it will open on DocumentCloud.org. If you're sure that you've published a document but it still opens on DocumentCloud.org, open the "Edit" menu, click "Published URL", and manually set the URL at which the document has been published.
 
 Still have questions about publishing documents? Don't hesitate to [contact us][].
 
