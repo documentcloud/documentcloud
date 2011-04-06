@@ -1,16 +1,18 @@
 # Document Modification
 
-We don't tend to think of modifying source documents as something a responsible journalist would do, but there are absolutely times when you need to. Whether you're trying to protect the privacy of a minor by redacting personally identifying information from a foster care incident report, reorganizing a collection of letters or inserting a page that wasn't properly scanned, reporters do sometimes need to rework source documents to ready them for publication. That's why DocumentCloud provides tools for modifying documents. Open the document that needs correction, and look in sidebar specific tool you need.
+We don't tend to think of modifying source documents as something a responsible journalist would do, but there are absolutely times when you need to. Whether you're trying to protect the privacy of a minor by redacting personally identifying information from a foster care incident report, reorganizing a collection of letters or inserting a page that wasn't properly scanned, reporters do sometimes need to rework source documents to ready them for publication. That's why DocumentCloud provides tools for modifying documents. Open any document that needs correction, and look in sidebar specific tool you need.
 
 ## <span id="redactions">Redacting Documents</span>
 
-DocumentCloud is often used to analyze sensitive documents, and many of those documents contain names, phone numbers, social security numbers, or other personal information that must be redacted before publication.
+Not everything is appropriate for publication. <a href="http://media.apps.chicagotribune.com/docs/ct-met-dcfs-letters.html">Reports from a state foster care agency</a> might illustrate a story well, but such documents are also usually full of sensitive information like the full names of minor children or other personally identifying information. We expect  newsroom to use their own policies and judgement in determining what is and is not suitable for publication. 
 
-To get started, click **Redact this Document** under "Document Tools" in the sidebar. The cursor will turn into a crosshair. Browse the document, and draw black rectangular redactions over every passage you'd like to remove. When you're done redacting, click the "Save Redactions" button.
+When you do need to redact passages from a document, open the document in DocumentCloud and look for **Redact Document** in the sidebar; select the tool. Draw a redaction just as you'd draw an annotation: set the cursor at one corner and drag until you've drawn your rectangle over the full passage. 
 
 <img alt="screenshot of redaction process" src="/images/help/redact.jpg" class="full_line" />
 
-DocumentCloud will proceed to render new, redacted images for each page you've altered. The redacted images will undergo OCR, and the newly redacted text will be reinserted into the document. The original PDF file will also be rebuilt, with the original version of the page being replaced by the redacted version. At the end of the process, no trace of the redacted passage should remain on DocumentCloud.
+When you save your redactions, DocumentCloud will render new images and text information for each altered page. This means any corrections you have made to the text of a page will be lost when you save your redactions, though DocumentCloud won't touch pages you haven't redacted.
+
+The accompanying PDF of your document will also be rebuilt: the original page will be replaced with the redacted version. No trace of the redacted passage should remain in the document. Please do check your work, however!
 
 ## <span id="pagetools">Page Tools</span>
 
