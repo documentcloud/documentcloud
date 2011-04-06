@@ -2,6 +2,16 @@
 
 We don't tend to think of modifying source documents as something a responsible journalist would do, but there are absolutely times when you need to. Whether you're trying to protect the privacy of a minor by redacting personally identifying information from a foster care incident report, reorganizing a collection of letters or inserting a page that wasn't properly scanned, reporters do sometimes need to rework source documents to ready them for publication. That's why DocumentCloud provides tools for modifying documents. Open the document that needs correction, and look in sidebar specific tool you need.
 
+## <span id="redactions">Redacting Documents</span>
+
+DocumentCloud is often used to analyze sensitive documents, and many of those documents contain names, phone numbers, social security numbers, or other personal information that must be redacted before publication.
+
+To get started, click **Redact this Document** under "Document Tools" in the sidebar. The cursor will turn into a crosshair. Browse the document, and draw black rectangular redactions over every passage you'd like to remove. If you make a mistake and need to cancel the process, click the close **(x)** icon. When you're done redacting, click the "Save Redactions" button.
+
+<img alt="screenshot of redaction process" src="/images/help/redact.jpg" class="full_line" />
+
+DocumentCloud will proceed to render new, redacted images for each page you've altered. The redacted images will undergo OCR, and the newly redacted text will be reinserted into the document. The original PDF file will also be rebuilt, with the original version of the page being replaced by the redacted version. At the end of the process, no trace of the redacted passage should remain on DocumentCloud.
+
 ## <span id="pagetools">Page Tools</span>
 
 Within the pages tab of any document that you have permission to edit, you'll find page manipulation tools in the sidebar on the right-hand side. As you save changes to the pages, the document window will close so DocumentCloud can rebuild your document. Depending on the size of the document and the number of other jobs DocumentCloud is handling at the time, this can take a while. Any changes to a document will also be applied to the original PDF file.
