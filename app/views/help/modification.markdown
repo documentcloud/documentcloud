@@ -4,7 +4,7 @@ We don't tend to think of modifying source documents as something a responsible 
 
 ## <span id="redactions">Redacting Documents</span>
 
-Not everything is appropriate for publication. <a href="http://media.apps.chicagotribune.com/docs/ct-met-dcfs-letters.html">Reports from a state foster care agency</a> might illustrate a story well, but such documents are also usually full of sensitive information like the full names of minor children or other personally identifying information. We expect  newsroom to use their own policies and judgement in determining what is and is not suitable for publication. 
+Not everything is appropriate for publication. <a href="http://media.apps.chicagotribune.com/docs/ct-met-dcfs-letters.html">Reports from a state foster care agency</a> might illustrate a story well, but such documents are also usually full of sensitive information like the full names of minor children or other personally identifying information. We expect newsrooms to use their own policies and judgement in determining what is and is not suitable for publication. 
 
 When you do need to redact passages from a document, open the document in DocumentCloud and look for **Redact Document** in the sidebar; select the tool. Draw a redaction just as you'd draw an annotation: set the cursor at one corner and drag until you've drawn your rectangle over the full passage. 
 
