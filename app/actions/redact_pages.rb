@@ -100,9 +100,9 @@ class RedactPages < DocumentModBase
     page_numbers = @page_text.keys
     Page.destroy_all "document_id = #{document.id} and page_number in (#{page_numbers.join(',')})"
     rows = @page_text.map do |pair|
-      "(#{document.organization_id}, #{document.account_id}, #{document.id}, #{access}, #{pair[0]}, '#{PGconn.escape(pair[1])}')"
+      "(#{document.organization_id}, #{document.account_id}, #{document.id}, #{access}, #{pair[0]}, '#{PGconn.escape(pair[1])}', true)"
     end
-    Page.connection.execute "insert into pages (organization_id, account_id, document_id, access, page_number, text) values #{rows.join(",\n")};"
+    Page.connection.execute "insert into pages (organization_id, account_id, document_id, access, page_number, text, redacted) values #{rows.join(",\n")};"
   end
 
 end
