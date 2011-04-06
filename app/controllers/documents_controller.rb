@@ -209,7 +209,11 @@ class DocumentsController < ApplicationController
 
   def date_requested?
     return false unless params[:date]
-    date = Time.at(params[:date].to_i).to_date
+    begin
+      date = Time.at(params[:date].to_i).to_date
+    rescue RangeError => e
+      return false
+    end
     meta = current_document.entity_dates.first(:conditions => {:date => date})
     redirect_to current_document.document_viewer_url(:date => meta, :allow_ssl => true)
   end
