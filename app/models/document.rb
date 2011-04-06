@@ -265,7 +265,10 @@ class Document < ActiveRecord::Base
 
   # Reset the cached counter of public notes on the document.
   def reset_public_note_count
-    update_attributes :public_note_count => annotations.unrestricted.count
+    count = annotations.unrestricted.count
+    if count != self.public_note_count
+      update_attributes :public_note_count => count
+    end
   end
 
   # Return a hash of all the document's entities (for an API response).

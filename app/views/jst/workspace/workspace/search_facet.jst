@@ -3,9 +3,7 @@
 <% } %>
 
 <div class="search_facet_input_container">
-  <input type="text" class="search_facet_input interface" />
+  <input type="text" class="search_facet_input interface" value="<%= model.get('value') %>" />
 </div>
-
-<div class="search_facet_query interface"><% if (model.has('value')) { %><%= model.get('value') %><% } %></div>
 
 <div class="search_facet_remove icon cancel_search"></div>

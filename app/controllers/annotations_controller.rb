@@ -35,6 +35,7 @@ class AnnotationsController < ApplicationController
     attrs[:access] = DC::Access::ACCESS_MAP[attrs[:access].to_sym]
     anno.update_attributes(attrs)
     expire_page current_document.canonical_cache_path if current_document.cacheable?
+    anno.reset_public_note_count
     json anno
   end
 

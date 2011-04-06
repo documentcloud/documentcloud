@@ -212,18 +212,6 @@ div.text_input {
         padding: 0 0 0 13px;
         position: relative;
       }
-        div.text_input.search .search_facet.not_editing .search_facet_input_container {
-          display: none;
-        }
-        div.text_input.search .search_facet.is_editing .search_facet_input_container {
-          display: block;
-        }
-        div.text_input.search .search_facet.not_editing .search_facet_query {
-          display: block;
-        }
-        div.text_input.search .search_facet.is_editing .search_facet_query {
-          display: none;
-        }
         div.text_input.search .search_facet .search_facet_category {
           float: left;
           text-transform: uppercase;
@@ -234,27 +222,21 @@ div.text_input {
           padding: 9px 0 0 0;
           line-height: 14px;
         }
-        div.text_input.search .search_facet .search_facet_query {
-          float: left;
-          color: #999;
-          font-size: 13px;
-          line-height: 16px;
-          margin: 0;
-          padding: 6px 9px 7px 5px;
-          height: 16px;
-        }
         div.text_input.search .search_facet .search_facet_input_container {
           float: left;
         }
         div.text_input.search .search_facet .search_facet_input_container input {
           margin: 0;
           padding: 0;
-          color: #202020;
+          color: #999;
           font-size: 13px;
           line-height: 16px;
           padding: 6px 8px 7px 4px;
           height: 16px;
           width: auto;
+        }
+        div.text_input.search .search_facet.is_editing .search_facet_input_container input {
+          color: #202020;
         }
         div.text_input.search .search_facet .search_facet_remove {
           position: absolute;
@@ -268,8 +250,7 @@ div.text_input {
         div.text_input.search .search_facet.is_editing .search_facet_category {
           color: darkblue;
         }
-        div.text_input.search .search_facet.search_facet_maybe_delete .search_facet_category,
-        div.text_input.search .search_facet.search_facet_maybe_delete .search_facet_query {
+        div.text_input.search .search_facet.search_facet_maybe_delete .search_facet_category {
           color: darkred;
         }
       div.text_input.search input {

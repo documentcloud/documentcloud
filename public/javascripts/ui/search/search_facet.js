@@ -21,7 +21,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   render : function() {
     var $el = this.$el = $(this.el);
     $el.html(JST['workspace/search_facet']({
-      model   : this.model
+      model : this.model
     }));
     
     this.setMode('not', 'editing');
@@ -62,7 +62,6 @@ dc.ui.SearchFacet = Backbone.View.extend({
     console.log(['set facet', value, e, this.model]);
     if (!value) return;
     this.box.unautocomplete();
-    this.render();
     if (this.model.get('value') != value) {
       this.model.set({'value': value});
       dc.app.searchBox.searchEvent(e);
@@ -103,6 +102,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     console.log(['disableEdit', e, this.box.val()]);
     var newFacetQuery = this.box.val();
     this.set(newFacetQuery);
+    this.setMode('not', 'editing');
     this.box.unautocomplete();
     if (!newFacetQuery) {
       this.remove();
