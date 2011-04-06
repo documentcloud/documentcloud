@@ -195,18 +195,23 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     var modelId = this.viewer.api.getModelId();
     var redactions = dc.app.editor.annotationEditor.redactions;
     if (!redactions.length) return dc.app.editor.annotationEditor.close();
-    $.ajax({
-      url       : '/documents/' + modelId + '/redact_pages',
-      type      : 'POST',
-      data      : {redactions : JSON.stringify(redactions)},
-      dataType  : 'json',
-      success   : _.bind(function(resp) {
-        this.setOnParent(modelId, resp);
-        _.defer(dc.ui.Dialog.alert, "The pages are being redacted. Please close this document.", {
-          onClose : function(){ window.close(); }
-        });
-      }, this)
-    });
+    var message = "You've redacted " + redactions.length + " " +
+      dc.inflector.pluralize('passage', redactions.length) +
+      ". This document will close while it's being rebuilt. Are you sure you're ready to proceed?";
+    dc.ui.Dialog.confirm(message, _.bind(function() {
+      $.ajax({
+        url       : '/documents/' + modelId + '/redact_pages',
+        type      : 'POST',
+        data      : {redactions : JSON.stringify(redactions)},
+        dataType  : 'json',
+        success   : _.bind(function(resp) {
+          this.setOnParent(modelId, resp);
+          window.close();
+          _.defer(dc.ui.Dialog.alert, "The document is being redacted. Please close this document.");
+        }, this)
+      });
+      return true;
+    }, this));
   },
 
   setOnParent : function(doc, attrs) {
