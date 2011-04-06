@@ -8,12 +8,6 @@ class FullText < ActiveRecord::Base
 
   belongs_to :document
 
-  # Generate the highlighted excerpt of the full text for a given search phrase.
-  def self.highlights(documents, search_phrase)
-    sql = "select document_id, ts_headline('english', full_text.text, plainto_tsquery('#{search_phrase}'), 'minWords=50,maxWords=60,maxFragments=1') as highlight from full_text where full_text.document_id in (#{documents.map(&:id).join(',')})"
-    connection.select_all(sql).inject({}) {|h, res| h[res['document_id'].to_i] = res['highlight']; h }
-  end
-
   # The first 255 characters of the text.
   def summarize
     text[0...1000].gsub(/\s+/, ' ').mb_chars[0...255]

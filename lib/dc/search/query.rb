@@ -82,7 +82,7 @@ module DC
         @exclude_documents = o[:exclude_documents]
         needs_solr? ? run_solr : run_database
         populate_annotation_counts
-        populate_highlights if DC_CONFIG['include_highlights']
+        populate_mentions
         self
       end
 
@@ -92,11 +92,12 @@ module DC
       end
 
       # If we've got a full text search with results, we can get Postgres to
-      # generate the text highlights for our search results.
-      def populate_highlights
+      # generate the text mentions for our search results.
+      def populate_mentions
         return false unless has_text? and has_results?
-        highlights = FullText.highlights(@results, @text)
-        @results.each {|doc| doc.highlight = highlights[doc.id] }
+        @results.each do |doc|
+          doc.mentions = Page.mentions(doc, @text)
+        end
       end
 
       # Stash the number of notes per-document on the document models.

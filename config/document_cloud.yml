@@ -4,11 +4,6 @@ defaults: &defaults
   aws_zone:             us-east-1c
   preconfigured_ami_id: ami-22c4394b
 
-  # Include Postgres-generated highlights of the search query within the
-  # document results (too slow).
-  include_highlights:   off
-
-
 development:
   <<: *defaults
 

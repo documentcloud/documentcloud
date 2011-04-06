@@ -4,7 +4,7 @@ class Document < ActiveRecord::Base
 
   # Accessors and constants:
 
-  attr_accessor :highlight, :annotation_count, :hits
+  attr_accessor :mentions, :annotation_count, :hits
   attr_writer   :organization_name, :organization_slug, :account_name, :account_slug
 
   SEARCHABLE_ATTRIBUTES = [:title, :description, :source, :account, :group]
@@ -642,7 +642,7 @@ class Document < ActiveRecord::Base
       :slug                => slug,
       :source              => source,
       :description         => description,
-      :highlight           => highlight,
+      :mentions            => mentions,
       :organization_name   => organization_name,
       :organization_slug   => organization_slug,
       :account_name        => account_name,

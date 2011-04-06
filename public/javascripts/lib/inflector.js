@@ -37,6 +37,11 @@ dc.inflector = {
     return s.trim ? s.trim() : s.replace(/^\s+|\s+$/g, '');
   },
 
+  // Remove runs of whitespace.
+  squeeze : function(s) {
+    return s.replace(/\s+/g, ' ');
+  },
+
   // Trim leading and trailing non-whitespace characters, and add ellipses.
   // Try to find natural breaks in the sentence, and avoid breaking HTML fragments.
   trimExcerpt : function(s) {

@@ -31,5 +31,20 @@
     <% } %>
   </span>
 </div>
+<% if (mentions && mentions.length) { %>
+  <div class="mentions">
+    <% _.each(mentions, function(mention) { %>
+      <div class="page" data-page="<%= mention.page %>">
+        <div class="page_icon">
+          <img class="page_image" alt="page <%= mention.page %>" src="<%= model.pageThumbnailURL(mention.page) %>" />
+          <div class="page_number">p. <%= mention.page %></div>
+        </div>
+        <div class="page_excerpt noselect"><%= dc.inflector.trimExcerpt(dc.inflector.squeeze(mention.excerpt)) %></div>
+        <div class="clear"></div>
+      </div>
+    <% }); %>
+    <div class="clear"></div>
+  </div>
+<% } %>
 <div class="notes"></div>
 <div class="pages"></div>

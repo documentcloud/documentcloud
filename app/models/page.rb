@@ -55,6 +55,22 @@ class Page < ActiveRecord::Base
     end
   end
 
+  # Generate the highlighted excerpt of the page text for a given search phrase.
+  def self.mentions(doc, search_phrase, limit=3)
+    search = PGconn.escape(search_phrase)
+    sql = <<-EOS
+      select page_number as page,
+        ts_headline('english', text, plainto_tsquery('#{search}'),
+        'startsel="<span class=""occurrence"">",stopsel=</span>,minwords=30,maxwords=50,maxfragments=1') as excerpt
+        from pages
+        where document_id = #{doc.id}
+        and text @@ plainto_tsquery('#{search}')
+        order by page_number
+        limit #{limit}
+    EOS
+    connection.select_all(sql)
+  end
+
   def contains?(occurrence)
     start_offset <= occurrence.offset && end_offset > occurrence.offset
   end
