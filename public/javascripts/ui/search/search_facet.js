@@ -99,14 +99,13 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   disableEdit : function(e) {
     // e.preventDefault();
-    console.log(['disableEdit', e, this.box.val()]);
-    var newFacetQuery = this.box.val();
-    this.set(newFacetQuery);
-    this.setMode('not', 'editing');
-    this.box.unautocomplete();
-    if (!newFacetQuery) {
-      this.remove();
-    }
+    _.defer(_.bind(function() {
+      console.log(['disableEdit', e, this.box.val()]);
+      var newFacetQuery = this.box.val();
+      this.set(newFacetQuery);
+      this.setMode('not', 'editing');
+      this.box.unautocomplete();
+    }, this));
   },
   
   remove : function(e) {

@@ -262,7 +262,7 @@
       var options = $.extend({}, {
         maxWidth: 1000,
         minWidth: 1,
-        comfortZone: 4
+        comfortZone: 10
       }, opts);
       
       this.filter('input:text').each(function() {
@@ -283,7 +283,7 @@
         });
         
         var check = function() {
-          // console.log(['check input size', input.val(), val]);
+          console.log(['check input size', input.val(), val]);
           if (val === (val = input.val())) return;
         
           // Enter new content into testSubject
@@ -303,7 +303,7 @@
                                (newWidth > minWidth && newWidth < options.maxWidth);
         
           // Animate width
-          // console.log(['Grow width', isValidWidthChange, testerWidth, currentWidth, newWidth]);
+          console.log(['Grow width', isValidWidthChange, testerWidth, currentWidth, newWidth]);
           if (isValidWidthChange) {
             input.width(newWidth);
           }
