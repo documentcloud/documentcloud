@@ -8,8 +8,9 @@ class LifecycleMailer < ActionMailer::Base
   # set their password, and log in.
   def login_instructions(account, admin=nil)
     subject     "Welcome to DocumentCloud"
-    from        [admin && admin.email, SUPPORT].compact
-    recipients  [account.email]
+    from        SUPPORT
+    recipients  account.email
+    cc          admin.email if admin
     body        :admin              => admin,
                 :account            => account,
                 :key                => account.security_key.key,
@@ -24,8 +25,9 @@ class LifecycleMailer < ActionMailer::Base
     else
       subject   "Review #{documents.count} documents on DocumentCloud"
     end
-    from        ["#{inviter_account.full_name} <#{inviter_account.email}>", "DocumentCloud <#{SUPPORT}>"]
-    recipients  [reviewer_account.email] if reviewer_account
+    from        SUPPORT
+    recipients  reviewer_account.email if reviewer_account
+    cc          inviter_account.email
     body        :documents            => documents,
                 :key                  => key,
                 :organization_name    => documents[0].account.organization_name,
@@ -60,7 +62,7 @@ class LifecycleMailer < ActionMailer::Base
     params.delete(:password) if params
     subject     "DocumentCloud exception (#{Rails.env}): #{error.class.name}"
     from        NO_REPLY
-    recipients  [SUPPORT]
+    recipients  SUPPORT
     body        :params => params, :error => error
   end
 
@@ -69,7 +71,7 @@ class LifecycleMailer < ActionMailer::Base
   def documents_finished_processing(account, document_count)
     subject     "Your documents are ready"
     from        SUPPORT
-    recipients  [account.email]
+    recipients  account.email
     body        :account  => account,
                 :count    => document_count
   end
@@ -78,7 +80,7 @@ class LifecycleMailer < ActionMailer::Base
   def account_and_document_csvs
     subject       "Accounts (CSVs)"
     from          NO_REPLY
-    recipients    ['amanda@documentcloud.org']
+    recipients    'amanda@documentcloud.org'
     content_type  "multipart/mixed"
 
     part :content_type => "text/plain",
@@ -98,7 +100,7 @@ class LifecycleMailer < ActionMailer::Base
   def logging_email(email_subject, args)
     subject       email_subject
     from          NO_REPLY
-    recipients    [SUPPORT]
+    recipients    SUPPORT
     body          :args => args,
                   :line => line
   end
