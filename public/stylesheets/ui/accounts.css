@@ -87,8 +87,8 @@
       margin-right: 20px;
     }
 .account_list .role .display {
-  font: italic 10px/18px Arial;
-  color: #333;
+  font: 11px/18px Arial;
+  color: #777;
 }
 .account_list .controls_wrapper {
   min-width: 100px;
