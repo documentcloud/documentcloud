@@ -2,7 +2,7 @@
 
 Someone (probably you) asked to reset your DocumentCloud password. You can use the link below to do just that:
 
-<%= DC.server_root(:ssl => false) %>/accounts/enable/<%= @key %>
+<%= DC.server_root(:force_ssl => true) %>/accounts/enable/<%= @key %>
 
 Enjoy,
 
