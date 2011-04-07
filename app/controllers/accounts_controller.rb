@@ -53,6 +53,8 @@ class AccountsController < ApplicationController
       account = current_organization.accounts.create(attributes)
     elsif account.reviewer?
       account.upgrade_reviewer_to_real(current_organization, attributes[:role])
+    else
+      return json(nil, 409)
     end
     account.send_login_instructions(current_account) if account.valid? && account.pending?
     json account
