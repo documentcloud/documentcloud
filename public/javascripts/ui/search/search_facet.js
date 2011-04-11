@@ -6,7 +6,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     'click'                    : 'enableEdit',
     // 'focus input'              : 'enableEdit',
     'keypress input'           : 'maybeDisableEdit',
-    'blur input'               : 'disableEdit',
+    'blur input'               : 'deferDisableEdit',
     // 'change input'             : 'disableEdit',
     'mouseover .cancel_search' : 'showDelete',
     'mouseout .cancel_search'  : 'hideDelete',
@@ -31,6 +31,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     // This is defered so it can be attached to the DOM to get the correct font-size.
     _.defer(_.bind(function() {
       this.box.autoGrowInput();
+      this.box.bind('autogrow:updated', _.bind(this.moveAutocomplete, this));
     }, this));
     
     return this;
@@ -39,29 +40,34 @@ dc.ui.SearchFacet = Backbone.View.extend({
   setupAutocomplete : function() {
     var data = this.autocompleteValues();
     
-    this.box.autocomplete(data, {
-      width     : 200,
-      minChars  : 0,
-      autoFill  : true,
-      clickFire : true,
-      formatItem : function(values, i, n) {
-        return values.length == 2 ? values[1] : values[0];
-      },
-      formatResult : function(value) {
-        return value[0];
-      }
-    }).result(_.bind(function(e, values, data) {
-      console.log(['autocomplete', values, data]);
-      e.preventDefault();
-      this.set(values[0], e);
-      return false;
-    }, this));
+    this.box.autocomplete({
+      source    : data,
+      minLength : 0,
+      delay     : 0,
+      select    : _.bind(function(e, ui) {
+        console.log(['autocomplete', e, ui]);
+        e.preventDefault();
+        this.set(ui.value, e);
+        return false;
+      }, this)
+    });
+  },
+  
+  moveAutocomplete : function() {
+    var $active = $('#ui-active-menuitem');
+    console.log(['moving', $active.length, this.box.data('autocomplete').menu.element]);
+    this.box.data('autocomplete').menu.element.position({
+      my: "left top",
+      at: "left bottom",
+      of: this.box.data('autocomplete').element,
+      collision: "none"
+    });
   },
   
   set : function(value, e) {
-    console.log(['set facet', value, e, this.model]);
+    console.log(['set facet', value, this.model.get('value'), this.model]);
     if (!value) return;
-    this.box.unautocomplete();
+    // this.box.data('autocomplete').close();
     if (this.model.get('value') != value) {
       this.model.set({'value': value});
       dc.app.searchBox.searchEvent(e);
@@ -78,6 +84,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       }
       dc.app.searchBox.addFocus();
     }
+    this.box.trigger('update');
   },
   
   maybeDisableEdit : function(e) {
@@ -97,15 +104,18 @@ dc.ui.SearchFacet = Backbone.View.extend({
     }
   },
   
+  deferDisableEdit : function(e) {
+    console.log(['deferDisableEdit', e]);
+    _.defer(_.bind(this.disableEdit, this, e));
+  },
+  
   disableEdit : function(e) {
     // e.preventDefault();
-    _.defer(_.bind(function() {
-      console.log(['disableEdit', e, this.box.val()]);
-      var newFacetQuery = this.box.val();
-      this.set(newFacetQuery);
-      this.setMode('not', 'editing');
-      this.box.unautocomplete();
-    }, this));
+    console.log(['disableEdit', e, this.box.val()]);
+    var newFacetQuery = this.box.val();
+    this.set(newFacetQuery);
+    this.setMode('not', 'editing');
+    // this.box.data('autocomplete').close();
   },
   
   remove : function(e) {
@@ -123,7 +133,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     var values = [];
     
     if (category == 'account') {
-      values = Accounts.map(function(a) { return [a.get('slug'), a.fullName()]; });
+      values = Accounts.map(function(a) { return {value: a.get('slug'), label: a.fullName()}; });
     } else if (category == 'project') {
       values = Projects.pluck('title');
     } else if (category == 'filter') {

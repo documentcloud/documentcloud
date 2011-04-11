@@ -115,16 +115,15 @@ label {
     float: right;
     margin: 3px 29px 0 6px;
   }
-  #search_category_selector {
-    float: left;
-    margin: 3px 0 0 29px;
-  }
   #search_box_wrapper {
-    margin: 0 100px 30px 142px;
+    margin: 0 100px 30px 30px;
     cursor: text;
   }
     #search_box {
       width: 10px;
+    }
+    #search_box_wrapper .menu_content {
+      z-index: 100;
     }
   #title_box {
     text-align: center;
@@ -133,18 +132,18 @@ label {
     padding: 14px 30px 20px;
   }
 
-.ac_results {
+.ui-autocomplete {
   border: 1px solid #C0C0C0;
   background-color: #F6F6F6;
   cursor: pointer;
   z-index: 10000;
+  width: 120px;
 }
-  .ac_results ul {
-  }
-  .ac_results li {
+  .ui-autocomplete .ui-menu-item a {
+    display: block;
     padding: 4px 3px;
   }
-  .ac_results .ac_over {
+  .ui-autocomplete .ui-menu-item .ui-state-hover {
     background-color: #2A61CD;
     color: white;
   }

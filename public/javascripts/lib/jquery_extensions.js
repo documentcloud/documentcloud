@@ -306,13 +306,14 @@
           // console.log(['Grow width', isValidWidthChange, testerWidth, currentWidth, newWidth]);
           if (isValidWidthChange) {
             input.width(newWidth);
+            input.trigger('autogrow:updated');
           }
         
         };
         
         testSubject.insertAfter(input);
         
-        $(this).bind('keyup keydown blur focus update', check);
+        input.bind('keyup keydown blur focus update', check);
         check();
         
       });

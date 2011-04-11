@@ -31,7 +31,7 @@ dc.app.SearchParser = {
         value    = field.replace(this.FIELD, '').replace(/(^['"]|['"]$)/g, '');
         query    = dc.inflector.trim(query.replace(field, ''));
       }
-      console.log(['extractAllFacets', query, category, value, field]);
+      // console.log(['extractAllFacets', query, category, value, field]);
       if (category && value) {
           var searchFacet = new dc.model.SearchFacet({
             category : category,
@@ -53,7 +53,7 @@ dc.app.SearchParser = {
   extractSearchText : function(query) {
     query = query || '';
     var text = dc.inflector.trim(query.replace(this.ALL_FIELDS, ''));
-    console.log(['extractSearchText', query, text]);
+    // console.log(['extractSearchText', query, text]);
     return text;
   },
 

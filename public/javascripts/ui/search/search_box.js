@@ -19,6 +19,7 @@ dc.ui.SearchBox = Backbone.View.extend({
               'group', 'access', 'related', 'projectid'],
 
   events : {
+    'click .search_glyph'       : 'showFacetCategoryMenu',
     'keypress #search_box'      : 'maybeSearch',
     // 'search #search_box'        : 'searchEvent',
     'focus #search_box'         : 'addFocus',
@@ -40,26 +41,28 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.box      = this.$('#search_box');
     this.titleBox = this.$('#title_box_inner');
     $(document.body).setMode('no', 'search');
-    this.box.autocomplete(this.PREFIXES, {
-      width     : 100,
-      minChars  : 1
-    }).result(_.bind(function(e, data, formatted) {
-      e.preventDefault();
-      this.addFacet(formatted);
-      return false;
-    }, this));
+    // this.box.autocomplete(this.PREFIXES, {
+    //   width     : 100,
+    //   minChars  : 1
+    // }).result(_.bind(function(e, data, formatted) {
+    //   e.preventDefault();
+    //   this.addFacet(formatted);
+    //   return false;
+    // }, this));
     
     // This is defered so it can be attached to the DOM to get the correct font-size.
     _.defer(_.bind(function() {
       this.box.autoGrowInput();
     }, this));
-    
-    this.createFacetCategoryMenu();
-    
+        
     return this;
   },
   
-  createFacetCategoryMenu : function() {
+  showFacetCategoryMenu : function() {
+    if (this.facetCategoryMenu && this.facetCategoryMenu.modes.open == 'is') {
+      return this.facetCategoryMenu.close();
+    }
+    
     var items = [
       {title: 'Account', onClick: _.bind(this.addFacet, this, 'account', '')},
       {title: 'Project', onClick: _.bind(this.addFacet, this, 'project', '')},
@@ -67,12 +70,12 @@ dc.ui.SearchBox = Backbone.View.extend({
       {title: 'Access', onClick: _.bind(this.addFacet, this, 'access', '')}
     ];
     
-    var menu = new dc.ui.Menu({
-      label   : 'Everything',
-      items   : items
-    });
+    var menu = this.facetCategoryMenu || (this.facetCategoryMenu = new dc.ui.Menu({
+      items       : items,
+      standalone  : true
+    }));
     
-    this.$('#search_category_selector').append(menu.render().el);
+    this.$('.search_glyph').after(menu.render().open().content);
   },
   
   // Shortcut to the searchbox's value.
@@ -85,7 +88,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     var query = SearchQuery.map(function(facet) {
       return facet.serialize();
     }).join(' ');
-
+    console.log(['getQuery', query, this.facetViews]);
     query += ' ' + this.box.val();
     
     return query;
