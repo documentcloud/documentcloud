@@ -17,24 +17,29 @@ dc.app.SearchParser = {
   
   extractAllFacets : function(query) {
     var facets = [];
+    var count = 0;
     
     while (query) {
       var category, value;
       var field = this.extractFirstField(query);
       if (!field) {
         category = 'text';
-        value = this.extractSearchText(field);
-        query = dc.inflector.trim(query.replace(searchText, ''));
+        value = this.extractSearchText(query);
+        query = dc.inflector.trim(query.replace(value, ''));
       } else {
         category = field.match(this.FIELD)[1];
         value    = field.replace(this.FIELD, '').replace(/(^['"]|['"]$)/g, '');
         query    = dc.inflector.trim(query.replace(field, ''));
       }
-      var searchFacet = new dc.model.SearchFacet({
-        category : category,
-        value    : value
-      });
-      facets.push(searchFacet);
+      console.log(['extractAllFacets', query, category, value, field]);
+      if (category && value) {
+          var searchFacet = new dc.model.SearchFacet({
+            category : category,
+            value    : value
+          });
+          facets.push(searchFacet);
+      }
+      if (count++ > 5) break;
     }
     
     return facets;
@@ -48,6 +53,7 @@ dc.app.SearchParser = {
   extractSearchText : function(query) {
     query = query || '';
     var text = dc.inflector.trim(query.replace(this.ALL_FIELDS, ''));
+    console.log(['extractSearchText', query, text]);
     return text;
   },
 

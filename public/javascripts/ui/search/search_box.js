@@ -115,12 +115,13 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
 
   showDocuments : function() {
-    $(document.body).setMode('active', 'search');
-    var query = this.value();
-    var title = dc.model.DocumentSet.entitle(query);
-    this.titleBox.html(title);
+    var query       = this.value();
+    var title       = dc.model.DocumentSet.entitle(query);
     var projectName = SearchQuery.find('project');
-    var groupName = SearchQuery.find('group');
+    var groupName   = SearchQuery.find('group');
+
+    $(document.body).setMode('active', 'search');
+    this.titleBox.html(title);
     dc.app.organizer.highlight(projectName, groupName);
   },
 
@@ -137,7 +138,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Callback fired on key press in the search box. We search when they hit
   // return.
   maybeSearch : function(e) {
-    console.log(['box key', e.keyCode, dc.app.hotkeys.key(e)]);
+    // console.log(['box key', e.keyCode, dc.app.hotkeys.key(e)]);
     if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') {
       return this.searchEvent(e);
     }
@@ -166,7 +167,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.box.val('');
     var model = new dc.model.SearchFacet({
       category : category,
-      value    : initialQuery
+      value    : initialQuery || ''
     });
     SearchQuery.add(model);
     var view = this.renderFacet(model);
