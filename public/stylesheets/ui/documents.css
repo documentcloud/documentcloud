@@ -189,28 +189,17 @@
     position: relative;
     margin-right: -45px;
   }
-.document .mentions {
-  margin-top: 20px;
-}
 .document .pages_header, .document .mentions_header {
   position: relative;
   line-height: 18px;
   padding-left: 20px;
-  margin: 20px 10px 15px 0;
+  margin: 20px 10px 12px 0;
 }
-  .document .page_list .pages_header {
-    margin: 20px 10px 12px 0;
+  .document .pages_title, .document .mentions_title {
+    font-size: 11px;
+    color: #333;
+    margin-right: 15px;
   }
-  .document .pages_title {
-    font-weight: bold;
-    font-size: 13px;
-    margin-right: 18px;
-  }
-    .document .page_list .pages_title {
-      font-size: 11px;
-      font-weight: normal;
-      color: #333;
-    }
     .document .pages_only {
       color: #000;
     }

@@ -31,20 +31,32 @@
     <% } %>
   </span>
 </div>
-<% if (mentions && mentions.length) { %>
-  <div class="mentions">
-    <% _.each(mentions, function(mention) { %>
-      <div class="page" data-page="<%= mention.page %>">
-        <div class="page_icon">
-          <img class="page_image" alt="page <%= mention.page %>" src="<%= model.pageThumbnailURL(mention.page) %>" />
-          <div class="page_number">p. <%= mention.page %></div>
-        </div>
-        <div class="page_excerpt noselect"><%= dc.inflector.trimExcerpt(dc.inflector.squeeze(mention.excerpt)) %></div>
-        <div class="clear"></div>
-      </div>
-    <% }); %>
-    <div class="clear"></div>
-  </div>
-<% } %>
 <div class="notes"></div>
-<div class="pages"></div>
+<div class="pages">
+  <% if (mentions && mentions.length) { %>
+    <% var count = mentions[0].count; %>
+    <div class="mentions">
+      <div class="mentions_header">
+        <span class="icon cancel_search" title="hide pages"></span>
+        <span class="mentions_title interface"><b><%= mentions.length %></b>
+        <%= count > mentions.length ? "of " + count : "" %>
+        <%= dc.inflector.pluralize('page', mentions.length) %>
+        mentioning &ldquo;<%= dc.app.searchBox.value() %>&rdquo;</span>
+        <% if (count > mentions.length) { %>
+          <span class="text_link show_mentions">Show all <%= count %> pages</span>
+        <% } %>
+      </div>
+      <% _.each(mentions, function(mention) { %>
+        <div class="page" data-page="<%= mention.page %>">
+          <div class="page_icon">
+            <img class="page_image" alt="page <%= mention.page %>" src="<%= model.pageThumbnailURL(mention.page) %>" />
+            <div class="page_number">p. <%= mention.page %></div>
+          </div>
+          <div class="page_excerpt noselect"><%= dc.inflector.trimExcerpt(dc.inflector.squeeze(mention.excerpt)) %></div>
+          <div class="clear"></div>
+        </div>
+      <% }); %>
+      <div class="clear"></div>
+    </div>
+  <% } %>
+</div>
