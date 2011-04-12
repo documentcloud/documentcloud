@@ -67,12 +67,13 @@ class Page < ActiveRecord::Base
     conds   = ["document_id = ? and text ~* ?", doc.id, psqlre]
     pages   = Page.all(:conditions => conds, :order => 'page_number asc', :limit => limit)
     count   = Page.count(:conditions => conds)
-    pages.map {|p| {:page => p.page_number, :excerpt => p.excerpt(rubyre), :count => count} }
+    pages.map {|p| {:page => p.page_number, :excerpt => p.excerpt(rubyre), :count => count} }.select {|p| p[:excerpt] }
   end
 
   def excerpt(regex, context=150)
     utf     =  text.mb_chars
     match   =  utf.match(regex)
+    return nil unless match
     excerpt =  match.pre_match.length >= context ? match.pre_match[-context..-1] : match.pre_match
     excerpt += "<span class=\"occurrence\">#{ match.to_s }</span>"
     excerpt += match.post_match.length >= context ? match.post_match[0..context] : match.post_match

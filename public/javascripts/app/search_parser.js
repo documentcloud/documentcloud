@@ -10,9 +10,21 @@ dc.app.SearchParser = {
 
   ALL_ENTITIES      : /(city|country|term|state|person|place|organization|email|phone):\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
 
-  parse : function(query) {
-    var searchFacets = this.extractAllFacets(query);
-    SearchQuery.refresh(searchFacets);
+  ALL_FIELDS        : /\w+:\s?(('.+?'|".+?")|([^'"]{2}\S*))/g,
+
+  FIRST_FILTER      : /filter:\s*(\w+)/i,
+
+  PROJECT_QUERY     : /project(id)?:/,
+
+  WHITESPACE_ONLY   : /^\s*$/,
+
+  extractText : function(query) {
+    return dc.inflector.trim(query.replace(this.ALL_FIELDS, ''));
+  },
+
+  extractProject : function(query) {
+    var project = query.match(this.FIRST_PROJECT);
+    return project && (project[2] || project[3] || project[4]);
   },
   
   extractAllFacets : function(query) {
