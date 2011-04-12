@@ -418,12 +418,14 @@ dc.ui.Document = Backbone.View.extend({
   // Clicking on either a page thumbnail or an entity in the document tile opens
   // up the document viewer, set to that page or entity.
   _openPage : function(e) {
-    var el      = $(e.target).closest('.page');
-    var page    = el.attr('data-page');
-    var id      = el.attr('data-id');
-    var offset  = el.attr('data-offset');
-    if (id) {
-      window.open(this.model.viewerUrl() + "?entity=" + id + '&page=' + page + '&offset=' + offset);
+    var el   = $(e.target).closest('.page');
+    var page = el.attr('data-page');
+    var id   = el.attr('data-id');
+    if (el.hasClass('mention')) {
+      var text = el.find('.occurrence').text();
+      this.model.openViewer('#search/p' + page + '/' + encodeURIComponent(text));
+    } else if (id) {
+      window.open(this.model.viewerUrl() + "?entity=" + id + '&page=' + page + '&offset=' + el.attr('data-offset'));
     } else {
       this.model.openViewer('#document/p' + page);
     }

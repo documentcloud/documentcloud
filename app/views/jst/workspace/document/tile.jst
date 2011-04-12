@@ -34,7 +34,7 @@
 <div class="notes"></div>
 <div class="pages">
   <% if (mentions && mentions.length) { %>
-    <% var query = dc.app.SearchParser.extractText(dc.app.searchBox.value()); %>
+    <% var query = dc.app.searcher.queryText(); %>
     <%= JST['document/mentions']({mentions: mentions, query: query, model: model}) %>
   <% } %>
 </div>

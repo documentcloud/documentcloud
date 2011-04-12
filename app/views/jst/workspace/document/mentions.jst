@@ -11,7 +11,7 @@
     <% } %>
   </div>
   <% _.each(mentions, function(mention) { %>
-    <div class="page" data-page="<%= mention.page %>">
+    <div class="page mention" data-page="<%= mention.page %>">
       <div class="page_icon">
         <img class="page_image" alt="page <%= mention.page %>" src="<%= model.pageThumbnailURL(mention.page) %>" />
         <div class="page_number">p. <%= mention.page %></div>

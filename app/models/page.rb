@@ -58,12 +58,20 @@ class Page < ActiveRecord::Base
 
   # Generate the highlighted excerpt of the page text for a given search phrase.
   def self.mentions(doc_id, search_phrase, limit=3)
-    phrases = search_phrase.scan(QUOTED_VALUE).map {|r| r[1] }
-    words   = search_phrase.gsub(QUOTED_VALUE, '').split(/\s+/)
-    phrases.unshift words.join('\\s+') if words.any?
+
+    # Pull out all the quoted phrases, and regexp escape them.
+    phrases = search_phrase.scan(QUOTED_VALUE).map {|r| Regexp.escape(r[1]) }
+    # Pull out all the bare words, and regexp escape them.
+    words   = search_phrase.gsub(QUOTED_VALUE, '').split(/\s+/).map {|w| Regexp.escape(w) }
+    # Create a preferential finder for the bare-words-as-quoted-phrase-case.
+    phrases.unshift words.join('\\s+') if words.length > 1
+    # Get the array of all possible matches for the FTS search.
     parts   = phrases + words
+    # Build the PSQL version of the regex.
     psqlre  = "(" + parts.map {|part| "\\m#{part}\\M" }.join('|') + ")"
-    rubyre  = /(#{ parts.map {|part| "#{part}" }.join('|') })/i
+    # Build the Ruby version of the regex.
+    rubyre  = /(#{ parts.map {|part| "#{part}(?![a-z0-9])" }.join('|') })/i
+
     conds   = ["document_id = ? and text ~* ?", doc_id, psqlre]
     pages   = Page.all(:conditions => conds, :order => 'page_number asc', :limit => limit)
     count   = Page.count(:conditions => conds)

@@ -77,6 +77,10 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     return query;
   },
 
+  queryText : function() {
+    return dc.app.SearchParser.extractText(this.box.value());
+  },
+
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
     dc.app.navigation.open('search');
