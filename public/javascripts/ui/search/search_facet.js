@@ -47,15 +47,13 @@ dc.ui.SearchFacet = Backbone.View.extend({
       select    : _.bind(function(e, ui) {
         console.log(['autocomplete', e, ui]);
         e.preventDefault();
-        this.set(ui.value, e);
+        this.set(ui.item.value, e);
         return false;
       }, this)
     });
   },
   
   moveAutocomplete : function() {
-    var $active = $('#ui-active-menuitem');
-    console.log(['moving', $active.length, this.box.data('autocomplete').menu.element]);
     this.box.data('autocomplete').menu.element.position({
       my: "left top",
       at: "left bottom",
@@ -65,10 +63,10 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   set : function(value, e) {
-    console.log(['set facet', value, this.model.get('value'), this.model]);
     if (!value) return;
     // this.box.data('autocomplete').close();
     if (this.model.get('value') != value) {
+      console.log(['set facet', value, this.model.get('value'), this.model]);
       this.model.set({'value': value});
       dc.app.searchBox.searchEvent(e);
     }
@@ -80,8 +78,9 @@ dc.ui.SearchFacet = Backbone.View.extend({
       this.setMode('is', 'editing');
       this.setupAutocomplete();
       if (this.box.val() == '') {
-        this.box.val(this.model.get('value')).focus().click();
+        this.box.val(this.model.get('value'));
       }
+      this.box.focus().click();
       dc.app.searchBox.addFocus();
     }
     this.box.trigger('update');
@@ -106,7 +105,11 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   deferDisableEdit : function(e) {
     console.log(['deferDisableEdit', e]);
-    _.defer(_.bind(this.disableEdit, this, e));
+    _.delay(_.bind(function() {
+      if (!this.box.is(':focus')) {
+        this.disableEdit(e);
+      }
+    }, this), 250);
   },
   
   disableEdit : function(e) {
@@ -115,7 +118,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     var newFacetQuery = this.box.val();
     this.set(newFacetQuery);
     this.setMode('not', 'editing');
-    // this.box.data('autocomplete').close();
+    this.box.data('autocomplete').close();
   },
   
   remove : function(e) {

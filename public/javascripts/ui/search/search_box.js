@@ -41,6 +41,18 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.box      = this.$('#search_box');
     this.titleBox = this.$('#title_box_inner');
     $(document.body).setMode('no', 'search');
+    
+    this.box.autocomplete({
+      source    : this.PREFIXES,
+      minLength : 1,
+      delay     : 50,
+      select    : _.bind(function(e, ui) {
+        console.log(['autocomplete', e, ui]);
+        e.preventDefault();
+        this.addFacet(ui.item.value);
+        return false;
+      }, this)
+    });
     // this.box.autocomplete(this.PREFIXES, {
     //   width     : 100,
     //   minChars  : 1
@@ -167,6 +179,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
     
   addFacet : function(category, initialQuery) {
+    console.log(['addFacet', category, initialQuery]);
     this.box.val('');
     var model = new dc.model.SearchFacet({
       category : category,

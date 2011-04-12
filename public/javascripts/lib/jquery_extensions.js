@@ -406,4 +406,9 @@
     }
   };
 
+  // Add :focus psuedo-selector. $('input:focus') and $('input').is(':focus')
+  jQuery.expr[':'].focus = function(elem) {
+    return elem === document.activeElement && (elem.type || elem.href);
+  };
+
 })(jQuery);
