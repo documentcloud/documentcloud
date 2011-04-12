@@ -15,7 +15,7 @@
 <% if (pageCount) { %>
   <div class="pages_header">
     <span class="icon cancel_search" title="hide pages"></span>
-    <span class="pages_title interface"><b><%= pageCount >= 200 ? 'over ' : '' %> <%= mentions.length %> <%= dc.inflector.pluralize('mention', mentions.length) %></b>
+    <span class="pages_title interface"><%= pageCount >= 200 ? 'over ' : '' %> <%= mentions.length %> <%= dc.inflector.pluralize('mention', mentions.length) %>
     of <%= dc.inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>
     on <%= pageCount %>
     <%= dc.inflector.pluralize('page', pageCount) %></span>

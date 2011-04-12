@@ -2,7 +2,7 @@
 <div class="mentions">
   <div class="mentions_header">
     <span class="icon cancel_search" title="hide pages"></span>
-    <span class="mentions_title interface"><b><%= mentions.length %></b>
+    <span class="mentions_title interface"><%= mentions.length %>
     <%= count > mentions.length ? "of " + count : "" %>
     <%= dc.inflector.pluralize('page', mentions.length) %>
     mentioning &ldquo;<%= query %>&rdquo;</span>

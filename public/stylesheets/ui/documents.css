@@ -196,8 +196,9 @@
   margin: 20px 10px 12px 0;
 }
   .document .pages_title, .document .mentions_title {
+    font-weight: bold;
     font-size: 11px;
-    color: #333;
+    color: #000;
     margin-right: 15px;
   }
     .document .pages_only {
@@ -208,9 +209,12 @@
     left: 0; top: 3px;
     cursor: pointer;
   }
-  .document .arrow.left {
-    margin-left: 10px;
+  .document .arrow {
+    font-weight: normal;
   }
+    .document .arrow.left {
+      margin-left: 10px;
+    }
 .document .page {
   padding-bottom: 15px;
 }
