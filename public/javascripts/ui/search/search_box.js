@@ -53,21 +53,23 @@ dc.ui.SearchBox = Backbone.View.extend({
         return false;
       }, this)
     });
-    // this.box.autocomplete(this.PREFIXES, {
-    //   width     : 100,
-    //   minChars  : 1
-    // }).result(_.bind(function(e, data, formatted) {
-    //   e.preventDefault();
-    //   this.addFacet(formatted);
-    //   return false;
-    // }, this));
     
     // This is defered so it can be attached to the DOM to get the correct font-size.
     _.defer(_.bind(function() {
       this.box.autoGrowInput();
+      this.box.bind('autogrow:updated', _.bind(this.moveAutocomplete, this));
     }, this));
         
     return this;
+  },
+  
+  moveAutocomplete : function() {
+    this.box.data('autocomplete').menu.element.position({
+      my: "left top",
+      at: "left bottom",
+      of: this.box.data('autocomplete').element,
+      collision: "none"
+    });
   },
   
   showFacetCategoryMenu : function() {

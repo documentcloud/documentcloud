@@ -121,6 +121,8 @@ label {
   }
     #search_box {
       width: 10px;
+      z-index: 100;
+      position: relative;
     }
     #search_box_wrapper .menu_content {
       z-index: 100;

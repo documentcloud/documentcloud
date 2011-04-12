@@ -237,6 +237,8 @@ div.text_input {
         }
         div.text_input.search .search_facet.is_editing .search_facet_input_container input {
           color: #202020;
+          z-index: 100;
+          position: relative;
         }
         div.text_input.search .search_facet .search_facet_remove {
           position: absolute;
