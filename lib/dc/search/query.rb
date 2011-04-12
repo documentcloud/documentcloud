@@ -96,7 +96,7 @@ module DC
       def populate_mentions
         return false unless has_text? and has_results?
         @results.each do |doc|
-          doc.mentions = Page.mentions(doc, @text)
+          doc.mentions = Page.mentions(doc.id, @text)
         end
       end
 

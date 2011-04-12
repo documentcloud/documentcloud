@@ -59,6 +59,13 @@ dc.model.Document = Backbone.Model.extend({
     return date && (this.formatDay(date) + ' at ' + this.formatTime(date));
   },
 
+  // Fetch all of the documents page mentions for a given search query.
+  fetchMentions : function(query) {
+    $.getJSON(this.url() + '/mentions', {q: query}, _.bind(function(resp) {
+      this.set({mentions: resp.mentions});
+    }, this));
+  },
+
   // Tell the server to reprocess the text for this document.
   reprocessText : function(forceOCR) {
     var params = {};

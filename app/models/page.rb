@@ -57,14 +57,14 @@ class Page < ActiveRecord::Base
   end
 
   # Generate the highlighted excerpt of the page text for a given search phrase.
-  def self.mentions(doc, search_phrase, limit=3)
+  def self.mentions(doc_id, search_phrase, limit=3)
     phrases = search_phrase.scan(QUOTED_VALUE).map {|r| r[1] }
     words   = search_phrase.gsub(QUOTED_VALUE, '').split(/\s+/)
     phrases.unshift words.join('\\s+') if words.any?
     parts   = phrases + words
     psqlre  = "(" + parts.map {|part| "\\m#{part}\\M" }.join('|') + ")"
-    rubyre  = /(#{ parts.map {|part| "#{part}(?!\\w)" }.join('|') })/i
-    conds   = ["document_id = ? and text ~* ?", doc.id, psqlre]
+    rubyre  = /(#{ parts.map {|part| "#{part}" }.join('|') })/i
+    conds   = ["document_id = ? and text ~* ?", doc_id, psqlre]
     pages   = Page.all(:conditions => conds, :order => 'page_number asc', :limit => limit)
     count   = Page.count(:conditions => conds)
     pages.map {|p| {:page => p.page_number, :excerpt => p.excerpt(rubyre), :count => count} }.select {|p| p[:excerpt] }

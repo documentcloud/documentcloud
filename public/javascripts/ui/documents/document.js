@@ -36,6 +36,7 @@ dc.ui.Document = Backbone.View.extend({
     'click .troubleshoot'       : 'openTroubleshooting',
     'click .contact_us'         : 'openContactUs',
     'click .open_pages'         : 'openPagesInViewer',
+    'click .show_mentions'      : 'fetchAllMentions',
     'click .page_list .left'    : 'previousPage',
     'click .page_list .right'   : 'nextPage'
   },
@@ -163,6 +164,10 @@ dc.ui.Document = Backbone.View.extend({
 
   openPagesInViewer : function() {
     this.model.openViewer('#pages');
+  },
+
+  fetchAllMentions : function() {
+    this.model.fetchMentions(dc.app.searchBox.value());
   },
 
   previousPage : function() {

@@ -133,6 +133,11 @@ class DocumentsController < ApplicationController
     json({'dates' => dates}.to_json)
   end
 
+  # TODO: Access-control this:
+  def mentions
+    json :mentions => Page.mentions(params[:id], params[:q], nil)
+  end
+
   # Allows us to poll for status updates in the in-progress document uploads.
   def status
     docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => params[:ids]})

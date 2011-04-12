@@ -22,7 +22,8 @@ ActionController::Routing::Routes.draw do |map|
       :save_page_text         => :post,
       :upload_insert_document => :post,
       :reprocess_text         => :post,
-      :per_page_note_counts   => :get
+      :per_page_note_counts   => :get,
+      :mentions               => :get
     },
     :collection => {
       :entities     => :get,
