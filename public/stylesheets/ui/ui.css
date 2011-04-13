@@ -260,10 +260,15 @@ div.text_input {
         }
       div.text_input.search input {
         width: 100px;
+      }
+      div.text_input.search input,
+      div.text_input.search .input_width_tester {
         padding: 6px 0;
         float: left;
       }
-        div.text_input.search input, div.text_input.search .placeholder {
+        div.text_input.search input, 
+        div.text_input.search .placeholder,
+        div.text_input.search .input_width_tester {
           color: #808080;
           font: 13px/18px Helvetica, Arial;
         }

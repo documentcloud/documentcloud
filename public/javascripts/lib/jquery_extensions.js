@@ -265,24 +265,28 @@
           top           : -9999,
           left          : -9999,
           position      : 'absolute',
-          whiteSpace    : 'nowrap',
-          height        : $input.css('height'),
-          lineHeight    : $input.css('line-height'),
-          padding       : $input.css('padding'),
-          margin        : $input.css('margin'),
-          border        : $input.css('border'),
-          fontSize      : $input.css('font-size'),
-          fontFamily    : $input.css('font-family'),
-          fontWeight    : $input.css('font-weight'),
-          fontStyle     : $input.css('font-style'),
-          letterSpacing : $input.css('letter-spacing')
-        }).addClass('input_width_tester');
+          whiteSpace    : 'nowrap'
+          // height        : $input.css('height'),
+          // lineHeight    : $input.css('line-height'),
+          // padding       : $input.css('padding'),
+          // margin        : $input.css('margin'),
+          // border        : $input.css('border'),
+          // fontSize      : $input.css('font-size'),
+          // fontFamily    : $input.css('font-family'),
+          // fontWeight    : $input.css('font-weight'),
+          // fontStyle     : $input.css('font-style'),
+          // letterSpacing : $input.css('letter-spacing')
+        }).addClass('input_width_tester').addClass('interface');
         
         $input.after($tester);
-        $input.bind('keypress autogrow:resize', function(e) {
+        $input.bind('keydown autogrow:resize change', function(e, realEvent) {
+          if (realEvent) e = realEvent;
+          dc.app.hotkeys.down(e);
           var value = $input.val();
           if (dc.app.hotkeys.backspace) {
             value = value.slice(0, value.length - 1);
+          } else if (dc.app.hotkeys.command || dc.app.hotkeys.control || dc.app.hotkeys.left || dc.app.hotkeys.right || dc.app.hotkeys.upArrow || dc.app.hotkeys.downArrow || dc.app.hotkeys.tab) {
+            
           } else {
             value += dc.app.hotkeys.shift ? 
                      String.fromCharCode(e.which) : 
@@ -294,7 +298,7 @@
                        .replace(/>/g, '&gt;');
           
           $tester.html(value);
-          // console.log(['autoGrow', value, $tester, $tester.html(), $tester.width()]);
+          // console.log(['autoGrow', realEvent, e.type, value, $tester, $tester.html(), $tester.width()]);
           $input.width($tester.width() + 3);
           $input.trigger('autogrow:updated');
         });

@@ -84,7 +84,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
       }
       this.box.focus().click();
       _.defer(_.bind(function() {
-        this.box.data('autocomplete').search();
+        var autocomplete = this.box.data('autocomplete');
+        if (autocomplete) autocomplete.search();
       }, this));
       dc.app.searchBox.addFocus();
     }
@@ -101,16 +102,16 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   keypress : function(e) {
     console.log(['keypress', e.keyCode, this.box.val()]);
-    if (dc.app.hotkeys.enter && this.box.val()) {
-      this.disableEdit(e);
-      dc.app.searchBox.searchEvent(e);
-    }
   },
   
   keydown : function(e) {
     dc.app.hotkeys.down(e);
-    console.log(['keydown', e.keyCode, this.box.val(), this.box.getCursorPosition()]);
-    if (dc.app.hotkeys.left) {
+    this.box.trigger('autogrow:resize', e);
+    // console.log(['keydown', e.keyCode, dc.app.hotkeys.downArrow, this.box.val(), this.box.getCursorPosition()]);
+    if (dc.app.hotkeys.enter && this.box.val()) {
+      this.disableEdit(e);
+      dc.app.searchBox.searchEvent(e);
+    } else if (dc.app.hotkeys.left) {
       if (this.box.getCursorPosition() == 0) {
         if (this.modes.selected == 'is') {
           this.disableEdit(e);
@@ -123,11 +124,13 @@ dc.ui.SearchFacet = Backbone.View.extend({
       }
     } else if (dc.app.hotkeys.right) {
       if (this.modes.selected == 'is') {
+        e.preventDefault();
         this.setMode('not', 'selected');
         this.setCursorPosition(0);
       } else if (this.box.getCursorPosition() == this.box.val().length) {
-        dc.app.searchBox.focusNextFacet(this, 1);
         e.preventDefault();
+        this.disableEdit(e);
+        dc.app.searchBox.focusNextFacet(this, 1);
       }
     } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
       e.preventDefault();

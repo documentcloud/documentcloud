@@ -174,6 +174,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   
   keydown : function(e) {
     dc.app.hotkeys.down(e);
+    this.box.trigger('autogrow:resize', e);
     if (dc.app.hotkeys.left) {
       if (this.box.getCursorPosition() == 0) {
         e.preventDefault();
