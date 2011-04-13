@@ -5,7 +5,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
   events : {
     'click'                    : 'enableEdit',
     // 'focus input'              : 'enableEdit',
-    'keypress input'           : 'maybeDisableEdit',
+    'keypress input'           : 'keypress',
+    'keydown input'            : 'keydown',
     'blur input'               : 'deferDisableEdit',
     // 'change input'             : 'disableEdit',
     'mouseover .cancel_search' : 'showDelete',
@@ -82,22 +83,57 @@ dc.ui.SearchFacet = Backbone.View.extend({
         this.box.val(this.model.get('value'));
       }
       this.box.focus().click();
+      _.defer(_.bind(function() {
+        this.box.data('autocomplete').search();
+      }, this));
       dc.app.searchBox.addFocus();
     }
     this.box.trigger('autogrow:resize');
   },
   
-  maybeDisableEdit : function(e) {
-    console.log(['maybeDisableEdit', e.keyCode, this.box.val()]);
-    if (e.keyCode == 13 && this.box.val()) { // Enter key
+  setCursorPosition : function(direction) {
+    if (direction == -1) {
+      this.box.setCursorPosition(this.box.val().length);
+    } else {
+      this.box.setCursorPosition(0);
+    }
+  },
+  
+  keypress : function(e) {
+    console.log(['keypress', e.keyCode, this.box.val()]);
+    if (dc.app.hotkeys.enter && this.box.val()) {
       this.disableEdit(e);
       dc.app.searchBox.searchEvent(e);
     }
-    if (dc.app.hotkeys.shift && e.keyCode == 9) { // Tab key
+  },
+  
+  keydown : function(e) {
+    dc.app.hotkeys.down(e);
+    console.log(['keydown', e.keyCode, this.box.val(), this.box.getCursorPosition()]);
+    if (dc.app.hotkeys.left) {
+      if (this.box.getCursorPosition() == 0) {
+        if (this.modes.selected == 'is') {
+          this.disableEdit(e);
+          dc.app.searchBox.focusNextFacet(this, -1);
+          e.preventDefault();
+          this.setMode('not', 'selected');
+        } else {
+          this.setMode('is', 'selected');
+        }
+      }
+    } else if (dc.app.hotkeys.right) {
+      if (this.modes.selected == 'is') {
+        this.setMode('not', 'selected');
+        this.setCursorPosition(0);
+      } else if (this.box.getCursorPosition() == this.box.val().length) {
+        dc.app.searchBox.focusNextFacet(this, 1);
+        e.preventDefault();
+      }
+    } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
       e.preventDefault();
       this.disableEdit(e);
       dc.app.searchBox.focusNextFacet(this, -1);
-    } else if (e.keyCode == 9) {
+    } else if (dc.app.hotkeys.tab) {
       e.preventDefault();
       this.disableEdit(e);
       dc.app.searchBox.focusNextFacet(this, 1);

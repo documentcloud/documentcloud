@@ -10,11 +10,12 @@ dc.app.hotkeys = {
     '224': 'command',
     '13':  'enter',
     '37':  'left',
-    '38':  'up',
+    '38':  'upArrow',
     '39':  'right',
-    '40':  'down',
+    '40':  'downArrow',
     '46':  'delete',
     '8':   'backspace',
+    '9':   'tab',
     '188': 'comma'
   },
 

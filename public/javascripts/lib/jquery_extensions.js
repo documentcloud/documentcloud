@@ -294,7 +294,7 @@
                        .replace(/>/g, '&gt;');
           
           $tester.html(value);
-          console.log(['autoGrow', value, $tester, $tester.html(), $tester.width()]);
+          // console.log(['autoGrow', value, $tester, $tester.html(), $tester.width()]);
           $input.width($tester.width() + 3);
           $input.trigger('autogrow:updated');
         });
@@ -302,69 +302,44 @@
       });
     },
     
-    autoGrowInputs: function(opts) {
+    getCursorPosition: function() {
+      var position = 0;
+      var input    = this.get(0);
+      
+      if (document.selection) {
+        // IE
+        input.focus();
+        var sel    = document.selection.createRange();
+        var selLen = document.selection.createRange().text.length;
+        sel.moveStart('character', -input.value.length);
+        position = sel.text.length - selLen;
+      } else if (input.selectionStart || input.selectionStart == '0') {
+        // Firefox/Safari
+        position = input.selectionStart;
+      }
 
-      var options = $.extend({}, {
-        maxWidth: 1000,
-        minWidth: 1,
-        comfortZone: 10
-      }, opts);
-      
-      this.filter('input:text').each(function() {
-      
-        var minWidth = options.minWidth || $(this).width();
-        var val = '';
-        var input = $(this);
-        var testSubject = $('<div/>').css({
-          position: 'absolute',
-          top: -9999,
-          left: -9999,
-          width: 'auto',
-          fontSize: input.css('fontSize'),
-          fontFamily: input.css('fontFamily'),
-          fontWeight: input.css('fontWeight'),
-          letterSpacing: input.css('letterSpacing'),
-          whiteSpace: 'nowrap'
-        });
-        
-        var check = function() {
-          console.log(['check input size', input.val(), val]);
-          if (val === (val = input.val())) return;
-        
-          // Enter new content into testSubject
-          var escaped = val.replace(/&/g, '&amp;')
-                           .replace(/\s/g,'&nbsp;')
-                           .replace(/</g, '&lt;')
-                           .replace(/>/g, '&gt;');
-          testSubject.html(escaped);
-        
-          // Calculate new width + whether to change
-          var testerWidth = testSubject.width(),
-          newWidth = (testerWidth + options.comfortZone) >= minWidth ?
-                     testerWidth + options.comfortZone :
-                     minWidth,
-          currentWidth = input.width(),
-          isValidWidthChange = (newWidth < currentWidth && newWidth >= minWidth) || 
-                               (newWidth > minWidth && newWidth < options.maxWidth);
-        
-          // Animate width
-          console.log(['Grow width', isValidWidthChange, testerWidth, currentWidth, newWidth]);
-          if (isValidWidthChange) {
-            input.width(newWidth);
-            input.trigger('autogrow:updated');
-          }
-        
-        };
-        
-        testSubject.insertAfter(input);
-        
-        input.bind('keyup keydown blur focus update', check);
-        check();
-        
+      return position;
+    },
+    
+    setCursorPosition: function(position) {
+      return this.each(function() {
+        return $(this).selectRange(position, position);
       });
-      
-      return this;
+    },
 
+    selectRange: function(start, end) {
+      return this.each(function() {
+        if (this.setSelectionRange) {
+          this.focus();
+          this.setSelectionRange(start, end);
+        } else if (this.createTextRange) {
+          var range = this.createTextRange();
+          range.collapse(true);
+          range.moveEnd('character', end);
+          range.moveStart('character', start);
+          range.select();
+        }
+      });
     },
 
     // jQuery's default text() method doesn't play nice with contentEditable

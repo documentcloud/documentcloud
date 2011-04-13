@@ -212,6 +212,9 @@ div.text_input {
         padding: 0 0 0 13px;
         position: relative;
       }
+        div.text_input.search .search_facet.is_selected {
+          background-color: blue;
+        }
         div.text_input.search .search_facet .search_facet_category {
           float: left;
           text-transform: uppercase;
