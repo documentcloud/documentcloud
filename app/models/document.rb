@@ -97,18 +97,15 @@ class Document < ActiveRecord::Base
   # our organization and we're allowed to see it, or it belongs to a project
   # that's been shared with us.
   named_scope :accessible, lambda {|account, org|
-    conditions, access = [], []
-    joins  = nil
+    has_shared = account && account.shared_document_ids.present?
+    access = []
     access << "(documents.access = #{PUBLIC})"
     access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}) and documents.account_id = #{account.id})" if account
     access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org
-    if account.has_projects?
-      access << "(documents.id = project_memberships.document_id and project_memberships.project_id in (?))"
-      conditions.push(account.accessible_project_ids)
-      joins = :project_memberships
-    end
-    conditions.unshift "(#{access.join(' or ')})"
-    {:conditions => conditions, :joins => joins}
+    access << "(documents.id in (?))" if has_shared
+    conditions = ["(#{access.join(' or ')})"]
+    conditions.push(account.shared_document_ids) if has_shared
+    {:conditions => conditions}
   }
 
   # The definition of the Solr search index. Via sunspot-rails.
