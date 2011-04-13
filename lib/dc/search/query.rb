@@ -243,8 +243,7 @@ module DC
         else
           @sql << 'projects.id in (?)'
           @interpolations << @project_ids
-          @joins << 'inner join project_memberships ON documents.id = document_id
-                     inner join projects on project_id = projects.id'
+          @joins << 'inner join projects on project_id = projects.id'
         end
       end
 

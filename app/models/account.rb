@@ -96,7 +96,7 @@ class Account < ActiveRecord::Base
   def reviewer?
     role == REVIEWER
   end
-  
+
   def real?
     admin? || contributor?
   end
@@ -167,6 +167,10 @@ class Account < ActiveRecord::Base
   def accessible_project_ids
     @accessible_project_ids ||=
       Collaboration.owned_by(self).all(:select => [:project_id]).map {|c| c.project_id }
+  end
+
+  def has_projects?
+    @has_projects ||= Collaboration.exists? :account_id => id
   end
 
   # When an account is created by a third party, send an email with a secure
