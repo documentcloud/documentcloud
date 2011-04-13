@@ -12,6 +12,11 @@ namespace :deploy do
     remote ["app:update", "app:jammit", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
   end
 
+  desc "Deploy just updates to Rails code"
+  task :rails do
+    remote ["app:update", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
+  end
+
   desc "Deploy the Document Viewer to S3"
   task :viewer, :needs => :environment do
     s3 = RightAws::S3.new(SECRETS['aws_access_key'], SECRETS['aws_secret_key'], :protocol => 'http', :port => 80)
