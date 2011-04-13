@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
   # Make a JSONP-aware JSON response, using the contents of `@response`
   def json_response
     return if jsonp_request?
-    render :json => @response
+    json @response
   end
 
   # Select only a sub-set of passed parameters. Useful for whitelisting
