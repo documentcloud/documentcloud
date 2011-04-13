@@ -10,7 +10,6 @@ dc.model.SearchQuery = Backbone.Collection.extend({
   },
   
   count : function(category) {
-    // TODO: Underscore.js 1.1.6 has a _.count, which is faster than a _.select.
     return this.select(function(facet) {
       return facet.get('category') == category;
     }).length;
