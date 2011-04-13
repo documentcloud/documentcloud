@@ -257,7 +257,52 @@
       }, this));
     },
     
-    autoGrowInput: function(opts) {
+    autoGrowInput: function() {
+      return this.each(function() {
+        var $input = $(this);
+        var $tester = $('<div />').css({
+          opacity       : 0,
+          top           : -9999,
+          left          : -9999,
+          position      : 'absolute',
+          whiteSpace    : 'nowrap',
+          height        : $input.css('height'),
+          lineHeight    : $input.css('line-height'),
+          padding       : $input.css('padding'),
+          margin        : $input.css('margin'),
+          border        : $input.css('border'),
+          fontSize      : $input.css('font-size'),
+          fontFamily    : $input.css('font-family'),
+          fontWeight    : $input.css('font-weight'),
+          fontStyle     : $input.css('font-style'),
+          letterSpacing : $input.css('letter-spacing')
+        }).addClass('input_width_tester');
+        
+        $input.after($tester);
+        $input.bind('keypress autogrow:resize', function(e) {
+          var value = $input.val();
+          if (dc.app.hotkeys.backspace) {
+            value = value.slice(0, value.length - 1);
+          } else {
+            value += dc.app.hotkeys.shift ? 
+                     String.fromCharCode(e.which) : 
+                     String.fromCharCode(e.which).toLowerCase();
+          }
+          value = value.replace(/&/g, '&amp;')
+                       .replace(/\s/g,'&nbsp;')
+                       .replace(/</g, '&lt;')
+                       .replace(/>/g, '&gt;');
+          
+          $tester.html(value);
+          console.log(['autoGrow', value, $tester, $tester.html(), $tester.width()]);
+          $input.width($tester.width() + 3);
+          $input.trigger('autogrow:updated');
+        });
+        $input.trigger('autogrow:resize');
+      });
+    },
+    
+    autoGrowInputs: function(opts) {
 
       var options = $.extend({}, {
         maxWidth: 1000,
@@ -283,7 +328,7 @@
         });
         
         var check = function() {
-          // console.log(['check input size', input.val(), val]);
+          console.log(['check input size', input.val(), val]);
           if (val === (val = input.val())) return;
         
           // Enter new content into testSubject
@@ -303,7 +348,7 @@
                                (newWidth > minWidth && newWidth < options.maxWidth);
         
           // Animate width
-          // console.log(['Grow width', isValidWidthChange, testerWidth, currentWidth, newWidth]);
+          console.log(['Grow width', isValidWidthChange, testerWidth, currentWidth, newWidth]);
           if (isValidWidthChange) {
             input.width(newWidth);
             input.trigger('autogrow:updated');

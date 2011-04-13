@@ -28,13 +28,13 @@ dc.ui.SearchFacet = Backbone.View.extend({
     
     this.box = this.$('input');
     
-    // This is defered so it can be attached to the DOM to get the correct font-size.
-    _.defer(_.bind(function() {
-      this.box.autoGrowInput();
-      this.box.bind('autogrow:updated', _.bind(this.moveAutocomplete, this));
-    }, this));
-    
     return this;
+  },
+  
+  calculateSize : function() {
+    // This is defered so it can be attached to the DOM to get the correct font-size.
+    this.box.autoGrowInput();
+    this.box.bind('autogrow:updated', _.bind(this.moveAutocomplete, this));
   },
   
   setupAutocomplete : function() {
@@ -54,12 +54,15 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   moveAutocomplete : function() {
-    this.box.data('autocomplete').menu.element.position({
-      my: "left top",
-      at: "left bottom",
-      of: this.box.data('autocomplete').element,
-      collision: "none"
-    });
+    var autocomplete = this.box.data('autocomplete');
+    if (autocomplete) {
+      autocomplete.menu.element.position({
+        my: "left top",
+        at: "left bottom",
+        of: this.box.data('autocomplete').element,
+        collision: "none"
+      });
+    }
   },
   
   set : function(value, e) {
@@ -106,7 +109,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   deferDisableEdit : function(e) {
     console.log(['deferDisableEdit', e]);
     _.delay(_.bind(function() {
-      if (!this.box.is(':focus')) {
+      if (!this.box.is(':focus') && this.modes.editing == 'is') {
         this.disableEdit(e);
       }
     }, this), 250);
@@ -115,10 +118,12 @@ dc.ui.SearchFacet = Backbone.View.extend({
   disableEdit : function(e) {
     // e.preventDefault();
     console.log(['disableEdit', e, this.box.val()]);
-    var newFacetQuery = this.box.val();
+    var newFacetQuery = dc.inflector.trim(this.box.val());
     this.set(newFacetQuery);
     this.setMode('not', 'editing');
-    this.box.data('autocomplete').close();
+    this.box.blur();
+    var autocomplete = this.box.data('autocomplete');
+    if (autocomplete) autocomplete.close();
   },
   
   remove : function(e) {

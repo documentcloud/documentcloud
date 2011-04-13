@@ -79,7 +79,9 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
+    dc.app.navigation.open('search');
     if (this.currentSearch) this.currentSearch.abort();
+    console.log(['searcher', query]);
     this.searchBox.value(query);
     this.flags.related  = query.indexOf('related:') >= 0;
     this.flags.specific = query.indexOf('document:') >= 0;
@@ -105,7 +107,6 @@ dc.controllers.Searcher = Backbone.Controller.extend({
       },
       dataType: 'json'
     });
-    dc.app.navigation.open('search');
   },
 
   loadFacets : function() {
@@ -122,7 +123,9 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
   // When searching by the URL's hash value, we need to unescape first.
   searchByHash : function(query, page) {
-    this.search(decodeURIComponent(query), page && parseInt(page, 10));
+    _.defer(_.bind(function() {
+      this.search(decodeURIComponent(query), page && parseInt(page, 10));
+    }, this));
   },
 
   // Add a query fragment to the search and search again, if it's not already

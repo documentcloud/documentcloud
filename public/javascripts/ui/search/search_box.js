@@ -55,21 +55,22 @@ dc.ui.SearchBox = Backbone.View.extend({
     });
     
     // This is defered so it can be attached to the DOM to get the correct font-size.
-    _.defer(_.bind(function() {
-      this.box.autoGrowInput();
-      this.box.bind('autogrow:updated', _.bind(this.moveAutocomplete, this));
-    }, this));
+    this.box.autoGrowInput();
+    this.box.bind('autogrow:updated', _.bind(this.moveAutocomplete, this));
         
     return this;
   },
   
   moveAutocomplete : function() {
-    this.box.data('autocomplete').menu.element.position({
-      my: "left top",
-      at: "left bottom",
-      of: this.box.data('autocomplete').element,
-      collision: "none"
-    });
+    var autocomplete = this.box.data('autocomplete');
+    if (autocomplete) {
+      autocomplete.menu.element.position({
+        my: "left top",
+        at: "left bottom",
+        of: this.box.data('autocomplete').element,
+        collision: "none"
+      });
+    }
   },
   
   showFacetCategoryMenu : function() {
@@ -103,9 +104,18 @@ dc.ui.SearchBox = Backbone.View.extend({
       return facet.serialize();
     }).join(' ');
     console.log(['getQuery', query, this.facetViews]);
-    query += ' ' + this.box.val();
+    var boxVal = this.box.val();
+    if (boxVal) query += ' ' + boxVal;
     
     return query;
+  },
+  
+  setQuery : function(query) {
+    // if (this.currentQuery != query) {
+      this.currentQuery = query;
+      dc.app.SearchParser.parse(query);
+      this.box.val('');
+    // }
   },
   
   queryWithoutCategory : function(category) {
@@ -120,11 +130,6 @@ dc.ui.SearchBox = Backbone.View.extend({
   
   removeFacet : function(view) {
     this.facetViews = _.without(this.facetViews, view);
-  },
-  
-  setQuery : function(query) {
-    dc.app.SearchParser.parse(query);
-    this.box.val('');
   },
 
   hideSearch : function() {
@@ -217,7 +222,9 @@ dc.ui.SearchBox = Backbone.View.extend({
     
     this.facetViews.push(view);
     this.$('.search_facets').append(view.render().el);
-
+    view.calculateSize();
+    _.defer(_.bind(view.calculateSize, view));
+    
     return view;
   },
     

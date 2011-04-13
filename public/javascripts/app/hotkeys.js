@@ -14,6 +14,7 @@ dc.app.hotkeys = {
     '39':  'right',
     '40':  'down',
     '46':  'delete',
+    '8':   'backspace',
     '188': 'comma'
   },
 
