@@ -279,15 +279,14 @@
         }).addClass('input_width_tester').addClass('interface');
         
         $input.after($tester);
-        $input.bind('keydown autogrow:resize change', function(e, realEvent) {
+        $input.unbind('keydown.autogrow resize.autogrow change.autogrow')
+              .bind('keydown.autogrow resize.autogrow change.autogrow', function(e, realEvent) {
           if (realEvent) e = realEvent;
           dc.app.hotkeys.down(e);
           var value = $input.val();
           if (dc.app.hotkeys.backspace) {
             value = value.slice(0, value.length - 1);
-          } else if (dc.app.hotkeys.command || dc.app.hotkeys.control || dc.app.hotkeys.left || dc.app.hotkeys.right || dc.app.hotkeys.upArrow || dc.app.hotkeys.downArrow || dc.app.hotkeys.tab) {
-            
-          } else {
+          } else if (dc.app.hotkeys.printable(e)) {
             value += dc.app.hotkeys.shift ? 
                      String.fromCharCode(e.which) : 
                      String.fromCharCode(e.which).toLowerCase();
@@ -300,9 +299,9 @@
           $tester.html(value);
           // console.log(['autoGrow', realEvent, e.type, value, $tester, $tester.html(), $tester.width()]);
           $input.width($tester.width() + 3);
-          $input.trigger('autogrow:updated');
+          $input.trigger('updated.autogrow');
         });
-        $input.trigger('autogrow:resize');
+        $input.trigger('resize.autogrow');
       });
     },
     

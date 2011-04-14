@@ -45,8 +45,23 @@ dc.app.hotkeys = {
   },
   
   colon : function(e) {
-    var charCode = e.keyCode || e.which;
+    // Colon is special, since the value is different between browsers.
+    var charCode = e.which;
     return charCode && String.fromCharCode(charCode) == ":";
+  },
+  
+  printable : function(e) {
+    var code = e.which;
+    if (code == 32 ||                      // space
+        (code >= 48 && code <= 90) ||      // 0-1a-z
+        (code >= 96 && code <= 111) ||     // 0-9+-/*.
+        (code >= 186 && code <= 192) ||    // ;=,-./^
+        (code >= 219 && code <= 222) ||    // (\)'
+        (String.fromCharCode(code) == ":")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 };

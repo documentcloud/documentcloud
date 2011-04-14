@@ -4,8 +4,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   events : {
     'click'                    : 'enableEdit',
-    // 'focus input'              : 'enableEdit',
-    'keypress input'           : 'keypress',
+    'focus input'              : 'searchAutocomplete',
     'keydown input'            : 'keydown',
     'blur input'               : 'deferDisableEdit',
     // 'change input'             : 'disableEdit',
@@ -35,7 +34,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   calculateSize : function() {
     // This is defered so it can be attached to the DOM to get the correct font-size.
     this.box.autoGrowInput();
-    this.box.bind('autogrow:updated', _.bind(this.moveAutocomplete, this));
+    this.box.unbind('updated.autogrow').bind('updated.autogrow', _.bind(this.moveAutocomplete, this));
   },
   
   setupAutocomplete : function() {
@@ -49,6 +48,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
         console.log(['autocomplete', e, ui]);
         e.preventDefault();
         this.set(ui.item.value, e);
+        this.search(e);
         return false;
       }, this)
     });
@@ -71,6 +71,9 @@ dc.ui.SearchFacet = Backbone.View.extend({
     // this.box.data('autocomplete').close();
     console.log(['set facet', value, this.model.get('value'), this.model]);
     this.model.set({'value': value});
+  },
+  
+  search : function(e) {
     dc.app.searchBox.searchEvent(e);
   },
   
@@ -83,13 +86,14 @@ dc.ui.SearchFacet = Backbone.View.extend({
         this.box.val(this.model.get('value'));
       }
       this.box.focus().click();
-      _.defer(_.bind(function() {
-        var autocomplete = this.box.data('autocomplete');
-        if (autocomplete) autocomplete.search();
-      }, this));
       dc.app.searchBox.addFocus();
     }
-    this.box.trigger('autogrow:resize');
+    this.box.trigger('resize.autogrow');
+  },
+  
+  searchAutocomplete : function() {
+    var autocomplete = this.box.data('autocomplete');
+    if (autocomplete) autocomplete.search();
   },
   
   setCursorPosition : function(direction) {
@@ -100,13 +104,9 @@ dc.ui.SearchFacet = Backbone.View.extend({
     }
   },
   
-  keypress : function(e) {
-    console.log(['keypress', e.keyCode, this.box.val()]);
-  },
-  
   keydown : function(e) {
     dc.app.hotkeys.down(e);
-    this.box.trigger('autogrow:resize', e);
+    this.box.trigger('resize.autogrow', e);
     // console.log(['keydown', e.keyCode, dc.app.hotkeys.downArrow, this.box.val(), this.box.getCursorPosition()]);
     if (dc.app.hotkeys.enter && this.box.val()) {
       this.disableEdit(e);

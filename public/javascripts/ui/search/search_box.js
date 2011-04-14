@@ -57,7 +57,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     
     // This is defered so it can be attached to the DOM to get the correct font-size.
     this.box.autoGrowInput();
-    this.box.bind('autogrow:updated', _.bind(this.moveAutocomplete, this));
+    this.box.bind('updated.autogrow', _.bind(this.moveAutocomplete, this));
         
     return this;
   },
@@ -174,7 +174,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   
   keydown : function(e) {
     dc.app.hotkeys.down(e);
-    this.box.trigger('autogrow:resize', e);
+    this.box.trigger('resize.autogrow', e);
     if (dc.app.hotkeys.left) {
       if (this.box.getCursorPosition() == 0) {
         e.preventDefault();
@@ -182,7 +182,9 @@ dc.ui.SearchBox = Backbone.View.extend({
       }
     } else if (dc.app.hotkeys.right) {
       e.preventDefault();
-      dc.app.searchBox.focusNextFacet(null, 0);
+      if (this.box.getCursorPosition() == this.box.val().length) {
+        dc.app.searchBox.focusNextFacet(null, 0);
+      }
     } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
       e.preventDefault();
       this.focusNextFacet(this.facetViews.length-1, 0);
@@ -208,11 +210,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     });
     SearchQuery.add(model);
     var view = this.renderFacet(model);
-    dc.app.searcher.flags.outstandingSearch = true;
-    _.defer(function() {
-      view.enableEdit();
-      dc.app.searcher.flags.outstandingSearch = false;
-    }, 100);
+    view.enableEdit();
   },
 
   // Renders each facet as a searchFacet view.
