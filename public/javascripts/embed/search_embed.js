@@ -256,7 +256,7 @@
     },
 
     fitTitleWidth : function(width) {
-      return Math.floor(0.28 * width - 10);
+      return Math.floor(0.27 * width - 10);
     },
 
     fitDescriptionWidth : function(width, showOrg) {
