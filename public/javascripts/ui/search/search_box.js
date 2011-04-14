@@ -265,7 +265,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     dc.app.scroller.checkLater();
   },
   
-  focusNextFacet : function(currentView, direction, startAtEnd) {
+  focusNextFacet : function(currentView, direction, startAtEnd, selectFacet) {
     console.log(['focusNextFacet', currentView, direction]);
     var currentFacetIndex = 0;
     var viewsCount = this.facetViews.length;
@@ -282,7 +282,11 @@ dc.ui.SearchBox = Backbone.View.extend({
       this.box.focus();
     } else {
       this.facetViews[next].enableEdit();
-      this.facetViews[next].setCursorPosition(direction || startAtEnd);
+      if (selectFacet) {
+        this.facetViews[next].selectFacet();
+      } else {
+        this.facetViews[next].setCursorPosition(direction || startAtEnd);
+      }
     }
   },
   

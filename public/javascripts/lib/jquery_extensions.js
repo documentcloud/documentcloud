@@ -285,8 +285,9 @@
           dc.app.hotkeys.down(e);
           var value = $input.val();
           if (dc.app.hotkeys.backspace) {
-            value = value.slice(0, value.length - 1);
-          } else if (dc.app.hotkeys.printable(e)) {
+            var position = $input.getCursorPosition();
+            if (position > 0) value = value.slice(0, position-1) + value.slice(position, value.length);
+          } else if (dc.app.hotkeys.printable(e) && !dc.app.hotkeys.command) {
             value += dc.app.hotkeys.shift ? 
                      String.fromCharCode(e.which) : 
                      String.fromCharCode(e.which).toLowerCase();
@@ -297,7 +298,7 @@
                        .replace(/>/g, '&gt;');
           
           $tester.html(value);
-          // console.log(['autoGrow', realEvent, e.type, value, $tester, $tester.html(), $tester.width()]);
+          console.log(['autoGrow', realEvent, e.type, value, $tester, $tester.html(), $tester.width()]);
           $input.width($tester.width() + 3);
           $input.trigger('updated.autogrow');
         });

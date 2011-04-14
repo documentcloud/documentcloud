@@ -201,19 +201,36 @@ div.text_input {
     }
     div.text_input .search_inner {
       position: relative;
-      margin: 0 28px;
+      padding: 0 28px;
       overflow: hidden;
     }
       div.text_input.search .search_facets {
       }
       div.text_input.search .search_facet {
         float: left;
-        margin: 0 0 0 0;
+        margin: 0;
         padding: 0 0 0 13px;
         position: relative;
       }
+        div.text_input.search .search_facet.is_selected,
+        div.text_input.search .search_facet.is_editing {
+          margin: 5px 0 5px -3px;
+          -webkit-border-radius: 16px;
+          -moz-border-radius: 16px;
+          border-radius: 16px;
+        }
+        div.text_input.search .search_facet.is_editing {
+          background-color: #E3E8FF;
+        }
         div.text_input.search .search_facet.is_selected {
-          background-color: blue;
+          background-color: #CBD1F1;
+          background-image: -moz-linear-gradient(top, #CBD1F1, #AFB5EC); /* FF3.6 */
+          background-image: -ms-linear-gradient(top, #CBD1F1, #AFB5EC); /* IE10 */
+          background-image: -o-linear-gradient(top, #CBD1F1, #AFB5EC); /* Opera 11.10+ */
+          background-image: -webkit-gradient(linear, left top, left bottom, from(#CBD1F1), to(#AFB5EC)); /* Saf4+, Chrome */
+          background-image: -webkit-linear-gradient(top, #CBD1F1, #AFB5EC); /* Chrome 10+, Saf5.1+ */
+          background-image: linear-gradient(top, #CBD1F1, #AFB5EC);
+          filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#CBD1F1', EndColorStr='#AFB5EC'); /* IE6–IE9 */
         }
         div.text_input.search .search_facet .search_facet_category {
           float: left;
@@ -224,6 +241,11 @@ div.text_input {
           text-shadow: 1px 1px 0 #FFF;
           padding: 9px 0 0 0;
           line-height: 14px;
+        }
+        div.text_input.search .search_facet.is_selected .search_facet_category,
+        div.text_input.search .search_facet.is_editing .search_facet_category {
+          padding-top: 4px;
+          margin-left: 3px;
         }
         div.text_input.search .search_facet .search_facet_input_container {
           float: left;
@@ -238,6 +260,11 @@ div.text_input {
           height: 16px;
           width: auto;
         }
+        div.text_input.search .search_facet.is_selected .search_facet_input_container input,
+        div.text_input.search .search_facet.is_editing .search_facet_input_container input {
+          padding-top: 1px;
+          padding-bottom: 2px;
+        }
         div.text_input.search .search_facet.is_editing .search_facet_input_container input {
           color: #202020;
           z-index: 100;
@@ -249,6 +276,11 @@ div.text_input {
           top: 9px;
           opacity: .5;
         }
+          div.text_input.search .search_facet.is_selected .search_facet_remove,
+          div.text_input.search .search_facet.is_editing .search_facet_remove {
+            top: 4px;
+            left: 3px;
+          }
           div.text_input.search .search_facet .search_facet_remove:hover {
             opacity: 1;
           }

@@ -141,6 +141,7 @@ label {
   cursor: pointer;
   z-index: 10000;
   width: 120px;
+  font-size: 13px;
 }
   .ui-autocomplete .ui-menu-item a {
     display: block;
