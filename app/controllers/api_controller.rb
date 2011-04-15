@@ -19,8 +19,8 @@ class ApiController < ApplicationController
 
   def search
     if mentions = params[:mentions] && params[:mentions].to_i
-      mentions = nil if mentions < 1
       mentions = 10  if mentions > 10
+      mentions = nil if mentions < 1
     end
     respond_to do |format|
       format.any(:js, :json) do
