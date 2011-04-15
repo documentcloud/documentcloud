@@ -18,9 +18,11 @@ class ApiController < ApplicationController
   end
 
   def search
+    mentions = params[:mentions] && params[:mentions].to_i
+    return bad_request if mentions && mentions > 10
     respond_to do |format|
       format.any(:js, :json) do
-        perform_search :include_facets => (params[:entities] ? :api : false), :mentions => params[:mentions]
+        perform_search :include_facets => (params[:entities] ? :api : false), :mentions => mentions
         @response = ActiveSupport::OrderedHash.new
         @response['total']     = @query.total
         @response['page']      = @query.page
