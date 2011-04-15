@@ -19,7 +19,7 @@ class ApiController < ApplicationController
 
   def search
     mentions = params[:mentions] && params[:mentions].to_i
-    return bad_request if mentions && mentions > 10
+    mentions = 10 if mentions > 10
     respond_to do |format|
       format.any(:js, :json) do
         perform_search :include_facets => (params[:entities] ? :api : false), :mentions => mentions
