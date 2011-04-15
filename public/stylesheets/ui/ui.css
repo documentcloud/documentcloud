@@ -720,14 +720,15 @@ iframe.hidden_iframe {
 }
 
 /*------------------------------ Occurrences ----------------------------------*/
-.occurrence {
+.occurrence, .mention b {
+  font-weight: normal;
   background: #ff6;
   padding: 1px 2px;
   white-space: nowrap;
   color: #000;
   cursor: pointer;
 }
-  .occurrence:hover {
+  .occurrence:hover, .mention b:hover {
     text-decoration: underline;
   }
 

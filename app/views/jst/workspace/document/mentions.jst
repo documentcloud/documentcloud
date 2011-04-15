@@ -1,13 +1,12 @@
-<% var count = mentions[0].count; %>
 <div class="mentions">
   <div class="mentions_header">
     <span class="icon cancel_search" title="hide pages"></span>
     <span class="mentions_title interface"><%= mentions.length %>
-    <%= count > mentions.length ? "of " + count : "" %>
+    <%= total > mentions.length ? "of " + total : "" %>
     <%= dc.inflector.pluralize('page', mentions.length) %>
     mentioning &ldquo;<%= query %>&rdquo;</span>
-    <% if (count > mentions.length) { %>
-      <span class="text_link show_mentions">Show all <%= count %> pages</span>
+    <% if (total > mentions.length) { %>
+      <span class="text_link show_mentions">Show all <%= total %> pages</span>
     <% } %>
   </div>
   <% _.each(mentions, function(mention) { %>
@@ -16,7 +15,7 @@
         <img class="page_image" alt="page <%= mention.page %>" src="<%= model.pageThumbnailURL(mention.page) %>" />
         <div class="page_number">p. <%= mention.page %></div>
       </div>
-      <div class="page_excerpt noselect"><%= dc.inflector.trimExcerpt(dc.inflector.squeeze(mention.excerpt)) %></div>
+      <div class="page_excerpt noselect"><%= dc.inflector.trimExcerpt(dc.inflector.squeeze(mention.text)) %></div>
       <div class="clear"></div>
     </div>
   <% }); %>

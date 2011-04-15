@@ -6,7 +6,7 @@ class SearchController < ApplicationController
   FIELD_STRIP = /\S+:\s*/
 
   def documents
-    perform_search pick(params, :include_facets, :include_mentions)
+    perform_search pick(params, :include_facets, :mentions)
     results = {:query => @query, :documents => @documents}
     results[:facets] = @query.facets if params[:include_facets]
     results[:source_document] = @source_document if params.include? :include_source_document

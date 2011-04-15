@@ -135,7 +135,8 @@ class DocumentsController < ApplicationController
 
   def mentions
     return not_found unless doc = current_document(true)
-    json :mentions => Page.mentions(doc.id, params[:q], nil)
+    mention_data = Page.mentions(doc.id, params[:q], nil)
+    json :mentions => mention_data[:mentions], :total_mentions => mention_data[:total]
   end
 
   # Allows us to poll for status updates in the in-progress document uploads.

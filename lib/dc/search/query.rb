@@ -82,7 +82,7 @@ module DC
         @exclude_documents = o[:exclude_documents]
         needs_solr? ? run_solr : run_database
         populate_annotation_counts
-        populate_mentions if o[:include_mentions]
+        populate_mentions o[:mentions].to_i if o[:mentions]
         self
       end
 
@@ -93,10 +93,13 @@ module DC
 
       # If we've got a full text search with results, we can get Postgres to
       # generate the text mentions for our search results.
-      def populate_mentions
+      def populate_mentions(mentions)
+        raise "Invalid number of mentions" unless mentions > 0 && mentions <= 10
         return false unless has_text? and has_results?
         @results.each do |doc|
-          doc.mentions = Page.mentions(doc.id, @text)
+          mention_data        = Page.mentions(doc.id, @text, mentions)
+          doc.mentions        = mention_data[:mentions]
+          doc.total_mentions  = mention_data[:total]
         end
       end
 

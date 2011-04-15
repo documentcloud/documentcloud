@@ -62,7 +62,7 @@ dc.model.Document = Backbone.Model.extend({
   // Fetch all of the documents page mentions for a given search query.
   fetchMentions : function(query) {
     $.getJSON(this.url() + '/mentions', {q: query}, _.bind(function(resp) {
-      this.set({mentions: resp.mentions});
+      this.set(resp);
     }, this));
   },
 
@@ -184,6 +184,9 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   EMBED_FORBIDDEN : "At this stage in the beta, you may only embed documents you've uploaded yourself.",
 
   POLL_INTERVAL : 5 * 1000, // 5 seconds.
+
+  // Default number of mentions to include in a text search.
+  NUM_MENTIONS : 3,
 
   url : '/documents',
 

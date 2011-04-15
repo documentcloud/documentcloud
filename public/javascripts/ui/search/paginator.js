@@ -51,7 +51,7 @@ dc.ui.Paginator = Backbone.View.extend({
       per_page : dc.app.paginator.pageSize(),
       order    : dc.app.paginator.sortOrder
     };
-    if (!this.mini) params.include_mentions = true;
+    if (!this.mini) params.mentions = Documents.NUM_MENTIONS;
     return params;
   },
 

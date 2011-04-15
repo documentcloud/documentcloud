@@ -4,7 +4,7 @@ class Document < ActiveRecord::Base
 
   # Accessors and constants:
 
-  attr_accessor :mentions, :annotation_count, :hits
+  attr_accessor :mentions, :total_mentions, :annotation_count, :hits
   attr_writer   :organization_name, :organization_slug, :account_name, :account_slug
 
   SEARCHABLE_ATTRIBUTES = [:title, :description, :source, :account, :group]
@@ -642,7 +642,6 @@ class Document < ActiveRecord::Base
       :slug                => slug,
       :source              => source,
       :description         => description,
-      :mentions            => mentions,
       :organization_name   => organization_name,
       :organization_slug   => organization_slug,
       :account_name        => account_name,
@@ -658,7 +657,9 @@ class Document < ActiveRecord::Base
       :remote_url          => remote_url,
       :detected_remote_url => detected_remote_url,
       :publish_at          => publish_at.as_json,
-      :hits                => hits
+      :hits                => hits,
+      :mentions            => mentions,
+      :total_mentions      => total_mentions
     }.to_json
   end
 
@@ -691,6 +692,11 @@ class Document < ActiveRecord::Base
     doc['source']             = source
     doc['created_at']         = created_at.to_formatted_s(:rfc822)
     doc['updated_at']         = updated_at.to_formatted_s(:rfc822)
+    doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
+    if options[:contributor]
+      doc['contributor']      = account_name
+      doc['contributor_organization'] = organization_name
+    end
     doc['resources']          = res = ActiveSupport::OrderedHash.new
     res['pdf']                = pdf_url
     res['text']               = full_text_url
@@ -711,10 +717,8 @@ class Document < ActiveRecord::Base
     elsif options[:annotations]
       doc['annotations']      = self.annotations.accessible(options[:account]).map {|a| a.canonical}
     end
-    doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
-    if options[:contributor]
-      doc['contributor']      = account_name
-      doc['contributor_organization'] = organization_name
+    if self.mentions
+      doc['mentions']         = self.mentions
     end
     doc
   end

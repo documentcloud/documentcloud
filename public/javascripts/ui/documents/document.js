@@ -27,6 +27,7 @@ dc.ui.Document = Backbone.View.extend({
     'click .page_icon'          : '_openPage',
     'click .reviewer_count'     : '_openShareDialog',
     'click .occurrence'         : '_openPage',
+    'click .mention b'          : '_openPage',
     'click .cancel_search'      : '_hidePages',
     'click .page_count'         : '_togglePageImages',
     'click .search_account'     : 'searchAccount',
@@ -422,7 +423,7 @@ dc.ui.Document = Backbone.View.extend({
     var page = el.attr('data-page');
     var id   = el.attr('data-id');
     if (el.hasClass('mention')) {
-      var text = el.find('.occurrence').text();
+      var text = el.find('b').text();
       this.model.openViewer('#search/p' + page + '/' + encodeURIComponent(text));
     } else if (id) {
       window.open(this.model.viewerUrl() + "?entity=" + id + '&page=' + page + '&offset=' + el.attr('data-offset'));

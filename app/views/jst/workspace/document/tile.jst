@@ -35,6 +35,6 @@
 <div class="pages">
   <% if (mentions && mentions.length) { %>
     <% var query = dc.app.searcher.queryText(); %>
-    <%= JST['document/mentions']({mentions: mentions, query: query, model: model}) %>
+    <%= JST['document/mentions']({mentions: mentions, total: total_mentions, query: query, model: model}) %>
   <% } %>
 </div>

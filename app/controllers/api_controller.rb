@@ -20,7 +20,7 @@ class ApiController < ApplicationController
   def search
     respond_to do |format|
       format.any(:js, :json) do
-        perform_search :include_facets => params[:entities] ? :api : false
+        perform_search :include_facets => (params[:entities] ? :api : false), :mentions => params[:mentions]
         @response = ActiveSupport::OrderedHash.new
         @response['total']     = @query.total
         @response['page']      = @query.page
