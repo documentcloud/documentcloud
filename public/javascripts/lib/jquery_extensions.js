@@ -298,7 +298,7 @@
                        .replace(/>/g, '&gt;');
           
           $tester.html(value);
-          console.log(['autoGrow', realEvent, e.type, value, $tester, $tester.html(), $tester.width()]);
+          // console.log(['autoGrow', realEvent, e.type, value, $tester, $tester.html(), $tester.width()]);
           $input.width($tester.width() + 3);
           $input.trigger('updated.autogrow');
         });
@@ -333,10 +333,10 @@
 
     selectRange: function(start, end) {
       return this.each(function() {
-        if (this.setSelectionRange) {
+        if (this.setSelectionRange) { // FF/Webkit
           this.focus();
           this.setSelectionRange(start, end);
-        } else if (this.createTextRange) {
+        } else if (this.createTextRange) { // IE
           var range = this.createTextRange();
           range.collapse(true);
           range.moveEnd('character', end);
@@ -344,6 +344,28 @@
           range.select();
         }
       });
+    },
+    
+    getSelection: function() {
+      var input = this[0];
+      
+      if (input.selectionStart) { // FF/Webkit
+        var start = input.selectionStart;
+        var end   = input.selectionEnd;
+        return {start: start, end: end, length: end-start, text: input.value.substr(start, end-start)};
+      } else if (document.selection) { // IE
+        var range = document.selection.createRange();
+        if (range) {
+          var textRange = input.createTextRange();
+          var copyRange = textRange.duplicate();
+          textRange.moveToBookmark(range.getBookmark());
+          copyRange.setEndPoint('EndToStart', textRange);
+          var start = copyRange.text.length;
+          var end   = start + range.text.length;
+          return {start: start, end: end, length: end-start, text: range.text};
+        }
+      }
+      return {start: 0, end: 0, length: 0};
     },
 
     // jQuery's default text() method doesn't play nice with contentEditable

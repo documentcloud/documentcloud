@@ -180,11 +180,6 @@ dc.ui.SearchBox = Backbone.View.extend({
         e.preventDefault();
         this.focusNextFacet(this.facetViews.length-1, 0, -1);
       }
-    } else if (dc.app.hotkeys.right) {
-      e.preventDefault();
-      if (this.box.getCursorPosition() == this.box.val().length) {
-        dc.app.searchBox.focusNextFacet(null, 0);
-      }
     } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
       e.preventDefault();
       this.focusNextFacet(this.facetViews.length-1, 0);
@@ -277,7 +272,11 @@ dc.ui.SearchBox = Backbone.View.extend({
     });
     
     var next = currentFacetIndex + direction;
-    if (next < 0 || viewsCount-1 < next) {
+    if (next < 0) {
+      // Do nothing, at beginning.
+      this.facetViews[currentFacetIndex].enableEdit();
+      this.facetViews[currentFacetIndex].selectFacet();
+    } else if (next > viewsCount-1) {
       // this.facetViews[currentFacetIndex].disableEdit();
       this.box.focus();
     } else {

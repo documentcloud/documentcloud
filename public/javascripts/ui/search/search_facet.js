@@ -38,11 +38,13 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   selectFacet : function() {
+    this.canClose = false;
     this.box.blur();
     this.setMode('is', 'selected');
     this.closeAutocomplete();
     _.defer(_.bind(function() {
       $(document).bind('keydown.facet', this.keydown);
+      $(document).bind('click.facet', _.bind(this.deselectFacet, this));
     }, this));
   },
   
@@ -50,6 +52,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.setMode('not', 'selected');
     this.closeAutocomplete();
     $(document).unbind('keydown.facet');
+    $(document).bind('click.facet');
   },
   
   setupAutocomplete : function() {
@@ -93,6 +96,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   enableEdit : function(e) {
+    this.canClose = false;
     console.log(['enableEdit', e, this.model.get('category'), !this.$el.hasClass('is_editing')]);
     if (!this.$el.hasClass('is_editing')) {
       this.setMode('is', 'editing');
@@ -109,6 +113,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   searchAutocomplete : function() {
+    this.deselectFacet();
     var autocomplete = this.box.data('autocomplete');
     if (autocomplete) autocomplete.search();
   },
@@ -128,8 +133,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   keydown : function(e) {
     dc.app.hotkeys.down(e);
-    this.box.trigger('resize.autogrow', e);
-    console.log(['keydown', e.keyCode, this.box.val(), this.box.getCursorPosition()]);
+    console.log(['keydown', e.keyCode, dc.app.hotkeys.right, this.box.val(), this.box.getCursorPosition()]);
     if (dc.app.hotkeys.enter && this.box.val()) {
       this.disableEdit(e);
       this.search(e);
@@ -166,18 +170,21 @@ dc.ui.SearchFacet = Backbone.View.extend({
       if (this.modes.selected == 'is') {
         e.preventDefault();
         this.remove(e);
-      } else if (this.box.getCursorPosition() == 0) {
+      } else if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
         e.preventDefault();
         this.selectFacet();
         return false;
       }
     }
+    
+    this.box.trigger('resize.autogrow', e);
   },
   
   deferDisableEdit : function(e) {
+    this.canClose = true;
     // console.log(['deferDisableEdit', e]);
     _.delay(_.bind(function() {
-      if (!this.box.is(':focus') && this.modes.editing == 'is' && this.modes.selected != 'is') {
+      if (this.canClose && !this.box.is(':focus') && this.modes.editing == 'is' && this.modes.selected != 'is') {
         this.disableEdit(e);
       }
     }, this), 250);
