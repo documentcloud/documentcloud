@@ -194,6 +194,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     var query = this.value();
     console.log(['real searchEvent', e, query]);
     if (!dc.app.searcher.flags.outstandingSearch) dc.app.searcher.search(query);
+    this.box.focus();
   },
     
   addFacet : function(category, initialQuery) {
@@ -212,19 +213,20 @@ dc.ui.SearchBox = Backbone.View.extend({
   renderFacets : function() {
     this.$('.search_facets').empty();
     this.facetViews = [];
-    SearchQuery.each(_.bind(function(facet) {
+    SearchQuery.each(_.bind(function(facet, i) {
       if (facet.get('category') == 'entities') {
         console.log(['entities', facet]);
       } else {
-        this.renderFacet(facet);
+        this.renderFacet(facet, i);
       }
     }, this));
   },
   
   // Render a single facet, using its category and query value.
-  renderFacet : function(facet) {
+  renderFacet : function(facet, order) {
     var view = new dc.ui.SearchFacet({
-      model : facet
+      model : facet,
+      order : order
     });
     
     this.facetViews.push(view);
@@ -274,10 +276,12 @@ dc.ui.SearchBox = Backbone.View.extend({
     var next = currentFacetIndex + direction;
     if (next < 0) {
       // Do nothing, at beginning.
-      this.facetViews[currentFacetIndex].enableEdit();
-      this.facetViews[currentFacetIndex].selectFacet();
+      if (selectFacet) {
+        this.facetViews[currentFacetIndex].selectFacet();
+      } else {
+        this.box.focus();
+      }
     } else if (next > viewsCount-1) {
-      // this.facetViews[currentFacetIndex].disableEdit();
       this.box.focus();
     } else {
       this.facetViews[next].enableEdit();
@@ -302,7 +306,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
 
   focusSearch : function(e) {
-    if ($(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner')) {
+    if (!e || $(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner')) {
       this.box.focus();
     }
   },

@@ -228,18 +228,18 @@ div.text_input {
           background-image: linear-gradient(top, #CBD1F1, #AFB5EC);
           filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#CBD1F1', EndColorStr='#AFB5EC'); /* IE6–IE9 */
         }
-        div.text_input.search .search_facet .search_facet_category {
+        div.text_input.search .search_facet .category {
           float: left;
           text-transform: uppercase;
           font-weight: bold;
           font-size: 10px;
           color: #B0B0B0;
           text-shadow: 1px 1px 0 #FFF;
-          padding: 9px 0 0 0;
+          padding: 9px 0 6px;
           line-height: 14px;
         }
-        div.text_input.search .search_facet.is_selected .search_facet_category {
-          padding-top: 4px;
+        div.text_input.search .search_facet.is_selected .category {
+          padding: 4px 0 0;
           margin-left: 3px;
         }
         div.text_input.search .search_facet .search_facet_input_container {
@@ -259,7 +259,8 @@ div.text_input {
           padding-top: 1px;
           padding-bottom: 2px;
         }
-        div.text_input.search .search_facet.is_editing input {
+        div.text_input.search .search_facet.is_editing input,
+        div.text_input.search .search_facet.is_selected input {
           color: #202020;
           z-index: 100;
           position: relative;
@@ -277,10 +278,11 @@ div.text_input {
           div.text_input.search .search_facet .search_facet_remove:hover {
             opacity: 1;
           }
-        div.text_input.search .search_facet.is_editing .search_facet_category {
+        div.text_input.search .search_facet.is_editing .category,
+        div.text_input.search .search_facet.is_selected .category {
           color: darkblue;
         }
-        div.text_input.search .search_facet.search_facet_maybe_delete .search_facet_category,
+        div.text_input.search .search_facet.search_facet_maybe_delete .category,
         div.text_input.search .search_facet.search_facet_maybe_delete input {
           color: darkred;
         }

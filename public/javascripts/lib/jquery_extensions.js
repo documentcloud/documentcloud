@@ -317,7 +317,7 @@
         var selLen = document.selection.createRange().text.length;
         sel.moveStart('character', -input.value.length);
         position = sel.text.length - selLen;
-      } else if (input.selectionStart || input.selectionStart == '0') {
+      } else if (input && input.selectionStart != null) {
         // Firefox/Safari
         position = input.selectionStart;
       }
@@ -348,8 +348,8 @@
     
     getSelection: function() {
       var input = this[0];
-      
-      if (input.selectionStart) { // FF/Webkit
+      console.log(['getSelection', input, input.selectionStart, input.selectionStart, input.selectionEnd]);
+      if (input.selectionStart != null) { // FF/Webkit
         var start = input.selectionStart;
         var end   = input.selectionEnd;
         return {start: start, end: end, length: end-start, text: input.value.substr(start, end-start)};
