@@ -245,7 +245,6 @@
   text-align: left;
 }
   .note_embed_dialog .custom {
-    height: 360px;
     position: relative;
     font-size: 12px;
   }
@@ -255,9 +254,6 @@
 }
 
 .note_embed_dialog .publish_wizard_controls {
-  position: absolute;
-  bottom: 0px;
-  width: 500px;
   height: 24px;
 }
   .note_embed_dialog .publish_wizard_controls .cancel {
@@ -284,7 +280,7 @@
     overflow: hidden;
   }
   .note_embed_dialog textarea.snippet {
-    width: 484px;
+    width: 100%;
     height: 240px;
     border: 1px solid #dedede;
     font: 11px Menlo, Consolas, Monaco, Courier, monospace;
@@ -311,13 +307,17 @@
   width: 300px;
 }
 .note_embed_dialog .note_preview {
-  background-color: white;
   max-height: 400px;
   overflow-y: auto;
+  padding-right: 12px;
 }
   .note_embed_dialog .note_preview .edit_note {
     display: none;
   }
   .note_embed_dialog .note_preview .annotation_meta {
     display: none;
+  }
+  .note_embed_dialog .note_preview .note {
+    background-color: white;
+    margin-top: 0;
   }

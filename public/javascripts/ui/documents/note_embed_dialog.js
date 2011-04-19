@@ -23,6 +23,7 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   constructor : function(doc) {
     this.currentStep = 1;
     this.doc         = doc;
+    this.height      = 0;
     dc.ui.Dialog.call(this, {mode : 'custom', title : this.displayTitle()});
     dc.ui.spinner.show();
     this.fetchNotes();
@@ -47,6 +48,7 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
     this._next          = this.$('.next');
     this._previous      = this.$('.previous');
     this._noteSelectEl  = this.$('select[name=note]');
+    this._preview       = this.$('.note_preview');
     this.setMode('embed', 'dialog');
     this.setMode('note_embed', 'dialog');
     this.update();
@@ -65,7 +67,10 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
     this.note = this.doc.notes.get(id);
     this._renderNote();
     this._renderEmbedCode();
-    this.center();
+    if (this._preview.height() > this.height) {
+      this.center();
+      this.height = this._preview.height();
+    }
   },
   
   _renderNote : function() {
