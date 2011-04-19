@@ -241,6 +241,7 @@ div.text_input {
         div.text_input.search .search_facet.is_selected .category {
           padding: 4px 0 0;
           margin-left: 3px;
+          text-shadow: 1px 1px 0 #D0D0D0;
         }
         div.text_input.search .search_facet .search_facet_input_container {
           float: left;

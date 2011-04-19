@@ -167,13 +167,18 @@ dc.ui.SearchBox = Backbone.View.extend({
     }
 
     if (dc.app.hotkeys.colon(e)) {
-      this.addFacet(this.box.val());
-      return false;
+      var query = this.box.val();
+      if (_.contains(this.PREFIXES, query)) {
+        e.preventDefault();
+        this.addFacet(query);
+        return false;
+      }
     }
   },
   
   keydown : function(e) {
     dc.app.hotkeys.down(e);
+    console.log(['box keydown', e.keyCode, this.box.getCursorPosition()]);
     this.box.trigger('resize.autogrow', e);
     if (dc.app.hotkeys.left) {
       if (this.box.getCursorPosition() == 0) {
@@ -186,6 +191,11 @@ dc.ui.SearchBox = Backbone.View.extend({
     } else if (dc.app.hotkeys.tab) {
       e.preventDefault();
       this.focusNextFacet(null, 0);
+    } else if (dc.app.hotkeys.backspace) {
+      if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
+        e.preventDefault();
+        this.focusNextFacet(this.facetViews.length-1, 0, -1, true);
+      }
     }
   },
 
@@ -195,6 +205,10 @@ dc.ui.SearchBox = Backbone.View.extend({
     console.log(['real searchEvent', e, query]);
     if (!dc.app.searcher.flags.outstandingSearch) dc.app.searcher.search(query);
     this.box.focus();
+  },
+  
+  renderQuery : function() {
+     this.setQuery(this.value());
   },
     
   addFacet : function(category, initialQuery) {
@@ -284,10 +298,11 @@ dc.ui.SearchBox = Backbone.View.extend({
     } else if (next > viewsCount-1) {
       this.box.focus();
     } else {
-      this.facetViews[next].enableEdit();
+      this.box.blur();
       if (selectFacet) {
         this.facetViews[next].selectFacet();
       } else {
+        this.facetViews[next].enableEdit();
         this.facetViews[next].setCursorPosition(direction || startAtEnd);
       }
     }
@@ -306,6 +321,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
 
   focusSearch : function(e) {
+    console.log(['focusSearch', e]);
     if (!e || $(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner')) {
       this.box.focus();
     }
