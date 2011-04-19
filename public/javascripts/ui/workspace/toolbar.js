@@ -14,10 +14,11 @@ dc.ui.Toolbar = Backbone.View.extend({
     Backbone.View.call(this, options);
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'openPages', 'openDocumentEmbedDialog',
-      'openSearchEmbedDialog', 'openPublicationDateDialog', 'requestDownloadViewers',
-      'checkFloat', '_openTimeline', '_viewEntities', 'editDocumentURL', '_markOrder',
-      '_removeFromSelectedProject');
+      'editRelatedArticle', 'editAccess', 'openDocumentEmbedDialog', 'openNoteEmbedDialog',
+      'openSearchEmbedDialog', 'openPublicationDateDialog', 'requestDownloadViewers', 
+      'checkFloat', '_openTimeline', '_viewEntities', 'editPublishedUrl', 
+      'openShareDialog', '_markOrder', '_removeFromSelectedProject', 
+      '_enableAnalyzeMenu');
     this.sortMenu    = this._createSortMenu();
     this.analyzeMenu = this._createAnalyzeMenu();
     this.publishMenu = this._createPublishMenu();
@@ -143,6 +144,16 @@ dc.ui.Toolbar = Backbone.View.extend({
     if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
     (new dc.ui.DocumentEmbedDialog(doc)).render();
   },
+  
+  openNoteEmbedDialog : function() {
+    var docs = Documents.chosen();
+    if (!docs.length) return;
+    if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document in order to create the embed.');
+    var doc = docs[0];
+    if (!doc.public_note_count) return dc.ui.Dialog.alert('Please select a document with at least one public annotation.');
+    if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
+    (new dc.ui.NoteEmbedDialog(doc)).render();
+  },
 
   openShareDialog : function() {
     var docs = Documents.chosen();
@@ -256,6 +267,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     var accountItems = [
       {title : 'Embed These Documents',    onClick : this.openSearchEmbedDialog,      attrs: {'class': 'always'}},
       {title : 'Embed Document Viewer',    onClick : this.openDocumentEmbedDialog,    attrs: {'class': 'singular'}},
+      {title : 'Embed Annotation',         onClick : this.openNoteEmbedDialog,        attrs: {'class': 'singular'}},
       {title : 'Set Publication Date',     onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
       {title : 'Download Document Viewer', onClick : this.requestDownloadViewers}
     ];

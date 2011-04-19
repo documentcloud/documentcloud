@@ -638,6 +638,7 @@ class Document < ActiveRecord::Base
       :access              => access,
       :page_count          => page_count,
       :annotation_count    => annotation_count || 0,
+      :public_note_count   => public_note_count,
       :title               => title,
       :slug                => slug,
       :source              => source,
