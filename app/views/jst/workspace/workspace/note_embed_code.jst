@@ -1,0 +1,18 @@
+<div class="publish_info publish_prepare_section_label selectable_text interface">
+  Add the HTML below to your site to embed the annotation.
+</div>
+
+<textarea class="snippet">
+&lt;div id="DC-note-<%= note.get('id') %>"&gt;&lt;/div&gt;&#10;
+&lt;script src="http://s3.documentcloud.org/embed/loader.js"&gt;&lt;/script&gt;&#10;
+&lt;script&gt;&#10;
+  dc.embed.load('<%= window.SERVER_ROOT_HTTP %>/search/embed/', {&#10;
+    <%= options %>&#10;
+  });&#10;
+&lt;/script&gt;
+</textarea>
+
+<div class="publish_info publish_prepare_section_label selectable_text interface hidden">
+  You can find examples of embedded searches on our list of
+  <a class="text_link" href="http://www.documentcloud.org/featured" target="_blank">featured reporting</a>.
+</div>
