@@ -7,6 +7,7 @@ class RedactPages < DocumentModBase
   # The zoom ratio at which we'll be drawing redactions.
   LARGE_FACTOR    = 1000.0 / 700.0
   ORIGINAL_FACTOR = 1700.0 / 700.0
+  REDACTION_RED   = "#880000"
 
   GM_ARGS = '-limit memory 256MiB -limit map 512MiB'
 
@@ -62,8 +63,8 @@ class RedactPages < DocumentModBase
     end
     original_coords = coords.map {|list| 'rectangle ' + list.map {|px| (px.to_i * ORIGINAL_FACTOR).round }.join(',') }.join(' ')
     large_coords    = coords.map {|list| 'rectangle ' + list.map {|px| (px.to_i * LARGE_FACTOR).round }.join(',') }.join(' ')
-    `gm mogrify #{GM_ARGS} #{page_tiff_path} -fill black -draw "#{original_coords}" #{page_tiff_path} 2>&1`
-    `gm mogrify #{GM_ARGS} #{images['large']} -fill black -draw "#{large_coords}" #{images['large']} 2>&1`
+    `gm mogrify #{GM_ARGS} #{page_tiff_path} -fill "#{REDACTION_RED}" -draw "#{original_coords}" #{page_tiff_path} 2>&1`
+    `gm mogrify #{GM_ARGS} #{images['large']} -fill "#{REDACTION_RED}" -draw "#{large_coords}" #{images['large']} 2>&1`
 
     # Downsize the large image to all smaller image sizes.
     previous = nil
