@@ -303,6 +303,11 @@
     text-align: left;
     height: 20px;
   }
+    .DC-search-embed.DC-skinny-width .DC-paginator .DC-paginator-enumeration {
+      right: 0;
+      left: auto;
+      width: auto;
+    }
     .DC-search-embed .DC-paginator .DC-page-current {
       font-weight: bold;
     }
@@ -332,6 +337,9 @@
     width: 105px; height: 19px;
     background: url(/images/search_embed/embed/dc_inline_logo.png);
   }
+    .DC-search-embed.DC-skinny-width .DC-paginator .DC-logo {
+      display: none;
+    }
 
 /* ========= */
 /* = Icons = */

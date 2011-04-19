@@ -143,12 +143,14 @@
 
     calculateTileWidth : function() {
       var pageWidth      = $(this.el).width();
-      var minWidth       = 300;
+      var minWidth       = pageWidth > 300 ? 300 : pageWidth;
       var padding        = 97;
       var remainingWidth = pageWidth % minWidth;
       var tilesPerRow    = Math.floor(pageWidth / minWidth);
       var width          = minWidth + Math.floor(remainingWidth/tilesPerRow);
 
+      if (pageWidth < 380) $(this.el).addClass('DC-skinny-width');
+      
       return width - padding;
     },
 
