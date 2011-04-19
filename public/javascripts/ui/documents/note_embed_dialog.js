@@ -1,18 +1,12 @@
 dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
 
   events : {
-    'click .preview'        : 'preview',
     'change select'         : 'update',
     'click select'          : 'update',
-    'keyup input'           : 'update',
-    'focus input'           : 'update',
-    'click input'           : 'update',
-    'change input'          : 'update',
     'click .next'           : 'nextStep',
     'click .previous'       : 'previousStep',
     'click .close'          : 'close',
-    'click .snippet'        : 'selectSnippet',
-    'click .change_access'  : 'changeAccess'
+    'click .snippet'        : 'selectSnippet'
   },
 
   totalSteps : 2,
@@ -35,10 +29,13 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   },
 
   fetchNotes : function() {
-    this.doc.notes.fetch({success : _.bind(function() {
-      dc.ui.spinner.hide();
-      this.render();
-    }, this)});
+    this.doc.notes.fetch({
+      silent  : true,
+      success : _.bind(function() {
+        dc.ui.spinner.hide();
+        this.render();
+      }, this)
+    });
   },
 
   render : function() {
@@ -64,38 +61,41 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   },
 
   update : function() {
+    var id = parseInt(this._noteSelectEl.val(), 10);
+    this.note = this.doc.notes.get(id);
+    this._renderNote();
     this._renderEmbedCode();
+    this.center();
+  },
+  
+  _renderNote : function() {
+    this.$('.note_preview').html((new dc.ui.Note({
+      model       : this.note,
+      collection  : this.doc.notes
+    })).render().el);
   },
 
   embedOptions : function() {
     var options = {};
-    options.q            = this.query;
-    options.container    = '#DC-search-' + dc.inflector.sluggify(this.query);
-    options.title        = this._titleEl.val().replace(/\"/g, '\\\"');
-    options.order        = this._orderEl.val();
-    options.per_page     = this._perPageEl.val();
-    options.search_bar   = this._searchBarEl.is(':checked');
-    options.organization = dc.account.organization.id;
+    options.note_id = this.note.get('id');
+    options.note_title = this.note.get('title');
     return options;
   },
 
   _renderEmbedCode : function() {
     var options          = this.embedOptions();
-    options.title        = '"' + options.title + '"';
-    options.container    = '"' + options.container + '"';
-    options.q            = '"' + options.q + '"';
-    options.order        = '"' + options.order + '"';
+    options.note_title   = '"' + options.note_title + '"';
     var serialized       = _.map(options, function(value, key){ return key + ': ' + value; });
-    this.$('.publish_embed_code').html(JST['search/embed_code']({
-      query: dc.inflector.sluggify(this.query),
-      options: serialized.join(',&#10;    ')
+    this.$('.publish_embed_code').html(JST['workspace/note_embed_code']({
+      note    : this.note,
+      options : serialized.join(',&#10;    ')
     }));
   },
 
   nextStep : function() {
     this.currentStep += 1;
     if (this.currentStep > this.totalSteps) return this.close();
-    if (this.currentStep == 2) this._renderEmbedCode();
+    if (this.currentStep == 2) this.update();
     this.setStep();
   },
 

@@ -150,9 +150,9 @@ dc.ui.Toolbar = Backbone.View.extend({
     if (!docs.length) return;
     if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document in order to create the embed.');
     var doc = docs[0];
-    if (!doc.public_note_count) return dc.ui.Dialog.alert('Please select a document with at least one public annotation.');
+    if (!doc.get('public_note_count')) return dc.ui.Dialog.alert('Please select a document with at least one public annotation.');
     if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
-    (new dc.ui.NoteEmbedDialog(doc)).render();
+    dc.app.noteEmbedDialog = new dc.ui.NoteEmbedDialog(doc);
   },
 
   openShareDialog : function() {

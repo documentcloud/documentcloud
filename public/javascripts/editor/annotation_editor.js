@@ -178,7 +178,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     var params = this.annotationToParams(anno);
     $.ajax({url : this._baseURL, type : 'POST', data : params, dataType : 'json', success : _.bind(function(resp) {
       anno.server_id = resp.id;
-      this._adjustNoteCount(1);
+      this._adjustNoteCount(1, this._kind == 'public' ? 1 : 0);
     }, this)});
   },
 
@@ -192,7 +192,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     if (!anno.server_id) return;
     var url = this._baseURL + '/' + anno.server_id;
     $.ajax({url : url, type : 'POST', data : {_method : 'delete'}, dataType : 'json', success : _.bind(function() {
-      this._adjustNoteCount(-1);
+      this._adjustNoteCount(-1, this._kind == 'public' ? -1 : 0);
     }, this)});
   },
 
@@ -205,11 +205,14 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     return $(el);
   },
 
-  _adjustNoteCount : function(num) {
+  _adjustNoteCount : function(notesCount, publicCount) {
     try {
       var id = parseInt(currentDocument.api.getId(), 10);
       var doc = window.opener.Documents.get(id);
-      if (doc) doc.set({annotation_count : (doc.get('annotation_count') || 0) + num});
+      if (doc) {
+        doc.set({annotation_count : (doc.get('annotation_count') || 0) + notesCount});
+        doc.set({public_note_count : (doc.get('public_note_count') || 0) + publicCount});
+      }
     } catch (e) {
       // It's ok -- we don't have access to the parent window.
     }

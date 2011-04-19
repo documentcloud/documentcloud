@@ -234,3 +234,90 @@
     float: none;
     position: static;
   }
+
+/* ===================== */
+/* = Note Embed Dialog = */
+/* ===================== */
+
+.note_embed_dialog {
+  width: 500px;
+  font-size: 12px;
+  text-align: left;
+}
+  .note_embed_dialog .custom {
+    height: 360px;
+    position: relative;
+    font-size: 12px;
+  }
+
+.note_embed_dialog .controls {
+  display: none;
+}
+
+.note_embed_dialog .publish_wizard_controls {
+  position: absolute;
+  bottom: 0px;
+  width: 500px;
+  height: 24px;
+}
+  .note_embed_dialog .publish_wizard_controls .cancel {
+    float: left;
+  }
+  .note_embed_dialog .publish_wizard_controls .next,
+  .note_embed_dialog .publish_wizard_controls .previous {
+    float: right;
+    margin-left: 8px;
+  }
+
+.note_embed_dialog .publish_section {
+  position: relative;
+  margin-bottom: 15px;
+  clear: both;
+  overflow: hidden;
+}
+  .note_embed_dialog .publish_info {
+    font-size: 11px;
+    color: #ccc;
+  }
+  .note_embed_dialog .publish_prepare_input {
+    margin: 0 0 2px 0;
+    overflow: hidden;
+  }
+  .note_embed_dialog textarea.snippet {
+    width: 484px;
+    height: 240px;
+    border: 1px solid #dedede;
+    font: 11px Menlo, Consolas, Monaco, Courier, monospace;
+    margin: 10px 0px;
+    padding: 8px;
+    resize: none;
+  }
+
+.note_embed_dialog .publish_prepare_section {
+  margin: 0 0 16px 0;
+  clear: both;
+  overflow: hidden;
+}
+  .note_embed_dialog .publish_prepare_section_label {
+    margin: 0 0 4px 0;
+  }
+  
+.note_embed_dialog .publish_step_1 label {
+  float: left;
+  margin: 0 6px 0 0;
+}
+.note_embed_dialog .publish_step_1 select {
+  margin: 0;
+  width: 300px;
+}
+.note_embed_dialog .note_preview {
+  background-color: white;
+  max-height: 400px;
+  overflow-y: auto;
+}
+  .note_embed_dialog .note_preview .edit_note {
+    display: none;
+  }
+  .note_embed_dialog .note_preview .annotation_meta {
+    display: none;
+  }
