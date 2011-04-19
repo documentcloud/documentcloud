@@ -23,16 +23,6 @@
   /*@end
   @*/
   
-  dc.afterLoad = function(viewer) {
-    var loc = window.location;
-    var url = loc.protocol + '//' + loc.host + loc.pathname + loc.search;
-    if (url.match(/^file:/)) return false;
-    url = url.replace(/[\/]+$/, '');
-    var id  = parseInt(viewer.api.getId(), 10);
-    var key = encodeURIComponent(id + ':' + url);
-    dc.jQuery(document.body).append('<img alt="" width="1" height="1" src="<%= root.sub("s3", "www") %>/pixel.gif?key=' + key + '" />');
-  };
-
   // Record the fact that the embed is loaded.
   dc.loaded = true;
 
