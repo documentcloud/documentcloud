@@ -101,7 +101,7 @@
     },
 
     render : function() {
-      $(this.el).html(JST['embed_workspace']({options : this.embed.options}));
+      $(this.el).html(JST['search_embed_workspace']({options : this.embed.options}));
       this.container.html(this.el);
 
       this.search = this.$('.DC-search-box');
@@ -120,14 +120,14 @@
       this.hideSpinner();
 
       if (!this.embed.documents.length) {
-        docList.append(JST['no_results']({}));
+        docList.append(JST['search_no_results']({}));
       } else {
         this.embed.documents.each(_.bind(function(doc) {
           var view = (new dc.EmbedDocumentTile({model: doc, embed: this.embed})).render(width).el;
           docList.append(view);
         }, this));
       }
-      this.$('.DC-paginator').removeClass('DC-is-editing').html(JST['paginator']({
+      this.$('.DC-paginator').removeClass('DC-is-editing').html(JST['search_paginator']({
         total         : options.total,
         per_page      : options.per_page,
         page          : options.page,
@@ -249,7 +249,7 @@
 
       el.css({width: width});
       el.toggleClass('DC-show-organization', showOrg);
-      el.html(JST['embed_document_tile']({
+      el.html(JST['search_embed_document_tile']({
         doc               : this.model,
         titleWidth        : titleWidth,
         descriptionWidth  : descriptionWidth

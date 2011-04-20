@@ -9,8 +9,13 @@ javascripts:
     - public/javascripts/vendor/backbone-*.js
     - public/javascripts/lib/inflector.js
     - public/javascripts/embed/search_embed.js
-    - app/views/jst/embed/*.jst
+    - app/views/jst/embed/search_*.jst
+  note_embed:
+    - public/javascripts/embed/note_embed.js
+    - app/views/jst/embed/note_*.jst
 
 stylesheets:
   search_embed:
     - public/stylesheets/embed/search_embed.css
+  note_embed:
+    - public/stylesheets/embed/note_embed.css

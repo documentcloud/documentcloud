@@ -52,26 +52,28 @@ namespace :build do
 
   end
 
-  task :embed do
-    FileUtils.rm_r('build') if File.exists?('build')
-    sh "jammit -f -o build -c config/search_embed_assets.yml"
-    sh "rm build/*.gz"
+  {:search => 'search_embed', :note => 'note_embed'}.each_pair do |embed_type, embed|
+    task embed_type do
+      FileUtils.rm_r('build') if File.exists?('build')
+      sh "jammit -f -o build -p #{embed} -c config/#{embed}_assets.yml"
+      sh "rm build/*.gz"
 
-    Dir['build/*.css'].each do |css_file|
-      File.open(css_file, 'r+') do |file|
-        css = file.read
-        css.gsub!('/images/search_embed', 'images')
-        file.rewind
-        file.write(css)
-        file.truncate(css.length)
+      Dir['build/*.css'].each do |css_file|
+        File.open(css_file, 'r+') do |file|
+          css = file.read
+          css.gsub!("/images/#{embed}", 'images')
+          file.rewind
+          file.write(css)
+          file.truncate(css.length)
+        end
       end
+      FileUtils.cp_r("public/images/#{embed}", 'build/images')
+
+      FileUtils.rm_r('public/embed') if File.exists?('public/embed')
+      FileUtils.cp_r('build', 'public/embed')
+
+      FileUtils.rm_r('build') if File.exists?('build')
     end
-    FileUtils.cp_r('public/images/search_embed', 'build/images')
-
-    FileUtils.rm_r('public/embed') if File.exists?('public/embed')
-    FileUtils.cp_r('build', 'public/embed')
-
-    FileUtils.rm_r('build') if File.exists?('build')
   end
 
 end

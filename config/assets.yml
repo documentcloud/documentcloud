@@ -19,7 +19,9 @@ javascripts:
     - public/javascripts/editor/*.js
     - app/views/jst/editor/*.jst
   search_embed:
-    - app/views/jst/embed/*.jst
+    - app/views/jst/embed/search_*.jst
+  note_embed:
+    - app/views/jst/embed/note_*.jst
   admin:
     - public/javascripts/admin/*.js
     - app/views/admin/*.jst

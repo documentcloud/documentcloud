@@ -1,0 +1,117 @@
+.note {
+  position: relative;
+  margin: 20px 0 0 0;
+  padding: 10px;
+  font: 12px/18px Helvetica, Arial;
+  color: #333;
+  border: 3px solid #ffe325;
+  -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
+  box-shadow: 1px 2px 3px #bbb; -webkit-box-shadow: 1px 2px 3px #bbb; -moz-box-shadow: 1px 2px 3px #bbb;
+}
+  .note .note_contents {
+    position: relative;
+    overflow: hidden;
+  }
+    .note .note_title {
+      color: #000;
+      font-weight: bold;
+      margin-bottom: 10px;
+      margin-right: 10px;
+    }
+      .note .title_link {
+        cursor: pointer;
+      }
+    .note .note_title_edit {
+      width: 300px;
+      margin-bottom: 10px;
+    }
+      .note .note_title_input {
+        background: #fff;
+      }
+    .note .page_number {
+      color: #777;
+      font-weight: normal;
+      margin-left: 3px;
+    }
+    .note .note_text {
+      color: #333;
+      font: 13px/18px Georgia;
+    }
+    .note .note_text_edit_wrap {
+      position: relative;
+      margin-right: 14px;
+    }
+      .note .note_text_edit {
+        height: 110px;
+        width: 100%;
+        font: 12px/18px Helvetica, Arial;
+      }
+    .note .note_excerpt_wrap {
+      border: 1px solid #ccc;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+      .note .note_excerpt {
+        position: relative;
+        margin: 0 auto;
+        width: 750px;
+        overflow: hidden;
+      }
+        .note .left_cover,
+        .note .right_cover {
+          position: absolute;
+          z-index: 2;
+          background: white;
+          opacity: 0.68;
+          filter: alpha(opacity=68);
+        }
+          .note .left_cover {
+            left: 0;
+            border-right: 1px solid #f1f1f1;
+          }
+          .note .right_cover {
+            right: 0;
+            border-left: 1px solid #f1f1f1;
+          }
+        .note .note_image {
+          left: 0;
+          position: absolute;
+        }
+    .note .lock {
+      float: left;
+      margin: 0 6px 0 0;
+    }
+    .note .note_draft_label {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 9px;
+      padding: 0px 1px 0px 2px;
+      line-height: 11px;
+      border: 2px solid #b55;
+      color: #a33;
+      margin: 2px 0 0 3px;
+      float: left;
+    }
+    .note .edit_note {
+      position: absolute;
+      cursor: pointer;
+      top: -1px; right: -1px;
+      z-index: 2;
+    }
+    .note .note_controls {
+      height: 36px;
+    }
+      .note .note_controls .minibutton {
+        margin: 10px 0 0 0;
+        width: 60px;
+      }
+        .note .note_controls .cancel_note,
+        .note .note_controls .save_draft_note {
+          margin-right: 10px;
+        }
+        .note.private_access .note_controls .save_draft_note {
+          display: none;
+        }
+        .note .note_controls .save_draft_note {
+          width: 80px;
+        }

@@ -11,7 +11,7 @@ class ApiController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   before_filter :api_login_required, :only => [:upload, :projects, :update, :destroy, :projects, :create_project, :update_project, :destroy_project]
-  before_filter :api_login_optional, :only => [:documents, :search]
+  before_filter :api_login_optional, :only => [:documents, :search, :notes]
 
   def index
     redirect_to '/help/api'
@@ -58,6 +58,14 @@ class ApiController < ApplicationController
     return bad_request unless params[:id] and request.format.json? || request.format.js?
     return not_found unless current_document
     @response = {'document' => current_document.canonical(:access => true, :sections => true, :annotations => true)}
+    json_response
+  end
+  
+  # Retrieve a note's canonical JSON.
+  def note
+    return bad_request unless params[:id] and request.format.json? || request.format.js?
+    return not_found unless current_note
+    @response = {'annotation' => current_note.canonical}
     json_response
   end
 
@@ -139,6 +147,14 @@ class ApiController < ApplicationController
 
   def current_document
     @current_document ||= Document.accessible(current_account, current_organization).find_by_id(params[:id].to_i)
+  end
+
+  def current_note
+    if current_account
+      @current_note ||= Annotation.accessible(current_account).find_by_id(params[:note_id].to_i)
+    else
+      @current_note ||= Annotation.unrestricted.find_by_id(params[:note_id].to_i)
+    end
   end
 
 end

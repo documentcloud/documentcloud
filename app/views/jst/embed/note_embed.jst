@@ -1,0 +1,25 @@
+<div class="note">
+  <div class="note_contents">
+    <div class="note_title display">
+      <span class="title_link"><%= note.get('title') %> <span class="page_number">(p. <%= note.get('page') %>)</span></span>
+    </div>
+    <% if (note.get('access') == 'exclusive') { %>
+      <div class="note_draft_label interface display">Draft</div>
+    <% } %>
+  
+    <% if (note.get('access') == 'private') { %>
+      <div class="icon lock display" title="Private note"></div>
+    <% } %>
+    <% var coords = note.coordinates(); %>
+    <% if (coords) { %>
+      <div class="note_excerpt_wrap">
+        <div class="note_excerpt" style="height: <%= coords.height %>px;">
+          <div class="left_cover"  style="height: <%= coords.height %>px; width: <%= coords.left %>px;"></div>
+          <div class="right_cover" style="height: <%= coords.height %>px; width: <%= 750 - coords.right %>px;"></div>
+          <img class="note_image" src="<%= note.imageUrl() %>" alt="" style="top: -<%= coords.top %>px;" />
+        </div>
+      </div>
+    <% } %>
+    <div class="note_text display"><%= note.get('content') %></div>
+  </div>
+</div>

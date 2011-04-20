@@ -81,15 +81,17 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   },
 
   embedOptions : function() {
-    var options = {};
-    options.note_id = this.note.get('id');
-    options.note_title = this.note.get('title');
+    var options = {
+      note_id     : this.note.get('id'),
+      document_id : this.doc.get('id'),
+      image_url   : this.doc.get('page_image_url')
+    };
     return options;
   },
 
   _renderEmbedCode : function() {
     var options          = this.embedOptions();
-    options.note_title   = '"' + options.note_title + '"';
+    options.image_url    = '"' + options.image_url + '"';
     var serialized       = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['workspace/note_embed_code']({
       note    : this.note,
