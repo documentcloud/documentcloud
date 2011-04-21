@@ -29,7 +29,7 @@
   <div class="note_text display"><%= note.get('content') %></div>
   <div class="annotation_meta">
     <% if (note.get('author')) { %>
-      <div class="annotation_author interface display">Written by: <%= note.get('author') %><% if (note.get('author_organization')) { %>, <i><%= note.get('author_organization') %><% } %></i></div>
+      <div class="annotation_author interface display">Annotated by: <%= note.get('author') %><% if (note.get('author_organization')) { %>, <i><%= note.get('author_organization') %><% } %></i></div>
     <% } %>
     <% if (note.get('access') == 'exclusive') { %>
       <div class="annotation_access interface display">
