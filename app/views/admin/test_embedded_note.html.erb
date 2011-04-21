@@ -17,24 +17,28 @@
   <div class="DC-embed-preview">
 
     <div id="DC-note-172" style="width:370px"></div>
-
     <script type="text/javascript">
-      dc.note_embed.load('<%= DC.server_root(:force_ssl => true) %>/api', {
+      dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>', {
         document_id : 529,
-        note_id     : 172,
-        image_url   : "https://dev.dcloud.org/asset_store/documents/529/pages/a-laboratory-for-teaching-object-oriented-thinking-p{page}-{size}.gif"
+        note_id     : 172
       });
     </script>
     
     <div id="DC-note-176"></div>
-<script>
-  dc.note_embed.load('<%= DC.server_root(:force_ssl => true) %>/api', {
-    note_id: 176,
-    note_title: "CardReader",
-    document_id: 529,
-    image_url: "https://dev.dcloud.org/asset_store/documents/529/pages/a-laboratory-for-teaching-object-oriented-thinking-p{page}-{size}.gif"
-  });
-</script>
+    <script>
+      dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>', {
+        note_id: 176,
+        document_id: 529
+      });
+    </script>
+    
+    <div id="DC-note-177"></div>
+    <script>
+      dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>', {
+        note_id: 177,
+        document_id: 529
+      });
+    </script>
 
 </body>
 </html>

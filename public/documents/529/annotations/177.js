@@ -1,0 +1,1 @@
+dc.embed.noteCallback({"location":{"image":"292,579,380,424"},"access":"public","image_url":"https://dev.dcloud.org/asset_store/documents/529/pages/a-laboratory-for-teaching-object-oriented-thinking-p{page}-{size}.gif","title":"Purple numbers","id":177,"page":4,"content":"It's purple and there are two of them."})

@@ -96,14 +96,24 @@ class Annotation < ActiveRecord::Base
   def access_name
     ACCESS_NAMES[access]
   end
+  
+  def cacheable?
+    access == PUBLIC && document.cacheable?
+  end
 
   def canonical_url
     document.canonical_url(:html) + '#document/' + page_number.to_s
   end
 
-  def canonical
+  def canonical_cache_path
+    "/documents/#{document.id}/annotations/#{id}.js"
+  end
+  
+  def canonical(opts={})
     data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content, :access => access_name}
     data['location'] = {'image' => location} if location
+    Rails.logger.info document.page_image_url_template
+    data['image_url'] = document.page_image_url_template if opts[:include_image_url]
     if author
       data.merge!({
         'author'              => author[:full_name],

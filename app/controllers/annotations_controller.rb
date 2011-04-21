@@ -8,6 +8,17 @@ class AnnotationsController < ApplicationController
     annotations = current_document.annotations_with_authors(current_account)
     json annotations
   end
+  
+  def show
+    respond_to do |format|
+      format.js do
+        json = current_annotation.canonical(:include_image_url => true).to_json
+        js = "dc.embed.noteCallback(#{json})"
+        cache_page js if current_annotation.cacheable?
+        render :js => js
+      end
+    end
+  end
 
   # Any account can create a private note on any document.
   # Only the owner of the document is allowed to create a public annotation.
@@ -21,6 +32,7 @@ class AnnotationsController < ApplicationController
       :account_id      => current_account.id,
       :organization_id => current_organization.id
     ))
+    expire_page current_annotation.canonical_cache_path if current_annotation.cacheable?
     json current_document.annotations_with_authors(current_account, [anno]).first
   end
 
@@ -35,6 +47,7 @@ class AnnotationsController < ApplicationController
     attrs[:access] = DC::Access::ACCESS_MAP[attrs[:access].to_sym]
     anno.update_attributes(attrs)
     expire_page current_document.canonical_cache_path if current_document.cacheable?
+    expire_page current_annotation.canonical_cache_path if current_annotation.cacheable?
     anno.reset_public_note_count
     json anno
   end

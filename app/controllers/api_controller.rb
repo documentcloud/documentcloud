@@ -150,11 +150,7 @@ class ApiController < ApplicationController
   end
 
   def current_note
-    if current_account
-      @current_note ||= Annotation.accessible(current_account).find_by_id(params[:note_id].to_i)
-    else
-      @current_note ||= Annotation.unrestricted.find_by_id(params[:note_id].to_i)
-    end
+    @current_note ||= Annotation.accessible(current_account).find_by_id(params[:note_id].to_i)
   end
 
 end

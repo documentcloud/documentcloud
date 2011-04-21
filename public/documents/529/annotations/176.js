@@ -1,0 +1,1 @@
+dc.embed.noteCallback({"location":{"image":"48,227,520,11"},"image_url":"https://dev.dcloud.org/asset_store/documents/529/pages/a-laboratory-for-teaching-object-oriented-thinking-p{page}-{size}.gif","title":"CardReader","id":176,"access":"public","page":6,"content":"Each a very good table."})
