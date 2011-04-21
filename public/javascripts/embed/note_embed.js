@@ -67,6 +67,7 @@
     center : function($container) {
       var $excerpt       = $('.DC-note-excerpt', $container);
       var coords         = this._coordinates;
+      if (!coords) return;
       var annoCenter     = coords.left + (coords.width / 2);
       var viewportWidth  = $excerpt.closest('.DC-note-excerpt-wrap').width();
       var viewportCenter = viewportWidth / 2;

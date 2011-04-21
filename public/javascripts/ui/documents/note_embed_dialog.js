@@ -12,11 +12,11 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   totalSteps : 2,
 
   STEPS : [null,
-    'Step One: Configure the Embedded Annotation',
+    'Step One: Configure the Embedded Note',
     'Step Two: Copy and Paste the Embed Code'
   ],
 
-  DEMO_ERROR : 'Demo accounts are not allowed to embed annotations. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_5">here</a>.',
+  DEMO_ERROR : 'Demo accounts are not allowed to embed notes. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_5">here</a>.',
 
   DEFAULT_OPTIONS : {},
 

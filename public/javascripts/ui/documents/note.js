@@ -38,6 +38,7 @@ dc.ui.Note = Backbone.View.extend({
   center : function() {
     var $excerpt       = this.$('.note_excerpt');
     var coords         = this.model.coordinates();
+    if (!coords) return;
     var annoCenter     = coords.left + (coords.width / 2);
     var viewportWidth  = $excerpt.closest('.note_excerpt_wrap').width();
     var viewportCenter = viewportWidth / 2;

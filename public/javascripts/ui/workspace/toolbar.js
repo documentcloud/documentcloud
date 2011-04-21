@@ -150,7 +150,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     if (!docs.length) return;
     if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document in order to create the embed.');
     var doc = docs[0];
-    if (!doc.get('public_note_count')) return dc.ui.Dialog.alert('Please select a document with at least one public annotation.');
+    if (!doc.get('public_note_count')) return dc.ui.Dialog.alert('Please select a document with at least one public note.');
     if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
     dc.app.noteEmbedDialog = new dc.ui.NoteEmbedDialog(doc);
   },
@@ -267,7 +267,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     var accountItems = [
       {title : 'Embed These Documents',    onClick : this.openSearchEmbedDialog,      attrs: {'class': 'always'}},
       {title : 'Embed Document Viewer',    onClick : this.openDocumentEmbedDialog,    attrs: {'class': 'singular'}},
-      {title : 'Embed Annotation',         onClick : this.openNoteEmbedDialog,        attrs: {'class': 'singular'}},
+      {title : 'Embed Note',               onClick : this.openNoteEmbedDialog,        attrs: {'class': 'singular'}},
       {title : 'Set Publication Date',     onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
       {title : 'Download Document Viewer', onClick : this.requestDownloadViewers}
     ];
