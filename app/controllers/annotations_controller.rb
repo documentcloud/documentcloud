@@ -1,7 +1,7 @@
 class AnnotationsController < ApplicationController
   include DC::Access
 
-  before_filter :login_required, :except => [:index]
+  before_filter :login_required, :except => [:index, :show]
 
   # In the workspace, request a listing of annotations.
   def index
