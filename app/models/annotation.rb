@@ -112,8 +112,8 @@ class Annotation < ActiveRecord::Base
   def canonical(opts={})
     data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content, :access => access_name}
     data['location'] = {'image' => location} if location
-    Rails.logger.info document.page_image_url_template
     data['image_url'] = document.page_image_url_template if opts[:include_image_url]
+    data['published_url'] = document.published_url || document.document_viewer_url(:allow_ssl => true) if opts[:include_document_url]
     if author
       data.merge!({
         'author'              => author[:full_name],

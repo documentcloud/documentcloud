@@ -16,15 +16,8 @@
 <body style="margin:0; padding:0;">
   <div class="DC-embed-preview">
 
-    <div id="DC-note-172" style="width:370px"></div>
-    <script type="text/javascript">
-      dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>', {
-        document_id : 529,
-        note_id     : 172
-      });
-    </script>
-    
-    <div id="DC-note-176"></div>
+
+    <div id="DC-note-176" style="width:690px;"></div>
     <script>
       dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>', {
         note_id: 176,
@@ -32,13 +25,23 @@
       });
     </script>
     
-    <div id="DC-note-177"></div>
+    <div id="DC-note-177" style="width:200px"></div>
     <script>
       dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>', {
         note_id: 177,
         document_id: 529
       });
     </script>
-
+    
+    <div id="container" style="width:270px"></div>
+    <script type="text/javascript">
+      // dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>', {
+      //   document_id : 529,
+      //   note_id     : 172,
+      //   container   : '#container'
+      // });
+    </script>
+    
+    
 </body>
 </html>

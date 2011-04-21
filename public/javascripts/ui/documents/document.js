@@ -379,18 +379,20 @@ dc.ui.Document = Backbone.View.extend({
 
   // Render each of a document's notes, which have already been fetched.
   _addNote : function(note) {
-    this.notesEl.append((new dc.ui.Note({
+    var noteView = new dc.ui.Note({
       model : note,
       collection : this.model.notes
-    })).render().el);
+    });
+    this.notesEl.append(noteView.render().el);
+    noteView.center();
   },
 
   // Re-renders the notes when the notes are refreshed.
   _renderNotes : function() {
+    this.setMode('has', 'notes');
     this.notesEl.empty();
     this.model.notes.each(this._addNote);
-    if (this.model.ignoreNotes) return;
-    this.setMode('has', 'notes');
+    if (this.model.ignoreNotes) this.setMode('no', 'notes');
   },
 
   // Clicking on the page counts in the tile opens up the page thumbnails below

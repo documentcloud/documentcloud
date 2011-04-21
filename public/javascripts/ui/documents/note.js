@@ -33,6 +33,23 @@ dc.ui.Note = Backbone.View.extend({
     this.setMode(this.model.checkAllowedToEdit() ? 'is' : 'not', 'editable');
     return this;
   },
+  
+  // If the viewport is narrower than the note, center the note.
+  center : function() {
+    var $excerpt       = this.$('.note_excerpt');
+    var coords         = this.model.coordinates();
+    var annoCenter     = coords.left + (coords.width / 2);
+    var viewportWidth  = $excerpt.closest('.note_excerpt_wrap').width();
+    var viewportCenter = viewportWidth / 2;
+
+    if (coords.left + coords.width > viewportWidth) {
+      if (coords.width > viewportWidth) {
+        $excerpt.css('left', -1 * coords.left);
+      } else {
+        $excerpt.css('left', viewportCenter - annoCenter);
+      }
+    }
+  },
 
   // Opens the note in a document in a new window.
   viewNoteInDocument : function() {

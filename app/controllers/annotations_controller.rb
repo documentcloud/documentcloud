@@ -12,7 +12,7 @@ class AnnotationsController < ApplicationController
   def show
     respond_to do |format|
       format.js do
-        json = current_annotation.canonical(:include_image_url => true).to_json
+        json = current_annotation.canonical(:include_image_url => true, :include_document_url => true).to_json
         js = "dc.embed.noteCallback(#{json})"
         cache_page js if current_annotation.cacheable?
         render :js => js

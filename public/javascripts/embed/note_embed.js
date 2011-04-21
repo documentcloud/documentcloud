@@ -8,21 +8,27 @@
   var $ = dc.jQuery   = window.jQuery.noConflict(true);
   
   dc.embed.loadNote = function(embedUrl, opts) {
-    console.log(['load', embedUrl, opts]);
     var id = opts.note_id;
     notes[id] = notes[id] || {};
     notes[id].options = opts;
-
+    
     var urlParams = '/documents/'   + encodeURIComponent(opts.document_id) +
                     '/annotations/' + encodeURIComponent(opts.note_id) + '.js';
     $.getScript(embedUrl + urlParams);
   };
   
   dc.embed.noteCallback = function(response) {
-    var id = response.id;
-    var note = new dc.embed.noteModel(response);
-    console.log(['response', id, response, notes[id].options, note]);
-    $('#DC-note-' + id).html(JST['note_embed']({note : note}));
+    var id         = response.id;
+    var note       = new dc.embed.noteModel(response);
+    var $container = $('#DC-note-' + id);
+    var container;
+    var containerWidth = $container.width();
+
+    if (container = notes[id].options.container) {
+      $container = $(container);
+    }
+    $container.html(JST['note_embed']({note : note}));
+    if (containerWidth < 700) note.center($container, containerWidth);
   };
   
   dc.embed.noteModel = function(json) {
@@ -54,9 +60,31 @@
         left:   css[3],
         right:  css[1],
         height: css[2] - css[0],
-        width:  css[3] - css[1]
+        width:  css[1] - css[3]
       };
+    },
+    
+    center : function($container) {
+      var $excerpt       = $('.DC-note-excerpt', $container);
+      var coords         = this._coordinates;
+      var annoCenter     = coords.left + (coords.width / 2);
+      var viewportWidth  = $excerpt.closest('.DC-note-excerpt-wrap').width();
+      var viewportCenter = viewportWidth / 2;
+
+      if (coords.left + coords.width > viewportWidth) {
+        if (coords.width > viewportWidth) {
+          $excerpt.css('left', -1 * coords.left);
+        } else {
+          $excerpt.css('left', viewportCenter - annoCenter);
+        }
+      }
+    },
+    
+    viewerUrl : function() {
+      var suffix = '#document/p' + this.get('page') + '/a' + this.get('id');
+      return this.get('published_url') + suffix;
     }
+    
   };
   
 })();

@@ -74,24 +74,24 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   },
   
   _renderNote : function() {
-    this.$('.note_preview').html((new dc.ui.Note({
+    var noteView = new dc.ui.Note({
       model       : this.note,
       collection  : this.doc.notes
-    })).render().el);
+    });
+    this.$('.note_preview').html(noteView.render().el);
+    noteView.center();
   },
 
   embedOptions : function() {
     var options = {
       note_id     : this.note.get('id'),
-      document_id : this.doc.get('id'),
-      image_url   : this.doc.get('page_image_url')
+      document_id : this.doc.get('id')
     };
     return options;
   },
 
   _renderEmbedCode : function() {
     var options          = this.embedOptions();
-    options.image_url    = '"' + options.image_url + '"';
     var serialized       = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['workspace/note_embed_code']({
       note    : this.note,

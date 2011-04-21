@@ -26,7 +26,7 @@ dc.model.Note = Backbone.Model.extend({
       left:   css[3],
       right:  css[1],
       height: css[2] - css[0],
-      width:  css[3] - css[1]
+      width:  css[1] - css[3]
     };
   }
 

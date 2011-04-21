@@ -269,7 +269,6 @@
   position: relative;
   margin-bottom: 15px;
   clear: both;
-  overflow: hidden;
 }
   .note_embed_dialog .publish_info {
     font-size: 11px;
@@ -310,6 +309,7 @@
   max-height: 400px;
   overflow-y: auto;
   padding-right: 12px;
+  margin-right: -12px;
 }
   .note_embed_dialog .note_preview .edit_note {
     display: none;
