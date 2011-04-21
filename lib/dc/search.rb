@@ -15,7 +15,7 @@ module DC
 
     DEFAULT_PER_PAGE  = 10
     MAX_PER_PAGE      = 1000
-    DEFAULT_ORDER     = 'created_at'
+    DEFAULT_ORDER     = 'score'
     QUERY_OR          = ' | '
 
   end
