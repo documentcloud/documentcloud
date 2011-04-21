@@ -11,6 +11,8 @@ javascripts:
     - public/javascripts/embed/search_embed.js
     - app/views/jst/embed/search_*.jst
   note_embed:
+    - public/javascripts/vendor/underscore-*.js
+    - public/javascripts/vendor/jquery-*.js
     - public/javascripts/embed/note_embed.js
     - app/views/jst/embed/note_*.jst
 

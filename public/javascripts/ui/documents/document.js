@@ -189,6 +189,7 @@ dc.ui.Document = Backbone.View.extend({
       if (this.modes.notes == 'has') return this.setMode('owns', 'notes');
       if (model.checkBusy()) return;
       if (model.notes.length && model.notes.length == this.model.get('annotation_count')) {
+        this._renderNotes();
         return this.setMode('has', 'notes');
       }
       dc.ui.spinner.show('loading notes');
