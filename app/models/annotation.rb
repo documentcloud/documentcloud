@@ -125,7 +125,6 @@ class Annotation < ActiveRecord::Base
   end
 
   def reset_public_note_count
-    return unless access == PUBLIC
     document.reset_public_note_count
   end
 

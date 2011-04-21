@@ -43,7 +43,8 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
     if (dc.account.organization.demo) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     dc.ui.Dialog.prototype.render.call(this);
     this.$('.custom').html(JST['workspace/note_embed_dialog']({
-      doc : this.doc
+      doc   : this.doc,
+      notes : this.doc.notes.select(function(note) { return note.get('access') == 'public'; })
     }));
     this._next          = this.$('.next');
     this._previous      = this.$('.previous');

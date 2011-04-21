@@ -3,7 +3,7 @@
   <div class="publish_section publish_info selectable_text">
     <label for="embed_note_select">Select an annotation to embed:</label>
     <select name="note" id="embed_note_select">
-      <% doc.notes.each(function(note) { %>
+      <% _.each(notes, function(note) { %>
         <option value="<%= note.get('id') %>"><%= note.get('title') %></option>
       <% }); %>
     </select>
