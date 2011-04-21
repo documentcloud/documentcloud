@@ -33,20 +33,22 @@ namespace :deploy do
     bucket.put('viewer/loader.js', contents, {}, 'public-read')
   end
 
-  desc "Deploy the Search Embed to S3"
-  task :embed, :needs => :environment do
-    s3 = RightAws::S3.new(SECRETS['aws_access_key'], SECRETS['aws_secret_key'], :protocol => 'http', :port => 80)
-    bucket = s3.bucket('s3.documentcloud.org')
-    Dir['public/embed/**/*'].each do |file|
-      next if File.directory? file
-      mimetype = MIME::Types.type_for(File.extname(file)).first
-      headers = mimetype ? {'Content-type' => mimetype.content_type} : {}
-      puts "uploading #{file} (#{mimetype})"
-      bucket.put("embed/#{file.gsub('public/embed/', '')}", File.open(file), {}, 'public-read', headers)
+  desc "Deploy the Search/Note Embed to S3"
+  {:search => ['search_embed', 'embed'], :notes => ['note_embed', 'notes']}.each_pair do |folder, embed|
+    task folder.to_sym, :needs => :environment do
+      s3 = RightAws::S3.new(SECRETS['aws_access_key'], SECRETS['aws_secret_key'], :protocol => 'http', :port => 80)
+      bucket = s3.bucket('s3.documentcloud.org')
+      Dir['public/#{embed[0]}/**/*'].each do |file|
+        next if File.directory? file
+        mimetype = MIME::Types.type_for(File.extname(file)).first
+        headers = mimetype ? {'Content-type' => mimetype.content_type} : {}
+        puts "uploading #{file} (#{mimetype})"
+        bucket.put("embed/#{file.gsub("public/#{embed[0]}", '')}", File.open(file), {}, 'public-read', headers)
+      end
+      DC_CONFIG['server_root'] = 's3.documentcloud.org'
+      contents = ERB.new(File.read("app/views/#{embed[0]}/loader.js.erb")).result(binding)
+      bucket.put("#{embed[1]}/loader.js", contents, {}, 'public-read')
     end
-    DC_CONFIG['server_root'] = 's3.documentcloud.org'
-    contents = ERB.new(File.read('app/views/search/loader.js.erb')).result(binding)
-    bucket.put('embed/loader.js', contents, {}, 'public-read')
   end
 
 end
