@@ -6,9 +6,9 @@
 &lt;div id="DC-note-<%= note.get('id') %>"&gt;&lt;/div&gt;&#10;
 &lt;script src="http://s3.documentcloud.org/notes/loader.js"&gt;&lt;/script&gt;&#10;
 &lt;script&gt;&#10;
-  dc.embed.loadNote('<%= window.SERVER_ROOT_HTTP %>', {&#10;
+  dc.embed.loadNote('<%= window.SERVER_ROOT_HTTP %>/documents/<%= note.get('document_id') %>/annotations/<%= note.get('id') %>.js'<% if (options) { %>, {&#10;
     <%= options %>&#10;
-  });&#10;
+  }<% } %>);&#10;
 &lt;/script&gt;
 </textarea>
 

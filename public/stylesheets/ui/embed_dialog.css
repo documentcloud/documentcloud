@@ -267,7 +267,7 @@
 
 .note_embed_dialog .publish_section {
   position: relative;
-  margin-bottom: 15px;
+  margin-bottom: 24px;
   clear: both;
 }
   .note_embed_dialog .publish_info {
@@ -279,22 +279,26 @@
     overflow: hidden;
   }
   .note_embed_dialog textarea.snippet {
-    width: 100%;
+    width: 96%;
     height: 120px;
     border: 1px solid #dedede;
     font: 11px Menlo, Consolas, Monaco, Courier, monospace;
-    margin: 10px 0px;
+    margin: 10px 0px 0;
     padding: 8px;
     resize: none;
   }
-
+.note_embed_dialog .note {
+   box-shadow: none; 
+   -webkit-box-shadow: none; 
+   -moz-box-shadow: none;
+}
 .note_embed_dialog .publish_prepare_section {
   margin: 0 0 16px 0;
   clear: both;
   overflow: hidden;
 }
   .note_embed_dialog .publish_prepare_section_label {
-    margin: 0 0 4px 0;
+    margin: 0 0 8px 0;
   }
   
 .note_embed_dialog .publish_step_1 label {

@@ -8,13 +8,10 @@
   var $ = dc.jQuery   = window.jQuery.noConflict(true);
   
   dc.embed.loadNote = function(embedUrl, opts) {
-    var id = opts.note_id;
+    var id = parseInt(embedUrl.match(/(\d+).js$/)[1], 10);
     notes[id] = notes[id] || {};
-    notes[id].options = opts;
-    
-    var urlParams = '/documents/'   + encodeURIComponent(opts.document_id) +
-                    '/annotations/' + encodeURIComponent(opts.note_id) + '.js';
-    $.getScript(embedUrl + urlParams);
+    notes[id].options = opts || {};
+    $.getScript(embedUrl);
   };
   
   dc.embed.noteCallback = function(response) {

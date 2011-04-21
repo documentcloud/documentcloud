@@ -84,10 +84,7 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   },
 
   embedOptions : function() {
-    var options = {
-      note_id     : this.note.get('id'),
-      document_id : this.doc.get('id')
-    };
+    var options = {};
     return options;
   },
 
