@@ -36,29 +36,6 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.box.unbind('updated.autogrow').bind('updated.autogrow', _.bind(this.moveAutocomplete, this));
   },
   
-  selectFacet : function() {
-    console.log(['selectFacet', this.box]);
-    this.canClose = false;
-    if (this.box.is(':focus')) this.box.blur();
-    this.setMode('is', 'selected');
-    this.setMode('not', 'editing');
-    this.closeAutocomplete();
-    $(document).unbind('keydown.facet');
-    $(document).unbind('click.facet');
-    _.defer(_.bind(function() {
-      $(document).unbind('keydown.facet').bind('keydown.facet', this.keydown);
-      $(document).unbind('click.facet').one('click.facet', this.deselectFacet);
-    }, this));
-  },
-  
-  deselectFacet : function(e) {
-    console.log(['deselectFacet', this.box, e]);
-    this.setMode('not', 'selected');
-    this.closeAutocomplete();
-    $(document).unbind('keydown.facet');
-    $(document).unbind('click.facet');
-  },
-  
   setupAutocomplete : function() {
     var data = this.autocompleteValues();
 
@@ -114,25 +91,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       dc.app.searchBox.addFocus();
     }
     this.box.trigger('resize.autogrow');
-  },
-  
-  searchAutocomplete : function(e) {
-    console.log(['searchAutocomplete', e]);
-    var autocomplete = this.box.data('autocomplete');
-    if (autocomplete) autocomplete.search();
-  },
-  
-  closeAutocomplete : function() {
-    var autocomplete = this.box.data('autocomplete');
-    if (autocomplete) autocomplete.close();
-  },
-  
-  setCursorPosition : function(direction) {
-    if (direction == -1) {
-      this.box.setCursorPosition(this.box.val().length);
-    } else {
-      this.box.setCursorPosition(0);
-    }
+    dc.app.searchBox.disableFacets(this);
   },
   
   deferDisableEdit : function(e) {
@@ -155,6 +114,51 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.setMode('not', 'editing');
     this.box.blur();
     this.closeAutocomplete();
+  },
+  
+  selectFacet : function() {
+    console.log(['selectFacet', this.box]);
+    this.canClose = false;
+    this.box.setCursorPosition(0);
+    if (this.box.is(':focus')) this.box.blur();
+    this.setMode('is', 'selected');
+    this.setMode('not', 'editing');
+    this.closeAutocomplete();
+    dc.app.searchBox.addFocus();
+    $(document).unbind('keydown.facet');
+    $(document).unbind('click.facet');
+    _.defer(_.bind(function() {
+      $(document).unbind('keydown.facet').bind('keydown.facet', this.keydown);
+      $(document).unbind('click.facet').one('click.facet', this.deselectFacet);
+    }, this));
+    dc.app.searchBox.disableFacets(this);
+  },
+  
+  deselectFacet : function(e) {
+    console.log(['deselectFacet', this.box, e]);
+    this.setMode('not', 'selected');
+    this.closeAutocomplete();
+    $(document).unbind('keydown.facet');
+    $(document).unbind('click.facet');
+  },
+  
+  searchAutocomplete : function(e) {
+    console.log(['searchAutocomplete', e]);
+    var autocomplete = this.box.data('autocomplete');
+    if (autocomplete) autocomplete.search();
+  },
+  
+  closeAutocomplete : function() {
+    var autocomplete = this.box.data('autocomplete');
+    if (autocomplete) autocomplete.close();
+  },
+  
+  setCursorPosition : function(direction) {
+    if (direction == -1) {
+      this.box.setCursorPosition(this.box.val().length);
+    } else {
+      this.box.setCursorPosition(0);
+    }
   },
   
   remove : function(e) {

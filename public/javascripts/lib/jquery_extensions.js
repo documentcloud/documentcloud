@@ -298,7 +298,7 @@
                        .replace(/>/g, '&gt;');
           
           $tester.html(value);
-          console.log(['autoGrow', realEvent, e.type, value, $tester, $tester.html(), $tester.width()]);
+          // console.log(['autoGrow', realEvent, e.type, value, $tester, $tester.html(), $tester.width()]);
           $input.width($tester.width() + 3);
           $input.trigger('updated.autogrow');
         });
@@ -309,7 +309,6 @@
     getCursorPosition: function() {
       var position = 0;
       var input    = this.get(0);
-      console.log(['getCursorPosition', input, this]);
       if (document.selection) {
         // IE
         input.focus();
@@ -322,6 +321,7 @@
         position = input.selectionStart;
       }
 
+      console.log(['getCursorPosition', position]);
       return position;
     },
     

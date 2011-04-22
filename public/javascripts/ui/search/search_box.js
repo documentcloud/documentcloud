@@ -132,6 +132,18 @@ dc.ui.SearchBox = Backbone.View.extend({
   removeFacet : function(view) {
     this.facetViews = _.without(this.facetViews, view);
   },
+  
+  disableFacets : function(keepView) {
+    _.each(this.facetViews, function(view) {
+      if (view != keepView &&
+          (view.modes.editing == 'is' ||
+           view.modes.selected == 'is')) {
+        console.log(['disabling view', view]);
+        view.disableEdit();
+        view.deselectFacet();
+      }
+    });
+  },
 
   hideSearch : function() {
     $(document.body).setMode(null, 'search');
