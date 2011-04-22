@@ -151,12 +151,17 @@ dc.ui.AccountView = Backbone.View.extend({
   },
 
   _deleteAccount : function() {
-    if (dc.app.accounts.isOpen()) dc.app.accounts.close();
-    dc.ui.Dialog.confirm('Really delete ' + this.model.fullName() + '?', _.bind(function() {
+    if (this.dialog.isOpen()) this.dialog.close();
+    dc.ui.Dialog.confirm(null, _.bind(function() {
       $(this.el).remove();
       this.model.destroy();
       return true;
-    }, this));
+    }, this), {
+      id          : 'delete_account_confirm',
+      title       : 'Really disable ' + this.model.fullName() + '\'s account?',
+      description : this.model.fullName() + ' will no longer be able to log in to DocumentCloud, but any existing public documents and annotations will remain available. If '+this.model.fullName()+'\'s account should be purged completely, contact Support.',
+      saveText    : 'Disable'
+    });
   },
 
   _loginAsAccount : function() {

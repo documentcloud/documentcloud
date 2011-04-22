@@ -134,6 +134,10 @@
     display: inline;
   }
 
+#delete_account_confirm {
+  width: 342px;
+}
+
 /*--------------------------- Share Documents Dialog ----------------------------*/
 .share_dialog {
   width: 600px;

@@ -4,7 +4,7 @@
 class Account < ActiveRecord::Base
   include DC::Access
   
-  DELETED       = 0
+  DISABLED      = 0
   ADMINISTRATOR = 1
   CONTRIBUTOR   = 2
   REVIEWER      = 3
@@ -33,8 +33,10 @@ class Account < ActiveRecord::Base
   delegate :name, :to => :organization, :prefix => true, :allow_nil => true
 
   # Scopes:
-  named_scope :admin, {:conditions => {:role => ADMINISTRATOR}}
-  named_scope :active, {:conditions => {:role => [ADMINISTRATOR, CONTRIBUTOR]}}
+  named_scope :admin,     {:conditions => {:role => ADMINISTRATOR}}
+  named_scope :active,    {:conditions => ["role not in (?)", [DISABLED]]}
+  named_scope :real,      {:conditions => ["role in (?)", [ADMINISTRATOR, CONTRIBUTOR]]}
+  named_scope :reviewer,  {:conditions => {:role => REVIEWER}}
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session=nil, cookies=nil)
@@ -99,6 +101,10 @@ class Account < ActiveRecord::Base
   
   def real?
     admin? || contributor?
+  end
+  
+  def active?
+    @role != DISABLED
   end
 
   # An account owns a resource if it's tagged with the account_id.
@@ -229,10 +235,6 @@ class Account < ActiveRecord::Base
   def password=(new_password)
     @password = BCrypt::Password.create(new_password, :cost => 8)
     self.hashed_password = @password
-  end
-  
-  def active?
-    @role != DELETED
   end
 
   def canonical(options={})
