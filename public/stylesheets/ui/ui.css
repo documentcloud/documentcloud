@@ -201,7 +201,8 @@ div.text_input {
     }
     div.text_input .search_inner {
       position: relative;
-      padding: 0 28px;
+      margin: 0 25px;
+      padding: 0 3px;
       overflow: hidden;
     }
       div.text_input.search .search_facets {
@@ -299,7 +300,7 @@ div.text_input {
         div.text_input.search .placeholder,
         div.text_input.search .input_width_tester {
           color: #808080;
-          font: 13px/18px Helvetica, Arial;
+          font: 13px/17px Helvetica, Arial;
         }
         div.text_input.search.focus .search_facet.is_editing input {
           color: #000;

@@ -22,16 +22,15 @@ dc.ui.SearchFacet = Backbone.View.extend({
     $el.html(JST['workspace/search_facet']({
       model : this.model
     }));
-    
     this.setMode('not', 'editing');
-    
     this.box = this.$('input');
     
     return this;
   },
   
+  // This is defered from the searchBox so it can be attached to the 
+  // DOM to get the correct font-size.
   calculateSize : function() {
-    // This is defered so it can be attached to the DOM to get the correct font-size.
     this.box.autoGrowInput();
     this.box.unbind('updated.autogrow').bind('updated.autogrow', _.bind(this.moveAutocomplete, this));
   },
@@ -46,7 +45,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       select    : _.bind(function(e, ui) {
         console.log(['autocomplete', e, ui]);
         e.preventDefault();
-        this.set(ui.item.value, e);
+        this.set(ui.item.value);
         this.search(e);
         return false;
       }, this)
@@ -65,7 +64,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     }
   },
   
-  set : function(value, e) {
+  set : function(value) {
     if (!value) return;
     // this.box.data('autocomplete').close();
     console.log(['set facet', value, this.model.get('value'), this.model]);
@@ -152,29 +151,6 @@ dc.ui.SearchFacet = Backbone.View.extend({
     var autocomplete = this.box.data('autocomplete');
     if (autocomplete) autocomplete.close();
   },
-  
-  setCursorPosition : function(direction) {
-    if (direction == -1) {
-      this.box.setCursorPosition(this.box.val().length);
-    } else {
-      this.box.setCursorPosition(0);
-    }
-  },
-  
-  remove : function(e) {
-    console.log(['remove facet', e, this.model]);
-    var committed = this.model.has('value');
-    this.deselectFacet();
-    this.disableEdit();
-    SearchQuery.remove(this.model);
-    Backbone.View.prototype.remove.call(this);
-    if (committed) {
-      this.search(e);
-    } else {
-      dc.app.searchBox.renderQuery();
-      dc.app.searchBox.focusNextFacet(this, -1);
-    }
-  },
 
   autocompleteValues : function() {
     var category = this.model.get('category');
@@ -199,6 +175,29 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   hideDelete : function() {
     this.$el.removeClass('search_facet_maybe_delete');
+  },
+  
+  moveCursorInDirection : function(direction) {
+    if (direction == -1) {
+      this.box.setCursorPosition(this.box.val().length);
+    } else {
+      this.box.setCursorPosition(0);
+    }
+  },
+  
+  remove : function(e) {
+    console.log(['remove facet', e, this.model]);
+    var committed = this.model.has('value');
+    this.deselectFacet();
+    this.disableEdit();
+    SearchQuery.remove(this.model);
+    Backbone.View.prototype.remove.call(this);
+    if (committed) {
+      this.search(e);
+    } else {
+      dc.app.searchBox.renderQuery();
+      dc.app.searchBox.focusNextFacet(this, -1);
+    }
   },
   
   keydown : function(e) {

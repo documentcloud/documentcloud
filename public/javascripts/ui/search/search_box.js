@@ -74,7 +74,10 @@ dc.ui.SearchBox = Backbone.View.extend({
     }
   },
   
-  showFacetCategoryMenu : function() {
+  showFacetCategoryMenu : function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(['showFacetCategoryMenu', e]);
     if (this.facetCategoryMenu && this.facetCategoryMenu.modes.open == 'is') {
       return this.facetCategoryMenu.close();
     }
@@ -92,6 +95,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     }));
     
     this.$('.search_glyph').after(menu.render().open().content);
+    return false;
   },
   
   // Shortcut to the searchbox's value.
@@ -315,7 +319,7 @@ dc.ui.SearchBox = Backbone.View.extend({
         this.facetViews[next].selectFacet();
       } else {
         this.facetViews[next].enableEdit();
-        this.facetViews[next].setCursorPosition(direction || startAtEnd);
+        this.facetViews[next].moveCursorInDirection(direction || startAtEnd);
       }
     }
   },
