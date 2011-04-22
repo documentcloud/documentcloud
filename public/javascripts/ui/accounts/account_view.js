@@ -188,7 +188,7 @@ dc.ui.AccountView = Backbone.View.extend({
     model.invalid = true;
     dc.ui.spinner.hide();
     this.showEdit();
-    dc.app.accounts.error(resp.errors[0]);
+    this.dialog.error(resp.errors && resp.errors[0] || 'Could not add the account.');
   }
 
 });

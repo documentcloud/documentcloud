@@ -34,7 +34,7 @@ class Account < ActiveRecord::Base
 
   # Scopes:
   named_scope :admin,     {:conditions => {:role => ADMINISTRATOR}}
-  named_scope :active,    {:conditions => ["role not in (?)", [DISABLED]]}
+  named_scope :active,    {:conditions => ["role != ?", DISABLED]}
   named_scope :real,      {:conditions => ["role in (?)", [ADMINISTRATOR, CONTRIBUTOR]]}
   named_scope :reviewer,  {:conditions => {:role => REVIEWER}}
 

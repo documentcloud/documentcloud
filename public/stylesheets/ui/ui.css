@@ -626,8 +626,8 @@ textarea.text_area {
   }
   .dialog .description {
     text-align: left;
-    font-size: 12px;
-    line-height: 18px;
+    font-size: 11px;
+    line-height: 16px;
     margin-bottom: 10px;
   }
   .dialog .text_link {

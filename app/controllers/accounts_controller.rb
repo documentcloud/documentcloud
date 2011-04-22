@@ -87,8 +87,8 @@ class AccountsController < ApplicationController
   # Removing an account only changes their role so that they cannot
   # login. Ther documents, projects, and name remain.
   def destroy
+    return forbidden unless current_account.admin?
     account = current_organization.accounts.find(params[:id])
-    return forbidden unless current_account.admin? and current_account.organization == account.organization
     account.update_attributes :role => Account::DISABLED
     json nil
   end
