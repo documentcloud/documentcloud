@@ -8,6 +8,7 @@ class RedactPages < DocumentModBase
   LARGE_FACTOR    = 1000.0 / 700.0
   ORIGINAL_FACTOR = 1700.0 / 700.0
   REDACTION_RED   = "#880000"
+  MAX_PER_PAGE    = 25
 
   GM_ARGS = '-limit memory 256MiB -limit map 512MiB'
 
@@ -61,7 +62,7 @@ class RedactPages < DocumentModBase
       pos = redaction['location'].split(/,\s*/)
       [pos[3], pos[0], pos[1], pos[2]]
     end
-    coords.each_slice(3) do |coords_slice|
+    coords.each_slice(MAX_PER_PAGE) do |coords_slice|
       original_coords = coords_slice.map {|list| 'rectangle ' + list.map {|px| (px.to_i * ORIGINAL_FACTOR).round }.join(',') }.join(' ')
       large_coords    = coords_slice.map {|list| 'rectangle ' + list.map {|px| (px.to_i * LARGE_FACTOR).round }.join(',') }.join(' ')
       `gm mogrify #{GM_ARGS} #{page_tiff_path} -fill "#{REDACTION_RED}" -draw "#{original_coords}" #{page_tiff_path} 2>&1`
