@@ -222,7 +222,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       if (this.modes.selected == 'is') {
         e.preventDefault();
         this.deselectFacet(e);
-        this.setCursorPosition(0);
+        this.moveCursorInDirection(0);
         this.enableEdit(e);
       } else if (this.box.getCursorPosition() == this.box.val().length) {
         e.preventDefault();

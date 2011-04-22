@@ -83,6 +83,9 @@ body.minidocs #document_list .document {
 div.text_input.search input {
   line-height: 16px;
 }
+div.text_input.search .search_facet .category {
+  line-height: 12px;
+}
 #upload_dialog .line {
   display: none;
 }
