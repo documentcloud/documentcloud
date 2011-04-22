@@ -61,10 +61,12 @@ class RedactPages < DocumentModBase
       pos = redaction['location'].split(/,\s*/)
       [pos[3], pos[0], pos[1], pos[2]]
     end
-    original_coords = coords.map {|list| 'rectangle ' + list.map {|px| (px.to_i * ORIGINAL_FACTOR).round }.join(',') }.join(' ')
-    large_coords    = coords.map {|list| 'rectangle ' + list.map {|px| (px.to_i * LARGE_FACTOR).round }.join(',') }.join(' ')
-    `gm mogrify #{GM_ARGS} #{page_tiff_path} -fill "#{REDACTION_RED}" -draw "#{original_coords}" #{page_tiff_path} 2>&1`
-    `gm mogrify #{GM_ARGS} #{images['large']} -fill "#{REDACTION_RED}" -draw "#{large_coords}" #{images['large']} 2>&1`
+    coords.each_slice(3) do |coords_slice|
+      original_coords = coords_slice.map {|list| 'rectangle ' + list.map {|px| (px.to_i * ORIGINAL_FACTOR).round }.join(',') }.join(' ')
+      large_coords    = coords_slice.map {|list| 'rectangle ' + list.map {|px| (px.to_i * LARGE_FACTOR).round }.join(',') }.join(' ')
+      `gm mogrify #{GM_ARGS} #{page_tiff_path} -fill "#{REDACTION_RED}" -draw "#{original_coords}" #{page_tiff_path} 2>&1`
+      `gm mogrify #{GM_ARGS} #{images['large']} -fill "#{REDACTION_RED}" -draw "#{large_coords}" #{images['large']} 2>&1`
+    end
 
     # Downsize the large image to all smaller image sizes.
     previous = nil
