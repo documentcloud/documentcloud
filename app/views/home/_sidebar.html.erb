@@ -30,7 +30,7 @@
     <div class="sidebar_section login_section">
       <% if flash[:error] %>
         <div class="error">
-          Invalid email or password.
+          <%= flash[:error] %>
         </div>
       <% end %>
       <form id="login_form" action="<%= DC.server_root(:force_ssl => true) %>/login" method="POST">

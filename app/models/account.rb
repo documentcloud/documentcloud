@@ -9,7 +9,7 @@ class Account < ActiveRecord::Base
   CONTRIBUTOR   = 2
   REVIEWER      = 3
 
-  ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER]
+  ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER, DISABLED]
 
   # Associations:
   belongs_to  :organization
@@ -104,7 +104,7 @@ class Account < ActiveRecord::Base
   end
   
   def active?
-    @role != DISABLED
+    role != DISABLED
   end
 
   # An account owns a resource if it's tagged with the account_id.

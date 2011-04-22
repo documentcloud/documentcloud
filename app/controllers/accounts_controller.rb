@@ -88,7 +88,8 @@ class AccountsController < ApplicationController
   # login. Ther documents, projects, and name remain.
   def destroy
     account = current_organization.accounts.find(params[:id])
-    account.update_attributes :role => Account::DELETED
+    return forbidden unless current_account.admin? and current_account.organization == account.organization
+    account.update_attributes :role => Account::DISABLED
     json nil
   end
 

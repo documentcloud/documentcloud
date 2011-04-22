@@ -9,7 +9,7 @@
     <% if flash[:error] %>
       <div class="form_error login_error">
         <span>
-          Incorrect email address or password.
+          <%= flash[:error] %>
         </span>
       </div>
     <% end %>

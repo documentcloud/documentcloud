@@ -31,10 +31,23 @@ class WorkspaceController < ApplicationController
 
   # /login handles both the login form and the login request.
   def login
-    return redirect_to '/' if current_account && current_account.refresh_credentials(cookies)
+    return redirect_to '/' if current_account && current_account.refresh_credentials(cookies) && !current_account.reviewer? && current_account.active?
     return render unless request.post?
-    account = Account.log_in(params[:email], params[:password], session)
-    (account && account.active?) ? redirect_to('/') : fail(true)
+    next_url = (params[:next] && CGI.unescape(params[:next])) || '/'
+    account = Account.log_in(params[:email], params[:password], session, cookies)
+    return redirect_to(next_url) if account && account.active?
+    if account && !account.active?
+      flash[:error] = "Your account has been disabled. Contact support@documentcloud.org."
+    else
+      flash[:error] = "Invalid email or password."
+    end
+    begin
+      if referrer = request.env["HTTP_REFERER"]
+        redirect_to referrer.sub(/^http:/, 'https:')
+      end
+    rescue RedirectBackError => e
+      # Render...
+    end
   end
 
   # Logging out clears your entire session.
