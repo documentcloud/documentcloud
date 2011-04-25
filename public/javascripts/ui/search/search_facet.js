@@ -72,6 +72,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   search : function(e) {
+    this.closeAutocomplete();
     dc.app.searchBox.searchEvent(e);
   },
   

@@ -221,6 +221,12 @@ dc.ui.SearchBox = Backbone.View.extend({
     console.log(['real searchEvent', e, query]);
     if (!dc.app.searcher.flags.outstandingSearch) dc.app.searcher.search(query);
     this.box.focus();
+    this.closeAutocomplete();
+  },
+  
+  closeAutocomplete : function() {
+    var autocomplete = this.box.data('autocomplete');
+    if (autocomplete) autocomplete.close();
   },
   
   renderQuery : function() {
