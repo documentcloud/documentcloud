@@ -32,7 +32,6 @@ class AnnotationsController < ApplicationController
       :account_id      => current_account.id,
       :organization_id => current_organization.id
     ))
-    expire_page current_annotation.canonical_cache_path if current_annotation.cacheable?
     json current_document.annotations_with_authors(current_account, [anno]).first
   end
 
