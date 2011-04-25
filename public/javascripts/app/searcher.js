@@ -66,6 +66,16 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
   // Swap out project
   publicQuery : function() {
+<<<<<<< HEAD
+=======
+    var projectName;
+    var query = this.box.value();
+
+    // Swap out documents for short ids.
+    query = query.replace(/(document: \d+)-\S+/g, '$1');
+
+    // Swap out projects.
+>>>>>>> 7bf5665... upgrading the search embed dialog to use more pithy document queries for selected docs.
     var projects = [];
     var projectNames = SearchQuery.values('project');
     _.each(projectNames, function(projectName) {

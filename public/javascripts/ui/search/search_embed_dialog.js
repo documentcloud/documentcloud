@@ -34,11 +34,12 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function(docs) {
-    this.query       = dc.app.searcher.publicQuery() || "";
     this.currentStep = 1;
     this.docs        = docs;
     if (docs.length) {
-      this.query = _.map(docs, function(doc){ return 'document: ' + doc.canonicalId(); }).join(' ');
+      this.query = _.map(docs, function(doc){ return 'document: ' + doc.id; }).join(' ');
+    } else {
+      this.query = dc.app.searcher.publicQuery() || "";
     }
 
     dc.ui.Dialog.call(this, {mode : 'custom', title : this.displayTitle()});
