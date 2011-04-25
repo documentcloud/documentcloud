@@ -52,7 +52,33 @@ Place the embed code on your page, in the location where you would like the view
 
 [Let us know][] about your reporting!
 
+# <span id="docset">Embedding a Note from a Document</span>
+
+![Embed Note Menu][]
+
+If you are looking to embed notes directly in your reporting, DocumentCloud can provide the HTML to embed as many notes as you would like. The embedded notes also stay up-to-date with any changes you make to the notes while editing the document.
+
+You can only embed notes from documents that you or your organization owns. You do not have to be the author of the note.
+
+To get started, you can either find a document that contains the note you would like to embed, or go to the note directly and embed it from the document viewer.
+
+To embed a note from the workspace, click on the document, open the "Publish" menu and select "Embed a Note." You'll see a dialog which allows you to choose which note from the document to embed. Here you can preview how the note will look. **Note:** The embedded note will stretch to fill the container it's in. So it may end up wider than the preview. 
+
+If the preview looks good, copy and paste the HTML embed code. Here's an example of what the embed code should look like:
+
+    <div id="DC-note-237"></div>
+    <script src="http://s3.documentcloud.org/notes/loader.js"></script>
+    <script>
+      dc.embed.loadNote('http://www.documentcloud.org/documents/223/annotations/237.js');
+    </script>
+    
+Paste the code into on your website, and you'll see the embedded note appear.
+
+Click on either the note title or the note image to open the document. The document will open directly on the note.
+
 # <span id="docset">Embedding a Document Set</span>
+
+![Embed Search Menu][]
 
 If you'd rather embed a complete set of documents, DocumentCloud can provide the HTML to do that as well. Readers will be able to search or filter through as many documents as you'd like to share with them. 
 
@@ -89,7 +115,9 @@ Click on any document to open it. If you've previously published the document on
 Still have questions about publishing documents? Don't hesitate to [contact us][].
 
 [Embed Menu]: /images/help/embed_menu.png
-[favorite embedded documents]: http://documentcloud.pbworks.com/Document-Dives
+[Embed Note Menu]: /images/help/embed_note_menu.png
+[Embed Search Menu]: /images/help/embed_search_menu.png
+[favorite embedded documents]: /featured
 [terms and conditions]: /terms
 [plenty more]: /featured
 [HTML validator]: http://validator.w3.org/
