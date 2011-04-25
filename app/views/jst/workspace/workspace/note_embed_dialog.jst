@@ -1,7 +1,7 @@
 <div class="publish_step publish_step_1 is_enabled">
 
   <div class="publish_section publish_info selectable_text">
-    <label for="embed_note_select">Select a note to embed:</label>
+    <label for="embed_note_select">Choose note:</label>
     <select name="note" id="embed_note_select">
       <% _.each(notes, function(note) { %>
         <option value="<%= note.get('id') %>"><%= note.get('title') %></option>

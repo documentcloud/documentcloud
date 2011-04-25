@@ -12,7 +12,7 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   totalSteps : 2,
 
   STEPS : [null,
-    'Step One: Configure the Embedded Note',
+    'Step One: Select a Note to Embed',
     'Step Two: Copy and Paste the Embed Code'
   ],
 
