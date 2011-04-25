@@ -42,12 +42,10 @@
         embed it on your website. Change the
         <span class="text_link edit_access">access level</span>.
       <% } else { %>
-        This document is currently private, and will not be visible
-        when you embed it on your website. Before you publish your story, you 
-        need to make the document public.
-        Change the <span class="text_link edit_access">access level</span> now
+        This document is private. It will not be visible to the public until you
+         make it public. Change the <span class="text_link edit_access">access level</span> now
         or <%= doc.get('publish_at') ? '' : 'set the' %>
-        <span class="text_link set_publish_at">publication date</span> for later.
+        <span class="text_link set_publish_at">publication date</span>.
       <% } %>
     </p>
   </div>
