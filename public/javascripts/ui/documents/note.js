@@ -6,7 +6,6 @@ dc.ui.Note = Backbone.View.extend({
 
   events : {
     'click .title_link':       'viewNoteInDocument',
-    'click .page_number':      'viewNoteInDocument',
     'click .edit_note':        'editNote',
     'click .cancel_note':      'cancelNote',
     'click .save_note':        'saveNote',
