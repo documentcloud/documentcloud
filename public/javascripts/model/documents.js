@@ -245,7 +245,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
   downloadSelectedPDF : function() {
     if (this.selectedCount <= 1) return this.selected()[0].openPDF();
-    dc.app.download('/download/' + this.selectedIds().join('/') + '/document_pdfs.zip');
+    dc.app.download('/download/' + this.selectedIds().join('/') + '/original_documents.zip');
   },
 
   downloadSelectedFullText : function() {

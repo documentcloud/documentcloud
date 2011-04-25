@@ -6,9 +6,9 @@ class DownloadController < ApplicationController
   def bulk_download
     @documents = Document.accessible(current_account, current_organization).find_all_by_id(params[:args][0...-1])
     case params[:args].last
-    when 'document_pdfs'    then send_pdfs
-    when 'document_text'    then send_text
-    when 'document_viewer'  then send_viewer
+    when 'original_documents' then send_pdfs
+    when 'document_text'      then send_text
+    when 'document_viewer'    then send_viewer
     else not_found
     end
   end
@@ -18,7 +18,7 @@ class DownloadController < ApplicationController
 
   # TODO: Figure out a more efficient way to package PDFs.
   def send_pdfs
-    package("#{package_name}.zip") do |zip|
+    package("#{package_name('original_documents')}.zip") do |zip|
       @documents.each do |doc|
         zip.get_output_stream("#{doc.slug}.pdf") {|f| f.write(asset_store.read_pdf(doc)) }
       end
@@ -54,8 +54,8 @@ class DownloadController < ApplicationController
     end
   end
 
-  def package_name
-    @documents.length == 1 ? @documents.first.slug : 'document_viewers'
+  def package_name(default_name='document_viewers')
+    @documents.length == 1 ? @documents.first.slug : default_name
   end
 
   def asset_store
