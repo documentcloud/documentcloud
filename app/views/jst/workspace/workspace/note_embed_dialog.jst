@@ -1,4 +1,15 @@
 <div class="publish_step publish_step_1 is_enabled">
+  
+  <% if (doc.get('access') != dc.access.PUBLIC) { %>
+    <div class="publish_section dialog_info selectable_text interface">
+      This document is currently private, and notes from this document will not 
+      be visible when you embed them on your website. Before you publish your 
+      story, you need to make the document public.
+      Change the <span class="text_link edit_access">access level</span> now
+      or <%= doc.get('publish_at') ? '' : 'set the' %>
+      <span class="text_link set_publish_at">publication date</span> for later.
+    </div>
+  <% } %>
 
   <div class="publish_section publish_info selectable_text">
     <label for="embed_note_select">Choose note:</label>

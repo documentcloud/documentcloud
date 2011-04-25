@@ -6,7 +6,9 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
     'click .next'           : 'nextStep',
     'click .previous'       : 'previousStep',
     'click .close'          : 'close',
-    'click .snippet'        : 'selectSnippet'
+    'click .snippet'        : 'selectSnippet',
+    'click .set_publish_at' : 'openPublishAtDialog',
+    'click .edit_access'    : 'editAccessLevel'
   },
 
   totalSteps : 2,
@@ -125,6 +127,18 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
 
   selectSnippet : function() {
     this.$('.snippet').select();
+  },
+  
+  // If necessary, let the user change the document's access level before embedding.
+  editAccessLevel : function() {
+    this.close();
+    Documents.editAccess([this.doc]);
+  },
+
+  // Optionally, set a document `publish_at` time by opening a new dialog.
+  openPublishAtDialog : function() {
+    this.close();
+    new dc.ui.PublicationDateDialog([this.doc]);
   }
 
 });
