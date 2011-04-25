@@ -1,4 +1,8 @@
-# Publishing Documents on your Web Site
+# Publishing Documents, Notes, and Document Sets
+
+There are a few ways to publish data from DocumentCloud on your website. You can publish a document by using either a standalone viewer or embedding the document directly onto a page. Additionally, notes from your documents can be embedded directly onto a page. You can also embed an entire set of documents that can be searched through by your readers.
+
+# Publishing Documents on your Website
 
 To publish a document from DocumentCloud on your website, you can either download a standalone copy of the viewer, or copy and paste a simple embed code for that document. The instructions that follow assume some basic familiarity with HTML, but we've tried to keep the embedding process as simple as possible.
 
