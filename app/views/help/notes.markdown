@@ -1,8 +1,12 @@
-# Adding Public and Private Notes
+# Adding Public, Private, and Draft Notes
 
 ![Annotations][]
 
-There are two kinds of notes: public and private. Public notes are always displayed to everyone who as access to your document. Private notes are only  visible to you. You can distinguish the two by color: public notes appear in yellow, while private ones are blue, with a lock. While you're viewing a document, you can add a note by selecting one of the two links ("Add a public note" or "Add a private note"). Your cursor should change to crosshairs: click and drag to select the area you'd like to highlight. When you release the mouse you will be able to edit and save your note.
+There are three kinds of notes: public, private, and draft. Public notes are always displayed to everyone who as access to your document. Private notes are only visible to you. Draft notes are only displayed to other people in your organization, but not the general public. You can distinguish between public and private by color: public notes appear in yellow, while private ones are blue, with a lock. Draft notes are yellow like public notes, but have a red dot or a red [DRAFT] notice. 
+
+Draft notes can be published by editing the note and clicking on the "Publish" button. Similarly, public notes can be moved into draft status by clicking the "Save as Draft" button while editing the note. Draft notes can only be seen by collaborators on the document, whereas public notes can be seen by everybody viewing the document.
+
+While you're viewing a document, you can add a note by selecting one of the two links ("Add a public note" or "Add a private note"). Your cursor should change to crosshairs: click and drag to select the area you'd like to highlight. When you release the mouse you will be able to edit and save your note.
 
 If you'd like to add a note not to a particular region of a page, but to a page *in general*, hover the crosshair in the gutter between pages. You will see a note tab and a dotted line appear &mdash; click near the line to create a note that sits in between the pages.
 
