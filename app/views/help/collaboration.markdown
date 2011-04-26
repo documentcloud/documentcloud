@@ -2,7 +2,7 @@
 
 You already know you can <a href="/help/privacy#access">share documents with everyone in your newsroom</a>. You can also share projects full of documents with other users, whether or not they're in your newsroom, and share specific documents with reviewers, whether or not they have a DocumentCloud account.
 
-## Sharing Projects
+##  <span id="collaborate">Sharing Projects with Reporters</span>
 
 Collaboration in DocumentCloud is based around sharing projects or sharing specific documents. sharing a project with another user gives them access to view and edit all of the documents in that project and all the public notes on those documents. Your private notes will still be private. 
 
@@ -12,7 +12,7 @@ To start sharing, you'll need to know the email address that each collaborator u
 
 Shared projects will appear in each collaborator's sidebar and they will be able to view, edit, and annotate all documents in the project. They'll also be able to add new documents to the project, which will in turn be available to you.
 
-## Sharing Documents
+## <span id="reviewer">Sharing Documents with Reviewers</span>
 
 You can share specific documents for review with anyone with an email address &mdash; no DocumentCloud account required. This is useful for crowdsourcing your document annotations among experts, or quickly sharing a document on deadline.
 
