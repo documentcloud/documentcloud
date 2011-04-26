@@ -159,7 +159,7 @@ dc.ui.AccountView = Backbone.View.extend({
     }, this), {
       id          : 'delete_account_confirm',
       title       : 'Really disable ' + this.model.fullName() + '\'s account?',
-      description : this.model.fullName() + ' will no longer be able to log in to DocumentCloud, but any existing public documents and annotations will remain available. If '+this.model.fullName()+'\'s account should be purged completely, contact Support.',
+      description : this.model.fullName() + ' will not be able to log in to DocumentCloud. Public documents and annotations provided by ' + this.model.fullName()+ ' will remain available. Contact support to completely purge '+this.model.fullName()+'\'s account.',
       saveText    : 'Disable'
     });
   },
