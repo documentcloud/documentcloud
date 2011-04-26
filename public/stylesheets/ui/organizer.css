@@ -73,6 +73,8 @@
 #organizer .account_links {
   display: none;
   color: #808080;
+  font-size: 11px;
+  line-height: 17px;
 }
   #organizer.show_accounts .account_links {
     display: block;
