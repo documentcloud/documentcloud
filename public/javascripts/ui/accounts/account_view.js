@@ -154,7 +154,7 @@ dc.ui.AccountView = Backbone.View.extend({
 
   _disableAccount : function() {
     if (this.dialog.isOpen()) this.dialog.close();
-    dc.ui.Dialog.confirm(null, _.bind(function() {
+    var dialog = dc.ui.Dialog.confirm(null, _.bind(function() {
       this.setMode('display', 'view');
       this.model.save({'role': this.model.DISABLED});
       dc.ui.notifier.show({
@@ -166,8 +166,13 @@ dc.ui.AccountView = Backbone.View.extend({
     }, this), {
       id          : 'disable_account_confirm',
       title       : 'Really disable ' + this.model.fullName() + '\'s account?',
-      description : this.model.fullName() + ' will not be able to log in to DocumentCloud. Public documents and annotations provided by ' + this.model.fullName()+ ' will remain available. Contact support to completely purge '+this.model.fullName()+'\'s account.',
+      description : this.model.fullName() + ' will not be able to log in to DocumentCloud. Public documents and annotations provided by ' + this.model.fullName()+ ' will remain available. <span class="contact_support text_link">Contact support</span> to completely purge '+this.model.fullName()+'\'s account.',
       saveText    : 'Disable'
+    });
+    console.log(['dialog', dialog]);
+    $('.contact_support', dialog.el).bind('click', function() {
+      dialog.close();
+      dc.ui.Dialog.contact();
     });
   },
 

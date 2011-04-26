@@ -6,10 +6,10 @@
 #contact_us .text {
   font-size: 10px;
   margin-bottom: 30px;
-  color: #808080;
+  color: #CCC;
 }
   #contact_us a {
-    color: #808080;
+    color: #FFF;
     text-decoration: underline;
   }
   #contact_us .contact_email {
