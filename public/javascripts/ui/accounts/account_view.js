@@ -24,7 +24,8 @@ dc.ui.AccountView = Backbone.View.extend({
     'click .admin_link':            '_openAccounts',
     'click .save_changes':          '_doneEditing',
     'click .cancel_changes':        '_cancelEditing',
-    'click .delete_account':        '_deleteAccount',
+    'click .disable_account':       '_disableAccount',
+    'click .enable_account':        '_enableAccount',
     'click .login_as .minibutton':  '_loginAsAccount'
   },
 
@@ -64,6 +65,7 @@ dc.ui.AccountView = Backbone.View.extend({
     if (this.model.isPending()) $(this.el).addClass('pending');
     this._loadAvatar();
     this._setPlaceholders();
+    this.setMode(this.model.ROLE_NAMES[this.model.get('role')], 'role');
     return this;
   },
 
@@ -150,18 +152,28 @@ dc.ui.AccountView = Backbone.View.extend({
     this.setMode('display', 'view');
   },
 
-  _deleteAccount : function() {
+  _disableAccount : function() {
     if (this.dialog.isOpen()) this.dialog.close();
     dc.ui.Dialog.confirm(null, _.bind(function() {
-      $(this.el).remove();
-      this.model.destroy();
+      this.setMode('display', 'view');
+      this.model.save({'role': this.model.DISABLED});
+      dc.ui.notifier.show({
+        text      : this.model.fullName() + ' has been disabled.',
+        duration  : 5000,
+        mode      : 'info'
+      });
       return true;
     }, this), {
-      id          : 'delete_account_confirm',
+      id          : 'disable_account_confirm',
       title       : 'Really disable ' + this.model.fullName() + '\'s account?',
       description : this.model.fullName() + ' will not be able to log in to DocumentCloud. Public documents and annotations provided by ' + this.model.fullName()+ ' will remain available. Contact support to completely purge '+this.model.fullName()+'\'s account.',
       saveText    : 'Disable'
     });
+  },
+
+  _enableAccount : function() {
+    this.setMode('display', 'view');
+    this.model.save({'role': this.model.CONTRIBUTOR});
   },
 
   _loginAsAccount : function() {

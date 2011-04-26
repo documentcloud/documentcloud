@@ -35,7 +35,7 @@ class Account < ActiveRecord::Base
   # Scopes:
   named_scope :admin,     {:conditions => {:role => ADMINISTRATOR}}
   named_scope :active,    {:conditions => ["role != ?", DISABLED]}
-  named_scope :real,      {:conditions => ["role in (?)", [ADMINISTRATOR, CONTRIBUTOR]]}
+  named_scope :real,      {:conditions => ["role in (?)", [ADMINISTRATOR, CONTRIBUTOR, DISABLED]]}
   named_scope :reviewer,  {:conditions => {:role => REVIEWER}}
 
   # Attempt to log in with an email address and password.

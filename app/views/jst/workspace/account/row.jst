@@ -27,14 +27,22 @@
 </td>
 <td class="role">
   <span class="display">
-    role:&nbsp;<%= account.ROLE_NAMES[account.get('role')] %>
+    <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>
+      <span class="disabled">(disabled)</span>
+    <% } else { %>
+      role:&nbsp;<%= account.ROLE_NAMES[account.get('role')] %>
+    <% } %>
   </span>
   <span class="edit">
-    <select name="role" class="account_role" <%= current && current.isAdmin() && account.id != current.id ? '' : 'disabled="disabled"' %>>
-      <option class="role_2" value="2">Contributor</option>
-      <!-- <option class="role_3" value="3">Reviewer</option> -->
-      <option class="role_1" value="1">Administrator</option>
-    </select>
+    <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>
+      <span class="disabled">(disabled)</span>
+    <% } else { %>
+      <select name="role" class="account_role" <%= current && current.isAdmin() && account.id != current.id ? '' : 'disabled="disabled"' %>>
+        <option class="role_2" value="2">Contributor</option>
+        <!-- <option class="role_3" value="3">Reviewer</option> -->
+        <option class="role_1" value="1">Administrator</option>
+      </select>
+    <% } %>
   </span>
 </td>
 <td class="last">
@@ -48,7 +56,12 @@
   <div class="edit controls_wrapper">
     <div class="minibutton default save_changes">OK</div>
     <% if (account.id && account.id > 0 && account.id != dc.account.id) { %>
-      <div class="minibutton warn delete_account">Disable</div>
+      <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>
+        <div class="minibutton warn enable_account">Re-enable</div>
+      <% } else { %>
+        <div class="minibutton warn disable_account">Disable</div>
+      <% } %>
+      
     <% } %>
   </div>
   <% } %>

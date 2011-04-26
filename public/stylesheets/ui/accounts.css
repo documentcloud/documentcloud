@@ -43,6 +43,7 @@
       border-bottom: 1px solid #222;
       font-size: 11px; line-height: 25px;
       color: #ccc;
+      height: 46px;
     }
       .account_list .first,
       .collaborator_list .first {
@@ -61,6 +62,9 @@
 }
 .account_list tr.edit_view .edit, .account_list tr.display_view .display {
   display: block;
+}
+.account_list .disabled_role.display_view td {
+  color: #777777;
 }
 .account_list img.avatar,
 .collaborator_list img.avatar {
@@ -86,7 +90,8 @@
     .account_list .name_wrapper .text_input:first-child {
       margin-right: 20px;
     }
-.account_list .role .display {
+.account_list .role .display,
+.account_list .role .edit {
   font: 11px/18px Arial;
   color: #777;
 }
@@ -105,7 +110,8 @@
   left: -6px;
   margin: 0 5px;
 }
-.account_list .delete_account {
+.account_list .disable_account,
+.account_list .enable_account {
   float: left;
 }
 .account_list .pending_wrap {
@@ -134,7 +140,7 @@
     display: inline;
   }
 
-#delete_account_confirm {
+#disable_account_confirm {
   width: 342px;
 }
 

@@ -2,13 +2,15 @@
 
 dc.model.Account = Backbone.Model.extend({
 
+  DISABLED           : 0,
+  
   ADMINISTRATOR      : 1,
 
   CONTRIBUTOR        : 2,
 
   REVIEWER           : 3,
 
-  ROLE_NAMES         : ['', 'administrator', 'contributor', 'reviewer'], // NB: Indexed by role number.
+  ROLE_NAMES         : ['disabled', 'administrator', 'contributor', 'reviewer'], // NB: Indexed by role number.
 
   GRAVATAR_BASE      : location.protocol + (location.protocol == 'https:' ? '//secure.' : '//www.') + 'gravatar.com/avatar/',
 
