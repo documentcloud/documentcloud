@@ -53,6 +53,8 @@ class AccountsController < ApplicationController
       account = current_organization.accounts.create(attributes)
     elsif account.reviewer?
       account.upgrade_reviewer_to_real(current_organization, attributes[:role])
+    elsif account.role == Account::DISABLED
+      return json({:errors => ['That email address belongs to an inactive account.']}, 409)
     else
       return json(nil, 409)
     end
