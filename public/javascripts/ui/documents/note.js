@@ -23,8 +23,9 @@ dc.ui.Note = Backbone.View.extend({
   // Renders the note, adding classes that show editing controls if allowed.
   render : function() {
     var data = _.extend(this.model.toJSON(), {
-      note     : this.model,
-      ownsNote : true
+      note          : this.model,
+      ownsNote      : true,
+      disableLinks  : this.options.disableLinks
     });
     $(this.el).html(JST['document/note'](data));
     this.setMode('display', 'visible');

@@ -41,6 +41,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
   // Can't have an embed dialog without a document.
   constructor : function(doc) {
+    console.log(['doc embed', doc]);
     this.model = doc;
     this.currentStep = 1;
     dc.ui.Dialog.call(this, {mode : 'custom', title : this.displayTitle()});

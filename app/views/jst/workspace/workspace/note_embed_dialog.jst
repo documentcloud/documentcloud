@@ -14,7 +14,7 @@
     <label for="embed_note_select">Choose note:</label>
     <select name="note" id="embed_note_select">
       <% _.each(notes, function(note) { %>
-        <option value="<%= note.get('id') %>"><%= note.get('title') %></option>
+        <option value="<%= note.get('id') %>" <% if (note.get('id') == initialNoteId) { %>selected="true"<% } %>><%= note.get('title') %></option>
       <% }); %>
     </select>
   </div>

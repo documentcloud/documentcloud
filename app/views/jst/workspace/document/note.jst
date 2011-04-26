@@ -1,6 +1,6 @@
 <div class="note_contents">
   <div class="note_title display">
-    <span class="title_link"><%= note.get('title') %> <span class="page_number">(p. <%= note.get('page') %>)</span></span>
+    <span class="<% if (!disableLinks) { %>title_link<% } %>"><%= note.get('title') %> <span class="page_number">(p. <%= note.get('page') %>)</span></span>
   </div>
   <% if (note.get('access') == 'exclusive') { %>
     <div class="note_draft_label interface display">Draft</div>

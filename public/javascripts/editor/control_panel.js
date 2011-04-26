@@ -20,7 +20,9 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .edit_page_text':        'editPageText',
     'click .reprocess_text':        'reprocessText',
     'click .edit_replace_pages':    'editReplacePages',
-    'click .toggle_document_info':  'toggleDocumentInfo'
+    'click .toggle_document_info':  'toggleDocumentInfo',
+    'click .embed_document':        'embedDocument',
+    'click .embed_note':            'embedNote'
   },
 
   render : function() {
@@ -55,7 +57,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   editDocumentInfo : function(e) {
     if ($(e.target).is('.toggle_document_info')) return;
-    var doc = this._getDocument({}, true);
+    var doc = this._getDocumentCanonical({}, true);
     new dc.ui.DocumentDialog([doc]);
   },
 
@@ -117,14 +119,14 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
         \"Force OCR\" (optical character recognition) to ignore any embedded \
         text information and use Tesseract before reprocessing. The document will \
         close while it's being rebuilt. Are you sure you want to proceed? ", function() {
-      var doc = self._getDocument();
+      var doc = self._getDocumentCanonical();
       doc.reprocessText();
       self.setOnParent(doc, {access: dc.access.PENDING});
       $(dialog.el).remove();
       _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
     }, {width: 450});
     var forceEl = $(dialog.make('span', {'class':'minibutton dark center_button'}, 'Force OCR')).bind('click', function() {
-      var doc = self._getDocument();
+      var doc = self._getDocumentCanonical();
       doc.reprocessText(true);
       self.setOnParent(doc, {access: dc.access.PENDING});
       $(dialog.el).remove();
@@ -192,6 +194,18 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     $('.document_fields_container .toggle').setMode(showing ? 'not' : 'is', 'enabled');
   },
 
+  embedDocument : function() {
+    var doc = this._getDocumentModel();
+    (new dc.ui.DocumentEmbedDialog(doc)).render();
+  },
+  
+  embedNote : function() {
+    var doc = this._getDocumentModel();
+    console.log(['doc', doc]);
+    Documents.refresh([doc]);
+    dc.app.noteEmbedDialog = new dc.ui.NoteEmbedDialog(doc);
+  },
+  
   saveRedactions : function() {
     var modelId = this.viewer.api.getModelId();
     var redactions = dc.app.editor.annotationEditor.redactions;
@@ -224,7 +238,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     }
   },
 
-  _getDocument : function(attrs, full) {
+  _getDocumentCanonical : function(attrs, full) {
     if (full) {
       var schema = this.viewer.api.getSchema();
       attrs = _.extend({}, schema, attrs);
@@ -233,9 +247,17 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     attrs.id = parseInt(this.viewer.api.getId(), 10);
     return new dc.model.Document(_.clone(attrs));
   },
+  
+  _getDocumentModel : function(attrs) {
+    if (this.docModel) return this.docModel;
+    attrs = attrs || {};
+    attrs = _.extend({}, window.currentDocumentModel, attrs);
+    this.docModel = new dc.model.Document(_.clone(attrs));
+    return this.docModel;
+  },
 
   _updateDocument : function(attrs) {
-    var doc = this._getDocument(attrs);
+    var doc = this._getDocumentCanonical(attrs);
     doc.save();
     this.setOnParent(doc, attrs);
   }

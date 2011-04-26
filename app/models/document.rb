@@ -710,7 +710,7 @@ class Document < ActiveRecord::Base
     if options[:allow_detected]
       res['published_url']    = published_url if published_url
     else
-      res['published_url']      = remote_url if remote_url
+      res['published_url']    = remote_url if remote_url
     end
     doc['sections']           = sections.map(&:canonical) if options[:sections]
     if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])

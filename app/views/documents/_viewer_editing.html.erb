@@ -1,4 +1,6 @@
 <script type="text/javascript">
+  window.currentDocumentModel = <%= @current_document.to_json %>;
+
   DV.jQuery(function() {
     <% if @current_account %>
       var docId = <%= @current_document.id %>;

@@ -8,12 +8,14 @@ dc.model.Note = Backbone.Model.extend({
 
   checkAllowedToEdit : function() {
     if (!dc.account) return false;
-    return Accounts.current().allowedToEdit(this);
+    var currentAccount = Accounts.current();
+    return currentAccount && currentAccount.allowedToEdit(this);
   },
 
   imageUrl : function() {
+    var template = this.document().get('page_image_url') || this.document().get('resources').page_image_url;
     return this._imageUrl = this._imageUrl ||
-      this.document().get('page_image_url').replace('{size}', 'normal').replace('{page}', this.get('page'));
+      template.replace('{size}', 'normal').replace('{page}', this.get('page'));
   },
 
   coordinates : function() {
