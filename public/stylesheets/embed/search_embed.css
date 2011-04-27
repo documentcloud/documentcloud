@@ -35,7 +35,13 @@
     color: #000;
     text-decoration: underline;
   }
-
+  
+.DC-search-embed a,
+.DC-search-embed a:hover,
+.DC-search-embed .DC-document-list a:hover,
+.DC-search-embed .DC-paginator a:hover {
+  background-color: transparent;
+}
 /* ========================== */
 /* = Search Embed Workspace = */
 /* ========================== */
@@ -199,6 +205,7 @@
       height: 75px;
       padding: 1px;
       background-color: #fff;
+      float: none;
     }
     .DC-search-embed .DC-document-tile:hover .DC-document-thumbnail img {
       border-color: #808080;
@@ -285,6 +292,7 @@
 }
   .DC-search-embed .DC-paginator a img {
     border: none;
+    float: none;
   }
   .DC-search-embed .DC-paginator .DC-paginator-description {
     position: absolute;
