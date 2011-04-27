@@ -29,10 +29,11 @@ dc.app.SearchParser = {
   
   extractAllFacets : function(query) {
     var facets = [];
-    var count = 0;
+    var originalQuery = query;
     
     while (query) {
       var category, value;
+      originalQuery = query;
       var field = this.extractFirstField(query);
       if (!field) {
         category = 'text';
@@ -51,7 +52,7 @@ dc.app.SearchParser = {
           });
           facets.push(searchFacet);
       }
-      if (count++ > 5) break;
+      if (originalQuery == query) break;
     }
     
     return facets;
@@ -65,7 +66,7 @@ dc.app.SearchParser = {
   extractSearchText : function(query) {
     query = query || '';
     var text = dc.inflector.trim(query.replace(this.ALL_FIELDS, ''));
-    // console.log(['extractSearchText', query, text]);
+    console.log(['extractSearchText', query, text]);
     return text;
   },
 
