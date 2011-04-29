@@ -11,7 +11,6 @@
   </span>
   <div class="icon mini_note"></div>
 <% } %>
-<div class="description"><span class="noselect description_text"></span></div>
 <div class="metalines interface">
   <span class="noselect">
     <% if (page_count) { %>
@@ -31,6 +30,16 @@
     <% } %>
   </span>
 </div>
+<div class="description"><span class="noselect description_text"></span></div>
+<% if (data.length) { %>
+  <div class="datalines interface">
+    <% for (var i = 0, l = data.length; i < l; i++) { %>
+      <span class="data_item noselect quiet_link gradient_white"><span class="data_key"><%= data[i][0] %>:</span>
+      <span class="data_value"><%= data[i][1] %></span></span>
+    <% } %>
+    <span class="icon document_tool edit_glyph" title="Edit Data">&#65279;</span>
+  </div>
+<% } %>
 <div class="notes"></div>
 <div class="pages">
   <% if (mentions && mentions.length) { %>

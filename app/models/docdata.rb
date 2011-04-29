@@ -9,7 +9,7 @@ class Docdata < ActiveRecord::Base
   end
   
   def data    
-    @data ||= Hash[self[:data].scan(/"(.*?[^\\])"=>"(.*?[^\\])"/)]
+    @data ||= Hash[self[:data].scan(/"(.*?[^\\]|)"=>"(.*?[^\\]|)"/)]
   end
   
   def index_document

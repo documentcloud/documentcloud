@@ -70,7 +70,8 @@ dc.ui.Document = Backbone.View.extend({
       model         : this.model,
       created_at    : this.model.get('created_at').replace(/\s/g, '&nbsp;'),
       icon          : this._iconAttributes(),
-      thumbnail_url : this._thumbnailURL()
+      thumbnail_url : this._thumbnailURL(),
+      data          : this.model.sortedData()
     });
     if (dc.app.paginator.mini) data.title = dc.inflector.truncateWords(data.title, 50);
     $(this.el).html(JST['document/tile'](data));

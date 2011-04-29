@@ -59,6 +59,16 @@ dc.model.Document = Backbone.Model.extend({
     return date && (this.formatDay(date) + ' at ' + this.formatTime(date));
   },
 
+  // Return the sorted array of key value pairs for the document's data.
+  sortedData : function() {
+    var data = this.get('data');
+    var list = [];
+    for (var key in data) {
+      list.push([key, data[key]]);
+    }
+    return list.sort(function(a, b){ return a[0] > b[0] ? 1 : -1 });
+  },
+
   // Fetch all of the documents page mentions for a given search query.
   fetchMentions : function(query) {
     $.getJSON(this.url() + '/mentions', {q: query}, _.bind(function(resp) {

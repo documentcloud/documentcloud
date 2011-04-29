@@ -144,7 +144,7 @@ class Document < ActiveRecord::Base
     
     # Data...
     dynamic_string :data do
-      self.docdata ? self.docdata.symbolize_keys : {}
+      self.docdata ? self.docdata.data.symbolize_keys : {}
     end
 
   end
@@ -341,6 +341,10 @@ class Document < ActiveRecord::Base
 
   def account_name
     @account_name ||= (account ? account.full_name : 'Unattributed')
+  end
+  
+  def data
+    docdata ? docdata.data : {}
   end
 
   # Ex: docs/1011
@@ -666,7 +670,8 @@ class Document < ActiveRecord::Base
       :publish_at          => publish_at.as_json,
       :hits                => hits,
       :mentions            => mentions,
-      :total_mentions      => total_mentions
+      :total_mentions      => total_mentions,
+      :data                => data
     }.to_json
   end
 
