@@ -35,6 +35,7 @@ class Document < ActiveRecord::Base
   belongs_to :organization
 
   has_one  :full_text,            :dependent   => :destroy
+  has_one  :docdata,              :dependent   => :destroy
   has_many :pages,                :dependent   => :destroy
   has_many :entities,             :dependent   => :destroy
   has_many :entity_dates,         :dependent   => :destroy
@@ -139,6 +140,11 @@ class Document < ActiveRecord::Base
     DC::ENTITY_KINDS.each do |entity|
       text(entity) { self.entity_values(entity) }
       string(entity, :multiple => true) { self.entity_values(entity) }
+    end
+    
+    # Data...
+    dynamic_string :data do
+      self.docdata ? self.docdata.symbolize_keys : {}
     end
 
   end
