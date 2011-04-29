@@ -39,7 +39,8 @@ dc.ui.Document = Backbone.View.extend({
     'click .open_pages'         : 'openPagesInViewer',
     'click .show_mentions'      : 'fetchAllMentions',
     'click .page_list .left'    : 'previousPage',
-    'click .page_list .right'   : 'nextPage'
+    'click .page_list .right'   : 'nextPage',
+    'click .data_item'          : 'searchData'
   },
 
   // Takes a document model and sets up listeners on the document model,
@@ -252,6 +253,13 @@ dc.ui.Document = Backbone.View.extend({
   // from this source.
   searchSource : function() {
     dc.app.searcher.addToSearch('source: "' + this.model.get('source').replace(/"/g, '\\"') + '"');
+  },
+
+  searchData : function(e) {
+    var el    = $(e.currentTarget);
+    var key   = el.find('.data_key').text();
+    var value = el.find('.data_value').text();
+    dc.app.searcher.addToSearch(key + ' ' + dc.app.searcher.quote(value));
   },
 
   // Context menu item opens access level dialog for a single document.

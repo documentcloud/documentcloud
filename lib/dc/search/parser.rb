@@ -15,8 +15,8 @@ module DC
       # about the text, fields, projects, and attributes it's composed of.
       def parse(query_string='')
         @text, @access, @source_document = nil, nil, nil
-        @fields, @accounts, @groups, @projects, @project_ids, @doc_ids, @attributes, @filters =
-          [], [], [], [], [], [], [], []
+        @fields, @accounts, @groups, @projects, @project_ids, @doc_ids, @attributes, @filters, @data =
+          [], [], [], [], [], [], [], [], []
 
         quoted_fields = query_string.scan(Matchers::QUOTED_FIELD).map {|m| m[0] }
         bare_fields   = query_string.gsub(Matchers::QUOTED_FIELD, '').scan(Matchers::BARE_FIELD)
@@ -28,7 +28,7 @@ module DC
         Query.new(:text => @text, :fields => @fields, :projects => @projects,
           :accounts => @accounts, :groups => @groups, :project_ids => @project_ids,
           :doc_ids => @doc_ids, :attributes => @attributes, :access => @access,
-          :filters => @filters, :source_document => @source_document)
+          :filters => @filters, :data => @data, :source_document => @source_document)
       end
 
       # Convert the full-text search into a form that our index can handle.
@@ -69,8 +69,7 @@ module DC
         field = Field.new(match_kind(kind), value.strip)
         return @attributes << field if field.attribute?
         return @fields     << field if field.entity?
-        @text ||= ''
-        @text += " #{field}"
+        return @data       << field
       end
 
       # Convert a field kind string into its canonical form, by searching

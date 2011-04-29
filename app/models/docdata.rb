@@ -4,8 +4,16 @@ class Docdata < ActiveRecord::Base
   
   after_save :index_document
   
+  def self.to_hstore(hash)
+    hash.map {|k, v| "\"#{sanitize(k)}\"=>\"#{sanitize(v)}\"" }.join(',')
+  end
+  
+  def self.sanitize(obj)
+    obj.to_s.gsub(/[\\"]/, '')
+  end
+  
   def data=(hash)
-    self[:data] = hash.map {|k, v| "\"#{sanitize(k)}\"=>\"#{sanitize(v)}\"" }.join(',')
+    self[:data] = Docdata.to_hstore(hash)
   end
   
   def data    
@@ -14,13 +22,6 @@ class Docdata < ActiveRecord::Base
   
   def index_document
     self.document.index
-  end
-  
-  
-  private
-  
-  def sanitize(obj)
-    obj.to_s.gsub(/[\\"]/, '')
   end
   
 end

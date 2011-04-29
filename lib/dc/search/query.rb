@@ -20,7 +20,7 @@ module DC
 
       EMPTY_PAGINATION = {:page => 1, :per_page => 0}
 
-      attr_reader   :text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :filters, :access, :attributes, :conditions, :results, :solr, :source_document
+      attr_reader   :text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :filters, :access, :attributes, :data, :conditions, :results, :solr, :source_document
       attr_accessor :page, :per_page, :order, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
@@ -37,6 +37,7 @@ module DC
         @doc_ids                = opts[:doc_ids]      || []
         @attributes             = opts[:attributes]   || []
         @filters                = opts[:filters]      || []
+        @data                   = opts[:data]         || []
         @source_document        = opts[:source_document]
         @from, @to, @total      = nil, nil, nil
         @account, @organization = nil, nil
@@ -45,7 +46,7 @@ module DC
       end
 
       # Series of attribute checks to determine the kind and state of query.
-      [:text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :attributes, :results, :filters, :access, :source_document].each do |att|
+      [:text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :attributes, :data, :results, :filters, :access, :source_document].each do |att|
         class_eval "def has_#{att}?; @has_#{att} ||= @#{att}.present?; end"
       end
 
@@ -62,6 +63,7 @@ module DC
         build_related      if     has_source_document?
         build_text         if     has_text? && !has_source_document?
         build_fields       if     has_fields?
+        build_data         if     has_data?
         build_accounts     if     has_accounts?
         build_groups       if     has_groups?
         build_project_ids  if     has_project_ids?
@@ -132,7 +134,8 @@ module DC
           'groups'      => @groups,
           'project_ids' => @project_ids,
           'doc_ids'     => @doc_ids,
-          'attributes'  => @attributes
+          'attributes'  => @attributes,
+          'data'        => @data
         }.to_json
       end
 
@@ -246,8 +249,8 @@ module DC
         else
           @sql << 'projects.id in (?)'
           @interpolations << @project_ids
-          @joins << 'inner join project_memberships ON documents.id = document_id
-                     inner join projects on project_id = projects.id'
+          @joins << 'inner join project_memberships ON documents.id = project_memberships.document_id
+                     inner join projects on project_memberships.project_id = projects.id'
         end
       end
 
@@ -299,6 +302,26 @@ module DC
               fields field.kind
             end
           end
+        end
+      end
+      
+      # Generate the Solr or SQL to match user-data queries.
+      def build_data
+        data = @data
+        if needs_solr?
+          @solr.build do
+            dynamic :data do
+              data.each do |datum|
+                with datum.kind, datum.value
+              end
+            end
+          end
+        else
+          hash = {}
+          data.each {|datum| hash[datum.kind] = datum.value }
+          @sql << 'docdata.data @> ?'
+          @interpolations << Docdata.to_hstore(hash)
+          @joins << 'inner join docdata ON documents.id = docdata.document_id'
         end
       end
 

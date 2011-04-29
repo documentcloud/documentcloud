@@ -140,11 +140,12 @@
       display: none;
     }
     .document .data_item {
-      font-size: 9px;
+      display: inline-block;
+      font-size: 9px; line-height: 13px;
       color: #555;
       border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px;
-      padding: 2px 5px;
-      border: 1px solid #ccc;
+      padding: 1px 5px;
+      border: 1px solid #bbb; border-top-color: #ccc; border-bottom-color: #aaa;
       margin-right: 2px;
     }
       .document .data_item:hover {
@@ -153,10 +154,15 @@
         border-color: transparent;
       }
     .document .datalines .document_tool {
-      display: inline-block;
       position: relative;
-      top: 3px; left: -5px;
+      top: -1px; left: -5px;
+      display: none;
     }
+      .document .datalines:hover .document_tool {
+        height: auto;
+        line-height: 13px;
+        display: inline-block;
+      }
   .document .description {
     font: 13px/18px Georgia;
     color: #333;
