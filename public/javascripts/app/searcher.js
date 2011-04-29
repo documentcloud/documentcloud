@@ -158,7 +158,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   addToSearch : function(fragment, callback) {
     var val = this.searchBox.value();
     if (val.toLowerCase().match(fragment.toLowerCase())) return;
-    this.searchBox.value(val = (val + " " + fragment));
+    this.box.value(val = (dc.inflector.trim(val) + " " + fragment));
     this.search(val, null, callback);
   },
 
