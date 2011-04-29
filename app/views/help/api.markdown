@@ -14,7 +14,7 @@ _We reserve the right to revise these guidelines. If you violate the spirit of t
 
 ## GET /api/search.json
 
-Search the catalog of public documents. This method can be used to scrape the public documents from your account for embedding purposes, or to enable searches of your archive of uploaded documents directly from your own website.
+Search the catalog of public documents. This method can be used to scrape the public documents from your account for embedding purposes, or to enable searches of your archive of uploaded documents directly from your own website. See our <a href="searching">search documentation</a> for help with search queries.
 
 Parameter     | Description           |  Example
 --------------|-----------------------|--------------
@@ -36,7 +36,6 @@ mentions      | include highlighted mentions of the search phrase | 3 (not prese
   </p>
   <div>
     <form id="search_form" action="about:blank" autocomplete="off">
-      <%= token_tag %>
       <div id="run_search" class="minibutton default">Search</div>
       <div class="text_input">
         <div class="background">
