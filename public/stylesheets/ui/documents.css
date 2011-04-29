@@ -149,7 +149,7 @@
       border: 1px solid #bbb; border-top-color: #ccc; border-bottom-color: #aaa;
       margin-right: 2px;
     }
-      .document .data_item:hover {
+      .document .data_item:hover, .document .data_item.active {
         color: #333;
         border-color: #73aef3;
         text-shadow: #d2e8fd 0px 1px 0px;
