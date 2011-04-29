@@ -32,7 +32,7 @@ Rails::Initializer.run do |config|
   config.gem 'pg',                    :version => '>= 0.9.0'
   config.gem 'jammit',                :version => '>= 0.5.0'
   config.gem 'docsplit',              :version => '>= 0.5.0'
-  config.gem 'sunspot_rails',         :version => '>= 1.1.0',       :lib => 'sunspot/rails'
+  config.gem 'sunspot_rails',         :version => '>= 1.2.1'
   config.gem 'rdiscount',             :version => '>= 1.6.5'
   config.gem 'fastercsv',             :version => '>= 1.5.3'
   config.gem 'sanitize',              :version => '>= 2.0.0'
