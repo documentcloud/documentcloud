@@ -7,8 +7,6 @@ class Document < ActiveRecord::Base
   attr_accessor :mentions, :total_mentions, :annotation_count, :hits
   attr_writer   :organization_name, :organization_slug, :account_name, :account_slug
 
-  SEARCHABLE_ATTRIBUTES = [:title, :description, :source, :account, :group]
-
   DEFAULT_TITLE = "Untitled Document"
 
   MINIMUM_POPULAR = 100

@@ -7,6 +7,19 @@ module DC
   ENTITY_KINDS = [
     :person, :organization, :place, :term, :email, :phone, :city, :state, :country
   ]
+  
+  # The list of searchable document attributes.
+  DOCUMENT_ATTRIBUTES = [
+    :title, :description, :source, :account, :group
+  ]
+  
+  # Other valid search prefixes.
+  OTHER_SEARCHES = [
+    :project, :projectid, :document, :access, :filter
+  ]
+  
+  # All defined search prefixes.
+  ALL_SEARCHES = DOCUMENT_ATTRIBUTES + OTHER_SEARCHES + ENTITY_KINDS
 
   # Supported entity kinds as strings for Rails validation.
   VALID_KINDS = ENTITY_KINDS.map(&:to_s)

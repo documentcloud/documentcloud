@@ -12,7 +12,7 @@ module DC
       end
 
       def attribute?
-        Document::SEARCHABLE_ATTRIBUTES.include? @kind.to_sym
+        DC::DOCUMENT_ATTRIBUTES.include? @kind.to_sym
       end
 
       def entity?
