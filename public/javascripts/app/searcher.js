@@ -143,6 +143,16 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     }, this));
   },
 
+  // Toggle a query fragment in the search.
+  toggleSearch : function(fragment) {
+    var val = this.box.value();
+    if (val.indexOf(fragment) >= 0) {
+      this.removeFromSearch(fragment);
+    } else {
+      this.addToSearch(fragment);
+    }
+  },
+
   // Add a query fragment to the search and search again, if it's not already
   // present in the current search.
   addToSearch : function(fragment, callback) {
@@ -157,7 +167,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   removeFromSearch : function(regex) {
     var val = this.searchBox.value();
     if (!val.match(regex)) return;
-    var next = val.replace(regex, '');
+    var next = dc.inflector.trim(val.replace(regex, ''));
     if (next == val) return false;
     this.searchBox.value(next);
     this.search(next);

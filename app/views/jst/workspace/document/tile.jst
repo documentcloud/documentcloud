@@ -34,8 +34,10 @@
 <% if (data.length) { %>
   <div class="datalines interface">
     <% for (var i = 0, l = data.length; i < l; i++) { %>
-      <span class="data_item noselect quiet_link gradient_white"><span class="data_key"><%= data[i][0] %>:</span>
-      <span class="data_value"><%= data[i][1] %></span></span>
+      <% var key = data[i][0], value = data[i][1]; %>
+      <% var className = dc.app.paginator.query.data[key] == value ? 'active' : ''; %>
+      <span class="data_item noselect gradient_white <%= className %>"><span class="data_key"><%= key %>:</span>
+      <span class="data_value"><%= value %></span></span>
     <% } %>
     <span class="icon document_tool edit_glyph" title="Edit Data">&#65279;</span>
   </div>

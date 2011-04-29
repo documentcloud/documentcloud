@@ -135,7 +135,7 @@ module DC
           'project_ids' => @project_ids,
           'doc_ids'     => @doc_ids,
           'attributes'  => @attributes,
-          'data'        => @data
+          'data'        => Hash[@data.map {|f| [f.kind, f.value] }]
         }.to_json
       end
 

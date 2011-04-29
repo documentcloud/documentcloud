@@ -140,6 +140,7 @@
       display: none;
     }
     .document .data_item {
+      cursor: pointer;
       display: inline-block;
       font-size: 9px; line-height: 13px;
       color: #555;
@@ -149,9 +150,9 @@
       margin-right: 2px;
     }
       .document .data_item:hover {
-        color: #000;
-        background: #fff;
-        border-color: transparent;
+        color: #333;
+        border-color: #73aef3;
+        text-shadow: #d2e8fd 0px 1px 0px;
       }
     .document .datalines .document_tool {
       position: relative;
