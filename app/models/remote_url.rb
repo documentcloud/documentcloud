@@ -1,3 +1,5 @@
+require 'cgi'
+
 class RemoteUrl < ActiveRecord::Base
 
   self.establish_connection(ANALYTICS_DB)
@@ -14,21 +16,33 @@ class RemoteUrl < ActiveRecord::Base
     :group => 'document_id'
   }
 
-  # Make sure to truncate the URL to 255 characters...
-  def self.record_hits(doc_id, url, hits)
-    # Write the RemoteUrl row.
+  def self.record_hits_on_documents(doc_id, url, hits)
     url = url.mb_chars[0...255].to_s
     row = self.find_or_create_by_document_id_and_url_and_date_recorded(doc_id, url, Time.now.utc.to_date)
     row.update_attributes :hits => row.hits + hits
+    
     # Increment the document's total hits.
     doc = Document.find_by_id(doc_id)
     doc.update_attributes(:hit_count => doc.hit_count + hits) if doc
   end
 
+  def self.record_hits_on_searches(query, url, hits)
+    url   = url.mb_chars[0...255].to_s
+    query = CGI::unescape(query)
+    row   = self.find_or_create_by_search_query_and_url_and_date_recorded(query, url, Time.now.utc.to_date)
+    row.update_attributes :hits => row.hits + hits
+  end
+
+  def self.record_hits_on_notes(note_id, url, hits)
+    url = url.mb_chars[0...255].to_s
+    row = self.find_or_create_by_note_id_and_url_and_date_recorded(note_id, url, Time.now.utc.to_date)
+    row.update_attributes :hits => row.hits + hits
+  end
+
   # Using the recorded remote URL hits, correctly set detected remote urls
   # for all listed document ids. This method is only ever run within a
   # background job.
-  def self.populate_detected(doc_ids)
+  def self.populate_detected_document_ids(doc_ids)
     urls = self.aggregated.all(:conditions => {:document_id => doc_ids})
     top  = urls.inject({}) do |memo, url|
       if DOCUMENT_CLOUD_URL =~ url.url

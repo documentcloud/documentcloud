@@ -1,10 +1,11 @@
 (function() {
   // If the note embed is already loaded, don't repeat the process.
   if (window.dc && window.dc.noteEmbedLoaded) return;
-  window.dc = window.dc || {};
-  
-  <% root = DC.server_root %>
 
+  <% root = DC.server_root(:ssl => false) %>
+  window.dc = window.dc || {};
+  window.dc.recordHit = "<%= root.sub('s3', 'www') %>/pixel.gif";
+  
   var loadCSS = function(url, media) {
     var link   = document.createElement('link');
     link.rel   = 'stylesheet';

@@ -32,6 +32,7 @@
                  (secure ? '-secure' : '') + '.js';
 
     $.getScript(searchUrl + params);
+    dc.embed.pingRemoteUrl('search', encodeURIComponent(opts.originalQuery || opts.q));
   };
 
   dc.embed.callback = function(json) {
@@ -274,5 +275,15 @@
     }
 
   });
+  
+  dc.embed.pingRemoteUrl = function(type, id) {
+    var loc = window.location;
+    var url = loc.protocol + '//' + loc.host + loc.pathname + loc.search;
+    if (url.match(/^file:/)) return false;
+    url = url.replace(/[\/]+$/, '');
+    var hitUrl = dc.recordHit;
+    var key    = encodeURIComponent(id + ':' + url);
+    $(document.body).append('<img alt="" width="1" height="1" src="' + hitUrl + '?type=' + type + '&key=' + key + '" />');
+  };
 
 })();

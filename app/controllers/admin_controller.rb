@@ -3,7 +3,7 @@ class AdminController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:save_analytics, :queue_length]
 
   before_filter :secure_only,    :only   => [:index, :signup, :login_as]
-  before_filter :admin_required, :except => [:save_analytics, :queue_length, :test_embedded_search, :test_embedded_note]
+  before_filter :admin_required, :except => [:save_analytics, :queue_length, :test_embedded_search, :test_embedded_note, :test_embedded_viewer]
 
   # The Admin Dashboard
   def index

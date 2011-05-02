@@ -4,15 +4,43 @@ class SaveAnalytics < CloudCrowd::Action
 
   def process
     handle_errors do
-      doc_ids = []
-      input.each do |key, hits|
-        id, url = *key.split(':', 2)
-        id = id.to_i
-        next unless url && (doc = Document.unrestricted.find_by_id(id))
-        doc_ids << id
-        RemoteUrl.record_hits(id, url, hits)
+      Rails.logger.info "#{input.inspect}"
+      input.each_pair do |type, hits|
+        case type
+        when 'document' then self.record_document_hits hits
+        when 'search'   then self.record_search_embed_hits hits
+        when 'note'     then self.record_note_hits hits
+        end
       end
-      RemoteUrl.populate_detected(doc_ids)
+    end
+  end
+  
+  def record_document_hits(hits)
+    doc_ids = []
+    hits.each_pair do |key, type_hits|
+      id, url = *key.split(':', 2)
+      id = id.to_i
+      next unless url && (doc = Document.unrestricted.find_by_id(id))
+      doc_ids << id
+      RemoteUrl.record_hits_on_documents(id, url, type_hits)
+    end
+    RemoteUrl.populate_detected_document_ids(doc_ids)
+  end
+  
+  def record_search_embed_hits(hits)
+    hits.each_pair do |key, type_hits|
+      query, url = *key.split(':', 2)
+      next unless url
+      RemoteUrl.record_hits_on_searches(query, url, type_hits)
+    end
+  end
+  
+  def record_note_hits(hits)
+    hits.each_pair do |key, type_hits|
+      id, url = *key.split(':', 2)
+      id = id.to_i
+      next unless url && (note = Annotation.unrestricted.find_by_id(id))
+      RemoteUrl.record_hits_on_notes(id, url, type_hits)
     end
   end
 

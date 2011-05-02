@@ -10,6 +10,7 @@
   <script src="/javascripts/embed/note_embed.js" type="text/javascript"></script>
   <script>
     window._ = dc._;
+    window.dc.recordHit = "<%= DC.server_root(:ssl => false).sub('s3', 'www') %>/pixel.gif";
   </script>
   <%= include_javascripts(:note_embed) %>
 </head>
