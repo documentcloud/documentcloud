@@ -100,6 +100,18 @@ class RemoteUrl < ActiveRecord::Base
       :having => ['sum(hits) > 0'],
       :order => 'hits desc'
     }.merge(options))
+    urls = RemoteUrl.find_all_by_search_query(hit_searches.map {|s| s.search_query }, 
+                                       :select => "url, hits, search_query", 
+                                       :order => 'hits desc').inject({}) do |memo, hit|
+      memo[hit.search_query] ||= []
+      memo[hit.search_query] << [hit.url, hit.hits]
+      memo
+    end
+    hit_searches.select {|q| !!urls[q.search_query] }.map do |query|
+      query_attrs = query.attributes
+      query_attrs[:urls] = urls[query.search_query]
+      query_attrs
+    end
   end
   
   def self.top_notes(days=7, options={})
@@ -108,6 +120,27 @@ class RemoteUrl < ActiveRecord::Base
       :having => ['sum(hits) > 0'],
       :order => 'hits desc'
     }.merge(options))
+    notes = Annotation.find_all_by_id(hit_notes.map {|n| n.note_id }).inject({}) do |memo, note|
+      memo[note.id] = note
+      memo
+    end
+    docs = Document.find_all_by_id(notes.map {|id, n| n.document_id }).inject({}) do |memo, doc|
+      memo[doc.id] = doc
+      memo
+    end
+    urls = RemoteUrl.find_all_by_note_id(hit_notes.map {|n| n.note_id }, 
+                                         :select => "url, hits, note_id", 
+                                         :order => 'hits desc').inject({}) do |memo, hit|
+      memo[hit.note_id] ||= []
+      memo[hit.note_id] << [hit.url, hit.hits]
+      memo
+    end
+    hit_notes.select {|note| !!notes[note.note_id] }.map do |note|
+      note_attrs = note.attributes
+      note_attrs[:urls] = urls[note.note_id]
+      note_attrs[:document] = docs[notes[note.note_id].document_id]
+      notes[note.note_id].attributes.merge(note_attrs)
+    end
   end
 
 end
