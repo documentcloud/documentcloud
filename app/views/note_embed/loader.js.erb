@@ -6,6 +6,8 @@
   window.dc = window.dc || {};
   window.dc.recordHit = "<%= root.sub('s3', 'www') %>/pixel.gif";
   
+  <% root = DC.server_root(:ssl => false) %>
+
   var loadCSS = function(url, media) {
     var link   = document.createElement('link');
     link.rel   = 'stylesheet';
@@ -18,9 +20,9 @@
 
   /*@cc_on
   /*@if (@_jscript_version < 5.8)
-    loadCSS('<%= root %>/embed/note_embed.css');
+    loadCSS('<%= root %>/note_embed/note_embed.css');
   @else @*/
-    loadCSS('<%= root %>/embed/note_embed-datauri.css');
+    loadCSS('<%= root %>/note_embed/note_embed-datauri.css');
   /*@end
   @*/
   
@@ -28,5 +30,5 @@
   dc.noteEmbedLoaded = true;
 
   // Request the embed JavaScript.
-  document.write('<script type="text/javascript" src="<%= root %>/embed/note_embed.js"></script>');
+  document.write('<script type="text/javascript" src="<%= root %>/note_embed/note_embed.js"></script>');
 })();

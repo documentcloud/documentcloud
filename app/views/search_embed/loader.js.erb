@@ -4,7 +4,8 @@
 
   <% root = DC.server_root(:ssl => false) %>
   window.dc = window.dc || {};
-  window.dc.recordHit = "<%= root.sub('s3', 'www') %>/pixel.gif";
+  
+  <% root = DC.server_root(:ssl => false) %>
 
   var loadCSS = function(url, media) {
     var link   = document.createElement('link');
@@ -18,9 +19,9 @@
 
   /*@cc_on
   /*@if (@_jscript_version < 5.8)
-    loadCSS('<%= root %>/embed/search_embed.css');
+    loadCSS('<%= root %>/search_embed/search_embed.css');
   @else @*/
-    loadCSS('<%= root %>/embed/search_embed-datauri.css');
+    loadCSS('<%= root %>/search_embed/search_embed-datauri.css');
   /*@end
   @*/
   
@@ -28,5 +29,5 @@
   dc.loaded = true;
 
   // Request the embed JavaScript.
-  document.write('<script type="text/javascript" src="<%= root %>/embed/search_embed.js"></script>');
+  document.write('<script type="text/javascript" src="<%= root %>/search_embed/search_embed.js"></script>');
 })();

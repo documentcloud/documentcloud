@@ -42,12 +42,13 @@ namespace :deploy do
         next if File.directory? file
         mimetype = MIME::Types.type_for(File.extname(file)).first
         headers = mimetype ? {'Content-type' => mimetype.content_type} : {}
-        puts "uploading #{file} (#{mimetype}) to embed/#{file.gsub("public/#{embed[0]}/", '')}"
-        bucket.put("embed/#{file.gsub("public/#{embed[0]}/", '')}", File.open(file), {}, 'public-read', headers)
+        puts "uploading #{file} (#{mimetype}) to #{file.gsub("public/", '')}"
+        bucket.put("#{file.gsub("public/", '')}", File.open(file), {}, 'public-read', headers)
       end
       DC_CONFIG['server_root'] = 's3.documentcloud.org'
       contents = ERB.new(File.read("app/views/#{embed[0]}/loader.js.erb")).result(binding)
       bucket.put("#{embed[1]}/loader.js", contents, {}, 'public-read')
+      puts "uploading ERB(app/views/#{embed[0]}/loader.js.erb) to #{embed[1]}/loader.js"
     end
   end
 
