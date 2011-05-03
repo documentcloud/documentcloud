@@ -13,7 +13,20 @@ class RemoteUrl < ActiveRecord::Base
 
   named_scope :by_document, {
     :select => 'sum(hits) AS hits, document_id',
-    :group => 'document_id'
+    :group => 'document_id',
+    :having => 'document_id is not NULL'
+  }
+
+  named_scope :by_search_query, {
+    :select => 'sum(hits) AS hits, search_query',
+    :group => 'search_query',
+    :having => 'search_query is not NULL'
+  }
+
+  named_scope :by_note, {
+    :select => 'sum(hits) AS hits, note_id',
+    :group => 'note_id',
+    :having => 'note_id is not NULL'
   }
 
   def self.record_hits_on_documents(doc_id, url, hits)
@@ -82,11 +95,19 @@ class RemoteUrl < ActiveRecord::Base
   end
   
   def self.top_searches(days=7, options={})
-    
+    hit_searches = self.by_search_query.all({
+      :conditions => ['date_recorded > ?', days.days.ago],
+      :having => ['sum(hits) > 0'],
+      :order => 'hits desc'
+    }.merge(options))
   end
   
   def self.top_notes(days=7, options={})
-    
+    hit_notes = self.by_note.all({
+      :conditions => ['date_recorded > ?', days.days.ago],
+      :having => ['sum(hits) > 0'],
+      :order => 'hits desc'
+    }.merge(options))
   end
 
 end
