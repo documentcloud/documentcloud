@@ -64,6 +64,7 @@
       searches[id].workspace       = new dc.EmbedWorkspaceView(searches[id].options);
       searches[id].originalOptions = _.clone(searches[id].options);
       searches[id].isLoaded        = true;
+      searches[id].search          = searches[id].workspace.search;
     }
 
   };
@@ -104,6 +105,7 @@
     },
 
     initialize : function() {
+      _.bindAll(this, 'search');
       this.embed     = searches[this.options.id];
       this.container = $(this.options.container);
       this.embed.documents.bind('refresh', _.bind(this.renderDocuments, this));
@@ -118,7 +120,7 @@
       }));
       this.container.html(this.el);
 
-      this.search = this.$('.DC-search-box');
+      this.searchBox = this.$('.DC-search-box');
 
       this.renderDocuments();
       this.showSearchCancel();
@@ -182,7 +184,7 @@
 
     cancelSearch : function(e) {
       e.preventDefault();
-      this.search.val('').blur();
+      this.searchBox.val('').blur();
       this.performSearch();
     },
 
@@ -192,9 +194,15 @@
       this.embed.options.page = 1;
       this.performSearch(force);
     },
+        
+    search : function(query) {
+      this.embed.options.page = 1;
+      this.performSearch(true, query);
+    },
 
-    performSearch : function(force) {
-      var query = this.$('.DC-search-box').val();
+    performSearch : function(force, query) {
+      query = query || this.$('.DC-search-box').val();
+      this.$('.DC-search-box').val(query);
       this.embed.query = dc.inflector.trim(query);
 
       if (query == '' && !force && !this.embed.options.search) {
