@@ -23,7 +23,10 @@
       title         : null,
       pass_search   : false
     }, opts);
-
+    
+    if (opts.search && !searches[id].isLoaded) {
+      searches[id].options.q = opts.q = opts.originalQuery + ' ' + opts.search;
+    }
     var params = encodeURIComponent(opts.q.replace(/\?/g, '')) +
                  '/p-'      + encodeURIComponent(opts.page) +
                  '-per-'    + encodeURIComponent(opts.per_page) +
@@ -50,6 +53,12 @@
 
     if (searches[id].isLoaded) {
       searches[id].documents.refresh(json.documents);
+      if (searches[id].options.search && !searches[id].originalLoaded) {
+        searches[id].workspace.render();
+      }
+      if (searches[id].options.q == searches[id].options.originalQuery) {
+        searches[id].originalLoaded = true;
+      }
     } else {
       searches[id].documents       = new dc.EmbedDocumentSet(json.documents, searches[id].options);
       searches[id].workspace       = new dc.EmbedWorkspaceView(searches[id].options);
@@ -102,15 +111,19 @@
     },
 
     render : function() {
-      $(this.el).html(JST['search_embed_workspace']({options : this.embed.options}));
+      var search = $.trim(this.embed.options.q.replace(this.embed.options.originalQuery, ''));
+      $(this.el).html(JST['search_embed_workspace']({
+        options : this.embed.options,
+        search  : search
+      }));
       this.container.html(this.el);
 
       this.search = this.$('.DC-search-box');
 
       this.renderDocuments();
       this.showSearchCancel();
-      var listEl = $('.DC-document-list', this.el);
-      listEl.height(listEl.height());
+      this.setHeight();
+      this.delegateEvents();
     },
 
     renderDocuments : function() {
@@ -140,6 +153,11 @@
         workspace_url : options.dc_url + (options.secure ? "/#search/" : "/public/#search/") +
                         encodeURIComponent(options.q)
       }));
+    },
+    
+    setHeight : function() {
+      var listEl = $('.DC-document-list', this.el);
+      listEl.height(listEl.height());
     },
 
     calculateTileWidth : function() {
@@ -179,7 +197,7 @@
       var query = this.$('.DC-search-box').val();
       this.embed.query = dc.inflector.trim(query);
 
-      if (query == '' && !force) {
+      if (query == '' && !force && !this.embed.options.search) {
         // Returning to original query, just use the cached original response.
         this.embed.options = _.clone(this.embed.originalOptions);
         this.embed.documents.refresh(this.embed.documents.originalModels);

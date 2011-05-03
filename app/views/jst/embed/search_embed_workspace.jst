@@ -8,7 +8,7 @@
   <div class="DC-text-input DC-search">
     <div class="DC-icon DC-search-glyph"></div>
     <div class="DC-search-inner">
-      <input placeholder="Search..." class="DC-search-box DC-interface" />
+      <input placeholder="Search..." class="DC-search-box DC-interface" <% if (search) { %>value="<%= search %>"<% } %> />
     </div>
     <div class="DC-icon DC-cancel-search" title="clear search"></div>
   </div>
