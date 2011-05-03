@@ -22,6 +22,8 @@ class AdminController < ApplicationController
     @organizations                 = Organization.all.to_json
     @instances                     = DC::AWS.new.describe_instances.to_json
     @top_documents                 = RemoteUrl.top_documents(7, :limit => 5).to_json
+    @top_searches                  = RemoteUrl.top_searches(7, :limit => 5).to_json
+    @top_notes                     = RemoteUrl.top_notes(7, :limit => 5).to_json
     @remote_url_hits_last_week     = DC::Statistics.remote_url_hits_last_week.to_json
     @remote_url_hits_last_year     = DC::Statistics.remote_url_hits_last_year.to_json
     @count_organizations_embedding = DC::Statistics.count_organizations_embedding.to_json

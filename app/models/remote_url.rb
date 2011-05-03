@@ -80,5 +80,13 @@ class RemoteUrl < ActiveRecord::Base
       docs[url.document_id].admin_attributes.merge(url_attrs)
     end
   end
+  
+  def self.top_searches(days=7, options={})
+    
+  end
+  
+  def self.top_notes(days=7, options={})
+    
+  end
 
 end

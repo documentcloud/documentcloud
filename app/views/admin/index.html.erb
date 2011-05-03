@@ -31,11 +31,12 @@
   stats.count_total_collaborators     = <%= @count_total_collaborators %>;
   stats.numbers                       = <%= @numbers %>;
 
-
   Accounts.refresh(<%= @accounts %>);
   Organizations.refresh(<%= @organizations %>);
   Documents.refresh(<%= @documents %>);
   TopDocuments.refresh(<%= @top_documents %>);
+  TopSearches.refresh(<%= @top_searches %>);
+  TopNotes.refresh(<%= @top_notes %>);
   FailedDocuments.refresh(<%= @failed_documents %>);
 
   $(function(){
