@@ -22,7 +22,7 @@
             </td>
             <td>
               <% _.each(note.get('urls'), function(url) { %>
-                <b><a href="<%= url[0] %>"><%= note.get('title') %></a></b><br />
+                <b><a href="<%= url[0] %>"><%= dc.inflector.truncate(note.get('title') || '', 50) %></a></b><br />
               <% }); %>
               <a href="<%= note.document.publishedUrl() %><%= '#document/p' + note.get('page') + '/a' + note.get('id') %>"><%= note.document.get('access') == dc.access.PUBLIC ? dc.inflector.truncate(note.document.get('title') || '', 50) : '<i>private</i>' %></a>
             </td>

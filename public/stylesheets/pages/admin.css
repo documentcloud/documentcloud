@@ -129,6 +129,10 @@ body {
         line-height: 20px;
         vertical-align: middle;
       }
+      #statistics .data .searches tbody td {
+        padding-top: 0;
+        padding-bottom: 16px;
+      }
 
 .icon.minus {
   position: absolute; margin-top: 5px;

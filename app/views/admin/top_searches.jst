@@ -1,1 +1,31 @@
-<%= TopSearches.models %>
+
+<tr class="data top_searches_list">
+  <td colspan="4">
+    <table class="searches">
+      <thead>
+        <td>Search Query</td>
+        <td>Hits</td>
+        <td>Embed Date</td>
+        <td></td>
+      </thead>
+      <tbody>
+        <% _.each(_.sortBy(TopSearches.models, function(query){ return -query.get('hits')}), function(query) { %>
+          <tr>
+            <td>
+              <% _.each(query.get('urls'), function(url) { %>
+                <b><a href="<%= url[0] %>"><%= dc.inflector.truncate(query.get('search_query') || '', 100) %></a></b><br />
+              <% }); %>
+            </td>
+            <td>
+              <% _.each(query.get('urls'), function(url) { %>
+                <b><%= url[1] %></b><br />
+              <% }); %>
+            </td>
+            <td><%= query.get('first_recorded_date') %></td>
+            <td class="last"></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </td>
+</tr>

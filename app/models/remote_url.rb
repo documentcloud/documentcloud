@@ -110,6 +110,10 @@ class RemoteUrl < ActiveRecord::Base
     hit_searches.select {|q| !!urls[q.search_query] }.map do |query|
       query_attrs = query.attributes
       query_attrs[:urls] = urls[query.search_query]
+      first_hit = RemoteUrl.first(:select => 'created_at',
+                                  :conditions => {:search_query => query.search_query},
+                                  :order => 'created_at ASC')
+      query_attrs[:first_recorded_date] = first_hit[:created_at].strftime "%a %b %d, %Y"
       query_attrs
     end
   end
