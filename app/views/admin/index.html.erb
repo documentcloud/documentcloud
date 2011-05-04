@@ -40,6 +40,10 @@
   TopSearches.refresh(<%= @top_searches %>);
   TopNotes.refresh(<%= @top_notes %>);
   FailedDocuments.refresh(<%= @failed_documents %>);
+  
+  TopNotes.each(function(note) {
+    note.document = new dc.model.Document(note.get('document'));
+  });
 
   $(function(){
     $('#content').append((new dc.ui.Admin()).render().el);

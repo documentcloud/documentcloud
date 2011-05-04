@@ -1,1 +1,44 @@
-<%= TopNotes.models %>
+
+<tr class="data top_notes_list">
+  <td colspan="4">
+    <table class="notes documents">
+      <thead>
+        <td>Cover</td>
+        <td>ID</td>
+        <td>Title</td>
+        <td>Contributor</td>
+        <td>Organization</td>
+        <td>Hits</td>
+        <td>Embed Date</td>
+        <td></td>
+      </thead>
+      <tbody>
+        <% _.each(_.sortBy(TopNotes.models, function(note){ return -note.get('hits')}), function(note) { %>
+          <tr>
+            <td class="first"><img class="doc" src="<%= note.document.get('thumbnail_url') %>" /></td>
+            <td>
+              <b><%= note.get('id') %></b><br />
+              <%= note.get('document_id') %>
+            </td>
+            <td>
+              <% _.each(note.get('urls'), function(url) { %>
+                <b><a href="<%= url[0] %>"><%= note.get('title') %></a></b><br />
+              <% }); %>
+              <a href="<%= note.document.publishedUrl() %><%= '#document/p' + note.get('page') + '/a' + note.get('id') %>"><%= note.document.get('access') == dc.access.PUBLIC ? dc.inflector.truncate(note.document.get('title') || '', 50) : '<i>private</i>' %></a>
+            </td>
+            <td><%= note.document.get('account_name') %></td>
+            <td><%= note.document.get('organization_name') %></td>
+            <td>
+              <% _.each(note.get('urls'), function(url) { %>
+                <b><%= url[1] %></b><br />
+              <% }); %>
+              <%= note.get('hits') %>
+            </td>
+            <td><%= note.get('first_recorded_date') %></td>
+            <td class="last"></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </td>
+</tr>

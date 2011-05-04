@@ -113,7 +113,7 @@ body {
         line-height: 45px;
       }
         #statistics .documents td.first {
-          width: 30px; height: 37.5px;
+          width: 30px; height: 56px;
           padding: 7px 0 7px 0;
         }
         #statistics .documents .doc {
@@ -125,6 +125,10 @@ body {
         #statistics .display_view:hover .login_as .minibutton {
           display: block;
         }
+      #statistics .notes tbody tr td {
+        line-height: 20px;
+        vertical-align: middle;
+      }
 
 .icon.minus {
   position: absolute; margin-top: 5px;

@@ -139,6 +139,10 @@ class RemoteUrl < ActiveRecord::Base
       note_attrs = note.attributes
       note_attrs[:urls] = urls[note.note_id]
       note_attrs[:document] = docs[notes[note.note_id][:document_id]]
+      first_hit = RemoteUrl.first(:select => 'created_at',
+                                  :conditions => {:note_id => note.note_id},
+                                  :order => 'created_at ASC')
+      note_attrs[:first_recorded_date] = first_hit[:created_at].strftime "%a %b %d, %Y"
       notes[note.note_id].merge(note_attrs)
     end
   end
