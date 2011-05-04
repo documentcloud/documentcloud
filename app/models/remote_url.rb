@@ -121,10 +121,10 @@ class RemoteUrl < ActiveRecord::Base
       :order => 'hits desc'
     }.merge(options))
     notes = Annotation.find_all_by_id(hit_notes.map {|n| n.note_id }).inject({}) do |memo, note|
-      memo[note.id] = note
+      memo[note.id] = note.canonical.merge({:document_id => note.document_id})
       memo
     end
-    docs = Document.find_all_by_id(notes.map {|id, n| n.document_id }).inject({}) do |memo, doc|
+    docs = Document.find_all_by_id(notes.map {|id, n| n[:document_id] }).inject({}) do |memo, doc|
       memo[doc.id] = doc
       memo
     end
@@ -138,8 +138,8 @@ class RemoteUrl < ActiveRecord::Base
     hit_notes.select {|note| !!notes[note.note_id] }.map do |note|
       note_attrs = note.attributes
       note_attrs[:urls] = urls[note.note_id]
-      note_attrs[:document] = docs[notes[note.note_id].document_id]
-      notes[note.note_id].attributes.merge(note_attrs)
+      note_attrs[:document] = docs[notes[note.note_id][:document_id]]
+      notes[note.note_id].merge(note_attrs)
     end
   end
 

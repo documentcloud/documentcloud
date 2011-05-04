@@ -8,6 +8,8 @@
 <script type="text/javascript">
   window.CLOUD_CROWD_SERVER   = "<%= DC_CONFIG['cloud_crowd_server'] %>";
   window.TopDocuments         = new dc.model.DocumentSet();
+  window.TopNotes             = new dc.model.NoteSet();
+  window.TopSearches          = new dc.model.SearchEmbeds();
   window.FailedDocuments      = new dc.model.DocumentSet();
 
   window.stats = {};
