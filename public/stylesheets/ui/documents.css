@@ -441,3 +441,23 @@
           .note .note_controls .save_draft_note {
             width: 80px;
           }
+
+/*------------------------------ Data Dialog ---------------------------------*/
+.datalog .data_row {
+  margin: 0 0 10px;
+}
+  .datalog .data_row .minibutton {
+    display: inline-block;
+    width: 10px;
+    padding-left: 7px; padding-right: 7px;
+    text-shadow: 0 -1px 0 #555;
+    font: 14px/11px Arial;
+    margin-right: 5px;
+  }
+  .datalog .text_input.small {
+    margin-right: 5px;
+    display: inline-block;
+  }
+    .datalog .text_input input {
+      width: 150px;
+    }

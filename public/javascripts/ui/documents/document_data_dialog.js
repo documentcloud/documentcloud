@@ -1,12 +1,23 @@
 dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
 
+  className : 'dialog datalog',
+
   constructor : function(docs) {
     this.docs = docs;
     this.multiple = docs.length > 1;
     var title = "Edit Data for " + this._title();
-    dc.ui.Dialog.call(this, {mode : 'custom', title : title, editor : true});
+    dc.ui.Dialog.call(this, {mode : 'custom', title : title, saveText : 'Save'});
     this.render();
     $(document.body).append(this.el);
+  },
+
+  render : function() {
+    dc.ui.Dialog.prototype.render.call(this);
+    this._container = this.$('.custom');
+    this._container.html(JST['document/document_data_dialog']({
+      data: Documents.sortData(Documents.sharedData(this.docs))
+    }));
+    return this;
   },
 
   // Sets the dialog title to include the number of documents or title of

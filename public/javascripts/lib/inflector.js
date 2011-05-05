@@ -184,6 +184,10 @@ dc.inflector = {
 
   escapeRegExp : function(s) {
     return s.replace(/([.*+?^${}()|[\]\/\\])/g, '\\$1');
+  },
+
+  escapeHTML : function(s) {
+    return s.replace(/&(?!\w+;)/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
 };

@@ -392,11 +392,11 @@ textarea.text_area {
   .minibutton.default {
     background-image: url(/images/embed/ui/button_bg_green.gif);
     border-color: #4ba47c; border-top-color: #53b388; border-bottom-color: #459671;
-    text-shadow: none;
+    text-shadow: #4ba47c 0 -1px 0;
   }
   .minibutton.dark {
     background-image: url(/images/embed/ui/button_bg_dark.gif);
-    text-shadow: none;
+    text-shadow: #777 0 -1px 0;
   }
   .minibutton.plus {
     position: relative;

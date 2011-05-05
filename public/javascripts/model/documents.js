@@ -61,12 +61,7 @@ dc.model.Document = Backbone.Model.extend({
 
   // Return the sorted array of key value pairs for the document's data.
   sortedData : function() {
-    var data = this.get('data');
-    var list = [];
-    for (var key in data) {
-      list.push([key, data[key]]);
-    }
-    return list.sort(function(a, b){ return a[0] > b[0] ? 1 : -1 });
+    return Documents.sortData(this.get('data'));
   },
 
   // Fetch all of the documents page mentions for a given search query.
@@ -225,6 +220,28 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   sharedAttribute : function(docs, attr) {
     var attrs = _.uniq(_.map(docs, function(doc){ return doc.get(attr); }));
     return attrs.length > 1 ? false : attrs[0];
+  },
+
+  // Given a list of documents, return the sorted list of data key/value
+  // pairs they have in common.
+  sharedData : function(docs) {
+    var first  = docs.shift();
+    var shared = first.get('data');
+    _.each(docs, function(doc) {
+      for (var key in shared) {
+        if (doc.attributes.data[key] !== shared[key]) delete shared[key];
+      }
+    });
+    return shared;
+  },
+
+  // Convert a data hash into a sorted list of pairs.
+  sortData : function(data) {
+    var list = [];
+    for (var key in data) {
+      list.push([key, data[key]]);
+    }
+    return list.sort(function(a, b){ return a[0] > b[0] ? 1 : -1; });
   },
 
   selectedPublicCount : function() {
