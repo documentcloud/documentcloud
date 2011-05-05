@@ -29,7 +29,7 @@ class RemoteUrl < ActiveRecord::Base
     :having => 'note_id is not NULL'
   }
 
-  def self.record_hits_on_documents(doc_id, url, hits)
+  def self.record_hits_on_document(doc_id, url, hits)
     url = url.mb_chars[0...255].to_s
     row = self.find_or_create_by_document_id_and_url_and_date_recorded(doc_id, url, Time.now.utc.to_date)
     row.update_attributes :hits => row.hits + hits
@@ -39,14 +39,14 @@ class RemoteUrl < ActiveRecord::Base
     doc.update_attributes(:hit_count => doc.hit_count + hits) if doc
   end
 
-  def self.record_hits_on_searches(query, url, hits)
+  def self.record_hits_on_search(query, url, hits)
     url   = url.mb_chars[0...255].to_s
     query = CGI::unescape(query)
     row   = self.find_or_create_by_search_query_and_url_and_date_recorded(query, url, Time.now.utc.to_date)
     row.update_attributes :hits => row.hits + hits
   end
 
-  def self.record_hits_on_notes(note_id, url, hits)
+  def self.record_hits_on_note(note_id, url, hits)
     url = url.mb_chars[0...255].to_s
     row = self.find_or_create_by_note_id_and_url_and_date_recorded(note_id, url, Time.now.utc.to_date)
     row.update_attributes :hits => row.hits + hits

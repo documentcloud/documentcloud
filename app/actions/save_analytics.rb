@@ -4,9 +4,12 @@ class SaveAnalytics < CloudCrowd::Action
 
   def process
     handle_errors do
-      Rails.logger.info "#{input.inspect}"
       hits = input.keys.inject({}) do |memo, hit|
         type, key = *hit.split(':', 2)
+        unless ['document', 'search', 'note'].include? type
+          type = 'document'
+          key  = hit
+        end
         memo[type] ||= {}
         memo[type][key] = input[hit]
         memo
@@ -28,7 +31,7 @@ class SaveAnalytics < CloudCrowd::Action
       id = id.to_i
       next unless url && (doc = Document.unrestricted.find_by_id(id))
       doc_ids << id
-      RemoteUrl.record_hits_on_documents(id, url, type_hits)
+      RemoteUrl.record_hits_on_document(id, url, type_hits)
     end
     RemoteUrl.populate_detected_document_ids(doc_ids)
   end
@@ -37,7 +40,7 @@ class SaveAnalytics < CloudCrowd::Action
     hits.each_pair do |key, type_hits|
       query, url = *key.split(':', 2)
       next unless url
-      RemoteUrl.record_hits_on_searches(query, url, type_hits)
+      RemoteUrl.record_hits_on_search(query, url, type_hits)
     end
   end
   
@@ -46,7 +49,7 @@ class SaveAnalytics < CloudCrowd::Action
       id, url = *key.split(':', 2)
       id = id.to_i
       next unless url && (note = Annotation.unrestricted.find_by_id(id))
-      RemoteUrl.record_hits_on_notes(id, url, type_hits)
+      RemoteUrl.record_hits_on_note(id, url, type_hits)
     end
   end
 
