@@ -15,9 +15,9 @@ dc.ui.Toolbar = Backbone.View.extend({
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'openDocumentEmbedDialog', 'openNoteEmbedDialog',
-      'openSearchEmbedDialog', 'openPublicationDateDialog', 'requestDownloadViewers', 
-      'checkFloat', '_openTimeline', '_viewEntities', 'editPublishedUrl', 
-      'openShareDialog', '_markOrder', '_removeFromSelectedProject', 
+      'openSearchEmbedDialog', 'openPublicationDateDialog', 'requestDownloadViewers',
+      'checkFloat', '_openTimeline', '_viewEntities', 'editPublishedUrl',
+      'openShareDialog', '_markOrder', '_removeFromSelectedProject',
       '_enableAnalyzeMenu');
     this.sortMenu    = this._createSortMenu();
     this.analyzeMenu = this._createAnalyzeMenu();
@@ -116,6 +116,12 @@ dc.ui.Toolbar = Backbone.View.extend({
     Documents.editAccess(Documents.selected());
   },
 
+  editData : function() {
+    var docs = Documents.selected();
+    if (!Documents.allowedToEdit(docs)) return;
+    new dc.ui.DocumentDataDialog(docs);
+  },
+
   openViewers : function(checkEdit, suffix, afterLoad) {
     if (!Documents.selectedCount) return dc.ui.Dialog.alert('Please select a document to open.');
     var continuation = function(docs) {
@@ -132,7 +138,7 @@ dc.ui.Toolbar = Backbone.View.extend({
 
   openSearchEmbedDialog : function() {
     var docs = Documents.chosen();
-    
+
     dc.app.searchEmbedDialog = new dc.ui.SearchEmbedDialog(docs);
   },
 
@@ -144,7 +150,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
     (new dc.ui.DocumentEmbedDialog(doc)).render();
   },
-  
+
   openNoteEmbedDialog : function() {
     var docs = Documents.chosen();
     if (!docs.length) return;
@@ -312,6 +318,7 @@ dc.ui.Toolbar = Backbone.View.extend({
         {title : 'Access Level',              attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
         {title : 'Related Article URL',       attrs: {'class' : 'multiple indent'}, onClick : this.editRelatedArticle},
         {title : 'Published URL',             attrs: {'class' : 'multiple indent'}, onClick : this.editPublishedUrl},
+        {title : 'Edit Document Data',        attrs: {'class' : 'multiple'},        onClick : this.editData},
         {title : 'Modify Original Document',  attrs: {'class' : 'multiple'},        onClick : _.bind(this.openViewers, this, true, '#pages', null)},
         {title : 'Remove from this Project',  attrs: {'class' : 'multiple project'},onClick : this._removeFromSelectedProject},
         {title : 'Delete Documents',          attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}

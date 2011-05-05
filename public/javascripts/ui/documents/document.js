@@ -14,33 +14,34 @@ dc.ui.Document = Backbone.View.extend({
   className : 'document',
 
   events : {
-    'click .doc_title'          : 'select',
-    'contextmenu .doc_title'    : 'showMenu',
-    'dblclick .doc_title'       : 'viewDocument',
-    'click .icon.doc'           : 'select',
-    'contextmenu .icon.doc'     : 'showMenu',
-    'dblclick .icon.doc'        : 'viewDocument',
-    'click .show_notes'         : 'toggleNotes',
-    'click .title .edit_glyph'  : 'openDialog',
-    'click .title .lock'        : 'editAccessLevel',
-    'click .title .published'   : 'viewPublishedDocuments',
-    'click .page_icon'          : '_openPage',
-    'click .reviewer_count'     : '_openShareDialog',
-    'click .occurrence'         : '_openPage',
-    'click .mention b'          : '_openPage',
-    'click .cancel_search'      : '_hidePages',
-    'click .page_count'         : '_togglePageImages',
-    'click .search_account'     : 'searchAccount',
-    'click .search_group'       : 'searchOrganization',
-    'click .search_source'      : 'searchSource',
-    'click .change_publish_at'  : 'editPublishAt',
-    'click .troubleshoot'       : 'openTroubleshooting',
-    'click .contact_us'         : 'openContactUs',
-    'click .open_pages'         : 'openPagesInViewer',
-    'click .show_mentions'      : 'fetchAllMentions',
-    'click .page_list .left'    : 'previousPage',
-    'click .page_list .right'   : 'nextPage',
-    'click .data_item'          : 'searchData'
+    'click .doc_title'              : 'select',
+    'contextmenu .doc_title'        : 'showMenu',
+    'dblclick .doc_title'           : 'viewDocument',
+    'click .icon.doc'               : 'select',
+    'contextmenu .icon.doc'         : 'showMenu',
+    'dblclick .icon.doc'            : 'viewDocument',
+    'click .show_notes'             : 'toggleNotes',
+    'click .title .edit_glyph'      : 'openDialog',
+    'click .datalines .edit_glyph'  : 'openDataDialog',
+    'click .title .lock'            : 'editAccessLevel',
+    'click .title .published'       : 'viewPublishedDocuments',
+    'click .page_icon'              : '_openPage',
+    'click .reviewer_count'         : '_openShareDialog',
+    'click .occurrence'             : '_openPage',
+    'click .mention b'              : '_openPage',
+    'click .cancel_search'          : '_hidePages',
+    'click .page_count'             : '_togglePageImages',
+    'click .search_account'         : 'searchAccount',
+    'click .search_group'           : 'searchOrganization',
+    'click .search_source'          : 'searchSource',
+    'click .change_publish_at'      : 'editPublishAt',
+    'click .troubleshoot'           : 'openTroubleshooting',
+    'click .contact_us'             : 'openContactUs',
+    'click .open_pages'             : 'openPagesInViewer',
+    'click .show_mentions'          : 'fetchAllMentions',
+    'click .page_list .left'        : 'previousPage',
+    'click .page_list .right'       : 'nextPage',
+    'click .data_item'              : 'searchData'
   },
 
   // Takes a document model and sets up listeners on the document model,
@@ -151,12 +152,18 @@ dc.ui.Document = Backbone.View.extend({
     this.model.downloadViewer();
   },
 
-  // Open an edit dialog for the currently selected documents, if this
-  // document is among them. Otherwise, open the dialog just for this document.
+  // Open an edit dialog for this document.
   openDialog : function(e) {
     if (!(this.modes.editable == 'is')) return;
     if (this.model.checkBusy()) return;
     dc.ui.DocumentDialog.open(this.model);
+  },
+
+  // Open a dialog to edit the document's data.
+  openDataDialog : function(e) {
+    if (!(this.modes.editable == 'is')) return;
+    if (this.model.checkBusy()) return;
+    dc.ui.DocumentDataDialog.open(this.model);
   },
 
   // Renders a single document embed dialog. Checks for permission to embed.
