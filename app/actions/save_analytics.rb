@@ -5,11 +5,17 @@ class SaveAnalytics < CloudCrowd::Action
   def process
     handle_errors do
       Rails.logger.info "#{input.inspect}"
-      input.each_pair do |type, hits|
+      hits = input.keys.inject({}) do |memo, hit|
+        type, key = *hit.split(':', 2)
+        memo[type] ||= {}
+        memo[type][key] = input[hit]
+        memo
+      end
+      hits.each_pair do |type, type_hits|
         case type
-        when 'document' then self.record_document_hits hits
-        when 'search'   then self.record_search_embed_hits hits
-        when 'note'     then self.record_note_hits hits
+        when 'document' then self.record_document_hits type_hits
+        when 'search'   then self.record_search_embed_hits type_hits
+        when 'note'     then self.record_note_hits type_hits
         end
       end
     end

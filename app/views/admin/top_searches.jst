@@ -12,14 +12,10 @@
         <% _.each(_.sortBy(TopSearches.models, function(query){ return -query.get('hits')}), function(query) { %>
           <tr>
             <td>
-              <% _.each(query.get('urls'), function(url) { %>
-                <b><a href="<%= url[0] %>"><%= dc.inflector.truncate(query.get('search_query') || '', 100) %></a></b><br />
-              <% }); %>
+              <b><a href="<%= query.get('url') %>"><%= dc.inflector.truncate(query.get('search_query') || '', 100) %></a></b>
             </td>
             <td>
-              <% _.each(query.get('urls'), function(url) { %>
-                <b><%= url[1] %></b><br />
-              <% }); %>
+              <b><%= query.get('hits') %></b>
             </td>
             <td><%= query.get('first_recorded_date') %></td>
             <td class="last"></td>

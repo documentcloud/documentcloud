@@ -18,14 +18,14 @@ class RemoteUrl < ActiveRecord::Base
   }
 
   named_scope :by_search_query, {
-    :select => 'sum(hits) AS hits, search_query',
-    :group => 'search_query',
+    :select => 'sum(hits) AS hits, search_query, url',
+    :group => 'search_query, url',
     :having => 'search_query is not NULL'
   }
 
   named_scope :by_note, {
-    :select => 'sum(hits) AS hits, note_id',
-    :group => 'note_id',
+    :select => 'sum(hits) AS hits, note_id, url',
+    :group => 'note_id, url',
     :having => 'note_id is not NULL'
   }
 
@@ -100,16 +100,8 @@ class RemoteUrl < ActiveRecord::Base
       :having => ['sum(hits) > 0'],
       :order => 'hits desc'
     }.merge(options))
-    urls = RemoteUrl.find_all_by_search_query(hit_searches.map {|s| s.search_query }, 
-                                       :select => "url, hits, search_query", 
-                                       :order => 'hits desc').inject({}) do |memo, hit|
-      memo[hit.search_query] ||= []
-      memo[hit.search_query] << [hit.url, hit.hits]
-      memo
-    end
-    hit_searches.select {|q| !!urls[q.search_query] }.map do |query|
+    hit_searches.map do |query|
       query_attrs = query.attributes
-      query_attrs[:urls] = urls[query.search_query]
       first_hit = RemoteUrl.first(:select => 'created_at',
                                   :conditions => {:search_query => query.search_query},
                                   :order => 'created_at ASC')
@@ -132,16 +124,8 @@ class RemoteUrl < ActiveRecord::Base
       memo[doc.id] = doc
       memo
     end
-    urls = RemoteUrl.find_all_by_note_id(hit_notes.map {|n| n.note_id }, 
-                                         :select => "url, hits, note_id", 
-                                         :order => 'hits desc').inject({}) do |memo, hit|
-      memo[hit.note_id] ||= []
-      memo[hit.note_id] << [hit.url, hit.hits]
-      memo
-    end
     hit_notes.select {|note| !!notes[note.note_id] }.map do |note|
       note_attrs = note.attributes
-      note_attrs[:urls] = urls[note.note_id]
       note_attrs[:document] = docs[notes[note.note_id][:document_id]]
       first_hit = RemoteUrl.first(:select => 'created_at',
                                   :conditions => {:note_id => note.note_id},
