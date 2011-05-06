@@ -34,6 +34,10 @@
                  '-org-'    + encodeURIComponent(opts.organization) +
                  (secure ? '-secure' : '') + '.js';
 
+    // Make sure we haven't been monkey-patched by Omniture.
+    // Super, amazingly, ridiculously, hacky. But hey, fight fire with fire.
+    window.dc = dc;
+    setTimeout(function(){ window.dc = dc; }, 50);
     $.getScript(searchUrl + params);
     dc.embed.pingRemoteUrl('search', encodeURIComponent(opts.originalQuery || opts.q));
   };
@@ -119,9 +123,7 @@
         search  : search
       }));
       this.container.html(this.el);
-
       this.searchBox = this.$('.DC-search-box');
-
       this.renderDocuments();
       this.showSearchCancel();
       this.setHeight();
@@ -201,7 +203,7 @@
     },
 
     performSearch : function(force, query) {
-      query = query || this.$('.DC-search-box').val();
+      query = query || this.$('.DC-search-box').val() || "";
       this.$('.DC-search-box').val(query);
       this.embed.query = dc.inflector.trim(query);
 
