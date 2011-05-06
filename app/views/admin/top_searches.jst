@@ -12,7 +12,8 @@
         <% _.each(_.sortBy(TopSearches.models, function(query){ return -query.get('hits')}), function(query) { %>
           <tr>
             <td>
-              <a href="<%= query.get('url') %>"><%= dc.inflector.truncate(query.get('search_query') || '', 100) %></a>
+              <b><%= dc.inflector.truncate(query.get('search_query') || '', 80) %></a></b><br />
+              <a href="<%= query.get('url') %>"><%= dc.inflector.truncate(query.get('url') || '', 100) %></a>
             </td>
             <td>
               <%= query.get('hits') %>

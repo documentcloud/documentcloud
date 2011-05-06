@@ -113,7 +113,7 @@ body {
         line-height: 45px;
       }
         #statistics .documents td.first {
-          width: 30px; height: 56px;
+          width: 30px;
           padding: 7px 0 7px 0;
         }
         #statistics .documents .doc {
@@ -128,10 +128,15 @@ body {
       #statistics .notes tbody tr td {
         line-height: 20px;
         vertical-align: middle;
+        padding-top: 8px;
+        padding-bottom: 8px;
       }
       #statistics .data .searches tbody td {
-        padding-top: 0;
-        padding-bottom: 16px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        height: auto;
+        line-height: 20px;
+        vertical-align: middle;
       }
 
 .icon.minus {
