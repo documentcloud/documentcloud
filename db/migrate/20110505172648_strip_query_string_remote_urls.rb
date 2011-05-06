@@ -2,32 +2,21 @@ class StripQueryStringRemoteUrls < ActiveRecord::Migration
   
   def self.up
     doc_ids = []
-    RemoteUrl.find_each do |url|
-      if url.url.include? '?'
-        new_url, query_string = *url.url.split('?', 2)
-        url.update_attributes :url => new_url
-        
-        all_urls = RemoteUrl.all(:conditions => {
-          :date_recorded  => url.date_recorded, 
-          :url            => new_url,
-          :document_id    => url.document_id,
-          :note_id        => url.note_id,
-          :search_query   => url.search_query,
-        }, :order => 'created_at asc')
-        if all_urls.count > 1
-          doc_ids << url.document_id if url.document_id
-          total_hits = all_urls.inject(0) {|memo, hit| memo += hit.hits }
-          all_urls[1, all_urls.length].each do |u| 
-            puts " ---> Destroying: #{u.url} - #{u.hits} hits"
-            u.destroy
-          end
-          puts " ---> Not Destroying: #{all_urls[0].url} - #{all_urls[0].hits}"
-          all_urls[0].hits = total_hits
-          all_urls[0].save
-          puts " ---> Saving: #{new_url} - #{total_hits} hits"
-        end
+    docs = RemoteUrl.all(:conditions => ['url LIKE ? AND document_id is not NULL', '%?%']).group_by {|u| u.document_id }
+    docs.each do |id, doc_urls|
+      docs[id] = doc_urls.group_by {|h| h.date_recorded }
+    end
+    docs.each_pair do |doc_id, days|
+      puts doc_id
+      doc_ids << doc_id
+      days.each_pair do |hit_date, hits|
+        new_url, query_string = *hits[0].url.split('?', 2)
+        total = hits.inject(0) {|sum, hit| sum += hit.hits }
+        hits.shift.update_attributes :hits => total, :url => new_url
+        hits.each {|hit| hit.destroy }
       end
     end
+    
     puts "Detecting top URLs for documents... #{doc_ids.inspect}"
     RemoteUrl.populate_detected_document_ids(doc_ids)
   end
