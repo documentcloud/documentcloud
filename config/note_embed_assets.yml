@@ -1,0 +1,14 @@
+javascript_compressor: closure
+template_function: dc._.template
+embed_assets: datauri
+
+javascripts:
+  note_embed:
+    - public/javascripts/vendor/underscore-*.js
+    - public/javascripts/vendor/jquery-*.js
+    - public/javascripts/embed/note_embed.js
+    - app/views/jst/embed/note_*.jst
+
+stylesheets:
+  note_embed:
+    - public/stylesheets/embed/note_embed.css
