@@ -444,20 +444,31 @@
 
 /*------------------------------ Data Dialog ---------------------------------*/
 .datalog .data_row {
-  margin: 0 0 10px;
+  color: #aaa;
+  font-size: 13px;
+  margin: 0 0 15px;
+  text-align: left;
 }
-  .datalog .data_row .minibutton {
+  .datalog .data_row .icon {
     display: inline-block;
-    width: 10px;
-    padding-left: 7px; padding-right: 7px;
-    text-shadow: 0 -1px 0 #555;
-    font: 14px/11px Arial;
-    margin-right: 5px;
+    cursor: pointer;
   }
+    .datalog .icon.minus {
+      margin-left: 5px;
+    } 
+      .datalog .no_minus .icon.minus {
+        visibility: hidden;
+      }
   .datalog .text_input.small {
     margin-right: 5px;
     display: inline-block;
   }
     .datalog .text_input input {
-      width: 150px;
+      width: 200px;
     }
+    .datalog .text_input.first {
+      margin-right: 2px;
+    }
+      .datalog .text_input.first input {
+        width: 100px;
+      }

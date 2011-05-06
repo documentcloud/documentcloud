@@ -2,7 +2,13 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
 
   className : 'dialog datalog',
 
+  dataEvents : {
+    'click .minus':   '_removeDatum',
+    'click .plus':    '_addDatum'
+  },
+
   constructor : function(docs) {
+    this.events = _.extend(this.events, this.dataEvents);
     this.docs = docs;
     this.multiple = docs.length > 1;
     var title = "Edit Data for " + this._title();
@@ -14,17 +20,39 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
   render : function() {
     dc.ui.Dialog.prototype.render.call(this);
     this._container = this.$('.custom');
-    this._container.html(JST['document/document_data_dialog']({
-      data: Documents.sortData(Documents.sharedData(this.docs))
-    }));
+    var html = _.map(Documents.sortData(Documents.sharedData(this.docs)), function(pair){
+      return JST['document/data_dialog_row']({key: pair[0], value: pair[1], minus: true});
+    }).join('');
+    this._container.html(html);
+    this.checkNoData();
     return this;
+  },
+
+  checkNoData : function() {
+    if (!this.$('.data_row').length) {
+      this._container.html(JST['document/data_dialog_row']({key: '', value: '', minus: false}));
+    }
+  },
+
+  _removeDatum : function(e) {
+    $(e.target).closest('.data_row').remove();
+    this.checkNoData();
+  },
+
+  _addDatum : function(e) {
+    $(e.target).closest('.data_row').after(JST['document/data_dialog_row']({key: '', value: '', minus: true}));
+    this.checkNoData();
   },
 
   // Sets the dialog title to include the number of documents or title of
   // the single document being edited.
   _title : function() {
     if (this.multiple) return this.docs.length + ' Documents';
-    return '"' + dc.inflector.truncate(this.docs[0].get('title'), 35) + '"';
+    return '"' + dc.inflector.truncate(this.docs[0].get('title'), 30) + '"';
+  },
+
+  _returnCloses : function() {
+    return true;
   }
 
 }, {
