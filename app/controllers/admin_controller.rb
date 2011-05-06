@@ -23,7 +23,6 @@ class AdminController < ApplicationController
     @weekly_hits_on_searches       = keys_to_timestamps(DC::Statistics.weekly_hits_on_searches).to_json
     @documents                     = Document.finished.chronological.all(:limit => 5).map {|d| d.admin_attributes }.to_json
     @failed_documents              = Document.failed.chronological.all(:limit => 3).map {|d| d.admin_attributes }.to_json
-    @organizations                 = Organization.all.to_json
     @instances                     = DC::AWS.new.describe_instances.to_json
     @top_documents                 = RemoteUrl.top_documents(7, :limit => 5).to_json
     @top_searches                  = RemoteUrl.top_searches(7, :limit => 5).to_json
@@ -51,7 +50,7 @@ class AdminController < ApplicationController
       'public_per_account'  => DC::Statistics.public_documents_per_account,
       'private_per_account' => DC::Statistics.private_documents_per_account,
       'pages_per_account'   => DC::Statistics.pages_per_account,
-      'accounts'            => Account.all
+      'accounts'            => Account.all.map {|a| a.canonical(:include_organization => true) }
     })
   end
 
