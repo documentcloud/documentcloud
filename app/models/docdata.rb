@@ -1,6 +1,7 @@
 class Docdata < ActiveRecord::Base
   
   belongs_to :document
+  validates_uniqueness_of :document_id, :allow_nil => true
   
   after_save :index_document
   
@@ -13,11 +14,17 @@ class Docdata < ActiveRecord::Base
   end
   
   def data=(hash)
-    self[:data] = Docdata.to_hstore(hash)
+    @data = nil
+    if hash.empty?
+      self[:data] = nil
+      self.destroy
+    else
+      self[:data] = Docdata.to_hstore(hash)
+    end
   end
   
   def data    
-    @data ||= Hash[self[:data].scan(/"(.*?[^\\]|)"=>"(.*?[^\\]|)"/)]
+    @data ||= Hash[(self[:data] || "").scan(/"(.*?[^\\]|)"=>"(.*?[^\\]|)"/)]
   end
   
   def index_document

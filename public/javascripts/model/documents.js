@@ -59,6 +59,22 @@ dc.model.Document = Backbone.Model.extend({
     return date && (this.formatDay(date) + ' at ' + this.formatTime(date));
   },
 
+  // Merge in and save a hash of data, removing any blank keys or values.
+  mergeData : function(hash) {
+    var data = this.get('data');
+    for (var key in hash) {
+      if (!key) continue;
+      var val = hash[key];
+      if (val) {
+        data[key] = val;
+      } else {
+        delete data[key];
+      }
+    }
+    this.save({data: data});
+    this.change();
+  },
+
   // Return the sorted array of key value pairs for the document's data.
   sortedData : function() {
     return Documents.sortData(this.get('data'));
@@ -225,6 +241,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   // Given a list of documents, return the sorted list of data key/value
   // pairs they have in common.
   sharedData : function(docs) {
+    docs = _.clone(docs);
     var first  = docs.shift();
     var shared = first.get('data');
     _.each(docs, function(doc) {

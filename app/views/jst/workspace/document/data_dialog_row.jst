@@ -1,9 +1,9 @@
 <div class="data_row <%= minus ? '' : 'no_minus' %>">
   <div class="text_input dark small first">
-    <input type="text" value="<%= dc.inflector.escapeHTML(key) %>" />
+    <input type="text" class="key" value="<%= dc.inflector.escapeHTML(key) %>" />
   </div>:&nbsp;
   <div class="text_input dark small">
-    <input type="text" value="<%= dc.inflector.escapeHTML(value) %>" />
+    <input type="text" class="value" value="<%= dc.inflector.escapeHTML(value) %>" />
   </div>
   <div class="icon minus not_draggable"></div>
   <div class="icon plus not_draggable"></div>

@@ -9,6 +9,7 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
 
   constructor : function(docs) {
     this.events = _.extend(this.events, this.dataEvents);
+    this.removedKeys = [];
     this.docs = docs;
     this.multiple = docs.length > 1;
     var title = "Edit Data for " + this._title();
@@ -30,17 +31,40 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
 
   checkNoData : function() {
     if (!this.$('.data_row').length) {
-      this._container.html(JST['document/data_dialog_row']({key: '', value: '', minus: false}));
+      var container = this._container;
+      container.html(JST['document/data_dialog_row']({key: '', value: '', minus: false}));
+      _.defer(function(){ container.find('input.key').focus(); });
     }
   },
 
+  serialize : function() {
+    var data = {};
+    _.each(this.removedKeys, function(key) {
+      data[key] = null;
+    });
+    _.each(this.$('.data_row'), function(row) {
+      data[$(row).find('.key').val()] = $(row).find('.value').val();
+    });
+    return data;
+  },
+
+  confirm : function() {
+    var data = this.serialize();
+    _.each(this.docs, function(doc){ doc.mergeData(data); });
+    this.close();
+  },
+
   _removeDatum : function(e) {
-    $(e.target).closest('.data_row').remove();
+    var row = $(e.target).closest('.data_row');
+    this.removedKeys.push(row.find('.key').val());
+    row.remove();
     this.checkNoData();
   },
 
   _addDatum : function(e) {
-    $(e.target).closest('.data_row').after(JST['document/data_dialog_row']({key: '', value: '', minus: true}));
+    var newRow = $(JST['document/data_dialog_row']({key: '', value: '', minus: true}));
+    $(e.target).closest('.data_row').after(newRow);
+    newRow.find('.key').focus();
     this.checkNoData();
   },
 

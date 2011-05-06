@@ -234,7 +234,9 @@ class Document < ActiveRecord::Base
     access &&= access.to_i
     published_url = attrs.delete :published_url
     attrs[:remote_url] ||= published_url
+    data = attrs.delete :data
     update_attributes attrs
+    self.data = data if data
     set_access(access) if access && self.access != access
     true
   end
@@ -343,6 +345,11 @@ class Document < ActiveRecord::Base
   
   def data
     docdata ? docdata.data : {}
+  end
+  
+  def data=(hash)
+    self.docdata = Docdata.create(:document_id => id) unless self.docdata
+    docdata.update_attributes :data => hash
   end
 
   # Ex: docs/1011
