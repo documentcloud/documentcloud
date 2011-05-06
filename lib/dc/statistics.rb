@@ -27,18 +27,45 @@ module DC
     end
 
     # Count the number of hits per day for embedded documents.
-    def self.daily_hits(since=nil)
-      RemoteUrl.sum :hits, :group => 'date_recorded', :conditions => since_clause(since)
+    def self.daily_hits_on_documents(since=nil)
+      RemoteUrl.sum :hits, :group => 'date_recorded', :conditions => type_and_since_clause('document_id', since)
     end
 
     # Count the number of hits per week for embedded documents.
-    def self.weekly_hits(since=nil)
-      RemoteUrl.sum :hits, :group => "date_trunc('week', date_recorded)", :conditions => since_clause(since)
+    def self.weekly_hits_on_documents(since=nil)
+      RemoteUrl.sum :hits, :group => "date_trunc('week', date_recorded)", 
+                    :conditions => type_and_since_clause('document_id', since)
+    end
+
+    # Count the number of hits per day for embedded notes.
+    def self.daily_hits_on_notes(since=nil)
+      RemoteUrl.sum :hits, :group => 'date_recorded', :conditions => type_and_since_clause('note_id', since)
+    end
+
+    # Count the number of hits per week for embedded notes.
+    def self.weekly_hits_on_notes(since=nil)
+      RemoteUrl.sum :hits, :group => "date_trunc('week', date_recorded)", 
+                    :conditions => type_and_since_clause('note_id', since)
+    end
+
+    # Count the number of hits per day for embedded searches.
+    def self.daily_hits_on_searches(since=nil)
+      RemoteUrl.sum :hits, :group => 'date_recorded', :conditions => type_and_since_clause('search_query', since)
+    end
+
+    # Count the number of hits per week for embedded searches.
+    def self.weekly_hits_on_searches(since=nil)
+      RemoteUrl.sum :hits, :group => "date_trunc('week', date_recorded)", 
+                    :conditions => type_and_since_clause('search_query', since)
     end
 
     # Implementation of default "since" conditions.
     def self.since_clause(since=nil)
       ['created_at > ?', since || START_DATE]
+    end
+    
+    def self.type_and_since_clause(type, since=nil)
+      ["#{type} is not NULL and created_at > ?", since || START_DATE]
     end
 
     # Count the total number of uploaded pages since a certain date.
