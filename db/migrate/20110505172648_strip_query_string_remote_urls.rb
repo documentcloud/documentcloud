@@ -1,6 +1,7 @@
 class StripQueryStringRemoteUrls < ActiveRecord::Migration
   
   def self.up
+    doc_ids = []
     RemoteUrl.find_each do |url|
       if url.url.include? '?'
         new_url, query_string = *url.url.split('?', 2)
@@ -14,6 +15,7 @@ class StripQueryStringRemoteUrls < ActiveRecord::Migration
           :search_query   => url.search_query,
         }, :order => 'created_at asc')
         if all_urls.count > 1
+          doc_ids << url.document_id if url.document_id
           total_hits = all_urls.inject(0) {|memo, hit| memo += hit.hits }
           all_urls[1, all_urls.length].each do |u| 
             puts " ---> Destroying: #{u.url} - #{u.hits} hits"
