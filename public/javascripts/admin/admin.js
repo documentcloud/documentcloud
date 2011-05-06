@@ -31,7 +31,7 @@ dc.ui.Admin = Backbone.View.extend({
     'click #instances .minus':    '_terminateInstance',
     'click .more_top_documents':  '_loadMoreTopDocuments',
     'click #load_all_accounts':   '_loadAllAccounts',
-    'click #account_list .sort':  '_sortAccounts'
+    'click .account_list .sort':  '_sortAccounts'
   },
 
   ACCOUNT_COMPARATORS : {
@@ -164,7 +164,7 @@ dc.ui.Admin = Backbone.View.extend({
     Accounts.comparator = this.ACCOUNT_COMPARATORS[sort];
     Accounts.sort();
     this.renderAccounts();
-    $('#account_list .sort_' + sort).addClass('active');
+    $('.account_list .sort_' + sort).addClass('active');
   },
 
   // Create a tooltip to show a hovered date.
