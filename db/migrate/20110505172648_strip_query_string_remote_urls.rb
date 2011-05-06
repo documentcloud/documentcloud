@@ -28,6 +28,8 @@ class StripQueryStringRemoteUrls < ActiveRecord::Migration
         end
       end
     end
+    puts "Detecting top URLs for documents... #{doc_ids.inspect}"
+    RemoteUrl.populate_detected_document_ids(doc_ids)
   end
 
   def self.down
