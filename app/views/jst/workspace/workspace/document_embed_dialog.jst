@@ -14,18 +14,6 @@
   </div>
 
   <div class="publish_section">
-    <div class="text_input dark small">
-      <input type="text" name="remote_url" value="<%= doc.get('remote_url') %>" id="publish_prepare_remote_url" />
-    </div>
-    <label for="publish_prepare_remote_url">Published URL:</label>
-    <p class="dialog_info selectable_text interface">
-      Most users won't need to enter this. When the public searches DocumentCloud's
-       catalog, we direct them to documents on your site. Usually, we're able to
-       guess where a document is embedded. Specifying it here is optional. 
-    </p>
-  </div>
-
-  <div class="publish_section">
     <% if (doc.isPublic()) { %>
       <label>This document is already public.</label>
     <% } else if (doc.get('publish_at')) { %>
@@ -42,10 +30,14 @@
         embed it on your website. Change the
         <span class="text_link edit_access">access level</span>.
       <% } else { %>
-        This document is private. It will not be visible to the public until you
-         make it public. Change the <span class="text_link edit_access">access level</span> now
+        This document is private. It will not be visible to your readers until you
+        make it public. Change the <span class="text_link edit_access">access level</span> now
         or <%= doc.get('publish_at') ? '' : 'set the' %>
         <span class="text_link set_publish_at">publication date</span>.
+        <br /><br />  
+        If you want to test the embed before publication, make sure to edit the
+        embed code to use secure HTTPS URLs, and then switch back to regular HTTP 
+        before making the document public.
       <% } %>
     </p>
   </div>

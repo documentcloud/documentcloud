@@ -195,14 +195,12 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     var access = this.$('input[name=access_level]').is(':checked') ?
                  dc.access.PUBLIC : this.model.get('access');
     var relatedArticle = this.$('input[name=related_article]').removeClass('error').val();
-    var remoteUrl      = this.$('input[name=remote_url]').removeClass('error').val();
     var attrs = {
       access          : access,
-      related_article : dc.inflector.normalizeUrl(relatedArticle),
-      remote_url      : dc.inflector.normalizeUrl(remoteUrl)
+      related_article : dc.inflector.normalizeUrl(relatedArticle)
     };
     if (attrs = this.model.changedAttributes(attrs)) {
-      var errors = _.any(['related_article', 'remote_url'], _.bind(function(attr) {
+      var errors = _.any(['related_article'], _.bind(function(attr) {
         if (attrs[attr] && !this.validateUrl(attrs[attr])) {
           this.$('input[name=' + attr + ']').addClass('error');
           return true;
