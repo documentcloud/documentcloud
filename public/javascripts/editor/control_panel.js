@@ -170,14 +170,14 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
         \"Force OCR\" (optical character recognition) to ignore any embedded \
         text information and use Tesseract before reprocessing. The document will \
         close while it's being rebuilt. Are you sure you want to proceed? ", function() {
-      var doc = self._getDocumentCanonical();
+      var doc = self._getDocumentModel();
       doc.reprocessText();
       self.setOnParent(doc, {access: dc.access.PENDING});
       $(dialog.el).remove();
       _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
     }, {width: 450});
     var forceEl = $(dialog.make('span', {'class':'minibutton dark center_button'}, 'Force OCR')).bind('click', function() {
-      var doc = self._getDocumentCanonical();
+      var doc = self._getDocumentModel();
       doc.reprocessText(true);
       self.setOnParent(doc, {access: dc.access.PENDING});
       $(dialog.el).remove();
@@ -287,19 +287,10 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       // Couldn't access the parent window -- it's ok.
     }
   },
-
-  _getDocumentCanonical : function(attrs) {
-    if (this.doc) return this.doc;
-    attrs    = attrs || {};
-    attrs.id = parseInt(this.viewer.api.getId(), 10);
-    this.doc = new dc.model.Document(attrs);
-    return this.doc;
-  },
   
-  _getDocumentModel : function(attrs) {
+  _getDocumentModel : function() {
     if (this.docModel) return this.docModel;
-    attrs = _.extend({}, window.currentDocumentModel, attrs);
-    this.docModel = new dc.model.Document(attrs);
+    this.docModel = new dc.model.Document(window.currentDocumentModel);
     this.docModel.viewerEditable   = dc.account.isOwner;
     this.docModel.suppressNotifier = true;
     
@@ -307,8 +298,8 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   _updateDocument : function(attrs) {
-    var doc = this._getDocumentCanonical(attrs);
-    doc.save();
+    var doc = this._getDocumentModel();
+    doc.save(attrs);
     this.setOnParent(doc, attrs);
   }
 
