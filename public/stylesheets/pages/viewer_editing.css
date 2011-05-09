@@ -488,3 +488,14 @@
 }
 .DV-reorderPages .DV-thumbnails .DV-thumbnail.ui-sortable-placeholder {
 }
+
+.access_info {
+  cursor: pointer;
+  font: 11px Arial,sans-serif;
+  background: transparent url(/images/embed/icons/lock.png) no-repeat 0 0px;
+  padding: 2px 0 0 20px;
+  margin: 0 0 0 22px;
+}
+  .access_info span:hover {
+    text-decoration: underline;
+  }

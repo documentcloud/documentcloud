@@ -669,8 +669,14 @@ textarea.text_area {
   .dialog .choices {
     text-align: left;
   }
+    .dialog .choices > input[type=radio] {
+      float: left;
+    }
     .dialog .choices > label {
       line-height: 18px;
+      padding-left: 22px;
+      display: block;
+      font-size: 12px;
     }
     .dialog .choice_description {
       font-size: 10px;

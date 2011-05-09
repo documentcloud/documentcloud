@@ -22,7 +22,12 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .edit_replace_pages':    'editReplacePages',
     'click .toggle_document_info':  'toggleDocumentInfo',
     'click .embed_document':        'embedDocument',
-    'click .embed_note':            'embedNote'
+    'click .embed_note':            'embedNote',
+    'click .access_info':           'editAccess'
+  },
+  
+  initialize : function() {
+    _.bindAll(this, 'closeDocumentOnAccessChange');
   },
 
   render : function() {
@@ -31,10 +36,13 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
                           dc.account.role == accountProto.CONTRIBUTOR;
     this.viewer         = currentDocument;
     this._page          = this.viewer.$('.DV-textContents');
+    var doc             = this._getDocumentCanonical({}, true);
+    var docAccess       = doc.get('access');
     $(this.el).html(JST['control_panel']({
       isReviewer      : dc.app.editor.options.isReviewer,
       isOwner         : dc.app.editor.options.isOwner,
-      workspacePrefix : accessWorkspace ? '#' : ''
+      workspacePrefix : accessWorkspace ? '#' : '',
+      docAccess       : docAccess
     }));
     this.showReviewerWelcome();
     return this;
@@ -58,6 +66,24 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   editDocumentInfo : function(e) {
     if ($(e.target).is('.toggle_document_info')) return;
     var doc = this._getDocumentCanonical({}, true);
+    doc.unbind('change').bind('change', _.bind(function(doc) {
+      this.viewer.api.setTitle(doc.get('title'));
+      this.viewer.api.setSource(doc.get('source'));
+      this.viewer.api.setRelatedArticle(doc.get('related_article'));
+      this.viewer.api.setPublishedUrl(doc.get('remote_url'));
+      this.viewer.api.setDescription(doc.get('description'));
+      this.setOnParent(doc, {
+        title           : doc.get('title'),
+        source          : doc.get('source'),
+        related_article : doc.get('related_article'),
+        remote_url      : doc.get('remote_url'),
+        description     : doc.get('description'),
+        access          : doc.get('access')
+      });
+      if (doc.hasChanged('access')) {
+        this.closeDocumentOnAccessChange();
+      }
+    }, this));
     new dc.ui.DocumentDialog([doc]);
   },
 
@@ -111,6 +137,16 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     }, this));
   },
 
+  editAccess : function() {
+    Documents.editAccess([this.doc], this.closeDocumentOnAccessChange);
+  },
+
+  closeDocumentOnAccessChange : function() {
+    this.setOnParent(this.doc, {access: dc.access.PENDING});
+    var closeMessage = "Changing the access level will take a few moments. Please close this document.";
+    _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
+  },
+  
   reprocessText : function() {
     var self = this;
     var closeMessage = "The text is being processed. Please close this document.";
@@ -201,7 +237,6 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   
   embedNote : function() {
     var doc = this._getDocumentModel();
-    console.log(['doc', doc]);
     Documents.refresh([doc]);
     dc.app.noteEmbedDialog = new dc.ui.NoteEmbedDialog(doc);
   },
@@ -239,13 +274,17 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   _getDocumentCanonical : function(attrs, full) {
+    if (this.doc) return this.doc;
     if (full) {
-      var schema = this.viewer.api.getSchema();
-      attrs = _.extend({}, schema, attrs);
+      var schema                = this.viewer.api.getSchema();
+      attrs                     = _.extend({}, schema, attrs);
+      attrs['access']           = dc.access[attrs['access'].toUpperCase()];
+      attrs['allowedToEdit']    = dc.account.isOwner;
+      attrs['suppressNotifier'] = true;
     }
-    attrs = attrs || {};
+    attrs    = attrs || {};
     attrs.id = parseInt(this.viewer.api.getId(), 10);
-    return new dc.model.Document(_.clone(attrs));
+    return this.doc = new dc.model.Document(_.clone(attrs));
   },
   
   _getDocumentModel : function(attrs) {

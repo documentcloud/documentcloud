@@ -1,3 +1,12 @@
+<% if (docAccess != dc.access.PUBLIC) { %>
+<div class="access_info">
+  <span>
+    This document is 
+    <%= docAccess == dc.access.ORGANIZATION ? 'private to your organization' : 'private' %>.
+  </span>
+</div>
+<% } %>
+
 <div class="control_panel_title gradient_light">
   <span class="">Document Tools</span>
 </div>
@@ -53,6 +62,16 @@
   </div>
   
   <div class="control_panel_title gradient_light">
+    <span class="">Embed Tools</span>
+  </div>
+  <div class="embed_document button">
+    <span>Embed this Document</span>
+  </div>
+  <div class="embed_note button">
+    <span>Embed a Note</span>
+  </div>
+  
+  <div class="control_panel_title gradient_light">
     <span class="">Page Tools</span>
   </div>
   <div class="edit_replace_pages button">
@@ -102,16 +121,6 @@
   </div>
   <div class="reprocess_text button">
     <span>Reprocess Text</span>
-  </div>
-  
-  <div class="control_panel_title gradient_light">
-    <span class="">Embed Tools</span>
-  </div>
-  <div class="embed_document button">
-    <span>Embed this Document</span>
-  </div>
-  <div class="embed_note button">
-    <span>Embed a Note</span>
   </div>
 <% } %>
 

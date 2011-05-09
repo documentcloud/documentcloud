@@ -109,6 +109,7 @@ dc.model.Document = Backbone.Model.extend({
   },
 
   allowedToEdit : function() {
+    if (this.get('allowedToEdit')) return this.get('allowedToEdit');
     var current = Accounts.current();
     return current && Accounts.current().allowedToEdit(this);
   },
@@ -329,7 +330,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     });
   },
 
-  editAccess : function(docs) {
+  editAccess : function(docs, callback) {
     var options = {information: this.subtitle(docs.length)};
     if (!this.allowedToEdit(docs)) return;
     var current = this.sharedAttribute(docs, 'access') || dc.access.PRIVATE;
@@ -355,7 +356,10 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     ], function(access) {
       _.each(docs, function(doc) { doc.save({access : parseInt(access, 10)}); });
       var notification = 'Access updated for ' + docs.length + ' ' + dc.inflector.pluralize('document', docs.length);
-      dc.ui.notifier.show({mode : 'info', text : notification});
+      if (!_.any(docs, function(doc) { return doc.get('suppressNotifier'); })) {
+        dc.ui.notifier.show({mode : 'info', text : notification});
+      }
+      callback(access);
       return true;
     }, options);
   },
