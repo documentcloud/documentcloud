@@ -13,6 +13,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .edit_description':      'editDescription',
     'click .edit_title':            'editTitle',
     'click .edit_source':           'editSource',
+    'click .edit_access':           'editAccess',
     'click .edit_related_article':  'editRelatedArticle',
     'click .edit_document_url':     'editPublishedUrl',
     'click .edit_remove_pages':     'editRemovePages',
@@ -42,10 +43,11 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       isReviewer      : dc.app.editor.options.isReviewer,
       isOwner         : dc.app.editor.options.isOwner,
       workspacePrefix : accessWorkspace ? '#' : '',
-      docAccess       : docAccess
+      docAccess       : docAccess,
+      orgName         : this.viewer.api.getContributorOrganization()
     }));
     this.showReviewerWelcome();
-    this.docModel.bind('change:access', this.render);
+    doc.bind('change:access', this.render);
     return this;
   },
 
@@ -143,9 +145,11 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   closeDocumentOnAccessChange : function() {
-    this.setOnParent(this.docModel, {access: dc.access.PENDING});
-    var closeMessage = "Changing the access level will take a few moments. Please close this document.";
-    _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
+    if (this.docModel.hasChanged('access')) {
+      this.setOnParent(this.docModel, {access: dc.access.PENDING});
+      var closeMessage = "Changing the access level will take a few moments. Please close this document.";
+      _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
+    }
   },
   
   reprocessText : function() {

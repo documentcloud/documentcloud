@@ -1,8 +1,7 @@
 <% if (docAccess != dc.access.PUBLIC) { %>
 <div class="access_info">
   <span>
-    This document is 
-    <%= docAccess == dc.access.ORGANIZATION ? 'private to your organization' : 'private' %>.
+    <%= docAccess == dc.access.ORGANIZATION ? 'Private to ' + orgName : 'Private Access' %>
   </span>
 </div>
 <% } %>
@@ -56,6 +55,7 @@
       <div class="edit_title button"><span class="dash">–</span>&nbsp; <span>Edit Title</span></div>
       <div class="edit_source button"><span class="dash">–</span>&nbsp; <span>Edit Source</span></div>
       <div class="edit_description button"><span class="dash">–</span>&nbsp; <span>Edit Description</span></div>
+      <div class="edit_access button"><span class="dash">–</span>&nbsp; <span>Edit Access Level</span></div>
       <div class="edit_related_article button"><span class="dash">–</span>&nbsp; <span>Edit Related Article URL</span></div>
       <div class="edit_document_url button"><span class="dash">–</span>&nbsp; <span>Edit Published URL</span></div>
     </div>
