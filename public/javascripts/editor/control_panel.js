@@ -28,7 +28,10 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
   
   initialize : function() {
-    _.bindAll(this, 'closeDocumentOnAccessChange', 'render');
+    var docModel = this._getDocumentModel();
+    _.bindAll(this, 'closeDocumentOnAccessChange', 'onDocumentChange', 'render');
+    docModel.bind('change:access', this.render);
+    docModel.bind('change', this.onDocumentChange);
   },
 
   render : function() {
@@ -47,7 +50,6 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       orgName         : this.viewer.api.getContributorOrganization()
     }));
     this.showReviewerWelcome();
-    doc.bind('change:access', this.render);
     return this;
   },
 
@@ -65,33 +67,22 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   openSectionEditor : function() {
     dc.app.editor.sectionEditor.open();
   },
+  
+  prompt : function(title, initialValue, callback, options) {
+    dc.ui.Dialog.prompt(title, initialValue, function(value, dialog) {
+      if (initialValue != value) return callback(value, dialog);
+      return true;
+    }, options);
+  },
 
   editDocumentInfo : function(e) {
     if ($(e.target).is('.toggle_document_info')) return;
     var doc = this._getDocumentModel();
-    doc.unbind('change').bind('change', _.bind(function(doc) {
-      this.viewer.api.setTitle(doc.get('title'));
-      this.viewer.api.setSource(doc.get('source'));
-      this.viewer.api.setRelatedArticle(doc.get('related_article'));
-      this.viewer.api.setPublishedUrl(doc.get('remote_url'));
-      this.viewer.api.setDescription(doc.get('description'));
-      this.setOnParent(doc, {
-        title           : doc.get('title'),
-        source          : doc.get('source'),
-        related_article : doc.get('related_article'),
-        remote_url      : doc.get('remote_url'),
-        description     : doc.get('description'),
-        access          : doc.get('access')
-      });
-      if (doc.hasChanged('access')) {
-        this.closeDocumentOnAccessChange();
-      }
-    }, this));
     new dc.ui.DocumentDialog([doc]);
   },
 
   editTitle : function() {
-    dc.ui.Dialog.prompt('Title', this.viewer.api.getTitle(), _.bind(function(title) {
+    this.prompt('Title', this.viewer.api.getTitle(), _.bind(function(title) {
       this.viewer.api.setTitle(title);
       this._updateDocument({title : title});
       return true;
@@ -99,7 +90,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   editSource : function() {
-    dc.ui.Dialog.prompt('Source', this.viewer.api.getSource(), _.bind(function(source) {
+    this.prompt('Source', this.viewer.api.getSource(), _.bind(function(source) {
       this.viewer.api.setSource(source);
       this._updateDocument({source : source});
       return true;
@@ -107,7 +98,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   editRelatedArticle : function() {
-    dc.ui.Dialog.prompt('Related Article URL', this.viewer.api.getRelatedArticle(), _.bind(function(url, dialog) {
+    this.prompt('Related Article URL', this.viewer.api.getRelatedArticle(), _.bind(function(url, dialog) {
       url = dc.inflector.normalizeUrl(url);
       if (url && !dialog.validateUrl(url)) return false;
       this.viewer.api.setRelatedArticle(url);
@@ -120,7 +111,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   editPublishedUrl : function() {
-    dc.ui.Dialog.prompt('Published URL', this.viewer.api.getPublishedUrl(), _.bind(function(url, dialog) {
+    this.prompt('Published URL', this.viewer.api.getPublishedUrl(), _.bind(function(url, dialog) {
       url = dc.inflector.normalizeUrl(url);
       if (url && !dialog.validateUrl(url)) return false;
       this.viewer.api.setPublishedUrl(url);
@@ -133,7 +124,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   editDescription : function() {
-    dc.ui.Dialog.prompt('Description', this.viewer.api.getDescription(), _.bind(function(desc) {
+    this.prompt('Description', this.viewer.api.getDescription(), _.bind(function(desc) {
       this.viewer.api.setDescription(desc);
       this._updateDocument({description : desc});
       return true;
@@ -148,7 +139,26 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     if (this.docModel.hasChanged('access')) {
       this.setOnParent(this.docModel, {access: dc.access.PENDING});
       var closeMessage = "Changing the access level will take a few moments. Please close this document.";
-      _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
+      dc.ui.Dialog.alert(closeMessage, {onClose: function(){ window.close(); }});
+    }
+  },
+  
+  onDocumentChange : function(doc) {
+    this.viewer.api.setTitle(doc.get('title'));
+    this.viewer.api.setSource(doc.get('source'));
+    this.viewer.api.setRelatedArticle(doc.get('related_article'));
+    this.viewer.api.setPublishedUrl(doc.get('remote_url'));
+    this.viewer.api.setDescription(doc.get('description'));
+    this.setOnParent(doc, {
+      title           : doc.get('title'),
+      source          : doc.get('source'),
+      related_article : doc.get('related_article'),
+      remote_url      : doc.get('remote_url'),
+      description     : doc.get('description'),
+      access          : doc.get('access')
+    });
+    if (doc.hasChanged('access')) {
+      this.closeDocumentOnAccessChange();
     }
   },
   
@@ -278,27 +288,21 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     }
   },
 
-  _getDocumentCanonical : function(attrs, full) {
+  _getDocumentCanonical : function(attrs) {
     if (this.doc) return this.doc;
-    if (full) {
-      var schema                = this.viewer.api.getSchema();
-      attrs                     = _.extend({}, schema, attrs);
-      attrs['allowedToEdit']    = dc.account.isOwner;
-      attrs['suppressNotifier'] = true;
-    }
     attrs    = attrs || {};
     attrs.id = parseInt(this.viewer.api.getId(), 10);
-    return this.doc = new dc.model.Document(_.clone(attrs));
+    this.doc = new dc.model.Document(attrs);
+    return this.doc;
   },
   
   _getDocumentModel : function(attrs) {
     if (this.docModel) return this.docModel;
-    attrs = attrs || {};
-    attrs = _.extend({
-      'allowedToEdit'     : dc.account.isOwner,
-      'suppressNotifier'  : true
-    }, window.currentDocumentModel, attrs);
-    this.docModel = new dc.model.Document(_.clone(attrs));
+    attrs = _.extend({}, window.currentDocumentModel, attrs);
+    this.docModel = new dc.model.Document(attrs);
+    this.docModel.viewerEditable   = dc.account.isOwner;
+    this.docModel.suppressNotifier = true;
+    
     return this.docModel;
   },
 

@@ -69,7 +69,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     this.close();
     if (!_.isEmpty(changes)) {
       _.each(this.docs, function(doc){ doc.save(changes); });
-      if (!_.any(this.docs, function(doc) { return doc.get('suppressNotifier'); })) {
+      if (!_.any(this.docs, function(doc) { return doc.suppressNotifier; })) {
         dc.ui.notifier.show({
           mode : 'info', 
           text : 'Updated ' + this.docs.length + ' ' +
