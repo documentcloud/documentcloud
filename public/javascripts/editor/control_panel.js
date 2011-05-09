@@ -27,7 +27,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
   
   initialize : function() {
-    _.bindAll(this, 'closeDocumentOnAccessChange');
+    _.bindAll(this, 'closeDocumentOnAccessChange', 'render');
   },
 
   render : function() {
@@ -36,7 +36,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
                           dc.account.role == accountProto.CONTRIBUTOR;
     this.viewer         = currentDocument;
     this._page          = this.viewer.$('.DV-textContents');
-    var doc             = this._getDocumentCanonical({}, true);
+    var doc             = this._getDocumentModel();
     var docAccess       = doc.get('access');
     $(this.el).html(JST['control_panel']({
       isReviewer      : dc.app.editor.options.isReviewer,
@@ -45,6 +45,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       docAccess       : docAccess
     }));
     this.showReviewerWelcome();
+    this.docModel.bind('change:access', this.render);
     return this;
   },
 
@@ -65,7 +66,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   editDocumentInfo : function(e) {
     if ($(e.target).is('.toggle_document_info')) return;
-    var doc = this._getDocumentCanonical({}, true);
+    var doc = this._getDocumentModel();
     doc.unbind('change').bind('change', _.bind(function(doc) {
       this.viewer.api.setTitle(doc.get('title'));
       this.viewer.api.setSource(doc.get('source'));
@@ -138,11 +139,11 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   editAccess : function() {
-    Documents.editAccess([this.doc], this.closeDocumentOnAccessChange);
+    Documents.editAccess([this.docModel], this.closeDocumentOnAccessChange);
   },
 
   closeDocumentOnAccessChange : function() {
-    this.setOnParent(this.doc, {access: dc.access.PENDING});
+    this.setOnParent(this.docModel, {access: dc.access.PENDING});
     var closeMessage = "Changing the access level will take a few moments. Please close this document.";
     _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
   },
@@ -278,7 +279,6 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     if (full) {
       var schema                = this.viewer.api.getSchema();
       attrs                     = _.extend({}, schema, attrs);
-      attrs['access']           = dc.access[attrs['access'].toUpperCase()];
       attrs['allowedToEdit']    = dc.account.isOwner;
       attrs['suppressNotifier'] = true;
     }
@@ -290,7 +290,10 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   _getDocumentModel : function(attrs) {
     if (this.docModel) return this.docModel;
     attrs = attrs || {};
-    attrs = _.extend({}, window.currentDocumentModel, attrs);
+    attrs = _.extend({
+      'allowedToEdit'     : dc.account.isOwner,
+      'suppressNotifier'  : true
+    }, window.currentDocumentModel, attrs);
     this.docModel = new dc.model.Document(_.clone(attrs));
     return this.docModel;
   },
