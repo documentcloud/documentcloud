@@ -243,7 +243,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   sharedData : function(docs) {
     docs = _.clone(docs);
     var first  = docs.shift();
-    var shared = first.get('data');
+    var shared = _.clone(first.get('data'));
     _.each(docs, function(doc) {
       for (var key in shared) {
         if (doc.attributes.data[key] !== shared[key]) delete shared[key];
