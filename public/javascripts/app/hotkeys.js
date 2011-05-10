@@ -52,6 +52,7 @@ dc.app.hotkeys = {
   
   printable : function(e) {
     var code = e.which;
+    console.log(['code', code, String.fromCharCode(code) == ":"]);
     if (code == 32 ||                      // space
         (code >= 48 && code <= 90) ||      // 0-1a-z
         (code >= 96 && code <= 111) ||     // 0-9+-/*.

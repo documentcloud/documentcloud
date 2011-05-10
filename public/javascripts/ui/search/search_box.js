@@ -376,7 +376,7 @@ dc.ui.SearchBox = Backbone.View.extend({
         this.facetViews[next].selectFacet();
       } else {
         this.facetViews[next].enableEdit();
-        this.facetViews[next].moveCursorInDirection(direction || startAtEnd);
+        this.facetViews[next].setCursorAtEnd(direction || startAtEnd);
       }
     }
   },

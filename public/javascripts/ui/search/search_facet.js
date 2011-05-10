@@ -43,6 +43,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       source    : data,
       minLength : 0,
       delay     : 0,
+      autoFocus : true,
       select    : _.bind(function(e, ui) {
         console.log(['autocomplete', e, ui]);
         e.preventDefault();
@@ -181,7 +182,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.$el.removeClass('search_facet_maybe_delete');
   },
   
-  moveCursorInDirection : function(direction) {
+  setCursorAtEnd : function(direction) {
     if (direction == -1) {
       this.box.setCursorPosition(this.box.val().length);
     } else {
@@ -226,7 +227,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       if (this.modes.selected == 'is') {
         e.preventDefault();
         this.deselectFacet(e);
-        this.moveCursorInDirection(0);
+        this.setCursorAtEnd(0);
         this.enableEdit(e);
       } else if (this.box.getCursorPosition() == this.box.val().length) {
         e.preventDefault();
