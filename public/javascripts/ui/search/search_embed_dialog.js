@@ -23,7 +23,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     'Step Two: Copy and Paste the Embed Code'
   ],
 
-  DEMO_ERROR : 'Demo accounts are not allowed to embed document sets. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="http://dev.dcloud.org/help/publishing#step_4">here</a>.',
+  DEMO_ERROR : 'Demo accounts are not allowed to embed document sets. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="/help/publishing#step_4">here</a>.',
 
   DEFAULT_OPTIONS : {
     order      : 'title',
