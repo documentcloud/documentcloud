@@ -206,7 +206,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   keydown : function(e) {
     dc.app.hotkeys.down(e);
-    console.log(['keydown', e.keyCode, dc.app.hotkeys.right, this.box.val(), this.box.getCursorPosition()]);
+    // console.log(['keydown', e.keyCode, dc.app.hotkeys.right, this.box.val(), this.box.getCursorPosition()]);
     if (dc.app.hotkeys.enter && this.box.val()) {
       this.disableEdit(e);
       this.search(e);

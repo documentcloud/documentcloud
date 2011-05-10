@@ -321,7 +321,7 @@
         position = input.selectionStart;
       }
 
-      console.log(['getCursorPosition', position]);
+      // console.log(['getCursorPosition', position]);
       return position;
     },
     

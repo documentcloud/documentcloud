@@ -18,6 +18,9 @@ dc.ui.SearchBox = Backbone.View.extend({
   PREFIXES : [
     { label: 'project',       category: '' },
     { label: 'text',          category: '' },
+    { label: 'title',         category: '' },
+    { label: 'description',   category: '' },
+    { label: 'source',        category: '' },
     { label: 'account',       category: '' },
     { label: 'document',      category: '' },
     { label: 'filter',        category: '' },
@@ -75,16 +78,21 @@ dc.ui.SearchBox = Backbone.View.extend({
       source    : this.PREFIXES,
       minLength : 1,
       delay     : 50,
+      autoFocus : true,
       source    : _.bind(function(req, resp) {
         // Autocomplete phrases only from the beginning.
         var re = $.ui.autocomplete.escapeRegex(req.term);
         var matcher = new RegExp('^' + re, 'i');
-        resp($.grep(this.PREFIXES, function(item) {
+        resp(_.sortBy($.grep(this.PREFIXES, function(item) {
           return matcher.test(item.label);
+        }), function(match) {
+          return match.category + '-' + match.label;
         }));
       }, this),
       select    : _.bind(function(e, ui) {
+        console.log(['select autocomplete', e, ui]);
         e.preventDefault();
+        e.stopPropagation();
         this.addFacet(ui.item.value);
         return false;
       }, this)
@@ -227,7 +235,7 @@ dc.ui.SearchBox = Backbone.View.extend({
 
     if (dc.app.hotkeys.colon(e)) {
       var query = this.box.val();
-      if (_.contains(this.PREFIXES, query)) {
+      if (_.contains(_.pluck(this.PREFIXES, 'label'), query)) {
         e.preventDefault();
         this.addFacet(query);
         return false;
@@ -237,7 +245,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   
   keydown : function(e) {
     dc.app.hotkeys.down(e);
-    console.log(['box keydown', e.keyCode, this.box.getCursorPosition()]);
+    // console.log(['box keydown', e.keyCode, this.box.getCursorPosition()]);
     this.box.trigger('resize.autogrow', e);
     if (dc.app.hotkeys.left) {
       if (this.box.getCursorPosition() == 0) {
