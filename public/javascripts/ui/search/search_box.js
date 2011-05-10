@@ -228,6 +228,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Callback fired on key press in the search box. We search when they hit
   // return.
   maybeSearch : function(e) {
+    this.box.trigger('resize.autogrow', e);
     // console.log(['box key', e.keyCode, dc.app.hotkeys.key(e)]);
     if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') {
       return this.searchEvent(e);
