@@ -15,8 +15,26 @@ dc.ui.SearchBox = Backbone.View.extend({
 
   id  : 'search',
   
-  PREFIXES : ['project', 'text', 'account', 'document', 'filter', 
-              'group', 'access', 'related', 'projectid'],
+  PREFIXES : [
+    { label: 'project',       category: '' },
+    { label: 'text',          category: '' },
+    { label: 'account',       category: '' },
+    { label: 'document',      category: '' },
+    { label: 'filter',        category: '' },
+    { label: 'group',         category: '' },
+    { label: 'access',        category: '' },
+    { label: 'related',       category: '' },
+    { label: 'projectid',     category: '' },
+    { label: 'city',          category: 'entities' },
+    { label: 'country',       category: 'entities' },
+    { label: 'term',          category: 'entities' },
+    { label: 'state',         category: 'entities' },
+    { label: 'person',        category: 'entities' },
+    { label: 'place',         category: 'entities' },
+    { label: 'organization',  category: 'entities' },
+    { label: 'email',         category: 'entities' },
+    { label: 'phone',         category: 'entities' }
+  ],
 
   events : {
     'click .search_glyph'       : 'showFacetCategoryMenu',
@@ -43,23 +61,48 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.titleBox = this.$('#title_box_inner');
     $(document.body).setMode('no', 'search');
     
-    this.box.autocomplete({
-      source    : this.PREFIXES,
-      minLength : 1,
-      delay     : 50,
-      select    : _.bind(function(e, ui) {
-        console.log(['autocomplete', e, ui]);
-        e.preventDefault();
-        this.addFacet(ui.item.value);
-        return false;
-      }, this)
-    });
+    this.setupAutocomplete();
     
     // This is defered so it can be attached to the DOM to get the correct font-size.
     this.box.autoGrowInput();
     this.box.bind('updated.autogrow', _.bind(this.moveAutocomplete, this));
         
     return this;
+  },
+
+  setupAutocomplete : function() {
+    this.box.autocomplete({
+      source    : this.PREFIXES,
+      minLength : 1,
+      delay     : 50,
+      source    : _.bind(function(req, resp) {
+        // Autocomplete phrases only from the beginning.
+        var re = $.ui.autocomplete.escapeRegex(req.term);
+        var matcher = new RegExp('^' + re, 'i');
+        resp($.grep(this.PREFIXES, function(item) {
+          return matcher.test(item.label);
+        }));
+      }, this),
+      select    : _.bind(function(e, ui) {
+        e.preventDefault();
+        this.addFacet(ui.item.value);
+        return false;
+      }, this)
+    });
+    
+    this.box.data('autocomplete')._renderMenu = function(ul, items) {
+      // Renders the results under the categories they belong to.
+      var category = '';
+      _.each(items, _.bind(function(item, i) {
+        if (item.category && item.category != category) {
+          ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
+          category = item.category;
+        }
+        this._renderItem(ul, item);
+      }, this));
+    };
+    
+    this.box.autocomplete('widget').addClass('interface');
   },
   
   moveAutocomplete : function() {

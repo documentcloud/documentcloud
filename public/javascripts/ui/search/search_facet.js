@@ -51,6 +51,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
         return false;
       }, this)
     });
+    
+    this.box.autocomplete('widget').addClass('interface');
   },
   
   moveAutocomplete : function() {
