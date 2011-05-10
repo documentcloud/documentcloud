@@ -1,5 +1,6 @@
 <script type="text/javascript">
   window.currentDocumentModel = <%= @current_document.to_json %>;
+  window.SERVER_ROOT_HTTP = '<%= DC.server_root(:ssl => false) %>';
 
   DV.jQuery(function() {
     <% if @current_account %>
