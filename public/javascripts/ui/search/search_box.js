@@ -149,31 +149,6 @@ dc.ui.SearchBox = Backbone.View.extend({
     return false;
   },
   
-  // Shortcut to the searchbox's value.
-  value : function(query) {
-    if (query == null) return this.getQuery();
-    return this.setQuery(query);
-  },
-  
-  getQuery : function() {
-    var query = SearchQuery.map(function(facet) {
-      return facet.serialize();
-    }).join(' ');
-    console.log(['getQuery', query, this.facetViews]);
-    var boxVal = this.box.val();
-    if (boxVal) query += ' ' + boxVal;
-    
-    return query;
-  },
-  
-  setQuery : function(query) {
-    // if (this.currentQuery != query) {
-      this.currentQuery = query;
-      dc.app.SearchParser.parse(query);
-      this.box.val('');
-    // }
-  },
-  
   queryWithoutCategory : function(category) {
     var query = SearchQuery.map(function(facet) {
       if (facet.get('category') != category) return facet.serialize();
@@ -228,13 +203,13 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Callback fired on key press in the search box. We search when they hit
   // return.
   maybeSearch : function(e) {
-    this.box.trigger('resize.autogrow', e);
     // console.log(['box key', e.keyCode, dc.app.hotkeys.key(e)]);
     if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') {
       return this.searchEvent(e);
     }
 
     if (dc.app.hotkeys.colon(e)) {
+      this.box.trigger('resize.autogrow', e);
       var query = this.box.val();
       if (_.contains(_.pluck(this.PREFIXES, 'label'), query)) {
         e.preventDefault();
@@ -246,7 +221,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   
   keydown : function(e) {
     dc.app.hotkeys.down(e);
-    // console.log(['box keydown', e.keyCode, this.box.getCursorPosition()]);
+    // console.log(['box keydown', e.keyCode, e.which, this.box.getCursorPosition()]);
     this.box.trigger('resize.autogrow', e);
     if (dc.app.hotkeys.left) {
       if (this.box.getCursorPosition() == 0) {
@@ -274,6 +249,31 @@ dc.ui.SearchBox = Backbone.View.extend({
     if (!dc.app.searcher.flags.outstandingSearch) dc.app.searcher.search(query);
     this.box.focus();
     this.closeAutocomplete();
+  },
+  
+  // Shortcut to the searchbox's value.
+  value : function(query) {
+    if (query == null) return this.getQuery();
+    return this.setQuery(query);
+  },
+  
+  getQuery : function() {
+    var query = SearchQuery.map(function(facet) {
+      return facet.serialize();
+    }).join(' ');
+    console.log(['getQuery', query, this.facetViews]);
+    var boxVal = this.box.val();
+    if (boxVal) query += ' ' + boxVal;
+    
+    return query;
+  },
+  
+  setQuery : function(query) {
+    // if (this.currentQuery != query) {
+      this.currentQuery = query;
+      dc.app.SearchParser.parse(query);
+      this.box.val('');
+    // }
   },
   
   closeAutocomplete : function() {

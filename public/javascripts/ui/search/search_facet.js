@@ -117,6 +117,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     }
     this.setMode('not', 'editing');
     this.box.blur();
+    // this.box.val(newFacetQuery);
     this.closeAutocomplete();
   },
   
