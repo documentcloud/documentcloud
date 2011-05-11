@@ -456,11 +456,11 @@
   color: #ccc;
 }
 .datalog .rows {
-  width: 405px;
   max-height: 380px;
+  width: 400px;
   overflow-y: auto; 
   position: relative;
-  padding: 0 25px 0 0;
+  padding: 0 15px 0 0;
 }
   .datalog .data_row {
     color: #aaa;
