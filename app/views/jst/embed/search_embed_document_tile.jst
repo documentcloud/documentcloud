@@ -1,14 +1,16 @@
-<div class="DC-document-thumbnail-select"></div>
-<div class="DC-document-thumbnail"><img src="<%= doc.get('resources')['thumbnail'] %>" /></div>
-<div class="DC-document-title">
-  <div class="DC-icon DC-icon-lock"></div>
-  <%= dc.inflector.truncateWords(doc.get('title'), titleWidth) %>
-</div>
-<% if (doc.get('description')) { %>
-  <div class="DC-document-description">
-    <%= dc.inflector.truncateWords(dc.inflector.stripTags(doc.get('description') || ""), descriptionWidth) %>
+<a class="DC-document-tile <% if (doc.isPrivate()) { %>DC-document-private<% } %> <% if (showOrg) { %>DC-show-organization<% } %>" href="<%= doc.url() %>" style="width: <%= tileWidth %>px;">
+  <div class="DC-document-thumbnail-select"></div>
+  <div class="DC-document-thumbnail"><img src="<%= doc.get('resources')['thumbnail'] %>" /></div>
+  <div class="DC-document-title">
+    <div class="DC-icon DC-icon-lock"></div>
+    <%= dc.inflector.truncateWords(doc.get('title'), titleWidth) %>
   </div>
-<% } %>
-<div class="DC-document-organization DC-interface">
-  <%= doc.get('contributor_organization') %>
-</div>
+  <% if (doc.get('description')) { %>
+    <div class="DC-document-description">
+      <%= dc.inflector.truncateWords(dc.inflector.stripTags(doc.get('description') || ""), descriptionWidth) %>
+    </div>
+  <% } %>
+  <div class="DC-document-organization DC-interface">
+    <%= doc.get('contributor_organization') %>
+  </div>
+</a>

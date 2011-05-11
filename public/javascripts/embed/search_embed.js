@@ -257,32 +257,25 @@
 
   dc.EmbedDocumentTile = dc.Backbone.View.extend({
 
-    tagName   : 'a',
-    className : 'DC-document-tile',
+    className : 'DC-document-tile-container',
 
     events : {
-      'click' : 'open'
+      'click a.DC-document-tile' : 'open'
     },
 
     initialize : function() {
       this.embed = this.options.embed;
-      $(this.el).attr({href: this.model.url()});
-      if (this.model.isPrivate()) $(this.el).addClass('DC-document-private');
     },
 
     render : function(width) {
-      var el               = $(this.el);
-      var showOrg          = !!this.model.get('contributor_organization');
-      var titleWidth       = this.fitTitleWidth(width);
-      var descriptionWidth = this.fitDescriptionWidth(width, showOrg);
-
-      el.css({width: width});
-      el.toggleClass('DC-show-organization', showOrg);
-      el.html(JST['search_embed_document_tile']({
+      var showOrg = !!this.model.get('contributor_organization');
+      $(this.el).html(JST['search_embed_document_tile']({
         dc                : dc,
         doc               : this.model,
-        titleWidth        : titleWidth,
-        descriptionWidth  : descriptionWidth
+        tileWidth         : width,
+        titleWidth        : this.fitTitleWidth(width),
+        descriptionWidth  : this.fitDescriptionWidth(width, showOrg),
+        showOrg           : showOrg
       }));
       return this;
     },
