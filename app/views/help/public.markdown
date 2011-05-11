@@ -1,32 +1,26 @@
-# DocumentCloud: The Guided Tour
+# DocumentCloud's Public Catalog
 
-DocumentCloud is a tool for organizing and working with large documents and document collections, a document viewer that makes it easier for reporters to share source material with readers and a publicly accessible repository of primary source documents that were used in reporters' investigations. If you're new to this, take a look at some [recent news stories that use DocumentCloud for primary source material][].
+DocumentCloud is a tool for organizing and working with large documents and document collections, a document viewer that makes it easier for reporters to share source material with readers and a publicly accessible repository of primary source documents that were used in reporters' investigations. 
 
-## Finding Your Way Around the Workspace
+If you're a reporter who'd like to analyze, annotate, and publish documents, [contact us] to find out more about getting an account. 
 
-If you're looking at a list of documents (search results, featured document, a single news organization) you can click on a thumbnail image to select that document. It works the same way as icons on your desktop: you can use the shift or control (command) keys, or drag across to select multiple documents at once. With documents selected, you can use the toolbar to view entities, plot extracted dates on a timeline, or download the original documents in PDF form.
-
-<img src="/images/help/drag_select.png" class="full_line" />
-
-Double-click a document's icon to launch the document viewer, where you can read the document and browse its annotations.
-
-## Try a search of public documents.
+## Search public documents and browse the notes.
 
 Search for [gulf oil spill][].
 
-This will search all documents made public by any DocumentCloud user for documents with "gulf," "oil" and "spill" in the text or title. Your results should include a number of documents relating to the British Petroleum oil spill in the Gulf of Mexico.
+This will search all documents made public by any DocumentCloud user for documents with "gulf," "oil" and "spill" in the text or title. Your results should include a number of documents relating to the British Petroleum oil spill in the Gulf of Mexico. For each document you can see the name of the user who uploaded the document and the newsroom they work in. 
 
-## Browse the notes.
+If a reporter has annotated a document, you'll see a yellow "note" indicator on the document's thumbnail. Below the thumbnail, there's a small link you can use to show the annotations that have been made on that document. 
 
-Some of the documents will have yellow notes attached. Click on the "Show Notes" link below the document's icon. The notes will be displayed, along with the relevant portion of the original page.
+Double click on any document to read the whole document in our viewer.
 
-## Try our analytic tools.
+## Try out our analytic tools.
 
 DocumentCloud gives you access to a great set of analytic tools for working with large and small documents. When a document is uploaded, we run it through OCR, which extracts letters and words from the documents' image. But that's not all. 
  
 Search for [source: "House Committee on the Judiciary"][].
  
-Your results will include a handful of documents related to a DOJ report on Bush administration interrogation policies. Select all 8 of the interrogation documents and click the "Timeline" button:
+Your results should include a handful of documents related to a DOJ report on Bush administration interrogation policies. Select all 8 of the interrogation documents and click the "Timeline" button:
 
 <img src="/images/help/timeline.jpg" class="full_line" />
 
@@ -36,7 +30,7 @@ Close the timeline and click the "Entities" tab, at the top left of the screen. 
 
 <img src="/images/help/show_pages.png" class="full_line" />
 
-## Searching the Full Text of Documents
+## Search the Full Text of Documents
 
 By default, a search looks for all of the words you enter within the title and full text of the document itself. For example: [John Yoo detainee][]. You can, however, ask DocumentCloud to search the contents of specific fields.
 
@@ -73,8 +67,6 @@ city                        | For example: [city: "New Orleans"][].
 state                       | (Includes provinces, in countries that have provinces instead of states.) For example: [state: Arizona][].
 country                     | For example: [country: Iran][].
 
-To see the details of how to use our search API, visit the API documentation at [documentcloud.org/help/api][].
-
 Questions? Don't hesitate to [contact us][]. And as you go, feel free to [request features and report bugs][].
 
 <div class="help_footer">
@@ -84,7 +76,6 @@ Questions? Don't hesitate to [contact us][]. And as you go, feel free to [reques
 </div>
 
 
-[recent news stories that use DocumentCloud for primary source material]: /featured
 [gulf oil spill]: #search/gulf%20oil%20spill
 [source: "House Committee on the Judiciary"]: #search/source%3A%20%22House%20Committee%20on%20the%20Judiciary%22
 [John Yoo detainee]: #search/John%20Yoo%20detainee
@@ -109,6 +100,5 @@ Questions? Don't hesitate to [contact us][]. And as you go, feel free to [reques
 [state: Arizona]: #search/state%3A%20Arizona
 [country: Iran]: #search/country%3A%20Iran
 [OpenCalais]: http://www.opencalais.com/
-[documentcloud.org/help/api]: http://www.documentcloud.org/help/api
-[contact us]: javascript:dc.ui.Dialog.contact()
+[contact us]: /contact
 [request features and report bugs]: http://documentcloud.uservoice.com
