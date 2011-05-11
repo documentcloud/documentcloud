@@ -22,8 +22,13 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
   render : function() {
     dc.ui.Dialog.prototype.render.call(this);
     var data = Documents.sortData(this.originalData);
+    var removeAll = _.any(this.docs, function(doc){ return !_.isEmpty(doc.get('data')); });
     this._container = this.$('.custom');
-    this._container.html(JST['document/data_dialog']({multiple: this.multiple, data: data}));
+    this._container.html(JST['document/data_dialog']({
+      multiple  : this.multiple,
+      removeAll : removeAll,
+      data      : data
+    }));
     this.checkNoData();
     return this;
   },
