@@ -72,6 +72,7 @@ related_article | (optional) the URL of the article associated with the document
 published_url | (optional) the URL of the page on which the document will be embedded | http://documents.example.com/blago-transcript.html
 access | (optional) one of "public", "private", "organization", defaults to "private" | public
 project | (optional) a numeric Project id, to upload the document into an existing project. | 1012
+data | (optional) a hash of arbitrary key/value data pairs | {"data": {"status": "active"}} (json) <br /> data[status]=active (query string)
 secure | (optional) If you're dealing with a truly sensitive document, pass the "secure" parameter in order to prevent the document from being sent to OpenCalais for entity extraction. | true
 
 ### Tips
@@ -120,7 +121,7 @@ Retrieve the canonical JSON representation of a particular document, as specifie
 
 ## PUT /api/documents/[id].json
 
-Update a document's **title**, **source**, **description**, **related article**, or **access level** with this method. Reference your document by its id (usually something like: **218-madoff-sec-report**).
+Update a document's **title**, **source**, **description**, **related article**, **access level**, or **data** with this method. Reference your document by its id (usually something like: **218-madoff-sec-report**).
 
 Parameter     | Description           |  Example
 --------------|-----------------------|--------------
@@ -130,6 +131,7 @@ description | (optional) a paragraph of detailed description | This prosecution 
 related_article | (optional) the URL of the article associated with the document | http://example.com/news/blago/2010-5-3.html
 published_url | (optional) the URL of the page on which the document will be embedded | http://documents.example.com/blago-transcript.html
 access | (optional) one of "public", "private", "organization" | "public"
+data | (optional) a hash of arbitrary key/value data pairs | {"data": {"status": "active"}} (json) <br /> data[status]=active (query string)
 
 The response value of this method will be the JSON representation of your document (as seen in the GET method above), with all updates applied.
 

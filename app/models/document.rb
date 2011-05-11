@@ -179,6 +179,9 @@ class Document < ActiveRecord::Base
       project = Project.accessible(account).find_by_id(params[:project].to_i)
       project.add_document(doc) if project
     end
+    if params[:data]
+      doc.data = params[:data]
+    end
     doc.reload
   end
 
@@ -729,6 +732,7 @@ class Document < ActiveRecord::Base
       res['published_url']    = remote_url if remote_url
     end
     doc['sections']           = sections.map(&:canonical) if options[:sections]
+    doc['data']               = data if options[:data]
     if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
       doc['annotations']      = self.annotations_with_authors(options[:account]).map {|a| a.canonical}
     elsif options[:annotations]

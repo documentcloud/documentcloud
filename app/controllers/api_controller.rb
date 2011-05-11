@@ -57,7 +57,7 @@ class ApiController < ApplicationController
   def documents
     return bad_request unless params[:id] and request.format.json? || request.format.js?
     return not_found unless current_document
-    @response = {'document' => current_document.canonical(:access => true, :sections => true, :annotations => true)}
+    @response = {'document' => current_document.canonical(:access => true, :sections => true, :annotations => true, :data => true)}
     json_response
   end
   
@@ -80,7 +80,7 @@ class ApiController < ApplicationController
   def update
     return bad_request unless params[:id] and request.format.json? || request.format.js?
     return not_found unless doc = current_document
-    attrs = pick(params, :access, :title, :description, :source, :related_article, :published_url)
+    attrs = pick(params, :access, :title, :description, :source, :related_article, :published_url, :data)
     attrs[:access] = ACCESS_MAP[attrs[:access].to_sym] if attrs[:access]
     success = doc.secure_update attrs, current_account
     return json(doc, 403) unless success
