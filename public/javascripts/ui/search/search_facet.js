@@ -259,7 +259,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       }
     } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
       e.preventDefault();
-      dc.app.searchBox.selectAllFacets(this);
+      dc.app.searchBox.selectAllFacets();
       console.log(['command a', e]);
     }
     this.resize(e);

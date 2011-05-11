@@ -201,48 +201,6 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.value('');
   },
 
-  // Callback fired on key press in the search box. We search when they hit
-  // return.
-  maybeSearch : function(e) {
-    // console.log(['box key', e.keyCode, dc.app.hotkeys.key(e)]);
-    if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') {
-      return this.searchEvent(e);
-    }
-
-    if (dc.app.hotkeys.colon(e)) {
-      this.box.trigger('resize.autogrow', e);
-      var query = this.box.val();
-      if (_.contains(_.pluck(this.PREFIXES, 'label'), query)) {
-        e.preventDefault();
-        this.addFacet(query);
-        return false;
-      }
-    }
-  },
-  
-  keydown : function(e) {
-    dc.app.hotkeys.down(e);
-    // console.log(['box keydown', e.keyCode, e.which, this.box.getCursorPosition()]);
-    this.box.trigger('resize.autogrow', e);
-    if (dc.app.hotkeys.left) {
-      if (this.box.getCursorPosition() == 0) {
-        e.preventDefault();
-        this.focusNextFacet(this.facetViews.length-1, 0, -1);
-      }
-    } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
-      e.preventDefault();
-      this.focusNextFacet(this.facetViews.length-1, 0);
-    } else if (dc.app.hotkeys.tab) {
-      e.preventDefault();
-      this.focusNextFacet(null, 0);
-    } else if (dc.app.hotkeys.backspace) {
-      if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
-        e.preventDefault();
-        this.focusNextFacet(this.facetViews.length-1, 0, -1, true);
-      }
-    }
-  },
-
   // Webkit knows how to fire a real "search" event.
   searchEvent : function(e) {
     var query = this.value();
@@ -386,12 +344,11 @@ dc.ui.SearchBox = Backbone.View.extend({
   
   selectAllFacets : function(currentView) {
     _.each(this.facetViews, function(facetView, i) {
-      if (currentView == facetView || currentView == i) {
-        facetView.selectFacet(false, true);
-      } else {
-        facetView.selectFacet(true);
-      }
+      facetView.selectFacet(true);
     });
+    this.box.focus();
+    this.box.selectRange(0, this.box.val().length);
+    this.allSelected = true;
   },
   
   disableAllFacets : function(currentView) {
@@ -433,6 +390,59 @@ dc.ui.SearchBox = Backbone.View.extend({
 
   removeFocus : function() {
     this.$('.search').removeClass('focus');
+  },
+
+  // Callback fired on key press in the search box. We search when they hit
+  // return.
+  maybeSearch : function(e) {
+    // console.log(['box key', e.keyCode, dc.app.hotkeys.key(e)]);
+    if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') {
+      return this.searchEvent(e);
+    }
+
+    if (dc.app.hotkeys.colon(e)) {
+      this.box.trigger('resize.autogrow', e);
+      var query = this.box.val();
+      if (_.contains(_.pluck(this.PREFIXES, 'label'), query)) {
+        e.preventDefault();
+        this.addFacet(query);
+        return false;
+      }
+    }
+  },
+  
+  keydown : function(e) {
+    dc.app.hotkeys.down(e);
+    console.log(['box keydown', e.keyCode, e.which, this.box.getCursorPosition(), this.allSelected]);
+    this.box.trigger('resize.autogrow', e);
+    
+    if (!dc.app.hotkeys.backspace && this.allSelected) {
+      this.allSelected = false;
+      this.disableFacets();
+    }
+    
+    if (dc.app.hotkeys.left) {
+      if (this.box.getCursorPosition() == 0) {
+        e.preventDefault();
+        this.focusNextFacet(this.facetViews.length-1, 0, -1);
+      }
+    } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
+      e.preventDefault();
+      this.focusNextFacet(this.facetViews.length-1, 0);
+    } else if (dc.app.hotkeys.tab) {
+      e.preventDefault();
+      this.focusNextFacet(null, 0);
+    } else if (dc.app.hotkeys.backspace) {
+      if (this.allSelected) {
+        this.cancelSearch();
+      } else if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
+        e.preventDefault();
+        this.focusNextFacet(this.facetViews.length-1, 0, -1, true);
+      }
+    } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
+      e.preventDefault();
+      this.selectAllFacets();
+    }
   }
 
 });
