@@ -15,6 +15,7 @@ class Docdata < ActiveRecord::Base
   
   def data=(hash)
     @data = nil
+    return unless validate_keys(hash)
     if hash.empty?
       self[:data] = nil
       self.destroy
@@ -25,6 +26,15 @@ class Docdata < ActiveRecord::Base
   
   def data    
     @data ||= Hash[(self[:data] || "").scan(/"(.*?[^\\]|)"=>"(.*?[^\\]|)"/)]
+  end
+  
+  def validate_keys(hash)
+    if forbidden = hash.keys.detect {|key| DC::ALL_SEARCHES.include?(key.to_sym) }
+      errors.add_to_base "Invalid data key: #{forbidden}"
+      false
+    else
+      true
+    end
   end
   
   def index_document

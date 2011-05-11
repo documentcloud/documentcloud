@@ -55,9 +55,14 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
 
   confirm : function() {
     var data = this.serialize();
-    var toRemove = _.without.apply(_, [_.keys(this.originalData)].concat(_.keys(data)));
-    _.each(this.docs, function(doc){ doc.mergeData(data, toRemove); });
-    this.close();
+    var forbidden = _.detect(_.keys(data), function(key){ return _.include(dc.searchPrefixes, key); });
+    if (forbidden) {
+      this.error('"' + forbidden + '" cannot be used as a key');
+    } else {
+      var toRemove = _.without.apply(_, [_.keys(this.originalData)].concat(_.keys(data)));
+      _.each(this.docs, function(doc){ doc.mergeData(data, toRemove); });
+      this.close();
+    }
   },
 
   _removeDatum : function(e) {
@@ -81,7 +86,7 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
   // the single document being edited.
   _title : function() {
     if (this.multiple) return this.docs.length + ' Documents';
-    return '"' + dc.inflector.truncate(this.docs[0].get('title'), 30) + '"';
+    return '"' + dc.inflector.truncate(this.docs[0].get('title'), 25) + '"';
   },
 
   _returnCloses : function() {

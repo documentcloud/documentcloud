@@ -1,15 +1,15 @@
 <script type="text/javascript">
 window.RAILS_ENV = '<%= RAILS_ENV %>';
 window.SERVER_ROOT = '<%= DC.server_root %>';
-<% if @current_account %>
-  dc.account = {
-    id            : <%= @current_account.id %>,
-    hasDocuments  : <%= @has_documents.to_json %>,
-    organization  : <%= @current_organization.to_json %>
-  };
-  Accounts.refresh(<%= @accounts.active.to_json %>);
-  Projects.refresh(<%= @projects.to_json({:account => @current_account, :include_collaborators => true}) %>);
-annotations/documents/projects remain under them.
+window.SERVER_ROOT_HTTP = '<%= DC.server_root(:ssl => false) %>';
+<% if workspace %>
+  Organizations.refresh(<%= @organizations.to_json %>);
+  <% if @current_account %>
+    <%= render :partial => 'accounts/current_account.js', :type => :js %>
+    Accounts.refresh(<%= @accounts.to_json %>);
+    Projects.refresh(<%= @projects.to_json({:account => @current_account, :include_collaborators => true}) %>);
+    dc.searchPrefixes = <%= DC::ALL_SEARCHES.to_json %>;
+  <% end %>
 <% end %>
 <% if @additional_js %>
   <%= @additional_js %>

@@ -452,11 +452,11 @@
 .datalog .description {
   font-size: 11px;
   line-height: 16px;
-  margin: 10px 0 30px;
+  margin: 15px 0 30px;
   color: #ccc;
 }
 .datalog .rows {
-  max-height: 380px;
+  max-height: 300px;
   width: 400px;
   overflow-y: auto; 
   position: relative;
