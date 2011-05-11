@@ -21,4 +21,5 @@
 [state: Arizona]: #search/state%3A%20Arizona
 [country: Iran]: #search/country%3A%20Iran
 
+[the API]: #help/api
 [API documentation]: #help/api

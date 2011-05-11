@@ -5,7 +5,7 @@ dc.ui.Help = Backbone.View.extend({
     {url : '',                 title : 'Introduction'},
     {url : 'tour',             title : 'Guided Tour'},
     {url : 'accounts',         title : 'Adding Accounts'},
-    {url : 'searching',        title : 'Searching Documents'},
+    {url : 'searching',        title : 'Searching Documents and Data'},
     {url : 'uploading',        title : 'Uploading Documents'},
     {url : 'troubleshooting',  title : 'Troubleshooting Failed Uploads'},
     {url : 'modification',     title : 'Document Modification'},

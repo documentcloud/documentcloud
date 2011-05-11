@@ -7,7 +7,7 @@ Enclose terms in quotes to search for a specific, multi-word phrase.
 
 Use "NOT" or "-" to exclude a term from your search. For example both: [geithner -madoff][] and [geithner NOT madoff][] will return documents that mention "Geithner" and do not also mention "Madoff." 
 
-## Searching by Metadata Field
+## Searching by Built-in Metadata Field
    
 Term                        | Description 
 ----------------------------|---------------------
@@ -36,6 +36,18 @@ phone                       | Telephone or Fax numbers. For example: [phone: "(2
 city                        | For example: [city: "New Orleans"][].
 state                       | (Includes provinces, in countries that have provinces instead of states.) For example: [state: Arizona][].
 country                     | For example: [country: Iran][].
+
+## Editing and Searching your own Custom Data
+
+DocumentCloud allows you to define and search your own set of custom data (key/value pairs) associated with specific documents. To get started with document data, you can use [the API][] to add data to your documents in bulk &mdash; useful if you already have an existing database of information about your documents.
+
+To edit data for individual documents in the workspace, select the documents you wish to update, and choose **Edit Document Data** from the **Edit** menu ... or right-click a document, and choose **Edit Document Data** from the context menu.
+
+<img alt="" src="/images/help/edit_document_data.png" class="full_line" />
+
+A dialog will appear which you can use to view the existing key/value pairs, add new pairs, and remove old ones.
+
+To filter documents by data that you've added, either click on the tag (shown in the picture above), or search for the key/value pair as you would for any other field, by typing `citizen: Pakistan` into the search box.
 
 Still have questions about how to search? Don't hesitate to [contact us][].
 

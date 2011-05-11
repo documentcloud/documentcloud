@@ -8,7 +8,7 @@ class AjaxHelpController < ApplicationController
     :tour             => 'Guided Tour',
     :public           => 'The Public Catalog',
     :accounts         => 'Adding Accounts',
-    :searching        => 'Searching Documents',
+    :searching        => 'Searching Documents and Data',
     :uploading        => 'Uploading Documents',
     :troubleshooting  => 'Troubleshooting Failed Uploads',
     :modification     => 'Document Modification',
