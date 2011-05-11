@@ -344,7 +344,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   
   selectAllFacets : function(currentView) {
     _.each(this.facetViews, function(facetView, i) {
-      facetView.selectFacet(true);
+      facetView.selectFacet(null, true);
     });
     this.box.focus();
     this.box.selectRange(0, this.box.val().length);
@@ -413,7 +413,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   
   keydown : function(e) {
     dc.app.hotkeys.down(e);
-    console.log(['box keydown', e.keyCode, e.which, this.box.getCursorPosition(), this.allSelected]);
+    // console.log(['box keydown', e.keyCode, e.which, this.box.getCursorPosition(), this.allSelected]);
     this.box.trigger('resize.autogrow', e);
     
     if (!dc.app.hotkeys.backspace && this.allSelected) {
@@ -434,6 +434,7 @@ dc.ui.SearchBox = Backbone.View.extend({
       this.focusNextFacet(null, 0);
     } else if (dc.app.hotkeys.backspace) {
       if (this.allSelected) {
+        e.preventDefault();
         this.cancelSearch();
       } else if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
         e.preventDefault();

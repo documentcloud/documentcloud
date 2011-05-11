@@ -122,7 +122,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.closeAutocomplete();
   },
   
-  selectFacet : function(selectAll, currentView) {
+  selectFacet : function(e, selectAll) {
     console.log(['selectFacet', this.box, selectAll]);
     this.canClose = false;
     this.box.setCursorPosition(0);
@@ -131,14 +131,14 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.setMode('not', 'editing');
     this.closeAutocomplete();
     if (!selectAll) {
-      if (!currentView) dc.app.searchBox.addFocus();
+      dc.app.searchBox.addFocus();
       $(document).unbind('keydown.facet');
       $(document).unbind('click.facet');
       _.defer(_.bind(function() {
         $(document).unbind('keydown.facet').bind('keydown.facet', this.keydown);
         $(document).unbind('click.facet').one('click.facet', this.deselectFacet);
       }, this));
-      if (!currentView) dc.app.searchBox.disableFacets(this);
+      dc.app.searchBox.disableFacets(this);
     }
   },
   
