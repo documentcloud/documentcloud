@@ -392,8 +392,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.$('.search').removeClass('focus');
   },
 
-  // Callback fired on key press in the search box. We search when they hit
-  // return.
+  // Callback fired on key press in the search box. We search when they hit return.
   maybeSearch : function(e) {
     // console.log(['box key', e.keyCode, dc.app.hotkeys.key(e)]);
     if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') {

@@ -45,11 +45,11 @@ dc.ui.SearchFacet = Backbone.View.extend({
       delay     : 0,
       autoFocus : true,
       select    : _.bind(function(e, ui) {
-        console.log(['autocomplete facet', ui.item.value]);
         e.preventDefault();
         var originalValue = this.model.get('value');
+        console.log(['autocomplete facet', ui.item.value, originalValue]);
         this.set(ui.item.value);
-        if (originalValue != ui.item.value) this.search(e);
+        if (originalValue != ui.item.value || this.box.val() != ui.item.value) this.search(e);
         return false;
       }, this)
     });
@@ -211,7 +211,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   keydown : function(e) {
     dc.app.hotkeys.down(e);
-    console.log(['keydown', e.which, this.box.val(), this.box.getCursorPosition(), this.box.getSelection().length, dc.app.hotkeys.key(e), dc.app.hotkeys.left, dc.app.hotkeys.right]);
+    // console.log(['keydown', e.which, this.box.val(), this.box.getCursorPosition(), this.box.getSelection().length, dc.app.hotkeys.key(e), dc.app.hotkeys.left, dc.app.hotkeys.right]);
     if (dc.app.hotkeys.enter && this.box.val()) {
       this.disableEdit(e);
       this.search(e);
