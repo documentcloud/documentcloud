@@ -443,32 +443,54 @@
           }
 
 /*------------------------------ Data Dialog ---------------------------------*/
-.datalog .data_row {
-  color: #aaa;
-  font-size: 13px;
-  margin: 0 0 15px;
-  text-align: left;
+.datalog {
+  width: 400px;
 }
-  .datalog .data_row .icon {
-    display: inline-block;
-    cursor: pointer;
+.datalog .title {
+  margin-bottom: 0;
+}
+.datalog .description {
+  font-size: 11px;
+  line-height: 14px;
+  margin: 10px 0 30px;
+  color: #ccc;
+}
+.datalog .rows {
+  width: 405px;
+  max-height: 380px;
+  overflow-y: auto; 
+  position: relative;
+  padding: 0 25px 0 0;
+}
+  .datalog .data_row {
+    color: #aaa;
+    font-size: 13px;
+    margin: 15px 0 0;
+    text-align: left;
   }
-    .datalog .icon.minus {
-      margin-left: 5px;
-    } 
-      .datalog .no_minus .icon.minus {
-        visibility: hidden;
-      }
-  .datalog .text_input.small {
-    margin-right: 5px;
-    display: inline-block;
-  }
-    .datalog .text_input input {
-      width: 200px;
+    .datalog .data_row:first-child {
+      margin-top: 0;
     }
-    .datalog .text_input.first {
-      margin-right: 2px;
+    .datalog .data_row .icon {
+      display: inline-block;
+      cursor: pointer;
     }
-      .datalog .text_input.first input {
-        width: 100px;
+      .datalog .icon.minus {
+        margin-left: 5px;
+      } 
+        .datalog .no_minus .icon.minus {
+          visibility: hidden;
+        }
+    .datalog .text_input.small {
+      margin-right: 5px;
+      display: inline-block;
+    }
+      .datalog .text_input input {
+        width: 200px;
       }
+      .datalog .text_input.first {
+        margin-right: 2px;
+      }
+        .datalog .text_input.first input {
+          width: 100px;
+        }

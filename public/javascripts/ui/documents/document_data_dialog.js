@@ -8,7 +8,7 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function(docs) {
-    this.events = _.extend(this.events, this.dataEvents);
+    this.events = _.extend({}, this.events, this.dataEvents);
     this.removedKeys = [];
     this.docs = docs;
     this.multiple = docs.length > 1;
@@ -20,18 +20,16 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
 
   render : function() {
     dc.ui.Dialog.prototype.render.call(this);
+    var data = Documents.sortData(Documents.sharedData(this.docs));
     this._container = this.$('.custom');
-    var html = _.map(Documents.sortData(Documents.sharedData(this.docs)), function(pair){
-      return JST['document/data_dialog_row']({key: pair[0], value: pair[1], minus: true});
-    }).join('');
-    this._container.html(html);
+    this._container.html(JST['document/data_dialog']({multiple: this.multiple, data: data}));
     this.checkNoData();
     return this;
   },
 
   checkNoData : function() {
     if (!this.$('.data_row').length) {
-      var container = this._container;
+      var container = this._container.find('.rows');
       container.html(JST['document/data_dialog_row']({key: '', value: '', minus: false}));
       _.defer(function(){ container.find('input.key').focus(); });
     }

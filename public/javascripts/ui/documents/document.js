@@ -54,8 +54,9 @@ dc.ui.Document = Backbone.View.extend({
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
       '_renderPages', '_setSelected', 'viewDocuments', 'viewPublishedDocuments',
-      'openDialog', 'openEmbed', 'setAccessLevelAll', 'viewEntities',
-      'viewPages', 'viewChosenPages', 'deleteDocuments', 'removeFromProject');
+      'openDialog', 'setAccessLevelAll', 'viewEntities',
+      'viewPages', 'viewChosenPages', 'deleteDocuments', 'removeFromProject',
+      '_openShareDialog', 'openDataDialog');
     this.model.bind('change', this._onDocumentChange);
     this.model.bind('change:selected', this._setSelected);
     this.model.bind('view:pages', this.viewPages);
@@ -164,12 +165,6 @@ dc.ui.Document = Backbone.View.extend({
     if (!(this.modes.editable == 'is')) return;
     if (this.model.checkBusy()) return;
     dc.ui.DocumentDataDialog.open(this.model);
-  },
-
-  // Renders a single document embed dialog. Checks for permission to embed.
-  openEmbed : function() {
-    if (!this.model.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
-    (new dc.ui.DocumentEmbedDialog(this.model)).render();
   },
 
   openPagesInViewer : function() {
@@ -326,9 +321,8 @@ dc.ui.Document = Backbone.View.extend({
     if (this.model.allowedToEdit()) {
       items = items.concat([
         {title : 'Edit Document Information', onClick: this.openDialog},
+        {title : 'Edit Document Data',        onClick: this.openDataDialog},
         {title : 'Set Access Level',          onClick: this.setAccessLevelAll},
-        {title : 'Embed Document Viewer',     onClick: this.openEmbed,
-                                              attrs : {'class' : count > 1 ? 'disabled' : ''}},
         {title : deleteTitle,                 onClick: this.deleteDocuments,
                                               attrs : {'class' : 'warn'}}
       ]);

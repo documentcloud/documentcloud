@@ -1,0 +1,12 @@
+<div class="description">
+  Add and edit key/value pairs describing 
+  <%= multiple ? "these documents" : "this document"%>. 
+  <br />
+  For example: &ldquo;birth: 1935-01-08&rdquo;, or &ldquo;status: released&rdquo;
+</div>
+
+<div class="rows">
+  <% _.each(data, function(pair) { %>
+    <%= JST["document/data_dialog_row"]({key: pair[0], value: pair[1], minus: true}) %>
+  <% }); %>
+</div>
