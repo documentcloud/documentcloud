@@ -348,7 +348,7 @@
     
     getSelection: function() {
       var input = this[0];
-      console.log(['getSelection', input, input.selectionStart, input.selectionStart, input.selectionEnd]);
+      // console.log(['getSelection', input, input.selectionStart, input.selectionStart, input.selectionEnd]);
       if (input.selectionStart != null) { // FF/Webkit
         var start = input.selectionStart;
         var end   = input.selectionEnd;

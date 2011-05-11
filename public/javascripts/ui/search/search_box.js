@@ -421,7 +421,7 @@ dc.ui.SearchBox = Backbone.View.extend({
       this.disableFacets();
     }
     
-    if (dc.app.hotkeys.left) {
+    if (dc.app.hotkeys.key(e) == 'left') {
       if (this.box.getCursorPosition() == 0) {
         e.preventDefault();
         this.focusNextFacet(this.facetViews.length-1, 0, -1);

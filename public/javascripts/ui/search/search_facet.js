@@ -211,11 +211,11 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   keydown : function(e) {
     dc.app.hotkeys.down(e);
-    console.log(['keydown', e.which, this.box.val(), this.box.getCursorPosition(), dc.app.hotkeys.left, dc.app.hotkeys.right]);
+    console.log(['keydown', e.which, this.box.val(), this.box.getCursorPosition(), this.box.getSelection().length, dc.app.hotkeys.key(e), dc.app.hotkeys.left, dc.app.hotkeys.right]);
     if (dc.app.hotkeys.enter && this.box.val()) {
       this.disableEdit(e);
       this.search(e);
-    } else if (dc.app.hotkeys.left) {
+    } else if (dc.app.hotkeys.key(e) == 'left') {
       if (this.box.getCursorPosition() == 0) {
         if (this.modes.selected == 'is' && this.options.order > 0) {
           this.disableEdit(e);
@@ -225,9 +225,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
         } else {
           this.selectFacet();
         }
-        return false;
       }
-    } else if (dc.app.hotkeys.right) {
+    } else if (dc.app.hotkeys.key(e) == 'right') {
       if (this.modes.selected == 'is') {
         e.preventDefault();
         this.deselectFacet(e);
@@ -237,7 +236,6 @@ dc.ui.SearchFacet = Backbone.View.extend({
         e.preventDefault();
         this.disableEdit(e);
         dc.app.searchBox.focusNextFacet(this, 1, false, true);
-        return false;
       }
     } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
       e.preventDefault();
@@ -251,11 +249,9 @@ dc.ui.SearchFacet = Backbone.View.extend({
       if (this.modes.selected == 'is') {
         e.preventDefault();
         this.remove(e);
-        return false;
       } else if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
         e.preventDefault();
         this.selectFacet();
-        return false;
       }
     } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
       e.preventDefault();

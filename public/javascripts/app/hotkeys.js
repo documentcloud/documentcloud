@@ -32,6 +32,7 @@ dc.app.hotkeys = {
   },
 
   up : function(e) {
+    console.log(['up', e.which, this.KEYS[e.which]]);
     var key = this.KEYS[e.which];
     if (key) this[key] = false;
   },
