@@ -12,6 +12,7 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
     this.removedKeys = [];
     this.docs = docs;
     this.multiple = docs.length > 1;
+    this._rowTemplate = JST['document/data_dialog_row'];
     var title = "Edit Data for " + this._title();
     dc.ui.Dialog.call(this, {mode : 'custom', title : title, saveText : 'Save'});
     this.render();
@@ -30,8 +31,12 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
   checkNoData : function() {
     if (!this.$('.data_row').length) {
       var container = this._container.find('.rows');
-      container.html(JST['document/data_dialog_row']({key: '', value: '', minus: false}));
-      _.defer(function(){ container.find('input.key').focus(); });
+      var template  =
+      container.html(
+        this._rowTemplate({key: '', value: '', minus: false}) +
+        this._rowTemplate({key: '', value: '', minus: true}) +
+        this._rowTemplate({key: '', value: '', minus: true})
+      );
     }
   },
 
@@ -60,7 +65,7 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
   },
 
   _addDatum : function(e) {
-    var newRow = $(JST['document/data_dialog_row']({key: '', value: '', minus: true}));
+    var newRow = $(this._rowTemplate({key: '', value: '', minus: true}));
     $(e.target).closest('.data_row').after(newRow);
     newRow.find('.key').focus();
     this.checkNoData();
