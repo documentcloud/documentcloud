@@ -20,7 +20,7 @@ Double-click on one of your documents to open it. If the contributing reporter m
 
 ## Try our analytic tools.
 
-DocumentCloud gives you access to a great set of analytic tools for working with large and small documents. When a document is uploaded, we run it through OCR, which extracts letters and words from the documents' image. But that's not all. 
+DocumentCloud gives reporters a great set of analytic tools for working with large and small documents. When a document is uploaded, we run it through OCR, which extracts letters and words from each documents' image. But that's not all. 
  
 Search for [source: "House Committee on the Judiciary"][].
  
