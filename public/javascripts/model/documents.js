@@ -60,17 +60,12 @@ dc.model.Document = Backbone.Model.extend({
   },
 
   // Merge in and save a hash of data, removing any blank keys or values.
-  mergeData : function(hash) {
+  mergeData : function(hash, toRemove) {
     var data = this.get('data');
-    for (var key in hash) {
-      if (!key) continue;
-      var val = hash[key];
-      if (val) {
-        data[key] = val;
-      } else {
-        delete data[key];
-      }
-    }
+    _.each(toRemove, function(key){ delete data[key]; });
+    _.each(hash, function(val, key) {
+      val ? data[key] = val : delete data[key];
+    });
     this.save({data: data});
     this.change();
   },

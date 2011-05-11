@@ -9,20 +9,19 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function(docs) {
-    this.events = _.extend({}, this.events, this.dataEvents);
-    this.removedKeys = [];
-    this.docs = docs;
-    this.multiple = docs.length > 1;
+    this.events       = _.extend({}, this.events, this.dataEvents);
+    this.docs         = docs;
+    this.multiple     = docs.length > 1;
+    this.originalData = Documents.sharedData(this.docs);
     this._rowTemplate = JST['document/data_dialog_row'];
-    var title = "Edit Data for " + this._title();
-    dc.ui.Dialog.call(this, {mode : 'custom', title : title, saveText : 'Save'});
+    dc.ui.Dialog.call(this, {mode : 'custom', title : "Edit Data for " + this._title(), saveText : 'Save'});
     this.render();
     $(document.body).append(this.el);
   },
 
   render : function() {
     dc.ui.Dialog.prototype.render.call(this);
-    var data = Documents.sortData(Documents.sharedData(this.docs));
+    var data = Documents.sortData(this.originalData);
     this._container = this.$('.custom');
     this._container.html(JST['document/data_dialog']({multiple: this.multiple, data: data}));
     this.checkNoData();
@@ -43,9 +42,6 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
 
   serialize : function() {
     var data = {};
-    _.each(this.removedKeys, function(key) {
-      data[key] = null;
-    });
     _.each(this.$('.data_row'), function(row) {
       data[$(row).find('.key').val()] = $(row).find('.value').val();
     });
@@ -54,14 +50,13 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
 
   confirm : function() {
     var data = this.serialize();
-    _.each(this.docs, function(doc){ doc.mergeData(data); });
+    var toRemove = _.without.apply(_, [_.keys(this.originalData)].concat(_.keys(data)));
+    _.each(this.docs, function(doc){ doc.mergeData(data, toRemove); });
     this.close();
   },
 
   _removeDatum : function(e) {
-    var row = $(e.target).closest('.data_row');
-    this.removedKeys.push(row.find('.key').val());
-    row.remove();
+    $(e.target).closest('.data_row').remove();
     this.checkNoData();
   },
 
