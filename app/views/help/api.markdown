@@ -85,10 +85,11 @@ secure | (optional) If you're dealing with a truly sensitive document, pass the 
 Using Ruby's RestClient library you could do:
 
     RestClient.post('https://ME%40TEST.COM:SECRET@www.documentcloud.org/api/upload.json',
-      :file => File.new('/full/path/to/document/document.pdf','rb'),
-      :title => "2008 Blagojevich Tax Return",
+      :file   => File.new('/full/path/to/document/document.pdf','rb'),
+      :title  => "2008 Blagojevich Tax Return",
       :source => "U.S. Attorney's Office",
-      :access => 'private'
+      :access => 'private',
+      :data   => {"date" => "2009-04-01", "exhibit" => "E1146"}
     )
 
 ## GET /api/documents/[id].json
