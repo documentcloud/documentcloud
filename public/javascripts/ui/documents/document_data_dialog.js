@@ -3,8 +3,9 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
   className : 'dialog datalog',
 
   dataEvents : {
-    'click .minus':   '_removeDatum',
-    'click .plus':    '_addDatum'
+    'click .minus':       '_removeDatum',
+    'click .plus':        '_addDatum',
+    'click .remove_all':  '_removeAll'
   },
 
   constructor : function(docs) {
@@ -69,6 +70,11 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
     $(e.target).closest('.data_row').after(newRow);
     newRow.find('.key').focus();
     this.checkNoData();
+  },
+
+  _removeAll : function() {
+    _.each(this.docs, function(doc){ doc.save({data: {}}); });
+    this.close();
   },
 
   // Sets the dialog title to include the number of documents or title of
