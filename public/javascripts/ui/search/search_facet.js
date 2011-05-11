@@ -132,8 +132,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.closeAutocomplete();
     if (!selectAll) {
       dc.app.searchBox.addFocus();
-      $(document).unbind('keydown.facet');
-      $(document).unbind('click.facet');
+      $(document).unbind('keydown.facet', this.keydown);
+      $(document).unbind('click.facet', this.deselectFacet);
       _.defer(_.bind(function() {
         $(document).unbind('keydown.facet').bind('keydown.facet', this.keydown);
         $(document).unbind('click.facet').one('click.facet', this.deselectFacet);
@@ -146,8 +146,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
     console.log(['deselectFacet', this.box, e]);
     this.setMode('not', 'selected');
     this.closeAutocomplete();
-    $(document).unbind('keydown.facet');
-    $(document).unbind('click.facet');
+    $(document).unbind('keydown.facet', this.keydown);
+    $(document).unbind('click.facet', this.deselectFacet);
   },
   
   searchAutocomplete : function(e) {
@@ -211,7 +211,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   keydown : function(e) {
     dc.app.hotkeys.down(e);
-    // console.log(['keydown', e.keyCode, dc.app.hotkeys.right, this.box.val(), this.box.getCursorPosition()]);
+    console.log(['keydown', e.which, this.box.val(), this.box.getCursorPosition(), dc.app.hotkeys.left, dc.app.hotkeys.right]);
     if (dc.app.hotkeys.enter && this.box.val()) {
       this.disableEdit(e);
       this.search(e);
@@ -260,7 +260,6 @@ dc.ui.SearchFacet = Backbone.View.extend({
     } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
       e.preventDefault();
       dc.app.searchBox.selectAllFacets();
-      console.log(['command a', e]);
     }
     this.resize(e);
   },

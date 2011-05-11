@@ -436,6 +436,7 @@ dc.ui.SearchBox = Backbone.View.extend({
       if (this.allSelected) {
         e.preventDefault();
         this.cancelSearch();
+        this.allSelected = false;
       } else if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
         e.preventDefault();
         this.focusNextFacet(this.facetViews.length-1, 0, -1, true);
