@@ -63,11 +63,11 @@ dc.app.SearchParser = {
   },
   
   extractNextField : function(query) {
-    var textRe = /^\s*(\w+)\s+(?=\w+:\s?(('.+?'|".+?")|([^'"]{2}\S*)))/;
+    var textRe = /^\s*(\S+)\s+(?=\w+:\s?(('.+?'|".+?")|([^'"]{2}\S*)))/;
     var textMatch = query.match(textRe);
     console.log(['extractNextField', query, textMatch]);
-    if (textMatch && textMatch.length) {
-      return textMatch[0];
+    if (textMatch && textMatch.length >= 1) {
+      return textMatch[1];
     } else {
       return this.extractFirstField(query);
     }

@@ -45,10 +45,11 @@ dc.ui.SearchFacet = Backbone.View.extend({
       delay     : 0,
       autoFocus : true,
       select    : _.bind(function(e, ui) {
-        console.log(['autocomplete', e, ui]);
+        console.log(['autocomplete facet', ui.item.value]);
         e.preventDefault();
+        var originalValue = this.model.get('value');
         this.set(ui.item.value);
-        this.search(e);
+        if (originalValue != ui.item.value) this.search(e);
         return false;
       }, this)
     });
@@ -121,22 +122,24 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.closeAutocomplete();
   },
   
-  selectFacet : function() {
-    console.log(['selectFacet', this.box]);
+  selectFacet : function(selectAll, currentView) {
+    console.log(['selectFacet', this.box, selectAll]);
     this.canClose = false;
     this.box.setCursorPosition(0);
     if (this.box.is(':focus')) this.box.blur();
     this.setMode('is', 'selected');
     this.setMode('not', 'editing');
     this.closeAutocomplete();
-    dc.app.searchBox.addFocus();
-    $(document).unbind('keydown.facet');
-    $(document).unbind('click.facet');
-    _.defer(_.bind(function() {
-      $(document).unbind('keydown.facet').bind('keydown.facet', this.keydown);
-      $(document).unbind('click.facet').one('click.facet', this.deselectFacet);
-    }, this));
-    dc.app.searchBox.disableFacets(this);
+    if (!selectAll) {
+      if (!currentView) dc.app.searchBox.addFocus();
+      $(document).unbind('keydown.facet');
+      $(document).unbind('click.facet');
+      _.defer(_.bind(function() {
+        $(document).unbind('keydown.facet').bind('keydown.facet', this.keydown);
+        $(document).unbind('click.facet').one('click.facet', this.deselectFacet);
+      }, this));
+      if (!currentView) dc.app.searchBox.disableFacets(this);
+    }
   },
   
   deselectFacet : function(e) {
@@ -254,8 +257,15 @@ dc.ui.SearchFacet = Backbone.View.extend({
         this.selectFacet();
         return false;
       }
+    } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
+      e.preventDefault();
+      dc.app.searchBox.selectAllFacets(this);
+      console.log(['command a', e]);
     }
-    
+    this.resize(e);
+  },
+  
+  resize : function(e) {
     this.box.trigger('resize.autogrow', e);
   }
   

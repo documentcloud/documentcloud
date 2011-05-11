@@ -75,13 +75,14 @@ dc.ui.SearchBox = Backbone.View.extend({
 
   setupAutocomplete : function() {
     this.box.autocomplete({
-      source    : this.PREFIXES,
       minLength : 1,
       delay     : 50,
       autoFocus : true,
       source    : _.bind(function(req, resp) {
-        // Autocomplete phrases only from the beginning.
-        var re = $.ui.autocomplete.escapeRegex(req.term);
+        // Autocomplete only last word.
+        var lastWord = req.term.match(/\w+$/);
+        var re = $.ui.autocomplete.escapeRegex(lastWord && lastWord[0] || ' ');
+        // Only match from the beginning of the word.
         var matcher = new RegExp('^' + re, 'i');
         resp(_.sortBy($.grep(this.PREFIXES, function(item) {
           return matcher.test(item.label);
@@ -380,6 +381,23 @@ dc.ui.SearchBox = Backbone.View.extend({
         this.facetViews[next].setCursorAtEnd(direction || startAtEnd);
       }
     }
+    this.resizeFacets();
+  },
+  
+  selectAllFacets : function(currentView) {
+    _.each(this.facetViews, function(facetView, i) {
+      if (currentView == facetView || currentView == i) {
+        facetView.selectFacet(false, true);
+      } else {
+        facetView.selectFacet(true);
+      }
+    });
+  },
+  
+  disableAllFacets : function(currentView) {
+    _.each(this.facetViews, function(facetView, i) {
+      facetView.disableEdit();
+    });
   },
   
   focusCategory : function(category) {
@@ -387,6 +405,12 @@ dc.ui.SearchBox = Backbone.View.extend({
       if (facetView.options.category == category) {
         facetView.enableEdit();
       }
+    });
+  },
+  
+  resizeFacets : function() {
+    _.each(this.facetViews, function(facetView, i) {
+      facetView.resize();
     });
   },
 
@@ -398,6 +422,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     console.log(['focusSearch', e]);
     if (!e || $(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner')) {
       this.box.focus();
+      this.disableAllFacets();
     }
   },
   
