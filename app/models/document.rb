@@ -330,7 +330,6 @@ class Document < ActiveRecord::Base
     org = account.organization
     update_attributes(:account_id => account.id, :organization_id => org.id)
     sql = ["account_id = #{account.id}, organization_id = #{org.id}", "document_id = #{id}"]
-    FullText.update_all(*sql)
     Page.update_all(*sql)
     Entity.update_all(*sql)
     EntityDate.update_all(*sql)

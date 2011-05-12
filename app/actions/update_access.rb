@@ -10,7 +10,6 @@ class UpdateAccess < CloudCrowd::Action
       access   = options['access']
       document = Document.find(input)
       sql      = ["access = #{access}", "document_id = #{document.id}"]
-      FullText.update_all(*sql)
       Page.update_all(*sql)
       Entity.update_all(*sql)
       EntityDate.update_all(*sql)
