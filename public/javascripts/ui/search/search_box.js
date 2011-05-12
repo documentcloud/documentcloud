@@ -84,9 +84,10 @@ dc.ui.SearchBox = Backbone.View.extend({
         var re = $.ui.autocomplete.escapeRegex(lastWord && lastWord[0] || ' ');
         // Only match from the beginning of the word.
         var matcher = new RegExp('^' + re, 'i');
-        resp(_.sortBy($.grep(this.PREFIXES, function(item) {
+        var matches = $.grep(this.PREFIXES, function(item) {
           return matcher.test(item.label);
-        }), function(match) {
+        });
+        resp(_.sortBy(matches, function(match) {
           return match.category + '-' + match.label;
         }));
       }, this),

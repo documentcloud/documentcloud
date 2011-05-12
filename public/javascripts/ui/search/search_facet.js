@@ -37,10 +37,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   setupAutocomplete : function() {
-    var data = this.autocompleteValues();
-
     this.box.autocomplete({
-      source    : data,
+      source    : _.bind(this.autocompleteValues, this),
       minLength : 0,
       delay     : 0,
       autoFocus : true,
@@ -161,21 +159,34 @@ dc.ui.SearchFacet = Backbone.View.extend({
     if (autocomplete) autocomplete.close();
   },
 
-  autocompleteValues : function() {
+  autocompleteValues : function(req, resp) {
     var category = this.model.get('category');
-    var values = [];
+    var value    = this.model.get('value');
+    var matches  = [];
+    var searchTerm = req.term;
     
     if (category == 'account') {
-      values = Accounts.map(function(a) { return {value: a.get('slug'), label: a.fullName()}; });
+      matches = Accounts.map(function(a) { return {value: a.get('slug'), label: a.fullName()}; });
     } else if (category == 'project') {
-      values = Projects.pluck('title');
+      matches = Projects.pluck('title');
     } else if (category == 'filter') {
-      values = ['published', 'annotated'];
+      matches = ['published', 'annotated'];
     } else if (category == 'access') {
-      values = ['public', 'private', 'organization'];
+      matches = ['public', 'private', 'organization'];
     }
     
-    return values;
+    if (searchTerm && value != searchTerm) {
+      var re = $.ui.autocomplete.escapeRegex(searchTerm || '');
+      var matcher = new RegExp('\\b' + re, 'i');
+      matches = $.grep(matches, function(item) {
+        return matcher.test(item);
+      });
+    }
+
+    resp(_.sortBy(matches, function(match) {
+      if (match == value) return '';
+      else return match;
+    }));
   },
   
   showDelete : function() {
