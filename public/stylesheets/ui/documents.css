@@ -464,25 +464,27 @@
   .datalog .data_row {
     color: #aaa;
     font-size: 13px;
+    line-height: 22px;
     margin: 15px 0 0;
     text-align: left;
+    overflow: hidden;
   }
     .datalog .data_row:first-child {
       margin-top: 0;
     }
     .datalog .data_row .icon {
-      display: inline-block;
+      display: block;
       cursor: pointer;
+      margin-top: 6px;
     }
       .datalog .icon.minus {
-        margin-left: 5px;
+        margin-left: 9px; margin-right: 4px;
       } 
         .datalog .no_minus .icon.minus {
           visibility: hidden;
         }
     .datalog .text_input.small {
       margin-right: 5px;
-      display: inline-block;
     }
       .datalog .text_input input {
         width: 200px;

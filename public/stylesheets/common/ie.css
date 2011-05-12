@@ -101,3 +101,6 @@ ul.bullet, #help ul {
 .api_search_form {
   display: none;
 }
+.datalog .icon.minus {
+  margin-left: 3px;
+}

@@ -1,10 +1,12 @@
 <div class="data_row <%= minus ? '' : 'no_minus' %>">
-  <div class="text_input dark small first">
+  <div class="text_input dark small first float_left">
     <input type="text" class="key" value="<%= dc.inflector.escapeHTML(key) %>" />
-  </div>:&nbsp;
-  <div class="text_input dark small">
+  </div>
+  <div class="float_left">:&nbsp;&nbsp;</div>
+  <div class="text_input dark small float_left">
     <input type="text" class="value" value="<%= dc.inflector.escapeHTML(value) %>" />
   </div>
-  <div class="icon minus not_draggable"></div>
-  <div class="icon plus not_draggable"></div>
+  <div class="icon minus not_draggable float_left"></div>
+  <div class="icon plus not_draggable float_left"></div>
+  <br class="clear" />
 </div>
