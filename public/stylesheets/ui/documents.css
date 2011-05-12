@@ -150,12 +150,8 @@
       margin: 0 2px 5px 0;
     }
       .document .data_item:hover, .document .data_item.active {
-        background: #e0f4ff;
-        color: #333;
-        border-top-color: #88ccff;
-        border-color: #66aaee;
-        border-bottom-color: #5599dd;
-        text-shadow: none;
+        color: #000;
+        border-color: #0099ff;
       }
     .document .datalines .document_tool {
       position: relative;
