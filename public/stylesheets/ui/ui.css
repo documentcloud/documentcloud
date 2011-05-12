@@ -49,7 +49,7 @@ input.hidden_submit {
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f0f0f0));
   background: -moz-linear-gradient(top, #fff, #f0f0f0);
 }
-.gradient_blue, .document .data_item:hover, .document .data_item.active {
+.gradient_blue {
   background: #edf4fc;
   background: -webkit-gradient(linear, left top, left bottom, from(#edf4fc), to(#b1d2f8));
   background: -moz-linear-gradient(top, #edf4fc, #b1d2f8);
