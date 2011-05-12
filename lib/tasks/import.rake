@@ -63,7 +63,6 @@ def import_document(client, record)
   end
   puts "#{ref} -- #{pages.length} pages..."
   doc.page_count = pages.length
-  doc.full_text  = FullText.create!(:text => pages.map{|p| p[:text] }.join(''), :document => doc, :access => access)
 
   if doc.page_count <= 0
     puts "#{ref} -- zero pages, aborting..."
@@ -80,7 +79,7 @@ def import_document(client, record)
   Sunspot.index pages
 
   puts "#{ref} -- extracting entities from Calais, uploading text to S3..."
-  DC::Import::EntityExtractor.new.extract(doc)
+  DC::Import::EntityExtractor.new.extract(doc, doc.combined_page_text)
   doc.upload_text_assets(pages)
   sql = ["access = #{access}", "document_id = #{doc.id}"]
   Entity.update_all(*sql)

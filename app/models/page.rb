@@ -21,8 +21,6 @@ class Page < ActiveRecord::Base
 
   before_update :track_text_changes
 
-  after_update :refresh_full_text_index
-
   searchable do
     text    :text
     integer :document_id
@@ -109,13 +107,6 @@ class Page < ActiveRecord::Base
     self.text = strip_tags(text)
     DC::Store::AssetStore.new.save_page_text(self.document, self.page_number, self.text, access)
     @text_changed = true
-  end
-
-  # When page text changes, we need to update the document's full text index.
-  def refresh_full_text_index
-    return true unless @text_changed
-    document.full_text.refresh
-    @text_changed = false
   end
 
 end

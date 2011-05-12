@@ -32,7 +32,6 @@ class Document < ActiveRecord::Base
   belongs_to :account
   belongs_to :organization
 
-  has_one  :full_text,            :dependent   => :destroy
   has_one  :docdata,              :dependent   => :destroy
   has_many :pages,                :dependent   => :destroy
   has_many :entities,             :dependent   => :destroy
@@ -57,7 +56,6 @@ class Document < ActiveRecord::Base
   text_attr :source, :related_article, :remote_url
   html_attr :description
 
-  delegate :text, :to => :full_text,    :allow_nil => true
   delegate :slug, :to => :organization, :allow_nil => true, :prefix => true
   delegate :slug, :to => :account,      :allow_nil => true, :prefix => true
 
@@ -115,7 +113,7 @@ class Document < ActiveRecord::Base
     text :source
     text :description
     text :full_text, {:more_like_this => true} do
-      self.text
+      self.combined_page_text
     end
 
     # Attributes...
@@ -436,8 +434,10 @@ class Document < ActiveRecord::Base
     File.join(DC.server_root, full_text_path)
   end
 
-  def full_text_url
-    public? ? public_full_text_url : private_full_text_url
+  def full_text_url(direct=false)
+    return public_full_text_url if public? || Rails.env.development?
+    return private_full_text_url unless direct
+    DC::Store::AssetStore.new.authorized_url(full_text_path)
   end
 
   def document_viewer_url(opts={})
@@ -535,7 +535,6 @@ class Document < ActiveRecord::Base
   end
 
   def reindex_all!(access=nil)
-    full_text.refresh
     Page.refresh_page_map(self)
     EntityDate.refresh(self)
     pages = self.reload.pages

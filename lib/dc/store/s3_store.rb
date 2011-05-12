@@ -64,7 +64,7 @@ module DC
       end
 
       def save_full_text(document, access=DEFAULT_ACCESS)
-        save_file(document.text, document.full_text_path, access, :string => true)
+        save_file(document.combined_page_text, document.full_text_path, access, :string => true)
       end
 
       def save_rdf(document, rdf, access=DEFAULT_ACCESS)

@@ -12,8 +12,6 @@ class Entity < ActiveRecord::Base
 
   belongs_to :document
 
-  has_one :full_text, :through => :document
-
   validates_inclusion_of :kind, :in => DC::VALID_KINDS
 
   text_attr :value

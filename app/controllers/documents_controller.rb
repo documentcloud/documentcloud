@@ -164,7 +164,7 @@ class DocumentsController < ApplicationController
 
   def send_pdf
     return not_found unless current_document(true)
-    redirect_to(current_document.pdf_url(:direct))
+    redirect_to current_document.pdf_url(:direct)
   end
 
   def send_page_image
@@ -176,7 +176,7 @@ class DocumentsController < ApplicationController
 
   def send_full_text
     return not_found unless current_document(true)
-    send_data(current_document.text, :disposition => 'inline', :type => :txt)
+    redirect_to document.full_text_url(:direct)
   end
 
   def send_page_text

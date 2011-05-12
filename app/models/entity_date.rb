@@ -5,14 +5,13 @@ class EntityDate < ActiveRecord::Base
 
   belongs_to :document
 
-  has_one :full_text, :through => :document
-
   # Destroy and recreate all of a document's dates, from the text. Save the
   # document after running this method in order to save the dates.
   def self.refresh(document)
-    return false unless document.text
+    text = document.combined_page_text
+    return false unless text
     document.entity_dates.destroy_all
-    DC::Import::DateExtractor.new.extract_dates(document.text).each do |hash|
+    DC::Import::DateExtractor.new.extract_dates(text).each do |hash|
       model = self.new(:document => document, :date => hash[:date], :occurrences => Occurrence.to_csv(hash[:occurrences]))
       document.entity_dates << model
     end

@@ -51,7 +51,7 @@ module DC
 
       def save_full_text(document, access=nil)
         ensure_directory(document.path)
-        File.open(local(document.full_text_path), 'w+') {|f| f.write(document.text) }
+        File.open(local(document.full_text_path), 'w+') {|f| f.write(document.combined_page_text) }
       end
 
       def save_rdf(document, rdf, access=nil)

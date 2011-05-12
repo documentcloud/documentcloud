@@ -49,7 +49,6 @@ class DocumentImport < CloudCrowd::Action
   def process_text
     @pages = []
     # Destroy existing text and pages to make way for the new.
-    document.full_text.destroy if document.full_text
     document.pages.destroy_all if document.pages.count > 0
     begin
       opts = {:pages => 'all', :output => 'text'}
@@ -68,14 +67,14 @@ class DocumentImport < CloudCrowd::Action
       queue_page_text(text, page_number)
     end
     save_page_text!
+    text = @pages.map{|p| p[:text] }.join('')
     document.page_count = @pages.length
-    document.full_text  = FullText.create!(:text => @pages.map{|p| p[:text] }.join(''), :document => document)
     Page.refresh_page_map(document)
     EntityDate.refresh(document)
     document.save!
     pages = document.reload.pages
     Sunspot.index pages
-    DC::Import::EntityExtractor.new.extract(document) unless options['secure']
+    DC::Import::EntityExtractor.new.extract(document, text) unless options['secure']
     document.upload_text_assets(pages)
     document.id
   end

@@ -4,7 +4,7 @@ class ReprocessEntities < CloudCrowd::Action
 
   def process
     puts "Reprocessing Entities: #{document.title}"
-    DC::Import::EntityExtractor.new.extract document
+    DC::Import::EntityExtractor.new.extract document, document.combined_page_text
     true
   end
 
