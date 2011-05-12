@@ -8,15 +8,15 @@ module DC
       attr_reader :kind, :value
 
       def initialize(kind, value)
-        @kind, @value = kind.downcase, value.strip
+        @kind, @value = kind.strip, value.strip
       end
 
       def attribute?
-        DC::DOCUMENT_ATTRIBUTES.include? @kind.to_sym
+        DC::DOCUMENT_ATTRIBUTES.include? @kind.downcase.to_sym
       end
 
       def entity?
-        DC::ENTITY_KINDS.include? @kind.to_sym
+        DC::ENTITY_KINDS.include? @kind.downcase.to_sym
       end
 
       def to_s

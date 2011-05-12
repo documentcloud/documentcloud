@@ -68,8 +68,7 @@ module DC
       # Convert a field kind string into its canonical form, by searching
       # through all the valid kinds for a match.
       def match_kind(kind)
-        matcher = Regexp.new(kind.downcase)
-        DC::VALID_KINDS.detect {|canonical| canonical.match(matcher) } || kind
+        DC::VALID_KINDS.detect {|s| s.match(Regexp.new(kind.downcase)) } || kind
       end
 
     end
