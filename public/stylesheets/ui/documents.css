@@ -147,7 +147,7 @@
       border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px;
       padding: 1px 5px;
       border: 1px solid #bbb; border-top-color: #ccc; border-bottom-color: #aaa;
-      margin-right: 2px;
+      margin: 0 2px 5px 0;
     }
       .document .data_item:hover, .document .data_item.active {
         color: #333;
