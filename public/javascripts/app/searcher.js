@@ -82,7 +82,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     _.each(projectNames, function(projectName) {
       projects.push(Projects.find(projectName));
     });
-    var query = this.searchBox.queryWithoutCategory('project');
+    var query = SearchQuery.withoutCategory('project');
     query = _.map(projects, function(p) { return 'projectid: ' + p.slug(); }).join(' ') + ' ' + query;
 
     return query;
@@ -144,12 +144,11 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   },
 
   // Toggle a query fragment in the search.
-  toggleSearch : function(fragment) {
-    var val = this.box.value();
-    if (val.indexOf(fragment) >= 0) {
-      this.removeFromSearch(fragment);
+  toggleSearch : function(category, value) {
+    if (SearchQuery.has(category)) {
+      this.removeFromSearch(category, value);
     } else {
-      this.addToSearch(fragment);
+      this.addToSearch(category, value);
     }
   },
 

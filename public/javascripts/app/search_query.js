@@ -57,8 +57,16 @@ dc.model.SearchQuery = Backbone.Collection.extend({
     }
     
     return 'search';
-  }
+  },
   
+  withoutCategory : function(category) {
+    var query = this.map(function(facet) {
+      if (facet.get('category') != category) return facet.serialize();
+    }).join(' ');
+    
+    return query;
+  }
+    
 });
 
 window.SearchQuery = new dc.model.SearchQuery();

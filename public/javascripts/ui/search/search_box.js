@@ -15,37 +15,8 @@ dc.ui.SearchBox = Backbone.View.extend({
 
   id  : 'search',
   
-  PREFIXES : [
-    { label: 'project',       category: '' },
-    { label: 'text',          category: '' },
-    { label: 'title',         category: '' },
-    { label: 'description',   category: '' },
-    { label: 'source',        category: '' },
-    { label: 'account',       category: '' },
-    { label: 'document',      category: '' },
-    { label: 'filter',        category: '' },
-    { label: 'group',         category: '' },
-    { label: 'access',        category: '' },
-    { label: 'related',       category: '' },
-    { label: 'projectid',     category: '' },
-    { label: 'city',          category: 'entities' },
-    { label: 'country',       category: 'entities' },
-    { label: 'term',          category: 'entities' },
-    { label: 'state',         category: 'entities' },
-    { label: 'person',        category: 'entities' },
-    { label: 'place',         category: 'entities' },
-    { label: 'organization',  category: 'entities' },
-    { label: 'email',         category: 'entities' },
-    { label: 'phone',         category: 'entities' }
-  ],
-
   events : {
     'click .search_glyph'       : 'showFacetCategoryMenu',
-    'keypress #search_box'      : 'maybeSearch',
-    'keydown #search_box'       : 'keydown',
-    // 'search #search_box'        : 'searchEvent',
-    'focus #search_box'         : 'addFocus',
-    'blur #search_box'          : 'removeFocus',
     'click .cancel_search_box'  : 'cancelSearch',
     'click #search_box_wrapper' : 'focusSearch',
     'click #search_button'      : 'searchEvent'
@@ -60,105 +31,10 @@ dc.ui.SearchBox = Backbone.View.extend({
 
   render : function() {
     $(this.el).append(JST['workspace/search_box']({}));
-    this.box      = this.$('#search_box');
     this.titleBox = this.$('#title_box_inner');
     $(document.body).setMode('no', 'search');
-    
-    this.setupAutocomplete();
-    
-    // This is defered so it can be attached to the DOM to get the correct font-size.
-    this.box.autoGrowInput();
-    this.box.bind('updated.autogrow', _.bind(this.moveAutocomplete, this));
         
     return this;
-  },
-
-  setupAutocomplete : function() {
-    this.box.autocomplete({
-      minLength : 1,
-      delay     : 50,
-      autoFocus : true,
-      source    : _.bind(function(req, resp) {
-        // Autocomplete only last word.
-        var lastWord = req.term.match(/\w+$/);
-        var re = $.ui.autocomplete.escapeRegex(lastWord && lastWord[0] || ' ');
-        // Only match from the beginning of the word.
-        var matcher = new RegExp('^' + re, 'i');
-        var matches = $.grep(this.PREFIXES, function(item) {
-          return matcher.test(item.label);
-        });
-        resp(_.sortBy(matches, function(match) {
-          return match.category + '-' + match.label;
-        }));
-      }, this),
-      select    : _.bind(function(e, ui) {
-        console.log(['select autocomplete', e, ui]);
-        e.preventDefault();
-        e.stopPropagation();
-        this.addFacet(ui.item.value);
-        return false;
-      }, this)
-    });
-    
-    this.box.data('autocomplete')._renderMenu = function(ul, items) {
-      // Renders the results under the categories they belong to.
-      var category = '';
-      _.each(items, _.bind(function(item, i) {
-        if (item.category && item.category != category) {
-          ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
-          category = item.category;
-        }
-        this._renderItem(ul, item);
-      }, this));
-    };
-    
-    this.box.autocomplete('widget').addClass('interface');
-  },
-  
-  moveAutocomplete : function() {
-    var autocomplete = this.box.data('autocomplete');
-    if (autocomplete) {
-      autocomplete.menu.element.position({
-        my: "left top",
-        at: "left bottom",
-        of: this.box.data('autocomplete').element,
-        collision: "none"
-      });
-    }
-  },
-  
-  showFacetCategoryMenu : function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log(['showFacetCategoryMenu', e]);
-    if (this.facetCategoryMenu && this.facetCategoryMenu.modes.open == 'is') {
-      return this.facetCategoryMenu.close();
-    }
-    
-    var items = [
-      {title: 'Account', onClick: _.bind(this.addFacet, this, 'account', '')},
-      {title: 'Project', onClick: _.bind(this.addFacet, this, 'project', '')},
-      {title: 'Filter', onClick: _.bind(this.addFacet, this, 'filter', '')},
-      {title: 'Access', onClick: _.bind(this.addFacet, this, 'access', '')}
-    ];
-    
-    var menu = this.facetCategoryMenu || (this.facetCategoryMenu = new dc.ui.Menu({
-      items       : items,
-      standalone  : true
-    }));
-    
-    this.$('.search_glyph').after(menu.render().open().content);
-    return false;
-  },
-  
-  queryWithoutCategory : function(category) {
-    var query = SearchQuery.map(function(facet) {
-      if (facet.get('category') != category) return facet.serialize();
-    }).join(' ');
-
-    query += ' ' + this.box.val();
-    
-    return query;
   },
   
   removeFacet : function(view) {
@@ -207,8 +83,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     var query = this.value();
     console.log(['real searchEvent', e, query]);
     if (!dc.app.searcher.flags.outstandingSearch) dc.app.searcher.search(query);
-    this.box.focus();
-    this.closeAutocomplete();
+    this.focusSearch();
   },
   
   // Shortcut to the searchbox's value.
@@ -218,49 +93,56 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   getQuery : function() {
-    var query = SearchQuery.map(function(facet) {
-      return facet.serialize();
-    }).join(' ');
-    console.log(['getQuery', query, this.facetViews]);
-    var boxVal = this.box.val();
-    if (boxVal) query += ' ' + boxVal;
+    var query = [];
+    SearchQuery.each(_.bind(function(facet, i) {
+      query.push(this.inputViews[i].value());
+      query.push(facet.serialize());
+    }, this));
+    query.push(this.inputViews[this.inputViews.length-1].value());
+    console.log(['getQuery', query, _.compact(query)]);
     
-    return query;
+    return _.compact(query).join(' ');
   },
-  
+
   setQuery : function(query) {
-    // if (this.currentQuery != query) {
-      this.currentQuery = query;
-      dc.app.SearchParser.parse(query);
-      this.box.val('');
-    // }
-  },
-  
-  closeAutocomplete : function() {
-    var autocomplete = this.box.data('autocomplete');
-    if (autocomplete) autocomplete.close();
+    this.currentQuery = query;
+    dc.app.SearchParser.parse(query);
+    this.clearInputs();
   },
   
   renderQuery : function() {
      this.setQuery(this.value());
   },
+  
+  viewPosition : function(view) {
+    var position = 0;
+    var views = view.type == 'facet' ? this.facetViews : this.inputViews;
+    _.each(views, function(inputView, i) {
+      if (inputView == view) position = i;
+    });
+    return position;
+  },
     
-  addFacet : function(category, initialQuery) {
-    console.log(['addFacet', category, initialQuery]);
-    this.box.val('');
+  addFacet : function(category, initialQuery, view) {
+    var position = this.viewPosition(view);
+    console.log(['addFacet', category, initialQuery, position]);
     var model = new dc.model.SearchFacet({
       category : category,
       value    : initialQuery || ''
     });
-    SearchQuery.add(model);
-    var view = this.renderFacet(model);
+    SearchQuery.add(model, {at: position});
+    var view = this.renderFacet(model, position);
     view.enableEdit();
   },
 
   // Renders each facet as a searchFacet view.
   renderFacets : function() {
-    this.$('.search_facets').empty();
     this.facetViews = [];
+    this.inputViews = [];
+    
+    this.$('.search_inner').empty();
+    this.renderSearchInput();
+    
     SearchQuery.each(_.bind(function(facet, i) {
       if (facet.get('category') == 'entities') {
         console.log(['entities', facet]);
@@ -277,12 +159,26 @@ dc.ui.SearchBox = Backbone.View.extend({
       order : order
     });
     
-    this.facetViews.push(view);
-    this.$('.search_facets').append(view.render().el);
+    this.facetViews.splice(order, 0, view);
+    this.$('.search_inner').children().eq(order*2).after(view.render().el);
+    
     view.calculateSize();
     _.defer(_.bind(view.calculateSize, view));
     
+    this.renderSearchInput();
     return view;
+  },
+  
+  renderSearchInput : function() {
+    var input = new dc.ui.SearchInput();
+    this.$('.search_inner').append(input.render().el);
+    this.inputViews.push(input);
+  },
+  
+  clearInputs : function() {
+    _.each(this.inputViews, function(input) {
+      input.clear();
+    });
   },
     
   // Hide the spinner and remove the search lock when finished searching.
@@ -372,14 +268,10 @@ dc.ui.SearchBox = Backbone.View.extend({
     });
   },
 
-  blur : function() {
-    this.box.blur();
-  },
-
   focusSearch : function(e) {
     console.log(['focusSearch', e]);
     if (!e || $(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner')) {
-      this.box.focus();
+      this.inputViews[this.inputViews.length-1].focus();
       this.disableAllFacets();
     }
   },
@@ -392,59 +284,29 @@ dc.ui.SearchBox = Backbone.View.extend({
   removeFocus : function() {
     this.$('.search').removeClass('focus');
   },
-
-  // Callback fired on key press in the search box. We search when they hit return.
-  maybeSearch : function(e) {
-    // console.log(['box key', e.keyCode, dc.app.hotkeys.key(e)]);
-    if (!dc.app.searcher.flags.outstandingSearch && dc.app.hotkeys.key(e) == 'enter') {
-      return this.searchEvent(e);
-    }
-
-    if (dc.app.hotkeys.colon(e)) {
-      this.box.trigger('resize.autogrow', e);
-      var query = this.box.val();
-      if (_.contains(_.pluck(this.PREFIXES, 'label'), query)) {
-        e.preventDefault();
-        this.addFacet(query);
-        return false;
-      }
-    }
-  },
-  
-  keydown : function(e) {
-    dc.app.hotkeys.down(e);
-    // console.log(['box keydown', e.keyCode, e.which, this.box.getCursorPosition(), this.allSelected]);
-    this.box.trigger('resize.autogrow', e);
     
-    if (!dc.app.hotkeys.backspace && this.allSelected) {
-      this.allSelected = false;
-      this.disableFacets();
+  showFacetCategoryMenu : function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(['showFacetCategoryMenu', e]);
+    if (this.facetCategoryMenu && this.facetCategoryMenu.modes.open == 'is') {
+      return this.facetCategoryMenu.close();
     }
     
-    if (dc.app.hotkeys.key(e) == 'left') {
-      if (this.box.getCursorPosition() == 0) {
-        e.preventDefault();
-        this.focusNextFacet(this.facetViews.length-1, 0, -1);
-      }
-    } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
-      e.preventDefault();
-      this.focusNextFacet(this.facetViews.length-1, 0);
-    } else if (dc.app.hotkeys.tab) {
-      e.preventDefault();
-      this.focusNextFacet(null, 0);
-    } else if (dc.app.hotkeys.backspace) {
-      if (this.allSelected) {
-        e.preventDefault();
-        this.cancelSearch();
-        this.allSelected = false;
-      } else if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
-        e.preventDefault();
-        this.focusNextFacet(this.facetViews.length-1, 0, -1, true);
-      }
-    } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
-      e.preventDefault();
-      this.selectAllFacets();
-    }
+    var items = [
+      {title: 'Account', onClick: _.bind(this.addFacet, this, 'account', '')},
+      {title: 'Project', onClick: _.bind(this.addFacet, this, 'project', '')},
+      {title: 'Filter', onClick: _.bind(this.addFacet, this, 'filter', '')},
+      {title: 'Access', onClick: _.bind(this.addFacet, this, 'access', '')}
+    ];
+    
+    var menu = this.facetCategoryMenu || (this.facetCategoryMenu = new dc.ui.Menu({
+      items       : items,
+      standalone  : true
+    }));
+    
+    this.$('.search_glyph').after(menu.render().open().content);
+    return false;
   }
-
+  
 });

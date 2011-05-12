@@ -263,7 +263,7 @@ div.text_input {
           color: #999;
           font-size: 13px;
           line-height: 16px;
-          padding: 6px 8px 7px 4px;
+          padding: 6px 2px 7px 4px;
           height: 16px;
           width: auto;
         }
@@ -297,6 +297,12 @@ div.text_input {
         div.text_input.search .search_facet.search_facet_maybe_delete .category,
         div.text_input.search .search_facet.search_facet_maybe_delete input {
           color: darkred;
+        }
+      div.text_input.search .search_input {
+        float: left;
+      }
+        div.text_input.search .search_input input {
+          padding: 6px 2px 7px 2px;
         }
       div.text_input.search input {
         width: 100px;

@@ -1,5 +1,7 @@
 dc.ui.SearchFacet = Backbone.View.extend({
   
+  type : 'facet',
+  
   className : 'search_facet',
   
   events : {
