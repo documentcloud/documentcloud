@@ -18,12 +18,11 @@ module DC
         @fields, @accounts, @groups, @projects, @project_ids, @doc_ids, @attributes, @filters, @data =
           [], [], [], [], [], [], [], [], []
 
-        quoted_fields = query_string.scan(Matchers::QUOTED_FIELD).map {|m| m[0] }
-        bare_fields   = query_string.gsub(Matchers::QUOTED_FIELD, '').scan(Matchers::BARE_FIELD)
-        search_text   = query_string.gsub(Matchers::ALL_FIELDS, '').squeeze(' ').strip
+        fields        = query_string.scan(Matchers::FIELD).map {|m| [m[0], m[3]] }
+        search_text   = query_string.gsub(Matchers::FIELD, '').squeeze(' ').strip
 
         process_search_text(search_text)
-        process_fields_and_projects(bare_fields, quoted_fields)
+        process_fields_and_projects(fields)
 
         Query.new(:text => @text, :fields => @fields, :projects => @projects,
           :accounts => @accounts, :groups => @groups, :project_ids => @project_ids,
@@ -39,17 +38,11 @@ module DC
 
       # Extract the portions of the query that are fields, attributes,
       # and projects.
-      def process_fields_and_projects(bare, quoted)
-        bare.map! {|f| f.split(/:\s*/) }
-        quoted.map! do |f|
-          type  = f.match(/(.+?):\s*/)[1]
-          value = f.sub(/(.+?):\s*/, '').gsub(/(^['"]|['"]$)/, '')
-          [type, value]
-        end
-        (bare + quoted).each do |pair|
-          type, value = *pair
-          type = type.downcase
-          case type
+      def process_fields_and_projects(fields)
+        fields.each do |pair|
+          type  = pair.first.gsub(/(^['"]|['"]$)/, '')
+          value = pair.last.gsub(/(^['"]|['"]$)/, '')
+          case type.downcase
           when 'account'    then @accounts << value.to_i
           when 'group'      then @groups << value.downcase
           when 'filter'     then @filters << value.downcase.to_sym

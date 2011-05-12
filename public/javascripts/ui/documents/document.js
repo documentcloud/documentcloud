@@ -259,9 +259,9 @@ dc.ui.Document = Backbone.View.extend({
 
   searchData : function(e) {
     var el    = $(e.currentTarget);
-    var key   = el.find('.data_key').text();
+    var key   = el.find('.data_key').text().replace(/:$/, '');
     var value = el.find('.data_value').text();
-    dc.app.searcher.toggleSearch(key + ' ' + dc.app.searcher.quote(value));
+    dc.app.searcher.toggleSearch(dc.app.searcher.quote(key) + ': ' + dc.app.searcher.quote(value));
   },
 
   // Context menu item opens access level dialog for a single document.

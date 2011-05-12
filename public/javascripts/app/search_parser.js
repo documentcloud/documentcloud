@@ -10,7 +10,7 @@ dc.app.SearchParser = {
 
   ALL_ENTITIES      : /(city|country|term|state|person|place|organization|email|phone):\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
 
-  ALL_FIELDS        : /\w+:\s?(('.+?'|".+?")|([^'"]{2}\S*))/g,
+  ALL_FIELDS        : /('.+?'|".+?"|[^'"\s]{2}\S*):\s*('.+?'|".+?"|[^'"\s]{2}\S*)/g,
 
   FIRST_FILTER      : /filter:\s*(\w+)/i,
 
