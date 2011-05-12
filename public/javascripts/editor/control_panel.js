@@ -16,6 +16,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .edit_access':           'editAccess',
     'click .edit_related_article':  'editRelatedArticle',
     'click .edit_document_url':     'editPublishedUrl',
+    'click .edit_data':             'editData',
     'click .edit_remove_pages':     'editRemovePages',
     'click .edit_reorder_pages':    'editReorderPages',
     'click .edit_page_text':        'editPageText',
@@ -26,7 +27,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .embed_note':            'embedNote',
     'click .access_info':           'editAccess'
   },
-  
+
   initialize : function() {
     var docModel = this._getDocumentModel();
     _.bindAll(this, 'closeDocumentOnAccessChange', 'onDocumentChange', 'render');
@@ -67,7 +68,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   openSectionEditor : function() {
     dc.app.editor.sectionEditor.open();
   },
-  
+
   prompt : function(title, initialValue, callback, options) {
     dc.ui.Dialog.prompt(title, initialValue, function(value, dialog) {
       if (initialValue != value) return callback(value, dialog);
@@ -135,6 +136,10 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     Documents.editAccess([this.docModel], this.closeDocumentOnAccessChange);
   },
 
+  editData : function() {
+    new dc.ui.DocumentDataDialog([this.docModel]);
+  },
+
   closeDocumentOnAccessChange : function() {
     if (this.docModel.hasChanged('access')) {
       this.setOnParent(this.docModel, {access: dc.access.PENDING});
@@ -142,7 +147,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       dc.ui.Dialog.alert(closeMessage, {onClose: function(){ window.close(); }});
     }
   },
-  
+
   onDocumentChange : function(doc) {
     this.viewer.api.setTitle(doc.get('title'));
     this.viewer.api.setSource(doc.get('source'));
@@ -155,13 +160,14 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       related_article : doc.get('related_article'),
       remote_url      : doc.get('remote_url'),
       description     : doc.get('description'),
-      access          : doc.get('access')
+      access          : doc.get('access'),
+      data            : _.clone(doc.get('data'))
     });
     if (doc.hasChanged('access')) {
       this.closeDocumentOnAccessChange();
     }
   },
-  
+
   reprocessText : function() {
     var self = this;
     var closeMessage = "The text is being processed. Please close this document.";
@@ -249,13 +255,13 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     var doc = this._getDocumentModel();
     (new dc.ui.DocumentEmbedDialog(doc)).render();
   },
-  
+
   embedNote : function() {
     var doc = this._getDocumentModel();
     Documents.refresh([doc]);
     dc.app.noteEmbedDialog = new dc.ui.NoteEmbedDialog(doc);
   },
-  
+
   saveRedactions : function() {
     var modelId = this.viewer.api.getModelId();
     var redactions = dc.app.editor.annotationEditor.redactions;
@@ -287,13 +293,13 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       // Couldn't access the parent window -- it's ok.
     }
   },
-  
+
   _getDocumentModel : function() {
     if (this.docModel) return this.docModel;
     this.docModel = new dc.model.Document(window.currentDocumentModel);
     this.docModel.viewerEditable   = dc.account.isOwner;
     this.docModel.suppressNotifier = true;
-    
+
     return this.docModel;
   },
 

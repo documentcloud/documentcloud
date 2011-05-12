@@ -23,7 +23,7 @@
   <% unless @local %>
     <%= csrf_meta_tag %>
   <% end %>
-  
+
   <%= render(:partial => 'viewer_editing_head') if @edits_enabled %>
 </head>
 <body style="margin:0; padding:0;">
@@ -32,17 +32,18 @@
   <script type="text/javascript">
     <% if @current_document %>
       window.currentDocument = DV.load(<%= @current_document.canonical({
-        :account => @current_account, 
-        :local => @local, 
+        :account => @current_account,
+        :local => @local,
         :allowed_to_edit => @allowed_to_edit,
         :allowed_to_review => @allowed_to_review,
+        :data => true,
         :access => true
       }).to_json %>, {
         container: '#viewer'
       });
     <% end %>
   </script>
-  
+
   <%= render(:partial => 'viewer_editing') if @edits_enabled %>
 </body>
 </html>
