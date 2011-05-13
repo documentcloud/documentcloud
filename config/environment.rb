@@ -31,7 +31,7 @@ Rails::Initializer.run do |config|
   config.gem 'right_aws',             :version => '>= 2.0.1'        # Our patched version.
   config.gem 'pg',                    :version => '>= 0.11.0'
   config.gem 'jammit',                :version => '>= 0.5.0'
-  config.gem 'docsplit',              :version => '>= 0.5.0'
+  config.gem 'docsplit',              :version => '>= 0.5.2'
   config.gem 'sunspot_rails',         :version => '>= 1.2.1'
   config.gem 'rdiscount',             :version => '>= 1.6.5'
   config.gem 'fastercsv',             :version => '>= 1.5.3'
