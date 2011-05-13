@@ -55,7 +55,7 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
 
   confirm : function() {
     var data = this.serialize();
-    var forbidden = _.detect(_.keys(data), function(key){ return _.include(dc.searchPrefixes, key); });
+    var forbidden = _.detect(_.keys(data), function(key){ return _.include(dc.searchPrefixes, key.toLowerCase()); });
     if (forbidden) {
       this.error('"' + forbidden + '" cannot be used as a key');
     } else {
