@@ -40,28 +40,23 @@ dc.ui.EntityList = Backbone.View.extend({
   mergeFacets : function(facets, limit, docCount) {
     this.renderFacets(_.extend(this._facets, facets), limit, docCount);
   },
-
-  _facetStringFor : function(el) {
-    var row = $(el).closest('.row');
-    var val = row.attr('data-value');
-    if (val.match(/\s/)) val = '"' + val + '"';
-    return row.attr('data-category') + ': ' + val;
-  },
-
-  _facetMatcherFor : function(el) {
+  
+  _facetValueFor : function(el) {
     var row = $(el).closest('.row');
     var val = row.attr('data-value');
     var cat = row.attr('data-category');
-    return new RegExp('\\s*' + cat + ':\\s*[\'"]?' + dc.inflector.escapeRegExp(val) + '[\'"]?', 'ig');
+    return {category: cat, value: val};
   },
 
   _filterFacet : function(e) {
-    dc.app.searcher.addToSearch(this._facetStringFor(e.target));
+    var facet = this._facetValueFor(e.target);
+    dc.app.searcher.addToSearch(facet.category, facet.value);
   },
 
   _removeFacet : function(e) {
     $(e.target).closest('.row').removeClass('active');
-    dc.app.searcher.removeFromSearch(this._facetMatcherFor(e.target));
+    var facet = this._facetValueFor(e.target);
+    dc.app.searcher.removeFromSearch(facet.category);
     return false;
   },
 
@@ -86,8 +81,9 @@ dc.ui.EntityList = Backbone.View.extend({
     }, this);
     var next = fetch;
     if (!active) {
+      var facet = this._facetValueFor(el);
       next = _.bind(function() {
-        dc.app.searcher.addToSearch(this._facetStringFor(el), fetch);
+        dc.app.searcher.addToSearch(facet.category, facet.value, fetch);
       }, this);
     }
     if (dc.app.paginator.mini) {

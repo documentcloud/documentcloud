@@ -146,7 +146,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   // Toggle a query fragment in the search.
   toggleSearch : function(category, value) {
     if (SearchQuery.has(category)) {
-      this.removeFromSearch(category, value);
+      this.removeFromSearch(category);
     } else {
       this.addToSearch(category, value);
     }
@@ -154,22 +154,18 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
   // Add a query fragment to the search and search again, if it's not already
   // present in the current search.
-  addToSearch : function(fragment, callback) {
-    var val = this.searchBox.value();
-    if (val.toLowerCase().match(fragment.toLowerCase())) return;
-    this.box.value(val = (dc.inflector.trim(val) + " " + fragment));
-    this.search(val, null, callback);
+  addToSearch : function(category, value, callback) {
+    if (SearchQuery.has(category, value)) return;
+    SearchQuery.add({category: category, value: value});
+    var query = SearchQuery.value();
+    this.search(query, null, callback);
   },
 
   // Remove a query fragment from the search and search again, only if it's
   // present in the current search.
-  removeFromSearch : function(regex) {
-    var val = this.searchBox.value();
-    if (!val.match(regex)) return;
-    var next = dc.inflector.trim(val.replace(regex, ''));
-    if (next == val) return false;
-    this.searchBox.value(next);
-    this.search(next);
+  removeFromSearch : function(category) {
+    var query = SearchQuery.withoutCategory(category);
+    this.search(query);
     return true;
   },
 

@@ -178,7 +178,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     }
     
     if (searchTerm && value != searchTerm) {
-      var re = $.ui.autocomplete.escapeRegex(searchTerm || '');
+      var re = dc.inflector.escapeRegExp(searchTerm || '');
       var matcher = new RegExp('\\b' + re, 'i');
       matches = $.grep(matches, function(item) {
         return matcher.test(item);
@@ -186,7 +186,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     }
 
     resp(_.sortBy(matches, function(match) {
-      if (match == value) return '';
+      if (match == value || match.value == value) return '';
       else return match;
     }));
   },

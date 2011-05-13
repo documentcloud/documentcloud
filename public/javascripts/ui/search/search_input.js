@@ -55,7 +55,7 @@ dc.ui.SearchInput = Backbone.View.extend({
       source    : _.bind(function(req, resp) {
         // Autocomplete only last word.
         var lastWord = req.term.match(/\w+$/);
-        var re = $.ui.autocomplete.escapeRegex(lastWord && lastWord[0] || ' ');
+        var re = dc.inflector.escapeRegExp(lastWord && lastWord[0] || ' ');
         // Only match from the beginning of the word.
         var matcher = new RegExp('^' + re, 'i');
         var matches = $.grep(this.PREFIXES, function(item) {

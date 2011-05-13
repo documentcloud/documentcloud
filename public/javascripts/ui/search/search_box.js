@@ -98,7 +98,9 @@ dc.ui.SearchBox = Backbone.View.extend({
       query.push(this.inputViews[i].value());
       query.push(facet.serialize());
     }, this));
-    query.push(this.inputViews[this.inputViews.length-1].value());
+    if (this.inputViews && this.inputViews.length) {
+      query.push(this.inputViews[this.inputViews.length-1].value());
+    }
     console.log(['getQuery', query, _.compact(query)]);
     
     return _.compact(query).join(' ');
@@ -123,16 +125,16 @@ dc.ui.SearchBox = Backbone.View.extend({
     return position;
   },
     
-  addFacet : function(category, initialQuery, view) {
-    var position = this.viewPosition(view);
+  addFacet : function(category, initialQuery, inputView) {
+    var position = inputView && {at: this.viewPosition(inputView)};
     console.log(['addFacet', category, initialQuery, position]);
     var model = new dc.model.SearchFacet({
       category : category,
       value    : initialQuery || ''
     });
-    SearchQuery.add(model, {at: position});
-    var view = this.renderFacet(model, position);
-    view.enableEdit();
+    SearchQuery.add(model, position);
+    var facetView = this.renderFacet(model, position);
+    facetView.enableEdit();
   },
 
   // Renders each facet as a searchFacet view.

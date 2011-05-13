@@ -211,7 +211,7 @@ div.text_input {
     }
     div.text_input .search_inner {
       position: relative;
-      margin: 0 25px;
+      margin: 0 25px 0 18px;
       padding: 0 3px;
       overflow: hidden;
     }
@@ -224,7 +224,7 @@ div.text_input {
         position: relative;
       }
         div.text_input.search .search_facet.is_selected {
-          margin: 5px 0 5px -3px;
+          margin: 5px -3px 5px -3px;
           -webkit-border-radius: 16px;
           -moz-border-radius: 16px;
           border-radius: 16px;
@@ -263,13 +263,14 @@ div.text_input {
           color: #999;
           font-size: 13px;
           line-height: 16px;
-          padding: 6px 2px 7px 4px;
+          padding: 6px 0 7px 4px;
           height: 16px;
           width: auto;
         }
         div.text_input.search .search_facet.is_selected input {
           padding-top: 1px;
           padding-bottom: 2px;
+          padding-right: 3px;
         }
         div.text_input.search .search_facet.is_editing input,
         div.text_input.search .search_facet.is_selected input {

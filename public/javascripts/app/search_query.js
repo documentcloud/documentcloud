@@ -2,6 +2,12 @@ dc.model.SearchQuery = Backbone.Collection.extend({
   
   model : dc.model.SearchFacet,
   
+  value : function() {
+    return this.map(function(facet) {
+      return facet.serialize();
+    }).join(' ');
+  },
+  
   find : function(category) {
     var facet = this.detect(function(facet) {
       return facet.get('category') == category;
@@ -22,9 +28,13 @@ dc.model.SearchQuery = Backbone.Collection.extend({
     return _.map(facets, function(facet) { return facet.get('value'); });
   },
   
-  has : function(category) {
+  has : function(category, value) {
     return this.any(function(facet) {
-      return facet.get('category') == category;
+      if (value) {
+        return facet.get('category') == category && facet.get('value') == value;
+      } else {
+        return facet.get('category') == category;
+      }
     });
   },
   
