@@ -215,7 +215,7 @@
         if ((e.pageX > off.left + this.outerWidth() - edge) ||
             (e.pageY > off.top + this.outerHeight() - edge)) return;
         e.preventDefault();
-        if (dc.app.searchBox) dc.app.searchBox.blur();
+        if (dc.app.searchBox) dc.app.searchBox.removeFocus();
         var targets = $(options.select);
         var scrTop  = this.scrollTop(), scrLeft = this.scrollLeft();
         var ox = e.pageX, oy = e.pageY;
@@ -309,14 +309,15 @@
     getCursorPosition: function() {
       var position = 0;
       var input    = this.get(0);
+
       if (document.selection) {
         // IE
         input.focus();
         var sel    = document.selection.createRange();
         var selLen = document.selection.createRange().text.length;
         sel.moveStart('character', -input.value.length);
-        position = sel.text.length - selLen;
-      } else if (input && input.selectionStart != null) {
+        position   = sel.text.length - selLen;
+      } else if (input && $(input).is(':visible') && input.selectionStart != null) {
         // Firefox/Safari
         position = input.selectionStart;
       }

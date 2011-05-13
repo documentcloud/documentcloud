@@ -119,7 +119,7 @@ label {
     margin: 0 100px 30px 30px;
     cursor: text;
   }
-    .search_box input {
+    input.search_box {
       width: 10px;
       z-index: 100;
       position: relative;

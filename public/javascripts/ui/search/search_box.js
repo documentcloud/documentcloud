@@ -12,6 +12,10 @@ dc.ui.SearchBox = Backbone.View.extend({
     search    : "Your search did not match any documents.",
     all       : "There are no documents."
   },
+  
+  flags : {
+    allSelected : false
+  },
 
   id  : 'search',
   
@@ -25,8 +29,9 @@ dc.ui.SearchBox = Backbone.View.extend({
   // Creating a new SearchBox registers #search page fragments.
   constructor : function(options) {
     Backbone.View.call(this, options);
-    _.bindAll(this, 'hideSearch', 'renderFacets');
+    _.bindAll(this, 'hideSearch', 'renderFacets', '_maybeCancelSearch', 'disableFacets');
     SearchQuery.bind('refresh', this.renderFacets);
+    $(document).bind('keydown', this._maybeCancelSearch);
   },
 
   render : function() {
@@ -35,22 +40,6 @@ dc.ui.SearchBox = Backbone.View.extend({
     $(document.body).setMode('no', 'search');
         
     return this;
-  },
-  
-  removeFacet : function(view) {
-    this.facetViews = _.without(this.facetViews, view);
-  },
-  
-  disableFacets : function(keepView) {
-    _.each(this.facetViews, function(view) {
-      if (view != keepView &&
-          (view.modes.editing == 'is' ||
-           view.modes.selected == 'is')) {
-        console.log(['disabling view', view]);
-        view.disableEdit();
-        view.deselectFacet();
-      }
-    });
   },
 
   hideSearch : function() {
@@ -74,8 +63,22 @@ dc.ui.SearchBox = Backbone.View.extend({
     _.defer(dc.app.toolbar.checkFloat);
   },
 
+  _maybeCancelSearch : function(e) {
+    if (this.flags.allSelected && e.which == 8) {
+      e.preventDefault();
+      this.cancelSearch();
+      return false;
+    } else if (this.flags.allSelected) {
+      console.log(['_maybeCancelSearch', this.flags.allSelected]);
+      this.flags.allSelected = false;
+      this.disableFacets();
+    }
+  },
+  
   cancelSearch : function() {
     this.value('');
+    this.flags.allSelected = false;
+    this.focusSearch();
   },
 
   // Webkit knows how to fire a real "search" event.
@@ -209,50 +212,58 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   focusNextFacet : function(currentView, direction, startAtEnd, selectFacet) {
-    console.log(['focusNextFacet', currentView, direction]);
-    var currentFacetIndex = 0;
-    var viewsCount = this.facetViews.length;
+    var viewCount    = this.facetViews.length;
+    var viewPosition = this.viewPosition(currentView);
+    var viewType     = currentView.type;
     
-    _.each(this.facetViews, function(facetView, i) {
-      if (currentView == facetView || currentView == i) {
-        currentFacetIndex = i;
-      }
-    });
-    
-    var next = currentFacetIndex + direction;
-    if (next < 0) {
-      // Do nothing, at beginning.
-      if (selectFacet) {
-        this.facetViews[currentFacetIndex].selectFacet();
-      } else {
-        this.box.focus();
-      }
-    } else if (next > viewsCount-1) {
-      this.box.focus();
-    } else {
-      this.box.blur();
+    // Correct for bouncing between matching text and facet arrays.
+    if (viewType == 'text' && direction >= 0)  direction -= 1;
+    if (viewType == 'facet' && direction < 0) direction = 0;
+    var next = Math.min(viewCount, viewPosition + direction);
+
+    if (viewType == 'text' && next >= 0 && next < viewCount) {
       if (selectFacet) {
         this.facetViews[next].selectFacet();
       } else {
         this.facetViews[next].enableEdit();
         this.facetViews[next].setCursorAtEnd(direction || startAtEnd);
       }
+    } else if (viewType == 'facet') {
+      this.inputViews[next].focus();
     }
     this.resizeFacets();
+    console.log(['focusNextFacet', direction, viewType, next, viewCount]);
   },
   
   selectAllFacets : function(currentView) {
     _.each(this.facetViews, function(facetView, i) {
       facetView.selectFacet(null, true);
     });
-    this.box.focus();
-    this.box.selectRange(0, this.box.val().length);
-    this.allSelected = true;
+    _.each(this.inputViews, function(inputView, i) {
+      inputView.selectAll();
+    });
+    this.flags.allSelected = true;
+    
+    $(document).one('click', this.disableFacets);
   },
   
-  disableAllFacets : function(currentView) {
-    _.each(this.facetViews, function(facetView, i) {
-      facetView.disableEdit();
+  allSelected : function() {
+    return this.flags.allSelected;
+  },
+  
+  removeFacet : function(view) {
+    this.facetViews = _.without(this.facetViews, view);
+  },
+  
+  disableFacets : function(keepView) {
+    _.each(this.facetViews, function(view) {
+      if (view != keepView &&
+          (view.modes.editing == 'is' ||
+           view.modes.selected == 'is')) {
+        console.log(['disabling view', view]);
+        view.disableEdit();
+        view.deselectFacet();
+      }
     });
   },
   
@@ -274,7 +285,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     console.log(['focusSearch', e]);
     if (!e || $(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner')) {
       this.inputViews[this.inputViews.length-1].focus();
-      this.disableAllFacets();
+      this.disableFacets();
     }
   },
   
