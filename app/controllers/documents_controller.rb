@@ -176,7 +176,7 @@ class DocumentsController < ApplicationController
 
   def send_full_text
     return not_found unless current_document(true)
-    redirect_to document.full_text_url(:direct)
+    redirect_to current_document.full_text_url(:direct)
   end
 
   def send_page_text
