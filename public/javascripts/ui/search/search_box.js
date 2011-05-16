@@ -120,23 +120,25 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   viewPosition : function(view) {
-    var position = 0;
     var views = view.type == 'facet' ? this.facetViews : this.inputViews;
-    _.each(views, function(inputView, i) {
-      if (inputView == view) position = i;
-    });
+    var position = _.detect(views, function(inputView, i) {
+      if (inputView == view) return i;
+    }) || 0;
     return position;
   },
     
   addFacet : function(category, initialQuery, inputView) {
-    var position = inputView && {at: this.viewPosition(inputView)};
+    var position = inputView && this.viewPosition(inputView);
     console.log(['addFacet', category, initialQuery, position]);
     var model = new dc.model.SearchFacet({
       category : category,
       value    : initialQuery || ''
     });
-    SearchQuery.add(model, position);
-    var facetView = this.renderFacet(model, position);
+    SearchQuery.add(model, {at: position});
+    this.renderFacets();
+    var facetView = _.detect(this.facetViews, function(view) {
+      if (view.model == model) return view;
+    });
     facetView.enableEdit();
   },
 
@@ -146,31 +148,30 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.inputViews = [];
     
     this.$('.search_inner').empty();
-    this.renderSearchInput();
     
     SearchQuery.each(_.bind(function(facet, i) {
-      if (facet.get('category') == 'entities') {
-        console.log(['entities', facet]);
-      } else {
-        this.renderFacet(facet, i);
-      }
+      this.renderFacet(facet, i);
     }, this));
+    
+    // Add on an n+1 empty search input on the very end.
+    this.renderSearchInput();
   },
   
   // Render a single facet, using its category and query value.
-  renderFacet : function(facet, order) {
+  renderFacet : function(facet, position) {
     var view = new dc.ui.SearchFacet({
       model : facet,
-      order : order
+      order : position
     });
     
-    this.facetViews.splice(order, 0, view);
-    this.$('.search_inner').children().eq(order*2).after(view.render().el);
+    // Input first, facet second.
+    this.renderSearchInput();
+    this.facetViews.push(view);
+    this.$('.search_inner').children().eq(position*2).after(view.render().el);
     
     view.calculateSize();
     _.defer(_.bind(view.calculateSize, view));
     
-    this.renderSearchInput();
     return view;
   },
   
