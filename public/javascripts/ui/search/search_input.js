@@ -163,12 +163,12 @@ dc.ui.SearchInput = Backbone.View.extend({
     if (dc.app.hotkeys.key(e) == 'left') {
       if (this.box.getCursorPosition() == 0) {
         e.preventDefault();
-        dc.app.searchBox.focusNextFacet(this, -1, true);
+        dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true});
       }
     } else if (dc.app.hotkeys.key(e) == 'right') {
       if (this.box.getCursorPosition() == this.box.val().length) {
         e.preventDefault();
-        dc.app.searchBox.focusNextFacet(this, 1, false, true);
+        dc.app.searchBox.focusNextFacet(this, 1, {selectFacet: true});
       }
     } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
       e.preventDefault();
@@ -179,7 +179,7 @@ dc.ui.SearchInput = Backbone.View.extend({
     } else if (dc.app.hotkeys.backspace && !dc.app.searchBox.allSelected()) {
       if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
         e.preventDefault();
-        dc.app.searchBox.focusNextFacet(this, -1, false, true);
+        dc.app.searchBox.focusNextFacet(this, -1, {selectFacet: true});
       }
     } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
       e.preventDefault();

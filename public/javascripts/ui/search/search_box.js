@@ -211,7 +211,8 @@ dc.ui.SearchBox = Backbone.View.extend({
     dc.app.scroller.checkLater();
   },
   
-  focusNextFacet : function(currentView, direction, startAtEnd, selectFacet) {
+  focusNextFacet : function(currentView, direction, options) {
+    options = options || {};
     var viewCount    = this.facetViews.length;
     var viewPosition = this.viewPosition(currentView);
     var viewType     = currentView.type;
@@ -222,14 +223,23 @@ dc.ui.SearchBox = Backbone.View.extend({
     var next = Math.min(viewCount, viewPosition + direction);
 
     if (viewType == 'text' && next >= 0 && next < viewCount) {
-      if (selectFacet) {
+      if (options.selectFacet) {
         this.facetViews[next].selectFacet();
       } else {
         this.facetViews[next].enableEdit();
-        this.facetViews[next].setCursorAtEnd(direction || startAtEnd);
+        this.facetViews[next].setCursorAtEnd(direction || options.startAtEnd);
       }
     } else if (viewType == 'facet') {
-      this.inputViews[next].focus();
+      if (options.sameType) {
+        var position = viewPosition + direction;
+        if (position >= viewCount) position = 0;
+        else if (position < 0) position = viewCount - 1;
+        console.log(['facet', position, viewPosition, direction]);
+        this.facetViews[position].enableEdit();
+        this.facetViews[position].setCursorAtEnd(direction || options.startAtEnd);
+      } else {
+        this.inputViews[next].focus();
+      }
     }
     this.resizeFacets();
     console.log(['focusNextFacet', direction, viewType, next, viewCount]);

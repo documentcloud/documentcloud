@@ -218,7 +218,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       this.search(e);
     } else {
       dc.app.searchBox.renderQuery();
-      dc.app.searchBox.focusNextFacet(this, -2, true);
+      dc.app.searchBox.focusNextFacet(this, -2, {startAtEnd: true});
     }
   },
   
@@ -231,10 +231,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
     } else if (dc.app.hotkeys.key(e) == 'left') {
       if (this.box.getCursorPosition() == 0) {
         if (this.modes.selected == 'is') {
-          this.disableEdit(e);
-          dc.app.searchBox.focusNextFacet(this, -1, true);
-          e.preventDefault();
           this.deselectFacet();
+          dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true});
         } else {
           this.selectFacet();
         }
@@ -253,11 +251,11 @@ dc.ui.SearchFacet = Backbone.View.extend({
     } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
       e.preventDefault();
       this.disableEdit(e);
-      dc.app.searchBox.focusNextFacet(this, -1, true);
+      dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true, sameType: true});
     } else if (dc.app.hotkeys.tab) {
       e.preventDefault();
       this.disableEdit(e);
-      dc.app.searchBox.focusNextFacet(this, 1);
+      dc.app.searchBox.focusNextFacet(this, 1, {sameType: true});
     } else if (dc.app.hotkeys.backspace) {
       if (this.modes.selected == 'is') {
         e.preventDefault();
@@ -277,6 +275,4 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.box.trigger('resize.autogrow', e);
   }
   
-  
-   
 });
