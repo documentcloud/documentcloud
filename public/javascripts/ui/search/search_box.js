@@ -121,9 +121,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   
   viewPosition : function(view) {
     var views = view.type == 'facet' ? this.facetViews : this.inputViews;
-    var position = _.detect(views, function(inputView, i) {
-      if (inputView == view) return i;
-    }) || 0;
+    var position = _.indexOf(views, view) || 0;
     return position;
   },
     
@@ -137,7 +135,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     SearchQuery.add(model, {at: position});
     this.renderFacets();
     var facetView = _.detect(this.facetViews, function(view) {
-      if (view.model == model) return view;
+      if (view.model == model) return true;
     });
     facetView.enableEdit();
   },
@@ -219,9 +217,10 @@ dc.ui.SearchBox = Backbone.View.extend({
     var viewType     = currentView.type;
     
     // Correct for bouncing between matching text and facet arrays.
-    if (viewType == 'text' && direction >= 0)  direction -= 1;
-    if (viewType == 'facet' && direction < 0) direction = 0;
+    if (viewType == 'text' && direction > 0)  direction -= 1;
+    if (viewType == 'facet' && direction < 0) direction += 1;
     var next = Math.min(viewCount, viewPosition + direction);
+    console.log(['focusNextFacet', viewType, viewPosition, direction, next, viewCount]);
 
     if (viewType == 'text' && next >= 0 && next < viewCount) {
       if (options.selectFacet) {
