@@ -121,7 +121,8 @@ dc.ui.SearchBox = Backbone.View.extend({
   
   viewPosition : function(view) {
     var views = view.type == 'facet' ? this.facetViews : this.inputViews;
-    var position = _.indexOf(views, view) || 0;
+    var position = _.indexOf(views, view);
+    if (position == -1) position = 0;
     return position;
   },
     
@@ -220,7 +221,6 @@ dc.ui.SearchBox = Backbone.View.extend({
     if (viewType == 'text' && direction > 0)  direction -= 1;
     if (viewType == 'facet' && direction < 0) direction += 1;
     var next = Math.min(viewCount, viewPosition + direction);
-    console.log(['focusNextFacet', viewType, viewPosition, direction, next, viewCount]);
 
     if (viewType == 'text' && next >= 0 && next < viewCount) {
       if (options.selectFacet) {
@@ -242,7 +242,6 @@ dc.ui.SearchBox = Backbone.View.extend({
       }
     }
     this.resizeFacets();
-    console.log(['focusNextFacet', direction, viewType, next, viewCount]);
   },
   
   selectAllFacets : function(currentView) {

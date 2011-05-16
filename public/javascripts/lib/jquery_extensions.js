@@ -279,12 +279,13 @@
         }).addClass('input_width_tester').addClass('interface');
         
         $input.after($tester);
-        $input.unbind('keydown.autogrow resize.autogrow change.autogrow')
-              .bind('keydown.autogrow resize.autogrow change.autogrow', function(e, realEvent) {
+        $input.unbind('keydown.autogrow keypress.autogrow resize.autogrow change.autogrow')
+              .bind('keydown.autogrow keypress.autogrow resize.autogrow change.autogrow', function(e, realEvent) {
           if (realEvent) e = realEvent;
-          dc.app.hotkeys.down(e);
           var value = $input.val();
-          if (dc.app.hotkeys.backspace) {
+          dc.app.hotkeys.down(e);
+          
+          if (dc.app.hotkeys.key(e) == 'backspace') {
             var position = $input.getCursorPosition();
             if (position > 0) value = value.slice(0, position-1) + value.slice(position, value.length);
           } else if (dc.app.hotkeys.printable(e) && !dc.app.hotkeys.command) {
@@ -298,7 +299,7 @@
                        .replace(/>/g, '&gt;');
           
           $tester.html(value);
-          // console.log(['autoGrow', realEvent, e.type, value, $tester, $tester.html(), $tester.width()]);
+          // console.log(['autoGrow', realEvent, e, e.type, e.which, dc.app.hotkeys.printable(e), value, $tester, $tester.html(), $tester.width()]);
           $input.width($tester.width() + 3);
           $input.trigger('updated.autogrow');
         });

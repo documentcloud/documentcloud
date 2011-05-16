@@ -95,7 +95,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       this.box.focus();
       dc.app.searchBox.addFocus();
     }
-    this.box.trigger('resize.autogrow');
+    this.resize(e);
     dc.app.searchBox.disableFacets(this);
   },
   
@@ -215,7 +215,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     SearchQuery.remove(this.model);
     Backbone.View.prototype.remove.call(this);
     if (committed) {
-      this.search(e);
+      this.search();
     } else {
       dc.app.searchBox.renderQuery();
       dc.app.searchBox.focusNextFacet(this, -2, {startAtEnd: true});
@@ -267,6 +267,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
     } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
       e.preventDefault();
       dc.app.searchBox.selectAllFacets(this);
+      return false;
     }
     this.resize(e);
   },

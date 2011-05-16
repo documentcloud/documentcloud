@@ -52,16 +52,22 @@ dc.app.hotkeys = {
   
   printable : function(e) {
     var code = e.which;
-    if (code == 32 ||                      // space
-        (code >= 48 && code <= 90) ||      // 0-1a-z
-        (code >= 96 && code <= 111) ||     // 0-9+-/*.
-        (code >= 186 && code <= 192) ||    // ;=,-./^
-        (code >= 219 && code <= 222) ||    // (\)'
-        (String.fromCharCode(code) == ":")) {
-      return true;
+    if (e.type == 'keydown') {
+      if (code == 32 ||                      // space
+          (code >= 48 && code <= 90) ||      // 0-1a-z
+          (code >= 96 && code <= 111) ||     // 0-9+-/*.
+          (code >= 186 && code <= 192) ||    // ;=,-./^
+          (code >= 219 && code <= 222)) {    // (\)'
+        return true;
+      }
     } else {
-      return false;
+      if ((code >= 32 && code <= 126)  || // [space]!"#$%&'()*+,-.0-9:;<=>?@A-Z[\]^_`a-z{|}
+          (code >= 160 && code <= 500) || // unicode
+          (String.fromCharCode(code) == ":")) {
+        return true;
+      }      
     }
+    return false;
   }
 
 };
