@@ -6,10 +6,12 @@ ActionController::Routing::Routes.draw do |map|
   # Journalist workspace and surrounding HTML.
   map.with_options :controller => 'workspace' do |main|
     main.root
-    main.results    '/results',     :action => 'index'
-    main.signup     '/signup',      :action => 'signup_info'
-    main.login      '/login',       :action => 'login'
-    main.logout     '/logout',      :action => 'logout'
+    main.search     '/search/:query', :action => 'index'
+    main.help_page  '/help/:page',    :action => 'index'
+    main.results    '/results',       :action => 'index'
+    main.signup     '/signup',        :action => 'signup_info'
+    main.login      '/login',         :action => 'login'
+    main.logout     '/logout',        :action => 'logout'
   end
 
   # Document representations and (private) sub-resources.

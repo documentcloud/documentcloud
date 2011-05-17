@@ -25,8 +25,8 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   flags         : {},
 
   routes        : {
-    'search/:query':         'searchByHash',
-    'search/:query/p:page':  'searchByHash'
+    '/search/:query':         'searchByHash',
+    '/search/:query/p:page':  'searchByHash'
   },
 
   // Creating a new SearchBox registers #search page fragments.
@@ -48,8 +48,8 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   loadDefault : function(options) {
     options || (options = {});
     if (options.clear) {
-      Documents.refresh();
-      this.searchBox.value('');
+      Documents.reset();
+      this.box.value('');
     }
     if (this.currentSearch) return;
     if (!Documents.isEmpty()) {
@@ -118,11 +118,11 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     this.flags.specific = query.indexOf('document:') >= 0;
     this.flags.hasEntities = false;
     this.page = pageNumber <= 1 ? null : pageNumber;
-    this.fragment = 'search/' + encodeURIComponent(query);
+    this.fragment = '/search/' + encodeURIComponent(query);
     this.populateRelatedDocument();
     this.showDocuments();
     this.saveLocation(this.urlFragment());
-    Documents.refresh();
+    Documents.reset();
     this._afterSearch = callback;
     var params = _.extend(dc.app.paginator.queryParams(), {q : query});
     if (this.flags.related && !this.relatedDoc) params.include_source_document = true;
@@ -269,7 +269,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     if (resp.facets) this._loadFacetsResults(resp);
     var docs = resp.documents;
     for (var i = 0, l = docs.length; i < l; i++) docs[i].index = i;
-    Documents.refresh(docs);
+    Documents.reset(docs);
     if (this.flags.related && !this.relatedDoc) {
       this.relatedDoc = new dc.model.Document(resp.source_document);
     }

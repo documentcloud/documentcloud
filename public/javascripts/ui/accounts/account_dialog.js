@@ -15,7 +15,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
       title         : 'Manage Accounts: ' + dc.account.organization.name,
       information   : 'group: ' + dc.account.organization.slug
     });
-    Accounts.bind('refresh', _.bind(this._renderAccounts, this));
+    Accounts.bind('reset', _.bind(this._renderAccounts, this));
     this._rendered = false;
     this._open = false;
     $(this.el).hide();

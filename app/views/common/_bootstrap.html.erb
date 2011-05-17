@@ -3,11 +3,11 @@ window.RAILS_ENV = '<%= RAILS_ENV %>';
 window.SERVER_ROOT = '<%= DC.server_root %>';
 window.SERVER_ROOT_HTTP = '<%= DC.server_root(:ssl => false) %>';
 <% if workspace %>
-  Organizations.refresh(<%= @organizations.to_json %>);
+  Organizations.reset(<%= @organizations.to_json %>);
   <% if @current_account %>
     <%= render :partial => 'accounts/current_account.js', :type => :js %>
-    Accounts.refresh(<%= @accounts.to_json %>);
-    Projects.refresh(<%= @projects.to_json({:account => @current_account, :include_collaborators => true}) %>);
+    Accounts.reset(<%= @accounts.to_json %>);
+    Projects.reset(<%= @projects.to_json({:account => @current_account, :include_collaborators => true}) %>);
     dc.searchPrefixes = <%= DC::ALL_SEARCHES.to_json %>;
   <% end %>
 <% end %>

@@ -70,7 +70,7 @@ class DocumentImport < CloudCrowd::Action
     text = @pages.map{|p| p[:text] }.join('')
     document.page_count = @pages.length
     Page.refresh_page_map(document)
-    EntityDate.refresh(document)
+    EntityDate.reset(document)
     document.save!
     pages = document.reload.pages
     Sunspot.index pages

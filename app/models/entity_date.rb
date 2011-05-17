@@ -7,7 +7,7 @@ class EntityDate < ActiveRecord::Base
 
   # Destroy and recreate all of a document's dates, from the text. Save the
   # document after running this method in order to save the dates.
-  def self.refresh(document)
+  def self.reset(document)
     text = document.combined_page_text
     return false unless text
     document.entity_dates.destroy_all

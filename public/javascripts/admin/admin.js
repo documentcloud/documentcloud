@@ -191,7 +191,7 @@ dc.ui.Admin = Backbone.View.extend({
     }, this);
     if (Accounts.length) return finish();
     $.getJSON('/admin/all_accounts', {}, _.bind(function(resp) {
-      Accounts.refresh(resp.accounts);
+      Accounts.reset(resp.accounts);
       delete resp.accounts;
       _.extend(stats, resp);
       finish();
@@ -205,7 +205,7 @@ dc.ui.Admin = Backbone.View.extend({
 
   // Displays all top documents, retrieved through AJAX.
   _displayMoreTopDocuments : function(data) {
-    TopDocuments.refresh(data);
+    TopDocuments.reset(data);
     this.$('.top_documents_list').replaceWith(JST['top_documents']({}));
     this.$('.top_documents_label_year').css({'display': 'table-row'});
     this.$('.top_documents_label_week').css({'display': 'none'});

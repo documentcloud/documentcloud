@@ -104,7 +104,7 @@ dc.ui.EntityList = Backbone.View.extend({
       return memo;
     }, {});
     _.each(sets, function(set) {
-      Documents.get(set[0].get('document_id')).pageEntities.refresh(set);
+      Documents.get(set[0].get('document_id')).pageEntities.reset(set);
     });
   },
 

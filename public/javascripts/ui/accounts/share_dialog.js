@@ -143,7 +143,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     if (this.showingEmailDialog) return;
 
     _.each(resp.reviewers, _.bind(function(reviewers, document_id) {
-      this.docs.get(document_id).reviewers.refresh(reviewers);
+      this.docs.get(document_id).reviewers.reset(reviewers);
     }, this));
     this._renderReviewers();
   },

@@ -546,7 +546,7 @@ class Document < ActiveRecord::Base
 
   def reindex_all!(access=nil)
     Page.refresh_page_map(self)
-    EntityDate.refresh(self)
+    EntityDate.reset(self)
     pages = self.reload.pages
     Sunspot.index pages
     reprocess_entities if calais_id

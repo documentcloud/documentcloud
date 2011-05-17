@@ -258,7 +258,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   embedNote : function() {
     var doc = this._getDocumentModel();
-    Documents.refresh([doc]);
+    Documents.reset([doc]);
     dc.app.noteEmbedDialog = new dc.ui.NoteEmbedDialog(doc);
   },
 

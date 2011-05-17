@@ -6,7 +6,7 @@ class AddPageMap < ActiveRecord::Migration
 
     Document.all.each do |doc|
       puts "Migrating: #{doc.title}"
-      MetadataDate.refresh(doc)
+      MetadataDate.reset(doc)
       Page.refresh_page_map(doc)
     end
   end

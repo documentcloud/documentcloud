@@ -56,7 +56,7 @@
     });
 
     if (searches[id].isLoaded) {
-      searches[id].documents.refresh(json.documents);
+      searches[id].documents.reset(json.documents);
       if (searches[id].options.search && !searches[id].originalLoaded) {
         searches[id].workspace.render();
       }
@@ -112,7 +112,7 @@
       _.bindAll(this, 'search');
       this.embed     = searches[this.options.id];
       this.container = $(this.options.container);
-      this.embed.documents.bind('refresh', _.bind(this.renderDocuments, this));
+      this.embed.documents.bind('reset', _.bind(this.renderDocuments, this));
       this.render();
     },
 
@@ -210,7 +210,7 @@
       // Returning to original query, just use the cached original response.
       if (query == '' && !force && !this.embed.options.search) {
         this.embed.options = _.clone(this.embed.originalOptions);
-        this.embed.documents.refresh(this.embed.documents.originalModels);
+        this.embed.documents.reset(this.embed.documents.originalModels);
       } else {
         this.embed.options.q = this.embed.options.original_query + (query && (' ' + query));
         this.showSpinner();

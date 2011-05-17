@@ -2,15 +2,15 @@
 dc.controllers.Workspace = Backbone.Controller.extend({
 
   routes : {
-    'help/:page': 'help',
-    'help':       'help'
+    '/help/:page': 'help',
+    '/help':       'help'
   },
 
   // Initializes the workspace, binding it to <body>.
   initialize : function() {
     this.createSubViews();
     this.renderSubViews();
-    dc.app.searcher = new dc.controllers.Searcher();
+    dc.app.searcher = new dc.controllers.Searcher({pushState: true});
     if (!Backbone.history.start()) {
       dc.app.searcher.loadDefault({showHelp: true});
     }

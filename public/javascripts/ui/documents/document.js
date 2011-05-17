@@ -61,8 +61,8 @@ dc.ui.Document = Backbone.View.extend({
     this.model.bind('change:selected', this._setSelected);
     this.model.bind('view:pages', this.viewPages);
     this.model.notes.bind('add', this._addNote);
-    this.model.notes.bind('refresh', this._renderNotes);
-    this.model.pageEntities.bind('refresh', this._renderPages);
+    this.model.notes.bind('reset', this._renderNotes);
+    this.model.pageEntities.bind('reset', this._renderPages);
   },
 
   // Render the document tile, setting modes, selected state, and attaches drag events.

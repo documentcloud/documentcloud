@@ -8,7 +8,7 @@ class DatesShouldBeUnique < ActiveRecord::Migration
     # Okay because there's not very many documents yet.
     Document.all.each do |doc|
       puts doc.title
-      MetadataDate.refresh(doc); doc.save!
+      MetadataDate.reset(doc); doc.save!
     end
   end
 

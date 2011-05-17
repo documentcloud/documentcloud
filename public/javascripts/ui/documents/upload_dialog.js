@@ -268,7 +268,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Closes dialog when finished. Clears out collection for next upload.
   close : function() {
-    this.collection.refresh();
+    this.collection.reset();
     dc.ui.Dialog.prototype.close.call(this);
   }
 
