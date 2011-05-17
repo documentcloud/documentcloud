@@ -25,8 +25,8 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   flags         : {},
 
   routes        : {
-    '/search/:query':         'searchByHash',
-    '/search/:query/p:page':  'searchByHash'
+    'search/:query':         'searchByHash',
+    'search/:query/p:page':  'searchByHash'
   },
 
   // Creating a new SearchBox registers #search page fragments.
@@ -118,7 +118,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     this.flags.specific = query.indexOf('document:') >= 0;
     this.flags.hasEntities = false;
     this.page = pageNumber <= 1 ? null : pageNumber;
-    this.fragment = '/search/' + encodeURIComponent(query);
+    this.fragment = 'search/' + encodeURIComponent(query);
     this.populateRelatedDocument();
     this.showDocuments();
     this.saveLocation(this.urlFragment());

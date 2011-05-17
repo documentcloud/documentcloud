@@ -2,8 +2,8 @@
 dc.controllers.Workspace = Backbone.Controller.extend({
 
   routes : {
-    '/help/:page': 'help',
-    '/help':       'help'
+    'help/:page': 'help',
+    'help':       'help'
   },
 
   // Initializes the workspace, binding it to <body>.

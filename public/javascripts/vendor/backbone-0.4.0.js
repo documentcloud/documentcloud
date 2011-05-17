@@ -688,6 +688,14 @@
     saveLocation : function(fragment) {
       Backbone.history.saveLocation(fragment);
     },
+    
+    // Simple proxy to `Backbone.history` to both save a fragment into the
+    // history and to then load the route at that fragment. Used in place
+    // of settings `window.location.hash` when using `window.history.pushState`.
+    loadUrl : function(fragment) {
+      Backbone.history.saveLocation(fragment);
+      Backbone.history.loadUrl();
+    },
 
     // Bind all defined routes to `Backbone.history`. We have to reverse the
     // order of the routes here to support behavior where the most general
@@ -759,6 +767,7 @@
           loc = window.location.pathname;
           var search = window.location.search;
           if (search) loc = loc + search;
+          if (loc.indexOf(this.options.root) == 0) loc = loc.substr(this.options.root.length);
         } else {
           loc = window.location.hash;
         }
@@ -768,8 +777,9 @@
 
     // Start the hash change handling, returning `true` if the current URL matches
     // an existing route, and `false` otherwise.
-    start : function(force) {
-      if (historyStarted && !force) throw new Error("Backbone.history has already been started");
+    start : function(options) {
+      this.options = _.extend({}, {root: '/'}, this.options, options);
+      if (historyStarted && !this.options.force) throw new Error("Backbone.history has already been started");
       var docMode = document.documentMode;
       var oldIE = (isExplorer.exec(navigator.userAgent.toLowerCase()) && (!docMode || docMode <= 7));
       if (oldIE) {
@@ -784,7 +794,7 @@
         setInterval(this.checkUrl, this.interval);
       }
       historyStarted = true;
-      return this.loadUrl();
+      return this.loadUrl() || this.loadUrl(window.location.hash);
     },
 
     // Add a route to be tested when the hash changes. Routes added later may
@@ -806,14 +816,14 @@
       if (this.iframe) {
         window.location.hash = this.iframe.location.hash = current;
       }
-      this.loadUrl();
+      this.loadUrl() || this.loadUrl(window.location.hash);
     },
 
     // Attempt to load the current URL fragment. If a route succeeds with a
     // match, returns `true`. If no defined routes matches the fragment,
     // returns `false`.
-    loadUrl : function() {
-      var fragment = this.fragment;
+    loadUrl : function(fragment) {
+      fragment = this.fragment = this.getFragment(fragment);
       var matched = _.any(this.handlers, function(handler) {
         if (handler.route.test(fragment)) {
           handler.callback(fragment);
@@ -833,9 +843,9 @@
       
       if (this.options.pushState) {
         var loc = window.location;
+        if (fragment.indexOf(this.options.root) != 0) fragment = this.options.root + fragment;
         this.fragment = fragment;
         window.history.pushState({}, document.title, loc.protocol + '//' + loc.host + fragment);
-        this.loadUrl();
       } else {
         window.location.hash = this.fragment = fragment;
         if (this.iframe && (fragment != this.getFragment(this.iframe.location))) {
