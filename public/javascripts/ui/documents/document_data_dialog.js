@@ -78,7 +78,13 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
   },
 
   _removeAll : function() {
-    _.each(this.docs, function(doc){ doc.save({data: {}}); });
+    this.close();
+    var docs = this.docs;
+    var message = "Are you sure you want to remove all data from " + this._title() + "?";
+    dc.ui.Dialog.confirm(message, function() {
+      _.each(docs, function(doc){ doc.save({data: {}}); });
+      return true;
+    });
     this.close();
   },
 
