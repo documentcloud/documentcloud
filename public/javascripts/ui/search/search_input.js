@@ -107,8 +107,11 @@ dc.ui.SearchInput = Backbone.View.extend({
     if (autocomplete) autocomplete.close();
   },
 
-  focus : function() {
+  focus : function(highlight) {
     this.box.focus();
+    if (highlight) {
+      this.selectAll();
+    }
   },
   
   blur : function() {
@@ -175,11 +178,11 @@ dc.ui.SearchInput = Backbone.View.extend({
       dc.app.searchBox.focusNextFacet(this, -1);
     } else if (dc.app.hotkeys.tab) {
       e.preventDefault();
-      dc.app.searchBox.focusNextFacet(this, 1);
+      dc.app.searchBox.focusNextFacet(this, 1, {skipToFacet: true});
     } else if (dc.app.hotkeys.backspace && !dc.app.searchBox.allSelected()) {
       if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
         e.preventDefault();
-        dc.app.searchBox.focusNextFacet(this, -1, {selectFacet: true});
+        dc.app.searchBox.focusNextFacet(this, -1, {backspace: true});
       }
     } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
       e.preventDefault();

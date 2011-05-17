@@ -20,10 +20,11 @@ dc.ui.SearchBox = Backbone.View.extend({
   id  : 'search',
   
   events : {
-    'click .search_glyph'       : 'showFacetCategoryMenu',
-    'click .cancel_search_box'  : 'cancelSearch',
-    'click #search_box_wrapper' : 'focusSearch',
-    'click #search_button'      : 'searchEvent'
+    'click .search_glyph'          : 'showFacetCategoryMenu',
+    'click .cancel_search_box'     : 'cancelSearch',
+    'click #search_box_wrapper'    : 'focusSearch',
+    'dblclick #search_box_wrapper' : 'highlightSearch',
+    'click #search_button'         : 'searchEvent'
   },
 
   // Creating a new SearchBox registers #search page fragments.
@@ -218,8 +219,13 @@ dc.ui.SearchBox = Backbone.View.extend({
     var viewType     = currentView.type;
     
     // Correct for bouncing between matching text and facet arrays.
-    if (viewType == 'text' && direction > 0)  direction -= 1;
-    if (viewType == 'facet' && direction < 0) direction += 1;
+    if (!options.skipToFacet) {
+      if (viewType == 'text' && direction > 0)  direction -= 1;
+      if (viewType == 'facet' && direction < 0) direction += 1;
+    } else if (options.skipToFacet && viewType == 'text' && viewCount == viewPosition && direction > 0) {
+      viewPosition = 0;
+      direction = 0;
+    }
     var next = Math.min(viewCount, viewPosition + direction);
 
     if (viewType == 'text' && next >= 0 && next < viewCount) {
@@ -229,14 +235,19 @@ dc.ui.SearchBox = Backbone.View.extend({
         this.facetViews[next].enableEdit();
         this.facetViews[next].setCursorAtEnd(direction || options.startAtEnd);
       }
+      if (options.backspace) {
+        this.facetViews[next].removeLastCharacter();
+      }
     } else if (viewType == 'facet') {
-      if (options.sameType) {
+      if (options.skipToFacet) {
         var position = viewPosition + direction;
-        if (position >= viewCount) position = 0;
-        else if (position < 0) position = viewCount - 1;
-        console.log(['facet', position, viewPosition, direction]);
-        this.facetViews[position].enableEdit();
-        this.facetViews[position].setCursorAtEnd(direction || options.startAtEnd);
+        if (position >= viewCount || position < 0) {
+          _.last(this.inputViews).focus();
+        } else {
+          var view = this.facetViews[position];
+          view.enableEdit();
+          view.setCursorAtEnd(direction || options.startAtEnd);
+        }
       } else {
         this.inputViews[next].focus();
       }
@@ -290,12 +301,16 @@ dc.ui.SearchBox = Backbone.View.extend({
     });
   },
 
-  focusSearch : function(e) {
+  focusSearch : function(e, highlight) {
     console.log(['focusSearch', e]);
     if (!e || $(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner')) {
-      this.inputViews[this.inputViews.length-1].focus();
+      this.inputViews[this.inputViews.length-1].focus(highlight);
       this.disableFacets();
     }
+  },
+  
+  highlightSearch : function(e) {
+    this.focusSearch(e, true);
   },
   
   addFocus : function() {

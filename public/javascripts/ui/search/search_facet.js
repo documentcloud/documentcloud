@@ -222,6 +222,11 @@ dc.ui.SearchFacet = Backbone.View.extend({
     }
   },
   
+  removeLastCharacter : function() {
+    var value = this.box.val();
+    this.box.val(value.substr(0, value.length-1));
+  },
+  
   keydown : function(e) {
     dc.app.hotkeys.down(e);
     // console.log(['keydown', e.which, this.box.val(), this.box.getCursorPosition(), this.box.getSelection().length, dc.app.hotkeys.key(e), dc.app.hotkeys.left, dc.app.hotkeys.right]);
@@ -250,12 +255,14 @@ dc.ui.SearchFacet = Backbone.View.extend({
       }
     } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
       e.preventDefault();
+      this.deselectFacet(e);
       this.disableEdit(e);
-      dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true, sameType: true});
+      dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true, skipToFacet: true});
     } else if (dc.app.hotkeys.tab) {
       e.preventDefault();
+      this.deselectFacet(e);
       this.disableEdit(e);
-      dc.app.searchBox.focusNextFacet(this, 1, {sameType: true});
+      dc.app.searchBox.focusNextFacet(this, 1, {skipToFacet: true});
     } else if (dc.app.hotkeys.backspace) {
       if (this.modes.selected == 'is') {
         e.preventDefault();
