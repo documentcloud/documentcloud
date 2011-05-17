@@ -803,9 +803,7 @@
       if (current == this.fragment ||
           current == decodeURIComponent(this.fragment)) return false;
       
-      if (this.options.pushState) {
-        window.history.pushState({}, document.title, loc.protocol + '//' + loc.host + current);
-      } else if (this.iframe) {
+      if (this.iframe) {
         window.location.hash = this.iframe.location.hash = current;
       }
       this.loadUrl();

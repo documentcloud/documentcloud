@@ -6,8 +6,10 @@ ActionController::Routing::Routes.draw do |map|
   # Journalist workspace and surrounding HTML.
   map.with_options :controller => 'workspace' do |main|
     main.root
+    main.search     '/search',        :action => 'index'
     main.search     '/search/:query', :action => 'index'
-    main.help_page  '/help/:page',    :action => 'index'
+    main.help       '/help',          :action => 'help'
+    main.help       '/help/:page',    :action => 'help'
     main.results    '/results',       :action => 'index'
     main.signup     '/signup',        :action => 'signup_info'
     main.login      '/login',         :action => 'login'

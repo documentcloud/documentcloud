@@ -19,7 +19,7 @@
   <div id="grid"></div>
   <div id="overlay"></div>
 
-  <%= render :partial => 'nav' %>
+  <%= render :partial => 'home/nav' %>
 
   <div id="sky"></div>
 
@@ -40,12 +40,12 @@
   <% end %>
 
   <div id="container">
-    <%= render :partial => 'sidebar' %>
+    <%= render :partial => 'home/sidebar' %>
     <%= yield %>
     <br class="clear" />
   </div>
 
-  <%= render :partial => 'footer' %>
+  <%= render :partial => 'home/footer' %>
 
   <%= render :partial => 'common/bootstrap', :locals => {:workspace => false} %>
 

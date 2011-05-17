@@ -1,9 +1,6 @@
 class HomeController < ApplicationController
   include DC::Access
 
-  HELP_PAGES  = AjaxHelpController::PAGES.map {|page| page.to_s }
-  HELP_TITLES = AjaxHelpController::PAGE_TITLES
-
   # Regex that matches missed markdown links in `[title][]` format.
   MARKDOWN_LINK_REPLACER = /\[([^\]]*?)\]\[\]/i
 
@@ -30,17 +27,6 @@ class HomeController < ApplicationController
     yaml          = yaml_for('contributors')
     @partners     = yaml['partners']
     @contributors = yaml['contributors']
-  end
-
-  # Render a help page as regular HTML, including correctly re-directed links.
-  def help
-    @page           = HELP_PAGES.include?(params[:page]) ? params[:page] : 'index'
-    contents        = File.read("#{Rails.root}/app/views/help/#{@page}.markdown")
-    links_filename  = "#{Rails.root}/app/views/help/links/#{@page}_links.markdown"
-    links           = File.exists?(links_filename) ? File.read(links_filename) : ""
-    @help_content   = RDiscount.new(contents+links).to_html.gsub MARKDOWN_LINK_REPLACER, '<tt>\1</tt>'
-    @help_pages     = HELP_PAGES - ['tour']
-    @help_titles    = HELP_TITLES
   end
 
 
