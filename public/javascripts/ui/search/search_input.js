@@ -193,7 +193,12 @@ dc.ui.SearchInput = Backbone.View.extend({
       dc.app.searchBox.focusNextFacet(this, -1);
     } else if (dc.app.hotkeys.tab) {
       e.preventDefault();
-      dc.app.searchBox.focusNextFacet(this, 1, {skipToFacet: true});
+      var value = this.box.val();
+      if (value.length) {
+        dc.app.searchBox.addFacet(value, '', this);
+      } else {
+        dc.app.searchBox.focusNextFacet(this, 1, {skipToFacet: true});
+      }
     } else if (dc.app.hotkeys.backspace && !dc.app.searchBox.allSelected()) {
       if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
         e.preventDefault();

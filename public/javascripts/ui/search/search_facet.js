@@ -175,7 +175,10 @@ dc.ui.SearchFacet = Backbone.View.extend({
       matches = ['published', 'annotated'];
     } else if (category == 'access') {
       matches = ['public', 'private', 'organization'];
+    } else if (category == 'title') {
+      matches = _.uniq(Documents.pluck('title'));
     } else {
+      // Meta data
       matches = _.compact(_.uniq(Documents.reduce(function(memo, doc) {
         if (_.size(doc.get('data'))) memo.push(doc.get('data')[category]);
         return memo;
