@@ -52,19 +52,7 @@ dc.ui.SearchInput = Backbone.View.extend({
       minLength : 1,
       delay     : 50,
       autoFocus : true,
-      source    : _.bind(function(req, resp) {
-        // Autocomplete only last word.
-        var lastWord = req.term.match(/\w+$/);
-        var re = dc.inflector.escapeRegExp(lastWord && lastWord[0] || ' ');
-        // Only match from the beginning of the word.
-        var matcher = new RegExp('^' + re, 'i');
-        var matches = $.grep(this.PREFIXES, function(item) {
-          return matcher.test(item.label);
-        });
-        resp(_.sortBy(matches, function(match) {
-          return match.category + '-' + match.label;
-        }));
-      }, this),
+      source    : _.bind(this.autocompleteValues, this),
       select    : _.bind(function(e, ui) {
         console.log(['select autocomplete', e, ui]);
         e.preventDefault();
@@ -88,6 +76,33 @@ dc.ui.SearchInput = Backbone.View.extend({
     };
     
     this.box.autocomplete('widget').addClass('interface');
+  },
+  
+  autocompleteValues : function(req, resp) {
+    var prefixes = this.PREFIXES;
+    var searchTerm = req.term;
+    
+    var metadata = _.map(_.keys(Documents.reduce(function(memo, doc) {
+      if (_.size(doc.get('data'))) _.extend(memo, doc.get('data'));
+      return memo;
+    }, {})), function(key) {
+      return {label: key, category: 'data'};
+    });
+    
+    prefixes = prefixes.concat(metadata);
+    
+    // Autocomplete only last word.
+    var lastWord = searchTerm.match(/\w+$/);
+    var re = dc.inflector.escapeRegExp(lastWord && lastWord[0] || ' ');
+    // Only match from the beginning of the word.
+    var matcher = new RegExp('^' + re, 'i');
+    var matches = $.grep(prefixes, function(item) {
+      return matcher.test(item.label);
+    });
+
+    resp(_.sortBy(matches, function(match) {
+      return match.category + '-' + match.label;
+    }));
   },
   
   moveAutocomplete : function() {
