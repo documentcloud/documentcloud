@@ -649,7 +649,8 @@
   Backbone.Controller = function(options) {
     options || (options = {});
     if (options.routes) this.routes = options.routes;
-    this.pushState = this._supportsPushState(options.pushState);
+    this.pushState    = this._supportsPushState(options.pushState);
+    this.optPushState = options.pushState;
     this._bindRoutes();
     this.initialize(options);
   };
@@ -674,7 +675,10 @@
     //     });
     //
     route : function(route, name, callback) {
-      Backbone.history || (Backbone.history = new Backbone.History({pushState: this.pushState}));
+      Backbone.history || (Backbone.history = new Backbone.History({
+        pushState     : this.pushState, 
+        optPushState  : this.optPushState
+      }));
       if (!_.isRegExp(route)) route = this._routeToRegExp(route);
       Backbone.history.route(route, _.bind(function(fragment) {
         var args = this._extractParameters(route, fragment);
@@ -761,18 +765,18 @@
     interval: 50,
 
     // Get the cross-browser normalized URL fragment.
-    getFragment : function(loc) {
-      if (!loc) {
-        if (this.options.pushState) {
-          loc = window.location.pathname;
+    getFragment : function(fragment, forcePushState) {
+      if (!fragment) {
+        if (this.options.pushState || forcePushState) {
+          fragment = window.location.pathname;
           var search = window.location.search;
-          if (search) loc = loc + search;
-          if (loc.indexOf(this.options.root) == 0) loc = loc.substr(this.options.root.length);
+          if (search) fragment += search;
+          if (fragment.indexOf(this.options.root) == 0) fragment = fragment.substr(this.options.root.length);
         } else {
-          loc = window.location.hash;
+          fragment = window.location.hash;
         }
       }
-      return loc.replace(hashStrip, '');
+      return fragment.replace(hashStrip, '');
     },
 
     // Start the hash change handling, returning `true` if the current URL matches
@@ -794,7 +798,15 @@
         setInterval(this.checkUrl, this.interval);
       }
       historyStarted = true;
-      return this.loadUrl() || this.loadUrl(window.location.hash);
+      var started = this.loadUrl() || this.loadUrl(window.location.hash);
+      
+      if (this.options.optPushState && !this.options.pushState && 
+          window.location.pathname != this.options.root) {
+        this.fragment = this.getFragment(null, true);
+        window.location.href = this.options.root + '#' + this.fragment;
+      } else {
+        return started;
+      }
     },
 
     // Add a route to be tested when the hash changes. Routes added later may
