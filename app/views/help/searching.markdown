@@ -7,7 +7,7 @@ Enclose terms in quotes to search for a specific, multi-word phrase.
 
 Use "NOT" or "-" to exclude a term from your search. For example both: [geithner -madoff][] and [geithner NOT madoff][] will return documents that mention "Geithner" and do not also mention "Madoff." 
 
-## Searching by Built-in Metadata Field
+## <span id="builtin">Searching by Built-in Metadata Field</span>
    
 Term                        | Description 
 ----------------------------|---------------------
@@ -21,7 +21,7 @@ projectid                   | Restrict your search to a particular project, by a
 access                      | Search for only documents that have a particular access level (one of "public", "private", or "organization"). For example, to view all of your private documents: [access: private][]
 filter                      | Filter documents by interesting criteria (one of "published", "unpublished", "annotated", or "popular"). For example, to view all published documents: [filter: published][]
  
-## Searching with Entities
+## <span id="entities">Searching with Entities</span>
  
 For each document we store a list of entities identified by [OpenCalais][]. These are the same entities that appear in the "Entities" tab on the left. After searching for an entity, you can click on "show pages" to display links to the specific pages in each document that mention the person, place or thing you're searching for.
 
@@ -37,7 +37,7 @@ city                        | For example: [city: "New Orleans"][].
 state                       | (Includes provinces, in countries that have provinces instead of states.) For example: [state: Arizona][].
 country                     | For example: [country: Iran][].
 
-## Editing and Searching your own Custom Data
+## <span id="metadata">Editing and Searching your own Custom Data</span>
 
 DocumentCloud allows you to define and search your own set of custom data (key/value pairs) associated with specific documents. To get started with document data, you can use [the API][] to add data to your documents in bulk &mdash; useful if you already have an existing database of information about your documents.
 
