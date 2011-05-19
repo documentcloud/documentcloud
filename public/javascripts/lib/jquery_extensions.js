@@ -299,7 +299,7 @@
                        .replace(/>/g, '&gt;');
           
           $tester.html(value);
-          // console.log(['autoGrow', realEvent, e, e.type, e.which, dc.app.hotkeys.printable(e), value, $tester, $tester.html(), $tester.width()]);
+          // console.log(['autoGrow', e.type, e.which, dc.app.hotkeys.printable(e), value]);
           $input.width($tester.width() + 3);
           $input.trigger('updated.autogrow');
         });
@@ -350,7 +350,7 @@
     
     getSelection: function() {
       var input = this[0];
-      // console.log(['getSelection', input, input.selectionStart, input.selectionStart, input.selectionEnd]);
+      console.log(['getSelection', input]);
       if (input.selectionStart != null) { // FF/Webkit
         var start = input.selectionStart;
         var end   = input.selectionEnd;

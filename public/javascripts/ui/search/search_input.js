@@ -57,7 +57,8 @@ dc.ui.SearchInput = Backbone.View.extend({
         console.log(['select autocomplete', e, ui]);
         e.preventDefault();
         e.stopPropagation();
-        dc.app.searchBox.addFacet(ui.item.value, '', this);
+        var remainder = this.addTextFacetRemainder(ui.item.value);
+        dc.app.searchBox.addFacet(ui.item.value, '', this.options.position + (remainder?1:0));
         this.clear();
         return false;
       }, this)
@@ -121,6 +122,14 @@ dc.ui.SearchInput = Backbone.View.extend({
     var autocomplete = this.box.data('autocomplete');
     if (autocomplete) autocomplete.close();
   },
+  
+  addTextFacetRemainder : function(facetValue) {
+    var remainder = this.box.val().replace(facetValue, '').replace('^\s+|\s+$', '');
+    if (remainder) {
+      dc.app.searchBox.addFacet('text', remainder, this.options.position);
+    }
+    return remainder;
+  },
 
   focus : function(highlight) {
     this.box.focus();
@@ -131,25 +140,6 @@ dc.ui.SearchInput = Backbone.View.extend({
   
   blur : function() {
     this.box.blur();
-  },
-  
-  // Callback fired on key press in the search box. We search when they hit return.
-  maybeSearch : function(e) {
-    // console.log(['box key', e.keyCode, dc.app.hotkeys.key(e)]);
-    if (dc.app.hotkeys.key(e) == 'enter') {
-      return dc.app.searchBox.searchEvent(e);
-    }
-
-    if (dc.app.hotkeys.colon(e)) {
-      this.box.trigger('resize.autogrow', e);
-      var query = this.box.val();
-      if (_.contains(_.pluck(this.PREFIXES, 'label'), query)) {
-        e.preventDefault();
-        dc.app.searchBox.addFacet(query, '', this);
-        this.clear();
-        return false;
-      }
-    }
   },
   
   addFocus : function() {
@@ -173,9 +163,35 @@ dc.ui.SearchInput = Backbone.View.extend({
     this.box.focus();
   },
   
+  // Callback fired on key press in the search box. We search when they hit return.
+  maybeSearch : function(e) {
+    // console.log(['box key', e.keyCode, dc.app.hotkeys.key(e)]);
+    if (dc.app.hotkeys.key(e) == 'enter') {
+      return dc.app.searchBox.searchEvent(e);
+    }
+
+    if (dc.app.hotkeys.colon(e)) {
+      this.box.trigger('resize.autogrow', e);
+      var query = this.box.val();
+      if (_.contains(_.pluck(this.PREFIXES, 'label'), query)) {
+        e.preventDefault();
+        var remainder = this.addTextFacetRemainder(query);
+        dc.app.searchBox.addFacet(query, '', this.options.position + (remainder?1:0));
+        this.clear();
+        return false;
+      }
+    } else if (dc.app.hotkeys.key(e) == 'backspace' && !dc.app.searchBox.allSelected()) {
+      if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
+        e.preventDefault();
+        dc.app.searchBox.focusNextFacet(this, -1, {backspace: true});
+        return false;
+      }
+    }
+  },
+  
   keydown : function(e) {
     dc.app.hotkeys.down(e);
-    // console.log(['box keydown', e.keyCode, e.which, this.box.getCursorPosition()]);
+    console.log(['box keydown', e.keyCode, e.which, this.box.getCursorPosition()]);
     this.box.trigger('resize.autogrow', e);
     
     if (dc.app.hotkeys.key(e) == 'left') {
@@ -195,14 +211,10 @@ dc.ui.SearchInput = Backbone.View.extend({
       e.preventDefault();
       var value = this.box.val();
       if (value.length) {
-        dc.app.searchBox.addFacet(value, '', this);
+        var remainder = this.addTextFacetRemainder(value);
+        dc.app.searchBox.addFacet(value, '', this.options.position + (remainder?1:0));
       } else {
         dc.app.searchBox.focusNextFacet(this, 1, {skipToFacet: true});
-      }
-    } else if (dc.app.hotkeys.backspace && !dc.app.searchBox.allSelected()) {
-      if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
-        e.preventDefault();
-        dc.app.searchBox.focusNextFacet(this, -1, {backspace: true});
       }
     } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
       e.preventDefault();

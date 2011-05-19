@@ -65,10 +65,9 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
 
   _maybeCancelSearch : function(e) {
-    if (this.flags.allSelected && e.which == 8) {
-      e.preventDefault();
+    if (this.flags.allSelected && 
+        (dc.app.hotkeys.key(e) == 'backspace' || dc.app.hotkeys.printable(e))) {
       this.cancelSearch();
-      return false;
     } else if (this.flags.allSelected) {
       console.log(['_maybeCancelSearch', this.flags.allSelected]);
       this.flags.allSelected = false;
@@ -116,8 +115,11 @@ dc.ui.SearchBox = Backbone.View.extend({
     this.clearInputs();
   },
   
-  renderQuery : function() {
-     this.setQuery(this.value());
+  renderQuery : function(currentView) {
+    var viewType = currentView.type;
+    var currentPosition = this.viewPosition(currentView);
+    this.setQuery(this.value());
+    this.focusNextFacet({type: viewType}, -1, {startAtEnd: true, viewPosition: currentPosition});
   },
   
   viewPosition : function(view) {
@@ -127,8 +129,7 @@ dc.ui.SearchBox = Backbone.View.extend({
     return position;
   },
     
-  addFacet : function(category, initialQuery, inputView) {
-    var position = inputView && this.viewPosition(inputView);
+  addFacet : function(category, initialQuery, position) {
     console.log(['addFacet', category, initialQuery, position]);
     var model = new dc.model.SearchFacet({
       category : category,
@@ -176,7 +177,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   renderSearchInput : function() {
-    var input = new dc.ui.SearchInput();
+    var input = new dc.ui.SearchInput({position: this.inputViews.length});
     this.$('.search_inner').append(input.render().el);
     this.inputViews.push(input);
   },
@@ -215,16 +216,17 @@ dc.ui.SearchBox = Backbone.View.extend({
   focusNextFacet : function(currentView, direction, options) {
     options = options || {};
     var viewCount    = this.facetViews.length;
-    var viewPosition = this.viewPosition(currentView);
+    var viewPosition = options.viewPosition || this.viewPosition(currentView);
     var viewType     = currentView.type;
     
     // Correct for bouncing between matching text and facet arrays.
     if (!options.skipToFacet) {
-      if (viewType == 'text' && direction > 0)  direction -= 1;
+      if (viewType == 'text'  && direction > 0) direction -= 1;
       if (viewType == 'facet' && direction < 0) direction += 1;
-    } else if (options.skipToFacet && viewType == 'text' && viewCount == viewPosition && direction > 0) {
+    } else if (options.skipToFacet && viewType == 'text' && 
+               viewCount == viewPosition && direction > 0) {
       viewPosition = 0;
-      direction = 0;
+      direction    = 0;
     }
     var next = Math.min(viewCount, viewPosition + direction);
 
