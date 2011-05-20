@@ -131,10 +131,12 @@ dc.ui.SearchBox = Backbone.View.extend({
     
   addFacet : function(category, initialQuery, position) {
     console.log(['addFacet', category, initialQuery, position]);
-    var model = new dc.model.SearchFacet({
+    var model = new dc.model.SearchFacet();
+    model.set({
       category : category,
       value    : initialQuery || ''
-    });
+    }, {silent: true});
+    console.log(['model', model, initialQuery, model.get('value')]);
     SearchQuery.add(model, {at: position});
     this.renderFacets();
     var facetView = _.detect(this.facetViews, function(view) {

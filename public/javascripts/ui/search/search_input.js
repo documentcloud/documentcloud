@@ -124,11 +124,15 @@ dc.ui.SearchInput = Backbone.View.extend({
   },
   
   addTextFacetRemainder : function(facetValue) {
-    var remainder = this.box.val().replace(facetValue, '').replace('^\s+|\s+$', '');
-    if (remainder) {
-      dc.app.searchBox.addFacet('text', remainder, this.options.position);
+    var boxValue = this.box.val();
+    var lastWord = boxValue.match(/\b(\w+)$/);
+    if (lastWord && facetValue.indexOf(lastWord[0]) == 0) boxValue = boxValue.replace(/\b(\w+)$/, '');
+    boxValue = boxValue.replace('^\s+|\s+$', '');
+    // console.log(['addTextFacetRemainder', facetValue, lastWord, boxValue]);
+    if (boxValue) {
+      dc.app.searchBox.addFacet('text', boxValue, this.options.position);
     }
-    return remainder;
+    return boxValue;
   },
 
   focus : function(highlight) {

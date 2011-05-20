@@ -21,7 +21,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   render : function() {
-    console.log(['search facet', this.model.get('value')]);
+    console.log(['search facet', this.model.get('category'), this.model.get('value')]);
     var $el = this.$el = $(this.el);
     $el.html(JST['workspace/search_facet']({
       model : this.model
