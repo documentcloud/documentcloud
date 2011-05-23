@@ -753,10 +753,11 @@
     // Checks the current URL to see if it has changed, and if it has,
     // calls `loadUrl`, normalizing across the hidden iframe.
     checkUrl : function() {
-      var fragment = this.getFragment(this.iframe ? this.iframe.location : null);
+      var fragment = this.getFragment();
+      if (fragment == this.fragment && this.iframe) fragment = this.getFragment(this.iframe.location);
       if (fragment == this.fragment ||
           fragment == decodeURIComponent(this.fragment)) return false;
-      if (this.iframe) window.location.hash = fragment;
+      if (this.iframe) this.saveLocation(fragment);
       this.fragment = fragment;
       this.loadUrl();
     },
