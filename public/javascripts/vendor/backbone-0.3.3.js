@@ -11,10 +11,10 @@
 
   // Save a reference to the global object.
   var root = this;
-  
+
   // Save the previous value of the `Backbone` variable.
   var previousBackbone = root.Backbone;
-  
+
   // The top-level namespace. All public Backbone classes and modules will
   // be attached to this. Exported for both CommonJS and the browser.
   var Backbone;
@@ -40,7 +40,7 @@
     root.Backbone = previousBackbone;
     return this;
   };
-  
+
   // Turn on `emulateHTTP` to use support legacy HTTP servers. Setting this option will
   // fake `"PUT"` and `"DELETE"` requests via the `_method` parameter and set a
   // `X-Http-Method-Override` header.
@@ -707,7 +707,6 @@
   // browser does not support `onhashchange`, falls back to polling.
   Backbone.History = function() {
     this.handlers = [];
-    this.fragment = this.getFragment();
     _.bindAll(this, 'checkUrl');
   };
 
@@ -729,16 +728,19 @@
     // Start the hash change handling, returning `true` if the current URL matches
     // an existing route, and `false` otherwise.
     start : function() {
+      var fragment = this.getFragment();
       var docMode = document.documentMode;
       var oldIE = ($.browser.msie && (!docMode || docMode <= 7));
       if (oldIE) {
         this.iframe = $('<iframe src="javascript:0" tabindex="-1" />').hide().appendTo('body')[0].contentWindow;
+        this.saveLocation(fragment);
       }
       if ('onhashchange' in window && !oldIE) {
         $(window).bind('hashchange', this.checkUrl);
       } else {
         setInterval(this.checkUrl, this.interval);
       }
+      this.fragment = fragment;
       return this.loadUrl();
     },
 
@@ -751,15 +753,11 @@
     // Checks the current URL to see if it has changed, and if it has,
     // calls `loadUrl`, normalizing across the hidden iframe.
     checkUrl : function() {
-      var current = this.getFragment();
-      if (current == this.fragment && this.iframe) {
-        current = this.getFragment(this.iframe.location);
-      }
-      if (current == this.fragment ||
-          current == decodeURIComponent(this.fragment)) return false;
-      if (this.iframe) {
-        window.location.hash = this.iframe.location.hash = current;
-      }
+      var fragment = this.getFragment(this.iframe ? this.iframe.location : null);
+      if (fragment == this.fragment ||
+          fragment == decodeURIComponent(this.fragment)) return false;
+      if (this.iframe) window.location.hash = fragment;
+      this.fragment = fragment;
       this.loadUrl();
     },
 
@@ -767,7 +765,7 @@
     // match, returns `true`. If no defined routes matches the fragment,
     // returns `false`.
     loadUrl : function() {
-      var fragment = this.fragment = this.getFragment();
+      var fragment = this.fragment;
       var matched = _.any(this.handlers, function(handler) {
         if (handler.route.test(fragment)) {
           handler.callback(fragment);
