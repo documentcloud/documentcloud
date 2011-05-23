@@ -157,7 +157,6 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
   },
 
   saveAnnotation : function(anno) {
-    if (!anno.location) currentDocument.api.redraw(true);
     this[anno.unsaved ? 'createAnnotation' : 'updateAnnotation'](anno);
   },
 
