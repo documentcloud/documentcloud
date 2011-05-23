@@ -34,7 +34,7 @@ namespace :deploy do
   end
 
   desc "Deploy the Search/Note Embed to S3"
-  {:search => ['search_embed', 'embed'], :notes => ['note_embed', 'notes']}.each_pair do |folder, embed|
+  {:search_embed => ['search_embed', 'embed'], :note_embed => ['note_embed', 'notes']}.each_pair do |folder, embed|
     task folder, :needs => :environment do
       s3 = RightAws::S3.new(SECRETS['aws_access_key'], SECRETS['aws_secret_key'], :protocol => 'http', :port => 80)
       bucket = s3.bucket('s3.documentcloud.org')
