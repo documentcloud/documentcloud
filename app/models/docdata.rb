@@ -13,14 +13,15 @@ class Docdata < ActiveRecord::Base
     obj.to_s.gsub(/[\\"]/, '')
   end
   
-  def data=(hash)
+  def data=(obj)
     @data = nil
-    return unless validate_keys(hash)
-    if hash.empty?
+    return self[:data] = obj if obj.is_a? String
+    return unless validate_keys(obj)
+    if obj.empty?
       self[:data] = nil
       self.destroy
     else
-      self[:data] = Docdata.to_hstore(hash)
+      self[:data] = Docdata.to_hstore(obj)
     end
   end
   

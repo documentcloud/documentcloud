@@ -643,6 +643,34 @@ class Document < ActiveRecord::Base
     self.update_attributes :access => PENDING
     record_job(DC::Import::CloudCrowdImporter.new.import([id], options, self.low_priority?).body)
   end
+  
+  # Create an identical clone of this document, in all ways (except for the ID).
+  def duplicate!
+    
+    # Clone the document.
+    copy     = Document.create!(attributes.merge(:created_at => Time.now, :updated_at => Time.now))
+    newattrs = {:document_id => copy.id}
+    
+    # Clone the docdata.
+    if docdata
+      Docdata.create! docdata.attributes.merge newattrs
+    end
+    
+    # Clone the associations.
+    [annotations, entities, entity_dates, pages, sections, project_memberships].each do |association|
+      association.each do |model|
+        model.class.create! model.attributes.merge newattrs
+      end
+    end
+    
+    # Clone the assets.
+    DC::Store::AssetStore.new.copy_assets(self, copy)
+    
+    # Reindex.
+    copy.index
+    
+    copy
+  end
 
   # TODO: Make the to_json an extended form of the canonical.
   def to_json(opts={})

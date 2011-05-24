@@ -116,6 +116,21 @@ module DC
       def destroy(document)
         bucket.delete_folder(document.path)
       end
+      
+      # Duplicate all of the assets from one document over to another.
+      def copy_assets(original, copy)
+        bucket.copy_key original.pdf_path, copy.pdf_path
+        bucket.copy_key original.full_text_path, copy.full_text_path
+        bucket.copy_key original.rdf_path, copy.rdf_path if bucket.key(original.rdf_path).exists?
+        original.pages.each do |page|
+          num = page.page_number
+          bucket.copy_key original.page_text_path(num), copy.page_text_path(num)
+          Page::IMAGE_SIZES.keys.each do |size|
+            bucket.copy_key original.page_image_path(num, size), copy.page_image_path(num, size)
+          end
+        end
+        true
+      end
 
 
       private
