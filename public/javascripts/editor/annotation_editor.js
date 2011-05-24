@@ -31,6 +31,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     if (kind != 'redact') this._inserts.filter('.visible').show().addClass('DV-' + kind);
     this.page.bind('mousedown', this.drawAnnotation);
     $(document).bind('keydown', this.close);
+    $(document.body).setMode(kind, 'editing');
     this._buttons[kind].addClass('open');
     this._guide.fadeIn('fast');
   },
@@ -43,6 +44,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     this.clearAnnotation();
     this.clearRedactions();
     this._inserts.hide().removeClass('DV-public DV-private');
+    $(document.body).setMode(null, 'editing');
     this._buttons[this._kind].removeClass('open');
     this._guide.hide();
   },

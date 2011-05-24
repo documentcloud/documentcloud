@@ -258,6 +258,15 @@
   border: 1px solid #ccc;
 }
 
+/* Hide annotations while redacting. ---------------------------------------*/
+
+body.redact_editing .DV-annotationRegion {
+  display: none;
+}
+  body.redact_editing .DV-annotationRegion.DV-accessRedact {
+    display: block;
+  }
+
 /*---------------------------- Editing Toolbar -------------------------------*/
 .editor_toolbar {
   z-index: 10001;
