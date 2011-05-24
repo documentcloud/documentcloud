@@ -648,7 +648,7 @@ class Document < ActiveRecord::Base
   def duplicate!
     
     # Clone the document.
-    copy     = Document.create!(attributes.merge(:created_at => Time.now, :updated_at => Time.now))
+    copy     = Document.create!(attributes.merge(:access => PENDING, :created_at => Time.now, :updated_at => Time.now))
     newattrs = {:document_id => copy.id}
     
     # Clone the docdata.
@@ -666,8 +666,9 @@ class Document < ActiveRecord::Base
     # Clone the assets.
     DC::Store::AssetStore.new.copy_assets(self, copy)
     
-    # Reindex.
+    # Reindex, set access.
     copy.index
+    copy.set_access access
     
     copy
   end
