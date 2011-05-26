@@ -1,6 +1,6 @@
 // The `dc.app.searcher` is the core controller for running document searches
-// from the client side. It's main "view" is the `dc.ui.SearchBox`.
-dc.controllers.Searcher = Backbone.Controller.extend({
+// from the client side. It's main "view" is the dc.ui.SearchBox.
+dc.controllers.Searcher = Backbone.Router.extend({
 
   // Error messages to display when your search returns no results.
   NO_RESULTS : {

@@ -1,4 +1,4 @@
-//     Backbone.js 0.3.3
+//     Backbone.js 0.5.0-pre
 //     (c) 2010 Jeremy Ashkenas, DocumentCloud Inc.
 //     Backbone may be freely distributed under the MIT license.
 //     For all details and documentation:
@@ -25,7 +25,7 @@
   }
 
   // Current version of the library. Keep in sync with `package.json`.
-  Backbone.VERSION = '0.3.3';
+  Backbone.VERSION = '0.5.0-pre';
 
   // Require Underscore, if we're on the server, and it's not already present.
   var _ = root._;
@@ -578,7 +578,7 @@
       if (!model.collection) {
         model.collection = this;
       }
-      var index = this.comparator ? this.sortedIndex(model, this.comparator) : 
+      var index = this.comparator ? this.sortedIndex(model, this.comparator) :
                   options.at != null ? options.at : this.length;
       this.models.splice(index, 0, model);
       model.bind('all', this._onModelEvent);
@@ -641,16 +641,14 @@
     };
   });
 
-  // Backbone.Controller
+  // Backbone.Router
   // -------------------
 
-  // Controllers map faux-URLs to actions, and fire events when routes are
+  // Routers map faux-URLs to actions, and fire events when routes are
   // matched. Creating a new one sets its `routes` hash, if not set statically.
-  Backbone.Controller = function(options) {
+  Backbone.Router = function(options) {
     options || (options = {});
     if (options.routes) this.routes = options.routes;
-    this.pushState    = this._supportsPushState(options.pushState);
-    this.optPushState = options.pushState;
     this._bindRoutes();
     this.initialize(options);
   };
@@ -661,8 +659,8 @@
   var splatParam    = /\*([\w\d]+)/g;
   var escapeRegExp  = /[-[\]{}()+?.,\\^$|#\s]/g;
 
-  // Set up all inheritable **Backbone.Controller** properties and methods.
-  _.extend(Backbone.Controller.prototype, Backbone.Events, {
+  // Set up all inheritable **Backbone.Router** properties and methods.
+  _.extend(Backbone.Router.prototype, Backbone.Events, {
 
     // Initialize is an empty function by default. Override it with your own
     // initialization logic.
@@ -675,10 +673,7 @@
     //     });
     //
     route : function(route, name, callback) {
-      Backbone.history || (Backbone.history = new Backbone.History({
-        pushState     : this.pushState, 
-        optPushState  : this.optPushState
-      }));
+      Backbone.history || (Backbone.history = new Backbone.History);
       if (!_.isRegExp(route)) route = this._routeToRegExp(route);
       Backbone.history.route(route, _.bind(function(fragment) {
         var args = this._extractParameters(route, fragment);
@@ -692,7 +687,7 @@
     saveLocation : function(fragment) {
       Backbone.history.saveLocation(fragment);
     },
-    
+
     // Simple proxy to `Backbone.history` to both save a fragment into the
     // history and to then load the route at that fragment. Used in place
     // of settings `window.location.hash` when using `window.history.pushState`.
@@ -716,7 +711,7 @@
     },
 
     // Convert a route string into a regular expression, suitable for matching
-    // against the current location fragment.
+    // against the current location hash.
     _routeToRegExp : function(route) {
       route = route.replace(escapeRegExp, "\\$&")
                    .replace(namedParam, "([^\/]*)")
@@ -728,11 +723,6 @@
     // extracted parameters.
     _extractParameters : function(route, fragment) {
       return route.exec(fragment).slice(1);
-    },
-    
-    // If pushState is enabled, check if browser supports pushState in history.
-    _supportsPushState : function(pushState) {
-      return !!(pushState && window.history && window.history.pushState);
     }
 
   });
@@ -740,10 +730,9 @@
   // Backbone.History
   // ----------------
 
-  // Handles cross-browser history management, based on URL hashes. If the
+  // Handles cross-browser history management, based on URL fragments. If the
   // browser does not support `onhashchange`, falls back to polling.
-  Backbone.History = function(options) {
-    this.options = options || (options = {});
+  Backbone.History = function() {
     this.handlers = [];
     _.bindAll(this, 'checkUrl');
   };
@@ -767,7 +756,7 @@
     // Get the cross-browser normalized URL fragment.
     getFragment : function(fragment, forcePushState) {
       if (!fragment) {
-        if (this.options.pushState || forcePushState) {
+        if (this._hasPushState || forcePushState) {
           fragment = window.location.pathname;
           var search = window.location.search;
           if (search) fragment += search;
@@ -782,26 +771,29 @@
     // Start the hash change handling, returning `true` if the current URL matches
     // an existing route, and `false` otherwise.
     start : function(options) {
-      this.options = _.extend({}, {root: '/'}, this.options, options);
-      if (historyStarted && !this.options.force) throw new Error("Backbone.history has already been started");
+      if (historyStarted) throw new Error("Backbone.history has already been started");
+      this.options          = _.extend({}, {root: '/'}, this.options, options);
+      this._wantsPushState  = !!this.options.pushState;
+      this._hasPushState    = !!(this.options.pushState && window.history && window.history.pushState);
+      var fragment          = this.getFragment();
       var docMode = document.documentMode;
       var oldIE = (isExplorer.exec(navigator.userAgent.toLowerCase()) && (!docMode || docMode <= 7));
       if (oldIE) {
         this.iframe = $('<iframe src="javascript:0" tabindex="-1" />').hide().appendTo('body')[0].contentWindow;
         this.saveLocation(fragment);
       }
-      if (this.options.pushState) {
+      if (this._hasPushState) {
         $(window).bind('popstate', this.checkUrl);
       } else if ('onhashchange' in window && !oldIE) {
         $(window).bind('hashchange', this.checkUrl);
       } else {
         setInterval(this.checkUrl, this.interval);
       }
+      this.fragment = fragment;
       historyStarted = true;
       var started = this.loadUrl() || this.loadUrl(window.location.hash);
-      
-      if (this.options.optPushState && !this.options.pushState && 
-          window.location.pathname != this.options.root) {
+
+      if (this._wantsPushState && !this._hasPushState && window.location.pathname != this.options.root) {
         this.fragment = this.getFragment(null, true);
         window.location.href = this.options.root + '#' + this.fragment;
       } else {
@@ -809,7 +801,7 @@
       }
     },
 
-    // Add a route to be tested when the hash changes. Routes added later may
+    // Add a route to be tested when the fragment changes. Routes added later may
     // override previous routes.
     route : function(route, callback) {
       this.handlers.unshift({route : route, callback : callback});
@@ -824,7 +816,7 @@
       }
       if (current == this.fragment ||
           current == decodeURIComponent(this.fragment)) return false;
-      
+
       if (this.iframe) {
         window.location.hash = this.iframe.location.hash = current;
       }
@@ -850,10 +842,10 @@
     // a `hashchange` event.
     saveLocation : function(fragment) {
       fragment = (fragment || '').replace(hashStrip, '');
-      if (this.fragment == fragment ||
-          this.fragment == decodeURIComponent(fragment)) return;
-      
-      if (this.options.pushState) {
+      if (this.fragment == fragment || this.fragment == decodeURIComponent(fragment)) return;
+
+      console.log(this._hasPushState);
+      if (this._hasPushState) {
         var loc = window.location;
         if (fragment.indexOf(this.options.root) != 0) fragment = this.options.root + fragment;
         this.fragment = fragment;
@@ -890,7 +882,7 @@
   };
 
   // Cached regex to split keys for `delegate`.
-  var eventSplitter = /^(\w+)\s*(.*)$/;
+  var eventSplitter = /^(\S+)\s*(.*)$/;
 
   // List of view options to be merged as properties.
   var viewOptions = ['model', 'collection', 'el', 'id', 'attributes', 'className', 'tagName'];
@@ -1003,7 +995,7 @@
 
   // Set up inheritance for the model, collection, and view.
   Backbone.Model.extend = Backbone.Collection.extend =
-    Backbone.Controller.extend = Backbone.View.extend = extend;
+    Backbone.Router.extend = Backbone.View.extend = extend;
 
   // Map from CRUD to HTTP for our default `Backbone.sync` implementation.
   var methodMap = {
