@@ -10,7 +10,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
   initialize : function() {
     this.createSubViews();
     this.renderSubViews();
-    dc.app.searcher = new dc.controllers.Searcher({pushState: true});
+    dc.app.searcher = new dc.controllers.Searcher;
     if (!Backbone.history.start({pushState: true})) {
       dc.app.searcher.loadDefault({showHelp: true});
     }

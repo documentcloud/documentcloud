@@ -1,13 +1,13 @@
 ActionController::Routing::Routes.draw do |map|
 
   # Internal Search API.
-  # /search/documents.json
+  map.internal_search '/search/documents.json', :controller => 'search', :action => 'documents'
 
   # Journalist workspace and surrounding HTML.
   map.with_options :controller => 'workspace' do |main|
     main.root
     main.search     '/search',        :action => 'index'
-    main.search     '/search/:query', :action => 'index'
+    main.search     '/search/:query', :action => 'index', :query => /.*/
     main.help       '/help',          :action => 'help'
     main.help       '/help/:page',    :action => 'help'
     main.results    '/results',       :action => 'index'
