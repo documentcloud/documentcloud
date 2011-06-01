@@ -77,7 +77,7 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
       this.height = this._preview.height();
     }
   },
-  
+
   _renderNote : function() {
     var noteView = new dc.ui.Note({
       model         : this.note,
@@ -98,7 +98,7 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
     var serialized       = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['workspace/note_embed_code']({
       note    : this.note,
-      options : serialized.join(',&#10;    ')
+      options : serialized.join(',\n    ')
     }));
   },
 
@@ -131,7 +131,7 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   selectSnippet : function() {
     this.$('.snippet').select();
   },
-  
+
   // If necessary, let the user change the document's access level before embedding.
   editAccessLevel : function() {
     this.close();
