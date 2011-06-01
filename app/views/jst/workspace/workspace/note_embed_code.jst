@@ -3,12 +3,12 @@
 </div>
 
 <textarea class="snippet">
-&lt;div id="DC-note-<%= note.get('id') %>" class="DC-note-container"&gt;&lt;/div&gt;&#10;
-&lt;script src="http://s3.documentcloud.org/notes/loader.js"&gt;&lt;/script&gt;&#10;
-&lt;script&gt;&#10;
-  dc.embed.loadNote('<%= window.SERVER_ROOT_HTTP %>/documents/<%= note.get('document_id') %>/annotations/<%= note.get('id') %>.js'<% if (options) { %>, {&#10;
-    <%= options %>&#10;
-  }<% } %>);&#10;
+&lt;div id="DC-note-<%= note.get('id') %>" class="DC-note-container"&gt;&lt;/div&gt;
+&lt;script src="http://s3.documentcloud.org/notes/loader.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  dc.embed.loadNote('<%= window.SERVER_ROOT_HTTP %>/documents/<%= note.get('document_id') %>/annotations/<%= note.get('id') %>.js'<% if (options) { %>, {
+    <%= options %>
+  }<% } %>);
 &lt;/script&gt;
 </textarea>
 
