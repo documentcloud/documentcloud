@@ -49,6 +49,8 @@ A dialog will appear which you can use to view the existing key/value pairs, add
 
 To filter documents by data that you've added, either click on the tag (shown in the picture above), or search for the key/value pair as you would for any other field, by typing `citizen: Pakistan` into the search box.
 
+If you'd like to filter all documents with a `citizen` key, but you don't care about the value, you can use: `citizen: *`
+
 Still have questions about how to search? Don't hesitate to [contact us][].
 
 To see the details of how to use our search API, view the [API documentation][].

@@ -6,7 +6,7 @@ module DC
   module Search
 
     module Matchers
-      FIELD         = /("(.+?)"|'(.+?)'|[^'"\s]{2}\S*):\s*("(.+?)"|'(.+?)'|[^'"\s]{2}\S*)/
+      FIELD         = /("(.+?)"|'(.+?)'|[^'"\s]{2}\S*):\s*("(.+?)"|'(.+?)'|[^'"\s]\S*)/
       QUOTED_VALUE  = /("(.+?)"|'(.+?)')/
       BOOLEAN_OR    = /\s+OR\s+/
     end

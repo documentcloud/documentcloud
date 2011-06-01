@@ -305,22 +305,36 @@ module DC
         end
       end
       
-      # Generate the Solr or SQL to match user-data queries.
+      # Generate the Solr or SQL to match user-data queries. If the value 
+      # is "*", assume that any document that contains the key will do.
       def build_data
         data = @data
         if needs_solr?
           @solr.build do
             dynamic :data do
               data.each do |datum|
-                with datum.kind, datum.value
+                if datum.value == '*'
+                  without datum.kind, nil
+                else
+                  with datum.kind, datum.value
+                end
               end
             end
           end
         else
           hash = {}
-          data.each {|datum| hash[datum.kind] = datum.value }
-          @sql << 'docdata.data @> ?'
-          @interpolations << Docdata.to_hstore(hash)
+          data.each do |datum| 
+            if datum.value == '*'
+              @sql << 'defined(docdata.data, ?)'
+              @interpolations << datum.kind
+            else
+              hash[datum.kind] = datum.value
+            end
+          end
+          unless hash.empty?
+            @sql << 'docdata.data @> ?'
+            @interpolations << Docdata.to_hstore(hash)
+          end
           @joins << 'inner join docdata ON documents.id = docdata.document_id'
         end
       end
