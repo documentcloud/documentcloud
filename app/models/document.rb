@@ -389,6 +389,10 @@ class Document < ActiveRecord::Base
     "/#{canonical_path(:js)}"
   end
 
+  def project_ids
+    self.project_memberships.map {|m| m.project_id }
+  end
+  
   # Externally used image path, not to be confused with `page_image_path()`
   def page_image_template
     "#{slug}-p{page}-{size}.gif"
@@ -706,6 +710,7 @@ class Document < ActiveRecord::Base
       :hits                => hits,
       :mentions            => mentions,
       :total_mentions      => total_mentions,
+      :project_ids         => project_ids,
       :data                => data
     }.to_json
   end

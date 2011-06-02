@@ -13,7 +13,6 @@ dc.model.Project = Backbone.Model.extend({
   set : function(attrs, options) {
     attrs || (attrs = {});
     if (attrs.title)            attrs.title = dc.inflector.trim(attrs.title).replace(/"/g, '');
-    if (attrs.document_ids)     attrs.document_count = attrs.document_ids.length;
     if (attrs.account_id)       attrs.owner = attrs.account_id == dc.account.id;
     Backbone.Model.prototype.set.call(this, attrs, options);
     if (attrs.id) this._setCollaboratorsResource();
@@ -33,27 +32,45 @@ dc.model.Project = Backbone.Model.extend({
     $(document.body).append((new dc.ui.ProjectDialog({model : this})).render().el);
   },
 
-  documentCount : function() {
-    return this.get('document_ids').length;
-  },
-
   addDocuments : function(documents) {
-    var ids = _.pluck(documents, 'id');
-    var newIds = _.uniq(this.get('document_ids').concat(ids));
-    this.save({document_ids : newIds});
-    this.notifyProjectChange(documents.length, false);
+    var projectId  = this.get('id');
+    var ids        = _.uniq(_.pluck(documents, 'id'));
+    var addedCount = _.reduce(documents, function(sum, doc) {
+      if (!_.contains(doc.get('project_ids'), projectId)) sum += 1;
+      return sum;
+    }, 0);
+    this.set({document_count : this.get('document_count') + addedCount});
+    this.notifyProjectChange(addedCount, false);
+    $.ajax({
+      url     : '/projects/' + projectId + '/add_documents',
+      type    : 'POST',
+      data    : {document_ids : ids},
+      success : _.bind(function(resp) {
+        this.set(resp);
+      }, this)
+    });
   },
 
   removeDocuments : function(documents, localOnly) {
-    var args = _.pluck(documents, 'id');
-    args.unshift(this.get('document_ids'));
-    var newIds = _.without.apply(_, args);
+    var projectId     = this.get('id');
+    var ids           = _.uniq(_.pluck(documents, 'id'));
+    var removedCount  = _.reduce(documents, function(sum, doc) {
+      if (_.contains(doc.get('project_ids'), projectId)) sum += 1;
+      return sum;
+    }, 0);
+    
     if (Projects.firstSelected() === this) Documents.remove(documents);
-    if (localOnly) {
-      this.set({document_ids : newIds});
-    } else {
-      this.save({document_ids : newIds});
-      this.notifyProjectChange(documents.length, true);
+    this.set({document_count : this.get('document_count') - removedCount});
+    this.notifyProjectChange(removedCount, true);
+    if (!localOnly) {
+      $.ajax({
+        url : '/projects/' + projectId + '/remove_documents',
+        type : 'POST',
+        data : {document_ids : ids},
+        success : _.bind(function(resp) {
+          this.set(resp);
+        }, this)
+      });
     }
   },
 
@@ -66,7 +83,7 @@ dc.model.Project = Backbone.Model.extend({
 
   // Does this project already contain a given document?
   contains : function(doc) {
-    return _.indexOf(this.get('document_ids'), doc.id) >= 0;
+    return _.contains(doc.get('project_ids'), this.get('id'));
   },
 
   // Does this project already contain any of the given documents?

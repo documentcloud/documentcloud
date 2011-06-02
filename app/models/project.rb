@@ -51,6 +51,18 @@ class Project < ActiveRecord::Base
     @document_ids = nil
     reindex_documents new_ids ^ old_ids
   end
+  
+  def add_documents(new_ids)
+    add_ids = new_ids.uniq - self.document_ids
+    add_ids.each {|doc_id| self.project_memberships.create(:document_id => doc_id) }
+    reindex_documents add_ids
+  end
+  
+  def remove_documents(ids)
+    ids.uniq!
+    ids.each {|doc_id| self.project_memberships.find_by_document_id(doc_id).destroy }
+    reindex_documents ids
+  end
 
   def add_collaborator(account, creator=nil)
     if !hidden? && account.reviewer?
@@ -113,7 +125,6 @@ class Project < ActiveRecord::Base
     data['id']            = id
     data['title']         = title
     data['description']   = description
-    data['document_ids']  = self.documents.all(:select => 'documents.id, slug').map {|doc| doc.canonical_id }
     data
   end
 
@@ -122,7 +133,7 @@ class Project < ActiveRecord::Base
     attrs = attributes.merge(
       :account_full_name  => account_full_name,
       :annotation_count   => annotation_count(acc),
-      :document_ids       => document_ids
+      :document_count     => project_memberships.count
     )
     if opts[:include_collaborators]
       attrs[:collaborators] = other_collaborators(acc).map {|c| c.canonical(:include_organization => true) }

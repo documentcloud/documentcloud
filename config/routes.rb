@@ -80,7 +80,11 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # Projects.
-  map.resources :projects, :has_many => :collaborators, :member => {:documents => :get}
+  map.resources :projects, :has_many => :collaborators, :member => {
+    :documents        => :get,
+    :add_documents    => :post,
+    :remove_documents => :post
+  }
 
   # Home pages.
   map.with_options :controller => 'home' do |home|

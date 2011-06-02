@@ -10,13 +10,8 @@ class ProjectsController < ApplicationController
     json current_account.projects.create(pick(params, :title, :description, :document_ids))
   end
 
-  # TODO: Ensure that the document ids you're adding are for documents you
-  # have access to.
   def update
-    data = pick(params, :title, :description, :document_ids)
-    ids  = (data.delete(:document_ids) || []).map(&:to_i)
-    docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => ids}, :select => 'id')
-    current_project.set_documents(docs.map(&:id))
+    data = pick(params, :title, :description)
     current_project.update_attributes data
     json current_project.reload
   end
@@ -29,7 +24,20 @@ class ProjectsController < ApplicationController
   def documents
     json current_project.loaded_documents
   end
-
+  
+  def add_documents
+    ids = params[:document_ids].map(&:to_i)
+    docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => ids}, :select => 'id')
+    current_project.add_documents(docs.map(&:id))
+    json current_project
+  end
+  
+  def remove_documents
+    ids = params[:document_ids].map(&:to_i)
+    docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => ids}, :select => 'id')
+    current_project.remove_documents(docs.map(&:id))
+    json current_project
+  end
 
   private
 

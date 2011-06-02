@@ -51,16 +51,19 @@ dc.model.Account = Backbone.Model.extend({
   },
 
   collaborates: function(model) {
-    var docId = model.get('document_id') || model.id;
+    var docId      = model.get('document_id') || model.id;
+    var projectIds = model.get('project_ids');
+    
     for (var i = 0, l = Projects.length; i < l; i++) {
       var project = Projects.models[i];
-      if (_.include(project.get('document_ids'), docId) && !project.get('hidden')) {
+      if (_.contains(projectIds, project.get('id')) && !project.get('hidden')) {
         for (var j = 0, k = project.collaborators.length; j < k; j++) {
           var collab = project.collaborators.models[j];
           if (collab.ownsOrOrganization(model)) return true;
         }
       }
     }
+    
     return false;
   },
 
