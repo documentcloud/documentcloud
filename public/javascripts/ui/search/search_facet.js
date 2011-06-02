@@ -8,7 +8,6 @@ dc.ui.SearchFacet = Backbone.View.extend({
     'click input'                   : 'enableEdit',
     'click .category'               : 'selectFacet',
     'keydown input'                 : 'keydown',
-    'keypress input'                : 'keypress',
     'blur input'                    : 'deferDisableEdit',
     'mouseover .cancel_search'      : 'showDelete',
     'mouseout .cancel_search'       : 'hideDelete',
@@ -17,7 +16,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   initialize : function(options) {
     this.setMode('not', 'editing');
-    _.bindAll(this, 'set', 'keydown', 'keypress', 'deselectFacet');
+    _.bindAll(this, 'set', 'keydown', 'deselectFacet');
   },
   
   render : function() {
@@ -134,11 +133,9 @@ dc.ui.SearchFacet = Backbone.View.extend({
     if (!selectAll) {
       dc.app.searchBox.addFocus();
       $(document).unbind('keydown.facet', this.keydown);
-      $(document).unbind('keypress.facet', this.keypress);
       $(document).unbind('click.facet', this.deselectFacet);
       _.defer(_.bind(function() {
         $(document).unbind('keydown.facet').bind('keydown.facet', this.keydown);
-        $(document).unbind('keypress.facet').bind('keypress.facet', this.keypress);
         $(document).unbind('click.facet').one('click.facet', this.deselectFacet);
       }, this));
       dc.app.searchBox.disableFacets(this);
@@ -150,7 +147,6 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.setMode('not', 'selected');
     this.closeAutocomplete();
     $(document).unbind('keydown.facet', this.keydown);
-    $(document).unbind('keypress.facet', this.keypress);
     $(document).unbind('click.facet', this.deselectFacet);
   },
   
@@ -193,7 +189,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       var re = dc.inflector.escapeRegExp(searchTerm || '');
       var matcher = new RegExp('\\b' + re, 'i');
       matches = $.grep(matches, function(item) {
-        return matcher.test(item);
+        return matcher.test(item) || matcher.test(item.value) || matcher.test(item.label);
       });
     }
 
@@ -227,9 +223,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
     SearchQuery.remove(this.model);
     if (committed) {
       this.search();
-    } else {
-      dc.app.searchBox.renderQuery(this);
     }
+    dc.app.searchBox.focusNextFacet(this, 0, {viewPosition: this.options.order});
   },
   
   removeLastCharacter : function() {
@@ -239,26 +234,14 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.resize();
   },
   
-  keypress : function(e) {
-    console.log(['keypress', e.which, this.box.val()]);
-    if (dc.app.hotkeys.key(e) == 'backspace') {
-      if (this.modes.selected == 'is') {
-        e.preventDefault();
-        this.remove(e);
-      } else if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
-        e.preventDefault();
-        this.selectFacet();
-      }
-    }
-  },
-  
   keydown : function(e) {
-    dc.app.hotkeys.down(e);
-    console.log(['keydown', e.which, this.box.val(), this.box.getCursorPosition(), this.box.getSelection().length, dc.app.hotkeys.key(e), dc.app.hotkeys.left, dc.app.hotkeys.right]);
-    if (dc.app.hotkeys.enter && this.box.val()) {
+    var key = dc.app.hotkeys.key(e);
+    console.log(['facet keydown', key, this.box.val(), this.box.getCursorPosition(), this.box.getSelection().length, dc.app.hotkeys.left, dc.app.hotkeys.right]);
+
+    if (key == 'enter' && this.box.val()) {
       this.disableEdit(e);
       this.search(e);
-    } else if (dc.app.hotkeys.key(e) == 'left') {
+    } else if (key == 'left') {
       if (this.box.getCursorPosition() == 0) {
         if (this.modes.selected == 'is') {
           this.deselectFacet();
@@ -267,7 +250,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
           this.selectFacet();
         }
       }
-    } else if (dc.app.hotkeys.key(e) == 'right') {
+    } else if (key == 'right') {
       if (this.modes.selected == 'is') {
         e.preventDefault();
         this.deselectFacet(e);
@@ -278,12 +261,12 @@ dc.ui.SearchFacet = Backbone.View.extend({
         this.disableEdit(e);
         dc.app.searchBox.focusNextFacet(this, 1);
       }
-    } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
+    } else if (dc.app.hotkeys.shift && key == 'tab') {
       e.preventDefault();
       this.deselectFacet(e);
       this.disableEdit(e);
       dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true, skipToFacet: true});
-    } else if (dc.app.hotkeys.tab) {
+    } else if (key == 'tab') {
       e.preventDefault();
       this.deselectFacet(e);
       this.disableEdit(e);
@@ -292,7 +275,19 @@ dc.ui.SearchFacet = Backbone.View.extend({
       e.preventDefault();
       dc.app.searchBox.selectAllFacets(this);
       return false;
+    } else if (dc.app.hotkeys.printable(e) && this.modes.selected == 'is') {
+      dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true});
+      this.remove();
+    } else if (key == 'backspace') {
+      if (this.modes.selected == 'is') {
+        e.preventDefault();
+        this.remove(e);
+      } else if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
+        e.preventDefault();
+        this.selectFacet();
+      }
     }
+    
     this.resize(e);
   },
   

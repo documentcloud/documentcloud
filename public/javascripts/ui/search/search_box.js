@@ -221,12 +221,13 @@ dc.ui.SearchBox = Backbone.View.extend({
     var viewPosition = options.viewPosition || this.viewPosition(currentView);
     var viewType     = currentView.type;
     
+    console.log(['focusNextFacet', viewCount, viewPosition, viewType, direction, options]);
     // Correct for bouncing between matching text and facet arrays.
     if (!options.skipToFacet) {
       if (viewType == 'text'  && direction > 0) direction -= 1;
       if (viewType == 'facet' && direction < 0) direction += 1;
     } else if (options.skipToFacet && viewType == 'text' && 
-               viewCount == viewPosition && direction > 0) {
+               viewCount == viewPosition && direction >= 0) {
       viewPosition = 0;
       direction    = 0;
     }

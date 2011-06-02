@@ -29,7 +29,7 @@ dc.ui.SearchInput = Backbone.View.extend({
   ],
 
   events : {
-    'keypress input'            : 'maybeSearch',
+    'keypress input'            : 'keypress',
     'keydown input'             : 'keydown',
     // 'search input'           : 'searchEvent',
     'focus input'               : 'addFocus',
@@ -168,13 +168,13 @@ dc.ui.SearchInput = Backbone.View.extend({
   },
   
   // Callback fired on key press in the search box. We search when they hit return.
-  maybeSearch : function(e) {
-    // console.log(['box key', e.keyCode, dc.app.hotkeys.key(e)]);
-    if (dc.app.hotkeys.key(e) == 'enter') {
+  keypress : function(e) {
+    var key = dc.app.hotkeys.key(e);
+    console.log(['input keypress', e.keyCode, key, this.box.getCursorPosition()]);
+    
+    if (key == 'enter') {
       return dc.app.searchBox.searchEvent(e);
-    }
-
-    if (dc.app.hotkeys.colon(e)) {
+    } else if (dc.app.hotkeys.colon(e)) {
       this.box.trigger('resize.autogrow', e);
       var query = this.box.val();
       if (_.contains(_.pluck(this.PREFIXES, 'label'), query)) {
@@ -184,46 +184,46 @@ dc.ui.SearchInput = Backbone.View.extend({
         this.clear();
         return false;
       }
-    } else if (dc.app.hotkeys.key(e) == 'backspace' && !dc.app.searchBox.allSelected()) {
-      if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
-        e.preventDefault();
-        dc.app.searchBox.focusNextFacet(this, -1, {backspace: true});
-        return false;
-      }
     }
   },
   
   keydown : function(e) {
-    dc.app.hotkeys.down(e);
-    console.log(['box keydown', e.keyCode, e.which, this.box.getCursorPosition()]);
+    var key = dc.app.hotkeys.key(e);
+    console.log(['input keydown', key, e.which, this.box.getCursorPosition()]);
     this.box.trigger('resize.autogrow', e);
     
-    if (dc.app.hotkeys.key(e) == 'left') {
+    if (key == 'left') {
       if (this.box.getCursorPosition() == 0) {
         e.preventDefault();
         dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true});
       }
-    } else if (dc.app.hotkeys.key(e) == 'right') {
+    } else if (key == 'right') {
       if (this.box.getCursorPosition() == this.box.val().length) {
         e.preventDefault();
         dc.app.searchBox.focusNextFacet(this, 1, {selectFacet: true});
       }
-    } else if (dc.app.hotkeys.shift && dc.app.hotkeys.tab) {
+    } else if (dc.app.hotkeys.shift && key == 'tab') {
       e.preventDefault();
       dc.app.searchBox.focusNextFacet(this, -1);
-    } else if (dc.app.hotkeys.tab) {
+    } else if (key == 'tab') {
       e.preventDefault();
       var value = this.box.val();
       if (value.length) {
         var remainder = this.addTextFacetRemainder(value);
         dc.app.searchBox.addFacet(value, '', this.options.position + (remainder?1:0));
       } else {
-        dc.app.searchBox.focusNextFacet(this, 1, {skipToFacet: true});
+        dc.app.searchBox.focusNextFacet(this, 0, {skipToFacet: true});
       }
     } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
       e.preventDefault();
       dc.app.searchBox.selectAllFacets(this);
       return false;
+    } else if (key == 'backspace' && !dc.app.searchBox.allSelected()) {
+      if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
+        e.preventDefault();
+        dc.app.searchBox.focusNextFacet(this, -1, {backspace: true});
+        return false;
+      }
     }
   }
   
