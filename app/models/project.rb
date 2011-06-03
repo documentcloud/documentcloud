@@ -54,8 +54,9 @@ class Project < ActiveRecord::Base
   end
   
   def add_documents(new_ids)
-    add_ids = new_ids.uniq - self.document_ids
-    add_ids.each {|doc_id| self.project_memberships.create(:document_id => doc_id) }
+    rows = self.project_memberships.all(:conditions => {:document_id => new_ids.uniq}, :select => :document_id)
+    add_ids = new_ids - rows.map(&:document_id)
+    add_ids.each {|id| self.project_memberships.create(:document_id => id) }
     reindex_documents add_ids
   end
   
@@ -154,7 +155,7 @@ class Project < ActiveRecord::Base
     ids ||= self.document_ids
     return if ids.empty?
     update_reviewer_counts
-    Document.all(:conditions => ["id in (?)", ids]).each {|doc| doc.index }
+    Document.find_each(:conditions => ["id in (?)", ids]) {|doc| doc.index }
   end
 
 end

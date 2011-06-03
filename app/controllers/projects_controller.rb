@@ -27,14 +27,14 @@ class ProjectsController < ApplicationController
   
   def add_documents
     ids = params[:document_ids].map(&:to_i)
-    docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => ids}, :select => 'id')
+    docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => ids}, :select => 'documents.id')
     current_project.add_documents(docs.map(&:id))
     json current_project
   end
   
   def remove_documents
     ids = params[:document_ids].map(&:to_i)
-    docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => ids}, :select => 'id')
+    docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => ids}, :select => 'documents.id')
     current_project.remove_documents(docs.map(&:id))
     json current_project
   end

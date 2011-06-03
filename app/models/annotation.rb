@@ -28,7 +28,7 @@ class Annotation < ActiveRecord::Base
     access << "((annotations.access = #{EXCLUSIVE}) and annotations.organization_id = #{account.organization_id})" if account
     access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
     access << "((annotations.access = #{EXCLUSIVE}) and project_memberships.project_id in (?))" if account && account.accessible_project_ids.present?
-    opts = {:conditions => ["(#{access.join(' or ')})"]}
+    opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
     if account && account.accessible_project_ids.present?
       opts[:conditions].push(account.accessible_project_ids) 
       opts[:joins] = 'left outer join project_memberships on project_memberships.document_id = annotations.document_id'
