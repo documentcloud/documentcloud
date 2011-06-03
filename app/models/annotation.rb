@@ -3,9 +3,11 @@ class Annotation < ActiveRecord::Base
   include DC::Store::DocumentResource
   include DC::Access
 
-  belongs_to :document
+  belongs_to :document, :foreign_key => 'id', :primary_key => 'document_id'
   belongs_to :account # NB: This account is not the owner of the document.
                       #     Rather, it is the author of the annotation.
+                      
+  has_many :project_memberships, :through => :document
 
   attr_accessor :author
 
@@ -25,10 +27,13 @@ class Annotation < ActiveRecord::Base
     access << "(annotations.access = #{PUBLIC})"
     access << "((annotations.access = #{EXCLUSIVE}) and annotations.organization_id = #{account.organization_id})" if account
     access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
-    access << "((annotations.access = #{EXCLUSIVE}) and annotations.document_id in (?))" if account && account.shared_document_ids.present?
-    conditions = ["(#{access.join(' or ')})"]
-    conditions.push(account.shared_document_ids) if account && account.shared_document_ids.present?
-    {:conditions => conditions}
+    access << "((annotations.access = #{EXCLUSIVE}) and project_memberships.project_id in (?))" if account && account.accessible_project_ids.present?
+    opts = {:conditions => ["(#{access.join(' or ')})"]}
+    if account && account.accessible_project_ids.present?
+      opts[:conditions].push(account.accessible_project_ids) 
+      opts[:joins] = 'left outer join project_memberships on project_memberships.document_id = annotations.document_id'
+    end
+    opts
   }
 
   named_scope :owned_by, lambda { |account|
@@ -50,7 +55,7 @@ class Annotation < ActiveRecord::Base
 
   def self.counts_for_documents(account, docs)
     doc_ids = docs.map {|doc| doc.id }
-    self.accessible(account).count(:conditions => {:document_id => doc_ids}, :group => 'document_id')
+    self.accessible(account).count(:conditions => {:document_id => doc_ids}, :group => 'annotations.document_id')
   end
 
   def self.populate_author_info(notes, current_account=nil)

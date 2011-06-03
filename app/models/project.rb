@@ -4,7 +4,8 @@ require 'set'
 # name under which to group a set of related documents, purely for
 # organizational purposes.
 class Project < ActiveRecord::Base
-
+  include DC::Access
+  
   belongs_to :account
   has_many :project_memberships, :dependent => :destroy
   has_many :collaborations,      :dependent => :destroy
@@ -59,9 +60,9 @@ class Project < ActiveRecord::Base
   end
   
   def remove_documents(ids)
-    ids.uniq!
-    ids.each {|doc_id| self.project_memberships.find_by_document_id(doc_id).destroy }
-    reindex_documents ids
+    memberships = self.project_memberships.all(:conditions => {:document_id => ids})
+    memberships.each {|m| m.destroy }
+    reindex_documents memberships.map {|m| m.document_id }
   end
 
   def add_collaborator(account, creator=nil)
@@ -115,9 +116,13 @@ class Project < ActiveRecord::Base
   # How many of those annotations are accessible to a given account?
   def annotation_count(account=nil)
     account ||= self.account
-    @annotation_count ||= Annotation.accessible(account).count(
-      {:conditions => {:document_id => document_ids}}
-    )
+    @annotation_count ||= Annotation.count_by_sql <<-EOS
+      select count(*) from annotations 
+        inner join project_memberships on project_memberships.document_id = annotations.document_id
+      where project_memberships.project_id = #{id}
+      and (annotations.access in (#{PUBLIC}, #{EXCLUSIVE}) or 
+        annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})
+    EOS
   end
 
   def canonical
