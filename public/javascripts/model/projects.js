@@ -36,7 +36,11 @@ dc.model.Project = Backbone.Model.extend({
     var projectId  = this.get('id');
     var ids        = _.uniq(_.pluck(documents, 'id'));
     var addedCount = _.reduce(documents, function(sum, doc) {
-      if (!_.contains(doc.get('project_ids'), projectId)) sum += 1;
+      var docProjectIds = doc.get('project_ids');
+      if (!_.contains(docProjectIds, projectId)) {
+        doc.set({project_ids: docProjectIds.concat([projectId])});
+        sum += 1;
+      }
       return sum;
     }, 0);
     this.set({document_count : this.get('document_count') + addedCount});
@@ -55,10 +59,14 @@ dc.model.Project = Backbone.Model.extend({
     var projectId     = this.get('id');
     var ids           = _.uniq(_.pluck(documents, 'id'));
     var removedCount  = _.reduce(documents, function(sum, doc) {
-      if (_.contains(doc.get('project_ids'), projectId)) sum += 1;
+      var docProjectIds = doc.get('project_ids');
+      if (_.contains(docProjectIds, projectId)) {
+        doc.set({project_ids: _.without(docProjectIds, projectId)});
+        sum += 1;
+      }
       return sum;
     }, 0);
-    
+
     if (Projects.firstSelected() === this) Documents.remove(documents);
     this.set({document_count : this.get('document_count') - removedCount});
     this.notifyProjectChange(removedCount, true);
