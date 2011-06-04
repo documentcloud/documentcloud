@@ -3,7 +3,7 @@ class Annotation < ActiveRecord::Base
   include DC::Store::DocumentResource
   include DC::Access
 
-  belongs_to :document, :foreign_key => 'id', :primary_key => 'document_id'
+  belongs_to :document
   belongs_to :account # NB: This account is not the owner of the document.
                       #     Rather, it is the author of the annotation.
                       
