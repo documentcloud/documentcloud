@@ -131,6 +131,7 @@ class Project < ActiveRecord::Base
     data['id']            = id
     data['title']         = title
     data['description']   = description
+    data['document_ids']  = document_ids
     data
   end
 
