@@ -28,13 +28,11 @@ class RedactPages < DocumentModBase
   private
 
   def redact
-    @page_text = {}
     Docsplit.extract_pages @pdf
     FileUtils.rm @pdf
     redactions_by_page = options['redactions'].group_by {|r| r['page'].to_i }
     redactions_by_page.each {|page, redactions| redact_page page, redactions }
     rebuild_pdf
-    rebuild_text
     document.reindex_all! access
   end
 
@@ -88,8 +86,9 @@ class RedactPages < DocumentModBase
 
     # OCR the large version of the image.
     `tesseract #{page_tiff_path} #{base} -l eng 2>&1`
-    @page_text[page] = Docsplit.clean_text(DC::Import::Utils.read_ascii("#{base}.txt"))
-
+    text = Docsplit.clean_text(DC::Import::Utils.read_ascii("#{base}.txt"))
+    
+    document.pages.find_by_page_number(page).update_attributes :text => text
   end
 
   # Create the new PDF for the full document, and save it to the asset store.
@@ -97,16 +96,6 @@ class RedactPages < DocumentModBase
     page_paths = (1..document.page_count).map {|i| "#{document.slug}_#{i}.pdf" }
     `pdftk #{page_paths.join(' ')} cat output #{@pdf}`
     asset_store.save_pdf(document, @pdf, access)
-  end
-
-  # Create all the new Page models, for pages that have been changed.
-  def rebuild_text
-    page_numbers = @page_text.keys
-    Page.destroy_all "document_id = #{document.id} and page_number in (#{page_numbers.join(',')})"
-    rows = @page_text.map do |pair|
-      "(#{document.organization_id}, #{document.account_id}, #{document.id}, #{access}, #{pair[0]}, '#{PGconn.escape(pair[1])}')"
-    end
-    Page.connection.execute "insert into pages (organization_id, account_id, document_id, access, page_number, text) values #{rows.join(",\n")};"
   end
 
 end
