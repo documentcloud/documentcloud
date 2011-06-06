@@ -37,7 +37,7 @@ class Project < ActiveRecord::Base
 
   # Load all of the projects belonging to an account in one fell swoop.
   def self.load_for(account)
-    self.visible.accessible(account).all(:include => ['account', 'project_memberships', 'collaborations'])
+    self.visible.accessible(account).all(:include => ['account', 'collaborations'])
   end
 
   def hidden?
