@@ -223,6 +223,8 @@ dc.ui.SearchFacet = Backbone.View.extend({
     SearchQuery.remove(this.model);
     if (committed) {
       this.search();
+    } else {
+      dc.app.searchBox.renderFacets();
     }
     dc.app.searchBox.focusNextFacet(this, 0, {viewPosition: this.options.order});
   },

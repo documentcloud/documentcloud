@@ -222,7 +222,6 @@ dc.ui.SearchInput = Backbone.View.extend({
       if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
         e.preventDefault();
         dc.app.searchBox.focusNextFacet(this, -1, {backspace: true});
-        return false;
       }
     }
   }

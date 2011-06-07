@@ -300,6 +300,7 @@ div.text_input {
           color: darkred;
         }
       div.text_input.search .search_input {
+        height: 29px;
         float: left;
       }
         div.text_input.search .search_input input {
