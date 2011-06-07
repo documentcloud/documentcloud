@@ -116,10 +116,9 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   renderQuery : function(currentView) {
-    var viewType = currentView.type;
     var currentPosition = this.viewPosition(currentView);
     this.setQuery(this.value());
-    this.focusNextFacet({type: viewType}, -1, {startAtEnd: true, viewPosition: currentPosition});
+    this.focusNextFacet({type: currentView.type}, -1, {startAtEnd: true, viewPosition: currentPosition});
   },
   
   viewPosition : function(view) {
@@ -219,44 +218,45 @@ dc.ui.SearchBox = Backbone.View.extend({
     options = options || {};
     var viewCount    = this.facetViews.length;
     var viewPosition = options.viewPosition || this.viewPosition(currentView);
-    var viewType     = currentView.type;
     
-    console.log(['focusNextFacet', viewCount, viewPosition, viewType, direction, options]);
+    console.log(['focusNextFacet', viewCount, viewPosition, currentView.type, direction, options]);
     // Correct for bouncing between matching text and facet arrays.
     if (!options.skipToFacet) {
-      if (viewType == 'text'  && direction > 0) direction -= 1;
-      if (viewType == 'facet' && direction < 0) direction += 1;
-    } else if (options.skipToFacet && viewType == 'text' && 
+      if (currentView.type == 'text'  && direction > 0) direction -= 1;
+      if (currentView.type == 'facet' && direction < 0) direction += 1;
+    } else if (options.skipToFacet && currentView.type == 'text' && 
                viewCount == viewPosition && direction >= 0) {
       viewPosition = 0;
       direction    = 0;
     }
-    var next = Math.min(viewCount, viewPosition + direction);
+    var view, next = Math.min(viewCount, viewPosition + direction);
 
-    if (viewType == 'text' && next >= 0 && next < viewCount) {
+    if (currentView.type == 'text' && next >= 0 && next < viewCount) {
+      view = this.facetViews[next];
       if (options.selectFacet) {
-        this.facetViews[next].selectFacet();
+        view.selectFacet();
       } else {
-        this.facetViews[next].enableEdit();
-        this.facetViews[next].setCursorAtEnd(direction || options.startAtEnd);
+        view.enableEdit();
+        view.setCursorAtEnd(direction || options.startAtEnd);
       }
-      if (options.backspace) {
-        this.facetViews[next].removeLastCharacter();
-      }
-    } else if (viewType == 'facet') {
+    } else if (currentView.type == 'facet') {
       if (options.skipToFacet) {
-        var position = viewPosition + direction;
+        var view, position = viewPosition + direction;
         if (position >= viewCount || position < 0) {
-          _.last(this.inputViews).focus();
+          view = _.last(this.inputViews);
+          view.focus();
         } else {
-          var view = this.facetViews[position];
+          view = this.facetViews[position];
           view.enableEdit();
           view.setCursorAtEnd(direction || options.startAtEnd);
         }
       } else {
-        this.inputViews[next].focus();
+        view = this.inputViews[next];
+        view.focus();
+        if (options.selectText) view.selectText();
       }
     }
+    if (options.selectText) view.selectText();
     this.resizeFacets();
   },
   
@@ -265,7 +265,7 @@ dc.ui.SearchBox = Backbone.View.extend({
       facetView.selectFacet(null, true);
     });
     _.each(this.inputViews, function(inputView, i) {
-      inputView.selectAll();
+      inputView.selectText();
     });
     this.flags.allSelected = true;
     

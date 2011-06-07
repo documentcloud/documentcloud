@@ -236,6 +236,10 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.resize();
   },
   
+  selectText: function() {
+    this.box.selectRange(0, this.box.val().length);
+  },
+  
   keydown : function(e) {
     var key = dc.app.hotkeys.key(e);
     console.log(['facet keydown', key, this.box.val(), this.box.getCursorPosition(), this.box.getSelection().length, dc.app.hotkeys.left, dc.app.hotkeys.right]);
@@ -267,12 +271,12 @@ dc.ui.SearchFacet = Backbone.View.extend({
       e.preventDefault();
       this.deselectFacet(e);
       this.disableEdit(e);
-      dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true, skipToFacet: true});
+      dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true, skipToFacet: true, selectText: true});
     } else if (key == 'tab') {
       e.preventDefault();
       this.deselectFacet(e);
       this.disableEdit(e);
-      dc.app.searchBox.focusNextFacet(this, 1, {skipToFacet: true});
+      dc.app.searchBox.focusNextFacet(this, 1, {skipToFacet: true, selectText: true});
     } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
       e.preventDefault();
       dc.app.searchBox.selectAllFacets(this);
