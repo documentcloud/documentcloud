@@ -5,7 +5,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   className : 'search_facet',
   
   events : {
-    'click input'                   : 'enableEdit',
+    'mousedown input'               : 'enableEdit',
     'click .category'               : 'selectFacet',
     'keydown input'                 : 'keydown',
     'blur input'                    : 'deferDisableEdit',
