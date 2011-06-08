@@ -31,7 +31,6 @@ dc.ui.SearchInput = Backbone.View.extend({
   events : {
     'keypress input'            : 'keypress',
     'keydown input'             : 'keydown'
-    // 'search input'           : 'searchEvent',
   },
   
   initialize : function() {
@@ -40,14 +39,14 @@ dc.ui.SearchInput = Backbone.View.extend({
   
   render : function() {
     $(this.el).html(JST['workspace/search_input']({}));
-    this.box = this.$('input');
-    this.setupAutocomplete();
     
-    // This is defered so it can be attached to the DOM to get the correct font-size.
+    this.box = this.$('input');
     this.box.autoGrowInput();
     this.box.bind('updated.autogrow', this.moveAutocomplete);
-    this.box.bind('blur', this.removeFocus);
+    this.box.bind('blur',  this.removeFocus);
     this.box.bind('focus', this.addFocus);
+    this.setupAutocomplete();
+    
     return this;
   },
   

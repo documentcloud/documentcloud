@@ -93,11 +93,12 @@ dc.ui.SearchFacet = Backbone.View.extend({
       if (this.box.val() == '') {
         this.box.val(this.model.get('value'));
       }
-      dc.app.searchBox.addFocus();
     }
     this.searchAutocomplete();
     this.resize();
     dc.app.searchBox.disableFacets(this);
+    dc.app.searchBox.addFocus();
+    if (!this.box.is(':focus')) this.box.focus();
   },
   
   deferDisableEdit : function() {
@@ -132,7 +133,6 @@ dc.ui.SearchFacet = Backbone.View.extend({
     this.setMode('not', 'editing');
     this.closeAutocomplete();
     if (!selectAll) {
-      dc.app.searchBox.addFocus();
       $(document).unbind('keydown.facet', this.keydown);
       $(document).unbind('click.facet', this.deselectFacet);
       _.defer(_.bind(function() {
@@ -140,6 +140,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
         $(document).unbind('click.facet').one('click.facet', this.deselectFacet);
       }, this));
       dc.app.searchBox.disableFacets(this);
+      dc.app.searchBox.addFocus();
     }
   },
   

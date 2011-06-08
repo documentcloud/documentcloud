@@ -76,6 +76,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
   
   cancelSearch : function() {
+    console.log(['cancelSearch']);
     this.value('');
     this.flags.allSelected = false;
     this.focusSearch();
@@ -135,7 +136,6 @@ dc.ui.SearchBox = Backbone.View.extend({
       category : category,
       value    : initialQuery || ''
     }, {silent: true});
-    console.log(['model', model, initialQuery, model.get('value')]);
     SearchQuery.add(model, {at: position});
     this.renderFacets();
     var facetView = _.detect(this.facetViews, function(view) {
@@ -241,17 +241,18 @@ dc.ui.SearchBox = Backbone.View.extend({
       }
     } else if (currentView.type == 'facet') {
       if (options.skipToFacet) {
-        var view, position = viewPosition + direction;
-        if (position >= viewCount || position < 0) {
+        var view;
+        if (next >= viewCount || next < 0) {
           view = _.last(this.inputViews);
           view.focus();
         } else {
-          view = this.facetViews[position];
+          view = this.facetViews[next];
           view.enableEdit();
           view.setCursorAtEnd(direction || options.startAtEnd);
         }
       } else {
         view = this.inputViews[next];
+        console.log(['next view', next, view]);
         view.focus();
         if (options.selectText) view.selectText();
       }
@@ -290,6 +291,7 @@ dc.ui.SearchBox = Backbone.View.extend({
         view.deselectFacet();
       }
     });
+    this.removeFocus();
   },
   
   focusCategory : function(category) {
@@ -307,16 +309,19 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
 
   focusSearch : function(e, highlight) {
-    console.log(['focusSearch', e && ($(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner'))]);
+    console.log(['focusSearch', e, !e || $(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner')]);
     if (!e || $(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner')) {
       this.disableFacets();
       _.defer(_.bind(function() {
-        this.inputViews[this.inputViews.length-1].focus(highlight);
+        if (!this.$('input:focus').length) {
+          this.inputViews[this.inputViews.length-1].focus(highlight);
+        }
       }, this));
     }
   },
   
   highlightSearch : function(e) {
+    console.log(['highlightSearch', e]);
     this.focusSearch(e, true);
   },
   
