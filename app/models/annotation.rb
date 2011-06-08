@@ -23,15 +23,20 @@ class Annotation < ActiveRecord::Base
   html_attr :content
 
   named_scope :accessible, lambda { |account|
+    has_shared = account && account.accessible_project_ids.present?
     access = []
     access << "(annotations.access = #{PUBLIC})"
     access << "((annotations.access = #{EXCLUSIVE}) and annotations.organization_id = #{account.organization_id})" if account
     access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
-    access << "((annotations.access = #{EXCLUSIVE}) and project_memberships.project_id in (?))" if account && account.accessible_project_ids.present?
+    access << "((annotations.access = #{EXCLUSIVE}) and memberships.document_id = annotations.document_id)" if has_shared
     opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
-    if account && account.accessible_project_ids.present?
-      opts[:conditions].push(account.accessible_project_ids) 
-      opts[:joins] = 'left outer join project_memberships on project_memberships.document_id = annotations.document_id'
+    if has_shared
+      opts[:joins] = <<-EOS
+        left outer join
+        (select distinct document_id from project_memberships
+          where project_id in (#{account.accessible_project_ids.join(',')})) as memberships
+        on memberships.document_id = annotations.document_id
+      EOS
     end
     opts
   }
