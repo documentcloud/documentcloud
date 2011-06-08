@@ -10,7 +10,8 @@ class ApiController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
 
-  before_filter :api_login_required, :only => [:upload, :projects, :update, :destroy, :projects, :create_project, :update_project, :destroy_project]
+  before_filter :secure_only,        :only => [:upload, :projects, :upload, :destroy, :create_project, :update_project, :destroy_project]
+  before_filter :api_login_required, :only => [:upload, :projects, :update, :destroy, :create_project, :update_project, :destroy_project]
   before_filter :api_login_optional, :only => [:documents, :search, :notes]
 
   def index
