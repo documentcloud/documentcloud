@@ -5,10 +5,9 @@ dc.ui.SearchFacet = Backbone.View.extend({
   className : 'search_facet',
   
   events : {
-    'mousedown input'               : 'enableEdit',
     'click .category'               : 'selectFacet',
     'keydown input'                 : 'keydown',
-    'blur input'                    : 'deferDisableEdit',
+    'mousedown input'               : 'enableEdit',
     'mouseover .cancel_search'      : 'showDelete',
     'mouseout .cancel_search'       : 'hideDelete',
     'click .cancel_search'          : 'remove'
@@ -16,7 +15,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   
   initialize : function(options) {
     this.setMode('not', 'editing');
-    _.bindAll(this, 'set', 'keydown', 'deselectFacet');
+    _.bindAll(this, 'set', 'keydown', 'deselectFacet', 'deferDisableEdit');
   },
   
   render : function() {
@@ -27,6 +26,9 @@ dc.ui.SearchFacet = Backbone.View.extend({
     }));
     this.setMode('not', 'editing');
     this.box = this.$('input');
+    this.box.val(this.model.get('value'));
+    this.box.bind('blur', this.deferDisableEdit);
+    this.setupAutocomplete();
     
     return this;
   },
@@ -77,53 +79,52 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   search : function(e) {
+    console.log(['facet search', e]);
     this.closeAutocomplete();
     dc.app.searchBox.searchEvent(e);
   },
   
-  enableEdit : function(e) {
+  enableEdit : function() {
     this.canClose = false;
-    // console.log(['enableEdit', e, this.model.get('category'), this.model.get('value'), !this.$el.hasClass('is_editing')]);
+    console.log(['enableEdit', this.model.get('category'), this.modes.editing]);
     if (this.modes.editing != 'is') {
       this.setMode('is', 'editing');
-      this.deselectFacet(e);
-      this.setupAutocomplete();
+      this.deselectFacet();
       if (this.box.val() == '') {
         this.box.val(this.model.get('value'));
       }
-      this.searchAutocomplete();
-      this.box.focus();
       dc.app.searchBox.addFocus();
     }
-    this.resize(e);
+    this.searchAutocomplete();
+    this.resize();
     dc.app.searchBox.disableFacets(this);
   },
   
-  deferDisableEdit : function(e) {
+  deferDisableEdit : function() {
+    if (!this.box.is(':focus')) return;
     this.canClose = true;
-    // console.log(['deferDisableEdit', e]);
+    console.log(['deferDisableEdit', this.model.get('category')]);
     _.delay(_.bind(function() {
       if (this.canClose && !this.box.is(':focus') && this.modes.editing == 'is' && this.modes.selected != 'is') {
-        this.disableEdit(e);
+        this.disableEdit();
       }
     }, this), 250);
   },
   
-  disableEdit : function(e) {
-    // e.preventDefault();
-    // console.log(['disableEdit', e, this.box.val()]);
+  disableEdit : function() {
+    console.log(['disableEdit', this.model.get('category'), this.box.is(':focus')]);
     var newFacetQuery = dc.inflector.trim(this.box.val());
     if (newFacetQuery != this.model.get('value')) {
       this.set(newFacetQuery);
     }
-    this.setMode('not', 'editing');
+    this.box.selectRange(0, 0);
     this.box.blur();
-    // this.box.val(newFacetQuery);
+    this.setMode('not', 'editing');
     this.closeAutocomplete();
   },
   
   selectFacet : function(e, selectAll) {
-    // console.log(['selectFacet', this.box, selectAll]);
+    console.log(['selectFacet', this.model.get('category'), selectAll]);
     this.canClose = false;
     this.box.setCursorPosition(0);
     if (this.box.is(':focus')) this.box.blur();
@@ -142,10 +143,12 @@ dc.ui.SearchFacet = Backbone.View.extend({
     }
   },
   
-  deselectFacet : function(e) {
-    // console.log(['deselectFacet', this.box, e]);
-    this.setMode('not', 'selected');
-    this.closeAutocomplete();
+  deselectFacet : function() {
+    console.log(['deselectFacet', this.model.get('category')]);
+    if (this.modes.selected == 'is') {
+      this.setMode('not', 'selected');
+      this.closeAutocomplete();
+    }
     $(document).unbind('keydown.facet', this.keydown);
     $(document).unbind('click.facet', this.deselectFacet);
   },
@@ -157,6 +160,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
   },
   
   closeAutocomplete : function() {
+    console.log(['closeAutocomplete', this.model.get('category')]);
     var autocomplete = this.box.data('autocomplete');
     if (autocomplete) autocomplete.close();
   },
@@ -245,10 +249,10 @@ dc.ui.SearchFacet = Backbone.View.extend({
     console.log(['facet keydown', key, this.box.val(), this.box.getCursorPosition(), this.box.getSelection().length, dc.app.hotkeys.left, dc.app.hotkeys.right]);
 
     if (key == 'enter' && this.box.val()) {
-      this.disableEdit(e);
+      this.disableEdit();
       this.search(e);
     } else if (key == 'left') {
-      if (this.box.getCursorPosition() == 0) {
+      if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
         if (this.modes.selected == 'is') {
           this.deselectFacet();
           dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true});
@@ -259,23 +263,23 @@ dc.ui.SearchFacet = Backbone.View.extend({
     } else if (key == 'right') {
       if (this.modes.selected == 'is') {
         e.preventDefault();
-        this.deselectFacet(e);
+        this.deselectFacet();
         this.setCursorAtEnd(0);
         this.enableEdit(e);
       } else if (this.box.getCursorPosition() == this.box.val().length) {
         e.preventDefault();
-        this.disableEdit(e);
+        this.disableEdit();
         dc.app.searchBox.focusNextFacet(this, 1);
       }
     } else if (dc.app.hotkeys.shift && key == 'tab') {
       e.preventDefault();
-      this.deselectFacet(e);
-      this.disableEdit(e);
+      this.deselectFacet();
+      this.disableEdit();
       dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true, skipToFacet: true, selectText: true});
     } else if (key == 'tab') {
       e.preventDefault();
-      this.deselectFacet(e);
-      this.disableEdit(e);
+      this.deselectFacet();
+      this.disableEdit();
       dc.app.searchBox.focusNextFacet(this, 1, {skipToFacet: true, selectText: true});
     } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
       e.preventDefault();

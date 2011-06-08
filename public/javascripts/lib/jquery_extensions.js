@@ -215,7 +215,10 @@
         if ((e.pageX > off.left + this.outerWidth() - edge) ||
             (e.pageY > off.top + this.outerHeight() - edge)) return;
         e.preventDefault();
-        if (dc.app.searchBox) dc.app.searchBox.removeFocus();
+        if (dc.app.searchBox) {
+          dc.app.searchBox.removeFocus();
+          dc.app.searchBox.disableFacets();
+        }
         var targets = $(options.select);
         var scrTop  = this.scrollTop(), scrLeft = this.scrollLeft();
         var ox = e.pageX, oy = e.pageY;

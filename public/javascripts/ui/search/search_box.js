@@ -22,7 +22,7 @@ dc.ui.SearchBox = Backbone.View.extend({
   events : {
     'click .search_glyph'          : 'showFacetCategoryMenu',
     'click .cancel_search_box'     : 'cancelSearch',
-    'click #search_box_wrapper'    : 'focusSearch',
+    'mousedown #search_box_wrapper': 'focusSearch',
     'dblclick #search_box_wrapper' : 'highlightSearch',
     'click #search_button'         : 'searchEvent'
   },
@@ -285,7 +285,7 @@ dc.ui.SearchBox = Backbone.View.extend({
       if (view != keepView &&
           (view.modes.editing == 'is' ||
            view.modes.selected == 'is')) {
-        console.log(['disabling view', view]);
+        console.log(['disabling view', view.model.get('category')]);
         view.disableEdit();
         view.deselectFacet();
       }
@@ -307,10 +307,12 @@ dc.ui.SearchBox = Backbone.View.extend({
   },
 
   focusSearch : function(e, highlight) {
-    console.log(['focusSearch', e]);
+    console.log(['focusSearch', e && ($(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner'))]);
     if (!e || $(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner')) {
-      this.inputViews[this.inputViews.length-1].focus(highlight);
       this.disableFacets();
+      _.defer(_.bind(function() {
+        this.inputViews[this.inputViews.length-1].focus(highlight);
+      }, this));
     }
   },
   

@@ -266,7 +266,10 @@ div.text_input {
           line-height: 16px;
           padding: 6px 0 7px 4px;
           height: 16px;
-          width: auto;
+          width: auto;          
+          z-index: 100;
+          position: relative;
+
         }
         div.text_input.search .search_facet.is_selected input {
           padding-top: 1px;
@@ -276,8 +279,6 @@ div.text_input {
         div.text_input.search .search_facet.is_editing input,
         div.text_input.search .search_facet.is_selected input {
           color: #202020;
-          z-index: 100;
-          position: relative;
         }
         div.text_input.search .search_facet .search_facet_remove {
           position: absolute;

@@ -30,12 +30,14 @@ dc.ui.SearchInput = Backbone.View.extend({
 
   events : {
     'keypress input'            : 'keypress',
-    'keydown input'             : 'keydown',
+    'keydown input'             : 'keydown'
     // 'search input'           : 'searchEvent',
-    'focus input'               : 'addFocus',
-    'blur input'                : 'removeFocus'
   },
-
+  
+  initialize : function() {
+    _.bindAll(this, 'removeFocus', 'addFocus', 'moveAutocomplete');
+  },
+  
   render : function() {
     $(this.el).html(JST['workspace/search_input']({}));
     this.box = this.$('input');
@@ -43,7 +45,9 @@ dc.ui.SearchInput = Backbone.View.extend({
     
     // This is defered so it can be attached to the DOM to get the correct font-size.
     this.box.autoGrowInput();
-    this.box.bind('updated.autogrow', _.bind(this.moveAutocomplete, this));
+    this.box.bind('updated.autogrow', this.moveAutocomplete);
+    this.box.bind('blur', this.removeFocus);
+    this.box.bind('focus', this.addFocus);
     return this;
   },
   
@@ -136,6 +140,7 @@ dc.ui.SearchInput = Backbone.View.extend({
   },
 
   focus : function(highlight) {
+    console.log(['input focus', highlight]);
     this.box.focus();
     if (highlight) {
       this.selectText();
@@ -143,15 +148,18 @@ dc.ui.SearchInput = Backbone.View.extend({
   },
   
   blur : function() {
+    console.log(['input blur']);
     this.box.blur();
   },
-  
-  addFocus : function() {
-    dc.app.searchBox.addFocus();
-  },
 
-  removeFocus : function() {
+  removeFocus : function(e) {
+    console.log(['removeFocus', e]);
     dc.app.searchBox.removeFocus();
+  },
+  
+  addFocus : function(e) {
+    console.log(['addFocus', e]);
+    dc.app.searchBox.addFocus();
   },
   
   clear : function() {
@@ -222,6 +230,7 @@ dc.ui.SearchInput = Backbone.View.extend({
       if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {
         e.preventDefault();
         dc.app.searchBox.focusNextFacet(this, -1, {backspace: true});
+        return false;
       }
     }
   }
