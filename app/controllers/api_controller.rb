@@ -19,20 +19,21 @@ class ApiController < ApplicationController
   end
 
   def search
-    if mentions = params[:mentions] && params[:mentions].to_i
-      mentions = 10  if mentions > 10
-      mentions = nil if mentions < 1
+    opts = API_OPTIONS.merge(pick(params, :sections, :annotations, :entities, :mentions, :data))
+    if opts[:mentions] &&= opts[:mentions].to_i
+      opts[:mentions] = 10  if opts[:mentions] > 10
+      opts[:mentions] = nil if opts[:mentions] < 1
     end
     respond_to do |format|
       format.any(:js, :json) do
-        perform_search :include_facets => (params[:entities] ? :api : false), :mentions => mentions
+        perform_search :include_facets => (opts[:entities] ? :api : false), :mentions => opts[:mentions]
         @response = ActiveSupport::OrderedHash.new
         @response['total']     = @query.total
         @response['page']      = @query.page
         @response['per_page']  = @query.per_page
-        @response['q']         = params['q']
-        @response['documents'] = @documents.map {|d| d.canonical(API_OPTIONS) }
-        @response['entities']  = @query.facets if params[:entities]
+        @response['q']         = params[:q]
+        @response['documents'] = @documents.map {|d| d.canonical(opts) }
+        @response['entities']  = @query.facets if opts[:entities]
         json_response
       end
     end
