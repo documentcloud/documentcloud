@@ -160,7 +160,6 @@ dc.ui.SearchInput = Backbone.View.extend({
   
   addFocus : function(e) {
     console.log(['addFocus', e]);
-    dc.app.searchBox.disableFacets();
     dc.app.searchBox.addFocus();
   },
   
