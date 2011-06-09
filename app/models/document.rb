@@ -655,11 +655,27 @@ class Document < ActiveRecord::Base
     record_job(DC::Import::CloudCrowdImporter.new.import([id], options, self.low_priority?).body)
   end
   
+  def self.duplicate(document_ids, account=nil, options={})
+    RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+      'action'  => 'duplicate_documents',
+      'inputs'  => [document_ids],
+      'options' => options.merge(
+        :account_id => account.id
+      )
+    }.to_json})
+  end
+  
   # Create an identical clone of this document, in all ways (except for the ID).
-  def duplicate!
-    
+  def duplicate!(account=nil, options={})
+    puts "Duplicate! : #{options.inspect}"
     # Clone the document.
-    copy     = Document.create!(attributes.merge(:access => PENDING, :created_at => Time.now, :updated_at => Time.now))
+    newattrs = attributes.merge({
+      :access     => PENDING, 
+      :created_at => Time.now, 
+      :updated_at => Time.now
+    })
+    newattrs[:account_id] = account.id if account
+    copy     = Document.create!(newattrs)
     newattrs = {:document_id => copy.id}
     
     # Clone the docdata.
@@ -668,7 +684,16 @@ class Document < ActiveRecord::Base
     end
     
     # Clone the associations.
-    [annotations, entities, entity_dates, pages, sections, project_memberships].each do |association|
+    associations = [entities, entity_dates, pages, sections]
+    unless options['skip_annotations']
+      if account
+        associations.push annotations.accessible(account)
+      else
+        associations.push annotations
+      end
+    end
+    associations.push project_memberships unless options['skip_project']
+    associations.each do |association|
       association.each do |model|
         model.class.create! model.attributes.merge newattrs
       end
