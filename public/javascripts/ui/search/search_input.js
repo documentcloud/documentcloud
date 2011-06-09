@@ -1,3 +1,5 @@
+// This is the visual search input that is responsible for creating new facets.
+// There is one input placed in between all facets.
 dc.ui.SearchInput = Backbone.View.extend({
 
   type : 'text',
@@ -138,10 +140,10 @@ dc.ui.SearchInput = Backbone.View.extend({
     return boxValue;
   },
 
-  focus : function(highlight) {
-    console.log(['input focus', highlight]);
+  focus : function(selectText) {
+    console.log(['input focus', selectText]);
     this.box.focus();
-    if (highlight) {
+    if (selectText) {
       this.selectText();
     }
   },
@@ -158,6 +160,7 @@ dc.ui.SearchInput = Backbone.View.extend({
   
   addFocus : function(e) {
     console.log(['addFocus', e]);
+    dc.app.searchBox.disableFacets();
     dc.app.searchBox.addFocus();
   },
   
@@ -223,7 +226,7 @@ dc.ui.SearchInput = Backbone.View.extend({
       }
     } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
       e.preventDefault();
-      dc.app.searchBox.selectAllFacets(this);
+      dc.app.searchBox.selectAllFacets();
       return false;
     } else if (key == 'backspace' && !dc.app.searchBox.allSelected()) {
       if (this.box.getCursorPosition() == 0 && !this.box.getSelection().length) {

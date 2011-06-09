@@ -1,3 +1,5 @@
+// This is the visual search facet that holds the category and its autocompleted 
+// input field.
 dc.ui.SearchFacet = Backbone.View.extend({
   
   type : 'facet',
@@ -284,7 +286,7 @@ dc.ui.SearchFacet = Backbone.View.extend({
       dc.app.searchBox.focusNextFacet(this, 1, {skipToFacet: true, selectText: true});
     } else if (dc.app.hotkeys.command && (e.which == 97 || e.which == 65)) {
       e.preventDefault();
-      dc.app.searchBox.selectAllFacets(this);
+      dc.app.searchBox.selectAllFacets();
       return false;
     } else if (dc.app.hotkeys.printable(e) && this.modes.selected == 'is') {
       dc.app.searchBox.focusNextFacet(this, -1, {startAtEnd: true});
