@@ -75,7 +75,7 @@ class DocumentImport < CloudCrowd::Action
     pages = document.reload.pages
     Sunspot.index pages
     DC::Import::EntityExtractor.new.extract(document, text) unless options['secure']
-    document.upload_text_assets(pages, access)
+    document.upload_text_assets(pages)
     document.id
   end
 
