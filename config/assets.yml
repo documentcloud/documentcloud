@@ -7,6 +7,12 @@ javascripts:
     - public/javascripts/application.js
     - public/javascripts/vendor/underscore-*.js
     - public/javascripts/vendor/jquery-*.js
+    - public/javascripts/vendor/jquery.ui.core.js
+    - public/javascripts/vendor/jquery.ui.widget.js
+    - public/javascripts/vendor/jquery.ui.position.js
+    - public/javascripts/vendor/jquery.ui.mouse.js
+    - public/javascripts/vendor/jquery.ui.sortable.js
+    - public/javascripts/vendor/jquery.ui.autocomplete.js
     - public/javascripts/vendor/*.js
     - public/javascripts/lib/*.js
     - public/javascripts/model/*.js
