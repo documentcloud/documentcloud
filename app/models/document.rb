@@ -225,7 +225,7 @@ class Document < ActiveRecord::Base
 
   # Save all text assets, including the `combined_page_text`, and the text of
   # each page individually, to the asset store.
-  def upload_text_assets(pages)
+  def upload_text_assets(pages, access)
     asset_store.save_full_text(self, access)
     pages.each do |page|
       asset_store.save_page_text(self, page.page_number, page.text, access)
@@ -550,7 +550,7 @@ class Document < ActiveRecord::Base
     pages = self.reload.pages
     Sunspot.index pages
     reprocess_entities if calais_id
-    upload_text_assets(pages)
+    upload_text_assets(pages, access)
     self.access = access if access
     self.save!
   end

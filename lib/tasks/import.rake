@@ -80,7 +80,7 @@ def import_document(client, record)
 
   puts "#{ref} -- extracting entities from Calais, uploading text to S3..."
   DC::Import::EntityExtractor.new.extract(doc, doc.combined_page_text)
-  doc.upload_text_assets(pages)
+  doc.upload_text_assets(pages, access)
   sql = ["access = #{access}", "document_id = #{doc.id}"]
   Entity.update_all(*sql)
   EntityDate.update_all(*sql)
