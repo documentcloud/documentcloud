@@ -22,6 +22,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     this.searchBox = dc.app.searchBox;
     this.flags.hasEntities = false;
     this.currentSearch = null;
+    this.titleBox = $('#title_box_inner');
     _.bindAll(this, '_loadSearchResults', '_loadFacetsResults', '_loadFacetResults',
       'loadDefault', 'loadFacets');
     dc.app.navigation.bind('tab:search', this.loadDefault);
@@ -41,7 +42,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     if (this.currentSearch) return;
     if (!Documents.isEmpty()) {
       this.saveLocation(this.urlFragment());
-      this.searchBox.showDocuments();
+      this.showDocuments();
     } else if (this.searchBox.value()) {
       this.search(this.searchBox.value());
     } else if (dc.account && dc.account.hasDocuments) {
@@ -104,11 +105,10 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.fragment = 'search/' + encodeURIComponent(query);
     this.populateRelatedDocument();
-    this.searchBox.showDocuments();
+    this.showDocuments();
     this.saveLocation(this.urlFragment());
     Documents.refresh();
     this._afterSearch = callback;
-    this.searchBox.startSearch();
     var params = _.extend(dc.app.paginator.queryParams(), {q : query});
     if (this.flags.related && !this.relatedDoc) params.include_source_document = true;
     if (dc.app.navigation.isOpen('entities'))   params.include_facets = true;
@@ -122,6 +122,42 @@ dc.controllers.Searcher = Backbone.Controller.extend({
       },
       dataType: 'json'
     });
+  },
+  
+  showDocuments : function() {
+    var query       = this.searchBox.value();
+    var title       = dc.model.DocumentSet.entitle(query);
+    var projectName = VS.app.searchQuery.find('project');
+    var groupName   = VS.app.searchQuery.find('group');
+
+    $(document.body).setMode('active', 'search');
+    this.titleBox.html(title);
+    dc.app.organizer.highlight(projectName, groupName);
+  },
+  
+  // Hide the spinner and remove the search lock when finished searching.
+  doneSearching : function() {
+    var count      = dc.app.paginator.query.total;
+    var documents  = dc.inflector.pluralize('Document', count);
+    var searchType = VS.app.searchQuery.searchType();
+    
+    if (this.flags.related) {
+      this.titleBox.text(count + ' ' + documents + ' Related to "' + dc.inflector.truncate(this.relatedDoc.get('title'), 100) + '"');
+    } else if (this.flags.specific) {
+      this.titleBox.text(count + ' ' + documents);
+    } else if (searchType == 'search') {
+      var quote  = VS.app.searchQuery.has('project');
+      var suffix = ' in ' + (quote ? '“' : '') + this.titleBox.html() + (quote ? '”' : '');
+      var prefix = count ? count + ' ' + dc.inflector.pluralize('Result', count) : 'No Results';
+      this.titleBox.html(prefix + suffix);
+    }
+    if (count <= 0) {
+      $(document.body).setMode('empty', 'search');
+      var explanation = this.NO_RESULTS[searchType] || this.NO_RESULTS['search'];
+      $('#no_results .explanation').text(explanation);
+    }
+    dc.ui.spinner.hide();
+    dc.app.scroller.checkLater();
   },
 
   loadFacets : function() {
@@ -170,7 +206,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   },
 
   populateRelatedDocument : function() {
-    var relatedFacet = SearchQuery.find('related');
+    var relatedFacet = VS.app.searchQuery.find('related');
     var id = parseInt(relatedFacet && relatedFacet.get('value'), 10);
     this.relatedDoc = Documents.get(id) || null;
   },
@@ -192,7 +228,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     if (this.flags.related && !this.relatedDoc) {
       this.relatedDoc = new dc.model.Document(resp.source_document);
     }
-    this.searchBox.doneSearching();
+    this.doneSearching();
     this.currentSearch = null;
     if (this._afterSearch) this._afterSearch();
   },

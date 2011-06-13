@@ -433,23 +433,24 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 }, {
 
   entitle : function(query) {
+    var searchQuery = VS.app.searchQuery;
     var title, ret, account, org;
         
-    if (SearchQuery.count('project') == 1) {
-      title = SearchQuery.find('project');
-    } else if (dc.account && SearchQuery.find('account') == Accounts.current().get('slug')) {
-      ret = (SearchQuery.find('filter') == 'published') ? 'your_published_documents' : 'your_documents';
-    } else if (account = Accounts.getBySlug(SearchQuery.find('account'))) {
+    if (searchQuery.count('project') == 1) {
+      title = searchQuery.find('project');
+    } else if (dc.account && searchQuery.find('account') == Accounts.current().get('slug')) {
+      ret = (searchQuery.find('filter') == 'published') ? 'your_published_documents' : 'your_documents';
+    } else if (account = Accounts.getBySlug(searchQuery.find('account'))) {
       title = account.documentsTitle();
-    } else if (dc.account && SearchQuery.find('group') == dc.account.organization.slug) {
+    } else if (dc.account && searchQuery.find('group') == dc.account.organization.slug) {
       ret = 'org_documents';
-    } else if (SearchQuery.has('group') && (org = Organizations.findBySlug(SearchQuery.find('group')))) {
+    } else if (searchQuery.has('group') && (org = Organizations.findBySlug(searchQuery.find('group')))) {
       title = dc.inflector.possessivize(org.get('name')) + " Documents";
-    } else if (SearchQuery.find('filter') == 'published') {
+    } else if (searchQuery.find('filter') == 'published') {
       ret = 'published_documents';
-    } else if (SearchQuery.find('filter') == 'popular') {
+    } else if (searchQuery.find('filter') == 'popular') {
       ret = 'popular_documents';
-    } else if (SearchQuery.find('filter') == 'annotated') {
+    } else if (searchQuery.find('filter') == 'annotated') {
       ret = 'annotated_documents';
     } else {
       ret = 'all_documents';

@@ -20,6 +20,13 @@ namespace :build do
     FileUtils.cp UNDERSCORE, "public/javascripts/vendor/underscore-#{version}.js"
   end
 
+  # Pull in a new build of VisualSearch.
+  task :visual_search do
+    sh 'rake ../visual-search/'
+    version = get_version File.read UNDERSCORE
+    FileUtils.cp UNDERSCORE, "public/javascripts/vendor/underscore-#{version}.js"
+  end
+
   # Pull in a new build of the Document Viewer.
   task :viewer do
 

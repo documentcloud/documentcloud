@@ -23,13 +23,13 @@ dc.controllers.Workspace = Backbone.Controller.extend({
 
   // Create all of the requisite subviews.
   createSubViews : function() {
-    dc.app.searchBox  = new dc.ui.SearchBox();
     dc.app.paginator  = new dc.ui.Paginator();
     dc.app.navigation = new dc.ui.Navigation();
     dc.app.toolbar    = new dc.ui.Toolbar();
     dc.app.organizer  = new dc.ui.Organizer();
     dc.ui.notifier    = new dc.ui.Notifier();
     dc.ui.tooltip     = new dc.ui.Tooltip();
+    dc.app.searchBox  = VS.init(this.searchOptions());
     this.sidebar      = new dc.ui.Sidebar();
     this.panel        = new dc.ui.Panel();
     this.documentList = new dc.ui.DocumentList();
@@ -61,6 +61,22 @@ dc.controllers.Workspace = Backbone.Controller.extend({
     if (!dc.account) return;
 
     this.sidebar.add('account_badge', this.accountBadge.render().el);
+  },
+  
+  searchOptions : function() {
+    return {
+      callbacks : {
+        search : function(query) {
+          console.log(['search callback', query]);
+          if (!dc.app.searcher.flags.outstandingSearch) {
+            dc.ui.spinner.show();
+            dc.app.paginator.hide();
+            _.defer(dc.app.toolbar.checkFloat);
+            dc.app.searcher.search(query);
+          }
+        }
+      }
+    };
   },
   
   disableDeleteButton : function() {
