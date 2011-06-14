@@ -80,7 +80,7 @@ class LifecycleMailer < ActionMailer::Base
   def account_and_document_csvs
     subject       "Accounts (CSVs)"
     from          NO_REPLY
-    recipients    'amanda@documentcloud.org'
+    recipients    'info@documentcloud.org'
     content_type  "multipart/mixed"
 
     part :content_type => "text/plain",
