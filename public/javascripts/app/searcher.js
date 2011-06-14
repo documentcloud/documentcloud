@@ -2,6 +2,18 @@
 // from the client side. It's main "view" is the `dc.ui.SearchBox`.
 dc.controllers.Searcher = Backbone.Controller.extend({
 
+  // Error messages to display when your search returns no results.
+  NO_RESULTS : {
+    project   : "This project does not contain any documents.",
+    account   : "This account does not have any documents.",
+    group     : "This organization does not have any documents.",
+    related   : "There are no documents related to this document.",
+    published : "This account does not have any published documents.",
+    annotated : "There are no annotated documents.",
+    search    : "Your search did not match any documents.",
+    all       : "There are no documents."
+  },
+
   PAGE_MATCHER  : (/\/p(\d+)$/),
 
   DOCUMENTS_URL : '/search/documents.json',
@@ -139,7 +151,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   doneSearching : function() {
     var count      = dc.app.paginator.query.total;
     var documents  = dc.inflector.pluralize('Document', count);
-    var searchType = VS.app.searchQuery.searchType();
+    var searchType = this.searchType();
     
     if (this.flags.related) {
       this.titleBox.text(count + ' ' + documents + ' Related to "' + dc.inflector.truncate(this.relatedDoc.get('title'), 100) + '"');
@@ -158,6 +170,37 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     }
     dc.ui.spinner.hide();
     dc.app.scroller.checkLater();
+  },
+  
+  searchType : function() {
+    var single   = false;
+    var multiple = false;
+    
+    VS.app.searchQuery.each(function(facet) {
+      var category = facet.get('category');
+      var value    = facet.get('value');
+      
+      if (value) {
+        if (!single && !multiple) {
+          single = category;
+        } else {
+          multiple = true;
+          single = false;
+        }
+      }
+    });
+
+    if (single == 'filter') {
+      return VS.app.searchQuery.first().get('value');
+    } else if (single == 'projectid') {
+      return 'project';
+    } else if (_.contains(['project', 'group', 'account'], single)) {
+      return single;
+    } else if (!single && !multiple) {
+      return 'all';
+    }
+    
+    return 'search';
   },
 
   loadFacets : function() {

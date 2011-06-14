@@ -67,13 +67,66 @@ dc.controllers.Workspace = Backbone.Controller.extend({
     return {
       callbacks : {
         search : function(query) {
-          console.log(['search callback', query]);
           if (!dc.app.searcher.flags.outstandingSearch) {
             dc.ui.spinner.show();
             dc.app.paginator.hide();
             _.defer(dc.app.toolbar.checkFloat);
             dc.app.searcher.search(query);
           }
+        },
+        focus : function() {
+          Documents.deselectAll();
+        },
+        facetMatches : function(category) {
+          if (category == 'account') {
+            return Accounts.map(function(a) { return {value: a.get('slug'), label: a.fullName()}; });
+          } else if (category == 'project') {
+            return Projects.pluck('title');
+          } else if (category == 'filter') {
+            return ['published', 'annotated'];
+          } else if (category == 'access') {
+            return ['public', 'private', 'organization'];
+          } else if (category == 'title') {
+            return _.uniq(Documents.pluck('title'));
+          } else {
+            // Meta data
+            return _.compact(_.uniq(Documents.reduce(function(memo, doc) {
+              if (_.size(doc.get('data'))) memo.push(doc.get('data')[category]);
+              return memo;
+            }, [])));
+          }
+        },
+        categoryMatches : function() {
+          var prefixes = [
+            { label: 'project',       category: '' },
+            { label: 'text',          category: '' },
+            { label: 'title',         category: '' },
+            { label: 'description',   category: '' },
+            { label: 'source',        category: '' },
+            { label: 'account',       category: '' },
+            { label: 'document',      category: '' },
+            { label: 'filter',        category: '' },
+            { label: 'group',         category: '' },
+            { label: 'access',        category: '' },
+            { label: 'related',       category: '' },
+            { label: 'projectid',     category: '' },
+            { label: 'city',          category: 'entities' },
+            { label: 'country',       category: 'entities' },
+            { label: 'term',          category: 'entities' },
+            { label: 'state',         category: 'entities' },
+            { label: 'person',        category: 'entities' },
+            { label: 'place',         category: 'entities' },
+            { label: 'organization',  category: 'entities' },
+            { label: 'email',         category: 'entities' },
+            { label: 'phone',         category: 'entities' }
+          ];
+          var metadata = _.map(_.keys(Documents.reduce(function(memo, doc) {
+            if (_.size(doc.get('data'))) _.extend(memo, doc.get('data'));
+            return memo;
+          }, {})), function(key) {
+            return {label: key, category: 'data'};
+          });
+          return prefixes.concat(metadata);
         }
       }
     };
