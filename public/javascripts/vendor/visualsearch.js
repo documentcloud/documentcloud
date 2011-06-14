@@ -40,11 +40,11 @@ VS.ui.SearchBox = Backbone.View.extend({
   id  : 'search',
   
   events : {
-    'click .search_glyph'          : 'showFacetCategoryMenu',
-    'click .cancel_search_box'     : 'clearSearch',
-    'mousedown #search_box_wrapper': 'focusSearch',
-    'dblclick #search_box_wrapper' : 'highlightSearch',
-    'click #search_button'         : 'searchEvent'
+    'click .search_glyph'             : 'showFacetCategoryMenu',
+    'click .cancel_search_box'        : 'clearSearch',
+    'mousedown .VS-search-box': 'focusSearch',
+    'dblclick .VS-search-box' : 'highlightSearch',
+    'click #search_button'            : 'searchEvent'
   },
 
   // Creating a new SearchBox registers handlers for 
@@ -300,8 +300,8 @@ VS.ui.SearchBox = Backbone.View.extend({
 
   // Bring focus to last input field.
   focusSearch : function(e, selectText) {
-    console.log(['focusSearch', e, !e || $(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner')]);
-    if (!e || $(e.target).is('#search_box_wrapper') || $(e.target).is('.search_inner')) {
+    console.log(['focusSearch', e, !e || $(e.target).is('.VS-search-box') || $(e.target).is('.search_inner')]);
+    if (!e || $(e.target).is('.VS-search-box') || $(e.target).is('.search_inner')) {
       this.disableFacets();
       _.defer(_.bind(function() {
         if (!this.$('input:focus').length) {
@@ -320,12 +320,12 @@ VS.ui.SearchBox = Backbone.View.extend({
   // Used to show the user is focused on some input inside the search box.
   addFocus : function() {
     VS.options.callbacks.focus();
-    this.$('.search').addClass('focus');
+    this.$('.VS-search-box').addClass('VS-focus');
   },
 
   // User is no longer focused on anything in the search box.
   removeFocus : function() {
-    this.$('.search').removeClass('focus');
+    this.$('.VS-search-box').removeClass('VS-focus');
   },
   
   // Show a menu which adds pre-defined facets to the search box.
@@ -366,6 +366,7 @@ VS.ui.SearchFacet = Backbone.View.extend({
     'click .category'               : 'selectFacet',
     'keydown input'                 : 'keydown',
     'mousedown input'               : 'enableEdit',
+    'blur input'                    : 'deferDisableEdit',
     'mouseover .cancel_search'      : 'showDelete',
     'mouseout .cancel_search'       : 'hideDelete',
     'click .cancel_search'          : 'remove'
@@ -1303,7 +1304,7 @@ VS.model.SearchQuery = Backbone.Collection.extend({
 });(function(){
 window.JST = window.JST || {};
 
-window.JST['search_box'] = _.template('<div class="VS-search">  <div id="search_container">    <div id="search_button" class="minibutton">Search</div>    <div id="search_box_wrapper" class="text_input search noselect">      <div class="icon search_glyph"></div>      <div class="search_inner"></div>      <div class="icon cancel_search cancel_search_box" title="clear search"></div>    </div>  </div></div>');
+window.JST['search_box'] = _.template('<div class="VS-search">  <div id="search_container">    <div id="search_button" class="minibutton">Search</div>    <div id="search_box_wrapper" class="VS-search-box">      <div class="icon search_glyph"></div>      <div class="search_inner"></div>      <div class="icon cancel_search cancel_search_box" title="clear search"></div>    </div>  </div></div>');
 window.JST['search_facet'] = _.template('<% if (model.has(\'category\')) { %>  <div class="category"><%= model.get(\'category\') %>:</div><% } %><div class="search_facet_input_container">  <input type="text" class="search_facet_input interface" value="" /></div><div class="search_facet_remove icon cancel_search"></div>');
 window.JST['search_input'] = _.template('<input class="search_box" type="text" />');
 })();
