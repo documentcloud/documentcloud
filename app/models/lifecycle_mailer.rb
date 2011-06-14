@@ -82,18 +82,20 @@ class LifecycleMailer < ActionMailer::Base
     from          NO_REPLY
     recipients    'info@documentcloud.org'
     content_type  "multipart/mixed"
+    
+    date = Date.today.strftime "%Y-%m-%d"
 
     part :content_type => "text/plain",
          :body => render_message("account_and_document_csvs.text.plain", :date => Time.now)
 
     attachment "text/csv" do |a|
       a.body     = DC::Statistics.accounts_csv
-      a.filename = 'accounts.csv'
+      a.filename = "accounts-#{date}.csv"
     end
 
     attachment "text/csv" do |a|
       a.body     = DC::Statistics.top_documents_csv
-      a.filename = 'top_documents.csv'
+      a.filename = "top-documents-#{date}.csv"
     end
   end
 
