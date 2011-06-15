@@ -125,8 +125,12 @@ contributors:
      - http://www.dailyfreeman.com/
    - - Daily Herald
      - http://heraldnet.com
+   - - Daily Press
+     - http://www.dailypress.com/
    - - Daily Report
      - http://www.dailyreportonline.com/
+   - - Daily Telegraph
+     - http://telegraph.co.uk
    - - Danbury News-Times
      - http://www.newstimes.com
    - - Dark Acres
@@ -209,6 +213,8 @@ contributors:
      - http://www.civilbeat.com/
    - - Houston Chronicle
      - http://chron.com
+   - - Huffington Post
+     - http://www.huffingtonpost.com
    - - Huffington Post Investigative Fund
      - http://huffpostfund.org
    - - Illinois Times
@@ -257,6 +263,8 @@ contributors:
      - http://www.mcclatchydc.com
    - - Media Coop
      - http://www.mediacoop.ca/
+   - - Media Shift
+     - http://www.pbs.org/mediashift/
    - - Miami Herald
      - http://miamiherald.com
    - - Military Times
@@ -295,6 +303,8 @@ contributors:
      - http://neastphilly.com/
    - - NET Nebraska
      - http://www.netnebraska.org
+   - - News 21
+     - http://news21.com/
    - - NewsHour
      - http://pbs.org/newshour
    - - The News Journal
@@ -359,8 +369,12 @@ contributors:
      - http://www.picced.org/
    - - Press & Sun-Bulletin
      - http://Pressconnects.com
+   - - Press Gazette
+     - http://www.pressgazette.co.uk
    - - ProPublica
      - http://propublica.org
+   - - Project on Government Oversight
+     - http://www.pogo.org/
    - - Public Education Center
      - http://DCBureau.org
    - - Public Radio International
@@ -475,6 +489,8 @@ contributors:
      - http://trac.syr.edu/
    - - Tucson Sentinel
      - http://www.tucsonsentinel.com/
+   - - Two Circles
+     - http://www.TwoCircles.net
    - - UBC School of Journalism
      - http://journalism.ubc.ca
    - - Legacy Tobacco Documents Library (UCSF)
