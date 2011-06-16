@@ -34,7 +34,7 @@ Enclose terms in quotes to search for a specific, multi-word phrase.
 
 Use "NOT" or "-" to exclude a term from your search. For example these searches: [geithner -madoff][] and [geithner NOT madoff][] will return documents that mention "Geithner" and do not also mention "Madoff." 
 
-By default DocumentCLoud will search both the title and full text of every document for for all of the words in your search term. You can, however, ask DocumentCloud to search the contents of specific fields. 
+By default DocumentCloud will search both the title and full text of every document for for all of the words in your search term. You can, however, ask DocumentCloud to search the contents of specific fields. 
 
 
 ## Searching by Metadata Field
