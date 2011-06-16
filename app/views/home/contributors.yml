@@ -15,6 +15,8 @@ contributors:
      - http://www.timesunion.com
    - - AllPrinceton
      - http://allprinceton.com/
+   - - Anchorage Daily News
+     - http://www.adn.com/
    - - AnnArbor.com
      - http://annarbor.com
    - - A.Q. Miller School of Journalism and Mass Communications
@@ -29,6 +31,8 @@ contributors:
      - http://www.app.com
    - - Aspen Journalism
      - http://www.aspenjournalism.org/
+   - - Associated Press
+     - http://associatedpress.com/
    - - ASU State Press
      - http://www.statepress.com/
    - - Atlanta Journal-Constitution
@@ -37,6 +41,8 @@ contributors:
      - http://theatlantic.com
    - - Austin American-Statesman
      - http://www.statesman.com/
+   - - Australian Broadcasting Corporation
+     - http://www.abc.net.au/
    - - The Bay Citizen
      - http://www.baycitizen.org/
    - - Better Government Association
@@ -167,6 +173,8 @@ contributors:
      - http://www.fayettevilleflyer.com/
    - - Fire Dog Lake
      - http://firedoglake.com
+   - - Financial Times
+     - http://www.ft.com
    - - Florida Center for Investigative Reporting
      - http://fcir.org
    - - Florida Today
@@ -365,6 +373,10 @@ contributors:
      - http://politico.ie
    - - Politifact
      - http://politifact.com/
+   - - Post Star
+     - http://poststar.com/
+   - - POV
+     - http://www.pbs.org/pov/
    - - Pratt Center for Community Development
      - http://www.picced.org/
    - - Press & Sun-Bulletin
@@ -495,6 +507,8 @@ contributors:
      - http://journalism.ubc.ca
    - - Legacy Tobacco Documents Library (UCSF)
      - http://legacy.library.ucsf.edu
+   - - The Union
+     - http://www.theunion.com/
    - - USA Today
      - http://www.usatoday.com
    - - US Local News Network
