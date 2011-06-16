@@ -7,7 +7,7 @@
 .VS-search .icon.cancel_search {
   width: 11px; height: 11px;
   background-position: center 0;
-  background-image: url(../Users/conesus/cloud/visual-search/images/cancel_search.png?1281992275);
+  background-image: url("data:image/png;charset=utf-8;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAWCAYAAAAW5GZjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAb9JREFUeNqUUr1qAkEQ3j0khQp6kihaeGgEEa18gTQR0iRY+BaBSMDGwidIEUKqFL6BopgqBAJ5AMFGjUU0d4WHEvwJarvZ77gRIzGYgb1hZr+Z75vZ40IIzqTNZrPj8Xicn0wmmcViEXS73aaqqq+BQODG6/W+A8MBNk3zfDAY3C6Xy0O2ZS6X6zMSiVwHg8FHLjtq7Xb7RQKj7BeTzVCgJ5PJU2U0GhUk7REuMpkMi8fjFggeMeecrVYrFRId0CgTAgDDMFg4HLbA8IjJgHNgGEr0er0fQIphUmZAwdSUADUB4RFDsz3oSMF6CLzZkQqgGebz+Z75dDqNdTqdp13bgDmdTj2VSp0oWHg0Gr2UNH2Z/9o+yMv7K4/HY/C/XhDUfr//jl7QQVT9fp/V63VWqVRYt9tliUSCZbPZg1wux9Lp9PqFeK1Wu9A0DdXz7YM87i0FrVZLs4Fi1wmFQh/NZjOmVKvVgq7rR/QflMtlixGedjwcDlUpMQ9tbzalkAAB2/R297mNW+sT2wUbUnA//V/nYrH4QOBNABUQuFQq3TNMuc82sDVrz41G42yvPeODAwZQ0QzwiJEnzLcAAwBJ6WXlwoBgZAAAAABJRU5ErkJggg==");
   cursor: pointer;
 }
   .VS-search .icon.cancel_search:hover {
@@ -15,7 +15,7 @@
   }
 .VS-search .icon.search_glyph {
   width: 12px; height: 12px;
-  background-image: url(../Users/conesus/cloud/visual-search/images/search_glyph.png?1278683131);
+  background-image: url("data:image/png;charset=utf-8;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAUZJREFUeNpUUM2qgmAQzS8NiUgLzTIXLZQW1QuI9AY9QPSW9gQ9QiriwpJQEBVrVWT2d7p2L9xZzDdzZs7M+YYqy/J8Ptu2vd/v4zgeDAaqqk4mE47jar9GnU6nzWbjOA5FUa/Xq0Jns9l8Pud5vkpp58cwAOzhcBhFkeu6GNztdg3D+Db5vo9nOp2iiWGYTqdDCMFe4LquI0aVpGmKR9M0lmUbjQY8YiBJklTb4YkoilBzOBzq9TogeMQIJEmqmlAlo9EIyXa7tSyrKAp4xEBkWUb5q2k8Hh+PR8/zwjCEgufz+aESstvtoKnVan2GgY31kBkEAfT1ej1FUZDiNIIgrFYr9H1ug3teLpfH43G/3/FBUJGu1+s8z8FZLpc0mmiabrfbf5fEumazuVgsTNO8Xq+3242qRNT+G0CMz7IMzH6//xZgAA60tj6rqzxpAAAAAElFTkSuQmCC");
 }
 
 /*------------------------------ RESET + DEFAULT STYLES ---------------------------------*/
@@ -68,8 +68,9 @@ Source: http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
   line-height: 20px;
   width: 100%;
 }
-.VS-search .interface, .VS-search .dialog, .VS-search input {
+.VS-interface, .VS-search .dialog, .VS-search input {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif !important;
+  line-height: 1.1em;
 }
 
 /* ========== */
@@ -148,7 +149,7 @@ Source: http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
         color: #B0B0B0;
         text-shadow: 1px 1px 0 #FFF;
         padding: 9px 0 6px;
-        line-height: 14px;
+        line-height: 13px;
         cursor: pointer;
       }
       .VS-search .search_facet.is_selected .category {
@@ -203,7 +204,7 @@ Source: http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
         color: darkred;
       }
     .VS-search .search_input {
-      height: 29px;
+      height: 28px;
       float: left;
     }
       .VS-search .search_input input {
@@ -248,7 +249,9 @@ Source: http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
   background-color: #F6F6F6;
   cursor: pointer;
   z-index: 10000;
-  width: 120px;
+  width: auto;
+  min-width: 70px;
+  max-width: 220px;
   font-size: 13px;
 }
   .ui-autocomplete .ui-autocomplete-category {

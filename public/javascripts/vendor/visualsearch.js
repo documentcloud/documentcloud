@@ -15,10 +15,12 @@
         facetMatches    : $.noop
       }
     };
-    VS.options = _.extend({}, defaults, options);
+    VS.options           = _.extend({}, defaults, options);
+    VS.options.callbacks = _.extend({}, defaults.callbacks, options.callbacks);
+    
     VS.app.hotkeys.initialize();
-    VS.app.searchQuery = new VS.model.SearchQuery();
-    VS.app.searchBox   = new VS.ui.SearchBox(options);
+    VS.app.searchQuery   = new VS.model.SearchQuery();
+    VS.app.searchBox     = new VS.ui.SearchBox(options);
     
     if (options.container) {
       var searchBox = VS.app.searchBox.render().el;
@@ -33,22 +35,21 @@
 // The search box is responsible for managing the many facet views and input views.
 VS.ui.SearchBox = Backbone.View.extend({
   
-  flags : {
-    allSelected : false
-  },
-
   id  : 'search',
   
   events : {
-    'click .search_glyph'             : 'showFacetCategoryMenu',
-    'click .cancel_search_box'        : 'clearSearch',
-    'mousedown .VS-search-box': 'focusSearch',
-    'dblclick .VS-search-box' : 'highlightSearch',
-    'click #search_button'            : 'searchEvent'
+    'click .search_glyph'       : 'showFacetCategoryMenu',
+    'click .cancel_search_box'  : 'clearSearch',
+    'mousedown .VS-search-box'  : 'focusSearch',
+    'dblclick .VS-search-box'   : 'highlightSearch',
+    'click #search_button'      : 'searchEvent'
   },
 
   // Creating a new SearchBox registers handlers for 
   initialize : function() {
+    this.flags = {
+      allSelected : false
+    };
     this.facetViews = [];
     this.inputViews = [];
     _.bindAll(this, 'hideSearch', 'renderFacets', '_maybeDisableFacets', 'disableFacets');
@@ -93,7 +94,9 @@ VS.ui.SearchBox = Backbone.View.extend({
     var query = this.value();
     console.log(['real searchEvent', e, query, VS.options.callbacks]);
     this.focusSearch();
-    VS.options.callbacks.search(query);
+    if (VS.options.callbacks.search(query) !== false) {
+      this.value(query);
+    }
   },
   
   // Either gets a serialized query string or sets the faceted query from a query string.
@@ -143,8 +146,8 @@ VS.ui.SearchBox = Backbone.View.extend({
   // Add a new facet. Facet will be focused and ready to accept a value. Can also
   // specify position, in the case of adding facets from an inbetween input.
   addFacet : function(category, initialQuery, position) {
-    category     = dc.inflector.trim(category);
-    initialQuery = dc.inflector.trim(initialQuery || '');
+    category     = VS.utils.inflector.trim(category);
+    initialQuery = VS.utils.inflector.trim(initialQuery || '');
     if (!category) return;
     
     console.log(['addFacet', category, initialQuery, position]);
@@ -325,7 +328,10 @@ VS.ui.SearchBox = Backbone.View.extend({
 
   // User is no longer focused on anything in the search box.
   removeFocus : function() {
-    this.$('.VS-search-box').removeClass('VS-focus');
+    var focus = _.any(this.facetViews.concat(this.inputViews), function(view) {
+      return view.isFocused();
+    });
+    if (!focus) this.$('.VS-search-box').removeClass('VS-focus');
   },
   
   // Show a menu which adds pre-defined facets to the search box.
@@ -363,13 +369,12 @@ VS.ui.SearchFacet = Backbone.View.extend({
   className : 'search_facet',
   
   events : {
-    'click .category'               : 'selectFacet',
-    'keydown input'                 : 'keydown',
-    'mousedown input'               : 'enableEdit',
-    'blur input'                    : 'deferDisableEdit',
-    'mouseover .cancel_search'      : 'showDelete',
-    'mouseout .cancel_search'       : 'hideDelete',
-    'click .cancel_search'          : 'remove'
+    'click .category'           : 'selectFacet',
+    'keydown input'             : 'keydown',
+    'mousedown input'           : 'enableEdit',
+    'mouseover .cancel_search'  : 'showDelete',
+    'mouseout .cancel_search'   : 'hideDelete',
+    'click .cancel_search'      : 'remove'
   },
   
   initialize : function(options) {
@@ -415,7 +420,7 @@ VS.ui.SearchFacet = Backbone.View.extend({
       }, this)
     });
     
-    this.box.autocomplete('widget').addClass('interface');
+    this.box.autocomplete('widget').addClass('VS-interface');
   },
   
   moveAutocomplete : function() {
@@ -457,14 +462,17 @@ VS.ui.SearchFacet = Backbone.View.extend({
     this.resize();
     VS.app.searchBox.disableFacets(this);
     VS.app.searchBox.addFocus();
+    _.defer(function() {
+      VS.app.searchBox.addFocus();
+    });
     if (!this.box.is(':focus')) this.box.focus();
   },
   
   deferDisableEdit : function() {
-    if (!this.box.is(':focus')) return;
+    console.log(['deferDisableEdit', this.model.get('category'), this.box.is(':focus')]);
     this.canClose = true;
-    console.log(['deferDisableEdit', this.model.get('category')]);
     _.delay(_.bind(function() {
+      console.log(['deferDisableEdit post', this.canClose, this.box.is(':focus'), this.modes.editing]);
       if (this.canClose && !this.box.is(':focus') && this.modes.editing == 'is' && this.modes.selected != 'is') {
         this.disableEdit();
       }
@@ -477,10 +485,12 @@ VS.ui.SearchFacet = Backbone.View.extend({
     if (newFacetQuery != this.model.get('value')) {
       this.set(newFacetQuery);
     }
+    this.canClose = false;
     this.box.selectRange(0, 0);
     this.box.blur();
     this.setMode('not', 'editing');
     this.closeAutocomplete();
+    VS.app.searchBox.removeFocus();
   },
   
   selectFacet : function(e, selectAll) {
@@ -508,9 +518,14 @@ VS.ui.SearchFacet = Backbone.View.extend({
     if (this.modes.selected == 'is') {
       this.setMode('not', 'selected');
       this.closeAutocomplete();
+      VS.app.searchBox.removeFocus();
     }
     $(document).unbind('keydown.facet', this.keydown);
     $(document).unbind('click.facet', this.deselectFacet);
+  },
+  
+  isFocused : function() {
+    return this.box.is(':focus');
   },
   
   searchAutocomplete : function(e) {
@@ -658,8 +673,8 @@ VS.ui.SearchInput = Backbone.View.extend({
   className : 'search_input',
   
   events : {
-    'keypress input'            : 'keypress',
-    'keydown input'             : 'keydown'
+    'keypress input'  : 'keypress',
+    'keydown input'   : 'keydown'
   },
   
   initialize : function() {
@@ -708,7 +723,7 @@ VS.ui.SearchInput = Backbone.View.extend({
       }, this));
     };
     
-    this.box.autocomplete('widget').addClass('interface');
+    this.box.autocomplete('widget').addClass('VS-interface');
   },
   
   autocompleteValues : function(req, resp) {
@@ -720,11 +735,12 @@ VS.ui.SearchInput = Backbone.View.extend({
     // Only match from the beginning of the word.
     var matcher    = new RegExp('^' + re, 'i');
     var matches    = $.grep(prefixes, function(item) {
-      return matcher.test(item.label);
+      return matcher.test(item.label || item);
     });
 
     resp(_.sortBy(matches, function(match) {
-      return match.category + '-' + match.label;
+      if (match.label) return match.category + '-' + match.label;
+      else             return match;
     }));
   },
   
@@ -759,6 +775,7 @@ VS.ui.SearchInput = Backbone.View.extend({
 
   focus : function(selectText) {
     console.log(['input focus', selectText]);
+    this.addFocus();
     this.box.focus();
     if (selectText) {
       this.selectText();
@@ -768,6 +785,7 @@ VS.ui.SearchInput = Backbone.View.extend({
   blur : function() {
     console.log(['input blur']);
     this.box.blur();
+    this.removeFocus();
   },
 
   removeFocus : function(e) {
@@ -777,7 +795,12 @@ VS.ui.SearchInput = Backbone.View.extend({
   
   addFocus : function(e) {
     console.log(['addFocus', e]);
+    VS.app.searchBox.disableFacets(this);
     VS.app.searchBox.addFocus();
+  },
+  
+  isFocused : function() {
+    return this.box.is(':focus');
   },
   
   clear : function() {
@@ -804,6 +827,10 @@ VS.ui.SearchInput = Backbone.View.extend({
       this.box.trigger('resize.autogrow', e);
       var query    = this.box.val();
       var prefixes = VS.options.callbacks.categoryMatches() || [];
+      var labels   = _.map(prefixes, function(prefix) {
+        if (prefix.label) return prefix.label;
+        else              return prefix;
+      });
       if (_.contains(_.pluck(prefixes, 'label'), query)) {
         e.preventDefault();
         var remainder = this.addTextFacetRemainder(query);
@@ -1036,7 +1063,7 @@ VS.utils.inflector = {
           // fontWeight    : $input.css('font-weight'),
           // fontStyle     : $input.css('font-style'),
           // letterSpacing : $input.css('letter-spacing')
-        }).addClass('input_width_tester').addClass('interface');
+        }).addClass('input_width_tester').addClass('VS-interface');
         
         $input.after($tester);
         $input.unbind('keydown.autogrow keypress.autogrow resize.autogrow change.autogrow')
@@ -1305,6 +1332,6 @@ VS.model.SearchQuery = Backbone.Collection.extend({
 window.JST = window.JST || {};
 
 window.JST['search_box'] = _.template('<div class="VS-search">  <div id="search_container">    <div id="search_button" class="minibutton">Search</div>    <div id="search_box_wrapper" class="VS-search-box">      <div class="icon search_glyph"></div>      <div class="search_inner"></div>      <div class="icon cancel_search cancel_search_box" title="clear search"></div>    </div>  </div></div>');
-window.JST['search_facet'] = _.template('<% if (model.has(\'category\')) { %>  <div class="category"><%= model.get(\'category\') %>:</div><% } %><div class="search_facet_input_container">  <input type="text" class="search_facet_input interface" value="" /></div><div class="search_facet_remove icon cancel_search"></div>');
+window.JST['search_facet'] = _.template('<% if (model.has(\'category\')) { %>  <div class="category"><%= model.get(\'category\') %>:</div><% } %><div class="search_facet_input_container">  <input type="text" class="search_facet_input VS-interface" value="" /></div><div class="search_facet_remove icon cancel_search"></div>');
 window.JST['search_input'] = _.template('<input class="search_box" type="text" />');
 })();

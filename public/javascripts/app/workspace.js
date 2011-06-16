@@ -65,6 +65,16 @@ dc.controllers.Workspace = Backbone.Controller.extend({
   
   searchOptions : function() {
     return {
+      unquotable : [
+        'text',
+        'account',
+        'document',
+        'filter',
+        'group',
+        'access',
+        'related',
+        'projectid'
+      ],
       callbacks : {
         search : function(query) {
           if (!dc.app.searcher.flags.outstandingSearch) {
@@ -73,6 +83,7 @@ dc.controllers.Workspace = Backbone.Controller.extend({
             _.defer(dc.app.toolbar.checkFloat);
             dc.app.searcher.search(query);
           }
+          return false;
         },
         focus : function() {
           Documents.deselectAll();

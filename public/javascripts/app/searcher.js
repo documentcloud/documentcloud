@@ -109,7 +109,6 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   search : function(query, pageNumber, callback) {
     dc.app.navigation.open('search');
     if (this.currentSearch) this.currentSearch.abort();
-    console.log(['searcher', query]);
     this.searchBox.value(query);
     this.flags.related  = query.indexOf('related:') >= 0;
     this.flags.specific = query.indexOf('document:') >= 0;
