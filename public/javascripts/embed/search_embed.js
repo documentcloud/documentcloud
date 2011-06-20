@@ -9,23 +9,23 @@
 
   dc.embed.load = function(searchUrl, opts) {
     var secure = (/^https/).test(searchUrl);
-    var id = dc.inflector.sluggify(opts.originalQuery || opts.q);
+    var id = dc.inflector.sluggify(opts.original_query || opts.q);
 
     searches[id] = searches[id] || {};
     searches[id].options = opts = _.extend({}, {
-      searchUrl     : searchUrl,
-      secure        : secure,
-      originalQuery : opts.originalQuery || opts.q,
-      per_page      : 12,
-      order         : 'score',
-      search_bar    : true,
-      page          : 1,
-      title         : null,
-      pass_search   : false
+      searchUrl      : searchUrl,
+      secure         : secure,
+      original_query : opts.original_query || opts.q,
+      per_page       : 12,
+      order          : 'score',
+      search_bar     : true,
+      page           : 1,
+      title          : null,
+      pass_search    : false
     }, opts);
 
     if (opts.search && !searches[id].isLoaded) {
-      searches[id].options.q = opts.q = opts.originalQuery + ' ' + opts.search;
+      searches[id].options.q = opts.q = opts.original_query + ' ' + opts.search;
     }
     var params = encodeURIComponent(opts.q.replace(/\?/g, '')) +
                  '/p-'      + encodeURIComponent(opts.page) +
@@ -39,7 +39,7 @@
     window.dc = dc;
     setTimeout(function(){ window.dc = dc; }, 50);
     $.getScript(searchUrl + params);
-    dc.embed.pingRemoteUrl('search', encodeURIComponent(opts.originalQuery || opts.q));
+    dc.embed.pingRemoteUrl('search', encodeURIComponent(opts.original_query || opts.q));
   };
 
   dc.embed.callback = function(json) {
@@ -60,7 +60,7 @@
       if (searches[id].options.search && !searches[id].originalLoaded) {
         searches[id].workspace.render();
       }
-      if (searches[id].options.q == searches[id].options.originalQuery) {
+      if (searches[id].options.q == searches[id].options.original_query) {
         searches[id].originalLoaded = true;
       }
     } else {
@@ -117,7 +117,7 @@
     },
 
     render : function() {
-      var search = $.trim(this.embed.options.q.replace(this.embed.options.originalQuery, ''));
+      var search = $.trim(this.embed.options.q.replace(this.embed.options.original_query, ''));
       $(this.el).html(JST['search_embed_workspace']({
         options : this.embed.options,
         search  : search
@@ -147,14 +147,14 @@
       }
       this.$('.DC-paginator').removeClass('DC-is-editing').html(JST['search_paginator']({
         total         : options.total,
-        per_page      : options.per_page,
+        perPage       : options.per_page,
         page          : options.page,
-        page_count    : Math.ceil(options.total / options.per_page),
+        pageCount     : Math.ceil(options.total / options.per_page),
         from          : (options.page-1) * options.per_page,
         to            : Math.min(options.page * options.per_page, options.total),
         title         : options.title,
-        dc_url        : options.dc_url,
-        workspace_url : options.dc_url + (options.secure ? "/#search/" : "/public/#search/") +
+        dcUrl         : options.dc_url,
+        workspaceUrl  : options.dc_url + (options.secure ? "/#search/" : "/public/#search/") +
                         encodeURIComponent(options.q)
       }));
     },
@@ -178,7 +178,7 @@
     },
 
     showSearchCancel : function() {
-      var show = this.embed.options.q == this.embed.options.originalQuery;
+      var show = this.embed.options.q == this.embed.options.original_query;
 
       $(this.el).toggleClass('DC-query-original', show);
       $(this.el).toggleClass('DC-query-search',  !show);
@@ -207,12 +207,12 @@
       this.$('.DC-search-box').val(query);
       this.embed.query = dc.inflector.trim(query);
 
+      // Returning to original query, just use the cached original response.
       if (query == '' && !force && !this.embed.options.search) {
-        // Returning to original query, just use the cached original response.
         this.embed.options = _.clone(this.embed.originalOptions);
         this.embed.documents.refresh(this.embed.documents.originalModels);
       } else {
-        this.embed.options.q = this.embed.options.originalQuery + (query && (' ' + query));
+        this.embed.options.q = this.embed.options.original_query + (query && (' ' + query));
         this.showSpinner();
         this.$('.DC-document-list').empty();
         dc.embed.load(this.embed.options.searchUrl, this.embed.options);

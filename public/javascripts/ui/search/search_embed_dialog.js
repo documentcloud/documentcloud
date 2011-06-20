@@ -98,7 +98,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
         slug    : dc.inflector.sluggify(this.query),
         options : options
     });
-    var url = '/search/preview?' + params;
+    var url = 'http://' + window.location.host + '/search/preview?' + params;
     window.open(url);
     return false;
   },
