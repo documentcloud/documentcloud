@@ -91,18 +91,18 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
     // Swap out projects.
     var projects = [];
-    var projectNames = SearchQuery.values('project');
+    var projectNames = VS.app.searchQuery.values('project');
     _.each(projectNames, function(projectName) {
       projects.push(Projects.find(projectName));
     });
-    var query = SearchQuery.withoutCategory('project');
+    var query = VS.app.searchQuery.withoutCategory('project');
     query = _.map(projects, function(p) { return 'projectid: ' + p.slug(); }).join(' ') + ' ' + query;
 
     return query;
   },
 
   queryText : function() {
-    return dc.app.SearchParser.extractText(this.box.value());
+    return VS.app.searchQuery.find('text');
   },
 
   // Start a search for a query string, updating the page URL.
@@ -223,7 +223,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
   // Toggle a query fragment in the search.
   toggleSearch : function(category, value) {
-    if (SearchQuery.has(category)) {
+    if (VS.app.searchQuery.has(category)) {
       this.removeFromSearch(category);
     } else {
       this.addToSearch(category, value);
@@ -233,16 +233,16 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   // Add a query fragment to the search and search again, if it's not already
   // present in the current search.
   addToSearch : function(category, value, callback) {
-    if (SearchQuery.has(category, value)) return;
-    SearchQuery.add({category: category, value: value});
-    var query = SearchQuery.value();
+    if (VS.app.searchQuery.has(category, value)) return;
+    VS.app.searchQuery.add({category: category, value: value});
+    var query = VS.app.searchQuery.value();
     this.search(query, null, callback);
   },
 
   // Remove a query fragment from the search and search again, only if it's
   // present in the current search.
   removeFromSearch : function(category) {
-    var query = SearchQuery.withoutCategory(category);
+    var query = VS.app.searchQuery.withoutCategory(category);
     this.search(query);
     return true;
   },

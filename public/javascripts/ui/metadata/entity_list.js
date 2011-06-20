@@ -9,11 +9,16 @@ dc.ui.EntityList = Backbone.View.extend({
     'click .less'          : '_showLess',
     'click .show_pages'    : '_showPages'
   },
+  
+  ONE_ENTITY   : /(city|country|term|state|person|place|organization|email|phone):\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
+
+  ALL_ENTITIES : /(city|country|term|state|person|place|organization|email|phone):\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
+
 
   // Refresh the facets with a new batch.
   renderFacets : function(facets, limit, docCount) {
     this._docCount = docCount;
-    var filtered   = dc.app.SearchParser.extractEntities(dc.app.searchBox.value());
+    var filtered   = this.extractEntities(dc.app.searchBox.value());
     _.each(filtered, function(filter) {
       var list  = facets[filter.type];
       if (!list) return;
@@ -104,6 +109,19 @@ dc.ui.EntityList = Backbone.View.extend({
     _.each(sets, function(set) {
       Documents.get(set[0].get('document_id')).pageEntities.refresh(set);
     });
+  },
+
+  extractEntities : function(query) {
+    var all      = this.ALL_ENTITIES;
+    var one      = this.ONE_ENTITY;
+    var entities = query.match(all) || [];
+
+    return _.sortBy(_.map(entities, function(ent){
+      var match = ent.match(one);
+      return {type : match[1], value : match[3] || match[4] || match[5]};
+    }), function(ent) {
+      return ent.value.toLowerCase();
+    }).reverse();
   }
 
 });
