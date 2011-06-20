@@ -77,10 +77,6 @@ Source: http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
 /* = Layout = */
 /* ========== */
 
-#search_button {
-  float: right;
-  margin: 3px 29px 0 6px;
-}
 #search_box_wrapper {
 }
   input.search_box {
@@ -113,7 +109,7 @@ Source: http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
   }
   .VS-search .search_inner {
     position: relative;
-    margin: 0 25px 0 18px;
+    margin: 0 0 0 18px;
     padding: 0 3px;
     overflow: hidden;
   }
@@ -217,13 +213,12 @@ Source: http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
       width: 100px;
     }
     .VS-search input,
-    .VS-search .input_width_tester {
+    .VS-search .VS-input-width-tester {
       padding: 6px 0;
       float: left;
     }
       .VS-search input, 
-      .VS-search .placeholder,
-      .VS-search .input_width_tester {
+      .VS-search .VS-input-width-tester {
         color: #808080;
         font: 13px/17px Helvetica, Arial;
       }

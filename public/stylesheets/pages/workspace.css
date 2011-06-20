@@ -116,7 +116,7 @@ label {
     margin: 3px 29px 0 6px;
   }
   #search_box_wrapper {
-    margin: 0 100px 30px 30px;
+    margin: 0 30px 30px 30px;
     cursor: text;
   }
     input.search_box {
@@ -132,36 +132,6 @@ label {
     font: bold 20px Arial;
     color: #000;
     padding: 14px 30px 20px;
-  }
-
-.ui-autocomplete {
-  position: absolute;
-  border: 1px solid #C0C0C0;
-  background-color: #F6F6F6;
-  cursor: pointer;
-  z-index: 10000;
-  width: 120px;
-  font-size: 13px;
-}
-  .ui-autocomplete .ui-autocomplete-category {
-    text-transform: capitalize;
-    font-size: 11px;
-    padding: 4px 4px 4px;
-    border-top: 1px solid #A2A2A2;
-    border-bottom: 1px solid #A2A2A2;
-    background-color: #B7B7B7;
-    text-shadow: 0 -1px 0 #999;
-    font-weight: bold;
-    color: white;
-    cursor: default;
-  }
-  .ui-autocomplete .ui-menu-item a {
-    display: block;
-    padding: 3px 3px 5px;
-  }
-  .ui-autocomplete .ui-menu-item .ui-state-hover {
-    background-color: #2A61CD;
-    color: white;
   }
 
 #spinner {

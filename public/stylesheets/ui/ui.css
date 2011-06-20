@@ -192,6 +192,45 @@ div.text_input {
     div.text_input input.error {
       border-color: #991612 !important;
     }
+  div.text_input.search {
+    height: 28px;
+    background: transparent;
+    border: 2px solid #ccc;
+    border-radius: 16px; -webkit-border-radius: 16px; -moz-border-radius: 16px;
+    background-color: #fafafa;
+    -webkit-box-shadow: inset 0px 0px 3px #ccc;
+    -moz-box-shadow: inset 0px 0px 3px #ccc;
+    box-shadow: inset 0px 0px 3px #ccc;
+  }
+    div.text_input.search.focus {
+      border-color: #acf;
+      -webkit-box-shadow: inset 0px 0px 3px #acf;
+      -moz-box-shadow: inset 0px 0px 3px #acf;
+      box-shadow: inset 0px 0px 3px #acf;
+    }
+    div.text_input .search_inner {
+      position: relative;
+      margin: 0 28px;
+    }
+      div.text_input.search input {
+        width: 100%;
+        padding: 5px 0;
+      }
+        div.text_input.search input, div.text_input.search .placeholder {
+          color: #808080;
+          font: 13px/18px Helvetica, Arial;
+        }
+        div.text_input.search.focus input {
+          color: #000;
+        }
+    div.text_input .search_glyph {
+      position: absolute;
+      left: 9px; top: 8px;
+    }
+    div.text_input .cancel_search {
+      position: absolute;
+      right: 9px; top: 8px;
+    }
 
 textarea.text_area {
   border: 1px solid #d0d0d0;
