@@ -175,9 +175,9 @@ VS.ui.SearchBox = Backbone.View.extend({
   renderFacets : function() {
     this.facetViews = [];
     this.inputViews = [];
-
-    this.$('.search_inner').empty();
-
+    
+    this.$('.VS-search-inner').empty();
+    
     VS.app.searchQuery.each(_.bind(function(facet, i) {
       this.renderFacet(facet, i);
     }, this));
@@ -196,8 +196,8 @@ VS.ui.SearchBox = Backbone.View.extend({
     // Input first, facet second.
     this.renderSearchInput();
     this.facetViews.push(view);
-    this.$('.search_inner').children().eq(position*2).after(view.render().el);
-
+    this.$('.VS-search-inner').children().eq(position*2).after(view.render().el);
+    
     view.calculateSize();
     _.defer(_.bind(view.calculateSize, view));
 
@@ -207,7 +207,7 @@ VS.ui.SearchBox = Backbone.View.extend({
   // Render a single input, used to create and autocomplete facets
   renderSearchInput : function() {
     var input = new VS.ui.SearchInput({position: this.inputViews.length});
-    this.$('.search_inner').append(input.render().el);
+    this.$('.VS-search-inner').append(input.render().el);
     this.inputViews.push(input);
   },
 
@@ -337,9 +337,9 @@ VS.ui.SearchBox = Backbone.View.extend({
   // Bring focus to last input field.
   focusSearch : function(e, selectText) {
     var view = this.inputViews[this.inputViews.length-1];
-    if (!e ||
-        $(e.target).is('.VS-search-box') ||
-        $(e.target).is('.search_inner') ||
+    if (!e || 
+        $(e.target).is('.VS-search-box') || 
+        $(e.target).is('.VS-search-inner') || 
         e.type == 'keydown') {
       this.disableFacets();
       if (selectText) view.enableEdit(selectText);
@@ -1639,7 +1639,7 @@ VS.model.SearchQuery = Backbone.Collection.extend({
 })();(function(){
 window.JST = window.JST || {};
 
-window.JST['search_box'] = _.template('<div class="VS-search">\n  <div id="search_container">\n    <div class="VS-search-box-wrapper VS-search-box">\n      <div class="icon VS-icon-search"></div>\n      <div class="search_inner"></div>\n      <div class="icon VS-icon-cancel VS-cancel-search-box" title="clear search"></div>\n    </div>\n  </div>\n</div>');
-window.JST['search_facet'] = _.template('<% if (model.has(\'category\')) { %>\n  <div class="category"><%= model.get(\'category\') %>:</div>\n<% } %>\n\n<div class="search_facet_input_container">\n  <input type="text" class="search_facet_input VS-interface" value="" />\n</div>\n\n<div class="search_facet_remove icon VS-icon-cancel"></div>');
+window.JST['search_box'] = _.template('<div class="VS-search">  <div class="VS-search-box-wrapper VS-search-box">    <div class="VS-icon VS-icon-search"></div>    <div class="VS-search-inner"></div>    <div class="VS-icon VS-icon-cancel VS-cancel-search-box" title="clear search"></div>  </div></div>');
+window.JST['search_facet'] = _.template('<% if (model.has(\'category\')) { %>  <div class="category"><%= model.get(\'category\') %>:</div><% } %><div class="search_facet_input_container">  <input type="text" class="search_facet_input VS-interface" value="" /></div><div class="search_facet_remove VS-icon VS-icon-cancel"></div>');
 window.JST['search_input'] = _.template('<input type="text" />');
 })();
