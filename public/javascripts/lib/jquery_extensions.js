@@ -200,8 +200,8 @@
       });
     },
 
-    // Creates a boundary box of selection, used to drag a square lasso 
-    // around objects (specifically, document tiles). On mouse release, 
+    // Creates a boundary box of selection, used to drag a square lasso
+    // around objects (specifically, document tiles). On mouse release,
     // fire `options.onSelect`.
     // TODO: share common bits of this with the annotation_editor.
     selectable : function(options) {
@@ -259,7 +259,7 @@
         doc.bind('mouseup', dragEnd).bind('mousemove', drag);
       }, this));
     },
-    
+
     // jQuery's default text() method doesn't play nice with contentEditable
     // elements, which insert divs or paras instead of newline characters.
     // Convert them properly.
@@ -276,12 +276,12 @@
       });
       return ret;
     },
-    
+
     placeholder: function(opts) {
       if (supportsPlaceholder) return;
       var options = $.extend({}, {className: 'placeholder'}, opts);
       var otherEl;
-      
+
       this.each(function() {
         var el = $(this);
         var message = el.attr('placeholder');
@@ -343,46 +343,5 @@
       }
     }
   };
-
-  // Add :focus psuedo-selector. $('input:focus') and $('input').is(':focus')
-  jQuery.expr[':'].focus = function(elem) {
-    return elem === document.activeElement && (elem.type || elem.href);
-  };
-  
-  if (!window.console || !window.console.log) {
-    window.console = {};
-    var _$ied;
-    window.console.log = function(msg) {
-      if (_.isArray(msg)) {
-        var message = msg[0];
-        var vars = _.map(msg.slice(1), function(arg) {
-          return JSON.stringify(arg);
-        }).join(' - ');
-      }
-      if(!_$ied){
-        _$ied = $('<div><ol></ol></div>').css({
-          'position': 'fixed',
-          'bottom': 10,
-          'left': 10,
-          'zIndex': 20000,
-          'width': $('body').width() - 80,
-          'border': '1px solid #000',
-          'padding': '10px',
-          'backgroundColor': '#fff',
-          'fontFamily': 'arial,helvetica,sans-serif',
-          'fontSize': '11px'
-        });
-        $('body').append(_$ied);
-      }
-      var $message = $('<li>'+message+' - '+vars+'</li>').css({
-        'borderBottom': '1px solid #999999'
-      });
-      _$ied.find('ol').append($message);
-      _.delay(function() {
-        $message.fadeOut(500);
-      }, 2000);
-    };
-
-  }
 
 })(jQuery);

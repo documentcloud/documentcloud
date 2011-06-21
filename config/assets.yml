@@ -33,6 +33,8 @@ javascripts:
     - app/views/admin/*.jst
   ie_only:
     - public/javascripts/ie/*.js
+  dev_only:
+    - public/javascripts/dev/*.js
   home:
     - public/javascripts/home/*.js
 

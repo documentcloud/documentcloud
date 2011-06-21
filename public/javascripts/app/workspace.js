@@ -14,7 +14,6 @@ dc.controllers.Workspace = Backbone.Controller.extend({
     if (!Backbone.history.start()) {
       dc.app.searcher.loadDefault({showHelp: true});
     }
-    this.disableDeleteButton();
   },
 
   help : function(page) {
@@ -149,15 +148,6 @@ dc.controllers.Workspace = Backbone.Controller.extend({
         }
       }
     };
-  },
-
-  disableDeleteButton : function() {
-    $(document).bind('keypress', function(e) {
-      if (dc.app.hotkeys.key(e) == 'backspace' && !$('input:focus').length) {
-        e.preventDefault();
-        return false;
-      }
-    });
   }
 
 });

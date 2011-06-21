@@ -15,6 +15,9 @@
     <%= include_stylesheets :ie_only, :embed_assets => false %>
     <%= include_javascripts :ie_only %>
   <![endif]-->
+  <% if Rails.env.development? %>
+    <%= include_javascripts :dev_only %>
+  <% end %>
   <% if @include_analytics && Rails.env.production? %>
     <%= render :partial => 'common/google' %>
   <% end %>
