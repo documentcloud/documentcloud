@@ -115,9 +115,8 @@ label {
     float: right;
     margin: 3px 29px 0 6px;
   }
-  #search_box_wrapper {
+  .VS-search-box {
     margin: 0 30px 30px 30px;
-    cursor: text;
   }
     input.search_box {
       width: 10px;
