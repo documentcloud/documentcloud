@@ -294,6 +294,11 @@ div.full_page_background {
         margin: 0;
       }
 
+/*------------------------- Visual Search -----------------------------*/
+
+.VS-search {
+  margin: 0 29px 30px;
+}
 /*------------------------- View-mode visibility -----------------------------*/
 
 .search_tab_content,

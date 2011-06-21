@@ -89,8 +89,6 @@ Source: http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
   box-shadow: inset 0px 0px 3px #ccc;
   min-height: 29px;
   height: auto;
-  
-    margin: 0 30px 30px 30px;
 }
   .VS-search .VS-search-box.VS-focus {
     border-color: #acf;
@@ -143,14 +141,10 @@ Source: http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
     border-radius: 16px;
   }
   .VS-search .search_facet.is_selected {
-    background-color: #CBD1F1;
-    background-image: -moz-linear-gradient(top, #CBD1F1, #AFB5EC); /* FF3.6 */
-    background-image: -ms-linear-gradient(top, #CBD1F1, #AFB5EC); /* IE10 */
-    background-image: -o-linear-gradient(top, #CBD1F1, #AFB5EC); /* Opera 11.10+ */
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#CBD1F1), to(#AFB5EC)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(top, #CBD1F1, #AFB5EC); /* Chrome 10+, Saf5.1+ */
-    background-image: linear-gradient(top, #CBD1F1, #AFB5EC);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#CBD1F1', EndColorStr='#AFB5EC'); /* IE6–IE9 */
+    background-color: #A7B9FF;
+    background-image: -moz-linear-gradient(top, #B0BCFF, #7489FF); /* FF3.6 */
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#B0BCFF), to(#7489FF)); /* Saf4+, Chrome */
+    background-image: linear-gradient(top, #B0BCFF, #7489FF);
   }
   .VS-search .search_facet .category {
     float: left;
@@ -202,6 +196,8 @@ Source: http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
     .VS-search .search_facet.is_selected .search_facet_remove {
       top: 4px;
       left: 3px;
+      opacity: .4;
+      background-position: center -11px;
     }
     .VS-search .search_facet .search_facet_remove:hover {
       opacity: 1;
