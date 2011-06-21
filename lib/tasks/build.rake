@@ -3,7 +3,7 @@ namespace :build do
   BACKBONE         = '../backbone/backbone.js'
   UNDERSCORE       = '../underscore/underscore.js'
   VISUALSEARCH_JS  = '../visualsearch/build/visualsearch.js'
-  VISUALSEARCH_CSS = '../visualsearch/build/*.css'
+  VISUALSEARCH_CSS = '../visualsearch/build/visualsearch.css'
 
   # Figure out the version number of a JS source file.
   def get_version(string)
@@ -26,7 +26,7 @@ namespace :build do
   task :visualsearch do
     version = get_version File.read VISUALSEARCH_JS
     FileUtils.cp VISUALSEARCH_JS, "public/javascripts/vendor/visualsearch-#{version}.js", :verbose => true
-    FileUtils.cp Dir.glob(VISUALSEARCH_CSS), "public/stylesheets/vendor/", :verbose => true
+    FileUtils.cp VISUALSEARCH_CSS, "public/stylesheets/vendor/", :verbose => true
     
     # Fix image url paths.
     File.open('public/stylesheets/vendor/visualsearch.css', 'r+') do |file|
