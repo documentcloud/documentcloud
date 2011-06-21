@@ -125,21 +125,22 @@ dc.controllers.Workspace = Backbone.Controller.extend({
             { label: 'access',        category: '' },
             { label: 'related',       category: '' },
             { label: 'projectid',     category: '' },
-            { label: 'city',          category: 'entities' },
-            { label: 'country',       category: 'entities' },
-            { label: 'term',          category: 'entities' },
-            { label: 'state',         category: 'entities' },
-            { label: 'person',        category: 'entities' },
-            { label: 'place',         category: 'entities' },
-            { label: 'organization',  category: 'entities' },
-            { label: 'email',         category: 'entities' },
-            { label: 'phone',         category: 'entities' }
+            // Entities
+            { label: 'city',          category: '' },
+            { label: 'country',       category: '' },
+            { label: 'term',          category: '' },
+            { label: 'state',         category: '' },
+            { label: 'person',        category: '' },
+            { label: 'place',         category: '' },
+            { label: 'organization',  category: '' },
+            { label: 'email',         category: '' },
+            { label: 'phone',         category: '' }
           ];
           var metadata = _.map(_.keys(Documents.reduce(function(memo, doc) {
             if (_.size(doc.get('data'))) _.extend(memo, doc.get('data'));
             return memo;
           }, {})), function(key) {
-            return {label: key, category: 'data'};
+            return {label: key, category: ''};
           });
           return prefixes.concat(metadata);
         }
