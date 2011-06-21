@@ -99,6 +99,10 @@ dc.controllers.Workspace = Backbone.Controller.extend({
             return ['public', 'private', 'organization'];
           } else if (category == 'title') {
             return _.uniq(Documents.pluck('title'));
+          } else if (category == 'source') {
+            return _.uniq(_.compact(Documents.pluck('source')));
+          } else if (category == 'group') {
+            return Organizations.map(function(o) { return {value: o.get('slug'), label: o.get('name') }; });
           } else {
             // Meta data
             return _.compact(_.uniq(Documents.reduce(function(memo, doc) {

@@ -13,7 +13,7 @@ class WorkspaceController < ApplicationController
     if logged_in? && !current_account.reviewer?
       @accounts = current_organization.accounts.real
       @projects = Project.load_for(current_account)
-      @organizations = Organization.all
+      @organizations = Organization.all_slugs
       @has_documents = Document.owned_by(current_account).count(:limit => 1) > 0
       return
     end

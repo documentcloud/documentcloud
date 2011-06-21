@@ -34,6 +34,16 @@ class Organization < ActiveRecord::Base
     end
     orgs
   end
+  
+  # Retrieve all Organizations, just returning the name and slug.
+  def self.all_slugs
+    self.all(:select => ['name, slug']).map do |org|
+      {
+        :name => org.name,
+        :slug => org.slug
+      }
+    end
+  end
 
   # How many documents have been uploaded across the whole organization?
   def document_count
