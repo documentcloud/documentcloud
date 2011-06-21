@@ -9,11 +9,8 @@ dc.ui.EntityList = Backbone.View.extend({
     'click .less'          : '_showLess',
     'click .show_pages'    : '_showPages'
   },
-  
-  ONE_ENTITY   : /(city|country|term|state|person|place|organization|email|phone):\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/i,
 
-  ALL_ENTITIES : /(city|country|term|state|person|place|organization|email|phone):\s*(([^'"][^'"]\S*)|'(.+?)'|"(.+?)")/ig,
-
+  ENTITY_KINDS : ['city', 'country', 'term', 'state', 'person', 'place', 'organization', 'email', 'phone'],
 
   // Refresh the facets with a new batch.
   renderFacets : function(facets, limit, docCount) {
@@ -45,7 +42,7 @@ dc.ui.EntityList = Backbone.View.extend({
   mergeFacets : function(facets, limit, docCount) {
     this.renderFacets(_.extend(this._facets, facets), limit, docCount);
   },
-  
+
   _facetValueFor : function(el) {
     var row = $(el).closest('.row');
     var val = row.attr('data-value');
@@ -112,13 +109,11 @@ dc.ui.EntityList = Backbone.View.extend({
   },
 
   extractEntities : function(query) {
-    var all      = this.ALL_ENTITIES;
-    var one      = this.ONE_ENTITY;
-    var entities = query.match(all) || [];
-
-    return _.sortBy(_.map(entities, function(ent){
-      var match = ent.match(one);
-      return {type : match[1], value : match[3] || match[4] || match[5]};
+    var entities = VS.app.searchQuery.filter(_.bind(function(facet) {
+      return _.include(this.ENTITY_KINDS, facet.get('category'));
+    }, this));
+    return _.sortBy(_.map(entities, function(ent) {
+      return {type: ent.get('category'), value: ent.get('value')};
     }), function(ent) {
       return ent.value.toLowerCase();
     }).reverse();
