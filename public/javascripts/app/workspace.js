@@ -62,7 +62,7 @@ dc.controllers.Workspace = Backbone.Controller.extend({
 
     this.sidebar.add('account_badge', this.accountBadge.render().el);
   },
-  
+
   searchOptions : function() {
     return {
       unquotable : [
@@ -89,26 +89,29 @@ dc.controllers.Workspace = Backbone.Controller.extend({
           Documents.deselectAll();
         },
         facetMatches : function(category) {
-          if (category == 'account') {
-            return Accounts.map(function(a) { return {value: a.get('slug'), label: a.fullName()}; });
-          } else if (category == 'project') {
-            return Projects.pluck('title');
-          } else if (category == 'filter') {
-            return ['published', 'annotated'];
-          } else if (category == 'access') {
-            return ['public', 'private', 'organization'];
-          } else if (category == 'title') {
-            return _.uniq(Documents.pluck('title'));
-          } else if (category == 'source') {
-            return _.uniq(_.compact(Documents.pluck('source')));
-          } else if (category == 'group') {
-            return Organizations.map(function(o) { return {value: o.get('slug'), label: o.get('name') }; });
-          } else {
-            // Meta data
-            return _.compact(_.uniq(Documents.reduce(function(memo, doc) {
-              if (_.size(doc.get('data'))) memo.push(doc.get('data')[category]);
-              return memo;
-            }, [])));
+          switch (category) {
+            case 'account':
+              return Accounts.map(function(a) { return {value: a.get('slug'), label: a.fullName()}; });
+            case 'project':
+              return Projects.pluck('title');
+            case 'filter':
+              return ['published', 'annotated'];
+            case 'access':
+              return ['public', 'private', 'organization'];
+            case 'title':
+              return _.uniq(Documents.pluck('title'));
+            case 'source':
+              return _.uniq(_.compact(Documents.pluck('source')));
+            case 'group':
+              return Organizations.map(function(o) { return {value: o.get('slug'), label: o.get('name') }; });
+            case 'document':
+              return Documents.map(function(d){ return {value: d.canonicalId(), label: d.get('title')}; });
+            default:
+              // Meta data
+              return _.compact(_.uniq(Documents.reduce(function(memo, doc) {
+                if (_.size(doc.get('data'))) memo.push(doc.get('data')[category]);
+                return memo;
+              }, [])));
           }
         },
         categoryMatches : function() {
@@ -147,7 +150,7 @@ dc.controllers.Workspace = Backbone.Controller.extend({
       }
     };
   },
-  
+
   disableDeleteButton : function() {
     $(document).bind('keypress', function(e) {
       if (dc.app.hotkeys.key(e) == 'backspace' && !$('input:focus').length) {
