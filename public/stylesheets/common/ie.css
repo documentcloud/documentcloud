@@ -104,3 +104,6 @@ ul.bullet, #help ul {
 .datalog .icon.minus {
   margin-left: 3px;
 }
+.VS-search .search_facet .category {
+  line-height: 12px;
+}

@@ -170,7 +170,7 @@ VS.ui.SearchBox = Backbone.View.extend({
     var facetView = _.detect(this.facetViews, function(view) {
       if (view.model == model) return true;
     });
-    
+
     _.defer(function() {
       facetView.enableEdit();
     });
@@ -180,9 +180,9 @@ VS.ui.SearchBox = Backbone.View.extend({
   renderFacets : function() {
     this.facetViews = [];
     this.inputViews = [];
-    
+
     this.$('.VS-search-inner').empty();
-    
+
     VS.app.searchQuery.each(_.bind(function(facet, i) {
       this.renderFacet(facet, i);
     }, this));
@@ -202,7 +202,7 @@ VS.ui.SearchBox = Backbone.View.extend({
     this.renderSearchInput();
     this.facetViews.push(view);
     this.$('.VS-search-inner').children().eq(position*2).after(view.render().el);
-    
+
     view.calculateSize();
     _.defer(_.bind(view.calculateSize, view));
 
@@ -225,13 +225,13 @@ VS.ui.SearchBox = Backbone.View.extend({
     this.flags.allSelected = false;
     this.focusSearch(e);
   },
-  
+
   // Command+A selects all facets.
   selectAllFacets : function() {
     this.flags.allSelected = true;
-    
+
     $(document).one('click.selectAllFacets', this.disableFacets);
-    
+
     _.each(this.facetViews, function(facetView, i) {
       facetView.selectFacet();
     });
@@ -249,7 +249,6 @@ VS.ui.SearchBox = Backbone.View.extend({
   // Disables all facets except for the passed in view. Used when switching between
   // facets, so as not to have to keep state of active facets.
   disableFacets : function(keepView) {
-    console.log(['disableFacets', keepView]);
     _.each(this.inputViews, function(view) {
       if (view && view != keepView &&
           (view.modes.editing == 'is' || view.modes.selected == 'is')) {
@@ -312,7 +311,7 @@ VS.ui.SearchBox = Backbone.View.extend({
       direction    = 0;
     }
     var view, next = Math.min(viewCount, viewPosition + direction);
-    
+
     if (currentView.type == 'text') {
       if (next >= 0 && next < viewCount) {
         view = this.facetViews[next];
@@ -345,13 +344,13 @@ VS.ui.SearchBox = Backbone.View.extend({
   },
 
   maybeFocusSearch : function(e) {
-    if ($(e.target).is('.VS-search-box') || 
-        $(e.target).is('.VS-search-inner') || 
+    if ($(e.target).is('.VS-search-box') ||
+        $(e.target).is('.VS-search-inner') ||
         e.type == 'keydown') {
       this.focusSearch(e);
     }
   },
-  
+
   // Bring focus to last input field.
   focusSearch : function(e, selectText) {
     var view = this.inputViews[this.inputViews.length-1];
@@ -371,8 +370,8 @@ VS.ui.SearchBox = Backbone.View.extend({
   // Double-clicking on the search wrapper should select the existing text in
   // the last search input. Also start the triple-click timer.
   highlightSearch : function(e) {
-    if ($(e.target).is('.VS-search-box') || 
-        $(e.target).is('.VS-search-inner') || 
+    if ($(e.target).is('.VS-search-box') ||
+        $(e.target).is('.VS-search-inner') ||
         e.type == 'keydown') {
       var lastinput = this.inputViews[this.inputViews.length-1];
       lastinput.startTripleClickTimer();
@@ -398,7 +397,7 @@ VS.ui.SearchBox = Backbone.View.extend({
     });
     if (!focus) this.$('.VS-search-box').removeClass('VS-focus');
   },
-  
+
   // Show a menu which adds pre-defined facets to the search box. This is unused for now.
   showFacetCategoryMenu : function(e) {
     e.preventDefault();
@@ -521,7 +520,7 @@ VS.ui.SearchFacet = Backbone.View.extend({
         at        : "left bottom",
         of        : this.box.data('autocomplete').element,
         collision : "flip",
-        offset    : "0 1"
+        offset    : "0 0"
       });
     }
   },
@@ -540,7 +539,6 @@ VS.ui.SearchFacet = Backbone.View.extend({
         menu.width('').outerWidth(),
         autocomplete.element.outerWidth()
       ));
-      this.moveAutocomplete();
     }
   },
 
@@ -658,11 +656,10 @@ VS.ui.SearchFacet = Backbone.View.extend({
   // we attach a mouse/keyboard watcher to check if the next action by the user
   // should delete this facet or just deselect it.
   selectFacet : function(e) {
-    console.log(['allSelected', allSelected, e]);
     if (e) e.preventDefault();
     var allSelected = VS.app.searchBox.allSelected();
     if (this.modes.selected == 'is') return;
-    
+
     if (this.box.is(':focus')) {
         this.box.setCursorPosition(0);
         this.box.blur();
@@ -778,8 +775,8 @@ VS.ui.SearchFacet = Backbone.View.extend({
     } else if (VS.app.hotkeys.shift && key == 'tab') {
       e.preventDefault();
       VS.app.searchBox.focusNextFacet(this, -1, {
-        startAtEnd  : -1, 
-        skipToFacet : true, 
+        startAtEnd  : -1,
+        skipToFacet : true,
         selectText  : true
       });
     } else if (key == 'tab') {
@@ -977,7 +974,7 @@ VS.ui.SearchInput = Backbone.View.extend({
     }
     this.box.focus();
   },
-  
+
   // Event called on user focus on the input. Tells all other input and facets
   // to give up focus, and starts revving the autocomplete.
   addFocus : function() {
@@ -990,7 +987,7 @@ VS.ui.SearchInput = Backbone.View.extend({
     this.setMode('not', 'selected');
     this.searchAutocomplete();
   },
-  
+
   // Directly called to blur the input. This is different from `removeFocus`
   // because this is not called by a blur event.
   disableEdit : function() {
@@ -999,7 +996,7 @@ VS.ui.SearchInput = Backbone.View.extend({
   },
 
   // Event called when user blur's the input, either through the keyboard tabbing
-  // away or the mouse clicking off. Cleans up 
+  // away or the mouse clicking off. Cleans up
   removeFocus : function() {
     this.flags.canClose = false;
     VS.app.searchBox.removeFocus();
@@ -1007,19 +1004,19 @@ VS.ui.SearchInput = Backbone.View.extend({
     this.setMode('not', 'selected');
     this.closeAutocomplete();
   },
-  
+
   // When the user blurs the input, they may either be going to another input
   // or off the search box entirely. If they go to another input, this facet
   // will be instantly disabled, and the canClose flag will be turned back off.
-  // 
+  //
   // However, if the user clicks elsewhere on the page, this method starts a timer
   // that checks if any of the other inputs are selected or are being edited. If
   // not, then it can finally close itself and its autocomplete menu.
   deferDisableEdit : function() {
     this.flags.canClose = true;
     _.delay(_.bind(function() {
-      if (this.flags.canClose && 
-          !this.box.is(':focus') && 
+      if (this.flags.canClose &&
+          !this.box.is(':focus') &&
           this.modes.editing == 'is') {
         this.disableEdit();
       }
@@ -1032,8 +1029,8 @@ VS.ui.SearchInput = Backbone.View.extend({
       this.tripleClickTimer = null;
     }, this), 500);
   },
-  
-  // Event on click that checks if a triple click is in play. The 
+
+  // Event on click that checks if a triple click is in play. The
   // `tripleClickTimer` is counting down, ready to be engaged and intercept
   // the click event to force a select all instead.
   maybeTripleClick : function(e) {
@@ -1043,12 +1040,12 @@ VS.ui.SearchInput = Backbone.View.extend({
       return false;
     }
   },
-  
+
   // Is the user currently focused in the input field?
   isFocused : function() {
     return this.box.is(':focus');
   },
-  
+
   // When serializing the facets, the inputs need to also have their values represented,
   // in case they contain text that is not yet faceted (but will be once the search is
   // completed).
@@ -1066,7 +1063,7 @@ VS.ui.SearchInput = Backbone.View.extend({
       this.box.setCursorPosition(0);
     }
   },
-  
+
   // Selects the entire range of text in the input. Useful when tabbing between inputs
   // and facets.
   selectText : function() {
@@ -1077,8 +1074,8 @@ VS.ui.SearchInput = Backbone.View.extend({
       this.setMode('is', 'selected');
     }
   },
-  
-  // Before the searchBox performs a search, we need to close the 
+
+  // Before the searchBox performs a search, we need to close the
   // autocomplete menu.
   search : function(e, direction) {
     if (!direction) direction = 0;
@@ -1088,7 +1085,7 @@ VS.ui.SearchInput = Backbone.View.extend({
       VS.app.searchBox.focusNextFacet(this, direction);
     }, this));
   },
-  
+
   // Callback fired on key press in the search box. We search when they hit return.
   keypress : function(e) {
     var key = VS.app.hotkeys.key(e);
@@ -1120,7 +1117,7 @@ VS.ui.SearchInput = Backbone.View.extend({
       }
     }
   },
-  
+
   // Handles all keyboard inputs when in the input field. This checks
   // for movement between facets and inputs, entering a new value that needs
   // to be autocompleted, as well as stepping between facets with backspace.
@@ -1149,11 +1146,11 @@ VS.ui.SearchInput = Backbone.View.extend({
         VS.app.searchBox.addFacet(value, '', position);
       } else {
         VS.app.searchBox.focusNextFacet(this, 0, {
-          skipToFacet: true, 
+          skipToFacet: true,
           selectText: true
         });
       }
-    } else if (VS.app.hotkeys.command && 
+    } else if (VS.app.hotkeys.command &&
                String.fromCharCode(e.which).toLowerCase() == 'a') {
       e.preventDefault();
       VS.app.searchBox.selectAllFacets();
@@ -1461,12 +1458,13 @@ $.fn.extend({
 
 });
 
-// Debugging in Internet Explorer. This allows you to use 
+// Debugging in Internet Explorer. This allows you to use
 // `console.log(['message', var1, var2, ...])`. Just remove the `false` and
 // add your console.logs. This will automatically stringify objects using
 // `JSON.stringify', so you can read what's going out. Think of this as a
 // *Diet Firebug Lite Zero with Lemon*.
-if ($.browser.msie && false) {
+
+if (false && $.browser.msie) {
   window.console = {};
   var _$ied;
   window.console.log = function(msg) {
@@ -1711,7 +1709,7 @@ VS.model.SearchQuery = Backbone.Collection.extend({
 })();(function(){
 window.JST = window.JST || {};
 
-window.JST['search_box'] = _.template('<div class="VS-search">  <div class="VS-search-box-wrapper VS-search-box">    <div class="VS-icon VS-icon-search"></div>    <div class="VS-search-inner"></div>    <div class="VS-icon VS-icon-cancel VS-cancel-search-box" title="clear search"></div>  </div></div>');
-window.JST['search_facet'] = _.template('<% if (model.has(\'category\')) { %>  <div class="category"><%= model.get(\'category\') %>:</div><% } %><div class="search_facet_input_container">  <input type="text" class="search_facet_input VS-interface" value="" /></div><div class="search_facet_remove VS-icon VS-icon-cancel"></div>');
+window.JST['search_box'] = _.template('<div class="VS-search">\n  <div class="VS-search-box-wrapper VS-search-box">\n    <div class="VS-icon VS-icon-search"></div>\n    <div class="VS-search-inner"></div>\n    <div class="VS-icon VS-icon-cancel VS-cancel-search-box" title="clear search"></div>\n  </div>\n</div>');
+window.JST['search_facet'] = _.template('<% if (model.has(\'category\')) { %>\n  <div class="category"><%= model.get(\'category\') %>:</div>\n<% } %>\n\n<div class="search_facet_input_container">\n  <input type="text" class="search_facet_input VS-interface" value="" />\n</div>\n\n<div class="search_facet_remove VS-icon VS-icon-cancel"></div>');
 window.JST['search_input'] = _.template('<input type="text" />');
 })();
