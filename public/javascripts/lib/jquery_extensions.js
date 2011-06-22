@@ -304,6 +304,10 @@
 
   });
 
+  jQuery.expr[':'].focus = function(elem) {
+    return elem === document.activeElement && (elem.type || elem.href);
+  };
+
   // Add mousewheel support:
   var types = ['DOMMouseScroll', 'mousewheel'];
 
