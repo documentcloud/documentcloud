@@ -98,6 +98,9 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     var query = VS.app.searchQuery.withoutCategory('project');
     query = _.map(projects, function(p) { return 'projectid: ' + p.slug(); }).join(' ') + ' ' + query;
 
+    // Swap out documents for short ids.
+    query = query.replace(/(document: \d+)-\S+/g, '$1');
+
     return query;
   },
 
@@ -107,6 +110,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
 
   // Start a search for a query string, updating the page URL.
   search : function(query, pageNumber, callback) {
+    dc.ui.spinner.show();
     dc.app.navigation.open('search');
     if (this.currentSearch) this.currentSearch.abort();
     this.searchBox.value(query);
@@ -134,7 +138,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
       dataType: 'json'
     });
   },
-  
+
   showDocuments : function() {
     var query       = this.searchBox.value();
     var title       = dc.model.DocumentSet.entitle(query);
@@ -145,13 +149,13 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     this.titleBox.html(title);
     dc.app.organizer.highlight(projectName, groupName);
   },
-  
+
   // Hide the spinner and remove the search lock when finished searching.
   doneSearching : function() {
     var count      = dc.app.paginator.query.total;
     var documents  = dc.inflector.pluralize('Document', count);
     var searchType = this.searchType();
-    
+
     if (this.flags.related) {
       this.titleBox.text(count + ' ' + documents + ' Related to "' + dc.inflector.truncate(this.relatedDoc.get('title'), 100) + '"');
     } else if (this.flags.specific) {
@@ -170,15 +174,15 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     dc.ui.spinner.hide();
     dc.app.scroller.checkLater();
   },
-  
+
   searchType : function() {
     var single   = false;
     var multiple = false;
-    
+
     VS.app.searchQuery.each(function(facet) {
       var category = facet.get('category');
       var value    = facet.get('value');
-      
+
       if (value) {
         if (!single && !multiple) {
           single = category;
@@ -198,7 +202,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
     } else if (!single && !multiple) {
       return 'all';
     }
-    
+
     return 'search';
   },
 

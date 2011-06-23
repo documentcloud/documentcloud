@@ -77,7 +77,6 @@ dc.controllers.Workspace = Backbone.Controller.extend({
       callbacks : {
         search : function(query) {
           if (!dc.app.searcher.flags.outstandingSearch) {
-            dc.ui.spinner.show();
             dc.app.paginator.hide();
             _.defer(dc.app.toolbar.checkFloat);
             dc.app.searcher.search(query);
