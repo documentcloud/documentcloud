@@ -8,8 +8,8 @@ module DC
     # We're not talking full domains, just (prefix).documentcloud.org
     SUBDOMAIN = /\A[0-9a-z\-_]+\Z/i
 
-    # Proper slugs are alphanumeric, lowercased, with dashes or underscores.
-    SLUG = /\A[a-z0-9\-_]+\Z/
+    # Proper slugs are alphanumeric, lowercased, with dashes.
+    SLUG = /\A[a-z0-9\-]+\Z/
 
     # IP Validation Regex.
     IP = /\A(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\Z/
