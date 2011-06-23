@@ -87,7 +87,7 @@ dc.controllers.Workspace = Backbone.Controller.extend({
         focus : function() {
           Documents.deselectAll();
         },
-        facetMatches : function(category) {
+        valueMatches : function(category) {
           switch (category) {
             case 'account':
               return Accounts.map(function(a) { return {value: a.get('slug'), label: a.fullName()}; });
@@ -113,7 +113,7 @@ dc.controllers.Workspace = Backbone.Controller.extend({
               }, [])));
           }
         },
-        categoryMatches : function() {
+        facetMatches : function() {
           var prefixes = [
             { label: 'project',       category: '' },
             { label: 'text',          category: '' },

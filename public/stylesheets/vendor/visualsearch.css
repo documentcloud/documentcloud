@@ -7,7 +7,7 @@
   .VS-search .VS-icon-cancel {
     width: 11px; height: 11px;
     background-position: center 0;
-    background-image: url(../../images/embed/icons/cancel_search.png?1308683855);
+    background-image: url(../../images/embed/icons/cancel_search.png?1308268129);
     cursor: pointer;
   }
     .VS-search .VS-icon-cancel:hover {
@@ -15,7 +15,7 @@
     }
   .VS-search .VS-icon-search {
     width: 12px; height: 12px;
-    background-image: url(../../images/embed/icons/search_glyph.png?1308683855);
+    background-image: url(../../images/embed/icons/search_glyph.png?1308268129);
   }
 
 /*------------------------------ RESET + DEFAULT STYLES ---------------------------------*/
@@ -158,8 +158,8 @@ Source: http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
     cursor: pointer;
   }
   .VS-search .search_facet.is_selected .category {
-    padding: 4px 0 0;
     margin-left: 3px;
+    padding: 4px 0 0;
   }
   .VS-search .search_facet .search_facet_input_container {
     float: left;
@@ -195,6 +195,7 @@ Source: http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
       top: 4px;
       left: 3px;
       opacity: 0.4;
+      filter: alpha(opacity=40);
       background-position: center -11px;
     }
     .VS-search .search_facet .search_facet_remove:hover {
