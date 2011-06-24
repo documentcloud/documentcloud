@@ -6,7 +6,7 @@ dc.ui.Document = Backbone.View.extend({
 
   // To display if the document failed to upload.
   ERROR_MESSAGE : "<span class=\"interface\">Our system was unable to process \
-    this document. We've been notified of the problem and periodially review \
+    this document. We've been notified of the problem and periodically review \
     these errors. Please review our \
     <span class=\"text_link troubleshoot\">troubleshooting suggestions</span> or \
     <span class=\"text_link contact_us\">contact us</span> for immediate assistance.</span>",
