@@ -252,8 +252,7 @@ dc.controllers.Searcher = Backbone.Controller.extend({
   },
 
   populateRelatedDocument : function() {
-    var relatedFacet = VS.app.searchQuery.find('related');
-    var id = parseInt(relatedFacet && relatedFacet.get('value'), 10);
+    var id = parseInt(VS.app.searchQuery.find('related'), 10);
     this.relatedDoc = Documents.get(id) || null;
   },
 
