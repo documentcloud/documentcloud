@@ -1,4 +1,12 @@
 news:
+  - - "Getting Started with Backbone.js"
+    - http://net.tutsplus.com/tutorials/javascript-ajax/getting-started-with-backbone-js/
+    - Nettuts+
+    - 2011-04-28
+  - - "Node Tutorial Part 19: Backbone.js"
+    - http://dailyjs.com/2011/04/04/node-tutorial-19/
+    - DailyJS
+    - 2011-04-04
   - - "A Backbone for JavaScript-Heavy Web UI"
     - http://www.drdobbs.com/blog/archives/2011/02/a_backbone_for.html
     - Dr. Dobb's
@@ -85,3 +93,7 @@ github:
     - http://documentcloud.github.com/pixel-ping
     - http://github.com/documentcloud/pixel-ping
     - "A lightweight pixel-tracking server that we use to keep tabs on embedded documents, and send traffic to contributing organizations."
+  - - VisualSearch.js
+    - http://documentcloud.github.com/visualsearch/
+    - https://github.com/documentcloud/visualsearch/
+    - "A rich search box with built-in autcompletion for faceted search queries."
