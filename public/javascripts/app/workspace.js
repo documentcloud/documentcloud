@@ -95,7 +95,7 @@ dc.controllers.Workspace = Backbone.Controller.extend({
             case 'filter':
               return ['published', 'annotated'];
             case 'access':
-              return ['public', 'private', 'organization'];
+              return ['public', 'private', 'organization', 'error'];
             case 'title':
               return _.uniq(Documents.pluck('title'));
             case 'source':
