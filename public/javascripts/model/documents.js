@@ -200,7 +200,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
   EMBED_FORBIDDEN : "At this stage in the beta, you may only embed documents you've uploaded yourself.",
 
-  POLL_INTERVAL : 5 * 1000, // 5 seconds.
+  POLL_INTERVAL : 10 * 1000, // 10 seconds.
 
   // Default number of mentions to include in a text search.
   NUM_MENTIONS : 3,
@@ -302,9 +302,14 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     this._polling = null;
   },
 
+  // Every time we poll, ask for the status of the two oldest documents, plus
+  // one random one, if there are more than 5 pending documents.
   poll : function() {
     var ids = _.compact(_.pluck(this.pending(), 'id'));
     if (!ids.length) return this.stopPolling();
+    if (ids.length > 5) {
+      ids = [ids.shift(), ids.shift(), ids[Math.floor(Math.random() * ids.length)]];
+    }
     $.get('/documents/status.json', {'ids[]' : ids}, _.bind(function(resp) {
       _.each(resp.documents, function(json) {
         var doc = Documents.get(json.id);
@@ -435,7 +440,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   entitle : function(query) {
     var searchQuery = VS.app.searchQuery;
     var title, ret, account, org;
-        
+
     if (searchQuery.count('project') == 1) {
       title = searchQuery.find('project');
     } else if (dc.account && searchQuery.find('account') == Accounts.current().get('slug')) {
@@ -455,7 +460,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     } else {
       ret = 'all_documents';
     }
-    
+
     return title || dc.model.Project.topLevelTitle(ret);
   }
 
