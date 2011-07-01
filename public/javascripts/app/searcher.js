@@ -53,7 +53,7 @@ dc.controllers.Searcher = Backbone.Router.extend({
     }
     if (this.currentSearch) return;
     if (!Documents.isEmpty()) {
-      this.saveLocation(this.urlFragment());
+      this.navigate(this.urlFragment());
       this.showDocuments();
     } else if (this.searchBox.value()) {
       this.search(this.searchBox.value());
@@ -121,7 +121,7 @@ dc.controllers.Searcher = Backbone.Router.extend({
     this.fragment = 'search/' + query;
     this.populateRelatedDocument();
     this.showDocuments();
-    this.saveLocation(this.urlFragment());
+    this.navigate(this.urlFragment());
     Documents.reset();
     this._afterSearch = callback;
     var params = _.extend(dc.app.paginator.queryParams(), {q : query});
