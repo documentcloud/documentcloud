@@ -74,30 +74,30 @@ Questions? Don't hesitate to [contact us][]. And as you go, feel free to [reques
 </div>
 
 
-[gulf oil spill]: /public/#search/gulf%20oil%20spill
-[source: "House Committee on the Judiciary"]: /public/#search/source%3A%20%22House%20Committee%20on%20the%20Judiciary%22
-[John Yoo detainee]: /public/#search/John%20Yoo%20detainee
-[geithner -madoff]: /public/#search/geithner%20-madoff 
-[geithner NOT madoff]: /public/#search/geithner%20NOT%20madoff
-[account: 143-james-wilkerson]: /public/#search/account%3A%20143-james-wilkerson
-[group: chicago-tribune]: /public/#search/group%3A%20chicago-tribune
-[title: deepwater]: /public/#search/title%3A%20deepwater
-[source: supreme]: /public/#search/source%3A%20supreme
-[description: manifesto]: /public/#search/description%3A%20manifesto
-[projectid: 6-the-financial-crisis]: /public/#search/projectid%3A%206-the-financial-crisis
-[access: private]: /public/#search/access%3A%20private
-[filter: published]: /public/#search/filter%3A%20published
+[gulf oil spill]: /public/search/gulf%20oil%20spill
+[source: "House Committee on the Judiciary"]: /public/search/source%3A%20%22House%20Committee%20on%20the%20Judiciary%22
+[John Yoo detainee]: /public/search/John%20Yoo%20detainee
+[geithner -madoff]: /public/search/geithner%20-madoff 
+[geithner NOT madoff]: /public/search/geithner%20NOT%20madoff
+[account: 143-james-wilkerson]: /public/search/account%3A%20143-james-wilkerson
+[group: chicago-tribune]: /public/search/group%3A%20chicago-tribune
+[title: deepwater]: /public/search/title%3A%20deepwater
+[source: supreme]: /public/search/source%3A%20supreme
+[description: manifesto]: /public/search/description%3A%20manifesto
+[projectid: 6-the-financial-crisis]: /public/search/projectid%3A%206-the-financial-crisis
+[access: private]: /public/search/access%3A%20private
+[filter: published]: /public/search/filter%3A%20published
 [person: Lee]:/public/ #search/person%3A%20Lee
-[organization: "Department of Defense"]: /public/#search/organization%3A%20%22Department%20of%20Defense%22
-[term: "nuclear energy"]: /public/#search/term%3A%20%22nuclear%20energy%22
-[term: "gross domestic product"]: /public/#search/term%3A%20%22gross%20domestic%20product%22
-[email: fraudnet@gao.gov]: /public/#search/%20email%3A%20fraudnet%40gao.gov
+[organization: "Department of Defense"]: /public/search/organization%3A%20%22Department%20of%20Defense%22
+[term: "nuclear energy"]: /public/search/term%3A%20%22nuclear%20energy%22
+[term: "gross domestic product"]: /public/search/term%3A%20%22gross%20domestic%20product%22
+[email: fraudnet@gao.gov]: /public/search/%20email%3A%20fraudnet%40gao.gov
 [phone: "(251) 441-6216"]: /public/search/%20phone%3A%20%22(251)%20441-6216%22
-[place: "World Trade Center"]: /public/#search/place%3A%20%22World%20Trade%20Center%22
-[place: "Gulf of Mexico"]: /public/#search/place%3A%20%22Gulf%20of%20Mexico%22
-[city: "New Orleans"]: /public/#search/city%3A%20%22New%20Orleans%22
-[state: Arizona]: /public/#search/state%3A%20Arizona
-[country: Iran]: /public/#search/country%3A%20Iran
+[place: "World Trade Center"]: /public/search/place%3A%20%22World%20Trade%20Center%22
+[place: "Gulf of Mexico"]: /public/search/place%3A%20%22Gulf%20of%20Mexico%22
+[city: "New Orleans"]: /public/search/city%3A%20%22New%20Orleans%22
+[state: Arizona]: /public/search/state%3A%20Arizona
+[country: Iran]: /public/search/country%3A%20Iran
 [OpenCalais]: http://www.opencalais.com/
 [contact us]: /contact
 [request features and report bugs]: http://documentcloud.uservoice.com

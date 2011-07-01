@@ -154,7 +154,7 @@
         to            : Math.min(options.page * options.per_page, options.total),
         title         : options.title,
         dcUrl         : options.dc_url,
-        workspaceUrl  : options.dc_url + (options.secure ? "/#search/" : "/public/#search/") +
+        workspaceUrl  : options.dc_url + (options.secure ? "/#search/" : "/public/search/") +
                         encodeURIComponent(options.q)
       }));
     },

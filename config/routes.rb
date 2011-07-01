@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Internal Search API.
   map.internal_search '/search/documents.json', :controller => 'search', :action => 'documents'
-
+  
   # Journalist workspace and surrounding HTML.
   map.with_options :controller => 'workspace' do |main|
     main.root
@@ -16,6 +16,10 @@ ActionController::Routing::Routes.draw do |map|
     main.logout     '/logout',        :action => 'logout'
   end
 
+  # Public search.
+  map.public_search '/public/search', :controller => 'public', :action => 'index'
+  map.public_search '/public/search/:query', :controller => 'public', :action => 'index', :query => /.*/
+  
   # Document representations and (private) sub-resources.
   map.resources  :documents, :has_many => [:annotations],
     :member => {
