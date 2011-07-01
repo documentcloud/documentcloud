@@ -17,10 +17,10 @@ dc.ui.DocumentList = Backbone.View.extend({
   // at load time and when searching.
   constructor : function(options) {
     Backbone.View.call(this, options);
-    _.bindAll(this, 'refresh', '_removeDocument', '_addDocument', '_onSelect',
+    _.bindAll(this, 'reset', '_removeDocument', '_addDocument', '_onSelect',
               '_maybeSelectOrDelete');
     $(document).bind('keydown', this._maybeSelectOrDelete);
-    Documents.bind('reset', this.refresh);
+    Documents.bind('reset',   this.reset);
     Documents.bind('remove',  this._removeDocument);
     Documents.bind('add',     this._addDocument);
   },
@@ -36,9 +36,10 @@ dc.ui.DocumentList = Backbone.View.extend({
     return this;
   },
 
-  // Once there are Documents being populated, this view listens for a `Collection#refresh`,
+  // Once there are Documents being populated, this view listens for a `Collection#reset`,
   // which redraws all the Document tile views in this list view.
-  refresh : function() {
+  reset
+   : function() {
     $(this.el).html('');
     var views = Documents.map(function(m){
       return (new dc.ui.Document({model : m})).render().el;

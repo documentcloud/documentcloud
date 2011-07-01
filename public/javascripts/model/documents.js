@@ -415,12 +415,12 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     this._checkForPending();
   },
 
-  // We override `refresh` to cancel the polling action if the current set
+  // We override `reset` to cancel the polling action if the current set
   // has no pending documents.
-  refresh : function(models, options) {
+  reset: function(models, options) {
     this._resetSelection();
     if (!this.pending().length) this.stopPolling();
-    Backbone.Collection.prototype.refresh.call(this, models, options);
+    Backbone.Collection.prototype.reset.call(this, models, options);
   },
 
   // When one of our models has changed, if it has changed its access level
