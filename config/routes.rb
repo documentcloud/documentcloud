@@ -3,10 +3,20 @@ ActionController::Routing::Routes.draw do |map|
   # Internal Search API.
   map.internal_search '/search/documents.json', :controller => 'search', :action => 'documents'
   
+  # Search Embeds.
+  map.with_options :controller => :search, :action => :embed do |embed|
+    options = {:q => /[^\/;,?]*/, :options => /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/}
+    embed.search_embed "/search/embed/:q/:options.:format", options
+    embed.search_embed "/search/embed/:options.:format", options
+  end
+  
   # Journalist workspace and surrounding HTML.
   map.with_options :controller => 'workspace' do |main|
     main.root
     main.search     '/search',        :action => 'index'
+    main.routes     '/search/:action.json', :controller => :search, :format => :json
+    main.routes     '/search/:action.js',   :controller => :search, :format => :js
+    main.preview    '/search/preview',      :controller => :search, :action => :preview
     main.search     '/search/:query', :action => 'index', :query => /.*/
     main.help       '/help',          :action => 'help'
     main.help       '/help/:page',    :action => 'help'
@@ -50,13 +60,6 @@ ActionController::Routing::Routes.draw do |map|
   map.page_text  "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :send_page_text, :conditions => {:method => :get}
   map.set_text   "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :set_page_text,  :conditions => {:method => :post}
   map.page_image "/documents/:id/pages/:page_name.gif", :controller => :documents, :action => :send_page_image
-
-  # Search Embeds.
-  map.with_options :controller => :search, :action => :embed do |embed|
-    options = {:q => /[^\/;,?]*/, :options => /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/}
-    embed.search_embed "/search/embed/:q/:options.:format", options
-    embed.search_embed "/search/embed/:options.:format", options
-  end
 
   # Reviewers.
   map.resources :reviewers, :collection => {
