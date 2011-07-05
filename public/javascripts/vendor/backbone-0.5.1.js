@@ -581,9 +581,8 @@
     // hash indexes for `id` and `cid` lookups.
     _add : function(model, options) {
       options || (options = {});
-      if (!(model instanceof Backbone.Model)) {
-        model = new this.model(model, {collection: this});
-      }
+      model = this._prepareModel(model, options);
+      if (!model) return false;
       var already = this.getByCid(model);
       if (already) throw new Error(["Can't add the same model to a set twice", already.id]);
       this._byId[model.id] = model;
