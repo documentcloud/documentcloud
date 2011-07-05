@@ -3,14 +3,16 @@ class LifecycleMailer < ActionMailer::Base
 
   SUPPORT   = 'support@documentcloud.org'
   NO_REPLY  = 'no-reply@documentcloud.org'
+  GMAIL     = 'mail.documentcloud@gmail.com'
 
   # Mail instructions for a new account, with a secure link to activate,
   # set their password, and log in.
   def login_instructions(account, admin=nil)
     subject     "Welcome to DocumentCloud"
-    from        SUPPORT
+    from        GMAIL
     recipients  account.email
     cc          admin.email if admin
+    @headers['Reply-to'] = SUPPORT
     body        :admin              => admin,
                 :account            => account,
                 :key                => account.security_key.key,
@@ -25,9 +27,10 @@ class LifecycleMailer < ActionMailer::Base
     else
       subject   "Review #{documents.count} documents on DocumentCloud"
     end
-    from        SUPPORT
+    from        GMAIL
     recipients  reviewer_account.email if reviewer_account
     cc          inviter_account.email
+    @headers['Reply-to'] = SUPPORT
     body        :documents            => documents,
                 :key                  => key,
                 :organization_name    => documents[0].account.organization_name,
@@ -40,8 +43,9 @@ class LifecycleMailer < ActionMailer::Base
   # Mail instructions for resetting an active account's password.
   def reset_request(account)
     subject     "DocumentCloud password reset"
-    from        SUPPORT
+    from        GMAIL
     recipients  [account.email]
+    @headers['Reply-to'] = SUPPORT
     body        :account            => account,
                 :key                => account.security_key.key
   end
@@ -51,7 +55,7 @@ class LifecycleMailer < ActionMailer::Base
   def contact_us(account, params)
     name = account ? account.full_name : params[:email]
     subject     "DocumentCloud message from #{name}"
-    from        NO_REPLY
+    from        GMAIL
     recipients  SUPPORT
     body        :account => account, :message => params[:message], :email => params[:email]
     @headers['Reply-to'] = account ? account.email : params[:email]
@@ -61,7 +65,7 @@ class LifecycleMailer < ActionMailer::Base
   def exception_notification(error, params=nil)
     params.delete(:password) if params
     subject     "DocumentCloud exception (#{Rails.env}): #{error.class.name}"
-    from        NO_REPLY
+    from        GMAIL
     recipients  SUPPORT
     body        :params => params, :error => error
   end
@@ -70,8 +74,9 @@ class LifecycleMailer < ActionMailer::Base
   # the account to let them know.
   def documents_finished_processing(account, document_count)
     subject     "Your documents are ready"
-    from        SUPPORT
+    from        GMAIL
     recipients  account.email
+    @headers['Reply-to'] = SUPPORT
     body        :account  => account,
                 :count    => document_count
   end
@@ -79,7 +84,7 @@ class LifecycleMailer < ActionMailer::Base
   # Accounts and Document CSVs mailed out every 1st and 15th of the month
   def account_and_document_csvs
     subject       "Accounts (CSVs)"
-    from          NO_REPLY
+    from          GMAIL
     recipients    'info@documentcloud.org'
     content_type  "multipart/mixed"
     
@@ -101,7 +106,7 @@ class LifecycleMailer < ActionMailer::Base
 
   def logging_email(email_subject, args)
     subject       email_subject
-    from          NO_REPLY
+    from          GMAIL
     recipients    SUPPORT
     body          :args => args,
                   :line => line
