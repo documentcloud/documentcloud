@@ -155,13 +155,15 @@
       }
     .document .datalines .document_tool {
       position: relative;
+      height: auto;
+      line-height: 10px;
       top: -1px; left: -5px;
-      display: none;
+      display: inline-block;
+      visibility: hidden;
     }
       .document:hover .datalines .document_tool {
-        height: auto;
         line-height: 13px;
-        display: inline-block;
+        visibility: visible;
       }
   .document .description {
     font: 13px/18px Georgia;
