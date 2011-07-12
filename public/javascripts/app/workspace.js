@@ -93,7 +93,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
             case 'project':
               return Projects.pluck('title');
             case 'filter':
-              return ['published', 'annotated'];
+              return ['annotated', 'popular', 'published', 'unpublished', 'restricted'];
             case 'access':
               return ['public', 'private', 'organization', 'error'];
             case 'title':
