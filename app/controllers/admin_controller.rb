@@ -120,7 +120,7 @@ class AdminController < ApplicationController
   end
 
   def optimize_solr
-    RestClient.get Sunspot.config.solr.url + '/update?optimize=true&waitFlush=false'
+    DC::Store::BackgroundJobs.optimize_solr
     json nil
   end
 

@@ -3,6 +3,8 @@ namespace :cron do
   # Only run on db01
   task :nightly do
     invoke 'db:backup'
+    invoke 'db:vacuum_analyze'
+    invoke 'db:optimize_solr'
     invoke 'mail:csv'
   end
 

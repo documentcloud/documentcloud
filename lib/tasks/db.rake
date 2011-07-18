@@ -4,6 +4,16 @@ namespace :db do
   task :backup, :needs => :environment do
     DC::Store::BackgroundJobs.backup_database
   end
+  
+  desc "VACUUM ANALYZE the Postgres DB"
+  task :vacuum_analyze, :needs => :environment do
+    DC::Store::BackgroundJobs.vacuum_analyze
+  end
+  
+  desc "Optimize the Solr Index"
+  task :optimize_solr, :needs => :environment do
+    DC::Store::BackgroundJobs.optimize_solr
+  end
 
   desc "Start Postgrest on Ubuntu"
   task :start do

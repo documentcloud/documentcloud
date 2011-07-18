@@ -7,6 +7,10 @@ module DC
       def self.vacuum_analyze
         fire_job(:action => 'vacuum_analyze', :inputs => [true])
       end
+      
+      def self.optimize_solr
+        fire_job(:action => 'optimize_solr', :inputs => [true])
+      end
 
       def self.backup_database
         fire_job(:action => 'backup_database', :inputs => [true])
