@@ -6,9 +6,11 @@ class RedactPages < DocumentModBase
 
   # The zoom ratio at which we'll be drawing redactions.
   LARGE_FACTOR    = 1000.0 / 700.0
-  ORIGINAL_FACTOR = 1700.0 / 700.0
+  # ORIGINAL_FACTOR = 1700.0 / 700.0
   REDACTION_RED   = "#880000"
   MAX_PER_PAGE    = 25
+  
+  SIZE_EXTRACTOR  = /(\d+)x(\d+)/
 
   GM_ARGS = '-limit memory 256MiB -limit map 512MiB'
 
@@ -54,14 +56,17 @@ class RedactPages < DocumentModBase
 
     # Generate the "original" version of the page image.
     `gm convert #{GM_ARGS} -density 200x200 -resize 1700x #{page_pdf_path} #{page_tiff_path} 2>&1`
+    
+    both, width, height = *(`gm identify #{page_tiff_path}`).match(SIZE_EXTRACTOR)
+    original_factor = width.to_f / 700.0
 
-    # Draw black rectangular redactions on both versions.
+    # Draw red rectangular redactions on both versions.
     coords = redactions.map do |redaction|
       pos = redaction['location'].split(/,\s*/)
       [pos[3], pos[0], pos[1], pos[2]]
     end
     coords.each_slice(MAX_PER_PAGE) do |coords_slice|
-      original_coords = coords_slice.map {|list| 'rectangle ' + list.map {|px| (px.to_i * ORIGINAL_FACTOR).round }.join(',') }.join(' ')
+      original_coords = coords_slice.map {|list| 'rectangle ' + list.map {|px| (px.to_i * original_factor).round }.join(',') }.join(' ')
       large_coords    = coords_slice.map {|list| 'rectangle ' + list.map {|px| (px.to_i * LARGE_FACTOR).round }.join(',') }.join(' ')
       `gm mogrify #{GM_ARGS} #{page_tiff_path} -fill "#{REDACTION_RED}" -draw "#{original_coords}" #{page_tiff_path} 2>&1`
       `gm mogrify #{GM_ARGS} #{images['large']} -fill "#{REDACTION_RED}" -draw "#{large_coords}" #{images['large']} 2>&1`
