@@ -97,8 +97,8 @@ class Document < ActiveRecord::Base
     has_shared = account && account.accessible_project_ids.present?
     access = []
     access << "(documents.access = #{PUBLIC})"
-    access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}) and documents.account_id = #{account.id})" if account
-    access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org
+    access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}, #{ORGANIZATION}, #{EXCLUSIVE}) and documents.account_id = #{account.id})" if account
+    access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org && account && !account.freelancer?
     access << "(memberships.document_id = documents.id)" if has_shared
     opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
     if has_shared

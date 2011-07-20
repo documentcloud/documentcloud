@@ -8,8 +8,9 @@ class Account < ActiveRecord::Base
   ADMINISTRATOR = 1
   CONTRIBUTOR   = 2
   REVIEWER      = 3
+  FREELANCER    = 4
 
-  ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER, DISABLED]
+  ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER, FREELANCER, DISABLED]
 
   # Associations:
   belongs_to  :organization
@@ -35,7 +36,7 @@ class Account < ActiveRecord::Base
   # Scopes:
   named_scope :admin,     {:conditions => {:role => ADMINISTRATOR}}
   named_scope :active,    {:conditions => ["role != ?", DISABLED]}
-  named_scope :real,      {:conditions => ["role in (?)", [ADMINISTRATOR, CONTRIBUTOR, DISABLED]]}
+  named_scope :real,      {:conditions => ["role in (?)", [ADMINISTRATOR, CONTRIBUTOR, FREELANCER, DISABLED]]}
   named_scope :reviewer,  {:conditions => {:role => REVIEWER}}
 
   # Attempt to log in with an email address and password.
@@ -85,18 +86,20 @@ class Account < ActiveRecord::Base
     @slug ||= "#{id}-#{first}-#{last}"
   end
 
-  # Is this account an administrator?
   def admin?
     role == ADMINISTRATOR
   end
 
-  # Is this account a contributor?
   def contributor?
     role == CONTRIBUTOR
   end
 
   def reviewer?
     role == REVIEWER
+  end
+  
+  def freelancer?
+    role == FREELANCER
   end
   
   def real?

@@ -3,14 +3,12 @@
 dc.model.Account = Backbone.Model.extend({
 
   DISABLED           : 0,
-  
   ADMINISTRATOR      : 1,
-
   CONTRIBUTOR        : 2,
-
   REVIEWER           : 3,
+  FREELANCER         : 4,
 
-  ROLE_NAMES         : ['disabled', 'administrator', 'contributor', 'reviewer'], // NB: Indexed by role number.
+  ROLE_NAMES         : ['disabled', 'administrator', 'contributor', 'reviewer', 'freelancer'], // NB: Indexed by role number.
 
   GRAVATAR_BASE      : location.protocol + (location.protocol == 'https:' ? '//secure.' : '//www.') + 'gravatar.com/avatar/',
 
@@ -43,7 +41,7 @@ dc.model.Account = Backbone.Model.extend({
   ownsOrOrganization: function(model) {
     return (model.get('account_id') == this.id) ||
            (model.get('organization_id') == this.get('organization_id') &&
-            this.isReal() &&
+            (this.isAdmin() || this.isContributor()) &&
             _.contains([
               dc.access.PUBLIC, dc.access.EXCLUSIVE, dc.access.ORGANIZATION,
               'public', 'exclusive', 'organization'
@@ -53,7 +51,7 @@ dc.model.Account = Backbone.Model.extend({
   collaborates: function(model) {
     var docId      = model.get('document_id') || model.id;
     var projectIds = model.get('project_ids');
-    
+
     for (var i = 0, l = Projects.length; i < l; i++) {
       var project = Projects.models[i];
       if (_.contains(projectIds, project.get('id')) && !project.get('hidden')) {
@@ -63,7 +61,7 @@ dc.model.Account = Backbone.Model.extend({
         }
       }
     }
-    
+
     return false;
   },
 
@@ -80,13 +78,17 @@ dc.model.Account = Backbone.Model.extend({
     return this.attributes.role == this.ADMINISTRATOR;
   },
 
+  isContributor : function() {
+    return this.attributes.role == this.CONTRIBUTOR;
+  },
+
   isReviewer : function() {
     return this.attributes.role == this.REVIEWER;
   },
 
   isReal : function() {
     var role = this.attributes.role;
-    return role == this.ADMINISTRATOR || role == this.CONTRIBUTOR;
+    return role == this.ADMINISTRATOR || role == this.CONTRIBUTOR || role == this.FREELANCER;
   },
 
   isPending : function() {

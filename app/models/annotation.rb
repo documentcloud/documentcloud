@@ -85,7 +85,7 @@ class Annotation < ActiveRecord::Base
         :account_id        => note.account_id,
         :owns_note         => current_account && current_account.id == note.account_id
       }
-      if author && [Account::ADMINISTRATOR, Account::CONTRIBUTOR].include?(author['role'].to_i)
+      if author && [Account::ADMINISTRATOR, Account::CONTRIBUTOR, Account::FREELANCER].include?(author['role'].to_i)
         note.author[:organization_name] = author['organization_name']
       end
     end

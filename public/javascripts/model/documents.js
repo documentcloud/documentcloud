@@ -387,13 +387,13 @@ dc.model.DocumentSet = Backbone.Collection.extend({
       },
       {
         text        : 'Private Access',
-        description : 'Only people explicitly granted permission (via collaboration) may access.',
+        description : 'Only people with explicit permission (via collaboration) have access.',
         value       : dc.access.PRIVATE,
         selected    : current == dc.access.PRIVATE
       },
       {
         text        : 'Private to ' + dc.account.organization.name,
-        description : 'Only the people in your organization may view the document.',
+        description : 'Only the people in your organization have access. (No freelancers.)',
         value       : dc.access.ORGANIZATION,
         selected    : current == dc.access.ORGANIZATION
       }

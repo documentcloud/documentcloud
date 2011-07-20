@@ -38,7 +38,8 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   render : function() {
     var accountProto    = dc.model.Account.prototype;
     var accessWorkspace = dc.account.role == accountProto.ADMINISTRATOR ||
-                          dc.account.role == accountProto.CONTRIBUTOR;
+                          dc.account.role == accountProto.CONTRIBUTOR   ||
+                          dc.account.role == accountProto.FREELANCER;
     this.viewer         = currentDocument;
     this._page          = this.viewer.$('.DV-textContents');
     var doc             = this._getDocumentModel();

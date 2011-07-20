@@ -423,13 +423,13 @@ module DC
             with        :access, PUBLIC
             if account
               all_of do
-                with    :access, [PRIVATE, PENDING, ERROR]
+                with    :access, [PRIVATE, PENDING, ERROR, ORGANIZATION, EXCLUSIVE]
                 with    :account_id, account.id
               end
             end
-            if organization
+            if organization && account && !account.freelancer?
               all_of do
-                with    :access, ORGANIZATION
+                with    :access, [ORGANIZATION, EXCLUSIVE]
                 with    :organization_id, organization.id
               end
             end

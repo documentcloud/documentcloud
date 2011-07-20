@@ -161,7 +161,7 @@
       display: inline-block;
       visibility: hidden;
     }
-      .document:hover .datalines .document_tool {
+      .document.is_editable:hover .datalines .document_tool {
         line-height: 13px;
         visibility: visible;
       }
