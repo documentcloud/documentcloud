@@ -43,16 +43,18 @@ dc.model.Project = Backbone.Model.extend({
       }
       return sum;
     }, 0);
-    this.set({document_count : this.get('document_count') + addedCount});
-    this.notifyProjectChange(addedCount, false);
-    $.ajax({
-      url     : '/projects/' + projectId + '/add_documents',
-      type    : 'POST',
-      data    : {document_ids : ids},
-      success : _.bind(function(resp) {
-        this.set(resp);
-      }, this)
-    });
+    if (addedCount) {
+      this.set({document_count : this.get('document_count') + addedCount});
+      this.notifyProjectChange(addedCount, false);
+      $.ajax({
+        url     : '/projects/' + projectId + '/add_documents',
+        type    : 'POST',
+        data    : {document_ids : ids},
+        success : _.bind(function(resp) {
+          this.set(resp);
+        }, this)
+      });
+    }
   },
 
   removeDocuments : function(documents, localOnly) {
@@ -67,18 +69,20 @@ dc.model.Project = Backbone.Model.extend({
       return sum;
     }, 0);
 
-    if (Projects.firstSelected() === this) Documents.remove(documents);
-    this.set({document_count : this.get('document_count') - removedCount});
-    this.notifyProjectChange(removedCount, true);
-    if (!localOnly) {
-      $.ajax({
-        url : '/projects/' + projectId + '/remove_documents',
-        type : 'POST',
-        data : {document_ids : ids},
-        success : _.bind(function(resp) {
-          this.set(resp);
-        }, this)
-      });
+    if (removedCount) {
+      if (Projects.firstSelected() === this) Documents.remove(documents);
+      this.set({document_count : this.get('document_count') - removedCount});
+      this.notifyProjectChange(removedCount, true);
+      if (!localOnly) {
+        $.ajax({
+          url : '/projects/' + projectId + '/remove_documents',
+          type : 'POST',
+          data : {document_ids : ids},
+          success : _.bind(function(resp) {
+            this.set(resp);
+          }, this)
+        });
+      }
     }
   },
 
