@@ -38,8 +38,8 @@
       <span class="disabled">(disabled)</span>
     <% } else { %>
       <select name="role" class="account_role" <%= current && current.isAdmin() && account.id != current.id ? '' : 'disabled="disabled"' %>>
-        <option class="role_2" value="2">Contributor</option>
         <option class="role_1" value="1">Administrator</option>
+        <option class="role_2" value="2">Contributor</option>
         <option class="role_4" value="4">Freelancer</option>
       </select>
     <% } %>
