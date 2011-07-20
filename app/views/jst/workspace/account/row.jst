@@ -30,7 +30,7 @@
     <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>
       <span class="disabled">(disabled)</span>
     <% } else { %>
-      role:&nbsp;<%= account.ROLE_NAMES[account.get('role')] %>
+      <%= account.ROLE_NAMES[account.get('role')] %>
     <% } %>
   </span>
   <span class="edit">
