@@ -86,33 +86,41 @@ dc.controllers.Workspace = Backbone.Router.extend({
         focus : function() {
           Documents.deselectAll();
         },
-        valueMatches : function(category) {
+        valueMatches : function(category, searchTerm, cb) {
           switch (category) {
             case 'account':
-              return Accounts.map(function(a) { return {value: a.get('slug'), label: a.fullName()}; });
+              cb(Accounts.map(function(a) { return {value: a.get('slug'), label: a.fullName()}; }));
+              break;
             case 'project':
-              return Projects.pluck('title');
+              cb(Projects.pluck('title'));
+              break;
             case 'filter':
-              return ['annotated', 'popular', 'published', 'unpublished', 'restricted'];
+              cb(['annotated', 'popular', 'published', 'unpublished', 'restricted']);
+              break;
             case 'access':
-              return ['public', 'private', 'organization', 'error'];
+              cb(['public', 'private', 'organization', 'error']);
+              break;
             case 'title':
-              return _.uniq(Documents.pluck('title'));
+              cb(_.uniq(Documents.pluck('title')));
+              break;
             case 'source':
-              return _.uniq(_.compact(Documents.pluck('source')));
+              cb(_.uniq(_.compact(Documents.pluck('source'))));
+              break;
             case 'group':
-              return Organizations.map(function(o) { return {value: o.get('slug'), label: o.get('name') }; });
+              cb(Organizations.map(function(o) { return {value: o.get('slug'), label: o.get('name') }; }));
+              break;
             case 'document':
-              return Documents.map(function(d){ return {value: d.canonicalId(), label: d.get('title')}; });
+              cb(Documents.map(function(d){ return {value: d.canonicalId(), label: d.get('title')}; }));
+              break;
             default:
               // Meta data
-              return _.compact(_.uniq(Documents.reduce(function(memo, doc) {
+              cb(_.compact(_.uniq(Documents.reduce(function(memo, doc) {
                 if (_.size(doc.get('data'))) memo.push(doc.get('data')[category]);
                 return memo;
-              }, [])));
+              }, []))));
           }
         },
-        facetMatches : function() {
+        facetMatches : function(cb) {
           var prefixes = [
             { label: 'project',       category: '' },
             { label: 'text',          category: '' },
@@ -143,7 +151,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
           }, {})), function(key) {
             return {label: key, category: ''};
           });
-          return prefixes.concat(metadata);
+          cb(prefixes.concat(metadata));
         }
       }
     };
