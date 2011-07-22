@@ -532,6 +532,9 @@ textarea.text_area {
     color: #ccc;
     background-color: #000;
   }
+    .alert_dialog .information {
+      display: none;
+    }
     .dialog .information.error {
       color: #f00;
     }
