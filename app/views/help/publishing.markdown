@@ -80,7 +80,7 @@ If you'd rather embed a complete set of documents, DocumentCloud can provide the
 
 You can embed any set of documents, whether or not you uploaded them: any document that has already been published by their contributor will open to the URL at which it originally appeared.
 
-To get started, find a set of documents you wish to embed -- either by selecting a project or by running a search. **Note:** future public documents added to the project or matching the search criteria will be added to your embbedded document set. Open the "Publish" menu and select "Embed These Documents." You'll see a dialog which allows you to configure the embedded set:
+To get started, find a set of documents you wish to embed -- either by selecting a project or by running a search. **Note:** future public documents added to the project or matching the search criteria will be added to your embbedded document set. Open the "Publish" menu and select "Embed Document List." You'll see a dialog which allows you to configure the embedded set:
 
  * Provide a **title** to be displayed above the embedded set of documents;
  * **Order** documents alphabetically, by date uploaded, or by length;

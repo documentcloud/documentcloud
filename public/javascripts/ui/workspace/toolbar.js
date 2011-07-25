@@ -273,8 +273,8 @@ dc.ui.Toolbar = Backbone.View.extend({
 
   _createPublishMenu : function() {
     var accountItems = [
-      {title : 'Embed These Documents',    onClick : this.openSearchEmbedDialog,      attrs: {'class': 'always'}},
       {title : 'Embed Document Viewer',    onClick : this.openDocumentEmbedDialog,    attrs: {'class': 'singular'}},
+      {title : 'Embed Document List',      onClick : this.openSearchEmbedDialog,      attrs: {'class': 'always'}},
       {title : 'Embed a Note',             onClick : this.openNoteEmbedDialog,        attrs: {'class': 'singular'}},
       {title : 'Set Publication Date',     onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
       {title : 'Download Document Viewer', onClick : this.requestDownloadViewers}
