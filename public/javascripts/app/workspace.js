@@ -98,7 +98,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
               cb(['annotated', 'popular', 'published', 'unpublished', 'restricted']);
               break;
             case 'access':
-              cb(['public', 'private', 'organization', 'error']);
+              cb(['public', 'private', 'organization', 'pending', 'error']);
               break;
             case 'title':
               cb(_.uniq(Documents.pluck('title')));
