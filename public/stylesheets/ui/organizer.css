@@ -94,6 +94,9 @@
   border-right: 2px solid #ccc;
   background: #f4f3f1;
 }
+  #organizer .top_level_search {
+    padding: 20px 20px 20px 30px;
+  }
   #organizer .box {
     background-image: url(/images/embed/ui/box_back.png);
     background-repeat: repeat-y;

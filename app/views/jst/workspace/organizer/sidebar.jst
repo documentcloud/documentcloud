@@ -15,11 +15,7 @@
     </div>
 
     <% if (dc.account) { %>
-
-      <div class="project_list">
-        <!-- Render target for projects. -->
-      </div>
-
+      
       <div id="project_controls" class="block">
         <form id="new_document_form" class="float_left" action="/import/upload_document" method="POST" enctype="multipart/form-data" target="upload_iframe">
           <div class="minibutton float_left plus" id="new_document"><div class="icon white_plus"></div>New Documents</div>
@@ -31,6 +27,10 @@
         </form>
         <div class="minibutton float_right plus" id="new_project"><div class="icon white_plus"></div>New Project</div>
         <div class="clear"></div>
+      </div>
+
+      <div class="project_list">
+        <!-- Render target for projects. -->
       </div>
 
       <div class="project_help help_text">
