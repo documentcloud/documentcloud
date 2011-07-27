@@ -666,7 +666,7 @@ class Document < ActiveRecord::Base
   end
   
   # Create an identical clone of this document, in all ways (except for the ID).
-  def duplicate!(account, options={})
+  def duplicate!(account=nil, options={})
     # Clone the document.
     newattrs = attributes.merge({
       :access     => PENDING, 
