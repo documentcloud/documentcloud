@@ -671,12 +671,10 @@ class Document < ActiveRecord::Base
     newattrs = attributes.merge({
       :access     => PENDING, 
       :created_at => Time.now, 
-      :updated_at => Time.now,
-      :hit_count  => 0,
-      :detected_remote_url => nil
+      :updated_at => Time.now
     })
     newattrs[:account_id] = account.id if account
-    copy     = Document.create!(newattrs)
+    copy     = Document.create!(newattrs.merge({:hit_count  => 0, :detected_remote_url => nil}))
     newattrs = {:document_id => copy.id}
     
     # Clone the docdata.
