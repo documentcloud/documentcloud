@@ -47,16 +47,18 @@ class Annotation < ActiveRecord::Base
 
   named_scope :unrestricted, :conditions => {:access => PUBLIC}
 
-  searchable do
-    text :title, :boost => 2.0
-    text :content
+  # Annotations are not indexed for the time being.
 
-    integer :document_id
-    integer :account_id
-    integer :organization_id
-    integer :access
-    time    :created_at
-  end
+  # searchable do
+  #   text :title, :boost => 2.0
+  #   text :content
+  # 
+  #   integer :document_id
+  #   integer :account_id
+  #   integer :organization_id
+  #   integer :access
+  #   time    :created_at
+  # end
 
   def self.counts_for_documents(account, docs)
     doc_ids = docs.map {|doc| doc.id }
