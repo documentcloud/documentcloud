@@ -671,7 +671,9 @@ class Document < ActiveRecord::Base
     newattrs = attributes.merge({
       :access     => PENDING, 
       :created_at => Time.now, 
-      :updated_at => Time.now
+      :updated_at => Time.now,
+      :hit_count  => 0,
+      :detected_remote_url => nil
     })
     newattrs[:account_id] = account.id if account
     copy     = Document.create!(newattrs)
