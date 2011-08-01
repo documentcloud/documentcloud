@@ -161,6 +161,8 @@ contributors:
      - http://dartcenter.org
    - - Democrat and Chronicle
      - http://www.DemocratAndChronicle.com
+   - - The Denver Post
+     - http://www.denverpost.com/
    - - Derivative Works
      - http://www.derivativeworks.com/
    - - Des Moines Register
@@ -205,6 +207,8 @@ contributors:
      - http://www.coloradoan.com
    - - Free Government Information
      - http://freegovinfo.info/
+   - - The Free Press
+     - http://www.mankatofreepress.com
    - - Frontline
      - http://www.pbs.org/wgbh/pages/frontline
    - - The Gadsden Times
@@ -227,6 +231,8 @@ contributors:
      - http://www.greenwichtime.com
    - - Greenwire
      - http://www.eenews.net/gw
+   - - The Guardian 
+     - http://www.guardian.co.uk
    - - Health News Florida
      - http://www.healthnewsflorida.org/
    - - Hearst Papers
@@ -263,6 +269,8 @@ contributors:
      - http://www.journalstandard.com
    - - JURIST
      - http://jurist.org/
+   - - The Justice
+     - http://www.thejustice.org/
    - - Keizertimes
      - http://keizertimes.com/
    - - KHI News Service
@@ -345,12 +353,16 @@ contributors:
      - http://www.netnebraska.org
    - - News 21
      - http://news21.com/
+   - - The News Enterprise
+     - http://newsenterprise.emory.edu
    - - NewsHour
      - http://pbs.org/newshour
    - - The News Journal
      - http://www.delawareonline.com
    - - News Northwest
      - http://newsnw.org
+   - - The News Outlet
+     - http://www.thenewsoutlet.org/
    - - The New Yorker
      - http://newyorker.com
    - - New York Times
@@ -387,6 +399,8 @@ contributors:
      - http://www.ozarksunbound.com/
    - - Pacific Northwest Inlander
      - http://www.inlander.com/
+   - - Página/12
+     - http://www.pagina12.com.ar
    - - The Palm Beach Post
      - http://www.palmbeachpost.com/
    - - The Patriot Ledger
@@ -395,6 +409,8 @@ contributors:
      - http://pbs.org
    - - Phawker
      - http://www.phawker.com
+   - - Philly.com
+     - http://www.philly.com
    - - Pioneer Press/Sun-Times Media
      - http://www.pioneerlocal.com
    - - Pioneer Press
@@ -407,6 +423,8 @@ contributors:
      - http://politifact.com/
    - - Post Star
      - http://poststar.com/
+   - - Poughkeepsie Journal
+     - http://www.poughkeepsiejournal.com/
    - - POV
      - http://www.pbs.org/pov/
    - - Pratt Center for Community Development
@@ -429,10 +447,14 @@ contributors:
      - http://public.resource.org
    - - Quinnipiac University School of Communications
      - http://www.quinnipiac.edu/gradjournalism.xml
+   - - Radio-Canada
+     - http://www.radio-canada.ca
    - - Rapid City Journal
      - http://www.rapidcityjournal.com
    - - Raleigh Public Record
      - http://www.raleighpublicrecord.org
+   - - Reality Blurred 
+     - http://realityblurred.com
    - - Reese News
      - http://reesenews.org/
    - - Reference Tone
@@ -475,6 +497,8 @@ contributors:
      - http://seattletimes.nwsource.com
    - - SF Public Press
      - http://sfpublicpress.org
+   - - Sharesleuth 
+     - http://sharesleuth.com/
    - - The Skanner
      - http://www.theskanner.com
    - - SoCal Connected (KCET)
@@ -493,6 +517,8 @@ contributors:
      - http://spot.us/
    - - Stabile Center for Investigative Journalism
      - http://www.stabilecenter.org/
+   - - The Star Ledger
+     - http://www.nj.com/starledger/
    - - The Star Tribune
      - http://startribune.com
    - - StarNews
@@ -507,10 +533,16 @@ contributors:
      - http://www.stltoday.com
    - - St. Petersburg Times
      - http://tampabay.com
+   - - Student Press Law Center
+     - http://www.splc.org/
    - - Sunlight Foundation
      - http://sunlightfoundation.com
+   - - The Sydney Morning Herald
+     - http://www.smh.com.au/
    - - Talking Points Memo
      - http://talkingpointsmemo.com
+   - - Tallahassee Democrat
+     - http://Tallahassee.com
    - - Tampa Tribune
      - http://www.tampatrib.com/
    - - TBD
@@ -527,8 +559,12 @@ contributors:
      - http://thomsonreuters.com
    - - Time
      - http://www.time.com
+   - - The Times Herald
+     - http://www.timesherald.com/
    - - Times Herald-Record
      - http://www.recordonline.com
+   - - The Times-Picayune
+     - http://www.nola.com
    - - Transactional Records Access Clearinghouse
      - http://trac.syr.edu/
    - - Tucson Sentinel
@@ -559,14 +595,24 @@ contributors:
      - http://www.northernbroadcasting.com
    - - Washington Post
      - http://wpost.com
+   - - The Washington Times
+     - http://www.washingtontimes.com/
    - - Watchdog Institute
      - http://www.watchdoginstitute.org
    - - Watchdog New England
      - http://northeastern.edu/watchdognewengland/
+   - - WA Today
+     - http://www.watoday.com.au
+   - - Wausau Daily Herald
+     - http://www.wausaudailyherald.com/
    - - Western Citizen
      - http://www.westerncitizen.com
+   - - WFTS-TV
+     - http://www.abcactionnews.com/
    - - Wichita Eagle
      - http://www.kansas.com/
+   - - Winston-Salem Journal
+     - http://www2.journalnow.com/
    - - Wired.com
      - http://www.wired.com
    - - Wisconsin Center for Investigative Journalism
