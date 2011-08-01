@@ -96,7 +96,7 @@ dc.ui.Admin = Backbone.View.extend({
       error_docs                    : this._format(acl[a.ERROR] || 0),
       instance_tags                 : this.INSTANCE_TAGS,
       remote_url_hits_last_week     : this._format(stats.remote_url_hits_last_week),
-      remote_url_hits_last_year     : this._format(stats.remote_url_hits_last_year),
+      remote_url_hits_all_time      : this._format(stats.remote_url_hits_all_time),
       count_organizations_embedding : this._format(stats.count_organizations_embedding),
       count_total_collaborators     : this._format(stats.count_total_collaborators)
 

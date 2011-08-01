@@ -28,7 +28,7 @@ class AdminController < ApplicationController
     @top_searches                  = RemoteUrl.top_searches(7, :limit => 5).to_json
     @top_notes                     = RemoteUrl.top_notes(7, :limit => 5).to_json
     @remote_url_hits_last_week     = DC::Statistics.remote_url_hits_last_week.to_json
-    @remote_url_hits_last_year     = DC::Statistics.remote_url_hits_last_year.to_json
+    @remote_url_hits_all_time      = DC::Statistics.remote_url_hits_all_time.to_json
     @count_organizations_embedding = DC::Statistics.count_organizations_embedding.to_json
     @count_total_collaborators     = DC::Statistics.count_total_collaborators.to_json
     @numbers                       = DC::Statistics.by_the_numbers.to_json

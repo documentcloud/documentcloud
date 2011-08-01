@@ -165,8 +165,8 @@ module DC
       RemoteUrl.sum(:hits, :conditions => ['date_recorded > ?', 7.days.ago])
     end
 
-    def self.remote_url_hits_last_year
-      RemoteUrl.sum(:hits, :conditions => ['date_recorded > ?', 365.days.ago])
+    def self.remote_url_hits_all_time
+      RemoteUrl.sum(:hits)
     end
 
     def self.count_organizations_embedding
