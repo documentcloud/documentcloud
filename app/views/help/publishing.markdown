@@ -8,7 +8,7 @@ To publish any document from DocumentCloud, either download a standalone copy of
 
 We maintain a list of some of our [favorite embedded documents][] as examples of how newsrooms might embed documents. 
 
-## Step 1: <span id="choose_size">Review your Metadata</span>
+## <span id="choose_size">Review your Metadata</span>
 
 ![Embed Menu][]
 
@@ -22,7 +22,7 @@ On step one, you'll also see a checkbox offering to make the document public, if
 
 If you're not yet ready to make the document public, you can schedule it to be published at a future date. Click "Set Publication Date" in the "Publish" menu, and choose a date and an hour when you would like the document to be made public. This is useful if you already know when your story is going live, or if your article is running in the middle of the night.
 
-## Step 2: <span id="template">Configure the Document Viewer</span>
+## <span id="template">Configure the Document Viewer</span>
 
 Depending on how you wish to display the document on your website, you have two choices: You can create a template for a **full page** viewer, with your own logo, links, analytics and advertising; or you can embed a **fixed size** viewer directly inside an article. You can also embed multiple **fixed size** viewers on a single page.
 
@@ -38,7 +38,7 @@ To see a live example of a fixed size document with no sidebar, take a look at [
 
 <img src="/images/help/wnyc.jpg" class="full_line" />
 
-## Step 3: <span id="embed">Copy and Paste the Code</span>
+## <span id="embed">Copy and Paste the Code</span>
 
 Click on the "Next" button to proceed to step 3, and you'll see the embed code: a snippet of HTML that can be pasted into any web page to create a document viewer. The code will look something like this:
 
@@ -52,7 +52,7 @@ Click on the "Next" button to proceed to step 3, and you'll see the embed code: 
 
 Place the embed code on your page, in the location where you would like the viewer to appear. The next time you load the page, the viewer should be up and running. 
  
-## Step 4: <span id="intouch">Stay in Touch</span>
+## <span id="intouch">Stay in Touch</span>
 
 [Let us know][] about your reporting!
 
