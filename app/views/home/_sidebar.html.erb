@@ -1,6 +1,7 @@
 <div id="sidebar" class="sans">
 
   <%= render :partial => 'home/help_navigation' if @nav == 'guide' %>
+  
 
   <% if @current_account && !@current_account.reviewer? %>
 
@@ -80,7 +81,7 @@
     </ul>
   </div>
 
-  <% if !@current_account || @current_account.reviewer? %>
+  <% if @title != 'Contact' && (!@current_account || @current_account.reviewer?) %> 
 
     <div id="join" class="sidebar_section">
       DocumentCloud is a tool for journalists.<br />
