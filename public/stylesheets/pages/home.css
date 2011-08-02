@@ -275,6 +275,13 @@ ol {
     float: left;
     margin: 0 20px 0 0;
   }
+  
+#content #faqs ul li {
+    padding-left: 10px;
+    list-style: circle inside;
+}
+
+}  
 #content p.bio {
   position: relative;
   padding-left: 100px;
