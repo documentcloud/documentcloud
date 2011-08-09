@@ -1,4 +1,4 @@
-//     Backbone.js 0.5.1
+//     Backbone.js 0.5.30
 //     (c) 2010 Jeremy Ashkenas, DocumentCloud Inc.
 //     Backbone may be freely distributed under the MIT license.
 //     For all details and documentation:
@@ -25,7 +25,7 @@
   }
 
   // Current version of the library. Keep in sync with `package.json`.
-  Backbone.VERSION = '0.5.1';
+  Backbone.VERSION = '0.5.3';
 
   // Require Underscore, if we're on the server, and it's not already present.
   var _ = root._;
@@ -41,7 +41,7 @@
     return this;
   };
 
-  // Turn on `emulateHTTP` to use support legacy HTTP servers. Setting this option will
+  // Turn on `emulateHTTP` to support legacy HTTP servers. Setting this option will
   // fake `"PUT"` and `"DELETE"` requests via the `_method` parameter and set a
   // `X-Http-Method-Override` header.
   Backbone.emulateHTTP = false;
@@ -68,10 +68,10 @@
 
     // Bind an event, specified by a string name, `ev`, to a `callback` function.
     // Passing `"all"` will bind the callback to all events fired.
-    bind : function(ev, callback) {
+    bind : function(ev, callback, context) {
       var calls = this._callbacks || (this._callbacks = {});
-      var list  = this._callbacks[ev] || (this._callbacks[ev] = []);
-      list.push(callback);
+      var list  = calls[ev] || (calls[ev] = []);
+      list.push([callback, context]);
       return this;
     },
 
@@ -89,7 +89,7 @@
           var list = calls[ev];
           if (!list) return this;
           for (var i = 0, l = list.length; i < l; i++) {
-            if (callback === list[i]) {
+            if (list[i] && callback === list[i][0]) {
               list[i] = null;
               break;
             }
@@ -114,7 +114,7 @@
               list.splice(i, 1); i--; l--;
             } else {
               args = both ? Array.prototype.slice.call(arguments, 1) : arguments;
-              callback.apply(this, args);
+              callback[0].apply(callback[1] || this, args);
             }
           }
         }
@@ -133,7 +133,7 @@
     var defaults;
     attributes || (attributes = {});
     if (defaults = this.defaults) {
-      if (_.isFunction(defaults)) defaults = defaults();
+      if (_.isFunction(defaults)) defaults = defaults.call(this);
       attributes = _.extend({}, defaults, attributes);
     }
     this.attributes = {};
@@ -644,7 +644,7 @@
   var methods = ['forEach', 'each', 'map', 'reduce', 'reduceRight', 'find', 'detect',
     'filter', 'select', 'reject', 'every', 'all', 'some', 'any', 'include',
     'contains', 'invoke', 'max', 'min', 'sortBy', 'sortedIndex', 'toArray', 'size',
-    'first', 'rest', 'last', 'without', 'indexOf', 'lastIndexOf', 'isEmpty'];
+    'first', 'rest', 'last', 'without', 'indexOf', 'lastIndexOf', 'isEmpty', 'groupBy'];
 
   // Mix in each Underscore method as a proxy to `Collection#models`.
   _.each(methods, function(method) {
@@ -768,7 +768,7 @@
           fragment = window.location.hash;
         }
       }
-      return fragment.replace(hashStrip, '');
+      return decodeURIComponent(fragment.replace(hashStrip, ''));
     },
 
     // Start the hash change handling, returning `true` if the current URL matches
@@ -799,11 +799,16 @@
       if (this._wantsPushState && !this._hasPushState && !atRoot) {
         this.fragment = this.getFragment(null, true);
         window.location.replace(this.options.root + '#' + this.fragment);
+        // Return immediately as browser will do redirect to new url
+        return true;
       } else if (this._wantsPushState && this._hasPushState && atRoot && loc.hash) {
         this.fragment = loc.hash.replace(hashStrip, '');
         window.history.replaceState({}, document.title, loc.protocol + '//' + loc.host + this.options.root + this.fragment);
       }
-      return this.loadUrl();
+
+      if (!this.options.silent) {
+        return this.loadUrl();
+      }
     },
 
     // Add a route to be tested when the fragment changes. Routes added later may
@@ -842,6 +847,7 @@
     navigate : function(fragment, triggerRoute) {
       var frag = (fragment || '').replace(hashStrip, '');
       if (this.fragment == frag || this.fragment == decodeURIComponent(frag)) return;
+      console.log('from', this.fragment, 'to', frag);
       if (this._hasPushState) {
         var loc = window.location;
         if (frag.indexOf(this.options.root) != 0) frag = this.options.root + frag;
@@ -940,6 +946,7 @@
     // not `change`, `submit`, and `reset` in Internet Explorer.
     delegateEvents : function(events) {
       if (!(events || (events = this.events))) return;
+      if (_.isFunction(events)) events = events.call(this);
       $(this.el).unbind('.delegateEvents' + this.cid);
       for (var key in events) {
         var methodName = events[key];
@@ -1027,8 +1034,7 @@
     // Default JSON-request options.
     var params = _.extend({
       type:         type,
-      dataType:     'json',
-      processData:  false
+      dataType:     'json'
     }, options);
 
     // Ensure that we have a URL.
@@ -1045,7 +1051,6 @@
     // For older servers, emulate JSON by encoding the request into an HTML-form.
     if (Backbone.emulateJSON) {
       params.contentType = 'application/x-www-form-urlencoded';
-      params.processData = true;
       params.data        = params.data ? {model : params.data} : {};
     }
 
@@ -1059,6 +1064,11 @@
           xhr.setRequestHeader('X-HTTP-Method-Override', type);
         };
       }
+    }
+
+    // Don't process data on a non-GET request.
+    if (params.type !== 'GET' && ! Backbone.emulateJSON) {
+      params.processData = false;
     }
 
     // Make the request.
@@ -1135,7 +1145,7 @@
 
   // Helper function to escape a string for HTML rendering.
   var escapeHTML = function(string) {
-    return string.replace(/&(?!\w+;|#\d+;|#x[\da-f]+;)/gi, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    return string.replace(/&(?!\w+;|#\d+;|#x[\da-f]+;)/gi, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g,'&#x2F;');
   };
 
 }).call(this);
