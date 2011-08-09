@@ -1,4 +1,4 @@
-//     Backbone.js 0.5.30
+//     Backbone.js 0.5.3
 //     (c) 2010 Jeremy Ashkenas, DocumentCloud Inc.
 //     Backbone may be freely distributed under the MIT license.
 //     For all details and documentation:
@@ -847,7 +847,6 @@
     navigate : function(fragment, triggerRoute) {
       var frag = (fragment || '').replace(hashStrip, '');
       if (this.fragment == frag || this.fragment == decodeURIComponent(frag)) return;
-      console.log('from', this.fragment, 'to', frag);
       if (this._hasPushState) {
         var loc = window.location;
         if (frag.indexOf(this.options.root) != 0) frag = this.options.root + frag;
@@ -1067,7 +1066,7 @@
     }
 
     // Don't process data on a non-GET request.
-    if (params.type !== 'GET' && ! Backbone.emulateJSON) {
+    if (params.type !== 'GET' && !Backbone.emulateJSON) {
       params.processData = false;
     }
 
