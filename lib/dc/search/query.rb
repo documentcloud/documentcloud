@@ -315,6 +315,8 @@ module DC
               data.each do |datum|
                 if datum.value == '*'
                   without datum.kind, nil
+                elsif datum.value == '!'
+                  with datum.kind, nil
                 else
                   with datum.kind, datum.value
                 end
@@ -326,6 +328,9 @@ module DC
           data.each do |datum| 
             if datum.value == '*'
               @sql << 'defined(docdata.data, ?)'
+              @interpolations << datum.kind
+            elsif datum.value == '!'
+              @sql << '(docdata.data -> ?) is null'
               @interpolations << datum.kind
             else
               hash[datum.kind] = datum.value
