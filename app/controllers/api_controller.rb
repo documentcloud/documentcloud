@@ -41,15 +41,18 @@ class ApiController < ApplicationController
 
   # Upload API, similar to our internal upload API for starters. Parameters:
   # file, title, access, source, description.
+  # The `file` must either be a multipart file upload, or a URL to a remote doc.
   def upload
     secure_silence_logs do
       return bad_request unless params[:file] && params[:title] && current_account
-      if !params[:file].respond_to? :path
+      is_file = params[:file].respond_to?(:path)
+      if !is_file && !(URI.parse(params[:file]) rescue nil)
         return render({
-          :json => {:message => "The file parameter must be the contents of a file."},
+          :json => {:message => "The 'file' parameter must be the contents of a file or a URL."},
           :status => 400
         })
       end
+      params[:url] = params[:file] unless is_file
       @response = Document.upload(params, current_account, current_organization).canonical
       json_response
     end

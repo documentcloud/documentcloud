@@ -160,7 +160,7 @@ class Document < ActiveRecord::Base
 
   # Upload a new document, starting the import process.
   def self.upload(params, account, organization)
-    name     = params[:file].original_filename
+    name     = params[:url] || params[:file].original_filename
     title    = params[:title] || File.basename(name, File.extname(name)).titleize
     access   = params[:make_public] ? PUBLIC :
                (params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE)
@@ -176,9 +176,14 @@ class Document < ActiveRecord::Base
       :related_article  => params[:related_article],
       :remote_url       => params[:published_url] || params[:remote_url]
     )
-    DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
-      DC::Store::AssetStore.new.save_pdf(doc, path, access)
-      doc.queue_import(:access => access, :email_me => email_me, :secure => params[:secure])
+    import_options = {:access => access, :email_me => email_me, :secure => params[:secure]}
+    if params[:url]
+      doc.queue_import import_options.merge(:url => params[:url])
+    else
+      DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
+        DC::Store::AssetStore.new.save_pdf(doc, path, access)
+        doc.queue_import import_options
+      end
     end
     if params[:project]
       project = Project.accessible(account).find_by_id(params[:project].to_i)

@@ -63,9 +63,11 @@ mentions      | include highlighted mentions of the search phrase | 3 (not prese
 
 Our API for bulk uploads exposes the same method that we use internally, but wraps it in basic authentication over HTTPS. Documents will be uploaded into the authenticated account.
 
+You can either upload a local file using a standard multi-part upload, or tell DocumentCloud to download the file from a public server by passing a URL.
+
 Parameter     | Description           |  Example
 --------------|-----------------------|--------------
-file | (required) the path to the document itself | --
+file | (required) either the contents of a local file, or the URL where the document can be found | --
 title | (required) the document's canonical title | 2008 Blagojevich Tax Return
 source | (optional) the source who produced the document | U.S. Attorney's Office
 description | (optional) a paragraph of detailed description | This prosecution exhibit is the 2008 joint tax return for Rod and Patti Blagojevich. It shows their total income for the year was $284,000.

@@ -4,8 +4,29 @@ class DocumentImport < CloudCrowd::Action
 
   # Split a document import job into two parallel parts ... one for the image
   # generation and one for the text extraction.
+  # If the Document was not originally uploaded, but was passed as a remote URL
+  # instead, download it first, convert it to a PDF ... then go to town.
   def split
-    tasks = [{'task' => 'text'  }]
+    if options['url']
+      file = File.basename(options['url'])
+      File.open(file, 'w') do |f|
+        url = URI.parse(options['url'])
+        Net::HTTP.start(url.host, url.port) do |http|
+          http.request_get(url.path) do |res|
+            res.read_body do |seg|
+              f << seg
+              sleep 0.005 # To allow the buffer to fill (more).
+            end
+          end
+        end
+      end
+      File.open(file, 'r') do |f|
+        DC::Import::PDFWrangler.new.ensure_pdf(f, file) do |path|
+          DC::Store::AssetStore.new.save_pdf(document, path, access)
+        end
+      end
+    end
+    tasks = [{'task' => 'text'}]
     tasks << {'task' => 'images'} unless options['text_only']
     tasks
   end
