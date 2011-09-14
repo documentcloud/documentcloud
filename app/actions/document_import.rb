@@ -26,7 +26,8 @@ class DocumentImport < CloudCrowd::Action
         end
       end
     end
-    tasks = [{'task' => 'text'}]
+    tasks = []
+    tasks << {'task' => 'text'} unless options['images_only']
     tasks << {'task' => 'images'} unless options['text_only']
     tasks
   end

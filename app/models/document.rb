@@ -548,6 +548,10 @@ class Document < ActiveRecord::Base
   def reprocess_text(force_ocr = false)
     queue_import :text_only => true, :force_ocr => force_ocr, :secure => !calais_id
   end
+  
+  def reprocess_images
+    queue_import :images_only => true, :secure => !calais_id
+  end
 
   def reindex_all!(access=nil)
     Page.refresh_page_map(self)
