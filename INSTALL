@@ -98,6 +98,10 @@ touch on EC2 in here.
   pg_ctlcluster 8.4 main start
   Our postgre DB (volume vol-d4c305bd) is mounted at /data.
   
+* Install the HStore module, by cd-ing into the contrib directory of your postgres, and following the directions here:
+
+http://www.postgresql.org/docs/8.3/static/contrib.html
+  
 ============================= Development ====================================
 
 * Install the dependencies and gems listed in PROVISIONING, as appropriate 
