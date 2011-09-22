@@ -103,6 +103,11 @@
       }, {});
     },
 
+    // Get the outerHTML for a set of jQuery elements.
+    outerHTML : function() {
+      return $('<div></div>').append(this.clone()).html();
+    },
+
     // When the next click or keypress happens, anywhere on the screen, hide the
     // element. 'clickable' makes the element and its contents clickable without
     // hiding. The 'onHide' callback runs when the hide fires, and has a chance

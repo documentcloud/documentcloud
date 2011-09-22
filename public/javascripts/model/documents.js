@@ -310,10 +310,10 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     }
     var win = window.open(SERVER_ROOT + '/notes/print');
     $.when.apply($, _.map(docs, function(doc){ return doc.notes.fetch(); })).then(_.bind(function() {
-      var docEls = $('.document.is_selected').clone();
+      var docEls = $('.document.is_selected');
       var continuation = function() {
-        $('#document_list', win.document.body).append(docEls);
-        $('.document', win.document.body).removeClass('is_selected');
+        win.$('#document_list').append(docEls.outerHTML());
+        win.$('.document').removeClass('is_selected');
         _.each(docs, function(doc){ doc.trigger('notes:hide'); });
         win.print();
         win.close();
