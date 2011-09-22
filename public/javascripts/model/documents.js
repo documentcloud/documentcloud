@@ -314,6 +314,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
       var continuation = function() {
         $('#document_list', win.document.body).append(docEls);
         $('.document', win.document.body).removeClass('is_selected');
+        _.each(docs, function(doc){ doc.trigger('notes:hide'); });
         win.print();
         win.close();
       };

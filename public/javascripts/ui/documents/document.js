@@ -54,12 +54,13 @@ dc.ui.Document = Backbone.View.extend({
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
       '_renderPages', '_setSelected', 'viewDocuments', 'viewPublishedDocuments',
-      'openDialog', 'setAccessLevelAll', 'viewEntities',
+      'openDialog', 'setAccessLevelAll', 'viewEntities', 'hideNotes',
       'viewPages', 'viewChosenPages', 'deleteDocuments', 'removeFromProject',
       '_openShareDialog', 'openDataDialog');
     this.model.bind('change', this._onDocumentChange);
     this.model.bind('change:selected', this._setSelected);
     this.model.bind('view:pages', this.viewPages);
+    this.model.bind('notes:hide', this.hideNotes);
     this.model.notes.bind('add', this._addNote);
     this.model.notes.bind('reset', this._renderNotes);
     this.model.pageEntities.bind('reset', this._renderPages);
@@ -146,6 +147,10 @@ dc.ui.Document = Backbone.View.extend({
 
   viewEntities : function() {
     dc.app.searcher.viewEntities(Documents.chosen(this.model));
+  },
+
+  hideNotes : function() {
+    this.setMode(this.model.hasNotes() ? 'owns' : 'no', 'notes');
   },
 
   downloadViewer : function() {
@@ -400,10 +405,9 @@ dc.ui.Document = Backbone.View.extend({
 
   // Re-renders the notes when the notes are refreshed.
   _renderNotes : function() {
-    this.setMode('has', 'notes');
     this.notesEl.empty();
     this.model.notes.each(this._addNote);
-    if (this.model.ignoreNotes) this.setMode('no', 'notes');
+    this.setMode(this.model.ignoreNotes ? 'owns' : 'has', 'notes');
   },
 
   // Clicking on the page counts in the tile opens up the page thumbnails below
