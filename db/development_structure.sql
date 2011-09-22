@@ -11,6 +11,893 @@ SET escape_string_warning = off;
 
 SET search_path = public, pg_catalog;
 
+--
+-- Name: ghstore; Type: SHELL TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE ghstore;
+
+
+--
+-- Name: ghstore_in(cstring); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION ghstore_in(cstring) RETURNS ghstore
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'ghstore_in';
+
+
+--
+-- Name: ghstore_out(ghstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION ghstore_out(ghstore) RETURNS cstring
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'ghstore_out';
+
+
+--
+-- Name: ghstore; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE ghstore (
+    INTERNALLENGTH = variable,
+    INPUT = ghstore_in,
+    OUTPUT = ghstore_out,
+    ALIGNMENT = int4,
+    STORAGE = plain
+);
+
+
+--
+-- Name: hstore; Type: SHELL TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE hstore;
+
+
+--
+-- Name: hstore_in(cstring); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_in(cstring) RETURNS hstore
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_in';
+
+
+--
+-- Name: hstore_out(hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_out(hstore) RETURNS cstring
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_out';
+
+
+--
+-- Name: hstore_recv(internal); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_recv(internal) RETURNS hstore
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_recv';
+
+
+--
+-- Name: hstore_send(hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_send(hstore) RETURNS bytea
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_send';
+
+
+--
+-- Name: hstore; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE hstore (
+    INTERNALLENGTH = variable,
+    INPUT = hstore_in,
+    OUTPUT = hstore_out,
+    RECEIVE = hstore_recv,
+    SEND = hstore_send,
+    ALIGNMENT = int4,
+    STORAGE = extended
+);
+
+
+--
+-- Name: akeys(hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION akeys(hstore) RETURNS text[]
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_akeys';
+
+
+--
+-- Name: avals(hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION avals(hstore) RETURNS text[]
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_avals';
+
+
+--
+-- Name: defined(hstore, text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION defined(hstore, text) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_defined';
+
+
+--
+-- Name: delete(hstore, text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION delete(hstore, text) RETURNS hstore
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_delete';
+
+
+--
+-- Name: delete(hstore, text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION delete(hstore, text[]) RETURNS hstore
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_delete_array';
+
+
+--
+-- Name: delete(hstore, hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION delete(hstore, hstore) RETURNS hstore
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_delete_hstore';
+
+
+--
+-- Name: each(hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION each(hs hstore, OUT key text, OUT value text) RETURNS SETOF record
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_each';
+
+
+--
+-- Name: exist(hstore, text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION exist(hstore, text) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_exists';
+
+
+--
+-- Name: exists_all(hstore, text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION exists_all(hstore, text[]) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_exists_all';
+
+
+--
+-- Name: exists_any(hstore, text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION exists_any(hstore, text[]) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_exists_any';
+
+
+--
+-- Name: fetchval(hstore, text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION fetchval(hstore, text) RETURNS text
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_fetchval';
+
+
+--
+-- Name: ghstore_compress(internal); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION ghstore_compress(internal) RETURNS internal
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'ghstore_compress';
+
+
+--
+-- Name: ghstore_consistent(internal, internal, integer, oid, internal); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION ghstore_consistent(internal, internal, integer, oid, internal) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'ghstore_consistent';
+
+
+--
+-- Name: ghstore_decompress(internal); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION ghstore_decompress(internal) RETURNS internal
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'ghstore_decompress';
+
+
+--
+-- Name: ghstore_penalty(internal, internal, internal); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION ghstore_penalty(internal, internal, internal) RETURNS internal
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'ghstore_penalty';
+
+
+--
+-- Name: ghstore_picksplit(internal, internal); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION ghstore_picksplit(internal, internal) RETURNS internal
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'ghstore_picksplit';
+
+
+--
+-- Name: ghstore_same(internal, internal, internal); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION ghstore_same(internal, internal, internal) RETURNS internal
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'ghstore_same';
+
+
+--
+-- Name: ghstore_union(internal, internal); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION ghstore_union(internal, internal) RETURNS internal
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'ghstore_union';
+
+
+--
+-- Name: gin_consistent_hstore(internal, smallint, internal, integer, internal, internal); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION gin_consistent_hstore(internal, smallint, internal, integer, internal, internal) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'gin_consistent_hstore';
+
+
+--
+-- Name: gin_extract_hstore(internal, internal); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION gin_extract_hstore(internal, internal) RETURNS internal
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'gin_extract_hstore';
+
+
+--
+-- Name: gin_extract_hstore_query(internal, internal, smallint, internal, internal); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION gin_extract_hstore_query(internal, internal, smallint, internal, internal) RETURNS internal
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'gin_extract_hstore_query';
+
+
+--
+-- Name: hs_concat(hstore, hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hs_concat(hstore, hstore) RETURNS hstore
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_concat';
+
+
+--
+-- Name: hs_contained(hstore, hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hs_contained(hstore, hstore) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_contained';
+
+
+--
+-- Name: hs_contains(hstore, hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hs_contains(hstore, hstore) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_contains';
+
+
+--
+-- Name: hstore(text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore(text[]) RETURNS hstore
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_from_array';
+
+
+--
+-- Name: hstore(record); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore(record) RETURNS hstore
+    LANGUAGE c IMMUTABLE
+    AS '$libdir/hstore', 'hstore_from_record';
+
+
+--
+-- Name: hstore(text, text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore(text, text) RETURNS hstore
+    LANGUAGE c IMMUTABLE
+    AS '$libdir/hstore', 'hstore_from_text';
+
+
+--
+-- Name: hstore(text[], text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore(text[], text[]) RETURNS hstore
+    LANGUAGE c IMMUTABLE
+    AS '$libdir/hstore', 'hstore_from_arrays';
+
+
+--
+-- Name: hstore_cmp(hstore, hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_cmp(hstore, hstore) RETURNS integer
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_cmp';
+
+
+--
+-- Name: hstore_eq(hstore, hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_eq(hstore, hstore) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_eq';
+
+
+--
+-- Name: hstore_ge(hstore, hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_ge(hstore, hstore) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_ge';
+
+
+--
+-- Name: hstore_gt(hstore, hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_gt(hstore, hstore) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_gt';
+
+
+--
+-- Name: hstore_hash(hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_hash(hstore) RETURNS integer
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_hash';
+
+
+--
+-- Name: hstore_le(hstore, hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_le(hstore, hstore) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_le';
+
+
+--
+-- Name: hstore_lt(hstore, hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_lt(hstore, hstore) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_lt';
+
+
+--
+-- Name: hstore_ne(hstore, hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_ne(hstore, hstore) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_ne';
+
+
+--
+-- Name: hstore_to_array(hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_to_array(hstore) RETURNS text[]
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_to_array';
+
+
+--
+-- Name: hstore_to_matrix(hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_to_matrix(hstore) RETURNS text[]
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_to_matrix';
+
+
+--
+-- Name: hstore_version_diag(hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hstore_version_diag(hstore) RETURNS integer
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_version_diag';
+
+
+--
+-- Name: isdefined(hstore, text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION isdefined(hstore, text) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_defined';
+
+
+--
+-- Name: isexists(hstore, text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION isexists(hstore, text) RETURNS boolean
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_exists';
+
+
+--
+-- Name: populate_record(anyelement, hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION populate_record(anyelement, hstore) RETURNS anyelement
+    LANGUAGE c IMMUTABLE
+    AS '$libdir/hstore', 'hstore_populate_record';
+
+
+--
+-- Name: skeys(hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION skeys(hstore) RETURNS SETOF text
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_skeys';
+
+
+--
+-- Name: slice(hstore, text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION slice(hstore, text[]) RETURNS hstore
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_slice_to_hstore';
+
+
+--
+-- Name: slice_array(hstore, text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION slice_array(hstore, text[]) RETURNS text[]
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_slice_to_array';
+
+
+--
+-- Name: svals(hstore); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION svals(hstore) RETURNS SETOF text
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/hstore', 'hstore_svals';
+
+
+--
+-- Name: tconvert(text, text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION tconvert(text, text) RETURNS hstore
+    LANGUAGE c IMMUTABLE
+    AS '$libdir/hstore', 'hstore_from_text';
+
+
+--
+-- Name: #<#; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR #<# (
+    PROCEDURE = hstore_lt,
+    LEFTARG = hstore,
+    RIGHTARG = hstore,
+    COMMUTATOR = #>#,
+    NEGATOR = #>=#,
+    RESTRICT = scalarltsel,
+    JOIN = scalarltjoinsel
+);
+
+
+--
+-- Name: #<=#; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR #<=# (
+    PROCEDURE = hstore_le,
+    LEFTARG = hstore,
+    RIGHTARG = hstore,
+    COMMUTATOR = #>=#,
+    NEGATOR = #>#,
+    RESTRICT = scalarltsel,
+    JOIN = scalarltjoinsel
+);
+
+
+--
+-- Name: #=; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR #= (
+    PROCEDURE = populate_record,
+    LEFTARG = anyelement,
+    RIGHTARG = hstore
+);
+
+
+--
+-- Name: #>#; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR #># (
+    PROCEDURE = hstore_gt,
+    LEFTARG = hstore,
+    RIGHTARG = hstore,
+    COMMUTATOR = #<#,
+    NEGATOR = #<=#,
+    RESTRICT = scalargtsel,
+    JOIN = scalargtjoinsel
+);
+
+
+--
+-- Name: #>=#; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR #>=# (
+    PROCEDURE = hstore_ge,
+    LEFTARG = hstore,
+    RIGHTARG = hstore,
+    COMMUTATOR = #<=#,
+    NEGATOR = #<#,
+    RESTRICT = scalargtsel,
+    JOIN = scalargtjoinsel
+);
+
+
+--
+-- Name: %#; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR %# (
+    PROCEDURE = hstore_to_matrix,
+    RIGHTARG = hstore
+);
+
+
+--
+-- Name: %%; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR %% (
+    PROCEDURE = hstore_to_array,
+    RIGHTARG = hstore
+);
+
+
+--
+-- Name: -; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR - (
+    PROCEDURE = delete,
+    LEFTARG = hstore,
+    RIGHTARG = text
+);
+
+
+--
+-- Name: -; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR - (
+    PROCEDURE = delete,
+    LEFTARG = hstore,
+    RIGHTARG = text[]
+);
+
+
+--
+-- Name: -; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR - (
+    PROCEDURE = delete,
+    LEFTARG = hstore,
+    RIGHTARG = hstore
+);
+
+
+--
+-- Name: ->; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR -> (
+    PROCEDURE = fetchval,
+    LEFTARG = hstore,
+    RIGHTARG = text
+);
+
+
+--
+-- Name: ->; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR -> (
+    PROCEDURE = slice_array,
+    LEFTARG = hstore,
+    RIGHTARG = text[]
+);
+
+
+--
+-- Name: <>; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR <> (
+    PROCEDURE = hstore_ne,
+    LEFTARG = hstore,
+    RIGHTARG = hstore,
+    COMMUTATOR = <>,
+    NEGATOR = =,
+    RESTRICT = neqsel,
+    JOIN = neqjoinsel
+);
+
+
+--
+-- Name: <@; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR <@ (
+    PROCEDURE = hs_contained,
+    LEFTARG = hstore,
+    RIGHTARG = hstore,
+    COMMUTATOR = @>,
+    RESTRICT = contsel,
+    JOIN = contjoinsel
+);
+
+
+--
+-- Name: =; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR = (
+    PROCEDURE = hstore_eq,
+    LEFTARG = hstore,
+    RIGHTARG = hstore,
+    COMMUTATOR = =,
+    NEGATOR = <>,
+    MERGES,
+    HASHES,
+    RESTRICT = eqsel,
+    JOIN = eqjoinsel
+);
+
+
+--
+-- Name: =>; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR => (
+    PROCEDURE = hstore,
+    LEFTARG = text,
+    RIGHTARG = text
+);
+
+
+--
+-- Name: ?; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR ? (
+    PROCEDURE = exist,
+    LEFTARG = hstore,
+    RIGHTARG = text,
+    RESTRICT = contsel,
+    JOIN = contjoinsel
+);
+
+
+--
+-- Name: ?&; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR ?& (
+    PROCEDURE = exists_all,
+    LEFTARG = hstore,
+    RIGHTARG = text[],
+    RESTRICT = contsel,
+    JOIN = contjoinsel
+);
+
+
+--
+-- Name: ?|; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR ?| (
+    PROCEDURE = exists_any,
+    LEFTARG = hstore,
+    RIGHTARG = text[],
+    RESTRICT = contsel,
+    JOIN = contjoinsel
+);
+
+
+--
+-- Name: @; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR @ (
+    PROCEDURE = hs_contains,
+    LEFTARG = hstore,
+    RIGHTARG = hstore,
+    COMMUTATOR = ~,
+    RESTRICT = contsel,
+    JOIN = contjoinsel
+);
+
+
+--
+-- Name: @>; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR @> (
+    PROCEDURE = hs_contains,
+    LEFTARG = hstore,
+    RIGHTARG = hstore,
+    COMMUTATOR = <@,
+    RESTRICT = contsel,
+    JOIN = contjoinsel
+);
+
+
+--
+-- Name: ||; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR || (
+    PROCEDURE = hs_concat,
+    LEFTARG = hstore,
+    RIGHTARG = hstore
+);
+
+
+--
+-- Name: ~; Type: OPERATOR; Schema: public; Owner: -
+--
+
+CREATE OPERATOR ~ (
+    PROCEDURE = hs_contained,
+    LEFTARG = hstore,
+    RIGHTARG = hstore,
+    COMMUTATOR = @,
+    RESTRICT = contsel,
+    JOIN = contjoinsel
+);
+
+
+--
+-- Name: btree_hstore_ops; Type: OPERATOR CLASS; Schema: public; Owner: -
+--
+
+CREATE OPERATOR CLASS btree_hstore_ops
+    DEFAULT FOR TYPE hstore USING btree AS
+    OPERATOR 1 #<#(hstore,hstore) ,
+    OPERATOR 2 #<=#(hstore,hstore) ,
+    OPERATOR 3 =(hstore,hstore) ,
+    OPERATOR 4 #>=#(hstore,hstore) ,
+    OPERATOR 5 #>#(hstore,hstore) ,
+    FUNCTION 1 hstore_cmp(hstore,hstore);
+
+
+--
+-- Name: gin_hstore_ops; Type: OPERATOR CLASS; Schema: public; Owner: -
+--
+
+CREATE OPERATOR CLASS gin_hstore_ops
+    DEFAULT FOR TYPE hstore USING gin AS
+    STORAGE text ,
+    OPERATOR 7 @>(hstore,hstore) ,
+    OPERATOR 9 ?(hstore,text) ,
+    OPERATOR 10 ?|(hstore,text[]) ,
+    OPERATOR 11 ?&(hstore,text[]) ,
+    FUNCTION 1 bttextcmp(text,text) ,
+    FUNCTION 2 gin_extract_hstore(internal,internal) ,
+    FUNCTION 3 gin_extract_hstore_query(internal,internal,smallint,internal,internal) ,
+    FUNCTION 4 gin_consistent_hstore(internal,smallint,internal,integer,internal,internal);
+
+
+--
+-- Name: gist_hstore_ops; Type: OPERATOR CLASS; Schema: public; Owner: -
+--
+
+CREATE OPERATOR CLASS gist_hstore_ops
+    DEFAULT FOR TYPE hstore USING gist AS
+    STORAGE ghstore ,
+    OPERATOR 7 @>(hstore,hstore) ,
+    OPERATOR 9 ?(hstore,text) ,
+    OPERATOR 10 ?|(hstore,text[]) ,
+    OPERATOR 11 ?&(hstore,text[]) ,
+    OPERATOR 13 @(hstore,hstore) ,
+    FUNCTION 1 ghstore_consistent(internal,internal,integer,oid,internal) ,
+    FUNCTION 2 ghstore_union(internal,internal) ,
+    FUNCTION 3 ghstore_compress(internal) ,
+    FUNCTION 4 ghstore_decompress(internal) ,
+    FUNCTION 5 ghstore_penalty(internal,internal,internal) ,
+    FUNCTION 6 ghstore_picksplit(internal,internal) ,
+    FUNCTION 7 ghstore_same(internal,internal,internal);
+
+
+--
+-- Name: hash_hstore_ops; Type: OPERATOR CLASS; Schema: public; Owner: -
+--
+
+CREATE OPERATOR CLASS hash_hstore_ops
+    DEFAULT FOR TYPE hstore USING hash AS
+    OPERATOR 1 =(hstore,hstore) ,
+    FUNCTION 1 hstore_hash(hstore);
+
+
+SET search_path = pg_catalog;
+
+--
+-- Name: CAST (text[] AS public.hstore); Type: CAST; Schema: pg_catalog; Owner: -
+--
+
+CREATE CAST (text[] AS public.hstore) WITH FUNCTION public.hstore(text[]);
+
+
+SET search_path = public, pg_catalog;
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -39,8 +926,8 @@ CREATE TABLE accounts (
 CREATE SEQUENCE accounts_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -77,8 +964,8 @@ CREATE TABLE annotations (
 CREATE SEQUENCE annotations_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -107,8 +994,8 @@ CREATE TABLE app_constants (
 CREATE SEQUENCE app_constants_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -138,8 +1025,8 @@ CREATE TABLE collaborations (
 CREATE SEQUENCE collaborations_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -148,6 +1035,36 @@ CREATE SEQUENCE collaborations_id_seq
 --
 
 ALTER SEQUENCE collaborations_id_seq OWNED BY collaborations.id;
+
+
+--
+-- Name: docdata; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE docdata (
+    id integer NOT NULL,
+    document_id integer NOT NULL,
+    data hstore
+);
+
+
+--
+-- Name: docdata_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE docdata_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: docdata_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE docdata_id_seq OWNED BY docdata.id;
 
 
 --
@@ -170,8 +1087,8 @@ CREATE TABLE document_reviewers (
 CREATE SEQUENCE document_reviewers_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -220,8 +1137,8 @@ CREATE TABLE documents (
 CREATE SEQUENCE documents_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -266,39 +1183,6 @@ CREATE TABLE entity_dates (
 
 
 --
--- Name: full_text; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE full_text (
-    id integer NOT NULL,
-    organization_id integer NOT NULL,
-    account_id integer NOT NULL,
-    document_id integer NOT NULL,
-    access integer NOT NULL,
-    text text NOT NULL
-);
-
-
---
--- Name: full_text_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE full_text_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
---
--- Name: full_text_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE full_text_id_seq OWNED BY full_text.id;
-
-
---
 -- Name: projects; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -318,8 +1202,8 @@ CREATE TABLE projects (
 CREATE SEQUENCE labels_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -337,8 +1221,8 @@ ALTER SEQUENCE labels_id_seq OWNED BY projects.id;
 CREATE SEQUENCE metadata_dates_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -356,8 +1240,8 @@ ALTER SEQUENCE metadata_dates_id_seq OWNED BY entity_dates.id;
 CREATE SEQUENCE metadata_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -389,8 +1273,8 @@ CREATE TABLE organizations (
 CREATE SEQUENCE organizations_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -425,8 +1309,8 @@ CREATE TABLE pages (
 CREATE SEQUENCE pages_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -457,8 +1341,8 @@ CREATE TABLE processing_jobs (
 CREATE SEQUENCE processing_jobs_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -487,8 +1371,8 @@ CREATE TABLE project_memberships (
 CREATE SEQUENCE project_memberships_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -518,8 +1402,8 @@ CREATE TABLE remote_urls (
 CREATE SEQUENCE remote_urls_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -561,8 +1445,8 @@ CREATE TABLE sections (
 CREATE SEQUENCE sections_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -592,8 +1476,8 @@ CREATE TABLE security_keys (
 CREATE SEQUENCE security_keys_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -636,6 +1520,13 @@ ALTER TABLE collaborations ALTER COLUMN id SET DEFAULT nextval('collaborations_i
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE docdata ALTER COLUMN id SET DEFAULT nextval('docdata_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE document_reviewers ALTER COLUMN id SET DEFAULT nextval('document_reviewers_id_seq'::regclass);
 
 
@@ -658,13 +1549,6 @@ ALTER TABLE entities ALTER COLUMN id SET DEFAULT nextval('metadata_id_seq'::regc
 --
 
 ALTER TABLE entity_dates ALTER COLUMN id SET DEFAULT nextval('metadata_dates_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE full_text ALTER COLUMN id SET DEFAULT nextval('full_text_id_seq'::regclass);
 
 
 --
@@ -756,6 +1640,14 @@ ALTER TABLE ONLY collaborations
 
 
 --
+-- Name: docdata_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY docdata
+    ADD CONSTRAINT docdata_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: document_reviewers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -769,14 +1661,6 @@ ALTER TABLE ONLY document_reviewers
 
 ALTER TABLE ONLY documents
     ADD CONSTRAINT documents_pkey PRIMARY KEY (id);
-
-
---
--- Name: full_text_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY full_text
-    ADD CONSTRAINT full_text_pkey PRIMARY KEY (id);
 
 
 --
@@ -881,6 +1765,13 @@ CREATE INDEX index_annotations_on_document_id ON annotations USING btree (docume
 
 
 --
+-- Name: index_docdata_on_data; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_docdata_on_data ON docdata USING gin (data);
+
+
+--
 -- Name: index_documents_on_access; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -913,13 +1804,6 @@ CREATE INDEX index_documents_on_public_note_count ON documents USING btree (publ
 --
 
 CREATE INDEX index_entities_on_value ON entities USING btree (lower((value)::text));
-
-
---
--- Name: index_full_text_on_document_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_full_text_on_document_id ON full_text USING btree (document_id);
 
 
 --
@@ -990,6 +1874,20 @@ CREATE INDEX index_pages_on_start_offset_and_end_offset ON pages USING btree (st
 --
 
 CREATE INDEX index_processing_jobs_on_account_id ON processing_jobs USING btree (account_id);
+
+
+--
+-- Name: index_project_memberships_on_document_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_project_memberships_on_document_id ON project_memberships USING btree (document_id);
+
+
+--
+-- Name: index_project_memberships_on_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_project_memberships_on_project_id ON project_memberships USING btree (project_id);
 
 
 --
@@ -1113,3 +2011,15 @@ INSERT INTO schema_migrations (version) VALUES ('20110303202721');
 INSERT INTO schema_migrations (version) VALUES ('20110304213500');
 
 INSERT INTO schema_migrations (version) VALUES ('20110308170707');
+
+INSERT INTO schema_migrations (version) VALUES ('20110310000919');
+
+INSERT INTO schema_migrations (version) VALUES ('20110429150927');
+
+INSERT INTO schema_migrations (version) VALUES ('20110502200512');
+
+INSERT INTO schema_migrations (version) VALUES ('20110505172648');
+
+INSERT INTO schema_migrations (version) VALUES ('20110512193718');
+
+INSERT INTO schema_migrations (version) VALUES ('20110603223356');
