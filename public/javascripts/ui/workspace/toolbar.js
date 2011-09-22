@@ -286,7 +286,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     ];
     var items = dc.account ? accountItems.concat(publicItems) : publicItems;
     return new dc.ui.Menu({
-      label   : dc.account ? 'Publish' : 'Download',
+      label   : dc.account ? 'Publish' : 'Save',
       onOpen  : this._enableMenuItems,
       items   : items
     });
