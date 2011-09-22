@@ -75,6 +75,16 @@ dc.model.Document = Backbone.Model.extend({
     return Documents.sortData(this.get('data'));
   },
 
+  // Does the document have any notes?
+  hasNotes : function() {
+    return !!this.get('annotation_count');
+  },
+
+  // Does the document have notes, *and* are they already loaded?
+  hasLoadedNotes : function() {
+    return this.notes.length && this.notes.length == this.get('annotation_count');
+  },
+
   // Fetch all of the documents page mentions for a given search query.
   fetchMentions : function(query) {
     $.getJSON(this.url() + '/mentions', {q: query}, _.bind(function(resp) {
@@ -210,7 +220,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   constructor : function(options) {
     Backbone.Collection.call(this, options);
     this._polling = false;
-    _.bindAll(this, 'poll', 'downloadViewers', 'downloadSelectedPDF', 'downloadSelectedFullText', '_onModelChanged');
+    _.bindAll(this, 'poll', 'downloadViewers', 'downloadSelectedPDF', 'downloadSelectedFullText', 'printNotes', '_onModelChanged');
     this.bind('change', this._onModelChanged);
   },
 
@@ -291,6 +301,40 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   downloadSelectedFullText : function() {
     if (this.selectedCount <= 1) return this.selected()[0].openText();
     dc.app.download('/download/' + this.selectedIds().join('/') + '/document_text.zip');
+  },
+
+  printNotes : function() {
+    var docs = this.selected();
+    if (!_.any(docs, function(doc){ return doc.hasNotes(); })) {
+      return dc.ui.Dialog.alert('"' + docs[0].get('title') + '" does not contain any printable notes.');
+    }
+    var win = window.open(SERVER_ROOT + '/notes/print');
+    $.when.apply($, _.map(docs, function(doc){ return doc.notes.fetch(); })).then(_.bind(function() {
+      var docEls = $('.document.is_selected').clone();
+      var continuation = function() {
+        $('#document_list', win.document.body).append(docEls);
+        $('.document', win.document.body).removeClass('is_selected');
+        win.print();
+        win.close();
+      };
+      if (this._printCallback) {
+        continuation();
+        delete this._printCallback;
+      } else {
+        this._printCallback = continuation;
+      }
+    }, this));
+  },
+
+  // Callback so that we can know when the child window for printing notes is
+  // ready to be rendered.
+  readyToPrint : function() {
+    if (this._printCallback) {
+      this._printCallback();
+      delete this._printCallback;
+    } else {
+      this._printCallback = true;
+    }
   },
 
   startPolling : function() {

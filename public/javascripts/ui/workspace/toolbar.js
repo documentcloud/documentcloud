@@ -280,8 +280,9 @@ dc.ui.Toolbar = Backbone.View.extend({
       {title : 'Download Document Viewer', onClick : this.requestDownloadViewers}
     ];
     var publicItems = [
-      {title : 'Download Original PDF',          onClick : Documents.downloadSelectedPDF},
-      {title : 'Download Full Text',             onClick : Documents.downloadSelectedFullText}
+      {title : 'Download Original PDF',    onClick : Documents.downloadSelectedPDF},
+      {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText},
+      {title : 'Print Notes',              onClick : Documents.printNotes}
     ];
     var items = dc.account ? accountItems.concat(publicItems) : publicItems;
     return new dc.ui.Menu({

@@ -1,7 +1,7 @@
 class AnnotationsController < ApplicationController
   include DC::Access
 
-  before_filter :login_required, :except => [:index, :show]
+  before_filter :login_required, :except => [:index, :show, :print]
 
   # In the workspace, request a listing of annotations.
   def index
@@ -18,6 +18,11 @@ class AnnotationsController < ApplicationController
         render :js => js
       end
     end
+  end
+  
+  # Print out all the annotations for a document (or documents.)
+  def print
+    render :layout => false
   end
 
   # Any account can create a private note on any document.

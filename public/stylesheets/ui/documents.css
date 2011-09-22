@@ -7,8 +7,12 @@
   }
 
 .document {
+  page-break-before: always;
   position: relative;
 }
+  .document:first-child {
+    page-break-before: auto;
+  }
   .document.muted {
     background: transparent;
   }
@@ -291,6 +295,7 @@
     display: block;
   }
   .note {
+    background: #fff;
     position: relative;
     margin: 20px 0 0 0;
     padding: 10px;

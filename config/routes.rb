@@ -61,6 +61,9 @@ ActionController::Routing::Routes.draw do |map|
   map.set_text   "/documents/:id/pages/:page_name.txt", :controller => :documents, :action => :set_page_text,  :conditions => {:method => :post}
   map.page_image "/documents/:id/pages/:page_name.gif", :controller => :documents, :action => :send_page_image
 
+  # Print notes.
+  map.print_notes "/notes/print", :controller => :annotations, :action => 'print'
+
   # Reviewers.
   map.resources :reviewers, :collection => {
     :preview_email => :get,

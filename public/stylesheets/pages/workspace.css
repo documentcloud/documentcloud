@@ -299,6 +299,24 @@ div.full_page_background {
 .VS-search {
   margin: 0 29px 30px;
 }
+
+/* Print Notes ---------------------------------------*/
+.print_notes {
+  background: #fff;
+  margin: 0;
+}
+.print_notes #document_list {
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px;
+}
+    .print_notes .edit_glyph, 
+    .print_notes .cancel_search {
+      display: none !important;
+    }
+
 /*------------------------- View-mode visibility -----------------------------*/
 
 .search_tab_content,

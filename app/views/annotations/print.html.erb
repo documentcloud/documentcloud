@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <%= render :partial => 'common/meta_tags' %>
+  <title>Print Notes</title>
+  <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
+  <%= include_stylesheets *css %>
+  <!--[if lte IE 6]>
+    <script>window.location = '/workspace/upgrade';</script>
+  <![endif]-->
+  <!--[if lt IE 9]>
+    <%= include_stylesheets :ie_only, :embed_assets => false %>
+  <![endif]-->
+</head>
+<body class="print_notes">
+
+  <div id="document_list"></div>
+
+  <script>
+    if (window.opener) {
+      window.opener.Documents.readyToPrint();
+    }
+  </script>
+
+</body>
+</html>
