@@ -74,13 +74,6 @@ touch on EC2 in here.
   
 * Copy over config/server/gitconfig.conf to ~/.gitconfig
 
-* Copy over config/server/munin configuration files to /etc/munin
-  Install the plugins in config/server/munin/plugins to /usr/share/munin/plugins,
-  and symlink them to /etc/munin/plugins
-  Disable (remove) the if_err_eth0, postfix_mailqueue, postfix_mailvolume,
-  and entropy plugins.
-  Restart munin-node: sudo /etc/init.d/munin-node restart
-
 * If bundling, move on to Step 6 of Hammond's directions, but ensure that
   EC2_CERT and EC2_PRIVATE_KEY are set correctly, and that the size of the EBS
   is 40 GB. You can use a better name for the $prefix, and a better description.
