@@ -16,7 +16,8 @@ body.print_notes #document_list {
   }
     body.print_notes #document_list .select,
     body.print_notes #document_list .icon,
-    body.print_notes #document_list .datalines {
+    body.print_notes #document_list .datalines,
+    body.print_notes #document_list .show_notes {
       display: none;
     }
     body.print_notes #document_list .title {
