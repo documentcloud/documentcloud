@@ -1,0 +1,30 @@
+/* Print Notes Page ---------------------------------------*/
+
+body.print_notes {
+  background: #fff;
+  margin: 0;
+}
+body.print_notes #document_list {
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px;
+}
+  body.print_notes #document_list .document {
+    padding-left: 0;
+  }
+    body.print_notes #document_list .select,
+    body.print_notes #document_list .icon,
+    body.print_notes #document_list .datalines {
+      display: none;
+    }
+    body.print_notes #document_list .title {
+      font-size: 20px;
+      line-height: 28px;
+    }
+    body.print_notes .edit_glyph, 
+    body.print_notes .cancel_search {
+      display: none !important;
+    }
+    
