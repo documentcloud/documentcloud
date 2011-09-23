@@ -73,7 +73,7 @@ class DocumentInsertPages < DocumentModBase
     end
 
     cmd = "pdftk A=#{@pdf} #{pdf_names.values.join(' ')} cat A #{pdf_names.keys.join(' ')} output #{document.slug}.pdf_temp"
-    `#{cmd}`
+    `#{cmd} 2>&1`
 
     asset_store.save_pdf(document, "#{document.slug}.pdf_temp", access)
     asset_store.delete_insert_pdfs(document)
