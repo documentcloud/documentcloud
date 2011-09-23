@@ -477,6 +477,10 @@ class Document < ActiveRecord::Base
   def search_url
     "#{DC.server_root}/documents/#{id}/search.json?q={query}"
   end
+  
+  def print_annotations_url
+    "#{DC.server_root}/notes/print?docs[]=#{id}"
+  end
 
   # Internally used image path, not to be confused with page_image_template()
   def page_image_path(page_number, size)
@@ -793,6 +797,7 @@ class Document < ActiveRecord::Base
     res['text']               = full_text_url
     res['thumbnail']          = thumbnail_url
     res['search']             = search_url
+    res['print_annotations']  = print_annotations_url
     res['page']               = {}
     res['page']['image']      = page_image_url_template(:local => options[:local])
     res['page']['text']       = page_text_url_template(:local => options[:local])
