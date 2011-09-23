@@ -22,6 +22,12 @@ Link directly to [any note][]: to find the URL (or permalink) of a note, open th
 
 You can also embed a note directly. See our <a href="publishing">publishing and embedding</a> documentation for details.
 
+## <span id="printing">Printing Notes</span>
+
+![Print Notes][]
+
+It's easy to print out all the notes on a particular document or collection of documents. If you're in the workspace, select the documents with notes that you'd like to print, open the "Publish" menu, and click "Print Notes". While viewing a document, you'll find the link to "Print Notes" in the sidebar.
+
 
 # <span id="sections">Adding Sections for Navigation</span>
 
@@ -31,6 +37,7 @@ Still have questions about annotating documents? Don't hesitate to [contact us][
 
 [Annotations]: /images/help/document_annotations.jpg
 [Notes Link]: /images/help/notes_link.jpg
+[Print Notes]: /images/help/print_notes.png
 [any note]: http://www.washingtonpost.com/wp-srv/business/documents/fcic-final-report.html#document/p173/a8646
 [example]: http://www.washingtonpost.com/wp-srv/business/documents/fcic-final-report.html#document/p173/a8646
 [contact us]: javascript:dc.ui.Dialog.contact()
