@@ -67,7 +67,8 @@ dc.ui.Document = Backbone.View.extend({
   },
 
   // Render the document tile, setting modes, selected state, and attaches drag events.
-  render : function() {
+  render : function(options) {
+    options || (options = {});
     var me = this;
     var title = this.model.get('title');
     var data = _.extend(this.model.toJSON(), {
@@ -77,13 +78,14 @@ dc.ui.Document = Backbone.View.extend({
       thumbnail_url : this._thumbnailURL(),
       data          : this.model.sortedData()
     });
-    if (dc.app.paginator.mini) data.title = dc.inflector.truncateWords(data.title, 50);
+    if (dc.app.paginator && dc.app.paginator.mini) data.title = dc.inflector.truncateWords(data.title, 50);
     $(this.el).html(JST['document/tile'](data));
     this._displayDescription();
     if (dc.account) this.$('.doc.icon').draggable({ghost : true, onDrop : this._onDrop});
     this.notesEl = this.$('.notes');
     this.pagesEl = this.$('.pages');
     this.model.notes.each(function(note){ me._addNote(note); });
+    if (options.notes && this.model.hasLoadedNotes()) this.setMode('has', 'notes');
     this.setMode(dc.access.NAMES[this.model.get('access')], 'access');
     this.setMode(this.model.allowedToEdit() ? 'is' : 'not', 'editable');
     this._setSelected();

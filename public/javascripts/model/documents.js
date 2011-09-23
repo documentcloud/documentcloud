@@ -14,6 +14,7 @@ dc.model.Document = Backbone.Model.extend({
     this.notes.url = function() {
       return '/documents/' + id + '/annotations';
     };
+    if (this.get('annotations')) this.notes.reset(this.get('annotations'));
     this.pageEntities = new dc.model.EntitySet();
     this.reviewers = new dc.model.AccountSet();
   },
@@ -308,34 +309,8 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     if (!_.any(docs, function(doc){ return doc.hasNotes(); })) {
       return dc.ui.Dialog.alert('"' + docs[0].get('title') + '" does not contain any printable notes.');
     }
-    var win = window.open(SERVER_ROOT + '/notes/print');
-    $.when.apply($, _.map(docs, function(doc){ return doc.notes.fetch(); })).then(_.bind(function() {
-      var docEls = $('.document.is_selected');
-      var continuation = function() {
-        win.$('#document_list').append(docEls.outerHTML());
-        win.$('.document').removeClass('is_selected');
-        _.each(docs, function(doc){ doc.trigger('notes:hide'); });
-        win.print();
-        win.close();
-      };
-      if (this._printCallback) {
-        continuation();
-        delete this._printCallback;
-      } else {
-        this._printCallback = continuation;
-      }
-    }, this));
-  },
-
-  // Callback so that we can know when the child window for printing notes is
-  // ready to be rendered.
-  readyToPrint : function() {
-    if (this._printCallback) {
-      this._printCallback();
-      delete this._printCallback;
-    } else {
-      this._printCallback = true;
-    }
+    var params = _.map(docs, function(doc){ return 'docs[]=' + doc.id; }).join('&');
+    var win = window.open(SERVER_ROOT + '/notes/print?' + params);
   },
 
   startPolling : function() {

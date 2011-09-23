@@ -35,7 +35,7 @@
   <div class="datalines interface">
     <% for (var i = 0, l = data.length; i < l; i++) { %>
       <% var key = data[i][0], value = data[i][1]; %>
-      <% var className = dc.app.paginator.query.data[key] == value ? 'active' : ''; %>
+      <% var className = dc.app.paginator && dc.app.paginator.query.data[key] == value ? 'active' : ''; %>
       <span class="data_item noselect gradient_white <%= className %>"><span class="data_key"><%= key %>:</span>
       <span class="data_value"><%= value %></span></span>
     <% } %>

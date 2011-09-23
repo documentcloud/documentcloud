@@ -17,12 +17,16 @@
 </head>
 <body class="print_notes">
 
-  <div id="document_list"></div>
-
   <script>
-    if (window.opener) {
-      window.opener.Documents.readyToPrint();
-    }
+    // Render a list of documents, with annotations preloaded, and then
+    // print and close the page.
+
+    $(document.body).append((new dc.ui.DocumentList().render()).el);
+    Documents.reset([<%= @documents_json.join(',') %>]);
+    $(window).load(function() {
+      window.print();
+      window.close();
+    });
   </script>
 
 </body>

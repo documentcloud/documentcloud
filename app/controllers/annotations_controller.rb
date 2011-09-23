@@ -22,6 +22,9 @@ class AnnotationsController < ApplicationController
   
   # Print out all the annotations for a document (or documents.)
   def print
+    docs = Document.accessible(current_account, current_organization).find_all_by_id(params[:docs])
+    Document.populate_annotation_counts(current_account, docs)
+    @documents_json = docs.map {|doc| doc.to_json(:annotations => true, :account => current_account) }
     render :layout => false
   end
 
