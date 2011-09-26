@@ -15,14 +15,14 @@ SET search_path = public, pg_catalog;
 -- Name: ghstore; Type: SHELL TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE ghstore;
+--CREATE TYPE ghstore;
 
 
 --
 -- Name: ghstore_in(cstring); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION ghstore_in(cstring) RETURNS ghstore
+/*CREATE FUNCTION ghstore_in(cstring) RETURNS ghstore
     LANGUAGE c IMMUTABLE STRICT
     AS '$libdir/hstore', 'ghstore_in';
 
@@ -894,7 +894,7 @@ SET search_path = pg_catalog;
 --
 
 CREATE CAST (text[] AS public.hstore) WITH FUNCTION public.hstore(text[]);
-
+*/
 
 SET search_path = public, pg_catalog;
 
