@@ -2,10 +2,14 @@
 
 By default, a search looks for all of the words you enter within the title and full text of the document itself. For example: [John Yoo detainee][]. You can, however, ask DocumentCloud to search the contents of specific fields.
 
-## Tips
-Enclose terms in quotes to search for a specific, multi-word phrase.  
+## Advanced Queries
+Enclose terms in quotes to search for a specific, multi-word phrase. `"Robert Smith"` 
 
-Use "NOT" or "-" to exclude a term from your search. For example both: [geithner -madoff][] and [geithner NOT madoff][] will return documents that mention "Geithner" and do not also mention "Madoff." 
+Use Boolean search operators, like `and` and `or` in conjunction with parentheses for grouping, and `!` to exclude terms that shouldn't be present in your results. 
+
+For example: `(geithner and bernanke) !madoff`
+
+You may also use `*` for "wildcard" searches, so a search of `J* Brown` will match both `"Jerry Brown"` and `"John Brown"`.
 
 ## <span id="builtin">Searching by Built-in Metadata Field</span>
    
