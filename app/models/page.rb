@@ -67,6 +67,8 @@ class Page < ActiveRecord::Base
     phrases.unshift words.join('\\s+') if words.length > 1
     # Get the array of all possible matches for the FTS search.
     parts   = phrases + words
+    # Fix wildcards.
+    parts   = parts.map {|part| part.gsub('\\*', '\\S*') }
     # Build the PSQL version of the regex.
     psqlre  = "(" + parts.map {|part| "#{part}(?![a-z0-9])" }.join('|') + ")"
     # Build the Ruby version of the regex.
