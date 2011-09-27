@@ -103,7 +103,8 @@ http://www.postgresql.org/docs/8.3/static/contrib.html
 * Configure Nginx and /etc/hosts to serve dev.dcloud.org locally. An example
   Nginx configuration is stored in config/server/nginx
 
-* Load the development_structure.sql into Postgres.
+* Load the development_structure.sql into the database listed in config/database.yml.
+  Load the analytics_structure.sql into the database listed in config/database_analytics.yml
 
 * Create your CloudCrowd database, using the config/cloud_crowd/development
   configuration folder.
