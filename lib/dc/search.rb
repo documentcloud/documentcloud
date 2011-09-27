@@ -8,13 +8,12 @@ module DC
     module Matchers
       FIELD         = /("(.+?)"|'(.+?)'|[^'"\s]{2}\S*):\s*("(.+?)"|'(.+?)'|[^'"\s]\S*)/
       QUOTED_VALUE  = /("(.+?)"|'(.+?)')/
-      BOOLEAN_OR    = /\s+OR\s+/
+      BOOLEAN       = /(or|and|[*!+\-()])/i
     end
 
     DEFAULT_PER_PAGE  = 10
     MAX_PER_PAGE      = 1000
     DEFAULT_ORDER     = 'score'
-    QUERY_OR          = ' | '
 
   end
 

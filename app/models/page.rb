@@ -59,8 +59,10 @@ class Page < ActiveRecord::Base
 
     # Pull out all the quoted phrases, and regexp escape them.
     phrases = search_phrase.scan(QUOTED_VALUE).map {|r| Regexp.escape(r[1] || r[2]) }
-    # Pull out all the bare words, and regexp escape them.
-    words   = search_phrase.gsub(QUOTED_VALUE, '').split(/\s+/).map {|w| Regexp.escape(w) }
+    # Pull out all the bare words, remove boolean bits.
+    words   = search_phrase.gsub(QUOTED_VALUE, '').gsub(BOOLEAN, '')
+    # Split word parts, and regex escape them.
+    words   = words.split(/\s+/).map {|w| Regexp.escape(w) }
     # Create a preferential finder for the bare-words-as-quoted-phrase-case.
     phrases.unshift words.join('\\s+') if words.length > 1
     # Get the array of all possible matches for the FTS search.
@@ -68,7 +70,7 @@ class Page < ActiveRecord::Base
     # Build the PSQL version of the regex.
     psqlre  = "(" + parts.map {|part| "#{part}(?![a-z0-9])" }.join('|') + ")"
     # Build the Ruby version of the regex.
-    rubyre  = /(#{ parts.map {|part| "#{part}(?![a-z0-9])" }.join('|') })/i
+    rubyre  = /(#{ parts.map {|part| "\\b#{part}\\b" }.join('|') })/i
 
     conds   = ["document_id = ? and text ~* ?", doc_id, psqlre]
     pages   = Page.all(:conditions => conds, :order => 'page_number asc', :limit => limit)

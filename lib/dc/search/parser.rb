@@ -21,19 +21,13 @@ module DC
         fields        = query_string.scan(Matchers::FIELD).map {|m| [m[0], m[3]] }
         search_text   = query_string.gsub(Matchers::FIELD, '').squeeze(' ').strip
 
-        process_search_text(search_text)
+        @text = search_text.present? ? search_text : nil
         process_fields_and_projects(fields)
 
         Query.new(:text => @text, :fields => @fields, :projects => @projects,
           :accounts => @accounts, :groups => @groups, :project_ids => @project_ids,
           :doc_ids => @doc_ids, :attributes => @attributes, :access => @access,
           :filters => @filters, :data => @data, :source_document => @source_document)
-      end
-
-      # Convert the full-text search into a form that our index can handle.
-      def process_search_text(text)
-        return if text.empty?
-        @text = text.gsub(Matchers::BOOLEAN_OR, QUERY_OR)
       end
 
       # Extract the portions of the query that are fields, attributes,
