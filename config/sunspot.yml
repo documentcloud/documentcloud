@@ -2,10 +2,12 @@ development:
   auto_commit_after_request: false
   solr:
     hostname: localhost
-    port: 8982
+    port: 7377
     log_level: INFO
     min_memory: 20M
     max_memory: 1G
+    solr_home: /Users/jashkenas/Desktop/document_cloud/document-cloud/solr
+    solr_jar: /Users/jashkenas/Desktop/document_cloud/document-cloud/vendor/solr-3.4.0/start.jar
 
 staging:
   auto_commit_after_request: false
@@ -13,6 +15,8 @@ staging:
     hostname: ec2-75-101-222-118.compute-1.amazonaws.com
     port: 7377
     log_level: WARNING
+    solr_home: solr
+    solr_jar: vendor/solr-3.4.0/start.jar
 
 production:
   auto_commit_after_request: false
@@ -22,6 +26,8 @@ production:
     log_level: WARNING
     min_memory: 200M
     max_memory: 1G
+    solr_home: solr
+    solr_jar: vendor/solr-3.4.0/start.jar
 
 test:
   solr:

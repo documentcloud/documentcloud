@@ -31,6 +31,9 @@
          -Dsolr.abortOnConfigurationError=false
      -->
   <abortOnConfigurationError>${solr.abortOnConfigurationError:true}</abortOnConfigurationError>
+  
+  <luceneMatchVersion>LUCENE_34</luceneMatchVersion>
+  
   <!-- lib directives can be used to instruct Solr to load an Jars identified
        and use them to resolve any "plugins" specified in your solrconfig.xml or
        schema.xml (ie: Analyzers, Request Handlers, etc...).
@@ -52,10 +55,10 @@
     -->
   <lib dir="../../dist/" regex="apache-solr-cell-\d.*\.jar"/>
   <lib dir="../../dist/" regex="apache-solr-clustering-\d.*\.jar"/>
+  <lib dir="../../dist/" regex="apache-solr-dataimporthandler-\d.*\.jar" />
   <!-- If a dir option (with or without a regex) is used and nothing is found
        that matches, it will be ignored
     -->
-  <lib dir="../../contrib/clustering/lib/downloads/"/>
   <lib dir="../../contrib/clustering/lib/"/>
   <lib dir="/total/crap/dir/ignored"/>
   <!-- an exact path can be used to specify a specific file.  This will cause
@@ -66,6 +69,21 @@
        other than the default ./data under the Solr home.
        If replication is in use, this should match the replication configuration. -->
   <dataDir>${solr.data.dir:./solr/data}</dataDir>
+  
+  <!-- The DirectoryFactory to use for indexes.
+       
+       solr.StandardDirectoryFactory, the default, is filesystem
+       based and tries to pick the best implementation for the current
+       JVM and platform.  One can force a particular implementation
+       via solr.MMapDirectoryFactory, solr.NIOFSDirectoryFactory, or
+       solr.SimpleFSDirectoryFactory.
+
+       solr.RAMDirectoryFactory is memory based, not
+       persistent, and doesn't work with replication.
+    -->
+  <directoryFactory name="DirectoryFactory" 
+                    class="${solr.directoryFactory:solr.StandardDirectoryFactory}"/>
+  
   <!-- WARNING: this <indexDefaults> section only provides defaults for index writers
        in general. See also the <mainIndex> section after that when changing parameters
        for Solr's main Lucene index. -->
@@ -130,6 +148,7 @@
     Controls how often Lucene loads terms into memory -->
     <!--<termIndexInterval>256</termIndexInterval>-->
   </indexDefaults>
+  
   <mainIndex>
     <!-- options specific to the main on-disk lucene index -->
     <useCompoundFile>false</useCompoundFile>
@@ -210,7 +229,7 @@
          when adding documents. http://wiki.apache.org/solr/UpdateXmlMessages -->
     <autoCommit>
       <maxDocs>10000</maxDocs>
-      <maxTime>1000</maxTime>
+      <maxTime>30000</maxTime>
     </autoCommit>
     <!-- The RunExecutableListener executes an external command from a
       hook such as postCommit or postOptimize.
@@ -394,8 +413,8 @@
          use the never304="true" option and do not specify a value for
          <cacheControl>
     -->
-    <!-- <httpCaching never304="true"> -->
-    <httpCaching lastModifiedFrom="openTime" etagSeed="Solr">
+    <httpCaching never304="true" />
+    <!-- <httpCaching lastModifiedFrom="openTime" etagSeed="Solr"> -->
       <!-- lastModFrom="openTime" is the default, the Last-Modified value
             (and validation against If-Modified-Since requests) will all be
             relative to when the current Searcher was opened.
@@ -421,7 +440,6 @@
             never304="true"
        -->
       <!-- <cacheControl>max-age=30, public</cacheControl> -->
-    </httpCaching>
   </requestDispatcher>
   <!-- requestHandler plugins... incoming queries will be dispatched to the
      correct handler based on the path or the qt (query type) param.
@@ -435,15 +453,13 @@
     <!-- default values for query parameters -->
     <lst name="defaults">
       <str name="echoParams">explicit</str>
+      <int name="rows">10</int>
       <!--
        <int name="rows">10</int>
        <str name="fl">*</str>
        <str name="version">2.1</str>
         -->
     </lst>
-    <arr name="last-components">
-      <str>spatial</str>
-    </arr>
   </requestHandler>
   <!-- Please refer to http://wiki.apache.org/solr/SolrReplication for details on configuring replication -->
   <!-- remove the <lst name="master"> section if this is just a slave -->
@@ -927,7 +943,6 @@
     <healthcheck type="file">server-enabled</healthcheck>
     -->
   </admin>
-  <searchComponent name="spatial" class="me.outofti.solrspatiallight.SpatialQueryComponent"/>
   <requestHandler class="solr.MoreLikeThisHandler" name="/mlt">
     <lst name="defaults">
       <str name="mlt.mintf">1</str>
