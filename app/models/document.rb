@@ -140,10 +140,10 @@ class Document < ActiveRecord::Base
     end
 
     # Entities...
-    DC::ENTITY_KINDS.each do |entity|
-      text(entity) { self.entity_values(entity) }
-      string(entity, :multiple => true) { self.entity_values(entity) }
-    end
+    # DC::ENTITY_KINDS.each do |entity|
+    #   text(entity) { self.entity_values(entity) }
+    #   string(entity, :multiple => true) { self.entity_values(entity) }
+    # end
     
     # Data...
     dynamic_string :data do

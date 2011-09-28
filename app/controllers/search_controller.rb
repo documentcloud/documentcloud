@@ -6,9 +6,8 @@ class SearchController < ApplicationController
   FIELD_STRIP = /\S+:\s*/
 
   def documents
-    perform_search pick(params, :include_facets, :mentions)
+    perform_search pick(params, :mentions)
     results = {:query => @query, :documents => @documents}
-    results[:facets] = @query.facets if params[:include_facets]
     results[:source_document] = @source_document if params.include? :include_source_document
     respond_to do |format|
       format.json do
@@ -21,7 +20,7 @@ class SearchController < ApplicationController
     return bad_request unless params[:options]
     groups = params[:options].match(/p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)/)
     _, params[:page], params[:per_page], params[:order], params[:organization_id] = *groups
-    perform_search :include_facets => params[:include_facets]
+    perform_search
     results             = {:query => @query, :documents => @documents}
     results[:query]     = params[:q] || ""
     results[:total]     = @query.total
@@ -43,12 +42,12 @@ class SearchController < ApplicationController
     json :restricted_count => @query.total
   end
 
-  def facets
-    perform_search :exclude_documents => true,
-                   :include_facets => true
-    results = {:query => @query, :facets => @query.facets}
-    json results
-  end
+  # def facets
+  #   perform_search :exclude_documents => true,
+  #                  :include_facets => true
+  #   results = {:query => @query, :facets => @query.facets}
+  #   json results
+  # end
 
   def preview
     @query   = params[:query]

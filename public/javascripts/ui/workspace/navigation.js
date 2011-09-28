@@ -28,7 +28,7 @@ dc.ui.Navigation = Backbone.View.extend({
     this.bind('tab:entities',   _.bind(this._saveSidebarPreference, this, 'entities'));
     this.bind('tab:entities', _.bind(function() {
       if (!this.isOpen('search')) this.open('search');
-      _.defer(dc.app.searcher.loadFacets);
+      // _.defer(dc.app.searcher.loadFacets);
     }, this));
     $('#toplinks .open_accounts').click(function(){ dc.app.accounts.open(); });
     this.setMode('search', 'panel_tab');

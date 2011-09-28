@@ -26,7 +26,7 @@ class ApiController < ApplicationController
     end
     respond_to do |format|
       format.any(:js, :json) do
-        perform_search :include_facets => (opts[:entities] ? :api : false), :mentions => opts[:mentions]
+        perform_search :mentions => opts[:mentions]
         @response = ActiveSupport::OrderedHash.new
         @response['total']     = @query.total
         @response['page']      = @query.page

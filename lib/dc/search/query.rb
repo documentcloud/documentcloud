@@ -71,7 +71,7 @@ module DC
         build_doc_ids      if     has_doc_ids?
         build_attributes   if     has_attributes? && !has_source_document?
         build_filters      if     has_filters?
-        build_facets       if     @include_facets
+        # build_facets       if     @include_facets
         build_access       unless @unrestricted
       end
 
@@ -80,7 +80,6 @@ module DC
       # for the current page.
       def run(o={})
         @account, @organization, @unrestricted = o[:account], o[:organization], o[:unrestricted]
-        @include_facets, @facet = o[:include_facets], o[:facet]
         @exclude_documents = o[:exclude_documents]
         needs_solr? ? run_solr : run_database
         populate_annotation_counts
@@ -90,7 +89,7 @@ module DC
 
       # Does this query require the Solr index to run?
       def needs_solr?
-        @needs_solr ||= (@include_facets || has_text? || has_fields? || has_source_document? || has_attributes?)
+        @needs_solr ||= (has_text? || has_fields? || has_source_document? || has_attributes?)
       end
 
       # If we've got a full text search with results, we can get Postgres to
@@ -111,14 +110,14 @@ module DC
         Document.populate_annotation_counts(@account, @results)
       end
 
-      # Return a hash of facets.
-      def facets
-        return {} unless @include_facets
-        @solr.facets.inject({}) do |hash, facet|
-          hash[facet.field_name] = facet.rows.map {|row| {:value => row.value, :count => row.count}}
-          hash
-        end
-      end
+      # # Return a hash of facets.
+      # def facets
+      #   return {} unless @include_facets
+      #   @solr.facets.inject({}) do |hash, facet|
+      #     hash[facet.field_name] = facet.rows.map {|row| {:value => row.value, :count => row.count}}
+      #     hash
+      #   end
+      # end
 
       # The JSON representation of a query contains all the structured aspects
       # of the search.
@@ -174,7 +173,7 @@ module DC
       # Construct the correct pagination for the current query.
       def build_pagination
         page       = @page
-        size       = @facet ? 0 : @per_page
+        size       = @per_page
         order      = @order.to_sym
         direction  = [:created_at, :score, :page_count, :hit_count].include?(order) ? :desc : :asc
         pagination = {:page => page, :per_page => size}
@@ -345,18 +344,18 @@ module DC
       end
 
       # Add facet results to the Solr search, if requested.
-      def build_facets
-        api = @include_facets == :api
-        specific = @facet
-        @solr.build do
-          if specific
-            args = [specific.to_sym, FACET_OPTIONS[:specific]]
-          else
-            args = DC::ENTITY_KINDS + [FACET_OPTIONS[api ? :api : :all]]
-          end
-          facet(*args)
-        end
-      end
+      # def build_facets
+      #   api = @include_facets == :api
+      #   specific = @facet
+      #   @solr.build do
+      #     if specific
+      #       args = [specific.to_sym, FACET_OPTIONS[:specific]]
+      #     else
+      #       args = DC::ENTITY_KINDS + [FACET_OPTIONS[api ? :api : :all]]
+      #     end
+      #     facet(*args)
+      #   end
+      # end
 
       # Filter documents along certain "interesting axes".
       def build_filters

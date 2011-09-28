@@ -14,6 +14,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
     if (!Backbone.history.start({pushState : true, root : dc.account ? '/' : '/public/'})) {
       dc.app.searcher.loadDefault({showHelp: true});
     }
+    dc.ui.notifier.show({text: "We're currently experiencing trouble with our search index. It will be back online as soon as possible."});
   },
 
   help : function(page) {
@@ -133,17 +134,17 @@ dc.controllers.Workspace = Backbone.Router.extend({
             { label: 'group',         category: '' },
             { label: 'access',        category: '' },
             { label: 'related',       category: '' },
-            { label: 'projectid',     category: '' },
+            { label: 'projectid',     category: '' }
             // Entities
-            { label: 'city',          category: '' },
-            { label: 'country',       category: '' },
-            { label: 'term',          category: '' },
-            { label: 'state',         category: '' },
-            { label: 'person',        category: '' },
-            { label: 'place',         category: '' },
-            { label: 'organization',  category: '' },
-            { label: 'email',         category: '' },
-            { label: 'phone',         category: '' }
+            // { label: 'city',          category: '' },
+            // { label: 'country',       category: '' },
+            // { label: 'term',          category: '' },
+            // { label: 'state',         category: '' },
+            // { label: 'person',        category: '' },
+            // { label: 'place',         category: '' },
+            // { label: 'organization',  category: '' },
+            // { label: 'email',         category: '' },
+            // { label: 'phone',         category: '' }
           ];
           var metadata = _.map(_.keys(Documents.reduce(function(memo, doc) {
             if (_.size(doc.get('data'))) _.extend(memo, doc.get('data'));
