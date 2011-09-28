@@ -21,7 +21,7 @@ production:
   solr:
     hostname: ec2-174-129-5-5.compute-1.amazonaws.com
     port: 7377
-    log_level: WARNING
+    log_level: INFO
     min_memory: 200M
     max_memory: 1G
     solr_jar: vendor/solr-3.4.0/start.jar
