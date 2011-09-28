@@ -14,7 +14,6 @@ dc.controllers.Workspace = Backbone.Router.extend({
     if (!Backbone.history.start({pushState : true, root : dc.account ? '/' : '/public/'})) {
       dc.app.searcher.loadDefault({showHelp: true});
     }
-    dc.ui.notifier.show({text: "We're currently experiencing trouble with our search index. It will be back online as soon as possible."});
   },
 
   help : function(page) {

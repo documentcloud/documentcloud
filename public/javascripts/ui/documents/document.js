@@ -324,7 +324,7 @@ dc.ui.Document = Backbone.View.extend({
       });
     }
     items.push({title : 'View Pages', onClick: this.viewChosenPages});
-    items.push({title : 'View Entities', onClick: this.viewEntities});
+    // items.push({title : 'View Entities', onClick: this.viewEntities});
     if (this.model.allowedToEdit()) {
       items = items.concat([
         {title : 'Edit Document Information', onClick: this.openDialog},

@@ -328,7 +328,7 @@ dc.ui.Toolbar = Backbone.View.extend({
 
   _createAnalyzeMenu : function() {
     var publicItems = [
-      {title: 'View Entities',          attrs: {'class' : 'always'},   onClick : this._viewEntities},
+      // {title: 'View Entities',          attrs: {'class' : 'always'},   onClick : this._viewEntities},
       {title: 'View Timeline',          attrs: {'class' : 'always'},   onClick : this._openTimeline},
       {title: 'Find Related Documents', attrs: {'class' : 'singular'}, onClick : this._openRelatedDocuments}
     ];
