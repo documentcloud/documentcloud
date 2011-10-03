@@ -25,7 +25,7 @@ projectid                   | Restrict your search to a particular project, by a
 access                      | Search for only documents that have a particular access level (one of "public", "private", or "organization"). For example, to view all of your private documents: [access: private][]
 filter                      | Filter documents by interesting criteria (one of "published", "unpublished", "annotated", or "popular"). For example, to view all published documents: [filter: published][]
  
-## <span id="entities">Searching with Entities</span>
+<!-- ## <span id="entities">Searching with Entities</span>
  
 For each document we store a list of entities identified by [OpenCalais][]. These are the same entities that appear in the "Entities" tab on the left. After searching for an entity, you can click on "show pages" to display links to the specific pages in each document that mention the person, place or thing you're searching for.
 
@@ -39,7 +39,7 @@ email                       | Complete email addresses. Documents that mention t
 phone                       | Telephone or Fax numbers. For example: [phone: "(251) 441-6216"][].
 city                        | For example: [city: "New Orleans"][].
 state                       | (Includes provinces, in countries that have provinces instead of states.) For example: [state: Arizona][].
-country                     | For example: [country: Iran][].
+country                     | For example: [country: Iran][]. -->
 
 ## <span id="metadata">Editing and Searching your own Custom Data</span>
 
@@ -53,7 +53,11 @@ A dialog will appear which you can use to view the existing key/value pairs, add
 
 To filter documents by data that you've added, either click on the tag (shown in the picture above), or search for the key/value pair as you would for any other field, by typing `citizen: Pakistan` into the search box.
 
-If you'd like to filter all documents with a `citizen` key, but you don't care about the value, you can use: `citizen: *`
+You can add the same key multiple times with different values. To search for all citizens of Pakistan or Yemen: `citizen: Pakistan citizen: Yemen`
+
+If you'd like to filter all documents with a `citizen` key, but you don't care about the value, you can use: `citizen: *` 
+
+To find all the documents that *don't* have a `citizen` key yet, use: `citizen: !`
 
 Still have questions about how to search? Don't hesitate to [contact us][].
 

@@ -41,6 +41,7 @@ module DC
         @source_document        = opts[:source_document]
         @from, @to, @total      = nil, nil, nil
         @account, @organization = nil, nil
+        @data_groups            = @data.group_by {|datum| datum.kind }
         @per_page               = DEFAULT_PER_PAGE
         @order                  = DEFAULT_ORDER
       end
@@ -89,7 +90,8 @@ module DC
 
       # Does this query require the Solr index to run?
       def needs_solr?
-        @needs_solr ||= (has_text? || has_fields? || has_source_document? || has_attributes?)
+        @needs_solr ||= (has_text? || has_fields? || has_source_document? || has_attributes?) ||
+          @data_groups.any? {|kind, list| list.length > 1 }
       end
 
       # If we've got a full text search with results, we can get Postgres to
@@ -134,7 +136,7 @@ module DC
           'project_ids' => @project_ids,
           'doc_ids'     => @doc_ids,
           'attributes'  => @attributes,
-          'data'        => Hash[@data.map {|f| [f.kind, f.value] }]
+          'data'        => @data.map {|f| [f.kind, f.value] }
         }.to_json
       end
 
@@ -307,17 +309,22 @@ module DC
       # Generate the Solr or SQL to match user-data queries. If the value 
       # is "*", assume that any document that contains the key will do.
       def build_data
-        data = @data
+        data   = @data
+        groups = @data_groups
         if needs_solr?
           @solr.build do
             dynamic :data do
-              data.each do |datum|
-                if datum.value == '*'
-                  without datum.kind, nil
-                elsif datum.value == '!'
-                  with datum.kind, nil
-                else
-                  with datum.kind, datum.value
+              groups.each do |kind, data|
+                any_of do
+                  data.each do |datum|
+                    if datum.value == '*'
+                      without datum.kind, nil
+                    elsif datum.value == '!'
+                      with datum.kind, nil
+                    else
+                      with datum.kind, datum.value
+                    end
+                  end
                 end
               end
             end
