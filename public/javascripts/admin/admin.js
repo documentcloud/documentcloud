@@ -61,8 +61,8 @@ dc.ui.Admin = Backbone.View.extend({
     this.$('.chart').html('');
     $.plot($('#daily_docs_chart'),  [this._series(stats.daily_documents, 'Document', 1), this._series(stats.daily_pages, 'Page', 2)], this.GRAPH_OPTIONS);
     $.plot($('#weekly_docs_chart'), [this._series(stats.weekly_documents, 'Document', 1), this._series(stats.weekly_pages, 'Page', 2)], this.GRAPH_OPTIONS);
-    $.plot($('#daily_hits_chart'),  [this._series(stats.daily_hits_on_documents, 'Document Hit', 1), this._series(stats.daily_hits_on_notes, 'Note Hit', 2), this._series(stats.daily_hits_on_searches, 'Search Hit', 2)], this.GRAPH_OPTIONS);
-    $.plot($('#weekly_hits_chart'), [this._series(stats.weekly_hits_on_documents, 'Document Hit', 1), this._series(stats.weekly_hits_on_notes, 'Note Hit', 2), this._series(stats.weekly_hits_on_searches, 'Search Hit', 2)], this.GRAPH_OPTIONS);
+    $.plot($('#daily_hits_chart'),  [this._series(stats.daily_hits_on_documents, 'Document Hit'), this._series(stats.daily_hits_on_notes, 'Note Hit'), this._series(stats.daily_hits_on_searches, 'Search Hit')], this.GRAPH_OPTIONS);
+    $.plot($('#weekly_hits_chart'), [this._series(stats.weekly_hits_on_documents, 'Document Hit'), this._series(stats.weekly_hits_on_notes, 'Note Hit'), this._series(stats.weekly_hits_on_searches, 'Search Hit')], this.GRAPH_OPTIONS);
   },
 
   // Convert a date-hash into JSON that flot can properly plot.
