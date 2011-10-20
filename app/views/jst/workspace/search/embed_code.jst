@@ -3,7 +3,13 @@
 </div>
 
 <textarea class="snippet">
-&lt;div id="DC-search-<%= query %>" class="DC-search-container"&gt;&lt;/div&gt;&lt;script src="http://s3.documentcloud.org/embed/loader.js"&gt;&lt;/script&gt;&lt;script&gt;dc.embed.load('<%= window.SERVER_ROOT_HTTP %>/search/embed/', {<%= options %>});&lt;/script&gt;
+&lt;div id="DC-search-<%= query %>" class="DC-search-container"&gt;&lt;/div&gt;
+&lt;script src="http://s3.documentcloud.org/embed/loader.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  dc.embed.load('<%= window.SERVER_ROOT_HTTP %>/search/embed/', {
+    <%= options %>
+  });
+&lt;/script&gt;
 </textarea>
 
 <div class="publish_info publish_prepare_section_label selectable_text interface hidden">
