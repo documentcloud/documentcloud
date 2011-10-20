@@ -3,7 +3,13 @@
 </div>
 
 <textarea class="snippet">
-&lt;div id="DV-viewer-<%= doc.canonicalId() %>" class="DV-container"&gt;&lt;/div&gt;&lt;script src="http://s3.documentcloud.org/viewer/loader.js"&gt;&lt;/script&gt;&lt;script&gt;DV.load('<%= doc.get("document_viewer_js") %>', {<%= options %>});&lt;/script&gt;
+&lt;div id="DV-viewer-<%= doc.canonicalId() %>" class="DV-container"&gt;&lt;/div&gt;
+&lt;script src="http://s3.documentcloud.org/viewer/loader.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  DV.load('<%= doc.get("document_viewer_js") %>', {
+    <%= options %>
+  });
+&lt;/script&gt;
 </textarea>
 
 <div class="dialog_info selectable_text interface">

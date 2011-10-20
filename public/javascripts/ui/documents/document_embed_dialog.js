@@ -179,7 +179,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['document/embed_code']({
       doc: this.model,
-      options: serialized.join(', ')
+      options: serialized.join(',\n    ')
     }));
   },
 

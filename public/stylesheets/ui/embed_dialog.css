@@ -88,7 +88,7 @@
 
   .document_embed_dialog textarea.snippet {
     width: 484px;
-    height: 145px;
+    height: 200px;
     border: 1px solid #dedede;
     font: 11px Menlo, Consolas, Monaco, Courier, monospace;
     margin: 10px 0px;
