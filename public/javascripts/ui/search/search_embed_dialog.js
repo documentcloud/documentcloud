@@ -144,7 +144,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     var serialized       = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['search/embed_code']({
       query: dc.inflector.sluggify(this.query),
-      options: serialized.join(',\n    ')
+      options: serialized.join(', ')
     }));
   },
 
