@@ -16,7 +16,8 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     'click .close'          : 'close',
     'click .snippet'        : 'selectSnippet',
     'click .set_publish_at' : 'openPublishAtDialog',
-    'click .edit_access'    : 'editAccessLevel'
+    'click .edit_access'    : 'editAccessLevel',
+    'click .remove_lines'   : 'removeLines'
   },
 
   totalSteps : 3,
@@ -122,6 +123,11 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
   openPublishAtDialog : function() {
     this.close();
     new dc.ui.PublicationDateDialog([this.model]);
+  },
+
+  // Remove line breaks from the viewer embed.
+  removeLines : function() {
+    this.$('.snippet').val(this.$('.snippet').val().replace(/[\r\n]/g, ''));
   },
 
   // Serialize and stringify embed options so they remain consistent between embeds.

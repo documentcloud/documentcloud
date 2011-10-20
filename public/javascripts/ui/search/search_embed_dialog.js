@@ -13,7 +13,8 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     'click .previous'       : 'previousStep',
     'click .close'          : 'close',
     'click .snippet'        : 'selectSnippet',
-    'click .change_access'  : 'changeAccess'
+    'click .change_access'  : 'changeAccess',
+    'click .remove_lines'   : 'removeLines'
   },
 
   totalSteps : 2,
@@ -118,6 +119,11 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     options.search_bar   = this._searchBarEl.is(':checked');
     options.organization = dc.account.organization.id;
     return options;
+  },
+
+  // Remove line breaks from the viewer embed.
+  removeLines : function() {
+    this.$('.snippet').val(this.$('.snippet').val().replace(/[\r\n]/g, ''));
   },
 
   _savePreferences : function() {

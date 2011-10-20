@@ -8,7 +8,8 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
     'click .close'          : 'close',
     'click .snippet'        : 'selectSnippet',
     'click .set_publish_at' : 'openPublishAtDialog',
-    'click .edit_access'    : 'editAccessLevel'
+    'click .edit_access'    : 'editAccessLevel',
+    'click .remove_lines'   : 'removeLines'
   },
 
   totalSteps : 2,
@@ -76,6 +77,11 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
       this.center();
       this.height = this._preview.height();
     }
+  },
+
+  // Remove line breaks from the viewer embed.
+  removeLines : function() {
+    this.$('.snippet').val(this.$('.snippet').val().replace(/[\r\n]/g, ''));
   },
 
   _renderNote : function() {

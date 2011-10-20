@@ -95,6 +95,10 @@
     padding: 8px;
     resize: none;
   }
+  
+.dialog .remove_lines {
+  float: right;
+}
 
 .document_embed_dialog .open_to {
   position: absolute;
@@ -193,9 +197,6 @@
   clear: both;
   overflow: hidden;
 }
-  .search_embed_dialog .publish_prepare_section_label {
-    margin: 0 0 4px 0;
-  }
 .search_embed_dialog .sidelabel {
   font-size: 10px;
   line-height: 24px;
@@ -297,9 +298,6 @@
   clear: both;
   overflow: hidden;
 }
-  .note_embed_dialog .publish_prepare_section_label {
-    margin: 0 0 8px 0;
-  }
   
 .note_embed_dialog .publish_step_1 label {
   float: left;
