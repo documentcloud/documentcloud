@@ -66,7 +66,8 @@ class Entity < ActiveRecord::Base
      'document_id'  => document_id,
      'kind'         => kind,
      'value'        => value,
-     'relevance'    => relevance
+     'relevance'    => relevance,
+     'occurrences'  => occurrences
     }
     data['excerpts'] = excerpts(150, :limit => 200)if options[:include_excerpts]
     data.to_json

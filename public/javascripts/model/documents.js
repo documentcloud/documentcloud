@@ -14,6 +14,7 @@ dc.model.Document = Backbone.Model.extend({
     this.notes.url = function() {
       return '/documents/' + id + '/annotations';
     };
+    this.entities = new dc.model.EntitySet();
     if (this.get('annotations')) this.notes.reset(this.get('annotations'));
     this.pageEntities = new dc.model.EntitySet();
     this.reviewers = new dc.model.AccountSet();

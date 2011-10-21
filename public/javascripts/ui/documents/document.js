@@ -29,8 +29,9 @@ dc.ui.Document = Backbone.View.extend({
     'click .reviewer_count'         : '_openShareDialog',
     'click .occurrence'             : '_openPage',
     'click .mention b'              : '_openPage',
-    'click .cancel_search'          : '_hidePages',
+    'click .pages .cancel_search'   : '_hidePages',
     'click .page_count'             : '_togglePageImages',
+    'click .entities .cancel_search': '_hideEntities',
     'click .search_account'         : 'searchAccount',
     'click .search_group'           : 'searchOrganization',
     'click .search_source'          : 'searchSource',
@@ -53,16 +54,17 @@ dc.ui.Document = Backbone.View.extend({
     this._showingPages = false;
     this.setMode(this.model.get('annotation_count') ? 'owns' : 'no', 'notes');
     _.bindAll(this, '_onDocumentChange', '_onDrop', '_addNote', '_renderNotes',
-      '_renderPages', '_setSelected', 'viewDocuments', 'viewPublishedDocuments',
-      'openDialog', 'setAccessLevelAll', 'viewEntities', 'hideNotes',
-      'viewPages', 'viewChosenPages', 'deleteDocuments', 'removeFromProject',
-      '_openShareDialog', 'openDataDialog');
+      '_renderPages', '_renderEntities', '_setSelected', 'viewDocuments',
+      'viewPublishedDocuments', 'openDialog', 'setAccessLevelAll', 'viewEntities',
+      'hideNotes', 'viewPages', 'viewChosenPages', 'deleteDocuments',
+      'removeFromProject', '_openShareDialog', 'openDataDialog');
     this.model.bind('change', this._onDocumentChange);
     this.model.bind('change:selected', this._setSelected);
     this.model.bind('view:pages', this.viewPages);
     this.model.bind('notes:hide', this.hideNotes);
     this.model.notes.bind('add', this._addNote);
     this.model.notes.bind('reset', this._renderNotes);
+    this.model.entities.bind('load', this._renderEntities);
     this.model.pageEntities.bind('reset', this._renderPages);
   },
 
@@ -83,6 +85,7 @@ dc.ui.Document = Backbone.View.extend({
     this._displayDescription();
     if (dc.account) this.$('.doc.icon').draggable({ghost : true, onDrop : this._onDrop});
     this.notesEl = this.$('.notes');
+    this.entitiesEl = this.$('.entities');
     this.pagesEl = this.$('.pages');
     this.model.notes.each(function(note){ me._addNote(note); });
     if (options.notes && this.model.hasLoadedNotes()) this.setMode('has', 'notes');
@@ -151,9 +154,10 @@ dc.ui.Document = Backbone.View.extend({
   // dc.app.searcher.viewEntities(Documents.chosen(this.model));
 
   viewEntities : function() {
-    this.entities.fetch({success: function() {
-      console.log('ok');
-    }});
+    var docs = Documents.chosen(this.model);
+    dc.model.EntitySet.populateDocuments(docs, function() {
+      _.each(docs, function(doc){ doc.entities.trigger('load'); });
+    });
   },
 
   hideNotes : function() {
@@ -417,6 +421,12 @@ dc.ui.Document = Backbone.View.extend({
     this.setMode(this.model.ignoreNotes ? 'owns' : 'has', 'notes');
   },
 
+  // Re-renders the entities when the entities are refreshed.
+  _renderEntities : function() {
+    this.entitiesEl.html(JST['document/entities']({doc : this.model}));
+    this.setMode('show', 'entities');
+  },
+
   // Clicking on the page counts in the tile opens up the page thumbnails below
   // the document tile.
   _togglePageImages : function() {
@@ -438,6 +448,11 @@ dc.ui.Document = Backbone.View.extend({
     this._showingPages = false;
     this._currentPage = 0;
     this.pagesEl.html('');
+  },
+
+  // Hiding the entity search locations.
+  _hideEntities : function() {
+    this.entitiesEl.html('');
   },
 
   // Clicking on either a page thumbnail or an entity in the document tile opens
