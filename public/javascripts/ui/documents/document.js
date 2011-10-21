@@ -147,8 +147,13 @@ dc.ui.Document = Backbone.View.extend({
     this.model.openText();
   },
 
+  // Old implementation of viewEntities:
+  // dc.app.searcher.viewEntities(Documents.chosen(this.model));
+
   viewEntities : function() {
-    dc.app.searcher.viewEntities(Documents.chosen(this.model));
+    this.entities.fetch({success: function() {
+      console.log('ok');
+    }});
   },
 
   hideNotes : function() {
@@ -324,7 +329,7 @@ dc.ui.Document = Backbone.View.extend({
       });
     }
     items.push({title : 'View Pages', onClick: this.viewChosenPages});
-    // items.push({title : 'View Entities', onClick: this.viewEntities});
+    items.push({title : 'View Entities', onClick: this.viewEntities});
     if (this.model.allowedToEdit()) {
       items = items.concat([
         {title : 'Edit Document Information', onClick: this.openDialog},

@@ -9,7 +9,7 @@ dc.ui.Navigation = Backbone.View.extend({
   },
 
   VALID : {
-    sidebar : ['documents', 'entities'],
+    sidebar : ['documents', 'accounts'],
     panel   : ['search', 'publish', 'help']
   },
 
@@ -23,9 +23,7 @@ dc.ui.Navigation = Backbone.View.extend({
       memo[name] = el.click(_.bind(this._switchTab, this, name));
       return memo;
     }, this), {});
-    this.tabs[dc.app.preferences.get('sidebar_tab', this.VALID.sidebar) || 'documents'].click();
-    this.bind('tab:documents',  _.bind(this._saveSidebarPreference, this, 'documents'));
-    this.bind('tab:entities',   _.bind(this._saveSidebarPreference, this, 'entities'));
+    this.tabs['documents'].click();
     this.bind('tab:entities', _.bind(function() {
       if (!this.isOpen('search')) this.open('search');
       // _.defer(dc.app.searcher.loadFacets);
@@ -51,10 +49,6 @@ dc.ui.Navigation = Backbone.View.extend({
     this.setMode(name, this.SECTIONS[name] + '_tab');
     if (!(silent === true)) this.trigger('tab:' + name);
     _.defer(dc.app.scroller.check);
-  },
-
-  _saveSidebarPreference : function(kind) {
-    dc.app.preferences.set({sidebar_tab : kind});
   }
 
 });
