@@ -1,4 +1,4 @@
-//     Underscore.js 1.2.0
+//     Underscore.js 1.2.1
 //     (c) 2011 Jeremy Ashkenas, DocumentCloud Inc.
 //     Underscore is freely distributable under the MIT license.
 //     Portions of Underscore are inspired or borrowed from Prototype,
@@ -67,7 +67,7 @@
   }
 
   // Current version.
-  _.VERSION = '1.2.0';
+  _.VERSION = '1.2.1';
 
   // Collection Functions
   // --------------------
@@ -205,8 +205,8 @@
     var found = false;
     if (obj == null) return found;
     if (nativeIndexOf && obj.indexOf === nativeIndexOf) return obj.indexOf(target) != -1;
-    any(obj, function(value) {
-      if (found = value === target) return true;
+    found = any(obj, function(value) {
+      if (value === target) return true;
     });
     return found;
   };
@@ -520,8 +520,29 @@
     return _.delay.apply(_, [func, 1].concat(slice.call(arguments, 1)));
   };
 
-  // Internal function used to implement `_.throttle` and `_.debounce`.
-  var limit = function(func, wait, debounce) {
+  // Returns a function, that, when invoked, will only be triggered at most once
+  // during a given window of time.
+  _.throttle = function(func, wait) {
+    var timeout, context, args, throttling, finishThrottle;
+    finishThrottle = _.debounce(function(){ throttling = false; }, wait);
+    return function() {
+      context = this; args = arguments;
+      var throttler = function() {
+        timeout = null;
+        func.apply(context, args);
+        finishThrottle();
+      };
+      if (!timeout) timeout = setTimeout(throttler, wait);
+      if (!throttling) func.apply(context, args);
+      if (finishThrottle) finishThrottle();
+      throttling = true;
+    };
+  };
+
+  // Returns a function, that, as long as it continues to be invoked, will not
+  // be triggered. The function will be called after it stops being called for
+  // N milliseconds.
+  _.debounce = function(func, wait) {
     var timeout;
     return function() {
       var context = this, args = arguments;
@@ -529,22 +550,9 @@
         timeout = null;
         func.apply(context, args);
       };
-      if (debounce) clearTimeout(timeout);
-      if (debounce || !timeout) timeout = setTimeout(throttler, wait);
+      clearTimeout(timeout);
+      timeout = setTimeout(throttler, wait);
     };
-  };
-
-  // Returns a function, that, when invoked, will only be triggered at most once
-  // during a given window of time.
-  _.throttle = function(func, wait) {
-    return limit(func, wait, false);
-  };
-
-  // Returns a function, that, as long as it continues to be invoked, will not
-  // be triggered. The function will be called after it stops being called for
-  // N milliseconds.
-  _.debounce = function(func, wait) {
-    return limit(func, wait, true);
   };
 
   // Returns a function that will be executed at most one time, no matter how
@@ -637,6 +645,7 @@
 
   // Create a (shallow-cloned) duplicate of an object.
   _.clone = function(obj) {
+    if (!_.isObject(obj)) return obj;
     return _.isArray(obj) ? obj.slice() : _.extend({}, obj);
   };
 
@@ -733,7 +742,8 @@
     return eq(a, b, []);
   };
 
-  // Is a given array or object empty?
+  // Is a given array, string, or object empty?
+  // An "empty" object has no enumerable own-properties.
   _.isEmpty = function(obj) {
     if (_.isArray(obj) || _.isString(obj)) return obj.length === 0;
     for (var key in obj) if (hasOwnProperty.call(obj, key)) return false;
@@ -748,7 +758,7 @@
   // Is a given value an array?
   // Delegates to ECMA5's native Array.isArray
   _.isArray = nativeIsArray || function(obj) {
-    return toString.call(obj) === '[object Array]';
+    return toString.call(obj) == '[object Array]';
   };
 
   // Is a given variable an object?
@@ -757,23 +767,29 @@
   };
 
   // Is a given variable an arguments object?
-  _.isArguments = function(obj) {
-    return !!(obj && hasOwnProperty.call(obj, 'callee'));
-  };
+  if (toString.call(arguments) == '[object Arguments]') {
+    _.isArguments = function(obj) {
+      return toString.call(obj) == '[object Arguments]';
+    };
+  } else {
+    _.isArguments = function(obj) {
+      return !!(obj && hasOwnProperty.call(obj, 'callee'));
+    };
+  }
 
   // Is a given value a function?
   _.isFunction = function(obj) {
-    return !!(obj && obj.constructor && obj.call && obj.apply);
+    return toString.call(obj) == '[object Function]';
   };
 
   // Is a given value a string?
   _.isString = function(obj) {
-    return !!(obj === '' || (obj && obj.charCodeAt && obj.substr));
+    return toString.call(obj) == '[object String]';
   };
 
   // Is a given value a number?
   _.isNumber = function(obj) {
-    return !!(obj === 0 || (obj && obj.toExponential && obj.toFixed));
+    return toString.call(obj) == '[object Number]';
   };
 
   // Is the given value `NaN`?
@@ -789,12 +805,12 @@
 
   // Is a given value a date?
   _.isDate = function(obj) {
-    return !!(obj && obj.getTimezoneOffset && obj.setUTCFullYear);
+    return toString.call(obj) == '[object Date]';
   };
 
   // Is the given value a regular expression?
   _.isRegExp = function(obj) {
-    return !!(obj && obj.test && obj.exec && (obj.ignoreCase || obj.ignoreCase === false));
+    return toString.call(obj) == '[object RegExp]';
   };
 
   // Is a given value equal to null?
