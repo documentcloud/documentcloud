@@ -1,14 +1,6 @@
 <% var entities = doc.entities; %>
 
-<div class="entities_header">
-  <span class="icon cancel_search" title="hide entities"></span>
-  <span class="pages_title interface">
-    <%= entities.length %> entities
-    appearing <%= entities.sumOccurrences() %> times
-    on <%= doc.get('page_count') %>
-    <%= dc.inflector.pluralize('page', doc.get('page_count')) %>
-  </span>
-</div>
+<span class="icon cancel_search" title="hide entities"></span>
 
 <% var renderList = only ? [only] : dc.model.Entity.SPARK_ORDER; %>
 <% _.each(renderList, function(kind) { %>

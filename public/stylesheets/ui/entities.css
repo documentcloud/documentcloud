@@ -3,10 +3,16 @@
 .document .entities {
   overflow: hidden;
   position: relative;
-  margin-right: -50px;
+  margin: 20px -50px 0 -20px;
+  padding-left: 20px;
 }
+  .document .entities .cancel_search {
+    position: absolute;
+    left: 0; top: 1px;
+    cursor: pointer;
+  }
   .document .entity_group {
-    margin: 5px 50px 25px 0;
+    margin: 0 50px 25px 0;
     float: left;
   }
     .document .entity_group_header {

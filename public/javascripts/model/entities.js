@@ -35,7 +35,6 @@ dc.model.Entity = Backbone.Model.extend({
 
     for (var i = 0, l = this.occurrences().length; i < l; i++) {
       var occ = this.occurrences()[i];
-      if (occ[0] > max) console.log('uh oh, ', occ[0], ' is more than ', max);
       var loc = location(occ[0]);
       if (!buckets[loc]) {
         buckets[loc] = {height: 0, occurrence: occ.join(':')};

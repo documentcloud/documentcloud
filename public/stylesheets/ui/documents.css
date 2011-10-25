@@ -220,13 +220,13 @@
     position: relative;
     margin-right: -45px;
   }
-.document .pages_header, .document .mentions_header, .document .entities_header {
+.document .pages_header, .document .mentions_header {
   position: relative;
   line-height: 18px;
   padding-left: 20px;
   margin: 20px 10px 12px 0;
 }
-  .document .pages_title, .document .mentions_title, .document .entities_title {
+  .document .pages_title, .document .mentions_title {
     font-weight: bold;
     font-size: 11px;
     color: #000;
@@ -235,7 +235,7 @@
     .document .pages_only {
       color: #000;
     }
-  .document .pages .cancel_search, .document .mentions .cancel_search, .document .entities .cancel_search {
+  .document .pages .cancel_search, .document .mentions .cancel_search {
     position: absolute;
     left: 0; top: 3px;
     cursor: pointer;
