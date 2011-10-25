@@ -31,7 +31,6 @@ dc.ui.Document = Backbone.View.extend({
     'click .mention b'              : '_openPage',
     'click .pages .cancel_search'   : '_hidePages',
     'click .page_count'             : '_togglePageImages',
-    'click .entities .cancel_search': '_hideEntities',
     'click .search_account'         : 'searchAccount',
     'click .search_group'           : 'searchOrganization',
     'click .search_source'          : 'searchSource',
@@ -87,6 +86,7 @@ dc.ui.Document = Backbone.View.extend({
     this.notesEl = this.$('.notes');
     this.entitiesEl = this.$('.entities');
     this.pagesEl = this.$('.pages');
+    this.entitiesView = new dc.ui.SparkEntities({model: this.model, parent: this, container: this.$('.entities')});
     this.model.notes.each(function(note){ me._addNote(note); });
     if (options.notes && this.model.hasLoadedNotes()) this.setMode('has', 'notes');
     this.setMode(dc.access.NAMES[this.model.get('access')], 'access');
@@ -423,8 +423,7 @@ dc.ui.Document = Backbone.View.extend({
 
   // Re-renders the entities when the entities are refreshed.
   _renderEntities : function() {
-    this.entitiesEl.html(JST['document/entities']({doc : this.model}));
-    this.setMode('show', 'entities');
+    this.entitiesView.render();
   },
 
   // Clicking on the page counts in the tile opens up the page thumbnails below
@@ -448,11 +447,6 @@ dc.ui.Document = Backbone.View.extend({
     this._showingPages = false;
     this._currentPage = 0;
     this.pagesEl.html('');
-  },
-
-  // Hiding the entity search locations.
-  _hideEntities : function() {
-    this.entitiesEl.html('');
   },
 
   // Clicking on either a page thumbnail or an entity in the document tile opens

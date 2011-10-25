@@ -122,7 +122,11 @@ class DocumentsController < ApplicationController
 
   # TODO: Access-control this:
   def entity
-    entities = Entity.search_in_documents(params[:kind], params[:value], params[:ids])
+    if params[:entity_id]
+      entities = [Entity.find(params[:entity_id])]
+    else
+      entities = Entity.search_in_documents(params[:kind], params[:value], params[:ids])
+    end
     json({'entities' => entities}.to_json(:include_excerpts => true))
   end
 

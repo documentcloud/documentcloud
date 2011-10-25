@@ -4,8 +4,7 @@ dc.model.Entity = Backbone.Model.extend({
 
   // Dimensions for bucketing the occurrences.
   DIMS: {
-    total:  290,
-    height: 13,
+    height: 19,
     bucket: 3,
     min:    2,
     margin: 1
@@ -23,10 +22,10 @@ dc.model.Entity = Backbone.Model.extend({
   },
 
   // Chunk the occurrences of this entity in the document into fixed-size boxes
-  buckets : function() {
+  buckets : function(width) {
     var doc         = Documents.get(this.get('document_id'));
     var max         = doc.get('character_count');
-    var numBuckets  = Math.floor(this.DIMS.total / (this.DIMS.bucket + this.DIMS.margin));
+    var numBuckets  = Math.floor(width / (this.DIMS.bucket + this.DIMS.margin));
     var buckets     = [];
     var maxOcc      = 5; // Even if the overall entity counts are low...
 
@@ -84,8 +83,18 @@ dc.model.Entity = Backbone.Model.extend({
 
   // Fetch a single entity across a set of visible documents.
   fetch : function(kind, value, callback) {
+    this._fetch(Documents.pluck('id'), {kind: kind, value: value}, callback);
+  },
+
+  // Fetch a single entity for a single document, by id.
+  fetchId : function(docId, entityId, callback) {
+    this._fetch([docId], {entity_id : entityId}, callback);
+  },
+
+  _fetch : function(ids, options, callback) {
     dc.ui.spinner.show();
-    $.get('/documents/entity.json', {'ids[]' : Documents.pluck('id'), kind : kind, value : value}, function(resp) {
+    var data = _.extend({'ids[]': ids}, options);
+    $.get('/documents/entity.json', data, function(resp) {
       callback(_.map(resp.entities, function(obj){ return new dc.model.Entity(obj); }));
       dc.ui.spinner.hide();
     }, 'json');

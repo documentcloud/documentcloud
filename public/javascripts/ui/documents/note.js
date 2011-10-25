@@ -25,7 +25,7 @@ dc.ui.Note = Backbone.View.extend({
     var data = _.extend(this.model.toJSON(), {
       note          : this.model,
       ownsNote      : true,
-      disableLinks  : this.options.disableLinks
+      disableLinks  : this.options.disableLinks || false
     });
     $(this.el).html(JST['document/note'](data));
     this.setMode('display', 'visible');
@@ -33,7 +33,7 @@ dc.ui.Note = Backbone.View.extend({
     this.setMode(this.model.checkAllowedToEdit() ? 'is' : 'not', 'editable');
     return this;
   },
-  
+
   // If the viewport is narrower than the note, center the note.
   center : function() {
     var $excerpt       = this.$('.note_excerpt');

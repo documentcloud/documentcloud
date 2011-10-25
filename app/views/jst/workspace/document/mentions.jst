@@ -1,12 +1,12 @@
 <div class="mentions">
   <div class="mentions_header">
     <span class="icon cancel_search" title="hide pages"></span>
-    <span class="mentions_title interface"><%= mentions.length %>
+    <span class="mentions_title noselect interface"><%= mentions.length %>
     <%= total > mentions.length ? "of " + total : "" %>
     <%= dc.inflector.pluralize('page', total) %>
     mentioning &ldquo;<%= query %>&rdquo;</span>
     <% if (total > mentions.length) { %>
-      <span class="text_link show_mentions">Show all <%= total %> pages</span>
+      <span class="text_link noselect show_mentions">Show all <%= total %> pages</span>
     <% } %>
   </div>
   <% _.each(mentions, function(mention) { %>

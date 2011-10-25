@@ -10,22 +10,29 @@
   </span>
 </div>
 
-<% _.each(dc.model.Entity.SPARK_ORDER, function(kind) { %>
-  <% var list = (entities.index()[kind] || []).slice(0, dc.model.Entity.PER_PAGE); %>
+<% var renderList = only ? [only] : dc.model.Entity.SPARK_ORDER; %>
+<% _.each(renderList, function(kind) { %>
+  <% var list = (entities.index()[kind] || []); %>
+  <% var page = only ? list : list.slice(0, dc.model.Entity.PER_PAGE); %>
   <% if (list.length) { %>
     <div class="entity_group">
-      <div class="entity_group_title interface">
-        <%= dc.model.Entity.DISPLAY_NAME[kind] %>
+      <div class="entity_group_header">
+        <span class="entity_group_title interface">
+          <%= list.length + ' ' + dc.model.Entity.DISPLAY_NAME[kind] %>
+        </span>
+        <% if (list.length > page.length) { %>
+          <span class="text_link show_all" data-kind="<%= kind %>">Show all <%= list.length %></span>
+        <% } %>
       </div>
-      <% for (var i = 0, l = list.length; i < l; i++) { %>
-        <% var entity = list[i]; %>
+      <% for (var i = 0, l = page.length; i < l; i++) { %>
+        <% var entity = page[i]; %>
         <div class="entity_line">
-          <div class="entity_line_title">
+          <div class="entity_line_title quiet_link" data-id="<%= entity.id %>">
             <%- entity.escape('value') %>
           </div>
-          <div class="entity_buckets">
+          <div class="entity_buckets" style="width:<%= width %>px;">
             <div class="entity_rule"></div>
-            <% var buckets = entity.buckets(); %>
+            <% var buckets = entity.buckets(width); %>
             <% for (var j = 0, k = buckets.length; j < k; j++) { %>
               <% var bucket = buckets[j]; %>
               <div class="entity_bucket_wrap">

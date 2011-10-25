@@ -1,4 +1,4 @@
-/* Entities inside of Document Tiles ---------------------------------------*/
+/* Spark Entities inside of Document Tiles ---------------------------------------*/
 
 .document .entities {
   overflow: hidden;
@@ -6,22 +6,22 @@
   margin-right: -50px;
 }
   .document .entity_group {
-    width: 400px;
-    min-height: 274px;
-    margin: 0 50px 20px 0;
+    margin: 5px 50px 25px 0;
     float: left;
   }
-    .document .entity_group_title {
-      font-weight: bold;
-      margin-bottom: 10px;
+    .document .entity_group_header {
+      margin-bottom: 8px;
     }
+      .document .entity_group_title {
+        margin-right: 10px;
+        font-weight: bold;
+      }
     .document .entity_line {
-      line-height: 15px;
-      height: 15px;
+      line-height: 19px;
       padding: 5px 0;
     }
       .document .entity_line_title {
-        width: 100px;
+        width: 102px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -30,22 +30,21 @@
       }
       .document .entity_buckets {
         position: relative;
-        width: 290px;
         margin-left: 110px;
-        height: 15px;
+        height: 19px;
       }
         .document .entity_rule {
           position: absolute;
           background: #eee;
           width: 100%;
-          top: 7px;
+          top: 9px;
           height: 1px;
         }
         .document .entity_bucket_wrap {
           position: relative;
           display: block;
           float: left;
-          width: 3px; height: 15px; 
+          width: 3px; height: 19px; 
           padding-right: 1px;
           cursor: pointer;
         }

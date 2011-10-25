@@ -229,8 +229,14 @@ dc.ui.Toolbar = Backbone.View.extend({
   _viewEntities : function() {
     var docs = Documents.chosen();
     if (!docs.length && Documents.selectedCount) return;
-    if (!docs.length) return dc.app.navigation.open('entities');
-    dc.app.searcher.viewEntities(docs);
+
+    // Old implementation:
+    // if (!docs.length) return dc.app.navigation.open('entities');
+    // dc.app.searcher.viewEntities(docs);
+
+    dc.model.EntitySet.populateDocuments(docs, function() {
+      _.each(docs, function(doc){ doc.entities.trigger('load'); });
+    });
   },
 
   _panel : function() {
@@ -328,7 +334,7 @@ dc.ui.Toolbar = Backbone.View.extend({
 
   _createAnalyzeMenu : function() {
     var publicItems = [
-      // {title: 'View Entities',          attrs: {'class' : 'always'},   onClick : this._viewEntities},
+      {title: 'View Entities',          attrs: {'class' : 'always'},   onClick : this._viewEntities},
       {title: 'View Timeline',          attrs: {'class' : 'always'},   onClick : this._openTimeline},
       {title: 'Find Related Documents', attrs: {'class' : 'singular'}, onClick : this._openRelatedDocuments}
     ];
