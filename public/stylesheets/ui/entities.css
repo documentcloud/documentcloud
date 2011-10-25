@@ -7,7 +7,7 @@
 }
   .document .entity_group {
     width: 400px;
-    min-height: 129px;
+    min-height: 274px;
     margin: 0 50px 20px 0;
     float: left;
   }
@@ -18,7 +18,7 @@
     .document .entity_line {
       line-height: 15px;
       height: 15px;
-      padding: 3px 0;
+      padding: 5px 0;
     }
       .document .entity_line_title {
         width: 100px;

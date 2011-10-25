@@ -27,9 +27,11 @@
             <div class="entity_rule"></div>
             <% var buckets = entity.buckets(); %>
             <% for (var j = 0, k = buckets.length; j < k; j++) { %>
-              <% var height = buckets[j]; %>
+              <% var bucket = buckets[j]; %>
               <div class="entity_bucket_wrap">
-                <div class="entity_bucket" style="height:<%= height || 0 %>px; margin-top: -<%= Math.floor(height / 2) %>px;"></div>
+                <% if (bucket) { %>
+                  <div class="entity_bucket" data-occurrence="<%= bucket.occurrence %>" style="height:<%= bucket.height %>px; margin-top: -<%= Math.floor(bucket.height / 2) %>px;"></div>
+                <% } %>
               </div>
             <% } %>
           </div>

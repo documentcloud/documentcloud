@@ -26,36 +26,36 @@ dc.model.Entity = Backbone.Model.extend({
   buckets : function() {
     var doc         = Documents.get(this.get('document_id'));
     var max         = doc.get('character_count');
-    var numBuckets  = (this.DIMS.total - this.DIMS.bucket) / (this.DIMS.bucket + this.DIMS.margin);
+    var numBuckets  = Math.floor(this.DIMS.total / (this.DIMS.bucket + this.DIMS.margin));
     var buckets     = [];
     var maxOcc      = 5; // Even if the overall entity counts are low...
 
     var location = function(character) {
-      return Math.round(character / (max / numBuckets));
+      return Math.floor(character / (max / numBuckets)) - 1;
     };
 
-    buckets[location(max)] = 0;
-
     for (var i = 0, l = this.occurrences().length; i < l; i++) {
-      var occ = this.occurrences()[i][0];
-      var loc = location(occ);
-      buckets[loc] || (buckets[loc] = 0);
-      var val = buckets[loc] += 1;
+      var occ = this.occurrences()[i];
+      if (occ[0] > max) console.log('uh oh, ', occ[0], ' is more than ', max);
+      var loc = location(occ[0]);
+      if (!buckets[loc]) {
+        buckets[loc] = {height: 0, occurrence: occ.join(':')};
+      }
+      var val = buckets[loc].height += 1;
       if (maxOcc < val) maxOcc = val;
     }
 
-    var heights   = buckets.slice(0);
     var heightPer = this.DIMS.height / maxOcc;
 
     for (var i = 0, l = buckets.length; i < l; i++) {
       var bucket = buckets[i];
       if (bucket) {
         // Here we round to the nearest odd integer...
-        heights[i] = (Math.round(((heightPer * bucket) - 1) / 2) * 2 + 1) + this.DIMS.min;
+        bucket.height = (Math.round(((heightPer * bucket.height) - 1) / 2) * 2 + 1) + this.DIMS.min;
       }
     }
 
-    return heights;
+    return buckets;
   }
 
 }, {
