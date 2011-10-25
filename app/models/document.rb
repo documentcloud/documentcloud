@@ -304,6 +304,11 @@ class Document < ActiveRecord::Base
     end
     hash
   end
+  
+  # TODO: Make this a cached field on all documents (not indexed)...
+  def character_count
+    pages.first(:order => 'page_number desc').end_offset
+  end
 
   # Does this document have a title?
   def titled?
@@ -750,6 +755,7 @@ class Document < ActiveRecord::Base
       :mentions            => mentions,
       :total_mentions      => total_mentions,
       :project_ids         => project_ids,
+      :character_count     => character_count,
       :data                => data
     }
     if opts[:annotations]

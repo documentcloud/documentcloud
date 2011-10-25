@@ -13,7 +13,7 @@ module DC
         @scanner  = StringScanner.new(@text)
       end
 
-      # Matches a given **regex** to all of its occurences within the **text**,
+      # Matches a given **regex** to all of its occurrences within the **text**,
       # yielding to the block with the matched text, the character offset
       # and character length of the match.
       def scan(regex)

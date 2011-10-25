@@ -9,3 +9,32 @@
     <%= dc.inflector.pluralize('page', doc.get('page_count')) %>
   </span>
 </div>
+
+<% _.each(dc.model.Entity.SPARK_ORDER, function(kind) { %>
+  <% var list = (entities.index()[kind] || []).slice(0, dc.model.Entity.PER_PAGE); %>
+  <% if (list.length) { %>
+    <div class="entity_group">
+      <div class="entity_group_title interface">
+        <%= dc.model.Entity.DISPLAY_NAME[kind] %>
+      </div>
+      <% for (var i = 0, l = list.length; i < l; i++) { %>
+        <% var entity = list[i]; %>
+        <div class="entity_line">
+          <div class="entity_line_title">
+            <%- entity.escape('value') %>
+          </div>
+          <div class="entity_buckets">
+            <div class="entity_rule"></div>
+            <% var buckets = entity.buckets(); %>
+            <% for (var j = 0, k = buckets.length; j < k; j++) { %>
+              <% var height = buckets[j]; %>
+              <div class="entity_bucket_wrap">
+                <div class="entity_bucket" style="height:<%= height || 0 %>px; margin-top: -<%= Math.floor(height / 2) %>px;"></div>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  <% } %>
+<% }); %>
