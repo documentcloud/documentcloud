@@ -459,7 +459,7 @@ dc.ui.Document = Backbone.View.extend({
       var text = el.find('b').text();
       this.model.openViewer('#search/p' + page + '/' + encodeURIComponent(text));
     } else if (id) {
-      window.open(this.model.viewerUrl() + "?entity=" + id + '&page=' + page + '&offset=' + el.attr('data-offset'));
+      this.model.openEntity(id, el.attr('data-offset'));
     } else {
       this.model.openViewer('#document/p' + page);
     }

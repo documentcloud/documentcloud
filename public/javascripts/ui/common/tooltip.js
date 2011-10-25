@@ -37,7 +37,7 @@ dc.ui.Tooltip = Backbone.View.extend({
     this._open = true;
   },
 
-  hide : function() {
+  hide : function(e) {
     if (!this._open) return;
     this._open = false;
     $(document).unbind('mouseover', this.hide);

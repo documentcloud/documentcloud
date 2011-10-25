@@ -18,8 +18,8 @@
       </div>
       <% for (var i = 0, l = page.length; i < l; i++) { %>
         <% var entity = page[i]; %>
-        <div class="entity_line">
-          <div class="entity_line_title quiet_link" data-id="<%= entity.id %>">
+        <div class="entity_line" data-id="<%= entity.id %>">
+          <div class="entity_line_title quiet_link">
             <%- entity.escape('value') %>
           </div>
           <div class="entity_buckets" style="width:<%= width %>px;">
@@ -29,7 +29,7 @@
               <% var bucket = buckets[j]; %>
               <div class="entity_bucket_wrap">
                 <% if (bucket) { %>
-                  <div class="entity_bucket" data-occurrence="<%= bucket.occurrence %>" style="height:<%= bucket.height %>px; margin-top: -<%= Math.floor(bucket.height / 2) %>px;"></div>
+                  <div class="entity_bucket" data-occurrence="<%= bucket.offset + ':' + bucket.length %>" style="height:<%= bucket.height %>px; margin-top: -<%= Math.floor(bucket.height / 2) %>px;"></div>
                 <% } %>
               </div>
             <% } %>

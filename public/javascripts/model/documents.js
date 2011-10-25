@@ -108,6 +108,10 @@ dc.model.Document = Backbone.Model.extend({
     return window.open(this.viewerUrl() + (suffix || ''));
   },
 
+  openEntity : function(id, offset) {
+    window.open(this.viewerUrl() + "?entity=" + id + '&offset=' + offset);
+  },
+
   openPublishedViewer : function() {
     if (this.checkBusy()) return;
     if (!this.isPublished()) return dc.ui.Dialog.alert('"' + this.get('title') + '" is not published.');

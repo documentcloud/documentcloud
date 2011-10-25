@@ -47,6 +47,7 @@ ActionController::Routing::Routes.draw do |map|
       :entities     => :get,
       :entity       => :get,
       :dates        => :get,
+      :occurrence   => :get,
       :status       => :get,
       :queue_length => :get,
       :loader       => :get,

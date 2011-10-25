@@ -17,7 +17,7 @@ class Occurrence
   end
 
   def initialize(offset, length, entity=nil)
-    @offset, @length, @entity = offset, length, entity
+    @offset, @length, @entity = offset.to_i, length.to_i, entity
   end
 
   # Return this occurrence's offset relative to its page.

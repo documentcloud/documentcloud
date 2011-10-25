@@ -25,8 +25,8 @@ module DC
         @pages
       end
 
-      def excerpts(context=50, options={})
-        pages(split_occurrences, options)
+      def excerpts(context=50, options={}, occurrences=nil)
+        pages(occurrences || split_occurrences, options)
         @page_map.map do |occur, page|
           utf     =  page.text.mb_chars
           open    =  occur.offset - page.start_offset

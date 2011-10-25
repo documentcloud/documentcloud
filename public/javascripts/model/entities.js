@@ -10,6 +10,10 @@ dc.model.Entity = Backbone.Model.extend({
     margin: 1
   },
 
+  initialize : function() {
+    this.excerpts = {};
+  },
+
   // Lazily split and cache the serialized occurrences (they won't change).
   occurrences : function() {
     if (!this._occurrences) {
@@ -21,11 +25,21 @@ dc.model.Entity = Backbone.Model.extend({
     return this._occurrences;
   },
 
+  // Load the text for a single occurrence of this entity.
+  loadExcerpt : function(occurrence, callback) {
+    var excerpt;
+    if (excerpt = this.excerpts[occurrence]) return callback(excerpt);
+    $.get('/documents/occurrence.json', {id: this.id, occurrence: occurrence}, _.bind(function(resp) {
+      callback(this.excerpts[occurrence] = resp.excerpts[0]);
+    }, this), 'json');
+  },
+
   // Chunk the occurrences of this entity in the document into fixed-size boxes
   buckets : function(width) {
     var doc         = Documents.get(this.get('document_id'));
     var max         = doc.get('character_count');
     var numBuckets  = Math.floor(width / (this.DIMS.bucket + this.DIMS.margin));
+    var occurrences = this.occurrences();
     var buckets     = [];
     var maxOcc      = 5; // Even if the overall entity counts are low...
 
@@ -33,13 +47,15 @@ dc.model.Entity = Backbone.Model.extend({
       return Math.floor(character / (max / numBuckets)) - 1;
     };
 
-    for (var i = 0, l = this.occurrences().length; i < l; i++) {
-      var occ = this.occurrences()[i];
+    for (var i = 0, l = occurrences.length; i < l; i++) {
+      var occ = occurrences[i];
       var loc = location(occ[0]);
-      if (!buckets[loc]) {
-        buckets[loc] = {height: 0, occurrence: occ.join(':')};
+      var bucket = buckets[loc] || (buckets[loc] = {height: 0, offset: 0, length: 0});
+      var val = bucket.height += 1;
+      if (bucket.length < occ[1]) {
+        bucket.offset = occ[0];
+        bucket.length = occ[1];
       }
-      var val = buckets[loc].height += 1;
       if (maxOcc < val) maxOcc = val;
     }
 

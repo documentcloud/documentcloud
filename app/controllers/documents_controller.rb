@@ -136,6 +136,12 @@ class DocumentsController < ApplicationController
     dates = EntityDate.find_all_by_document_id(params[:ids], :include => [:document])
     json({'dates' => dates}.to_json)
   end
+  
+  def occurrence
+    entity = Entity.find(params[:id])
+    occurrence = Occurrence.new(*(params[:occurrence].split(':') + [entity]))
+    json :excerpts => entity.excerpts(200, {}, [occurrence])
+  end
 
   def mentions
     return not_found unless doc = current_document(true)
@@ -231,7 +237,8 @@ class DocumentsController < ApplicationController
   def entity_requested?
     return false unless params[:entity]
     meta = current_document.entities.find(params[:entity])
-    redirect_to current_document.document_viewer_url(:entity => meta, :page => params[:page], :offset => params[:offset], :allow_ssl => true)
+    page = Occurrence.new(params[:offset], 0, meta).page
+    redirect_to current_document.document_viewer_url(:entity => meta, :page => page.page_number, :offset => params[:offset], :allow_ssl => true)
   end
 
   def current_document(exists=false)
