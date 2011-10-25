@@ -10,7 +10,7 @@
     <div class="entity_group">
       <div class="entity_group_header">
         <span class="entity_group_title interface">
-          <%= list.length + ' ' + dc.model.Entity.DISPLAY_NAME[kind] %>
+          <%= list.length + ' ' + dc.model.Entity.DISPLAY_NAME[kind] %> mentioned <%= entities.sumOccurrences(kind) %> times
         </span>
         <% if (list.length > page.length) { %>
           <span class="text_link show_all" data-kind="<%= kind %>">Show all <%= list.length %></span>

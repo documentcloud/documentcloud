@@ -124,10 +124,16 @@ dc.model.EntitySet = Backbone.Collection.extend({
     return this._index;
   },
 
-  sumOccurrences : function() {
+  // Pass a kind to filter, or leave it out for the total sum of all occurrences.
+  sumOccurrences : function(kind) {
     this.index();
     var sum = 0, i = this.models.length;
-    while (i--) sum += this.models[i].occurrenceCount;
+    while (i--) {
+      var model = this.models[i];
+      if (!kind || model.attributes.kind == kind) {
+        sum += model.occurrenceCount;
+      }
+    }
     return sum;
   }
 
