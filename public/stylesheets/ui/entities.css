@@ -7,9 +7,9 @@
   padding-left: 20px;
 }
   .document .entities .cancel_search {
-    position: absolute;
-    left: 0; top: 1px;
+    float: left;
     cursor: pointer;
+    margin: 1px 7px 0 0;
   }
   .document .entity_group {
     margin: 0 50px 25px 0;

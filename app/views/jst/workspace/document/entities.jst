@@ -1,6 +1,5 @@
 <% var entities = doc.entities; %>
-
-<span class="icon cancel_search" title="hide entities"></span>
+<% var renderedButton = false; %>
 
 <% var renderList = only ? [only] : dc.model.Entity.SPARK_ORDER; %>
 <% _.each(renderList, function(kind) { %>
@@ -9,6 +8,10 @@
   <% if (list.length) { %>
     <div class="entity_group">
       <div class="entity_group_header">
+        <% if (!renderedButton) { %>
+          <span class="icon cancel_search" title="hide entities"></span>
+          <% renderedButton = true; %>
+        <% } %>
         <span class="entity_group_title interface">
           <%= list.length + ' ' + dc.model.Entity.DISPLAY_NAME[kind] %> mentioned <%= entities.sumOccurrences(kind) %> times
         </span>
