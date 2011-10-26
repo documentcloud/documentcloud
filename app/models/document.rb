@@ -306,7 +306,7 @@ class Document < ActiveRecord::Base
   end
   
   def reset_char_count!
-    count = pages.first(:order => 'page_number desc').end_offset + 1
+    count = (pages.first(:order => 'page_number desc').end_offset || 0) + 1
     update_attributes :char_count => count
   end
 
