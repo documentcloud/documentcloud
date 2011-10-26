@@ -27,7 +27,7 @@ dc.ui.Notifier = Backbone.View.extend({
   show : function(options) {
     options = _.extend({}, this.options, options);
     this.setMode(options.mode, 'style');
-    $(this.el).text(options.text).fadeIn('fast');
+    $(this.el).html(options.text).fadeIn('fast');
     $(this.el).show();
     if (this.timeout) clearTimeout(this.timeout);
     if (!options.leaveOpen) this.timeout = setTimeout(this.hide, options.duration);
