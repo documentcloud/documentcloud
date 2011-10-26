@@ -156,9 +156,9 @@ dc.ui.Document = Backbone.View.extend({
 
   viewEntities : function() {
     var docs = Documents.chosen(this.model);
-    dc.model.EntitySet.populateDocuments(docs, function() {
-      _.each(docs, function(doc){ doc.entities.trigger('load'); });
-    });
+    dc.app.paginator.ensureRows(function(){
+      dc.model.EntitySet.populateDocuments(docs);
+    }, docs[0]);
   },
 
   hideNotes : function() {
@@ -243,7 +243,12 @@ dc.ui.Document = Backbone.View.extend({
   // document. This will call `viewPages`, which displays page thumbnails below
   // the document tile.
   viewChosenPages : function() {
-    _.each(Documents.chosen(this.model), function(doc){ doc.trigger('view:pages'); });
+    var docs = Documents.chosen(this.model);
+    dc.app.paginator.ensureRows(function() {
+      _.each(docs, function(doc){
+        if (doc = Documents.get(doc.id)) doc.trigger('view:pages');
+      });
+    }, docs[0]);
   },
 
   // Document context menu item used to delete multiple selected documents.

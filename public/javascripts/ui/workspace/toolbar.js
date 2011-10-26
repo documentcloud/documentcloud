@@ -234,10 +234,9 @@ dc.ui.Toolbar = Backbone.View.extend({
     // Old implementation:
     // if (!docs.length) return dc.app.navigation.open('entities');
     // dc.app.searcher.viewEntities(docs);
-
-    dc.model.EntitySet.populateDocuments(docs, function() {
-      _.each(docs, function(doc){ doc.entities.trigger('load'); });
-    });
+    dc.app.paginator.ensureRows(function(){
+      dc.model.EntitySet.populateDocuments(docs);
+    }, docs[0]);
   },
 
   _panel : function() {

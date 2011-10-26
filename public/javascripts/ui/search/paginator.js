@@ -92,6 +92,14 @@ dc.ui.Paginator = Backbone.View.extend({
     $(document.body).toggleClass('minidocs', this.mini);
   },
 
+  ensureRows : function(callback, doc) {
+    if (this.mini) {
+      this.toggleSize(callback, doc);
+    } else {
+      callback();
+    }
+  },
+
   toggleSize : function(callback, doc) {
     this.setSize(!this.mini);
     dc.app.preferences.set({paginator_mini : this.mini});

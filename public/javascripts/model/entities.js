@@ -156,9 +156,13 @@ dc.model.EntitySet = Backbone.Collection.extend({
 
 }, {
 
-  populateDocuments: function(docs, callback) {
+  populateDocuments: function(docs) {
+    docs = _.compact(_.map(docs, function(doc){ return Documents.get(doc.id); }));
+    var callback = function() {
+      _.each(docs, function(doc){ doc.entities.trigger('load'); });
+    };
     var missing = _.select(docs, function(doc){ return !doc.entities.loaded; });
-    if (!missing.length) return callback && callback();
+    if (!missing.length) return callback();
     dc.ui.spinner.show();
     $.get('/documents/entities.json', {'ids[]' : _.pluck(missing, 'id')}, function(resp) {
       var entities = _.groupBy(resp.entities, 'document_id');
@@ -168,7 +172,7 @@ dc.model.EntitySet = Backbone.Collection.extend({
         collection.reset(list);
       });
       dc.ui.spinner.hide();
-      callback && callback();
+      callback();
     }, 'json');
   }
 

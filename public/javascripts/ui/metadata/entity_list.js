@@ -88,11 +88,7 @@ dc.ui.EntityList = Backbone.View.extend({
         dc.app.searcher.addToSearch(facet.category, facet.value, fetch);
       }, this);
     }
-    if (dc.app.paginator.mini) {
-      dc.app.paginator.toggleSize(next);
-    } else {
-      next();
-    }
+    dc.app.paginator.ensureRows(next);
     return false;
   },
 
