@@ -229,6 +229,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   _viewEntities : function() {
     var docs = Documents.chosen();
     if (!docs.length && Documents.selectedCount) return;
+    if (docs.length <= 0) docs = Documents.models;
 
     // Old implementation:
     // if (!docs.length) return dc.app.navigation.open('entities');
