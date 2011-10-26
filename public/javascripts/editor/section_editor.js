@@ -63,7 +63,7 @@ dc.ui.SectionEditor = Backbone.View.extend({
 
   renderSections : function() {
     var me = this;
-    if (!_.any(this.sections)) return _.each(_.range(3), function(){ me.addRow(); });
+    if (!_.size(this.sections)) return _.each(_.range(3), function(){ me.addRow(); });
     _.each(this.sections, function(sec) {
       me.addRow({title : sec.title, page_number : sec.page});
     });
