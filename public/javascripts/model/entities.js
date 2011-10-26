@@ -45,7 +45,7 @@ dc.model.Entity = Backbone.Model.extend({
     var maxOcc      = 5; // Even if the overall entity counts are low...
 
     var location = function(character) {
-      return Math.floor(character / (max / numBuckets)) - 1;
+      return Math.floor(character / (max / numBuckets));
     };
 
     for (var i = 0, l = occurrences.length; i < l; i++) {
