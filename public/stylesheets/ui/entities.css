@@ -27,7 +27,7 @@
       padding: 5px 0;
     }
       .document .entity_line_title {
-        width: 102px;
+        width: 112px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -36,7 +36,7 @@
       }
       .document .entity_buckets {
         position: relative;
-        margin-left: 110px;
+        margin-left: 120px;
         height: 19px;
       }
         .document .entity_rule {

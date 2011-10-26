@@ -2,7 +2,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
 
   BLOCK_WIDTH: 275,
 
-  LEFT_WIDTH: 110,
+  LEFT_WIDTH: 120,
 
   RIGHT_MARGIN: 50,
 

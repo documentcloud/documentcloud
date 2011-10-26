@@ -1,8 +1,10 @@
 <% var entities = doc.entities; %>
 <% var renderedButton = false; %>
+<% var sum = 0; %>
 
 <% var renderList = only ? [only] : dc.model.Entity.SPARK_ORDER; %>
 <% _.each(renderList, function(kind) { %>
+  <% var sum  = entities.sumOccurrences(kind); %>
   <% var list = (entities.index()[kind] || []); %>
   <% var page = only ? list : list.slice(0, dc.model.Entity.PER_PAGE); %>
   <% if (list.length) { %>
@@ -13,7 +15,7 @@
           <% renderedButton = true; %>
         <% } %>
         <span class="entity_group_title interface">
-          <%= list.length + ' ' + dc.model.Entity.DISPLAY_NAME[kind] %> mentioned <%= entities.sumOccurrences(kind) %> times
+          <%= list.length + ' ' + (sum == 1 ? dc.inflector.capitalize(kind) : dc.model.Entity.DISPLAY_NAME[kind]) %> mentioned <%= sum + ' ' + dc.inflector.pluralize('time', sum) %>
         </span>
         <% if (list.length > page.length) { %>
           <span class="text_link show_all" data-kind="<%= kind %>">Show all <%= list.length %></span>
