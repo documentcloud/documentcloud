@@ -46,11 +46,10 @@ dc.ui.SparkEntities = Backbone.View.extend({
   showTooltip : function() {
     if (this._event) {
       this._entity.loadExcerpt(this._occurrence, _.bind(function(excerpt) {
-        var title   = dc.inflector.truncate(this._entity.get('value'));
         dc.ui.tooltip.show({
           left  : this._event.pageX,
           top   : this._event.pageY + 5,
-          title : title,
+          title : this._entity.get('value'),
           text  : '<b>p.' + excerpt.page_number + '</b> ' + dc.inflector.trimExcerpt(excerpt.excerpt)
         });
       }, this));
