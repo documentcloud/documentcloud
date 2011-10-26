@@ -2,13 +2,15 @@
 <% var renderedButton = false; %>
 <% var sum = 0; %>
 
-<% var renderList = only ? [only] : dc.model.Entity.SPARK_ORDER; %>
+<% var renderList = only ? [only] : dc.model.Entity.ORDER; %>
 <% _.each(renderList, function(kind) { %>
-  <% var sum  = entities.sumOccurrences(kind); %>
-  <% var list = (entities.index()[kind] || []); %>
-  <% var page = only ? list : list.slice(0, dc.model.Entity.PER_PAGE); %>
+  <% var sum   = entities.sumOccurrences(kind); %>
+  <% var list  = (entities.index()[kind] || []); %>
+  <% var graph = only || _.include(dc.model.Entity.SPARK_GRAPHS, kind); %>
+  <% var page  = (only || !graph) ? list : list.slice(0, dc.model.Entity.PER_PAGE); %>
   <% if (list.length) { %>
     <div class="entity_group">
+      
       <div class="entity_group_header">
         <% if (!renderedButton) { %>
           <span class="icon cancel_search" title="hide entities"></span>
@@ -21,26 +23,41 @@
           <span class="text_link show_all" data-kind="<%= kind %>">Show all <%= list.length %></span>
         <% } %>
       </div>
-      <% for (var i = 0, l = page.length; i < l; i++) { %>
-        <% var entity = page[i]; %>
-        <div class="entity_line" data-id="<%= entity.id %>">
-          <div class="entity_line_title quiet_link">
-            <%- entity.escape('value') %>
+      
+      <% if (graph) { %>
+        
+        <% for (var i = 0, l = page.length; i < l; i++) { %>
+          <% var entity = page[i]; %>
+          <div class="entity_line" data-id="<%= entity.id %>">
+            <div class="entity_line_title quiet_link">
+              <%= entity.escape('value') %>
+            </div>
+            <div class="entity_buckets" style="width:<%= width %>px;">
+              <div class="entity_rule"></div>
+              <% var buckets = entity.buckets(width); %>
+              <% for (var j = 0, k = buckets.length; j < k; j++) { %>
+                <% var bucket = buckets[j]; %>
+                <div class="entity_bucket_wrap">
+                  <% if (bucket) { %>
+                    <div class="entity_bucket" data-occurrence="<%= bucket.offset + ':' + bucket.length %>" style="height:<%= bucket.height %>px; margin-top: -<%= Math.floor(bucket.height / 2) %>px;"></div>
+                  <% } %>
+                </div>
+              <% } %>
+            </div>
           </div>
-          <div class="entity_buckets" style="width:<%= width %>px;">
-            <div class="entity_rule"></div>
-            <% var buckets = entity.buckets(width); %>
-            <% for (var j = 0, k = buckets.length; j < k; j++) { %>
-              <% var bucket = buckets[j]; %>
-              <div class="entity_bucket_wrap">
-                <% if (bucket) { %>
-                  <div class="entity_bucket" data-occurrence="<%= bucket.offset + ':' + bucket.length %>" style="height:<%= bucket.height %>px; margin-top: -<%= Math.floor(bucket.height / 2) %>px;"></div>
-                <% } %>
-              </div>
-            <% } %>
-          </div>
+        <% } %>
+        
+      <% } else { %>
+        
+        <div class="entity_list" style="width:<%= width + 120 %>px;">
+          <% for (var i = 0, l = page.length; i < l; i++) { %>
+            <% var entity = page[i]; %>
+            <span class="entity_list_title quiet_link" data-id="<%= entity.id %>"><%= entity.escape('value') %></span><%= ((i < l - 1) ? ', ' : '') %>
+          <% } %>
         </div>
+        
       <% } %>
+      
     </div>
   <% } %>
 <% }); %>

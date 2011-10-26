@@ -65,3 +65,7 @@
               background: #999;
               background: rgba(0,0,0,0.5);
             }
+
+.document .entity_list {
+  line-height: 18px;
+}

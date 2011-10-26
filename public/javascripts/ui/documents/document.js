@@ -56,9 +56,10 @@ dc.ui.Document = Backbone.View.extend({
       '_renderPages', '_renderEntities', '_setSelected', 'viewDocuments',
       'viewPublishedDocuments', 'openDialog', 'setAccessLevelAll', 'viewEntities',
       'hideNotes', 'viewPages', 'viewChosenPages', 'deleteDocuments',
-      'removeFromProject', '_openShareDialog', 'openDataDialog');
+      'removeFromProject', '_openShareDialog', 'openDataDialog', 'focus');
     this.model.bind('change', this._onDocumentChange);
     this.model.bind('change:selected', this._setSelected);
+    this.model.bind('focus', this.focus);
     this.model.bind('view:pages', this.viewPages);
     this.model.bind('notes:hide', this.hideNotes);
     this.model.notes.bind('add', this._addNote);
@@ -295,6 +296,11 @@ dc.ui.Document = Backbone.View.extend({
     new dc.ui.PublicationDateDialog([this.model]);
   },
 
+  // Focus by jumping to the top of the view.
+  focus : function() {
+    window.scroll(0, $(this.el).offset().top - 100);
+  },
+
   // Documents that have failed processing show a link to this help page.
   openTroubleshooting : function() {
     dc.app.workspace.help.openPage('troubleshooting');
@@ -441,7 +447,7 @@ dc.ui.Document = Backbone.View.extend({
   _renderPages : function() {
     this._showingPages = false;
     this.pagesEl.html(JST['document/pages']({doc : this.model}));
-    window.scroll(0, $(this.el).offset().top - 100);
+    this.focus();
   },
 
   // Hiding the entity search locations.

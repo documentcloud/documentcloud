@@ -94,8 +94,8 @@ dc.model.Entity = Backbone.Model.extend({
   // When rendering entities in a list, use this order:
   ORDER : ['person', 'organization', 'place', 'term', 'email', 'phone', 'city', 'state', 'country'],
 
-  // When rendering entities in a sparkline, use this order:
-  SPARK_ORDER: ['person', 'organization', 'place', 'term'],
+  // Only render these types of entities with a sparkline:
+  SPARK_GRAPHS: ['person', 'organization', 'place', 'term'],
 
   // Fetch a single entity across a set of visible documents.
   fetch : function(kind, value, callback) {

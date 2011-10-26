@@ -14,6 +14,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
     'click .cancel_search'           : 'hide',
     'click .show_all'                : 'renderKind',
     'click .entity_line_title'       : '_showPages',
+    'click .entity_list_title'       : '_showPages',
     'click .entity_bucket_wrap'      : '_openEntity',
     'mouseenter .entity_bucket_wrap' : '_onMouseEnter',
     'mouseleave .entity_bucket_wrap' : '_onMouseLeave'
@@ -37,6 +38,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
     var kind = $(e.currentTarget).attr('data-kind');
     var fullWidth = Math.min($(this.el).width() - (this.LEFT_WIDTH + this.RIGHT_MARGIN), this.MAX_WIDTH);
     $(this.el).html(this.template({doc : this.model, only: kind, width: fullWidth}));
+    this.model.trigger('focus');
   },
 
   hide : function() {
@@ -81,7 +83,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
   },
 
   _showPages : function(e) {
-    var id = $(e.currentTarget).closest('.entity_line').attr('data-id');
+    var id = $(e.currentTarget).closest('[data-id]').attr('data-id');
     dc.model.Entity.fetchId(this.model.id, id, _.bind(function(entities) {
       this.hide();
       this.model.pageEntities.reset(entities);
