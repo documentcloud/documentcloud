@@ -128,6 +128,8 @@
           me.forceHide = null;
         };
         me._autohider = function(e) {
+          // Ignore non-left-clicks, which Firefox will persist in triggering.
+          if (e.which > 1) return;
           if (me._autoignore) return;
           if (options.clickable && (me[0] == e.target || _.include($(e.target).parents(), me[0]))) return;
           if (options.onHide && !options.onHide(e)) return;
@@ -215,6 +217,7 @@
       var selection = $('.selection');
 
       $(this).bind('mousedown', _.bind(function(e) {
+        if (e.which > 1) return;
         if (options.ignore && $(e.target).closest(options.ignore).length) return;
         var off = this.offset();
         if ((e.pageX > off.left + this.outerWidth() - edge) ||
