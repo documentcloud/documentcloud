@@ -18,7 +18,8 @@ dc.model.Entity = Backbone.Model.extend({
   occurrences : function() {
     if (!this._occurrences) {
       this._occurrences = _.map(this.get('occurrences').split(','), function(pair) {
-        return pair.split(':');
+        pair = pair.split(':');
+        return [parseInt(pair[0], 10), parseInt(pair[1], 10)];
       });
       this.occurrenceCount = this._occurrences.length;
     }
