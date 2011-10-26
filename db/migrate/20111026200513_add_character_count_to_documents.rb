@@ -3,9 +3,11 @@ class AddCharacterCountToDocuments < ActiveRecord::Migration
     add_column :documents, :char_count, :integer, :null => false, :default => 0
     
     # Properly initialize the character counts of all documents.
-    Document.find_each do |doc|
-      doc.reset_char_count!
-    end
+    Document.connection.execute <<-EOS
+      update documents 
+      set char_count = 1 + coalesce((select max(end_offset) from pages 
+        where pages.document_id = documents.id), 0)
+    EOS
   end
 
   def self.down
