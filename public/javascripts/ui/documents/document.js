@@ -436,10 +436,12 @@ dc.ui.Document = Backbone.View.extend({
     }
   },
 
-  // Clicking on entities shows which pages they are found on.
+  // Clicking on entities shows which pages they are found on, and jumps to this
+  // view.
   _renderPages : function() {
     this._showingPages = false;
     this.pagesEl.html(JST['document/pages']({doc : this.model}));
+    window.scroll(0, $(this.el).offset().top - 100);
   },
 
   // Hiding the entity search locations.
