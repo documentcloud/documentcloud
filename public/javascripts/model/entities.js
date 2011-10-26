@@ -158,6 +158,7 @@ dc.model.EntitySet = Backbone.Collection.extend({
   populateDocuments: function(docs, callback) {
     var missing = _.select(docs, function(doc){ return !doc.entities.loaded; });
     if (!missing.length) return callback && callback();
+    dc.ui.spinner.show();
     $.get('/documents/entities.json', {'ids[]' : _.pluck(missing, 'id')}, function(resp) {
       var entities = _.groupBy(resp.entities, 'document_id');
       _.each(entities, function(list, docId) {
@@ -165,6 +166,7 @@ dc.model.EntitySet = Backbone.Collection.extend({
         collection.loaded = true;
         collection.reset(list);
       });
+      dc.ui.spinner.hide();
       callback && callback();
     }, 'json');
   }
