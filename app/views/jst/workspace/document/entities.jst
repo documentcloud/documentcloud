@@ -5,7 +5,7 @@
 <% _.each(renderList, function(kind) { %>
   <% var list  = (entities.index()[kind] || []); %>
   <% var graph = only || _.include(dc.model.Entity.SPARK_GRAPHS, kind); %>
-  <% var page  = (only || !graph) ? list : list.slice(0, dc.model.Entity.PER_PAGE); %>
+  <% var page  = only ? list : list.slice(0, dc.model.Entity.PER_PAGE); %>
   <% if (list.length) { %>
     <div class="entity_group">
       

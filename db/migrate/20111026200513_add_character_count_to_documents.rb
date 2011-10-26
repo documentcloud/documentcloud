@@ -7,6 +7,7 @@ class AddCharacterCountToDocuments < ActiveRecord::Migration
       update documents 
       set char_count = 1 + coalesce((select max(end_offset) from pages 
         where pages.document_id = documents.id), 0)
+      where char_count = 0
     EOS
   end
 
