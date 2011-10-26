@@ -69,3 +69,7 @@
 .document .entity_list {
   line-height: 18px;
 }
+.document .entities .arrow.left {
+  top: 1px;
+  margin-left: 2px;
+}

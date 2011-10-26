@@ -16,6 +16,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
     'click .entity_line_title'       : '_showPages',
     'click .entity_list_title'       : '_showPages',
     'click .entity_bucket_wrap'      : '_openEntity',
+    'click .arrow.left'              : 'render',
     'mouseenter .entity_bucket_wrap' : '_onMouseEnter',
     'mouseleave .entity_bucket_wrap' : '_onMouseLeave'
   },
