@@ -27,6 +27,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
   },
 
   render : function() {
+    this.options.container.show();
     var width = $(this.el).width();
     var rows = Math.floor(width / (this.BLOCK_WIDTH + this.LEFT_WIDTH + this.RIGHT_MARGIN));
     var blockWidth = Math.min(Math.floor((width - ((this.LEFT_WIDTH + this.RIGHT_MARGIN) * rows)) / rows), this.MAX_WIDTH);
@@ -35,6 +36,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
   },
 
   renderKind : function(e) {
+    this.options.container.show();
     var kind = $(e.currentTarget).attr('data-kind');
     var fullWidth = Math.min($(this.el).width() - (this.LEFT_WIDTH + this.RIGHT_MARGIN), this.MAX_WIDTH);
     $(this.el).html(this.template({doc : this.model, only: kind, width: fullWidth}));
@@ -43,6 +45,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
 
   hide : function() {
     $(this.el).html('');
+    this.options.container.hide();
   },
 
   showTooltip : function() {

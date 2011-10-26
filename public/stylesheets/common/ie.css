@@ -107,3 +107,6 @@ ul.bullet, #help ul {
 .VS-search .search_facet .category {
   line-height: 12px;
 }
+.document .entity_rule {
+  top: 10px; 
+}

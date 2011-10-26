@@ -17,7 +17,7 @@
           <% renderedButton = true; %>
         <% } %>
         <span class="entity_group_title interface">
-          <%= list.length + ' ' + (sum == 1 ? dc.inflector.capitalize(kind) : dc.model.Entity.DISPLAY_NAME[kind]) %> mentioned <%= sum + ' ' + dc.inflector.pluralize('time', sum) %>
+          <%= list.length + ' ' + (list.length == 1 ? dc.inflector.capitalize(kind) : dc.model.Entity.DISPLAY_NAME[kind]) %> mentioned <%= sum + ' ' + dc.inflector.pluralize('time', sum) %>
         </span>
         <% if (list.length > page.length) { %>
           <span class="text_link show_all" data-kind="<%= kind %>">Show all <%= list.length %></span>

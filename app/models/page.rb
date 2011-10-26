@@ -52,6 +52,7 @@ class Page < ActiveRecord::Base
       Page.update_all("start_offset = #{pos + 1}, end_offset = #{pos + length}", "id = #{id}")
       pos = pos + length
     end
+    document.reset_char_count!
   end
 
   # Generate the highlighted excerpt of the page text for a given search phrase.

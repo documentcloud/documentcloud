@@ -43,7 +43,7 @@
           position: absolute;
           background: #eee;
           width: 100%;
-          top: 9px;
+          top: 9px; left: 0;
           height: 1px;
         }
         .document .entity_bucket_wrap {

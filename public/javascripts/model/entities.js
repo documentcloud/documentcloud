@@ -38,7 +38,7 @@ dc.model.Entity = Backbone.Model.extend({
   // Chunk the occurrences of this entity in the document into fixed-size boxes
   buckets : function(width) {
     var doc         = Documents.get(this.get('document_id'));
-    var max         = doc.get('character_count');
+    var max         = doc.get('char_count');
     var numBuckets  = Math.floor(width / (this.DIMS.bucket + this.DIMS.margin));
     var occurrences = this.occurrences();
     var buckets     = [];
