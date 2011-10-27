@@ -31,7 +31,7 @@ filter                      | Filter documents by interesting criteria (one of "
 
 When you upload a document to DocumentCloud we send the text to [OpenCalais][], a service that discovers entities (people, places, organizations, terms, etc.) present in plain text. For example, OpenCalais can tell us that "Barack Obama" is the same person as "President Obama", "Senator Obama", "Mr. President" ... and even "he" or "his" in clauses like "his policy proposals".
 
-To view entities, select a document and choose **View Entities** from the **Analyze** menu ... or right-click a document, and choose **View Entities** from the context menu. The entities will be displayed in a chart that shows how often each entity occurs across the different sections of the document. Using this chart, you can see which companies and individuals tend to be mentioned together frequently. Hover over a mention to see the surrounding context, and click on it to jump directly to that mention within the document itself.
+To view entities, select a document and choose **View Entities** from the **Analyze** menu ... or right-click on a document, and choose **View Entities** from the context menu. The entities will be displayed in a chart that shows how often each entity occurs across the different sections of the document. Using this chart, you can see which companies and individuals tend to be mentioned together frequently. Hover over a mention to see the surrounding context, and click on it to jump directly to that mention within the document itself.
 
 <img alt="" src="/images/help/entities.png" class="full_line" />
 
@@ -39,7 +39,7 @@ To view entities, select a document and choose **View Entities** from the **Anal
 
 DocumentCloud allows you to define and search your own set of custom data (key/value pairs) associated with specific documents. To get started with document data, you can use [the API][] to add data to your documents in bulk &mdash; useful if you already have an existing database of information about your documents.
 
-To edit data for individual documents in the workspace, select the documents you wish to update, and choose **Edit Document Data** from the **Edit** menu ... or right-click a document, and choose **Edit Document Data** from the context menu.
+To edit data for individual documents in the workspace, select the documents you wish to update, and choose **Edit Document Data** from the **Edit** menu ... or right-click on a document, and choose **Edit Document Data** from the context menu.
 
 <img alt="" src="/images/help/edit_document_data.png" class="full_line" />
 
