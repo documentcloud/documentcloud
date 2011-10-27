@@ -25,21 +25,15 @@ projectid                   | Restrict your search to a particular project, by a
 access                      | Search for only documents that have a particular access level (one of "public", "private", or "organization"). For example, to view all of your private documents: [access: private][]
 filter                      | Filter documents by interesting criteria (one of "published", "unpublished", "annotated", or "popular"). For example, to view all published documents: [filter: published][]
  
-<!-- ## <span id="entities">Searching with Entities</span>
- 
-For each document we store a list of entities identified by [OpenCalais][]. These are the same entities that appear in the "Entities" tab on the left. After searching for an entity, you can click on "show pages" to display links to the specific pages in each document that mention the person, place or thing you're searching for.
+## <span id="viewing_entities">Viewing Entities</span>
 
-Term                        | Description 
-----------------------------|-------------------------
-person                      | The name of a human being. If you're looking for documents that reference a person with the last name of "Lee", but keep getting swamped with unrelated words, try narrowing your search to [person: Lee][].
-organization                | Organizations include businesses, government agencies, and other types of institutions. For example: [organization: "Department of Defense"][].
-place                       | Addresses, names of buildings and landmarks, regions, or geographical landmarks. For example: [place: "World Trade Center"][] or [place: "Gulf of Mexico"][].
-term                        | Searches for terms might include [term: "nuclear energy"][] or [term: "gross domestic product"][]. The results will be comparable to searching for the terms directly.
-email                       | Complete email addresses. Documents that mention the email address of the GAO FraudNet can be found with this search: [email: fraudnet@gao.gov][].
-phone                       | Telephone or Fax numbers. For example: [phone: "(251) 441-6216"][].
-city                        | For example: [city: "New Orleans"][].
-state                       | (Includes provinces, in countries that have provinces instead of states.) For example: [state: Arizona][].
-country                     | For example: [country: Iran][]. -->
+![OpenCalais Logo][]
+
+When you upload a document to DocumentCloud we send the text to [OpenCalais][], a service that discovers entities (people, places, organizations, terms, etc.) present in plain text. For example, OpenCalais can tell us that "Barack Obama" is the same person as "President Obama", "Senator Obama", "Mr. President" ... and even "he" or "his" in clauses like "his policy proposals".
+
+To view entities, select a document and choose **View Entities** from the **Analyze** menu ... or right-click a document, and choose **View Entities** from the context menu. The entities will be displayed in a chart that shows how often each entity occurs across the different sections of the document. Using this chart, you can see which companies and individuals tend to be mentioned together frequently. Hover over a mention to see the surrounding context, and click on it to jump directly to that mention within the document itself.
+
+<img alt="" src="/images/help/entities.png" class="full_line" />
 
 ## <span id="metadata">Editing and Searching your own Custom Data</span>
 
@@ -65,4 +59,5 @@ To see the details of how to use our search API, view the [API documentation][].
 
 
 [OpenCalais]: http://www.opencalais.com/
+[OpenCalais Logo]: /images/help/opencalais.jpg
 [contact us]: javascript:dc.ui.Dialog.contact()

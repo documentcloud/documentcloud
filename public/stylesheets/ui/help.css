@@ -20,7 +20,7 @@
   color: #333;
   padding: 15px 30px 30px;
   max-width: 550px;
-  font: 14px/18px Helvetica, Arial;
+  font: 14px/20px Helvetica, Arial;
   display: none;
   position: relative;
 }
@@ -135,6 +135,7 @@
     #help td {
       padding: 10px 20px 10px 10px;
       font-size: 12px;
+      line-height: 16px;
       background: #f0fafa;
     }
       #help td:first-child {
