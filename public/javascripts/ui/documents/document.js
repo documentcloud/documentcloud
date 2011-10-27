@@ -435,7 +435,7 @@ dc.ui.Document = Backbone.View.extend({
   // Re-renders the entities when the entities are refreshed.
   _renderEntities : function() {
     if (this.model.entities.length) {
-      this.entitiesView.render();
+      this.entitiesView.show();
     } else {
       dc.ui.notifier.show({text: '"' + this.model.get('title') + '" has no entities to display.'});
     }

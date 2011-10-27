@@ -39,6 +39,7 @@ dc.ui.DocumentList = Backbone.View.extend({
   // Once there are Documents being populated, this view listens for a `Collection#reset`,
   // which redraws all the Document tile views in this list view.
   reset : function() {
+    $(window).unbind('resize.entities');
     $(this.el).html('');
     var views = Documents.map(function(m){
       return (new dc.ui.Document({model : m})).render({notes: true}).el;

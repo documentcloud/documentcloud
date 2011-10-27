@@ -10,6 +10,8 @@ dc.ui.SparkEntities = Backbone.View.extend({
 
   TOOLTIP_DELAY: 200,
 
+  RESIZE_DELAY: 333,
+
   SEARCH_DISTANCE: 5,
 
   events: {
@@ -28,26 +30,47 @@ dc.ui.SparkEntities = Backbone.View.extend({
     this.template = JST['document/entities'];
     this.options.container.append(this.el);
     this.showLater = _.debounce(this.showLater, this.TOOLTIP_DELAY);
+    this.rerenderLater = _.debounce(_.bind(this.rerender, this), this.RESIZE_DELAY);
+    this._renderState = {doc: this.model, distance: this.SEARCH_DISTANCE};
+  },
+
+  show : function() {
+    this._open = true;
+    $(window).bind('resize.entities', this.rerenderLater);
+    this.render();
   },
 
   render : function() {
-    this.options.container.show();
-    var width = $(this.el).width();
-    var rows = Math.floor(width / (this.BLOCK_WIDTH + this.LEFT_WIDTH + this.RIGHT_MARGIN));
-    var blockWidth = Math.min(Math.floor((width - ((this.LEFT_WIDTH + this.RIGHT_MARGIN) * rows)) / rows), this.MAX_WIDTH);
-    $(this.el).html(this.template({doc : this.model, only: false, width: blockWidth, distance: this.SEARCH_DISTANCE}));
+    this._renderState.only = false;
+    this.rerender();
     return this;
   },
 
   renderKind : function(e) {
-    this.options.container.show();
-    var kind = $(e.currentTarget).attr('data-kind');
-    var fullWidth = Math.min($(this.el).width() - (this.LEFT_WIDTH + this.RIGHT_MARGIN), this.MAX_WIDTH);
-    $(this.el).html(this.template({doc : this.model, only: kind, width: fullWidth, distance: this.SEARCH_DISTANCE}));
+    this._renderState.only = $(e.currentTarget).attr('data-kind');
+    this.rerender();
     this.model.trigger('focus');
   },
 
+  calculateWidth : function() {
+    var elWidth = $(this.el).width();
+    if (this._renderState.only) {
+      return Math.min(elWidth - (this.LEFT_WIDTH + this.RIGHT_MARGIN), this.MAX_WIDTH);
+    } else {
+      var rows = Math.floor(elWidth / (this.BLOCK_WIDTH + this.LEFT_WIDTH + this.RIGHT_MARGIN));
+      return Math.min(Math.floor((elWidth - ((this.LEFT_WIDTH + this.RIGHT_MARGIN) * rows)) / rows), this.MAX_WIDTH);
+    }
+  },
+
+  rerender : function() {
+    this.options.container.show();
+    var options = _.extend(this._renderState, {width: this.calculateWidth()});
+    $(this.el).html(this.template(options));
+  },
+
   hide : function() {
+    this._open = false;
+    $(window).unbind('resize.entities', this.rerenderLater);
     $(this.el).html('');
     this.options.container.hide();
   },
