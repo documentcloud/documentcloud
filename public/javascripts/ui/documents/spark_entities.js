@@ -8,7 +8,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
 
   MAX_WIDTH: 700,
 
-  TOOLTIP_DELAY: 250,
+  TOOLTIP_DELAY: 200,
 
   SEARCH_DISTANCE: 5,
 
@@ -19,6 +19,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
     'click .entity_list_title'       : '_showPages',
     'click .entity_bucket_wrap'      : '_openEntity',
     'click .arrow.left'              : 'render',
+    'mouseleave .entity_buckets'     : 'hideTooltip',
     'mouseenter .entity_bucket_wrap' : '_onMouseEnter',
     'mouseleave .entity_bucket_wrap' : '_onMouseLeave'
   },
@@ -26,7 +27,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
   initialize : function() {
     this.template = JST['document/entities'];
     this.options.container.append(this.el);
-    this.showTooltip = _.debounce(this.showTooltip, this.TOOLTIP_DELAY);
+    this.showLater = _.debounce(this.showLater, this.TOOLTIP_DELAY);
   },
 
   render : function() {
@@ -52,16 +53,32 @@ dc.ui.SparkEntities = Backbone.View.extend({
   },
 
   showTooltip : function() {
-    if (this._event) {
-      this._entity.loadExcerpt(this._occurrence, _.bind(function(excerpt) {
+    if (!this._current) return;
+    var excerpt;
+    var next = _.bind(function(excerpt) {
+      if (this._current) {
         dc.ui.tooltip.show({
-          left  : this._event.pageX,
-          top   : this._event.pageY + 5,
-          title : this._entity.get('value'),
-          text  : '<b>p.' + excerpt.page_number + '</b> ' + dc.inflector.trimExcerpt(excerpt.excerpt)
+          left      : this._current.offset().left,
+          top       : this._current.offset().top + 15,
+          title     : this._entity.get('value'),
+          text      : '<b>p.' + excerpt.page_number + '</b> ' + dc.inflector.trimExcerpt(excerpt.excerpt),
+          leaveOpen : true
         });
-      }, this));
+      }
+    }, this);
+    if (excerpt = this._entity.excerpts[this._occurrence]) {
+      next(excerpt);
+    } else {
+      this.showLater(next);
     }
+  },
+
+  showLater : function(next) {
+    if (this._current) this._entity.loadExcerpt(this._occurrence, next);
+  },
+
+  hideTooltip : function() {
+    dc.ui.tooltip.hide();
   },
 
   _setCurrent : function(e) {
@@ -79,13 +96,15 @@ dc.ui.SparkEntities = Backbone.View.extend({
                  ($(before).hasClass('occurs') && $(before))) break;
       }
     }
-    if (!el) return false;
+    if (!el) {
+      this.hideTooltip();
+      return false;
+    }
     el.addClass('active');
     this._current = el;
     this._occurrence = el.find('.entity_bucket').attr(occ);
     var id = el.closest('.entity_line').attr('data-id');
     this._entity = this.model.entities.get(id);
-    this._event = e;
     return true;
   },
 
@@ -101,7 +120,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
 
   _onMouseLeave : function() {
     if (this._current) this._current.removeClass('active');
-    this._event = this._occurrence = this._entity = this._current = null;
+    this._occurrence = this._entity = this._current = null;
   },
 
   _showPages : function(e) {
