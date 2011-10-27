@@ -29,9 +29,9 @@ filter                      | Filter documents by interesting criteria (one of "
 
 ![OpenCalais Logo][]
 
-When you upload a document to DocumentCloud we send the text to [OpenCalais][], a service that discovers entities (people, places, organizations, terms, etc.) present in plain text. For example, OpenCalais can tell us that "Barack Obama" is the same person as "President Obama", "Senator Obama", "Mr. President" ... and even "he" or "his" in clauses like "his policy proposals".
+Whenever you upload a document to DocumentCloud we send the contents to [OpenCalais][], a service that discovers the entities (people, places, organizations, terms, etc.) that are present in plain text. OpenCalais can tell us that "Barack Obama" is the same person as "President Obama", "Senator Obama", "Mr. President" ... and even "he" or "his" in clauses like "his policy proposals".
 
-To view entities, select a document and choose **View Entities** from the **Analyze** menu ... or right-click on a document, and choose **View Entities** from the context menu. The entities will be displayed in a chart that shows how often each entity occurs across the different sections of the document. Using this chart, you can see which companies and individuals tend to be mentioned together frequently. Hover over a mention to see the surrounding context, and click on it to jump directly to that mention within the document itself.
+To view entities, select a document and choose **View Entities** from the **Analyze** menu ... or right-click on a document, and choose **View Entities** from the context menu. The entities will be displayed in a chart that shows how often each entity occurs across each page. Using this chart, you can see which companies and individuals tend to be mentioned together frequently, or which parts of a long document concern a certain topic. Hover over any mention (the small gray boxes) to see the surrounding context, and click on it to jump directly to that mention within the document itself.
 
 <img alt="" src="/images/help/entities.png" class="full_line" />
 
