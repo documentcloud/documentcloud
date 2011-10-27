@@ -306,8 +306,12 @@ class Document < ActiveRecord::Base
   end
   
   def reset_char_count!
-    count = (pages.first(:order => 'page_number desc').end_offset || 0) + 1
-    update_attributes :char_count => count
+    Document.connection.execute <<-EOS
+      update documents 
+      set char_count = 1 + 
+        coalesce((select max(end_offset) from pages where pages.document_id = documents.id), 0)
+      where documents.id = #{id}
+    EOS
   end
 
   # Does this document have a title?
