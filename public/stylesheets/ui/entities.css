@@ -38,6 +38,7 @@
         position: relative;
         margin-left: 120px;
         height: 19px;
+        overflow: hidden;
       }
         .document .entity_rule {
           position: absolute;
@@ -61,7 +62,7 @@
             background: #ccc;
             background: rgba(0,0,0,0.3);
           }
-            .document .entity_bucket_wrap:hover .entity_bucket {
+            .document .entity_bucket_wrap.active .entity_bucket {
               background: #999;
               background: rgba(0,0,0,0.5);
             }

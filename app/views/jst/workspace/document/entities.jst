@@ -35,15 +35,17 @@
             </div>
             <div class="entity_buckets" style="width:<%= width %>px;">
               <div class="entity_rule"></div>
-              <% var buckets = entity.buckets(width); %>
-              <% for (var j = 0, k = buckets.length; j < k; j++) { %>
-                <% var bucket = buckets[j]; %>
-                <div class="entity_bucket_wrap">
-                  <% if (bucket) { %>
-                    <div class="entity_bucket" data-occurrence="<%= bucket.offset + ':' + bucket.length %>" style="height:<%= bucket.height %>px; margin-top: -<%= Math.floor(bucket.height / 2) %>px;"></div>
-                  <% } %>
-                </div>
-              <% } %>
+              <div>
+                <% var buckets = entity.buckets(width); %>
+                <% for (var j = 0, k = buckets.length + distance; j < k; j++) { %>
+                  <% var bucket = buckets[j]; %>
+                  <div class="<%= bucket ? 'occurs' : '' %> entity_bucket_wrap">
+                    <% if (bucket) { %>
+                      <div class="entity_bucket" data-occurrence="<%= bucket.offset + ':' + bucket.length %>" style="height:<%= bucket.height %>px; margin-top: -<%= Math.floor(bucket.height / 2) %>px;"></div>
+                    <% } %>
+                  </div>
+                <% } %>
+              </div>
             </div>
           </div>
         <% } %>

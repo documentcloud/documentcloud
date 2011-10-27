@@ -10,6 +10,8 @@ dc.ui.SparkEntities = Backbone.View.extend({
 
   TOOLTIP_DELAY: 250,
 
+  SEARCH_DISTANCE: 5,
+
   events: {
     'click .cancel_search'           : 'hide',
     'click .show_all'                : 'renderKind',
@@ -32,7 +34,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
     var width = $(this.el).width();
     var rows = Math.floor(width / (this.BLOCK_WIDTH + this.LEFT_WIDTH + this.RIGHT_MARGIN));
     var blockWidth = Math.min(Math.floor((width - ((this.LEFT_WIDTH + this.RIGHT_MARGIN) * rows)) / rows), this.MAX_WIDTH);
-    $(this.el).html(this.template({doc : this.model, only: false, width: blockWidth}));
+    $(this.el).html(this.template({doc : this.model, only: false, width: blockWidth, distance: this.SEARCH_DISTANCE}));
     return this;
   },
 
@@ -40,7 +42,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
     this.options.container.show();
     var kind = $(e.currentTarget).attr('data-kind');
     var fullWidth = Math.min($(this.el).width() - (this.LEFT_WIDTH + this.RIGHT_MARGIN), this.MAX_WIDTH);
-    $(this.el).html(this.template({doc : this.model, only: kind, width: fullWidth}));
+    $(this.el).html(this.template({doc : this.model, only: kind, width: fullWidth, distance: this.SEARCH_DISTANCE}));
     this.model.trigger('focus');
   },
 
@@ -63,9 +65,24 @@ dc.ui.SparkEntities = Backbone.View.extend({
   },
 
   _setCurrent : function(e) {
+    var found;
+    var occ = 'data-occurrence';
     var el = $(e.currentTarget);
-    this._occurrence = el.find('.entity_bucket').attr('data-occurrence');
-    if (!this._occurrence) return false;
+    if (el.hasClass('occurs')) {
+      var found = el;
+    } else {
+      var index = el.index();
+      var buckets = el.parent().children();
+      for (var i = 1, l = this.SEARCH_DISTANCE; i <= l; i++) {
+        var after = buckets[index + i], before = buckets[index - i];
+        if (el = ($(after).hasClass('occurs') && $(after)) ||
+                 ($(before).hasClass('occurs') && $(before))) break;
+      }
+    }
+    if (!el) return false;
+    el.addClass('active');
+    this._current = el;
+    this._occurrence = el.find('.entity_bucket').attr(occ);
     var id = el.closest('.entity_line').attr('data-id');
     this._entity = this.model.entities.get(id);
     this._event = e;
@@ -83,7 +100,8 @@ dc.ui.SparkEntities = Backbone.View.extend({
   },
 
   _onMouseLeave : function() {
-    this._event = this._occurrence = this._entity = null;
+    if (this._current) this._current.removeClass('active');
+    this._event = this._occurrence = this._entity = this._current = null;
   },
 
   _showPages : function(e) {
