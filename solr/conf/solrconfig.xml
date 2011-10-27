@@ -100,8 +100,8 @@
     <ramBufferSizeMB>32</ramBufferSizeMB>
     <!-- <maxMergeDocs>2147483647</maxMergeDocs> -->
     <maxFieldLength>10000</maxFieldLength>
-    <writeLockTimeout>1000</writeLockTimeout>
-    <commitLockTimeout>10000</commitLockTimeout>
+    <writeLockTimeout>10000</writeLockTimeout>
+    <commitLockTimeout>20000</commitLockTimeout>
     <!--
      Expert: Turn on Lucene's auto commit capability.  This causes intermediate
      segment flushes to write a new lucene index descriptor, enabling it to be
@@ -142,7 +142,7 @@
       (For backwards compatibility with Solr 1.2, 'simple' is the default
        if not specified.)
     -->
-    <lockType>native</lockType>
+    <lockType>single</lockType>
     <!--
      Expert:
     Controls how often Lucene loads terms into memory -->

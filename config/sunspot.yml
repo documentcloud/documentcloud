@@ -5,7 +5,7 @@ development:
     port: 7377
     log_level: INFO
     min_memory: 20M
-    max_memory: 1G
+    max_memory: 500M
     solr_jar: vendor/solr-3.4.0/start.jar
   
 staging:
@@ -23,7 +23,7 @@ production:
     port: 7377
     log_level: INFO
     min_memory: 200M
-    max_memory: 1G
+    max_memory: 1500M
     solr_jar: vendor/solr-3.4.0/start.jar
 
 test:
