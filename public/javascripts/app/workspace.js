@@ -151,7 +151,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
           }, {})), function(key) {
             return {label: key, category: ''};
           });
-          cb(prefixes.concat(metadata));
+          cb && cb(prefixes.concat(metadata));
         }
       }
     };
