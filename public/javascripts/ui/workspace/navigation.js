@@ -8,6 +8,7 @@ dc.ui.Navigation = Backbone.View.extend({
 
   constructor : function() {
     Backbone.View.call(this, {el : document.body});
+    this.modes = {};
   },
 
   render : function() {
@@ -16,12 +17,12 @@ dc.ui.Navigation = Backbone.View.extend({
       memo[name] = el.click(_.bind(this._switchTab, this, name));
       return memo;
     }, this), {});
+    this.open('documents');
     // this.bind('tab:entities', _.bind(function() {
     //   if (!this.isOpen('search')) this.open('search');
     //   _.defer(dc.app.searcher.loadFacets);
     // }, this));
     $('#toplinks .open_accounts').click(function(){ dc.app.accounts.open(); });
-    this.setMode('documents', 'sidebar_tab');
     this.setMode('search', 'panel_tab');
     return this;
   },
