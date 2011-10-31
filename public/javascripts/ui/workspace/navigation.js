@@ -2,15 +2,8 @@ dc.ui.Navigation = Backbone.View.extend({
 
   SECTIONS : {
     documents : 'sidebar',
-    entities  : 'sidebar',
     search    : 'panel',
-    help      : 'panel',
-    publish   : 'panel'
-  },
-
-  VALID : {
-    sidebar : ['documents', 'accounts'],
-    panel   : ['search', 'publish', 'help']
+    help      : 'panel'
   },
 
   constructor : function() {
@@ -23,12 +16,12 @@ dc.ui.Navigation = Backbone.View.extend({
       memo[name] = el.click(_.bind(this._switchTab, this, name));
       return memo;
     }, this), {});
-    this.tabs['documents'].click();
-    this.bind('tab:entities', _.bind(function() {
-      if (!this.isOpen('search')) this.open('search');
-      // _.defer(dc.app.searcher.loadFacets);
-    }, this));
+    // this.bind('tab:entities', _.bind(function() {
+    //   if (!this.isOpen('search')) this.open('search');
+    //   _.defer(dc.app.searcher.loadFacets);
+    // }, this));
     $('#toplinks .open_accounts').click(function(){ dc.app.accounts.open(); });
+    this.setMode('documents', 'sidebar_tab');
     this.setMode('search', 'panel_tab');
     return this;
   },
@@ -43,7 +36,7 @@ dc.ui.Navigation = Backbone.View.extend({
   },
 
   _switchTab : function(name, silent) {
-    var tab  = this.tabs[name];
+    var tab = this.tabs[name];
     $('.tab.active', $(tab).closest('.tabs')).removeClass('active');
     tab.addClass('active');
     this.setMode(name, this.SECTIONS[name] + '_tab');

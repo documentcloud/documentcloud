@@ -44,11 +44,11 @@ label {
 
 #workspace_logo {
   display: none;
-  width: 115px; height: 29px;
+  width: 125px; height: 24px;
   position: absolute;
-  right: 45px; top: 75px;
+  left: 48px; top: 13px;
   z-index: 3;
-  background: #fff url(/images/embed/ui/workspace_logo.png) no-repeat center center;
+  background: url(/images/embed/ui/workspace_logo.png) no-repeat center center;
 }
   body.workspace #workspace_logo {
     display: block;
