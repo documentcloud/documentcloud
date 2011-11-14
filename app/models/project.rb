@@ -105,6 +105,7 @@ class Project < ActiveRecord::Base
     @document_ids = nil
   end
 
+  # N.B. These are raw numeric document ids, used internally for data access
   def document_ids
     @document_ids ||= project_memberships.map {|m| m.document_id }
   end
@@ -131,7 +132,7 @@ class Project < ActiveRecord::Base
     data['id']            = id
     data['title']         = title
     data['description']   = description
-    data['document_ids']  = document_ids
+    data['document_ids']  = documents.map{ |d| d.canonical_id } # slugged ids for external reference.
     data
   end
 
