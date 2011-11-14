@@ -105,9 +105,17 @@ class Project < ActiveRecord::Base
     @document_ids = nil
   end
 
-  # N.B. These are raw numeric document ids, used internally for data access
+  # N.B. document_ids are raw numeric document ids, used internally for data access
   def document_ids
     @document_ids ||= project_memberships.map {|m| m.document_id }
+  end
+  
+  def canonical_document_ids
+    sparse_documents = Document.all(
+      :select=>"documents.id, documents.slug", 
+      :joins=>"join project_memberships on documents.id = project_memberships.document_id", 
+      :conditions => [ "project_memberships.project_id = ?", id ])
+    sparse_documents.map { |d| d.canonical_id }
   end
 
   def collaborator_ids
@@ -132,7 +140,7 @@ class Project < ActiveRecord::Base
     data['id']            = id
     data['title']         = title
     data['description']   = description
-    data['document_ids']  = documents.map{ |d| d.canonical_id } # slugged ids for external reference.
+    data['document_ids']  = canonical_document_ids
     data
   end
 
