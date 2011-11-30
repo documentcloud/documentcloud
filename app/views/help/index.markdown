@@ -1,6 +1,8 @@
 # Welcome to DocumentCloud
 
-From the workspace, you can:
+If you're just looking to get started, try our [guided tour][], or take a look at [what other reporters are doing with DocumentCloud][].
+
+Find out how to:
 
   * [Search][] the existing repository of public documents.
   * [Upload document files][] of your own.
@@ -18,7 +20,7 @@ If you're looking at a list of documents (search results, your documents, a sing
 
 <img src="/images/help/drag_select.png" class="full_line" />
 
-If you're just looking to get started, try searching the documents already in the repository. Click on the "[Documents][]" tab and try a regular full-text search such as "[obama health care][]", or a more specific fielded search, such as "[person:geithner term:regulator][]".
+Double-click a document's title to launch a viewer, where you can edit and annotate the document, if it belongs to you.
 
 Right-click on a document to open a context menu, showing a list of actions that can be done to the document.
 

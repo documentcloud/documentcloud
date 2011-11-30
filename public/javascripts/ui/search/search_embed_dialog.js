@@ -107,6 +107,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   update : function() {
     this._renderPerPageLabel();
     this._renderEmbedCode();
+    this._savePreferences();
   },
 
   embedOptions : function() {

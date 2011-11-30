@@ -1564,7 +1564,7 @@ VS.app.SearchParser = {
         value    = this._extractSearchText(query);
         query    = VS.utils.inflector.trim(query.replace(value, ''));
       } else if (field.indexOf(':') != -1) {
-        category = field.match(this.CATEGORY)[1];
+        category = field.match(this.CATEGORY)[1].replace(/(^['"]|['"]$)/g, '');
         value    = field.replace(this.CATEGORY, '').replace(/(^['"]|['"]$)/g, '');
         query    = VS.utils.inflector.trim(query.replace(field, ''));
       } else if (field.indexOf(':') == -1) {
@@ -1640,7 +1640,6 @@ VS.model.SearchFacet = Backbone.Model.extend({
     } else {
       category = "";
     }
-
     return category + value;
   },
   

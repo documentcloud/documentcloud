@@ -60,7 +60,6 @@ dc.ui.AccountView = Backbone.View.extend({
     }, options);
     if (this.isRow()) this.setMode(viewMode, 'view');
     $(this.el).html(this.template(attrs));
-    console.log(['role render', this.model.get('role'), this.model, viewMode]);
     if (viewMode == 'edit') this.$('option.role_' + this.model.get('role')).attr({selected : 'selected'});
     if (this.model.isPending()) $(this.el).addClass('pending');
     this._loadAvatar();
@@ -89,7 +88,7 @@ dc.ui.AccountView = Backbone.View.extend({
   },
 
   promptPasswordChange : function() {
-    dc.app.accounts.close();
+    this.dialog.close();
     var dialog = dc.ui.Dialog.prompt('Enter your new password:', '', _.bind(function(password) {
       this.model.save({password : password}, {success : _.bind(function() {
         dc.ui.notifier.show({
@@ -124,7 +123,7 @@ dc.ui.AccountView = Backbone.View.extend({
 
   _openAccounts : function(e) {
     e.preventDefault();
-    dc.app.accounts.open();
+    this.dialog.open();
   },
 
   // When we're done editing an account, it's either a create or update.
@@ -169,7 +168,6 @@ dc.ui.AccountView = Backbone.View.extend({
       description : this.model.fullName() + ' will not be able to log in to DocumentCloud. Public documents and annotations provided by ' + this.model.fullName()+ ' will remain available. <span class="contact_support text_link">Contact support</span> to completely purge '+this.model.fullName()+'\'s account.',
       saveText    : 'Disable'
     });
-    console.log(['dialog', dialog]);
     $('.contact_support', dialog.el).bind('click', function() {
       dialog.close();
       dc.ui.Dialog.contact();

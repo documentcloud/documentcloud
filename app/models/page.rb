@@ -5,7 +5,7 @@ class Page < ActiveRecord::Base
   IMAGE_SIZES = ActiveSupport::OrderedHash.new
   IMAGE_SIZES['large']      = '1000x'
   IMAGE_SIZES['normal']     = '700x'
-  IMAGE_SIZES['small']      = '240x'
+  IMAGE_SIZES['small']      = '180x'
   IMAGE_SIZES['thumbnail']  = '60x75!'
 
   MAX_PAGE_RESULTS = 1000

@@ -28,7 +28,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this._container.setMode('not', 'draggable');
     this._container.html(JST['account/dialog']({}));
     if (Accounts.current().isAdmin()) this.addControl(this.make('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, 'New Account'));
-    this.list = this.$('#account_list_content');
+    this.list = this.$('.account_list_content');
     this._renderAccounts();
     return this;
   },
@@ -56,7 +56,11 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   },
 
   newAccount : function() {
-    var view = new dc.ui.AccountView({model : new dc.model.Account(), kind : 'row'});
+    var view = new dc.ui.AccountView({
+      model : new dc.model.Account(), 
+      kind : 'row',
+      dialog : this
+    });
     this.list.append(view.render('edit').el);
     this._container[0].scrollTop = this._container[0].scrollHeight;
   },

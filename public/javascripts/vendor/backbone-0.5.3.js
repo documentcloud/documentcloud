@@ -103,13 +103,13 @@
     // same arguments as `trigger` is, apart from the event name.
     // Listening for `"all"` passes the true event name as the first argument.
     trigger : function(eventName) {
-      var list, calls, ev, callback, args, i, l;
+      var list, calls, ev, callback, args;
       var both = 2;
       if (!(calls = this._callbacks)) return this;
       while (both--) {
         ev = both ? eventName : 'all';
         if (list = calls[ev]) {
-          for (i = 0, l = list.length; i < l; i++) {
+          for (var i = 0, l = list.length; i < l; i++) {
             if (!(callback = list[i])) {
               list.splice(i, 1); i--; l--;
             } else {
@@ -204,6 +204,10 @@
       // Check for changes of `id`.
       if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
 
+      // We're about to start triggering change events.
+      var alreadyChanging = this._changing;
+      this._changing = true;
+
       // Update attributes.
       for (var attr in attrs) {
         var val = attrs[attr];
@@ -216,7 +220,8 @@
       }
 
       // Fire the `"change"` event, if the model has been changed.
-      if (!options.silent && this._changed) this.change(options);
+      if (!alreadyChanging && !options.silent && this._changed) this.change(options);
+      this._changing = false;
       return this;
     },
 
@@ -300,10 +305,11 @@
       return (this.sync || Backbone.sync).call(this, method, this, options);
     },
 
-    // Destroy this model on the server. Upon success, the model is removed
+    // Destroy this model on the server if it was already persisted. Upon success, the model is removed
     // from its collection, if it has one.
     destroy : function(options) {
       options || (options = {});
+      if (this.isNew()) return this.trigger('destroy', this, this.collection, options);
       var model = this;
       var success = options.success;
       options.success = function(resp) {
@@ -334,10 +340,9 @@
       return new this.constructor(this);
     },
 
-    // A model is new if it has never been saved to the server, and has a negative
-    // ID.
+    // A model is new if it has never been saved to the server, and lacks an id.
     isNew : function() {
-      return !this.id;
+      return this.id == null;
     },
 
     // Call this method to manually fire a `change` event for this model.
@@ -392,7 +397,7 @@
       var error = this.validate(attrs);
       if (error) {
         if (options.error) {
-          options.error(this, error);
+          options.error(this, error, options);
         } else {
           this.trigger('error', this, error, options);
         }
@@ -411,14 +416,11 @@
   // its models in sort order, as they're added and removed.
   Backbone.Collection = function(models, options) {
     options || (options = {});
-    if (options.comparator) {
-      this.comparator = options.comparator;
-      delete options.comparator;
-    }
+    if (options.comparator) this.comparator = options.comparator;
     _.bindAll(this, '_onModelEvent', '_removeReference');
     this._reset();
     if (models) this.reset(models, {silent: true});
-    this.initialize(models, options);
+    this.initialize.apply(this, arguments);
   };
 
   // Define the Collection's inheritable methods.
@@ -496,8 +498,8 @@
     },
 
     // When you have more items than you want to add or remove individually,
-    // you can refresh the entire set with a new list of models, without firing
-    // any `added` or `removed` events. Fires `refresh` when finished.
+    // you can reset the entire set with a new list of models, without firing
+    // any `added` or `removed` events. Fires `reset` when finished.
     reset : function(models, options) {
       models  || (models = []);
       options || (options = {});
@@ -508,9 +510,9 @@
       return this;
     },
 
-    // Fetch the default set of models for this collection, refreshing the
+    // Fetch the default set of models for this collection, resetting the
     // collection when they arrive. If `add: true` is passed, appends the
-    // models to the collection instead of refreshing.
+    // models to the collection instead of resetting.
     fetch : function(options) {
       options || (options = {});
       var collection = this;
@@ -525,19 +527,15 @@
 
     // Create a new instance of a model in this collection. After the model
     // has been created on the server, it will be added to the collection.
+    // Returns the model, or 'false' if validation on a new model fails.
     create : function(model, options) {
       var coll = this;
       options || (options = {});
-      if (!(model instanceof Backbone.Model)) {
-        var attrs = model;
-        model = new this.model(null, {collection: coll});
-        if (!model.set(attrs, options)) return false;
-      } else {
-        model.collection = coll;
-      }
+      model = this._prepareModel(model, options);
+      if (!model) return false;
       var success = options.success;
       options.success = function(nextModel, resp, xhr) {
-        coll.add(nextModel);
+        coll.add(nextModel, options);
         if (success) success(nextModel, resp, xhr);
       };
       model.save(null, options);
@@ -579,6 +577,7 @@
 
     // Internal implementation of adding a single model to the set, updating
     // hash indexes for `id` and `cid` lookups.
+    // Returns the model, or 'false' if validation on a new model fails.
     _add : function(model, options) {
       options || (options = {});
       model = this._prepareModel(model, options);
@@ -587,15 +586,13 @@
       if (already) throw new Error(["Can't add the same model to a set twice", already.id]);
       this._byId[model.id] = model;
       this._byCid[model.cid] = model;
-      if (!model.collection) {
-        model.collection = this;
-      }
-      var index = this.comparator ? this.sortedIndex(model, this.comparator) :
-                  options.at != null ? options.at : this.length;
+      var index = options.at != null ? options.at :
+                  this.comparator ? this.sortedIndex(model, this.comparator) :
+                  this.length;
       this.models.splice(index, 0, model);
       model.bind('all', this._onModelEvent);
       this.length++;
-      if (!options.silent) model.trigger('add', model, this);
+      if (!options.silent) model.trigger('add', model, this, options);
       return model;
     },
 
@@ -662,7 +659,7 @@
     options || (options = {});
     if (options.routes) this.routes = options.routes;
     this._bindRoutes();
-    this.initialize(options);
+    this.initialize.apply(this, arguments);
   };
 
   // Cached regular expressions for matching named param parts and splatted
@@ -756,9 +753,10 @@
     // twenty times a second.
     interval: 50,
 
-    // Get the cross-browser normalized URL fragment.
+    // Get the cross-browser normalized URL fragment, either from the URL,
+    // the hash, or the override.
     getFragment : function(fragment, forcePushState) {
-      if (!fragment) {
+      if (fragment == null) {
         if (this._hasPushState || forcePushState) {
           fragment = window.location.pathname;
           var search = window.location.search;
@@ -774,17 +772,23 @@
     // Start the hash change handling, returning `true` if the current URL matches
     // an existing route, and `false` otherwise.
     start : function(options) {
+
+      // Figure out the initial configuration. Do we need an iframe?
+      // Is pushState desired ... is it available?
       if (historyStarted) throw new Error("Backbone.history has already been started");
       this.options          = _.extend({}, {root: '/'}, this.options, options);
       this._wantsPushState  = !!this.options.pushState;
       this._hasPushState    = !!(this.options.pushState && window.history && window.history.pushState);
       var fragment          = this.getFragment();
-      var docMode = document.documentMode;
-      var oldIE = (isExplorer.exec(navigator.userAgent.toLowerCase()) && (!docMode || docMode <= 7));
+      var docMode           = document.documentMode;
+      var oldIE             = (isExplorer.exec(navigator.userAgent.toLowerCase()) && (!docMode || docMode <= 7));
       if (oldIE) {
         this.iframe = $('<iframe src="javascript:0" tabindex="-1" />').hide().appendTo('body')[0].contentWindow;
         this.navigate(fragment);
       }
+
+      // Depending on whether we're using pushState or hashes, and whether
+      // 'onhashchange' is supported, determine how we check the URL state.
       if (this._hasPushState) {
         $(window).bind('popstate', this.checkUrl);
       } else if ('onhashchange' in window && !oldIE) {
@@ -792,6 +796,9 @@
       } else {
         setInterval(this.checkUrl, this.interval);
       }
+
+      // Determine if we need to change the base url, for a pushState link
+      // opened by a non-pushState browser.
       this.fragment = fragment;
       historyStarted = true;
       var loc = window.location;
@@ -830,8 +837,8 @@
     // Attempt to load the current URL fragment. If a route succeeds with a
     // match, returns `true`. If no defined routes matches the fragment,
     // returns `false`.
-    loadUrl : function(fragment) {
-      fragment = this.fragment = this.getFragment(fragment);
+    loadUrl : function(fragmentOverride) {
+      var fragment = this.fragment = this.getFragment(fragmentOverride);
       var matched = _.any(this.handlers, function(handler) {
         if (handler.route.test(fragment)) {
           handler.callback(fragment);
@@ -874,7 +881,7 @@
     this._configure(options || {});
     this._ensureElement();
     this.delegateEvents();
-    this.initialize(options);
+    this.initialize.apply(this, arguments);
   };
 
   // Element lookup, scoped to DOM elements within the current view.
@@ -948,10 +955,11 @@
       if (_.isFunction(events)) events = events.call(this);
       $(this.el).unbind('.delegateEvents' + this.cid);
       for (var key in events) {
-        var methodName = events[key];
+        var method = this[events[key]];
+        if (!method) throw new Error('Event "' + events[key] + '" does not exist');
         var match = key.match(eventSplitter);
         var eventName = match[1], selector = match[2];
-        var method = _.bind(this[methodName], this);
+        method = _.bind(method, this);
         eventName += '.delegateEvents' + this.cid;
         if (selector === '') {
           $(this.el).bind(eventName, method);
@@ -1128,7 +1136,7 @@
 
   // Throw an error when a URL is needed, and none is supplied.
   var urlError = function() {
-    throw new Error("A 'url' property or function must be specified");
+    throw new Error('A "url" property or function must be specified');
   };
 
   // Wrap an optional error callback with a fallback error event.

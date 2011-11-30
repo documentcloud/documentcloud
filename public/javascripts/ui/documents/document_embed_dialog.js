@@ -60,6 +60,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     this._viewerSizeEl  = this.$('select[name=viewer_size]');
     this._sidebarEl     = this.$('input[name=sidebar]');
     this._showTextEl    = this.$('input[name=show_text]');
+    this._showPDFEl     = this.$('input[name=show_pdf]');
     this._openToEl      = this.$('.open_to');
     if (dc.app.preferences.get('embed_options')) this._loadPreferences();
     this.setMode('document_embed', 'dialog');
@@ -104,6 +105,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     }
     if (!this._sidebarEl.is(':checked'))  options.sidebar = false;
     if (!this._showTextEl.is(':checked')) options.text    = false;
+    if (!this._showPDFEl.is(':checked'))  options.pdf     = false;
     if (openToPage) options.page = parseInt(openToPage, 10);
     if (openToNote) {
       var note = this.model.notes.get(parseInt(openToNote, 10));
@@ -144,21 +146,6 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     this._heightEl.val(options.height);
     this._sidebarEl.attr('checked', options.sidebar);
     this._showTextEl.attr('checked', options.text);
-  },
-
-  _renderOpenTo : function(e) {
-    switch ($(e.currentTarget).val()) {
-      case 'first_page':
-        return this._openToEl.empty();
-      case 'page':
-        return this._openToEl.html(JST['document/page_select']({doc : this.model}));
-      case 'note':
-        this.model.ignoreNotes = true;
-        this.model.notes.fetch({success : _.bind(function() {
-          this._openToEl.html(JST['document/note_select']({doc : this.model}));
-          delete this.model.ignoreNotes;
-        }, this)});
-    }
   },
 
   // Handles user selection of dropdown that controls which page/annotation

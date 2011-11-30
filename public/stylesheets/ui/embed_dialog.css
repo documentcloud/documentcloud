@@ -44,9 +44,8 @@
   position: relative;
   margin-bottom: 20px;
 }
-  .document_embed_dialog .publish_info {
-    font-size: 11px;
-    color: #ccc;
+  .document_embed_dialog .publish_step_2 .publish_section {
+    margin-bottom: 14px;
   }
   .document_embed_dialog .text_input,
   .document_embed_dialog input[type="checkbox"],
@@ -69,6 +68,9 @@
     line-height: 25px;
     margin-bottom: 10px;
   }
+  .document_embed_dialog .publish_step_2 label {
+    margin-bottom: 2px;
+  }
   .document_embed_dialog .dimensions {
     font-size: 11px;
     position: absolute;
@@ -80,7 +82,7 @@
       margin-left: 10px;
     }
     .document_embed_dialog .dimensions input {
-      font-size: 11px;
+      font-size: 10px;
       margin: 0 5px;
       width: 30px;
       padding: 0;

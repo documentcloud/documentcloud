@@ -27,7 +27,6 @@ dc.ui.DocumentList = Backbone.View.extend({
 
   // Simply renders the list container, still waiting for documents.
   render : function() {
-    this.setCallbacks();
     $('.search_tab_content').selectable({
       ignore : '.noselect, .minibutton',
       select : '.icon.doc',

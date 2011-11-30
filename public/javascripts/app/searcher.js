@@ -49,7 +49,7 @@ dc.controllers.Searcher = Backbone.Router.extend({
     options || (options = {});
     if (options.clear) {
       Documents.reset();
-      this.box.value('');
+      this.searchBox.value('');
     }
     if (this.currentSearch) return;
     if (!Documents.isEmpty()) {
@@ -83,12 +83,6 @@ dc.controllers.Searcher = Backbone.Router.extend({
   },
 
   publicQuery : function() {
-    var projectName;
-    var query = this.box.value();
-
-    // Swap out documents for short ids.
-    query = query.replace(/(document: \d+)-\S+/g, '$1');
-
     // Swap out projects.
     var projects = [];
     var projectNames = VS.app.searchQuery.values('project');

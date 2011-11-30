@@ -53,7 +53,7 @@ dc.app.hotkeys = {
   
   // Check a key from a jQuery event and return the common english name.
   key : function(e) {
-    return this.KEYS[e.keyCode || e.which];
+    return this.KEYS[e.which];
   },
   
   // Colon is special, since the value is different between browsers.

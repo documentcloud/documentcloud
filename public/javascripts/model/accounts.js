@@ -17,6 +17,7 @@ dc.model.Account = Backbone.Model.extend({
   BLANK_ACCOUNT      : {first_name : '', last_name : '', email : '', role : 2},
 
   constructor : function(attributes, options) {
+    if (attributes) attributes = _.extend({}, this.BLANK_ACCOUNT, attributes);
     Backbone.Model.call(this, attributes || this.BLANK_ACCOUNT, options);
   },
 

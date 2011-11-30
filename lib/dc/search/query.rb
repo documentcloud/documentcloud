@@ -228,10 +228,9 @@ module DC
       # Lookup projects by title, and delegate to `build_project_ids`.
       def build_projects
         return unless @account
-        projects = Project.accessible(@account).all(:conditions => {:title => @projects})
-        doc_ids = projects.map{|proj| proj.document_ids }.flatten.uniq
-        doc_ids = [-1] if doc_ids.empty?
-        if doc_ids.present?
+        projects = Project.accessible(@account).all(:conditions => {:title => @projects}, :select => [:id])
+        project_ids = projects.map {|p| p.id }
+        if project_ids.present?
           @populated_projects = true
         else
           project_ids = [-1]

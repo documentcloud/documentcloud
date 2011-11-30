@@ -210,7 +210,11 @@ class DocumentsController < ApplicationController
   end
 
   def preview
-    render :action => 'show'
+    return unless login_required
+    doc = current_document(true)
+    return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
+    return not_found unless doc
+    @options = params[:options]
   end
 
 

@@ -47,6 +47,8 @@ _.extend(dc.app.editor, {
     $('.DV-docViewer').addClass(access);
     $('.DV-well').append(this.controlPanel.render().el);
     $('.DV-logo').hide();
+    $('.DV-thumbnailsView').show();
+    currentDocument.api.roundTabCorners();
     var supp = $('.DV-supplemental');
     if (supp.hasClass('DV-noNavigation')) {
       supp.removeClass('DV-noNavigation').addClass('DV-noNavigationMargin');

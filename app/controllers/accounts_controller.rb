@@ -46,7 +46,7 @@ class AccountsController < ApplicationController
   # Creating a new account creates a pending account, with a security key
   # instead of a password.
   def create
-    return forbidden unless current_account.admin?
+    return forbidden unless current_account.admin? or params[:role] == Account::REVIEWER
     attributes = pick(params, :first_name, :last_name, :email, :role)
     account = Account.lookup(attributes[:email])
     if account.nil?

@@ -4,8 +4,7 @@
 
   <% root = DC.server_root(:ssl => false) %>
   window.dc = window.dc || {};
-  
-  <% root = DC.server_root(:ssl => false) %>
+  window.dc.recordHit = "<%= root.sub('s3', 'www') %>/pixel.gif";
 
   var loadCSS = function(url, media) {
     var link   = document.createElement('link');
