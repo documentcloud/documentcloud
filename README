@@ -20,10 +20,17 @@ documents, while Pixel Ping records the traffic.
 
 The annotated source code to DocumentCloud is available here:
 
-...
+[TBD]
+
+WARNING: This repository will be moving shortly to:
+http://github.com/documentcloud/document-cloud
 
 If you find a security issue while browsing the source, please email 
 support@documentcloud.org to inform us of the problem.
 
 If you're interested in contributing patches to DocumentCloud, installation 
 instructions to get up and running are available in the "INSTALL" file.
+
+Code contributed to this project is provided under the MIT license (see
+the LICENSE file).  Some components of the project are subject to their own 
+licenses as indicated (see /vendor and /public/javascripts/vendor directories).
