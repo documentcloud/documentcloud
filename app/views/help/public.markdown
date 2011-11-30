@@ -91,10 +91,6 @@ Questions? Don't hesitate to [contact us][]. And as you go, feel free to [reques
 [description: manifesto]: #search/description%3A%20manifesto
 [projectid: 6-the-financial-crisis]: #search/projectid%3A%206-the-financial-crisis
 [access: private]: #search/access%3A%20private
-<<<<<<< HEAD
-[filter: published]: #search/filter%3A%20published
-=======
->>>>>>> cee3b26... bringing back help/public.
 [person: Lee]: #search/person%3A%20Lee
 [organization: "Department of Defense"]: #search/organization%3A%20%22Department%20of%20Defense%22
 [term: "nuclear energy"]: #search/term%3A%20%22nuclear%20energy%22
