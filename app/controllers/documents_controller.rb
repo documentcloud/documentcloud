@@ -115,25 +115,35 @@ class DocumentsController < ApplicationController
     render :action => 'loader', :content_type => :js
   end
 
-  # TODO: Access-control this:
   def entities
-    json 'entities' => Entity.all(:conditions => {:document_id => params[:ids]})
+    ids = Document.accessible(current_account, current_organization).all(:select=>"id", :conditions =>{:id => params[:ids]}).map{ |d| d.id }
+    json 'entities' => Entity.all(:conditions => { :document_id => ids })
   end
 
-  # TODO: Access-control this:
   def entity
     if params[:entity_id]
-      entities = [Entity.find(params[:entity_id])]
+      entity = Entity.find(params[:entity_id])
+      entities = []
+      entities << entity if Document.accessible(current_account, current_organization).find_by_id(entity.document_id)
     else
-      entities = Entity.search_in_documents(params[:kind], params[:value], params[:ids])
+      ids = Document.accessible(current_account, current_organization).all(:select=>"id", :conditions =>{:id => params[:ids]}).map{ |d| d.id }
+      entities = Entity.search_in_documents(params[:kind], params[:value], ids)
     end
     json({'entities' => entities}.to_json(:include_excerpts => true))
   end
 
-  # TODO: Access-control this:
   def dates
-    return json({'date' => EntityDate.find(params[:id])}.to_json(:include_excerpts => true)) if params[:id]
-    dates = EntityDate.find_all_by_document_id(params[:ids], :include => [:document])
+    if params[:id]
+      result = {}
+      entity = EntityDate.find(params[:id])
+      if Document.accessible(current_account, current_organization).find_by_id(entity.document_id)
+        result = {'date' => entity}.to_json(:include_excerpts => true)
+      end
+      return json(result)
+    end
+
+    ids = Document.accessible(current_account, current_organization).all(:select=>"id", :conditions =>{:id => params[:ids]}).map{ |d| d.id }
+    dates = EntityDate.find_all_by_document_id(ids, :include => [:document])
     json({'dates' => dates}.to_json)
   end
   
