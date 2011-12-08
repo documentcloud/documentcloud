@@ -64,8 +64,8 @@ grep -q github .ssh/known_hosts 2>/dev/null || ssh-keyscan -t rsa github.com > .
 # [copy over the secrets directory].
 
 chown -R $USERNAME .
-test -e document-cloud || sudo -u $USERNAME git clone git@github.com:documentcloud/document-cloud.git document-cloud
-cd /home/$USERNAME/document-cloud
+test -e documentcloud || sudo -u $USERNAME git clone git@github.com:documentcloud/documentcloud.git documentcloud
+cd /home/$USERNAME/documentcloud
 cp config/server/gitconfig.conf .gitconfig
 rake gems:install
 
@@ -97,7 +97,7 @@ sudo -u postgres createuser -s ubuntu
 sudo -u postgres createuser -s documentcloud
 sudo -u postgres psql -c "alter user documentcloud password 'YOUR_DB_PASSWORD_GOES_HERE' "
 sudo -u postgres createdb dcloud_$RAILS_ENVIRONMENT
-cd /home/$USERNAME/document-cloud
+cd /home/$USERNAME/documentcloud
 sudo -u postgres psql -f db/development_structure.sql dcloud_$RAILS_ENVIRONMENT 2>&1|grep ERROR
 # rake $RAILS_ENVIRONMENT db:migrate
 

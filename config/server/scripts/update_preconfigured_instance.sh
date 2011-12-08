@@ -11,7 +11,7 @@ export DEBIAN_FRONTEND=noninteractive
 USERNAME=ubuntu
 
 chown -R $USERNAME /home/$USERNAME
-cd /home/$USERNAME/document-cloud
+cd /home/$USERNAME/documentcloud
 sudo -u $USERNAME git pull
 rake gems:install
 chown -R $USERNAME /home/$USERNAME

@@ -1,7 +1,7 @@
 
 namespace :aws do
 
-  desc "Launch a new unconfigured EC2 instance and configure it for document-cloud"
+  desc "Launch a new unconfigured EC2 instance and configure it for documentcloud"
   task :new_instance_from_scratch, :instance_type, :needs => :environment do |t,args|
     DC::AWS.new.boot_instance({
       :type     => args.instance_type,

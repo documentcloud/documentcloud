@@ -58,13 +58,13 @@ namespace :build do
     FileUtils.cp_r('public/images', 'build/images')
 
     # Export back to DocumentCloud
-    FileUtils.cp_r('build/images', '../document-cloud/public/viewer')
+    FileUtils.cp_r('build/images', '../documentcloud/public/viewer')
     `cat build/viewer.js build/templates.js > build/viewer_new.js`
     FileUtils.rm_r(['build/viewer.js', 'build/templates.js'])
     FileUtils.mv 'build/viewer_new.js', 'build/viewer.js'
-    FileUtils.cp 'build/print.css', "../document-cloud/public/viewer/printviewer.css"
+    FileUtils.cp 'build/print.css', "../documentcloud/public/viewer/printviewer.css"
     Dir['build/viewer*'].each do |asset|
-      FileUtils.cp(asset, "../document-cloud/public/viewer/#{File.basename(asset)}")
+      FileUtils.cp(asset, "../documentcloud/public/viewer/#{File.basename(asset)}")
     end
     FileUtils.rm_r('build') if File.exists?('build')
 
