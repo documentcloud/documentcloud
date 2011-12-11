@@ -6,11 +6,7 @@ class Docdata < ActiveRecord::Base
   after_save :index_document
   
   def self.to_hstore(hash)
-    hash.map {|k, v| "\"#{sanitize(k)}\"=>\"#{sanitize(v)}\"" }.join(',')
-  end
-  
-  def self.sanitize(obj)
-    obj.to_s.gsub(/[\\"]/, '')
+    hash.map {|k, v| "\"#{PGconn.escape(k.to_s)}\"=>\"#{PGconn.escape(v.to_s)}\"" }.join(',')
   end
   
   def data=(obj)
