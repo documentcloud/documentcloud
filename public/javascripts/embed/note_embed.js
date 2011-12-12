@@ -27,6 +27,7 @@
     }
     $container.html(JST['note_embed']({note : note}));
     if (containerWidth < 700) note.center($container, containerWidth);
+    if (notes[id].options.afterLoad) notes[id].options.afterLoad.call();
   };
   
   dc.embed.noteModel = function(json) {
