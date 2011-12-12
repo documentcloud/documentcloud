@@ -18,16 +18,17 @@
   dc.embed.noteCallback = function(response) {
     var id         = response.id;
     var note       = new dc.embed.noteModel(response);
+    var options    = notes[id].options
     var $container = $('#DC-note-' + id);
     var container;
     var containerWidth = $container.width();
 
-    if (container = notes[id].options.container) {
+    if (container = options.container) {
       $container = $(container);
     }
     $container.html(JST['note_embed']({note : note}));
     if (containerWidth < 700) note.center($container, containerWidth);
-    if (notes[id].options.afterLoad) notes[id].options.afterLoad.call();
+    if (options.afterLoad) options.afterLoad(note);
   };
   
   dc.embed.noteModel = function(json) {
