@@ -18,7 +18,7 @@ class ReindexDocument < CloudCrowd::Action
   end
 
   def access
-    options['access'] || document.access
+    options['access'] || DC::Access::PRIVATE
   end
 
 end
