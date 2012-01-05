@@ -46,7 +46,10 @@ class DocumentsController < ApplicationController
                          :related_article, :remote_url, :publish_at, :data)
     success = doc.secure_update attrs, current_account
     return json(doc, 403) unless success
-    expire_page doc.canonical_cache_path if doc.cacheable?
+    if doc.cacheable?
+      expire_page doc.canonical_cache_path
+      doc.annotations.each{ |note| expire_page note.canonical_cache_path }
+    end
     Document.populate_annotation_counts(current_account, [doc])
     json doc
   end
@@ -57,7 +60,10 @@ class DocumentsController < ApplicationController
       doc.errors.add_to_base "You don't have permission to delete the document."
       return json(doc, 403)
     end
-    expire_page doc.canonical_cache_path if doc.cacheable?
+    if doc.cacheable?
+      expire_page doc.canonical_cache_path
+      doc.annotations.each{ |note| expire_page note.canonical_cache_path }
+    end
     doc.destroy
     json nil
   end

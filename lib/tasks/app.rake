@@ -51,6 +51,12 @@ namespace :app do
     desc "Clears out cached document JS files."
     task :docs do
       sh "rm -f ./public/documents/*.js"
+      invoke 'app:clearcache:notes'
+    end
+
+    desc "Clears out cached annotation JS files."
+    task :notes do
+      sh "rm -f ./public/documents/*/annotations/*.js"
     end
 
     desc "Purges cached search embeds."
