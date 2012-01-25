@@ -4,7 +4,7 @@ _.extend(dc.app.editor, {
 
   // Initializes the workspace, binding it to <body>.
   initialize : function(docId, options) {
-    this.el = $('body')[0];
+    this.setElement('body');
     this.docId = docId;
     this.options = options;
     _.bindAll(this, 'closeAllEditors', 'confirmStateChange');

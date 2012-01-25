@@ -70,7 +70,7 @@ dc.ui.Organizer = Backbone.View.extend({
         annotation_count  : count,
         document_ids      : Documents.selectedIds(),
         owner             : true
-      });
+      }, {wait: true});
       return true;
     }, {mode : 'short_prompt'});
   },

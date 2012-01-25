@@ -25,7 +25,7 @@ dc.ui.Scroll = Backbone.View.extend({
   render : function() {
     this.content.addClass('scroll_content');
     this.content.wrap(this.el);
-    this.el = $(this.content).closest('.scroll')[0];
+    this.setElement($(this.content).closest('.scroll')[0]);
     this.content.before(this.upButton);
     this.content.after(this.downButton);
     $(window).resize(this.check);

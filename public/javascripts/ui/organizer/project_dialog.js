@@ -87,6 +87,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     if (!email) return this.error('Please enter an email address.');
     this.showSpinner();
     this.model.collaborators.create({email : email}, {
+      wait: true,
       success : _.bind(function(acc, resp) {
         this.model.change();
         this.render(true);
