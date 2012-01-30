@@ -340,8 +340,9 @@
       var args = [].slice.call( arguments, 1 ), delta = 0, returnValue = true;
       event = $.event.fix(event || window.event);
       event.type = "mousewheel";
-      if (event.wheelDelta) {
-        delta = event.wheelDelta / 3;
+      var wheelDelta = event.wheelDelta || event.originalEvent.wheelDelta;
+      if (wheelDelta) {
+        delta = wheelDelta / 3;
       } else if (event.detail) {
         delta = -event.detail * 9;
       }
