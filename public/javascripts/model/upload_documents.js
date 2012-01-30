@@ -19,6 +19,7 @@ dc.model.UploadDocument = Backbone.Model.extend({
       attrs.size      = file.fileSize || file.size || null;
     }
     Backbone.Model.prototype.set.call(this, attrs);
+    return this;
   },
 
   overSizeLimit : function() {
