@@ -1,4 +1,4 @@
-//     Backbone.js 0.5.3
+//     Backbone.js 0.9.0
 //     (c) 2010-2012 Jeremy Ashkenas, DocumentCloud Inc.
 //     Backbone may be freely distributed under the MIT license.
 //     For all details and documentation:
@@ -31,7 +31,7 @@
   }
 
   // Current version of the library. Keep in sync with `package.json`.
-  Backbone.VERSION = '0.5.3';
+  Backbone.VERSION = '0.9.0';
 
   // Require Underscore, if we're on the server, and it's not already present.
   var _ = root._;
@@ -223,7 +223,7 @@
       options || (options = {});
       if (!attrs) return this;
       if (attrs instanceof Backbone.Model) attrs = attrs.attributes;
-      if (options.unset) for (var attr in attrs) attrs[attr] = void 0;
+      if (options.unset) for (attr in attrs) attrs[attr] = void 0;
 
       // Run validation.
       if (this.validate && !this._performValidation(attrs, options)) return false;
@@ -395,17 +395,13 @@
     // You can also pass an attributes object to diff against the model,
     // determining if there *would be* a change.
     changedAttributes: function(diff) {
-      var changed = false, old = this._previousAttributes;
-      if (diff) {
-        for (var attr in diff) {
-          if (_.isEqual(old[attr], diff[attr])) continue;
-          (changed || (changed = {}))[attr] = diff[attr];
-        }
-        return changed;
-      } else {
-        if (!this.hasChanged()) return false;
-        return _.clone(this._changed);
+      if (!diff) return this.hasChanged() ? _.clone(this._changed) : false;
+      var val, changed = false, old = this._previousAttributes;
+      for (var attr in diff) {
+        if (_.isEqual(old[attr], (val = diff[attr]))) continue;
+        (changed || (changed = {}))[attr] = val;
       }
+      return changed;
     },
 
     // Get the previous value of an attribute, recorded at the time the last
@@ -474,7 +470,7 @@
     // Add a model, or list of models to the set. Pass **silent** to avoid
     // firing the `add` event for every new model.
     add: function(models, options) {
-      var i, index, length, model, cids = {};
+      var i, index, length, model, cid, id, cids = {}, ids = {};
       options || (options = {});
       models = _.isArray(models) ? models.slice() : [models];
 
@@ -484,10 +480,11 @@
         if (!(model = models[i] = this._prepareModel(models[i], options))) {
           throw new Error("Can't add an invalid model to a collection");
         }
-        var hasId = model.id != null;
-        if (this._byCid[model.cid] || (hasId && this._byId[model.id])) {
+        if (cids[cid = model.cid] || this._byCid[cid] ||
+          (((id = model.id) != null) && (ids[id] || this._byId[id]))) {
           throw new Error("Can't add the same model to a collection twice");
         }
+        cids[cid] = ids[id] = model;
       }
 
       // Listen to added models' events, and index models for lookup by
@@ -496,7 +493,6 @@
         (model = models[i]).on('all', this._onModelEvent, this);
         this._byCid[model.cid] = model;
         if (model.id != null) this._byId[model.id] = model;
-        cids[model.cid] = true;
       }
 
       // Insert models into the collection, re-sorting if needed, and triggering
@@ -1191,7 +1187,7 @@
   // Wrap an optional error callback with a fallback error event.
   Backbone.wrapError = function(onError, originalModel, options) {
     return function(model, resp) {
-      var resp = model === originalModel ? resp : model;
+      resp = model === originalModel ? resp : model;
       if (onError) {
         onError(model, resp, options);
       } else {
