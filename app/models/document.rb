@@ -165,26 +165,27 @@ class Document < ActiveRecord::Base
     access   = params[:make_public] ? PUBLIC :
                (params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE)
     email_me = params[:email_me] ? params[:email_me].to_i : false
+    file_ext = File.extname(name).downcase[1,-1]
+    
     doc = self.create!(
-      :organization_id  => organization.id,
-      :account_id       => account.id,
-      :access           => PENDING,
-      :page_count       => 0,
-      :title            => title,
-      :description      => params[:description],
-      :source           => params[:source],
-      :related_article  => params[:related_article],
-      :remote_url       => params[:published_url] || params[:remote_url]
+      :organization_id    => organization.id,
+      :account_id         => account.id,
+      :access             => PENDING,
+      :page_count         => 0,
+      :title              => title,
+      :description        => params[:description],
+      :source             => params[:source],
+      :related_article    => params[:related_article],
+      :remote_url         => params[:published_url] || params[:remote_url],
+      :original_extension => file_ext
     )
-    import_options = {:access => access, :email_me => email_me, :secure => params[:secure]}
+    import_options = { :access => access, :email_me => email_me, :secure => params[:secure] }
     if params[:url]
-      doc.queue_import import_options.merge(:url => params[:url])
+      import_options.merge!(:url => params[:url])
     else
-      DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
-        DC::Store::AssetStore.new.save_pdf(doc, path, access)
-        doc.queue_import import_options
-      end
+      DC::Store::AssetStore.new.save_original(doc, params[:file].path, access)
     end
+    doc.queue_import(import_options)
     if params[:project]
       project = Project.accessible(account).find_by_id(params[:project].to_i)
       project.add_document(doc) if project
