@@ -377,6 +377,10 @@ class Document < ActiveRecord::Base
   def path
     File.join('documents', id.to_s)
   end
+  
+  def original_file_path
+    File.join(path, slug + ".#{original_extension}")
+  end
 
   # Ex: docs/1011/sec-madoff-investigation.txt
   def full_text_path
