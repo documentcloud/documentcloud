@@ -49,7 +49,7 @@ module DC
       end
       
       def save_original(document, file_path, access=DEFAULT_ACCESS)
-        save_file(file_path, document.original_path, access)
+        save_file(file_path, document.original_file_path, access)
       end
 
       def save_pdf(document, pdf_path, access=DEFAULT_ACCESS)
