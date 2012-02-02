@@ -17,7 +17,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
   },
 
   help : function(page) {
-    this.help.openPage(page);
+    this.help.openPage(page || '');
   },
 
   // Create all of the requisite subviews.

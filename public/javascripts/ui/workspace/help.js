@@ -60,7 +60,7 @@ dc.ui.Help = Backbone.View.extend({
   },
 
   saveHistory : function() {
-    Backbone.history.navigate('help/' + (this.currentPage || ''));
+    Backbone.history.navigate('help' + (this.currentPage ? '/' + this.currentPage : ''));
   },
 
   _createHelpMenu : function() {
