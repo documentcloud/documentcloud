@@ -1,4 +1,5 @@
-//     Backbone.js 0.9.0
+//     Backbone.js 0.9.1
+
 //     (c) 2010-2012 Jeremy Ashkenas, DocumentCloud Inc.
 //     Backbone may be freely distributed under the MIT license.
 //     For all details and documentation:
@@ -31,7 +32,7 @@
   }
 
   // Current version of the library. Keep in sync with `package.json`.
-  Backbone.VERSION = '0.9.0';
+  Backbone.VERSION = '0.9.1';
 
   // Require Underscore, if we're on the server, and it's not already present.
   var _ = root._;
@@ -39,6 +40,15 @@
 
   // For Backbone's purposes, jQuery, Zepto, or Ender owns the `$` variable.
   var $ = root.jQuery || root.Zepto || root.ender;
+
+  // Set the JavaScript library that will be used for DOM manipulation and
+  // Ajax calls (a.k.a. the `$` variable). By default Backbone will use: jQuery,
+  // Zepto, or Ender; but the `setDomLibrary()` method lets you inject an
+  // alternate JavaScript library (or a mock library for testing your views
+  // outside of a browser).
+  Backbone.setDomLibrary = function(lib) {
+    $ = lib;
+  };
 
   // Runs Backbone.js in *noConflict* mode, returning the `Backbone` variable
   // to its previous owner. Returns a reference to this Backbone object.
@@ -435,11 +445,17 @@
       return _.clone(this._previousAttributes);
     },
 
+    // Check if the model is currently in a valid state. It's only possible to
+    // get into an *invalid* state if you're using silent changes.
+    isValid: function() {
+      return !this.validate(this.attributes);
+    },
+
     // Run validation against a set of incoming attributes, returning `true`
     // if all is well. If a specific `error` callback has been passed,
     // call that instead of firing the general `"error"` event.
     _validate: function(attrs, options) {
-      if (!_.isFunction(this.validate)) return true;
+      if (options.silent || !this.validate) return true;
       attrs = _.extend({}, this.attributes, attrs);
       var error = this.validate(attrs, options);
       if (!error) return true;
@@ -1207,9 +1223,9 @@
     return function(model, resp) {
       resp = model === originalModel ? resp : model;
       if (onError) {
-        onError(model, resp, options);
+        onError(originalModel, resp, options);
       } else {
-        originalModel.trigger('error', model, resp, options);
+        originalModel.trigger('error', originalModel, resp, options);
       }
     };
   };
