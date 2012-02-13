@@ -173,9 +173,7 @@
     this.attributes = {};
     this._escapedAttributes = {};
     this.cid = _.uniqueId('c');
-    if (!this.set(attributes, {silent: true})) {
-      throw new Error("Can't create an invalid model");
-    }
+    this.set(attributes, {silent: true});
     delete this._changed;
     this._previousAttributes = _.clone(this.attributes);
     this.initialize.apply(this, arguments);
@@ -503,7 +501,7 @@
     // Add a model, or list of models to the set. Pass **silent** to avoid
     // firing the `add` event for every new model.
     add: function(models, options) {
-      var i, index, length, model, cid, id, cids = {}, ids = {};
+      var i, index, length, model, cid, id, cids = {}, ids = {}, dups = [];
       options || (options = {});
       models = _.isArray(models) ? models.slice() : [models];
 
@@ -513,16 +511,24 @@
         if (!(model = models[i] = this._prepareModel(models[i], options))) {
           throw new Error("Can't add an invalid model to a collection");
         }
-        if (cids[cid = model.cid] || this._byCid[cid] ||
-          (((id = model.id) != null) && (ids[id] || this._byId[id]))) {
-          throw new Error("Can't add the same model to a collection twice");
+        cid = model.cid;
+        id = model.id;
+        if (cids[cid] || this._byCid[cid] || ((id != null) && (ids[id] || this._byId[id]))) {
+          dups.push(i);
+          continue;
         }
         cids[cid] = ids[id] = model;
       }
 
+      // Remove duplicates.
+      i = dups.length;
+      while (i--) {
+        models.splice(dups[i], 1);
+      }
+
       // Listen to added models' events, and index models for lookup by
       // `id` and by `cid`.
-      for (i = 0; i < length; i++) {
+      for (i = 0, length = models.length; i < length; i++) {
         (model = models[i]).on('all', this._onModelEvent, this);
         this._byCid[model.cid] = model;
         if (model.id != null) this._byId[model.id] = model;
@@ -566,9 +572,37 @@
       return this;
     },
 
+    // Add a model to the end of the collection.
+    push: function(model, options) {
+      model = this._prepareModel(model, options);
+      this.add(model, options);
+      return model;
+    },
+
+    // Remove a model from the end of the collection.
+    pop: function(options) {
+      var model = this.at(this.length - 1);
+      this.remove(model, options);
+      return model;
+    },
+
+    // Add a model to the beginning of the collection.
+    unshift: function(model, options) {
+      model = this._prepareModel(model, options);
+      this.add(model, _.extend({at: 0}, options));
+      return model;
+    },
+
+    // Remove a model from the beginning of the collection.
+    shift: function(options) {
+      var model = this.at(0);
+      this.remove(model, options);
+      return model;
+    },
+
     // Get a model from the set by id.
     get: function(id) {
-      if (id == null) return null;
+      if (id == null) return void 0;
       return this._byId[id.id != null ? id.id : id];
     },
 
@@ -679,6 +713,7 @@
 
     // Prepare a model or hash of attributes to be added to this collection.
     _prepareModel: function(model, options) {
+      options || (options = {});
       if (!(model instanceof Backbone.Model)) {
         var attrs = model;
         options.collection = this;
@@ -953,7 +988,7 @@
     //
     // The options object can contain `trigger: true` if you wish to have the
     // route callback be fired (not usually desirable), or `replace: true`, if
-    // you which to modify the current URL without adding an entry to the history.
+    // you wish to modify the current URL without adding an entry to the history.
     navigate: function(fragment, options) {
       if (!historyStarted) return false;
       if (!options || options === true) options = {trigger: options};
