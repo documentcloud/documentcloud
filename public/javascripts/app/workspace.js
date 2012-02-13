@@ -71,7 +71,6 @@ dc.controllers.Workspace = Backbone.Router.extend({
         'filter',
         'group',
         'access',
-        'related',
         'projectid'
       ],
       callbacks : {
@@ -132,7 +131,6 @@ dc.controllers.Workspace = Backbone.Router.extend({
             { label: 'filter',        category: '' },
             { label: 'group',         category: '' },
             { label: 'access',        category: '' },
-            { label: 'related',       category: '' },
             { label: 'projectid',     category: '' }
             // Entities
             // { label: 'city',          category: '' },

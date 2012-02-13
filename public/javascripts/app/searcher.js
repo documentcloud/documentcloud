@@ -7,7 +7,6 @@ dc.controllers.Searcher = Backbone.Router.extend({
     project   : "This project does not contain any documents.",
     account   : "This account does not have any documents.",
     group     : "This organization does not have any documents.",
-    related   : "There are no documents related to this document.",
     published : "This account does not have any published documents.",
     annotated : "There are no annotated documents.",
     search    : "Your search did not match any documents.",
@@ -113,13 +112,11 @@ dc.controllers.Searcher = Backbone.Router.extend({
     this.flags.hasEntities = false;
     this.page = pageNumber <= 1 ? null : pageNumber;
     this.fragment = 'search/' + query;
-    this.populateRelatedDocument();
     this.showDocuments();
     this.navigate(this.urlFragment());
     Documents.reset();
     this._afterSearch = callback;
     var params = _.extend(dc.app.paginator.queryParams(), {q : query});
-    if (this.flags.related && !this.relatedDoc) params.include_source_document = true;
     if (dc.app.navigation.isOpen('entities'))   params.include_facets = true;
     if (this.page)                              params.page = this.page;
     this.currentSearch = $.ajax({
@@ -150,9 +147,7 @@ dc.controllers.Searcher = Backbone.Router.extend({
     var documents  = dc.inflector.pluralize('Document', count);
     var searchType = this.searchType();
 
-    if (this.flags.related) {
-      this.titleBox.text(count + ' ' + documents + ' Related to "' + dc.inflector.truncate(this.relatedDoc.get('title'), 100) + '"');
-    } else if (this.flags.specific) {
+    if (this.flags.specific) {
       this.titleBox.text(count + ' ' + documents);
     } else if (searchType == 'search') {
       var quote  = VS.app.searchQuery.has('project');
@@ -245,11 +240,6 @@ dc.controllers.Searcher = Backbone.Router.extend({
     return true;
   },
 
-  populateRelatedDocument : function() {
-    var id = parseInt(VS.app.searchQuery.find('related'), 10);
-    this.relatedDoc = Documents.get(id) || null;
-  },
-
   viewEntities : function(docs) {
     dc.app.navigation.open('entities', true);
     this.search(_.map(docs, function(doc){ return 'document: ' + doc.canonicalId(); }).join(' '));
@@ -264,9 +254,6 @@ dc.controllers.Searcher = Backbone.Router.extend({
     var docs = resp.documents;
     for (var i = 0, l = docs.length; i < l; i++) docs[i].index = i;
     Documents.reset(docs);
-    if (this.flags.related && !this.relatedDoc) {
-      this.relatedDoc = new dc.model.Document(resp.source_document);
-    }
     this.doneSearching();
     this.currentSearch = null;
     if (this._afterSearch) this._afterSearch();

@@ -119,7 +119,7 @@ class Document < ActiveRecord::Base
     text :title, :default_boost => 2.0
     text :source
     text :description
-    text :full_text, {:more_like_this => true} do
+    text :full_text do
       self.combined_page_text
     end
 

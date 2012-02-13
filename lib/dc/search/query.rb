@@ -20,7 +20,7 @@ module DC
 
       EMPTY_PAGINATION = {:page => 1, :per_page => 0}
 
-      attr_reader   :text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :filters, :access, :attributes, :data, :conditions, :results, :solr, :source_document
+      attr_reader   :text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :filters, :access, :attributes, :data, :conditions, :results, :solr
       attr_accessor :page, :per_page, :order, :from, :to, :total
 
       # Queries are created by the Search::Parser, which sets them up with the
@@ -38,7 +38,6 @@ module DC
         @attributes             = opts[:attributes]   || []
         @filters                = opts[:filters]      || []
         @data                   = opts[:data]         || []
-        @source_document        = opts[:source_document]
         @from, @to, @total      = nil, nil, nil
         @account, @organization = nil, nil
         @data_groups            = @data.group_by {|datum| datum.kind }
@@ -47,7 +46,7 @@ module DC
       end
 
       # Series of attribute checks to determine the kind and state of query.
-      [:text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :attributes, :data, :results, :filters, :access, :source_document].each do |att|
+      [:text, :fields, :projects, :accounts, :groups, :project_ids, :doc_ids, :attributes, :data, :results, :filters, :access].each do |att|
         class_eval "def has_#{att}?; @has_#{att} ||= @#{att}.present?; end"
       end
 
@@ -61,8 +60,7 @@ module DC
       # Generate all of the SQL, including conditions and joins, that is needed
       # to run the query.
       def generate_search
-        build_related      if     has_source_document?
-        build_text         if     has_text? && !has_source_document?
+        build_text         if     has_text?
         build_fields       if     has_fields?
         build_data         if     has_data?
         build_accounts     if     has_accounts?
@@ -70,7 +68,7 @@ module DC
         build_project_ids  if     has_project_ids?
         build_projects     if     has_projects?
         build_doc_ids      if     has_doc_ids?
-        build_attributes   if     has_attributes? && !has_source_document?
+        build_attributes   if     has_attributes?
         build_filters      if     has_filters?
         # build_facets       if     @include_facets
         build_access       unless @unrestricted
@@ -90,7 +88,7 @@ module DC
 
       # Does this query require the Solr index to run?
       def needs_solr?
-        @needs_solr ||= (has_text? || has_fields? || has_source_document? || has_attributes?) ||
+        @needs_solr ||= (has_text? || has_fields? || has_attributes?) ||
           @data_groups.any? {|kind, list| list.length > 1 }
       end
 
@@ -145,9 +143,7 @@ module DC
 
       # Run the search, using the Solr index.
       def run_solr
-        @solr = has_source_document? ?
-          Sunspot.new_more_like_this(@source_document, Document) :
-          Sunspot.new_search(Document)
+        @solr = Sunspot.new_search(Document)
         generate_search
         build_pagination
         @solr.execute
@@ -180,22 +176,11 @@ module DC
         direction  = [:created_at, :score, :page_count, :hit_count].include?(order) ? :desc : :asc
         pagination = {:page => page, :per_page => size}
         pagination = EMPTY_PAGINATION if @exclude_documents
-        related    = has_source_document?
         @solr.build do
           order_by  order, direction
           order_by  :created_at, :desc if order != :created_at
           paginate  pagination
-          data_accessor_for(Document).include = [:organization, :account] unless related
-        end
-      end
-
-      # Build the Solr needed to pass options to the MoreLikeThis DSL
-      def build_related
-        @solr.build do
-          minimum_term_frequency 15
-          minimum_document_frequency 2
-          minimum_word_length 8
-          boost_by_relevance true
+          data_accessor_for(Document).include = [:organization, :account]
         end
       end
 
@@ -211,15 +196,10 @@ module DC
       # Generate the Solr to search across the fielded metadata.
       def build_fields
         fields = @fields
-        related = has_source_document?
         @solr.build do
           fields.each do |field|
-            if related
-              with field.kind, field.value
-            else
-              fulltext field.value do
-                fields field.kind
-              end
+            fulltext field.value do
+              fields field.kind
             end
           end
         end

@@ -219,13 +219,6 @@ dc.ui.Toolbar = Backbone.View.extend({
     new dc.ui.TimelineDialog(docs);
   },
 
-  _openRelatedDocuments : function() {
-    var docs = Documents.chosen();
-    if (!docs.length) return;
-    if (docs.length != 1) return dc.ui.Dialog.alert("Please select a single document, in order to view related documents.");
-    dc.app.searcher.search('related: ' + docs[0].id + '-' + docs[0].toJSON().slug);
-  },
-
   _viewEntities : function() {
     var docs = Documents.chosen();
     if (!docs.length && Documents.selectedCount) return;
@@ -335,8 +328,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   _createAnalyzeMenu : function() {
     var publicItems = [
       {title: 'View Entities',          attrs: {'class' : 'always'},   onClick : this._viewEntities},
-      {title: 'View Timeline',          attrs: {'class' : 'always'},   onClick : this._openTimeline},
-      {title: 'Find Related Documents', attrs: {'class' : 'singular'}, onClick : this._openRelatedDocuments}
+      {title: 'View Timeline',          attrs: {'class' : 'always'},   onClick : this._openTimeline}
     ];
     var accountItems = [
       {title: 'Share these Documents',  attrs: {'class' : 'multiple share_documents'}, onClick : this.openShareDialog },
