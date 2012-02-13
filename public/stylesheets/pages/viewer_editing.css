@@ -61,6 +61,14 @@
     #control_panel .note_guide span.warn {
       color: #844;
     }
+    #control_panel .when_red,
+    .DV-redRedactions #control_panel .when_black {
+      display: none;
+    }
+    #control_panel .when_black,
+    .DV-redRedactions #control_panel .when_red {
+      display: inline;
+    }
   #control_panel .button {
     cursor: pointer;
     position: relative;
