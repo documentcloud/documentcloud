@@ -18,7 +18,7 @@ Click on "Demo Documents" to open your project. You should see your documents li
 
 Double-click on one of your documents to open it. If the contributing reporter made public notes on the document, you'll be able to see them here. You can make [your own private notes][] on the document: those won't be visible to anyone but you.
 
-## Try our analytic tools.
+## <span id="analytic_tools">Try our analytic tools.</span>
 
 DocumentCloud gives reporters a great set of analytic tools for working with large and small documents. When a document is uploaded, we run it through OCR, which extracts letters and words from each documents' image. But that's not all. 
  
