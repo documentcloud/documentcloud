@@ -134,16 +134,17 @@
       var options = this.embed.options;
       var docList = this.$('.DC-document-list').empty();
       var width   = this.calculateTileWidth();
+      var self    = this;
 
       this.hideSpinner();
 
       if (!this.embed.documents.length) {
         docList.append(JST['search_no_results']({}));
       } else {
-        this.embed.documents.each(_.bind(function(doc) {
-          var view = (new dc.EmbedDocumentTile({model: doc, embed: this.embed})).render(width).el;
+        this.embed.documents.each(function(doc) {
+          var view = (new dc.EmbedDocumentTile({model: doc, embed: self.embed})).render(width).el;
           docList.append(view);
-        }, this));
+        });
       }
       this.$('.DC-paginator').removeClass('DC-is-editing').html(JST['search_paginator']({
         total         : options.total,
@@ -297,7 +298,7 @@
     }
 
   });
-  
+
   dc.embed.pingRemoteUrl = function(type, id) {
     var loc = window.location;
     var url = loc.protocol + '//' + loc.host + loc.pathname;
