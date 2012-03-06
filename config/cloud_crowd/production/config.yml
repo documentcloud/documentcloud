@@ -1,5 +1,5 @@
 # The URL where you're planning on running the central server/queue/database.
-:central_server:      http://ip-10-244-239-17.ec2.internal:8080
+:central_server:      <%= secrets['central_server'] %>
 
 # The following settings allow you to control the number of workers that can run
 # on a given node, to prevent the node from becoming overloaded. 'max_workers'

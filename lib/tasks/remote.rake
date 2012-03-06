@@ -82,7 +82,7 @@ end
 
 def configuration
   case RAILS_ENV
-  when 'staging'    then {:user => 'root', :dir => '/web/documentcloud', :key => 'secrets/keys/staging.pem'}
+  when 'staging'    then {:user => 'ubuntu', :dir => '~/documentcloud', :key => 'secrets/keys/documentcloud.pem'}
   when 'production' then {:user => 'ubuntu', :dir => '~/documentcloud', :key => 'secrets/keys/documentcloud.pem'}
   end
 end

@@ -1,5 +1,5 @@
 # The URL where you're planning on running the central server/queue/database.
-:central_server:      http://staging.dcloud.org:8080
+:central_server:      <%= secrets['central_server'] %>
 
 # The following settings allow you to control the number of workers that can run
 # on a given node, to prevent the node from becoming overloaded. 'max_workers'
@@ -33,20 +33,20 @@
 # If you're using the 'filesystem' storage, perhaps with an NFS share or
 # something similar, all files will be saved inside of the 'local_storage_path'.
 # The default value if left unspecified is '/tmp/cloud_crowd_storage'.
-:local_storage_path:  /tmp/cloud_crowd_storage
+# :local_storage_path:  /tmp/cloud_crowd_storage
 
 # Use HTTP Basic Auth for all requests? (Includes all internal worker requests
 # to the central server). If yes, specify the login and password that all
 # requests must provide for authentication.
 :http_authentication: no
-:login:               [your login name]
-:password:            [your password]
+:login:               documentcloud
+:password:            <%= secrets['db_password'] %>
 
 # By default, CloudCrowd looks for installed actions inside the 'actions'
 # subdirectory of this configuration folder. 'actions_path' allows you to load
 # additional actions from a location of your choice.
-:actions_path: app/actions
+:actions_path:        app/actions
 
 # The number of separate attempts that will be made to process an individual
 # work unit, before marking it as having failed.
-:work_unit_retries:   3
+:work_unit_retries:   1
