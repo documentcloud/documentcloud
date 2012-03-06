@@ -1,3 +1,4 @@
+<% secrets = YAML.load_file('secrets/secrets.yml')[ENV['RAILS_ENV']] %>
 # The URL where you're planning on running the central server/queue/database.
 :central_server:      <%= secrets['central_server'] %>
 
@@ -19,7 +20,6 @@
 :storage:             s3
 
 # Please provide your AWS credentials for S3 storage of job output.
-<% secrets = YAML.load_file('secrets/secrets.yml')[ENV['RAILS_ENV']] %>
 :aws_access_key:      <%= secrets['aws_access_key'] %>
 :aws_secret_key:      <%= secrets['aws_secret_key'] %>
 
