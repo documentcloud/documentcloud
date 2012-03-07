@@ -1,3 +1,5 @@
+<% secrets = YAML.load_file(File.join(Rails.root, 'secrets/secrets.yml'))[ENV['RAILS_ENV'] || 'development'] %>
+
 development:
   auto_commit_after_request: false
   solr:
@@ -11,7 +13,7 @@ development:
 staging:
   auto_commit_after_request: false
   solr:
-    hostname: ec2-75-101-222-118.compute-1.amazonaws.com
+    hostname: <%= secrets['solr_host'] %>
     port: 7377
     log_level: WARNING
     solr_jar: vendor/solr-3.4.0/start.jar
@@ -19,7 +21,7 @@ staging:
 production:
   auto_commit_after_request: false
   solr:
-    hostname: ec2-174-129-5-5.compute-1.amazonaws.com
+    hostname: <%= secrets['solr_host'] %>
     port: 7377
     log_level: INFO
     min_memory: 200M
