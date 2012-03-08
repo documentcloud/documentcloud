@@ -9,8 +9,8 @@ development:
 
 staging:
   <<: *defaults
-  cloud_crowd_server: http://staging.dcloud.org:8080
-  server_root:        staging.dcloud.org
+  cloud_crowd_server: http://staging.documentcloud.org:8080
+  server_root:        staging.documentcloud.org
 
 production:
   <<: *defaults
