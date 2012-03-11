@@ -10,7 +10,7 @@ class Docdata < ActiveRecord::Base
   end
   
   def self.sanitize(obj)
-    obj.to_s.gsub(/[\\"]/, '')
+    Sanitize.clean(obj.to_s.gsub(/[\\"]/, ''))
   end
   
   def data=(obj)
