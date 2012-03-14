@@ -10,12 +10,12 @@ development:
 
 staging:
   <<: *defaults
-  cloud_crowd_server: <%= secrets['job_end_point'] %>
+  cloud_crowd_server: ec2-50-16-197-147.compute-1.amazonaws.com
   server_root:        staging.documentcloud.org
 
 production:
   <<: *defaults
-  cloud_crowd_server: <%= secrets['job_end_point'] %>
+  cloud_crowd_server: ec2-174-129-5-5.compute-1.amazonaws.com
   server_root:        www.documentcloud.org
   db_volume_id:       vol-d4c305bd
 
