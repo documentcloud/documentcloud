@@ -119,7 +119,7 @@ class Document < ActiveRecord::Base
     text :title, :default_boost => 2.0
     text :source
     text :description
-    text :full_text, {:more_like_this => true} do
+    text :full_text do
       self.combined_page_text
     end
 
@@ -623,7 +623,8 @@ class Document < ActiveRecord::Base
   end
 
   # Redactions is an array of objects: {'page' => 1, 'location' => '30,50,50,10'}
-  def redact_pages(redactions)
+  # The color can be 'black' or 'red'.
+  def redact_pages(redactions, color='black')
     eventual_access = access || PRIVATE
     update_attributes :access => PENDING
     record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
@@ -632,7 +633,8 @@ class Document < ActiveRecord::Base
       'options' => {
         :id => id,
         :redactions => redactions,
-        :access => eventual_access
+        :access => eventual_access,
+        :color => color
       }
     }.to_json}).body)
   end

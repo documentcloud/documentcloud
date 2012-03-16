@@ -8,7 +8,6 @@ class SearchController < ApplicationController
   def documents
     perform_search pick(params, :mentions)
     results = {:query => @query, :documents => @documents}
-    results[:source_document] = @source_document if params.include? :include_source_document
     respond_to do |format|
       format.json do
         json results

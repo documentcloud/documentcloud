@@ -27,5 +27,18 @@ namespace :db do
     ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[args.database])
     Rake::Task[args.task].invoke
   end
+  
+  namespace :dev do
+    [:start, :stop, :restart, :status].each do |cmd|
+      task cmd do
+        postgres_command cmd
+      end
+    end
+  end
 
 end
+
+def postgres_command(cmd)
+  sh "sudo su postgres -c \"/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data #{cmd}\""
+end
+  

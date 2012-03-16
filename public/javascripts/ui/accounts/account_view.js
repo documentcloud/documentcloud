@@ -186,7 +186,7 @@ dc.ui.AccountView = Backbone.View.extend({
   _onSuccess : function(model, resp) {
     this.model.invalid = false;
     this.setMode('display', 'view');
-    this.model.change();
+    this.model.trigger('change');
     dc.ui.spinner.hide();
     if (this.model.newRecord) {
       this.model.newRecord = false;

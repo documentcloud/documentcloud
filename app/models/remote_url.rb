@@ -126,6 +126,7 @@ class RemoteUrl < ActiveRecord::Base
     end
     hit_notes.select {|note| !!notes[note.note_id] }.map do |note|
       note_attrs = note.attributes
+      note_attrs.delete :id
       note_attrs[:document] = docs[notes[note.note_id][:document_id]]
       first_hit = RemoteUrl.first(:select => 'created_at',
                                   :conditions => {:note_id => note.note_id},

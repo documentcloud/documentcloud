@@ -1,3 +1,4 @@
+<% secrets = YAML.load_file('secrets/secrets.yml')[ENV['RAILS_ENV']] %>
 defaults: &defaults
   cloud_crowd_server:   http://dev.dcloud.org:8080
   server_root:          dev.dcloud.org
@@ -9,12 +10,12 @@ development:
 
 staging:
   <<: *defaults
-  cloud_crowd_server: http://staging.dcloud.org:8080
-  server_root:        staging.dcloud.org
+  cloud_crowd_server: ec2-50-16-197-147.compute-1.amazonaws.com:8080
+  server_root:        staging.documentcloud.org
 
 production:
   <<: *defaults
-  cloud_crowd_server: http://ec2-174-129-5-5.compute-1.amazonaws.com:8080
+  cloud_crowd_server: ec2-174-129-5-5.compute-1.amazonaws.com:8080
   server_root:        www.documentcloud.org
   db_volume_id:       vol-d4c305bd
 

@@ -1,4 +1,5 @@
-//     Backbone.js 0.9.0
+//     Backbone.js 0.9.1
+
 //     (c) 2010-2012 Jeremy Ashkenas, DocumentCloud Inc.
 //     Backbone may be freely distributed under the MIT license.
 //     For all details and documentation:
@@ -31,7 +32,7 @@
   }
 
   // Current version of the library. Keep in sync with `package.json`.
-  Backbone.VERSION = '0.9.0';
+  Backbone.VERSION = '0.9.1';
 
   // Require Underscore, if we're on the server, and it's not already present.
   var _ = root._;
@@ -39,6 +40,15 @@
 
   // For Backbone's purposes, jQuery, Zepto, or Ender owns the `$` variable.
   var $ = root.jQuery || root.Zepto || root.ender;
+
+  // Set the JavaScript library that will be used for DOM manipulation and
+  // Ajax calls (a.k.a. the `$` variable). By default Backbone will use: jQuery,
+  // Zepto, or Ender; but the `setDomLibrary()` method lets you inject an
+  // alternate JavaScript library (or a mock library for testing your views
+  // outside of a browser).
+  Backbone.setDomLibrary = function(lib) {
+    $ = lib;
+  };
 
   // Runs Backbone.js in *noConflict* mode, returning the `Backbone` variable
   // to its previous owner. Returns a reference to this Backbone object.
@@ -163,11 +173,8 @@
     this.attributes = {};
     this._escapedAttributes = {};
     this.cid = _.uniqueId('c');
-    this._changed = {};
-    if (!this.set(attributes, {silent: true})) {
-      throw new Error("Can't create an invalid model");
-    }
-    this._changed = {};
+    this.set(attributes, {silent: true});
+    delete this._changed;
     this._previousAttributes = _.clone(this.attributes);
     this.initialize.apply(this, arguments);
   };
@@ -226,7 +233,7 @@
       if (options.unset) for (attr in attrs) attrs[attr] = void 0;
 
       // Run validation.
-      if (this.validate && !this._performValidation(attrs, options)) return false;
+      if (!this._validate(attrs, options)) return false;
 
       // Check for changes of `id`.
       if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
@@ -234,14 +241,19 @@
       var now = this.attributes;
       var escaped = this._escapedAttributes;
       var prev = this._previousAttributes || {};
-      var alreadyChanging = this._changing;
-      this._changing = true;
+      var alreadySetting = this._setting;
+      this._changed || (this._changed = {});
+      this._setting = true;
 
       // Update attributes.
       for (attr in attrs) {
         val = attrs[attr];
         if (!_.isEqual(now[attr], val)) delete escaped[attr];
         options.unset ? delete now[attr] : now[attr] = val;
+        if (this._changing && !_.isEqual(this._changed[attr], val)) {
+          this.trigger('change:' + attr, this, val, options);
+          this._moreChanges = true;
+        }
         delete this._changed[attr];
         if (!_.isEqual(prev[attr], val) || (_.has(now, attr) != _.has(prev, attr))) {
           this._changed[attr] = val;
@@ -249,9 +261,9 @@
       }
 
       // Fire the `"change"` events, if the model has been changed.
-      if (!alreadyChanging) {
+      if (!alreadySetting) {
         if (!options.silent && this.hasChanged()) this.change(options);
-        this._changing = false;
+        this._setting = false;
       }
       return this;
     },
@@ -289,7 +301,7 @@
     // If the server returns an attributes hash that differs, the model's
     // state will be `set` again.
     save: function(key, value, options) {
-      var attrs;
+      var attrs, current;
       if (_.isObject(key) || key == null) {
         attrs = key;
         options = value;
@@ -299,7 +311,11 @@
       }
 
       options = options ? _.clone(options) : {};
-      if (attrs && !this[options.wait ? '_performValidation' : 'set'](attrs, options)) return false;
+      if (options.wait) current = _.clone(this.attributes);
+      var silentOptions = _.extend({}, options, {silent: true});
+      if (attrs && !this.set(attrs, options.wait ? silentOptions : options)) {
+        return false;
+      }
       var model = this;
       var success = options.success;
       options.success = function(resp, status, xhr) {
@@ -314,7 +330,9 @@
       };
       options.error = Backbone.wrapError(options.error, model, options);
       var method = this.isNew() ? 'create' : 'update';
-      return (this.sync || Backbone.sync).call(this, method, this, options);
+      var xhr = (this.sync || Backbone.sync).call(this, method, this, options);
+      if (options.wait) this.set(current, silentOptions);
+      return xhr;
     },
 
     // Destroy this model on the server if it was already persisted.
@@ -373,19 +391,27 @@
     // a `"change:attribute"` event for each changed attribute.
     // Calling this will cause all objects observing the model to update.
     change: function(options) {
+      if (this._changing || !this.hasChanged()) return this;
+      this._changing = true;
+      this._moreChanges = true;
       for (var attr in this._changed) {
         this.trigger('change:' + attr, this, this._changed[attr], options);
       }
-      this.trigger('change', this, options);
+      while (this._moreChanges) {
+        this._moreChanges = false;
+        this.trigger('change', this, options);
+      }
       this._previousAttributes = _.clone(this.attributes);
-      this._changed = {};
+      delete this._changed;
+      this._changing = false;
+      return this;
     },
 
     // Determine if the model has changed since the last `"change"` event.
     // If you specify an attribute name, determine if that attribute has changed.
     hasChanged: function(attr) {
-      if (attr) return _.has(this._changed, attr);
-      return !_.isEmpty(this._changed);
+      if (!arguments.length) return !_.isEmpty(this._changed);
+      return this._changed && _.has(this._changed, attr);
     },
 
     // Return an object containing all the attributes that have changed, or
@@ -407,7 +433,7 @@
     // Get the previous value of an attribute, recorded at the time the last
     // `"change"` event was fired.
     previous: function(attr) {
-      if (!attr || !this._previousAttributes) return null;
+      if (!arguments.length || !this._previousAttributes) return null;
       return this._previousAttributes[attr];
     },
 
@@ -417,21 +443,26 @@
       return _.clone(this._previousAttributes);
     },
 
+    // Check if the model is currently in a valid state. It's only possible to
+    // get into an *invalid* state if you're using silent changes.
+    isValid: function() {
+      return !this.validate(this.attributes);
+    },
+
     // Run validation against a set of incoming attributes, returning `true`
     // if all is well. If a specific `error` callback has been passed,
     // call that instead of firing the general `"error"` event.
-    _performValidation: function(attrs, options) {
-      var newAttrs = _.extend({}, this.attributes, attrs);
-      var error = this.validate(newAttrs, options);
-      if (error) {
-        if (options.error) {
-          options.error(this, error, options);
-        } else {
-          this.trigger('error', this, error, options);
-        }
-        return false;
+    _validate: function(attrs, options) {
+      if (options.silent || !this.validate) return true;
+      attrs = _.extend({}, this.attributes, attrs);
+      var error = this.validate(attrs, options);
+      if (!error) return true;
+      if (options && options.error) {
+        options.error(this, error, options);
+      } else {
+        this.trigger('error', this, error, options);
       }
-      return true;
+      return false;
     }
 
   });
@@ -470,7 +501,7 @@
     // Add a model, or list of models to the set. Pass **silent** to avoid
     // firing the `add` event for every new model.
     add: function(models, options) {
-      var i, index, length, model, cid, id, cids = {}, ids = {};
+      var i, index, length, model, cid, id, cids = {}, ids = {}, dups = [];
       options || (options = {});
       models = _.isArray(models) ? models.slice() : [models];
 
@@ -480,16 +511,24 @@
         if (!(model = models[i] = this._prepareModel(models[i], options))) {
           throw new Error("Can't add an invalid model to a collection");
         }
-        if (cids[cid = model.cid] || this._byCid[cid] ||
-          (((id = model.id) != null) && (ids[id] || this._byId[id]))) {
-          throw new Error("Can't add the same model to a collection twice");
+        cid = model.cid;
+        id = model.id;
+        if (cids[cid] || this._byCid[cid] || ((id != null) && (ids[id] || this._byId[id]))) {
+          dups.push(i);
+          continue;
         }
         cids[cid] = ids[id] = model;
       }
 
+      // Remove duplicates.
+      i = dups.length;
+      while (i--) {
+        models.splice(dups[i], 1);
+      }
+
       // Listen to added models' events, and index models for lookup by
       // `id` and by `cid`.
-      for (i = 0; i < length; i++) {
+      for (i = 0, length = models.length; i < length; i++) {
         (model = models[i]).on('all', this._onModelEvent, this);
         this._byCid[model.cid] = model;
         if (model.id != null) this._byId[model.id] = model;
@@ -533,9 +572,37 @@
       return this;
     },
 
+    // Add a model to the end of the collection.
+    push: function(model, options) {
+      model = this._prepareModel(model, options);
+      this.add(model, options);
+      return model;
+    },
+
+    // Remove a model from the end of the collection.
+    pop: function(options) {
+      var model = this.at(this.length - 1);
+      this.remove(model, options);
+      return model;
+    },
+
+    // Add a model to the beginning of the collection.
+    unshift: function(model, options) {
+      model = this._prepareModel(model, options);
+      this.add(model, _.extend({at: 0}, options));
+      return model;
+    },
+
+    // Remove a model from the beginning of the collection.
+    shift: function(options) {
+      var model = this.at(0);
+      this.remove(model, options);
+      return model;
+    },
+
     // Get a model from the set by id.
     get: function(id) {
-      if (id == null) return null;
+      if (id == null) return void 0;
       return this._byId[id.id != null ? id.id : id];
     },
 
@@ -646,11 +713,12 @@
 
     // Prepare a model or hash of attributes to be added to this collection.
     _prepareModel: function(model, options) {
+      options || (options = {});
       if (!(model instanceof Backbone.Model)) {
         var attrs = model;
         options.collection = this;
         model = new this.model(attrs, options);
-        if (model.validate && !model._performValidation(model.attributes, options)) model = false;
+        if (!model._validate(model.attributes, options)) model = false;
       } else if (!model.collection) {
         model.collection = this;
       }
@@ -815,9 +883,9 @@
           fragment = window.location.hash;
         }
       }
-      fragment = decodeURIComponent(fragment.replace(routeStripper, ''));
+      fragment = decodeURIComponent(fragment);
       if (!fragment.indexOf(this.options.root)) fragment = fragment.substr(this.options.root.length);
-      return fragment;
+      return fragment.replace(routeStripper, '');
     },
 
     // Start the hash change handling, returning `true` if the current URL matches
@@ -920,7 +988,7 @@
     //
     // The options object can contain `trigger: true` if you wish to have the
     // route callback be fired (not usually desirable), or `replace: true`, if
-    // you which to modify the current URL without adding an entry to the history.
+    // you wish to modify the current URL without adding an entry to the history.
     navigate: function(fragment, options) {
       if (!historyStarted) return false;
       if (!options || options === true) options = {trigger: options};
@@ -1031,6 +1099,7 @@
       this.$el = $(element);
       this.el = this.$el[0];
       if (delegate !== false) this.delegateEvents();
+      return this;
     },
 
     // Set callbacks, where `this.events` is a hash of
@@ -1189,9 +1258,9 @@
     return function(model, resp) {
       resp = model === originalModel ? resp : model;
       if (onError) {
-        onError(model, resp, options);
+        onError(originalModel, resp, options);
       } else {
-        originalModel.trigger('error', model, resp, options);
+        originalModel.trigger('error', originalModel, resp, options);
       }
     };
   };

@@ -14,7 +14,7 @@ module DC
       # Parse a raw query_string, returning a DC::Search::Query that knows
       # about the text, fields, projects, and attributes it's composed of.
       def parse(query_string='')
-        @text, @access, @source_document = nil, nil, nil
+        @text, @access = nil, nil
         @fields, @accounts, @groups, @projects, @project_ids, @doc_ids, @attributes, @filters, @data =
           [], [], [], [], [], [], [], [], []
 
@@ -27,7 +27,7 @@ module DC
         Query.new(:text => @text, :fields => @fields, :projects => @projects,
           :accounts => @accounts, :groups => @groups, :project_ids => @project_ids,
           :doc_ids => @doc_ids, :attributes => @attributes, :access => @access,
-          :filters => @filters, :data => @data, :source_document => @source_document)
+          :filters => @filters, :data => @data)
       end
 
       # Extract the portions of the query that are fields, attributes,
@@ -44,7 +44,6 @@ module DC
           when 'project'    then @projects << value
           when 'projectid'  then @project_ids << value.to_i
           when 'document'   then @doc_ids << value.to_i
-          when 'related'    then @source_document = Document.find(value.to_i)
           else
             process_field(type, value)
           end

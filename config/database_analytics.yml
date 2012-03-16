@@ -15,7 +15,7 @@ development:
 
 staging:
   <<: *defaults
-  host: staging.dcloud.org
+  host: staging.documentcloud.org
   database: dcloud_analytics_staging
 
 production:

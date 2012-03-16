@@ -9,6 +9,8 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .redact_annotation':     'toggleRedaction',
     'click .cancel_redactions':     'toggleRedaction',
     'click .save_redactions':       'saveRedactions',
+    'click a.when_black':           'toggleRedactionColor',
+    'click a.when_red':             'toggleRedactionColor',
     'click .edit_document_info':    'editDocumentInfo',
     'click .edit_description':      'editDescription',
     'click .edit_title':            'editTitle',
@@ -33,6 +35,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     _.bindAll(this, 'closeDocumentOnAccessChange', 'onDocumentChange', 'render');
     docModel.bind('change:access', this.render);
     docModel.bind('change', this.onDocumentChange);
+    this.redactionColor = 'black';
   },
 
   render : function() {
@@ -246,6 +249,12 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     dc.app.editor.annotationEditor.toggle('redact');
   },
 
+  toggleRedactionColor : function() {
+    var el = this.viewer.elements.viewer;
+    this.redactionColor = this.redactionColor == 'black' ? 'red' : 'black';
+    $(el).toggleClass('DV-redRedactions', this.redactionColor == 'red');
+  },
+
   toggleDocumentInfo : function() {
     var showing = $('.edit_document_fields').is(':visible');
     $('.document_fields_container').setMode(showing ? 'hide' : 'show', 'document_fields');
@@ -274,7 +283,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       $.ajax({
         url       : '/documents/' + modelId + '/redact_pages',
         type      : 'POST',
-        data      : {redactions : JSON.stringify(redactions)},
+        data      : {redactions : JSON.stringify(redactions), color: this.redactionColor},
         dataType  : 'json',
         success   : _.bind(function(resp) {
           this.setOnParent(modelId, resp);

@@ -10,6 +10,7 @@ class AnnotationsController < ApplicationController
   end
   
   def show
+    return not_found unless current_annotation
     respond_to do |format|
       format.js do
         json = current_annotation.canonical(:include_image_url => true, :include_document_url => true).to_json

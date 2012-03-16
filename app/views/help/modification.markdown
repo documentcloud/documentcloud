@@ -10,7 +10,7 @@ When you do need to redact passages from a document, open the document in Docume
 
 <img alt="screenshot of redaction process" src="/images/help/redact.jpg" class="full_line" />
 
-When you save your redactions, DocumentCloud will render new images and text information for each altered page and re-extract the entity information for the redacted document. This means any corrections you have made to the text of a page will be lost when you save your redactions, though DocumentCloud won't touch pages you haven't redacted.
+When you save your redactions, DocumentCloud will render new images and text information for each altered page and re-extract the entity information for the redacted document. This means [any corrections you have made to the text of a page](#texttools) will be lost when you save your redactions, though DocumentCloud won't touch pages you haven't redacted.
 
 The accompanying PDF of your document will also be rebuilt: the original page will be replaced with the redacted version. No trace of the redacted passage should remain in the document. Please do check your work, however!
 

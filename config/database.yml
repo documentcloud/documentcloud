@@ -8,6 +8,7 @@ defaults: &defaults
   username: <%= secrets['username'] %>
   password: <%= secrets['db_password'] %>
   allow_concurrency: true
+  host: <%= secrets['db_host'] %>
 
 development:
   <<: *defaults
@@ -15,12 +16,10 @@ development:
 
 staging:
   <<: *defaults
-  host: staging.dcloud.org
   database: dcloud_staging
 
 production:
   <<: *defaults
-  host: ec2-174-129-5-5.compute-1.amazonaws.com
   database: dcloud_production
 
 test:

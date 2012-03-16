@@ -14,7 +14,6 @@ module DC
         @query.page       = params[:page] ? params[:page].to_i : 1
         search_results    = Document.search(@query, opts)
         @documents        = search_results.results
-        @source_document  = search_results.source_document
       end
 
 

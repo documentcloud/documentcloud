@@ -5,12 +5,15 @@ require 'fileutils'
 class RedactPages < DocumentModBase
 
   # The zoom ratio at which we'll be drawing redactions.
-  LARGE_FACTOR    = 1000.0 / 700.0
+  LARGE_FACTOR      = 1000.0 / 700.0
   # ORIGINAL_FACTOR = 1700.0 / 700.0
-  REDACTION_RED   = "#880000"
-  MAX_PER_PAGE    = 25
+  REDACTION_COLORS  = {
+    'black' => '#000000',
+    'red'   => '#880000'
+  }
+  MAX_PER_PAGE      = 25
   
-  SIZE_EXTRACTOR  = /(\d+)x(\d+)/
+  SIZE_EXTRACTOR    = /(\d+)x(\d+)/
 
   GM_ARGS = '-limit memory 256MiB -limit map 512MiB'
 
@@ -39,7 +42,8 @@ class RedactPages < DocumentModBase
   end
 
   def redact_page(page, redactions)
-    base = "#{document.slug}_#{page}"
+    base  = "#{document.slug}_#{page}"
+    color = REDACTION_COLORS[options['color']]
 
     # Make the list of image file paths.
     images = {}
@@ -68,8 +72,8 @@ class RedactPages < DocumentModBase
     coords.each_slice(MAX_PER_PAGE) do |coords_slice|
       original_coords = coords_slice.map {|list| 'rectangle ' + list.map {|px| (px.to_i * original_factor).round }.join(',') }.join(' ')
       large_coords    = coords_slice.map {|list| 'rectangle ' + list.map {|px| (px.to_i * LARGE_FACTOR).round }.join(',') }.join(' ')
-      `gm mogrify #{GM_ARGS} #{page_tiff_path} -fill "#{REDACTION_RED}" -draw "#{original_coords}" #{page_tiff_path} 2>&1`
-      `gm mogrify #{GM_ARGS} #{images['large']} -fill "#{REDACTION_RED}" -draw "#{large_coords}" #{images['large']} 2>&1`
+      `gm mogrify #{GM_ARGS} #{page_tiff_path} -fill "#{color}" -draw "#{original_coords}" #{page_tiff_path} 2>&1`
+      `gm mogrify #{GM_ARGS} #{images['large']} -fill "#{color}" -draw "#{large_coords}" #{images['large']} 2>&1`
     end
 
     # Downsize the large image to all smaller image sizes.
