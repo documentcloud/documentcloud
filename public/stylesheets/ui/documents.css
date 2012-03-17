@@ -46,12 +46,15 @@
     body.minidocs #document_list .document img.doc {
       margin-left: 56px;
     }
-  .document .mini_note {
+  .document .mini_note, .document .mini_note_private {
     position: absolute;
     top: 13px; left: -3px;
     opacity: 0.85;
   }
-    body.minidocs #document_list .document .mini_note {
+  .document .mini_note_private {
+    top:22px;
+  }
+    body.minidocs #document_list .document .mini_note, body.minidocs #document_list .document .mini_note_private {
       left: 53px;
     }
   .document .select {
@@ -265,7 +268,7 @@
     .document .page_list .page_icon {
       margin-right: 0;
     }
-    .document .page_icon .mini_note {
+    .document .page_icon .mini_note, .document .page_icon .mini_note_private {
       left: -6px;
     }
     .document img.page_image {

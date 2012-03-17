@@ -11,6 +11,9 @@
   </span>
   <div class="icon mini_note"></div>
 <% } %>
+<% if (annotation_count !== public_note_count) { %>
+  <div class="icon mini_note_private"></div>
+<% } %>
 <div class="metalines interface">
   <span class="noselect">
     <% if (page_count) { %>
