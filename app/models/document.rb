@@ -54,7 +54,7 @@ class Document < ActiveRecord::Base
 
   # Sanitizations (title handled separately):
   text_attr :source, :related_article, :remote_url
-  html_attr :description
+  styleable_attr :description
 
   delegate :slug, :to => :organization, :allow_nil => true, :prefix => true
   delegate :slug, :to => :account,      :allow_nil => true, :prefix => true
