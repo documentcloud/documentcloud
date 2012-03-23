@@ -32,6 +32,16 @@ module DC
       def list(path)
         Dir[local("#{path}/**/*")].map {|f| f.sub(AssetStore.asset_root + '/', '') }
       end
+      
+      def save_original(document, file_path, access=nil)
+        ensure_directory(document.path)
+        FileUtils.cp(file_path, local(document.original_file_path))
+      end
+      
+      def delete_original(document)
+        ensure_directory(document.path)
+        FileUtils.rm(local(document.original_file_path))
+      end
 
       def save_pdf(document, pdf_path, access=nil)
         ensure_directory(document.path)
@@ -90,6 +100,10 @@ module DC
 
       def set_access(document, access)
         # No-op for the FileSystemStore.
+      end
+      
+      def read_original(document)
+        read document.original_file_path
       end
 
       def read_pdf(document)

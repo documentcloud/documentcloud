@@ -20,10 +20,13 @@ class DocumentImport < CloudCrowd::Action
           end
         end
       end
-      File.open(file, 'r') do |f|
-        DC::Import::PDFWrangler.new.ensure_pdf(f, file) do |path|
-          DC::Store::AssetStore.new.save_pdf(document, path, access)
-        end
+    else
+      file = File.basename document.original_file_path
+      File.open(file, 'w'){ |f| f << DC::Store::AssetStore.new.read_original(document) }
+    end
+    File.open(file, 'r') do |f|
+      DC::Import::PDFWrangler.new.ensure_pdf(f, file) do |path|
+        DC::Store::AssetStore.new.save_pdf(document, path, access)
       end
     end
     tasks = []

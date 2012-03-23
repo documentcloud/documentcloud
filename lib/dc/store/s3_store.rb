@@ -47,6 +47,14 @@ module DC
       def list(path)
         bucket.keys(:prefix => path).map {|key| key.name }
       end
+      
+      def save_original(document, file_path, access=DEFAULT_ACCESS)
+        save_file(file_path, document.original_file_path, access)
+      end
+      
+      def delete_original(document)
+        remove_file(document.original_file_path)
+      end
 
       def save_pdf(document, pdf_path, access=DEFAULT_ACCESS)
         document.update_attributes :file_size => File.size?(pdf_path)
@@ -107,6 +115,10 @@ module DC
           end
         end
         true
+      end
+      
+      def read_original(document)
+        read document.original_file_path
       end
 
       def read_pdf(document)
