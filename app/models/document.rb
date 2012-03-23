@@ -626,7 +626,14 @@ class Document < ActiveRecord::Base
   # The color can be 'black' or 'red'.
   def redact_pages(redactions, color='black')
     eventual_access = access || PRIVATE
-    update_attributes :access => PENDING
+
+    attributes = {:access => PENDING}
+    unless original_extension.nil? or original_extension.downcase == 'pdf'
+      asset_store.delete_original(self)
+      attributes[:original_extension] = 'pdf'
+    end
+
+    update_attributes attributes
     record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'redact_pages',
       'inputs'  => [id],

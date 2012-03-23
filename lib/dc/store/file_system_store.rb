@@ -37,6 +37,11 @@ module DC
         ensure_directory(document.path)
         FileUtils.cp(file_path, local(document.original_file_path))
       end
+      
+      def delete_original(document)
+        ensure_directory(document.path)
+        FileUtils.rm(local(document.original_file_path))
+      end
 
       def save_pdf(document, pdf_path, access=nil)
         ensure_directory(document.path)
