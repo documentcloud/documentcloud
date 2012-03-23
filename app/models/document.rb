@@ -165,7 +165,7 @@ class Document < ActiveRecord::Base
     access   = params[:make_public] ? PUBLIC :
                (params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE)
     email_me = params[:email_me] ? params[:email_me].to_i : false
-    file_ext = File.extname(name).downcase[1,-1]
+    file_ext = File.extname(name).downcase[1..-1]
     
     doc = self.create!(
       :organization_id    => organization.id,
