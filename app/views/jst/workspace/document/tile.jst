@@ -9,7 +9,12 @@
   <span class="show_notes">
     <span class="icon cancel_search" title="hide notes"></span><span class="text_link"><span class="note_count"><%= annotation_count %></span> <%= dc.inflector.pluralize('note', annotation_count) %></span>
   </span>
+  <% if (public_note_count) { %>
   <div class="icon mini_note"></div>
+  <% } %>
+  <% if (annotation_count > public_note_count) { %>
+  <div class="icon mini_note_private"></div>
+  <% } %>
 <% } %>
 <div class="metalines interface">
   <span class="noselect">

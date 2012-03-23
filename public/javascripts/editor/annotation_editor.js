@@ -193,7 +193,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     if (!anno.server_id) return;
     var url = this._baseURL + '/' + anno.server_id;
     $.ajax({url : url, type : 'POST', data : {_method : 'delete'}, dataType : 'json', success : _.bind(function() {
-      this._adjustNoteCount(-1, this._kind == 'public' ? -1 : 0);
+      this._adjustNoteCount(-1, (this._kind == 'public' || anno.access == 'public') ? -1 : 0);
     }, this)});
   },
 
