@@ -184,7 +184,7 @@ class Document < ActiveRecord::Base
       :email_me => email_me,
       :secure => params[:secure],
       :organization_id => organization.id,
-      :account_id => account_id
+      :account_id => account.id
     }
     if params[:url]
       import_options.merge!(:url => params[:url])
