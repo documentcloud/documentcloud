@@ -22,7 +22,7 @@ class Project < ActiveRecord::Base
 
   # Sanitizations:
   text_attr :title
-  html_attr :description
+  styleable_attr :description
 
   named_scope :alphabetical, {:order => :title}
   named_scope :visible, :conditions => {:hidden => false}
