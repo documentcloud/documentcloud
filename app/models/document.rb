@@ -179,7 +179,13 @@ class Document < ActiveRecord::Base
       :remote_url         => params[:published_url] || params[:remote_url],
       :original_extension => file_ext
     )
-    import_options = { :access => access, :email_me => email_me, :secure => params[:secure] }
+    import_options = {
+      :access => access,
+      :email_me => email_me,
+      :secure => params[:secure],
+      :organization_id => organization.id,
+      :account_id => account_id
+    }
     if params[:url]
       import_options.merge!(:url => params[:url])
     else
