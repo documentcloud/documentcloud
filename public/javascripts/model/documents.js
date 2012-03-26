@@ -38,6 +38,13 @@ dc.model.Document = Backbone.Model.extend({
     return this.get('remote_url') || this.get('detected_remote_url');
   },
 
+  // Even if we're in the SSL-only workspace, generate the HTTP version of an
+  // AWS resource link.
+  publicUrl : function(url) {
+    if (url.indexOf('s3.documentcloud.org') < 0) return url;
+    return url.replace('s://s3.amazonaws.com/', '://');
+  },
+
   // Generate the canonical id for this document.
   canonicalId : function() {
     return this.id + '-' + this.get('slug');

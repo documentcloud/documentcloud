@@ -7,10 +7,15 @@
 &lt;div id="DV-viewer-<%= doc.canonicalId() %>" class="DV-container"&gt;&lt;/div&gt;
 &lt;script src="http://s3.documentcloud.org/viewer/loader.js"&gt;&lt;/script&gt;
 &lt;script&gt;
-  DV.load('<%= doc.get("document_viewer_js") %>', {
+  DV.load("<%= doc.get("document_viewer_js") %>", {
     <%= options %>
   });
 &lt;/script&gt;
+&lt;noscript&gt;
+  &lt;a href="<%= doc.publicUrl(doc.get('pdf_url')) %>"&gt;<%= doc.escape("title") %> (PDF)&lt;/a&gt;
+  &lt;br /&gt;
+  &lt;a href="<%= doc.publicUrl(doc.get('full_text_url')) %>"&gt;<%= doc.escape("title") %> (Text)&lt;/a&gt;
+&lt;/noscript&gt;
 </textarea>
 
 <div class="dialog_info selectable_text interface">
