@@ -6,6 +6,7 @@ class Annotation < ActiveRecord::Base
   belongs_to :document
   belongs_to :account # NB: This account is not the owner of the document.
                       #     Rather, it is the author of the annotation.
+  belongs_to :commenter
                       
   has_many :project_memberships, :through => :document
 
