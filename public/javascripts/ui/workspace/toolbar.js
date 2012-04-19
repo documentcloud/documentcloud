@@ -14,11 +14,12 @@ dc.ui.Toolbar = Backbone.View.extend({
     Backbone.View.call(this, options);
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'openDocumentEmbedDialog', 'openNoteEmbedDialog',
-      'openSearchEmbedDialog', 'openPublicationDateDialog', 'requestDownloadViewers',
-      'checkFloat', '_openTimeline', '_viewEntities', 'editPublishedUrl',
-      'openShareDialog', '_markOrder', '_removeFromSelectedProject',
-      '_enableAnalyzeMenu');
+      'editRelatedArticle', 'editAccess', 'openDocumentEmbedDialog',
+      'openNoteEmbedDialog', 'openSearchEmbedDialog',
+      'openPublicationDateDialog', 'requestDownloadViewers',
+      'checkFloat', '_openTimeline', '_openDifferences', '_viewEntities',
+      'editPublishedUrl', 'openShareDialog', '_markOrder',
+      '_removeFromSelectedProject', '_enableAnalyzeMenu');
     this.sortMenu    = this._createSortMenu();
     this.analyzeMenu = this._createAnalyzeMenu();
     this.publishMenu = this._createPublishMenu();
@@ -219,6 +220,12 @@ dc.ui.Toolbar = Backbone.View.extend({
     new dc.ui.TimelineDialog(docs);
   },
 
+  // Open up the Differences Dialog.
+  _openDifferences : function() {
+    var docs = Documents.chosen();
+    new dc.ui.DifferencesDialog(docs);
+  },
+
   _viewEntities : function() {
     var docs = Documents.chosen();
     if (!docs.length && Documents.selectedCount) return;
@@ -254,6 +261,8 @@ dc.ui.Toolbar = Backbone.View.extend({
       .attr('title', count ? '' : 'No documents selected');
     $('.singular', menu.content)
       .toggleClass('disabled', !(count == 1));
+    $('.dual', menu.content)
+      .toggleClass('disabled', !(count == 2));
     $('.private_only', menu.content)
       .toggleClass('disabled', !count || publicCount > 0).
       attr('title', count && publicCount > 0 ? "already public" : '');
@@ -328,7 +337,8 @@ dc.ui.Toolbar = Backbone.View.extend({
   _createAnalyzeMenu : function() {
     var publicItems = [
       {title: 'View Entities',          attrs: {'class' : 'always'},   onClick : this._viewEntities},
-      {title: 'View Timeline',          attrs: {'class' : 'always'},   onClick : this._openTimeline}
+      {title: 'View Timeline',          attrs: {'class' : 'always'},   onClick : this._openTimeline},
+      {title: 'View Differences',       attrs: {'class' : 'dual'},     onClick : this._openDifferences}
     ];
     var accountItems = [
       {title: 'Share these Documents',  attrs: {'class' : 'multiple share_documents'}, onClick : this.openShareDialog },
