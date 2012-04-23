@@ -1,5 +1,6 @@
 [Search]: /help/searching
 [Upload document files]: /help/uploading
+[View lists of entities]: /help/searching#viewing_entities
 [Annotate documents]: /help/notes
 [share them]: /help/collaboration
 [Publish documents]: /help/publishing
