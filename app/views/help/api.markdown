@@ -81,7 +81,7 @@ secure | (optional) If you're dealing with a truly sensitive document, pass the 
 ### Tips
 
  * Please ensure that you send the request properly encoded as "multipart/form-data"
- * Review your uploaded files and add a source and description if you didn't .
+ * Review your uploaded files and add a source and description if you didn't already.
 
 ### Example
 

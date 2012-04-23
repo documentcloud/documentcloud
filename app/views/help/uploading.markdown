@@ -4,7 +4,7 @@ Most DocumentCloud users are working PDFs, but our software can work with any fi
 
 If you open a project before you begin uploading, your new documents will be added to the project you have open. 
 
-To upload one or more documents, click the "New Documents" button in the sidebar and select the files you'd like to upload. Hold down the ctrl key to select more than one document. *Note: multiple document upload is only supported in browsers other than Internet Explorer.*
+To upload one or more documents, click the "New Documents" button in the sidebar and select the files you'd like to upload. Hold down the ctrl or command key to select more than one document. *Note: multiple document upload is only supported in browsers other than Internet Explorer.*
 
 <img src="/images/help/upload_dialog.png" class="full_line" />
  
@@ -30,7 +30,7 @@ To view all the documents you've uploaded, click on the "[Your Documents][]" lin
 Still have questions about uploading documents? Don't hesitate to [contact us][].
 
 [use Preview to reduce the size of your file]: http://www.ehow.com/how_4499823_reduce-file-size-pdf-using.html
-[works as well]: http://www.ehow.com/how_5874491_decrease-size-pdf.html
+[works as well]: http://www.ehow.com/how_7152145_make-acrobat-file-size-smaller.html
 [OCR]: http://en.wikipedia.org/wiki/Optical_character_recognition
 [Tesseract]: http://code.google.com/p/tesseract-ocr/
 [contact us]: javascript:dc.ui.Dialog.contact()

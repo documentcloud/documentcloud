@@ -1,6 +1,6 @@
 # Publishing Documents, Notes, and Document Sets
 
-Ready to share make your documents public? Publish individual documents, embed a whole set of documents for your readers to browse, or embed a single note from any one document. Before you publish a note, document or document set, you'll want to make sure that the document or documents are public. Make a document public by editing the "Access Level" (from the "Edit" menu) or by setting a publication date (from the "Publish" menu).
+Ready to make your documents public? Publish individual documents, embed a whole set of documents for your readers to browse, or embed a single note from any one document. Before you publish a note, document or document set, you'll want to make sure that the document or documents are public. Make a document public by editing the "Access Level" (from the "Edit" menu) or by setting a publication date (from the "Publish" menu).
 
 # Publishing Individual Documents
 

@@ -4,7 +4,7 @@ You already know you can <a href="/help/privacy#access">share documents with eve
 
 ##  <span id="collaborate">Sharing Projects with Reporters</span>
 
-Collaboration in DocumentCloud is based around sharing projects or sharing specific documents. sharing a project with another user gives them access to view and edit all of the documents in that project and all the public notes on those documents. Your private notes will still be private. 
+Collaboration in DocumentCloud is based around sharing projects or sharing specific documents. Sharing a project with another user gives them access to view and edit all of the documents in that project and all the public notes on those documents. Your private notes will still be private. 
 
 To start sharing, you'll need to know the email address that each collaborator uses to log in to DocumentCloud. Click any project's edit icon <span class="icon edit_glyph" style="padding-left:16px;position:relative;top: -2px;">&#65279;</span> ... or choose **Share this Project** from the **Analyze** menu. The project's edit pane will appear, where you can click on "Add a collaborator to this project", and enter the email address of your collaborator's DocumentCloud account.
 
