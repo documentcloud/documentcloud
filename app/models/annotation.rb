@@ -1,20 +1,27 @@
 class Annotation < ActiveRecord::Base
 
-  include DC::Store::DocumentResource
   include DC::Access
 
   belongs_to :document
-  belongs_to :account # NB: This account is not the owner of the document.
-                      #     Rather, it is the author of the annotation.
-  belongs_to :commenter
-                      
+  belongs_to :commenter # NB: This account is not the owner of the document.
+                        #     Rather, it is the author of the annotation.
+
   has_many :project_memberships, :through => :document
 
   attr_accessor :author
 
   validates_presence_of :title, :page_number
+  validates_presence_of :organization_id, :commenter_id, :document_id, :access
 
   before_validation :ensure_title
+  before_create :before_validation_on_create
+
+  def before_validation_on_create
+    self.document_id      = document.id
+    self.organization_id  = organization_id || document.organization_id
+    self.commenter_id     = commenter_id || document.account.commenter_id
+    self.access           = access || document.access
+  end
 
   after_create  :reset_public_note_count
   after_destroy :reset_public_note_count
@@ -23,12 +30,13 @@ class Annotation < ActiveRecord::Base
   text_attr :title
   html_attr :content
 
+  # Access permissions for annotations are enforced 
   named_scope :accessible, lambda { |account|
     has_shared = account && account.accessible_project_ids.present?
     access = []
     access << "(annotations.access = #{PUBLIC})"
     access << "((annotations.access = #{EXCLUSIVE}) and annotations.organization_id = #{account.organization_id})" if account
-    access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
+    access << "(annotations.access = #{PRIVATE} and annotations.commenter_id = #{account.commenter_id})" if account
     access << "((annotations.access = #{EXCLUSIVE}) and memberships.document_id = annotations.document_id)" if has_shared
     opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
     if has_shared
@@ -43,7 +51,7 @@ class Annotation < ActiveRecord::Base
   }
 
   named_scope :owned_by, lambda { |account|
-    {:conditions => {:account_id => account.id}}
+    {:conditions => {:commenter_id => account.commenter_id}}
   }
 
   named_scope :unrestricted, :conditions => {:access => PUBLIC}
@@ -72,7 +80,7 @@ class Annotation < ActiveRecord::Base
       SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name,
                       accounts.role, organizations.name as organization_name
       FROM accounts
-      INNER JOIN annotations   ON annotations.account_id = accounts.id
+      INNER JOIN annotations   ON annotations.commenter_id = accounts.commenter_id
       INNER JOIN organizations ON organizations.id = accounts.organization_id
       WHERE annotations.id in (#{notes.map(&:id).join(',')})
     EOS
@@ -82,11 +90,11 @@ class Annotation < ActiveRecord::Base
       memo
     end
     notes.each do |note|
-      author = account_map[note.account_id]
+      author = account_map[note.commenter_id]
       note.author = {
         :full_name         => author ? "#{author['first_name']} #{author['last_name']}" : "Unattributed",
-        :account_id        => note.account_id,
-        :owns_note         => current_account && current_account.id == note.account_id
+        :account_id        => note.commenter_id,
+        :owns_note         => current_account && current_account.id == note.commenter_id
       }
       if author && [Account::ADMINISTRATOR, Account::CONTRIBUTOR, Account::FREELANCER].include?(author['role'].to_i)
         note.author[:organization_name] = author['organization_name']
@@ -144,7 +152,7 @@ class Annotation < ActiveRecord::Base
   def to_json(opts={})
     canonical.merge({
       'document_id'     => document_id,
-      'account_id'      => account_id,
+      'account_id'      => commenter_id,
       'organization_id' => organization_id
     }).to_json
   end

@@ -38,7 +38,7 @@ class AnnotationsController < ApplicationController
     return forbidden unless note_attrs[:access] == PRIVATE || current_account.allowed_to_edit?(doc) || current_account.reviews?(doc)
     expire_page doc.canonical_cache_path if doc.cacheable?
     anno = doc.annotations.create(note_attrs.merge(
-      :account_id      => current_account.id,
+      :commenter_id      => current_account.commenter_id,
       :organization_id => current_organization.id
     ))
     json current_document.annotations_with_authors(current_account, [anno]).first

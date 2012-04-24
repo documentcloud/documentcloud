@@ -4,6 +4,9 @@ class Commenter < ActiveRecord::Base
   
   #belongs_to :account     # Accounts must all have an associated commentor
   has_many :annotations
+  has_one :account
+
+  validates_presence_of :first_name, :last_name
   
   # The internal marshaled representation for a Commenter
   def canonical(options={})

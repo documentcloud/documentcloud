@@ -14,7 +14,7 @@ class Account < ActiveRecord::Base
 
   # Associations:
   belongs_to  :organization
-  has_one     :commenter,            :dependent => :destroy
+  belongs_to  :commenter
   has_many    :projects,             :dependent => :destroy
   has_many    :collaborations,       :dependent => :destroy
   has_many    :processing_jobs,      :dependent => :destroy
