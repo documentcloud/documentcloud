@@ -51,7 +51,7 @@ module DC
     RELAXED       = Sanitize::Config::RELAXED.dup
     SUPER_RELAXED = Sanitize::Config::RELAXED.dup
     SUPER_RELAXED[:elements] += %w[ iframe ]
-    SUPER_RELAXED[:attributes].merge!({ 'iframe' => %w[ src srcdoc width height sandbox ] })
+    SUPER_RELAXED[:attributes].merge!({ 'iframe' => %w[ src srcdoc width height sandbox style ] })
     SUPER_RELAXED[:protocols].merge!({
       'iframe'    => {
         'src'     => ['ftp', 'http', 'https', 'mailto', :relative], 
