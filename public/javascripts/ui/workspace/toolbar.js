@@ -223,7 +223,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   // Open up the Differences Dialog.
   _openDifferences : function() {
     var docs = Documents.chosen();
-    new dc.ui.DifferencesDialog(docs);
+    new dc.ui.DifferenceViewer(docs);
   },
 
   _viewEntities : function() {
