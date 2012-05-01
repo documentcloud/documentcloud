@@ -1,6 +1,66 @@
 # Welcome to DocumentCloud
 
-If you're just looking to get started, try our [guided tour][], or take a look at [what other reporters are doing with DocumentCloud][].
+DocumentCloud is an online platform for uploading, analyzing, annotating and publishing documents. If you're just looking to get started, try our [guided tour][], or take a look at [what other reporters are doing with DocumentCloud][].
+
+If you've uploaded documents to the index, here's what you can do with them:
+
+<table border="1">
+  <tr>
+    <td></td>
+    <th>Analyze</th>
+    <th>Collaborate</th>
+    <th>Publish</th>
+  </tr>
+  <tr>
+    <th>Documents</th>
+    <td>
+      <a href="https://www.documentcloud.org/help/searching#viewing_entities">Entities</a>
+      <br />
+      <a href="https://www.documentcloud.org/help/tour#analytic_tools">Timelines</a>
+      <br />
+      <a href="https://www.documentcloud.org/help/searching">Search</a>
+    </td>
+    <td>
+      <a href="https://www.documentcloud.org/help/privacy">Private and public</a>
+      <br />
+      <a href="https://www.documentcloud.org/help/collaboration">Organizations</a>
+    </td>
+    <td>
+      <a href="https://www.documentcloud.org/help/publishing">Embed or link</a>
+      <br />
+      <a href="https://www.documentcloud.org/help/modification#redactions">Redaction</a>
+      <br />
+      <a href="https://www.documentcloud.org/help/modification#texttools">Text Correction</a>
+    </td>
+  </tr>
+  <tr>
+    <th>Projects</th>
+    <td>
+      <a href="https://www.documentcloud.org/help/searching#viewing_entities">Entities</a>
+      <br />
+      <a href="https://www.documentcloud.org/help/tour#analytic_tools">Timelines</a>
+    </td>
+    <td>
+      <a href="https://www.documentcloud.org/help/accounts">Accounts</a>
+    </td>
+    <td>
+      <a href="https://www.documentcloud.org/help/publishing#docset">Embed</a>
+    </td>
+  </tr>
+  <tr>
+    <th>Notes</th>
+    <td>
+    </td>
+    <td>
+      <a href="https://www.documentcloud.org/help/notes">Private</a>
+      <br />
+      <a href="https://www.documentcloud.org/help/notes">Drafts, Public</a>
+    </td>
+    <td>
+      <a href="https://www.documentcloud.org/help/publishing#note_embed">Embed</a>
+    </td>
+  </tr>
+</table>
 
 Find out how to:
 
