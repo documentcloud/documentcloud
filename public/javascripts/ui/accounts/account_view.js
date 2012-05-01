@@ -98,8 +98,7 @@ dc.ui.AccountView = Backbone.View.extend({
               duration  : 5000,
               mode      : 'info'
             });
-          }, this),
-          error: _.bind(function() { alert("Failed") }, this)
+          }, this)
         });
         return true;
       } else {
