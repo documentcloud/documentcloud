@@ -90,14 +90,21 @@ dc.ui.AccountView = Backbone.View.extend({
   promptPasswordChange : function() {
     this.dialog.close();
     var dialog = dc.ui.Dialog.prompt('Enter your new password:', '', _.bind(function(password) {
-      this.model.save({password : password}, {success : _.bind(function() {
-        dc.ui.notifier.show({
-          text      : 'Password updated',
-          duration  : 5000,
-          mode      : 'info'
+      if (password.length > 0) {
+        this.model.save({password : password}, {
+          success : _.bind(function() {
+            dc.ui.notifier.show({
+              text      : 'Password updated',
+              duration  : 5000,
+              mode      : 'info'
+            });
+          }, this),
+          error: _.bind(function() { alert("Failed") }, this)
         });
-      }, this)});
-      return true;
+        return true;
+      } else {
+        dc.ui.Dialog.alert("Your password can't be blank");
+      };
     }, this), {password : true, mode : 'short_prompt'});
   },
 
