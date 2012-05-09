@@ -19,13 +19,10 @@
     var id         = response.id;
     var note       = new dc.embed.noteModel(response);
     var options    = notes[id].options
-    var $container = $('#DC-note-' + id);
-    var container;
+    var container  = options.container || '#DC-note-' + id;
+    var $container = $(container);
     var containerWidth = $container.width();
 
-    if (container = options.container) {
-      $container = $(container);
-    }
     $container.html(JST['note_embed']({note : note}));
     if (containerWidth < 700) note.center($container, containerWidth);
     if (options.afterLoad) options.afterLoad(note);
