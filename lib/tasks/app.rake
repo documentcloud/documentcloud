@@ -42,7 +42,7 @@ namespace :app do
   end
 
   desc "Publish all documents with expired publish_at timestamps"
-  task :publish, :needs => :environment do
+  task :publish => :environment do
     Document.publish_due_documents
   end
 

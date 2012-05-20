@@ -269,24 +269,28 @@
     },
 
     render : function(width) {
-      var showOrg = !!this.model.get('contributor_organization');
+      var hasOrg = !!this.model.get('contributor_organization');
+      var hasDesc = !!this.model.get('description');
       $(this.el).html(JST['search_embed_document_tile']({
         dc                : dc,
         doc               : this.model,
         tileWidth         : width,
-        titleWidth        : this.fitTitleWidth(width),
-        descriptionWidth  : this.fitDescriptionWidth(width, showOrg),
-        showOrg           : showOrg
+        titleWidth        : this.fitTitleWidth(width, hasDesc, hasOrg),
+        descriptionWidth  : this.fitDescriptionWidth(width, hasOrg),
+        showOrg           : hasOrg
       }));
       return this;
     },
 
-    fitTitleWidth : function(width) {
-      return Math.floor(0.26 * width - 10);
+    fitTitleWidth : function(width, hasDesc, hasOrg) {
+      var multiplier = 0.26;
+      if (!hasDesc) multiplier += 0.3;
+      if (!hasOrg) multiplier += 0.2;
+      return Math.floor(multiplier * width - 10);
     },
 
-    fitDescriptionWidth : function(width, showOrg) {
-      return Math.floor((showOrg ? 0.35 : 0.55) * width - 10);
+    fitDescriptionWidth : function(width, hasOrg) {
+      return Math.floor((hasOrg ? 0.35 : 0.55) * width - 10);
     },
 
     open : function(e) {
@@ -306,7 +310,7 @@
     url = url.replace(/[\/]+$/, '');
     var hitUrl = dc.recordHit;
     var key    = encodeURIComponent(type + ':' + id + ':' + url);
-    $(document.body).append('<img alt="" width="1" height="1" src="' + hitUrl + '?key=' + key + '" />');
+    $(document).ready( function(){ $(document.body).append('<img alt="" width="1" height="1" src="' + hitUrl + '?key=' + key + '" />'); });
   };
 
 })();

@@ -50,7 +50,11 @@ Click on the "Next" button to proceed to step 3, and you'll see the embed code: 
       });
     </script>
 
-Place the embed code on your page, in the location where you would like the viewer to appear. The next time you load the page, the viewer should be up and running. 
+Place the embed code on your page, in the location where you would like the viewer to appear. The next time you load the page, the viewer should be up and running.
+
+## <span id="testing">Testing Embedded Documents</span>
+
+On occasion you may have embedded documents which you would like to remain private while you test them in a new feature or page layout.  You can view your private embedded documents when logged in by changing the embedded document's url in the embed code (see the line beginning with "DV.load") from the "http" protocol to "https".  **Please make sure to set your embed codes back to HTTP when you set your documents to public.**
  
 ## <span id="intouch">Stay in Touch</span>
 

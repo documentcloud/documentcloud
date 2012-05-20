@@ -29,6 +29,14 @@ namespace :crowd do
 
     end
   end
+  
+  namespace :node do 
+    desc "Handy unix shotgun for culling zombie crowd worker processes"
+    task :cull do
+      `ps aux | grep crowd | ruby -e 'STDIN.read.split("\n").each{ |line| puts line.split[1] }' | xargs kill`
+    end
+  end
+  
 
 end
 
