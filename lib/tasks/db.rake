@@ -1,17 +1,17 @@
 namespace :db do
 
   desc "Back up the production database EBS as a snapshot on S3"
-  task :backup, :needs => :environment do
+  task :backup => :environment do
     DC::Store::BackgroundJobs.backup_database
   end
   
   desc "VACUUM ANALYZE the Postgres DB"
-  task :vacuum_analyze, :needs => :environment do
+  task :vacuum_analyze => :environment do
     DC::Store::BackgroundJobs.vacuum_analyze
   end
   
   desc "Optimize the Solr Index"
-  task :optimize_solr, :needs => :environment do
+  task :optimize_solr => :environment do
     DC::Store::BackgroundJobs.optimize_solr
   end
 
@@ -21,7 +21,7 @@ namespace :db do
   end
   
   desc "Apply db tasks in custom databases, for example  rake db:alter[db:migrate,test-es] applies db:migrate on the database defined as test-es in databases.yml"
-  task :alter, [:task,:database] => [:environment] do |t, args|
+  task :alter, [:task,:database] => :environment do |t, args|
     require 'activerecord'
     puts "Applying #{args.task} on #{args.database}"
     ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[args.database])

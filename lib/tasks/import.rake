@@ -4,7 +4,7 @@
 namespace :import do
 
   desc "Import the NYTimes' Document Viewer database"
-  task :nyt, {:needs => :environment} do
+  task :nyt => :environment do
     require 'mysql2'
     require 'tmpdir'
     require 'iconv'

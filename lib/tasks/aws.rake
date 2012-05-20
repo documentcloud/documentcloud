@@ -2,7 +2,7 @@
 namespace :aws do
 
   desc "Launch a new unconfigured EC2 instance and configure it for documentcloud"
-  task :new_instance_from_scratch, :instance_type, :needs => :environment do |t,args|
+  task :new_instance_from_scratch, [:instance_type] => :environment do |t,args|
     DC::AWS.new.boot_instance({
       :type     => args.instance_type,
       :scripts  => [DC::AWS::SCRIPTS[:scratch]]
@@ -10,7 +10,7 @@ namespace :aws do
   end
 
   desc "Launch a new preconfigured EC2 instance"
-  task :new_instance, :instance_type, :needs => :environment do |t,args|
+  task :new_instance, [:instance_type] => :environment do |t,args|
     DC::AWS.new.boot_instance({
       :type     => args.instance_type,
       :scripts  => [DC::AWS::SCRIPTS[:update]]
@@ -18,7 +18,7 @@ namespace :aws do
   end
 
   desc "Snapshot EBS root and register it as a new AMI"
-  task :register_ami, :instance_id, :needs => :environment do |t,args|
+  task :register_ami, [:instance_id] => [:environment] do |t,args|
     require 'right_aws'
     ec2 = RightAws::Ec2.new(SECRETS['aws_access_key'], SECRETS['aws_secret_key'])
 

@@ -18,7 +18,7 @@ namespace :deploy do
   end
 
   desc "Deploy the Document Viewer to S3"
-  task :viewer, :needs => :environment do
+  task :viewer => :environment do
     s3 = RightAws::S3.new(SECRETS['aws_access_key'], SECRETS['aws_secret_key'], :protocol => 'http', :port => 80)
     bucket = s3.bucket('s3.documentcloud.org')
     Dir['public/viewer/**/*'].each do |file|
@@ -35,7 +35,7 @@ namespace :deploy do
 
   desc "Deploy the Search/Note Embed to S3"
   {:search_embed => ['search_embed', 'embed'], :note_embed => ['note_embed', 'notes']}.each_pair do |folder, embed|
-    task folder, :needs => :environment do
+    task folder => :environment do
       s3 = RightAws::S3.new(SECRETS['aws_access_key'], SECRETS['aws_secret_key'], :protocol => 'http', :port => 80)
       bucket = s3.bucket('s3.documentcloud.org')
       Dir["public/#{embed[0]}/**/*"].each do |file|
