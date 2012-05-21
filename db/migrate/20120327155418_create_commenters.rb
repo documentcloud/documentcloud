@@ -9,10 +9,11 @@ class CreateCommenters < ActiveRecord::Migration
     end
     
     add_column :accounts, :commenter_id, :integer
+    add_column :annotations, :commenter_id, :integer
     
     puts "fissioning commenters from each account"
     Account.all(:order=>'id asc').each do |account|
-      print "#{account.id}: "
+      print "\r#{account.id}: "
       # use block assignment to allow the primary key to be set
       commenter = Commenter.create do |c|
         c.id = account.id
@@ -21,12 +22,19 @@ class CreateCommenters < ActiveRecord::Migration
         c.email = account.email
       end
       account.update_attributes(:commenter_id => commenter.id)
-      puts "Done."
+      print "Done."
+    end
+    puts
+    Annotation.all(:order=>'id asc').each do |note|
+      print "\rUpdating note #{note.id}:"
+      note.update_attributes(:commenter_id => note.account_id)
+      print "Done"
     end
   end
 
   def self.down
     drop_table :commenters
     remove_column :accounts, :commenter_id
+    remove_column :annotations, :commenter_id
   end
 end
