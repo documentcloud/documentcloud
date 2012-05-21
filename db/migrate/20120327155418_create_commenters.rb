@@ -4,7 +4,7 @@ class CreateCommenters < ActiveRecord::Migration
       t.string  "first_name",      :limit => 40,  :null => false
       t.string  "last_name",       :limit => 40,  :null => false
       t.string  "email",           :limit => 100
-      t.string  "hashed_password"
+      t.string  "hashed_email"
       t.timestamps
     end
     
