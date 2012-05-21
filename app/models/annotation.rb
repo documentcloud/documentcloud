@@ -105,6 +105,8 @@ class Annotation < ActiveRecord::Base
   def self.populate_comment_info(notes, current_account)
     return if notes.empty?
     unsorted_comments = Comment.all(:conditions=>{ :annotation_id => notes.map(&:id) })
+    commenters = Commenter.all(:conditions => { :id => unsorted_comments.map(&:commenter_id).uniq } )
+    unsorted_comments.each{ |comment| comment.author = commenters.select{ |author| author.id == comment.commenter_id }.first }
     grouped_comments = unsorted_comments.group_by{ |c| c.annotation_id }
     grouped_comments.each do |note_id, comments|
       notes.select{ |n| n.id == note_id }.first.comments = comments

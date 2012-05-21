@@ -14,7 +14,7 @@ class Comment < ActiveRecord::Base
       'text'          => text,
       'created_at'    => created_at
     }
-    data.merge!({ 'author' => author.to_json(options) }) if author
+    data.merge!({ 'author' => author }) if author
     data
   end
 
