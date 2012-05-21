@@ -1,4 +1,4 @@
-//     Underscore.js 1.3.1
+//     Underscore.js 1.3.3
 //     (c) 2009-2012 Jeremy Ashkenas, DocumentCloud Inc.
 //     Underscore is freely distributable under the MIT license.
 //     Portions of Underscore are inspired or borrowed from Prototype,
@@ -24,7 +24,8 @@
   var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
 
   // Create quick reference variables for speed access to core prototypes.
-  var slice            = ArrayProto.slice,
+  var push             = ArrayProto.push,
+      slice            = ArrayProto.slice,
       unshift          = ArrayProto.unshift,
       toString         = ObjProto.toString,
       hasOwnProperty   = ObjProto.hasOwnProperty;
@@ -62,7 +63,7 @@
   }
 
   // Current version.
-  _.VERSION = '1.3.1';
+  _.VERSION = '1.3.3';
 
   // Collection Functions
   // --------------------
@@ -180,7 +181,7 @@
     each(obj, function(value, index, list) {
       if (!(result = result && iterator.call(context, value, index, list))) return breaker;
     });
-    return result;
+    return !!result;
   };
 
   // Determine if at least one element in the object matches a truth test.
@@ -223,8 +224,12 @@
   };
 
   // Return the maximum element or (element-based computation).
+  // Can't optimize arrays of integers longer than 65,535 elements.
+  // See: https://bugs.webkit.org/show_bug.cgi?id=80797
   _.max = function(obj, iterator, context) {
-    if (!iterator && _.isArray(obj) && obj[0] === +obj[0]) return Math.max.apply(Math, obj);
+    if (!iterator && _.isArray(obj) && obj[0] === +obj[0] && obj.length < 65535) {
+      return Math.max.apply(Math, obj);
+    }
     if (!iterator && _.isEmpty(obj)) return -Infinity;
     var result = {computed : -Infinity};
     each(obj, function(value, index, list) {
@@ -236,7 +241,9 @@
 
   // Return the minimum element (or element-based computation).
   _.min = function(obj, iterator, context) {
-    if (!iterator && _.isArray(obj) && obj[0] === +obj[0]) return Math.min.apply(Math, obj);
+    if (!iterator && _.isArray(obj) && obj[0] === +obj[0] && obj.length < 65535) {
+      return Math.min.apply(Math, obj);
+    }
     if (!iterator && _.isEmpty(obj)) return Infinity;
     var result = {computed : Infinity};
     each(obj, function(value, index, list) {
@@ -250,19 +257,16 @@
   _.shuffle = function(obj) {
     var shuffled = [], rand;
     each(obj, function(value, index, list) {
-      if (index == 0) {
-        shuffled[0] = value;
-      } else {
-        rand = Math.floor(Math.random() * (index + 1));
-        shuffled[index] = shuffled[rand];
-        shuffled[rand] = value;
-      }
+      rand = Math.floor(Math.random() * (index + 1));
+      shuffled[index] = shuffled[rand];
+      shuffled[rand] = value;
     });
     return shuffled;
   };
 
   // Sort the object's values by a criterion produced by an iterator.
-  _.sortBy = function(obj, iterator, context) {
+  _.sortBy = function(obj, val, context) {
+    var iterator = _.isFunction(val) ? val : function(obj) { return obj[val]; };
     return _.pluck(_.map(obj, function(value, index, list) {
       return {
         value : value,
@@ -270,6 +274,8 @@
       };
     }).sort(function(left, right) {
       var a = left.criteria, b = right.criteria;
+      if (a === void 0) return 1;
+      if (b === void 0) return -1;
       return a < b ? -1 : a > b ? 1 : 0;
     }), 'value');
   };
@@ -286,43 +292,44 @@
     return result;
   };
 
-  // Use a comparator function to figure out at what index an object should
-  // be inserted so as to maintain order. Uses binary search.
+  // Use a comparator function to figure out the smallest index at which
+  // an object should be inserted so as to maintain order. Uses binary search.
   _.sortedIndex = function(array, obj, iterator) {
     iterator || (iterator = _.identity);
+    var value = iterator(obj);
     var low = 0, high = array.length;
     while (low < high) {
       var mid = (low + high) >> 1;
-      iterator(array[mid]) < iterator(obj) ? low = mid + 1 : high = mid;
+      iterator(array[mid]) < value ? low = mid + 1 : high = mid;
     }
     return low;
   };
 
   // Safely convert anything iterable into a real, live array.
-  _.toArray = function(iterable) {
-    if (!iterable)                return [];
-    if (iterable.toArray)         return iterable.toArray();
-    if (_.isArray(iterable))      return slice.call(iterable);
-    if (_.isArguments(iterable))  return slice.call(iterable);
-    return _.values(iterable);
+  _.toArray = function(obj) {
+    if (!obj)                                     return [];
+    if (_.isArray(obj))                           return slice.call(obj);
+    if (_.isArguments(obj))                       return slice.call(obj);
+    if (obj.toArray && _.isFunction(obj.toArray)) return obj.toArray();
+    return _.values(obj);
   };
 
   // Return the number of elements in an object.
   _.size = function(obj) {
-    return _.toArray(obj).length;
+    return _.isArray(obj) ? obj.length : _.keys(obj).length;
   };
 
   // Array Functions
   // ---------------
 
   // Get the first element of an array. Passing **n** will return the first N
-  // values in the array. Aliased as `head`. The **guard** check allows it to work
-  // with `_.map`.
-  _.first = _.head = function(array, n, guard) {
+  // values in the array. Aliased as `head` and `take`. The **guard** check
+  // allows it to work with `_.map`.
+  _.first = _.head = _.take = function(array, n, guard) {
     return (n != null) && !guard ? slice.call(array, 0, n) : array[0];
   };
 
-  // Returns everything but the last entry of the array. Especcialy useful on
+  // Returns everything but the last entry of the array. Especially useful on
   // the arguments object. Passing **n** will return all the values in
   // the array, excluding the last N. The **guard** check allows it to work with
   // `_.map`.
@@ -355,11 +362,16 @@
 
   // Return a completely flattened version of an array.
   _.flatten = function(array, shallow) {
-    return _.reduce(array, function(memo, value) {
-      if (_.isArray(value)) return memo.concat(shallow ? value : _.flatten(value));
-      memo[memo.length] = value;
-      return memo;
-    }, []);
+    return (function flatten(input, output) {
+      each(input, function(value) {
+        if (_.isArray(value)) {
+          shallow ? push.apply(output, value) : flatten(value, output);
+        } else {
+          output.push(value);
+        }
+      });
+      return output;
+    })(array, []);
   };
 
   // Return a version of the array that does not contain the specified value(s).
@@ -372,15 +384,17 @@
   // Aliased as `unique`.
   _.uniq = _.unique = function(array, isSorted, iterator) {
     var initial = iterator ? _.map(array, iterator) : array;
-    var result = [];
-    _.reduce(initial, function(memo, el, i) {
-      if (0 == i || (isSorted === true ? _.last(memo) != el : !_.include(memo, el))) {
-        memo[memo.length] = el;
-        result[result.length] = array[i];
+    var results = [];
+    // The `isSorted` flag is irrelevant if the array only contains two elements.
+    if (array.length < 3) isSorted = true;
+    _.reduce(initial, function(memo, value, index) {
+      if (isSorted ? _.last(memo) !== value || !memo.length : !_.include(memo, value)) {
+        memo.push(value);
+        results.push(array[index]);
       }
       return memo;
     }, []);
-    return result;
+    return results;
   };
 
   // Produce an array that contains the union: each distinct element from all of
@@ -403,7 +417,7 @@
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
-    var rest = _.flatten(slice.call(arguments, 1));
+    var rest = _.flatten(slice.call(arguments, 1), true);
     return _.filter(array, function(value){ return !_.include(rest, value); });
   };
 
@@ -514,7 +528,7 @@
   // it with the arguments supplied.
   _.delay = function(func, wait) {
     var args = slice.call(arguments, 2);
-    return setTimeout(function(){ return func.apply(func, args); }, wait);
+    return setTimeout(function(){ return func.apply(null, args); }, wait);
   };
 
   // Defers a function, scheduling it to run after the current call stack has
@@ -526,7 +540,7 @@
   // Returns a function, that, when invoked, will only be triggered at most once
   // during a given window of time.
   _.throttle = function(func, wait) {
-    var context, args, timeout, throttling, more;
+    var context, args, timeout, throttling, more, result;
     var whenDone = _.debounce(function(){ more = throttling = false; }, wait);
     return function() {
       context = this; args = arguments;
@@ -539,26 +553,30 @@
       if (throttling) {
         more = true;
       } else {
-        func.apply(context, args);
+        throttling = true;
+        result = func.apply(context, args);
       }
       whenDone();
-      throttling = true;
+      return result;
     };
   };
 
   // Returns a function, that, as long as it continues to be invoked, will not
   // be triggered. The function will be called after it stops being called for
-  // N milliseconds.
-  _.debounce = function(func, wait) {
+  // N milliseconds. If `immediate` is passed, trigger the function on the
+  // leading edge, instead of the trailing.
+  _.debounce = function(func, wait, immediate) {
     var timeout;
     return function() {
       var context = this, args = arguments;
       var later = function() {
         timeout = null;
-        func.apply(context, args);
+        if (!immediate) func.apply(context, args);
       };
+      var callNow = immediate && !timeout;
       clearTimeout(timeout);
       timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
     };
   };
 
@@ -641,6 +659,15 @@
     return obj;
   };
 
+  // Return a copy of the object only containing the whitelisted properties.
+  _.pick = function(obj) {
+    var result = {};
+    each(_.flatten(slice.call(arguments, 1)), function(key) {
+      if (key in obj) result[key] = obj[key];
+    });
+    return result;
+  };
+
   // Fill in a given object with default properties.
   _.defaults = function(obj) {
     each(slice.call(arguments, 1), function(source) {
@@ -665,7 +692,7 @@
     return obj;
   };
 
-  // Internal recursive comparison function.
+  // Internal recursive comparison function for `isEqual`.
   function eq(a, b, stack) {
     // Identical objects are equal. `0 === -0`, but they aren't identical.
     // See the Harmony `egal` proposal: http://wiki.ecmascript.org/doku.php?id=harmony:egal.
@@ -761,6 +788,7 @@
   // Is a given array, string, or object empty?
   // An "empty" object has no enumerable own-properties.
   _.isEmpty = function(obj) {
+    if (obj == null) return true;
     if (_.isArray(obj) || _.isString(obj)) return obj.length === 0;
     for (var key in obj) if (_.has(obj, key)) return false;
     return true;
@@ -783,6 +811,8 @@
   };
 
   // Is a given variable an arguments object?
+  // Define a fallback version of the method in browsers (ahem, IE), where
+  // there isn't any inspectable "Arguments" type.
   _.isArguments = function(obj) {
     return toString.call(obj) == '[object Arguments]';
   };
@@ -805,6 +835,11 @@
   // Is a given value a number?
   _.isNumber = function(obj) {
     return toString.call(obj) == '[object Number]';
+  };
+
+  // Is a given object a finite number?
+  _.isFinite = function(obj) {
+    return _.isNumber(obj) && isFinite(obj);
   };
 
   // Is the given value `NaN`?
@@ -838,7 +873,7 @@
     return obj === void 0;
   };
 
-  // Has own property?
+  // Does an object have the given "own" property?
   _.has = function(obj, key) {
     return hasOwnProperty.call(obj, key);
   };
@@ -859,13 +894,27 @@
   };
 
   // Run a function **n** times.
-  _.times = function (n, iterator, context) {
+  _.times = function(n, iterator, context) {
     for (var i = 0; i < n; i++) iterator.call(context, i);
   };
 
   // Escape a string for HTML interpolation.
   _.escape = function(string) {
-    return (''+string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g,'&#x2F;');
+    return (''+string)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#x27;')
+      .replace(/\//g,'&#x2F;');
+  };
+
+  // If the value of the named property is a function then invoke it;
+  // otherwise, return it.
+  _.result = function(object, property) {
+    if (object == null) return null;
+    var value = object[property];
+    return _.isFunction(value) ? value.call(object) : value;
   };
 
   // Add your own custom functions to the Underscore object, ensuring that
@@ -897,39 +946,70 @@
   // guaranteed not to match.
   var noMatch = /.^/;
 
+  // Certain characters need to be escaped so that they can be put into a
+  // string literal.
+  var escapes = {
+    '\\': '\\',
+    "'": "'",
+    r: '\r',
+    n: '\n',
+    t: '\t',
+    u2028: '\u2028',
+    u2029: '\u2029'
+  };
+
+  for (var p in escapes) escapes[escapes[p]] = p;
+  var escaper = /\\|'|\r|\n|\t|\u2028|\u2029/g;
+  var unescaper = /\\(\\|'|r|n|t|u2028|u2029)/g;
+
   // Within an interpolation, evaluation, or escaping, remove HTML escaping
   // that had been previously added.
   var unescape = function(code) {
-    return code.replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+    return code.replace(unescaper, function(match, escape) {
+      return escapes[escape];
+    });
   };
 
   // JavaScript micro-templating, similar to John Resig's implementation.
   // Underscore templating handles arbitrary delimiters, preserves whitespace,
   // and correctly escapes quotes within interpolated code.
-  _.template = function(str, data) {
-    var c  = _.templateSettings;
-    var tmpl = 'var __p=[],print=function(){__p.push.apply(__p,arguments);};' +
-      'with(obj||{}){__p.push(\'' +
-      str.replace(/\\/g, '\\\\')
-         .replace(/'/g, "\\'")
-         .replace(c.escape || noMatch, function(match, code) {
-           return "',_.escape(" + unescape(code) + "),'";
-         })
-         .replace(c.interpolate || noMatch, function(match, code) {
-           return "'," + unescape(code) + ",'";
-         })
-         .replace(c.evaluate || noMatch, function(match, code) {
-           return "');" + unescape(code).replace(/[\r\n\t]/g, ' ') + ";__p.push('";
-         })
-         .replace(/\r/g, '\\r')
-         .replace(/\n/g, '\\n')
-         .replace(/\t/g, '\\t')
-         + "');}return __p.join('');";
-    var func = new Function('obj', '_', tmpl);
-    if (data) return func(data, _);
-    return function(data) {
-      return func.call(this, data, _);
+  _.template = function(text, data, settings) {
+    settings = _.defaults(settings || {}, _.templateSettings);
+
+    // Compile the template source, taking care to escape characters that
+    // cannot be included in a string literal and then unescape them in code
+    // blocks.
+    var source = "__p+='" + text
+      .replace(escaper, function(match) {
+        return '\\' + escapes[match];
+      })
+      .replace(settings.escape || noMatch, function(match, code) {
+        return "'+\n((__t=(" + unescape(code) + "))==null?'':_.escape(__t))+\n'";
+      })
+      .replace(settings.interpolate || noMatch, function(match, code) {
+        return "'+\n((__t=(" + unescape(code) + "))==null?'':__t)+\n'";
+      })
+      .replace(settings.evaluate || noMatch, function(match, code) {
+        return "';\n" + unescape(code) + "\n__p+='";
+      }) + "';\n";
+
+    // If a variable is not specified, place data values in local scope.
+    if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
+
+    source = "var __t,__p='',__j=Array.prototype.join," +
+      "print=function(){__p+=__j.call(arguments,'')};\n" +
+      source + "return __p;\n";
+
+    var render = new Function(settings.variable || 'obj', '_', source);
+    if (data) return render(data, _);
+    var template = function(data) {
+      return render.call(this, data, _);
     };
+
+    // Provide the compiled function source as a convenience for precompilation.
+    template.source = 'function(' + (settings.variable || 'obj') + '){\n' + source + '}';
+
+    return template;
   };
 
   // Add a "chain" function, which will delegate to the wrapper.
@@ -969,11 +1049,10 @@
   each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
     var method = ArrayProto[name];
     wrapper.prototype[name] = function() {
-      var wrapped = this._wrapped;
-      method.apply(wrapped, arguments);
-      var length = wrapped.length;
-      if ((name == 'shift' || name == 'splice') && length === 0) delete wrapped[0];
-      return result(wrapped, this._chain);
+      var obj = this._wrapped;
+      method.apply(obj, arguments);
+      if ((name == 'shift' || name == 'splice') && obj.length === 0) delete obj[0];
+      return result(obj, this._chain);
     };
   });
 
