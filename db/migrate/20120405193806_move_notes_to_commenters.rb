@@ -1,9 +1,11 @@
 class MoveNotesToCommenters < ActiveRecord::Migration
   def self.up
-    rename_column :annotations, :account_id, :commenter_id
+    add_column :annotations, :commenter_id, :integer
+    notes = Annotation.all
+    notes.each{ |n| n.update_attributes(:commenter_id => n.account_id) }
   end
 
   def self.down
-    rename_column :annotations, :commenter_id, :account_id
+    remove :annotations, :commenter_id
   end
 end
