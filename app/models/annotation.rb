@@ -8,7 +8,7 @@ class Annotation < ActiveRecord::Base
 
   has_many :project_memberships, :through => :document
 
-  attr_accessor :author
+  attr_accessor :author, :comments
 
   validates_presence_of :title, :page_number
   validates_presence_of :organization_id, :commenter_id, :document_id, :access
@@ -101,6 +101,16 @@ class Annotation < ActiveRecord::Base
       end
     end
   end
+  
+  def self.populate_comment_info(notes, current_account)
+    return if notes.empty?
+    unsorted_comments = Comment.all(:conditions=>{ :annotation_id => notes.map(&:id) })
+    grouped_comments = unsorted_comments.group_by{ |c| c.annotation_id }
+    grouped_comments.each do |note_id, comments|
+      notes.select{ |n| n.id == note_id }.first.comments = comments
+    end
+    notes
+  end
 
   def self.public_note_counts_by_organization
     self.unrestricted.count({
@@ -142,6 +152,7 @@ class Annotation < ActiveRecord::Base
         'author_organization' => author[:organization_name]
       })
     end
+    data.merge!({ 'comments' => comments }) if comments
     data
   end
 
