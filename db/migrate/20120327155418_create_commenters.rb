@@ -29,6 +29,5 @@ class CreateCommenters < ActiveRecord::Migration
   def self.down
     drop_table :commenters
     remove_column :accounts, :commenter_id
-    remove_column :annotations, :commenter_id
   end
 end
