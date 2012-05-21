@@ -31,7 +31,7 @@ ActionController::Routing::Routes.draw do |map|
   map.public_search '/public/search/:query', :controller => 'public', :action => 'index', :query => /.*/
   
   # Document representations and (private) sub-resources.
-  map.resources  :documents, :has_many => [:annotations],
+  map.resources  :documents,
     :member => {
       :search                 => :get,
       :remove_pages           => :post,
@@ -54,7 +54,11 @@ ActionController::Routing::Routes.draw do |map|
       :preview      => :get,
       :published    => :get,
       :unpublished  => :get
-    }
+    } do |document|
+    document.resources :annotations do |note|
+      note.resources :comments
+    end
+  end
 
   map.pdf        "/documents/:id/:slug.pdf",            :controller => :documents, :action => :send_pdf
   map.full_text  "/documents/:id/:slug.txt",            :controller => :documents, :action => :send_full_text
