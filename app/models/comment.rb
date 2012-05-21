@@ -11,8 +11,8 @@ class Comment < ActiveRecord::Base
   
   def canonical(options = {})
     data           = {
-      'text'       => text
-      'created_at' => created_at
+      'text'          => text,
+      'created_at'    => created_at
     }
     data.merge!({ 'author' => author.to_json(options) }) if author
     data
