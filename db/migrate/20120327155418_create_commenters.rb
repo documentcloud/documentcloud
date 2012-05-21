@@ -9,7 +9,6 @@ class CreateCommenters < ActiveRecord::Migration
     end
     
     add_column :accounts, :commenter_id, :integer
-    add_column :annotations, :commenter_id, :integer
     
     puts "fissioning commenters from each account"
     Account.all(:order=>'id asc').each do |account|
@@ -25,11 +24,6 @@ class CreateCommenters < ActiveRecord::Migration
       print "Done."
     end
     puts
-    Annotation.all(:order=>'id asc').each do |note|
-      print "\rUpdating note #{note.id}:"
-      note.update_attributes(:commenter_id => note.account_id)
-      print "Done"
-    end
   end
 
   def self.down
