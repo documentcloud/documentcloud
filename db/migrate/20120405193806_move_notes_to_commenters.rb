@@ -1,6 +1,6 @@
 class MoveNotesToCommenters < ActiveRecord::Migration
   def self.up
-    add_column :annotations, :commenter_id, :integer
+    add_column :annotations, :commenter_id, :integer, :null => false
     Annotation.all(:order=>'id asc').each do |note|
       print "\rUpdating note #{note.id}:"
       note.update_attributes(:commenter_id => note.account_id)
