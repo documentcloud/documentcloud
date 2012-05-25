@@ -1,7 +1,8 @@
 class CommentsController < ApplicationController
   def create
-    return not_found unless current_annotation
-    #comment_attributes = pick(params, :text, )
+    return forbidden unless current_document and current_annotation and current_account
+    comment = Comment.create(:document_id => current_annotation.document_id, :annotation_id => current_annotation.id, :commenter_id => current_account.id, :text=>params[:text])
+    json Comment.populate_author_info([comment], current_account).first
   end
   
   # def destroy
