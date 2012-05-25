@@ -280,7 +280,7 @@ class Document < ActiveRecord::Base
   def annotations_with_authors(account, annotations=nil)
     annotations ||= self.annotations.accessible(account)
     Annotation.populate_author_info(annotations, account)
-    Annotation.populate_comment_info(annotations, account)
+    Annotation.comments_with_authors(account, annotations)
     annotations
   end
 
