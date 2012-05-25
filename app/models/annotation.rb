@@ -10,6 +10,8 @@ class Annotation < ActiveRecord::Base
 
   attr_accessor :author, :comments
 
+  DEFAULT_CANONICAL_OPTIONS = { :comments => true }
+
   validates_presence_of :title, :page_number
   validates_presence_of :organization_id, :commenter_id, :document_id, :access
 
@@ -102,15 +104,16 @@ class Annotation < ActiveRecord::Base
     end
   end
   
-  def self.populate_comment_info(notes, current_account)
-    return if notes.empty?
+  def self.comments_with_authors(account, notes=nil)
+    # Get comments acecssible to current account
+    # (Replace with code that actually restricts comments based on account)
+    #unsorted_comments = self.comments.accessible(current_account)
     unsorted_comments = Comment.all(:conditions=>{ :annotation_id => notes.map(&:id) })
-    commenters = Commenter.all(:conditions => { :id => unsorted_comments.map(&:commenter_id).uniq } )
-    unsorted_comments.each{ |comment| comment.author = commenters.select{ |author| author.id == comment.commenter_id }.first }
+    Comment.populate_author_info(unsorted_comments, account)
+
+    # Populate annotations with their comments
     grouped_comments = unsorted_comments.group_by{ |c| c.annotation_id }
-    grouped_comments.each do |note_id, comments|
-      notes.select{ |n| n.id == note_id }.first.comments = comments
-    end
+    grouped_comments.each{ |note_id, comments| notes.select{ |n| n.id == note_id }.first.comments = comments }
     notes
   end
 
@@ -143,6 +146,7 @@ class Annotation < ActiveRecord::Base
   end
   
   def canonical(opts={})
+    opts = DEFAULT_CANONICAL_OPTIONS.merge(opts)
     data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content, :access => access_name}
     data['location'] = {'image' => location} if location
     data['image_url'] = document.page_image_url_template if opts[:include_image_url]
@@ -154,7 +158,7 @@ class Annotation < ActiveRecord::Base
         'author_organization' => author[:organization_name]
       })
     end
-    data.merge!({ 'comments' => comments }) if comments
+    data.merge!({ 'comments' => comments }) if opts[:comments]
     data
   end
 
@@ -163,7 +167,7 @@ class Annotation < ActiveRecord::Base
   end
 
   def to_json(opts={})
-    canonical.merge({
+    canonical(opts).merge({
       'document_id'     => document_id,
       'account_id'      => commenter_id,
       'organization_id' => organization_id
