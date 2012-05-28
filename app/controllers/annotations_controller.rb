@@ -42,7 +42,8 @@ class AnnotationsController < ApplicationController
       :commenter_id      => current_account.commenter_id,
       :organization_id => current_organization.id
     ))
-    json current_document.annotations_with_authors(current_account, [anno]).first
+    @response = current_document.annotations_with_authors(current_account, [anno]).first
+    json_response
   end
 
   # You can only alter annotations that you've made yourself.

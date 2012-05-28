@@ -9,7 +9,8 @@ class CommentsController < ApplicationController
       :commenter_id => ((current_account and current_account.commenter_id) || anonymous_commenter.id), 
       :text => params[:text]
     )
-    json Comment.populate_author_info([comment], current_account).first
+    @response = Comment.populate_author_info([comment], current_account).first
+    json_response
   end
   
   # def destroy
