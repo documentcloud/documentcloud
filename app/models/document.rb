@@ -843,7 +843,7 @@ class Document < ActiveRecord::Base
     if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
       doc['annotations']      = self.annotations_with_authors(options[:account]).map {|a| a.canonical}
     elsif options[:annotations]
-      doc['annotations']      = self.annotations.accessible(options[:account]).map {|a| a.canonical}
+      doc['annotations']      = self.notes_populated_with(:account=> options[:account]).map {|a| a.canonical}
     end
     if self.mentions
       doc['mentions']         = self.mentions
@@ -851,6 +851,12 @@ class Document < ActiveRecord::Base
     doc
   end
 
+  def notes_populated_with(options)
+    annotations ||= self.annotations.accessible(options[:account])
+    Annotation.populate_author_info(options[:account], annotations) if options[:authors]
+    Annotation.comments_with_authors(options[:account], annotations)
+    annotations
+  end
 
   private
 
