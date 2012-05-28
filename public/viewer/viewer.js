@@ -12328,15 +12328,8 @@ DV.Schema.prototype.loadAnnotation = function(anno) {
   }else if(anno.type === 'page'){
     anno.y1 = 0; anno.x2 = 0; anno.y2 = 0; anno.x1 = 0;
   }
-  anno.comments = new DV.backbone.model.CommentSet(anno.comments);
-  /*anno.comments = new DV.backbone.model.CommentSet([
-    { author: {first_name: 'Monsieur', last_name: 'Grenouille', hashed_email: 'e9419fd4df1cfd3b64d64d65c38bcfa2'},
-      created_at: '2012-05-14T20:48:23Z',
-      text:'Ribbit.' },
-    { author: {first_name: 'Charles', last_name: 'Darwin', hashed_email: '81f4236d716759d3092e8f5d40b7b78f'}, 
-      created_at: '2012-05-03T18:57:46Z',
-      text:'WHEN on board H.M.S. \'Beagle,\' as naturalist, I was much struck with certain facts in the distribution of the inhabitants of South America, and in the geological relations of the present to the past inhabitants of that continent. These facts seemed to me to throw some light on the origin of species—that mystery of mysteries, as it has been called by one of our greatest philosophers. On my return home, it occurred to me, in 1837, that something might perhaps be made out on this question by patiently accumulating and reflecting on all sorts of facts which could possibly have any bearing on it. After five years\' work I allowed myself to speculate on the subject, and drew up some short notes; these I enlarged in 1844 into a sketch of the conclusions, which then seemed to me probable: from that period to the present day I have steadily pursued the same object. I hope that I may be excused for entering on these personal details, as I give them to show that I have not been hasty in coming to a decision.'}
-  ]);*/
+  var commentOptions = { note_id: anno.id, document_id: this.document.id.replace(/^(\d+).+/, "$1") };
+  anno.comments = new DV.backbone.model.CommentSet(anno.comments, commentOptions);
   this.data.annotationsById[anno.id] = anno;
   var page = this.data.annotationsByPage[idx] = this.data.annotationsByPage[idx] || [];
   var insertionIndex = _.sortedIndex(page, anno, function(a){ return a.y1; });
@@ -12368,8 +12361,8 @@ DV.Schema.elements =
   { name: 'fullscreen',         query: 'div.DV-fullscreen' }
 ];
 // mock account object
-DV.account  = {name: 'Ted Han', avatar_url: 'https://si0.twimg.com/profile_images/2187833737/hat_shot_90ccw_normal.jpg'}
-Backbone.sync = function(){ return true };
+DV.account  = {name: 'Ted Han', avatar_url: 'https://si0.twimg.com/profile_images/2187833737/hat_shot_90ccw_normal.jpg'};
+
 DV.backbone.model.Account = Backbone.Model.extend({
   className  : 'account',
 
@@ -12663,6 +12656,10 @@ DV.backbone.model.CommentSet = Backbone.Collection.extend({
   model: DV.backbone.model.Comment
 });
 DV.backbone.model.Comment    = Backbone.Model.extend({
+  sync: function(method, model, options) {
+    options.dataType = "jsonp";
+    return Backbone.sync(method, model, options);
+  },
   className: 'comment',
   initialize: function(attributes, options){
     this.author = new DV.backbone.model.Account(this.get('author') || {});
@@ -12671,7 +12668,11 @@ DV.backbone.model.Comment    = Backbone.Model.extend({
 
 DV.backbone.model.CommentSet = Backbone.Collection.extend({
   model: DV.backbone.model.Comment,
-  
+  url: function() { return '/documents/' + this.document_id + '/annotations/' + this.note_id + '/comments'; },
+  initialize: function(models, options){
+    this.document_id = options.document_id;
+    this.note_id     = options.note_id;
+  },
   // Return the top n comments
   top: function(n) { return this.models.slice(0,n); }
 });
