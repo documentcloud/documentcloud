@@ -791,6 +791,7 @@
     clear:left;
     cursor: pointer;
   }
+  .DV-all_comments:hover { text-decoration: underline; }
   .DV-comments textarea { width:99%; height: 4ex; }
   .DV-commenting .DV-button { float:right; }
 

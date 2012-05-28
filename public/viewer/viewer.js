@@ -11772,12 +11772,13 @@ DV.Page.prototype.draw = function(argHash) {
         if (anno.comments) {
           html.find(".DV-annotationContent").append('<div class="DV-comments"></div>');
           var commentListView = new DV.backbone.view.CommentList({
-            collection: anno.comments, 
-            viewer: this.viewer, 
-            note: anno, 
+            collection: anno.comments,
+            count: 3,
+            viewer: this.viewer,
+            note: anno,
             el: html.find(".DV-annotationContent .DV-comments")
           });
-          //commentListView.render();
+          commentListView.render();
         }
 
         var newAnno = new DV.Annotation({
@@ -12362,6 +12363,9 @@ DV.Schema.elements =
 ];
 // mock account object
 DV.account  = {name: 'Ted Han', avatar_url: 'https://si0.twimg.com/profile_images/2187833737/hat_shot_90ccw_normal.jpg'};
+Backbone.sync = _.wrap(Backbone.sync, function(sync, method, model, options) { 
+  return sync(method, model, _.extend(options, {dataType: 'jsonp'}));
+});
 
 DV.backbone.model.Account = Backbone.Model.extend({
   className  : 'account',
@@ -12656,14 +12660,7 @@ DV.backbone.model.CommentSet = Backbone.Collection.extend({
   model: DV.backbone.model.Comment
 });
 DV.backbone.model.Comment    = Backbone.Model.extend({
-  sync: function(method, model, options) {
-    options.dataType = "jsonp";
-    return Backbone.sync(method, model, options);
-  },
-  className: 'comment',
-  initialize: function(attributes, options){
-    this.author = new DV.backbone.model.Account(this.get('author') || {});
-  }
+  initialize: function(attributes, options){ this.author = new DV.backbone.model.Account(this.get('author') || {}); }
 });
 
 DV.backbone.model.CommentSet = Backbone.Collection.extend({
@@ -12674,7 +12671,7 @@ DV.backbone.model.CommentSet = Backbone.Collection.extend({
     this.note_id     = options.note_id;
   },
   // Return the top n comments
-  top: function(n) { return this.models.slice(0,n); }
+  top: function(n) { return _(this.models.slice(0,n)); }
 });
 
 DV.backbone.model.Document    = Backbone.Model.extend({
@@ -12845,13 +12842,14 @@ DV.backbone.view.CommentList = Backbone.View.extend({
   initialize: function(options) {
     this.viewer     = options.viewer;
     this.note       = options.note;
+    this.count      = options.count;
     this.collection.bind('add', this.render, this);
   },
 
   render: function() {
-    DV.jQuery(this.el).html( JST['comment_list']({
-      comments: this.collection.reduce(function(html, comment){ return html += JST['comment_item']({comment:comment}); }, '')
-    }));
+    var collection = this.count ? this.collection.top(this.count) : this.collection;
+    var commentText = collection.reduce(function(html, comment){ return (html += JST['comment_item']({comment:comment})); }, '');
+    DV.jQuery(this.el).html( JST['comment_list']({ comments: commentText, commentCount: this.collection.length }));
   },
 
   addComment: function() {
@@ -15588,7 +15586,7 @@ window.JST['annotation'] = _.template('<div class="DV-annotation <%= orderClass 
 window.JST['annotationNav'] = _.template('<div class="DV-annotationMarker" id="DV-annotationMarker-<%= id %>">\n  <span class="DV-trigger">\n    <span class="DV-navAnnotationTitle"><%= title %></span>&nbsp;<span class="DV-navPageNumber">p.<%= page %></span>\n  </span>\n</div>');
 window.JST['chapterNav'] = _.template('<div id="DV-chapter-<%= id %>" class="DV-chapter <%= navigationExpanderClass %>">\n  <div class="DV-first">\n    <%= navigationExpander %>\n    <span class="DV-trigger">\n      <span class="DV-navChapterTitle"><%= title %></span>&nbsp;<span class="DV-navPageNumber">p.&nbsp;<%= pageNumber %></span>\n    </span>\n  </div>\n  <%= noteViews %>\n</div>');
 window.JST['comment_item'] = _.template('<li class="DV-comment">\n  <div class="DV-comment_meta">\n    <%= comment.author.fullName() %> commented <a href=""><%= DV.DateUtils.timeSince(comment.get(\'created_at\')) %></a>\n  </div>\n  <div class="DV-avatar"><img src="<%= comment.author.gravatarUrl(48) %>"/></div>\n  <div class="DV-comment_body"><%= comment.get(\'text\') %></div>\n</li>\n');
-window.JST['comment_list'] = _.template('<div class="DV-comment_header">Reader Comment</div>\n<ul class="DV-comment_list">\n  <%= comments %>\n</ul>\n<div class="DV-all_comments">see all comments</div>\n<div class="DV-commenting">\n  <textarea class="DV-comment_input"></textarea>\n  <span class="DV-add_comment DV-button">add comment</span>\n</div>\n');
+window.JST['comment_list'] = _.template('<div class="DV-comment_header">Reader Comment</div>\n<ul class="DV-comment_list">\n  <%= comments %>\n</ul>\n<div class="DV-all_comments">see all <%= commentCount %> comments</div>\n<div class="DV-commenting">\n  <textarea class="DV-comment_input"></textarea>\n  <span class="DV-add_comment DV-button">add comment</span>\n</div>\n');
 window.JST['descriptionContainer'] = _.template('<% if (description) { %>\n  <div class="DV-description">\n    <div class="DV-descriptionHead">\n      <span class="DV-descriptionToggle DV-showDescription DV-trigger"> Toggle Description</span>\n      Description\n    </div>\n    <div class="DV-descriptionText"><%= description %></div>\n  </div>\n<% } %>\n');
 window.JST['footer'] = _.template('<% if (!options.sidebar) { %>\n  <div class="DV-footer">\n    <div class="DV-fullscreenContainer"></div>\n    <div class="DV-navControlsContainer"></div>\n  </div>\n<% } %>');
 window.JST['fullscreenControl'] = _.template('<div class="DV-fullscreen" title="View Document in Fullscreen"></div>\n');
