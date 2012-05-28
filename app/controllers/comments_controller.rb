@@ -1,7 +1,14 @@
 class CommentsController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => [:create]
+  
   def create
-    return forbidden unless current_document and current_annotation and current_account
-    comment = Comment.create(:document_id => current_annotation.document_id, :annotation_id => current_annotation.id, :commenter_id => current_account.id, :text=>params[:text])
+    return forbidden unless current_document and current_annotation and current_document.allows_comments?
+    comment = Comment.create(
+      :document_id => current_document.id, 
+      :annotation_id => current_annotation.id, 
+      :commenter_id => ((current_account and current_account.commenter_id) || anonymous_commenter.id), 
+      :text => params[:text]
+    )
     json Comment.populate_author_info([comment], current_account).first
   end
   
@@ -36,5 +43,9 @@ class CommentsController < ApplicationController
   
   def current_comment
     @current_comment ||= Comment.first(:conditions=>{:id=>params[:id], :annotation_id => current_annotation.id})
+  end
+  
+  def anonymous_commenter
+    @current_commenter = Commenter.find_by_email("anonymous@documentcloud.org")
   end
 end
