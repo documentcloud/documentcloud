@@ -24,6 +24,8 @@ class CreateCommenters < ActiveRecord::Migration
       print "Done."
     end
     puts
+    Commenter.connection.execute(
+      "select setval('commenters_id_seq'::regclass, (select max(id) from commenters group by id order by id desc limit 1));")
   end
 
   def self.down
