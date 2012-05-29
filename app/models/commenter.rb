@@ -11,9 +11,15 @@ class Commenter < ActiveRecord::Base
   # The internal marshaled representation for a Commenter
   def canonical(options={})
     attrs = {
-      'first_name' => first_name,
-      'last_name'  => last_name
+      'id'           => id,
+      'first_name'   => first_name,
+      'last_name'    => last_name,
+      'hashed_email' => hashed_email
     }
+  end
+  
+  def hashed_email
+    @hashed_email ||= Digest::MD5.hexdigest(email.downcase.gsub(/\s/, ''))
   end
   
   # The JSON representation for a Commenter
