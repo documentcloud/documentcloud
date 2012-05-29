@@ -17,7 +17,8 @@ class CommentsController < ApplicationController
   # end
 
   def index
-    
+    @response = Comment.find_all_by_annotation_id(current_annotation.id)
+    json_response
   end  
   
   def show
