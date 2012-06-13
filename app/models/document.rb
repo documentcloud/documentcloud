@@ -276,9 +276,17 @@ class Document < ActiveRecord::Base
   def per_page_annotation_counts
     self.annotations.count(:group => 'page_number')
   end
+  
+  def ordered_sections
+    sections.all(:order => 'page_number asc')
+  end
+  
+  def ordered_annotations(account)
+    self.annotations.accessible(account).all(:order => 'page_number asc, location asc nulls first')
+  end
 
   def annotations_with_authors(account, annotations=nil)
-    annotations ||= self.annotations.accessible(account)
+    annotations ||= ordered_annotations(account)
     Annotation.populate_author_info(annotations, account)
     annotations
   end
@@ -837,12 +845,12 @@ class Document < ActiveRecord::Base
     else
       res['published_url']    = remote_url if remote_url
     end
-    doc['sections']           = sections.map(&:canonical) if options[:sections]
+    doc['sections']           = ordered_sections.map {|s| s.canonical } if options[:sections]
     doc['data']               = data if options[:data]
     if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
       doc['annotations']      = self.annotations_with_authors(options[:account]).map {|a| a.canonical}
     elsif options[:annotations]
-      doc['annotations']      = self.annotations.accessible(options[:account]).map {|a| a.canonical}
+      doc['annotations']      = ordered_annotations(options[:account]).map {|a| a.canonical}
     end
     if self.mentions
       doc['mentions']         = self.mentions
