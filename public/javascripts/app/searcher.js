@@ -111,7 +111,7 @@ dc.controllers.Searcher = Backbone.Router.extend({
     this.flags.specific = query.indexOf('document:') >= 0;
     this.flags.hasEntities = false;
     this.page = pageNumber <= 1 ? null : pageNumber;
-    this.fragment = 'search/' + query;
+    this.fragment = 'search/' + encodeURIComponent(query);
     this.showDocuments();
     this.navigate(this.urlFragment());
     Documents.reset();
