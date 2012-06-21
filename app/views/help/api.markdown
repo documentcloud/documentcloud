@@ -24,7 +24,6 @@ per_page      | the number of documents to return per page | 100 (defaults to 10
 sections      | include document sections in the results | true (not present by default)
 annotations   | include document annotations in the results | true (not present by default)
 data          | include key/value data in the results | true (not present by default)
-entities      | include entities for the search in the results | true (not present by default)
 mentions      | include highlighted mentions of the search phrase | 3 (not present by default, max is 10)
 
 ### Example

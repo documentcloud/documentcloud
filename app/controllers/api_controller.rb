@@ -33,7 +33,6 @@ class ApiController < ApplicationController
         @response['per_page']  = @query.per_page
         @response['q']         = params[:q]
         @response['documents'] = @documents.map {|d| d.canonical(opts) }
-        @response['entities']  = @query.facets if opts[:entities]
         json_response
       end
     end

@@ -1,4 +1,5 @@
 class ReviewersController < ApplicationController
+  include DC::Sanitized
 
   before_filter :login_required, :load_documents
 
@@ -39,7 +40,7 @@ class ReviewersController < ApplicationController
   end
 
   def preview_email
-    @email = LifecycleMailer.create_reviewer_instructions(@documents, current_account, nil, params[:message]).body
+    @email = sanitize LifecycleMailer.create_reviewer_instructions(@documents, current_account, nil, params[:message]).body
     render :layout => false
   end
 
