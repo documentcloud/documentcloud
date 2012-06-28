@@ -58,21 +58,13 @@ class RedactPages < DocumentModBase
       f.write(asset_store.read(document.page_image_path(page, 'large')))
     end
 
-    # Generate the "original" version of the page image.
-    `gm convert #{GM_ARGS} -density 200x200 -resize 1700x #{page_pdf_path} #{page_tiff_path} 2>&1`
-    
-    both, width, height = *(`gm identify #{page_tiff_path}`).match(SIZE_EXTRACTOR)
-    original_factor = width.to_f / 700.0
-
     # Draw red rectangular redactions on both versions.
     coords = redactions.map do |redaction|
       pos = redaction['location'].split(/,\s*/)
       [pos[3], pos[0], pos[1], pos[2]]
     end
     coords.each_slice(MAX_PER_PAGE) do |coords_slice|
-      original_coords = coords_slice.map {|list| 'rectangle ' + list.map {|px| (px.to_i * original_factor).round }.join(',') }.join(' ')
       large_coords    = coords_slice.map {|list| 'rectangle ' + list.map {|px| (px.to_i * LARGE_FACTOR).round }.join(',') }.join(' ')
-      `gm mogrify #{GM_ARGS} #{page_tiff_path} -fill "#{color}" -draw "#{original_coords}" #{page_tiff_path} 2>&1`
       `gm mogrify #{GM_ARGS} #{images['large']} -fill "#{color}" -draw "#{large_coords}" #{images['large']} 2>&1`
     end
 
@@ -90,8 +82,8 @@ class RedactPages < DocumentModBase
     asset_store.save_page_images(document, page, images, access)
 
     # Write out the new redacted pdf page, and tiff version for OCR.
-    `gm convert #{GM_ARGS} #{page_tiff_path} #{page_pdf_path} 2>&1`
-    `gm convert #{GM_ARGS} -colorspace GRAY #{page_tiff_path} #{page_tiff_path} 2>&1`
+    `gm convert #{GM_ARGS} #{images['large']} #{page_pdf_path} 2>&1`
+    `gm convert #{GM_ARGS} -colorspace GRAY #{images['large']} #{page_tiff_path} 2>&1`
 
     # OCR the large version of the image.
     `tesseract #{page_tiff_path} #{base} -l eng 2>&1`
