@@ -20,22 +20,22 @@ Notes on a document are available in the workspace as well as in the open docume
 
 Note bodies can contain a limited subset of HTML and attributes.  The table below lists some commonly used elements and attributes.  You can find a full list beneath the table.
 
-Element           | Description | Attributes
-------------------|-------------|-----------
-<[a][]>             | creates a hyperlink | href
-<[img][]>           | displays an image | src, width, height, alt, align
-<[br][]/>            | inserts a line break | –
-<[em][]>, <[i][]>     | emphasizes/italicizes text | –
-<[strong][]>, <[b][]> | bolds text | –
-<[u][]>             | underlines text | –
-<[blockquote][]>    | offsets text as a quote | –
-<[table][]>         | creates a table into which rows (tr elements) are inserted | summary, width
-<[tr][]>            | creates a table row to hold table data (td elements) and table headers (th elements) | –
-<[th][]>            | creates a table header cell | abbr, axis, colspan, rowspan, width, scope
-<[td][]>            | creates a table cell in a “tr” row | abbr, axis, colspan, rowspan, width
-<[ol][]>            | creates a numbered ordered list  | start, reversed, type
-<[ul][]>            | creates is a bulleted unordered list  | type
-<[iframe][]>        | An iframe can be used to embed web pages. | src, srcdoc, width, height, sandbox
+Element                       | Description | Attributes
+------------------------------|-------------|-----------
+[<a>][a]                      | creates a hyperlink | href
+[<img>][img]                  | displays an image | src, width, height, alt, align
+[<br/>][br]                   | inserts a line break | –
+[<em>][em], [<i>][i]          | emphasizes/italicizes text | –
+[<strong>][strong], [<b>][b]  | bolds text | –
+[<u>][u]                      | underlines text | –
+[<blockquote>][blockquote]    | offsets text as a quote | –
+[<table>][table]              | creates a table into which rows (tr elements) are inserted | summary, width
+[<tr>][tr]                    | creates a table row to hold table data (td elements) and table headers (th elements) | –
+[<th>][th]                    | creates a table header cell | abbr, axis, colspan, rowspan, width, scope
+[<td>][td]                    | creates a table cell in a “tr” row | abbr, axis, colspan, rowspan, width
+[<ol>][ol]                    | creates a numbered ordered list  | start, reversed, type
+[<ul>][ul]                    | creates is a bulleted unordered list  | type
+[<iframe>][iframe]            | An iframe can be used to embed web pages. | src, srcdoc, width, height, sandbox
 
 ### Complete list of available HTML tags
 [`a`][a], [`abbr`][abbr], [`b`][b], [`bdo`][bdo], [`blockquote`][blockquote], [`br`][br], [`caption`][caption], [`cite`][cite], [`code`][code], [`col`][col], [`colgroup`][colgroup], [`dd`][dd], [`del`][del], [`dfn`][dfn], [`dl`][dl], [`dt`][dt], [`em`][em], [`figcaption`][figcaption], [`figure`][figure], [`h1`][h1], [`h2`][h2], [`h3`][h3], [`h4`][h4], [`h5`][h5], [`h6`][h6], [`hgroup`][hgroup], [`i`][i], [`iframe`][iframe], [`img`][img], [`ins`][ins], [`kbd`][kbd], [`li`][li], [`mark`][mark], [`ol`][ol], [`p`][p], [`pre`][pre], [`q`][q], [`rp`][rp], [`rt`][rt], [`ruby`][ruby], [`s`][s], [`samp`][samp], [`small`][small], [`strike`][strike], [`strong`][strong], [`sub`][sub], [`sup`][sup], [`table`][table], [`tbody`][tbody], [`td`][td], [`tfoot`][tfoot], [`th`][th], [`thead`][thead], [`time`][time], [`tr`][tr], [`u`][u], [`ul`][ul], [`var`][var], [`wbr`][wbr]
