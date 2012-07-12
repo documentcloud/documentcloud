@@ -22,20 +22,20 @@ Note bodies can contain a limited subset of HTML and attributes.  The table belo
 
 Element                       | Description | Attributes
 ------------------------------|-------------|-----------
-[<a>][a]                      | creates a hyperlink | href
-[<img>][img]                  | displays an image | src, width, height, alt, align
-[<br/>][br]                   | inserts a line break | –
-[<em>][em], [<i>][i]          | emphasizes/italicizes text | –
-[<strong>][strong], [<b>][b]  | bolds text | –
-[<u>][u]                      | underlines text | –
-[<blockquote>][blockquote]    | offsets text as a quote | –
-[<table>][table]              | creates a table into which rows (tr elements) are inserted | summary, width
-[<tr>][tr]                    | creates a table row to hold table data (td elements) and table headers (th elements) | –
-[<th>][th]                    | creates a table header cell | abbr, axis, colspan, rowspan, width, scope
-[<td>][td]                    | creates a table cell in a “tr” row | abbr, axis, colspan, rowspan, width
-[<ol>][ol]                    | creates a numbered ordered list  | start, reversed, type
-[<ul>][ul]                    | creates is a bulleted unordered list  | type
-[<iframe>][iframe]            | An iframe can be used to embed web pages. | src, srcdoc, width, height, sandbox
+[&lt;a&gt;][a]                      | creates a hyperlink | href
+[&lt;img&gt;][img]                  | displays an image | src, width, height, alt, align
+[&lt;br/&gt;][br]                   | inserts a line break | –
+[&lt;em&gt;][em], [&lt;i&gt;][i]          | emphasizes/italicizes text | –
+[&lt;strong&gt;][strong], [&lt;b&gt;][b]  | bolds text | –
+[&lt;u&gt;][u]                      | underlines text | –
+[&lt;blockquote&gt;][blockquote]    | offsets text as a quote | –
+[&lt;table&gt;][table]              | creates a table into which rows (tr elements) are inserted | summary, width
+[&lt;tr&gt;][tr]                    | creates a table row to hold table data (td elements) and table headers (th elements) | –
+[&lt;th&gt;][th]                    | creates a table header cell | abbr, axis, colspan, rowspan, width, scope
+[&lt;td&gt;][td]                    | creates a table cell in a “tr” row | abbr, axis, colspan, rowspan, width
+[&lt;ol&gt;][ol]                    | creates a numbered ordered list  | start, reversed, type
+[&lt;ul&gt;][ul]                    | creates is a bulleted unordered list  | type
+[&lt;iframe&gt;][iframe]            | An iframe can be used to embed web pages. | src, srcdoc, width, height, sandbox
 
 ### Complete list of available HTML tags
 [`a`][a], [`abbr`][abbr], [`b`][b], [`bdo`][bdo], [`blockquote`][blockquote], [`br`][br], [`caption`][caption], [`cite`][cite], [`code`][code], [`col`][col], [`colgroup`][colgroup], [`dd`][dd], [`del`][del], [`dfn`][dfn], [`dl`][dl], [`dt`][dt], [`em`][em], [`figcaption`][figcaption], [`figure`][figure], [`h1`][h1], [`h2`][h2], [`h3`][h3], [`h4`][h4], [`h5`][h5], [`h6`][h6], [`hgroup`][hgroup], [`i`][i], [`iframe`][iframe], [`img`][img], [`ins`][ins], [`kbd`][kbd], [`li`][li], [`mark`][mark], [`ol`][ol], [`p`][p], [`pre`][pre], [`q`][q], [`rp`][rp], [`rt`][rt], [`ruby`][ruby], [`s`][s], [`samp`][samp], [`small`][small], [`strike`][strike], [`strong`][strong], [`sub`][sub], [`sup`][sup], [`table`][table], [`tbody`][tbody], [`td`][td], [`tfoot`][tfoot], [`th`][th], [`thead`][thead], [`time`][time], [`tr`][tr], [`u`][u], [`ul`][ul], [`var`][var], [`wbr`][wbr]
