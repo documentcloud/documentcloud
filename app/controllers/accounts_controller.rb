@@ -25,6 +25,7 @@ class AccountsController < ApplicationController
   # Show the "Reset Password" screen for an account holder.
   def reset
     return render if request.get?
+    @display_notice = true
     account = Account.lookup(params[:email].strip)
     @failure = true and return render unless account
     account.send_reset_request
