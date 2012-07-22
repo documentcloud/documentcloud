@@ -128,6 +128,18 @@ dc.model.AccountSet = Backbone.Collection.extend({
       return account.get('slug') === slug;
     });
   },
+  
+  getByEmail: function(email) {
+    return this.detect(function(account){
+      return account.get('email') === email;
+    });
+  },
+  
+  getValidByEmail: function(email) {
+    return this.detect(function(account){
+      return !account.invalid && account.get('email') === email;
+    });
+  },
 
   // Fetch the account of the logged-in journalist.
   current : function() {

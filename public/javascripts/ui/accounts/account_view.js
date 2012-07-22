@@ -1,4 +1,4 @@
-// A tile view for previewing a Document in a listing.
+// A tile view for previewing an Account in a listing.
 dc.ui.AccountView = Backbone.View.extend({
 
   AVATAR_SIZES : {
@@ -103,7 +103,7 @@ dc.ui.AccountView = Backbone.View.extend({
         return true;
       } else {
         dc.ui.Dialog.alert("Your password can't be blank");
-      };
+      }
     }, this), {password : true, mode : 'short_prompt'});
   },
 
@@ -141,6 +141,10 @@ dc.ui.AccountView = Backbone.View.extend({
     var options = {success : this._onSuccess, error : this._onError};
     if (this.model.isNew()) {
       if (!attributes.email) return $(this.el).remove();
+      if (Accounts.getValidByEmail(attributes.email)) { 
+        this.dialog.error(""+attributes.email+" already has an account");
+        return; 
+      }
       dc.ui.spinner.show();
       this.model.newRecord = true;
       this.model.set(attributes);
