@@ -780,6 +780,7 @@ class Document < ActiveRecord::Base
       :organization_slug   => organization_slug,
       :account_name        => account_name,
       :account_slug        => account_slug,
+      :allows_comments     => allows_comments,
       :related_article     => related_article,
       :pdf_url             => pdf_url,
       :thumbnail_url       => thumbnail_url,
@@ -838,6 +839,7 @@ class Document < ActiveRecord::Base
       doc['contributor']      = account_name
       doc['contributor_organization'] = organization_name
     end
+    doc['allows_comments']    = allows_comments
     doc['resources']          = res = ActiveSupport::OrderedHash.new
     res['pdf']                = pdf_url
     res['text']               = full_text_url
