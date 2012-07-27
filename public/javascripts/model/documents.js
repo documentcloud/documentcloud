@@ -424,7 +424,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
         selected    : current == dc.access.PRIVATE
       },
       {
-        text        : 'Private to ' + dc.account.organization.name,
+        text        : 'Private to ' + dc.account.organization().get('name'),
         description : 'Only the people in your organization have access. (No freelancers.)',
         value       : dc.access.ORGANIZATION,
         selected    : current == dc.access.ORGANIZATION
@@ -479,7 +479,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
       ret = (searchQuery.find('filter') == 'published') ? 'your_published_documents' : 'your_documents';
     } else if (account = Accounts.getBySlug(searchQuery.find('account'))) {
       title = account.documentsTitle();
-    } else if (dc.account && searchQuery.find('group') == dc.account.organization.slug) {
+    } else if (dc.account && searchQuery.find('group') == dc.account.organization().get('slug')) {
       ret = 'org_documents';
     } else if (searchQuery.has('group') && (org = Organizations.findBySlug(searchQuery.find('group')))) {
       title = dc.inflector.possessivize(org.get('name')) + " Documents";

@@ -7,14 +7,9 @@
   <form action="/reset_password" method="POST" autocomplete="off">
     <%= token_tag %>
     <h1>Reset your DocumentCloud Password</h1>
-    <% if @failure %>
-      <div class="form_error">
-        <span>No account with that email address could be found.</span>
-      </div>
-    <% end %>
-    <% if @success %>
+    <% if @display_notice and params[:email].size > 0 %>
       <div class="form_success">
-        <span>Instructions to reset your password have been emailed to you.</span>
+        <span>Please check the email address you have provided (<%= h params[:email ]%>) for further instructions.</span>
       </div>
     <% end %>
     <div class="line">

@@ -44,7 +44,7 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   },
 
   render : function() {
-    if (dc.account.organization.demo) return dc.ui.Dialog.alert(this.DEMO_ERROR);
+    if (dc.account.organization().get('demo')) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     dc.ui.Dialog.prototype.render.call(this);
     this.$('.custom').html(JST['workspace/note_embed_dialog']({
       doc           : this.doc,

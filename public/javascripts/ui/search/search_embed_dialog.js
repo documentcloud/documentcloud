@@ -63,7 +63,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   },
 
   render : function() {
-    if (dc.account.organization.demo) return dc.ui.Dialog.alert(this.DEMO_ERROR);
+    if (dc.account.organization().get('demo')) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     dc.ui.Dialog.prototype.render.call(this);
     this.$('.custom').html(JST['workspace/search_embed_dialog']({
       query           : this.query,
@@ -118,7 +118,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     options.order        = this._orderEl.val();
     options.per_page     = this._perPageEl.val();
     options.search_bar   = this._searchBarEl.is(':checked');
-    options.organization = dc.account.organization.id;
+    options.organization = dc.account.organization().id;
     return options;
   },
 

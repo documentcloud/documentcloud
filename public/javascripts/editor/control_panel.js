@@ -6,7 +6,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .set_sections':          'openSectionEditor',
     'click .public_annotation':     'togglePublicAnnotation',
     'click .private_annotation':    'togglePrivateAnnotation',
-    'click .redact_annotation':     'redactionNotice',//'toggleRedaction',
+    'click .redact_annotation':     'toggleRedaction',
     'click .cancel_redactions':     'toggleRedaction',
     'click .save_redactions':       'saveRedactions',
     'click a.when_black':           'toggleRedactionColor',
@@ -40,9 +40,9 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   render : function() {
     var accountProto    = dc.model.Account.prototype;
-    var accessWorkspace = dc.account.role == accountProto.ADMINISTRATOR ||
-                          dc.account.role == accountProto.CONTRIBUTOR   ||
-                          dc.account.role == accountProto.FREELANCER;
+    var accessWorkspace = dc.account.get('role') == accountProto.ADMINISTRATOR ||
+                          dc.account.get('role') == accountProto.CONTRIBUTOR   ||
+                          dc.account.get('role') == accountProto.FREELANCER;
     this.viewer         = currentDocument;
     this._page          = this.viewer.$('.DV-textContents');
     var doc             = this._getDocumentModel();
@@ -60,7 +60,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   showReviewerWelcome : function() {
     var inviter = dc.app.editor.options.reviewerInviter;
-    if (!(dc.account.role == dc.model.Account.prototype.REVIEWER && inviter)) return;
+    if (!(dc.account.get('role') == dc.model.Account.prototype.REVIEWER && inviter)) return;
     var title = inviter.fullName + ' has invited you to review "' +
       dc.inflector.truncate(currentDocument.api.getTitle(), 50) + '"';
     var description = JST['reviewer_welcome'](inviter);
@@ -244,10 +244,6 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     dc.app.editor.annotationEditor.toggle('private');
   },
 
-  redactionNotice: function() {
-    dc.ui.Dialog.alert('The redaction tool has been temporarily disabled.  Feel free to <a style="color:white;cursor:pointer;" href="/contact">contact us</a> if you have any questions.');
-  },
-
   toggleRedaction : function() {
     this.openDocumentTab();
     dc.app.editor.annotationEditor.toggle('redact');
@@ -311,7 +307,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   _getDocumentModel : function() {
     if (this.docModel) return this.docModel;
     this.docModel = new dc.model.Document(window.currentDocumentModel);
-    this.docModel.viewerEditable   = dc.account.isOwner;
+    this.docModel.viewerEditable   = dc.account.get('isOwner');
     this.docModel.suppressNotifier = true;
 
     return this.docModel;

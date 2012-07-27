@@ -14,7 +14,7 @@ dc.model.Account = Backbone.Model.extend({
 
   DEFAULT_AVATAR     : location.protocol + '//' + location.host + '/images/embed/icons/user_blue_32.png',
 
-  defaults           : {first_name : '', last_name : '', email : '', role : 2},
+  defaults           : { first_name : '', last_name : '', email : '', role : 2 },
 
   organization : function() {
     return Organizations.get(this.get('organization_id'));
@@ -27,7 +27,7 @@ dc.model.Account = Backbone.Model.extend({
   },
 
   openOrganizationDocuments : function() {
-    dc.app.searcher.search('group: ' + dc.account.organization.slug);
+    dc.app.searcher.search('group: ' + dc.account.organization().get('slug'));
   },
 
   allowedToEdit: function(model) {
@@ -121,6 +121,18 @@ dc.model.AccountSet = Backbone.Collection.extend({
   getBySlug : function(slug) {
     return this.detect(function(account) {
       return account.get('slug') === slug;
+    });
+  },
+  
+  getByEmail: function(email) {
+    return this.detect(function(account){
+      return account.get('email') === email;
+    });
+  },
+  
+  getValidByEmail: function(email) {
+    return this.detect(function(account){
+      return !account.invalid && account.get('email') === email;
     });
   },
 
