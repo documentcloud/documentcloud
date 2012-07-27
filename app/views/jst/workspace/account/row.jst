@@ -55,7 +55,7 @@
    <% } %>
   <div class="edit controls_wrapper">
     <div class="minibutton default save_changes">OK</div>
-    <% if (account.id && account.id > 0 && account.id != dc.account.id) { %>
+    <% if (account.id && account.id > 0 && account.id != dc.account.get('id')) { %>
       <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>
         <div class="minibutton warn enable_account">Re-enable</div>
       <% } else { %>

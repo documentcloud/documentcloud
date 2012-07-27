@@ -56,7 +56,7 @@ dc.controllers.Searcher = Backbone.Router.extend({
       this.showDocuments();
     } else if (this.searchBox.value()) {
       this.search(this.searchBox.value());
-    } else if (dc.account && dc.account.hasDocuments) {
+    } else if (dc.account && dc.account.get('hasDocuments')) {
       Accounts.current().openDocuments();
     } else if (Projects.first()) {
       Projects.first().open();

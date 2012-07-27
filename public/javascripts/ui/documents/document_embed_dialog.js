@@ -50,7 +50,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
   // Sets up all jQuery selectors and shows the first step of the embedding process.
   render : function() {
-    if (dc.account.organization.demo) return dc.ui.Dialog.alert(this.DEMO_ERROR);
+    if (dc.account.organization().get('demo')) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     dc.ui.Dialog.prototype.render.call(this);
     this.$('.custom').html(JST['workspace/document_embed_dialog']({doc: this.model}));
     this._next          = this.$('.next');

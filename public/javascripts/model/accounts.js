@@ -27,7 +27,7 @@ dc.model.Account = Backbone.Model.extend({
   },
 
   openOrganizationDocuments : function() {
-    dc.app.searcher.search('group: ' + dc.account.organization.slug);
+    dc.app.searcher.search('group: ' + dc.account.organization().get('slug'));
   },
 
   allowedToEdit: function(model) {

@@ -180,7 +180,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   requestDownloadViewers : function() {
-    if (dc.account.organization.demo) return dc.ui.Dialog.alert('Demo accounts are not allowed to download viewers. <a href="/contact">Contact us</a> if you need a full featured account.');
+    if (dc.account.organization().get('demo')) return dc.ui.Dialog.alert('Demo accounts are not allowed to download viewers. <a href="/contact">Contact us</a> if you need a full featured account.');
     var docs = Documents.chosen();
     if (docs.length) Documents.downloadViewers(docs);
   },
