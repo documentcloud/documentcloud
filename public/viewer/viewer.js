@@ -11769,7 +11769,7 @@ DV.Page.prototype.draw = function(argHash) {
           el.attr('src', el.attr('data-src'));
         });
 
-        if (anno.comments) {
+        if (this.viewer.schema.document.comment_access == 4 && anno.comments) {
           html.find(".DV-annotationContent").append('<div class="DV-comments"></div>');
           var commentListView = new DV.backbone.view.CommentList({
             collection: anno.comments,
@@ -12329,7 +12329,7 @@ DV.Schema.prototype.loadAnnotation = function(anno) {
   }else if(anno.type === 'page'){
     anno.y1 = 0; anno.x2 = 0; anno.y2 = 0; anno.x1 = 0;
   }
-  var commentOptions = { note_id: anno.id, document_id: this.document.id.replace(/^(\d+).+/, "$1") };
+  var commentOptions = { note_id: anno.id, access: anno.comment_access, document_id: this.document.id.replace(/^(\d+).+/, "$1") };
   anno.comments = new DV.backbone.model.CommentSet(anno.comments, commentOptions);
   this.data.annotationsById[anno.id] = anno;
   var page = this.data.annotationsByPage[idx] = this.data.annotationsByPage[idx] || [];
@@ -12660,7 +12660,10 @@ DV.backbone.model.CommentSet = Backbone.Collection.extend({
   model: DV.backbone.model.Comment
 });
 DV.backbone.model.Comment    = Backbone.Model.extend({
-  initialize: function(attributes, options){ this.author = new DV.backbone.model.Account(this.get('author') || {}); }
+  initialize: function(attributes, options){ 
+    this.author = new DV.backbone.model.Account(this.get('author') || {});
+    //if (!this.get('access')) this.set('access', this.collection.access);
+  }
 });
 
 DV.backbone.model.CommentSet = Backbone.Collection.extend({
@@ -12669,6 +12672,7 @@ DV.backbone.model.CommentSet = Backbone.Collection.extend({
   initialize: function(models, options){
     this.document_id = options.document_id;
     this.note_id     = options.note_id;
+    this.access      = options.access;
   },
   // Return the top n comments
   top: function(n) { return _(this.models.slice(0,n)); }
@@ -12831,10 +12835,26 @@ DV.backbone.model.Page = Backbone.Model.extend({
 DV.backbone.model.PageSet = Backbone.Collection.extend({
   model : DV.backbone.model.Page
 });
+DV.backbone.view.CommentView = Backbone.View.extend({
+  tagName: 'li',
+  events: { 'click .DV-comment_permalink': 'navigateTo' },
+  initialize: function(options) {
+    this.note = options.note;
+    this.viewer = options.viewer;
+    if (options.canonical) this.id = 'DV-comment_' + options.model.id;
+  },
+  render: function() { return JST['comment_item']({ comment: this.model }); },
+  navigateTo: function() {
+    this.viewer.activeAnnotationId = this.note.id;
+    this.viewer.open('ViewAnnotation');
+    this.viewer.pageSet.showAnnotation({id: this.note.id});
+  }
+});
+
 DV.backbone.view.CommentList = Backbone.View.extend({
   id: 'DV-commentsList',
   className: 'DV-comments',
-  events: { 
+  events: {
     'click .DV-add_comment': 'addComment',
     'click .DV-all_comments': 'openAnnotationList'
   },
@@ -12848,19 +12868,24 @@ DV.backbone.view.CommentList = Backbone.View.extend({
 
   render: function() {
     var collection = this.count ? this.collection.top(this.count) : this.collection;
-    var commentText = collection.reduce(function(html, comment){ return (html += JST['comment_item']({comment:comment})); }, '');
-    DV.jQuery(this.el).html( JST['comment_list']({ comments: commentText, commentCount: this.collection.length }));
+    this.commentViews = collection.map(function(comment){
+      return new DV.backbone.view.CommentView({ model: comment, note: this.note, viewer: this.viewer });
+    });
+    var commentHTML = this.commentViews.reduce(function(html, view){ return (html += view.render()); }, '');
+    DV.jQuery(this.el).html( JST['comment_list']({ comments: commentHTML, commentCount: this.collection.length }));
   },
 
   addComment: function() {
     var commentText = this.$el.find('.DV-comment_input').val();
     this.$el.find('.DV-comment_input').val('');
-    this.collection.create( { commenter: DV.account.name, avatar_url: DV.account.avatar_url, text: commentText } );
+    this.collection.create( { commenter: DV.account.name, avatar_url: DV.account.avatar_url, text: commentText, access: this.collection.access } );
+    this.openAnnotationList();
   },
   
   openAnnotationList: function() {
     this.viewer.activeAnnotationId = this.note.id;
     this.viewer.open('ViewAnnotation');
+    this.viewer.pageSet.showAnnotation({id: this.note.id});
   }
 });
 
@@ -12968,7 +12993,7 @@ DV.model.Annotations.prototype = {
     this.viewer.$('div.DV-allAnnotations').html(html);
     
     _.each(this.bySortOrder, function(anno){
-      if (anno.comments) {
+      if (this.viewer.schema.document.comment_access == 4 && anno.comments) {
         var noteEl = this.viewer.$('div.DV-allAnnotations .DV-annotation[data-id='+anno.id+'] .DV-annotationContent')
         noteEl.append('<div class="DV-comments"></div>');
         var commentListView = new DV.backbone.view.CommentList({
@@ -12978,7 +13003,7 @@ DV.model.Annotations.prototype = {
           el: noteEl.find(".DV-comments")
         });
         commentListView.render();
-      };
+      }
     }, this);
 
     this.renderAnnotationsByIndex.rendered  = true;
@@ -15585,7 +15610,7 @@ window.JST = window.JST || {};
 window.JST['annotation'] = _.template('<div class="DV-annotation <%= orderClass %> <%= accessClass %> <% if (owns_note) { %>DV-ownsAnnotation<% } %>" style="top:<%= top %>px;" id="DV-annotation-<%= id %>" data-id="<%= id %>">\n\n  <div class="DV-annotationTab" style="top:<%= tabTop %>px;">\n    <div class="DV-annotationClose DV-trigger">\n      <% if (access == \'exclusive\') { %>\n        <div class="DV-annotationDraftDot DV-editHidden"></div>\n      <% } %>\n    </div>\n  </div>\n\n  <div class="DV-annotationRegion" style="margin-left:<%= excerptMarginLeft - 4 %>px; height:<%= excerptHeight %>px; width:<%= excerptWidth - 1 %>px;">\n    <div class="<%= accessClass %>">\n      <div class="DV-annotationEdge DV-annotationEdgeTop"></div>\n      <div class="DV-annotationEdge DV-annotationEdgeRight"></div>\n      <div class="DV-annotationEdge DV-annotationEdgeBottom"></div>\n      <div class="DV-annotationEdge DV-annotationEdgeLeft"></div>\n      <div class="DV-annotationCorner DV-annotationCornerTopLeft"></div>\n      <div class="DV-annotationCorner DV-annotationCornerTopRight"></div>\n      <div class="DV-annotationCorner DV-annotationCornerBottomLeft"></div>\n      <div class="DV-annotationCorner DV-annotationCornerBottomRight"></div>\n    </div>\n    <div class="DV-annotationRegionExclusive"></div>\n  </div>\n\n\n  <div class="DV-annotationContent">\n\n    <div class="DV-annotationHeader DV-clearfix">\n      <div class="DV-pagination DV-editHidden">\n        <span class="DV-trigger DV-annotationPrevious" title="Previous Annotation">Previous</span>\n        <span class="DV-trigger DV-annotationNext" title="Next Annotation">Next</span>\n      </div>\n      <div class="DV-annotationGoto DV-editHidden"><div class="DV-trigger">p. <%= pageNumber %></div></div>\n      <div class="DV-annotationTitle DV-editHidden"><%= title %></div>\n      <input class="DV-annotationTitleInput DV-editVisible" type="text" placeholder="Annotation Title" value="<%= title.replace(/"/g, \'&quot;\') %>" />\n      <% if (access == \'exclusive\') { %>\n        <div class="DV-annotationDraftLabel DV-editHidden DV-interface">Draft</div>\n      <% } else if (access == \'private\') { %>\n        <div class="DV-privateLock DV-editHidden" title="Private note"></div>\n      <% } %>\n      <span class="DV-permalink DV-editHidden" title="Link to this note"></span>\n      <div class="DV-showEdit DV-editHidden <%= accessClass %>"></div>\n    </div>\n\n\n    <div class="DV-annotationExcerpt" style="height:<%= excerptHeight %>px;">\n      <div class="DV-annotationExcerptImageTop" style="height:<%= excerptHeight %>px; width:<%= excerptWidth %>px;left:<%= excerptMarginLeft - 1 %>px;">\n\n        <img class="DV-img" src="<%= image %>" style="left:<%= -(excerptMarginLeft + 1) %>px; top:-<%= imageTop %>px;" width="<%= imageWidth %>" />\n\n      </div>\n      <div class="DV-annotationExcerptImage" style="height:<%= excerptHeight %>px;">\n        <img class="DV-img" src="<%= image %>" style="top:-<%= imageTop %>px;" width="<%= imageWidth %>" />\n      </div>\n    </div>\n\n    <div class="DV-annotationBody DV-editHidden">\n      <%= text %>\n    </div>\n    <textarea class="DV-annotationTextArea DV-editVisible" style="width: <%= bWidth %>px;"><%= text %></textarea>\n\n    <div class="DV-annotationMeta <%= accessClass %>">\n      <% if (author) { %>\n        <div class="DV-annotationAuthor DV-interface DV-editHidden">\n          Annotated by: <%= author %><% if (author_organization) { %>, <i><%= author_organization %></i><% } %>\n        </div>\n      <% } %>\n      <% if (access == \'exclusive\') { %>\n        <div class="DV-annotationWarning DV-interface DV-editHidden">\n          This draft is only visible to you and collaborators.\n        </div>\n      <% } else if (access == \'private\') { %>\n        <div class="DV-annotationWarning DV-interface DV-editHidden">\n          This private note is only visible to you.\n        </div>\n      <% } %>\n      <div class="DV-annotationEditControls DV-editVisible">\n        <div class="DV-clearfix">\n          <div class="minibutton warn DV-deleteAnnotation float_left">Delete</div>\n          <div class="minibutton default DV-saveAnnotation float_right">\n            <% if (access == \'exclusive\') { %>\n              Publish\n            <% } else { %>\n              Save\n            <% } %>\n          </div>\n          <% if (access == \'public\' || access == \'exclusive\') { %>\n            <div class="minibutton DV-saveAnnotationDraft float_right">Save as Draft</div>\n          <% } %>\n          <div class="minibutton DV-cancelEdit float_right">Cancel</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n');
 window.JST['annotationNav'] = _.template('<div class="DV-annotationMarker" id="DV-annotationMarker-<%= id %>">\n  <span class="DV-trigger">\n    <span class="DV-navAnnotationTitle"><%= title %></span>&nbsp;<span class="DV-navPageNumber">p.<%= page %></span>\n  </span>\n</div>');
 window.JST['chapterNav'] = _.template('<div id="DV-chapter-<%= id %>" class="DV-chapter <%= navigationExpanderClass %>">\n  <div class="DV-first">\n    <%= navigationExpander %>\n    <span class="DV-trigger">\n      <span class="DV-navChapterTitle"><%= title %></span>&nbsp;<span class="DV-navPageNumber">p.&nbsp;<%= pageNumber %></span>\n    </span>\n  </div>\n  <%= noteViews %>\n</div>');
-window.JST['comment_item'] = _.template('<li class="DV-comment">\n  <div class="DV-comment_meta">\n    <%= comment.author.fullName() %> commented <a href=""><%= DV.DateUtils.timeSince(comment.get(\'created_at\')) %></a>\n  </div>\n  <div class="DV-avatar"><img src="<%= comment.author.gravatarUrl(48) %>"/></div>\n  <div class="DV-comment_body"><%= comment.get(\'text\') %></div>\n</li>\n');
+window.JST['comment_item'] = _.template('<li class="DV-comment">\n  <div class="DV-comment_meta">\n    <%= comment.author.fullName() %> commented <span class="DV-comment_permalink"><%= DV.DateUtils.timeSince(comment.get(\'created_at\')) %></span>\n  </div>\n  <div class="DV-avatar"><img src="<%= comment.author.gravatarUrl(48) %>"/></div>\n  <div class="DV-comment_body"><%= comment.get(\'text\') %></div>\n</li>\n');
 window.JST['comment_list'] = _.template('<div class="DV-comment_header">Reader Comment</div>\n<ul class="DV-comment_list">\n  <%= comments %>\n</ul>\n<div class="DV-all_comments">see all <%= commentCount %> comments</div>\n<div class="DV-commenting">\n  <textarea class="DV-comment_input"></textarea>\n  <span class="DV-add_comment DV-button">add comment</span>\n</div>\n');
 window.JST['descriptionContainer'] = _.template('<% if (description) { %>\n  <div class="DV-description">\n    <div class="DV-descriptionHead">\n      <span class="DV-descriptionToggle DV-showDescription DV-trigger"> Toggle Description</span>\n      Description\n    </div>\n    <div class="DV-descriptionText"><%= description %></div>\n  </div>\n<% } %>\n');
 window.JST['footer'] = _.template('<% if (!options.sidebar) { %>\n  <div class="DV-footer">\n    <div class="DV-fullscreenContainer"></div>\n    <div class="DV-navControlsContainer"></div>\n  </div>\n<% } %>');

@@ -163,7 +163,7 @@
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   box-shadow: 0 1px 2px #bababa; -webkit-box-shadow: 0 1px 2px #bababa; -moz-box-shadow: 0 1px 2px #bababa;
   border: 1px solid #a7a7a7; border-top-color: #b7b7b7; border-bottom-color: #959595;
-  background: url(images/DV/embed/button_bg.png?1337801213) repeat-x left top;
+  background: url(images/DV/embed/button_bg.png?1340599152) repeat-x left top;
 }
 
  .DV-annotations{
@@ -785,13 +785,13 @@
   .DV-comments .DV-comment_meta { margin-bottom: 4px; }
   .DV-avatar { display:inline-block; vertical-align:top; width: 10% }
   .DV-comment_body { display:inline-block; width: 89% }
-  .DV-all_comments {
+  .DV-all_comments, .DV-comment_permalink {
     padding:4px;
     border-top: 4px solid #ddd;
     clear:left;
     cursor: pointer;
   }
-  .DV-all_comments:hover { text-decoration: underline; }
+  .DV-all_comments:hover, .DV-comment_permalink:hover { text-decoration: underline; }
   .DV-comments textarea { width:99%; height: 4ex; }
   .DV-commenting .DV-button { float:right; }
 
