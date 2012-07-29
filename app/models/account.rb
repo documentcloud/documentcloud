@@ -9,8 +9,9 @@ class Account < ActiveRecord::Base
   CONTRIBUTOR   = 2
   REVIEWER      = 3
   FREELANCER    = 4
+  COMMENTER     = 5
 
-  ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER, FREELANCER, DISABLED]
+  ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER, FREELANCER, DISABLED, COMMENTER]
 
   # Associations:
   belongs_to  :organization
@@ -38,6 +39,7 @@ class Account < ActiveRecord::Base
   named_scope :active,    {:conditions => ["role != ?", DISABLED]}
   named_scope :real,      {:conditions => ["role in (?)", [ADMINISTRATOR, CONTRIBUTOR, FREELANCER, DISABLED]]}
   named_scope :reviewer,  {:conditions => {:role => REVIEWER}}
+  named_scope :commenter, {:conditions => {"role != ?", DISABLED}}
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session=nil, cookies=nil)

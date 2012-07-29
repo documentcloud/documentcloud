@@ -128,7 +128,7 @@ class Annotation < ActiveRecord::Base
       end
     end
   end
-  
+
   def self.public_note_counts_by_organization
     self.unrestricted.count({
       :joins      => [:document],
@@ -137,11 +137,23 @@ class Annotation < ActiveRecord::Base
     })
   end
   
-  def allows_comments?(account=nil)
+  def allows_comments?(account)
+    access == PUBLIC if account.nil? or account.organization.nil?
+
     this_note = self
     ( comment_access == PUBLIC ) or
     ( comment_access == PRIVATE and account.owns? this_note ) or
-    ( comment_access == EXCLUSIVE and account.owns_or_collaborates? this_note )
+    ( [EXCLUSIVE, ORGANIZATION].include?(comment_access) and 
+      ( account.owns_or_collaborates?(this_note) or
+        account.shared?(this_note) ))
+  end
+  
+  # This mess exists because Rails 2.3's eager loading
+  # doesn't play nicely with SQL.
+  # Instead this method takes a list of notes
+  # filters out comments by their accessibility to account
+  def accessible_comments(account=nil)
+    @accessible_comments ||= comments.select{ |c| c.accessible_to? account }
   end
   
   def page
@@ -166,7 +178,14 @@ class Annotation < ActiveRecord::Base
   
   def canonical(opts={})
     opts = DEFAULT_CANONICAL_OPTIONS.merge(opts)
-    data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content, :access => access_name}
+    data = {
+      'id' => id, 
+      'page' => page_number, 
+      'title' => title, 
+      'content' => content, 
+      :access => access_name, 
+      :comment_access => comment_access
+    }
     data['location'] = {'image' => location} if location
     data['image_url'] = document.page_image_url_template if opts[:include_image_url]
     data['published_url'] = document.published_url || document.document_viewer_url(:allow_ssl => true) if opts[:include_document_url]
@@ -177,7 +196,7 @@ class Annotation < ActiveRecord::Base
         'author_organization' => author[:organization_name]
       })
     end
-    data.merge!({ 'comments' => comments }) if opts[:comments]
+    data.merge!({ 'comments' => accessible_comments }) if opts[:comments]
     data
   end
 

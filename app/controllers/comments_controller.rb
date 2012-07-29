@@ -3,13 +3,18 @@ class CommentsController < ApplicationController
   
   def create
     return forbidden unless current_annotation and current_annotation.allows_comments? current_account
-    comment = Comment.create(
+    comment = Comment.new(
       :document_id => current_document.id, 
-      :annotation_id => current_annotation.id, 
-      :account_id => ((current_account and current_account.id) || anonymous_commenter.id), 
-      :text => params[:text]
+      :annotation_id => current_annotation.id,
+      :account_id => ((current_account and current_account.id) || anonymous_commenter.id),
+      :text => params[:text],
+      :access => params[:access]
     )
-    @response = Comment.populate_author_info([comment], current_account).first
+    if comment.save
+      @response = comment
+    else
+      return json({:errors => comment.errors}, 409)
+    end
     json_response
   end
   
@@ -49,6 +54,6 @@ class CommentsController < ApplicationController
   end
   
   def anonymous_commenter
-    @current_commenter = Commenter.find_by_email("anonymous@documentcloud.org")
+    @current_commenter = Account.find_by_email("anonymous@documentcloud.org")
   end
 end

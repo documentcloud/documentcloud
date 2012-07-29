@@ -7,7 +7,7 @@ class Comment < ActiveRecord::Base
 
   validates_presence_of :text, :access, :document_id, :annotation_id
   
-  before_create :ensure_author_name
+  before_create :ensure_author_name, :ensure_access
   
   def ensure_author_name
     if account
@@ -17,30 +17,47 @@ class Comment < ActiveRecord::Base
     end
   end
   
+  def ensure_access
+    self.access = annotation.comment_access unless access
+  end
+  
   named_scope :accessible, lambda { |account|
     has_shared = account && account.accessible_project_ids.present?
     access = []
     access << "(comments.access = #{PUBLIC})"
-    access << "((comments.access = #{EXCLUSIVE}) and comments.organization_id = #{account.organization_id})" if account
     access << "(comments.access = #{PRIVATE} and comments.account_id = #{account.id})" if account
-    access << "((comments.access = #{EXCLUSIVE}) and memberships.document_id = comments.document_id)" if has_shared
+    access << "(comments.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and comments.organization_id = #{account.organization.id})" if account && !account.freelancer?
+    access << "((comments.access = #{EXCLUSIVE}) and comment_memberships.document_id = comments.document_id)" if has_shared
     opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
     if has_shared
       opts[:joins] = <<-EOS
         left outer join
         (select distinct document_id from project_memberships
-          where project_id in (#{account.accessible_project_ids.join(',')})) as memberships
-        on memberships.document_id = comments.document_id
+          where project_id in (#{account.accessible_project_ids.join(',')})) as comment_memberships
+        on comment_memberships.document_id = comments.document_id
       EOS
     end
     opts
   }
   
+  def accessible_to?(account)
+    # short circuit for public view or commenters who don't belong to an organization.
+    access == PUBLIC if account.nil? or account.organization.nil?
+
+    this_comment = self
+    ( access == PUBLIC ) or
+    ( access == PRIVATE and account.owns? this_comment ) or
+    ( [EXCLUSIVE, ORGANIZATION].include?(access) and 
+      ( account.owns_or_collaborates?(this_comment) or
+        account.shared?(this_comment) ))
+  end
+  
   def canonical(options = {})
     data = {
       'id'         => id,
       'text'       => text,
-      'created_at' => created_at
+      'created_at' => created_at,
+      'access'     => access
     }
     data.merge!({ 'author' => author_name }) if author_name
     data

@@ -282,13 +282,18 @@ class Document < ActiveRecord::Base
   end
   
   def ordered_annotations(account, options={})
-    opts = {:order => 'page_number asc, location asc nulls first'}.merge(options)
+    opts = {:order => 'page_number asc, location asc nulls first'}
+    # fetches ALL comments on notes, to be filtered later
+    # due to Rails 2.3's inconsistent behavior in prefetching
+    # models specified by :include
+    opts[:include] = :comments if options[:comments]
     self.annotations.accessible(account).all(opts)
   end
 
   def annotations_with_authors(account, annotations=nil)
-    annotations ||= ordered_annotations(account, options)
+    annotations ||= ordered_annotations(account, :comments => comment_access)
     Annotation.populate_author_info(annotations, account)
+    annotations.each{ |note| note.accessible_comments(account) }
     annotations
   end
 
@@ -296,6 +301,7 @@ class Document < ActiveRecord::Base
     account = options[:account]
     annotations = options[:annotations] || ordered_annotations(account, options)
     Annotation.populate_author_info(account, annotations) if options[:authors]
+    annotations.each{ |note| note.accessible_comments(account) }
     annotations
   end
 
@@ -858,9 +864,9 @@ class Document < ActiveRecord::Base
     doc['sections']           = ordered_sections.map {|s| s.canonical } if options[:sections]
     doc['data']               = data if options[:data]
     if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
-      doc['annotations']      = self.annotations_with_authors(options[:account]).map {|a| a.canonical}
+      doc['annotations']      = self.annotations_with_authors(options[:account]).map { |a| a.canonical }
     elsif options[:annotations]
-      doc['annotations']      = self.notes_populated_with(:account=> options[:account]).map {|a| a.canonical}
+      doc['annotations']      = self.notes_populated_with(:account=> options[:account]).map {|a| a.canonical }
     end
     if self.mentions
       doc['mentions']         = self.mentions
