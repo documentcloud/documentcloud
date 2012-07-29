@@ -3,7 +3,10 @@ class CreateComments < ActiveRecord::Migration
     create_table :comments do |t|
       t.integer "annotation_id",  :null => false
       t.integer "document_id",    :null => false
-      t.integer "commenter_id"
+      t.integer "account_id"
+      t.integer "organization_id"
+      t.integer "access",         :null => false
+      t.text    "author_name",    :length => 90
       t.text    "text",           :null => false
       t.timestamps
     end
