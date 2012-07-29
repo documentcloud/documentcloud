@@ -2,11 +2,11 @@ class CommentsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:create]
   
   def create
-    return forbidden unless current_document and current_annotation and current_document.allows_comments?
+    return forbidden unless current_annotation and current_annotation.allows_comments? current_account
     comment = Comment.create(
       :document_id => current_document.id, 
       :annotation_id => current_annotation.id, 
-      :commenter_id => ((current_account and current_account.commenter_id) || anonymous_commenter.id), 
+      :account_id => ((current_account and current_account.id) || anonymous_commenter.id), 
       :text => params[:text]
     )
     @response = Comment.populate_author_info([comment], current_account).first
@@ -40,6 +40,7 @@ class CommentsController < ApplicationController
   end
   
   def current_annotation
+    return nil unless current_document
     @current_annotation ||= current_document.annotations.find_by_id(params[:annotation_id])
   end
   

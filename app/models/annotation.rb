@@ -3,17 +3,18 @@ class Annotation < ActiveRecord::Base
   include DC::Access
 
   belongs_to :document
-  belongs_to :commenter # NB: This account is not the owner of the document.
-                        #     Rather, it is the author of the annotation.
+  belongs_to :account # NB: This account is not the owner of the document.
+                      #     Rather, it is the author of the annotation.
 
   has_many :project_memberships, :through => :document
+  has_many :comments
 
-  attr_accessor :author, :comments
+  attr_accessor :author
 
   DEFAULT_CANONICAL_OPTIONS = { :comments => true }
 
   validates_presence_of :title, :page_number
-  validates_presence_of :organization_id, :commenter_id, :document_id, :access
+  validates_presence_of :organization_id, :account_id, :document_id, :access
 
   before_validation :ensure_title
   before_create :before_validation_on_create
@@ -21,8 +22,9 @@ class Annotation < ActiveRecord::Base
   def before_validation_on_create
     self.document_id      = document.id
     self.organization_id  = organization_id || document.organization_id
-    self.commenter_id     = commenter_id || document.account.commenter_id
+    self.account_id       = account_id || document.account_id
     self.access           = access || document.access
+    self.comment_access   = comment_access || document.comment_access
   end
 
   after_create  :reset_public_note_count
@@ -38,7 +40,7 @@ class Annotation < ActiveRecord::Base
     access = []
     access << "(annotations.access = #{PUBLIC})"
     access << "((annotations.access = #{EXCLUSIVE}) and annotations.organization_id = #{account.organization_id})" if account
-    access << "(annotations.access = #{PRIVATE} and annotations.commenter_id = #{account.commenter_id})" if account
+    access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
     access << "((annotations.access = #{EXCLUSIVE}) and memberships.document_id = annotations.document_id)" if has_shared
     opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
     if has_shared
@@ -52,11 +54,34 @@ class Annotation < ActiveRecord::Base
     opts
   }
 
+  # Access permissions for annotations are enforced 
+  named_scope :commentable, lambda { |account|
+    has_shared = account && account.accessible_project_ids.present?
+    access = []
+    access << "(annotations.comment_access = #{PUBLIC})"
+    access << "((annotations.comment_access = #{EXCLUSIVE}) and annotations.organization_id = #{account.organization_id})" if account
+    access << "(annotations.comment_access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
+    access << "((annotations.comment_access = #{EXCLUSIVE}) and memberships.document_id = annotations.document_id)" if has_shared
+    opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
+    if has_shared
+      opts[:joins] = <<-EOS
+        left outer join
+        (select distinct document_id from project_memberships
+          where project_id in (#{account.accessible_project_ids.join(',')})) as memberships
+        on memberships.document_id = annotations.document_id
+      EOS
+    end
+    opts
+  }
+
+
   named_scope :owned_by, lambda { |account|
-    {:conditions => {:commenter_id => account.commenter_id}}
+    {:conditions => {:account_id => account.id}}
   }
 
   named_scope :unrestricted, :conditions => {:access => PUBLIC}
+  
+  named_scope :with_comments, :include => [:comments]
 
   # Annotations are not indexed for the time being.
 
@@ -82,7 +107,7 @@ class Annotation < ActiveRecord::Base
       SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name,
                       accounts.role, organizations.name as organization_name
       FROM accounts
-      INNER JOIN annotations   ON annotations.commenter_id = accounts.commenter_id
+      INNER JOIN annotations   ON annotations.account_id = accounts.id
       INNER JOIN organizations ON organizations.id = accounts.organization_id
       WHERE annotations.id in (#{notes.map(&:id).join(',')})
     EOS
@@ -92,11 +117,11 @@ class Annotation < ActiveRecord::Base
       memo
     end
     notes.each do |note|
-      author = account_map[note.commenter_id]
+      author = account_map[note.account_id]
       note.author = {
         :full_name         => author ? "#{author['first_name']} #{author['last_name']}" : "Unattributed",
-        :account_id        => note.commenter_id,
-        :owns_note         => current_account && current_account.id == note.commenter_id
+        :account_id        => note.account_id,
+        :owns_note         => current_account && current_account.id == note.account_id
       }
       if author && [Account::ADMINISTRATOR, Account::CONTRIBUTOR, Account::FREELANCER].include?(author['role'].to_i)
         note.author[:organization_name] = author['organization_name']
@@ -104,19 +129,6 @@ class Annotation < ActiveRecord::Base
     end
   end
   
-  def self.comments_with_authors(account, notes=nil)
-    # Get comments acecssible to current account
-    # (Replace with code that actually restricts comments based on account)
-    #unsorted_comments = self.comments.accessible(current_account)
-    unsorted_comments = Comment.all(:conditions=>{ :annotation_id => notes.map(&:id) })
-    Comment.populate_author_info(unsorted_comments, account)
-
-    # Populate annotations with their comments
-    grouped_comments = unsorted_comments.group_by{ |c| c.annotation_id }
-    grouped_comments.each{ |note_id, comments| notes.select{ |n| n.id == note_id }.first.comments = comments }
-    notes
-  end
-
   def self.public_note_counts_by_organization
     self.unrestricted.count({
       :joins      => [:document],
@@ -124,7 +136,14 @@ class Annotation < ActiveRecord::Base
       :group      => 'annotations.organization_id'
     })
   end
-
+  
+  def allows_comments?(account=nil)
+    this_note = self
+    ( comment_access == PUBLIC ) or
+    ( comment_access == PRIVATE and account.owns? this_note ) or
+    ( comment_access == EXCLUSIVE and account.owns_or_collaborates? this_note )
+  end
+  
   def page
     document.pages.find_by_page_number(page_number)
   end
@@ -169,7 +188,7 @@ class Annotation < ActiveRecord::Base
   def to_json(opts={})
     canonical(opts).merge({
       'document_id'     => document_id,
-      'account_id'      => commenter_id,
+      'account_id'      => account_id,
       'organization_id' => organization_id
     }).to_json
   end

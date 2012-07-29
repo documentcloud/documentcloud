@@ -131,7 +131,7 @@ class Project < ActiveRecord::Base
         inner join project_memberships on project_memberships.document_id = annotations.document_id
       where project_memberships.project_id = #{id}
       and (annotations.access in (#{PUBLIC}, #{EXCLUSIVE}) or 
-        annotations.access = #{PRIVATE} and annotations.commenter_id = #{account.commenter_id})
+        annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})
     EOS
   end
 

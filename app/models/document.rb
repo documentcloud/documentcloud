@@ -46,7 +46,7 @@ class Document < ActiveRecord::Base
                                   :source      => :project
 
   validates_presence_of :organization_id, :account_id, :access, :page_count,
-                        :title, :slug
+                        :title, :slug, :comment_access
 
   before_validation_on_create :ensure_titled
 
@@ -281,21 +281,21 @@ class Document < ActiveRecord::Base
     sections.all(:order => 'page_number asc')
   end
   
-  def ordered_annotations(account)
-    self.annotations.accessible(account).all(:order => 'page_number asc, location asc nulls first')
+  def ordered_annotations(account, options={})
+    opts = {:order => 'page_number asc, location asc nulls first'}.merge(options)
+    self.annotations.accessible(account).all(opts)
   end
 
   def annotations_with_authors(account, annotations=nil)
-    annotations ||= ordered_annotations(account)
+    annotations ||= ordered_annotations(account, options)
     Annotation.populate_author_info(annotations, account)
-    Annotation.comments_with_authors(account, annotations)
     annotations
   end
 
   def notes_populated_with(options)
-    annotations ||= ordered_annotations(options[:account])
-    Annotation.populate_author_info(options[:account], annotations) if options[:authors]
-    Annotation.comments_with_authors(options[:account], annotations)
+    account = options[:account]
+    annotations = options[:annotations] || ordered_annotations(account, options)
+    Annotation.populate_author_info(account, annotations) if options[:authors]
     annotations
   end
 
@@ -780,7 +780,7 @@ class Document < ActiveRecord::Base
       :organization_slug   => organization_slug,
       :account_name        => account_name,
       :account_slug        => account_slug,
-      :allows_comments     => allows_comments,
+      :comment_access      => comment_access,
       :related_article     => related_article,
       :pdf_url             => pdf_url,
       :thumbnail_url       => thumbnail_url,
@@ -839,7 +839,7 @@ class Document < ActiveRecord::Base
       doc['contributor']      = account_name
       doc['contributor_organization'] = organization_name
     end
-    doc['allows_comments']    = allows_comments
+    doc['comment_access']     = comment_access
     doc['resources']          = res = ActiveSupport::OrderedHash.new
     res['pdf']                = pdf_url
     res['text']               = full_text_url
