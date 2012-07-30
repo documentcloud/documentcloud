@@ -12660,10 +12660,7 @@ DV.backbone.model.CommentSet = Backbone.Collection.extend({
   model: DV.backbone.model.Comment
 });
 DV.backbone.model.Comment    = Backbone.Model.extend({
-  initialize: function(attributes, options){ 
-    this.author = new DV.backbone.model.Account(this.get('author') || {});
-    //if (!this.get('access')) this.set('access', this.collection.access);
-  }
+  initialize: function(attributes, options){ this.author = new DV.backbone.model.Account(this.get('author') || {}); }
 });
 
 DV.backbone.model.CommentSet = Backbone.Collection.extend({
@@ -12878,7 +12875,12 @@ DV.backbone.view.CommentList = Backbone.View.extend({
   addComment: function() {
     var commentText = this.$el.find('.DV-comment_input').val();
     this.$el.find('.DV-comment_input').val('');
-    this.collection.create( { commenter: DV.account.name, avatar_url: DV.account.avatar_url, text: commentText, access: this.collection.access } );
+    this.collection.create({ 
+      account: DV.account.name, 
+      avatar_url: DV.account.avatar_url, 
+      text: commentText, 
+      access: this.collection.access
+    });
     this.openAnnotationList();
   },
   

@@ -256,6 +256,9 @@ class Document < ActiveRecord::Base
     attrs[:remote_url] ||= published_url
     data = attrs.delete :data
     update_attributes attrs
+    if attrs[:comment_access]
+      Annotation.update_all(['comment_access = ?', comment_access], ['document_id = ?', id])
+    end
     self.data = data if data
     set_access(access) if access && self.access != access
     true

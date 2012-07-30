@@ -32,7 +32,7 @@ class AnnotationsController < ApplicationController
   # Any account can create a private note on any document.
   # Only the owner of the document is allowed to create a public annotation.
   def create
-    note_attrs = pick(params, :page_number, :title, :content, :location, :access)
+    note_attrs = pick(params, :page_number, :title, :content, :location, :access, :comment_access)
     note_attrs[:access] = ACCESS_MAP[note_attrs[:access].to_sym]
     doc = current_document
     return forbidden unless note_attrs[:access] == PRIVATE || current_account.allowed_to_edit?(doc) || current_account.reviews?(doc)

@@ -14,7 +14,7 @@ class Annotation < ActiveRecord::Base
   DEFAULT_CANONICAL_OPTIONS = { :comments => true }
 
   validates_presence_of :title, :page_number
-  validates_presence_of :organization_id, :account_id, :document_id, :access
+  validates_presence_of :organization_id, :account_id, :document_id, :access, :comment_access
 
   before_validation :ensure_title
   before_create :before_validation_on_create

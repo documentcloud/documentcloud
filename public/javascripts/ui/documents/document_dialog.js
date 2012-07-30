@@ -2,7 +2,7 @@
 // documents at once, sending a `Backbone.Model#save` per-document.
 dc.ui.DocumentDialog = dc.ui.Dialog.extend({
 
-  ATTRIBUTES : ['title', 'source', 'description', 'related_article', 'remote_url', 'access'],
+  ATTRIBUTES : ['title', 'source', 'description', 'related_article', 'remote_url', 'access', 'comment_access'],
 
   id        : 'edit_document_dialog',
   className : 'dialog docalog',
@@ -39,6 +39,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
     }));
     var attrs = this._sharedAttributes();
     attrs['access'] = attrs['access'] || dc.access.PRIVATE;
+    attrs['comment_access'] = attrs['comment_access'] || dc.access.PRIVATE;
     _.each(this.ATTRIBUTES, _.bind(function(attr) {
       $('#document_edit_' + attr).val(attrs[attr] || '');
     }, this));
@@ -56,6 +57,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
       if (!el.length) return;
       var next = el.val();
       if (attr == 'access') next = parseInt(next, 10);
+      if (attr == 'comment_access') next = parseInt(next, 10);
       if (attr == 'related_article' || attr == 'remote_url') next = dc.inflector.normalizeUrl(next);
       if (next != original[attr] && el.hasClass('change')) changes[attr] = next;
     }, this));
