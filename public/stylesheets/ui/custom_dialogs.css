@@ -36,7 +36,7 @@
     width: 366px; height: 78px;
     display: block;
   }
-  .docalog .document_access {
+  .docalog select {
     position: absolute;
     left: 115px; top: 5px;
   }
