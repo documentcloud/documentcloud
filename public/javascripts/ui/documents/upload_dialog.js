@@ -302,10 +302,11 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
   // Serialize user-submitted form data for the document's various attributes.
   serialize : function() {
     return {
-      title       : this._title.val(),
-      description : this.$('textarea[name=description]').val(),
-      source      : this.$('input[name=source]').val(),
-      access      : this.$('select[name=access]').val()
+      title          : this._title.val(),
+      description    : this.$('textarea[name=description]').val(),
+      source         : this.$('input[name=source]').val(),
+      comment_access : this.$('select[name=comment_access]').val(),
+      access         : this.$('select[name=access]').val()
     };
   },
 
@@ -322,9 +323,10 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
   applyAll : function() {
     var dialog = dc.app.uploader.el;
     var attrs  = this.serialize();
-    $('textarea[name=description]', dialog).val(attrs.description);
-    $('input[name=source]',         dialog).val(attrs.source);
-    $('select[name=access]',        dialog).val(attrs.access);
+    $('textarea[name=description]',  dialog).val(attrs.description);
+    $('input[name=source]',          dialog).val(attrs.source);
+    $('select[name=comment_access]', dialog).val(attrs.comment_access);
+    $('select[name=access]',         dialog).val(attrs.access);
     dc.app.uploader.info('Update applied to all files.');
   },
 

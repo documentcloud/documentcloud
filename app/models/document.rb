@@ -164,6 +164,7 @@ class Document < ActiveRecord::Base
     title    = params[:title] || File.basename(name, File.extname(name)).titleize
     access   = params[:make_public] ? PUBLIC :
                (params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE)
+    comment_access = params[:comment_access] ? ACCESS_MAP[params[:comment_access].to_sym] : PRIVATE
     email_me = params[:email_me] ? params[:email_me].to_i : false
     file_ext = File.extname(name).downcase[1..-1]
     
@@ -171,6 +172,7 @@ class Document < ActiveRecord::Base
       :organization_id    => organization.id,
       :account_id         => account.id,
       :access             => PENDING,
+      :comment_access     => comment_access,
       :page_count         => 0,
       :title              => title,
       :description        => params[:description],
