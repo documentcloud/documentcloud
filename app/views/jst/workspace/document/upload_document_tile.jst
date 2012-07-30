@@ -44,6 +44,17 @@
     </div>
 
     <div class="upload_access">
+      <label for="document_upload_comment_access_<%= model.id %>">
+        Comment Access:
+      </label>
+      <select name="comment_access" class="document_comment_access" id="document_upload_comment_access_<%= model.id %>">
+        <option value="public">Public Access</option>
+        <option value="private" selected="true">Private Access</option>
+        <option value="organization">Private to <%= dc.account.organization().get('name') %></option>
+      </select>
+    </div>
+
+    <div class="upload_access">
       <label for="document_upload_access_<%= model.id %>">
         Access Level:
       </label>

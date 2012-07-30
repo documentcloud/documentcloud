@@ -57,7 +57,7 @@
   <select name="comment_access" class="document_comment_access attribute" id="document_edit_comment_access">
     <option value="4">Public Commenting</option>
     <option value="1">Private Commenting</option>
-    <option value="2">Private Commenting for <%= dc.account.organization.name %></option>
+    <option value="2">Private Commenting for <%= dc.account.organization().get('name') %></option>
   </select>
 </div>
 
@@ -68,6 +68,6 @@
   <select name="access" class="document_access attribute" id="document_edit_access">
     <option value="4">Public Access</option>
     <option value="1">Private Access</option>
-    <option value="2">Private to <%= dc.account.organization.name %></option>
+    <option value="2">Private to <%= dc.account.organization().get('name') %></option>
   </select>
 </div>
