@@ -54,27 +54,6 @@ class Annotation < ActiveRecord::Base
     opts
   }
 
-  # Access permissions for annotations are enforced 
-  named_scope :commentable, lambda { |account|
-    has_shared = account && account.accessible_project_ids.present?
-    access = []
-    access << "(annotations.comment_access = #{PUBLIC})"
-    access << "((annotations.comment_access = #{EXCLUSIVE}) and annotations.organization_id = #{account.organization_id})" if account
-    access << "(annotations.comment_access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
-    access << "((annotations.comment_access = #{EXCLUSIVE}) and memberships.document_id = annotations.document_id)" if has_shared
-    opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
-    if has_shared
-      opts[:joins] = <<-EOS
-        left outer join
-        (select distinct document_id from project_memberships
-          where project_id in (#{account.accessible_project_ids.join(',')})) as memberships
-        on memberships.document_id = annotations.document_id
-      EOS
-    end
-    opts
-  }
-
-
   named_scope :owned_by, lambda { |account|
     {:conditions => {:account_id => account.id}}
   }

@@ -21,11 +21,6 @@ class CommentsController < ApplicationController
   # def destroy
   # end
 
-  def index
-    @response = Comment.find_all_by_annotation_id(current_annotation.id)
-    json_response
-  end  
-  
   def show
     return not_found unless current_annotation and current_comment
     respond_to do |format|
