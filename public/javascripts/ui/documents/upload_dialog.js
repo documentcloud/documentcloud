@@ -305,7 +305,8 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
       title       : this._title.val(),
       description : this.$('textarea[name=description]').val(),
       source      : this.$('input[name=source]').val(),
-      access      : this.$('select[name=access]').val()
+      access      : this.$('select[name=access]').val(),
+      language    : this.$('select[name=language]').val()
     };
   },
 
@@ -325,6 +326,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     $('textarea[name=description]', dialog).val(attrs.description);
     $('input[name=source]',         dialog).val(attrs.source);
     $('select[name=access]',        dialog).val(attrs.access);
+    $('select[name=language]',      dialog).val(attrs.language);
     dc.app.uploader.info('Update applied to all files.');
   },
 

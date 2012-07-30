@@ -126,6 +126,7 @@ class Document < ActiveRecord::Base
     # Attributes...
     string  :title
     string  :source
+    string  :language
     time    :created_at
     boolean :published, :using => :published?
     integer :id
@@ -177,6 +178,7 @@ class Document < ActiveRecord::Base
       :source             => params[:source],
       :related_article    => params[:related_article],
       :remote_url         => params[:published_url] || params[:remote_url],
+      :language           => params[:language] || 'en', # todo: default to account.language
       :original_extension => file_ext
     )
     import_options = {

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/support/setup'
 
 class DocumentImport < CloudCrowd::Action
-
+  
   # Split a document import job into two parallel parts ... one for the image
   # generation and one for the text extraction.
   # If the Document was not originally uploaded, but was passed as a remote URL
@@ -76,8 +76,9 @@ class DocumentImport < CloudCrowd::Action
     # Destroy existing text and pages to make way for the new.
     document.pages.destroy_all if document.pages.count > 0
     begin
-      opts = {:pages => 'all', :output => 'text'}
+      opts = {:pages => 'all', :output => 'text', :language => ocr_language(document.language)}
       opts[:ocr] = true if options['force_ocr']
+      opts[:clean] = false unless opts[:language] == 'eng'
       Docsplit.extract_text(@pdf, opts)
     rescue Exception => e
       LifecycleMailer.deliver_exception_notification(e, options)
@@ -87,7 +88,12 @@ class DocumentImport < CloudCrowd::Action
       path = "text/#{document.slug}_#{page_number}.txt"
       text = ''
       if File.exists?(path)
-        text = DC::Import::Utils.read_ascii(path)
+        text = if document.language == 'en'
+          DC::Import::Utils.read_ascii(path)
+        else
+          puts "Non english document"
+          File.read(path)
+        end
       end
       queue_page_text(text, page_number)
     end
@@ -99,7 +105,7 @@ class DocumentImport < CloudCrowd::Action
     document.save!
     pages = document.reload.pages
     Sunspot.index pages
-    DC::Import::EntityExtractor.new.extract(document, text) unless options['secure']
+    DC::Import::EntityExtractor.new.extract(document, text) unless options['secure'] or document.language != 'en'
     document.upload_text_assets(pages, access)
     document.id
   end
@@ -148,6 +154,13 @@ class DocumentImport < CloudCrowd::Action
 
   def access
     options['access'] || DC::Access::PRIVATE
+  end
+  
+  def ocr_language(two_letter)
+    {
+      'en' => 'eng',
+      'es' => 'spa'
+    }[two_letter] || 'eng'
   end
 
 end
