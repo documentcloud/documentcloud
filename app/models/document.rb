@@ -48,6 +48,8 @@ class Document < ActiveRecord::Base
   validates_presence_of :organization_id, :account_id, :access, :page_count,
                         :title, :slug
 
+  validates_inclusion_of :language, :in => DC::Language::SUPPORTED
+
   before_validation_on_create :ensure_titled
 
   after_destroy :delete_assets
