@@ -294,7 +294,7 @@ dc.ui.Document = Backbone.View.extend({
   
   editCommentAccess : function() {
     console.log("Opening the Comment Access dialog! (well, at some point. maybe.)");
-  }
+  },
 
   // Context menu item opens access level dialog for multiple selected documents.
   setAccessLevelAll : function() {
