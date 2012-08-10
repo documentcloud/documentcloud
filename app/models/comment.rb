@@ -7,6 +7,8 @@ class Comment < ActiveRecord::Base
 
   validates_presence_of :text, :access, :document_id, :annotation_id
   
+  text_attr :text
+  
   before_create :ensure_author_name, :ensure_access
   
   def ensure_author_name
@@ -42,7 +44,7 @@ class Comment < ActiveRecord::Base
   
   def accessible_to?(account)
     # short circuit for public view or commenters who don't belong to an organization.
-    access == PUBLIC if account.nil? or account.organization.nil?
+    return access == PUBLIC if account.nil? or account.organization.nil?
 
     this_comment = self
     ( access == PUBLIC ) or
