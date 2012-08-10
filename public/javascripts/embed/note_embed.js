@@ -9,30 +9,34 @@
   
   dc.embed.loadNote = function(embedUrl, opts) {
     var id = parseInt(embedUrl.match(/(\d+).js$/)[1], 10);
-    notes[id] = notes[id] || {};
-    notes[id].options = opts || {};
+    notes[id] = notes[id] || new dc.embed.noteModel(opts);
     $.getScript(embedUrl);
     dc.embed.pingRemoteUrl('note', id);
   };
   
   dc.embed.noteCallback = function(response) {
-    var id         = response.id;
-    var note       = new dc.embed.noteModel(response);
-    var options    = notes[id].options
-    var container  = options.container || '#DC-note-' + id;
-    var $container = $(container);
-    var containerWidth = $container.width();
-
-    $container.html(JST['note_embed']({note : note}));
-    if (containerWidth < 700) note.center($container, containerWidth);
-    if (options.afterLoad) options.afterLoad(note);
+    var id   = response.id;
+    var note = dc.embed.notes[id];
+    note.attributes = response;
+    note.render();
+    if (note.options && note.options.afterLoad) note.options.afterLoad(note);
   };
   
-  dc.embed.noteModel = function(json) {
-    this.attributes = json;
+  dc.embed.noteModel = function(opts) {
+    this.options = opts || {};
   };
   
   dc.embed.noteModel.prototype = {
+    render : function(selector) {
+      var options    = this.options;
+      var container  = selector || options.container || '#DC-note-' + this.get('id');
+      var $container = $(container);
+      var containerWidth = $container.width();
+
+      $container.html(JST['note_embed']({note : this}));
+      if (containerWidth < 700) this.center($container, containerWidth);
+      return $container;
+    },
     
     get : function(key) {
       return this.attributes[key];
@@ -43,8 +47,8 @@
     },
     
     imageUrl : function() {
-      return this._imageUrl = this._imageUrl ||
-        this.get('image_url').replace('{size}', 'normal').replace('{page}', this.get('page'));
+      return (this._imageUrl = this._imageUrl ||
+        this.get('image_url').replace('{size}', 'normal').replace('{page}', this.get('page')));
     },
 
     coordinates : function() {
@@ -52,13 +56,13 @@
       var loc = this.get('location');
       if (!loc) return null;
       var css = _.map(loc.image.split(','), function(num){ return parseInt(num, 10); });
-      return this._coordinates = {
+      return (this._coordinates = {
         top:    css[0],
         left:   css[3],
         right:  css[1],
         height: css[2] - css[0],
         width:  css[1] - css[3]
-      };
+      });
     },
     
     center : function($container) {
@@ -92,7 +96,7 @@
     url = url.replace(/[\/]+$/, '');
     var hitUrl = dc.recordHit;
     var key    = encodeURIComponent(type + ':' + id + ':' + url);
-    $(document).ready( function(){ $(document.body).append('<img alt="" width="1" height="1" src="' + hitUrl + '?key=' + key + '" />') });
+    $(document).ready( function(){ $(document.body).append('<img alt="" width="1" height="1" src="' + hitUrl + '?key=' + key + '" />'); });
   };
   
 })();
