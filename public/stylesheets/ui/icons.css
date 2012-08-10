@@ -39,6 +39,13 @@
   .icon.published:hover {
     background-position: center -28px;
   }
+.icon.comments {
+  background-image: url(/images/embed/icons/comments.png);
+  background-position: center 0;
+}
+  .icon.comments:hover {
+    background-position: center -28px;
+  }
 .icon.cancel_search, .icon.cancel_search_dark {
   width: 11px; height: 11px;
   background-position: center 0;

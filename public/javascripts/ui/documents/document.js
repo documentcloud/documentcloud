@@ -25,6 +25,7 @@ dc.ui.Document = Backbone.View.extend({
     'click .datalines .edit_glyph'  : 'openDataDialog',
     'click .title .lock'            : 'editAccessLevel',
     'click .title .published'       : 'viewPublishedDocuments',
+    'click .title .comments'        : 'editCommentAccess',
     'click .page_icon'              : '_openPage',
     'click .reviewer_count'         : '_openShareDialog',
     'click .occurrence'             : '_openPage',
@@ -290,6 +291,10 @@ dc.ui.Document = Backbone.View.extend({
   editAccessLevel : function() {
     Documents.editAccess([this.model]);
   },
+  
+  editCommentAccess : function() {
+    console.log("Opening the Comment Access dialog! (well, at some point. maybe.)");
+  }
 
   // Context menu item opens access level dialog for multiple selected documents.
   setAccessLevelAll : function() {
