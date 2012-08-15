@@ -14,7 +14,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     Backbone.View.call(this, options);
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'openDocumentEmbedDialog', 'openNoteEmbedDialog',
+      'editRelatedArticle', 'editAccess', 'editCommentAccess', 'openDocumentEmbedDialog', 'openNoteEmbedDialog',
       'openSearchEmbedDialog', 'openPublicationDateDialog', 'requestDownloadViewers',
       'checkFloat', '_openTimeline', '_viewEntities', 'editPublishedUrl',
       'openShareDialog', '_markOrder', '_removeFromSelectedProject',
@@ -114,6 +114,10 @@ dc.ui.Toolbar = Backbone.View.extend({
 
   editAccess : function() {
     Documents.editAccess(Documents.selected());
+  },
+
+  editCommentAccess : function() {
+    Documents.editCommentAccess(Documents.selected());
   },
 
   editData : function() {
@@ -315,6 +319,7 @@ dc.ui.Toolbar = Backbone.View.extend({
         {title : 'Source',                    attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
         {title : 'Description',               attrs: {'class' : 'multiple indent'}, onClick : this.editDescription},
         {title : 'Access Level',              attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
+        {title : 'Comment Access',            attrs: {'class' : 'multiple indent'}, onClick : this.editCommentAccess},
         {title : 'Related Article URL',       attrs: {'class' : 'multiple indent'}, onClick : this.editRelatedArticle},
         {title : 'Published URL',             attrs: {'class' : 'multiple indent'}, onClick : this.editPublishedUrl},
         {title : 'Edit Document Data',        attrs: {'class' : 'multiple'},        onClick : this.editData},

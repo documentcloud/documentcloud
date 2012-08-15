@@ -3,9 +3,9 @@
   <img class="icon doc generic is_draggable <%= dc.account ? 'noselect' : '' %>" src="<%= thumbnail_url %>" data-id="<%= id %>" />
   <div class="title noselect">
     <a href="<%= document_viewer_url %>" class="doc_title noselect"><%= title %></a>
-    <span class="<%= icon["class"] %>" title="<%= icon.title %>"></span>
-    <span class="<%= icon["class"] + " comments" %>" title="<%= icon.title %>"></span>
-    <span class="icon document_tool edit_glyph <%= icon.iconless ? '' : 'bottom' %>" title="Edit Document Information"></span>
+    <span class="<%= icons.access["class"] %>" title="<%= icons.access['title'] %>"></span>
+    <span class="<%= icons.comment_access["class"] %>" title="<%= icons.comment_access['title'] %>"></span>
+    <span class="icon document_tool edit_glyph <%= icons.iconless ? '' : 'bottom' %>" title="Edit Document Information"></span>
   </div>
 </div>
 <% if (annotation_count) { %>

@@ -439,6 +439,34 @@ dc.model.DocumentSet = Backbone.Collection.extend({
       return true;
     }, options);
   },
+  
+  editCommentAccess : function(docs, callback) {
+    var options = {information: this.subtitle(docs.length)};
+    if (!this.allowedToEdit(docs)) return;
+    var current = this.sharedAttribute(docs, 'comment_access') || dc.access.PRIVATE;
+    dc.ui.Dialog.choose('Comment Access', [
+      {
+        text        : 'Public Commenting',
+        description : 'Anyone on the internet can comment on the document\'s notes.',
+        value       : dc.access.PUBLIC,
+        selected    : current == dc.access.PUBLIC
+      },
+      {
+        text        : 'No Commenting',
+        description : 'No one can comment on the document\'s notes.',
+        value       : dc.access.PRIVATE,
+        selected    : current == dc.access.PRIVATE
+      }
+    ], function(comment_access) {
+      _.each(docs, function(doc) { doc.save({comment_access : parseInt(comment_access, 10)}); });
+      var notification = 'Comment Access updated for ' + docs.length + ' ' + dc.inflector.pluralize('document', docs.length);
+      if (!_.any(docs, function(doc) { return doc.suppressNotifier; })) {
+        dc.ui.notifier.show({mode : 'info', text : notification});
+      }
+      if (callback) callback(comment_access);
+      return true;
+    }, options);
+  },
 
   // We override `add` to listen for uploading documents, and to start polling
   // for changes.

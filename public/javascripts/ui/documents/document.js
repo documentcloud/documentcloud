@@ -77,7 +77,7 @@ dc.ui.Document = Backbone.View.extend({
     var data = _.extend(this.model.toJSON(), {
       model         : this.model,
       created_at    : this.model.get('created_at').replace(/\s/g, '&nbsp;'),
-      icon          : this._iconAttributes(),
+      icons         : this._iconAttributes(),
       thumbnail_url : this._thumbnailURL(),
       data          : this.model.sortedData()
     });
@@ -293,12 +293,16 @@ dc.ui.Document = Backbone.View.extend({
   },
   
   editCommentAccess : function() {
-    console.log("Opening the Comment Access dialog! (well, at some point. maybe.)");
+    Documents.editCommentAccess([this.model]);
   },
 
   // Context menu item opens access level dialog for multiple selected documents.
   setAccessLevelAll : function() {
     Documents.editAccess(Documents.chosen(this.model));
+  },
+
+  setCommentAccessAll : function() {
+    Documents.editCommentAccess(Documents.chosen(this.model));
   },
 
   // Opens dialog to change `publish_at` field on document model.
@@ -355,6 +359,7 @@ dc.ui.Document = Backbone.View.extend({
         {title : 'Edit Document Information', onClick: this.openDialog},
         {title : 'Edit Document Data',        onClick: this.openDataDialog},
         {title : 'Set Access Level',          onClick: this.setAccessLevelAll},
+        {title : 'Set Comment Access',        onClick: this.setCommentAccessAll},
         {title : deleteTitle,                 onClick: this.deleteDocuments,
                                               attrs : {'class' : 'warn'}}
       ]);
@@ -369,24 +374,40 @@ dc.ui.Document = Backbone.View.extend({
 
   // Helper method for setting which action icons appear next to the document tile.
   _iconAttributes : function() {
-    var access = this.model.get('access');
+    var icons = {}
     var base = 'icon main_icon document_tool ';
+
+    var access = this.model.get('access');
     switch (access) {
       case dc.access.PENDING:
-        return {'class' : base + 'spinner',    title : 'Uploading...'};
+        icons['access'] = {'class' : base + 'spinner',    title : 'Uploading...'};
+        break;
       case dc.access.ERROR:
-        return {'class' : base + 'alert_gray', title : 'Broken document'};
+        icons['access'] = {'class' : base + 'alert_gray', title : 'Broken document'};
+        break;
       case dc.access.ORGANIZATION:
-        return {'class' : base + 'lock',       title : 'Private to ' + (dc.account ?
+        icons['access'] = {'class' : base + 'lock',       title : 'Private to ' + (dc.account ?
                                                        dc.account.organization().get('name') :
                                                        'your organization')};
+       break;
       case dc.access.PRIVATE:
-        return {'class' : base + 'lock',       title : 'Private'};
+        icons['access'] = {'class' : base + 'lock',       title : 'Private'};
+        break;
       default:
         if (this.model.isPublished())
-          return {'class' : base + 'published', title : 'Open Published Version'};
-        return {'class' : base + 'hidden', iconless: true};
+          icons['access'] = {'class' : base + 'published', title : 'Open Published Version'};
+        icons['access'] = {'class' : base + 'hidden', iconless: true};
     }
+    
+    var comment_access = this.model.get('comment_access');
+    if (comment_access == dc.access.PUBLIC) {
+      icons['comment_access'] = {'class' : base + 'comments', title : 'Comments'};
+    } else {
+      icons['comment_access'] = {'class' : base + 'hidden', iconless: true};
+    }
+    
+    if (_.all(icons, function(k,v){ return v.iconless; })) icons.iconless = true;
+    return icons;
   },
 
   // Helper method for getting the right document tile icon URL, based on
