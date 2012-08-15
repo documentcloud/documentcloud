@@ -1,8 +1,12 @@
+<%
+  root = DC.server_root(:agnostic => true)
+  asset_root = DC_CONFIG['asset_root'] || root
+%>
+
 (function() {
   // If the viewer is already loaded, don't repeat the process.
   if (window.DV && window.DV.loaded) return;
 
-  <% root = DC.server_root(:ssl => false) %>
   window.DV = window.DV || {};
   window.DV.recordHit = "<%= root.sub('s3', 'www') %>/pixel.gif";
 
@@ -18,16 +22,16 @@
 
   /*@cc_on
   /*@if (@_jscript_version < 5.8)
-    loadCSS('<%= root %>/viewer/viewer.css');
+    loadCSS('<%= asset_root %>/viewer/viewer.css');
   @else @*/
-    loadCSS('<%= root %>/viewer/viewer-datauri.css');
+    loadCSS('<%= asset_root %>/viewer/viewer-datauri.css');
   /*@end
   @*/
-  loadCSS('<%= root %>/viewer/printviewer.css', 'print');
+  loadCSS('<%= asset_root %>/viewer/printviewer.css', 'print');
 
   // Record the fact that the viewer is loaded.
   DV.loaded = true;
 
   // Request the viewer JavaScript.
-  document.write('<script type="text/javascript" src="<%= root %>/viewer/viewer.js"></script>');
+  document.write('<script type="text/javascript" src="<%= asset_root %>/viewer/viewer.js"></script>');
 })();

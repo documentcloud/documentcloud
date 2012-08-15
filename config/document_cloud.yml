@@ -12,11 +12,13 @@ staging:
   <<: *defaults
   cloud_crowd_server: ec2-50-16-197-147.compute-1.amazonaws.com:8080
   server_root:        staging.documentcloud.org
+  asset_root:         "//s3.amazonaws.com/dcloud_staging"
 
 production:
   <<: *defaults
   cloud_crowd_server: ec2-174-129-5-5.compute-1.amazonaws.com:8080
   server_root:        www.documentcloud.org
+  asset_root:         "//s3.amazonaws.com/s3.documentcloud.org"
   db_volume_id:       vol-d4c305bd
 
 test:
