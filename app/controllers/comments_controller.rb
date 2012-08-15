@@ -4,14 +4,16 @@ class CommentsController < ApplicationController
   def create
     return forbidden unless current_annotation and current_annotation.allows_comments? current_account
     comment = Comment.new(
-      :document_id => current_document.id, 
+      :document_id   => current_document.id, 
       :annotation_id => current_annotation.id,
-      :account_id => ((current_account and current_account.id) || anonymous_commenter.id),
-      :text => params[:text],
-      :access => params[:access]
+      :account_id    => ((current_account and current_account.id) or anonymous_commenter.id),
+      :text          => params[:text],
+      :access        => params[:access]
     )
     if comment.save
       @response = comment
+      expire_page current_document.canonical_cache_path if current_document.cacheable?
+      expire_page current_annotation.canonical_cache_path if current_annotation.cacheable?
     else
       return json({:errors => comment.errors}, 409)
     end
@@ -32,6 +34,18 @@ class CommentsController < ApplicationController
   end
   
   def update
+    return not_found unless comment = current_comment
+    unless current_account.allowed_to_edit?(comment) or current_account.allowed_to_edit(current_document)
+      comment.errors.add_to_base "You don't have permission to update this comment."
+      return json(comment, 403)
+    end
+
+    attrs = pick(params, :text, :access)
+    attrs[:access] = DC::Access::ACCESS_MAP[attrs[:access].to_sym]
+    comment.update_attributes(attrs)
+    expire_page current_document.canonical_cache_path if current_document.cacheable?
+    expire_page current_annotation.canonical_cache_path if current_annotation.cacheable?
+    json comment
   end
   
   private
@@ -45,7 +59,8 @@ class CommentsController < ApplicationController
   end
   
   def current_comment
-    @current_comment ||= Comment.first(:conditions=>{:id=>params[:id], :annotation_id => current_annotation.id})
+    return nil unless current_annotation
+    @current_comment ||= current_annotation.comments.find_by_id(params[:id])
   end
   
   def anonymous_commenter

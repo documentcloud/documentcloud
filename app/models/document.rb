@@ -850,7 +850,7 @@ class Document < ActiveRecord::Base
       doc['contributor']      = account_name
       doc['contributor_organization'] = organization_name
     end
-    doc['comment_access']     = comment_access
+    doc['comment_access']     = comment_access # ACCESS_NAMES[comment_access] if options[:access]
     doc['resources']          = res = ActiveSupport::OrderedHash.new
     res['pdf']                = pdf_url
     res['text']               = full_text_url

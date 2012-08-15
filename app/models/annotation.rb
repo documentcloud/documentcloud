@@ -117,7 +117,7 @@ class Annotation < ActiveRecord::Base
   end
   
   def allows_comments?(account)
-    access == PUBLIC if account.nil? or account.organization.nil?
+    return comment_access == PUBLIC if account.nil? or account.organization.nil?
 
     this_note = self
     ( comment_access == PUBLIC ) or
