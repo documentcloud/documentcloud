@@ -798,6 +798,7 @@
   .DV-all_comments:hover, .DV-comment_permalink:hover { text-decoration: underline; }
   .DV-comments textarea { width:99%; height: 4ex; }
   .DV-commenting .DV-button { float:right; }
+  .DV-commenting .DV-comment_input { height: 20ex; }
 
 /* ========== */
 /* = Header = */
