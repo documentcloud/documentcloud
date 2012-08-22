@@ -17,7 +17,7 @@ class Document < ActiveRecord::Base
   DISPLAY_DATETIME_FORMAT = "%I:%M %p – %a %b %d, %Y"
 
   DEFAULT_CANONICAL_OPTIONS = {
-    :sections => true, :annotations => true
+    :sections => true, :annotations => true, :contributor => true
   }
 
   DEFAULT_IMPORT_OPTIONS = {
