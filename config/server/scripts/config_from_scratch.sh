@@ -103,7 +103,7 @@ sudo -u postgres psql -f db/development_structure.sql dcloud_$RAILS_ENVIRONMENT 
 
 # nginx
 test -e /usr/local/nginx || /usr/bin/passenger-install-nginx-module --auto --auto-download \
-    --prefix /usr/local/nginx --extra-configure-flags='--with-http_gzip_static_module --with-http_ssl_module'
+    --prefix /usr/local/nginx --extra-configure-flags='--with-http_gzip_static_module --with-http_ssl_module --with-http_stub_status_module'
 LINE='export PATH=$PATH:/usr/local/nginx/sbin'
 grep -q "$LINE" .bashrc 2>/dev/null || echo "$LINE" >> .bashrc
 mkdir -p /usr/local/nginx/conf/sites-enabled /var/log/nginx/
