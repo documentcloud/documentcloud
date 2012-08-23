@@ -8,6 +8,9 @@
 <div class="slug">
   <span style="padding-right: 10px;" class="selectable_text">Project ID: <%= model.slug() %></span>
 </div>
+<div class="slug">
+<span style="padding-right: 10px;" class="selectable_text">Public Link: <a class="text_link" href="http://<%= location.hostname %>/public/search/projectid:<%= model.slug() %>"> http://<%= location.hostname %>/public/search/projectid:<%= model.slug() %></span>
+</div>
 
 <div class="collaboration">
   <div class="collaborators" style="display:none;">
