@@ -63,7 +63,10 @@ class ApiController < ApplicationController
     return not_found unless current_document
     @response = {'document' => current_document.canonical(:access => true, :sections => true, :annotations => true, :data => true)}
     respond_to do |format|
-      format.text { redirect_to(current_document.full_text_url) }
+      format.text do 
+        direct = [PRIVATE, ORGANIZATION, EXCLUSIVE].include? current_document.access
+        redirect_to(current_document.full_text_url(direct))
+      end
       format.json { json_response }
       format.js { json_response }
     end
