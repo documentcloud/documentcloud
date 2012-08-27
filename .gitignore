@@ -10,7 +10,7 @@ db/mongodb*
 db/solr_*
 db/sphinx
 raw
-secrets
+/secrets
 public/docs
 public/asset_store
 public/document-viewer/images/*.psd
