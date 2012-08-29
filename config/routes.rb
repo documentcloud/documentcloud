@@ -116,6 +116,7 @@ ActionController::Routing::Routes.draw do |map|
     home.contact        '/contact',       :action => 'contact'
     home.help           '/help',          :action => 'help'
     home.help           '/help/:page',    :action => 'help'
+    home.multilanguage  '/multilanguage', :action => 'multilanguage'
   end
 
   # Redirects.
