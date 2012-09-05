@@ -16,18 +16,19 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: remote_urls; Type: TABLE; Schema: public; Owner: documentcloud; Tablespace:
+-- Name: remote_urls; Type: TABLE; Schema: public; Owner: documentcloud; Tablespace: 
 --
 
-DROP TABLE IF EXISTS remote_urls;
 CREATE TABLE remote_urls (
     id integer NOT NULL,
-    document_id integer NOT NULL,
+    document_id integer,
     url character varying(255) NOT NULL,
     hits integer DEFAULT 0 NOT NULL,
     date_recorded date NOT NULL,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    note_id integer,
+    search_query character varying(255)
 );
 
 
@@ -36,7 +37,7 @@ ALTER TABLE public.remote_urls OWNER TO documentcloud;
 --
 -- Name: remote_urls_id_seq; Type: SEQUENCE; Schema: public; Owner: documentcloud
 --
-DROP SEQUENCE IF EXISTS remote_urls_id_seq;
+
 CREATE SEQUENCE remote_urls_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -55,13 +56,6 @@ ALTER SEQUENCE remote_urls_id_seq OWNED BY remote_urls.id;
 
 
 --
--- Name: remote_urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: documentcloud
---
-
-SELECT pg_catalog.setval('remote_urls_id_seq', 1, false);
-
-
---
 -- Name: id; Type: DEFAULT; Schema: public; Owner: documentcloud
 --
 
@@ -69,7 +63,7 @@ ALTER TABLE remote_urls ALTER COLUMN id SET DEFAULT nextval('remote_urls_id_seq'
 
 
 --
--- Name: remote_urls_pkey; Type: CONSTRAINT; Schema: public; Owner: documentcloud; Tablespace:
+-- Name: remote_urls_pkey; Type: CONSTRAINT; Schema: public; Owner: documentcloud; Tablespace: 
 --
 
 ALTER TABLE ONLY remote_urls
