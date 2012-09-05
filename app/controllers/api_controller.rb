@@ -110,6 +110,7 @@ class ApiController < ApplicationController
 
   # Retrieve a listing of your projects, including document id.
   def projects
+    return forbidden unless current_account # already returns a 401 if credentials aren't supplied
     @response = {'projects' => Project.accessible(current_account).map {|p| p.canonical } }
     json_response
   end
