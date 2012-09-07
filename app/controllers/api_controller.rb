@@ -59,10 +59,17 @@ class ApiController < ApplicationController
 
   # Retrieve a document's canonical JSON.
   def documents
-    return bad_request unless params[:id] and request.format.json? || request.format.js?
+    return bad_request unless params[:id] and request.format.json? || request.format.js? || request.format.text?
     return not_found unless current_document
     @response = {'document' => current_document.canonical(:access => true, :sections => true, :annotations => true, :data => true)}
-    json_response
+    respond_to do |format|
+      format.text do 
+        direct = [PRIVATE, ORGANIZATION, EXCLUSIVE].include? current_document.access
+        redirect_to(current_document.full_text_url(direct))
+      end
+      format.json { json_response }
+      format.js { json_response }
+    end
   end
   
   # Retrieve a note's canonical JSON.
@@ -103,6 +110,7 @@ class ApiController < ApplicationController
 
   # Retrieve a listing of your projects, including document id.
   def projects
+    return forbidden unless current_account # already returns a 401 if credentials aren't supplied
     @response = {'projects' => Project.accessible(current_account).map {|p| p.canonical } }
     json_response
   end

@@ -229,7 +229,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       if (num <= 0) return;
       var conj = num > 1 ? 'are' : 'is';
       this.info('There ' + conj + ' ' + num + ' ' + dc.inflector.pluralize('document', num) +
-                ' ahead of you in line.', true);
+                ' currently being processed.', true);
     }, this));
   },
 
