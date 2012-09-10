@@ -18,6 +18,15 @@ class ApiController < ApplicationController
     redirect_to '/help/api'
   end
 
+  def cors_options
+    return bad_request unless params[:allowed_methods]
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'OPTIONS, ' + params[:allowed_methods].map(&:to_s).map(&:upcase).join(', ')
+    headers['Access-Control-Allow-Headers'] = 'Authorization'
+    headers['Access-Control-Allow-Credentials'] = 'true'
+    render :nothing => true
+  end
+
   def search
     opts = API_OPTIONS.merge(pick(params, :sections, :annotations, :entities, :mentions, :data))
     if opts[:mentions] &&= opts[:mentions].to_i
