@@ -163,7 +163,7 @@
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   box-shadow: 0 1px 2px #bababa; -webkit-box-shadow: 0 1px 2px #bababa; -moz-box-shadow: 0 1px 2px #bababa;
   border: 1px solid #a7a7a7; border-top-color: #b7b7b7; border-bottom-color: #959595;
-  background: url(images/DV/embed/button_bg.png?1340599152) repeat-x left top;
+  background: url(images/DV/embed/button_bg.png?1346363004) repeat-x left top;
 }
 
  .DV-annotations{
@@ -2306,6 +2306,8 @@ span.DV-highlighted{
 .DV-docViewer {
   border: 1px solid #aaa;
   line-height: normal;
+  position: relative;
+  z-index: 0;
 }
 .DV-headerHat, .DV-title, .DV-contentsHeader {
   display: none !important;
@@ -2315,7 +2317,7 @@ span.DV-highlighted{
   border-bottom: 1px solid #777;
   position: relative;
   z-index: 20000;
-  box-shadow: 0 0 25px rgba(0,0,0,.35); -webkit-box-shadow: 0 0 25px rgba(0,0,0,.35); -moz-box-shadow: 0 0 25px rgba(0,0,0,.35);
+  box-shadow: 0 0 25px rgba(0,0,0,0.35); -webkit-box-shadow: 0 0 25px rgba(0,0,0,0.35); -moz-box-shadow: 0 0 25px rgba(0,0,0,0.35);
 }
   .DV-controls {
     margin-top: 0;

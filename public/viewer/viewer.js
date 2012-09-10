@@ -11434,14 +11434,23 @@ DV.DateUtils = {
     var minute = 1000 * 60;
     var hour   = minute * 60;
     var day    = hour * 24;
-    var time;
+    var time, answer;
 
-    if (!_.isFinite(duration))  { time = ""; } 
-    else if ( duration < 1 )    { time = "less than a minute ago"; } 
-    else if ( duration < hour ) { time = "" + Math.round(duration / minute) + " minutes ago"; }
-    else if ( duration < day )  { time = "" + Math.round(duration / hour) + " days ago"; }
-    else                        { time = "" + Math.round(duration / day) + " days ago"; }
-    return time;
+    if (!_.isFinite(duration))  { 
+      answer = ""; 
+    } else if ( duration < 1 * minute ) { 
+      answer = "less than a minute ago"; 
+    } else if ( duration < 1 * hour ) { 
+      time = Math.round(duration / minute);
+      answer = "" + time + " minute"+ (time < 2 ? '' : 's') +" ago"; 
+    } else if ( duration < 1 * day )  { 
+      time = Math.round(duration / hour);
+      answer = "" + time + " hour"+ (time < 2 ? '' : 's') +" ago";
+    } else {
+      time = Math.round(duration / day);
+      answer = "" + time + " day"+ (time < 2 ? '' : 's') +" ago";
+    }
+    return answer;
   }
 
 };
@@ -12878,7 +12887,7 @@ DV.backbone.view.CommentList = Backbone.View.extend({
     this.collection.create({ 
       account: DV.account.name, 
       avatar_url: DV.account.avatar_url, 
-      text: commentText, 
+      text: _.escape(commentText), 
       access: this.collection.access
     });
     this.openAnnotationList();
@@ -14831,7 +14840,8 @@ _.extend(DV.Schema.helpers, {
     var pdfURL = doc.resources.pdf;
     pdfURL = pdfURL && this.viewer.options.pdf !== false ? '<a target="_blank" href="' + pdfURL + '">Original Document (PDF) &raquo;</a>' : '';
 
-    var contributorList = '' + this.viewer.schema.document.contributor +', '+ this.viewer.schema.document.contributor_organization;
+    var contribs = doc.contributor && doc.contributor_organization &&
+                   ('' + doc.contributor + ', '+ doc.contributor_organization);
 
     var showAnnotations = this.showAnnotations();
     var printNotesURL = (showAnnotations) && doc.resources.print_annotations;
@@ -14842,7 +14852,7 @@ _.extend(DV.Schema.helpers, {
       header: headerHTML,
       footer: footerHTML,
       pdf_url: pdfURL,
-      contributors: contributorList,
+      contributors: contribs,
       story_url: storyURL,
       print_notes_url: printNotesURL,
       descriptionContainer: JST.descriptionContainer({ description: description}),
@@ -15197,7 +15207,6 @@ _.extend(DV.Schema.helpers, {
 
   },
   highlightSearchResponses: function(){
-
     var viewer    = this.viewer;
     var response  = viewer.searchResponse;
 
@@ -15221,11 +15230,12 @@ _.extend(DV.Schema.helpers, {
 
     // Replaces spaces in query with `\s+` to match newlines in textContent,
     // escape regex char contents (like "()"), and only match on word boundaries.
-    var query             = '\\b' + response.query.replace(/[-[\]{}()*+?.,\\^$|#]/g, "\\$&").replace(/\s+/g, '\\s+') + '\\b';
+    var boundary          = '(\\b|\\B)';
+    var query             = boundary + '('+response.query.replace(/[-[\]{}()*+?.,\\^$|#]/g, "\\$&").replace(/\s+/g, '\\s+')+')' + boundary;
     var textContent       = this.viewer.$('.DV-textContents');
     var currentPageText   = textContent.text();
     var pattern           = new RegExp(query,"ig");
-    var replacement       = currentPageText.replace(pattern,'<span class="DV-searchMatch">$&</span>');
+    var replacement       = currentPageText.replace(pattern,'$1<span class="DV-searchMatch">$2</span>$3');
 
     textContent.html(replacement);
 
