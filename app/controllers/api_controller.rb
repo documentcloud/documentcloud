@@ -82,7 +82,7 @@ class ApiController < ApplicationController
   end
   
   # Retrieve a note's canonical JSON.
-  def note
+  def notes
     return bad_request unless params[:id] and request.format.json? || request.format.js?
     return not_found unless current_note
     @response = {'annotation' => current_note.canonical}
