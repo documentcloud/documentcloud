@@ -45,8 +45,10 @@ class ApplicationController < ActionController::Base
   end
 
   # Make a JSONP-aware JSON response, using the contents of `@response`
+  # Where we allow JSONP, we also allow CORS.
   def json_response
     return if jsonp_request?
+    headers['Access-Control-Allow-Origin'] = '*'
     json @response
   end
 
