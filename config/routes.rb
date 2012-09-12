@@ -74,6 +74,14 @@ ActionController::Routing::Routes.draw do |map|
 
   # API.
   map.with_options :controller => 'api' do |api|
+    api.with_options :conditions => {:method => :options}, :action => 'cors_options' do |cors_api|
+      cors_api.document '/api/documents/:id.:format', :allowed_methods => [ :put, :delete ]
+      cors_api.entities '/api/documents/:id/entities.:format', :allowed_methods => [ :get ]
+      cors_api.note     '/api/documents/:id/note/:note_id.:format', :allowed_methods => [ :get ]
+      cors_api.projects '/api/projects.:format', :allowed_methods => [ :get, :post ]
+      cors_api.project  '/api/projects/:id.:format', :allowed_methods => [ :put, :delete ]
+    end
+
     api.update          '/api/documents/:id.:format', :action => 'update', :conditions => {:method => :put}
     api.destroy         '/api/documents/:id.:format', :action => 'destroy', :conditions => {:method => :delete}
     api.entities        '/api/documents/:id/entities.:format', :action => :entities
@@ -82,14 +90,6 @@ ActionController::Routing::Routes.draw do |map|
     api.create_project  '/api/projects.:format',      :action => 'create_project', :conditions => {:method => :post}
     api.update_project  '/api/projects/:id.:format',  :action => 'update_project', :conditions => {:method => :put}
     api.delete_project  '/api/projects/:id.:format',  :action => 'destroy_project',:conditions => {:method => :delete}
-
-    api.with_options :conditions => {:method => :options}, :action => 'cors_options' do |cors_api|
-      cors_api.document '/api/documents/:id.:format', :allowed_methods => [ :put, :delete ]
-      cors_api.entities '/api/documents/:id/entities.:format', :allowed_methods => [ :get ]
-      cors_api.note     '/api/documents/:id/note/:note_id.:format', :allowed_methods => [ :get ]
-      cors_api.projects '/api/projects.:format', :allowed_methods => [ :get, :post ]
-      cors_api.project  '/api/projects/:id.:format', :allowed_methods => [ :put, :delete ]
-    end
   end
 
   # Bulk downloads.
