@@ -29,6 +29,28 @@ ActionController::Routing::Routes.draw do |map|
   # Public search.
   map.public_search '/public/search', :controller => 'public', :action => 'index'
   map.public_search '/public/search/:query', :controller => 'public', :action => 'index', :query => /.*/
+
+  # API.
+  map.with_options :controller => 'api' do |api|
+    api.with_options :conditions => {:method => :options}, :action => 'cors_options' do |cors_api|
+      cors_api.document     '/documents/:id.:format', :allowed_methods => [ :get ]
+      cors_api.api_document '/api/documents/:id.:format', :allowed_methods => [ :put, :delete ]
+      cors_api.entities     '/api/documents/:id/entities.:format', :allowed_methods => [ :get ]
+      cors_api.note         '/api/documents/:id/note/:note_id.:format', :allowed_methods => [ :get ]
+      cors_api.notes        '/api/documents/:id/notes/:note_id.:format', :allowed_methods => [ :get ]
+      cors_api.projects     '/api/projects.:format', :allowed_methods => [ :get, :post ]
+      cors_api.project      '/api/projects/:id.:format', :allowed_methods => [ :put, :delete ]
+    end
+
+    api.update          '/api/documents/:id.:format', :action => 'update', :conditions => {:method => :put}
+    api.destroy         '/api/documents/:id.:format', :action => 'destroy', :conditions => {:method => :delete}
+    api.entities        '/api/documents/:id/entities.:format', :action => :entities
+    api.note            '/api/documents/:id/note/:note_id.:format', :action => :note, :conditions => {:method => :get}
+    api.projects        '/api/projects.:format',      :action => 'projects',       :conditions => {:method => :get}
+    api.create_project  '/api/projects.:format',      :action => 'create_project', :conditions => {:method => :post}
+    api.update_project  '/api/projects/:id.:format',  :action => 'update_project', :conditions => {:method => :put}
+    api.delete_project  '/api/projects/:id.:format',  :action => 'destroy_project',:conditions => {:method => :delete}
+  end
   
   # Document representations and (private) sub-resources.
   map.resources  :documents, :has_many => [:annotations],
@@ -71,28 +93,6 @@ ActionController::Routing::Routes.draw do |map|
     :preview_email => :get,
     :send_email    => :post
   }
-
-  # API.
-  map.with_options :controller => 'api' do |api|
-    api.update          '/api/documents/:id.:format', :action => 'update', :conditions => {:method => :put}
-    api.destroy         '/api/documents/:id.:format', :action => 'destroy', :conditions => {:method => :delete}
-    api.entities        '/api/documents/:id/entities.:format', :action => :entities
-    api.note           '/api/documents/:id/note/:note_id.:format', :action => :notes, :conditions => {:method => :get}
-    api.notes           '/api/documents/:id/notes/:note_id.:format', :action => :notes, :conditions => {:method => :get}
-    api.projects        '/api/projects.:format',      :action => 'projects',       :conditions => {:method => :get}
-    api.create_project  '/api/projects.:format',      :action => 'create_project', :conditions => {:method => :post}
-    api.update_project  '/api/projects/:id.:format',  :action => 'update_project', :conditions => {:method => :put}
-    api.delete_project  '/api/projects/:id.:format',  :action => 'destroy_project',:conditions => {:method => :delete}
-
-    api.with_options :conditions => {:method => :options}, :action => 'cors_options' do |cors_api|
-      cors_api.document '/api/documents/:id.:format', :allowed_methods => [ :put, :delete ]
-      cors_api.entities '/api/documents/:id/entities.:format', :allowed_methods => [ :get ]
-      cors_api.note     '/api/documents/:id/note/:note_id.:format', :allowed_methods => [ :get ]
-      cors_api.notes    '/api/documents/:id/notes/:note_id.:format', :allowed_methods => [ :get ]
-      cors_api.projects '/api/projects.:format', :allowed_methods => [ :get, :post ]
-      cors_api.project  '/api/projects/:id.:format', :allowed_methods => [ :put, :delete ]
-    end
-  end
 
   # Bulk downloads.
   map.bulk_download '/download/*args.zip', :controller => 'download', :action => 'bulk_download'
