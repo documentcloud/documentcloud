@@ -33,8 +33,7 @@ ActionController::Routing::Routes.draw do |map|
   # API.
   map.with_options :controller => 'api' do |api|
     api.with_options :conditions => {:method => :options}, :action => 'cors_options' do |cors_api|
-      cors_api.document     '/documents/:id.:format', :allowed_methods => [ :get ]
-      cors_api.api_document '/api/documents/:id.:format', :allowed_methods => [ :put, :delete ]
+      cors_api.document     '/api/documents/:id.:format', :allowed_methods => [ :get, :put, :delete ]
       cors_api.entities     '/api/documents/:id/entities.:format', :allowed_methods => [ :get ]
       cors_api.note         '/api/documents/:id/note/:note_id.:format', :allowed_methods => [ :get ]
       cors_api.notes        '/api/documents/:id/notes/:note_id.:format', :allowed_methods => [ :get ]
