@@ -1,10 +1,11 @@
 module DC
   # The official list of supported languages
   module Language
-    SUPPORTED = ['en', 'es']
+    SUPPORTED = ['en', 'es', 'fr']
     ALPHA3 = {
       'en' => 'eng',
-      'es' => 'spa'
+      'es' => 'spa',
+      'fr' => 'fra'
     }
   end
 end
