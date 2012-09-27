@@ -1,3 +1,5 @@
+require 'curb'
+
 module DC
   module Import
 
