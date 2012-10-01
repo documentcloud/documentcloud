@@ -91,7 +91,6 @@ class DocumentImport < CloudCrowd::Action
         text = if document.language == 'en'
           DC::Import::Utils.read_ascii(path)
         else
-          puts "Non english document"
           File.read(path)
         end
       end
