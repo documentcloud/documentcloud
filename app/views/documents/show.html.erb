@@ -38,7 +38,8 @@
         :allowed_to_edit => @allowed_to_edit,
         :allowed_to_review => @allowed_to_review,
         :data => true,
-        :access => true
+        :access => true,
+        :cache_busting => @allowed_to_edit
       }).to_json %>, {
         container: '#viewer'
       });

@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  window.currentDocumentModel = <%= @current_document.to_json %>;
+  window.currentDocumentModel = <%= @current_document.to_json({:cache_busting=>true}); %>;
   window.SERVER_ROOT_HTTP = '<%= DC.server_root(:ssl => false) %>';
 
   DV.jQuery(function() {
