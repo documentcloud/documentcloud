@@ -42,6 +42,9 @@ class DocumentImport < CloudCrowd::Action
       @pdf = document.slug + '.pdf'
       pdf_contents = asset_store.read_pdf document
       File.open(@pdf, 'w+') {|f| f.write(pdf_contents) }
+
+      document.update_file_metadata
+
       case input['task']
       when 'text'   then process_text
       when 'images' then process_images
@@ -60,14 +63,21 @@ class DocumentImport < CloudCrowd::Action
     document.id
   end
 
-  # Process the image generation of the document via Docsplit, then
+
+  # Check if there is a duplicate of the document already in the system
+  # if so, copy it into the appropriate bucket,
+  # otherwise process the image generation of the document via Docsplit, then
   # save each image with the asset store.
   def process_images
-    Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :rolling => true, :output => 'images')
-    Dir['images/700x/*.gif'].length.times do |i|
-      number = i + 1
-      image  = "#{document.slug}_#{number}.gif"
-      DC::Import::Utils.save_page_images(asset_store, document, number, image, access)
+    if document.duplicates.empty?
+      Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :rolling => true, :output => 'images')
+      Dir['images/700x/*.gif'].length.times do |i|
+        number = i + 1
+        image  = "#{document.slug}_#{number}.gif"
+        DC::Import::Utils.save_page_images(asset_store, document, number, image, access)
+      end
+    else
+      asset_store.copy_assets( document.duplicates.first, document )
     end
   end
 

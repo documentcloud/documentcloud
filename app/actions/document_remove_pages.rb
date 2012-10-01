@@ -15,6 +15,7 @@ class DocumentRemovePages < DocumentModBase
                                   options['insert_document_count'],
                                   options['access'])
       end
+
     rescue Exception => e
       fail_document
       LifecycleMailer.deliver_exception_notification(e, options)
@@ -33,9 +34,15 @@ class DocumentRemovePages < DocumentModBase
     orphaned_pages = ((total - delete_pages.length + 1)..total)
 
     # Rename pages with pdftk, keeping only unremoved pages
-    cmd = "pdftk #{@pdf} cat #{keep_pages.join(' ')} output #{document.slug}.pdf_temp"
+    tmp_name = "#{document.slug}.pdf_temp"
+    cmd = "pdftk #{@pdf} cat #{keep_pages.join(' ')} output #{tmp_name}"
     `#{cmd}`
-    asset_store.save_pdf(document, "#{document.slug}.pdf_temp")
+    if File.exists? tmp_name
+      asset_store.save_pdf(document, tmp_name)
+      File.open(tmp_name,'r') do | fh |
+        document.update_file_metadata( fh.read )
+      end
+    end
 
     # Pull images from S3, delete old images, then upload renamed images
     keep_pages.each_with_index do |p, i|
