@@ -38,7 +38,8 @@ end
 rule(/^ssh:/) do |t|
   conf = configuration
   host = t.name.split(':').last
-  exec "ssh -A -i #{conf[:key]} #{conf[:user]}@#{host}.documentcloud.org"
+  host += ".documentcloud.org" if host !~ /\./
+  exec "ssh -A -i #{conf[:key]} #{conf[:user]}@#{host}"
 end
 
 rule(/^remote:branch:/) do |t|
