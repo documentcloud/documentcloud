@@ -30,7 +30,7 @@ module DC
       # document if it hasn't already been set.
       def extract_information(document, calais, chunk_number)
         document.title = calais.doc_title unless document.titled?
-        document.language = 'en' # TODO: Convert calais.language into an ISO language code.
+        document.language ||= 'en' # TODO: Convert calais.language into an ISO language code.
         document.publication_date ||= calais.doc_date
         document.calais_id = calais.request_id
       end

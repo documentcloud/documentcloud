@@ -50,7 +50,7 @@
   </div>
 <% } %>
 
-<div class="row last">
+<div class="row">
   <label for="document_edit_access">
     Access Level:
   </label>
@@ -58,5 +58,16 @@
     <option value="4">Public Access</option>
     <option value="1">Private Access</option>
     <option value="2">Private to <%= dc.account.organization.name %></option>
+  </select>
+</div>
+
+<div class="row last">
+  <label for="document_edit_language">
+    Language:
+  </label>
+  <select name="language" class="document_access attribute" id="document_edit_language">
+    <option value="en">English</option>
+    <option value="es">Español/Spanish</option>
+    <option value="fr">Français/French</option>
   </select>
 </div>
