@@ -40,6 +40,7 @@
         :data => true,
         :access => true
       }).to_json %>, {
+        <% if @no_sidebar %>sidebar: false,<% end %>
         container: '#viewer'
       });
     <% end %>
