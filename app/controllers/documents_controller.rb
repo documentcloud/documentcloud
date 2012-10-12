@@ -16,6 +16,7 @@ class DocumentsController < ApplicationController
     return render :file => "#{Rails.root}/public/doc_404.html", :status => 404 unless doc
     respond_to do |format|
       format.html do
+        @no_sidebar = (params[:sidebar] || '').match /no|false/
         populate_editor_data if current_account
         return if date_requested?
         return if entity_requested?
@@ -238,7 +239,6 @@ class DocumentsController < ApplicationController
 
   def populate_editor_data
     @edits_enabled = true
-    @no_sidebar = (params[:sidebar] || '').match /no|false/
     @allowed_to_edit = current_account.allowed_to_edit?(current_document)
     @allowed_to_review = current_account.reviews?(current_document)
     @reviewer_inviter = @allowed_to_review && current_document.reviewer_inviter(current_account) || nil
