@@ -120,6 +120,7 @@ ActionController::Routing::Routes.draw do |map|
     home.terms          '/terms',         :action => 'terms'
     home.featured       '/featured',      :action => 'featured'
     home.privacy        '/privacy',       :action => 'privacy'
+    home.p3p            '/p3p.:format',   :action => 'p3p'
     home.home           '/home',          :action => 'index'
     home.news           '/news',          :action => 'news'
     home.opensource     '/opensource',    :action => 'opensource'
