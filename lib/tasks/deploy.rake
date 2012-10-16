@@ -30,7 +30,7 @@ namespace :deploy do
     end
     DC_CONFIG['server_root'] = 's3.documentcloud.org'
     contents = ERB.new(File.read('app/views/documents/loader.js.erb')).result(binding)
-    bucket.put('viewer/loader.js', contents, {}, 'public-read')
+    bucket.put('viewer/loader.js', contents, {}, 'public-read', {'Content-type' => 'application/javascript'})
   end
 
   desc "Deploy the Search/Note Embed to S3"
@@ -47,8 +47,8 @@ namespace :deploy do
       end
       DC_CONFIG['server_root'] = 's3.documentcloud.org'
       contents = ERB.new(File.read("app/views/#{embed[0]}/loader.js.erb")).result(binding)
-      bucket.put("#{embed[1]}/loader.js", contents, {}, 'public-read')
-      puts "uploading ERB(app/views/#{embed[0]}/loader.js.erb) to #{embed[1]}/loader.js"
+      bucket.put("#{embed[1]}/loader.js", contents, {}, 'public-read', {'Content-type' => 'application/javascript'})
+      puts "uploading app/views/#{embed[0]}/loader.js.erb to #{embed[1]}/loader.js"
     end
   end
 
