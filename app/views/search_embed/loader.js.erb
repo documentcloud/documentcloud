@@ -1,8 +1,12 @@
+<%
+  root = DC.server_root(:agnostic => true)
+  asset_root = DC_CONFIG['asset_root'] || root
+%>
+
 (function() {
   // If the search embed is already loaded, don't repeat the process.
   if (window.dc && window.dc.loaded) return;
 
-  <% root = DC.server_root(:ssl => false) %>
   window.dc = window.dc || {};
   window.dc.recordHit = "<%= root.sub('s3', 'www') %>/pixel.gif";
 
@@ -18,15 +22,15 @@
 
   /*@cc_on
   /*@if (@_jscript_version < 5.8)
-    loadCSS('<%= root %>/search_embed/search_embed.css');
+    loadCSS('<%= asset_root %>/search_embed/search_embed.css');
   @else @*/
-    loadCSS('<%= root %>/search_embed/search_embed-datauri.css');
+    loadCSS('<%= asset_root %>/search_embed/search_embed-datauri.css');
   /*@end
   @*/
-  
+
   // Record the fact that the embed is loaded.
   dc.loaded = true;
 
   // Request the embed JavaScript.
-  document.write('<script type="text/javascript" src="<%= root %>/search_embed/search_embed.js"></script>');
+  document.write('<script type="text/javascript" src="<%= asset_root %>/search_embed/search_embed.js"></script>');
 })();
