@@ -12,7 +12,7 @@ class ApiController < ApplicationController
 
   before_filter :secure_only,        :only => [:upload, :projects, :upload, :destroy, :create_project, :update_project, :destroy_project]
   before_filter :api_login_required, :only => [:upload, :projects, :update, :destroy, :create_project, :update_project, :destroy_project]
-  before_filter :api_login_optional, :only => [:documents, :search, :notes]
+  before_filter :api_login_optional, :only => [:documents, :search, :notes, :pending]
 
   def index
     redirect_to '/help/api'
@@ -79,6 +79,12 @@ class ApiController < ApplicationController
       format.json { json_response }
       format.js { json_response }
     end
+  end
+  
+  def pending
+    @response = { :total_documents => Document.pending.count }
+    @response[:your_documents] = Document.pending.count(:conditions => { :account_id => current_account.id }) if current_account
+    json_response
   end
   
   # Retrieve a note's canonical JSON.
@@ -150,7 +156,6 @@ class ApiController < ApplicationController
   def logger
     params[:secure] ? nil : super
   end
-
 
   private
 
