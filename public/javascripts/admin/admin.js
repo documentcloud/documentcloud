@@ -17,10 +17,10 @@ dc.ui.Admin = Backbone.View.extend({
     'i-0d4e9065': 'staging',
     'i-a3466ecb': 'app01',
     'i-4752792f': 'db01',
-    'i-0c448976': 'worker01',
-    'i-ab9808c0': 'worker02',
-    'i-bd7c3cd1': 'worker03',
-    'i-bdacecd1': 'worker04'
+    'i-c47d78b9': 'worker01',
+    'i-c41216b9': 'worker02',
+    'i-c61216bb': 'worker03',
+    'i-c01216bd': 'worker04'
   },
 
   id        : 'statistics',
