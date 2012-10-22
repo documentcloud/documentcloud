@@ -47,7 +47,7 @@ class Document < ActiveRecord::Base
                                   :source      => :project
 
   has_many :duplicates, :foreign_key=>'file_hash', :primary_key=>'file_hash', 
-           :class_name=>"Document", :conditions=>'id != #{id}'
+           :class_name=>"Document", :conditions=>'id != #{id} and text_changed=false and access in (1,2,3,4)'
 
   validates_presence_of :organization_id, :account_id, :access, :page_count,
                         :title, :slug
