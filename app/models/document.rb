@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Document < ActiveRecord::Base
   include DC::Access
   include ActionView::Helpers::TextHelper
@@ -44,6 +45,9 @@ class Document < ActiveRecord::Base
   has_one  :reviewer_project,     :through     => :project_memberships,
                                   :conditions  => {:hidden => true},
                                   :source      => :project
+
+  has_many :duplicates, :foreign_key=>'file_hash', :primary_key=>'file_hash', 
+           :class_name=>"Document", :conditions=>'id != #{id}'
 
   validates_presence_of :organization_id, :account_id, :access, :page_count,
                         :title, :slug
@@ -862,6 +866,12 @@ class Document < ActiveRecord::Base
     doc
   end
 
+  # Updates file_size and file_hash
+  # Will default to reading the data from the asset_store
+  # or can be passed arbitrary data such as from a file on disk
+  def update_file_metadata( data = asset_store.read_original(self) )
+    update_attributes!( :file_size => data.bytesize, :file_hash => Digest::SHA1.hexdigest( data ) )
+  end
 
   private
 
