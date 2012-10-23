@@ -24,14 +24,25 @@ class DocumentImport < CloudCrowd::Action
       file = File.basename document.original_file_path
       File.open(file, 'w'){ |f| f << DC::Store::AssetStore.new.read_original(document) }
     end
-    File.open(file, 'r') do |f|
-      DC::Import::PDFWrangler.new.ensure_pdf(f, file) do |path|
-        DC::Store::AssetStore.new.save_pdf(document, path, access)
+
+    tasks = []
+
+    # Calculate the file hash for the document's original_file so that duplicates can be found
+    document.update_file_metadata
+    if duplicate = document.duplicates.first
+      Rails.logger.info "Duplicate found, copying pdf"
+      asset_store.copy_pdf( duplicate, document )
+    else
+      Rails.logger.info "Building PDF"
+      File.open(file, 'r') do |f|
+        DC::Import::PDFWrangler.new.ensure_pdf(f, file) do |path|
+          DC::Store::AssetStore.new.save_pdf(document, path, access)
+        end
       end
     end
-    tasks = []
-    tasks << {'task' => 'text'} unless options['images_only']
     tasks << {'task' => 'images'} unless options['text_only']
+    tasks << {'task' => 'text'} unless options['images_only']
+
     tasks
   end
 
@@ -43,11 +54,9 @@ class DocumentImport < CloudCrowd::Action
       pdf_contents = asset_store.read_pdf document
       File.open(@pdf, 'w+') {|f| f.write(pdf_contents) }
 
-      document.update_file_metadata
-
       case input['task']
-      when 'text'   then process_text
-      when 'images' then process_images
+      when 'text'       then process_text
+      when 'images'     then process_images
       end
     rescue Exception => e
       LifecycleMailer.deliver_exception_notification(e, options)
@@ -63,21 +72,16 @@ class DocumentImport < CloudCrowd::Action
     document.id
   end
 
-
-  # Check if there is a duplicate of the document already in the system
-  # if so, copy it into the appropriate bucket,
-  # otherwise process the image generation of the document via Docsplit, then
-  # save each image with the asset store.
   def process_images
-    if document.duplicates.empty?
+    if duplicate = document.duplicates.first
+      asset_store.copy_images( duplicate, document )
+    else
       Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :rolling => true, :output => 'images')
       Dir['images/700x/*.gif'].length.times do |i|
         number = i + 1
         image  = "#{document.slug}_#{number}.gif"
         DC::Import::Utils.save_page_images(asset_store, document, number, image, access)
       end
-    else
-      asset_store.copy_assets( document.duplicates.first, document )
     end
   end
 
@@ -85,21 +89,30 @@ class DocumentImport < CloudCrowd::Action
     @pages = []
     # Destroy existing text and pages to make way for the new.
     document.pages.destroy_all if document.pages.count > 0
-    begin
-      opts = {:pages => 'all', :output => 'text'}
-      opts[:ocr] = true if options['force_ocr']
-      Docsplit.extract_text(@pdf, opts)
-    rescue Exception => e
-      LifecycleMailer.deliver_exception_notification(e, options)
-    end
-    Docsplit.extract_length(@pdf).times do |i|
-      page_number = i + 1
-      path = "text/#{document.slug}_#{page_number}.txt"
-      text = ''
-      if File.exists?(path)
-        text = DC::Import::Utils.read_ascii(path)
+    if duplicate = document.duplicates.first
+      asset_store.copy_text( duplicate, document )
+      Docsplit.extract_length(@pdf).times do |i|
+        page_number = i + 1
+        text = asset_store.read document.page_text_path(page_number)
+        queue_page_text(text, page_number)
       end
-      queue_page_text(text, page_number)
+    else
+      begin
+        opts = {:pages => 'all', :output => 'text'}
+        opts[:ocr] = true if options['force_ocr']
+        Docsplit.extract_text(@pdf, opts)
+      rescue Exception => e
+        LifecycleMailer.deliver_exception_notification(e, options)
+      end
+      Docsplit.extract_length(@pdf).times do |i|
+        page_number = i + 1
+        path = "text/#{document.slug}_#{page_number}.txt"
+        text = ''
+        if File.exists?(path)
+          text = DC::Import::Utils.read_ascii(path)
+        end
+        queue_page_text(text, page_number)
+      end
     end
     save_page_text!
     text = @pages.map{|p| p[:text] }.join('')
