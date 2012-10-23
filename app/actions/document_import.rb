@@ -29,7 +29,7 @@ class DocumentImport < CloudCrowd::Action
     document.update_file_metadata
     if duplicate = document.duplicates.first
       Rails.logger.info "Duplicate found, copying pdf"
-      asset_store.copy_pdf( duplicate, document )
+      asset_store.copy_pdf( duplicate, document, access )
     else
       Rails.logger.info "Building PDF"
       File.open(file, 'r') do |f|
@@ -71,7 +71,7 @@ class DocumentImport < CloudCrowd::Action
 
   def process_images
     if duplicate = document.duplicates.first
-      asset_store.copy_images( duplicate, document )
+      asset_store.copy_images( duplicate, document, access )
     else
       Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :rolling => true, :output => 'images')
       Dir['images/700x/*.gif'].length.times do |i|
@@ -87,7 +87,7 @@ class DocumentImport < CloudCrowd::Action
     # Destroy existing text and pages to make way for the new.
     document.pages.destroy_all if document.pages.count > 0
     if duplicate = document.duplicates.first
-      asset_store.copy_text( duplicate, document )
+      asset_store.copy_text( duplicate, document, access )
       Docsplit.extract_length(@pdf).times do |i|
         page_number = i + 1
         text = asset_store.read document.page_text_path(page_number)

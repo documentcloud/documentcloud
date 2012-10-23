@@ -119,14 +119,14 @@ module DC
       end
       
       # Duplicate all of the assets from one document over to another.
-      def copy_assets(source, destination)
+      def copy_assets(source, destination, access)
         [:copy_pdf, :copy_images, :copy_text].each do |task|
           send(task, source, destination)
         end
         true
       end
       
-      def copy_text(source, destination)
+      def copy_text(source, destination, access)
         ensure_directory(destination.path)
         ensure_directory(destination.pages_path)
         FileUtils.cp local(source.full_text_path), local(destination.full_text_path)
@@ -137,7 +137,7 @@ module DC
         true
       end
       
-      def copy_images(source, destination)
+      def copy_images(source, destination, access)
         ensure_directory(destination.path)
         ensure_directory(destination.pages_path)
         source.pages.each do |page|
@@ -149,13 +149,13 @@ module DC
         true
       end
       
-      def copy_rdf(source, destination)
+      def copy_rdf(source, destination, access)
         ensure_directory(destination.path)
         FileUtils.cp local(source.rdf_path), local(destination.rdf_path) if File.exists?(source.rdf_path)
         true
       end
       
-      def copy_pdf(source, destination)
+      def copy_pdf(source, destination, access)
         ensure_directory(destination.path)
         FileUtils.cp local(source.pdf_path), local(destination.pdf_path)
         true
