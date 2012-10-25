@@ -35,6 +35,7 @@ Rails::Initializer.run do |config|
   config.gem 'sunspot_rails',         :version => '>= 1.2.1'
   config.gem 'rdiscount',             :version => '>= 1.6.5'
   config.gem 'fastercsv',             :version => '>= 1.5.3'
+  config.gem 'curb',                  :version => '>= 0.7.18'
   require 'sanitize'
 
   # Middleware
