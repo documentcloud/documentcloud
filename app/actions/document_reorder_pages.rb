@@ -24,9 +24,16 @@ class DocumentReorderPages < DocumentModBase
 
   def reorder_pages(page_order)
     # Rewrite PDF with pdftk, using new page order
-    cmd = "pdftk #{@pdf} cat #{page_order.join(' ')} output #{document.slug}.pdf_temp"
+    tmp_name = "#{document.slug}.pdf_temp"
+    cmd = "pdftk #{@pdf} cat #{page_order.join(' ')} output #{tmp_name}"
     `#{cmd}`
-    asset_store.save_pdf(document, "#{document.slug}.pdf_temp") if File.exists? "#{document.slug}.pdf_temp"
+    if File.exists? tmp_name
+      asset_store.save_pdf(document, tmp_name)
+      File.open(tmp_name,'r') do | fh |
+        document.update_file_metadata( fh.read )
+      end
+    end
+
 
     # Pull images from S3, delete old images, then upload renamed images
     reordered_page_images = {}

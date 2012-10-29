@@ -12,7 +12,7 @@ class RedactPages < DocumentModBase
     'red'   => '#880000'
   }
   MAX_PER_PAGE      = 25
-  
+
   SIZE_EXTRACTOR    = /(\d+)x(\d+)/
 
   GM_ARGS = '-limit memory 256MiB -limit map 512MiB'
@@ -88,15 +88,22 @@ class RedactPages < DocumentModBase
     # OCR the large version of the image.
     `tesseract #{page_tiff_path} #{base} -l eng 2>&1`
     text = Docsplit.clean_text(DC::Import::Utils.read_ascii("#{base}.txt"))
-    
+
     document.pages.find_by_page_number(page).update_attributes :text => text
   end
 
   # Create the new PDF for the full document, and save it to the asset store.
+  # When complete, calculate the new file_hash for the document
   def rebuild_pdf
     page_paths = (1..document.page_count).map {|i| "#{document.slug}_#{i}.pdf" }
     `pdftk #{page_paths.join(' ')} cat output #{@pdf}`
-    asset_store.save_pdf(document, @pdf, access)
+
+    if File.exists? @pdf
+      asset_store.save_pdf(document, @pdf, access)
+      File.open( @pdf,'r') do | fh |
+        document.update_file_metadata( fh.read )
+      end
+    end
   end
 
 end
