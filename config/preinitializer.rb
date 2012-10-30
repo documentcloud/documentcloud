@@ -1,2 +1,5 @@
 require "rubygems"
-Gem::Deprecate.skip = true
+begin
+  Gem::Deprecate.skip = true
+rescue Error
+end
