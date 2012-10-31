@@ -16,6 +16,9 @@ module DC
         fire_job(:action => 'backup_database', :inputs => [true])
       end
 
+      def self.backup_solr
+        fire_job(:action => 'backup_solr', :inputs => [true])
+      end
 
       private
 

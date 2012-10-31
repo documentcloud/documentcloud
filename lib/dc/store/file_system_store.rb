@@ -97,6 +97,11 @@ module DC
         FileUtils.cp(path, local("backups/#{name}/#{Date.today}.dump"))
       end
 
+      def save_solr_backup(name, path)
+        ensure_directory("solr_backups/#{name}")
+        FileUtils.cp(path, local("solr_backups/#{name}/#{Date.today}.dump"))
+      end
+
       def set_access(document, access)
         # No-op for the FileSystemStore.
       end

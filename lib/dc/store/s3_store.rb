@@ -102,6 +102,10 @@ module DC
         bucket.put("backups/#{name}/#{Date.today}.dump", File.open(path))
       end
 
+      def save_solr_backup(name, path)
+        bucket.put("solr_backups/#{name}/#{Date.today}.dump", File.open(path))
+      end
+
       # This is going to be *extremely* expensive. We can thread it, but
       # there must be a better way somehow. (running in the background for now)
       def set_access(document, access)
