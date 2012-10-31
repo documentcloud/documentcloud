@@ -464,18 +464,14 @@
   <!-- Please refer to http://wiki.apache.org/solr/SolrReplication for details on configuring replication -->
   <!-- remove the <lst name="master"> section if this is just a slave -->
   <!-- remove  the <lst name="slave"> section if this is just a master -->
-  <!--
-<requestHandler name="/replication" class="solr.ReplicationHandler" >
-    <lst name="master">
-      <str name="replicateAfter">commit</str>
-      <str name="replicateAfter">startup</str>
-      <str name="confFiles">schema.xml,stopwords.txt</str>
-    </lst>
-    <lst name="slave">
-      <str name="masterUrl">http://localhost:8983/solr/replication</str>
-      <str name="pollInterval">00:00:60</str>
-    </lst>
-</requestHandler>-->
+  <requestHandler name="/replication" class="solr.ReplicationHandler" >
+      <lst name="master">
+          <str name="replicateAfter">commit</str>
+          <str name="replicateAfter">startup</str>
+          <str name="confFiles">schema.xml,stopwords.txt</str>
+      </lst>
+      <str name="maxNumberOfBackups">1</str>
+  </requestHandler>
   <!-- DisMaxRequestHandler allows easy searching across multiple fields
        for simple user-entered phrases.  It's implementation is now
        just the standard SearchHandler with a default query type

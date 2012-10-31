@@ -51,5 +51,10 @@ namespace :sunspot do
       model.solr_reindex reindex_options
     end
   end
-  
+
+  desc "Take a snapshot of the production solr database and store it on S3"
+  task :backup do
+    DC::Store::BackgroundJobs.backup_solr
+  end
+
 end

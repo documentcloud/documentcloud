@@ -19,7 +19,12 @@ namespace :db do
   task :start do
     sh "sudo /etc/init.d/postgresql-8.4 start"
   end
-  
+
+  desc "Backup the Solr Index"
+  task :backup_solr => :environment do
+    DC::Store::BackgroundJobs.backup_solr
+  end
+
   desc "Apply db tasks in custom databases, for example  rake db:alter[db:migrate,test-es] applies db:migrate on the database defined as test-es in databases.yml"
   task :alter, [:task,:database] => :environment do |t, args|
     require 'activerecord'
