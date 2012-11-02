@@ -261,7 +261,7 @@
     className : 'DC-document-tile-container',
 
     events : {
-      'click a.DC-document-tile' : 'open'
+      'click a.DC-document-tile' : 'click'
     },
 
     initialize : function() {
@@ -291,6 +291,14 @@
 
     fitDescriptionWidth : function(width, hasOrg) {
       return Math.floor((hasOrg ? 0.35 : 0.55) * width - 10);
+    },
+    
+    click: function(e) {
+      if (this.embed.options.click) {
+        return this.embed.options.click(e, this);
+      } else {
+        return this.open(e);
+      }
     },
 
     open : function(e) {
