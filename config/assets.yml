@@ -50,6 +50,7 @@ stylesheets:
     - public/stylesheets/pages/empty.css
   admin:
     - public/stylesheets/pages/admin.css
+    - public/stylesheets/pages/admin_featured_reports.css
   home:
     - public/stylesheets/pages/home.css
 

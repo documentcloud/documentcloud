@@ -249,6 +249,52 @@ ol {
     margin-top: 0;
   }
 
+  #content.featured h1 {
+    position: static;
+    text-align: left;
+    z-index: 1;
+    margin: 0.4em 0;
+    font-weight: 1;
+    font-size: 22px;
+    color: #232323;
+  }
+  #content.featured h2 {
+    position: static;
+    text-align: left;
+    z-index: 1;
+    margin: 0.4em 0;
+    font-weight: 1;
+    font-size: 18px;
+    color: #232323;
+  }
+  #content.featured h3 {
+    position: static;
+    text-align: left;
+    z-index: 1;
+    margin: 0.4em 0;
+    font-weight: 1;
+    font-size: 16px;
+    color: #232323;
+  }
+
+  #content.featured blockquote {
+    margin: 1em 3em;
+    color: #999;
+    border-left: 2px solid #999;
+    padding-left: 1em; 
+  }
+  #content.featured p {
+    margin-bottom: 0.3em;
+  }
+  #content.featured ul {
+    list-style: disc inside;
+    padding-left: 0.5em;
+  }
+  #content.featured hr {
+    margin-top: 6px;
+  }
+
+
 #content hr {
   border: 0;
   background: #ccc;

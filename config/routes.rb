@@ -52,6 +52,9 @@ ActionController::Routing::Routes.draw do |map|
     api.update_project  '/api/projects/:id.:format',  :action => 'update_project', :conditions => {:method => :put}
     api.delete_project  '/api/projects/:id.:format',  :action => 'destroy_project',:conditions => {:method => :delete}
   end
+
+
+  map.resources :featured, :collection => { :present_order => :any }
   
   # Document representations and (private) sub-resources.
   map.resources  :documents, :has_many => [:annotations],
@@ -118,7 +121,6 @@ ActionController::Routing::Routes.draw do |map|
     home.contributors   '/contributors',  :action => 'contributors'
     home.faq            '/faq',           :action => 'faq'
     home.terms          '/terms',         :action => 'terms'
-    home.featured       '/featured',      :action => 'featured'
     home.privacy        '/privacy',       :action => 'privacy'
     home.home           '/home',          :action => 'index'
     home.news           '/news',          :action => 'news'

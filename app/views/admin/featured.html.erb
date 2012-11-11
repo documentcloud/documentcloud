@@ -1,0 +1,18 @@
+<%
+  @title = "Admin Dashboard :: Featured Reports"
+  @stylesheets = [:admin]
+  @javascripts = [:admin]
+  @bodyclass   = 'featured_reports'
+%>
+
+<script type="text/javascript">
+
+  $(function(){
+
+    $('#content').append( (new dc.ui.FeaturedReporting( {
+      collection: new dc.model.FeaturedReports( <%= FeaturedReport.sorted.to_json %> ) 
+    } ) ).render().el);
+  });
+
+</script>
+

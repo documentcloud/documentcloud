@@ -54,6 +54,7 @@ dc.ui.Admin = Backbone.View.extend({
     $('#topbar').append(this._actionsMenu.render().el);
     _.defer(this.renderCharts);
     if (Accounts.length) _.defer(this._loadAllAccounts);
+
     return this;
   },
 
@@ -233,7 +234,8 @@ dc.ui.Admin = Backbone.View.extend({
         {title : 'Force a DB Backup to S3',   onClick : this.forceBackup},
         {title : 'Vacuum Analyze the DB',     onClick : this.vacuumAnalyze},
         {title : 'Optimize the Solr Index',   onClick : this.optimizeSolr},
-        {title : 'Launch a Worker Instance',  onClick : this.launchWorker}
+        {title : 'Launch a Worker Instance',  onClick : this.launchWorker},
+        {title : 'Edit Featured Reporting',   onClick : function(){ window.location = '/admin/featured'; } }
       ]
     });
   },
