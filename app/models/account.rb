@@ -177,6 +177,11 @@ class Account < ActiveRecord::Base
     @accessible_project_ids ||=
       Collaboration.owned_by(self).all(:select => [:project_id]).map {|c| c.project_id }
   end
+  
+  # is the account considered an DocumentCloud Administrator?
+  def dcloud_admin?
+    organization.id == 1 && ! reviewer?    
+  end
 
   # When an account is created by a third party, send an email with a secure
   # key to set the password.
