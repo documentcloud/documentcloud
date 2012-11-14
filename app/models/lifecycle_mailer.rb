@@ -60,7 +60,7 @@ class LifecycleMailer < ActionMailer::Base
   # Mail a notification of an exception that occurred in production.
   def exception_notification(error, params=nil)
     params.delete(:password) if params
-    subject     "DocumentCloud exception (#{Rails.env}): #{error.class.name}"
+    subject     "DocumentCloud exception (#{Rails.env}:#{`hostname`.chomp}): #{error.class.name}"
     from        NO_REPLY
     recipients  SUPPORT
     body        :params => params, :error => error
