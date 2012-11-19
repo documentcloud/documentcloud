@@ -532,9 +532,16 @@ class Document < ActiveRecord::Base
   end
 
   def page_image_url_template(opts={})
-    tmpl = opts[:local] ? File.join(slug, page_image_template ) : 
-      ( public? || Rails.env.development? ) ? public_page_image_template : private_page_image_template
-    tmpl << "?#{updated_at.to_i}" if opts[:cache_busting] 
+    tmpl = if opts[:local]
+             File.join(slug, page_image_template )
+           elsif self.public? || Rails.env.development?
+             public_page_image_template 
+           else
+             private_page_image_template
+           end
+    if opts[:cache_busting] 
+      tmpl << "?#{updated_at.to_i}"
+    end
     tmpl
   end
 
