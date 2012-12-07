@@ -23,6 +23,7 @@ Rails::Initializer.run do |config|
   # Gems:
   config.gem 'json',                  :version => '>= 1.6.5'
 
+  # config.gem 'curb',                  :version => '>= 0.7.18'
   config.gem 'nokogiri',              :version => '>= 1.4.4'
   config.gem 'calais',                :version => '>= 0.0.11'
   config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'
@@ -35,7 +36,6 @@ Rails::Initializer.run do |config|
   config.gem 'sunspot_rails',         :version => '>= 1.2.1'
   config.gem 'rdiscount',             :version => '>= 1.6.5'
   config.gem 'fastercsv',             :version => '>= 1.5.3'
-  config.gem 'curb',                  :version => '>= 0.7.18'
   require 'sanitize'
 
   # Middleware
