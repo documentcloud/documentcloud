@@ -11,7 +11,7 @@ development:
 staging:
   auto_commit_after_request: false
   solr:
-    hostname: ec2-50-16-197-147.compute-1.amazonaws.com
+    hostname: ec2-184-73-57-252.compute-1.amazonaws.com
     port: 7377
     log_level: WARNING
     solr_jar: vendor/solr-3.4.0/start.jar

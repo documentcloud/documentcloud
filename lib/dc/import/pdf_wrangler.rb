@@ -33,17 +33,6 @@ module DC
         end
       end
 
-      # Bursts a pdf into individual pages, removing the original file.
-      # The double pdftk shuffle fixes the document xrefs.
-      def burst(pdf)
-        basename = File.basename(pdf, File.extname(pdf))
-        `pdftk #{pdf} burst output "#{basename}_%05d.pdf_temp"`
-        FileUtils.rm pdf
-        pdfs = Dir["*.pdf_temp"]
-        pdfs.each {|page| `pdftk #{page} output #{File.basename(page, '.pdf_temp')}.pdf`}
-        Dir["*.pdf"]
-      end
-
       # Archive a list of PDF pages into TAR archives, grouped by batch_size.
       def archive(pages, batch_size=nil)
         batch_size ||= DEFAULT_BATCH_SIZE
