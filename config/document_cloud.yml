@@ -3,7 +3,7 @@ defaults: &defaults
   cloud_crowd_server:   http://dev.dcloud.org:8080
   server_root:          dev.dcloud.org
   aws_zone:             us-east-1c
-  preconfigured_ami_id: ami-cdfd7fa4
+  preconfigured_ami_id: ami-3542c05c
 
 development:
   <<: *defaults
