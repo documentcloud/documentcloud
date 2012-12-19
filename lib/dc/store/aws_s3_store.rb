@@ -2,7 +2,7 @@ module DC
   module Store
 
     # An implementation of an AssetStore.
-    module AWSS3Store
+    module AwsS3Store
 
       BUCKET_NAME     = Rails.env.production? ? 's3.documentcloud.org' : "dcloud_#{Rails.env}"
 
