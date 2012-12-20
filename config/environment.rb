@@ -30,6 +30,7 @@ Rails::Initializer.run do |config|
   config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
   config.gem 'rubyzip',               :version => '>= 0.9.1',       :lib => 'zip/zip'
   config.gem 'right_aws',             :version => '>= 2.0.1'        # Our patched version.
+  config.gem 'aws-sdk',               :version => '>= 1.7.1'
   config.gem 'pg',                    :version => '>= 0.11.0'
   config.gem 'jammit',                :version => '>= 0.5.0'
   config.gem 'docsplit',              :version => '>= 0.5.2'
