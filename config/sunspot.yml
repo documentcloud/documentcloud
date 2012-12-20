@@ -21,12 +21,12 @@ staging:
 production:
   auto_commit_after_request: false
   solr:
-    hostname: ec2-174-129-5-5.compute-1.amazonaws.com
+    hostname: ec2-23-20-237-32.compute-1.amazonaws.com
     port: 7377
     log_level: INFO
     min_memory: 200M
     max_memory: 1500M
-    solr_jar: vendor/solr-3.4.0/start.jar
+    solr_jar: vendor/solr-4.0.0/start.jar
     pid_dir: tmp/pids
 
 test:
