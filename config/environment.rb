@@ -23,19 +23,21 @@ Rails::Initializer.run do |config|
   # Gems:
   config.gem 'json',                  :version => '>= 1.6.5'
 
+  # config.gem 'curb',                  :version => '>= 0.7.18'
   config.gem 'nokogiri',              :version => '>= 1.4.4'
   config.gem 'calais',                :version => '>= 0.0.11'
   config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'
   config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
   config.gem 'rubyzip',               :version => '>= 0.9.1',       :lib => 'zip/zip'
   config.gem 'right_aws',             :version => '>= 2.0.1'        # Our patched version.
+  config.gem 'aws-sdk',               :version => '>= 1.7.1'
   config.gem 'pg',                    :version => '>= 0.11.0'
   config.gem 'jammit',                :version => '>= 0.5.0'
   config.gem 'docsplit',              :version => '>= 0.5.2'
-  config.gem 'sunspot_rails',         :version => '>= 1.2.1'
+  config.gem 'sunspot_rails',         :version => '>= 1.3.3'
+  config.gem 'sunspot_solr',         :version => '>= 1.3.3'
   config.gem 'rdiscount',             :version => '>= 1.6.5'
   config.gem 'fastercsv',             :version => '>= 1.5.3'
-  config.gem 'curb',                  :version => '>= 0.7.18'
   require 'sanitize'
 
   # Middleware
