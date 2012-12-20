@@ -6,7 +6,7 @@ development:
     log_level: INFO
     min_memory: 20M
     max_memory: 500M
-    solr_jar: vendor/solr-3.4.0/start.jar
+    solr_jar: vendor/solr-4.0.0/start.jar
     pid_dir: tmp/pids
 
 staging:
@@ -15,7 +15,7 @@ staging:
     hostname: ec2-184-73-57-252.compute-1.amazonaws.com
     port: 7377
     log_level: WARNING
-    solr_jar: vendor/solr-3.4.0/start.jar
+    solr_jar: vendor/solr-4.0.0/start.jar
     pid_dir: tmp/pids
 
 production:
