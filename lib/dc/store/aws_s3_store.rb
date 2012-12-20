@@ -150,7 +150,7 @@ module DC
         source.pages.each do |page|
           num = page.page_number
           Page::IMAGE_SIZES.keys.each do |size|
-            source_object = bucket.objects.with_prefix[source.page_image_path(num, size)]
+            source_object = bucket.objects[source.page_image_path(num, size)]
             options = {:acl => ACCESS_TO_ACL[access], :content_type => content_type(source.page_text_path(num))}
             source_object.copy_to(destination.page_image_path(num, size), options)
           end
