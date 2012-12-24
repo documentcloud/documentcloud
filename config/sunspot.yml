@@ -25,7 +25,7 @@ production:
     port: 7377
     log_level: INFO
     min_memory: 200M
-    max_memory: 1500M
+    max_memory: 3G
     solr_jar: vendor/solr-4.0.0/start.jar
     pid_dir: tmp/pids
 
