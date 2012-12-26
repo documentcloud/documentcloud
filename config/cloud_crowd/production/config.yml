@@ -14,6 +14,8 @@
   - regenerate_thumbnails
   - reprocess_entities
   - save_analytics
+  - update_access
+  - vacuum_analyze
 
 # The following settings allow you to control the number of workers that can run
 # on a given node, to prevent the node from becoming overloaded. 'max_workers'
