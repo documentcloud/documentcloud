@@ -317,8 +317,9 @@
          searcher to be opened to make those changes visible.
       -->
      <autoCommit> 
-       <maxTime>15000</maxTime> 
-       <openSearcher>false</openSearcher> 
+         <!-- 10 minutes -->
+         <maxTime>600000</maxTime>
+         <openSearcher>false</openSearcher>
      </autoCommit>
 
     <!-- softAutoCommit is like autoCommit except it causes a
@@ -326,11 +327,12 @@
          but does not ensure that data is synced to disk.  This is
          faster and more near-realtime friendly than a hard commit.
       -->
-     <!--
-       <autoSoftCommit> 
-         <maxTime>1000</maxTime> 
+
+       <autoSoftCommit>
+           <!-- 5 minutes -->
+           <maxTime>300000</maxTime>
        </autoSoftCommit>
-      -->
+
 
     <!-- Update Related Event Listeners
          

@@ -124,6 +124,7 @@ class DocumentImport < CloudCrowd::Action
     document.save!
     pages = document.reload.pages
     Sunspot.index pages
+    Sunspot.commit
     DC::Import::EntityExtractor.new.extract(document, text) unless options['secure'] or not DC::Language::SUPPORTED.include? document.language
     document.upload_text_assets(pages, access)
     document.id
