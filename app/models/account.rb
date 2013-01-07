@@ -2,18 +2,18 @@
 # documents. Accounts have full priviledges for the entire organization, at the
 # moment.
 class Account < ActiveRecord::Base
-  include DC::Access
-  
-  DISABLED      = 0
-  ADMINISTRATOR = 1
-  CONTRIBUTOR   = 2
-  REVIEWER      = 3
-  FREELANCER    = 4
-
-  ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER, FREELANCER, DISABLED]
+  include DC::Access                                                   # flagged to move to memberships
+                                                                       # 
+  DISABLED      = 0                                                    # 
+  ADMINISTRATOR = 1                                                    # 
+  CONTRIBUTOR   = 2                                                    # 
+  REVIEWER      = 3                                                    # 
+  FREELANCER    = 4                                                    # 
+                                                                       # 
+  ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER, FREELANCER, DISABLED] # 
 
   # Associations:
-  belongs_to  :organization
+  belongs_to  :organization # flagged to move to memberships
   has_many    :projects,             :dependent => :destroy
   has_many    :annotations
   has_many    :collaborations,       :dependent => :destroy
@@ -33,11 +33,11 @@ class Account < ActiveRecord::Base
   # Delegations:
   delegate :name, :to => :organization, :prefix => true, :allow_nil => true
 
-  # Scopes:
-  named_scope :admin,     {:conditions => {:role => ADMINISTRATOR}}
-  named_scope :active,    {:conditions => ["role != ?", DISABLED]}
-  named_scope :real,      {:conditions => ["role in (?)", [ADMINISTRATOR, CONTRIBUTOR, FREELANCER, DISABLED]]}
-  named_scope :reviewer,  {:conditions => {:role => REVIEWER}}
+  # Scopes:                                                                                                    # Flagged
+  named_scope :admin,     {:conditions => {:role => ADMINISTRATOR}}                                            # to
+  named_scope :active,    {:conditions => ["role != ?", DISABLED]}                                             # move
+  named_scope :real,      {:conditions => ["role in (?)", [ADMINISTRATOR, CONTRIBUTOR, FREELANCER, DISABLED]]} # to
+  named_scope :reviewer,  {:conditions => {:role => REVIEWER}}                                                 # memberships
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session=nil, cookies=nil)
@@ -86,36 +86,38 @@ class Account < ActiveRecord::Base
     @slug ||= "#{id}-#{first}-#{last}"
   end
 
-  def admin?
-    role == ADMINISTRATOR
-  end
-
-  def contributor?
-    role == CONTRIBUTOR
-  end
-
-  def reviewer?
-    role == REVIEWER
-  end
-  
-  def freelancer?
-    role == FREELANCER
-  end
-  
-  def real?
-    admin? || contributor?
-  end
-  
-  def active?
-    role != DISABLED
-  end
+  # Role dependent methods must now transit through memberships.
+  def admin?                # def admin?(organization)
+    role == ADMINISTRATOR   #   memberships.find(:conditions=>{:organization_id => organization}).admin?
+                            #   membership && membership.admin?
+  end                       # end
+                            # 
+  def contributor?          # 
+    role == CONTRIBUTOR     # 
+  end                       # 
+                            # 
+  def reviewer?             # 
+    role == REVIEWER        # 
+  end                       # 
+                            # 
+  def freelancer?           # 
+    role == FREELANCER      # 
+  end                       # 
+                            # 
+  def real?                 # 
+    admin? || contributor?  # 
+  end                       # 
+                            # 
+  def active?               # 
+    role != DISABLED        # 
+  end                       # 
 
   # An account owns a resource if it's tagged with the account_id.
   def owns?(resource)
     resource.account_id == id
   end
 
-  def collaborates?(resource)
+  def collaborates?(resource) # Flagged to rewrite
     (admin? || contributor?) &&
       resource.organization_id == organization_id &&
       [ORGANIZATION, EXCLUSIVE, PUBLIC, PENDING, ERROR].include?(resource.access)
@@ -126,6 +128,7 @@ class Account < ActiveRecord::Base
   # project is in collaboration with an owner or and administrator of the document.
   # Note that shared? is not the same as reviews?, as it ignores hidden projects.
   def shared?(resource)
+    # organization_id will no long be returned on account queries
     collaborators = Account.find_by_sql(<<-EOS
       select distinct on (a.id)
       a.id as id, a.organization_id as organization_id, a.role as role
@@ -141,6 +144,7 @@ class Account < ActiveRecord::Base
       where a.id != #{id}
     EOS
     )
+    # check for knockon effects in identifying whether an account owns/collabs on a resource.
     collaborators.any? {|account| account.owns_or_collaborates?(resource) }
   end
 
@@ -194,12 +198,12 @@ class Account < ActiveRecord::Base
     LifecycleMailer.deliver_reviewer_instructions(documents, inviter_account, self, message, key)
   end
 
-  # Upgrading a reviewer account to a newsroom account also moves their
-  # notes over to the (potentially different) organization.
-  def upgrade_reviewer_to_real(organization, role)
-    update_attributes :organization => organization, :role => role
-    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{id}")
-  end
+  # Upgrading a reviewer account to a newsroom account also moves their                 # 
+  # notes over to the (potentially different) organization.                             # Move to Organization
+  def upgrade_reviewer_to_real(organization, role)                                      # 
+    update_attributes :organization => organization, :role => role                      # 
+    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{id}") # 
+  end                                                                                   # 
 
   # When a password reset request is made, send an email with a secure key to
   # reset the password.
@@ -240,6 +244,7 @@ class Account < ActiveRecord::Base
     self.hashed_password = @password
   end
 
+  # Create default organization to preserve backwards compatability.
   def canonical(options={})
     attrs = {
       'id'                => id,
