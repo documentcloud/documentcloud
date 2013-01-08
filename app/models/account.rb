@@ -2,19 +2,11 @@
 # documents. Accounts have full priviledges for the entire organization, at the
 # moment.
 class Account < ActiveRecord::Base
-  include DC::Access                                                   # flagged to move to memberships
-                                                                       # 
-  DISABLED      = 0                                                    # 
-  ADMINISTRATOR = 1                                                    # 
-  CONTRIBUTOR   = 2                                                    # 
-  REVIEWER      = 3                                                    # 
-  FREELANCER    = 4                                                    # 
-                                                                       # 
-  ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER, FREELANCER, DISABLED] # 
+  include DC::Access
+  include DC::Roles
 
   # Associations:
   has_many :memberships
-  belongs_to :organization # remove/transition to default organization
   has_many :organizations,   :through => :memberships
   has_many :projects,        :dependent => :destroy
   has_many :annotations      
@@ -27,7 +19,6 @@ class Account < ActiveRecord::Base
   validates_presence_of   :first_name, :last_name, :email
   validates_format_of     :email, :with => DC::Validators::EMAIL
   validates_uniqueness_of :email, :case_sensitive => false
-  validates_inclusion_of  :role, :in => ROLES
 
   # Sanitizations:
   text_attr :first_name, :last_name, :email
@@ -35,11 +26,11 @@ class Account < ActiveRecord::Base
   # Delegations:
   delegate :name, :to => :organization, :prefix => true, :allow_nil => true
 
-  # Scopes:                                                                                                    # Flagged
-  named_scope :admin,     {:conditions => {:role => ADMINISTRATOR}}                                            # to
-  named_scope :active,    {:conditions => ["role != ?", DISABLED]}                                             # move
-  named_scope :real,      {:conditions => ["role in (?)", [ADMINISTRATOR, CONTRIBUTOR, FREELANCER, DISABLED]]} # to
-  named_scope :reviewer,  {:conditions => {:role => REVIEWER}}                                                 # memberships
+  # Scopes
+  named_scope :admin,     { :include=> "memberships", :conditions => ["memberships.role = ?",    ADMINISTRATOR] }
+  named_scope :active,    { :include=> "memberships", :conditions => ["memberships.role != ?",   DISABLED] }
+  named_scope :real,      { :include=> "memberships", :conditions => ["memberships.role in (?)", REAL_ROLES] }
+  named_scope :reviewer,  { :include=> "memberships", :conditions => ["memberships.role = ?",    REVIEWER] }
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session=nil, cookies=nil)
@@ -86,6 +77,15 @@ class Account < ActiveRecord::Base
     first = first_name && first_name.downcase.gsub(/\W/, '')
     last  = last_name && last_name.downcase.gsub(/\W/, '')
     @slug ||= "#{id}-#{first}-#{last}"
+  end
+
+  # Shims to preserve API backwards compatability.
+  def organization
+    Organization.default_for(self)
+  end
+  
+  def organization_id
+    organization.id
   end
 
   # Role dependent methods must now transit through memberships.
@@ -191,14 +191,14 @@ class Account < ActiveRecord::Base
     LifecycleMailer.deliver_login_instructions(self, admin)
   end
 
-  def send_reviewer_instructions(documents, inviter_account, message=nil)
-    key = nil
-    if self.role == Account::REVIEWER
-      create_security_key if self.security_key.nil?
-      key = '?key=' + self.security_key.key
-    end
-    LifecycleMailer.deliver_reviewer_instructions(documents, inviter_account, self, message, key)
-  end
+  def send_reviewer_instructions(documents, inviter_account, message=nil)                          #
+    key = nil                                                                                      #
+    if self.role == Account::REVIEWER                                                              # Check
+      create_security_key if self.security_key.nil?                                                #
+      key = '?key=' + self.security_key.key                                                        #
+    end                                                                                            #
+    LifecycleMailer.deliver_reviewer_instructions(documents, inviter_account, self, message, key)  #
+  end                                                                                              #
 
   # Upgrading a reviewer account to a newsroom account also moves their                 # 
   # notes over to the (potentially different) organization.                             # Move to Organization
