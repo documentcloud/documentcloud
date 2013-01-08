@@ -13,13 +13,15 @@ class Account < ActiveRecord::Base
   ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER, FREELANCER, DISABLED] # 
 
   # Associations:
-  belongs_to  :organization # flagged to move to memberships
-  has_many    :projects,             :dependent => :destroy
-  has_many    :annotations
-  has_many    :collaborations,       :dependent => :destroy
-  has_many    :processing_jobs,      :dependent => :destroy
-  has_one     :security_key,         :dependent => :destroy, :as => :securable
-  has_many    :shared_projects,      :through => :collaborations, :source => :project
+  has_many :memberships
+  belongs_to :organization # remove/transition to default organization
+  has_many :organizations,   :through => :memberships
+  has_many :projects,        :dependent => :destroy
+  has_many :annotations      
+  has_many :collaborations,  :dependent => :destroy
+  has_many :processing_jobs, :dependent => :destroy
+  has_one  :security_key,    :dependent => :destroy, :as => :securable
+  has_many :shared_projects, :through => :collaborations, :source => :project
 
   # Validations:
   validates_presence_of   :first_name, :last_name, :email
