@@ -6,28 +6,4 @@ class Membership < ActiveRecord::Base
 
   belongs_to :organization
   belongs_to :account
-  
-  def admin?
-    role == ADMINISTRATOR
-  end
-
-  def contributor?
-    role == CONTRIBUTOR
-  end
-
-  def reviewer?
-    role == REVIEWER
-  end
-
-  def freelancer?
-    role == FREELANCER
-  end
-
-  def real?
-    admin? || contributor?
-  end
-
-  def active?
-    role != DISABLED
-  end
 end

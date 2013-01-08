@@ -87,32 +87,35 @@ class Account < ActiveRecord::Base
   def organization_id
     organization.id
   end
+  
+  def has_role?(role, org)
+    not self.memberships.first(:conditions=>{:role => role, :organization_id => organization}).nil?
+  end
+  
+  def admin?(org=self.organization)
+    has_role?(ADMINISTRATOR, org)
+  end
+  
+  def contributor?(org=self.organization)
+    has_role?(CONTRIBUTOR, org)
+  end
 
-  # Role dependent methods must now transit through memberships.
-  def admin?                # def admin?(organization)
-    role == ADMINISTRATOR   #   memberships.find(:conditions=>{:organization_id => organization}).admin?
-                            #   membership && membership.admin?
-  end                       # end
-                            # 
-  def contributor?          # 
-    role == CONTRIBUTOR     # 
-  end                       # 
-                            # 
-  def reviewer?             # 
-    role == REVIEWER        # 
-  end                       # 
-                            # 
-  def freelancer?           # 
-    role == FREELANCER      # 
-  end                       # 
-                            # 
-  def real?                 # 
-    admin? || contributor?  # 
-  end                       # 
-                            # 
-  def active?               # 
-    role != DISABLED        # 
-  end                       # 
+  def reviewer?(org=self.organization)
+    has_role?(REVIEWER, org)
+  end
+
+  def freelancer?(org=self.organization)
+    has_role?(FREELANCER, org)
+  end
+
+  def real?(org=self.organization)
+    admin?(org) || contributor?(org)
+  end
+
+  def active?(org=self.organization)
+    membership = self.memberships.first(:conditions=>{:organization_id => organization})
+    !membership.nil?  && membership.role != DISABLED
+  end
 
   # An account owns a resource if it's tagged with the account_id.
   def owns?(resource)
