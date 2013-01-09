@@ -3,17 +3,26 @@
 class Organization < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
   include DC::Access
+  include DC::Roles
 
   attr_accessor :document_count, :note_count
 
-  has_many :accounts, :dependent => :destroy
+  has_many :memberships
+  has_many :accounts, :through => :memberships
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug
   validates_format_of :slug, :with => DC::Validators::SLUG
-
+  
   # Sanitizations:
   text_attr :name
+  
+  def self.default_for(account)
+    self.first(
+      :include => "memberships",
+      :conditions => ["memberships.account_id = ? and memberships.default is true", account.id]
+    )
+  end
 
   # Retrieve the names of the organizations for the result set of documents.
   def self.names_for_documents(docs)
