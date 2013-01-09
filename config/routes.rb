@@ -142,6 +142,12 @@ ActionController::Routing::Routes.draw do |map|
     move.blog             '/blog/*parts',   :url => 'http://blog.documentcloud.org/'
   end
 
+  # Third party logins via OmitAuth library
+  map.connect '/auth/failure',            :controller => :identities, :action => :failure
+  map.connect '/auth/:provider',          :controller => :identities, :action => :blank
+  map.connect '/auth/:provider/callback', :controller => :identities, :action => :callback
+
+
   # Asset packages.
   Jammit::Routes.draw(map)
 
