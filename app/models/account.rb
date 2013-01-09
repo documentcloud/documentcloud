@@ -66,7 +66,7 @@ class Account < ActiveRecord::Base
 
   # 
   def self.from_identity( identity )
-    account = Account.with_identity( identity['provider'],  identity['uid'] ).first || Account.new({ :profile_incomplete=>true })
+    account = Account.with_identity( identity['provider'],  identity['uid'] ).first || Account.new()
     account.record_identity_attributes( identity )
     account.save if account.changed?
     account
@@ -97,7 +97,7 @@ class Account < ActiveRecord::Base
   end
 
   def organization_id
-    organization.id
+    organization ? organization.id : nil
   end
 
   def has_role?(role, org)
@@ -271,17 +271,15 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def identities=(obj)
-    write_attribute( :identities, DC::Hstore.to_sql(obj) )
-    @identities = obj
-  end
-  
   def identities
-    @identities ||= DC::Hstore.from_sql( read_attribute('identities') )
+    DC::Hstore.from_sql( read_attribute('identities') )
   end
 
   def record_identity_attributes( identity )
-    self.identities[ identity['provider'] ] = identity['uid']
+    current_identities = self.identities
+    current_identities[ identity['provider'] ] = identity['uid']
+    write_attribute( :identities, DC::Hstore.to_sql(  current_identities ) )
+
     info = identity['info']
     %w{ email first_name last_name }.each do | attr |
       write_attribute( attr, info[attr] ) if read_attribute(attr).blank? && info[attr]
