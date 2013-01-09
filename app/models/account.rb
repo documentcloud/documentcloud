@@ -281,9 +281,7 @@ class Account < ActiveRecord::Base
   end
 
   def record_identity_attributes( identity )
-    cur = self.identities
-    cur[ identity['provider'] ] = identity['uid']
-    self.identities = cur
+    self.identities[ identity['provider'] ] = identity['uid']
     info = identity['info']
     %w{ email first_name last_name }.each do | attr |
       write_attribute( attr, info[attr] ) if read_attribute(attr).blank? && info[attr]
