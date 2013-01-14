@@ -20,7 +20,7 @@ namespace :remote do
   desc "Start all resources, on all servers"
   task :start_all do
     remote "db:start", central_servers
-    remote "sunspot:solr:start", central_servers
+    remote "sunspot:solr:start", search_servers
     remote "crowd:server:start", central_servers
     remote "crowd:node:start", worker_servers
     remote "openoffice:start", app_servers
@@ -71,6 +71,13 @@ def central_servers
   case RAILS_ENV
   when 'staging'    then ['staging.documentcloud.org']
   when 'production' then ['db01.documentcloud.org']
+  end
+end
+
+def search_servers
+  case RAILS_ENV
+  when 'staging'    then ['staging.documentcloud.org']
+  when 'production' then ['solr01.documentcloud.org']
   end
 end
 
