@@ -4,18 +4,6 @@
 
 :disabled_actions:
   - backup_database
-  - document_import
-  - document_insert_pages
-  - document_remove_pages
-  - document_reorder_pages
-  - large_document_import
-  - optimize_solr
-  - redact_pages
-  - regenerate_thumbnails
-  - reprocess_entities
-  - save_analytics
-  - update_access
-  - vacuum_analyze
 
 # The following settings allow you to control the number of workers that can run
 # on a given node, to prevent the node from becoming overloaded. 'max_workers'
