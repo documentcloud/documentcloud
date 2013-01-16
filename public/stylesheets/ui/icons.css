@@ -178,6 +178,6 @@
       background: url("/images/embed/icons/social-icons.png") -64px 0;
   }
   .login_services li {
-    float: left;
+    display: inline-block;
     margin: 0 5px 0 0;
   }
