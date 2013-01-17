@@ -81,15 +81,24 @@ class Account < ActiveRecord::Base
 
   # Shims to preserve API backwards compatability.
   def organization
-    Organization.default_for(self)
+    @organization ||= Organization.default_for(self)
   end
   
   def organization_id
-    organization.id
+    return nil unless self.organization
+    self.organization.id
+  end
+  
+  def role
+    self.memberships.first(:conditions=>{:default=>true}).role
+  end
+  
+  def member_of?(org)
+    self.memberships.exists?(:organization_id => org.id)
   end
   
   def has_role?(role, org)
-    not self.memberships.first(:conditions=>{:role => role, :organization_id => organization}).nil?
+    self.memberships.exists?(:role => role, :organization_id => org.id)
   end
   
   def admin?(org=self.organization)
@@ -113,7 +122,7 @@ class Account < ActiveRecord::Base
   end
 
   def active?(org=self.organization)
-    membership = self.memberships.first(:conditions=>{:organization_id => organization})
+    membership = self.memberships.first(:conditions=>{:organization_id => org})
     !membership.nil?  && membership.role != DISABLED
   end
 
@@ -167,9 +176,9 @@ class Account < ActiveRecord::Base
     owns_or_collaborates?(resource) || shared?(resource)
   end
 
-  def allowed_to_edit_account?(account)
+  def allowed_to_edit_account?(account, org=self.organization)
     (self.id == account.id) ||
-    ((self.organization_id == account.organization_id) && (self.admin? || account.reviewer?))
+    ((self.admin?(org) && account.member_of?(org)) || (self.member_of?(org) && account.reviewer?(org)))
   end
 
   def shared_document_ids
@@ -262,7 +271,10 @@ class Account < ActiveRecord::Base
       'hashed_email'      => hashed_email,
       'pending'           => pending?
     }
-    attrs['organization_name'] = organization_name if options[:include_organization]
+    if options[:include_organization]
+      attrs['organization_name'] = organization_name
+      attrs['organizations']     = organizations.map(&:canonical)
+    end
     if options[:include_document_counts]
       attrs['public_documents'] = Document.unrestricted.count(:conditions => {:account_id => id})
       attrs['private_documents'] = Document.restricted.count(:conditions => {:account_id => id})
