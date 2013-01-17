@@ -35,7 +35,9 @@ Rails::Initializer.run do |config|
   config.gem 'jammit',                :version => '>= 0.5.0'
   config.gem 'docsplit',              :version => '>= 0.5.2'
   config.gem 'sunspot_rails',         :version => '>= 1.3.3'
-  config.gem 'sunspot_solr',         :version => '>= 1.3.3'
+  # running a pre-release to fix rake sunspot:solr:stop task bug
+  # https://github.com/sunspot/sunspot/pull/221
+  config.gem 'sunspot_solr',          :version => '>= 2.0.0.pre.120925'
   config.gem 'rdiscount',             :version => '>= 1.6.5'
   config.gem 'fastercsv',             :version => '>= 1.5.3'
   require 'sanitize'
