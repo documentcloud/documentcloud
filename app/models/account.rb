@@ -145,7 +145,7 @@ class Account < ActiveRecord::Base
     # organization_id will no long be returned on account queries
     collaborators = Account.find_by_sql(<<-EOS
       select distinct on (a.id)
-      a.id as id, a.organization_id as organization_id, a.role as role
+      a.id as id, m.organization_id as organization_id, m.role as role
       from accounts as a
       inner join collaborations as c1
         on c1.account_id = a.id
@@ -155,6 +155,7 @@ class Account < ActiveRecord::Base
         on p.id = c1.project_id and p.hidden = false
       inner join project_memberships as pm
         on pm.project_id = c1.project_id and pm.document_id = #{resource.document_id}
+      left outer join memberships as m on m.account_id = #{id}
       where a.id != #{id}
     EOS
     )
