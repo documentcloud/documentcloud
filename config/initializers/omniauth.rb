@@ -1,6 +1,9 @@
 
 secrets = SECRETS['omniauth']
 
+if secrets
+  
+end
 # For Google: Remember to customize the redirect URI for the key to be: /auth/google_oauth2/callback 
 # If you do happen to forget and do so later, REDOWNLOAD the key, it changes every time you edit the settings.
 
