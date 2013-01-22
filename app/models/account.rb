@@ -16,9 +16,9 @@ class Account < ActiveRecord::Base
   has_many :shared_projects, :through => :collaborations, :source => :project
 
   # Validations:
-#  validates_presence_of   :first_name, :last_name, :email
-#  validates_format_of     :email, :with => DC::Validators::EMAIL
-#  validates_uniqueness_of :email, :case_sensitive => false
+  validates_presence_of   :first_name, :last_name, :email, :if => :has_memberships?
+  validates_format_of     :email, :with => DC::Validators::EMAIL, :if => :has_memberships?
+  validates_uniqueness_of :email, :case_sensitive => false, :if => :has_memberships?
   validate :validate_identity_is_unique
 
   # Sanitizations:
@@ -107,6 +107,10 @@ class Account < ActiveRecord::Base
   
   def member_of?(org)
     self.memberships.exists?(:organization_id => org.id)
+  end
+  
+  def has_memberships? # should be reworked as Account#real?
+    self.memberships.exists?
   end
 
   def has_role?(role, org)
