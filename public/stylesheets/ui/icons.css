@@ -156,3 +156,28 @@
 .menu_content .menu_item.plus {
   background-image: url(/images/embed/icons/dark_plus.png);
 }
+
+/*-------------------- Online Social Services --------------------- */
+.login_services {
+  list-style: none;
+}
+  .login_services a.icon {
+    font-size: 11px;
+    display: block;
+    width: 32px;
+    height: 32px;
+    text-indent: -9999em;
+  }
+  .login_services .icon.twitter {
+      background: url("/images/embed/icons/social-icons.png");
+  }
+  .login_services .icon.facebook {
+      background: url("/images/embed/icons/social-icons.png") -32px 0;
+  }
+  .login_services .icon.google {
+      background: url("/images/embed/icons/social-icons.png") -64px 0;
+  }
+  .login_services li {
+    float: left;
+    margin: 0 5px 0 0;
+  }
