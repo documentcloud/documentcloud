@@ -35,13 +35,13 @@ Rails::Initializer.run do |config|
   config.gem 'jammit',                :version => '>= 0.5.0'
   config.gem 'docsplit',              :version => '>= 0.5.2'
   config.gem 'sunspot_rails',         :version => '>= 1.3.3'
-  config.gem 'sunspot_solr',         :version => '>= 1.3.3'
+  config.gem 'sunspot_solr',          :version => '>= 1.3.3'
   config.gem 'rdiscount',             :version => '>= 1.6.5'
   config.gem 'fastercsv',             :version => '>= 1.5.3'
   config.gem 'omniauth',              :version => '>= 1.0'
-  config.gem 'omniauth-twitter'
-  config.gem 'omniauth-facebook'
-  config.gem 'omniauth-google-oauth2'
+  config.gem 'omniauth-twitter'       :version => '>=0.0.14'
+  config.gem 'omniauth-facebook'      :version => '>=1.4.1'
+  config.gem 'omniauth-google-oauth2' :version => '>=0.1.13'
   require 'sanitize'
 
   # Middleware
