@@ -23,9 +23,8 @@ dc.ui.Organizer = Backbone.View.extend({
     'click .toggle_account_links'     : 'toggleAccountLinks',
     'click .organization.box'         : 'showOtherOrgDocuments'
   },
-
-  constructor : function(options) {
-    Backbone.View.call(this, options);
+  
+  initialize: function(options) {
     _.bindAll(this, '_addSubView', '_removeSubView', 'renderAccounts');
     this._bindToSets();
     this.subViews = [];
