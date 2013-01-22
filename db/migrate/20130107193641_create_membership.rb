@@ -10,6 +10,11 @@ class CreateMembership < ActiveRecord::Migration
     
     add_index :memberships, :account_id
     add_index :memberships, :organization_id
+    
+    Account.all.each do |account|
+      puts account.id
+      account.memberships.create(:role=>account.role, :organization_id => account.attributes['organization_id'], :default => true)
+    end
   end
 
   def self.down

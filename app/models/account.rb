@@ -93,15 +93,24 @@ class Account < ActiveRecord::Base
 
   # Shims to preserve API backwards compatability.
   def organization
-    Organization.default_for(self)
+    @organization ||= Organization.default_for(self)
   end
 
   def organization_id
-    organization ? organization.id : nil
+    return nil unless self.organization
+    self.organization.id
+  end
+  
+  def role
+    self.memberships.first(:conditions=>{:default=>true}).role
+  end
+  
+  def member_of?(org)
+    self.memberships.exists?(:organization_id => org.id)
   end
 
   def has_role?(role, org)
-    not self.memberships.first(:conditions=>{:role => role, :organization_id => organization}).nil?
+    self.memberships.exists?(:role => role, :organization_id => org.id)
   end
   
   def admin?(org=self.organization)
@@ -125,7 +134,7 @@ class Account < ActiveRecord::Base
   end
 
   def active?(org=self.organization)
-    membership = self.memberships.first(:conditions=>{:organization_id => organization})
+    membership = self.memberships.first(:conditions=>{:organization_id => org})
     !membership.nil?  && membership.role != DISABLED
   end
 
@@ -148,7 +157,7 @@ class Account < ActiveRecord::Base
     # organization_id will no long be returned on account queries
     collaborators = Account.find_by_sql(<<-EOS
       select distinct on (a.id)
-      a.id as id, a.organization_id as organization_id, a.role as role
+      a.id as id, m.organization_id as organization_id, m.role as role
       from accounts as a
       inner join collaborations as c1
         on c1.account_id = a.id
@@ -158,6 +167,7 @@ class Account < ActiveRecord::Base
         on p.id = c1.project_id and p.hidden = false
       inner join project_memberships as pm
         on pm.project_id = c1.project_id and pm.document_id = #{resource.document_id}
+      left outer join memberships as m on m.account_id = #{id}
       where a.id != #{id}
     EOS
     )
@@ -179,9 +189,9 @@ class Account < ActiveRecord::Base
     owns_or_collaborates?(resource) || shared?(resource)
   end
 
-  def allowed_to_edit_account?(account)
+  def allowed_to_edit_account?(account, org=self.organization)
     (self.id == account.id) ||
-    ((self.organization_id == account.organization_id) && (self.admin? || account.reviewer?))
+    ((self.admin?(org) && account.member_of?(org)) || (self.member_of?(org) && account.reviewer?(org)))
   end
 
   def shared_document_ids
@@ -308,7 +318,10 @@ class Account < ActiveRecord::Base
       'hashed_email'      => hashed_email,
       'pending'           => pending?
     }
-    attrs['organization_name'] = organization_name if options[:include_organization]
+    if options[:include_organization]
+      attrs['organization_name'] = organization_name
+      attrs['organizations']     = organizations.map(&:canonical)
+    end
     if options[:include_document_counts]
       attrs['public_documents'] = Document.unrestricted.count(:conditions => {:account_id => id})
       attrs['private_documents'] = Document.restricted.count(:conditions => {:account_id => id})
