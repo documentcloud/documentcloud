@@ -120,6 +120,7 @@ ActionController::Routing::Routes.draw do |map|
     home.terms          '/terms',         :action => 'terms'
     home.featured       '/featured',      :action => 'featured'
     home.privacy        '/privacy',       :action => 'privacy'
+    home.p3p            '/p3p.:format',   :action => 'p3p'
     home.home           '/home',          :action => 'index'
     home.news           '/news',          :action => 'news'
     home.opensource     '/opensource',    :action => 'opensource'
@@ -143,10 +144,12 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # Third party logins via OmitAuth library
-  map.connect '/auth/failure',            :controller => :identities, :action => :failure
-  map.connect '/auth/:provider',          :controller => :identities, :action => :blank
-  map.connect '/auth/:provider/callback', :controller => :identities, :action => :callback
+  map.with_options :controller => 'identities' do | identities |
+    identities.connect '/auth/:action'
 
+    identities.connect '/auth/:provider',          :action => :blank
+    identities.connect '/auth/:provider/callback', :action => :callback
+  end
 
   # Asset packages.
   Jammit::Routes.draw(map)
