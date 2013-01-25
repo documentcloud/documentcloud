@@ -16,9 +16,10 @@ class Account < ActiveRecord::Base
   has_many :shared_projects, :through => :collaborations, :source => :project
 
   # Validations:
-  validates_presence_of   :first_name, :last_name, :email
-  validates_format_of     :email, :with => DC::Validators::EMAIL
-  validates_uniqueness_of :email, :case_sensitive => false
+#  validates_presence_of   :first_name, :last_name, :email
+#  validates_format_of     :email, :with => DC::Validators::EMAIL
+#  validates_uniqueness_of :email, :case_sensitive => false
+  validate :validate_identity_is_unique
 
   # Sanitizations:
   text_attr :first_name, :last_name, :email
@@ -31,6 +32,9 @@ class Account < ActiveRecord::Base
   named_scope :active,    { :include=> "memberships", :conditions => ["memberships.role != ?",   DISABLED] }
   named_scope :real,      { :include=> "memberships", :conditions => ["memberships.role in (?)", REAL_ROLES] }
   named_scope :reviewer,  { :include=> "memberships", :conditions => ["memberships.role = ?",    REVIEWER] }
+  named_scope :with_identity, lambda { | provider, id |
+    { :conditions=>"identities @> '\"#{DC::Hstore.escape(provider)}\"=>\"#{DC::Hstore.escape(id)}\"'" }
+  }
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session=nil, cookies=nil)
@@ -60,6 +64,14 @@ class Account < ActiveRecord::Base
     Account.first(:conditions => ['lower(email) = ?', email.downcase])
   end
 
+  # 
+  def self.from_identity( identity )
+    account = Account.with_identity( identity['provider'],  identity['uid'] ).first || Account.new()
+    account.record_identity_attributes( identity )
+    account.save if account.changed?
+    account
+  end
+
   # Save this account as the current account in the session. Logs a visitor in.
   def authenticate(session, cookies)
     session['account_id']      = id
@@ -83,11 +95,11 @@ class Account < ActiveRecord::Base
   def organization
     Organization.default_for(self)
   end
-  
+
   def organization_id
-    organization.id
+    organization ? organization.id : nil
   end
-  
+
   def has_role?(role, org)
     not self.memberships.first(:conditions=>{:role => role, :organization_id => organization}).nil?
   end
@@ -248,6 +260,40 @@ class Account < ActiveRecord::Base
     @password = BCrypt::Password.create(new_password, :cost => 8)
     self.hashed_password = @password
   end
+
+  def validate_identity_is_unique
+    return if self.identities.empty?
+    cond = '(' + DC::Hstore.quote( self.identities ).map{|k,v| "identities @> '\"#{k}\"=>\"#{v}\"'" }.join(" or ") + ')'
+    cond << " and id<>#{self.id}" unless new_record?
+    if account = Account.first( :conditions=>cond )
+      duplicated = account.identities.to_set.intersection( self.identities ).map{|k,v| k}.join(',')
+      errors.add(:identities, "An account exists with the same id for #{account.id} #{account.identities.to_json} #{duplicated}")
+    end
+  end
+
+  def identities
+    DC::Hstore.from_sql( read_attribute('identities') )
+  end
+
+  def record_identity_attributes( identity )
+    current_identities = self.identities
+    current_identities[ identity['provider'] ] = identity['uid']
+    write_attribute( :identities, DC::Hstore.to_sql(  current_identities ) )
+
+    info = identity['info']
+    %w{ email first_name last_name }.each do | attr |
+      write_attribute( attr, info[attr] ) if read_attribute(attr).blank? && info[attr]
+    end
+    if self.first_name.blank? && ! info['name'].blank?
+      self.first_name = info['name'].split(' ').first
+    end
+    if self.last_name.blank? && ! info['name'].blank?
+      self.last_name = info['name'].split(' ').last
+    end
+
+    self
+  end
+
 
   # Create default organization to preserve backwards compatability.
   def canonical(options={})

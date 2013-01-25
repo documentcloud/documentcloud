@@ -204,6 +204,11 @@ div.full_page_background {
   #full_screen_form form {
     padding: 50px 0 0 0;
   }
+    #full_screen_form .login_services {
+      left: 220px;
+      position: relative;
+      top: -5px;
+    }
     #full_screen_form h1 {
       text-align: center;
       color: #566eaa;

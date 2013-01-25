@@ -120,6 +120,7 @@ ActionController::Routing::Routes.draw do |map|
     home.terms          '/terms',         :action => 'terms'
     home.featured       '/featured',      :action => 'featured'
     home.privacy        '/privacy',       :action => 'privacy'
+    home.p3p            '/p3p.:format',   :action => 'p3p'
     home.home           '/home',          :action => 'index'
     home.news           '/news',          :action => 'news'
     home.opensource     '/opensource',    :action => 'opensource'
@@ -140,6 +141,14 @@ ActionController::Routing::Routes.draw do |map|
     move.feed             '/blog/feed',     :url => 'http://blog.documentcloud.org/feed'
     move.root_feed        '/feed',          :url => 'http://blog.documentcloud.org/feed'
     move.blog             '/blog/*parts',   :url => 'http://blog.documentcloud.org/'
+  end
+
+  # Third party logins via OmitAuth library
+  map.with_options :controller => 'identities' do | identities |
+    identities.connect '/auth/:action'
+
+    identities.connect '/auth/:provider',          :action => :blank
+    identities.connect '/auth/:provider/callback', :action => :callback
   end
 
   # Asset packages.
