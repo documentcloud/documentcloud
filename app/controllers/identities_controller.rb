@@ -41,6 +41,25 @@ class IdentitiesController < ApplicationController
   # causes an error even though omniauth is intercepting it
   def blank; render :text => "Not Found.", :status => 404 end
 
+  # this is the endpoint for an embedded document to obtain addition information 
+  # about the document as well as the current user
+  def remote_data
+    if logged_in?
+      document = Document.accessible(current_account,current_organization).find(params[:document_id])
+      render :json=> {
+        :success=>true,
+        :account=> current_account.canonical,
+        :document => document.as_json(:only=>[:access]).merge({
+                                                                :annotations=>
+                                                                    document.annotations.accessible(current_account).
+                                                                        map{|annot| annot.canonical}
+                                                              })
+
+      }
+    else
+      render :json=> { :success=>false }
+    end
+  end
 
   # Closes the popup window and loads the appropriate page 
   # into the inner iframe that opened them

@@ -153,7 +153,7 @@ ActionController::Routing::Routes.draw do |map|
   # Third party logins via OmitAuth library
   map.with_options :controller => 'identities' do | identities |
     identities.connect '/auth/:action'
-
+    identities.connect '/auth/remote_data/:document_id', :action=>'remote_data'
     identities.connect '/auth/:provider',          :action => :blank
     identities.connect '/auth/:provider/callback', :action => :callback
   end
