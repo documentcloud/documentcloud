@@ -53,6 +53,13 @@ ActionController::Routing::Routes.draw do |map|
     api.delete_project  '/api/projects/:id.:format',  :action => 'destroy_project',:conditions => {:method => :delete}
   end
   
+  map.with_options :controller=>:annotations do | annot |
+    annot.with_options :conditions => {:method => :options}, :action => 'cors_options' do |cors_api|
+      cors_api.annotation '/documents/:document_id/annotations/:id.:format', :allowed_methods=>[:put,:delete,:post]
+      cors_api.annotations '/documents/:document_id/annotations.:format', :allowed_methods=>[:get,:post]
+    end
+  end
+
   # Document representations and (private) sub-resources.
   map.resources  :documents, :has_many => [:annotations],
     :member => {
