@@ -26,7 +26,7 @@ class Annotation < ActiveRecord::Base
     has_shared = account && account.accessible_project_ids.present?
     access = []
     access << "(annotations.access = #{PUBLIC})"
-    access << "((annotations.access = #{EXCLUSIVE}) and annotations.organization_id = #{account.organization_id})" if account
+    access << "((annotations.access = #{EXCLUSIVE}) and annotations.organization_id = #{account.organization_id})" if account && account.organization
     access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
     access << "((annotations.access = #{EXCLUSIVE}) and memberships.document_id = annotations.document_id)" if has_shared
     opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
