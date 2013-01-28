@@ -65,10 +65,7 @@
           getRemoteData: function(document_id,successFn,errorFn){
             $.ajax('/auth/remote_data/' + document_id, {
               success: function( data ){
-                if ( data.success )
                   successFn(data);
-                else
-                  errorFn();
               },
               error: errorFn
             });
