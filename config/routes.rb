@@ -32,6 +32,7 @@ ActionController::Routing::Routes.draw do |map|
     auth.connect '/auth/:action'
     auth.connect '/auth/:provider',          :action => :blank
     auth.connect '/auth/:provider/callback', :action => :callback
+    auth.connect '/auth/remote_data/:document_id', :action=>:remote_data
   end
 
   # Public search.
