@@ -15,7 +15,7 @@ class AnnotationsController < ApplicationController
       format.js do
         json = current_annotation.canonical(:include_image_url => true, :include_document_url => true).to_json
         js = "dc.embed.noteCallback(#{json})"
-        cache_page js if current_annotation.cacheable? && current_document.access == PUBLIC
+        cache_page js if current_annotation.cacheable? && PUBLIC_LEVELS.include?(current_document.access)
         render :js => js
       end
     end

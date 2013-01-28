@@ -152,7 +152,7 @@ class Account < ActiveRecord::Base
   def collaborates?(resource) # Flagged to rewrite
     (admin? || contributor?) &&
       resource.organization_id == organization_id &&
-      [ORGANIZATION, EXCLUSIVE, PUBLIC, PENDING, ERROR].include?(resource.access)
+      SHARED_ACCESS.include?(resource.access)
   end
 
   # Heavy-duty SQL.

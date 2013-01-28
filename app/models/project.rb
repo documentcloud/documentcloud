@@ -124,6 +124,8 @@ class Project < ActiveRecord::Base
 
   # How many annotations belong to documents belonging to this project?
   # How many of those annotations are accessible to a given account?
+  # 
+  # TODO: incorporate PREMODERATED and POSTMODERATED comments into counts
   def annotation_count(account=nil)
     account ||= self.account
     @annotation_count ||= Annotation.count_by_sql <<-EOS
