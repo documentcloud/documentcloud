@@ -118,7 +118,7 @@ class AuthenticationController < ApplicationController
       render :action=>'iframe_success'
     else
       @next_url = '/auth/iframe_success'
-      render :template=>'workspace/login'
+      render :template=>'authentication/login'
     end
   end
 
