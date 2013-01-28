@@ -76,21 +76,16 @@ class AuthenticationController < ApplicationController
   # this is the endpoint for an embedded document to obtain addition information 
   # about the document as well as the current user
   def remote_data
-    if logged_in?
-      document = Document.accessible(current_account,current_organization).find(params[:document_id])
-      render :json=> {
-        :success=>true,
-        :account=> current_account.canonical,
-        :document => document.as_json(:only=>[:access]).merge({
-                                                                :annotations=>
-                                                                    document.annotations.accessible(current_account).
-                                                                        map{|annot| annot.canonical}
-                                                              })
+    data = {}
+    document = Document.accessible(current_account,current_organization).find(params[:document_id])
+    render :text => "Not Found.", :status => 404 and return unless document
 
-      }
-    else
-      render :json=> { :success=>false }
+    data[:document] = document.as_json(:only=>[:access])
+    if logged_in?
+      data[:account] = current_account.canonical 
+      data[:document][:annotations] = document.annotations.accessible(current_account).map{|annot| annot.canonical}
     end
+    render :json=> data 
   end
 
   # Closes the popup window and loads the appropriate page 
