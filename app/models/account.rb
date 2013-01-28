@@ -181,6 +181,11 @@ class Account < ActiveRecord::Base
     collaborators.any? {|account| account.owns_or_collaborates?(resource) }
   end
 
+  def allowed_to_comment?( resource )
+    # Will have to change to new access level PUBLIC_COMMENTING or whatever we decide here
+    PUBLIC == resource.access
+  end
+
   def owns_or_collaborates?(resource)
     owns?(resource) || collaborates?(resource)
   end
