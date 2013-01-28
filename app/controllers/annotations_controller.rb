@@ -37,7 +37,7 @@ class AnnotationsController < ApplicationController
     note_attrs = pick(params, :page_number, :title, :content, :location, :access)
     note_attrs[:access] = ACCESS_MAP[note_attrs[:access].to_sym]
     doc = current_document
-    return forbidden unless note_attrs[:access] == PRIVATE ||  current_account.allowed_to_comment?(doc)
+    return forbidden unless note_attrs[:access] == PRIVATE || current_account.allowed_to_comment?(doc)
     expire_page doc.canonical_cache_path if doc.cacheable?
     anno = doc.annotations.create(note_attrs.merge(
       :account_id      => current_account.id
