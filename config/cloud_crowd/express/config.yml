@@ -1,5 +1,6 @@
 :disabled_actions:
   - large_document_import
+  - reindex_everything
 
 # The URL where you're planning on running the central server/queue/database.
 :central_server:      http://ec2-174-129-5-5.compute-1.amazonaws.com:8080

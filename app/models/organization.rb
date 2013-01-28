@@ -55,19 +55,37 @@ class Organization < ActiveRecord::Base
   def document_count
     @document_count ||= Document.count(:conditions => {:organization_id => id})
   end
+  
+  def role_of(account)
+    self.memberships.first(:conditions=>{:account_id=>account.id})
+  end
+  
+  def add_member(account, role, concealed=false)
+    options = {:account_id => account.id, :role => role, :concealed => concealed}
+    options[:default] = true unless account.memberships.exists?(:default=>true) # TODO: transition account#real? for this verification
+    self.memberships.create(options)
+  end
+  
+  def remove_member(account)
+    self.memberships.destroy_all(:conditions=>{:account_id => account.id})
+  end
 
   # The list of all administrator emails in the organization.
   def admin_emails
     self.accounts.admin.all(:select => [:email]).map {|acc| acc.email }
   end
 
-  def to_json(options = nil)
+  def canonical(options = nil)
     {'name'           => name,
      'slug'           => slug,
      'demo'           => demo,
      'id'             => id,
      'document_count' => document_count,
-     'note_count'     => note_count}.to_json
+     'note_count'     => note_count}
+  end
+  
+  def to_json(options = nil)
+    canonical(options).to_json
   end
 
 end

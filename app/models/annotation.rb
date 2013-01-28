@@ -24,21 +24,40 @@ class Annotation < ActiveRecord::Base
 
   named_scope :accessible, lambda { |account|
     has_shared = account && account.accessible_project_ids.present?
+  
+    # Notes accessible under the following circumstances:
     access = []
+    joins  = []
+
+    # A note is public
     access << "(annotations.access = #{PUBLIC})"
-    access << "((annotations.access = #{EXCLUSIVE}) and annotations.organization_id = #{account.organization_id})" if account
-    access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})" if account
-    access << "((annotations.access = #{EXCLUSIVE}) and memberships.document_id = annotations.document_id)" if has_shared
-    opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
+    
+    if account
+      # A note belongs to the accessing account
+      access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})"
+
+      # An draft (EXCLUSIVE) note and the accessing account belong to the same organization
+      joins << <<-EOS
+        left outer join memberships on
+          (annotations.organization_id = memberships.organization_id and 
+           memberships.account_id = #{account.id})
+      EOS
+      access << "(annotations.access = #{EXCLUSIVE} and annotations.organization_id = memberships.organization_id)"
+    end
+
+
     if has_shared
-      opts[:joins] = <<-EOS
+      # A draft (EXCLUSIVE) note is on a document shared with the accessing account
+      access << "((annotations.access = #{EXCLUSIVE}) and projects.document_id = annotations.document_id)"
+      joins  << <<-EOS
         left outer join
         (select distinct document_id from project_memberships
-          where project_id in (#{account.accessible_project_ids.join(',')})) as memberships
-        on memberships.document_id = annotations.document_id
+          where project_id in (#{account.accessible_project_ids.join(',')})) as projects
+        on projects.document_id = annotations.document_id
       EOS
     end
-    opts
+
+    {:readonly => false, :joins => joins.join("\n"), :conditions => ["(#{access.join(' or ')})"]}
   }
 
   named_scope :owned_by, lambda { |account|
@@ -69,10 +88,10 @@ class Annotation < ActiveRecord::Base
     return if notes.empty?
     account_sql = <<-EOS
       SELECT DISTINCT accounts.id, accounts.first_name, accounts.last_name,
-                      accounts.role, organizations.name as organization_name
+                      organizations.name as organization_name
       FROM accounts
       INNER JOIN annotations   ON annotations.account_id = accounts.id
-      INNER JOIN organizations ON organizations.id = accounts.organization_id
+      INNER JOIN organizations ON organizations.id = annotations.organization_id
       WHERE annotations.id in (#{notes.map(&:id).join(',')})
     EOS
     rows = Account.connection.select_all(account_sql)
@@ -85,11 +104,9 @@ class Annotation < ActiveRecord::Base
       note.author = {
         :full_name         => author ? "#{author['first_name']} #{author['last_name']}" : "Unattributed",
         :account_id        => note.account_id,
-        :owns_note         => current_account && current_account.id == note.account_id
+        :owns_note         => current_account && current_account.id == note.account_id,
+        :organization_name => author['organization_name']
       }
-      if author && [Account::ADMINISTRATOR, Account::CONTRIBUTOR, Account::FREELANCER].include?(author['role'].to_i)
-        note.author[:organization_name] = author['organization_name']
-      end
     end
   end
 

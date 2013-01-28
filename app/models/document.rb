@@ -598,6 +598,7 @@ class Document < ActiveRecord::Base
     EntityDate.reset(self)
     pages = self.reload.pages
     Sunspot.index pages
+    Sunspot.commit
     reprocess_entities if calais_id
     upload_text_assets(pages, access)
     self.access = access if access

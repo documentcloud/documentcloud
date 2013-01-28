@@ -1,14 +1,15 @@
 class AnnotationsController < ApplicationController
   include DC::Access
 
-  before_filter :login_required, :except => [:index, :show, :print]
+  before_filter :login_required, :except => [:index, :show, :print,:cors_options]
+  skip_before_filter :verify_authenticity_token
 
   # In the workspace, request a listing of annotations.
   def index
     annotations = current_document.annotations_with_authors(current_account)
     json annotations
   end
-  
+
   def show
     return not_found unless current_annotation
     respond_to do |format|
@@ -20,7 +21,7 @@ class AnnotationsController < ApplicationController
       end
     end
   end
-  
+
   # Print out all the annotations for a document (or documents.)
   def print
     docs = Document.accessible(current_account, current_organization).find_all_by_id(params[:docs])
@@ -41,6 +42,7 @@ class AnnotationsController < ApplicationController
       :account_id      => current_account.id,
       :organization_id => current_organization.id
     ))
+    maybe_set_cors_headers
     json current_document.annotations_with_authors(current_account, [anno]).first
   end
 
@@ -57,6 +59,7 @@ class AnnotationsController < ApplicationController
     expire_page current_document.canonical_cache_path if current_document.cacheable?
     expire_page current_annotation.canonical_cache_path if current_annotation.cacheable?
     anno.reset_public_note_count
+    maybe_set_cors_headers
     json anno
   end
 
@@ -67,12 +70,26 @@ class AnnotationsController < ApplicationController
       return json(anno, 403)
     end
     anno.destroy
+    maybe_set_cors_headers
     expire_page current_document.canonical_cache_path if current_document.cacheable?
     json nil
   end
 
+  def cors_options(should_render=true)
+    return bad_request unless params[:allowed_methods]
+    maybe_set_cors_headers
+    render :nothing => true
+  end
 
   private
+
+  def maybe_set_cors_headers
+    return unless request.headers['Origin']
+    headers['Access-Control-Allow-Origin'] = request.headers['Origin'] #'http://dc-viewer.dev'
+    headers['Access-Control-Allow-Methods'] = 'OPTIONS, GET, POST, PUT, DELETE'
+    headers['Access-Control-Allow-Headers'] = 'Accept,Authorization,Content-Length,Content-Type,Cookie'
+    headers['Access-Control-Allow-Credentials'] = 'true'
+  end
 
   def current_annotation
     @current_annotation ||= current_document.annotations.find_by_id(params[:id])
