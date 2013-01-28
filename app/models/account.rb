@@ -16,7 +16,8 @@ class Account < ActiveRecord::Base
   has_many :shared_projects, :through => :collaborations, :source => :project
 
   # Validations:
-  validates_presence_of   :first_name, :last_name, :email, :if => :has_memberships?
+  validates_presence_of   :first_name, :last_name
+  validates_presence_of   :email, :if => :has_memberships?
   validates_format_of     :email, :with => DC::Validators::EMAIL, :if => :has_memberships?
   validates_uniqueness_of :email, :case_sensitive => false, :if => :has_memberships?
   validate :validate_identity_is_unique
@@ -29,7 +30,7 @@ class Account < ActiveRecord::Base
 
   # Scopes
   named_scope :admin,     { :include=> "memberships", :conditions => ["memberships.role = ?",    ADMINISTRATOR] }
-  named_scope :active,    { :include=> "memberships", :conditions => ["memberships.role != ?",   DISABLED] }
+  named_scope :active,    { :include=> "memberships", :conditions => ["memberships.role is NULL or memberships.role != ?",   DISABLED] }
   named_scope :real,      { :include=> "memberships", :conditions => ["memberships.role in (?)", REAL_ROLES] }
   named_scope :reviewer,  { :include=> "memberships", :conditions => ["memberships.role = ?",    REVIEWER] }
   named_scope :with_identity, lambda { | provider, id |
@@ -102,7 +103,8 @@ class Account < ActiveRecord::Base
   end
   
   def role
-    self.memberships.first(:conditions=>{:default=>true}).role
+    default = memberships.first(:conditions=>{:default=>true})
+    default.nil? ? nil : default.role 
   end
   
   def member_of?(org)
@@ -114,7 +116,7 @@ class Account < ActiveRecord::Base
   end
 
   def has_role?(role, org)
-    self.memberships.exists?(:role => role, :organization_id => org.id)
+    org && self.memberships.exists?(:role => role, :organization_id => org.id)
   end
   
   def admin?(org=self.organization)
@@ -139,7 +141,7 @@ class Account < ActiveRecord::Base
 
   def active?(org=self.organization)
     membership = self.memberships.first(:conditions=>{:organization_id => org})
-    !membership.nil?  && membership.role != DISABLED
+    membership && membership.role != DISABLED
   end
 
   # An account owns a resource if it's tagged with the account_id.
@@ -255,12 +257,12 @@ class Account < ActiveRecord::Base
 
   # MD5 hash of processed email address, for use in Gravatar URLs.
   def hashed_email
-    @hashed_email ||= Digest::MD5.hexdigest(email.downcase.gsub(/\s/, ''))
+    @hashed_email ||= Digest::MD5.hexdigest(email.downcase.gsub(/\s/, '')) if email
   end
 
   # Has this account been assigned, but never logged into, with no password set?
   def pending?
-    !hashed_password && !reviewer?
+    !hashed_password && !reviewer? && identities.empty?
   end
 
   # It's slo-o-o-w to compare passwords. Which is a mixed bag, but mostly good.
