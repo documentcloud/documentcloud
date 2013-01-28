@@ -81,9 +81,9 @@ class Document < ActiveRecord::Base
 
   named_scope :pending,       :conditions => {:access => PENDING}
   named_scope :failed,        :conditions => {:access => ERROR}
-  named_scope :unrestricted,  :conditions => {:access => PUBLIC}
+  named_scope :unrestricted,  :conditions => {:access => PUBLIC_LEVELS}
   named_scope :restricted,    :conditions => {:access => [PRIVATE, ORGANIZATION]}
-  named_scope :finished,      :conditions => {:access => [PUBLIC, PRIVATE, ORGANIZATION]}
+  named_scope :finished,      :conditions => {:access => [PUBLIC, PRIVATE, ORGANIZATION, PREMODERATED, POSTMODERATED]}
 
   named_scope :popular,       :conditions => ["hit_count > ?", MINIMUM_POPULAR]
 
@@ -102,7 +102,7 @@ class Document < ActiveRecord::Base
   named_scope :accessible, lambda {|account, org|
     has_shared = account && account.accessible_project_ids.present?
     access = []
-    access << "(documents.access = #{PUBLIC})"
+    access << "(documents.access in (#{PUBLIC_LEVELS.join(",")}))"
     access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}, #{ORGANIZATION}, #{EXCLUSIVE}) and documents.account_id = #{account.id})" if account
     access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org && account && !account.freelancer?
     access << "(memberships.document_id = documents.id)" if has_shared
@@ -347,7 +347,7 @@ class Document < ActiveRecord::Base
   end
 
   def publicly_accessible?
-    [PUBLIC, EXCLUSIVE].include? access
+    [PUBLIC, EXCLUSIVE, PREMODERATED, POSTMODERATED].include? access
   end
   alias_method :cacheable?, :publicly_accessible?
 
@@ -363,7 +363,7 @@ class Document < ActiveRecord::Base
   # need to be updated.
   def set_access(access_level)
     changes = {:access => PENDING}
-    changes[:publish_at] = nil if access_level == PUBLIC
+    changes[:publish_at] = nil if PUBLIC_LEVELS.include? access_level
     update_attributes changes
     background_update_asset_access access_level
   end

@@ -30,7 +30,7 @@ class Annotation < ActiveRecord::Base
     joins  = []
 
     # A note is public
-    access << "(annotations.access = #{PUBLIC})"
+    access << "(annotations.access in (#{PUBLIC_LEVELS.join(",")}))"
     
     if account
       # A note belongs to the accessing account
@@ -64,7 +64,7 @@ class Annotation < ActiveRecord::Base
     {:conditions => {:account_id => account.id}}
   }
 
-  named_scope :unrestricted, :conditions => {:access => PUBLIC}
+  named_scope :unrestricted, :conditions => {:access => PUBLIC_LEVELS}
 
   # Annotations are not indexed for the time being.
 
@@ -113,7 +113,7 @@ class Annotation < ActiveRecord::Base
   def self.public_note_counts_by_organization
     self.unrestricted.count({
       :joins      => [:document],
-      :conditions => ["documents.access = ?", PUBLIC],
+      :conditions => ["documents.access in (?)", PUBLIC_LEVELS],
       :group      => 'annotations.organization_id'
     })
   end
@@ -127,7 +127,7 @@ class Annotation < ActiveRecord::Base
   end
   
   def cacheable?
-    access == PUBLIC && document.cacheable?
+    PUBLIC_LEVELS.include?(access) && document.cacheable?
   end
 
   def canonical_url
