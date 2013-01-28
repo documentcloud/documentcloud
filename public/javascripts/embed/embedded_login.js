@@ -11,21 +11,18 @@
     // services prevent that using X-Frame-Options headers
     attachPopupHandler: function(ev){
       $('.login_services a').click( function(ev){
-        
+
+        ev.preventDefault();
+
         var POPUP_HEIGHT = 300, POPUP_WIDTH = 420,
             left = (screen.width/2)-( POPUP_WIDTH  / 2 ),
             top = (screen.height/2)-( POPUP_HEIGHT / 2 );
 
-//        var win = window.open('/test/popup.html','popup');
-
-        var win = window.open( '/auth/omniauth_start_popup?service='+$(this).attr("href"), 'IFrameLoginPopup', 
+        var win = window.open( '/auth/omniauth_start_popup?service='+$(this).attr("href"), 'IFrameLoginPopup',
                      "menubar=no,toolbar=no,status=no,width="+ POPUP_WIDTH+",height="+POPUP_HEIGHT+
                      ",toolbar=no,left="+left+",top="+top );
 
         win.focus();
-        win.parentwin=window;
-
-        ev.preventDefault();
 
       } );
     },
@@ -33,23 +30,25 @@
 
     // These are called from inner iframe pages.
     // They communicate across the parent iframe's xdm RPC socket
-    onLoginSuccess: function(){   window.parent.socket.loggedInStatus( { success:false, account: window.ACCOUNT_DATA } );  },
+    onLoginSuccess: function( account ){
+      window.parent.socket.loggedInStatus({
+        success: true, account: account
+      });
+    },
     onLoginFailure: function(){   window.parent.socket.loggedInStatus( { success:false } );                },
 
 
-    // called from an omniauth powered popup window once 
+    // called from an omniauth powered popup window once
     // a third party login is complete.
     onPopupCompletion: function( call_type ) {
       // load success page in iframe.  It will handle informing the
       // xdm socket of the success
-
-
       window.opener.location.href= '/auth/iframe_' + call_type;
       // relay message back to iframe that opened us.
       window.close();
     },
 
-    // this is called from the outer iframe.  
+    // this is called from the outer iframe.
     establishSocket: function(){
       // is deliberately global so child iframe can access it to send messages
       window.socket = new easyXDM.Rpc({},{
@@ -64,7 +63,6 @@
             iframe.src = "/auth/inner_iframe";
           },
           getRemoteData: function(document_id,successFn,errorFn){
-//            debugger
             $.ajax('/auth/remote_data/' + document_id, {
               success: function( data ){
                 if ( data.success )
@@ -82,9 +80,7 @@
     }
 
   };
-  
 
-  
+
+
 })(window, document, jQuery);
-
-

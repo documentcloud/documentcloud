@@ -2,6 +2,5 @@
     <h1><%= flash[:notice] %></h1>
 </div>
 <script type="text/javascript">
-  window.ACCOUNT_DATA = <%= @account.canonical.to_json %>;
-  EmbeddedLogin.onLoginSuccess();
+  EmbeddedLogin.onLoginSuccess( <%= @account.canonical.to_json %> );
 </script>
