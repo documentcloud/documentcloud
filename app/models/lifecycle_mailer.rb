@@ -16,6 +16,15 @@ class LifecycleMailer < ActionMailer::Base
                 :key                => account.security_key.key,
                 :organization_name  => account.organization_name
   end
+  
+  def membership_notification(account, organization, admin=nil)
+    subject    "You have been added to #{organization.name}"
+    from       SUPPORT
+    recipients account.email
+    body       :admin   => admin,
+               :account => account,
+               :organization_name => organization.name
+  end
 
   # Mail instructions for a document review, with a secure link to the
   # document viewer, where the user can annotate the document.

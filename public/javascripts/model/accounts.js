@@ -15,6 +15,11 @@ dc.model.Account = Backbone.Model.extend({
   DEFAULT_AVATAR     : location.protocol + '//' + location.host + '/images/embed/icons/user_blue_32.png',
 
   defaults           : { first_name : '', last_name : '', email : '', role : 2 },
+  
+  initialize: function(options) {
+    this.organizations = new dc.model.OrganizationSet();
+    if (this.get('organizations')) { this.organizations.reset(this.get('organizations')); }
+  },
 
   organization : function() {
     return Organizations.get(this.get('organization_id'));

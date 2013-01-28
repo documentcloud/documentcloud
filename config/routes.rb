@@ -21,9 +21,17 @@ ActionController::Routing::Routes.draw do |map|
     main.help       '/help',          :action => 'help'
     main.help       '/help/:page',    :action => 'help'
     main.results    '/results',       :action => 'index'
-    main.signup     '/signup',        :action => 'signup_info'
-    main.login      '/login',         :action => 'login'
-    main.logout     '/logout',        :action => 'logout'
+  end
+  
+  # Third party logins via OmitAuth library
+  map.with_options :controller => 'authentication' do | auth |
+    auth.signup     '/signup',        :action => 'signup_info'
+    auth.login      '/login',         :action => 'login'
+    auth.logout     '/logout',        :action => 'logout'
+
+    auth.connect '/auth/:action'
+    auth.connect '/auth/:provider',          :action => :blank
+    auth.connect '/auth/:provider/callback', :action => :callback
   end
 
   # Public search.
@@ -148,14 +156,6 @@ ActionController::Routing::Routes.draw do |map|
     move.feed             '/blog/feed',     :url => 'http://blog.documentcloud.org/feed'
     move.root_feed        '/feed',          :url => 'http://blog.documentcloud.org/feed'
     move.blog             '/blog/*parts',   :url => 'http://blog.documentcloud.org/'
-  end
-
-  # Third party logins via OmitAuth library
-  map.with_options :controller => 'identities' do | identities |
-    identities.connect '/auth/:action'
-    identities.connect '/auth/remote_data/:document_id', :action=>'remote_data'
-    identities.connect '/auth/:provider',          :action => :blank
-    identities.connect '/auth/:provider/callback', :action => :callback
   end
 
   # Asset packages.
