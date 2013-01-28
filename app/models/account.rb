@@ -182,8 +182,7 @@ class Account < ActiveRecord::Base
   end
 
   def allowed_to_comment?( resource )
-    # Will have to change to new access level PUBLIC_COMMENTING or whatever we decide here
-    PUBLIC == resource.access
+    [COMMENT_LEVELS].include?( resource.access )
   end
 
   def owns_or_collaborates?(resource)
