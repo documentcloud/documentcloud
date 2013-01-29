@@ -83,7 +83,12 @@ class AuthenticationController < ApplicationController
     data[:document] = document.as_json(:only=>[:access])
     if logged_in?
       data[:account] = current_account.canonical 
-      data[:document][:annotations] = document.annotations.accessible(current_account).map{|annot| annot.canonical}
+      data[:document][:annotations] = document.annotations_with_authors( current_account ).map{ |annot|
+        annot.canonical.merge({
+                                :editable=>current_account.owns?( annot )
+                              })
+
+      }
     end
     render :json=> data 
   end
