@@ -30,12 +30,14 @@
 
     // These are called from inner iframe pages.
     // They communicate across the parent iframe's xdm RPC socket
-    onLoginSuccess: function( account ){
+    onLoginSuccess: function( data ){
       window.parent.socket.loggedInStatus({
-        success: true, account: account
+        success: true, data: data
       });
     },
-    onLoginFailure: function(){   window.parent.socket.loggedInStatus( { success:false } );                },
+    onLoginFailure: function(){
+      window.parent.socket.loggedInStatus( { success:false,data:{} } );
+    },
 
 
     // called from an omniauth powered popup window once
@@ -57,16 +59,14 @@
           loggedInStatus: {}
         },
         local: {
-          loadStartingPage: function( successFn, errorFn ){
+          loadStartingPage: function( document_id, successFn, errorFn ){
             var iframe = document.getElementById('services_login');
             iframe.contentDocument.write('<body style="background: radial-gradient(circle farthest-corner at center top , #FAFAFA 0%, #C8C8C8 100%) repeat scroll 0 0 transparent;"></body>');
-            iframe.src = "/auth/inner_iframe";
+            iframe.src = "/auth/inner_iframe?document_id=" + document_id;
           },
           getRemoteData: function(document_id,successFn,errorFn){
             $.ajax('/auth/remote_data/' + document_id, {
-              success: function( data ){
-                  successFn(data);
-              },
+              success: successFn,
               error: errorFn
             });
 
