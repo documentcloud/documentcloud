@@ -182,7 +182,7 @@ class Account < ActiveRecord::Base
   end
 
   def allowed_to_comment?( resource )
-    COMMENT_LEVELS.include?( resource.access )
+    [PREMODERATED,POSTMODERATED].include?( resource.access )
   end
 
   def owns_or_collaborates?(resource)
