@@ -17,25 +17,17 @@
         var POPUP_HEIGHT = 300, POPUP_WIDTH = 420,
             left = (screen.width/2)-( POPUP_WIDTH  / 2 ),
             top = (screen.height/2)-( POPUP_HEIGHT / 2 );
-
-        var win = window.open( '/auth/omniauth_start_popup?service='+$(this).attr("href"), 'IFrameLoginPopup',
-                     "menubar=no,toolbar=no,status=no,width="+ POPUP_WIDTH+",height="+POPUP_HEIGHT+
-                     ",toolbar=no,left="+left+",top="+top );
-
-        win.focus();
-
+        var url = '/auth/omniauth_start_popup?service='+$(this).attr("href");
+        // IE doesn't work with popop.  Well it works, but then you we can't access the window.opener 
+        // in the onPopupCompletion function below due to SSL and crossing security zones
+        var win = window.open( url, 'IFrameLoginPopup',
+                               "menubar=no,toolbar=no,status=no,width="+ POPUP_WIDTH+",height="+POPUP_HEIGHT+
+                               ",toolbar=no,left="+left+",top="+top );
+        if ( win.focus ) {
+          win.focus();
+        }
       } );
     },
-
-
-    // These are called from inner iframe pages.
-    // They communicate across the parent iframe's xdm RPC socket
-    onLoginSuccess: function( account ){
-      window.parent.socket.loggedInStatus({
-        success: true, account: account
-      });
-    },
-    onLoginFailure: function(){   window.parent.socket.loggedInStatus( { success:false } );                },
 
 
     // called from an omniauth powered popup window once
@@ -43,9 +35,26 @@
     onPopupCompletion: function( call_type ) {
       // load success page in iframe.  It will handle informing the
       // xdm socket of the success
-      window.opener.location.href= '/auth/iframe_' + call_type;
-      // relay message back to iframe that opened us.
-      window.close();
+      // If IE fails here while complaining that window.opener is null, check security zones and
+      // Make sure the site isn't 'trusted'.
+      // http://stackoverflow.com/questions/6190879/window-opener-becomes-null-in-internet-explorer-after-security-zone-change
+      // the Timeout is another IE compatability hack.  Without it postmessage fails with XDM
+      setTimeout( function(){
+        window.opener.location.href= '/auth/iframe_' + call_type;
+        window.close();
+      }, 1 );
+    },
+
+
+    // These are called from inner iframe pages.
+    // They communicate across the parent iframe's xdm RPC socket
+    onLoginSuccess: function( data ){
+      window.parent.socket.loggedInStatus({
+        success: true, data: data
+      });
+    },
+    onLoginFailure: function(){
+      window.parent.socket.loggedInStatus( { success:false,data:{} } );
     },
 
     // this is called from the outer iframe.
@@ -57,16 +66,14 @@
           loggedInStatus: {}
         },
         local: {
-          loadStartingPage: function( successFn, errorFn ){
+          loadStartingPage: function( document_id, successFn, errorFn ){
             var iframe = document.getElementById('services_login');
             iframe.contentDocument.write('<body style="background: radial-gradient(circle farthest-corner at center top , #FAFAFA 0%, #C8C8C8 100%) repeat scroll 0 0 transparent;"></body>');
-            iframe.src = "/auth/inner_iframe";
+            iframe.src = "/auth/inner_iframe?document_id=" + document_id;
           },
           getRemoteData: function(document_id,successFn,errorFn){
             $.ajax('/auth/remote_data/' + document_id, {
-              success: function( data ){
-                  successFn(data);
-              },
+              success: successFn,
               error: errorFn
             });
 
