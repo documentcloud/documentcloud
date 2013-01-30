@@ -13,7 +13,8 @@ class CreateMembership < ActiveRecord::Migration
     
     Account.all.each do |account|
       puts account.id
-      account.memberships.create(:role=>account.role, :organization_id => account.attributes['organization_id'], :default => true)
+      m = account.memberships.new(:role=>account.role, :organization_id => account.attributes['organization_id'], :default => true)
+      raise StandardError, "Unable to save membership for #{account.email}" unless m.save
     end
   end
 
