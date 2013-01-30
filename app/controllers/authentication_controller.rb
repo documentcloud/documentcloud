@@ -68,6 +68,7 @@ class AuthenticationController < ApplicationController
   layout 'embedded_login', :only=>[ :inner_iframe, :iframe_success, :iframe_failure, :popup_completion ]
 
   before_filter :login_required, :only => [:iframe_success]
+  before_filter :set_p3p_header
 
   # this is needed for running omniauth on rails 2.3.  Without it the route
   # causes an error even though omniauth is intercepting it
@@ -193,6 +194,11 @@ class AuthenticationController < ApplicationController
       }
     end
     return data
+  end
+
+  def set_p3p_header
+    # explanation of what these mean: http://www.p3pwriter.com/LRN_111.asp
+    headers['P3P'] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
   end
 
 end
