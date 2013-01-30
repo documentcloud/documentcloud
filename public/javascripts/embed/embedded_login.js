@@ -17,14 +17,32 @@
         var POPUP_HEIGHT = 300, POPUP_WIDTH = 420,
             left = (screen.width/2)-( POPUP_WIDTH  / 2 ),
             top = (screen.height/2)-( POPUP_HEIGHT / 2 );
-
-        var win = window.open( '/auth/omniauth_start_popup?service='+$(this).attr("href"), 'IFrameLoginPopup',
-                     "menubar=no,toolbar=no,status=no,width="+ POPUP_WIDTH+",height="+POPUP_HEIGHT+
-                     ",toolbar=no,left="+left+",top="+top );
-
-        win.focus();
-
+        var url = '/auth/omniauth_start_popup?service='+$(this).attr("href");
+        // IE doesn't work with popop.  Well it works, but then you we can't access the window.opener 
+        // in the onPopupCompletion function below due to SSL and crossing security zones
+        var win = window.open( url, 'IFrameLoginPopup',
+                               "menubar=no,toolbar=no,status=no,width="+ POPUP_WIDTH+",height="+POPUP_HEIGHT+
+                               ",toolbar=no,left="+left+",top="+top );
+        if ( win.focus ) {
+          win.focus();
+        }
       } );
+    },
+
+
+    // called from an omniauth powered popup window once
+    // a third party login is complete.
+    onPopupCompletion: function( call_type ) {
+      // load success page in iframe.  It will handle informing the
+      // xdm socket of the success
+      // If IE fails here while complaining that window.opener is null, check security zones and
+      // Make sure the site isn't 'trusted'.
+      // http://stackoverflow.com/questions/6190879/window-opener-becomes-null-in-internet-explorer-after-security-zone-change
+      // the Timeout is another IE compatability hack.  Without it postmessage fails with XDM
+      setTimeout( function(){
+        window.opener.location.href= '/auth/iframe_' + call_type;
+        window.close();
+      }, 1 );
     },
 
 
@@ -37,17 +55,6 @@
     },
     onLoginFailure: function(){
       window.parent.socket.loggedInStatus( { success:false,data:{} } );
-    },
-
-
-    // called from an omniauth powered popup window once
-    // a third party login is complete.
-    onPopupCompletion: function( call_type ) {
-      // load success page in iframe.  It will handle informing the
-      // xdm socket of the success
-      window.opener.location.href= '/auth/iframe_' + call_type;
-      // relay message back to iframe that opened us.
-      window.close();
     },
 
     // this is called from the outer iframe.
