@@ -1,4 +1,6 @@
 class AuthenticationController < ApplicationController
+  
+  before_filter :bouncer, :except => [:callback] if Rails.env.staging?
 
   # Display the signup information page.
   def signup_info
