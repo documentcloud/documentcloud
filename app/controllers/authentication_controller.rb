@@ -27,8 +27,7 @@ class AuthenticationController < ApplicationController
 
   # Logging out clears your entire session.
   def logout
-    reset_session
-    cookies.delete 'dc_logged_in'
+    clear_login_state
     redirect_to '/'
   end
 
@@ -65,7 +64,7 @@ class AuthenticationController < ApplicationController
 #    * Once the omniauth flow is complete, the popup notifies the iframe is notified using the DOM window.opener
 #
 
-  layout 'embedded_login', :only=>[ :inner_iframe, :iframe_success, :iframe_failure, :popup_completion ]
+  layout 'embedded_login', :only=>[ :inner_iframe, :iframe_success, :iframe_failure, :popup_completion, :iframe_logout ]
 
   before_filter :login_required, :only => [:iframe_success]
   before_filter :set_p3p_header
@@ -93,6 +92,14 @@ class AuthenticationController < ApplicationController
   def iframe
   end
 
+  def iframe_logout
+    clear_login_state
+    flash[:notice] = 'You have logged out successfully'
+    @remote_data = build_remote_data( params[:document_id] )
+    @status = false
+    render :action=>'iframe_login_status'
+  end
+
   # Displays the login page inside an iframe.
   #
   # if they are already logged in, display a success message,
@@ -103,7 +110,8 @@ class AuthenticationController < ApplicationController
       @account = current_account
       flash[:notice] = 'You are already logged in'
       @remote_data = build_remote_data( params[:document_id] )
-      render :action=>'iframe_success'
+      @status = true
+      render :action=>'iframe_login_status'
     else
       @next_url = '/auth/iframe_success'
       session[:dv_document_id]=params[:document_id]
@@ -124,11 +132,9 @@ class AuthenticationController < ApplicationController
   def iframe_success
     @remote_data = session.has_key?(:dv_document_id) ? build_remote_data( session.delete(:dv_document_id) ) : {}
     flash[:notice] = 'Successfully logged in'
+    @status = true
+    render :action=>'iframe_login_status'
   end
-  # Displays flash[:error], Relays the failure across XDM RPC
-  def iframe_failure
-  end
-
   
   # Where third-party logins come back to once they have
   # completed successfully.
@@ -197,6 +203,11 @@ class AuthenticationController < ApplicationController
   def set_p3p_header
     # explanation of what these mean: http://www.p3pwriter.com/LRN_111.asp
     headers['P3P'] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
+  end
+
+  def clear_login_state
+    reset_session
+    cookies.delete 'dc_logged_in'
   end
 
 end
