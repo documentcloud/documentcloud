@@ -14,7 +14,7 @@
 
         ev.preventDefault();
 
-        var POPUP_HEIGHT = 300, POPUP_WIDTH = 420,
+        var POPUP_HEIGHT = 450, POPUP_WIDTH = 400,
             left = (screen.width/2)-( POPUP_WIDTH  / 2 ),
             top = (screen.height/2)-( POPUP_HEIGHT / 2 );
         var url = '/auth/omniauth_start_popup?service='+$(this).attr("href");
