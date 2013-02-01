@@ -64,9 +64,9 @@ class AuthenticationController < ApplicationController
 #    * Once the omniauth flow is complete, the popup notifies the iframe is notified using the DOM window.opener
 #
 
-  layout 'embedded_login', :only=>[ :inner_iframe, :iframe_success, :iframe_failure, :popup_completion, :iframe_logout ]
+  layout 'embedded_login', :only=>[ :inner_iframe, :iframe_success, :iframe_failure, :popup_completion, :iframe_logout,:callback,:request_additional_information ]
 
-  before_filter :login_required, :only => [:iframe_success]
+  before_filter :login_required, :only => [:iframe_success,:record_user_information]
   before_filter :set_p3p_header
 
   # this is needed for running omniauth on rails 2.3.  Without it the route
@@ -82,6 +82,7 @@ class AuthenticationController < ApplicationController
   # Closes the popup window and loads the appropriate page 
   # into the inner iframe that opened them
   def popup_completion
+    session.delete(:omniauth_popup_next)
   end
 
   # Renders a very minimialist page with only
@@ -123,7 +124,7 @@ class AuthenticationController < ApplicationController
   # This way we can know where the request originated and can close the popup
   # after the authentication completes
   def omniauth_start_popup
-    session[:omniauth_from_popup]=true
+    session[:omniauth_popup_next]='/auth/popup_completion'
     redirect_to params[:service]
   end
 
@@ -142,16 +143,30 @@ class AuthenticationController < ApplicationController
     if logged_in?
       # if logged in, then they are adding a new account identity
       current_account.record_identity_attributes( identity_hash ).save!
+      @account = current_account
     else
-      account = Account.from_identity( identity_hash )
-      if account.errors.empty?
-        account.authenticate(session, cookies)
-      else
-        flash[:error] = account.errors.full_messages.to_sentence
-      end
+      @account = Account.from_identity( identity_hash )
     end
-    flash[:notice] = "Successfully logged in."
-    render_or_redirect( true )
+    if @account.errors.empty?
+      @account.authenticate(session, cookies)
+      @next_url = session[ :omniauth_popup_next ] || request.env['omniauth.origin'] || '/'
+      render :action=>:request_additional_information
+    else
+      flash[:error] = @account.errors.full_messages.to_sentence
+      render :action=>:login
+    end
+  end
+
+
+  def record_user_information
+    account = current_account
+    account.update_attributes( pick(params, :first_name, :last_name) )
+    if account.errors.empty?
+      redirect_to params[:next_url]
+    else
+      flash[:error] = account.errors.full_messages.to_sentence
+      render :action=>:request_additional_information
+    end
   end
 
   # The destination for third party logins that have failed.  
@@ -159,26 +174,11 @@ class AuthenticationController < ApplicationController
   # being selected while on the external site
   def failure
     flash[:error] = params[:message]
-    render_or_redirect( false )
+    rendirect_to :action=>'login'
   end
 
   private
 
-  # common method called in cases of both success and failure by the 
-  # omniauth callback
-  def render_or_redirect( was_successful )
-    # if we started from an iframe and the user authenticated via omniauth
-    # then the request will come from a popup window.  
-    #
-    # The popup views will close it and display the results 
-    # inside the iframe that opened the window
-    if ( session.delete( :omniauth_from_popup ) )
-      @message = was_successful ? 'success' : 'failure'
-      render :action => 'popup_completion', :layout=>'embedded_login'
-    else
-      redirect_to request.env['omniauth.origin'] || '/'
-    end
-  end
 
   # convenience method to extract the omniauth identity data
   def identity_hash
