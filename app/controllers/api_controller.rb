@@ -70,7 +70,13 @@ class ApiController < ApplicationController
   def documents
     return bad_request unless params[:id] and request.format.json? || request.format.js? || request.format.text?
     return not_found unless current_document
-    @response = {'document' => current_document.canonical(:access => true, :sections => true, :annotations => true, :data => true)}
+    opts                     = {:access => true, :sections => true, :annotations => true, :data => true}
+    if current_account
+      opts[:account]           = current_account
+      opts[:allowed_to_edit]   = current_account.allowed_to_edit?(current_document)
+      opts[:allowed_to_review] = current_account.reviews?(current_document)
+    end
+    @response                = {'document' => current_document.canonical(opts)}
     respond_to do |format|
       format.text do 
         direct = [PRIVATE, ORGANIZATION, EXCLUSIVE].include? current_document.access
