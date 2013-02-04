@@ -21,9 +21,18 @@ ActionController::Routing::Routes.draw do |map|
     main.help       '/help',          :action => 'help'
     main.help       '/help/:page',    :action => 'help'
     main.results    '/results',       :action => 'index'
-    main.signup     '/signup',        :action => 'signup_info'
-    main.login      '/login',         :action => 'login'
-    main.logout     '/logout',        :action => 'logout'
+  end
+  
+  # Third party logins via OmitAuth library
+  map.with_options :controller => 'authentication' do | auth |
+    auth.signup     '/signup',        :action => 'signup_info'
+    auth.login      '/login',         :action => 'login'
+    auth.logout     '/logout',        :action => 'logout'
+
+    auth.connect '/auth/:action'
+    auth.connect '/auth/:provider',          :action => :blank
+    auth.connect '/auth/:provider/callback', :action => :callback
+    auth.connect '/auth/remote_data/:document_id', :action=>:remote_data
   end
 
   # Public search.
@@ -53,6 +62,13 @@ ActionController::Routing::Routes.draw do |map|
     api.delete_project  '/api/projects/:id.:format',  :action => 'destroy_project',:conditions => {:method => :delete}
   end
   
+  map.with_options :controller=>:annotations do | annot |
+    annot.with_options :conditions => {:method => :options}, :action => 'cors_options' do |cors_api|
+      cors_api.annotation '/documents/:document_id/annotations/:id.:format', :allowed_methods=>[:put,:delete,:post]
+      cors_api.annotations '/documents/:document_id/annotations.:format', :allowed_methods=>[:get,:post]
+    end
+  end
+
   # Document representations and (private) sub-resources.
   map.resources  :documents, :has_many => [:annotations],
     :member => {
@@ -120,6 +136,7 @@ ActionController::Routing::Routes.draw do |map|
     home.terms          '/terms',         :action => 'terms'
     home.featured       '/featured',      :action => 'featured'
     home.privacy        '/privacy',       :action => 'privacy'
+    home.p3p            '/p3p.:format',   :action => 'p3p'
     home.home           '/home',          :action => 'index'
     home.news           '/news',          :action => 'news'
     home.opensource     '/opensource',    :action => 'opensource'

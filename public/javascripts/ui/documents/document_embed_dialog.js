@@ -134,7 +134,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
   // Serialize and stringify embed options so they remain consistent between embeds.
   _savePreferences : function() {
-    dc.app.preferences.set({embed_options : JSON.stringify(this.embedOptions())});
+    dc.app.preferences.set({document_embed_options : JSON.stringify(this.embedOptions())});
   },
 
   // Read serialized embed options from user's cookie so embed options remain consistent
@@ -144,6 +144,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     if (options.width || options.height) this._viewerSizeEl.val('fixed');
     this._widthEl.val(options.width);
     this._heightEl.val(options.height);
+    this._showPDFEl.attr('checked', options.pdf );
     this._sidebarEl.attr('checked', options.sidebar);
     this._showTextEl.attr('checked', options.text);
   },

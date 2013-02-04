@@ -40,6 +40,10 @@ Rails::Initializer.run do |config|
   config.gem 'sunspot_solr',          :version => '>= 2.0.0.pre.120925'
   config.gem 'rdiscount',             :version => '>= 1.6.5'
   config.gem 'fastercsv',             :version => '>= 1.5.3'
+  config.gem 'omniauth',              :version => '>= 1.0'
+  config.gem 'omniauth-twitter',      :version => '>= 0.0.13'
+  config.gem 'omniauth-facebook',     :version => '>= 1.4.0'
+  config.gem 'omniauth-google-oauth2',:version => '>= 0.1.13'
   require 'sanitize'
 
   # Middleware

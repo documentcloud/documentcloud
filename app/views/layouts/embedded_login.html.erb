@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title><%= @title ? @title + ' - ' : '' %>DocumentCloud</title>
+    <%= include_javascripts 'embedded_login' %>
+    <%= include_stylesheets 'ui','workspace','embedded_login' %>
+  </head>
+  <body>
+
+    <div class="header gradient_mid" id="topbar">
+      <div id="logo">
+        <div id="cloud_edge"></div>
+        <div class="logo_words" id="wordmark">DocumentCloud</div>
+        <h1 id="title" class="logo_words"><%= @title %></h1>
+      </div>
+    </div>
+    <div class="full_page_background" >
+      <%= yield %>
+    </div>
+    <script type="text/javascript">
+      EmbeddedLogin.attachPopupHandler();
+    </script>
+
+  </body>
+</html>
+
