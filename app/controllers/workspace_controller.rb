@@ -17,7 +17,8 @@ class WorkspaceController < ApplicationController
   # searching, the home page otherwise.
   def index
     if logged_in? && !current_account.reviewer?
-      @accounts = current_organization.accounts.real
+      @accounts = Account.coworkers( @current_account ).real
+      @current_organization = current_organization
       @projects = Project.load_for(current_account)
       @organizations = Organization.all_slugs
       @has_documents = Document.owned_by(current_account).count(:limit => 1) > 0

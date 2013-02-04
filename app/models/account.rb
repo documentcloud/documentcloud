@@ -15,6 +15,7 @@ class Account < ActiveRecord::Base
   has_one  :security_key,    :dependent => :destroy, :as => :securable
   has_many :shared_projects, :through => :collaborations, :source => :project
 
+
   # Validations:
 #  validates_presence_of   :first_name, :last_name, :email
 #  validates_format_of     :email, :with => DC::Validators::EMAIL
@@ -34,6 +35,10 @@ class Account < ActiveRecord::Base
   named_scope :reviewer,  { :include=> "memberships", :conditions => ["memberships.role = ?",    REVIEWER] }
   named_scope :with_identity, lambda { | provider, id |
     { :conditions=>"identities @> '\"#{DC::Hstore.escape(provider)}\"=>\"#{DC::Hstore.escape(id)}\"'" }
+  }
+  # all the other accounts that belong to the same organizations that the account does
+  named_scope :coworkers, lambda{ | account |
+    { :include=>'memberships', :conditions=>['memberships.organization_id in (?)', account.organizations ] }
   }
 
   # Attempt to log in with an email address and password.
