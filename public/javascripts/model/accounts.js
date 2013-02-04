@@ -17,7 +17,7 @@ dc.model.Account = Backbone.Model.extend({
   defaults           : { first_name : '', last_name : '', email : '', role : 2 },
 
   organization : function() {
-    return Organizations.get(this.get('organization_id'));
+    return this.memberships.getDefault().organization();
   },
 
   allOrganizations: function(){
