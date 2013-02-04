@@ -20,6 +20,14 @@ dc.model.Account = Backbone.Model.extend({
     return Organizations.get(this.get('organization_id'));
   },
 
+  allOrganizations: function(){
+    return this.memberships.invoke( 'organization' );
+  },
+
+  setMemberships: function( memberships_data ){
+    this.memberships = new dc.model.MemberhipSet( memberships_data );
+  },
+
   openDocuments : function(options) {
     options || (options = {});
     var suffix = options.published ? ' filter: published' : '';
