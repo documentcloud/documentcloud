@@ -92,10 +92,14 @@ class Account < ActiveRecord::Base
     cookies['dc_logged_in'] = {:value => 'true', :expires => 1.month.from_now, :httponly => true}
   end
 
+  def self.make_slug(account)
+    first = account['first_name'] && account['first_name'].downcase.gsub(/\W/, '')
+    last  = account['last_name'] && account['last_name'].downcase.gsub(/\W/, '')
+    "#{account['id']}-#{first}-#{last}"
+  end
+
   def slug
-    first = first_name && first_name.downcase.gsub(/\W/, '')
-    last  = last_name && last_name.downcase.gsub(/\W/, '')
-    @slug ||= "#{id}-#{first}-#{last}"
+    @slug ||= Account.make_slug(self)
   end
 
   # Shims to preserve API backwards compatability.

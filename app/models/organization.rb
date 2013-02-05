@@ -72,6 +72,7 @@ class Organization < ActiveRecord::Base
     organizations.each do | organization |
       organization.members = accounts_map[ organization.id ].map do | account |
         account.delete('organization_id')
+        account['slug'] = Account.make_slug( account )
         account['hashed_email']=Digest::MD5.hexdigest( account['email'].downcase.gsub(/\s/, '') ) if account['email']
         account
       end
