@@ -16,16 +16,18 @@ dc.model.Account = Backbone.Model.extend({
 
   defaults           : { first_name : '', last_name : '', email : '', role : 2 },
 
+  constructor : function(attrs, options) {
+    Backbone.Model.call(this, attrs, options);
+    this.organizations = new dc.model.OrganizationSet();
+  },  
+
   organization : function() {
-    return this.memberships.getDefault().organization();
+    return this.organizations.first();
   },
 
-  allOrganizations: function(){
-    return this.memberships.invoke( 'organization' );
-  },
 
-  setMemberships: function( memberships_data ){
-    this.memberships = new dc.model.MemberhipSet( memberships_data );
+  addOrganization: function( organization_data ){
+    this.organizations.add( organization_data );
   },
 
   openDocuments : function(options) {

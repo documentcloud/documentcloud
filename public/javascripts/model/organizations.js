@@ -2,6 +2,17 @@
 
 dc.model.Organization = Backbone.Model.extend({
 
+
+  constructor : function(attrs, options) {
+    Backbone.Model.call(this, attrs, options);
+    if ( attrs.members ){
+      this.members = new dc.model.AccountSet( attrs.members );
+      this.members.each( function(account){
+        Accounts.add(account);
+      });
+    }
+  },  
+
   groupSearchUrl : function() {
     return "/#search/" + encodeURIComponent(this.query());
   },
