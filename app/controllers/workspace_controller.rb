@@ -51,40 +51,5 @@ class WorkspaceController < ApplicationController
     render :layout => false
   end
 
-<<<<<<< HEAD
-  # Display the signup information page.
-  def signup_info
-  end
-
-  # /login handles both the login form and the login request.
-  def login
-    return redirect_to '/' if current_account && current_account.refresh_credentials(cookies) && !current_account.reviewer? && current_account.active?
-    return render unless request.post?
-    next_url = (params[:next] && CGI.unescape(params[:next])) || '/'
-    account = Account.log_in(params[:email], params[:password], session, cookies)
-    return redirect_to(next_url) if account && account.active?
-    if account && !account.active?
-      flash[:error] = "Your account has been disabled. Contact support@documentcloud.org."
-    else
-      flash[:error] = "Invalid email or password."
-    end
-    begin
-      if referrer = request.env["HTTP_REFERER"]
-        redirect_to referrer.sub(/^http:/, 'https:')
-      end
-    rescue RedirectBackError => e
-      # Render...
-    end
-  end
-
-  # Logging out clears your entire session.
-  def logout
-    reset_session
-    cookies.delete 'dc_logged_in'
-    redirect_to '/'
-  end
-
 end
-=======
-end
->>>>>>> 47faa6b3ced82b45e18c05bfa47eaf46b7d9c001
+
