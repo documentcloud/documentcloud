@@ -5,7 +5,7 @@ class Organization < ActiveRecord::Base
   include DC::Access
   include DC::Roles
 
-  attr_accessor :document_count, :note_count
+  attr_accessor :document_count, :note_count, :members
 
   has_many :memberships
   has_many :accounts, :through => :memberships
@@ -51,6 +51,30 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  # Populates the members accessor with all the organizaton's accounts
+  def self.populate_members_info( organizations )
+    sql = <<-EOS
+    select
+       memberships.organization_id, memberships.role,
+       accounts.id,                 accounts.email,
+       accounts.first_name,         accounts.last_name
+    from memberships
+       inner join accounts on accounts.id = memberships.account_id
+    where memberships.organization_id in (#{organizations.map(&:id).join(',')})
+    EOS
+    rows = self.connection.select_all( sql )
+    accounts_map = rows.group_by{|row| row['organization_id'].to_i }
+    organizations.each do | organization |
+      organization.members = accounts_map[ organization.id ].map do | account |
+        account.delete('organization_id')
+        account['hashed_email']=Digest::MD5.hexdigest( account['email'].downcase.gsub(/\s/, '') ) if account['email']
+        account
+      end
+    end
+    return organizations
+  end
+
+
   # How many documents have been uploaded across the whole organization?
   def document_count
     @document_count ||= Document.count(:conditions => {:organization_id => id})
@@ -71,8 +95,8 @@ class Organization < ActiveRecord::Base
     if options[:include_document_count]
       attrs['document_count'] = document_count
     end
-    if options[:include_memberships]
-      attrs['memberships'] = self.memberships.map{|membership| membership.canonical( options[:include_memberships] ) }
+    if self.members
+      attrs['members'] = self.members
     end
     attrs
   end
