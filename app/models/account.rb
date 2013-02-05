@@ -36,10 +36,15 @@ class Account < ActiveRecord::Base
   named_scope :with_identity, lambda { | provider, id |
     { :conditions=>"identities @> '\"#{DC::Hstore.escape(provider)}\"=>\"#{DC::Hstore.escape(id)}\"'" }
   }
-  # all the other accounts that belong to the same organizations that the account does
-  named_scope :coworkers, lambda{ | account |
-    { :include=>'memberships', :conditions=>['memberships.organization_id in (?)', account.organizations ] }
-  }
+
+
+  # all the other accounts that belong to the same organizations as this account
+  # returns data as an array of organizations which include membership and account data
+  def organizations_with_accounts
+    self.organizations.all( :include=>[:memberships=>[:account]] ).map do | organization | 
+      organization.canonical( :include_memberships=>{:include_account=>{} } )
+    end
+  end
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session=nil, cookies=nil)
@@ -308,10 +313,10 @@ class Account < ActiveRecord::Base
       'email'             => email,
       'first_name'        => first_name,
       'last_name'         => last_name,
-      'organization_id'   => organization_id,
-      'role'              => role,
+#      'organization_id'   => organization_id,
+#      'role'              => role,
       'hashed_email'      => hashed_email,
-      'pending'           => pending?
+#      'pending'           => pending?
     }
     attrs['organization_name'] = organization_name if options[:include_organization]
     if options[:include_document_counts]

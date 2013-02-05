@@ -61,13 +61,24 @@ class Organization < ActiveRecord::Base
     self.accounts.admin.all(:select => [:email]).map {|acc| acc.email }
   end
 
+  def canonical( options = {} )
+    attrs = {
+      'name' => name,
+      'slug' => slug,
+      'demo' => demo,
+      'id'   => id
+    }
+    if options[:include_document_count]
+      attrs['document_count'] = document_count
+    end
+    if options[:include_memberships]
+      attrs['memberships'] = self.memberships.map{|membership| membership.canonical( options[:include_memberships] ) }
+    end
+    attrs
+  end
+
   def to_json(options = nil)
-    {'name'           => name,
-     'slug'           => slug,
-     'demo'           => demo,
-     'id'             => id,
-     'document_count' => document_count,
-     'note_count'     => note_count}.to_json
+    self.canonical( :include_document_count=>true ).to_json
   end
 
 end
