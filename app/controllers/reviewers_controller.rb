@@ -13,12 +13,13 @@ class ReviewersController < ApplicationController
     account = Account.lookup(params[:email])
     if account
       return json(nil, 409) if account.id == current_account.id
-      return json({:errors => ['The account associated with that email address has been disabled.']}, 409) if account.role == Account::DISABLED
+      return json({:errors => ['The account associated with that email address has been disabled.']}, 409) if account.disabled?( current_organization )
+    else
+      account = Account.create( pick(params, :first_name, :last_name, :email) )
+      unless account.new_record?
+        current_organization.memberships.create({ :role=> Account::REVIEWER, :account=> account, :default=>true })
+      end
     end
-
-    account ||= current_organization.accounts.create(
-      pick(params, :first_name, :last_name, :email).merge({:role => Account::REVIEWER})
-    )
 
     return json account if account.errors.any?
 

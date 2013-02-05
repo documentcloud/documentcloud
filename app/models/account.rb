@@ -17,7 +17,7 @@ class Account < ActiveRecord::Base
 
 
   # Validations:
-  validates_presence_of   :first_name, :last_name
+  validates_presence_of   :first_name, :last_name# => :has_memberships?
   validates_presence_of   :email, :if => :has_memberships?
   validates_format_of     :email, :with => DC::Validators::EMAIL, :if => :has_memberships?
   validates_uniqueness_of :email, :case_sensitive => false, :if => :has_memberships?
@@ -120,8 +120,12 @@ class Account < ActiveRecord::Base
     self.memberships.exists?
   end
 
-  def has_role?(role, org)
-    org && self.memberships.exists?(:role => role, :organization_id => org.id)
+  def has_role?(role, org=nil)
+    if org.nil?
+      self.memberships.exists?(:role => role)
+    else
+      self.memberships.exists?(:role => role, :organization_id => org.id)
+    end
   end
   
   def admin?(org=self.organization)
@@ -142,6 +146,10 @@ class Account < ActiveRecord::Base
 
   def real?(org=self.organization)
     admin?(org) || contributor?(org)
+  end
+
+  def disabled?(org=self.organization)
+    self.memberships.exists?({ :role=>DISABLED, :organization_id => org })
   end
 
   def active?(org=self.organization)
@@ -231,14 +239,14 @@ class Account < ActiveRecord::Base
     LifecycleMailer.deliver_login_instructions(self, admin)
   end
 
-  def send_reviewer_instructions(documents, inviter_account, message=nil)                          #
-    key = nil                                                                                      #
-    if self.role == Account::REVIEWER                                                              # Check
-      create_security_key if self.security_key.nil?                                                #
-      key = '?key=' + self.security_key.key                                                        #
-    end                                                                                            #
-    LifecycleMailer.deliver_reviewer_instructions(documents, inviter_account, self, message, key)  #
-  end                                                                                              #
+  def send_reviewer_instructions(documents, inviter_account, message=nil)
+    key = nil
+    if self.has_role?( Account::REVIEWER )
+      create_security_key if self.security_key.nil?
+      key = '?key=' + self.security_key.key
+    end
+    LifecycleMailer.deliver_reviewer_instructions(documents, inviter_account, self, message, key)
+  end
 
   # Upgrading a reviewer account to a newsroom account also moves their                 # 
   # notes over to the (potentially different) organization.                             # Move to Organization
