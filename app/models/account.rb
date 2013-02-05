@@ -42,7 +42,19 @@ class Account < ActiveRecord::Base
   # returns data as an array of organizations which include membership and account data
   def organizations_with_accounts
     self.organizations.all( :include=>[:memberships=>[:account]] ).map do | organization | 
-      organization.canonical( :include_memberships=>{:include_account=>{} } )
+      json = organization.canonical
+      json['accounts'] = organization.memberships.select(&:real?).map do |membership|
+        {
+          'role'              => membership.role,
+          'id'                => membership.account.id,
+          'slug'              => membership.account.slug,
+          'email'             => membership.account.email,
+          'first_name'        => membership.account.first_name,
+          'last_name'         => membership.account.last_name,
+          'hashed_email'      => membership.account.hashed_email
+        }
+      end
+      json
     end
   end
 
@@ -313,10 +325,10 @@ class Account < ActiveRecord::Base
       'email'             => email,
       'first_name'        => first_name,
       'last_name'         => last_name,
-#      'organization_id'   => organization_id,
-#      'role'              => role,
+      'organization_id'   => organization_id,
+      'role'              => role,
       'hashed_email'      => hashed_email,
-#      'pending'           => pending?
+      'pending'           => pending?
     }
     attrs['organization_name'] = organization_name if options[:include_organization]
     if options[:include_document_counts]
