@@ -1,4 +1,35 @@
-class IdentitiesController < ApplicationController
+class AuthenticationController < ApplicationController
+
+  # Display the signup information page.
+  def signup_info
+  end
+
+  # /login handles both the login form and the login request.
+  def login
+    return redirect_to '/' if current_account && current_account.refresh_credentials(cookies) && !current_account.reviewer? && current_account.active?
+    return render(:layout => "workspace") unless request.post?
+    next_url = (params[:next] && CGI.unescape(params[:next])) || '/'
+    account = Account.log_in(params[:email], params[:password], session, cookies)
+    return redirect_to(next_url) if account && account.active?
+    if account && !account.active?
+      flash[:error] = "Your account has been disabled. Contact support@documentcloud.org."
+    else
+      flash[:error] = "Invalid email or password."
+    end
+    begin
+      if referrer = request.env["HTTP_REFERER"]
+        redirect_to referrer.sub(/^http:/, 'https:')
+      end
+    rescue RedirectBackError => e
+      # Render...
+    end
+  end
+
+  # Logging out clears your entire session.
+  def logout
+    clear_login_state
+    redirect_to '/'
+  end
 
 # This controller deals with the concept of identities which are provided/verified
 # by either a documentcloud account or third party service
@@ -33,9 +64,10 @@ class IdentitiesController < ApplicationController
 #    * Once the omniauth flow is complete, the popup notifies the iframe is notified using the DOM window.opener
 #
 
-  layout 'embedded_login', :only=>[ :inner_iframe, :iframe_success, :iframe_failure, :popup_completion ]
+  layout 'embedded_login', :only=>[ :inner_iframe, :iframe_success, :iframe_failure, :popup_completion, :iframe_logout ]
 
   before_filter :login_required, :only => [:iframe_success]
+  before_filter :set_p3p_header
 
   # this is needed for running omniauth on rails 2.3.  Without it the route
   # causes an error even though omniauth is intercepting it
@@ -44,21 +76,7 @@ class IdentitiesController < ApplicationController
   # this is the endpoint for an embedded document to obtain addition information 
   # about the document as well as the current user
   def remote_data
-    if logged_in?
-      document = Document.accessible(current_account,current_organization).find(params[:document_id])
-      render :json=> {
-        :success=>true,
-        :account=> current_account.canonical,
-        :document => document.as_json(:only=>[:access]).merge({
-                                                                :annotations=>
-                                                                    document.annotations.accessible(current_account).
-                                                                        map{|annot| annot.canonical}
-                                                              })
-
-      }
-    else
-      render :json=> { :success=>false }
-    end
+    render :json => build_remote_data( params[:document_id] )
   end
 
   # Closes the popup window and loads the appropriate page 
@@ -74,6 +92,14 @@ class IdentitiesController < ApplicationController
   def iframe
   end
 
+  def iframe_logout
+    clear_login_state
+    flash[:notice] = 'You have logged out successfully'
+    @remote_data = build_remote_data( params[:document_id] )
+    @status = false
+    render :action=>'iframe_login_status'
+  end
+
   # Displays the login page inside an iframe.
   #
   # if they are already logged in, display a success message,
@@ -83,10 +109,13 @@ class IdentitiesController < ApplicationController
     if logged_in?
       @account = current_account
       flash[:notice] = 'You are already logged in'
-      render :action=>'iframe_success'
+      @remote_data = build_remote_data( params[:document_id] )
+      @status = true
+      render :action=>'iframe_login_status'
     else
       @next_url = '/auth/iframe_success'
-      render :template=>'workspace/login'
+      session[:dv_document_id]=params[:document_id]
+      render :template=>'authentication/login'
     end
   end
 
@@ -101,13 +130,11 @@ class IdentitiesController < ApplicationController
   # renders the message and communicates the success back to the outer
   # iframe and across the xdm socket to the viewer
   def iframe_success
-    @account = current_account
+    @remote_data = session.has_key?(:dv_document_id) ? build_remote_data( session.delete(:dv_document_id) ) : {}
     flash[:notice] = 'Successfully logged in'
+    @status = true
+    render :action=>'iframe_login_status'
   end
-  # Displays flash[:error], Relays the failure across XDM RPC
-  def iframe_failure
-  end
-
   
   # Where third-party logins come back to once they have
   # completed successfully.
@@ -158,5 +185,29 @@ class IdentitiesController < ApplicationController
     request.env['omniauth.auth']
   end
 
+
+  def build_remote_data( document_id )
+    data = {}
+    document = Document.accessible(current_account,current_organization).find( document_id )
+    data[:document] = document.as_json(:only=>[:access])
+    account = current_account
+    if account
+      data[:account] = account.canonical
+    end
+    data[:document][:annotations] = document.annotations_with_authors( account ).map do |annot|
+      annot.canonical.merge({ :editable=> account ? account.owns?( annot ) : false })
+    end
+    return data
+  end
+
+  def set_p3p_header
+    # explanation of what these mean: http://www.p3pwriter.com/LRN_111.asp
+    headers['P3P'] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
+  end
+
+  def clear_login_state
+    reset_session
+    cookies.delete 'dc_logged_in'
+  end
 
 end

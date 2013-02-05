@@ -1,0 +1,6 @@
+<div id="login_flash">
+    <h1><%= flash[:notice] || flash[:failure] %></h1>
+</div>
+<script type="text/javascript">
+  EmbeddedLogin.setLoginStatus( <%=@status%>, <%= @remote_data.to_json %> );
+</script>

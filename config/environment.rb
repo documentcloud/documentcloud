@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.15' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.16' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -41,9 +41,9 @@ Rails::Initializer.run do |config|
   config.gem 'rdiscount',             :version => '>= 1.6.5'
   config.gem 'fastercsv',             :version => '>= 1.5.3'
   config.gem 'omniauth',              :version => '>= 1.0'
-  config.gem 'omniauth-twitter'
-  config.gem 'omniauth-facebook'
-  config.gem 'omniauth-google-oauth2'
+  config.gem 'omniauth-twitter',      :version => '>= 0.0.13'
+  config.gem 'omniauth-facebook',     :version => '>= 1.4.0'
+  config.gem 'omniauth-google-oauth2',:version => '>= 0.1.13'
   require 'sanitize'
 
   # Middleware

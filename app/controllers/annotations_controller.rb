@@ -16,7 +16,7 @@ class AnnotationsController < ApplicationController
       format.js do
         json = current_annotation.canonical(:include_image_url => true, :include_document_url => true).to_json
         js = "dc.embed.noteCallback(#{json})"
-        cache_page js if current_annotation.cacheable? && current_document.access == PUBLIC
+        cache_page js if current_annotation.cacheable? && PUBLIC_LEVELS.include?(current_document.access)
         render :js => js
       end
     end
@@ -33,21 +33,21 @@ class AnnotationsController < ApplicationController
   # Any account can create a private note on any document.
   # Only the owner of the document is allowed to create a public annotation.
   def create
+    maybe_set_cors_headers
     note_attrs = pick(params, :page_number, :title, :content, :location, :access)
     note_attrs[:access] = ACCESS_MAP[note_attrs[:access].to_sym]
     doc = current_document
-    return forbidden unless note_attrs[:access] == PRIVATE || current_account.allowed_to_edit?(doc) || current_account.reviews?(doc)
+    return forbidden unless note_attrs[:access] == PRIVATE || current_account.allowed_to_comment?(doc)
     expire_page doc.canonical_cache_path if doc.cacheable?
     anno = doc.annotations.create(note_attrs.merge(
-      :account_id      => current_account.id,
-      :organization_id => current_organization.id
+      :account_id      => current_account.id
     ))
-    maybe_set_cors_headers
     json current_document.annotations_with_authors(current_account, [anno]).first
   end
 
   # You can only alter annotations that you've made yourself.
   def update
+    maybe_set_cors_headers
     return not_found unless anno = current_annotation
     if !current_account.allowed_to_edit?(anno)
       anno.errors.add_to_base "You don't have permission to update the note."
@@ -59,18 +59,17 @@ class AnnotationsController < ApplicationController
     expire_page current_document.canonical_cache_path if current_document.cacheable?
     expire_page current_annotation.canonical_cache_path if current_annotation.cacheable?
     anno.reset_public_note_count
-    maybe_set_cors_headers
     json anno
   end
 
   def destroy
+    maybe_set_cors_headers
     return not_found unless anno = current_annotation
-    if !current_account.allowed_to_edit?(anno)
+    if ! current_account.allowed_to_edit?(anno)
       anno.errors.add_to_base "You don't have permission to delete the note."
       return json(anno, 403)
     end
     anno.destroy
-    maybe_set_cors_headers
     expire_page current_document.canonical_cache_path if current_document.cacheable?
     json nil
   end

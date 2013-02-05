@@ -17,9 +17,10 @@ class Account < ActiveRecord::Base
 
 
   # Validations:
-#  validates_presence_of   :first_name, :last_name, :email
-#  validates_format_of     :email, :with => DC::Validators::EMAIL
-#  validates_uniqueness_of :email, :case_sensitive => false
+  validates_presence_of   :first_name, :last_name
+  validates_presence_of   :email, :if => :has_memberships?
+  validates_format_of     :email, :with => DC::Validators::EMAIL, :if => :has_memberships?
+  validates_uniqueness_of :email, :case_sensitive => false, :if => :has_memberships?
   validate :validate_identity_is_unique
 
   # Sanitizations:
@@ -30,7 +31,7 @@ class Account < ActiveRecord::Base
 
   # Scopes
   named_scope :admin,     { :include=> "memberships", :conditions => ["memberships.role = ?",    ADMINISTRATOR] }
-  named_scope :active,    { :include=> "memberships", :conditions => ["memberships.role != ?",   DISABLED] }
+  named_scope :active,    { :include=> "memberships", :conditions => ["memberships.role is NULL or memberships.role != ?",   DISABLED] }
   named_scope :real,      { :include=> "memberships", :conditions => ["memberships.role in (?)", REAL_ROLES] }
   named_scope :reviewer,  { :include=> "memberships", :conditions => ["memberships.role = ?",    REVIEWER] }
   named_scope :with_identity, lambda { | provider, id |
@@ -98,15 +99,29 @@ class Account < ActiveRecord::Base
 
   # Shims to preserve API backwards compatability.
   def organization
-    Organization.default_for(self)
+    @organization ||= Organization.default_for(self)
   end
 
   def organization_id
-    organization ? organization.id : nil
+    return nil unless self.organization
+    self.organization.id
+  end
+  
+  def role
+    default = memberships.first(:conditions=>{:default=>true})
+    default.nil? ? nil : default.role 
+  end
+  
+  def member_of?(org)
+    self.memberships.exists?(:organization_id => org.id)
+  end
+  
+  def has_memberships? # should be reworked as Account#real?
+    self.memberships.exists?
   end
 
   def has_role?(role, org)
-    not self.memberships.first(:conditions=>{:role => role, :organization_id => organization}).nil?
+    org && self.memberships.exists?(:role => role, :organization_id => org.id)
   end
   
   def admin?(org=self.organization)
@@ -130,8 +145,8 @@ class Account < ActiveRecord::Base
   end
 
   def active?(org=self.organization)
-    membership = self.memberships.first(:conditions=>{:organization_id => organization})
-    !membership.nil?  && membership.role != DISABLED
+    membership = self.memberships.first(:conditions=>{:organization_id => org})
+    membership && membership.role != DISABLED
   end
 
   # An account owns a resource if it's tagged with the account_id.
@@ -142,7 +157,7 @@ class Account < ActiveRecord::Base
   def collaborates?(resource) # Flagged to rewrite
     (admin? || contributor?) &&
       resource.organization_id == organization_id &&
-      [ORGANIZATION, EXCLUSIVE, PUBLIC, PENDING, ERROR].include?(resource.access)
+      SHARED_ACCESS.include?(resource.access)
   end
 
   # Heavy-duty SQL.
@@ -153,7 +168,7 @@ class Account < ActiveRecord::Base
     # organization_id will no long be returned on account queries
     collaborators = Account.find_by_sql(<<-EOS
       select distinct on (a.id)
-      a.id as id, a.organization_id as organization_id, a.role as role
+      a.id as id, m.organization_id as organization_id, m.role as role
       from accounts as a
       inner join collaborations as c1
         on c1.account_id = a.id
@@ -163,11 +178,16 @@ class Account < ActiveRecord::Base
         on p.id = c1.project_id and p.hidden = false
       inner join project_memberships as pm
         on pm.project_id = c1.project_id and pm.document_id = #{resource.document_id}
+      left outer join memberships as m on m.account_id = #{id}
       where a.id != #{id}
     EOS
     )
     # check for knockon effects in identifying whether an account owns/collabs on a resource.
     collaborators.any? {|account| account.owns_or_collaborates?(resource) }
+  end
+
+  def allowed_to_comment?( resource )
+    [PREMODERATED,POSTMODERATED].include?( resource.access )
   end
 
   def owns_or_collaborates?(resource)
@@ -184,9 +204,9 @@ class Account < ActiveRecord::Base
     owns_or_collaborates?(resource) || shared?(resource)
   end
 
-  def allowed_to_edit_account?(account)
+  def allowed_to_edit_account?(account, org=self.organization)
     (self.id == account.id) ||
-    ((self.organization_id == account.organization_id) && (self.admin? || account.reviewer?))
+    ((self.admin?(org) && account.member_of?(org)) || (self.member_of?(org) && account.reviewer?(org)))
   end
 
   def shared_document_ids
@@ -246,12 +266,12 @@ class Account < ActiveRecord::Base
 
   # MD5 hash of processed email address, for use in Gravatar URLs.
   def hashed_email
-    @hashed_email ||= Digest::MD5.hexdigest(email.downcase.gsub(/\s/, ''))
+    @hashed_email ||= Digest::MD5.hexdigest(email.downcase.gsub(/\s/, '')) if email
   end
 
   # Has this account been assigned, but never logged into, with no password set?
   def pending?
-    !hashed_password && !reviewer?
+    !hashed_password && !reviewer? && identities.empty?
   end
 
   # It's slo-o-o-w to compare passwords. Which is a mixed bag, but mostly good.
@@ -313,7 +333,10 @@ class Account < ActiveRecord::Base
       'hashed_email'      => hashed_email,
       'pending'           => pending?
     }
-    attrs['organization_name'] = organization_name if options[:include_organization]
+    if options[:include_organization]
+      attrs['organization_name'] = organization_name
+      attrs['organizations']     = organizations.map(&:canonical)
+    end
     if options[:include_document_counts]
       attrs['public_documents'] = Document.unrestricted.count(:conditions => {:account_id => id})
       attrs['private_documents'] = Document.restricted.count(:conditions => {:account_id => id})
