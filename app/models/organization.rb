@@ -5,7 +5,7 @@ class Organization < ActiveRecord::Base
   include DC::Access
   include DC::Roles
 
-  attr_accessor :document_count, :note_count
+  attr_accessor :document_count, :note_count, :members
 
   has_many :memberships
   has_many :accounts, :through => :memberships
@@ -51,6 +51,36 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  # Populates the members accessor with all the organizaton's accounts
+  def self.populate_members_info( organizations, except_account=nil)
+    sql = <<-EOS
+    select
+      memberships.organization_id, memberships.role,
+      accounts.id,                 accounts.email,
+      accounts.first_name,         accounts.last_name
+    from memberships
+      inner join accounts on accounts.id = memberships.account_id
+    where 
+      memberships.role in (#{Membership::REAL_ROLES.join(',')})
+      and memberships.organization_id in (#{organizations.map(&:id).join(',')})
+    EOS
+    if except_account
+      sql << "and memberships.account_id not in (#{except_account.id})"
+    end
+    rows = self.connection.select_all( sql )
+    accounts_map = rows.group_by{|row| row['organization_id'].to_i }
+    organizations.each do | organization |
+      organization.members = accounts_map[ organization.id ].map do | account |
+        account.delete('organization_id')
+        account['slug'] = Account.make_slug( account )
+        account['hashed_email']=Digest::MD5.hexdigest( account['email'].downcase.gsub(/\s/, '') ) if account['email']
+        account
+      end
+    end
+    return organizations
+  end
+
+
   # How many documents have been uploaded across the whole organization?
   def document_count
     @document_count ||= Document.count(:conditions => {:organization_id => id})
@@ -74,18 +104,26 @@ class Organization < ActiveRecord::Base
   def admin_emails
     self.accounts.admin.all(:select => [:email]).map {|acc| acc.email }
   end
-
-  def canonical(options = nil)
-    {'name'           => name,
-     'slug'           => slug,
-     'demo'           => demo,
-     'id'             => id,
-     'document_count' => document_count,
-     'note_count'     => note_count}
-  end
   
   def to_json(options = nil)
     canonical(options).to_json
   end
+
+  def canonical( options = {} )
+    attrs = {
+      'name' => name,
+      'slug' => slug,
+      'demo' => demo,
+      'id'   => id
+    }
+    if options[:include_document_count]
+      attrs['document_count'] = document_count
+    end
+    if self.members
+      attrs['members'] = self.members
+    end
+    attrs
+  end
+
 
 end

@@ -6,7 +6,6 @@ window.SERVER_ROOT_HTTP = '<%= DC.server_root(:ssl => false) %>';
   Organizations.reset(<%= @organizations.to_json %>);
   <% if @current_account && @current_organization %>
     <%= render :partial => 'accounts/current_account.js', :type => :js %>
-    Accounts.reset(<%= @accounts.to_json %>);
     Projects.reset(<%= @projects.to_json({:account => @current_account, :include_collaborators => true}) %>);
     dc.searchPrefixes = <%= DC::ALL_SEARCHES.to_json %>;
   <% end %>
