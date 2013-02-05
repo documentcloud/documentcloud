@@ -40,22 +40,42 @@ class Account < ActiveRecord::Base
 
   # all the other accounts that belong to the same organizations as this account
   # returns data as an array of organizations which include membership and account data
+
+# SQL was three queries before: 
+#  Organization Load (0.5ms)   SELECT "organizations".* FROM "organizations" INNER JOIN "memberships" ON "organizations".id = "memberships".organization_id WHERE (("memberships".account_id = 21988)) 
+#  Membership Load (0.2ms)   SELECT "memberships".* FROM "memberships" WHERE ("memberships".organization_id IN (1,3380)) 
+#  Account Load (0.2ms)   SELECT * FROM "accounts" WHERE ("accounts"."id" IN (21988,20690,22033)) # 
+
   def organizations_with_accounts
-    self.organizations.all( :include=>[:memberships=>[:account]] ).map do | organization | 
-      json = organization.canonical
-      json['accounts'] = organization.memberships.select(&:real?).map do |membership|
-        {
-          'role'              => membership.role,
-          'id'                => membership.account.id,
-          'slug'              => membership.account.slug,
-          'email'             => membership.account.email,
-          'first_name'        => membership.account.first_name,
-          'last_name'         => membership.account.last_name,
-          'hashed_email'      => membership.account.hashed_email
-        }
+    sql = <<-EOS
+    select
+       organizations.id as organization_id,
+       organizations.slug as organization_slug,
+       organizations.name as organization_name, 
+       memberships.role,
+       memberships.organization_id,
+       accounts.email,
+       accounts.first_name,
+       accounts.last_name,
+       accounts.email
+    from organizations
+       inner join memberships on memberships.organization_id = organizations.id
+       inner join accounts on accounts.id = memberships.account_id
+    where organizations.id in (#{organization_ids.join(',')})
+    EOS
+    rows = self.connection.select_all( sql )
+    organizations = rows.group_by{|row| row['organization_id'] }
+    json = organizations.map do | organization_id, organization_data |
+      organization = { 'id' => organization_id }.merge( organization_data.first.slice('organization_slug','organization_name') )
+      organization['accounts'] = organization_data.map do | account | 
+        account = account.except("organization_id","organization_slug","organization_name")
+        account['hashed_email'] = Digest::MD5.hexdigest( account['email'].downcase.gsub(/\s/, '') ) if account['email']
+        account
       end
-      json
+      organization
     end
+
+    return json
   end
 
   # Attempt to log in with an email address and password.
