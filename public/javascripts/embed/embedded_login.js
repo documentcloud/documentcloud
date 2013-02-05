@@ -30,7 +30,7 @@
 
     // called from an omniauth powered popup window once
     // a third party login is complete.
-    onPopupCompletion: function( call_type ) {
+    onPopupCompletion: function() {
       // load success page in iframe.  It will handle informing the
       // xdm socket of the success
       // If IE fails here while complaining that window.opener is null, check security zones and
@@ -38,7 +38,7 @@
       // http://stackoverflow.com/questions/6190879/window-opener-becomes-null-in-internet-explorer-after-security-zone-change
       // the Timeout is another IE compatability hack.  Without it postmessage fails with XDM
       setTimeout( function(){
-        window.opener.location.href= '/auth/iframe_' + call_type;
+        window.opener.location.href= '/auth/iframe_success';
         window.close();
       }, 1 );
     },
