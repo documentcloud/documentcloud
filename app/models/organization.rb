@@ -52,16 +52,21 @@ class Organization < ActiveRecord::Base
   end
 
   # Populates the members accessor with all the organizaton's accounts
-  def self.populate_members_info( organizations )
+  def self.populate_members_info( organizations, except_account=nil)
     sql = <<-EOS
     select
-       memberships.organization_id, memberships.role,
-       accounts.id,                 accounts.email,
-       accounts.first_name,         accounts.last_name
+      memberships.organization_id, memberships.role,
+      accounts.id,                 accounts.email,
+      accounts.first_name,         accounts.last_name
     from memberships
-       inner join accounts on accounts.id = memberships.account_id
-    where memberships.organization_id in (#{organizations.map(&:id).join(',')})
+      inner join accounts on accounts.id = memberships.account_id
+    where 
+      memberships.role in (#{Membership::REAL_ROLES.join(',')})
+      and memberships.organization_id in (#{organizations.map(&:id).join(',')})
     EOS
+    if except_account
+      sql << "and memberships.account_id not in (#{except_account.id})"
+    end
     rows = self.connection.select_all( sql )
     accounts_map = rows.group_by{|row| row['organization_id'].to_i }
     organizations.each do | organization |

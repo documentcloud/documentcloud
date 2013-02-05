@@ -40,7 +40,7 @@ class Account < ActiveRecord::Base
 
   # Populates the organization#members accessor with all the organizaton's accounts
   def organizations_with_accounts
-    Organization.populate_members_info( self.organizations )
+    Organization.populate_members_info( self.organizations, self )
   end
 
   # Attempt to log in with an email address and password.
