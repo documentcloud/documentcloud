@@ -76,7 +76,7 @@
   font-size: 11px;
   line-height: 17px;
 }
-  #organizer.show_accounts .account_links {
+  #organizer .show_accounts .account_links {
     display: block;
   }
   #organizer .toggle_account_links {

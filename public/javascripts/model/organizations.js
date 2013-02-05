@@ -2,6 +2,22 @@
 
 dc.model.Organization = Backbone.Model.extend({
 
+
+  constructor : function(attrs, options) {
+    Backbone.Model.call(this, attrs, options);
+    if ( attrs.members ){
+      this.members = new dc.model.AccountSet();
+      _.each( attrs.members, function( member_data ){
+        var account = Accounts.get( member_data.id );
+        if ( ! account ){
+          account = new dc.model.Account(member_data);
+          Accounts.add( account );
+        }
+        this.members.add( account );
+      },this);
+    }
+  },  
+
   groupSearchUrl : function() {
     return "/#search/" + encodeURIComponent(this.query());
   },
@@ -20,6 +36,7 @@ dc.model.Organization = Backbone.Model.extend({
     return docs + ' ' + dc.inflector.pluralize('document', docs)
       + ', ' + notes + ' ' + dc.inflector.pluralize('note', notes);
   }
+
 
 });
 

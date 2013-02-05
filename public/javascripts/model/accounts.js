@@ -21,16 +21,20 @@ dc.model.Account = Backbone.Model.extend({
     if (this.get('organizations')) { this.organizations.reset(this.get('organizations')); }
   },
 
+  constructor : function(attrs, options) {
+    Backbone.Model.call(this, attrs, options);
+    this.organizations = new dc.model.OrganizationSet();
+  },  
+
   organization : function() {
-    return this.memberships.getDefault().organization();
+    return this.organizations.first();
   },
 
-  allOrganizations: function(){
-    return this.memberships.invoke( 'organization' );
-  },
-
-  setMemberships: function( memberships_data ){
-    this.memberships = new dc.model.MemberhipSet( memberships_data );
+  addOrganization: function( organization_data ){
+    var organization = new dc.model.Organization( organization_data );
+    this.organizations.add( organization );
+    Organizations.add( organization );
+    return organization;
   },
 
   openDocuments : function(options) {

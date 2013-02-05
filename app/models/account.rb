@@ -37,10 +37,12 @@ class Account < ActiveRecord::Base
   named_scope :with_identity, lambda { | provider, id |
     { :conditions=>"identities @> '\"#{DC::Hstore.escape(provider)}\"=>\"#{DC::Hstore.escape(id)}\"'" }
   }
-  # all the other accounts that belong to the same organizations that the account does
-  named_scope :coworkers, lambda{ | account |
-    { :include=>'memberships', :conditions=>['memberships.organization_id in (?)', account.organizations ] }
-  }
+
+
+  # Populates the organization#members accessor with all the organizaton's accounts
+  def organizations_with_accounts
+    Organization.populate_members_info( self.organizations, self )
+  end
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session=nil, cookies=nil)
@@ -91,10 +93,14 @@ class Account < ActiveRecord::Base
     cookies['dc_logged_in'] = {:value => 'true', :expires => 1.month.from_now, :httponly => true}
   end
 
+  def self.make_slug(account)
+    first = account['first_name'] && account['first_name'].downcase.gsub(/\W/, '')
+    last  = account['last_name'] && account['last_name'].downcase.gsub(/\W/, '')
+    "#{account['id']}-#{first}-#{last}"
+  end
+
   def slug
-    first = first_name && first_name.downcase.gsub(/\W/, '')
-    last  = last_name && last_name.downcase.gsub(/\W/, '')
-    @slug ||= "#{id}-#{first}-#{last}"
+    @slug ||= Account.make_slug(self)
   end
 
   # Shims to preserve API backwards compatability.
