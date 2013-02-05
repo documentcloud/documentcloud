@@ -105,7 +105,7 @@ class Organization < ActiveRecord::Base
     self.accounts.admin.all(:select => [:email]).map {|acc| acc.email }
   end
   
-  def to_json(options = nil)
+  def to_json(options = {})
     canonical(options).to_json
   end
 
