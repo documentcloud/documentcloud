@@ -25,9 +25,11 @@ dc.model.Account = Backbone.Model.extend({
     return this.organizations.first();
   },
 
-
   addOrganization: function( organization_data ){
-    this.organizations.add( organization_data );
+    var organization = new dc.model.Organization( organization_data );
+    this.organizations.add( organization );
+    Organizations.add( organization );
+    return organization;
   },
 
   openDocuments : function(options) {

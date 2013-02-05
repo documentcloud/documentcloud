@@ -3,7 +3,7 @@ dc.ui.Organizer = Backbone.View.extend({
   id : 'organizer',
 
   PRIVATE_SEARCHES: [
-    'all_documents', 'your_documents', 'your_published_documents', 'org_documents'
+    'all_documents', 'your_documents', 'your_published_documents'
   ],
 
   PUBLIC_SEARCHES: [
@@ -52,7 +52,10 @@ dc.ui.Organizer = Backbone.View.extend({
   },
 
   renderAccounts : function() {
-    this.$('.account_links').html(JST['organizer/account_links']());
+    _.each( this.$('.account_links'), function(el){
+      el = $(el);
+      el.html( JST['organizer/account_links']( { organization: Organizations.getByCid( el.attr('data-cid') )} )  );
+    });
   },
 
   promptNewProject : function() {
@@ -128,9 +131,8 @@ dc.ui.Organizer = Backbone.View.extend({
     Organizations.get(el.attr('data-id')).openDocuments();
   },
 
-  toggleAccountLinks : function() {
-    var mode = this.modes.accounts == 'show' ? 'hide' : 'show';
-    this.setMode(mode, 'accounts');
+  toggleAccountLinks : function(e) {
+    $(e.target).closest('div.organization').toggleClass('show_accounts');
   },
 
   // Bind all possible and Project events for rendering.

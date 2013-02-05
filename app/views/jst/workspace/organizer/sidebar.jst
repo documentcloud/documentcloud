@@ -5,13 +5,20 @@
     <div class="top_level_search">
       <% _.each(searches, function(item) { %>
         <div>
-          <% if (item === 'org_documents' && Accounts.length > 1) { %>
-            <div class="icon toggle toggle_account_links"></div>
-          <% } %>
           <span class="<%= item %> interface text_link"><%= dc.model.Project.topLevelTitle(item) %></span>
         </div>
       <% }); %>
-      <div class="account_links"></div>
+      <% dc.account.organizations.each( function( organization ){ %>
+        <div class="organization">
+          <% if ( organization.members.length ) { %>
+            <div class="icon toggle toggle_account_links"></div>
+          <% } %>
+          <span class="org_documents interface text_link">
+            <%= dc.inflector.possessivize( organization.get('name') )  %> Documents
+          </span>
+          <div class="account_links" data-cid="<%= organization.cid %>"></div>
+        </div>
+      <% } ) %>
     </div>
 
     <% if (dc.account) { %>
