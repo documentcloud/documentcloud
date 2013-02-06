@@ -523,8 +523,8 @@ class Document < ActiveRecord::Base
     "#{DC.server_root}/documents/#{id}/search.json?q={query}"
   end
 
-  def annotations_url( format = :json, allow_ssl=true )
-    File.join(DC.server_root(:ssl => allow_ssl, :agnostic => format == :json), annotations_path )
+  def annotations_url
+    File.join(DC.server_root(:force_ssl => true, :agnostic => false ), annotations_path )
   end
 
   def print_annotations_url
@@ -850,7 +850,7 @@ class Document < ActiveRecord::Base
     doc['updated_at']         = updated_at.to_formatted_s(:rfc822)
     doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
     if annotations_allowed?(options[:account])
-      doc['annotations_url']    = annotations_url(:json, options[:allow_ssl])
+      doc['annotations_url']    = annotations_url
     end
     if options[:contributor]
       doc['contributor']      = account_name
