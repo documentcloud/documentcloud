@@ -189,7 +189,7 @@ class AuthenticationController < ApplicationController
 
 
   def build_remote_data( document_id )
-    data = { :document => {}, :account=>{} }
+    data = { :document => {} }
 
     if logged_in?
       data[:account] = current_account.canonical
