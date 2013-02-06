@@ -359,6 +359,11 @@ class Document < ActiveRecord::Base
     remote_url || detected_remote_url
   end
 
+  # can annotations be created on the document.  Yes if it's setup to allow them or the account is present and has sufficient access
+  def annotations_allowed?( account=nil )
+    [ PREMODERATED, POSTMODERATED ].include?(access) || ( account && account.allowed_to_comment?(self) )
+  end
+
   # When the access level changes, all sub-resource and asset permissions
   # need to be updated.
   def set_access(access_level)
@@ -423,6 +428,10 @@ class Document < ActiveRecord::Base
   # Ex: docs/1011/pages
   def pages_path
     File.join(path, 'pages')
+  end
+
+  def annotations_path
+    File.join(path, 'annotations')
   end
 
   def canonical_id
@@ -513,7 +522,11 @@ class Document < ActiveRecord::Base
   def search_url
     "#{DC.server_root}/documents/#{id}/search.json?q={query}"
   end
-  
+
+  def annotations_url( format = :json, allow_ssl=true )
+    File.join(DC.server_root(:ssl => allow_ssl, :agnostic => format == :json), annotations_path )
+  end
+
   def print_annotations_url
     "#{DC.server_root}/notes/print?docs[]=#{id}"
   end
@@ -800,6 +813,7 @@ class Document < ActiveRecord::Base
       :data                => data
     }
     if opts[:annotations]
+      json[:annotations_url] = annotations_url if annotations_allowed?(opts[:account])
       json[:annotations] = self.annotations_with_authors(opts[:account])
     end
     json.to_json
@@ -835,6 +849,9 @@ class Document < ActiveRecord::Base
     doc['created_at']         = created_at.to_formatted_s(:rfc822)
     doc['updated_at']         = updated_at.to_formatted_s(:rfc822)
     doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
+    if annotations_allowed?(options[:account])
+      doc['annotations_url']    = annotations_url(:json, options[:allow_ssl])
+    end
     if options[:contributor]
       doc['contributor']      = account_name
       doc['contributor_organization'] = organization_name
