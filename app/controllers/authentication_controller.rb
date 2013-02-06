@@ -111,7 +111,7 @@ class AuthenticationController < ApplicationController
   def inner_iframe
     if logged_in?
       @account = current_account
-      flash[:notice] = 'You are already logged in'
+      flash[:notice] = 'You have successfully logged in'
       @remote_data = build_remote_data( params[:document_id] )
       @status = true
       render :action=>'iframe_login_status'
