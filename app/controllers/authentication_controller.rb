@@ -189,16 +189,17 @@ class AuthenticationController < ApplicationController
 
 
   def build_remote_data( document_id )
-    data = {}
-    document = Document.accessible(current_account,current_organization).find( document_id )
-    data[:document] = document.as_json(:only=>[:access])
-    account = current_account
-    if account
-      data[:account] = account.canonical
+    data = { :document => {}, :account=>{} }
+
+    if logged_in?
+      data[:account] = current_account.canonical
+      if document = Document.accessible(current_account,current_organization).find( document_id )
+        data[:document][:annotations] = document.annotations_with_authors( account ).map do | note |
+          note.canonical.merge({ :editable=> account ? account.owns?( annot ) : false })
+        end
+      end
     end
-    data[:document][:annotations] = document.annotations_with_authors( account ).map do |annot|
-      annot.canonical.merge({ :editable=> account ? account.owns?( annot ) : false })
-    end
+
     return data
   end
 
