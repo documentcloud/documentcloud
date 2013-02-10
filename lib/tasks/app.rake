@@ -72,7 +72,7 @@ namespace :openoffice do
 
   task :start do
     utility = RUBY_PLATFORM.match(/darwin/) ? "/Applications/OpenOffice.org.app/Contents/MacOS/soffice.bin" : "soffice"
-    sh "#{utility} -headless -accept=\"socket,host=127.0.0.1,port=8100;urp;\" -nofirststartwizard"
+    sh "#{utility} --headless --accept=\"socket,host=127.0.0.1,port=8100;urp;\" --nofirststartwizard"
   end
 
 end
