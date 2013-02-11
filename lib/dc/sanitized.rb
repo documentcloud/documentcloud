@@ -11,7 +11,7 @@ module DC
 
     # Clean unsafe HTML from a string.
     def sanitize(s, level=:relaxed)
-      Sanitize.clean(s, level == :super_relaxed ? ::DC::Sanitizer::SUPER_RELAXED : ::DC::Sanitizer::RELAXED)
+      Sanitize.clean(s, ::DC::Sanitizer.const_get( level.to_s.upcase ) )
     end
 
     # Class methods to mix in.
@@ -32,9 +32,15 @@ module DC
       end
 
       # HTML attributes are sanitized of malicious HTML before being saved.
+      # Accepts a list of attribute names, with optional level specifiied at end.
+      # If not specified, the level defaults to :super_relaxed
+      #    html_attr :sanitized_attr, :another_sanitized_attr, :level=>:basic
       def html_attr(*attrs)
+        options = attrs.extract_options!.reverse_merge({
+                                                         :level => :super_relaxed
+                                                       })
         attrs.each do |att|
-          class_eval "def #{att}=(val); self[:#{att}] = sanitize(val, :super_relaxed); end"
+          class_eval "def #{att}=(val); self[:#{att}] = sanitize(val, :#{options[:level]}); end"
         end
       end
 
@@ -48,6 +54,8 @@ module DC
   end
   
   module Sanitizer
+    RESTRICTED    = Sanitize::Config::RESTRICTED.dup
+    BASIC         = Sanitize::Config::BASIC.dup
     RELAXED       = Sanitize::Config::RELAXED.dup
     SUPER_RELAXED = Sanitize::Config::RELAXED.dup
     SUPER_RELAXED[:elements] += %w[ iframe ]
@@ -58,6 +66,9 @@ module DC
         'sandbox' => %w[ allow-forms allow-same-origin allow-scripts allow-top-navigation ]
       }
     })
+    def Sanitizer.const_missing(sym)
+      return Sanitizer::RELAXED
+    end
   end
 
 end

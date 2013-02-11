@@ -20,7 +20,7 @@ class Annotation < ActiveRecord::Base
 
   # Sanitizations:
   text_attr :title
-  html_attr :content
+  html_attr :content, :level=>:restricted
 
   named_scope :accessible, lambda { |account|
     has_shared = account && account.accessible_project_ids.present?
