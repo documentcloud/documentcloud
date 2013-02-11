@@ -11,7 +11,7 @@ module DC
 
     # Clean unsafe HTML from a string.
     def sanitize(s, level=:relaxed)
-      Sanitize.clean(s, ::DC::Sanitizer.const_get( level.to_s.upcase ) )
+      Sanitize.clean(s, DC::Sanitizer::LEVELS[ level ] )
     end
 
     # Class methods to mix in.
@@ -66,10 +66,16 @@ module DC
         'sandbox' => %w[ allow-forms allow-same-origin allow-scripts allow-top-navigation ]
       }
     })
-    def Sanitizer.const_missing(sym)
-      return Sanitizer::RELAXED
-    end
+    LEVELS = {
+      :restricted    => RESTRICTED,
+      :basic         => BASIC,
+      :relaxed       => RELAXED,
+      :super_relaxed => SUPER_RELAXED
+    }
+
   end
+
+
 
 end
 
