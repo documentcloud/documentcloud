@@ -9,7 +9,7 @@ dc.ui.FeaturedReport = Backbone.View.extend({
     'click .ok'         : 'save',
     'click .edit_glyph' : 'edit',
     'click .cancel'     : 'cancel',
-    'click .delete'     : 'delete'
+    'click .delete'     : 'deleteReport'
   },
 
   initialize: function(options) {
@@ -17,7 +17,7 @@ dc.ui.FeaturedReport = Backbone.View.extend({
   },
 
   renderTmpl: function( editing ){
-    var tmpl = editing ? JST['featured_report_edit'] : JST['featured_report_display'],
+    var tmpl = ( editing ? JST['featured_report_edit'] : JST['featured_report_display'] ),
         json = this.model.toJSON();
     this.$el.html( tmpl( json ) ).attr('data-id', this.model.id );
   },
@@ -37,7 +37,7 @@ dc.ui.FeaturedReport = Backbone.View.extend({
     }
   },
 
-  delete: function(){
+  deleteReport: function(){
     this.model.destroy({
       success: function(model,resp){
         model.collection.remove( model );
