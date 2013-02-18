@@ -12,7 +12,7 @@ class ApiController < ApplicationController
 
   before_filter :secure_only,        :only => [:upload, :projects, :upload, :destroy, :create_project, :update_project, :destroy_project]
   before_filter :api_login_required, :only => [:upload, :projects, :update, :destroy, :create_project, :update_project, :destroy_project]
-  before_filter :api_login_optional, :only => [:documents, :search, :notes, :pending]
+  before_filter :api_login_optional, :only => [:documents, :search, :notes, :pending, :entities]
 
   def index
     redirect_to '/help/api'

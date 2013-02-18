@@ -97,7 +97,7 @@ class Project < ActiveRecord::Base
 
   def other_collaborators(account)
     collaborations = self.collaborations.not_owned_by(account).all(:select => ['account_id'])
-    Account.active.all(:conditions => {:id => collaborations.map {|c| c.account_id }})
+    Account.all(:conditions => {:id => collaborations.map {|c| c.account_id }})
   end
 
   def add_document(document)
@@ -124,6 +124,8 @@ class Project < ActiveRecord::Base
 
   # How many annotations belong to documents belonging to this project?
   # How many of those annotations are accessible to a given account?
+  # 
+  # TODO: incorporate PREMODERATED and POSTMODERATED comments into counts
   def annotation_count(account=nil)
     account ||= self.account
     @annotation_count ||= Annotation.count_by_sql <<-EOS

@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.14' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.16' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -23,19 +23,27 @@ Rails::Initializer.run do |config|
   # Gems:
   config.gem 'json',                  :version => '>= 1.6.5'
 
+  # config.gem 'curb',                  :version => '>= 0.7.18'
   config.gem 'nokogiri',              :version => '>= 1.4.4'
   config.gem 'calais',                :version => '>= 0.0.11'
   config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'
   config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
   config.gem 'rubyzip',               :version => '>= 0.9.1',       :lib => 'zip/zip'
   config.gem 'right_aws',             :version => '>= 2.0.1'        # Our patched version.
+  config.gem 'aws-sdk',               :version => '>= 1.7.1'
   config.gem 'pg',                    :version => '>= 0.11.0'
   config.gem 'jammit',                :version => '>= 0.5.0'
   config.gem 'docsplit',              :version => '>= 0.5.2'
-  config.gem 'sunspot_rails',         :version => '>= 1.2.1'
+  config.gem 'sunspot_rails',         :version => '>= 1.3.3'
+  # running a pre-release to fix rake sunspot:solr:stop task bug
+  # https://github.com/sunspot/sunspot/pull/221
+  config.gem 'sunspot_solr',          :version => '>= 2.0.0.pre.120925'
   config.gem 'rdiscount',             :version => '>= 1.6.5'
   config.gem 'fastercsv',             :version => '>= 1.5.3'
-  config.gem 'curb',                  :version => '>= 0.7.18'
+  config.gem 'omniauth',              :version => '>= 1.0'
+  config.gem 'omniauth-twitter',      :version => '>= 0.0.13'
+  config.gem 'omniauth-facebook',     :version => '>= 1.4.0'
+  config.gem 'omniauth-google-oauth2',:version => '>= 0.1.13'
   require 'sanitize'
 
   # Middleware

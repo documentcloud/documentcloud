@@ -2,6 +2,9 @@
 # The URL where you're planning on running the central server/queue/database.
 :central_server:      <%= secrets['central_server'] %>
 
+:disabled_actions:
+  - backup_database
+
 # The following settings allow you to control the number of workers that can run
 # on a given node, to prevent the node from becoming overloaded. 'max_workers'
 # is a simple cap on the maximum number of workers a node is allowed to run

@@ -81,9 +81,9 @@ class Document < ActiveRecord::Base
 
   named_scope :pending,       :conditions => {:access => PENDING}
   named_scope :failed,        :conditions => {:access => ERROR}
-  named_scope :unrestricted,  :conditions => {:access => PUBLIC}
+  named_scope :unrestricted,  :conditions => {:access => PUBLIC_LEVELS}
   named_scope :restricted,    :conditions => {:access => [PRIVATE, ORGANIZATION]}
-  named_scope :finished,      :conditions => {:access => [PUBLIC, PRIVATE, ORGANIZATION]}
+  named_scope :finished,      :conditions => {:access => [PUBLIC, PRIVATE, ORGANIZATION, PREMODERATED, POSTMODERATED]}
 
   named_scope :popular,       :conditions => ["hit_count > ?", MINIMUM_POPULAR]
 
@@ -102,7 +102,7 @@ class Document < ActiveRecord::Base
   named_scope :accessible, lambda {|account, org|
     has_shared = account && account.accessible_project_ids.present?
     access = []
-    access << "(documents.access = #{PUBLIC})"
+    access << "(documents.access in (#{PUBLIC_LEVELS.join(",")}))"
     access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}, #{ORGANIZATION}, #{EXCLUSIVE}) and documents.account_id = #{account.id})" if account
     access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org && account && !account.freelancer?
     access << "(memberships.document_id = documents.id)" if has_shared
@@ -347,7 +347,7 @@ class Document < ActiveRecord::Base
   end
 
   def publicly_accessible?
-    [PUBLIC, EXCLUSIVE].include? access
+    [PUBLIC, EXCLUSIVE, PREMODERATED, POSTMODERATED].include? access
   end
   alias_method :cacheable?, :publicly_accessible?
 
@@ -359,11 +359,16 @@ class Document < ActiveRecord::Base
     remote_url || detected_remote_url
   end
 
+  # can annotations be created on the document.  Yes if it's setup to allow them or the account is present and has sufficient access
+  def annotations_allowed?( account=nil )
+    [ PREMODERATED, POSTMODERATED ].include?(access) || ( account && account.allowed_to_comment?(self) )
+  end
+
   # When the access level changes, all sub-resource and asset permissions
   # need to be updated.
   def set_access(access_level)
     changes = {:access => PENDING}
-    changes[:publish_at] = nil if access_level == PUBLIC
+    changes[:publish_at] = nil if PUBLIC_LEVELS.include? access_level
     update_attributes changes
     background_update_asset_access access_level
   end
@@ -423,6 +428,10 @@ class Document < ActiveRecord::Base
   # Ex: docs/1011/pages
   def pages_path
     File.join(path, 'pages')
+  end
+
+  def annotations_path
+    File.join(path, 'annotations')
   end
 
   def canonical_id
@@ -513,7 +522,11 @@ class Document < ActiveRecord::Base
   def search_url
     "#{DC.server_root}/documents/#{id}/search.json?q={query}"
   end
-  
+
+  def annotations_url
+    File.join(DC.server_root(:force_ssl => true, :agnostic => false ), annotations_path )
+  end
+
   def print_annotations_url
     "#{DC.server_root}/notes/print?docs[]=#{id}"
   end
@@ -598,6 +611,7 @@ class Document < ActiveRecord::Base
     EntityDate.reset(self)
     pages = self.reload.pages
     Sunspot.index pages
+    Sunspot.commit
     reprocess_entities if calais_id
     upload_text_assets(pages, access)
     self.access = access if access
@@ -799,6 +813,7 @@ class Document < ActiveRecord::Base
       :data                => data
     }
     if opts[:annotations]
+      json[:annotations_url] = annotations_url if annotations_allowed?(opts[:account])
       json[:annotations] = self.annotations_with_authors(opts[:account])
     end
     json.to_json
@@ -834,6 +849,9 @@ class Document < ActiveRecord::Base
     doc['created_at']         = created_at.to_formatted_s(:rfc822)
     doc['updated_at']         = updated_at.to_formatted_s(:rfc822)
     doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
+    if annotations_allowed?(options[:account])
+      doc['annotations_url']    = annotations_url
+    end
     if options[:contributor]
       doc['contributor']      = account_name
       doc['contributor_organization'] = organization_name

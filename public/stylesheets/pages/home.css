@@ -474,6 +474,10 @@ ol {
   #sidebar #login_form {
 
   }
+    #sidebar .login_services {
+      margin-top: 5px;
+      float: left;
+    }
     #sidebar #login_button {
       float: left;
     }

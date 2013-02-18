@@ -3,7 +3,7 @@ dc.model.UploadDocument = Backbone.Model.extend({
 
   FILE_EXTENSION_MATCHER : /\.([^.]+)$/,
 
-  MAX_FILE_SIZE : 209715200, // 200 Megabytes
+  MAX_FILE_SIZE : 419430400, // 400 Megabytes
 
   // When creating an UploadDocument, we pull off some properties that
   // are on the file object, and attach them as attributes.

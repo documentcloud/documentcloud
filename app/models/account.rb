@@ -3,29 +3,25 @@
 # moment.
 class Account < ActiveRecord::Base
   include DC::Access
-  
-  DISABLED      = 0
-  ADMINISTRATOR = 1
-  CONTRIBUTOR   = 2
-  REVIEWER      = 3
-  FREELANCER    = 4
-
-  ROLES = [ADMINISTRATOR, CONTRIBUTOR, REVIEWER, FREELANCER, DISABLED]
+  include DC::Roles
 
   # Associations:
-  belongs_to  :organization
-  has_many    :projects,             :dependent => :destroy
-  has_many    :annotations
-  has_many    :collaborations,       :dependent => :destroy
-  has_many    :processing_jobs,      :dependent => :destroy
-  has_one     :security_key,         :dependent => :destroy, :as => :securable
-  has_many    :shared_projects,      :through => :collaborations, :source => :project
+  has_many :memberships
+  has_many :organizations,   :through => :memberships
+  has_many :projects,        :dependent => :destroy
+  has_many :annotations      
+  has_many :collaborations,  :dependent => :destroy
+  has_many :processing_jobs, :dependent => :destroy
+  has_one  :security_key,    :dependent => :destroy, :as => :securable
+  has_many :shared_projects, :through => :collaborations, :source => :project
+
 
   # Validations:
-  validates_presence_of   :first_name, :last_name, :email
-  validates_format_of     :email, :with => DC::Validators::EMAIL
-  validates_uniqueness_of :email, :case_sensitive => false
-  validates_inclusion_of  :role, :in => ROLES
+  validates_presence_of   :first_name, :last_name# => :has_memberships?
+  validates_presence_of   :email, :if => :has_memberships?
+  validates_format_of     :email, :with => DC::Validators::EMAIL, :if => :has_memberships?
+  validates_uniqueness_of :email, :case_sensitive => false, :if => :has_memberships?
+  validate :validate_identity_is_unique
 
   # Sanitizations:
   text_attr :first_name, :last_name, :email
@@ -33,11 +29,20 @@ class Account < ActiveRecord::Base
   # Delegations:
   delegate :name, :to => :organization, :prefix => true, :allow_nil => true
 
-  # Scopes:
-  named_scope :admin,     {:conditions => {:role => ADMINISTRATOR}}
-  named_scope :active,    {:conditions => ["role != ?", DISABLED]}
-  named_scope :real,      {:conditions => ["role in (?)", [ADMINISTRATOR, CONTRIBUTOR, FREELANCER, DISABLED]]}
-  named_scope :reviewer,  {:conditions => {:role => REVIEWER}}
+  # Scopes
+  named_scope :admin,     { :include=> "memberships", :conditions => ["memberships.role = ?",    ADMINISTRATOR] }
+  named_scope :active,    { :include=> "memberships", :conditions => ["memberships.role is NULL or memberships.role != ?",   DISABLED] }
+  named_scope :real,      { :include=> "memberships", :conditions => ["memberships.role in (?)", REAL_ROLES] }
+  named_scope :reviewer,  { :include=> "memberships", :conditions => ["memberships.role = ?",    REVIEWER] }
+  named_scope :with_identity, lambda { | provider, id |
+    { :conditions=>"identities @> '\"#{DC::Hstore.escape(provider)}\"=>\"#{DC::Hstore.escape(id)}\"'" }
+  }
+
+
+  # Populates the organization#members accessor with all the organizaton's accounts
+  def organizations_with_accounts
+    Organization.populate_members_info( self.organizations, self )
+  end
 
   # Attempt to log in with an email address and password.
   def self.log_in(email, password, session=nil, cookies=nil)
@@ -67,6 +72,14 @@ class Account < ActiveRecord::Base
     Account.first(:conditions => ['lower(email) = ?', email.downcase])
   end
 
+  # 
+  def self.from_identity( identity )
+    account = Account.with_identity( identity['provider'],  identity['uid'] ).first || Account.new()
+    account.record_identity_attributes( identity )
+    account.save if account.changed?
+    account
+  end
+
   # Save this account as the current account in the session. Logs a visitor in.
   def authenticate(session, cookies)
     session['account_id']      = id
@@ -80,34 +93,74 @@ class Account < ActiveRecord::Base
     cookies['dc_logged_in'] = {:value => 'true', :expires => 1.month.from_now, :httponly => true}
   end
 
+  def self.make_slug(account)
+    first = account['first_name'] && account['first_name'].downcase.gsub(/\W/, '')
+    last  = account['last_name'] && account['last_name'].downcase.gsub(/\W/, '')
+    "#{account['id']}-#{first}-#{last}"
+  end
+
   def slug
-    first = first_name && first_name.downcase.gsub(/\W/, '')
-    last  = last_name && last_name.downcase.gsub(/\W/, '')
-    @slug ||= "#{id}-#{first}-#{last}"
+    @slug ||= Account.make_slug(self)
   end
 
-  def admin?
-    role == ADMINISTRATOR
+  # Shims to preserve API backwards compatability.
+  def organization
+    @organization ||= Organization.default_for(self)
   end
 
-  def contributor?
-    role == CONTRIBUTOR
+  def organization_id
+    return nil unless self.organization
+    self.organization.id
+  end
+  
+  def role
+    default = memberships.first(:conditions=>{:default=>true})
+    default.nil? ? nil : default.role 
+  end
+  
+  def member_of?(org)
+    self.memberships.exists?(:organization_id => org.id)
+  end
+  
+  def has_memberships? # should be reworked as Account#real?
+    self.memberships.exists?
   end
 
-  def reviewer?
-    role == REVIEWER
+  def has_role?(role, org=nil)
+    if org.nil?
+      self.memberships.exists?(:role => role)
+    else
+      self.memberships.exists?(:role => role, :organization_id => org.id)
+    end
   end
   
-  def freelancer?
-    role == FREELANCER
+  def admin?(org=self.organization)
+    has_role?(ADMINISTRATOR, org)
   end
   
-  def real?
-    admin? || contributor?
+  def contributor?(org=self.organization)
+    has_role?(CONTRIBUTOR, org)
   end
-  
-  def active?
-    role != DISABLED
+
+  def reviewer?(org=self.organization)
+    has_role?(REVIEWER, org)
+  end
+
+  def freelancer?(org=self.organization)
+    has_role?(FREELANCER, org)
+  end
+
+  def real?(org=self.organization)
+    admin?(org) || contributor?(org)
+  end
+
+  def disabled?(org=self.organization)
+    self.memberships.exists?({ :role=>DISABLED, :organization_id => org })
+  end
+
+  def active?(org=self.organization)
+    membership = self.memberships.first(:conditions=>{:organization_id => org})
+    membership && membership.role != DISABLED
   end
 
   # An account owns a resource if it's tagged with the account_id.
@@ -115,10 +168,10 @@ class Account < ActiveRecord::Base
     resource.account_id == id
   end
 
-  def collaborates?(resource)
+  def collaborates?(resource) # Flagged to rewrite
     (admin? || contributor?) &&
       resource.organization_id == organization_id &&
-      [ORGANIZATION, EXCLUSIVE, PUBLIC, PENDING, ERROR].include?(resource.access)
+      SHARED_ACCESS.include?(resource.access)
   end
 
   # Heavy-duty SQL.
@@ -126,9 +179,10 @@ class Account < ActiveRecord::Base
   # project is in collaboration with an owner or and administrator of the document.
   # Note that shared? is not the same as reviews?, as it ignores hidden projects.
   def shared?(resource)
+    # organization_id will no long be returned on account queries
     collaborators = Account.find_by_sql(<<-EOS
       select distinct on (a.id)
-      a.id as id, a.organization_id as organization_id, a.role as role
+      a.id as id, m.organization_id as organization_id, m.role as role
       from accounts as a
       inner join collaborations as c1
         on c1.account_id = a.id
@@ -138,10 +192,16 @@ class Account < ActiveRecord::Base
         on p.id = c1.project_id and p.hidden = false
       inner join project_memberships as pm
         on pm.project_id = c1.project_id and pm.document_id = #{resource.document_id}
+      left outer join memberships as m on m.account_id = #{id}
       where a.id != #{id}
     EOS
     )
+    # check for knockon effects in identifying whether an account owns/collabs on a resource.
     collaborators.any? {|account| account.owns_or_collaborates?(resource) }
+  end
+
+  def allowed_to_comment?( resource )
+    [PREMODERATED,POSTMODERATED].include?( resource.access ) || resource.account_id = self.id
   end
 
   def owns_or_collaborates?(resource)
@@ -158,9 +218,9 @@ class Account < ActiveRecord::Base
     owns_or_collaborates?(resource) || shared?(resource)
   end
 
-  def allowed_to_edit_account?(account)
+  def allowed_to_edit_account?(account, org=self.organization)
     (self.id == account.id) ||
-    ((self.organization_id == account.organization_id) && (self.admin? || account.reviewer?))
+    ((self.admin?(org) && account.member_of?(org)) || (self.member_of?(org) && account.reviewer?(org)))
   end
 
   def shared_document_ids
@@ -192,19 +252,19 @@ class Account < ActiveRecord::Base
 
   def send_reviewer_instructions(documents, inviter_account, message=nil)
     key = nil
-    if self.role == Account::REVIEWER
+    if self.has_role?( Account::REVIEWER )
       create_security_key if self.security_key.nil?
       key = '?key=' + self.security_key.key
     end
     LifecycleMailer.deliver_reviewer_instructions(documents, inviter_account, self, message, key)
   end
 
-  # Upgrading a reviewer account to a newsroom account also moves their
-  # notes over to the (potentially different) organization.
-  def upgrade_reviewer_to_real(organization, role)
-    update_attributes :organization => organization, :role => role
-    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{id}")
-  end
+  # Upgrading a reviewer account to a newsroom account also moves their                 # 
+  # notes over to the (potentially different) organization.                             # Move to Organization
+  def upgrade_reviewer_to_real(organization, role)                                      # 
+    update_attributes :organization => organization, :role => role                      # 
+    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{id}") # 
+  end                                                                                   # 
 
   # When a password reset request is made, send an email with a secure key to
   # reset the password.
@@ -225,12 +285,12 @@ class Account < ActiveRecord::Base
 
   # MD5 hash of processed email address, for use in Gravatar URLs.
   def hashed_email
-    @hashed_email ||= Digest::MD5.hexdigest(email.downcase.gsub(/\s/, ''))
+    @hashed_email ||= Digest::MD5.hexdigest(email.downcase.gsub(/\s/, '')) if email
   end
 
   # Has this account been assigned, but never logged into, with no password set?
   def pending?
-    !hashed_password && !reviewer?
+    !hashed_password && !reviewer? && identities.empty?
   end
 
   # It's slo-o-o-w to compare passwords. Which is a mixed bag, but mostly good.
@@ -245,6 +305,41 @@ class Account < ActiveRecord::Base
     self.hashed_password = @password
   end
 
+  def validate_identity_is_unique
+    return if self.identities.empty?
+    cond = '(' + DC::Hstore.quote( self.identities ).map{|k,v| "identities @> '\"#{k}\"=>\"#{v}\"'" }.join(" or ") + ')'
+    cond << " and id<>#{self.id}" unless new_record?
+    if account = Account.first( :conditions=>cond )
+      duplicated = account.identities.to_set.intersection( self.identities ).map{|k,v| k}.join(',')
+      errors.add(:identities, "An account exists with the same id for #{account.id} #{account.identities.to_json} #{duplicated}")
+    end
+  end
+
+  def identities
+    DC::Hstore.from_sql( read_attribute('identities') )
+  end
+
+  def record_identity_attributes( identity )
+    current_identities = self.identities
+    current_identities[ identity['provider'] ] = identity['uid']
+    write_attribute( :identities, DC::Hstore.to_sql(  current_identities ) )
+
+    info = identity['info']
+    %w{ email first_name last_name }.each do | attr |
+      write_attribute( attr, info[attr] ) if read_attribute(attr).blank? && info[attr]
+    end
+    if self.first_name.blank? && ! info['name'].blank?
+      self.first_name = info['name'].split(' ').first
+    end
+    if self.last_name.blank? && ! info['name'].blank?
+      self.last_name = info['name'].split(' ').last
+    end
+
+    self
+  end
+
+
+  # Create default organization to preserve backwards compatability.
   def canonical(options={})
     attrs = {
       'id'                => id,
@@ -257,7 +352,10 @@ class Account < ActiveRecord::Base
       'hashed_email'      => hashed_email,
       'pending'           => pending?
     }
-    attrs['organization_name'] = organization_name if options[:include_organization]
+    if options[:include_organization]
+      attrs['organization_name'] = organization_name
+      attrs['organizations']     = organizations.map(&:canonical)
+    end
     if options[:include_document_counts]
       attrs['public_documents'] = Document.unrestricted.count(:conditions => {:account_id => id})
       attrs['private_documents'] = Document.restricted.count(:conditions => {:account_id => id})
