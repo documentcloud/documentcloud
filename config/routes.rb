@@ -61,6 +61,9 @@ ActionController::Routing::Routes.draw do |map|
     api.update_project  '/api/projects/:id.:format',  :action => 'update_project', :conditions => {:method => :put}
     api.delete_project  '/api/projects/:id.:format',  :action => 'destroy_project',:conditions => {:method => :delete}
   end
+
+
+  map.resources :featured, :collection => { :present_order => :any }
   
   map.with_options :controller=>:annotations do | annot |
     annot.with_options :conditions => {:method => :options}, :action => 'cors_options' do |cors_api|
@@ -134,7 +137,6 @@ ActionController::Routing::Routes.draw do |map|
     home.contributors   '/contributors',  :action => 'contributors'
     home.faq            '/faq',           :action => 'faq'
     home.terms          '/terms',         :action => 'terms'
-    home.featured       '/featured',      :action => 'featured'
     home.privacy        '/privacy',       :action => 'privacy'
     home.p3p            '/p3p.:format',   :action => 'p3p'
     home.home           '/home',          :action => 'index'
