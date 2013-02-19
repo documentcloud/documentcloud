@@ -28,12 +28,12 @@ touch on EC2 in here.
 * Install RubyGems:
   DO NOT INSTALL RUBYGEMS THROUGH APT-GET (or you'll live to regret it)
   wget http://production.cf.rubygems.org/rubygems/rubygems-1.3.7.tgz && \
-  tar xzvf rubygems-1.3.5.tgz
-  ruby rubygems-1.3.5/setup.rb
-  ln -s /usr/bin/gem1.8 /usr/local/bin/gem
+  tar xzvf rubygems-1.3.7.tgz
+  ruby rubygems-1.3.7/setup.rb
+  sudo ln -s /usr/bin/gem1.8 /usr/local/bin/gem
   sudo gem update --system
   
-* Install these gems (--no-ri --no-rdoc):
+* Install these gems (sudo gem install --no-ri --no-rdoc):
   pg sqlite3-ruby rails passenger sinatra right_aws rest-client rack \
   bcrypt-ruby rdiscount rubyzip libxml-ruby nokogiri json hpricot calais \
   curb daemons cloud-crowd yui-compressor jammit docsplit sunspot sunspot_rails
