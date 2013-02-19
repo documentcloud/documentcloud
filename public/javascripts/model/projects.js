@@ -133,7 +133,7 @@ dc.model.Project.topLevelTitle = function(type) {
     case 'popular_documents':         return 'Popular Documents';
     case 'published_documents':       return 'Published Documents';
     case 'your_published_documents':  return 'Your Published Documents';
-    case 'org_documents':             return dc.inflector.possessivize(dc.account.organization().get('name')) + " Documents";
+
   }
 };
 

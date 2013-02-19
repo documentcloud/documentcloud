@@ -44,33 +44,56 @@ class AccountsController < ApplicationController
     json_response
   end
 
-  # Creating a new account creates a pending account, with a security key
-  # instead of a password.
+  # Fetches or creates a user account and creates a membership for that
+  # account in an organization.
+  # 
+  # New accounts are created as pending, with a security key instead of
+  # a password.
   def create
-    return forbidden unless current_account.admin? or params[:role] == Account::REVIEWER
-    attributes = pick(params, :first_name, :last_name, :email, :role)
-    account = Account.lookup(attributes[:email])
-    if account.nil?
-      account = current_organization.accounts.create(attributes)
-    elsif account.reviewer?
+    # Check the requester's permissions
+    return forbidden unless current_account.admin? or 
+      (current_account.real?(current_organization) and params[:role] == Account::REVIEWER)
+
+    # Find or create the appropriate account
+    account_attributes = pick(params, :first_name, :last_name, :email)
+    account = Account.lookup(account_attributes[:email]) || Account.create(account_attributes)    
+
+    # Find role for account in organization if it exists.
+    membership_attributes = pick(params, :role, :concealed)
+    membership = current_organization.role_of(account)
+    
+    # Create a membership if account has no existing role
+    if membership.nil?
+      membership_attributes[:default] = true unless account.memberships.exists?
+      membership = current_organization.memberships.create(membership_attributes.merge(:account_id => account.id))
+    elsif membership.reviewer? # or if account is a reviewer in this organization
       account.upgrade_reviewer_to_real(current_organization, attributes[:role])
-    elsif account.role == Account::DISABLED
+    elsif membership.role == Account::DISABLED
       return json({:errors => ['That email address belongs to an inactive account.']}, 409)
     else
-      return json(nil, 409)
+      return json({:errors => ['That email address is already part of this organization']}, 409)
     end
-    account.send_login_instructions(current_account) if account.valid? && account.pending?
-    json account
+
+    if account.valid?
+      if account.pending?
+        account.send_login_instructions(current_account)
+      else
+        LifecycleMailer.deliver_membership_notification(account, current_organization, current_account)
+      end
+    end
+    json account # N.B. account's canonical method currently returns the default organization_id.
   end
 
   # Journalists are authorized to update any account in the organization.
   # Think about what the desired level of access control is.
   def update
     account = current_organization.accounts.find(params[:id])
-    return json(nil, 403) unless account && current_account.allowed_to_edit_account?(account)
+    return json(nil, 403) unless account && current_account.allowed_to_edit_account?(account, current_organization)
     account.update_attributes pick(params, :first_name, :last_name, :email)
     role = pick(params, :role)
-    account.update_attributes(role) if !role.empty? && current_account.admin?
+    #account.update_attributes(role) if !role.empty? && current_account.admin?
+    membership = current_organization.role_of(account)
+    membership.update_attributes(role) if !role.empty? && current_account.admin?
     password = pick(params, :password)[:password]
     if (current_account.id == account.id) && password
       account.password = password

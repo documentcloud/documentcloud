@@ -366,8 +366,8 @@ module DC
             if needs_solr?
               @solr.build { with :published, true }
             else
-              @sql << 'documents.access = ? and (documents.remote_url is not null or documents.detected_remote_url is not null)'
-              @interpolations << PUBLIC
+              @sql << 'documents.access in (?) and (documents.remote_url is not null or documents.detected_remote_url is not null)'
+              @interpolations << PUBLIC_LEVELS
             end
           when :unpublished
             if needs_solr?
@@ -410,7 +410,7 @@ module DC
         accessible_project_ids = has_projects? || has_project_ids? ? [] : (account && account.accessible_project_ids)
         @solr.build do
           any_of do
-            with        :access, PUBLIC
+            with        :access, PUBLIC_LEVELS
             if account
               all_of do
                 with    :access, [PRIVATE, PENDING, ERROR, ORGANIZATION, EXCLUSIVE]

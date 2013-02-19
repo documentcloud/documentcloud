@@ -1,0 +1,105 @@
+div.full_page_background {
+  position: absolute;
+  top: 41px; bottom: 0; left: 0; right: 0;
+  background: #f1f1f1;
+  background: -webkit-gradient(radial, center top, 0, 0 0, 1500, from(rgb(250,250,250)), to(rgb(200,200,200)));
+  background: -moz-radial-gradient(center top, circle cover, rgb(250,250,250) 0%, rgb(200,200,200) 100%);
+  overflow: hidden;
+}
+#logo #wordmark {
+  cursor: default;
+}
+
+#additional_information h3{
+  font-size: 1.2em;
+  text-align: center;
+  font-weight: strong;
+}
+
+#additional_information .minibutton {
+  font-size: 16px;
+  height: 22px;
+  margin-top: 0;
+  padding: 0 20px;
+  position: relative;
+  top: 10px;
+  left: 30%;
+}
+
+#additional_information label {
+  text-align: left;
+  margin: 10px 0;
+}
+
+#login_form, #additional_information {
+  width: 300px;
+  margin: 0 auto;
+}
+  #login_form .text_input {
+    margin: 0.3em;
+  }
+
+  #login_form #login_button {
+    margin: 10px 0;
+
+    display: inline-block;
+  }
+
+  #login_form .login_services {
+    margin: 5px 0;
+    text-align: center;
+  }
+
+  #login_flash h1 {
+    text-align: center;
+    color: #566eaa;
+    font: bold 24px Arial;
+    text-shadow: 0px 1px 1px #fff;
+    margin-top: 2em;
+  }
+
+/* overrides for workspace css in order to work better on small window */
+#full_screen_form {
+  top: 8px;
+}
+
+  #full_screen_form form {
+    padding: 0;
+  }
+
+  #full_screen_form .line {
+    width: 100%;
+    margin: 10px auto;
+    height: 30px;
+  }
+  #full_screen_form h1 {
+    font-size: 18px;
+  }
+  #full_screen_form label {
+    padding-top: 8px;
+    width: 125px;
+  }
+
+  .full_page_background .example.long {
+    margin-left: 140px;
+  }
+
+  #full_screen_form .text_input {
+    margin: 0 0 0 135px;
+    width: 250px;
+  }
+  #full_screen_form .minibutton {
+    left: 100px;
+    top: 15px;
+  }
+  .full_page_background .example.long {
+    margin-left: 40px;
+  }
+  .full_page_background .example {
+    display: none;
+  }
+  #full_screen_form .login_services {
+    left: 180px;
+    top: -30px;
+  }
+
