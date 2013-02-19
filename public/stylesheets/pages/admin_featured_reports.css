@@ -1,0 +1,86 @@
+
+
+.featured_reports .listing {
+  margin: 50px 20px; 0 20px;
+}
+
+.featured_reports .report{
+  border: 1px dashed lightGrey;
+  border-radius: 10px 10px 10px 10px;
+  padding: 20px;
+}
+
+  .featured_reports .drop-placeholder {
+    background-color: lightYellow;
+    border: 1px solid Gold;
+    border-radius: 10px 10px 10px 10px;
+  }
+  .featured_reports .controls {
+    float: right;
+  }
+
+  .featured_reports .controls.actions {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+  }
+
+    .featured_reports .controls>div {
+      float: right;
+      margin-left: 3px;
+      cursor: pointer;
+    }
+
+  .featured_reports .edit .controls {
+    width: 30px;
+  }
+    .featured_reports .edit .row {
+      padding-top: 10px;
+      clear: both;
+    }
+      .featured_reports .edit .errors {
+        color: red;
+      }
+        .featured_reports .edit .errors ul {
+          list-style: disc inside;
+        }
+
+    .featured_reports .edit .title, .featured_reports .edit .organization {
+      width: 49%;
+      float: left;
+    }
+
+    .featured_reports .edit .url, .featured_reports .edit .article_date {
+      width: 49%;
+      float: right;
+    }
+
+    .featured_reports .edit .writeup label {
+      display: block;
+    }
+
+    .featured_reports .edit .writeup .text_input {
+      height: 50px;
+    }
+
+    .featured_reports .edit .writeup textarea {
+      width: 100%;
+      height: 150px;
+      padding: 0px;
+    }
+     .featured_reports .edit .delete  {
+       float: left;
+       width: 40px;
+       margin-top: 10px;
+     }
+     .featured_reports .edit .controls  {
+       margin: 10px auto 0 auto;
+       width: 150px;
+     }
+
+    .featured_reports .edit .controls .minibutton {
+      width: 40px;
+      float: left;
+      margin-left: 8px;
+    }
+

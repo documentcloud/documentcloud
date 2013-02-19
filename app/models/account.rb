@@ -201,7 +201,7 @@ class Account < ActiveRecord::Base
   end
 
   def allowed_to_comment?( resource )
-    [PREMODERATED,POSTMODERATED].include?( resource.access ) || resource.acount_id = self.id
+    [PREMODERATED,POSTMODERATED].include?( resource.access ) || resource.account_id = self.id
   end
 
   def owns_or_collaborates?(resource)
@@ -236,6 +236,11 @@ class Account < ActiveRecord::Base
   def accessible_project_ids
     @accessible_project_ids ||=
       Collaboration.owned_by(self).all(:select => [:project_id]).map {|c| c.project_id }
+  end
+  
+  # is the account considered an DocumentCloud Administrator?
+  def dcloud_admin?
+    organization.id == 1 && ! reviewer?    
   end
 
   # When an account is created by a third party, send an email with a secure
