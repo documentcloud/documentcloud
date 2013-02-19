@@ -203,11 +203,6 @@ class AuthenticationController < ApplicationController
     return data
   end
 
-  def set_p3p_header
-    # explanation of what these mean: http://www.p3pwriter.com/LRN_111.asp
-    headers['P3P'] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
-  end
-
   def clear_login_state
     reset_session
     cookies.delete 'dc_logged_in'
