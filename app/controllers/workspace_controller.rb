@@ -20,6 +20,7 @@ class WorkspaceController < ApplicationController
     if logged_in?
       if current_account.real?
         @projects = Project.load_for(current_account)
+        @current_organization = current_account.organization
         @organizations = Organization.all_slugs
         @has_documents = Document.owned_by(current_account).count(:limit => 1) > 0
         return render :template => 'workspace/index'
