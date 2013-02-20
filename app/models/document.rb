@@ -359,9 +359,8 @@ class Document < ActiveRecord::Base
     remote_url || detected_remote_url
   end
 
-  # can annotations be created on the document.  Yes if it's setup to allow them or the account is present and has sufficient access
-  def annotations_allowed?( account=nil )
-    [ PREMODERATED, POSTMODERATED ].include?(access) || ( account && account.allowed_to_comment?(self) )
+  def commentable?(account)
+    [ PREMODERATED, POSTMODERATED ].include?(access) or ( account && account.allowed_to_comment?(self) )
   end
 
   # When the access level changes, all sub-resource and asset permissions
@@ -813,7 +812,7 @@ class Document < ActiveRecord::Base
       :data                => data
     }
     if opts[:annotations]
-      json[:annotations_url] = annotations_url if annotations_allowed?(opts[:account])
+      json[:annotations_url] = annotations_url if commentable?(opts[:account])
       json[:annotations] = self.annotations_with_authors(opts[:account])
     end
     json.to_json
@@ -849,7 +848,7 @@ class Document < ActiveRecord::Base
     doc['created_at']         = created_at.to_formatted_s(:rfc822)
     doc['updated_at']         = updated_at.to_formatted_s(:rfc822)
     doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
-    if annotations_allowed?(options[:account])
+    if commentable?(options[:account])
       doc['annotations_url']    = annotations_url
     end
     if options[:contributor]
