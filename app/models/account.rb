@@ -201,7 +201,7 @@ class Account < ActiveRecord::Base
   end
 
   def allowed_to_comment?( resource )
-    [PREMODERATED,POSTMODERATED].include?( resource.access ) or collaborates?(resource)
+    [PREMODERATED,POSTMODERATED].include?( resource.access ) or owns_or_collaborates?(resource)
   end
 
   def owns_or_collaborates?(resource)
