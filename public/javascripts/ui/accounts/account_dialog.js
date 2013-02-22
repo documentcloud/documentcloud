@@ -10,13 +10,12 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   },
 
   constructor : function() {
-    this.collection = dc.account.current_organization().members;
     dc.ui.Dialog.call(this, {
       mode          : 'custom',
-      title         : 'Manage Accounts: ' + dc.account.current_organization().get('name'),
-      information   : 'group: ' + dc.account.current_organization().get('slug')
+      title         : 'Manage Accounts: ' + dc.account.organization().get('name'),
+      information   : 'group: ' + dc.account.organization().get('slug')
     });
-    this.collection.bind('reset', _.bind(this._renderAccounts, this));
+    Accounts.bind('reset', _.bind(this._renderAccounts, this));
     this._rendered = false;
     this._open = false;
     $(this.el).hide();
@@ -68,7 +67,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
 
   _renderAccounts : function() {
     dc.ui.spinner.hide();
-    var views = this.collection.map(function(account) {
+    var views = Accounts.map(function(account) {
       return (new dc.ui.AccountView({model : account, kind : 'row'})).render().el;
     });
     this.list.append(views);
