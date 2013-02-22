@@ -1,8 +1,7 @@
 // Organization Model
 
 dc.model.Organization = Backbone.Model.extend({
-  constructor : function(attrs, options) {
-    Backbone.Model.call(this, attrs, options);
+  initialize : function(attrs, options) {
     this.members = new dc.model.AccountSet();
     this.members.reset(this.get('members'));
   },  
