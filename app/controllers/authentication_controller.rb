@@ -4,6 +4,7 @@ class AuthenticationController < ApplicationController
 
   # Display the signup information page.
   def signup_info
+    render :layout => "workspace.html.erb"
   end
 
   # /login handles both the login form and the login request.
