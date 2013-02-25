@@ -1,4 +1,4 @@
-<% organization.members.each( function(account) { %>
+<% (organization.members).each( function(account) { %>
   <div class="account_link">
     - &nbsp;<span class="interface text_link" data-cid="<%= account.cid %>"><%= account.fullName() %></span>
     <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>

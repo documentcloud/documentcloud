@@ -11,7 +11,7 @@
       <% if( dc.account ){ %>
         <% dc.account.organizations.each( function( organization ){ %>
           <div class="organization">
-            <% if ( organization.members.length ) { %>
+            <% if ( organization && organization.members && organization.members.length ) { %>
               <div class="icon toggle toggle_account_links"></div>
             <% } %>
             <span class="org_documents interface text_link">

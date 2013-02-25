@@ -68,13 +68,17 @@ class Organization < ActiveRecord::Base
       sql << "and memberships.account_id not in (#{except_account.id})"
     end
     rows = self.connection.select_all( sql )
+
     accounts_map = rows.group_by{|row| row['organization_id'].to_i }
     organizations.each do | organization |
-      organization.members = accounts_map[ organization.id ].map do | account |
-        account.delete('organization_id')
-        account['slug'] = Account.make_slug( account )
-        account['hashed_email']=Digest::MD5.hexdigest( account['email'].downcase.gsub(/\s/, '') ) if account['email']
-        account
+      account_details = accounts_map[organization.id]
+      if account_details # if except_account is set, this could be nil
+        organization.members = account_details.map do |account|
+          account.delete('organization_id')
+          account['slug'] = Account.make_slug( account )
+          account['hashed_email']=Digest::MD5.hexdigest( account['email'].downcase.gsub(/\s/, '') ) if account['email']
+          account
+        end
       end
     end
     return organizations

@@ -50,6 +50,8 @@ stylesheets:
     - public/stylesheets/ui/ui.css
     - public/stylesheets/ui/*.css
     - public/stylesheets/vendor/*.css
+  authentication:
+    - public/stylesheets/pages/workspace.css
   workspace:
     - public/stylesheets/pages/workspace.css
   empty:

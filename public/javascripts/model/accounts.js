@@ -24,7 +24,11 @@ dc.model.Account = Backbone.Model.extend({
   constructor : function(attrs, options) {
     Backbone.Model.call(this, attrs, options);
     this.organizations = new dc.model.OrganizationSet();
-  },  
+  },
+  
+  current_organization: function(){
+    return this.organization();
+  },
 
   organization : function() {
     return this.organizations.first();

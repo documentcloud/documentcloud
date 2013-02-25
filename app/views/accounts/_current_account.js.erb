@@ -3,6 +3,7 @@ dc.account = new dc.model.Account(<%= @current_account.canonical.to_json %>);
 dc.account.addOrganization( <%= organization.to_json %> );
 <% end -%>
 
+Accounts.reset(dc.account.current_organization().members.models);
 Accounts.add(dc.account);
 
 dc.account.set({
