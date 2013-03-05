@@ -151,7 +151,7 @@ class Account < ActiveRecord::Base
   end
 
   def real?(org=self.organization)
-    admin?(org) || contributor?(org)
+    admin?(org) || contributor?(org) || freelancer?(org)
   end
 
   def disabled?(org=self.organization)
