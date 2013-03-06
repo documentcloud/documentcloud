@@ -80,7 +80,7 @@ class AdminController < ApplicationController
     params[:account][:email].strip! if params[:account][:email]
     acc = Account.create(params[:account])
     return org.destroy && fail(acc.errors.full_messages.first) if acc.errors.any?
-    org.memberships.create(:account_id => acc.id, :role => Account::ADMINISTRATOR)
+    org.memberships.create(:account_id => acc.id, :role => Account::ADMINISTRATOR, :default => true)
     acc.send_login_instructions
     @success = "Account Created. Welcome email sent to #{acc.email}."
     @params = {:organization => {}, :account => {}}
