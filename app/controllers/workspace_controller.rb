@@ -6,12 +6,9 @@ class WorkspaceController < ApplicationController
   # Regex that matches missed markdown links in `[title][]` format.
   MARKDOWN_LINK_REPLACER = /\[([^\]]*?)\]\[\]/i
 
-  skip_before_filter :verify_authenticity_token, :only => [:login]
-
   before_filter :bouncer, :except => :index if Rails.env.staging?
 
   before_filter :prefer_secure,   :only => [:index]
-  before_filter :secure_only,     :only => [:login]
 
   # Main documentcloud.org page. Renders the workspace if logged in or
   # searching, the home page otherwise.
