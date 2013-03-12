@@ -2,8 +2,13 @@ class AuthenticationController < ApplicationController
   
   before_filter :bouncer, :except => [:callback] if Rails.env.staging?
 
+  skip_before_filter :verify_authenticity_token, :only => [:login]
+
+  before_filter :secure_only,     :only => [:login]
+
   # Display the signup information page.
   def signup_info
+    render :layout => "workspace.html.erb"
   end
 
   # /login handles both the login form and the login request.

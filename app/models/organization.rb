@@ -123,6 +123,9 @@ class Organization < ActiveRecord::Base
     if options[:include_document_count]
       attrs['document_count'] = document_count
     end
+    if options[:include_note_count] and @note_count
+      attrs['note_count'] = @note_count
+    end
     if self.members
       attrs['members'] = self.members
     end

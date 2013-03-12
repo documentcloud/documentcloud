@@ -66,7 +66,7 @@ class AccountsController < ApplicationController
     if membership.nil?
       membership_attributes[:default] = true unless account.memberships.exists?
       membership = current_organization.memberships.create(membership_attributes.merge(:account_id => account.id))
-    elsif membership.reviewer? # or if account is a reviewer in this organization
+    elsif membership.role == Account::REVIEWER # or if account is a reviewer in this organization
       account.upgrade_reviewer_to_real(current_organization, attributes[:role])
     elsif membership.role == Account::DISABLED
       return json({:errors => ['That email address belongs to an inactive account.']}, 409)
