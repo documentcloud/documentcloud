@@ -1,5 +1,6 @@
 :disabled_actions:
   - large_document_import
+  - document_import
   - reindex_everything
 
 # The URL where you're planning on running the central server/queue/database.
