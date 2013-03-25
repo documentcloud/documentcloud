@@ -90,16 +90,17 @@ class AccountsController < ApplicationController
     account = current_organization.accounts.find(params[:id])
     return json(nil, 403) unless account && current_account.allowed_to_edit_account?(account, current_organization)
     account.update_attributes pick(params, :first_name, :last_name, :email)
-    role = pick(params, :role)
-    #account.update_attributes(role) if !role.empty? && current_account.admin?
-    membership = current_organization.role_of(account)
-    membership.update_attributes(role) if !role.empty? && current_account.admin?
     password = pick(params, :password)[:password]
     if (current_account.id == account.id) && password
       account.password = password
       account.save
     end
-    json account
+    account.with_organization( current_organization ) do | membership |
+      if current_account.admin? && ( role = pick(params, :role) )
+        membership.update_attributes(role)
+      end
+      json account.canonical
+    end
   end
 
   # Resend a welcome email for a pending account.

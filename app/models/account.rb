@@ -39,6 +39,15 @@ class Account < ActiveRecord::Base
   }
 
 
+  def with_organization( organization )
+    begin
+      previous, @membership = @membership, memberships.find(:first, :conditions=>{:organization_id=>organization.id})
+      yield @membership
+    ensure
+      @membership = previous
+    end
+  end
+
   # Populates the organization#members accessor with all the organizaton's accounts
   def organizations_with_accounts
     Organization.populate_members_info( self.organizations, self )
@@ -108,20 +117,23 @@ class Account < ActiveRecord::Base
     @organization ||= Organization.default_for(self)
   end
 
+  def membership
+    @membership ||= memberships.first(:conditions=>{:default=>true})
+  end
+
   def organization_id
     return nil unless self.organization
     self.organization.id
   end
-  
+
   def role
-    default = memberships.first(:conditions=>{:default=>true})
-    default.nil? ? nil : default.role 
+    membership ? membership.role : nil
   end
-  
+
   def member_of?(org)
     self.memberships.exists?(:organization_id => org.id)
   end
-  
+
   def has_memberships? # should be reworked as Account#real?
     self.memberships.exists?
   end
