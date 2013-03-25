@@ -120,7 +120,7 @@ class Account < ActiveRecord::Base
   end
 
   def role
-    membership ? membership.role : nil
+    current_membership ? current_membership.role : nil
   end
 
   def member_of?(org)
