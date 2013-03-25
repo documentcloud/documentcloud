@@ -38,16 +38,6 @@ class Account < ActiveRecord::Base
     { :conditions=>"identities @> '\"#{DC::Hstore.escape(provider)}\"=>\"#{DC::Hstore.escape(id)}\"'" }
   }
 
-
-  def with_organization( organization )
-    begin
-      previous, @membership = @membership, memberships.find(:first, :conditions=>{:organization_id=>organization.id})
-      yield @membership
-    ensure
-      @membership = previous
-    end
-  end
-
   # Populates the organization#members accessor with all the organizaton's accounts
   def organizations_with_accounts
     Organization.populate_members_info( self.organizations, self )
@@ -117,8 +107,11 @@ class Account < ActiveRecord::Base
     @organization ||= Organization.default_for(self)
   end
 
-  def membership
-    @membership ||= memberships.first(:conditions=>{:default=>true})
+  def current_membership=( membership )
+    @current_membership = membership
+  end
+  def current_membership
+    @current_membership ||= memberships.first(:conditions=>{:default=>true})
   end
 
   def organization_id

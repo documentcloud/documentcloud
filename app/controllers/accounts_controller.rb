@@ -88,14 +88,14 @@ class AccountsController < ApplicationController
   # Think about what the desired level of access control is.
   def update
     account = current_organization.accounts.find(params[:id])
-    return json(nil, 403) unless account && current_account.allowed_to_edit_account?(account, current_organization)
-    account.update_attributes pick(params, :first_name, :last_name, :email)
-    password = pick(params, :password)[:password]
-    if (current_account.id == account.id) && password
-      account.password = password
-      account.save
-    end
-    account.with_organization( current_organization ) do | membership |
+    current_organization.membership_for_account( account ) do | membership |
+      return json(nil, 403) unless account && current_account.allowed_to_edit_account?(account, current_organization)
+      account.update_attributes pick(params, :first_name, :last_name, :email)
+      password = pick(params, :password)[:password]
+      if (current_account.id == account.id) && password
+        account.password = password
+        account.save
+      end
       if current_account.admin? && ( role = pick(params, :role) )
         membership.update_attributes(role)
       end

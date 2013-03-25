@@ -85,21 +85,33 @@ class Organization < ActiveRecord::Base
   end
 
 
+  def membership_for_account( account )
+    membership = memberships.find(:first, :conditions=>{:account_id=>account.id})
+    return membership unless block_given?
+    begin
+      previous, account.current_membership = account.current_membership, membership
+      yield membership
+    ensure
+      account.current_membership = previous
+    end
+    return membership
+  end
+
   # How many documents have been uploaded across the whole organization?
   def document_count
     @document_count ||= Document.count(:conditions => {:organization_id => id})
   end
-  
+
   def role_of(account)
     self.memberships.first(:conditions=>{:account_id=>account.id})
   end
-  
+
   def add_member(account, role, concealed=false)
     options = {:account_id => account.id, :role => role, :concealed => concealed}
     options[:default] = true unless account.memberships.exists?(:default=>true) # TODO: transition account#real? for this verification
     self.memberships.create(options)
   end
-  
+
   def remove_member(account)
     self.memberships.destroy_all(:conditions=>{:account_id => account.id})
   end
