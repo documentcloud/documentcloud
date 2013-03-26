@@ -39,7 +39,7 @@
       &nbsp;/&nbsp;
       <% if @current_account %>
         <% if @current_organization %>
-        <span class="text_link open_accounts">Accounts</span>
+        <span class="text_link open_accounts"><%= @current_account.admin? ? 'Organization' : 'Accounts' %></span>
         &nbsp;/&nbsp;
         <% end %>
         <a href="/logout" class="text_link">Log Out</a>
