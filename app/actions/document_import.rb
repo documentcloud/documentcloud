@@ -20,6 +20,7 @@ class DocumentImport < CloudCrowd::Action
           end
         end
       end
+      DC::Store::AssetStore.new.save_original(document, file )
     else
       file = File.basename document.original_file_path
       File.open(file, 'w'){ |f| f << DC::Store::AssetStore.new.read_original(document) }
