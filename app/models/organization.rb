@@ -127,10 +127,11 @@ class Organization < ActiveRecord::Base
 
   def canonical( options = {} )
     attrs = {
-      'name' => name,
-      'slug' => slug,
-      'demo' => demo,
-      'id'   => id
+      'name'     => name,
+      'slug'     => slug,
+      'language' => language || 'en',
+      'demo'     => demo,
+      'id'       => id
     }
     if options[:include_document_count]
       attrs['document_count'] = document_count

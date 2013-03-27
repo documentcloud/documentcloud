@@ -352,6 +352,7 @@ class Account < ActiveRecord::Base
       'email'             => email,
       'first_name'        => first_name,
       'last_name'         => last_name,
+      'language'          => language || 'en',
       'organization_id'   => organization_id,
       'role'              => role,
       'hashed_email'      => hashed_email,
