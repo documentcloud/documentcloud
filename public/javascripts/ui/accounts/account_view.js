@@ -40,6 +40,7 @@ dc.ui.AccountView = Backbone.View.extend({
     _.bindAll(this, '_onSuccess', '_onError');
     this._boundRender = _.bind(this.render, this, 'display');
     this.observe(this.model);
+    this.dialog.open(); // FIXME - REMOVE BEFORE COMMITING
   },
 
   observe : function(model) {
