@@ -129,6 +129,11 @@ dc.model.Account = Backbone.Model.extend({
 
 });
 
+
+// mixin the languages we support
+_.defaults( dc.model.Account.prototype, ModelWithLanguageMixin );
+
+
 // Account Set
 dc.model.AccountSet = Backbone.Collection.extend({
 
