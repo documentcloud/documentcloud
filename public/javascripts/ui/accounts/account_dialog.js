@@ -5,10 +5,11 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   className : 'account_list dialog',
 
   events : {
-    'click .ok'           : 'close',
-    'click .new_account'  : 'newAccount',
-    'click .language_sheet .chooser'  : 'toggleChooseLanguage',
-    'click .language_sheet td' : 'chooseLanguage'
+    'click .ok'             : 'close',
+    'click .new_account'    : 'newAccount',
+    'click .edit_language'  : 'showLanguageEdit',
+    'click .language_sheet td' : 'chooseLanguage',
+
   },
 
   constructor : function() {
@@ -20,6 +21,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
       information   : 'group: ' + dc.account.organization().get('slug')
     });
     Accounts.bind('reset', _.bind(this._renderAccounts, this));
+    dc.account.organization().bind('change:language', this.onOrganizationLanguageChange, this )
     this._rendered = false;
     this._open = false;
     $(this.el).hide();
@@ -30,14 +32,13 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this._rendered = true;
     this._container = this.$('.custom');
     this._container.setMode('not', 'draggable');
-    this._container.html(JST['account/dialog']({}));
-    if (Accounts.current().isAdmin()){
-      this._container.prepend( JST['account/organization_settings_dialog']({ organization: dc.account.organization().toJSON() }) );
-      this.addControl(this.make('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, 'New Account'));
-
-    }
+    this._container.html(JST['account/dialog']( dc.account.toJSON() ));
     this.list = this.$('.account_list_content');
     this._renderAccounts();
+    if (Accounts.current().isAdmin()){
+      this.$('.custom').prepend( JST['account/language_settings']( {language: dc.account.getLanguage() } ) );
+      this.addControl(this.make('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, 'New Account'));
+    }
     return this;
   },
 
@@ -59,20 +60,31 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this._open = false;
   },
 
+  onOrganizationLanguageChange: function( organization ){
+    this.$('.organization .choice').html( organization.getLanguageName() );
+  },
+
+  showLanguageEdit: function(ev){
+    var sheet = $(ev.target).closest('.language').siblings('.language_sheet');
+    if ( ! sheet.toggle().is(":visible") ){
+      return;
+    }
+    language = dc.account.organization().getLanguageCode()
+    this.$('.languages td' ).removeClass('active');
+    this.$('.languages td[data-lang=' + language + ']' ).addClass('active');
+
+  },
+
   chooseLanguage: function(ev){
     target = $(ev.target);
     target.closest('table').find('td').removeClass('active');
     target.addClass('active');
-    // FIXME - remove & replace with listen action on model
-    // once that's hooked up
-    target.closest('.language_sheet').find('.current').html( target.attr('data-lang') );
-    _.delay( function(){
-      target.closest('.language_sheet').removeClass('open');
-    }, 500);  // wait a bit so they can see that the languages was chosen
-  },
 
-  toggleChooseLanguage: function(){
-    this.$('.language_sheet').toggleClass('open')
+    dc.account.organization().set({ language: target.attr('data-lang') })
+
+    _.delay( function(){
+      target.closest('.language_sheet').hide()
+    }, 500);  // wait a bit so they can see that the languages was chosen
   },
 
   isOpen : function() {

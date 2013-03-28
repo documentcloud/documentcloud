@@ -23,7 +23,7 @@ dc.ui.AccountView = Backbone.View.extend({
     'click .resend_welcome':        'resendWelcomeEmail',
     'click .admin_link':            '_openAccounts',
     'click .save_changes':          '_doneEditing',
-    'click .cancel_changes':        '_cancelEditing',
+    'click .cancel_changes':        '_cancelEditing',  // Where'd this go?
     'click .disable_account':       '_disableAccount',
     'click .enable_account':        '_enableAccount',
     'click .login_as .minibutton':  '_loginAsAccount'
@@ -86,6 +86,19 @@ dc.ui.AccountView = Backbone.View.extend({
   showEdit : function() {
     this.$('option.role_' + this.model.get('role')).attr({selected : 'selected'});
     this.setMode('edit', 'view');
+
+    var td = $( this.make('td',{colspan: 5 }) ),
+        tr = this.make('tr',{'class':'editing'}, td );
+    td.append( JST['account/language_settings']( {language: this.model.getLanguage() } ) );
+
+    language = this.model.getLanguageCode()
+    td.find('.languages td' ).removeClass('active');
+    td.find('.languages td[data-lang=' + language + ']' ).addClass('active');
+
+    this.$el.closest('tr').before( tr );
+    this.$el.closest('.custom').animate({scrollTop: $(tr).offset().top - 120 })
+
+
   },
 
   promptPasswordChange : function() {
@@ -160,12 +173,14 @@ dc.ui.AccountView = Backbone.View.extend({
 
   _cancelEditing : function() {
     this.setMode('display', 'view');
+    this.$el.prev('tr.editing').remove()
   },
 
   _disableAccount : function() {
     if (this.dialog.isOpen()) this.dialog.close();
     var dialog = dc.ui.Dialog.confirm(null, _.bind(function() {
       this.setMode('display', 'view');
+      this.$el.prev('tr.editing').remove()
       this.model.save({'role': this.model.DISABLED});
       dc.ui.notifier.show({
         text      : this.model.fullName() + ' has been disabled.',
@@ -187,6 +202,7 @@ dc.ui.AccountView = Backbone.View.extend({
 
   _enableAccount : function() {
     this.setMode('display', 'view');
+    this.$el.prev('tr.editing').remove()
     this.model.save({'role': this.model.CONTRIBUTOR});
   },
 
@@ -197,6 +213,7 @@ dc.ui.AccountView = Backbone.View.extend({
   _onSuccess : function(model, resp) {
     this.model.invalid = false;
     this.setMode('display', 'view');
+    this.$el.prev('tr.editing').remove()
     this.model.trigger('change');
     dc.ui.spinner.hide();
     if (this.model.newRecord) {
