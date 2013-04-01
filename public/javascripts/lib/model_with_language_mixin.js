@@ -29,6 +29,10 @@ window.ModelWithLanguageMixin = {
 
   getLanguageName: function(){
     return this.LANGUAGE_CHOICES[ this.getLanguageCode() ];
+  },
+
+  getLanguage: function(){
+    return { code: this.getLanguageCode(), name: this.getLanguageName() };
   }
 
 };
