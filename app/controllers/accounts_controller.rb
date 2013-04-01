@@ -55,7 +55,7 @@ class AccountsController < ApplicationController
       (current_account.real?(current_organization) and params[:role] == Account::REVIEWER)
 
     # Find or create the appropriate account
-    account_attributes = pick(params, :first_name, :last_name, :email)
+    account_attributes = pick(params, :first_name, :last_name, :email, :language)
     account = Account.lookup(account_attributes[:email]) || Account.create(account_attributes)    
 
     # Find role for account in organization if it exists.
@@ -90,7 +90,7 @@ class AccountsController < ApplicationController
     account = current_organization.accounts.find(params[:id])
     current_organization.membership_for_account( account ) do | membership |
       return json(nil, 403) unless account && current_account.allowed_to_edit_account?(account, current_organization)
-      account.update_attributes pick(params, :first_name, :last_name, :email)
+      account.update_attributes pick(params, :first_name, :last_name, :email, :language )
       password = pick(params, :password)[:password]
       if (current_account.id == account.id) && password
         account.password = password

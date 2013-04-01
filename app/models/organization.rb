@@ -57,7 +57,8 @@ class Organization < ActiveRecord::Base
     select
       memberships.organization_id, memberships.role,
       accounts.id,                 accounts.email,
-      accounts.first_name,         accounts.last_name
+      accounts.first_name,         accounts.last_name,
+      accounts.language
     from memberships
       inner join accounts on accounts.id = memberships.account_id
     where 
