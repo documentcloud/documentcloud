@@ -33,70 +33,52 @@
   .account_list .organization {
 
   }
-  .account_list .organization .title {
+  .account_list .language {
     font-size: 14px;
+    text-align: left;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    /* padding: 5px 10px; */
+
+    /* background-image: url(/images/embed/icons/toggle-down.png); */
+    /* background-position: left; */
+    /* background-repeat: no-repeat; */
+    /* cursor: pointer; */
+    /* position: relative; */
+    /* top: 5px; */
   }
-    .account_list .organization .chooser {
-      text-align: left;
-      margin-bottom: 0;
-      padding-bottom: 10px;
-      padding: 5px 10px;
-
-      background-image: url(/images/embed/icons/toggle-down.png);
-      background-position: right;
-      background-repeat: no-repeat;
-      width: 250px;
+  .account_list .language .edit_language {
+    display: inline-block;
+    cursor: pointer;
+  }
+    .account_list .languages td {
+      padding: 3px;
       cursor: pointer;
-      position: relative;
-      top: 5px;
     }
-
-    .account_list .organization .open .chooser {
-      background: darkGrey;
-      border-top-left-radius: 6px; -webkit-border-top-left-radius: 6px; -moz-border-radius-topleft: 6px;
-      border-top-right-radius: 6px; -webkit-border-top-right-radius: 6px; -moz-border-radius-topright: 6px;
-    }
-    .account_list .organization .language_sheet.open {
-      width: 80%;
-    }
-      .account_list .organization .languages td {
-        border: none;
-        padding: 3px;
-        cursor: pointer;
-        color: #F9F6F4;
-      }
-      .account_list .organization .languages td.active {
+      .account_list .languages td.active {
         border-radius:6px;
         -moz-border-radius:6px;
         background: none repeat scroll 0 0 #6C7A7D;
         border: 1px solid #303F42;
+        text-indent: 5px;
       }
-
-      .account_list .organization .languages {
-        border-collapse:separate;
-        display: none;
+      .account_list_content .editing td {
+        padding: 0px;
+        border-bottom: 0;
       }
-        .account_list .organization .languages table {
-          padding: 8px;
-          border: 0;
-        }
-        .account_list .organization .open .languages {
-          z-index: 10002;
-          position: absolute;
-          background: darkGrey;
-          display: block;
-          width: 80%;
-          border-top-right-radius: 6px; -webkit-border-top-right-radius: 6px; -moz-border-radius-topright: 6px;
-          border-bottom-left-radius: 6px; -webkit-border-bottom-left-radius: 6px; -moz-border-radius-bottomleft: 6px;
-          border-bottom-right-radius: 6px; -webkit-border-bottom-right-radius: 6px; -moz-border-radius-bottomright: 6px;
-        }
-
+      .account_list_content .language {
+        font-size: 12px;
+        padding-bottom: 5px;
+      }
 
   .account_list table,
   .collaborator_list {
     width: 100%;
     border-top: 1px solid #222;
   }
+    .account_list_content .languages table {
+      border-top: 0;
+    }
     .account_list td,
     .collaborator_list td {
       padding: 10px;

@@ -36,7 +36,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this.list = this.$('.account_list_content');
     this._renderAccounts();
     if (Accounts.current().isAdmin()){
-      this.$('.custom').prepend( JST['account/language_settings']( {language: dc.account.getLanguage() } ) );
+      this.$('.organization_language').html( JST['account/language_settings']( {language: dc.account.getLanguage() } ) );
       this.addControl(this.make('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, 'New Account'));
     }
     return this;
@@ -79,8 +79,12 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     target = $(ev.target);
     target.closest('table').find('td').removeClass('active');
     target.addClass('active');
-
-    dc.account.organization().set({ language: target.attr('data-lang') })
+    language = target.attr('data-lang');
+    if ( target.closest('.organization_language').length ){
+      dc.account.organization().set({ language: language })
+    } else {
+      target.closest('tr.editing').next().trigger('chosen', language )
+    }
 
     _.delay( function(){
       target.closest('.language_sheet').hide()

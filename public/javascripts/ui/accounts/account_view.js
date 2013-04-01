@@ -26,7 +26,8 @@ dc.ui.AccountView = Backbone.View.extend({
     'click .cancel_changes':        '_cancelEditing',  // Where'd this go?
     'click .disable_account':       '_disableAccount',
     'click .enable_account':        '_enableAccount',
-    'click .login_as .minibutton':  '_loginAsAccount'
+    'click .login_as .minibutton':  '_loginAsAccount',
+    'chosen':                       'setDisplayLanguage'
   },
 
   constructor : function(options) {
@@ -90,16 +91,21 @@ dc.ui.AccountView = Backbone.View.extend({
     var td = $( this.make('td',{colspan: 5 }) ),
         tr = this.make('tr',{'class':'editing'}, td );
     td.append( JST['account/language_settings']( {language: this.model.getLanguage() } ) );
-
     language = this.model.getLanguageCode()
+    this.setDisplayLanguage( null, language )
     td.find('.languages td' ).removeClass('active');
     td.find('.languages td[data-lang=' + language + ']' ).addClass('active');
-
     this.$el.closest('tr').before( tr );
     this.$el.closest('.custom').animate({scrollTop: $(tr).offset().top - 120 })
+  },
 
+  setDisplayLanguage: function( ev, language ){
+    this.$el.prev('tr.editing').find('.choice').
+      html( dc.account.LANGUAGE_CHOICES[ language ] ).
+      attr('data-language',language);
 
   },
+
 
   promptPasswordChange : function() {
     this.dialog.close();
@@ -153,6 +159,10 @@ dc.ui.AccountView = Backbone.View.extend({
     var me = this;
     var attributes = this.serialize();
     var options = {success : this._onSuccess, error : this._onError};
+    var language = this.$el.prev('tr.editing').find('.choice').attr('data-language');
+    if (language){
+      this.model.set({ language: language })
+    }
     if (this.model.isNew()) {
       if (!attributes.email) return $(this.el).remove();
       if (Accounts.getValidByEmail(attributes.email)) { 
