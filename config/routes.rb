@@ -126,6 +126,9 @@ ActionController::Routing::Routes.draw do |map|
     accounts.reset_password '/reset_password', :action => 'reset'
   end
 
+  # Organizations management
+  map.resources :organizations, :only=>:update
+
   # Projects.
   map.resources :projects, :has_many => :collaborators, :member => {
     :documents        => :get,
