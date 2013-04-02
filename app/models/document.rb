@@ -26,7 +26,7 @@ class Document < ActiveRecord::Base
   }
 
   # If the Document.pending count is greater than this number, send a warning.
-  WARN_QUEUE_LENGTH = 50
+  WARN_QUEUE_LENGTH = 150
 
   # DB Associations:
 
