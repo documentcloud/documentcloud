@@ -81,26 +81,25 @@ class AccountsController < ApplicationController
         LifecycleMailer.deliver_membership_notification(account, current_organization, current_account)
       end
     end
-    json account # N.B. account's canonical method currently returns the default organization_id.
+    json account.canonical( :membership=>membership )
   end
 
   # Journalists are authorized to update any account in the organization.
   # Think about what the desired level of access control is.
   def update
     account = current_organization.accounts.find(params[:id])
-    current_organization.membership_for_account( account ) do | membership |
-      return json(nil, 403) unless account && current_account.allowed_to_edit_account?(account, current_organization)
-      account.update_attributes pick(params, :first_name, :last_name, :email, :language )
-      password = pick(params, :password)[:password]
-      if (current_account.id == account.id) && password
-        account.password = password
-        account.save
-      end
-      if current_account.admin? && ( role = pick(params, :role) )
-        membership.update_attributes(role)
-      end
-      json account.canonical
+    return json(nil, 403) unless account && current_account.allowed_to_edit_account?(account, current_organization)
+    account.update_attributes pick(params, :first_name, :last_name, :email)
+    role = pick(params, :role)
+    #account.update_attributes(role) if !role.empty? && current_account.admin?
+    membership = current_organization.role_of(account)
+    membership.update_attributes(role) if !role.empty? && current_account.admin?
+    password = pick(params, :password)[:password]
+    if (current_account.id == account.id) && password
+      account.password = password
+      account.save
     end
+    json account.canonical( :membership=>membership )
   end
 
   # Resend a welcome email for a pending account.

@@ -38,6 +38,7 @@ class Account < ActiveRecord::Base
     { :conditions=>"identities @> '\"#{DC::Hstore.escape(provider)}\"=>\"#{DC::Hstore.escape(id)}\"'" }
   }
 
+
   # Populates the organization#members accessor with all the organizaton's accounts
   def organizations_with_accounts
     Organization.populate_members_info( self.organizations, self )
@@ -107,26 +108,20 @@ class Account < ActiveRecord::Base
     @organization ||= Organization.default_for(self)
   end
 
-  def current_membership=( membership )
-    @current_membership = membership
-  end
-  def current_membership
-    @current_membership ||= memberships.first(:conditions=>{:default=>true})
-  end
-
   def organization_id
     return nil unless self.organization
     self.organization.id
   end
-
+  
   def role
-    current_membership ? current_membership.role : nil
+    default = memberships.first(:conditions=>{:default=>true})
+    default.nil? ? nil : default.role 
   end
-
+  
   def member_of?(org)
     self.memberships.exists?(:organization_id => org.id)
   end
-
+  
   def has_memberships? # should be reworked as Account#real?
     self.memberships.exists?
   end
@@ -346,20 +341,21 @@ class Account < ActiveRecord::Base
 
   # Create default organization to preserve backwards compatability.
   def canonical(options={})
+    membership = options[:membership] || memberships.first(:conditions=>{:default=>true})
     attrs = {
-      'id'                => id,
-      'slug'              => slug,
-      'email'             => email,
-      'first_name'        => first_name,
-      'last_name'         => last_name,
-      'language'          => language || 'en',
-      'organization_id'   => organization_id,
-      'role'              => role,
-      'hashed_email'      => hashed_email,
-      'pending'           => pending?
+      'id'              => id,
+      'slug'            => slug,
+      'email'           => email,
+      'first_name'      => first_name,
+      'last_name'       => last_name,
+      'hashed_email'    => hashed_email,
+      'pending'         => pending?,
+      'organization_id' => membership.organization_id,
+      'role'            => membership.role
     }
+
     if options[:include_organization]
-      attrs['organization_name'] = organization_name
+      attrs['organization_name'] = membership.organization.name
       attrs['organizations']     = organizations.map(&:canonical)
     end
     if options[:include_document_counts]

@@ -85,19 +85,6 @@ class Organization < ActiveRecord::Base
     return organizations
   end
 
-
-  def membership_for_account( account )
-    membership = memberships.find(:first, :conditions=>{:account_id=>account.id})
-    return membership unless block_given?
-    begin
-      previous, account.current_membership = account.current_membership, membership
-      yield membership
-    ensure
-      account.current_membership = previous
-    end
-    return membership
-  end
-
   # How many documents have been uploaded across the whole organization?
   def document_count
     @document_count ||= Document.count(:conditions => {:organization_id => id})
