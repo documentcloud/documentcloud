@@ -21,7 +21,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
       information   : 'group: ' + dc.account.organization().get('slug')
     });
     Accounts.bind('reset', _.bind(this._renderAccounts, this));
-    dc.account.organization().bind('change:language', this.onOrganizationLanguageChange, this );
+    dc.account.organization().bind('change:language', this.setDisplayLanguage, this );
     this._rendered = false;
     this._open = false;
     $(this.el).hide();
@@ -37,6 +37,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this._renderAccounts();
     if (Accounts.current().isAdmin()){
       this.$('.organization_language').html( JST['account/language_settings']( {language: dc.account.getLanguage() } ) );
+      this.setDisplayLanguage();
       this.addControl(this.make('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, 'New Account'));
     }
     return this;
@@ -60,8 +61,8 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this._open = false;
   },
 
-  onOrganizationLanguageChange: function( organization ){
-    this.$('.organization .choice').html( organization.getLanguageName() );
+  setDisplayLanguage: function(){
+    this.$('.organization_language .choice').html( dc.account.organization().getLanguageName() );
   },
 
   showLanguageEdit: function(ev){
@@ -72,7 +73,6 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     var language = dc.account.organization().getLanguageCode();
     this.$('.languages td' ).removeClass('active');
     this.$('.languages td[data-lang=' + language + ']' ).addClass('active');
-
   },
 
   chooseLanguage: function(ev){
@@ -82,10 +82,10 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     var language = target.attr('data-lang');
     if ( target.closest('.organization_language').length ){
       dc.account.organization().set({ language: language });
+      dc.account.organization().save();
     } else {
       target.closest('tr.editing').next().trigger('chosen', language );
     }
-
     _.delay( function(){
       target.closest('.language_sheet').hide();
     }, 500);  // wait a bit so they can see that the languages was chosen
