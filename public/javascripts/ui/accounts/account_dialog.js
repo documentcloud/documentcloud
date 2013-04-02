@@ -1,14 +1,14 @@
 dc.ui.AccountDialog = dc.ui.Dialog.extend({
-  
+
   id : 'account_list',
-  
+
   className : 'account_list dialog',
 
   events : {
     'click .ok'             : 'close',
     'click .new_account'    : 'newAccount',
     'click .edit_language'  : 'showLanguageEdit',
-    'click .language_sheet td' : 'chooseLanguage',
+    'click .language_sheet td' : 'chooseLanguage'
 
   },
 
@@ -16,12 +16,12 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     dc.ui.Dialog.call(this, {
       mode          : 'custom',
       title         : 'Manage ' + ( Accounts.current().isAdmin() ?
-                                    'Organization: ' + dc.account.organization().get('name') : 
+                                    'Organization: ' + dc.account.organization().get('name') :
                                     'Account' ),
       information   : 'group: ' + dc.account.organization().get('slug')
     });
     Accounts.bind('reset', _.bind(this._renderAccounts, this));
-    dc.account.organization().bind('change:language', this.onOrganizationLanguageChange, this )
+    dc.account.organization().bind('change:language', this.onOrganizationLanguageChange, this );
     this._rendered = false;
     this._open = false;
     $(this.el).hide();
@@ -69,25 +69,25 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     if ( ! sheet.toggle().is(":visible") ){
       return;
     }
-    language = dc.account.organization().getLanguageCode()
+    var language = dc.account.organization().getLanguageCode();
     this.$('.languages td' ).removeClass('active');
     this.$('.languages td[data-lang=' + language + ']' ).addClass('active');
 
   },
 
   chooseLanguage: function(ev){
-    target = $(ev.target);
+    var target = $(ev.target);
     target.closest('table').find('td').removeClass('active');
     target.addClass('active');
-    language = target.attr('data-lang');
+    var language = target.attr('data-lang');
     if ( target.closest('.organization_language').length ){
-      dc.account.organization().set({ language: language })
+      dc.account.organization().set({ language: language });
     } else {
-      target.closest('tr.editing').next().trigger('chosen', language )
+      target.closest('tr.editing').next().trigger('chosen', language );
     }
 
     _.delay( function(){
-      target.closest('.language_sheet').hide()
+      target.closest('.language_sheet').hide();
     }, 500);  // wait a bit so they can see that the languages was chosen
   },
 
@@ -97,7 +97,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
 
   newAccount : function() {
     var view = new dc.ui.AccountView({
-      model : new dc.model.Account(), 
+      model : new dc.model.Account(),
       kind : 'row',
       dialog : this
     });
