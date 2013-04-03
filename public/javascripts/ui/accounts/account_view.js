@@ -100,7 +100,7 @@ dc.ui.AccountView = Backbone.View.extend({
 
   setDisplayLanguage: function( ev, language ){
     this.$el.prev('tr.editing').find('.choice').
-      html( dc.account.LANGUAGE_CHOICES[ language ] ).
+      html( dc.language.NAMES[ language ] ).
       attr('data-language',language);
 
   },
