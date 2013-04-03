@@ -70,9 +70,6 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     if ( ! sheet.toggle().is(":visible") ){
       return;
     }
-    var language = dc.account.organization().getLanguageCode();
-    this.$('.languages td' ).removeClass('active');
-    this.$('.languages td[data-lang=' + language + ']' ).addClass('active');
   },
 
   chooseLanguage: function(ev){

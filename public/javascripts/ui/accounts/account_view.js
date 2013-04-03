@@ -89,6 +89,7 @@ dc.ui.AccountView = Backbone.View.extend({
 
     var td = $( this.make('td',{colspan: 5 }) ),
         tr = this.make('tr',{'class':'editing'}, td );
+
     td.append( JST['account/language_settings']( {language: this.model.getLanguage() } ) );
     var language = this.model.getLanguageCode();
     this.setDisplayLanguage( null, language );
@@ -160,10 +161,13 @@ dc.ui.AccountView = Backbone.View.extend({
     var options = {success : this._onSuccess, error : this._onError};
     var language = this.$el.prev('tr.editing').find('.choice').attr('data-language');
     if (language){
-      this.model.set({ language: language });
+      attributes['language'] = language;
     }
     if (this.model.isNew()) {
-      if (!attributes.email) return $(this.el).remove();
+      if (!attributes.email){
+        this.$el.prev('tr.editing').remove();
+        return $(this.el).remove();
+      }
       if (Accounts.getValidByEmail(attributes.email)) {
         this.dialog.error(""+attributes.email+" already has an account");
         return;
@@ -174,6 +178,7 @@ dc.ui.AccountView = Backbone.View.extend({
       Accounts.create(this.model, options);
     } else if (!this.model.invalid && !this.model.changedAttributes(attributes)) {
       this.setMode('display', 'view');
+      this.$el.prev('tr.editing').remove();
     } else {
       dc.ui.spinner.show();
       this.model.save(attributes, options);
