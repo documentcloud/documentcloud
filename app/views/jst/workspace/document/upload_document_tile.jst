@@ -60,8 +60,7 @@
       </label>
       <select name="language" class="document_language" id="document_language_<%= model.id %>">
         <% _.each( dc.language.SUPPORTED, function(language_code){ %>
-           <option value="<%= language_code %>" selected="<%= ( dc.account.getLanguageCode() == language_code ) ? 'true' : 'false' %>"><%= dc.language.NAMES[ language_code ] %></option>
-
+           <option value="<%= language_code %>"><%= dc.language.NAMES[ language_code ] %></option>
         <% }); %>
       </select>
     </div>

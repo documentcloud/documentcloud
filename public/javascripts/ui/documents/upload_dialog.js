@@ -294,6 +294,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
       multiFileUpload : this.options.multiFileUpload
     });
     $(this.el).html(template);
+    this.$('.document_language').val( dc.account.getLanguageCode() );
     this._title    = this.$('input[name=title]');
     this._progress = this.$('.progress_bar');
     return this;
