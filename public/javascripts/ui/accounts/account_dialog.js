@@ -77,9 +77,12 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
 
   chooseLanguage: function(ev){
     var target = $(ev.target);
+    var language = target.attr('data-lang');
+    if ( ! language ){
+      return;
+    }
     target.closest('table').find('td').removeClass('active');
     target.addClass('active');
-    var language = target.attr('data-lang');
     if ( target.closest('.organization_language').length ){
       dc.account.organization().set({ language: language });
       dc.account.organization().save();
