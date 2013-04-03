@@ -89,7 +89,7 @@ class AccountsController < ApplicationController
   def update
     account = current_organization.accounts.find(params[:id])
     return json(nil, 403) unless account && current_account.allowed_to_edit_account?(account, current_organization)
-    account.update_attributes pick(params, :first_name, :last_name, :email)
+    account.update_attributes pick(params, :first_name, :last_name, :email,:language)
     role = pick(params, :role)
     #account.update_attributes(role) if !role.empty? && current_account.admin?
     membership = current_organization.role_of(account)

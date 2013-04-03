@@ -348,6 +348,7 @@ class Account < ActiveRecord::Base
       'email'           => email,
       'first_name'      => first_name,
       'last_name'       => last_name,
+      'language'        => language,
       'hashed_email'    => hashed_email,
       'pending'         => pending?,
       'organization_id' => membership.organization_id,
