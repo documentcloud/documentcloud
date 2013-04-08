@@ -76,12 +76,12 @@ class Organization < ActiveRecord::Base
       if account_details # if except_account is set, this could be nil
         organization.members = account_details.map do |account|
           account['slug'] = Account.make_slug( account )
-          account['pending'] = account['hashed_password'].blank? || # algorithm from Account#pending?
-                               ! Membership::REAL_ROLES.include?(account['role'].to_i) ||
+          account['pending'] = account['hashed_password'].blank? && # algorithm from Account#pending?
+                               Membership::REVIEWER != account['role'].to_i &&
                                DC::Hstore.from_sql( account['identities'] ).empty?
           account['hashed_email']=Digest::MD5.hexdigest( account['email'].downcase.gsub(/\s/, '') ) if account['email']
 
-          account.reject{|field| hidden_fields.include?(field) }
+          account.delete_if{|field,value| hidden_fields.include?(field) }
           account
         end
       end
