@@ -35,10 +35,12 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     this._container.html(JST['account/dialog']( dc.account.toJSON() ));
     this.list = this.$('.account_list_content');
     this._renderAccounts();
-    if (Accounts.current().isAdmin()){
+    if ( Accounts.current().isAdmin() ) {
+      this.$('.custom').before('<div class="organization_language"></div>');
       this.$('.organization_language').html( JST['account/language_settings']( {language: dc.account.getLanguage() } ) );
       this.setDisplayLanguage();
       this.addControl(this.make('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, 'New Account'));
+
     }
     return this;
   },
