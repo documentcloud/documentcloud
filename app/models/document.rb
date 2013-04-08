@@ -184,7 +184,7 @@ class Document < ActiveRecord::Base
       :source             => params[:source],
       :related_article    => params[:related_article],
       :remote_url         => params[:published_url] || params[:remote_url],
-      :language           => params[:language] || 'en', # todo: default to account.language
+      :language           => params[:language] || account.language,
       :original_extension => file_ext
     )
     import_options = {
@@ -522,6 +522,10 @@ class Document < ActiveRecord::Base
     "#{DC.server_root}/documents/#{id}/search.json?q={query}"
   end
 
+  def translations_url
+    "#{DC.server_root}/translations/{realm}/{language}"
+  end
+
   def annotations_url
     File.join(DC.server_root(:force_ssl => true, :agnostic => false ), annotations_path )
   end
@@ -809,6 +813,7 @@ class Document < ActiveRecord::Base
       :total_mentions      => total_mentions,
       :project_ids         => project_ids,
       :char_count          => char_count,
+      :language            => language,
       :data                => data
     }
     if opts[:annotations]
@@ -861,6 +866,7 @@ class Document < ActiveRecord::Base
     res['thumbnail']          = thumbnail_url
     res['search']             = search_url
     res['print_annotations']  = print_annotations_url
+    res['translations_url']   = translations_url
     res['page']               = {}
     res['page']['image']      = page_image_url_template(:local => options[:local])
     res['page']['text']       = page_text_url_template(:local => options[:local])
@@ -872,6 +878,7 @@ class Document < ActiveRecord::Base
     end
     doc['sections']           = ordered_sections.map {|s| s.canonical } if options[:sections]
     doc['data']               = data if options[:data]
+    doc['language']           = language
     if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
       doc['annotations']      = self.annotations_with_authors(options[:account]).map {|a| a.canonical}
     elsif options[:annotations]
