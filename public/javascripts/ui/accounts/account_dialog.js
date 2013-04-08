@@ -65,6 +65,9 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
 
   setDisplayLanguage: function(){
     this.$('.organization_language .choice').html( dc.account.organization().getLanguageName() );
+    this.$('.organization_language td' ).removeClass('active');
+    this.$('.organization_language td[data-lang=' + dc.account.organization().getLanguageCode() + ']' ).addClass('active');
+
   },
 
   showLanguageEdit: function(ev){
@@ -86,7 +89,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
       dc.account.organization().set({ language: language });
       dc.account.organization().save();
     } else {
-      target.closest('tr.editing').next().trigger('chosen', language );
+      target.closest('tr.editing').prev().trigger('chosen', language );
     }
     _.delay( function(){
       target.closest('.language_sheet').hide();

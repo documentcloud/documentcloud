@@ -92,18 +92,18 @@ dc.ui.AccountView = Backbone.View.extend({
 
     td.append( JST['account/language_settings']( {language: this.model.getLanguage() } ) );
     var language = this.model.getLanguageCode();
-    this.setDisplayLanguage( null, language );
     td.find('.languages td' ).removeClass('active');
     td.find('.languages td[data-lang=' + language + ']' ).addClass('active');
-    this.$el.closest('tr').before( tr );
+    this.$el.closest('tr').after( tr );
+    this.setDisplayLanguage( null, language );
     this.$el.closest('.custom').animate({scrollTop: $(tr).offset().top - 120 });
   },
 
   setDisplayLanguage: function( ev, language ){
-    this.$el.prev('tr.editing').find('.choice').
+    var code = dc.language.NAMES[ language ];
+    this.$el.next('tr.editing').find('.choice').
       html( dc.language.NAMES[ language ] ).
       attr('data-language',language);
-
   },
 
 
@@ -159,13 +159,13 @@ dc.ui.AccountView = Backbone.View.extend({
     var me = this;
     var attributes = this.serialize();
     var options = {success : this._onSuccess, error : this._onError};
-    var language = this.$el.prev('tr.editing').find('.choice').attr('data-language');
+    var language = this.$el.next('tr.editing').find('.choice').attr('data-language');
     if (language){
       attributes['language'] = language;
     }
     if (this.model.isNew()) {
       if (!attributes.email){
-        this.$el.prev('tr.editing').remove();
+        this.$el.next('tr.editing').remove();
         return $(this.el).remove();
       }
       if (Accounts.getValidByEmail(attributes.email)) {
@@ -178,7 +178,7 @@ dc.ui.AccountView = Backbone.View.extend({
       Accounts.create(this.model, options);
     } else if (!this.model.invalid && !this.model.changedAttributes(attributes)) {
       this.setMode('display', 'view');
-      this.$el.prev('tr.editing').remove();
+      this.$el.next('tr.editing').remove();
     } else {
       dc.ui.spinner.show();
       this.model.save(attributes, options);
@@ -187,14 +187,14 @@ dc.ui.AccountView = Backbone.View.extend({
 
   _cancelEditing : function() {
     this.setMode('display', 'view');
-    this.$el.prev('tr.editing').remove();
+    this.$el.next('tr.editing').remove();
   },
 
   _disableAccount : function() {
     if (this.dialog.isOpen()) this.dialog.close();
     var dialog = dc.ui.Dialog.confirm(null, _.bind(function() {
       this.setMode('display', 'view');
-      this.$el.prev('tr.editing').remove();
+      this.$el.next('tr.editing').remove();
       this.model.save({'role': this.model.DISABLED});
       dc.ui.notifier.show({
         text      : this.model.fullName() + ' has been disabled.',
@@ -216,7 +216,7 @@ dc.ui.AccountView = Backbone.View.extend({
 
   _enableAccount : function() {
     this.setMode('display', 'view');
-    this.$el.prev('tr.editing').remove();
+    this.$el.next('tr.editing').remove();
     this.model.save({'role': this.model.CONTRIBUTOR});
   },
 
@@ -227,7 +227,7 @@ dc.ui.AccountView = Backbone.View.extend({
   _onSuccess : function(model, resp) {
     this.model.invalid = false;
     this.setMode('display', 'view');
-    this.$el.prev('tr.editing').remove();
+    this.$el.next('tr.editing').remove();
     this.model.trigger('change');
     dc.ui.spinner.hide();
     if (this.model.newRecord) {
