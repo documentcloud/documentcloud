@@ -58,6 +58,7 @@ class Organization < ActiveRecord::Base
       memberships.organization_id, memberships.role,
       accounts.id,                 accounts.email,
       accounts.first_name,         accounts.last_name,
+      accounts.hashed_password,    accounts.identities,
       accounts.language
     from memberships
       inner join accounts on accounts.id = memberships.account_id
@@ -69,15 +70,19 @@ class Organization < ActiveRecord::Base
       sql << "and memberships.account_id not in (#{except_account.id})"
     end
     rows = self.connection.select_all( sql )
-
+    hidden_fields=%w{ organization_id hashed_password identities }
     accounts_map = rows.group_by{|row| row['organization_id'].to_i }
     organizations.each do | organization |
       account_details = accounts_map[organization.id]
       if account_details # if except_account is set, this could be nil
         organization.members = account_details.map do |account|
-          account.delete('organization_id')
           account['slug'] = Account.make_slug( account )
+          account['pending'] = account['hashed_password'].blank? || # algorithm from Account#pending?
+                               ! Membership::REAL_ROLES.include?(account['role'].to_i) ||
+                               DC::Hstore.from_sql( account['identities'] ).empty?
           account['hashed_email']=Digest::MD5.hexdigest( account['email'].downcase.gsub(/\s/, '') ) if account['email']
+
+          account.reject{|field| hidden_fields.include?(field) }
           account
         end
       end
