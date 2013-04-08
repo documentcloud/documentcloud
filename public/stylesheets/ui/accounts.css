@@ -30,9 +30,14 @@
   .account_list .minibutton.cancel {
     display: none;
   }
-  .account_list .organization {
-
+  .account_list .organization_language {
+    margin-left: 2em;
   }
+  .account_list tr.editing > td {
+    padding: 0 0 8px 40px;
+    border-bottom: 2px solid #444444;
+  }
+
   .account_list .language {
     font-size: 14px;
     text-align: left;
