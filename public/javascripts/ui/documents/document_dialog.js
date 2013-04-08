@@ -37,6 +37,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
       docs     : this.docs, 
       multiple : this.multiple
     }));
+    $('select[name=language]').val( this.docs[0].get('language') );
     var attrs = this._sharedAttributes();
     attrs['access'] = attrs['access'] || dc.access.PRIVATE;
     _.each(this.ATTRIBUTES, _.bind(function(attr) {

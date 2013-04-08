@@ -66,8 +66,8 @@
     Language:
   </label>
   <select name="language" class="document_access attribute" id="document_edit_language">
-    <option value="en">English</option>
-    <option value="es">Español/Spanish</option>
-    <option value="fr">Français/French</option>
+    <% _.each( dc.language.SUPPORTED, function(language_code){ %>
+       <option value="<%= language_code %>"><%= dc.language.NAMES[ language_code ] %></option>
+    <% }); %>
   </select>
 </div>
