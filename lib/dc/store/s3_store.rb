@@ -16,7 +16,7 @@ module DC
       S3_PARAMS       = {:connection_lifetime => 60}
 
       ACCESS_TO_ACL   = Hash.new('private')
-      ACCESS_TO_ACL[DC::Access::PUBLIC] = 'public-read'
+      PUBLIC_LEVELS.each{ |level| ACCESS_TO_ACL[level] = 'public-read' }
 
       module ClassMethods
         def asset_root
@@ -129,20 +129,45 @@ module DC
       end
       
       # Duplicate all of the assets from one document over to another.
-      def copy_assets(original, copy)
-        bucket.copy_key original.pdf_path, copy.pdf_path
-        bucket.copy_key original.full_text_path, copy.full_text_path
-        bucket.copy_key original.rdf_path, copy.rdf_path if bucket.key(original.rdf_path).exists?
-        original.pages.each do |page|
+      def copy_assets(source, destination, access)
+        [:copy_pdf, :copy_images, :copy_text].each do |task|
+          send(task, source, destination, access)
+        end
+        true
+      end
+      
+      def copy_text(source, destination, access)
+        bucket.copy_key source.full_text_path, destination.full_text_path
+        source.pages.each do |page|
           num = page.page_number
-          bucket.copy_key original.page_text_path(num), copy.page_text_path(num)
+          bucket.copy_key source.page_text_path(num), destination.page_text_path(num)
+          save_permissions destination.page_text_path(num), access
+        end
+        true
+      end
+      
+      def copy_images(source, destination, access)
+        source.pages.each do |page|
+          num = page.page_number
           Page::IMAGE_SIZES.keys.each do |size|
-            bucket.copy_key original.page_image_path(num, size), copy.page_image_path(num, size)
+            bucket.copy_key source.page_image_path(num, size), destination.page_image_path(num, size)
+            save_permissions destination.page_image_path(num, size), access
           end
         end
         true
       end
+      
+      def copy_rdf(source, destination, access)
+        bucket.copy_key source.rdf_path, destination.rdf_path
+        save_permissions destination.rdf_path, access
+        true
+      end
 
+      def copy_pdf(source, destination, access)
+        bucket.copy_key source.pdf_path, destination.pdf_path
+        save_permissions destination.pdf_path, access
+        true
+      end
 
       private
 

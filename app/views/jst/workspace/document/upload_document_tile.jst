@@ -53,6 +53,17 @@
         <option value="organization">Private to <%= dc.account.organization().get('name') %></option>
       </select>
     </div>
+    
+    <div class="language">
+      <label for="document_language_<%= model.id %>">
+        Language:
+      </label>
+      <select name="language" class="document_language" id="document_language_<%= model.id %>">
+        <option value="en" selected="true">English</option>
+        <option value="es">Español/Spanish</option>
+        <option value="fr">Français/French</option>
+      </select>
+    </div>
 
     <div class="apply_all" title="Apply this description, source, and access level to all files">
       <span class="text_link">Apply to All Files</span>

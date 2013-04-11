@@ -2,7 +2,7 @@
 // documents at once, sending a `Backbone.Model#save` per-document.
 dc.ui.DocumentDialog = dc.ui.Dialog.extend({
 
-  ATTRIBUTES : ['title', 'source', 'description', 'related_article', 'remote_url', 'access'],
+  ATTRIBUTES : ['title', 'source', 'description', 'related_article', 'remote_url', 'access', 'language'],
 
   id        : 'edit_document_dialog',
   className : 'dialog docalog',

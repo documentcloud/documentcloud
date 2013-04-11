@@ -1,0 +1,21 @@
+<%
+  @title  = 'Featured Reporting'
+  @header = 'What can I do with DocumentCloud?'
+%>
+<%= auto_discovery_link_tag(:rss, :format=>:rss ) %>
+
+<div id="content" class="featured">
+
+  <p>
+    <i>This is a sampling of some of the thousands of documents that newsrooms have published with DocumentCloud. Find many more by searching our <a href="http://www.documentcloud.org/public">public catalog</a> for <a href="http://www.documentcloud.org/public/search/filter%3A%20published">published documents</a>.</i>
+  </p>
+
+<% @reports.each do | report | %>
+  <h6>
+    <a href="<%= report.url %>"><u><%= report.title %></u></a>
+    <small><i><%= report.organization %></i>, <%= report.article_date.strftime('%B %e, %Y') %></small>
+  </h6>
+  <%= report.writeup_html %>
+<% end %>
+
+</div>

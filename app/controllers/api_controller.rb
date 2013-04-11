@@ -12,7 +12,7 @@ class ApiController < ApplicationController
 
   before_filter :secure_only,        :only => [:upload, :projects, :upload, :destroy, :create_project, :update_project, :destroy_project]
   before_filter :api_login_required, :only => [:upload, :projects, :update, :destroy, :create_project, :update_project, :destroy_project]
-  before_filter :api_login_optional, :only => [:documents, :search, :notes]
+  before_filter :api_login_optional, :only => [:documents, :search, :notes, :pending, :entities]
 
   def index
     redirect_to '/help/api'
@@ -70,7 +70,13 @@ class ApiController < ApplicationController
   def documents
     return bad_request unless params[:id] and request.format.json? || request.format.js? || request.format.text?
     return not_found unless current_document
-    @response = {'document' => current_document.canonical(:access => true, :sections => true, :annotations => true, :data => true)}
+    opts                     = {:access => true, :sections => true, :annotations => true, :data => true}
+    if current_account
+      opts[:account]           = current_account
+      opts[:allowed_to_edit]   = current_account.allowed_to_edit?(current_document)
+      opts[:allowed_to_review] = current_account.reviews?(current_document)
+    end
+    @response                = {'document' => current_document.canonical(opts)}
     respond_to do |format|
       format.text do 
         direct = [PRIVATE, ORGANIZATION, EXCLUSIVE].include? current_document.access
@@ -79,6 +85,12 @@ class ApiController < ApplicationController
       format.json { json_response }
       format.js { json_response }
     end
+  end
+  
+  def pending
+    @response = { :total_documents => Document.pending.count }
+    @response[:your_documents] = Document.pending.count(:conditions => { :account_id => current_account.id }) if current_account
+    json_response
   end
   
   # Retrieve a note's canonical JSON.
@@ -150,7 +162,6 @@ class ApiController < ApplicationController
   def logger
     params[:secure] ? nil : super
   end
-
 
   private
 

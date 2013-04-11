@@ -1,6 +1,10 @@
 // Organization Model
 
 dc.model.Organization = Backbone.Model.extend({
+  initialize : function(attrs, options) {
+    this.members = new dc.model.AccountSet();
+    this.members.reset(this.get('members'));
+  },  
 
   groupSearchUrl : function() {
     return "/#search/" + encodeURIComponent(this.query());
@@ -20,6 +24,7 @@ dc.model.Organization = Backbone.Model.extend({
     return docs + ' ' + dc.inflector.pluralize('document', docs)
       + ', ' + notes + ' ' + dc.inflector.pluralize('note', notes);
   }
+
 
 });
 

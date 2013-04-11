@@ -41,6 +41,7 @@
         :access => true,
         :cache_busting => @allowed_to_edit
       }).to_json %>, {
+        <% if @no_sidebar %>sidebar: false,<% end %>
         container: '#viewer'
       });
     <% end %>

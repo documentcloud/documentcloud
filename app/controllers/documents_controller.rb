@@ -5,6 +5,7 @@ class DocumentsController < ApplicationController
   before_filter :login_required,      :only => [:update, :destroy]
   before_filter :prefer_secure,       :only => [:show]
   before_filter :api_login_optional,  :only => [:send_full_text, :send_pdf, :send_page_text, :send_page_image]
+  before_filter :set_p3p_header,      :only => [:show]
 
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
@@ -16,7 +17,8 @@ class DocumentsController < ApplicationController
     return render :file => "#{Rails.root}/public/doc_404.html", :status => 404 unless doc
     respond_to do |format|
       format.html do
-        populate_editor_data if current_account
+        @no_sidebar = (params[:sidebar] || '').match /no|false/
+        populate_editor_data if current_account && current_organization
         return if date_requested?
         return if entity_requested?
       end
@@ -43,7 +45,7 @@ class DocumentsController < ApplicationController
   def update
     return not_found unless doc = current_document(true)
     attrs = pick(params, :access, :title, :description, :source,
-                         :related_article, :remote_url, :publish_at, :data)
+                         :related_article, :remote_url, :publish_at, :data, :language)
     success = doc.secure_update attrs, current_account
     return json(doc, 403) unless success
     if doc.cacheable?

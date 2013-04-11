@@ -35,6 +35,13 @@ class ApplicationController < ActionController::Base
     render :json => obj, :status => status
   end
 
+  # for use by actions that may be embedded in an iframe
+  # without this header IE will not send cookies
+  def set_p3p_header
+    # explanation of what these mean: http://www.p3pwriter.com/LRN_111.asp
+    headers['P3P'] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
+  end
+
   # If the request is asking for JSONP (eg. has a 'callback' parameter), then
   # short-circuit, and return the rendered JSONP.
   def jsonp_request?
@@ -85,7 +92,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_required
-    (logged_in? && current_organization.id == 1 && !current_account.reviewer?) || forbidden
+    ( logged_in? && current_account.dcloud_admin? ) || forbidden
   end
 
   def prefer_secure

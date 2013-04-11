@@ -119,22 +119,47 @@ module DC
       end
       
       # Duplicate all of the assets from one document over to another.
-      def copy_assets(original, copy)
-        ensure_directory(copy.path)
-        ensure_directory(copy.pages_path)
-        FileUtils.cp local(original.pdf_path),        local(copy.pdf_path)
-        FileUtils.cp local(original.full_text_path),  local(copy.full_text_path)
-        FileUtils.cp local(original.rdf_path),        local(copy.rdf_path) if File.exists?(original.rdf_path)
-        original.pages.each do |page|
+      def copy_assets(source, destination, access)
+        [:copy_pdf, :copy_images, :copy_text].each do |task|
+          send(task, source, destination)
+        end
+        true
+      end
+      
+      def copy_text(source, destination, access)
+        ensure_directory(destination.path)
+        ensure_directory(destination.pages_path)
+        FileUtils.cp local(source.full_text_path), local(destination.full_text_path)
+        source.pages.each do |page|
           num = page.page_number
-          FileUtils.cp local(original.page_text_path(num)), local(copy.page_text_path(num))
+          FileUtils.cp local(source.page_text_path(num)), local(destination.page_text_path(num))
+        end
+        true
+      end
+      
+      def copy_images(source, destination, access)
+        ensure_directory(destination.path)
+        ensure_directory(destination.pages_path)
+        source.pages.each do |page|
+          num = page.page_number
           Page::IMAGE_SIZES.keys.each do |size|
-            FileUtils.cp local(original.page_image_path(num, size)), local(copy.page_image_path(num, size))
+            FileUtils.cp local(source.page_image_path(num, size)), local(destination.page_image_path(num, size))
           end
         end
         true
       end
-
+      
+      def copy_rdf(source, destination, access)
+        ensure_directory(destination.path)
+        FileUtils.cp local(source.rdf_path), local(destination.rdf_path) if File.exists?(source.rdf_path)
+        true
+      end
+      
+      def copy_pdf(source, destination, access)
+        ensure_directory(destination.path)
+        FileUtils.cp local(source.pdf_path), local(destination.pdf_path)
+        true
+      end
 
       protected
 

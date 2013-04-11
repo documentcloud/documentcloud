@@ -21,9 +21,18 @@ ActionController::Routing::Routes.draw do |map|
     main.help       '/help',          :action => 'help'
     main.help       '/help/:page',    :action => 'help'
     main.results    '/results',       :action => 'index'
-    main.signup     '/signup',        :action => 'signup_info'
-    main.login      '/login',         :action => 'login'
-    main.logout     '/logout',        :action => 'logout'
+  end
+  
+  # Third party logins via OmitAuth library
+  map.with_options :controller => 'authentication' do | auth |
+    auth.signup     '/signup',        :action => 'signup_info'
+    auth.login      '/login',         :action => 'login'
+    auth.logout     '/logout',        :action => 'logout'
+
+    auth.connect '/auth/:action'
+    auth.connect '/auth/:provider',          :action => :blank
+    auth.connect '/auth/:provider/callback', :action => :callback
+    auth.connect '/auth/remote_data/:document_id', :action=>:remote_data
   end
 
   # Public search.
@@ -37,6 +46,7 @@ ActionController::Routing::Routes.draw do |map|
       cors_api.entities     '/api/documents/:id/entities.:format', :allowed_methods => [ :get ]
       cors_api.note         '/api/documents/:id/note/:note_id.:format', :allowed_methods => [ :get ]
       cors_api.notes        '/api/documents/:id/notes/:note_id.:format', :allowed_methods => [ :get ]
+      cors_api.pending      '/api/documents/pending.:format', :allowed_methods => [ :get ]
       cors_api.projects     '/api/projects.:format', :allowed_methods => [ :get, :post ]
       cors_api.project      '/api/projects/:id.:format', :allowed_methods => [ :put, :delete ]
     end
@@ -44,13 +54,25 @@ ActionController::Routing::Routes.draw do |map|
     api.update          '/api/documents/:id.:format', :action => 'update', :conditions => {:method => :put}
     api.destroy         '/api/documents/:id.:format', :action => 'destroy', :conditions => {:method => :delete}
     api.entities        '/api/documents/:id/entities.:format', :action => :entities
-    api.note            '/api/documents/:id/note/:note_id.:format', :action => :note, :conditions => {:method => :get}
+    api.note            '/api/documents/:id/note/:note_id.:format', :action => :notes, :conditions => {:method => :get}
+    api.notes            '/api/documents/:id/notes/:note_id.:format', :action => :notes, :conditions => {:method => :get}
+    api.pending         '/api/documents/pending.:format', :action => :pending
     api.projects        '/api/projects.:format',      :action => 'projects',       :conditions => {:method => :get}
     api.create_project  '/api/projects.:format',      :action => 'create_project', :conditions => {:method => :post}
     api.update_project  '/api/projects/:id.:format',  :action => 'update_project', :conditions => {:method => :put}
     api.delete_project  '/api/projects/:id.:format',  :action => 'destroy_project',:conditions => {:method => :delete}
   end
+
+
+  map.resources :featured, :collection => { :present_order => :any }
   
+  map.with_options :controller=>:annotations do | annot |
+    annot.with_options :conditions => {:method => :options}, :action => 'cors_options' do |cors_api|
+      cors_api.annotation '/documents/:document_id/annotations/:id.:format', :allowed_methods=>[:put,:delete,:post]
+      cors_api.annotations '/documents/:document_id/annotations.:format', :allowed_methods=>[:get,:post]
+    end
+  end
+
   # Document representations and (private) sub-resources.
   map.resources  :documents, :has_many => [:annotations],
     :member => {
@@ -116,8 +138,8 @@ ActionController::Routing::Routes.draw do |map|
     home.contributors   '/contributors',  :action => 'contributors'
     home.faq            '/faq',           :action => 'faq'
     home.terms          '/terms',         :action => 'terms'
-    home.featured       '/featured',      :action => 'featured'
     home.privacy        '/privacy',       :action => 'privacy'
+    home.p3p            '/p3p.:format',   :action => 'p3p'
     home.home           '/home',          :action => 'index'
     home.news           '/news',          :action => 'news'
     home.opensource     '/opensource',    :action => 'opensource'

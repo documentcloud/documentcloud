@@ -1,6 +1,9 @@
-if (Organizations && !Organizations.get(<%= @current_organization.id %>)) Organizations.add(<%= @current_organization.to_json %>);
-
 dc.account = new dc.model.Account(<%= @current_account.canonical.to_json %>);
+<% @current_account.organizations_with_accounts.each do | organization | -%>
+dc.account.addOrganization( <%= organization.to_json %> );
+<% end -%>
+
+Accounts.reset(dc.account.current_organization().members.models);
 Accounts.add(dc.account);
 
 dc.account.set({

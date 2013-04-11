@@ -13,6 +13,8 @@ module DC
     PENDING       = 5   # The document is being processed (acts as disabled).
     INVISIBLE     = 6   # The document has been taken down (perhaps temporary).
     ERROR         = 7   # The document is broken, or failed to import.
+    PREMODERATED  = 8   # The document is open to premoderated reader input
+    POSTMODERATED = 9   # The document is open to postmoderated reader input
 
     ACCESS_MAP = {
       :deleted      => DELETED,
@@ -22,10 +24,16 @@ module DC
       :public       => PUBLIC,
       :pending      => PENDING,
       :invisible    => INVISIBLE,
-      :error        => ERROR
+      :error        => ERROR,
+      :premoderated => PREMODERATED,
+      :postmoderated => POSTMODERATED
     }
 
     ACCESS_NAMES = ACCESS_MAP.invert
+
+    SHARED_ACCESS    = [ORGANIZATION, EXCLUSIVE, PUBLIC, PENDING, ERROR, PREMODERATED, POSTMODERATED]
+    PUBLIC_LEVELS    = [PUBLIC, PREMODERATED, POSTMODERATED]
+    ACCESS_SUCCEEDED = ACCESS_NAMES.keys - [ DELETED, INVISIBLE, ERROR, PENDING ]
 
   end
 

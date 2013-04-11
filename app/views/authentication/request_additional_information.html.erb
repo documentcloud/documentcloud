@@ -1,0 +1,33 @@
+<div id="additional_information">
+
+<h3>Please verify and update how your name will be displayed by DocumentCloud</h3>
+  
+  <form method="POST" action="<%= DC.server_root(:force_ssl => true) %>/auth/record_user_information">
+    <%= token_tag %>
+
+    <% if flash[:error] %>
+      <div class="form_error login_error">
+        <span>
+          <%= flash[:error] %>
+        </span>
+      </div>
+    <% end %>
+    <input type="hidden" name="next_url" value="<%= defined?( @next_url ) ? @next_url : params[:next_url] %>">
+    <label for="first_name">First Name</label>
+    <div class="text_input first light">
+      <div class="inner">
+        <input type="text" id="first_name" value="<%= @account.first_name %>" name="first_name">
+      </div>
+    </div>
+
+    <label for="last_name">Last Name</label>
+    <div class="text_input last light">
+      <div class="inner">
+        <input type="text" id="last_name" value="<%= @account.last_name %>"  name="last_name">
+      </div>
+    </div>
+
+
+    <input type="submit" class="minibutton" value="Save">
+  </form>
+</div>

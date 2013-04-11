@@ -20,6 +20,7 @@ javascripts:
     - public/javascripts/ui/**/*.js
     - public/javascripts/app/**/*.js
     - app/views/jst/workspace/**/*.jst
+    - public/javascripts/viewer
   editor:
     - public/javascripts/editor/editor_toolbar.js
     - public/javascripts/editor/*.js
@@ -37,6 +38,11 @@ javascripts:
     - public/javascripts/dev/*.js
   home:
     - public/javascripts/home/*.js
+  embedded_login:
+    - public/javascripts/vendor/json2.js
+    - public/javascripts/vendor/jquery-*.js
+    - public/javascripts/embed/easy_xdm.js
+    - public/javascripts/embed/embedded_login.js
 
 stylesheets:
   ui:
@@ -44,15 +50,19 @@ stylesheets:
     - public/stylesheets/ui/ui.css
     - public/stylesheets/ui/*.css
     - public/stylesheets/vendor/*.css
+  authentication:
+    - public/stylesheets/pages/workspace.css
   workspace:
     - public/stylesheets/pages/workspace.css
   empty:
     - public/stylesheets/pages/empty.css
   admin:
     - public/stylesheets/pages/admin.css
+    - public/stylesheets/pages/admin_featured_reports.css
   home:
     - public/stylesheets/pages/home.css
-
+  embedded_login:
+    - public/stylesheets/pages/embedded_login.css
   viewer_editing:
     - public/stylesheets/pages/viewer_editing.css
   ie_only:

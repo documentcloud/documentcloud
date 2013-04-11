@@ -44,6 +44,9 @@
       font-size: 11px; line-height: 25px;
       color: #ccc;
     }
+      .collaborator_list .account_view.disabled_role td {
+        color: #777;
+      }
       .account_list .first,
       .collaborator_list .first {
         width: 0%; padding: 0;

@@ -14,10 +14,11 @@ raw
 public/docs
 public/asset_store
 public/document-viewer/images/*.psd
-solr
+solr/data
 *.swp
 *~
 .#*
 cloud_crowd.db
 .DS_Store
 public/search
+vendor/solr-4.0.0/solr-webapp/webapp/*
