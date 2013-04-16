@@ -178,10 +178,7 @@ class DocumentImport < CloudCrowd::Action
   end
   
   def ocr_language(two_letter)
-    {
-      'en' => 'eng',
-      'es' => 'spa'
-    }[two_letter] || 'eng'
+    DC::Language::ALPHA3[two_letter] || 'eng'
   end
 
 end
