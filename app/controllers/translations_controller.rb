@@ -9,8 +9,8 @@ class TranslationsController < ApplicationController
   end
 
   TEST_TRANSLATION =  {
-    "AnnoBy"             => "附加说明：",
-    "AnnoTitle"          => "注释标题",
+    "NoteBy"             => "附加说明：",
+    "NoteTitle"          => "注释标题",
     "CLOSE"              => "关闭",
     "Cancel"             => "取消",
     "ClickAddPageNote"   => "点击添加一个页面注意",
@@ -26,14 +26,14 @@ class TranslationsController < ApplicationController
     "LinkToNote"         => "这说明",
     "Loading"            => "载入中",
     "Next"               => "下",
-    "NextAnno"           => "下一个注解",
+    "NextNote"           => "下一个注解",
     "Note"               => "注意",
     "Notes"              => "笔记",
-    "NoPrintPDFWithAnno" => "要打印的文档，单击“原始文件”链接，打开原始的PDF。在这个时候，它是不可能的打印文档与注释",
+    "NoPrintPDFWithNote" => "要打印的文档，单击“原始文件”链接，打开原始的PDF。在这个时候，它是不可能的打印文档与注释",
     "Page"               => "页",
     "Pages"              => "页",
     "Previous"           => "前",
-    "PreviousAnnotation" => "上一页注释",
+    "PreviousNotetation" => "上一页注释",
     "PrintNotes"         => "打印票据",
     "PrivateNote"        => "私人笔记",
     "Publish"            => "发布",
