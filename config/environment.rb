@@ -1,4 +1,5 @@
 # Be sure to restart your server when you modify this file
+require 'erb'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.17' unless defined? RAILS_GEM_VERSION
@@ -8,8 +9,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 # DocumentCloud-specific configuration.
 SECRETS   = YAML.load_file("#{Rails.root}/secrets/secrets.yml")[RAILS_ENV]
-DC_CONFIG = YAML.load_file("#{Rails.root}/config/document_cloud.yml")[RAILS_ENV]
-
+DC_CONFIG = YAML.load( ERB.new(File.read( Rails.root.join('config','document_cloud.yml') ) ).result )[RAILS_ENV]
 
 # Settings in config/initializers take precedence over this.
 Rails::Initializer.run do |config|
