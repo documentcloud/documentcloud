@@ -19,7 +19,7 @@ Rails::Initializer.run do |config|
   require 'tmpdir'
   require 'fileutils'
   require 'iconv'
-
+  require 'forwardable'
   # Gems:
   config.gem 'json',                  :version => '>= 1.7.7'
 
