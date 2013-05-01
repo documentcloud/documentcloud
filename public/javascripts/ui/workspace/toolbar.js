@@ -16,8 +16,8 @@ dc.ui.Toolbar = Backbone.View.extend({
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'openDocumentEmbedDialog', 'openNoteEmbedDialog',
       'openSearchEmbedDialog', 'openPublicationDateDialog', 'requestDownloadViewers',
-      'checkFloat', '_openTimeline', '_viewEntities', 'editPublishedUrl',
-      'openShareDialog', '_markOrder', '_removeFromSelectedProject',
+      'checkFloat', '_browseInOverview', '_openTimeline', '_viewEntities',
+      'editPublishedUrl', 'openShareDialog', '_markOrder', '_removeFromSelectedProject',
       '_enableAnalyzeMenu');
     this.sortMenu    = this._createSortMenu();
     this.analyzeMenu = this._createAnalyzeMenu();
@@ -219,6 +219,11 @@ dc.ui.Toolbar = Backbone.View.extend({
     new dc.ui.TimelineDialog(docs);
   },
 
+  _browseInOverview : function() {
+    var project = Projects.firstSelected();
+    if (project) window.open("https://www.overviewproject.org/imports/documentcloud/new/" + project.slug(), '_blank');
+  },
+
   _viewEntities : function() {
     var docs = Documents.chosen();
     if (!docs.length && Documents.selectedCount) return;
@@ -331,8 +336,9 @@ dc.ui.Toolbar = Backbone.View.extend({
       {title: 'View Timeline',          attrs: {'class' : 'always'},   onClick : this._openTimeline}
     ];
     var accountItems = [
-      {title: 'Share these Documents',  attrs: {'class' : 'multiple share_documents'}, onClick : this.openShareDialog },
-      {title: 'Share this Project',     attrs: {'class' : 'share_project'},            onClick : this.openCurrentProject }
+      {title: 'Browse this Project in Overview', attrs: {'class' : 'always project'},           onClick : this._browseInOverview },
+      {title: 'Share these Documents',           attrs: {'class' : 'multiple share_documents'}, onClick : this.openShareDialog },
+      {title: 'Share this Project',              attrs: {'class' : 'share_project'},            onClick : this.openCurrentProject }
     ];
     return new dc.ui.Menu({
       label   : 'Analyze',
