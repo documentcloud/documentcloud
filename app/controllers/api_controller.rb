@@ -134,14 +134,16 @@ class ApiController < ApplicationController
     return forbidden unless current_account and params[:id] and (request.format.json? || request.format.js? || request.format.text?)
     project = Project.accessible(current_account).find(params[:id].to_i)
     return not_found unless project
-    @response = {'project' => project.canonical}
+    opts = { :include_document_ids => params[:include_document_ids] != 'false' }
+    @response = {'project' => project.canonical(opts)}
     json_response
   end
 
   # Retrieve a listing of your projects, including document id.
   def projects
     return forbidden unless current_account # already returns a 401 if credentials aren't supplied
-    @response = {'projects' => Project.accessible(current_account).map {|p| p.canonical } }
+    opts = { :include_document_ids => params[:include_document_ids] != 'false' }
+    @response = {'projects' => Project.accessible(current_account).map {|p| p.canonical(opts) } }
     json_response
   end
 
