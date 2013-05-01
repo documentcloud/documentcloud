@@ -47,16 +47,17 @@ ActionController::Routing::Routes.draw do |map|
       cors_api.note         '/api/documents/:id/note/:note_id.:format', :allowed_methods => [ :get ]
       cors_api.notes        '/api/documents/:id/notes/:note_id.:format', :allowed_methods => [ :get ]
       cors_api.pending      '/api/documents/pending.:format', :allowed_methods => [ :get ]
+      cors_api.project      '/api/projects/:id.:format', :allowed_methods => [ :get, :put, :delete ]
       cors_api.projects     '/api/projects.:format', :allowed_methods => [ :get, :post ]
-      cors_api.project      '/api/projects/:id.:format', :allowed_methods => [ :put, :delete ]
     end
 
     api.update          '/api/documents/:id.:format', :action => 'update', :conditions => {:method => :put}
     api.destroy         '/api/documents/:id.:format', :action => 'destroy', :conditions => {:method => :delete}
     api.entities        '/api/documents/:id/entities.:format', :action => :entities
     api.note            '/api/documents/:id/note/:note_id.:format', :action => :notes, :conditions => {:method => :get}
-    api.notes            '/api/documents/:id/notes/:note_id.:format', :action => :notes, :conditions => {:method => :get}
+    api.notes           '/api/documents/:id/notes/:note_id.:format', :action => :notes, :conditions => {:method => :get}
     api.pending         '/api/documents/pending.:format', :action => :pending
+    api.project         '/api/projects/:id.:format',  :action => 'project',        :conditions => {:method => :get}
     api.projects        '/api/projects.:format',      :action => 'projects',       :conditions => {:method => :get}
     api.create_project  '/api/projects.:format',      :action => 'create_project', :conditions => {:method => :post}
     api.update_project  '/api/projects/:id.:format',  :action => 'update_project', :conditions => {:method => :put}
