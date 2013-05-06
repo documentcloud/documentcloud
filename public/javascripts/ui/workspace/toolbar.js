@@ -226,17 +226,10 @@ dc.ui.Toolbar = Backbone.View.extend({
       var docs = Documents.chosen();
       query = _.map(docs, function(doc) { return 'document:' + doc.id }).join(' ');
     } else {
-      var project = Projects.firstSelected();
-      if (project) {
-        // Prefer to send "projectid:1-slug", so Overview can query the project parameters
-        query = project.slug();
-      } else {
-        // Send whatever we have
-        query = dc.app.searchBox.currentQuery;
-      }
+      query = dc.app.searcher.publicQuery();
     }
 
-    if (/[^\s]/.test(query || '')) {
+    if (/\S/.test(query)) {
       dc.ui.Dialog.confirm(
         'You are about to export to Overview. You must create an Overview account, and you must provide Overview with your DocumentCloud username and password.',
         function() { window.open("https://www.overviewproject.org/imports/documentcloud/new/" + encodeURIComponent(query), '_blank'); },
@@ -281,7 +274,6 @@ dc.ui.Toolbar = Backbone.View.extend({
     var total       = Documents.length;
     var count       = Documents.selectedCount;
     var publicCount = Documents.selectedPublicCount();
-    var overviewWillAnalyzeProject = !Documents.selectedCount && !!Projects.firstSelected();
     $('.menu_item:not(.plus,.always)', menu.content)
       .toggleClass('disabled', !count)
       .attr('title', count ? '' : 'No documents selected');
@@ -294,10 +286,6 @@ dc.ui.Toolbar = Backbone.View.extend({
       .toggleClass('disabled', !total);
     $('.menu_item.project', menu.content)
       .toggleClass('hidden', !Projects.firstSelected());
-    $('.menu_item.analyze_in_overview', menu.content)
-      .text(overviewWillAnalyzeProject
-            ? 'Analyze this Project in Overview'
-            : (Documents.selectedCount == 1 ? 'Analyze this Document in Overview' : 'Analyze these Documents in Overview'));
   },
 
   _enableAnalyzeMenu : function(menu) {
@@ -305,6 +293,14 @@ dc.ui.Toolbar = Backbone.View.extend({
     var singular = Documents.selectedCount == 1;
     $('.share_documents', menu.content).text(singular ? 'Share this Document' : 'Share these Documents');
     $('.share_project', menu.content).toggleClass('disabled', !Projects.selectedCount);
+    var overviewWillAnalyzeProject = !Documents.selectedCount && !!Projects.firstSelected();
+    var overviewDisabled = !Documents.selectedCount && !/\S/.test(dc.app.searcher.publicQuery());
+    $('.menu_item.analyze_in_overview', menu.content)
+      .toggleClass('disabled', overviewDisabled)
+      .attr('title', overviewDisabled ? 'No project or documents selected' : '')
+      .text(overviewWillAnalyzeProject
+            ? 'Analyze this Project in Overview'
+            : (singular ? 'Analyze this Document in Overview' : 'Analyze these Documents in Overview'));
   },
 
   _createPublishMenu : function() {
