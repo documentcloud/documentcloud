@@ -237,7 +237,14 @@ dc.ui.Toolbar = Backbone.View.extend({
     }
 
     if (/[^\s]/.test(query || '')) {
-      window.open("https://www.overviewproject.org/imports/documentcloud/new/" + encodeURIComponent(query), '_blank');
+      dc.ui.Dialog.confirm(
+        'You are about to export to Overview. You must create an Overview account, and you must provide Overview with your DocumentCloud username and password.',
+        function() { window.open("https://www.overviewproject.org/imports/documentcloud/new/" + encodeURIComponent(query), '_blank'); },
+        {
+          saveText: 'Export',
+          closeText: 'Cancel'
+        }
+      );
     } else {
       // Overview will refuse to import all DocumentCloud documents at once
       dc.ui.Dialog.alert("In order to analyze documents in Overview, please select a project or some documents.");
