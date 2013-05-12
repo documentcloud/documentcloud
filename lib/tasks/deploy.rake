@@ -2,10 +2,10 @@ namespace :deploy do
 
   desc "Deploy and migrate the database, then restart CloudCrowd"
   task :full do
-    remote ["app:update", "app:bundle", "app:jammit", "db:migrate", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
-    remote ["app:update", "app:bundle", "crowd:server:restart"], central_servers
+    remote ["app:update", "app:jammit", "db:migrate", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
+    remote ["app:update", "crowd:server:restart"], central_servers
     remote ["app:restart_solr"], search_servers
-    remote ["app:update", "app:bundle", "crowd:node:restart"], worker_servers
+    remote ["app:update", "crowd:node:restart"], worker_servers
   end
 
   desc "Deploy the Rails application"

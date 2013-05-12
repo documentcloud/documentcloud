@@ -5,6 +5,7 @@ gem 'rake'
  
 gem 'json',           '>= 1.7.7'
 gem 'nokogiri',       '1.5.5' # only pegged because nokogiri 1.5.9 installation fucking up on OSX
+gem 'curb'
 gem 'calais',         '>= 0.0.11'
 gem 'rest-client',    '>= 1.0.3',  :require => 'rest_client'
 gem 'bcrypt-ruby',    '>= 2.1.2',  :require => 'bcrypt'
