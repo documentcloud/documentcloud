@@ -34,6 +34,11 @@ namespace :app do
     sh 'git pull'
     sleep 0.2
   end
+  
+  desc "Install bundled gems"
+  task :bundle do
+    sh 'sudo bundle install'
+  end
 
   desc "Repackage static assets"
   task :jammit do
