@@ -26,3 +26,5 @@ gem 'omniauth-twitter',        '>= 0.0.13'
 gem 'omniauth-facebook',       '>= 1.4.0'
 gem 'omniauth-google-oauth2',  '>= 0.1.13'
 gem 'sanitize'
+
+gem 'cloud-crowd'
