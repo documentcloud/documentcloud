@@ -10,5 +10,5 @@
 :username: <%= secrets['username'] %>
 :password: <%= secrets['db_password'] %>
 :allow_concurrency: true
-:host:     ec2-174-129-5-5.compute-1.amazonaws.com
+:host: <%= secrets['db_host'] %>
 :database: dcloud_crowd_production

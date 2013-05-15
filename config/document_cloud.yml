@@ -16,7 +16,7 @@ staging:
 
 production:
   <<: *defaults
-  cloud_crowd_server: ec2-174-129-5-5.compute-1.amazonaws.com:8080
+  cloud_crowd_server: <%= secrets['db_host'] %>:8080
   server_root:        www.documentcloud.org
   asset_root:         "//s3.amazonaws.com/s3.documentcloud.org"
   db_volume_id:       vol-d4c305bd

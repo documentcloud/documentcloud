@@ -1,9 +1,10 @@
+<% secrets = YAML.load_file('secrets/secrets.yml')[ENV['RAILS_ENV']] %>
+# The URL where you're planning on running the central server/queue/database.
+:central_server:      <%= secrets['central_server'] %>
+
 :disabled_actions:
   - large_document_import
   - reindex_everything
-
-# The URL where you're planning on running the central server/queue/database.
-:central_server:      http://ec2-174-129-5-5.compute-1.amazonaws.com:8080
 
 # The following settings allow you to control the number of workers that can run
 # on a given node, to prevent the node from becoming overloaded. 'max_workers'
