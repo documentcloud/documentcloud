@@ -10,5 +10,5 @@
 :username: <%= secrets['username'] %>
 :password: <%= secrets['db_password'] %>
 :allow_concurrency: true
-:host: <%= secrets['db_host'] %>
+:host:     <%= secrets['db_host'] %>
 :database: dcloud_crowd_production
