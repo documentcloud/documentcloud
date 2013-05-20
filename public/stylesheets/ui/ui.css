@@ -365,7 +365,7 @@ textarea.text_area {
   display: none;
   position: absolute;
   z-index: 100;
-  width: 200px;
+  width: 220px;
   background: #161616;
   padding: 4px 0;
   opacity: 0.97; filter: alpha(opacity=97);
