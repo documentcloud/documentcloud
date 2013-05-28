@@ -10,8 +10,8 @@ class ApiController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
 
-  before_filter :secure_only,        :only => [:upload, :projects, :upload, :destroy, :create_project, :update_project, :destroy_project]
-  before_filter :api_login_required, :only => [:upload, :projects, :update, :destroy, :create_project, :update_project, :destroy_project]
+  before_filter :secure_only,        :only => [:upload, :project, :projects, :upload, :destroy, :create_project, :update_project, :destroy_project]
+  before_filter :api_login_required, :only => [:upload, :project, :projects, :update, :destroy, :create_project, :update_project, :destroy_project]
   before_filter :api_login_optional, :only => [:documents, :search, :notes, :pending, :entities]
 
   def index
@@ -129,10 +129,21 @@ class ApiController < ApplicationController
     json nil
   end
 
+  # Retrieve information about one project
+  def project
+    return forbidden unless current_account and params[:id] and (request.format.json? || request.format.js? || request.format.text?)
+    project = Project.accessible(current_account).find(params[:id].to_i)
+    return not_found unless project
+    opts = { :include_document_ids => params[:include_document_ids] != 'false' }
+    @response = {'project' => project.canonical(opts)}
+    json_response
+  end
+
   # Retrieve a listing of your projects, including document id.
   def projects
     return forbidden unless current_account # already returns a 401 if credentials aren't supplied
-    @response = {'projects' => Project.accessible(current_account).map {|p| p.canonical } }
+    opts = { :include_document_ids => params[:include_document_ids] != 'false' }
+    @response = {'projects' => Project.accessible(current_account).map {|p| p.canonical(opts) } }
     json_response
   end
 

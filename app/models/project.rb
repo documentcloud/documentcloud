@@ -137,12 +137,19 @@ class Project < ActiveRecord::Base
     EOS
   end
 
-  def canonical
+  # Options:
+  # :include_document_ids: if set and false, add a 'document_count' Integer.
+  #                        Otherwise, add a 'document_ids' Array.
+  def canonical(options={})
     data = ActiveSupport::OrderedHash.new
     data['id']            = id
     data['title']         = title
     data['description']   = description
-    data['document_ids']  = canonical_document_ids
+    if options.fetch(:include_document_ids, true)
+      data['document_ids'] = canonical_document_ids
+    else
+      data['document_count'] = project_memberships.count
+    end
     data
   end
 

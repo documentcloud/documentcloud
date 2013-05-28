@@ -16,8 +16,8 @@ dc.ui.Toolbar = Backbone.View.extend({
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
       'editRelatedArticle', 'editAccess', 'openDocumentEmbedDialog', 'openNoteEmbedDialog',
       'openSearchEmbedDialog', 'openPublicationDateDialog', 'requestDownloadViewers',
-      'checkFloat', '_openTimeline', '_viewEntities', 'editPublishedUrl',
-      'openShareDialog', '_markOrder', '_removeFromSelectedProject',
+      'checkFloat', '_analyzeInOverview', '_openTimeline', '_viewEntities',
+      'editPublishedUrl', 'openShareDialog', '_markOrder', '_removeFromSelectedProject',
       '_enableAnalyzeMenu');
     this.sortMenu    = this._createSortMenu();
     this.analyzeMenu = this._createAnalyzeMenu();
@@ -219,6 +219,31 @@ dc.ui.Toolbar = Backbone.View.extend({
     new dc.ui.TimelineDialog(docs);
   },
 
+  _analyzeInOverview : function() {
+    var query;
+
+    if (Documents.selectedCount) {
+      var docs = Documents.chosen();
+      query = _.map(docs, function(doc) { return 'document:' + doc.id }).join(' ');
+    } else {
+      query = dc.app.searcher.publicQuery();
+    }
+
+    if (/\S/.test(query)) {
+      dc.ui.Dialog.confirm(
+        'You are about to export to Overview. You must create an Overview account, and you must provide Overview with your DocumentCloud username and password.',
+        function() { window.open("https://www.overviewproject.org/imports/documentcloud/new/" + encodeURIComponent(query), '_blank'); },
+        {
+          saveText: 'Export',
+          closeText: 'Cancel'
+        }
+      );
+    } else {
+      // Overview will refuse to import all DocumentCloud documents at once
+      dc.ui.Dialog.alert("In order to analyze documents in Overview, please select a project or some documents.");
+    }
+  },
+
   _viewEntities : function() {
     var docs = Documents.chosen();
     if (!docs.length && Documents.selectedCount) return;
@@ -268,6 +293,14 @@ dc.ui.Toolbar = Backbone.View.extend({
     var singular = Documents.selectedCount == 1;
     $('.share_documents', menu.content).text(singular ? 'Share this Document' : 'Share these Documents');
     $('.share_project', menu.content).toggleClass('disabled', !Projects.selectedCount);
+    var overviewWillAnalyzeProject = !Documents.selectedCount && !!Projects.firstSelected();
+    var overviewDisabled = !Documents.selectedCount && !/\S/.test(dc.app.searcher.publicQuery());
+    $('.menu_item.analyze_in_overview', menu.content)
+      .toggleClass('disabled', overviewDisabled)
+      .attr('title', overviewDisabled ? 'No project or documents selected' : '')
+      .text(overviewWillAnalyzeProject
+            ? 'Analyze this Project in Overview'
+            : (singular ? 'Analyze this Document in Overview' : 'Analyze these Documents in Overview'));
   },
 
   _createPublishMenu : function() {
@@ -331,8 +364,9 @@ dc.ui.Toolbar = Backbone.View.extend({
       {title: 'View Timeline',          attrs: {'class' : 'always'},   onClick : this._openTimeline}
     ];
     var accountItems = [
-      {title: 'Share these Documents',  attrs: {'class' : 'multiple share_documents'}, onClick : this.openShareDialog },
-      {title: 'Share this Project',     attrs: {'class' : 'share_project'},            onClick : this.openCurrentProject }
+      {title: 'Analyze these Documents in Overview', attrs: {'class' : 'always analyze_in_overview'}, onClick : this._analyzeInOverview },
+      {title: 'Share these Documents',               attrs: {'class' : 'multiple share_documents'},   onClick : this.openShareDialog },
+      {title: 'Share this Project',                  attrs: {'class' : 'share_project'},              onClick : this.openCurrentProject }
     ];
     return new dc.ui.Menu({
       label   : 'Analyze',
