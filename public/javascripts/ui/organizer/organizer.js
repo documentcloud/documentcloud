@@ -120,8 +120,8 @@ dc.ui.Organizer = Backbone.View.extend({
     Accounts.current().openDocuments({published : true});
   },
 
-  showOrganizationDocuments : function() {
-    this.setMode('show', 'accounts');
+  showOrganizationDocuments : function(e) {
+    $(e.target).closest('.organization').toggleClass('show_accounts');
     Accounts.current().openOrganizationDocuments();
   },
 
@@ -130,6 +130,7 @@ dc.ui.Organizer = Backbone.View.extend({
     Organizations.get(el.attr('data-id')).openDocuments();
   },
 
+  // display the list of accounts for an organization
   toggleAccountLinks : function(e) {
     $(e.target).closest('div.organization').toggleClass('show_accounts');
   },
