@@ -100,7 +100,7 @@ def remote(commands, machines)
   conf = configuration
   todo = []
   todo << "cd #{conf[:dir]}"
-  todo << "rake #{RAILS_ENV} #{commands.join(' ')}"
+  todo << "bundle install && rake #{RAILS_ENV} #{commands.join(' ')}"
   machines.each do |host|
     puts "\n-- #{host} --"
     system "ssh -A -t -i #{conf[:key]} #{conf[:user]}@#{host} '#{todo.join(' && ')}'"

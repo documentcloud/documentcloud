@@ -20,7 +20,7 @@ staging:
 
 production:
   <<: *defaults
-  host: ec2-174-129-5-5.compute-1.amazonaws.com
+  host: <%= secrets['db_host'] %>
   database: dcloud_analytics_production
 
 test:

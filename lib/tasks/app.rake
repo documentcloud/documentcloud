@@ -31,7 +31,7 @@ namespace :app do
 
   desc "Update the Rails application"
   task :update do
-    sh 'git pull'
+    sh 'git pull && bundle install'
     sleep 0.2
   end
 

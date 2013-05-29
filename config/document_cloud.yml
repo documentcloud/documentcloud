@@ -1,9 +1,9 @@
-<% secrets = YAML.load_file('secrets/secrets.yml')[ENV['RAILS_ENV']] %>
+<% secrets = YAML.load_file('./secrets/secrets.yml')[ENV['RAILS_ENV'] || "development"] %>
 defaults: &defaults
   cloud_crowd_server:   http://dev.dcloud.org:8080
   server_root:          dev.dcloud.org
   aws_zone:             us-east-1c
-  preconfigured_ami_id: ami-6e69f207
+  preconfigured_ami_id: ami-e39ef78a
 
 development:
   <<: *defaults
@@ -16,7 +16,7 @@ staging:
 
 production:
   <<: *defaults
-  cloud_crowd_server: ec2-174-129-5-5.compute-1.amazonaws.com:8080
+  cloud_crowd_server: <%= secrets['db_host'] %>:8080
   server_root:        www.documentcloud.org
   asset_root:         "//s3.amazonaws.com/s3.documentcloud.org"
   db_volume_id:       vol-d4c305bd

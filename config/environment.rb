@@ -1,15 +1,38 @@
 # Be sure to restart your server when you modify this file
+require 'erb'
+
+# Since both Ruby2 and RubyGems 2 remove source_index
+# hack them back in.
+unless Gem.methods.include?("source_index")
+  module Gem
+    def self.source_index
+      sources
+    end
+
+    def self.cache
+      sources
+    end
+
+    SourceIndex = Specification
+
+    class SourceList
+      # If you want vendor gems, this is where to start writing code.
+      def search( *args ); []; end
+      def each( &block ); end
+      include Enumerable
+    end
+  end
+end
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.17' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.18' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
 # DocumentCloud-specific configuration.
 SECRETS   = YAML.load_file("#{Rails.root}/secrets/secrets.yml")[RAILS_ENV]
-DC_CONFIG = YAML.load_file("#{Rails.root}/config/document_cloud.yml")[RAILS_ENV]
-
+DC_CONFIG = YAML.load( ERB.new(File.read( Rails.root.join('config','document_cloud.yml') ) ).result )[RAILS_ENV]
 
 # Settings in config/initializers take precedence over this.
 Rails::Initializer.run do |config|
@@ -19,33 +42,7 @@ Rails::Initializer.run do |config|
   require 'tmpdir'
   require 'fileutils'
   require 'iconv'
-
-  # Gems:
-  config.gem 'json',                  :version => '>= 1.7.7'
-
-  # config.gem 'curb',                  :version => '>= 0.7.18'
-  config.gem 'nokogiri',              :version => '>= 1.4.4'
-  config.gem 'calais',                :version => '>= 0.0.11'
-  config.gem 'rest-client',           :version => '>= 1.0.3',       :lib => 'rest_client'
-  config.gem 'bcrypt-ruby',           :version => '>= 2.1.2',       :lib => 'bcrypt'
-  config.gem 'rubyzip',               :version => '>= 0.9.1',       :lib => 'zip/zip'
-  config.gem 'right_aws',             :version => '>= 2.0.1'        # Our patched version.
-  config.gem 'aws-sdk',               :version => '>= 1.7.1'
-  config.gem 'pg',                    :version => '>= 0.11.0'
-  config.gem 'jammit',                :version => '>= 0.5.0'
-  config.gem 'docsplit',              :version => '>= 0.5.2'
-  config.gem 'sunspot_rails',         :version => '>= 1.3.3'
-  # running a pre-release to fix rake sunspot:solr:stop task bug
-  # https://github.com/sunspot/sunspot/pull/221
-  config.gem 'sunspot_solr',          :version => '>= 2.0.0.pre.120925'
-  config.gem 'rdiscount',             :version => '>= 1.6.5'
-  config.gem 'fastercsv',             :version => '>= 1.5.3'
-
-  #config.gem 'omniauth',              :version => '>= 1.0'
-  #config.gem 'omniauth-twitter',      :version => '>= 0.0.13'
-  #config.gem 'omniauth-facebook',     :version => '>= 1.4.0'
-  #config.gem 'omniauth-google-oauth2',:version => '>= 0.1.13'
-  require 'sanitize'
+  require 'forwardable'
 
   # Middleware
   paths = config.respond_to?(:autoload_paths) ? config.autoload_paths : config.load_paths
