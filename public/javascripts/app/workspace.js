@@ -8,6 +8,11 @@ dc.controllers.Workspace = Backbone.Router.extend({
 
   // Initializes the workspace, binding it to <body>.
   initialize : function() {
+    new I18n({
+      underscore: _,
+      translations: dc.translations.en
+    });
+
     this.createSubViews();
     this.renderSubViews();
     dc.app.searcher = new dc.controllers.Searcher;

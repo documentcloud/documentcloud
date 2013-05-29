@@ -1,139 +1,134 @@
 <% if (docAccess != dc.access.PUBLIC) { %>
 <div class="access_info">
   <span>
-    <%= docAccess == dc.access.ORGANIZATION ? 'Private to ' + orgName : 'Private Access' %>
+    <%= docAccess == dc.access.ORGANIZATION ? _.t('private_to', orgName ) : _.t('private_access') %>
   </span>
 </div>
 <% } %>
 
 <div class="control_panel_title gradient_light">
-  <span class="">Document Tools</span>
+  <span class=""><%= _.t('document_tools') %></span>
 </div>
 <% if (isOwner || isReviewer) { %>
   <div class="public_annotation button">
     <div class="icon mini_note"></div>
     <div class="icon cancel_search"></div>
-    <span>Add a Public Note</span>
+    <span><%= _.t('add_public_note') %></span>
   </div>
   <div id="public_note_guide" class="note_guide" style="display:none;">
-    Highlight a portion of the page, or click between pages to create a note.
+    <%= _.t('add_note_instructions') %>
     <br /><br />
-    <span class="warn">Public notes are visible to everyone who views this document.</span>
+    <span class="warn"><%= _.t('add_public_note_warn') %></span>
   </div>
 <% } %>
 <div class="private_annotation button">
   <div class="icon mini_note_private"></div>
   <div class="icon cancel_search"></div>
-  <span>Add a Private Note</span>
+  <span><%= _.t('add_private_note') %></span>
 </div>
 <div id="private_note_guide" class="note_guide" style="display:none;">
-  Highlight a portion of the page, or click between pages to create a note.
+  <%= _.t('add_note_instructions') %>
   <br /><br />
-  <span class="warn">No one apart from you is ever allowed to view your private notes.</span>
+  <span class="warn"><%= _.t('add_private_note_warn') %></span>
 </div>
 <% if (isOwner || isReviewer) { %>
   <div class="redact_annotation button">
     <div class="icon mini_redaction"></div>
     <div class="icon cancel_search"></div>
-    <span>Redact Document</span>
+    <span><%= _.t('redact_document') %></span>
   </div>
   <div id="redact_note_guide" class="note_guide" style="display:none;">
-    Click and drag to draw a 
-    <span class="when_black">black </span><span class="when_red">red </span>
-    <a class="when_black" href="#">(or red) </a><a class="when_red" href="#">(or black) </a>
-    rectangle over each portion of the document 
-    you'd like to redact. Associated text will be removed when you save your redactions.
+  <% red = _.t('red'); black = _.t('black') %>
+  <%= _.t('redact_instructions', '<span class="when_black">' + black + '</span><span class="when_red">' + red + '</span>' ) %>
     <br /><br />
-    Any existing notes are temporarily hidden while redaction is taking place.
+    <%= _.t('notes_hidden_while_redacting') %>
     <br /><br />
-    <div class="minibutton cancel_redactions">Cancel</div>
-    <div class="minibutton default save_redactions">Save Redactions</div>
+    <div class="minibutton cancel_redactions"><%= _.t('cancel') %></div>
+    <div class="minibutton default save_redactions"><%= _.t('save_redactions') %></div>
   </div> 
 <% } %> 
 <% if (isOwner) { %>
-  <div class="set_sections button"><span>Edit Sections</span></div>
+  <div class="set_sections button"><span><%= _.t('edit_sections') %></span></div>
   <div class="document_fields_container">
     <div class="edit_document_info button">
       <div class="icon toggle toggle_document_info"></div>
-      <span>Edit Document Info</span>
+      <span><%= _.t('edit_document_info') %></span>
     </div>
     <div class="edit_document_fields">
-      <div class="edit_title button"><span class="dash">–</span>&nbsp; <span>Edit Title</span></div>
-      <div class="edit_source button"><span class="dash">–</span>&nbsp; <span>Edit Source</span></div>
-      <div class="edit_description button"><span class="dash">–</span>&nbsp; <span>Edit Description</span></div>
-      <div class="edit_access button"><span class="dash">–</span>&nbsp; <span>Edit Access Level</span></div>
-      <div class="edit_related_article button"><span class="dash">–</span>&nbsp; <span>Edit Related Article URL</span></div>
-      <div class="edit_document_url button"><span class="dash">–</span>&nbsp; <span>Edit Published URL</span></div>
+      <div class="edit_title button"><span class="dash">–</span>&nbsp; <span><%= _.t('edit_title') %></span></div>
+      <div class="edit_source button"><span class="dash">–</span>&nbsp; <span><%= _.t('edit_source') %></span></div>
+      <div class="edit_description button"><span class="dash">–</span>&nbsp; <span><%= _.t('edit_description') %></span></div>
+      <div class="edit_access button"><span class="dash">–</span>&nbsp; <span><%= _.t('edit_access') %></span></div>
+      <div class="edit_related_article button"><span class="dash">–</span>&nbsp; <span><%= _.t('edit_related_url') %></span></div>
+      <div class="edit_document_url button"><span class="dash">–</span>&nbsp; <span><%= _.t('edit_published_url') %></span></div>
     </div>
   </div>
   
-  <div class="edit_data button"><span>Edit Document Data</span></div>
+  <div class="edit_data button"><span><%= _.t('edit_document_data') %></span></div>
   
   <div class="control_panel_title gradient_light">
-    <span class="">Embed Tools</span>
+    <span class=""><%= _.t('embed_tools') %></span>
   </div>
   <div class="embed_document button">
-    <span>Embed this Document</span>
+    <span><%= _.t('embed_document') %></span>
   </div>
   <div class="embed_note button">
-    <span>Embed a Note</span>
+    <span><%= _.t('embed_note')%></span>
   </div>
   
   <div class="control_panel_title gradient_light">
-    <span class="">Page Tools</span>
+    <span class=""><%= _.t('page_tools') %></span>
   </div>
   <div class="edit_replace_pages button">
     <div class="icon cancel_search"></div>
-    <span>Insert/Replace Pages</span>
+    <span><%= _.t('insert_replace_pages') %></span>
   </div>
   <div id="edit_replace_pages_guide" class="note_guide" style="display:none;">
-    To insert new pages at a specific position within the document, click
-    in between the pages above. If you'd like to replace a specific page with a new copy, 
-    click on the page you'd like to remove.
+    <%= _.t('insert_pages_instructions') %>
     <br /><br />
-    Hold down the shift key to select multiple pages to replace at once. When
-    you're ready, click the "Upload Pages" button.
+    <%= _.t('insert_pages_shift_key') %>
   </div>
   <div class="edit_remove_pages button">
     <div class="icon cancel_search"></div>
-    <span>Remove Pages</span>
+    <span><%= _.t('remove_pages') %></span>
   </div>
   <div id="edit_remove_pages_guide" class="note_guide" style="display:none;">
-    Click on each page you want to remove from this document.
+    <%= _.t('remove_pages_click') %>
     <br /><br />
-    When you're finished selecting pages, click the "Remove Pages" button.
+    <%= _.t('remove_pages_done') %>
   </div>
   <div class="edit_reorder_pages button">
     <div class="icon cancel_search"></div>
-    <span>Reorder Pages</span>
+    <span><%= _.t('reorder_pages') %></span>
   </div>
   <div id="edit_reorder_pages_guide" class="note_guide" style="display:none;">
-    Drag and drop pages to change their position in the document.
+    <%= _.t('reorder_pages_instructions') %>
     <br /><br />
-    When you're finished rearranging, click on the "Save Page Order" button 
-    to save your changes.
+    <%= _.t('reorder_pages_done') %>
   </div>
   
   <div class="control_panel_title gradient_light">
-    <span class="">Text Tools</span>
+    <span class=""><%= _.t('text_tools') %></span>
   </div>
   <div class="edit_page_text button">
     <div class="icon cancel_search"></div>
-    <span>Edit Page Text</span>
+    <span><%= _.t('edit_page_text') %></span>
   </div>
   <div id="edit_page_text_guide" class="note_guide" style="display:none;">
-    Edit the text of any page: use the navigation arrows at the top to page 
-    through this document. Editing the text here will not alter the original PDF.
+    <%= _.t('edit_page_text_instructions') %>
     <br /><br />
-    When you’re finished revising the text, click the “Save Text” button.
+    <%= _.t('edit_page_text_done') %>
   </div>
   <div class="reprocess_text button">
-    <span>Reprocess Text</span>
+    <span><%= _.t('reprocess_text') %></span>
   </div>
 <% } %>
 
 <div class="control_panel_help">
-  Our <a href="/<%= workspacePrefix %>help" target="_blank">help pages</a> can help you get the 
-  most out of our <a href="/<%= workspacePrefix %>help/notes" target="_blank">annotation</a> and 
-  <a href="/<%= workspacePrefix %>help/modification" target="_blank">modification</a> tools.
+   <% 
+     help         = '<a href="/' + workspacePrefix + 'help" target="_blank">' +      _.t('help_pages') + '</a>';
+     annotation   = '<a href="/'+ workspacePrefix + 'help/notes" target="_blank">' + _.t('annotation') + '</a>';
+     modification = '<a href="/' + workspacePrefix + 'help/modification" target="_blank">' + _.t('modification') + '</a>';
+   %>
+  <%= _.t('tools_help', help, annotation,  modification ) %>
 </div>

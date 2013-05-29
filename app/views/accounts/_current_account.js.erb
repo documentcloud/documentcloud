@@ -6,6 +6,12 @@ dc.account.addOrganization( <%= organization.to_json %> );
 Accounts.reset(dc.account.current_organization().members.models);
 Accounts.add(dc.account);
 
+dc.i18n = new I18n({
+ underscore: _,
+ translations: dc.translations.es
+});
+
+
 dc.account.set({
   hasDocuments  : <%= @has_documents.to_json %>,
   <% if @allowed_to_edit || @allowed_to_review %>

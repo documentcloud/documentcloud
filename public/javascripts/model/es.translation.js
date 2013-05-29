@@ -1,0 +1,56 @@
+dc.translations.es = {
+
+  mixin: function(){
+
+  },
+
+  strings: {
+    private_to: 'Private a %s',
+    private_access: 'Acceso Privado',
+    document_tools: 'Documentos',
+    add_note_instructions: 'Resalte una parte de la página, o haga clic en las páginas para crear una nota.',
+    add_public_note: 'Agregar una nota pública',
+    add_public_note_warn: 'Notas públicas son visibles para todas las personas que considera este documento.',
+    add_private_note: 'Agregar una nota privada',
+    add_private_note_warn: 'Nadie, aparte de que alguna vez se pueden ver sus notas privadas.',
+    redact_document: 'redactar el documento',
+    red: 'rojo',
+    black: 'negro',
+    redact_instructions: 'Haga clic y arrastre para dibujar un rectángulo %s sobre cada parte del documento que desea que se corrijan. Se eliminará el texto asociado al guardar sus redacciones.',
+    notes_hidden_while_redacting: 'Todas las notas existentes se ocultan temporalmente mientras redacción está teniendo lugar.',
+    cancel: 'cancelar',
+    save_redactions: 'Guardar redacciones',
+    edit_sections: 'Editar Secciones',
+    edit_document_info: 'Editar información del documento',
+    edit_title: 'Editar título',
+    edit_source: 'Editar origen',
+    edit_description: 'Editar Descripción',
+    edit_access: 'Editar nivel de acceso',
+    edit_related_url: 'Editar Artículo relacionado URL',
+    edit_published_url: 'Editar URL Publicado',
+    edit_document_data: 'Editar datos del documento',
+    embed_tools: 'Integrar Herramientas',
+    embed_document: 'Insertar este documento',
+    embed_note: 'Insertar una nota',
+    page_tools: 'Herramientas de página',
+    insert_replace_pages: 'Insertar / Reemplazar páginas',
+    insert_pages_instructions:'Para insertar nuevas páginas en una posición específica dentro del documento, haga clic en el medio de las páginas anteriores. Si desea reemplazar una página específica con una nueva copia, cick en la página que desea eliminar.',
+    insert_pages_shift_key: 'Mantenga pulsada la tecla Mayús para seleccionar varias páginas para reemplazar a la vez. Cuando esté listo, haga clic en el botón "Subir Páginas".',
+    remove_pages: 'Eliminar páginas',
+    remove_pages_click: 'Haga clic en cada página que desea eliminar de este documento.',
+    remove_pages_done: 'Cuando haya terminado de seleccionar las páginas, haga clic en el botón "Eliminar páginas".',
+    reorder_pages: 'Reordenar páginas',
+    reorder_pages_instructions: 'Arrastre y suelte las páginas para cambiar su posición en el documento.',
+    reorder_pages_done: 'Cuando haya terminado de reordenar, haga clic en el botón "Guardar Orden de página" para guardar los cambios.',
+    text_tools: 'Herramientas de texto',
+    edit_page_text: 'Editar página texto',
+    edit_page_text_instructions: 'Modificar el texto de cualquier página: utilizar las flechas de navegación en la parte superior de la página a través de este documento. Edición del texto aquí no alterará el PDF original.',
+    edit_page_text_done: 'Cuando haya terminado de revisar el texto, haga clic en el botón "Guardar texto".',
+    reprocess_text: 'Vuelva a procesar texto',
+    help_pages: 'páginas de ayuda',
+    annotation: 'anotación',
+    modification: 'modificación',
+    tools_help: 'Nuestro %s puede ayudarle a obtener el máximo provecho de nuestra %s y %s herramientas.'
+  }
+
+};
