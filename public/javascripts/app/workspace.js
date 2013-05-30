@@ -10,7 +10,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
   initialize : function() {
     new I18n({
       underscore: _,
-      translations: dc.translations.en
+      translations: dc.translations.es
     });
 
     this.createSubViews();
