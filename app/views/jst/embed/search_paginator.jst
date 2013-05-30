@@ -1,7 +1,7 @@
 <% if (total > perPage) { %>
   <div class="DC-paginator-enumeration">
       <span class="DC-arrow DC-arrow-left <% if (page <= 1) { %>DC-hidden<% } %>">&larr;</span>
-      Page
+      <%= _.t('page) %>
       <input type="text" class="DC-page-edit" value="<%= page %>" />
       <span class="DC-page-current DC-quiet-link"><%= page %></span> of 
       <%= pageCount %>
@@ -14,7 +14,7 @@
     <span class="DC-paginator-range"><%= '' + (from + 1) %> &ndash; <%= to %></span>
     of
   <% } %>
-  <a href="<%= workspaceUrl %>" title="View these documents on DocumentCloud" class="DC-quiet-link">
+  <a href="<%= workspaceUrl %>" title="<%= _.t('view_docs_on_dc') %>" class="DC-quiet-link">
     <%= total %> <%= total==1 ? 'document' : 'documents' %>
   </a>
 </div>

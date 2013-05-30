@@ -7,42 +7,42 @@
 
 <td class="email">
   <% if (account.isReviewer()) { %>
-    <div class="display selectable_text">
-      <%= email %>
+  <div class="display selectable_text">
+    <%= email %>
+  </div>
+  <div class="edit">
+    <div class="text_input dark small">
+      <input name="email" type="text" placeholder="<%= _.t('email') %>" value="<%= account.get('email') %>" />
     </div>
-    <div class="edit">
-      <div class="text_input dark small">
-        <input name="email" type="text" placeholder="Email" value="<%= account.get('email') %>" />
-      </div>
-    </div>
+  </div>
   <% } else { %>
-    <div class="selectable_text">
-      <%= email %>
-    </div>
+  <div class="selectable_text">
+    <%= email %>
+  </div>
   <% } %>
 </td>
 
 <td class="name">
   <% if (account.isReviewer()) { %>
-    <div class="display">
-      <span class="account_name selectable_text">
-        <%= fullName %>
-      </span>
-    </div>
-    <div class="edit">
-      <div class="name_wrapper">
-        <div class="text_input dark small">
-          <input name="first_name" id="reviewer_first_name" type="text" placeholder="First name" value="<%= account.get('first_name') %>" />
-        </div>
-        <div class="text_input dark small">
-          <input name="last_name" id="reviewer_last_name" type="text" placeholder="Last name" value="<%= account.get('last_name') %>" />
-        </div>
-      </div>
-    </div>
-  <% } else { %>
+  <div class="display">
     <span class="account_name selectable_text">
       <%= fullName %>
     </span>
+  </div>
+  <div class="edit">
+    <div class="name_wrapper">
+      <div class="text_input dark small">
+        <input name="first_name" id="reviewer_first_name" type="text" placeholder="<%= _.t('first_name') %>" value="<%= account.get('first_name') %>" />
+      </div>
+      <div class="text_input dark small">
+        <input name="last_name" id="reviewer_last_name" type="text" placeholder="<%= _.t('last_name') %>" value="<%= account.get('last_name') %>" />
+      </div>
+    </div>
+  </div>
+  <% } else { %>
+  <span class="account_name selectable_text">
+    <%= fullName %>
+  </span>
   <% } %>
 </td>
 
@@ -58,17 +58,18 @@
 <td class="last nowrap">
   <div class="display">
     <% if (documentsCount && documentsCount > 1) { %>
-      <span class="document_count">sharing <%= documentCount %>/<%= documentsCount %> <%= dc.inflector.pluralize('document', documentsCount) %></span>
+    <span class="document_count">sharing <%= documentCount %>/<%= documentsCount %>
+      <%= dc.inflector.pluralize( _.t('document'), documentsCount) %></span>
     <% } else if (!account.get('needsEmail')) { %>
-      <span class="resend_reviewer text_link" data-account-id="<%= account.id %>">resend instructions</span>
+    <span class="resend_reviewer text_link" data-account-id="<%= account.id %>"> <%= _.t('resend_instructions') %> </span>
     <% } %>
   </div>
   <div class="edit">
     <% if (account.isReviewer()) { %>
-      <div class="minibutton default save_changes">
-        Save
-      </div>
+    <div class="minibutton default save_changes">
+      <%= _.t('save') %>
+    </div>
     <% } %>
-    <div class="minibutton warn remove_reviewer" data-account-id="<%= account.id %>">Revoke</div>
+    <div class="minibutton warn remove_reviewer" data-account-id="<%= account.id %>"> <%= _.t('revoke') %></div>
   </div>
 </td>

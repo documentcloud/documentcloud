@@ -6,7 +6,7 @@
 </td>
 <td class="name">
   <span class="display">
-    <a href="<%= account.searchUrl() %>"><%= account.fullName(true) %></a>&nbsp;<span class="pending_notification">(pending)</span>
+    <a href="<%= account.searchUrl() %>"><%= account.fullName(true) %></a>&nbsp;<span class="pending_notification">(<%= _.t('pending') %>)</span>
   </span>
 </td>
 <td class="email">
@@ -33,7 +33,7 @@
   </span>
 </td>
 <td class="login_as">
-  <div class="minibutton">Login</div>
+  <div class="minibutton"><%= _.t('login') %></div>
 </td>
 <td class="last">
 </td>

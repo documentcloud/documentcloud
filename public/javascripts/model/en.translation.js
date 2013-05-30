@@ -5,25 +5,23 @@ dc.translations.en = {
   },
 
   strings: {
-
+    pg: 'p.',
     private_to: 'Private to %s',
     private_access: 'Private Access',
     document_tools: 'Document Tools',
     add_note_instructions: 'Highlight a portion of the page, or click between pages to create a note.',
-
     add_public_note: 'Add a Public Note',
     add_public_note_warn: 'Public notes are visible to everyone who views this document.',
-
     add_private_note: 'Add a Private Note',
     add_private_note_warn: 'No one apart from you is ever allowed to view your private notes.',
-
     redact_document: 'Redact Document',
     red: 'red',
     black: 'black',
     redact_instructions: "Click and drag to draw a %s rectangle over each portion of the document you'd like to redact. Associated text will be removed when you save your redactions.",
     notes_hidden_while_redacting: 'Any existing notes are temporarily hidden while redaction is taking place.',
-
     cancel: 'Cancel',
+    save: 'Save',
+    revoke: 'Revoke',
     save_redactions: 'Save Redactions',
     edit_sections: 'Edit Sections',
     edit_document_info: 'Edit Document Info',
@@ -55,9 +53,39 @@ dc.translations.en = {
     help_pages: 'help pages',
     annotation: 'annotation',
     modification: 'modification',
-    tools_help: 'Our %s can help you get the most out of our %s and %s tools.'
+    tools_help: 'Our %s can help you get the most out of our %s and %s tools.',
 
-
+    save_text: 'Save Text',
+    edit_text_any_page: 'Edit the text of any page.',
+    change_page_arrows: 'Change pages with the arrows on the right.',
+    select_pages_remove: 'Select the pages you wish to remove.',
+    save_page_order: 'Save Page Order',
+    reorder_hint: 'Reorder pages by dragging and dropping.',
+    upload_pages: 'Upload Pages',
+    annotation_help: 'Use the links at the right to annotate the document. Keep in mind that any other reviewers will be able to see public annotations and drafts. Private annotations are for your own reference. Even %s can\'t see them.',
+    contact_reviewer: 'Contact %s at %s if you need any help, or visit %s for more information about DocumentCloud.',
+    title: 'Title',
+    draft: 'Draft',
+    private_note: 'Private note',
+    search_elipsis: 'Search...',
+    clear_search: 'clear search',
+    search_no_match: 'Your search did not match any documents.',
+    return_to_orig_docs: 'Return to the original documents.',
+    page: 'Page',
+    view_docs_on_dc: 'View these documents on DocumentCloud',
+    login: 'Login',
+    log_out: 'Log Out',
+    pending: 'Pending',
+    manage: 'Manage',
+    organization: 'Organization',
+    account: 'Account',
+    remove: 'Remove',
+    project_owner: 'Project Owner',
+    email: 'Email',
+    first_name: 'First name',
+    last_name: 'Last name',
+    resend_instructions: 'Resend Instructions',
+    document: 'Document'
   }
 
 

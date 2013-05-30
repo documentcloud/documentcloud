@@ -3,7 +3,7 @@
   <%= dc.inflector.truncate(account.fullName(), 20) %>
 </div>
 <div class="controls">
-  <a href="#" class="admin_link text_link">Manage <%= account.isAdmin() ? 'Oranization' : 'Account' %></a>
+  <a href="#" class="admin_link text_link"><%= _.t('manage') %> <%= account.isAdmin() ?  _.t('organization') :  _.t('occount') %></a>
   &nbsp;/&nbsp;
-  <a href="/logout" class="text_link">Log Out</a>
+  <a href="/logout" class="text_link"><%= _.t('log_out') %></a>
 </div>
