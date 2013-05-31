@@ -13,7 +13,8 @@ gem 'rubyzip',        '>= 0.9.1',  :require => 'zip/zip'
 gem 'right_aws',      '>= 2.0.1'        # Our patched version.
 gem 'aws-sdk',        '>= 1.7.1'
 gem 'pg',             '>= 0.11.0'
-gem 'jammit',         '>= 0.5.0'
+gem 'jammit'
+gem 'closure-compiler'
 gem 'docsplit',       '>= 0.6.4'
 gem 'sunspot_rails',  '>= 1.3.3'
 # running a pre-release to fix rake sunspot:solr:stop task bug
