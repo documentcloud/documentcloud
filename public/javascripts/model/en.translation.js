@@ -1,5 +1,10 @@
 dc.translations.en = {
 
+  nplurals: 2,
+  pluralizer: function(n){
+    return n ? 1 : 0;
+  },
+
   mixin: function(){
 
   },
@@ -85,7 +90,35 @@ dc.translations.en = {
     first_name: 'First name',
     last_name: 'Last name',
     resend_instructions: 'Resend Instructions',
-    document: 'Document'
+    document: 'Document',
+
+
+    disabled: 'Disabled',
+    administrator: 'Administrator',
+    contributor: 'Contributor',
+    freelancer: 'Freelancer',
+    change_password: 'Change Password',
+    resend_welcome_email: 'Resend Welcome Email',
+    ok: 'OK',
+    reenable: 'Re-enable',
+    disable: 'Disable',
+    no_reviewer_on_document: [
+      'There are no reviewers on this document.',
+      'There are no reviewers on these documents.'
+    ],
+
+    include_optional_msg: 'Optional: Include a personal message',
+    preview_email: 'preview the email message',
+    before_continue: 'Before continuing, you can take a moment to %s',
+    next: 'Next',
+    back: 'Back',
+    close: 'Close',
+    add_reviewer: 'Add Reviewer',
+    form_contact_instructions: 'Use this form (or email to %s) to contact us for assistance. If you need to speak to someone immediately, you can call us at (202) 505-1010. See %s for more ways to get in touch.',
+    message: 'Message',
+    delete: 'Delete'
+
+
   }
 
 

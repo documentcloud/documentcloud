@@ -41,15 +41,22 @@ I18n = function( options ){
 // If translation string is not available for the current locale,
 // attempts to find it in the 'en' locale or returns
 // an empty string
-I18n.prototype.lookup = function( key, optional_args ){
+I18n.prototype.lookup = function( key, args ){
   var string = this.translations.strings[ key ];
   if ( _.isUndefined(string) ){
     if ( console && console.warn )
       console.warn( 'i18n nonexistant key: ' + key );
     string = dc.translations.en.strings[ key ] || '';
   }
-  if ( optional_args ){
-    return vsprintf( string, _.toArray( arguments ).slice(1) );
+  if ( 'no_reviewer_on_document' == key ){
+    debugger;
+  }
+  if ( args ){
+    if ( _.isArray( string ) ){ // plural lookup
+      return string[ this.translations.pluralizer( args ) ];
+    } else {
+      return vsprintf( string, _.toArray( arguments ).slice(1) );
+    }
   } else {
     return string;
   }

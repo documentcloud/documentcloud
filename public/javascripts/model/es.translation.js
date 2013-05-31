@@ -1,5 +1,10 @@
 dc.translations.es = {
 
+  nplurals: 2,
+  pluralizer: function(n){
+    return n ? 1 : 0;
+  },
+
   mixin: function(){
 
   },
@@ -84,7 +89,32 @@ dc.translations.es = {
     first_name: 'primer nombre',
     last_name: 'apellido',
     resend_instructions: 'Reenviar Instrucciones',
-    document: 'documento'
+    document: 'documento',
+    disabled: 'discapacitado',
+    administrator: 'administrador',
+    contributor: 'contribuyente',
+    freelancer: 'independiente',
+    change_password: 'Cambiar contraseña',
+    resend_welcome_email: 'Reenviar correo electrónico de bienvenida',
+    ok: 'bueno',
+    reenable: 'Vuelva a activar',
+    disable: 'inhabilitar',
+    no_reviewer_on_document: [
+      'No hay críticas en este documento.',
+      'No hay críticas en estos documentos.'
+    ],
+    include_optional_msg: 'Opcional: Incluya un mensaje personal',
+    preview_email: 'una vista previa del mensaje de correo electrónico',
+    before_continue: 'Antes de continuar, usted puede tomar un momento para %s',
+    next: 'próximo',
+    back: 'espalda',
+    close: 'cerrar',
+    add_reviewer: 'Añadir Revisor',
+    form_contact_instructions: 'Utilice este formulario (o por correo electrónico a %s) para ponerse en contacto con nosotros para obtener ayuda. Si usted necesita hablar con alguien inmediatamente, puede llamarnos al (202) 505-1010. Vea %s para más maneras de ponerse en contacto.',
+    message: 'mensaje',
+    delete: 'borrar'
+
+
   }
 
 };

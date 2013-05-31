@@ -1,38 +1,38 @@
 <div class="document_reviewers_empty">
-  <p>There are no reviewers on <% if (docCount == 1) { %>this document<% } else { %>these documents<% }%>.</p>
+  <p><%= _.t('no_reviewer_on_document', docCount ) %></p>
 </div>
 
 <div class="step_one document_reviewers not_draggable account_list">
   <table border="0" cellspacing="0" cellpadding="0" class="account_list_content">
     <tr class="reviewer_management">
-      
+
       <td class="first">
         <img class="avatar" src="<%= defaultAvatar %>" width="24" height="24" />
       </td>
-      
+
       <td class="email">
         <div class="text_input dark small">
-          <input name="email" type="text" value="" placeholder="Email" class="reviewer_management_email" />
+          <input name="email" type="text" value="" placeholder="<%= _.t('email') %>" class="reviewer_management_email" />
         </div>
       </td>
-      
+
       <td class="name selectable_text">
         <div class="name_wrapper">
           <div class="text_input dark small">
-            <input name="first_name" ype="text" value="" placeholder="First name" class="reviewer_management_firstname" />
+            <input name="first_name" ype="text" value="" placeholder="<%= _.t('first_name') %>" class="reviewer_management_firstname" />
           </div>
           <div class="text_input dark small">
-            <input name="last_name" type="text" value="" placeholder="Last name" class="reviewer_management_lastname" />
+            <input name="last_name" type="text" value="" placeholder="<%= _.t('last_name') %>" class="reviewer_management_lastname" />
           </div>
         </div>
       </td>
-    
+
       <td class="edit_column">
         <div class="cancel_add icon cancel_search_dark"></div>
       </td>
-      
+
       <td class="last error"></td>
-      
+
     </tr>
   </table>
 </div>
@@ -41,17 +41,16 @@
   <div class="email_description dialog_info">
   </div>
   <div class="prompt">
-    <textarea class="email_message text_area dark content" placeholder="Optional: Include a personal message&hellip;"></textarea>
+    <textarea class="email_message text_area dark content" placeholder="<%= _.t('include_optional_msg') %>&hellip;"></textarea>
   </div>
   <div class="dialog_info">
-    Before continuing, you can take a moment to 
-    <span class="text_link preview">preview the email message</span>.
+    <%= _.t('before_continue', '<span class="text_link preview">'+ _.t('preview_email') + '</span>.') %>
   </div>
 </div>
 
 <div class="step_controls">
-  <div class="minibutton next default">Next <span class="text_arrow">&raquo;</span></div>
-  <div class="minibutton previous dark"><span class="text_arrow">&laquo;</span> Back</div>
-  <div class="minibutton close dark">Close</div>
-  <div class="minibutton add_reviewer default" style="width: 90px;">Add Reviewer</div>
+  <div class="minibutton next default"><%= _.t('next') %> <span class="text_arrow">&raquo;</span></div>
+  <div class="minibutton previous dark"><span class="text_arrow">&laquo;</span> <%= _.t('back') %></div>
+  <div class="minibutton close dark"><%= _.t('close') %></div>
+  <div class="minibutton add_reviewer default" style="width: 90px;"><%= _.t('add_reviewer') %></div>
 </div>
