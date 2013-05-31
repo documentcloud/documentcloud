@@ -17,16 +17,16 @@
  * workspace/account/dialog.jst
  * workspace/account/language_settings.jst
  * workspace/account/reviewer.jst
-workspace/account/row.jst
-workspace/account/share_dialog.jst
-workspace/common/contact.jst
-workspace/common/date_select.jst
-workspace/common/dialog.jst
-workspace/common/hour_select.jst
-workspace/common/menu.jst
-workspace/common/menubutton.jst
-workspace/common/tooltip.jst
-workspace/document/data_dialog.jst
+ * workspace/account/row.jst
+ * workspace/account/share_dialog.jst
+ * workspace/common/contact.jst
+ * workspace/common/date_select.jst
+ * workspace/common/dialog.jst
+ * workspace/common/hour_select.jst
+ * workspace/common/menu.jst
+ * workspace/common/menubutton.jst
+ * workspace/common/tooltip.jst
+ * workspace/document/data_dialog.jst
 workspace/document/data_dialog_row.jst
 workspace/document/document_dialog.jst
 workspace/document/embed_code.jst
