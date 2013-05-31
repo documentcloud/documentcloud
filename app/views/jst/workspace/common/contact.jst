@@ -1,17 +1,13 @@
 <div class="text">
-  Use this form (or email to
-  <a href="mailto:support@documentcloud.org">support@documentcloud.org</a>)
-  to contact us for assistance. If you need to speak to someone immediately, you
-  can call us at (202) 505-1010.<br />
-  See <a href="/contact">documentcloud.org/contact</a> for more ways to get in touch.
+  <%= _.t('form_contact_instructions', '<a href="mailto:support@documentcloud.org">support@documentcloud.org</a>', '<a href="/contact">documentcloud.org/contact</a>' ) %>
 </div>
 
 <% if (!dc.account) { %>
-  <div class="text_input dark small">
-    <input name="email" class="contact_email" type="text" placeholder="Email&hellip;" />
-  </div>
+<div class="text_input dark small">
+  <input name="email" class="contact_email" type="text" placeholder="<%= _.t('email') %>&hellip;" />
+</div>
 <% } %>
 
 <div class="prompt">
-  <textarea class="text_area dark small content" placeholder="Message&hellip;"></textarea>
+  <textarea class="text_area dark small content" placeholder="<%= _.t('message') %>&hellip;"></textarea>
 </div>

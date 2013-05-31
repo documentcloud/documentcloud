@@ -42,10 +42,10 @@
 <% } %>
 <% if (mode != 'progress') { %>
   <div class="controls">
-    <% var saveText = saveText || ((editor || mode == 'prompt' || mode == 'short_prompt') ? 'Save' : (mode == 'alert' || mode == 'confirm') ? 'OK' : 'Close'); %>
-    <% var closeText = closeText || (mode == 'confirm' || saveText == 'Close' ? 'Cancel' : 'Close'); %>
+    <% var saveText = saveText || ((editor || mode == 'prompt' || mode == 'short_prompt') ? _.t('save') : (mode == 'alert' || mode == 'confirm') ? _.t('ok') : _.t('close') ); %>
+    <% var closeText = closeText || (mode == 'confirm' || saveText == 'Close' ? _.t('cancel') : _.t('close') ); %>
     <% if (editor) { %>
-      <% var deleteText = deleteText || 'Delete'; %>
+      <% var deleteText = deleteText || _.t('delete'); %>
       <span class="minibutton delete warn"><%= deleteText %></span>
     <% } %>
     <span class="minibutton cancel dark"><%= closeText %></span>

@@ -6,14 +6,14 @@
 </td>
 <td class="name">
   <span class="display selectable_text">
-    <%= dc.inflector.truncate(account.fullName(true) || '', 25) %>&nbsp;<span class="pending_notification">(pending)</span>
+    <%= dc.inflector.truncate(account.fullName(true) || '', 25) %>&nbsp;<span class="pending_notification">(<%= _.t('pending') %>)</span>
   </span>
   <div class="edit name_wrapper">
     <div class="text_input dark small">
-      <input name="first_name" type="text" placeholder="first name" value="<%= account.get('first_name') %>" />
+      <input name="first_name" type="text" placeholder="<%= _.t('first_name') %>" value="<%= account.get('first_name') %>" />
     </div>
     <div class="text_input dark small">
-      <input name="last_name" type="text" placeholder="last name" value="<%= account.get('last_name') %>" />
+      <input name="last_name" type="text" placeholder="<%= _.t('last_name') %>" value="<%= account.get('last_name') %>" />
     </div>
   </div>
 </td>
@@ -22,26 +22,26 @@
     <%= dc.inflector.truncate(email || '', 25) %>
   </span>
   <div class="text_input edit dark small">
-    <input name="email" type="text" placeholder="email" value="<%= email %>" />
+    <input name="email" type="text" placeholder="<%= _.t('email') %>" value="<%= email %>" />
   </div>
 </td>
 <td class="role">
   <span class="display">
     <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>
-      <span class="disabled">(disabled)</span>
+    <span class="disabled">(<%= _.t('disabled') %>)</span>
     <% } else { %>
-      <%= account.ROLE_NAMES[account.get('role')] %>
+    <%= account.ROLE_NAMES[account.get('role')] %>
     <% } %>
   </span>
   <span class="edit">
     <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>
-      <span class="disabled">(disabled)</span>
+    <span class="disabled">(<%= _.t('disabled') %>)</span>
     <% } else { %>
-      <select name="role" class="account_role" <%= current && current.isAdmin() && account.id != current.id ? '' : 'disabled="disabled"' %>>
-        <option class="role_1" value="1">Administrator</option>
-        <option class="role_2" value="2">Contributor</option>
-        <option class="role_4" value="4">Freelancer</option>
-      </select>
+    <select name="role" class="account_role" <%= current && current.isAdmin() && account.id != current.id ? '' : 'disabled="disabled"' %>>
+      <option class="role_1" value="1"><%= _.t('administrator') %></option>
+      <option class="role_2" value="2"><%= _.t('contributor') %></option>
+      <option class="role_4" value="4"><%= _.t('freelancer') %></option>
+    </select>
     <% } %>
   </span>
 </td>
@@ -49,19 +49,19 @@
   <% if (account == current || (current && current.isAdmin())) { %>
   <div class="edit_account icon edit_glyph_dark display"></div>
   <% if (account == current) { %>
-    <span class="change_password display text_link">change password</span>
+  <span class="change_password display text_link"><%= _.t('change_password') %></span>
   <% } else if (account.isPending()) { %>
-    <span class="resend_welcome display text_link">resend welcome email</span>
-   <% } %>
+  <span class="resend_welcome display text_link"><%= _.t('resend_welcome_email') %></span>
+  <% } %>
   <div class="edit controls_wrapper">
-    <div class="minibutton default save_changes">OK</div>
+    <div class="minibutton default save_changes"><%= _.t('ok') %></div>
     <% if (account.id && account.id > 0 && account.id != dc.account.get('id')) { %>
-      <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>
-        <div class="minibutton warn enable_account">Re-enable</div>
-      <% } else { %>
-        <div class="minibutton warn disable_account">Disable</div>
-      <% } %>
-      
+    <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>
+    <div class="minibutton warn enable_account"><%= _.t('reenable') %></div>
+    <% } else { %>
+    <div class="minibutton warn disable_account"><%= _.t('disable') %></div>
+    <% } %>
+
     <% } %>
   </div>
   <% } %>
