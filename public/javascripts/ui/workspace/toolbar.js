@@ -258,7 +258,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   _panel : function() {
-    return this._panelEl = this._panelEl || $(this.el).parents('.panel_content')[0];
+    return (this._panelEl = this._panelEl || $(this.el).parents('.panel_content')[0]);
   },
 
   _chooseSort : function(e) {
