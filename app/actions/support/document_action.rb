@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/setup'
 require 'fileutils'
 
-class DocumentModBase < CloudCrowd::Action
+class DocumentAction < CloudCrowd::Action
 
   # The default merge behavior just returns the document id.
   def merge

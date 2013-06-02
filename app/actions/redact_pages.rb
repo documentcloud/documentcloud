@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/support/setup'
 require File.dirname(__FILE__) + '/support/document_mod_base'
 require 'fileutils'
 
-class RedactPages < DocumentModBase
+class RedactPages < DocumentAction
 
   # The zoom ratio at which we'll be drawing redactions.
   LARGE_FACTOR      = 1000.0 / 700.0

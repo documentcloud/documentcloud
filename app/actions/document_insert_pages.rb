@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/support/setup'
 require File.dirname(__FILE__) + '/support/document_mod_base'
 require 'fileutils'
 
-class DocumentInsertPages < DocumentModBase
+class DocumentInsertPages < DocumentAction
 
   def process
     @old_page_count    = document.page_count

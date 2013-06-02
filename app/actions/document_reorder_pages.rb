@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/support/setup'
 require File.dirname(__FILE__) + '/support/document_mod_base'
 require 'fileutils'
 
-class DocumentReorderPages < DocumentModBase
+class DocumentReorderPages < DocumentAction
 
   def process
     begin
