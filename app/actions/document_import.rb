@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/support/setup'
 
-class DocumentImport < CloudCrowd::Action
+class DocumentImport < DocumentAction
   
   # Split a document import job into two parallel parts ... one for the image
   # generation and one for the text extraction.
@@ -161,20 +161,6 @@ class DocumentImport < CloudCrowd::Action
     if Document.owned_by(document.account).pending.count == 0
       LifecycleMailer.deliver_documents_finished_processing(document.account, count)
     end
-  end
-
-  def document
-    return @document if @document
-    ActiveRecord::Base.establish_connection
-    @document = Document.find(options['id'])
-  end
-
-  def asset_store
-    @asset_store ||= DC::Store::AssetStore.new
-  end
-
-  def access
-    options['access'] || DC::Access::PRIVATE
   end
   
   def ocr_language(two_letter)
