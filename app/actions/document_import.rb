@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/support/setup'
+require File.dirname(__FILE__) + '/support/document_action'
 
 class DocumentImport < DocumentAction
   
