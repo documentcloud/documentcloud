@@ -33,7 +33,14 @@ I18n = function( options ){
   if ( this.viewer && this.viewer.schema.document.language ){
     this.setLocale( this.viewer.schema.document.language );
   }
-
+  if ( window.console ){
+    this.log=window.console;
+  } else {
+    var emptyfn = function(str){ };
+    this.log = {
+      warn: emptyfn, error: emptyfn
+    };
+  }
 
 };
 
@@ -44,19 +51,17 @@ I18n = function( options ){
 I18n.prototype.lookup = function( key, args ){
   var string = this.translations.strings[ key ];
   if ( _.isUndefined(string) ){
-    if ( console && console.warn )
-      console.warn( 'i18n nonexistant key: ' + key );
+    this.log.warn( 'i18n translation string not found for key: ' + key );
     string = dc.translations.en.strings[ key ] || '';
   }
-  if ( 'no_reviewer_on_document' == key ){
-    debugger;
-  }
+  if ( ! string )
+    this.log.error( 'English fallback i18n translation string not found for key: ' + key );
   if ( args ){
     if ( _.isArray( string ) ){ // plural lookup
-      return string[ this.translations.pluralizer( args ) ];
-    } else {
-      return vsprintf( string, _.toArray( arguments ).slice(1) );
+      string = string[ this.translations.pluralizer( args ) ];
     }
+    return vsprintf( string, _.toArray( arguments ).slice(1) );
+
   } else {
     return string;
   }

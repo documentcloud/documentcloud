@@ -18,7 +18,7 @@
         <span class="arrow right">&rarr;</span>
       <% } %>
     </span>
-    <span class="text_link open_pages noselect">Open all pages in viewer</span>
+    <span class="text_link open_pages noselect"><%= _.t('open_in_viewer') %></span>
   </div>
   <% for (var page = start, l = end; page <= l; page++) { %>
     <div class="page" data-page="<%= page %>">
@@ -27,10 +27,9 @@
           <div class="icon mini_note"></div>
         <% } %>
         <img class="page_image" alt="" src="<%= doc.pageThumbnailURL(page, 'small') %>" />
-        <div class="page_number">p. <%= page %></div>
+        <div class="page_number"><%= _.t('pg') %> <%= page %></div>
       </div>
     </div>
   <% } %>
   <div class="clear"></div>
 </div>
-

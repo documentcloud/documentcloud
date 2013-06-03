@@ -1,13 +1,13 @@
 <div class="note_contents">
   <div class="note_title display">
-    <span class="<% if (!disableLinks) { %>title_link<% } %>"><%= note.get('title') %> <span class="page_number">(p. <%= note.get('page') %>)</span></span>
+    <span class="<% if (!disableLinks) { %>title_link<% } %>"><%= note.get('title') %> <span class="page_number">(<%=_.t('pg') %> <%= note.get('page') %>)</span></span>
   </div>
   <% if (note.get('access') == 'exclusive') { %>
-    <div class="note_draft_label interface display">Draft</div>
+  <div class="note_draft_label interface display"><%= _.t('draft') %></div>
   <% } %>
-  
+
   <% if (note.get('access') == 'private') { %>
-    <div class="icon lock display" title="Private note"></div>
+  <div class="icon lock display" title="<%= _.t('private_note') %>"></div>
   <% } %>
   <div class="edit_note icon edit_glyph display"></div>
   <br class="clear display" />
@@ -18,44 +18,44 @@
   </div>
   <% var coords = note.coordinates(); %>
   <% if (coords) { %>
-    <div class="note_excerpt_wrap">
-      <div class="note_excerpt" style="height: <%= coords.height %>px;">
-        <div class="left_cover"  style="height: <%= coords.height %>px; width: <%= coords.left %>px;"></div>
-        <div class="right_cover" style="height: <%= coords.height %>px; width: <%= 750 - coords.right %>px;"></div>
-        <img class="note_image" src="<%= note.imageUrl() %>" alt="" style="top: -<%= coords.top %>px;" />
-      </div>
+  <div class="note_excerpt_wrap">
+    <div class="note_excerpt" style="height: <%= coords.height %>px;">
+      <div class="left_cover"  style="height: <%= coords.height %>px; width: <%= coords.left %>px;"></div>
+      <div class="right_cover" style="height: <%= coords.height %>px; width: <%= 750 - coords.right %>px;"></div>
+      <img class="note_image" src="<%= note.imageUrl() %>" alt="" style="top: -<%= coords.top %>px;" />
     </div>
+  </div>
   <% } %>
   <div class="note_text display"><%= note.get('content') %></div>
   <div class="annotation_meta">
     <% if (note.get('author')) { %>
-      <div class="annotation_author interface display">Annotated by: <%= note.get('author') %><% if (note.get('author_organization')) { %>, <i><%= note.get('author_organization') %><% } %></i></div>
+    <div class="annotation_author interface display"><%= _.t('annotated_by', note.get('author') ) %><% if (note.get('author_organization')) { %>, <i><%= note.get('author_organization') %><% } %></i></div>
     <% } %>
     <% if (note.get('access') == 'exclusive') { %>
-      <div class="annotation_access interface display">
-        This draft is only visible to you and collaborators.
-      </div>
+    <div class="annotation_access interface display">
+      <%= _.t('draft_visible_collab') %>
+    </div>
     <% } else if (note.get('access') == 'private') { %>
-      <div class="annotation_access interface display">
-        This private note is only visible to you.
-      </div>
+    <div class="annotation_access interface display">
+      <%= _.t('private_note_visible') %>
+    </div>
     <% } %>
   </div>
   <div class="note_text_edit_wrap">
     <textarea class="note_text_edit text_area edit"></textarea>
   </div>
   <div class="note_controls edit">
-    <div class="minibutton warn delete_note float_left">Delete</div>
+    <div class="minibutton warn delete_note float_left"><%= _.t('delete') %></div>
     <div class="minibutton default save_note float_right">
       <% if (note.get('access') == 'exclusive') { %>
-        Publish
+      <%= _.t('publish') %>
       <% } else { %>
-        Save
+      <%= _.t('save') %>
       <% } %>
     </div>
     <% if (_.contains(['public', 'exclusive'], note.get('access'))) { %>
-      <div class="minibutton save_draft_note float_right">Save as Draft</div>
+    <div class="minibutton save_draft_note float_right"><%= _.t('save_as_draft') %></div>
     <% } %>
-    <div class="minibutton cancel_note float_right">Cancel</div>
+    <div class="minibutton cancel_note float_right"><%= _.t('save') %></div>
   </div>
 </div>

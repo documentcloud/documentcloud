@@ -4,40 +4,29 @@
     <div class="text_input dark small">
       <input type="text" name="related_article" value="<%= doc.get('related_article') %>" id="publish_prepare_related_article" />
     </div>
-    <label for="publish_prepare_related_article">Related article URL:</label>
+    <label for="publish_prepare_related_article"><%= _.t('related_article_url') %>:</label>
     <p class="dialog_info selectable_text interface">
-      Providing the URL of the article or that references this
-      document will enable a "Related Article" link within the document viewer.
-      Many readers arrive at a document from a web search &mdash; the link guides
-      them back to the document's original context.
+      <%= _.t('related_article_url_help') %>
     </p>
   </div>
 
   <div class="publish_section">
     <% if (doc.isPublic()) { %>
-      <label>This document is already public.</label>
+      <label><%= _.t('document_already_public') %></label>
     <% } else if (doc.get('publish_at')) { %>
-      <label>This document will be public on <%= doc.formattedPublishAtDate() %></label>
+      <label><%= _.t('document_public_on',doc.formattedPublishAtDate() )%></label>
     <% } else { %>
       <% var checked = doc.isPublic() ? 'checked="checked"' : '' ; %>
       <input type="checkbox" name="access_level" id="publish_prepare_access_level" <%= checked %> />
-      <label for="publish_prepare_access_level">Make document public:</label>
+      <label for="publish_prepare_access_level"><%= _.t('make_document_public') %>:</label>
     <% } %>
     <p class="dialog_info selectable_text interface">
       <% if (doc.isPublic()) { %>
-        This document is public. It is currently available to users who search
-        DocumentCloud's catalog and will be visible to the public when you
-        embed it on your website. Change the
-        <span class="text_link edit_access">access level</span>.
+        <%= _.t('document_public_help', '<span class="text_link edit_access">','</span>') %>
       <% } else { %>
-        This document is private. It will not be visible to your readers until you
-        make it public. Change the <span class="text_link edit_access">access level</span> now
-        or <%= doc.get('publish_at') ? '' : 'set the' %>
-        <span class="text_link set_publish_at">publication date</span>.
-        <br /><br />  
-        If you want to test the embed before publication, make sure to edit the
-        embed code to use secure HTTPS URLs, and then switch back to regular HTTP 
-        before making the document public.
+      <%= _.t('document_publish_private_help', '<span class="text_link edit_access">','</span>',( doc.get('publish_at') ? '' : _.t('set_the') ) ) %>
+        <br /><br />
+        <%= _.t('document_publish_embed_test') %>
       <% } %>
     </p>
   </div>
@@ -49,70 +38,67 @@
   <div class="publish_section">
     <label>Document viewer size:</label>
     <select name="viewer_size">
-      <option value="full" selected="selected">Full Page</option>
+      <option value="full" selected="selected"><%= _.t('full_page') %></option>
       <option value="fixed">Fixed Size</option>
     </select>
     <span class="dimensions">
       <label for="publish_option_width">
-        Width:
+        <%= _.t('width') %>:
         <input id="publish_option_width" type="text" name="width" value="" />px
       </label>
       &nbsp;&nbsp;
       <label for="publish_option_height">
-        Height:
+        <%= _.t('height') %>:
         <input id="publish_option_height" type="text" name="height" value="" />px
       </label>
     </span>
     <p class="dialog_info selectable_text interface">
-      Choose whether to display your document in a
-      <a class="text_link" href="http://www.propublica.org/documents/item/memo-on-goldman-sachs-timberwolf-cdo-nov.-10-2006" target="_blank">full page layout</a>,
-      or a <a class="text_link" href="http://voices.washingtonpost.com/thefix/white-house/rahm-emanuel-ruled-ineligible.html" target="_blank">fixed size box</a>.
+      <%= _.t('publish_choose_display', '<a class="text_link" href="http://www.propublica.org/documents/item/memo-on-goldman-sachs-timberwolf-cdo-nov.-10-2006" target="_blank">','</a>', '<a class="text_link" href="http://voices.washingtonpost.com/thefix/white-house/rahm-emanuel-ruled-ineligible.html" target="_blank">','</a>' ) %>
     </p>
   </div>
 
   <div class="publish_section">
-    <label for="publish_option_text">Viewer opens to:</label>
+    <label for="publish_option_text"><%= _.t('embed_viewer_opens_to') %>:</label>
     <select class="viewer_open_to" name="viewer_open_to">
-      <option value="first_page">First Page</option>
-      <option value="page">Page ...</option>
+      <option value="first_page"><%= _.t('first_page') %></option>
+      <option value="page"><%= _.t('page_ellipsis') %></option>
       <% if (doc.get('annotation_count')) { %>
-        <option value="note">Note ...</option>
+        <option value="note"><%= _.t('note_ellipsis') %></option>
       <% } %>
     </select>
     <div class="open_to"></div>
     <p class="dialog_info selectable_text interface">
-      Tell the viewer to open directly to a specific page or annotation.
+      <%= _.t('embed_viewer_opens_to_help') %>
     </p>
   </div>
 
   <div class="publish_section">
     <input id="publish_option_sidebar" type="checkbox" name="sidebar" checked />
-    <label for="publish_option_sidebar">Show the sidebar:</label>
+    <label for="publish_option_sidebar"><%= _.t('embed_show_sidebar') %>:</label>
     <p class="dialog_info selectable_text interface">
-      If your layout has limited horizontal space, uncheck this box to hide the sidebar.
+      <%= _.t('embed_show_sidebar_help') %>
     </p>
   </div>
 
   <div class="publish_section">
     <input id="publish_option_text" type="checkbox" name="show_text" checked />
-    <label for="publish_option_text">Show the text tab:</label>
+    <label for="publish_option_text"><%= _.t('embed_show_text_tab') %>:</label>
     <p class="dialog_info selectable_text interface">
-      If the quality of the document's text is poor, uncheck this box to hide the text tab.
+      <%= _.t('embed_hide_text_tab_help') %>
     </p>
   </div>
 
   <div class="publish_section">
     <input id="publish_option_pdf" type="checkbox" name="show_pdf" checked />
-    <label for="publish_option_pdf">Link to the original PDF:</label>
+    <label for="publish_option_pdf"><%= _.t('link_to_pdf') %>:</label>
     <p class="dialog_info selectable_text interface">
-      Uncheck this box to remove the PDF link from the document viewer.
+      <%= _.t('link_to_pdf_help') %>
     </p>
   </div>
 
   <div class="publish_section">
     <p class="dialog_info selectable_text interface">
-      Before continuing, please take a moment to
-      <span class="text_link preview">preview the document viewer</span>.
+      <%= _.t('preview_viewer','<span class="text_link preview">','</span>') %>
     </p>
   </div>
 
@@ -124,7 +110,7 @@
 
 
 <div class="publish_wizard_controls">
-  <div class="minibutton next default">Next <span class="text_arrow">&raquo;</span></div>
+  <div class="minibutton next default"><%= _.t('next') %> <span class="text_arrow">&raquo;</span></div>
   <div class="minibutton previous dark"><span class="text_arrow">&laquo;</span> Back</div>
-  <div class="minibutton close dark">Close</div>
+  <div class="minibutton close dark"><%= _.t('close') %></div>
 </div>

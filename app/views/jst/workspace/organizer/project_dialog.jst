@@ -1,18 +1,18 @@
 <div class="text_input dark">
-  <input name="title" id="project_title" type="text" value="" placeholder="Title..." />
+  <input name="title" id="project_title" type="text" value="" placeholder="<%= _.t('title_ellipsis') %>" />
 </div>
 <div class="text_input dark small description_wrap">
-  <textarea name="description" id="project_description" class="text_area dark small content attribute" placeholder="Description..."></textarea>
+  <textarea name="description" id="project_description" class="text_area dark small content attribute" placeholder="<%= _.t('description_ellipsis') %>"></textarea>
 </div>
 
 <div class="slug">
-  <span style="padding-right: 10px;" class="selectable_text">Project ID: <%= model.slug() %></span>
+  <span style="padding-right: 10px;" class="selectable_text"><%= _.t( 'project_id', model.slug() ) %></span>
 </div>
 
 <div class="collaboration">
   <div class="collaborators" style="display:none;">
     <div class="collaborators_title">
-      Collaborators:
+      <%= _.t('collaborators') %>:
     </div>
     <div class="collaborator_list_wrapper not_draggable">
       <table class="collaborator_list" border="0" cellspacing="0" cellpadding="0">
@@ -22,16 +22,13 @@
     </div>
   </div>
   <div class="collaborator_management">
-    <div class="add_collaborator text_link">Add a collaborator to this project</div>
+    <div class="add_collaborator text_link"><%= _.t('add_a_collaborator') %></div>
     <div class="enter_email" style="display:none;">
       <div class="text_input dark small">
         <input name="collaborator_email" id="collaborator_email" type="text" value="" />
       </div>
-      <div class="minibutton default add">Add</div>
-      <label class="enter_email_label" for="collaborator_email">Enter email address:</label>
+      <div class="minibutton default add"><%= _.t('add') %></div>
+      <label class="enter_email_label" for="collaborator_email"><%= _.t('enter_email_address') %></label>
     </div>
   </div>
 </div>
-
-
-

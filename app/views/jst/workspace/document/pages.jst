@@ -15,16 +15,16 @@
 <% if (pageCount) { %>
   <div class="pages_header">
     <span class="icon cancel_search" title="hide pages"></span>
-    <span class="pages_title interface"><%= pageCount >= 200 ? 'over ' : '' %> <%= mentions.length %> <%= dc.inflector.pluralize('mention', mentions.length) %>
-    of <%= dc.inflector.commify(doc.uniquePageEntityValues(), {quote : true, conjunction : 'or'}) %>
-    on <%= pageCount %>
-    <%= dc.inflector.pluralize('page', pageCount) %></span>
+    <span class="pages_title interface"><%= pageCount >= 200 ? _.t('over_x_mentions', mentions.length ) : _.t('mentions',mentions.length) %>
+    <%= _.t('of') %> <%= dc.inflector.commify( doc.uniquePageEntityValues(), {quote : true, conjunction : _.t('or') }) %>
+    <%= _.t('on') %> <%= pageCount %>
+    <%= dc.inflector.pluralize( _.t('page'), pageCount) %></span>
   </div>
   <% _.each(mentions, function(mention) { %>
     <div class="page" data-page="<%= mention.page_number %>" data-id="<%= mention.id %>" data-offset="<%= mention.offset %>">
       <div class="page_icon">
         <img class="page_image" alt="page <%= mention.page_number %>" src="<%= doc.pageThumbnailURL(mention.page_number) %>" />
-        <div class="page_number">p. <%= mention.page_number %></div>
+        <div class="page_number"><%= _.t('pg') %> <%= mention.page_number %></div>
       </div>
       <div class="page_excerpt noselect"><%= dc.inflector.trimExcerpt(mention.excerpt) %></div>
       <div class="clear"></div>
@@ -32,4 +32,3 @@
   <% }); %>
   <div class="clear"></div>
 <% } %>
-

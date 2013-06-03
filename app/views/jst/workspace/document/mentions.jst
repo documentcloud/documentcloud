@@ -2,18 +2,18 @@
   <div class="mentions_header">
     <span class="icon cancel_search" title="hide pages"></span>
     <span class="mentions_title noselect interface"><%= mentions.length %>
-    <%= total > mentions.length ? "of " + total : "" %>
+    <%= total > mentions.length ? ' ' + _.t('of') + ' ' + total : "" %>
     <%= dc.inflector.pluralize('page', total) %>
-    mentioning &ldquo;<%= query %>&rdquo;</span>
+    <%= _.t('mentioning_query', query ) %></span>
     <% if (total > mentions.length) { %>
-      <span class="text_link noselect show_mentions">Show all <%= total %> pages</span>
+      <span class="text_link noselect show_mentions"><%= _.t('show_all_x_pages', total ) %></span>
     <% } %>
   </div>
   <% _.each(mentions, function(mention) { %>
     <div class="page mention" data-page="<%= mention.page %>">
       <div class="page_icon">
         <img class="page_image" alt="page <%= mention.page %>" src="<%= model.pageThumbnailURL(mention.page) %>" />
-        <div class="page_number">p. <%= mention.page %></div>
+        <div class="page_number"><%= _.t('pg') %> <%= mention.page %></div>
       </div>
       <div class="page_excerpt noselect"><%= dc.inflector.trimExcerpt(dc.inflector.squeeze(mention.text)) %></div>
       <div class="clear"></div>

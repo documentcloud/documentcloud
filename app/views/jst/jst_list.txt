@@ -27,29 +27,29 @@
  * workspace/common/menubutton.jst
  * workspace/common/tooltip.jst
  * workspace/document/data_dialog.jst
-workspace/document/data_dialog_row.jst
-workspace/document/document_dialog.jst
-workspace/document/embed_code.jst
-workspace/document/entities.jst
-workspace/document/mentions.jst
-workspace/document/note.jst
-workspace/document/note_select.jst
-workspace/document/page_images.jst
-workspace/document/page_select.jst
-workspace/document/pages.jst
-workspace/document/publication_date_dialog.jst
-workspace/document/tile.jst
-workspace/document/timeline.jst
-workspace/document/upload_dialog.jst
-workspace/document/upload_document_tile.jst
-workspace/home/tweet.jst
-workspace/organizer/account_links.jst
-workspace/organizer/organizations.jst
-workspace/organizer/project.jst
-workspace/organizer/project_dialog.jst
-workspace/organizer/sidebar.jst
-workspace/search/embed_code.jst
-workspace/workspace/document_embed_dialog.jst
+ * workspace/document/data_dialog_row.jst
+ * workspace/document/document_dialog.jst
+ * workspace/document/embed_code.jst
+ * workspace/document/entities.jst
+ * workspace/document/mentions.jst
+ * workspace/document/note.jst
+ * workspace/document/note_select.jst
+ * workspace/document/page_images.jst
+ * workspace/document/page_select.jst
+ * workspace/document/pages.jst
+ * workspace/document/publication_date_dialog.jst
+ * workspace/document/tile.jst
+ * workspace/document/timeline.jst
+ * workspace/document/upload_dialog.jst
+ * workspace/document/upload_document_tile.jst
+ * workspace/home/tweet.jst
+ * workspace/organizer/account_links.jst
+ * workspace/organizer/organizations.jst
+ * workspace/organizer/project.jst
+ * workspace/organizer/project_dialog.jst
+ * workspace/organizer/sidebar.jst
+ * workspace/search/embed_code.jst
+ * workspace/workspace/document_embed_dialog.jst
 workspace/workspace/entities.jst
 workspace/workspace/no_results.jst
 workspace/workspace/note_embed_code.jst

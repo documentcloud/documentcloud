@@ -2,12 +2,12 @@
 <div class="hoverable">
   <img class="icon doc generic is_draggable <%= dc.account ? 'noselect' : '' %>" src="<%= thumbnail_url %>" data-id="<%= id %>" />
   <div class="title noselect">
-    <a href="<%= document_viewer_url %>" class="doc_title noselect"><%= title %></a>&nbsp;<span class="<%= icon["class"] %>" title="<%= icon.title %>">&#65279;</span>&nbsp;<span class="icon document_tool edit_glyph <%= icon.iconless ? '' : 'bottom' %>" title="Edit Document Information">&#65279;</span>
+    <a href="<%= document_viewer_url %>" class="doc_title noselect"><%= title %></a>&nbsp;<span class="<%= icon["class"] %>" title="<%= icon.title %>">&#65279;</span>&nbsp;<span class="icon document_tool edit_glyph <%= icon.iconless ? '' : 'bottom' %>" title="<%= _.t('edit_document_information') %>">&#65279;</span>
   </div>
 </div>
 <% if (annotation_count) { %>
   <span class="show_notes">
-    <span class="icon cancel_search" title="hide notes"></span><span class="text_link"><span class="note_count"><%= annotation_count %></span> <%= dc.inflector.pluralize('note', annotation_count) %></span>
+    <span class="icon cancel_search" title="hide notes"></span><span class="text_link"><span class="note_count"><%= annotation_count %></span> <%= dc.inflector.pluralize( _.t('note'), annotation_count) %></span>
   </span>
   <% if (public_note_count) { %>
   <div class="icon mini_note"></div>
@@ -19,18 +19,18 @@
 <div class="metalines interface">
   <span class="noselect">
     <% if (page_count) { %>
-      <span class="quiet_link page_count"><%= page_count + ' ' + dc.inflector.pluralize('page', page_count) %></span> -
+      <span class="quiet_link page_count"><%= page_count + ' ' + dc.inflector.pluralize(_.t('page'), page_count) %></span> -
     <% } %>
     <% if (model.allowedToEdit() && reviewer_count) { %>
-      <span class="reviewer_count quiet_link"><%= reviewer_count + ' ' + dc.inflector.pluralize('reviewer', reviewer_count) %></span> -
+      <span class="reviewer_count quiet_link"><%= reviewer_count + ' ' + dc.inflector.pluralize(_.t('reviewer'), reviewer_count) %></span> -
     <% } %>
-    <% if (source) { %>Source: <span class="quiet_link search_source"><%= source %></span> -<% } %>
-    Contributed by
+    <% if (source) { %><%= _.t('source') %>>: <span class="quiet_link search_source"><%= source %></span> -<% } %>
+    <%= _.t('contributed_by') %>
     <span class="quiet_link search_account"><%= account_name %></span>,
     <span class="quiet_link search_group"><%= organization_name %></span> -
     <%= created_at %>
     <% if (publish_at) { %>
-      - (Public on
+      - (<%= 'public_on' %>
       <span class="quiet_link change_publish_at"><%= model.formattedPublishAtDate() %></span>)
     <% } %>
   </span>
@@ -45,7 +45,7 @@
       <span class="data_item noselect gradient_white <%= className %>"><span class="data_key"><%= key %>:</span>
       <span class="data_value"><%= value %></span></span>
     <% } %>
-    <span class="icon document_tool edit_glyph" title="Edit Data">&#65279;</span>
+    <span class="icon document_tool edit_glyph" title="<%= _.t('edit_data') %>">&#65279;</span>
   </div>
 <% } %>
 <div class="notes"></div>

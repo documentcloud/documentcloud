@@ -1,7 +1,7 @@
 <div class="upload_title">
   <% if (editable) { %>
-    <div class="icon remove_queue cancel_search_dark not_draggable" title="Remove file"></div>
-    <div class="icon edit_glyph_dark open_edit not_draggable" title="Edit details"></div>
+  <div class="icon remove_queue cancel_search_dark not_draggable" title="<%= _.t('remove_file') %>"></div>
+    <div class="icon edit_glyph_dark open_edit not_draggable" title="<%= _.t('edit_details') %>"></div>
   <% } %>
   <div class="upload_file_size">
     <% if (model.get('size')) { %>
@@ -48,15 +48,15 @@
         Access Level:
       </label>
       <select name="access" class="document_access" id="document_upload_access_<%= model.id %>">
-        <option value="public">Public Access</option>
-        <option value="private" selected="true">Private Access</option>
-        <option value="organization">Private to <%= dc.account.organization().get('name') %></option>
+        <option value="public"><%= _.t('public_access') %></option>
+        <option value="private" selected="true"><%= _.t('private_access') %></option>
+        <option value="organization"><%= _.t('private_to_organization', dc.account.organization().get('name') ) %></option>
       </select>
     </div>
-    
+
     <div class="language">
       <label for="document_language_<%= model.id %>">
-        Language:
+        <%= _.t('language') %>:
       </label>
       <select name="language" class="document_language" id="document_language_<%= model.id %>">
         <% _.each( dc.language.SUPPORTED, function(language_code){ %>
@@ -65,8 +65,8 @@
       </select>
     </div>
 
-    <div class="apply_all" title="Apply this description, source, and access level to all files">
-      <span class="text_link">Apply to All Files</span>
+    <div class="apply_all" title="<%= _.t('apply_fields_all_files') %>">
+      <span class="text_link"><%= _.t('apply_all_files') %></span>
     </div>
   </div>
 <% } %>

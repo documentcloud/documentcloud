@@ -3,64 +3,64 @@
 
 <% var renderList = only ? [only] : dc.model.Entity.ORDER; %>
 <% _.each(renderList, function(kind) { %>
-  <% var list  = (entities.index()[kind] || []); %>
-  <% var graph = only || _.include(dc.model.Entity.SPARK_GRAPHS, kind); %>
-  <% var page  = only ? list : list.slice(0, dc.model.Entity.PER_PAGE); %>
-  <% if (list.length) { %>
-    <div class="entity_group">
-      
-      <div class="entity_group_header">
-        <% if (!renderedButton) { %>
-          <span class="icon cancel_search" title="hide entities"></span>
-          <% renderedButton = true; %>
-        <% } %>
-        <% if (only) { %>
-          <span class="arrow left interface">←</span>
-        <% } %>
-        <span class="entity_group_title interface">
-          <%= list.length + ' ' + (list.length == 1 ? dc.inflector.capitalize(kind) : dc.model.Entity.DISPLAY_NAME[kind]) %>
-        </span>
-        <% if (list.length > page.length) { %>
-          <span class="text_link show_all" data-kind="<%= kind %>">Show all</span>
-        <% } %>
-      </div>
-      
-      <% if (graph) { %>
-        
-        <% for (var i = 0, l = page.length; i < l; i++) { %>
-          <% var entity = page[i]; %>
-          <div class="entity_line" data-id="<%= entity.id %>">
-            <div class="entity_line_title quiet_link">
-              <%= entity.escape('value') %>
-            </div>
-            <div class="entity_buckets" style="width:<%= width %>px;">
-              <div class="entity_rule"></div>
-              <div>
-                <% var buckets = entity.buckets(width); %>
-                <% for (var j = 0, k = buckets.length + distance; j < k; j++) { %>
-                  <% var bucket = buckets[j]; %>
-                  <div class="<%= bucket ? 'occurs' : '' %> entity_bucket_wrap">
-                    <% if (bucket) { %>
-                      <div class="entity_bucket" data-occurrence="<%= bucket.offset + ':' + bucket.length %>" style="height:<%= bucket.height %>px; margin-top: -<%= Math.floor(bucket.height / 2) %>px;"></div>
-                    <% } %>
-                  </div>
-                <% } %>
-              </div>
-            </div>
-          </div>
-        <% } %>
-        
-      <% } else { %>
-        
-        <div class="entity_list" style="width:<%= width + 120 %>px;">
-          <% for (var i = 0, l = page.length; i < l; i++) { %>
-            <% var entity = page[i]; %>
-            <span class="entity_list_title quiet_link" data-id="<%= entity.id %>"><%= entity.escape('value') %></span><%= ((i < l - 1) ? ', ' : '') %>
+<% var list  = (entities.index()[kind] || []); %>
+<% var graph = only || _.include(dc.model.Entity.SPARK_GRAPHS, kind); %>
+<% var page  = only ? list : list.slice(0, dc.model.Entity.PER_PAGE); %>
+<% if (list.length) { %>
+<div class="entity_group">
+
+  <div class="entity_group_header">
+    <% if (!renderedButton) { %>
+    <span class="icon cancel_search" title="hide entities"></span>
+    <% renderedButton = true; %>
+    <% } %>
+    <% if (only) { %>
+    <span class="arrow left interface">←</span>
+    <% } %>
+    <span class="entity_group_title interface">
+      <%= list.length + ' ' + (list.length == 1 ? dc.inflector.capitalize(kind) : dc.model.Entity.DISPLAY_NAME[kind]) %>
+    </span>
+    <% if (list.length > page.length) { %>
+    <span class="text_link show_all" data-kind="<%= kind %>"><%= _.t('show_all') %></span>
+    <% } %>
+  </div>
+
+  <% if (graph) { %>
+
+  <% for (var i = 0, l = page.length; i < l; i++) { %>
+  <% var entity = page[i]; %>
+  <div class="entity_line" data-id="<%= entity.id %>">
+    <div class="entity_line_title quiet_link">
+      <%= entity.escape('value') %>
+    </div>
+    <div class="entity_buckets" style="width:<%= width %>px;">
+      <div class="entity_rule"></div>
+      <div>
+        <% var buckets = entity.buckets(width); %>
+        <% for (var j = 0, k = buckets.length + distance; j < k; j++) { %>
+        <% var bucket = buckets[j]; %>
+        <div class="<%= bucket ? 'occurs' : '' %> entity_bucket_wrap">
+          <% if (bucket) { %>
+          <div class="entity_bucket" data-occurrence="<%= bucket.offset + ':' + bucket.length %>" style="height:<%= bucket.height %>px; margin-top: -<%= Math.floor(bucket.height / 2) %>px;"></div>
           <% } %>
         </div>
-        
-      <% } %>
-      
+        <% } %>
+      </div>
     </div>
+  </div>
   <% } %>
+
+  <% } else { %>
+
+  <div class="entity_list" style="width:<%= width + 120 %>px;">
+    <% for (var i = 0, l = page.length; i < l; i++) { %>
+    <% var entity = page[i]; %>
+    <span class="entity_list_title quiet_link" data-id="<%= entity.id %>"><%= entity.escape('value') %></span><%= ((i < l - 1) ? ', ' : '') %>
+    <% } %>
+  </div>
+
+  <% } %>
+
+</div>
+<% } %>
 <% }); %>

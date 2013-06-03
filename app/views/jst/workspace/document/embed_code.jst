@@ -1,6 +1,6 @@
 <div class="dialog_info selectable_text interface">
-  <span class="text_link remove_lines">Remove line breaks</span>
-  Add this HTML to your site to create a document viewer.
+  <span class="text_link remove_lines"><%= _.t('remove_line_breaks') %></span>
+  <%= _.t('add_html_for_viewer') %>
 </div>
 
 <textarea class="snippet">
@@ -8,10 +8,10 @@
 &lt;script src="//s3.amazonaws.com/s3.documentcloud.org/viewer/loader.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   DV.load("<%= doc.get("document_viewer_js") %>", {
-    <%= options %>
+  <%= options %>
   });
 &lt;/script&gt;
-<% if (rawOptions.pdf !== false) { %>&lt;noscript&gt;
+  <% if (rawOptions.pdf !== false) { %>&lt;noscript&gt;
   &lt;a href="<%= doc.publicUrl(doc.get('pdf_url')) %>"&gt;<%= doc.escape("title") %> (PDF)&lt;/a&gt;
   &lt;br /&gt;
   &lt;a href="<%= doc.publicUrl(doc.get('full_text_url')) %>"&gt;<%= doc.escape("title") %> (Text)&lt;/a&gt;
@@ -19,6 +19,5 @@
 </textarea>
 
 <div class="dialog_info selectable_text interface">
-  You can find plenty of examples of embedded documents on our list of
-  <a class="text_link" href="http://www.documentcloud.org/featured" target="_blank">featured reporting</a>.
+  <%= _.t('featured_examples_list', '<a class="text_link" href="http://www.documentcloud.org/featured" target="_blank">', '</a>') %>
 </div>

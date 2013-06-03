@@ -1,19 +1,13 @@
 <div class="description">
-  <% var pronoun = multiple ? 'them' : 'it'; %>
-  <%= multiple ? 'These documents are' : 'This document is' %> private.
-  You must make <%= pronoun %> public before
-  <%= multiple ? 'they' : 'it' %> will be visible on your website or in
-  searches of DocumentCloud's catalog. You can choose to make <%= pronoun %>
-  public at a future date, or you can
-  <span class="text_link public_now">change <%= pronoun %> now</span>.
+<%= _.t('private_documents_visible_instructions', documentCount, '<span class="text_link public_now">','</span>' ) %>
 </div>
 
-Make public on:
+<%= _.t('make_public_on') %>
 <span class="datetime">
   <%= JST['common/date_select']({date : date}) %>
 </span>
 
-at
+<%= 'at' %>
 <span class="datetime">
   <%= JST['common/hour_select']({date : date}) %>
 </span>

@@ -1,9 +1,11 @@
 <div class="description">
-  Edit key/value pairs describing 
-  <%= multiple ? "these documents" : "this document"%><% if (removeAll) { %>, 
-  or <span class="text_link remove_all">remove all data</span><% } %>.
+  <%= _.t('edit_document_pairs', documentCount ) %>
+  <% if (removeAll) { %>, 
+  <%= _.t( 'or_remove_all_data', '<span class="text_link remove_all">','</span>' ) %>
+  <% } %>
   <br />
-  For example: &ldquo;birth: 1935-01-08&rdquo;, or &ldquo;status: released&rdquo;
+  <%= _.t('for_example_data') %>
+
 </div>
 
 <div class="rows">

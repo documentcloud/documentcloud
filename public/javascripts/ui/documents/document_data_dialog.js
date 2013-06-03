@@ -14,7 +14,7 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
     this.multiple     = docs.length > 1;
     this.originalData = Documents.sharedData(this.docs);
     this._rowTemplate = JST['document/data_dialog_row'];
-    dc.ui.Dialog.call(this, {mode : 'custom', title : "Edit Data for " + this._title(), saveText : 'Save'});
+    dc.ui.Dialog.call(this, {mode : 'custom', title : _.t('edit_data_for',this._title()), saveText : _.t('save') });
     this.render();
     $(document.body).append(this.el);
   },
@@ -25,9 +25,9 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
     var removeAll = _.any(this.docs, function(doc){ return !_.isEmpty(doc.get('data')); });
     this._container = this.$('.custom');
     this._container.html(JST['document/data_dialog']({
-      multiple  : this.multiple,
-      removeAll : removeAll,
-      data      : data
+      documentCount : this.docs.length,
+      removeAll     : removeAll,
+      data          : data
     }));
     this.checkNoData();
     return this;
@@ -57,7 +57,7 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
     var data = this.serialize();
     var forbidden = _.detect(_.keys(data), function(key){ return _.include(dc.searchPrefixes, key.toLowerCase()); });
     if (forbidden) {
-      this.error('"' + forbidden + '" cannot be used as a key');
+      this.error( _.t('bad_data_key', forbidden ) );
     } else {
       var toRemove = _.without.apply(_, [_.keys(this.originalData)].concat(_.keys(data)));
       _.each(this.docs, function(doc){ doc.mergeData(data, toRemove); });
@@ -80,7 +80,7 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
   _removeAll : function() {
     this.close();
     var docs = this.docs;
-    var message = "Are you sure you want to remove all data from " + this._title() + "?";
+    var message = _.t('confirm_remove_all_data', this._title() );
     dc.ui.Dialog.confirm(message, function() {
       _.each(docs, function(doc){ doc.save({data: {}}); });
       return true;
@@ -91,7 +91,7 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
   // Sets the dialog title to include the number of documents or title of
   // the single document being edited.
   _title : function() {
-    if (this.multiple) return this.docs.length + ' Documents';
+    if (this.multiple) return _.t('documents', this.docs.length );
     return '"' + dc.inflector.truncate(this.docs[0].get('title'), 25) + '"';
   },
 
