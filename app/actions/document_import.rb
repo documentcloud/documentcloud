@@ -68,7 +68,7 @@ class DocumentImport < DocumentAction
   def merge
     document.update_attributes :access => access
     email_on_complete
-    document.id
+    super
   end
 
   def process_images

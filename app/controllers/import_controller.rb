@@ -30,7 +30,8 @@ class ImportController < ApplicationController
       record.document.update_attributes(:access => DC::Access::ERROR) if record && record.document
     end
     ProcessingJob.destroy_all(:cloud_crowd_id => job['id'])
-    render :text => '201 Created', :status => 201
+    #render :text => '201 Created', :status => 201
+    render :text => "Created but don't clean up the job right now."
   end
 
   # CloudCrowd is done changing the document's asset access levels.
