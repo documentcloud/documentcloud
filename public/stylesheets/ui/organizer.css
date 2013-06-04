@@ -38,6 +38,7 @@
 #organizer #project_controls {
   margin-right: 2px;
   position: relative;
+  padding: 20px 20px;
 }
   #new_document_form {
     position: relative;
@@ -59,6 +60,12 @@
     }
     #new_document_form button {
       display: none;
+    }
+    #new_document_form .minibutton {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 94px;
     }
 #organizer .project_list_wrap {
 }
