@@ -3,15 +3,16 @@
 dc.controllers.Searcher = Backbone.Router.extend({
 
   // Error messages to display when your search returns no results.
-  NO_RESULTS : {
-    project   : "This project does not contain any documents.",
-    account   : "This account does not have any documents.",
-    group     : "This organization does not have any documents.",
-    published : "This account does not have any published documents.",
-    annotated : "There are no annotated documents.",
-    search    : "Your search did not match any documents.",
-    all       : "There are no documents."
-  },
+
+ NO_RESULTS : {
+  project    : _.t('not_found_project'),
+  account    : _.t('not_found_account'),
+  group      : _.t('not_found_group'),
+   published : _.t('not_found_published'),
+  annotated  : _.t('not_found_annotated'),
+  search     : _.t('not_found_search'),
+  all        : _.t('not_found_all')
+ },
 
   PAGE_MATCHER  : (/\/p(\d+)$/),
 

@@ -113,9 +113,9 @@ dc.model.Project = Backbone.Model.extend({
     var docCount    = this.get('document_count');
     var noteCount   = this.get('annotation_count');
     var shareCount  = this.collaborators.length;
-    return docCount + ' ' + dc.inflector.pluralize('document', docCount)
-      + ', ' + noteCount + ' ' + dc.inflector.pluralize('note', noteCount)
-      + (shareCount ? ', ' + shareCount + ' ' + dc.inflector.pluralize('collaborator', shareCount) : '');
+    return docCount + ' ' + dc.inflector.pluralize(_.t('document'), docCount)
+      + ', ' + noteCount + ' ' + dc.inflector.pluralize( _.t('note'), noteCount)
+      + (shareCount ? ', ' + shareCount + ' ' + dc.inflector.pluralize( _.t('collaborator'), shareCount) : '');
   },
 
   _setCollaboratorsResource : function() {
@@ -126,15 +126,7 @@ dc.model.Project = Backbone.Model.extend({
 });
 
 dc.model.Project.topLevelTitle = function(type) {
-  switch (type) {
-    case 'all_documents':             return 'All Documents';
-    case 'your_documents':            return 'Your Documents';
-    case 'annotated_documents':       return 'Annotated Documents';
-    case 'popular_documents':         return 'Popular Documents';
-    case 'published_documents':       return 'Published Documents';
-    case 'your_published_documents':  return 'Your Published Documents';
-
-  }
+  return _.t( type );
 };
 
 // Project Set

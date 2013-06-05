@@ -33,9 +33,9 @@
   }
   #paginator .legal {
     position: absolute;
-    width: 100px;
+    width: 150px;
     left: 50%;
-    margin-left: -50px;
+    margin-left: -75px;
     text-align: center;
   }
   #paginator .description,
