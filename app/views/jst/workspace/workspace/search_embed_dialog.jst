@@ -1,41 +1,39 @@
 <div class="publish_step publish_step_1 is_enabled">
 
   <div class="publish_section publish_info selectable_text">
-    <%= publicCount %> public <%= dc.inflector.pluralize('document', documentsCount) %>
-    <%= projectQuery ? 'in this project' : 'matching this search' %>
-    will appear in this set.
+    <%= publicCount %> <%= _.t('public') %> <%= dc.inflector.pluralize( _.t('document'), documentsCount) %>
+    <%= projectQuery ? _.t('in_project') : _.t('matching_search') %>
+    <%= _.t('set_will_appear') %>
     <% if (restrictedCount > 0) {  %>
-      <span class="publish_section text_link change_access"><%= restrictedCount %> private <%= dc.inflector.pluralize('document', restrictedCount) %></span>
-      will not appear until published.
+      <span class="publish_section text_link change_access"><%= restrictedCount %> <%= _.t('private') %> <%= dc.inflector.pluralize(_.t('document'), restrictedCount) %></span>
+      <%= _.t('no_appear_until_publish') %>
     <% } %>
-    Future documents
-    <%= projectQuery ? 'added to this project' : 'matching this search' %>
-    will appear in your embed.
+    <%= _.t('future_documents_w_appear', projectQuery ? _.t('added_project') : _.t('matching_search') ) %>
   </div>
 
   <div class="publish_config">
 
     <div class="publish_section">
-      <label for="publish_option_input_title">Title: </label>
+      <label for="publish_option_input_title"><%= _.t('title') %>: </label>
       <div class="text_input dark small">
         <input id="publish_option_input_title" class="input_title" name="title" />
       </div>
-      <span class="sidelabel">(optional)</span>
+      <span class="sidelabel">(<%= _.t('optional') %>)</span>
     </div>
 
     <div class="publish_section">
-      <label for="publish_option_order">Order documents by:</label>
+      <label for="publish_option_order"><%= _.t('order_documents_by') %>:</label>
       <select id="publish_option_order" class="embed_order" name="order">
-        <option value="title">Title</option>
-        <option value="score">Relevance</option>
-        <option value="created_at">Date Uploaded</option>
-        <option value="source">Source</option>
-        <option value="page_count">Length</option>
+        <option value="title"><%= _.t('title') %></option>
+        <option value="score"><%= _.t('relevance') %></option>
+        <option value="created_at"><%= _.t('date_uploaded') %></option>
+        <option value="source"><%= _.t('source') %></option>
+        <option value="page_count"><%= _.t('length') %></option>
       </select>
     </div>
 
     <div class="publish_section">
-      <label for="publish_option_per_page">Documents per page:</label>
+      <label for="publish_option_per_page"><%= _.t('documents_per_page') %>:</label>
       <div class="text_input dark small">
         <input id="publish_option_per_page" class="per_page" name="per_page" type="text" />
       </div>
@@ -45,18 +43,14 @@
     <div class="publish_section search_bar">
       <label>Search Bar:</label>
       <input type="checkbox" name="search_bar" id="publish_option_search_bar" />
-      <label for="publish_option_search_bar" class="sidelabel">Allow readers to search this set of documents.</label>
+      <label for="publish_option_search_bar" class="sidelabel"><%= _.t('allow_readers_to_search') %>.</label>
     </div>
 
   </div>
 
   <div class="publish_section">
     <p class="publish_info selectable_text interface">
-      Before continuing, please take a moment to
-      <span class="text_link preview">preview the document set</span>.
-      <br /><br />
-      Published documents will open at the URL where they were originally published,
-      while other public documents will open on DocumentCloud.
+      <%= _.t('preview_search_embed_help', '<span class="text_link preview">', '</span><br /><br />' ) %>
     </p>
   </div>
 
@@ -68,7 +62,7 @@
 
 
 <div class="publish_wizard_controls">
-  <div class="minibutton next default">Next <span class="text_arrow">&raquo;</span></div>
-  <div class="minibutton previous dark"><span class="text_arrow">&laquo;</span> Back</div>
-  <div class="minibutton close dark">Close</div>
+  <div class="minibutton next default"><%= _.t('next') %> <span class="text_arrow">&raquo;</span></div>
+  <div class="minibutton previous dark"><span class="text_arrow">&laquo;</span> <%= _.t('back') %></div>
+  <div class="minibutton close dark"><%= _.t('close') %></div>
 </div>

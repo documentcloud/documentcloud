@@ -4,7 +4,7 @@
     <span class="range"><%= '' + (q.from + 1) %> &ndash; <%= to %></span>
     of
   <% } %>
-  <%= q.total %> <%= dc.inflector.pluralize('document', q.total) %>
+  <%= q.total %> <%= dc.inflector.pluralize( _.t('document'), q.total) %>
 </div>
 
 <div class="sorter noselect quiet_link">
@@ -12,8 +12,8 @@
 </div>
 
 <div class="legal">
-  <a class="quiet_link" href="/terms">Terms</a> &nbsp;&ndash;&nbsp;
-  <a class="quiet_link" href="/privacy">Privacy</a>
+  <a class="quiet_link" href="/terms"><%= _.t('terms') %></a> &nbsp;&ndash;&nbsp;
+  <a class="quiet_link" href="/privacy"><%= _.t('privacy') %></a>
 </div>
 
 <% if (q.total > per_page) { %>

@@ -8,31 +8,30 @@
       <div class="rows">
         <% _.each(list.slice(0, limit), function(facet) { %>
           <div class="row <%= facet.active ? 'active' : '' %>" data-value="<%= facet.value %>" data-category="<%= category %>">
-            <span class="facet interface"><%= facet.value %></span>&nbsp;<span class="count" title="Mentioned in <%= facet.count %> documents">(<%= facet.count %>)</span>&nbsp;<span class="show_pages text_link interface">show&nbsp;pages</span>
+            <span class="facet interface"><%= facet.value %></span>&nbsp;<span class="count" title="<%= _.t('mentioned_in_documents',facet.count) %></span>&nbsp;<span class="show_pages text_link interface"><%= _.t('show_pages') %></span>
             <% if (facet.active) { %>
-              <div class="icon cancel_search" title="remove this entity from your search"></div>
+              <div class="icon cancel_search" title="<%= _.t('remove_entity') %>"></div>
             <% } %>
           </div>
         <% }); %>
       </div>
       <% if (list.length == 6) { %>
-        <div class="more text_link interface" data-category="<%= category %>">Show more&hellip;</div>
+        <div class="more text_link interface" data-category="<%= category %>"><%= _.t('show_more') %>&hellip;</div>
       <% } else if (list.length > 6) { %>
-        <div class="less text_link interface" data-category="<%= category %>">Show less&hellip;</div>
+        <div class="less text_link interface" data-category="<%= category %>"><%= _.t('show_less') %>&hellip;</div>
       <% } %>
     </div>
   <% } %>
 <% }); %>
 <% if (empty) { %>
   <div class="no_results">
-    No entities were found that match your search.
+    <%= _.t('no_entities_found') %>
   </div>
 <% } else { %>
   <div class="block explanation">
-    The entities listed above are present within the documents that match
-    your search. Select an entity to filter your search results.
+    <%= _.t('entities_explained') %>
     <a class="calais_info text_link" href="http://opencalais.com/" target="_blank">
-      <div class="icon calais_30"></div>Entities provided by OpenCalais
+      <div class="icon calais_30"></div><%= _.t('calais_credit') %>
     </a>
   </div>
 <% } %>

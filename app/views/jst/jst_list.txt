@@ -50,12 +50,12 @@
  * workspace/organizer/sidebar.jst
  * workspace/search/embed_code.jst
  * workspace/workspace/document_embed_dialog.jst
-workspace/workspace/entities.jst
-workspace/workspace/no_results.jst
-workspace/workspace/note_embed_code.jst
-workspace/workspace/note_embed_dialog.jst
-workspace/workspace/paginator.jst
-workspace/workspace/panel.jst
-workspace/workspace/search_embed_dialog.jst
-workspace/workspace/sidebar.jst
-workspace/workspace/toolbar.jst
+ * workspace/workspace/entities.jst
+ * workspace/workspace/no_results.jst
+ * workspace/workspace/note_embed_code.jst
+ * workspace/workspace/note_embed_dialog.jst
+ * workspace/workspace/paginator.jst
+ * workspace/workspace/panel.jst
+ * workspace/workspace/search_embed_dialog.jst
+ * workspace/workspace/sidebar.jst
+ * workspace/workspace/toolbar.jst
