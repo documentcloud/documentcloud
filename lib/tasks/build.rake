@@ -10,6 +10,17 @@ namespace :build do
     string.match(/VERSION = '(\S+)'/)[1]
   end
 
+  desc "Compile Javascript version of translation strings"
+  task :translations do
+    %w{ es en }.each do | language_code |
+      File.open( Rails.root.join('public','javascripts','translations',"#{language_code}.js"),'w' ) do | destination_file |
+        translation_strings = YAML.load_file( Rails.root.join('config','locales', "#{language_code}.yml" ) )[language_code]
+        template = File.read( Rails.root.join('config','locales', "#{language_code}.js.erb" ) )
+        destination_file.write ERB.new( template ).result( binding )
+      end
+    end
+  end
+
   # Pull in a new build of Backbone.
   task :backbone do
     version = get_version File.read BACKBONE
@@ -27,7 +38,7 @@ namespace :build do
     version = get_version File.read VISUALSEARCH_JS
     FileUtils.cp VISUALSEARCH_JS, "public/javascripts/vendor/visualsearch-#{version}.js", :verbose => true
     FileUtils.cp VISUALSEARCH_CSS, "public/stylesheets/vendor/", :verbose => true
-    
+
     # Fix image url paths.
     File.open('public/stylesheets/vendor/visualsearch.css', 'r+') do |file|
       css = file.read

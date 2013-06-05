@@ -54,8 +54,10 @@ I18n.prototype.lookup = function( key, args ){
     this.log.warn( 'i18n translation string not found for key: ' + key );
     string = dc.translations.en.strings[ key ] || '';
   }
-  if ( ! string )
+  if ( ! string ){
     this.log.error( 'English fallback i18n translation string not found for key: ' + key );
+    string = key;  // last resort, just return the key
+  }
   if ( args ){
     if ( _.isArray( string ) ){ // plural lookup
       string = string[ this.translations.pluralizer( args ) ];
@@ -145,3 +147,9 @@ I18n.prototype.extend_underscore = function( underscore ){
   underscore.t = underscore.bind( this.lookup, this );
   return this;
 };
+
+
+window.i18n = new I18n({
+  underscore: _,
+  translations: dc.translations[ window.USER_LANGUAGE ]
+});
