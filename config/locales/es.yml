@@ -28,9 +28,11 @@ es:
   edit_title: Editar título
   edit_source: Editar origen
   edit_description: Editar Descripción
+  description: Descripción
   edit_access: Editar nivel de acceso
   edit_related_url: Editar Artículo relacionado URL
   edit_published_url: Editar URL Publicado
+  published_url: URL Publicado
   edit_document_data: Editar datos del documento
   embed_tools: Integrar Herramientas
   embed_document: Insertar este documento
@@ -149,7 +151,7 @@ es:
     incrustados en nuestra lista de% sfeatured reporte %s.
   show_all: Mostrar todos
   mentioning_query: mencionando "%s"
-  show_all_x_pages: Mostrar una sola página, Mostrar todos los %i páginas
+  show_all_x_pages: Mostrar una sola página, Mostrar todos los %d páginas
   draft_visible_collab: Este proyecto es sólo visible para usted y sus colaboradores.
   private_note_visible: Esta nota privada sólo es visible para usted.
   annotated_by: 'Anotado por: %s'
@@ -157,8 +159,8 @@ es:
   save_as_draft: Guardar como borrador
   document_has_no_public_notes: Este documento no tiene notas públicas.
   open_in_viewer: Abra todas las páginas en el visor
-  over_x_mentions: Over %i menciones
-  x_mentions: Una mención, %i menciones
+  over_x_mentions: Over %d menciones
+  x_mentions: Una mención, %d menciones
   or: o
   of: de
   'on': en
@@ -308,3 +310,69 @@ es:
   not_found_annotated: No hay documentos anotados.
   not_found_search: Su búsqueda no produjo ningún documento.
   not_found_all: No hay documentos
+  enter_url_that_references:
+  - Introduzca la URL del artículo que hace referencia a este documento
+  - Introduzca la URL del artículo que hace referencia a estos documentos
+  edit: Editar
+  edit_document_info: Editar información del documento
+  access_level: Nivel de Acceso
+  modify_original_document: Modificar documento original
+  remove_from_project: Borrar de este proyecto
+  delete_documents: Eliminar Documentos
+  sort: Clasificar
+  sort_by_relevance: Ordenar por Relevance
+  sort_by_date_uploaded: Ordenar por Fecha de publicación
+  sort_by_title: Ordenar por Título
+  sort_by_source: Ordenar por Fuente
+  sort_by_length: Ordenar por Longitud
+  view_entities: Ver Entidades
+  view_timeline: Vista de línea de tiempo
+  analyze_doc_in_overview: Analizar estos Documentos en Overview
+  analyze_project_in_overview: Analyze este Proyecto in Overview
+
+  share_documents: Compartir estos documentos
+  share_project: Comparte este Proyecto
+  analyze: Analizar
+  share_x_documents:
+  - Comparte este documento
+  - Compartir estos documentos
+  analyze_x_docs_in_overview: 
+  - Analizar este Documento en Overview
+  - Analizar estos documentos en Overview
+  embed_document_viewer: Incrustar Visor de documentos
+  embed_document_list: Lista de documentos Embed
+  embed_a_note: Insertar una nota
+  set_publication_date: Set Fecha de publicación
+  download_viewer: Descargar Visor de documentos
+  download_pdf: Descargar PDF original
+  download_text: Descargar texto completo
+  print_notes: Imprimir las notas
+  export: Exportar
+  export_to_overview_explain: Estás a punto de exportar a la vista. Debe crear una cuenta general, y usted debe proveer general con su nombre de usuario y contraseña DocumentCloud.
+  timeline_max_documents: Sólo se puede ver una línea de tiempo de diez documentos a la vez.
+  timeline_must_select: Para ver una línea de tiempo, seleccione algunos documentos.
+  demo_no_viewer: cuentas de demostración no se permite descargar los espectadores. % s si usted necesita una cuenta con todas las funciones.
+  select_single_to_embed: Por favor selecciona un único documento con el fin de crear el embed.
+  select_single_to_open: Por favor selecciona un documento para abrirlo.
+  enter_url_for_embed:
+  - Introduzca la URL en la que se inserta este documento
+  - Introduzca la URL en la que se insertan estos documentos
+  projects: Proyectos
+  new_project: Nuevo proyecto
+  create_new_project: Crear un nuevo proyecto
+  project_exists: Un proyecto llamado% s ya existe
+  must_have_title: Por favor, escriba un título.
+  help: Ayudar
+  introduction: Introducción
+  guided_tour: Guided Tour
+  adding_accounts: Adición de cuentas
+  searching_dd: Búsqueda de documentos y datos
+  uploading_documents: Carga de documentos
+  troubleshooting_uploads: Cargas fallidos solución de problemas
+  document_modification: Modificación del documento
+  editing_notes_sections: Notas de edición y Secciones
+  collaboration: Colaboración
+  privacy: Intimidad
+  publishing_embedding: Publishing & Embedding
+  the_api: El API DocumentCloud
+  guides_howtos: Guías y Cómo la

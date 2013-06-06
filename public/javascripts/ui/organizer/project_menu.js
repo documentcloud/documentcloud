@@ -4,7 +4,7 @@ dc.ui.ProjectMenu = dc.ui.Menu.extend({
     _.bindAll(this, 'renderProjects');
     options = _.extend({
       id          : 'projects_menu',
-      label       : 'Projects',
+      label       : _.t('projects'),
       onOpen      : this.renderProjects
     }, options);
     dc.ui.Menu.call(this, options);
@@ -18,7 +18,7 @@ dc.ui.ProjectMenu = dc.ui.Menu.extend({
       var className = (project.containsAny(docs) ? 'checked' : '') + disabled;
       return {title : project.get('title'), attrs : {'class': className}, onClick : _.bind(menu.options.onClick, menu, project)};
     });
-    items.unshift({title : 'New Project', attrs : {'class' : 'plus'}, onClick : function() {
+    items.unshift({title : _.t('new_project'), attrs : {'class' : 'plus'}, onClick : function() {
       dc.app.organizer.promptNewProject();
     }});
     menu.addItems(items);

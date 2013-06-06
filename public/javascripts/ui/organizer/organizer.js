@@ -59,10 +59,10 @@ dc.ui.Organizer = Backbone.View.extend({
 
   promptNewProject : function() {
     var me = this;
-    dc.ui.Dialog.prompt('Create a New Project', '', function(title, dialog) {
+    dc.ui.Dialog.prompt(_.t('create_new_project'), '', function(title, dialog) {
       title = dc.inflector.trim(title);
       if (!title) {
-        dialog.error('Please enter a title.');
+        dialog.error( _.t('must_have_title') );
         return;
       }
       if (Projects.find(title)) return me._warnAlreadyExists(title);
@@ -143,7 +143,7 @@ dc.ui.Organizer = Backbone.View.extend({
   },
 
   _warnAlreadyExists : function(title) {
-    dc.ui.notifier.show({text : 'A project named "' + title + '" already exists'});
+    dc.ui.notifier.show({text : _.t('project_exists', title) });
     return false;
   },
 

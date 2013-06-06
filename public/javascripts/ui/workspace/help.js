@@ -2,18 +2,18 @@
 dc.ui.Help = Backbone.View.extend({
 
   PAGES : [
-    {url : '',                 title : 'Introduction'},
-    {url : 'tour',             title : 'Guided Tour'},
-    {url : 'accounts',         title : 'Adding Accounts'},
-    {url : 'searching',        title : 'Searching Documents and Data'},
-    {url : 'uploading',        title : 'Uploading Documents'},
-    {url : 'troubleshooting',  title : 'Troubleshooting Failed Uploads'},
-    {url : 'modification',     title : 'Document Modification'},
-    {url : 'notes',            title : 'Editing Notes and Sections'},
-    {url : 'collaboration',    title : 'Collaboration'},
-    {url : 'privacy',          title : 'Privacy'},
-    {url : 'publishing',       title : 'Publishing &amp; Embedding'},
-    {url : 'api',              title : 'The DocumentCloud API'}
+    {url : '',                 title : _.t('introduction')},
+    {url : 'tour',             title : _.t('guided_tour')},
+    {url : 'accounts',         title : _.t('adding_accounts')},
+    {url : 'searching',        title : _.t('searching_dd')},
+    {url : 'uploading',        title : _.t('uploading_documents')},
+    {url : 'troubleshooting',  title : _.t('troubleshooting_uploads')},
+    {url : 'modification',     title : _.t('document_modification')},
+    {url : 'notes',            title : _.t('editing_notes_sections')},
+    {url : 'collaboration',    title : _.t('collaboration')},
+    {url : 'privacy',          title : _.t('privacy')},
+    {url : 'publishing',       title : _.t('publishing_embedding')},
+    {url : 'api',              title : _.t('the_api')}
   ],
 
   events : {
@@ -66,7 +66,7 @@ dc.ui.Help = Backbone.View.extend({
   _createHelpMenu : function() {
     return this.menu = new dc.ui.Menu({
       id      : 'how_to_menu',
-      label   : 'Guides &amp; How To\'s',
+      label   : _.t('guides_howtos'),
       items   : _.map(this.PAGES, _.bind(function(page) {
         return {onClick : _.bind(this.openPage, this, page.url), title : page.title};
       }, this))

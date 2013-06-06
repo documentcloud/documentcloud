@@ -28,9 +28,11 @@ en:
   edit_title: Edit Title
   edit_source: Edit Source
   edit_description: Edit Description
+  description: Description
   edit_access: Edit Access Level
   edit_related_url: Edit Related Article URL
   edit_published_url: Edit Published URL
+  published_url: Published URL
   edit_document_data: Edit Document Data
   embed_tools: Embed Tools
   embed_document: Embed this Document
@@ -129,9 +131,9 @@ en:
     released&rdquo;'
   edit_data_for: Edit Data for %s
   num_documents:
-  - '%i Document'
-  - '%i Documents'
-  bad_data_key: '%s cannot be used as a key'
+  - %d Document
+  - %d Documents
+  bad_data_key: %s cannot be used as a key
   confirm_remove_all_data: Are you sure you want to remove all data from %s?
   title_of_document: Title of this document
   source_of_document: The source from which you obtained this document
@@ -149,7 +151,7 @@ en:
   mentioning_query: mentioning &ldquo;%s&rdquo;
   show_all_x_pages:
   - Show single page
-  - Show all %i pages
+  - Show all %d pages
   draft_visible_collab: This draft is only visible to you and collaborators.
   private_note_visible: This private note is only visible to you.
   annotated_by: 'Annotated by: %s'
@@ -157,10 +159,10 @@ en:
   save_as_draft: Save as Draft
   document_has_no_public_notes: This document has no public notes.
   open_in_viewer: Open all pages in viewer
-  over_x_mentions: Over %i mentions
+  over_x_mentions: Over %d mentions
   x_mentions:
   - One Mention
-  - '%i mentions'
+  - '%d mentions'
   or: or
   of: of
   'on': 'on'
@@ -308,3 +310,68 @@ en:
   not_found_annotated: There are no annotated documents.
   not_found_search: Your search did not match any documents.
   not_found_all: There are no documents
+  enter_url_that_references:
+  - Enter the URL of the article that references this document
+  - Enter the URL of the article that references these documents
+  edit: Edit
+  edit_document_info: Edit Document Information
+  access_level: Access Level
+  modify_original_document: Modify Original Document
+  remove_from_project: Remove from this Project
+  delete_documents: Delete Documents
+  sort: Sort
+  sort_by_relevance: Sort by Relevance
+  sort_by_date_uploaded: Sort by date Uploaded
+  sort_by_title: Sort by Title
+  sort_by_source: Sort by Source
+  sort_by_length: Sort by Length
+  view_entities: View Entities
+  view_timeline: View Timeline
+  analyze_project_in_overview: Analyze this Project in Overview
+  share_documents: Share these Documents
+  share_project: Share this Project
+  analyze: Analyze
+  no_project_doc_selected: No project or documents selected
+  share_x_documents:
+  - Share this Document
+  - Share these Documents
+  analyze_x_docs_in_overview: 
+  - Analyze this Document in Overview
+  - Analyze these Documents in Overview
+  embed_document_viewer: Embed Document Viewer
+  embed_document_list: Embed Document List
+  embed_a_note: Embed a Note
+  set_publication_date: Set Publication Date
+  download_viewer: Download Document Viewer
+  download_pdf: Download Original PDF
+  download_text: Download Full Text
+  print_notes: Print Notes
+  export: Export
+  export_to_overview_explain: You are about to export to Overview. You must create an Overview account, and you must provide Overview with your DocumentCloud username and password.
+  timeline_max_documents: You can only view a timeline for ten documents at a time.
+  timeline_must_select: In order to view a timeline, please select some documents.
+  demo_no_viewer: Demo accounts are not allowed to download viewers. %s if you need a full featured account.
+  select_single_to_embed: Please select a single document in order to create the embed.
+  select_single_to_open: Please select a document to open.
+  enter_url_for_embed: 
+  - Enter the URL at which this document is embedded
+  - Enter the URL at which these documents are embedded
+  projects: Projects
+  new_project: New Project
+  create_new_project: Create a New Project
+  project_exists: A project named %s already exists
+  must_have_title: Please enter a title.
+  help: Help
+  introduction: Introduction
+  guided_tour: Guided Tour
+  adding_accounts: Adding Accounts
+  searching_dd: Searching Documents and Data
+  uploading_documents: Uploading Documents
+  troubleshooting_uploads: Troubleshooting Failed Uploads
+  document_modification: Document Modification
+  editing_notes_sections: Editing Notes and Sections
+  collaboration: Collaboration
+  privacy: Privacy
+  publishing_embedding: Publishing &amp; Embedding
+  the_api: The DocumentCloud API
+  guides_howtos: Guides &amp Howto's

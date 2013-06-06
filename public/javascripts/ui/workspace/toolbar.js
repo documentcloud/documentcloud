@@ -51,7 +51,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   editTitle : function() {
     this.edit(function(docs) {
       var doc = docs[0];
-      dc.ui.Dialog.prompt('Title', doc.get('title'), function(title) {
+      dc.ui.Dialog.prompt(_.t('title'), doc.get('title'), function(title) {
         doc.save({title : title});
         return true;
       }, {mode : 'short_prompt'});
@@ -81,8 +81,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   editRelatedArticle : function() {
     this.edit(function(docs) {
       var current = Documents.sharedAttribute(docs, 'related_article') || '';
-      var suffix  = docs.length > 1 ? 'these documents:' : 'this document:';
-      dc.ui.Dialog.prompt('Related Article URL', current, function(rel, dialog) {
+      dc.ui.Dialog.prompt(_.t('related_article_url'), current, function(rel, dialog) {
         rel = dc.inflector.normalizeUrl(rel);
         if (rel && !dialog.validateUrl(rel)) return false;
         _.each(docs, function(doc) { doc.save({related_article : rel}); });
@@ -90,7 +89,7 @@ dc.ui.Toolbar = Backbone.View.extend({
       }, {
         mode        : 'short_prompt',
         information : Documents.subtitle(docs.length),
-        description : 'Enter the URL of the article that references ' + suffix
+        description : _.t('enter_url_that_references', docs.length )
       });
     });
   },
@@ -98,7 +97,6 @@ dc.ui.Toolbar = Backbone.View.extend({
   editPublishedUrl : function() {
     this.edit(function(docs) {
       var current = Documents.sharedAttribute(docs, 'remote_url') || '';
-      var suffix  = docs.length > 1 ? 'these documents are' : 'this document is';
       dc.ui.Dialog.prompt('Published URL', current, function(url, dialog) {
         url = dc.inflector.normalizeUrl(url);
         if (url && !dialog.validateUrl(url)) return false;
@@ -107,7 +105,7 @@ dc.ui.Toolbar = Backbone.View.extend({
       }, {
         mode        : 'short_prompt',
         information : Documents.subtitle(docs.length),
-        description : 'Enter the URL at which ' + suffix + ' embedded:'
+        description : _.t('enter_url_for_embed', docs.length )
       });
     });
   },
@@ -123,7 +121,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   openViewers : function(checkEdit, suffix, afterLoad) {
-    if (!Documents.selectedCount) return dc.ui.Dialog.alert('Please select a document to open.');
+    if (!Documents.selectedCount) return dc.ui.Dialog.alert( _.t('select_single_to_open') );
     var continuation = function(docs) {
       _.each(docs, function(doc){
         var win = doc.openAppropriateVersion(suffix);
@@ -144,7 +142,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   openDocumentEmbedDialog : function() {
     var docs = Documents.chosen();
     if (!docs.length) return;
-    if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document in order to create the embed.');
+    if (docs.length != 1) return dc.ui.Dialog.alert( _.t('select_single_to_embed') );
     var doc = docs[0];
     if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
     (new dc.ui.DocumentEmbedDialog(doc)).render();
@@ -153,7 +151,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   openNoteEmbedDialog : function() {
     var docs = Documents.chosen();
     if (!docs.length) return;
-    if (docs.length != 1) return dc.ui.Dialog.alert('Please select a single document in order to create the embed.');
+    if (docs.length != 1) return dc.ui.Dialog.alert( _.t('select_single_to_embed') );
     var doc = docs[0];
     if ((doc.notes.length && !doc.notes.any(function(note) { return note.get('access') == 'public'; })) ||
         (!doc.notes.length && !doc.get('public_note_count'))) {
@@ -180,7 +178,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   requestDownloadViewers : function() {
-    if (dc.account.organization().get('demo')) return dc.ui.Dialog.alert('Demo accounts are not allowed to download viewers. <a href="/contact">Contact us</a> if you need a full featured account.');
+    if (dc.account.organization().get('demo')) return dc.ui.Dialog.alert( _.t('demo_no_viewer', '<a href="/contact">' + _.t('contact_documentcloud') + '</a>' ) );
     var docs = Documents.chosen();
     if (docs.length) Documents.downloadViewers(docs);
   },
@@ -213,9 +211,9 @@ dc.ui.Toolbar = Backbone.View.extend({
   _openTimeline : function() {
     var docs = Documents.chosen();
     if (!docs.length && Documents.selectedCount) return;
-    if (docs.length > 10) return dc.ui.Dialog.alert("You can only view a timeline for ten documents at a time.");
+    if (docs.length > 10) return dc.ui.Dialog.alert( _.t('timeline_max_documents') );
     if (docs.length <= 0) docs = Documents.models.slice(0, 10);
-    if (docs.length <= 0) return dc.ui.Dialog.alert("In order to view a timeline, please select some documents.");
+    if (docs.length <= 0) return dc.ui.Dialog.alert( _.t('timeline_must_select') );
     new dc.ui.TimelineDialog(docs);
   },
 
@@ -224,18 +222,18 @@ dc.ui.Toolbar = Backbone.View.extend({
 
     if (Documents.selectedCount) {
       var docs = Documents.chosen();
-      query = _.map(docs, function(doc) { return 'document:' + doc.id }).join(' ');
+      query = _.map(docs, function(doc) { return 'document:' + doc.id; }).join(' ');
     } else {
       query = dc.app.searcher.publicQuery();
     }
 
     if (/\S/.test(query)) {
       dc.ui.Dialog.confirm(
-        'You are about to export to Overview. You must create an Overview account, and you must provide Overview with your DocumentCloud username and password.',
+        _.t('export_to_overview_explain'),
         function() { window.open("https://www.overviewproject.org/imports/documentcloud/new/" + encodeURIComponent(query), '_blank'); },
         {
-          saveText: 'Export',
-          closeText: 'Cancel'
+          saveText: _.t('export'),
+          closeText: _.t('cancel')
         }
       );
     } else {
@@ -291,34 +289,34 @@ dc.ui.Toolbar = Backbone.View.extend({
   _enableAnalyzeMenu : function(menu) {
     this._enableMenuItems(menu);
     var singular = Documents.selectedCount == 1;
-    $('.share_documents', menu.content).text(singular ? 'Share this Document' : 'Share these Documents');
+    $('.share_documents', menu.content).text( _.t('share_x_documents', Documents.selectedCount ) );
     $('.share_project', menu.content).toggleClass('disabled', !Projects.selectedCount);
     var overviewWillAnalyzeProject = !Documents.selectedCount && !!Projects.firstSelected();
     var overviewDisabled = !Documents.selectedCount && !/\S/.test(dc.app.searcher.publicQuery());
     $('.menu_item.analyze_in_overview', menu.content)
       .toggleClass('disabled', overviewDisabled)
-      .attr('title', overviewDisabled ? 'No project or documents selected' : '')
+      .attr('title', overviewDisabled ? _.t('no_project_doc_selected') : '')
       .text(overviewWillAnalyzeProject
-            ? 'Analyze this Project in Overview'
-            : (singular ? 'Analyze this Document in Overview' : 'Analyze these Documents in Overview'));
+            ? _.t('analyze_project_in_overview')
+            : _.t( 'analyze_x_docs_in_overview', Documents.selectedCount ) );
   },
 
   _createPublishMenu : function() {
     var accountItems = [
-      {title : 'Embed Document Viewer',    onClick : this.openDocumentEmbedDialog,    attrs: {'class': 'singular'}},
-      {title : 'Embed Document List',      onClick : this.openSearchEmbedDialog,      attrs: {'class': 'always'}},
-      {title : 'Embed a Note',             onClick : this.openNoteEmbedDialog,        attrs: {'class': 'singular'}},
-      {title : 'Set Publication Date',     onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
-      {title : 'Download Document Viewer', onClick : this.requestDownloadViewers}
+      {title : _.t('embed_document_viewer'), onClick : this.openDocumentEmbedDialog,    attrs: {'class': 'singular'}},
+      {title : _.t('embed_document_list'),   onClick : this.openSearchEmbedDialog,      attrs: {'class': 'always'}},
+      {title : _.t('embed_a_note'),          onClick : this.openNoteEmbedDialog,        attrs: {'class': 'singular'}},
+      {title : _.t('set_publication_date'),  onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
+      {title : _.t('download_viewer'),       onClick : this.requestDownloadViewers}
     ];
     var publicItems = [
-      {title : 'Download Original PDF',    onClick : Documents.downloadSelectedPDF},
-      {title : 'Download Full Text',       onClick : Documents.downloadSelectedFullText},
-      {title : 'Print Notes',              onClick : Documents.printNotes}
+      {title : _.t('download_pdf'),  onClick : Documents.downloadSelectedPDF},
+      {title : _.t('download_text'), onClick : Documents.downloadSelectedFullText},
+      {title : _.t('print_notes'),   onClick : Documents.printNotes}
     ];
     var items = dc.account ? accountItems.concat(publicItems) : publicItems;
     return new dc.ui.Menu({
-      label   : dc.account ? 'Publish' : 'Save',
+      label   : dc.account ? _.t('publish') : _.t('save'),
       onOpen  : this._enableMenuItems,
       items   : items
     });
@@ -326,50 +324,50 @@ dc.ui.Toolbar = Backbone.View.extend({
 
   _createSortMenu : function() {
     return new dc.ui.Menu({
-      label   : 'Sort',
+      label   : _.t('sort'),
       onOpen  : this._markOrder,
       items   : [
-        {title: 'Sort by Relevance',     attrs: {'data-order' : 'score'},      onClick : this._chooseSort},
-        {title: 'Sort by Date Uploaded', attrs: {'data-order' : 'created_at'}, onClick : this._chooseSort},
-        {title: 'Sort by Title',         attrs: {'data-order' : 'title'},      onClick : this._chooseSort},
-        {title: 'Sort by Source',        attrs: {'data-order' : 'source'},     onClick : this._chooseSort},
-        {title: 'Sort by Length',        attrs: {'data-order' : 'page_count'}, onClick : this._chooseSort}
+        {title: _.t('sort_by_relevance'),     attrs: {'data-order' : 'score'},      onClick : this._chooseSort},
+        {title: _.t('sort_by_date_uploaded'), attrs: {'data-order' : 'created_at'}, onClick : this._chooseSort},
+        {title: _.t('sort_by_title'),         attrs: {'data-order' : 'title'},      onClick : this._chooseSort},
+        {title: _.t('sort_by_source'),        attrs: {'data-order' : 'source'},     onClick : this._chooseSort},
+        {title: _.t('sort_by_length'),        attrs: {'data-order' : 'page_count'}, onClick : this._chooseSort}
       ]
     });
   },
 
   _createEditMenu : function() {
     return new dc.ui.Menu({
-      label   : 'Edit',
+      label   : _.t('edit'),
       onOpen  : this._enableMenuItems,
       items   : [
-        {title : 'Edit Document Information', attrs: {'class' : 'multiple'},        onClick : function(){ dc.ui.DocumentDialog.open(); }},
-        {title : 'Title',                     attrs: {'class' : 'singular indent'}, onClick : this.editTitle},
-        {title : 'Source',                    attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
-        {title : 'Description',               attrs: {'class' : 'multiple indent'}, onClick : this.editDescription},
-        {title : 'Access Level',              attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
-        {title : 'Related Article URL',       attrs: {'class' : 'multiple indent'}, onClick : this.editRelatedArticle},
-        {title : 'Published URL',             attrs: {'class' : 'multiple indent'}, onClick : this.editPublishedUrl},
-        {title : 'Edit Document Data',        attrs: {'class' : 'multiple'},        onClick : this.editData},
-        {title : 'Modify Original Document',  attrs: {'class' : 'multiple'},        onClick : _.bind(this.openViewers, this, true, '#pages', null)},
-        {title : 'Remove from this Project',  attrs: {'class' : 'multiple project'},onClick : this._removeFromSelectedProject},
-        {title : 'Delete Documents',          attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
+        {title : _.t('edit_document_info'),       attrs: {'class' : 'multiple'},        onClick : function(){ dc.ui.DocumentDialog.open(); }},
+        {title : _.t('title'),                    attrs: {'class' : 'singular indent'}, onClick : this.editTitle},
+        {title : _.t('source'),                   attrs: {'class' : 'multiple indent'}, onClick : this.editSource},
+        {title : _.t('description'),              attrs: {'class' : 'multiple indent'}, onClick : this.editDescription},
+        {title : _.t('access_level'),             attrs: {'class' : 'multiple indent'}, onClick : this.editAccess},
+        {title : _.t('related_article_url'),      attrs: {'class' : 'multiple indent'}, onClick : this.editRelatedArticle},
+        {title : _.t('published_url'),            attrs: {'class' : 'multiple indent'}, onClick : this.editPublishedUrl},
+        {title : _.t('edit_document_data'),       attrs: {'class' : 'multiple'},        onClick : this.editData},
+        {title : _.t('modify_original_document'), attrs: {'class' : 'multiple'},        onClick : _.bind(this.openViewers, this, true, '#pages', null)},
+        {title : _.t('remove_from_project'),      attrs: {'class' : 'multiple project'},onClick : this._removeFromSelectedProject},
+        {title : _.t('delete_documents'),         attrs: {'class' : 'multiple warn'},   onClick : this._deleteSelectedDocuments}
       ]
     });
   },
 
   _createAnalyzeMenu : function() {
     var publicItems = [
-      {title: 'View Entities',          attrs: {'class' : 'always'},   onClick : this._viewEntities},
-      {title: 'View Timeline',          attrs: {'class' : 'always'},   onClick : this._openTimeline}
+      {title: _.t('view_entities'), attrs: {'class' : 'always'},   onClick : this._viewEntities},
+      {title: _.t('view_timeline'), attrs: {'class' : 'always'},   onClick : this._openTimeline}
     ];
     var accountItems = [
-      {title: 'Analyze these Documents in Overview', attrs: {'class' : 'always analyze_in_overview'}, onClick : this._analyzeInOverview },
-      {title: 'Share these Documents',               attrs: {'class' : 'multiple share_documents'},   onClick : this.openShareDialog },
-      {title: 'Share this Project',                  attrs: {'class' : 'share_project'},              onClick : this.openCurrentProject }
+      {title: _.t('analyze_x_docs_in_overview',2), attrs: {'class' : 'always analyze_in_overview'}, onClick : this._analyzeInOverview },
+      {title: _.t('share_documents'),     attrs: {'class' : 'multiple share_documents'},   onClick : this.openShareDialog },
+      {title: _.t('share_project'),       attrs: {'class' : 'share_project'},              onClick : this.openCurrentProject }
     ];
     return new dc.ui.Menu({
-      label   : 'Analyze',
+      label   : _.t('analyze'),
       onOpen  : this._enableAnalyzeMenu,
       items   : dc.account ? publicItems.concat(accountItems) : publicItems
     });
