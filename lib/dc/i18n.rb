@@ -4,17 +4,20 @@ module DC
 
     STRINGS = {}
 
-    ['en','es'].each do | code |
-      STRINGS[ code ] = YAML.load_file( Rails.root.join('config','locales', "#{code}.yml" ) )[code]
+    DC::Language::SUPPORTED.each do | code |
+      path = Rails.root.join('config','locales', "#{code}.yml" )
+      STRINGS[ code ] = YAML.load_file( path )['workspace'] if path.exist?
     end
 
-    ENGLISH = STRINGS['en'] # our fallback
+    ENGLISH = STRINGS['eng'] # our fallback
 
     def self.plural_index( language, num )
       return num && num > 1 ? 1 : 0;
     end
 
-    def self.lookup( language, key, *args )
+    def self.lookup( account, key, *args )
+      language = account ? account.language : 'eng'
+
       lookup = STRINGS[ language ] || ENGLISH
 
       if ! translation = lookup[key]
@@ -36,4 +39,9 @@ module DC
     end
 
   end
+
+  def DC.t( account, key, *args )
+    DC::I18n.lookup( account, key, args )
+  end
+
 end

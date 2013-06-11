@@ -1,155 +1,123 @@
 // A tiny object to perform string substitution for translation
-// No pluralization or anything fancier
 
-// The simplest thing that could possibly work
+// This is intended to be the simplest thing that could possibly work
+// We'll build up from there as needs arise
+//
+// Uses the concept of translations packs
+// which are JS Modules with the following form:
 
-// Initialize with an object containing
-// language codes for keys and key->string for value
-// i.e.
-// {
-//   'en': {
-//     doc: 'Document',
-//     annot: 'Annotation'
-//   },{
-//     'zh': {
-//       doc:'文件'
-//       annot: '註解'
-//     }
+// var simple_pack = {
+//   code: 'en',
+//   nplurals: 2,
+//   pluralizer: function(n){
+//     return n ? 1 : 0;
+//   },
+//   strings: {
+//     "not_found_project":"This project (%s) does not contain any documents.",
+//     "no_reviewer_on_document":[
+//       "The document %2$s does not have a reviewer",
+//       "There are %d reviewers on document %s."
+//     ]
 //   }
-//  }
+// };
+// _.i18n.load( simple_pack );
+
+// Packs can be stacked, and lookups will fallback to earlier loaded ones.
+
+// The typical usage pattern will be to first
+//  load the English pack, then a language pack that would be relevant to the user
+//
+
+// using the above pack as an example:
+
+// _.t('not_found_project','TestingOnly')
+// returns: "This project (TestingOnly) does not contain any documents."
+//
+// _.t('no_reviewer_on_document',2,'GoodDoc')
+// would return: "There are 2 reviewers on document GoodDoc."
+// but _.t('no_reviewer_on_document',1,'GoodDoc')
+// would return: "The document GoodDoc does not have a reviewer."
 
 
-I18n = function( options ){
-  this.translations = options.translations || {};
-  this.aliases      = options.aliases      || [];
-  this.viewer       = options.viewer;
+(function(root) {
 
-  if ( options.underscore )
-    this.extend_underscore( options.underscore );
+  var _ = root._;
 
-  if ( true === options.autoDetect )
-    this.detectLocale();
-
-  if ( this.viewer && this.viewer.schema.document.language ){
-    this.setLocale( this.viewer.schema.document.language );
-  }
-  if ( window.console ){
-    this.log=window.console;
+  if ( root.console ){
+    LOG=window.console;
   } else {
     var emptyfn = function(str){ };
-    this.log = {
+    LOG = {
       warn: emptyfn, error: emptyfn
     };
   }
 
-};
+  _.i18n = {
+    packs: [],
+    default:  null,
+    codes: {},
+    fallback: null,
 
+    configure: function( options ){
+      if ( options.default )
+        this.set( 'default', options.default );
+      if ( options.fallback )
+        this.set( 'fallback', options.fallback );
+    },
 
-// If translation string is not available for the current locale,
-// attempts to find it in the 'en' locale or returns
-// an empty string
-I18n.prototype.lookup = function( key, args ){
-  var string = this.translations.strings[ key ];
-  if ( _.isUndefined(string) ){
-    this.log.warn( 'i18n translation string not found for key: ' + key );
-    string = dc.translations.en.strings[ key ] || '';
-  }
-  if ( ! string ){
-    this.log.error( 'English fallback i18n translation string not found for key: ' + key );
-    string = key;  // last resort, just return the key
-  }
-  if ( args ){
-    if ( _.isArray( string ) ){ // plural lookup
-      string = string[ this.translations.pluralizer( args ) ];
-    }
-    return vsprintf( string, _.toArray( arguments ).slice(1) );
-
-  } else {
-    return string;
-  }
-};
-
-
-// Aliases
-// we get strings like zh-cn and en-GB back from various browsers
-// We need to normalize that to a language set (where appropriate)
-//
-// since case differs between IE and chrome/firefox, the language
-// is converted to lowercase before the alias is evaluated
-//
-// an alias can be either a regex, string, or function
-// Examples:
-// { 'zh': 'zh-sg' }  // will use the zh language set for detected 'zh-sg'
-// { 'zh': ['zh-sg', 'zh-cn'] }  // use zh for both Singapore and PRC
-// { 'zh': new Regex('zh-\w{2}') }  // match anything that starts with zh- 
-// { 'zh' function(lang){ return lang=='zh-cn' } } // same as the first example
-
-// accepts an array of aliases
-I18n.prototype.setAliases = function( aliases ){
-  this.aliases = aliases || [];
-  return this;
-};
-
-var evalAlias=function( alias, detected ){
-  return ( ( _.isString(alias) && alias === detected ) ||
-           ( _.isArray(alias) && -1 != alias.indexOf(detected) ) ||
-           ( _.isRegExp(alias) && detected.match(alias) ) ||
-           ( _.isFunction(alias) && true == alias.call( detected ) )
-       );
-};
-
-// Sniffs the browser's navigator.language || navigator.userLanguage
-// converts it to lowercase and runs through each of the aliases
-// Sets the locale to the first matching alias
-I18n.prototype.detectLocale = function(){
-  var lang = ( navigator.language || navigator.userLanguage || '' ).toLowerCase();
-  for (var i = 0, l = this.aliases.length; i < l; i++) {
-    var alias = this.aliases[i];
-    for (var key in alias) {
-      if ( alias.hasOwnProperty(key) && true === evalAlias( alias[key], lang ) ){
-        lang = key;
-        break;
+    set: function( type, code ){
+      if ( ! code ) {
+        code = root.DC_LANGUAGE_CODES ? root.DC_LANGUAGE_CODES[ type ] : 'eng';
       }
-    }
-  }
-  if ( this.translations[ lang ] )
-    this.setLocale( lang );
-  return this.locale;
-};
+      this.codes[ type ] = code;
+      this[ type ] = this.packForCode( code );
+    },
 
-I18n.prototype.setLocale = function( code ){
-  if ( ! this.translations[ code ] ){
-    var url = this.viewer.schema.data.translationsURL.
-          replace(/\{language\}/, code ).
-          replace(/\{realm\}/, 'viewer' ) + '.json';
-    var i18n = this;
-
-    DV.jQuery.ajax( {
-      url: url,
-      dataType: 'jsonp',
-      success: function( translation ){
-        i18n.translations[ code ] = translation;
-        i18n.viewer.open('InitialLoad');
+    load: function( pack ){
+      if ( _.isArray(pack) ){
+        this.packs = this.packs.concat( pack );
+      } else {
+        this.packs.push( pack );
       }
-    } );
-  }
 
-  this.locale = code;
-  return this;
-};
+      if ( ! this.default )
+        this.set( 'default', this.codes['default'] );
 
-I18n.prototype.reset = function( translations ){
-  this.translations = translations || {};
-  return this;
-};
+      if ( ! this.fallback )
+        this.set( 'fallback', this.codes['fallback'] );
+    },
 
-I18n.prototype.extend_underscore = function( underscore ){
-  underscore.t = underscore.bind( this.lookup, this );
-  return this;
-};
+    packForCode: function( code ){
+      return _.detect( this.packs, function( pack ){
+        return pack.code == code;
+      });
+    }
 
+  };
 
-window.i18n = new I18n({
-  underscore: _,
-  translations: dc.translations[ window.USER_LANGUAGE ]
-});
+  _.t = function( key, args ){
+
+    var match, pack;
+    pack = _.i18n.default;
+
+    if ( ! ( match = pack.strings[ key ] ) ){
+      LOG.warn( '[i18n] lookup for ' + key + ' in \'' + pack.code + '\' failed.' );
+      pack = _.i18n.fallback;
+      if ( ! ( match = pack.strings[ key ] ) ){
+        LOG.error( '[i18n] lookup for ' + key + ' failed in all languages' );
+        return key;  // something is better than nothing (perhaps?)
+      }
+    };
+
+    // if our matching string is an array
+    // then we select the match from it using the pluralization
+    // lookup rules from the pack
+    if ( _.isArray( match ) ){ // plural lookup 
+      match = match[ pack.pluralizer( args ) ];
+    }
+
+    return vsprintf( match, _.toArray( arguments ).slice(1) );
+
+  };
+
+})(this);

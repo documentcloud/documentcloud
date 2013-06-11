@@ -1,4 +1,4 @@
-en:
+workspace:
   home: Home
   pg: p.
   private_to: Private to %s
@@ -375,3 +375,55 @@ en:
   publishing_embedding: Publishing &amp; Embedding
   the_api: The DocumentCloud API
   guides_howtos: Guides &amp Howto's
+
+viewer:
+  note_by: 'Annotated by:'
+  note_title: Annotation Title
+  CLOSE: CLOSE
+  cancel: Cancel
+  click_add_page_note: Click to Add a Page Note
+  contents: Contents
+  contributed_by: 'Contributed by:'
+  delete: Delete
+  description: Description
+  document: Document
+  container_not_found: 'Document Viewer container element not found:'
+  dl_as_pdf: Download this document as a PDF
+  draft: Draft
+  expand: Expand
+  link_to_note: Link to this note
+  loading: Loading
+  next: Next
+  next_note: Next Annotation
+  annotation_title: Annotation Title
+  note: 
+  - Note
+  - Notes
+  print_document_help: To print the document, click the "Original Document" link to open the original PDF. At this time it is not possible to print the document with annotations.
+  page:
+  - Page
+  - Pages
+  previous: Previous
+  previous_note: Previous Annotation
+  print_notes: Print Notes
+  private_note: 
+  - Private note
+  - Private notes
+  publish: Publish
+  related_article: Related Article
+  save: Save
+  save_as_draft: Save as Draft
+  search: Search
+  text: Text
+  draft_note_visible: This draft is only visible to you and collaborators.
+  private_note_visible: This private note is only visible to you
+  must_upgrade: 'To use the Document Viewer you need to upgrade your browser:'
+  toggle_description: Toggle Description
+  untitled_note: Untitled Note
+  view_fullscreen: View Document in Fullscreen
+  zoom: Zoom
+  for: for
+  install_chrome_frame: Or, if you'd like to continue using Internet Explorer 6, you can %sinstall Google Chrome Frame%s.
+  pg: p.
+  of: of
+  original_document_pdf: Original Document (PDF)

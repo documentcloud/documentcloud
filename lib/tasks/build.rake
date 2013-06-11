@@ -12,10 +12,13 @@ namespace :build do
 
   desc "Compile Javascript version of translation strings"
   task :translations do
-    %w{ es en }.each do | language_code |
-      File.open( Rails.root.join('public','javascripts','translations',"#{language_code}.js"),'w' ) do | destination_file |
-        translation_strings = YAML.load_file( Rails.root.join('config','locales', "#{language_code}.yml" ) )[language_code]
-        template = File.read( Rails.root.join('config','locales', "#{language_code}.js.erb" ) )
+    require 'dc/language'
+    DC::Language::SUPPORTED.each do | language_code |
+      path =  Rails.root.join('config','locales', "#{language_code}.yml" )
+      next unless path.exist?
+      File.open( Rails.root.join('public','javascripts','translations', "#{language_code}.js"), 'w' ) do | destination_file |
+        translation_strings = YAML.load_file( path )[language_code]
+        template = File.read( path.dirname.join("#{language_code}.js.erb") )
         destination_file.write ERB.new( template ).result( binding )
       end
     end

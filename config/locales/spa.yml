@@ -1,6 +1,33 @@
-es:
-  home: Página Principal
+commonstrings: &common
+  draft: borrador
+  print_notes: Imprimir las notas
   pg: p.
+  next: Próximo
+  save: Guardar
+  save_as_draft: Guardar como borrador
+  private_note:
+  - Nota privada
+  - Las notas privadas
+  page:
+  - Página
+  - Páginas
+  contributed_by: Contribución de
+  search: Búsqueda
+  description: Descripción
+  document: Documento
+  delete: Eliminar
+  of: de
+  cancel: Cancelar
+  note:
+  - Nota
+  - Notas
+  private_note_visible: Esta nota privada sólo es visible para usted.
+  publish: Publicar
+
+
+workspace: 
+  <<: *common
+  home: Página Principal
   private_to: Private a %s
   private_access: Acceso Privado
   document_tools: Documentos
@@ -19,8 +46,6 @@ es:
     guardar sus redacciones.
   notes_hidden_while_redacting: Todas las notas existentes se ocultan temporalmente
     mientras redacción está teniendo lugar.
-  cancel: cancelar
-  save: Guardar
   revoke: Revocar
   save_redactions: Guardar redacciones
   edit_sections: Editar Secciones
@@ -28,7 +53,6 @@ es:
   edit_title: Editar título
   edit_source: Editar origen
   edit_description: Editar Descripción
-  description: Descripción
   edit_access: Editar nivel de acceso
   edit_related_url: Editar Artículo relacionado URL
   edit_published_url: Editar URL Publicado
@@ -81,13 +105,10 @@ es:
   contact_reviewer: Póngase en contacto con %s en %s si necesita ayuda o visite %s para
     más información sobre DocumentCloud.
   title: título
-  draft: borrador
-  private_note: nota privada
   search_elipsis: Buscar ...
   clear_search: buscar borrar
   search_no_match: Su búsqueda no produjo ningún documento.
   return_to_orig_docs: Volver a los documentos originales.
-  page: página
   view_docs_on_dc: Vea estos documentos en DocumentCloud
   login: login
   log_out: finalizar la sesión
@@ -102,7 +123,6 @@ es:
   first_name: primer nombre
   last_name: apellido
   resend_instructions: Reenviar Instrucciones
-  document: documento
   disabled: discapacitado
   administrator: administrador
   contributor: contribuyente
@@ -118,7 +138,6 @@ es:
   include_optional_msg: 'Opcional: Incluya un mensaje personal'
   preview_email: una vista previa del mensaje de correo electrónico
   before_continue: Antes de continuar, usted puede tomar un momento para %s
-  next: próximo
   back: espalda
   close: cerrar
   add_reviewer: Añadir Revisor
@@ -127,14 +146,15 @@ es:
     con alguien inmediatamente, puede llamarnos al (202) 505-1010. Vea %s para más maneras
     de ponerse en contacto.
   message: mensaje
-  delete: borrar
   edit_document_pairs:
   - Editar pares clave / valor que describen este documento.
   - Editar pares clave / valor que describen estos documentos.
   or_remove_all_data: o %seliminar todos los datos%s.
   for_example_data: 'Por ejemplo: "nacimiento: 08/01/1935", o "estado: en libertad"'
   edit_data_for: Editar para %s
-  documents: Documentos
+  num_documents:
+  - %d Documento
+  - %d Documentos
   bad_data_key: '%s no se puede utilizar como una llave'
   confirm_remove_all_data: ¿Está seguro de que desea eliminar todos los datos de %s?
   title_of_document: Título de este documento
@@ -153,16 +173,12 @@ es:
   mentioning_query: mencionando "%s"
   show_all_x_pages: Mostrar una sola página, Mostrar todos los %d páginas
   draft_visible_collab: Este proyecto es sólo visible para usted y sus colaboradores.
-  private_note_visible: Esta nota privada sólo es visible para usted.
   annotated_by: 'Anotado por: %s'
-  publish: Publicar
-  save_as_draft: Guardar como borrador
   document_has_no_public_notes: Este documento no tiene notas públicas.
   open_in_viewer: Abra todas las páginas en el visor
   over_x_mentions: Over %d menciones
   x_mentions: Una mención, %d menciones
   or: o
-  of: de
   'on': en
   at: en
   private_documents_visible_instructions:
@@ -176,12 +192,10 @@ es:
   no_past_publication: No se puede establecer un documento que se publicará en el pasado.
   make_public_on: 'Hacer público el:'
   edit_document_information: Editar información del documento
-  note: Nota
   reviewer: Crítico
   source: Fuente
   public_on: Público en
   edit_data: Modificar información
-  contributed_by: Contribución de
   email_when_complete: Envíeme un correo electrónico cuando sdocuments% tienen procesamiento
     terminado %s.
   make_documents_public: Hacer pública %sdocuments%s.
@@ -199,8 +213,9 @@ es:
   add_a_collaborator: Añadir un colaborador de este proyecto
   add: Añadir
   enter_email_address: 'Introduce dirección de correo electrónico:'
-  new_documents: Nuevos Documentos
+  documents: Documentos
   new_document: Nuevo documento
+  new_documents: Nuevo documentos
   new_project: Nuevo proyecto
   no_projects_help: Esta cuenta no tiene ningún proyecto todavía. Para iniciar uno,
     haga clic en el botón "Nuevo Proyecto" arriba.
@@ -267,7 +282,6 @@ es:
   choose_note: Elige cuenta
   terms: Condiciones
   privacy: Intimidad
-  search: Buscar
   uservoice_discuss: Discuta Características y bichos
   contact_documentcloud: Contacto DocumentCloud
   in_project: en este proyecto
@@ -346,7 +360,6 @@ es:
   download_viewer: Descargar Visor de documentos
   download_pdf: Descargar PDF original
   download_text: Descargar texto completo
-  print_notes: Imprimir las notas
   export: Exportar
   export_to_overview_explain: Estás a punto de exportar a la vista. Debe crear una cuenta general, y usted debe proveer general con su nombre de usuario y contraseña DocumentCloud.
   timeline_max_documents: Sólo se puede ver una línea de tiempo de diez documentos a la vez.
@@ -376,3 +389,32 @@ es:
   publishing_embedding: Publishing & Embedding
   the_api: El API DocumentCloud
   guides_howtos: Guías y Cómo la
+
+viewer:
+  <<: *common
+  note_by: 'Anotado por:'
+  note_title: Anotación Título
+  CLOSE: CIERRE
+  click_add_page_note: Haga clic para agregar una página Nota
+  contents: Contenido
+  container_not_found: 'Documento elemento contenedor Visor no encontrado: '
+  dl_as_pdf: Descargar este documento en formato PDF
+  expand: Ampliar
+  link_to_note: Enlace a esta nota
+  loading: Carga
+  next_note: Nota Siguiente
+  annotation_title: Anotación Título
+  print_document_help: Para imprimir el documento, haga clic en el enlace "documento original" para abrir el PDF original. En este momento no es posible imprimir el documento con anotaciones.
+  previous: Previo
+  previous_note: Anotación Anterior
+  related_article: Artículo relacionado
+  text: Texto
+  draft_note_visible: Este proyecto es sólo visible para usted y sus colaboradores.
+  must_upgrade: 'Para utilizar el Visor de documentos debe actualizar su navegador: '
+  toggle_description: Descripción Toggle
+  untitled_note: Untitled Note
+  view_fullscreen: Ver documento en pantalla completa
+  zoom: Zoom
+  for: Para
+  install_chrome_frame: O bien, si desea continuar utilizando Internet Explorer 6, podrá %sinstalar Google Chrome Frame%s.
+  original_document_pdf: Documento original (PDF)

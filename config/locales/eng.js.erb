@@ -1,14 +1,10 @@
-dc.translations.en = {
-
+_.i18n.load({
+  code: 'eng',
   nplurals: 2,
   pluralizer: function(n){
     return n ? 1 : 0;
   },
 
-  mixin: function(){
-
-  },
-
   strings: <%= translation_strings.to_json %>
 
-};
+});
