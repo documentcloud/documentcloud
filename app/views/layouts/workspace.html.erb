@@ -4,7 +4,7 @@
 <head>
   <%= render :partial => 'common/meta_tags' %>
   <title><%= @title ? @title + ' - ' : '' %>DocumentCloud</title>
-   <script>window.USER_LANGUAGE = 'es';</script>
+  <%= render :partial=>'accounts/language_settings' %>
 
   <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
   <% js  = [:core] + (@javascripts || []) %>
@@ -37,16 +37,16 @@
     </div>
     <a id="workspace_logo" href="/home"></a>
     <div id="toplinks" class="interface">
-      <a href="/home" class="text_link"><%= DC::I18n.lookup( @current_account.language,'home') %></a>
+      <a href="/home" class="text_link"><%= DC.t( @current_account, 'home') %></a>
       &nbsp;/&nbsp;
       <% if @current_account %>
         <% if @current_organization %>
           <span class="text_link open_accounts"><%= @current_account.admin? ? 
-                                                    DC::I18n.lookup( @current_account.language,'organization') : 
-                                                      DC::I18n.lookup( @current_account.language,'accounts')  %></span>
+                                                    DC.t( @current_account, 'organization') : 
+                                                      DC.t( @current_account, 'accounts')  %></span>
         &nbsp;/&nbsp;
         <% end %>
-        <a href="/logout" class="text_link"><%= DC::I18n.lookup( @current_account.language, 'log_out') %></a>
+        <a href="/logout" class="text_link"><%= DC.t( @current_account, 'log_out') %></a>
       <% else %>
         <a href="/contact" class="text_link">Join</a>
         &nbsp;/&nbsp;

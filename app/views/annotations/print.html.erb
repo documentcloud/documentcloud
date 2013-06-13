@@ -3,7 +3,8 @@
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
-  <title>Print Notes</title>
+  <title><%= DC.t( @current_account, 'print_notes' ) %></title>
+  <%= render :partial=>'accounts/language_settings' %>
   <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
   <% js  = [:core] + (@javascripts || []) %>
   <%= include_stylesheets *css %>
