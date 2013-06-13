@@ -1,6 +1,9 @@
 /*! sprintf.js | Copyright (c) 2007-2013 Alexandru Marasteanu <hello at alexei dot ro> | 3 clause BSD license */
 
 (function(ctx) {
+  var log = ( ctx.console && ctx.console.warn ) ? ctx.console.warn : function(){};
+
+
 	var sprintf = function() {
 		if (!sprintf.cache.hasOwnProperty(arguments[0])) {
 			sprintf.cache[arguments[0]] = sprintf.parse(arguments[0]);
@@ -83,12 +86,12 @@
 								field_list.push(field_match[1]);
 							}
 							else {
-								throw('[sprintf] huh?');
+							  log('[sprintf] error: ' + fmt );
 							}
 						}
 					}
 					else {
-						throw('[sprintf] huh?');
+						log('[sprintf] error: ' + fmt );
 					}
 					match[2] = field_list;
 				}
@@ -101,7 +104,7 @@
 				parse_tree.push(match);
 			}
 			else {
-				throw('[sprintf] huh?');
+			  log('[sprintf] error: ' + fmt );
 			}
 			_fmt = _fmt.substring(match[0].length);
 		}
