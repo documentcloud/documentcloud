@@ -14,8 +14,9 @@ javascripts:
     - public/javascripts/vendor/jquery.ui.sortable.js
     - public/javascripts/vendor/jquery.ui.autocomplete.js
     - public/javascripts/vendor/*.js
-    - public/javascripts/translations/*.js
     - public/javascripts/lib/*.js
+    - public/javascripts/translations/eng.js
+    - public/javascripts/translations/spa.js
     - public/javascripts/model/*.js
     - public/javascripts/ui/common/*.js
     - public/javascripts/ui/**/*.js

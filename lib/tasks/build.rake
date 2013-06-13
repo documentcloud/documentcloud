@@ -16,11 +16,21 @@ namespace :build do
     DC::Language::SUPPORTED.each do | language_code |
       path =  Rails.root.join('config','locales', "#{language_code}.yml" )
       next unless path.exist?
-      File.open( Rails.root.join('public','javascripts','translations', "#{language_code}.js"), 'w' ) do | destination_file |
-        translation_strings = YAML.load_file( path )[language_code]
-        template = File.read( path.dirname.join("#{language_code}.js.erb") )
-        destination_file.write ERB.new( template ).result( binding )
+      dictionary = YAML.load_file( path )
+      template = ERB.new( File.read( path.dirname.join("#{language_code}.js.erb") ) )
+
+      workspace = Rails.root.join('public','javascripts','translations', "#{language_code}.js")
+      File.open( workspace, 'w' ) do | destination_file |
+        translation_strings = dictionary['workspace']
+        destination_file.write template.result( binding )
       end
+
+      viewer = Rails.root.join("../document-viewer/public/javascripts/DV/schema/translation.#{language_code}.js")
+      File.open( viewer, 'w' ) do | destination_file |
+        translation_strings = dictionary['viewer']
+        destination_file.write template.result( binding )
+      end
+
     end
   end
 
@@ -99,7 +109,7 @@ namespace :build do
           file.truncate(css.length)
         end
       end
-      FileUtils.cp_r("public/images/#{embed}", 'build/images')
+      FileUtils.cp_r("public/images/#{embed}", 'build/images') if File.exists?("public/images/#{embed}")
 
       FileUtils.rm_r("public/#{embed}") if File.exists?("public/#{embed}")
       FileUtils.cp_r('build', "public/#{embed}")
