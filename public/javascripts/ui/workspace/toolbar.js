@@ -155,7 +155,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     var doc = docs[0];
     if ((doc.notes.length && !doc.notes.any(function(note) { return note.get('access') == 'public'; })) ||
         (!doc.notes.length && !doc.get('public_note_count'))) {
-      return dc.ui.Dialog.alert('Please select a document with at least one public note.');
+      return dc.ui.Dialog.alert( _.t('select_with_public_note' ));
     }
     if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
     dc.app.noteEmbedDialog = new dc.ui.NoteEmbedDialog(doc);

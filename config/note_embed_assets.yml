@@ -5,6 +5,10 @@ embed_assets: datauri
 javascripts:
   note_embed:
     - public/javascripts/vendor/underscore-*.js
+    - public/javascripts/vendor/sprintf.js
+    - public/javascripts/lib/i18n.js
+    - public/javascripts/translations/eng.js
+    - public/javascripts/translations/spa.js
     - public/javascripts/vendor/jquery-*.js
     - public/javascripts/embed/note_embed.js
     - app/views/jst/embed/note_*.jst
