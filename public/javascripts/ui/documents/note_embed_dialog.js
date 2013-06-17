@@ -15,11 +15,11 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   totalSteps : 2,
 
   STEPS : [null,
-    'Step One: Select a Note to Embed',
-    'Step Two: Copy and Paste the Embed Code'
+    _.t('embed_note_step_one'),
+    _.t('embed_note_step_two')
   ],
 
-  DEMO_ERROR : 'Demo accounts are not allowed to embed notes. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="/help/publishing#step_5">here</a>.',
+  DEMO_ERROR : _.t('embed_note_demo_error','<a href="/contact">','</a>','<a href="/help/publishing#step_5">','</a>'),
 
   DEFAULT_OPTIONS : {},
 

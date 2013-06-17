@@ -22,7 +22,7 @@
     <% } %>
     <p class="dialog_info selectable_text interface">
       <% if (doc.isPublic()) { %>
-        <%= _.t('document_public_help', '<span class="text_link edit_access">','</span>') %>
+        <%= _.t('document_publish_public_help', '<span class="text_link edit_access">','</span>') %>
       <% } else { %>
       <%= _.t('document_publish_private_help', '<span class="text_link edit_access">','</span>',( doc.get('publish_at') ? '' : _.t('set_the') ) ) %>
         <br /><br />

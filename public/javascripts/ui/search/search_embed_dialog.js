@@ -20,11 +20,12 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
   totalSteps : 2,
 
   STEPS : [null,
-    'Step One: Configure the Embedded Documents',
-    'Step Two: Copy and Paste the Embed Code'
+           _.t('embed_search_step_one'),
+           _.t('embed_search_step_two')
   ],
 
-  DEMO_ERROR : 'Demo accounts are not allowed to embed document sets. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="/help/publishing#step_4">here</a>.',
+  DEMO_ERROR : _.t('embed_search_demo_error','<a href="/contact">', '</a>',
+                   '<a href="/help/publishing#step_4">','</a>.'),
 
   DEFAULT_OPTIONS : {
     order      : 'title',
