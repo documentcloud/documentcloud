@@ -1,4 +1,4 @@
-commonstrings: &common
+common: &common
   draft: borrador
   print_notes: Imprimir las notas
   pg: p.
@@ -24,9 +24,9 @@ commonstrings: &common
   private_note_visible: Esta nota privada sólo es visible para usted.
   publish: Publicar
 
-
 workspace: 
   <<: *common
+  public: Público
   home: Página Principal
   private_to: Private a %s
   private_access: Acceso Privado
@@ -167,8 +167,9 @@ workspace:
   private_to_organization: Privado a %s
   remove_line_breaks: Eliminar saltos de línea
   add_html_for_viewer: Añade este código HTML a su sitio para crear un visor de documentos.
+  add_html_for_note: Añade este código HTML a su sitio para integrar la nota.
   featured_examples_list: Usted puede encontrar un montón de ejemplos de documentos
-    incrustados en nuestra lista de% sfeatured reporte %s.
+    incrustados en nuestra lista de %sfeatured reporte%s.
   show_all: Mostrar todos
   mentioning_query: mencionando "%s"
   show_all_x_pages: Mostrar una sola página, Mostrar todos los %d páginas
@@ -245,7 +246,7 @@ workspace:
   width: Ancho
   height: Altura
   publish_choose_display: Seleccione si desea mostrar el documento en un %sfull diseño
-    de página%s o %tamaño sfixed cuadro de%s.
+    de página%s o %stamaño sfixed cuadro de%s.
   embed_viewer_opens_to: Visor se abre para
   first_page: Primera página
   page_ellipsis: Página ...
@@ -261,8 +262,8 @@ workspace:
   link_to_pdf: Enlace a la original PDF
   link_to_pdf_help: Desactive esta casilla para eliminar el enlace PDF desde el visor
     de documentos.
-  preview_viewer: Antes de continuar, por favor tome un momento para% spreview el visor
-    de documentos de %s.
+  preview_viewer: Antes de continuar, por favor tome un momento para %spreview el visor
+    de documentos de%s.
   mentioned_in_documents:
   - Mencionado en un documento
   - mencionado en %d documentos
@@ -288,7 +289,7 @@ workspace:
   matching_search: juego esta búsqueda
   set_will_appear: aparecerá en este set.
   no_appear_until_publish: no aparecerá hasta que se publiquen.
-  future_documents_w_appear: Documentos Future% s aparecerá en su inserción.
+  future_documents_w_appear: Documentos Future %s aparecerá en su inserción.
   added_project: agregado a este proyecto
   optional: opcional
   order_documents_by: Documentos Ordenado por
@@ -389,6 +390,15 @@ workspace:
   publishing_embedding: Publishing & Embedding
   the_api: El API DocumentCloud
   guides_howtos: Guías y Cómo la
+  select_with_public_note: Por favor, seleccione un documento con al menos una nota pública.
+  embed_note_step_one: 'Paso uno: Seleccione una nota para incrustar'
+  embed_note_step_two: 'Segundo paso: Copiar y pegar el código de inserción'
+  embed_note_demo_error: Las cuentas demo no se les permite insertar notas. %sPóngase en contacto con nosotros%s si necesita una cuenta con todas las funciones. Ver un ejemplo de código de inserción %saquí%s.
+  embed_search_step_one: 'Primer Paso: Configurar los documentos incrustados'
+  embed_search_step_two: 'Segundo paso: Copiar y pegar el código de inserción'
+  embed_search_demo_error: Las cuentas demo no se les permite integrar conjuntos de documentos. %sContáctenos%s si usted necesita una cuenta con todas las funciones. Ver un ejemplo de código de inserción %saquí%s.
+
+
 
 viewer:
   <<: *common

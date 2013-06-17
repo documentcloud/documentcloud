@@ -1,6 +1,34 @@
-workspace:
-  home: Home
+common: &common
+  draft: Draft
+  print_notes: Print Notes
   pg: p.
+  next: Next
+  save: Save
+  save_as_draft: Save as Draft
+  private_note: 
+  - Private note
+  - Private notes
+  page:
+  - Page
+  - Pages
+  contributed_by: Contributed by
+  search: Search
+  description: Description
+  document: Document
+  delete: Delete
+  of: of
+  cancel: Cancel
+  note: 
+  - Note
+  - Notes
+  private_note_visible: This private note is only visible to you.
+  publish: Publish
+
+
+workspace:
+  <<: *common
+  public: Public
+  home: Home
   private_to: Private to %s
   private_access: Private Access
   document_tools: Document Tools
@@ -19,8 +47,6 @@ workspace:
     redactions.
   notes_hidden_while_redacting: Any existing notes are temporarily hidden while redaction
     is taking place.
-  cancel: Cancel
-  save: Save
   revoke: Revoke
   save_redactions: Save Redactions
   edit_sections: Edit Sections
@@ -28,7 +54,6 @@ workspace:
   edit_title: Edit Title
   edit_source: Edit Source
   edit_description: Edit Description
-  description: Description
   edit_access: Edit Access Level
   edit_related_url: Edit Related Article URL
   edit_published_url: Edit Published URL
@@ -77,13 +102,10 @@ workspace:
   contact_reviewer: Contact %s at %s if you need any help, or visit %s for more information
     about DocumentCloud.
   title: Title
-  draft: Draft
-  private_note: Private note
   search_elipsis: Search...
   clear_search: clear search
   search_no_match: Your search did not match any documents.
   return_to_orig_docs: Return to the original documents.
-  page: Page
   view_docs_on_dc: View these documents on DocumentCloud
   login: Login
   log_out: Log Out
@@ -98,7 +120,6 @@ workspace:
   first_name: First name
   last_name: Last name
   resend_instructions: Resend Instructions
-  document: Document
   disabled: Disabled
   administrator: Administrator
   contributor: Contributor
@@ -114,7 +135,6 @@ workspace:
   include_optional_msg: 'Optional: Include a personal message'
   preview_email: preview the email message
   before_continue: Before continuing, you can take a moment to %s
-  next: Next
   back: Back
   close: Close
   add_reviewer: Add Reviewer
@@ -122,7 +142,6 @@ workspace:
     If you need to speak to someone immediately, you can call us at (202) 505-1010.
     See %s for more ways to get in touch.
   message: Message
-  delete: Delete
   edit_document_pairs:
   - Edit key/value pairs describing this document.
   - Edit key/value pairs describing these documents.
@@ -145,6 +164,7 @@ workspace:
   private_to_organization: Private to %s
   remove_line_breaks: Remove line breaks
   add_html_for_viewer: Add this HTML to your site to create a document viewer.
+  add_html_for_note: Add this HTML to your site to embed the note.
   featured_examples_list: You can find plenty of examples of embedded documents on our
     list of %sfeatured reporting%s.
   show_all: Show all
@@ -153,10 +173,7 @@ workspace:
   - Show single page
   - Show all %d pages
   draft_visible_collab: This draft is only visible to you and collaborators.
-  private_note_visible: This private note is only visible to you.
   annotated_by: 'Annotated by: %s'
-  publish: Publish
-  save_as_draft: Save as Draft
   document_has_no_public_notes: This document has no public notes.
   open_in_viewer: Open all pages in viewer
   over_x_mentions: Over %d mentions
@@ -164,7 +181,6 @@ workspace:
   - One Mention
   - '%d mentions'
   or: or
-  of: of
   'on': 'on'
   at: at
   private_documents_visible_instructions:
@@ -178,12 +194,10 @@ workspace:
   no_past_publication: You can't set a document to be published in the past.
   make_public_on: 'Make public on:'
   edit_document_information: Edit Document Information
-  note: Note
   reviewer: Reviewer
   source: Source
   public_on: Public on
   edit_data: Edit Data
-  contributed_by: Contributed by
   email_when_complete: Email me when %sdocuments have%s finished processing.
   make_documents_public: Make %sdocuments%s public.
   remove_file: Remove file
@@ -267,7 +281,6 @@ workspace:
   choose_note: Choose note
   terms: Terms
   privacy: Privacy
-  search: Search
   uservoice_discuss: Discuss Features &amp; Bugs
   contact_documentcloud: Contact DocumentCloud
   in_project: in this project
@@ -345,7 +358,6 @@ workspace:
   download_viewer: Download Document Viewer
   download_pdf: Download Original PDF
   download_text: Download Full Text
-  print_notes: Print Notes
   export: Export
   export_to_overview_explain: You are about to export to Overview. You must create an Overview account, and you must provide Overview with your DocumentCloud username and password.
   timeline_max_documents: You can only view a timeline for ten documents at a time.
@@ -375,48 +387,38 @@ workspace:
   publishing_embedding: Publishing &amp; Embedding
   the_api: The DocumentCloud API
   guides_howtos: Guides &amp Howto's
+  select_with_public_note: Please select a document with at least one public note.
+  embed_note_step_one: 'Step One: Select a Note to Embed'
+  embed_note_step_two: 'Step Two: Copy and Paste the Embed Code'
+  embed_note_demo_error: 'Demo accounts are not allowed to embed notes. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.'
+  embed_search_step_one: 'Step One: Configure the Embedded Documents'
+  embed_search_step_two: 'Step Two: Copy and Paste the Embed Code'
+  embed_search_demo_error: Demo accounts are not allowed to embed document sets. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.
+
+
+
+
 
 viewer:
+  <<: *common
   note_by: 'Annotated by:'
   note_title: Annotation Title
   CLOSE: CLOSE
-  cancel: Cancel
   click_add_page_note: Click to Add a Page Note
   contents: Contents
-  contributed_by: 'Contributed by:'
-  delete: Delete
-  description: Description
-  document: Document
   container_not_found: 'Document Viewer container element not found:'
   dl_as_pdf: Download this document as a PDF
-  draft: Draft
   expand: Expand
   link_to_note: Link to this note
   loading: Loading
-  next: Next
   next_note: Next Annotation
   annotation_title: Annotation Title
-  note: 
-  - Note
-  - Notes
   print_document_help: To print the document, click the "Original Document" link to open the original PDF. At this time it is not possible to print the document with annotations.
-  page:
-  - Page
-  - Pages
   previous: Previous
   previous_note: Previous Annotation
-  print_notes: Print Notes
-  private_note: 
-  - Private note
-  - Private notes
-  publish: Publish
   related_article: Related Article
-  save: Save
-  save_as_draft: Save as Draft
-  search: Search
   text: Text
   draft_note_visible: This draft is only visible to you and collaborators.
-  private_note_visible: This private note is only visible to you
   must_upgrade: 'To use the Document Viewer you need to upgrade your browser:'
   toggle_description: Toggle Description
   untitled_note: Untitled Note
@@ -424,6 +426,4 @@ viewer:
   zoom: Zoom
   for: for
   install_chrome_frame: Or, if you'd like to continue using Internet Explorer 6, you can %sinstall Google Chrome Frame%s.
-  pg: p.
-  of: of
   original_document_pdf: Original Document (PDF)
