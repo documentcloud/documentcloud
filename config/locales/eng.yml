@@ -8,6 +8,9 @@ common: &common
   private_note: 
   - Private note
   - Private notes
+  x_pages:
+  - %d Page
+  - %d Pages
   page:
   - Page
   - Pages
@@ -161,7 +164,6 @@ workspace:
   embed_url_of_document: Most users won't need to add this. URL of the page on your
     site where this document is embedded
   public_access: Public Access
-  private_to_organization: Private to %s
   remove_line_breaks: Remove line breaks
   add_html_for_viewer: Add this HTML to your site to create a document viewer.
   add_html_for_note: Add this HTML to your site to embed the note.
@@ -331,7 +333,9 @@ workspace:
   access_level: Access Level
   modify_original_document: Modify Original Document
   remove_from_project: Remove from this Project
-  delete_documents: Delete Documents
+  delete_documents: 
+  - Delete Document
+  - Delete Documents
   sort: Sort
   sort_by_relevance: Sort by Relevance
   sort_by_date_uploaded: Sort by date Uploaded
@@ -394,10 +398,15 @@ workspace:
   embed_search_step_one: 'Step One: Configure the Embedded Documents'
   embed_search_step_two: 'Step Two: Copy and Paste the Embed Code'
   embed_search_demo_error: Demo accounts are not allowed to embed document sets. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.
-
-
-
-
+  open_published_version: Open Published Version
+  view_pages: View Pages
+  set_access: Set Access Level
+  uploading: Uploading...
+  broken_document: Broken document
+  your_organization: Your Organization
+  private: Private
+  open_published: Open Published Version
+  has_no_entities: %s has no entities to display.
 
 viewer:
   <<: *common

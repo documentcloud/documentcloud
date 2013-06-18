@@ -8,6 +8,9 @@ common: &common
   private_note:
   - Nota privada
   - Las notas privadas
+  x_pages:
+  - %d Página
+  - %d Páginas
   page:
   - Página
   - Páginas
@@ -164,7 +167,6 @@ workspace:
   embed_url_of_document: La mayoría de los usuarios no tendrán que añadir esto. URL
     de la página de su sitio donde se inserta este documento
   public_access: Acceso Público
-  private_to_organization: Privado a %s
   remove_line_breaks: Eliminar saltos de línea
   add_html_for_viewer: Añade este código HTML a su sitio para crear un visor de documentos.
   add_html_for_note: Añade este código HTML a su sitio para integrar la nota.
@@ -333,7 +335,9 @@ workspace:
   access_level: Nivel de Acceso
   modify_original_document: Modificar documento original
   remove_from_project: Borrar de este proyecto
-  delete_documents: Eliminar Documentos
+  delete_documents: 
+  - Eliminar el Documento
+  - Eliminar Documentos
   sort: Clasificar
   sort_by_relevance: Ordenar por Relevance
   sort_by_date_uploaded: Ordenar por Fecha de publicación
@@ -344,7 +348,6 @@ workspace:
   view_timeline: Vista de línea de tiempo
   analyze_doc_in_overview: Analizar estos Documentos en Overview
   analyze_project_in_overview: Analyze este Proyecto in Overview
-
   share_documents: Compartir estos documentos
   share_project: Comparte este Proyecto
   analyze: Analizar
@@ -397,8 +400,15 @@ workspace:
   embed_search_step_one: 'Primer Paso: Configurar los documentos incrustados'
   embed_search_step_two: 'Segundo paso: Copiar y pegar el código de inserción'
   embed_search_demo_error: Las cuentas demo no se les permite integrar conjuntos de documentos. %sContáctenos%s si usted necesita una cuenta con todas las funciones. Ver un ejemplo de código de inserción %saquí%s.
-
-
+  open_published_version: Abra versión publicada
+  view_pages: Ver Páginas
+  set_access: Establezca el nivel de acceso
+  uploading: Cargando ...
+  broken_document: Documento Roto
+  your_organization: su organización
+  private: Privado
+  open_published: Abrir versión publicada
+  has_no_entities: %s no tiene entidades para mostrar.
 
 viewer:
   <<: *common

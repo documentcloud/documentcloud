@@ -334,29 +334,29 @@ dc.ui.Document = Backbone.View.extend({
     }));
     var count = Documents.chosen(this.model).length;
     if (!count) return;
-    var deleteTitle = dc.inflector.pluralize('Delete Document', count);
+
     menu.clear();
     var items = [{title : 'Open', onClick: this.viewDocuments}];
     if (this.model.isPublished()) {
       items.push({
-        title   : 'Open Published Version',
+        title   : _.t('open_published_version'),
         onClick : this.viewPublishedDocuments
       });
     }
-    items.push({title : 'View Entities', onClick: this.viewEntities});
-    items.push({title : 'View Pages', onClick: this.viewChosenPages});
+    items.push({title : _.t('view_entities'), onClick: this.viewEntities});
+    items.push({title : _.t('view_pages'), onClick: this.viewChosenPages});
     if (this.model.allowedToEdit()) {
       items = items.concat([
-        {title : 'Edit Document Information', onClick: this.openDialog},
-        {title : 'Edit Document Data',        onClick: this.openDataDialog},
-        {title : 'Set Access Level',          onClick: this.setAccessLevelAll},
-        {title : deleteTitle,                 onClick: this.deleteDocuments,
+        {title : _.t('edit_document_information'), onClick: this.openDialog},
+        {title : _.t('edit_document_data'),        onClick: this.openDataDialog},
+        {title : _.t('set_access'),                onClick: this.setAccessLevelAll},
+        {title : _.t('delete_documents', count),    onClick: this.deleteDocuments,
                                               attrs : {'class' : 'warn'}}
       ]);
     }
     if (Projects.firstSelected()) {
       var index = items.length - (items[items.length - 1].onClick == this.deleteDocuments ? 1 : 0);
-      items.splice(index, 0, {title : 'Remove from this Project', onClick: this.removeFromProject});
+      items.splice(index, 0, {title : _.t('remove_from_project'), onClick: this.removeFromProject});
     }
     menu.addItems(items);
     menu.render().open().content.css({top : e.pageY, left : e.pageX});
@@ -368,18 +368,18 @@ dc.ui.Document = Backbone.View.extend({
     var base = 'icon main_icon document_tool ';
     switch (access) {
       case dc.access.PENDING:
-        return {'class' : base + 'spinner',    title : 'Uploading...'};
+        return {'class' : base + 'spinner',    title : _.t('uploading') };
       case dc.access.ERROR:
-        return {'class' : base + 'alert_gray', title : 'Broken document'};
+        return {'class' : base + 'alert_gray', title : _.t('broken_document') };
       case dc.access.ORGANIZATION:
-        return {'class' : base + 'lock',       title : 'Private to ' + (dc.account ?
+        return {'class' : base + 'lock',       title : _.t('private_to', (dc.account ?
                                                        dc.account.organization().get('name') :
-                                                       'your organization')};
+                                                       'your organization') )};
       case dc.access.PRIVATE:
-        return {'class' : base + 'lock',       title : 'Private'};
+        return {'class' : base + 'lock',       title : _.t('private')};
       default:
         if (this.model.isPublished())
-          return {'class' : base + 'published', title : 'Open Published Version'};
+          return {'class' : base + 'published', title : _.t('open_published') };
         return {'class' : base + 'hidden', iconless: true};
     }
   },
@@ -437,7 +437,7 @@ dc.ui.Document = Backbone.View.extend({
     if (this.model.entities.length) {
       this.entitiesView.show();
     } else {
-      dc.ui.Dialog.alert('"' + this.model.get('title') + '" has no entities to display.');
+      dc.ui.Dialog.alert( _.t('has_no_entities', this.model.get('title') ) );
     }
   },
 
