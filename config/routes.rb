@@ -49,6 +49,7 @@ ActionController::Routing::Routes.draw do |map|
       cors_api.pending      '/api/documents/pending.:format', :allowed_methods => [ :get ]
       cors_api.project      '/api/projects/:id.:format', :allowed_methods => [ :get, :put, :delete ]
       cors_api.projects     '/api/projects.:format', :allowed_methods => [ :get, :post ]
+      cors_api.search       '/api/search.:format', :allowed_methods => [ :get ]
     end
 
     api.update          '/api/documents/:id.:format', :action => 'update', :conditions => {:method => :put}
