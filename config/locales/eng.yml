@@ -407,6 +407,19 @@ workspace:
   private: Private
   open_published: Open Published Version
   has_no_entities: %s has no entities to display.
+  manage_organization: Manage Organization %s
+  manage_account: Manage Account
+  new_account: New Account
+  enter_new_password: Enter your new password
+  password_updated: Password updated
+  password_no_blank: Your password can't be blank
+  welcome_message_sent_to: A welcome message has been sent to %s.
+  already_has_account: %s alread has an account.
+  account_is_disabled: %s has been disabled.
+  double_check_disable: Really disable %s's account?
+  explain_disable_account: %1$s will not be able to log in to DocumentCloud. Public documents and annotations provided by %1$s will remain available. %2$sContact support%3$s to completely purge %1$s's account.
+  signup_sent_to:  Signup sent to %s
+  account_add_failure: Could not add the account.
 
 viewer:
   <<: *common

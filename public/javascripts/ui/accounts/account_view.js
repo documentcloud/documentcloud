@@ -109,12 +109,12 @@ dc.ui.AccountView = Backbone.View.extend({
 
   promptPasswordChange : function() {
     this.dialog.close();
-    var dialog = dc.ui.Dialog.prompt('Enter your new password:', '', _.bind(function(password) {
+    var dialog = dc.ui.Dialog.prompt(_.t('enter_new_password'), '', _.bind(function(password) {
       if (password.length > 0) {
         this.model.save({password : password}, {
           success : _.bind(function() {
             dc.ui.notifier.show({
-              text      : 'Password updated',
+              text      : _.t('password_updated'),
               duration  : 5000,
               mode      : 'info'
             });
@@ -122,7 +122,7 @@ dc.ui.AccountView = Backbone.View.extend({
         });
         return true;
       } else {
-        dc.ui.Dialog.alert("Your password can't be blank");
+        dc.ui.Dialog.alert(_.t('password_no_blank'));
       }
     }, this), {password : true, mode : 'short_prompt'});
   },
@@ -132,7 +132,7 @@ dc.ui.AccountView = Backbone.View.extend({
     var model = this.model;
     model.resendWelcomeEmail({success : _.bind(function() {
       dc.ui.spinner.hide();
-      dc.ui.notifier.show({mode : 'info', text : 'A welcome message has been sent to ' + model.get('email') + '.'});
+      dc.ui.notifier.show({mode : 'info', text : _.t('welcome_message_sent_to', model.get('email') ) });
     }, this)});
   },
 
@@ -169,7 +169,7 @@ dc.ui.AccountView = Backbone.View.extend({
         return $(this.el).remove();
       }
       if (Accounts.getValidByEmail(attributes.email)) {
-        this.dialog.error(""+attributes.email+" already has an account");
+        this.dialog.error( _.t('already_has_account', attributes.email ) );
         return;
       }
       dc.ui.spinner.show();
@@ -197,15 +197,15 @@ dc.ui.AccountView = Backbone.View.extend({
       this.$el.next('tr.editing').remove();
       this.model.save({'role': this.model.DISABLED});
       dc.ui.notifier.show({
-        text      : this.model.fullName() + ' has been disabled.',
+        text      : _.t('account_is_disabled',this.model.fullName() ),
         duration  : 5000,
         mode      : 'info'
       });
       return true;
     }, this), {
       id          : 'disable_account_confirm',
-      title       : 'Really disable ' + this.model.fullName() + '\'s account?',
-      description : this.model.fullName() + ' will not be able to log in to DocumentCloud. Public documents and annotations provided by ' + this.model.fullName()+ ' will remain available. <span class="contact_support text_link">Contact support</span> to completely purge '+this.model.fullName()+'\'s account.',
+      title       : _.t('double_check_disable'),
+      description : _.t('explain_disable_account', this.model.fullName(), '<span class="contact_support text_link">','</span>' ),
       saveText    : 'Disable'
     });
     $('.contact_support', dialog.el).bind('click', function() {
@@ -233,7 +233,7 @@ dc.ui.AccountView = Backbone.View.extend({
     if (this.model.newRecord) {
       this.model.newRecord = false;
       dc.ui.notifier.show({
-        text      : 'Signup sent to ' + model.get('email'),
+        text      : _.t('signup_sent_to', model.get('email') ),
         duration  : 5000,
         mode      : 'info'
       });
@@ -245,7 +245,7 @@ dc.ui.AccountView = Backbone.View.extend({
     model.invalid = true;
     dc.ui.spinner.hide();
     this.showEdit();
-    this.dialog.error(resp.errors && resp.errors[0] || 'Could not add the account.');
+    this.dialog.error( resp.errors && resp.errors[0] || _.t('account_add_failure') );
   }
 
 });

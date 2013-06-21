@@ -8,7 +8,7 @@
       <% if (total > limit) { %>
         <b><%= start %> &ndash; <%= end %></b> of
       <% } %>
-      <% var totalLine = total + ' ' + dc.inflector.pluralize('page', total); %>
+      <% var totalLine = _.t('x_pages', total) %>
       <% if (total <= limit) { %>
         <b class="pages_only"><%= totalLine %></b>
       <% } else { %>

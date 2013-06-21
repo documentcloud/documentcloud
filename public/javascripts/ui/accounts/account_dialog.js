@@ -15,9 +15,9 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
   constructor : function() {
     dc.ui.Dialog.call(this, {
       mode          : 'custom',
-      title         : 'Manage ' + ( Accounts.current().isAdmin() ?
-                                    'Organization: ' + dc.account.organization().get('name') :
-                                    'Account' ),
+      title         : ( Accounts.current().isAdmin() ?
+                                    _.t('manage_organization', dc.account.organization().get('name') ) :
+                                    _.t('manage_account' ) ),
       information   : 'group: ' + dc.account.organization().get('slug')
     });
     Accounts.bind('reset', _.bind(this._renderAccounts, this));
@@ -39,7 +39,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
       this.$('.custom').before('<div class="organization_language"></div>');
       this.$('.organization_language').html( JST['account/language_settings']( {language: dc.account.getLanguage() } ) );
       this.setDisplayLanguage();
-      this.addControl(this.make('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, 'New Account'));
+      this.addControl(this.make('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, _.t('new_account') ));
 
     }
     return this;

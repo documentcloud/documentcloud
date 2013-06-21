@@ -409,6 +409,20 @@ workspace:
   private: Privado
   open_published: Abrir versión publicada
   has_no_entities: %s no tiene entidades para mostrar.
+  manage_organization: Gestione Organización %s
+  manage_account: Administrar Cuenta
+  new_account: Nueva Cuenta
+  enter_new_password: Ingrese su nueva contraseña
+  password_updated: Contraseña actualizada
+  password_no_blank: La contraseña no puede estar en blanco
+  welcome_message_sent_to: Un mensaje de bienvenida ha sido enviado con %s.
+  already_has_account: %s ya tiene una cuenta.
+  account_is_disabled: %s se ha desactivado.
+  double_check_disable: Realmente deshabilitar la cuenta de %s
+  explain_disable_account: %1$s no podrá iniciar sesión en DocumentCloud. Los documentos públicos y anotaciones proporcionadas por %1$s seguirán estando disponibles. %2$sPóngase en contacto%3$s con apoyo para purgar completamente la cuenta de %1$s.
+  signup_sent_to: Signup enviado a %s
+  account_add_failure: No se pudo agregar la cuenta.
+
 
 viewer:
   <<: *common
