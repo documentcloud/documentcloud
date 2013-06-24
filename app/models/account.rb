@@ -338,6 +338,9 @@ class Account < ActiveRecord::Base
     self
   end
 
+  def language
+    'spa'
+  end
 
   # Create default organization to preserve backwards compatability.
   def canonical(options={})
