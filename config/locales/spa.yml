@@ -399,6 +399,13 @@ workspace:
   guided_tour: Guided Tour
   adding_accounts: Adición de cuentas
   searching_dd: Búsqueda de documentos y datos
+  upload: Subir
+  upload_document: Cargue el documento
+  max_upload_size_warn: Sólo se pueden subir documentos a menos de 200 MB de tamaño. Por favor, %soptimizar su documento%s antes de continuar.
+  must_upload_something: Tienes que subir al menos un documento.
+  document_processing_count: 
+  - Hay un solo documento en trámite
+  - Hay %d documentos en trámite
   uploading_documents: Carga de documentos
   troubleshooting_uploads: Cargas fallidos solución de problemas
   document_modification: Modificación del documento

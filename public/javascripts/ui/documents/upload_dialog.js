@@ -15,9 +15,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       autostart       : false,
       collection      : UploadDocuments,
       mode            : 'custom',
-      title           : 'Upload Documents',
-      saveText        : 'Upload',
-      closeText       : 'Cancel',
+      title           : _.t('upload_document'),
+      saveText        : _.t('upload'),
+      closeText       : _.t('cancel'),
       multiFileUpload : false
     };
     options = _.extend({}, defaults, options);
@@ -119,9 +119,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
     if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
       this.close();
-      return dc.ui.Dialog.alert("You can only upload documents less than 200MB in size. " +
-                                "Please <a href=\"/help/troubleshooting\">optimize your document</a> " +
-                                "before continuing.");
+      return dc.ui.Dialog.alert(_.t('max_upload_size_warn','<a href="/help/troubleshooting">',"</a>") );
     }
 
     this.render();
@@ -131,7 +129,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // Cancel an upload by index.
   cancelUpload : function(uploadIndex) {
     if (this.collection.length <= 1) {
-      this.error('You must upload at least one document.');
+      this.error( _.t('must_upload_something') );
       return false;
     }
     return true;
@@ -227,9 +225,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     $.getJSON('/documents/queue_length.json', {}, _.bind(function(resp) {
       var num = resp.queue_length;
       if (num <= 0) return;
-      var conj = num > 1 ? 'are' : 'is';
-      this.info('There ' + conj + ' ' + num + ' ' + dc.inflector.pluralize('document', num) +
-                ' currently being processed.', true);
+      this.info( _.t('document_processing_count', num ), true );
     }, this));
   },
 
