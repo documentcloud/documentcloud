@@ -26,6 +26,17 @@ common: &common
   - Notas
   private_note_visible: Esta nota privada sólo es visible para usted.
   publish: Publicar
+  access_level_edit_closing: Cambiar el nivel de acceso se tome unos momentos. El documento se cierra mientras se procesa.
+  close_while_text_reprocess: El texto se está procesando. Por favor, cierre el documento.
+  force_ocr: Fuerza OCR
+  text_reprocess_help: Vuelva a procesar este documento para tomar ventaja de la mejora de nuestras herramientas de extracción de texto. Seleccione la opción "Fuerza OCR" (reconocimiento óptico de caracteres) para ignorar cualquier información de texto incrustado y utilizar Tesseract antes de la preparación. El documento se cierra mientras se está reconstruyendo. ¿Está seguro de que desea continuar?
+  reprocess: Jubilación
+  x_invited_to_review_x: %s ha invitado a revisar %s
+  redaction_close_while_processing: 
+  - Usted ha redactado un pasaje. Este documento se cierra mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
+  - Usted ha redactado %d pasos. Este documento se cierra mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
+  close_while_redacting: El documento se redactó. Se cerrará al procesar.
+
 
 workspace: 
   <<: *common
@@ -33,7 +44,7 @@ workspace:
   home: Página Principal
   private_to: Private a %s
   private_access: Acceso Privado
-  document_tools: Documentos
+  document_tools: Herramientas de documentos
   add_note_instructions: Resalte una parte de la página, o haga clic en las páginas
     para crear una nota.
   add_public_note: Agregar una nota pública
@@ -107,7 +118,7 @@ workspace:
     ver.
   contact_reviewer: Póngase en contacto con %s en %s si necesita ayuda o visite %s para
     más información sobre DocumentCloud.
-  title: título
+  title: Título
   search_elipsis: Buscar ...
   clear_search: buscar borrar
   search_no_match: Su búsqueda no produjo ningún documento.
@@ -163,7 +174,7 @@ workspace:
   title_of_document: Título de este documento
   source_of_document: La fuente de la que ha obtenido este documento
   paragraph_description_of_document: Descripción párrafo de este documento
-  url_of_document: URL del artículo de la tela que hace referencia a este documento
+  related_url_of_document: URL del artículo de la tela que hace referencia a este documento
   embed_url_of_document: La mayoría de los usuarios no tendrán que añadir esto. URL
     de la página de su sitio donde se inserta este documento
   public_access: Acceso Público
@@ -331,6 +342,7 @@ workspace:
   - Introduzca la URL del artículo que hace referencia a este documento
   - Introduzca la URL del artículo que hace referencia a estos documentos
   edit: Editar
+  edit_x: Editar %s
   edit_document_info: Editar información del documento
   access_level: Nivel de Acceso
   modify_original_document: Modificar documento original
@@ -451,7 +463,7 @@ viewer:
   toggle_description: Descripción Toggle
   untitled_note: Untitled Note
   view_fullscreen: Ver documento en pantalla completa
-  zoom: Zoom
+  zoom: Enfocar
   for: Para
   install_chrome_frame: O bien, si desea continuar utilizando Internet Explorer 6, podrá %sinstalar Google Chrome Frame%s.
   original_document_pdf: Documento original (PDF)

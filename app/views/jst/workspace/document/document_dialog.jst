@@ -1,7 +1,7 @@
 <% if (!multiple) { %>
 <div class="row">
   <label for="document_edit_title" title="<%= _.t('title_of_document') %>">
-      Title:
+      <%= _.t('title') %>:
   </label>
   <div class="text_input dark small">
     <input name="title" id="document_edit_title" class="attribute" type="text" />
@@ -12,7 +12,7 @@
 
 <div class="row">
   <label for="document_edit_source" title="<%= _.t('source_of_document') %>">
-    Source:
+    <%= _.t('source') %>:
   </label>
   <div class="text_input dark small">
     <input name="source" id="document_edit_source" class="attribute" type="text" />
@@ -22,15 +22,15 @@
 
 <div class="row tall">
   <label for="document_edit_description" title="<%= _.t('paragraph_description_of_document') %>">
-    Description:
+    <%= _.t('description') %>:
   </label>
   <textarea name="description" id="document_edit_description" class="text_area dark small content attribute"></textarea>
   <br class="clear" />
 </div>
 
 <div class="row">
-  <label for="document_edit_related_article" title="<%= _.t('url_of_document') %>">
-    Related Article URL:
+  <label for="document_edit_related_article" title="<%= _.t('related_url_of_document') %>">
+    <%= _.t('related_article_url') %>:
   </label>
   <div class="text_input dark small">
     <input name="related_article" id="document_edit_related_article" class="attribute" type="text" />
@@ -41,7 +41,7 @@
 <% if (!multiple) { %>
 <div class="row">
   <label for="document_edit_remote_url" title="<%= _.t('embed_url_of_document') %>">
-      Published URL:
+      <%= _.t('published_url') %>:
   </label>
   <div class="text_input dark small">
     <input name="remote_url" id="document_edit_remote_url" class="attribute" type="text" />
@@ -52,7 +52,7 @@
 
 <div class="row">
   <label for="document_edit_access">
-    Access Level:
+    <%= _.t('access_level') %>:
   </label>
   <select name="access" class="document_access attribute" id="document_edit_access">
     <option value="4"><%= _.t('public_access') %></option>
@@ -63,7 +63,7 @@
 
 <div class="row last">
   <label for="document_edit_language">
-    Language:
+    <%= _.t('language') %>:
   </label>
   <select name="language" class="document_access attribute" id="document_edit_language">
     <% _.each( dc.language.SUPPORTED, function(language_code){ %>

@@ -61,8 +61,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   showReviewerWelcome : function() {
     var inviter = dc.app.editor.options.reviewerInviter;
     if (!(dc.account.get('role') == dc.model.Account.prototype.REVIEWER && inviter)) return;
-    var title = inviter.fullName + ' has invited you to review "' +
-      dc.inflector.truncate(currentDocument.api.getTitle(), 50) + '"';
+    var title = _.t('x_invited_to_review_x', inviter.fullName, dc.inflector.truncate(currentDocument.api.getTitle(), 50) );
     var description = JST['reviewer_welcome'](inviter);
     var dialog = dc.ui.Dialog.alert("", {description: description, title: title});
     $(dialog.el).addClass('wide_dialog');
@@ -87,7 +86,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   editTitle : function() {
-    this.prompt('Title', this.viewer.api.getTitle(), _.bind(function(title) {
+    this.prompt(_.t('title'), this.viewer.api.getTitle(), _.bind(function(title) {
       this.viewer.api.setTitle(title);
       this._updateDocument({title : title});
       return true;
@@ -95,7 +94,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   editSource : function() {
-    this.prompt('Source', this.viewer.api.getSource(), _.bind(function(source) {
+    this.prompt(_.t('source'), this.viewer.api.getSource(), _.bind(function(source) {
       this.viewer.api.setSource(source);
       this._updateDocument({source : source});
       return true;
@@ -103,7 +102,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   editRelatedArticle : function() {
-    this.prompt('Related Article URL', this.viewer.api.getRelatedArticle(), _.bind(function(url, dialog) {
+    this.prompt(_.t('related_article_url'), this.viewer.api.getRelatedArticle(), _.bind(function(url, dialog) {
       url = dc.inflector.normalizeUrl(url);
       if (url && !dialog.validateUrl(url)) return false;
       this.viewer.api.setRelatedArticle(url);
@@ -111,12 +110,12 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       return true;
     }, this), {
       mode : 'short_prompt',
-      description : 'Enter the URL of the article that references this document:'
+      description : _.t('related_url_of_document')
     });
   },
 
   editPublishedUrl : function() {
-    this.prompt('Published URL', this.viewer.api.getPublishedUrl(), _.bind(function(url, dialog) {
+    this.prompt( _.t('published_url'), this.viewer.api.getPublishedUrl(), _.bind(function(url, dialog) {
       url = dc.inflector.normalizeUrl(url);
       if (url && !dialog.validateUrl(url)) return false;
       this.viewer.api.setPublishedUrl(url);
@@ -124,12 +123,12 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       return true;
     }, this), {
       mode        : 'short_prompt',
-      description : 'Enter the URL of the page on which this document is embedded:'
+      description : _.t('embed_url_of_document')
     });
   },
 
   editDescription : function() {
-    this.prompt('Description', this.viewer.api.getDescription(), _.bind(function(desc) {
+    this.prompt(_.t('description'), this.viewer.api.getDescription(), _.bind(function(desc) {
       this.viewer.api.setDescription(desc);
       this._updateDocument({description : desc});
       return true;
@@ -147,7 +146,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   closeDocumentOnAccessChange : function() {
     if (this.docModel.hasChanged('access')) {
       this.setOnParent(this.docModel, {access: dc.access.PENDING});
-      var closeMessage = "Changing the access level will take a few moments. Please close this document.";
+      var closeMessage = _.t('access_level_edit_closing');
       dc.ui.Dialog.alert(closeMessage, {onClose: function(){ window.close(); }});
     }
   },
@@ -174,26 +173,22 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   reprocessText : function() {
     var self = this;
-    var closeMessage = "The text is being processed. Please close this document.";
-    var dialog = new dc.ui.Dialog.confirm("Reprocess this document to take \
-        advantage of improvements to our text extraction tools. Choose \
-        \"Force OCR\" (optical character recognition) to ignore any embedded \
-        text information and use Tesseract before reprocessing. The document will \
-        close while it's being rebuilt. Are you sure you want to proceed? ", function() {
+    var closeMessage = _.t('close_while_text_reprocess');
+    var dialog = new dc.ui.Dialog.confirm(_.t('text_reprocess_help'), function() {
       var doc = self._getDocumentModel();
       doc.reprocessText();
       self.setOnParent(doc, {access: dc.access.PENDING});
       $(dialog.el).remove();
       _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
     }, {width: 450});
-    var forceEl = $(dialog.make('span', {'class':'minibutton dark center_button'}, 'Force OCR')).bind('click', function() {
+    var forceEl = $(dialog.make('span', {'class':'minibutton dark center_button'}, _.t('force_ocr'))).bind('click', function() {
       var doc = self._getDocumentModel();
       doc.reprocessText(true);
       self.setOnParent(doc, {access: dc.access.PENDING});
       $(dialog.el).remove();
       _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
     });
-    dialog.$('.ok').text('Reprocess').before(forceEl);
+    dialog.$('.ok').text(_.t('reprocess')).before(forceEl);
   },
 
   openTextTab : function() {
@@ -276,9 +271,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     var modelId = this.viewer.api.getModelId();
     var redactions = dc.app.editor.annotationEditor.redactions;
     if (!redactions.length) return dc.app.editor.annotationEditor.close();
-    var message = "You've redacted " + redactions.length + " " +
-      dc.inflector.pluralize('passage', redactions.length) +
-      ". This document will close while it's being rebuilt. Are you sure you're ready to proceed?";
+    var message = _.t('redaction_close_while_processing');
     dc.ui.Dialog.confirm(message, _.bind(function() {
       $.ajax({
         url       : '/documents/' + modelId + '/redact_pages',
@@ -288,7 +281,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
         success   : _.bind(function(resp) {
           this.setOnParent(modelId, resp);
           window.close();
-          _.defer(dc.ui.Dialog.alert, "The document is being redacted. Please close this document.");
+          _.defer(dc.ui.Dialog.alert, _.t('close_while_redacting') );
         }, this)
       });
       return true;

@@ -160,7 +160,7 @@ workspace:
   title_of_document: Title of this document
   source_of_document: The source from which you obtained this document
   paragraph_description_of_document: Paragraph description of this document
-  url_of_document: URL of the web article that refers to this document
+  related_url_of_document: URL of the web article that refers to this document
   embed_url_of_document: Most users won't need to add this. URL of the page on your
     site where this document is embedded
   public_access: Public Access
@@ -227,7 +227,7 @@ workspace:
   featured_reporting_list: You can find examples of embedded searches on our list of
     %sfeatured reporting%s.
   related_article_url: Related article URL
-  related_article_url_help: Providing the URL of the article or that references this
+  related_article_url_help: Providing the URL of the article that references this
     document will enable a "Related Article" link within the document viewer. Many readers
     arrive at a document from a web search &mdash; the link guides them back to the
     document's original context.
@@ -329,6 +329,7 @@ workspace:
   - Enter the URL of the article that references this document
   - Enter the URL of the article that references these documents
   edit: Edit
+  edit_x: Edit %s
   edit_document_info: Edit Document Information
   access_level: Access Level
   modify_original_document: Modify Original Document
@@ -424,6 +425,16 @@ workspace:
   no_duplicate_section: Can't create a duplicate section.
   no_section_outside_doc: Can't create a section outside the document.
   remove_all: Remove All
+  access_level_edit_closing: Changing the access level will take a few moments. The document will close while it processes.
+  close_while_text_reprocess: The text is being processed. Please close this document.
+  force_ocr: Force OCR
+  text_reprocess_help: Reprocess this document to take advantage of improvements to our text extraction tools. Choose "Force OCR" (optical character recognition) to ignore any embedded text information and use Tesseract before reprocessing. The document will close while it's being rebuilt. Are you sure you want to proceed? 
+  reprocess: Reprocess
+  x_invited_to_review_x: %s has invited you to review %s
+  redaction_close_while_processing: 
+  - You've redacted a passage. This document will close while it's being rebuilt. Are you sure you're ready to proceed?
+  - You've redacted %d passages. This document will close while it's being rebuilt. Are you sure you're ready to proceed?
+  close_while_redacting: The document is being redacted. It will close while processing.
 
 viewer:
   <<: *common
