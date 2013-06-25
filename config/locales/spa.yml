@@ -422,7 +422,10 @@ workspace:
   explain_disable_account: %1$s no podrá iniciar sesión en DocumentCloud. Los documentos públicos y anotaciones proporcionadas por %1$s seguirán estando disponibles. %2$sPóngase en contacto%3$s con apoyo para purgar completamente la cuenta de %1$s.
   signup_sent_to: Signup enviado a %s
   account_add_failure: No se pudo agregar la cuenta.
-
+  enter_title_and_page: Por favor, añadir un título y el número de página para cada sección.
+  no_duplicate_section: No se puede crear una sección duplicada.
+  no_section_outside_doc: No se puede crear una sección fuera del documento.
+  remove_all: Eliminar Todo
 
 viewer:
   <<: *common

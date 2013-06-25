@@ -420,6 +420,10 @@ workspace:
   explain_disable_account: %1$s will not be able to log in to DocumentCloud. Public documents and annotations provided by %1$s will remain available. %2$sContact support%3$s to completely purge %1$s's account.
   signup_sent_to:  Signup sent to %s
   account_add_failure: Could not add the account.
+  enter_title_and_page: Please add a title and page number for each section.
+  no_duplicate_section: Can't create a duplicate section.
+  no_section_outside_doc: Can't create a section outside the document.
+  remove_all: Remove All
 
 viewer:
   <<: *common
