@@ -33,7 +33,9 @@ workspace:
   public: Public
   home: Home
   private_to: Private to %s
+  private_to_organization_help: Only the people in your organization have access. (No freelancers.)
   private_access: Private Access
+  private_access_help: Only people with explicit permission (via collaboration) have access.
   document_tools: Document Tools
   add_note_instructions: Highlight a portion of the page, or click between pages to
     create a note.
@@ -164,6 +166,7 @@ workspace:
   embed_url_of_document: Most users won't need to add this. URL of the page on your
     site where this document is embedded
   public_access: Public Access
+  public_access_help: Anyone on the internet can search for and view the document.
   remove_line_breaks: Remove line breaks
   add_html_for_viewer: Add this HTML to your site to create a document viewer.
   add_html_for_note: Add this HTML to your site to embed the note.
@@ -435,6 +438,9 @@ workspace:
   - You've redacted a passage. This document will close while it's being rebuilt. Are you sure you're ready to proceed?
   - You've redacted %d passages. This document will close while it's being rebuilt. Are you sure you're ready to proceed?
   close_while_redacting: The document is being redacted. It will close while processing.
+  document_access_updated:
+  - Access updated for the document
+  - Access updated for %d documents
 
 viewer:
   <<: *common

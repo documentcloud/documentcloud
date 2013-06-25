@@ -410,28 +410,28 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     var options = {information: this.subtitle(docs.length)};
     if (!this.allowedToEdit(docs)) return;
     var current = this.sharedAttribute(docs, 'access') || dc.access.PRIVATE;
-    dc.ui.Dialog.choose('Access Level', [
+    dc.ui.Dialog.choose( _.t('access_level'), [
       {
-        text        : 'Public Access',
-        description : 'Anyone on the internet can search for and view the document.',
+        text        : _.t('public_access'),
+        description : _.t('public_access_help'),
         value       : dc.access.PUBLIC,
         selected    : current == dc.access.PUBLIC
       },
       {
-        text        : 'Private Access',
-        description : 'Only people with explicit permission (via collaboration) have access.',
+        text        : _.t('private_access'),
+        description : _.t('private_access_help'),
         value       : dc.access.PRIVATE,
         selected    : current == dc.access.PRIVATE
       },
       {
-        text        : 'Private to ' + dc.account.organization().get('name'),
-        description : 'Only the people in your organization have access. (No freelancers.)',
+        text        : _.t('private_to', dc.account.organization().get('name') ),
+        description : _.t('private_to_organization_help'),
         value       : dc.access.ORGANIZATION,
         selected    : current == dc.access.ORGANIZATION
       }
     ], function(access) {
       _.each(docs, function(doc) { doc.save({access : parseInt(access, 10)}); });
-      var notification = 'Access updated for ' + docs.length + ' ' + dc.inflector.pluralize('document', docs.length);
+      var notification = _.t('document_access_updated', docs.length );
       if (!_.any(docs, function(doc) { return doc.suppressNotifier; })) {
         dc.ui.notifier.show({mode : 'info', text : notification});
       }

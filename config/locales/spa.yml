@@ -43,7 +43,9 @@ workspace:
   public: Público
   home: Página Principal
   private_to: Private a %s
+  private_to_organization_help: Sólo las personas de su organización tienen acceso. (No hay freelancers.)
   private_access: Acceso Privado
+  private_access_help: Sólo las personas con permiso explícito (a través de la colaboración) tienen acceso.
   document_tools: Herramientas de documentos
   add_note_instructions: Resalte una parte de la página, o haga clic en las páginas
     para crear una nota.
@@ -178,6 +180,7 @@ workspace:
   embed_url_of_document: La mayoría de los usuarios no tendrán que añadir esto. URL
     de la página de su sitio donde se inserta este documento
   public_access: Acceso Público
+  public_access_help: Cualquier usuario de Internet puede buscar y ver el documento.
   remove_line_breaks: Eliminar saltos de línea
   add_html_for_viewer: Añade este código HTML a su sitio para crear un visor de documentos.
   add_html_for_note: Añade este código HTML a su sitio para integrar la nota.
@@ -210,9 +213,9 @@ workspace:
   source: Fuente
   public_on: Público en
   edit_data: Modificar información
-  email_when_complete: Envíeme un correo electrónico cuando sdocuments% tienen procesamiento
+  email_when_complete: Envíeme un correo electrónico cuando %s documentos tienen procesamiento
     terminado %s.
-  make_documents_public: Hacer pública %sdocuments%s.
+  make_documents_public: Hacer pública %sdocumento%s.
   remove_file: Eliminar archivo
   edit_details: Editar detalles
   apply_all_files: Aplicar a todos los archivos
@@ -438,6 +441,10 @@ workspace:
   no_duplicate_section: No se puede crear una sección duplicada.
   no_section_outside_doc: No se puede crear una sección fuera del documento.
   remove_all: Eliminar Todo
+  document_access_updated:
+  - Acceso actualizada del documento
+  - Acceso actualizado para %d documentos
+
 
 viewer:
   <<: *common
