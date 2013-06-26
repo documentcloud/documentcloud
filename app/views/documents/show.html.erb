@@ -7,7 +7,6 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <title><%= @current_document && @current_document.title %></title>
   <%= render :partial=>'accounts/language_settings' %>
-  <script>window.DC_LANGUAGE_CODES = { fallback: 'eng', default: '<%= @current_account.language %>' };</script>
 
   <!--[if (!IE)|(gte IE 8)]><!-->
     <link href="/viewer/viewer-datauri.css" media="screen" rel="stylesheet" type="text/css" />
