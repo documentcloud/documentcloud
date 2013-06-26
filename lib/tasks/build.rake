@@ -19,12 +19,14 @@ namespace :build do
       dictionary = YAML.load_file( path )
       template = ERB.new( File.read( path.dirname.join("#{language_code}.js.erb") ) )
 
+      js_namespace = 'WS'
       workspace = Rails.root.join('public','javascripts','translations', "#{language_code}.js")
       File.open( workspace, 'w' ) do | destination_file |
         translation_strings = dictionary['workspace']
         destination_file.write template.result( binding )
       end
 
+      js_namespace = 'DV'
       viewer = Rails.root.join("../document-viewer/public/javascripts/DV/schema/translation.#{language_code}.js")
       File.open( viewer, 'w' ) do | destination_file |
         translation_strings = dictionary['viewer']
