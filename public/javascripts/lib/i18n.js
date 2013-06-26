@@ -1,4 +1,4 @@
-// A tiny object to perform string substitution for translation
+// A tiny js library to perform string substitution for translation
 
 // This is intended to be the simplest thing that could possibly work
 // We'll build up from there as needs arise
@@ -7,7 +7,8 @@
 // which are JS Modules with the following form:
 
 // var simple_pack = {
-//   code: 'en',
+//   code: 'eng',
+//   namespace: 'main',
 //   nplurals: 2,
 //   pluralizer: function(n){
 //     return n ? 1 : 0;
@@ -20,13 +21,24 @@
 //     ]
 //   }
 // };
-// _.i18n.load( simple_pack );
-
-// Packs can be stacked, and lookups will fallback to earlier loaded ones.
-
-// The typical usage pattern will be to first
-//  load the English pack, then a language pack that would be relevant to the user
 //
+// Each pack is assigned:
+//   A namespace.  This is the area where it will be utilized, i.e. WS for WorkSpace, DV for Document Viewer.
+//   This is needed to accomodate loading multiple translation objects in the same page, 
+//   such as when the Viewer is embedded into the workspace
+//
+//   A language code.  The ISO 639-3 code that it corresponds to.
+//
+//   A pluralizer function.  This is takes a number and returns the index of the string that should be used.
+//   Concept originated with gettext: http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms
+
+// Example Usage:
+
+// var encoding = new I18n( { namespace: 'main', language: 'spa', fallback: 'eng' } );
+// _.t = encoding.translate
+
+// This could also come before the object creation
+// I18n.load( simple_pack );
 
 // using the above pack as an example:
 
@@ -39,10 +51,19 @@
 // would return: "The document GoodDoc does not have a reviewer."
 
 
-(function(root) {
+// Special care has been taken to allow differing orders of initialization.  In some cases the library may be initialized
+// before the packs are loaded, or it may be initalized and then the language codes changed later.
+
+
+(function(root,undefined) {
 
   var _ = root._;
 
+  // There can be only one!
+  if ( ! _.isUndefined( root.I18n ) )
+    return;
+
+  var LOG;
   if ( root.console ){
     LOG=window.console;
   } else {
@@ -52,58 +73,87 @@
     };
   }
 
-  _.i18n = {
-    packs: [],
-    default:  null,
-    codes: {},
-    fallback: null,
+  // stores all available language
+  // packs
+  var ALL_PACKS = {};
+  var ALL_INITIALIZED = [];
 
-    configure: function( options ){
-      if ( options.default )
-        this.set( 'default', options.default );
-      if ( options.fallback )
-        this.set( 'fallback', options.fallback );
-    },
+  function I18n( options ){
+    this.codes    = {};
 
-    set: function( type, code ){
-      if ( ! code ) {
-        code = root.DC_LANGUAGE_CODES ? root.DC_LANGUAGE_CODES[ type ] : 'eng';
-      }
-      this.codes[ type ] = code;
-      this[ type ] = this.packForCode( code );
-    },
+    this.reconfigure( options );
 
-    load: function( pack ){
-      if ( _.isArray(pack) ){
-        this.packs = this.packs.concat( pack );
-      } else {
-        this.packs.push( pack );
-      }
+    this.translate = _.bind( this.translate, this );
+    ALL_INITIALIZED.push(this);
+  }
 
-      if ( ! this.default )
-        this.set( 'default', this.codes['default'] );
+  // static method.  Stores packs for
+  // later use by individual translators
+  I18n.load = function( pack ){
+    if ( ALL_PACKS[ pack.namespace ] )
+      ALL_PACKS[ pack.namespace ].push( pack );
+    else
+      ALL_PACKS[ pack.namespace ] = [ pack ];
 
-      if ( ! this.fallback )
-        this.set( 'fallback', this.codes['fallback'] );
-    },
-
-    packForCode: function( code ){
-      return _.detect( this.packs, function( pack ){
-        return pack.code == code;
-      });
-    }
-
+    _.each( ALL_INITIALIZED, function(lib){
+      lib.reconfigure();
+    });
+    return true;
   };
 
-  _.t = function( key, args ){
+  I18n.prototype.reconfigure = function( options ){
+    if (_.isUndefined(options)){
+      options=this.options;
+    } else {
+      this.options = options;
+    }
+    if ( ALL_PACKS[options.namespace] ){
+      this.packs = ALL_PACKS[options.namespace];
+    }
+
+    if ( options.language )
+      this.set( 'language', options.language );
+    if ( options.fallback )
+      this.set( 'fallback', options.fallback );
+  };
+
+  I18n.prototype.set = function( type, code ){
+    if ( ! code ) {
+      code = root.DC_LANGUAGE_CODES ? root.DC_LANGUAGE_CODES[ type ] : 'eng';
+    }
+    this.codes[ type ] = code;
+    this[ type ] = this.packForCode( code );
+  };
+
+  I18n.prototype.load = function( pack ){
+    if ( _.isArray(pack) ){
+      this.packs = this.packs.concat( pack );
+    } else {
+      this.packs.push( pack );
+    }
+
+    if ( ! this.language )
+      this.set( 'language', this.codes['language'] );
+
+    if ( ! this.fallback )
+      this.set( 'fallback', this.codes['fallback'] );
+  };
+
+  I18n.prototype.packForCode = function( code ){
+    return _.detect( this.packs, function( pack ){
+      return pack.code == code;
+    });
+  };
+
+
+  I18n.prototype.translate = function( key, args ){
 
     var match, pack;
-    pack = _.i18n.default;
-
-    if ( ! ( match = pack.strings[ key ] ) ){
-      LOG.warn( '[i18n] lookup for ' + key + ' in \'' + pack.code + '\' failed.' );
-      pack = _.i18n.fallback;
-      if ( ! ( match = pack.strings[ key ] ) ){
+    pack = this.language;
+    if ( ! pack || ! ( match = pack.strings[ key ] ) ){
+      LOG.warn( '[i18n] lookup for ' + key + ' in \'' + ( pack ? pack.code : this.options.language + ' (missing)' ) + '\' failed.' );
+      pack = this.fallback;
+      if ( ! pack || ! ( match = pack.strings[ key ] ) ){
         LOG.error( '[i18n] lookup for ' + key + ' failed in all languages' );
         return key;  // something is better than nothing (perhaps?)
       }
@@ -112,12 +162,14 @@
     // if our matching string is an array
     // then we select the match from it using the pluralization
     // lookup rules from the pack
-    if ( _.isArray( match ) ){ // plural lookup 
+    if ( _.isArray( match ) ){ // plural lookup
       match = match[ pack.pluralizer( args ) ];
     }
 
     return vsprintf( match, _.toArray( arguments ).slice(1) );
 
   };
+
+  root.I18n = I18n;
 
 })(this);
