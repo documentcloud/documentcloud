@@ -5,11 +5,10 @@ dc.ui.Document = Backbone.View.extend({
   PAGE_LIMIT : 50,
 
   // To display if the document failed to upload.
-  ERROR_MESSAGE : "<span class=\"interface\">Our system was unable to process \
-    this document. We've been notified of the problem and periodically review \
-    these errors. Please review our \
-    <span class=\"text_link troubleshoot\">troubleshooting suggestions</span> or \
-    <span class=\"text_link contact_us\">contact us</span> for immediate assistance.</span>",
+  ERROR_MESSAGE : '<span class="interface">' + _.t('document_error_message',
+                                                   '<span class="text_link troubleshoot">', '</span>',
+                                                   '<span class="text_link contact_us">',   '</span>' ) +
+    '</span>',
 
   className : 'document',
 

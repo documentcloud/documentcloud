@@ -394,6 +394,22 @@ workspace:
   create_new_project: Crear un nuevo proyecto
   project_exists: Un proyecto llamado% s ya existe
   must_have_title: Por favor, escriba un título.
+  must_have_doc_title:
+  - Por favor, escriba un título para el documento
+  - Por favor, introduzca un título para todos los documentos.
+  update_applied_all: Actualizar aplica a todos los archivos.
+  uploaded_x_documents:
+  - Subida de un documento
+  - Subida %d Documentos
+  uploaded_x_document_has:
+  - El documento cargado tiene
+  - Los %d documentos cargados tienen
+  document_error_message: Nuestro sistema no pudo procesar este documento. Hemos sido notificados del problema y revisar periódicamente estos errores. Por favor revise nuestra %ssugerencias de solución de problemas%s en %scontacto con nosotros%s para obtener asistencia inmediata.
+  really_delete_x_docs:
+   - ¿Desea borrar documento?
+   - ¿Desea borrar %d documentos?
+
+  insert_pages_message: Este documento se cierra mientras se está reconstruyendo. Los documentos largos pueden tardar mucho tiempo para reconstruir.
   help: Ayudar
   introduction: Introducción
   guided_tour: Guided Tour

@@ -381,6 +381,22 @@ workspace:
   create_new_project: Create a New Project
   project_exists: A project named %s already exists
   must_have_title: Please enter a title.
+  must_have_doc_title:
+  - Please enter a title for the document
+  - Please enter a title for all documents.
+  update_applied_all: Update applied to all files.
+  uploaded_x_documents:
+  - Uploaded one Document
+  - Uploaded %d Documents
+  uploaded_x_document_has:
+  - The uploaded document has
+  - The %d uploaded documents have
+  document_error_message: Our system was unable to process this document. We've been notified of the problem and periodically review these errors. Please review our %stroubleshooting suggestions%s or %scontact us%s for immediate assistance.
+  really_delete_x_docs:
+  - Really delete document?
+  - Really delete %d documents?
+
+  insert_pages_message: This document will close while it's being rebuilt.  Long documents may take a long time to rebuild.
   help: Help
   introduction: Introduction
   guided_tour: Guided Tour

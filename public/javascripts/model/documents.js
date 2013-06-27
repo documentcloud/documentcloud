@@ -354,7 +354,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   // Destroy the currently selected documents, after asking for confirmation.
   verifyDestroy : function(docs) {
     if (!this.allowedToEdit(docs)) return;
-    var message = 'Really delete ' + docs.length + ' ' + dc.inflector.pluralize('document', docs.length) + '?';
+    var message = _.t('really_delete_x_docs', docs.length );
     dc.ui.Dialog.confirm(message, _.bind(function() {
       var counter = docs.length;
       var progress = dc.ui.Dialog.progress('Deleting Documents&hellip;');
