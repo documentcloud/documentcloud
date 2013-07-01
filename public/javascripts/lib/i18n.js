@@ -24,7 +24,7 @@
 //
 // Each pack is assigned:
 //   A namespace.  This is the area where it will be utilized, i.e. WS for WorkSpace, DV for Document Viewer.
-//   This is needed to accomodate loading multiple translation objects in the same page, 
+//   This is needed to accomodate loading multiple translation objects in the same page,
 //   such as when the Viewer is embedded into the workspace
 //
 //   A language code.  The ISO 639-3 code that it corresponds to.
@@ -57,7 +57,7 @@
 
 (function(root,undefined) {
 
-  var _ = root._;
+  var _ = root._, jQuery = root.jQuery;
 
   // There can be only one!
   if ( ! _.isUndefined( root.I18n ) )
@@ -67,16 +67,17 @@
   if ( root.console ){
     LOG=window.console;
   } else {
-    var emptyfn = function(str){ };
     LOG = {
-      warn: emptyfn, error: emptyfn
+      warn: jQuery.noop, error: jQuery.noop
     };
   }
 
   // stores all available language
   // packs
   var ALL_PACKS = {};
-  var ALL_INITIALIZED = [];
+  // keeps references to all i18n instances that are created.
+  // This way they can all be contacted for reconfiguration when additional packs are loaded
+  var ALL_INSTANCES = [];
 
   function I18n( options ){
     this.codes    = {};
@@ -84,7 +85,7 @@
     this.reconfigure( options );
 
     this.translate = _.bind( this.translate, this );
-    ALL_INITIALIZED.push(this);
+    ALL_INSTANCES.push(this);
   }
 
   // static method.  Stores packs for
@@ -95,12 +96,23 @@
     else
       ALL_PACKS[ pack.namespace ] = [ pack ];
 
-    _.each( ALL_INITIALIZED, function(lib){
+    _.each( ALL_INSTANCES, function(lib){
       lib.reconfigure();
     });
     return true;
   };
 
+  // private(ish) method to set either the
+  // language or fallback code
+  I18n.prototype._set = function( type, code ){
+    if ( ! code ) {
+      code = root.DC_LANGUAGE_CODES ? root.DC_LANGUAGE_CODES[ type ] : 'eng';
+    }
+    this.codes[ type ] = code;
+    this[ type ] = this.packForCode( code );
+  };
+
+  // reconfigure the language and fallback in use
   I18n.prototype.reconfigure = function( options ){
     if (_.isUndefined(options)){
       options=this.options;
@@ -112,32 +124,11 @@
     }
 
     if ( options.language )
-      this.set( 'language', options.language );
+      this._set( 'language', options.language );
     if ( options.fallback )
-      this.set( 'fallback', options.fallback );
+      this._set( 'fallback', options.fallback );
   };
 
-  I18n.prototype.set = function( type, code ){
-    if ( ! code ) {
-      code = root.DC_LANGUAGE_CODES ? root.DC_LANGUAGE_CODES[ type ] : 'eng';
-    }
-    this.codes[ type ] = code;
-    this[ type ] = this.packForCode( code );
-  };
-
-  I18n.prototype.load = function( pack ){
-    if ( _.isArray(pack) ){
-      this.packs = this.packs.concat( pack );
-    } else {
-      this.packs.push( pack );
-    }
-
-    if ( ! this.language )
-      this.set( 'language', this.codes['language'] );
-
-    if ( ! this.fallback )
-      this.set( 'fallback', this.codes['fallback'] );
-  };
 
   I18n.prototype.packForCode = function( code ){
     return _.detect( this.packs, function( pack ){
@@ -146,12 +137,17 @@
   };
 
 
+  // our raison d'etre.
+  // Looks up a translation string for a given key
+  // and applies pluralization & sprintf substitions to it
   I18n.prototype.translate = function( key, args ){
 
     var match, pack;
     pack = this.language;
     if ( ! pack || ! ( match = pack.strings[ key ] ) ){
-      LOG.warn( '[i18n] lookup for ' + key + ' in \'' + ( pack ? pack.code : this.options.language + ' (missing)' ) + '\' failed.' );
+      LOG.warn( '[i18n] lookup for ' + key + ' in \'' +
+                ( pack ? pack.code : this.options.language + ' (missing)' ) +
+                '\' failed.' );
       pack = this.fallback;
       if ( ! pack || ! ( match = pack.strings[ key ] ) ){
         LOG.error( '[i18n] lookup for ' + key + ' failed in all languages' );
@@ -159,10 +155,9 @@
       }
     };
 
-    // if our matching string is an array
-    // then we select the match from it using the pluralization
-    // lookup rules from the pack
-    if ( _.isArray( match ) ){ // plural lookup
+    // if the match is an array then perform an additional lookup 
+    // using the pluralization lookup rules from the pack
+    if ( _.isArray( match ) ){
       match = match[ pack.pluralizer( args ) ];
     }
 
@@ -170,6 +165,7 @@
 
   };
 
+  // export ourselves
   root.I18n = I18n;
 
 })(this);
