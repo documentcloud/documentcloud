@@ -1,4 +1,5 @@
 /*! sprintf.js | Copyright (c) 2007-2013 Alexandru Marasteanu <hello at alexei dot ro> | 3 clause BSD license */
+// Lightly modified for use with i18n library - Exceptions were removed and replaced with logged warnings.
 
 (function(ctx) {
   var log = ( ctx.console && ctx.console.warn ) ? ctx.console.warn : function(){};
