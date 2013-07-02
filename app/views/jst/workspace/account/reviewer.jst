@@ -59,7 +59,7 @@
   <div class="display">
     <% if (documentsCount && documentsCount > 1) { %>
     <span class="document_count">sharing <%= documentCount %>/<%= documentsCount %>
-      <%= dc.inflector.pluralize( _.t('document'), documentsCount) %></span>
+      <%= _.t('document', documentsCount) %></span>
     <% } else if (!account.get('needsEmail')) { %>
     <span class="resend_reviewer text_link" data-account-id="<%= account.id %>"> <%= _.t('resend_instructions') %> </span>
     <% } %>
