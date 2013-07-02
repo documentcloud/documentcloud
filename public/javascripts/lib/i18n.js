@@ -158,7 +158,7 @@
     // if the match is an array then perform an additional lookup 
     // using the pluralization lookup rules from the pack
     if ( _.isArray( match ) ){
-      match = match[ pack.pluralizer( args ) ];
+      match = match[ pack.pluralizer( _.isUndefined(args) ? 1 : args ) ];
     }
 
     return vsprintf( match, _.toArray( arguments ).slice(1) );
