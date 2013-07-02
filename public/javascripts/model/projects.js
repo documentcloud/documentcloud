@@ -89,7 +89,7 @@ dc.model.Project = Backbone.Model.extend({
   notifyProjectChange : function(numDocs, removal) {
     var prefix = removal ? 'Removed ' : 'Added ';
     var prep   = removal ? ' from "'  : ' to "';
-    var notification = prefix + numDocs + ' ' + dc.inflector.pluralize('document', numDocs) + prep + this.get('title') + '"';
+    var notification = prefix + numDocs + ' ' + _.t('document', numDocs) + prep + this.get('title') + '"';
     dc.ui.notifier.show({mode : 'info', text : notification});
   },
 
@@ -113,7 +113,7 @@ dc.model.Project = Backbone.Model.extend({
     var docCount    = this.get('document_count');
     var noteCount   = this.get('annotation_count');
     var shareCount  = this.collaborators.length;
-    return docCount + ' ' + dc.inflector.pluralize(_.t('document'), docCount)
+    return docCount + ' ' + _.t('document', docCount)
       + ', ' + noteCount + ' ' + dc.inflector.pluralize( _.t('note'), noteCount)
       + (shareCount ? ', ' + shareCount + ' ' + dc.inflector.pluralize( _.t('collaborator'), shareCount) : '');
   },
