@@ -93,7 +93,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   // the single document being edited.
   _title : function() {
     return (this.multiple) ? 
-      _.t('num_documents',this.docs.length) :
+      _.t('x_documents',this.docs.length) :
       '"' + dc.inflector.truncate(this.docs[0].get('title'), 35) + '"';
   },
 

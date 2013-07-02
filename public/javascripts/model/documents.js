@@ -246,7 +246,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   },
 
   subtitle : function(count) {
-    return _.t('num_documents',count);
+    return _.t('x_documents',count);
   },
 
   // Given a list of documents and an attribute, return the value of the

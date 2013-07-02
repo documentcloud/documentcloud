@@ -216,7 +216,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     
     this.title( _.t('uploaded_x_documents',num) );
 
-    this.$('.upload_public_count').text( _.t('num_documents', num ) );
+    this.$('.upload_public_count').text( _.t('x_documents', num ) );
     this.$('.upload_email_count').text( _.t('uploaded_x_document_has', num ) );
   },
 
