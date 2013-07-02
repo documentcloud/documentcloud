@@ -91,7 +91,7 @@ dc.ui.DocumentDataDialog = dc.ui.Dialog.extend({
   // Sets the dialog title to include the number of documents or title of
   // the single document being edited.
   _title : function() {
-    if (this.multiple) return _.t('documents', this.docs.length );
+    if (this.multiple) return _.t('x_documents', this.docs.length );
     return '"' + dc.inflector.truncate(this.docs[0].get('title'), 25) + '"';
   },
 

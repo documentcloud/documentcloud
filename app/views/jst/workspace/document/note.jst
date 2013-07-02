@@ -33,7 +33,7 @@
     <% } %>
     <% if (note.get('access') == 'exclusive') { %>
     <div class="annotation_access interface display">
-      <%= _.t('draft_visible_collab') %>
+      <%= _.t('draft_note_visible') %>
     </div>
     <% } else if (note.get('access') == 'private') { %>
     <div class="annotation_access interface display">
@@ -56,6 +56,6 @@
     <% if (_.contains(['public', 'exclusive'], note.get('access'))) { %>
     <div class="minibutton save_draft_note float_right"><%= _.t('save_as_draft') %></div>
     <% } %>
-    <div class="minibutton cancel_note float_right"><%= _.t('save') %></div>
+    <div class="minibutton cancel_note float_right"><%= _.t('cancel') %></div>
   </div>
 </div>
