@@ -1,37 +1,92 @@
+
+# Strings that are in this section are shared between the viewer and workspace
 common: &common
+
   draft: Draft
+  # The label that's applied to a note when it's a draft.  Is displayed in red with a red border, and is transformed to uppercase.
+
   print_notes: Print Notes
+  # Appears in the editor's control panel, under the notes listing and before the Document Tools.
+
   pg: p.
+  # Is scattered thourout the interface as a shortcut for page.
+
   next: Next
+  # Is used in a button on multiple dialogs.  For example in the workspace, click a document and click the Publish menu, then select Embed Dialog Viewer
+
   save: Save
+  # Used as button on multiple dialogs.  The 'Edit Document Information' dialog, accessed by right-clicking on a document int he workspace is an example.
+
   save_as_draft: Save as Draft
-  private_note: 
-  - Private note
-  - Private notes
-  x_pages:
-  - %d Page
-  - %d Pages
+  # Appears on the Annotation dialog.  To view, create a new public annotation using the interface and it will appear as one of the dialog's buttons.
+
+  private_note: Private note
+  # The mouseover text on private notes.  To view hover your mouse over the padlock icon on a note that is private.
+  
+
+  contributed_by: Contributed by
+  # Document's description in organizer, and in Viewer's sidebar under 'Print Notes'
+
+  search: Search
+  # The placeholder text in the search input box.
+
+  description: Description
+  # Many uses.  Document information dialog, Upload Dialog, Workspace's 'Edit Document Information' dialog
+
+  delete: Delete
+  # The "Delete" button on the notes editing dialog.
+
+  of: of
+  # The Forward and Back Page controls in the viewer.  When a search is performed, and more than 3 results are returned it displays: X 'of' X pages.
+
+  cancel: Cancel
+  # Cancel button on all dialogs
+
+  private_note_visible: This private note is only visible to you.
+  draft_note_visible:   This draft is only visible to you and collaborators.
+  # These appear on the bottom of each annotation to explain to whom the note is visible.
+
+  
+  publish: Publish
+  # Displayed on the 'Publish' button on the organizer's toolbar.  Also on note editing dialog if the note is private.
+
   page:
   - Page
   - Pages
-  contributed_by: Contributed by
-  search: Search
-  description: Description
-  document: Document
-  delete: Delete
-  of: of
-  cancel: Cancel
+  x_pages:
+  - %d Page
+  - %d Pages
+  # Appears on the viewer's forward & back page controls. Is also part of the Entity listing subject line and may be viewed by Right-clicking on a document and select 'View Entitities'.
+
+  document: 
+  - Document
+  - Documents
+  x_documents:
+  - %d Document
+  - %d Documents
+  # Used all over, an example is the project listing, document data dialog, and most of the dialogs for the data elements in the viewer.
+
   note: 
   - Note
   - Notes
-  private_note_visible: This private note is only visible to you.
-  publish: Publish
-
+  x_notes: 
+  - %d Note
+  - %d Notes
+  # The note count text under each document image in the organizer, and the projects listing on the left.
 
 workspace:
   <<: *common
   public: Public
+  
+
   home: Home
+  # Right click on Document in organizer, select 'View Images'
+  removed_from_x_documents:
+  - Removed a document from %s
+  - Removed %d documents from %s
+  added_to_x_documents:
+  - Added a document to %s
+  - Added %d documents to %s
   private_to: Private to %s
   private_to_organization_help: Only the people in your organization have access. (No freelancers.)
   private_access: Private Access
@@ -154,9 +209,6 @@ workspace:
   for_example_data: 'For example: &ldquo;birth: 1935-01-08&rdquo;, or &ldquo;status:
     released&rdquo;'
   edit_data_for: Edit Data for %s
-  num_documents:
-  - %d Document
-  - %d Documents
   bad_data_key: %s cannot be used as a key
   confirm_remove_all_data: Are you sure you want to remove all data from %s?
   title_of_document: Title of this document
@@ -177,7 +229,6 @@ workspace:
   show_all_x_pages:
   - Show single page
   - Show all %d pages
-  draft_visible_collab: This draft is only visible to you and collaborators.
   annotated_by: 'Annotated by: %s'
   document_has_no_public_notes: This document has no public notes.
   open_in_viewer: Open all pages in viewer
@@ -185,8 +236,12 @@ workspace:
   x_mentions:
   - One Mention
   - '%d mentions'
+  x_collaborators:
+  - One Collaborator
+  - %d Collaborators
+  # or, on & at are used in workspace/document/pages.jst - line 19
   or: or
-  'on': 'on'
+  on: 'on'
   at: at
   private_documents_visible_instructions:
   - This document is private.  You must make it public before it will be visible on
@@ -484,7 +539,6 @@ viewer:
   previous_note: Previous Annotation
   related_article: Related Article
   text: Text
-  draft_note_visible: This draft is only visible to you and collaborators.
   must_upgrade: 'To use the Document Viewer you need to upgrade your browser:'
   toggle_description: Toggle Description
   untitled_note: Untitled Note

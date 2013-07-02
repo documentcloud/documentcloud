@@ -5,43 +5,46 @@ common: &common
   next: Próximo
   save: Guardar
   save_as_draft: Guardar como borrador
-  private_note:
-  - Nota privada
-  - Las notas privadas
-  x_pages:
-  - %d Página
-  - %d Páginas
-  page:
-  - Página
-  - Páginas
+  private_note: Nota privada
   contributed_by: Contribución de
   search: Búsqueda
   description: Descripción
-  document: Documento
   delete: Eliminar
   of: de
   cancel: Cancelar
+  private_note_visible: Esta nota privada sólo es visible para usted.
+  draft_note_visible: Este proyecto es sólo visible para usted y sus colaboradores.
+  publish: Publicar
+  page:
+  - Página
+  - Páginas
+  x_pages:
+  - %d Página
+  - %d Páginas
+  document:
+  - Documento
+  - Documentos
+  x_documents:
+  - %d Documento
+  - %d Documentos
   note:
   - Nota
   - Notas
-  private_note_visible: Esta nota privada sólo es visible para usted.
-  publish: Publicar
-  access_level_edit_closing: Cambiar el nivel de acceso se tome unos momentos. El documento se cierra mientras se procesa.
-  close_while_text_reprocess: El texto se está procesando. Por favor, cierre el documento.
-  force_ocr: Fuerza OCR
-  text_reprocess_help: Vuelva a procesar este documento para tomar ventaja de la mejora de nuestras herramientas de extracción de texto. Seleccione la opción "Fuerza OCR" (reconocimiento óptico de caracteres) para ignorar cualquier información de texto incrustado y utilizar Tesseract antes de la preparación. El documento se cierra mientras se está reconstruyendo. ¿Está seguro de que desea continuar?
-  reprocess: Jubilación
-  x_invited_to_review_x: %s ha invitado a revisar %s
-  redaction_close_while_processing: 
-  - Usted ha redactado un pasaje. Este documento se cierra mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
-  - Usted ha redactado %d pasos. Este documento se cierra mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
-  close_while_redacting: El documento se redactó. Se cerrará al procesar.
+  x_notes:
+  - %d Nota
+  - %d Notas
 
 
 workspace: 
   <<: *common
   public: Público
   home: Página Principal
+  removed_from_x_documents:
+  - Se ha eliminado un documento de %s
+  - Se han eliminado %d documentos de %s
+  added_to_x_documents:
+  - Se ha añadido un documento de %s
+  - Se ha añadido %d documentos %s
   private_to: Private a %s
   private_to_organization_help: Sólo las personas de su organización tienen acceso. (No hay freelancers.)
   private_access: Acceso Privado
@@ -168,9 +171,6 @@ workspace:
   or_remove_all_data: o %seliminar todos los datos%s.
   for_example_data: 'Por ejemplo: "nacimiento: 08/01/1935", o "estado: en libertad"'
   edit_data_for: Editar para %s
-  num_documents:
-  - %d Documento
-  - %d Documentos
   bad_data_key: '%s no se puede utilizar como una llave'
   confirm_remove_all_data: ¿Está seguro de que desea eliminar todos los datos de %s?
   title_of_document: Título de este documento
@@ -189,14 +189,20 @@ workspace:
   show_all: Mostrar todos
   mentioning_query: mencionando "%s"
   show_all_x_pages: Mostrar una sola página, Mostrar todos los %d páginas
-  draft_visible_collab: Este proyecto es sólo visible para usted y sus colaboradores.
   annotated_by: 'Anotado por: %s'
   document_has_no_public_notes: Este documento no tiene notas públicas.
   open_in_viewer: Abra todas las páginas en el visor
   over_x_mentions: Over %d menciones
-  x_mentions: Una mención, %d menciones
+  x_mentions: 
+  - Una mención
+  - %d menciones
+  x_collaborators:
+  - Una Colaborador
+  - %d Collaboratores
+
+  # or, on & at are used in workspace/document/pages.jst - line 19
   or: o
-  'on': en
+  on: en
   at: en
   private_documents_visible_instructions:
   - Este documento es privado. Debe hacerlo público antes de que sea visible en su página
@@ -464,6 +470,16 @@ workspace:
   no_duplicate_section: No se puede crear una sección duplicada.
   no_section_outside_doc: No se puede crear una sección fuera del documento.
   remove_all: Eliminar Todo
+  access_level_edit_closing: Cambiar el nivel de acceso se tome unos momentos. El documento se cierra mientras se procesa.
+  close_while_text_reprocess: El texto se está procesando. Por favor, cierre el documento.
+  force_ocr: Fuerza OCR
+  text_reprocess_help: Vuelva a procesar este documento para tomar ventaja de la mejora de nuestras herramientas de extracción de texto. Seleccione la opción "Fuerza OCR" (reconocimiento óptico de caracteres) para ignorar cualquier información de texto incrustado y utilizar Tesseract antes de la preparación. El documento se cierra mientras se está reconstruyendo. ¿Está seguro de que desea continuar?
+  reprocess: Jubilación
+  x_invited_to_review_x: %s ha invitado a revisar %s
+  redaction_close_while_processing: 
+  - Usted ha redactado un pasaje. Este documento se cierra mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
+  - Usted ha redactado %d pasos. Este documento se cierra mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
+  close_while_redacting: El documento se redactó. Se cerrará al procesar.
   document_access_updated:
   - Acceso actualizada del documento
   - Acceso actualizado para %d documentos
@@ -488,7 +504,6 @@ viewer:
   previous_note: Anotación Anterior
   related_article: Artículo relacionado
   text: Texto
-  draft_note_visible: Este proyecto es sólo visible para usted y sus colaboradores.
   must_upgrade: 'Para utilizar el Visor de documentos debe actualizar su navegador: '
   toggle_description: Descripción Toggle
   untitled_note: Untitled Note
