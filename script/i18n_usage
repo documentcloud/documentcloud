@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+  then
+    echo "usage: $0 <i18n key>"
+fi
+
+clear
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+STRING=$1
+
+grep -n -C2 --color=auto -r  "_.t('$STRING'" $DIR/../app/views/jst
+
+grep -n -C2 --color=auto -r  "_.t('$STRING'" --exclude=$DIR/../public/javascripts/translations/*js $DIR/../public/javascripts
+
+grep -n -C2 --color=auto -r  "DV.t('$STRING'" --exclude=$DIR/../../viewer/public/javascripts/DV/schema/translation* $DIR/../../viewer/public/javascripts
