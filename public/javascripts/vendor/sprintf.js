@@ -25,7 +25,7 @@
 					arg = argv[cursor];
 					for (k = 0; k < match[2].length; k++) {
 						if (!arg.hasOwnProperty(match[2][k])) {
-							throw(sprintf('[sprintf] property "%s" does not exist', match[2][k]));
+							log(sprintf('[sprintf] property "%s" does not exist', match[2][k]));
 						}
 						arg = arg[match[2][k]];
 					}
@@ -38,7 +38,7 @@
 				}
 
 				if (/[^s]/.test(match[8]) && (get_type(arg) != 'number')) {
-					throw(sprintf('[sprintf] expecting number but found %s', get_type(arg)));
+					log(sprintf('[sprintf] expecting number but found %s', get_type(arg)));
 				}
 				switch (match[8]) {
 					case 'b': arg = arg.toString(2); break;
@@ -100,7 +100,7 @@
 					arg_names |= 2;
 				}
 				if (arg_names === 3) {
-					throw('[sprintf] mixing positional and named placeholders is not (yet) supported');
+					log('[sprintf] mixing positional and named placeholders is not (yet) supported');
 				}
 				parse_tree.push(match);
 			}
