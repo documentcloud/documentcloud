@@ -23,7 +23,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   constructor : function(docs) {
     this.docs = docs;
     this.multiple = docs.length > 1;
-    var title = _.t('edit', this._title() );
+    var title = _.t('edit_x', this._title() );
     dc.ui.Dialog.call(this, {mode : 'custom', title : title, editor : true});
     this.render();
     $(document.body).append(this.el);

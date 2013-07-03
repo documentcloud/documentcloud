@@ -16,7 +16,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     this.model = options.model;
     dc.ui.Dialog.call(this, {
       mode        : 'custom',
-      title       : 'Edit Project'
+      title       : _.t('edit_x', this.model.get('title') )
     });
   },
 
