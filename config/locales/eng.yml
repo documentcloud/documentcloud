@@ -46,6 +46,8 @@ common: &common
   draft_note_visible:   This draft is only visible to you and collaborators.
   # These appear on the bottom of each annotation to explain to whom the note is visible.
 
+  log_out: Log Out
+  # Appears as a link at the top right of the organizer
   
   publish: Publish
   # Displayed on the 'Publish' button on the organizer's toolbar.  Also on note editing dialog if the note is private.
@@ -74,23 +76,44 @@ common: &common
   - %d Notes
   # The note count text under each document image in the organizer, and the projects listing on the left.
 
+# These strings are used in the Workspace
 workspace:
   <<: *common
-  public: Public
-  
+  x_public_documents: 
+  -  %d Public Document
+  -  %d Public Documents
+  x_private_documents: 
+  -  %d Private Document
+  -  %d Private Documents
+  # These are used on the Search Embed dialog.  To see this, open a project with documents.  Select "Embed Document List" from the Publish menu, the phrases will be at the top of the dialog.
 
-  home: Home
-  # Right click on Document in organizer, select 'View Images'
+
   removed_from_x_documents:
   - Removed a document from %s
   - Removed %d documents from %s
   added_to_x_documents:
   - Added a document to %s
   - Added %d documents to %s
-  private_to: Private to %s
-  private_to_organization_help: Only the people in your organization have access. (No freelancers.)
-  private_access: Private Access
+  # These are used in the text at the top-left of the screen that's shown momentarily after adding or removing a document from a project
+
   private_access_help: Only people with explicit permission (via collaboration) have access.
+  private_to_organization_help: Only the people in your organization have access. (No freelancers.)
+  # these are the mouse-over text that is displayed when hovering the mouse over the padlock icon on a private document.
+
+  public_access: Public Access
+  public_access_help: Anyone on the internet can search for and view the document.
+  private_to: Private to %s
+  private_access: Private Access
+  # Used in multiple dialogs and other areas to show a document's access level.  An exampe would be in the document information edit dialog's access level Access Level selection
+
+
+  ###############################################################
+  #
+  #  The below strings are all used on the "Control Panel" 
+  #  which is the sidebar that's displayed on the right side
+  #  when viewing/editing a document
+  #
+  ###############################################################
   document_tools: Document Tools
   add_note_instructions: Highlight a portion of the page, or click between pages to
     create a note.
@@ -158,28 +181,38 @@ workspace:
   upload_pages: Upload Pages
   annotation_help: Use the links at the right to annotate the document. Keep in mind
     that any other reviewers will be able to see public annotations and drafts. Private
-    annotations are for your own reference. Even %s can't see them.
+    annotations are for your own reference. Even %s can\'t see them.
   contact_reviewer: Contact %s at %s if you need any help, or visit %s for more information
     about DocumentCloud.
   title: Title
-  search_elipsis: Search...
-  clear_search: clear search
-  search_no_match: Your search did not match any documents.
-  return_to_orig_docs: Return to the original documents.
-  view_docs_on_dc: View these documents on DocumentCloud
-  login: Login
-  log_out: Log Out
+  ###############################################################
+  #  End of "Control Panel" strings
+  ###############################################################
+
+
+  ###############################################################
+  # Project Edit Dialog
+  # It can be viewed by clicking the pencil icon beside a project
+  project_id: 'Project ID: %s'
+  edit_x: Edit %s
+  collaborators: Collaborators
+  add_a_collaborator: Add a collaborator to this project
+  remove: Remove
+  add: Add
+  enter_email_address: Enter email address
+  project_owner: Project Owner
+
+  ###############################################################
+  # Admin Dialog for accounts.  
+  # It may be viewed by logging in as an administrator and clicking 'Manage Accounts' 
+  # in the organizer under the project listing.
   pending: Pending
   manage: Manage
   organization: Organization
   account: Account
-  accounts: Accounts
-  remove: Remove
-  project_owner: Project Owner
   email: Email
   first_name: First name
   last_name: Last name
-  resend_instructions: Resend Instructions
   disabled: Disabled
   administrator: Administrator
   contributor: Contributor
@@ -189,19 +222,33 @@ workspace:
   ok: OK
   reenable: Re-enable
   disable: Disable
+
+  ###############################################################
+  # "Share Document" dialog
+  # It may be accessed by selecting a document and 
+  # selecting "Share this Document" from the Analyze menu
+  resend_instructions: Resend Instructions
   no_reviewer_on_document:
   - There are no reviewers on this document.
   - There are no reviewers on these documents.
   include_optional_msg: 'Optional: Include a personal message'
   preview_email: preview the email message
   before_continue: Before continuing, you can take a moment to %s
-  back: Back
-  close: Close
   add_reviewer: Add Reviewer
+
+  
+  ###############################################################
+  # "Contact us" form
   form_contact_instructions: Use this form (or email to %s) to contact us for assistance.
     If you need to speak to someone immediately, you can call us at (202) 505-1010.
     See %s for more ways to get in touch.
   message: Message
+
+
+  ###############################################################
+  # These are part of the Document Data dialog
+  # Can be opened by selecting one or more documents then 
+  # selecting "Edit Document Data" from the Edit menu
   edit_document_pairs:
   - Edit key/value pairs describing this document.
   - Edit key/value pairs describing these documents.
@@ -211,20 +258,34 @@ workspace:
   edit_data_for: Edit Data for %s
   bad_data_key: %s cannot be used as a key
   confirm_remove_all_data: Are you sure you want to remove all data from %s?
+
+
+
+  ###############################################################
+  # Edit Document Information dialog
+  # Can be opened by selecting one or more documents then 
+  # selecting "Edit Document Information" from the Edit menu
   title_of_document: Title of this document
   source_of_document: The source from which you obtained this document
   paragraph_description_of_document: Paragraph description of this document
   related_url_of_document: URL of the web article that refers to this document
-  embed_url_of_document: Most users won't need to add this. URL of the page on your
-    site where this document is embedded
-  public_access: Public Access
-  public_access_help: Anyone on the internet can search for and view the document.
+  embed_url_of_document: Most users won't need to add this. URL of the page on your site where this document is embedded
+
+
+  # These are miscellaneous strings that are used in multiple locations
+  back: Back
+  close: Close
+  show_all: Show all
+
+
+  # embed_code
   remove_line_breaks: Remove line breaks
   add_html_for_viewer: Add this HTML to your site to create a document viewer.
   add_html_for_note: Add this HTML to your site to embed the note.
   featured_examples_list: You can find plenty of examples of embedded documents on our
     list of %sfeatured reporting%s.
-  show_all: Show all
+  # Document embed_code  
+
   mentioning_query: mentioning &ldquo;%s&rdquo;
   show_all_x_pages:
   - Show single page
@@ -266,13 +327,10 @@ workspace:
   apply_fields_all_files: Apply this description, source, and access level to all files
   language: Language
   shared_with_you_by: Shared with you by %s
-  title_ellipsis: Title ...
-  description_ellipsis: Description ...
-  project_id: 'Project ID: %s'
-  collaborators: Collaborators
-  add_a_collaborator: Add a collaborator to this project
-  add: Add
-  enter_email_address: 'Enter email address:'
+
+
+
+
   documents: Documents
   new_documents: New Documents
   new_document: New Document
@@ -387,7 +445,6 @@ workspace:
   - Enter the URL of the article that references this document
   - Enter the URL of the article that references these documents
   edit: Edit
-  edit_x: Edit %s
   edit_document_info: Edit Document Information
   access_level: Access Level
   modify_original_document: Modify Original Document
