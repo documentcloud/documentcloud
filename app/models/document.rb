@@ -867,6 +867,7 @@ class Document < ActiveRecord::Base
     res['page']['image']      = page_image_url_template(:local => options[:local])
     res['page']['text']       = page_text_url_template(:local => options[:local])
     res['related_article']    = related_article if related_article
+    res['annotations_url']    = annotations_url if commentable?(options[:account])
     if options[:allow_detected]
       res['published_url']    = published_url if published_url
     else
