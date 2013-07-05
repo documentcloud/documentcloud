@@ -5,13 +5,16 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
   events : {
     'click .close': 'close'
   },
-
-  constructor : function(options) {
-    Backbone.View.call(this, options);
+  
+  initialize: function(options) {
+    // track open/close state
     this._open    = false;
+    // cache of button DOM elements
     this._buttons = {};
+    // Annotation endpoint.
     this._baseURL = '/documents/' + dc.app.editor.docId + '/annotations';
     this._inserts = $('.DV-pageNoteInsert');
+    // list of positions to redact.
     this.redactions = [];
     _.bindAll(this, 'open', 'close', 'drawAnnotation', 'saveAnnotation',
       'deleteAnnotation', 'createPageNote');
@@ -22,15 +25,21 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
 
   open : function(kind) {
     this._open          = true;
+
+    // cache references to elements
     this._buttons[kind] = $('#control_panel .' + kind + '_annotation');
     this.pages          = $('.DV-pages');
     this.page           = $('.DV-page');
     this._guide         = $('#' + kind + '_note_guide');
+
     this.redactions     = [];
     this.page.css({cursor : 'crosshair'});
     if (kind != 'redact') this._inserts.filter('.visible').show().addClass('DV-' + kind);
+
+    // Start drawing region when user mousesdown
     this.page.bind('mousedown', this.drawAnnotation);
     $(document).bind('keydown', this.close);
+    
     $(document.body).setMode(kind, 'editing');
     this._buttons[kind].addClass('open');
     this._guide.fadeIn('fast');
@@ -84,16 +93,22 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     e.stopPropagation();
     e.preventDefault();
     this._activePage = $(e.currentTarget);
+    // not sure why this isn't just currentDocument.api.getPageNumber
     this._activePageNumber = currentDocument.api.getPageNumberForId($(this._activePage).closest('.DV-set').attr('data-id'));
-    this.clearAnnotation();
+    this.clearAnnotation(); // close any open annotation.
+
+    // Record the page boundaries and the starting position for the click+drag
     var offTop        = this._activePage.offset().top,
         offLeft       = this._activePage.offset().left,
-        ox            = e.pageX - offLeft,
-        oy            = e.pageY - offTop,
+        xStart        = e.pageX - offLeft,
+        yStart        = e.pageY - offTop,
         borderBottom  = this._activePage.height() - 6,
         borderRight   = this._activePage.width() - 6;
+    
+    // Create a div to represent the highlighted region
     this.region = this.make('div', {'class' : 'DV-annotationRegion active ' + this._accessClass(this._kind), style:'position:absolute;'});
     (this._kind == 'redact' ? this._specificPage() : this._activePage).append(this.region);
+
     var contained = function(e) {
       return e.pageX > 0 && e.pageX < borderRight &&
              e.pageY > 0 && e.pageY < borderBottom;
@@ -101,23 +116,33 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     var coords = function(e) {
       var x = e.pageX - offLeft - 3,
           y = e.pageY - offTop - 3;
+      // keep ending position for drag in bounds
       x = x < 0 ? 0 : (x > borderRight ? borderRight : x);
       y = y < 0 ? 0 : (y > borderBottom ? borderBottom : y);
       return {
-        left    : Math.min(ox, x),
-        top     : Math.min(oy, y),
-        width   : Math.abs(x - ox),
-        height  : Math.abs(y - oy)
+        left    : Math.min(xStart, x),
+        top     : Math.min(yStart, y),
+        width   : Math.abs(x - xStart),
+        height  : Math.abs(y - yStart)
       };
     };
+    
+    // set the highlighted region's boundaries
     $(this.region).css(coords(e));
+    // and continue to update the region's boundaries when the mouse moves.
     var drag = _.bind(function(e) {
       $(this.region).css(coords(e));
       return false;
     }, this);
+    this.pages.on('mousemove', drag);
+    
+    // when drag is finished
     var dragEnd = _.bind(function(e) {
+      // clean up event listeners
       $(document).unbind('keydown', this.close);
       this.pages.unbind('mouseup', dragEnd).unbind('mousemove', drag);
+      
+      // calculate highlighted region's dimensions
       var loc     = coords(e);
       loc.left    -= 1;
       loc.top     -= 1;
@@ -129,20 +154,27 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
         loc.right   += 15;
         loc.bottom  += 5;
       }
+      
+      // Use the document's current zoom level to scale the region
+      // into normalized coordinates
       var zoom    = currentDocument.api.relativeZoom();
       var image   = _.map([loc.top, loc.right, loc.bottom, loc.left], function(l){ return Math.round(l / zoom); }).join(',');
       if (this._kind == 'redact') {
+        // ignoring redactions too small to cover anything,
+        // record redaction dimensions and which page to apply them to
         if (loc.width > 5 && loc.height > 5) {
           this.redactions.push({
             location: image,
             page: this._activePageNumber
           });
-        } else {
+        } else { 
           $(this.region).remove();
         }
         this.region = null;
       } else {
+        // Close the editor
         this.close();
+        // Instruct the viewer to create a note, if the region is large enough.
         if (loc.width > 5 && loc.height > 5) {
           currentDocument.api.addAnnotation({
             location        : {image : image},
@@ -155,7 +187,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       }
       return false;
     }, this);
-    this.pages.bind('mouseup', dragEnd).bind('mousemove', drag);
+    this.pages.bind('mouseup', dragEnd);
   },
 
   saveAnnotation : function(anno) {
@@ -199,8 +231,10 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
 
   // Lazily create the page-specific div for persistent elements.
   _specificPage : function() {
+    // if a div for redaction already exists, return it.
     var already = $('.DV-pageSpecific-' + this._activePageNumber);
     if (already.length) return already;
+    // otherwise make a div for redactions to be written into
     var el = this.make('div', {'class' : 'DV-pageSpecific DV-pageSpecific-' + this._activePageNumber});
     this._activePage.append(el);
     return $(el);
