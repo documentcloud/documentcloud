@@ -37,8 +37,14 @@ common: &common
 
 workspace: 
   <<: *common
-  public: Público
-  home: Página Principal
+  x_public_documents: 
+  - %d Documento Público
+  - %d Documentos Públicos
+  x_private_documents: 
+  - %d Documento Privado
+  - %d Documentos Privados
+
+
   removed_from_x_documents:
   - Se ha eliminado un documento de %s
   - Se han eliminado %d documentos de %s
@@ -124,13 +130,12 @@ workspace:
   contact_reviewer: Póngase en contacto con %s en %s si necesita ayuda o visite %s para
     más información sobre DocumentCloud.
   title: Título
-  search_elipsis: Buscar ...
+
   clear_search: buscar borrar
-  search_no_match: Su búsqueda no produjo ningún documento.
-  return_to_orig_docs: Volver a los documentos originales.
-  view_docs_on_dc: Vea estos documentos en DocumentCloud
-  login: login
+
+
   log_out: finalizar la sesión
+
   pending: pendiente
   manage: gestionar
   organization: organización
@@ -229,13 +234,13 @@ workspace:
     todos los archivos
   language: Idioma
   shared_with_you_by: Compartido con usted por %s
-  title_ellipsis: Título ...
-  description_ellipsis: Descripción ...
+
+
   project_id: 'ID del proyecto: %s'
   collaborators: Colaboradores
   add_a_collaborator: Añadir un colaborador de este proyecto
   add: Añadir
-  enter_email_address: 'Introduce dirección de correo electrónico:'
+  enter_email_address: Introduce dirección de correo electrónico
   documents: Documentos
   new_document: Nuevo documento
   new_documents: Nuevo documentos
@@ -286,7 +291,7 @@ workspace:
     de documentos.
   preview_viewer: Antes de continuar, por favor tome un momento para %spreview el visor
     de documentos de%s.
-  mentioned_in_documents:
+  mentioned_in_x_documents:
   - Mencionado en un documento
   - mencionado en %d documentos
   show_pages: mostrar páginas

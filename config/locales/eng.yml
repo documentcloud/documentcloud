@@ -20,12 +20,9 @@ common: &common
   save_as_draft: Save as Draft
   # Appears on the Annotation dialog.  To view, create a new public annotation using the interface and it will appear as one of the dialog's buttons.
 
-  private_note: Private note
-  # The mouseover text on private notes.  To view hover your mouse over the padlock icon on a note that is private.
-  
-
   contributed_by: Contributed by
-  # Document's description in organizer, and in Viewer's sidebar under 'Print Notes'
+  reviewer: Reviewer
+  # Document's description in organizer, makes up the text that appears under the document title
 
   search: Search
   # The placeholder text in the search input box.
@@ -52,6 +49,10 @@ common: &common
   publish: Publish
   # Displayed on the 'Publish' button on the organizer's toolbar.  Also on note editing dialog if the note is private.
 
+  edit_data: Edit Data
+  # This is the mouse-over text for the pencil icon that appears beside the document's data 
+  # under the title in the organizer
+
   page:
   - Page
   - Pages
@@ -67,6 +68,11 @@ common: &common
   - %d Document
   - %d Documents
   # Used all over, an example is the project listing, document data dialog, and most of the dialogs for the data elements in the viewer.
+
+  x_collaborators:
+  - One Collaborator
+  - %d Collaborators
+  # projects listing on left of organizer
 
   note: 
   - Note
@@ -136,12 +142,12 @@ workspace:
   edit_document_info: Edit Document Info
   edit_title: Edit Title
   edit_source: Edit Source
+  source: Source
   edit_description: Edit Description
   edit_access: Edit Access Level
   edit_related_url: Edit Related Article URL
   edit_published_url: Edit Published URL
   published_url: Published URL
-  edit_document_data: Edit Document Data
   embed_tools: Embed Tools
   embed_document: Embed this Document
   embed_note: Embed a Note
@@ -188,6 +194,14 @@ workspace:
   ###############################################################
   #  End of "Control Panel" strings
   ###############################################################
+
+
+  ###############################################################
+  # Annotation panel that is displayed by double clicking it's region in the viewer
+  private_note: Private note
+  # The mouseover text on private notes.  To view hover your mouse over the padlock icon on a private note
+  annotated_by: 'Annotated by: %s'
+
 
 
   ###############################################################
@@ -269,94 +283,53 @@ workspace:
   source_of_document: The source from which you obtained this document
   paragraph_description_of_document: Paragraph description of this document
   related_url_of_document: URL of the web article that refers to this document
-  embed_url_of_document: Most users won't need to add this. URL of the page on your site where this document is embedded
+  embed_url_of_document: Most users won\'t need to add this. URL of the page on your site where this document is embedded
 
 
+  ###############################################################
   # These are miscellaneous strings that are used in multiple locations
-  back: Back
-  close: Close
-  show_all: Show all
 
 
-  # embed_code
+  ###############################################################
+  # Options on document and search embed dialogs
   remove_line_breaks: Remove line breaks
   add_html_for_viewer: Add this HTML to your site to create a document viewer.
   add_html_for_note: Add this HTML to your site to embed the note.
   featured_examples_list: You can find plenty of examples of embedded documents on our
     list of %sfeatured reporting%s.
   # Document embed_code  
-
   mentioning_query: mentioning &ldquo;%s&rdquo;
+
+  # document mentions
   show_all_x_pages:
   - Show single page
   - Show all %d pages
-  annotated_by: 'Annotated by: %s'
+
+  ###############################################################
+  # document embed dialog - Select a document in the organizer, 
+  # then select "Embed Document Viewwer" from the Publlish menu
   document_has_no_public_notes: This document has no public notes.
-  open_in_viewer: Open all pages in viewer
-  over_x_mentions: Over %d mentions
-  x_mentions:
-  - One Mention
-  - '%d mentions'
-  x_collaborators:
-  - One Collaborator
-  - %d Collaborators
-  # or, on & at are used in workspace/document/pages.jst - line 19
-  or: or
-  on: 'on'
-  at: at
-  private_documents_visible_instructions:
-  - This document is private.  You must make it public before it will be visible on
-    your website or in searches of DocumentCloud's catalog. You can choose to make it
-    public at a future date or you can %2$schange it now%3$s.
-  - These documents are private.  You must make them public before they will be visible
-    on your website or in searches of DocumentCloud's catalog. You can choose to make
-    them public at a future date or you can %2$schange them now%3$s.
-  set_publication_date_for: Set publication date for %s
-  no_past_publication: You can't set a document to be published in the past.
-  make_public_on: 'Make public on:'
-  edit_document_information: Edit Document Information
-  reviewer: Reviewer
-  source: Source
-  public_on: Public on
-  edit_data: Edit Data
-  email_when_complete: Email me when %sdocuments have%s finished processing.
-  make_documents_public: Make %sdocuments%s public.
-  remove_file: Remove file
-  edit_details: Edit details
-  apply_all_files: Apply to All Files
-  apply_fields_all_files: Apply this description, source, and access level to all files
-  language: Language
-  shared_with_you_by: Shared with you by %s
-
-
-
-
-  documents: Documents
-  new_documents: New Documents
-  new_document: New Document
-  new_project: New Project
-  no_projects_help: This account doesn't have any projects yet. To start one, click
-    on the "New Project" button above.
-  public_documents_help: Select a contributing organization in the list above to view
-    their public documents.
-  add_html_for_documents: Add this HTML to your site to embed these documents.
-  featured_reporting_list: You can find examples of embedded searches on our list of
-    %sfeatured reporting%s.
   related_article_url: Related article URL
   related_article_url_help: Providing the URL of the article that references this
     document will enable a "Related Article" link within the document viewer. Many readers
     arrive at a document from a web search &mdash; the link guides them back to the
-    document's original context.
+    document\'s original context.
+  embed_show_sidebar: Show the sidebar
+  embed_show_sidebar_help: If your layout has limited horizontal space, uncheck this
+    box to hide the sidebar.
+  embed_show_text_tab: Show the text tab
+  embed_hide_text_tab_help: If the quality of the document\'s text is poor, uncheck this box
+    to hide the text tab.
   document_already_public: This document is already public.
   document_public_on: This document will be public on %s
   make_document_public: Make document public
-  set_the: set the
   document_publish_public_help: This document is public. It is currently available to
-    users who search DocumentCloud's catalog and will be visible to the public when
+    users who search DocumentCloud\'s catalog and will be visible to the public when
     you embed it on your website. Change the %saccess level%s.
   document_publish_private_help: This document is private. It will not be visible to
     your readers until you make it public. Change the %saccess level%s now or %s publication
     date
+  set_the: set the
   document_publish_embed_test: If you want to test the embed before publication, make
     sure to edit the embed code to use secure HTTPS URLs, and then switch back to regular
     HTTP before making the document public.
@@ -371,17 +344,95 @@ workspace:
   note_ellipsis: Note ...
   embed_viewer_opens_to_help: Tell the viewer to open directly to a specific page or
     annotation.
-  embed_show_sidebar: Show the sidebar
-  embed_show_sidebar_help: If your layout has limited horizontal space, uncheck this
-    box to hide the sidebar.
-  embed_show_text_tab: Show the text tab
-  embed_hide_text_tab: If the quality of the document's text is poor, uncheck this box
-    to hide the text tab.
   link_to_pdf: Link to the original PDF
   link_to_pdf_help: Uncheck this box to remove the PDF link from the document viewer.
   preview_viewer: Before continuing, please take a moment to %spreview the document
     viewer%s.
-  mentioned_in_documents:
+  back: Back
+  close: Close
+
+
+  # Displayed when pages are shown in organizer.  Right-click on a document and select 'View Pages'
+  open_in_viewer: Open all pages in viewer
+  # used to construct sentence indicating how many pages are shown (workspace/document/pages.jst)
+  or: or
+  on: on
+  over_x_mentions: Over %d mentions
+  x_mentions:
+  - One Mention
+  - %d mentions
+
+
+  ###############################################################
+  # Publication date dialog
+  # Opened by selecting "Set Publication Date" from Publish menu
+  private_documents_visible_instructions:
+  - This document is private.  You must make it public before it will be visible on
+    your website or in searches of DocumentCloud's catalog. You can choose to make it
+    public at a future date or you can %2$schange it now%3$s.
+  - These documents are private.  You must make them public before they will be visible
+    on your website or in searches of DocumentCloud's catalog. You can choose to make
+    them public at a future date or you can %2$schange them now%3$s.
+  set_publication_date_for: Set publication date for %s
+  no_past_publication: You can\'t set a document to be published in the past.
+  make_public_on: Make public on
+  at: at
+  public_on: Public on
+
+
+  ###############################################################
+  # The Document right-click menu for documents
+  # Appears when a documents icon is right-clicked in the organizer
+  open: Open
+  view_entities: View Entities
+  view_pages: View Pages
+  edit_document_information: Edit Document Information
+  edit_document_data: Edit Document Data
+  set_access: Set Access Level
+  delete_documents: 
+  - Delete Document
+  - Delete Documents
+
+
+  ###############################################################
+  # Document upload dialog
+  email_when_complete: Email me when %sdocuments have%s finished processing.
+  make_documents_public: Make %sdocuments%s public.
+  remove_file: Remove file
+  edit_details: edit details
+  apply_all_files: apply to all files
+  apply_fields_all_files: apply this description, source, and access level to all files
+  language: language
+  shared_with_you_by: Shared with you by %s
+
+
+  new_documents: New Documents
+  # The document upload button on the left side of the organizer
+
+  new_project: New Project
+  # The new project button on the left side of the organizer
+  
+
+  no_projects_help: This account doesn\'t have any projects yet. To start one, click on the "New Project" button above.
+  # is displayed on the left sidebar of the organizer when the account does not have any projects
+
+  public_documents_help: Select a contributing organization in the list above to view their public documents.
+  # displayed on the public search under the list of organizations
+
+  ###############################################################
+  # Embed project dialog.  Select a project in the sidebar of the organizer, 
+  # then select "Embed Document List" from the Publish menu
+  add_html_for_documents: Add this HTML to your site to embed these documents.
+  embed_search_step_one: 'Step One: Configure the Embedded Documents'
+  embed_search_step_two: 'Step Two: Copy and Paste the Embed Code'
+  embed_search_demo_error: Demo accounts are not allowed to embed document sets. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.
+  featured_reporting_list: You can find examples of embedded searches on our list of
+    %sfeatured reporting%s.
+
+
+  # Entities - where?
+  # jst/workspace/workspace/entities.jst
+  mentioned_in_x_documents:
   - Mentioned in a document
   - Mentioned in %d documents
   show_pages: show pages
@@ -389,18 +440,31 @@ workspace:
   show_more: Show more
   show_less: Show less
   no_entities_found: No entities were found that match your search.
+  show_all: Show all
   entities_explained: The entities listed above are present within the documents that
     match your search. Select an entity to filter your search results.
   calais_credit: Entities provided by OpenCalais
+
+
+  ###############################################################
+  # Note embed dialog.  Select a Document in the organizer,
+  # then select "Embed A Note" from the Publish menu
   note_embed_private: 'This document is private: notes on this document will not be
     visible to the public until the document is public.  Change the %saccess level%s
     now or'
   publication_date: publication date
   choose_note: Choose note
+
+  # Terms & Privacy are links at the bottom of the Organizer
   terms: Terms
   privacy: Privacy
+
+  # These are buttons on the front of the help page
+  guides_howtos: Guides &amp Howto\'s
   uservoice_discuss: Discuss Features &amp; Bugs
   contact_documentcloud: Contact DocumentCloud
+
+
   in_project: in this project
   matching_search: matching this search
   set_will_appear: will appear in this set.
@@ -419,7 +483,6 @@ workspace:
     published, while other public documents will open on DocumentCloud.
   entities_unavailable: Entities are temporarily unavailable.
   email_for_assistance: If you need assistance, please email us at support@documentcloud.org.
-  open: Open
   collaborator: Collaborator
   by_relevance: by relevance
   by_title: by title
@@ -449,16 +512,12 @@ workspace:
   access_level: Access Level
   modify_original_document: Modify Original Document
   remove_from_project: Remove from this Project
-  delete_documents: 
-  - Delete Document
-  - Delete Documents
   sort: Sort
   sort_by_relevance: Sort by Relevance
   sort_by_date_uploaded: Sort by date Uploaded
   sort_by_title: Sort by Title
   sort_by_source: Sort by Source
   sort_by_length: Sort by Length
-  view_entities: View Entities
   view_timeline: View Timeline
   analyze_project_in_overview: Analyze this Project in Overview
   share_documents: Share these Documents
@@ -529,17 +588,11 @@ workspace:
   privacy: Privacy
   publishing_embedding: Publishing &amp; Embedding
   the_api: The DocumentCloud API
-  guides_howtos: Guides &amp Howto's
   select_with_public_note: Please select a document with at least one public note.
   embed_note_step_one: 'Step One: Select a Note to Embed'
   embed_note_step_two: 'Step Two: Copy and Paste the Embed Code'
   embed_note_demo_error: 'Demo accounts are not allowed to embed notes. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.'
-  embed_search_step_one: 'Step One: Configure the Embedded Documents'
-  embed_search_step_two: 'Step Two: Copy and Paste the Embed Code'
-  embed_search_demo_error: Demo accounts are not allowed to embed document sets. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.
   open_published_version: Open Published Version
-  view_pages: View Pages
-  set_access: Set Access Level
   uploading: Uploading...
   broken_document: Broken document
   your_organization: Your Organization
