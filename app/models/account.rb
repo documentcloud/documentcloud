@@ -325,7 +325,11 @@ class Account < ActiveRecord::Base
     write_attribute( :identities, DC::Hstore.to_sql(  current_identities ) )
 
     info = identity['info']
-    %w{ email first_name last_name }.each do | attr |
+
+    # only overwrite account's email if it is blank no-one else is using it
+    self.email = info['email'] if info['email'] && self.email.blank? && Account.lookup( info['email'] ).nil?
+
+    %w{ first_name last_name }.each do | attr |
       write_attribute( attr, info[attr] ) if read_attribute(attr).blank? && info[attr]
     end
     if self.first_name.blank? && ! info['name'].blank?
