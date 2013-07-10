@@ -123,7 +123,7 @@ class AuthenticationController < ApplicationController
     else
       @next_url = '/auth/iframe_success'
       session[:dv_document_id]=params[:document_id]
-      render :template=>'authentication/login'
+      render :template=>'authentication/social_login'
     end
   end
 

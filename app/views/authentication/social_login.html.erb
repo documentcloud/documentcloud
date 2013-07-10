@@ -1,0 +1,57 @@
+<%
+  @title      = "Login"
+  @bodyclass  = "full_page_background"
+%>
+
+<div id="full_screen_form" class="full_page_background">
+  <form action="<%= DC.server_root(:force_ssl => true) %>/login" method="POST">
+    <%= token_tag %>
+    <% if flash[:error] %>
+      <div class="form_error login_error">
+        <span>
+          <%= flash[:error] %>
+        </span>
+      </div>
+    <% end %>
+    <div class="line">
+      <div class="text_input">
+        <div class="background">
+          <div class="inner">
+           <input type="text" name="email" id="account_email" />
+          </div>
+        </div>
+      </div>
+      <label for="account_email">
+        Email Address:<br /><span class="example"><a href="/contact" tabindex="-1">Need an Account?</a></span>
+      </label>
+    </div>
+    <div class="line">
+      <div class="text_input">
+        <div class="background">
+          <div class="inner">
+            <input type="password" name="password" id="account_password" />
+          </div>
+        </div>
+      </div>
+      <label for="account_password">
+        Password:<br /><span class="example"><a href="/reset_password" tabindex="-1">Forgot your Password?</a></span>
+      </label>
+    </div>
+    <div class="line">
+      <input type="hidden" name="next" value="<%= defined?( @next_url ) ? @next_url : params[:next] %>">
+      <div class="minibutton submit">Log in</div>
+    </div>
+  </form>
+  <ul class="login_services">
+    <li class=""><a class="icon twitter" href="/auth/twitter" title="Twitter">Twitter</a></li>
+    <li class=""><a class="icon facebook" href="/auth/facebook" title="Facebook">Facebook</a></li>
+    <li class=""><a class="icon google" href="/auth/google_oauth2" title="Google">Google</a></li>
+  </ul>
+</div>
+
+<script type="text/javascript">
+  $('#full_screen_form form').keypress(function(e) {
+    if (e.which == 13) this.submit();
+  });
+  $('.minibutton.submit').click(function(){ $('#full_screen_form form').submit(); });
+</script>
