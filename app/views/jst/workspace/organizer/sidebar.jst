@@ -28,7 +28,7 @@
       <div id="project_controls" class="block">
         <form id="new_document_form" class="float_left" action="/import/upload_document" method="POST" enctype="multipart/form-data" target="upload_iframe">
           <div class="minibutton float_left plus" id="new_document"><div class="icon white_plus"></div><%= _.t('new_documents') %></div>
-          <button type="submit"><%= _.t('new_document') %></button>
+          <button type="submit"><%= _.t('new_documents') %></button>
           <input id="new_document_project" name="project_id" type="text" style="display:none;" value="" />
           <input id="new_document_input" name="file" type="file" multiple />
           <iframe id="upload_iframe" name="upload_iframe" src="about:blank" class="hidden_iframe">

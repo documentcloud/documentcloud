@@ -335,7 +335,7 @@ dc.ui.Document = Backbone.View.extend({
     if (!count) return;
 
     menu.clear();
-    var items = [{title : 'Open', onClick: this.viewDocuments}];
+    var items = [{title : _.t('open'), onClick: this.viewDocuments}];
     if (this.model.isPublished()) {
       items.push({
         title   : _.t('open_published_version'),
@@ -367,7 +367,7 @@ dc.ui.Document = Backbone.View.extend({
     var base = 'icon main_icon document_tool ';
     switch (access) {
       case dc.access.PENDING:
-        return {'class' : base + 'spinner',    title : _.t('uploading') };
+        return {'class' : base + 'spinner',    title : _.t('uploading') + ' ...' };
       case dc.access.ERROR:
         return {'class' : base + 'alert_gray', title : _.t('broken_document') };
       case dc.access.ORGANIZATION:

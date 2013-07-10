@@ -1,8 +1,8 @@
 <div class="text_input dark">
-  <input name="title" id="project_title" type="text" value="" placeholder="<%= _.t('title_ellipsis') %>" />
+  <input name="title" id="project_title" type="text" value="" placeholder="<%= _.t('title') %>..." />
 </div>
 <div class="text_input dark small description_wrap">
-  <textarea name="description" id="project_description" class="text_area dark small content attribute" placeholder="<%= _.t('description_ellipsis') %>"></textarea>
+  <textarea name="description" id="project_description" class="text_area dark small content attribute" placeholder="<%= _.t('description') %>..."></textarea>
 </div>
 
 <div class="slug">
@@ -28,7 +28,7 @@
         <input name="collaborator_email" id="collaborator_email" type="text" value="" />
       </div>
       <div class="minibutton default add"><%= _.t('add') %></div>
-      <label class="enter_email_label" for="collaborator_email"><%= _.t('enter_email_address') %></label>
+      <label class="enter_email_label" for="collaborator_email"><%= _.t('enter_email_address') %>:</label>
     </div>
   </div>
 </div>
