@@ -181,7 +181,7 @@ class AuthenticationController < ApplicationController
   # being selected while on the external site
   def failure
     flash[:error] = params[:message]
-    rendirect_to :action=>'login'
+    redirect_to :action=>'login'
   end
 
   private
