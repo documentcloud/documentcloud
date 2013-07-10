@@ -6,19 +6,23 @@ common: &common
   # The label that's applied to a note when it's a draft.  Is displayed in red with a red border, and is transformed to uppercase.
 
   print_notes: Print Notes
-  # Appears in the editor's control panel, under the notes listing and before the Document Tools.
 
+  annotated_by: 'Annotated by: %s'
+  # displayed in light grey text at the bottom of notes
+  
   pg: p.
   # Is scattered thourout the interface as a shortcut for page.
 
   next: Next
   # Is used in a button on multiple dialogs.  For example in the workspace, click a document and click the Publish menu, then select Embed Dialog Viewer
 
+
   save: Save
-  # Used as button on multiple dialogs.  The 'Edit Document Information' dialog, accessed by right-clicking on a document int he workspace is an example.
+  # Used as button on multiple dialogs.  The 'Edit Document Information' dialog, accessed by right-clicking on a document in the workspace is an example.
 
   save_as_draft: Save as Draft
-  # Appears on the Annotation dialog.  To view, create a new public annotation using the interface and it will appear as one of the dialog's buttons.
+  publish: Publish
+  # These appears on the Annotation dialog.  To view, create a new public annotation using the interface and it will appear as one of the dialog's buttons.
 
   contributed_by: Contributed by
   reviewer: Reviewer
@@ -27,8 +31,10 @@ common: &common
   search: Search
   # The placeholder text in the search input box.
 
+  
   description: Description
-  # Many uses.  Document information dialog, Upload Dialog, Workspace's 'Edit Document Information' dialog
+  # Used as placeholder text in the Document information
+  # dialog
 
   delete: Delete
   # The "Delete" button on the notes editing dialog.
@@ -46,71 +52,75 @@ common: &common
   log_out: Log Out
   # Appears as a link at the top right of the organizer
   
-  publish: Publish
-  # Displayed on the 'Publish' button on the organizer's toolbar.  Also on note editing dialog if the note is private.
 
   edit_data: Edit Data
   # This is the mouse-over text for the pencil icon that appears beside the document's data 
   # under the title in the organizer
 
+  private_note: Private note
+  # The mouseover text on private notes.  To view hover your mouse over the padlock icon on a private note
+
   page:
   - Page
   - Pages
   x_pages:
-  - %d Page
-  - %d Pages
+  - '%d Page'
+  - '%d Pages'
   # Appears on the viewer's forward & back page controls. Is also part of the Entity listing subject line and may be viewed by Right-clicking on a document and select 'View Entitities'.
 
   document: 
   - Document
   - Documents
   x_documents:
-  - %d Document
-  - %d Documents
+  - '%d Document'
+  - '%d Documents'
   # Used all over, an example is the project listing, document data dialog, and most of the dialogs for the data elements in the viewer.
 
   x_collaborators:
   - One Collaborator
-  - %d Collaborators
+  - '%d Collaborators'
   # projects listing on left of organizer
 
   note: 
   - Note
   - Notes
   x_notes: 
-  - %d Note
-  - %d Notes
+  - '%d Note'
+  - '%d Notes'
   # The note count text under each document image in the organizer, and the projects listing on the left.
 
 # These strings are used in the Workspace
 workspace:
   <<: *common
-  x_public_documents: 
-  -  %d Public Document
-  -  %d Public Documents
-  x_private_documents: 
-  -  %d Private Document
-  -  %d Private Documents
-  # These are used on the Search Embed dialog.  To see this, open a project with documents.  Select "Embed Document List" from the Publish menu, the phrases will be at the top of the dialog.
 
+  # The title's on the Help tabs of the Organizer screen.
+  # (the 'Search' tab's string is located in the common section)
+  help: Help
 
+  # Internal admin api for displaying document mentions
+  # jst/workspace/document/mentions.jst
+  show_all_x_pages:
+  - Show single page
+  - Show all %d pages
+
+  # These are used in the text at the top-left of the screen that's shown momentarily after adding or removing a document from a project
   removed_from_x_documents:
   - Removed a document from %s
   - Removed %d documents from %s
   added_to_x_documents:
   - Added a document to %s
   - Added %d documents to %s
-  # These are used in the text at the top-left of the screen that's shown momentarily after adding or removing a document from a project
 
+  # Displayed as mouse-over text that when hovering the mouse over the padlock icon on a private document.
   private_access_help: Only people with explicit permission (via collaboration) have access.
   private_to_organization_help: Only the people in your organization have access. (No freelancers.)
-  # these are the mouse-over text that is displayed when hovering the mouse over the padlock icon on a private document.
 
+  # Used in multiple dialogs and other areas to show a document's access level.  An exampe would be in the document information edit dialog's access level Access Level selection
   public_access: Public Access
   public_access_help: Anyone on the internet can search for and view the document.
   private_to: Private to %s
   private_access: Private Access
-  # Used in multiple dialogs and other areas to show a document's access level.  An exampe would be in the document information edit dialog's access level Access Level selection
+
 
 
   ###############################################################
@@ -118,6 +128,8 @@ workspace:
   #  The below strings are all used on the "Control Panel" 
   #  which is the sidebar that's displayed on the right side
   #  when viewing/editing a document
+  #
+  #  Many of them do not appear until the parent option is selected.
   #
   ###############################################################
   document_tools: Document Tools
@@ -130,41 +142,54 @@ workspace:
     notes.
   redact_document: Redact Document
   red: red
+  title: Title
   black: black
   redact_instructions: Click and drag to draw a %s rectangle over each portion of the
-    document you'd like to redact. Associated text will be removed when you save your
+    document you''d like to redact. Associated text will be removed when you save your
     redactions.
   notes_hidden_while_redacting: Any existing notes are temporarily hidden while redaction
     is taking place.
   revoke: Revoke
   save_redactions: Save Redactions
+  redaction_close_while_processing: 
+  - You''ve redacted a passage. This document will close while it''s being rebuilt. Are you sure you''re ready to proceed?
+  - You''ve redacted %d passages. This document will close while it''s being rebuilt. Are you sure you''re ready to proceed?
+  close_while_redacting: The document is being redacted. It will close while processing.
   edit_sections: Edit Sections
   edit_document_info: Edit Document Info
   edit_title: Edit Title
   edit_source: Edit Source
-  source: Source
   edit_description: Edit Description
   edit_access: Edit Access Level
+  access_level_edit_closing: Changing the access level will take a few moments. The document will close while it processes.
+  document_access_updated:
+  - Access updated for the document
+  - Access updated for %d documents
+  close_while_text_reprocess: The text is being processed. Please close this document.
+  force_ocr: Force OCR
+  text_reprocess_help: Reprocess this document to take advantage of improvements to our text extraction tools. Choose "Force OCR" (optical character recognition) to ignore any embedded text information and use Tesseract before reprocessing. The document will close while it''s being rebuilt. Are you sure you want to proceed? 
+  reprocess: Reprocess
+
   edit_related_url: Edit Related Article URL
   edit_published_url: Edit Published URL
-  published_url: Published URL
   embed_tools: Embed Tools
   embed_document: Embed this Document
   embed_note: Embed a Note
   page_tools: Page Tools
   insert_replace_pages: Insert/Replace Pages
   insert_pages_instructions: To insert new pages at a specific position within the document,
-    click in between the pages above. If you'd like to replace a specific page with
-    a new copy, cick on the page you'd like to remove.
+    click in between the pages above. If you''d like to replace a specific page with
+    a new copy, cick on the page you''d like to remove.
+  insert_pages_message: This document will close while it''s being rebuilt.  Long documents may take a long time to rebuild.
   insert_pages_shift_key: Hold down the shift key to select multiple pages to replace
-    at once. When you're ready, click the "Upload Pages" button.
+    at once. When you''re ready, click the "Upload Pages" button.
   remove_pages: Remove Pages
   remove_pages_click: Click on each page you want to remove from this document.
-  remove_pages_done: When you're finished selecting pages, click the "Remove Pages"
+  remove_pages_done: When you''re finished selecting pages, click the "Remove Pages"
     button.
   reorder_pages: Reorder Pages
   reorder_pages_instructions: Drag and drop pages to change their position in the document.
-  reorder_pages_done: When you're finished rearranging, click on the "Save Page Order"
+  reorder_pages_done: When you''re finished rearranging, click on the "Save Page Order"
     button to save your changes.
   text_tools: Text Tools
   edit_page_text: Edit Page Text
@@ -187,21 +212,42 @@ workspace:
   upload_pages: Upload Pages
   annotation_help: Use the links at the right to annotate the document. Keep in mind
     that any other reviewers will be able to see public annotations and drafts. Private
-    annotations are for your own reference. Even %s can\'t see them.
+    annotations are for your own reference. Even %s can''t see them.
   contact_reviewer: Contact %s at %s if you need any help, or visit %s for more information
     about DocumentCloud.
-  title: Title
   ###############################################################
   #  End of "Control Panel" strings
   ###############################################################
 
 
-  ###############################################################
-  # Annotation panel that is displayed by double clicking it's region in the viewer
-  private_note: Private note
-  # The mouseover text on private notes.  To view hover your mouse over the padlock icon on a private note
-  annotated_by: 'Annotated by: %s'
 
+
+  ###############################################################
+  # These are used on the Search Embed dialog.  
+  # To see this, open a project with documents.  Select "Embed Document
+  # List" from the Publish menu, the phrases will be at the top of the dialog.
+  in_project: in this project
+  x_public_documents: 
+  -  '%d Public Document'
+  -  '%d Public Documents'
+  x_private_documents: 
+  -  '%d Private Document'
+  -  '%d Private Documents'
+  matching_search: matching this search
+  set_will_appear: will appear in this set.
+  no_appear_until_publish: will not appear until published.
+  future_documents_w_appear: Future documents %s will appear in your embed.
+  added_project: added to this project
+  optional: Optional
+  order_documents_by: Order documents by
+  relevance: Relevance
+  date_uploaded: Date Uploaded
+  length: Length
+  documents_per_page: Documents per page
+  allow_readers_to_search: Allow readers to search this set of documents
+  preview_search_embed_help: Before continuing, please take a moment to %spreview the
+    document set%s Published documents will open at the URL where they were originally
+    published, while other public documents will open on DocumentCloud.
 
 
   ###############################################################
@@ -260,6 +306,31 @@ workspace:
 
 
   ###############################################################
+  # The account/organization management dialog that is 
+  # opened by clicking one of the above links
+  new_account: New Account
+  enter_new_password: Enter your new password
+  password_updated: Password updated
+  password_no_blank: Your password can''t be blank
+  welcome_message_sent_to: A welcome message has been sent to %s.
+  already_has_account: '%s alread has an account.'
+  account_is_disabled: '%s has been disabled.'
+  double_check_disable: Really disable %s''s account?
+  explain_disable_account: '%1$s will not be able to log in to DocumentCloud. Public documents and annotations provided by %1$s will remain available. %2$sContact support%3$s to completely purge %1$s''s account.'
+  signup_sent_to:  Signup sent to %s
+  account_add_failure: Could not add the account.
+
+  ###############################################################
+  # The Section editing dialog
+  # is opened by selecting the "Edit Sections" link that is located
+  # in the "Control Panel" area on the right of th document workspace
+  enter_title_and_page: Please add a title and page number for each section.
+  no_duplicate_section: Can''t create a duplicate section.
+  no_section_outside_doc: Can''t create a section outside the document.
+  remove_all: Remove All
+
+
+  ###############################################################
   # These are part of the Document Data dialog
   # Can be opened by selecting one or more documents then 
   # selecting "Edit Document Data" from the Edit menu
@@ -270,7 +341,7 @@ workspace:
   for_example_data: 'For example: &ldquo;birth: 1935-01-08&rdquo;, or &ldquo;status:
     released&rdquo;'
   edit_data_for: Edit Data for %s
-  bad_data_key: %s cannot be used as a key
+  bad_data_key: '%s cannot be used as a key'
   confirm_remove_all_data: Are you sure you want to remove all data from %s?
 
 
@@ -283,7 +354,7 @@ workspace:
   source_of_document: The source from which you obtained this document
   paragraph_description_of_document: Paragraph description of this document
   related_url_of_document: URL of the web article that refers to this document
-  embed_url_of_document: Most users won\'t need to add this. URL of the page on your site where this document is embedded
+  embed_url_of_document: Most users won''t need to add this. URL of the page on your site where this document is embedded
 
 
   ###############################################################
@@ -300,31 +371,28 @@ workspace:
   # Document embed_code  
   mentioning_query: mentioning &ldquo;%s&rdquo;
 
-  # document mentions
-  show_all_x_pages:
-  - Show single page
-  - Show all %d pages
-
   ###############################################################
   # document embed dialog - Select a document in the organizer, 
   # then select "Embed Document Viewwer" from the Publlish menu
   document_has_no_public_notes: This document has no public notes.
-  related_article_url: Related article URL
+  enter_url_that_references:
+  - Enter the URL of the article that references this document
+  - Enter the URL of the article that references these documents
   related_article_url_help: Providing the URL of the article that references this
     document will enable a "Related Article" link within the document viewer. Many readers
     arrive at a document from a web search &mdash; the link guides them back to the
-    document\'s original context.
+    document''s original context.
   embed_show_sidebar: Show the sidebar
   embed_show_sidebar_help: If your layout has limited horizontal space, uncheck this
     box to hide the sidebar.
   embed_show_text_tab: Show the text tab
-  embed_hide_text_tab_help: If the quality of the document\'s text is poor, uncheck this box
+  embed_hide_text_tab_help: If the quality of the document''s text is poor, uncheck this box
     to hide the text tab.
   document_already_public: This document is already public.
   document_public_on: This document will be public on %s
   make_document_public: Make document public
   document_publish_public_help: This document is public. It is currently available to
-    users who search DocumentCloud\'s catalog and will be visible to the public when
+    users who search DocumentCloud''s catalog and will be visible to the public when
     you embed it on your website. Change the %saccess level%s.
   document_publish_private_help: This document is private. It will not be visible to
     your readers until you make it public. Change the %saccess level%s now or %s publication
@@ -352,7 +420,8 @@ workspace:
   close: Close
 
 
-  # Displayed when pages are shown in organizer.  Right-click on a document and select 'View Pages'
+  # Appears when pages are shown in organizer.  
+  # Right-click on a document and select 'View Pages'
   open_in_viewer: Open all pages in viewer
   # used to construct sentence indicating how many pages are shown (workspace/document/pages.jst)
   or: or
@@ -360,7 +429,7 @@ workspace:
   over_x_mentions: Over %d mentions
   x_mentions:
   - One Mention
-  - %d mentions
+  - '%d Mentions'
 
 
   ###############################################################
@@ -368,13 +437,13 @@ workspace:
   # Opened by selecting "Set Publication Date" from Publish menu
   private_documents_visible_instructions:
   - This document is private.  You must make it public before it will be visible on
-    your website or in searches of DocumentCloud's catalog. You can choose to make it
+    your website or in searches of DocumentCloud''s catalog. You can choose to make it
     public at a future date or you can %2$schange it now%3$s.
   - These documents are private.  You must make them public before they will be visible
-    on your website or in searches of DocumentCloud's catalog. You can choose to make
+    on your website or in searches of DocumentCloud''s catalog. You can choose to make
     them public at a future date or you can %2$schange them now%3$s.
   set_publication_date_for: Set publication date for %s
-  no_past_publication: You can\'t set a document to be published in the past.
+  no_past_publication: You can''t set a document to be published in the past.
   make_public_on: Make public on
   at: at
   public_on: Public on
@@ -383,19 +452,19 @@ workspace:
   ###############################################################
   # The Document right-click menu for documents
   # Appears when a documents icon is right-clicked in the organizer
-  open: Open
-  view_entities: View Entities
   view_pages: View Pages
   edit_document_information: Edit Document Information
-  edit_document_data: Edit Document Data
   set_access: Set Access Level
-  delete_documents: 
-  - Delete Document
-  - Delete Documents
-
+  remove_from_project: Remove from this Project
+  open_published_version: Open Published Version 
+  # is only displayed if the document has a published url
 
   ###############################################################
   # Document upload dialog
+  # Accessed by clicking "New Document" at the left of the Organizer
+  # The dialog is displayed after selecting at least one file to upload
+  new_documents: New Documents
+  # The upload button 
   email_when_complete: Email me when %sdocuments have%s finished processing.
   make_documents_public: Make %sdocuments%s public.
   remove_file: Remove file
@@ -404,16 +473,29 @@ workspace:
   apply_fields_all_files: apply this description, source, and access level to all files
   language: language
   shared_with_you_by: Shared with you by %s
+  must_have_doc_title:
+  - Please enter a title for the document
+  - Please enter a title for all documents.
+  update_applied_all: Update applied to all files.
+  uploaded_x_documents:
+  - Uploaded one Document
+  - Uploaded %d Documents
+  uploaded_x_document_has:
+  - The uploaded document has
+  - The %d uploaded documents have
+  # this message is displayed beside documents that have failed to upload properly 
+  document_error_message: Our system was unable to process this document. We''ve been notified of the problem and periodically review these errors. Please review our %stroubleshooting suggestions%s or %scontact us%s for immediate assistance.  
+  upload: Upload
+  upload_document: Upload Document
+  max_upload_size_warn: You can only upload documents less than 200MB in size. Please %soptimize your document%s before continuing.
+  must_upload_something: You must upload at least one document.
+  document_processing_count:
+  - There is one documents being processed
+  - There are %d documents being processed
 
 
-  new_documents: New Documents
-  # The document upload button on the left side of the organizer
 
-  new_project: New Project
-  # The new project button on the left side of the organizer
-  
-
-  no_projects_help: This account doesn\'t have any projects yet. To start one, click on the "New Project" button above.
+  no_projects_help: This account doesn''t have any projects yet. To start one, click on the "New Project" button above.
   # is displayed on the left sidebar of the organizer when the account does not have any projects
 
   public_documents_help: Select a contributing organization in the list above to view their public documents.
@@ -428,6 +510,7 @@ workspace:
   embed_search_demo_error: Demo accounts are not allowed to embed document sets. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.
   featured_reporting_list: You can find examples of embedded searches on our list of
     %sfeatured reporting%s.
+  collaborators: Collaborator
 
 
   # Entities - where?
@@ -454,132 +537,26 @@ workspace:
     now or'
   publication_date: publication date
   choose_note: Choose note
+  select_with_public_note: Please select a document with at least one public note.
+  embed_note_step_one: 'Step One: Select a Note to Embed'
+  embed_note_step_two: 'Step Two: Copy and Paste the Embed Code'
+  embed_note_demo_error: 'Demo accounts are not allowed to embed notes. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.'
+
 
   # Terms & Privacy are links at the bottom of the Organizer
   terms: Terms
   privacy: Privacy
 
   # These are buttons on the front of the help page
-  guides_howtos: Guides &amp Howto\'s
+  guides_howtos: Guides &amp Howto''s
   uservoice_discuss: Discuss Features &amp; Bugs
   contact_documentcloud: Contact DocumentCloud
 
-
-  in_project: in this project
-  matching_search: matching this search
-  set_will_appear: will appear in this set.
-  no_appear_until_publish: will not appear until published.
-  future_documents_w_appear: Future documents %s will appear in your embed.
-  added_project: added to this project
-  optional: Optional
-  order_documents_by: Order documents by
-  relevance: Relevance
-  date_uploaded: Date Uploaded
-  length: Length
-  documents_per_page: Documents per page
-  allow_readers_to_search: Allow readers to search this set of documents
-  preview_search_embed_help: Before continuing, please take a moment to %spreview the
-    document set%s Published documents will open at the URL where they were originally
-    published, while other public documents will open on DocumentCloud.
-  entities_unavailable: Entities are temporarily unavailable.
-  email_for_assistance: If you need assistance, please email us at support@documentcloud.org.
-  collaborator: Collaborator
-  by_relevance: by relevance
-  by_title: by title
-  by_date: by date
-  by_source: by_source
-  by_length: by length
-  sort_documents_by: Sort Documents By
-  title: Title
-  all_documents: All Documents
-  your_documents: Your Documents
-  annotated_documents: Annotated Documents
-  popular_documents: Popular Documents
-  published_documents: Published Documents
-  your_published_documents: Your Published Documents
-  not_found_project: This project does not contain any documents.
-  not_found_account: This account does not have any documents.
-  not_found_group: This organization does not have any documents.
-  not_found_published: This organization does not have any documents.
-  not_found_annotated: There are no annotated documents.
-  not_found_search: Your search did not match any documents.
-  not_found_all: There are no documents
-  enter_url_that_references:
-  - Enter the URL of the article that references this document
-  - Enter the URL of the article that references these documents
-  edit: Edit
-  edit_document_info: Edit Document Information
-  access_level: Access Level
-  modify_original_document: Modify Original Document
-  remove_from_project: Remove from this Project
-  sort: Sort
-  sort_by_relevance: Sort by Relevance
-  sort_by_date_uploaded: Sort by date Uploaded
-  sort_by_title: Sort by Title
-  sort_by_source: Sort by Source
-  sort_by_length: Sort by Length
-  view_timeline: View Timeline
-  analyze_project_in_overview: Analyze this Project in Overview
-  share_documents: Share these Documents
-  share_project: Share this Project
-  analyze: Analyze
-  no_project_doc_selected: No project or documents selected
-  share_x_documents:
-  - Share this Document
-  - Share these Documents
-  analyze_x_docs_in_overview: 
-  - Analyze this Document in Overview
-  - Analyze these Documents in Overview
-  embed_document_viewer: Embed Document Viewer
-  embed_document_list: Embed Document List
-  embed_a_note: Embed a Note
-  set_publication_date: Set Publication Date
-  download_viewer: Download Document Viewer
-  download_pdf: Download Original PDF
-  download_text: Download Full Text
-  export: Export
-  export_to_overview_explain: You are about to export to Overview. You must create an Overview account, and you must provide Overview with your DocumentCloud username and password.
-  timeline_max_documents: You can only view a timeline for ten documents at a time.
-  timeline_must_select: In order to view a timeline, please select some documents.
-  demo_no_viewer: Demo accounts are not allowed to download viewers. %s if you need a full featured account.
-  select_single_to_embed: Please select a single document in order to create the embed.
-  select_single_to_open: Please select a document to open.
-  enter_url_for_embed: 
-  - Enter the URL at which this document is embedded
-  - Enter the URL at which these documents are embedded
-  projects: Projects
-  new_project: New Project
-  create_new_project: Create a New Project
-  project_exists: A project named %s already exists
-  must_have_title: Please enter a title.
-  must_have_doc_title:
-  - Please enter a title for the document
-  - Please enter a title for all documents.
-  update_applied_all: Update applied to all files.
-  uploaded_x_documents:
-  - Uploaded one Document
-  - Uploaded %d Documents
-  uploaded_x_document_has:
-  - The uploaded document has
-  - The %d uploaded documents have
-  document_error_message: Our system was unable to process this document. We've been notified of the problem and periodically review these errors. Please review our %stroubleshooting suggestions%s or %scontact us%s for immediate assistance.
-  really_delete_x_docs:
-  - Really delete document?
-  - Really delete %d documents?
-
-  insert_pages_message: This document will close while it's being rebuilt.  Long documents may take a long time to rebuild.
-  help: Help
+  # The "Guides & Howto's" menu in help
   introduction: Introduction
   guided_tour: Guided Tour
   adding_accounts: Adding Accounts
   searching_dd: Searching Documents and Data
-  upload: Upload
-  upload_document: Upload Document
-  max_upload_size_warn: You can only upload documents less than 200MB in size. Please %soptimize your document%s before continuing.
-  must_upload_something: You must upload at least one document.
-  document_processing_count: 
-  - There is one documents being processed
-  - There are %d documents being processed
   uploading_documents: Uploading Documents
   troubleshooting_uploads: Troubleshooting Failed Uploads
   document_modification: Document Modification
@@ -588,72 +565,216 @@ workspace:
   privacy: Privacy
   publishing_embedding: Publishing &amp; Embedding
   the_api: The DocumentCloud API
-  select_with_public_note: Please select a document with at least one public note.
-  embed_note_step_one: 'Step One: Select a Note to Embed'
-  embed_note_step_two: 'Step Two: Copy and Paste the Embed Code'
-  embed_note_demo_error: 'Demo accounts are not allowed to embed notes. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.'
-  open_published_version: Open Published Version
-  uploading: Uploading...
+
+
+  # these messages are displayed in the left sidebar of the Organizer
+  # if the system detects that entitity processing is unavailable
+  entities_unavailable: Entities are temporarily unavailable.
+  email_for_assistance: If you need assistance, please email us at support@documentcloud.org.
+
+
+  # These are displayed when searching for a document
+  # Initially the sort order is diplsayed at the bottom of the page, but can be
+  # modified by clicking and seelcting a different option from the dialog or by 
+  # selecting one of the options from the 'Sort' menu.
+  sort_documents_by: Sort Documents By
+  by_relevance: by relevance
+  by_title: by title
+  by_date: by date
+  by_source: by_source
+  by_length: by length
+
+
+  # These are used to filter the documents that appear 
+  # in the organizer, they're located at the top-left of the window
+  # Some of the strings such as 'Annotated Documents' are not currently displayed
+  documents: Documents
+  all_documents: All Documents
+  your_documents: Your Documents
+  annotated_documents: Annotated Documents
+  popular_documents: Popular Documents
+  published_documents: Published Documents
+  your_published_documents: Your Published Documents
+
+  # These are displayed by the search when it doesn't return any results
+  # Different stings are displayed depending on what was searched for.
+  not_found_project: This project does not contain any documents.
+  not_found_account: This account does not have any documents.
+  not_found_group: This organization does not have any documents.
+  not_found_published: This organization does not have any documents.
+  not_found_annotated: There are no annotated documents.
+  not_found_search: Your search did not match any documents.
+  not_found_all: There are no documents
+
+  # These are the menu buttons that make up the toolbar of the organizer screen
+  open: Open
+  edit: Edit
+  sort: Sort
+  projects: Projects
+  analyze: Analyze
+  publish: Publish
+
+  # This error is displayed if attempting to open
+  # more than one document at a time using the "Open" menu
+  select_single_to_open: Please select a document to open.
+
+  # "Edit" menu of the toolbar
+  edit_document_info: Edit Document Information
+  title: Title
+  source: Source
+  access_level: Access Level
+  related_article_url: Related article URL
+  published_url: Published URL
+  enter_url_for_embed: 
+  - Enter the URL at which this document is embedded
+  - Enter the URL at which these documents are embedded
+  edit_document_data: Edit Document Data
+  modify_original_document: Modify Original Document
+  delete_documents: 
+  - Delete Document
+  - Delete Documents
+  really_delete_x_docs:
+  - Really delete document?
+  - Really delete %d documents?
+
+  # "Sort" menu from the toolbar
+  sort_by_relevance: Sort by Relevance
+  sort_by_date_uploaded: Sort by date Uploaded
+  sort_by_title: Sort by Title
+  sort_by_source: Sort by Source
+  sort_by_length: Sort by Length
+
+  # Tthe only translatable string on the "Projects" menu
+  # The other options are auto-generated based on the projects names
+  new_project: New Project
+  
+  # "Analyze" menu.  Some strings are not displayed
+  # until a selection is made
+  view_entities: View Entities
+  has_no_entities: '%s has no entities to display.'
+  view_timeline: View Timeline
+  timeline_max_documents: You can only view a timeline for ten documents at a time.
+  timeline_must_select: In order to view a timeline, please select some documents.
+  analyze_project_in_overview: Analyze this Project in Overview
+  export_to_overview_explain: You are about to export to Overview. You must create an Overview account, and you must provide Overview with your DocumentCloud username and password.
+  share_documents: Share these Documents
+  share_project: Share this Project
+  share_x_documents:
+  - Share this Document
+  - Share these Documents
+  analyze_x_docs_in_overview: 
+  - Analyze this Document in Overview
+  - Analyze these Documents in Overview
+  export: Export
+
+  # The "Publish" menu.  Quite a few of the
+  # strings are only displayed in reaction to user selections
+  no_project_doc_selected: No project or documents selected
+  embed_document_viewer: Embed Document Viewer
+  demo_no_viewer: Demo accounts are not allowed to download viewers. %s if you need a full featured account.
+  select_single_to_embed: Please select a single document in order to create the embed.
+  embed_document_list: Embed Document List
+  embed_a_note: Embed a Note
+  set_publication_date: Set Publication Date
+  download_viewer: Download Document Viewer
+  download_pdf: Download Original PDF
+  download_text: Download Full Text
+
+  # The create a new project dialog
+  # Shown in response to selecting "New Project"
+  # From the Projects menu
+  create_new_project: Create a New Project
+  project_exists: A project named %s already exists
+  must_have_title: Please enter a title.
+
+
+  # these are the mouse-over text for small tool that's 
+  # displayed beside documents in the organizer
+  uploading: Uploading
   broken_document: Broken document
   your_organization: Your Organization
   private: Private
   open_published: Open Published Version
-  has_no_entities: %s has no entities to display.
+
+
+  # Links that are displayed beside account in the sidebar for 
+  # accounts who are an administrator
   manage_organization: Manage Organization %s
+  # This message is displayed for accounts that are not 
+  # and administrator
   manage_account: Manage Account
-  new_account: New Account
-  enter_new_password: Enter your new password
-  password_updated: Password updated
-  password_no_blank: Your password can't be blank
-  welcome_message_sent_to: A welcome message has been sent to %s.
-  already_has_account: %s alread has an account.
-  account_is_disabled: %s has been disabled.
-  double_check_disable: Really disable %s's account?
-  explain_disable_account: %1$s will not be able to log in to DocumentCloud. Public documents and annotations provided by %1$s will remain available. %2$sContact support%3$s to completely purge %1$s's account.
-  signup_sent_to:  Signup sent to %s
-  account_add_failure: Could not add the account.
-  enter_title_and_page: Please add a title and page number for each section.
-  no_duplicate_section: Can't create a duplicate section.
-  no_section_outside_doc: Can't create a section outside the document.
-  remove_all: Remove All
-  access_level_edit_closing: Changing the access level will take a few moments. The document will close while it processes.
-  close_while_text_reprocess: The text is being processed. Please close this document.
-  force_ocr: Force OCR
-  text_reprocess_help: Reprocess this document to take advantage of improvements to our text extraction tools. Choose "Force OCR" (optical character recognition) to ignore any embedded text information and use Tesseract before reprocessing. The document will close while it's being rebuilt. Are you sure you want to proceed? 
-  reprocess: Reprocess
-  x_invited_to_review_x: %s has invited you to review %s
-  redaction_close_while_processing: 
-  - You've redacted a passage. This document will close while it's being rebuilt. Are you sure you're ready to proceed?
-  - You've redacted %d passages. This document will close while it's being rebuilt. Are you sure you're ready to proceed?
-  close_while_redacting: The document is being redacted. It will close while processing.
-  document_access_updated:
-  - Access updated for the document
-  - Access updated for %d documents
+
+  # this message is shown in a dialog to a new reviewer the frist
+  # time they access a document they've been invited to review
+  x_invited_to_review_x: '%s has invited you to review %s'
+
 
 viewer:
   <<: *common
-  note_by: 'Annotated by:'
-  note_title: Annotation Title
   CLOSE: CLOSE
+  # Displayed at top-right of pages after searching in the viewer
+  
   click_add_page_note: Click to Add a Page Note
+  # Displayed when the mouse is moved into the gap between pages while adding a note
+
   contents: Contents
+  # Section heading that appears under the forward-back page controls at the top of the sidebar.  Is hidden by default
+
   container_not_found: 'Document Viewer container element not found:'
+  # Error message that is displayed when a document is incorrectly embedded
+
   dl_as_pdf: Download this document as a PDF
+  # The link to download the document that is located on the right sidebar
+
   expand: Expand
+  # generic expander element. ( DV/views/navigationExpander.js )
+
   link_to_note: Link to this note
+  # displays while hovering the mouse over the chain icon beside a note's title
+
   loading: Loading
+  # This message is displayed on the background of pages while the images for them are loading
+
+  next: Next
   next_note: Next Annotation
-  annotation_title: Annotation Title
-  print_document_help: To print the document, click the "Original Document" link to open the original PDF. At this time it is not possible to print the document with annotations.
   previous: Previous
   previous_note: Previous Annotation
+  # These strings are displayed as navigation on annotations
+  # They are hidden and shown as appropriate. 
+
+  note_by: Note by %s
+  annotation_title: Annotation Title
+  # Used as a placeholder on the title text input when creating a new annotation
+
+  print_document_help: To print the document, click the "Original Document" link to open the original PDF. At this time it is not possible to print the document with annotations.
+  # displays on bottom of screen, but is normally hidden
+
   related_article: Related Article
+  # On document's sidebar, it links to the related article.
+  # Only displays if an related article url is entered for document
+
   text: Text
+  # The 'Text' tab on the document.  The other tabs are in the common strings section
+
   must_upgrade: 'To use the Document Viewer you need to upgrade your browser:'
+  install_chrome_frame: Or, if you''d like to continue using Internet Explorer 6, you can %sinstall Google Chrome Frame%s.
+  # These messages are displayed to people whom are attempting to use the viewer with older unsupported web browsers
+
   toggle_description: Toggle Description
+  # appears as text when hovering the mouse over the disclosure triange beside the documents description on the sidebar of the viewer.  Is only displayed when the document has a desciption entered.
+
   untitled_note: Untitled Note
+  # The default name for a note
+
   view_fullscreen: View Document in Fullscreen
+  # The help text for the control that toggles a document from being viewed full screen.  It''s not normally displayed.
+
   zoom: Zoom
+  # Appears at the top of the document, directly to the left of the Zoom control.
+
   for: for
-  install_chrome_frame: Or, if you'd like to continue using Internet Explorer 6, you can %sinstall Google Chrome Frame%s.
+  # used in constructing sentence for number of search results.
+  # Either: Page 1 of X "for" <term> or: No results "for" <term>
+
   original_document_pdf: Original Document (PDF)
+  # The download link for documents.  Is located on the sidebar of the viewer.
