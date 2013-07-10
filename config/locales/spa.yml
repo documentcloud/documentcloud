@@ -1,12 +1,15 @@
 common: &common
   draft: borrador
   print_notes: Imprimir las notas
+  annotated_by: 'Anotado por: %s'
   pg: p.
   next: Próximo
   save: Guardar
   save_as_draft: Guardar como borrador
-  private_note: Nota privada
+  publish: Publicar
   contributed_by: Contribución de
+  reviewer: Crítico
+
   search: Búsqueda
   description: Descripción
   delete: Eliminar
@@ -14,35 +17,39 @@ common: &common
   cancel: Cancelar
   private_note_visible: Esta nota privada sólo es visible para usted.
   draft_note_visible: Este proyecto es sólo visible para usted y sus colaboradores.
-  publish: Publicar
+  log_out: finalizar la sesión
+  edit_data: Modificar información
+  private_note: Nota privada
+
   page:
   - Página
   - Páginas
   x_pages:
-  - %d Página
-  - %d Páginas
+  - '%d Página'
+  - '%d Páginas'
   document:
   - Documento
   - Documentos
   x_documents:
-  - %d Documento
-  - %d Documentos
+  - '%d Documento'
+  - '%d Documentos'
+  x_collaborators:
+  - Una Colaborador
+  - '%d Collaboratores'
   note:
   - Nota
   - Notas
   x_notes:
-  - %d Nota
-  - %d Notas
+  - '%d Nota'
+  - '%d Notas'
 
 
 workspace: 
   <<: *common
-  x_public_documents: 
-  - %d Documento Público
-  - %d Documentos Públicos
-  x_private_documents: 
-  - %d Documento Privado
-  - %d Documentos Privados
+
+  help: Ayudar
+  show_all_x_pages: Mostrar una sola página, Mostrar todos los %d páginas
+
 
 
   removed_from_x_documents:
@@ -51,6 +58,12 @@ workspace:
   added_to_x_documents:
   - Se ha añadido un documento de %s
   - Se ha añadido %d documentos %s
+  x_public_documents: 
+  - '%d Documento Público'
+  - '%d Documentos Públicos'
+  x_private_documents: 
+  - '%d Documento Privado'
+  - '%d Documentos Privados'
   private_to: Private a %s
   private_to_organization_help: Sólo las personas de su organización tienen acceso. (No hay freelancers.)
   private_access: Acceso Privado
@@ -131,16 +144,13 @@ workspace:
     más información sobre DocumentCloud.
   title: Título
 
-  clear_search: buscar borrar
 
-
-  log_out: finalizar la sesión
 
   pending: pendiente
   manage: gestionar
   organization: organización
   account: Cuenta
-  accounts: Cuentas
+
   remove: eliminar
   project_owner: Dueño del Proyecto
   email: Email
@@ -193,17 +203,12 @@ workspace:
     incrustados en nuestra lista de %sfeatured reporte%s.
   show_all: Mostrar todos
   mentioning_query: mencionando "%s"
-  show_all_x_pages: Mostrar una sola página, Mostrar todos los %d páginas
-  annotated_by: 'Anotado por: %s'
   document_has_no_public_notes: Este documento no tiene notas públicas.
   open_in_viewer: Abra todas las páginas en el visor
   over_x_mentions: Over %d menciones
   x_mentions: 
   - Una mención
-  - %d menciones
-  x_collaborators:
-  - Una Colaborador
-  - %d Collaboratores
+  - '%d menciones'
 
   # or, on & at are used in workspace/document/pages.jst - line 19
   or: o
@@ -220,10 +225,8 @@ workspace:
   no_past_publication: No se puede establecer un documento que se publicará en el pasado.
   make_public_on: 'Hacer público el:'
   edit_document_information: Editar información del documento
-  reviewer: Crítico
   source: Fuente
   public_on: Público en
-  edit_data: Modificar información
   email_when_complete: Envíeme un correo electrónico cuando %s documentos tienen procesamiento
     terminado %s.
   make_documents_public: Hacer pública %sdocumento%s.
@@ -235,6 +238,7 @@ workspace:
   language: Idioma
   shared_with_you_by: Compartido con usted por %s
 
+  no_project_doc_selected: Ningún proyecto o los documentos seleccionados
 
   project_id: 'ID del proyecto: %s'
   collaborators: Colaboradores
@@ -242,7 +246,7 @@ workspace:
   add: Añadir
   enter_email_address: Introduce dirección de correo electrónico
   documents: Documentos
-  new_document: Nuevo documento
+
   new_documents: Nuevo documentos
   new_project: Nuevo proyecto
   no_projects_help: Esta cuenta no tiene ningún proyecto todavía. Para iniciar uno,
@@ -331,7 +335,7 @@ workspace:
   entities_unavailable: Las entidades no están disponibles temporalmente.
   email_for_assistance: Si usted necesita ayuda, por favor envíenos un email a support@documentcloud.org.
   open: Abierto
-  collaborator: Colaborador
+
   by_relevance: por relevancia
   by_title: por título
   by_date: por fecha
@@ -372,7 +376,6 @@ workspace:
   sort_by_length: Ordenar por Longitud
   view_entities: Ver Entidades
   view_timeline: Vista de línea de tiempo
-  analyze_doc_in_overview: Analizar estos Documentos en Overview
   analyze_project_in_overview: Analyze este Proyecto in Overview
   share_documents: Compartir estos documentos
   share_project: Comparte este Proyecto
@@ -421,7 +424,6 @@ workspace:
    - ¿Desea borrar %d documentos?
 
   insert_pages_message: Este documento se cierra mientras se está reconstruyendo. Los documentos largos pueden tardar mucho tiempo para reconstruir.
-  help: Ayudar
   introduction: Introducción
   guided_tour: Guided Tour
   adding_accounts: Adición de cuentas
@@ -457,7 +459,7 @@ workspace:
   your_organization: su organización
   private: Privado
   open_published: Abrir versión publicada
-  has_no_entities: %s no tiene entidades para mostrar.
+  has_no_entities: '%s no tiene entidades para mostrar.'
   manage_organization: Gestione Organización %s
   manage_account: Administrar Cuenta
   new_account: Nueva Cuenta
@@ -465,10 +467,10 @@ workspace:
   password_updated: Contraseña actualizada
   password_no_blank: La contraseña no puede estar en blanco
   welcome_message_sent_to: Un mensaje de bienvenida ha sido enviado con %s.
-  already_has_account: %s ya tiene una cuenta.
-  account_is_disabled: %s se ha desactivado.
+  already_has_account: '%s ya tiene una cuenta.'
+  account_is_disabled: '%s se ha desactivado.'
   double_check_disable: Realmente deshabilitar la cuenta de %s
-  explain_disable_account: %1$s no podrá iniciar sesión en DocumentCloud. Los documentos públicos y anotaciones proporcionadas por %1$s seguirán estando disponibles. %2$sPóngase en contacto%3$s con apoyo para purgar completamente la cuenta de %1$s.
+  explain_disable_account: '%1$s no podrá iniciar sesión en DocumentCloud. Los documentos públicos y anotaciones proporcionadas por %1$s seguirán estando disponibles. %2$sPóngase en contacto%3$s con apoyo para purgar completamente la cuenta de %1$s.'
   signup_sent_to: Signup enviado a %s
   account_add_failure: No se pudo agregar la cuenta.
   enter_title_and_page: Por favor, añadir un título y el número de página para cada sección.
@@ -480,7 +482,7 @@ workspace:
   force_ocr: Fuerza OCR
   text_reprocess_help: Vuelva a procesar este documento para tomar ventaja de la mejora de nuestras herramientas de extracción de texto. Seleccione la opción "Fuerza OCR" (reconocimiento óptico de caracteres) para ignorar cualquier información de texto incrustado y utilizar Tesseract antes de la preparación. El documento se cierra mientras se está reconstruyendo. ¿Está seguro de que desea continuar?
   reprocess: Jubilación
-  x_invited_to_review_x: %s ha invitado a revisar %s
+  x_invited_to_review_x: '%s ha invitado a revisar %s'
   redaction_close_while_processing: 
   - Usted ha redactado un pasaje. Este documento se cierra mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
   - Usted ha redactado %d pasos. Este documento se cierra mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
@@ -492,8 +494,7 @@ workspace:
 
 viewer:
   <<: *common
-  note_by: 'Anotado por:'
-  note_title: Anotación Título
+
   CLOSE: CIERRE
   click_add_page_note: Haga clic para agregar una página Nota
   contents: Contenido
@@ -503,6 +504,7 @@ viewer:
   link_to_note: Enlace a esta nota
   loading: Carga
   next_note: Nota Siguiente
+  note_by: Nota de %s
   annotation_title: Anotación Título
   print_document_help: Para imprimir el documento, haga clic en el enlace "documento original" para abrir el PDF original. En este momento no es posible imprimir el documento con anotaciones.
   previous: Previo
