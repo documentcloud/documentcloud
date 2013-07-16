@@ -31,4 +31,6 @@ gem 'right_aws',              '2.0.1', :git=>'https://github.com/documentcloud/r
 group :test do
   gem 'minitest-spec-rails'
   gem 'minitest-emoji'
+  gem 'guard-minitest'
+  gem 'spring'
 end
