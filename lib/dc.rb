@@ -1,3 +1,8 @@
+require 'dc/access'
+require 'dc/roles'
+require 'dc/sanitized'
+require 'dc/validators'
+
 module DC
 
   # The canonical server root, including SSL, if requested.

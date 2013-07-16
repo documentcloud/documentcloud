@@ -11,7 +11,7 @@ module DC
 
   SECRETS   = {}
   DC_CONFIG = {}
-
+  
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -28,6 +28,10 @@ module DC
     # DocumentCloud-specific configuration.
     ::DC::SECRETS.merge!   YAML.load_file("#{Rails.root}/secrets/secrets.yml")[Rails.env]
     ::DC::DC_CONFIG.merge! YAML.load( ERB.new(File.read( Rails.root.join('config','document_cloud.yml') ) ).result )[Rails.env]
+
+    ::DC::ANALYTICS_DB = YAML.load(ERB.new(File.read("#{Rails.root}/config/database_analytics.yml")).result(binding))[Rails.env]
+    ::DC::MAIN_DB      = YAML.load(ERB.new(File.read("#{Rails.root}/config/database.yml")).result(binding))[Rails.env]
+
 
   end
 end
