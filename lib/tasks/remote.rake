@@ -61,35 +61,35 @@ rule(/^gem:install/) do |t|
 end
 
 def app_servers
-  case RAILS_ENV
+  case Rails.env
   when 'staging'    then ['staging.documentcloud.org']
   when 'production' then ['app01.documentcloud.org']
   end
 end
 
 def central_servers
-  case RAILS_ENV
+  case Rails.env
   when 'staging'    then ['staging.documentcloud.org']
   when 'production' then ['db01.documentcloud.org']
   end
 end
 
 def search_servers
-  case RAILS_ENV
+  case Rails.env
   when 'staging'    then ['staging.documentcloud.org']
   when 'production' then ['solr01.documentcloud.org']
   end
 end
 
 def worker_servers
-  case RAILS_ENV
+  case Rails.env
   when 'staging'    then ['staging.documentcloud.org']
   when 'production' then ['worker01.documentcloud.org', 'worker02.documentcloud.org', 'worker03.documentcloud.org', 'worker04.documentcloud.org']
   end
 end
 
 def configuration
-  case RAILS_ENV
+  case Rails.env
   when 'staging'    then {:user => 'ubuntu', :dir => '~/documentcloud', :key => 'secrets/keys/documentcloud.pem'}
   when 'production' then {:user => 'ubuntu', :dir => '~/documentcloud', :key => 'secrets/keys/documentcloud.pem'}
   end
@@ -100,7 +100,7 @@ def remote(commands, machines)
   conf = configuration
   todo = []
   todo << "cd #{conf[:dir]}"
-  todo << "bundle install && rake #{RAILS_ENV} #{commands.join(' ')}"
+  todo << "bundle install && rake #{Rails.env} #{commands.join(' ')}"
   machines.each do |host|
     puts "\n-- #{host} --"
     system "ssh -A -t -i #{conf[:key]} #{conf[:user]}@#{host} '#{todo.join(' && ')}'"

@@ -1,3 +1,10 @@
+# Load the Rails application.
+require File.expand_path('../application', __FILE__)
+
+# Initialize the Rails application.
+DC::Application.initialize!
+
+__END__
 # Be sure to restart your server when you modify this file
 require 'erb'
 

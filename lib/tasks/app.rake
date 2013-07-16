@@ -9,7 +9,7 @@ namespace :app do
   end
 
   task :restart_solr do
-    sh "rake #{RAILS_ENV} sunspot:solr:stop sunspot:solr:start"
+    sh "rake #{Rails.env} sunspot:solr:stop sunspot:solr:start"
   end
 
   task :stop do
@@ -21,12 +21,12 @@ namespace :app do
   end
 
   task :warm do
-    secrets = YAML.load_file("#{Rails.root}/secrets/secrets.yml")[RAILS_ENV]
+    secrets = YAML.load_file("#{Rails.root}/secrets/secrets.yml")[Rails.env]
     sh "curl -s -u #{secrets['guest_username']}:#{secrets['guest_password']} http://localhost:80 > /dev/null"
   end
 
   task :console do
-    exec "script/console #{RAILS_ENV}"
+    exec "script/console #{Rails.env}"
   end
 
   desc "Update the Rails application"
@@ -37,7 +37,7 @@ namespace :app do
 
   desc "Repackage static assets"
   task :jammit do
-    config = YAML.load_file("#{Rails.root}/config/document_cloud.yml")[RAILS_ENV]
+    config = YAML.load_file("#{Rails.root}/config/document_cloud.yml")[Rails.env]
     sh "sudo su www-data -c \"jammit -u http://#{config['server_root']}\""
   end
 
