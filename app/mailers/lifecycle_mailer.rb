@@ -4,19 +4,21 @@ class LifecycleMailer < ActionMailer::Base
   SUPPORT   = 'support@documentcloud.org'
   NO_REPLY  = 'no-reply@documentcloud.org'
 
+  default from: SUPPORT
+
   # Mail instructions for a new account, with a secure link to activate,
   # set their password, and log in.
   def login_instructions(account, admin=nil)
-    subject     "Welcome to DocumentCloud"
-    from        SUPPORT
-    recipients  account.email
-    cc          admin.email if admin
-    body        :admin              => admin,
-                :account            => account,
-                :key                => account.security_key.key,
-                :organization_name  => account.organization_name
+    @admin   = admin
+    @account = account
+    options = {
+      :subject => "Welcome to DocumentCloud",
+      :to      => @account.email
+    }
+    options[ :cc  ] = @admin.email if @admin
+    mail( options )
   end
-  
+
   def membership_notification(account, organization, admin=nil)
     subject    "You have been added to #{organization.name}"
     from       SUPPORT
@@ -48,11 +50,10 @@ class LifecycleMailer < ActionMailer::Base
 
   # Mail instructions for resetting an active account's password.
   def reset_request(account)
-    subject     "DocumentCloud password reset"
-    from        SUPPORT
-    recipients  [account.email]
-    body        :account            => account,
-                :key                => account.security_key.key
+    @account = account
+    @key     = account.security_key.key
+    mail( :to      => account.email,
+          :subject => "DocumentCloud password reset" )
   end
 
   # When someone sends a message through the "Contact Us" form, deliver it to

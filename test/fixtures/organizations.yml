@@ -1,3 +1,8 @@
 tribune:
   name: The Daily Tribune
   slug: daily-tribune
+
+# has no accounts, because they are 'wait for it..' 
+bankrupt:
+  name: United Media Conglomerate
+  slug: united-media
