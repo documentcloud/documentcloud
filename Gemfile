@@ -4,7 +4,7 @@ gem 'rails',                  '~>4.0'
 gem 'curb',                   '~>0.8.4'
 gem 'calais',                 '~> 0.0.13'
 gem 'rest-client',            '~> 1.6.7'
-gem 'bcrypt-ruby',            '~> 3.1.1'
+gem 'bcrypt-ruby',            '~> 3.1.1', :require => 'bcrypt'
 gem 'rubyzip',                '~> 0.9.9'
 gem 'aws-sdk',                '~> 1.11.1'
 gem 'pg',                     '~> 0.15.1'
@@ -21,14 +21,15 @@ gem 'omniauth-google-oauth2', '~> 0.2.0'
 gem 'sanitize',               '~> 2.0.6'
 gem 'sunspot_solr',           '~> 2.0.0'
 gem 'rdiscount',              '~> 2.1.6'
-
 gem 'right_http_connection'
 gem 'rake'
 gem 'jammit',                 '0.6.6', :git=>'https://github.com/documentcloud/jammit.git'
 gem 'nokogiri',               '1.5.6' # only pegged because nokogiri 1.5.9 installation fucking up on OSX
 gem 'right_aws',              '2.0.1', :git=>'https://github.com/documentcloud/right_aws.git'        # Our patched version.
 
-group :test do
+group :development, :test do
+  gem 'guard-bundler'
+  gem 'growl'
   gem 'minitest-spec-rails'
   gem 'minitest-emoji'
   gem 'guard-minitest'
