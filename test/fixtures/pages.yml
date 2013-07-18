@@ -1,0 +1,15 @@
+first:
+  account: louis
+  organization: tribune
+  document: tv_manual
+  access: <%= DC::Access::PUBLIC %>
+  page_number: 0
+  text: Call me Ishmael.
+
+second:
+  account: louis
+  organization: tribune
+  document: tv_manual
+  access: <%= DC::Access::PUBLIC %>
+  page_number: 1
+  text: This is the glorious second page
