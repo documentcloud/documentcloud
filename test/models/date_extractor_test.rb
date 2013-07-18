@@ -14,13 +14,11 @@ class DateExtractorTest < ActiveSupport::TestCase
 
   DATES = [Date.parse('2004-12-10'), Date.parse('1419-1-2')]
 
-  context "The DateExtractor" do
-
-    should "be able to correctly extract dates from text" do
-      dates = DC::Import::DateExtractor.new.extract_dates(DOC).map {|d| d[:date] }
-      assert dates.sort == DATES.sort
-    end
-
+  it "correctly extracts dates from text" do
+    dates = DC::Import::DateExtractor.new.extract_dates(DOC).map {|d| d[:date] }
+    assert_equal dates.sort, DATES.sort
   end
+
+
 
 end
