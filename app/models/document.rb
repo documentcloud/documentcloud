@@ -42,19 +42,21 @@ class Document < ActiveRecord::Base
   has_many :remote_urls,          :dependent   => :destroy
   has_many :project_memberships,  :dependent   => :destroy
   has_many :projects,             :through     => :project_memberships
-  has_one  :reviewer_project,     :through     => :project_memberships,
-                                  :conditions  => {:hidden => true},
-                                  :source      => :project
 
-  has_many :duplicates, :foreign_key=>'file_hash', :primary_key=>'file_hash', :class_name=>"Document", 
-      :conditions=>['access in (?) and id != #{id} and text_changed = false', ACCESS_SUCCEEDED ]
+  has_many :reviewer_projects,     -> { where( :hidden => true) },
+                                     :through     => :project_memberships,
+                                     :source      => :project
+
+
+  has_many :duplicates, -> { where(['access in (?) and id != #{id} and text_changed = false', ACCESS_SUCCEEDED ]) },
+      :foreign_key=>'file_hash', :primary_key=>'file_hash', :class_name=>"Document"
 
   validates_presence_of :organization_id, :account_id, :access, :page_count,
                         :title, :slug
 
   validates_inclusion_of :language, :in => DC::Language::SUPPORTED
 
-  before_validation_on_create :ensure_titled
+  before_validation :ensure_titled, :on=>:create
 
   after_destroy :delete_assets
 
@@ -65,57 +67,52 @@ class Document < ActiveRecord::Base
   delegate :slug, :to => :organization, :allow_nil => true, :prefix => true
   delegate :slug, :to => :account,      :allow_nil => true, :prefix => true
 
-  # Named scopes:
+  # Scopes:
 
-  named_scope :chronological, {:order => 'created_at desc'}
+  scope :chronological, -> { order('created_at desc') }
 
   # NB: This is *not* efficient.
-  named_scope :random,        {:order => 'random()'}
+  scope :random,        -> { order('random()') }
 
-  named_scope :owned_by, lambda { |account|
-    {:conditions => {:account_id => account.id}}
-  }
+  scope :owned_by, ->(account) { where( :account_id => account.id ) }
 
-  named_scope :published,     :conditions => 'remote_url is not null or detected_remote_url is not null'
-  named_scope :unpublished,   :conditions => 'remote_url is null and detected_remote_url is null'
+  scope :published,     ->{  where( 'remote_url is not null or detected_remote_url is not null' ) }
+  scope :unpublished,   ->{  where( 'remote_url is null and detected_remote_url is null' ) }
 
-  named_scope :pending,       :conditions => {:access => PENDING}
-  named_scope :failed,        :conditions => {:access => ERROR}
-  named_scope :unrestricted,  :conditions => {:access => PUBLIC_LEVELS}
-  named_scope :restricted,    :conditions => {:access => [PRIVATE, ORGANIZATION]}
-  named_scope :finished,      :conditions => {:access => [PUBLIC, PRIVATE, ORGANIZATION, PREMODERATED, POSTMODERATED]}
+  scope :pending,       ->{ where( :access => PENDING ) }
+  scope :failed,        ->{ where( :access => ERROR   ) }
+  scope :unrestricted,  ->{ where( :access => PUBLIC_LEVELS ) }
+  scope :restricted,    ->{ where( :access => [PRIVATE, ORGANIZATION] ) }
+  scope :finished,      ->{ where( :access => [PUBLIC, PRIVATE, ORGANIZATION, PREMODERATED, POSTMODERATED] ) }
 
-  named_scope :popular,       :conditions => ["hit_count > ?", MINIMUM_POPULAR]
+  scope :popular,       ->{ where( ["hit_count > ?", MINIMUM_POPULAR] ) }
 
-  named_scope :due, lambda {|time|
-    {:conditions => ["publish_at <= ?", Time.now.utc]}
-  }
+  scope :due,           ->( time=Time.now.utc ) { where( ["publish_at <= ?", time  ] ) }
 
-  named_scope :since, lambda {|time|
-    time ? {:conditions => ["created_at >= ?", time]} : {}
-  }
+  scope :since,         ->(time){ where( ["created_at >= ?", time] ) if time }
+
 
   # Restrict accessible documents for a given account/organization.
   # Either the document itself is public, or it belongs to us, or it belongs to
   # our organization and we're allowed to see it, or it belongs to a project
   # that's been shared with us.
-  named_scope :accessible, lambda {|account, org|
+  scope :accessible, lambda {|account, org|
     has_shared = account && account.accessible_project_ids.present?
     access = []
     access << "(documents.access in (#{PUBLIC_LEVELS.join(",")}))"
     access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}, #{ORGANIZATION}, #{EXCLUSIVE}) and documents.account_id = #{account.id})" if account
     access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org && account && !account.freelancer?
     access << "(memberships.document_id = documents.id)" if has_shared
-    opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
+    query = where( access.join(' or ') )
     if has_shared
-      opts[:joins] = <<-EOS
-        left outer join 
-        (select distinct document_id from project_memberships 
-          where project_id in (#{account.accessible_project_ids.join(',')})) as memberships
-        on memberships.document_id = documents.id
-      EOS
+        query = query.joins( "
+          left outer join
+          (select distinct document_id from project_memberships
+            where project_id in (#{account.accessible_project_ids.join(',')})) as memberships
+          on memberships.document_id = documents.id
+        ")
     end
-    opts
+    query
   }
 
   # The definition of the Solr search index. Via sunspot-rails.
@@ -151,7 +148,7 @@ class Document < ActiveRecord::Base
     #   text(entity) { self.entity_values(entity) }
     #   string(entity, :multiple => true) { self.entity_values(entity) }
     # end
-    
+
     # Data...
     dynamic_string :data do
       self.docdata ? self.docdata.data.symbolize_keys : {}
@@ -215,7 +212,7 @@ class Document < ActiveRecord::Base
   def insert_documents(insert_page_at, document_count, eventual_access=nil)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
-    record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'document_insert_pages',
       'inputs'  => [id],
       'options' => {
@@ -277,7 +274,7 @@ class Document < ActiveRecord::Base
   # Produce the full text of the document by combining the text of each of
   # the pages. Used at initial import.
   def combined_page_text
-    self.pages.all(:select => [:text], :order => 'page_number asc').map(&:text).join('')
+    self.pages.order('page_number asc').pluck(:text).join('')
   end
 
   # Determine the number of annotations on each page of this document.
@@ -286,11 +283,11 @@ class Document < ActiveRecord::Base
   end
   
   def ordered_sections
-    sections.all(:order => 'page_number asc')
+    sections.order('page_number asc')
   end
   
   def ordered_annotations(account)
-    self.annotations.accessible(account).all(:order => 'page_number asc, location asc nulls first')
+    self.annotations.accessible(account).order('page_number asc, location asc nulls first')
   end
 
   def annotations_with_authors(account, annotations=nil)
@@ -302,7 +299,7 @@ class Document < ActiveRecord::Base
   # Return an array of all of the document entity values for a given type,
   # for Solr indexing purposes.
   def entity_values(kind)
-    self.entities.kind(kind.to_s).all(:select => [:value]).map {|e| e.value }
+    self.entities.kind(kind.to_s).pluck('value')
   end
 
   # Reset the cached counter of public notes on the document.
@@ -327,7 +324,9 @@ class Document < ActiveRecord::Base
     end
     hash
   end
-  
+
+  # updates the document's character count by detecting the
+  # largest end_offset off our pages.
   def reset_char_count!
     update_attributes :char_count => 1+self.pages.maximum(:end_offset).to_i
   end
@@ -370,12 +369,14 @@ class Document < ActiveRecord::Base
   # If we need to change the ownership of the document, we have to propagate
   # the change to all associated models.
   def set_owner(account)
-    org = account.organization
+    unless org = account.organization
+      errors.add(:account, "must have an organization") and return false
+    end
     update_attributes(:account_id => account.id, :organization_id => org.id)
-    sql = ["account_id = #{account.id}, organization_id = #{org.id}", "document_id = #{id}"]
-    Page.update_all(*sql)
-    Entity.update_all(*sql)
-    EntityDate.update_all(*sql)
+    sql = "account_id = #{account.id}, organization_id = #{org.id}"
+    self.pages.update_all( sql )
+    self.entities.update_all( sql )
+    self.entity_dates.update_all( sql )
   end
 
   def organization_name
@@ -440,10 +441,6 @@ class Document < ActiveRecord::Base
     "/#{canonical_path(:js)}"
   end
 
-  def project_ids
-    self.project_memberships.map {|m| m.project_id }
-  end
-  
   # Externally used image path, not to be confused with `page_image_path()`
   def page_image_template
     "#{slug}-p{page}-{size}.gif"
@@ -553,12 +550,12 @@ class Document < ActiveRecord::Base
   end
 
   def reviewers
-    return [] unless reviewer_project
-    reviewer_project.collaborators
+    return [] unless reviewer_projects.empty?
+    reviewer_projects.map{ |project| project.collaborators }.flatten.uniq
   end
 
   def add_reviewer(account, creator)
-    unless project = reviewer_project
+    unless project = reviewer_projects.first
       project = Project.create :hidden => true
       project.set_documents([id])
     end
@@ -566,14 +563,14 @@ class Document < ActiveRecord::Base
   end
 
   def remove_reviewer(account)
-    reviewer_project.remove_collaborator(account)
+    reviewer_projects.first.remove_collaborator(account)
   end
 
   def reviewer_inviter(reviewer_account)
     collab = Collaboration.first(:conditions => [
       "account_id = ? AND project_id = ? AND creator_id IS NOT NULL",
       reviewer_account.id,
-      reviewer_project.id
+      reviewer_projects.first.id
     ])
     collab && collab.creator
   end
@@ -613,7 +610,7 @@ class Document < ActiveRecord::Base
   end
 
   def reprocess_entities
-    RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'reprocess_entities',
       'inputs'  => [id]
     }.to_json})
@@ -642,7 +639,7 @@ class Document < ActiveRecord::Base
       page.text = page_text
       page.save
     end
-    record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'reindex_document',
       'inputs'  => [id],
       'options' => {
@@ -664,7 +661,7 @@ class Document < ActiveRecord::Base
     end
 
     update_attributes attributes
-    record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'redact_pages',
       'inputs'  => [id],
       'options' => {
@@ -679,7 +676,7 @@ class Document < ActiveRecord::Base
   def remove_pages(pages, replace_pages_start=nil, insert_document_count=nil)
     eventual_access = access || PRIVATE
     update_attributes :access => PENDING
-    record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'document_remove_pages',
       'inputs'  => [id],
       'options' => {
@@ -695,7 +692,7 @@ class Document < ActiveRecord::Base
   def reorder_pages(page_order, eventual_access=nil)
     eventual_access ||= access || PRIVATE
     update_attributes :access => PENDING
-    record_job(RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'document_reorder_pages',
       'inputs'  => [id],
       'options' => {
@@ -722,7 +719,7 @@ class Document < ActiveRecord::Base
   end
   
   def self.duplicate(document_ids, account, options={})
-    RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'duplicate_documents',
       'inputs'  => [document_ids],
       'options' => options.merge(
@@ -910,7 +907,7 @@ class Document < ActiveRecord::Base
 
   def background_update_asset_access(access_level)
     return update_attributes(:access => access_level) if Rails.env.development?
-    RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'update_access',
       'inputs'  => [self.id],
       'options' => {'access' => access_level},
