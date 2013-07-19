@@ -3,13 +3,15 @@ first:
   organization: tribune
   document: tv_manual
   access: <%= DC::Access::PUBLIC %>
-  page_number: 0
+  page_number: 1
   text: Call me Ishmael.
+  end_offset: 16
 
 second:
   account: louis
   organization: tribune
   document: tv_manual
   access: <%= DC::Access::PUBLIC %>
-  page_number: 1
+  page_number: 2
   text: This is the glorious second page
+  end_offset: 32

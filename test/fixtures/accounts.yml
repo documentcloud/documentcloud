@@ -11,3 +11,8 @@ reporter_joe:
   last_name: Reporting
   hashed_password: $2a$08$FR1MWbwlC7qqdVfmF/C/8uHRHzZDjV97pkVd6M5ixbigq/3nhcNtm
 
+freelancer_bob:
+  email: bob@aol.com
+  first_name: Bob
+  last_name: Freelance
+  hashed_password: $2a$08$FR1MWbwlC7qqdVfmF/C/8uHRHzZDjV97pkVd6M5ixbigq/3nhcNtm
