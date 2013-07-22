@@ -236,7 +236,7 @@ class Account < ActiveRecord::Base
   # through collaboration.
   def accessible_project_ids
     @accessible_project_ids ||=
-      Collaboration.owned_by(self).all(:select => [:project_id]).map {|c| c.project_id }
+      Collaboration.owned_by(self).pluck(:project_id)
   end
   
   # is the account considered an DocumentCloud Administrator?

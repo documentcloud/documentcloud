@@ -20,7 +20,7 @@ class ProcessingJob < ActiveRecord::Base
 
   # The URL of the Job on CloudCrowd.
   def url
-    "#{DC_CONFIG['cloud_crowd_server']}/jobs/#{cloud_crowd_id}"
+    "#{DC::CONFIG['cloud_crowd_server']}/jobs/#{cloud_crowd_id}"
   end
 
   # The default JSON of a processing job is just enough to get it polling for

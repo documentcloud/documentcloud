@@ -20,7 +20,7 @@ class SecurityKey < ActiveRecord::Base
   private
 
   def generate_key
-    self.key ||= ActiveSupport::SecureRandom.hex(HARDNESS)
+    self.key ||= SecureRandom.hex(HARDNESS)
   end
 
 end

@@ -16,6 +16,8 @@ class Page < ActiveRecord::Base
   extend ActionView::Helpers::SanitizeHelper::ClassMethods
 
   belongs_to :document
+  belongs_to :account
+  belongs_to :organization
 
   validates_numericality_of :page_number, :greater_than_or_equal_to => 1
 

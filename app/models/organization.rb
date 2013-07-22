@@ -18,10 +18,10 @@ class Organization < ActiveRecord::Base
   text_attr :name
   
   def self.default_for(account)
-    self.first(
-      :include => "memberships",
-      :conditions => ["memberships.account_id = ? and memberships.default is true", account.id]
-    )
+    self.includes(:memberships)
+      .where(["memberships.account_id = ? and memberships.default is true", account.id] )
+      .references(:memberships)
+      .first
   end
 
   # Retrieve the names of the organizations for the result set of documents.

@@ -13,10 +13,10 @@ class Entity < ActiveRecord::Base
   belongs_to :document
 
   validates_inclusion_of :kind, :in => DC::VALID_KINDS
-
+  validates :value, :presence=>true
   text_attr :value
 
-  named_scope :kind, lambda {|kind| {:conditions => {:kind => kind}} }
+  scope :kind, lambda {|kind| where( :kind => kind ) }
 
   def self.normalize_kind(string)
     DC::CALAIS_MAP[string.underscore.to_sym]

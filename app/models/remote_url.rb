@@ -2,31 +2,31 @@ require 'cgi'
 
 class RemoteUrl < ActiveRecord::Base
 
-  self.establish_connection(ANALYTICS_DB)
+  self.establish_connection( DC::ANALYTICS_DB )
 
   DOCUMENT_CLOUD_URL = /^https?:\/\/(www\.)?documentcloud.org/
 
-  named_scope :aggregated, {
-    :select => 'sum(hits) AS hits, document_id, url',
-    :group => 'document_id, url'
+  scope :aggregated, -> {
+    select( 'sum(hits) AS hits, document_id, url' )
+    .group( 'document_id, url' )
   }
 
-  named_scope :by_document, {
-    :select => 'sum(hits) AS hits, document_id',
-    :group => 'document_id',
-    :having => 'document_id is not NULL'
+ scope :by_document, -> {
+    select( 'sum(hits) AS hits, document_id' )
+    .group( 'document_id' )
+    .having( 'document_id is not NULL' )
   }
 
-  named_scope :by_search_query, {
-    :select => 'sum(hits) AS hits, search_query, url',
-    :group => 'search_query, url',
-    :having => 'search_query is not NULL'
+  scope :by_search_query, -> {
+    select('sum(hits) AS hits, search_query, url')
+    .group( 'search_query, url' )
+    .having( 'search_query is not NULL' )
   }
 
-  named_scope :by_note, {
-    :select => 'sum(hits) AS hits, note_id, url',
-    :group => 'note_id, url',
-    :having => 'note_id is not NULL'
+  scope :by_note, -> {
+    select( 'sum(hits) AS hits, note_id, url' )
+    .group( 'note_id, url' )
+    .having( 'note_id is not NULL' )
   }
 
   def self.record_hits_on_document(doc_id, url, hits)

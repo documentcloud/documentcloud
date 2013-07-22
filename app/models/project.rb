@@ -24,11 +24,11 @@ class Project < ActiveRecord::Base
   text_attr :title
   styleable_attr :description
 
-  named_scope :alphabetical, {:order => :title}
-  named_scope :visible, :conditions => {:hidden => false}
-  named_scope :hidden, :conditions => {:hidden => true}
-  named_scope :accessible, lambda {|account|
-    {:conditions => ['account_id = ? or id in (select project_id from collaborations where account_id = ?)', account.id, account.id]}
+  scope :alphabetical,-> { order( :title ) }
+  scope :visible,     -> { where(:hidden => false) }
+  scope :hidden,      -> { where(:hidden => true ) }
+  scope :accessible,  ->(account) {
+    where( ['account_id = ? or id in (select project_id from collaborations where account_id = ?)', account.id, account.id] )
   }
 
   delegate :full_name, :to => :account, :prefix => true, :allow_nil => true

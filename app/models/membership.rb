@@ -8,7 +8,7 @@ class Membership < ActiveRecord::Base
   belongs_to :organization
   belongs_to :account
 
-  named_scope :real,      { :conditions => ["memberships.role in (?)", REAL_ROLES] }
+  scope :real, ->{ where( ["memberships.role in (?)", REAL_ROLES] ) }
 
 
   def real?
