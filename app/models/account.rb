@@ -6,7 +6,7 @@ class Account < ActiveRecord::Base
   include DC::Roles
 
   # Associations:
-  has_many :memberships
+  has_many :memberships,     :dependent => :destroy
   has_many :organizations,   :through => :memberships
   has_many :projects,        :dependent => :destroy
   has_many :annotations      
