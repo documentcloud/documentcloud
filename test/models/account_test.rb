@@ -12,6 +12,10 @@ class AccountTest < ActiveSupport::TestCase
     refute account
   end
 
+  it "has associations and they query successfully" do
+    assert_associations_queryable louis
+  end
+
   it "has scopes and they work" do
     assert_includes Account.admin, louis
     assert_includes Account.active, louis

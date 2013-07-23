@@ -1,0 +1,11 @@
+person:
+  document: tv_manual
+  account: louis
+  organization: tribune
+  access: <%= DC::Access::PUBLIC %>
+  kind: person
+  value: Ronald McDonald
+  relevance: 1.0
+  calais_id: unknown
+  occurrences: 206057:16,223728:6 
+

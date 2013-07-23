@@ -11,7 +11,8 @@ class Entity < ActiveRecord::Base
   ALL_CAPS = /\A[A-Z0-9\s.]+\Z/
 
   belongs_to :document
-
+  belongs_to :account
+  belongs_to :organization
   validates_inclusion_of :kind, :in => DC::VALID_KINDS
   validates :value, :presence=>true
   text_attr :value
@@ -24,17 +25,16 @@ class Entity < ActiveRecord::Base
 
   # Truncate and titlize the value, if necessary.
   def self.normalize_value(string)
-    string = string.mb_chars[0...255].to_s
+    string = string[0...255]
     return string unless string.length > 5 && string.match(ALL_CAPS)
     string.titleize
   end
 
-  # TODO: Make this not use an ilike, Solr, preferably.
   def self.search_in_documents(kind, value, ids)
     return [] if value.nil?
-    entities = self.all({:conditions => [
+    self.includes(:document).references(:document).where([
       "document_id in (?) and kind = ? and lower(value) like lower('%#{Entity.connection.quote_string(value)}%')", ids, kind
-    ], :include => :document})
+    ])
   end
 
   # Merge this entity with another of the "same" entity for the same document.
