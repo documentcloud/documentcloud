@@ -4,37 +4,16 @@
 notification :growl
 
 guard :minitest, :all_on_start => true, :spring => true do
-  # with Minitest::Unit
-  # watch(%r{^test/(.*)\/?(.*)_test\.rb})
-  # watch(%r{^lib/(.*/)?([^/]+)\.rb})     { |m| "test/#{m[1]}test_#{m[2]}.rb" }
-  # watch(%r{^test/test_helper\.rb})      { 'test' }
-  # watch(%r|^app/models/(.*)\.rb|)       { |m| "test/models/#{m[1]}_test.rb" }
 
-
-
-  # with Minitest::Spec
-  # watch(%r{^spec/(.*)_spec\.rb})
-  # watch(%r{^lib/(.+)\.rb})         { |m| "spec/#{m[1]}_spec.rb" }
-  # watch(%r{^spec/spec_helper\.rb}) { 'spec' }
-
-  # Rails 4
   watch(%r{^test/test_helper\.rb}) { 'test' }
   watch(%r{^test/.+_test\.rb})
   watch(%r{^app/(.+)\.rb})                               { |m| "test/#{m[1]}_test.rb" }
+  watch(%r{^test/fixtures/(.+)s\.rb})                    { |m| "test/unit/#{m[1]}_test.rb" }
   watch(%r{^app/controllers/application_controller\.rb}) { 'test/controllers' }
   watch(%r{^app/controllers/(.+)_controller\.rb})        { |m| "test/integration/#{m[1]}_test.rb" }
   watch(%r{^app/views/(.+)_mailer/.+})                   { |m| "test/mailers/#{m[1]}_mailer_test.rb" }
   watch(%r{^lib/(.+)\.rb})                               { |m| "test/lib/#{m[1]}_test.rb" }
 
-  # Rails 3.2
-  # watch(%r{^app/controllers/(.*)\.rb}) { |m| "test/controllers/#{m[1]}_test.rb" }
-  # watch(%r{^app/helpers/(.*)\.rb})     { |m| "test/helpers/#{m[1]}_test.rb" }
-  # watch(%r{^app/models/(.*)\.rb})      { |m| "test/unit/#{m[1]}_test.rb" }
-
-  # Rails
-  # watch(%r{^app/controllers/(.*)\.rb}) { |m| "test/functional/#{m[1]}_test.rb" }
-  # watch(%r{^app/helpers/(.*)\.rb})     { |m| "test/helpers/#{m[1]}_test.rb" }
-  # watch(%r{^app/models/(.*)\.rb})      { |m| "test/unit/#{m[1]}_test.rb" }
 end
 
 guard 'bundler' do
