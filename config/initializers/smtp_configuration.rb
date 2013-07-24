@@ -1,6 +1,5 @@
 unless Rails.env.development?
 
-  ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
     :address              => DC::SECRETS['smtp_host'],
     :port                 => 25,
