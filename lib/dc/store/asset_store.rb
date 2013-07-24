@@ -1,3 +1,7 @@
+require_relative 'aws_s3_store'
+require_relative 'file_system_store'
+Dir[File.dirname(__FILE__) + '/*.rb'].each {|file| require file }
+
 module DC
   module Store
 

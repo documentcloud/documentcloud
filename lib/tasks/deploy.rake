@@ -29,7 +29,7 @@ namespace :deploy do
       puts "uploading #{file} (#{mimetype})"
       bucket.put("viewer/#{file.gsub('public/viewer/', '')}", File.open(file), {}, 'public-read', headers)
     end
-    DC_CONFIG['server_root'] = 's3.documentcloud.org'
+    DC::CONFIG['server_root'] = 's3.documentcloud.org'
     contents = ERB.new(File.read('app/views/documents/loader.js.erb')).result(binding)
     bucket.put('viewer/loader.js', contents, {}, 'public-read', {'Content-type' => 'application/javascript'})
   end
@@ -46,7 +46,7 @@ namespace :deploy do
         puts "uploading #{file} (#{mimetype}) to #{file.gsub("public/", '')}"
         bucket.put("#{file.gsub("public/", '')}", File.open(file), {}, 'public-read', headers)
       end
-      DC_CONFIG['server_root'] = 's3.documentcloud.org'
+      DC::CONFIG['server_root'] = 's3.documentcloud.org'
       contents = ERB.new(File.read("app/views/#{embed[0]}/loader.js.erb")).result(binding)
       bucket.put("#{embed[1]}/loader.js", contents, {}, 'public-read', {'Content-type' => 'application/javascript'})
       puts "uploading app/views/#{embed[0]}/loader.js.erb to #{embed[1]}/loader.js"

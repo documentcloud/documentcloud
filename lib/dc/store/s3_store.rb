@@ -16,7 +16,7 @@ module DC
       S3_PARAMS       = {:connection_lifetime => 60}
 
       ACCESS_TO_ACL   = Hash.new('private')
-      PUBLIC_LEVELS.each{ |level| ACCESS_TO_ACL[level] = 'public-read' }
+      DC::Access::PUBLIC_LEVELS.each{ |level| ACCESS_TO_ACL[level] = 'public-read' }
 
       module ClassMethods
         def asset_root

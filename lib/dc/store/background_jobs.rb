@@ -20,7 +20,7 @@ module DC
       private
 
       def self.fire_job(job)
-        RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => job.to_json})
+        RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => job.to_json})
       end
 
     end

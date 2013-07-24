@@ -12,7 +12,7 @@ module DC
 
     # Default AMI, instance type, and launch script to start a new instance.
     DEFAULT_BOOT_OPTIONS = {
-      :ami      => DC_CONFIG['preconfigured_ami_id'],
+      :ami      => DC::CONFIG['preconfigured_ami_id'],
       :type     => 'm1.small',
       :scripts  => [SCRIPTS[:update]]
     }
@@ -49,7 +49,7 @@ module DC
       keypair = 'documentcloud'
       userdata = 'blank'
       addressing_type = 'public'
-      zone = DC_CONFIG['aws_zone']
+      zone = DC::CONFIG['aws_zone']
 
       ssh_config = {
         'CheckHostIP' => 'no',
