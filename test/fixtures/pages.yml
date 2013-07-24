@@ -5,6 +5,7 @@ first:
   access: <%= DC::Access::PUBLIC %>
   page_number: 1
   text: Call me Ishmael.
+  start_offset: 0
   end_offset: 16
 
 second:
@@ -14,4 +15,5 @@ second:
   access: <%= DC::Access::PUBLIC %>
   page_number: 2
   text: This is the glorious second page
+  start_offset: 17
   end_offset: 32

@@ -84,14 +84,12 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   it "provides entity values" do
-    assert doc.entities.none?
     assert doc.entities.create! :kind=>'person', :value=>'king kong'
-    assert_equal ['king kong'], doc.entity_values('person')
+    assert_equal [ 'Mr Rogers','king kong'], doc.entity_values('person')
   end
 
   it "collects entities as a hash" do
-    assert doc.entities.create! :kind=>'person', :value=>'king kong'
-    assert_equal [{:value=>'king kong',:relevance=>0.0}], doc.ordered_entity_hash['person']
+    assert_equal [ { :value=>"Mr Rogers", :relevance=>1.0} ], doc.ordered_entity_hash['person']
   end
 
   it "calculates number of characters" do

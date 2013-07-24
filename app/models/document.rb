@@ -33,9 +33,9 @@ class Document < ActiveRecord::Base
   belongs_to :account
   belongs_to :organization
 
-  has_one  :docdata,              :dependent   => :destroy
-  has_many :pages,                :dependent   => :destroy
-  has_many :entities,             :dependent   => :destroy
+  has_one  :docdata,              :dependent   => :destroy, :inverse_of=>:document
+  has_many :pages,                :dependent   => :destroy, :inverse_of=>:document
+  has_many :entities,             :dependent   => :destroy, :inverse_of=>:document
   has_many :entity_dates,         :dependent   => :destroy
   has_many :sections,             :dependent   => :destroy
   has_many :annotations,          :dependent   => :destroy
@@ -170,7 +170,7 @@ class Document < ActiveRecord::Base
                (params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE)
     email_me = params[:email_me] ? params[:email_me].to_i : false
     file_ext = File.extname(name).downcase[1..-1]
-    
+
     doc = self.create!(
       :organization_id    => organization.id,
       :account_id         => account.id,
@@ -281,11 +281,11 @@ class Document < ActiveRecord::Base
   def per_page_annotation_counts
     self.annotations.count(:group => 'page_number')
   end
-  
+
   def ordered_sections
     sections.order('page_number asc')
   end
-  
+
   def ordered_annotations(account)
     self.annotations.accessible(account).order('page_number asc, location asc nulls first')
   end
@@ -386,11 +386,11 @@ class Document < ActiveRecord::Base
   def account_name
     @account_name ||= (account ? account.full_name : 'Unattributed')
   end
-  
+
   def data
     docdata ? docdata.data : {}
   end
-  
+
   def data=(hash)
     self.docdata = Docdata.create(:document_id => id) unless self.docdata
     docdata.update_attributes :data => hash
@@ -400,7 +400,7 @@ class Document < ActiveRecord::Base
   def path
     File.join('documents', id.to_s)
   end
-  
+
   def original_file_path
     File.join(path, slug + ".#{original_extension}")
   end
@@ -592,7 +592,7 @@ class Document < ActiveRecord::Base
   def reprocess_text(force_ocr = false)
     queue_import :text_only => true, :force_ocr => force_ocr, :secure => !calais_id
   end
-  
+
   def reprocess_images
     queue_import :images_only => true, :secure => !calais_id
   end
@@ -717,7 +717,7 @@ class Document < ActiveRecord::Base
     self.update_attributes :access => PENDING
     record_job(DC::Import::CloudCrowdImporter.new.import([id], options, self.low_priority?).body)
   end
-  
+
   def self.duplicate(document_ids, account, options={})
     RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'duplicate_documents',
@@ -727,24 +727,24 @@ class Document < ActiveRecord::Base
       )
     }.to_json})
   end
-  
+
   # Create an identical clone of this document, in all ways (except for the ID).
   def duplicate!(account=nil, options={})
     # Clone the document.
     newattrs = attributes.merge({
-      :access     => PENDING, 
-      :created_at => Time.now, 
+      :access     => PENDING,
+      :created_at => Time.now,
       :updated_at => Time.now
     })
     newattrs[:account_id] = account.id if account
     copy     = Document.create!(newattrs.merge({:hit_count  => 0, :detected_remote_url => nil}))
     newattrs = {:document_id => copy.id}
-    
+
     # Clone the docdata.
     if docdata and options['include_docdata']
       Docdata.create! docdata.attributes.merge newattrs
     end
-    
+
     # Clone the associations.
     associations = [entities, entity_dates, pages]
     associations.push sections if options['include_sections']
@@ -755,14 +755,14 @@ class Document < ActiveRecord::Base
         model.class.create! model.attributes.merge newattrs
       end
     end
-    
+
     # Clone the assets.
     DC::Store::AssetStore.new.copy_assets(self, copy)
-    
+
     # Reindex, set access.
     copy.index
     copy.set_access access
-    
+
     copy
   end
 

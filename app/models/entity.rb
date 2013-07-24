@@ -46,9 +46,9 @@ class Entity < ActiveRecord::Base
   end
 
   # The pages on which this entity occurs within the document.
-  def pages(occurs=split_occurrences, options={})
+  def pages(occurs=split_occurrences)
     return [] unless textual?
-    super(occurs, options)
+    super(occurs)
   end
 
   # An Entity is considered to be textual if it occurs in the body of the text.
@@ -57,7 +57,7 @@ class Entity < ActiveRecord::Base
   end
 
   def value=(val)
-    write_attribute :value, val.mb_chars[0...255].to_s
+    write_attribute :value, val[0...255]
   end
 
   def to_json(options={})
@@ -69,7 +69,7 @@ class Entity < ActiveRecord::Base
      'relevance'    => relevance,
      'occurrences'  => occurrences
     }
-    data['excerpts'] = excerpts(150, :limit => 200)if options[:include_excerpts]
+    data['excerpts'] = excerpts(150, self.pages.limit(200) ) if options[:include_excerpts]
     data.to_json
   end
 
