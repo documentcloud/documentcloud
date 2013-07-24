@@ -30,6 +30,7 @@ gem 'right_aws',              '2.0.1', :git=>'https://github.com/documentcloud/r
 group :development, :test do
   gem 'guard-bundler'
   gem 'growl'
+  gem 'sunspot_matchers_testunit'
   gem 'minitest-spec-rails'
   gem 'minitest-emoji'
   gem 'guard-minitest'
