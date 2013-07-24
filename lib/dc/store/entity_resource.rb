@@ -11,24 +11,22 @@ module DC
       end
 
       # The pages on which this entity occurs within the document.
-      def pages(occurs=split_occurrences, options={})
+      def pages( occurs=split_occurrences )
         conds = occurs.map do |occur|
           "(start_offset <= #{occur.offset} and end_offset > #{occur.offset})"
         end
-        search = options.merge({:conditions => conds.join(' or ')})
-        @pages ||= document.pages.all(search)
-        @page_map = occurs.inject({}) do |memo, occur|
-          page = @pages.detect {|page| page.contains?(occur) }
+        document.pages.where( conds.join(' or ') )
+      end
+
+      def excerpts( context=50, pages=self.pages, occurrences=split_occurrences)
+        page_map = occurrences.inject({}) do |memo, occur|
+          page = pages.detect{|pg| pg.contains?(occur) }
           memo[occur] = page if page
           memo
         end
-        @pages
-      end
 
-      def excerpts(context=50, options={}, occurrences=nil)
-        pages(occurrences || split_occurrences, options)
-        @page_map.map do |occur, page|
-          utf     =  page.text.mb_chars
+        page_map.map do |occur, page|
+          utf     =  page.text
           open    =  occur.offset - page.start_offset
           close   =  open + occur.length
           first   =  open - context
