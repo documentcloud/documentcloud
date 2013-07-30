@@ -10,7 +10,6 @@ class Membership < ActiveRecord::Base
 
   scope :real, ->{ where( ["memberships.role in (?)", REAL_ROLES] ) }
 
-
   def real?
     REAL_ROLES.include?(role)
   end

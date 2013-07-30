@@ -14,6 +14,6 @@ second:
   document: tv_manual
   access: <%= DC::Access::PUBLIC %>
   page_number: 2
-  text: This is the glorious second page
+  text: This is the glorious second page. I was written on 10-18-1851
   start_offset: 17
   end_offset: 32

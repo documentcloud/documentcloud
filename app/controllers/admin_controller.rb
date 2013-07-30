@@ -90,7 +90,7 @@ class AdminController < ApplicationController
   # so often -- delegate to a cloudcrowd job.
   def save_analytics
     return forbidden unless params[:secret] == SECRETS['pixel_ping']
-    RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       :action => 'save_analytics', :inputs => [params[:json]]
     }.to_json})
     json nil

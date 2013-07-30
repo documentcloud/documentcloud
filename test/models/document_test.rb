@@ -62,7 +62,8 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   it "combines text from pages" do
-    assert_equal 'Call me Ishmael.This is the glorious second page', doc.combined_page_text
+    text = doc.pages.map(&:text).join('')
+    assert_equal text, doc.combined_page_text
   end
 
   it "calculates annotations per page" do

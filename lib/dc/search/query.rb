@@ -160,12 +160,16 @@ module DC
         order             = "documents.created_at desc"
         direction         = [:page_count, :hit_count].include?(@order.to_sym) ? 'desc' : 'asc'
         order             = "documents.#{@order} #{direction}, #{order}" unless [:created_at, :score].include?(@order.to_sym)
-        options           = {:conditions => conditions, :joins => @joins, :include => [:account, :organization]}
-        @total            = @proxy.count(options)
-        options[:order]   = order
-        options[:limit]   = @per_page
-        options[:offset]  = @from
-        @results          = @proxy.all(options)
+        query             = @proxy
+          .joins( @joins )
+          .includes(:account, :organization)
+          .references(:account, :organization)
+          .where( conditions )
+        @total            = query.count
+        # options[:order]   = order
+        # options[:limit]   = @per_page
+        # options[:offset]  = @from
+        @results          = query.order( order ).limit( @per_page ).offset( @from )
       end
 
       # Construct the correct pagination for the current query.

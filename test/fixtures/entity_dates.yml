@@ -1,0 +1,16 @@
+jan1:
+  document: tv_manual
+  account: louis
+  organization: tribune
+  access: <%= DC::Access::PUBLIC %>
+  date: 2001-01-01
+  occurrences: 8:14,20:6 
+
+dec24:
+  document: tv_manual
+  account: louis
+  organization: tribune
+  access: <%= DC::Access::PUBLIC %>
+  date: 2001-12-24
+  occurrences: 2:16,20:6 
+
