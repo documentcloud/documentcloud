@@ -4,7 +4,7 @@ class ProcessingJob < ActiveRecord::Base
   belongs_to :account
   belongs_to :document
 
-  validates_presence_of :cloud_crowd_id
+  validates :cloud_crowd_id, :presence=>true
 
   attr_accessor :remote_job
 

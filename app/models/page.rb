@@ -19,7 +19,7 @@ class Page < ActiveRecord::Base
   belongs_to :account
   belongs_to :organization
 
-  validates_numericality_of :page_number, :greater_than_or_equal_to => 1
+  validates :page_number, :numericality => { :greater_than_or_equal_to => 1 }
 
   before_update :track_text_changes
 

@@ -18,11 +18,14 @@ class Account < ActiveRecord::Base
 
 
   # Validations:
-  validates_presence_of   :first_name, :last_name# => :has_memberships?
-  validates_presence_of   :email, :if => :has_memberships?
-  validates_format_of     :email, :with => DC::Validators::EMAIL, :if => :has_memberships?
-  validates_uniqueness_of :email, :case_sensitive => false, :if => :has_memberships?
-  validate :validate_identity_is_unique
+  validates  :first_name, :last_name, :presence=>true
+  validates  :email,
+    :presence   =>true,
+    :uniqueness =>{ :case_sensitive => false },
+    :format     =>{ :with => DC::Validators::EMAIL },
+    :if         => :has_memberships?
+
+  validate   :validate_identity_is_unique
 
   # Sanitizations:
   text_attr :first_name, :last_name, :email
@@ -73,7 +76,7 @@ class Account < ActiveRecord::Base
     Account.where(['lower(email) = ?', email.downcase]).first
   end
 
-  # 
+  #
   def self.from_identity( identity )
     account = Account.with_identity( identity['provider'],  identity['uid'] ).first || Account.new()
     account.record_identity_attributes( identity )
@@ -113,16 +116,16 @@ class Account < ActiveRecord::Base
     return nil unless self.organization
     self.organization.id
   end
-  
+
   def role
     default = memberships.where({:default=>true}).first
-    default.nil? ? nil : default.role 
+    default.nil? ? nil : default.role
   end
-  
+
   def member_of?(org)
     self.memberships.exists?(:organization_id => org.id)
   end
-  
+
   def has_memberships? # should be reworked as Account#real?
     self.memberships.exists?
   end
@@ -134,11 +137,11 @@ class Account < ActiveRecord::Base
       self.memberships.exists?(:role => role, :organization_id => org.id)
     end
   end
-  
+
   def admin?(org=self.organization)
     has_role?(ADMINISTRATOR, org)
   end
-  
+
   def contributor?(org=self.organization)
     has_role?(CONTRIBUTOR, org)
   end
@@ -238,10 +241,10 @@ class Account < ActiveRecord::Base
     @accessible_project_ids ||=
       Collaboration.owned_by(self).pluck(:project_id)
   end
-  
+
   # is the account considered an DocumentCloud Administrator?
   def dcloud_admin?
-    organization.id == 1 && ! reviewer?    
+    organization.id == 1 && ! reviewer?
   end
 
   # When an account is created by a third party, send an email with a secure
@@ -260,12 +263,12 @@ class Account < ActiveRecord::Base
     LifecycleMailer.reviewer_instructions(documents, inviter_account, self, message, key).deliver
   end
 
-  # Upgrading a reviewer account to a newsroom account also moves their                 # 
+  # Upgrading a reviewer account to a newsroom account also moves their                 #
   # notes over to the (potentially different) organization.                             # Move to Organization
-  def upgrade_reviewer_to_real(organization, role)                                      # 
-    update_attributes :organization => organization, :role => role                      # 
-    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{id}") # 
-  end                                                                                   # 
+  def upgrade_reviewer_to_real(organization, role)                                      #
+    update_attributes :organization => organization, :role => role                      #
+    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{id}") #
+  end                                                                                   #
 
   # When a password reset request is made, send an email with a secure key to
   # reset the password.

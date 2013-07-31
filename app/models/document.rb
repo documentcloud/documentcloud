@@ -51,10 +51,9 @@ class Document < ActiveRecord::Base
   has_many :duplicates, -> { where(['access in (?) and id != #{id} and text_changed = false', ACCESS_SUCCEEDED ]) },
       :foreign_key=>'file_hash', :primary_key=>'file_hash', :class_name=>"Document"
 
-  validates_presence_of :organization_id, :account_id, :access, :page_count,
-                        :title, :slug
+  validates :organization_id, :account_id, :access, :page_count, :title, :slug, :presence=>true
 
-  validates_inclusion_of :language, :in => DC::Language::SUPPORTED
+  validates :language, :inclusion => { :in => DC::Language::SUPPORTED }
 
   before_validation :ensure_titled, :on=>:create
 

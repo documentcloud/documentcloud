@@ -12,7 +12,7 @@ class Annotation < ActiveRecord::Base
 
   attr_accessor :author
 
-  validates_presence_of :title, :page_number
+  validates :title, :page_number, :presence=>true
 
   before_validation :ensure_title
 

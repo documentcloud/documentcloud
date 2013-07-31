@@ -12,8 +12,7 @@ class Project < ActiveRecord::Base
   has_many :documents,           :through => :project_memberships
   has_many :collaborators,       :through => :collaborations, :source => :account
 
-  validates_presence_of   :title, :unless => :hidden?
-  validates_uniqueness_of :title, :scope => :account_id, :unless => :hidden?
+  validates   :title, :presence=>true, :uniqueness=>{ :scope=>:account_id }, :unless => :hidden?
 
   after_create    :create_default_collaboration
   after_create    :reindex_documents

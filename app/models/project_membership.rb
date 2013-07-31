@@ -5,6 +5,6 @@ class ProjectMembership < ActiveRecord::Base
 
   has_many :collaborations, :through => :project
 
-  validates_uniqueness_of :document_id, :scope => :project_id
+  validates :document_id, :uniqueness=>{ :scope => :project_id }
 
 end

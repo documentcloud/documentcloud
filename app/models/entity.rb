@@ -13,9 +13,9 @@ class Entity < ActiveRecord::Base
   belongs_to :document
   belongs_to :account
   belongs_to :organization
-  validates_inclusion_of :kind, :in => DC::VALID_KINDS
-  validates :value, :presence=>true
-  text_attr :value
+  validates  :kind, :inclusion=>{ :in => DC::VALID_KINDS }
+  validates  :value, :presence=>true
+  text_attr  :value
 
   scope :kind, lambda {|kind| where( :kind => kind ) }
 

@@ -12,7 +12,7 @@ class Collaboration < ActiveRecord::Base
     where( ["account_id != ?", account.id] ) if account
   }
 
-  validates_uniqueness_of :project_id, :scope => :account_id
+  validates :project_id, :uniqueness=>{ :scope => :account_id }
 
   has_many :project_memberships, :through => :project
 

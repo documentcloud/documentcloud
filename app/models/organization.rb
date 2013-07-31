@@ -10,13 +10,13 @@ class Organization < ActiveRecord::Base
   has_many :memberships
   has_many :accounts, :through => :memberships
 
-  validates_presence_of :name, :slug
-  validates_uniqueness_of :name, :slug
-  validates_format_of :slug, :with => DC::Validators::SLUG
-  
+  validates :name, :slug, :presence=>true
+  validates :name, :slug, :uniqueness=>true
+  validates :slug, :format => { :with => DC::Validators::SLUG }
+
   # Sanitizations:
   text_attr :name
-  
+
   def self.default_for(account)
     self.includes(:memberships)
       .where(["memberships.account_id = ? and memberships.default is true", account.id] )

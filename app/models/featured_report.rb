@@ -1,6 +1,6 @@
 class FeaturedReport < ActiveRecord::Base
 
-  validates_presence_of :url, :title, :organization, :writeup
+  validates :url, :title, :organization, :writeup, :presence=>true
   validate do | rec |
     rec.errors.add(:article_date, 'is invalid') if rec.article_date.blank?
   end
