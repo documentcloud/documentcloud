@@ -100,8 +100,8 @@ class Project < ActiveRecord::Base
   end
 
   def other_collaborators(account)
-    collaborations = self.collaborations.not_owned_by(account).all(:select => ['account_id'])
-    Account.all(:conditions => {:id => collaborations.map {|c| c.account_id }})
+    account_ids = self.collaborations.not_owned_by(account).pluck( :account_id )
+    Account.find( account_ids )
   end
 
   def add_document(document)
@@ -109,21 +109,16 @@ class Project < ActiveRecord::Base
     @document_ids = nil
   end
 
-  # N.B. document_ids are raw numeric document ids, used internally for data access
-  def document_ids
-    @document_ids ||= project_memberships.map {|m| m.document_id }
-  end
 
   def canonical_document_ids
-    sparse_documents = Document.all(
-      :select=>"documents.id, documents.slug",
-      :joins=>"join project_memberships on documents.id = project_memberships.document_id",
-      :conditions => [ "project_memberships.project_id = ?", id ])
+    sparse_documents = Document
+      .where( ["project_memberships.project_id = ?", id ] )
+      .joins( "join project_memberships on documents.id = project_memberships.document_id" )
+      .select( 'documents.id,documents.slug')
+      # :select=>"documents.id, documents.slug",
+      # :joins=>"join project_memberships on documents.id = project_memberships.document_id",
+      # :conditions => [ "project_memberships.project_id = ?", id ])
     sparse_documents.map { |d| d.canonical_id }
-  end
-
-  def collaborator_ids
-    @collaborator_ids ||= collaborations.not_owned_by(account).map {|m| m.account_id }
   end
 
   # How many annotations belong to documents belonging to this project?
@@ -145,10 +140,11 @@ class Project < ActiveRecord::Base
   # :include_document_ids: if set and false, add a 'document_count' Integer.
   #                        Otherwise, add a 'document_ids' Array.
   def canonical(options={})
-    data = ActiveSupport::OrderedHash.new
-    data['id']            = id
-    data['title']         = title
-    data['description']   = description
+    data = {
+      'id'          => id,
+      'title'       => title,
+      'description' => description
+    }
     if options.fetch(:include_document_ids, true)
       data['document_ids'] = canonical_document_ids
     else
