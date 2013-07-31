@@ -5,7 +5,7 @@ require 'set'
 # organizational purposes.
 class Project < ActiveRecord::Base
   include DC::Access
-  
+
   belongs_to :account
   has_many :project_memberships, :dependent => :destroy
   has_many :collaborations,      :dependent => :destroy
@@ -27,7 +27,7 @@ class Project < ActiveRecord::Base
   scope :alphabetical,-> { order( :title ) }
   scope :visible,     -> { where(:hidden => false) }
   scope :hidden,      -> { where(:hidden => true ) }
-  scope :accessible,  ->(account) {
+  scope :accessible,  -> (account) {
     where( ['account_id = ? or id in (select project_id from collaborations where account_id = ?)', account.id, account.id] )
   }
 
@@ -37,11 +37,15 @@ class Project < ActiveRecord::Base
 
   # Load all of the projects belonging to an account in one fell swoop.
   def self.load_for(account)
-    self.visible.accessible(account).all(:include => ['account', 'collaborations'])
+    self.visible.accessible(account).includes( :account, :collaborations )
   end
 
-  def hidden?
-    hidden
+  def document_id
+    documents_ids.first
+  end
+
+  def document
+    documents.first
   end
 
   def set_documents(new_ids)
@@ -52,23 +56,23 @@ class Project < ActiveRecord::Base
     @document_ids = nil
     reindex_documents new_ids ^ old_ids
   end
-  
+
   def add_documents(new_ids)
-    rows = self.project_memberships.all(:conditions => {:document_id => new_ids.uniq}, :select => :document_id)
-    add_ids = new_ids - rows.map(&:document_id)
+    existing = self.project_memberships.where({:document_id => new_ids.uniq}).pluck(:document_id)
+    add_ids = new_ids - existing
     add_ids.each {|id| self.project_memberships.create(:document_id => id) }
     reindex_documents add_ids
   end
-  
+
   def remove_documents(ids)
-    memberships = self.project_memberships.all(:conditions => {:document_id => ids})
-    memberships.each {|m| m.destroy }
+    memberships = self.project_memberships.where( {:document_id => ids} )
+    memberships.destroy_all
     reindex_documents memberships.map {|m| m.document_id }
   end
 
   def add_collaborator(account, creator=nil)
     if !hidden? && account.reviewer?
-      account.errors.add_to_base("Please create a real contributor account for this user.")
+      account.errors.add(:base, "Please create a real contributor account for this user.")
       return false
     end
     self.collaborations.create(:account => account, :creator => creator)
@@ -88,7 +92,7 @@ class Project < ActiveRecord::Base
 
   def update_reviewer_counts
     return false unless hidden?
-    Document.find(document_ids.first).update_attributes :reviewer_count => collaborations.count
+    document.update_attributes :reviewer_count => collaborations.count
   end
 
   def create_default_collaboration
@@ -109,11 +113,11 @@ class Project < ActiveRecord::Base
   def document_ids
     @document_ids ||= project_memberships.map {|m| m.document_id }
   end
-  
+
   def canonical_document_ids
     sparse_documents = Document.all(
-      :select=>"documents.id, documents.slug", 
-      :joins=>"join project_memberships on documents.id = project_memberships.document_id", 
+      :select=>"documents.id, documents.slug",
+      :joins=>"join project_memberships on documents.id = project_memberships.document_id",
       :conditions => [ "project_memberships.project_id = ?", id ])
     sparse_documents.map { |d| d.canonical_id }
   end
@@ -124,15 +128,15 @@ class Project < ActiveRecord::Base
 
   # How many annotations belong to documents belonging to this project?
   # How many of those annotations are accessible to a given account?
-  # 
+  #
   # TODO: incorporate PREMODERATED and POSTMODERATED comments into counts
   def annotation_count(account=nil)
     account ||= self.account
     @annotation_count ||= Annotation.count_by_sql <<-EOS
-      select count(*) from annotations 
+      select count(*) from annotations
         inner join project_memberships on project_memberships.document_id = annotations.document_id
       where project_memberships.project_id = #{id}
-      and (annotations.access in (#{PUBLIC}, #{EXCLUSIVE}) or 
+      and (annotations.access in (#{PUBLIC}, #{EXCLUSIVE}) or
         annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})
     EOS
   end
@@ -174,7 +178,7 @@ class Project < ActiveRecord::Base
     ids ||= self.document_ids
     return if ids.empty?
     update_reviewer_counts
-    Document.find_each(:conditions => ["id in (?)", ids]) {|doc| doc.index }
+    ids.each{|id| Document.find(id).index }
   end
 
 end

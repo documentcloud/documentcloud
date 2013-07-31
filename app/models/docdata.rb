@@ -44,7 +44,7 @@ class Docdata < ActiveRecord::Base
 
   def ensure_keys_are_not_forbidden
     if forbidden = self.data.keys.detect {|key| DC::ALL_SEARCHES.include?(key.to_sym) }
-      errors.add_to_base "Invalid data key: #{forbidden}"
+      errors.add( :base, "Invalid data key: #{forbidden}" )
       false
     else
       true

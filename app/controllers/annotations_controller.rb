@@ -50,7 +50,7 @@ class AnnotationsController < ApplicationController
     maybe_set_cors_headers
     return not_found unless anno = current_annotation
     if !current_account.allowed_to_edit?(anno)
-      anno.errors.add_to_base "You don't have permission to update the note."
+      anno.errors.add(:base, "You don't have permission to update the note.")
       return json(anno, 403)
     end
     attrs = pick(params, :title, :content, :access)
@@ -66,7 +66,7 @@ class AnnotationsController < ApplicationController
     maybe_set_cors_headers
     return not_found unless anno = current_annotation
     if ! current_account.allowed_to_edit?(anno)
-      anno.errors.add_to_base "You don't have permission to delete the note."
+      anno.errors.add(:base, "You don't have permission to delete the note.")
       return json(anno, 403)
     end
     anno.destroy

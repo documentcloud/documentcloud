@@ -48,11 +48,9 @@ class Page < ActiveRecord::Base
   # page's full text, relative to the combined full text of the entire document.
   def self.refresh_page_map(document)
     pos = -1
-    result = self.connection.execute("select id, length(text) from pages where document_id = #{document.id} order by page_number asc;")
-    result.each do |item|
-      id, length = item['id'].to_i, item['length'].to_i
-      Page.update_all("start_offset = #{pos + 1}, end_offset = #{pos + length}", "id = #{id}")
-      pos = pos + length
+    document.pages.pluck( :id, 'length(text)' ).each do | id, length |
+      Page.where( :id=>id ).update_all("start_offset = #{pos + 1}, end_offset = #{pos + length}")
+      pos = pos + length.to_i
     end
     document.reset_char_count!
   end
@@ -78,11 +76,11 @@ class Page < ActiveRecord::Base
     rubyre  = /(#{ parts.map {|part| "\\b#{part}\\b" }.join('|') })/i
 
     conds   = ["document_id = ? and text ~* ?", doc_id, psqlre]
-    pages   = Page.all(:conditions => conds, :order => 'page_number asc', :limit => limit)
-    count   = Page.count(:conditions => conds)
+    query   = Page.where( conds )
+    pages   = query.order('page_number asc').limit( limit )
     {
       :mentions => pages.map {|p| {:page => p.page_number, :text => p.excerpt(rubyre)} }.select {|p| p[:text] },
-      :total    => count
+      :total    => query.count
     }
   end
 

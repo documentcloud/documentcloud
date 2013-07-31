@@ -59,7 +59,7 @@ class DocumentsController < ApplicationController
   def destroy
     return not_found unless doc = current_document(true)
     if !current_account.owns_or_collaborates?(doc)
-      doc.errors.add_to_base "You don't have permission to delete the document."
+      doc.errors.add(:base, "You don't have permission to delete the document." )
       return json(doc, 403)
     end
     if doc.cacheable?
@@ -154,7 +154,7 @@ class DocumentsController < ApplicationController
     dates = EntityDate.find_all_by_document_id(ids, :include => [:document])
     json({'dates' => dates}.to_json)
   end
-  
+
   def occurrence
     entity = Entity.find(params[:id])
     occurrence = Occurrence.new(*(params[:occurrence].split(':') + [entity]))

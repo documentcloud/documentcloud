@@ -252,7 +252,7 @@ class Document < ActiveRecord::Base
   # Update a document, with S3 permission fixing, cache expiry, and access control.
   def secure_update(attrs, account)
     if !account.allowed_to_edit?(self)
-      self.errors.add_to_base "You don't have permission to update the document."
+      self.errors.add(:base, "You don't have permission to update the document." )
       return false
     end
     access = attrs.delete :access
