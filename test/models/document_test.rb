@@ -71,7 +71,7 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   it "calculates ordered sections" do
-    assert_equal [], doc.ordered_sections
+    assert_equal [sections(:first)], doc.ordered_sections
   end
 
   it "calculates ordered annotations" do

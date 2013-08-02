@@ -3,6 +3,8 @@ class Section < ActiveRecord::Base
   include DC::Store::DocumentResource
 
   belongs_to :document
+  belongs_to :organization
+  belongs_to :account
 
   validates  :title,       :presence=>true
   validates  :page_number, :presence=>true, :uniqueness=>{ :scope => :document_id }
