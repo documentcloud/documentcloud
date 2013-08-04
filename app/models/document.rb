@@ -281,7 +281,7 @@ class Document < ActiveRecord::Base
   end
 
   # Determine the number of annotations on each page of this document.
-  def per_page_annotation_counts
+  def annotation_counts_by_page
     self.annotations.count(:group => 'page_number')
   end
   
