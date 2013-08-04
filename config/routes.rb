@@ -85,7 +85,7 @@ ActionController::Routing::Routes.draw do |map|
       :save_page_text         => :post,
       :upload_insert_document => :post,
       :reprocess_text         => :post,
-      :per_page_note_counts   => :get,
+      :note_counts_by_page    => :get,
       :mentions               => :get
     },
     :collection => {
