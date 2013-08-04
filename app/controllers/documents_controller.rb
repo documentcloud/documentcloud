@@ -174,9 +174,8 @@ class DocumentsController < ApplicationController
     json 'documents' => docs
   end
 
-  # TODO: Fix the note/annotation terminology.
-  def per_page_note_counts
-    json current_document(true).per_page_annotation_counts
+  def note_counts_by_page
+    json current_document(true).annotation_counts_by_page
   end
 
   def queue_length
