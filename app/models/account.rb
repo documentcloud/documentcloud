@@ -310,7 +310,7 @@ class Account < ActiveRecord::Base
   end
 
   def validate_identity_is_unique
-    return if self.identities.empty?
+    return if self.identities.blank?
     condition = self.identities.map{ | provider, id | "identities @> hstore(?,?)" }.join(' or ')
     condition << " and id<>#{self.id}" unless new_record?
     values = self.identities.map{|k,v| [k.to_s,v.to_s] }.flatten
