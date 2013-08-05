@@ -7,8 +7,6 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  filter_parameter_logging :password
-
   before_filter :set_ssl
 
   if Rails.env.development?
@@ -101,7 +99,7 @@ class ApplicationController < ActionController::Base
 
   def secure_only
     if !request.ssl? && (request.format.html? || request.format.nil?)
-      redirect_to DC.server_root(:force_ssl => true) + request.request_uri
+      redirect_to DC.server_root(:force_ssl => true) + request.original_fullpath
     end
   end
 
@@ -130,7 +128,7 @@ class ApplicationController < ActionController::Base
 
   # Return forbidden when the access is unauthorized.
   def forbidden
-    @next = CGI.escape(request.request_uri)
+    @next = CGI.escape(request.original_url)
     render :file => "#{Rails.root}/public/403.html", :status => 403
     false
   end
