@@ -13,13 +13,12 @@ class WorkspaceController < ApplicationController
   # Main documentcloud.org page. Renders the workspace if logged in or
   # searching, the home page otherwise.
   def index
-
     if logged_in?
       if current_account.real?
         @projects = Project.load_for(current_account)
         @current_organization = current_account.organization
         @organizations = Organization.all_slugs
-        @has_documents = Document.owned_by(current_account).count(:limit => 1) > 0
+        @has_documents = Document.owned_by(current_account).exists?
         return render :template => 'workspace/index'
       else
         return redirect_to '/public/search'
@@ -50,4 +49,3 @@ class WorkspaceController < ApplicationController
   end
 
 end
-
