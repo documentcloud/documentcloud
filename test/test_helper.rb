@@ -9,7 +9,13 @@ PROCESSING_JOBS = []
 
 class ActionController::TestCase
   def login_account!( login = :louis )
-    @request.session['account_id'] = accounts(login).id
+    account = accounts(login)
+    @request.session['account_id']      = account.id,
+    @request.session['organization_id'] = account.organization_id
+  end
+
+  def json_body
+    ActiveSupport::JSON.decode(@response.body)
   end
 end
 
