@@ -7,6 +7,13 @@ require 'sunspot_matchers_testunit'
 
 PROCESSING_JOBS = []
 
+class ActionController::TestCase
+  def login_account!( login = :louis )
+    @request.session['account_id'] = accounts(login).id
+  end
+end
+
+
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
 
@@ -57,6 +64,13 @@ class ActiveSupport::TestCase
     assert PROCESSING_JOBS.detect{ | job | job['action'] == action }, "no job #{action} was ran"
   end
 
+end
+
+
+class ActionController::TestRequest
+  def ssl?
+    true
+  end
 end
 
 
