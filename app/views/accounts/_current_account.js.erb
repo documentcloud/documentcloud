@@ -1,16 +1,16 @@
-dc.account = new dc.model.Account(<%= @current_account.canonical.to_json %>);
+dc.account = new dc.model.Account(<%=raw @current_account.canonical.to_json %>);
 <% @current_account.organizations_with_accounts.each do | organization | -%>
-dc.account.addOrganization( <%= organization.to_json %> );
+dc.account.addOrganization( <%=raw organization.to_json %> );
 <% end -%>
 
 Accounts.reset(dc.account.current_organization().members.models);
 Accounts.add(dc.account);
 
 dc.account.set({
-  hasDocuments  : <%= @has_documents.to_json %>,
+  hasDocuments  : <%=raw @has_documents.to_json %>,
   <% if @allowed_to_edit || @allowed_to_review %>
-  isOwner       : <%= !!@allowed_to_edit %>,
-  isReviewer    : <%= !!@allowed_to_review %>,
+  isOwner       : <%=raw !!@allowed_to_edit %>,
+  isReviewer    : <%=raw !!@allowed_to_review %>,
   <% end %>
-  isReal        : <%= @current_account.real? %>
+  isReal        : <%=raw @current_account.real? %>
 });

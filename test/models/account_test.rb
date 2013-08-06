@@ -2,13 +2,11 @@ require 'test_helper'
 
 class AccountTest < ActiveSupport::TestCase
 
-  EMAIL = 'lmercier@tribune.org'
-
-  let (:louis) { Account.find_by_email(EMAIL) }
+  let (:louis) { accounts(:louis) }
   let (:tribune) { organizations(:tribune) }
 
   it "should not be able to log in with a bad password" do
-    account = Account.log_in(EMAIL, 'nope', {})
+    account = Account.log_in( louis.email, 'nope', {})
     refute account
   end
 
@@ -25,15 +23,15 @@ class AccountTest < ActiveSupport::TestCase
 
   it "should be able to log in" do
     session = {}
-    account = Account.log_in(EMAIL, 'password', session, {})
+    account = Account.log_in( louis.email, 'password', session, {})
     assert account
-    assert account.email == EMAIL
+    assert account.email == louis.email
     assert session['account_id'] == account.id
   end
 
   it "does generate computed attributes" do
     assert louis.full_name == "Louis Mercier"
-    assert louis.rfc_email == "\"Louis Mercier\" <#{EMAIL}>"
+    assert louis.rfc_email == "\"Louis Mercier\" <#{louis.email}>"
     assert louis.hashed_email == "ad8a5488a780b768fd04ab4b8e319793"
     assert !louis.pending?
   end

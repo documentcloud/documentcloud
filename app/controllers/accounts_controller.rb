@@ -46,22 +46,24 @@ class AccountsController < ApplicationController
 
   # Fetches or creates a user account and creates a membership for that
   # account in an organization.
-  # 
+  #
   # New accounts are created as pending, with a security key instead of
   # a password.
   def create
     # Check the requester's permissions
-    return forbidden unless current_account.admin? or 
+    return forbidden unless current_account.admin? or
       (current_account.real?(current_organization) and params[:role] == Account::REVIEWER)
 
     # Find or create the appropriate account
-    account_attributes = pick(params, :first_name, :last_name, :email)
-    account = Account.lookup(account_attributes[:email]) || Account.create(account_attributes)    
+    attributes = [ :first_name, :last_name, :email ]
+    params.require( attributes )
+    account_attributes = pick(params, attributes)
+    account = Account.lookup(account_attributes[:email]) || Account.create(account_attributes)
 
     # Find role for account in organization if it exists.
     membership_attributes = pick(params, :role, :concealed)
     membership = current_organization.role_of(account)
-    
+
     # Create a membership if account has no existing role
     if membership.nil?
       membership_attributes[:default] = true unless account.memberships.exists?
