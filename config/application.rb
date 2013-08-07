@@ -11,7 +11,7 @@ module DC
 
   SECRETS   = {}
   CONFIG = {}
-  
+
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -32,6 +32,7 @@ module DC
     ::DC::ANALYTICS_DB = YAML.load(ERB.new(File.read("#{Rails.root}/config/database_analytics.yml")).result(binding))[Rails.env]
     ::DC::MAIN_DB      = YAML.load(ERB.new(File.read("#{Rails.root}/config/database.yml")).result(binding))[Rails.env]
 
+    config.filter_parameters += [:password]
 
   end
 end
