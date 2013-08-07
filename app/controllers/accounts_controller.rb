@@ -10,7 +10,8 @@ class AccountsController < ApplicationController
   # Enabling an account continues the second half of the signup process,
   # allowing the journalist to set their password, and logging them in.
   def enable
-    return render if request.get?
+    render and return if request.get?
+
     @failure = 'Please accept the Terms of Service.' and return render unless params[:acceptance]
     key = SecurityKey.find_by_key(params[:key])
     @failure = 'The account is invalid, or has already been activated.' and return render unless key
@@ -24,7 +25,7 @@ class AccountsController < ApplicationController
 
   # Show the "Reset Password" screen for an account holder.
   def reset
-    return render if request.get?
+    render and return if request.get?
     @display_notice = true
     account = Account.lookup(params[:email].strip)
     @failure = true and return render unless account
@@ -55,9 +56,7 @@ class AccountsController < ApplicationController
       (current_account.real?(current_organization) and params[:role] == Account::REVIEWER)
 
     # Find or create the appropriate account
-    attributes = [ :first_name, :last_name, :email ]
-    params.require( attributes )
-    account_attributes = pick(params, attributes)
+    account_attributes = pick(params, :first_name, :last_name, :email )
     account = Account.lookup(account_attributes[:email]) || Account.create(account_attributes)
 
     # Find role for account in organization if it exists.
@@ -108,7 +107,7 @@ class AccountsController < ApplicationController
   def resend_welcome
     return forbidden unless current_account.admin?
     account = current_organization.accounts.find(params[:id])
-    LifecycleMailer.deliver_login_instructions account, current_account
+    LifecycleMailer.login_instructions( account, current_account ).deliver
     json nil
   end
 
@@ -116,8 +115,7 @@ class AccountsController < ApplicationController
   # login. Ther documents, projects, and name remain.
   def destroy
     return forbidden unless current_account.admin?
-    account = current_organization.accounts.find(params[:id])
-    account.update_attributes :role => Account::DISABLED
+    current_organization.memberships.where( account_id: params[:id] ).update_all( role: Account::DISABLED )
     json nil
   end
 

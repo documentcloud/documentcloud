@@ -2,9 +2,6 @@ require 'test_helper'
 
 class AccountTest < ActiveSupport::TestCase
 
-  let (:louis) { accounts(:louis) }
-  let (:tribune) { organizations(:tribune) }
-
   it "should not be able to log in with a bad password" do
     account = Account.log_in( louis.email, 'nope', {})
     refute account
