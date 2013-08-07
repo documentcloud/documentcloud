@@ -23,7 +23,7 @@ class AjaxHelpController < ApplicationController
 
   def contact_us
     return bad_request unless params[:message]
-    LifecycleMailer.deliver_contact_us(current_account, params)
+    LifecycleMailer.contact_us(current_account, params).deliver
     json nil
   end
 
