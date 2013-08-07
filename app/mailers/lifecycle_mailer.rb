@@ -15,6 +15,7 @@ class LifecycleMailer < ActionMailer::Base
       :subject => "Welcome to DocumentCloud",
       :to      => @account.email
     }
+    account.create_security_key unless account.security_key.present?
     options[ :cc  ] = @admin.email if @admin
     mail( options )
   end
@@ -60,11 +61,15 @@ class LifecycleMailer < ActionMailer::Base
   # us via email.
   def contact_us(account, params)
     name = account ? account.full_name : params[:email]
-    subject     "DocumentCloud message from #{name}"
-    from        NO_REPLY
-    recipients  SUPPORT
-    body        :account => account, :message => params[:message], :email => params[:email]
-    @headers['Reply-to'] = account ? account.email : params[:email]
+    @account = account
+    @message = params[:message]
+    @email   = params[:email]
+    mail({
+        :subject  => "DocumentCloud message from #{name}",
+        :from     => NO_REPLY,
+        :reply_to => account ? account.email : params[:email],
+        :to       => SUPPORT
+      })
   end
 
   # Mail a notification of an exception that occurred in production.
@@ -92,7 +97,7 @@ class LifecycleMailer < ActionMailer::Base
     from          NO_REPLY
     recipients    'info@documentcloud.org'
     content_type  "multipart/mixed"
-    
+
     date = Date.today.strftime "%Y-%m-%d"
 
     part :content_type => "text/plain",
