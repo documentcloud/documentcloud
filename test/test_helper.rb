@@ -8,6 +8,8 @@ require 'sunspot_matchers_testunit'
 PROCESSING_JOBS = []
 
 class ActionController::TestCase
+  include SunspotMatchersTestunit
+
   def login_account!( login = :louis )
     account = accounts(login)
     @request.session['account_id']      = account.id,
@@ -17,13 +19,21 @@ class ActionController::TestCase
   def json_body
     ActiveSupport::JSON.decode(@response.body)
   end
+
+  setup do
+    Sunspot.session = SunspotMatchersTestunit::SunspotSessionSpy.new(Sunspot.session)
+  end
+  teardown do
+    PROCESSING_JOBS.clear
+  end
+
 end
 
 
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
 
-  include SunspotMatchersTestunit
+   include SunspotMatchersTestunit
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   #
@@ -39,10 +49,10 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 
-  def setup
+  setup do
     Sunspot.session = SunspotMatchersTestunit::SunspotSessionSpy.new(Sunspot.session)
   end
-  def teardown
+  teardown do
     PROCESSING_JOBS.clear
   end
 
