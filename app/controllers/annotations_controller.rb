@@ -1,6 +1,8 @@
 class AnnotationsController < ApplicationController
   include DC::Access
 
+  layout false
+
   before_filter :login_required, :except => [:index, :show, :print,:cors_options]
   skip_before_filter :verify_authenticity_token
 
@@ -24,7 +26,7 @@ class AnnotationsController < ApplicationController
 
   # Print out all the annotations for a document (or documents.)
   def print
-    docs = Document.accessible(current_account, current_organization).find_all_by_id(params[:docs])
+    docs = Document.accessible(current_account, current_organization).where( :id => params[:docs] )
     Document.populate_annotation_counts(current_account, docs)
     @documents_json = docs.map {|doc| doc.to_json(:annotations => true, :account => current_account) }
     render :layout => false
@@ -84,7 +86,7 @@ class AnnotationsController < ApplicationController
 
   def maybe_set_cors_headers
     return unless request.headers['Origin']
-    headers['Access-Control-Allow-Origin'] = request.headers['Origin'] #'http://dc-viewer.dev'
+    headers['Access-Control-Allow-Origin'] = request.headers['Origin']
     headers['Access-Control-Allow-Methods'] = 'OPTIONS, GET, POST, PUT, DELETE'
     headers['Access-Control-Allow-Headers'] = 'Accept,Authorization,Content-Length,Content-Type,Cookie'
     headers['Access-Control-Allow-Credentials'] = 'true'
@@ -96,6 +98,10 @@ class AnnotationsController < ApplicationController
 
   def current_document
     @current_document ||= Document.accessible(current_account, current_organization).find(params[:document_id])
+  end
+
+  def expire_page( model )
+    #NOOP until we decide what caching strategy is best
   end
 
 end
