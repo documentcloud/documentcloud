@@ -17,7 +17,7 @@ EOS
   it "encodes with markdown" do
     fr = FeaturedReport.new( :writeup => MARKDOWN )
     assert_equal HTML, fr.writeup_html
-    assert_equal HTML, fr.as_json['featured_report']['writeup_html']
+    assert_equal HTML, fr.as_json['writeup_html']
   end
 
 
