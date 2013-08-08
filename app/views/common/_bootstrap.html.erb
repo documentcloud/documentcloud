@@ -1,17 +1,17 @@
 <script type="text/javascript">
-window.RAILS_ENV = '<%= RAILS_ENV %>';
+window.RAILS_ENV = '<%= Rails.env.to_s %>';
 window.SERVER_ROOT = '<%= DC.server_root %>';
 window.SERVER_ROOT_HTTP = '<%= DC.server_root(:ssl => false) %>';
 
 <% if workspace %>
-  Organizations.reset(<%= @organizations.to_json(:include_document_count=>true, :include_note_count=>true) %>);
+  Organizations.reset(<%=raw @organizations.to_json(:include_document_count=>true, :include_note_count=>true) %>);
   <% if @current_account && @current_account.memberships.any? %>
     <%= render :partial => 'accounts/current_account.js', :type => :js %>
-    Projects.reset(<%= @projects.to_json({:account => @current_account, :include_collaborators => true}) %>);
-    dc.searchPrefixes = <%= DC::ALL_SEARCHES.to_json %>;
+    Projects.reset(<%=raw @projects.to_json({:account => @current_account, :include_collaborators => true}) %>);
+    dc.searchPrefixes = <%=raw DC::ALL_SEARCHES.to_json %>;
   <% end %>
 <% end %>
 <% if @additional_js %>
-  <%= @additional_js %>
+  <%=raw @additional_js %>
 <% end %>
 </script>
