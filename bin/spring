@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+# This is a special way of invoking the spring gem in order to
+# work around the performance issue discussed in
+# https://github.com/rubygems/rubygems/pull/435
+
+glob       = "{#{Gem::Specification.dirs.join(",")}}/spring-*.gemspec"
+candidates = Dir[glob].to_a.sort
+
+spec = Gem::Specification.load(candidates.last)
+
+if spec
+  spec.activate
+  load spec.bin_file("spring")
+else
+  $stderr.puts "Could not find spring gem in #{Gem::Specification.dirs.join(", ")}."
+  exit 1
+end
