@@ -139,7 +139,7 @@ class Annotation < ActiveRecord::Base
   end
 
   def canonical(opts={})
-    data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content, :access => access_name}
+    data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content, 'access' => access_name.to_s }
     data['location'] = {'image' => location} if location
     data['image_url'] = document.page_image_url_template if opts[:include_image_url]
     data['published_url'] = document.published_url || document.document_viewer_url(:allow_ssl => true) if opts[:include_document_url]

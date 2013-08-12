@@ -3,8 +3,8 @@ class AnnotationsController < ApplicationController
 
   layout false
 
-  before_filter :login_required, :except => [:index, :show, :print,:cors_options]
-  skip_before_filter :verify_authenticity_token
+  before_action :login_required, :except => [:index, :show, :print,:cors_options]
+  skip_before_action :verify_authenticity_token
 
   # In the workspace, request a listing of annotations.
   def index
@@ -98,10 +98,6 @@ class AnnotationsController < ApplicationController
 
   def current_document
     @current_document ||= Document.accessible(current_account, current_organization).find(params[:document_id])
-  end
-
-  def expire_page( model )
-    #NOOP until we decide what caching strategy is best
   end
 
 end
