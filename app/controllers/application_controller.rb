@@ -76,15 +76,13 @@ class ApplicationController < ActionController::Base
   end
 
   def api_login_required
-    authenticate_or_request_with_http_basic("DocumentCloud") do |email, password|
-      return false unless @current_account = Account.log_in(email, password)
-      @current_organization = @current_account.organization
-      true
+    unless @current_user = authenticate_with_http_basic{ |email, password|  Account.log_in(email, password) }
+      request_http_basic_authentication('DocumentCloud')
     end
   end
 
   def api_login_optional
-    return if BasicAuth.authorization(request).blank?
+    return if request.authorization.blank?
     return unless @current_account = Account.log_in(*BasicAuth.user_name_and_password(request))
     @current_organization = @current_account.organization
   end
@@ -185,6 +183,10 @@ class ApplicationController < ActionController::Base
   # the JSON visible in the browser.
   def debug_api
     response.content_type = 'text/plain' if params[:debug]
+  end
+
+  def expire_page( model )
+    #NOOP until we decide what caching strategy is best
   end
 
 end

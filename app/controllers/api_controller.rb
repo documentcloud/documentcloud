@@ -5,14 +5,14 @@ class ApiController < ApplicationController
 
   layout 'workspace'
 
-  before_filter :bouncer if Rails.env.staging?
-  before_filter :prefer_secure, :only => [:index]
+  before_action :bouncer if Rails.env.staging?
+  before_action :prefer_secure, :only => [:index]
 
-  skip_before_filter :verify_authenticity_token
+  skip_before_action :verify_authenticity_token
 
-  before_filter :secure_only,        :only => [:upload, :project, :projects, :upload, :destroy, :create_project, :update_project, :destroy_project]
-  before_filter :api_login_required, :only => [:upload, :project, :projects, :update, :destroy, :create_project, :update_project, :destroy_project]
-  before_filter :api_login_optional, :only => [:documents, :search, :notes, :pending, :entities]
+  before_action :secure_only,        :only => [:upload, :project, :projects, :upload, :destroy, :create_project, :update_project, :destroy_project]
+  before_action :api_login_required, :only => [:upload, :project, :projects, :update, :destroy, :create_project, :update_project, :destroy_project]
+  before_action :api_login_optional, :only => [:documents, :search, :notes, :pending, :entities]
 
   def index
     redirect_to '/help/api'
@@ -36,12 +36,13 @@ class ApiController < ApplicationController
     respond_to do |format|
       format.any(:js, :json) do
         perform_search :mentions => opts[:mentions]
-        @response = ActiveSupport::OrderedHash.new
-        @response['total']     = @query.total
-        @response['page']      = @query.page
-        @response['per_page']  = @query.per_page
-        @response['q']         = params[:q]
-        @response['documents'] = @documents.map {|d| d.canonical(opts) }
+        @response = {
+          total:    @query.total,
+          page:     @query.page,
+          per_page: @query.per_page,
+          q:        params[:q],
+          documents: @documents.map {|d| d.canonical(opts) }
+        }
         json_response
       end
     end
@@ -66,6 +67,7 @@ class ApiController < ApplicationController
     end
   end
 
+
   # Retrieve a document's canonical JSON.
   def documents
     return bad_request unless params[:id] and request.format.json? || request.format.js? || request.format.text?
@@ -78,7 +80,7 @@ class ApiController < ApplicationController
     end
     @response                = {'document' => current_document.canonical(opts)}
     respond_to do |format|
-      format.text do 
+      format.text do
         direct = [PRIVATE, ORGANIZATION, EXCLUSIVE].include? current_document.access
         redirect_to(current_document.full_text_url(direct))
       end
@@ -86,16 +88,16 @@ class ApiController < ApplicationController
       format.js { json_response }
     end
   end
-  
+
   def pending
     @response = { :total_documents => Document.pending.count }
-    @response[:your_documents] = Document.pending.count(:conditions => { :account_id => current_account.id }) if current_account
+    @response[:your_documents] = current_account.documents.pending.count if logged_in?
     json_response
   end
-  
+
   # Retrieve a note's canonical JSON.
   def notes
-    return bad_request unless params[:id] and request.format.json? || request.format.js?
+    return bad_request unless params[:note_id] and request.format.json? || request.format.js?
     return not_found unless current_note
     @response = {'annotation' => current_note.canonical}
     json_response
@@ -157,8 +159,8 @@ class ApiController < ApplicationController
   def update_project
     data = pick(params, :title, :description, :document_ids)
     ids  = (data.delete(:document_ids) || []).map(&:to_i)
-    docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => ids}, :select => 'id')
-    current_project.set_documents(docs.map(&:id))
+    doc_ids = Document.accessible(current_account, current_organization).where({ :id => ids }).pluck( 'id' )
+    current_project.set_documents( doc_ids )
     current_project.update_attributes data
     @response = {'project' => current_project.reload.canonical}
     json_response
