@@ -15,7 +15,7 @@ class LifecycleMailer < ActionMailer::Base
       :subject => "Welcome to DocumentCloud",
       :to      => @account.email
     }
-    account.create_security_key unless account.security_key.present?
+    account.ensure_security_key!
     options[ :cc  ] = @admin.email if @admin
     mail( options )
   end

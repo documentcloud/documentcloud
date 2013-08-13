@@ -163,7 +163,7 @@ class Account < ActiveRecord::Base
   end
 
   def active?(org=self.organization)
-    membership = self.memberships.first(:conditions=>{:organization_id => org})
+    membership = self.memberships.where({:organization_id => org}).first
     membership && membership.role != DISABLED
   end
 
@@ -250,14 +250,18 @@ class Account < ActiveRecord::Base
   # When an account is created by a third party, send an email with a secure
   # key to set the password.
   def send_login_instructions(admin=nil)
-    create_security_key if security_key.nil?
+    ensure_security_key!
     LifecycleMailer.login_instructions(self, admin).deliver
+  end
+
+  def ensure_security_key!
+    create_security_key if security_key.nil?
   end
 
   def send_reviewer_instructions(documents, inviter_account, message=nil)
     key = nil
     if self.has_role?( Account::REVIEWER )
-      create_security_key if self.security_key.nil?
+      ensure_security_key!
       key = '?key=' + self.security_key.key
     end
     LifecycleMailer.reviewer_instructions(documents, inviter_account, self, message, key).deliver
@@ -273,7 +277,7 @@ class Account < ActiveRecord::Base
   # When a password reset request is made, send an email with a secure key to
   # reset the password.
   def send_reset_request
-    create_security_key if security_key.nil?
+    ensure_security_key!
     LifecycleMailer.reset_request(self).deliver
   end
 
@@ -321,7 +325,7 @@ class Account < ActiveRecord::Base
   end
 
   def record_identity_attributes( identity )
-    current_identities = self.identities
+    current_identities = ( self.identities ||= {} )
     current_identities[ identity['provider'] ] = identity['uid']
     write_attribute( :identities, DC::Hstore.to_sql(  current_identities ) )
 
