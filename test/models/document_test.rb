@@ -36,6 +36,17 @@ class DocumentTest < ActiveSupport::TestCase
     assert_has_search_params Sunspot.session.searches.last, :keywords, 'super keywords'
   end
 
+  it "can import document" do
+    doc = Document.upload({
+        :url=>'http://test.com/file.pdf',
+        :title=>"Test Doc",
+        :make_public=>false,
+        :email_me=>false
+        }, louis, tribune )
+    refute doc.new_record?
+    assert_job_action 'document_import'
+  end
+
   it "publishes documents once due" do
     doc.update_attributes :access=>Document::PRIVATE, :publish_at=>(Time.now-1.day)
     assert Document.due.where( :id=>doc.id ).any?
@@ -181,7 +192,6 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal doc.public_full_text_url, doc.full_text_url
     assert_equal secret_doc.private_full_text_url, secret_doc.full_text_url
 
-    assert_equal "#{DC.server_root}/#{base}-#{doc.slug}.html",doc.document_viewer_url
   end
 
   it "retrives project ids" do
