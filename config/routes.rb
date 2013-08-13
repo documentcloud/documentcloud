@@ -20,88 +20,90 @@ DC::Application.routes.draw do
   get '/results' => 'workspace#index', :as => :results
 
   # login / logout
-  get '/signup' => 'authentication#signup_info', :as => :signup
-  get '/login' => 'authentication#login', :as => :login
-  get '/logout' => 'authentication#logout', :as => :logout
-  # Third party auth via OmniAuth
-  get '/auth/:action' => 'authentication#index'
-  get '/auth/:provider' => 'authentication#blank'
-  get '/auth/:provider/callback' => 'authentication#callback'
-  get '/auth/remote_data/:document_id' => 'authentication#remote_data'
+  scope( controller: 'authentication' ) do
+    get '/signup',                        action: 'signup_info'
+    match '/login',                       action: 'login', :via=>[:get,:post]
+    get '/logout',                        action: 'logout'
+    get '/auth/remote_data/:document_id', action: 'remote_data'
+    # Third party auth via OmniAuth
+    get '/auth/:provider/callback',       action: 'callback'
+  end
 
   # Public search.
   get '/public/search' => 'public#index'
   get '/public/search/:query' => 'public#index', :query => /.*/
 
   # API.
-  namespace :api do
-    
-    # match 'documents/:id.:format' => 'api#cors_options', :as => :document, :via => [:get, :put, :delete], :via => :options
+  scope( 'api', controller: 'api' ) do
+    scope( via: :options, action: 'cors_options' ) do
+      match 'documents/pending.:format',            allowed_methods: [:get]
+      match 'documents/:id.:format',                allowed_methods: [:get, :put, :delete]
+      match 'documents/:id/entities.:format',       allowed_methods: [:get]
+      match 'documents/:id/note/:note_id.:format',  allowed_methods: [:get]
+      match 'documents/:id/notes/:note_id.:format', allowed_methods: [:get]
+      match 'projects/:id.:format',                 allowed_methods: [:get, :put, :delete]
+      match 'projects.:format',                     allowed_methods: [:get, :post]
+      match 'search.:format',                       allowed_methods: [:get]
+    end
 
-    # get 'documents/:id/entities.:format' => 'api#cors_options', :as => :entities, :allowed_methods => [:get], :via => 
-    #   get 'documents/:id/note/:note_id.:format' => 'api#cors_options', :as => :note, :allowed_methods => [:get], :via => 
-    #   get 'documents/:id/notes/:note_id.:format' => 'api#cors_options', :as => :notes, :allowed_methods => [:get], :via => 
-    #   get 'documents/pending.:format' => 'api#cors_options', :as => :pending, :allowed_methods => [:get], :via => 
-    #   get 'projects/:id.:format' => 'api#cors_options', :as => :project, :allowed_methods => [:get, :put, :delete], :via => 
-    #   get 'projects.:format' => 'api#cors_options', :as => :projects, :allowed_methods => [:get, :post], :via => 
-    #   get 'search.:format' => 'api#cors_options', :as => :search, :allowed_methods => [:get], :via => 
-
-
-    # put 'documents/:id.:format' => 'api#update', :as => :update, :via => :put
-
-    # get 'documents/:id.:format' => 'api#destroy', :as => :destroy, :via => :delete
-    # get 'documents/:id/entities.:format' => 'api#entities', :as => :entities
-    # get 'documents/:id/note/:note_id.:format' => 'api#notes', :as => :note, :via => :get
-    # get 'documents/:id/notes/:note_id.:format' => 'api#notes', :as => :notes, :via => :get
-    # get 'documents/pending.:format' => 'api#pending', :as => :pending
-    # get 'projects/:id.:format' => 'api#project', :as => :project, :via => :get
-    # get 'projects.:format' => 'api#projects', :as => :projects, :via => :get
-    # post 'projects.:format' => 'api#create_project', :as => :create_project
-    # put 'projects/:id.:format' => 'api#update_project', :as => :update_project
-    # delete 'projects/:id.:format' => 'api#destroy_project', :as => :delete_project
+    put 'documents/:id.:format',                action: 'update'
+    delete 'documents/:id.:format',             action: 'destroy'
+    get 'documents/:id/entities.:format',       action: 'entities'
+    get 'documents/:id/note/:note_id.:format',  action: 'notes'
+    get 'documents/:id/notes/:note_id.:format', action: 'notes'
+    get 'documents/pending.:format',            action: 'pending'
+    get 'projects/:id.:format',                 action: 'project'
+    get 'projects.:format',                     action: 'projects'
+    post 'projects.:format',                    action: 'create_project'
+    put 'projects/:id.:format',                 action: 'update_project'
+    delete 'projects/:id.:format',              action: 'destroy_project'
   end
 
   resources :featured do
     collection { post :present_order }
   end
 
-  # get '/documents/:document_id/annotations/:id.:format' => 'annotations#cors_options', :as => :annotation, :allowed_methods => [:put, :delete, :post], :via => :options
-  # get '/documents/:document_id/annotations.:format' => 'annotations#cors_options', :as => :annotations, :allowed_methods => [:get, :post], :via => 
-  # resources :documents do
-  #   collection do
-  # get :status
-  # get :loader
-  # get :queue_length
-  # get :preview
-  # get :published
-  # get :entity
-  # get :unpublished
-  # get :entities
-  # get :dates
-  # get :occurrence
-  # end
-  #   member do
-  # post :upload_insert_document
-  # post :reprocess_text
-  # post :remove_pages
-  # get :search
-  # get :per_page_note_counts
-  # post :redact_pages
-  # get :mentions
-  # post :reorder_pages
-  # post :save_page_text
-  # end
-  
-  # end
 
-  get '/documents/:id/:slug.pdf' => 'documents#send_pdf'
-  get '/documents/:id/:slug.txt' => 'documents#send_full_text'
-  get '/documents/:id/preview/' => 'documents#preview'
-  get '/documents/:id/pages/:page_name.txt' => 'documents#send_page_text'
-  post '/documents/:id/pages/:page_name.txt' => 'documents#set_page_text'
-  get '/documents/:id/pages/:page_name.gif' => 'documents#send_page_image'
+  resources :documents do
 
-  # Print notes.
+    resources :annotations do
+      member {  match '(*all)', action: :cors_options, via: :options, allowed_methods: [:put,:delete,:post] }
+    end
+    resource :annotation do
+      match '(*all)', action: :cors_options, via: :options, allowed_methods: [:get,:post]
+    end
+    collection do
+      get :status
+      get :loader
+      get :queue_length
+      get :preview
+      get :published
+      get :entity
+      get :unpublished
+      get :entities
+      get :dates
+      get :occurrence
+    end
+    member do
+      post :upload_insert_document
+      post :reprocess_text
+      post :remove_pages
+      get  :search
+      get  :per_page_note_counts
+      post :redact_pages
+      get  :mentions
+      post :reorder_pages
+      post :save_page_text
+      get  :preview
+      get  'pages/:page_name.txt', :action=>:send_page_text
+      post 'pages/:page_name.txt', :action=>:set_page_text
+      get  'pages/:page_name.gif', :action=>:send_page_image
+      get  ':slug.pdf', :action=>:send_pdf
+      get  ':slug.txt', :action=>:send_full_text
+    end
+  end
+
+  # # Print notes.
   get '/notes/print' => 'annotations#print', :as => :print_notes
 
   # Reviewers.
@@ -124,8 +126,8 @@ DC::Application.routes.draw do
       post :resend_welcome
     }
   end
-  get '/accounts/enable/:key' => 'accounts#enable', :as => :enable_account
-  get '/reset_password' => 'accounts#reset', :as => :reset_password
+  match '/accounts/enable/:key' => 'accounts#enable', :via=>[:get,:post], :as => :enable_account
+  match '/reset_password' => 'accounts#reset', :via=>[:get,:post], :as => :reset_password
 
   # Projects.
   resources :projects do
@@ -134,6 +136,7 @@ DC::Application.routes.draw do
       post :remove_documents
       get :documents
     }
+    resources :collaborators, :only=>[:create,:destroy]
   end
 
   # Home pages.
@@ -160,6 +163,8 @@ DC::Application.routes.draw do
   get '/blog/feed' => 'redirect#index', :as => :feed, :url => 'http://blog.documentcloud.org/feed'
   get '/feed' => 'redirect#index', :as => :root_feed, :url => 'http://blog.documentcloud.org/feed'
   get '/blog/*parts' => 'redirect#index', :as => :blog, :url => 'http://blog.documentcloud.org/'
+
+  # Standard fallback routes
   get '/:controller(/:action(/:id))'
   get ':controller/:action.:format' => '#index'
 
