@@ -15,7 +15,6 @@ class CollaboratorsController < ApplicationController
     json nil
   end
 
-
   private
 
   def current_project
