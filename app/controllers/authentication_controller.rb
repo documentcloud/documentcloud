@@ -1,10 +1,10 @@
 class AuthenticationController < ApplicationController
-  
-  before_filter :bouncer, :except => [:callback] if Rails.env.staging?
 
-  skip_before_filter :verify_authenticity_token, :only => [:login]
+  before_action :bouncer, :except => [:callback] if Rails.env.staging?
 
-  before_filter :secure_only,     :only => [:login]
+  skip_before_action :verify_authenticity_token, :only => [:login]
+
+  before_action :secure_only,     :only => [:login]
 
   # Display the signup information page.
   def signup_info
@@ -80,13 +80,13 @@ class AuthenticationController < ApplicationController
   # causes an error even though omniauth is intercepting it
   def blank; render :text => "Not Found.", :status => 404 end
 
-  # this is the endpoint for an embedded document to obtain addition information 
+  # this is the endpoint for an embedded document to obtain addition information
   # about the document as well as the current user
   def remote_data
     render :json => build_remote_data( params[:document_id] )
   end
 
-  # Closes the popup window and loads the appropriate page 
+  # Closes the popup window and loads the appropriate page
   # into the inner iframe that opened them
   def popup_completion
     session.delete(:omniauth_popup_next)
@@ -143,7 +143,7 @@ class AuthenticationController < ApplicationController
     @status = true
     render :action=>'iframe_login_status'
   end
-  
+
   # Where third-party logins come back to once they have
   # completed successfully.
   def callback
@@ -176,8 +176,8 @@ class AuthenticationController < ApplicationController
     end
   end
 
-  # The destination for third party logins that have failed.  
-  # In almost all cases this is due to the cancel option 
+  # The destination for third party logins that have failed.
+  # In almost all cases this is due to the cancel option
   # being selected while on the external site
   def failure
     flash[:error] = params[:message]
@@ -198,7 +198,7 @@ class AuthenticationController < ApplicationController
 
     if logged_in?
       data[:account] = current_account.canonical
-      if document = Document.accessible(current_account,current_organization).find( document_id ) 
+      if document = Document.accessible(current_account,current_organization).find( document_id )
         data[:document][:annotations] = document.annotations_with_authors( current_account ).map do | note |
           note.canonical.merge({ :editable=> current_account.owns?( note ) })
         end
