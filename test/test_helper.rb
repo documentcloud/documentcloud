@@ -7,11 +7,32 @@ require 'sunspot_matchers_testunit'
 
 PROCESSING_JOBS = []
 
-class ActionController::TestCase
-  include SunspotMatchersTestunit
 
-  def login_account!( login = :louis )
+
+module DocumentCloudAssertions
+  def self.included(base)
+    base.send :include, SunspotMatchersTestunit
+    base.setup do
+      Sunspot.session = SunspotMatchersTestunit::SunspotSessionSpy.new(Sunspot.session)
+    end
+    base.teardown do
+      PROCESSING_JOBS.clear
+    end
+  end
+
+  def assert_job_action( action )
+    assert PROCESSING_JOBS.detect{ | job | job['action'] == action }, "no job #{action} was ran"
+  end
+
+end
+
+class ActionController::TestCase
+  include DocumentCloudAssertions
+
+  def login_account!( login = :louis, password='password' )
     account = accounts(login)
+    @request.headers['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic
+      .encode_credentials( account.email, password )
     @request.session['account_id']      = account.id,
     @request.session['organization_id'] = account.organization_id
   end
@@ -20,25 +41,22 @@ class ActionController::TestCase
     ActiveSupport::JSON.decode(@response.body)
   end
 
-  setup do
-    Sunspot.session = SunspotMatchersTestunit::SunspotSessionSpy.new(Sunspot.session)
+  def cors_allowed_methods
+    response.headers['Access-Control-Allow-Methods'].split(/,\s*/)
   end
-  teardown do
-    PROCESSING_JOBS.clear
+
+  def cors_allowed_headers
+    response.headers['Access-Control-Allow-Headers'].split(/,\s*/)
   end
+
 
 end
 
 
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
+  include DocumentCloudAssertions
 
-   include SunspotMatchersTestunit
-
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
   fixtures :all
 
   let (:doc) { documents(:tv_manual) }
@@ -48,13 +66,6 @@ class ActiveSupport::TestCase
   let (:joe) { accounts(:reporter_joe) }
 
   # Add more helper methods to be used by all tests here...
-
-  setup do
-    Sunspot.session = SunspotMatchersTestunit::SunspotSessionSpy.new(Sunspot.session)
-  end
-  teardown do
-    PROCESSING_JOBS.clear
-  end
 
   def assert_working_relations( model, relations )
     failed = []
@@ -76,10 +87,6 @@ class ActiveSupport::TestCase
     assert_working_relations( model, model.class.reflect_on_all_associations.map{|association| association.name } )
   end
 
-  def assert_job_action( action )
-    assert PROCESSING_JOBS.detect{ | job | job['action'] == action }, "no job #{action} was ran"
-  end
-
 end
 
 
@@ -99,8 +106,10 @@ end
 module RestClient
   class DummyResponse
     def initialize(url,json)
-      PROCESSING_JOBS.push( ActiveSupport::JSON.decode(json[:job] ) )
-      @url=url; @json=json
+      job = ActiveSupport::JSON.decode( json[:job] )
+      job['id'] = rand(100).to_s
+      PROCESSING_JOBS.push( job )
+      @url=url; @json={ :job => job.to_json }
     end
     def body
       @json
