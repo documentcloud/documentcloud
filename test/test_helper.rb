@@ -119,3 +119,15 @@ module RestClient
     DummyResponse.new(url, json)
   end
 end
+
+
+class DC::Import::PDFWrangler
+  def ensure_pdf(file,name)
+    yield Tempfile.new(file)
+  end
+end
+
+class DC::Store::AssetStore
+  def save_insert_pdf(doc, path, file )
+  end
+end
