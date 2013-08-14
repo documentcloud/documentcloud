@@ -1,11 +1,11 @@
 class DocumentsController < ApplicationController
   layout nil
 
-  before_filter :bouncer,             :only => [:show] if Rails.env.staging?
-  before_filter :login_required,      :only => [:update, :destroy]
-  before_filter :prefer_secure,       :only => [:show]
-  before_filter :api_login_optional,  :only => [:send_full_text, :send_pdf, :send_page_text, :send_page_image]
-  before_filter :set_p3p_header,      :only => [:show]
+  before_action :bouncer,             :only => [:show] if Rails.env.staging?
+  before_action :login_required,      :only => [:update, :destroy]
+  before_action :prefer_secure,       :only => [:show]
+  before_action :api_login_optional,  :only => [:send_full_text, :send_pdf, :send_page_text, :send_page_image]
+  before_action :set_p3p_header,      :only => [:show]
 
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
@@ -91,7 +91,7 @@ class DocumentsController < ApplicationController
 
   def upload_insert_document
     return not_found unless doc = current_document(true)
-    return json(nil, 409) unless params[:file] && (params[:insert_page_at] || params[:replace_pages_start])
+    return json(nil, 409) unless params[:file] && params[:document_number] && (params[:insert_page_at] || params[:replace_pages_start])
 
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
       DC::Store::AssetStore.new.save_insert_pdf(doc, path, params[:document_number]+'.pdf')
@@ -120,12 +120,12 @@ class DocumentsController < ApplicationController
   end
 
   def loader
-    render :action => 'loader', :content_type => :js
+    render :action => 'loader.js.erb', :content_type => :js
   end
 
   def entities
-    ids = Document.accessible(current_account, current_organization).all(:select=>"id", :conditions =>{:id => params[:ids]}).map{ |d| d.id }
-    json 'entities' => Entity.all(:conditions => { :document_id => ids })
+    ids = Document.accessible(current_account, current_organization).where({:id => params[:ids]}).pluck('id')
+    json 'entities' => Entity.where({ :document_id => ids })
   end
 
   def entity
@@ -134,7 +134,7 @@ class DocumentsController < ApplicationController
       entities = []
       entities << entity if Document.accessible(current_account, current_organization).find_by_id(entity.document_id)
     else
-      ids = Document.accessible(current_account, current_organization).all(:select=>"id", :conditions =>{:id => params[:ids]}).map{ |d| d.id }
+      ids = Document.accessible(current_account, current_organization).where({:id => params[:ids]}).pluck('id')
       entities = Entity.search_in_documents(params[:kind], params[:value], ids)
     end
     json({'entities' => entities}.to_json(:include_excerpts => true))
@@ -150,7 +150,7 @@ class DocumentsController < ApplicationController
       return json(result)
     end
 
-    ids = Document.accessible(current_account, current_organization).all(:select=>"id", :conditions =>{:id => params[:ids]}).map{ |d| d.id }
+    ids = Document.accessible(current_account, current_organization).where({:id => params[:ids]}).pluck('id')
     dates = EntityDate.find_all_by_document_id(ids, :include => [:document])
     json({'dates' => dates}.to_json)
   end
@@ -169,7 +169,7 @@ class DocumentsController < ApplicationController
 
   # Allows us to poll for status updates in the in-progress document uploads.
   def status
-    docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => params[:ids]})
+    docs = Document.accessible(current_account, current_organization).where({:id => params[:ids]})
     Document.populate_annotation_counts(current_account, docs)
     json 'documents' => docs
   end

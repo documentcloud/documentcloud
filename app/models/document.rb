@@ -278,7 +278,7 @@ class Document < ActiveRecord::Base
 
   # Determine the number of annotations on each page of this document.
   def per_page_annotation_counts
-    self.annotations.count(:group => 'page_number')
+    self.annotations.group('page_number').count
   end
 
   def ordered_sections
@@ -617,7 +617,7 @@ class Document < ActiveRecord::Base
 
   # Keep a local ProcessingJob record of this active CloudCrowd Job.
   def record_job(job_json)
-    job = JSON.parse(job_json)
+    job = JSON.parse(job_json[:job])
     ProcessingJob.create!(
       :document_id    => id,
       :account_id     => account_id,

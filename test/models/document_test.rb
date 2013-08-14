@@ -78,7 +78,7 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   it "calculates annotations per page" do
-    assert_equal 2, doc.per_page_annotation_counts
+    assert_equal( { 2=>1, 1=>1 }, doc.per_page_annotation_counts )
   end
 
   it "calculates ordered sections" do
