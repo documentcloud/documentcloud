@@ -7,17 +7,19 @@ require 'dc/hstore'
 require 'dc/store/asset_store'
 require 'dc/search'
 require 'dc/statistics'
-
-Dir[File.dirname(__FILE__) + '/dc/import/*.rb'].each {|file| require file }
-
+require 'dc/zip_utils'
+require 'dc/import'
 
 module DC
 
   # The canonical server root, including SSL, if requested.
   def self.server_root(options={:ssl => true, :agnostic => false, })
-    root = 'http://'
-    root = 'https://' if options[:force_ssl] || (options[:ssl] && Thread.current[:ssl])
-    root = '//' if options[:agnostic]
+    root = case
+           when options[:force_ssl] || (options[:ssl] && Thread.current[:ssl]) then 'https://'
+           when options[:agnostic] then '//'
+           else
+             'http://'
+           end
     root + DC::CONFIG['server_root']
   end
 
