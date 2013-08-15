@@ -1,19 +1,32 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'rails/test_help'
-require 'minitest/emoji'
-
-require 'sunspot_matchers_testunit'
+require 'sunspot_matchers/test_helper'
+require 'turn/autorun'
 
 PROCESSING_JOBS = []
 
+Turn.config do |c|
+  # use one of output formats:
+  # :outline  - turn's original case/test outline mode [default]
+  # :progress - indicates progress with progress bar
+  # :dotted   - test/unit's traditional dot-progress mode
+  # :pretty   - new pretty reporter
+  # :marshal  - dump output as YAML (normal run mode only)
+  # :cue      - interactive testing
+  c.format  = :pretty
+  # turn on invoke/execute tracing, enable full backtrace
+  c.trace   = 3
+  # use humanized test names (works only with :outline format)
+  c.natural = true
+end
 
 
 module DocumentCloudAssertions
   def self.included(base)
-    base.send :include, SunspotMatchersTestunit
+    base.send :include,  SunspotMatchers::TestHelper
     base.setup do
-      Sunspot.session = SunspotMatchersTestunit::SunspotSessionSpy.new(Sunspot.session)
+      Sunspot.session = SunspotMatchers::SunspotSessionSpy.new(Sunspot.session)
     end
     base.teardown do
       PROCESSING_JOBS.clear
