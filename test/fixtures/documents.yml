@@ -5,7 +5,7 @@ tv_manual:
   title: TV Manual
   original_extension: pdf
   description: ""
-  hit_count: "0"
+  hit_count: 1001
   slug: tv
   reviewer_count: "0"
   source: ""
@@ -22,7 +22,7 @@ tv_manual:
   language: en
   file_hash: a483ba7b72e0571f23d61f5233228c9540ce325b
   file_size: "2662279"
-  remote_url:
+  remote_url: http://example.com/my_precious
   detected_remote_url:
   account: louis
 

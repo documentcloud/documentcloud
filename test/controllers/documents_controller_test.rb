@@ -2,7 +2,7 @@ require 'test_helper'
 
 class DocumentsControllerTest < ActionController::TestCase
 
-  test "routing" do
+  def test_routing
     assert_recognizes(
       { controller: 'documents', id:'1', action: 'send_pdf', slug:'a_simple_image_named' },
       { path: '/documents/1/a_simple_image_named.pdf',  method: :get } )
@@ -21,7 +21,7 @@ class DocumentsControllerTest < ActionController::TestCase
   end
 
 
-  test "it can log in a reviewer" do
+  def test_it_can_log_in_a_reviewer
     reviewer = accounts(:freelancer_bob)
     reviewer.ensure_security_key!
     get :show, :id=>doc.id, :format=>:html, :key=>reviewer.security_key.key
@@ -29,7 +29,7 @@ class DocumentsControllerTest < ActionController::TestCase
     assert_equal reviewer.id, session['account_id']
   end
 
-  test "it renders a public document" do
+  def test_it_renders_a_public_document
     get :show, :id=>doc.id, :format=>:html
     assert_response :success
     refute assigns[:edits_enabled]
@@ -39,7 +39,7 @@ class DocumentsControllerTest < ActionController::TestCase
     assert assigns[:edits_enabled]
   end
 
-  test "it renders a private document to owner" do
+  def test_it_renders_a_private_document_to_owner
     get :show, :id=>secret_doc.id, :format=>:html
     assert_response :forbidden
 
@@ -49,7 +49,7 @@ class DocumentsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "update" do
+  def test_update
     login_account!
     put :update, :id=>doc.id, :title=>'A new Title'
     assert_response :success
@@ -58,7 +58,7 @@ class DocumentsControllerTest < ActionController::TestCase
     assert_equal ActiveSupport::JSON.decode( doc.to_json ), json_body
   end
 
-  test "destroy" do
+  def test_destroy
     login_account!
     assert_difference( 'Document.count', -1 ){
       delete :destroy, :id=>doc.id
@@ -67,28 +67,28 @@ class DocumentsControllerTest < ActionController::TestCase
     assert_empty Document.where( id: doc.id )
   end
 
-  test "redact_pages" do
+  def test_redact_pages
     login_account!
     post :redact_pages, :id=>doc.id, :redactions=>'[{"location":"286,614,353,437","page":1}]', :color=>'black'
     assert_response :success
     assert_job_action 'redact_pages'
   end
 
-  test "remove_pages" do
+  def test_remove_pages
     login_account!
     post :remove_pages, :id=>doc.id, :pages=>[1,2]
     assert_response :success
     assert_job_action 'document_remove_pages'
   end
 
-  test "reorder_pages" do
+  def test_reorder_pages
     login_account!
     post :reorder_pages, :id=>doc.id, :page_order=> (0...doc.page_count).to_a.shuffle
     assert_response :success
     assert_job_action 'document_reorder_pages'
   end
 
-  test "upload_insert_document" do
+  def test_upload_insert_document
     login_account!
     post :upload_insert_document, :id=>doc.id
     assert_response 409
@@ -97,7 +97,7 @@ class DocumentsControllerTest < ActionController::TestCase
     assert_job_action 'document_remove_pages'
   end
 
-  test "save_page_text" do
+  def test_save_page_text
     login_account!
     post :save_page_text, :id=>doc.id, :modified_pages=>'{"1":"new page text"}'
     assert_response :success
@@ -105,26 +105,26 @@ class DocumentsControllerTest < ActionController::TestCase
     assert_job_action 'reindex_document'
   end
 
-  test "loader" do
+  def test_loader
     get :loader
     assert_response :success
     assert_equal 'js', response.content_type
   end
 
-  test "entities" do
+  def test_entities
     login_account!
     get :entities, :ids=>[doc.id]
     assert_equal entities(:person).as_json, json_body['entities'].first
   end
 
-  test "entity" do
+  def test_entity
     login_account!
     get :entity, :entity_id=>entities(:person).id
     assert_response :success
     assert_equal entities(:person).as_json( :include_excerpts => true ), json_body['entities'].first
   end
 
-  test "dates" do
+  def test_dates
     login_account!
     ed = entity_dates(:jan1)
     get :dates, :id=>ed.id
@@ -134,21 +134,21 @@ class DocumentsControllerTest < ActionController::TestCase
     assert_equal json, json_body['date']
   end
 
-  test "occurrence" do
+  def test_occurrence
     login_account!
     skip("Incorrect arguments to creating Occurrence.new  ")
     # get :occurrence, :id=>entities(:person).id, :occurrence=>'Rogers'
     # assert_response :success
   end
 
-  test "mentions" do
+  def test_mentions
     login_account!
     get :mentions, :id=>doc.id, :q=>'Ishmael'
     assert_response :success
     assert_equal "Call me <b>Ishmael</b>.", json_body['mentions'].first['text']
   end
 
-  test "status" do
+  def test_status
     login_account!
     get :status, :ids=>[doc.id]
     assert_response :success
@@ -157,14 +157,14 @@ class DocumentsControllerTest < ActionController::TestCase
   end
 
 
-  test "per_page_note_counts" do
+  def test_per_page_note_counts
     login_account!
     get :per_page_note_counts, :id=>doc.id
     assert_response :success
     assert_equal( { "2"=>1, "1"=>1 }, json_body )
   end
 
-  test "queue_length" do
+  def test_queue_length
     login_account!
     get :queue_length
     assert_equal 0, json_body['queue_length']
@@ -173,27 +173,50 @@ class DocumentsControllerTest < ActionController::TestCase
     assert_equal 1, json_body['queue_length']
   end
 
-  test "reprocess_text" do
+  def test_reprocess_text
     login_account!
     get :reprocess_text, :id=>doc.id
     assert_response :success
     assert_job_action 'large_document_import'
   end
 
-  test "send_pdf" do
+  def test_send_pdf
     get :send_pdf, :id=>doc.id
     assert_redirected_to doc.pdf_url(:direct)
   end
 
-  test "send_page_image" do
+  def test_send_page_image
     get :send_page_image, :id=>doc.id, :page_name=>'one-p1-800'
-    assert_redirected_to pages(:first).authorized_image_url(800)
+    assert_match doc.page_image_path(1, 800), response.headers['Location']
   end
 
-
-  test "send_full_text" do
+  def test_send_full_text
     get :send_full_text, :id=>doc.id
-    assert_redirected_to doc.full_text_url(:direct)
+    assert_match doc.full_text_path, response.headers['Location']
+  end
+
+  def test_send_page_text
+    get :send_page_text, :id=>doc.id, :page_name=>'one-p1-800'
+    assert_equal pages(:first).text, response.body
+  end
+
+  def test_set_page_text
+    login_account!
+    post :set_page_text, :id=>doc.id, :page_name=>'one-p1-800', :text=>'This is my page!'
+    assert_equal "This is my page!", pages(:first).text
+  end
+
+  def test_search
+    get :search, :id=>doc.id, :q=>"Page Text"
+    assert_is_search_for Sunspot.session, Page
+    assert_has_search_params( Sunspot.session.searches.last, :keywords, '"Page Text"' )
+  end
+
+  def test_preview
+    login_account!
+    get :preview, :id=>doc.id
+    assert_response :success
+    assert_template "preview"
   end
 
 end

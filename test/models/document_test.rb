@@ -4,11 +4,11 @@ class DocumentTest < ActiveSupport::TestCase
 
   subject { documents(:tv_manual) }
 
-  it "has associations and they query successfully" do
+  def test_it_has_associations_and_they_query_successfully
     assert_associations_queryable doc
   end
 
-  it "has scopes that are queryable" do
+  def test_has_scopes_that_are_queryable
     assert_working_relations( Document, [
         :chronological,:random,:published,:unpublished,:pending,
         :failed,:unrestricted, :restricted,:finished,:popular,:due
@@ -18,25 +18,25 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
 
-  it "restricts access to appropriate accounts" do
+  def test_restricts_access_to_appropriate_accounts
     assert Document.accessible( accounts(:freelancer_bob), nil ).include?( doc )
     refute Document.accessible( accounts(:freelancer_bob), nil ).include?( documents(:top_secret) )
     assert Document.accessible( louis, organizations(:tribune) ).include?( documents(:top_secret) )
   end
 
-  it "can be searched using database" do
+  def test_searched_using_database
     assert Document.search( "document:#{doc.id}" ).results.include?( doc )
     assert Document.search( "account:#{louis.id}" ).results.include?( doc )
     refute Document.search( "account:#{louis.id}" ).results.include?( documents(:top_secret) )
   end
 
-  it "can be searched using solr" do
+  def test_searched_using_solr
     search = Document.search( "super keywords" )
     assert_is_search_for Sunspot.session, Document
     assert_has_search_params Sunspot.session.searches.last, :keywords, 'super keywords'
   end
 
-  it "can import document" do
+  def test_can_import_document
     doc = Document.upload({
         :url=>'http://test.com/file.pdf',
         :title=>"Test Doc",
@@ -47,7 +47,7 @@ class DocumentTest < ActiveSupport::TestCase
     assert_job_action 'document_import'
   end
 
-  it "publishes documents once due" do
+  def test_publishes_documents_once_due
     doc.update_attributes :access=>Document::PRIVATE, :publish_at=>(Time.now-1.day)
     assert Document.due.where( :id=>doc.id ).any?
     Document.publish_due_documents
@@ -55,7 +55,7 @@ class DocumentTest < ActiveSupport::TestCase
     assert doc.public?
   end
 
-  it "sets annotation counts" do
+  def test_sets_annotation_counts
     assert_equal 2, doc.annotations.count
     Document.populate_annotation_counts( louis, [doc] )
     assert_equal 2, doc.annotation_count
@@ -65,62 +65,62 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal 1, doc.public_note_count # much better
   end
 
-  it "strips whitespace from title" do
+  def test_strips_whitespace_from_title
     title = "a good document, but poorly titled"
     document = Document.new
     document.title= " #{title}   "
     assert_equal title, document.title
   end
 
-  it "combines text from pages" do
+  def test_combines_text_from_pages
     text = doc.pages.map(&:text).join('')
     assert_equal text, doc.combined_page_text
   end
 
-  it "calculates annotations per page" do
+  def test_calculates_annotations_per_page
     assert_equal( { 2=>1, 1=>1 }, doc.per_page_annotation_counts )
   end
 
-  it "calculates ordered sections" do
+  def test_calculates_ordered_sections
     assert_equal [sections(:first)], doc.ordered_sections
   end
 
-  it "calculates ordered annotations" do
+  def test_calculates_ordered_annotations
     assert_equal [annotations(:private),annotations(:public)], doc.ordered_annotations( louis )
   end
 
-  it "populates author information on annotations" do
+  def test_populates_author_information_on_annotations
     notes = doc.annotations_with_authors( louis )
     assert_equal annotations(:private), notes.first
     assert_equal notes.first.author[:full_name], louis.full_name
   end
 
-  it "provides entity values" do
+  def test_provides_entity_values
     assert doc.entities.create! :kind=>'person', :value=>'king kong'
-    assert_equal [ 'Mr Rogers','king kong'], doc.entity_values('person')
+    assert_equal [ 'Mr Rogers','king kong'], doc.entity_values('person').sort
   end
 
-  it "collects entities as a hash" do
+  def test_collects_entities_as_a_hash
     assert_equal [ { :value=>"Mr Rogers", :relevance=>1.0} ], doc.ordered_entity_hash['person']
   end
 
-  it "calculates number of characters" do
+  def test_calculates_number_of_characters
     assert_equal 146055,doc.char_count # from fixture, is wildly inaccurate
     doc.reset_char_count!
     doc.reload
     assert_equal 33, doc.char_count
   end
 
-  it "has boolean helper checks" do
+  def test_has_working_boolean_helpers
     assert doc.titled?
     doc.title = Document::DEFAULT_TITLE
     refute doc.titled?
     assert doc.public?
     assert doc.publicly_accessible?
 
-    refute doc.published?
-    doc.remote_url = 'http://example.com/my_precious'
     assert doc.published?
+    doc.remote_url = nil
+    refute doc.published?
 
     doc.access = Document::EXCLUSIVE
     refute doc.public?
@@ -137,14 +137,14 @@ class DocumentTest < ActiveSupport::TestCase
 
   end
 
-  it "clears published at when marking public" do
+  def test_clears_published_at_when_marking_public
     ts = documents(:top_secret)
     ts.publish_at = Time.now+2.days
     ts.set_access( Document::PUBLIC )
     assert_nil ts.publish_at
   end
 
-  it "propagates ownership changes to associations" do
+  def test_propagates_ownership_changes_to_associations
     doc.set_owner( joe )
     assert_equal doc.account_id, joe.id
     assert_empty doc.pages.where([ 'account_id<>?',joe ])
@@ -152,12 +152,12 @@ class DocumentTest < ActiveSupport::TestCase
     assert_empty doc.entity_dates.where([ 'account_id<>?',joe ])
   end
 
-  it "delegates methods" do
+  def test_delegates_methods
     assert_equal doc.organization.name, doc.organization_name
     assert_equal doc.account.full_name, doc.account_name
   end
 
-  it "stores and retrieves docdata" do
+  def test_stores_and_retrieves_docdata
     assert_empty doc.data
     doc.data = 'one=>1'
     assert_equal( { 'one'=>'1' } , doc.reload.data )
@@ -166,7 +166,7 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal( {"foo"=>"bar", "one"=>"1", "answer"=>"42"}, doc.reload.data )
   end
 
-  it "encodes paths and urls" do
+  def test_encodes_paths_and_urls
     base = "documents/#{doc.id}"
     assert_equal base, doc.path
     slug = "#{doc.path}/#{doc.slug}"
@@ -194,14 +194,14 @@ class DocumentTest < ActiveSupport::TestCase
 
   end
 
-  it "retrives project ids" do
+  def test_retrives_project_ids
     # document#project_ids used to be an explicit method that contained:
     #    self.project_memberships.map {|m| m.project_id }
     # it was removed in favor of the more efficient Rail's _ids auto-method
     assert_equal [195501225], doc.project_ids
   end
 
-  it "submits jobs" do
+  def test_submits_jobs
     doc.reprocess_entities
     assert_job_action 'reprocess_entities'
   end
