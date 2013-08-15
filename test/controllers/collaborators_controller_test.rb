@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CollaboratorsControllerTest < ActionController::TestCase
 
-  test "routing" do
+  def test_routing
     assert_recognizes(
       { controller: 'collaborators', project_id: '1', action: 'create' },
       { path: '/projects/1/collaborators',  method: :post } )
@@ -11,7 +11,7 @@ class CollaboratorsControllerTest < ActionController::TestCase
       { path: '/projects/1/collaborators/1',  method: :delete } )
   end
 
-  test "create" do
+  def test_create
     login_account!
     project = projects(:collab)
     assert_empty project.collaborations
@@ -19,7 +19,7 @@ class CollaboratorsControllerTest < ActionController::TestCase
     assert_equal 1, project.collaborations.count
   end
 
-  test "destroy" do
+  def test_destroy
     login_account!
     project = projects(:collab)
     user = accounts(:freelancer_bob )

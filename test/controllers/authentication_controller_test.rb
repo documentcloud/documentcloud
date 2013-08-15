@@ -2,12 +2,12 @@ require 'test_helper'
 
 class AuthenticationControllerTest < ActionController::TestCase
 
-  test "signup_info" do
+  def test_signup_info
     get :signup_info
     assert_template layout: "workspace.html.erb"
   end
 
-  it "redirects to home for logged accounts attempting to login" do
+  def test_redirects_to_home_for_logged_accounts_attempting_to_login
     get :login
     assert_template "login"
     login_account!
@@ -15,12 +15,12 @@ class AuthenticationControllerTest < ActionController::TestCase
     assert_redirected_to '/'
   end
 
-  it "logins a user" do
+  def test_logins_a_user
     post :login, :email=>louis.email, :password=>'password', :next=>'/foo'
     assert_redirected_to '/foo'
   end
 
-  it "displays error on bad login" do
+  def test_displays_error_on_bad_login
     post :login, :email=>louis.email, :password=>'badpass', :next=>'/foo'
     assert_match( /invalid/i, flash[:error] )
     louis.memberships.first.update_attributes :role=>Account::DISABLED
@@ -28,13 +28,13 @@ class AuthenticationControllerTest < ActionController::TestCase
     assert_match( /disabled/i, flash[:error] )
   end
 
-  test "logout" do
+  def test_logout
     session['account_id']=louis.id
     get :logout
     assert_nil session['account_id']
   end
 
-  it "logs in from omniauth callback" do
+  def test_logs_in_from_omniauth_callback
     request.env['omniauth.auth'] = {
       'provider' => 'twitter',
       'uid' => '424',

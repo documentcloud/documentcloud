@@ -16,20 +16,20 @@ class AnnotationsControllerTest < ActionController::TestCase
     login_account!
   end
 
-  test "index" do
+  it "index" do
     get :index, :document_id => doc.id
     assert_response 200
     assert_equal  doc.annotation_ids.sort, json_body.map{|note| note['id'] }.sort
   end
 
-  test "show" do
+  it "show" do
     note = doc.annotations.first
     get :show, :id=>note.id, :document_id => doc.id, :format=>:js
     assert_response 200
     assert_match( /\"id\":#{note.id}/, @response.body )
   end
 
-  test "print" do
+  it "print" do
     get :print, :docs=>[doc.id,secret_doc.id]
     doc.annotations.each do | note |
       assert_match( /#{note.content}/, @response.body )
@@ -37,14 +37,14 @@ class AnnotationsControllerTest < ActionController::TestCase
   end
 
 
-  test "create" do
+  it "create" do
     assert_difference( 'Annotation.count', 1 ) do
       put :create, :document_id=>doc.id, :page_number=>2, :title=>'Test Note',
           :content=>'this is a note', :location=>23, :access=>Document::PUBLIC
     end
   end
 
-  test "update" do
+  it "update" do
     note = doc.annotations.first
     post :update, :document_id=>doc.id, :id=>note.id, :title=>'New Title',
          :content=>'I have become death the destroyer of worlds', :access=>'private'
@@ -55,7 +55,7 @@ class AnnotationsControllerTest < ActionController::TestCase
     assert_equal Annotation::PRIVATE, note.access
   end
 
-  test "destroy" do
+  it "destroy" do
     note = doc.annotations.first
     delete :destroy, :document_id=>doc.id, :id=>note.id
     assert_raises(ActiveRecord::RecordNotFound){
@@ -63,7 +63,7 @@ class AnnotationsControllerTest < ActionController::TestCase
     }
   end
 
-  test "cors_options" do
+  it "cors_options" do
     get :cors_options
     assert_response 400
     request.headers['Origin']='http://test.com/'

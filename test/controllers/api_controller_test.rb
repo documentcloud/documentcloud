@@ -3,7 +3,7 @@ require 'test_helper'
 class ApiControllerTest < ActionController::TestCase
 
 
-  test "routing" do
+  def test_routing
     assert_recognizes(
       { controller: 'api', action: 'cors_options', :format=>'json', "allowed_methods"=>[:get] },
       { path: '/api/documents/pending.json',  method: :options } )
@@ -31,12 +31,12 @@ class ApiControllerTest < ActionController::TestCase
 
   end
 
-  test "index" do
+  def test_index
     get :index
     assert_redirected_to '/help/api'
   end
 
-  it "sets cors options" do
+  def test_it_sets_cors_options
     get :cors_options
     assert_response 400
     get :cors_options, :allowed_methods=>['GET']
@@ -52,26 +52,26 @@ class ApiControllerTest < ActionController::TestCase
   end
 
 
-  test "search" do
+  def test_search
     get :search, q: 'ponies', :format => :json
     assert_has_search_params Sunspot.session.searches.last, :keywords, 'ponies'
     assert_equal 0, json_body['total']
   end
 
-  test "search" do
+  def test_search
     get :search, q: "document:#{doc.id}", :format=>:json
     assert_equal 1, json_body['total']
     assert_equal doc.canonical_id, json_body['documents'].first['id']
   end
 
-  it "requires authentication" do
+  def test_it_requires_authentication
     [ :upload, :project, :projects, :update, :destroy, :create_project, :update_project, :destroy_project ].each do | action |
       get action
       assert_response 401
     end
   end
 
-  test "upload" do
+  def test_upload
     login_account!
     get :upload
     assert_response 400
@@ -80,7 +80,7 @@ class ApiControllerTest < ActionController::TestCase
     assert_job_action 'document_import'
   end
 
-  test "documents" do
+  def test_documents
     login_account!
     get :documents
     assert_response :bad_request
@@ -90,7 +90,7 @@ class ApiControllerTest < ActionController::TestCase
     assert_equal doc.canonical_id, json_body['document']['id']
   end
 
-  test "pending" do
+  def test_pending
     get :pending
     assert_equal 0, json_body['total_documents']
     assert_nil json_body['your_documents']
@@ -101,14 +101,14 @@ class ApiControllerTest < ActionController::TestCase
     assert_equal louis.documents.count, json_body['your_documents']
   end
 
-  test "notes" do
+  def test_notes
     note = annotations(:public)
     get :notes, :note_id=>note.id, :format=>:json
     assert_response :success
     assert_equal note.canonical, json_body['annotation']
   end
 
-  it "doesn't return private notes unless authorized" do
+  def test_it_doesnt_return_private_notes_unless_authorized
     note = annotations(:private)
     get :notes, :note_id=>note.id, :format=>:json
     assert_response :not_found
@@ -119,13 +119,13 @@ class ApiControllerTest < ActionController::TestCase
     assert_equal note.canonical, json_body['annotation']
   end
 
-  test "entities" do
+  def test_entities
     get :entities, :id=>doc.id, :format=>:json
     assert_response :success
     assert_equal doc.ordered_entity_hash.as_json, json_body['entities']
   end
 
-  test "update" do
+  def test_update
     post :update, :id=>doc.id, :format=>:json
     assert_response 401
     login_account!
@@ -134,14 +134,14 @@ class ApiControllerTest < ActionController::TestCase
     assert_equal 'A New Title', doc.reload.title
   end
 
-  test "destroy" do
+  def test_destroy
     login_account!
     delete :destroy, :id=>doc.id
     assert_response :success
     refute Document.where( :id=>doc.id ).first
   end
 
-  test "project" do
+  def test_project
     login_account!
     project = projects(:collab)
     get :project, :id=>project.id, :format=>:json, :include_document_ids=>true
@@ -149,14 +149,14 @@ class ApiControllerTest < ActionController::TestCase
     assert_equal project.canonical(:include_document_ids=>true), json_body['project']
   end
 
-  test "projects" do
+  def test_projects
     login_account!
     get :projects, :format=>:json, :include_document_ids=>true
     assert_response :success
     assert_equal [ projects(:collab).canonical(:include_document_ids=>true) ], json_body['projects']
   end
 
-  test "create_projects" do
+  def test_create_projects
     login_account!
     put :create_project, :document_ids=>[doc.id],:title=>'new project',:description=>'no desc'
     assert_response :success
@@ -164,7 +164,7 @@ class ApiControllerTest < ActionController::TestCase
     refute_empty doc.projects.where( :title=>'new project' )
   end
 
-  test "update project" do
+  def test_update_project
     login_account!
     project = projects(:collab)
     post :update_project, :id=>project.id, :document_ids=>[secret_doc.id]
@@ -172,7 +172,7 @@ class ApiControllerTest < ActionController::TestCase
     assert_equal [secret_doc.id], project.reload.document_ids
   end
 
-  test "destroy_project" do
+  def test_destroy_project
     login_account!
     project = projects(:collab)
     delete :destroy_project, :id=>project.id
