@@ -152,7 +152,7 @@ class Project < ActiveRecord::Base
     data
   end
 
-  def to_json(opts={})
+  def as_json(opts={})
     acc = opts[:account]
     attrs = attributes.merge(
       :account_full_name  => account_full_name,
@@ -163,7 +163,7 @@ class Project < ActiveRecord::Base
       attrs[:collaborators] = other_collaborators(acc).map {|c| c.canonical(:include_organization => true) }
     end
     attrs['title'] ||= "[Untitled Project]"
-    attrs.to_json
+    attrs
   end
 
 

@@ -8,7 +8,7 @@ class ProjectsControllerTest < ActionController::TestCase
 
   def test_index
     get :index
-    assert_equal louis.projects.first.as_json, json_body.first
+    assert_equal louis.projects.first.as_json.stringify_keys, json_body.first
   end
 
   def test_create

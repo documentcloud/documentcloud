@@ -766,7 +766,7 @@ class Document < ActiveRecord::Base
   end
 
   # TODO: Make the to_json an extended form of the canonical.
-  def to_json(opts={})
+  def as_json(opts={})
     json = {
       :id                  => id,
       :organization_id     => organization_id,
@@ -807,7 +807,7 @@ class Document < ActiveRecord::Base
       json[:annotations_url] = annotations_url if commentable?(opts[:account])
       json[:annotations] = self.annotations_with_authors(opts[:account])
     end
-    json.to_json
+    json
   end
 
   # The filtered attributes we're allowed to display in the admin UI.

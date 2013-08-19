@@ -112,8 +112,8 @@ class Organization < ActiveRecord::Base
     self.accounts.admin.pluck( :email )
   end
 
-  def to_json(options = {})
-    canonical(options).to_json
+  def as_json(options = {})
+    canonical(options)
   end
 
   def canonical( options = {} )

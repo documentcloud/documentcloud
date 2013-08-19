@@ -121,17 +121,16 @@ class DocumentsControllerTest < ActionController::TestCase
     login_account!
     get :entity, :entity_id=>entities(:person).id
     assert_response :success
-    assert_equal entities(:person).as_json( :include_excerpts => true ), json_body['entities'].first
+    assert_equal entities(:person).as_json( :include_excerpts => true ).with_indifferent_access, json_body['entities'].first
   end
 
   def test_dates
     login_account!
     ed = entity_dates(:jan1)
     get :dates, :id=>ed.id
-    json = ed.as_json
-    json['date'] = ed.date.strftime('%Y-%m-%d')
+    json = ed.as_json(:include_excerpts=>true)
     assert_response :success
-    assert_equal json, json_body['date']
+    assert_equal json.with_indifferent_access, json_body['date']
   end
 
   def test_occurrence

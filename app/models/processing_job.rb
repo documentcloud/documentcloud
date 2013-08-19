@@ -25,11 +25,11 @@ class ProcessingJob < ActiveRecord::Base
 
   # The default JSON of a processing job is just enough to get it polling for
   # updates again.
-  def to_json(opts={})
+  def as_json(opts={})
     { 'id'      => id,
       'title'   => title,
       'status'  => 'loading'
-    }.to_json
+    }
   end
 
 end

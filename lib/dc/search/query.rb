@@ -121,7 +121,7 @@ module DC
 
       # The JSON representation of a query contains all the structured aspects
       # of the search.
-      def to_json(opts={})
+      def as_json(opts={})
         { 'text'        => @text,
           'page'        => @page,
           'from'        => @from,
@@ -135,7 +135,7 @@ module DC
           'doc_ids'     => @doc_ids,
           'attributes'  => @attributes,
           'data'        => @data.map {|f| [f.kind, f.value] }
-        }.to_json
+        }
       end
 
 
@@ -288,8 +288,8 @@ module DC
           end
         end
       end
-      
-      # Generate the Solr or SQL to match user-data queries. If the value 
+
+      # Generate the Solr or SQL to match user-data queries. If the value
       # is "*", assume that any document that contains the key will do.
       def build_data
         data   = @data
@@ -314,7 +314,7 @@ module DC
           end
         else
           hash = {}
-          data.each do |datum| 
+          data.each do |datum|
             if datum.value == '*'
               @sql << 'defined(docdata.data, ?)'
               @interpolations << datum.kind

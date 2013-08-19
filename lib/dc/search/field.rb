@@ -24,8 +24,8 @@ module DC
         "#{@kind}:#{val}"
       end
 
-      def to_json(opts={})
-        {'kind' => kind, 'value' => value}.to_json
+      def as_json(opts={})
+        {'kind' => kind, 'value' => value}
       end
 
     end

@@ -374,8 +374,8 @@ class Account < ActiveRecord::Base
 
   # The JSON representation of an account avoids sending down the password,
   # among other things, and includes extra attributes.
-  def to_json(options={})
-    canonical(options).to_json
+  def as_json(options={})
+    canonical(options)
   end
 
 end

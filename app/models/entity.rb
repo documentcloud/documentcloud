@@ -60,7 +60,7 @@ class Entity < ActiveRecord::Base
     write_attribute :value, val[0...255]
   end
 
-  def to_json(options={})
+  def as_json(options={})
     data = {
      'id'           => id,
      'document_id'  => document_id,
@@ -70,7 +70,7 @@ class Entity < ActiveRecord::Base
      'occurrences'  => occurrences
     }
     data['excerpts'] = excerpts(150, self.pages.limit(200) ) if options[:include_excerpts]
-    data.to_json
+    data
   end
 
   def canonical

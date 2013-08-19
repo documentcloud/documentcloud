@@ -158,12 +158,12 @@ class Annotation < ActiveRecord::Base
     document.reset_public_note_count
   end
 
-  def to_json(opts={})
+  def as_json(opts={})
     canonical.merge({
       'document_id'     => document_id,
       'account_id'      => account_id,
       'organization_id' => organization_id
-    }).to_json
+    })
   end
 
   private
