@@ -33,7 +33,11 @@ namespace :crowd do
   namespace :node do 
     desc "Handy unix shotgun for culling zombie crowd worker processes"
     task :cull do
-      `ps aux | grep crowd | ruby -e 'STDIN.read.split("\n").each{ |line| puts line.split[1] unless line =~ /rake/ }' | xargs kill`
+      `ps aux | egrep "crowd|pdftk|tesseract|gm" | ruby -e 'STDIN.read.split("\n").each{ |line| puts line.split[1] unless line =~ /rake|grep/ }' | xargs kill`
+    end
+    
+    task :cleanup_tmp do
+      `rm -rf /tmp/cloud_crowd_tmp/*; rm -rf /tmp/d#{Time.now.year}*`
     end
   end
   
