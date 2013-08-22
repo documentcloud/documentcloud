@@ -1,11 +1,10 @@
-
 secrets = DC::SECRETS['omniauth']
 
 if secrets.blank?
   STDERR.puts "OmniAuth secrets are not available.  Not performing initialization"
 else
 
-  # For Google: Remember to customize the redirect URI for the key to be: /auth/google_oauth2/callback 
+  # For Google: Remember to customize the redirect URI for the key to be: /auth/google_oauth2/callback
   # If you do happen to forget and do so later, REDOWNLOAD the key, it changes every time you edit the settings.
 
   Rails.application.config.middleware.use OmniAuth::Builder do

@@ -1,18 +1,18 @@
 <script type="text/javascript">
-  window.currentDocumentModel = <%= @current_document.to_json %>;
-  window.SERVER_ROOT_HTTP = '<%= DC.server_root(:ssl => false) %>';
+  window.currentDocumentModel = <%=raw @current_document.to_json %>;
+  window.SERVER_ROOT_HTTP = '<%=raw DC.server_root(:ssl => false) %>';
 
   DV.jQuery(function() {
     <% if @current_account %>
-      var docId = <%= @current_document.id %>;
+      var docId = <%=raw @current_document.id %>;
       var opts        = {
-        isOwner         : <%= !!@allowed_to_edit %>,
-        isReviewer      : <%= !!@allowed_to_review %>
+        isOwner         : <%=raw !!@allowed_to_edit %>,
+        isReviewer      : <%=raw !!@allowed_to_review %>
       }
       <% if @reviewer_inviter %>
         opts['reviewerInviter'] = {
-          fullName : "<%= @reviewer_inviter.full_name %>",
-          email    : "<%= @reviewer_inviter.email %>"
+          fullName : "<%=raw @reviewer_inviter.full_name %>",
+          email    : "<%=raw @reviewer_inviter.email %>"
         }
       <% end %>
       dc.app.editor.initialize(docId, opts);

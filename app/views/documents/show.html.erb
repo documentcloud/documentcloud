@@ -17,7 +17,7 @@
   <script src="/viewer/viewer.js"></script>
   <% if Rails.env.production? && !request.ssl? %>
     <script>
-      window.DV.recordHit = "<%= DC.server_root(:ssl => false).sub('s3', 'www') %>/pixel.gif";
+      window.DV.recordHit = "<%=raw DC.server_root(:ssl => false).sub('s3', 'www') %>/pixel.gif";
     </script>
   <% end %>
   <% unless @local %>
@@ -31,7 +31,7 @@
   <div id="overlay"></div>
   <script type="text/javascript">
     <% if @current_document %>
-      window.currentDocument = DV.load(<%= @current_document.canonical({
+      window.currentDocument = DV.load(<%=raw @current_document.canonical({
         :account => @current_account,
         :local => @local,
         :contributor => true,

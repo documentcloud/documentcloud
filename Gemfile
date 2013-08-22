@@ -23,8 +23,8 @@ gem 'sunspot_solr',           '~> 2.0.0'
 gem 'rdiscount',              '~> 2.1.6'
 gem 'right_http_connection'
 gem 'rake'
-gem 'jammit',                 :path=>'/Users/nas/code/dc/jammit'
-#gem 'jammit', :git=>'https://github.com/documentcloud/jammit.git'
+#gem 'jammit',                 :path=>'/Users/nas/code/dc/jammit'
+gem 'jammit', :git=>'https://github.com/documentcloud/jammit.git'
 gem 'nokogiri',               '1.5.6' # only pegged because nokogiri 1.5.9 installation fucking up on OSX
 gem 'right_aws',              '2.0.1', :git=>'https://github.com/documentcloud/right_aws.git'        # Our patched version.
 
