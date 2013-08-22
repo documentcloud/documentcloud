@@ -6,7 +6,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .set_sections':          'openSectionEditor',
     'click .public_annotation':     'togglePublicAnnotation',
     'click .private_annotation':    'togglePrivateAnnotation',
-    'click .redact_annotation':     'toggleRedaction',
+    'click .redact_annotation':     'redactionNotice',//'toggleRedaction',
     'click .cancel_redactions':     'toggleRedaction',
     'click .save_redactions':       'saveRedactions',
     'click a.when_black':           'toggleRedactionColor',
@@ -28,6 +28,10 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .embed_document':        'embedDocument',
     'click .embed_note':            'embedNote',
     'click .access_info':           'editAccess'
+  },
+  
+  redactionNotice: function() {
+    dc.ui.Dialog.alert('The redaction tool has been temporarily disabled.  Feel free to <a style="color:white;cursor:pointer;" href="/contact">contact us</a> if you have any questions.');
   },
 
   initialize : function() {
