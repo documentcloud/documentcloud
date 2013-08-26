@@ -196,7 +196,7 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
     var hint, range, insertion;
 
     if (state == 'choose') {
-      hint = "Choose a location to insert pages.";
+      hint = _.t('choose_location_to_insert_pages');
       $(this.el).setMode('off', 'upload');
       this.$('.replace_pages_upload_button').setMode('not', 'enabled');
     } else {

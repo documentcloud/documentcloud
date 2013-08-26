@@ -170,7 +170,7 @@ workspace:
   force_ocr: Force OCR
   text_reprocess_help: Reprocess this document to take advantage of improvements to our text extraction tools. Choose "Force OCR" (optical character recognition) to ignore any embedded text information and use Tesseract before reprocessing. The document will close while it''s being rebuilt. Are you sure you want to proceed? 
   reprocess: Reprocess
-
+  choose_location_to_insert_pages: Choose a location to insert pages.
   edit_related_url: Edit Related Article URL
   edit_published_url: Edit Published URL
   embed_tools: Embed Tools

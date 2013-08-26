@@ -167,7 +167,7 @@ workspace:
   force_ocr: Forzar OCR
   text_reprocess_help: Reprocesa este documento para aprovechar de mejoras en nuestras herramientas de extracción de texto. Elije "Forzar OCR" (optical character recognition) para ignorar cualquier texto incrustado en el documento y usar Tesseract antes de reprocesar. El documento se va a cerrar mientras se reconstruye. ¿Quieres continuar? 
   reprocess: Reprocesar
-
+  choose_location_to_insert_pages: Elija un lugar para insertar páginas.
   edit_related_url: Editar URL de Artículo Relacionado
   edit_published_url: Editar URL Publicado
   embed_tools: Incrustar Herramientas
