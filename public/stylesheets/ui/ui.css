@@ -613,6 +613,10 @@ textarea.text_area {
   .dialog.account_list .new_account {
     width: 150px;
   }
+  .dialog .controls .force_ocr {
+    width: 90px;
+  }
+
 
 /*------------------------------ Hidden Iframes ------------------------------*/
 iframe.hidden_iframe {
