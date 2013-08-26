@@ -384,7 +384,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       _.map( this.accountsToEmail(),
              function(a){ return a.fullName(); }
            )
-    ,{});
+      ,{conjunction: 'and'});
     this.$('.email_description').html( _.t('reviewer_email_message', emails ) );
   },
 
