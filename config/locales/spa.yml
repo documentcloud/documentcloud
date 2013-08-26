@@ -283,11 +283,12 @@ workspace:
   
   ###############################################################
   # "Contact us" form
+  contact_us: Contáctenos
   form_contact_instructions: Utiliza este formulario (o mándanos un email a %s) para solicitar asistencia.
     Si necesitas hablar con alguien inmediatamente, llama al (202) 505-1010.
     Visita %s para otras formas de ponerte en contacto con nosotros.
   message: Mensaje
-
+  send: Transmitir
 
   ###############################################################
   # The account/organization management dialog that is 

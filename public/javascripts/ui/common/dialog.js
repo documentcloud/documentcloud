@@ -194,8 +194,8 @@ _.extend(dc.ui.Dialog, {
     var dialog = new dc.ui.Dialog({
       id        : 'contact_us',
       mode      : 'custom',
-      title     : 'Contact Us',
-      saveText  : 'Send',
+      title     : _.t('contact_us'),
+      saveText  : _.t('send'),
       onConfirm : callback
     });
     dialog.render();
