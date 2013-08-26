@@ -33,8 +33,27 @@ class AccountsController < ApplicationController
   end
 
   # Requesting /accounts returns the list of accounts in your logged-in organization.
+  # consider extracting the HTML info into a single method in common w/ workspace
   def index
-    json current_organization.accounts.active
+    respond_to do |format|
+      format.html do
+        if logged_in?
+          if current_account.real?
+            @projects = Project.load_for(current_account)
+            @current_organization = current_account.organization
+            @organizations = Organization.all_slugs
+            @has_documents = Document.owned_by(current_account).count(:limit => 1) > 0
+            return render :layout => 'workspace'
+          else
+            return redirect_to '/public/search'
+          end
+        end
+        redirect_to '/home'
+      end
+      format.json do 
+        json current_organization.accounts.active
+      end
+    end
   end
 
   # Does the current request come from a logged-in account?
