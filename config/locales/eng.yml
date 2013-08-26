@@ -659,6 +659,10 @@ workspace:
   view_entities: View Entities
   has_no_entities: '%s has no entities to display.'
   view_timeline: View Timeline
+  timeline_zoom_in: Drag a range of dates to zoom in.
+  timeline_for_doc: "Timeline for \"%s\""
+  timeline_for_x_docs: Timeline for %d documents
+  zoom_out: Zoom Out
   timeline_max_documents: You can only view a timeline for ten documents at a time.
   timeline_must_select: In order to view a timeline, please select some documents.
   analyze_project_in_overview: Analyze this Project in Overview

@@ -621,6 +621,10 @@ workspace:
   view_entities: Ver Entidades
   has_no_entities: '%s no dispone de entidades para revisar.'
   view_timeline: Ver cronología
+  timeline_zoom_in: Arrastre un rango de fechas para agrandar
+  timeline_for_doc: "Cronograma para \"%s\""
+  timeline_for_x_docs: Cronograma para %d documentos
+  zoom_out: Alejar
   timeline_max_documents: Sólo puedes ver una cronología de 10 documentos a la vez.
   timeline_must_select: Para ver una cronología, por favor selecciona algunos documentos.
   analyze_project_in_overview: Analizar este Proyecto en Panorama
