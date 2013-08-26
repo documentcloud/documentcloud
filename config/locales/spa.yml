@@ -280,7 +280,28 @@ workspace:
   preview_email: Revisar el mensaje
   before_continue: Antes de continuar, puedes %s
   add_reviewer: Añadir Revisor
-
+  reviewer_name: Por favor, indique el nombre del revisor
+  reviewer_add_permission_denied: No se permite añadir colaboradores.
+  reviewer_enter_email: Por favor, introduzca la dirección de correo electrónico de un usuario.
+  x_is_no_longer_a_reviewer_on_x:
+  - %2$s ya no es un crítico en el documento
+  - %2$s ya no es un crítico de los %1$d Documentos
+  reviewer_remove_permission_denied: No tienes permiso para eliminar colaboradores.
+  reviewer_remove_error: Hubo un problema al eliminar el revisor.
+  reviewer_email_message: DocumentCloud le enviará revisar las instrucciones a %s Si lo desea, puede agregar un mensaje personal.
+  sending: Envío de ...
+  reviewer_enter_email: "Introduzca la dirección de correo electrónico de la primera crítica de invitar:"
+  please_enter_email: Introduzca una dirección de correo electrónico.
+  please_enter_valid_email: Introduzca una dirección de correo electrónico válida.
+  reviewing_instructions_single_sent_to: Instrucciones para la revisión %s enviado a %s
+  reviewing_instructions_multiple_sent_to: Instrucciones para la revisión de %d Documentos enviados a %s
+  reviewing_instructions_send_failure: Sus instrucciones no fueron enviados. Póngase en contacto con soporte para resolución de problemas ayuda.
+  share_x_documents:
+    - Comparte \"%2$s\"
+    - Comparte %d documentos
+  reviewer_email_instructions:
+    - Las instrucciones por correo electrónico a %2$s
+    - Las instrucciones por correo electrónico a %d revisores
   
   ###############################################################
   # "Contact us" form

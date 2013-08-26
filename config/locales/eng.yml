@@ -296,15 +296,36 @@ workspace:
   preview_email: preview the email message
   before_continue: Before continuing, you can take a moment to %s
   add_reviewer: Add Reviewer
+  reviewer_name: Please provide the reviewer\'s name
+  reviewer_add_permission_denied: You are not allowed to add reviewers.
+  reviewer_enter_email: Please enter the email address of a reviewer.
+  x_is_no_longer_a_reviewer_on_x: 
+  - %2$s is no longer a reviewer on the Document
+  - %2$s is no longer a reviewer on the %1$d Documents
+  reviewer_remove_permission_denied: You are not allowed to remove reviewers.
+  reviewer_remove_error: There was a problem removing the reviewer.
+  reviewer_email_message: DocumentCloud will email reviewing instructions to %s If you wish, you may add a personal message.
+  sending: Sending...
+  reviewer_enter_email: "Enter the email address of the first reviewer to invite:"
+  please_enter_email: Please enter an email address.
+  please_enter_valid_email: Please enter a valid email address.
+  reviewing_instructions_single_sent_to: Instructions for reviewing %s sent to %s
+  reviewing_instructions_multiple_sent_to: Instructions for reviewing %d Documents sent to %s
+  reviewing_instructions_send_failure: Your instructions were not sent. Contact support for help troubleshooting.
+  share_x_documents:
+  - Share \"%2$s\"
+  - Share %d Documents
+  reviewer_email_instructions:
+  - Email Instructions to %2$s
+  - Email Instructions to %d Reviewers
 
-  
   ###############################################################
-  # "Contact us" form
-  contact_us: Contact Us
-  form_contact_instructions: Use this form (or email to %s) to contact us for assistance.
-    If you need to speak to someone immediately, you can call us at (202) 505-1010.
-    See %s for more ways to get in touch.
-  message: Message
+  # "contact us" form
+  contact_us: contact us
+  form_contact_instructions: use this form (or email to %s) to contact us for assistance.
+    if you need to speak to someone immediately, you can call us at (202) 505-1010.
+    see %s for more ways to get in touch.
+  message: message
   send: Send
 
   ###############################################################
