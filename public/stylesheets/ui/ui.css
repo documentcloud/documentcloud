@@ -610,6 +610,9 @@ textarea.text_area {
       position: static;
       margin: 0 auto 20px;
     }
+  .dialog.account_list .new_account {
+    width: 150px;
+  }
 
 /*------------------------------ Hidden Iframes ------------------------------*/
 iframe.hidden_iframe {

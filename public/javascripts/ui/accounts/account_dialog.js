@@ -39,7 +39,7 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
       this.$('.custom').before('<div class="organization_language"></div>');
       this.$('.organization_language').html( JST['account/language_settings']( {language: dc.account.getLanguage() } ) );
       this.setDisplayLanguage();
-      this.addControl(this.make('div', {'class': 'minibutton dark new_account', style : 'width: 90px;'}, _.t('new_account') ));
+      this.addControl(this.make('div', {'class': 'minibutton dark new_account' }, _.t('new_account') ));
 
     }
     return this;
