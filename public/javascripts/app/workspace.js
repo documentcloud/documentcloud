@@ -3,7 +3,8 @@ dc.controllers.Workspace = Backbone.Router.extend({
 
   routes : {
     'help/:page': 'help',
-    'help':       'help'
+    'help':       'help',
+    'accounts':   'accounts'
   },
 
   // Initializes the workspace, binding it to <body>.
@@ -15,6 +16,11 @@ dc.controllers.Workspace = Backbone.Router.extend({
       dc.app.searcher.loadDefault({showHelp: true});
     }
   },
+  
+  accounts: function() {
+    console.log("Opening accounts!");
+    dc.app.accountManager.open();
+  },
 
   help : function(page) {
     this.help.openPage(page || '');
@@ -22,17 +28,18 @@ dc.controllers.Workspace = Backbone.Router.extend({
 
   // Create all of the requisite subviews.
   createSubViews : function() {
-    dc.app.paginator  = new dc.ui.Paginator();
-    dc.app.navigation = new dc.ui.Navigation();
-    dc.app.toolbar    = new dc.ui.Toolbar();
-    dc.app.organizer  = new dc.ui.Organizer();
-    dc.ui.notifier    = new dc.ui.Notifier();
-    dc.ui.tooltip     = new dc.ui.Tooltip();
-    dc.app.searchBox  = VS.init(this.searchOptions());
-    this.sidebar      = new dc.ui.Sidebar();
-    this.panel        = new dc.ui.Panel();
-    this.documentList = new dc.ui.DocumentList();
-    this.entityList   = new dc.ui.EntityList();
+    dc.app.paginator      = new dc.ui.Paginator();
+    dc.app.navigation     = new dc.ui.Navigation();
+    dc.app.toolbar        = new dc.ui.Toolbar();
+    dc.app.organizer      = new dc.ui.Organizer();
+    dc.ui.notifier        = new dc.ui.Notifier();
+    dc.ui.tooltip         = new dc.ui.Tooltip();
+    dc.app.searchBox      = VS.init(this.searchOptions());
+    dc.app.accountManager = new dc.ui.AccountManager();
+    this.sidebar          = new dc.ui.Sidebar();
+    this.panel            = new dc.ui.Panel();
+    this.documentList     = new dc.ui.DocumentList();
+    this.entityList       = new dc.ui.EntityList();
 
     if (!dc.account) return;
 
