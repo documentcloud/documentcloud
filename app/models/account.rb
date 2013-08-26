@@ -338,10 +338,6 @@ class Account < ActiveRecord::Base
     self
   end
 
-  def language
-    'spa'
-  end
-
   # Create default organization to preserve backwards compatability.
   def canonical(options={})
     membership = options[:membership] || memberships.first(:conditions=>{:default=>true})
