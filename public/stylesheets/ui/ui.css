@@ -527,6 +527,7 @@ textarea.text_area {
   .dialog .information {
     position: absolute;
     padding: 5px 10px;
+    max-width: 270px;
     top: 29px; right: 20px;
     font-size: 10px;
     color: #ccc;
