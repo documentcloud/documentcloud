@@ -16,9 +16,9 @@
     <% } else if (doc.get('publish_at')) { %>
       <label><%= _.t('document_public_on',doc.formattedPublishAtDate() )%></label>
     <% } else { %>
+      <label for="publish_prepare_access_level"><%= _.t('make_document_public') %>:</label>
       <% var checked = doc.isPublic() ? 'checked="checked"' : '' ; %>
       <input type="checkbox" name="access_level" id="publish_prepare_access_level" <%= checked %> />
-      <label for="publish_prepare_access_level"><%= _.t('make_document_public') %>:</label>
     <% } %>
     <p class="dialog_info selectable_text interface">
       <% if (doc.isPublic()) { %>
