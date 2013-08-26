@@ -321,11 +321,12 @@ workspace:
 
   ###############################################################
   # "contact us" form
-  contact_us: contact us
-  form_contact_instructions: use this form (or email to %s) to contact us for assistance.
-    if you need to speak to someone immediately, you can call us at (202) 505-1010.
-    see %s for more ways to get in touch.
-  message: message
+  # "Contact us" form
+  contact_us: Contact Us
+  form_contact_instructions: Use this form (or email to %s) to contact us for assistance.
+    If you need to speak to someone immediately, you can call us at (202) 505-1010.
+    See %s for more ways to get in touch.
+  message: Message
   send: Send
 
   ###############################################################
