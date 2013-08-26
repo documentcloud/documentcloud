@@ -1,4 +1,4 @@
-
+
 # Strings that are in this section are shared between the viewer and workspace
 common: &common
 
@@ -135,7 +135,7 @@ workspace:
   #
   ###############################################################
   document_tools: Herramientas
-  add_note_instructions: Destacar una parte de la página, o hacer clic entre páginas para crear una nota.
+  add_note_instructions: 'Destacar una parte de la página, o hacer clic entre páginas para crear una nota.'
   add_public_note: Añadir una Nota Pública
   add_public_note_warn: Notas Públicas son visibles para todos los que vean este documento.
   add_private_note: Añadir una nota privada.
@@ -174,19 +174,19 @@ workspace:
   embed_note: Incrustar una Nota
   page_tools: Herramientas de Página
   insert_replace_pages: Insertar/Reemplazar Páginas
-  insert_pages_instructions: Para insertar nuevas páginas en posición específica dentro del documento, haz clic entre las páginas arriba. Si quieres reemplazar una página específica con una copia nueva, haz clic en la página que quieres quitar.
+  insert_pages_instructions: 'Para insertar nuevas páginas en posición específica dentro del documento, haz clic entre las páginas arriba. Si quieres reemplazar una página específica con una copia nueva, haz clic en la página que quieres quitar.'
   insert_pages_message: Este documento será cerrado mientras se reconstruye. Documentos largos pueden tardar bastante tiempo en reconstruirse.
-  insert_pages_shift_key: Oprime la tecla "Shift" mientras seleccionas múltiples páginas para reemplazar a la misma vez. Cuando estés listo, haz clic en el botón "Subir Páginas".
+  insert_pages_shift_key: 'Oprime la tecla "Shift" mientras seleccionas múltiples páginas para reemplazar a la misma vez. Cuando estés listo, haz clic en el botón "Subir Páginas".'
   remove_pages: Eliminar Páginas
   remove_pages_click: Haz clic en cada página que quieras eliminar de este documento.
-  remove_pages_done: Cuando termines de seleccionar las páginas que quieras eliminar, hac click en el botón "Eliminar Páginas".
+  remove_pages_done: 'Cuando termines de seleccionar las páginas que quieras eliminar, hac click en el botón "Eliminar Páginas".'
   reorder_pages: Reordenar Páginas
   reorder_pages_instructions: Arrastra y suelta páginas para cambiar sus posiciones dentro del documento.
-  reorder_pages_done: Cuando termines de reordenar, haz clic en el botón "Guardar Orden" para guardar tus cambios.
+  reorder_pages_done: 'Cuando termines de reordenar, haz clic en el botón "Guardar Orden" para guardar tus cambios.'
   text_tools: Herramientas de Texto
   edit_page_text: Editar Texto de Página
-  edit_page_text_instructions: 'Edita el texto de cualquier página: usa las flechas para navegar dentro de este documento. Editando el texto aquí no cambiará el PDF original.
-  edit_page_text_done: Cuando termines de revisar el texto, haz clic en el botón "Guardar Texto".
+  edit_page_text_instructions: 'Edita el texto de cualquier página: usa las flechas para navegar dentro de este documento. Editando el texto aquí no cambiará el PDF original.'
+  edit_page_text_done: 'Cuando termines de revisar el texto, haz clic en el botón "Guardar Texto".'
   reprocess_text: Reprocesar Texto
   help_pages: páginas de ayuda
   annotation: anotación
@@ -200,7 +200,7 @@ workspace:
   reorder_hint: Reordenar páginas arrastrando y soltando.
   upload_pages: Subir Páginas
   annotation_help: Utiliza los enlaces a la derecha para anotar el documento. Recuerda que cualquier otros revisores podrán ver anotaciones públicas y borradores. Anotaciones privadas existen para tu referencia exclusiva. Ni %s las pueden ver.
-  contact_reviewer: Contactar a %s en %s si necesitas cualquier ayuda, o visita %s para más información sobre DocumentCloud.
+  contact_reviewer: 'Contactar a %s en %s si necesitas cualquier ayuda, o visita %s para más información sobre DocumentCloud.'
   ###############################################################
   #  End of "Control Panel" strings
   ###############################################################
@@ -300,7 +300,7 @@ workspace:
   already_has_account: '%s ya tiene una cuenta.'
   account_is_disabled: '%s se ha desactivado.'
   double_check_disable: ¿Seguro que quieres desactivar la cuenta de %s?
-  explain_disable_account: '%1$s no podrá acceder a DocumentCloud. Documentos y anotaciones públicas de %1$s permanecerán disponibles. %2$sContactar a soporte técnico%3$s para purgar completamente la cuenta de %1$s'.
+  explain_disable_account: '%1$s no podrá acceder a DocumentCloud. Documentos y anotaciones públicas de %1$s permanecerán disponibles. %2$sContactar a soporte técnico%3$s para purgar completamente la cuenta de %1$s.'
   signup_sent_to:  Solicitud para crear una cuenta enviada a %s
   account_add_failure: No se pudo crear a la cuenta.
 
