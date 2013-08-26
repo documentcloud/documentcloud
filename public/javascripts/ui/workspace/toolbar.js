@@ -61,7 +61,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   editDescription : function() {
     this.edit(function(docs) {
       var current = Documents.sharedAttribute(docs, 'description') || '';
-      dc.ui.Dialog.prompt('Description', current, function(description) {
+      dc.ui.Dialog.prompt( _.t('edit_description'), current, function(description) {
         _.each(docs, function(doc) { doc.save({description : description}); });
         return true;
       }, {information : Documents.subtitle(docs.length)});
@@ -71,7 +71,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   editSource : function() {
     this.edit(function(docs) {
       var current = Documents.sharedAttribute(docs, 'source') || '';
-      dc.ui.Dialog.prompt('Source', current, function(source) {
+      dc.ui.Dialog.prompt(_.t('edit_source'), current, function(source) {
         _.each(docs, function(doc) { doc.save({source : source}); });
         return true;
       }, {mode : 'short_prompt', information : Documents.subtitle(docs.length)});
@@ -97,7 +97,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   editPublishedUrl : function() {
     this.edit(function(docs) {
       var current = Documents.sharedAttribute(docs, 'remote_url') || '';
-      dc.ui.Dialog.prompt('Published URL', current, function(url, dialog) {
+      dc.ui.Dialog.prompt( _.t('edit_published_url'), current, function(url, dialog) {
         url = dc.inflector.normalizeUrl(url);
         if (url && !dialog.validateUrl(url)) return false;
         _.each(docs, function(doc) { doc.save({remote_url : url}); });
