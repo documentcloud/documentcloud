@@ -13,8 +13,9 @@ common: &common
   pg: p.
   # Is scattered thourout the interface as a shortcut for page.
 
+  finish: Finish
   next: Next
-  # Is used in a button on multiple dialogs.  For example in the workspace, click a document and click the Publish menu, then select Embed Dialog Viewer
+  # Is used in a button on multiple dialogs.  For example in the workspace, click a document and click the Publish menu, then select Embed Document Viewer
 
 
   save: Save
@@ -419,6 +420,10 @@ workspace:
     viewer%s.
   back: Back
   close: Close
+  step_x_of_x: Step %d of %d
+  embed_step_one_title: "Step One: Review \"%s\""
+  embed_step_two_title: "Step Two: Configure the Document Viewer"
+  embed_step_three_title: "Step Three: Copy and Paste the Embed Code"
 
 
   # Appears when pages are shown in organizer.  

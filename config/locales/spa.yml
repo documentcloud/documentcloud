@@ -14,8 +14,9 @@ common: &common
   # Is scattered thourout the interface as a shortcut for page.
   # this could also be pág. 
 
+  finish: Acabados
   next: Próximo
-  # Is used in a button on multiple dialogs.  For example in the workspace, click a document and click the Publish menu, then select Embed Dialog Viewer
+  # Is used in a button on multiple dialogs.  For example in the workspace, click a document and click the Publish menu, then select Embed Document Viewer
 
   save: Guardar
   # Used as button on multiple dialogs.  The 'Edit Document Information' dialog, accessed by right-clicking on a document in the workspace is an example.
@@ -389,7 +390,10 @@ workspace:
   preview_viewer: Antes de continuar, por favor %srevisa el marco del documento%s.
   back: Volver
   close: Cerrar
-
+  step_x_of_x: Paso %d de %d
+  embed_step_one_title: "Paso uno: Revisión \"%s\""
+  embed_step_two_title: "Paso dos: Configurar el marco de documentos"
+  embed_step_three_title: "Step Three: Copy and Paste the Embed Code"
 
   # Appears when pages are shown in organizer.  
   # Right-click on a document and select 'View Pages'
@@ -699,7 +703,6 @@ viewer:
   loading: Cargando
   # This message is displayed on the background of pages while the images for them are loading
 
-  next: Próxima
   next_note: Próxima Anotación
   previous: Previa
   previous_note: Previa Anotación
