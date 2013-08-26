@@ -121,7 +121,7 @@ dc.model.Document = Backbone.Model.extend({
 
   openPublishedViewer : function() {
     if (this.checkBusy()) return;
-    if (!this.isPublished()) return dc.ui.Dialog.alert('"' + this.get('title') + '" is not published.');
+    if (!this.isPublished()) return dc.ui.Dialog.alert( _.t('x_is_not_published', this.get('title') ) );
     return window.open(this.publishedUrl());
   },
 
@@ -155,7 +155,7 @@ dc.model.Document = Backbone.Model.extend({
 
   // Is the document editable by the current account?
   checkAllowedToEdit : function(message) {
-    message = message || "You don't have permission to edit \"" + this.get('title') + "\".";
+    message = message || _.t('no_permission_to_edit_x', this.get('title') );
     if (this.allowedToEdit()) return true;
     dc.ui.Dialog.alert(message);
     return false;
@@ -163,7 +163,7 @@ dc.model.Document = Backbone.Model.extend({
 
   checkBusy : function() {
     if (!(this.get('access') == dc.access.PENDING)) return false;
-    dc.ui.Dialog.alert('"' + this.get('title') + '" is still being processed. Please wait for it to finish.');
+    dc.ui.Dialog.alert( _.t('x_still_processing', this.get('title') ) );
     return true;
   },
 
@@ -221,7 +221,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
   model    : dc.model.Document,
 
-  EMBED_FORBIDDEN : "You don't have permission to embed that document.",
+  EMBED_FORBIDDEN : _.t('no_embed_permission'),
 
   POLL_INTERVAL : 10 * 1000, // 10 seconds.
 
@@ -300,7 +300,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
   downloadViewers : function(docs) {
     var ids = _.map(docs, function(doc){ return doc.id; });
-    var dialog = dc.ui.Dialog.progress('Preparing ' + dc.inflector.pluralize('document', ids.length) + ' for download...');
+    var dialog = dc.ui.Dialog.progress( _.t('downloading_progress', ids.length, docs[0].get('title') ) );
     dc.app.download('/download/' + ids.join('/') + '/document_viewer.zip', function() {
       dialog.close();
     });

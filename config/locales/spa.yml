@@ -670,6 +670,13 @@ workspace:
   embed_a_note: Incrustar una Nota
   set_publication_date: Definir fecha de publicación
   download_viewer: Descargar Marco de Revisión
+  no_permission_to_edit_x: Usted no tiene permiso para edita \"%s\".
+  x_is_not_published: \"%s\" no se publica.
+  x_still_processing: \"%s\" está siendo procesada. Espere a que termine por favor.
+  no_embed_permission: Usted no tiene permiso para insertar el documento.
+  downloading_progress: 
+  - Preparación de \"%$2s\" para descargar ...
+  - Preparación %d documentos para descargar
   download_pdf: Descargar PDF Original
   download_text: Descargar Text Completo
 
