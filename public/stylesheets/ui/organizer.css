@@ -38,13 +38,13 @@
 #organizer #project_controls {
   margin-right: 2px;
   position: relative;
-  padding: 20px 20px;
+  padding: 20px 15px;
 }
   #new_document_form {
     position: relative;
     height: 26px;
     overflow: hidden;
-    width: 130px;
+    width: 150px;
   }
     #new_document_form input[type=file] {
       position: absolute;
@@ -65,7 +65,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      max-width: 94px;
+      max-width: 130px;
     }
 #organizer .project_list_wrap {
 }
