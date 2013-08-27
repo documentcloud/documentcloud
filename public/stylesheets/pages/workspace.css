@@ -249,6 +249,15 @@ div.full_page_background {
             margin-top: 10px;
             margin-left: 200px;
           }
+      #full_screen_form .input {
+        display: block;
+        position: absolute;
+        margin: 0 0 0 195px;
+        height: 30px;
+        width: 355px;
+        font-size: 16px;
+        padding-top: 2px;
+      }
       #full_screen_form .text_input {
         display: block;
         position: absolute;

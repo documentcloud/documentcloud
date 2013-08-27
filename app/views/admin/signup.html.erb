@@ -41,6 +41,18 @@
         Short Name for URLs:<br /><span class="example">ex: daily-tribune</span>
       </label>
     </div>
+
+    <div class="line">
+      <select name="organization[language]" class="language input">
+        <% DC::Language::SUPPORTED.each do | language | %>
+        <option value="<%= language %>"><%= DC::Language::NAMES[ language ]  %></option>
+        <% end %>
+      </select>
+      <label for="account_email">
+        Language:<br /><span class="example">For Organization and Admin Account</span>
+      </label>
+    </div>
+
     <div class="line">
       <div class="text_input">
         <div class="background">
