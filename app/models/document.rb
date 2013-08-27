@@ -46,13 +46,14 @@ class Document < ActiveRecord::Base
                                   :conditions  => {:hidden => true},
                                   :source      => :project
 
-  has_many :duplicates, :foreign_key=>'file_hash', :primary_key=>'file_hash', :class_name=>"Document",
+  has_many :duplicates, :foreign_key=>'file_hash', :primary_key=>'file_hash', :class_name=>"Document", 
       :conditions=>['access in (?) and id != #{id} and text_changed = false', ACCESS_SUCCEEDED ]
 
   validates_presence_of :organization_id, :account_id, :access, :page_count,
                         :title, :slug
 
-  before_validation :ensure_language_is_valid
+  validates_inclusion_of :language, :in => DC::Language::SUPPORTED
+
   before_validation_on_create :ensure_titled
 
   after_destroy :delete_assets
@@ -108,8 +109,8 @@ class Document < ActiveRecord::Base
     opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
     if has_shared
       opts[:joins] = <<-EOS
-        left outer join
-        (select distinct document_id from project_memberships
+        left outer join 
+        (select distinct document_id from project_memberships 
           where project_id in (#{account.accessible_project_ids.join(',')})) as memberships
         on memberships.document_id = documents.id
       EOS
@@ -150,7 +151,7 @@ class Document < ActiveRecord::Base
     #   text(entity) { self.entity_values(entity) }
     #   string(entity, :multiple => true) { self.entity_values(entity) }
     # end
-
+    
     # Data...
     dynamic_string :data do
       self.docdata ? self.docdata.data.symbolize_keys : {}
@@ -172,7 +173,7 @@ class Document < ActiveRecord::Base
                (params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE)
     email_me = params[:email_me] ? params[:email_me].to_i : false
     file_ext = File.extname(name).downcase[1..-1]
-
+    
     doc = self.create!(
       :organization_id    => organization.id,
       :account_id         => account.id,
@@ -283,11 +284,11 @@ class Document < ActiveRecord::Base
   def per_page_annotation_counts
     self.annotations.count(:group => 'page_number')
   end
-
+  
   def ordered_sections
     sections.all(:order => 'page_number asc')
   end
-
+  
   def ordered_annotations(account)
     self.annotations.accessible(account).all(:order => 'page_number asc, location asc nulls first')
   end
@@ -326,11 +327,11 @@ class Document < ActiveRecord::Base
     end
     hash
   end
-
+  
   def reset_char_count!
     Document.connection.execute <<-EOS
-      update documents
-      set char_count = 1 +
+      update documents 
+      set char_count = 1 + 
         coalesce((select max(end_offset) from pages where pages.document_id = documents.id), 0)
       where documents.id = #{id}
     EOS
@@ -389,11 +390,11 @@ class Document < ActiveRecord::Base
   def account_name
     @account_name ||= (account ? account.full_name : 'Unattributed')
   end
-
+  
   def data
     docdata ? docdata.data : {}
   end
-
+  
   def data=(hash)
     self.docdata = Docdata.create(:document_id => id) unless self.docdata
     docdata.update_attributes :data => hash
@@ -403,7 +404,7 @@ class Document < ActiveRecord::Base
   def path
     File.join('documents', id.to_s)
   end
-
+  
   def original_file_path
     File.join(path, slug + ".#{original_extension}")
   end
@@ -447,7 +448,7 @@ class Document < ActiveRecord::Base
   def project_ids
     self.project_memberships.map {|m| m.project_id }
   end
-
+  
   # Externally used image path, not to be confused with `page_image_path()`
   def page_image_template
     "#{slug}-p{page}-{size}.gif"
@@ -603,7 +604,7 @@ class Document < ActiveRecord::Base
   def reprocess_text(force_ocr = false)
     queue_import :text_only => true, :force_ocr => force_ocr, :secure => !calais_id
   end
-
+  
   def reprocess_images
     queue_import :images_only => true, :secure => !calais_id
   end
@@ -728,7 +729,7 @@ class Document < ActiveRecord::Base
     self.update_attributes :access => PENDING
     record_job(DC::Import::CloudCrowdImporter.new.import([id], options, self.low_priority?).body)
   end
-
+  
   def self.duplicate(document_ids, account, options={})
     RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'duplicate_documents',
@@ -738,24 +739,24 @@ class Document < ActiveRecord::Base
       )
     }.to_json})
   end
-
+  
   # Create an identical clone of this document, in all ways (except for the ID).
   def duplicate!(account=nil, options={})
     # Clone the document.
     newattrs = attributes.merge({
-      :access     => PENDING,
-      :created_at => Time.now,
+      :access     => PENDING, 
+      :created_at => Time.now, 
       :updated_at => Time.now
     })
     newattrs[:account_id] = account.id if account
     copy     = Document.create!(newattrs.merge({:hit_count  => 0, :detected_remote_url => nil}))
     newattrs = {:document_id => copy.id}
-
+    
     # Clone the docdata.
     if docdata and options['include_docdata']
       Docdata.create! docdata.attributes.merge newattrs
     end
-
+    
     # Clone the associations.
     associations = [entities, entity_dates, pages]
     associations.push sections if options['include_sections']
@@ -766,14 +767,14 @@ class Document < ActiveRecord::Base
         model.class.create! model.attributes.merge newattrs
       end
     end
-
+    
     # Clone the assets.
     DC::Store::AssetStore.new.copy_assets(self, copy)
-
+    
     # Reindex, set access.
     copy.index
     copy.set_access access
-
+    
     copy
   end
 
@@ -898,9 +899,6 @@ class Document < ActiveRecord::Base
   end
 
   private
-  def ensure_language_is_valid
-    self.language = DC::Language::DEFAULT unless DC::Language::SUPPORTED.include?(language)
-  end
 
   def ensure_titled
     self.title ||= DEFAULT_TITLE
