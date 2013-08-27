@@ -113,16 +113,19 @@ class Organization < ActiveRecord::Base
   def admin_emails
     self.accounts.admin.all(:select => [:email]).map {|acc| acc.email }
   end
-  
+
+  def language
+    read_attribute('language') || DC::Language::DEFAULT
+  end
+
   def to_json(options = {})
     canonical(options).to_json
   end
-
   def canonical( options = {} )
     attrs = {
       'name'     => name,
       'slug'     => slug,
-      'language' => language || 'en',
+      'language' => language,
       'demo'     => demo,
       'id'       => id
     }
