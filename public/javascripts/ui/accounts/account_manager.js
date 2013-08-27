@@ -17,6 +17,9 @@ dc.ui.AccountManager = Backbone.View.extend({
   },
   
   open: function() {
+    // note needs a guard against opening
+    // accounts panel when in the public workspace
+    // or dc.account otherwise isn't set.
     console.log("Opened Account Manager!");
     dc.app.navigation.open('accounts');
     Backbone.history.navigate('accounts');
