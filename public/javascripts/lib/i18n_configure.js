@@ -7,6 +7,8 @@
 
   var i18n = new root.I18n( langopts );
 
-  _.t = i18n.translate;
+  _.mixin({
+    t: i18n.translate
+  });
 
 })(this);
