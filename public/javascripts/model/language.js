@@ -3,25 +3,12 @@
 
 
 dc.language = {
-
-  SUPPORTED: [
-    'eng', 'spa', 'fra','nor','swe','ara','deu',
-    'chi','zho','jpn','hin','rus'
-  ],
-
   NAMES: {
     'eng': 'English',
-    'spa': 'Spanish',
-    'fra': 'French',
-    'nor': 'Norwegian',
-    'swe': 'Swedish',
-    'ara': 'Arabic',
-    'deu': 'German',
-    'chi': 'Chinese(Tranditional)',
-    'zho': 'Chinese(Simplified)',
-    'jpn': 'Japanese',
-    'hin': 'Hindu',
-    'rus': 'Russian'
+    'spa': 'Español/Spanish',
+    'fra': 'Français/French',
+    'deu': 'Duetch/German'
   }
-
 };
+
+dc.language.SUPPORTED = _.keys(dc.language.NAMES);
