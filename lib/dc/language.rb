@@ -24,7 +24,7 @@ module DC
       'hin' => 'Hindu',
       'rus' => 'Russian'
     }
-
+    DEFAULT = 'eng'
   end
 
 end
