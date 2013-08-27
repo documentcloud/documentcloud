@@ -25,6 +25,8 @@ module DC
       'rus' => 'Russian'
     }
 
+    DEFAULT = 'eng'
+
   end
 
 end
