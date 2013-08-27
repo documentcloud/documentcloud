@@ -318,11 +318,13 @@ div.full_page_background {
 
 .search_tab_content,
 .publish_tab_content,
+.accounts_tab_content,
 .help_tab_content {
   display: none;
 }
   body.search_panel_tab .search_tab_content,
   body.publish_panel_tab .publish_tab_content,
+  body.accounts_panel_tab .accounts_tab_content,
   body.help_panel_tab .help_tab_content {
     display: block;
   }

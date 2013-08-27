@@ -4,7 +4,6 @@ dc.ui.AccountManager = Backbone.View.extend({
   initialize: function(options){
     this.account = dc.account;
     this.collection = (this.collection || window.Accounts)
-    this.createSubViews();
     dc.app.navigation.bind('tab:accounts', this.open);
   },
   
@@ -13,7 +12,8 @@ dc.ui.AccountManager = Backbone.View.extend({
   },
   
   render: function() {
-    
+    //var html = ""
+    this.$el.html(html)
   },
   
   open: function() {
