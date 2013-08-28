@@ -78,6 +78,7 @@ common: &common
   x_documents:
   - '%d Documento'
   - '%d Documentos'
+  organizations_documents: Documentos de %s
   # Used all over, an example is the project listing, document data dialog, and most of the dialogs for the data elements in the viewer.
 
   x_collaborators:

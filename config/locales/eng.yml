@@ -75,6 +75,7 @@ common: &common
   x_documents:
   - '%d Document'
   - '%d Documents'
+  organizations_documents: Documents belonging to %s
   # Used all over, an example is the project listing, document data dialog, and most of the dialogs for the data elements in the viewer.
 
   x_collaborators:
@@ -121,7 +122,6 @@ workspace:
   public_access_help: Anyone on the internet can search for and view the document.
   private_to: Private to %s
   private_access: Private Access
-
 
 
   ###############################################################
