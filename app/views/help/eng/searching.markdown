@@ -3,19 +3,19 @@
 By default, a search looks for all of the words you enter within the title and full text of the document itself. For example: [John Yoo detainee][]. You can, however, ask DocumentCloud to search the contents of specific fields.
 
 ## Advanced Queries
-Enclose terms in quotes to search for a specific, multi-word phrase. `"Robert Smith"` 
+Enclose terms in quotes to search for a specific, multi-word phrase. `"Robert Smith"`
 
-Use Boolean search operators, like `and` and `or` in conjunction with parentheses for grouping, and `!` to exclude terms that shouldn't be present in your results. 
+Use Boolean search operators, like `and` and `or` in conjunction with parentheses for grouping, and `!` to exclude terms that shouldn't be present in your results.
 
 For example: `(geithner and bernanke) !madoff`
 
 You may also use `*` for "wildcard" searches, so a search of `J* Brown` will match both `"Jerry Brown"` and `"John Brown"`.
 
 ## <span id="builtin">Searching by Built-in Metadata Field</span>
-   
-Term                        | Description 
+
+Term                        | Description
 ----------------------------|---------------------
-title                       |	Will search for documents by title, as provided by the person who uploaded it. For example: [title: deepwater][].
+title                       | Will search for documents by title, as provided by the person who uploaded it. For example: [title: deepwater][].
 source                      | When you upload a document, you have the opportunity to identify the source. This provides a way to search that field. For example: [source: supreme][] will identify documents attributed to "U.S. Supreme Court" as well as "New York State Supreme Court."
 description                 | Search for a word or phrase within a document's description. For example: [description: manifesto][].
 account                     | Specify an account id to see documents uploaded by a single user. Click on the toggle triangle in the top left corner of the "Documents" tab, to reveal a list of all the accounts in your organization. For example: [account: 7-scott-klein][].
@@ -24,7 +24,7 @@ project                     | Restrict your search to just the documents in one 
 projectid                   | Restrict your search to a particular project, by a project's canonical identifier. Useful for filtering public API calls. You can view this ID by opening the project's edit dialog. For example: [projectid: 6-the-financial-crisis][]
 access                      | Search for only documents that have a particular access level (one of "public", "private", or "organization"). For example, to view all of your private documents: [access: private][]
 filter                      | Filter documents by interesting criteria (one of "published", "unpublished", "annotated", or "popular"). For example, to view all published documents: [filter: published][]
- 
+
 ## <span id="viewing_entities">Viewing Entities</span>
 
 ![OpenCalais Logo][]
@@ -49,7 +49,7 @@ To filter documents by data that you've added, either click on the tag (shown in
 
 You can add the same key multiple times with different values. To search for all citizens of Pakistan or Yemen: `citizen: Pakistan citizen: Yemen`
 
-If you'd like to filter all documents with a `citizen` key, but you don't care about the value, you can use: `citizen: *` 
+If you'd like to filter all documents with a `citizen` key, but you don't care about the value, you can use: `citizen: *`
 
 To find all the documents that *don't* have a `citizen` key yet, use: `citizen: !`
 
