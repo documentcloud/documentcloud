@@ -29,9 +29,13 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .embed_note':            'embedNote',
     'click .access_info':           'editAccess'
   },
-  
-  redactionNotice: function() {
-    dc.ui.Dialog.alert('The redaction tool has been temporarily disabled.  Feel free to <a style="color:white;cursor:pointer;" href="/contact">contact us</a> if you have any questions.');
+
+  redactionNotice: function(evt) {
+    if ( evt.shiftKey ){
+      this.toggleRedaction(evt);
+    } else {
+      dc.ui.Dialog.alert('The redaction tool has been temporarily disabled.  Feel free to <a style="color:white;cursor:pointer;" href="/contact">contact us</a> if you have any questions.');
+    }
   },
 
   initialize : function() {
