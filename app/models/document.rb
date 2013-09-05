@@ -451,7 +451,7 @@ class Document < ActiveRecord::Base
   
   # Externally used image path, not to be confused with `page_image_path()`
   def page_image_template
-    "#{slug}-p{page}-{size}.gif"
+    "#{slug}-p{page}-{size}.gif" 
   end
 
   def page_text_template
@@ -548,8 +548,17 @@ class Document < ActiveRecord::Base
   end
 
   def page_image_url_template(opts={})
-    return File.join(slug, page_image_template) if opts[:local]
-    public? || Rails.env.development? ? public_page_image_template : private_page_image_template
+    tmpl = if opts[:local]
+             File.join(slug, page_image_template )
+           elsif self.public? || Rails.env.development?
+             public_page_image_template 
+           else
+             private_page_image_template
+           end
+    if opts[:cache_busting] 
+      tmpl << "?#{updated_at.to_i}"
+    end
+    tmpl
   end
 
   def page_text_url_template(opts={})
@@ -797,7 +806,7 @@ class Document < ActiveRecord::Base
       :pdf_url             => pdf_url,
       :thumbnail_url       => thumbnail_url,
       :full_text_url       => full_text_url,
-      :page_image_url      => page_image_url_template,
+      :page_image_url      => page_image_url_template( { :cache_busting => opts[:cache_busting] } ),
       :document_viewer_url => document_viewer_url,
       :document_viewer_js  => canonical_url(:js),
       :reviewer_count      => reviewer_count,
@@ -864,7 +873,7 @@ class Document < ActiveRecord::Base
     res['search']             = search_url
     res['print_annotations']  = print_annotations_url
     res['page']               = {}
-    res['page']['image']      = page_image_url_template(:local => options[:local])
+    res['page']['image']      = page_image_url_template({ :local => options[:local], :cache_busting => options[:cache_busting] })
     res['page']['text']       = page_text_url_template(:local => options[:local])
     res['related_article']    = related_article if related_article
     res['annotations_url']    = annotations_url if commentable?(options[:account])
