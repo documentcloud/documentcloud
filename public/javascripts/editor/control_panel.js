@@ -32,7 +32,8 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   redactionNotice: function(evt) {
     if ( evt.shiftKey ){
-      this.toggleRedaction(evt);
+      this.openDocumentTab();
+      dc.app.editor.annotationEditor.open('redact');
     } else {
       dc.ui.Dialog.alert('The redaction tool has been temporarily disabled.  Feel free to <a style="color:white;cursor:pointer;" href="/contact">contact us</a> if you have any questions.');
     }
