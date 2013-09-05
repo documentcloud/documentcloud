@@ -46,7 +46,7 @@ class Document < ActiveRecord::Base
                                   :conditions  => {:hidden => true},
                                   :source      => :project
 
-  has_many :duplicates, :foreign_key=>'file_hash', :primary_key=>'file_hash', :class_name=>"Document", 
+  has_many :duplicates, :foreign_key=>'file_hash', :primary_key=>'file_hash', :class_name=>"Document",
       :conditions=>['access in (?) and id != #{id} and text_changed = false', ACCESS_SUCCEEDED ]
 
   validates_presence_of :organization_id, :account_id, :access, :page_count,
@@ -109,8 +109,8 @@ class Document < ActiveRecord::Base
     opts = {:conditions => ["(#{access.join(' or ')})"], :readonly => false}
     if has_shared
       opts[:joins] = <<-EOS
-        left outer join 
-        (select distinct document_id from project_memberships 
+        left outer join
+        (select distinct document_id from project_memberships
           where project_id in (#{account.accessible_project_ids.join(',')})) as memberships
         on memberships.document_id = documents.id
       EOS
@@ -151,7 +151,7 @@ class Document < ActiveRecord::Base
     #   text(entity) { self.entity_values(entity) }
     #   string(entity, :multiple => true) { self.entity_values(entity) }
     # end
-    
+
     # Data...
     dynamic_string :data do
       self.docdata ? self.docdata.data.symbolize_keys : {}
@@ -173,7 +173,7 @@ class Document < ActiveRecord::Base
                (params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE)
     email_me = params[:email_me] ? params[:email_me].to_i : false
     file_ext = File.extname(name).downcase[1..-1]
-    
+
     doc = self.create!(
       :organization_id    => organization.id,
       :account_id         => account.id,
@@ -284,11 +284,11 @@ class Document < ActiveRecord::Base
   def per_page_annotation_counts
     self.annotations.count(:group => 'page_number')
   end
-  
+
   def ordered_sections
     sections.all(:order => 'page_number asc')
   end
-  
+
   def ordered_annotations(account)
     self.annotations.accessible(account).all(:order => 'page_number asc, location asc nulls first')
   end
@@ -327,11 +327,11 @@ class Document < ActiveRecord::Base
     end
     hash
   end
-  
+
   def reset_char_count!
     Document.connection.execute <<-EOS
-      update documents 
-      set char_count = 1 + 
+      update documents
+      set char_count = 1 +
         coalesce((select max(end_offset) from pages where pages.document_id = documents.id), 0)
       where documents.id = #{id}
     EOS
@@ -390,11 +390,11 @@ class Document < ActiveRecord::Base
   def account_name
     @account_name ||= (account ? account.full_name : 'Unattributed')
   end
-  
+
   def data
     docdata ? docdata.data : {}
   end
-  
+
   def data=(hash)
     self.docdata = Docdata.create(:document_id => id) unless self.docdata
     docdata.update_attributes :data => hash
@@ -404,7 +404,7 @@ class Document < ActiveRecord::Base
   def path
     File.join('documents', id.to_s)
   end
-  
+
   def original_file_path
     File.join(path, slug + ".#{original_extension}")
   end
@@ -448,10 +448,10 @@ class Document < ActiveRecord::Base
   def project_ids
     self.project_memberships.map {|m| m.project_id }
   end
-  
+
   # Externally used image path, not to be confused with `page_image_path()`
   def page_image_template
-    "#{slug}-p{page}-{size}.gif" 
+    "#{slug}-p{page}-{size}.gif"
   end
 
   def page_text_template
@@ -472,17 +472,19 @@ class Document < ActiveRecord::Base
     DC::Store::AssetStore.new.authorized_url(pdf_path)
   end
 
-  def thumbnail_url
-    page_image_url 1, 'thumbnail'
+  def thumbnail_url( options={} )
+    page_image_url( 1, 'thumbnail', options )
   end
 
-  def page_image_url(page, size)
+  def page_image_url(page, size, options={} )
     path = page_image_path(page, size)
-    if public?
-      File.join DC::Store::AssetStore.web_root, path
-    else
-      DC::Store::AssetStore.new.authorized_url path
-    end
+    url = if public?
+            File.join DC::Store::AssetStore.web_root, path
+          else
+            DC::Store::AssetStore.new.authorized_url path
+          end
+    url << "?#{updated_at.to_i}" if options[:cache_busting]
+    url
   end
 
   def public_full_text_url
@@ -551,13 +553,11 @@ class Document < ActiveRecord::Base
     tmpl = if opts[:local]
              File.join(slug, page_image_template )
            elsif self.public? || Rails.env.development?
-             public_page_image_template 
+             public_page_image_template
            else
              private_page_image_template
            end
-    if opts[:cache_busting] 
-      tmpl << "?#{updated_at.to_i}"
-    end
+    tmpl << "?#{updated_at.to_i}" if opts[:cache_busting]
     tmpl
   end
 
@@ -609,7 +609,7 @@ class Document < ActiveRecord::Base
   def reprocess_text(force_ocr = false)
     queue_import :text_only => true, :force_ocr => force_ocr, :secure => !calais_id
   end
-  
+
   def reprocess_images
     queue_import :images_only => true, :secure => !calais_id
   end
@@ -734,7 +734,7 @@ class Document < ActiveRecord::Base
     self.update_attributes :access => PENDING
     record_job(DC::Import::CloudCrowdImporter.new.import([id], options, self.low_priority?).body)
   end
-  
+
   def self.duplicate(document_ids, account, options={})
     RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'duplicate_documents',
@@ -744,24 +744,24 @@ class Document < ActiveRecord::Base
       )
     }.to_json})
   end
-  
+
   # Create an identical clone of this document, in all ways (except for the ID).
   def duplicate!(account=nil, options={})
     # Clone the document.
     newattrs = attributes.merge({
-      :access     => PENDING, 
-      :created_at => Time.now, 
+      :access     => PENDING,
+      :created_at => Time.now,
       :updated_at => Time.now
     })
     newattrs[:account_id] = account.id if account
     copy     = Document.create!(newattrs.merge({:hit_count  => 0, :detected_remote_url => nil}))
     newattrs = {:document_id => copy.id}
-    
+
     # Clone the docdata.
     if docdata and options['include_docdata']
       Docdata.create! docdata.attributes.merge newattrs
     end
-    
+
     # Clone the associations.
     associations = [entities, entity_dates, pages]
     associations.push sections if options['include_sections']
@@ -772,19 +772,19 @@ class Document < ActiveRecord::Base
         model.class.create! model.attributes.merge newattrs
       end
     end
-    
+
     # Clone the assets.
     DC::Store::AssetStore.new.copy_assets(self, copy)
-    
+
     # Reindex, set access.
     copy.index
     copy.set_access access
-    
+
     copy
   end
 
   # TODO: Make the to_json an extended form of the canonical.
-  def to_json(opts={})
+  def as_json(opts={})
     json = {
       :id                  => id,
       :organization_id     => organization_id,
@@ -804,7 +804,7 @@ class Document < ActiveRecord::Base
       :account_slug        => account_slug,
       :related_article     => related_article,
       :pdf_url             => pdf_url,
-      :thumbnail_url       => thumbnail_url,
+      :thumbnail_url       => thumbnail_url( { :cache_busting => opts[:cache_busting] } ),
       :full_text_url       => full_text_url,
       :page_image_url      => page_image_url_template( { :cache_busting => opts[:cache_busting] } ),
       :document_viewer_url => document_viewer_url,
@@ -825,7 +825,11 @@ class Document < ActiveRecord::Base
       json[:annotations_url] = annotations_url if commentable?(opts[:account])
       json[:annotations] = self.annotations_with_authors(opts[:account])
     end
-    json.to_json
+    json
+  end
+
+  def to_json(opts={})
+    as_json(opts).to_json
   end
 
   # The filtered attributes we're allowed to display in the admin UI.
