@@ -478,13 +478,13 @@ class Document < ActiveRecord::Base
 
   def page_image_url(page, size, options={} )
     path = page_image_path(page, size)
-    url = if public?
-            File.join DC::Store::AssetStore.web_root, path
-          else
-            DC::Store::AssetStore.new.authorized_url path
-          end
-    url << "?#{updated_at.to_i}" if options[:cache_busting]
-    url
+    if public?
+      url = File.join( DC::Store::AssetStore.web_root, path )
+      url << "?#{updated_at.to_i}" if options[:cache_busting]
+      url
+    else
+      DC::Store::AssetStore.new.authorized_url path
+    end
   end
 
   def public_full_text_url
