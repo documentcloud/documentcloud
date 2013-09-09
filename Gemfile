@@ -30,4 +30,5 @@ gem 'omniauth-google-oauth2',  '>= 0.1.13'
 gem 'sanitize'
 
 gem 'cloud-crowd'
+gem 'pdftailor'
 gem 'sqlite3'
