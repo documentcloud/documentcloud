@@ -97,7 +97,6 @@ class RedactPages < DocumentAction
   def rebuild_pdf
     page_paths = (1..document.page_count).map {|i| "#{document.slug}_#{i}.pdf" }
     #`pdftk #{page_paths.join(' ')} cat output #{@pdf}`
-    Rails.logger.warn `which pdftailor`
     `pdftailor stitch --output #{@pdf} #{page_paths.join(' ')} 2>&1`
 
     if File.exists? @pdf
