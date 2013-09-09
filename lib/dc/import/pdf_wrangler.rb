@@ -40,7 +40,7 @@ module DC
         batches.times do |batch_num|
           tar_path = "#{sprintf('%05d', batch_num)}.tar"
           batch_pages = pages[batch_num*batch_size...(batch_num + 1)*batch_size]
-          `tar -czf #{tar_path} #{batch_pages.join(' ')}`
+          `tar -czf #{tar_path} #{batch_pages.join(' ')} 2>&1`
         end
         Dir["*.tar"]
       end
