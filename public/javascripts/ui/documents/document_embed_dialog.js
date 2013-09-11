@@ -62,7 +62,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     this._showTextEl    = this.$('input[name=show_text]');
     this._showPDFEl     = this.$('input[name=show_pdf]');
     this._openToEl      = this.$('.open_to');
-    if (dc.app.preferences.get('embed_options')) this._loadPreferences();
+    if (dc.app.preferences.get('document_embed_options')) this._loadPreferences();
     this.setMode('document_embed', 'dialog');
     this.update();
     this.setStep();
