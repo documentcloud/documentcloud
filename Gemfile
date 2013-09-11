@@ -11,9 +11,9 @@ gem 'pg',                     '~> 0.15.1'
 gem 'closure-compiler'
 gem 'docsplit',               '>= 0.6.4'
 gem 'sunspot_rails',          '~> 2.0'
-gem 'cloud-crowd',            '~> 0.3.3'
-gem 'sqlite3',                '~> 1.3.7'
-
+gem 'cloud-crowd'
+gem 'sqlite3'
+gem 'pdftailor'
 gem 'omniauth',               '~> 1.1.4'
 gem 'omniauth-twitter',       '~> 1.0'
 gem 'omniauth-facebook',      '~> 1.4.1'
@@ -38,7 +38,3 @@ group :development, :test do
   gem 'guard-minitest'
   gem 'spring'
 end
-
-gem 'cloud-crowd'
-gem 'pdftailor'
-gem 'sqlite3'

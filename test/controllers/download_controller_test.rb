@@ -27,7 +27,7 @@ class DownloadControllerTest < ActionController::TestCase
     end
   end
 
-  test "send_viewer" do
+  it "sends the viewer" do
     get :bulk_download, :args=>[ doc.id.to_s, 'document_viewer']
     assert_response :success
     zip_from_response( response ) do | zf |
