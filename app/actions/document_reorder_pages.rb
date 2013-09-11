@@ -26,7 +26,7 @@ class DocumentReorderPages < DocumentAction
     # Rewrite PDF with pdftk, using new page order
     tmp_name = "#{document.slug}.pdf_temp"
     cmd = "pdftk #{@pdf} cat #{page_order.join(' ')} output #{tmp_name}"
-    `#{cmd}`
+    `#{cmd} 2>&1`
     if File.exists? tmp_name
       asset_store.save_pdf(document, tmp_name)
       File.open(tmp_name,'r') do | fh |

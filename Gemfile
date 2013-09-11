@@ -28,6 +28,7 @@ gem 'jammit', :git=>'https://github.com/documentcloud/jammit.git'
 gem 'nokogiri',               '1.5.6' # only pegged because nokogiri 1.5.9 installation fucking up on OSX
 gem 'right_aws',              '2.0.1', :git=>'https://github.com/documentcloud/right_aws.git'        # Our patched version.
 
+
 group :development, :test do
   gem 'guard-bundler'
   gem 'growl'
@@ -37,3 +38,7 @@ group :development, :test do
   gem 'guard-minitest'
   gem 'spring'
 end
+
+gem 'cloud-crowd'
+gem 'pdftailor'
+gem 'sqlite3'

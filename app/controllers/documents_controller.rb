@@ -171,7 +171,7 @@ class DocumentsController < ApplicationController
   def status
     docs = Document.accessible(current_account, current_organization).where({:id => params[:ids]})
     Document.populate_annotation_counts(current_account, docs)
-    json 'documents' => docs
+    render :json => { 'documents' => docs.map{|doc| doc.as_json(:cache_busting=>true) } }
   end
 
   # TODO: Fix the note/annotation terminology.

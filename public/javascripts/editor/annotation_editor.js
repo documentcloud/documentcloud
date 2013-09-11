@@ -5,7 +5,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
   events : {
     'click .close': 'close'
   },
-  
+
   initialize: function(options) {
     // track open/close state
     this._open    = false;
@@ -39,7 +39,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
     // Start drawing region when user mousesdown
     this.page.bind('mousedown', this.drawAnnotation);
     $(document).bind('keydown', this.close);
-    
+
     $(document.body).setMode(kind, 'editing');
     this._buttons[kind].addClass('open');
     this._guide.fadeIn('fast');
@@ -104,7 +104,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
         yStart        = e.pageY - offTop,
         borderBottom  = this._activePage.height() - 6,
         borderRight   = this._activePage.width() - 6;
-    
+
     // Create a div to represent the highlighted region
     this.region = this.make('div', {'class' : 'DV-annotationRegion active ' + this._accessClass(this._kind), style:'position:absolute;'});
     (this._kind == 'redact' ? this._specificPage() : this._activePage).append(this.region);
@@ -126,7 +126,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
         height  : Math.abs(y - yStart)
       };
     };
-    
+
     // set the highlighted region's boundaries
     $(this.region).css(coords(e));
     // and continue to update the region's boundaries when the mouse moves.
@@ -135,13 +135,13 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
       return false;
     }, this);
     this.pages.on('mousemove', drag);
-    
+
     // when drag is finished
     var dragEnd = _.bind(function(e) {
       // clean up event listeners
       $(document).unbind('keydown', this.close);
       this.pages.unbind('mouseup', dragEnd).unbind('mousemove', drag);
-      
+
       // calculate highlighted region's dimensions
       var loc     = coords(e);
       loc.left    -= 1;
@@ -154,7 +154,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
         loc.right   += 15;
         loc.bottom  += 5;
       }
-      
+
       // Use the document's current zoom level to scale the region
       // into normalized coordinates
       var zoom    = currentDocument.api.relativeZoom();
@@ -167,7 +167,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
             location: image,
             page: this._activePageNumber
           });
-        } else { 
+        } else {
           $(this.region).remove();
         }
         this.region = null;

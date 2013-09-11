@@ -43,9 +43,14 @@ class Document < ActiveRecord::Base
   has_many :project_memberships,  :dependent   => :destroy
   has_many :projects,             :through     => :project_memberships
 
+<<<<<<< HEAD
   has_many :reviewer_projects,     -> { where( :hidden => true) },
                                      :through     => :project_memberships,
                                      :source      => :project
+=======
+  has_many :duplicates, :foreign_key=>'file_hash', :primary_key=>'file_hash', :class_name=>"Document",
+      :conditions=>['access in (?) and id != #{id} and text_changed = false', ACCESS_SUCCEEDED ]
+>>>>>>> ec29acfa3c9eae08c929eebf441ad4292e7e5b18
 
 
   has_many :duplicates, -> { where(['access in (?) and id != #{id} and text_changed = false', ACCESS_SUCCEEDED ]) },
@@ -104,12 +109,21 @@ class Document < ActiveRecord::Base
     access << "(memberships.document_id = documents.id)" if has_shared
     query = where( access.join(' or ') )
     if has_shared
+<<<<<<< HEAD
         query = query.joins( "
           left outer join
           (select distinct document_id from project_memberships
             where project_id in (#{account.accessible_project_ids.join(',')})) as memberships
           on memberships.document_id = documents.id
         ")
+=======
+      opts[:joins] = <<-EOS
+        left outer join
+        (select distinct document_id from project_memberships
+          where project_id in (#{account.accessible_project_ids.join(',')})) as memberships
+        on memberships.document_id = documents.id
+      EOS
+>>>>>>> ec29acfa3c9eae08c929eebf441ad4292e7e5b18
     end
     query
   }
@@ -324,10 +338,20 @@ class Document < ActiveRecord::Base
     hash
   end
 
+<<<<<<< HEAD
   # updates the document's character count by detecting the
   # largest end_offset off our pages.
   def reset_char_count!
     update_attributes :char_count => 1+self.pages.maximum(:end_offset).to_i
+=======
+  def reset_char_count!
+    Document.connection.execute <<-EOS
+      update documents
+      set char_count = 1 +
+        coalesce((select max(end_offset) from pages where pages.document_id = documents.id), 0)
+      where documents.id = #{id}
+    EOS
+>>>>>>> ec29acfa3c9eae08c929eebf441ad4292e7e5b18
   end
 
   # Does this document have a title?
@@ -440,6 +464,13 @@ class Document < ActiveRecord::Base
     "/#{canonical_path(:js)}"
   end
 
+<<<<<<< HEAD
+=======
+  def project_ids
+    self.project_memberships.map {|m| m.project_id }
+  end
+
+>>>>>>> ec29acfa3c9eae08c929eebf441ad4292e7e5b18
   # Externally used image path, not to be confused with `page_image_path()`
   def page_image_template
     "#{slug}-p{page}-{size}.gif"
@@ -463,14 +494,16 @@ class Document < ActiveRecord::Base
     DC::Store::AssetStore.new.authorized_url(pdf_path)
   end
 
-  def thumbnail_url
-    page_image_url 1, 'thumbnail'
+  def thumbnail_url( options={} )
+    page_image_url( 1, 'thumbnail', options )
   end
 
-  def page_image_url(page, size)
+  def page_image_url(page, size, options={} )
     path = page_image_path(page, size)
     if public?
-      File.join DC::Store::AssetStore.web_root, path
+      url = File.join( DC::Store::AssetStore.web_root, path )
+      url << "?#{updated_at.to_i}" if options[:cache_busting]
+      url
     else
       DC::Store::AssetStore.new.authorized_url path
     end
@@ -539,8 +572,15 @@ class Document < ActiveRecord::Base
   end
 
   def page_image_url_template(opts={})
-    return File.join(slug, page_image_template) if opts[:local]
-    public? || Rails.env.development? ? public_page_image_template : private_page_image_template
+    tmpl = if opts[:local]
+             File.join(slug, page_image_template )
+           elsif self.public? || Rails.env.development?
+             public_page_image_template
+           else
+             private_page_image_template
+           end
+    tmpl << "?#{updated_at.to_i}" if opts[:cache_busting]
+    tmpl
   end
 
   def page_text_url_template(opts={})
@@ -786,9 +826,9 @@ class Document < ActiveRecord::Base
       :account_slug        => account_slug,
       :related_article     => related_article,
       :pdf_url             => pdf_url,
-      :thumbnail_url       => thumbnail_url,
+      :thumbnail_url       => thumbnail_url( { :cache_busting => opts[:cache_busting] } ),
       :full_text_url       => full_text_url,
-      :page_image_url      => page_image_url_template,
+      :page_image_url      => page_image_url_template( { :cache_busting => opts[:cache_busting] } ),
       :document_viewer_url => document_viewer_url,
       :document_viewer_js  => canonical_url(:js),
       :reviewer_count      => reviewer_count,
@@ -855,7 +895,7 @@ class Document < ActiveRecord::Base
     res['search']             = search_url
     res['print_annotations']  = print_annotations_url
     res['page']               = {}
-    res['page']['image']      = page_image_url_template(:local => options[:local])
+    res['page']['image']      = page_image_url_template({ :local => options[:local], :cache_busting => options[:cache_busting] })
     res['page']['text']       = page_text_url_template(:local => options[:local])
     res['related_article']    = related_article if related_article
     res['annotations_url']    = annotations_url if commentable?(options[:account])

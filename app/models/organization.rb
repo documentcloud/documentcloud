@@ -7,7 +7,7 @@ class Organization < ActiveRecord::Base
 
   attr_accessor :document_count, :note_count, :members
 
-  has_many :memberships
+  has_many :memberships, :dependent => :destroy
   has_many :accounts, :through => :memberships
   has_many :documents
   validates :name, :slug, :presence=>true
