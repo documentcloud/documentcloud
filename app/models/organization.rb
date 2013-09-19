@@ -114,6 +114,10 @@ class Organization < ActiveRecord::Base
     self.accounts.admin.all(:select => [:email]).map {|acc| acc.email }
   end
 
+  def language
+    read_attribute('language') || DC::Language::DEFAULT
+  end
+
   def to_json(options = {})
     canonical(options).to_json
   end

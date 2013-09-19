@@ -479,8 +479,10 @@ dc.model.DocumentSet = Backbone.Collection.extend({
       ret = (searchQuery.find('filter') == 'published') ? 'your_published_documents' : 'your_documents';
     } else if (account = Accounts.getBySlug(searchQuery.find('account'))) {
       title = account.documentsTitle();
+    } else if (dc.account && searchQuery.find('group') == dc.account.organization().get('slug')) {
+      ret = 'org_documents';
     } else if (searchQuery.has('group') && (org = Organizations.findBySlug(searchQuery.find('group')))) {
-      title = _.t('organizations_documents', org.get('name') );
+      title = dc.inflector.possessivize(org.get('name')) + " Documents";
     } else if (searchQuery.find('filter') == 'published') {
       ret = 'published_documents';
     } else if (searchQuery.find('filter') == 'popular') {

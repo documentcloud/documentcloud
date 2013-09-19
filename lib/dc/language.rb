@@ -12,9 +12,7 @@ module DC
       'deu' => 'German'
     }
     SUPPORTED = NAMES.keys
-
     DEFAULT = 'eng'
-
   end
 
 end
