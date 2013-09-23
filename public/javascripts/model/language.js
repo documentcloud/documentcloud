@@ -1,7 +1,5 @@
 // Keep this file in sync with lib/dc/language.rb
 
-
-
 dc.language = {
   NAMES: {
     'eng': 'English',
