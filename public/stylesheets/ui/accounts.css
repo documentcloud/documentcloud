@@ -14,6 +14,47 @@
   .account_view.badge .name {
     font-weight: bold;
   }
+  
+/*--------------------------- Account Manager --------------------------------*/
+
+#accounts_manager_container {
+  margin: 0px 25px;
+}
+
+.your.account_details {
+  clear: both;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.your.account_details .avatar {
+  border-radius: 3px;
+  border: 1px solid #d0d0d0;
+  width: 150px;
+  float: left;
+}
+
+.your.account_details form {
+  padding: 15px;
+  float: left;
+}
+
+.your.account_details label {
+  display:block;
+  padding-bottom: 5px;
+}
+
+.your.account_details label .title {
+  display: inline-block;
+  min-width: 12em;
+}
+
+.account_details input, .account_details textarea, .account_details select {
+  border-radius: 3px;
+  border: 1px solid #d0d0d0;
+  min-width: 20em;
+}
+
 
 /*--------------------------- Accounts Dialog --------------------------------*/
 .account_list {
