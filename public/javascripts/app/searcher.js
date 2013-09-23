@@ -34,7 +34,7 @@ dc.controllers.Searcher = Backbone.Router.extend({
     this.searchBox = dc.app.searchBox;
     this.flags.hasEntities = false;
     this.currentSearch = null;
-    this.titleBox = $('#title_box_inner');
+    this.titleBox = $('.search_tab_content .title_box_inner');
     _.bindAll(this, '_loadSearchResults', '_loadFacetsResults', '_loadFacetResults',
       'loadDefault', 'loadFacets');
     dc.app.navigation.bind('tab:search', this.loadDefault);
