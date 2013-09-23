@@ -60,6 +60,8 @@ dc.controllers.Workspace = Backbone.Router.extend({
     this.panel.add('pagination', dc.app.paginator.el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
     this.panel.add('document_list', this.documentList.render().el);
+    dc.app.accountManager.setElement($("#accounts_manager_container"));
+    dc.app.accountManager.render();
     this.sidebar.add('entities', this.entityList.render().el);
     $('#no_results_container').html(JST['workspace/no_results']({}));
     this.sidebar.add('organizer', dc.app.organizer.render().el);
