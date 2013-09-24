@@ -362,6 +362,10 @@ class Account < ActiveRecord::Base
       'organization_id' => membership.organization_id,
       'role'            => membership.role
     }
+    
+    if options[:include_memberships]
+      attrs['memberships'] = memberships.map{ |m| m.canonical(options) }
+    end
 
     if options[:include_organization]
       attrs['organization_name'] = membership.organization.name
