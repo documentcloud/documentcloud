@@ -53,7 +53,7 @@ dc.ui.Organizer = Backbone.View.extend({
   renderAccounts : function() {
     _.each( this.$('.account_links'), function(el){
       el = $(el);
-      el.html( JST['organizer/account_links']( { organization: Organizations.getByCid( el.attr('data-cid') )} )  );
+      el.html( JST['organizer/account_links']( { organization: Organizations.get( el.attr('data-cid') )} )  );
     });
   },
 
@@ -113,7 +113,7 @@ dc.ui.Organizer = Backbone.View.extend({
 
   showAccountDocuments : function(e) {
     var cid = $(e.target).attr('data-cid');
-    Accounts.getByCid(cid).openDocuments();
+    Accounts.get(cid).openDocuments();
   },
 
   showYourPublishedDocuments : function() {
@@ -122,7 +122,8 @@ dc.ui.Organizer = Backbone.View.extend({
 
   showOrganizationDocuments : function(e) {
     $(e.target).closest('.organization').toggleClass('show_accounts');
-    Accounts.current().openOrganizationDocuments();
+    var cid = $(e.target).parent().find(".account_links").attr("data-cid")
+    Organizations.get(cid).openDocuments();
   },
 
   showOtherOrgDocuments : function(e) {

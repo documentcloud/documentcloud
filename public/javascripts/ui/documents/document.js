@@ -491,7 +491,7 @@ dc.ui.Document = Backbone.View.extend({
       var top = $(this).offset().top, left = $(this).offset().left;
       var right = left + $(this).outerWidth(), bottom = top + $(this).outerHeight();
       if (left < x && right > x && top < y && bottom > y) {
-        var project = Projects.getByCid($(this).attr('data-project-cid'));
+        var project = Projects.get($(this).attr('data-project-cid'));
         if (project) project.addDocuments(docs);
         return false;
       }
