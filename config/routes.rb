@@ -165,7 +165,7 @@ DC::Application.routes.draw do
   get '/blog/*parts' => 'redirect#index', :as => :blog, :url => 'http://blog.documentcloud.org/'
 
   # Standard fallback routes
-  get '/:controller(/:action(/:id))'
+  match '/:controller(/:action(/:id))', :via=>[:get,:post]
   get ':controller/:action.:format' => '#index'
 
 end
