@@ -7,9 +7,10 @@ if CloudCrowd.node?
   require 'logger'
   log = Logger.new(STDOUT)
   log.level = Logger::WARN if RAILS_ENV == 'production'
-  Object.const_set "RAILS_DEFAULT_LOGGER", log
   require 'rubygems'
-  gem 'rails', '~> 2.0'
+  gem 'rails'
+  require 'rails'
+  Rails.logger = log
   require 'active_record'
   require 'config/environment'
 end
