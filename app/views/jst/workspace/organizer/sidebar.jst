@@ -9,7 +9,7 @@
         </div>
       <% }); %>
       <% if( dc.account ){ %>
-        <% dc.account.organizations.each( function( organization ){ %>
+        <% dc.account.organizations().each( function( organization ){ %>
           <div class="organization">
             <% if ( organization && organization.members && organization.members.length ) { %>
               <div class="icon toggle toggle_account_links"></div>
@@ -20,7 +20,7 @@
             <div class="account_links" data-cid="<%= organization.cid %>"></div>
           </div>
         <% } ) %>
-       <% } %>
+      <% } %>
     </div>
 
     <% if (dc.account) { %>
