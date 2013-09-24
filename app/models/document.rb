@@ -48,8 +48,9 @@ class Document < ActiveRecord::Base
                                      :through     => :project_memberships,
                                      :source      => :project
 
-  has_many :duplicates, -> { where(['access in (?) and id != #{id} and text_changed = false', ACCESS_SUCCEEDED ]) },
-      :foreign_key=>'file_hash', :primary_key=>'file_hash', :class_name=>"Document"
+  has_many :duplicates, ->(document) {
+    where(["access in (?) and id != #{document.id} and text_changed = false", ACCESS_SUCCEEDED ])
+  }, :foreign_key=>'file_hash', :primary_key=>'file_hash', :class_name=>"Document"
 
   validates :organization_id, :account_id, :access, :page_count, :title, :slug, :presence=>true
 
@@ -111,7 +112,7 @@ class Document < ActiveRecord::Base
           on memberships.document_id = documents.id
         ")
     end
-    query
+    query.readonly(false)
   }
 
   # The definition of the Solr search index. Via sunspot-rails.
@@ -630,7 +631,7 @@ class Document < ActiveRecord::Base
 
   # Keep a local ProcessingJob record of this active CloudCrowd Job.
   def record_job(job_json)
-    job = JSON.parse(job_json[:job])
+    job = JSON.parse(job_json)
     ProcessingJob.create!(
       :document_id    => id,
       :account_id     => account_id,
