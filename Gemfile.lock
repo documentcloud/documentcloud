@@ -1,16 +1,29 @@
 GIT
-  remote: https://github.com/documentcloud/jammit.git
-  revision: 332eebc9bd4507b1ed94816acaa0740fbe2a9b36
-  specs:
-    jammit (0.6.6)
-      cssmin (>= 1.0.3)
-      jsmin (>= 1.0.1)
-
-GIT
   remote: https://github.com/documentcloud/right_aws.git
   revision: 57beab61fac4a621614b67f2014ec879bac25890
   specs:
     right_aws (2.0.1)
+
+GIT
+  remote: https://github.com/nathanstitt/cloud-crowd.git
+  revision: 788e6fa95e10283a00229f70b730e2bf21f0ebd4
+  branch: rails4
+  specs:
+    cloud-crowd (0.7.0)
+      activerecord
+      json (>= 1.1.7)
+      rest-client (>= 1.4)
+      sinatra
+      thin (>= 1.2.4)
+
+GIT
+  remote: https://github.com/nathanstitt/jammit.git
+  revision: dcc9b02c2b9254fc4e6e53ba4a2dbc36378540cd
+  branch: rails4
+  specs:
+    jammit (0.6.6)
+      cssmin (>= 1.0.3)
+      jsmin (>= 1.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -41,24 +54,17 @@ GEM
       tzinfo (~> 0.3.37)
     ansi (1.4.3)
     arel (4.0.0)
-    atomic (1.1.13)
+    atomic (1.1.14)
     aws-sdk (1.11.3)
       json (~> 1.4)
       nokogiri (< 1.6.0)
       uuidtools (~> 2.1)
-    bcrypt-ruby (3.1.1)
+    bcrypt-ruby (3.1.2)
     builder (3.1.4)
     calais (0.0.13)
       json (>= 1.1.3)
       nokogiri (>= 1.3.3)
     closure-compiler (1.1.10)
-    cloud-crowd (0.3.3)
-      activerecord (>= 2.3.3)
-      json (>= 1.1.7)
-      rest-client (>= 1.0.3)
-      right_aws (>= 1.10.0)
-      sinatra (>= 0.9.4)
-      thin (>= 1.2.4)
     coderay (1.0.9)
     cssmin (1.0.3)
     curb (0.8.4)
@@ -71,16 +77,16 @@ GEM
     ffi (1.9.0)
     formatador (0.2.4)
     growl (1.0.3)
-    guard (1.8.2)
+    guard (1.8.3)
       formatador (>= 0.2.4)
-      listen (>= 1.0.0)
+      listen (~> 1.3)
       lumberjack (>= 1.0.2)
       pry (>= 0.9.10)
       thor (>= 0.14.6)
     guard-bundler (1.0.0)
       bundler (~> 1.0)
       guard (~> 1.1)
-    guard-minitest (1.0.1)
+    guard-minitest (1.3.1)
       guard (>= 1.8)
       minitest (>= 2.1)
     hashie (2.0.5)
@@ -92,7 +98,7 @@ GEM
     json (1.8.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
-    listen (1.3.0)
+    listen (1.3.1)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
@@ -101,12 +107,12 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_source (0.8.2)
-    mime-types (1.24)
+    mime-types (1.25)
     minitest (4.7.5)
     minitest-spec-rails (4.7.4)
       minitest (~> 4.7)
       rails (<= 4.0)
-    multi_json (1.7.9)
+    multi_json (1.8.0)
     multipart-post (1.2.0)
     nokogiri (1.5.6)
     oauth (0.4.7)
@@ -121,7 +127,7 @@ GEM
       rack
     omniauth-facebook (1.4.1)
       omniauth-oauth2 (~> 1.1.0)
-    omniauth-google-oauth2 (0.2.0)
+    omniauth-google-oauth2 (0.2.1)
       omniauth (~> 1.0)
       omniauth-oauth2
     omniauth-oauth (1.0.1)
@@ -161,7 +167,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.1.0)
     rb-fsevent (0.9.3)
-    rb-inotify (0.9.1)
+    rb-inotify (0.9.2)
       ffi (>= 0.5.0)
     rb-kqueue (0.2.0)
       ffi (>= 0.5.0)
@@ -189,11 +195,11 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    sqlite3 (1.3.7)
+    sqlite3 (1.3.8)
     sunspot (2.0.0)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
-    sunspot_matchers (2.0.0.4)
+    sunspot_matchers (2.0.0.5)
     sunspot_rails (2.0.0)
       nokogiri
       sunspot (= 2.0.0)
@@ -203,10 +209,10 @@ GEM
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     thor (0.18.1)
-    thread_safe (0.1.2)
+    thread_safe (0.1.3)
       atomic
     tilt (1.4.1)
-    treetop (1.4.14)
+    treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
     turn (0.9.6)
@@ -222,7 +228,7 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.1.1)
   calais (~> 0.0.13)
   closure-compiler
-  cloud-crowd
+  cloud-crowd!
   curb (~> 0.8.4)
   docsplit (>= 0.6.4)
   growl
