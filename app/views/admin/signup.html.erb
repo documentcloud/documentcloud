@@ -45,7 +45,7 @@
     <div class="line">
       <select name="organization[language]" class="language input">
         <% DC::Language::SUPPORTED.each do | language | %>
-        <option value="<%= language %>"><%= DC::Language::NAMES[ language ]  %></option>
+        <option value="<%= language %>" <%= "selected=true" if language == DC::Language::DEFAULT %>><%= DC::Language::NAMES[ language ]  %></option>
         <% end %>
       </select>
       <label for="account_email">
