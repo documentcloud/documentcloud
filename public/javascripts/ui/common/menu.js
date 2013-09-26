@@ -14,9 +14,9 @@ dc.ui.Menu = Backbone.View.extend({
     _.bindAll(this, 'close');
     Backbone.View.call(this, options);
     this.items          = [];
-    this.content        = $(JST['common/menu'](this.options));
-    this.itemsContainer = $('.menu_items', this.content);
-    this.addIcon        = $('.bullet_add', this.content);
+    //this.content        = $(JST['common/menu'](this.options));
+    //this.itemsContainer = $('.menu_items', this.content);
+    //this.addIcon        = $('.bullet_add', this.content);
     this.modes.open     = 'not';
     if (options.items) this.addItems(options.items);
   },
