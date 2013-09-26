@@ -470,7 +470,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 }, {
 
   entitle : function(query) {
-    var searchQuery = VS.app.searchQuery;
+    var searchQuery = dc.app.visualSearch.searchQuery;
     var title, ret, account, org;
 
     if (searchQuery.count('project') == 1) {
