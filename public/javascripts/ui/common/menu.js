@@ -18,9 +18,16 @@ dc.ui.Menu = Backbone.View.extend({
     _.bindAll(this, 'close');
     Backbone.View.call(this, _.extend({}, this.options, options));
     this.items          = [];
-    //this.content        = $(JST['common/menu'](this.options));
-    //this.itemsContainer = $('.menu_items', this.content);
-    //this.addIcon        = $('.bullet_add', this.content);
+    // an Update to jQuery removed direct element creation requiring this code:
+    //    this.content        = $(JST['common/menu'](this.options));
+    //    this.itemsContainer = $('.menu_items', this.content);
+    //    this.addIcon        = $('.bullet_add', this.content);
+    // to be replaced with the following code.  It should be refactored & cleaned up
+    // in order to simplify the manner in which menus are injected onto the page.
+    var classNames = "menu_content interface " + (this.options.standalone ? 'standalone' : 'attached');
+    this.content        = $(this.make("div", {'class': classNames, id: this.options.mid }, '<div class="menu_items"></div>'));
+    this.itemsContainer = this.content.find('.menu_items');
+    this.addIcon        = this.content.find('.bullet_add');
     this.modes.open     = 'not';
     if (options.items) this.addItems(options.items);
   },
