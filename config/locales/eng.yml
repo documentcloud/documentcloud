@@ -663,7 +663,7 @@ workspace:
 
   # "Sort" menu from the toolbar
   sort_by_relevance: Sort by Relevance
-  sort_by_date_uploaded: Sort by date Uploaded
+  sort_by_date_uploaded: Sort by Date Uploaded
   sort_by_title: Sort by Title
   sort_by_source: Sort by Source
   sort_by_length: Sort by Length
