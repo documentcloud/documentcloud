@@ -8,11 +8,15 @@ dc.ui.Menu = Backbone.View.extend({
     'click'        : 'open',
     'selectstart'  : '_stopSelect'
   },
+  
+  initialize: function(options) {
+    this.options = options;
+  },
 
   constructor : function(options) {
     this.modes = {};
     _.bindAll(this, 'close');
-    Backbone.View.call(this, options);
+    Backbone.View.call(this, _.extend({}, this.options, options));
     this.items          = [];
     //this.content        = $(JST['common/menu'](this.options));
     //this.itemsContainer = $('.menu_items', this.content);
