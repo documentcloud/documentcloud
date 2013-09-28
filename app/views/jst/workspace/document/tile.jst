@@ -24,7 +24,7 @@
     <% if (model.allowedToEdit() && reviewer_count) { %>
       <span class="reviewer_count quiet_link"><%= reviewer_count + ' ' + dc.inflector.pluralize(_.t('reviewer'), reviewer_count) %></span> -
     <% } %>
-    <% if (source) { %><%= _.t('source') %>>: <span class="quiet_link search_source"><%= source %></span> -<% } %>
+    <% if (source) { %><%= _.t('source') %>: <span class="quiet_link search_source"><%= source %></span> -<% } %>
     <%= _.t('contributed_by') %>
     <span class="quiet_link search_account"><%= account_name %></span>,
     <span class="quiet_link search_group"><%= organization_name %></span> -
