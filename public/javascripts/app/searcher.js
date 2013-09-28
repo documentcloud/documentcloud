@@ -85,7 +85,7 @@ dc.controllers.Searcher = Backbone.Router.extend({
   publicQuery : function() {
     // Swap out projects.
     var projects = [];
-    var projectNames = dc.app.visualSearch.searchQuery.values('project');
+    var projectNames = dc.app.visualSearch.searchQuery.value('project');
     _.each(projectNames, function(projectName) {
       projects.push(Projects.find(projectName));
     });
@@ -228,8 +228,8 @@ dc.controllers.Searcher = Backbone.Router.extend({
   // present in the current search.
   addToSearch : function(category, value, callback) {
     if (dc.app.visualSearch.searchQuery.has(category, value)) return;
-    dc.app.visualSearch.searchQuery.add({category: category, value: value});
-    var query = dc.app.visualSearch.searchQuery.value();
+    dc.app.visualSearch.searchQuery.add({category: category, value: value, app: dc.app.visualSearch});
+    var query = dc.app.visualSearch.searchQuery.serialize();
     this.search(query, null, callback);
   },
 
