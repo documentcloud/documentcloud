@@ -280,6 +280,8 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     'click .open_edit'    : 'openEdit',
     'click .apply_all'    : 'applyAll'
   },
+  
+  initialize: function(options) { this.options = options; },
 
   // Renders tile and sets up commonly used jQuery selectors.
   render : function() {
