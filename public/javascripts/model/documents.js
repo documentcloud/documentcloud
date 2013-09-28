@@ -76,7 +76,7 @@ dc.model.Document = Backbone.Model.extend({
       val ? data[key] = val : delete data[key];
     });
     this.save({data: data});
-    this.change();
+    this.trigger('change', this);
   },
 
   // Return the sorted array of key value pairs for the document's data.
