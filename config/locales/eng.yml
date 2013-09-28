@@ -296,7 +296,7 @@ workspace:
   preview_email: preview the email message
   before_continue: Before continuing, you can take a moment to %s
   add_reviewer: Add Reviewer
-  reviewer_name: Please provide the reviewer\'s name
+  reviewer_name: Please provide the reviewer's name
   reviewer_add_permission_denied: You are not allowed to add reviewers.
   reviewer_enter_email: Please enter the email address of a reviewer.
   x_is_no_longer_a_reviewer_on_x: 
@@ -536,8 +536,7 @@ workspace:
   embed_search_step_one: 'Step One: Configure the Embedded Documents'
   embed_search_step_two: 'Step Two: Copy and Paste the Embed Code'
   embed_search_demo_error: Demo accounts are not allowed to embed document sets. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.
-  featured_reporting_list: You can find examples of embedded searches on our list of
-    %sfeatured reporting%s.
+  featured_reporting_list: You can find examples of embedded searches on our list of %sfeatured reporting%s.
   collaborators: Collaborator
 
 
@@ -552,17 +551,14 @@ workspace:
   show_less: Show less
   no_entities_found: No entities were found that match your search.
   show_all: Show all
-  entities_explained: The entities listed above are present within the documents that
-    match your search. Select an entity to filter your search results.
+  entities_explained: The entities listed above are present within the documents that match your search. Select an entity to filter your search results.
   calais_credit: Entities provided by OpenCalais
 
 
   ###############################################################
   # Note embed dialog.  Select a Document in the organizer,
   # then select "Embed A Note" from the Publish menu
-  note_embed_private: 'This document is private: notes on this document will not be
-    visible to the public until the document is public.  Change the %saccess level%s
-    now or'
+  note_embed_private: 'This document is private: notes on this document will not be visible to the public until the document is public.  Change the %saccess level%s now or'
   publication_date: publication date
   choose_note: Choose note
   select_with_public_note: Please select a document with at least one public note.
@@ -576,7 +572,7 @@ workspace:
   privacy: Privacy
 
   # These are buttons on the front of the help page
-  guides_howtos: Guides &amp Howto''s
+  guides_howtos: "Guides &amp Howto's"
   uservoice_discuss: Discuss Features &amp; Bugs
   contact_documentcloud: Contact DocumentCloud
 
@@ -598,7 +594,7 @@ workspace:
   # these messages are displayed in the left sidebar of the Organizer
   # if the system detects that entitity processing is unavailable
   entities_unavailable: Entities are temporarily unavailable.
-  email_for_assistance: If you need assistance, please email us at support@documentcloud.org.
+  email_for_assistance: "If you need assistance, please email us at support@documentcloud.org."
 
 
   # These are displayed when searching for a document
@@ -686,9 +682,9 @@ workspace:
   timeline_for_x_docs: Timeline for %d documents
   zoom_out: Zoom Out
   timeline_max_documents: You can only view a timeline for ten documents at a time.
-  timeline_must_select: In order to view a timeline, please select some documents.
+  timeline_must_select: "In order to view a timeline, please select some documents."
   analyze_project_in_overview: Analyze this Project in Overview
-  export_to_overview_explain: You are about to export to Overview. You must create an Overview account, and you must provide Overview with your DocumentCloud username and password.
+  export_to_overview_explain: "You are about to export to Overview. You must create an Overview account, and you must provide Overview with your DocumentCloud username and password."
   share_documents: Share these Documents
   share_project: Share this Project
   share_x_documents:
