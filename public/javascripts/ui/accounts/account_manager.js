@@ -6,19 +6,28 @@ dc.ui.AccountManager = Backbone.View.extend({
     'click .save_changes': 'save_account'
   },
 
-  initialize: function(options){
-    this.account = dc.account;
-    this.collection = (this.collection || window.Accounts);
+  initialize: function(){
+    this.model         = dc.account;
+    this.organizationViews = {};
+    this.createSubViews();
     dc.app.navigation.bind('tab:accounts', this.open);
   },
   
   createSubViews: function() {
-    
+    this.model.organizations().each(function(organization){ 
+      this.organizationViews[organization.cid] = new dc.ui.OrganizationManager({model: organization});
+    }, this);
   },
   
   render: function() {
-    var html = JST['account/details']({languages: dc.language.NAMES, account: dc.account});
-    return this.$el.html(html);
+    this.$el.html( JST['account/details']({ languages: dc.language.NAMES, account: this.model }) );
+    this._renderSubViews();
+    return this.$el;
+  },
+  
+  _renderSubViews: function() {
+    this.$el.append('<div class="organizations"><h2 class="title_box"><span class="title_box_inner">Your Organizations</span></h2></div>');
+    this.$('.organizations').append(_.map(this.organizationViews, function(view, cid){ return view.render().el }));
   },
   
   open: function() {

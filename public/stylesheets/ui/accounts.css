@@ -55,6 +55,19 @@
   min-width: 20em;
 }
 
+.organizations {
+  margin-top: 15em;
+  display: block;
+  width: 100%;
+}
+
+.organizations h2 {
+  font: bold 20px Arial;
+}
+
+.organizations h3 {
+  font: bold 20px Arial;
+}
 
 /*--------------------------- Accounts Dialog --------------------------------*/
 .account_list {
