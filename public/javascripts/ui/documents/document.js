@@ -213,9 +213,11 @@ dc.ui.Document = Backbone.View.extend({
         return this.setMode('has', 'notes');
       }
       dc.ui.spinner.show('loading notes');
-      model.notes.fetch({success : function() {
-        dc.ui.spinner.hide();
-        window.scroll(0, $('#document_' + model.id).offset().top - 100);
+      model.notes.fetch({
+        reset: true,
+        success : function() {
+          dc.ui.spinner.hide();
+          window.scroll(0, $('#document_' + model.id).offset().top - 100);
       }});
     }, this);
     dc.app.paginator.mini ? dc.app.paginator.toggleSize(next, this.model) : next();
