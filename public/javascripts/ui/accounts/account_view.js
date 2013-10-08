@@ -86,17 +86,6 @@ dc.ui.AccountView = Backbone.View.extend({
   showEdit : function() {
     this.$('option.role_' + this.model.get('role')).attr({selected : 'selected'});
     this.setMode('edit', 'view');
-
-    var td = $( this.make('td',{colspan: 5 }) ),
-        tr = this.make('tr',{'class':'editing'}, td );
-
-    td.append( JST['account/language_settings']( {language: this.model.getLanguage() } ) );
-    var language = this.model.getLanguageCode();
-    td.find('.languages td' ).removeClass('active');
-    td.find('.languages td[data-lang=' + language + ']' ).addClass('active');
-    this.$el.closest('tr').after( tr );
-    this.setDisplayLanguage( null, language );
-    this.$el.closest('.custom').animate({scrollTop: $(tr).offset().top - 120 });
   },
 
   setDisplayLanguage: function( ev, language ){
