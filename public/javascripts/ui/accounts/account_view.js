@@ -145,18 +145,11 @@ dc.ui.AccountView = Backbone.View.extend({
   // This method specializes to try and avoid server requests when nothing has
   // changed.
   _doneEditing : function() {
-    var me = this;
     var attributes = this.serialize();
     var options = {success : this._onSuccess, error : this._onError};
-    var language = this.$el.next('tr.editing').find('.choice').attr('data-language');
-    if (language){
-      attributes['language'] = language;
-    }
     if (this.model.isNew()) {
-      if (!attributes.email){
-        this.$el.next('tr.editing').remove();
-        return $(this.el).remove();
-      }
+      if (!attributes.email){ return $(this.el).remove(); }
+      // the following will not work in a multi-organization paradigm:
       if (Accounts.getValidByEmail(attributes.email)) {
         this.dialog.error( _.t('already_has_account', attributes.email ) );
         return;
@@ -167,7 +160,6 @@ dc.ui.AccountView = Backbone.View.extend({
       Accounts.create(this.model, options);
     } else if (!this.model.invalid && !this.model.changedAttributes(attributes)) {
       this.setMode('display', 'view');
-      this.$el.next('tr.editing').remove();
     } else {
       dc.ui.spinner.show();
       this.model.save(attributes, options);

@@ -112,22 +112,6 @@
     margin-bottom: 0;
     padding-bottom: 10px;
   }
-  .account_list .language .edit_language {
-    display: inline-block;
-    cursor: pointer;
-  }
-    .account_list .languages td {
-      padding: 3px;
-      cursor: pointer;
-      width: 20%;
-    }
-      .account_list .languages td.active {
-        border-radius:6px;
-        -moz-border-radius:6px;
-        background: none repeat scroll 0 0 #6C7A7D;
-        border: 1px solid #303F42;
-        text-indent: 5px;
-      }
       .account_list_content .editing td {
         padding: 0px;
         border-bottom: 0;
