@@ -2,10 +2,6 @@ dc.ui.AccountManager = Backbone.View.extend({
   id: "account_manager_container",
   className: 'accounts_tab_content',
 
-  events: {
-    'click .save_changes': 'save_account'
-  },
-
   initialize: function(){
     this.model         = dc.account;
     this.organizationViews = {};
@@ -14,6 +10,7 @@ dc.ui.AccountManager = Backbone.View.extend({
   },
   
   createSubViews: function() {
+    this.userView = new dc.ui.AccountView({model: this.model, kind: "user"});
     this.model.organizations().each(function(organization){ 
       this.organizationViews[organization.cid] = new dc.ui.OrganizationManager({
         model: organization, 
@@ -22,12 +19,13 @@ dc.ui.AccountManager = Backbone.View.extend({
   },
   
   render: function() {
-    this.$el.html( JST['account/details']({ languages: dc.language.NAMES, account: this.model }) );
+    this.$el.html('<div class="title_box"><span class="title_box_inner" class="noselect">Your Account</span></div>');
     this._renderSubViews();
     return this.$el;
   },
   
   _renderSubViews: function() {
+    this.$el.append(this.userView.render().el);
     this.$el.append(JST['organization/list']());
     this.$('.organizations').append(_.map(this.organizationViews, function(view, cid){ return view.render().el; }));
   },

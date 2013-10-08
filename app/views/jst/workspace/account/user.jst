@@ -1,8 +1,5 @@
-<div class="title_box">
-  <span class="title_box_inner" class="noselect">Your Account</span>
-</div>
 <div class="your account_details">
-  <img class="avatar" src="<%= account.gravatarUrl(150) %>"/>
+  <img class="avatar" width="<%= 150 %>" height="<%= 150 %>" />
   <form>
     <label>
       <span class="title"><%= _.t('first_name') %>:</span>
@@ -17,7 +14,7 @@
     </label>
     <label><span class="title">Workspace Language:</span>
     <select name="language">
-      <% _.each(languages, function(name, code){ %>
+      <% _.each(dc.language.NAMES, function(name, code){ %>
       <option value="<%= code %>" <%= account.get('language') == code ? "selected" : "" %>><%= name %></option>
       <% }); %>
     </select>

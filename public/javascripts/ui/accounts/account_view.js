@@ -6,7 +6,8 @@ dc.ui.AccountView = Backbone.View.extend({
     row            : 25,
     admin          : 25,
     collaborator   : 25,
-    reviewer       : 25
+    reviewer       : 25,
+    user           : 150
   },
 
   TAGS : {
@@ -14,7 +15,9 @@ dc.ui.AccountView = Backbone.View.extend({
     row            : 'tr',
     admin          : 'tr',
     collaborator   : 'tr',
-    reviewer       : 'tr'
+    reviewer       : 'tr',
+    membership     : 'div',
+    user           : 'div'
   },
 
   events : {
@@ -71,6 +74,10 @@ dc.ui.AccountView = Backbone.View.extend({
 
   size : function() {
     return this.AVATAR_SIZES[this.kind];
+  },
+  
+  isUser: function() {
+    return this.kind == "user";
   },
 
   isRow : function() {
