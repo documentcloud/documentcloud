@@ -1,6 +1,0 @@
-<h3>You are a <%= role %> <%= organization.get("name") %></h3>
-<table>
-  <% organization.members.map(function(account){ %>
-  <tr><td><%= account.fullName() %></td><td><%= account.get('email') %></td></tr>
-  <% }); %>
-</table>

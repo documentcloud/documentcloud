@@ -15,7 +15,9 @@ dc.ui.AccountManager = Backbone.View.extend({
   
   createSubViews: function() {
     this.model.organizations().each(function(organization){ 
-      this.organizationViews[organization.cid] = new dc.ui.OrganizationManager({model: organization});
+      this.organizationViews[organization.cid] = new dc.ui.OrganizationManager({
+        model: organization, 
+        membership: this.model.memberships.findWhere({organization_id: organization.get('id')})});
     }, this);
   },
   
@@ -26,8 +28,8 @@ dc.ui.AccountManager = Backbone.View.extend({
   },
   
   _renderSubViews: function() {
-    this.$el.append('<div class="organizations"><h2 class="title_box"><span class="title_box_inner">Your Organizations</span></h2></div>');
-    this.$('.organizations').append(_.map(this.organizationViews, function(view, cid){ return view.render().el }));
+    this.$el.append(JST['organization/list']());
+    this.$('.organizations').append(_.map(this.organizationViews, function(view, cid){ return view.render().el; }));
   },
   
   open: function() {

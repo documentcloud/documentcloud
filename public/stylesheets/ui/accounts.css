@@ -41,7 +41,7 @@
 
 .your.account_details label {
   display:block;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
 
 .your.account_details label .title {
@@ -67,6 +67,20 @@
 
 .organizations h3 {
   font: bold 20px Arial;
+}
+
+.organizations .organization h3 {
+  margin: 10px 0px;
+}
+
+.organizations .organization form.details label {
+  display: block;
+  padding-bottom: 10px;
+}
+
+.organizations .organization form.details label .title {
+  display: inline-block;
+  min-width: 20em;
 }
 
 /*--------------------------- Accounts Dialog --------------------------------*/
