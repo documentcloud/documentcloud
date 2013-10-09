@@ -62,7 +62,7 @@ dc.ui.AccountView = Backbone.View.extend({
       size : this.size(),
       current : Accounts.current()
     }, options);
-    if (this.isRow()) this.setMode(viewMode, 'view');
+    if (this.isRow()) this.setMode(viewMode, 'view_mode');
     $(this.el).html(this.template(attrs));
     if (viewMode == 'edit') this.$('option.role_' + this.model.get('role')).attr({selected : 'selected'});
     if (this.model.isPending()) $(this.el).addClass('pending');
@@ -92,7 +92,7 @@ dc.ui.AccountView = Backbone.View.extend({
 
   showEdit : function() {
     this.$('option.role_' + this.model.get('role')).attr({selected : 'selected'});
-    this.setMode('edit', 'view');
+    this.setMode('edit', 'view_mode');
   },
 
   setDisplayLanguage: function( ev, language ){
@@ -166,7 +166,7 @@ dc.ui.AccountView = Backbone.View.extend({
       this.model.set(attributes);
       Accounts.create(this.model, options);
     } else if (!this.model.invalid && !this.model.changedAttributes(attributes)) {
-      this.setMode('display', 'view');
+      this.setMode('display', 'view_mode');
     } else {
       dc.ui.spinner.show();
       this.model.save(attributes, options);
@@ -174,14 +174,14 @@ dc.ui.AccountView = Backbone.View.extend({
   },
 
   _cancelEditing : function() {
-    this.setMode('display', 'view');
+    this.setMode('display', 'view_mode');
     this.$el.next('tr.editing').remove();
   },
 
   _disableAccount : function() {
     if (this.dialog.isOpen()) this.dialog.close();
     var dialog = dc.ui.Dialog.confirm(null, _.bind(function() {
-      this.setMode('display', 'view');
+      this.setMode('display', 'view_mode');
       this.$el.next('tr.editing').remove();
       this.model.save({'role': this.model.DISABLED});
       dc.ui.notifier.show({
@@ -203,7 +203,7 @@ dc.ui.AccountView = Backbone.View.extend({
   },
 
   _enableAccount : function() {
-    this.setMode('display', 'view');
+    this.setMode('display', 'view_mode');
     this.$el.next('tr.editing').remove();
     this.model.save({'role': this.model.CONTRIBUTOR});
   },
@@ -214,7 +214,7 @@ dc.ui.AccountView = Backbone.View.extend({
 
   _onSuccess : function(model, resp) {
     this.model.invalid = false;
-    this.setMode('display', 'view');
+    this.setMode('display', 'view_mode');
     this.$el.next('tr.editing').remove();
     this.model.trigger('change');
     dc.ui.spinner.hide();

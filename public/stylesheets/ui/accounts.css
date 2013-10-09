@@ -156,10 +156,10 @@
 .account_list tr .edit, .account_list tr .display {
   display: none;
 }
-.account_list tr.edit_view .edit, .account_list tr.display_view .display {
+.account_list tr.edit_view_mode .edit, .account_list tr.display_view_mode .display {
   display: block;
 }
-.account_list .disabled_role.display_view td {
+.account_list .disabled_role.display_view_mode td {
   color: #777777;
 }
 .account_list img.avatar,
