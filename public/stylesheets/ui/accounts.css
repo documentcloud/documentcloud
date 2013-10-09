@@ -21,35 +21,35 @@
   margin: 0px 25px;
 }
 
-.your.account_details {
+.user.account_view {
   clear: both;
   width: 600px;
   margin: 0 auto;
 }
 
-.your.account_details .avatar {
+.user.account_view .avatar {
   border-radius: 3px;
   border: 1px solid #d0d0d0;
   width: 150px;
   float: left;
 }
 
-.your.account_details form {
+.user.account_view form {
   padding: 15px;
   float: left;
 }
 
-.your.account_details label {
+.user.account_view label {
   display:block;
   padding-bottom: 10px;
 }
 
-.your.account_details label .title {
+.user.account_view label .title {
   display: inline-block;
   min-width: 12em;
 }
 
-.account_details input, .account_details textarea, .account_details select {
+.user.account_view input, .user.account_view textarea, .user.account_view select {
   border-radius: 3px;
   border: 1px solid #d0d0d0;
   min-width: 20em;
