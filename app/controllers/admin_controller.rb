@@ -69,7 +69,10 @@ class AdminController < ApplicationController
   # Attempt a new signup for DocumentCloud -- includes both the organization and
   # its first account. If everything's kosher, the journalist is logged in.
   # NB: This needs to stay access controlled by the bouncer throughout the beta.
-  DEFAULT_SIGNUP_PARAMS = {:organization => {:language=>DC::Language::DEFAULT}, :account => {}}
+  DEFAULT_SIGNUP_PARAMS = {
+    :account => {},
+    :organization => { :language=>DC::Language::DEFAULT,:document_language=>DC::Language::DEFAULT }
+  }
   def signup
     unless request.post?
       @params = DEFAULT_SIGNUP_PARAMS.dup
@@ -79,7 +82,7 @@ class AdminController < ApplicationController
     org = Organization.create(params[:organization])
     return fail(org.errors.full_messages.first) if org.errors.any?
     params[:account][:email].strip! if params[:account][:email]
-    acc = Account.create(params[:account].merge(:language=>org.language))
+    acc = Account.create(params[:account].merge(:language=>org.language,:document_language=>org.document_language))
     return org.destroy && fail(acc.errors.full_messages.first) if acc.errors.any?
     org.memberships.create(:account_id => acc.id, :role => Account::ADMINISTRATOR, :default => true)
     acc.send_login_instructions
