@@ -19,7 +19,7 @@ dc.ui.AccountManager = Backbone.View.extend({
   },
   
   render: function() {
-    this.$el.html('<div class="title_box"><span class="title_box_inner" class="noselect">Your Account</span></div>');
+    this.$el.html(JST['account/manager']());
     this._renderSubViews();
     return this.$el;
   },

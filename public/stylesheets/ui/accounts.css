@@ -83,6 +83,19 @@
   min-width: 20em;
 }
 
+#accounts_manager_container .toggle {
+  width: 48px; height: 24px;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  background: url(/images/embed/ui/account_toggle_left.png);
+  float: right;
+}
+  #accounts_manager_container.organizations .toggle {
+    background: url(/images/embed/ui/account_toggle_right.png);
+  }
+
+
 /*--------------------------- Accounts Dialog --------------------------------*/
 .account_list {
   max-width: none;
