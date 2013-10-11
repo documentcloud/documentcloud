@@ -21,6 +21,17 @@
   margin: 0px 25px;
 }
 
+#accounts_manager_container h3 {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1em;
+  font: bold 14px Arial;
+}
+
+.user.account_view .edit {
+  display:none;
+}
+
 .user.account_view {
   clear: both;
   width: 600px;
@@ -28,6 +39,7 @@
 }
 
 .user.account_view .avatar {
+  margin: 15px 0;
   border-radius: 3px;
   border: 1px solid #d0d0d0;
   width: 150px;
@@ -56,8 +68,8 @@
 }
 
 .organizations {
-  margin-top: 15em;
-  display: block;
+  display: none;
+  margin-top: 18em;
   width: 100%;
 }
 

@@ -1,18 +1,18 @@
 <h3>You are <%= membership %> <%= organization.get("name") %></h3>
 <form class="details">
   <label>
-    <span class="title">Default Workspace Language:</span>
-    <select name="workspace_language">
+    <span class="title">Reader/Workspace Language:</span>
+    <select name="language">
       <% _.each(languages, function(name, code){ %>
       <option value="<%= code %>" <%= organization.get('language') == code ? "selected" : "" %>><%= name %></option>
       <% }); %>
     </select>
   </label>
   <label>
-    <span class="title">Default Embed Language:</span>
-    <select name="embed_language">
+    <span class="title">Default Document Language:</span>
+    <select name="document_language">
       <% _.each(languages, function(name, code){ %>
-      <option value="<%= code %>" <%= organization.get('language') == code ? "selected" : "" %>><%= name %></option>
+      <option value="<%= code %>" <%= organization.get('document_language') == code ? "selected" : "" %>><%= name %></option>
       <% }); %>
     </select>
   </label>
