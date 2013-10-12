@@ -2,15 +2,20 @@ dc.ui.AccountManager = Backbone.View.extend({
   id: "account_manager_container",
   className: 'accounts_tab_content',
 
-  initialize: function(){
-    this.model         = dc.account;
+  options: {
+    information: null
+  },
+
+  initialize: function(options){
+    this.options           = _.extend(this.options, options);
+    this.model             = dc.account;
     this.organizationViews = {};
     this.createSubViews();
     dc.app.navigation.bind('tab:accounts', this.open);
   },
   
   createSubViews: function() {
-    this.userView = new dc.ui.AccountView({model: this.model, kind: "user"});
+    this.userView = new dc.ui.AccountView({model: this.model, kind: "user", dialog: this});
     this.model.organizations().each(function(organization){ 
       this.organizationViews[organization.cid] = new dc.ui.OrganizationManager({
         model: organization, 
@@ -19,8 +24,9 @@ dc.ui.AccountManager = Backbone.View.extend({
   },
   
   render: function() {
-    this.$el.html(JST['account/manager']());
+    this.$el.html(JST['account/manager'](this.options));
     this._renderSubViews();
+    this._information = this.$('.information');
     return this.$el;
   },
   
@@ -39,7 +45,10 @@ dc.ui.AccountManager = Backbone.View.extend({
     Backbone.history.navigate('accounts');
   },
   
-  save_account: function() {
-    
+  close: function() { /* noop so that AccountViews think this is a dialog. */},
+  
+  error : function(message, leaveOpen) {
+    this._information.stop().addClass('error').text(message).show();
+    if (!leaveOpen) this._information.delay(3000).fadeOut();
   }
 });

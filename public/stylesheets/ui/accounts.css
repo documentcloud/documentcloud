@@ -67,6 +67,11 @@
   min-width: 20em;
 }
 
+.user.account_view .controls .minibutton {
+  width: 14em;
+  display: inline-block;
+}
+
 .organizations {
   display: none;
   margin-top: 18em;
