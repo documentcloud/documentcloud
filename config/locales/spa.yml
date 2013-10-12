@@ -767,7 +767,7 @@ viewer:
   # The default name for a note
 
   view_fullscreen: Ver Documento en Pantall Completa
-  # The help text for the control that toggles a document from being viewed full screen.  It''s not normally displayed.
+  # The help text for the control that toggles a document from being viewed full screen.  It's not normally displayed.
 
   zoom: Tamaño
   # Appears at the top of the document, directly to the left of the Zoom control.

@@ -145,16 +145,16 @@ workspace:
   red: red
   title: Title
   black: black
-  redact_instructions: Click and drag to draw a %s rectangle over each portion of the
-    document you''d like to redact. Associated text will be removed when you save your
+  redact_instructions: Click and drag to draw a %s rectangle over each portion of the \
+    document you'd like to redact. Associated text will be removed when you save your \
     redactions.
   notes_hidden_while_redacting: Any existing notes are temporarily hidden while redaction
     is taking place.
   revoke: Revoke
   save_redactions: Save Redactions
   redaction_close_while_processing: 
-  - You''ve redacted a passage. This document will close while it''s being rebuilt. Are you sure you''re ready to proceed?
-  - You''ve redacted %d passages. This document will close while it''s being rebuilt. Are you sure you''re ready to proceed?
+  - "You've redacted a passage. This document will close while it's being rebuilt. Are you sure you're ready to proceed?"
+  - "You've redacted %d passages. This document will close while it's being rebuilt. Are you sure you're ready to proceed?"
   close_while_redacting: The document is being redacted. It will close while processing.
   edit_sections: Edit Sections
   edit_document_info: Edit Document Info
@@ -168,7 +168,9 @@ workspace:
   - Access updated for %d documents
   close_while_text_reprocess: The text is being processed. Please close this document.
   force_ocr: Force OCR
-  text_reprocess_help: Reprocess this document to take advantage of improvements to our text extraction tools. Choose "Force OCR" (optical character recognition) to ignore any embedded text information and use Tesseract before reprocessing. The document will close while it''s being rebuilt. Are you sure you want to proceed? 
+  text_reprocess_help: Reprocess this document to take advantage of improvements to our text extraction tools.                                           \
+                       Choose "Force OCR" (optical character recognition) to ignore any embedded text information and use Tesseract before reprocessing. \
+                       The document will close while it's being rebuilt. Are you sure you want to proceed? 
   reprocess: Reprocess
   choose_location_to_insert_pages: Choose a location to insert pages.
   edit_related_url: Edit Related Article URL
@@ -178,20 +180,18 @@ workspace:
   embed_note: Embed a Note
   page_tools: Page Tools
   insert_replace_pages: Insert/Replace Pages
-  insert_pages_instructions: To insert new pages at a specific position within the document,
-    click in between the pages above. If you''d like to replace a specific page with
-    a new copy, cick on the page you''d like to remove.
-  insert_pages_message: This document will close while it''s being rebuilt.  Long documents may take a long time to rebuild.
-  insert_pages_shift_key: Hold down the shift key to select multiple pages to replace
-    at once. When you''re ready, click the "Upload Pages" button.
+  insert_pages_instructions: To insert new pages at a specific position within the document,                 \
+                             click in between the pages above. If you'd like to replace a specific page with \
+                             a new copy, cick on the page you'd like to remove.
+  insert_pages_message: "This document will close while it's being rebuilt.  Long documents may take a long time to rebuild."
+  insert_pages_shift_key: Hold down the shift key to select multiple pages to replace \
+                          at once. When you're ready, click the "Upload Pages" button.
   remove_pages: Remove Pages
   remove_pages_click: Click on each page you want to remove from this document.
-  remove_pages_done: When you''re finished selecting pages, click the "Remove Pages"
-    button.
+  remove_pages_done: "When you're finished selecting pages, click the \"Remove Pages\" button."
   reorder_pages: Reorder Pages
   reorder_pages_instructions: Drag and drop pages to change their position in the document.
-  reorder_pages_done: When you''re finished rearranging, click on the "Save Page Order"
-    button to save your changes.
+  reorder_pages_done: "When you're finished rearranging, click on the \"Save Page Order\" button to save your changes."
   text_tools: Text Tools
   edit_page_text: Edit Page Text
   edit_page_text_instructions: 'Edit the text of any page: use the navigation arrows
@@ -211,9 +211,9 @@ workspace:
   save_page_order: Save Page Order
   reorder_hint: Reorder pages by dragging and dropping.
   upload_pages: Upload Pages
-  annotation_help: Use the links at the right to annotate the document. Keep in mind
-    that any other reviewers will be able to see public annotations and drafts. Private
-    annotations are for your own reference. Even %s can''t see them.
+  annotation_help: Use the links at the right to annotate the document. Keep in mind      \
+    that any other reviewers will be able to see public annotations and drafts. Private   \
+    annotations are for your own reference. Even %s can't see them.
   contact_reviewer: Contact %s at %s if you need any help, or visit %s for more information
     about DocumentCloud.
   ###############################################################
@@ -335,12 +335,14 @@ workspace:
   new_account: New Account
   enter_new_password: Enter your new password
   password_updated: Password updated
-  password_no_blank: Your password can''t be blank
+  password_no_blank: "Your password can't be blank"
   welcome_message_sent_to: A welcome message has been sent to %s.
   already_has_account: '%s alread has an account.'
   account_is_disabled: '%s has been disabled.'
-  double_check_disable: Really disable %s''s account?
-  explain_disable_account: '%1$s will not be able to log in to DocumentCloud. Public documents and annotations provided by %1$s will remain available. %2$sContact support%3$s to completely purge %1$s''s account.'
+  double_check_disable: "Really disable %s's account?"
+  explain_disable_account: %1$s will not be able to log in to DocumentCloud. \
+                           Public documents and annotations provided by %1$s will remain available. \
+                           %2$sContact support%3$s to completely purge %1$s's account.
   signup_sent_to:  Signup sent to %s
   account_add_failure: Could not add the account.
 
@@ -349,8 +351,8 @@ workspace:
   # is opened by selecting the "Edit Sections" link that is located
   # in the "Control Panel" area on the right of th document workspace
   enter_title_and_page: Please add a title and page number for each section.
-  no_duplicate_section: Can''t create a duplicate section.
-  no_section_outside_doc: Can''t create a section outside the document.
+  no_duplicate_section: "Can't create a duplicate section."
+  no_section_outside_doc: "Can't create a section outside the document."
   remove_all: Remove All
 
 
@@ -378,7 +380,7 @@ workspace:
   source_of_document: The source from which you obtained this document
   paragraph_description_of_document: Paragraph description of this document
   related_url_of_document: URL of the web article that refers to this document
-  embed_url_of_document: Most users won''t need to add this. URL of the page on your site where this document is embedded
+  embed_url_of_document: "Most users won't need to add this. URL of the page on your site where this document is embedded"
 
 
   ###############################################################
@@ -402,22 +404,21 @@ workspace:
   enter_url_that_references:
   - Enter the URL of the article that references this document
   - Enter the URL of the article that references these documents
-  related_article_url_help: Providing the URL of the article that references this
-    document will enable a "Related Article" link within the document viewer. Many readers
-    arrive at a document from a web search &mdash; the link guides them back to the
-    document''s original context.
+  related_article_url_help: Providing the URL of the article that references this           \
+    document will enable a "Related Article" link within the document viewer. Many readers  \
+    arrive at a document from a web search &mdash; the link guides them back to the         \
+    document's original context.
   embed_show_sidebar: Show the sidebar
   embed_show_sidebar_help: If your layout has limited horizontal space, uncheck this
     box to hide the sidebar.
   embed_show_text_tab: Show the text tab
-  embed_hide_text_tab_help: If the quality of the document''s text is poor, uncheck this box
-    to hide the text tab.
+  embed_hide_text_tab_help: "If the quality of the document's text is poor, uncheck this box to hide the text tab."
   document_already_public: This document is already public.
   document_public_on: This document will be public on %s
   make_document_public: Make document public
-  document_publish_public_help: This document is public. It is currently available to
-    users who search DocumentCloud''s catalog and will be visible to the public when
-    you embed it on your website. Change the %saccess level%s.
+  document_publish_public_help: This document is public. It is currently available to  \
+    users who search DocumentCloud's catalog and will be visible to the public when    \
+    you embed it on your website. Change the %saccess level%s.                         
   document_publish_private_help: This document is private. It will not be visible to
     your readers until you make it public. Change the %saccess level%s now or %s publication
     date
@@ -464,14 +465,14 @@ workspace:
   # Publication date dialog
   # Opened by selecting "Set Publication Date" from Publish menu
   private_documents_visible_instructions:
-  - This document is private.  You must make it public before it will be visible on
-    your website or in searches of DocumentCloud''s catalog. You can choose to make it
+  - This document is private.  You must make it public before it will be visible on   \
+    your website or in searches of DocumentCloud's catalog. You can choose to make it \
     public at a future date or you can %2$schange it now%3$s.
-  - These documents are private.  You must make them public before they will be visible
-    on your website or in searches of DocumentCloud''s catalog. You can choose to make
+  - These documents are private.  You must make them public before they will be visible \
+    on your website or in searches of DocumentCloud's catalog. You can choose to make  \
     them public at a future date or you can %2$schange them now%3$s.
   set_publication_date_for: Set publication date for %s
-  no_past_publication: You can''t set a document to be published in the past.
+  no_past_publication: "You can't set a document to be published in the past."
   make_public_on: Make public on
   at: at
   public_on: Public on
@@ -512,7 +513,7 @@ workspace:
   - The uploaded document has
   - The %d uploaded documents have
   # this message is displayed beside documents that have failed to upload properly 
-  document_error_message: Our system was unable to process this document. We''ve been notified of the problem and periodically review these errors. Please review our %stroubleshooting suggestions%s or %scontact us%s for immediate assistance.  
+  document_error_message: "Our system was unable to process this document. We've been notified of the problem and periodically review these errors. Please review our %stroubleshooting suggestions%s or %scontact us%s for immediate assistance.  "
   upload: Upload
   upload_document: Upload Document
   max_upload_size_warn: You can only upload documents less than 200MB in size. Please %soptimize your document%s before continuing.
@@ -523,7 +524,7 @@ workspace:
 
 
 
-  no_projects_help: This account doesn''t have any projects yet. To start one, click on the "New Project" button above.
+  no_projects_help: "This account doesn't have any projects yet. To start one, click on the \"New Project\" button above."
   # is displayed on the left sidebar of the organizer when the account does not have any projects
 
   public_documents_help: Select a contributing organization in the list above to view their public documents.
@@ -792,7 +793,7 @@ viewer:
   # The 'Text' tab on the document.  The other tabs are in the common strings section
 
   must_upgrade: 'To use the Document Viewer you need to upgrade your browser:'
-  install_chrome_frame: Or, if you''d like to continue using Internet Explorer 6, you can %sinstall Google Chrome Frame%s.
+  install_chrome_frame: "Or, if you'd like to continue using Internet Explorer 6, you can %sinstall Google Chrome Frame%s."
   # These messages are displayed to people whom are attempting to use the viewer with older unsupported web browsers
 
   toggle_description: Toggle Description
@@ -802,7 +803,7 @@ viewer:
   # The default name for a note
 
   view_fullscreen: View Document in Fullscreen
-  # The help text for the control that toggles a document from being viewed full screen.  It''s not normally displayed.
+  # The help text for the control that toggles a document from being viewed full screen.  It's not normally displayed.
 
   zoom: Zoom
   # Appears at the top of the document, directly to the left of the Zoom control.
