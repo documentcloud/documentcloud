@@ -15,6 +15,11 @@
     return sprintf.format.call(null, sprintf.cache[arguments[0]], arguments);
   };
 
+  sprintf.noConflict = function() {
+    ctx.sprintf = previousSprintf;
+    return this;
+  };
+
   sprintf.format = function(parse_tree, argv) {
     var cursor = 1, tree_length = parse_tree.length, node_type = '', arg, output = [], i, k, match, pad, pad_character, pad_length;
     for (i = 0; i < tree_length; i++) {
