@@ -21,6 +21,17 @@
   margin: 0px 25px;
 }
 
+#accounts_manager_container h3 {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1em;
+  font: bold 14px Arial;
+}
+
+.user.account_view .edit {
+  display:none;
+}
+
 .user.account_view {
   clear: both;
   width: 600px;
@@ -28,6 +39,7 @@
 }
 
 .user.account_view .avatar {
+  margin: 15px 0;
   border-radius: 3px;
   border: 1px solid #d0d0d0;
   width: 150px;
@@ -55,9 +67,14 @@
   min-width: 20em;
 }
 
+.user.account_view .controls .minibutton {
+  width: 14em;
+  display: inline-block;
+}
+
 .organizations {
-  margin-top: 15em;
-  display: block;
+  display: none;
+  margin-top: 18em;
   width: 100%;
 }
 
@@ -82,6 +99,19 @@
   display: inline-block;
   min-width: 20em;
 }
+
+#accounts_manager_container .toggle {
+  width: 48px; height: 24px;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  background: url(/images/embed/ui/account_toggle_left.png);
+  float: right;
+}
+  #accounts_manager_container.organizations .toggle {
+    background: url(/images/embed/ui/account_toggle_right.png);
+  }
+
 
 /*--------------------------- Accounts Dialog --------------------------------*/
 .account_list {
