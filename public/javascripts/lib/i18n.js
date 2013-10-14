@@ -82,6 +82,7 @@
 
   function I18n( options ){
     this.codes    = {};
+    this.sprintf = root.sprintf.noConflict();
     this.reconfigure( options );
     this.translate = _.bind( this.translate, this );
     ALL_INSTANCES.push(this);
@@ -159,13 +160,13 @@
       }
     };
 
-    // if the match is an array then perform an additional lookup 
+    // if the match is an array then perform an additional lookup
     // using the pluralization lookup rules from the pack
     if ( _.isArray( match ) ){
       match = match[ pack.pluralizer( _.isUndefined(args) ? 1 : args ) ];
     }
 
-    return vsprintf( match, _.toArray( arguments ).slice(1) );
+    return this.sprintf.with_array( match, _.toArray( arguments ).slice(1) );
 
   };
 
