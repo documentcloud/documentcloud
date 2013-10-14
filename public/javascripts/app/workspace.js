@@ -16,7 +16,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
       dc.app.searcher.loadDefault({showHelp: true});
     }
   },
-  
+
   accounts: function() {
     console.log("Opening accounts!");
     dc.app.accountManager.open();
@@ -37,6 +37,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
     dc.app.visualSearch   = new VS.VisualSearch(this.searchOptions());
     dc.app.searchBox      = dc.app.visualSearch.searchBox;
     dc.app.accountManager = new dc.ui.AccountManager();
+    dc.i18n               = I18n.noConflict();
     this.sidebar          = new dc.ui.Sidebar();
     this.panel            = new dc.ui.Panel();
     this.documentList     = new dc.ui.DocumentList();
