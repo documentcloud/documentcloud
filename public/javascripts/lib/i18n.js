@@ -56,8 +56,9 @@
 
 
 (function(root,undefined) {
-
   var _ = root._, jQuery = root.jQuery;
+
+  var previousI18n = root.I18n;
 
   // There can be only one!
   if ( ! _.isUndefined( root.I18n ) )
@@ -81,12 +82,15 @@
 
   function I18n( options ){
     this.codes    = {};
-
     this.reconfigure( options );
-
     this.translate = _.bind( this.translate, this );
     ALL_INSTANCES.push(this);
-  }
+  };
+
+  I18n.noConflict = function(){
+    root.I18n = previousI18n;
+    return this;
+  };
 
   // static method.  Stores packs for
   // later use by individual translators
