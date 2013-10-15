@@ -126,7 +126,7 @@ class Account < ActiveRecord::Base
   end
   
   def has_memberships? # should be reworked as Account#real?
-    self.memberships.exists?
+    self.memberships.any?
   end
 
   def has_role?(role, org=nil)

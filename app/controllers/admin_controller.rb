@@ -82,9 +82,12 @@ class AdminController < ApplicationController
     org = Organization.create(params[:organization])
     return fail(org.errors.full_messages.first) if org.errors.any?
     params[:account][:email].strip! if params[:account][:email]
-    acc = Account.create(params[:account].merge(:language=>org.language,:document_language=>org.document_language))
-    return org.destroy && fail(acc.errors.full_messages.first) if acc.errors.any?
-    org.memberships.create(:account_id => acc.id, :role => Account::ADMINISTRATOR, :default => true)
+    acc = Account.new( params[:account].merge( :language=>org.language, :document_language=>org.document_language ))
+    acc.memberships.build({
+      :role => Account::ADMINISTRATOR, :default => true, :organization=>org
+    })
+    return org.destroy && fail(acc.errors.full_messages.first) unless acc.save
+
     acc.send_login_instructions
     @success = "Account Created. Welcome email sent to #{acc.email}."
     @params = DEFAULT_SIGNUP_PARAMS.dup
