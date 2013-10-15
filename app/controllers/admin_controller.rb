@@ -80,13 +80,13 @@ class AdminController < ApplicationController
     return render unless request.post?
     @params = params
     org = Organization.create(params[:organization])
-    return fail(org.errors.full_messages.first) if org.errors.any?
+    return fail(org.errors.full_messages.join(', ')) if org.errors.any?
     params[:account][:email].strip! if params[:account][:email]
     acc = Account.new( params[:account].merge( :language=>org.language, :document_language=>org.document_language ))
     acc.memberships.build({
       :role => Account::ADMINISTRATOR, :default => true, :organization=>org
     })
-    return org.destroy && fail(acc.errors.full_messages.first) unless acc.save
+    return org.destroy && fail( acc.errors.full_messages.join(', ') ) unless acc.save
 
     acc.send_login_instructions
     @success = "Account Created. Welcome email sent to #{acc.email}."
