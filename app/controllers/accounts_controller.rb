@@ -74,7 +74,7 @@ class AccountsController < ApplicationController
       (current_account.real?(current_organization) and params[:role] == Account::REVIEWER)
 
     # Find or create the appropriate account
-    account_attributes = pick(params, :first_name, :last_name, :email, :language)
+    account_attributes = pick(params, :first_name, :last_name, :email, :language, :document_language)
     account = Account.lookup(account_attributes[:email]) || Account.create(account_attributes)    
 
     # Find role for account in organization if it exists.
@@ -108,7 +108,7 @@ class AccountsController < ApplicationController
   def update
     account = current_organization.accounts.find(params[:id])
     return json(nil, 403) unless account && current_account.allowed_to_edit_account?(account, current_organization)
-    unless account.update_attributes pick(params, :first_name, :last_name, :email,:language)
+    unless account.update_attributes pick(params, :first_name, :last_name, :email,:language, :document_language)
       return json({ "errors" => account.errors.to_a.map{ |field, error| "#{field} #{error}" } }, 409)
     end
     role = pick(params, :role)
