@@ -84,7 +84,7 @@ dc.model.Account = Backbone.Model.extend({
   },
 
   documentsTitle : function() {
-    return dc.inflector.possessivize(this.fullName()) + ' Documents';
+    return dc.inflector.possessivize(this.fullName()) + ' ' + _.t('documents');
   },
 
   isAdmin : function() {
