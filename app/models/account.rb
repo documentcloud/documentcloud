@@ -343,7 +343,6 @@ class Account < ActiveRecord::Base
 
   # Create default organization to preserve backwards compatability.
   def canonical(options={})
-    membership = options[:membership] || memberships.first(:conditions=>{:default=>true})
     attrs = {
       'id'              => id,
       'slug'            => slug,
@@ -353,22 +352,26 @@ class Account < ActiveRecord::Base
       'language'        => language,
       'hashed_email'    => hashed_email,
       'pending'         => pending?,
-      'organization_id' => membership.organization_id,
-      'role'            => membership.role
     }
-    
+
     if options[:include_memberships]
       attrs['memberships'] = memberships.map{ |m| m.canonical(options) }
-    end
-
-    if options[:include_organization]
-      attrs['organization_name'] = membership.organization.name
-      attrs['organizations']     = organizations.map(&:canonical)
     end
     if options[:include_document_counts]
       attrs['public_documents'] = Document.unrestricted.count(:conditions => {:account_id => id})
       attrs['private_documents'] = Document.restricted.count(:conditions => {:account_id => id})
     end
+    
+    # all of the below should be rendered obsolete and removed.
+    if (membership = options[:membership] || memberships.first(:conditions=>{:default=>true}))
+      attrs['organization_id'] = membership.organization_id
+      attrs['role']            = membership.role
+    end
+    if options[:include_organization]
+      attrs['organization_name'] = membership.organization.name if membership
+      attrs['organizations']     = organizations.map(&:canonical)
+    end
+    
     attrs
   end
 
