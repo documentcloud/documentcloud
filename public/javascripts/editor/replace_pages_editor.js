@@ -203,23 +203,23 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
       var replace = state == 'replace';
       $(this.el).setMode('on', 'upload');
       this.$('.replace_pages_upload_button').setMode('is', 'enabled');
-      hint = replace ? 'Replace ' : 'Insert ';
+//      hint = ( replace ? _.t('replace') : _.t('insert') ) + ' ';
       if (replace) {
         range = this.getPageRange();
         if (range.start != range.end) {
-          hint += "pages " + range.start + " through " + range.end + ".";
+          hint = _.t('replace_multiple_pages', range.start, range.end );
         } else {
-          hint += "page " + range.start + ".";
+          hint = _.t('replace_page_x', range.start );
         }
       } else if (state == 'insert') {
         var pageCount = this.viewer.api.numberOfPages();
         var insertion = this.getInsertPageNumber();
         if (insertion < 1) {
-          hint += "before the first page.";
+          hint = _.t('insert_first_page');
         } else if (insertion < pageCount) {
-          hint += "between pages " + insertion + " and " + (insertion + 1) + ".";
+          hint = _.t('insert_between_pages', insertion, insertion+1 );
         } else if (insertion >= pageCount) {
-          hint += "after the last page.";
+          hint = _.t('insert_last_page');
         }
       }
       dc.app.uploader.insertPagesAttrs({

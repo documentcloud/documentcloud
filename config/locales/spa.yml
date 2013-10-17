@@ -176,12 +176,29 @@ workspace:
   embed_note: Incrustar una Nota
   page_tools: Herramientas de Página
   insert_replace_pages: Insertar/Reemplazar Páginas
+  replace_page_x: Reemplazar página %d
+  replace_multiple_pages: Reemplazar las páginas %d a %d
+  insert_first_page: Insertar antes de la primera página
+  insert_between_pages: Insertar entre las páginas %d y %d
+  insert_last_page: Insertar después de la última página
+  replace_pages:
+  - Reemplazar página %d
+  - Reemplazar las páginas %d a %d
   insert_pages_instructions: 'Para insertar nuevas páginas en posición específica dentro del documento, haz clic entre las páginas arriba. Si quieres reemplazar una página específica con una copia nueva, haz clic en la página que quieres quitar.'
   insert_pages_message: Este documento será cerrado mientras se reconstruye. Documentos largos pueden tardar bastante tiempo en reconstruirse.
   insert_pages_shift_key: 'Oprime la tecla "Shift" mientras seleccionas múltiples páginas para reemplazar a la misma vez. Cuando estés listo, haz clic en el botón "Subir Páginas".'
   remove_pages: Eliminar Páginas
   remove_pages_click: Haz clic en cada página que quieras eliminar de este documento.
   remove_pages_done: 'Cuando termines de seleccionar las páginas que quieras eliminar, hac click en el botón "Eliminar Páginas".'
+  remove_pages_input:
+  - Retire página
+  - Quite %d Páginas
+  remove_page_warning_message:
+  - Usted ha seleccionado una página para su eliminación. Este documento se cierra mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
+  - Usted ha seleccionado %d páginas para su eliminación. Este documento se cierra mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
+  removing: Extracción de ...
+  pages_are_being_removed: Se están eliminando las páginas. Por favor, cierre el documento.
+  cannot_remove_all: No se puede eliminar todas las páginas de este documento.
   reorder_pages: Reordenar Páginas
   reorder_pages_instructions: Arrastra y suelta páginas para cambiar sus posiciones dentro del documento.
   reorder_pages_done: 'Cuando termines de reordenar, haz clic en el botón "Guardar Orden" para guardar tus cambios.'
@@ -440,7 +457,6 @@ workspace:
   make_public_on: Cambiar acceso a público 
   at: a
   public_on: Acceso Público
-
 
   ###############################################################
   # The Document right-click menu for documents
