@@ -19,7 +19,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
 
   accounts: function() {
     console.log("Opening accounts!");
-    dc.app.accountManager.open();
+    dc.app.accounts.open();
   },
 
   help : function(page) {
@@ -36,7 +36,6 @@ dc.controllers.Workspace = Backbone.Router.extend({
     dc.ui.tooltip         = new dc.ui.Tooltip();
     dc.app.visualSearch   = new VS.VisualSearch(this.searchOptions());
     dc.app.searchBox      = dc.app.visualSearch.searchBox;
-    dc.app.accountManager = new dc.ui.AccountManager();
     dc.i18n               = I18n.noConflict();
     this.sidebar          = new dc.ui.Sidebar();
     this.panel            = new dc.ui.Panel();
@@ -44,10 +43,13 @@ dc.controllers.Workspace = Backbone.Router.extend({
     this.entityList       = new dc.ui.EntityList();
 
     if (!dc.account) return;
+    dc.app.accountSearch    = new VS.VisualSearch(this.accountSearchOptions());
+    dc.app.accountSearchBox = dc.app.accountSearch.searchBox;
+    dc.app.accounts         = new dc.ui.AccountManager();
 
-    dc.app.uploader   = new dc.ui.UploadDialog();
-    dc.app.accounts   = new dc.ui.AccountDialog();
-    this.accountBadge = new dc.ui.AccountView({model : Accounts.current(), kind : 'badge'});
+    dc.app.uploader        = new dc.ui.UploadDialog();
+    dc.app.accounts.dialog = new dc.ui.AccountDialog();
+    this.accountBadge      = new dc.ui.AccountView({model : Accounts.current(), kind : 'badge'});
   },
 
   // Render all of the existing subviews and place them in the DOM.
@@ -59,11 +61,12 @@ dc.controllers.Workspace = Backbone.Router.extend({
     dc.app.hotkeys.initialize();
     this.help = new dc.ui.Help({el : $('#help')[0]}).render();
     this.panel.add('search_box', dc.app.searchBox.render().el);
+    this.panel.add('account_search_box', dc.app.accountSearchBox.render().el);
     this.panel.add('pagination', dc.app.paginator.el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
     this.panel.add('document_list', this.documentList.render().el);
-    dc.app.accountManager.setElement($("#accounts_manager_container"));
-    dc.app.accountManager.render();
+    dc.app.accounts.setElement($("#accounts_manager_container"));
+    dc.app.accounts.render();
     this.sidebar.add('entities', this.entityList.render().el);
     $('#no_results_container').html(JST['workspace/no_results']({}));
     this.sidebar.add('organizer', dc.app.organizer.render().el);
@@ -163,6 +166,12 @@ dc.controllers.Workspace = Backbone.Router.extend({
           cb && cb(prefixes.concat(metadata));
         }
       }
+    };
+  },
+  
+  accountSearchOptions: function() {
+    return {
+      
     };
   }
 

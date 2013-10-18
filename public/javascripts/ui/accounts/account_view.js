@@ -38,7 +38,7 @@ dc.ui.AccountView = Backbone.View.extend({
     this.kind       = options.kind;
     this.tagName    = this.TAGS[this.kind];
     this.className  = 'account_view ' + this.kind + (this.tagName == 'tr' ? ' not_draggable' : '');
-    this.dialog     = options.dialog || dc.app.accounts;
+    this.dialog     = options.dialog || dc.app.accounts.dialog;
     Backbone.View.call(this, options);
     this.template   = JST['account/' + this.kind];
     _.bindAll(this, '_onSuccess', '_onError');
