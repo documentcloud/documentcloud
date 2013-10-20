@@ -122,7 +122,7 @@ dc.ui.Organizer = Backbone.View.extend({
 
   showOrganizationDocuments : function(e) {
     $(e.target).closest('.organization').toggleClass('show_accounts');
-    var cid = $(e.target).parent().find(".account_links").attr("data-cid")
+    var cid = $(e.target).parent().find(".account_links").attr("data-cid");
     Organizations.get(cid).openDocuments();
   },
 
