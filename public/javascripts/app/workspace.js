@@ -43,9 +43,10 @@ dc.controllers.Workspace = Backbone.Router.extend({
     this.entityList       = new dc.ui.EntityList();
 
     if (!dc.account) return;
-    dc.app.accountSearch    = new VS.VisualSearch(this.accountSearchOptions());
-    dc.app.accountSearchBox = dc.app.accountSearch.searchBox;
-    dc.app.accounts         = new dc.ui.AccountManager();
+    dc.app.accountSearch          = new VS.VisualSearch(this.accountSearchOptions());
+    dc.app.accountSearchBox       = dc.app.accountSearch.searchBox;
+    dc.app.accounts               = new dc.ui.AccountManager();
+    dc.app.accounts.organizations = new dc.ui.OrganizationList();
 
     dc.app.uploader        = new dc.ui.UploadDialog();
     dc.app.accounts.dialog = new dc.ui.AccountDialog();
@@ -61,18 +62,18 @@ dc.controllers.Workspace = Backbone.Router.extend({
     dc.app.hotkeys.initialize();
     this.help = new dc.ui.Help({el : $('#help')[0]}).render();
     this.panel.add('search_box', dc.app.searchBox.render().el);
-    this.panel.add('account_search_box', dc.app.accountSearchBox.render().el);
     this.panel.add('pagination', dc.app.paginator.el);
     this.panel.add('search_toolbar', dc.app.toolbar.render().el);
     this.panel.add('document_list', this.documentList.render().el);
-    dc.app.accounts.setElement($("#accounts_manager_container"));
-    dc.app.accounts.render();
     this.sidebar.add('entities', this.entityList.render().el);
     $('#no_results_container').html(JST['workspace/no_results']({}));
     this.sidebar.add('organizer', dc.app.organizer.render().el);
 
     if (!dc.account) return;
-
+    dc.app.accounts.setElement($("#accounts_manager_container"));
+    dc.app.accounts.render();
+    this.panel.add('account_search_box', dc.app.accountSearchBox.render().el);
+    this.sidebar.add('organization_list', dc.app.accounts.organizations.render().el);
     this.sidebar.add('account_badge', this.accountBadge.render().el);
   },
 
