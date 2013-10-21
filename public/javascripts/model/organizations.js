@@ -21,10 +21,13 @@ dc.model.Organization = Backbone.Model.extend({
   statistics : function() {
     var docs  = this.get('document_count');
     var notes = this.get('note_count');
-    return docs + ' ' + dc.inflector.pluralize('document', docs)
-      + ', ' + notes + ' ' + dc.inflector.pluralize('note', notes);
+    var accounts = this.members.size();
+    var stats = [];
+    if (accounts) { stats.push(accounts + ' ' + dc.inflector.pluralize('account', accounts)); }
+    if (docs) {     stats.push(docs + ' ' + dc.inflector.pluralize('document', docs)); }
+    if (notes) {    stats.push(notes + ' ' + dc.inflector.pluralize('note', notes)); }
+    return stats.join(', ');
   }
-
 
 });
 
