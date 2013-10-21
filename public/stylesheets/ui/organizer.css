@@ -24,6 +24,9 @@
       float: left;
       margin-right: 12px;
     }
+    
+#organizer { display: none; }
+body.search_panel_tab #organizer { display:block; }
 
 #organizer_projects,
 #entities {
@@ -92,6 +95,7 @@
   }
 
 #organizer .box,
+#organization_list .box,
 #organizer .top_level_search {
   position: relative;
   padding: 15px 20px 15px 30px;
@@ -104,12 +108,13 @@
   #organizer .top_level_search {
     padding: 20px 20px 20px 30px;
   }
-  #organizer .box {
+  #organizer .box,
+  #organization_list .box {
     background-image: url(/images/embed/ui/box_back.png);
     background-repeat: repeat-y;
     background-position: right top;
   }
-    #organizer .box:hover {
+    #organizer .box:hover, #organization_list .box:hover {
       background: #fff;
     }
   body.search_panel_tab #organizer .box.is_selected,
@@ -117,7 +122,8 @@
     border-right-color: transparent;
     background: #fff;
   }
-  #organizer .box .edit_glyph {
+  #organizer .box .edit_glyph,
+  #organization_list .box .edit_glyph {
     display: inline;
     width: 0;
     vertical-align: baseline;
@@ -127,35 +133,43 @@
     visibility: hidden;
   }
     #organizer .box:hover .edit_glyph,
+    #organization_list .box:hover .edit_glyph, 
     body.search_panel_tab #organizer .box.is_selected .edit_glyph {
       visibility: visible;
     }
-  #organizer .box .title {
+  #organizer .box .title,
+  #organization_list .box .title {
     font-size: 13px;
     line-height: 16px;
     font-weight: bold;
     color: #333;
   }
     body.search_panel_tab #organizer .box.is_selected .title,
-    #organizer .box:hover .title {
+    #organization_list .box.is_selected .title,
+    #organizer .box:hover .title,
+    #organization_list .box:hover .title {
       color: #000;
     }
-    #organizer .box .last_word {
+    #organizer .box .last_word,
+    #organization_list .box .last_word {
       white-space: nowrap;
     }
-  #organizer .box .description {
+  #organizer .box .description,
+  #organization_list .box .description {
     font-size: 11px;
     line-height: 14px;
     margin: 5px 0;
     color: #333;
   }
   #organizer .box .counts,
-  #organizer .top_level_search .text_link {
+  #organizer .top_level_search .text_link,
+  #organization_list .box .counts {
     font-size: 11px;
     line-height: 17px;
     color: #808080;
   }
-    #organizer .box .counts {
+    #organizer .box .counts,
+    #organization_list .box .counts {
       line-height: 14px; margin: 2px 0 1px 0;
     }
     #organizer .top_level_search .text_link:hover {

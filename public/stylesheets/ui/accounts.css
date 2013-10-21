@@ -17,6 +17,9 @@
   
 /*--------------------------- Account Manager --------------------------------*/
 
+#organization_list { display:none; }
+body.accounts_panel_tab #organization_list { display:block; }
+
 #accounts_manager_container {
   margin: 0px 25px;
 }
