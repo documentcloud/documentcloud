@@ -46,7 +46,7 @@ dc.ui.Organizer = Backbone.View.extend({
       if (Projects.isEmpty()) this.setMode('no', 'projects');
       Projects.each(this._addSubView);
     } else {
-      this.$('.organization_list').html(JST['organizer/organizations']());
+      this.$('.organization_list').html(JST['organizer/organizations']({organizations: Organizations}));
     }
   },
 
