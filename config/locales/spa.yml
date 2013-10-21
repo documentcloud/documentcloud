@@ -273,6 +273,7 @@ workspace:
   manage: Administrar
   organization: Organización
   account: Cuenta
+  accounts: Cuentas
   email: Email
   first_name: Nombre
   last_name: Apellido
