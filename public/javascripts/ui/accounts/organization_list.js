@@ -12,7 +12,6 @@ dc.ui.OrganizationList = Backbone.View.extend({
   
   openAccountList: function(e) {
     var cid = $(e.target).closest('.organization').attr("data-id");
-    console.log("opening ", cid);
     Organizations.get(cid).openAccounts();
   }
 });
