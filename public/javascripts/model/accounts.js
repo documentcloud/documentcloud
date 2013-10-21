@@ -21,7 +21,7 @@ dc.model.Account = Backbone.Model.extend({
     if (this.get('memberships')) { this.memberships.reset(this.get('memberships')); }
   },
   
-  current_organization: function(){
+  currentOrganization: function(){
     return this.organization();
   },
 
