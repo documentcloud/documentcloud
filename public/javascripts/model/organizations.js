@@ -13,6 +13,10 @@ dc.model.Organization = Backbone.Model.extend({
   openDocuments : function() {
     dc.app.searcher.search(this.query());
   },
+  
+  openAccounts : function() {
+    dc.app.accounts.showOrganization(this);
+  },
 
   query : function() {
     return 'group: ' + this.get('slug');

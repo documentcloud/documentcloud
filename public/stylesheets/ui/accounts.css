@@ -31,6 +31,12 @@ body.accounts_panel_tab #organization_list { display:block; }
   font: bold 14px Arial;
 }
 
+#accounts_manager_container .user.account_view { display:none; }
+#accounts_manager_container.user_mode .user.account_view { display:block; }
+
+#accounts_manager_container .organizations { display:none; }
+#accounts_manager_container.organization_mode .organizations { display:block; }
+
 .user.account_view .edit {
   display:none;
 }
@@ -76,10 +82,11 @@ body.accounts_panel_tab #organization_list { display:block; }
 }
 
 .organizations {
-  display: none;
-  margin-top: 18em;
   width: 100%;
 }
+
+.organizations .organization { display:none; }
+.organizations .organization.display_view { display: block; }
 
 .organizations h2 {
   font: bold 20px Arial;
