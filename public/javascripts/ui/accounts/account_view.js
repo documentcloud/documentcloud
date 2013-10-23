@@ -145,7 +145,7 @@ dc.ui.AccountView = Backbone.View.extend({
 
   _openAccounts : function(e) {
     e.preventDefault();
-    this.dialog.open();
+    dc.app.accounts.open();
   },
 
   // When we're done editing an account, it's either a create or update.
