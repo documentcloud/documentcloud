@@ -12,6 +12,7 @@ dc.ui.OrganizationManager = Backbone.View.extend({
     this.memberViews = this.model.members.map(function(account){ 
       return new dc.ui.AccountView({model: account, kind: 'row', dialog: this.dialog}); 
     }, this);
+    _.bindAll(this, '_onSuccess', '_onError');
   },
 
   render: function() {
@@ -31,7 +32,6 @@ dc.ui.OrganizationManager = Backbone.View.extend({
   },
 
   newAccount : function() {
-    console.log("new account");
     var view = new dc.ui.AccountView({
       model : new dc.model.Account(),
       kind : 'row',
@@ -40,5 +40,33 @@ dc.ui.OrganizationManager = Backbone.View.extend({
     this.list.prepend(view.render('edit').el);
   },
   
-  saveOrganization: function() { console.log('saving') }
+  saveOrganization: function() {
+    var options = {success : this._onSuccess, error : this._onError};
+    dc.ui.spinner.show();
+    this.model.save({
+      language: this.$('form select[name=language]').val(),
+      document_language: this.$('form select[name=document_language]').val()
+    }, options);
+  },
+  
+  _onSuccess : function(model, resp) {
+    this.model.invalid = false;
+    dc.ui.spinner.hide();
+    if (this.model) {
+      this.model.newRecord = false;
+      dc.ui.notifier.show({
+        text      : _.t('saved') + " " + this.model.get('name'),
+        duration  : 5000,
+        mode      : 'info'
+      });
+    }
+  },
+
+  _onError : function(model, resp) {
+    resp = JSON.parse(resp.responseText);
+    model.invalid = true;
+    dc.ui.spinner.hide();
+    this.showEdit();
+    this.dialog.error( resp.errors && resp.errors[0] || _.t('account_add_failure') );
+  }
 });
