@@ -85,7 +85,7 @@ dc.controllers.Searcher = Backbone.Router.extend({
   publicQuery : function() {
     // Swap out projects.
     var projects = [];
-    var projectNames = dc.app.visualSearch.searchQuery.value('project');
+    var projectNames = dc.app.visualSearch.searchQuery.values('project');
     _.each(projectNames, function(projectName) {
       projects.push(Projects.find(projectName));
     });
