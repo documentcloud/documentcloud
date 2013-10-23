@@ -1,4 +1,5 @@
 <h3>You are <%= membership %> <%= organization.get("name") %></h3>
+<% if (dc.account && dc.account.isAdmin()) { %>
 <form class="details">
   <label>
     <span class="title">Reader/Workspace Language:</span>
@@ -17,7 +18,11 @@
     </select>
   </label>
 </form>
-<div class="minibutton default save_changes float_right"><%= _.t('save') %></div>
+<div class="controls">
+  <div class="minibutton new_account float_left"><%= _.t('new_account') %></div>
+  <div class="minibutton default save_changes"><%= _.t('save') %></div>
+</div>
+<% } %>
 <table>
   <tbody class="account_list_content">
   </tbody>
