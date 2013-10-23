@@ -113,8 +113,12 @@ div.text_input {
   background: transparent url(/images/embed/ui/text_input_large_left.png) no-repeat center left;
 }
   div.text_input.small {
-    height: 23px;
     background: transparent url(/images/embed/ui/text_input_small_left.png) no-repeat center left;
+  }
+  div.text_input.small input {
+    height: 23px;
+    background: transparent url(/images/embed/ui/text_input_small_right.png) no-repeat center right;
+    margin-left: 5px;
   }
   div.text_input.dark {
     height: auto;

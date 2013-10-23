@@ -100,6 +100,18 @@ body.accounts_panel_tab #organization_list {
   min-width: 20em;
 }
 
+.organization .account_list td {
+  color: black;
+}
+
+.organization .controls {
+  height: 24px;
+  margin-bottom: 10px;
+}
+  .organization .controls div {
+    margin-right: 10px;
+  }
+
 #accounts_manager_container .toggle {
   width: 48px; height: 24px;
   position: relative;
@@ -111,7 +123,7 @@ body.accounts_panel_tab #organization_list {
   #accounts_manager_container.organizations .toggle {
     background: url(/images/embed/ui/account_toggle_right.png);
   }
-
+  
 /*--------------------------- Accounts Dialog --------------------------------*/
 .account_list {
   max-width: none;
@@ -149,7 +161,6 @@ body.accounts_panel_tab #organization_list {
         padding-bottom: 5px;
       }
 
-  .account_list table,
   .collaborator_list {
     width: 100%;
     border-top: 1px solid #222;
@@ -162,9 +173,11 @@ body.accounts_panel_tab #organization_list {
       padding: 10px;
       vertical-align: middle;
       white-space: nowrap;
-      border-bottom: 1px solid #222;
       font-size: 11px; line-height: 25px;
+    }
+    .collaborator_list td {
       color: #ccc;
+      border-bottom: 1px solid #222;
     }
       .collaborator_list .account_view.disabled_role td {
         color: #777;
@@ -199,9 +212,6 @@ body.accounts_panel_tab #organization_list {
 }
 .account_list .text_input {
   width: 150px;
-}
-.account_list .text_link {
-  color: #ccc;
 }
 .account_list .name_wrapper {
   width: 240px;
