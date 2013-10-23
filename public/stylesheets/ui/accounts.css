@@ -113,9 +113,8 @@ body.accounts_panel_tab #organization_list {
   }
 
 /*--------------------------- Accounts Dialog --------------------------------*/
-tbody.account_list {
+.account_list {
   max-width: none;
-  width: 800px;
 }
   .account_list .custom {
     position: relative;
@@ -182,8 +181,6 @@ tbody.account_list {
       .account_list .email { width: 0%; }
       .account_list .last  { width: 100%; }
 
-.account_list div.organization_row * { width: auto; float: left; }
-.organization_row { clear: both; }
 .account_list tr .edit, .account_list tr .display, .account_list div .edit, .account_list div .display {
   display: none;
 }
