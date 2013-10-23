@@ -342,16 +342,17 @@ class Account < ActiveRecord::Base
   end
 
   # Create default organization to preserve backwards compatability.
-  def canonical(options={})
+  def canonical(options = {})
     attrs = {
-      'id'              => id,
-      'slug'            => slug,
-      'email'           => email,
-      'first_name'      => first_name,
-      'last_name'       => last_name,
-      'language'        => language,
-      'hashed_email'    => hashed_email,
-      'pending'         => pending?,
+      'id'                => id,
+      'slug'              => slug,
+      'email'             => email,
+      'first_name'        => first_name,
+      'last_name'         => last_name,
+      'language'          => language,
+      'document_language' => document_language,
+      'hashed_email'      => hashed_email,
+      'pending'           => pending?,
     }
 
     if options[:include_memberships]

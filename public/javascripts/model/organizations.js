@@ -35,10 +35,6 @@ dc.model.Organization = Backbone.Model.extend({
 
 });
 
-// mixin the languages we support
-_.defaults( dc.model.Organization.prototype, ModelWithLanguageMixin );
-
-
 // Organization Set
 
 dc.model.OrganizationSet = Backbone.Collection.extend({
