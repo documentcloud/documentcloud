@@ -331,7 +331,7 @@ workspace:
   reviewing_instructions_multiple_sent_to: Instructions for reviewing %d Documents sent to %s
   reviewing_instructions_send_failure: Your instructions were not sent. Contact support for help troubleshooting.
   share_x_documents:
-  - Share \"%2$s\"
+  - "Share \"%2$s\""
   - Share %d Documents
   reviewer_email_instructions:
   - Email Instructions to %2$s
@@ -724,12 +724,12 @@ workspace:
   embed_a_note: Embed a Note
   set_publication_date: Set Publication Date
   download_viewer: Download Document Viewer
-  x_is_not_published: \"%s\" is not published.
-  no_permission_to_edit_x: You don\'t have permission to edit \"%s\".
-  x_still_processing: \"%s\" is still being processed. Please wait for it to finish.
+  x_is_not_published: "\"%s\" is not published."
+  no_permission_to_edit_x: "You don\'t have permission to edit \"%s\"."
+  x_still_processing: "\"%s\" is still being processed. Please wait for it to finish."
   no_embed_permission: You don\'t have permission to embed that document.
   downloading_progress: 
-  - Preparing \"%$2s\" for download...
+  - "Preparing \"%$2s\" for download..."
   - Preparing %d documents for download
   download_pdf: Download Original PDF
   download_text: Download Full Text
