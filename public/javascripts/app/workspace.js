@@ -18,7 +18,6 @@ dc.controllers.Workspace = Backbone.Router.extend({
   },
 
   accounts: function() {
-    console.log("Opening accounts!");
     dc.app.accounts.open();
   },
 
