@@ -301,6 +301,7 @@ workspace:
   ok: OK
   reenable: Re-enable
   disable: Disable
+  Workspace: Workspace
 
   ###############################################################
   # "Share Document" dialog

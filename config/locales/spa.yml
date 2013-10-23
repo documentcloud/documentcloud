@@ -286,6 +286,7 @@ workspace:
   ok: OK
   reenable: Reactivar
   disable: Desactivar
+  Workspace: Área de trabajo
 
   ###############################################################
   # "Share Document" dialog
