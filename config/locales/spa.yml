@@ -1,4 +1,4 @@
-
+
 # Strings that are in this section are shared between the viewer and workspace
 common: &common
 
@@ -101,6 +101,7 @@ workspace:
   # The title's on the Help tabs of the Organizer screen.
   # (the 'Search' tab's string is located in the common section)
   help: Ayuda
+  home: Página de inicio
 
   # Internal admin api for displaying document mentions
   # jst/workspace/document/mentions.jst
@@ -286,7 +287,13 @@ workspace:
   ok: OK
   reenable: Reactivar
   disable: Desactivar
-  Workspace: Área de trabajo
+  workspace: Área de trabajo
+  reader_workspace_language: Lector/Espacio de trabajo Idioma
+  default_document_language: Documento predeterminado Idioma
+  role_administrator_for_x:  Usted es un administrador de %s
+  role_contributor_for_x:  Usted es un miembro de %s
+  role_reviewer_for_x:  Usted es un revisor de %s
+  role_freelancer_for_x:  Usted es un profesional independiente de %s
 
   ###############################################################
   # "Share Document" dialog
@@ -346,6 +353,7 @@ workspace:
   explain_disable_account: '%1$s no podrá acceder a DocumentCloud. Documentos y anotaciones públicas de %1$s permanecerán disponibles. %2$sContactar a soporte técnico%3$s para purgar completamente la cuenta de %1$s.'
   signup_sent_to:  Solicitud para crear una cuenta enviada a %s
   account_add_failure: No se pudo crear a la cuenta.
+  saved: Guardar
 
   ###############################################################
   # The Section editing dialog

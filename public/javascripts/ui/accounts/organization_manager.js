@@ -18,7 +18,7 @@ dc.ui.OrganizationManager = Backbone.View.extend({
   render: function() {
     this.$el.html(JST['organization/details']({
       organization: this.model, 
-      membership:   this.describeMembership(this.membership),
+      membership_description:   this.describeMembership(this.membership),
       languages: dc.language.NAMES
     }));
     this.list = this.$('.account_list_content');
@@ -28,7 +28,7 @@ dc.ui.OrganizationManager = Backbone.View.extend({
   },
 
   describeMembership: function(membership){
-    return "a " + dc.model.Account.prototype.ROLE_NAMES[membership.get('role')] + " for ";
+    return _.t( 'role_' + dc.model.Account.prototype.ROLE_NAMES[membership.get('role')] + '_for_x', this.model.get('name') );
   },
 
   newAccount : function() {

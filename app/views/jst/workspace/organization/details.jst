@@ -1,8 +1,8 @@
-<h3>You are <%= membership %> <%= organization.get("name") %></h3>
+<h3><%= membership_description %></h3>
 <% if (dc.account && dc.account.isAdmin()) { %>
 <form class="details">
   <label>
-    <span class="title">Reader/Workspace Language:</span>
+    <span class="title"><%= _.t('reader_workspace_language') %>:</span>
     <select name="language">
       <% _.each(languages, function(name, code){ %>
       <option value="<%= code %>" <%= organization.get('language') == code ? "selected" : "" %>><%= name %></option>
@@ -10,7 +10,7 @@
     </select>
   </label>
   <label>
-    <span class="title">Default Document Language:</span>
+    <span class="title"><%= _.t('default_document_language') %>:</span>
     <select name="document_language">
       <% _.each(languages, function(name, code){ %>
       <option value="<%= code %>" <%= organization.get('document_language') == code ? "selected" : "" %>><%= name %></option>

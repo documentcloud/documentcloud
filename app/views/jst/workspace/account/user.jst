@@ -16,7 +16,7 @@
 
   <!-- <h3>Language Defaults</h3> -->
   <label>
-    <span class="title"><%= _.t('Workspace') %>:</span>
+    <span class="title"><%= _.t('workspace') %>:</span>
     <select name="language">
       <% _.each(dc.language.NAMES, function(name, code){ %>
       <option value="<%= code %>" <%= account.get('language') == code ? "selected" : "" %>><%= name %></option>
