@@ -18,14 +18,16 @@
 /*--------------------------- Account Manager --------------------------------*/
 
 #organization_list { display:none; }
-body.accounts_panel_tab #organization_list { display:block; }
+body.accounts_panel_tab #organization_list { 
+  display:block;
+  border-top: 1px solid #e0e0e0;
+}
 
 #accounts_manager_container {
   margin: 0px 25px;
 }
 
 #accounts_manager_container h3 {
-  text-align: center;
   font-weight: bold;
   margin-bottom: 1em;
   font: bold 14px Arial;
@@ -88,18 +90,6 @@ body.accounts_panel_tab #organization_list { display:block; }
 .organizations .organization { display:none; }
 .organizations .organization.display_view { display: block; }
 
-.organizations h2 {
-  font: bold 20px Arial;
-}
-
-.organizations h3 {
-  font: bold 20px Arial;
-}
-
-.organizations .organization h3 {
-  margin: 10px 0px;
-}
-
 .organizations .organization form.details label {
   display: block;
   padding-bottom: 10px;
@@ -122,9 +112,8 @@ body.accounts_panel_tab #organization_list { display:block; }
     background: url(/images/embed/ui/account_toggle_right.png);
   }
 
-
 /*--------------------------- Accounts Dialog --------------------------------*/
-.account_list {
+tbody.account_list {
   max-width: none;
   width: 800px;
 }
@@ -193,10 +182,13 @@ body.accounts_panel_tab #organization_list { display:block; }
       .account_list .email { width: 0%; }
       .account_list .last  { width: 100%; }
 
-.account_list tr .edit, .account_list tr .display {
+.account_list div.organization_row * { width: auto; float: left; }
+.organization_row { clear: both; }
+.account_list tr .edit, .account_list tr .display, .account_list div .edit, .account_list div .display {
   display: none;
 }
-.account_list tr.edit_view_mode .edit, .account_list tr.display_view_mode .display {
+.account_list tr.edit_view_mode .edit, .account_list tr.display_view_mode .display, 
+.account_list div.edit_view_mode .edit, .account_list div.display_view_mode .display {
   display: block;
 }
 .account_list .disabled_role.display_view_mode td {

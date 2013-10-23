@@ -17,7 +17,8 @@ dc.ui.AccountView = Backbone.View.extend({
     collaborator   : 'tr',
     reviewer       : 'tr',
     membership     : 'div',
-    user           : 'div'
+    user           : 'div',
+    organization_row : 'div'
   },
 
   events : {
@@ -81,7 +82,7 @@ dc.ui.AccountView = Backbone.View.extend({
   },
 
   isRow : function() {
-    return this.kind == 'row' || this.kind == 'admin' || this.kind == 'reviewer';
+    return this.kind == 'row' || this.kind == 'admin' || this.kind == 'reviewer' || this.kind == 'organization_row';
   },
 
   serialize : function() {

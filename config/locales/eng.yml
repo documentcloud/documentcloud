@@ -98,6 +98,8 @@ workspace:
   # The title's on the Help tabs of the Organizer screen.
   # (the 'Search' tab's string is located in the common section)
   help: Help
+  
+  home: Home
 
   # Internal admin api for displaying document mentions
   # jst/workspace/document/mentions.jst
