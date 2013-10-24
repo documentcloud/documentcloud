@@ -6,7 +6,8 @@ dc.language = {
     'spa': 'Español/Spanish',
     'fra': 'Français/French',
     'deu': 'Duetch/German'
-  }
+  },
+  USER: ['eng','spa']
 };
 
 dc.language.SUPPORTED = _.keys(dc.language.NAMES);

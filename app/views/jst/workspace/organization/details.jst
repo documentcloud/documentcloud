@@ -12,8 +12,8 @@
   <label>
     <span class="title"><%= _.t('default_document_language') %>:</span>
     <select name="document_language">
-      <% _.each(languages, function(name, code){ %>
-      <option value="<%= code %>" <%= organization.get('document_language') == code ? "selected" : "" %>><%= name %></option>
+      <% _.each(dc.language.USER, function(code){ %>
+      <option value="<%= code %>" <%= organization.get('language') == code ? "selected" : "" %>><%= dc.language.NAMES[code] %></option>
       <% }); %>
     </select>
   </label>

@@ -23,7 +23,7 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :email, :case_sensitive => false, :if => :has_memberships?
   validate :validate_identity_is_unique
   validates_inclusion_of  :language, :document_language, 
-                          :in => DC::Language::SUPPORTED, 
+                          :in => DC::Language::USER, 
                           :message => "must be one of: (#{DC::Language::SUPPORTED.join(', ')})"
 
   # Sanitizations:

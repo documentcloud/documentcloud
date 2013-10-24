@@ -3,7 +3,6 @@ module DC
 
   # should we be using iso15924 script codes?
   #   http://www.unicode.org/iso15924/iso15924-codes.html
-
   module Language
     NAMES = {
       'eng' => 'English',
@@ -13,6 +12,8 @@ module DC
     }
     SUPPORTED = NAMES.keys
     DEFAULT = 'eng'
+
+    USER = ['spa','eng']
   end
 
 end

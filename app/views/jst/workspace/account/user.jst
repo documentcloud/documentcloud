@@ -18,8 +18,8 @@
   <label>
     <span class="title"><%= _.t('workspace') %>:</span>
     <select name="language">
-      <% _.each(dc.language.NAMES, function(name, code){ %>
-      <option value="<%= code %>" <%= account.get('language') == code ? "selected" : "" %>><%= name %></option>
+      <% _.each(dc.language.USER, function(code){ %>
+      <option value="<%= code %>" <%= account.get('language') == code ? "selected" : "" %>><%= dc.language.NAMES[code] %></option>
       <% }); %>
     </select>
   </label>
