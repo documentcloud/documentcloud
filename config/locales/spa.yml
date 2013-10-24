@@ -546,6 +546,16 @@ workspace:
   show_all: Mostrar todas
   entities_explained: Las entidades listadas están presentes adentro de los documentos relacionados con tu búsqueda. Selecciona una entidad para filtrar estos resultados.
   calais_credit: Entidades a través de OpenCalais
+  city: Ciudades
+  country: Países
+  date: Fechas
+  phone: Números de Teléfono
+  email: Direcciones de correo electrónico
+  organization: Organizaciones
+  person: Personas
+  place: Lugares
+  state: Unidos
+  term: Términos
 
 
   ###############################################################

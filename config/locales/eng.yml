@@ -580,6 +580,16 @@ workspace:
   show_all: Show all
   entities_explained: The entities listed above are present within the documents that match your search. Select an entity to filter your search results.
   calais_credit: Entities provided by OpenCalais
+  city: City
+  country: Countries
+  date: Dates
+  phone: Phone
+  email: Email Addresses
+  organization: Organizations
+  person: People
+  place: Places
+  state: States
+  term: Terms
 
 
   ###############################################################
