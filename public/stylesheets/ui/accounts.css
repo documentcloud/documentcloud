@@ -102,6 +102,7 @@ body.accounts_panel_tab #organization_list {
 
 .organization .account_list td {
   color: black;
+  font-size: 12px;
 }
 
 .organization .controls {
@@ -173,7 +174,8 @@ body.accounts_panel_tab #organization_list {
       padding: 10px;
       vertical-align: middle;
       white-space: nowrap;
-      font-size: 11px; line-height: 25px;
+      font-size: 11px; 
+      line-height: 25px;
     }
     .collaborator_list td {
       color: #ccc;

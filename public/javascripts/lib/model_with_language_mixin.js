@@ -1,7 +1,7 @@
 window.ModelWithLanguageMixin = {
 
   getLanguageCode: function(){
-    return this.get('language') || 'eng';
+    return this.get('document_language') || 'eng';
   },
 
   getLanguageName: function(){
