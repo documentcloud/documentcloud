@@ -11,7 +11,13 @@ class OrganizationsController < ApplicationController
                                   :organization_id => params[:id] })
     return forbidden unless membership
 
-    membership.organization.update_attributes pick(params, :language)
+    if membership.organization.language != params[:language]
+      Document.find(:all,:conditions=>{:organization_id=>membership.organization_id}).each do | doc |
+        expire_page doc.canonical_cache_path if doc.cacheable?
+      end
+    end
+
+    membership.organization.update_attributes pick(params, :language, :document_language)
 
     json membership.organization.canonical
   end
