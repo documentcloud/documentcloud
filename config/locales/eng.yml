@@ -306,6 +306,7 @@ workspace:
   role_contributor_for_x:  You are a contributor for %s
   role_reviewer_for_x:  You are a reviewer for %s
   role_freelancer_for_x:  You are a freelancer for %s
+  language_defaults: Language Defaults
 
   ###############################################################
   # "Share Document" dialog

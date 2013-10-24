@@ -294,6 +294,7 @@ workspace:
   role_contributor_for_x:  Usted es un miembro de %s
   role_reviewer_for_x:  Usted es un revisor de %s
   role_freelancer_for_x:  Usted es un profesional independiente de %s
+  language_defaults: Predeterminados de Idiomas
 
   ###############################################################
   # "Share Document" dialog
