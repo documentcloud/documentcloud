@@ -21,7 +21,6 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
       information   : 'group: ' + dc.account.organization().get('slug')
     });
     Accounts.bind('reset', _.bind(this._renderAccounts, this));
-    dc.account.organization().bind('change:language', this.setDisplayLanguage, this );
     this._rendered = false;
     this._open = false;
     $(this.el).hide();
@@ -57,12 +56,6 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     $(this.el).hide();
     $(document.body).removeClass('overlay');
     this._open = false;
-  },
-
-  setDisplayLanguage: function(){
-    this.$('.organization_language .choice').html( dc.account.organization().getLanguageName() );
-    this.$('.organization_language td' ).removeClass('active');
-    this.$('.organization_language td[data-lang=' + dc.account.organization().getLanguageCode() + ']' ).addClass('active');
   },
 
   showLanguageEdit: function(ev){
