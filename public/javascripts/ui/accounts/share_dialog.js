@@ -21,8 +21,8 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   EMAIL_DIALOG_OPTIONS : {
     mode:        'short_prompt',
     description: _.t('reviewer_enter_email'),
-    saveText:    'Next',
-    closeText:   'Cancel'
+    saveText:    _.t('next'),
+    closeText:   _.t('cancel')
   },
 
   initialize : function(options) {

@@ -28,10 +28,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
            _.t('embed_step_three_title')
   ],
 
-  DEMO_ERROR : 'Demo accounts are not allowed to embed documents. ' +
-               '<a href="/contact">Contact us</a> if you need a full ' +
-               'featured account. View an example of the embed code ' +
-               '<a href="/help/publishing">here</a>.',
+  DEMO_ERROR : _.t('embed_demo_error', '<a href="/contact">','</a>', '<a href="/help/publishing">','</a>'),
 
   DEFAULT_OPTIONS : {
     width   : null,

@@ -319,7 +319,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   printNotes : function() {
     var docs = this.selected();
     if (!_.any(docs, function(doc){ return doc.hasNotes(); })) {
-      return dc.ui.Dialog.alert('"' + docs[0].get('title') + '" does not contain any printable notes.');
+      return dc.ui.Dialog.alert( _.t('print_notes_missing_error', '"'+docs[0].get('title')+'"' ) );
     }
     var params = _.map(docs, function(doc){ return 'docs[]=' + doc.id; }).join('&');
     var win = window.open(SERVER_ROOT + '/notes/print?' + params);

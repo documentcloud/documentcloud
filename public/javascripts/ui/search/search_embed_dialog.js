@@ -205,13 +205,13 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
 
     this.$('.publish_step').setMode('not', 'enabled');
     this.$('.publish_step_'+this.currentStep).setMode('is', 'enabled');
-    this.info('Step ' + this.currentStep + ' of ' + this.totalSteps, true);
+    this.info( _.t('step_x_of_x', this.currentStep, this.totalSteps), true);
 
     var first = this.currentStep == 1;
     var last = this.currentStep == this.totalSteps;
 
     this._previous.setMode(first ? 'not' : 'is', 'enabled');
-    this._next.html(last ? 'Finish' : 'Next &raquo;').setMode('is', 'enabled');
+    this._next.html(last ? _.t('finish') : _.t('next') + ' &raquo;').setMode('is', 'enabled');
   },
 
   selectSnippet : function() {

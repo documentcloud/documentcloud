@@ -6,7 +6,6 @@ common: &common
   # The label that's applied to a note when it's a draft.  Is displayed in red with a red border, and is transformed to uppercase.
 
   print_notes: Print Notes
-
   annotated_by: 'Annotated by: %s'
   # displayed in light grey text at the bottom of notes
   
@@ -434,6 +433,9 @@ workspace:
     arrive at a document from a web search &mdash; the link guides them back to the         \
     document's original context.
   embed_show_sidebar: Show the sidebar
+  document_viewer_size: Document viewer size
+  demo_embed_error: Demo accounts are not allowed to embed documents. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.
+
   embed_show_sidebar_help: If your layout has limited horizontal space, uncheck this
     box to hide the sidebar.
   embed_show_text_tab: Show the text tab
@@ -472,7 +474,6 @@ workspace:
   embed_step_one_title: "Step One: Review \"%s\""
   embed_step_two_title: "Step Two: Configure the Document Viewer"
   embed_step_three_title: "Step Three: Copy and Paste the Embed Code"
-
 
   # Appears when pages are shown in organizer.  
   # Right-click on a document and select 'View Pages'
@@ -547,7 +548,7 @@ workspace:
   - There is one documents being processed
   - There are %d documents being processed
 
-
+  print_notes_missing_error: "%s does not contain any printable notes."
 
   no_projects_help: "This account doesn't have any projects yet. To start one, click on the \"New Project\" button above."
   # is displayed on the left sidebar of the organizer when the account does not have any projects

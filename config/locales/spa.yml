@@ -414,6 +414,8 @@ workspace:
   - Provee el URL del artículo que se refiere a estos documentos.
   related_article_url_help: Proveer el URL del artículo que se refiere a este documento permitirá crear un enlace al "Artículo Relacionado" adentro del marco que muestra el documento. Muchos lectores llegarán al documento a través de una busqueda; el enlace les guiará al contexto orginal del documento.
   embed_show_sidebar: Mostrar el sidebar
+  document_viewer_size: Tamaño del documento
+  embed_demo_error: Las cuentas demo no se les permite integrar documentos. Póngase en %scontacto%s con nosotros si necesita una cuenta con todas las funciones. Ver %sun ejemplo%s de código de inserción aquí
   embed_show_sidebar_help: Si el espacio horizontal de tu sitio es limitado, haz clic en esta caja para esconder el sidebar.
   embed_show_text_tab: Mostrar la pestaña de texto
   embed_hide_text_tab_help: Si el texto del documento no se lee bien, haz click en esta caja para esconder la pestaña de texto.
@@ -442,7 +444,7 @@ workspace:
   step_x_of_x: Paso %d de %d
   embed_step_one_title: "Paso uno: Revisión \"%s\""
   embed_step_two_title: "Paso dos: Configurar el marco de documentos"
-  embed_step_three_title: "Step Three: Copy and Paste the Embed Code"
+  embed_step_three_title: "Tercer paso: Copiar y pegar el código de inserción"
 
   # Appears when pages are shown in organizer.  
   # Right-click on a document and select 'View Pages'
@@ -512,7 +514,7 @@ workspace:
   - Se está procesando un documento
   - Se están procesando %d documentos
 
-
+  print_notes_missing_error: "%s no contiene ningún notas imprimibles."
 
   no_projects_help: Esta cuenta aun no tiene proyectos. Para crear uno, haz click en el botón de "Proyecto Nuevo" arriba.
   # is displayed on the left sidebar of the organizer when the account does not have any projects
@@ -702,7 +704,7 @@ workspace:
   x_still_processing: "\"%s\" está siendo procesada. Espere a que termine por favor."
   no_embed_permission: Usted no tiene permiso para insertar el documento.
   downloading_progress: 
-  - "Preparación de \"%$2s\" para descargar ..."
+  - "Preparación de \"%2$s\" para descargar ..."
   - Preparación %d documentos para descargar
   download_pdf: Descargar PDF Original
   download_text: Descargar Text Completo
