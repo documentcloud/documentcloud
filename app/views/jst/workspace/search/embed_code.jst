@@ -1,6 +1,6 @@
 <div class="publish_info publish_prepare_section_label selectable_text interface">
-  <span class="text_link remove_lines">Remove line breaks</span>
-  Add this HTML to your site to embed these documents.
+  <span class="text_link remove_lines"><%= _.t('remove_line_breaks') %></span>
+  <%= _.t('add_html_for_documents') %>
 </div>
 
 <textarea class="snippet">
@@ -14,6 +14,5 @@
 </textarea>
 
 <div class="publish_info publish_prepare_section_label selectable_text interface hidden">
-  You can find examples of embedded searches on our list of
-  <a class="text_link" href="http://www.documentcloud.org/featured" target="_blank">featured reporting</a>.
+  <%= _.t( 'featured_reporting_list','<a class="text_link" href="http://www.documentcloud.org/featured" target="_blank">','</a>' ) %>
 </div>

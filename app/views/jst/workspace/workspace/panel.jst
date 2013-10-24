@@ -1,11 +1,18 @@
 <div id="workspace_tabs" class="tabs">
   <div id="search_tab" data-tab="search" class="tab active">
-    Search
+    <%= _.t('documents') %>
     <div class="tab_corner left"></div>
     <div class="tab_corner right"></div>
   </div>
+  <% if (dc.account) { %>
+  <div id="accounts_tab" data-tab="account" class="tab trailing">
+    <%= _.t('accounts') %>
+    <div class="tab_corner left"></div>
+    <div class="tab_corner right"></div>
+  </div>
+  <% } %>
   <div id="help_tab" data-tab="help" class="tab trailing">
-    Help
+    <%= _.t('help') %>
     <div class="tab_corner left"></div>
     <div class="tab_corner right"></div>
   </div>
@@ -13,8 +20,8 @@
 
 <div class="panel_content">
   <div class="search_tab_content">
-    <div id="title_box">
-      <span id="title_box_inner" class="noselect"></span>
+    <div class="title_box">
+      <span class="title_box_inner" class="noselect"></span>
     </div>
     <div id="search_box_container" class="active_search empty_search noselect"></div>
     <div id="search_toolbar_container" class="active_search empty_search"></div>
@@ -23,14 +30,17 @@
     <div id="pagination_container" class="active_search"></div>
   </div>
   
+  <div id="accounts_manager_container" class="accounts_tab_content">
+  </div>
+
   <div id="help" class="help_tab_content">
-    
+
     <div id="help_toolbar">
-      <div class="minibutton uservoice">Discuss Features &amp; Bugs</div>
-      <div class="minibutton contact_us">Contact DocumentCloud</div>
+      <div class="minibutton uservoice"><%= _.t('uservoice_discuss') %></div>
+      <div class="minibutton contact_us"><%= _.t('contact_documentcloud') %></div>
     </div>
-    
+
     <div id="help_content"></div>
-    
+
   </div>
 </div>

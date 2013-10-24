@@ -33,8 +33,27 @@ class AccountsController < ApplicationController
   end
 
   # Requesting /accounts returns the list of accounts in your logged-in organization.
+  # consider extracting the HTML info into a single method in common w/ workspace
   def index
-    json current_organization.accounts.active
+    respond_to do |format|
+      format.html do
+        if logged_in?
+          if current_account.real?
+            @projects = Project.load_for(current_account)
+            @current_organization = current_account.organization
+            @organizations = Organization.all_slugs
+            @has_documents = Document.owned_by(current_account).count(:limit => 1) > 0
+            return render :layout => 'workspace'
+          else
+            return redirect_to '/public/search'
+          end
+        end
+        redirect_to '/home'
+      end
+      format.json do 
+        json current_organization.accounts.active
+      end
+    end
   end
 
   # Does the current request come from a logged-in account?
@@ -55,7 +74,7 @@ class AccountsController < ApplicationController
       (current_account.real?(current_organization) and params[:role] == Account::REVIEWER)
 
     # Find or create the appropriate account
-    account_attributes = pick(params, :first_name, :last_name, :email)
+    account_attributes = pick(params, :first_name, :last_name, :email, :language, :document_language)
     account = Account.lookup(account_attributes[:email]) || Account.create(account_attributes)    
 
     # Find role for account in organization if it exists.
@@ -81,7 +100,7 @@ class AccountsController < ApplicationController
         LifecycleMailer.deliver_membership_notification(account, current_organization, current_account)
       end
     end
-    json account # N.B. account's canonical method currently returns the default organization_id.
+    json account.canonical( :membership=>membership )
   end
 
   # Journalists are authorized to update any account in the organization.
@@ -89,7 +108,9 @@ class AccountsController < ApplicationController
   def update
     account = current_organization.accounts.find(params[:id])
     return json(nil, 403) unless account && current_account.allowed_to_edit_account?(account, current_organization)
-    account.update_attributes pick(params, :first_name, :last_name, :email)
+    unless account.update_attributes pick(params, :first_name, :last_name, :email,:language, :document_language)
+      return json({ "errors" => account.errors.to_a.map{ |field, error| "#{field} #{error}" } }, 409)
+    end
     role = pick(params, :role)
     #account.update_attributes(role) if !role.empty? && current_account.admin?
     membership = current_organization.role_of(account)
@@ -99,7 +120,7 @@ class AccountsController < ApplicationController
       account.password = password
       account.save
     end
-    json account
+    json account.canonical( :membership=>membership )
   end
 
   # Resend a welcome email for a pending account.

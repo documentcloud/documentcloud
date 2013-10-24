@@ -41,6 +41,29 @@
         Short Name for URLs:<br /><span class="example">ex: daily-tribune</span>
       </label>
     </div>
+
+    <div class="line">
+      <select name="organization[language]" class="language input" id="language">
+        <% DC::Language::SUPPORTED.each do | language | %>
+        <option value="<%= language %>" <%= "selected=true" if language == @params[:organization][:language] %>><%= DC::Language::NAMES[ language ]  %></option>
+        <% end %>
+      </select>
+      <label for="language">
+        Interface Language:<br /><span class="example">For Organization and Admin Account</span>
+      </label>
+    </div>
+
+    <div class="line">
+      <select name="organization[document_language]" class="language input" id="document_language">
+        <% DC::Language::SUPPORTED.each do | language | %>
+          <option value="<%= language %>" <%= "selected=true" if language == @params[:organization][:document_language] %>><%= DC::Language::NAMES[ language ]  %></option>
+        <% end %>
+      </select>
+      <label for="document_language">
+        Document Language:<br /><span class="example">What documents will default to when uploaded</span>
+      </label>
+    </div>
+
     <div class="line">
       <div class="text_input">
         <div class="background">
@@ -57,7 +80,7 @@
       <div class="text_input left_half">
         <div class="background">
           <div class="inner">
-            <input type="text" name="account[first_name]" value="<%= @params[:account][:first_name] %>" />
+            <input type="text" id="first_name" name="account[first_name]" value="<%= @params[:account][:first_name] %>" />
           </div>
         </div>
       </div>
@@ -68,22 +91,10 @@
           </div>
         </div>
       </div>
-      <label>
+      <label for="first_name">
         Full Name:<br /><span class="example">First name, last name</span>
       </label>
     </div>
-    <!--<div class="line">
-      <div class="text_input">
-        <div class="background">
-          <div class="inner">
-            <input type="password" name="account[password]" id="account_password" />
-          </div>
-        </div>
-      </div>
-      <label for="account_password">
-        Password:<br /><span class="example">At least 6 letters long, please</span>
-      </label>
-    </div>-->
     <div class="line license">
     This form is intended as an admin tool. All users, especially those who plan to upload documents to DocumentCloud should review our terms of service, which can be found at <a href="http://www.documentcloud.org/terms">http://www.documentcloud.org/terms</a>.
     </div>

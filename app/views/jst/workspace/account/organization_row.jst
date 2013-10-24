@@ -1,0 +1,68 @@
+<div class="first">
+  <div class="pending_wrap">
+    <div class="pending_badge icon alert_yellow"></div>
+  </div>
+  <img class="avatar" src="<%= account.DEFAULT_AVATAR %>" width="<%= size %>" height="<%= size %>" />
+</div>
+<div class="name">
+  <div class="display selectable_text">
+    <%= dc.inflector.truncate(account.fullName(true) || '', 25) %>&nbsp;<div class="pending_notification">(<%= _.t('pending') %>)</div>
+  </div>
+  <div class="edit name_wrapper">
+    <div class="text_input dark small">
+      <input name="first_name" type="text" placeholder="<%= _.t('first_name') %>" value="<%= account.get('first_name') %>" />
+    </div>
+    <div class="text_input dark small">
+      <input name="last_name" type="text" placeholder="<%= _.t('last_name') %>" value="<%= account.get('last_name') %>" />
+    </div>
+  </div>
+</div>
+<div class="email">
+  <div class="display selectable_text">
+    <%= dc.inflector.truncate(email || '', 25) %>
+  </div>
+  <div class="text_input edit dark small">
+    <input name="email" type="text" placeholder="<%= _.t('email') %>" value="<%= email %>" />
+  </div>
+</div>
+<div class="role">
+  <div class="display">
+    <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>
+    <div class="disabled">(<%= _.t('disabled') %>)</div>
+    <% } else { %>
+    <%= account.ROLE_NAMES[account.get('role')] %>
+    <% } %>
+  </div>
+  <div class="edit">
+    <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>
+    <div class="disabled">(<%= _.t('disabled') %>)</div>
+    <% } else { %>
+    <select name="role" class="account_role" <%= current && current.isAdmin() && account.id != current.id ? '' : 'disabled="disabled"' %>>
+      <option class="role_1" value="1"><%= _.t('administrator') %></option>
+      <option class="role_2" value="2"><%= _.t('contributor') %></option>
+      <option class="role_4" value="4"><%= _.t('freelancer') %></option>
+    </select>
+    <% } %>
+  </div>
+</div>
+<div class="last">
+  <% if (account == current || (current && current.isAdmin())) { %>
+  <div class="edit_account icon edit_glyph_dark display"></div>
+  <% if (account == current) { %>
+  <div class="change_password display text_link"><%= _.t('change_password') %></div>
+  <% } else if (account.isPending()) { %>
+  <div class="resend_welcome display text_link"><%= _.t('resend_welcome_email') %></div>
+  <% } %>
+  <div class="edit controls_wrapper">
+    <div class="minibutton default save_changes"><%= _.t('ok') %></div>
+    <% if (account.id && account.id > 0 && account.id != dc.account.get('id')) { %>
+    <% if (account.ROLE_NAMES[account.get('role')] == 'disabled') { %>
+    <div class="minibutton warn enable_account"><%= _.t('reenable') %></div>
+    <% } else { %>
+    <div class="minibutton warn disable_account"><%= _.t('disable') %></div>
+    <% } %>
+
+    <% } %>
+  </div>
+  <% } %>
+</div>

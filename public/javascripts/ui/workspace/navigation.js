@@ -3,7 +3,8 @@ dc.ui.Navigation = Backbone.View.extend({
   SECTIONS : {
     documents : 'sidebar',
     search    : 'panel',
-    help      : 'panel'
+    help      : 'panel',
+    accounts  : 'panel'
   },
 
   constructor : function() {
@@ -18,10 +19,6 @@ dc.ui.Navigation = Backbone.View.extend({
       return memo;
     }, this), {});
     this.open('documents');
-    // this.bind('tab:entities', _.bind(function() {
-    //   if (!this.isOpen('search')) this.open('search');
-    //   _.defer(dc.app.searcher.loadFacets);
-    // }, this));
     $('#toplinks .open_accounts').click(function(){ dc.app.accounts.open(); });
     this.setMode('search', 'panel_tab');
     return this;

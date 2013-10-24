@@ -1,6 +1,6 @@
 # How to Add Accounts
 
-Manage your organization's DocumentCloud accounts by clicking the "[Manage Accounts][]" link at the bottom of the sidebar to open a list of every account in your organization.
+Manage your organization's DocumentCloud accounts and settings by clicking the "[Manage Organization][]" link at the bottom of the sidebar to open a list of every account in your organization.
 
 <img src="/images/help/show_all_accounts.jpg" class="full_line" />
 

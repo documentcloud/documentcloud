@@ -6,7 +6,7 @@ class Document < ActiveRecord::Base
   # Accessors and constants:
 
   attr_accessor :mentions, :total_mentions, :annotation_count, :hits
-  attr_writer   :organization_name, :organization_slug, :account_name, :account_slug
+  attr_writer   :organization_name, :organization_slug, :display_language, :account_name, :account_slug
 
   DEFAULT_TITLE = "Untitled Document"
 
@@ -52,8 +52,7 @@ class Document < ActiveRecord::Base
   validates_presence_of :organization_id, :account_id, :access, :page_count,
                         :title, :slug
 
-  validates_inclusion_of :language, :in => DC::Language::SUPPORTED
-
+  before_validation :ensure_language_is_valid
   before_validation_on_create :ensure_titled
 
   after_destroy :delete_assets
@@ -184,7 +183,7 @@ class Document < ActiveRecord::Base
       :source             => params[:source],
       :related_article    => params[:related_article],
       :remote_url         => params[:published_url] || params[:remote_url],
-      :language           => params[:language] || 'en', # todo: default to account.language
+      :language           => params[:language] || account.language,
       :original_extension => file_ext
     )
     import_options = {
@@ -387,6 +386,10 @@ class Document < ActiveRecord::Base
     @organization_name ||= organization.name
   end
 
+  def display_language
+    @display_language ||= organization.language
+  end
+
   def account_name
     @account_name ||= (account ? account.full_name : 'Unattributed')
   end
@@ -522,6 +525,10 @@ class Document < ActiveRecord::Base
 
   def search_url
     "#{DC.server_root}/documents/#{id}/search.json?q={query}"
+  end
+
+  def translations_url
+    "#{DC.server_root}/translations/{realm}/{language}"
   end
 
   def annotations_url
@@ -870,12 +877,14 @@ class Document < ActiveRecord::Base
       doc['contributor']      = account_name
       doc['contributor_organization'] = organization_name
     end
+    doc['display_language']   = display_language
     doc['resources']          = res = ActiveSupport::OrderedHash.new
     res['pdf']                = pdf_url
     res['text']               = full_text_url
     res['thumbnail']          = thumbnail_url
     res['search']             = search_url
     res['print_annotations']  = print_annotations_url
+    res['translations_url']   = translations_url
     res['page']               = {}
     res['page']['image']      = page_image_url_template({ :local => options[:local], :cache_busting => options[:cache_busting] })
     res['page']['text']       = page_text_url_template(:local => options[:local])
@@ -888,6 +897,7 @@ class Document < ActiveRecord::Base
     end
     doc['sections']           = ordered_sections.map {|s| s.canonical } if options[:sections]
     doc['data']               = data if options[:data]
+    doc['language']           = language
     if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
       doc['annotations']      = self.annotations_with_authors(options[:account]).map {|a| a.canonical}
     elsif options[:annotations]
@@ -907,6 +917,9 @@ class Document < ActiveRecord::Base
   end
 
   private
+  def ensure_language_is_valid
+    self.language = DC::Language::DEFAULT unless DC::Language::SUPPORTED.include?(language)
+  end
 
   def ensure_titled
     self.title ||= DEFAULT_TITLE

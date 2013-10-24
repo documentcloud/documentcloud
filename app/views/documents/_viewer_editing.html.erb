@@ -24,7 +24,7 @@
     var contributor = currentDocument.api.getContributor();
     var org = currentDocument.api.getContributorOrganization();
     if (contributor && org) {
-      currentDocument.$('.DV-contributor').text("Contributed by: " + contributor + ', ' + org);
+      currentDocument.$('.DV-contributor').text(_.t('contributed_by') +": " + contributor + ', ' + org);
     }
   });
 </script>

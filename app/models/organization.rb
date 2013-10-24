@@ -13,6 +13,9 @@ class Organization < ActiveRecord::Base
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug
   validates_format_of :slug, :with => DC::Validators::SLUG
+  validates_inclusion_of  :language, :document_language, 
+                          :in => DC::Language::SUPPORTED, 
+                          :message => "must be one of: (#{DC::Language::SUPPORTED.join(', ')})"
   
   # Sanitizations:
   text_attr :name
@@ -58,7 +61,8 @@ class Organization < ActiveRecord::Base
       memberships.organization_id, memberships.role,
       accounts.id,                 accounts.email,
       accounts.first_name,         accounts.last_name,
-      accounts.hashed_password,    accounts.identities
+      accounts.hashed_password,    accounts.identities,
+      accounts.language
     from memberships
       inner join accounts on accounts.id = memberships.account_id
     where 
@@ -89,22 +93,21 @@ class Organization < ActiveRecord::Base
     return organizations
   end
 
-
   # How many documents have been uploaded across the whole organization?
   def document_count
     @document_count ||= Document.count(:conditions => {:organization_id => id})
   end
-  
+
   def role_of(account)
     self.memberships.first(:conditions=>{:account_id=>account.id})
   end
-  
+
   def add_member(account, role, concealed=false)
     options = {:account_id => account.id, :role => role, :concealed => concealed}
     options[:default] = true unless account.memberships.exists?(:default=>true) # TODO: transition account#real? for this verification
     self.memberships.create(options)
   end
-  
+
   def remove_member(account)
     self.memberships.destroy_all(:conditions=>{:account_id => account.id})
   end
@@ -113,17 +116,18 @@ class Organization < ActiveRecord::Base
   def admin_emails
     self.accounts.admin.all(:select => [:email]).map {|acc| acc.email }
   end
-  
+
   def to_json(options = {})
     canonical(options).to_json
   end
-
   def canonical( options = {} )
     attrs = {
-      'name' => name,
-      'slug' => slug,
-      'demo' => demo,
-      'id'   => id
+      'name'              => name,
+      'slug'              => slug,
+      'language'          => language,
+      'document_language' => document_language,
+      'demo'              => demo,
+      'id'                => id
     }
     if options[:include_document_count]
       attrs['document_count'] = document_count
