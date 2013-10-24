@@ -6,7 +6,7 @@ class Document < ActiveRecord::Base
   # Accessors and constants:
 
   attr_accessor :mentions, :total_mentions, :annotation_count, :hits
-  attr_writer   :organization_name, :organization_slug, :account_name, :account_slug
+  attr_writer   :organization_name, :organization_slug, :organization_language, :account_name, :account_slug
 
   DEFAULT_TITLE = "Untitled Document"
 
@@ -384,6 +384,10 @@ class Document < ActiveRecord::Base
 
   def organization_name
     @organization_name ||= organization.name
+  end
+
+  def organization_language
+    @organization_language ||= organization.language
   end
 
   def account_name
@@ -858,6 +862,7 @@ class Document < ActiveRecord::Base
     end
     if options[:contributor]
       doc['contributor']      = account_name
+      doc['contributor_language']     = organization_language
       doc['contributor_organization'] = organization_name
     end
     doc['resources']          = res = ActiveSupport::OrderedHash.new
