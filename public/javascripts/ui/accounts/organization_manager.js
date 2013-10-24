@@ -22,7 +22,7 @@ dc.ui.OrganizationManager = Backbone.View.extend({
       languages: dc.language.NAMES
     }));
     this.list = this.$('.account_list_content');
-    this.list.append(this.memberViews.map(function(view){ return view.render().el; }));
+    this.list.append(_.map( this.memberViews, function(view){ return view.render().el; }));
     this.$el.addClass('account_list');
     return this;
   },
