@@ -2,7 +2,7 @@ dc.ui.OrganizationManager = Backbone.View.extend({
   className: 'organization',
 
   events: {
-    'click .save_changes': 'saveOrganization',
+    'click .controls .save_changes': 'saveOrganization',
     'click .new_account' : 'newAccount'
   },
 
