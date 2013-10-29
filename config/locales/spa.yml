@@ -416,7 +416,7 @@ workspace:
   related_article_url_help: Proveer el URL del artículo que se refiere a este documento permitirá crear un enlace al "Artículo Relacionado" adentro del marco que muestra el documento. Muchos lectores llegarán al documento a través de una busqueda; el enlace les guiará al contexto orginal del documento.
   embed_show_sidebar: Mostrar el sidebar
   document_viewer_size: Tamaño del documento
-  embed_demo_error: Las cuentas demo no se les permite integrar documentos. Póngase en %scontacto%s con nosotros si necesita una cuenta con todas las funciones. Ver %sun ejemplo%s de código de inserción aquí
+  demo_embed_error: Las cuentas demo no se les permite integrar documentos. Póngase en %scontacto%s con nosotros si necesita una cuenta con todas las funciones. Ver %sun ejemplo%s de código de inserción aquí
   embed_show_sidebar_help: Si el espacio horizontal de tu sitio es limitado, haz clic en esta caja para esconder el sidebar.
   embed_show_text_tab: Mostrar la pestaña de texto
   embed_hide_text_tab_help: Si el texto del documento no se lee bien, haz click en esta caja para esconder la pestaña de texto.

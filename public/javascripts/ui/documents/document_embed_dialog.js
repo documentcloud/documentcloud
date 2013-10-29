@@ -28,7 +28,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
            _.t('embed_step_three_title')
   ],
 
-  DEMO_ERROR : _.t('embed_demo_error', '<a href="/contact">','</a>', '<a href="/help/publishing">','</a>'),
+  DEMO_ERROR : _.t('demo_embed_error', '<a href="/contact">','</a>', '<a href="/help/publishing">','</a>'),
 
   DEFAULT_OPTIONS : {
     width   : null,
