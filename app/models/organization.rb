@@ -13,10 +13,11 @@ class Organization < ActiveRecord::Base
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug
   validates_format_of :slug, :with => DC::Validators::SLUG
-  validates_inclusion_of  :language, :document_language, 
-                          :in => DC::Language::USER, 
+  validates_inclusion_of  :language, :in => DC::Language::USER,
+                          :message => "must be one of: (#{DC::Language::USER.join(', ')})"
+  validates_inclusion_of  :document_language,  :in => DC::Language::SUPPORTED,
                           :message => "must be one of: (#{DC::Language::SUPPORTED.join(', ')})"
-  
+
   # Sanitizations:
   text_attr :name
   

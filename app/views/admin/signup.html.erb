@@ -44,7 +44,7 @@
 
     <div class="line">
       <select name="organization[language]" class="language input" id="language">
-        <% DC::Language::SUPPORTED.each do | language | %>
+        <% DC::Language::USER.each do | language | %>
         <option value="<%= language %>" <%= "selected=true" if language == @params[:organization][:language] %>><%= DC::Language::NAMES[ language ]  %></option>
         <% end %>
       </select>
