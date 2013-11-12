@@ -42,6 +42,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     if (this.docs.all(function(doc) { return doc.get('reviewer_count') == 0; })) {
       this.renderEmailDialog();
     }
+    dc.ui.Dialog.prototype.initialize.call(this, options);
   },
 
   render : function() {
