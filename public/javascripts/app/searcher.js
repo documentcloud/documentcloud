@@ -83,6 +83,7 @@ dc.controllers.Searcher = Backbone.Router.extend({
   },
 
   publicQuery : function() {
+
     // Swap out projects.
     var projects = [];
     var projectNames = dc.app.visualSearch.searchQuery.values('project');
@@ -90,7 +91,9 @@ dc.controllers.Searcher = Backbone.Router.extend({
       projects.push(Projects.find(projectName));
     });
     var query = dc.app.visualSearch.searchQuery.withoutCategory('project');
-    query = _.map(projects, function(p) { return 'projectid: ' + p.slug(); }).join(' ') + ' ' + query;
+    if ( ! _.isEmpty(projects) ){
+      query = _.map(projects, function(p) { return 'projectid: ' + p.slug(); }).join(' ') + ' ' + query;
+    }
 
     // Swap out documents for short ids.
     query = query.replace(/(document: \d+)-\S+/g, '$1');

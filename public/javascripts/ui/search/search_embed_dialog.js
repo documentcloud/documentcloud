@@ -113,7 +113,7 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
 
   embedOptions : function() {
     var options = {};
-    options.q            = this.query;
+    options.q            = this.query.replace(/\"/g, '\\\"');
     options.container    = '#DC-search-' + dc.inflector.sluggify(this.query);
     options.title        = this._titleEl.val().replace(/\"/g, '\\\"');
     options.order        = this._orderEl.val();
