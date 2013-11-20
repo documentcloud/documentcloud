@@ -325,7 +325,7 @@ workspace:
   reviewing_instructions_multiple_sent_to: Instrucciones para la revisión de %d Documentos enviados a %s
   reviewing_instructions_send_failure: Sus instrucciones no fueron enviados. Póngase en contacto con soporte para resolución de problemas ayuda.
   share_x_documents:
-    - "Comparte \"%2$s\""
+    - Comparte documento
     - Comparte %d documentos
   reviewer_email_instructions:
     - Las instrucciones por correo electrónico a %2$s

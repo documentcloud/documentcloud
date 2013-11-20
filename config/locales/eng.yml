@@ -429,10 +429,7 @@ workspace:
   enter_url_that_references:
   - Enter the URL of the article that references this document
   - Enter the URL of the article that references these documents
-  related_article_url_help: Providing the URL of the article that references this           \
-    document will enable a "Related Article" link within the document viewer. Many readers  \
-    arrive at a document from a web search &mdash; the link guides them back to the         \
-    document's original context.
+  related_article_url_help: Providing the URL of the article that references this document will enable a "Related Article" link within the document viewer. Many readers arrive at a document from a web search &mdash; the link guides them back to the document's original context.
   embed_show_sidebar: Show the sidebar
   document_viewer_size: Document viewer size
   demo_embed_error: Demo accounts are not allowed to embed documents. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.
@@ -444,9 +441,7 @@ workspace:
   document_already_public: This document is already public.
   document_public_on: This document will be public on %s
   make_document_public: Make document public
-  document_publish_public_help: This document is public. It is currently available to  \
-    users who search DocumentCloud's catalog and will be visible to the public when    \
-    you embed it on your website. Change the %saccess level%s.                         
+  document_publish_public_help: This document is public. It is currently available to users who search DocumentCloud's catalog and will be visible to the public when you embed it on your website. Change the %saccess level%s.                         
   document_publish_private_help: This document is private. It will not be visible to
     your readers until you make it public. Change the %saccess level%s now or %s publication
     date
