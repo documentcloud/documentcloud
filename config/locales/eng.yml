@@ -743,7 +743,7 @@ workspace:
   x_still_processing: "\"%s\" is still being processed. Please wait for it to finish."
   no_embed_permission: You don\'t have permission to embed that document.
   downloading_progress: 
-  - "Preparing \"%$2s\" for download..."
+  - "Preparing \"%2$s\" for download..."
   - Preparing %d documents for download
   download_pdf: Download Original PDF
   download_text: Download Full Text
