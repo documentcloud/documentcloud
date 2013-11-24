@@ -1,0 +1,29 @@
+<h3><%= membership_description %></h3>
+<% if (dc.account && dc.account.isAdmin()) { %>
+<form class="details">
+  <label>
+    <span class="title"><%= _.t('reader_workspace_language') %>:</span>
+    <select name="language">
+      <% _.each(languages, function(name, code){ %>
+      <option value="<%= code %>" <%= organization.get('language') == code ? "selected" : "" %>><%= name %></option>
+      <% }); %>
+    </select>
+  </label>
+  <label>
+    <span class="title"><%= _.t('default_document_language') %>:</span>
+    <select name="document_language">
+      <% _.each(dc.language.USER, function(code){ %>
+      <option value="<%= code %>" <%= organization.get('language') == code ? "selected" : "" %>><%= dc.language.NAMES[code] %></option>
+      <% }); %>
+    </select>
+  </label>
+</form>
+<div class="controls">
+  <div class="minibutton plus new_account float_left"><div class="icon white_plus"></div><%= _.t('new_account') %></div>
+  <div class="minibutton default save_changes"><%= _.t('save') %></div>
+</div>
+<% } %>
+<table>
+  <tbody class="account_list_content">
+  </tbody>
+</table>

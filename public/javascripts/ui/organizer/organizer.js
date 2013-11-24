@@ -46,23 +46,23 @@ dc.ui.Organizer = Backbone.View.extend({
       if (Projects.isEmpty()) this.setMode('no', 'projects');
       Projects.each(this._addSubView);
     } else {
-      this.$('.organization_list').html(JST['organizer/organizations']());
+      this.$('.organization_list').html(JST['organizer/organizations']({organizations: Organizations}));
     }
   },
 
   renderAccounts : function() {
     _.each( this.$('.account_links'), function(el){
       el = $(el);
-      el.html( JST['organizer/account_links']( { organization: Organizations.getByCid( el.attr('data-cid') )} )  );
+      el.html( JST['organizer/account_links']( { organization: Organizations.get( el.attr('data-cid') )} )  );
     });
   },
 
   promptNewProject : function() {
     var me = this;
-    dc.ui.Dialog.prompt('Create a New Project', '', function(title, dialog) {
+    dc.ui.Dialog.prompt(_.t('create_new_project'), '', function(title, dialog) {
       title = dc.inflector.trim(title);
       if (!title) {
-        dialog.error('Please enter a title.');
+        dialog.error( _.t('must_have_title') );
         return;
       }
       if (Projects.find(title)) return me._warnAlreadyExists(title);
@@ -113,7 +113,7 @@ dc.ui.Organizer = Backbone.View.extend({
 
   showAccountDocuments : function(e) {
     var cid = $(e.target).attr('data-cid');
-    Accounts.getByCid(cid).openDocuments();
+    Accounts.get(cid).openDocuments();
   },
 
   showYourPublishedDocuments : function() {
@@ -122,7 +122,8 @@ dc.ui.Organizer = Backbone.View.extend({
 
   showOrganizationDocuments : function(e) {
     $(e.target).closest('.organization').toggleClass('show_accounts');
-    Accounts.current().openOrganizationDocuments();
+    var cid = $(e.target).parent().find(".account_links").attr("data-cid");
+    Organizations.get(cid).openDocuments();
   },
 
   showOtherOrgDocuments : function(e) {
@@ -143,7 +144,7 @@ dc.ui.Organizer = Backbone.View.extend({
   },
 
   _warnAlreadyExists : function(title) {
-    dc.ui.notifier.show({text : 'A project named "' + title + '" already exists'});
+    dc.ui.notifier.show({text : _.t('project_exists', title) });
     return false;
   },
 

@@ -97,7 +97,7 @@ class DocumentImport < DocumentAction
       end
     else
       begin
-        opts = {:pages => 'all', :output => 'text', :language => ocr_language(document.language)}
+        opts = {:pages => 'all', :output => 'text', :language => document.language}
         opts[:ocr] = true if options['force_ocr']
         opts[:clean] = false unless opts[:language] == 'eng'
         Docsplit.extract_text(@pdf, opts)

@@ -1,0 +1,17 @@
+  <div class="language"><%= _.t('language') %>: 
+      <span class="choice"> <%= language.name %></span>
+      <div class="edit_language icon edit_glyph_dark display"></div>
+  </div>
+  <div class="language_sheet" style="display:none;">
+    <div class="languages">
+      <table>
+      <% _.each(_.inGroupsOf(dc.language.SUPPORTED,5),function( row ){ %>
+        <tr>
+        <% _.each(row,function(language_code){ %>
+            <td data-lang="<%= language_code %>"><%= dc.language.NAMES[ language_code ] %></td>
+         <% }); %>
+        </tr>
+      <% }); %>
+      </table>
+    </div>
+  </div>

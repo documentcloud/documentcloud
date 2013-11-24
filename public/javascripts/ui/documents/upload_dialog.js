@@ -4,8 +4,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   id        : 'upload_dialog',
   className : 'dialog',
 
-  INSERT_PAGES_MESSAGE: "This document will close while it's being rebuilt. " +
-                        "Long documents may take a long time to rebuild.",
+  INSERT_PAGES_MESSAGE: _.t('insert_pages_message'),
 
   // Sets up the uploader only when the Documents tab is opened. Manually use `setupUpload`.
   constructor : function(options) {
@@ -15,9 +14,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       autostart       : false,
       collection      : UploadDocuments,
       mode            : 'custom',
-      title           : 'Upload Documents',
-      saveText        : 'Upload',
-      closeText       : 'Cancel',
+      title           : _.t('upload_document'),
+      saveText        : _.t('upload'),
+      closeText       : _.t('cancel'),
       multiFileUpload : false
     };
     options = _.extend({}, defaults, options);
@@ -119,9 +118,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
     if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
       this.close();
-      return dc.ui.Dialog.alert("You can only upload documents less than 200MB in size. " +
-                                "Please <a href=\"/help/troubleshooting\">optimize your document</a> " +
-                                "before continuing.");
+      return dc.ui.Dialog.alert(_.t('max_upload_size_warn','<a href="/help/troubleshooting">',"</a>") );
     }
 
     this.render();
@@ -131,7 +128,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // Cancel an upload by index.
   cancelUpload : function(uploadIndex) {
     if (this.collection.length <= 1) {
-      this.error('You must upload at least one document.');
+      this.error( _.t('must_upload_something') );
       return false;
     }
     return true;
@@ -207,7 +204,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       }
       dc.ui.Dialog.alert(this.INSERT_PAGES_MESSAGE, {onClose : function() {
         window.close();
-        _.defer(dc.ui.Dialog.alert, "The pages are being processed. Please close this document.");
+        _.defer(dc.ui.Dialog.alert, _.t('close_while_text_reprocess') );
       }});
     }
     this.close();
@@ -216,10 +213,11 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // Update title and fields to match the new count of uploads.
   _countDocuments : function() {
     var num = this.collection.length;
-    this.title('Upload ' + (num > 1 ? num : '') + dc.inflector.pluralize(' Document', num));
-    var text = dc.inflector.pluralize('document', num);
-    this.$('.upload_public_count').text(text);
-    this.$('.upload_email_count').text('the ' + text + (num == 1 ? ' has' : ' have'));
+    
+    this.title( _.t('uploaded_x_documents',num) );
+
+    this.$('.upload_public_count').text( _.t('x_documents', num ) );
+    this.$('.upload_email_count').text( _.t('uploaded_x_document_has', num ) );
   },
 
   // Ask the server how many work units are currently queued.
@@ -227,9 +225,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     $.getJSON('/documents/queue_length.json', {}, _.bind(function(resp) {
       var num = resp.queue_length;
       if (num <= 0) return;
-      var conj = num > 1 ? 'are' : 'is';
-      this.info('There ' + conj + ' ' + num + ' ' + dc.inflector.pluralize('document', num) +
-                ' currently being processed.', true);
+      this.info( _.t('document_processing_count', num ), true );
     }, this));
   },
 
@@ -246,7 +242,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     var failed = _.select(this._tiles, function(tile) { return tile.ensureTitle(); });
     if (failed.length) {
       var num = this.collection.length;
-      return this.error('Please enter a title for ' + (num == 1 ? 'the document.' : 'all documents.'));
+      return this.error( _.t('must_have_doc_title', num ) );
     }
     this.$('.ok').setMode('not', 'enabled');
     this.startUpload(0);
@@ -284,6 +280,8 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     'click .open_edit'    : 'openEdit',
     'click .apply_all'    : 'applyAll'
   },
+  
+  initialize: function(options) { this.options = options; },
 
   // Renders tile and sets up commonly used jQuery selectors.
   render : function() {
@@ -327,7 +325,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     $('input[name=source]',         dialog).val(attrs.source);
     $('select[name=access]',        dialog).val(attrs.access);
     $('select[name=language]',      dialog).val(attrs.language);
-    dc.app.uploader.info('Update applied to all files.');
+    dc.app.uploader.info( _.t('update_applied_all') );
   },
 
   // Toggle used to show/hide upload document's user-editable attributes.

@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+#require "rubygems"
+require "google_drive"
+require 'highline/import'
+require 'yaml'
+
+yaml = YAML.load(File.read( './config/locales/eng.yml' ) )
+
+
+
+username = ask("Enter your username:  ") { |q| q.echo = true }
+password = ask("Enter your password:  ") { |q| q.echo = "*" }
+
+
+SPREADSHEET_KEY = '0Avx72osb7YIxdHVCVVczak9ySmh1VGRBUTBEdkU4Q1E'
+
+session = GoogleDrive.login( username, password )
+
+ws = session.spreadsheet_by_key(SPREADSHEET_KEY).worksheets[0]
+
+
+row = 3
+yaml['viewer'].each do | key, value |
+    row+=1
+    if key=~/help/
+        ws[row, 1] = 'help'
+        ws[row, 2] =  value
+    else
+        ws[row, 1] = key
+        ws[row, 2] = value.is_a?(Array) ? 'X' : ''
+        [*value].each_with_index do | english, index |
+            ws[row, 3 + index ] = english
+        end
+    end
+
+end
+
+ws.save()

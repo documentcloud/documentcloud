@@ -1,11 +1,10 @@
 <div class="publish_info publish_prepare_section_label selectable_text interface">
-  <span class="text_link remove_lines">Remove line breaks</span>
-  Add this HTML to your site to embed the note.
+  <span class="text_link remove_lines"><%= _.t('remove_line_breaks') %></span>
 </div>
 
 <textarea class="snippet">
 &lt;div id="DC-note-<%= note.get('id') %>" class="DC-note-container"&gt;&lt;/div&gt;
-&lt;script src="http://s3.documentcloud.org/notes/loader.js"&gt;&lt;/script&gt;
+&lt;script src="//s3.amazonaws.com/s3.documentcloud.org/notes/loader.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   dc.embed.loadNote('<%= window.SERVER_ROOT_HTTP %>/documents/<%= note.get('document_id') %>/annotations/<%= note.get('id') %>.js'<% if (options) { %>, {
     <%= options %>

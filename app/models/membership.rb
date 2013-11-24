@@ -10,17 +10,19 @@ class Membership < ActiveRecord::Base
 
   named_scope :real,      { :conditions => ["memberships.role in (?)", REAL_ROLES] }
 
-
   def real?
     REAL_ROLES.include?(role)
   end
 
-  def canonical( options={} )
+  def canonical( options = {} )
     attrs = self.as_json
-    if options[:include_account]
-      attrs[:account] = account.canonical( options[:include_account] )
-    end
+    attrs['account']           = account.canonical(options)      if options[:include_account]
+    attrs['organization']      = organization.canonical(options) if options[:include_organization]
+    attrs['organization_name'] = organization.name               if options[:include_organization_name]
     attrs
   end
-
+  
+  def to_json(options={})
+    canonical(options).to_json
+  end
 end
