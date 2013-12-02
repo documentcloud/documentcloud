@@ -32,12 +32,6 @@ gem 'omniauth-google-oauth2',  '>= 0.1.13'
 gem 'sanitize',                '=2.0.3'
 
 gem 'cloud-crowd'
-<<<<<<< HEAD
 
 gem 'pdftailor'
 gem 'sqlite3'
-
-=======
-gem 'pdftailor'
-gem 'sqlite3'
->>>>>>> 212f8fafa32b6bda26c42125af054e3902c8479d
