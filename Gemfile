@@ -2,6 +2,8 @@ source 'https://rubygems.org'
  
 gem 'rails',          '~>2.3.18'
 gem 'rake'
+
+gem 'rack',           '=1.1.0'
  
 gem 'json',           '>= 1.7.7'
 gem 'nokogiri',       '1.5.5' # only pegged because nokogiri 1.5.9 installation fucking up on OSX
@@ -27,7 +29,7 @@ gem 'omniauth',                '>= 1.0'
 gem 'omniauth-twitter',        '>= 0.0.13'
 gem 'omniauth-facebook',       '>= 1.4.0'
 gem 'omniauth-google-oauth2',  '>= 0.1.13'
-gem 'sanitize'
+gem 'sanitize',                '=2.0.3'
 
 gem 'cloud-crowd'
 gem 'sqlite3'

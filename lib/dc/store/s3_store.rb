@@ -4,7 +4,7 @@ module DC
     # An implementation of an AssetStore.
     module S3Store
 
-      BUCKET_NAME     = Rails.env.production? ? 's3.documentcloud.org' : "dcloud_#{Rails.env}"
+      BUCKET_NAME     = Rails.env.production? ? 'openafricadocss3' : "dcloud_#{Rails.env}"
 
       AUTH_PERIOD     = 5.minutes
 
@@ -20,10 +20,10 @@ module DC
 
       module ClassMethods
         def asset_root
-          Rails.env.production? ? "http://s3.documentcloud.org" : "http://s3.amazonaws.com/#{BUCKET_NAME}"
+          Rails.env.production? ? "http://s3.openafrica.net" : "http://#{BUCKET_NAME}.s3.amazonaws.com/"
         end
         def web_root
-          Thread.current[:ssl] ? "https://s3.amazonaws.com/#{BUCKET_NAME}" : asset_root
+          Thread.current[:ssl] ? "https://#{BUCKET_NAME}.s3.amazonaws.com/" : asset_root
         end
       end
 
