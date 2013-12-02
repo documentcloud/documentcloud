@@ -4,6 +4,8 @@
 <head>
   <%= render :partial => 'common/meta_tags' %>
   <title><%= @title ? @title + ' - ' : '' %>SourceAfrica</title>
+  <%= render :partial=>'accounts/language_settings' %>
+
   <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
   <% js  = [:core] + (@javascripts || []) %>
   <%= include_stylesheets *css %>
@@ -35,14 +37,10 @@
     </div>
     <a id="workspace_logo" href="/home" style="background:none; font-size:22px;">SourceAfrica</a>
     <div id="toplinks" class="interface">
-      <a href="/home" class="text_link">Home</a>
+      <a href="/home" class="text_link"><%= DC.t( @current_account, 'home') %></a>
       &nbsp;/&nbsp;
       <% if @current_account %>
-        <% if @current_organization %>
-        <span class="text_link open_accounts">Accounts</span>
-        &nbsp;/&nbsp;
-        <% end %>
-        <a href="/logout" class="text_link">Log Out</a>
+        <a href="/logout" class="text_link"><%= DC.t( @current_account, 'log_out') %></a>
       <% else %>
         <a href="/contact" class="text_link">Join</a>
         &nbsp;/&nbsp;

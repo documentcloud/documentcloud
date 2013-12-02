@@ -113,8 +113,12 @@ div.text_input {
   background: transparent url(/images/embed/ui/text_input_large_left.png) no-repeat center left;
 }
   div.text_input.small {
-    height: 23px;
     background: transparent url(/images/embed/ui/text_input_small_left.png) no-repeat center left;
+  }
+  div.text_input.small input {
+    height: 23px;
+    background: transparent url(/images/embed/ui/text_input_small_right.png) no-repeat center right;
+    margin-left: 5px;
   }
   div.text_input.dark {
     height: auto;
@@ -365,7 +369,7 @@ textarea.text_area {
   display: none;
   position: absolute;
   z-index: 100;
-  width: 220px;
+  width: 200px;
   background: #161616;
   padding: 4px 0;
   opacity: 0.97; filter: alpha(opacity=97);
@@ -527,6 +531,7 @@ textarea.text_area {
   .dialog .information {
     position: absolute;
     padding: 5px 10px;
+    max-width: 270px;
     top: 29px; right: 20px;
     font-size: 10px;
     color: #ccc;
@@ -610,6 +615,13 @@ textarea.text_area {
       position: static;
       margin: 0 auto 20px;
     }
+  .dialog.account_list .new_account {
+    width: 150px;
+  }
+  .dialog .controls .force_ocr {
+    width: 90px;
+  }
+
 
 /*------------------------------ Hidden Iframes ------------------------------*/
 iframe.hidden_iframe {

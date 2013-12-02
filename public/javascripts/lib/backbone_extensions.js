@@ -11,6 +11,18 @@
     $(this.el).setMode(mode, group);
     this.modes[group] = mode;
   };
+  
+  // For small amounts of DOM Elements, where a full-blown template isn't
+  // needed, use **make** to manufacture elements, one at a time.
+  //
+  //     var el = this.make('li', {'class': 'row'}, this.model.escape('title'));
+  //
+  Backbone.View.prototype.make = function(tagName, attributes, content) {
+    var el = document.createElement(tagName);
+    if (attributes) Backbone.$(el).attr(attributes);
+    if (content != null) Backbone.$(el).html(content);
+    return el;
+  };
 
   // Treat empty strings as `null`, in the context of Backbone Models.
   var oldSet = Backbone.Model.prototype.set;

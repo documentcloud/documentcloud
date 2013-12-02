@@ -22,6 +22,10 @@ class Account < ActiveRecord::Base
   validates_format_of     :email, :with => DC::Validators::EMAIL, :if => :has_memberships?
   validates_uniqueness_of :email, :case_sensitive => false, :if => :has_memberships?
   validate :validate_identity_is_unique
+  validates_inclusion_of  :language, :in => DC::Language::USER,
+                          :message => "must be one of: (#{DC::Language::USER.join(', ')})"
+  validates_inclusion_of  :document_language,  :in => DC::Language::SUPPORTED,
+                          :message => "must be one of: (#{DC::Language::SUPPORTED.join(', ')})"
 
   # Sanitizations:
   text_attr :first_name, :last_name, :email
@@ -123,7 +127,7 @@ class Account < ActiveRecord::Base
   end
   
   def has_memberships? # should be reworked as Account#real?
-    self.memberships.exists?
+    self.memberships.any?
   end
 
   def has_role?(role, org=nil)
@@ -342,28 +346,38 @@ class Account < ActiveRecord::Base
     self
   end
 
-
   # Create default organization to preserve backwards compatability.
-  def canonical(options={})
+  def canonical(options = {})
     attrs = {
       'id'                => id,
       'slug'              => slug,
       'email'             => email,
       'first_name'        => first_name,
       'last_name'         => last_name,
-      'organization_id'   => organization_id,
-      'role'              => role,
+      'language'          => language,
+      'document_language' => document_language,
       'hashed_email'      => hashed_email,
-      'pending'           => pending?
+      'pending'           => pending?,
     }
-    if options[:include_organization]
-      attrs['organization_name'] = organization_name
-      attrs['organizations']     = organizations.map(&:canonical)
+
+    if options[:include_memberships]
+      attrs['memberships'] = memberships.map{ |m| m.canonical(options) }
     end
     if options[:include_document_counts]
       attrs['public_documents'] = Document.unrestricted.count(:conditions => {:account_id => id})
       attrs['private_documents'] = Document.restricted.count(:conditions => {:account_id => id})
     end
+    
+    # all of the below should be rendered obsolete and removed.
+    if (membership = options[:membership] || memberships.first(:conditions=>{:default=>true}))
+      attrs['organization_id'] = membership.organization_id
+      attrs['role']            = membership.role
+    end
+    if options[:include_organization]
+      attrs['organization_name'] = membership.organization.name if membership
+      attrs['organizations']     = organizations.map(&:canonical)
+    end
+    
     attrs
   end
 

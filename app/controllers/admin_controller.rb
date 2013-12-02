@@ -69,21 +69,28 @@ class AdminController < ApplicationController
   # Attempt a new signup for DocumentCloud -- includes both the organization and
   # its first account. If everything's kosher, the journalist is logged in.
   # NB: This needs to stay access controlled by the bouncer throughout the beta.
+  DEFAULT_SIGNUP_PARAMS = {
+    :account => {},
+    :organization => { :language=>DC::Language::DEFAULT,:document_language=>DC::Language::DEFAULT }
+  }
   def signup
     unless request.post?
-      @params = {:organization => {}, :account => {}}
+      @params = DEFAULT_SIGNUP_PARAMS.dup
     end
     return render unless request.post?
     @params = params
     org = Organization.create(params[:organization])
-    return fail(org.errors.full_messages.first) if org.errors.any?
+    return fail(org.errors.full_messages.join(', ')) if org.errors.any?
     params[:account][:email].strip! if params[:account][:email]
-    acc = Account.create(params[:account])
-    return org.destroy && fail(acc.errors.full_messages.first) if acc.errors.any?
-    org.memberships.create(:account_id => acc.id, :role => Account::ADMINISTRATOR, :default => true)
+    acc = Account.new( params[:account].merge( :language=>org.language, :document_language=>org.document_language ))
+    acc.memberships.build({
+      :role => Account::ADMINISTRATOR, :default => true, :organization=>org
+    })
+    return org.destroy && fail( acc.errors.full_messages.join(', ') ) unless acc.save
+
     acc.send_login_instructions
     @success = "Account Created. Welcome email sent to #{acc.email}."
-    @params = {:organization => {}, :account => {}}
+    @params = DEFAULT_SIGNUP_PARAMS.dup
   end
 
   # Endpoint for our pixel-ping application, to save our analytic data every

@@ -14,8 +14,8 @@ dc.ui.Note = Backbone.View.extend({
   },
 
   // Re-render the note when saved.
-  constructor : function(options) {
-    Backbone.View.call(this, options);
+  initialize : function(options) {
+    this.options = options;
     _.bindAll(this, 'render');
     this.model.bind('change', this.render);
   },

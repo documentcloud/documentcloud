@@ -1,0 +1,38 @@
+<img class="avatar" width="<%= 150 %>" height="<%= 150 %>" />
+<form>
+  <!-- <h3>Details</h3> -->
+  <label>
+    <span class="title"><%= _.t('first_name') %>:</span>
+    <input name="first_name" type="text" placeholder="<%= _.t('first_name') %>" value="<%= account.get('first_name') %>" />
+  </label>
+  <label>
+    <span class="title"><%= _.t('last_name') %>:</span>
+    <input name="last_name" type="text" placeholder="<%= _.t('last_name') %>" value="<%= account.get('last_name') %>" />
+  </label>
+  <label>
+    <span class="title"><%= _.t('email') %>:</span>
+    <input name="email" type="text" placeholder="<%= _.t('email') %>" value="<%= account.get('email') %>" />
+  </label>
+
+  <h3><%= _.t('language_defaults') %></h3>
+  <label>
+    <span class="title"><%= _.t('workspace') %>:</span>
+    <select name="language">
+      <% _.each(dc.language.USER, function(code){ %>
+      <option value="<%= code %>" <%= account.get('language') == code ? "selected" : "" %>><%= dc.language.NAMES[code] %></option>
+      <% }); %>
+    </select>
+  </label>
+  <label>
+    <span class="title"><%= _.t('new_documents') %>:</span>
+    <select name="document_language">
+      <% _.each(dc.language.NAMES, function(name, code){ %>
+      <option value="<%= code %>" <%= account.get('document_language') == code ? "selected" : "" %>><%= name %></option>
+      <% }); %>
+    </select>
+  </label>
+  <div class="controls">
+    <div class="minibutton change_password"><%= _.t('change_password') %></div>
+    <div class="minibutton default save_changes"><%= _.t('save') %></div>
+  </div>
+</form>

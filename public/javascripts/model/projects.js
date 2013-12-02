@@ -87,10 +87,8 @@ dc.model.Project = Backbone.Model.extend({
   },
 
   notifyProjectChange : function(numDocs, removal) {
-    var prefix = removal ? 'Removed ' : 'Added ';
-    var prep   = removal ? ' from "'  : ' to "';
-    var notification = prefix + numDocs + ' ' + dc.inflector.pluralize('document', numDocs) + prep + this.get('title') + '"';
-    dc.ui.notifier.show({mode : 'info', text : notification});
+    var key = removal ? 'removed_from_x_documents' : 'added_to_x_documents'
+    dc.ui.notifier.show({mode : 'info', text : _.t( key, numDocs ) } );
   },
 
   // Does this project already contain a given document?
@@ -113,9 +111,9 @@ dc.model.Project = Backbone.Model.extend({
     var docCount    = this.get('document_count');
     var noteCount   = this.get('annotation_count');
     var shareCount  = this.collaborators.length;
-    return docCount + ' ' + dc.inflector.pluralize('document', docCount)
-      + ', ' + noteCount + ' ' + dc.inflector.pluralize('note', noteCount)
-      + (shareCount ? ', ' + shareCount + ' ' + dc.inflector.pluralize('collaborator', shareCount) : '');
+    return _.t('x_documents', docCount )
+      + ', ' + _.t('x_notes', noteCount )
+      + (shareCount ? ', ' + _.t('x_collaborators', shareCount ) : '');
   },
 
   _setCollaboratorsResource : function() {
@@ -126,15 +124,7 @@ dc.model.Project = Backbone.Model.extend({
 });
 
 dc.model.Project.topLevelTitle = function(type) {
-  switch (type) {
-    case 'all_documents':             return 'All Documents';
-    case 'your_documents':            return 'Your Documents';
-    case 'annotated_documents':       return 'Annotated Documents';
-    case 'popular_documents':         return 'Popular Documents';
-    case 'published_documents':       return 'Published Documents';
-    case 'your_published_documents':  return 'Your Published Documents';
-
-  }
+  return _.t( type );
 };
 
 // Project Set

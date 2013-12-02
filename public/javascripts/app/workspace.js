@@ -3,7 +3,8 @@ dc.controllers.Workspace = Backbone.Router.extend({
 
   routes : {
     'help/:page': 'help',
-    'help':       'help'
+    'help':       'help',
+    'accounts':   'accounts'
   },
 
   // Initializes the workspace, binding it to <body>.
@@ -16,29 +17,39 @@ dc.controllers.Workspace = Backbone.Router.extend({
     }
   },
 
+  accounts: function() {
+    dc.app.accounts.open();
+  },
+
   help : function(page) {
     this.help.openPage(page || '');
   },
 
   // Create all of the requisite subviews.
   createSubViews : function() {
-    dc.app.paginator  = new dc.ui.Paginator();
-    dc.app.navigation = new dc.ui.Navigation();
-    dc.app.toolbar    = new dc.ui.Toolbar();
-    dc.app.organizer  = new dc.ui.Organizer();
-    dc.ui.notifier    = new dc.ui.Notifier();
-    dc.ui.tooltip     = new dc.ui.Tooltip();
-    dc.app.searchBox  = VS.init(this.searchOptions());
-    this.sidebar      = new dc.ui.Sidebar();
-    this.panel        = new dc.ui.Panel();
-    this.documentList = new dc.ui.DocumentList();
-    this.entityList   = new dc.ui.EntityList();
+    dc.app.paginator      = new dc.ui.Paginator();
+    dc.app.navigation     = new dc.ui.Navigation();
+    dc.app.toolbar        = new dc.ui.Toolbar();
+    dc.app.organizer      = new dc.ui.Organizer();
+    dc.ui.notifier        = new dc.ui.Notifier();
+    dc.ui.tooltip         = new dc.ui.Tooltip();
+    dc.app.visualSearch   = new VS.VisualSearch(this.searchOptions());
+    dc.app.searchBox      = dc.app.visualSearch.searchBox;
+    dc.i18n               = I18n.noConflict();
+    this.sidebar          = new dc.ui.Sidebar();
+    this.panel            = new dc.ui.Panel();
+    this.documentList     = new dc.ui.DocumentList();
+    this.entityList       = new dc.ui.EntityList();
 
     if (!dc.account) return;
+    dc.app.accountSearch          = new VS.VisualSearch(this.accountSearchOptions());
+    dc.app.accountSearchBox       = dc.app.accountSearch.searchBox;
+    dc.app.accounts               = new dc.ui.AccountManager();
+    dc.app.accounts.organizations = new dc.ui.OrganizationList();
 
-    dc.app.uploader   = new dc.ui.UploadDialog();
-    dc.app.accounts   = new dc.ui.AccountDialog();
-    this.accountBadge = new dc.ui.AccountView({model : Accounts.current(), kind : 'badge'});
+    dc.app.uploader        = new dc.ui.UploadDialog();
+    dc.app.accounts.dialog = new dc.ui.AccountDialog();
+    this.accountBadge      = new dc.ui.AccountView({model : Accounts.current(), kind : 'badge'});
   },
 
   // Render all of the existing subviews and place them in the DOM.
@@ -58,7 +69,10 @@ dc.controllers.Workspace = Backbone.Router.extend({
     this.sidebar.add('organizer', dc.app.organizer.render().el);
 
     if (!dc.account) return;
-
+    dc.app.accounts.setElement($("#accounts_manager_container"));
+    dc.app.accounts.render();
+    this.panel.add('account_search_box', dc.app.accountSearchBox.render().el);
+    this.sidebar.add('organization_list', dc.app.accounts.organizations.render().el);
     this.sidebar.add('account_badge', this.accountBadge.render().el);
   },
 
@@ -152,6 +166,12 @@ dc.controllers.Workspace = Backbone.Router.extend({
           cb && cb(prefixes.concat(metadata));
         }
       }
+    };
+  },
+  
+  accountSearchOptions: function() {
+    return {
+      
     };
   }
 
