@@ -13,6 +13,7 @@ raw
 /secrets
 public/docs
 public/asset_store
+public/assets
 public/document-viewer/images/*.psd
 solr/data
 *.swp
