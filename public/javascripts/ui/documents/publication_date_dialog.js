@@ -17,13 +17,13 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
     if (!Documents.allowedToEdit(docs)) return;
     this.docs = docs;
     this.multiple = docs.length > 1;
-    var title = _.t('set_publication_date_for', this._title() );
+    var title = "Set Publication Date for " + this._title();
     dc.ui.Dialog.call(this, {
       mode        : 'custom',
       title       : title,
       editor      : true,
-      closeText   : _.t('cancel'),
-      deleteText  : _.t('remove')
+      closeText   : "Cancel",
+      deleteText  : "Remove"
     });
     this.render();
     $(document.body).append(this.el);
@@ -36,7 +36,7 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
     var publishAt = Documents.sharedAttribute(this.docs, 'publish_at');
     var oneHour = 60 * 60 * 1000;
     this._container.html(JST['document/publication_date_dialog']({
-      documentCount: this.docs.length,
+      multiple: this.multiple,
       date:     publishAt ? 
                 DateUtils.parseRfc(publishAt) : 
                 new Date(+(new Date) + oneHour)
@@ -58,7 +58,7 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
     var date = this._getDate();
     if (date < new Date) {
       this.close();
-      dc.ui.Dialog.alert(_.t('no_past_publication') );
+      dc.ui.Dialog.alert("You can't set a document to be published in the past.");
       return;
     }
     var utc = JSON.stringify(date);
@@ -74,7 +74,7 @@ dc.ui.PublicationDateDialog = dc.ui.Dialog.extend({
 
   // Helper method that constructs a title for multiple documents.
   _title : function() {
-    if (this.multiple) return _.t('document', this.docs.length );
+    if (this.multiple) return this.docs.length + ' Documents';
     return '"' + dc.inflector.truncate(this.docs[0].get('title'), 35) + '"';
   },
 

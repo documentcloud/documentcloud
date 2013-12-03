@@ -15,11 +15,11 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   totalSteps : 2,
 
   STEPS : [null,
-    _.t('embed_note_step_one'),
-    _.t('embed_note_step_two')
+    'Step One: Select a Note to Embed',
+    'Step Two: Copy and Paste the Embed Code'
   ],
 
-  DEMO_ERROR : _.t('embed_note_demo_error','<a href="/contact">','</a>','<a href="/help/publishing#step_5">','</a>'),
+  DEMO_ERROR : 'Demo accounts are not allowed to embed notes. <a href="/contact">Contact us</a> if you need a full featured account. View an example of the embed code <a href="/help/publishing#step_5">here</a>.',
 
   DEFAULT_OPTIONS : {},
 
@@ -125,13 +125,13 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
 
     this.$('.publish_step').setMode('not', 'enabled');
     this.$('.publish_step_'+this.currentStep).setMode('is', 'enabled');
-    this.info( _.t('step_x_of_x', this.currentStep, this.totalSteps), true);
+    this.info('Step ' + this.currentStep + ' of ' + this.totalSteps, true);
 
     var first = this.currentStep == 1;
     var last = this.currentStep == this.totalSteps;
 
     this._previous.setMode(first ? 'not' : 'is', 'enabled');
-    this._next.html(last ? _.t('finish') : _.t('next') + ' &raquo;').setMode('is', 'enabled');
+    this._next.html(last ? 'Finish' : 'Next &raquo;').setMode('is', 'enabled');
   },
 
   selectSnippet : function() {

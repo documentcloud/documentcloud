@@ -1,1 +1,0 @@
-* Scale up with a cron job after 100 docs are in the queue.  incrementally step down with lower thresholds

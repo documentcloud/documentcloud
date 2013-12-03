@@ -19,7 +19,7 @@
   .docalog label {
     background-color: #000;
     display: block;
-    max-width: 120px;
+    line-height: 25px;
     font-size: 11px;
     color: #ccc;
     text-align: left;

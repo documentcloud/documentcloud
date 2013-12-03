@@ -2,8 +2,6 @@ source 'https://rubygems.org'
  
 gem 'rails',          '~>2.3.18'
 gem 'rake'
-
-gem 'rack',           '=1.1.0'
  
 gem 'json',           '>= 1.7.7'
 gem 'nokogiri',       '1.5.5' # only pegged because nokogiri 1.5.9 installation fucking up on OSX
@@ -15,7 +13,7 @@ gem 'rubyzip',        '>= 0.9.1',  :require => 'zip/zip'
 gem 'right_aws',      '>= 2.0.1'        # Our patched version.
 gem 'aws-sdk',        '>= 1.7.1'
 gem 'pg',             '>= 0.11.0'
-gem 'jammit',         '>= 0.5.0'
+gem 'jammit'
 gem 'closure-compiler'
 gem 'docsplit',       '>= 0.6.4'
 gem 'sunspot_rails',  '>= 1.3.3'
@@ -29,9 +27,7 @@ gem 'omniauth',                '>= 1.0'
 gem 'omniauth-twitter',        '>= 0.0.13'
 gem 'omniauth-facebook',       '>= 1.4.0'
 gem 'omniauth-google-oauth2',  '>= 0.1.13'
-gem 'sanitize',                '=2.0.3'
+gem 'sanitize'
 
 gem 'cloud-crowd'
-
-gem 'pdftailor'
 gem 'sqlite3'

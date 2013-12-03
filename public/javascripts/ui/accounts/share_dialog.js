@@ -20,9 +20,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   EMAIL_DIALOG_OPTIONS : {
     mode:        'short_prompt',
-    description: _.t('reviewer_enter_email'),
-    saveText:    _.t('next'),
-    closeText:   _.t('cancel')
+    description: 'Enter the email address of the first reviewer to invite:',
+    saveText:    'Next',
+    closeText:   'Cancel'
   },
 
   initialize : function(options) {
@@ -42,7 +42,6 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     if (this.docs.all(function(doc) { return doc.get('reviewer_count') == 0; })) {
       this.renderEmailDialog();
     }
-    dc.ui.Dialog.prototype.initialize.call(this, options);
   },
 
   render : function() {
@@ -95,7 +94,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
   renderEmailDialog : function() {
     var docSize = this.docs.length;
-    var title = _.t('share_x_documents', this.docs.length, dc.inflector.truncate(this.docs.first().get('title'), 35) );
+    var title = 'Share ' + (this.docs.length == 1 ?
+        '"' + dc.inflector.truncate(this.docs.first().get('title'), 35) + '"' :
+        this.docs.length + ' Documents');
 
     this.showingEmailDialog = true;
     dc.ui.spinner.hide();
@@ -228,7 +229,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
 
     if (email)  this._emailEl.val(email);
     var email = this._emailEl.val();
-    if (!email) this.managementError( _.t('please_enter_email') );
+    if (!email) this.managementError("Please enter an email address.");
   },
 
   _cancelAddReviewer : function() {
@@ -252,7 +253,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     }
     if (!dc.app.validator.check(email, 'email')) {
       this._focusEmail();
-      this.managementError(_.t('please_enter_valid_email'), true);
+      this.managementError('Please enter a valid email address.', true);
       return false;
     }
 
@@ -296,13 +297,13 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       return error.indexOf("first name") != -1 || error.indexOf("last name") != -1;
     })) {
       this._showReviewerNameInputs();
-      this.managementError( _.t('reviewer_name') );
+      this.managementError("Please provide the reviewer's name.");
     } else if (resp.errors) {
       this.managementError(resp.errors[0], true);
     } else if (status == 403) {
-      this.error( _.t('reviewer_add_permission_denied'));
+      this.error('You are not allowed to add reviewers.');
     } else {
-      this.managementError( _.t('reviewer_enter_email'), true);
+      this.managementError("Please enter the email address of a reviewer.", true);
     }
     this.hideSpinner();
     this._focusEmail();
@@ -348,7 +349,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       }
     }, this));
     dc.ui.notifier.show({
-      text      : _.t('x_is_no_longer_a_reviewer_on_x', account.get('email'), documentIds.length ),
+      text      : account.get('email') + ' is no longer a reviewer on ' + documentIds.length + dc.inflector.pluralize(' document', documentIds.length),
       duration  : 5000,
       mode      : 'info'
     });
@@ -359,9 +360,9 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   _onRemoveError : function(resp) {
     this.hideSpinner();
      if (resp.status == 403) {
-       this.error( _.t('reviewer_remove_permission_denied') );
+      this.error('You are not allowed to remove reviewers.');
     } else {
-      this.error( _.t('reviewer_remove_error') );
+      this.error('There was a problem removing the reviewer.');
     }
     this._enabledNextButton();
   },
@@ -381,12 +382,11 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
   // ====================
 
   _setEmailDescription : function() {
-    var emails = dc.inflector.commify(
-      _.map( this.accountsToEmail(),
-             function(a){ return a.fullName(); }
-           )
-      ,{conjunction: 'and'});
-    this.$('.email_description').html( _.t('reviewer_email_message', emails ) );
+    var accounts = this.accountsToEmail();
+    var description = "DocumentCloud will email reviewing instructions to " +
+      dc.inflector.commify(_.map(accounts, function(a){ return a.fullName(); }), {conjunction: 'and'}) +
+      ". If you wish, you may add a personal&nbsp;message.";
+    this.$('.email_description').html(description);
   },
 
   _sendInstructions : function() {
@@ -394,7 +394,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.showSpinner();
 
     this._next.setMode('not', 'enabled');
-    this._next.html( _.t('sending') );
+    this._next.html('Sending...');
 
     var accountIds  = _.pluck(accounts, 'id');
     var documents   = this.docsForReviewers(accountIds);
@@ -406,13 +406,16 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       type : 'POST',
       data : {account_ids : accountIds, document_ids : documentIds, message : message},
       success: _.bind(function(resp) {
-        var account =  (accounts.length == 1 ? accounts[0].get('email') : accounts.length + ' people' );
 
-        var text = (documentIds.length == 1 ?
-                    _.t('reviewing_instructions_single_sent_to',
-                        dc.inflector.truncate(this.docs.get(documentIds[0]).get('title'), 30), account ) :
-                    _.t('reviewing_instructions_multiple_sent_to', documentIds.length, account )
-                   );
+        var text = 'Instructions for reviewing ' +
+            (documentIds.length == 1 ?
+              '"' + dc.inflector.truncate(this.docs.get(documentIds[0]).get('title'), 30) + '"' :
+              documentIds.length + ' documents'
+            ) + ' sent to ' +
+            (accounts.length == 1 ?
+              accounts[0].get('email') :
+              accounts.length + ' people'
+            ) + '.';
 
         dc.ui.notifier.show({
           text     : text,
@@ -425,7 +428,7 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
       }, this),
       error : _.bind(function(resp) {
         this.hideSpinner();
-        this.error( _.t('reviewing_instructions_send_failure') );
+        this.error('Your instructions were not sent. Contact support for help troubleshooting.');
         this._setStep();
         this._enabledNextButton();
       }, this)
@@ -446,17 +449,20 @@ dc.ui.ShareDialog = dc.ui.Dialog.extend({
     this.title(title);
     var last = this.currentStep == 2;
 
-    this._next.html(last ? _.t('send') : _.t('next') + ' &raquo;');
+    this._next.html(last ? 'Send' : 'Next &raquo;');
     this.setMode('p' + this.currentStep, 'step');
     if (last) this._setEmailDescription();
   },
 
   _displayTitle : function() {
     if (this.currentStep == 1) {
-      return _.t("share_x_documents", this.docs.length, dc.inflector.truncate(this.docs.first().get('title'), 30) );
+      return this.docs.length == 1 ?
+        'Share "' + dc.inflector.truncate(this.docs.first().get('title'), 30) + '"' :
+        'Share ' + this.docs.length + ' Documents';
     } else {
       var accounts = this.accountsToEmail();
-      return _.t('reviewer_email_instructions', accounts.length, accounts[0].fullName() );
+      return "Email Instructions to " + (accounts.length > 1 ?
+        accounts.length + " Reviewers" : accounts[0].fullName());
     }
   },
 

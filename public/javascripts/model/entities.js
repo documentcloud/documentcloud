@@ -77,16 +77,16 @@ dc.model.Entity = Backbone.Model.extend({
 
   // Map of kind to display name for titles and the like.
   DISPLAY_NAME : {
-    city          : _.t('city'),
-    country       : _.t('country'),
-    date          : _.t('date'),
-    phone         : _.t('phone'),
-    email         : _.t('email'),
-    organization  : _.t('organization'),
-    person        : _.t('person'),
-    place         : _.t('place'),
-    state         : _.t('state'),
-    term          : _.t('term')
+    city          : 'Cities',
+    country       : 'Countries',
+    date          : 'Dates',
+    phone         : 'Phone Numbers',
+    email         : 'Email Addresses',
+    organization  : 'Organizations',
+    person        : 'People',
+    place         : 'Places',
+    state         : 'States',
+    term          : 'Terms'
   },
 
   PER_PAGE: 10,

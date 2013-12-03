@@ -154,7 +154,7 @@ class DocumentsController < ApplicationController
     dates = EntityDate.find_all_by_document_id(ids, :include => [:document])
     json({'dates' => dates}.to_json)
   end
-
+  
   def occurrence
     entity = Entity.find(params[:id])
     occurrence = Occurrence.new(*(params[:occurrence].split(':') + [entity]))
@@ -171,7 +171,7 @@ class DocumentsController < ApplicationController
   def status
     docs = Document.accessible(current_account, current_organization).all(:conditions => {:id => params[:ids]})
     Document.populate_annotation_counts(current_account, docs)
-    render :json => { 'documents' => docs.map{|doc| doc.as_json(:cache_busting=>true) } }
+    json 'documents' => docs
   end
 
   # TODO: Fix the note/annotation terminology.

@@ -15,6 +15,7 @@
 <div class="counts interface">
   <%= statistics %>
   <% if (!owner) { %>
-    <br /> <%= _.t('shared_with_you_by', account_full_name ) %>
+    <br />Shared with you by <%= account_full_name %>
   <% } %>
 </div>
+

@@ -347,7 +347,7 @@
         delta = -event.detail * 9;
       }
       args.unshift(event, delta);
-      return $.event.dispatch.apply(this, args);
+      return $.event.handle.apply(this, args);
   };
 
   $.event.special.mousewheel = {

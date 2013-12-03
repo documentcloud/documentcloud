@@ -23,7 +23,7 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   constructor : function(docs) {
     this.docs = docs;
     this.multiple = docs.length > 1;
-    var title = _.t('edit_x', this._title() );
+    var title = "Edit " + this._title();
     dc.ui.Dialog.call(this, {mode : 'custom', title : title, editor : true});
     this.render();
     $(document.body).append(this.el);
@@ -37,7 +37,6 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
       docs     : this.docs, 
       multiple : this.multiple
     }));
-    $('select[name=language]').val( this.docs[0].get('language') );
     var attrs = this._sharedAttributes();
     attrs['access'] = attrs['access'] || dc.access.PRIVATE;
     _.each(this.ATTRIBUTES, _.bind(function(attr) {
@@ -92,9 +91,8 @@ dc.ui.DocumentDialog = dc.ui.Dialog.extend({
   // Sets the dialog title to include the number of documents or title of
   // the single document being edited.
   _title : function() {
-    return (this.multiple) ? 
-      _.t('x_documents',this.docs.length) :
-      '"' + dc.inflector.truncate(this.docs[0].get('title'), 35) + '"';
+    if (this.multiple) return this.docs.length + ' Documents';
+    return '"' + dc.inflector.truncate(this.docs[0].get('title'), 35) + '"';
   },
 
   // On change, mark input field as dirty.

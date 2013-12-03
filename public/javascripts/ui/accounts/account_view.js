@@ -6,8 +6,7 @@ dc.ui.AccountView = Backbone.View.extend({
     row            : 25,
     admin          : 25,
     collaborator   : 25,
-    reviewer       : 25,
-    user           : 150
+    reviewer       : 25
   },
 
   TAGS : {
@@ -15,10 +14,7 @@ dc.ui.AccountView = Backbone.View.extend({
     row            : 'tr',
     admin          : 'tr',
     collaborator   : 'tr',
-    reviewer       : 'tr',
-    membership     : 'div',
-    user           : 'div',
-    organization_row : 'div'
+    reviewer       : 'tr'
   },
 
   events : {
@@ -27,11 +23,10 @@ dc.ui.AccountView = Backbone.View.extend({
     'click .resend_welcome':        'resendWelcomeEmail',
     'click .admin_link':            '_openAccounts',
     'click .save_changes':          '_doneEditing',
-    'click .cancel_changes':        '_cancelEditing',  // Where'd this go?
+    'click .cancel_changes':        '_cancelEditing',
     'click .disable_account':       '_disableAccount',
     'click .enable_account':        '_enableAccount',
-    'click .login_as .minibutton':  '_loginAsAccount',
-    'chosen':                       'setDisplayLanguage'
+    'click .login_as .minibutton':  '_loginAsAccount'
   },
 
   constructor : function(options) {
@@ -39,7 +34,7 @@ dc.ui.AccountView = Backbone.View.extend({
     this.kind       = options.kind;
     this.tagName    = this.TAGS[this.kind];
     this.className  = 'account_view ' + this.kind + (this.tagName == 'tr' ? ' not_draggable' : '');
-    this.dialog     = options.dialog;
+    this.dialog     = options.dialog || dc.app.accounts;
     Backbone.View.call(this, options);
     this.template   = JST['account/' + this.kind];
     _.bindAll(this, '_onSuccess', '_onError');
@@ -63,7 +58,7 @@ dc.ui.AccountView = Backbone.View.extend({
       size : this.size(),
       current : Accounts.current()
     }, options);
-    if (this.isRow()) this.setMode(viewMode, 'view_mode');
+    if (this.isRow()) this.setMode(viewMode, 'view');
     $(this.el).html(this.template(attrs));
     if (viewMode == 'edit') this.$('option.role_' + this.model.get('role')).attr({selected : 'selected'});
     if (this.model.isPending()) $(this.el).addClass('pending');
@@ -76,13 +71,9 @@ dc.ui.AccountView = Backbone.View.extend({
   size : function() {
     return this.AVATAR_SIZES[this.kind];
   },
-  
-  isUser: function() {
-    return this.kind == "user";
-  },
 
   isRow : function() {
-    return this.kind == 'row' || this.kind == 'admin' || this.kind == 'reviewer' || this.kind == 'organization_row';
+    return this.kind == 'row' || this.kind == 'admin' || this.kind == 'reviewer';
   },
 
   serialize : function() {
@@ -93,25 +84,17 @@ dc.ui.AccountView = Backbone.View.extend({
 
   showEdit : function() {
     this.$('option.role_' + this.model.get('role')).attr({selected : 'selected'});
-    this.setMode('edit', 'view_mode');
+    this.setMode('edit', 'view');
   },
-
-  setDisplayLanguage: function( ev, language ){
-    var code = dc.language.NAMES[ language ];
-    this.$el.next('tr.editing').find('.choice').
-      html( dc.language.NAMES[ language ] ).
-      attr('data-language',language);
-  },
-
 
   promptPasswordChange : function() {
     this.dialog.close();
-    var dialog = dc.ui.Dialog.prompt(_.t('enter_new_password'), '', _.bind(function(password) {
+    var dialog = dc.ui.Dialog.prompt('Enter your new password:', '', _.bind(function(password) {
       if (password.length > 0) {
         this.model.save({password : password}, {
           success : _.bind(function() {
             dc.ui.notifier.show({
-              text      : _.t('password_updated'),
+              text      : 'Password updated',
               duration  : 5000,
               mode      : 'info'
             });
@@ -119,7 +102,7 @@ dc.ui.AccountView = Backbone.View.extend({
         });
         return true;
       } else {
-        dc.ui.Dialog.alert(_.t('password_no_blank'));
+        dc.ui.Dialog.alert("Your password can't be blank");
       }
     }, this), {password : true, mode : 'short_prompt'});
   },
@@ -129,7 +112,7 @@ dc.ui.AccountView = Backbone.View.extend({
     var model = this.model;
     model.resendWelcomeEmail({success : _.bind(function() {
       dc.ui.spinner.hide();
-      dc.ui.notifier.show({mode : 'info', text : _.t('welcome_message_sent_to', model.get('email') ) });
+      dc.ui.notifier.show({mode : 'info', text : 'A welcome message has been sent to ' + model.get('email') + '.'});
     }, this)});
   },
 
@@ -146,28 +129,28 @@ dc.ui.AccountView = Backbone.View.extend({
 
   _openAccounts : function(e) {
     e.preventDefault();
-    dc.app.accounts.open();
+    this.dialog.open();
   },
 
   // When we're done editing an account, it's either a create or update.
   // This method specializes to try and avoid server requests when nothing has
   // changed.
   _doneEditing : function() {
+    var me = this;
     var attributes = this.serialize();
     var options = {success : this._onSuccess, error : this._onError};
     if (this.model.isNew()) {
-      if (!attributes.email){ return $(this.el).remove(); }
-      // the following will not work in a multi-organization paradigm:
-      if (Accounts.getValidByEmail(attributes.email)) {
-        this.dialog.error( _.t('already_has_account', attributes.email ) );
-        return;
+      if (!attributes.email) return $(this.el).remove();
+      if (Accounts.getValidByEmail(attributes.email)) { 
+        this.dialog.error(""+attributes.email+" already has an account");
+        return; 
       }
       dc.ui.spinner.show();
       this.model.newRecord = true;
       this.model.set(attributes);
       Accounts.create(this.model, options);
     } else if (!this.model.invalid && !this.model.changedAttributes(attributes)) {
-      this.setMode('display', 'view_mode');
+      this.setMode('display', 'view');
     } else {
       dc.ui.spinner.show();
       this.model.save(attributes, options);
@@ -175,26 +158,24 @@ dc.ui.AccountView = Backbone.View.extend({
   },
 
   _cancelEditing : function() {
-    this.setMode('display', 'view_mode');
-    this.$el.next('tr.editing').remove();
+    this.setMode('display', 'view');
   },
 
   _disableAccount : function() {
     if (this.dialog.isOpen()) this.dialog.close();
     var dialog = dc.ui.Dialog.confirm(null, _.bind(function() {
-      this.setMode('display', 'view_mode');
-      this.$el.next('tr.editing').remove();
+      this.setMode('display', 'view');
       this.model.save({'role': this.model.DISABLED});
       dc.ui.notifier.show({
-        text      : _.t('account_is_disabled',this.model.fullName() ),
+        text      : this.model.fullName() + ' has been disabled.',
         duration  : 5000,
         mode      : 'info'
       });
       return true;
     }, this), {
       id          : 'disable_account_confirm',
-      title       : _.t('double_check_disable'),
-      description : _.t('explain_disable_account', this.model.fullName(), '<span class="contact_support text_link">','</span>' ),
+      title       : 'Really disable ' + this.model.fullName() + '\'s account?',
+      description : this.model.fullName() + ' will not be able to log in to DocumentCloud. Public documents and annotations provided by ' + this.model.fullName()+ ' will remain available. <span class="contact_support text_link">Contact support</span> to completely purge '+this.model.fullName()+'\'s account.',
       saveText    : 'Disable'
     });
     $('.contact_support', dialog.el).bind('click', function() {
@@ -204,8 +185,7 @@ dc.ui.AccountView = Backbone.View.extend({
   },
 
   _enableAccount : function() {
-    this.setMode('display', 'view_mode');
-    this.$el.next('tr.editing').remove();
+    this.setMode('display', 'view');
     this.model.save({'role': this.model.CONTRIBUTOR});
   },
 
@@ -215,14 +195,13 @@ dc.ui.AccountView = Backbone.View.extend({
 
   _onSuccess : function(model, resp) {
     this.model.invalid = false;
-    this.setMode('display', 'view_mode');
-    this.$el.next('tr.editing').remove();
+    this.setMode('display', 'view');
     this.model.trigger('change');
     dc.ui.spinner.hide();
     if (this.model.newRecord) {
       this.model.newRecord = false;
       dc.ui.notifier.show({
-        text      : _.t('signup_sent_to', model.get('email') ),
+        text      : 'Signup sent to ' + model.get('email'),
         duration  : 5000,
         mode      : 'info'
       });
@@ -234,7 +213,7 @@ dc.ui.AccountView = Backbone.View.extend({
     model.invalid = true;
     dc.ui.spinner.hide();
     this.showEdit();
-    this.dialog.error( resp.errors && resp.errors[0] || _.t('account_add_failure') );
+    this.dialog.error(resp.errors && resp.errors[0] || 'Could not add the account.');
   }
 
 });

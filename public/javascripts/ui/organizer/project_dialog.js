@@ -16,7 +16,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     this.model = options.model;
     dc.ui.Dialog.call(this, {
       mode        : 'custom',
-      title       : _.t('edit_x', this.model.get('title') )
+      title       : 'Edit Project'
     });
   },
 
@@ -89,7 +89,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     this.model.collaborators.create({email : email}, {
       wait: true,
       success : _.bind(function(acc, resp) {
-        this.model.trigger('change', this.model);
+        this.model.change();
         this.render(true);
       }, this),
       error   : _.bind(function(acc, resp) {
@@ -109,7 +109,7 @@ dc.ui.ProjectDialog = dc.ui.Dialog.extend({
     var collab = this.model.collaborators.get(parseInt($(e.target).attr('data-id'), 10));
     collab.destroy({
       success : _.bind(function(){
-        this.model.trigger('change', this.model);
+        this.model.change();
         this.render(true);
       }, this)
     });

@@ -196,30 +196,30 @@ dc.ui.ReplacePagesEditor = dc.ui.EditorToolbar.extend({
     var hint, range, insertion;
 
     if (state == 'choose') {
-      hint = _.t('choose_location_to_insert_pages');
+      hint = "Choose a location to insert pages.";
       $(this.el).setMode('off', 'upload');
       this.$('.replace_pages_upload_button').setMode('not', 'enabled');
     } else {
       var replace = state == 'replace';
       $(this.el).setMode('on', 'upload');
       this.$('.replace_pages_upload_button').setMode('is', 'enabled');
-//      hint = ( replace ? _.t('replace') : _.t('insert') ) + ' ';
+      hint = replace ? 'Replace ' : 'Insert ';
       if (replace) {
         range = this.getPageRange();
         if (range.start != range.end) {
-          hint = _.t('replace_multiple_pages', range.start, range.end );
+          hint += "pages " + range.start + " through " + range.end + ".";
         } else {
-          hint = _.t('replace_page_x', range.start );
+          hint += "page " + range.start + ".";
         }
       } else if (state == 'insert') {
         var pageCount = this.viewer.api.numberOfPages();
         var insertion = this.getInsertPageNumber();
         if (insertion < 1) {
-          hint = _.t('insert_first_page');
+          hint += "before the first page.";
         } else if (insertion < pageCount) {
-          hint = _.t('insert_between_pages', insertion, insertion+1 );
+          hint += "between pages " + insertion + " and " + (insertion + 1) + ".";
         } else if (insertion >= pageCount) {
-          hint = _.t('insert_last_page');
+          hint += "after the last page.";
         }
       }
       dc.app.uploader.insertPagesAttrs({

@@ -10,32 +10,6 @@ namespace :build do
     string.match(/VERSION = '(\S+)'/)[1]
   end
 
-  desc "Compile Javascript version of translation strings"
-  task :translations do
-    require 'dc/language'
-    DC::Language::SUPPORTED.each do | language_code |
-      path =  Rails.root.join('config','locales', "#{language_code}.yml" )
-      next unless path.exist?
-      dictionary = YAML.load_file( path )
-      template = ERB.new( File.read( path.dirname.join("#{language_code}.js.erb") ) )
-
-      js_namespace = 'WS'
-      workspace = Rails.root.join('public','javascripts','translations', "#{language_code}.js")
-      File.open( workspace, 'w' ) do | destination_file |
-        translation_strings = dictionary['workspace']
-        destination_file.write template.result( binding )
-      end
-
-      js_namespace = 'DV'
-      viewer = Rails.root.join("../document-viewer/public/javascripts/DV/schema/translation.#{language_code}.js")
-      File.open( viewer, 'w' ) do | destination_file |
-        translation_strings = dictionary['viewer']
-        destination_file.write template.result( binding )
-      end
-
-    end
-  end
-
   # Pull in a new build of Backbone.
   task :backbone do
     version = get_version File.read BACKBONE
@@ -53,7 +27,7 @@ namespace :build do
     version = get_version File.read VISUALSEARCH_JS
     FileUtils.cp VISUALSEARCH_JS, "public/javascripts/vendor/visualsearch-#{version}.js", :verbose => true
     FileUtils.cp VISUALSEARCH_CSS, "public/stylesheets/vendor/", :verbose => true
-
+    
     # Fix image url paths.
     File.open('public/stylesheets/vendor/visualsearch.css', 'r+') do |file|
       css = file.read
@@ -111,7 +85,7 @@ namespace :build do
           file.truncate(css.length)
         end
       end
-      FileUtils.cp_r("public/images/#{embed}", 'build/images') if File.exists?("public/images/#{embed}")
+      FileUtils.cp_r("public/images/#{embed}", 'build/images')
 
       FileUtils.rm_r("public/#{embed}") if File.exists?("public/#{embed}")
       FileUtils.cp_r('build', "public/#{embed}")

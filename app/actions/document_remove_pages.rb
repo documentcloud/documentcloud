@@ -36,7 +36,7 @@ class DocumentRemovePages < DocumentAction
     # Rename pages with pdftk, keeping only unremoved pages
     tmp_name = "#{document.slug}.pdf_temp"
     cmd = "pdftk #{@pdf} cat #{keep_pages.join(' ')} output #{tmp_name}"
-    `#{cmd} 2>&1`
+    `#{cmd}`
     if File.exists? tmp_name
       asset_store.save_pdf(document, tmp_name)
       File.open(tmp_name,'r') do | fh |

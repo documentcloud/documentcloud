@@ -105,7 +105,7 @@ dc.ui.EntityList = Backbone.View.extend({
   },
 
   extractEntities : function(query) {
-    var entities = dc.app.visualSearch.searchQuery.filter(_.bind(function(facet) {
+    var entities = VS.app.searchQuery.filter(_.bind(function(facet) {
       return _.include(this.ENTITY_KINDS, facet.get('category'));
     }, this));
     return _.sortBy(_.map(entities, function(ent) {

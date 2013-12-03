@@ -21,10 +21,6 @@ dc.ui.Dialog = Backbone.View.extend({
     'blur input'      : '_removeFocus',
     'blur textarea'   : '_removeFocus'
   },
-  
-  initialize: function(options) {
-    this.options = _.extend({}, this.options, options);
-  },
 
   render : function(opts) {
     this.modes || (this.modes = {});
@@ -198,8 +194,8 @@ _.extend(dc.ui.Dialog, {
     var dialog = new dc.ui.Dialog({
       id        : 'contact_us',
       mode      : 'custom',
-      title     : _.t('contact_us'),
-      saveText  : _.t('send'),
+      title     : 'Contact Us',
+      saveText  : 'Send',
       onConfirm : callback
     });
     dialog.render();

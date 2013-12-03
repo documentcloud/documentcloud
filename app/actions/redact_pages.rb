@@ -97,7 +97,7 @@ class RedactPages < DocumentAction
   def rebuild_pdf
     page_paths = (1..document.page_count).map {|i| "#{document.slug}_#{i}.pdf" }
     #`pdftk #{page_paths.join(' ')} cat output #{@pdf}`
-    `pdftailor stitch --output #{@pdf} #{page_paths.join(' ')} 2>&1`
+    `pdftailor stitch --output #{@pdf} #{page_paths.join(' ')}`
 
     if File.exists? @pdf
       asset_store.save_pdf(document, @pdf, access)

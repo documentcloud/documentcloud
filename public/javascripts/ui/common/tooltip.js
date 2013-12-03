@@ -45,11 +45,11 @@ dc.ui.Tooltip = Backbone.View.extend({
   },
 
   fadeIn : function() {
-    $(this.el).stop(true, true).fadeIn('fast');
+    $.browser.msie ? $(this.el).show() : $(this.el).stop(true, true).fadeIn('fast');
   },
 
   fadeOut : function() {
-    $(this.el).stop(true, true).fadeOut('fast');
+    $.browser.msie ? $(this.el).hide() : $(this.el).stop(true, true).fadeOut('fast');
   }
 
 });

@@ -31,7 +31,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
     dc.ui.Dialog.call(this, {
       mode        : 'custom',
       title       : this.displayTitle(),
-      information : _.t('timeline_zoom_in')
+      information : 'Drag a range of dates to zoom in.'
     });
     dc.ui.spinner.show();
     this._loadDates();
@@ -40,17 +40,15 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   render : function() {
     dc.ui.Dialog.prototype.render.call(this);
     this.$('.custom').html(JST['document/timeline']({docs : this.documents, minHeight : this.MIN_HEIGHT, rowHeight : this.ROW_HEIGHT}));
-    this._zoomButton = this.make('span', {'class' : 'minibutton zoom_out dark not_enabled'}, _.t('zoom_out'));
+    this._zoomButton = this.make('span', {'class' : 'minibutton zoom_out dark not_enabled'}, 'Zoom Out');
     this.addControl(this._zoomButton);
     this.center();
     return this;
   },
 
   displayTitle : function() {
-    if (this.documents.length == 1 )
-      return _.t('timeline_for_doc', dc.inflector.truncate(this.documents[0].get('title'), 55) );
-    else
-      return _.t('timeline_for_x_docs', this.documents.length );
+    if (this.documents.length == 1) return 'Timeline for "' + dc.inflector.truncate(this.documents[0].get('title'), 55) + '"';
+    return "Timeline for " + this.documents.length + " Documents";
   },
 
   // Redraw the Flot Plot.

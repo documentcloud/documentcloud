@@ -26,8 +26,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
     'mouseleave .entity_bucket_wrap' : '_onMouseLeave'
   },
 
-  initialize : function(options) {
-    this.options || (this.options = options);
+  initialize : function() {
     this.template = JST['document/entities'];
     this.options.container.append(this.el);
     this.showLater = _.debounce(this.showLater, this.TOOLTIP_DELAY);

@@ -13,10 +13,6 @@ dc.model.Organization = Backbone.Model.extend({
   openDocuments : function() {
     dc.app.searcher.search(this.query());
   },
-  
-  openAccounts : function() {
-    dc.app.accounts.showOrganization(this);
-  },
 
   query : function() {
     return 'group: ' + this.get('slug');
@@ -25,13 +21,10 @@ dc.model.Organization = Backbone.Model.extend({
   statistics : function() {
     var docs  = this.get('document_count');
     var notes = this.get('note_count');
-    var accounts = this.members.size();
-    var stats = [];
-    if (accounts) { stats.push(accounts + ' ' + dc.inflector.pluralize('account', accounts)); }
-    if (docs) {     stats.push(docs + ' ' + dc.inflector.pluralize('document', docs)); }
-    if (notes) {    stats.push(notes + ' ' + dc.inflector.pluralize('note', notes)); }
-    return stats.join(', ');
+    return docs + ' ' + dc.inflector.pluralize('document', docs)
+      + ', ' + notes + ' ' + dc.inflector.pluralize('note', notes);
   }
+
 
 });
 
@@ -51,6 +44,5 @@ dc.model.OrganizationSet = Backbone.Collection.extend({
   }
 
 });
-
 
 window.Organizations = new dc.model.OrganizationSet();

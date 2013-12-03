@@ -1,1 +1,1 @@
-[Manage Organization]: javascript:dc.app.accounts.dialog.open()
+[Manage Accounts]: javascript:dc.app.accounts.open()

@@ -126,7 +126,7 @@ label {
     #search_box_wrapper .menu_content {
       z-index: 100;
     }
-  .title_box {
+  #title_box {
     text-align: center;
     font: bold 20px Arial;
     color: #000;
@@ -249,15 +249,6 @@ div.full_page_background {
             margin-top: 10px;
             margin-left: 200px;
           }
-      #full_screen_form .input {
-        display: block;
-        position: absolute;
-        margin: 0 0 0 195px;
-        height: 30px;
-        width: 355px;
-        font-size: 16px;
-        padding-top: 2px;
-      }
       #full_screen_form .text_input {
         display: block;
         position: absolute;
@@ -318,13 +309,11 @@ div.full_page_background {
 
 .search_tab_content,
 .publish_tab_content,
-.accounts_tab_content,
 .help_tab_content {
   display: none;
 }
   body.search_panel_tab .search_tab_content,
   body.publish_panel_tab .publish_tab_content,
-  body.accounts_panel_tab .accounts_tab_content,
   body.help_panel_tab .help_tab_content {
     display: block;
   }

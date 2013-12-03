@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
-  <title><%= @title ? "#{@title} - " : '' %>SourceAfrica</title>
+  <title><%= @title ? "#{@title} - " : '' %>DocumentCloud</title>
   <%= include_stylesheets :ui, :home %>
   <!--[if lt IE 9]>
     <%= include_stylesheets :ie_only, :embed_assets => false %>
@@ -32,7 +32,7 @@
       </a>
     </div>
   <% else %>
-    <a id="logo" href="/">SourceAfrica<!--<img src="/images/home/logo.png" alt="DocumentCloud" />--></a>
+    <a id="logo" href="/"><img src="/images/home/logo.png" alt="DocumentCloud" /></a>
   <% end %>
 
   <% if @header %>

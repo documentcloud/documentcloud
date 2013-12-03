@@ -17,24 +17,28 @@ dc.model.Account = Backbone.Model.extend({
   defaults           : { first_name : '', last_name : '', email : '', role : 2 },
   
   initialize: function(options) {
-    this.memberships = new Backbone.Collection();
-    if (this.get('memberships')) { this.memberships.reset(this.get('memberships')); }
+    this.organizations = new dc.model.OrganizationSet();
+    if (this.get('organizations')) { this.organizations.reset(this.get('organizations')); }
+  },
+
+  constructor : function(attrs, options) {
+    Backbone.Model.call(this, attrs, options);
+    this.organizations = new dc.model.OrganizationSet();
   },
   
-  currentOrganization: function(){
+  current_organization: function(){
     return this.organization();
   },
 
   organization : function() {
-    var default_membership = this.memberships.find(function(m){ return m.get('default'); });
-    return Organizations.get(default_membership.get('organization_id'));
+    return this.organizations.first();
   },
-  
-  organization_ids: function() { return this.memberships.pluck('organization_id'); },
-  
-  organizations: function() {
-    var ids = this.organization_ids();
-    return new dc.model.OrganizationSet(Organizations.filter(function(org){ return _.contains(ids, org.get('id'));}));
+
+  addOrganization: function( organization_data ){
+    var organization = new dc.model.Organization( organization_data );
+    this.organizations.add( organization );
+    Organizations.add( organization );
+    return organization;
   },
 
   openDocuments : function(options) {
@@ -84,7 +88,7 @@ dc.model.Account = Backbone.Model.extend({
   },
 
   documentsTitle : function() {
-    return dc.inflector.possessivize(this.fullName()) + ' ' + _.t('documents');
+    return dc.inflector.possessivize(this.fullName()) + ' Documents';
   },
 
   isAdmin : function() {

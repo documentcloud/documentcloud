@@ -1,18 +1,18 @@
 <% if (!multiple) { %>
-<div class="row">
-  <label for="document_edit_title" title="<%= _.t('title_of_document') %>">
-      <%= _.t('title') %>:
-  </label>
-  <div class="text_input dark small">
-    <input name="title" id="document_edit_title" class="attribute" type="text" />
+  <div class="row">
+    <label for="document_edit_title" title="Title of this document">
+      Title:
+    </label>
+    <div class="text_input dark small">
+      <input name="title" id="document_edit_title" class="attribute" type="text" />
+    </div>
+    <br class="clear" />
   </div>
-  <br class="clear" />
-</div>
 <% } %>
 
 <div class="row">
-  <label for="document_edit_source" title="<%= _.t('source_of_document') %>">
-    <%= _.t('source') %>:
+  <label for="document_edit_source" title="The source from which you obtained this document">
+    Source:
   </label>
   <div class="text_input dark small">
     <input name="source" id="document_edit_source" class="attribute" type="text" />
@@ -21,16 +21,16 @@
 </div>
 
 <div class="row tall">
-  <label for="document_edit_description" title="<%= _.t('paragraph_description_of_document') %>">
-    <%= _.t('description') %>:
+  <label for="document_edit_description" title="Paragraph description of this document">
+    Description:
   </label>
   <textarea name="description" id="document_edit_description" class="text_area dark small content attribute"></textarea>
   <br class="clear" />
 </div>
 
 <div class="row">
-  <label for="document_edit_related_article" title="<%= _.t('related_url_of_document') %>">
-    <%= _.t('related_article_url') %>:
+  <label for="document_edit_related_article" title="URL of the web article that refers to this document">
+    Related Article URL:
   </label>
   <div class="text_input dark small">
     <input name="related_article" id="document_edit_related_article" class="attribute" type="text" />
@@ -39,35 +39,36 @@
 </div>
 
 <% if (!multiple) { %>
-<div class="row">
-  <label for="document_edit_remote_url" title="<%= _.t('embed_url_of_document') %>">
-      <%= _.t('published_url') %>:
-  </label>
-  <div class="text_input dark small">
-    <input name="remote_url" id="document_edit_remote_url" class="attribute" type="text" />
+  <div class="row">
+    <label for="document_edit_remote_url" title="Most users won't need to add this. URL of the page on your site where this document is embedded">
+      Published URL:
+    </label>
+    <div class="text_input dark small">
+      <input name="remote_url" id="document_edit_remote_url" class="attribute" type="text" />
+    </div>
+    <br class="clear" />
   </div>
-  <br class="clear" />
-</div>
 <% } %>
 
 <div class="row">
   <label for="document_edit_access">
-    <%= _.t('access_level') %>:
+    Access Level:
   </label>
   <select name="access" class="document_access attribute" id="document_edit_access">
-    <option value="4"><%= _.t('public_access') %></option>
-    <option value="1"><%= _.t('private_access') %></option>
-    <option value="2"><%= _.t('private_to', dc.account.organization.name ) %></option>
+    <option value="4">Public Access</option>
+    <option value="1">Private Access</option>
+    <option value="2">Private to <%= dc.account.organization.name %></option>
   </select>
 </div>
 
 <div class="row last">
   <label for="document_edit_language">
-    <%= _.t('language') %>:
+    Language:
   </label>
   <select name="language" class="document_access attribute" id="document_edit_language">
-    <% _.each( dc.language.SUPPORTED, function(language_code){ %>
-    <option value="<%= language_code %>"><%= dc.language.NAMES[ language_code ] %></option>
-    <% }); %>
+    <option value="en">English</option>
+    <option value="es">Español/Spanish</option>
+    <option value="fr">Français/French</option>
+    <option value="de">Deutsch/German</option>
   </select>
 </div>

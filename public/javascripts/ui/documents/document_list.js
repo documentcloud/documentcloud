@@ -15,7 +15,8 @@ dc.ui.DocumentList = Backbone.View.extend({
 
   // Listen for new documents on the `Documents` Collection, which is populated
   // at load time and when searching.
-  initialize: function(options) {
+  constructor : function(options) {
+    Backbone.View.call(this, options);
     _.bindAll(this, 'reset', '_removeDocument', '_addDocument', '_onSelect',
               '_maybeSelectOrDelete');
     $(document).bind('keydown', this._maybeSelectOrDelete);
@@ -38,11 +39,11 @@ dc.ui.DocumentList = Backbone.View.extend({
   // which redraws all the Document tile views in this list view.
   reset : function() {
     $(window).unbind('resize.entities');
-    this.$el.html('');
+    $(this.el).html('');
     var views = Documents.map(function(m){
       return (new dc.ui.Document({model : m})).render({notes: true}).el;
     });
-    this.$el.append(views.concat(this.make('div', {'class' : 'clear'})));
+    $(this.el).append(views.concat(this.make('div', {'class' : 'clear'})));
   },
 
   // When document tiles are lassoed by `.selection` in `render`, set their
@@ -100,7 +101,7 @@ dc.ui.DocumentList = Backbone.View.extend({
   // Called when document models added to `Documents` collection.
   _addDocument : function(doc) {
     var view = new dc.ui.Document({model : doc});
-    this.$el.prepend(view.render().el);
+    $(this.el).prepend(view.render().el);
   },
 
   // Called when document models deleted (and subsequently removed from `Documents`

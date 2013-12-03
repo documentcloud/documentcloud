@@ -24,11 +24,14 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
   // Off by 1 to maintain sanity. Additionally, the first step is always custom.
   STEPS : [null, null,
-           _.t('embed_step_two_title'),
-           _.t('embed_step_three_title')
+    'Step Two: Configure the Document Viewer',
+    'Step Three: Copy and Paste the Embed Code'
   ],
 
-  DEMO_ERROR : _.t('demo_embed_error', '<a href="/contact">','</a>', '<a href="/help/publishing">','</a>'),
+  DEMO_ERROR : 'Demo accounts are not allowed to embed documents. ' +
+               '<a href="/contact">Contact us</a> if you need a full ' +
+               'featured account. View an example of the embed code ' +
+               '<a href="/help/publishing">here</a>.',
 
   DEFAULT_OPTIONS : {
     width   : null,
@@ -59,7 +62,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     this._showTextEl    = this.$('input[name=show_text]');
     this._showPDFEl     = this.$('input[name=show_pdf]');
     this._openToEl      = this.$('.open_to');
-    if (dc.app.preferences.get('document_embed_options')) this._loadPreferences();
+    if (dc.app.preferences.get('embed_options')) this._loadPreferences();
     this.setMode('document_embed', 'dialog');
     this.update();
     this.setStep();
@@ -69,7 +72,8 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
   // The first step is always custom for the document.
   displayTitle : function() {
-    if (this.currentStep == 1) return _.t("embed_step_one_title", dc.inflector.truncate(this.model.get('title'), 25) );
+    if (this.currentStep == 1) return 'Step One: Review "' +
+                                      dc.inflector.truncate(this.model.get('title'), 25) + '"';
     return this.STEPS[this.currentStep];
   },
 
@@ -226,13 +230,13 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
     this.$('.publish_step').setMode('not', 'enabled');
     this.$('.publish_step_'+this.currentStep).setMode('is', 'enabled');
-    this.info( _.t('step_x_of_x', this.currentStep, this.totalSteps), true);
+    this.info('Step ' + this.currentStep + ' of ' + this.totalSteps, true);
 
     var first = this.currentStep == 1;
     var last = this.currentStep == this.totalSteps;
 
     this._previous.setMode(first ? 'not' : 'is', 'enabled');
-    this._next.html(last ? _.t('finish') : _.t('next')+' &raquo;').setMode('is', 'enabled');
+    this._next.html(last ? 'Finish' : 'Next &raquo;').setMode('is', 'enabled');
   },
 
   // Auto-selects the embed code when user clicks on the textarea.

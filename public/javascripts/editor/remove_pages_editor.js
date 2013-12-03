@@ -124,7 +124,8 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
     }, this));
 
     // Update remove button's text
-    this.$('.remove_pages_confirm_input').text( _.t("remove_pages_input", pageCount ) );
+    var removeText = 'Remove ' + (pageCount ? pageCount : '') + dc.inflector.pluralize(' Page', pageCount);
+    this.$('.remove_pages_confirm_input').text(removeText);
 
     // Set width of container for side-scrolling
     var width = $('.document_page_tile').length * $('.document_page_tile').eq(0).outerWidth(true);
@@ -136,12 +137,12 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
     var pageCount = this.removePages.length;
     if (!pageCount) return;
     if (pageCount >= this.viewer.api.numberOfPages()) {
-      dc.ui.Dialog.alert( _.t('cannot_remove_all'));
+      dc.ui.Dialog.alert("You can't remove all the pages from this document.");
       return;
     }
-
-    dc.ui.Dialog.confirm( _.t('remove_page_warning_message', pageCount ), _.bind(function() {
-      this.$s.saveButton.text( _.t('removing') ).attr('disabled', true).setMode('not', 'enabled');
+    var message = "You've selected " + pageCount + dc.inflector.pluralize(' page', pageCount) + " for removal. This document will close while it's being rebuilt. Are you sure you're ready to proceed?";
+    dc.ui.Dialog.confirm(message, _.bind(function() {
+      this.$s.saveButton.text('Removing...').attr('disabled', true).setMode('not', 'enabled');
       this.save();
       return true;
     }, this));
@@ -163,7 +164,7 @@ dc.ui.RemovePagesEditor = dc.ui.EditorToolbar.extend({
           // It's cool.
         }
         window.close();
-        _.defer(dc.ui.Dialog.alert, _.t('pages_are_being_removed') );
+        _.defer(dc.ui.Dialog.alert, "The pages are being removed. Please close this document.");
       }
     });
   },

@@ -3,9 +3,7 @@
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
-  <title><%= @title ? @title + ' - ' : '' %>SourceAfrica</title>
-  <%= render :partial=>'accounts/language_settings' %>
-
+  <title><%= @title ? @title + ' - ' : '' %>DocumentCloud</title>
   <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
   <% js  = [:core] + (@javascripts || []) %>
   <%= include_stylesheets *css %>
@@ -20,7 +18,7 @@
   <% if Rails.env.development? %>
     <%= include_javascripts :dev_only %>
   <% end %>
-  <% if Rails.env.production? %>
+  <% if @include_analytics && Rails.env.production? %>
     <%= render :partial => 'common/google' %>
   <% end %>
   <%= csrf_meta_tag %> 
@@ -35,12 +33,16 @@
         <h1 id="title" class="logo_words"><%= @title %></h1>
       </div>
     </div>
-    <a id="workspace_logo" href="/home" style="background:none; font-size:22px;">SourceAfrica</a>
+    <a id="workspace_logo" href="/home"></a>
     <div id="toplinks" class="interface">
-      <a href="/home" class="text_link"><%= DC.t( @current_account, 'home') %></a>
+      <a href="/home" class="text_link">Home</a>
       &nbsp;/&nbsp;
       <% if @current_account %>
-        <a href="/logout" class="text_link"><%= DC.t( @current_account, 'log_out') %></a>
+        <% if @current_organization %>
+        <span class="text_link open_accounts">Accounts</span>
+        &nbsp;/&nbsp;
+        <% end %>
+        <a href="/logout" class="text_link">Log Out</a>
       <% else %>
         <a href="/contact" class="text_link">Join</a>
         &nbsp;/&nbsp;
