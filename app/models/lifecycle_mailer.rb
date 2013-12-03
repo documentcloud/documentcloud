@@ -1,8 +1,8 @@
 # Responsible for sending out lifecycle emails to active accounts.
 class LifecycleMailer < ActionMailer::Base
 
-  SUPPORT   = 'support@documentcloud.org'
-  NO_REPLY  = 'no-reply@documentcloud.org'
+  SUPPORT   = 'support@codeforafrica.org'
+  NO_REPLY  = 'no-reply@codeforafrica.org'
 
   # Mail instructions for a new account, with a secure link to activate,
   # set their password, and log in.

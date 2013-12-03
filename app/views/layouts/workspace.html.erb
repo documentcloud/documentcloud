@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
-  <title><%= @title ? @title + ' - ' : '' %>DocumentCloud</title>
+  <title><%= @title ? @title + ' - ' : '' %>SourceAfrica</title>
   <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
   <% js  = [:core] + (@javascripts || []) %>
   <%= include_stylesheets *css %>
@@ -18,7 +18,7 @@
   <% if Rails.env.development? %>
     <%= include_javascripts :dev_only %>
   <% end %>
-  <% if @include_analytics && Rails.env.production? %>
+  <% if Rails.env.production? %>
     <%= render :partial => 'common/google' %>
   <% end %>
   <%= csrf_meta_tag %> 
@@ -33,7 +33,7 @@
         <h1 id="title" class="logo_words"><%= @title %></h1>
       </div>
     </div>
-    <a id="workspace_logo" href="/home"></a>
+    <a id="workspace_logo" href="/home" style="background:none; font-size:22px;">SourceAfrica</a>
     <div id="toplinks" class="interface">
       <a href="/home" class="text_link">Home</a>
       &nbsp;/&nbsp;

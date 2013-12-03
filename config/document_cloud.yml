@@ -2,8 +2,8 @@
 defaults: &defaults
   cloud_crowd_server:   http://dev.dcloud.org:8080
   server_root:          dev.dcloud.org
-  aws_zone:             us-east-1c
-  preconfigured_ami_id: ami-855a19ec
+  aws_zone:             eu-west-1c
+  preconfigured_ami_id: ami-e001ee97
 
 development:
   <<: *defaults
@@ -17,9 +17,9 @@ staging:
 production:
   <<: *defaults
   cloud_crowd_server: <%= secrets['db_host'] %>:8080
-  server_root:        www.documentcloud.org
-  asset_root:         "//s3.amazonaws.com/s3.documentcloud.org"
-  db_volume_id:       vol-d4c305bd
+  server_root:        dev.sourceafrica.net
+  asset_root:         "//s3.amazonaws.com/openafricadocss3"
+  db_volume_id:       vol-a17cc4f4
 
 test:
   <<: *defaults

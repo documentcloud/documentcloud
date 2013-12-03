@@ -4,7 +4,8 @@ module DC
     # An implementation of an AssetStore.
     module AwsS3Store
 
-      BUCKET_NAME     = Rails.env.production? ? 's3.documentcloud.org' : "dcloud_#{Rails.env}"
+      #AWS::S3::DEFAULT_HOST.replace "s3-eu-west-1.amazonaws.com"
+      BUCKET_NAME     = Rails.env.production? ? 'openafricadocss3' : "dcloud_#{Rails.env}"
 
       AUTH_PERIOD     = 5.minutes
 
