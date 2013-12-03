@@ -17,9 +17,9 @@ staging:
 production:
   <<: *defaults
   cloud_crowd_server: <%= secrets['db_host'] %>:8080
-  server_root:        dev.sourceafrica.net
+  server_root:        sourceafrica.net
   asset_root:         "//s3.amazonaws.com/openafricadocss3"
-  db_volume_id:       vol-a17cc4f4
+  db_volume_id:       vol-3ed1c86b
 
 test:
   <<: *defaults
