@@ -19,7 +19,7 @@ module DC
 
     # Create our EC2 connection upon initialization.
     def initialize
-      @ec2 = RightAws::Ec2.new(SECRETS['aws_access_key'], SECRETS['aws_secret_key'])
+      @ec2 = RightAws::Ec2.new(DC::SECRETS['aws_access_key'], DC::SECRETS['aws_secret_key'])
     end
 
     # Describe the running instances.

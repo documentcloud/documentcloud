@@ -20,7 +20,7 @@ namespace :aws do
   desc "Snapshot EBS root and register it as a new AMI"
   task :register_ami, [:instance_id] => [:environment] do |t,args|
     require 'right_aws'
-    ec2 = RightAws::Ec2.new(SECRETS['aws_access_key'], SECRETS['aws_secret_key'])
+    ec2 = RightAws::Ec2.new(DC::SECRETS['aws_access_key'], DC::SECRETS['aws_secret_key'])
 
     instance = ec2.describe_instances(args.instance_id)[0]
     if instance[:aws_state] == 'running'

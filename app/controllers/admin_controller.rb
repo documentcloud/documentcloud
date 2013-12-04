@@ -96,7 +96,7 @@ class AdminController < ApplicationController
   # Endpoint for our pixel-ping application, to save our analytic data every
   # so often -- delegate to a cloudcrowd job.
   def save_analytics
-    return forbidden unless params[:secret] == SECRETS['pixel_ping']
+    return forbidden unless params[:secret] == DC::SECRETS['pixel_ping']
     RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       :action => 'save_analytics', :inputs => [params[:json]]
     }.to_json})

@@ -28,7 +28,7 @@ module DC
       end
 
       def initialize
-        @key, @secret = SECRETS['aws_access_key'], SECRETS['aws_secret_key']
+        @key, @secret = DC::SECRETS['aws_access_key'], DC::SECRETS['aws_secret_key']
       end
 
       def read(path)

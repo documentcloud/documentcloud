@@ -42,7 +42,7 @@ module DC
           client = Calais::Client.new(
             :content                        => text,
             :content_type                   => :raw,
-            :license_id                     => SECRETS['calais_license'],
+            :license_id                     => DC::SECRETS['calais_license'],
             :allow_distribution             => false,
             :allow_search                   => false,
             :submitter                      => "DocumentCloud (#{Rails.env})",
