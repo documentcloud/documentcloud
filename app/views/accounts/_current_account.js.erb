@@ -1,9 +1,10 @@
-dc.account = new dc.model.Account(<%=raw @current_account.canonical.to_json %>);
-<% @current_account.organizations_with_accounts.each do | organization | -%>
-dc.account.addOrganization( <%=raw organization.to_json %> );
-<% end -%>
+dc.account = new dc.model.Account(<%=raw @current_account.canonical(:include_memberships => true).to_json %>);
+Organizations.add(<%=raw @current_account.organizations_with_accounts.to_json %>)
 
-Accounts.reset(dc.account.current_organization().members.models);
+
+dc.account.organizations().each(function(organization){
+  Accounts.add(organization.members.models);
+});
 Accounts.add(dc.account);
 
 dc.account.set({

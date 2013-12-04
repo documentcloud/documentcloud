@@ -4,11 +4,11 @@ dc.ui.Paginator = Backbone.View.extend({
   MINI_PER_PAGE    : 30,
 
   SORT_TEXT : {
-    score       : 'by relevance',
-    title       : 'by title',
-    created_at  : 'by date',
-    source      : 'by source',
-    page_count  : 'by length'
+    score       : _.t('by_relevance'),
+    title       : _.t('by_title'),
+    created_at  : _.t('by_date'),
+    source      : _.t('by_source'),
+    page_count  : _.t('by_length')
   },
 
   id        : 'paginator',
@@ -110,12 +110,12 @@ dc.ui.Paginator = Backbone.View.extend({
   },
 
   chooseSort : function() {
-    var dialog = dc.ui.Dialog.choose('Sort Documents By&hellip;', [
-      {text : 'Relevance',     value : 'score',      selected : this.sortOrder == 'score'},
-      {text : 'Date Uploaded', value : 'created_at', selected : this.sortOrder == 'created_at'},
-      {text : 'Title',         value : 'title',      selected : this.sortOrder == 'title'},
-      {text : 'Source',        value : 'source',     selected : this.sortOrder == 'source'},
-      {text : 'Length',        value : 'page_count', selected : this.sortOrder == 'page_count'}
+    var dialog = dc.ui.Dialog.choose( _.t('sort_documents_by')+'&hellip;', [
+      {text : _.t('relevance'),     value : 'score',      selected : this.sortOrder == 'score'},
+      {text : _.t('date_uploaded'), value : 'created_at', selected : this.sortOrder == 'created_at'},
+      {text : _.t('title'),         value : 'title',      selected : this.sortOrder == 'title'},
+      {text : _.t('source'),        value : 'source',     selected : this.sortOrder == 'source'},
+      {text : _.t('length'),        value : 'page_count', selected : this.sortOrder == 'page_count'}
     ], _.bind(function(order) {
       this.setSortOrder(order);
       return true;

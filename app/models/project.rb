@@ -26,7 +26,7 @@ class Project < ActiveRecord::Base
   scope :alphabetical,-> { order( :title ) }
   scope :visible,     -> { where(:hidden => false) }
   scope :hidden,      -> { where(:hidden => true ) }
-  scope :accessible,  -> (account) {
+  scope :accessible,  ->(account) {
     where( ['account_id = ? or id in (select project_id from collaborations where account_id = ?)', account.id, account.id] )
   }
 

@@ -129,6 +129,9 @@ DC::Application.routes.draw do
   match '/accounts/enable/:key' => 'accounts#enable', :via=>[:get,:post], :as => :enable_account
   match '/reset_password' => 'accounts#reset', :via=>[:get,:post], :as => :reset_password
 
+  # Organizations management
+  resources :organizations, :only=>:update
+
   # Projects.
   resources :projects do
     member {

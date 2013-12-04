@@ -14,6 +14,13 @@ class Organization < ActiveRecord::Base
   validates :name, :slug, :uniqueness=>true
   validates :slug, :format => { :with => DC::Validators::SLUG }
 
+  validates :name, :slug, :presence=>true, :uniqueness=>true
+  validates :slug, :format=>{:with=> DC::Validators::SLUG}
+  validates :language, :inclusion=>{ :in => DC::Language::USER,
+    :message => "must be one of: (#{DC::Language::USER.join(', ')})" }
+  validates :document_language,  :inclusion=>{ :in => DC::Language::SUPPORTED,
+    :message => "must be one of: (#{DC::Language::SUPPORTED.join(', ')})" }
+
   # Sanitizations:
   text_attr :name
 
@@ -56,7 +63,8 @@ class Organization < ActiveRecord::Base
       memberships.organization_id, memberships.role,
       accounts.id,                 accounts.email,
       accounts.first_name,         accounts.last_name,
-      accounts.hashed_password,    accounts.identities
+      accounts.hashed_password,    accounts.identities,
+      accounts.language
     from memberships
       inner join accounts on accounts.id = memberships.account_id
     where
@@ -86,7 +94,6 @@ class Organization < ActiveRecord::Base
     end
     return organizations
   end
-
 
   # How many documents have been uploaded across the whole organization?
   def document_count
@@ -118,10 +125,12 @@ class Organization < ActiveRecord::Base
 
   def canonical( options = {} )
     attrs = {
-      'name' => name,
-      'slug' => slug,
-      'demo' => demo,
-      'id'   => id
+      'name'              => name,
+      'slug'              => slug,
+      'language'          => language,
+      'document_language' => document_language,
+      'demo'              => demo,
+      'id'                => id
     }
     if options[:include_document_count]
       attrs['document_count'] = document_count

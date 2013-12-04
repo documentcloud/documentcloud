@@ -5,9 +5,10 @@ gem 'curb',                   '~>0.8.4'
 gem 'calais',                 '~> 0.0.13'
 gem 'rest-client',            '~> 1.6.7'
 gem 'bcrypt-ruby',            '~> 3.1.1', :require => 'bcrypt'
-gem 'rubyzip',                '~> 0.9.9'
-gem 'aws-sdk',                '~> 1.11.1'
-gem 'pg',                     '~> 0.15.1'
+gem 'rubyzip',                '~> 1.1.0' #0.9.9'
+gem 'aws-sdk',                '~> 1.29' #11.1'
+gem 'pg',                     '~> 0.17'
+
 gem 'closure-compiler'
 gem 'docsplit',               '>= 0.6.4'
 gem 'sunspot_rails',          '~> 2.0'
@@ -26,7 +27,7 @@ gem 'right_http_connection'
 gem 'rake'
 
 gem 'jammit', :git=>'https://github.com/nathanstitt/jammit.git', :branch=>'rails4'
-gem 'nokogiri',               '1.5.6' # only pegged because nokogiri 1.5.9 installation fucking up on OSX
+gem 'nokogiri', '~> 1.6.0'
 gem 'right_aws',              '2.0.1', :git=>'https://github.com/documentcloud/right_aws.git'        # Our patched version.
 
 

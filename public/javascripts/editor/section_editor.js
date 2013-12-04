@@ -9,16 +9,16 @@ dc.ui.SectionEditor = Backbone.View.extend({
     if (this.dialog) return false;
     this.sections = _.sortBy(currentDocument.api.getSections(), function(s){ return parseInt(s.pageNumber, 10); });
     this.dialog = new dc.ui.Dialog({
-      title       : 'Edit Sections',
-      information : 'Please add a title and page number for each section.',
+      title       : _.t('edit_sections'),
+      information : _.t('enter_title_and_page'),
       id          : 'section_editor',
       mode        : 'confirm',
-      saveText    : 'Save',
+      saveText    : _.t('save'),
       onClose     : _.bind(function(){ this.dialog = null; }, this),
       onConfirm   : _.bind(function(){ return this.saveSections(this.serializeSections()); }, this)
     }).render();
     this.sectionsEl = $(this.make('ul', {id : 'section_rows', 'class' : 'not_draggable'}));
-    this.removeEl   = $(this.make('div', {'class' : 'minibutton warn remove_all'}, 'Remove All'));
+    this.removeEl   = $(this.make('div', {'class' : 'minibutton warn remove_all'}, _.t('remove_all') ));
     this.removeEl.bind('click', this.removeAllSections);
     this.dialog.append(this.sectionsEl);
     this.dialog.addControl(this.removeEl);
@@ -27,8 +27,8 @@ dc.ui.SectionEditor = Backbone.View.extend({
 
   saveSections : function(sections) {
     var numbers = _.pluck(sections, 'page_number');
-    if (numbers.length > _.uniq(numbers).length) return this.dialog.error("Can't create a duplicate section.");
-    if (this.impossibleSections(sections)) return this.dialog.error("Can't create a section outside the document.");
+    if (numbers.length > _.uniq(numbers).length) return this.dialog.error( _.t('no_duplicate_section'));
+    if (this.impossibleSections(sections)) return this.dialog.error( _.t('no_section_outside_doc') );
     $.ajax({
       url       : '/sections/set',
       type      : 'POST',

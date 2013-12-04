@@ -8,7 +8,7 @@
   text-align: left;
 }
   .document_embed_dialog .custom {
-    height: 360px;
+    height: 380px;
     position: relative;
     font-size: 12px;
   }
@@ -48,13 +48,12 @@
     margin-bottom: 14px;
   }
   .document_embed_dialog .text_input,
-  .document_embed_dialog input[type="checkbox"],
   .document_embed_dialog select {
     position: absolute;
     left: 155px;
   }
     .document_embed_dialog .text_input {
-      left: 135px;
+      left: 180px;
       right: 0px;
     }
     .document_embed_dialog select {

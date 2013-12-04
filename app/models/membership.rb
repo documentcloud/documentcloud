@@ -14,12 +14,15 @@ class Membership < ActiveRecord::Base
     REAL_ROLES.include?(role)
   end
 
-  def canonical( options={} )
-    attrs = self.as_json
-    if options[:include_account]
-      attrs[:account] = account.canonical( options[:include_account] )
-    end
+  def canonical( options = {} )
+    attrs = self.attributes
+    attrs['account']           = account.canonical(options)      if options[:include_account]
+    attrs['organization']      = organization.canonical(options) if options[:include_organization]
+    attrs['organization_name'] = organization.name               if options[:include_organization_name]
     attrs
   end
-
+  
+  def as_json(options={})
+    canonical(options)
+  end
 end

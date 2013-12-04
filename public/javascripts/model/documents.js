@@ -76,7 +76,7 @@ dc.model.Document = Backbone.Model.extend({
       val ? data[key] = val : delete data[key];
     });
     this.save({data: data});
-    this.change();
+    this.trigger('change', this);
   },
 
   // Return the sorted array of key value pairs for the document's data.
@@ -121,7 +121,7 @@ dc.model.Document = Backbone.Model.extend({
 
   openPublishedViewer : function() {
     if (this.checkBusy()) return;
-    if (!this.isPublished()) return dc.ui.Dialog.alert('"' + this.get('title') + '" is not published.');
+    if (!this.isPublished()) return dc.ui.Dialog.alert( _.t('x_is_not_published', this.get('title') ) );
     return window.open(this.publishedUrl());
   },
 
@@ -155,7 +155,7 @@ dc.model.Document = Backbone.Model.extend({
 
   // Is the document editable by the current account?
   checkAllowedToEdit : function(message) {
-    message = message || "You don't have permission to edit \"" + this.get('title') + "\".";
+    message = message || _.t('no_permission_to_edit_x', this.get('title') );
     if (this.allowedToEdit()) return true;
     dc.ui.Dialog.alert(message);
     return false;
@@ -163,7 +163,7 @@ dc.model.Document = Backbone.Model.extend({
 
   checkBusy : function() {
     if (!(this.get('access') == dc.access.PENDING)) return false;
-    dc.ui.Dialog.alert('"' + this.get('title') + '" is still being processed. Please wait for it to finish.');
+    dc.ui.Dialog.alert( _.t('x_still_processing', this.get('title') ) );
     return true;
   },
 
@@ -221,7 +221,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
   model    : dc.model.Document,
 
-  EMBED_FORBIDDEN : "You don't have permission to embed that document.",
+  EMBED_FORBIDDEN : _.t('no_embed_permission'),
 
   POLL_INTERVAL : 10 * 1000, // 10 seconds.
 
@@ -246,7 +246,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   },
 
   subtitle : function(count) {
-    return count > 1 ? count + ' Documents' : '';
+    return _.t('x_documents',count);
   },
 
   // Given a list of documents and an attribute, return the value of the
@@ -300,7 +300,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 
   downloadViewers : function(docs) {
     var ids = _.map(docs, function(doc){ return doc.id; });
-    var dialog = dc.ui.Dialog.progress('Preparing ' + dc.inflector.pluralize('document', ids.length) + ' for download...');
+    var dialog = dc.ui.Dialog.progress( _.t('downloading_progress', ids.length, docs[0].get('title') ) );
     dc.app.download('/download/' + ids.join('/') + '/document_viewer.zip', function() {
       dialog.close();
     });
@@ -319,7 +319,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   printNotes : function() {
     var docs = this.selected();
     if (!_.any(docs, function(doc){ return doc.hasNotes(); })) {
-      return dc.ui.Dialog.alert('"' + docs[0].get('title') + '" does not contain any printable notes.');
+      return dc.ui.Dialog.alert( _.t('print_notes_missing_error', '"'+docs[0].get('title')+'"' ) );
     }
     var params = _.map(docs, function(doc){ return 'docs[]=' + doc.id; }).join('&');
     var win = window.open(SERVER_ROOT + '/notes/print?' + params);
@@ -354,7 +354,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
   // Destroy the currently selected documents, after asking for confirmation.
   verifyDestroy : function(docs) {
     if (!this.allowedToEdit(docs)) return;
-    var message = 'Really delete ' + docs.length + ' ' + dc.inflector.pluralize('document', docs.length) + '?';
+    var message = _.t('really_delete_x_docs', docs.length );
     dc.ui.Dialog.confirm(message, _.bind(function() {
       var counter = docs.length;
       var progress = dc.ui.Dialog.progress('Deleting Documents&hellip;');
@@ -410,28 +410,28 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     var options = {information: this.subtitle(docs.length)};
     if (!this.allowedToEdit(docs)) return;
     var current = this.sharedAttribute(docs, 'access') || dc.access.PRIVATE;
-    dc.ui.Dialog.choose('Access Level', [
+    dc.ui.Dialog.choose( _.t('access_level'), [
       {
-        text        : 'Public Access',
-        description : 'Anyone on the internet can search for and view the document.',
+        text        : _.t('public_access'),
+        description : _.t('public_access_help'),
         value       : dc.access.PUBLIC,
         selected    : current == dc.access.PUBLIC
       },
       {
-        text        : 'Private Access',
-        description : 'Only people with explicit permission (via collaboration) have access.',
+        text        : _.t('private_access'),
+        description : _.t('private_access_help'),
         value       : dc.access.PRIVATE,
         selected    : current == dc.access.PRIVATE
       },
       {
-        text        : 'Private to ' + dc.account.organization().get('name'),
-        description : 'Only the people in your organization have access. (No freelancers.)',
+        text        : _.t('private_to', dc.account.organization().get('name') ),
+        description : _.t('private_to_organization_help'),
         value       : dc.access.ORGANIZATION,
         selected    : current == dc.access.ORGANIZATION
       }
     ], function(access) {
       _.each(docs, function(doc) { doc.save({access : parseInt(access, 10)}); });
-      var notification = 'Access updated for ' + docs.length + ' ' + dc.inflector.pluralize('document', docs.length);
+      var notification = _.t('document_access_updated', docs.length );
       if (!_.any(docs, function(doc) { return doc.suppressNotifier; })) {
         dc.ui.notifier.show({mode : 'info', text : notification});
       }
@@ -470,7 +470,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
 }, {
 
   entitle : function(query) {
-    var searchQuery = VS.app.searchQuery;
+    var searchQuery = dc.app.visualSearch.searchQuery;
     var title, ret, account, org;
 
     if (searchQuery.count('project') == 1) {
@@ -479,10 +479,8 @@ dc.model.DocumentSet = Backbone.Collection.extend({
       ret = (searchQuery.find('filter') == 'published') ? 'your_published_documents' : 'your_documents';
     } else if (account = Accounts.getBySlug(searchQuery.find('account'))) {
       title = account.documentsTitle();
-    } else if (dc.account && searchQuery.find('group') == dc.account.organization().get('slug')) {
-      ret = 'org_documents';
     } else if (searchQuery.has('group') && (org = Organizations.findBySlug(searchQuery.find('group')))) {
-      title = dc.inflector.possessivize(org.get('name')) + " Documents";
+      title = _.t('organizations_documents', org.get('name') );
     } else if (searchQuery.find('filter') == 'published') {
       ret = 'published_documents';
     } else if (searchQuery.find('filter') == 'popular') {

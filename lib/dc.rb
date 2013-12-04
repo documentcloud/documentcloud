@@ -9,7 +9,7 @@ require 'dc/search'
 require 'dc/statistics'
 require 'dc/zip_utils'
 require 'dc/import'
-
+require 'dc/i18n'
 module DC
 
   # The canonical server root, including SSL, if requested.

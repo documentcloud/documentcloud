@@ -9,8 +9,8 @@
 </td>
 <td class="last">
   <% if (account.id != project.get('account_id')) { %>
-    <span class="remove text_link" data-id="<%= account.id %>">remove</span>
+  <span class="remove text_link" data-id="<%= account.id %>"><%= _.t('remove') %></span>
   <% } else { %>
-    (project owner)
+    (<%= _.t('project_owner') %>)
   <% } %>
 </td>
