@@ -73,8 +73,8 @@ class AuthenticationController < ApplicationController
 
   layout 'embedded_login', :only=>[ :inner_iframe, :iframe_success, :iframe_failure, :popup_completion, :iframe_logout,:callback,:request_additional_information ]
 
-  before_filter :login_required, :only => [:iframe_success,:record_user_information]
-  before_filter :set_p3p_header
+  before_action :login_required, :only => [:iframe_success,:record_user_information]
+  before_action :set_p3p_header
 
   # this is needed for running omniauth on rails 2.3.  Without it the route
   # causes an error even though omniauth is intercepting it

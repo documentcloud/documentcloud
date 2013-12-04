@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
 
-  before_filter :login_required
+  before_action :login_required
 
   def index
     json Project.visible.accessible(current_account)

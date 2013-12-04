@@ -7,15 +7,15 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  before_filter :set_ssl
+  before_action :set_ssl
 
   if Rails.env.development?
-    around_filter :perform_profile
-    after_filter  :debug_api
+    around_action :perform_profile
+    after_action :debug_api
   end
 
   if Rails.env.production?
-    around_filter :notify_exceptions
+    around_action :notify_exceptions
   end
 
   protected

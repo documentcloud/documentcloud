@@ -1,7 +1,7 @@
 class ReviewersController < ApplicationController
   include DC::Sanitized
 
-  before_filter :login_required, :load_documents
+  before_action :login_required, :load_documents
 
   def index
     reviewers = {}
