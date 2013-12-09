@@ -21,7 +21,7 @@ module DC
             rdfs[i] = fetch_rdf_from_calais(chunk)
           end
         rescue Exception => e
-          LifecycleMailer.deliver_exception_notification(e)
+          LifecycleMailer.exception_notification(e).deliver
         end
         rdfs
       end

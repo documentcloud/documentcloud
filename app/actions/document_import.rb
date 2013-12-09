@@ -58,7 +58,7 @@ class DocumentImport < DocumentAction
       when 'images' then process_images
       end
     rescue Exception => e
-      LifecycleMailer.deliver_exception_notification(e, options)
+      LifecycleMailer.exception_notification(e,options).deliver
       raise e
     end
     document.id
@@ -102,7 +102,7 @@ class DocumentImport < DocumentAction
         opts[:clean] = false unless opts[:language] == 'eng'
         Docsplit.extract_text(@pdf, opts)
       rescue Exception => e
-        LifecycleMailer.deliver_exception_notification(e, options)
+        LifecycleMailer.exception_notification(e, options).deliver
       end
       Docsplit.extract_length(@pdf).times do |i|
         page_number = i + 1

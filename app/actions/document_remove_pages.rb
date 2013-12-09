@@ -18,7 +18,7 @@ class DocumentRemovePages < DocumentAction
 
     rescue Exception => e
       fail_document
-      LifecycleMailer.deliver_exception_notification(e, options)
+      LifecycleMailer.exception_notification(e,options).deliver
       raise e
     end
     document.id

@@ -115,7 +115,7 @@ class ApplicationController < ActionController::Base
 
   def handle_unverified_request
     error = RuntimeError.new "CSRF Verification Failed"
-    LifecycleMailer.deliver_exception_notification(error, params)
+    LifecycleMailer.exception_notification(error, params).deliver
     forbidden
   end
 
@@ -160,7 +160,7 @@ class ApplicationController < ActionController::Base
       yield
     rescue Exception => e
       ignore = e.is_a?(ActionController::UnknownAction) || e.is_a?(ActionController::RoutingError)
-      LifecycleMailer.deliver_exception_notification(e, params) unless ignore
+      LifecycleMailer.exception_notification(e, params).deliver unless ignore
       raise e
     end
   end
