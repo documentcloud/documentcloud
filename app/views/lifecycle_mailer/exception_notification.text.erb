@@ -1,0 +1,7 @@
+<%= @params ? @params.inspect : '' %>
+
+<%= @error.class.name %>
+
+<%= @error.message %>
+
+<%= (@error.backtrace || []).join("\n") %>
