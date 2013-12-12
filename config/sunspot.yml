@@ -1,37 +1,35 @@
-development:
-  auto_commit_after_request: false
-  solr:
-    hostname: localhost
-    port: 7377
-    log_level: INFO
-    min_memory: 20M
-    max_memory: 500M
-    solr_jar: vendor/solr-4.0.0/start.jar
-    pid_dir: tmp/pids
-
-staging:
-  auto_commit_after_request: false
-  solr:
-    hostname: ec2-50-16-197-147.compute-1.amazonaws.com
-    port: 7377
-    log_level: WARNING
-    solr_jar: vendor/solr-4.0.0/start.jar
-    pid_dir: tmp/pids
-
 production:
-  auto_commit_after_request: false
   solr:
     hostname: ec2-23-20-237-32.compute-1.amazonaws.com
     port: 7377
+    path: /solr/production
+    read_timeout: 2
+    open_timeout: 0.5
     log_level: INFO
-    min_memory: 200M
-    max_memory: 3G
-    solr_jar: vendor/solr-4.0.0/start.jar
+    min_memory: 20M
+    max_memory: 500M
+    pid_dir: tmp/pids
+
+development:
+  solr:
+    hostname: localhost
+    port: 7377
+    log_level: ALL
+    path: /solr/collection1
     pid_dir: tmp/pids
 
 test:
   solr:
     hostname: localhost
-    port: 8981
+    port: 8982
+    log_level: WARNING
+    path: /solr/collection1
+    pid_dir: tmp/pids
+
+staging:
+  solr:
+    hostname: ec2-50-16-197-147.compute-1.amazonaws.com
+    port: 7377
     log_level: WARNING
     pid_dir: tmp/pids
+    path: /solr/collection1
