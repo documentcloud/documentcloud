@@ -47,6 +47,13 @@
       });
     <% end %>
   </script>
+  <noscript>
+    <% if @current_document %>
+    <a href="<%= @current_document.pdf_url %>"><%= @current_document.title %> (PDF)</a>
+    <br/>
+    <a href="<%= @current_document.full_text_url %>"><%= @current_document.title %> (Text)<a>
+    <% end %>
+  </noscript>
 
   <%= render(:partial => 'viewer_editing') if @edits_enabled %>
 </body>
