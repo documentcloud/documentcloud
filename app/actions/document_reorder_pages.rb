@@ -44,7 +44,7 @@ class DocumentReorderPages < DocumentAction
         Page::IMAGE_SIZES.keys.each do |size|
           page = document.page_image_path(old_num, size)
           image_path = reordered_page_images[new_num][size] = "#{document.slug}-p#{new_num}-#{size}.gif"
-          File.open(image_path, 'w+') do |f|
+          File.open(image_path, 'wb') do |f|
             f.write(asset_store.read(page))
           end
         end

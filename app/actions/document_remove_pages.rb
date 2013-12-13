@@ -51,7 +51,7 @@ class DocumentRemovePages < DocumentAction
         page = document.page_image_path(p, size)
         new_file = "#{document.slug}-p#{i+1}-#{size}.gif"
         sizes[size] = new_file
-        File.open(new_file, 'w+') do |f|
+        File.open(new_file, 'wb') do |f|
           f.write(asset_store.read(page))
         end
       end

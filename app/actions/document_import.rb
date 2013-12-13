@@ -10,7 +10,7 @@ class DocumentImport < DocumentAction
   def split
     if options['url']
       file = File.basename(options['url'])
-      File.open(file, 'w') do |f|
+      File.open(file, 'wb') do |f|
         url = URI.parse(options['url'])
         Net::HTTP.start(url.host, url.port) do |http|
           http.request_get(url.path) do |res|
@@ -24,7 +24,7 @@ class DocumentImport < DocumentAction
       DC::Store::AssetStore.new.save_original(document, file )
     else
       file = File.basename document.original_file_path
-      File.open(file, 'w'){ |f| f << DC::Store::AssetStore.new.read_original(document) }
+      File.open(file, 'wb'){ |f| f << DC::Store::AssetStore.new.read_original(document) }
     end
 
     # Calculate the file hash for the document's original_file so that duplicates can be found
@@ -52,7 +52,7 @@ class DocumentImport < DocumentAction
     begin
       @pdf = document.slug + '.pdf'
       pdf_contents = asset_store.read_pdf document
-      File.open(@pdf, 'w+') {|f| f.write(pdf_contents) }
+      File.open(@pdf, 'wb') {|f| f.write(pdf_contents) }
       case input['task']
       when 'text'   then process_text
       when 'images' then process_images

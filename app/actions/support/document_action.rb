@@ -13,7 +13,7 @@ class DocumentAction < CloudCrowd::Action
   # Generate the file name we're going to use for the PDF, and save it locally.
   def prepare_pdf
     @pdf = document.slug + '.pdf'
-    File.open(@pdf, 'w+') {|f| f.write(asset_store.read_pdf(document)) }
+    File.open(@pdf, 'wb') {|f| f.write(asset_store.read_pdf(document)) }
   end
 
   def document
