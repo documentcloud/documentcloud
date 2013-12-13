@@ -6,7 +6,7 @@ gem 'calais',                 '~> 0.0.13'
 gem 'rest-client',            '~> 1.6.7'
 gem 'bcrypt-ruby',            '~> 3.1.1', :require => 'bcrypt'
 gem 'rubyzip',                '~> 1.1.0' #0.9.9'
-gem 'aws-sdk',                '~> 1.29' #11.1'
+gem 'aws-sdk',                '~> 1.30' #11.1'
 gem 'pg',                     '~> 0.17'
 
 gem 'closure-compiler'

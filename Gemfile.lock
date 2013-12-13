@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/nathanstitt/cloud-crowd.git
-  revision: 765f50794291c06b211ef65883322cc93ca2bfe1
+  revision: 09e0a6e80b5c8122ba2e2cb5680d76c66f8103bc
   branch: rails4
   specs:
     cloud-crowd (0.7.0)
@@ -55,7 +55,7 @@ GEM
     ansi (1.4.3)
     arel (4.0.1)
     atomic (1.1.14)
-    aws-sdk (1.29.0)
+    aws-sdk (1.30.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
@@ -89,7 +89,7 @@ GEM
     guard-bundler (2.0.0)
       bundler (~> 1.0)
       guard (~> 2.2)
-    guard-minitest (2.1.2)
+    guard-minitest (2.1.3)
       guard (~> 2.0)
       minitest (>= 3.0)
     hashie (2.0.5)
@@ -97,12 +97,12 @@ GEM
     hike (1.2.3)
     httpauth (0.2.0)
     i18n (0.6.9)
-    iconv (1.0.3)
+    iconv (1.0.4)
     jsmin (1.0.1)
     json (1.8.1)
     jwt (0.1.8)
       multi_json (>= 1.5)
-    listen (2.3.1)
+    listen (2.4.0)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -235,7 +235,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-sdk (~> 1.29)
+  aws-sdk (~> 1.30)
   bcrypt-ruby (~> 3.1.1)
   calais (~> 0.0.13)
   closure-compiler
