@@ -1,8 +1,8 @@
 xml.instruct! :xml, :version => "1.0" 
 xml.rss :version => "2.0" do
   xml.channel do
-    xml.title "DocumentCloud Featured Reporting"
-    xml.description "Featured reports that have utilized DocumentCloud to assist with the creation or presentation of the article or series"
+    xml.title "sourceAFRICA Featured Reporting"
+    xml.description "Featured reports that have utilized sourceAFRICA to assist with the creation or presentation of the article or series"
     xml.link featured_index_url
 
     @reports.each do | report |
