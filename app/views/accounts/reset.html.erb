@@ -6,7 +6,7 @@
 <div id="full_screen_form" class="full_page_background">
   <form action="/reset_password" method="POST" autocomplete="off">
     <%= token_tag %>
-    <h1>Reset your DocumentCloud Password</h1>
+    <h1>Reset your sourceAFRICA Password</h1>
     <% if @display_notice and params[:email].size > 0 %>
       <div class="form_success">
         <span>Please check the email address you have provided (<%= h params[:email ]%>) for further instructions.</span>
@@ -26,7 +26,7 @@
       <div class="example long">
         Not sure what email address you use to log in?
         Here's a tip: any one else in your office with a
-        DocumentCloud account can look up your email address under 'Accounts'.
+        sourceAFRICA account can look up your email address under 'Accounts'.
       </div>
     </div>
     <div class="line">
