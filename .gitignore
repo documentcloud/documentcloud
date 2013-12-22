@@ -12,6 +12,7 @@ db/sphinx
 raw
 /secrets
 public/docs
+public/documents
 public/asset_store
 public/assets
 public/document-viewer/images/*.psd
@@ -23,3 +24,5 @@ cloud_crowd.db
 .DS_Store
 public/search
 vendor/solr-4.0.0/solr-webapp/webapp/*
+vendor/solr-3.4.0/*
+

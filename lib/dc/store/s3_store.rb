@@ -20,7 +20,7 @@ module DC
 
       module ClassMethods
         def asset_root
-          Rails.env.production? ? "http://s3.documentcloud.org" : "http://#{BUCKET_NAME}.s3.amazonaws.com/"
+          Rails.env.production? ? "http://openafricadocss3.s3.amazonaws.com/" : "http://#{BUCKET_NAME}.s3.amazonaws.com/"
         end
         def web_root
           Thread.current[:ssl] ? "https://#{BUCKET_NAME}.s3.amazonaws.com/" : asset_root
