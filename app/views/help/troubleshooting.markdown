@@ -1,6 +1,6 @@
 # Troubleshooting Documents
 
-We're always (with your help) discovering new and different ways to break our document importer. That is a good thing: it is one of the ways you're helping us make DocumentCloud better. In some cases, resolving a document import issue is as simple as opening the document in Adobe Acrobat or Apple Preview, optimizing it for web use and re-saving it.
+We're always (with your help) discovering new and different ways to break our document importer. That is a good thing: it is one of the ways you're helping us make sourceAFRICA better. In some cases, resolving a document import issue is as simple as opening the document in Adobe Acrobat or Apple Preview, optimizing it for web use and re-saving it.
 
 In Preview, open the PDF and choose "File > Print". When the dialog opens, click on the "PDF" menu in the lower-left hand corner, and use "Save as PDF".
 
@@ -18,7 +18,7 @@ If you've got high quality text already embedded in your PDF, we don't want to r
  
 ## <span id="encrypted">Encrypted or Secured Documents</span> 
 
-It is not unheard of for government agencies to release public documents that make use of usage restriction or monitoring capacities of PDFs. DocumentCloud can process some locked or password protected PDFs, but if we can't unlock a document for you, you may still be able to get around such restrictions. You may be able to unlock a document yourself with [qpdf][]. If qpdf isn't working for you, see if your operating system or print dialog includes a "Print to file" or "Print to PDF" option. You should be able to "print" a new document which DocumentCloud will be able to work with.
+It is not unheard of for government agencies to release public documents that make use of usage restriction or monitoring capacities of PDFs. sourceAFRICA can process some locked or password protected PDFs, but if we can't unlock a document for you, you may still be able to get around such restrictions. You may be able to unlock a document yourself with [qpdf][]. If qpdf isn't working for you, see if your operating system or print dialog includes a "Print to file" or "Print to PDF" option. You should be able to "print" a new document which sourceAFRICA will be able to work with.
 
 ## <span id="more">More Tools</span>
 
