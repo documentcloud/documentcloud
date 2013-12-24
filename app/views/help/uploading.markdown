@@ -1,6 +1,6 @@
 # Uploading documents
 
-Most DocumentCloud users are working PDFs, but our software can work with any file type that OpenOffice supports: Microsoft Word documents, RTFs and OpenDocument files will work just fine. Image files, including tiffs, jpegs and pngs will also work. 
+Most sourceAFRICA users are working PDFs, but our software can work with any file type that OpenOffice supports: Microsoft Word documents, RTFs and OpenDocument files will work just fine. Image files, including tiffs, jpegs and pngs will also work. 
 
 If you open a project before you begin uploading, your new documents will be added to the project you have open. 
 
@@ -10,7 +10,7 @@ To upload one or more documents, click the "New Documents" button in the sidebar
  
 The uploader will suggest a title for your document, based on its file name. You can edit the title before you continue, but you'll also be able to edit each document's metadata after you've uploaded it. Consider providing additional data about each document: click on the pencil icon to expand a detailed form, where you can add a description and source for each document and set the access level. If the files you are uploading should share a source and description, click on the link titled: "Apply to All Files." 
 
-When you're ready, click "Upload." The dialog will close when all files have been uploaded. Before you can work with them, however, DocumentCloud has more processing to do, to prepare your document for our document viewer. Most documents process in less than 30 minutes, but the time it takes to process documents depends heavily on how many other users are working at the same time. If you'd like to be notified when your batch of documents is finished being processed, click the checkbox, and we will send you an email they are ready. If you are uploading many large documents at once, let us know so and we can ensure there's enough computing power available.
+When you're ready, click "Upload." The dialog will close when all files have been uploaded. Before you can work with them, however, sourceAFRICA has more processing to do, to prepare your document for our document viewer. Most documents process in less than 30 minutes, but the time it takes to process documents depends heavily on how many other users are working at the same time. If you'd like to be notified when your batch of documents is finished being processed, click the checkbox, and we will send you an email they are ready. If you are uploading many large documents at once, let us know so and we can ensure there's enough computing power available.
  
 You might get better results if you optimize large documents (anything over 10 MB) before you upload them. On a Mac, [use Preview to reduce the size of your file][]. Adobe Acrobat [works as well][]. Don't have Acrobat or Preview? Take a look at our tips on [troubleshooting documents][] for more resources.
 
@@ -20,7 +20,7 @@ We also offer a [bulk upload API][]. Documentation of our API is only accessible
 
 ## Optical Character Recognition
 
-We're using OCR software called [Tesseract][]. For an absolutely free tool, it is pretty impressive, but you'll get better results with some of the fancier proprietary services like Abbyy or Nuance. If you have access to high quality [OCR][], we recommend that you OCR your document before you upload it to DocumentCloud. 
+We're using OCR software called [Tesseract][]. For an absolutely free tool, it is pretty impressive, but you'll get better results with some of the fancier proprietary services like Abbyy or Nuance. If you have access to high quality [OCR][], we recommend that you OCR your document before you upload it to sourceAFRICA. 
 
 What's OCR? OCR is software that identifies each individual character or letter in a scanned document or image that would otherwise have no text information.
 
