@@ -1,6 +1,6 @@
 # Guided Tour
 
-DocumentCloud is a tool for organizing and working with large documents and document collections, a document viewer that makes it easier for reporters to share source material with readers and a publicly accessible repository of primary source documents that were used in journalists' investigations. If you're new to DocumentCloud, here's a walk through that we hope will help you get your bearings. 
+sourceAFRICA is a tool for organizing and working with large documents and document collections, a document viewer that makes it easier for reporters to share source material with readers and a publicly accessible repository of primary source documents that were used in journalists' investigations. If you're new to sourceAFRICA, here's a walk through that we hope will help you get your bearings. 
 
 ## Create your first project.
 
@@ -10,7 +10,7 @@ Use the "New Project" button on the left to create a project called "Demo Docume
 
 Search for [gulf oil spill][].
 
-This will search all documents made public by any DocumentCloud user for documents with "gulf," "oil" and "spill" in the text or title. You can [refine your search by special criteria][], as well. Your results should include a number of documents relating to the British Petroleum oil spill in the Gulf of Mexico. Drag one or two of these documents into your "Demo Documents" project. 
+This will search all documents made public by any sourceAFRICA user for documents with "gulf," "oil" and "spill" in the text or title. You can [refine your search by special criteria][], as well. Your results should include a number of documents relating to the British Petroleum oil spill in the Gulf of Mexico. Drag one or two of these documents into your "Demo Documents" project. 
 
 Click on "Demo Documents" to open your project. You should see your documents listed there.
 
@@ -20,7 +20,7 @@ Double-click on one of your documents to open it. If the contributing reporter m
 
 ## <span id="analytic_tools">Try our analytic tools.</span>
 
-DocumentCloud gives reporters a great set of analytic tools for working with large and small documents. When a document is uploaded, we run it through OCR, which extracts letters and words from each documents' image. But that's not all. 
+sourceAFRICA gives reporters a great set of analytic tools for working with large and small documents. When a document is uploaded, we run it through OCR, which extracts letters and words from each documents' image. But that's not all. 
  
 Search for [source: "House Committee on the Judiciary"][].
  
