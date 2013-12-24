@@ -1,6 +1,6 @@
-# DocumentCloud's Public Catalog
+# sourceAFRICA's Public Catalog
 
-DocumentCloud is a tool for organizing and working with large documents and document collections, a document viewer that makes it easier for reporters to share source material with readers and a publicly accessible repository of primary source documents that were used in reporters' investigations. 
+sourceAFRICA is a tool for organizing and working with large documents and document collections, a document viewer that makes it easier for reporters to share source material with readers and a publicly accessible repository of primary source documents that were used in reporters' investigations. 
 
 If you're a reporter who'd like to analyze, annotate, and publish documents, [contact us][] to find out more about getting an account. Otherwise, take a spin through our public document collection and try out some of our great analytic tools.
 
@@ -14,7 +14,7 @@ Double click on any document to read the whole document in our viewer, or read o
 
 ## Try out our analytic tools.
 
-DocumentCloud gives you access to a great set of analytic tools. When a reporter uploads any document, we run it through OCR, which extracts letters and words from the documents' image. But that's not all. 
+sourceAFRICA gives you access to a great set of analytic tools. When a reporter uploads any document, we run it through OCR, which extracts letters and words from the documents' image. But that's not all. 
  
 Search for [source: "House Committee on the Judiciary"][].
  
@@ -34,7 +34,7 @@ Enclose terms in quotes to search for a specific, multi-word phrase.
 
 Use "NOT" or "-" to exclude a term from your search. For example these searches: [geithner -madoff][] and [geithner NOT madoff][] will return documents that mention "Geithner" and do not also mention "Madoff." 
 
-By default DocumentCloud will search both the title and full text of every document for for all of the words in your search term. You can, however, ask DocumentCloud to search the contents of specific fields. 
+By default sourceAFRICA will search both the title and full text of every document for for all of the words in your search term. You can, however, ask sourceAFRICA to search the contents of specific fields. 
 
 
 ## Searching by Metadata Field
@@ -46,7 +46,7 @@ source                      | Reporters have the opportunity to identify the sou
 description                 | Search for a word or phrase within all document descriptions. For example: [description: manifesto][].
 account                     | Specify an account id to see documents published by a specific user. Notice that clicking on any user's name in your search results will automatically filter your results to include only that user's documents.  For example: [account: 143-james-wilkerson][].
 group                       | Search for all documents made public by a single newsroom. Notice that clicking on any organization name in your search results will automatically filter your results to include only that group's documents. For example: [group: chicago-tribune][]. 
-projectid                   | Reporters can organize documents into as many projects as appropriate. To restrict a search to documents in one project, you need to know that project's canonical identifier or project id. DocumentCloud doesn't publish individual project id's, however.  For example: [projectid: 6-the-financial-crisis][]
+projectid                   | Reporters can organize documents into as many projects as appropriate. To restrict a search to documents in one project, you need to know that project's canonical identifier or project id. sourceAFRICA doesn't publish individual project id's, however.  For example: [projectid: 6-the-financial-crisis][]
 filter                      | Filter documents by interesting criteria (one of "published", "unpublished", "annotated", or "popular"). For example, to view all published documents: [filter: published][]
  
 ## Searching with Entities
