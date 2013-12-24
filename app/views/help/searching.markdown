@@ -1,6 +1,6 @@
 # Searching for Documents
 
-By default, a search looks for all of the words you enter within the title and full text of the document itself. For example: [John Yoo detainee][]. You can, however, ask DocumentCloud to search the contents of specific fields.
+By default, a search looks for all of the words you enter within the title and full text of the document itself. For example: [John Yoo detainee][]. You can, however, ask sourceAFRICA to search the contents of specific fields.
 
 ## Advanced Queries
 Enclose terms in quotes to search for a specific, multi-word phrase. `"Robert Smith"` 
@@ -29,7 +29,7 @@ filter                      | Filter documents by interesting criteria (one of "
 
 ![OpenCalais Logo][]
 
-Whenever you upload a document to DocumentCloud we send the contents to [OpenCalais][], a service that discovers the entities (people, places, organizations, terms, etc.) that are present in plain text. OpenCalais can tell us that "Barack Obama" is the same person as "President Obama", "Senator Obama", "Mr. President" ... and even "he" or "his" in clauses like "his policy proposals".
+Whenever you upload a document to sourceAFRICA we send the contents to [OpenCalais][], a service that discovers the entities (people, places, organizations, terms, etc.) that are present in plain text. OpenCalais can tell us that "Barack Obama" is the same person as "President Obama", "Senator Obama", "Mr. President" ... and even "he" or "his" in clauses like "his policy proposals".
 
 To view entities, select a document and choose **View Entities** from the **Analyze** menu ... or right-click on a document, and choose **View Entities** from the context menu. The entities will be displayed in a chart that shows how often each entity occurs across each page. Using this chart, you can see which companies and individuals tend to be mentioned together frequently, or which parts of a long document concern a certain topic. Hover over any mention (the small gray boxes) to see the surrounding context, and click on it to jump directly to that mention within the document itself.
 
@@ -37,7 +37,7 @@ To view entities, select a document and choose **View Entities** from the **Anal
 
 ## <span id="metadata">Editing and Searching your own Custom Data</span>
 
-DocumentCloud allows you to define and search your own set of custom data (key/value pairs) associated with specific documents. To get started with document data, you can use [the API][] to add data to your documents in bulk &mdash; useful if you already have an existing database of information about your documents.
+sourceAFRICA allows you to define and search your own set of custom data (key/value pairs) associated with specific documents. To get started with document data, you can use [the API][] to add data to your documents in bulk &mdash; useful if you already have an existing database of information about your documents.
 
 To edit data for individual documents in the workspace, select the documents you wish to update, and choose **Edit Document Data** from the **Edit** menu ... or right-click on a document, and choose **Edit Document Data** from the context menu.
 
