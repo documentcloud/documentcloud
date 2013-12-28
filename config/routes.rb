@@ -144,7 +144,6 @@ ActionController::Routing::Routes.draw do |map|
     home.p3p            '/p3p.:format',   :action => 'p3p'
     home.home           '/home',          :action => 'index'
     home.news           '/news',          :action => 'news'
-    home.opensource     '/opensource',    :action => 'opensource'
     home.contact        '/contact',       :action => 'contact'
     home.help           '/help',          :action => 'help'
     home.help           '/help/:page',    :action => 'help'
@@ -154,6 +153,7 @@ ActionController::Routing::Routes.draw do |map|
   # Redirects.
   map.with_options :controller => 'redirect' do |move|
     move.faq              '/faq.php',       :url => '/faq'
+    move.opensource       '/opensource',    :url => 'https://github.com/CodeForAfrica/sourceAFRICA'
     move.about            '/about',         :url => 'http://www.codeforafrica.org'
     move.who              '/who.php',       :url => 'http://www.codeforafrica.org'
     move.who_we_are       '/who-we-are',    :url => 'http://www.codeforafrica.org'
