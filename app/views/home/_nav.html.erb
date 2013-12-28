@@ -11,17 +11,9 @@
       </li>
       <li id="nav_search">
         <a class="mark" href="/public/search/">
-          <span class="nav_title external_link">Search</span>
+          <span class="nav_title">Search</span>
           <div class="nav_subtitle">
             Our catalog has thousands<br /> of public documents.
-          </div>
-        </a>
-      </li>
-      <li id="nav_open">
-        <a class="mark <%= @nav == 'opensource' ? 'active' : '' %>" href="https://github.com/CodeForAfrica/sourceAFRICA" target="_blank">
-          <span class="nav_title">Open Source</span>
-          <div class="nav_subtitle">
-            Our work is open source.<br /> Contribute your ideas.
           </div>
         </a>
       </li>
@@ -33,9 +25,18 @@
           </div>
         </a>
       </li>
+      <li id="nav_open">
+        <a class="mark <%= @nav == 'opensource' ? 'active' : '' %>" href="https://github.com/CodeForAfrica/sourceAFRICA" target="_blank">
+          <span class="nav_title external_link">Open Source</span>
+          <div class="nav_subtitle">
+            Our work is open source.<br /> Contribute your ideas.
+          </div>
+        </a>
+      </li>
+
       <li id="nav_news">
         <a class="mark <%= @nav == 'about' ? 'active' : '' %>" href="http://www.codeforafrica.org/" target="_blank">
-          <span class="nav_title">Who We Are</span>
+          <span class="nav_title external_link">Who We Are</span>
           <div class="nav_subtitle">
             Meet the people<br /> making this happen.
           </div>
