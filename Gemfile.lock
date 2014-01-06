@@ -1,12 +1,6 @@
 GIT
-  remote: git://github.com/documentcloud/right_aws.git
-  revision: 57beab61fac4a621614b67f2014ec879bac25890
-  specs:
-    right_aws (2.0.1)
-
-GIT
-  remote: git://github.com/nathanstitt/cloud-crowd.git
-  revision: 09e0a6e80b5c8122ba2e2cb5680d76c66f8103bc
+  remote: git://github.com/documentcloud/cloud-crowd.git
+  revision: 56a81c22583d061d61494284ba52c8af118e9dc6
   branch: rails4
   specs:
     cloud-crowd (0.7.0)
@@ -17,13 +11,19 @@ GIT
       thin (>= 1.2.4)
 
 GIT
-  remote: git://github.com/nathanstitt/jammit.git
+  remote: git://github.com/documentcloud/jammit.git
   revision: a68e62ab3e6c2ed06029919bb059473d177777e6
   branch: rails4
   specs:
     jammit (0.6.6)
       cssmin (>= 1.0.3)
       jsmin (>= 1.0.1)
+
+GIT
+  remote: git://github.com/documentcloud/right_aws.git
+  revision: 57beab61fac4a621614b67f2014ec879bac25890
+  specs:
+    right_aws (2.0.1)
 
 GEM
   remote: https://rubygems.org/
