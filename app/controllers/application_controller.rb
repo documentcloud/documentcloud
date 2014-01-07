@@ -185,8 +185,4 @@ class ApplicationController < ActionController::Base
     response.content_type = 'text/plain' if params[:debug]
   end
 
-  def expire_page( model )
-    #NOOP until we decide what caching strategy is best
-  end
-
 end
