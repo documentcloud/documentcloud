@@ -3,6 +3,9 @@ class Document < ActiveRecord::Base
   include DC::Access
   include ActionView::Helpers::TextHelper
 
+  include DocumentConcerns::Annotatable
+  include DocumentConcerns::Canonical
+  include DocumentConcerns::Searchable
   # Accessors and constants:
 
   attr_accessor :mentions, :total_mentions, :annotation_count, :hits
@@ -14,13 +17,9 @@ class Document < ActiveRecord::Base
 
   CONCURRENT_UPLOAD_LIMIT = 10
 
-  DISPLAY_DATE_FORMAT     = "%b %d, %Y"
   DISPLAY_DATETIME_FORMAT = "%I:%M %p – %a %b %d, %Y"
 
-  DEFAULT_CANONICAL_OPTIONS = {
-    :sections => true, :annotations => true, :contributor => true
-  }
-
+ 
   DEFAULT_IMPORT_OPTIONS = {
     :access => nil, :text_only => false, :email_me => false, :force_ocr => false, :secure => false
   }
@@ -116,62 +115,11 @@ class Document < ActiveRecord::Base
     query.readonly(false)
   }
 
-  # The definition of the Solr search index. Via sunspot-rails.
-  searchable do
-
-    # Full Text...
-    text :title, :default_boost => 2.0
-    text :source
-    text :description
-    text :full_text do
-      self.combined_page_text
-    end
-
-    # Attributes...
-    string  :title
-    string  :source
-    string  :language
-    time    :created_at
-    boolean :published, :using => :published?
-    integer :id
-    integer :account_id
-    integer :organization_id
-    integer :access
-    integer :page_count
-    integer :hit_count
-    integer :public_note_count
-    integer :project_ids, :multiple => true do
-      self.project_memberships.map {|m| m.project_id }
-    end
-
-    # Entities...
-    # DC::ENTITY_KINDS.each do |entity|
-    #   text(entity) { self.entity_values(entity) }
-    #   string(entity, :multiple => true) { self.entity_values(entity) }
-    # end
-
-    # Data...
-    dynamic_string :data do
-      self.docdata ? self.docdata.data.symbolize_keys : {}
-    end
-
-  end
-
-  # Main document search method -- handles queries.
-  def self.search(query, options={})
-    query = DC::Search::Parser.new.parse(query) if query.is_a? String
-    query.run(options)
-  end
-
   # Upload a new document, starting the import process.
   def self.upload(params, account, organization)
     name     = params[:url] || params[:file].original_filename
     title    = params[:title] || File.basename(name, File.extname(name)).titleize
-    access   = params[:make_public] ? PUBLIC :
-               (params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE)
-    email_me = params[:email_me] ? params[:email_me].to_i : false
     file_ext = File.extname(name).downcase[1..-1]
-
     doc = self.create!(
       :organization_id    => organization.id,
       :account_id         => account.id,
@@ -185,6 +133,11 @@ class Document < ActiveRecord::Base
       :language           => params[:language] || account.language,
       :original_extension => file_ext
     )
+
+    access   = params[:make_public] ? PUBLIC :
+               (params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE)
+    email_me = params[:email_me] ? params[:email_me].to_i : false
+
     import_options = {
       :access => access,
       :email_me => email_me,
@@ -278,24 +231,10 @@ class Document < ActiveRecord::Base
     self.pages.order('page_number asc').pluck(:text).join('')
   end
 
-  # Determine the number of annotations on each page of this document.
-  def per_page_annotation_counts
-    self.annotations.group('page_number').count
-  end
-
   def ordered_sections
     sections.order('page_number asc')
   end
 
-  def ordered_annotations(account)
-    self.annotations.accessible(account).order('page_number asc, location asc nulls first')
-  end
-
-  def annotations_with_authors(account, annotations=nil)
-    annotations ||= ordered_annotations(account)
-    Annotation.populate_author_info(annotations, account)
-    annotations
-  end
 
   # Return an array of all of the document entity values for a given type,
   # for Solr indexing purposes.
@@ -303,13 +242,6 @@ class Document < ActiveRecord::Base
     self.entities.kind(kind.to_s).pluck('value')
   end
 
-  # Reset the cached counter of public notes on the document.
-  def reset_public_note_count
-    count = annotations.unrestricted.count
-    if count != self.public_note_count
-      update_attributes :public_note_count => count
-    end
-  end
 
   # Return a hash of all the document's entities (for an API response).
   # The hash is ordered by entity kind, after the sidebar, with individual
@@ -401,176 +333,6 @@ class Document < ActiveRecord::Base
     docdata.update_attributes :data => hash
   end
 
-  # Ex: docs/1011
-  def path
-    File.join('documents', id.to_s)
-  end
-
-  def original_file_path
-    File.join(path, slug + ".#{original_extension}")
-  end
-
-  # Ex: docs/1011/sec-madoff-investigation.txt
-  def full_text_path
-    File.join(path, slug + '.txt')
-  end
-
-  # Ex: docs/1011/sec-madoff-investigation.pdf
-  def pdf_path
-    File.join(path, slug + '.pdf')
-  end
-
-  # Ex: docs/1011/sec-madoff-investigation.rdf
-  def rdf_path
-    File.join(path, slug + '.rdf')
-  end
-
-  # Ex: docs/1011/pages
-  def pages_path
-    File.join(path, 'pages')
-  end
-
-  def annotations_path
-    File.join(path, 'annotations')
-  end
-
-  def canonical_id
-    "#{id}-#{slug}"
-  end
-
-  def canonical_path(format = :json)
-    "documents/#{canonical_id}.#{format}"
-  end
-
-  def canonical_cache_path
-    "/#{canonical_path(:js)}"
-  end
-
-  def project_ids
-    self.project_memberships.map {|m| m.project_id }
-  end
-
-  # Externally used image path, not to be confused with `page_image_path()`
-  def page_image_template
-    "#{slug}-p{page}-{size}.gif"
-  end
-
-  def page_text_template
-    "#{slug}-p{page}.txt"
-  end
-
-  def public_pdf_url
-    File.join(DC::Store::AssetStore.web_root, pdf_path)
-  end
-
-  def private_pdf_url
-    File.join(DC.server_root, pdf_path)
-  end
-
-  def pdf_url(direct=false)
-    return public_pdf_url  if public? || Rails.env.development?
-    return private_pdf_url unless direct
-    DC::Store::AssetStore.new.authorized_url(pdf_path)
-  end
-
-  def thumbnail_url( options={} )
-    page_image_url( 1, 'thumbnail', options )
-  end
-
-  def page_image_url(page, size, options={} )
-    path = page_image_path(page, size)
-    if public?
-      url = File.join( DC::Store::AssetStore.web_root, path )
-      url << "?#{updated_at.to_i}" if options[:cache_busting]
-      url
-    else
-      DC::Store::AssetStore.new.authorized_url path
-    end
-  end
-
-  def public_full_text_url
-    File.join(DC::Store::AssetStore.web_root, full_text_path)
-  end
-
-  def private_full_text_url
-    File.join(DC.server_root, full_text_path)
-  end
-
-  def full_text_url(direct=false)
-    return public_full_text_url if public? || Rails.env.development?
-    return private_full_text_url unless direct
-    DC::Store::AssetStore.new.authorized_url(full_text_path)
-  end
-
-  def document_viewer_url(opts={})
-    suffix = ''
-    suffix = "#document/p#{opts[:page]}" if opts[:page]
-    if ent = opts[:entity]
-      page  = self.pages.first(:conditions => {:page_number => opts[:page]})
-      occur = ent.split_occurrences.detect {|o| o.offset == opts[:offset].to_i }
-      suffix = "#entity/p#{page.page_number}/#{URI.escape(ent.value)}/#{occur.page_offset}:#{occur.length}"
-    end
-    if date = opts[:date]
-      occur = date.split_occurrences.first
-      suffix = "#entity/p#{occur.page.page_number}/#{URI.escape(date.date.to_s)}/#{occur.page_offset}:#{occur.length}" if occur.page
-    end
-    canonical_url(:html, opts[:allow_ssl]) + suffix
-  end
-
-  def canonical_url(format = :json, allow_ssl = false)
-    File.join(DC.server_root(:ssl => allow_ssl, :agnostic => format == :js), canonical_path(format))
-  end
-
-  def search_url
-    "#{DC.server_root}/documents/#{id}/search.json?q={query}"
-  end
-
-  def translations_url
-    "#{DC.server_root}/translations/{realm}/{language}"
-  end
-
-  def annotations_url
-    File.join(DC.server_root(:force_ssl => true, :agnostic => false ), annotations_path )
-  end
-
-  def print_annotations_url
-    "#{DC.server_root}/notes/print?docs[]=#{id}"
-  end
-
-  # Internally used image path, not to be confused with page_image_template()
-  def page_image_path(page_number, size)
-    File.join(pages_path, "#{slug}-p#{page_number}-#{size}.gif")
-  end
-
-  def page_text_path(page_number)
-    File.join(pages_path, "#{slug}-p#{page_number}.txt")
-  end
-
-  def public_page_image_template
-    File.join(DC::Store::AssetStore.web_root, File.join(pages_path, page_image_template))
-  end
-
-  def private_page_image_template
-    File.join(DC.server_root, File.join(pages_path, page_image_template))
-  end
-
-  def page_image_url_template(opts={})
-    tmpl = if opts[:local]
-             File.join(slug, page_image_template )
-           elsif self.public? || Rails.env.development?
-             public_page_image_template
-           else
-             private_page_image_template
-           end
-    tmpl << "?#{updated_at.to_i}" if opts[:cache_busting]
-    tmpl
-  end
-
-  def page_text_url_template(opts={})
-    return File.join(slug, page_text_template) if opts[:local]
-    File.join(DC.server_root, File.join(pages_path, page_text_template))
-  end
-
   def reviewers
     return [] unless reviewer_projects.empty?
     reviewer_projects.map{ |project| project.collaborators }.flatten.uniq
@@ -619,17 +381,6 @@ class Document < ActiveRecord::Base
     queue_import :images_only => true, :secure => !calais_id
   end
 
-  def reindex_all!(access=nil)
-    Page.refresh_page_map(self)
-    EntityDate.reset(self)
-    pages = self.reload.pages
-    Sunspot.index pages
-    Sunspot.commit
-    reprocess_entities if calais_id
-    upload_text_assets(pages, access)
-    self.access = access if access
-    self.save!
-  end
 
   def reprocess_entities
     RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
@@ -639,8 +390,9 @@ class Document < ActiveRecord::Base
   end
 
   # Keep a local ProcessingJob record of this active CloudCrowd Job.
+  # job_json can either be a String or a Hash, e.g. {job: '{\"action\":\"document_import\",\...}'}
   def record_job(job_json)
-    job = JSON.parse(job_json)
+    job = job_json.is_a?(Hash) ? job_json.symbolize_keys[:job] : JSON.parse(job_json)
     ProcessingJob.create!(
       :document_id    => id,
       :account_id     => account_id,
@@ -788,50 +540,7 @@ class Document < ActiveRecord::Base
     copy
   end
 
-  # TODO: Make the to_json an extended form of the canonical.
-  def as_json(opts={})
-    json = {
-      :id                  => id,
-      :organization_id     => organization_id,
-      :account_id          => account_id,
-      :created_at          => created_at.to_date.strftime(DISPLAY_DATE_FORMAT),
-      :access              => access,
-      :page_count          => page_count,
-      :annotation_count    => annotation_count || 0,
-      :public_note_count   => public_note_count,
-      :title               => title,
-      :slug                => slug,
-      :source              => source,
-      :description         => description,
-      :organization_name   => organization_name,
-      :organization_slug   => organization_slug,
-      :account_name        => account_name,
-      :account_slug        => account_slug,
-      :related_article     => related_article,
-      :pdf_url             => pdf_url,
-      :thumbnail_url       => thumbnail_url( { :cache_busting => opts[:cache_busting] } ),
-      :full_text_url       => full_text_url,
-      :page_image_url      => page_image_url_template( { :cache_busting => opts[:cache_busting] } ),
-      :document_viewer_url => document_viewer_url,
-      :document_viewer_js  => canonical_url(:js),
-      :reviewer_count      => reviewer_count,
-      :remote_url          => remote_url,
-      :detected_remote_url => detected_remote_url,
-      :publish_at          => publish_at.as_json,
-      :hits                => hits,
-      :mentions            => mentions,
-      :total_mentions      => total_mentions,
-      :project_ids         => project_ids,
-      :char_count          => char_count,
-      :data                => data,
-      :language            => language
-    }
-    if opts[:annotations]
-      json[:annotations_url] = annotations_url if commentable?(opts[:account])
-      json[:annotations] = self.annotations_with_authors(opts[:account])
-    end
-    json
-  end
+ 
 
   # The filtered attributes we're allowed to display in the admin UI.
   def admin_attributes
@@ -851,63 +560,37 @@ class Document < ActiveRecord::Base
     }
   end
 
-  def canonical(options={})
-    options = DEFAULT_CANONICAL_OPTIONS.merge(options)
-    doc = ActiveSupport::OrderedHash.new
-    doc['id']                 = canonical_id
-    doc['title']              = title
-    doc['access']             = ACCESS_NAMES[access] if options[:access]
-    doc['pages']              = page_count
-    doc['description']        = description
-    doc['source']             = source
-    doc['created_at']         = created_at.to_formatted_s(:rfc822)
-    doc['updated_at']         = updated_at.to_formatted_s(:rfc822)
-    doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
-    doc['language']           = language
-    if commentable?(options[:account])
-      doc['annotations_url']  = annotations_url
-    end
-    if options[:contributor]
-      doc['contributor']      = account_name
-      doc['contributor_organization'] = organization_name
-    end
-    doc['display_language']   = display_language
-    doc['resources']          = res = ActiveSupport::OrderedHash.new
-    res['pdf']                = pdf_url
-    res['text']               = full_text_url
-    res['thumbnail']          = thumbnail_url
-    res['search']             = search_url
-    res['print_annotations']  = print_annotations_url
-    res['translations_url']   = translations_url
-    res['page']               = {}
-    res['page']['image']      = page_image_url_template({ :local => options[:local], :cache_busting => options[:cache_busting] })
-    res['page']['text']       = page_text_url_template(:local => options[:local])
-    res['related_article']    = related_article if related_article
-    res['annotations_url']    = annotations_url if commentable?(options[:account])
-    if options[:allow_detected]
-      res['published_url']    = published_url if published_url
-    else
-      res['published_url']    = remote_url if remote_url
-    end
-    doc['sections']           = ordered_sections.map {|s| s.canonical } if options[:sections]
-    doc['data']               = data if options[:data]
-    doc['language']           = language
-    if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
-      doc['annotations']      = self.annotations_with_authors(options[:account]).map {|a| a.canonical}
-    elsif options[:annotations]
-      doc['annotations']      = ordered_annotations(options[:account]).map {|a| a.canonical}
-    end
-    if self.mentions
-      doc['mentions']         = self.mentions
-    end
-    doc
-  end
 
   # Updates file_size and file_hash
   # Will default to reading the data from the asset_store
   # or can be passed arbitrary data such as from a file on disk
   def update_file_metadata( data = asset_store.read_original(self) )
     update_attributes!( :file_size => data.bytesize, :file_hash => Digest::SHA1.hexdigest( data ) )
+  end
+
+  # TODO: Put this elsewhere
+  def self.format_title_slug(title)
+
+    # slugged = title.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n, '').to_s # As ASCII
+    # slugged.gsub!(/[']+/, '') # Remove all apostrophes.
+    # slugged.gsub!(/\W+/, ' ') # All non-word characters become spaces.
+    # slugged.squeeze!(' ')     # Squeeze out runs of spaces.
+    # slugged.strip!            # Strip surrounding whitespace
+    # slugged.downcase!         # Ensure lowercase.
+    # # Truncate to the nearest space.
+    # if slugged.length > 50
+    #   words = slugged[0...50].split(' ')
+    #   slugged = words[0, words.length - 1].join(' ')
+    # end
+    # slugged.gsub!(' ', '-')   # Dasherize spaces.
+
+    slugged = title.to_url # .to_url is part of StringEx(lite)
+    if slugged.length > 50
+      words = slugged[0...50].split('-')
+      slugged = words[0, words.length - 1].join('-')
+    end
+
+    return slugged
   end
 
   private
@@ -918,19 +601,8 @@ class Document < ActiveRecord::Base
   def ensure_titled
     self.title ||= DEFAULT_TITLE
     return true if self.slug
-    slugged = title.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n, '').to_s # As ASCII
-    slugged.gsub!(/[']+/, '') # Remove all apostrophes.
-    slugged.gsub!(/\W+/, ' ') # All non-word characters become spaces.
-    slugged.squeeze!(' ')     # Squeeze out runs of spaces.
-    slugged.strip!            # Strip surrounding whitespace
-    slugged.downcase!         # Ensure lowercase.
-    # Truncate to the nearest space.
-    if slugged.length > 50
-      words = slugged[0...50].split(' ')
-      slugged = words[0, words.length - 1].join(' ')
-    end
-    slugged.gsub!(' ', '-')   # Dasherize spaces.
-    self.slug = slugged
+
+    self.slug = Document.format_title_slug(title)
   end
 
   def background_update_asset_access(access_level)
