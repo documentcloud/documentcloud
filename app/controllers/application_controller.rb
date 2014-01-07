@@ -159,7 +159,7 @@ class ApplicationController < ActionController::Base
     begin
       yield
     rescue Exception => e
-      ignore = e.is_a?(ActionController::UnknownAction) || e.is_a?(ActionController::RoutingError)
+      ignore = e.is_a?(AbstractController::ActionNotFound) || e.is_a?(ActionController::RoutingError)
       LifecycleMailer.exception_notification(e, params).deliver unless ignore
       raise e
     end
