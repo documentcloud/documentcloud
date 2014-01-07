@@ -27,7 +27,8 @@ CREATE TABLE accounts (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     identities hstore,
-    language character varying(3)
+    language character varying(3),
+    document_language character varying(3)
 );
 
 
@@ -285,6 +286,25 @@ CREATE TABLE entities (
 
 
 --
+-- Name: entities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE entities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE entities_id_seq OWNED BY entities.id;
+
+
+--
 -- Name: entity_dates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -297,6 +317,25 @@ CREATE TABLE entity_dates (
     date date NOT NULL,
     occurrences text
 );
+
+
+--
+-- Name: entity_dates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE entity_dates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entity_dates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE entity_dates_id_seq OWNED BY entity_dates.id;
 
 
 --
@@ -336,38 +375,6 @@ ALTER SEQUENCE featured_reports_id_seq OWNED BY featured_reports.id;
 
 
 --
--- Name: projects; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE projects (
-    id integer NOT NULL,
-    account_id integer,
-    title character varying(255),
-    description text,
-    hidden boolean DEFAULT false NOT NULL
-);
-
-
---
--- Name: labels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE labels_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: labels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE labels_id_seq OWNED BY projects.id;
-
-
---
 -- Name: memberships; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -401,44 +408,6 @@ ALTER SEQUENCE memberships_id_seq OWNED BY memberships.id;
 
 
 --
--- Name: metadata_dates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE metadata_dates_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: metadata_dates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE metadata_dates_id_seq OWNED BY entity_dates.id;
-
-
---
--- Name: metadata_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE metadata_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: metadata_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE metadata_id_seq OWNED BY entities.id;
-
-
---
 -- Name: organizations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -449,7 +418,8 @@ CREATE TABLE organizations (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     demo boolean DEFAULT false NOT NULL,
-    language character varying(3)
+    language character varying(3),
+    document_language character varying(3)
 );
 
 
@@ -612,6 +582,38 @@ ALTER SEQUENCE project_memberships_id_seq OWNED BY project_memberships.id;
 
 
 --
+-- Name: projects; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE projects (
+    id integer NOT NULL,
+    account_id integer,
+    title character varying(255),
+    description text,
+    hidden boolean DEFAULT false NOT NULL
+);
+
+
+--
+-- Name: projects_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE projects_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: projects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE projects_id_seq OWNED BY projects.id;
+
+
+--
 -- Name: remote_urls; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -769,14 +771,14 @@ ALTER TABLE ONLY documents ALTER COLUMN id SET DEFAULT nextval('documents_id_seq
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY entities ALTER COLUMN id SET DEFAULT nextval('metadata_id_seq'::regclass);
+ALTER TABLE ONLY entities ALTER COLUMN id SET DEFAULT nextval('entities_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY entity_dates ALTER COLUMN id SET DEFAULT nextval('metadata_dates_id_seq'::regclass);
+ALTER TABLE ONLY entity_dates ALTER COLUMN id SET DEFAULT nextval('entity_dates_id_seq'::regclass);
 
 
 --
@@ -832,7 +834,7 @@ ALTER TABLE ONLY project_memberships ALTER COLUMN id SET DEFAULT nextval('projec
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY projects ALTER COLUMN id SET DEFAULT nextval('labels_id_seq'::regclass);
+ALTER TABLE ONLY projects ALTER COLUMN id SET DEFAULT nextval('projects_id_seq'::regclass);
 
 
 --
@@ -913,6 +915,22 @@ ALTER TABLE ONLY documents
 
 
 --
+-- Name: entities_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY entities
+    ADD CONSTRAINT entities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: entity_dates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY entity_dates
+    ADD CONSTRAINT entity_dates_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: featured_reports_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -921,35 +939,11 @@ ALTER TABLE ONLY featured_reports
 
 
 --
--- Name: labels_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY projects
-    ADD CONSTRAINT labels_pkey PRIMARY KEY (id);
-
-
---
 -- Name: memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY memberships
     ADD CONSTRAINT memberships_pkey PRIMARY KEY (id);
-
-
---
--- Name: metadata_dates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY entity_dates
-    ADD CONSTRAINT metadata_dates_pkey PRIMARY KEY (id);
-
-
---
--- Name: metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY entities
-    ADD CONSTRAINT metadata_pkey PRIMARY KEY (id);
 
 
 --
@@ -990,6 +984,14 @@ ALTER TABLE ONLY processing_jobs
 
 ALTER TABLE ONLY project_memberships
     ADD CONSTRAINT project_memberships_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: projects_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY projects
+    ADD CONSTRAINT projects_pkey PRIMARY KEY (id);
 
 
 --
@@ -1084,13 +1086,6 @@ CREATE INDEX index_documents_on_hit_count ON documents USING btree (hit_count);
 --
 
 CREATE INDEX index_documents_on_public_note_count ON documents USING btree (public_note_count);
-
-
---
--- Name: index_entities_on_value; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_entities_on_value ON entities USING btree (lower((value)::text));
 
 
 --
@@ -1221,13 +1216,7 @@ INSERT INTO schema_migrations (version) VALUES ('20100109025746');
 
 INSERT INTO schema_migrations (version) VALUES ('20100109035508');
 
-INSERT INTO schema_migrations (version) VALUES ('20100109041445');
-
 INSERT INTO schema_migrations (version) VALUES ('20100112143144');
-
-INSERT INTO schema_migrations (version) VALUES ('20100114170321');
-
-INSERT INTO schema_migrations (version) VALUES ('20100114170333');
 
 INSERT INTO schema_migrations (version) VALUES ('20100114170350');
 
@@ -1333,26 +1322,12 @@ INSERT INTO schema_migrations (version) VALUES ('20120131180323');
 
 INSERT INTO schema_migrations (version) VALUES ('20120927202457');
 
-INSERT INTO schema_migrations (version) VALUES ('20121018212739');
-
-INSERT INTO schema_migrations (version) VALUES ('20121023173002');
-
 INSERT INTO schema_migrations (version) VALUES ('20121108160450');
-
-INSERT INTO schema_migrations (version) VALUES ('20121210175746');
 
 INSERT INTO schema_migrations (version) VALUES ('20130107193641');
 
 INSERT INTO schema_migrations (version) VALUES ('20130108201748');
 
-INSERT INTO schema_migrations (version) VALUES ('20130109184545');
-
 INSERT INTO schema_migrations (version) VALUES ('20130109194211');
 
-INSERT INTO schema_migrations (version) VALUES ('20130218180815');
-
-INSERT INTO schema_migrations (version) VALUES ('20130226174540');
-
-INSERT INTO schema_migrations (version) VALUES ('20130306223853');
-
-INSERT INTO schema_migrations (version) VALUES ('20130327170939');
+INSERT INTO schema_migrations (version) VALUES ('20130716200416');

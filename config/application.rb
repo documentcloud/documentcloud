@@ -25,6 +25,9 @@ module DC
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    # Use SQL instead of Active Record's schema dumper when creating the test database.
+    config.active_record.schema_format = :sql
+
     # DocumentCloud-specific configuration.
     ::DC::SECRETS.merge!   YAML.load_file("#{Rails.root}/secrets/secrets.yml")[Rails.env]
     ::DC::CONFIG.merge! YAML.load( ERB.new(File.read( Rails.root.join('config','document_cloud.yml') ) ).result )[Rails.env]

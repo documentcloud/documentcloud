@@ -3,6 +3,8 @@ louis:
   first_name: Louis
   last_name: Mercier
   hashed_password: $2a$08$FR1MWbwlC7qqdVfmF/C/8uHRHzZDjV97pkVd6M5ixbigq/3nhcNtm
+  document_language: eng
+  language: eng
   # His password is 'password', by the way.
 
 reporter_joe:
@@ -10,9 +12,13 @@ reporter_joe:
   first_name: Joe
   last_name: Reporting
   hashed_password: $2a$08$FR1MWbwlC7qqdVfmF/C/8uHRHzZDjV97pkVd6M5ixbigq/3nhcNtm
+  document_language: spa
+  language: spa
 
 freelancer_bob:
   email: bob@aol.com
   first_name: Bob
   last_name: Freelance
   hashed_password: $2a$08$FR1MWbwlC7qqdVfmF/C/8uHRHzZDjV97pkVd6M5ixbigq/3nhcNtm
+  document_language: eng
+  language: eng
