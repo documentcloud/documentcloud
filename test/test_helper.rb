@@ -4,6 +4,9 @@ require 'rails/test_help'
 require 'sunspot_matchers/test_helper'
 require 'turn/autorun'
 
+ require "minitest/autorun"
+ require 'pry'
+
 PROCESSING_JOBS = []
 
 Turn.config do |c|

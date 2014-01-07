@@ -206,5 +206,24 @@ class DocumentTest < ActiveSupport::TestCase
     assert_job_action 'reprocess_entities'
   end
 
+  # TODO: I don't understand assert tests so this is just a start - Dan
+  # ensure_slugged calls the class method .format_title_slug
+  #  which uses StringEx#to_url https://github.com/rsl/stringex
+  def test_title_slug_is_cleaned_up_and_around_50_chars
+    assert_equal Document.format_title_slug("Héllo World!"), "hello-world"
+
+    # asserts that it is as close to 50 chars as possible, truncate to nearest whole word
+    # also notes StringEx's fanciness, converting & to 'and', which may not be desirable...
+    assert_equal( 
+        Document.format_title_slug("rock it both in Español style & kick it en Français plu ENGLISH!"), 
+        'rock-it-both-in-espanol-style-and-kick-it-en'
+    )
+  end
+
+  # note: StringEx fanciness will mess up legacy titles. Not sure what implications that has...
+  def test_format_title_slug_doesnt_screw_up_legacy_titles
+    # TODO
+  end
 
 end
+

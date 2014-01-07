@@ -32,6 +32,8 @@ gem 'nokogiri', '~> 1.6.0'
 gem 'right_aws', '2.0.1', :github=>'documentcloud/right_aws'        # Our patched version.
 
 
+gem 'stringex', require: 'stringex_lite'
+
 group :development, :test do
   gem 'guard-bundler'
   gem 'growl'
@@ -40,4 +42,7 @@ group :development, :test do
   gem 'minitest-spec-rails'
   gem 'guard-minitest'
   gem 'spring'
+
+  gem 'pry'
+  gem 'pry-rails'
 end
