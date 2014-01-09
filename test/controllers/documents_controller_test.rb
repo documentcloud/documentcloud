@@ -115,6 +115,7 @@ class DocumentsControllerTest < ActionController::TestCase
     login_account!
     get :entities, :ids=>[doc.id]
     assert_equal entities(:person).as_json, json_body['entities'].first
+
   end
 
   def test_entity
@@ -133,11 +134,14 @@ class DocumentsControllerTest < ActionController::TestCase
     assert_equal json.with_indifferent_access, json_body['date']
   end
 
-  def test_occurrence
+  def test_retrieving_occurrence
     login_account!
-    skip("Incorrect arguments to creating Occurrence.new  ")
-    # get :occurrence, :id=>entities(:person).id, :occurrence=>'Rogers'
-    # assert_response :success
+    get :occurrence, :id=>entities(:person).id, :occurrence=>'8:16'
+    assert_response :success
+    ex = json_body['excerpts']
+    assert_equal 1, ex.length
+    assert_equal "Call me <span class=\"occurrence\">Ishmael.</span>", ex.first['excerpt']
+    assert_equal 1, ex.first['page_number']
   end
 
   def test_mentions

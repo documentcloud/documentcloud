@@ -18,23 +18,24 @@ module DC
         document.pages.where( conds.join(' or ') )
       end
 
-      def excerpts( context=50, pages=self.pages, occurrences=split_occurrences)
+      def excerpts( context=50, pages=[], occurrences=split_occurrences)
+        pgs = self.pages( occurrences ) if pgs.blank?
         page_map = occurrences.inject({}) do |memo, occur|
-          page = pages.detect{|pg| pg.contains?(occur) }
+          page = pgs.detect{|pg| pg.contains?(occur) }
           memo[occur] = page if page
           memo
         end
 
         page_map.map do |occur, page|
-          utf     =  page.text
+          txt     =  page.text
           open    =  occur.offset - page.start_offset
           close   =  open + occur.length
           first   =  open - context
           last    =  close + context
-          last    =  last < utf.length ? context : utf.length - close
-          excerpt =  first < 0 ? utf[0, open].to_s : utf[first, context].to_s
-          excerpt += "<span class=\"occurrence\">#{ utf[open, occur.length].to_s }</span>"
-          excerpt += utf[close, last].to_s if close < utf.length
+          last    =  last < txt.length ? context : txt.length - close
+          excerpt =  first < 0 ? txt[0, open].to_s : txt[first, context].to_s
+          excerpt += "<span class=\"occurrence\">#{ txt[open, occur.length].to_s }</span>"
+          excerpt += txt[close, last].to_s if close < txt.length
           {:page_number => page.page_number, :excerpt => excerpt, :offset => occur.offset}
         end
       end
