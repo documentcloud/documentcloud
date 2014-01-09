@@ -122,10 +122,10 @@ module RestClient
       job = ActiveSupport::JSON.decode( json[:job] )
       job['id'] = rand(100).to_s
       PROCESSING_JOBS.push( job )
-      @url=url; @json={ :job => job.to_json }
+      @url=url; @job=job
     end
     def body
-      @json
+      @job.to_json
     end
   end
   def self.post( url, json )
