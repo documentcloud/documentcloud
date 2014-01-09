@@ -8,7 +8,8 @@ class Membership < ActiveRecord::Base
   belongs_to :organization
   belongs_to :account
 
-  scope :real, ->{ where( ["memberships.role in (?)", REAL_ROLES] ) }
+  scope :real,    ->{ where( ["memberships.role in (?)", REAL_ROLES] ) }
+  scope :default, ->{ where(:default=>true) }
 
   def real?
     REAL_ROLES.include?(role)
