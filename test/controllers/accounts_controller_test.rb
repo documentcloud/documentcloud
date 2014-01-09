@@ -14,7 +14,8 @@ class AccountsControllerTest < ActionController::TestCase
   end
 
   it "can enable accounts" do
-    account = Account.create( email:'test@test.com', first_name: 'Test', last_name: 'Tester' )
+    account = Account.create( email:'test@test.com', first_name: 'Test', last_name: 'Tester',
+                              :language=>'spa', :document_language=>"spa" )
     refute account.security_key
     account.create_security_key
     assert account.security_key && account.security_key.securable
@@ -31,9 +32,9 @@ class AccountsControllerTest < ActionController::TestCase
     assert assigns(:success)
   end
 
-  it "returns json accounts" do
+  it "returns accounts as json" do
     login_account!
-    resp = get :index
+    resp = get :index, :format=>:json
     assert_response :success
     accounts = ActiveSupport::JSON.decode(resp.body)
     assert accounts.detect{|acct| acct['id'] == louis.id }, 'Account is present'
@@ -69,7 +70,7 @@ class AccountsControllerTest < ActionController::TestCase
   it "can create accounts" do
     login_account!(:louis)
     assert_difference('Account.count',1) do
-      post :create, :first_name=>'John', :last_name=>'Snow', :email=>'jsnow@winterfell.org'
+      post :create, :first_name=>'John', :last_name=>'Snow', :email=>'jsnow@winterfell.org', :language=>'spa', :document_language=>"spa"
     end
   end
 

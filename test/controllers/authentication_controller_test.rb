@@ -43,6 +43,7 @@ class AuthenticationControllerTest < ActionController::TestCase
         'name'  => 'Testing Tester'
       }
     }
+    assert_empty Account.with_identity( 'twitter', '424' )
     assert_difference( 'Account.count' ) do
       get :callback
     end

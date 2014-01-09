@@ -82,9 +82,10 @@ class Account < ActiveRecord::Base
 
   #
   def self.from_identity( identity )
-    account = Account.with_identity( identity['provider'],  identity['uid'] ).first || Account.new()
+    account = Account.with_identity( identity['provider'],  identity['uid'] ).first ||
+              Account.new( :language=>'eng', :document_language=>'eng')
     account.record_identity_attributes( identity )
-    account.save if account.changed?
+    account.save! if account.changed?
     account
   end
 
@@ -374,7 +375,7 @@ class Account < ActiveRecord::Base
     end
     
     # all of the below should be rendered obsolete and removed.
-    if (membership = options[:membership] || memberships.first(:conditions=>{:default=>true}))
+    if ( membership = options[:membership] || memberships.default.first )
       attrs['organization_id'] = membership.organization_id
       attrs['role']            = membership.role
     end
