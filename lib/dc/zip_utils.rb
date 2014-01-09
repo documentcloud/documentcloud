@@ -9,7 +9,7 @@ module DC
     def package(zip_name)
       temp_dir = Dir.mktmpdir# do |temp_dir|
         zipfile = "#{temp_dir}/#{zip_name}"
-        Zip::ZipFile.open(zipfile, Zip::ZipFile::CREATE) do |zip|
+        Zip::File.open(zipfile, Zip::File::CREATE) do |zip|
           yield zip
         end
         # TODO: We can stream, or even better, use X-Accel-Redirect, if we can

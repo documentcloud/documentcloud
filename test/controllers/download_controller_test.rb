@@ -11,7 +11,7 @@ class DownloadControllerTest < ActionController::TestCase
       tf.write response.body
       tf.flush
       File.open( tf.path ) do | zip_file |
-        Zip::ZipFile.open( zip_file ) do | zf |
+        Zip::File.open( zip_file ) do | zf |
           yield zf
         end
       end
