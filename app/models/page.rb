@@ -48,8 +48,8 @@ class Page < ActiveRecord::Base
   # page's full text, relative to the combined full text of the entire document.
   def self.refresh_page_map(document)
     pos = -1
-    document.pages.pluck( :id, 'length(text)' ).each do | id, length |
-      Page.where( :id=>id ).update_all("start_offset = #{pos + 1}, end_offset = #{pos + length}")
+    document.pages.order(:page_number).pluck( :id, 'length(text)' ).each do | id, length |
+      Page.where( :id=>id ).update_all( :start_offset => pos + 1, :end_offset => pos + length )
       pos = pos + length.to_i
     end
     document.reset_char_count!
