@@ -28,6 +28,8 @@ module DC
     # Use SQL instead of Active Record's schema dumper when creating the test database.
     config.active_record.schema_format = :sql
 
+    config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public"
+
     # DocumentCloud-specific configuration.
     ::DC::SECRETS.merge!   YAML.load_file("#{Rails.root}/secrets/secrets.yml")[Rails.env]
     ::DC::CONFIG.merge! YAML.load( ERB.new(File.read( Rails.root.join('config','document_cloud.yml') ) ).result )[Rails.env]
