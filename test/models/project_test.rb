@@ -43,14 +43,9 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
   it "can add collaborators" do
-    assert subject.collaborations.empty?
-    assert subject.add_collaborator( louis )
-    assert subject.collaborations.where( :account_id=> louis ).exists?
-    joe = accounts(:reporter_joe)
-    joe.memberships.first.update_attributes :role => Membership::REVIEWER
-    assert joe.reviewer?
-    refute subject.add_collaborator( joe )
-    refute_empty joe.errors.full_messages_for(:base)
+    refute subject.collaborations.where( :account_id=> joe ).exists?
+    assert subject.add_collaborator( joe )
+    assert subject.collaborations.where( :account_id=> joe ).exists?
   end
 
   it "can remove collaborations" do
@@ -100,9 +95,9 @@ class ProjectTest < ActiveSupport::TestCase
 
   it "collects collaborator ids" do
     # Project#collaborator_ids used to be a method - removed in favor of Rails built-in xxx_ids
-    assert_empty subject.collaborator_ids
-    subject.add_collaborator( louis )
     assert_equal [louis.id], subject.collaborator_ids
+    subject.add_collaborator( joe )
+    assert_equal [louis.id, joe.id], subject.collaborator_ids
   end
 
   it "counts annotations" do

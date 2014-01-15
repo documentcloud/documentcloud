@@ -31,11 +31,11 @@ class RemoteUrlTest < ActiveSupport::TestCase
   end
 
   it "populates detected document ids" do
-    assert_nil doc.detected_remote_url
-    RemoteUrl.record_hits_on_document( doc.id, 'http://gogole.com/', 1 )
-    RemoteUrl.populate_detected_document_ids( [ doc.id ] )
-    doc.reload
-    assert_equal 'http://gogole.com/',doc.detected_remote_url
+    assert_nil secret_doc.detected_remote_url
+    RemoteUrl.record_hits_on_document( secret_doc.id, 'http://gogole.com/', 1 )
+    RemoteUrl.populate_detected_document_ids( [ secret_doc.id ] )
+    secret_doc.reload
+    assert_equal 'http://gogole.com/',secret_doc.detected_remote_url
   end
 
   it "calculates top_documents" do

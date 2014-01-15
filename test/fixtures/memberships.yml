@@ -1,3 +1,9 @@
+dcloud_admin:
+  role: <%= Account::ADMINISTRATOR %>
+  default: true
+  account: admin
+  organization_id: 1
+
 louis_tribune:
   role: <%= Account::ADMINISTRATOR %>
   default: true

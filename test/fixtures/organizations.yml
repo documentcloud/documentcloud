@@ -1,3 +1,11 @@
+dcloud:
+  id: 1
+  name: DocumentCloud
+  slug: dcloud
+  document_language: eng
+  language: eng
+
+
 tribune:
   name: The Daily Tribune
   slug: daily-tribune
