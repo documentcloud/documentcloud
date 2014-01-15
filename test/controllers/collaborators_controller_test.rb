@@ -14,9 +14,9 @@ class CollaboratorsControllerTest < ActionController::TestCase
   def test_create
     login_account!
     project = projects(:collab)
-    assert_empty project.collaborations
+    refute_empty project.collaborations
     post :create, :project_id=>project.id, :email=>accounts(:freelancer_bob).email
-    assert_equal 1, project.collaborations.count
+    assert_equal 2, project.collaborations.count
   end
 
   def test_destroy
@@ -25,8 +25,9 @@ class CollaboratorsControllerTest < ActionController::TestCase
     user = accounts(:freelancer_bob )
     assert project.add_collaborator( user )
     refute_empty project.collaborations
-    delete :destroy, :project_id=>project.id, :id=>user.id
-    assert_empty project.collaborations(true)
+    assert_difference ->{ project.collaborations.count }, -1 do
+      delete :destroy, :project_id=>project.id, :id=>user.id
+    end
   end
 
 end
