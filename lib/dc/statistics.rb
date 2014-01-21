@@ -1,3 +1,5 @@
+require 'dc/csv'
+
 module DC
 
   # A static module for running statistical counts an aggregations for
@@ -179,7 +181,7 @@ module DC
     end
 
     def self.top_documents_csv
-      documents = RemoteUrl.top_documents(365, :limit => 1000)
+      documents = RemoteUrl.top_documents(365, 1000)
       DC::CSV::generate_csv(documents)
     end
 

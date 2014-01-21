@@ -1,7 +1,7 @@
 require 'cgi'
 
 class RemoteUrl < ActiveRecord::Base
-
+ 
   self.establish_connection( DC::ANALYTICS_DB ) unless Rails.env.testing?
   belongs_to :document
   belongs_to :note, :class_name=>'Annotation'
@@ -76,7 +76,7 @@ class RemoteUrl < ActiveRecord::Base
   end
 
   def self.top_documents( days=7, limit=1000 )
-    hit_documents = self.top_query( days, limit=1000 ).by_document
+    hit_documents = self.top_query( days, limit ).by_document
     docs = Document.find( hit_documents.map(&:document_id) ).inject({}) do |memo, doc|
       memo[doc.id] = doc
       memo
@@ -85,7 +85,7 @@ class RemoteUrl < ActiveRecord::Base
       url_attrs = url.attributes
       url_attrs[:url] = docs[url.document_id].published_url
       url_attrs[:id] = "#{url.document_id}:#{url_attrs[:url]}"
-      first_hit = RemoteUrl.where( :document_id => url['document_id'] ).order('created_at ASC').pluck('created_at').first
+      first_hit = RemoteUrl.where( :document_id => url['document_id'] ).order('created_at ASC').first.created_at
       url_attrs[:first_recorded_date] = first_hit.strftime "%a %b %d, %Y"
       docs[url.document_id].admin_attributes.merge(url_attrs)
     end
@@ -95,7 +95,7 @@ class RemoteUrl < ActiveRecord::Base
     hit_searches = self.top_query( days, limit ).by_search_query
     hit_searches.map do |query|
       query_attrs = query.attributes
-      first_hit = RemoteUrl.where( :search_query => query.search_query ).order('created_at ASC').pluck('created_at').first
+      first_hit = RemoteUrl.where( :search_query => query.search_query ).order('created_at ASC').first.created_at
       query_attrs[:first_recorded_date] = first_hit.strftime "%a %b %d, %Y"
       query_attrs
     end
@@ -115,7 +115,7 @@ class RemoteUrl < ActiveRecord::Base
       note_attrs = note.attributes
       note_attrs.delete :id
       note_attrs[:document] = docs[notes[note.note_id][:document_id]]
-      first_hit = RemoteUrl.where( {:note_id => note.note_id} ).order('created_at ASC').pluck('created_at').first
+      first_hit = RemoteUrl.where( {:note_id => note.note_id} ).order('created_at ASC').first.created_at
       note_attrs[:first_recorded_date] = first_hit.strftime "%a %b %d, %Y"
       notes[note.note_id].merge(note_attrs)
     end

@@ -66,6 +66,14 @@ class ActionController::TestCase
 end
 
 
+class ActionMailer::TestCase
+  def read_fixture( action )
+    a = super( action + '.text.erb' )
+    template = ERB.new(a.join)
+    template.result(binding)
+  end
+end
+
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
   include DocumentCloudAssertions

@@ -15,7 +15,9 @@ guard :minitest, :all_on_start => true, :spring => 'rake test' do
   watch(%r{^app/models/(.+)\.rb})                        { |m| "test/models/#{m[1]}_test.rb" }
 
   watch(%r{^app/views/(.+)_mailer/.+})                   { |m| "test/mailers/#{m[1]}_mailer_test.rb" }
+  watch(%r{^app/mailers/(.+)\.rb})                       { |m| "test/mailers/#{m[1]}_test.rb" }
   watch(%r{^lib/(.+)\.rb})                               { |m| "test/lib/#{m[1]}_test.rb" }
+  
 
 end
 
