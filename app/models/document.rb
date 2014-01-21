@@ -759,6 +759,7 @@ class Document < ActiveRecord::Base
       :updated_at => Time.now
     })
     newattrs[:account_id] = account.id if account
+    newattrs[:organization_id] = account.organization.id if account and not newattrs[:organization_id]
     copy     = Document.create!(newattrs.merge({:hit_count  => 0, :detected_remote_url => nil}))
     newattrs = {:document_id => copy.id}
 
@@ -779,7 +780,7 @@ class Document < ActiveRecord::Base
     end
 
     # Clone the assets.
-    DC::Store::AssetStore.new.copy_assets(self, copy)
+    DC::Store::AssetStore.new.copy_assets(self, copy, self.access)
 
     # Reindex, set access.
     copy.index
