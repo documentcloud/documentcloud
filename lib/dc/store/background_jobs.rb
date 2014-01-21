@@ -16,6 +16,9 @@ module DC
         fire_job(:action => 'backup_database', :inputs => [true])
       end
 
+      def self.reindex_everything( ids = Document.ids )
+        fire_job(:action => 'reindex_everything', :inputs => ids)
+      end
 
       private
 
