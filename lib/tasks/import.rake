@@ -3,6 +3,50 @@
 
 namespace :import do
 
+
+  desc "Create/Modify an organization with accounts read from file. File should not have header row and contain Fname, Lname, email, and admin columns."
+  task :accounts, [:org_name, :org_slug, :csv, :lang] => :environment do | t,args |
+    args.with_defaults(:lang=>'eng')
+
+    Organization.transaction do
+      begin
+
+        organization = Organization.find_or_create_by_slug( args[:org_slug] )
+        organization.demo = true
+        organization.name = args[:org_name]
+        organization.language = organization.document_language = args[:lang]
+        organization.save!
+
+        puts "Account ID,First Name,Last Name,Email,Password"
+
+        CSV.foreach( args[:csv] ) do | fname, lname, email, is_admin |
+
+          account = Account.new({ :email             => email.strip,
+                                  :first_name        => fname.strip,
+                                  :last_name         => lname.strip,
+                                  :language          => args[:lang],
+                                  :document_language => args[:lang] })
+
+          pw = generate_password
+          account.password = pw
+          account.save!
+
+          organization.add_member( account, is_admin ? Account::ADMINISTRATOR : Account::CONTRIBUTOR )
+
+          puts [ account.id, account.first_name, account.last_name, account.email, pw ].join(",")
+        end
+
+      rescue Exception=>e
+        STDERR.puts e
+        raise ActiveRecord::Rollback
+      end
+
+    end
+
+  end
+
+
+
   desc "Import the NYTimes' Document Viewer database"
   task :nyt => :environment do
     require 'mysql2'
@@ -20,6 +64,11 @@ namespace :import do
     end
   end
 
+end
+
+def generate_password( len = 6 )
+  charset = %w{ 2 3 4 6 7 9 A C D E F G H J K M N P Q R T V W X Y Z a c d e g h j k m n p q r v w x y z }
+  (0...len).map{ charset.to_a[rand(charset.size)] }.join
 end
 
 
