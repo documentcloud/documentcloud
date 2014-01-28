@@ -30,9 +30,8 @@ class ProjectsControllerTest < ActionController::TestCase
   end
 
   def test_documents
-    skip("This fails - missing project#loaded_documents method")
     get :documents, :id=>projects(:collab)
-    assert_equal doc.as_json, json_body.first
+    assert_equal projects(:collab).document_ids, json_body.map{ |json| json['id'] }
   end
 
   def test_add_documents

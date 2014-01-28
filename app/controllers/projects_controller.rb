@@ -22,7 +22,7 @@ class ProjectsController < ApplicationController
   end
 
   def documents
-    json current_project.loaded_documents
+    json current_project.documents
   end
 
   def add_documents
