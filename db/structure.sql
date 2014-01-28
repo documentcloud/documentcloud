@@ -243,8 +243,7 @@ CREATE TABLE documents (
     file_size integer DEFAULT 0 NOT NULL,
     char_count integer DEFAULT 0 NOT NULL,
     original_extension character varying(255),
-    file_hash text,
-    is_processing boolean DEFAULT true NOT NULL
+    file_hash text
 );
 
 
