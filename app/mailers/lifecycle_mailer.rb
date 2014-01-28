@@ -34,11 +34,11 @@ class LifecycleMailer < ActionMailer::Base
   # Mail instructions for a document review, with a secure link to the
   # document viewer, where the user can annotate the document.
   def reviewer_instructions(documents, inviter_account, reviewer_account=nil, message=nil, key='')
-    # if documents.count == 1
-    #   subject   "Review \"#{documents[0].title}\" on DocumentCloud"
-    # else
-    #   subject   "Review #{documents.count} documents on DocumentCloud"
-    # end
+    subject =  if documents.count == 1
+                 "Review \"#{documents[0].title}\" on DocumentCloud"
+               else
+                 "Review #{documents.count} documents on DocumentCloud"
+               end
 
     @documents            = documents
     @key                  = key
@@ -49,7 +49,7 @@ class LifecycleMailer < ActionMailer::Base
     @message              = message
     options = {
       :cc => inviter_account.email,
-      :subject=>"Review #{pluralize(documents.count,'document')} on DocumentCloud"
+      :subject=> subject
     }
     options[:to] = reviewer_account.email if reviewer_account
     mail( options )
@@ -122,6 +122,9 @@ class LifecycleMailer < ActionMailer::Base
   def logging_email( email_subject, args )
     @args = args
     stack=caller(0)
+    # search through the stack for the call right before
+    # it hit the mailer's method_missing and include everything before
+    # it in the email.
     key_frame = stack.index{ |l| l=~/method_missing\'$/ } || 0
     @stack = stack[ key_frame+1..-1 ]
     mail({

@@ -21,6 +21,7 @@ class LifecycleMailerTest < ActionMailer::TestCase
                                                   joe, "Don't mess this up!", '1234' ).deliver
     assert_equal [ accounts(:admin).email ], email.cc
     assert_equal [ joe.email ], email.to
+    assert_equal 'Review "Secret Plans" on DocumentCloud', email.subject
     assert_equal read_fixture('reviewer_instructions'), email.body.to_s
   end
 
