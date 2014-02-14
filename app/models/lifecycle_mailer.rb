@@ -8,7 +8,7 @@ class LifecycleMailer < ActionMailer::Base
   # set their password, and log in.
   def login_instructions(account, admin=nil)
     choose_translated_template( account.language )
-    subject     "Welcome to DocumentCloud"
+    subject     DC.t(account, 'welcome_to_document_cloud')
     from        SUPPORT
     recipients  account.email
     cc          admin.email if admin
@@ -20,7 +20,7 @@ class LifecycleMailer < ActionMailer::Base
   
   def membership_notification(account, organization, admin=nil)
     choose_translated_template( account.language )
-    subject    "You have been added to #{organization.name}"
+    subject    DC.t( account, 'youve_been_added_to_x', organization.name )
     from       SUPPORT
     recipients account.email
     body       :admin   => admin,
@@ -32,11 +32,7 @@ class LifecycleMailer < ActionMailer::Base
   # document viewer, where the user can annotate the document.
   def reviewer_instructions(documents, inviter_account, reviewer_account=nil, message=nil, key='')
     choose_translated_template( inviter_account.language )
-    if documents.count == 1
-      subject   "Review \"#{documents[0].title}\" on DocumentCloud"
-    else
-      subject   "Review #{documents.count} documents on DocumentCloud"
-    end
+    subject     DC.t( inviter_account, 'review_x_documents', documents.count, documents[0].title )
     from        SUPPORT
     recipients  reviewer_account.email if reviewer_account
     cc          inviter_account.email
@@ -52,7 +48,7 @@ class LifecycleMailer < ActionMailer::Base
   # Mail instructions for resetting an active account's password.
   def reset_request(account)
     choose_translated_template( account.language )
-    subject     "DocumentCloud password reset"
+    subject     DC.t(account, 'password_reset')
     from        SUPPORT
     recipients  [account.email]
     body        :account            => account,
@@ -83,7 +79,7 @@ class LifecycleMailer < ActionMailer::Base
   # the account to let them know.
   def documents_finished_processing(account, document_count)
     choose_translated_template( account.language )
-    subject     "Your documents are ready"
+    subject     DC.t( account, 'documents_are_ready')
     from        SUPPORT
     recipients  account.email
     body        :account  => account,
