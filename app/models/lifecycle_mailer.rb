@@ -7,6 +7,7 @@ class LifecycleMailer < ActionMailer::Base
   # Mail instructions for a new account, with a secure link to activate,
   # set their password, and log in.
   def login_instructions(account, admin=nil)
+    choose_translated_template( account.language )
     subject     "Welcome to DocumentCloud"
     from        SUPPORT
     recipients  account.email
@@ -18,6 +19,7 @@ class LifecycleMailer < ActionMailer::Base
   end
   
   def membership_notification(account, organization, admin=nil)
+    choose_translated_template( account.language )
     subject    "You have been added to #{organization.name}"
     from       SUPPORT
     recipients account.email
@@ -29,6 +31,7 @@ class LifecycleMailer < ActionMailer::Base
   # Mail instructions for a document review, with a secure link to the
   # document viewer, where the user can annotate the document.
   def reviewer_instructions(documents, inviter_account, reviewer_account=nil, message=nil, key='')
+    choose_translated_template( inviter_account.language )
     if documents.count == 1
       subject   "Review \"#{documents[0].title}\" on DocumentCloud"
     else
@@ -48,6 +51,7 @@ class LifecycleMailer < ActionMailer::Base
 
   # Mail instructions for resetting an active account's password.
   def reset_request(account)
+    choose_translated_template( account.language )
     subject     "DocumentCloud password reset"
     from        SUPPORT
     recipients  [account.email]
@@ -78,6 +82,7 @@ class LifecycleMailer < ActionMailer::Base
   # When a batch of uploaded documents has finished processing, email
   # the account to let them know.
   def documents_finished_processing(account, document_count)
+    choose_translated_template( account.language )
     subject     "Your documents are ready"
     from        SUPPORT
     recipients  account.email
@@ -115,4 +120,26 @@ class LifecycleMailer < ActionMailer::Base
     body          :args => args,
                   :line => line
   end
+
+  private
+
+  # this will break if HTML format emails are ever used.
+  # If we do, this will have to check text.html.erb extension as well
+  def relative_view_path_for_language( view, language )
+    "lifecycle_mailer/#{language}/#{view}.text.plain.erb" 
+  end
+
+  def abs_view_path_for_language( view, language )
+    "#{RAILS_ROOT}/app/views/" + relative_view_path_for_language(view,language)
+  end
+
+  def choose_translated_template( language )
+    view = @template
+    if language != DC::Language::DEFAULT && File.exists?( abs_view_path_for_language( view, language ) )
+      @template = relative_view_path_for_language( view, language )
+    else
+      @template = relative_view_path_for_language( view, DC::Language::DEFAULT )
+    end
+  end
+
 end
