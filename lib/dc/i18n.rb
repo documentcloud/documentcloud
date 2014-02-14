@@ -41,7 +41,7 @@ module DC
   end
 
   def DC.t( account, key, *args )
-    DC::I18n.lookup( account, key, args )
+    DC::I18n.lookup( account, key, *args )
   end
 
 end
