@@ -933,8 +933,8 @@ class Document < ActiveRecord::Base
     slugged.downcase!         # Ensure lowercase.
     # Truncate to the nearest space.
     if slugged.length > 50
-      words = slugged[0...50].split(' ')
-      slugged = words[0, words.length - 1].join(' ')
+      words = slugged[0...50].split(/\s|_|-/)
+      slugged = words.length > 1 ? words[0, words.length - 1].join(' ') : words.first
     end
     slugged.gsub!(' ', '-')   # Dasherize spaces.
     self.slug = slugged
