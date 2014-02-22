@@ -43,10 +43,8 @@ namespace :translations do
     languages = {
       'eng' =>2,
       "spa" =>3,
-      "dan" =>4,
       "rus" =>5,
-      "ukr" =>6,
-      "chi" =>7
+      "ukr" =>6
     }
 
     sections = {
@@ -76,9 +74,9 @@ namespace :translations do
 
           key   = tab[row,1] unless tab[row,1].empty?
           value = tab[row,col]
-
+          STDERR.puts "#{key} has no value set!" if value.empty? && ! translations[key]
           next if value.empty?
-
+          STDERR.puts "#{key} has spaces in it!" if key =~/\s/
           # if there is multiple values for a key, it needs
           # to be stored as an Array
           if translations[ key ]
@@ -94,13 +92,18 @@ namespace :translations do
           end
         end
       end
-
+      ActiveSupport::OrderedHash.new
       File.open("config/locales/#{language}.yml", 'w') do | i18n_file |
         common = language_data['common']
-        combined = {}
-        language_data.each do | section_name, section_data |
+        combined = ActiveSupport::OrderedHash.new
+        language_data.sort.each do | section_name, section_data |
           next if section_name == 'common'
-          combined[section_name] = section_data.merge( common )
+          sorted = ActiveSupport::OrderedHash.new
+          translation = section_data.merge( common )
+          translation.keys.sort.each do | key |
+            sorted[key] = translation[key]
+          end
+          combined[section_name]=sorted
         end
         i18n_file.write( combined.to_yaml )
       end
