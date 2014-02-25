@@ -531,6 +531,7 @@
     - workspace: Workspace
     - x_collaborators: *id004
     - x_documents: *id005
+    - x_has_documents: "%s Documents"
     - x_invited_to_review_x: "%s has invited you to review %s"
     - x_is_no_longer_a_reviewer_on_x: 
       - "%2$s is no longer a reviewer on the Document"

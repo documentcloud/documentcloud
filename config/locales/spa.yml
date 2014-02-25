@@ -531,6 +531,7 @@
     - workspace: "\xC3\x81rea de trabajo"
     - x_collaborators: *id004
     - x_documents: *id005
+    - x_has_documents: "%s Documentos"
     - x_invited_to_review_x: "%s te ha invitado a revisar %s"
     - x_is_no_longer_a_reviewer_on_x: 
       - "%2$s ya no es un cr\xC3\xADtico en el documento"

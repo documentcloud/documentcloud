@@ -1069,7 +1069,7 @@
         vdC40Lw=
 
     - manage: !binary |
-        0J3QsNC70LDRiNGC0YPQstCw0L3QvdGP
+        0J3QsNC70LDRiNGC0YPQstCw0YLQuA==
 
     - manage_account: !binary |
         0KPQv9GA0LDQstC70ZbQvdC90Y8g0LXQutCw0YPQvdGC0L7QvCA=
@@ -1267,7 +1267,7 @@
 
     - organization: 
       - !binary |
-        0L7RgNCz0LDQvdGW0LfQsNGG0ZbRlw==
+        0J7RgNCz0LDQvdGW0LfQsNGG0ZbRjg==
 
       - !binary |
         0J7RgNCz0LDQvdGW0LfQsNGG0ZbRjw==
@@ -1998,6 +1998,9 @@
 
     - x_collaborators: *id004
     - x_documents: *id005
+    - x_has_documents: !binary |
+        0JTQvtC60YPQvNC10L3RgtC4ICVz
+
     - x_invited_to_review_x: !binary |
         JXMg0LfQsNC/0YDQvtGB0LjQsiDQstCw0YEg0YDQtdGG0LXQvdC30YPQstCw
         0YLQuCAlcw==

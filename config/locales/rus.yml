@@ -1084,7 +1084,7 @@
         vdGL0Lw=
 
     - manage: !binary |
-        0J3QsNGB0YLRgNC+0LnQutC4
+        0J3QsNGB0YLRgNC+0LjRgtGM
 
     - manage_account: !binary |
         0KPQv9GA0LDQstC70LXQvdC40LUg0LDQutC60LDRg9C90YLQvtC8
@@ -1281,7 +1281,7 @@
 
     - organization: 
       - !binary |
-        0L7RgNCz0LDQvdC40LfQsNGG0LjQuA==
+        0J7RgNCz0LDQvdC40LfQsNGG0LjRjg==
 
       - !binary |
         0J7RgNCz0LDQvdC40LfQsNGG0LjQuA==
@@ -2014,6 +2014,9 @@
 
     - x_collaborators: *id004
     - x_documents: *id005
+    - x_has_documents: !binary |
+        0JTQvtC60YPQvNC10L3RgtGLICVz
+
     - x_invited_to_review_x: !binary |
         JXMg0L/RgNC40LPQu9Cw0YHQuNC7INCy0LDRgSDRgNC10YbQtdC90LfQuNGA
         0L7QstCw0YLRjCAlcw==
