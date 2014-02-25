@@ -301,6 +301,9 @@
     - new_project: New Project
     - next: Next
     - no_appear_until_publish: will not appear until published.
+    - no_dates_for_timeline: 
+      - We were unable to recognize any dates for %2$s.
+      - None of the %d documents contained recognizable dates.
     - no_duplicate_section: Can't create a duplicate section.
     - no_embed_permission: You don't have permission to embed that document.
     - no_entities_found: No entities were found that match your search.
@@ -365,7 +368,7 @@
     - private_access_help: Only people with explicit permission (via collaboration) have access.
     - private_documents_visible_instructions: 
       - This document is private. You must make it public before it will be visible on your website or in searches of DocumentCloud's catalog. You can choose to make it public at a future date or you can %2$schange it now%3$s.
-      - These documents are private.  You must make them public before they will be visible \ on your website or in searches of DocumentCloud's catalog. You can choose to make  \ them public at a future date or you can %2$schange them now%3$s.
+      - These documents are private.  You must make them public before they will be visible on your website or in searches of DocumentCloud's catalog. You can choose to make them public at a future date or you can %2$schange them now%3$s.
     - private_note: Private note
     - private_note_visible: This private note is only visible to you.
     - private_to: Private to %s
