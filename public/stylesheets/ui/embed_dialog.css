@@ -71,9 +71,7 @@
   }
   .document_embed_dialog .dimensions {
     font-size: 11px;
-    position: absolute;
-    left: 245px;
-    top: 1px;
+    display: inline-block;
   }
     .document_embed_dialog .dimensions label {
       font-weight: normal;
