@@ -47,8 +47,7 @@
   .document_embed_dialog .publish_step_2 .publish_section {
     margin-bottom: 14px;
   }
-  .document_embed_dialog .text_input,
-  .document_embed_dialog select {
+  .document_embed_dialog .text_input {
     position: absolute;
     left: 155px;
   }
