@@ -43,6 +43,8 @@ namespace :translations do
     languages = {
       'eng' =>2,
       "spa" =>3,
+#      "dan" =>4,
+#      "chi" =>7,
       "rus" =>5,
       "ukr" =>6
     }

@@ -13,16 +13,14 @@ module DC
       'fra' => 'French',
       'deu' => 'German',
       'dan'=> 'Danish',
-      'chi'=> 'Chinese (Traditional)',
       'rus'=> 'Russian',
-      'chi'=> 'Chinese',
       'ukr'=> 'Ukrainian'
-
     }
+
     SUPPORTED = NAMES.keys
     DEFAULT = 'eng'
     
-    USER = ['spa','eng','chi','rus','dan','chi','ukr']
+    USER = ['spa','eng','rus','ukr']
   end
 
 end

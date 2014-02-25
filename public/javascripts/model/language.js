@@ -7,11 +7,10 @@ dc.language = {
     'fra': 'Français/French',
     'deu': 'Duetch/German',
     'dan': 'Danish',
-    'chi': 'Chinese (Traditional)',
     'rus': 'Russian',
     'ukr': 'Ukrainian'
   },
-  USER: ['eng','spa','rus','dan','chi','ukr']
+  USER: ['eng','spa','rus','ukr']
 };
 
 dc.language.SUPPORTED = _.keys(dc.language.NAMES);
