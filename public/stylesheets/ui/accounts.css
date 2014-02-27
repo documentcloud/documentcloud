@@ -182,7 +182,7 @@ body.accounts_panel_tab #organization_list {
       border-bottom: 1px solid #222;
     }
       .collaborator_list .account_view.disabled_role td {
-        color: #777;
+        color: #BBB;
       }
       .account_list .first,
       .collaborator_list .first {
