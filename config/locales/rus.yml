@@ -184,13 +184,13 @@
 
     - x_documents: &id005 
         - !binary |
-          JWQg0JTQvtC60YPQvNC10L3Rgg==
+          JWQg0LTQvtC60YPQvNC10L3Rgg==
 
         - !binary |
-          JWQg0JTQvtC60YPQvNC10L3RgtCw
+          JWQg0LTQvtC60YPQvNC10L3RgtCw
 
         - !binary |
-          JWQg0JTQvtC60YPQvNC10L3RgtC+0LI=
+          JWQg0LTQvtC60YPQvNC10L3RgtC+0LI=
 
     - x_notes: &id006 
         - !binary |
@@ -383,19 +383,19 @@
         0J7RiNC40LHQutCwINC+0LHRgNCw0LHQvtGC0LrQuA==
 
     - by_date: !binary |
-        0LTQsNGC0LU=
+        0L/QviDQtNCw0YLQtQ==
 
     - by_length: !binary |
-        0LTQu9C40L3QtQ==
+        0L/QviDQtNC70LjQvdC1
 
     - by_relevance: !binary |
-        0YDQtdC70LXQstCw0L3RgtC90L7RgdGC0Lg=
+        0L/QviDRgNC10LvQtdCy0LDQvdGC0L3QvtGB0YLQuA==
 
     - by_source: !binary |
-        0LjRgdGC0L7Rh9C90LjQutGD
+        0L/QviDQuNGB0YLQvtGH0L3QuNC60YM=
 
     - by_title: !binary |
-        0L3QsNC30LLQsNC90LjRjg==
+        0L/QviDQvdCw0LfQstCw0L3QuNGO
 
     - calais_credit: !binary |
         0J7QsdGK0LXQutGC0Ysg0L7Qv9GA0LXQtNC10LvQtdC90Ysg0YEg0L/QvtC8
@@ -410,7 +410,8 @@
 
     - change_page_arrows: !binary |
         0J/QtdGA0LXQu9C40YHRgtGL0LLQsNGC0Ywg0YHRgtGA0LDQvdC40YbRiyDQ
-        vNC+0LbQvdC+INGB0YLRgNC10LvQutCw0LzQuCDRgdC/0YDQsNCy0LA=
+        vNC+0LbQvdC+INGB0YLRgNC10LvQutCw0LzQuCDQsiDQv9Cw0L3QtdC70Lgg
+        0YHQv9GA0LDQstCw
 
     - change_password: !binary |
         0JjQt9C80LXQvdC40YLRjCDQv9Cw0YDQvtC70Yw=
@@ -1042,8 +1043,8 @@
         gdGC0YDQsNC90LjRhtGLIg==
 
     - insert_replace_pages: !binary |
-        0JLRgtCw0LLQuNGC0Ywv0JfQsNC80LXQvdC40YLRjCDRgdGC0YDQsNC90LjR
-        htGL
+        0JLRgdGC0LDQstC40YLRjC/Ql9Cw0LzQtdC90LjRgtGMINGB0YLRgNCw0L3Q
+        uNGG0Ys=
 
     - introduction: !binary |
         0JLQstC10LTQtdC90LjQtQ==
@@ -1075,9 +1076,18 @@
         0KHQtNC10LvQsNGC0Ywg0LTQvtC60YPQvNC10L3RgiDQv9GD0LHQu9C40YfQ
         vdC+INC00L7RgdGC0YPQv9C90YvQvA==
 
-    - make_documents_public: !binary |
-        0KHQtNC10LvQsNGC0YwgJXPQtNC+0LrRg9C80LXQvdGC0YslcyDQv9GD0LHQ
-        u9C40YfQvdGL0LzQuA==
+    - make_documents_public: 
+      - !binary |
+        0KHQtNC10LvQsNGC0Ywg0LTQvtC60YPQvNC10L3RgiDQv9GD0LHQu9C40YfQ
+        vdGL0Lwu
+
+      - !binary |
+        0KHQtNC10LvQsNGC0YwgJWQg0LTQvtC60YPQvNC10L3RgtCwINC/0YPQsdC7
+        0LjRh9C90YvQvNC4Lg==
+
+      - !binary |
+        0KHQtNC10LvQsNGC0YwgJWQg0LTQvtC60YPQvNC10L3RgtC+0LIg0L/Rg9Cx
+        0LvQuNGH0L3Ri9C80Lgu
 
     - make_public_on: !binary |
         0KHQtNC10LvQsNGC0Ywg0L/Rg9Cx0LvQuNGH0L3QviDQtNC+0YHRgtGD0L/Q
@@ -1147,7 +1157,7 @@
         0J3QvtCy0YvQuSDQsNC60LrQsNGD0L3Rgg==
 
     - new_documents: !binary |
-        0JTQvtCx0LDQstC40YLRjCDQtNC+0LrRg9C80LXQvdGC0Ys=
+        0J3QvtCy0YvQtSDQtNC+0LrRg9C80LXQvdGC0Ys=
 
     - new_project: !binary |
         0JTQvtCx0LDQstC40YLRjCDQv9GA0L7QtdC60YI=
@@ -1159,10 +1169,14 @@
         0L3QtSDQsdGD0LTRg9GCINC00L7RgdGC0YPQv9C90Ysg0LTQviDQv9GD0LHQ
         u9C40LrQsNGG0LjQuC4=
 
-    - no_dates_for_timeline: !binary |
+    - no_dates_for_timeline: 
+      - !binary |
         0JIgJTIkcyDQvdC1INC90LDQudC00LXQvdC+INC00LDRgiwg0LrQvtGC0L7R
         gNGL0Lkg0LzQvtC20L3QviDQsdGL0LvQviDQsdGLINC/0YDQvtCw0L3QsNC7
         0LjQt9C40YDQvtCy0LDRgtGMLg==
+
+      - !binary |
+        0KPQtNCw0LvQtdC90LjQtS4uLg==
 
     - no_duplicate_section: !binary |
         0KHQtdC60YbQuNGOLdC00YPQsdC70LjQutCw0YIg0YHQvtC30LTQsNGC0Ywg
@@ -1498,7 +1512,7 @@
         0LrRgNCw0YHQvdGL0Lk=
 
     - redact_document: !binary |
-        0KHQutGA0YvRgtGMINGH0LDRgdGC0Lgg0YLQtdC60YHRgtCw
+        0KHQutGA0YvRgtGMINGH0LDRgdGC0Ywg0YLQtdC60YHRgtCw
 
     - redact_instructions: !binary |
         0JrRg9GA0YHQvtGA0L7QvCDQvNGL0YjQuCDQvdCw0YDQuNGB0YPQudGC0LUg
@@ -1876,7 +1890,7 @@
         0KPQv9C+0YDRj9C00L7Rh9C40YLRjCDQv9C+INC90LDQt9Cy0LDQvdC40Y4=
 
     - sort_documents_by: !binary |
-        0KPQv9C+0YDRj9C00L7Rh9C40YLRjCDQv9C+
+        0KPQv9C+0YDRj9C00L7Rh9C40YLRjA==
 
     - source: !binary |
         0JjRgdGC0L7Rh9C90LjQug==
@@ -2015,7 +2029,7 @@
         0KjQuNGA0LjQvdCw
 
     - workspace: !binary |
-        0KDQsNCx0L7Rh9C10LUg0L/RgNC+0YHRgtGA0LDQvdGB0YLQstC+
+        0JjQvdGC0LXRgNGE0LXQudGB
 
     - x_collaborators: *id004
     - x_documents: *id005

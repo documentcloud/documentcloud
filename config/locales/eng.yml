@@ -145,6 +145,7 @@
     - delete_documents: 
       - Delete Document
       - Delete Documents
+    - deleting_documents: Deleting Documents ...
     - demo_embed_error: Demo accounts are not allowed to embed documents. %sContact us%s if you need a full featured account. View an example of the embed code %shere%s.
     - demo_no_viewer: Demo accounts are not allowed to download viewers. %s if you need a full featured account.
     - description: Description
@@ -277,7 +278,9 @@
     - link_to_pdf_help: Uncheck this box to remove the PDF link from the document viewer.
     - log_out: Log Out
     - make_document_public: Make document public
-    - make_documents_public: Make %sdocuments%s public.
+    - make_documents_public: 
+      - Make document public.
+      - Make %d documents public
     - make_public_on: Make public on
     - manage: Manage
     - manage_account: Manage Account
