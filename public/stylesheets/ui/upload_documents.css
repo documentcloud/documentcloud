@@ -75,7 +75,9 @@
     font-size: 12px;
     margin: 2px 6px;
   }
-
+  #upload_dialog .minibutton {
+    width: auto;
+  }
     #upload_dialog .progress_bar {
       position: absolute;
       top: 1px; left: 1px; bottom: 1px;

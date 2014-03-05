@@ -1,0 +1,10 @@
+window.I18n.load({
+  namespace: '<%= js_namespace %>',
+  code: 'dan',
+  nplurals: 2,
+  pluralizer: function(n){
+    return (n != 1);
+  },
+  strings: <%= translation_strings.to_json %>
+
+});

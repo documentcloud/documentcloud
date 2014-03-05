@@ -33,10 +33,26 @@ class AjaxHelpController < ApplicationController
 
   private
 
+  HELP_DIRECTORY = "#{Rails.root}/app/views/help"
+
+  def help_for_language( language, resource )
+    "#{HELP_DIRECTORY}/#{language}/#{resource}.markdown"
+  end
+
+  def links_for_language( language, resource )
+    "#{HELP_DIRECTORY}/#{language}/#{resource}_ajax_links.markdown"
+  end
+
   def markdown(resource)
-    contents = File.read("#{Rails.root}/app/views/help/#{resource}.markdown")
-    links_filename = "#{Rails.root}/app/views/help/links/#{resource}_ajax_links.markdown"
-    links = File.exists?(links_filename) ? File.read(links_filename) : ""
+    language = logged_in? ? current_account.language : DC::Language::DEFAULT
+    if ! File.exists?( help_for_language( language, resource ) ) && language != DC::Language::DEFAULT
+      language = DC::Language::DEFAULT
+    end
+    render not_found and return unless File.exists?( help_for_language( language, resource ) )
+
+    contents = File.read( help_for_language( language, resource ) )
+    links = File.exists?( links_for_language( language, resource ) ) ?
+      File.read( links_for_language( language, resource ) ) : ""
     render :text => RDiscount.new(contents+links).to_html, :type => :html
   end
 

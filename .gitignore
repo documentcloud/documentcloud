@@ -15,7 +15,8 @@ raw
 public/docs
 public/asset_store
 public/document-viewer/images/*.psd
-solr/collection1/data
+solr/data
+solr/collection1
 *.swp
 *~
 .#*

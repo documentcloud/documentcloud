@@ -1,0 +1,16 @@
+<%= @inviter_account.full_name %> de <%= @organization_name %> lo ha invitado a revisar <% if @documents.count > 1 %><%= @documents.count %> documents.<% else %>"<%= @documents[0] && @documents[0].title %>."<% end %> Use el  siguiente enlace <% if @documents.count != 1 %>s<% end %> para ver el documento<% if @documents.count != 1 %>s<% end %>.
+<%- @documents.each do |d| -%>
+<%- if @documents.count > 1 -%><%= d.title %><%- end %>
+<%= DC.server_root(:ssl => true) %>/documents/<%= d.id %>-<%= d.slug %>.html<%= @key %>
+
+<%- end -%>
+<%- if @message && @message.length >= 1 -%>
+<%= @inviter_account.first_name %> siempre y cuando las siguientes instrucciones:
+<%= @message %>
+<%- end -%>
+Por favor no comparta este enlace, ya que ha sido creado específicamente para usted. Si tiene colegas con los que le gustaría compartir el documento, puede comunicarse con <%=@inviter_account.full_name %> en <%= @inviter_account.email %>.
+
+<%= @organization_name %> está utilizando DocumentCloud para compartir y anadir notas a documentos de fuentes. Usted puede aprender más visitando http://www.documentcloud.org.
+
+Jeremy, Lauren y Ted
+DocumentCloud

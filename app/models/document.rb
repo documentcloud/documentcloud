@@ -912,6 +912,7 @@ class Document < ActiveRecord::Base
   end
 
   private
+  
   def ensure_language_is_valid
     self.language = DC::Language::DEFAULT unless DC::Language::SUPPORTED.include?(language)
   end
@@ -919,7 +920,7 @@ class Document < ActiveRecord::Base
   def ensure_titled
     self.title ||= DEFAULT_TITLE
     return true if self.slug
-    slugged = title.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n, '').to_s # As ASCII
+    slugged = self.title.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n, '').to_s # As ASCII
     slugged.gsub!(/[']+/, '') # Remove all apostrophes.
     slugged.gsub!(/\W+/, ' ') # All non-word characters become spaces.
     slugged.squeeze!(' ')     # Squeeze out runs of spaces.
@@ -927,11 +928,12 @@ class Document < ActiveRecord::Base
     slugged.downcase!         # Ensure lowercase.
     # Truncate to the nearest space.
     if slugged.length > 50
-      words = slugged[0...50].split(' ')
-      slugged = words[0, words.length - 1].join(' ')
+      words = slugged[0...50].split(/\s|_|-/)
+      slugged = words.length > 1 ? words[0, words.length - 1].join(' ') : words.first
     end
     slugged.gsub!(' ', '-')   # Dasherize spaces.
-    self.slug = slugged
+    self.slug = slugged.empty? ? "untitled" : slugged
+    true
   end
 
   def background_update_asset_access(access_level)

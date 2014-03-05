@@ -46,7 +46,7 @@
         }
 
         if (/[^s]/.test(match[8]) && (get_type(arg) != 'number')) {
-          log(sprintf('[sprintf] expecting number but found %s', get_type(arg)));
+          log('[sprintf] expecting number but was non-numeric');
         }
         switch (match[8]) {
         case 'b': arg = arg.toString(2); break;

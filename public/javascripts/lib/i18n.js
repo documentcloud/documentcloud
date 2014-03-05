@@ -115,6 +115,7 @@
     }
     this.codes[ type ] = code;
     this[ type ] = this.packForCode( code );
+    return this[ type ];
   };
 
   // reconfigure the language and fallback in use
@@ -128,8 +129,12 @@
       this.packs = ALL_PACKS[options.namespace];
     }
 
-    if ( options.language )
-      this._set( 'language', options.language );
+    if ( options.language ){
+      var pack = this._set( 'language', options.language );
+      if ( pack && _.isFunction( pack['initialize'] ) ) {
+        pack.initialize();
+      }
+    }
     if ( options.fallback )
       this._set( 'fallback', options.fallback );
   };

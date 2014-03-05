@@ -1,819 +1,648 @@
-
-# Strings that are in this section are shared between the viewer and workspace
-common: &common
-
-  draft: Borrador
-  # The label that's applied to a note when it's a draft.  Is displayed in red with a red border, and is transformed to uppercase.
-
-  print_notes: Imprimir Notas
-
-  annotated_by: 'Anotado por: %s'
-  # displayed in light grey text at the bottom of notes
-  
-  pg: p.
-  # Is scattered thourout the interface as a shortcut for page.
-  # this could also be pág. 
-
-  finish: Acabados
-  next: Próximo
-  # Is used in a button on multiple dialogs.  For example in the workspace, click a document and click the Publish menu, then select Embed Document Viewer
-
-  save: Guardar
-  # Used as button on multiple dialogs.  The 'Edit Document Information' dialog, accessed by right-clicking on a document in the workspace is an example.
-
-  save_as_draft: Guardar como borrador
-  publish: Publicar
-  # These appears on the Annotation dialog.  To view, create a new public annotation using the interface and it will appear as one of the dialog's buttons.
-
-  contributed_by: Contribuido por
-  reviewer: Revisor
-  # this can change depending on the country. Some consider this role "critic" others reviewer somewhat like a critic, as in the case of Reseñante, which means reviewer but like a critic. 
-  # Document's description in organizer, makes up the text that appears under the document title
-
-  search: Buscar
-  # The placeholder text in the search input box.
-
-  
-  description: Descripción
-  # Used as placeholder text in the Document information
-  # dialog
-
-  delete: Borrar
-  # The "Delete" button on the notes editing dialog.
-
-  of: de
-  # The Forward and Back Page controls in the viewer.  When a search is performed, and more than 3 results are returned it displays: X 'of' X pages.
-
-  cancel: Cancelar
-  # Cancel button on all dialogs
-
-  private_note_visible: This private note is only visible to you.
-  # private_note_visible: Esta nota privada sólo la puedes ver tú.
-  draft_note_visible:   Esta nota en borrador sólo la pueden ver tú y tus colaboradores.
-  # These appear on the bottom of each annotation to explain to whom the note is visible.
-
-  log_out: Terminar la sesión	
-  # Appears as a link at the top right of the organizer
-  
-
-  edit_data: Editar datos
-  # This is the mouse-over text for the pencil icon that appears beside the document's data 
-  # under the title in the organizer
-
-  private_note: Nota privada
-  # The mouseover text on private notes.  To view hover your mouse over the padlock icon on a private note
-
-  page:
-  - Página
-  - Páginas
-  x_pages:
-  - 'Una Página'
-  - '%d Páginas'
-  # Appears on the viewer's forward & back page controls. Is also part of the Entity listing subject line and may be viewed by Right-clicking on a document and select 'View Entitities'.
-  # should this be translated as "first page" or "page 1"?
-
-  document: 
-  - Documento
-  - Documentos
-  x_documents:
-  - '%d Documento'
-  - '%d Documentos'
-  organizations_documents: Documentos de %s
-  # Used all over, an example is the project listing, document data dialog, and most of the dialogs for the data elements in the viewer.
-
-  x_collaborators:
-  - Un Colaborador
-  - '%d Colaboradores'
-  # projects listing on left of organizer
-
-  note: 
-  - Nota
-  - Notas
-  x_notes: 
-  - 'Una Nota'
-  - '%d Notas'
-  # The note count text under each document image in the organizer, and the projects listing on the left.
-
-# These strings are used in the Workspace
-workspace:
-  <<: *common
-
-  # The title's on the Help tabs of the Organizer screen.
-  # (the 'Search' tab's string is located in the common section)
-  help: Ayuda
-  home: Página de inicio
-
-  # Internal admin api for displaying document mentions
-  # jst/workspace/document/mentions.jst
-  show_all_x_pages:
-  - Mostrar una página
-  - Mostrar todas las %d páginas
-
-  # These are used in the text at the top-left of the screen that's shown momentarily after adding or removing a document from a project
-  removed_from_x_documents:
-  - Se eliminó un documento de %s
-  - Se eliminaron %d documentos de %s
-  added_to_x_documents:
-  - Se agregó un documento a %s
-  - Se agregaron %d documentos a %s
-  # Displayed as mouse-over text that when hovering the mouse over the padlock icon on a private document.
-  private_access_help: Sólo personas con permiso explícito (vía colaboración) tienen acceso.
-  private_to_organization_help: Acceso limitado a tu organización. (No freelancers.)
-
-  # Used in multiple dialogs and other areas to show a document's access level.  An exampe would be in the document information edit dialog's access level Access Level selection
-  public_access: Acceso Público
-  public_access_help: Cualquier usuario de la Internet puede buscar y ver este documento.
-  private_to: Privado de %s
-  private_access: Acceso Privado
-
-
-
-  ###############################################################
-  #
-  #  The below strings are all used on the "Control Panel" 
-  #  which is the sidebar that's displayed on the right side
-  #  when viewing/editing a document
-  #
-  #  Many of them do not appear until the parent option is selected.
-  #
-  ###############################################################
-  document_tools: Herramientas
-  add_note_instructions: 'Destacar una parte de la página, o hacer clic entre páginas para crear una nota.'
-  add_public_note: Añadir una Nota Pública
-  add_public_note_warn: Notas Públicas son visibles para todos los que vean este documento.
-  add_private_note: Añadir una nota privada.
-  add_private_note_warn: Nadie más que tú jamas podrá ver tus notas privadas.
-  redact_document: Redactar Documento
-  red: rojo
-  title: Título
-  black: negro
-  redact_instructions: Haz clic y arrastra para dibujar un %s rectángulo por encima de cada parte del documento que quieras redactar. El texto asociado será suprimido cuando guardes tu redacción.
-  notes_hidden_while_redacting: Cualquier notas que existan serán ocultadas mientras se guarda la redacción.
-  revoke: Revocar
-  save_redactions: Guardar Redacciones
-  redaction_close_while_processing: 
-  - Has redactado una parte de este documento. Se require cerrar el documento mientras se reconstruye. ¿Estás seguro de que quieres continuar?
-  - Has redactado %d partes de este documento. Se require cerrar el documento mientras se reconstruye. ¿Estás seguro de que quieres continuar?
-  close_while_redacting: Este documento se está redactando. Se va a cerrar mientras se procesa.
-  edit_sections: Editar Secciones
-  edit_document_info: Editar Datos del Documento
-  edit_title: Editar Título
-  edit_source: Editar Fuente
-  edit_description: Editar Descripción
-  edit_access: Editar Nivel de Acceso
-  access_level_edit_closing: Cambiar el nivel de acceso tardará unos momentos. Se va a cerrar el documento durante ese proceso.
-  document_access_updated:
-  - Acceso actualizado para este documento
-  - Acceso actualizado para %d documentos
-  close_while_text_reprocess: El texto se está procesando. Cierra este documento por favor.
-  force_ocr: Forzar OCR
-  text_reprocess_help: Reprocesa este documento para aprovechar de mejoras en nuestras herramientas de extracción de texto. Elije "Forzar OCR" (optical character recognition) para ignorar cualquier texto incrustado en el documento y usar Tesseract antes de reprocesar. El documento se va a cerrar mientras se reconstruye. ¿Quieres continuar? 
-  reprocess: Reprocesar
-  choose_location_to_insert_pages: Elija un lugar para insertar páginas.
-  edit_related_url: Editar URL de Artículo Relacionado
-  edit_published_url: Editar URL Publicado
-  embed_tools: Incrustar Herramientas
-  embed_document: Incrustar este Documento
-  embed_note: Incrustar una Nota
-  page_tools: Herramientas de Página
-  insert_replace_pages: Insertar/Reemplazar Páginas
-  replace_page_x: Reemplazar página %d
-  replace_multiple_pages: Reemplazar las páginas %d a %d
-  insert_first_page: Insertar antes de la primera página
-  insert_between_pages: Insertar entre las páginas %d y %d
-  insert_last_page: Insertar después de la última página
-  replace_pages:
-  - Reemplazar página %d
-  - Reemplazar las páginas %d a %d
-  insert_pages_instructions: 'Para insertar nuevas páginas en posición específica dentro del documento, haz clic entre las páginas arriba. Si quieres reemplazar una página específica con una copia nueva, haz clic en la página que quieres quitar.'
-  insert_pages_message: Este documento será cerrado mientras se reconstruye. Documentos largos pueden tardar bastante tiempo en reconstruirse.
-  insert_pages_shift_key: 'Oprime la tecla "Shift" mientras seleccionas múltiples páginas para reemplazar a la misma vez. Cuando estés listo, haz clic en el botón "Subir Páginas".'
-  remove_pages: Eliminar Páginas
-  remove_pages_click: Haz clic en cada página que quieras eliminar de este documento.
-  remove_pages_done: 'Cuando termines de seleccionar las páginas que quieras eliminar, hac click en el botón "Eliminar Páginas".'
-  remove_pages_input:
-  - Retire página
-  - Quite %d Páginas
-  remove_page_warning_message:
-  - Usted ha seleccionado una página para su eliminación. Este documento se cierra mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
-  - Usted ha seleccionado %d páginas para su eliminación. Este documento se cierra mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
-  removing: Extracción de ...
-  pages_are_being_removed: Se están eliminando las páginas. Por favor, cierre el documento.
-  cannot_remove_all: No se puede eliminar todas las páginas de este documento.
-  reorder_pages: Reordenar Páginas
-  reorder_pages_instructions: Arrastra y suelta páginas para cambiar sus posiciones dentro del documento.
-  reorder_pages_done: 'Cuando termines de reordenar, haz clic en el botón "Guardar Orden" para guardar tus cambios.'
-  text_tools: Herramientas de Texto
-  edit_page_text: Editar Texto de Página
-  edit_page_text_instructions: 'Edita el texto de cualquier página: usa las flechas para navegar dentro de este documento. Editando el texto aquí no cambiará el PDF original.'
-  edit_page_text_done: 'Cuando termines de revisar el texto, haz clic en el botón "Guardar Texto".'
-  reprocess_text: Reprocesar Texto
-  help_pages: páginas de ayuda
-  annotation: anotación
-  modification: modificación
-  tools_help: Nuestras %s te pueden ayudar a sacar el máximo provecho de nuestros %s y %s herramientas.
-  save_text: Guardar Texto
-  edit_text_any_page: Editar el texto de cualquier página.
-  change_page_arrows: Cambiar páginas con las flechas a la derecha.
-  select_pages_remove: Selecciona las páginas que quieres eliminar.
-  save_page_order: Guardar Orden de Páginas
-  reorder_hint: Reordenar páginas arrastrando y soltando.
-  upload_pages: Subir Páginas
-  annotation_help: Utiliza los enlaces a la derecha para anotar el documento. Recuerda que cualquier otros revisores podrán ver anotaciones públicas y borradores. Anotaciones privadas existen para tu referencia exclusiva. Ni %s las pueden ver.
-  contact_reviewer: 'Contactar a %s en %s si necesitas cualquier ayuda, o visita %s para más información sobre DocumentCloud.'
-  ###############################################################
-  #  End of "Control Panel" strings
-  ###############################################################
-
-
-
-
-  ###############################################################
-  # These are used on the Search Embed dialog.  
-  # To see this, open a project with documents.  Select "Embed Document
-  # List" from the Publish menu, the phrases will be at the top of the dialog.
-  in_project: en este proyecto
-  x_public_documents: 
-  -  '%d Documento Público'
-  -  '%d Documentos Públicos'
-  x_private_documents: 
-  -  '%d Documento Privado'
-  -  '%d Documentos Privados'
-  matching_search: igual que esta busqueda
-  set_will_appear: aparecerá en esta colección.
-  no_appear_until_publish: no aparecerá hasta que se publique.
-  future_documents_w_appear: Documentos en el futuro %s aparecerán en tu incrustado.
-  added_project: añadido a este proyecto
-  optional: Opcional
-  order_documents_by: Ordenar documentos por
-  relevance: Relación
-  date_uploaded: Fecha Subido
-  length: Extensión
-  documents_per_page: Documentos por página
-  allow_readers_to_search: Permitir que lectores busquen esta colección de documentos
-  preview_search_embed_help: Antes de continuar, por favor toma el tiempo de %s revisar la colección de documentos%s Documentos publicados estarán disponibles en el URL donde originalmente fueron publicados, mientras otros se abrirán en DocumentCloud.
-
-
-  ###############################################################
-  # Project Edit Dialog
-  # It can be viewed by clicking the pencil icon beside a project
-  project_id: 'ID de Proyecto: %s'
-  edit_x: Editar %s
-  collaborators: Colaboradores
-  add_a_collaborator: Añadir a un colaborador a este proyecto
-  remove: Eliminar
-  add: Añadir
-  enter_email_address: Proveer correo electrónico
-  project_owner: Dueño del Proyecto
-
-  ###############################################################
-  # Admin Dialog for accounts.  
-  # It may be viewed by logging in as an administrator and clicking 'Manage Accounts' 
-  # in the organizer under the project listing.
-  pending: Pendiente
-  manage: Administrar
-  organization: Organización
-  account: Cuenta
-  accounts: Cuentas
-  email: Email
-  first_name: Nombre
-  last_name: Apellido
-  disabled: Desactivado
-  administrator: Administrador
-  contributor: Contribuidor
-  freelancer: Freelancer
-  change_password: Cambiar Contraseña
-  resend_welcome_email: Reenviar Correo de Bienvenida
-  ok: OK
-  reenable: Reactivar
-  disable: Desactivar
-  workspace: Área de trabajo
-  reader_workspace_language: Lector/Espacio de trabajo Idioma
-  default_document_language: Documento predeterminado Idioma
-  role_administrator_for_x:  Usted es un administrador de %s
-  role_contributor_for_x:  Usted es un miembro de %s
-  role_reviewer_for_x:  Usted es un revisor de %s
-  role_freelancer_for_x:  Usted es un profesional independiente de %s
-  language_defaults: Predeterminados de Idiomas
-
-  ###############################################################
-  # "Share Document" dialog
-  # It may be accessed by selecting a document and 
-  # selecting "Share this Document" from the Analyze menu
-  resend_instructions: Reenviar Instrucciones
-  no_reviewer_on_document:
-  - No hay revisores en este documento.
-  - No hay revisores en estos documentos.
-  include_optional_msg: 'Opcional: Incluir un mensaje personal'
-  preview_email: Revisar el mensaje
-  before_continue: Antes de continuar, puedes %s
-  add_reviewer: Añadir Revisor
-  reviewer_name: Por favor, indique el nombre del revisor
-  reviewer_add_permission_denied: No se permite añadir colaboradores.
-  reviewer_enter_email: Por favor, introduzca la dirección de correo electrónico de un usuario.
-  x_is_no_longer_a_reviewer_on_x:
-  - "%2$s ya no es un crítico en el documento"
-  - "%2$s ya no es un crítico de los %1$d Documentos"
-  reviewer_remove_permission_denied: No tienes permiso para eliminar colaboradores.
-  reviewer_remove_error: Hubo un problema al eliminar el revisor.
-  reviewer_email_message: DocumentCloud le enviará revisar las instrucciones a %s Si lo desea, puede agregar un mensaje personal.
-  sending: Envío de ...
-  reviewer_enter_email: "Introduzca la dirección de correo electrónico de la primera crítica de invitar:"
-  please_enter_email: Introduzca una dirección de correo electrónico.
-  please_enter_valid_email: Introduzca una dirección de correo electrónico válida.
-  reviewing_instructions_single_sent_to: Instrucciones para la revisión %s enviado a %s
-  reviewing_instructions_multiple_sent_to: Instrucciones para la revisión de %d Documentos enviados a %s
-  reviewing_instructions_send_failure: Sus instrucciones no fueron enviados. Póngase en contacto con soporte para resolución de problemas ayuda.
-  share_x_documents:
-    - Comparte documento
-    - Comparte %d documentos
-  reviewer_email_instructions:
+--- !omap
+- viewer: !omap
+  - CLOSE: CERRAR
+  - annotated_by: 'Anotado por: %s'
+  - annotation_title: Título de Anotación
+  - cancel: Cancelar
+  - click_add_page_note: Haz clic para añadir una Nota
+  - container_not_found: 'Document Viewer container element not found:'
+  - contents: Contenidos
+  - contributed_by: Contribuido por
+  - delete: Borrar
+  - description: Descripción
+  - dl_as_pdf: Descargar este documento en PDF
+  - document: &1
+    - Documento
+    - Documentos
+  - draft: Borrador
+  - draft_note_visible: Esta nota en borrador sólo la pueden ver tú y tus colaboradores.
+  - edit_data: Editar datos
+  - expand: Expandir
+  - finish: Acabados
+  - for: para
+  - install_chrome_frame: O, si quieres continuar usando Internet Explorer 6, puedes
+      %sinstalar Google Chrome Frame%s.
+  - link_to_note: Crear enlace a esta nota
+  - loading: Cargando
+  - log_out: Terminar la sesión
+  - must_upgrade: 'Necesitas actualizar tu navegador para usar el marco de inspectar
+      los documentos:'
+  - next: Próximo
+  - next_note: Próxima Anotación
+  - note: &2
+    - Nota
+    - Notas
+  - note_by: Nota por %s
+  - of: de
+  - organizations_documents: Documentos de %s
+  - original_document_pdf: Documento Original (PDF)
+  - page: &3
+    - Página
+    - Páginas
+  - pg: p.
+  - previous: Previa
+  - previous_note: Previa Anotación
+  - print_document_help: Para imprimir el documento, haz clic en el enlace "Documento
+      Original" para abrir el PDF original. Por ahora, no es posible imprimir el documento
+      con sus anotaciones.
+  - print_notes: Imprimir Notas
+  - private_note: Nota privada
+  - private_note_visible: This private note is only visible to you.
+  - publish: Publicar
+  - related_article: Artículo Relacionado
+  - reviewer: Revisor
+  - save: Guardar
+  - save_as_draft: Guardar como borrador
+  - search: Buscar
+  - text: Texto
+  - toggle_description: Mostrar Descripción
+  - untitled_note: Nota sin Título
+  - view_fullscreen: Ver Documento en Pantall Completa
+  - x_collaborators: &4
+    - Un Colaborador
+    - "%d Colaboradores"
+  - x_documents: &5
+    - "%d Documento"
+    - "%d Documentos"
+  - x_notes: &6
+    - Una Nota
+    - "%d Notas"
+  - x_pages: &7
+    - Una Página
+    - "%d Páginas"
+  - zoom: Tamaño
+- workspace: !omap
+  - 'TRUE': Verdadero
+  - access_level: Nivel de Acceso
+  - access_level_edit_closing: Cambiar el nivel de acceso tardará unos momentos. Se
+      va a cerrar el documento durante ese proceso.
+  - account: Cuenta
+  - account_add_failure: No se pudo crear a la cuenta.
+  - account_is_disabled: "%s se ha desactivado."
+  - accounts: Cuentas
+  - add: Añadir
+  - add_a_collaborator: Añadir a un colaborador a este proyecto
+  - add_html_for_documents: Añadir este HTML a tu sitio para incrustar estos documentos.
+  - add_html_for_note: Añade este HTML a tu sitio web para incrustar esta nota.
+  - add_html_for_viewer: Añadir este HTML a tu sitio web para incrustar un marco para
+      ver el documento.
+  - add_note_instructions: Destacar una parte de la página, o hacer clic entre páginas
+      para crear una nota.
+  - add_private_note: Añadir una nota privada.
+  - add_private_note_warn: Nadie más que tú jamas podrá ver tus notas privadas.
+  - add_public_note: Añadir una Nota Pública
+  - add_public_note_warn: Notas Públicas son visibles para todos los que vean este
+      documento.
+  - add_reviewer: Añadir Revisor
+  - added_project: añadido a este proyecto
+  - added_to_x_documents:
+    - Se agregó un documento a %s
+    - Se agregaron %d documentos a %s
+  - adding_accounts: Añadir Cuentas
+  - administrator: Administrador
+  - all_documents: Todos los Documentos
+  - allow_readers_to_search: Permitir que lectores busquen esta colección de documentos
+  - already_has_account: "%s ya tiene una cuenta."
+  - analyze: Analizar
+  - analyze_project_in_overview: Analizar este Proyecto en Panorama
+  - analyze_x_docs_in_overview:
+    - Analyze this Document in Overview
+    - Analyze these Documents in Overview
+  - annotated_by: 'Anotado por: %s'
+  - annotated_documents: Documentos Anotados
+  - annotation: anotación
+  - annotation_help: Utiliza los enlaces a la derecha para anotar el documento. Recuerda
+      que cualquier otros revisores podrán ver anotaciones públicas y borradores.
+      Anotaciones privadas existen para tu referencia exclusiva. Ni %s las pueden
+      ver.
+  - apply_all_files: aplicar a todos los archivos
+  - apply_fields_all_files: aplicar esta descripción, fuente, y nivel de acceso a
+      todos los archivos
+  - at: a
+  - back: Volver
+  - bad_data_key: "%s no se puede utilizar como clave"
+  - before_continue: Antes de continuar, puedes %s
+  - black: negro
+  - broken_document: Documento roto
+  - by_date: por fecha
+  - by_length: por extensión
+  - by_relevance: por relación
+  - by_source: por fuente
+  - by_title: por título
+  - calais_credit: Entidades a través de OpenCalais
+  - cancel: Cancelar
+  - cannot_remove_all: No se puede eliminar todas las páginas de este documento.
+  - change_page_arrows: Cambiar páginas con las flechas a la derecha.
+  - change_password: Cambiar Contraseña
+  - choose_location_to_insert_pages: Elija un lugar para insertar páginas.
+  - choose_note: Elejir nota
+  - city: 'Ciudad '
+  - close: Cerrar
+  - close_while_redacting: Este documento se está redactando. Se va a cerrar mientras
+      se procesa.
+  - close_while_text_reprocess: El texto se está procesando. Cierra este documento
+      por favor.
+  - collaboration: Colaboración
+  - collaborators: Colaborador
+  - confirm_remove_all_data: "¿Estás seguro de que quieres eliminar todos los datos
+      de %s?"
+  - contact_documentcloud: Contactar a DocumentCloud
+  - contact_reviewer: Contactar a %s en %s si necesitas cualquier ayuda, o visita
+      %s para más información sobre DocumentCloud.
+  - contact_us: Contáctenos
+  - contributed_by: Contribuido por
+  - contributor: Contribuidor
+  - country: Países
+  - create_new_project: Crear un Proyecto Nuevo
+  - date: Fechas
+  - date_uploaded: Fecha Subido
+  - default_document_language: Documento predeterminado Idioma
+  - delete: Borrar
+  - delete_documents:
+    - Borrar Documento
+    - Borrar Documentos
+  - demo_embed_error: Las cuentas demo no se les permite integrar documentos. Póngase
+      en %scontacto%s con nosotros si necesita una cuenta con todas las funciones.
+      Ver %sun ejemplo%s de código de inserción aquí
+  - demo_no_viewer: No se permiten descargar marcos con cuentas de preuba. %s si necesitas
+      una cuenta de acceso completo.
+  - description: Descripción
+  - disable: Desactivar
+  - disabled: Desactivado
+  - document: *1
+  - document_access_updated:
+    - Acceso actualizado para este documento
+    - Acceso actualizado para %d documentos
+  - document_already_public: Este documento ya está disponible al público.
+  - document_error_message: Nuestro sistema no pudo procesar este documento. Estamos
+      atentos al problema y regularmente revisamos errores. Por favor revisa nuestras
+      %ssugerencias para resolver fallos técnicos%s o %scontáctanos%s para obtener
+      asistencia inmediata.
+  - document_has_no_public_notes: Este documento no tiene notas públicas.
+  - document_modification: Modificación de Documentos
+  - document_processing_count:
+    - Se está procesando un documento
+    - Se están procesando %d documentos
+  - document_public_on: Este documento estará disponible al público el/en %s
+  - document_publish_embed_test: Si quieres probar el incrustado del documento antes
+      de publicarlo, procura modificar el código de incrustar para que use URLs seguros
+      de HTTPS, y luego cambiarles a HTTP común antes de designarle al documento público.
+  - document_publish_private_help: Este documento es privado. No será visible para
+      los lectores hasta que lo designes público. Cambiar el %snivel de acceso%s ahora
+      o %s fecha de actualización.
+  - document_publish_public_help: Este documento es público. Es accesible por los
+      usuarios que buscan el catálogo de DocumentCloud y se podrá ver en tu sitio
+      web. Cambiar el %snivel de acceso%s.
+  - document_tools: Herramientas
+  - document_viewer_size: Tamaño del documento
+  - documents: Documentos
+  - documents_are_ready: Sus documentos están listos
+  - documents_per_page: Documentos por página
+  - double_check_disable: "¿Seguro que quieres desactivar la cuenta de %s?"
+  - download_pdf: Descargar PDF Original
+  - download_text: Descargar Text Completo
+  - download_viewer: Descargar Marco de Revisión
+  - downloading_progress:
+    - Preparación de "%2$s" para descargar ...
+    - Preparación %d documentos para descargar
+  - draft: Borrador
+  - draft_note_visible: Esta nota en borrador sólo la pueden ver tú y tus colaboradores.
+  - edit: Editar
+  - edit_access: Editar Nivel de Acceso
+  - edit_data: Editar datos
+  - edit_data_for: Editar datos de %s
+  - edit_description: Editar Descripción
+  - edit_details: editar detalles
+  - edit_document_data: Editar Datos del Documento
+  - edit_document_info: Editar información del documento
+  - edit_document_information: Editar Información del Documento
+  - edit_document_pairs:
+    - Editar parejas de clave/valor que describen a este documento.
+    - Editar parejas de clave/valor que describen a estos documentos.
+  - edit_page_text: Editar Texto de Página
+  - edit_page_text_done: Cuando termines de revisar el texto, haz clic en el botón
+      "Guardar Texto".
+  - edit_page_text_instructions: 'Edita el texto de cualquier página: usa las flechas
+      para navegar dentro de este documento. Editando el texto aquí no cambiará el
+      PDF original.'
+  - edit_published_url: Editar URL Publicado
+  - edit_related_url: Editar URL de Artículo Relacionado
+  - edit_sections: Editar Secciones
+  - edit_source: Editar Fuente
+  - edit_text_any_page: Editar el texto de cualquier página.
+  - edit_title: Editar Título
+  - edit_x: Editar %s
+  - editing_notes_sections: Editar Notas y Secciones
+  - email: Correo electrónico
+  - email_for_assistance: Si necesitas asistencia, envíanos un correo electrónico
+      a support@documentcloud.org.
+  - email_when_complete: Notifícame cuando %slos documentos%s estén procesados.
+  - embed_a_note: Incrustar una Nota
+  - embed_document: Incrustar este Documento
+  - embed_document_list: Incrustar Lista de Documentos
+  - embed_document_viewer: Incrustar Marco de Revisión
+  - embed_hide_text_tab_help: Si el texto del documento no se lee bien, haz click
+      en esta caja para esconder la pestaña de texto.
+  - embed_note: Incrustar una Nota
+  - embed_note_demo_error: No se permite incrustar notas con cuentas de prueba. %sContáctanos%s
+      si quieres una cuenta de acceso completo. Ve un ejemplo del código de incrustar
+      %saquí%s.
+  - embed_note_step_one: 'Primer Paso: Seleccionar una nota para incrustar'
+  - embed_note_step_two: 'Segundo Paso: Copia y pega el código para incrustar'
+  - embed_search_demo_error: No se permite incrustar sets de documentos con cuentas
+      de prueba. %sContáctanos%s si quieres una cuenta de acceso completo. Ve un ejemplo
+      del código de incrustar %saquí%s.
+  - embed_search_step_one: 'Primer Paso: Configurar los Documentos Incrustados'
+  - embed_search_step_two: 'Segundo Paso: Copiar y Pegar el Código de Incrustar'
+  - embed_show_sidebar: Mostrar el sidebar
+  - embed_show_sidebar_help: Si el espacio horizontal de tu sitio es limitado, haz
+      clic en esta caja para esconder el sidebar.
+  - embed_show_text_tab: Mostrar la pestaña de texto
+  - embed_step_one_title: 'Paso uno: Revisión "%s"'
+  - embed_step_three_title: 'Tercer paso: Copiar y pegar el código de inserción'
+  - embed_step_two_title: 'Paso dos: Configurar el marco de documentos'
+  - embed_tools: Incrustar Herramientas
+  - embed_url_of_document: La mayoría de usuarios no necesitarán añadir esto. URL
+      de la página en tu sitio web donde este documento está incrustado
+  - embed_viewer_opens_to: Marco abre a
+  - embed_viewer_opens_to_help: Definir la página o anotación específic que abrirá
+      el marco.
+  - enter_email_address: Proveer correo electrónico
+  - enter_new_password: Proveer nueva contraseña
+  - enter_title_and_page: Por favor añade un título y número de página para cada sección.
+  - enter_url_for_embed:
+    - Proveer URL donde este documento está incrustado
+    - Proveer URL donde estos documentos están incrustados
+  - enter_url_that_references:
+    - Provee el URL del artículo que se refiere a este documento.
+    - Provee el URL del artículo que se refiere a estos documentos.
+  - entities_explained: Las entidades listadas están presentes adentro de los documentos
+      relacionados con tu búsqueda. Selecciona una entidad para filtrar estos resultados.
+  - entities_unavailable: Entidades no están disponibles en estos momentos.
+  - explain_disable_account: "%1$s no podrá acceder a DocumentCloud. Documentos y
+      anotaciones públicas de %1$s permanecerán disponibles. %2$sContactar a soporte
+      técnico%3$s para purgar completamente la cuenta de %1$s."
+  - export: Exportar
+  - export_to_overview_explain: Estás a punto de exportar a Panorama. Necesitas crear
+      una cuenta de Panorama que requiere tu nombre de usuario y contraseña de DocumentCloud.
+  - featured_examples_list: Puedes ver varios ejemplos de documentos incrustados en
+      nuestra lista de %sreportajes destacados%s.
+  - featured_reporting_list: Puedes encontrar ejemplos de búsquedas incrustadas en
+      nuestra lista de %sreportajes destacados%s.
+  - finish: Acabados
+  - first_name: Nombre
+  - first_page: Primera Página
+  - for_example_data: 'Por ejemplo: &ldquo;birth: 1935-01-08&rdquo;, or &ldquo;status:
+      released&rdquo;'
+  - force_ocr: Forzar OCR
+  - form_contact_instructions: Utiliza este formulario (o mándanos un email a %s)
+      para solicitar asistencia. Si necesitas hablar con alguien inmediatamente, llama
+      al (202) 505-1010. Visita %s para otras formas de ponerte en contacto con nosotros.
+  - freelancer: Freelancer
+  - full_page: Página Completa
+  - future_documents_w_appear: Documentos en el futuro %s aparecerán en tu incrustado.
+  - guided_tour: Tur Guiado
+  - guides_howtos: Guías
+  - has_no_entities: "%s no dispone de entidades para revisar."
+  - height: Altura
+  - help: Ayuda
+  - help_pages: páginas de ayuda
+  - home: Página de inicio
+  - in_project: en este proyecto
+  - include_optional_msg: 'Opcional: Incluir un mensaje personal'
+  - insert_between_pages: Insertar entre las páginas %d y %d
+  - insert_first_page: Insertar antes de la primera página
+  - insert_last_page: Insertar después de la última página
+  - insert_pages_instructions: Para insertar nuevas páginas en posición específica
+      dentro del documento, haz clic entre las páginas arriba. Si quieres reemplazar
+      una página específica con una copia nueva, haz clic en la página que quieres
+      quitar.
+  - insert_pages_message: Este documento será cerrado mientras se reconstruye. Documentos
+      largos pueden tardar bastante tiempo en reconstruirse.
+  - insert_pages_shift_key: Oprime la tecla "Shift" mientras seleccionas múltiples
+      páginas para reemplazar a la misma vez. Cuando estés listo, haz clic en el botón
+      "Subir Páginas".
+  - insert_replace_pages: Insertar/Reemplazar Páginas
+  - introduction: Introducción
+  - language: idioma
+  - language_defaults: Predeterminados de Idiomas
+  - last_name: Apellido
+  - length: Extensión
+  - link_to_pdf: Enlace al PDF original
+  - link_to_pdf_help: Haz clic en esta caja para quitar el enlace al PDF original
+      del marco.
+  - log_out: Terminar la sesión
+  - make_document_public: Permitir acceso público al documento
+  - make_documents_public: Cambiar acceso a público de %slos documentos%s.
+  - make_public_on: Cambiar acceso a público
+  - manage: Administrar
+  - manage_account: Administrar Cuenta
+  - manage_organization: Administrar Organización %s
+  - matching_search: igual que esta busqueda
+  - max_upload_size_warn: Sólo se pueden subir documentos que pesen menos de 200MB.
+      Por favor %soptimiza tus documentos%s antes de continuar.
+  - mentioned_in_x_documents:
+    - Mencionada en un documento
+    - Mencionada en %d documentos
+  - mentioning_query: mentioning &ldquo;%s&rdquo;
+  - message: Mensaje
+  - modification: modificación
+  - modify_original_document: Modificar el Documento Original
+  - must_have_doc_title:
+    - Por favor provee un título pare este documento
+    - Por favor provee un título pare estos documentos documents.
+  - must_have_title: Por favor provee un títular.
+  - must_upload_something: Necesitas subir al menos un documento.
+  - new_account: Crear una cuenta nueva
+  - new_documents: Documentos Nuevos
+  - new_project: Proyecto Nuevo
+  - next: Próximo
+  - no_appear_until_publish: no aparecerá hasta que se publique.
+  - no_duplicate_section: No se puede duplicar una sección.
+  - no_embed_permission: Usted no tiene permiso para insertar el documento.
+  - no_entities_found: Ninguna entidad resultó relacionada con tu búsqueda.
+  - no_past_publication: No puedes designar que se publique un documento en el pasado.
+  - no_permission_to_edit_x: Usted no tiene permiso para edita "%s".
+  - no_project_doc_selected: No has seleccionado un proyecto o documentos
+  - no_projects_help: Esta cuenta aun no tiene proyectos. Para crear uno, haz click
+      en el botón de "Proyecto Nuevo" arriba.
+  - no_reviewer_on_document:
+    - No hay revisores en este documento.
+    - No hay revisores en estos documentos.
+  - no_section_outside_doc: No se puede crear una sección afuera de el documento.
+  - not_found_account: Esta cuenta no tiene documentos.
+  - not_found_all: No hay documentos
+  - not_found_annotated: No existen documentos anotados.
+  - not_found_group: Esta organización no tiene documentos.
+  - not_found_project: Este proyecto no tiene documentos.
+  - not_found_published: Esta organización no tiene documentos.
+  - not_found_search: No hay documentos relacionados con tu busqueda.
+  - note: *2
+  - note_ellipsis: Nota ...
+  - note_embed_private: 'Este documento es privado: notas en este documento no se
+      podrán ver hasta que sea público.  Cambiar el %snivel de acceso%s ahora o'
+  - notes_hidden_while_redacting: Cualquier notas que existan serán ocultadas mientras
+      se guarda la redacción.
+  - of: de
+  - ok: OK
+  - open: Abrir
+  - open_in_viewer: Abrir todas las páginas en el marco
+  - open_published: Abrir Versión Publicada
+  - open_published_version: Abrir Versión Publicada
+  - optional: Opcional
+  - or: o
+  - or_remove_all_data: o %seliminar todo los datos%s.
+  - order_documents_by: Ordenar documentos por
+  - organization:
+    - Organizaciones
+    - 'Organizaciones '
+  - organizations_documents: Documentos de %s
+  - over_x_mentions: Por %d menciones
+  - page: *3
+  - page_ellipsis: Página ...
+  - page_tools: Herramientas de Página
+  - pages_are_being_removed: Se están eliminando las páginas. Por favor, cierre el
+      documento.
+  - paragraph_description_of_document: Un párafo descriptivo de este documento
+  - password_no_blank: Tu contraseña no puede quedar vacio
+  - password_reset: Restablecimiento de contraseña DocumentCloud
+  - password_updated: Contraseña actualizada
+  - pending: Pendiente
+  - person: Personas
+  - pg: p.
+  - phone: Teléfono
+  - place: 'Lugares '
+  - please_enter_email: Introduzca una dirección de correo electrónico.
+  - please_enter_valid_email: Introduzca una dirección de correo electrónico válida.
+  - popular_documents: Documentos Populares
+  - preview_email: Revisar el mensaje
+  - preview_search_embed_help: Antes de continuar, por favor toma el tiempo de %s
+      revisar la colección de documentos%s Documentos publicados estarán disponibles
+      en el URL donde originalmente fueron publicados, mientras otros se abrirán en
+      DocumentCloud.
+  - preview_viewer: Antes de continuar, por favor %srevisa el marco del documento%s.
+  - print_notes: Imprimir Notas
+  - print_notes_missing_error: "%s no contiene ningún notas imprimibles."
+  - privacy: Privacidad
+  - private: Privado
+  - private_access: Acceso Privado
+  - private_access_help: Sólo personas con permiso explícito (vía colaboración) tienen
+      acceso.
+  - private_documents_visible_instructions:
+    - Este documento es privado. Necesitas cambiar el acceso a público antes de que
+      sea disponible en tu sitio web o en búsquedas del catálogo de DocumentCloud.
+      Puedes cambiar el acceso en el futuro o %2$sahora%3$s.
+    - Estos documentos son privados. Necesitas cambiar su acceso a público antes de
+      que sean disponibles en tu sitio web o en búsquedas del catálogo de DocumentCloud.
+      Puedes cambiar su acceso en el futuro o %2$sahora%3$s
+  - private_note: Nota privada
+  - private_note_visible: This private note is only visible to you.
+  - private_to: Privado de %s
+  - private_to_organization_help: Acceso limitado a tu organización. (No freelancers.)
+  - project_exists: Un proyecto con el nombre %s ya existe
+  - project_id: 'ID de Proyecto: %s'
+  - project_owner: Dueño del Proyecto
+  - projects: Proyectos
+  - public_access: Acceso Público
+  - public_access_help: Cualquier usuario de la Internet puede buscar y ver este documento.
+  - public_documents_help: Selecciona una organización de la lista arriba para ver
+      sus documentos públicos.
+  - public_on: Acceso Público
+  - publication_date: fecha de publicación
+  - publish: Publicar
+  - publish_choose_display: Elije si quieres ofrecer tu documento de %spágina completa%s
+      o si quieres %suna caja de tamaño específico%s.
+  - published_documents: Documentos Publicados
+  - published_url: URL Publicado
+  - publishing_embedding: Publicar e Incrustar
+  - reader_workspace_language: Lector/Espacio de trabajo Idioma
+  - really_delete_x_docs:
+    - "¿Seguro que quieres borrar este documento?"
+    - "¿Seguro que quieres borrar estos documentos?"
+  - red: rojo
+  - redact_document: Redactar Documento
+  - redact_instructions: Haz clic y arrastra para dibujar un %s rectángulo por encima
+      de cada parte del documento que quieras redactar. El texto asociado será suprimido
+      cuando guardes tu redacción.
+  - redaction_close_while_processing:
+    - Has redactado una parte de este documento. Se require cerrar el documento mientras
+      se reconstruye. ¿Estás seguro de que quieres continuar?
+    - Has redactado %d partes de este documento. Se require cerrar el documento mientras
+      se reconstruye. ¿Estás seguro de que quieres continuar?
+  - reenable: Reactivar
+  - related_article_url: URL de Artículo Relaciónado
+  - related_article_url_help: Proveer el URL del artículo que se refiere a este documento
+      permitirá crear un enlace al "Artículo Relacionado" adentro del marco que muestra
+      el documento. Muchos lectores llegarán al documento a través de una busqueda;
+      el enlace les guiará al contexto orginal del documento.
+  - related_url_of_document: URL del artículo que se refiere a este documento
+  - relevance: Relación
+  - remove: Eliminar
+  - remove_all: Eliminar todo
+  - remove_entity: Eliminar esta entidad de mi búsqueda
+  - remove_file: Eliminar archivo
+  - remove_from_project: Quitar de este Proyecto
+  - remove_line_breaks: Eliminar saltos de línea
+  - remove_page_warning_message:
+    - Usted ha seleccionado una página para su eliminación. Este documento se cierra
+      mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
+    - Usted ha seleccionado %d páginas para su eliminación. Este documento se cierra
+      mientras se está reconstruyendo. ¿Estás seguro de que está listo para proceder?
+  - remove_pages: Eliminar Páginas
+  - remove_pages_click: Haz clic en cada página que quieras eliminar de este documento.
+  - remove_pages_done: Cuando termines de seleccionar las páginas que quieras eliminar,
+      hac click en el botón "Eliminar Páginas".
+  - remove_pages_input:
+    - Retire página
+    - Quite %d Páginas
+  - removed_from_x_documents:
+    - Se eliminó un documento de %s
+    - Se eliminaron %d documentos de %s
+  - removing: Extracción de ...
+  - reorder_hint: Reordenar páginas arrastrando y soltando.
+  - reorder_pages: Reordenar Páginas
+  - reorder_pages_done: Cuando termines de reordenar, haz clic en el botón "Guardar
+      Orden" para guardar tus cambios.
+  - reorder_pages_instructions: Arrastra y suelta páginas para cambiar sus posiciones
+      dentro del documento.
+  - replace_multiple_pages: Reemplazar las páginas %d a %d
+  - replace_page_x: Reemplazar página %d
+  - reprocess: Reprocesar
+  - reprocess_text: Reprocesar Texto
+  - resend_instructions: Reenviar Instrucciones
+  - resend_welcome_email: Reenviar Correo de Bienvenida
+  - review_x_documents:
+    - Crítica "%2$s" en DocumentCloud
+    - Revise %d documentos en DocumentCloud
+  - reviewer: Revisor
+  - reviewer_add_permission_denied: No se permite añadir colaboradores.
+  - reviewer_email_instructions:
     - Las instrucciones por correo electrónico a %2$s
     - Las instrucciones por correo electrónico a %d revisores
-  
-  ###############################################################
-  # "Contact us" form
-  contact_us: Contáctenos
-  form_contact_instructions: Utiliza este formulario (o mándanos un email a %s) para solicitar asistencia.
-    Si necesitas hablar con alguien inmediatamente, llama al (202) 505-1010.
-    Visita %s para otras formas de ponerte en contacto con nosotros.
-  message: Mensaje
-  send: Transmitir
-
-  ###############################################################
-  # The account/organization management dialog that is 
-  # opened by clicking one of the above links
-  new_account: Crear una cuenta nueva
-  enter_new_password: Proveer nueva contraseña
-  password_updated: Contraseña actualizada
-  password_no_blank: Tu contraseña no puede quedar vacio
-  welcome_message_sent_to: Un mensaje de bienvenida se envió a  %s.
-  already_has_account: '%s ya tiene una cuenta.'
-  account_is_disabled: '%s se ha desactivado.'
-  double_check_disable: ¿Seguro que quieres desactivar la cuenta de %s?
-  explain_disable_account: '%1$s no podrá acceder a DocumentCloud. Documentos y anotaciones públicas de %1$s permanecerán disponibles. %2$sContactar a soporte técnico%3$s para purgar completamente la cuenta de %1$s.'
-  signup_sent_to:  Solicitud para crear una cuenta enviada a %s
-  account_add_failure: No se pudo crear a la cuenta.
-  saved: Guardar
-
-  ###############################################################
-  # The Section editing dialog
-  # is opened by selecting the "Edit Sections" link that is located
-  # in the "Control Panel" area on the right of th document workspace
-  enter_title_and_page: Por favor añade un título y número de página para cada sección.
-  no_duplicate_section: No se puede duplicar una sección.
-  no_section_outside_doc: No se puede crear una sección afuera de el documento.
-  remove_all: Eliminar todo
-
-
-  ###############################################################
-  # These are part of the Document Data dialog
-  # Can be opened by selecting one or more documents then 
-  # selecting "Edit Document Data" from the Edit menu
-  edit_document_pairs:
-  - Editar parejas de clave/valor que describen a este documento.
-  - Editar parejas de clave/valor que describen a estos documentos.
-  or_remove_all_data: o %seliminar todo los datos%s.
-  for_example_data: 'Por ejemplo: &ldquo;birth: 1935-01-08&rdquo;, or &ldquo;status:
-    released&rdquo;'
-  edit_data_for: Editar datos de %s
-  bad_data_key: '%s no se puede utilizar como clave'
-  confirm_remove_all_data: ¿Estás seguro de que quieres eliminar todos los datos de %s?
-
-
-
-  ###############################################################
-  # Edit Document Information dialog
-  # Can be opened by selecting one or more documents then 
-  # selecting "Edit Document Information" from the Edit menu
-  title_of_document: Título de este documento
-  source_of_document: La fuente donde obtuviste este documento
-  paragraph_description_of_document: Un párafo descriptivo de este documento
-  related_url_of_document: URL del artículo que se refiere a este documento
-  embed_url_of_document: La mayoría de usuarios no necesitarán añadir esto. URL de la página en tu sitio web donde este documento está incrustado
-
-
-  ###############################################################
-  # These are miscellaneous strings that are used in multiple locations
-
-
-  ###############################################################
-  # Options on document and search embed dialogs
-  remove_line_breaks: Eliminar saltos de línea
-  add_html_for_viewer: Añadir este HTML a tu sitio web para incrustar un marco para ver el documento.
-  add_html_for_note: Añade este HTML a tu sitio web para incrustar esta nota.
-  featured_examples_list: Puedes ver varios ejemplos de documentos incrustados en nuestra lista de %sreportajes destacados%s.
-  # Document embed_code  
-  mentioning_query: mentioning &ldquo;%s&rdquo;
-
-  ###############################################################
-  # document embed dialog - Select a document in the organizer, 
-  # then select "Embed Document Viewwer" from the Publlish menu
-  document_has_no_public_notes: Este documento no tiene notas públicas.
-  enter_url_that_references:
-  - Provee el URL del artículo que se refiere a este documento.
-  - Provee el URL del artículo que se refiere a estos documentos.
-  related_article_url_help: Proveer el URL del artículo que se refiere a este documento permitirá crear un enlace al "Artículo Relacionado" adentro del marco que muestra el documento. Muchos lectores llegarán al documento a través de una busqueda; el enlace les guiará al contexto orginal del documento.
-  embed_show_sidebar: Mostrar el sidebar
-  document_viewer_size: Tamaño del documento
-  demo_embed_error: Las cuentas demo no se les permite integrar documentos. Póngase en %scontacto%s con nosotros si necesita una cuenta con todas las funciones. Ver %sun ejemplo%s de código de inserción aquí
-  embed_show_sidebar_help: Si el espacio horizontal de tu sitio es limitado, haz clic en esta caja para esconder el sidebar.
-  embed_show_text_tab: Mostrar la pestaña de texto
-  embed_hide_text_tab_help: Si el texto del documento no se lee bien, haz click en esta caja para esconder la pestaña de texto.
-  document_already_public: Este documento ya está disponible al público.
-  document_public_on: Este documento estará disponible al público el/en %s
-  make_document_public: Permitir acceso público al documento
-  document_publish_public_help: Este documento es público. Es accesible por los usuarios que buscan el catálogo de DocumentCloud y se podrá ver en tu sitio web. Cambiar el %snivel de acceso%s.
-  document_publish_private_help: Este documento es privado. No será visible para los lectores hasta que lo designes público. Cambiar el %snivel de acceso%s ahora o %s fecha de actualización.
-  set_the: designar el
-  document_publish_embed_test: Si quieres probar el incrustado del documento antes de publicarlo, procura modificar el código de incrustar para que use URLs seguros de HTTPS, y luego cambiarles a HTTP común antes de designarle al documento público. 
-  full_page: Página Completa
-  width: Anchura
-  height: Altura
-  publish_choose_display: Elije si quieres ofrecer tu documento de %spágina completa%s
-    o si quieres %suna caja de tamaño específico%s.
-  embed_viewer_opens_to: Marco abre a 
-  first_page: Primera Página
-  page_ellipsis: Página ...
-  note_ellipsis: Nota ...
-  embed_viewer_opens_to_help: Definir la página o anotación específic que abrirá el marco.
-  link_to_pdf: Enlace al PDF original
-  link_to_pdf_help: Haz clic en esta caja para quitar el enlace al PDF original del marco.
-  preview_viewer: Antes de continuar, por favor %srevisa el marco del documento%s.
-  back: Volver
-  close: Cerrar
-  step_x_of_x: Paso %d de %d
-  embed_step_one_title: "Paso uno: Revisión \"%s\""
-  embed_step_two_title: "Paso dos: Configurar el marco de documentos"
-  embed_step_three_title: "Tercer paso: Copiar y pegar el código de inserción"
-
-  # Appears when pages are shown in organizer.  
-  # Right-click on a document and select 'View Pages'
-  open_in_viewer: Abrir todas las páginas en el marco
-  # used to construct sentence indicating how many pages are shown (workspace/document/pages.jst)
-  or: o
-  on: en
-  over_x_mentions: Por %d menciones
-  x_mentions:
-  - Una Mención
-  - '%d Menciones'
-
-
-  ###############################################################
-  # Publication date dialog
-  # Opened by selecting "Set Publication Date" from Publish menu
-  private_documents_visible_instructions:
-  - Este documento es privado. Necesitas cambiar el acceso a público antes de que sea disponible en tu sitio web o en búsquedas del catálogo de DocumentCloud. Puedes cambiar el acceso en el futuro o %2$sahora%3$s.
-  - Estos documentos son privados. Necesitas cambiar su acceso a público antes de que sean disponibles en tu sitio web o en búsquedas del catálogo de DocumentCloud. Puedes cambiar su acceso en el futuro o %2$sahora%3$s
-  set_publication_date_for: Definir fecha de publicación para %s
-  no_past_publication: No puedes designar que se publique un documento en el pasado.
-  make_public_on: Cambiar acceso a público 
-  at: a
-  public_on: Acceso Público
-
-  ###############################################################
-  # The Document right-click menu for documents
-  # Appears when a documents icon is right-clicked in the organizer
-  view_pages: Ver Páginas
-  edit_document_information: Editar Información del Documento
-  set_access: Definir Nivel de Acceso
-  remove_from_project: Quitar de este Proyecto
-  open_published_version: Abrir Versión Publicada
-  # is only displayed if the document has a published url
-
-  ###############################################################
-  # Document upload dialog
-  # Accessed by clicking "New Document" at the left of the Organizer
-  # The dialog is displayed after selecting at least one file to upload
-  new_documents: Documentos Nuevos
-  # The upload button 
-  email_when_complete: Notifícame cuando %slos documentos%s estén procesados.
-  make_documents_public: Cambiar acceso a público de %slos documentos%s.
-  remove_file: Eliminar archivo
-  edit_details: editar detalles
-  apply_all_files: aplicar a todos los archivos
-  apply_fields_all_files: aplicar esta descripción, fuente, y nivel de acceso a todos los archivos
-  language: idioma
-  shared_with_you_by: Compartido por ti %s
-  must_have_doc_title:
-  - Por favor provee un título pare este documento
-  - Por favor provee un título pare estos documentos documents.
-  update_applied_all: Actualización aplicada a todos los documentos.
-  uploaded_x_documents:
-  - Un Documunto subido
-  - "%d Documentos subidos"
-  uploaded_x_document_has:
-  - El documento subido tiene
-  - Los %d documentos tienen
-  # this message is displayed beside documents that have failed to upload properly 
-  document_error_message: Nuestro sistema no pudo procesar este documento. Estamos atentos al problema y regularmente revisamos errores. Por favor revisa nuestras %ssugerencias para resolver fallos técnicos%s o %scontáctanos%s para obtener asistencia inmediata.  
-  upload: Subir
-  upload_document: Subir Documento
-  max_upload_size_warn: Sólo se pueden subir documentos que pesen menos de 200MB. Por favor %soptimiza tus documentos%s antes de continuar.
-  must_upload_something: Necesitas subir al menos un documento.
-  document_processing_count:
-  - Se está procesando un documento
-  - Se están procesando %d documentos
-
-  print_notes_missing_error: "%s no contiene ningún notas imprimibles."
-
-  no_projects_help: Esta cuenta aun no tiene proyectos. Para crear uno, haz click en el botón de "Proyecto Nuevo" arriba.
-  # is displayed on the left sidebar of the organizer when the account does not have any projects
-
-  public_documents_help: Selecciona una organización de la lista arriba para ver sus documentos públicos.
-  # displayed on the public search under the list of organizations
-
-  ###############################################################
-  # Embed project dialog.  Select a project in the sidebar of the organizer, 
-  # then select "Embed Document List" from the Publish menu
-  add_html_for_documents: Añadir este HTML a tu sitio para incrustar estos documentos.
-  embed_search_step_one: 'Primer Paso: Configurar los Documentos Incrustados'
-  embed_search_step_two: 'Segundo Paso: Copiar y Pegar el Código de Incrustar'
-  embed_search_demo_error: No se permite incrustar sets de documentos con cuentas de prueba. %sContáctanos%s si quieres una cuenta de acceso completo. Ve un ejemplo del código de incrustar %saquí%s.
-  featured_reporting_list: Puedes encontrar ejemplos de búsquedas incrustadas en nuestra lista de %sreportajes destacados%s.
-  collaborators: Colaborador
-
-
-  # Entities - where?
-  # jst/workspace/workspace/entities.jst
-  mentioned_in_x_documents:
-  - Mencionada en un documento
-  - Mencionada en %d documentos
-  show_pages: mostrar páginas
-  remove_entity: Eliminar esta entidad de mi búsqueda
-  show_more: Mostrar más
-  show_less: Mostrar menos
-  no_entities_found: Ninguna entidad resultó relacionada con tu búsqueda.
-  show_all: Mostrar todas
-  entities_explained: Las entidades listadas están presentes adentro de los documentos relacionados con tu búsqueda. Selecciona una entidad para filtrar estos resultados.
-  calais_credit: Entidades a través de OpenCalais
-  city: Ciudades
-  country: Países
-  date: Fechas
-  phone: Números de Teléfono
-  email: Direcciones de correo electrónico
-  organization: Organizaciones
-  person: Personas
-  place: Lugares
-  state: Unidos
-  term: Términos
-
-
-  ###############################################################
-  # Note embed dialog.  Select a Document in the organizer,
-  # then select "Embed A Note" from the Publish menu
-  note_embed_private: 'Este documento es privado: notas en este documento no se podrán ver hasta que sea público.  Cambiar el %snivel de acceso%s
-    ahora o'
-  publication_date: fecha de publicación
-  choose_note: Elejir nota
-  select_with_public_note: Por favor selecciona un documento que tenga al menos una nota.
-  embed_note_step_one: 'Primer Paso: Seleccionar una nota para incrustar'
-  embed_note_step_two: 'Segundo Paso: Copia y pega el código para incrustar'
-  embed_note_demo_error: 'No se permite incrustar notas con cuentas de prueba. %sContáctanos%s si quieres una cuenta de acceso completo. Ve un ejemplo del código de incrustar %saquí%s.'
-
-
-  # Terms & Privacy are links at the bottom of the Organizer
-  terms: Terminos de Uso
-  privacy: Privacidad
-
-  # These are buttons on the front of the help page
-  guides_howtos: Guías
-  uservoice_discuss: Discutir servicio y Bugs
-  contact_documentcloud: Contactar a DocumentCloud
-
-  # The "Guides & Howto's" menu in help
-  introduction: Introducción
-  guided_tour: Tur Guiado
-  adding_accounts: Añadir Cuentas
-  searching_dd: Busquedas de Documentos y Datos
-  uploading_documents: Subir Documentos
-  troubleshooting_uploads: Solucionar Subida de Documentos Decaido
-  document_modification: Modificación de Documentos
-  editing_notes_sections: Editar Notas y Secciones
-  collaboration: Colaboración
-  privacy: Privacidad
-  publishing_embedding: Publicar e Incrustar
-  the_api: El API de DocumentCloud
-
-
-  # these messages are displayed in the left sidebar of the Organizer
-  # if the system detects that entitity processing is unavailable
-  entities_unavailable: Entidades no están disponibles en estos momentos.
-  email_for_assistance: Si necesitas asistencia, envíanos un correo electrónico a support@documentcloud.org.
-
-
-  # These are displayed when searching for a document
-  # Initially the sort order is diplsayed at the bottom of the page, but can be
-  # modified by clicking and seelcting a different option from the dialog or by 
-  # selecting one of the options from the 'Sort' menu.
-  sort_documents_by: Filtrar documentos por
-  by_relevance: por relación
-  by_title: por título
-  by_date: por fecha
-  by_source: por fuente
-  by_length: por extensión
-
-
-  # These are used to filter the documents that appear 
-  # in the organizer, they're located at the top-left of the window
-  # Some of the strings such as 'Annotated Documents' are not currently displayed
-  documents: Documentos
-  all_documents: Todos los Documentos
-  your_documents: Tus Documentos
-  annotated_documents: Documentos Anotados
-  popular_documents: Documentos Populares 
-  published_documents: Documentos Publicados
-  your_published_documents: Tus Documentos Publicados
-
-  # These are displayed by the search when it doesn't return any results
-  # Different stings are displayed depending on what was searched for.
-  not_found_project: Este proyecto no tiene documentos.
-  not_found_account: Esta cuenta no tiene documentos.
-  not_found_group: Esta organización no tiene documentos.
-  not_found_published: Esta organización no tiene documentos.
-  not_found_annotated: No existen documentos anotados.
-  not_found_search: No hay documentos relacionados con tu busqueda.
-  not_found_all: No hay documentos
-
-  # These are the menu buttons that make up the toolbar of the organizer screen
-  open: Abrir
-  edit: Editar
-  sort: Filtrar
-  projects: Proyectos
-  analyze: Analizar
-  publish: Publicar
-
-  # This error is displayed if attempting to open
-  # more than one document at a time using the "Open" menu
-  select_single_to_open: Por favor selecciona el documento que quieres abrir.
-
-  # "Edit" menu of the toolbar
-  edit_document_info: Editar información del documento
-  title: Títular
-  source: Fuente
-  access_level: Nivel de Acceso
-  related_article_url: URL de Artículo Relaciónado
-  published_url: URL Publicado
-  enter_url_for_embed: 
-  - Proveer URL donde este documento está incrustado
-  - Proveer URL donde estos documentos están incrustados
-  edit_document_data: Editar Datos del Documento
-  modify_original_document: Modificar el Documento Original
-  delete_documents: 
-  - Borrar Documento
-  - Borrar Documentos
-  really_delete_x_docs:
-  - ¿Seguro que quieres borrar este documento?
-  - ¿Seguro que quieres borrar estos documentos?
-
-  # "Sort" menu from the toolbar
-  sort_by_relevance: Filtrar por Relación
-  sort_by_date_uploaded: Filtrar por Fecha Subido
-  sort_by_title: Filtrar por Título
-  sort_by_source: Filtrar por Fuente
-  sort_by_length: Filtrar por Extensión
-
-  # Tthe only translatable string on the "Projects" menu
-  # The other options are auto-generated based on the projects names
-  new_project: Proyecto Nuevo
-  
-  # "Analyze" menu.  Some strings are not displayed
-  # until a selection is made
-  view_entities: Ver Entidades
-  has_no_entities: '%s no dispone de entidades para revisar.'
-  view_timeline: Ver cronología
-  timeline_zoom_in: Arrastre un rango de fechas para agrandar
-  timeline_for_doc: "Cronograma para \"%s\""
-  timeline_for_x_docs: Cronograma para %d documentos
-  zoom_out: Alejar
-  timeline_max_documents: Sólo puedes ver una cronología de 10 documentos a la vez.
-  timeline_must_select: Para ver una cronología, por favor selecciona algunos documentos.
-  analyze_project_in_overview: Analizar este Proyecto en Panorama
-  export_to_overview_explain: Estás a punto de exportar a Panorama. Necesitas crear una cuenta de Panorama que requiere tu nombre de usuario y contraseña de DocumentCloud.
-  share_documents: Compartir estos Documentos
-  share_project: Compartir este Proyecto
-  share_x_documents:
-  - Compartir este Documento
-  - Compartir estos Documentos
-  analyze_x_docs_in_overview: 
-  - Analyze this Document in Overview
-  - Analyze these Documents in Overview
-  export: Exportar
-
-  # The "Publish" menu.  Quite a few of the
-  # strings are only displayed in reaction to user selections
-  no_project_doc_selected: No has seleccionado un proyecto o documentos
-  embed_document_viewer: Incrustar Marco de Revisión
-  demo_no_viewer: No se permiten descargar marcos con cuentas de preuba. %s si necesitas una cuenta de acceso completo.
-  select_single_to_embed: Por favor elije a un documento para crear un incrustado.
-  embed_document_list: Incrustar Lista de Documentos
-  embed_a_note: Incrustar una Nota
-  set_publication_date: Definir fecha de publicación
-  download_viewer: Descargar Marco de Revisión
-  no_permission_to_edit_x: "Usted no tiene permiso para edita \"%s\"."
-  x_is_not_published: "\"%s\" no se publica."
-  x_still_processing: "\"%s\" está siendo procesada. Espere a que termine por favor."
-  no_embed_permission: Usted no tiene permiso para insertar el documento.
-  downloading_progress: 
-  - "Preparación de \"%2$s\" para descargar ..."
-  - Preparación %d documentos para descargar
-  download_pdf: Descargar PDF Original
-  download_text: Descargar Text Completo
-
-  # The create a new project dialog
-  # Shown in response to selecting "New Project"
-  # From the Projects menu
-  create_new_project: Crear un Proyecto Nuevo
-  project_exists: Un proyecto con el nombre %s ya existe
-  must_have_title: Por favor provee un títular.
-
-
-  # these are the mouse-over text for small tool that's 
-  # displayed beside documents in the organizer
-  uploading: Subiendo
-  broken_document: Documento roto
-  your_organization: Tu Organización
-  private: Privado
-  open_published: Abrir Versión Publicada
-
-
-  # Links that are displayed beside account in the sidebar for 
-  # accounts who are an administrator
-  manage_organization: Administrar Organización %s
-  # This message is displayed for accounts that are not 
-  # and administrator
-  manage_account: Administrar Cuenta
-
-  # this message is shown in a dialog to a new reviewer the frist
-  # time they access a document they've been invited to review
-  x_invited_to_review_x: '%s te ha invitado a revisar %s'
-
-
-viewer:
-  <<: *common
-  CLOSE: CERRAR
-  # Displayed at top-right of pages after searching in the viewer
-  
-  click_add_page_note: Haz clic para añadir una Nota
-  # Displayed when the mouse is moved into the gap between pages while adding a note
-
-  contents: Contenidos
-  # Section heading that appears under the forward-back page controls at the top of the sidebar.  Is hidden by default
-
-  container_not_found: 'Document Viewer container element not found:'
-  # Error message that is displayed when a document is incorrectly embedded
-
-  dl_as_pdf: Descargar este documento en PDF
-  # The link to download the document that is located on the right sidebar
-
-  expand: Expandir
-  # generic expander element. ( DV/views/navigationExpander.js )
-
-  link_to_note: Crear enlace a esta nota
-  # displays while hovering the mouse over the chain icon beside a note's title
-
-  loading: Cargando
-  # This message is displayed on the background of pages while the images for them are loading
-
-  next_note: Próxima Anotación
-  previous: Previa
-  previous_note: Previa Anotación
-  # These strings are displayed as navigation on annotations
-  # They are hidden and shown as appropriate. 
-
-  note_by: Nota por %s
-  annotation_title: Título de Anotación
-  # Used as a placeholder on the title text input when creating a new annotation
-
-  print_document_help: Para imprimir el documento, haz clic en el enlace "Documento Original" para abrir el PDF original. Por ahora, no es posible imprimir el documento con sus anotaciones.
-  # displays on bottom of screen, but is normally hidden
-
-  related_article: Artículo Relacionado
-  # On document's sidebar, it links to the related article.
-  # Only displays if an related article url is entered for document
-
-  text: Texto
-  # The 'Text' tab on the document.  The other tabs are in the common strings section
-
-  must_upgrade: 'Necesitas actualizar tu navegador para usar el marco de inspectar los documentos:'
-  install_chrome_frame: O, si quieres continuar usando Internet Explorer 6, puedes %sinstalar Google Chrome Frame%s.
-  # These messages are displayed to people whom are attempting to use the viewer with older unsupported web browsers
-
-  toggle_description: Mostrar Descripción
-  # appears as text when hovering the mouse over the disclosure triange beside the documents description on the sidebar of the viewer.  Is only displayed when the document has a desciption entered.
-
-  untitled_note: Nota sin Título
-  # The default name for a note
-
-  view_fullscreen: Ver Documento en Pantall Completa
-  # The help text for the control that toggles a document from being viewed full screen.  It's not normally displayed.
-
-  zoom: Tamaño
-  # Appears at the top of the document, directly to the left of the Zoom control.
-
-  for: para
-  # used in constructing sentence for number of search results.
-  # Either: Page 1 of X "for" <term> or: No results "for" <term>
-
-  original_document_pdf: Documento Original (PDF)
-  # The download link for documents.  Is located on the sidebar of the viewer.
+  - reviewer_email_message: DocumentCloud le enviará revisar las instrucciones a %s
+      Si lo desea, puede agregar un mensaje personal.
+  - reviewer_enter_email: 'Introduzca la dirección de correo electrónico de la primera
+      crítica de invitar:'
+  - reviewer_name: Por favor, indique el nombre del revisor
+  - reviewer_remove_error: Hubo un problema al eliminar el revisor.
+  - reviewer_remove_permission_denied: No tienes permiso para eliminar colaboradores.
+  - reviewing_instructions_multiple_sent_to: Instrucciones para la revisión de %d
+      Documentos enviados a %s
+  - reviewing_instructions_send_failure: Sus instrucciones no fueron enviados. Póngase
+      en contacto con soporte para resolución de problemas ayuda.
+  - reviewing_instructions_single_sent_to: Instrucciones para la revisión %s enviado
+      a %s
+  - revoke: Revocar
+  - role_administrator_for_x: 'Usted es un administrador para %s '
+  - role_contributor_for_x: Usted es un contribuyente para %s
+  - role_freelancer_for_x: Usted es un profesional independiente para %s
+  - role_reviewer_for_x: Usted es un revisor para %s
+  - save: Guardar
+  - save_as_draft: Guardar como borrador
+  - save_page_order: Guardar Orden de Páginas
+  - save_redactions: Guardar Redacciones
+  - save_text: Guardar Texto
+  - saved: Guardar
+  - search: Buscar
+  - searching_dd: Busquedas de Documentos y Datos
+  - select_pages_remove: Selecciona las páginas que quieres eliminar.
+  - select_single_to_embed: Por favor elije a un documento para crear un incrustado.
+  - select_single_to_open: Por favor selecciona el documento que quieres abrir.
+  - select_with_public_note: Por favor selecciona un documento que tenga al menos
+      una nota.
+  - send: Transmitir
+  - sending: Envío de ...
+  - set_access: Definir Nivel de Acceso
+  - set_publication_date: Definir fecha de publicación
+  - set_publication_date_for: Definir fecha de publicación para %s
+  - set_the: designar el
+  - set_will_appear: aparecerá en esta colección.
+  - share_documents: Compartir estos Documentos
+  - share_project: Compartir este Proyecto
+  - share_x_documents:
+    - Compartir este Documento
+    - Compartir estos Documentos
+  - shared_with_you_by: Compartido por ti %s
+  - show_all: Mostrar todas
+  - show_all_x_pages:
+    - Mostrar una página
+    - Mostrar todas las %d páginas
+  - show_less: Mostrar menos
+  - show_more: Mostrar más
+  - show_pages: mostrar páginas
+  - signup_sent_to: Solicitud para crear una cuenta enviada a %s
+  - sort: Filtrar
+  - sort_by_date_uploaded: Filtrar por Fecha Subido
+  - sort_by_length: Filtrar por Extensión
+  - sort_by_relevance: Filtrar por Relación
+  - sort_by_source: Filtrar por Fuente
+  - sort_by_title: Filtrar por Título
+  - sort_documents_by: Filtrar documentos por
+  - source: Fuente
+  - source_of_document: La fuente donde obtuviste este documento
+  - state: Unidos
+  - step_x_of_x: Paso %d de %d
+  - term: Condiciones
+  - terms: Terminos de Uso
+  - text_reprocess_help: Reprocesa este documento para aprovechar de mejoras en nuestras
+      herramientas de extracción de texto. Elije "Forzar OCR" (optical character recognition)
+      para ignorar cualquier texto incrustado en el documento y usar Tesseract antes
+      de reprocesar. El documento se va a cerrar mientras se reconstruye. ¿Quieres
+      continuar?
+  - text_tools: Herramientas de Texto
+  - the_api: El API de DocumentCloud
+  - timeline_for_doc: Cronograma para "%s"
+  - timeline_for_x_docs: Cronograma para %d documentos
+  - timeline_max_documents: Sólo puedes ver una cronología de 10 documentos a la vez.
+  - timeline_must_select: Para ver una cronología, por favor selecciona algunos documentos.
+  - timeline_zoom_in: Arrastre un rango de fechas para agrandar
+  - title: Títular
+  - title_of_document: Título de este documento
+  - tools_help: Nuestras %s te pueden ayudar a sacar el máximo provecho de nuestros
+      %s y %s herramientas.
+  - troubleshooting_uploads: Solucionar Subida de Documentos Decaido
+  - update_applied_all: Actualización aplicada a todos los documentos.
+  - upload: Subir
+  - upload_document: Subir Documento
+  - upload_pages: Subir Páginas
+  - uploaded_x_document_has:
+    - el documento subido tiene
+    - los %d documentos tienen
+  - uploaded_x_documents:
+    - Un Documunto subido
+    - "%d Documentos subidos"
+  - uploading: Subiendo
+  - uploading_documents: Subir Documentos
+  - uservoice_discuss: Discutir servicio y Bugs
+  - view_entities: Ver Entidades
+  - view_pages: Ver Páginas
+  - view_timeline: Ver cronología
+  - welcome_message_sent_to: Un mensaje de bienvenida se envió a  %s.
+  - welcome_to_document_cloud: 'Bienvenido a DocumentCloud '
+  - width: Anchura
+  - workspace: "Área de trabajo"
+  - x_collaborators: *4
+  - x_documents: *5
+  - x_has_documents: "%s Documentos"
+  - x_invited_to_review_x: "%s te ha invitado a revisar %s"
+  - x_is_no_longer_a_reviewer_on_x:
+    - "%2$s ya no es un crítico en el documento"
+    - "%2$s ya no es un crítico de los %1$d Documentos"
+  - x_is_not_published: "\"%s\" no se publica."
+  - x_mentions:
+    - Una Mención
+    - "%d Menciones"
+  - x_notes: *6
+  - x_pages: *7
+  - x_private_documents:
+    - "%d Documento Privado"
+    - "%d Documentos Privados"
+  - x_public_documents:
+    - "%d Documento Público"
+    - "%d Documentos Públicos"
+  - x_still_processing: "\"%s\" está siendo procesada. Espere a que termine por favor."
+  - your_documents: Tus Documentos
+  - your_organization: Tu Organización
+  - your_published_documents: Tus Documentos Publicados
+  - youve_been_added_to_x: Usted se han añadido a la cuenta %s
+  - zoom_out: Alejar

@@ -152,9 +152,7 @@ dc.ui.TimelineDialog = dc.ui.Dialog.extend({
   _noDates : function() {
     var count = this.documents.length;
     this.close();
-    var message = "None of the " + count + " documents contained recognizable dates.";
-    if (count <= 1) message = "We were unable to recognize any dates for " + '"' + this.documents[0].get('title') + '"';
-    dc.ui.Dialog.alert(message);
+    dc.ui.Dialog.alert( _.t('no_dates_for_timeline', count, this.documents[0].get('title') ) );
   }
 
 });
