@@ -6,7 +6,7 @@ Ready to share make your documents public? Publish individual documents, embed a
 
 To publish any document from DocumentCloud, either download a standalone copy of the viewer, or generate, copy, and paste a simple embed code for that document. We strongly encourage you to embed code that links back to DocumentCloud for most documents. The instructions that follow assume some basic familiarity with HTML, but we've tried to keep the embedding process as simple as possible.
 
-We maintain a list of some of our [favorite embedded documents][] as examples of how newsrooms might embed documents. 
+We maintain a list of some of our [favorite embedded documents][] as examples of how newsrooms might embed documents.
 
 ## <span id="choose_size">Review your Metadata</span>
 
@@ -16,7 +16,7 @@ Before you embed a document on your site, we encourage you to fill in a couple o
 
 Select a document, open the "Publish" menu, and click "Embed Document Viewer", or right-click the document, and select "Embed Document Viewer".
 
-A dialog will appear, asking you to fill in two additional pieces of information: the **Related Article URL**, and the **Published URL**. The **Related Article URL** is the location of the article that uses this document as source material &mdash; adding this URL means that readers who find the document first will still find your reporting, too. The **Published URL** is the page where the document is embedded. Most users won't need to provide this &mdash; <a href="http://www.propublica.org/nerds/item/pixel-ping-a-nodejs-stats-tracker">pixel ping</a> can usually tell us where the document is embedded. If a document might be accessed at more than one URL, however, you can specify the URL we should send users to if they find the document through a search of DocumentCloud. 
+A dialog will appear, asking you to fill in two additional pieces of information: the **Related Article URL**, and the **Published URL**. The **Related Article URL** is the location of the article that uses this document as source material &mdash; adding this URL means that readers who find the document first will still find your reporting, too. The **Published URL** is the page where the document is embedded. Most users won't need to provide this &mdash; [pixel ping](http://www.propublica.org/nerds/item/pixel-ping-a-nodejs-stats-tracker) can usually tell us where the document is embedded. If a document might be accessed at more than one URL, however, you can specify the URL we should send users to if they find the document through a search of DocumentCloud.
 
 On step one, you'll also see a checkbox offering to make the document public, if it's not already. While it's possible to paste the embed code before the document is made public, it won't start working until you've published the document on DocumentCloud.
 
@@ -32,7 +32,7 @@ Here are some live examples worth checking out: [NewsHour][], [Arizona Republic]
 
 <img src="/images/help/newshour.jpg" class="full_line" />
 
-If you opt to embed a **fixed size** viewer, set the width and height in pixels. You can also toggle both the sidebar and the text tab. We recommend hiding the sidebar in document viewers that are narrower than 800 pixels. If you're embedding handwritten documents or documents with poor OCR results, hiding the text tab is usually a good idea. Use the "preview the document viewer" link to see an example of the viewer rendered to your specifications. 
+If you opt to embed a **fixed size** viewer, set the width and height in pixels. You can also toggle both the sidebar and the text tab. We recommend hiding the sidebar in document viewers that are narrower than 800 pixels. If you're embedding handwritten documents or documents with poor OCR results, hiding the text tab is usually a good idea. Use the "preview the document viewer" link to see an example of the viewer rendered to your specifications.
 
 To see a live example of a fixed size document with no sidebar, take a look at [this ballot from WNYC][].
 
@@ -55,7 +55,7 @@ Place the embed code on your page, in the location where you would like the view
 ## <span id="testing">Testing Embedded Documents</span>
 
 On occasion you may have embedded documents which you would like to remain private while you test them in a new feature or page layout.  You can view your private embedded documents when logged in by changing the embedded document's url in the embed code (see the line beginning with "DV.load") from the "http" protocol to "https".  **Please make sure to set your embed codes back to HTTP when you set your documents to public.**
- 
+
 ## <span id="intouch">Stay in Touch</span>
 
 [Let us know][] about your reporting!
@@ -64,7 +64,7 @@ On occasion you may have embedded documents which you would like to remain priva
 
 ![Embed Note Menu][]
 
-If you have <a href="/help/notes">annotated a document</a>, you can embed any note directly on your site. Users can embed notes from any document you have edit privileges to. To embed a note, select any document and then choose "Embed a Note" from the "Publish" menu. 
+If you have [annotated a document](/help/notes), you can embed any note directly on your site. Users can embed notes from any document you have edit privileges to. To embed a note, select any document and then choose "Embed a Note" from the "Publish" menu.
 
 You'll be asked to select the note to embed, and will be able to preview the embedded note. Use your own CSS to control the width of any note on your site. Your HTML embed code will look something like this:
 
@@ -73,14 +73,14 @@ You'll be asked to select the note to embed, and will be able to preview the emb
     <script>
       dc.embed.loadNote('http://www.documentcloud.org/documents/223/annotations/237.js');
     </script>
-    
-Copy and paste the HTML onto your own site. Clicking the title or the image will open the document. Documents will open in DocumentCloud unless you've published them elsewhere. We use <a href="http://www.propublica.org/nerds/item/pixel-ping-a-nodejs-stats-tracker">pixel ping</a> to guess a document's Published URL, so if users won't find the document another way, you may need to add the Published URL manually. 
+
+Copy and paste the HTML onto your own site. Clicking the title or the image will open the document. Documents will open in DocumentCloud unless you've published them elsewhere. We use <a href="http://www.propublica.org/nerds/item/pixel-ping-a-nodejs-stats-tracker">pixel ping</a> to guess a document's Published URL, so if users won't find the document another way, you may need to add the Published URL manually.
 
 # <span id="docset">Embedding a Document Set</span>
 
 ![Embed Search Menu][]
 
-If you'd rather embed a complete set of documents, DocumentCloud can provide the HTML to do that as well. Readers will be able to search or filter through as many documents as you'd like to share with them. 
+If you'd rather embed a complete set of documents, DocumentCloud can provide the HTML to do that as well. Readers will be able to search or filter through as many documents as you'd like to share with them.
 
 You can embed any set of documents, whether or not you uploaded them: any document that has already been published by their contributor will open to the URL at which it originally appeared.
 
@@ -88,9 +88,9 @@ To get started, find a set of documents you wish to embed -- either by selecting
 
  * Provide a **title** to be displayed above the embedded set of documents;
  * **Order** documents alphabetically, by date uploaded, or by length;
- * Set the number of documents to display **per page** so that the embedded set suits the height and width of the space you have available; 
+ * Set the number of documents to display **per page** so that the embedded set suits the height and width of the space you have available;
  * Hide or reveal a **search bar**, that will allow your readers to search within the embedded set.
- 
+
 Once you're comfortable with your settings, preview the embedded document set. If the preview looks good, copy and paste the HTML embed code. Here's an example of what the embed code should look like:
 
     <div id="DC-search-projectid-8-epa-flouride"></div>
@@ -105,7 +105,7 @@ Once you're comfortable with your settings, preview the embedded document set. I
         organization: 117
       });
     </script>
-    
+
 Paste the code into on your website, and you'll see the set of documents appear.
 
 <img src="/images/help/search_embed.png" class="full_line" />

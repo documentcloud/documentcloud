@@ -560,7 +560,7 @@ textarea.text_area {
     line-height: 14px;
   }
   .dialog .minibutton {
-    width: 60px;
+    width: 70px;
     height: 13px;
     line-height: 13px;
     border: 0;
@@ -618,8 +618,9 @@ textarea.text_area {
   .dialog.account_list .new_account {
     width: 150px;
   }
-  .dialog .controls .force_ocr {
-    width: 90px;
+  .dialog .controls .force_ocr,
+  .dialog .controls .reprocess {
+    width: auto;
   }
 
 

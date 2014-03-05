@@ -2,14 +2,14 @@
 12.0
 ![Annotations][]
 
-DocumentCloud suppports both private and public notes. Public notes are visible to anyone who has access to the  document, while private notes are only ever visible to their author. Public notes may also be saved as drafts: draft notes are visible to anyone with the privileges neccessary to annotate a document, including <a href="collaboration">reviewers and collaborators</a>, but they won't be published with the document. 
+DocumentCloud suppports both private and public notes. Public notes are visible to anyone who has access to the  document, while private notes are only ever visible to their author. Public notes may also be saved as drafts: draft notes are visible to anyone with the privileges neccessary to annotate a document, including [reviewers and collaborators](collaboration), but they won't be published with the document.
 
-Annotate any document by opening and selecting either "Add a public note" or "Add a private note" as appropriate. Your cursor should change to crosshairs: click and drag to select the area you'd like to highlight. When you release the cursor, you will be able to add and save your note. 
+Annotate any document by opening and selecting either "Add a public note" or "Add a private note" as appropriate. Your cursor should change to crosshairs: click and drag to select the area you'd like to highlight. When you release the cursor, you will be able to add and save your note.
 
 To annotate a page *in general* rather than a region of the page, hover annotation crosshair in the gutter between pages. A note tab and dotted line will appear &mdash; click near the line to create a note that sits in between the pages.
 
 <img alt="" src="/images/help/add_page_note.jpg" class="full_line" />
- 
+
 It is not possible to resize a note. Instead, copy the contents, delete the existing note, and redraw it.
 
 ![Notes Link][]
@@ -20,22 +20,22 @@ Notes on a document are available in the workspace as well as in the open docume
 
 Note bodies can contain a limited subset of HTML and attributes.  The table below lists some commonly used elements and attributes.  You can find a full list beneath the table.
 
-Element                       | Description | Attributes
-------------------------------|-------------|-----------
-[&lt;a&gt;][a]                      | creates a hyperlink | href
-[&lt;img&gt;][img]                  | displays an image | src, width, height, alt, align
-[&lt;br/&gt;][br]                   | inserts a line break | –
-[&lt;em&gt;][em], [&lt;i&gt;][i]          | emphasizes/italicizes text | –
-[&lt;strong&gt;][strong], [&lt;b&gt;][b]  | bolds text | –
-[&lt;u&gt;][u]                      | underlines text | –
-[&lt;blockquote&gt;][blockquote]    | offsets text as a quote | –
-[&lt;table&gt;][table]              | creates a table into which rows (tr elements) are inserted | summary, width
-[&lt;tr&gt;][tr]                    | creates a table row to hold table data (td elements) and table headers (th elements) | –
-[&lt;th&gt;][th]                    | creates a table header cell | abbr, axis, colspan, rowspan, width, scope
-[&lt;td&gt;][td]                    | creates a table cell in a “tr” row | abbr, axis, colspan, rowspan, width
-[&lt;ol&gt;][ol]                    | creates a numbered ordered list  | start, reversed, type
-[&lt;ul&gt;][ul]                    | creates is a bulleted unordered list  | type
-[&lt;iframe&gt;][iframe]            | An iframe can be used to embed web pages. | src, srcdoc, width, height, sandbox
+Element                                  | Description | Attributes
+-----------------------------------------|------------------------------------------|-----------
+[&lt;a&gt;][a]                           | creates a hyperlink                      | href
+[&lt;img&gt;][img]                       | displays an image                        | src, width, height, alt, align
+[&lt;br/&gt;][br]                        | inserts a line break                     | –
+[&lt;em&gt;][em], [&lt;i&gt;][i]         | emphasizes/italicizes text               | –
+[&lt;strong&gt;][strong], [&lt;b&gt;][b] | bolds text                               | –
+[&lt;u&gt;][u]                           | underlines text                          | –
+[&lt;blockquote&gt;][blockquote]         | offsets text as a quote                  | –
+[&lt;table&gt;][table]                   | creates a table into which rows (tr elements) are inserted | summary, width
+[&lt;tr&gt;][tr]                         | creates a table row to hold table data (td elements) and table headers (th elements) | –
+[&lt;th&gt;][th]                         | creates a table header cell               | abbr, axis, colspan, rowspan, width, scope
+[&lt;td&gt;][td]                         | creates a table cell in a "tr"" row       | abbr, axis, colspan, rowspan, width
+[&lt;ol&gt;][ol]                         | creates a numbered ordered list           | start, reversed, type
+[&lt;ul&gt;][ul]                         | creates is a bulleted unordered list      | type
+[&lt;iframe&gt;][iframe]                 | An iframe can be used to embed web pages. | src, srcdoc, width, height, sandbox
 
 ### Complete list of available HTML tags
 [`a`][a], [`abbr`][abbr], [`b`][b], [`bdo`][bdo], [`blockquote`][blockquote], [`br`][br], [`caption`][caption], [`cite`][cite], [`code`][code], [`col`][col], [`colgroup`][colgroup], [`dd`][dd], [`del`][del], [`dfn`][dfn], [`dl`][dl], [`dt`][dt], [`em`][em], [`figcaption`][figcaption], [`figure`][figure], [`h1`][h1], [`h2`][h2], [`h3`][h3], [`h4`][h4], [`h5`][h5], [`h6`][h6], [`hgroup`][hgroup], [`i`][i], [`iframe`][iframe], [`img`][img], [`ins`][ins], [`kbd`][kbd], [`li`][li], [`mark`][mark], [`ol`][ol], [`p`][p], [`pre`][pre], [`q`][q], [`rp`][rp], [`rt`][rt], [`ruby`][ruby], [`s`][s], [`samp`][samp], [`small`][small], [`strike`][strike], [`strong`][strong], [`sub`][sub], [`sup`][sup], [`table`][table], [`tbody`][tbody], [`td`][td], [`tfoot`][tfoot], [`th`][th], [`thead`][thead], [`time`][time], [`tr`][tr], [`u`][u], [`ul`][ul], [`var`][var], [`wbr`][wbr]
@@ -102,9 +102,9 @@ Element                       | Description | Attributes
 
 ## <span id="linking">Linking to Notes</span>
 
-Link directly to [any note][]: to find the URL (or permalink) of a note, open the note and select the link icon <span class="icon permalink" style="padding-left:16px;position:relative;top: -2px;">&#65279;</span>. Your browser's address bar will be updated to display the full URL of the annotation. The good stuff comes after the # symbol &emdash; in our [example][] the URL of the embedded document ends with <code>#document/p173/a8646</code>, so we know that the annotation is on page 173. The annotation itself is identifed by a random string (in this case "a8646"). 
+Link directly to [any note][]: to find the URL (or permalink) of a note, open the note and select the link icon <span class="icon permalink" style="padding-left:16px;position:relative;top: -2px;">&#65279;</span>. Your browser's address bar will be updated to display the full URL of the annotation. The good stuff comes after the # symbol &emdash; in our [example][] the URL of the embedded document ends with <code>#document/p173/a8646</code>, so we know that the annotation is on page 173. The annotation itself is identifed by a random string (in this case "a8646").
 
-You can also embed a note directly. See our <a href="publishing">publishing and embedding</a> documentation for details.
+You can also embed a note directly. See our [publishing and embedding](<a href="publishing">) documentation for details.
 
 ## <span id="printing">Printing Notes</span>
 

@@ -357,7 +357,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     var message = _.t('really_delete_x_docs', docs.length );
     dc.ui.Dialog.confirm(message, _.bind(function() {
       var counter = docs.length;
-      var progress = dc.ui.Dialog.progress('Deleting Documents&hellip;');
+      var progress = dc.ui.Dialog.progress( _.t('deleting_documents') );
       _(docs).each(function(doc){ doc.destroy({success : function() {
         if (!--counter) progress.close();
       }}); });

@@ -188,7 +188,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       $(dialog.el).remove();
       _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
     });
-    dialog.$('.ok').text(_.t('reprocess')).before(forceEl);
+    dialog.$('.ok').addClass('reprocess').text(_.t('reprocess')).before(forceEl);
   },
 
   openTextTab : function() {

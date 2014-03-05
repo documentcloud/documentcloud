@@ -15,7 +15,7 @@
               <div class="icon toggle toggle_account_links"></div>
             <% } %>
             <span class="org_documents interface text_link">
-              <%= dc.inflector.possessivize( organization.get('name') )  %> <%= _.t('documents') %>
+              <%= _.t('x_has_documents', dc.inflector.possessivize( organization.get('name') ) )  %>
             </span>
             <div class="account_links" data-cid="<%= organization.cid %>"></div>
           </div>

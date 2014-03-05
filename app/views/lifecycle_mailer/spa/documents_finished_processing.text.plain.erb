@@ -1,0 +1,10 @@
+<%= @account.full_name %> --
+<% if @count == 1 %>
+El document ha terminado de procesarse y está disponible para editarse y agregar notas en DocumentCloud.
+<% else %>
+Los documentos de <%= @count %> han terminado de procesarse y estan disponibles para ser editados y agregar notas en DocumentCloud.
+<% end %>
+
+<%= DC.server_root(:ssl => false) %>
+
+P.D. Si necesita ayuda para utilizar DocumentCloud, eche un vistazo a nuestra documentación de consulta (http://www.documentcloud.org/help) o envíe un e-mail a support@documentcloud.org.

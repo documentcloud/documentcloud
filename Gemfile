@@ -26,7 +26,7 @@ gem 'sunspot_rails',  '>= 1.3.3'
 gem 'sunspot_solr',   '>= 2.0.0.pre.120925'
 gem 'rdiscount',      '>= 1.6.5'
 gem 'fastercsv',      '>= 1.5.3'
- 
+
 gem 'omniauth',                '>= 1.0'
 gem 'omniauth-twitter',        '>= 0.0.13'
 gem 'omniauth-facebook',       '>= 1.4.0'
@@ -35,3 +35,10 @@ gem 'omniauth-google-oauth2',  '>= 0.1.13'
 gem 'cloud-crowd'
 gem 'pdftailor'
 gem 'sqlite3'
+
+group :translations do
+  # for downloading the translations from google spreadsheet
+  gem 'google_drive'
+  # securely ask for username/password for access to translation spreadsheet
+  gem 'highline'
+end
