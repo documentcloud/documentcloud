@@ -123,7 +123,7 @@
     - by_date: by date
     - by_length: by length
     - by_relevance: by relevance
-    - by_source: by_source
+    - by_source: by source
     - by_title: by title
     - calais_credit: Entities provided by OpenCalais
     - cancel: Cancel
