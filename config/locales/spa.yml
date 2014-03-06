@@ -1,6 +1,11 @@
 --- !omap 
 - viewer: !omap 
     - CLOSE: CERRAR
+    - add_note_instructions: "Destacar una parte de la p\xC3\xA1gina, o hacer clic entre p\xC3\xA1ginas para crear una nota."
+    - add_private_note: "A\xC3\xB1adir una nota privada."
+    - add_private_note_warn: "Nadie m\xC3\xA1s que t\xC3\xBA jamas podr\xC3\xA1 ver tus notas privadas."
+    - add_public_note: "A\xC3\xB1adir una Nota P\xC3\xBAblica"
+    - add_public_note_warn: "Notas P\xC3\xBAblicas son visibles para todos los que vean este documento."
     - annotated_by: "Anotado por: %s"
     - annotation_title: "T\xC3\xADtulo de Anotaci\xC3\xB3n"
     - cancel: Cancelar
@@ -14,6 +19,7 @@
     - document: &id001 
         - Documento
         - Documentos
+    - document_tools: Herramientas
     - draft: Borrador
     - draft_note_visible: "Esta nota en borrador s\xC3\xB3lo la pueden ver t\xC3\xBA y tus colaboradores."
     - edit_data: Editar datos
@@ -23,7 +29,9 @@
     - install_chrome_frame: O, si quieres continuar usando Internet Explorer 6, puedes %sinstalar Google Chrome Frame%s.
     - link_to_note: Crear enlace a esta nota
     - loading: Cargando
+    - log_in: "Iniciar sesi\xC3\xB3n\n"
     - log_out: "Terminar la sesi\xC3\xB3n"
+    - logged_in_as: Conectado como %s
     - must_upgrade: "Necesitas actualizar tu navegador para usar el marco de inspectar los documentos:"
     - next: "Pr\xC3\xB3ximo"
     - next_note: "Pr\xC3\xB3xima Anotaci\xC3\xB3n"
@@ -277,7 +285,9 @@
     - length: "Extensi\xC3\xB3n"
     - link_to_pdf: Enlace al PDF original
     - link_to_pdf_help: Haz clic en esta caja para quitar el enlace al PDF original del marco.
+    - log_in: "Iniciar sesi\xC3\xB3n\n"
     - log_out: "Terminar la sesi\xC3\xB3n"
+    - logged_in_as: Conectado como %s
     - make_document_public: "Permitir acceso p\xC3\xBAblico al documento"
     - make_documents_public: "Cambiar acceso a p\xC3\xBAblico de %slos documentos%s."
     - make_public_on: "Cambiar acceso a p\xC3\xBAblico"

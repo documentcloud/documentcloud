@@ -1,6 +1,11 @@
 --- !omap 
 - viewer: !omap 
     - CLOSE: CLOSE
+    - add_note_instructions: Highlight a portion of the page, or click between pages to create a note.
+    - add_private_note: Add a Private Note
+    - add_private_note_warn: No one apart from you is ever allowed to view your private notes.
+    - add_public_note: Add a Public Note
+    - add_public_note_warn: Public notes are visible to everyone who views this document.
     - annotated_by: "Annotated by: %s"
     - annotation_title: Annotation Title
     - cancel: Cancel
@@ -14,6 +19,7 @@
     - document: &id001 
         - Document
         - Documents
+    - document_tools: Document Tools
     - draft: Draft
     - draft_note_visible: This draft is only visible to you and collaborators.
     - edit_data: Edit Data
@@ -23,7 +29,9 @@
     - install_chrome_frame: Or, if you'd like to continue using Internet Explorer 6, you can %sinstall Google Chrome Frame%s.
     - link_to_note: Link to this note
     - loading: Loading
+    - log_in: Log In
     - log_out: Log Out
+    - logged_in_as: Logged in as %s
     - must_upgrade: "To use the Document Viewer you need to upgrade your browser:"
     - next: Next
     - next_note: Next Annotation
@@ -276,7 +284,9 @@
     - length: Length
     - link_to_pdf: Link to the original PDF
     - link_to_pdf_help: Uncheck this box to remove the PDF link from the document viewer.
+    - log_in: Log In
     - log_out: Log Out
+    - logged_in_as: Logged in as %s
     - make_document_public: Make document public
     - make_documents_public: 
       - Make document public.
