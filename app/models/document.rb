@@ -873,9 +873,6 @@ class Document < ActiveRecord::Base
     doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
     doc['language']           = language
     doc['file_hash']          = file_hash
-    if commentable?(options[:account])
-      doc['annotations_url']  = annotations_url
-    end
     if options[:contributor]
       doc['contributor']      = account_name
       doc['contributor_organization'] = organization_name
