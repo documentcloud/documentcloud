@@ -78,7 +78,9 @@ class Account < ActiveRecord::Base
 
   # 
   def self.from_identity( identity )
-    account = Account.with_identity( identity['provider'],  identity['uid'] ).first || Account.new()
+    unless account = Account.with_identity( identity['provider'],  identity['uid'] ).first
+      account = Account.new({ :document_language=>'eng', :language=>'eng' })
+    end
     account.record_identity_attributes( identity )
     account.save if account.changed?
     account
