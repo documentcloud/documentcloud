@@ -60,6 +60,13 @@ class ApiController < ApplicationController
           :status => 400
         })
       end
+      
+      if params[:file_hash] && Document.accessible(current_account, current_organization).exists?(:file_hash=>params[:file_hash])
+        return render({ 
+          :status=>409, 
+          :json => "This file is a duplicate of an existing one you have access to" 
+        })
+      end
       params[:url] = params[:file] unless is_file
       @response = Document.upload(params, current_account, current_organization).canonical
       json_response
