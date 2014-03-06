@@ -62,7 +62,9 @@ module DC
       File.chmod(0600, ssh_config['IdentityFile'])
 
       new_instance = @ec2.run_instances(options[:ami], instance_count, instance_count, group, keypair, userdata, addressing_type, options[:type], nil, nil, zone)[0]
-
+      if ( name = options[:name] )
+        @ec2.create_tags( new_instance[:aws_instance_id], { "Name" => name } )
+      end
       # wait until instance is running and get the public dns name
       while true do
         sleep 2
