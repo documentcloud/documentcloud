@@ -545,6 +545,9 @@
     - welcome_to_document_cloud: Welcome to DocumentCloud
     - width: Width
     - workspace: Workspace
+    - x_accounts: 
+      - "%d account"
+      - "%d accounts"
     - x_collaborators: *id004
     - x_documents: *id005
     - x_has_documents: "%s Documents"
