@@ -27,7 +27,8 @@ CREATE TABLE accounts (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     identities hstore,
-    language character varying(3)
+    language character varying(3) default 'eng',
+    document_language character varying(3) default 'eng'
 );
 
 
@@ -449,7 +450,8 @@ CREATE TABLE organizations (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     demo boolean DEFAULT false NOT NULL,
-    language character varying(3)
+    language character varying(3) default 'eng',
+    document_language character varying(3) default 'eng'
 );
 
 
