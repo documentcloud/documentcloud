@@ -106,18 +106,26 @@ dc.controllers.Searcher = Backbone.Router.extend({
   },
 
   searchKeySubstitutions: function(){
-    return this._searchKeys || ( this._searchKeys = _.invert( dc.app.workspace.searchKeySubstitutions  ) );
+    if ( dc.app && dc.app.workspace ){
+      return this._searchKeys || ( this._searchKeys = _.invert( dc.app.workspace.searchKeySubstitutions  ) );
+    } else {
+      return {};
+    }
   },
 
   searchValueSubstitutions: function(){
     if ( this._searchValues ){
       return this._searchValues;
     }
-    var values = {};
-    _.each( dc.app.workspace.searchValueSubstitutions, function(value,key) {
-      values[ key ] = _.invert( value );
-    });
-    return this._searchValues = values;
+    if ( dc.app && dc.app.workspace ){
+      var values = {};
+      _.each( dc.app.workspace.searchValueSubstitutions, function(value,key) {
+        values[ key ] = _.invert( value );
+      });
+      return this._searchValues = values;
+    } else {
+      return {};
+    }
   },
 
   // Start a search for a query string, updating the page URL.
