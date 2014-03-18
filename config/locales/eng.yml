@@ -77,6 +77,7 @@
     - zoom: Zoom
 - workspace: !omap 
     - "TRUE": "TRUE"
+    - access: Access
     - access_level: Access Level
     - access_level_edit_closing: Changing the access level will take a few moments. The document will close while it processes.
     - account: Account
@@ -108,6 +109,7 @@
     - analyze_x_docs_in_overview: 
       - Analyze this Document in Overview
       - Analyze these Documents in Overview
+    - annotated: Annotated
     - annotated_by: "Annotated by: %s"
     - annotated_documents: Annotated Documents
     - annotation: annotation
@@ -247,11 +249,13 @@
       - Enter the URL of the article that references these documents
     - entities_explained: The entities listed above are present within the documents that match your search. Select an entity to filter your search results.
     - entities_unavailable: Entities are temporarily unavailable.
+    - error: Error
     - explain_disable_account: "%1$s will not be able to log in to DocumentCloud. Public documents and annotations provided by %1$s will remain available. %2$sContact support%3$s to completely purge %1$s's account."
     - export: Export
     - export_to_overview_explain: You are about to export to Overview. You must create an Overview account, and you must provide Overview with your DocumentCloud username and password.
     - featured_examples_list: You can find plenty of examples of embedded documents on our list of %sfeatured reporting%s.
     - featured_reporting_list: You can find examples of embedded searches on our list of %sfeatured reporting%s.
+    - filter: Filter
     - finish: Finish
     - first_name: First name
     - first_page: First Page
@@ -261,6 +265,7 @@
     - freelancer: Freelancer
     - full_page: Full Page
     - future_documents_w_appear: Future documents %s will appear in your embed.
+    - group: Group
     - guided_tour: Guided Tour
     - guides_howtos: Guides & Howto's
     - has_no_entities: "%s has no entities to display."
@@ -324,6 +329,7 @@
     - no_permission_to_edit_x: You don't have permission to edit "%s".
     - no_project_doc_selected: No project or documents selected
     - no_projects_help: This account doesn't have any projects yet. To start one, click on the "New Project" button above.
+    - no_results_for: No Results for %s
     - no_reviewer_on_document: 
       - There are no reviewers on this document.
       - There are no reviewers on these documents.
@@ -369,6 +375,7 @@
     - place: Places
     - please_enter_email: Please enter an email address.
     - please_enter_valid_email: Please enter a valid email address.
+    - popular: Popular
     - popular_documents: Popular Documents
     - preview_email: preview the email message
     - preview_search_embed_help: Before continuing, please take a moment to %spreview the document set%s Published documents will open at the URL where they were originally published, while other public documents will open on DocumentCloud.
@@ -386,10 +393,13 @@
     - private_note_visible: This private note is only visible to you.
     - private_to: Private to %s
     - private_to_organization_help: Only the people in your organization have access. (No freelancers.)
+    - project: Project
     - project_exists: A project named %s already exists
     - project_id: "Project ID: %s"
     - project_owner: Project Owner
+    - projectid: Project ID
     - projects: Projects
+    - public: Public
     - public_access: Public Access
     - public_access_help: Anyone on the internet can search for and view the document.
     - public_documents_help: Select a contributing organization in the list above to view their public documents.
@@ -397,6 +407,7 @@
     - publication_date: publication date
     - publish: Publish
     - publish_choose_display: Choose whether to display your document in a %sfull page layout%s or a %sfixed size box%s.
+    - published: Published
     - published_documents: Published Documents
     - published_url: Published URL
     - publishing_embedding: Publishing & Embedding
@@ -444,6 +455,7 @@
     - reprocess_text: Reprocess Text
     - resend_instructions: Resend Instructions
     - resend_welcome_email: Resend Welcome Email
+    - restricted: Restricted
     - review_x_documents: 
       - Review "%2$s" on DocumentCloud
       - Review %d documents on DocumentCloud
@@ -513,6 +525,7 @@
     - step_x_of_x: Step %d of %d
     - term: " Terms"
     - terms: Terms
+    - text: Text
     - text_reprocess_help: "\"Reprocess\" this document to take advantage of improvements to our text extraction tools. Choose \"Force OCR\" (optical character recognition) to ignore any embedded text information and use Tesseract before reprocessing. The document will close while it's being rebuilt. Are you sure you want to proceed?"
     - text_tools: Text Tools
     - the_api: The DocumentCloud API
@@ -525,6 +538,7 @@
     - title_of_document: Title of this document
     - tools_help: Our %s can help you get the most out of our %s and %s tools.
     - troubleshooting_uploads: Troubleshooting Failed Uploads
+    - unpublished: Unpublished
     - update_applied_all: Update applied to all files.
     - upload: Upload
     - upload_document: Upload Document
@@ -567,6 +581,9 @@
     - x_public_documents: 
       - "%d Public Document"
       - "%d Public Documents"
+    - x_results: 
+      - "%d Result"
+      - "%d Results"
     - x_still_processing: "\"%s\" is still being processed. Please wait for it to finish."
     - your_documents: Your Documents
     - your_organization: Your Organization

@@ -77,6 +77,7 @@
     - zoom: "Tama\xC3\xB1o"
 - workspace: !omap 
     - "TRUE": Verdadero
+    - access: Acceso
     - access_level: Nivel de Acceso
     - access_level_edit_closing: "Cambiar el nivel de acceso tardar\xC3\xA1 unos momentos. Se va a cerrar el documento durante ese proceso."
     - account: Cuenta
@@ -108,6 +109,7 @@
     - analyze_x_docs_in_overview: 
       - Analyze this Document in Overview
       - Analyze these Documents in Overview
+    - annotated: "Anotado "
     - annotated_by: "Anotado por: %s"
     - annotated_documents: Documentos Anotados
     - annotation: "anotaci\xC3\xB3n"
@@ -153,6 +155,7 @@
     - delete_documents: 
       - Borrar Documento
       - Borrar Documentos
+    - deleting_documents: "Eliminaci\xC3\xB3n de documentos ... "
     - demo_embed_error: "Las cuentas demo no se les permite integrar documentos. P\xC3\xB3ngase en %scontacto%s con nosotros si necesita una cuenta con todas las funciones. Ver %sun ejemplo%s de c\xC3\xB3digo de inserci\xC3\xB3n aqu\xC3\xAD"
     - demo_no_viewer: No se permiten descargar marcos con cuentas de preuba. %s si necesitas una cuenta de acceso completo.
     - description: "Descripci\xC3\xB3n"
@@ -246,11 +249,13 @@
       - "Provee el URL del art\xC3\xADculo que se refiere a estos documentos."
     - entities_explained: "Las entidades listadas est\xC3\xA1n presentes adentro de los documentos relacionados con tu b\xC3\xBAsqueda. Selecciona una entidad para filtrar estos resultados."
     - entities_unavailable: "Entidades no est\xC3\xA1n disponibles en estos momentos."
+    - error: "Error "
     - explain_disable_account: "%1$s no podr\xC3\xA1 acceder a DocumentCloud. Documentos y anotaciones p\xC3\xBAblicas de %1$s permanecer\xC3\xA1n disponibles. %2$sContactar a soporte t\xC3\xA9cnico%3$s para purgar completamente la cuenta de %1$s."
     - export: Exportar
     - export_to_overview_explain: "Est\xC3\xA1s a punto de exportar a Panorama. Necesitas crear una cuenta de Panorama que requiere tu nombre de usuario y contrase\xC3\xB1a de DocumentCloud."
     - featured_examples_list: Puedes ver varios ejemplos de documentos incrustados en nuestra lista de %sreportajes destacados%s.
     - featured_reporting_list: "Puedes encontrar ejemplos de b\xC3\xBAsquedas incrustadas en nuestra lista de %sreportajes destacados%s."
+    - filter: "Filtro "
     - finish: Acabados
     - first_name: Nombre
     - first_page: "Primera P\xC3\xA1gina"
@@ -260,6 +265,7 @@
     - freelancer: Freelancer
     - full_page: "P\xC3\xA1gina Completa"
     - future_documents_w_appear: "Documentos en el futuro %s aparecer\xC3\xA1n en tu incrustado."
+    - group: Grupo
     - guided_tour: Tur Guiado
     - guides_howtos: !binary |
         R3XDrWFz
@@ -313,6 +319,9 @@
     - new_project: Proyecto Nuevo
     - next: "Pr\xC3\xB3ximo"
     - no_appear_until_publish: "no aparecer\xC3\xA1 hasta que se publique."
+    - no_dates_for_timeline: 
+      - "Fuimos incapaces de reconocer cualquier fecha para %2$s. "
+      - "Ninguno de los documentos %d conten\xC3\xADa fechas reconocibles. "
     - no_duplicate_section: "No se puede duplicar una secci\xC3\xB3n."
     - no_embed_permission: Usted no tiene permiso para insertar el documento.
     - no_entities_found: "Ninguna entidad result\xC3\xB3 relacionada con tu b\xC3\xBAsqueda."
@@ -365,6 +374,7 @@
     - place: "Lugares "
     - please_enter_email: "Introduzca una direcci\xC3\xB3n de correo electr\xC3\xB3nico."
     - please_enter_valid_email: "Introduzca una direcci\xC3\xB3n de correo electr\xC3\xB3nico v\xC3\xA1lida."
+    - popular: "Popular "
     - popular_documents: Documentos Populares
     - preview_email: Revisar el mensaje
     - preview_search_embed_help: "Antes de continuar, por favor toma el tiempo de %s revisar la colecci\xC3\xB3n de documentos%s Documentos publicados estar\xC3\xA1n disponibles en el URL donde originalmente fueron publicados, mientras otros se abrir\xC3\xA1n en DocumentCloud."
@@ -382,10 +392,13 @@
     - private_note_visible: This private note is only visible to you.
     - private_to: Privado de %s
     - private_to_organization_help: "Acceso limitado a tu organizaci\xC3\xB3n. (No freelancers.)"
+    - project: Proyecto
     - project_exists: Un proyecto con el nombre %s ya existe
     - project_id: "ID de Proyecto: %s"
     - project_owner: "Due\xC3\xB1o del Proyecto"
+    - projectid: Project ID
     - projects: Proyectos
+    - public: "P\xC3\xBAblico "
     - public_access: "Acceso P\xC3\xBAblico"
     - public_access_help: Cualquier usuario de la Internet puede buscar y ver este documento.
     - public_documents_help: "Selecciona una organizaci\xC3\xB3n de la lista arriba para ver sus documentos p\xC3\xBAblicos."
@@ -393,6 +406,7 @@
     - publication_date: "fecha de publicaci\xC3\xB3n"
     - publish: Publicar
     - publish_choose_display: "Elije si quieres ofrecer tu documento de %sp\xC3\xA1gina completa%s o si quieres %suna caja de tama\xC3\xB1o espec\xC3\xADfico%s."
+    - published: "Publicado "
     - published_documents: Documentos Publicados
     - published_url: URL Publicado
     - publishing_embedding: Publicar e Incrustar
@@ -440,6 +454,7 @@
     - reprocess_text: Reprocesar Texto
     - resend_instructions: Reenviar Instrucciones
     - resend_welcome_email: Reenviar Correo de Bienvenida
+    - restricted: Restringido
     - review_x_documents: 
       - "Cr\xC3\xADtica \"%2$s\" en DocumentCloud"
       - Revise %d documentos en DocumentCloud
@@ -507,6 +522,7 @@
     - step_x_of_x: Paso %d de %d
     - term: Condiciones
     - terms: Terminos de Uso
+    - text: Texto
     - text_reprocess_help: "Reprocesa este documento para aprovechar de mejoras en nuestras herramientas de extracci\xC3\xB3n de texto. Elije \"Forzar OCR\" (optical character recognition) para ignorar cualquier texto incrustado en el documento y usar Tesseract antes de reprocesar. El documento se va a cerrar mientras se reconstruye. \xC2\xBFQuieres continuar?"
     - text_tools: Herramientas de Texto
     - the_api: El API de DocumentCloud
@@ -519,6 +535,7 @@
     - title_of_document: "T\xC3\xADtulo de este documento"
     - tools_help: "Nuestras %s te pueden ayudar a sacar el m\xC3\xA1ximo provecho de nuestros %s y %s herramientas."
     - troubleshooting_uploads: Solucionar Subida de Documentos Decaido
+    - unpublished: "In\xC3\xA9dito "
     - update_applied_all: "Actualizaci\xC3\xB3n aplicada a todos los documentos."
     - upload: Subir
     - upload_document: Subir Documento
@@ -539,6 +556,9 @@
     - welcome_to_document_cloud: "Bienvenido a DocumentCloud "
     - width: Anchura
     - workspace: "\xC3\x81rea de trabajo"
+    - x_accounts: 
+      - "%d cuenta "
+      - "%d cuentas"
     - x_collaborators: *id004
     - x_documents: *id005
     - x_has_documents: "%s Documentos"
