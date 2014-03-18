@@ -39,12 +39,12 @@ dc.model.Account = Backbone.Model.extend({
 
   openDocuments : function(options) {
     options || (options = {});
-    var suffix = options.published ? ' filter: published' : '';
-    dc.app.searcher.search('account: ' + this.get('slug') + suffix);
+    var suffix = options.published ? ' ' + _.t('filter') +':' + ' ' + _.t('published') : '';
+    dc.app.searcher.search(_.t('account') + ':' + this.get('slug') + suffix);
   },
 
   openOrganizationDocuments : function() {
-    dc.app.searcher.search('group: ' + dc.account.organization().get('slug'));
+    dc.app.searcher.search( _.t('group') + ': ' + dc.account.organization().get('slug'));
   },
 
   allowedToEdit: function(model) {

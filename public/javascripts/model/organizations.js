@@ -19,7 +19,7 @@ dc.model.Organization = Backbone.Model.extend({
   },
 
   query : function() {
-    return 'group: ' + this.get('slug');
+    return _.t('group') + ': ' + this.get('slug');
   },
 
   statistics : function() {

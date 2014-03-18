@@ -8,3 +8,4 @@ dc.model.SearchEmbeds = Backbone.Collection.extend({
   model : dc.model.SearchEmbed
   
 });
+
