@@ -259,6 +259,7 @@
     - finish: Acabados
     - first_name: Nombre
     - first_page: "Primera P\xC3\xA1gina"
+    - fixed_size: "Tama\xC3\xB1o fijo "
     - for_example_data: "Por ejemplo: &ldquo;birth: 1935-01-08&rdquo;, or &ldquo;status: released&rdquo;"
     - force_ocr: Forzar OCR
     - form_contact_instructions: "Utiliza este formulario (o m\xC3\xA1ndanos un email a %s) para solicitar asistencia. Si necesitas hablar con alguien inmediatamente, llama al (202) 505-1010. Visita %s para otras formas de ponerte en contacto con nosotros."
@@ -329,6 +330,7 @@
     - no_permission_to_edit_x: Usted no tiene permiso para edita "%s".
     - no_project_doc_selected: No has seleccionado un proyecto o documentos
     - no_projects_help: "Esta cuenta aun no tiene proyectos. Para crear uno, haz click en el bot\xC3\xB3n de \"Proyecto Nuevo\" arriba."
+    - no_results_for: "No hay resultados para %s "
     - no_reviewer_on_document: 
       - No hay revisores en este documento.
       - No hay revisores en estos documentos.
@@ -483,6 +485,7 @@
     - save_text: Guardar Texto
     - saved: Guardar
     - search: Buscar
+    - search_bar: "barra de b\xC3\xBAsqueda"
     - searching_dd: Busquedas de Documentos y Datos
     - select_pages_remove: "Selecciona las p\xC3\xA1ginas que quieres eliminar."
     - select_single_to_embed: Por favor elije a un documento para crear un incrustado.
@@ -578,6 +581,9 @@
     - x_public_documents: 
       - "%d Documento P\xC3\xBAblico"
       - "%d Documentos P\xC3\xBAblicos"
+    - x_results: 
+      - "%d Resultado "
+      - "%d Resultados"
     - x_still_processing: "\"%s\" est\xC3\xA1 siendo procesada. Espere a que termine por favor."
     - your_documents: Tus Documentos
     - your_organization: "Tu Organizaci\xC3\xB3n"
