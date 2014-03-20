@@ -988,6 +988,9 @@
     - first_page: !binary |
         0J/QtdGA0YjRltC5INGB0YLQvtGA0ZbQvdGG0ZY=
 
+    - fixed_size: !binary |
+        0JfQsNC00LDRgtC4INGA0L7Qt9C80ZbRgA==
+
     - for_example_data: !binary |
         0J3QsNC/0YDQuNC60LvQsNC0OiAmbGRxdW870LTQtdC90Ywg0L3QsNGA0L7Q
         tNC20LXQvdC90Y8gOiAxOTM1LTAxLTA4JmxkcXVvOywg0LDQsdC+ICZsZHF1
@@ -1548,10 +1551,9 @@
         0J7Qv9GD0LHQu9GW0LrRg9Cy0LDRgtC4
 
     - publish_choose_display: !binary |
-        0J/RgNC40LrQu9Cw0LTQuDog0YbQtSDQtNC+0LrRg9C80LXQvdGCINCy0LHR
-        g9C00L7QstCw0L3QuNC5ICVz0L3QsCDQstGB0Y4g0YHRgtC+0YDRltC90LrR
-        gyVzLCDQsCDRhtC1IC0g0YMg0LHQu9C+0YbRliDQtyAlc9GE0ZbQutGB0L7Q
-        stCw0L3QvtGOINGI0LjRgNC40L3QvtGOJXMu
+        0J/RgNC40LrQu9Cw0LTQuDog0LTQvtC60YPQvNC10L3RgiAlc9C90LAg0LLR
+        gdGOINGB0YLQvtGA0ZbQvdC60YMlcywg0YMg0LHQu9C+0YbRliDQtyAlc9GE
+        0ZbQutGB0L7QstCw0L3QvtGOINGI0LjRgNC40L3QvtGOJXMu
 
     - published: !binary |
         0L7Qv9GD0LHQu9GW0LrQvtCy0LDQvdC40Lk=
@@ -1872,6 +1874,9 @@
 
     - search: !binary |
         0J/QvtGI0YPQug==
+
+    - search_bar: !binary |
+        0J/QvtC70LUg0L/QvtGI0YPQutGD
 
     - searching_dd: !binary |
         0J/QvtGI0YPQuiDQtNC+0LrRg9C80LXQvdGC0ZbQsiDRliDQtNCw0L3QuNGF
