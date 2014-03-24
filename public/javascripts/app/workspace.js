@@ -76,53 +76,91 @@ dc.controllers.Workspace = Backbone.Router.extend({
     this.sidebar.add('account_badge', this.accountBadge.render().el);
   },
 
+  // Translated Search keys
+  searchKeySubstitutions: {
+    text:      _.t('text'),
+    account:   _.t('account'),
+    project:   _.t('project'),
+    filter:    _.t('filter'),
+    access:    _.t('access'),
+    title:     _.t('title'),
+    source:    _.t('source'),
+    group:     _.t('group'),
+    document:  _.t('document'),
+    projectid: _.t('projectid')
+  },
+
+  // Translated pre-defined search values
+  searchValueSubstitutions:{
+    access: {
+      'public':     _.t('public'),
+      'private':    _.t('private'),
+      organization: _.t('organization',1),
+      pending:      _.t('pending'),
+      error:        _.t('error')
+    },
+    filter: {
+      annotated:   _.t('annotated'),
+      popular:     _.t('popular'),
+      published:   _.t('published'),
+      unpublished: _.t('unpublished'),
+      restricted:  _.t('restricted')
+    }
+  },
+
   searchOptions : function() {
+    // store the translated search key and values locally
+    // so they can be referenced inside callbacks
+    var keys   = this.searchKeySubstitutions,
+        values = this.searchValueSubstitutions;
+
     return {
       unquotable : [
-        'text',
-        'account',
-        'document',
-        'filter',
-        'group',
-        'access',
-        'projectid'
+        keys.text,
+        keys.account,
+        keys.document,
+        keys.filter,
+        keys.group,
+        keys.access,
+        keys.projectid
       ],
       callbacks : {
-        search : function(query) {
+        search : function(query, facets ) {
           if (!dc.app.searcher.flags.outstandingSearch) {
             dc.app.paginator.hide();
             _.defer(dc.app.toolbar.checkFloat);
-            dc.app.searcher.search(query);
+            dc.app.searcher.search( query );
           }
           return false;
         },
         focus : function() {
           Documents.deselectAll();
         },
+
         valueMatches : function(category, searchTerm, cb) {
           switch (category) {
-            case 'account':
+          case keys.account:
               cb(Accounts.map(function(a) { return {value: a.get('slug'), label: a.fullName()}; }));
               break;
-            case 'project':
+            case keys.project:
               cb(Projects.pluck('title'));
               break;
-            case 'filter':
-              cb(['annotated', 'popular', 'published', 'unpublished', 'restricted']);
+            case keys.filter:
+              cb( _.values( values.filter ) );
               break;
-            case 'access':
-              cb(['public', 'private', 'organization', 'pending', 'error']);
+            case keys.access:
+              cb( _.values( values.access ) );
               break;
-            case 'title':
+            case keys.title:
               cb(_.uniq(Documents.pluck('title')));
               break;
-            case 'source':
+            case keys.source:
               cb(_.uniq(_.compact(Documents.pluck('source'))));
               break;
-            case 'group':
+            case keys.group:
               cb(Organizations.map(function(o) { return {value: o.get('slug'), label: o.get('name') }; }));
               break;
-            case 'document':
+            case keys.document:
               cb(Documents.map(function(d){ return {value: d.canonicalId(), label: d.get('title')}; }));
               break;
             default:
@@ -135,27 +173,17 @@ dc.controllers.Workspace = Backbone.Router.extend({
         },
         facetMatches : function(cb) {
           var prefixes = [
-            { label: 'project',       category: '' },
-            { label: 'text',          category: '' },
-            { label: 'title',         category: '' },
-            { label: 'description',   category: '' },
-            { label: 'source',        category: '' },
-            { label: 'account',       category: '' },
-            { label: 'document',      category: '' },
-            { label: 'filter',        category: '' },
-            { label: 'group',         category: '' },
-            { label: 'access',        category: '' },
-            { label: 'projectid',     category: '' }
-            // Entities
-            // { label: 'city',          category: '' },
-            // { label: 'country',       category: '' },
-            // { label: 'term',          category: '' },
-            // { label: 'state',         category: '' },
-            // { label: 'person',        category: '' },
-            // { label: 'place',         category: '' },
-            // { label: 'organization',  category: '' },
-            // { label: 'email',         category: '' },
-            // { label: 'phone',         category: '' }
+            { label: keys.project,     category: '' },
+            { label: keys.text,        category: '' },
+            { label: keys.title,       category: '' },
+            { label: keys.description, category: '' },
+            { label: keys.source,      category: '' },
+            { label: keys.account,     category: '' },
+            { label: keys.document,    category: '' },
+            { label: keys.filter,      category: '' },
+            { label: keys.group,       category: '' },
+            { label: keys.access,      category: '' },
+            { label: keys.projectid,   category: '' }
           ];
           var metadata = _.map(_.keys(Documents.reduce(function(memo, doc) {
             if (_.size(doc.get('data'))) _.extend(memo, doc.get('data'));

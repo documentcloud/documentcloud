@@ -265,19 +265,19 @@ dc.ui.Document = Backbone.View.extend({
   // Clicking on the contributor's name in the document tile searches for other
   // documents by this account.
   searchAccount : function() {
-    dc.app.searcher.addToSearch('account', this.model.get('account_slug'));
+    dc.app.searcher.addToSearch(_.t('account'), this.model.get('account_slug'));
   },
 
   // Clicking on the organization's name in the document tile searches for other
   // documents contributed by this organization.
   searchOrganization : function() {
-    dc.app.searcher.addToSearch('group', this.model.get('organization_slug'));
+    dc.app.searcher.addToSearch(_.t('group'), this.model.get('organization_slug'));
   },
 
   // Clicking on the source in the document tile searches for other documents
   // from this source.
   searchSource : function() {
-    dc.app.searcher.addToSearch('source', this.model.get('source').replace(/"/g, '\\"'));
+    dc.app.searcher.addToSearch(_.t('source'), this.model.get('source').replace(/"/g, '\\"'));
   },
 
   searchData : function(e) {

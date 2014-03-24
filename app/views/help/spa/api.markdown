@@ -69,6 +69,7 @@ file  	    | (requerido) ya sea el contenido de un archivo local o la  direcció
 title 		| (requerido) el titulo canónico del documento 		| Declaración de impuestos de Blagojevich 2008
 source		| (opcional) la fuente que produjo el documento 	|	U.S.  Attorney’s Office
 description	| (opcional) un párrafo de descripción detallada impuestos 	|  Esta muestra de la acusación es la declaración conjunta de del 2008 de Rod y Patti Blagojevich.
+language        | (optional) El lenguaje del documento. Se utilizará para determinar qué paquete de OCR que se utilizará para los archivos que requieren procesamiento de OCR. Tome por defecto "eng" | spa
 related_article | (opcional) la dirección URL del artículo asociado     | http://example.com/news/blago/2010-5-3.html
 published_url   |   (opcional) la dirección URL de la página en la que se integrará el documento | http://documents.example.com/blago-transcript.html
 access		    |(opcional), una de "publico", "privado", "organización",público predeterminado como  "privado" |
@@ -104,6 +105,9 @@ Recupere la representación canónica JSON de un documento en particular, según
       "id":"207-american-academy-v-napolitano",
       "title":"American Academy v. Napolitano",
       "pages":52,
+      "language":"eng",
+      "file_hash":"1c877b02d23dd1f49b55b9854e93a31c2df7e99d",
+      "display_language":"eng",
       "description":"Appeal from the judgment of the United States District Court, granting summary judgment...",
       "created_at":"Fri Dec 10 03:43:23 +0000 2010",
       "updated_at":"Fri Jan 14 14:49:11 +0000 2011",

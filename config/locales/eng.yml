@@ -1,6 +1,13 @@
 --- !omap
 - viewer: !omap
   - CLOSE: CLOSE
+  - add_note_instructions: Highlight a portion of the page, or click between pages
+      to create a note.
+  - add_private_note: Add a Private Note
+  - add_private_note_warn: No one apart from you is ever allowed to view your private
+      notes.
+  - add_public_note: Add a Public Note
+  - add_public_note_warn: Public notes are visible to everyone who views this document.
   - annotated_by: 'Annotated by: %s'
   - annotation_title: Annotation Title
   - cancel: Cancel
@@ -14,6 +21,7 @@
   - document: &1
     - Document
     - Documents
+  - document_tools: Document Tools
   - draft: Draft
   - draft_note_visible: This draft is only visible to you and collaborators.
   - edit_data: Edit Data
@@ -24,7 +32,9 @@
       you can %sinstall Google Chrome Frame%s.
   - link_to_note: Link to this note
   - loading: Loading
+  - log_in: Log In
   - log_out: Log Out
+  - logged_in_as: Logged in as %s
   - must_upgrade: 'To use the Document Viewer you need to upgrade your browser:'
   - next: Next
   - next_note: Next Annotation
@@ -72,6 +82,7 @@
   - zoom: Zoom
 - workspace: !omap
   - 'TRUE': 'TRUE'
+  - access: Access
   - access_level: Access Level
   - access_level_edit_closing: Changing the access level will take a few moments.
       The document will close while it processes.
@@ -106,6 +117,7 @@
   - analyze_x_docs_in_overview:
     - Analyze this Document in Overview
     - Analyze these Documents in Overview
+  - annotated: Annotated
   - annotated_by: 'Annotated by: %s'
   - annotated_documents: Annotated Documents
   - annotation: annotation
@@ -124,7 +136,7 @@
   - by_date: by date
   - by_length: by length
   - by_relevance: by relevance
-  - by_source: by_source
+  - by_source: by source
   - by_title: by title
   - calais_credit: Entities provided by OpenCalais
   - cancel: Cancel
@@ -272,6 +284,7 @@
   - entities_explained: The entities listed above are present within the documents
       that match your search. Select an entity to filter your search results.
   - entities_unavailable: Entities are temporarily unavailable.
+  - error: Error
   - explain_disable_account: "%1$s will not be able to log in to DocumentCloud. Public
       documents and annotations provided by %1$s will remain available. %2$sContact
       support%3$s to completely purge %1$s's account."
@@ -283,9 +296,11 @@
       on our list of %sfeatured reporting%s.
   - featured_reporting_list: You can find examples of embedded searches on our list
       of %sfeatured reporting%s.
+  - filter: Filter
   - finish: Finish
   - first_name: First name
   - first_page: First Page
+  - fixed_size: Fixed Size
   - for_example_data: 'For example: &ldquo;birth: 1935-01-08&rdquo;, or &ldquo;status:
       released&rdquo;'
   - force_ocr: Force OCR
@@ -295,6 +310,7 @@
   - freelancer: Freelancer
   - full_page: Full Page
   - future_documents_w_appear: Future documents %s will appear in your embed.
+  - group: Group
   - guided_tour: Guided Tour
   - guides_howtos: Guides & Howto's
   - has_no_entities: "%s has no entities to display."
@@ -322,7 +338,9 @@
   - length: Length
   - link_to_pdf: Link to the original PDF
   - link_to_pdf_help: Uncheck this box to remove the PDF link from the document viewer.
+  - log_in: Log In
   - log_out: Log Out
+  - logged_in_as: Logged in as %s
   - make_document_public: Make document public
   - make_documents_public:
     - Make document public.
@@ -362,6 +380,7 @@
   - no_project_doc_selected: No project or documents selected
   - no_projects_help: This account doesn't have any projects yet. To start one, click
       on the "New Project" button above.
+  - no_results_for: No Results for %s
   - no_reviewer_on_document:
     - There are no reviewers on this document.
     - There are no reviewers on these documents.
@@ -410,6 +429,7 @@
   - place: Places
   - please_enter_email: Please enter an email address.
   - please_enter_valid_email: Please enter a valid email address.
+  - popular: Popular
   - popular_documents: Popular Documents
   - preview_email: preview the email message
   - preview_search_embed_help: Before continuing, please take a moment to %spreview
@@ -436,10 +456,13 @@
   - private_to: Private to %s
   - private_to_organization_help: Only the people in your organization have access.
       (No freelancers.)
+  - project: Project
   - project_exists: A project named %s already exists
   - project_id: 'Project ID: %s'
   - project_owner: Project Owner
+  - projectid: Project ID
   - projects: Projects
+  - public: Public
   - public_access: Public Access
   - public_access_help: Anyone on the internet can search for and view the document.
   - public_documents_help: Select a contributing organization in the list above to
@@ -449,6 +472,7 @@
   - publish: Publish
   - publish_choose_display: Choose whether to display your document in a %sfull page
       layout%s or a %sfixed size box%s.
+  - published: Published
   - published_documents: Published Documents
   - published_url: Published URL
   - publishing_embedding: Publishing & Embedding
@@ -508,6 +532,7 @@
   - reprocess_text: Reprocess Text
   - resend_instructions: Resend Instructions
   - resend_welcome_email: Resend Welcome Email
+  - restricted: Restricted
   - review_x_documents:
     - Review "%2$s" on DocumentCloud
     - Review %d documents on DocumentCloud
@@ -539,6 +564,7 @@
   - save_text: Save Text
   - saved: Saved
   - search: Search
+  - search_bar: Search Bar
   - searching_dd: Searching Documents and Data
   - select_pages_remove: Select the pages you wish to remove.
   - select_single_to_embed: Please select a single document in order to create the
@@ -579,10 +605,12 @@
   - step_x_of_x: Step %d of %d
   - term: " Terms"
   - terms: Terms
-  - text_reprocess_help: "\"Reprocess\" this document to take advantage of improvements
-      to our text extraction tools. Choose \"Force OCR\" (optical character recognition)
+  - text: Text
+  - text_reprocess_help: '"Reprocess" this document to take advantage of improvements
+      to our text extraction tools. Choose "Force OCR" (optical character recognition)
       to ignore any embedded text information and use Tesseract before reprocessing.
-      The document will close while it's being rebuilt. Are you sure you want to proceed?"
+      The document will close while it''s being rebuilt. Are you sure you want to
+      proceed?'
   - text_tools: Text Tools
   - the_api: The DocumentCloud API
   - timeline_for_doc: Timeline for "%s"
@@ -594,6 +622,7 @@
   - title_of_document: Title of this document
   - tools_help: Our %s can help you get the most out of our %s and %s tools.
   - troubleshooting_uploads: Troubleshooting Failed Uploads
+  - unpublished: Unpublished
   - update_applied_all: Update applied to all files.
   - upload: Upload
   - upload_document: Upload Document
@@ -614,6 +643,9 @@
   - welcome_to_document_cloud: Welcome to DocumentCloud
   - width: Width
   - workspace: Workspace
+  - x_accounts:
+    - "%d account"
+    - "%d accounts"
   - x_collaborators: *4
   - x_documents: *5
   - x_has_documents: "%s Documents"
@@ -621,7 +653,7 @@
   - x_is_no_longer_a_reviewer_on_x:
     - "%2$s is no longer a reviewer on the Document"
     - "%2$s is no longer a reviewer on the %1$d Documents"
-  - x_is_not_published: "\"%s\" is not published."
+  - x_is_not_published: '"%s" is not published.'
   - x_mentions:
     - One Mention
     - "%d Mentions"
@@ -633,7 +665,10 @@
   - x_public_documents:
     - "%d Public Document"
     - "%d Public Documents"
-  - x_still_processing: "\"%s\" is still being processed. Please wait for it to finish."
+  - x_results:
+    - "%d Result"
+    - "%d Results"
+  - x_still_processing: '"%s" is still being processed. Please wait for it to finish.'
   - your_documents: Your Documents
   - your_organization: Your Organization
   - your_published_documents: Your Published Documents

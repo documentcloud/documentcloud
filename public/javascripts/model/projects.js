@@ -104,7 +104,7 @@ dc.model.Project = Backbone.Model.extend({
 
   // Return the title of this project as a search parameter.
   toSearchParam : function() {
-    return 'project: ' + dc.app.searcher.quote(this.get('title'));
+    return _.t('project') + ': ' + dc.app.searcher.quote(this.get('title'));
   },
 
   statistics : function() {

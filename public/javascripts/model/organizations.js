@@ -19,7 +19,7 @@ dc.model.Organization = Backbone.Model.extend({
   },
 
   query : function() {
-    return 'group: ' + this.get('slug');
+    return _.t('group') + ': ' + this.get('slug');
   },
 
   statistics : function() {
@@ -27,9 +27,9 @@ dc.model.Organization = Backbone.Model.extend({
     var notes = this.get('note_count');
     var accounts = this.members.size();
     var stats = [];
-    if (accounts) { stats.push(accounts + ' ' + dc.inflector.pluralize('account', accounts)); }
-    if (docs) {     stats.push(docs + ' ' + dc.inflector.pluralize('document', docs)); }
-    if (notes) {    stats.push(notes + ' ' + dc.inflector.pluralize('note', notes)); }
+    if (accounts) { stats.push( _.t('x_accounts', accounts ) ); }
+    if (docs) {     stats.push( _.t('x_documents', docs)     ); }
+    if (notes) {    stats.push( _.t('x_notes', notes)        ); }
     return stats.join(', ');
   }
 

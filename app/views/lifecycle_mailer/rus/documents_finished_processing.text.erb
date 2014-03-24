@@ -1,0 +1,19 @@
+<%= @account.full_name %> --
+<% form = (@count%10==1 && @count%100!=11 ? 0 : @count%10>=2 && @count%10<=4 && (@count%100<10 || @count%100>=20) ? 1 : 2) %>
+
+<% if 0 == form %>
+<%= @count %> документ был успешно обработан и теперь его можно посмотреть и отредактировать на DocumentCloud.
+
+<% elsif 1 == form %>
+
+<%= @count %> документа было успешно обработано и теперь их можно посмотреть и отредактировать на DocumentCloud.
+
+<% else %>
+
+<%= @count %> документов было успешно обработано и теперь их можно посмотреть и отредактировать на DocumentCloud.
+
+<% end %>
+
+<%= DC.server_root(:ssl => false) %>
+
+PS. Если вам нужна помошь в использовании DocumentCloud, вы можете почитать документацию (http://www.documentcloud.org/help) или написать на support@documentcloud.org.

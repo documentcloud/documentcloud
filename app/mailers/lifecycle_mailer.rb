@@ -10,12 +10,12 @@ class LifecycleMailer < ActionMailer::Base
   # Mail instructions for a new account, with a secure link to activate,
   # set their password, and log in.
   def login_instructions(account, admin=nil)
-    choose_translated_template( account.language )    
     @admin   = admin
     @account = account
     options = {
-      :subject => "Welcome to DocumentCloud",
-      :to      => @account.email
+      :subject       => "Welcome to DocumentCloud",
+      :to            => @account.email,
+      :template_path => translation_path_for( account.language )
     }
     account.ensure_security_key!
     options[ :cc  ] = @admin.email if @admin
@@ -23,20 +23,19 @@ class LifecycleMailer < ActionMailer::Base
   end
 
   def membership_notification(account, organization, admin=nil)
-    choose_translated_template( account.language )    
     @admin   = admin
     @account = account
     @organization_name = organization.name
     mail(
-      :subject  =>  "You have been added to #{organization.name}",
-      :to=> account.email
+      :subject       =>  "You have been added to #{organization.name}",
+      :to            => account.email,
+      :template_path => translation_path_for( account.language )
     )
   end
 
   # Mail instructions for a document review, with a secure link to the
   # document viewer, where the user can annotate the document.
   def reviewer_instructions(documents, inviter_account, reviewer_account=nil, message=nil, key='')
-    choose_translated_template( account.language )    
     subject =  if documents.count == 1
                  "Review \"#{documents[0].title}\" on DocumentCloud"
                else
@@ -51,8 +50,9 @@ class LifecycleMailer < ActionMailer::Base
     @reviewer_account     = reviewer_account
     @message              = message
     options = {
-      :cc => inviter_account.email,
-      :subject=> subject
+      :cc            => inviter_account.email,
+      :subject       => subject,
+      :template_path => translation_path_for( inviter_account.language )
     }
     options[:to] = reviewer_account.email if reviewer_account
     mail( options )
@@ -60,12 +60,12 @@ class LifecycleMailer < ActionMailer::Base
 
   # Mail instructions for resetting an active account's password.
   def reset_request(account)
-    choose_translated_template( account.language )    
     @account = account
     account.ensure_security_key!
     @key     = account.security_key.key
-    mail( :to      => account.email,
-          :subject => "DocumentCloud password reset" )
+    mail({ :to => account.email, :subject => "DocumentCloud password reset",
+           :template_path => translation_path_for( account.language )
+    })
   end
 
   # When someone sends a message through the "Contact Us" form, deliver it to
@@ -98,10 +98,10 @@ class LifecycleMailer < ActionMailer::Base
   # When a batch of uploaded documents has finished processing, email
   # the account to let them know.
   def documents_finished_processing(account, document_count)
-    choose_translated_template( account.language )
     @account  = account
     @count    = document_count
-    mail({ :to => account.email, :subject => "Your documents are ready" })
+    mail({:to => account.email, :subject => "Your documents are ready",
+          :template_path => translation_path_for( account.language ) })
   end
 
   # Accounts and Document CSVs mailed out every 1st and 15th of the month
@@ -143,21 +143,10 @@ class LifecycleMailer < ActionMailer::Base
 
   # this will break if HTML format emails are ever used.
   # If we do, this will have to check text.html.erb extension as well
-  def relative_view_path_for_language( view, language )
-    "lifecycle_mailer/#{language}/#{view}.text.plain.erb" 
-  end
-
-  def abs_view_path_for_language( view, language )
-    "#{RAILS_ROOT}/app/views/" + relative_view_path_for_language(view,language)
-  end
-
-  def choose_translated_template( language )
-    view = @template
-    if language != DC::Language::DEFAULT && File.exists?( abs_view_path_for_language( view, language ) )
-      @template = relative_view_path_for_language( view, language )
-    else
-      @template = relative_view_path_for_language( view, DC::Language::DEFAULT )
-    end
+  def translation_path_for( language )
+    view = action_name
+    path = Rails.root.join('app','views', 'lifecycle_mailer', language, "#{view}.text.erb" )
+    "lifecycle_mailer/" + ( path.exist? ? language : DC::Language::DEFAULT )
   end
 
 

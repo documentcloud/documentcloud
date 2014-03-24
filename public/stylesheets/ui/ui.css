@@ -511,6 +511,7 @@ textarea.text_area {
     margin-bottom: 29px;
     font-size: 16px;
     text-align: left;
+    max-width: 450px;
   }
     .dialog span.subtitle {
       color: #333;
@@ -530,8 +531,8 @@ textarea.text_area {
     }
   .dialog .information {
     position: absolute;
-    padding: 5px 10px;
-    max-width: 270px;
+    padding: 5px 0;
+    max-width: 250px;
     top: 29px; right: 20px;
     font-size: 10px;
     color: #ccc;

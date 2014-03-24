@@ -825,7 +825,8 @@ class Document < ActiveRecord::Base
       :project_ids         => project_ids,
       :char_count          => char_count,
       :data                => data,
-      :language            => language
+      :language            => language,
+      :file_hash           => file_hash
     }
     if opts[:annotations]
       json[:annotations_url] = annotations_url if commentable?(opts[:account])
@@ -865,9 +866,7 @@ class Document < ActiveRecord::Base
     doc['updated_at']         = updated_at.to_formatted_s(:rfc822)
     doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
     doc['language']           = language
-    if commentable?(options[:account])
-      doc['annotations_url']  = annotations_url
-    end
+    doc['file_hash']          = file_hash
     if options[:contributor]
       doc['contributor']      = account_name
       doc['contributor_organization'] = organization_name

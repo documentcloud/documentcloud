@@ -1,6 +1,13 @@
 --- !omap
 - viewer: !omap
   - CLOSE: CERRAR
+  - add_note_instructions: Destacar una parte de la página, o hacer clic entre páginas
+      para crear una nota.
+  - add_private_note: Añadir una nota privada.
+  - add_private_note_warn: Nadie más que tú jamas podrá ver tus notas privadas.
+  - add_public_note: Añadir una Nota Pública
+  - add_public_note_warn: Notas Públicas son visibles para todos los que vean este
+      documento.
   - annotated_by: 'Anotado por: %s'
   - annotation_title: Título de Anotación
   - cancel: Cancelar
@@ -14,6 +21,7 @@
   - document: &1
     - Documento
     - Documentos
+  - document_tools: Herramientas
   - draft: Borrador
   - draft_note_visible: Esta nota en borrador sólo la pueden ver tú y tus colaboradores.
   - edit_data: Editar datos
@@ -24,7 +32,10 @@
       %sinstalar Google Chrome Frame%s.
   - link_to_note: Crear enlace a esta nota
   - loading: Cargando
+  - log_in: |
+      Iniciar sesión
   - log_out: Terminar la sesión
+  - logged_in_as: Conectado como %s
   - must_upgrade: 'Necesitas actualizar tu navegador para usar el marco de inspectar
       los documentos:'
   - next: Próximo
@@ -73,6 +84,7 @@
   - zoom: Tamaño
 - workspace: !omap
   - 'TRUE': Verdadero
+  - access: Acceso
   - access_level: Nivel de Acceso
   - access_level_edit_closing: Cambiar el nivel de acceso tardará unos momentos. Se
       va a cerrar el documento durante ese proceso.
@@ -108,6 +120,7 @@
   - analyze_x_docs_in_overview:
     - Analyze this Document in Overview
     - Analyze these Documents in Overview
+  - annotated: 'Anotado '
   - annotated_by: 'Anotado por: %s'
   - annotated_documents: Documentos Anotados
   - annotation: anotación
@@ -161,6 +174,7 @@
   - delete_documents:
     - Borrar Documento
     - Borrar Documentos
+  - deleting_documents: 'Eliminación de documentos ... '
   - demo_embed_error: Las cuentas demo no se les permite integrar documentos. Póngase
       en %scontacto%s con nosotros si necesita una cuenta con todas las funciones.
       Ver %sun ejemplo%s de código de inserción aquí
@@ -279,6 +293,7 @@
   - entities_explained: Las entidades listadas están presentes adentro de los documentos
       relacionados con tu búsqueda. Selecciona una entidad para filtrar estos resultados.
   - entities_unavailable: Entidades no están disponibles en estos momentos.
+  - error: 'Error '
   - explain_disable_account: "%1$s no podrá acceder a DocumentCloud. Documentos y
       anotaciones públicas de %1$s permanecerán disponibles. %2$sContactar a soporte
       técnico%3$s para purgar completamente la cuenta de %1$s."
@@ -289,9 +304,11 @@
       nuestra lista de %sreportajes destacados%s.
   - featured_reporting_list: Puedes encontrar ejemplos de búsquedas incrustadas en
       nuestra lista de %sreportajes destacados%s.
+  - filter: 'Filtro '
   - finish: Acabados
   - first_name: Nombre
   - first_page: Primera Página
+  - fixed_size: 'Tamaño fijo '
   - for_example_data: 'Por ejemplo: &ldquo;birth: 1935-01-08&rdquo;, or &ldquo;status:
       released&rdquo;'
   - force_ocr: Forzar OCR
@@ -301,6 +318,7 @@
   - freelancer: Freelancer
   - full_page: Página Completa
   - future_documents_w_appear: Documentos en el futuro %s aparecerán en tu incrustado.
+  - group: Grupo
   - guided_tour: Tur Guiado
   - guides_howtos: Guías
   - has_no_entities: "%s no dispone de entidades para revisar."
@@ -331,7 +349,10 @@
   - link_to_pdf: Enlace al PDF original
   - link_to_pdf_help: Haz clic en esta caja para quitar el enlace al PDF original
       del marco.
+  - log_in: |
+      Iniciar sesión
   - log_out: Terminar la sesión
+  - logged_in_as: Conectado como %s
   - make_document_public: Permitir acceso público al documento
   - make_documents_public: Cambiar acceso a público de %slos documentos%s.
   - make_public_on: Cambiar acceso a público
@@ -358,6 +379,9 @@
   - new_project: Proyecto Nuevo
   - next: Próximo
   - no_appear_until_publish: no aparecerá hasta que se publique.
+  - no_dates_for_timeline:
+    - 'Fuimos incapaces de reconocer cualquier fecha para %2$s. '
+    - 'Ninguno de los documentos %d contenía fechas reconocibles. '
   - no_duplicate_section: No se puede duplicar una sección.
   - no_embed_permission: Usted no tiene permiso para insertar el documento.
   - no_entities_found: Ninguna entidad resultó relacionada con tu búsqueda.
@@ -366,6 +390,7 @@
   - no_project_doc_selected: No has seleccionado un proyecto o documentos
   - no_projects_help: Esta cuenta aun no tiene proyectos. Para crear uno, haz click
       en el botón de "Proyecto Nuevo" arriba.
+  - no_results_for: 'No hay resultados para %s '
   - no_reviewer_on_document:
     - No hay revisores en este documento.
     - No hay revisores en estos documentos.
@@ -414,6 +439,7 @@
   - place: 'Lugares '
   - please_enter_email: Introduzca una dirección de correo electrónico.
   - please_enter_valid_email: Introduzca una dirección de correo electrónico válida.
+  - popular: 'Popular '
   - popular_documents: Documentos Populares
   - preview_email: Revisar el mensaje
   - preview_search_embed_help: Antes de continuar, por favor toma el tiempo de %s
@@ -439,10 +465,13 @@
   - private_note_visible: This private note is only visible to you.
   - private_to: Privado de %s
   - private_to_organization_help: Acceso limitado a tu organización. (No freelancers.)
+  - project: Proyecto
   - project_exists: Un proyecto con el nombre %s ya existe
   - project_id: 'ID de Proyecto: %s'
   - project_owner: Dueño del Proyecto
+  - projectid: Project ID
   - projects: Proyectos
+  - public: 'Público '
   - public_access: Acceso Público
   - public_access_help: Cualquier usuario de la Internet puede buscar y ver este documento.
   - public_documents_help: Selecciona una organización de la lista arriba para ver
@@ -452,6 +481,7 @@
   - publish: Publicar
   - publish_choose_display: Elije si quieres ofrecer tu documento de %spágina completa%s
       o si quieres %suna caja de tamaño específico%s.
+  - published: 'Publicado '
   - published_documents: Documentos Publicados
   - published_url: URL Publicado
   - publishing_embedding: Publicar e Incrustar
@@ -511,6 +541,7 @@
   - reprocess_text: Reprocesar Texto
   - resend_instructions: Reenviar Instrucciones
   - resend_welcome_email: Reenviar Correo de Bienvenida
+  - restricted: Restringido
   - review_x_documents:
     - Crítica "%2$s" en DocumentCloud
     - Revise %d documentos en DocumentCloud
@@ -544,6 +575,7 @@
   - save_text: Guardar Texto
   - saved: Guardar
   - search: Buscar
+  - search_bar: barra de búsqueda
   - searching_dd: Busquedas de Documentos y Datos
   - select_pages_remove: Selecciona las páginas que quieres eliminar.
   - select_single_to_embed: Por favor elije a un documento para crear un incrustado.
@@ -584,6 +616,7 @@
   - step_x_of_x: Paso %d de %d
   - term: Condiciones
   - terms: Terminos de Uso
+  - text: Texto
   - text_reprocess_help: Reprocesa este documento para aprovechar de mejoras en nuestras
       herramientas de extracción de texto. Elije "Forzar OCR" (optical character recognition)
       para ignorar cualquier texto incrustado en el documento y usar Tesseract antes
@@ -601,6 +634,7 @@
   - tools_help: Nuestras %s te pueden ayudar a sacar el máximo provecho de nuestros
       %s y %s herramientas.
   - troubleshooting_uploads: Solucionar Subida de Documentos Decaido
+  - unpublished: 'Inédito '
   - update_applied_all: Actualización aplicada a todos los documentos.
   - upload: Subir
   - upload_document: Subir Documento
@@ -621,6 +655,9 @@
   - welcome_to_document_cloud: 'Bienvenido a DocumentCloud '
   - width: Anchura
   - workspace: "Área de trabajo"
+  - x_accounts:
+    - "%d cuenta "
+    - "%d cuentas"
   - x_collaborators: *4
   - x_documents: *5
   - x_has_documents: "%s Documentos"
@@ -628,7 +665,7 @@
   - x_is_no_longer_a_reviewer_on_x:
     - "%2$s ya no es un crítico en el documento"
     - "%2$s ya no es un crítico de los %1$d Documentos"
-  - x_is_not_published: "\"%s\" no se publica."
+  - x_is_not_published: '"%s" no se publica.'
   - x_mentions:
     - Una Mención
     - "%d Menciones"
@@ -640,7 +677,10 @@
   - x_public_documents:
     - "%d Documento Público"
     - "%d Documentos Públicos"
-  - x_still_processing: "\"%s\" está siendo procesada. Espere a que termine por favor."
+  - x_results:
+    - "%d Resultado "
+    - "%d Resultados"
+  - x_still_processing: '"%s" está siendo procesada. Espere a que termine por favor.'
   - your_documents: Tus Documentos
   - your_organization: Tu Organización
   - your_published_documents: Tus Documentos Publicados

@@ -66,16 +66,17 @@ You can either upload a local file using a standard multi-part upload, or tell D
 
 Parameter     | Description           |  Example
 --------------|-----------------------|--------------
-file | (required) either the contents of a local file, or the URL where the document can be found | --
-title | (required) the document's canonical title | 2008 Blagojevich Tax Return
-source | (optional) the source who produced the document | U.S. Attorney's Office
-description | (optional) a paragraph of detailed description | This prosecution exhibit is the 2008 joint tax return for Rod and Patti Blagojevich. It shows their total income for the year was $284,000.
+file            | (required) either the contents of a local file, or the URL where the document can be found | --
+title           | (required) the document's canonical title | 2008 Blagojevich Tax Return
+source          | (optional) the source who produced the document | U.S. Attorney's Office
+description     | (optional) a paragraph of detailed description | This prosecution exhibit is the 2008 joint tax return for Rod and Patti Blagojevich. It shows their total income for the year was $284,000.
+language        | (optional) The language of the document.  Will be used to determine what OCR package to use for files that require OCR processing. Default is: "eng" | eng
 related_article | (optional) the URL of the article associated with the document | http://example.com/news/blago/2010-5-3.html
-published_url | (optional) the URL of the page on which the document will be embedded | http://documents.example.com/blago-transcript.html
-access | (optional) one of "public", "private", "organization", defaults to "private" | public
-project | (optional) a numeric Project id, to upload the document into an existing project. | 1012
-data | (optional) a hash of arbitrary key/value data pairs | {"data": {"status": "active"}} (json) <br /> data[status]=active (query string)
-secure | (optional) If you're dealing with a truly sensitive document, pass the "secure" parameter in order to prevent the document from being sent to OpenCalais for entity extraction. | true
+published_url   | (optional) the URL of the page on which the document will be embedded | http://documents.example.com/blago-transcript.html
+access          | (optional) one of "public", "private", "organization", defaults to "private" | public
+project         | (optional) a numeric Project id, to upload the document into an existing project. | 1012
+data            | (optional) a hash of arbitrary key/value data pairs | {"data": {"status": "active"}} (json) <br /> data[status]=active (query string)
+secure          | (optional) If you're dealing with a truly sensitive document, pass the "secure" parameter in order to prevent the document from being sent to OpenCalais for entity extraction. | true
 
 ### Tips
 
@@ -104,6 +105,8 @@ Retrieve the canonical JSON representation of a particular document, as specifie
       "id":"207-american-academy-v-napolitano",
       "title":"American Academy v. Napolitano",
       "pages":52,
+      "language":"eng",
+      "display_language":"eng",
       "description":"Appeal from the judgment of the United States District Court, granting summary judgment...",
       "created_at":"Fri Dec 10 03:43:23 +0000 2010",
       "updated_at":"Fri Jan 14 14:49:11 +0000 2011",

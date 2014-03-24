@@ -13,7 +13,7 @@ USERNAME=ubuntu
 chown -R $USERNAME /home/$USERNAME
 cd /home/$USERNAME/documentcloud
 sudo -u $USERNAME git pull
-rake gems:install
+bundle install
 chown -R $USERNAME /home/$USERNAME
 
 # TODO warm cache

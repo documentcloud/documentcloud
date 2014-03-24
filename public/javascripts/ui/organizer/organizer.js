@@ -100,15 +100,15 @@ dc.ui.Organizer = Backbone.View.extend({
   },
 
   showAnnotatedDocuments : function() {
-    dc.app.searcher.search('filter: annotated');
+    dc.app.searcher.search(_.t('filter') + ': annotated');
   },
 
   showPublishedDocuments : function() {
-    dc.app.searcher.search('filter: published');
+    dc.app.searcher.search(_.t('filter') + ': published');
   },
 
   showPopularDocuments : function() {
-    dc.app.searcher.search('filter: popular');
+    dc.app.searcher.search(_.t('filter') + ': popular');
   },
 
   showAccountDocuments : function(e) {

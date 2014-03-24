@@ -16,7 +16,8 @@ module DC
       end
 
       def entity?
-        DC::ENTITY_KINDS.include? @kind.downcase.to_sym
+        #DC::ENTITY_KINDS.include? @kind.downcase.to_sym
+        false
       end
 
       def to_s

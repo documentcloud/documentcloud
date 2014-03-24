@@ -166,11 +166,9 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     } else {
       var pages = Math.max(1, Math.ceil(this.publicCount / perPage));
       var label = [
-        this.publicCount,
-        dc.inflector.pluralize(' document', this.publicCount),
+        _.t('x_documents', this.publicCount),
         ' / ',
-        pages,
-        dc.inflector.pluralize(' page', pages)
+        _.t('x_pages', pages )
       ].join('');
     }
 
