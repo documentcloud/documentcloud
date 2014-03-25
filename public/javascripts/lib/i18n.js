@@ -168,7 +168,10 @@
     // if the match is an array then perform an additional lookup
     // using the pluralization lookup rules from the pack
     if ( _.isArray( match ) ){
-      match = match[ pack.pluralizer( _.isUndefined(args) ? 1 : args ) ];
+      // find either the indicated form, or the last form present if the proper
+      // plural form is missing (because the translator didn't fill it out).
+      var index = _.min([pack.pluralizer( _.isUndefined(args) ? 1 : args ), match.length-1 ]);
+      match = match[ index ];
     }
 
     return this.sprintf.with_array( match, _.toArray( arguments ).slice(1) );
