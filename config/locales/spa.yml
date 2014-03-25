@@ -18,9 +18,7 @@
   - delete: Borrar
   - description: Descripción
   - dl_as_pdf: Descargar este documento en PDF
-  - document: &1
-    - Documento
-    - Documentos
+  - document: Documento
   - document_tools: Herramientas
   - draft: Borrador
   - draft_note_visible: Esta nota en borrador sólo la pueden ver tú y tus colaboradores.
@@ -40,14 +38,14 @@
       los documentos:'
   - next: Próximo
   - next_note: Próxima Anotación
-  - note: &2
+  - note: &1
     - Nota
     - Notas
   - note_by: Nota por %s
   - of: de
   - organizations_documents: Documentos de %s
   - original_document_pdf: Documento Original (PDF)
-  - page: &3
+  - page: &2
     - Página
     - Páginas
   - pg: p.
@@ -69,16 +67,16 @@
   - toggle_description: Mostrar Descripción
   - untitled_note: Nota sin Título
   - view_fullscreen: Ver Documento en Pantall Completa
-  - x_collaborators: &4
+  - x_collaborators: &3
     - Un Colaborador
     - "%d Colaboradores"
-  - x_documents: &5
+  - x_documents: &4
     - "%d Documento"
     - "%d Documentos"
-  - x_notes: &6
+  - x_notes: &5
     - Una Nota
     - "%d Notas"
-  - x_pages: &7
+  - x_pages: &6
     - Una Página
     - "%d Páginas"
   - zoom: Tamaño
@@ -183,7 +181,7 @@
   - description: Descripción
   - disable: Desactivar
   - disabled: Desactivado
-  - document: *1
+  - document: Documento
   - document_access_updated:
     - Acceso actualizado para este documento
     - Acceso actualizado para %d documentos
@@ -402,7 +400,7 @@
   - not_found_project: Este proyecto no tiene documentos.
   - not_found_published: Esta organización no tiene documentos.
   - not_found_search: No hay documentos relacionados con tu busqueda.
-  - note: *2
+  - note: *1
   - note_ellipsis: Nota ...
   - note_embed_private: 'Este documento es privado: notas en este documento no se
       podrán ver hasta que sea público.  Cambiar el %snivel de acceso%s ahora o'
@@ -423,7 +421,7 @@
     - 'Organizaciones '
   - organizations_documents: Documentos de %s
   - over_x_mentions: Por %d menciones
-  - page: *3
+  - page: *2
   - page_ellipsis: Página ...
   - page_tools: Herramientas de Página
   - pages_are_being_removed: Se están eliminando las páginas. Por favor, cierre el
@@ -658,19 +656,19 @@
   - x_accounts:
     - "%d cuenta "
     - "%d cuentas"
-  - x_collaborators: *4
-  - x_documents: *5
+  - x_collaborators: *3
+  - x_documents: *4
   - x_has_documents: "%s Documentos"
   - x_invited_to_review_x: "%s te ha invitado a revisar %s"
   - x_is_no_longer_a_reviewer_on_x:
     - "%2$s ya no es un crítico en el documento"
     - "%2$s ya no es un crítico de los %1$d Documentos"
-  - x_is_not_published: '"%s" no se publica.'
+  - x_is_not_published: "\"%s\" no se publica."
   - x_mentions:
     - Una Mención
     - "%d Menciones"
-  - x_notes: *6
-  - x_pages: *7
+  - x_notes: *5
+  - x_pages: *6
   - x_private_documents:
     - "%d Documento Privado"
     - "%d Documentos Privados"
@@ -680,7 +678,7 @@
   - x_results:
     - "%d Resultado "
     - "%d Resultados"
-  - x_still_processing: '"%s" está siendo procesada. Espere a que termine por favor.'
+  - x_still_processing: "\"%s\" está siendo procesada. Espere a que termine por favor."
   - your_documents: Tus Documentos
   - your_organization: Tu Organización
   - your_published_documents: Tus Documentos Publicados

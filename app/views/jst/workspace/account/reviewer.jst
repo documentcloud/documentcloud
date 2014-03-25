@@ -58,8 +58,9 @@
 <td class="last nowrap">
   <div class="display">
     <% if (documentsCount && documentsCount > 1) { %>
-    <span class="document_count">sharing <%= documentCount %>/<%= documentsCount %>
-      <%= _.t('document', documentsCount) %></span>
+    <span class="document_count">
+      <%= _.t('sharing_x_of_x_documents', documentCount, documentsCount) %>
+    </span>
     <% } else if (!account.get('needsEmail')) { %>
     <span class="resend_reviewer text_link" data-account-id="<%= account.id %>"> <%= _.t('resend_instructions') %> </span>
     <% } %>

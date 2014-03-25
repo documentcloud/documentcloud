@@ -18,9 +18,7 @@
   - delete: Delete
   - description: Description
   - dl_as_pdf: Download this document as a PDF
-  - document: &1
-    - Document
-    - Documents
+  - document: Document
   - document_tools: Document Tools
   - draft: Draft
   - draft_note_visible: This draft is only visible to you and collaborators.
@@ -38,14 +36,14 @@
   - must_upgrade: 'To use the Document Viewer you need to upgrade your browser:'
   - next: Next
   - next_note: Next Annotation
-  - note: &2
+  - note: &1
     - Note
     - Notes
   - note_by: Note by %s
   - of: of
   - organizations_documents: Documents belonging to %s
   - original_document_pdf: Original Document (PDF)
-  - page: &3
+  - page: &2
     - Page
     - Pages
   - pg: p.
@@ -67,16 +65,16 @@
   - toggle_description: Toggle Description
   - untitled_note: Untitled Note
   - view_fullscreen: View Document in Fullscreen
-  - x_collaborators: &4
+  - x_collaborators: &3
     - One Collaborator
     - "%d Collaborators"
-  - x_documents: &5
+  - x_documents: &4
     - "%d Document"
     - "%d Documents"
-  - x_notes: &6
+  - x_notes: &5
     - "%d Note"
     - "%d Notes"
-  - x_pages: &7
+  - x_pages: &6
     - "%d Page"
     - "%d Pages"
   - zoom: Zoom
@@ -176,7 +174,7 @@
   - description: Description
   - disable: Disable
   - disabled: Disabled
-  - document: *1
+  - document: Document
   - document_access_updated:
     - Access updated for the document
     - Access updated for %d documents
@@ -392,7 +390,7 @@
   - not_found_project: This project does not contain any documents.
   - not_found_published: This organization does not have any documents.
   - not_found_search: Your search did not match any documents.
-  - note: *2
+  - note: *1
   - note_ellipsis: Note ...
   - note_embed_private: 'This document is private: notes on this document will not
       be visible to the public until the document is public.  Change the %saccess
@@ -414,7 +412,7 @@
     - " Organizations"
   - organizations_documents: Documents belonging to %s
   - over_x_mentions: Over %d mentions
-  - page: *3
+  - page: *2
   - page_ellipsis: Page ...
   - page_tools: Page Tools
   - pages_are_being_removed: The pages are being removed. Please close this document.
@@ -584,6 +582,7 @@
     - Share this Document
     - Share these Documents
   - shared_with_you_by: Shared with you by %s
+  - sharing_x_of_x_documents: Sharing %d/%d documents
   - show_all: Show all
   - show_all_x_pages:
     - Show single page
@@ -606,11 +605,10 @@
   - term: " Terms"
   - terms: Terms
   - text: Text
-  - text_reprocess_help: '"Reprocess" this document to take advantage of improvements
-      to our text extraction tools. Choose "Force OCR" (optical character recognition)
+  - text_reprocess_help: "\"Reprocess\" this document to take advantage of improvements
+      to our text extraction tools. Choose \"Force OCR\" (optical character recognition)
       to ignore any embedded text information and use Tesseract before reprocessing.
-      The document will close while it''s being rebuilt. Are you sure you want to
-      proceed?'
+      The document will close while it's being rebuilt. Are you sure you want to proceed?"
   - text_tools: Text Tools
   - the_api: The DocumentCloud API
   - timeline_for_doc: Timeline for "%s"
@@ -646,19 +644,19 @@
   - x_accounts:
     - "%d account"
     - "%d accounts"
-  - x_collaborators: *4
-  - x_documents: *5
+  - x_collaborators: *3
+  - x_documents: *4
   - x_has_documents: "%s Documents"
   - x_invited_to_review_x: "%s has invited you to review %s"
   - x_is_no_longer_a_reviewer_on_x:
     - "%2$s is no longer a reviewer on the Document"
     - "%2$s is no longer a reviewer on the %1$d Documents"
-  - x_is_not_published: '"%s" is not published.'
+  - x_is_not_published: "\"%s\" is not published."
   - x_mentions:
     - One Mention
     - "%d Mentions"
-  - x_notes: *6
-  - x_pages: *7
+  - x_notes: *5
+  - x_pages: *6
   - x_private_documents:
     - "%d Private Document"
     - "%d Private Documents"
@@ -668,7 +666,7 @@
   - x_results:
     - "%d Result"
     - "%d Results"
-  - x_still_processing: '"%s" is still being processed. Please wait for it to finish.'
+  - x_still_processing: "\"%s\" is still being processed. Please wait for it to finish."
   - your_documents: Your Documents
   - your_organization: Your Organization
   - your_published_documents: Your Published Documents
