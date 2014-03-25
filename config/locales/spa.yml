@@ -16,9 +16,7 @@
     - delete: Borrar
     - description: "Descripci\xC3\xB3n"
     - dl_as_pdf: Descargar este documento en PDF
-    - document: &id001 
-        - Documento
-        - Documentos
+    - document: Documento
     - document_tools: Herramientas
     - draft: Borrador
     - draft_note_visible: "Esta nota en borrador s\xC3\xB3lo la pueden ver t\xC3\xBA y tus colaboradores."
@@ -35,14 +33,14 @@
     - must_upgrade: "Necesitas actualizar tu navegador para usar el marco de inspectar los documentos:"
     - next: "Pr\xC3\xB3ximo"
     - next_note: "Pr\xC3\xB3xima Anotaci\xC3\xB3n"
-    - note: &id002 
+    - note: &id001 
         - Nota
         - Notas
     - note_by: Nota por %s
     - of: de
     - organizations_documents: Documentos de %s
     - original_document_pdf: Documento Original (PDF)
-    - page: &id003 
+    - page: &id002 
         - "P\xC3\xA1gina"
         - "P\xC3\xA1ginas"
     - pg: p.
@@ -62,16 +60,16 @@
     - toggle_description: "Mostrar Descripci\xC3\xB3n"
     - untitled_note: "Nota sin T\xC3\xADtulo"
     - view_fullscreen: Ver Documento en Pantall Completa
-    - x_collaborators: &id004 
+    - x_collaborators: &id003 
         - Un Colaborador
         - "%d Colaboradores"
-    - x_documents: &id005 
+    - x_documents: &id004 
         - "%d Documento"
         - "%d Documentos"
-    - x_notes: &id006 
+    - x_notes: &id005 
         - Una Nota
         - "%d Notas"
-    - x_pages: &id007 
+    - x_pages: &id006 
         - "Una P\xC3\xA1gina"
         - "%d P\xC3\xA1ginas"
     - zoom: "Tama\xC3\xB1o"
@@ -161,7 +159,7 @@
     - description: "Descripci\xC3\xB3n"
     - disable: Desactivar
     - disabled: Desactivado
-    - document: *id001
+    - document: Documento
     - document_access_updated: 
       - Acceso actualizado para este documento
       - Acceso actualizado para %d documentos
@@ -342,7 +340,7 @@
     - not_found_project: Este proyecto no tiene documentos.
     - not_found_published: "Esta organizaci\xC3\xB3n no tiene documentos."
     - not_found_search: No hay documentos relacionados con tu busqueda.
-    - note: *id002
+    - note: *id001
     - note_ellipsis: Nota ...
     - note_embed_private: "Este documento es privado: notas en este documento no se podr\xC3\xA1n ver hasta que sea p\xC3\xBAblico.  Cambiar el %snivel de acceso%s ahora o"
     - notes_hidden_while_redacting: "Cualquier notas que existan ser\xC3\xA1n ocultadas mientras se guarda la redacci\xC3\xB3n."
@@ -361,7 +359,7 @@
       - "Organizaciones "
     - organizations_documents: Documentos de %s
     - over_x_mentions: Por %d menciones
-    - page: *id003
+    - page: *id002
     - page_ellipsis: "P\xC3\xA1gina ..."
     - page_tools: "Herramientas de P\xC3\xA1gina"
     - pages_are_being_removed: "Se est\xC3\xA1n eliminando las p\xC3\xA1ginas. Por favor, cierre el documento."
@@ -562,8 +560,8 @@
     - x_accounts: 
       - "%d cuenta "
       - "%d cuentas"
-    - x_collaborators: *id004
-    - x_documents: *id005
+    - x_collaborators: *id003
+    - x_documents: *id004
     - x_has_documents: "%s Documentos"
     - x_invited_to_review_x: "%s te ha invitado a revisar %s"
     - x_is_no_longer_a_reviewer_on_x: 
@@ -573,8 +571,8 @@
     - x_mentions: 
       - "Una Menci\xC3\xB3n"
       - "%d Menciones"
-    - x_notes: *id006
-    - x_pages: *id007
+    - x_notes: *id005
+    - x_pages: *id006
     - x_private_documents: 
       - "%d Documento Privado"
       - "%d Documentos Privados"

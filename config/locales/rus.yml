@@ -60,12 +60,8 @@
         0KHQutCw0YfQsNGC0Ywg0Y3RgtC+0YIg0LTQvtC60YPQvNC10L3RgiDQsiDQ
         stC40LTQtSBQREY=
 
-    - document: &id001 
-        - !binary |
-          0JTQvtC60YPQvNC10L3Rgg==
-
-        - !binary |
-          0JTQvtC60YPQvNC10L3RgtGL
+    - document: !binary |
+        0JTQvtC60YPQvNC10L3Rgg==
 
     - document_tools: !binary |
         0JjQvdGB0YLRgNGD0LzQtdC90YLRiw==
@@ -124,7 +120,7 @@
     - next_note: !binary |
         0KHQu9C10LTRg9GO0YnQsNGPINC30LDQvNC10YLQutCw
 
-    - note: &id002 
+    - note: &id001 
         - !binary |
           0JfQsNC80LXRgtC60LA=
 
@@ -143,7 +139,7 @@
     - original_document_pdf: !binary |
         0J7RgNC40LPQuNC90LDQuyDQtNC+0LrRg9C80LXQvdGC0LAgKFBERik=
 
-    - page: &id003 
+    - page: &id002 
         - !binary |
           0YHRgtGA0LDQvdC40YbQsA==
 
@@ -206,7 +202,7 @@
         0J7RgtC60YDRi9GC0Ywg0LTQvtC60YPQvNC10L3RgiDQvdCwINCy0LXRgdGM
         INGN0LrRgNCw0L0=
 
-    - x_collaborators: &id004 
+    - x_collaborators: &id003 
         - !binary |
           0J7QtNC40L0g0LDQstGC0L7RgNC40LfQvtCy0LDQvdC90YvQuSDQv9C+0LvR
           jNC30L7QstCw0YLQtdC70Yw=
@@ -215,7 +211,7 @@
           JWQg0JDQstGC0L7RgNC40LfQvtCy0LDQvdC90YvRhSDQv9C+0LvRjNC30L7Q
           stCw0YLQtdC70LXQuQ==
 
-    - x_documents: &id005 
+    - x_documents: &id004 
         - !binary |
           JWQg0LTQvtC60YPQvNC10L3Rgg==
 
@@ -225,14 +221,17 @@
         - !binary |
           JWQg0LTQvtC60YPQvNC10L3RgtC+0LI=
 
-    - x_notes: &id006 
+    - x_notes: &id005 
         - !binary |
-          JWQg0JfQsNC80LXRgtC60LA=
+          JWQg0LfQsNC80LXRgtC60LA=
 
         - !binary |
-          JWQg0JfQsNC80LXRgtC60Lg=
+          JWQg0LfQsNC80LXRgtC60Lg=
 
-    - x_pages: &id007 
+        - !binary |
+          JWQg0LfQsNC80LXRgtC+0Lo=
+
+    - x_pages: &id006 
         - !binary |
           JWQg0YHRgtGA0LDQvdC40YbQsA==
 
@@ -431,7 +430,7 @@
         0L/QviDQuNGB0YLQvtGH0L3QuNC60YM=
 
     - by_title: !binary |
-        0L/QviDQvdCw0LfQstCw0L3QuNGO
+        0L/QviDQuNC80LXQvdC4
 
     - calais_credit: !binary |
         0J7QsdGK0LXQutGC0Ysg0L7Qv9GA0LXQtNC10LvQtdC90Ysg0YEg0L/QvtC8
@@ -559,7 +558,9 @@
     - disabled: !binary |
         0J7RgtC60LvRjtGH0LXQvQ==
 
-    - document: *id001
+    - document: !binary |
+        0JTQvtC60YPQvNC10L3Rgg==
+
     - document_access_updated: 
       - !binary |
         0KPRgNC+0LLQtdC90Ywg0LTQvtGB0YLRg9C/0LAg0Log0LTQvtC60YPQvNC1
@@ -1162,9 +1163,14 @@
         0KPQv9GA0LDQstC70LXQvdC40LUg0L7RgNCz0LDQvdC40LfQsNGG0LjQtdC5
         ICVz
 
-    - matching_search: !binary |
-        0LrQvtGC0L7RgNGL0LUg0YHQvtCy0L/QsNC00YPRgiDRgSDQv9C+0LjRgdC6
-        0L7QstGL0Lwg0LfQsNC/0YDQvtGB0L7QvCw=
+    - matching_search: 
+      - !binary |
+        0LrQvtGC0L7RgNGL0Lkg0LLRiyDRgtC+0LvRjNC60L4g0YfRgtC+INCy0YvQ
+        sdGA0LDQu9C4LA==
+
+      - !binary |
+        0LrQvtGC0L7RgNGL0LUg0LLRiyDRgtC+0LvRjNC60L4g0YfRgtC+INCy0YvQ
+        sdGA0LDQu9C4LA==
 
     - max_upload_size_warn: !binary |
         0JfQsNCz0YDRg9C20LDRgtGMINC80L7QttC90L4g0YLQvtC70YzQutC+INC0
@@ -1311,7 +1317,7 @@
     - not_found_search: !binary |
         0J/QvtC40YHQuiDQvdC1INC00LDQuyDRgNC10LfRg9C70YzRgtCw0YLQvtCy
 
-    - note: *id002
+    - note: *id001
     - note_ellipsis: !binary |
         0JfQsNC80LXRgtC60LUuLi4=
 
@@ -1373,7 +1379,7 @@
     - over_x_mentions: !binary |
         0JHQvtC70LXQtSAlZCDRg9C/0L7QvNC40L3QsNC90LjQuQ==
 
-    - page: *id003
+    - page: *id002
     - page_ellipsis: !binary |
         0KHRgtGA0LDQvdC40YbQtS4uLg==
 
@@ -1926,7 +1932,8 @@
         0YPRgdGC0LDQvdC+0LLQuNGC0Yw=
 
     - set_will_appear: !binary |
-        0L/QvtGP0LLRj9GC0YHRjyDQsiDRjdGC0L7QvCDRgdC10YLQtS4=
+        0L/QvtGP0LLRj9GC0YHRjyDQsiDQs9C+0YLQvtCy0L7QvCDRgdC/0LjRgdC6
+        0LUu
 
     - share_documents: !binary |
         0J/QvtC00LXQu9C40YLRjNGB0Y8g0LTQvtC60YPQvNC10L3RgtCw0LzQuA==
@@ -1939,6 +1946,10 @@
 
     - shared_with_you_by: !binary |
         0K3RgtC40Lwg0YEg0LLQsNC80Lgg0L/QvtC00LXQu9C40LvRgdGPICVz
+
+    - sharing_x_of_x_documents: !binary |
+        0J7RgtC/0YDQsNCy0LvRj9C10Lwg0LTQvtC60YPQvNC10L3RgtGLINC90LAg
+        0YDQtdGG0LXQvdC30LjRjjogJWQg0LjQtyAlZA==
 
     - show_all: !binary |
         0J/QvtC60LDQt9Cw0YLRjCDQstGB0LU=
@@ -1985,7 +1996,7 @@
         gw==
 
     - sort_by_title: !binary |
-        0KPQv9C+0YDRj9C00L7Rh9C40YLRjCDQv9C+INC90LDQt9Cy0LDQvdC40Y4=
+        0KPQv9C+0YDRj9C00L7Rh9C40YLRjCDQv9C+INC40LzQtdC90Lg=
 
     - sort_documents_by: !binary |
         0KPQv9C+0YDRj9C00L7Rh9C40YLRjA==
@@ -2149,8 +2160,8 @@
       - !binary |
         JWQg0LDQutC60LDRg9C90YLQvtCy
 
-    - x_collaborators: *id004
-    - x_documents: *id005
+    - x_collaborators: *id003
+    - x_documents: *id004
     - x_has_documents: !binary |
         0JTQvtC60YPQvNC10L3RgtGLICVz
 
@@ -2180,8 +2191,8 @@
       - !binary |
         0KPQv9C+0LzQuNC90LDQvdC10YLRgdGPICVkINGA0LDQtw==
 
-    - x_notes: *id006
-    - x_pages: *id007
+    - x_notes: *id005
+    - x_pages: *id006
     - x_private_documents: 
       - !binary |
         JWQg0L/RgNC40LLQsNGC0L3Ri9C5INC00L7QutGD0LzQtdC90YI=

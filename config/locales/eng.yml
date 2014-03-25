@@ -16,9 +16,7 @@
     - delete: Delete
     - description: Description
     - dl_as_pdf: Download this document as a PDF
-    - document: &id001 
-        - Document
-        - Documents
+    - document: Document
     - document_tools: Document Tools
     - draft: Draft
     - draft_note_visible: This draft is only visible to you and collaborators.
@@ -35,14 +33,14 @@
     - must_upgrade: "To use the Document Viewer you need to upgrade your browser:"
     - next: Next
     - next_note: Next Annotation
-    - note: &id002 
+    - note: &id001 
         - Note
         - Notes
     - note_by: Note by %s
     - of: of
     - organizations_documents: Documents belonging to %s
     - original_document_pdf: Original Document (PDF)
-    - page: &id003 
+    - page: &id002 
         - Page
         - Pages
     - pg: p.
@@ -62,16 +60,16 @@
     - toggle_description: Toggle Description
     - untitled_note: Untitled Note
     - view_fullscreen: View Document in Fullscreen
-    - x_collaborators: &id004 
+    - x_collaborators: &id003 
         - One Collaborator
         - "%d Collaborators"
-    - x_documents: &id005 
+    - x_documents: &id004 
         - "%d Document"
         - "%d Documents"
-    - x_notes: &id006 
+    - x_notes: &id005 
         - "%d Note"
         - "%d Notes"
-    - x_pages: &id007 
+    - x_pages: &id006 
         - "%d Page"
         - "%d Pages"
     - zoom: Zoom
@@ -161,7 +159,7 @@
     - description: Description
     - disable: Disable
     - disabled: Disabled
-    - document: *id001
+    - document: Document
     - document_access_updated: 
       - Access updated for the document
       - Access updated for %d documents
@@ -342,7 +340,7 @@
     - not_found_project: This project does not contain any documents.
     - not_found_published: This organization does not have any documents.
     - not_found_search: Your search did not match any documents.
-    - note: *id002
+    - note: *id001
     - note_ellipsis: Note ...
     - note_embed_private: "This document is private: notes on this document will not be visible to the public until the document is public.  Change the %saccess level%s now or"
     - notes_hidden_while_redacting: Any existing notes are temporarily hidden while redaction is taking place.
@@ -361,7 +359,7 @@
       - " Organizations"
     - organizations_documents: Documents belonging to %s
     - over_x_mentions: Over %d mentions
-    - page: *id003
+    - page: *id002
     - page_ellipsis: Page ...
     - page_tools: Page Tools
     - pages_are_being_removed: The pages are being removed. Please close this document.
@@ -506,6 +504,7 @@
       - Share this Document
       - Share these Documents
     - shared_with_you_by: Shared with you by %s
+    - sharing_x_of_x_documents: Sharing %d/%d documents
     - show_all: Show all
     - show_all_x_pages: 
       - Show single page
@@ -564,8 +563,8 @@
     - x_accounts: 
       - "%d account"
       - "%d accounts"
-    - x_collaborators: *id004
-    - x_documents: *id005
+    - x_collaborators: *id003
+    - x_documents: *id004
     - x_has_documents: "%s Documents"
     - x_invited_to_review_x: "%s has invited you to review %s"
     - x_is_no_longer_a_reviewer_on_x: 
@@ -575,8 +574,8 @@
     - x_mentions: 
       - One Mention
       - "%d Mentions"
-    - x_notes: *id006
-    - x_pages: *id007
+    - x_notes: *id005
+    - x_pages: *id006
     - x_private_documents: 
       - "%d Private Document"
       - "%d Private Documents"
