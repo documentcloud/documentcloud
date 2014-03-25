@@ -360,7 +360,7 @@ body.accounts_panel_tab #organization_list {
     }
   .share_dialog .document_count {
     font-size: 10px;
-    color: #333;
+    color: ##cdcdcd;
     font-style: italic;
   }
   .share_dialog .account_view {
