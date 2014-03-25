@@ -1,0 +1,37 @@
+<%
+  count = @documents.count
+  form  = (count%10==1 && count%100!=11 ? 0 : count%10>=2 && count%10<=4 && (count%100<10 || count%100>=20) ? 1 : 2)
+%>
+
+<% if 0 == form %>
+
+<%= @inviter_account.full_name %> из <%= @organization_name %> пригласил(ла) вас проверить (рецензировать) 1 документ. Перейдите по этой ссылке, чтобы открыть документ:
+
+<% elsif 1 == form %>
+
+<%= @inviter_account.full_name %> из <%= @organization_name %> пригласил(ла) вас проверить (рецензировать) <%= count %> документа. Перейдите по этим ссылкам, чтобы открыть эти документы:
+
+<% else %>
+
+<%= @inviter_account.full_name %> из <%= @organization_name %> пригласил(ла) вас проверить (рецензировать) <%= count %> документов. Перейдите по этим ссылкам, чтобы открыть эти документы:
+
+<% end %>
+
+<% @documents.each do |d| %>
+<% if @documents.count > 1 %><%= d.title %><% end %>
+<%= DC.server_root(:ssl => true) %>/documents/<%= d.id %>-<%= d.slug %>.html<%= @key %>
+<% end %>
+
+<% if @message && @message.length >= 1 -%>
+<%= @inviter_account.first_name %> оставил(ла) вам вот это сообщение:
+<%= @message %>
+
+<% end -%>
+
+Пожалуйста, не передавайте никому ссылку, указанную выше, так как она была создана специально дня вас. Если вы хотите дать кому-то еще возможность поработать над документами, свяжитесь с <%= @inviter_account.full_name %> по этому email: <%= @inviter_account.email %>.
+
+<%= @organization_name %> использует DocumentCloud чтобы делиться документами и добавлять в них заметки. Больше информации есть тут: http://www.documentcloud.org.
+
+
+Джереми, Лоурен и Тэд
+DocumentCloud
