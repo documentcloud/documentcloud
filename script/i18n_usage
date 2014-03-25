@@ -46,6 +46,6 @@ if [ $FOUND == false ]; then
         $DIR/../public/javascripts | sed 's/.*\.\.\///'
 
     grep -n --color=always -r  $STRING \
-        --exclude=$DIR/../../viewer/public/javascripts/DV/schema/translation* \
-        $DIR/../../viewer/public/javascripts | sed 's/.*\.\./../'
+        --exclude=$DIR/../../document-viewer/public/javascripts/DV/schema/translation* \
+        $DIR/../../document-viewer/public/javascripts | sed 's/.*\.\./../'
 fi
