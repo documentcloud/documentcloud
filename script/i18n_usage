@@ -1,7 +1,19 @@
 #!/bin/bash
 
+
 if [ -z "$1" ]; then
-    echo "usage: $0 <i18n key>"
+    printf %s "\
+A simple shell script that attempts to find all uses of a given translation string
+To that end it runs grep on:
+   * JST directories
+   * Workspace javascripts
+   * Viewer javascripts
+
+It first looks for the string surrounded by quotes and preceded by _.t,
+but falls back to straight string matching if it's not found
+
+usage: $0 <i18n key>
+"
     exit 1
 fi
 
@@ -20,7 +32,7 @@ if [ ${PIPESTATUS[0]} -eq 0 ]; then
 fi
 
 grep -n --color=always -r  "DV.t('$STRING'" \
-    --exclude=$DIR/../../viewer/public/javascripts/DV/schema/translation* \
+    --exclude=$DIR/../../document-viewer/public/javascripts/DV/schema/translation* \
     $DIR/../../viewer/public/javascripts | sed 's/.*\.\./../'
 if [ ${PIPESTATUS[0]} -eq 0 ]; then
     FOUND=true
