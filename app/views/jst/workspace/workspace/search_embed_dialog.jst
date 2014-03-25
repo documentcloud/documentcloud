@@ -2,14 +2,14 @@
 
   <div class="publish_section publish_info selectable_text">
     <%= _.t('x_public_documents', publicCount ) %> 
-    <%= projectQuery ? _.t('in_project') : _.t('matching_search') %>
+    <%= projectQuery ? _.t('in_project', publicCount ) : _.t('matching_search', publicCount ) %>
     <%= _.t('set_will_appear') %>
     <% if (restrictedCount > 0) {  %>
       <span class="publish_section text_link change_access">
       <%= _.t('x_private_documents', restrictedCount ) %></span>
-      <%= _.t('no_appear_until_publish') %>
+      <%= _.t('no_appear_until_publish', restrictedCount ) %>
     <% } %>
-    <%= _.t('future_documents_w_appear', projectQuery ? _.t('added_project') : _.t('matching_search') ) %>
+    <%= _.t('future_documents_w_appear', projectQuery ? _.t('added_project') : _.t('matching_search', 2) ) %>
   </div>
 
   <div class="publish_config">
