@@ -5,31 +5,8 @@ class Docdata < ActiveRecord::Base
   before_validation :convert_data_to_hash
   validates :document_id, :uniqueness=>{ :allow_nil => true }
   validate :ensure_keys_are_not_forbidden
+
   after_save :index_document
-
-  # def self.to_hstore(hash)
-  #   hash.map {|k, v| "\"#{sanitize(k)}\"=>\"#{sanitize(v)}\"" }.join(',')
-  # end
-
-  # def self.sanitize(obj)
-  #   Sanitize.clean(obj.to_s.gsub(/[\\"]/, ''))
-  # end
-
-  # def data=(obj)
-  #   @data = nil
-  #   return self[:data] = obj if obj.is_a? String
-  #   return unless validate_keys(obj)
-  #   if obj.empty?
-  #     self[:data] = nil
-  #     self.destroy
-  #   else
-  #     self[:data] = Docdata.to_hstore(obj)
-  #   end
-  # end
-
-  # def data
-  #   @data ||= Hash[(self[:data] || "").scan(/"(.*?[^\\]|)"=>"(.*?[^\\]|)"/)]
-  # end
 
   private
 
