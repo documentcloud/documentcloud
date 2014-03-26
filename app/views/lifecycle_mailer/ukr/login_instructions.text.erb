@@ -1,14 +1,14 @@
 <%= @account.full_name %> --
 
 <% if @admin -%>
-<%= @admin.full_name %> додав Вас до екаунту <%= @organization_name %> на DocumentCloud.
+<%= @admin.full_name %> додав Вас до екаунту <%= @account.organization_name %> на DocumentCloud.
 <% else -%>
-Для Вас і для <%= @organization_name %> було створено екаунт на DocumentCloud.
+Для Вас і для <%= @account.organization.name %> було створено екаунт на DocumentCloud.
 <% end -%>
 
 Створіть пароль і можете починати працювати із бета-версією:
 
-<%= DC.server_root(:force_ssl => true) %>/accounts/enable/<%= @key %>
+<%= DC.server_root(:force_ssl => true) %>/accounts/enable/<%= @account.security_key.key %>
 
 Як тількт пароль буде створено, ви зможете увійти до системи за посиланням <%= DC.server_root(:ssl => false) %>/login скориставшись <%= @account.email %> у якості ім'я користувача.
 
