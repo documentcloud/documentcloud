@@ -1,5 +1,4 @@
 tv_manual:
-  updated_at: 2013-03-19 16:52:42.386987
   publication_date:
   text_changed: f
   title: TV Manual
@@ -14,7 +13,6 @@ tv_manual:
   calais_id:
   public_note_count: "102"
   publish_at:
-  created_at: 2013-03-19 16:48:33.237515
   access: <%= DC::Access::PUBLIC %>
   char_count: "146055"
   related_article:
@@ -24,9 +22,11 @@ tv_manual:
   remote_url: http://example.com/my_precious
   detected_remote_url:
   account: louis
+  created_at: <%= Time.now - 1.month - 2.days%>
+  updated_at: <%= Time.now - 1.month - 1.days%>
+
 
 top_secret:
-  updated_at: 2013-03-19 16:52:42.386987
   publication_date:
   text_changed: f
   title: Secret Plans
@@ -41,7 +41,6 @@ top_secret:
   calais_id:
   public_note_count: "102"
   publish_at:
-  created_at: 2013-03-19 16:48:33.237515
   access: <%= DC::Access::PRIVATE %>
   char_count: "146055"
   related_article:
@@ -51,3 +50,5 @@ top_secret:
   remote_url:
   detected_remote_url:
   account: louis
+  created_at: <%= Time.now - 1.week - 2.days%>
+  updated_at: <%= Time.now - 1.week - 1.days%>

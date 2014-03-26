@@ -44,7 +44,7 @@ class RemoteUrlTest < ActiveSupport::TestCase
       RemoteUrl.record_hits_on_document( doc.id, 'http://test.com/#{index}', index )
     end
     docs = RemoteUrl.top_documents
-    assert_equal 55, docs.first['hits']
+    assert_equal 73, docs.first['hits']
     assert_equal 45, docs.last['hits']
   end
 
@@ -52,7 +52,7 @@ class RemoteUrlTest < ActiveSupport::TestCase
     qs = 'account:%205676-nathan-stitt%20date:%20"2011-11'
     RemoteUrl.record_hits_on_search( qs, 'foo', 3 )
     searches = RemoteUrl.top_searches
-    assert_equal 3, searches.first['hits']
+    assert_equal 13, searches.first['hits']
   end
 
   it "calculate note searches" do
