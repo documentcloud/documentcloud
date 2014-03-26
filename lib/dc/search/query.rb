@@ -327,11 +327,21 @@ module DC
           end
           unless hash.empty?
             @sql << 'docdata.data @> ?'
-            @interpolations << Docdata.to_hstore(hash)
+            @interpolations << Query.to_hash_query(hash)
           end
           @joins << 'inner join docdata ON documents.id = docdata.document_id'
         end
       end
+
+
+      def self.to_hash_query(hash)
+        hash.map {|k, v| "\"#{sanitize(k)}\"=>\"#{sanitize(v)}\"" }.join(',')
+      end
+
+      def self.sanitize(obj)
+        Sanitize.clean(obj.to_s.gsub(/[\\"]/, ''))
+      end
+
 
       # Add facet results to the Solr search, if requested.
       # def build_facets
