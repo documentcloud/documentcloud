@@ -32,7 +32,7 @@ gem 'omniauth-twitter',        '>= 0.0.13'
 gem 'omniauth-facebook',       '>= 1.4.0'
 gem 'omniauth-google-oauth2',  '>= 0.1.13'
 
-gem 'cloud-crowd'
+gem 'cloud-crowd', '~>0.6.0'
 gem 'pdftailor'
 gem 'sqlite3'
 
