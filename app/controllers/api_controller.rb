@@ -7,7 +7,7 @@ class ApiController < ApplicationController
 
   before_action :bouncer if Rails.env.staging?
   before_action :prefer_secure, :only => [:index]
-
+  
   skip_before_action :verify_authenticity_token
 
   before_action :secure_only,        :only => [:upload, :project, :projects, :upload, :destroy, :create_project, :update_project, :destroy_project]
@@ -18,14 +18,7 @@ class ApiController < ApplicationController
     redirect_to '/help/api'
   end
 
-  def cors_options
-    return bad_request unless params[:allowed_methods]
-    headers['Access-Control-Allow-Origin'] = '*'
-    headers['Access-Control-Allow-Methods'] = 'OPTIONS, ' + params[:allowed_methods].map(&:to_s).map(&:upcase).join(', ')
-    headers['Access-Control-Allow-Headers'] = 'Authorization'
-    headers['Access-Control-Allow-Credentials'] = 'true'
-    render :nothing => true
-  end
+  after_filter :set_cors_options
 
   def search
     opts = API_OPTIONS.merge(pick(params, :sections, :annotations, :entities, :mentions, :data))
@@ -184,6 +177,14 @@ class ApiController < ApplicationController
   end
 
   private
+
+  def set_cors_options
+    headers['Access-Control-Allow-Origin'] = request.headers['Origin']
+    headers['Access-Control-Allow-Methods'] = 'OPTIONS, GET, POST, PUT, DELETE'
+    headers['Access-Control-Allow-Headers'] = 'Accept,Authorization,Content-Length,Content-Type,Cookie'
+    headers['Access-Control-Allow-Credentials'] = 'true'
+    head(:ok) if request.request_method == "OPTIONS"
+  end
 
   def secure_silence_logs
     if params[:secure]
