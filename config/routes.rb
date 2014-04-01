@@ -10,10 +10,10 @@ DC::Application.routes.draw do
   # Search Embeds.
   get '/search/embed/:q/:options.:format' => 'search#embed', :q => /[^\/;,?]*/, :options => /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
   get '/search/embed/:options.:format' => 'search#embed',    :q => /[^\/;,?]*/, :options => /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
-
   # Journalist workspace and surrounding HTML.
   get '/search' => 'workspace#index'
   get '/search/preview' => 'search#preview', :as => :preview
+  get '/search/restricted_count' => 'search#restricted_count'
   get '/search/:query' => 'workspace#index', :query => /.*/
   get '/help' => 'workspace#help'
   get '/help/:page' => 'workspace#help'
