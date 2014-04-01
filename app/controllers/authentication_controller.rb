@@ -3,6 +3,7 @@ class AuthenticationController < ApplicationController
   before_action :bouncer, :except => [:callback] if Rails.env.staging?
 
   skip_before_action :verify_authenticity_token, :only => [:login]
+  after_action :allow_iframe, only: [:iframe,:inner_iframe]
 
   before_action :secure_only,     :only => [:login]
 
@@ -186,6 +187,9 @@ class AuthenticationController < ApplicationController
 
   private
 
+  def allow_iframe
+    response.headers.except! 'X-Frame-Options'
+  end
 
   # convenience method to extract the omniauth identity data
   def identity_hash

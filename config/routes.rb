@@ -25,8 +25,11 @@ DC::Application.routes.draw do
     match '/login',                       action: 'login', :via=>[:get,:post]
     get '/logout',                        action: 'logout'
     get '/auth/remote_data/:document_id', action: 'remote_data'
+
     # Third party auth via OmniAuth
-    get '/auth/:provider/callback',       action: 'callback'
+    match '/auth/:action', :via=>[:get,:post]
+    get '/auth/:provider',          :action => :blank
+    get '/auth/:provider/callback', :action => :callback
   end
 
   # Public search.
