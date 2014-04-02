@@ -1,4 +1,5 @@
 --- !omap
+- html: !omap []
 - viewer: !omap
   - CLOSE: CERRAR
   - add_note_instructions: Destacar una parte de la página, o hacer clic entre páginas
