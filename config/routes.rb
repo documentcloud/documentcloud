@@ -38,6 +38,17 @@ DC::Application.routes.draw do
 
   # API.
   scope( 'api', controller: 'api' ) do
+    scope( via: :options, action: 'cors_options' ) do
+      match 'documents/pending.:format',            allowed_methods: [:get]
+      match 'documents/:id.:format',                allowed_methods: [:get, :put, :delete]
+      match 'documents/:id/entities.:format',       allowed_methods: [:get]
+      match 'documents/:id/note/:note_id.:format',  allowed_methods: [:get]
+      match 'documents/:id/notes/:note_id.:format', allowed_methods: [:get]
+      match 'projects/:id.:format',                 allowed_methods: [:get, :put, :delete]
+      match 'projects.:format',                     allowed_methods: [:get, :post]
+      match 'search.:format',                       allowed_methods: [:get]
+    end
+
     put 'documents/:id.:format',                action: 'update'
     delete 'documents/:id.:format',             action: 'destroy'
     get 'documents/:id/entities.:format',       action: 'entities'
