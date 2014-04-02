@@ -13,6 +13,7 @@ class ApiController < ApplicationController
   before_action :secure_only,        :only => [:upload, :project, :projects, :upload, :destroy, :create_project, :update_project, :destroy_project]
   before_action :api_login_required, :only => [:upload, :project, :projects, :update, :destroy, :create_project, :update_project, :destroy_project]
   before_action :api_login_optional, :only => [:documents, :search, :notes, :pending, :entities]
+  before_filter :maybe_set_cors_headers
 
   def index
     redirect_to '/help/api'
@@ -20,10 +21,7 @@ class ApiController < ApplicationController
 
   def cors_options
     return bad_request unless params[:allowed_methods]
-    headers['Access-Control-Allow-Origin'] = '*'
-    headers['Access-Control-Allow-Methods'] = 'OPTIONS, ' + params[:allowed_methods].map(&:to_s).map(&:upcase).join(', ')
-    headers['Access-Control-Allow-Headers'] = 'Authorization'
-    headers['Access-Control-Allow-Credentials'] = 'true'
+    maybe_set_cors_headers
     render :nothing => true
   end
 

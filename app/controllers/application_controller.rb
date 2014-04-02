@@ -20,6 +20,14 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def maybe_set_cors_headers
+    return unless request.headers['Origin']
+    headers['Access-Control-Allow-Origin'] = request.headers['Origin']
+    headers['Access-Control-Allow-Methods'] = 'OPTIONS, GET, POST, PUT, DELETE'
+    headers['Access-Control-Allow-Headers'] = 'Accept,Authorization,Content-Length,Content-Type,Cookie'
+    headers['Access-Control-Allow-Credentials'] = 'true'
+  end
+
   # Convenience method for responding with JSON. Sets the content type,
   # serializes, and allows empty responses. If json'ing an ActiveRecord object,
   # and the object has errors on it, a 409 Conflict will be returned with a
@@ -53,7 +61,9 @@ class ApplicationController < ActionController::Base
   # Where we allow JSONP, we also allow CORS.
   def json_response
     return if jsonp_request?
-    headers['Access-Control-Allow-Origin'] = '*'
+    # If the request has already set the CORS headers, don't overwrite them
+    # Sending the wildcard origin that will dissallow sending cookies for authentication.
+    headers['Access-Control-Allow-Origin'] = '*' unless headers.has_key?('Access-Control-Allow-Origin')
     json @response
   end
 

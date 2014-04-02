@@ -84,13 +84,6 @@ class AnnotationsController < ApplicationController
 
   private
 
-  def maybe_set_cors_headers
-    return unless request.headers['Origin']
-    headers['Access-Control-Allow-Origin'] = request.headers['Origin']
-    headers['Access-Control-Allow-Methods'] = 'OPTIONS, GET, POST, PUT, DELETE'
-    headers['Access-Control-Allow-Headers'] = 'Accept,Authorization,Content-Length,Content-Type,Cookie'
-    headers['Access-Control-Allow-Credentials'] = 'true'
-  end
 
   def current_annotation
     @current_annotation ||= current_document.annotations.find_by_id(params[:id])
