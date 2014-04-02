@@ -86,6 +86,10 @@ class ApplicationController < ActionController::Base
     return unless @current_account = Account.log_in(*BasicAuth.user_name_and_password(request))
     @current_organization = @current_account.organization
   end
+  
+  def allow_iframe
+    response.headers.except! 'X-Frame-Options'
+  end
 
   def admin_required
     ( logged_in? && current_account.dcloud_admin? ) || forbidden

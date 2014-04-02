@@ -6,6 +6,7 @@ class DocumentsController < ApplicationController
   before_action :prefer_secure,       :only => [:show]
   before_action :api_login_optional,  :only => [:send_full_text, :send_pdf, :send_page_text, :send_page_image]
   before_action :set_p3p_header,      :only => [:show]
+  after_action  :allow_iframe,        :only => [:show]
 
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
