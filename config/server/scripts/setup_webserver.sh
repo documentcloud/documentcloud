@@ -11,7 +11,11 @@ sudo apt-get update
 sudo apt-get install -y nginx-extras passenger
 # crash-watch gdb libc6-dbg libev4 liblua5.1-0 libperl5.14 nginx-common nginx-extras passenger passenger-dev passenger-doc ruby-daemon-controller ruby-rack
 
+sudo apt-get install -y nodejs nodejs-dev npm
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+
+sudo npm install -g coffee-script
+
 # Config files for nginx installed via apt-get are located in /etc/nginx
 
 test -e pixel-ping || sudo -u $USERNAME git clone git@github.com:documentcloud/pixel-ping.git pixel-ping
-
