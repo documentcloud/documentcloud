@@ -160,7 +160,7 @@ class DocumentImport < DocumentAction
     count = options['email_me']
     return unless count && count > 0
     if Document.owned_by(document.account).pending.count == 0
-      LifecycleMailer.deliver_documents_finished_processing(document.account, count)
+      LifecycleMailer.documents_finished_processing(document.account, count).deliver
     end
   end
   
