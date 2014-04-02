@@ -86,8 +86,10 @@ class ApplicationController < ActionController::Base
   end
 
   def api_login_required
-    unless @current_user = authenticate_with_http_basic{ |email, password|  Account.log_in(email, password) }
-      request_http_basic_authentication('DocumentCloud')
+    authenticate_or_request_with_http_basic("DocumentCloud") do |email, password|
+      return false unless @current_account = Account.log_in(email, password)
+      @current_organization = @current_account.organization
+      true
     end
   end
 
