@@ -13,7 +13,7 @@ class LifecycleMailer < ActionMailer::Base
     @admin   = admin
     @account = account
     options = {
-      :subject       => "Welcome to DocumentCloud",
+      :subject       => DC.t(account, 'welcome_to_document_cloud'),
       :to            => @account.email,
       :template_path => translation_path_for( account.language )
     }
@@ -27,7 +27,7 @@ class LifecycleMailer < ActionMailer::Base
     @account = account
     @organization_name = organization.name
     mail(
-      :subject       =>  "You have been added to #{organization.name}",
+      :subject       => DC.t(account, 'youve_been_added_to_x', organization.name ),
       :to            => account.email,
       :template_path => translation_path_for( account.language )
     )
@@ -36,12 +36,6 @@ class LifecycleMailer < ActionMailer::Base
   # Mail instructions for a document review, with a secure link to the
   # document viewer, where the user can annotate the document.
   def reviewer_instructions(documents, inviter_account, reviewer_account=nil, message=nil, key='')
-    subject =  if documents.count == 1
-                 "Review \"#{documents[0].title}\" on DocumentCloud"
-               else
-                 "Review #{documents.count} documents on DocumentCloud"
-               end
-
     @documents            = documents
     @key                  = key
     @organization_name    = documents[0].account.organization_name
@@ -51,7 +45,7 @@ class LifecycleMailer < ActionMailer::Base
     @message              = message
     options = {
       :cc            => inviter_account.email,
-      :subject       => subject,
+      :subject       => DC.t(inviter_account,'review_x_documents',documents.count),
       :template_path => translation_path_for( inviter_account.language )
     }
     options[:to] = reviewer_account.email if reviewer_account
@@ -63,7 +57,7 @@ class LifecycleMailer < ActionMailer::Base
     @account = account
     account.ensure_security_key!
     @key     = account.security_key.key
-    mail({ :to => account.email, :subject => "DocumentCloud password reset",
+    mail({ :to => account.email, :subject => DC.t(account,'password_reset'),
            :template_path => translation_path_for( account.language )
     })
   end
@@ -100,7 +94,7 @@ class LifecycleMailer < ActionMailer::Base
   def documents_finished_processing(account, document_count)
     @account  = account
     @count    = document_count
-    mail({:to => account.email, :subject => "Your documents are ready",
+    mail({:to => account.email, :subject => DC.t(account,'documents_are_ready'),
           :template_path => translation_path_for( account.language ) })
   end
 
