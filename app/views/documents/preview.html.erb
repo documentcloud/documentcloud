@@ -19,8 +19,8 @@
     <% @pageview_url = '/documents/show' %>
     <%= render :partial => 'common/google' %>
   <% end %>
-  <%= csrf_meta_tag %> 
-  
+  <%= csrf_meta_tag %>
+
   <%= render(:partial => 'viewer_editing_head') if @edits_enabled %>
 </head>
 <body style="margin:0; padding:0;">
@@ -28,10 +28,10 @@
   <% if canonical %>
     <div id="<%= canonical['id'] %>"></div>
     <script type="text/javascript">
-        window.currentDocument = DV.load(<%= canonical.to_json %>, <%= @options %>);
+        window.currentDocument = DV.load(<%=raw canonical.to_json %>, <%=raw @options %>);
     </script>
   <% end %>
-  
+
   <%= render(:partial => 'viewer_editing') if @edits_enabled %>
 </body>
 </html>
