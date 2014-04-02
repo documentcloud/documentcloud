@@ -75,7 +75,10 @@ class AccountsController < ApplicationController
       (current_account.real?(current_organization) and params[:role] == Account::REVIEWER)
 
     # Find or create the appropriate account
-    account_attributes = pick(params, :first_name, :last_name, :email, :language, :document_language)
+    account_attributes = pick(params, :first_name, :last_name, :email, :language, :document_language).merge({
+        :language => current_organization.language,
+        :document_language=>current_organization.document_language
+    })
     account = Account.lookup(account_attributes[:email]) || Account.create(account_attributes)
 
     # Find role for account in organization if it exists.
