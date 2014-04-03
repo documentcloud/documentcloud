@@ -1,1 +1,1 @@
-<%= @callback %>(<%= raw @response.to_json %>);
+<%= @callback %>(<%= @response.to_json.html_safe %>);
