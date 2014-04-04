@@ -52,8 +52,7 @@ class ApplicationController < ActionController::Base
   # short-circuit, and return the rendered JSONP.
   def jsonp_request?
     return false unless params[:callback]
-    @callback = params[:callback]
-    render :partial => 'common/jsonp.js', :type => :js
+    render :json=> Oj.dump( @response, :escape_mode=>:ascii ), :callback => params[:callback]
     true
   end
 

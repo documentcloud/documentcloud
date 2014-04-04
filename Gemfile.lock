@@ -139,6 +139,7 @@ GEM
       jwt (~> 0.1.4)
       multi_json (~> 1.0)
       rack (~> 1.2)
+    oj (2.7.1)
     omniauth (1.1.4)
       hashie (>= 1.2, < 3)
       rack
@@ -265,6 +266,7 @@ DEPENDENCIES
   minitest-spec-rails
   net-ssh
   nokogiri (~> 1.6.0)
+  oj
   omniauth (~> 1.1.4)
   omniauth-facebook (~> 1.4.1)
   omniauth-google-oauth2 (~> 0.2.0)
