@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 gem 'iconv'
-gem 'rails',                  '4.1.0.rc2'
+gem 'rails',                  '~>4.0.0'
 gem 'curb',                   '~>0.8.4'
 gem 'calais',                 '~> 0.0.13', :github=>'nathanstitt/calais', :branch=>'newer_nokogiri'
 gem 'rest-client',            '~> 1.6.7'
