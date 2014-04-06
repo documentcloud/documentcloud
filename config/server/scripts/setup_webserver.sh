@@ -19,3 +19,6 @@ sudo npm install -g coffee-script
 # Config files for nginx installed via apt-get are located in /etc/nginx
 
 test -e pixel-ping || sudo -u $USERNAME git clone git@github.com:documentcloud/pixel-ping.git pixel-ping
+
+sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.default.conf
+sudo cp config/server/files/nginx/{documentcloud,staging,passenger}.conf /etc/nginx/
