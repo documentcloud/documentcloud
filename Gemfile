@@ -28,7 +28,7 @@ gem 'rake'
 gem 'actionpack-page_caching'
 gem 'jammit',                 :github=>'documentcloud/jammit', :branch=>'rails4'
 gem 'nokogiri', '~> 1.6.0'
-#gem 'right_aws' #, '2.0.1', :github=>'documentcloud/right_aws'        # Our patched version.
+gem 'right_aws' #, '2.0.1', :github=>'documentcloud/right_aws'        # Our patched version.
 
 group :development, :test do
   gem 'net-ssh'
