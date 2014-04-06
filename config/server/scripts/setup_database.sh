@@ -16,8 +16,8 @@ postgresql-contrib-9.3
 echo $PACKAGES | xargs apt-get install -y
 
 ## setup dummy postgres environment so that you can verify rails is working
-cp config/server/postgres/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
-cp config/server/postgres/postgresql.conf /etc/postgresql/9.3/main/postgresql.conf
+cp config/server/files/postgres/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
+cp config/server/files/postgres/postgresql.conf /etc/postgresql/9.3/main/postgresql.conf
 /etc/init.d/postgresql reload
 sudo -u postgres createuser -s ubuntu
 sudo -u postgres createuser -s documentcloud
