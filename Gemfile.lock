@@ -191,8 +191,6 @@ GEM
     rdiscount (2.1.7)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    right_aws (3.1.0)
-      right_http_connection (>= 1.2.5)
     right_http_connection (1.4.0)
     rsolr (1.0.10)
       builder (>= 2.1.2)
@@ -272,7 +270,6 @@ DEPENDENCIES
   rake
   rdiscount (~> 2.1.6)
   rest-client (~> 1.6.7)
-  right_aws
   right_http_connection
   rubyzip (~> 1.1.0)
   sanitize (~> 2.0.6)
