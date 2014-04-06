@@ -8,10 +8,10 @@ echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger saucy main" | 
 
 sudo apt-get update
 
-sudo apt-get install -y nginx-extras passenger
+sudo apt-get install nginx-extras passenger -y
 # crash-watch gdb libc6-dbg libev4 liblua5.1-0 libperl5.14 nginx-common nginx-extras passenger passenger-dev passenger-doc ruby-daemon-controller ruby-rack
 
-sudo apt-get install -y nodejs nodejs-dev npm
+sudo apt-get install nodejs nodejs-dev npm -y
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 
 sudo npm install -g coffee-script
