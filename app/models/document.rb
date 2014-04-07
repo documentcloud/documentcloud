@@ -122,7 +122,7 @@ class Document < ActiveRecord::Base
     # Full Text...
     text :title, :default_boost => 2.0
     text :source
-    text :description.gsub(/\f/,'')
+    text :description
     text :full_text do
       self.combined_page_text.gsub(/\f/,'')
     end
