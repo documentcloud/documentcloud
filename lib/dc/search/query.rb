@@ -266,8 +266,7 @@ module DC
 
       # Generate the Solr or SQL to restrict the search to specific organizations.
       def build_groups
-        organzations = @groups.map {|slug| Organization.find_by_slug(slug, :select => 'id') }
-        ids          = organzations.map {|org| org ? org.id : -1 }
+        ids = Organization.where(:slug => @groups).pluck(:id)
         if needs_solr?
           @solr.build do
             with :organization_id, ids
