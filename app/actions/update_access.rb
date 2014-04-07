@@ -9,10 +9,10 @@ class UpdateAccess < CloudCrowd::Action
       ActiveRecord::Base.establish_connection
       access   = options['access']
       document = Document.find(input)
-      sql      = ["access = #{access}", "document_id = #{document.id}"]
-      Page.update_all(*sql)
-      Entity.update_all(*sql)
-      EntityDate.update_all(*sql)
+      attrs    = { :access => access, :document_id => document.id }
+      Page.update_all(attrs)
+      Entity.update_all(attrs)
+      EntityDate.update_all(attrs)
       begin
         DC::Store::AssetStore.new.set_access(document, access)
       rescue RightAws::AwsError => e
