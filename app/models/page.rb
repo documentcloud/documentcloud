@@ -23,6 +23,12 @@ class Page < ActiveRecord::Base
 
   before_update :track_text_changes
 
+  def text=(str); write_attribute(:text, self.class.clean_text(str)); end
+  
+  def self.clean_text(str)
+    str.gsub(/\f/,'')
+  end
+  
   searchable do
     text    :text
     integer :document_id

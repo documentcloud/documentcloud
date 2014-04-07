@@ -141,7 +141,7 @@ class DocumentImport < DocumentAction
 
   def save_page_text!
     rows = @pages.map do |page|
-      "(#{document.organization_id}, #{document.account_id}, #{document.id}, #{access}, #{page[:number]}, '#{PGconn.escape(page[:text])}')"
+      "(#{document.organization_id}, #{document.account_id}, #{document.id}, #{access}, #{page[:number]}, '#{PGconn.escape(Page.clean_text(page[:text]))}')"
     end
     Page.connection.execute "insert into pages (organization_id, account_id, document_id, access, page_number, text) values #{rows.join(",\n")};"
   end
