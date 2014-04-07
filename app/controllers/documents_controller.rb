@@ -153,7 +153,7 @@ class DocumentsController < ApplicationController
     end
 
     ids = Document.accessible(current_account, current_organization).where({:id => params[:ids]}).pluck('id')
-    dates = EntityDate.find_all_by_document_id(ids, :include => [:document])
+    dates = EntityDate.where( :document_id => ids).includes(:document)
     json({'dates' => dates}.to_json)
   end
 
