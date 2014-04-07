@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   BasicAuth = ActionController::HttpAuthentication::Basic
 
   protect_from_forgery
+  skip_before_action :verify_authenticity_token, if: :json_request?
 
   before_action :set_ssl
 
@@ -19,6 +20,10 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def json_request?
+    request.format.json? or request.format.jsonp? or request.format.js?
+  end
 
   def maybe_set_cors_headers
     return unless request.headers['Origin']
