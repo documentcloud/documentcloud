@@ -13,11 +13,7 @@ class UpdateAccess < CloudCrowd::Action
       Page.update_all(attrs)
       Entity.update_all(attrs)
       EntityDate.update_all(attrs)
-      begin
-        DC::Store::AssetStore.new.set_access(document, access)
-      rescue RightAws::AwsError => e
-        raise e unless e.http_code == "404"
-      end
+      DC::Store::AssetStore.new.set_access(document, access)
       document.update_attributes(:access => access)
     rescue Exception => e
       LifecycleMailer.exception_notification(e,options).deliver
