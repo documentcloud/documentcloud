@@ -9,10 +9,7 @@ class UpdateAccess < CloudCrowd::Action
       ActiveRecord::Base.establish_connection
       access   = options['access']
       document = Document.find(input)
-      attrs    = { :access => access, :document_id => document.id }
-      Page.update_all(attrs)
-      Entity.update_all(attrs)
-      EntityDate.update_all(attrs)
+      [Page, Entity, EntityDate].each{ |model_klass| model_klass.where(:document_id => document.id).update_all(:access=>access) }
       DC::Store::AssetStore.new.set_access(document, access)
       document.update_attributes(:access => access)
     rescue Exception => e
