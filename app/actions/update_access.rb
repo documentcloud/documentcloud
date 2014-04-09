@@ -13,6 +13,9 @@ class UpdateAccess < CloudCrowd::Action
       begin
         DC::Store::AssetStore.new.set_access(document, access)
       rescue AWS::S3::Errors::NoSuchKey
+        # Quite a few docs are missing text assets
+        # Even though they are incomplete, They should still
+        # be able to have their access manipulated
       end
       document.update_attributes(:access => access)
     rescue Exception => e
