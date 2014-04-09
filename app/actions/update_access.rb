@@ -10,7 +10,10 @@ class UpdateAccess < CloudCrowd::Action
       access   = options['access']
       document = Document.find(input)
       [Page, Entity, EntityDate].each{ |model_klass| model_klass.where(:document_id => document.id).update_all(:access=>access) }
-      DC::Store::AssetStore.new.set_access(document, access)
+      begin
+        DC::Store::AssetStore.new.set_access(document, access)
+      rescue AWS::S3::Errors::NoSuchKey
+      end
       document.update_attributes(:access => access)
     rescue Exception => e
       LifecycleMailer.exception_notification(e,options).deliver
