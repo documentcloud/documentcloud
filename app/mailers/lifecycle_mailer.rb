@@ -15,6 +15,7 @@ class LifecycleMailer < ActionMailer::Base
     options = {
       :subject       => DC.t(account, 'welcome_to_document_cloud'),
       :to            => @account.email,
+      :content_type  => "text/plain",
       :template_path => translation_path_for( account.language )
     }
     account.ensure_security_key!
@@ -29,6 +30,7 @@ class LifecycleMailer < ActionMailer::Base
     mail(
       :subject       => DC.t(account, 'youve_been_added_to_x', organization.name ),
       :to            => account.email,
+      :content_type  => "text/plain",
       :template_path => translation_path_for( account.language )
     )
   end
@@ -46,6 +48,7 @@ class LifecycleMailer < ActionMailer::Base
     options = {
       :cc            => inviter_account.email,
       :subject       => DC.t(inviter_account,'review_x_documents',documents.count),
+      :content_type  => "text/plain",
       :template_path => translation_path_for( inviter_account.language )
     }
     options[:to] = reviewer_account.email if reviewer_account
@@ -57,8 +60,10 @@ class LifecycleMailer < ActionMailer::Base
     @account = account
     account.ensure_security_key!
     @key     = account.security_key.key
-    mail({ :to => account.email, :subject => DC.t(account,'password_reset'),
-           :template_path => translation_path_for( account.language )
+    mail({
+        :to => account.email, :subject => DC.t(account,'password_reset'),
+        :content_type  => "text/plain",
+        :template_path => translation_path_for( account.language )
     })
   end
 
@@ -94,8 +99,11 @@ class LifecycleMailer < ActionMailer::Base
   def documents_finished_processing(account, document_count)
     @account  = account
     @count    = document_count
-    mail({:to => account.email, :subject => DC.t(account,'documents_are_ready'),
-          :template_path => translation_path_for( account.language ) })
+    mail({
+        :to => account.email, :subject => DC.t(account,'documents_are_ready'),
+        :content_type  => "text/plain",
+        :template_path => translation_path_for( account.language )
+      })
   end
 
   # Accounts and Document CSVs mailed out every 1st and 15th of the month
