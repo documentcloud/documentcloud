@@ -1,8 +1,1 @@
-<% secrets = YAML.load_file(File.join(Rails.root, 'secrets/secrets.yml'))[ENV['RAILS_ENV'] || 'development'] %>
-
----
-# The Skylight ID for the application.
-application: <%= secrets['skylight_app_id'] %>
-
-# The authentication token for the application.
-authentication: <%= secrets['skylight_token'] %>
+secrets/skylight.yml

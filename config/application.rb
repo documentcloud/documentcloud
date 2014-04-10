@@ -39,5 +39,6 @@ module DC
 
     config.filter_parameters += [:password]
 
+    config.skylight.config_path = "secrets/skylight.yml"
   end
 end
