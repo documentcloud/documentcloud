@@ -4,10 +4,6 @@ DC::Application.routes.draw do
   # homepage
   get '/' => 'workspace#index'
 
-  # Deactivate admin since it's taking way to long
-  # to load and affecting site performance
-  get '/admin/:action', :controller=>:admin, :response => '404'
-
   # Internal Search API.
   get '/search/documents.json' => 'search#documents'
 
@@ -174,6 +170,8 @@ DC::Application.routes.draw do
   get '/feed' => 'redirect#index', :as => :root_feed, :url => 'http://blog.documentcloud.org/feed'
   get '/blog/*parts' => 'redirect#index', :as => :blog, :url => 'http://blog.documentcloud.org/'
 
+  get '/admin' => 'admin#index'
+  
   # Standard fallback routes
   match '/:controller(/:action(/:id))', :via=>[:get,:post]
   get ':controller/:action.:format' => '#index'
