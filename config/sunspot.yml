@@ -4,7 +4,7 @@ production:
     port: 7377
     path: /solr/collection1
     read_timeout: 2
-    open_timeout: 0.5
+    open_timeout: 1.5
     log_level: INFO
     min_memory: 20M
     max_memory: 500M
