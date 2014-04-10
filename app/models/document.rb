@@ -115,7 +115,7 @@ class Document < ActiveRecord::Base
     end
     query.readonly(false)
   }
-  CONTROL_CHAR_CODES=Regexp.new("[\u0000-\u001f]")
+  
   # The definition of the Solr search index. Via sunspot-rails.
   searchable do
 
@@ -124,7 +124,7 @@ class Document < ActiveRecord::Base
     text :source
     text :description
     text :full_text do
-      self.combined_page_text.gsub(Document::CONTROL_CHAR_CODES,'')
+      self.combined_page_text.gsub( Page::INVALID_SOLR_CHARACTERS, '' )
     end
 
     # Attributes...
