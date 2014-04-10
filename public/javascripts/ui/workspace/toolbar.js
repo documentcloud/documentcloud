@@ -290,7 +290,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     this._enableMenuItems(menu);
     var singular = Documents.selectedCount == 1;
     $('.share_documents', menu.content).text( _.t('share_x_documents', Documents.selectedCount ) );
-    $('.share_project', menu.content).toggleClass('disabled', !Projects.selectedCount);
+    $('.share_project', menu.content).toggleClass('disabled', !Projects.firstSelected() );
     var overviewWillAnalyzeProject = !Documents.selectedCount && !!Projects.firstSelected();
     var overviewDisabled = !Documents.selectedCount && !/\S/.test(dc.app.searcher.publicQuery());
     $('.menu_item.analyze_in_overview', menu.content)
