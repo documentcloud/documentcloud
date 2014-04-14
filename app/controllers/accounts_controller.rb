@@ -101,7 +101,7 @@ class AccountsController < ApplicationController
       if account.pending?
         account.send_login_instructions(current_account)
       else
-        LifecycleMailer.deliver_membership_notification(account, current_organization, current_account)
+        LifecycleMailer.membership_notification(account, current_organization, current_account).deliver
       end
     end
     json account.canonical( :membership=>membership )

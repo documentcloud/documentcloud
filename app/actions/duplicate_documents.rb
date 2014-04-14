@@ -8,7 +8,7 @@ class DuplicateDocuments < CloudCrowd::Action
         doc.duplicate!(account, options)
       end
     rescue Exception => e
-      LifecycleMailer.deliver_exception_notification(e, options)
+      LifecycleMailer.exception_notification(e, options).deliver
       raise e
     end
     true

@@ -26,7 +26,7 @@ class ReindexEverything < CloudCrowd::Action
       Sunspot.commit
     rescue Exception => e
       counter += 1
-      LifecycleMailer.deliver_exception_notification(e, options)
+      LifecycleMailer.exception_notification(e, options).deliver
       retry if counter < 5
     end
   end
