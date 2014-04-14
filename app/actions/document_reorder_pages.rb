@@ -60,7 +60,7 @@ class DocumentReorderPages < DocumentAction
     # Update page offsets for text.
     offset = 0
     page_order.each_with_index do |p, i|
-      page = Page.find_by_document_id_and_page_number(document.id, p)
+      page = Page.where(:document_id => document.id, :page_number => p).first
       unless page
         LifecycleMailer.logging_email("Reorder pages", {
           :document_id => document.id,
@@ -76,14 +76,14 @@ class DocumentReorderPages < DocumentAction
       page.page_number = (i+1) + document.page_count
       page.save
     end
-    pages = Page.find_all_by_document_id(document.id)
+    pages = Page.where(:document_id=>document.id)
     pages.each do |page|
       page.page_number = page.page_number - document.page_count
       page.save
     end
 
     # Update annotations.
-    annotations = Annotation.find_all_by_document_id(document.id)
+    annotations = Annotation.where(:document_id=>document.id)
     annotations.each do |annotation|
       annotation_index = page_order.index(annotation.page_number)
       if annotation_index
@@ -95,7 +95,7 @@ class DocumentReorderPages < DocumentAction
     end
 
     # Update sections.
-    sections = Section.find_all_by_document_id(document.id)
+    sections = Section.where(:document_id=>document.id)
     sections.each do |section|
       section_index = page_order.index(section.page_number)
       if section_index
