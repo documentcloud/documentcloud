@@ -76,7 +76,6 @@ class AccountTest < ActiveSupport::TestCase
   end
 
   it "delivers account emails" do
-    assert ActionMailer::Base.deliveries.empty?
     louis.send_login_instructions
     mail = ActionMailer::Base.deliveries.last
     assert mail
