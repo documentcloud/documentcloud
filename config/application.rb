@@ -31,8 +31,8 @@ module DC
     config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public"
 
     # DocumentCloud-specific configuration.
-    ::DC::SECRETS.merge!   YAML.load_file("#{Rails.root}/secrets/secrets.yml")[Rails.env]
-    ::DC::CONFIG.merge! YAML.load( ERB.new(File.read( Rails.root.join('config','document_cloud.yml') ) ).result )[Rails.env]
+    ::DC::SECRETS.merge! YAML.load_file("#{Rails.root}/secrets/secrets.yml")[Rails.env]
+    ::DC::CONFIG.merge!  YAML.load( ERB.new(File.read( Rails.root.join('config','document_cloud.yml') ) ).result )[Rails.env]
 
     ::DC::ANALYTICS_DB = YAML.load(ERB.new(File.read("#{Rails.root}/config/database_analytics.yml")).result(binding))[Rails.env]
     ::DC::MAIN_DB      = YAML.load(ERB.new(File.read("#{Rails.root}/config/database.yml")).result(binding))[Rails.env]
