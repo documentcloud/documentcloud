@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
   def jsonp_request?
     return false unless params[:callback]
     @callback = params[:callback]
-    render :partial => 'common/jsonp.js', :type => :js
+    render :partial => 'common/jsonp.js', :content_type => 'application/javascript'
     true
   end
 
