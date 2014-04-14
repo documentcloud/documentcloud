@@ -589,11 +589,12 @@ class Document < ActiveRecord::Base
   end
 
   def reviewer_inviter(reviewer_account)
-    collab = Collaboration.first(:conditions => [
+    return false if reviewer_projects.empty?
+    collab = Collaboration.where(
       "account_id = ? AND project_id = ? AND creator_id IS NOT NULL",
       reviewer_account.id,
       reviewer_projects.first.id
-    ])
+    ).first
     collab && collab.creator
   end
 
