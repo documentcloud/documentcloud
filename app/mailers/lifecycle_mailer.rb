@@ -47,7 +47,7 @@ class LifecycleMailer < ActionMailer::Base
     @message              = message
     options = {
       :cc            => inviter_account.email,
-      :subject       => DC.t(inviter_account,'review_x_documents',documents.count),
+      :subject       => DC.t(inviter_account,'review_x_documents', documents.count, documents.first.title ),
       :content_type  => "text/plain",
       :template_path => translation_path_for( inviter_account.language )
     }
