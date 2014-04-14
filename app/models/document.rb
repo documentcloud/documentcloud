@@ -397,8 +397,12 @@ class Document < ActiveRecord::Base
   end
 
   def data=(hash)
-    self.docdata = Docdata.create(:document_id => id) unless self.docdata
-    docdata.update_attributes :data => hash
+    if hash.blank?
+      self.docdata.destroy if self.docdata
+      return
+    end
+    self.build_docdata unless self.docdata
+    self.docdata.update_attributes :data => hash
   end
 
   # Ex: docs/1011

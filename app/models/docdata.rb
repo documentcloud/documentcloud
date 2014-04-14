@@ -4,8 +4,8 @@ class Docdata < ActiveRecord::Base
 
   before_validation :convert_data_to_hash
   validates :document_id, :uniqueness=>{ :allow_nil => true }
-  validate :ensure_keys_are_not_forbidden
-
+  validate  :ensure_keys_are_not_forbidden
+  validates :data, :presence=>true
   after_save :index_document
 
   private

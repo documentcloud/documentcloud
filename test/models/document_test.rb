@@ -173,6 +173,19 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal( {"foo"=>"bar", "one"=>"1", "answer"=>"42"}, doc.reload.data )
   end
 
+  def test_it_cant_have_blank_data
+    assert_empty doc.data
+    doc.data = {}
+    assert_nil doc.docdata
+  end
+
+  def test_it_deletes_on_blank
+    doc.data = { one: 1 }
+    refute_nil doc.docdata
+    doc.data = {}
+    assert doc.docdata.destroyed?, "Docdata wasn't destroyed when data was set to blank"
+  end
+
   def test_encodes_paths_and_urls
     base = "documents/#{doc.id}"
     assert_equal base, doc.path
