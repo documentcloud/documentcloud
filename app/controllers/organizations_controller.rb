@@ -1,7 +1,10 @@
 # The OrganizationsController is responsible for organization management
 
+
 class OrganizationsController < ApplicationController
   layout 'workspace'
+
+  before_action :login_required
 
   # Administrators of an organization can set
   #   the default language for members
