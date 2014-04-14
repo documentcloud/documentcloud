@@ -254,7 +254,7 @@ class DocumentsController < ApplicationController
     rescue RangeError => e
       return false
     end
-    meta = current_document.entity_dates.first(:conditions => {:date => date})
+    meta = current_document.entity_dates.where(:date=>date).first
     redirect_to current_document.document_viewer_url(:date => meta, :allow_ssl => true)
   end
 
