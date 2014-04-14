@@ -71,7 +71,7 @@ class Account < ActiveRecord::Base
   # Retrieve the names of the contributors for the result set of documents.
   def self.names_for_documents(docs)
     ids = docs.map {|doc| doc.account_id }.uniq
-    self.all(:conditions => {:id => ids}, :select => 'id, first_name, last_name').inject({}) do |hash, acc|
+    self.where({:id => ids}).select('id, first_name, last_name').inject({}) do |hash, acc| 
       hash[acc.id] = acc.full_name; hash
     end
   end

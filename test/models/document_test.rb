@@ -47,6 +47,13 @@ class DocumentTest < ActiveSupport::TestCase
     assert_job_action 'document_import'
   end
 
+  def test_document_viewer_url
+    assert_equal "http://dev.dcloud.org/documents/368941146-tv.html", doc.document_viewer_url
+    assert_equal "http://dev.dcloud.org/documents/368941146-tv.html#document/p2", doc.document_viewer_url(:page=>2)
+    assert_equal "http://dev.dcloud.org/documents/368941146-tv.html#entity/p2/Mr%20Rogers/2:16",
+                 doc.document_viewer_url(:page=>2,:entity=>doc.entities.first,:offset=>2)
+  end
+
   def test_publishes_documents_once_due
     doc.update_attributes :access=>Document::PRIVATE, :publish_at=>(Time.now-1.day)
     assert Document.due.where( :id=>doc.id ).any?

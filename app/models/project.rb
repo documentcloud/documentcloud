@@ -114,9 +114,6 @@ class Project < ActiveRecord::Base
       .where( ["project_memberships.project_id = ?", id ] )
       .joins( "join project_memberships on documents.id = project_memberships.document_id" )
       .select( 'documents.id,documents.slug')
-      # :select=>"documents.id, documents.slug",
-      # :joins=>"join project_memberships on documents.id = project_memberships.document_id",
-      # :conditions => [ "project_memberships.project_id = ?", id ])
     sparse_documents.map { |d| d.canonical_id }
   end
 

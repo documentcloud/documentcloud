@@ -7,6 +7,12 @@ class AccountTest < ActiveSupport::TestCase
     refute account
   end
 
+  it "retrieves names for documents" do
+    docs = [ doc, secret_doc ]
+    ids = Account.names_for_documents( docs )
+    assert_equal "Louis Mercier", ids[ louis.id ]
+  end
+
   it "has associations and they query successfully" do
     assert_associations_queryable louis
   end

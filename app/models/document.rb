@@ -506,7 +506,7 @@ class Document < ActiveRecord::Base
     suffix = ''
     suffix = "#document/p#{opts[:page]}" if opts[:page]
     if ent = opts[:entity]
-      page  = self.pages.first(:conditions => {:page_number => opts[:page]})
+      page  = self.pages.where({:page_number => opts[:page]}).first
       occur = ent.split_occurrences.detect {|o| o.offset == opts[:offset].to_i }
       suffix = "#entity/p#{page.page_number}/#{URI.escape(ent.value)}/#{occur.page_offset}:#{occur.length}"
     end
