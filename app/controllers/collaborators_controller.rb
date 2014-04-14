@@ -1,5 +1,7 @@
 class CollaboratorsController < ApplicationController
 
+  before_action :login_required
+
   def create
     account = Account.lookup(pick(params, :email)[:email])
     return json(nil, 404) if !account || account.id == current_account.id
