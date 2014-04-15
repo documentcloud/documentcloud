@@ -9,8 +9,10 @@ class HomeController < ApplicationController
   before_action :bouncer if Rails.env.staging?
 
   def index
-    time = Rails.env.production? ? 2.weeks.ago : nil
-    @document = Document.unrestricted.published.popular.random.since(time).first
+    @document = Rails.cache.fetch( "homepage/featured_document" ) do
+      time = Rails.env.production? ? 2.weeks.ago : nil
+      Document.unrestricted.published.popular.random.since(time).first
+    end
   end
 
   def opensource
