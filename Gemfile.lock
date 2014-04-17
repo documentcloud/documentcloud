@@ -62,7 +62,7 @@ GEM
       celluloid (>= 0.15.0)
       nio4r (>= 0.5.0)
     closure-compiler (1.1.10)
-    cloud-crowd (0.7.2.pre3)
+    cloud-crowd (0.7.2)
       active_model_serializers
       activerecord (>= 3.0)
       json (>= 1.1.7)
@@ -249,7 +249,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.1)
   calais (~> 0.0.13)!
   closure-compiler
-  cloud-crowd (= 0.7.2.pre3)
+  cloud-crowd (= 0.7.2)
   curb (~> 0.8.4)
   docsplit (>= 0.6.4)
   google_drive
