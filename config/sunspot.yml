@@ -7,7 +7,7 @@ production:
     open_timeout: 1.5
     log_level: INFO
     min_memory: 20M
-    max_memory: 500M
+    max_memory: 3G
     pid_dir: tmp/pids
 
 development:
