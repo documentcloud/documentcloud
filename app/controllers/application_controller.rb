@@ -6,21 +6,37 @@ class ApplicationController < ActionController::Base
   BasicAuth = ActionController::HttpAuthentication::Basic
 
   protect_from_forgery
+  skip_before_action :verify_authenticity_token, if: :embeddable?
 
-  filter_parameter_logging :password
-
-  before_filter :set_ssl
+  before_action :set_ssl
 
   if Rails.env.development?
-    around_filter :perform_profile
-    after_filter  :debug_api
+    around_action :perform_profile
+    after_action :debug_api
   end
 
   if Rails.env.production?
-    around_filter :notify_exceptions
+    around_action :notify_exceptions
   end
 
   protected
+
+  def embeddable?
+    request.format.json? or 
+    request.format.jsonp? or 
+    request.format.js? or
+    request.format.text? or
+    request.format.txt? or
+    request.format.xml?
+  end
+
+  def maybe_set_cors_headers
+    return unless request.headers['Origin']
+    headers['Access-Control-Allow-Origin'] = request.headers['Origin']
+    headers['Access-Control-Allow-Methods'] = 'OPTIONS, GET, POST, PUT, DELETE'
+    headers['Access-Control-Allow-Headers'] = 'Accept,Authorization,Content-Length,Content-Type,Cookie'
+    headers['Access-Control-Allow-Credentials'] = 'true'
+  end
 
   # Convenience method for responding with JSON. Sets the content type,
   # serializes, and allows empty responses. If json'ing an ActiveRecord object,
@@ -47,7 +63,7 @@ class ApplicationController < ActionController::Base
   def jsonp_request?
     return false unless params[:callback]
     @callback = params[:callback]
-    render :partial => 'common/jsonp.js', :type => :js
+    render :partial => 'common/jsonp.js', :content_type => 'application/javascript'
     true
   end
 
@@ -55,7 +71,9 @@ class ApplicationController < ActionController::Base
   # Where we allow JSONP, we also allow CORS.
   def json_response
     return if jsonp_request?
-    headers['Access-Control-Allow-Origin'] = '*'
+    # If the request has already set the CORS headers, don't overwrite them
+    # Sending the wildcard origin that will dissallow sending cookies for authentication.
+    headers['Access-Control-Allow-Origin'] = '*' unless headers.has_key?('Access-Control-Allow-Origin')
     json @response
   end
 
@@ -86,9 +104,13 @@ class ApplicationController < ActionController::Base
   end
 
   def api_login_optional
-    return if BasicAuth.authorization(request).blank?
+    return if request.authorization.blank?
     return unless @current_account = Account.log_in(*BasicAuth.user_name_and_password(request))
     @current_organization = @current_account.organization
+  end
+  
+  def allow_iframe
+    response.headers.except! 'X-Frame-Options'
   end
 
   def admin_required
@@ -101,7 +123,7 @@ class ApplicationController < ActionController::Base
 
   def secure_only
     if !request.ssl? && (request.format.html? || request.format.nil?)
-      redirect_to DC.server_root(:force_ssl => true) + request.request_uri
+      redirect_to DC.server_root(:force_ssl => true) + request.original_fullpath
     end
   end
 
@@ -119,7 +141,7 @@ class ApplicationController < ActionController::Base
 
   def handle_unverified_request
     error = RuntimeError.new "CSRF Verification Failed"
-    LifecycleMailer.deliver_exception_notification(error, params)
+    LifecycleMailer.exception_notification(error, params).deliver
     forbidden
   end
 
@@ -130,7 +152,7 @@ class ApplicationController < ActionController::Base
 
   # Return forbidden when the access is unauthorized.
   def forbidden
-    @next = CGI.escape(request.request_uri)
+    @next = CGI.escape(request.original_url)
     render :file => "#{Rails.root}/public/403.html", :status => 403
     false
   end
@@ -150,7 +172,7 @@ class ApplicationController < ActionController::Base
   # Simple HTTP Basic Auth to make sure folks don't snoop where the shouldn't.
   def bouncer
     authenticate_or_request_with_http_basic("DocumentCloud") do |login, password|
-      login == SECRETS['guest_username'] && password == SECRETS['guest_password']
+      login == DC::SECRETS['guest_username'] && password == DC::SECRETS['guest_password']
     end
   end
 
@@ -163,8 +185,8 @@ class ApplicationController < ActionController::Base
     begin
       yield
     rescue Exception => e
-      ignore = e.is_a?(ActionController::UnknownAction) || e.is_a?(ActionController::RoutingError)
-      LifecycleMailer.deliver_exception_notification(e, params) unless ignore
+      ignore = e.is_a?(AbstractController::ActionNotFound) || e.is_a?(ActionController::RoutingError)
+      LifecycleMailer.exception_notification(e, params).deliver unless ignore
       raise e
     end
   end

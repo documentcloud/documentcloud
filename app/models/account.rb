@@ -1,6 +1,7 @@
 # An Account on DocumentCloud can be used to access the workspace and upload
 # documents. Accounts have full priviledges for the entire organization, at the
 # moment.
+
 class Account < ActiveRecord::Base
   include DC::Access
   include DC::Roles
@@ -9,23 +10,26 @@ class Account < ActiveRecord::Base
   has_many :memberships,     :dependent => :destroy
   has_many :organizations,   :through => :memberships
   has_many :projects,        :dependent => :destroy
-  has_many :annotations      
+  has_many :annotations
   has_many :collaborations,  :dependent => :destroy
   has_many :processing_jobs, :dependent => :destroy
   has_one  :security_key,    :dependent => :destroy, :as => :securable
   has_many :shared_projects, :through => :collaborations, :source => :project
-
+  has_many :documents
 
   # Validations:
-  validates_presence_of   :first_name, :last_name# => :has_memberships?
-  validates_presence_of   :email, :if => :has_memberships?
-  validates_format_of     :email, :with => DC::Validators::EMAIL, :if => :has_memberships?
-  validates_uniqueness_of :email, :case_sensitive => false, :if => :has_memberships?
+  validates  :first_name, :last_name, :presence=>true
+  validates  :email,
+    :presence   =>true,
+    :uniqueness =>{ :case_sensitive => false },
+    :format     =>{ :with => DC::Validators::EMAIL },
+    :if         => :has_memberships?
+
   validate :validate_identity_is_unique
-  validates_inclusion_of  :language, :in => DC::Language::USER,
-                          :message => "must be one of: (#{DC::Language::USER.join(', ')})"
-  validates_inclusion_of  :document_language,  :in => DC::Language::SUPPORTED,
-                          :message => "must be one of: (#{DC::Language::SUPPORTED.join(', ')})"
+  validates :language, :inclusion=>{ :in => DC::Language::USER,
+            :message => "must be one of: (#{DC::Language::USER.join(', ')})" }
+  validates :document_language,  :inclusion=>{ :in => DC::Language::SUPPORTED,
+            :message => "must be one of: (#{DC::Language::SUPPORTED.join(', ')})" }
 
   # Sanitizations:
   text_attr :first_name, :last_name, :email
@@ -34,14 +38,14 @@ class Account < ActiveRecord::Base
   delegate :name, :to => :organization, :prefix => true, :allow_nil => true
 
   # Scopes
-  named_scope :admin,     { :include=> "memberships", :conditions => ["memberships.role = ?",    ADMINISTRATOR] }
-  named_scope :active,    { :include=> "memberships", :conditions => ["memberships.role is NULL or memberships.role != ?",   DISABLED] }
-  named_scope :real,      { :include=> "memberships", :conditions => ["memberships.role in (?)", REAL_ROLES] }
-  named_scope :reviewer,  { :include=> "memberships", :conditions => ["memberships.role = ?",    REVIEWER] }
-  named_scope :with_identity, lambda { | provider, id |
-    { :conditions=>"identities @> '\"#{DC::Hstore.escape(provider)}\"=>\"#{DC::Hstore.escape(id)}\"'" }
+  scope :with_memberships, -> { references(:memberships).includes(:memberships) }
+  scope :admin,   -> { with_memberships.where( ["memberships.role = ?",  ADMINISTRATOR] )  }
+  scope :active,  -> { with_memberships.where( ["memberships.role is NULL or memberships.role != ?", DISABLED] ) }
+  scope :real,    -> { with_memberships.where( ["memberships.role in (?)", REAL_ROLES] ) }
+  scope :reviewer,-> { with_memberships.where( ["memberships.role = ?",    REVIEWER] ) }
+  scope :with_identity, lambda { | provider, id |
+     where("identities @> hstore(:provider, :id)", :provider=>provider.to_s,:id=>id.to_s )
   }
-
 
   # Populates the organization#members accessor with all the organizaton's accounts
   def organizations_with_accounts
@@ -67,22 +71,24 @@ class Account < ActiveRecord::Base
   # Retrieve the names of the contributors for the result set of documents.
   def self.names_for_documents(docs)
     ids = docs.map {|doc| doc.account_id }.uniq
-    self.all(:conditions => {:id => ids}, :select => 'id, first_name, last_name').inject({}) do |hash, acc|
+    self.where({:id => ids}).select('id, first_name, last_name').inject({}) do |hash, acc| 
       hash[acc.id] = acc.full_name; hash
     end
   end
 
   def self.lookup(email)
-    Account.first(:conditions => ['lower(email) = ?', email.downcase])
+    Account.where(['lower(email) = ?', email.downcase]).first
   end
 
-  # 
+  #
   def self.from_identity( identity )
+
     unless account = Account.with_identity( identity['provider'],  identity['uid'] ).first
       account = Account.new({ :document_language=>'eng', :language=>'eng' })
     end
+
     account.record_identity_attributes( identity )
-    account.save if account.changed?
+    account.save! if account.changed?
     account
   end
 
@@ -118,16 +124,16 @@ class Account < ActiveRecord::Base
     return nil unless self.organization
     self.organization.id
   end
-  
+
   def role
-    default = memberships.first(:conditions=>{:default=>true})
-    default.nil? ? nil : default.role 
+    default = memberships.where({:default=>true}).first
+    default.nil? ? nil : default.role
   end
-  
+
   def member_of?(org)
     self.memberships.exists?(:organization_id => org.id)
   end
-  
+
   def has_memberships? # should be reworked as Account#real?
     self.memberships.any?
   end
@@ -139,11 +145,11 @@ class Account < ActiveRecord::Base
       self.memberships.exists?(:role => role, :organization_id => org.id)
     end
   end
-  
+
   def admin?(org=self.organization)
     has_role?(ADMINISTRATOR, org)
   end
-  
+
   def contributor?(org=self.organization)
     has_role?(CONTRIBUTOR, org)
   end
@@ -165,7 +171,7 @@ class Account < ActiveRecord::Base
   end
 
   def active?(org=self.organization)
-    membership = self.memberships.first(:conditions=>{:organization_id => org})
+    membership = self.memberships.where({:organization_id => org}).first
     membership && membership.role != DISABLED
   end
 
@@ -241,42 +247,46 @@ class Account < ActiveRecord::Base
   # through collaboration.
   def accessible_project_ids
     @accessible_project_ids ||=
-      Collaboration.owned_by(self).all(:select => [:project_id]).map {|c| c.project_id }
+      Collaboration.owned_by(self).pluck(:project_id)
   end
-  
+
   # is the account considered an DocumentCloud Administrator?
   def dcloud_admin?
-    organization.id == 1 && ! reviewer?    
+    organization.id == 1 && ! reviewer?
   end
 
   # When an account is created by a third party, send an email with a secure
   # key to set the password.
   def send_login_instructions(admin=nil)
+    ensure_security_key!
+    LifecycleMailer.login_instructions(self, admin).deliver
+  end
+
+  def ensure_security_key!
     create_security_key if security_key.nil?
-    LifecycleMailer.deliver_login_instructions(self, admin)
   end
 
   def send_reviewer_instructions(documents, inviter_account, message=nil)
     key = nil
     if self.has_role?( Account::REVIEWER )
-      create_security_key if self.security_key.nil?
+      ensure_security_key!
       key = '?key=' + self.security_key.key
     end
-    LifecycleMailer.deliver_reviewer_instructions(documents, inviter_account, self, message, key)
+    LifecycleMailer.reviewer_instructions(documents, inviter_account, self, message, key).deliver
   end
 
-  # Upgrading a reviewer account to a newsroom account also moves their                 # 
+  # Upgrading a reviewer account to a newsroom account also moves their                 #
   # notes over to the (potentially different) organization.                             # Move to Organization
-  def upgrade_reviewer_to_real(organization, role)                                      # 
-    update_attributes :organization => organization, :role => role                      # 
-    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{id}") # 
-  end                                                                                   # 
+  def upgrade_reviewer_to_real(organization, role)                                      #
+    update_attributes :organization => organization, :role => role                      #
+    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{id}") #
+  end                                                                                   #
 
   # When a password reset request is made, send an email with a secure key to
   # reset the password.
   def send_reset_request
-    create_security_key if security_key.nil?
-    LifecycleMailer.deliver_reset_request(self)
+    ensure_security_key!
+    LifecycleMailer.reset_request(self).deliver
   end
 
   # No middle names, for now.
@@ -296,7 +306,7 @@ class Account < ActiveRecord::Base
 
   # Has this account been assigned, but never logged into, with no password set?
   def pending?
-    !hashed_password && !reviewer? && identities.empty?
+    !hashed_password && !reviewer? && identities.blank?
   end
 
   # It's slo-o-o-w to compare passwords. Which is a mixed bag, but mostly good.
@@ -312,21 +322,18 @@ class Account < ActiveRecord::Base
   end
 
   def validate_identity_is_unique
-    return if self.identities.empty?
-    cond = '(' + DC::Hstore.quote( self.identities ).map{|k,v| "identities @> '\"#{k}\"=>\"#{v}\"'" }.join(" or ") + ')'
-    cond << " and id<>#{self.id}" unless new_record?
-    if account = Account.first( :conditions=>cond )
+    return if self.identities.blank?
+    condition = self.identities.map{ | provider, id | "identities @> hstore(?,?)" }.join(' or ')
+    condition << " and id<>#{self.id}" unless new_record?
+    values = self.identities.map{|k,v| [k.to_s,v.to_s] }.flatten
+    if account = Account.where( [ condition, *values ] ).first
       duplicated = account.identities.to_set.intersection( self.identities ).map{|k,v| k}.join(',')
       errors.add(:identities, "An account exists with the same id for #{account.id} #{account.identities.to_json} #{duplicated}")
     end
   end
 
-  def identities
-    DC::Hstore.from_sql( read_attribute('identities') )
-  end
-
   def record_identity_attributes( identity )
-    current_identities = self.identities
+    current_identities = ( self.identities ||= {} )
     current_identities[ identity['provider'] ] = identity['uid']
     write_attribute( :identities, DC::Hstore.to_sql(  current_identities ) )
 
@@ -366,12 +373,12 @@ class Account < ActiveRecord::Base
       attrs['memberships'] = memberships.map{ |m| m.canonical(options) }
     end
     if options[:include_document_counts]
-      attrs['public_documents'] = Document.unrestricted.count(:conditions => {:account_id => id})
-      attrs['private_documents'] = Document.restricted.count(:conditions => {:account_id => id})
+      attrs['public_documents'] = Document.unrestricted.where(:account_id=>id).count
+      attrs['private_documents'] = Document.restricted.where(:account_id => id).count
     end
     
     # all of the below should be rendered obsolete and removed.
-    if (membership = options[:membership] || memberships.first(:conditions=>{:default=>true}))
+    if ( membership = options[:membership] || memberships.default.first )
       attrs['organization_id'] = membership.organization_id
       attrs['role']            = membership.role
     end
@@ -385,8 +392,8 @@ class Account < ActiveRecord::Base
 
   # The JSON representation of an account avoids sending down the password,
   # among other things, and includes extra attributes.
-  def to_json(options={})
-    canonical(options).to_json
+  def as_json(options={})
+    canonical(options)
   end
 
 end

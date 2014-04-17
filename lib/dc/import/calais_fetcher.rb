@@ -21,7 +21,7 @@ module DC
             rdfs[i] = fetch_rdf_from_calais(chunk)
           end
         rescue Exception => e
-          LifecycleMailer.deliver_exception_notification(e)
+          LifecycleMailer.exception_notification(e).deliver
         end
         rdfs
       end
@@ -42,10 +42,10 @@ module DC
           client = Calais::Client.new(
             :content                        => text,
             :content_type                   => :raw,
-            :license_id                     => SECRETS['calais_license'],
+            :license_id                     => DC::SECRETS['calais_license'],
             :allow_distribution             => false,
             :allow_search                   => false,
-            :submitter                      => "DocumentCloud (#{RAILS_ENV})",
+            :submitter                      => "DocumentCloud (#{Rails.env})",
             :omit_outputting_original_text  => true
           )
           Calais::Response.new(client.enlighten)

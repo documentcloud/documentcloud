@@ -1,2244 +1,718 @@
---- !omap 
-- viewer: !omap 
-    - CLOSE: !binary |
-        0JfQkNCa0KDQq9Ci0Kw=
-
-    - add_note_instructions: !binary |
-        0JLRi9C00LXQu9C40YLQtSDRh9Cw0YHRgtGMINC00L7QutGD0LzQtdC90YLQ
-        sCDQuNC70Lgg0YnQtdC70LrQvdC40YLQtSDQvdCwINC/0YDQvtGB0YLRgNCw
-        0L3RgdGC0LLQtSDQvNC10LbQtNGDINGB0YLRgNCw0L3QuNGG0LDQvNC4LCDR
-        h9GC0L7QsdGLINGB0L7Qt9C00LDRgtGMINC30LDQvNC10YLQutGD
-
-    - add_private_note: !binary |
-        0JTQvtCx0LDQstC40YLRjCDQv9GA0LjQstCw0YLQvdGD0Y4g0LfQsNC80LXR
-        gtC60YM=
-
-    - add_private_note_warn: !binary |
-        0JLQsNGI0Lgg0L/RgNC40LLQsNGC0L3Ri9C1INC30LDQvNC10YLQutC4INCy
-        0LjQtNC90Ysg0YLQvtC70YzQutC+INCy0LDQvCDQuCDQvdC40LrQvtC80YMg
-        0LrRgNC+0LzQtSDQstCw0YEu
-
-    - add_public_note: !binary |
-        0JTQvtCx0LDQstC40YLRjCDQv9GD0LHQu9C40YfQvdGD0Y4g0LfQsNC80LXR
-        gtC60YM=
-
-    - add_public_note_warn: !binary |
-        0J/Rg9Cx0LvQuNGH0L3Ri9C1INC30LDQvNC10YLQutC4INCx0YPQtNGD0YIg
-        0LLQuNC00L3RiyDQstGB0LXQvCwg0LrRgtC+INGD0LLQuNC00LjRgiDRjdGC
-        0L7RgiDQtNC+0LrRg9C80LXQvdGC
-
-    - annotated_by: !binary |
-        0JDQstGC0L7RgCDQt9Cw0LzQtdGC0LrQuDogJXM=
-
-    - annotation_title: !binary |
-        0J3QsNC30LLQsNC90LjQtSDQt9Cw0LzQtdGC0LrQuA==
-
-    - cancel: !binary |
-        0J7RgtC80LXQvdCw
-
-    - click_add_page_note: !binary |
-        0KnQtdC70LrQvdC40YLQtSwg0YfRgtC+0LHRiyDQtNC+0LHQsNCy0LjRgtGM
-        INC30LDQvNC10YLQutGD
-
-    - container_not_found: !binary |
-        0K3Qu9C10LzQtdC90YIg0LIg0L7QutC90LUg0L/RgNC+0YHQvNC+0YLRgNCw
-        INC00L7QutGD0LzQtdC90YLQvtCyINC90LUg0L3QsNC50LTQtdC9Og==
-
-    - contents: !binary |
-        0KHQvtC00LXRgNC20LDQvdC40LU=
-
-    - contributed_by: !binary |
-        0JTQvtCx0LDQstC70LXQvdC+
-
-    - delete: !binary |
-        0KPQtNCw0LvQuNGC0Yw=
-
-    - description: !binary |
-        0J7Qv9C40YHQsNC90LjQtQ==
-
-    - dl_as_pdf: !binary |
-        0KHQutCw0YfQsNGC0Ywg0Y3RgtC+0YIg0LTQvtC60YPQvNC10L3RgiDQsiDQ
-        stC40LTQtSBQREY=
-
-    - document: !binary |
-        0JTQvtC60YPQvNC10L3Rgg==
-
-    - document_tools: !binary |
-        0JjQvdGB0YLRgNGD0LzQtdC90YLRiw==
-
-    - draft: !binary |
-        0KfQtdGA0L3QvtCy0LjQug==
-
-    - draft_note_visible: !binary |
-        0K3RgtC+0YIg0YfQtdGA0L3QvtCy0LjQuiDQtNC+0YHRgtGD0L/QtdC9INGC
-        0L7Qu9GM0LrQviDQstCw0Lwg0Lgg0L/QvtC70YzQt9C+0LLQsNGC0LXQu9GP
-        0LwsINC60L7RgtC+0YDRi9GFINCy0Ysg0LDQstGC0L7RgNC40LfQvtCy0LDQ
-        u9C4
-
-    - edit_data: !binary |
-        0KDQtdC00LDQutGC0LjRgNC+0LLQsNGC0Yw=
-
-    - expand: !binary |
-        0J3QsCDQstGB0LUg0L7QutC90L4=
-
-    - finish: !binary |
-        0JPQvtGC0L7QstC+
-
-    - for: !binary |
-        0LTQu9GP
-
-    - install_chrome_frame: !binary |
-        0JjQu9C4LCDQtdGB0LvQuCDQstGLINCy0YHQtSDRgtCw0LrQuCDRhdC+0YLQ
-        uNGC0LUg0LTQsNC70YzRiNC1INC40YHQv9C+0LvRjNC30L7QstCw0YLRjCBJ
-        bnRlcm5ldCBFeHBsb3JlciA2LCDQstGLINC80L7QttC10YLQtSAlc9GD0YHR
-        gtCw0L3QvtCy0LjRgtGMIEdvb2dsZSBDaHJvbWUgRnJhbWUlcy4=
-
-    - link_to_note: !binary |
-        0KHRgdGL0LvQutCwINC90LAg0Y3RgtGDINC30LDQvNC10YLQutGD
-
-    - loading: !binary |
-        0JfQsNCz0YDRg9C30LrQsA==
-
-    - log_in: !binary |
-        0JLQvtC50YLQuA==
-
-    - log_out: !binary |
-        0JLRi9C50YLQuA==
-
-    - logged_in_as: !binary |
-        0JLRiyDQstC+0YjQu9C4INC60LDQuiAlcw==
-
-    - must_upgrade: !binary |
-        0KfRgtC+0LHRiyDQuNGB0L/QvtC70YzQt9C+0LLQsNGC0Ywg0L7QutC+0YjQ
-        utC+INC/0YDQvtGB0LzQvtGC0YDQsCDQtNC+0LrRg9C80LXQvdGC0L7Qsiwg
-        0LLQsNC8INC90YPQttC90L4g0L7QsdC90L7QstC40YLRjCDQsdGA0LDRg9C3
-        0LXRgDo=
-
-    - next: !binary |
-        0JTQsNC70LXQtQ==
-
-    - next_note: !binary |
-        0KHQu9C10LTRg9GO0YnQsNGPINC30LDQvNC10YLQutCw
-
-    - note: &id001 
-        - !binary |
-          0JfQsNC80LXRgtC60LA=
-
-        - !binary |
-          0JfQsNC80LXRgtC60Lg=
-
-    - note_by: !binary |
-        0JfQsNC80LXRgtC60YMg0L7RgdGC0LDQstC40LsgJXM=
-
-    - of: !binary |
-        0LjQtw==
-
-    - organizations_documents: !binary |
-        0JTQvtC60YPQvNC10L3RgtGLICVz
-
-    - original_document_pdf: !binary |
-        0J7RgNC40LPQuNC90LDQuyDQtNC+0LrRg9C80LXQvdGC0LAgKFBERik=
-
-    - page: &id002 
-        - !binary |
-          0YHRgtGA0LDQvdC40YbQsA==
-
-        - !binary |
-          0YHRgtGA0LDQvdC40YbRiw==
-
-    - pg: !binary |
-        0YEu
-
-    - previous: !binary |
-        0J3QsNC30LDQtA==
-
-    - previous_note: !binary |
-        0J/RgNC10LTRi9C00YPRidCw0Y8g0LfQsNC80LXRgtC60LA=
-
-    - print_document_help: !binary |
-        0KfRgtC+0LHRiyDRgNCw0YHQv9C10YfQsNGC0LDRgtGMINC00L7QutGD0LzQ
-        tdC90YIsINC90LDQttC80LjRgtC1INC90LAg0YHRgdGL0LvQutC1ICLQntGA
-        0LjQs9C40L3QsNC7INC00L7QutGD0LzQtdC90YLQsCIgLSDQsdGD0LTQtdGC
-        INC+0YLQutGA0YvRgiDQtNC+0LrRg9C80LXQvdGCIFBERi4g0JjQvNC10LnR
-        gtC1INCy0LLQuNC00YMsINGH0YLQviDQsiDRgtCw0LrQvtC8INCy0LjQtNC1
-        INC90LDQv9C10YfQsNGC0LDRgtGMINC30LDQvNC10YLQutC4INCx0YPQtNC1
-        0YIg0L3QtdC70YzQt9GPLg==
-
-    - print_notes: !binary |
-        0J3QsNC/0LXRh9Cw0YLQsNGC0Ywg0LfQsNC80LXRgtC60Lg=
-
-    - private_note: !binary |
-        0J/RgNC40LLQsNGC0L3QsNGPINC30LDQvNC10YLQutCw
-
-    - private_note_visible: !binary |
-        0K3RgtCwINC/0YDQuNCy0LDRgtC90LDRjyDQt9Cw0LzQtdGC0LrQsCDQstC4
-        0LTQvdCwINGC0L7Qu9GM0LrQviDQstCw0Lw=
-
-    - publish: !binary |
-        0J7Qv9GD0LHQu9C40LrQvtCy0LDRgtGM
-
-    - related_article: !binary |
-        0KHQstGP0LfQsNC90L3Ri9C1INGB0YLQsNGC0YzQuA==
-
-    - reviewer: !binary |
-        0KDQtdGG0LXQvdC30LXQvdGC
-
-    - save: !binary |
-        0KHQvtGF0YDQsNC90LjRgtGM
-
-    - save_as_draft: !binary |
-        0KHQvtGF0YDQsNC90LjRgtGMINGH0LXRgNC90L7QstC40Lo=
-
-    - search: !binary |
-        0J/QvtC40YHQug==
-
-    - text: !binary |
-        0KLQtdC60YHRgg==
-
-    - untitled_note: !binary |
-        0JfQsNC80LXRgtC60LAg0LHQtdC3INC90LDQt9Cy0LDQvdC40Y8=
-
-    - view_fullscreen: !binary |
-        0J7RgtC60YDRi9GC0Ywg0LTQvtC60YPQvNC10L3RgiDQvdCwINCy0LXRgdGM
-        INGN0LrRgNCw0L0=
-
-    - x_collaborators: &id003 
-        - !binary |
-          0J7QtNC40L0g0LDQstGC0L7RgNC40LfQvtCy0LDQvdC90YvQuSDQv9C+0LvR
-          jNC30L7QstCw0YLQtdC70Yw=
-
-        - !binary |
-          JWQg0JDQstGC0L7RgNC40LfQvtCy0LDQvdC90YvRhSDQv9C+0LvRjNC30L7Q
-          stCw0YLQtdC70LXQuQ==
-
-    - x_documents: &id004 
-        - !binary |
-          JWQg0LTQvtC60YPQvNC10L3Rgg==
-
-        - !binary |
-          JWQg0LTQvtC60YPQvNC10L3RgtCw
-
-        - !binary |
-          JWQg0LTQvtC60YPQvNC10L3RgtC+0LI=
-
-    - x_notes: &id005 
-        - !binary |
-          JWQg0LfQsNC80LXRgtC60LA=
-
-        - !binary |
-          JWQg0LfQsNC80LXRgtC60Lg=
-
-        - !binary |
-          JWQg0LfQsNC80LXRgtC+0Lo=
-
-    - x_pages: &id006 
-        - !binary |
-          JWQg0YHRgtGA0LDQvdC40YbQsA==
-
-        - !binary |
-          JWQg0YHRgtGA0LDQvdC40YbRiw==
-
-        - !binary |
-          JWQg0YHRgtGA0LDQvdC40YY=
-
-    - zoom: !binary |
-        0JzQsNGB0YjRgtCw0LE=
-
-- workspace: !omap 
-    - "TRUE": "TRUE"
-    - access: !binary |
-        0LTQvtGB0YLRg9C/
-
-    - access_level: !binary |
-        0KPRgNC+0LLQtdC90Ywg0LTQvtGB0YLRg9C/0LA=
-
-    - access_level_edit_closing: !binary |
-        0JjQt9C80LXQvdC10L3QuNC1INGD0YDQvtCy0L3RjyDQtNC+0YHRgtGD0L/Q
-        sCDQt9Cw0LnQvNC10YIg0L3QtdC60L7RgtC+0YDQvtC1INCy0YDQtdC80Y8u
-        INCU0L4g0LfQsNCy0LXRgNGI0LXQvdC40Y8g0L7Qv9C10YDQsNGG0LjQuCDQ
-        tNC+0LrRg9C80LXQvdGCINCx0YPQtNC10YIg0LfQsNC60YDRi9GCLg==
-
-    - account: !binary |
-        0JDQutC60LDRg9C90YI=
-
-    - account_add_failure: !binary |
-        0J3QtSDRg9C00LDQu9C+0YHRjCDQtNC+0LHQsNCy0LjRgtGMINCw0LrQutCw
-        0YPQvdGC
-
-    - account_is_disabled: !binary |
-        0JDQutC60LDRg9C90YIgJXMg0LHRi9C7INC+0YLQutC70Y7Rh9C10L0=
-
-    - accounts: !binary |
-        0JDQutC60LDRg9C90YLRiw==
-
-    - add: !binary |
-        0JTQvtCx0LDQstC40YLRjA==
-
-    - add_a_collaborator: !binary |
-        0JTQvtCx0LDQstC40YLRjCDQsiDQv9GA0L7QtdC60YIg0YPRh9Cw0YHRgtC9
-        0LjQutCw
-
-    - add_html_for_documents: !binary |
-        0JLRgdGC0LDQstGM0YLQtSDRjdGC0L7RgiBIVE1MINC60L7QtCDQvdCwINGB
-        0LLQvtC5INGB0LDQudGCLCDRh9GC0L7QsdGLINCy0YHRgtGA0L7QuNGC0Ywg
-        0LIg0L3QtdCz0L4g0Y3RgtC4INC00L7QutGD0LzQtdC90YLRiy4=
-
-    - add_html_for_note: !binary |
-        0JTQvtCx0LDQstGM0YLQtSDRjdGC0L7RgiBIVE1MINC60L7QtCDQvdCwINGB
-        0YLRgNCw0L3QuNGG0YMsINCyINC60L7RgtC+0YDRg9GOINGF0L7RgtC40YLQ
-        tSDQstGB0YLRgNC+0LjRgtGMINC30LDQvNC10YLQutGDLg==
-
-    - add_html_for_viewer: !binary |
-        0JTQvtCx0LDQstGM0YLQtSDRjdGC0L7RgiBIVE1MINC60L7QtCDQvdCwINGB
-        0YLRgNCw0L3QuNGG0YMsINCyINC60L7RgtC+0YDRg9GOINGF0L7RgtC40YLQ
-        tSDQstGB0YLRgNC+0LjRgtGMINC+0LrQvdC+INC/0YDQvtGB0LzQvtGC0YDQ
-        sCDQtNC+0LrRg9C80LXQvdGC0L7Qsi4=
-
-    - add_note_instructions: !binary |
-        0JLRi9C00LXQu9C40YLQtSDRh9Cw0YHRgtGMINC00L7QutGD0LzQtdC90YLQ
-        sCDQuNC70Lgg0YnQtdC70LrQvdC40YLQtSDQvdCwINC/0YDQvtGB0YLRgNCw
-        0L3RgdGC0LLQtSDQvNC10LbQtNGDINGB0YLRgNCw0L3QuNGG0LDQvNC4LCDR
-        h9GC0L7QsdGLINGB0L7Qt9C00LDRgtGMINC30LDQvNC10YLQutGD
-
-    - add_private_note: !binary |
-        0JTQvtCx0LDQstC40YLRjCDQv9GA0LjQstCw0YLQvdGD0Y4g0LfQsNC80LXR
-        gtC60YM=
-
-    - add_private_note_warn: !binary |
-        0JLQsNGI0Lgg0L/RgNC40LLQsNGC0L3Ri9C1INC30LDQvNC10YLQutC4INCy
-        0LjQtNC90Ysg0YLQvtC70YzQutC+INCy0LDQvCDQuCDQvdC40LrQvtC80YMg
-        0LrRgNC+0LzQtSDQstCw0YEu
-
-    - add_public_note: !binary |
-        0JTQvtCx0LDQstC40YLRjCDQv9GD0LHQu9C40YfQvdGD0Y4g0LfQsNC80LXR
-        gtC60YM=
-
-    - add_public_note_warn: !binary |
-        0J/Rg9Cx0LvQuNGH0L3Ri9C1INC30LDQvNC10YLQutC4INCx0YPQtNGD0YIg
-        0LLQuNC00L3RiyDQstGB0LXQvCwg0LrRgtC+INGD0LLQuNC00LjRgiDRjdGC
-        0L7RgiDQtNC+0LrRg9C80LXQvdGC
-
-    - add_reviewer: !binary |
-        0JTQvtCx0LDQstC40YLRjCDRgNC10YbQtdC90LfQtdC90YLQsA==
-
-    - added_project: !binary |
-        0LTQvtCx0LDQstC70LXQvdGLINCyINGN0YLQvtGCINC/0YDQvtC10LrRgg==
-
-    - added_to_x_documents: 
-      - !binary |
-        0JTQvtC60YPQvNC10L3RgiDQtNC+0LHQsNCy0LvQtdC9INCyICVz
-
-      - !binary |
-        JWQg0LTQvtC60YPQvNC10L3RgtCwINC00L7QsdCw0LLQu9C10L3QviDQsiAl
-        cw==
-
-      - !binary |
-        JWQg0LTQvtC60YPQvNC10L3RgtC+0LIg0LTQvtCx0LDQstC70LXQvdC+INCy
-        ICVz
-
-    - adding_accounts: !binary |
-        0JTQvtCx0LDQstC70LXQvdC40LUg0LDQutC60LDRg9C90YLQvtCy
-
-    - administrator: !binary |
-        0JDQtNC80LjQvdC40YHRgtGA0LDRgtC+0YA=
-
-    - all_documents: !binary |
-        0JLRgdC1INC00L7QutGD0LzQtdC90YLRiw==
-
-    - allow_readers_to_search: !binary |
-        0KDQsNC30YDQtdGI0LjRgtGMINC/0L7QuNGB0Log0L/QviDRjdGC0LjQvCDQ
-        tNC+0LrRg9C80LXQvdGC0LDQvA==
-
-    - already_has_account: !binary |
-        0KMgJXMg0YPQttC1INC10YHRgtGMINCw0LrQutCw0YPQvdGCLg==
-
-    - analyze: !binary |
-        0JDQvdCw0LvQuNC30LjRgNC+0LLQsNGC0Yw=
-
-    - analyze_project_in_overview: !binary |
-        0J/RgNC+0LDQvdCw0LvQuNC30LjRgNC+0LLQsNGC0Ywg0Y3RgtC+0YIg0L/R
-        gNC+0LXQutGCINCyIE92ZXJ2aWV3
-
-    - analyze_x_docs_in_overview: 
-      - !binary |
-        0JDQvdCw0LvQuNC30LjRgNC+0LLQsNGC0Ywg0LTQvtC60YPQvNC10L3RgiDQ
-        siBPdmVydmlldw==
-
-      - !binary |
-        0JDQvdCw0LvQuNC30LjRgNC+0LLQsNGC0Ywg0LTQvtC60YPQvNC10L3RgtGL
-        INCyIE92ZXJ2aWV3
-
-    - annotated: !binary |
-        0YFf0LfQsNC80LXRgtC60LDQvNC4
-
-    - annotated_by: !binary |
-        0JDQstGC0L7RgCDQt9Cw0LzQtdGC0LrQuDogJXM=
-
-    - annotated_documents: !binary |
-        0JTQvtC60YPQvNC10L3RgtGLINGBINC30LDQvNC10YLQutCw0LzQuA==
-
-    - annotation: !binary |
-        0LjQvdGB0YLRgNGD0LzQtdC90YLQvtCyINC/0L4g0YDQsNCx0L7RgtC1INGB
-        INC30LDQvNC10YLQutCw0LzQuA==
-
-    - annotation_help: !binary |
-        0KEg0L/QvtC80L7RiNGM0Y4g0YHRgdGL0LvQvtC6INGB0L/RgNCw0LLQsCwg
-        0LTQvtCx0LDQstGM0YLQtSDQuiDQtNC+0LrRg9C80LXQvdGC0YMg0LfQsNC8
-        0LXRgtC60LguINCY0LzQtdC50YLQtSDQstCy0LjQtNGDLCDRh9GC0L4g0LrQ
-        sNC6INGB0LDQvNC4INC30LDQvNC10YLQutC4INGC0LDQuiDQuCDRh9C10YDQ
-        vdC+0LLQuNC60LgsINC10YHQu9C4INC+0L3QuCDQv9GD0LHQu9C40YfQvdGL
-        LCDQsdGD0LTRg9GCINCy0LjQtNC90Ysg0LLRgdC10Lwg0L/QvtC70YzQt9C+
-        0LLQsNGC0LXQu9GP0LwuINCf0YDQuNCy0LDRgtC90YvQtSDQt9Cw0LzQtdGC
-        0LrQuCDRgtC+0LvRjNC60L4g0LTQu9GPINCy0LDRgSwg0L7QvdC4INC90LUg
-        0LHRg9C00YPRgiDQstC40LTQvdGLINC00LDQttC1ICVzLg==
-
-    - apply_all_files: !binary |
-        0L/RgNC40LzQtdC90LjRgtGMINC60L4g0LLRgdC10Lwg0YTQsNC50LvQsNC8
-
-    - apply_fields_all_files: !binary |
-        0L/RgNC40LzQtdC90LjRgtGMINGN0YLQviDQvtC/0LjRgdCw0L3QuNC1LCDQ
-        uNGB0YLQvtGH0L3QuNC6INC4INGD0YDQvtCy0LXQvdGMINC00L7RgdGC0YPQ
-        v9CwINC60L4g0LLRgdC10Lwg0YTQsNC50LvQsNC8
-
-    - back: !binary |
-        0J3QsNC30LDQtA==
-
-    - bad_data_key: !binary |
-        JXMg0L3QtdC70YzQt9GPINC40YHQv9C+0LvRjNC30L7QstCw0YLRjCDQsiDQ
-        utCw0YfQtdGB0YLQstC1INC30L3QsNGH0LXQvdC40Y8=
-
-    - before_continue: !binary |
-        0J/QtdGA0LXQtCDRgtC10LwsINC60LDQuiDQv9GA0L7QtNC+0LvQttC40YLR
-        jCwg0LLRiyDQvNC+0LbQtdGC0LUgJXM=
-
-    - black: !binary |
-        0YfQtdGA0L3Ri9C5
-
-    - broken_document: !binary |
-        0J7RiNC40LHQutCwINC+0LHRgNCw0LHQvtGC0LrQuA==
-
-    - by_date: !binary |
-        0L/QviDQtNCw0YLQtQ==
-
-    - by_length: !binary |
-        0L/QviDQtNC70LjQvdC1
-
-    - by_relevance: !binary |
-        0L/QviDRgNC10LvQtdCy0LDQvdGC0L3QvtGB0YLQuA==
-
-    - by_source: !binary |
-        0L/QviDQuNGB0YLQvtGH0L3QuNC60YM=
-
-    - by_title: !binary |
-        0L/QviDQuNC80LXQvdC4
-
-    - calais_credit: !binary |
-        0J7QsdGK0LXQutGC0Ysg0L7Qv9GA0LXQtNC10LvQtdC90Ysg0YEg0L/QvtC8
-        0L7RidGM0Y4gT3BlbkNhbGFpcw==
-
-    - cancel: !binary |
-        0J7RgtC80LXQvdCw
-
-    - cannot_remove_all: !binary |
-        0J3QtdC70YzQt9GPINGD0LTQsNC70LjRgtGMINC40Lcg0LTQvtC60YPQvNC1
-        0L3RgtCwINCy0YHQtSDRgdGC0YDQsNC90LjRhtGLLg==
-
-    - change_page_arrows: !binary |
-        0J/QtdGA0LXQu9C40YHRgtGL0LLQsNGC0Ywg0YHRgtGA0LDQvdC40YbRiyDQ
-        vNC+0LbQvdC+INGB0YLRgNC10LvQutCw0LzQuCDQsiDQv9Cw0L3QtdC70Lgg
-        0YHQv9GA0LDQstCw
-
-    - change_password: !binary |
-        0JjQt9C80LXQvdC40YLRjCDQv9Cw0YDQvtC70Yw=
-
-    - choose_location_to_insert_pages: !binary |
-        0JLRi9Cx0LXRgNC40YLQtSwg0LrRg9C00LAg0LLRgdGC0LDQstC40YLRjCDR
-        gdGC0YDQsNC90LjRhtGLLg==
-
-    - choose_note: !binary |
-        0JLRi9Cx0YDQsNGC0Ywg0LfQsNC80LXRgtC60YM=
-
-    - city: !binary |
-        0JPQvtGA0L7QtA==
-
-    - close: !binary |
-        0JfQsNC60YDRi9GC0Yw=
-
-    - close_while_redacting: !binary |
-        0JIg0LTQvtC60YPQvNC10L3RgiDQstC90L7RgdGP0YLRgdGPINC40LfQvNC1
-        0L3QtdC90LjRjy4g0J/QvtC60LAg0Y3RgtC+0YIg0L/RgNC+0YbQtdGB0YEg
-        0LjQtNC10YIsINC+0L0g0LHRg9C00LXRgiDQt9Cw0LrRgNGL0YIu
-
-    - close_while_text_reprocess: !binary |
-        0KLQtdC60YHRgiDRgNCw0YHQv9C+0LfQvdCw0LXRgtGB0Y8uINCf0L7QttCw
-        0LvRg9C50YHRgtCwLCDQt9Cw0LrRgNC+0LnRgtC1INC00L7QutGD0LzQtdC9
-        0YIu
-
-    - collaboration: !binary |
-        0KHQvtCy0LzQtdGB0YLQvdCw0Y8g0YDQsNCx0L7RgtCwINGD0YfQsNGB0YLQ
-        vdC40LrQvtCy
-
-    - collaborators: !binary |
-        0KPRh9Cw0YHRgtC90LjQug==
-
-    - confirm_remove_all_data: !binary |
-        0JLRiyDRg9Cy0LXRgNC10L3Riywg0YfRgtC+INGF0L7RgtC40YLQtSDRg9C0
-        0LDQu9C40YLRjCDQstGB0LUg0LTQsNC90L3Ri9C1INC40LcgJXM/
-
-    - contact_documentcloud: !binary |
-        0KHQstGP0LfQsNGC0YzRgdGPINGBIERvY3VtZW50Q2xvdWQ=
-
-    - contact_reviewer: !binary |
-        0JXRgdC70Lgg0LLQsNC8INC90YPQttC90LAg0L/QvtC80L7RiNGMLCDRgdCy
-        0Y/QttC40YLQtdGB0Ywg0YEgJXMgLSAlcy4g0JHQvtC70YzRiNC1INC40L3R
-        hNC+0YDQvNCw0YbQuNC4INC+IERvY3VtZW50Q2xvdWQg0YLQsNC60LbQtSDQ
-        tdGB0YLRjCDQvdCwICVzLg==
-
-    - contact_us: !binary |
-        0JrQvtC90YLQsNC60YLRiw==
-
-    - contributed_by: !binary |
-        0JTQvtCx0LDQstC70LXQvdC+
-
-    - contributor: !binary |
-        0J/QvtC70YzQt9C+0LLQsNGC0LXQu9GM
-
-    - country: !binary |
-        0KHRgtGA0LDQvdGL
-
-    - create_new_project: !binary |
-        0KHQvtC30LTQsNGC0Ywg0L3QvtCy0YvQuSDQv9GA0L7QtdC60YI=
-
-    - date: !binary |
-        0JTQsNGC0Ys=
-
-    - date_uploaded: !binary |
-        0LTQsNGC0LUg0LfQsNCz0YDRg9C30LrQuA==
-
-    - default_document_language: !binary |
-        0K/Qt9GL0Log0LTQvtC60YPQvNC10L3RgtCwINC/0L4g0YPQvNC+0LvRh9Cw
-        0L3QuNGO
-
-    - delete: !binary |
-        0KPQtNCw0LvQuNGC0Yw=
-
-    - delete_documents: 
-      - !binary |
-        0KPQtNCw0LvQuNGC0Ywg0LTQvtC60YPQvNC10L3Rgg==
-
-      - !binary |
-        0KPQtNCw0LvQuNGC0Ywg0LTQvtC60YPQvNC10L3RgtGL
-
-    - deleting_documents: !binary |
-        0KPQtNCw0LvQtdC90LjQtS4uLg==
-
-    - demo_embed_error: !binary |
-        0J/QvtC70YzQt9C+0LLQsNGC0LXQu9C4INC/0YDQvtCx0L3Ri9GFINCw0LrQ
-        utCw0YPQvdGC0L7QsiDQvdC1INC40LzQtdGO0YIg0LLQvtC30LzQvtC20L3Q
-        vtGB0YLQuCDQstGB0YLRgNCw0LjQstCw0YLRjCDQtNC+0LrRg9C80LXQvdGC
-        0Ysg0LIg0YHQsNC50YLRiy4gJXPQodCy0Y/QttC40YLQtdGB0Ywg0YEg0L3Q
-        sNC80LglcyDQtdGB0LvQuCDQstCw0Lwg0L3Rg9C20LXQvSDQv9C+0LvQvdC+
-        0YbQtdC90L3Ri9C5INCw0LrQutCw0YPQvdGCLiDQn9GA0LjQvNC10YAg0LLR
-        gdGC0YDQvtC10L3QvdC+0LPQviDQutC+0LTQsCDQtdGB0YLRjCAlc9GC0YPR
-        giVzLg==
-
-    - demo_no_viewer: !binary |
-        0J/QvtC70YzQt9C+0LLQsNGC0LXQu9C4INC00LXQvNC+INCw0LrQutCw0YPQ
-        vdGC0L7QsiDQvdC1INC80L7Qs9GD0YIg0YHQutCw0YfQuNCy0LDRgtGMINGB
-        0YLRgNCw0L3QuNGG0Ysg0YEg0L7QutC90L7QvCDQv9GA0L7RgdC80L7RgtGA
-        0LAuICVzINC10YHQu9C4INCy0LDQvCDQvdGD0LbQtdC9INC/0L7Qu9C90L7R
-        htC10L3QvdGL0Lkg0LDQutC60LDRg9C90YIu
-
-    - description: !binary |
-        0J7Qv9C40YHQsNC90LjQtQ==
-
-    - disable: !binary |
-        0J7RgtC60LvRjtGH0LjRgtGM
-
-    - disabled: !binary |
-        0J7RgtC60LvRjtGH0LXQvQ==
-
-    - document: !binary |
-        0JTQvtC60YPQvNC10L3Rgg==
-
-    - document_access_updated: 
-      - !binary |
-        0KPRgNC+0LLQtdC90Ywg0LTQvtGB0YLRg9C/0LAg0Log0LTQvtC60YPQvNC1
-        0L3RgtGDINC+0LHQvdC+0LLQu9C10L0=
-
-      - !binary |
-        0KPRgNC+0LLQtdC90Ywg0LTQvtGB0YLRg9C/0LAg0LogJWQg0LTQvtC60YPQ
-        vNC10L3RgtCw0Lwg0L7QsdC90L7QstC70LXQvQ==
-
-    - document_already_public: !binary |
-        0K3RgtC+0YIg0LTQvtC60YPQvNC10L3RgiDRg9C20LUg0LTQvtGB0YLRg9C/
-        0LXQvSDQv9GD0LHQu9C40YfQvdC+Lg==
-
-    - document_error_message: !binary |
-        0KHQuNGB0YLQtdC80LAg0L3QtSDRgdC80L7Qs9C70LAg0L7QsdGA0LDQsdC+
-        0YLQsNGC0Ywg0Y3RgtC+0YIg0LTQvtC60YPQvNC10L3Rgi4g0JjQvdGE0L7R
-        gNC80LDRhtC40Y8g0L4g0L/RgNC+0LHQu9C10LzQtSDQsdGL0LvQsCDQsNCy
-        0YLQvtC80LDRgtC40YfQtdGB0LrQuCDQvtGC0L/RgNCw0LLQu9C10L3QsCDQ
-        vdCw0LwsINC/0LXRgNC10L7QtNC40YfQtdGB0LrQuCDQvNGLINC40YHQv9GA
-        0LDQstC70Y/QtdC8INC+0YjQuNCx0LrQuCDRgtCw0LrQvtCz0L4g0YDQvtC0
-        0LAuINCS0Ysg0LzQvtC20LXRgtC1INC/0L7QuNGB0LrQsNGC0Ywg0L7RgtCy
-        0LXRgiDQsiDQvdCw0YjQuNGFICVz0YHQvtCy0LXRgtCw0YUg0L/QviDRg9GB
-        0YLRgNCw0L3QtdC90LjRjiDQvdC10L/QvtC70LDQtNC+0LolcyDQuNC70Lgg
-        JXPRgdCy0Y/Qt9Cw0YLRjNGB0Y8g0YEg0L3QsNC80LglcyDRh9GC0L7QsdGL
-        INC/0L7Qu9GD0YfQuNGC0Ywg0L/QvtC00LTQtdGA0LbQutGDINGB0YDQsNC3
-        0YMu
-
-    - document_has_no_public_notes: !binary |
-        0KEg0Y3RgtC40Lwg0LTQvtC60YPQvNC10L3RgtC+0Lwg0L3QtSDRgdCy0Y/Q
-        t9Cw0L3QviDQv9GD0LHQu9C40YfQvdC+INC00L7RgdGC0YPQv9C90YvRhSDQ
-        t9Cw0LzQtdGC0L7Qui4=
-
-    - document_modification: !binary |
-        0JzQvtC00LjRhNC40LrQsNGG0LjRjyDQtNC+0LrRg9C80LXQvdGC0L7Qsg==
-
-    - document_processing_count: 
-      - !binary |
-        0J7QsdGA0LDQsdCw0YLRi9Cy0LDQtdGC0YHRjyDQvtC00LjQvSDQtNC+0LrR
-        g9C80LXQvdGC
-
-      - !binary |
-        0J7QsdGA0LDQsdCw0YLRi9Cy0LDQtdGC0YHRjyAlZCDQtNC+0LrRg9C80LXQ
-        vdGC0LA=
-
-      - !binary |
-        0J7QsdGA0LDQsdCw0YLRi9Cy0LDQtdGC0YHRjyAlZCDQtNC+0LrRg9C80LXQ
-        vdGC0L7Qsg==
-
-    - document_public_on: !binary |
-        0JTQvtC60YPQvNC10L3RgiDRgdGC0LDQvdC10YIg0L/Rg9Cx0LvQuNGH0L3Q
-        viDQtNC+0YHRgtGD0L/QvdGL0LwgJXM=
-
-    - document_publish_embed_test: !binary |
-        0JXRgdC70Lgg0LLRiyDRhdC+0YLQuNGC0LUg0L/RgNC+0YLQtdGB0YLQuNGA
-        0L7QstCw0YLRjCDQstGB0YLRgNCw0LjQstCw0LXQvNGL0Lkg0LrQvtC0INC/
-        0LXRgNC10LQg0LXQs9C+INC/0YPQsdC70LjQutCw0YbQuNC10LksINCyINGB
-        0LDQvNC+0Lwg0LrQvtC00LUg0YPQutCw0LbQuNGC0LUg0LLRgdC1INCw0LTR
-        gNC10YHQsCBVUkwg0LIg0YTQvtGA0LzQsNGC0LUgSFRUUFMuINCh0LzQtdC9
-        0LjRgtC1INCw0LTRgNC10YHQsCDQvtCx0YDQsNGC0L3QviDQvdCwIEhUVFAg
-        0L/QtdGA0LXQtCDRgtC10LwsINC60LDQuiDRgdC00LXQu9Cw0YLRjCDQtNC+
-        0LrRg9C80LXQvdGCINC/0YPQsdC70LjRh9C90YvQvC4=
-
-    - document_publish_private_help: !binary |
-        0K3RgtC+0YIg0LTQvtC60YPQvNC10L3RgiDQv9GA0LjQstCw0YLQvdGL0Lku
-        INCf0L7QutCwINCy0Ysg0L3QtSDRgdC00LXQu9Cw0LXRgtC1INC10LPQviDQ
-        vtCx0YnQtdC00L7RgdGC0YPQv9C90YvQvCwg0L3QsNC50YLQuCDQuCDQv9C+
-        0YHQvNC+0YLRgNC10YLRjCDQtdCz0L4g0YHQvNC+0LbQtdGC0LUg0YLQvtC7
-        0YzQutC+INCy0YsuINCS0Ysg0LzQvtC20LXRgtC1INC/0YDRj9C80L4g0YHQ
-        tdC50YfQsNGBINGB0LzQtdC90LjRgtGMICVz0YPRgNC+0LLQtdC90Ywg0LTQ
-        vtGB0YLRg9C/0LAlcyDQuNC70LggJXMg0LLRgNC10LzRjyDQv9GD0LHQu9C4
-        0LrQsNGG0LjQuC4=
-
-    - document_publish_public_help: !binary |
-        0K3RgtC+0YIg0LTQvtC60YPQvNC10L3RgiDQtNC+0YHRgtGD0L/QtdC9INC/
-        0YPQsdC70LjRh9C90L4uINCh0LXQudGH0LDRgSDQvtC9INC00L7RgdGC0YPQ
-        v9C10L0g0L/QvtC70YzQt9C+0LLQsNGC0LXQu9GP0Lwg0YfQtdGA0LXQtyDQ
-        v9C+0LjRgdC6INCyINC60LDRgtCw0LvQvtCz0LUgRG9jdW1lbnRDbG91ZCwg
-        0L7QvSDRgtCw0LrQttC1INCx0YPQtNC10YIg0L3QsNGF0L7QtNC40YLRgdGP
-        INCyINC+0YLQutGA0YvRgtC+0Lwg0LTQvtGB0YLRg9C/0LUsINC10YHQu9C4
-        INCy0Ysg0LLRgdGC0YDQvtC40YLQtSDQtdCz0L4g0LIg0YHQsNC50YIuINCY
-        0LfQvNC10L3QuNGC0YwgJXPRg9GA0L7QstC10L3RjCDQtNC+0YHRgtGD0L/Q
-        sCVzLg==
-
-    - document_tools: !binary |
-        0JjQvdGB0YLRgNGD0LzQtdC90YLRiw==
-
-    - document_viewer_size: !binary |
-        0KDQsNC30LzQtdGAINC+0LrQvdCwINC/0YDQvtGB0LzQvtGC0YDQsCDQtNC+
-        0LrRg9C80LXQvdGC0L7Qsg==
-
-    - documents: !binary |
-        0JTQvtC60YPQvNC10L3RgtGL
-
-    - documents_are_ready: !binary |
-        0JLQsNGI0Lgg0LTQvtC60YPQvNC10L3RgtGLINCz0L7RgtC+0LLRiw==
-
-    - documents_per_page: !binary |
-        0JTQvtC60YPQvNC10L3RgtC+0LIg0L3QsCDRgdGC0YDQsNC90LjRhtC1
-
-    - double_check_disable: !binary |
-        0JLRiyDRg9Cy0LXRgNC10L3Riywg0YfRgtC+INGF0L7RgtC40YLQtSDQvtGC
-        0LrQu9GO0YfQuNGC0Ywg0LDQutC60LDRg9C90YIgJXM/
-
-    - download_pdf: !binary |
-        0KHQutCw0YfQsNGC0Ywg0L7RgNC40LPQuNC90LDQuyDQsiBQREY=
-
-    - download_text: !binary |
-        0KHQutCw0YfQsNGC0Ywg0L/QvtC70L3Ri9C5INGC0LXQutGB0YI=
-
-    - download_viewer: !binary |
-        0KHQutCw0YfQsNGC0Ywg0YHRgtGA0LDQvdC40YbRgyDRgSDQvtC60L3QvtC8
-        INC/0YDQvtGB0LzQvtGC0YDQsCDQtNC+0LrRg9C80LXQvdGC0L7Qsg==
-
-    - downloading_progress: 
-      - !binary |
-        0JPQvtGC0L7QstC40LwgIiUyJHMiINC00LvRjyDQt9Cw0LPRgNGD0LfQutC4
-        Li4u
-
-      - !binary |
-        0JPQvtGC0L7QstC40LwgJWQg0LTQvtC60YPQvNC10L3RgtCwINC00LvRjyDQ
-        t9Cw0LPRgNGD0LfQutC4
-
-      - !binary |
-        0JPQvtGC0L7QstC40LwgJWQg0LTQvtC60YPQvNC10L3RgtC+0LIg0LTQu9GP
-        INC30LDQs9GA0YPQt9C60Lg=
-
-    - draft: !binary |
-        0KfQtdGA0L3QvtCy0LjQug==
-
-    - draft_note_visible: !binary |
-        0K3RgtC+0YIg0YfQtdGA0L3QvtCy0LjQuiDQtNC+0YHRgtGD0L/QtdC9INGC
-        0L7Qu9GM0LrQviDQstCw0Lwg0Lgg0L/QvtC70YzQt9C+0LLQsNGC0LXQu9GP
-        0LwsINC60L7RgtC+0YDRi9GFINCy0Ysg0LDQstGC0L7RgNC40LfQvtCy0LDQ
-        u9C4
-
-    - edit: !binary |
-        0KDQtdC00LDQutGC0LjRgNC+0LLQsNGC0Yw=
-
-    - edit_access: !binary |
-        0JjQt9C80LXQvdC40YLRjCDRg9GA0L7QstC10L3RjCDQtNC+0YHRgtGD0L/Q
-        sA==
-
-    - edit_data: !binary |
-        0KDQtdC00LDQutGC0LjRgNC+0LLQsNGC0Yw=
-
-    - edit_data_for: !binary |
-        0JTQvtC/0L7Qu9C90LjRgtC10LvRjNC90YvQtSDQv9Cw0YDQsNC80LXRgtGA
-        0YsgJXM=
-
-    - edit_description: !binary |
-        0KDQtdC00LDQutGC0LjRgNC+0LLQsNGC0Ywg0L7Qv9C40YHQsNC90LjQtQ==
-
-    - edit_details: !binary |
-        0YDQtdC00LDQutGC0LjRgNC+0LLQsNGC0Ywg0L/QvtC00YDQvtCx0L3QvtGB
-        0YLQuA==
-
-    - edit_document_data: !binary |
-        0JTQvtC/0L7Qu9C90LjRgtC10LvRjNC90YvQtSDQv9Cw0YDQsNC80LXRgtGA
-        0Ysg0LTQvtC60YPQvNC10L3RgtCw
-
-    - edit_document_info: !binary |
-        0KDQtdC00LDQutGC0LjRgNC+0LLQsNGC0Ywg0LjQvdGE0L7RgNC80LDRhtC4
-        0Y4g0L4g0LTQvtC60YPQvNC10L3RgtC1
-
-    - edit_document_information: !binary |
-        0KDQtdC00LDQutGC0LjRgNC+0LLQsNGC0Ywg0LjQvdGE0L7RgNC80LDRhtC4
-        0Y4g0L4g0LTQvtC60YPQvNC10L3RgtC1
-
-    - edit_document_pairs: 
-      - !binary |
-        0JTQvtCx0LDQstC40YLRjC/QoNC10LTQsNC60YLQuNGA0L7QstCw0YLRjCDQ
-        tNC+0L/QvtC70L3QuNGC0LXQu9GM0L3Ri9C1INC/0LDRgNCw0LzQtdGC0YDR
-        iyDQtNC+0LrRg9C80LXQvdGC0LA=
-
-      - !binary |
-        0JTQvtCx0LDQstC40YLRjC/QoNC10LTQsNC60YLQuNGA0L7QstCw0YLRjCDQ
-        tNC+0L/QvtC70L3QuNGC0LXQu9GM0L3Ri9C1INC/0LDRgNCw0LzQtdGC0YDR
-        iyDQtNC+0LrRg9C80LXQvdGC0L7Qsg==
-
-    - edit_page_text: !binary |
-        0KDQtdC00LDQutGA0LjRgNC+0LLQsNGC0Ywg0YLQtdC60YHRgiDRgdGC0YDQ
-        sNC90LjRhtGL
-
-    - edit_page_text_done: !binary |
-        0JXRgdC70Lgg0LLRiyDQt9Cw0LrQvtC90YfQuNC70Lgg0YDQsNCx0L7RgtGD
-        INGBINGC0LXQutGB0YLQvtC8LCDRidC10LvQutC90LjRgtC1INC/0L4g0LrQ
-        vdC+0L/QutC1ICLQodC+0YXRgNCw0L3QuNGC0Ywg0YLQtdC60YHRgiIu
-
-    - edit_page_text_instructions: !binary |
-        0KfRgtC+0LHRiyDQstC90LXRgdGC0Lgg0LjQt9C80LXQvdC10L3QuNGPINCy
-        INGC0LXQutGB0YIg0LvRjtCx0L7QuSDRgdGC0YDQsNC90LjRhtGLOiDQv9GA
-        0L7Qu9C40YHRgtCw0LnRgtC1INC00L4g0L3Rg9C20L3QvtC5INGB0YLRgNCw
-        0LjQvdGG0Ysg0YEg0L/QvtC80L7RiNGM0Y4g0LrQvdC+0L/QvtC6INCy0LLQ
-        tdGA0YXRgy4g0JvRjtCx0YvQtSDQstC90LXRgdC10L3QvdGL0LUg0LjQt9C8
-        0LXQvdC10L3QuNGPINC90LUg0LfQsNGC0YDQvtC90YPRgiDQvtGA0LjQs9C4
-        0L3QsNC70YzQvdGL0LkgUERGLg==
-
-    - edit_published_url: !binary |
-        0KDQtdC00LDQutGC0LjRgNC+0LLQsNGC0YwgVVJMINC/0YPQsdC70LjQutCw
-        0YbQuNC4
-
-    - edit_related_url: !binary |
-        0KDQtdC00LDQutGC0LjRgNC+0LLQsNGC0YwgVVJMINGB0LLRj9C30LDQvdC9
-        0L7QuSDRgdGC0LDRgtGM0Lg=
-
-    - edit_sections: !binary |
-        0KDQtdC00LDQutGC0LjRgNC+0LLQsNGC0Ywg0YHQtdC60YbQuNC4
-
-    - edit_source: !binary |
-        0JjQt9C80LXQvdC40YLRjCDQuNGB0YLQvtGH0L3QuNC6
-
-    - edit_text_any_page: !binary |
-        0KDQtdC00LDQutGC0LjRgNC+0LLQsNGC0Ywg0YLQtdC60YHRgiDQu9GO0LHQ
-        vtC5INGB0YLRgNCw0L3QuNGG0Ysu
-
-    - edit_title: !binary |
-        0JjQt9C80LXQvdC40YLRjCDQvdCw0LfQstCw0L3QuNC1
-
-    - edit_x: !binary |
-        0KDQtdC00LDQutGC0LjRgNC+0LLQsNGC0YwgJXM=
-
-    - editing_notes_sections: !binary |
-        0KDQtdC00LDQutGC0LjRgNC+0LLQsNC90LjQtSDQt9Cw0LzQtdGC0L7QuiDQ
-        uCDRgdC10LrRhtC40Lk=
-
-    - email: Email
-    - email_for_assistance: !binary |
-        0JXRgdC70Lgg0LLQsNC8INC90YPQttC90LAg0L/QvtC80L7RidGMLCDQvdCw
-        0L/QuNGI0LjRgtC1INC90LDQvCDQvdCwIHN1cHBvcnRAZG9jdW1lbnRjbG91
-        ZC5vcmcu
-
-    - email_when_complete: !binary |
-        0K8g0YXQvtGH0YMg0L/QvtC70YPRh9C40YLRjCBlbWFpbCDQutC+0LPQtNCw
-        INC30LDQutC+0L3Rh9C40YLRgdGPICVz0L7QsdGA0LDQsdC+0YLQutCwINC0
-        0L7QutGD0LzQtdC90YLQvtCyJXMu
-
-    - embed_a_note: !binary |
-        0JLRgdGC0YDQvtC40YLRjCDQt9Cw0LzQtdGC0LrRgw==
-
-    - embed_document: !binary |
-        0JTQvtCx0LDQstC40YLRjCDQtNC+0LrRg9C80LXQvdGCINC90LAg0YHQsNC5
-        0YI=
-
-    - embed_document_list: !binary |
-        0JLRgdGC0YDQvtC40YLRjCDRgdC/0LjRgdC+0Log0LTQvtC60YPQvNC10L3R
-        gtC+0LI=
-
-    - embed_document_viewer: !binary |
-        0JLRgdGC0YDQvtC40YLRjCDQvtC60L3QviDQv9GA0L7RgdC80L7RgtGA0LAg
-        0LTQvtC60YPQvNC10L3RgtC+0LIg0LIg0YHRgtGA0LDQvdC40YbRgw==
-
-    - embed_hide_text_tab_help: !binary |
-        0JXRgdC70Lgg0LrQsNGH0LXRgdGC0LLQviDRgtC10LrRgdGC0LAg0LTQvtC6
-        0YPQvNC10L3RgtCwINC/0LvQvtGF0L7QtSwg0YHQvdC40LzQuNGC0LUg0Y3R
-        gtGDINCz0LDQu9C+0YfQutGDINGH0YLQvtCx0Ysg0YHQutGA0YvRgtGMINCy
-        0LrQu9Cw0LTQutGDICLRgtC10LrRgdGCIi4=
-
-    - embed_note: !binary |
-        0JTQvtCx0LDQstC40YLRjCDQt9Cw0LzQtdGC0LrRgyDQvdCwINGB0LDQudGC
-
-    - embed_note_demo_error: !binary |
-        0KHQvtCx0YHRgtCy0LXQvdC90LjQutC4INC00LXQvNC+LdCw0LrQutCw0YPQ
-        vdGC0L7QsiDQvdC1INC80L7Qs9GD0YIg0LLRgdGC0YDQsNC40LLQsNGC0Ywg
-        0LfQsNC80LXRgtC60LguICVz0KHQstGP0LbQuNGC0LXRgdGMINGBINC90LDQ
-        vNC4JXMsINC10YHQu9C4INCy0LDQvCDQvdGD0LbQtdC9INC/0L7Qu9C90L7R
-        htC10L3QvdGL0Lkg0LDQutC60LDRg9C90YIuINCf0YDQuNC80LXRgCDQutC+
-        0LTQsCDQtNC70Y8g0LLRgdGC0LDQstC60Lgg0LXRgdGC0YwgJXPRgtGD0YIl
-        cy4=
-
-    - embed_note_step_one: !binary |
-        0KjQsNCzINC/0LXRgNCy0YvQuTog0JLRi9Cx0LXRgNC40YLQtSDQt9Cw0LzQ
-        tdGC0LrRgywg0LrQvtGC0L7RgNGD0Y4g0YXQvtGC0LjRgtC1INCy0YHRgtGA
-        0L7QuNGC0Yw=
-
-    - embed_note_step_two: !binary |
-        0KjQsNCzINCy0YLQvtGA0L7QuTog0KHQutC+0L/QuNGA0YPQudGC0LUg0Lgg
-        0LLRgdGC0LDQstGM0YLQtSDQutC+0LQ=
-
-    - embed_search_demo_error: !binary |
-        0KHQvtCx0YHRgtCy0LXQvdC90LjQutC4INC00LXQvNC+LdCw0LrQutCw0YPQ
-        vdGC0L7QsiDQvdC1INC80L7Qs9GD0YIg0LfQsNCz0YDRg9C20LDRgtGMINGB
-        0LXRgtGLINC00L7QutGD0LzQtdC90YLQvtCyLiAlc9Ch0LLRj9C20LjRgtC1
-        0YHRjCDRgSDQvdCw0LzQuCVzINC10YHQu9C4INCy0LDQvCDQvdGD0LbQtdC9
-        INC/0L7Qu9C90L7RhtC10L3QvdGL0Lkg0LDQutC60LDRg9C90YIuINCf0YDQ
-        uNC80LXRgCDQutC+0LTQsCDQtNC70Y8g0LLRgtCw0LLQutC4INC10YHRgtGM
-        ICVz0YLRg9GCJXMuIA==
-
-    - embed_search_step_one: !binary |
-        0KjQsNCzINC/0LXRgNCy0YvQuTog0KPRgtC+0YfQvdC40YLRjCDQv9Cw0YDQ
-        sNC80LXRgtGA0Ysg0LTQvtC60YPQvNC10L3RgtC+0LI=
-
-    - embed_search_step_two: !binary |
-        0KjQsNCzINCy0YLQvtGA0L7QuTog0KHQutC+0L/QuNGA0L7QstCw0YLRjCDQ
-        uCDQstGB0YLQsNCy0LjRgtGMINC60L7QtA==
-
-    - embed_show_sidebar: !binary |
-        0J/QvtC60LDQt9Cw0YLRjCDQsdC+0LrQvtCy0YPRjiDQv9Cw0L3QtdC70Yw=
-
-    - embed_show_sidebar_help: !binary |
-        0JXRgdC70Lgg0YDQsNC30YDQtdGI0LXQvdC40LUg0LLQsNGI0LXQs9C+INGN
-        0LrRgNCw0L3QsCDRgdC70LjRiNC60L7QvCDQvNCw0LvQviDQv9C+INCz0L7R
-        gNC40LfQvtC90YLQsNC70LgsINGB0L3QuNC80LjRgtC1INCz0LDQu9C+0YfQ
-        utGDINGH0YLQvtCx0Ysg0YHQv9GA0Y/RgtCw0YLRjCDQsdC+0LrQvtCy0YPR
-        jiDQv9Cw0L3QtdC70Ywu
-
-    - embed_show_text_tab: !binary |
-        0J/QvtC60LDQt9Cw0YLRjCDQstC60LvQsNC00LrRgyAi0YLQtdC60YHRgiI=
-
-    - embed_step_one_title: !binary |
-        0KjQsNCzINC/0LXRgNCy0YvQuTog0J3QsNGB0YLRgNC+0LjRgtGMICIlcyI=
-
-    - embed_step_three_title: !binary |
-        0KjQsNCzINGC0YDQtdGC0LjQuTog0KHQutC+0L/QuNGA0L7QstCw0YLRjCDQ
-        uCDQstGB0YLQsNCy0LjRgtGMIEhUTUwg0LrQvtC0
-
-    - embed_step_two_title: !binary |
-        0KjQsNCzINCy0YLQvtGA0L7QuTog0J3QsNGB0YLRgNC+0LjRgtGMINC+0LrQ
-        vdC+INC/0YDQvtGB0LzQvtGC0YDQsCDQtNC+0LrRg9C80LXQvdGC0L7Qsg==
-
-    - embed_tools: !binary |
-        0JLRgdGC0YDQvtC40YLRjCDQtNC+0LrRg9C80LXQvdGC
-
-    - embed_url_of_document: !binary |
-        0JIg0LHQvtC70YzRiNC10L3RgdGC0LLQtSDRgdC70YPRh9Cw0LXQsiDRjdGC
-        0L4g0L/QvtC70LUg0LzQvtC20L3QviDQvdC1INC30LDQv9C+0LvQvdGP0YLR
-        jC4gVVJMINGB0YLRgNCw0L3QuNGG0Ysg0L3QsCDQstCw0YjQtdC8INGB0LDQ
-        udGC0LUsINCyINC60L7RgtC+0YDRg9GOINCy0YHRgtGA0L7QtdC9INC00L7Q
-        utGD0LzQtdC90YI=
-
-    - embed_viewer_opens_to: !binary |
-        0J7RgtC60YDRi9GC0Ywg0L7QutC90L4g0L/RgNC+0YHQvNC+0YLRgNCwINC9
-        0LA=
-
-    - embed_viewer_opens_to_help: !binary |
-        0KPQutCw0LfQsNGC0Ywg0YHRgtGA0LDQvdC40YbRgyDQuNC70Lgg0LfQsNC8
-        0LXRgtC60YMsINGBINC60L7RgtC+0YDQvtC5INC+0YLQutGA0L7QtdGC0YHR
-        jyDQvtC60L3QviDQv9GA0L7RgdC80L7RgtGA0LAg0LTQvtC60YPQvNC10L3R
-        gtC+0LIu
-
-    - enter_email_address: !binary |
-        0JLQstC10LTQuNGC0LUgZW1haWw=
-
-    - enter_new_password: !binary |
-        0JLQstC10LTQuNGC0LUg0L3QvtCy0YvQuSDQv9Cw0YDQvtC70Yw=
-
-    - enter_title_and_page: !binary |
-        0J/QvtC20LDQu9GD0LnRgdGC0LAsINGD0LrQsNC20LjRgtC1INC90LDQt9Cy
-        0LDQvdC40LUg0Lgg0L3QvtC80LXRgCDRgdGC0YDQsNC90LjRhtGLINC00LvR
-        jyDQutCw0LbQtNC+0LPQviDRgNCw0LfQtNC10LvQsC4=
-
-    - enter_url_for_embed: 
-      - !binary |
-        0KPQutCw0LbQuNGC0LUgVVJMINGB0YLRgNCw0L3QuNGG0YssINCyINC60L7R
-        gtC+0YDRg9GOINCy0YHRgtGA0L7QtdC9INGN0YLQvtGCINC00L7QutGD0LzQ
-        tdC90YI=
-
-      - !binary |
-        0KPQutCw0LbQuNGC0LUgVVJMINGB0YLRgNCw0L3QuNGG0YssINCyINC60L7R
-        gtC+0YDRg9GOINCy0YHRgtGA0L7QtdC90Ysg0Y3RgtC4INC00L7QutGD0LzQ
-        tdC90YLRiw==
-
-    - enter_url_that_references: 
-      - !binary |
-        0JLQstC10LTQuNGC0LUgVVJMINGB0YLQsNGC0YzQuCwg0LrQvtGC0L7RgNCw
-        0Y8g0YHRgdGL0LvQsNC10YLRgdGPINC90LAg0Y3RgtC+0YIg0LTQvtC60YPQ
-        vNC10L3Rgg==
-
-      - !binary |
-        0JLQstC10LTQuNGC0LUgVVJMINGB0YLQsNGC0YzQuCwg0LrQvtGC0L7RgNCw
-        0Y8g0YHRgdGL0LvQsNC10YLRgdGPINC90LAg0Y3RgtC4INC00L7QutGD0LzQ
-        tdC90YLRiw==
-
-    - entities_explained: !binary |
-        0KPQutCw0LfQsNC90L3Ri9C1INC90LjQttC1INC+0LHRitC10LrRgtGLINC9
-        0LDRhdC+0LTRj9GC0YHRjyDQsiDQtNC+0LrRg9C80LXQvdGC0LDRhSwg0LrQ
-        vtGC0L7RgNGL0LUg0L/QvtC00L/QsNC00LDRjtGCINC/0L7QtCDQutGA0LjR
-        gtC10YDQuNC4INC/0L7QuNGB0LrQsC4g0JjRidC40YLQtSDQv9C+INC40LzQ
-        tdC90Lgg0L7QsdGK0LXQutGC0LAg0YfRgtC+0LHRiyDQv9C+0LvRg9GH0LjR
-        gtGMINCx0L7Qu9C10LUg0YLQvtGH0L3Ri9C1INGA0LXQt9GD0LvRjNGC0LDR
-        gtGLINC/0L7QuNGB0LrQsC4=
-
-    - entities_unavailable: !binary |
-        0JrQu9GO0YfQtdCy0YvQtSDRgdC70L7QstCwINCy0YDQtdC80LXQvdC90L4g
-        0L3QtdC00L7RgdGC0YPQv9C90Ysu
-
-    - error: !binary |
-        0L7RiNC40LHQutCw
-
-    - explain_disable_account: !binary |
-        JTEkcyDQvdC1INGB0LzQvtC20LXRgiDQstC+0LnRgtC4INCyIERvY3VtZW50
-        Q2xvdWQuINCf0YPQsdC70LjRh9C90YvQtSDQtNC+0LrRg9C80LXQvdGC0Ysg
-        0Lgg0LfQsNC80LXRgtC60LgsINGB0LTQtdC70LDQvdC90YvQtSAlMSRzINC+
-        0YHRgtCw0L3Rg9GC0YHRjyDQvtCx0YnQtdC00L7RgdGC0YPQv9C90YvQvNC4
-        LiAlMiRzLCDRgdCy0Y/QttC40YLQtdGB0Ywg0YHQviDRgdC70YPQttCx0L7Q
-        uSDQv9C+0LTQtNC10YDQttC60LggJTMkcyDRh9GC0L7QsdGLINC/0L7Qu9GM
-        0L3QvtGB0YLRjNGOINGD0LTQsNC70LjRgtGMINCw0LrQutCw0YPQvdGCICUx
-        JHMu
-
-    - export: !binary |
-        0K3QutGB0L/QvtGA0YI=
-
-    - export_to_overview_explain: !binary |
-        0JLRiyDRgdC+0LHQuNGA0LDQtdGC0LXRgdGMINGN0LrRgdC/0L7RgNGC0LjR
-        gNC+0LLQsNGC0Ywg0L/RgNC+0LXQutGCINCyIE92ZXJ2aWV3LiDQndC1INC3
-        0LDQsdGD0LTRjNGC0LUsINGH0YLQviDQtNC70Y8g0Y3RgtC+0LPQviDRgyDQ
-        stCw0YEg0LTQvtC70LbQtdC9INCx0YvRgtGMINCw0LrQutCw0YPQvdGCIE92
-        ZXJ2aWV3LiDQotCw0LrQttC1INCy0Ysg0LTQvtC70LbQvdGLINC/0YDQtdC0
-        0L7RgdGC0LDQstC40YLRjCBPdmVydmlldyDQuNC80Y8g0L/QvtC70YzQt9C+
-        0LLQsNGC0LXQu9GPINC4INC/0LDRgNC+0LvRjCwg0LrQvtGC0L7RgNGL0LUg
-        0LjRgdC/0L7Qu9GM0LfRg9C10YLQtSDQtNC70Y8g0LLRhdC+0LTQsCDQsiBE
-        b2N1bWVudENsb3VkLg==
-
-    - featured_examples_list: !binary |
-        0JzQvdC+0LbQtdGB0YLQstC+INC/0YDQuNC80LXRgNC+0LIg0LLRgdGC0YDQ
-        vtC10L3Ri9GFINC00L7QutGD0LzQtdC90YLQvtCyINCy0Ysg0LzQvtC20LXR
-        gtC1INC90LDQudGC0Lgg0LIg0L3QsNGI0LXQvCAlc9GB0L/QuNGB0LrQtSDQ
-        v9GA0LjQvNC10YDQvtCyJXMu
-
-    - featured_reporting_list: !binary |
-        0JLRiyDQvNC+0LbQtdGC0LUg0L3QsNC50YLQuCDQv9GA0LjQvNC10YDRiyDQ
-        stGB0YLRgNCw0LjQstCw0LXQvNC+0LPQviDQv9C+0LjRgdC60LAg0LIg0L3Q
-        sNGI0LXQvCDRgdC/0LjRgdC60LUgJXPQv9GA0LjQvNC10YDQvtCyINC40YHQ
-        v9C+0LvRjNC30L7QstCw0L3QuNGPJXMuCg==
-
-    - filter: !binary |
-        0YTQuNC70YzRgtGA
-
-    - finish: !binary |
-        0JPQvtGC0L7QstC+
-
-    - first_name: !binary |
-        0JjQvNGP
-
-    - first_page: !binary |
-        0J/QtdGA0LLQvtC5INGB0YLRgNCw0L3QuNGG0LU=
-
-    - fixed_size: !binary |
-        0JfQsNC00LDRgtGMINGA0LDQt9C80LXRgA==
-
-    - for_example_data: !binary |
-        0J3QsNC/0YDQuNC80LXRgDogJmxkcXVvO9C00LXQvdGMINGA0L7QttC00LXQ
-        vdC40Y8gOiAxOTM1LTAxLTA4JmxkcXVvOywg0LjQu9C4ICZsZHF1bzvRgdGC
-        0LDRgtGD0YE6INCy0YvQv9GD0YnQtdC9JmxkcXVvOw==
-
-    - force_ocr: !binary |
-        0KDQsNGB0L/QvtC30L3QsNGC0Ywg0YLQtdC60YHRgiwg0LjQs9C90L7RgNC4
-        0YDRg9GPINC+0YjQuNCx0LrQuA==
-
-    - form_contact_instructions: !binary |
-        0KfRgtC+0LHRiyDRgdCy0Y/Qt9Cw0YLRjNGB0Y8g0YEg0L3QsNC80LgsINC4
-        0YHQv9C+0LvRjNC30YPQudGC0LUg0Y3RgtGDINGE0L7RgNC80YMgKNC40LvQ
-        uCDQvtGC0L/RgNCw0LLRjNGC0LUgZW1haWwg0L3QsCAlcykuINCV0YHQu9C4
-        INCy0LDQvCDRgdGA0L7Rh9C90L4g0L3Rg9C20L3QviDRgSDQutC10Lwt0YLQ
-        viDQv9C+0LPQvtCy0L7RgNC40YLRjCwg0LzQvtC20LXRgtC1INC90LDQvCDQ
-        v9C+0LfQstC+0L3QuNGC0Yw6ICsxICgyMDIpIDUwNS0xMDEwLiDQn9C+0LTR
-        gNC+0LHQvdC10LUg0L4g0YLQvtC8LCDQutCw0Log0YEg0L3QsNC80Lgg0YHQ
-        stGP0LfQsNGC0YzRgdGPLCDRgtGD0YIgLSAlcy4=
-
-    - freelancer: !binary |
-        0KTRgNC40LvQsNC90YHQtdGA
-
-    - full_page: !binary |
-        0J3QsCDQstGB0Y4g0YHRgtGA0LDQvdC40YbRgw==
-
-    - future_documents_w_appear: !binary |
-        0JLRgdC1INC00L7QutGD0LzQtdC90YLRiywgJXMg0YLQsNC60LbQtSDQv9C+
-        0Y/QstGP0YLRgdGPINC90LAg0LLQsNGI0LXQvCDRgdCw0LnRgtC1Lg==
-
-    - group: !binary |
-        0LPRgNGD0L/Qv9Cw
-
-    - guided_tour: !binary |
-        0J7QsdC30L7RgCDQstC+0LfQvNC+0LbQvdC+0YHRgtC10Lk=
-
-    - guides_howtos: !binary |
-        0JjQvdGB0YLRgNGD0LrRhtC40Lg=
-
-    - has_no_entities: !binary |
-        0JIgJXMg0L3QtdGCINC60LvRjtGH0LXQstGL0YUg0YHQu9C+0LI=
-
-    - height: !binary |
-        0JLRi9GB0L7RgtCw
-
-    - help: !binary |
-        0J/QvtC80L7RiNGM
-
-    - help_pages: !binary |
-        0YHRgtGA0LDQvdC40YbQsNGFINC/0L7QvNC+0YnQuA==
-
-    - home: !binary |
-        0JPQu9Cw0LLQvdCw0Y8=
-
-    - in_project: !binary |
-        0LIg0Y3RgtC+0Lwg0L/RgNC+0LXQutGC0LU=
-
-    - include_optional_msg: !binary |
-        0J7Qv9GG0LjQvtC90L3Qvjog0JTQvtCx0LDQstC40YLRjCDQu9C40YfQvdC+
-        0LUg0YHQvtC+0LHRidC10L3QuNC1
-
-    - insert_between_pages: !binary |
-        0JLRgdGC0LDQstC40YLRjCDQvNC10LbQtNGDINGB0YLRgNCw0L3QuNGG0LDQ
-        vNC4ICVkINC4ICVk
-
-    - insert_first_page: !binary |
-        0JLRgdGC0LDQstC40YLRjCDQv9C10YDQtdC0INC/0LXRgNCy0L7QuSDRgdGC
-        0YDQsNC90LjRhtC10Lk=
-
-    - insert_last_page: !binary |
-        0JLRgdGC0LDQstC40YLRjCDQv9C+0YHQu9C1INC/0L7RgdC70LXQtNC90LXQ
-        uSDRgdGC0YDQsNC90LjRhtGL
-
-    - insert_pages_instructions: !binary |
-        0KfRgtC+0LHRiyDQstGB0YLQsNCy0LjRgtGMINGB0YLRgNCw0L3QuNGG0Ysg
-        0LIg0L7Qv9GA0LXQtNC10LvQtdC90L3QvtC8INC80LXRgdGC0LUg0LIg0LTQ
-        vtC60YPQvNC10L3RgtC1LCDRidC10LvQutC90LjRgtC1INC80YvRiNC60L7Q
-        uSDQvdCwINC/0YDQvtGB0YLRgNCw0L3RgdGC0LLQtSDQvNC10LbQtNGDINGB
-        0YLRgNCw0L3QuNGG0LDQvNC4LiDQldGB0LvQuCDQstGLINGF0L7RgtC40YLQ
-        tSDQt9Cw0LzQtdC90LjRgtGMINGB0YLRgNCw0L3QuNGG0YMsINC/0YDQvtGB
-        0YLQviDRidC10LvQutC90LjRgtC1INC/0L4g0L3QtdC5Lg==
-
-    - insert_pages_message: !binary |
-        0JLQviDQstGA0LXQvNGPINC/0YDQuNC90Y/RgtC40Y8g0LjQt9C80LXQvdC1
-        0L3QuNC5INC00L7QutGD0LzQtdC90YIg0LHRg9C00LXRgiDQt9Cw0LrRgNGL
-        0YIuINCd0LAg0L7QsdGA0LDQsdC+0YLQutGDINC00LvQuNC90L3Ri9GFINC0
-        0L7QutGD0LzQtdC90YLQvtCyINC80L7QttC10YIg0YPQudGC0Lgg0LzQvdC+
-        0LPQviDQstGA0LXQvNC10L3QuC4=
-
-    - insert_pages_shift_key: !binary |
-        0KfRgtC+0LHRiyDRgdGA0LDQt9GDINC30LDQvNC10L3QuNGC0Ywg0L3QtdGB
-        0LrQvtC70YzQutC+INGB0YLRgNCw0L3QuNGGLCDQstGL0LHQtdGA0LXRgtC1
-        INC40YUsINC30LDQttCw0LIg0LrQu9Cw0LLQuNGI0YMgIlNoaWZ0Ii4g0JrQ
-        vtCz0LTQsCDQsdGD0LTQtdGC0LUg0LPQvtGC0L7QstGLLCDRidC10LvQutC9
-        0LjRgtC10L/QviDQutC90L7Qv9C60LUgItCX0LDQs9GA0YPQt9C40YLRjCDR
-        gdGC0YDQsNC90LjRhtGLIg==
-
-    - insert_replace_pages: !binary |
-        0JLRgdGC0LDQstC40YLRjC/Ql9Cw0LzQtdC90LjRgtGMINGB0YLRgNCw0L3Q
-        uNGG0Ys=
-
-    - introduction: !binary |
-        0JLQstC10LTQtdC90LjQtQ==
-
-    - language: !binary |
-        0K/Qt9GL0Lo=
-
-    - language_defaults: !binary |
-        0K/Qt9GL0Log0L/QviDRg9C80L7Qu9GH0LDQvdC40Y4=
-
-    - last_name: !binary |
-        0KTQsNC80LjQu9C40Y8=
-
-    - length: !binary |
-        0LTQu9C40L3QtQ==
-
-    - link_to_pdf: !binary |
-        0KHRgdGL0LvQutCwINC90LAg0L7RgNC40LPQuNC90LDQuyDQsiBQREY=
-
-    - link_to_pdf_help: !binary |
-        0KHQvdC40LzQuNGC0LUg0LPQsNC70L7Rh9C60YMsINGH0YLQvtCx0Ysg0YPQ
-        sdGA0LDRgtGMINC40Lcg0L7QutC90LAg0L/RgNC+0YHQvNC+0YLRgNCwINC0
-        0L7QutGD0LzQtdC90YLQsCDRgdGB0YvQu9C60YMg0L3QsCBQREYu
-
-    - log_in: !binary |
-        0JLQvtC50YLQuA==
-
-    - log_out: !binary |
-        0JLRi9C50YLQuA==
-
-    - logged_in_as: !binary |
-        0JLRiyDQstC+0YjQu9C4INC60LDQuiAlcw==
-
-    - make_document_public: !binary |
-        0KHQtNC10LvQsNGC0Ywg0LTQvtC60YPQvNC10L3RgiDQv9GD0LHQu9C40YfQ
-        vdC+INC00L7RgdGC0YPQv9C90YvQvA==
-
-    - make_documents_public: 
-      - !binary |
-        0KHQtNC10LvQsNGC0Ywg0LTQvtC60YPQvNC10L3RgiDQv9GD0LHQu9C40YfQ
-        vdGL0Lwu
-
-      - !binary |
-        0KHQtNC10LvQsNGC0YwgJWQg0LTQvtC60YPQvNC10L3RgtCwINC/0YPQsdC7
-        0LjRh9C90YvQvNC4Lg==
-
-      - !binary |
-        0KHQtNC10LvQsNGC0YwgJWQg0LTQvtC60YPQvNC10L3RgtC+0LIg0L/Rg9Cx
-        0LvQuNGH0L3Ri9C80Lgu
-
-    - make_public_on: !binary |
-        0KHQtNC10LvQsNGC0Ywg0L/Rg9Cx0LvQuNGH0L3QviDQtNC+0YHRgtGD0L/Q
-        vdGL0Lw=
-
-    - manage: !binary |
-        0J3QsNGB0YLRgNC+0LjRgtGM
-
-    - manage_account: !binary |
-        0KPQv9GA0LDQstC70LXQvdC40LUg0LDQutC60LDRg9C90YLQvtC8
-
-    - manage_organization: !binary |
-        0KPQv9GA0LDQstC70LXQvdC40LUg0L7RgNCz0LDQvdC40LfQsNGG0LjQtdC5
-        ICVz
-
-    - matching_search: 
-      - !binary |
-        0LrQvtGC0L7RgNGL0Lkg0LLRiyDRgtC+0LvRjNC60L4g0YfRgtC+INCy0YvQ
-        sdGA0LDQu9C4LA==
-
-      - !binary |
-        0LrQvtGC0L7RgNGL0LUg0LLRiyDRgtC+0LvRjNC60L4g0YfRgtC+INCy0YvQ
-        sdGA0LDQu9C4LA==
-
-    - max_upload_size_warn: !binary |
-        0JfQsNCz0YDRg9C20LDRgtGMINC80L7QttC90L4g0YLQvtC70YzQutC+INC0
-        0L7QutGD0LzQtdC90YLRiywg0LrQvtGC0L7RgNGL0LUg0LzQtdC90YzRiNC1
-        IDIwME1CLiDQn9C+0LbQsNC70YPQudGB0YLQsCwgJXPQvtC/0YLQuNC80LjQ
-        t9C40YDRg9C50YLQtSDQtNC+0LrRg9C80LXQvdGCJXMg0L/QtdGA0LXQtCDR
-        gtC10LwsINC60LDQuiDQv9GA0L7QtNC+0LvQttC40YLRjC4=
-
-    - mentioned_in_x_documents: 
-      - !binary |
-        0KPQv9C+0LzQuNC90LDQtdGC0YHRjyDQsiDQtNC+0LrRg9C80LXQvdGC0LU=
-
-      - !binary |
-        0KPQv9C+0LzQuNC90LDQtdGC0YHRjyDQsiAlZCDQtNC+0LrRg9C80LXQvdGC
-        0LDRhQ==
-
-    - mentioning_query: !binary |
-        0LIg0LrQvtGC0L7RgNGL0YUg0YPQv9C+0LzQuNC90LDQtdGC0YHRjyAmbGRx
-        dW87JXMmcmRxdW87
-
-    - message: !binary |
-        0KHQvtC+0LHRidC10L3QuNC1
-
-    - modification: !binary |
-        0LjQvdGB0YLRgNGD0LzQtdC90YLQvtCyINC80L7QtNC40YTQuNC60LDRhtC4
-        0Lg=
-
-    - modify_original_document: !binary |
-        0JzQvtC00LjRhNC40YbQuNGA0L7QstCw0YLRjCDQtNC+0LrRg9C80LXQvdGC
-
-    - must_have_doc_title: 
-      - !binary |
-        0J/QvtC20LDQu9GD0LnRgdGC0LAsINGD0LrQsNC20LjRgtC1INC90LDQt9Cy
-        0LDQvdC40LUg0LTQvtC60YPQvNC10L3RgtCw
-
-      - !binary |
-        0J/QvtC20LDQu9GD0LnRgdGC0LAsINGD0LrQsNC20LjRgtC1INC90LDQt9Cy
-        0LDQvdC40Y8g0LTQu9GPINCy0YHQtdGFINC00L7QutGD0LzQtdC90YLQvtCy
-
-    - must_have_title: !binary |
-        0J/QvtC20LDQu9GD0LnRgdGC0LAsINCy0LLQtdC00LjRgtC1INC90LDQt9Cy
-        0LDQvdC40LUu
-
-    - must_upload_something: !binary |
-        0J3Rg9C20L3QviDQt9Cw0LPRgNGD0LfQuNGC0Ywg0YXQvtGC0Y8g0LHRiyDQ
-        vtC00LjQvSDQtNC+0LrRg9C80LXQvdGCLg==
-
-    - new_account: !binary |
-        0J3QvtCy0YvQuSDQsNC60LrQsNGD0L3Rgg==
-
-    - new_documents: !binary |
-        0JTQvtCx0LDQstC40YLRjCDQtNC+0LrRg9C80LXQvdGC0Ys=
-
-    - new_project: !binary |
-        0J3QvtCy0YvQuSDQv9GA0L7QtdC60YI=
-
-    - next: !binary |
-        0JTQsNC70LXQtQ==
-
-    - no_appear_until_publish: 
-      - !binary |
-        0L3QtSDQv9C+0Y/QstC40YLRgdGPINCyINGB0L/QuNGB0LrQtSwg0L/QvtC6
-        0LAg0LLRiyDQtdCz0L4g0L3QtSDQvtC/0YPQsdC70LjQutGD0LXRgtC1Lg==
-
-      - !binary |
-        0L3QtSDQv9C+0Y/QstGP0YLRgdGPINCyINGB0L/QuNGB0LrQtSwg0L/QvtC6
-        0LAg0LLRiyDQuNGFINC90LUg0L7Qv9GD0LHQu9C40LrRg9C10YLQtS4=
-
-    - no_dates_for_timeline: 
-      - !binary |
-        0JIgJTIkcyDQvdC1INC90LDQudC00LXQvdC+INC00LDRgiwg0LrQvtGC0L7R
-        gNGL0LUg0LzQvtC20L3QviDQsdGL0LvQviDQsdGLINC/0YDQvtCw0L3QsNC7
-        0LjQt9C40YDQvtCy0LDRgtGMLg==
-
-      - !binary |
-        0JIgJWQg0LTQvtC60YPQvNC10L3RgtCw0YUg0L3QtSDQsdGL0LvQviDQvdCw
-        0LnQtNC10L3QviDQtNCw0YI=
-
-    - no_duplicate_section: !binary |
-        0KHQtdC60YbQuNGOLdC00YPQsdC70LjQutCw0YIg0YHQvtC30LTQsNGC0Ywg
-        0L3QtdC70YzQt9GP
-
-    - no_embed_permission: !binary |
-        0KMg0LLQsNGBINC90LXQtNC+0YHRgtCw0YLQvtGH0L3QviDQv9C+0LvQvdC+
-        0LzQvtGH0LjQuSDQtNC70Y8g0YLQvtCz0L4sINGH0YLQvtCx0Ysg0LLRgdGC
-        0YDQvtC40YLRjCDRjdGC0L7RgiDQtNC+0LrRg9C80LXQvdGCLg==
-
-    - no_entities_found: !binary |
-        0J/QvtC40YHQuiDQvdC1INC00LDQuyDRgNC10LfRg9C70YzRgtCw0YLQvtCy
-
-    - no_past_publication: !binary |
-        0JTQvtC60YPQvNC10L3RgiDQvNC+0LbQtdGCINCx0YvRgtGMINC+0L/Rg9Cx
-        0LvQuNC60L7QstCw0L0g0LfQsNC00L3QuNC8INGH0LjRgdC70L7QvC4=
-
-    - no_permission_to_edit_x: !binary |
-        0KMg0LLQsNGBINC90LXQtNC+0YHRgtCw0YLQvtGH0L3QviDQv9C+0LvQvdC+
-        0LzQvtGH0LjQuSDQtNC70Y8g0YLQvtCz0L4sINGH0YLQvtCx0Ysg0L7RgtGA
-        0LXQtNCw0LrRgtC40YDQvtCy0LDRgtGMICIlcyIu
-
-    - no_project_doc_selected: !binary |
-        0J3QtSDQstGL0LHRgNCw0L3QviDQvdC4INC+0LTQvdC+0LPQviDQv9GA0L7Q
-        tdC60YLQsCDQuNC70Lgg0LTQvtC60YPQvNC10L3RgtCw
-
-    - no_projects_help: !binary |
-        0JIg0Y3RgtC+0Lwg0LDQutC60LDRg9C90YLQtSDQv9C+0LrQsCDQvdC10YIg
-        0L/RgNC+0LXQutGC0L7Qsi4g0KfRgtC+0LHRiyDQvdCw0YfQsNGC0Ywg0L/R
-        gNC+0LXQutGCLCDQvdCw0LbQvNC40YLQtSDQvdCwINC60L3QvtC/0LrQtSAi
-        0JTQvtCx0LDQstC40YLRjCDQv9GA0L7QtdC60YIiLg==
-
-    - no_results_for: !binary |
-        0JIgJXMg0L3QuNGH0LXQs9C+INC90LUg0L3QsNC50LTQtdC90L4=
-
-    - no_reviewer_on_document: 
-      - !binary |
-        0K3RgtC+0YIg0LTQvtC60YPQvNC10L3RgiDQvdC1INC90LAg0YDQtdGG0LXQ
-        vdC30LjQuA==
-
-      - !binary |
-        0K3RgtC4INC00L7QutGD0LzQtdC90YLRiyDQvdC1INC90LAg0YDQtdGG0LXQ
-        vdC30LjQuA==
-
-    - no_section_outside_doc: !binary |
-        0KHQvtC30LTQsNGC0Ywg0YHQtdC60YbQuNGOINCy0L3QtSDQtNC+0LrRg9C8
-        0LXQvdGC0LAg0L3QtdC70YzQt9GP
-
-    - not_found_account: !binary |
-        0JIg0Y3RgtC+0Lwg0LDQutC60LDRg9C90YLQtSDQvdC10YIg0LTQvtC60YPQ
-        vNC10L3RgtC+0LIu
-
-    - not_found_all: !binary |
-        0J3QtdGCINC00L7QutGD0LzQtdC90YLQvtCy
-
-    - not_found_annotated: !binary |
-        0J3QtdGCINC00L7QutGD0LzQtdC90YLQvtCyINGBINC30LDQvNC10YLQutCw
-        0LzQuC4=
-
-    - not_found_group: !binary |
-        0KMg0Y3RgtC+0Lkg0L7RgNCz0LDQvdC40LfQsNGG0LjQuCDQvdC10YIg0LTQ
-        vtC60YPQvNC10L3RgtC+0LIu
-
-    - not_found_project: !binary |
-        0JIg0Y3RgtC+0Lwg0L/RgNC+0LXQutGC0LUg0L3QtdGCINC00L7QutGD0LzQ
-        tdC90YLQvtCyLg==
-
-    - not_found_published: !binary |
-        0KMg0Y3RgtC+0Lkg0L7RgNCz0LDQvdC40LfQsNGG0LjQuCDQvdC10YIg0LTQ
-        vtC60YPQvNC10L3RgtC+0LIu
-
-    - not_found_search: !binary |
-        0J/QvtC40YHQuiDQvdC1INC00LDQuyDRgNC10LfRg9C70YzRgtCw0YLQvtCy
-
-    - note: *id001
-    - note_ellipsis: !binary |
-        0JfQsNC80LXRgtC60LUuLi4=
-
-    - note_embed_private: !binary |
-        0K3RgtC+INC/0YDQuNCy0LDRgtC90YvQuSDQtNC+0LrRg9C80LXQvdGCOiDQ
-        t9Cw0LzQtdGC0LrQuCDQsiDRjdGC0L7QvCDQtNC+0LrRg9C80LXQvdGC0LUg
-        0L3QtSDQsdGD0LTRg9GCINC90LjQutC+0LzRgyDQstC40LTQvdGLLCDQv9C+
-        0LrQsCDQtNC+0LrRg9C80LXQvdGCINC90LUg0YHQtNC10LvQsNC9INC/0YPQ
-        sdC70LjRh9C90YvQvC4g0KHQvNC10L3QuNGC0YwgJXPRg9GA0L7QstC10L3R
-        jCDQtNC+0YHRgtGD0L/QsCVzINGB0LXQudGH0LDRgSDQuNC70Lg=
-
-    - notes_hidden_while_redacting: !binary |
-        0J/RgNC4INGA0LXQtNCw0LrRgtC40YDQvtCy0LDQvdC40Lgg0LTQvtC60YPQ
-        vNC10L3RgtCwINGB0YPRidC10YHRgtCy0YPRjtGJ0LjQtSDQt9Cw0LzQtdGC
-        0LrQuCDQsdGD0LTRg9GCINCy0YDQtdC80LXQvdC90L4g0YHQutGA0YvRgtGL
-
-    - of: !binary |
-        0LjQtw==
-
-    - ok: OK
-    - open: !binary |
-        0J7RgtC60YDRi9GC0Yw=
-
-    - open_in_viewer: !binary |
-        0J7RgtC60YDRi9GC0Ywg0LIg0L7QutC90LUg0L/RgNC+0YHQvNC+0YLRgNCw
-        INC00L7QutGD0LzQtdC90YLQvtCyINCy0YHQtSDRgdGC0YDQsNC90LjRhtGL
-
-    - open_published: !binary |
-        0J7RgtC60YDRi9GC0Ywg0L7Qv9GD0LHQu9C40LrQvtCy0LDQvdC90YPRjiDQ
-        stC10YDRgdC40Y4=
-
-    - open_published_version: !binary |
-        0J7RgtC60YDRi9GC0Ywg0L7Qv9GD0LHQu9C40LrQvtCy0LDQvdC90YPRjiDQ
-        stC10YDRgdC40Y4=
-
-    - optional: !binary |
-        0J7Qv9GG0LjQvtC90L3Qvg==
-
-    - or: !binary |
-        0LjQu9C4
-
-    - or_remove_all_data: !binary |
-        0LjQu9C4ICVz0YPQtNCw0LvQuNGC0Ywg0LLRgdC1INC00LDQvdC90YvQtSVz
-        Lg==
-
-    - order_documents_by: !binary |
-        0KPQv9C+0YDRj9C00L7Rh9C40YLRjCDQtNC+0LrRg9C80LXQvdGC0Ys=
-
-    - organization: 
-      - !binary |
-        0J7RgNCz0LDQvdC40LfQsNGG0LjRjg==
-
-      - !binary |
-        0J7RgNCz0LDQvdC40LfQsNGG0LjQuA==
-
-    - organizations_documents: !binary |
-        0JTQvtC60YPQvNC10L3RgtGLICVz
-
-    - over_x_mentions: !binary |
-        0JHQvtC70LXQtSAlZCDRg9C/0L7QvNC40L3QsNC90LjQuQ==
-
-    - page: *id002
-    - page_ellipsis: !binary |
-        0KHRgtGA0LDQvdC40YbQtS4uLg==
-
-    - page_tools: !binary |
-        0KDQsNCx0L7RgtCwINGB0L4g0YHRgtGA0LDQvdC40YbQsNC80Lg=
-
-    - pages_are_being_removed: !binary |
-        0JjQtNC10YIg0YPQtNCw0LvQtdC90LjQtSDRgdGC0YDQsNC90LjRhi4g0J/Q
-        vtC20LDQu9GD0LnRgdGC0LAsINC30LDQutGA0L7QudGC0LUg0LTQvtC60YPQ
-        vNC10L3Rgi4=
-
-    - paragraph_description_of_document: !binary |
-        0J7Qv9C40YHQsNC90LjQtSDQtNC+0LrRg9C80LXQvdGC0LAg0LIg0L3QtdGB
-        0LrQvtC70YzQutC+INC/0YDQtdC00LvQvtC20LXQvdC40Lk=
-
-    - password_no_blank: !binary |
-        0J/QvtC70LUg0L3QtdC70YzQt9GPINC+0YHRgtCw0LLQuNGC0Ywg0L/Rg9GB
-        0YLRi9C8
-
-    - password_reset: !binary |
-        0JLQvtGB0YHRgtCw0L3QvtCy0LvQtdC90LjQtSDQv9Cw0YDQvtC70Y8gRG9j
-        dW1lbnRDbG91ZA==
-
-    - password_updated: !binary |
-        0J/QsNGA0L7Qu9GMINC40LfQvNC10L3QtdC9
-
-    - pending: !binary |
-        0J3QtSDQsNC60YLQuNCy0LjRgNC+0LLQsNC9
-
-    - person: !binary |
-        0JvRjtC00Lg=
-
-    - pg: !binary |
-        0YEu
-
-    - phone: !binary |
-        0KLQtdC70LXRhNC+0L0=
-
-    - place: !binary |
-        0JzQtdGB0YLQsA==
-
-    - please_enter_email: !binary |
-        0JLQstC10LTQuNGC0LUgZW1haWw=
-
-    - please_enter_valid_email: !binary |
-        0JLQstC10LTQuNGC0LUg0YDQsNCx0L7RgtCw0Y7RidC40LkgZW1haWw=
-
-    - popular: !binary |
-        0L/QvtC/0YPQu9GP0YDQvdGL0Lk=
-
-    - popular_documents: !binary |
-        0J/QvtC/0YPQu9GP0YDQvdGL0LUg0LTQvtC60YPQvNC10L3RgtGL
-
-    - preview_email: !binary |
-        0L/QvtGB0LzQvtGC0YDQtdGC0Ywg0YHQvtC+0LHRidC10L3QuNC1
-
-    - preview_search_embed_help: !binary |
-        0J/QtdGA0LXQtCDRgtC10Lwg0LrQsNC6INC/0YDQvtC00L7Qu9C20LjRgtGM
-        LCDQv9C+0LbQsNC70YPQudGB0YLQsCwgJXPQv9GA0L7QstC10YDRjNGC0LUg
-        0YHQv9C40YHQvtC6INC00L7QutGD0LzQtdC90YLQvtCyLiVzINCe0L/Rg9Cx
-        0LvQuNC60L7QstCw0L3QvdGL0LUg0LTQvtC60YPQvNC10L3RgtGLINC+0YLQ
-        utGA0L7RjtGC0YHRjyDQv9C+INGC0L7QvNGDIFVSTCwg0L/QviDQutC+0YLQ
-        vtGA0L7QvNGDINC40YUg0LjQt9C90LDRh9Cw0LvRjNC90L4g0L7Qv9GD0LHQ
-        u9C40LrQvtCy0LDQu9C4LCDQsiDRgtC+INCy0YDQtdC80Y8g0LrQsNC6INC+
-        0YHRgtCw0LvRjNC90YvQtSDQv9GD0LHQu9C40YfQvdGL0LUg0LTQvtC60YPQ
-        vNC10L3RgtGLINC+0YLQutGA0L7RjtGC0YHRjyDQsiBEb2N1bWVudENsb3Vk
-        Lg==
-
-    - preview_viewer: !binary |
-        0J/QtdGA0LXQtCDRgtC10LwsINC60LDQuiDQv9GA0L7QtNC+0LvQttC40YLR
-        jCwgJXPQv9GA0L7QstC10YDRjNGC0LUsINC/0YDQsNCy0LjQu9GM0L3QviDQ
-        u9C4INCy0YvQs9C70Y/QtNC40YIg0L7QutC90L4g0L/RgNC+0YHQvNC+0YLR
-        gNCwINC00L7QutGD0LzQtdC90YLQsCVzLg==
-
-    - print_notes: !binary |
-        0J3QsNC/0LXRh9Cw0YLQsNGC0Ywg0LfQsNC80LXRgtC60Lg=
-
-    - print_notes_missing_error: !binary |
-        0JIgJXMg0L3QtdGCINC30LDQvNC10YLQvtC6LCDQutC+0YLQvtGA0YvQtSDQ
-        vNC+0LbQvdC+INCx0YvQu9C+INCx0Ysg0L3QsNC/0LXRh9Cw0YLQsNGC0Ywu
-
-    - privacy: !binary |
-        0J3QsNGB0YLRgNC+0LnQutC4INC/0YDQuNCy0LDRgtC90L7RgdGC0Lg=
-
-    - private: !binary |
-        0J/RgNC40LLQsNGC0L3Ri9C5
-
-    - private_access: !binary |
-        0J/RgNC40LLQsNGC0L3Ri9C5INC00L7RgdGC0YPQvw==
-
-    - private_access_help: !binary |
-        0JTQvtGB0YLRg9C/INC40LzQtdGO0YIg0YLQvtC70YzQutC+INC/0L7Qu9GM
-        0LfQvtCy0LDRgtC10LvQuCDRgSDQsdC+0LvQtdC1INGI0LjRgNC+0LrQuNC8
-        0Lgg0L/RgNCw0LLQsNC80LggKNGD0YfQsNGB0YLQvdC40LrQuCku
-
-    - private_documents_visible_instructions: 
-      - !binary |
-        0K3RgtC+INC/0YDQuNCy0LDRgtC90YvQuSDQtNC+0LrRg9C80LXQvdGCLiDQ
-        n9C10YDQtdC0INGC0LXQvCwg0LrQsNC6INC+0L0g0YHRgtCw0L3QtdGCINC0
-        0L7RgdGC0YPQv9C10L0g0L3QsCDQstCw0YjQtdC8INGB0LDQudGC0LUg0LjQ
-        u9C4INGH0LXRgNC10Lcg0L/QvtC40YHQuiDQsiDQutCw0YLQsNC70L7Qs9C1
-        IERvY3VtZW50Q2xvdWQsINC10LPQviDQvdGD0LbQvdC+INGB0LTQtdC70LDR
-        gtGMINC/0YPQsdC70LjRh9C90YvQvC4g0JLRiyDQvNC+0LbQtdGC0LUg0LfQ
-        sNC00LDRgtGMINCy0YDQtdC80Y8g0Lgg0LTQsNGC0YMg0L/Rg9Cx0LvQuNC6
-        0LDRhtC40Lgg0LjQu9C4ICUyJHPRgdC00LXQu9Cw0YLRjCDQtNC+0LrRg9C8
-        0LXQvdGCINC/0YPQsdC70LjRh9C90YvQvCDRgdC10LnRh9Cw0YElMyRzLg==
-
-      - !binary |
-        0K3RgtC4INC00L7QutGD0LzQtdC90YLRiyDQv9GA0LjQstCw0YLQvdGLLiDQ
-        n9C10YDQtdC0INGC0LXQvCwg0LrQsNC6INC+0L3QuCDRgdGC0LDQvdGD0YIg
-        0LTQvtGB0YLRg9C/0L3RiyDQvdCwINCy0LDRiNC10Lwg0YHQsNC50YLQtSDQ
-        uNC70Lgg0YfQtdGA0LXQtyDQv9C+0LjRgdC6INCyINC60LDRgtCw0LvQvtCz
-        0LUgRG9jdW1lbnRDbG91ZCwg0LjRhSDQvdGD0LbQvdC+INGB0LTQtdC70LDR
-        gtGMINC/0YPQsdC70LjRh9C90YvQvNC4LiDQktGLINC80L7QttC10YLQtSDQ
-        t9Cw0LTQsNGC0Ywg0LLRgNC10LzRjyDQuCDQtNCw0YLRgyDQv9GD0LHQu9C4
-        0LrQsNGG0LjQuCDQuNC70LggJTIkc9Cy0L3QtdGB0YLQuCDQuNC30LzQtdC9
-        0LXQvdC40Y8g0YHQtdC50YfQsNGBJTMkcy4=
-
-    - private_note: !binary |
-        0J/RgNC40LLQsNGC0L3QsNGPINC30LDQvNC10YLQutCw
-
-    - private_note_visible: !binary |
-        0K3RgtCwINC/0YDQuNCy0LDRgtC90LDRjyDQt9Cw0LzQtdGC0LrQsCDQstC4
-        0LTQvdCwINGC0L7Qu9GM0LrQviDQstCw0Lw=
-
-    - private_to: !binary |
-        0J/RgNC40LLQsNGC0L3QviDQtNC+0YHRgtGD0L/QtdC9ICVz
-
-    - private_to_organization_help: !binary |
-        0KLQvtC70YzQutC+INC/0L7Qu9GM0LfQvtCy0LDRgtC10LvQuCDQuNC3INCy
-        0LDRiNC10Lkg0L7RgNCz0LDQvdC40LfQsNGG0LjQuCDQuNC80LXRjtGCINC0
-        0L7RgdGC0YPQvyAo0L3QtSDRhNGA0LjQu9Cw0L3RgdC10YDRiyku
-
-    - project: !binary |
-        0L/RgNC+0LXQutGC
-
-    - project_exists: !binary |
-        0J/RgNC+0LXQutGCINGBINC40LzQtdC90LXQvCAlcyDRg9C20LUg0YHRg9GJ
-        0LXRgdGC0LLRg9C10YI=
-
-    - project_id: !binary |
-        SUQg0L/RgNC+0LXQutGC0LA6
-
-    - project_owner: !binary |
-        0KHQvtCx0YHRgtCy0LXQvdC90LjQuiDQv9GA0L7QtdC60YLQsA==
-
-    - projectid: !binary |
-        aWRf0L/RgNC+0LXQutGC0LA=
-
-    - projects: !binary |
-        0J/RgNC+0LXQutGC0Ys=
-
-    - public: !binary |
-        0L/Rg9Cx0LvQuNGH0L3Ri9C5
-
-    - public_access: !binary |
-        0J7QsdGJ0LjQuSDQtNC+0YHRgtGD0L8=
-
-    - public_access_help: !binary |
-        0JrRgtC+INGD0LPQvtC00L3QviDQsiDQuNC90YLQtdGA0L3QtdGC0LUg0LzQ
-        vtC20LXRgiDQuNGB0LrQsNGC0Ywg0Lgg0LLQuNC00LXRgtGMINC00L7QutGD
-        0LzQtdC90YIu
-
-    - public_documents_help: !binary |
-        0JLRi9Cx0LXRgNC40YLQtSDQvtGA0LPQsNC90LjQt9Cw0YbQuNGOINC40Lcg
-        0YHQv9C40YHQutCwINCy0YvRiNC1LCDRh9GC0L7QsdGLINC+0YLQutGA0YvR
-        gtGMINGB0L/QuNGB0L7QuiDQv9GD0LHQu9C40YfQvdGL0YUg0LTQvtC60YPQ
-        vNC10L3RgtC+0LIg0Y3RgtC+0Lkg0L7RgNCz0LDQvdC40LfQsNGG0LjQuC4=
-
-    - public_on: !binary |
-        0KHRgtCw0L3QtdGCINC/0YPQsdC70LjRh9C90L4g0LTQvtGB0YLRg9C/0LXQ
-        vQ==
-
-    - publication_date: !binary |
-        0LTQsNGC0LAg0L/Rg9Cx0LvQuNC60LDRhtC40Lg=
-
-    - publish: !binary |
-        0J7Qv9GD0LHQu9C40LrQvtCy0LDRgtGM
-
-    - publish_choose_display: !binary |
-        0J/RgNC40LzQtdGA0Ys6INC00L7QutGD0LzQtdC90YIgJXPQvdCwINCy0YHR
-        jiDRgdGC0YDQsNC90LjRhtGDJXMsINCyINCx0LvQvtC60LUg0YEgJXPRhNC4
-        0LrRgdC40YDQvtCy0LDQvdC+0Lkg0YjQuNGA0LjQvdC+0Lklcy4=
-
-    - published: !binary |
-        0L7Qv9GD0LHQu9C40LrQvtCy0LDQvdC90YvQuQ==
-
-    - published_documents: !binary |
-        0J7Qv9GD0LHQu9C40LrQvtCy0LDQvdC90YvQtSDQtNC+0LrRg9C80LXQvdGC
-        0Ys=
-
-    - published_url: !binary |
-        VVJMINC/0YPQsdC70LjQutCw0YbQuNC4
-
-    - publishing_embedding: !binary |
-        0J/Rg9Cx0LvQuNC60LDRhtC40Y8g0Lgg0LLRgdGC0YDQsNC40LLQsNC90LjQ
-        tSDQutC+0LTQsCDQsiDRgdCw0LnRgtGL
-
-    - reader_workspace_language: !binary |
-        0K/Qt9GL0Log0YDQuNC00LXRgNCwINC4INGA0LDQsdC+0YfQtdC5INC+0LHQ
-        u9Cw0YHRgtC4
-
-    - really_delete_x_docs: 
-      - !binary |
-        0JLRiyDRgtC+0YfQvdC+INGF0L7RgtC40YLQtSDRg9C00LDQu9C40YLRjCDQ
-        tNC+0LrRg9C80LXQvdGCPwo=
-
-      - !binary |
-        0JLRiyDRgtC+0YfQvdC+INGF0L7RgtC40YLQtSDRg9C00LDQu9C40YLRjCAl
-        ZCDQtNC+0LrRg9C80LXQvdGC0LA/Cg==
-
-      - !binary |
-        0JLRiyDRgtC+0YfQvdC+INGF0L7RgtC40YLQtSDRg9C00LDQu9C40YLRjCAl
-        ZCDQtNC+0LrRg9C80LXQvdGC0L7Qsj8=
-
-    - red: !binary |
-        0LrRgNCw0YHQvdGL0Lk=
-
-    - redact_document: !binary |
-        0KHQutGA0YvRgtGMINGH0LDRgdGC0Ywg0YLQtdC60YHRgtCw
-
-    - redact_instructions: !binary |
-        0JrRg9GA0YHQvtGA0L7QvCDQvNGL0YjQuCDQvdCw0YDQuNGB0YPQudGC0LUg
-        JXMg0YfQtdGC0YvRgNC10YXRg9Cz0L7Qu9GM0L3QuNC6INC90LDQtCDQutCw
-        0LbQtNGL0Lwg0YHQu9C+0LLQvtC8INC40LvQuCDRh9Cw0YHRgtGM0Y4g0LTQ
-        vtC60YPQvNC10L3RgtCwLCDQutC+0YLQvtGA0YvQtSDRhdC+0YLQtdC70Lgg
-        0LHRiyDRgdC60YDRi9GC0YwuINCi0LXQutGB0YIsINGB0LLRj9C30LDQvdC9
-        0YvQuSDRgdC+INGB0LrRgNGL0YLQvtC5INGH0LDRgdGC0YzRjiwg0LHRg9C0
-        0LXRgiDRg9C00LDQu9C10L0u
-
-    - redaction_close_while_processing: 
-      - !binary |
-        0JLRiyDRgdC60YDRi9C70Lgg0LDQsdC30LDRhi4g0JLQviDQstGA0LXQvNGP
-        INC/0YDQuNC90Y/RgtC40Y8g0LjQt9C80LXQvdC10L3QuNC5INC00L7QutGD
-        0LzQtdC90YIg0LHRg9C00LXRgiDQt9Cw0LrRgNGL0YIuINCS0Ysg0YPQstC1
-        0YDQtdC90YssINGH0YLQviDRhdC+0YLQuNGC0LUg0L/RgNC+0LTQvtC70LbQ
-        uNGC0Yw/
-
-      - !binary |
-        0JLRiyDRgdC60YDRi9C70LggJWQg0LDQsdC30LDRhtCwLiDQktC+INCy0YDQ
-        tdC80Y8g0L/RgNC40L3Rj9GC0LjRjyDQuNC30LzQtdC90LXQvdC40Lkg0LTQ
-        vtC60YPQvNC10L3RgiDQsdGD0LTQtdGCINC30LDQutGA0YvRgi4g0JLRiyDR
-        g9Cy0LXRgNC10L3Riywg0YfRgtC+INGF0L7RgtC40YLQtSDQv9GA0L7QtNC+
-        0LvQttC40YLRjD8=
-
-      - !binary |
-        0JLRiyDRgdC60YDRi9C70LggJWQg0LDQsdC30LDRhtC10LIuINCS0L4g0LLR
-        gNC10LzRjyDQv9GA0LjQvdGP0YLQuNGPINC40LfQvNC10L3QtdC90LjQuSDQ
-        tNC+0LrRg9C80LXQvdGCINCx0YPQtNC10YIg0LfQsNC60YDRi9GCLiDQktGL
-        INGD0LLQtdGA0LXQvdGLLCDRh9GC0L4g0YXQvtGC0LjRgtC1INC/0YDQvtC0
-        0L7Qu9C20LjRgtGMPw==
-
-    - reenable: !binary |
-        0JLQvtGB0YHRgtCw0L3QvtGB0LjRgtGM
-
-    - related_article_url: !binary |
-        VVJMINGB0LLRj9C30LDQvdC90L7QuSDRgdGC0LDRgtGM0Lg=
-
-    - related_article_url_help: !binary |
-        0JXRgdC70Lgg0LLRiyDRg9C60LDQttC40YLQtSBVUkwg0YHRgtCw0YLRjNC4
-        LCDQutC+0YLQvtGA0LDRjyDRgdGB0YvQu9Cw0LXRgtGB0Y8g0L3QsCDRjdGC
-        0L7RgiDQtNC+0LrRg9C80LXQvdGCLCDQstC90LjQt9GDINCyINC+0LrQvdC1
-        INC/0YDQvtGB0LzQvtGC0YDQsCDQtNC+0LrRg9C80LXQvdGC0L7QsiDQv9C+
-        0Y/QstC40YLRgdGPINGB0YHRi9C70LrQsCAi0KHQstGP0LfQsNC90L3QsNGP
-        INGB0YLQsNGC0YzRjyIuINCc0L3QvtCz0LjQtSDQv9C+0YHQtdGC0LjRgtC1
-        0LvQuCDQv9C+0L/QsNC00LDRjtGCINC90LAg0YHRgtGA0LDQvdC40YbRiyDR
-        gSDQstGB0YLRgNC+0LXQvdC90YvQvNC4INC00L7QutGD0LzQtdC90YLQsNC8
-        0Lgg0YfQtdGA0LXQtyDQv9C+0LjRgdC60L7QstC40LrQuCAmbWRhc2g7INGB
-        0YHRi9C70LrQsCDQvdCw0L/RgNCw0LLQuNGCINC40YUg0L3QsCDRgdGC0YDQ
-        sNC90LjRhtGDLdC40YHRgtC+0YfQvdC40Lou
-
-    - related_url_of_document: !binary |
-        VVJMINGB0YLRgNCw0L3QuNGG0Ysg0LIg0LjQvdGC0LXRgNC90LXRgtC1LCDQ
-        utC+0YLQvtGA0LDRjyDRgdGB0YvQu9Cw0LXRgtGB0Y8g0L3QsCDRjdGC0L7R
-        giDQtNC+0LrRg9C80LXQvdGC
-
-    - relevance: !binary |
-        0YDQtdC70LXQstCw0L3RgtC90L7RgdGC0Lg=
-
-    - remove: !binary |
-        0KPQtNCw0LvQuNGC0Yw=
-
-    - remove_all: !binary |
-        0KPQtNCw0LvQuNGC0Ywg0LLRgdC1
-
-    - remove_entity: !binary |
-        0YPQsdGA0LDRgtGMINC40Lcg0L/QvtC40YHQutCw
-
-    - remove_file: !binary |
-        0KPQtNCw0LvQuNGC0Ywg0YTQsNC50Ls=
-
-    - remove_from_project: !binary |
-        0KPQtNCw0LvQuNGC0Ywg0LjQtyDQv9GA0L7QtdC60YLQsA==
-
-    - remove_line_breaks: !binary |
-        0YPQsdGA0LDRgtGMINC/0LXRgNC10L3QvtGB0Ys=
-
-    - remove_page_warning_message: 
-      - !binary |
-        0J7QtNC90LAg0YHRgtGA0LDQvdC40YbQsCDQsdGD0LTQtdGCINGD0LTQsNC7
-        0LXQvdCwINC40Lcg0LTQvtC60YPQvNC10L3RgtCwLiDQktC+INCy0YDQtdC8
-        0Y8g0L/RgNC40L3Rj9GC0LjRjyDQuNC30LzQtdC90LXQvdC40Lkg0LTQvtC6
-        0YPQvNC10L3RgiDQsdGD0LTQtdGCINC30LDQutGA0YvRgi4g0JLRiyDRg9Cy
-        0LXRgNC10L3Riywg0YfRgtC+INGF0L7RgtC40YLQtSDQv9GA0L7QtNC+0LvQ
-        ttC40YLRjD8=
-
-      - !binary |
-        JWQg0YHRgtGA0LDQvdC40YbRiyDQsdGD0LTRg9GCINGD0LTQsNC70LXQvdGL
-        INC40Lcg0LTQvtC60YPQvNC10L3RgtCwLiDQktC+INCy0YDQtdC80Y8g0L/R
-        gNC40L3Rj9GC0LjRjyDQuNC30LzQtdC90LXQvdC40Lkg0LTQvtC60YPQvNC1
-        0L3RgiDQsdGD0LTQtdGCINC30LDQutGA0YvRgi4g0JLRiyDRg9Cy0LXRgNC1
-        0L3Riywg0YfRgtC+INGF0L7RgtC40YLQtSDQv9GA0L7QtNC+0LvQttC40YLR
-        jD8=
-
-      - !binary |
-        JWQg0YHRgtGA0LDQvdC40YYg0LHRg9C00LXRgiDRg9C00LDQu9C10L3QviDQ
-        uNC3INC00L7QutGD0LzQtdC90YLQsC4g0JLQviDQstGA0LXQvNGPINC/0YDQ
-        uNC90Y/RgtC40Y8g0LjQt9C80LXQvdC10L3QuNC5INC00L7QutGD0LzQtdC9
-        0YIg0LHRg9C00LXRgiDQt9Cw0LrRgNGL0YIuINCS0Ysg0YPQstC10YDQtdC9
-        0YssINGH0YLQviDRhdC+0YLQuNGC0LUg0L/RgNC+0LTQvtC70LbQuNGC0Yw/
-
-    - remove_pages: !binary |
-        0KPQtNCw0LvQuNGC0Ywg0YHRgtGA0LDQvdC40YbRiw==
-
-    - remove_pages_click: !binary |
-        0KnQtdC70LrQvdC40YLQtSDQv9C+INGC0LXQvCDRgdGC0YDQsNC90LjRhtCw
-        0LwsINC60L7RgtC+0YDRi9C1INGF0L7RgtC40YLQtSDRg9C00LDQu9C40YLR
-        jCDQuNC3INC00L7QutGD0LzQtdC90YLQsC4=
-
-    - remove_pages_done: !binary |
-        0JrQvtCz0LTQsCDQstGL0LHQtdGA0LXRgtC1INCy0YHQtSDRgdGC0YDQsNC9
-        0LjRhtGLLCDQutC+0YLQvtGA0YvQtSDQvdGD0LbQvdC+INGD0LTQsNC70LjR
-        gtGMLCDRidC10LvQutC90LjRgtC1INC/0L4g0LrQvdC+0L/QutC1ICLQo9C0
-        0LDQu9C40YLRjCDRgdGC0YDQsNC40L3RhtGLIg==
-
-    - remove_pages_input: 
-      - !binary |
-        0KPQtNCw0LvQuNGC0Ywg0YHRgtGA0LDQvdC40YbRgw==
-
-      - !binary |
-        0KPQtNCw0LvQuNGC0YwgJWQg0YHRgtGA0LDQvdC40YbRiw==
-
-      - !binary |
-        0KPQtNCw0LvQuNGC0YwgJWQg0YHRgtGA0LDQvdC40YY=
-
-    - removed_from_x_documents: 
-      - !binary |
-        0JTQvtC60YPQvNC10L3RgiDQuNC3ICVzINGD0LTQsNC70LXQvQ==
-
-      - !binary |
-        JWQg0LTQvtC60YPQvNC10L3RgtCwINC40LcgJXMg0YPQtNCw0LvQtdC90L4=
-
-      - !binary |
-        JWQg0LTQvtC60YPQvNC10L3RgtC+0LIg0LjQtyAlcyDRg9C00LDQu9C10L3Q
-        vg==
-
-    - removing: !binary |
-        0KPQtNCw0LvRj9GOLi4u
-
-    - reorder_hint: !binary |
-        0J/QtdGA0LXRgtCw0YHQutC40LLRgtC1INGB0YLRgNCw0L3QuNGG0YssINGH
-        0YLQvtCx0ZYg0LjQt9C80LXQvdC40YLRjCDQuNGFINC/0L7RgNGP0LTQvtC6
-        Lg==
-
-    - reorder_pages: !binary |
-        0JjQt9C80LXQvdC40YLRjCDQv9C+0YDRj9C00L7QuiDRgdGC0YDQsNC90LjR
-        hg==
-
-    - reorder_pages_done: !binary |
-        0JXRgdC70Lgg0YDQsNGB0L/QvtC70L7QttC10L3QuNC1INGB0YLRgNCw0L3Q
-        uNGGINCy0LDRgSDRg9GB0YLRgNCw0LjQstCw0LXRgiwg0YnQtdC70LrQvdC4
-        0YLQtSDQv9C+INC60L3QvtC/0LrQtSAi0KHQvtGF0YDQsNC90LjRgtGMINC/
-        0L7RgNGP0LTQvtC6INGB0YLRgNCw0L3QuNGGIi4g
-
-    - reorder_pages_instructions: !binary |
-        0J/QvtC80LXQvdGP0YLRjCDQv9C+0YDRj9C00L7QuiDRgdGC0YDQsNC90LjR
-        hiDQvNC+0LbQvdC+INC/0LXRgNC10YLQsNGB0LrQuNCy0LDRjyDQuNGFINC4
-        INC80LXQvdGP0Y8g0LzQtdGB0YLQsNC80Lgu
-
-    - replace_multiple_pages: !binary |
-        0JfQsNC80LXQvdC40YLRjCDRgdGC0YDQsNC90LjRhtGLINC80LXQttC00YMg
-        JWQg0LggJWQ=
-
-    - replace_page_x: !binary |
-        0JfQsNC80LXQvdC40YLRjCDRgdGC0YDQsNC90LjRhtGDICVk
-
-    - reprocess: !binary |
-        0KDQsNGB0L/QvtC30L3QsNGC0Ywg0LfQsNC90L7QstC+
-
-    - reprocess_text: !binary |
-        0KDQsNGB0L/QvtC30L3QsNGC0Ywg0YLQtdC60YHRgiDQt9Cw0L3QvtCy0L4=
-
-    - resend_instructions: !binary |
-        0J7RgtC/0YDQsNCy0LjRgtGMINC40L3RgdGC0YDRg9C60YbQuNC4INC30LDQ
-        vdC+0LLQvg==
-
-    - resend_welcome_email: !binary |
-        0J7RgtC+0YHQu9Cw0YLRjCDQv9GA0LjQs9C70LDRiNC10L3QuNC1INC10YnQ
-        tSDRgNCw0Lc=
-
-    - restricted: !binary |
-        0L7Qs9GA0LDQvdC40YfQtdC90L3Ri9C5
-
-    - review_x_documents: 
-      - !binary |
-        0KDQtdGG0LXQvdC30LjRgNC+0LLQsNGC0YwgIiUyJHMiINGBINC/0L7QvNC+
-        0YjRjNGOIERvY3VtZW50Q2xvdWQ=
-
-      - !binary |
-        0KDQtdGG0LXQvdC30LjRgNC+0LLQsNGC0YwgJWQg0LTQvtC60YPQvNC10L3R
-        gtCwINGBINC/0L7QvNC+0YjRjNGOIERvY3VtZW50Q2xvdWQ=
-
-      - !binary |
-        0KDQtdGG0LXQvdC30LjRgNC+0LLQsNGC0YwgJWQg0LTQvtC60YPQvNC10L3R
-        gtC+0LIg0YEg0L/QvtC80L7RiNGM0Y4gRG9jdW1lbnRDbG91ZA==
-
-    - reviewer: !binary |
-        0KDQtdGG0LXQvdC30LXQvdGC
-
-    - reviewer_add_permission_denied: !binary |
-        0JLRiyDQvdC1INC80L7QttC10YLQtSDQvtGC0L/RgNCw0LLQu9GP0YLRjCDQ
-        tNC+0LrRg9C80LXQvdGC0Ysg0L3QsCDRgNC10YbQtdC90LfQuNGO
-
-    - reviewer_email_instructions: 
-      - !binary |
-        0J7RgtC/0YDQsNCy0LjRgtGMINC40L3RgdGC0YDRg9C60YbQuNC4ICUyJHM=
-
-      - !binary |
-        0J7RgtC/0YDQsNCy0LjRgtGMINC40L3RgdGC0YDRg9C60YbQuNC4ICVkINGA
-        0LXRhtC10L3Qt9C10L3RgtCw0Lw=
-
-    - reviewer_email_message: !binary |
-        RG9jdW1lbnRDbG91ZCDQvtGC0L/RgNCw0LLQuNGCINC40L3RgdGC0YDRg9C6
-        0YbQuNC4INGA0LXRhtC10L3Qt9C10L3RgtCw0LwsINC10YHQu9C4INGF0L7R
-        gtC40YLQtSwg0LzQvtC20LXRgtC1INC00L7QsdCw0LLQuNGC0Ywg0YfRgtC+
-        LdGC0L4g0L7RgiDRgdC10LHRjwpEb2N1bWVudENsb3Vk
-
-    - reviewer_enter_email: !binary |
-        0JLQstC10LTQuNGC0LUgZW1haWwg0L/QtdGA0LLQvtCz0L4g0YDQtdGG0LXQ
-        vdC30LXQvdGC0LA=
-
-    - reviewer_name: !binary |
-        0KPQutCw0LbQuNGC0LUg0LjQvNGPINGA0LXRhtC10L3Qt9C10L3RgtCw
-
-    - reviewer_remove_error: !binary |
-        0J/RgNC4INGD0LTQsNC70LXQvdC40Lgg0YDQtdGG0LXQvdC30LXQvdGC0LAg
-        0LLQvtC30L3QuNC60LvQsCDQv9GA0L7QsdC70LXQvNCw
-
-    - reviewer_remove_permission_denied: !binary |
-        0JLRiyDQvdC1INC80L7QttC10YLQtSDRg9C00LDQu9GP0YLRjCDRgNC10YbQ
-        tdC90LfQtdC90YLQvtCy
-
-    - reviewing_instructions_multiple_sent_to: !binary |
-        0JjQvdGB0YLRgNGD0LrRhtC40Lgg0L/QviDRgNC10YbQtdC90LfQuNGA0L7Q
-        stCw0L3QuNGOICVzINC00L7QutGD0LzQtdC90YLQvtCyINC+0YLQv9GA0LDQ
-        stC70LXQvdGLICVz
-
-    - reviewing_instructions_send_failure: !binary |
-        0JjQvdGB0YLRgNGD0LrRhtC40Lgg0L3QtdC1INCx0YvQu9C4INC+0YLQv9GA
-        0LDQstC70LXQvdGLLiDQodCy0Y/QttC40YLQtdGB0YwsINC/0L7QttCw0LvR
-        g9C50YHRgtCwLCDRgdC+INGB0LvRg9C20LHQvtC5INC/0L7QtNC00LXRgNC2
-        0LrQuC4=
-
-    - reviewing_instructions_single_sent_to: !binary |
-        0JjQvdGB0YLRgNGD0LrRhtC40Lgg0L/QviDRgNC10YbQtdC90LfQuNGA0L7Q
-        stCw0L3QuNGOICVzINC+0YLQv9GA0LDQstC70LXQvdGLICVz
-
-    - revoke: !binary |
-        0J7RgtC80LXQvdC40YLRjA==
-
-    - role_administrator_for_x: !binary |
-        0JLRiyDQsNC00LzQuNC90LjRgdGC0YDQsNGC0L7RgCAlcw==
-
-    - role_contributor_for_x: !binary |
-        0JLRiyDQv9C+0LvRjNC30L7QstCw0YLQtdC70YwgJXM=
-
-    - role_freelancer_for_x: !binary |
-        0JLRiyDRhNGA0LjQu9Cw0L3RgdC10YAg0LTQu9GPICVz
-
-    - role_reviewer_for_x: !binary |
-        0JLRiyDRgNC10YbQtdC90LfQtdC90YIg0LTQu9GPICVz
-
-    - save: !binary |
-        0KHQvtGF0YDQsNC90LjRgtGM
-
-    - save_as_draft: !binary |
-        0KHQvtGF0YDQsNC90LjRgtGMINGH0LXRgNC90L7QstC40Lo=
-
-    - save_page_order: !binary |
-        0KHQvtGF0YDQsNC90LjRgtGMINC/0L7RgNGP0LTQvtC6INGB0YLRgNCw0L3Q
-        uNGG
-
-    - save_redactions: !binary |
-        0KHQvtGF0YDQsNC90LjRgtGMINC/0YDQsNCy0LrQuA==
-
-    - save_text: !binary |
-        0KHQvtGF0YDQsNC90LjRgtGMINGC0LXQutGB0YI=
-
-    - saved: !binary |
-        0KHQvtGF0YDQsNC90LXQvdC+
-
-    - search: !binary |
-        0J/QvtC40YHQug==
-
-    - search_bar: !binary |
-        0J/QvtC70LUg0L/QvtC40YHQutCw
-
-    - searching_dd: !binary |
-        0J/QvtC40YHQuiDQtNC+0LrRg9C80LXQvdGC0L7QsiDQuCDQtNCw0L3QvdGL
-        0YU=
-
-    - select_pages_remove: !binary |
-        0JLRi9Cx0LXRgNC10YLQtSDRgdGC0YDQsNC90LjRhtGLLCDQutC+0YLQvtGA
-        0YvQtSDRhdC+0YLQtdC70Lgg0LHRiyDRg9C00LDQu9C40YLRjC4=
-
-    - select_single_to_embed: !binary |
-        0KfRgtC+0LHRiyDRgdC+0LfQtNCw0YLRjCDQutC+0LQg0LTQu9GPINCy0YHR
-        gtCw0LLQutC4LCDQv9C+0LbQsNC70YPQudGB0YLQsCwg0LLRi9Cx0LXRgNC4
-        0YLQtSDQtNC+0LrRg9C80LXQvdGCLg==
-
-    - select_single_to_open: !binary |
-        0J/QvtC20LDQu9GD0LnRgdGC0LAsINCy0YvQsdC10YDQuNGC0LUg0LTQvtC6
-        0YPQvNC10L3Rgg==
-
-    - select_with_public_note: !binary |
-        0J/QvtC20LDQu9GD0LnRgdGC0LAsINCy0YvQsdC10YDQuNGC0LUg0LTQvtC6
-        0YPQvNC10L3RgiDQsiDQutC+0YLQvtGA0L7QvCDQtdGB0YLRjCDRhdC+0YLR
-        jyDQsdGLINC+0LTQvdCwINC/0YPQsdC70LjRh9C90LDRjyDQt9Cw0LzQtdGC
-        0LrQsC4=
-
-    - send: !binary |
-        0J7RgtC/0YDQsNCy0LjRgtGM
-
-    - sending: !binary |
-        0J7RgtC/0YDQsNCy0LvRj9GOLi4u
-
-    - set_access: !binary |
-        0KPRgdGC0LDQvdC+0LLQuNGC0Ywg0YPRgNC+0LLQtdC90Ywg0LTQvtGB0YLR
-        g9C/0LA=
-
-    - set_publication_date: !binary |
-        0KPRgdGC0LDQvdC+0LLQuNGC0Ywg0LTQsNGC0YMg0L/Rg9Cx0LvQuNC60LDR
-        htC40Lg=
-
-    - set_publication_date_for: !binary |
-        0JfQsNC00LDRgtGMINCy0YDQtdC80Y8g0L/Rg9Cx0LvQuNC60LDRhtC40Lgg
-        JXM=
-
-    - set_the: !binary |
-        0YPRgdGC0LDQvdC+0LLQuNGC0Yw=
-
-    - set_will_appear: !binary |
-        0L/QvtGP0LLRj9GC0YHRjyDQsiDQs9C+0YLQvtCy0L7QvCDRgdC/0LjRgdC6
-        0LUu
-
-    - share_documents: !binary |
-        0J/QvtC00LXQu9C40YLRjNGB0Y8g0LTQvtC60YPQvNC10L3RgtCw0LzQuA==
-
-    - share_project: !binary |
-        0J/QvtC00LXQu9C40YLRjNGB0Y8g0L/RgNC+0LXQutGC0L7QvA==
-
-    - share_x_documents: !binary |
-        0J7RgtC/0YDQsNCy0LjRgtGMINC90LAg0YDQtdGG0LXQvdC30LjRjg==
-
-    - shared_with_you_by: !binary |
-        0K3RgtC40Lwg0YEg0LLQsNC80Lgg0L/QvtC00LXQu9C40LvRgdGPICVz
-
-    - sharing_x_of_x_documents: !binary |
-        0J7RgtC/0YDQsNCy0LvRj9C10Lwg0LTQvtC60YPQvNC10L3RgtGLINC90LAg
-        0YDQtdGG0LXQvdC30LjRjjogJWQg0LjQtyAlZA==
-
-    - show_all: !binary |
-        0J/QvtC60LDQt9Cw0YLRjCDQstGB0LU=
-
-    - show_all_x_pages: 
-      - !binary |
-        0J/QvtC60LDQt9Cw0YLRjCDQvtC00L3RgyDRgdGC0YDQsNC90LjRhtGD
-
-      - !binary |
-        0J/QvtC60LDQt9Cw0YLRjCDQstGB0LUgJWQg0YHRgtGA0LDQvdC40YbRiw==
-
-      - !binary |
-        0J/QvtC60LDQt9Cw0YLRjCDQstGB0LUgJWQg0YHRgtGA0LDQvdC40YY=
-
-    - show_less: !binary |
-        0J/QvtC60LDQt9Cw0YLRjCDQvNC10L3RjNGI0LU=
-
-    - show_more: !binary |
-        0J/QvtC60LDQt9Cw0YLRjCDQtdGJ0LU=
-
-    - show_pages: !binary |
-        0L/QvtC60LDQt9Cw0YLRjCDRgdGC0YDQsNC90LjRhtGL
-
-    - signup_sent_to: !binary |
-        0JjQvdGE0L7RgNC80LDRhtC40Y8g0LTQu9GPINCy0YXQvtC00LAg0LIg0YHQ
-        uNGB0YLQtdC80YMg0L7RgtC/0YDQsNCy0LvQtdC90LAgJXM=
-
-    - sort: !binary |
-        0KHQvtGA0YLQuNGA0L7QstCw0YLRjA==
-
-    - sort_by_date_uploaded: !binary |
-        0KPQv9C+0YDRj9C00L7Rh9C40YLRjCDQv9C+INC00LDRgtC1INC30LDQs9GA
-        0YPQt9C60Lg=
-
-    - sort_by_length: !binary |
-        0KPQv9C+0YDRj9C00L7Rh9C40YLRjCDQv9C+INC00LvQuNC90LU=
-
-    - sort_by_relevance: !binary |
-        0KPQv9C+0YDRj9C00L7Rh9C40YLRjCDQv9C+INGA0LXQu9C10LLQsNC90YLQ
-        vdC+0YHRgtC4
-
-    - sort_by_source: !binary |
-        0KPQv9C+0YDRj9C00L7Rh9C40YLRjCDQv9C+INC40YHRgtC+0YfQvdC40LrR
-        gw==
-
-    - sort_by_title: !binary |
-        0KPQv9C+0YDRj9C00L7Rh9C40YLRjCDQv9C+INC40LzQtdC90Lg=
-
-    - sort_documents_by: !binary |
-        0KPQv9C+0YDRj9C00L7Rh9C40YLRjA==
-
-    - source: !binary |
-        0JjRgdGC0L7Rh9C90LjQug==
-
-    - source_of_document: !binary |
-        0J/RgNC+0LjRgdGF0L7QttC00LXQvdC40LUg0LTQvtC60YPQvNC10L3RgtCw
-        LCDQuNGB0YLQvtGH0L3QuNC6
-
-    - state: !binary |
-        0KjRgtCw0YLRiw==
-
-    - step_x_of_x: !binary |
-        0KjQsNCzICVkINC40LcgJWQ=
-
-    - term: !binary |
-        0KPRgdC70L7QstC40Y8=
-
-    - terms: !binary |
-        0KPRgdC70L7QstC40Y8g0LjRgdC/0L7Qu9GM0LfQvtCy0LDQvdC40Y8=
-
-    - text: !binary |
-        0YLQtdC60YHRgg==
-
-    - text_reprocess_help: !binary |
-        0JLRiyDQvNC+0LbQtdGC0LUg0L3QsNC20LDRgtGMICLQoNCw0YHQv9C+0LfQ
-        vdCw0YLRjCDQt9Cw0L3QvtCy0L4iINGH0YLQvtCx0Ysg0L/QvtC/0YDQvtCx
-        0L7QstCw0YLRjCDRg9C70YPRh9GI0LjRgtGMINC60LDRh9C10YHRgtCy0L4g
-        0YDQsNGB0L/QvtC30L3QsNC90L3QvtCz0L4g0YLQtdC60YHRgtCwLiDQndCw
-        0LbQvNC40YLQtSAi0KDQsNGB0L/QvtC30L3QsNGC0Ywg0YLQtdC60YHRgiwg
-        0LjQs9C90L7RgNC40YDRg9GPINC+0YjQuNCx0LrQuCIg0YfRgtC+0LHRiyDQ
-        uNC30LHQsNCy0LjRgtGM0YHRjyDQvtGCINC90LXQutC+0YLQvtGA0YvRhSDQ
-        vtGI0LjQsdC+0Log0Lgg0L/RgNC+0LLQtdGB0YLQuCDRgNCw0YHQv9C+0LfQ
-        vdCw0L3QuNC1INGBINC/0L7QvNC+0YnRjNGOIFRlc3NhcmFjdC4g0JLQviDQ
-        stGA0LXQvNGPINC/0YDQvtCy0LXQtNC10L3QuNGPINC+0L/QtdGA0LDRhtC4
-        0Lgg0LTQvtC60YPQvNC10L3RgiDQsdGD0LTQtdGCINC30LDQutGA0YvRgi4g
-        0JLRiyDRg9Cy0LXRgNC10L3Riywg0YfRgtC+INGF0L7RgtC40YLQtSDQv9GA
-        0L7QtNC+0LvQttC40YLRjD8=
-
-    - text_tools: !binary |
-        0KDQsNCx0L7RgtCwINGBINGC0LXQutGB0YLQvtC8
-
-    - the_api: !binary |
-        IEFQSSDRgdC40YHRgtC10LzRiyBEb2N1bWVudENsb3Vk
-
-    - timeline_for_doc: !binary |
-        0JLRgNC10LzQtdC90L3QsNGPINGI0LrQsNC70LAg0LTQu9GPICIlcyI=
-
-    - timeline_for_x_docs: !binary |
-        0JLRgNC10LzQtdC90L3QsNGPINGI0LrQsNC70LAg0LTQu9GPICVkINC00L7Q
-        utGD0LzQtdC90YLQvtCy
-
-    - timeline_max_documents: !binary |
-        0JLRgNC10LzQtdC90L3Rg9GOINGI0LrQsNC70YMg0LzQvtC20L3QviDQv9C+
-        0YHQvNC+0YLRgNC10YLRjCDRgtC+0LvRjNC60L4g0LTQu9GPINC90LUg0LHQ
-        vtC70LXQtSDRh9C10LwgMTAg0LTQvtC60YPQvNC10L3RgtC+0LIu
-
-    - timeline_must_select: !binary |
-        0KfRgtC+0LHRiyDQv9C+0YHRgtGA0L7QuNGC0Ywg0LLRgNC10LzQtdC90L3R
-        g9GOINGI0LrQsNC70YMsINC/0L7QttCw0LvRg9C50YHRgtCwLCDQstGL0LHQ
-        tdGA0LjRgtC1INC00L7QutGD0LzQtdC90YLRiy4=
-
-    - timeline_zoom_in: !binary |
-        0JLRi9Cx0LXRgNC40YLQtSDQtNC40LDQv9Cw0LfQvtC9INC00LDRgiwg0YfR
-        gtC+0LHRiyDRgNCw0YHRgdC80L7RgtGA0LXRgtGMINC40YUg0LHQu9C40LbQ
-        tQ==
-
-    - title: !binary |
-        0J3QsNC30LLQsNC90LjQtQ==
-
-    - title_of_document: !binary |
-        0J3QsNC30LLQsNC90LjQtSDQtNC+0LrRg9C80LXQvdGC0LA=
-
-    - tools_help: !binary |
-        0J3QsCDQvdCw0YjQuNGFICVzICDQstGLINC80L7QttC10YLQtSDQvdCw0LnR
-        gtC4INGB0L7QstC10YLRiyDQv9C+INC40YHQv9C+0LvRjNC30L7QstCw0L3Q
-        uNGOICVzINC4ICVzLg==
-
-    - troubleshooting_uploads: !binary |
-        0KDQtdGI0LXQvdC40LUg0L/RgNC+0LHQu9C10Lwg0YEg0LTQvtC60YPQvNC1
-        0L3RgtCw0LzQuCwg0LrQvtGC0L7RgNGL0LUg0L3QtSDRg9C00LDQu9C+0YHR
-        jCDQt9Cw0LPRgNGD0LfQuNGC0Yw=
-
-    - unpublished: !binary |
-        0L3QtV/QvtC/0YPQsdC70LjQutC+0LLQsNC90L3Ri9C5
-
-    - update_applied_all: !binary |
-        0JLRgdC1INGE0LDQudC70Ysg0LHRg9C00YPRgiDQvtCx0L3QvtCy0LvQtdC9
-        0Ysu
-
-    - upload: !binary |
-        0JfQsNCz0YDRg9C30LjRgtGM
-
-    - upload_document: !binary |
-        0JfQsNCz0YDRg9C30LjRgtGMINC00L7QutGD0LzQtdC90YI=
-
-    - upload_pages: !binary |
-        0JfQsNCz0YDRg9C30LjRgtGMINGB0YLRgNCw0L3QuNGG0Ys=
-
-    - uploaded_x_document_has: 
-      - !binary |
-        0L7QsdGA0LDQsdC+0YLQutCwINC30LDQs9GA0YPQttC10L3QvdC+0LPQviDQ
-        tNC+0LrRg9C80LXQvdGC0LA=
-
-      - !binary |
-        0L7QsdGA0LDQsdC+0YLQutCwICVkINC30LDQs9GA0YPQttC10L3Ri9GFINC0
-        0L7QutGD0LzQtdC90YLQvtCy
-
-    - uploaded_x_documents: 
-      - !binary |
-        0JfQsNCz0YDRg9C20LXQvSDQvtC00LjQvSDQtNC+0LrRg9C80LXQvdGC
-
-      - !binary |
-        0JfQsNCz0YDRg9C20LXQvdC+ICVkINC00L7QutGD0LzQtdC90YLQsA==
-
-      - !binary |
-        0JfQsNCz0YDRg9C20LXQvdC+ICVkINC00L7QutGD0LzQtdC90YLQvtCy
-
-    - uploading: !binary |
-        0JjQtNC10YIg0LfQsNCz0YDRg9C30LrQsA==
-
-    - uploading_documents: !binary |
-        0JfQsNCz0YDRg9C30LrQsCDQtNC+0LrRg9C80LXQvdGC0L7Qsg==
-
-    - uservoice_discuss: !binary |
-        0KTQvtGA0YPQvCBEb2N1bWVudENsb3Vk
-
-    - view_entities: !binary |
-        0J/QvtC60LDQt9Cw0YLRjCDQutC70Y7Rh9C10LLRi9C1INGB0LvQvtCy0LA=
-
-    - view_pages: !binary |
-        0J/QvtC60LDQt9Cw0YLRjCDRgdGC0YDQsNC90LjRhtGL
-
-    - view_timeline: !binary |
-        0J/QvtC60LDQt9Cw0YLRjCDQstGA0LXQvNC10L3QvdGD0Y4g0YjQutCw0LvR
-        gw==
-
-    - welcome_message_sent_to: !binary |
-        0KHQvtC+0LHRidC10L3QuNC1INCx0YvQu9C+INC+0YLQv9GA0LDQstC70LXQ
-        vdC+ICVzLg==
-
-    - welcome_to_document_cloud: !binary |
-        0JTQvtCx0YDQviDQv9C+0LbQsNC70L7QstCw0YLRjCDQsiBEb2N1bWVudENs
-        b3VkIQ==
-
-    - width: !binary |
-        0KjQuNGA0LjQvdCw
-
-    - workspace: !binary |
-        0JjQvdGC0LXRgNGE0LXQudGB
-
-    - x_accounts: 
-      - !binary |
-        JWQg0LDQutC60LDRg9C90YI=
-
-      - !binary |
-        JWQg0LDQutC60LDRg9C90YLQsA==
-
-      - !binary |
-        JWQg0LDQutC60LDRg9C90YLQvtCy
-
-    - x_collaborators: *id003
-    - x_documents: *id004
-    - x_has_documents: !binary |
-        0JTQvtC60YPQvNC10L3RgtGLICVz
-
-    - x_invited_to_review_x: !binary |
-        JXMg0L/RgNC40LPQu9Cw0YHQuNC7INCy0LDRgSDRgNC10YbQtdC90LfQuNGA
-        0L7QstCw0YLRjCAlcw==
-
-    - x_is_no_longer_a_reviewer_on_x: 
-      - !binary |
-        JTIkcyDQsdC+0LvRjNGI0LUg0L3QtSDRgNC10YbQtdC90LfQtdC90YIg0Y3R
-        gtC+0LPQviDQtNC+0LrRg9C80LXQvdGC0LA=
-
-      - !binary |
-        JTIkcyDQsdC+0LvRjNGI0LUg0L3QtSDRgNC10YbQtdC90LfQtdC90YIg0Y3R
-        gtC40YUg0LTQvtC60YPQvNC10L3RgtC+0LI=
-
-    - x_is_not_published: !binary |
-        IiVzIiDQvdC1INC+0L/Rg9Cx0LvQuNC60L7QstCw0L0=
-
-    - x_mentions: 
-      - !binary |
-        0J7QtNC90L4g0YPQv9C+0LzQuNC90LDQvdC40LU=
-
-      - !binary |
-        0KPQv9C+0LzQuNC90LDQvdC10YLRgdGPICVkINGA0LDQt9Cw
-
-      - !binary |
-        0KPQv9C+0LzQuNC90LDQvdC10YLRgdGPICVkINGA0LDQtw==
-
-    - x_notes: *id005
-    - x_pages: *id006
-    - x_private_documents: 
-      - !binary |
-        JWQg0L/RgNC40LLQsNGC0L3Ri9C5INC00L7QutGD0LzQtdC90YI=
-
-      - !binary |
-        JWQg0L/RgNC40LLQsNGC0L3Ri9GFINC00L7QutGD0LzQtdC90YLQsA==
-
-      - !binary |
-        JWQg0L/RgNC40LLQsNGC0L3Ri9GFINC00L7QutGD0LzQtdC90YLQvtCy
-
-    - x_public_documents: 
-      - !binary |
-        JWQg0L/Rg9Cx0LvQuNGH0L3Ri9C5INC00L7QutGD0LzQtdC90YIs
-
-      - !binary |
-        JWQg0L/Rg9Cx0LvQuNGH0L3Ri9GFINC00L7QutGD0LzQtdC90YLQsCw=
-
-      - !binary |
-        JWQg0L/Rg9Cx0LvQuNGH0L3Ri9GFINC00L7QutGD0LzQtdC90YLQvtCyLA==
-
-    - x_results: !binary |
-        0J3QsNC50LTQtdC90L4gJWQ=
-
-    - x_still_processing: !binary |
-        IiVzIiDQvtCx0YDQsNCx0LDRgtGL0LLQsNC10YLRgdGPLiDQn9C+0LTQvtC2
-        0LTQuNGC0LUu
-
-    - your_documents: !binary |
-        0JLQsNGI0Lgg0JTQvtC60YPQvNC10L3RgtGL
-
-    - your_organization: !binary |
-        0JLQsNGI0LAg0L7RgNCz0LDQvdC40LfQsNGG0LjRjw==
-
-    - your_published_documents: !binary |
-        0JLQsNGI0Lgg0L7Qv9GD0LHQu9C40LrQvtCy0LDQvdC90YvQtSDQtNC+0LrR
-        g9C80LXQvdGC0Ys=
-
-    - youve_been_added_to_x: !binary |
-        0JLRiyDRgtC10L/QtdGA0Ywg0YfQu9C10L0g0L7RgNCz0LDQvdC40LfQsNGG
-        0LjQuDogJXM=
-
-    - zoom_out: !binary |
-        0KPQvNC10L3RjNGI0LjRgtGM
-
+--- !omap
+- html: !omap []
+- viewer: !omap
+  - CLOSE: "ЗАКРЫТЬ"
+  - add_note_instructions: "Выделите часть документа или щелкните на пространстве
+      между страницами, чтобы создать заметку"
+  - add_private_note: "Добавить приватную заметку"
+  - add_private_note_warn: "Ваши приватные заметки видны только вам и никому кроме
+      вас."
+  - add_public_note: "Добавить публичную заметку"
+  - add_public_note_warn: "Публичные заметки будут видны всем, кто увидит этот документ"
+  - annotated_by: "Автор заметки: %s"
+  - annotation_title: "Название заметки"
+  - cancel: "Отмена"
+  - click_add_page_note: "Щелкните, чтобы добавить заметку"
+  - container_not_found: "Элемент в окне просмотра документов не найден:"
+  - contents: "Содержание"
+  - contributed_by: "Добавлено"
+  - delete: "Удалить"
+  - description: "Описание"
+  - dl_as_pdf: "Скачать этот документ в виде PDF"
+  - document: "Документ"
+  - document_tools: "Инструменты"
+  - draft: "Черновик"
+  - draft_note_visible: "Этот черновик доступен только вам и пользователям, которых
+      вы авторизовали"
+  - edit_data: "Редактировать"
+  - expand: "На все окно"
+  - finish: "Готово"
+  - for: "для"
+  - install_chrome_frame: "Или, если вы все таки хотите дальше использовать Internet
+      Explorer 6, вы можете %sустановить Google Chrome Frame%s."
+  - link_to_note: "Ссылка на эту заметку"
+  - loading: "Загрузка"
+  - log_in: "Войти"
+  - log_out: "Выйти"
+  - logged_in_as: "Вы вошли как %s"
+  - must_upgrade: "Чтобы использовать окошко просмотра документов, вам нужно обновить
+      браузер:"
+  - next: "Далее"
+  - next_note: "Следующая заметка"
+  - note: &1
+    - "Заметка"
+    - "Заметки"
+  - note_by: "Заметку оставил %s"
+  - of: "из"
+  - organizations_documents: "Документы %s"
+  - original_document_pdf: "Оригинал документа (PDF)"
+  - page: &2
+    - "страница"
+    - "страницы"
+  - pg: "с."
+  - previous: "Назад"
+  - previous_note: "Предыдущая заметка"
+  - print_document_help: "Чтобы распечатать документ, нажмите на ссылке \"Оригинал
+      документа\" - будет открыт документ PDF. Имейте ввиду, что в таком виде напечатать
+      заметки будет нельзя."
+  - print_notes: "Напечатать заметки"
+  - private_note: "Приватная заметка"
+  - private_note_visible: "Эта приватная заметка видна только вам"
+  - publish: "Опубликовать"
+  - related_article: "Связанные статьи"
+  - reviewer: "Рецензент"
+  - save: "Сохранить"
+  - save_as_draft: "Сохранить черновик"
+  - search: "Поиск"
+  - text: "Текст"
+  - untitled_note: "Заметка без названия"
+  - view_fullscreen: "Открыть документ на весь экран"
+  - x_collaborators: &3
+    - "Один авторизованный пользователь"
+    - "%d Авторизованных пользователей"
+  - x_documents: &4
+    - "%d документ"
+    - "%d документа"
+    - "%d документов"
+  - x_notes: &5
+    - "%d заметка"
+    - "%d заметки"
+    - "%d заметок"
+  - x_pages: &6
+    - "%d страница"
+    - "%d страницы"
+    - "%d страниц"
+  - zoom: "Масштаб"
+- workspace: !omap
+  - 'TRUE': 'TRUE'
+  - access: "Доступ"
+  - access_level: "Уровень доступа"
+  - access_level_edit_closing: "Изменение уровня доступа займет некоторое время. До
+      завершения операции документ будет закрыт."
+  - account: "Аккаунт"
+  - account_add_failure: "Не удалось добавить аккаунт"
+  - account_is_disabled: "Аккаунт %s был отключен"
+  - accounts: "Аккаунты"
+  - add: "Добавить"
+  - add_a_collaborator: "Добавить в проект участника"
+  - add_html_for_documents: "Вставьте этот HTML код на свой сайт, чтобы встроить в
+      него эти документы."
+  - add_html_for_note: "Добавьте этот HTML код на страницу, в которую хотите встроить
+      заметку."
+  - add_html_for_viewer: "Добавьте этот HTML код на страницу, в которую хотите встроить
+      окно просмотра документов."
+  - add_note_instructions: "Выделите часть документа или щелкните на пространстве
+      между страницами, чтобы создать заметку"
+  - add_private_note: "Добавить приватную заметку"
+  - add_private_note_warn: "Ваши приватные заметки видны только вам и никому кроме
+      вас."
+  - add_public_note: "Добавить публичную заметку"
+  - add_public_note_warn: "Публичные заметки будут видны всем, кто увидит этот документ"
+  - add_reviewer: "Добавить рецензента"
+  - added_project: "добавлены в этот проект"
+  - added_to_x_documents:
+    - "Документ добавлен в %s"
+    - "%d документа добавлено в %s"
+    - "%d документов добавлено в %s"
+  - adding_accounts: "Добавление аккаунтов"
+  - administrator: "Администратор"
+  - all_documents: "Все документы"
+  - allow_readers_to_search: "Разрешить поиск по этим документам"
+  - already_has_account: "У %s уже есть аккаунт."
+  - analyze: "Анализировать"
+  - analyze_project_in_overview: "Проанализировать этот проект в Overview"
+  - analyze_x_docs_in_overview:
+    - "Анализировать документ в Overview"
+    - "Анализировать документы в Overview"
+  - annotated: "С_заметками"
+  - annotated_by: "Автор заметки: %s"
+  - annotated_documents: "Документы с заметками"
+  - annotation: "инструментов по работе с заметками"
+  - annotation_help: "С помошью ссылок справа, добавьте к документу заметки. Имейте
+      ввиду, что как сами заметки так и черновики, если они публичны, будут видны
+      всем пользователям. Приватные заметки только для вас, они не будут видны даже
+      %s."
+  - apply_all_files: "применить ко всем файлам"
+  - apply_fields_all_files: "применить это описание, источник и уровень доступа ко
+      всем файлам"
+  - back: "Назад"
+  - bad_data_key: "%s нельзя использовать в качестве значения"
+  - before_continue: "Перед тем, как продолжить, вы можете %s"
+  - black: "черный"
+  - broken_document: "Ошибка обработки"
+  - by_date: "по дате"
+  - by_length: "по длине"
+  - by_relevance: "по релевантности"
+  - by_source: "по источнику"
+  - by_title: "по имени"
+  - calais_credit: "Объекты определены с помощью OpenCalais"
+  - cancel: "Отмена"
+  - cannot_remove_all: "Нельзя удалить из документа все страницы."
+  - change_page_arrows: "Перелистывать страницы можно стрелками в панели справа"
+  - change_password: "Изменить пароль"
+  - choose_location_to_insert_pages: "Выберите, куда вставить страницы."
+  - choose_note: "Выбрать заметку"
+  - city: "Город"
+  - close: "Закрыть"
+  - close_while_redacting: "В документ вносятся изменения. Пока этот процесс идет,
+      он будет закрыт."
+  - close_while_text_reprocess: "Текст распознается. Пожалуйста, закройте документ."
+  - collaboration: "Совместная работа участников"
+  - collaborators: "Участник"
+  - confirm_remove_all_data: "Вы уверены, что хотите удалить все данные из %s?"
+  - contact_documentcloud: "Связаться с DocumentCloud"
+  - contact_reviewer: "Если вам нужна помошь, свяжитесь с %s - %s. Больше информации
+      о DocumentCloud также есть на %s."
+  - contact_us: "Контакты"
+  - contributed_by: "Добавлено"
+  - contributor: "Пользователь"
+  - country: "Страны"
+  - create_new_project: "Создать новый проект"
+  - date: "Даты"
+  - date_uploaded: "дате загрузки"
+  - default_document_language: "Язык документа по умолчанию"
+  - delete: "Удалить"
+  - delete_documents:
+    - "Удалить документ"
+    - "Удалить документы"
+  - deleting_documents: "Удаление..."
+  - demo_embed_error: "Пользователи пробных аккаунтов не имеют возможности встраивать
+      документы в сайты. %sСвяжитесь с нами%s если вам нужен полноценный аккаунт.
+      Пример встроенного кода есть %sтут%s."
+  - demo_no_viewer: "Пользователи демо аккаунтов не могут скачивать страницы с окном
+      просмотра. %s если вам нужен полноценный аккаунт."
+  - description: "Описание"
+  - disable: "Отключить"
+  - disabled: "Отключен"
+  - document: "Документ"
+  - document_access_updated:
+    - "Уровень доступа к документу обновлен"
+    - "Уровень доступа к %d документам обновлен"
+  - document_already_public: "Этот документ уже доступен публично."
+  - document_error_message: "Система не смогла обработать этот документ. Информация
+      о проблеме была автоматически отправлена нам, переодически мы исправляем ошибки
+      такого рода. Вы можете поискать ответ в наших %sсоветах по устранению неполадок%s
+      или %sсвязаться с нами%s чтобы получить поддержку сразу."
+  - document_has_no_public_notes: "С этим документом не связано публично доступных
+      заметок."
+  - document_modification: "Модификация документов"
+  - document_processing_count:
+    - "Обрабатывается один документ"
+    - "Обрабатывается %d документа"
+    - "Обрабатывается %d документов"
+  - document_public_on: "Документ станет публично доступным %s"
+  - document_publish_embed_test: "Если вы хотите протестировать встраиваемый код перед
+      его публикацией, в самом коде укажите все адреса URL в формате HTTPS. Смените
+      адреса обратно на HTTP перед тем, как сделать документ публичным."
+  - document_publish_private_help: "Этот документ приватный. Пока вы не сделаете его
+      общедоступным, найти и посмотреть его сможете только вы. Вы можете прямо сейчас
+      сменить %sуровень доступа%s или %s время публикации."
+  - document_publish_public_help: "Этот документ доступен публично. Сейчас он доступен
+      пользователям через поиск в каталоге DocumentCloud, он также будет находится
+      в открытом доступе, если вы встроите его в сайт. Изменить %sуровень доступа%s."
+  - document_tools: "Инструменты"
+  - document_viewer_size: "Размер окна просмотра документов"
+  - documents: "Документы"
+  - documents_are_ready: "Ваши документы готовы"
+  - documents_per_page: "Документов на странице"
+  - double_check_disable: "Вы уверены, что хотите отключить аккаунт %s?"
+  - download_pdf: "Скачать оригинал в PDF"
+  - download_text: "Скачать полный текст"
+  - download_viewer: "Скачать страницу с окном просмотра документов"
+  - downloading_progress:
+    - "Готовим \"%2$s\" для загрузки..."
+    - "Готовим %d документа для загрузки"
+    - "Готовим %d документов для загрузки"
+  - draft: "Черновик"
+  - draft_note_visible: "Этот черновик доступен только вам и пользователям, которых
+      вы авторизовали"
+  - edit: "Редактировать"
+  - edit_access: "Изменить уровень доступа"
+  - edit_data: "Редактировать"
+  - edit_data_for: "Дополнительные параметры %s"
+  - edit_description: "Редактировать описание"
+  - edit_details: "редактировать подробности"
+  - edit_document_data: "Дополнительные параметры документа"
+  - edit_document_info: "Редактировать информацию о документе"
+  - edit_document_information: "Редактировать информацию о документе"
+  - edit_document_pairs:
+    - "Добавить/Редактировать дополнительные параметры документа"
+    - "Добавить/Редактировать дополнительные параметры документов"
+  - edit_page_text: "Редакрировать текст страницы"
+  - edit_page_text_done: "Если вы закончили работу с текстом, щелкните по кнопке \"Сохранить
+      текст\"."
+  - edit_page_text_instructions: "Чтобы внести изменения в текст любой страницы: пролистайте
+      до нужной страинцы с помошью кнопок вверху. Любые внесенные изменения не затронут
+      оригинальный PDF."
+  - edit_published_url: "Редактировать URL публикации"
+  - edit_related_url: "Редактировать URL связанной статьи"
+  - edit_sections: "Редактировать секции"
+  - edit_source: "Изменить источник"
+  - edit_text_any_page: "Редактировать текст любой страницы."
+  - edit_title: "Изменить название"
+  - edit_x: "Редактировать %s"
+  - editing_notes_sections: "Редактирование заметок и секций"
+  - email: Email
+  - email_for_assistance: "Если вам нужна помощь, напишите нам на support@documentcloud.org."
+  - email_when_complete: "Я хочу получить email когда закончится %sобработка документов%s."
+  - embed_a_note: "Встроить заметку"
+  - embed_document: "Добавить документ на сайт"
+  - embed_document_list: "Встроить список документов"
+  - embed_document_viewer: "Встроить окно просмотра документов в страницу"
+  - embed_hide_text_tab_help: "Если качество текста документа плохое, снимите эту
+      галочку чтобы скрыть вкладку \"текст\"."
+  - embed_note: "Добавить заметку на сайт"
+  - embed_note_demo_error: "Собственники демо-аккаунтов не могут встраивать заметки.
+      %sСвяжитесь с нами%s, если вам нужен полноценный аккаунт. Пример кода для вставки
+      есть %sтут%s."
+  - embed_note_step_one: "Шаг первый: Выберите заметку, которую хотите встроить"
+  - embed_note_step_two: "Шаг второй: Скопируйте и вставьте код"
+  - embed_search_demo_error: "Собственники демо-аккаунтов не могут загружать сеты
+      документов. %sСвяжитесь с нами%s если вам нужен полноценный аккаунт. Пример
+      кода для втавки есть %sтут%s. "
+  - embed_search_step_one: "Шаг первый: Уточнить параметры документов"
+  - embed_search_step_two: "Шаг второй: Скопировать и вставить код"
+  - embed_show_sidebar: "Показать боковую панель"
+  - embed_show_sidebar_help: "Если разрешение вашего экрана слишком мало по горизонтали,
+      снимите галочку чтобы спрятать боковую панель."
+  - embed_show_text_tab: "Показать вкладку \"текст\""
+  - embed_step_one_title: "Шаг первый: Настроить \"%s\""
+  - embed_step_three_title: "Шаг третий: Скопировать и вставить HTML код"
+  - embed_step_two_title: "Шаг второй: Настроить окно просмотра документов"
+  - embed_tools: "Встроить документ"
+  - embed_url_of_document: "В большенстве случаев это поле можно не заполнять. URL
+      страницы на вашем сайте, в которую встроен документ"
+  - embed_viewer_opens_to: "Открыть окно просмотра на"
+  - embed_viewer_opens_to_help: "Указать страницу или заметку, с которой откроется
+      окно просмотра документов."
+  - enter_email_address: "Введите email"
+  - enter_new_password: "Введите новый пароль"
+  - enter_title_and_page: "Пожалуйста, укажите название и номер страницы для каждого
+      раздела."
+  - enter_url_for_embed:
+    - "Укажите URL страницы, в которую встроен этот документ"
+    - "Укажите URL страницы, в которую встроены эти документы"
+  - enter_url_that_references:
+    - "Введите URL статьи, которая ссылается на этот документ"
+    - "Введите URL статьи, которая ссылается на эти документы"
+  - entities_explained: "Указанные ниже объекты находятся в документах, которые подпадают
+      под критерии поиска. Ищите по имени объекта чтобы получить более точные результаты
+      поиска."
+  - entities_unavailable: "Ключевые слова временно недоступны."
+  - error: "Ошибка"
+  - explain_disable_account: "%1$s не сможет войти в DocumentCloud. Публичные документы
+      и заметки, сделанные пользователем %1$s останутся общедоступными. %2$sСвяжитесь
+      со службой поддержки %3$s чтобы польностью удалить аккаунт %1$s."
+  - export: "Экспорт"
+  - export_to_overview_explain: "Вы собираетесь экспортировать проект в Overview.
+      Не забудьте, что для этого у вас должен быть аккаунт Overview. Также вы должны
+      предоставить Overview имя пользователя и пароль, которые используете для входа
+      в DocumentCloud."
+  - featured_examples_list: "Множество примеров встроеных документов вы можете найти
+      в нашем %sсписке примеров%s."
+  - featured_reporting_list: |
+      Вы можете найти примеры встраиваемого поиска в нашем списке %sпримеров использования%s.
+  - filter: "Фильтр"
+  - finish: "Готово"
+  - first_name: "Имя"
+  - first_page: "Первой странице"
+  - fixed_size: "Задать размер"
+  - for_example_data: "Например: &ldquo;день рождения : 1935-01-08&ldquo;, или &ldquo;статус:
+      выпущен&ldquo;"
+  - force_ocr: "Распознать текст, игнорируя ошибки"
+  - form_contact_instructions: "Чтобы связаться с нами, используйте эту форму (или
+      отправьте email на %s). Если вам срочно нужно с кем-то поговорить, можете нам
+      позвонить: +1 (202) 505-1010. Подробнее о том, как с нами связаться, тут - %s."
+  - freelancer: "Фрилансер"
+  - full_page: "На всю страницу"
+  - future_documents_w_appear: "Все документы, %s также появятся на вашем сайте."
+  - group: "Группа"
+  - guided_tour: "Обзор возможностей"
+  - guides_howtos: "Инструкции"
+  - has_no_entities: "В %s нет ключевых слов"
+  - height: "Высота"
+  - help: "Помошь"
+  - help_pages: "страницах помощи"
+  - home: "Главная"
+  - in_project: "в этом проекте"
+  - include_optional_msg: "Опционно: Добавить личное сообщение"
+  - insert_between_pages: "Вставить между страницами %d и %d"
+  - insert_first_page: "Вставить перед первой страницей"
+  - insert_last_page: "Вставить после последней страницы"
+  - insert_pages_instructions: "Чтобы вставить страницы в определенном месте в документе,
+      щелкните мышкой на пространстве между страницами. Если вы хотите заменить страницу,
+      просто щелкните по ней."
+  - insert_pages_message: "Во время принятия изменений документ будет закрыт. На обработку
+      длинных документов может уйти много времени."
+  - insert_pages_shift_key: "Чтобы сразу заменить несколько страниц, выберете их,
+      зажав клавишу \"Shift\". Когда будете готовы, щелкнитепо кнопке \"Загрузить
+      страницы\""
+  - insert_replace_pages: "Вставить/Заменить страницы"
+  - introduction: "Введение"
+  - language: "Язык"
+  - language_defaults: "Язык по умолчанию"
+  - last_name: "Фамилия"
+  - length: "длине"
+  - link_to_pdf: "Ссылка на оригинал в PDF"
+  - link_to_pdf_help: "Снимите галочку, чтобы убрать из окна просмотра документа ссылку
+      на PDF."
+  - log_in: "Войти"
+  - log_out: "Выйти"
+  - logged_in_as: "Вы вошли как %s"
+  - make_document_public: "Сделать документ публично доступным"
+  - make_documents_public:
+    - "Сделать документ публичным."
+    - "Сделать %d документа публичными."
+    - "Сделать %d документов публичными."
+  - make_public_on: "Сделать публично доступным"
+  - manage: "Настроить"
+  - manage_account: "Управление аккаунтом"
+  - manage_organization: "Управление организацией %s"
+  - matching_search:
+    - "который вы только что выбрали,"
+    - "которые вы только что выбрали,"
+  - max_upload_size_warn: "Загружать можно только документы, которые меньше 200MB.
+      Пожалуйста, %sоптимизируйте документ%s перед тем, как продолжить."
+  - mentioned_in_x_documents:
+    - "Упоминается в документе"
+    - "Упоминается в %d документах"
+  - mentioning_query: "в которых упоминается &ldquo;%s&rdquo;"
+  - message: "Сообщение"
+  - modification: "инструментов модификации"
+  - modify_original_document: "Модифицировать документ"
+  - must_have_doc_title:
+    - "Пожалуйста, укажите название документа"
+    - "Пожалуйста, укажите названия для всех документов"
+  - must_have_title: "Пожалуйста, введите название."
+  - must_upload_something: "Нужно загрузить хотя бы один документ."
+  - new_account: "Новый аккаунт"
+  - new_documents: "Добавить документы"
+  - new_project: "Новый проект"
+  - next: "Далее"
+  - no_appear_until_publish:
+    - "не появится в списке, пока вы его не опубликуете."
+    - "не появятся в списке, пока вы их не опубликуете."
+  - no_dates_for_timeline:
+    - "В %2$s не найдено дат, которые можно было бы проанализировать."
+    - "В %d документах не было найдено дат"
+  - no_duplicate_section: "Секцию-дубликат создать нельзя"
+  - no_embed_permission: "У вас недостаточно полномочий для того, чтобы встроить этот
+      документ."
+  - no_entities_found: "Поиск не дал результатов"
+  - no_past_publication: "Документ может быть опубликован задним числом."
+  - no_permission_to_edit_x: "У вас недостаточно полномочий для того, чтобы отредактировать
+      \"%s\"."
+  - no_project_doc_selected: "Не выбрано ни одного проекта или документа"
+  - no_projects_help: "В этом аккаунте пока нет проектов. Чтобы начать проект, нажмите
+      на кнопке \"Добавить проект\"."
+  - no_results_for: "В %s ничего не найдено"
+  - no_reviewer_on_document:
+    - "Этот документ не на рецензии"
+    - "Эти документы не на рецензии"
+  - no_section_outside_doc: "Создать секцию вне документа нельзя"
+  - not_found_account: "В этом аккаунте нет документов."
+  - not_found_all: "Нет документов"
+  - not_found_annotated: "Нет документов с заметками."
+  - not_found_group: "У этой организации нет документов."
+  - not_found_project: "В этом проекте нет документов."
+  - not_found_published: "У этой организации нет документов."
+  - not_found_search: "Поиск не дал результатов"
+  - note: *1
+  - note_ellipsis: "Заметке..."
+  - note_embed_private: "Это приватный документ: заметки в этом документе не будут
+      никому видны, пока документ не сделан публичным. Сменить %sуровень доступа%s
+      сейчас или"
+  - notes_hidden_while_redacting: "При редактировании документа существующие заметки
+      будут временно скрыты"
+  - of: "из"
+  - ok: OK
+  - open: "Открыть"
+  - open_in_viewer: "Открыть в окне просмотра документов все страницы"
+  - open_published: "Открыть опубликованную версию"
+  - open_published_version: "Открыть опубликованную версию"
+  - optional: "Опционно"
+  - or: "или"
+  - or_remove_all_data: "или %sудалить все данные%s."
+  - order_documents_by: "Упорядочить документы"
+  - organization:
+    - "Организацию"
+    - "Организации"
+  - organizations_documents: "Документы %s"
+  - over_x_mentions: "Более %d упоминаний"
+  - page: *2
+  - page_ellipsis: "Странице..."
+  - page_tools: "Работа со страницами"
+  - pages_are_being_removed: "Идет удаление страниц. Пожалуйста, закройте документ."
+  - paragraph_description_of_document: "Описание документа в несколько предложений"
+  - password_no_blank: "Поле нельзя оставить пустым"
+  - password_reset: "Восстановление пароля DocumentCloud"
+  - password_updated: "Пароль изменен"
+  - pending: "Не активирован"
+  - person: "Люди"
+  - pg: "с."
+  - phone: "Телефон"
+  - place: "Места"
+  - please_enter_email: "Введите email"
+  - please_enter_valid_email: "Введите работающий email"
+  - popular: "Популярный"
+  - popular_documents: "Популярные документы"
+  - preview_email: "посмотреть сообщение"
+  - preview_search_embed_help: "Перед тем как продолжить, пожалуйста, %sпроверьте
+      список документов.%s Опубликованные документы откроются по тому URL, по которому
+      их изначально опубликовали, в то время как остальные публичные документы откроются
+      в DocumentCloud."
+  - preview_viewer: "Перед тем, как продолжить, %sпроверьте, правильно ли выглядит
+      окно просмотра документа%s."
+  - print_notes: "Напечатать заметки"
+  - print_notes_missing_error: "В %s нет заметок, которые можно было бы напечатать."
+  - privacy: "Настройки приватности"
+  - private: "Приватный"
+  - private_access: "Приватный доступ"
+  - private_access_help: "Доступ имеют только пользователи с более широкими правами
+      (участники)."
+  - private_documents_visible_instructions:
+    - "Это приватный документ. Перед тем, как он станет доступен на вашем сайте или
+      через поиск в каталоге DocumentCloud, его нужно сделать публичным. Вы можете
+      задать время и дату публикации или %2$sсделать документ публичным сейчас%3$s."
+    - "Эти документы приватны. Перед тем, как они станут доступны на вашем сайте или
+      через поиск в каталоге DocumentCloud, их нужно сделать публичными. Вы можете
+      задать время и дату публикации или %2$sвнести изменения сейчас%3$s."
+  - private_note: "Приватная заметка"
+  - private_note_visible: "Эта приватная заметка видна только вам"
+  - private_to: "Приватно доступен %s"
+  - private_to_organization_help: "Только пользователи из вашей организации имеют
+      доступ (не фрилансеры)."
+  - project: "Проект"
+  - project_exists: "Проект с именем %s уже существует"
+  - project_id: 'ID проекта:'
+  - project_owner: "Собственник проекта"
+  - projectid: Id_проекта
+  - projects: "Проекты"
+  - public: "Публичный"
+  - public_access: "Общий доступ"
+  - public_access_help: "Кто угодно в интернете может искать и видеть документ."
+  - public_documents_help: "Выберите организацию из списка выше, чтобы открыть список
+      публичных документов этой организации."
+  - public_on: "Станет публично доступен"
+  - publication_date: "дата публикации"
+  - publish: "Опубликовать"
+  - publish_choose_display: "Примеры: документ %sна всю страницу%s, в блоке с %sфиксированой
+      шириной%s."
+  - published: "Опубликованный"
+  - published_documents: "Опубликованные документы"
+  - published_url: URL публикации
+  - publishing_embedding: "Публикация и встраивание кода в сайты"
+  - reader_workspace_language: "Язык ридера и рабочей области"
+  - really_delete_x_docs:
+    - |
+      Вы точно хотите удалить документ?
+    - |
+      Вы точно хотите удалить %d документа?
+    - "Вы точно хотите удалить %d документов?"
+  - red: "красный"
+  - redact_document: "Скрыть часть текста"
+  - redact_instructions: "Курсором мыши нарисуйте %s четырехугольник над каждым словом
+      или частью документа, которые хотели бы скрыть. Текст, связанный со скрытой
+      частью, будет удален."
+  - redaction_close_while_processing:
+    - "Вы скрыли абзац. Во время принятия изменений документ будет закрыт. Вы уверены,
+      что хотите продолжить?"
+    - "Вы скрыли %d абзаца. Во время принятия изменений документ будет закрыт. Вы
+      уверены, что хотите продолжить?"
+    - "Вы скрыли %d абзацев. Во время принятия изменений документ будет закрыт. Вы
+      уверены, что хотите продолжить?"
+  - reenable: "Восстаносить"
+  - related_article_url: URL связанной статьи
+  - related_article_url_help: "Если вы укажите URL статьи, которая ссылается на этот
+      документ, внизу в окне просмотра документов появится ссылка \"Связанная статья\".
+      Многие посетители попадают на страницы с встроенными документами через поисковики
+      &mdash; ссылка направит их на страницу-источник."
+  - related_url_of_document: URL страницы в интернете, которая ссылается на этот документ
+  - relevance: "релевантности"
+  - remove: "Удалить"
+  - remove_all: "Удалить все"
+  - remove_entity: "убрать из поиска"
+  - remove_file: "Удалить файл"
+  - remove_from_project: "Удалить из проекта"
+  - remove_line_breaks: "убрать переносы"
+  - remove_page_warning_message:
+    - "Одна страница будет удалена из документа. Во время принятия изменений документ
+      будет закрыт. Вы уверены, что хотите продолжить?"
+    - "%d страницы будут удалены из документа. Во время принятия изменений документ
+      будет закрыт. Вы уверены, что хотите продолжить?"
+    - "%d страниц будет удалено из документа. Во время принятия изменений документ
+      будет закрыт. Вы уверены, что хотите продолжить?"
+  - remove_pages: "Удалить страницы"
+  - remove_pages_click: "Щелкните по тем страницам, которые хотите удалить из документа."
+  - remove_pages_done: "Когда выберете все страницы, которые нужно удалить, щелкните
+      по кнопке \"Удалить страинцы\""
+  - remove_pages_input:
+    - "Удалить страницу"
+    - "Удалить %d страницы"
+    - "Удалить %d страниц"
+  - removed_from_x_documents:
+    - "Документ из %s удален"
+    - "%d документа из %s удалено"
+    - "%d документов из %s удалено"
+  - removing: "Удаляю..."
+  - reorder_hint: "Перетаскивте страницы, чтобі изменить их порядок."
+  - reorder_pages: "Изменить порядок страниц"
+  - reorder_pages_done: "Если расположение страниц вас устраивает, щелкните по кнопке
+      \"Сохранить порядок страниц\". "
+  - reorder_pages_instructions: "Поменять порядок страниц можно перетаскивая их и
+      меняя местами."
+  - replace_multiple_pages: "Заменить страницы между %d и %d"
+  - replace_page_x: "Заменить страницу %d"
+  - reprocess: "Распознать заново"
+  - reprocess_text: "Распознать текст заново"
+  - resend_instructions: "Отправить инструкции заново"
+  - resend_welcome_email: "Отослать приглашение еще раз"
+  - restricted: "Ограниченный"
+  - review_x_documents:
+    - "Рецензировать \"%2$s\" с помошью DocumentCloud"
+    - "Рецензировать %d документа с помошью DocumentCloud"
+    - "Рецензировать %d документов с помошью DocumentCloud"
+  - reviewer: "Рецензент"
+  - reviewer_add_permission_denied: "Вы не можете отправлять документы на рецензию"
+  - reviewer_email_instructions:
+    - "Отправить инструкции %2$s"
+    - "Отправить инструкции %d рецензентам"
+  - reviewer_email_message: |-
+      DocumentCloud отправит инструкции рецензентам, если хотите, можете добавить что-то от себя
+      DocumentCloud
+  - reviewer_enter_email: "Введите email первого рецензента"
+  - reviewer_name: "Укажите имя рецензента"
+  - reviewer_remove_error: "При удалении рецензента возникла проблема"
+  - reviewer_remove_permission_denied: "Вы не можете удалять рецензентов"
+  - reviewing_instructions_multiple_sent_to: "Инструкции по рецензированию %s документов
+      отправлены %s"
+  - reviewing_instructions_send_failure: "Инструкции нее были отправлены. Свяжитесь,
+      пожалуйста, со службой поддержки."
+  - reviewing_instructions_single_sent_to: "Инструкции по рецензированию %s отправлены
+      %s"
+  - revoke: "Отменить"
+  - role_administrator_for_x: "Вы администратор %s"
+  - role_contributor_for_x: "Вы пользователь %s"
+  - role_freelancer_for_x: "Вы фрилансер для %s"
+  - role_reviewer_for_x: "Вы рецензент для %s"
+  - save: "Сохранить"
+  - save_as_draft: "Сохранить черновик"
+  - save_page_order: "Сохранить порядок страниц"
+  - save_redactions: "Сохранить правки"
+  - save_text: "Сохранить текст"
+  - saved: "Сохранено"
+  - search: "Поиск"
+  - search_bar: "Поле поиска"
+  - searching_dd: "Поиск документов и данных"
+  - select_pages_remove: "Выберете страницы, которые хотели бы удалить."
+  - select_single_to_embed: "Чтобы создать код для вставки, пожалуйста, выберите документ."
+  - select_single_to_open: "Пожалуйста, выберите документ"
+  - select_with_public_note: "Пожалуйста, выберите документ в котором есть хотя бы
+      одна публичная заметка."
+  - send: "Отправить"
+  - sending: "Отправляю..."
+  - set_access: "Установить уровень доступа"
+  - set_publication_date: "Установить дату публикации"
+  - set_publication_date_for: "Задать время публикации %s"
+  - set_the: "установить"
+  - set_will_appear: "появятся в готовом списке."
+  - share_documents: "Поделиться документами"
+  - share_project: "Поделиться проектом"
+  - share_x_documents: "Отправить на рецензию"
+  - shared_with_you_by: "Этим с вами поделился %s"
+  - sharing_x_of_x_documents: "Отправляем документы на рецензию: %d из %d"
+  - show_all: "Показать все"
+  - show_all_x_pages:
+    - "Показать одну страницу"
+    - "Показать все %d страницы"
+    - "Показать все %d страниц"
+  - show_less: "Показать меньше"
+  - show_more: "Показать еще"
+  - show_pages: "показать страницы"
+  - signup_sent_to: "Информация для входа в систему отправлена %s"
+  - sort: "Сортировать"
+  - sort_by_date_uploaded: "Упорядочить по дате загрузки"
+  - sort_by_length: "Упорядочить по длине"
+  - sort_by_relevance: "Упорядочить по релевантности"
+  - sort_by_source: "Упорядочить по источнику"
+  - sort_by_title: "Упорядочить по имени"
+  - sort_documents_by: "Упорядочить"
+  - source: "Источник"
+  - source_of_document: "Происхождение документа, источник"
+  - state: "Штаты"
+  - step_x_of_x: "Шаг %d из %d"
+  - term: "Условия"
+  - terms: "Условия предоставления услуг"
+  - text: "Текст"
+  - text_reprocess_help: "Вы можете нажать \"Распознать заново\" чтобы попробовать
+      улучшить качество распознанного текста. Нажмите \"Распознать текст, игнорируя
+      ошибки\" чтобы избавиться от некоторых ошибок и провести распознание с помощью
+      Tessaract. Во время проведения операции документ будет закрыт. Вы уверены, что
+      хотите продолжить?"
+  - text_tools: "Работа с текстом"
+  - the_api: " API системы DocumentCloud"
+  - timeline_for_doc: "Временная шкала для \"%s\""
+  - timeline_for_x_docs: "Временная шкала для %d документов"
+  - timeline_max_documents: "Временную шкалу можно посмотреть только для не более
+      чем 10 документов."
+  - timeline_must_select: "Чтобы построить временную шкалу, пожалуйста, выберите документы."
+  - timeline_zoom_in: "Выберите диапазон дат, чтобы рассмотреть их ближе"
+  - title: "Название"
+  - title_of_document: "Название документа"
+  - tools_help: "На наших %s  вы можете найти советы по использованию %s и %s."
+  - troubleshooting_uploads: "Решение проблем с документами, которые не удалось загрузить"
+  - unpublished: "Не_опубликованный"
+  - update_applied_all: "Все файлы будут обновлены."
+  - upload: "Загрузить"
+  - upload_document: "Загрузить документ"
+  - upload_pages: "Загрузить страницы"
+  - uploaded_x_document_has:
+    - "обработка загруженного документа"
+    - "обработка %d загруженых документов"
+  - uploaded_x_documents:
+    - "Загружен один документ"
+    - "Загружено %d документа"
+    - "Загружено %d документов"
+  - uploading: "Идет загрузка"
+  - uploading_documents: "Загрузка документов"
+  - uservoice_discuss: "Форум DocumentCloud"
+  - view_entities: "Показать ключевые слова"
+  - view_pages: "Показать страницы"
+  - view_timeline: "Показать временную шкалу"
+  - welcome_message_sent_to: "Сообщение было отправлено %s."
+  - welcome_to_document_cloud: "Добро пожаловать в DocumentCloud!"
+  - width: "Ширина"
+  - workspace: "Интерфейс"
+  - x_accounts:
+    - "%d аккаунт"
+    - "%d аккаунта"
+    - "%d аккаунтов"
+  - x_collaborators: *3
+  - x_documents: *4
+  - x_has_documents: "Документы %s"
+  - x_invited_to_review_x: "%s пригласил вас рецензировать %s"
+  - x_is_no_longer_a_reviewer_on_x:
+    - "%2$s больше не рецензент этого документа"
+    - "%2$s больше не рецензент этих документов"
+  - x_is_not_published: "\"%s\" не опубликован"
+  - x_mentions:
+    - "Одно упоминание"
+    - "Упоминанется %d раза"
+    - "Упоминанется %d раз"
+  - x_notes: *5
+  - x_pages: *6
+  - x_private_documents:
+    - "%d приватный документ"
+    - "%d приватных документа"
+    - "%d приватных документов"
+  - x_public_documents:
+    - "%d публичный документ,"
+    - "%d публичных документа,"
+    - "%d публичных документов,"
+  - x_results: "Найдено %d"
+  - x_still_processing: "\"%s\" обрабатывается. Подождите."
+  - your_documents: "Ваши Документы"
+  - your_organization: "Ваша организация"
+  - your_published_documents: "Ваши опубликованные документы"
+  - youve_been_added_to_x: "Вы теперь член организации: %s"
+  - zoom_out: "Уменьшить"

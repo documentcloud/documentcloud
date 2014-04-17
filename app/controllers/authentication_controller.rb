@@ -1,10 +1,11 @@
 class AuthenticationController < ApplicationController
-  
-  before_filter :bouncer, :except => [:callback] if Rails.env.staging?
 
-  skip_before_filter :verify_authenticity_token, :only => [:login]
+  before_action :bouncer, :except => [:callback] if Rails.env.staging?
 
-  before_filter :secure_only,     :only => [:login]
+  skip_before_action :verify_authenticity_token, :only => [:login]
+  after_action :allow_iframe, only: [:iframe,:inner_iframe]
+
+  before_action :secure_only,     :only => [:login]
 
   # Display the signup information page.
   def signup_info
@@ -73,20 +74,20 @@ class AuthenticationController < ApplicationController
 
   layout 'embedded_login', :only=>[ :inner_iframe, :iframe_success, :iframe_failure, :popup_completion, :iframe_logout,:callback,:request_additional_information ]
 
-  before_filter :login_required, :only => [:iframe_success,:record_user_information]
-  before_filter :set_p3p_header
+  before_action :login_required, :only => [:iframe_success,:record_user_information]
+  before_action :set_p3p_header
 
   # this is needed for running omniauth on rails 2.3.  Without it the route
   # causes an error even though omniauth is intercepting it
   def blank; render :text => "Not Found.", :status => 404 end
 
-  # this is the endpoint for an embedded document to obtain addition information 
+  # this is the endpoint for an embedded document to obtain addition information
   # about the document as well as the current user
   def remote_data
     render :json => build_remote_data( params[:document_id] )
   end
 
-  # Closes the popup window and loads the appropriate page 
+  # Closes the popup window and loads the appropriate page
   # into the inner iframe that opened them
   def popup_completion
     session.delete(:omniauth_popup_next)
@@ -143,7 +144,7 @@ class AuthenticationController < ApplicationController
     @status = true
     render :action=>'iframe_login_status'
   end
-  
+
   # Where third-party logins come back to once they have
   # completed successfully.
   def callback
@@ -176,8 +177,8 @@ class AuthenticationController < ApplicationController
     end
   end
 
-  # The destination for third party logins that have failed.  
-  # In almost all cases this is due to the cancel option 
+  # The destination for third party logins that have failed.
+  # In almost all cases this is due to the cancel option
   # being selected while on the external site
   def failure
     flash[:error] = params[:message]
@@ -186,6 +187,9 @@ class AuthenticationController < ApplicationController
 
   private
 
+  def allow_iframe
+    response.headers.except! 'X-Frame-Options'
+  end
 
   # convenience method to extract the omniauth identity data
   def identity_hash

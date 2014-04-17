@@ -1,0 +1,11 @@
+person:
+  document: tv_manual
+  account: louis
+  organization: tribune
+  access: <%= DC::Access::PUBLIC %>
+  kind: person
+  value: Mr Rogers
+  relevance: 1.0
+  calais_id: unknown
+  occurrences: 2:16,20:6 
+

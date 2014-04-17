@@ -1,22 +1,4 @@
 namespace :sunspot do
-  namespace :solr do
-    desc 'Start the Solr instance'
-    task :start => :environment do
-      Sunspot::Rails::Server.new.start
-    end
-
-    desc 'Run the Solr instance in the foreground'
-    task :run => :environment do
-      Sunspot::Rails::Server.new.run
-    end
-
-    desc 'Stop the Solr instance'
-    task :stop => :environment do
-      Sunspot::Rails::Server.new.stop
-    end
-
-    task :reindex => :"sunspot:reindex"
-  end
 
   desc "Reindex all solr models that are located in your application's models directory."
   # This task depends on the standard Rails file naming \

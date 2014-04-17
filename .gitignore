@@ -10,6 +10,7 @@ db/mongodb*
 db/solr_*
 db/sphinx
 raw
+/bin
 /secrets
 public/docs
 public/asset_store
@@ -23,3 +24,5 @@ cloud_crowd.db
 .DS_Store
 public/search
 vendor/solr-4.0.0/solr-webapp/webapp/*
+.bundle
+

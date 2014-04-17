@@ -1,14 +1,12 @@
-<% secrets = YAML.load_file(File.join(Rails.root, 'secrets/secrets.yml'))[ENV['RAILS_ENV'] || 'development'] %>
-
 defaults: &defaults
   adapter: postgresql
   encoding: unicode
   schema_search_path: public
   pool: 5
-  username: <%= secrets['username'] %>
-  password: <%= secrets['db_password'] %>
+  username: <%= DC::SECRETS['username'] %>
+  password: <%= DC::SECRETS['db_password'] %>
   allow_concurrency: true
-  host: <%= secrets['db_host'] %>
+  host: <%= DC::SECRETS['db_host'] %>
 
 development:
   <<: *defaults

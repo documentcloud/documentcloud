@@ -2,11 +2,11 @@ require 'csv'
 
 namespace :import do
 
-
   desc "Create/Modify an organization with accounts from CSV file."
   task :accounts, [ :slug, :csv] => :environment do | t,args |
-    
+
     Organization.transaction do
+
       begin
 
         organization = Organization.find_by_slug( args[:slug] )
@@ -14,6 +14,7 @@ namespace :import do
 
         puts "Account ID,First Name,Last Name,Email,Password"
         CSV.foreach( args[:csv] ) do | fname, lname, email, is_admin |
+
 
           email += "@documentcloud.org" unless email.include?('@')
 
@@ -40,8 +41,6 @@ namespace :import do
     end
 
   end
-
-
 
 end
 

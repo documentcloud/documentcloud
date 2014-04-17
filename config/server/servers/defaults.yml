@@ -1,0 +1,15 @@
+# servers/defaults.yml
+################################
+# This file defines our defaults
+################################
+
+security_groups: default
+size: c1.medium
+image: ami-e76ac58e
+availability_zone: us-east-1c
+key_name: documentcloud
+cloud:
+  provider: AWS
+  aws_access_key_id: <=% ENV[AWS_ACCESS_KEY] %>
+  aws_secret_access_key: <%= ENV[AWS_SECRET_ACCESS_KEY] %>
+  region: us-east-1

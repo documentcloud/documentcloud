@@ -9,18 +9,17 @@ class UpdateAccess < CloudCrowd::Action
       ActiveRecord::Base.establish_connection
       access   = options['access']
       document = Document.find(input)
-      sql      = ["access = #{access}", "document_id = #{document.id}"]
-      Page.update_all(*sql)
-      Entity.update_all(*sql)
-      EntityDate.update_all(*sql)
+      [Page, Entity, EntityDate].each{ |model_klass| model_klass.where(:document_id => document.id).update_all(:access=>access) }
       begin
         DC::Store::AssetStore.new.set_access(document, access)
-      rescue RightAws::AwsError => e
-        raise e unless e.http_code == "404"
+      rescue AWS::S3::Errors::NoSuchKey
+        # Quite a few docs are missing text assets
+        # Even though they are incomplete, They should still
+        # be able to have their access manipulated
       end
       document.update_attributes(:access => access)
     rescue Exception => e
-      LifecycleMailer.deliver_exception_notification(e, options)
+      LifecycleMailer.exception_notification(e,options).deliver
       document.update_attributes(:access => DC::Access::ERROR) if document
       raise e
     end

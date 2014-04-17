@@ -14,7 +14,7 @@ class DocumentReorderPages < DocumentAction
       end
     rescue Exception => e
       fail_document
-      LifecycleMailer.deliver_exception_notification(e, options)
+      LifecycleMailer.exception_notification(e,options).deliver
       raise e
     end
     document.id
@@ -44,7 +44,7 @@ class DocumentReorderPages < DocumentAction
         Page::IMAGE_SIZES.keys.each do |size|
           page = document.page_image_path(old_num, size)
           image_path = reordered_page_images[new_num][size] = "#{document.slug}-p#{new_num}-#{size}.gif"
-          File.open(image_path, 'w+') do |f|
+          File.open(image_path, 'wb') do |f|
             f.write(asset_store.read(page))
           end
         end
@@ -60,14 +60,14 @@ class DocumentReorderPages < DocumentAction
     # Update page offsets for text.
     offset = 0
     page_order.each_with_index do |p, i|
-      page = Page.find_by_document_id_and_page_number(document.id, p)
+      page = Page.where(:document_id => document.id, :page_number => p).first
       unless page
-        LifecycleMailer.deliver_logging_email("Reorder pages", {
+        LifecycleMailer.logging_email("Reorder pages", {
           :document_id => document.id,
           :document => document,
           :page_count => document.page_count,
           :page_order => page_order
-        })
+        }).deliver
       end
       page_length = (page.end_offset - page.start_offset)
       page.end_offset = offset + page_length
@@ -76,14 +76,14 @@ class DocumentReorderPages < DocumentAction
       page.page_number = (i+1) + document.page_count
       page.save
     end
-    pages = Page.find_all_by_document_id(document.id)
+    pages = Page.where(:document_id=>document.id)
     pages.each do |page|
       page.page_number = page.page_number - document.page_count
       page.save
     end
 
     # Update annotations.
-    annotations = Annotation.find_all_by_document_id(document.id)
+    annotations = Annotation.where(:document_id=>document.id)
     annotations.each do |annotation|
       annotation_index = page_order.index(annotation.page_number)
       if annotation_index
@@ -95,7 +95,7 @@ class DocumentReorderPages < DocumentAction
     end
 
     # Update sections.
-    sections = Section.find_all_by_document_id(document.id)
+    sections = Section.where(:document_id=>document.id)
     sections.each do |section|
       section_index = page_order.index(section.page_number)
       if section_index

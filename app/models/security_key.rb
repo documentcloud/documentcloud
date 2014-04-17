@@ -8,8 +8,8 @@ class SecurityKey < ActiveRecord::Base
   belongs_to  :securable, :polymorphic => true
   before_save :generate_key
 
-  validates_presence_of   :securable_type, :securable_id
-  validates_uniqueness_of :securable_id, :scope => :securable_type
+  validates   :securable_type, :presence=>true
+  validates   :securable_id,   :presence=>true, :uniqueness=>{ :scope => :securable_type }
 
   # To compare a SecurityKey with a potential match, check self.key.
   def ==(value)
@@ -20,7 +20,7 @@ class SecurityKey < ActiveRecord::Base
   private
 
   def generate_key
-    self.key ||= ActiveSupport::SecureRandom.hex(HARDNESS)
+    self.key ||= SecureRandom.hex(HARDNESS)
   end
 
 end

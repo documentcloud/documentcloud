@@ -20,26 +20,24 @@ namespace :aws do
   desc "Snapshot EBS root and register it as a new AMI"
   task :register_ami, [:instance_id] => [:environment] do |t,args|
     require 'right_aws'
-    ec2 = RightAws::Ec2.new(SECRETS['aws_access_key'], SECRETS['aws_secret_key'])
+    aws = DC::AWS.new
 
-    instance = ec2.describe_instances(args.instance_id)[0]
-    if instance[:aws_state] == 'running'
+    instance = aws.ec2.instances[ args.instance_id ]
+    if :running == instance.status
       puts "It is recommended to halt the instance before snapshotting. You have 5 seconds to ctrl-c interrupt."
       sleep 5
     end
 
-    image = ec2.describe_images(instance[:aws_image_id])[0]
-    volume = ec2.describe_volumes.select {|vol| vol[:aws_instance_id] == args.instance_id}.first
+    image = aws.ec2.images[ :aws_image_id]
+    volume = aws.ec2.volumes.detect{ |vol| vol.attachments.include?( args.instance_id ) }
 
-    new_snapshot = ec2.create_snapshot volume[:aws_id]
-    while true do
+    new_snapshot = volume.create_snapshot
+    while :pending == new_snapshot.status do
+      puts "#{new_snapshot.volume_id} status: #{new_snapshot.status} progress: #{new_snapshot.progress}"
       sleep 2
-      new_snapshot = ec2.describe_snapshots(new_snapshot[:aws_id])[0]
-      puts "#{new_snapshot[:aws_id]} status: #{new_snapshot[:aws_status]} progress: #{new_snapshot[:aws_progress]}"
-      break if new_snapshot[:aws_status] == 'completed'
     end
 
-    puts "ec2-register --snapshot #{new_snapshot[:aws_id]} --kernel #{instance[:aws_kernel_id]} --ramdisk #{instance[:aws_ramdisk_id]} --description='dcloud revision of #{instance[:aws_image_id]}' --name='#{instance[:aws_image_id]}/#{new_snapshot[:aws_id]}.manifest.xml' --architecture #{image[:aws_architecture]} --root-device-name /dev/sda1"
+    puts "ec2-register --snapshot #{new_snapshot.id} --kernel #{instance.kernel_id} --ramdisk #{instance.ramdisk_id} --description='dcloud revision of #{instance.image_id}' --name='#{instance.image_id}/#{new_snapshot.id}.manifest.xml' --architecture #{image.architecture} --root-device-name /dev/sda1"
   end
 
 end

@@ -2,7 +2,7 @@
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-9312438-4']);
-  _gaq.push(<%= @pageview_url ? "['_trackPageview', '#{@pageview_url}']" : "['_trackPageview']" %>);
+  _gaq.push(<%=raw @pageview_url ? "['_trackPageview', '#{@pageview_url}']" : "['_trackPageview']" %>);
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;

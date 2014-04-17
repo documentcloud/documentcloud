@@ -11,12 +11,13 @@ class Entity < ActiveRecord::Base
   ALL_CAPS = /\A[A-Z0-9\s.]+\Z/
 
   belongs_to :document
+  belongs_to :account
+  belongs_to :organization
+  validates  :kind, :inclusion=>{ :in => DC::VALID_KINDS }
+  validates  :value, :presence=>true
+  text_attr  :value
 
-  validates_inclusion_of :kind, :in => DC::VALID_KINDS
-
-  text_attr :value
-
-  named_scope :kind, lambda {|kind| {:conditions => {:kind => kind}} }
+  scope :kind, lambda {|kind| where( :kind => kind ) }
 
   def self.normalize_kind(string)
     DC::CALAIS_MAP[string.underscore.to_sym]
@@ -24,17 +25,16 @@ class Entity < ActiveRecord::Base
 
   # Truncate and titlize the value, if necessary.
   def self.normalize_value(string)
-    string = string.mb_chars[0...255].to_s
+    string = string[0...255]
     return string unless string.length > 5 && string.match(ALL_CAPS)
     string.titleize
   end
 
-  # TODO: Make this not use an ilike, Solr, preferably.
   def self.search_in_documents(kind, value, ids)
     return [] if value.nil?
-    entities = self.all({:conditions => [
+    self.includes(:document).references(:document).where([
       "document_id in (?) and kind = ? and lower(value) like lower('%#{Entity.connection.quote_string(value)}%')", ids, kind
-    ], :include => :document})
+    ])
   end
 
   # Merge this entity with another of the "same" entity for the same document.
@@ -46,9 +46,9 @@ class Entity < ActiveRecord::Base
   end
 
   # The pages on which this entity occurs within the document.
-  def pages(occurs=split_occurrences, options={})
+  def pages(occurs=split_occurrences)
     return [] unless textual?
-    super(occurs, options)
+    super(occurs)
   end
 
   # An Entity is considered to be textual if it occurs in the body of the text.
@@ -57,10 +57,10 @@ class Entity < ActiveRecord::Base
   end
 
   def value=(val)
-    write_attribute :value, val.mb_chars[0...255].to_s
+    write_attribute :value, val[0...255]
   end
 
-  def to_json(options={})
+  def as_json(options={})
     data = {
      'id'           => id,
      'document_id'  => document_id,
@@ -69,8 +69,8 @@ class Entity < ActiveRecord::Base
      'relevance'    => relevance,
      'occurrences'  => occurrences
     }
-    data['excerpts'] = excerpts(150, :limit => 200)if options[:include_excerpts]
-    data.to_json
+    data['excerpts'] = excerpts(150, self.pages.limit(200) ) if options[:include_excerpts]
+    data
   end
 
   def canonical

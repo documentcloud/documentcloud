@@ -1,0 +1,18 @@
+dcloud_admin:
+  role: <%= Account::ADMINISTRATOR %>
+  default: true
+  account: admin
+  organization_id: 1
+
+louis_tribune:
+  role: <%= Account::ADMINISTRATOR %>
+  default: true
+  account: louis
+  organization: tribune
+
+joe_tribune:
+  role: <%= Account::CONTRIBUTOR %>
+  default: true
+  account: reporter_joe
+  organization: tribune
+

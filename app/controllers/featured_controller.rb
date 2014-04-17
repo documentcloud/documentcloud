@@ -1,6 +1,6 @@
 class FeaturedController < ApplicationController
 
-  before_filter :admin_required, :except => [:index]
+  before_action :admin_required, :except => [:index]
 
   def index
     @reports = FeaturedReport.sorted

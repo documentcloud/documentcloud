@@ -17,14 +17,9 @@ module DC
       # yielding to the block with the matched text, the character offset
       # and character length of the match.
       def scan(regex)
-        last_byte, last_char = 0, 0
         while @scanner.scan_until(regex)
           match   = @scanner.matched
-          byte    = @scanner.pos - match.length
-          char    = last_char + @text[last_byte..byte].unpack('U*').length - 1
-          length  = match.unpack('U*').length
-          last_byte, last_char = byte, char
-          yield match, char, length
+          yield match, @scanner.charpos, match.length
         end
       end
 

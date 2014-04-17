@@ -3,14 +3,15 @@
 class AccountsController < ApplicationController
   layout 'workspace'
 
-  before_filter :secure_only, :only => [:enable, :reset]
-  before_filter :login_required, :except => [:enable, :reset, :logged_in]
-  before_filter :bouncer, :only => [:enable, :reset] if Rails.env.staging?
+  before_action :secure_only, :only => [:enable, :reset]
+  before_action :login_required, :except => [:enable, :reset, :logged_in]
+  before_action :bouncer, :only => [:enable, :reset] if Rails.env.staging?
 
   # Enabling an account continues the second half of the signup process,
   # allowing the journalist to set their password, and logging them in.
   def enable
-    return render if request.get?
+    render and return if request.get?
+
     @failure = 'Please accept the Terms of Service.' and return render unless params[:acceptance]
     key = SecurityKey.find_by_key(params[:key])
     @failure = 'The account is invalid, or has already been activated.' and return render unless key
@@ -24,7 +25,7 @@ class AccountsController < ApplicationController
 
   # Show the "Reset Password" screen for an account holder.
   def reset
-    return render if request.get?
+    render and return if request.get?
     @display_notice = true
     account = Account.lookup(params[:email].strip)
     @failure = true and return render unless account
@@ -65,22 +66,25 @@ class AccountsController < ApplicationController
 
   # Fetches or creates a user account and creates a membership for that
   # account in an organization.
-  # 
+  #
   # New accounts are created as pending, with a security key instead of
   # a password.
   def create
     # Check the requester's permissions
-    return forbidden unless current_account.admin? or 
+    return forbidden unless current_account.admin? or
       (current_account.real?(current_organization) and params[:role] == Account::REVIEWER)
 
     # Find or create the appropriate account
-    account_attributes = pick(params, :first_name, :last_name, :email, :language, :document_language)
-    account = Account.lookup(account_attributes[:email]) || Account.create(account_attributes)    
+    account_attributes = pick(params, :first_name, :last_name, :email, :language, :document_language).merge({
+        :language => current_organization.language,
+        :document_language=>current_organization.document_language
+    })
+    account = Account.lookup(account_attributes[:email]) || Account.create(account_attributes)
 
     # Find role for account in organization if it exists.
     membership_attributes = pick(params, :role, :concealed)
     membership = current_organization.role_of(account)
-    
+
     # Create a membership if account has no existing role
     if membership.nil?
       membership_attributes[:default] = true unless account.memberships.exists?
@@ -97,7 +101,7 @@ class AccountsController < ApplicationController
       if account.pending?
         account.send_login_instructions(current_account)
       else
-        LifecycleMailer.deliver_membership_notification(account, current_organization, current_account)
+        LifecycleMailer.membership_notification(account, current_organization, current_account).deliver
       end
     end
     json account.canonical( :membership=>membership )
@@ -127,7 +131,7 @@ class AccountsController < ApplicationController
   def resend_welcome
     return forbidden unless current_account.admin?
     account = current_organization.accounts.find(params[:id])
-    LifecycleMailer.deliver_login_instructions account, current_account
+    LifecycleMailer.login_instructions( account, current_account ).deliver
     json nil
   end
 
@@ -135,8 +139,7 @@ class AccountsController < ApplicationController
   # login. Ther documents, projects, and name remain.
   def destroy
     return forbidden unless current_account.admin?
-    account = current_organization.accounts.find(params[:id])
-    account.update_attributes :role => Account::DISABLED
+    current_organization.memberships.where( account_id: params[:id] ).update_all( role: Account::DISABLED )
     json nil
   end
 

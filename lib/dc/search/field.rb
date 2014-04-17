@@ -16,8 +16,7 @@ module DC
       end
 
       def entity?
-        #DC::ENTITY_KINDS.include? @kind.downcase.to_sym
-        false
+        DC::ENTITY_KINDS.include? @kind.downcase.to_sym
       end
 
       def to_s
@@ -25,8 +24,8 @@ module DC
         "#{@kind}:#{val}"
       end
 
-      def to_json(opts={})
-        {'kind' => kind, 'value' => value}.to_json
+      def as_json(opts={})
+        {'kind' => kind, 'value' => value}
       end
 
     end

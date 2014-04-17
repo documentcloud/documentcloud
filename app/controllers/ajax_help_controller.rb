@@ -21,9 +21,11 @@ class AjaxHelpController < ApplicationController
 
   layout false
 
+  skip_before_action :verify_authenticity_token
+
   def contact_us
     return bad_request unless params[:message]
-    LifecycleMailer.deliver_contact_us(current_account, params)
+    LifecycleMailer.contact_us(current_account, params).deliver
     json nil
   end
 

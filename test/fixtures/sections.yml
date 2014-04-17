@@ -1,0 +1,9 @@
+first:
+  account: louis
+  organization: tribune
+  document: tv_manual
+  access: <%= DC::Access::PUBLIC %>
+  title: A Great Document!
+  page_number: 1
+
+

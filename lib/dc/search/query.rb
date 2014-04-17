@@ -121,7 +121,7 @@ module DC
 
       # The JSON representation of a query contains all the structured aspects
       # of the search.
-      def to_json(opts={})
+      def as_json(opts={})
         { 'text'        => @text,
           'page'        => @page,
           'from'        => @from,
@@ -135,7 +135,7 @@ module DC
           'doc_ids'     => @doc_ids,
           'attributes'  => @attributes,
           'data'        => @data.map {|f| [f.kind, f.value] }
-        }.to_json
+        }
       end
 
 
@@ -160,12 +160,16 @@ module DC
         order             = "documents.created_at desc"
         direction         = [:page_count, :hit_count].include?(@order.to_sym) ? 'desc' : 'asc'
         order             = "documents.#{@order} #{direction}, #{order}" unless [:created_at, :score].include?(@order.to_sym)
-        options           = {:conditions => conditions, :joins => @joins, :include => [:account, :organization]}
-        @total            = @proxy.count(options)
-        options[:order]   = order
-        options[:limit]   = @per_page
-        options[:offset]  = @from
-        @results          = @proxy.all(options)
+        query             = @proxy
+          .joins( @joins )
+          .includes(:account, :organization)
+          .references(:account, :organization)
+          .where( conditions )
+        @total            = query.count
+        # options[:order]   = order
+        # options[:limit]   = @per_page
+        # options[:offset]  = @from
+        @results          = query.order( order ).limit( @per_page ).offset( @from )
       end
 
       # Construct the correct pagination for the current query.
@@ -208,8 +212,7 @@ module DC
       # Lookup projects by title, and delegate to `build_project_ids`.
       def build_projects
         return unless @account
-        projects = Project.accessible(@account).all(:conditions => {:title => @projects}, :select => [:id])
-        project_ids = projects.map {|p| p.id }
+        project_ids = Project.accessible(@account).where(:title => @projects).pluck(:id)
         if project_ids.present?
           @populated_projects = true
         else
@@ -262,8 +265,7 @@ module DC
 
       # Generate the Solr or SQL to restrict the search to specific organizations.
       def build_groups
-        organzations = @groups.map {|slug| Organization.find_by_slug(slug, :select => 'id') }
-        ids          = organzations.map {|org| org ? org.id : -1 }
+        ids = Organization.where(:slug => @groups).pluck(:id)
         if needs_solr?
           @solr.build do
             with :organization_id, ids
@@ -284,8 +286,8 @@ module DC
           end
         end
       end
-      
-      # Generate the Solr or SQL to match user-data queries. If the value 
+
+      # Generate the Solr or SQL to match user-data queries. If the value
       # is "*", assume that any document that contains the key will do.
       def build_data
         data   = @data
@@ -310,7 +312,7 @@ module DC
           end
         else
           hash = {}
-          data.each do |datum| 
+          data.each do |datum|
             if datum.value == '*'
               @sql << 'defined(docdata.data, ?)'
               @interpolations << datum.kind
@@ -323,11 +325,21 @@ module DC
           end
           unless hash.empty?
             @sql << 'docdata.data @> ?'
-            @interpolations << Docdata.to_hstore(hash)
+            @interpolations << Query.to_hash_query(hash)
           end
           @joins << 'inner join docdata ON documents.id = docdata.document_id'
         end
       end
+
+
+      def self.to_hash_query(hash)
+        hash.map {|k, v| "\"#{sanitize(k)}\"=>\"#{sanitize(v)}\"" }.join(',')
+      end
+
+      def self.sanitize(obj)
+        Sanitize.clean(obj.to_s.gsub(/[\\"]/, ''))
+      end
+
 
       # Add facet results to the Solr search, if requested.
       # def build_facets

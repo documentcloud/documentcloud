@@ -1,0 +1,42 @@
+foo:
+  document: tv_manual
+  url: '/foo'
+  hits: 122
+  date_recorded: <%= Date.today - 1.month %>
+
+bar:
+  document: tv_manual
+  url: '/bar'
+  hits: 18
+  date_recorded: <%= Date.today - 1.day %>
+
+note_first:
+  note: pubic
+  url: '/baz'
+  hits: 11
+  date_recorded: <%= Date.today - 1.month %>
+
+note_second:
+  note: pubic
+  url: '/baz'
+  hits: 3
+  date_recorded: <%= Date.today - 1.week %>
+
+search_first:
+  search_query: 'glove'
+  url: '/baz'
+  hits: 11
+  date_recorded: <%= Date.today - 1.month %>
+
+search_second:
+  search_query: 'glove'
+  url: '/baz'
+  hits: 13
+  date_recorded: <%= Date.today - 1.day %>
+
+search_third:
+  search_query: 'glove'
+  url: '/baz'
+  hits: 1
+  date_recorded: <%= Date.today - 1.week %>
+

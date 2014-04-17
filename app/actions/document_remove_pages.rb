@@ -18,7 +18,7 @@ class DocumentRemovePages < DocumentAction
 
     rescue Exception => e
       fail_document
-      LifecycleMailer.deliver_exception_notification(e, options)
+      LifecycleMailer.exception_notification(e,options).deliver
       raise e
     end
     document.id
@@ -51,7 +51,7 @@ class DocumentRemovePages < DocumentAction
         page = document.page_image_path(p, size)
         new_file = "#{document.slug}-p#{i+1}-#{size}.gif"
         sizes[size] = new_file
-        File.open(new_file, 'w+') do |f|
+        File.open(new_file, 'wb') do |f|
           f.write(asset_store.read(page))
         end
       end
@@ -60,8 +60,8 @@ class DocumentRemovePages < DocumentAction
 
     # Update page offsets for text
     (1..document.page_count).each do |p|
-      this_page = Page.find_by_document_id_and_page_number(document.id, p)
-      previous_page = Page.find_by_document_id_and_page_number(document.id, p-1)
+      this_page = Page.where(:document_id=>document.id, :page_number=> p).first
+      previous_page = Page.where(:document_id=>document.id, :page_number=> p-1).first
       end_offset = 0
       start_offset = 0
       if this_page
@@ -92,7 +92,7 @@ class DocumentRemovePages < DocumentAction
     end
 
     # Compact, remove, and/or move all sections.
-    sections = Section.find_all_by_document_id(document.id, :order => 'page_number asc')
+    sections = Section.where(:document_id=>document.id).order('page_number asc')
     taken_page_numbers = {}
     sections.each do |section|
       delete_pages.reverse.each do |delete_page|

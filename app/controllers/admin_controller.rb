@@ -1,9 +1,11 @@
+require 'dc/aws'
+
 class AdminController < ApplicationController
 
-  skip_before_filter :verify_authenticity_token, :only => [:save_analytics, :queue_length]
+  skip_before_action :verify_authenticity_token, :only => [:save_analytics, :queue_length]
 
-  before_filter :secure_only,    :only   => [:index, :signup, :login_as]
-  before_filter :admin_required, :except => [:save_analytics, :queue_length, :test_embedded_search, :test_embedded_note, :test_embedded_viewer]
+  before_action :secure_only,    :only   => [:index, :signup, :login_as]
+  before_action :admin_required, :except => [:save_analytics, :queue_length, :test_embedded_search, :test_embedded_note, :test_embedded_viewer]
 
   # The Admin Dashboard
   def index
@@ -21,12 +23,12 @@ class AdminController < ApplicationController
     @weekly_hits_on_notes          = keys_to_timestamps(DC::Statistics.weekly_hits_on_notes).to_json
     @daily_hits_on_searches        = keys_to_timestamps(DC::Statistics.daily_hits_on_searches(1.month.ago)).to_json
     @weekly_hits_on_searches       = keys_to_timestamps(DC::Statistics.weekly_hits_on_searches).to_json
-    @documents                     = Document.finished.chronological.all(:limit => 5).map {|d| d.admin_attributes }.to_json
-    @failed_documents              = Document.failed.chronological.all(:limit => 3).map {|d| d.admin_attributes }.to_json
+    @documents                     = Document.finished.chronological.limit(5).map {|d| d.admin_attributes }.to_json
+    @failed_documents              = Document.failed.chronological.limit(3).map {|d| d.admin_attributes }.to_json
     @instances                     = DC::AWS.new.describe_instances.to_json
-    @top_documents                 = RemoteUrl.top_documents(7, :limit => 5).to_json
-    @top_searches                  = RemoteUrl.top_searches(7, :limit => 5).to_json
-    @top_notes                     = RemoteUrl.top_notes(7, :limit => 5).to_json
+    @top_documents                 = RemoteUrl.top_documents(7, 5).to_json
+    @top_searches                  = RemoteUrl.top_searches(7,  5).to_json
+    @top_notes                     = RemoteUrl.top_notes(7, 5).to_json
     @remote_url_hits_last_week     = DC::Statistics.remote_url_hits_last_week.to_json
     @remote_url_hits_all_time      = DC::Statistics.remote_url_hits_all_time.to_json
     @count_organizations_embedding = DC::Statistics.count_organizations_embedding.to_json
@@ -79,10 +81,13 @@ class AdminController < ApplicationController
     end
     return render unless request.post?
     @params = params
-    org = Organization.create(params[:organization])
+    organization_params = params.require(:organization).permit(:name,:slug,:language,:document_language)
+    org = Organization.create( organization_params )
     return fail(org.errors.full_messages.join(', ')) if org.errors.any?
     params[:account][:email].strip! if params[:account][:email]
-    acc = Account.new( params[:account].merge( :language=>org.language, :document_language=>org.document_language ))
+    user_params = params.require(:account).permit(:first_name,:last_name,:email,:slug,:language,:document_language)
+    acc = Account.new( user_params
+                       .merge( :language=>org.language, :document_language=>org.document_language ) )
     acc.memberships.build({
       :role => Account::ADMINISTRATOR, :default => true, :organization=>org
     })
@@ -96,8 +101,8 @@ class AdminController < ApplicationController
   # Endpoint for our pixel-ping application, to save our analytic data every
   # so often -- delegate to a cloudcrowd job.
   def save_analytics
-    return forbidden unless params[:secret] == SECRETS['pixel_ping']
-    RestClient.post(DC_CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+    return forbidden unless params[:secret] == DC::SECRETS['pixel_ping']
+    RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       :action => 'save_analytics', :inputs => [params[:json]]
     }.to_json})
     json nil
@@ -192,9 +197,9 @@ class AdminController < ApplicationController
   # Pass in the seconds since the epoch, for JavaScript.
   def keys_to_timestamps(hash)
     result = {}
-    dates = hash.keys.first.is_a? Date
+    strings = hash.keys.first.is_a? String
     hash.each do |key, value|
-      time = (dates ? key : Date.parse(key)).to_time
+      time = (strings ? Date.parse(key) : key ).to_time
       utc  = (time + time.utc_offset).utc
       result[utc.to_f.to_i] = value
     end

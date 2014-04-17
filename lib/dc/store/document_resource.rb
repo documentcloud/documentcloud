@@ -4,16 +4,17 @@ module DC
     # Contains common functionality of sub-document models.
     module DocumentResource
 
-      def before_validation_on_create
-        self.document_id      = document.id
-        self.organization_id  = organization_id || document.organization_id
-        self.account_id       = account_id || document.account_id
-        self.access           = access || document.access
-      end
-
       def self.included(klass)
         klass.class_eval do
-          validates_presence_of :organization_id, :account_id, :document_id, :access
+          validates :organization_id, :account_id, :document_id, :access, :presence=>true
+
+          before_validation :on=>:create do
+            self.document_id      = document.id
+            self.organization_id  = organization_id || document.organization_id
+            self.account_id       = account_id || document.account_id
+            self.access           = access || document.access
+          end
+
         end
       end
 

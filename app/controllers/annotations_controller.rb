@@ -1,8 +1,10 @@
 class AnnotationsController < ApplicationController
   include DC::Access
 
-  before_filter :login_required, :except => [:index, :show, :print,:cors_options]
-  skip_before_filter :verify_authenticity_token
+  layout false
+
+  before_action :login_required, :except => [:index, :show, :print,:cors_options]
+  skip_before_action :verify_authenticity_token
 
   # In the workspace, request a listing of annotations.
   def index
@@ -24,7 +26,7 @@ class AnnotationsController < ApplicationController
 
   # Print out all the annotations for a document (or documents.)
   def print
-    docs = Document.accessible(current_account, current_organization).find_all_by_id(params[:docs])
+    docs = Document.accessible(current_account, current_organization).where( :id => params[:docs] )
     Document.populate_annotation_counts(current_account, docs)
     @documents_json = docs.map {|doc| doc.to_json(:annotations => true, :account => current_account) }
     render :layout => false
@@ -50,7 +52,7 @@ class AnnotationsController < ApplicationController
     maybe_set_cors_headers
     return not_found unless anno = current_annotation
     if !current_account.allowed_to_edit?(anno)
-      anno.errors.add_to_base "You don't have permission to update the note."
+      anno.errors.add(:base, "You don't have permission to update the note.")
       return json(anno, 403)
     end
     attrs = pick(params, :title, :content, :access)
@@ -66,7 +68,7 @@ class AnnotationsController < ApplicationController
     maybe_set_cors_headers
     return not_found unless anno = current_annotation
     if ! current_account.allowed_to_edit?(anno)
-      anno.errors.add_to_base "You don't have permission to delete the note."
+      anno.errors.add(:base, "You don't have permission to delete the note.")
       return json(anno, 403)
     end
     anno.destroy
@@ -74,7 +76,7 @@ class AnnotationsController < ApplicationController
     json nil
   end
 
-  def cors_options(should_render=true)
+  def cors_options
     return bad_request unless params[:allowed_methods]
     maybe_set_cors_headers
     render :nothing => true
@@ -82,13 +84,6 @@ class AnnotationsController < ApplicationController
 
   private
 
-  def maybe_set_cors_headers
-    return unless request.headers['Origin']
-    headers['Access-Control-Allow-Origin'] = request.headers['Origin'] #'http://dc-viewer.dev'
-    headers['Access-Control-Allow-Methods'] = 'OPTIONS, GET, POST, PUT, DELETE'
-    headers['Access-Control-Allow-Headers'] = 'Accept,Authorization,Content-Length,Content-Type,Cookie'
-    headers['Access-Control-Allow-Credentials'] = 'true'
-  end
 
   def current_annotation
     @current_annotation ||= current_document.annotations.find_by_id(params[:id])

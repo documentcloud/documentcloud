@@ -9,6 +9,7 @@ class Page < ActiveRecord::Base
   IMAGE_SIZES['thumbnail']  = '60x75!'
 
   MAX_PAGE_RESULTS = 1000
+  INVALID_SOLR_CHARACTERS=Regexp.new("[\x0-\x1f]")
 
   include DC::Store::DocumentResource
   include DC::Search::Matchers
@@ -16,13 +17,22 @@ class Page < ActiveRecord::Base
   extend ActionView::Helpers::SanitizeHelper::ClassMethods
 
   belongs_to :document
+  belongs_to :account
+  belongs_to :organization
 
-  validates_numericality_of :page_number, :greater_than_or_equal_to => 1
+  validates :page_number, :numericality => { :greater_than_or_equal_to => 1 }
 
   before_update :track_text_changes
 
+  def text=(str); write_attribute(:text, self.class.clean_text(str)); end
+  
+  def self.clean_text(str)
+    str.gsub(INVALID_SOLR_CHARACTERS,'')
+  end
   searchable do
-    text    :text
+    text    :text do
+      text.gsub(INVALID_SOLR_CHARACTERS,'')
+    end
     integer :document_id
     integer :account_id
     integer :organization_id
@@ -46,11 +56,9 @@ class Page < ActiveRecord::Base
   # page's full text, relative to the combined full text of the entire document.
   def self.refresh_page_map(document)
     pos = -1
-    result = self.connection.execute("select id, length(text) from pages where document_id = #{document.id} order by page_number asc;")
-    result.each do |item|
-      id, length = item['id'].to_i, item['length'].to_i
-      Page.update_all("start_offset = #{pos + 1}, end_offset = #{pos + length}", "id = #{id}")
-      pos = pos + length
+    document.pages.order(:page_number).pluck( :id, 'length(text)' ).each do | id, length |
+      Page.where( :id=>id ).update_all( :start_offset => pos + 1, :end_offset => pos + length )
+      pos = pos + length.to_i
     end
     document.reset_char_count!
   end
@@ -76,11 +84,11 @@ class Page < ActiveRecord::Base
     rubyre  = /(#{ parts.map {|part| "\\b#{part}\\b" }.join('|') })/i
 
     conds   = ["document_id = ? and text ~* ?", doc_id, psqlre]
-    pages   = Page.all(:conditions => conds, :order => 'page_number asc', :limit => limit)
-    count   = Page.count(:conditions => conds)
+    query   = Page.where( conds )
+    pages   = query.order('page_number asc').limit( limit )
     {
       :mentions => pages.map {|p| {:page => p.page_number, :text => p.excerpt(rubyre)} }.select {|p| p[:text] },
-      :total    => count
+      :total    => query.count
     }
   end
 

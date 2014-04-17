@@ -6,7 +6,7 @@ module DC
     # Supported formats:
     #
     # 10/13/2009  (10-13-2009)
-    # 10/13/09    (10-13-09)
+    # 10/13/2019    (10-13-2019)
     # 2009/10/13  (2009-10-13)
     #
     # 13 October 2009 (13 Oct 2009)
@@ -29,12 +29,26 @@ module DC
       SPLITTER    = /#{SEP}|,?\s+/m
       NUMERIC     = /\A\d+\Z/
 
+      AMERICAN_REGEX = /(\d{1,2})#{SEP}(\d{1,2})#{SEP}(\d{4})/
+
       # Extract the unique dates within the text.
-      def extract_dates(text)
+      def extract_dates( text )
         @dates = {}
         scan_for(DATE_MATCH, text)
         reject_outliers
         @dates.values
+      end
+
+      def self.american
+        DC::Import::DateExtractor.new( true )
+      end
+
+      def self.international
+        DC::Import::DateExtractor.new( false )
+      end
+
+      def initialize( american_format = true )
+        @american_format = american_format
       end
 
 
@@ -73,8 +87,11 @@ module DC
       # For now, let's ignore dates without centuries,
       # and dates that are too far into the past or future.
       def to_date(string)
-        list =   string.split(SPLITTER)
-        return   nil unless valid_year?(list.first) || valid_year?(list.last)
+        list = string.split(SPLITTER)
+        return nil unless valid_year?(list.first) || valid_year?(list.last)
+        if @american_format # US format dates need to have month and day swapped for Date.parse
+          string.sub!( AMERICAN_REGEX ){|m| "#$3-#$1-#$2"}
+        end
         date =   Date.parse(string.gsub(SEP_REGEX, '/'), true) rescue nil
         date ||= Date.parse(string.gsub(SEP_REGEX, '-'), true) rescue nil
         return   nil if date && (date.year <= 0 || date.year >= 2100)

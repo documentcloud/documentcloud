@@ -9,50 +9,51 @@ class Organization < ActiveRecord::Base
 
   has_many :memberships, :dependent => :destroy
   has_many :accounts, :through => :memberships
+  has_many :documents
+  validates :name, :slug, :presence=>true
+  validates :name, :slug, :uniqueness=>true
+  validates :slug, :format => { :with => DC::Validators::SLUG }
 
-  validates_presence_of :name, :slug
-  validates_uniqueness_of :name, :slug
-  validates_format_of :slug, :with => DC::Validators::SLUG
-  validates_inclusion_of  :language, :in => DC::Language::USER,
-                          :message => "must be one of: (#{DC::Language::USER.join(', ')})"
-  validates_inclusion_of  :document_language,  :in => DC::Language::SUPPORTED,
-                          :message => "must be one of: (#{DC::Language::SUPPORTED.join(', ')})"
+  validates :name, :slug, :presence=>true, :uniqueness=>true
+  validates :slug, :format=>{:with=> DC::Validators::SLUG}
+  validates :language, :inclusion=>{ :in => DC::Language::USER,
+    :message => "must be one of: (#{DC::Language::USER.join(', ')})" }
+  validates :document_language,  :inclusion=>{ :in => DC::Language::SUPPORTED,
+    :message => "must be one of: (#{DC::Language::SUPPORTED.join(', ')})" }
 
   # Sanitizations:
   text_attr :name
-  
+
   def self.default_for(account)
-    self.first(
-      :include => "memberships",
-      :conditions => ["memberships.account_id = ? and memberships.default is true", account.id]
-    )
+    self.includes(:memberships)
+      .where(["memberships.account_id = ? and memberships.default is true", account.id] )
+      .references(:memberships)
+      .first
   end
 
   # Retrieve the names of the organizations for the result set of documents.
   def self.names_for_documents(docs)
-    ids = docs.map {|doc| doc.organization_id }.uniq
-    self.all(:conditions => {:id => ids}, :select => 'id, name').inject({}) do |hash, org|
-      hash[org.id] = org.name; hash
+    ids = docs.map(&:organization_id).uniq
+    self.where( :id=>ids ).pluck(:id, :name).inject({}) do |hash, org|
+      hash[org.first] = org.last; hash
     end
   end
 
   # Retrieve the list of organizations with public documents, including counts.
   def self.listed
-    public_doc_counts   = Document.unrestricted.count :group => 'organization_id'
+    public_doc_counts   = Document.unrestricted.group(:organization_id).count
     public_note_counts  = Annotation.public_note_counts_by_organization
-    orgs = self.all(:conditions => {:id => public_doc_counts.keys, :demo => false})
+    orgs = self.where({:id => public_doc_counts.keys, :demo => false})
     orgs.each do |org|
       org.document_count = public_doc_counts[org.id]  || 0
       org.note_count     = public_note_counts[org.id] || 0
     end
     orgs
   end
-  
+
   # Retrieve all Organizations, just returning the name and slug.
   def self.all_slugs
-    self.all(:select => ['name, slug']).map do |org| 
-      {:name => org.name, :slug => org.slug}
-    end
+    self.pluck('name, slug').map{ |name,slug| { 'name'=>name,'slug'=>slug } }
   end
 
   # Populates the members accessor with all the organizaton's accounts
@@ -66,7 +67,7 @@ class Organization < ActiveRecord::Base
       accounts.language
     from memberships
       inner join accounts on accounts.id = memberships.account_id
-    where 
+    where
       memberships.role in (#{Membership::REAL_ROLES.join(',')})
       and memberships.organization_id in (#{organizations.map(&:id).join(',')})
     EOS
@@ -96,11 +97,11 @@ class Organization < ActiveRecord::Base
 
   # How many documents have been uploaded across the whole organization?
   def document_count
-    @document_count ||= Document.count(:conditions => {:organization_id => id})
+    @document_count ||= self.documents.count
   end
 
   def role_of(account)
-    self.memberships.first(:conditions=>{:account_id=>account.id})
+    self.memberships.where({:account_id=>account.id}).first
   end
 
   def add_member(account, role, concealed=false)
@@ -110,17 +111,18 @@ class Organization < ActiveRecord::Base
   end
 
   def remove_member(account)
-    self.memberships.destroy_all(:conditions=>{:account_id => account.id})
+    self.memberships.where({:account_id=>account.id}).destroy_all
   end
 
   # The list of all administrator emails in the organization.
   def admin_emails
-    self.accounts.admin.all(:select => [:email]).map {|acc| acc.email }
+    self.accounts.admin.pluck( :email )
   end
 
-  def to_json(options = {})
-    canonical(options).to_json
+  def as_json(options = {})
+    canonical(options)
   end
+
   def canonical( options = {} )
     attrs = {
       'name'              => name,

@@ -1,0 +1,19 @@
+
+public:
+  document: tv_manual
+  access: <%= DC::Access::PUBLIC %>
+  title: A Great Document!
+  page_number: 2
+  account: louis
+  organization: tribune
+  content: I have greatly enjoyed reading this document
+
+private:
+  document: tv_manual
+  access: <%= DC::Access::PRIVATE %>
+  title: Secret Note
+  page_number: 1
+  account: louis
+  organization: tribune
+  content: the contents of this note are so unbelievable that I cannot in good conscience include them
+

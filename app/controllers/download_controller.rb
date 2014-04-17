@@ -4,7 +4,7 @@ class DownloadController < ApplicationController
   layout nil
 
   def bulk_download
-    @documents = Document.accessible(current_account, current_organization).find_all_by_id(params[:args][0...-1])
+    @documents = Document.accessible(current_account, current_organization).where( :id=>params[:args][0...-1] )
     case params[:args].last
     when 'original_documents' then send_pdfs
     when 'document_text'      then send_text

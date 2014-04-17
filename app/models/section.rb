@@ -3,9 +3,11 @@ class Section < ActiveRecord::Base
   include DC::Store::DocumentResource
 
   belongs_to :document
+  belongs_to :organization
+  belongs_to :account
 
-  validates_presence_of   :title, :page_number
-  validates_uniqueness_of :page_number, :scope => :document_id
+  validates  :title,       :presence=>true
+  validates  :page_number, :presence=>true, :uniqueness=>{ :scope => :document_id }
 
   # Sanitizations
   text_attr :title

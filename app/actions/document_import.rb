@@ -10,7 +10,7 @@ class DocumentImport < DocumentAction
   def split
     if options['url']
       file = File.basename(options['url'])
-      File.open(file, 'w') do |f|
+      File.open(file, 'wb') do |f|
         url = URI.parse(options['url'])
         Net::HTTP.start(url.host, url.port) do |http|
           http.request_get(url.path) do |res|
@@ -24,7 +24,7 @@ class DocumentImport < DocumentAction
       DC::Store::AssetStore.new.save_original(document, file )
     else
       file = File.basename document.original_file_path
-      File.open(file, 'w'){ |f| f << DC::Store::AssetStore.new.read_original(document) }
+      File.open(file, 'wb'){ |f| f << DC::Store::AssetStore.new.read_original(document) }
     end
 
     # Calculate the file hash for the document's original_file so that duplicates can be found
@@ -52,13 +52,13 @@ class DocumentImport < DocumentAction
     begin
       @pdf = document.slug + '.pdf'
       pdf_contents = asset_store.read_pdf document
-      File.open(@pdf, 'w+') {|f| f.write(pdf_contents) }
+      File.open(@pdf, 'wb') {|f| f.write(pdf_contents) }
       case input['task']
       when 'text'   then process_text
       when 'images' then process_images
       end
     rescue Exception => e
-      LifecycleMailer.deliver_exception_notification(e, options)
+      LifecycleMailer.exception_notification(e,options).deliver
       raise e
     end
     document.id
@@ -102,7 +102,7 @@ class DocumentImport < DocumentAction
         opts[:clean] = false unless opts[:language] == 'eng'
         Docsplit.extract_text(@pdf, opts)
       rescue Exception => e
-        LifecycleMailer.deliver_exception_notification(e, options)
+        LifecycleMailer.exception_notification(e, options).deliver
       end
       Docsplit.extract_length(@pdf).times do |i|
         page_number = i + 1
@@ -141,7 +141,7 @@ class DocumentImport < DocumentAction
 
   def save_page_text!
     rows = @pages.map do |page|
-      "(#{document.organization_id}, #{document.account_id}, #{document.id}, #{access}, #{page[:number]}, '#{PGconn.escape(page[:text])}')"
+      "(#{document.organization_id}, #{document.account_id}, #{document.id}, #{access}, #{page[:number]}, '#{PGconn.escape(Page.clean_text(page[:text]))}')"
     end
     Page.connection.execute "insert into pages (organization_id, account_id, document_id, access, page_number, text) values #{rows.join(",\n")};"
   end
@@ -160,7 +160,7 @@ class DocumentImport < DocumentAction
     count = options['email_me']
     return unless count && count > 0
     if Document.owned_by(document.account).pending.count == 0
-      LifecycleMailer.deliver_documents_finished_processing(document.account, count)
+      LifecycleMailer.documents_finished_processing(document.account, count).deliver
     end
   end
   

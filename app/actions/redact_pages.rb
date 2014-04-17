@@ -23,7 +23,7 @@ class RedactPages < DocumentAction
       redact
     rescue Exception => e
       fail_document
-      LifecycleMailer.deliver_exception_notification(e, options)
+      LifecycleMailer.exception_notification(e,options).deliver
       raise e
     end
     document.id
@@ -54,7 +54,7 @@ class RedactPages < DocumentAction
     # Get the large version of the page image.
     page_pdf_path  = "#{base}.pdf"
     page_tiff_path = "#{base}.tif"
-    File.open(images['large'], 'w+') do |f|
+    File.open(images['large'], 'wb') do |f|
       f.write(asset_store.read(document.page_image_path(page, 'large')))
     end
 

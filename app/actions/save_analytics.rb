@@ -29,7 +29,7 @@ class SaveAnalytics < CloudCrowd::Action
     hits.each_pair do |key, type_hits|
       id, url = *key.split(':', 2)
       id = id.to_i
-      next unless url && (doc = Document.unrestricted.find_by_id(id))
+      next unless url && Document.unrestricted.exists?(id)
       doc_ids << id
       RemoteUrl.record_hits_on_document(id, url, type_hits)
     end
@@ -48,7 +48,7 @@ class SaveAnalytics < CloudCrowd::Action
     hits.each_pair do |key, type_hits|
       id, url = *key.split(':', 2)
       id = id.to_i
-      next unless url && (note = Annotation.unrestricted.find_by_id(id))
+      next unless url && Annotation.unrestricted.exists?(id)
       RemoteUrl.record_hits_on_note(id, url, type_hits)
     end
   end
@@ -60,7 +60,7 @@ class SaveAnalytics < CloudCrowd::Action
     begin
       yield
     rescue Exception => e
-      LifecycleMailer.deliver_exception_notification(e)
+      LifecycleMailer.exception_notification(e,options).deliver
       raise e
     end
     true

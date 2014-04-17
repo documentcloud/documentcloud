@@ -1,12 +1,10 @@
-<% secrets = YAML.load_file('secrets/secrets.yml')[ENV['RAILS_ENV'] || 'development'] %>
-
 defaults: &defaults
   adapter: postgresql
   encoding: unicode
   schema_search_path: public
   pool: 5
-  username: <%= secrets['username'] %>
-  password: <%= secrets['db_password'] %>
+  username: <%= DC::SECRETS['username'] %>
+  password: <%= DC::SECRETS['db_password'] %>
   allow_concurrency: true
 
 development:
@@ -20,7 +18,7 @@ staging:
 
 production:
   <<: *defaults
-  host: <%= secrets['db_host'] %>
+  host: <%= DC::SECRETS['db_host'] %>
   database: dcloud_analytics_production
 
 test:

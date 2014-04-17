@@ -4,7 +4,7 @@ class ProcessingJob < ActiveRecord::Base
   belongs_to :account
   belongs_to :document
 
-  validates_presence_of :cloud_crowd_id
+  validates :cloud_crowd_id, :presence=>true
 
   attr_accessor :remote_job
 
@@ -20,16 +20,16 @@ class ProcessingJob < ActiveRecord::Base
 
   # The URL of the Job on CloudCrowd.
   def url
-    "#{DC_CONFIG['cloud_crowd_server']}/jobs/#{cloud_crowd_id}"
+    "#{DC::CONFIG['cloud_crowd_server']}/jobs/#{cloud_crowd_id}"
   end
 
   # The default JSON of a processing job is just enough to get it polling for
   # updates again.
-  def to_json(opts={})
+  def as_json(opts={})
     { 'id'      => id,
       'title'   => title,
       'status'  => 'loading'
-    }.to_json
+    }
   end
 
 end

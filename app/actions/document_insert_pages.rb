@@ -17,7 +17,7 @@ class DocumentInsertPages < DocumentAction
       document.reorder_pages(new_page_order, access)
     rescue Exception => e
       fail_document
-      LifecycleMailer.deliver_exception_notification(e, options)
+      LifecycleMailer.exception_notification(e,options).deliver
       raise e
     end
     document.id
@@ -68,7 +68,7 @@ class DocumentInsertPages < DocumentAction
     @insert_pdfs.each_with_index do |pdf, i|
       letter = letters[(i + 1) % 26]
       path = File.join(document.path, 'inserts', pdf)
-      File.open(pdf, 'w+') {|f| f.write(asset_store.read(path)) }
+      File.open(pdf, 'wb') {|f| f.write(asset_store.read(path)) }
       pdf_names[letter] = "#{letter}=#{pdf}"
     end
 

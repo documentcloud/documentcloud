@@ -2,7 +2,7 @@ module DC
   module Search
 
     module Controller
-      
+
       API_OPTIONS = {:sections => false, :annotations => false, :access => true, :contributor => false}
 
       def perform_search(opts={})

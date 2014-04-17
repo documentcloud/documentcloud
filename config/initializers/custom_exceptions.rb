@@ -1,1 +1,1 @@
-require 'lib/custom_exceptions'
+require 'custom_exceptions'

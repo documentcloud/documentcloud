@@ -4,17 +4,17 @@ class BackupDatabase < CloudCrowd::Action
 
   def process
     begin
-      config    = Rails::Configuration.new.database_configuration[Rails.env]
+      config    = Rails.configuration.database_configuration[ Rails.env ]
       @host     = config['host'] ? "-h #{config['host']}" : ''
       @username = config['username']
       @pass     = config['password']
       Dir.mktmpdir do |temp_dir|
         @temp_dir = temp_dir
-        backup MAIN_DB['database']
-        backup ANALYTICS_DB['database']
+        backup DC::MAIN_DB['database']
+        backup DC::ANALYTICS_DB['database']
       end
     rescue Exception => e
-      LifecycleMailer.deliver_exception_notification(e)
+      LifecycleMailer.exception_notification(e).deliver
       raise e
     end
     true

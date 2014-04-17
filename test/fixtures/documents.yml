@@ -1,0 +1,54 @@
+tv_manual:
+  publication_date:
+  text_changed: f
+  title: TV Manual
+  original_extension: pdf
+  description: ""
+  hit_count: 1001
+  slug: tv
+  reviewer_count: "0"
+  source: ""
+  page_count: 68
+  organization: tribune
+  calais_id:
+  public_note_count: "102"
+  publish_at:
+  access: <%= DC::Access::PUBLIC %>
+  char_count: "146055"
+  related_article:
+  language: en
+  file_hash: a483ba7b72e0571f23d61f5233228c9540ce325b
+  file_size: "2662279"
+  remote_url: http://example.com/my_precious
+  detected_remote_url:
+  account: louis
+  created_at: <%= Time.now - 1.month - 2.days%>
+  updated_at: <%= Time.now - 1.month - 1.days%>
+
+
+top_secret:
+  publication_date:
+  text_changed: f
+  title: Secret Plans
+  original_extension: pdf
+  description: ""
+  hit_count: "0"
+  slug: tv
+  reviewer_count: "0"
+  source: ""
+  page_count: 68
+  organization: tribune
+  calais_id:
+  public_note_count: "102"
+  publish_at:
+  access: <%= DC::Access::PRIVATE %>
+  char_count: "146055"
+  related_article:
+  language: en
+  file_hash: a483ba7b72e0571f23d61f5233228c9540ce325b
+  file_size: "2662279"
+  remote_url:
+  detected_remote_url:
+  account: louis
+  created_at: <%= Time.now - 1.week - 2.days%>
+  updated_at: <%= Time.now - 1.week - 1.days%>

@@ -1,3 +1,20 @@
+dcloud:
+  id: 1
+  name: DocumentCloud
+  slug: dcloud
+  document_language: eng
+  language: eng
+
+
 tribune:
   name: The Daily Tribune
   slug: daily-tribune
+  document_language: eng
+  language: eng
+
+# has no accounts, because they are 'wait for it..' 
+bankrupt:
+  name: United Media Conglomerate
+  slug: united-media
+  document_language: spa
+  language: spa

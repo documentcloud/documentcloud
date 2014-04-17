@@ -6,12 +6,13 @@ class Annotation < ActiveRecord::Base
   belongs_to :document
   belongs_to :account # NB: This account is not the owner of the document.
                       #     Rather, it is the author of the annotation.
-                      
+
+  belongs_to :organization
   has_many :project_memberships, :through => :document
 
   attr_accessor :author
 
-  validates_presence_of :title, :page_number
+  validates :title, :page_number, :presence=>true
 
   before_validation :ensure_title
 
@@ -22,16 +23,16 @@ class Annotation < ActiveRecord::Base
   text_attr :title
   html_attr :content, :level=>:super_relaxed
 
-  named_scope :accessible, lambda { |account|
+  scope :accessible, lambda { |account|
     has_shared = account && account.accessible_project_ids.present?
-  
+
     # Notes accessible under the following circumstances:
     access = []
     joins  = []
 
     # A note is public
     access << "(annotations.access in (#{PUBLIC_LEVELS.join(",")}))"
-    
+
     if account
       # A note belongs to the accessing account
       access << "(annotations.access = #{PRIVATE} and annotations.account_id = #{account.id})"
@@ -39,7 +40,7 @@ class Annotation < ActiveRecord::Base
       # An draft (EXCLUSIVE) note and the accessing account belong to the same organization
       joins << <<-EOS
         left outer join memberships on
-          (annotations.organization_id = memberships.organization_id and 
+          (annotations.organization_id = memberships.organization_id and
            memberships.account_id = #{account.id})
       EOS
       access << "(annotations.access = #{EXCLUSIVE} and annotations.organization_id = memberships.organization_id)"
@@ -56,22 +57,21 @@ class Annotation < ActiveRecord::Base
         on projects.document_id = annotations.document_id
       EOS
     end
-
-    {:readonly => false, :joins => joins.join("\n"), :conditions => ["(#{access.join(' or ')})"]}
+    where( "(#{access.join(' or ')})" ).joins( joins.join("\n") ).readonly(false)
   }
 
-  named_scope :owned_by, lambda { |account|
-    {:conditions => {:account_id => account.id}}
+  scope :owned_by, lambda { |account|
+    where( :account_id => account.id )
   }
 
-  named_scope :unrestricted, :conditions => {:access => PUBLIC_LEVELS}
+  scope :unrestricted, lambda{ where( :access => PUBLIC_LEVELS ) }
 
   # Annotations are not indexed for the time being.
 
   # searchable do
   #   text :title, :boost => 2.0
   #   text :content
-  # 
+  #
   #   integer :document_id
   #   integer :account_id
   #   integer :organization_id
@@ -81,7 +81,7 @@ class Annotation < ActiveRecord::Base
 
   def self.counts_for_documents(account, docs)
     doc_ids = docs.map {|doc| doc.id }
-    self.accessible(account).count(:conditions => {:document_id => doc_ids}, :group => 'annotations.document_id')
+    self.accessible(account).where({:document_id => doc_ids}).group('annotations.document_id').count
   end
 
   def self.populate_author_info(notes, current_account=nil)
@@ -95,7 +95,7 @@ class Annotation < ActiveRecord::Base
       WHERE annotations.id in (#{notes.map(&:id).join(',')})
     EOS
     rows = Account.connection.select_all(account_sql)
-    account_map = rows.inject({}) do |memo, acc| 
+    account_map = rows.inject({}) do |memo, acc|
       memo[acc['id'].to_i] = acc unless acc.nil?
       memo
     end
@@ -111,11 +111,11 @@ class Annotation < ActiveRecord::Base
   end
 
   def self.public_note_counts_by_organization
-    self.unrestricted.count({
-      :joins      => [:document],
-      :conditions => ["documents.access in (?)", PUBLIC_LEVELS],
-      :group      => 'annotations.organization_id'
-    })
+    self.unrestricted
+      .joins(:document)
+      .where(["documents.access in (?)", PUBLIC_LEVELS])
+      .group('annotations.organization_id')
+      .count
   end
 
   def page
@@ -125,7 +125,7 @@ class Annotation < ActiveRecord::Base
   def access_name
     ACCESS_NAMES[access]
   end
-  
+
   def cacheable?
     PUBLIC_LEVELS.include?(access) && document.cacheable?
   end
@@ -137,9 +137,9 @@ class Annotation < ActiveRecord::Base
   def canonical_cache_path
     "/documents/#{document.id}/annotations/#{id}.js"
   end
-  
+
   def canonical(opts={})
-    data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content, :access => access_name}
+    data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content, 'access' => access_name.to_s }
     data['location'] = {'image' => location} if location
     data['image_url'] = document.page_image_url_template if opts[:include_image_url]
     data['published_url'] = document.published_url || document.document_viewer_url(:allow_ssl => true) if opts[:include_document_url]
@@ -158,12 +158,12 @@ class Annotation < ActiveRecord::Base
     document.reset_public_note_count
   end
 
-  def to_json(opts={})
+  def as_json(opts={})
     canonical.merge({
       'document_id'     => document_id,
       'account_id'      => account_id,
       'organization_id' => organization_id
-    }).to_json
+    })
   end
 
   private

@@ -4,13 +4,15 @@ class HomeController < ApplicationController
   # Regex that matches missed markdown links in `[title][]` format.
   MARKDOWN_LINK_REPLACER = /\[([^\]]*?)\]\[\]/i
 
-  before_filter :prefer_secure
-  before_filter :current_account
-  before_filter :bouncer if Rails.env.staging?
+  before_action :prefer_secure
+  before_action :current_account
+  before_action :bouncer if Rails.env.staging?
 
   def index
-    time = Rails.env.production? ? 2.weeks.ago : nil
-    @document = Document.unrestricted.published.popular.random.since(time).first
+    @document = Rails.cache.fetch( "homepage/featured_document" ) do
+      time = Rails.env.production? ? 2.weeks.ago : nil
+      Document.unrestricted.published.popular.random.since(time).first
+    end
   end
 
   def opensource
@@ -33,7 +35,7 @@ class HomeController < ApplicationController
   private
 
   def date_sorted(list)
-    list.sort_by {|item| item.last }.reverse
+    list.sort{|a,b| b.last <=> a.last }
   end
 
   def yaml_for(action)
