@@ -184,6 +184,11 @@ class AdminController < ApplicationController
   end
 
   def test_embedded_note
+    @document      = Document.find(282753)
+    @wide_note     = @document.annotations.find(80993)
+    @tiny_note     = @document.annotations.find(42225)
+    @page_note     = @document.annotations.find(53672)
+    @narrow_note   = @document.annotations.find(99206)
     render :layout => false
   end
 

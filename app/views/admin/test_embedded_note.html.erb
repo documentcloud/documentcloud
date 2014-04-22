@@ -18,19 +18,19 @@
   <div class="DC-embed-preview">
 
 
-    <div id="DC-note-375" style="width:690px;"></div>
+    <div id="DC-note-<%= @wide_note.id %>" style="width:690px;"></div>
     <script>
-      dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>/documents/472/annotations/375.js');
+      dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>/documents/<%= @document.id %>/annotations/<%= @wide_note.id %>.js');
     </script>
 
-    <div id="DC-note-381" style="width:300px"></div>
+    <div id="DC-note-<%= @narrow_note %>" style="width:300px"></div>
     <script>
-      dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>/documents/472/annotations/381.js');
+      dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>/documents/<%= @document.id %>/annotations/<%= @narrow_note.id %>.js');
     </script>
 
     <div id="container" style="width:270px"></div>
     <script type="text/javascript">
-      dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>/documents/472/annotations/384.js', {
+      dc.embed.loadNote('<%= DC.server_root(:force_ssl => true) %>/documents/<%= @document.id %>/annotations/<%= @tiny_note.id %>.js', {
         container   : '#container'
       });
     </script>
