@@ -131,11 +131,11 @@ class Annotation < ActiveRecord::Base
   end
 
   def canonical_url(format = :json, allow_ssl = false)
-    File.join(DC.server_root(:ssl => allow_ssl, :agnostic => format == :js), canonical_path(format))
+    File.join(DC.server_root(:ssl => allow_ssl), canonical_path(format))
   end
   
   def canonical_path(format = :json)
-    "/documents/#{document.id}/annotations/#{id}.#{format}"
+    "/documents/#{document.canonical_id}/annotations/#{id}.#{format}"
   end
 
   def canonical_cache_path

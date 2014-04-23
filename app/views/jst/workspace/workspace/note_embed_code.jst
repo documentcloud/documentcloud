@@ -6,7 +6,7 @@
 &lt;div id="DC-note-<%= note.get('id') %>" class="DC-note-container"&gt;&lt;/div&gt;
 &lt;script src="//s3.amazonaws.com/s3.documentcloud.org/notes/loader.js"&gt;&lt;/script&gt;
 &lt;script&gt;
-  dc.embed.loadNote('<%= window.SERVER_ROOT_HTTP %>/documents/<%= note.get('document_id') %>/annotations/<%= note.get('id') %>.js'<% if (options) { %>, {
+  dc.embed.loadNote('<%= note.resourceUrl({agnostic: true})%>'<% if (options) { %>, {
     <%= options %>
   }<% } %>);
 &lt;/script&gt;

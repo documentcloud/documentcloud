@@ -11,6 +11,13 @@ dc.model.Note = Backbone.Model.extend({
     if (this.document().viewerEditable) return true;
     return Accounts.current().allowedToEdit(this);
   },
+  
+  resourceUrl: function(opts) {
+    var options = opts || {};
+    var url = this.get('resource_url');
+    if (options.agnostic){ url = url.replace(/^\S+:/,''); }
+    return url;
+  },
 
   imageUrl : function() {
     return this._imageUrl = this._imageUrl ||
