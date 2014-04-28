@@ -6,6 +6,11 @@ module DC
   # our backing stores for the most relevant results, and merges the result
   # sets together according to a strategy of our choosing.
   module Search
+    INVALID_SOLR_CHARACTERS = Regexp.new("[\x0-\x1f]")
+
+    def self.clean_text(text)
+      text.gsub(INVALID_SOLR_CHARACTERS, ' ')
+    end
 
     module Matchers
       FIELD         = /("(.+?)"|'(.+?)'|[^'"\s]{2}\S*):\s*("(.+?)"|'(.+?)'|[^'"\s]\S*)/

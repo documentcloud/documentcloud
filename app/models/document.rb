@@ -124,7 +124,7 @@ class Document < ActiveRecord::Base
     text :source
     text :description
     text :full_text do
-      self.combined_page_text.gsub( Page::INVALID_SOLR_CHARACTERS, '' )
+      DC::Search.clean_text(self.combined_page_text)
     end
 
     # Attributes...

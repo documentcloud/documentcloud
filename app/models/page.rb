@@ -9,8 +9,7 @@ class Page < ActiveRecord::Base
   IMAGE_SIZES['thumbnail']  = '60x75!'
 
   MAX_PAGE_RESULTS = 1000
-  INVALID_SOLR_CHARACTERS=Regexp.new("[\x0-\x1f]")
-
+  
   include DC::Store::DocumentResource
   include DC::Search::Matchers
   include ActionView::Helpers::SanitizeHelper
@@ -24,14 +23,9 @@ class Page < ActiveRecord::Base
 
   before_update :track_text_changes
 
-  def text=(str); write_attribute(:text, self.class.clean_text(str)); end
-  
-  def self.clean_text(str)
-    str.gsub(INVALID_SOLR_CHARACTERS,'')
-  end
   searchable do
     text    :text do
-      text.gsub(INVALID_SOLR_CHARACTERS,'')
+      DC::Search.clean_text(text)
     end
     integer :document_id
     integer :account_id
