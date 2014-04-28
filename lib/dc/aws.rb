@@ -77,35 +77,35 @@ module DC
                                             :image_id          => options[:ami],
                                             :count             => 1,
                                             :security_groups   => ['default'],
-                                            :key_name          => 'documentcloud',
+                                            :key_name          => 'DocumentCloud 2014-04-12',
                                             :instance_type     => options[:type],
                                             :availability_zone => DC::CONFIG['aws_zone']
                                           })
       if ( name = options[:name] )
-        instance.tag('Name', value: name )
+        new_instance.tag('Name', value: name )
       end
       
       # wait until instance is running and get the public dns name
       while :pending == new_instance.status
         sleep 2
-        Rails.logger.info "waiting for instance #{new_instance[:aws_instance_id]} state to become 'running'"
+        Rails.logger.info "waiting for instance #{new_instance.instance_id} state to become 'running'"
       end
 
       # wait until the instance is running sshd
       ssh_options = ssh_config.collect {|k,v| "-o #{k}=#{v}"}.join " "
       while true do
         sleep 2
-        break if system "ssh -o ConnectTimeout=10 #{ssh_options} #{new_instance[:dns_name]} exit 0 2>/dev/null"
+        break if system "ssh -o ConnectTimeout=10 #{ssh_options} #{new_instance.dns_name} exit 0 2>/dev/null"
         Rails.logger.info "waiting for instance #{new_instance.instance_id} / #{new_instance.dns_name} to start sshd "
       end
 
       # configure new instance with ssh key to access github
-      system "ssh #{ssh_options} #{new_instance[:dns_name]} 'test -e .ssh/id_dsa && exit 0; mkdir -p .ssh; while read line; do echo $line; done > .ssh/id_dsa; chmod 0600 .ssh/id_dsa' < #{Rails.root}/secrets/keys/github.pem"
+      system "ssh #{ssh_options} #{new_instance.dns_name} 'test -e .ssh/id_dsa && exit 0; mkdir -p .ssh; while read line; do echo $line; done > .ssh/id_dsa; chmod 0600 .ssh/id_dsa' < #{Rails.root}/secrets/keys/github.pem"
 
       # configure new instance
       unless options[:scripts].empty?
         options[:scripts].each do |script|
-          system "ssh #{ssh_options} #{new_instance[:dns_name]} sudo bash -x < #{script}"
+          system "ssh #{ssh_options} #{new_instance.dns_name} sudo bash -x < #{script}"
         end
       end
 
