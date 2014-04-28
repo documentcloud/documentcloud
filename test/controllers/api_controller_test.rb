@@ -41,14 +41,13 @@ class ApiControllerTest < ActionController::TestCase
     assert_response 400
     get :cors_options, :allowed_methods=>['GET']
     assert_response :success
-    assert_equal '*', response.headers['Access-Control-Allow-Origin']
-    %w{ OPTIONS GET }.each do | method |
+    refute response.headers['Access-Control-Allow-Origin'], "Access Control was set, when request didn't require it"
+    @request.headers['Origin'] = 'test.test.com'
+    get :cors_options, { :allowed_methods=>['GET'] }
+    %w{ OPTIONS GET POST PUT DELETE }.each do | method |
       assert_includes cors_allowed_methods, method
     end
-    %w{ POST PUT DELETE }.each do | method |
-      refute_includes cors_allowed_methods, method
-    end
-    assert_equal ['Authorization'], cors_allowed_headers
+    assert_equal ["Accept", "Authorization", "Content-Length", "Content-Type", "Cookie"], cors_allowed_headers.sort
   end
 
 
