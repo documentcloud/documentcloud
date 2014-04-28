@@ -2,8 +2,8 @@ require 'test_helper'
 
 class StatisticsTest < ActiveSupport::TestCase
 
-  DAY_DATE    = Date.today - 1.day # week #day #parse("2013-03-19")
-  WEEK_DATE   = Date.today - 1.week - 2.day #Time.parse("2013-03-18 00:00:00 UTC=>2")
+  DAY_DATE    = Date.today - 1.day
+  WEEK_DATE   = Date.today - 1.week - 2.day
   MONTH_DATE  = Date.today - 1.month - 2.day
   def test_daily_documents
     docs = DC::Statistics.daily_documents( MONTH_DATE )
@@ -17,12 +17,12 @@ class StatisticsTest < ActiveSupport::TestCase
 
   def test_weekly_documents
     docs = DC::Statistics.weekly_documents( Date.parse("2013-01-01") )
-    assert_equal 1, docs.detect{ |day, count| day.to_date == MONTH_DATE }.last
+    assert_equal [1,1], docs.values
   end
 
   def test_weekly_pages
     pgs = DC::Statistics.weekly_pages
-    assert_equal 68, pgs.detect{ |day, count| day.to_date == MONTH_DATE }.last
+    assert_equal [68, 68 ], pgs.values
   end
 
   def test_daily_hits_on_documents
@@ -32,28 +32,27 @@ class StatisticsTest < ActiveSupport::TestCase
 
   def test_weekly_hits_on_documents
     hits = DC::Statistics.weekly_hits_on_documents
-    assert_equal 122, hits.detect{ |day, count| day.to_date == MONTH_DATE }.last
+    assert_equal [122,18], hits.values
   end
 
   def test_daily_hits_on_notes
     hits = DC::Statistics.daily_hits_on_notes
-    date = MONTH_DATE+2.days
-    assert_equal 11, hits.detect{ |day, count| day.to_date == date }.last
+    assert_equal [11,3], hits.values
   end
 
   def test_weekly_hits_on_notes
     hits = DC::Statistics.weekly_hits_on_notes
-    assert_equal 11, hits.detect{ |day, count| day.to_date == MONTH_DATE }.last
+    assert_equal [11,3], hits.values
   end
 
   def test_daily_hits_on_searches
     hits = DC::Statistics.daily_hits_on_searches
-    assert_equal 13, hits[ DAY_DATE ]
+    assert_equal 1, hits[ Date.today - 1.week ]
   end
 
   def test_weekly_hits_on_searches
     hits = DC::Statistics.weekly_hits_on_searches
-    assert_equal 11, hits.detect{ |day, count| day.to_date == MONTH_DATE }.last
+    assert_equal [14, 11], hits.values
   end
 
   def test_pages_since
