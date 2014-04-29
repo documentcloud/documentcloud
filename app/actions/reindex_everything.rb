@@ -18,7 +18,7 @@ class ReindexEverything < CloudCrowd::Action
       end
     end
     Sunspot.commit
-    ids
+    true
   end
 
 end
