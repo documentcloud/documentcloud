@@ -17,17 +17,8 @@ class ReindexEverything < CloudCrowd::Action
         retry if counter < 5
       end
     end
+    Sunspot.commit
     ids
   end
 
-  def merge
-    counter = 0
-    begin
-      Sunspot.commit
-    rescue Exception => e
-      counter += 1
-      LifecycleMailer.exception_notification(e, options).deliver
-      retry if counter < 5
-    end
-  end
 end
