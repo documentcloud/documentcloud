@@ -7,8 +7,8 @@ module DC
   # sets together according to a strategy of our choosing.
   module Search
     # All Java XML control chars, except:
-    # 0x0A (line feed), 0x0B (tab), and 0x0D (carriage return)
-    INVALID_SOLR_CHARACTERS = Regexp.new("[\x0-\x09|\x0c|\x0e-\x1f]")
+    # 0x0A (line feed) and 0x0D (carriage return)
+    INVALID_SOLR_CHARACTERS = Regexp.new("[\x0-\x09|\x0b|\x0c|\x0e-\x1f]")
 
     def self.clean_text(text)
       text.gsub(INVALID_SOLR_CHARACTERS, ' ')
