@@ -1,6 +1,5 @@
 <%
-  root = DC.server_root(:agnostic => true)
-  asset_root = DC::CONFIG['asset_root'] || root
+  asset_root = DC.cdn_root(:agnostic => true)
 %>
 
 (function() {
@@ -8,7 +7,7 @@
   if (window.dc && window.dc.noteEmbedLoaded) return;
 
   window.dc = window.dc || {};
-  window.dc.recordHit = "<%= root.sub('s3', 'www') %>/pixel.gif";
+  window.dc.recordHit = "<%= DC.server_root(:agnostic=>true) %>/pixel.gif";
 
   var loadCSS = function(url, media) {
     var link   = document.createElement('link');

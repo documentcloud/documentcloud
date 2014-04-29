@@ -10,17 +10,7 @@ require 'dc/statistics'
 require 'dc/zip_utils'
 require 'dc/import'
 require 'dc/i18n'
+require 'dc/urls'
+
 module DC
-
-  # The canonical server root, including SSL, if requested.
-  def self.server_root(options={:ssl => true, :agnostic => false, })
-    root = case
-           when options[:force_ssl] || (options[:ssl] && Thread.current[:ssl]) then 'https://'
-           when options[:agnostic] then '//'
-           else
-             'http://'
-           end
-    root + DC::CONFIG['server_root']
-  end
-
 end
