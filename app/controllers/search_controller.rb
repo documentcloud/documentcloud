@@ -55,7 +55,9 @@ class SearchController < ApplicationController
   end
 
   def loader
-    render :template => 'search_embed/loader', :action => 'loader', :content_type => :js
+    respond_to do |format|
+      format.js { render :template => 'search_embed/loader' }
+    end
   end
 
 end
