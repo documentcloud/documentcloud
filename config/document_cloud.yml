@@ -11,7 +11,7 @@ development:
 
 staging:
   <<: *defaults
-  cloud_crowd_server: ec2-50-16-197-147.compute-1.amazonaws.com:8080
+  cloud_crowd_server: <%= secrets['db_host'] %>:8080
   server_root:        staging.documentcloud.org
   asset_root:         "s3.amazonaws.com/dcloud_staging"
 
