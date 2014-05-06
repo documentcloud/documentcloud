@@ -14,7 +14,7 @@ gem 'docsplit',               '>= 0.6.4'
 gem 'sunspot_rails',          '~> 2.1.0'
 gem 'sunspot_solr',           '~> 2.1.0'
 gem 'progress_bar'  # optional, used by sunspot to show progress while re-indexing
-gem 'cloud-crowd',            :github=>'documentcloud/cloud-crowd', :branch=>'stabilize-server'
+gem 'cloud-crowd',            '~>0.7.3'
 gem 'sqlite3'
 gem 'pdftailor'
 gem 'omniauth',               '~> 1.1.4'

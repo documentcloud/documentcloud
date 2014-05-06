@@ -1,18 +1,4 @@
 GIT
-  remote: git://github.com/documentcloud/cloud-crowd.git
-  revision: c0f00df98f57f7d669b919203a95c2ac061ae504
-  branch: stabilize-server
-  specs:
-    cloud-crowd (0.7.2)
-      active_model_serializers
-      activerecord (>= 3.0)
-      json (>= 1.1.7)
-      rake
-      rest-client (>= 1.4)
-      sinatra
-      thin (>= 1.2.4)
-
-GIT
   remote: git://github.com/documentcloud/jammit.git
   revision: a68e62ab3e6c2ed06029919bb059473d177777e6
   branch: rails4
@@ -76,6 +62,14 @@ GEM
       celluloid (>= 0.15.0)
       nio4r (>= 0.5.0)
     closure-compiler (1.1.10)
+    cloud-crowd (0.7.3)
+      active_model_serializers
+      activerecord (>= 3.0)
+      json (>= 1.1.7)
+      rake
+      rest-client (>= 1.4)
+      sinatra
+      thin (>= 1.2.4)
     coderay (1.1.0)
     cssmin (1.0.3)
     curb (0.8.5)
@@ -255,7 +249,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.1)
   calais (~> 0.0.13)!
   closure-compiler
-  cloud-crowd!
+  cloud-crowd (~> 0.7.3)
   curb (~> 0.8.4)
   docsplit (>= 0.6.4)
   google_drive
