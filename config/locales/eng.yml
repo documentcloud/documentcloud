@@ -109,7 +109,7 @@
   - administrator: Administrator
   - all_documents: All Documents
   - allow_readers_to_search: Allow readers to search this set of documents
-  - already_has_account: "%s alread has an account."
+  - already_has_account: "%s already has an account."
   - analyze: Analyze
   - analyze_project_in_overview: Analyze this Project in Overview
   - analyze_x_docs_in_overview:
