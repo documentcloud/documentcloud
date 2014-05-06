@@ -19,7 +19,7 @@ class FeaturedReport < ActiveRecord::Base
   end
 
   def writeup_html
-    @writeup_html ||= RDiscount.new( writeup ).to_html
+    @writeup_html ||= RDiscount.new( writeup ).to_html.html_safe
   end
 
   def serializable_hash( options={} )
