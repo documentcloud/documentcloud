@@ -73,7 +73,7 @@ class RedactPages < DocumentAction
     Page::IMAGE_SIZES.each do |size, geometry|
       if size != 'large'
         FileUtils.cp previous, images[size]
-        `gm mogrify #{GM_ARGS} -density 150 -unsharp 0x0.5+0.75 -resize #{geometry} #{images[size]} 2>&1`
+        `gm mogrify #{GM_ARGS} -density 150 -resize #{geometry} #{images[size]} 2>&1`
       end
       previous = images[size]
     end
