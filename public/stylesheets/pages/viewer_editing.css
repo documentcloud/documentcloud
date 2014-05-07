@@ -166,10 +166,9 @@
   }
     #section_editor li {
       margin-top: 7px;
+      position: relative;
       width: 430px; height: 25px;
       color: #ccc;
-      line-height: 25px;
-      position: relative;
     }
       #section_editor li:first-child {
         margin-top: 0;
@@ -191,11 +190,11 @@
         font-size: 11px;
         color: #808080;
         position: absolute;
-        margin: -1px 0 0 -14px;
+        bottom: 5px;
+        right: 55px;
       }
       #section_editor .plus, #section_editor .minus {
         float: left;
-        margin: 5px 0 0 3px;
         cursor: pointer;
       }
         #section_editor .minus {
