@@ -28,7 +28,6 @@ gem 'rake'
 gem 'actionpack-page_caching'
 gem 'jammit',                 :github=>'documentcloud/jammit', :branch=>'rails4'
 gem 'nokogiri', '~> 1.6.0'
-gem 'skylight'
 
 group :development, :test do
   gem 'net-ssh'

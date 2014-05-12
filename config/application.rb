@@ -39,7 +39,5 @@ module DC
     ::DC::MAIN_DB      = YAML.load(ERB.new(File.read("#{Rails.root}/config/database.yml")).result(binding))[Rails.env]
 
     config.filter_parameters += [:password]
-
-    config.skylight.config_path = "secrets/skylight.yml"
   end
 end
