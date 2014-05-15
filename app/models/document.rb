@@ -42,7 +42,7 @@ class Document < ActiveRecord::Base
   has_many :remote_urls,          :dependent   => :destroy
   has_many :project_memberships,  :dependent   => :destroy
   has_many :projects,             :through     => :project_memberships
-
+  has_many :processing_jobs
 
   has_many :reviewer_projects,     -> { where( :hidden => true) },
                                      :through     => :project_memberships,
@@ -646,8 +646,7 @@ class Document < ActiveRecord::Base
   # Keep a local ProcessingJob record of this active CloudCrowd Job.
   def record_job(job_json)
     job = JSON.parse(job_json)
-    ProcessingJob.create!(
-      :document_id    => id,
+    processing_jobs.create!(
       :account_id     => account_id,
       :cloud_crowd_id => job['id'],
       :title          => title,
