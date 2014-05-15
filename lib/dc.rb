@@ -1,4 +1,5 @@
 require 'dc/access'
+require 'dc/status'
 require 'dc/roles'
 require 'dc/sanitized'
 require 'dc/validators'
