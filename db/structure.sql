@@ -780,7 +780,8 @@ CREATE TABLE entities (
     value character varying(255) NOT NULL,
     relevance double precision DEFAULT 0.0 NOT NULL,
     calais_id character varying(40),
-    occurrences text
+    occurrences text,
+    status integer DEFAULT 1
 );
 
 
@@ -795,7 +796,8 @@ CREATE TABLE entity_dates (
     document_id integer NOT NULL,
     access integer NOT NULL,
     date date NOT NULL,
-    occurrences text
+    occurrences text,
+    status integer DEFAULT 1
 );
 
 
@@ -986,7 +988,8 @@ CREATE TABLE pages (
     page_number integer NOT NULL,
     text text NOT NULL,
     start_offset integer,
-    end_offset integer
+    end_offset integer,
+    status integer DEFAULT 1
 );
 
 

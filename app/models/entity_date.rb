@@ -2,6 +2,7 @@ class EntityDate < ActiveRecord::Base
 
   include DC::Store::DocumentResource
   include DC::Store::EntityResource
+  extend DC::Status::Migration
 
   belongs_to :document
   belongs_to :account

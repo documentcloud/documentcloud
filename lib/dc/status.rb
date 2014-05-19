@@ -19,5 +19,20 @@ module DC
     }
     
     STATUS_NAMES = STATUS_MAP.invert
+    
+    # REMOVE AFTER STATUS IS MIGRATED
+    FROM_ACCESS = Hash.new(AVAILABLE)
+    FROM_ACCESS[DC::Access::ERROR]   = ERROR
+    FROM_ACCESS[DC::Access::PENDING] = UNAVAILABLE
+    
+    # REMOVE AFTER STATUS IS MIGRATED
+    # extend relevent model calsses with this
+    module Migration
+      def update_all_statuses
+        self.where(:access=>DC::Access::ERROR).update_all(:status => DC::Status::ERROR)
+        self.where(:access=>DC::Access::PENDING).update_all(:status => DC::Status::UNAVAILABLE)
+        self.where("access not in (?)", [DC::Access::PENDING, DC::Access::ERROR]).update_all(:status => DC::Status::AVAILABLE)
+      end
+    end
   end
 end

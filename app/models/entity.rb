@@ -5,6 +5,7 @@ class Entity < ActiveRecord::Base
 
   include DC::Store::DocumentResource
   include DC::Store::EntityResource
+  extend DC::Status::Migration
 
   DEFAULT_RELEVANCE = 0.0
 

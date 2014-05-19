@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 class Document < ActiveRecord::Base
   include DC::Access
+  include DC::Status
+  extend DC::Status::Migration
   include ActionView::Helpers::TextHelper
 
   # Accessors and constants:
@@ -941,7 +943,9 @@ class Document < ActiveRecord::Base
   end
 
   def background_update_asset_access(access_level)
-    return update_attributes(:access => access_level) if Rails.env.development?
+    changes = {:access => access_level}
+    changes[:status] = DC::Status::FROM_ACCESS[access_level]
+    return update_attributes(changes) if Rails.env.development?
     RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'update_access',
       'inputs'  => [self.id],
@@ -949,5 +953,4 @@ class Document < ActiveRecord::Base
       'callback_url' => "#{DC.server_root(:ssl => false)}/import/update_access"
     }.to_json})
   end
-
 end

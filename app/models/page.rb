@@ -14,6 +14,7 @@ class Page < ActiveRecord::Base
   include DC::Search::Matchers
   include ActionView::Helpers::SanitizeHelper
   extend ActionView::Helpers::SanitizeHelper::ClassMethods
+  extend DC::Status::Migration
 
   belongs_to :document
   belongs_to :account
