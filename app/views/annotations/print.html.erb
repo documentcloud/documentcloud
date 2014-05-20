@@ -23,7 +23,7 @@
     // print and close the page.
 
     $(document.body).append((new dc.ui.DocumentList().render()).el);
-    Documents.reset([<%= @documents_json.join(',') %>]);
+    Documents.reset([<%= raw @documents_json.join(',') %>]);
     $(window).load(function() {
       window.print();
     });
