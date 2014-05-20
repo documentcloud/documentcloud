@@ -1,7 +1,7 @@
 # Add your own tasks in files placed in lib/tasks ending in .rake,
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
-if ['test development','staging','production'].include?(ARGV.first)
+if ['test','development','staging','production'].include?(ARGV.first)
     RAILS_ENV = ENV['RAILS_ENV'] = ARGV.first
 end
 
