@@ -50,18 +50,18 @@ namespace :app do
 
     desc "Clears out cached document JS files."
     task :docs do
-      sh 'find ./public/documents/ -maxdepth 1 -name "*.js" -delete'
+      print `find ./public/documents/ -maxdepth 1 -name "*.js" -delete`
       invoke 'app:clearcache:notes'
     end
 
     desc "Clears out cached annotation JS files."
     task :notes do
-      sh 'find ./public/documents/*/annotations/ -maxdepth 1 -name "*.js" -delete'
+      print `find ./public/documents/*/annotations/ -maxdepth 1 -name "*.js" -delete`
     end
 
     desc "Purges cached search embeds."
     task :search do
-      sh "rm -rf ./public/search/embed/*"
+      print `rm -rf ./public/search/embed/*`
     end
 
   end
