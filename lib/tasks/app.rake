@@ -37,7 +37,7 @@ namespace :app do
 
   desc "Repackage static assets"
   task :jammit do
-    config = YAML.load_file("#{Rails.root}/config/document_cloud.yml")[RAILS_ENV]
+    config = YAML.load(ERB.new(File.read("#{Rails.root}/config/document_cloud.yml")).result(binding))[Rails.env]
     sh "sudo su www-data -c \"jammit -u http://#{config['server_root']}\""
   end
 
