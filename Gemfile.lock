@@ -139,7 +139,9 @@ GEM
     multi_json (1.10.0)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    net-ssh (2.9.0)
+    net-ssh (2.1.4)
+    net-ssh-shell (0.2.0)
+      net-ssh (~> 2.1.0)
     nio4r (1.0.0)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
@@ -297,7 +299,7 @@ DEPENDENCIES
   jammit!
   minitest
   minitest-spec-rails
-  net-ssh
+  net-ssh-shell
   nokogiri (~> 1.6.0)
   omniauth (~> 1.2.1)
   omniauth-facebook (~> 1.6)

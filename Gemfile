@@ -28,9 +28,9 @@ gem 'rake'
 gem 'actionpack-page_caching'
 gem 'jammit',                 :github=>'documentcloud/jammit', :branch=>'rails4'
 gem 'nokogiri', '~> 1.6.0'
+gem 'net-ssh-shell'
 
 group :development, :test do
-  gem 'net-ssh'
   gem 'guard-bundler'
   gem 'growl'
   gem "sunspot_matchers"
