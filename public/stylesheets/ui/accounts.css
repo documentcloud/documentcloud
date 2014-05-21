@@ -181,8 +181,9 @@ body.accounts_panel_tab #organization_list {
       color: #ccc;
       border-bottom: 1px solid #222;
     }
-      .collaborator_list .account_view.disabled_role td {
-        color: #BBB;
+      .collaborator_list .account_view.disabled_role td,
+      .collaborator_list .account_view.disabled .role .display {
+        color: #B66161;
       }
       .account_list .first,
       .collaborator_list .first {
@@ -204,7 +205,7 @@ body.accounts_panel_tab #organization_list {
   display: block;
 }
 .account_list .disabled_role.display_view_mode td {
-  color: #777777;
+  color: #B66161;
 }
 .account_list img.avatar,
 .collaborator_list img.avatar {
@@ -227,7 +228,6 @@ body.accounts_panel_tab #organization_list {
     .account_list .name_wrapper .text_input:first-child {
       margin-right: 20px;
     }
-.account_list .role .display,
 .account_list .role .edit {
   font: 11px/18px Arial;
   color: #777;
