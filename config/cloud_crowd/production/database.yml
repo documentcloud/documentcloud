@@ -6,7 +6,9 @@
 :adapter:  postgresql
 :encoding: unicode
 :schema_search_path: public
-:pool:     5
+:pool: 10
+:dead_connection_timeout: 1
+:reaping_frequency: 30
 :username: <%= secrets['username'] %>
 :password: <%= secrets['db_password'] %>
 :allow_concurrency: true

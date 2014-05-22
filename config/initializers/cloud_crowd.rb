@@ -6,6 +6,7 @@ if defined? Rails::Console
   CloudCrowd.configure("./config/cloud_crowd/#{Rails.env}/config.yml")
 
   [CloudCrowd::Job, CloudCrowd::WorkUnit, CloudCrowd::NodeRecord].each do |klass|
+    Kernel.const_set klass.to_s.demodulize, klass # Hoist the constant into main namespace for easier quering
     klass.class_eval do
       config_path = "./config/cloud_crowd/#{Rails.env}/database.yml"
       configuration = YAML.load(ERB.new(File.read(config_path)).result)
@@ -13,5 +14,4 @@ if defined? Rails::Console
     end
   end
 
-  include CloudCrowd
 end

@@ -96,13 +96,28 @@ def configuration
 end
 
 def remote(commands, machines)
-  commands = [commands].flatten
-  conf = configuration
-  todo = []
+  conf    = configuration
+  todo    = []
+  threads = []
   todo << "cd #{conf[:dir]}"
-  todo << "bundle install && rake #{RAILS_ENV} #{commands.join(' ')}"
+  todo << "./bin/bundle install"
+  todo << "./bin/rake #{RAILS_ENV} #{commands.flatten.join(' ')}"
   machines.each do |host|
-    puts "\n-- #{host} --"
-    system "ssh -A -t -i #{conf[:key]} #{conf[:user]}@#{host} '#{todo.join(' && ')}'"
+    threads << Thread.new do
+      puts "\n-- #{host} --"
+      prefix = machines.many? ? sprintf("%-20s", host.gsub(/\..*$/,'') ) : ''
+      Net::SSH.start( host, conf[:user], keys: conf[:key], paranoid: false) do |ssh|
+        ssh.shell do |sh|
+          process = sh.execute( todo.join(' && ') )
+          process.on_output do |shell, line|
+            line.chomp!
+            puts prefix+line unless line.blank?
+          end
+          sh.wait!
+          sh.execute! 'exit'
+        end
+      end
+    end
+    threads.each{ |t| t.join }
   end
 end

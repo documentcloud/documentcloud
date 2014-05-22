@@ -1,5 +1,10 @@
 namespace :deploy do
 
+  desc "Deploy only minimal updates to Rails code"
+  task :minimal do
+    remote ["app:update", "app:restart", "app:warm"], app_servers
+  end
+
   desc "Deploy and migrate the database, then restart CloudCrowd"
   task :full do
     remote ["app:update", "app:jammit", "db:migrate", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers

@@ -226,5 +226,10 @@ class DocumentTest < ActiveSupport::TestCase
     assert_job_action 'reprocess_entities'
   end
 
+  def test_job_recording
+    assert_difference ->{ ProcessingJob.count }, 1 do
+      doc.record_job '{ "id": "23" }'
+    end
+  end
 
 end
