@@ -1,6 +1,12 @@
 /* ============ */
 /* = DC Reset = */
 /* ============ */
+.DC-search-container * {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+}
+
 .DC-search-embed div, .DC-search-embed span, .DC-search-embed a {
   margin: 0;
   padding: 0;
