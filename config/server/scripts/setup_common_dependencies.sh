@@ -98,10 +98,14 @@ uname -a | tee -a /etc/motd
 # postfix configuration
 perl -pi -e 's/smtpd_use_tls=yes/smtpd_use_tls=no/' /etc/postfix/main.cf
 
+# turn of rdoc/ri generation for gems
+echo 'gem: --no-document' > /home/$USERNAME/.gemrc
+chown $USERNAME.$USERNAME /home/$USERNAME/.gemrc
+
 # Despite the fact that a system ruby has been installed via apt
 # we'll use ruby-install and chruby to install a more recent ruby
 
-installer_tmp="/home/ubuntu/downloads/"
+installer_tmp="/home/$USERNAME/downloads/"
 mkdir -p $installer_tmp
 cd $installer_tmp
 
