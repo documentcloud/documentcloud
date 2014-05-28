@@ -141,6 +141,19 @@ class LifecycleMailer < ActionMailer::Base
          })
   end
 
+
+  # Email the owner of a document which is having difficulty processing
+  def permission_to_review(document)
+    @document = document
+    mail(
+      :subject       => "We were unable to successfully process a document",
+      :cc            => SUPPORT,
+      :to            => document.account.email,
+      :content_type  => "text/plain"
+    )
+  end
+
+
   private
 
   # this will break if HTML format emails are ever used.
