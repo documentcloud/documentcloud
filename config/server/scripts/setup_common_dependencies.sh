@@ -143,6 +143,7 @@ make install
 echo 'if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
   source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh
+  chruby 2.1
 fi' > /etc/profile.d/chruby.sh
 
 source /etc/profile.d/chruby.sh
