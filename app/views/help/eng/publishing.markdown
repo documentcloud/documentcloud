@@ -74,7 +74,7 @@ You'll be asked to select the note to embed, and will be able to preview the emb
       dc.embed.loadNote('http://www.documentcloud.org/documents/223/annotations/237.js');
     </script>
 
-Copy and paste the HTML onto your own site. Clicking the title or the image will open the document. Documents will open in DocumentCloud unless you've published them elsewhere. We use <a href="http://www.propublica.org/nerds/item/pixel-ping-a-nodejs-stats-tracker">pixel ping</a> to guess a document's Published URL, so if users won't find the document another way, you may need to add the Published URL manually.
+Copy and paste the HTML onto your own site. Clicking the title or the image will open the document. Documents will open in DocumentCloud unless you've published them elsewhere. We use [pixel ping](http://www.propublica.org/nerds/item/pixel-ping-a-nodejs-stats-tracker) to guess a document's Published URL, so if users won't find the document another way, you may need to add the Published URL manually.
 
 # <span id="docset">Embedding a Document Set</span>
 
@@ -84,7 +84,7 @@ If you'd rather embed a complete set of documents, DocumentCloud can provide the
 
 You can embed any set of documents, whether or not you uploaded them: any document that has already been published by their contributor will open to the URL at which it originally appeared.
 
-To get started, find a set of documents you wish to embed -- either by selecting a project or by running a search. **Note:** future public documents added to the project or matching the search criteria will be added to your embbedded document set. Open the "Publish" menu and select "Embed Document List." You'll see a dialog which allows you to configure the embedded set:
+To get started, find a set of documents you wish to embed -- either by selecting a project or by running a search. **Note:** future public documents added to the project or matching the search criteria will be added to your embedded document set. Open the "Publish" menu and select "Embed Document List." You'll see a dialog which allows you to configure the embedded set:
 
  * Provide a **title** to be displayed above the embedded set of documents;
  * **Order** documents alphabetically, by date uploaded, or by length;
