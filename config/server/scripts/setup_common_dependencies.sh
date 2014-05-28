@@ -32,6 +32,7 @@ tesseract-ocr
 libpcre3-dev
 sysstat
 libbz2-dev
+make
 '
 
 RUBY_DEPENDENCIES='
