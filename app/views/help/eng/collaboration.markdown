@@ -1,6 +1,6 @@
 # Collaboration
 
-You already know you can [share documents](/help/privacy#access) with everyone in your newsroom</a>. You can also share projects full of documents with other users, whether or not they're in your newsroom, and share specific documents with reviewers, whether or not they have a DocumentCloud account.
+You already know you can [share documents](/help/privacy#access) with everyone in your newsroom. You can also share projects full of documents with other users, whether or not they're in your newsroom, and share specific documents with reviewers, whether or not they have a DocumentCloud account.
 
 ##  <span id="collaborate">Sharing Projects with Reporters</span>
 
