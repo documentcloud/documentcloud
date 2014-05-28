@@ -3,7 +3,7 @@
 USERNAME=ubuntu
 RAILS_ENVIRONMENT=production
 
-echo "deb http://apt.postgresql.org/pub/repos/apt/ saucy-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt-get update
@@ -105,7 +105,7 @@ cd $installer_tmp
 #
 # Make sure to check what the most recent version of ruby-install is.
 #
-ruby_install_version='0.4.1'
+ruby_install_version='0.4.3'
 chruby_version='0.3.8'
 
 wget -O ruby-install-$ruby_install_version.tar.gz https://github.com/postmodern/ruby-install/archive/v$ruby_install_version.tar.gz
