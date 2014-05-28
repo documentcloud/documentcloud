@@ -1,6 +1,12 @@
 /* ============ */
 /* = DC Reset = */
 /* ============ */
+.DC-search-container * {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+}
+
 .DC-search-embed div, .DC-search-embed span, .DC-search-embed a {
   margin: 0;
   padding: 0;
@@ -284,8 +290,8 @@
   padding: 6px 0 0;
   margin: 0;
   font-size: 11px;
-  line-height: 18px;
-  height: 18px;
+  line-height: 25px;
+  height: 25px;
   color: #808080;
   border-top: 1px solid #ccc;
   position: relative;
