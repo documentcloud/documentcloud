@@ -10,7 +10,7 @@ class DocumentsController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:send_page_text]
 
   SIZE_EXTRACTOR        = /-(\w+)\Z/
-  PAGE_NUMBER_EXTRACTOR = /-p(\d+)/
+  PAGE_NUMBER_EXTRACTOR = /.*-p(\d+)/
 
   def show
     Account.login_reviewer(params[:key], session, cookies) if params[:key]

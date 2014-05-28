@@ -199,7 +199,10 @@ class DocumentsControllerTest < ActionController::TestCase
   end
 
   def test_send_page_text
-    get :send_page_text, :id=>doc.id, :page_name=>'one-p1-800'
+    # n.b. the document's title might have /-p\d/ naturally occuring
+    # We should get the page that corresponds to the last occurance
+    get :send_page_text, :id=>doc.id, :page_name=>'one-p88-p1-800'
+    assert_response :success
     assert_equal pages(:first).text, response.body
   end
 
