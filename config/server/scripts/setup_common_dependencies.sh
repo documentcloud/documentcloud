@@ -62,14 +62,9 @@ libxml2-dev
 libxslt-dev
 libexpat1-dev
 zlib1g-dev
-libzlib-ruby
-libopenssl-ruby
 ruby
 ri
-rdoc
-irb
 ruby-dev
-rubygems
 '
 
 TESSERACT_LANGUAGES='
