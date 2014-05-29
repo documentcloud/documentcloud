@@ -141,6 +141,8 @@ ruby-install ruby stable
 # load chruby (and thereby the current stable ruby)
 source /etc/profile.d/chruby.sh
 
+cd $installer_tmp
+
 rm -rf "$installer_tmp/ruby-install-$ruby_install_version/"
 rm -rf "$installer_tmp/chruby-$chruby_version/"
 
@@ -172,4 +174,3 @@ uname -a | tee -a /etc/motd
 
 # postfix configuration
 perl -pi -e 's/smtpd_use_tls=yes/smtpd_use_tls=no/' /etc/postfix/main.cf
-
