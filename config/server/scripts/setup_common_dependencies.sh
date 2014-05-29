@@ -143,12 +143,12 @@ make install
 echo 'if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
   source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh
-  chruby 2.1
+  chruby ruby stable
 fi' > /etc/profile.d/chruby.sh
 
-source /etc/profile.d/chruby.sh
-
 ruby-install ruby stable
+
+source /etc/profile.d/chruby.sh
 
 rm -rf "$installer_tmp/ruby-install-$ruby_install_version/"
 rm -rf "$installer_tmp/chruby-$chruby_version/"
