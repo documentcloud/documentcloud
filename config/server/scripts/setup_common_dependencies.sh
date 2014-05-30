@@ -151,20 +151,6 @@ chown $USERNAME.$USERNAME /home/$USERNAME/.gemrc
 grep -q '^UseDNS no' /etc/ssh/sshd_config || echo 'UseDNS no' >> /etc/ssh/sshd_config
 service ssh reload
 
-# replace annoying motd with new one
-test -e /etc/motd && rm /etc/motd
-cat >/etc/motd <<'EOF'
-
-______                                      _   _____ _                 _
-|  _  \                                    | | /  __ \ |               | |
-| | | |___   ___ _   _ _ __ ___   ___ _ __ | |_| /  \/ | ___  _   _  __| |
-| | | / _ \ / __| | | | '_ ` _ \ / _ \ '_ \| __| |   | |/ _ \| | | |/ _` |
-| |/ / (_) | (__| |_| | | | | | |  __/ | | | |_| \__/\ | (_) | |_| | (_| |
-|___/ \___/ \___|\__,_|_| |_| |_|\___|_| |_|\__|\____/_|\___/ \__,_|\__,_|
-
-EOF
-uname -a | tee -a /etc/motd
-
 # postfix configuration
 perl -pi -e 's/smtpd_use_tls=yes/smtpd_use_tls=no/' /etc/postfix/main.cf
 
@@ -182,3 +168,20 @@ bundle install
 ## Cleanup after ourselves
 rm -rf "$installer_tmp/ruby-install-$ruby_install_version/"
 rm -rf "$installer_tmp/chruby-$chruby_version/"
+
+# replace annoying motd with new one
+test -e /etc/motd && rm /etc/motd
+cat >/etc/motd <<'EOF'
+
+______                                      _   _____ _                 _
+|  _  \                                    | | /  __ \ |               | |
+| | | |___   ___ _   _ _ __ ___   ___ _ __ | |_| /  \/ | ___  _   _  __| |
+| | | / _ \ / __| | | | '_ ` _ \ / _ \ '_ \| __| |   | |/ _ \| | | |/ _` |
+| |/ / (_) | (__| |_| | | | | | |  __/ | | | |_| \__/\ | (_) | |_| | (_| |
+|___/ \___/ \___|\__,_|_| |_| |_|\___|_| |_|\__|\____/_|\___/ \__,_|\__,_|
+
+EOF
+uname -a | tee -a /etc/motd
+
+echo COMMON DEPENDENCY SETUP COMPLETED SUCCESSFULLY
+
