@@ -8,7 +8,7 @@ set -e
 test $USER = 'root' || { echo run this as root >&2; exit 1; }
 
 USERNAME=ubuntu
-RAILS_ENVIRONMENT=production
+RAILS_ENV=production
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 apt-get install apt-transport-https ca-certificates
@@ -34,5 +34,8 @@ test -e pixel-ping || su -c "git clone git://github.com/documentcloud/pixel-ping
 cd /home/$USERNAME/documentcloud
 
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.default.conf
+test -e /etc/nginx/sites-enabled/default && rm /etc/nginx/sites-enabled/default
 
-cp config/server/files/nginx/{nginx,documentcloud,staging,passenger}.conf /etc/nginx/
+cp config/server/files/nginx/{nginx,documentcloud,passenger}.conf /etc/nginx/
+cp config/server/files/nginx/{staging,production}.conf /etc/nginx/sites-available/
+ln -s /etc/nginx/sites-available/$RAILS_ENV.conf /etc/nginx/sites-enabled/documentcloud-$RAILS_ENV.conf
