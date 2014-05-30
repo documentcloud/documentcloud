@@ -39,3 +39,7 @@ test -e /etc/nginx/sites-enabled/default && rm /etc/nginx/sites-enabled/default
 cp config/server/files/nginx/{nginx,documentcloud,passenger}.conf /etc/nginx/
 cp config/server/files/nginx/{staging,production}.conf /etc/nginx/sites-available/
 ln -s /etc/nginx/sites-available/$RAILS_ENV.conf /etc/nginx/sites-enabled/documentcloud-$RAILS_ENV.conf
+
+service nginx restart
+
+echo WEBSERVER SETUP COMPLETED SUCCESSFULLY
