@@ -152,7 +152,7 @@ grep -q '^UseDNS no' /etc/ssh/sshd_config || echo 'UseDNS no' >> /etc/ssh/sshd_c
 service ssh reload
 
 # replace annoying motd with new one
-rm /etc/motd
+test -e /etc/motd && rm /etc/motd
 cat >/etc/motd <<'EOF'
 
 ______                                      _   _____ _                 _
