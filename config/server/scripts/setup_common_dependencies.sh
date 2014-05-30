@@ -149,7 +149,7 @@ chown $USERNAME.$USERNAME /home/$USERNAME/.gemrc
 
 # disable ssh dns to avoid long pause before login
 grep -q '^UseDNS no' /etc/ssh/sshd_config || echo 'UseDNS no' >> /etc/ssh/sshd_config
-/etc/init.d/ssh reload
+service ssh reload
 
 # replace annoying motd with new one
 rm /etc/motd
