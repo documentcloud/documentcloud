@@ -42,5 +42,5 @@ group :development, :test do
   gem 'google_drive'
   # securely ask for username/password for access to translation spreadsheet
   gem 'highline'
-  gem "pry-plus"
+  gem "pry"
 end

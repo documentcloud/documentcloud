@@ -48,7 +48,7 @@ class LifecycleMailerTest < ActionMailer::TestCase
     end
     email = LifecycleMailer.exception_notification(exception).deliver
     assert_equal [ LifecycleMailer::SUPPORT ], email.to
-    assert_match(/undefined local variable or method `jklasfa'/, email.body.to_s )
+    assert_match(/undefined local variable or method `jklasfa'/, email.body.to_s ) #`
   end
 
   def test_documents_finished_processing
@@ -69,6 +69,13 @@ class LifecycleMailerTest < ActionMailer::TestCase
                                     }).deliver
     assert_match(/lifecycle_mailer_test.rb/, email.body.to_s )
     assert_match(/document_id: 190792297 \(Fixnum\)/, email.body.to_s )
+  end
+
+  # Email the owner of a document which is having difficulty processing
+  def test_permission_to_review
+    assert_difference ->{ActionMailer::Base.deliveries.count}, 1 do
+      LifecycleMailer.permission_to_review(doc).deliver
+    end
   end
 
 end

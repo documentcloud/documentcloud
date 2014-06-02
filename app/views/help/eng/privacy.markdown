@@ -6,7 +6,7 @@ If you are concerned about the secrecy of documents you have uploaded to Documen
 
   * DocumentCloud is beta software.
 
-  * DocumentCloud does have a <a href="/privacy">privacy policy</a>.
+  * DocumentCloud does have a [privacy policy](/privacy).
 
   * All documents uploaded to DocumentCloud are passed through OpenCalais via their API. Take a look at their [terms of service][] if you haven't already.
 
