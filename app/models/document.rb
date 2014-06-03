@@ -756,44 +756,46 @@ class Document < ActiveRecord::Base
 
   # Create an identical clone of this document, in all ways (except for the ID).
   def duplicate!(account=nil, options={})
-    # Clone the document.
-    newattrs = attributes.merge({
-      :access     => PENDING,
-      :created_at => Time.now,
-      :updated_at => Time.now
-    })
-    newattrs.delete('id')
-    newattrs[:account_id] = account.id if account
-    newattrs[:organization_id] = account.organization.id if account and not newattrs[:organization_id]
-    copy     = Document.create!(newattrs.merge({:hit_count  => 0, :detected_remote_url => nil}))
-    newattrs = {:document_id => copy.id}
+    Document.transaction do
+      # Clone the document.
+      newattrs = attributes.merge({
+          :access     => PENDING,
+          :created_at => Time.now,
+          :updated_at => Time.now
+      })
+      newattrs.delete('id')
+      newattrs[:account_id] = account.id if account
+      newattrs[:organization_id] = account.organization.id if account and not newattrs[:organization_id]
+      copy     = Document.create!(newattrs.merge({:hit_count  => 0, :detected_remote_url => nil}))
+      newattrs = {:document_id => copy.id}
 
-    # Clone the docdata.
-    if docdata and options['include_docdata']
-      Docdata.create! docdata.attributes.merge newattrs
-    end
-
-    # Clone the associations.
-    associations = [entities, entity_dates, pages]
-    associations.push sections if options['include_sections']
-    associations.push annotations.accessible(account) if options['include_annotations']
-    associations.push project_memberships if options['include_project']
-    associations.each do |association|
-      association.each do |model|
-        model_attrs = model.attributes.merge newattrs
-        model_attrs.delete('id')
-        model.class.create! model_attrs
+      # Clone the docdata.
+      if docdata and options['include_docdata']
+        Docdata.create! docdata.attributes.merge newattrs
       end
+
+      # Clone the associations.
+      associations = [entities, entity_dates, pages]
+      associations.push sections if options['include_sections']
+      associations.push annotations.accessible(account) if options['include_annotations']
+      associations.push project_memberships if options['include_project']
+      associations.each do |association|
+        association.each do |model|
+          model_attrs = model.attributes.merge newattrs
+          model_attrs.delete('id')
+          model.class.create! model_attrs
+        end
+      end
+
+      # Clone the assets.
+      DC::Store::AssetStore.new.copy_assets(self, copy, self.access)
+
+      # Reindex, set access.
+      copy.index
+      copy.set_access access
+
+      copy
     end
-
-    # Clone the assets.
-    DC::Store::AssetStore.new.copy_assets(self, copy, self.access)
-
-    # Reindex, set access.
-    copy.index
-    copy.set_access access
-
-    copy
   end
 
   # TODO: Make the to_json an extended form of the canonical.
