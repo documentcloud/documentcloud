@@ -121,7 +121,7 @@ module DC
       # Duplicate all of the assets from one document over to another.
       def copy_assets(source, destination, access)
         [:copy_pdf, :copy_images, :copy_text].each do |task|
-          send(task, source, destination)
+          send(task, source, destination, access)
         end
         true
       end
