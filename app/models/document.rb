@@ -762,6 +762,7 @@ class Document < ActiveRecord::Base
       :created_at => Time.now,
       :updated_at => Time.now
     })
+    newattrs.delete('id')
     newattrs[:account_id] = account.id if account
     newattrs[:organization_id] = account.organization.id if account and not newattrs[:organization_id]
     copy     = Document.create!(newattrs.merge({:hit_count  => 0, :detected_remote_url => nil}))
@@ -779,7 +780,9 @@ class Document < ActiveRecord::Base
     associations.push project_memberships if options['include_project']
     associations.each do |association|
       association.each do |model|
-        model.class.create! model.attributes.merge newattrs
+        model_attrs = model.attributes.merge newattrs
+        model_attrs.delete('id')
+        model.class.create! model_attrs
       end
     end
 
