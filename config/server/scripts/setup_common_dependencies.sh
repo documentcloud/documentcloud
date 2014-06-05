@@ -154,16 +154,8 @@ service ssh reload
 # postfix configuration
 perl -pi -e 's/smtpd_use_tls=yes/smtpd_use_tls=no/' /etc/postfix/main.cf
 
-############################################
-# Install DocumentCloud source dependencies
-############################################
-
 # load chruby (and thereby the current stable ruby)
 source /etc/profile.d/chruby.sh
-
-cd /home/$USERNAME/documentcloud
-gem install bundler
-bundle install
 
 ## Cleanup after ourselves
 rm -rf "$installer_tmp/ruby-install-$ruby_install_version/"

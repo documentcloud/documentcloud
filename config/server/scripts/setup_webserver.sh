@@ -33,13 +33,14 @@ test -e pixel-ping || su -c "git clone git://github.com/documentcloud/pixel-ping
 
 cd /home/$USERNAME/documentcloud
 
-mv /etc/nginx/nginx.conf /etc/nginx/nginx.default.conf
+test -e /etc/nginx/nginx.conf && mv /etc/nginx/nginx.conf /etc/nginx/nginx.default.conf
 test -e /etc/nginx/sites-enabled/default && rm /etc/nginx/sites-enabled/default
 
-cp config/server/files/nginx/{nginx,documentcloud,passenger}.conf /etc/nginx/
-cp config/server/files/nginx/{staging,production}.conf /etc/nginx/sites-available/
+cp ./config/server/files/nginx/{nginx,documentcloud,passenger}.conf /etc/nginx/
+cp ./config/server/files/nginx/{staging,production}.conf /etc/nginx/sites-available/
 ln -s /etc/nginx/sites-available/$RAILS_ENV.conf /etc/nginx/sites-enabled/documentcloud-$RAILS_ENV.conf
 
 service nginx restart
+rake $RAILS_ENV ping:start
 
 echo WEBSERVER SETUP COMPLETED SUCCESSFULLY

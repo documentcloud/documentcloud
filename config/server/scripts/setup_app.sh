@@ -12,6 +12,9 @@ chown -R $USERNAME .
 test -e documentcloud || sudo -u $USERNAME git clone git@github.com:documentcloud/documentcloud.git documentcloud
 cd /home/$USERNAME/documentcloud
 
-bundle install
+gem install bundler
+./bin/bundle install
 
 # Don't forget to download your secrets file into documentcloud/secrets!
+
+#./bin/rails runner -e production 'puts "You already have #{Document.count} documents"'
