@@ -334,6 +334,10 @@ class Document < ActiveRecord::Base
     update_attributes :char_count => 1+self.pages.maximum(:end_offset).to_i
   end
 
+  def has_no_running_jobs?
+    processing_jobs.where(:completed=>false, :queued=>true).none?
+  end
+
   # Does this document have a title?
   def titled?
     title.present? && (title != DEFAULT_TITLE)

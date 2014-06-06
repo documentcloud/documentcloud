@@ -19,12 +19,24 @@ module DC
     }
     
     STATUS_NAMES = STATUS_MAP.invert
+
+    def available?
+      self.status == AVAILABLE
+    end
+    
+    def unavailable?
+      self.status == UNAVAILABLE
+    end
+    
+    def viewable?
+      [AVAILABLE, VIEWABLE].include? self.status
+    end
     
     # REMOVE AFTER STATUS IS MIGRATED
     FROM_ACCESS = Hash.new(AVAILABLE)
     FROM_ACCESS[DC::Access::ERROR]   = ERROR
     FROM_ACCESS[DC::Access::PENDING] = UNAVAILABLE
-    
+
     # REMOVE AFTER STATUS IS MIGRATED
     # extend relevent model calsses with this
     module Migration
