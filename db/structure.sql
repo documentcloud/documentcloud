@@ -1021,7 +1021,10 @@ CREATE TABLE processing_jobs (
     account_id integer NOT NULL,
     cloud_crowd_id integer NOT NULL,
     title character varying(255) NOT NULL,
-    document_id integer
+    document_id integer,
+    action character varying(255),
+    options character varying(255),
+    complete boolean DEFAULT false
 );
 
 
@@ -1802,4 +1805,6 @@ INSERT INTO schema_migrations (version) VALUES ('20130109194211');
 INSERT INTO schema_migrations (version) VALUES ('20130327170939');
 
 INSERT INTO schema_migrations (version) VALUES ('20140514180442');
+
+INSERT INTO schema_migrations (version) VALUES ('20140606170323');
 

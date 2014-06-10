@@ -335,7 +335,7 @@ class Document < ActiveRecord::Base
   end
 
   def has_no_running_jobs?
-    processing_jobs.where(:completed=>false, :queued=>true).none?
+    processing_jobs.incomplete.none?
   end
 
   # Does this document have a title?

@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 gem 'iconv'
 gem 'rails',                  '~>4.1.0'
+gem 'active_model_serializers'
 gem 'curb',                   '~>0.8.4'
 gem 'calais',                 '~> 0.0.13', :github=>'nathanstitt/calais', :branch=>'newer_nokogiri'
 gem 'rest-client',            '~> 1.6.7'
