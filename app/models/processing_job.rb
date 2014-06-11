@@ -40,9 +40,9 @@ class ProcessingJob < ActiveRecord::Base
   def queue
     # take advantage of ActiveRecord's error system.
     errors.clear
-    errors.add(:queued, "This job has already been queued")                  && (return false) unless new_record?
-    errors.add(:document, "Document must be locked as unavailable to queue") && (return false) unless document.unavailable? 
-    errors.add(:document, "Document is already being processed")             && (return false) unless document.has_no_running_jobs?
+    errors.add(:cloud_crowd_id, "This job has already been queued") && (return false) unless new_record?
+    errors.add(:document, "must be locked as unavailable to queue") && (return false) unless document.unavailable? 
+    errors.add(:document, "is already being processed")             && (return false) unless document.has_no_running_jobs?
 
     # Contact CloudCrowd to start the job, and get back its id.
     @response   = RestClient.post(ProcessingJob.endpoint, {:job => CloudCrowdSerializer.new(self).to_json})
