@@ -92,7 +92,7 @@ module DC
         FileUtils.rm(local(document.page_text_path(page_number)))
       end
 
-      def save_database_backup(name, path)
+      def save_backup(name, path)
         ensure_directory("backups/#{name}")
         FileUtils.cp(path, local("backups/#{name}/#{Date.today}.dump"))
       end

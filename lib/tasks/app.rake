@@ -1,5 +1,19 @@
 namespace :app do
 
+  namespace :backup do
+
+    desc "Backup the rails production log file"
+    task :rails, [:file]=>:environment do |t, args|
+      DC::Store::AssetStore.new.save_backup('rails', args[:file])
+    end
+
+    desc "Backup the nginx log file"
+    task :nginx, [:file]=>:environment do |t, args|
+      DC::Store::AssetStore.new.save_backup('nginx', args[:file])
+    end
+
+  end
+
   task :start do
     sh "sudo /etc/init.d/nginx start"
   end

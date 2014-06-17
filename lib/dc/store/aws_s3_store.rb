@@ -97,7 +97,7 @@ module DC
         remove_file(document.page_text_path(page_number))
       end
       
-      def save_database_backup(name, path)
+      def save_backup(name, path)
         bucket.objects["backups/#{name}/#{Date.today}.dump"].write(File.open(path))
       end
       
