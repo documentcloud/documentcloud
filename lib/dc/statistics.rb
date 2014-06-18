@@ -192,6 +192,29 @@ module DC
       # columns = Account.column_names | Account.first.canonical(:include_document_counts => true).keys
       DC::CSV::generate_csv(accounts, columns)
     end
+    
+    # To Do: set up a general notifier.
+    # Should take a webhook url and a json payload to send.
+    def self.notify_top_ten
+      top_ten_hits = RemoteUrl.where('document_id is not null and date_recorded = ?',Time.now.utc.to_date).group('document_id').order("sum_hits desc").limit(10).sum('hits')
+      data = top_ten_hits.map do |id, hits|
+        doc = Document.find(id)
+        {
+          'title' => doc.title,
+          'contributor' => doc.account.full_name,
+          'organization' => doc.organization.name,
+          'embedded_url' => doc.published_url || doc.detected_remote_url,
+          'canonical_url' => doc.canonical_url(:html),
+          'hits'  => hits
+        }
+      end
+
+      text = "Top ten most popular documents today\n"
+      text += data.map{ |d| "#{d['hits']} hits for <#{d['embedded_url']}|#{d['title']}> (<#{d['canonical_url']}|dc link>) contributed by #{d['contributor']} (#{d['organization']})" }.join("\n")
+      hook_url = DC::SECRETS['slack_webhook']
+      data = {:payload => {:text => text, :username => "docbot", :icon_emoji => ":doccloud:"}.to_json}
+      RestClient.post(hook_url, data)
+    end
   end
 
 end
