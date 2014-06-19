@@ -605,10 +605,11 @@
   - term: " Terms"
   - terms: Terms
   - text: Text
-  - text_reprocess_help: "\"Reprocess\" this document to take advantage of improvements
-      to our text extraction tools. Choose \"Force OCR\" (optical character recognition)
+  - text_reprocess_help: '"Reprocess" this document to take advantage of improvements
+      to our text extraction tools. Choose "Force OCR" (optical character recognition)
       to ignore any embedded text information and use Tesseract before reprocessing.
-      The document will close while it's being rebuilt. Are you sure you want to proceed?"
+      The document will close while it''s being rebuilt. Are you sure you want to
+      proceed?'
   - text_tools: Text Tools
   - the_api: The DocumentCloud API
   - timeline_for_doc: Timeline for "%s"
@@ -651,7 +652,7 @@
   - x_is_no_longer_a_reviewer_on_x:
     - "%2$s is no longer a reviewer on the Document"
     - "%2$s is no longer a reviewer on the %1$d Documents"
-  - x_is_not_published: "\"%s\" is not published."
+  - x_is_not_published: '"%s" is not published.'
   - x_mentions:
     - One Mention
     - "%d Mentions"
@@ -666,7 +667,7 @@
   - x_results:
     - "%d Result"
     - "%d Results"
-  - x_still_processing: "\"%s\" is still being processed. Please wait for it to finish."
+  - x_still_processing: '"%s" is still being processed. Please wait for it to finish.'
   - your_documents: Your Documents
   - your_organization: Your Organization
   - your_published_documents: Your Published Documents

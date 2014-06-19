@@ -1,5 +1,4 @@
 --- !omap
-- html: !omap []
 - viewer: !omap
   - CLOSE: CERRAR
   - add_note_instructions: Destacar una parte de la página, o hacer clic entre páginas
@@ -664,7 +663,7 @@
   - x_is_no_longer_a_reviewer_on_x:
     - "%2$s ya no es un crítico en el documento"
     - "%2$s ya no es un crítico de los %1$d Documentos"
-  - x_is_not_published: "\"%s\" no se publica."
+  - x_is_not_published: '"%s" no se publica.'
   - x_mentions:
     - Una Mención
     - "%d Menciones"
@@ -679,7 +678,7 @@
   - x_results:
     - "%d Resultado "
     - "%d Resultados"
-  - x_still_processing: "\"%s\" está siendo procesada. Espere a que termine por favor."
+  - x_still_processing: '"%s" está siendo procesada. Espere a que termine por favor.'
   - your_documents: Tus Documentos
   - your_organization: Tu Organización
   - your_published_documents: Tus Documentos Publicados
