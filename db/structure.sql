@@ -1637,6 +1637,27 @@ CREATE INDEX index_processing_jobs_on_account_id ON processing_jobs USING btree 
 
 
 --
+-- Name: index_processing_jobs_on_action; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_processing_jobs_on_action ON processing_jobs USING btree (action);
+
+
+--
+-- Name: index_processing_jobs_on_cloud_crowd_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_processing_jobs_on_cloud_crowd_id ON processing_jobs USING btree (cloud_crowd_id);
+
+
+--
+-- Name: index_processing_jobs_on_document_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_processing_jobs_on_document_id ON processing_jobs USING btree (document_id);
+
+
+--
 -- Name: index_project_memberships_on_document_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
