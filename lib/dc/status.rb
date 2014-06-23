@@ -24,10 +24,6 @@ module DC
       self.status == AVAILABLE
     end
     
-    def unavailable?
-      self.status == UNAVAILABLE
-    end
-    
     def viewable?
       [AVAILABLE, VIEWABLE].include? self.status
     end
