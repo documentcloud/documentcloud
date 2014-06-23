@@ -1,5 +1,6 @@
 # A ProcessingJob is the record of an active job on CloudCrowd.
 class ProcessingJob < ActiveRecord::Base
+  include DC::Status
 
   belongs_to :account
   belongs_to :document
@@ -36,24 +37,32 @@ class ProcessingJob < ActiveRecord::Base
       end
     end
   end
-
+  
+  # lock document and send job to be processed.
   def queue
     # take advantage of ActiveRecord's error system.
     errors.clear
-    errors.add(:cloud_crowd_id, "This job has already been queued") && (return false) unless new_record?
-    errors.add(:document, "must be locked as unavailable to queue") && (return false) unless document.unavailable? 
-    errors.add(:document, "is already being processed")             && (return false) unless document.has_no_running_jobs?
+    errors.add(:cloud_crowd_id, "This job has already been queued") and (return false) unless new_record?
+    errors.add(:document, "is already being processed")             and (return false) unless document.available?
+    
+    # Lock the document & contact CloudCrowd to start the job
+    document.update :status => UNAVAILABLE
+    begin
+      # If the request was successful, get the job id
+      @response = RestClient.post(ProcessingJob.endpoint, {:job => CloudCrowdSerializer.new(self).to_json})
+      @remote_job = JSON.parse @response.body
+      self.cloud_crowd_id = @remote_job['id']
 
-    # Contact CloudCrowd to start the job, and get back its id.
-    @response   = RestClient.post(ProcessingJob.endpoint, {:job => CloudCrowdSerializer.new(self).to_json})
-    @remote_job = JSON.parse @response.body
-    self.cloud_crowd_id = @remote_job['id']
-
-    # We've collected all the info we need, so
-    save # it
+      # We've collected all the info we need, so
+      save # it and retain the lock on the document.
+    rescue Errno::ECONNREFUSED, RestClient::Exception => error
+      # In the event of an error while communicating with CloudCrowd, unlock the document.
+      document.update :status => AVAILABLE
+      raise error
+    end
   end
   
-  # We'll save options as a JSON string, so we need to 
+  # We'll store options as a JSON string, so we need to 
   # cast it into a string when options are assigned.
   #
   # WARNING: if you monkey around with the contents of options
