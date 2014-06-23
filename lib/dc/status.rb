@@ -7,12 +7,14 @@ module DC
   #   a document is protected from concurrency issues.
   module Status
     ERROR       = 0 # The document has encountered an error during processing
-    UNAVAILABLE = 1 # The document is undergoing processing that blocks any other use
-    VIEWABLE    = 2 # The document is viewable but unavailable for other processing
-    AVAILABLE   = 3 # The document is viewable and available for processing
+    INITIAL     = 1 # The initial status for all newly created objects.
+    UNAVAILABLE = 2 # The document is undergoing processing that blocks any other use
+    VIEWABLE    = 3 # The document is viewable but unavailable for other processing
+    AVAILABLE   = 4 # The document is viewable and available for processing
     
     STATUS_MAP = {
       :error       => ERROR,
+      :initial     => INITIAL,
       :unavailable => UNAVAILABLE,
       :viewable    => VIEWABLE,
       :available   => AVAILABLE
@@ -22,6 +24,10 @@ module DC
 
     def available?
       self.status == AVAILABLE
+    end
+    
+    def unimported?
+      self.status == INITIAL
     end
     
     def viewable?

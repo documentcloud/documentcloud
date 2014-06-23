@@ -43,7 +43,7 @@ class ProcessingJob < ActiveRecord::Base
     # take advantage of ActiveRecord's error system.
     errors.clear
     errors.add(:cloud_crowd_id, "This job has already been queued") and (return false) unless new_record?
-    errors.add(:document, "is already being processed")             and (return false) unless document.available?
+    errors.add(:document, "is already being processed")             and (return false) unless document.available? or document.unimported?
     
     # Lock the document & contact CloudCrowd to start the job
     document.update :status => UNAVAILABLE
