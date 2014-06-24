@@ -2,13 +2,16 @@ class SwitchOverToSolrAltogether < ActiveRecord::Migration
   extend DC::Store::MigrationHelpers
 
   def self.up
+    found_pages = false
+
     # Index with Solr.
-    Page.find_in_batches(:conditions => ['true']) do |pages|
+    Page.find_in_batches do |pages|
+      found_pages ||= true
       Sunspot.index(pages)
     end
 
     # Commit the updates.
-    Sunspot.commit
+    Sunspot.commit if found_pages
 
     # Remove the Postgres indexes.
     remove_full_text_index :annotations, :content

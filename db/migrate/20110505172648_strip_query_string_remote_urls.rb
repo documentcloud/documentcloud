@@ -2,7 +2,7 @@ class StripQueryStringRemoteUrls < ActiveRecord::Migration
   
   def self.up
     doc_ids = []
-    docs = RemoteUrl.all(:conditions => ['url LIKE ? AND document_id is not NULL', '%?%']).group_by {|u| u.document_id }
+    docs = RemoteUrl.where(['url LIKE ? AND document_id IS NOT NULL', '%?%']).to_a.group_by(&:document_id)
     docs.each do |id, doc_urls|
       docs[id] = doc_urls.group_by {|h| h.date_recorded }
     end
