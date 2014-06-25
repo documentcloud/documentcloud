@@ -2,9 +2,9 @@ require File.dirname(__FILE__) + '/setup'
 require 'fileutils'
 
 class DocumentAction < CloudCrowd::Action
-
   # The default merge behavior just returns the document id.
   def merge
+    document.update(:status => DC::Status::AVAILABLE) # ideally this would happen as the result of the callback
     document.id
   end
 
