@@ -44,7 +44,7 @@ class Document < ActiveRecord::Base
   has_many :remote_urls,          :dependent   => :destroy
   has_many :project_memberships,  :dependent   => :destroy
   has_many :projects,             :through     => :project_memberships
-  has_many :processing_jobs
+  has_many :processing_jobs,      :validate => false
 
   has_many :reviewer_projects,     -> { where( :hidden => true) },
                                      :through     => :project_memberships,
