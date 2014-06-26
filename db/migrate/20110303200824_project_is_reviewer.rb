@@ -1,9 +1,9 @@
 class ProjectIsReviewer < ActiveRecord::Migration
   def self.up
-    projects = Project.find(:all, :conditions => ["reviewer_document_id IS NOT NULL"])
+    ids = Project.where("reviewer_document_id IS NOT NULL").pluck(:id).to_a
     add_column :projects, :hidden, :boolean, :default => false, :null => false
     remove_column :projects, :reviewer_document_id
-    projects.each {|p| p.update_attributes :hidden => true }
+    Project.where(id: ids).update_all(hidden: true)
   end
 
   def self.down

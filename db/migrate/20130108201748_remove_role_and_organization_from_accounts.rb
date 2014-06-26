@@ -1,6 +1,6 @@
 class RemoveRoleAndOrganizationFromAccounts < ActiveRecord::Migration
   def self.up
-    remove_index :accounts, 'organization_id'
+    remove_index :accounts, name: 'fk_organization_id'
     
     remove_column :accounts, 'role'
     remove_column :accounts, 'organization_id'
@@ -15,5 +15,7 @@ class RemoveRoleAndOrganizationFromAccounts < ActiveRecord::Migration
     end
     change_column 'accounts', 'role',            :integer, :null => false
     change_column 'accounts', 'organization_id', :integer, :null => false
+
+    add_index "accounts", ["organization_id"], :name => "fk_organization_id"
   end
 end
