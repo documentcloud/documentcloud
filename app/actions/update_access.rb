@@ -2,10 +2,10 @@ require File.dirname(__FILE__) + '/support/setup'
 
 # A background job to update all child models with the correct access level
 # of the parent document, and update all assets on S3.
-class UpdateAccess < CloudCrowd::Action
+class UpdateAccess < DocumentAction
 
   def process
-    begin
+    fail_document_and_notify_on_exception do
       ActiveRecord::Base.establish_connection
       access   = options['access']
       document = Document.find(input)
@@ -22,10 +22,6 @@ class UpdateAccess < CloudCrowd::Action
       changes = {:access => access}
       changes[:status] = DC::Status::FROM_ACCESS[access]
       document.update_attributes(changes)
-    rescue Exception => e
-      LifecycleMailer.exception_notification(e,options).deliver
-      document.update_attributes(:access => DC::Access::ERROR, :status => DC::Status::ERROR) if document
-      raise e
     end
     true
   end

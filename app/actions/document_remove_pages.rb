@@ -5,7 +5,7 @@ require 'fileutils'
 class DocumentRemovePages < DocumentAction
 
   def process
-    begin
+    fail_document_and_notify_on_exception do
       prepare_pdf
       @insert_after_remove = options['replace_pages_start'] && options['insert_document_count']
       remove_pages options['pages']
@@ -15,11 +15,6 @@ class DocumentRemovePages < DocumentAction
                                   options['insert_document_count'],
                                   options['access'])
       end
-
-    rescue Exception => e
-      fail_document
-      LifecycleMailer.exception_notification(e,options).deliver
-      raise e
     end
     document.id
   end

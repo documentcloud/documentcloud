@@ -1,15 +1,12 @@
 require File.dirname(__FILE__) + '/support/setup'
 
-class DuplicateDocuments < CloudCrowd::Action
+class DuplicateDocuments < DocumentAction
 
   def process
-    begin
+    fail_document_and_notify_on_exception do
       Document.where( {:id => input} ).find_each do |doc|
         doc.duplicate!(account, options)
       end
-    rescue Exception => e
-      LifecycleMailer.exception_notification(e, options).deliver
-      raise e
     end
     true
   end

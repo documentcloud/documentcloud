@@ -5,17 +5,13 @@ require 'fileutils'
 class DocumentReorderPages < DocumentAction
 
   def process
-    begin
+    fail_document_and_notify_on_exception do
       prepare_pdf
       if document.assert_page_order(options['page_order'])
         reorder_pages options['page_order']
       else
         raise "Inexplicable page order: #{options.inspect} (#{document.inspect})"
       end
-    rescue Exception => e
-      fail_document
-      LifecycleMailer.exception_notification(e,options).deliver
-      raise e
     end
     document.id
   end

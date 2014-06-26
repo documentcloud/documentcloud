@@ -5,20 +5,16 @@ require 'fileutils'
 class DocumentInsertPages < DocumentAction
 
   def process
-    @old_page_count    = document.page_count
-    @pdfs_count        = options['pdfs_count'].to_i
-    @insert_page_at    = options['insert_page_at'].to_i
-    @insert_page_count = 0
-    @insert_pdfs       = (1..@pdfs_count).map {|n| "#{n}.pdf" }
-    begin
+    fail_document_and_notify_on_exception do
+      @old_page_count    = document.page_count
+      @pdfs_count        = options['pdfs_count'].to_i
+      @insert_page_at    = options['insert_page_at'].to_i
+      @insert_page_count = 0
+      @insert_pdfs       = (1..@pdfs_count).map {|n| "#{n}.pdf" }
       prepare_pdf
       process_concat
       add_pages
       document.reorder_pages(new_page_order, access)
-    rescue Exception => e
-      fail_document
-      LifecycleMailer.exception_notification(e,options).deliver
-      raise e
     end
     document.id
   end

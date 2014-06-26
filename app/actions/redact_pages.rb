@@ -18,17 +18,12 @@ class RedactPages < DocumentAction
   GM_ARGS = '-limit memory 256MiB -limit map 512MiB'
 
   def process
-    begin
+    fail_document_and_notify_on_exception do
       prepare_pdf
       redact
-    rescue Exception => e
-      fail_document
-      LifecycleMailer.exception_notification(e,options).deliver
-      raise e
     end
     document.id
   end
-
 
   private
 

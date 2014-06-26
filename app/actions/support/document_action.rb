@@ -27,9 +27,19 @@ class DocumentAction < CloudCrowd::Action
   def access
     options['access'] || DC::Access::PRIVATE
   end
-
+  
   def fail_document
-    document.update_attributes :access => DC::Access::ERROR
+    document.update :access => DC::Access::ERROR, :status => DC::Status::ERROR
+  end
+  
+  def fail_document_and_notify_on_exception
+    begin
+      yield
+    rescue => error
+      fail_document
+      LifecycleMailer.exception_notification(error,options).deliver
+      raise error
+    end
   end
 
 end
