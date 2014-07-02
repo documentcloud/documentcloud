@@ -10,8 +10,11 @@ class ApiController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
-  before_action :secure_only,        :only => [:upload, :project, :projects, :upload, :destroy, :create_project, :update_project, :destroy_project]
-  before_action :api_login_required, :only => [:upload, :project, :projects, :update, :destroy, :create_project, :update_project, :destroy_project]
+  SECURED_ACTIONS = [ :upload, :project, :projects, :update, :destroy,
+                      :create_project, :update_project, :destroy_project, :account ]
+
+  before_action :secure_only,        :only => SECURED_ACTIONS
+  before_action :api_login_required, :only => SECURED_ACTIONS
   before_action :api_login_optional, :only => [:documents, :search, :notes, :pending, :entities]
   before_filter :maybe_set_cors_headers
 
@@ -168,6 +171,11 @@ class ApiController < ApplicationController
     current_project.set_documents( doc_ids )
     current_project.update_attributes data
     @response = {'project' => current_project.reload.canonical}
+    json_response
+  end
+
+  def account
+    @response = current_account.canonical
     json_response
   end
 

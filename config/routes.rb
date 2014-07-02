@@ -47,6 +47,7 @@ DC::Application.routes.draw do
       match 'documents/:id/notes/:note_id.:format', allowed_methods: [:get]
       match 'projects/:id.:format',                 allowed_methods: [:get, :put, :delete]
       match 'projects.:format',                     allowed_methods: [:get, :post]
+      match 'account.:format',                      allowed_methods: [:get]
       match 'search.:format',                       allowed_methods: [:get]
     end
 
@@ -58,6 +59,7 @@ DC::Application.routes.draw do
     get 'documents/pending.:format',            action: 'pending'
     get 'projects/:id.:format',                 action: 'project'
     get 'projects.:format',                     action: 'projects'
+    get 'account.:format',                      action: 'account'
     post 'projects.:format',                    action: 'create_project'
     put 'projects/:id.:format',                 action: 'update_project'
     delete 'projects/:id.:format',              action: 'destroy_project'

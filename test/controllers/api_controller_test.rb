@@ -179,4 +179,11 @@ class ApiControllerTest < ActionController::TestCase
     assert_raises( ActiveRecord::RecordNotFound ){ Project.find( project.id ) }
   end
 
+  def test_account_retrieval
+    login_account!
+    get :account
+    assert_response :success
+    assert_equal louis.canonical, json_body
+  end
+
 end
