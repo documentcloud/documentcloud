@@ -1,31 +1,69 @@
-# Ubuntu 14.04
-FROM ubuntu:14.04
+FROM phusion/baseimage:0.9.12
 MAINTAINER Stefan Wehrmeyer, stefan.wehrmeyer@correctiv.org
 
-RUN apt-get update && apt-get -y -f install build-essential checkinstall curl git-core graphicsmagick irb libbz2-dev libcurl4-openssl-dev libexpat-dev libitext-java libjpeg62-dev libleptonica-dev libpcre3-dev libpng12-dev libpq-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libxslt1-dev libyaml-dev libzip-dev mercurial openjdk-6-jdk libreoffice libreoffice-java-common pdftk postfix postgresql postgresql-client postgresql-contrib python-software-properties rdoc ri scons sqlite3 tesseract-ocr-dev tesseract-ocr-eng wget xfsprogs xpdf zlib1g-dev
+# Disable SSH
+RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 
-RUN apt-get install software-properties-common -y && apt-get update && add-apt-repository ppa:brightbox/ruby-ng && apt-get update && apt-get install ruby2.1 ruby2.1-dev -y
+RUN apt-get -q -y update
+RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
+    build-essential \
+    curl \
+    git-core \
+    graphicsmagick \
+    libbz2-dev \
+    libcurl4-openssl-dev \
+    libexpat-dev \
+    libitext-java \
+    libjpeg62-dev \
+    libleptonica-dev \
+    libpcre3-dev \
+    libpng12-dev \
+    libpq-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    libyaml-dev \
+    libzip-dev \
+    mercurial \
+    openjdk-6-jdk \
+    libreoffice \
+    libreoffice-java-common \
+    pdftk \
+    postfix \
+    scons \
+    sqlite3 \
+    tesseract-ocr-dev \
+    tesseract-ocr-eng \
+    wget \
+    xfsprogs \
+    xpdf \
+    zlib1g-dev
 
-WORKDIR /tmp
-ADD Gemfile Gemfile
-ADD Gemfile.lock Gemfile.lock
+RUN add-apt-repository ppa:brightbox/ruby-ng
+RUN apt-get -q -y update
+RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install ruby2.1 ruby2.1-dev
 
-RUN gem install bundler && bundle install
+# Don't bother installing documentation for any gems
+RUN echo gem: --no-document >>/etc/gemrc
 
-ENV RAILS_ENV development
+RUN gem install bundler
 
-RUN service postgresql start && \
- su postgres sh -c "createuser -d -r -s documentcloud" && \
- -u postgres psql -c "ALTER USER documentcloud WITH PASSWORD 'documentcloud';" && \
- su postgres sh -c "createdb -O documentcloud dcloud_development" && \
- su postgres sh -c "psql -c \"GRANT ALL PRIVILEGES ON DATABASE dcloud_development to documentcloud;\"" && \
- rake $RAILS_ENV db:migrate
+# Add Gemfile and Gemfile.lock separately so that only changes to these files
+# trigger a cache invalidation and a reinstall of all gems.
+ADD Gemfile /src/documentcloud/Gemfile
+ADD Gemfile.lock /src/documentcloud/Gemfile.lock
+RUN bundle install --gemfile=/src/documentcloud/Gemfile --path=/src/documentcloud/.bundle
 
-RUN apt-get install nginx
+ADD . /src/documentcloud
+ADD ./contrib/docker/my_init.d /etc/my_init.d
+ADD ./contrib/docker/svc /etc/service
 
-ADD . /home/root/documentcloud
-WORKDIR /home/root/documentcloud
+# Set default RAILS_ENV. This can easily be overridden on the commandline to
+# `docker run`.
+ENV RAILS_ENV production
 
-EXPOSE 8080
+EXPOSE 80
 
-CMD service postgresql start && rake development crowd:server:start crowd:node:start
+CMD ['/sbin/my_init']

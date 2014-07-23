@@ -1,0 +1,6 @@
+#!/bin/sh
+exec 2>&1
+
+cd /src/documentcloud
+
+exec bundle exec thin -p 80 start

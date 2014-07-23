@@ -1,0 +1,49 @@
+#!/bin/sh
+
+set -e
+
+cd /src/documentcloud
+
+: ${DB_NAME:=documentcloud}
+: ${SECRET_KEY:=$(ruby -rsecurerandom -e 'puts SecureRandom.hex(40)')}
+
+set -u
+
+mkdir -p secrets
+
+if [ ! -e secrets/secrets.yml ]; then
+  cat >secrets/secrets.yml <<EOM
+${RAILS_ENV}:
+  db_host: "${DB_HOST}"
+  username: "${DB_USERNAME}"
+  db_password: "${DB_PASSWORD}"
+  solr_host: "${SOLR_HOST}"
+
+  job_end_point:  # the hostname for your cloud-crowd server
+  central_server: # the fully qualified (private) url for the cloud-crowd server (e.g. http://ip-44-555-66-777.ec2.internal:8080)
+  aws_access_key: "${AWS_ACCESS_KEY_ID}"
+  aws_secret_key: "${AWS_SECRET_ACCESS_KEY}"
+
+  secret_key_base: "${SECRET_KEY}"
+
+  calais_license: 
+  smtp_password:  
+
+  pixel_ping:     DocumentCloud               # The secret hashed key for Pixel Ping (keep in sync with secrets/pixel_ping/:env.json)
+  guest_username: guest                       # The username used for logging into basic auth in staging
+  guest_password: DocumentCloud               # The password used for logging into basic auth in staging
+EOM
+fi
+
+cat >config/database.yml <<EOM
+${RAILS_ENV}:
+  adapter: postgresql
+  encoding: unicode
+  schema_search_path: public
+  pool: 5
+  host: "${DB_HOST}"
+  database: "${DB_NAME}"
+  username: "${DB_USERNAME}"
+  password: "${DB_PASSWORD}"
+  allow_concurrency: true
+EOM
