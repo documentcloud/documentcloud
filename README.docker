@@ -1,0 +1,72 @@
+# What?
+
+This branch contains a *very* rough and ready attempt to Dockerise
+DocumentCloud. There's a great deal more work to do before it's usable, and
+we've done some really nasty things already (DocumentCloud has all kinds of
+hard-coded expectations of running behind SSL, which should really be the
+responsibility of something in front of the container, not the container itself,
+IMO...).
+
+YOU ALMOST CERTAINLY DO NOT WANT TO USE THIS RIGHT NOW.
+
+# How?
+
+Very roughly, you should be able to build and run the image something like this:
+
+    docker build -t documentcloud .
+
+You'll need to configure the database (Postgres) mostly yourself. Something like
+orchardup/postgresql could be useful.
+
+    docker run -d -p 5432:5432 \
+               -e POSTGRESQL_USER=documentcloud \
+               -e POSTGRESQL_PASS=documentcloud \
+               -e POSTGRESQL_DB=documentcloud \
+               orchardup/postgresql
+
+Now create the additional analytics database:
+
+    psql -h <dockerhost> -U documentcloud -c 'CREATE DATABASE analytics;'
+    psql -h <dockerhost> -U documentcloud analytics <analytics_structure.sql
+
+You can then run the container, with configuration provided in the environment:
+
+     docker run -p 80:80 \
+                --hostname <dockerhost> \
+                -e RAILS_ENV=development \
+                -e DB_HOST=<dockerhost> \
+                -e DB_USERNAME=documentcloud \
+                -e DB_PASSWORD=documentcloud \
+                -e DB_NAME=documentcloud \
+                -e DB_ANALYTICS_NAME=analytics \
+                -e SOLR_HOST= \
+                -e AWS_ACCESS_KEY_ID= \
+                -e AWS_SECRET_ACCESS_KEY= \
+                documentcloud
+
+(And yes, we haven't got making Solr or AWS integration work yet, which is
+obviously an important part of DocumentCloud...)
+
+If you want to get dropped into a shell on the container, which is very useful
+for debugging, you can run command above, with the same environment variables, 
+but different flags and a custom command:
+
+    docker run -p 80:80 -i -t \
+               ... \
+               documentcloud \
+               /sbin/my_init -- /bin/bash -l
+
+From here you will probably want to create an initial organisation and user from
+the rails console. (This hasn't been automated yet).
+
+    cd /src/documentcloud
+    bundle exec rails c
+    > org = Organization.new(:name => "MegaCorp", :slug => "megacorp",
+                             :language => "eng", :document_language => "eng")
+    > org.save!
+    > acc = Account.new(:email => "admin@example.com",
+                        :first_name => "Admin",
+                        :last_name => "Example")
+    > acc.password = "password"
+    > acc.save!
+    > org.add_member(acc, Account::ADMINISTRATOR)

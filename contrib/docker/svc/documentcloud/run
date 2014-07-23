@@ -3,4 +3,4 @@ exec 2>&1
 
 cd /src/documentcloud
 
-exec bundle exec thin -p 80 start
+exec bundle exec thin -S /var/run/documentcloud.sock start

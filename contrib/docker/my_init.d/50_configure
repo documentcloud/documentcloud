@@ -6,6 +6,7 @@ cd /src/documentcloud
 
 : ${DB_NAME:=documentcloud}
 : ${SECRET_KEY:=$(ruby -rsecurerandom -e 'puts SecureRandom.hex(40)')}
+: ${SERVER_NAME:=$(hostname -f)}
 
 set -u
 
@@ -46,4 +47,27 @@ ${RAILS_ENV}:
   username: "${DB_USERNAME}"
   password: "${DB_PASSWORD}"
   allow_concurrency: true
+EOM
+
+cat >config/database_analytics.yml <<EOM
+${RAILS_ENV}:
+  adapter: postgresql
+  encoding: unicode
+  schema_search_path: public
+  pool: 5
+  host: "${DB_HOST}"
+  database: "${DB_ANALYTICS_NAME}"
+  username: "${DB_USERNAME}"
+  password: "${DB_PASSWORD}"
+EOM
+
+cat >config/document_cloud.yml <<EOM
+${RAILS_ENV}:
+  cloud_crowd_server: http://localhost:8080
+  server_root: "${SERVER_NAME}"
+  asset_root: "${SERVER_NAME}"
+  # WTF?
+  aws_zone: us-east-1c
+  preconfigured_ami_id: ami-508c7538
+  db_volume_id: vol-d4c305bd
 EOM

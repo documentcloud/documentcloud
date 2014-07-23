@@ -20,6 +20,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     libpng12-dev \
     libpq-dev \
     libreadline-dev \
+    libreoffice \
+    libreoffice-java-common \
     libsqlite3-dev \
     libssl-dev \
     libxml2-dev \
@@ -27,9 +29,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     libyaml-dev \
     libzip-dev \
     mercurial \
+    nginx-light \
     openjdk-6-jdk \
-    libreoffice \
-    libreoffice-java-common \
     pdftk \
     postfix \
     scons \
@@ -56,7 +57,13 @@ ADD Gemfile /src/documentcloud/Gemfile
 ADD Gemfile.lock /src/documentcloud/Gemfile.lock
 RUN bundle install --gemfile=/src/documentcloud/Gemfile --path=/src/documentcloud/.bundle
 
+# Install DocumentCloud and patches
 ADD . /src/documentcloud
+ADD ./contrib/docker/patches /src/documentcloud/patches
+RUN for f in /src/documentcloud/patches/*; do patch -p1 -d /src/documentcloud/ <$f; done
+RUN bundle install --gemfile=/src/documentcloud/Gemfile --path=/src/documentcloud/.bundle
+ADD ./contrib/docker/initializers /src/documentcloud/config/initializers
+
 ADD ./contrib/docker/my_init.d /etc/my_init.d
 ADD ./contrib/docker/svc /etc/service
 
@@ -64,6 +71,14 @@ ADD ./contrib/docker/svc /etc/service
 # `docker run`.
 ENV RAILS_ENV production
 
+# Configure nginx in order to futz with hostnames and SSL. This is a VERY BAD
+# IDEA, unless you are planning on deploying this container behind SSL
+# termination, so please ensure you understand the implications of the below
+# before using this image.
+ADD ./contrib/docker/nginx.conf /etc/nginx/nginx.conf
+
 EXPOSE 80
 
 CMD ['/sbin/my_init']
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
