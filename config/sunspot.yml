@@ -1,6 +1,6 @@
 production:
   solr:
-    hostname: ec2-184-73-200-49.compute-1.amazonaws.com
+    hostname: ip-10-140-158-114.ec2.internal
     port: 7377
     path: /solr/collection1
     read_timeout: 5
