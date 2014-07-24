@@ -45,7 +45,14 @@ namespace :crowd do
 end
 
 def crowd_folder
-  File.exists?('EXPRESS') ? 'express' : RAILS_ENV
+  case
+    when File.exists?('EXPRESS')
+      'express'
+    when File.exists?('reindex')
+      'reindex'
+    else 
+      RAILS_ENV
+  end
 end
 
 
