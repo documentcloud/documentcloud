@@ -48,7 +48,7 @@ def crowd_folder
   case
     when File.exists?('EXPRESS')
       'express'
-    when File.exists?('reindex')
+    when File.exists?('REINDEX')
       'reindex'
     else 
       RAILS_ENV
