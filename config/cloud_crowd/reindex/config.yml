@@ -3,8 +3,20 @@
 :central_server:      <%= secrets['central_server'] %>
 
 :disabled_actions:
+  - large_document_import
   - backup_database
-  - reindex_everything
+  - document_import
+  - document_insert_pages
+  - document_remove_pages
+  - document_reorder_pages
+  - optimize_solr
+  - redact_pages
+  - regenerate_thumbnails
+  - reindex_document
+  - reprocess_entities
+  - save_analytics
+  - update_access
+  - vacuum_analyze
 
 # The following settings allow you to control the number of workers that can run
 # on a given node, to prevent the node from becoming overloaded. 'max_workers'
@@ -24,6 +36,7 @@
 :storage:             s3
 
 # Please provide your AWS credentials for S3 storage of job output.
+<% secrets = YAML.load_file('secrets/secrets.yml')[ENV['RAILS_ENV']] %>
 :aws_access_key:      <%= secrets['aws_access_key'] %>
 :aws_secret_key:      <%= secrets['aws_secret_key'] %>
 
@@ -43,13 +56,13 @@
 # to the central server). If yes, specify the login and password that all
 # requests must provide for authentication.
 :http_authentication: no
-:login:               documentcloud
+:login:               <%= secrets['username'] %>
 :password:            <%= secrets['db_password'] %>
 
 # By default, CloudCrowd looks for installed actions inside the 'actions'
 # subdirectory of this configuration folder. 'actions_path' allows you to load
 # additional actions from a location of your choice.
-:actions_path:        ./app/actions
+:actions_path:        app/actions
 
 # The number of separate attempts that will be made to process an individual
 # work unit, before marking it as having failed.
