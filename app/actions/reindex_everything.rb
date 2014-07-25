@@ -13,7 +13,7 @@ class ReindexEverything < CloudCrowd::Action
         ids << document.id
       rescue Exception => e
         counter += 1
-        LifecycleMailer.exception_notification(e,options).deliver
+        #LifecycleMailer.exception_notification(e,options).deliver
         retry if counter < 5
       end
     end
