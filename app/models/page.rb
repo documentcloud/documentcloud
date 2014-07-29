@@ -87,8 +87,7 @@ class Page < ActiveRecord::Base
   end
 
   def excerpt(regex, context=150)
-    utf     =  text.mb_chars
-    match   =  utf.match(regex)
+    match   =  text.match(regex)
     return nil unless match
     excerpt =  match.pre_match.length >= context ? match.pre_match[-context..-1] : match.pre_match
     excerpt += "<b>#{ match.to_s }</b>"
