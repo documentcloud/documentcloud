@@ -15,8 +15,9 @@ module DC
       def extract(document, text)
         @entities = {}
         chunks = CalaisFetcher.new.fetch_rdf(text)
-        chunks.compact.each_with_index do |chunk, i|
-          extract_information(document, chunk, i) if i == 0
+        chunks.each_with_index do |chunk, i|
+          next if chunk.nil?
+          extract_information(document, chunk) if document.calais_id.blank?
           extract_entities(document, chunk, i)
         end
         document.entities = @entities.values
@@ -28,7 +29,7 @@ module DC
 
       # Pull out all of the standard, top-level entities, and add it to our
       # document if it hasn't already been set.
-      def extract_information(document, calais, chunk_number)
+      def extract_information(document, calais)
         document.title = calais.doc_title unless document.titled?
         document.language ||= 'en' # TODO: Convert calais.language into an ISO language code.
         document.publication_date ||= calais.doc_date
