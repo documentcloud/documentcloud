@@ -119,15 +119,18 @@ class DocumentImport < DocumentAction
       end
     end
     save_page_text!
-    text = @pages.map{|p| p[:text] }.join('')
+
     document.page_count = @pages.length
     Page.refresh_page_map(document)
     EntityDate.reset(document)
     document.save!
-    pages = document.reload.pages
+    pages = document.reload.pages.order(:page_number)
     Sunspot.index pages
     Sunspot.commit
-    DC::Import::EntityExtractor.new.extract(document, text) unless options['secure'] or not DC::Language::SUPPORTED.include? document.language
+    if ! options['secure'] && DC::Language::SUPPORTED.include?(document.language)
+      text = pages.map(&:text).join('')
+      DC::Import::EntityExtractor.new.extract(document, text)
+    end
     document.upload_text_assets(pages, access)
     document.id
   end
