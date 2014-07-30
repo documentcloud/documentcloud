@@ -27,11 +27,11 @@ orchardup/postgresql could be useful.
 Now create the additional analytics database:
 
     psql -h <dockerhost> -U documentcloud -c 'CREATE DATABASE analytics;'
-    psql -h <dockerhost> -U documentcloud analytics <analytics_structure.sql
+    psql -h <dockerhost> -U documentcloud analytics < db/analytics_structure.sql
 
 You can then run the container, with configuration provided in the environment:
 
-     docker run -p 80:80 \
+    docker run -p 80:80 \
                 --hostname <dockerhost> \
                 -e RAILS_ENV=development \
                 -e DB_HOST=<dockerhost> \
