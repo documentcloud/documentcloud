@@ -172,6 +172,21 @@ module DC
         true
       end
 
+      # This is a potentially expensive (as in $$) method since S3 charges by the request
+      # returns an array of paths that should exist in the S3 bucket but do not
+      def validate_assets(document)
+        invalid = []
+        1.upto(document.page_count) do |pg|
+          text_path  = document.page_text_path(pg)
+          invalid << text_path unless bucket.objects[text_path].exists?
+          Page::IMAGE_SIZES.keys.each do |size|
+            image_path = document.page_image_path(pg, size)
+            invalid << image_path unless bucket.objects[image_path].exists?
+          end
+        end
+        invalid
+      end
+
       private
 
       def s3
