@@ -79,6 +79,6 @@ ADD ./contrib/docker/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
-CMD ['/sbin/my_init']
+CMD ["/sbin/my_init"]
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
