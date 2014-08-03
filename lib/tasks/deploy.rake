@@ -60,8 +60,7 @@ namespace :deploy do
   end
 
   def upload_template( src_file, s3_destination )
-    DC::CONFIG['server_root'] = 's3.documentcloud.org'
-    contents = ERB.new(File.read( src_file )).result(binding)
+    contents = render_template(src_file)
     puts "uploading #{src_file} to #{s3_destination}"
 
     object = upload_bucket.objects[ s3_destination ]
@@ -71,5 +70,13 @@ namespace :deploy do
                   })
 
   end
+  
+  def render_template(template_path)
+    DC::CONFIG['server_root'] = 's3.documentcloud.org'
+    ERB.new(File.read( template_path )).result(binding)    
+  end
 
+  task :test_template => :environment do
+    puts render_template('app/views/documents/loader.js.erb')
+  end
 end
