@@ -1,4 +1,5 @@
 namespace :deploy do
+  DEPLOYABLE_ENV = %w(production, staging)
 
   desc "Deploy only minimal updates to Rails code"
   task :minimal do
@@ -25,6 +26,10 @@ namespace :deploy do
 
   desc "Deploy the Document Viewer to S3"
   task :viewer => :environment do
+    unless deployable_environment?
+      raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
+(e.g. `rake production deploy:[taskname]`)"
+    end
     upload_directory_contents 'public/viewer/**/*'
     upload_template( 'app/views/documents/loader.js.erb', 'viewer/loader.js' )
   end
@@ -32,6 +37,10 @@ namespace :deploy do
   desc "Deploy the Search/Note Embed to S3"
   {:search_embed => ['search_embed', 'embed'], :note_embed => ['note_embed', 'notes']}.each_pair do |folder, embed|
     task folder => :environment do
+      unless deployable_environment?
+        raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
+(e.g. `rake production deploy:[taskname]`)"
+      end
       upload_directory_contents "public/#{embed[0]}/**/*"
       upload_template( "app/views/#{embed[0]}/loader.js.erb", "#{embed[1]}/loader.js" )
     end
@@ -68,5 +77,18 @@ namespace :deploy do
   
   def render_template(template_path)
     ERB.new(File.read( template_path )).result(binding)    
+  end
+  
+  def deployable_environment?
+    DEPLOYABLE_ENV.include? Rails.env
+  end
+  
+  task :test => :environment do
+    unless deployable_environment?
+      raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
+(e.g. `rake production deploy:[taskname]`)"
+    end
+    
+    puts Rails.env
   end
 end
