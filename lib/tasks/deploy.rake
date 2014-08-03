@@ -82,13 +82,4 @@ namespace :deploy do
   def deployable_environment?
     DEPLOYABLE_ENV.include? Rails.env
   end
-  
-  task :test => :environment do
-    unless deployable_environment?
-      raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
-(e.g. `rake production deploy:[taskname]`)"
-    end
-    
-    puts Rails.env
-  end
 end
