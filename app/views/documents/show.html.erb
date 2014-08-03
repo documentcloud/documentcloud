@@ -18,7 +18,7 @@
   <script src="/viewer/viewer.js"></script>
   <% if Rails.env.production? && !request.ssl? %>
     <script>
-      window.DV.recordHit = "<%= DC.server_root(:ssl => false).sub('s3', 'www').html_safe %>/pixel.gif";
+      window.DV.recordHit = "<%= DC.server_root(:ssl => false).html_safe %>/pixel.gif";
     </script>
   <% end %>
   <% unless @local %>
