@@ -38,33 +38,32 @@ namespace :deploy do
   end
 
   # helper methods for tasks that upload to S3
-  def upload_bucket
+  def bucket
     ::AWS::S3.new( { :secure => false } ).buckets['s3.documentcloud.org']
   end
+  
+  def upload_directory_contents( glob )
+    Dir[glob].each do |file|
+      unless File.directory?(file)
+        upload_attributes = { :acl => :public_read }
 
-  def upload_directory_contents( mask )
-    bucket = upload_bucket
-    Dir[mask].each do |file|
-      next if File.directory? file
+        # attempt to identify the mimetype for this file.
+        mimetype = MIME::Types.type_for(File.extname(file)).first
+        upload_attributes[:content_type] = mimetype.content_type if mimetype
 
-      upload_attributes = { :acl=> :public_read}
-      
-      mimetype = MIME::Types.type_for(File.extname(file)).first
-      upload_attributes = [:content_type] = mimetype.content_type if mimetype
-      object = bucket.objects[ "viewer/#{file.gsub('public/viewer/', '')}" ]
-
-      puts "uploading #{file} (#{mimetype})"                    
-      object.write( Pathname.new(file), upload_attributes)
-
+        puts "uploading #{file} (#{mimetype})"                    
+        destination = bucket.objects[ "viewer/#{file.gsub('public/viewer/', '')}" ]
+        destination.write( Pathname.new(file), upload_attributes)
+      end
     end
   end
 
-  def upload_template( src_file, s3_destination )
-    contents = render_template(src_file)
-    puts "uploading #{src_file} to #{s3_destination}"
+  def upload_template( template_path, destination_path )
+    contents = render_template(template_path)
+    puts "uploading #{template_path} to #{destination_path}"
 
-    object = upload_bucket.objects[ s3_destination ]
-    object.write( contents, { :acl=> :public_read, :content_type=>'application/javascript' })
+    destination = bucket.objects[ destination_path ]
+    destination.write( contents, { :acl=> :public_read, :content_type=>'application/javascript' })
   end
   
   def render_template(template_path)
