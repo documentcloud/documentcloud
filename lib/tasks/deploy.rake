@@ -51,10 +51,11 @@ namespace :deploy do
       puts "uploading #{file} (#{mimetype})"
 
       object = bucket.objects[ "viewer/#{file.gsub('public/viewer/', '')}" ]
-      object.write( Pathname.new(file), {
+      upload_attributes = {
                       :acl=> :public_read,
                       :content_type=> mimetype ? mimetype.content_type  : nil
-                    })
+                    }
+      object.write( Pathname.new(file), upload_attributes)
 
     end
   end
@@ -64,11 +65,7 @@ namespace :deploy do
     puts "uploading #{src_file} to #{s3_destination}"
 
     object = upload_bucket.objects[ s3_destination ]
-    object.write( contents, {
-                    :acl=> :public_read,
-                    :content_type=>'application/javascript'
-                  })
-
+    object.write( contents, { :acl=> :public_read, :content_type=>'application/javascript' })
   end
   
   def render_template(template_path)
