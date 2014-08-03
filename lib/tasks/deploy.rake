@@ -46,15 +46,14 @@ namespace :deploy do
     bucket = upload_bucket
     Dir[mask].each do |file|
       next if File.directory? file
+
+      upload_attributes = { :acl=> :public_read}
+      
       mimetype = MIME::Types.type_for(File.extname(file)).first
-
-      puts "uploading #{file} (#{mimetype})"
-
+      upload_attributes = [:content_type] = mimetype.content_type if mimetype
       object = bucket.objects[ "viewer/#{file.gsub('public/viewer/', '')}" ]
-      upload_attributes = {
-                      :acl=> :public_read,
-                      :content_type=> mimetype ? mimetype.content_type  : nil
-                    }
+
+      puts "uploading #{file} (#{mimetype})"                    
       object.write( Pathname.new(file), upload_attributes)
 
     end
