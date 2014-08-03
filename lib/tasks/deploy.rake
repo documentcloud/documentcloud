@@ -72,11 +72,6 @@ namespace :deploy do
   end
   
   def render_template(template_path)
-    DC::CONFIG['server_root'] = 's3.documentcloud.org'
     ERB.new(File.read( template_path )).result(binding)    
-  end
-
-  task :test_template => :environment do
-    puts render_template('app/views/documents/loader.js.erb')
   end
 end
