@@ -34,15 +34,19 @@ namespace :deploy do
     upload_template( 'app/views/documents/loader.js.erb', 'viewer/loader.js' )
   end
 
+  embeds = [{:name => :search_embed, :source_dir => 'search_embed', :destination_dir =>'embed'},
+            {:name => :note_embed,   :source_dir => 'note_embed',   :destination_dir =>'notes'}]
+
   desc "Deploy the Search/Note Embed to S3"
-  {:search_embed => ['search_embed', 'embed'], :note_embed => ['note_embed', 'notes']}.each_pair do |folder, embed|
-    task folder => :environment do
+  embeds.each do |embed|
+    task embed[:name] => :environment do
       unless deployable_environment?
         raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
 (e.g. `rake production deploy:[taskname]`)"
       end
-      upload_filetree( "public/#{embed.first}/**/*" )
-      upload_template( "app/views/#{embed.first}/loader.js.erb", "#{embed.last}/loader.js" )
+      
+      upload_filetree( "public/#{embed[:source_dir]}/**/*" )
+      upload_template( "app/views/#{embed[:source_dir]}/loader.js.erb", "#{embed[:destination_dir]}/loader.js" )
     end
   end
 
@@ -50,9 +54,9 @@ namespace :deploy do
   def bucket; ::AWS::S3.new( { :secure => false } ).buckets[DC::SECRETS['bucket']]; end
   def render_template(template_path); ERB.new(File.read( template_path )).result(binding); end  
   def deployable_environment?; DEPLOYABLE_ENV.include? Rails.env; end
-  
-  def upload_filetree( glob )
-    Dir[glob].each do |file|
+
+  def upload_filetree( source_pattern, destination_dir )
+    Dir[source_pattern].each do |file|
       unless File.directory?(file)
         upload_attributes = { :acl => :public_read }
 
@@ -60,8 +64,9 @@ namespace :deploy do
         mimetype = MIME::Types.type_for(File.extname(file)).first
         upload_attributes[:content_type] = mimetype.content_type if mimetype
 
-        puts "uploading #{file} (#{mimetype})"                    
-        destination = bucket.objects[ "viewer/#{file.gsub('public/viewer/', '')}" ]
+        destination_path = "#{file.gsub('public/viewer/', '')}"
+        puts "uploading #{file} (#{mimetype}) to #{destination_path}"
+        destination = bucket.objects[destination_path]
         destination.write( Pathname.new(file), upload_attributes)
       end
     end
