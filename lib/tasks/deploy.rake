@@ -1,5 +1,5 @@
 namespace :deploy do
-  DEPLOYABLE_ENV = %w(production, staging)
+  DEPLOYABLE_ENV = %w(production staging)
 
   desc "Deploy only minimal updates to Rails code"
   task :minimal do
