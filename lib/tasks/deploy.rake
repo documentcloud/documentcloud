@@ -30,7 +30,7 @@ namespace :deploy do
       raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
 (e.g. `rake production deploy:[taskname]`)"
     end
-    upload_directory_contents 'public/viewer/**/*'
+    upload_filetree( 'public/viewer/**/*' )
     upload_template( 'app/views/documents/loader.js.erb', 'viewer/loader.js' )
   end
 
@@ -41,8 +41,8 @@ namespace :deploy do
         raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
 (e.g. `rake production deploy:[taskname]`)"
       end
-      upload_directory_contents "public/#{embed[0]}/**/*"
-      upload_template( "app/views/#{embed[0]}/loader.js.erb", "#{embed[1]}/loader.js" )
+      upload_filetree( "public/#{embed.first}/**/*" )
+      upload_template( "app/views/#{embed.first}/loader.js.erb", "#{embed.last}/loader.js" )
     end
   end
 
@@ -51,7 +51,7 @@ namespace :deploy do
   def render_template(template_path); ERB.new(File.read( template_path )).result(binding); end  
   def deployable_environment?; DEPLOYABLE_ENV.include? Rails.env; end
   
-  def upload_directory_contents( glob )
+  def upload_filetree( glob )
     Dir[glob].each do |file|
       unless File.directory?(file)
         upload_attributes = { :acl => :public_read }
