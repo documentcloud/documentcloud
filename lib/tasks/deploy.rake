@@ -47,9 +47,9 @@ namespace :deploy do
   end
 
   # helper methods for tasks that upload to S3
-  def bucket
-    ::AWS::S3.new( { :secure => false } ).buckets['s3.documentcloud.org']
-  end
+  def bucket; ::AWS::S3.new( { :secure => false } ).buckets[DC::SECRETS['bucket']]; end
+  def render_template(template_path); ERB.new(File.read( template_path )).result(binding); end  
+  def deployable_environment?; DEPLOYABLE_ENV.include? Rails.env; end
   
   def upload_directory_contents( glob )
     Dir[glob].each do |file|
@@ -73,13 +73,5 @@ namespace :deploy do
 
     destination = bucket.objects[ destination_path ]
     destination.write( contents, { :acl=> :public_read, :content_type=>'application/javascript' })
-  end
-  
-  def render_template(template_path)
-    ERB.new(File.read( template_path )).result(binding)    
-  end
-  
-  def deployable_environment?
-    DEPLOYABLE_ENV.include? Rails.env
   end
 end
