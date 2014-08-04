@@ -44,9 +44,15 @@ namespace :deploy do
         raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
 (e.g. `rake production deploy:[taskname]`)"
       end
-      
-      upload_filetree( "public/#{embed[:source_dir]}/**/*" )
+
+      # Each loader.js file is the entry point for each embed.
+      # It coordinates all of the other javascript and assets.
+      # they currently live at /notes/loader.js and /search/loader.js
       upload_template( "app/views/#{embed[:source_dir]}/loader.js.erb", "#{embed[:destination_dir]}/loader.js" )
+      # The assets are currently served out of a different directory from each loader.
+      # /note_embed/ and /search_embed/ respectively
+      local_root = "public/#{embed[:source_dir]}"
+      upload_filetree( "#{local_root}/**/*", embed[:source_dir], /^#{local_root}/ )
     end
   end
 
@@ -55,7 +61,7 @@ namespace :deploy do
   def render_template(template_path); ERB.new(File.read( template_path )).result(binding); end  
   def deployable_environment?; DEPLOYABLE_ENV.include? Rails.env; end
 
-  def upload_filetree( source_pattern, destination_dir )
+  def upload_filetree( source_pattern, destination_root, source_path_filter=// )
     Dir[source_pattern].each do |file|
       unless File.directory?(file)
         upload_attributes = { :acl => :public_read }
@@ -64,9 +70,9 @@ namespace :deploy do
         mimetype = MIME::Types.type_for(File.extname(file)).first
         upload_attributes[:content_type] = mimetype.content_type if mimetype
 
-        destination_path = "#{file.gsub('public/viewer/', '')}"
-        puts "uploading #{file} (#{mimetype}) to #{destination_path}"
+        destination_path = destination_root + file.gsub(source_path_filter, '')
         destination = bucket.objects[destination_path]
+        puts "uploading #{file} (#{mimetype}) to #{destination_path}"
         destination.write( Pathname.new(file), upload_attributes)
       end
     end
