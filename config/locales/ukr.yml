@@ -385,7 +385,7 @@
   - must_have_title: "Будь ласка, введіть назву. "
   - must_upload_something: "Потрібно завантажити принаймні один документ."
   - new_account: "Новий екаунт"
-  - new_documents: "Додати документи"
+  - new_documents: "Нові документи"
   - new_project: "Додати проект"
   - next: "Далі"
   - no_appear_until_publish:
