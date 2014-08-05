@@ -4,7 +4,6 @@
 
 :disabled_actions:
   - backup_database
-  - api_document_import
   - reindex_everything
 
 # The following settings allow you to control the number of workers that can run
@@ -50,7 +49,7 @@
 # By default, CloudCrowd looks for installed actions inside the 'actions'
 # subdirectory of this configuration folder. 'actions_path' allows you to load
 # additional actions from a location of your choice.
-:actions_path:        ./app/actions
+:actions_path:        app/actions
 
 # The number of separate attempts that will be made to process an individual
 # work unit, before marking it as having failed.

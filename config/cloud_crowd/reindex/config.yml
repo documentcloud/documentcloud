@@ -3,6 +3,7 @@
 :central_server:      <%= secrets['central_server'] %>
 
 :disabled_actions:
+  - api_document_import
   - large_document_import
   - backup_database
   - document_import
