@@ -50,7 +50,7 @@ def crowd_folder
       'express'
     when File.exists?('REINDEX')
       'reindex'
-    when FILE.exists?('API')
+    when File.exists?('API')
       'api'
     else 
       RAILS_ENV
