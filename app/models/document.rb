@@ -2,7 +2,7 @@
 class Document < ActiveRecord::Base
   include DC::Access
   include ActionView::Helpers::TextHelper
-
+  extend  DC::Store::DocumentFileType
   # Accessors and constants:
 
   attr_accessor :mentions, :total_mentions, :annotation_count, :hits
@@ -58,7 +58,7 @@ class Document < ActiveRecord::Base
 
   before_validation :ensure_titled, :on=>:create
   before_validation :ensure_language_is_valid
-
+  
   after_destroy :delete_assets
 
   # Sanitizations (title handled separately):
@@ -171,7 +171,9 @@ class Document < ActiveRecord::Base
                (params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE)
     email_me = params[:email_me] ? params[:email_me].to_i : false
     file_ext = File.extname(name).downcase[1..-1]
-
+    if params[:file].respond_to?(:path) && ! self.valid_source_document?(params[:file].path)
+      raise ArgumentError.new("Invalid File Type")
+    end
     doc = self.create!(
       :organization_id    => organization.id,
       :account_id         => account.id,

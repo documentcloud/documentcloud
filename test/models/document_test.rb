@@ -4,6 +4,17 @@ class DocumentTest < ActiveSupport::TestCase
 
   subject { documents(:tv_manual) }
 
+  include ActionDispatch::TestProcess
+
+  def test_file_types
+    mp3 = fixture_file_upload('computers-in-control.mp3', 'audio/mpeg')
+    assert_raises(ArgumentError){
+      Document.upload({
+          :file=>mp3, :title=>"Test Doc", :make_public=>false, :email_me=>false
+      }, louis, tribune )
+    }
+  end
+
   def test_it_has_associations_and_they_query_successfully
     assert_associations_queryable doc
   end
