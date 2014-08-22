@@ -4,6 +4,7 @@ dc.model.UploadDocument = Backbone.Model.extend({
   FILE_EXTENSION_MATCHER : /\.([^.]+)$/,
 
   MAX_FILE_SIZE : 419430400, // 400 Megabytes
+  INVALID_EXTENSIONS: ['exes', 'mp3'],
 
   // When creating an UploadDocument, we pull off some properties that
   // are on the file object, and attach them as attributes.
@@ -24,6 +25,23 @@ dc.model.UploadDocument = Backbone.Model.extend({
 
   overSizeLimit : function() {
     return this.get('size') >= this.MAX_FILE_SIZE;
+  },
+
+  invalidFileType: function(){
+    return _.contains( this.INVALID_EXTENSIONS, this.get('extension').toLowerCase() );
+  },
+
+  errorMessage: function(){
+    if ( this.overSizeLimit() ){
+      return _.t('max_upload_size_warn','<a href="/help/troubleshooting">',"</a>");
+    } else if ( this.invalidFileType() ){
+      return _.t('invalid_upload_file_type');
+    }
+    return "";
+  },
+
+  isValid: function(){
+    return ! ( this.overSizeLimit() || this.invalidFileType() );
   }
 
 });

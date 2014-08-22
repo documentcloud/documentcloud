@@ -115,10 +115,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     }));
 
     if (index != files.length - 1) return;
-
-    if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
+    var invalid = this.collection.find(function(file){ return ! file.isValid(); });
+    if ( invalid ) {
       this.close();
-      return dc.ui.Dialog.alert(_.t('max_upload_size_warn','<a href="/help/troubleshooting">',"</a>") );
+      return dc.ui.Dialog.alert( invalid.errorMessage() );
     }
 
     this.render();
