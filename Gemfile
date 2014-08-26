@@ -27,8 +27,9 @@ gem 'rdiscount',              '~> 2.1.6'
 gem 'rake'
 gem 'actionpack-page_caching'
 gem 'jammit',                 :github=>'documentcloud/jammit', :branch=>'rails4'
-gem 'nokogiri', '~> 1.6.0'
-gem 'net-ssh-shell'
+gem 'nokogiri', '       ~> 1.6.0'
+gem 'net-ssh-shell',  ' ~> 0.2'
+gem 'ruby-filemagic', ' ~> 0.6'
 
 group :development, :test do
   gem 'guard-bundler'

@@ -195,6 +195,7 @@ GEM
       rdoc (>= 2.4.2)
     rsolr (1.0.10)
       builder (>= 2.1.2)
+    ruby-filemagic (0.6.1)
     rubyzip (1.1.6)
     sanitize (2.0.6)
       nokogiri (>= 1.4.4)
@@ -258,7 +259,7 @@ DEPENDENCIES
   jammit!
   minitest
   minitest-spec-rails
-  net-ssh-shell
+  net-ssh-shell (~> 0.2)
   nokogiri (~> 1.6.0)
   omniauth (~> 1.2.1)
   omniauth-facebook (~> 1.6)
@@ -272,6 +273,7 @@ DEPENDENCIES
   rake
   rdiscount (~> 2.1.6)
   rest-client (~> 1.6.7)
+  ruby-filemagic (~> 0.6)
   rubyzip (~> 1.1.0)
   sanitize (~> 2.0.6)
   spring
