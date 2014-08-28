@@ -330,6 +330,9 @@
       at once. When you're ready, click the "Upload Pages" button.
   - insert_replace_pages: Insert/Replace Pages
   - introduction: Introduction
+  - invalid_upload_file_type: "Invalid file type.  We are unable to process documents
+      of this type, please convert the file to a supported document format such as
+      PDF.  \n View %stroubleshooting%s for additional details."
   - language: language
   - language_defaults: Language Defaults
   - last_name: Last name
@@ -563,6 +566,10 @@
   - saved: Saved
   - search: Search
   - search_bar: Search Bar
+  - search_embed_nothing_chosen: You have not performed a search to embed.  Please
+      either perform a search or select some documents.
+  - search_embed_too_long_error: Too many documents were selected for embedding.  Please
+      select fewer documents or embed a project
   - searching_dd: Searching Documents and Data
   - select_pages_remove: Select the pages you wish to remove.
   - select_single_to_embed: Please select a single document in order to create the

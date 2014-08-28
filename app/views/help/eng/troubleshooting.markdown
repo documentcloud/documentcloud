@@ -8,6 +8,10 @@ In Acrobat, open the PDF and choose "Advanced > PDF Optimizer". You'll see a win
 
 <img src="/images/help/pdf_optimizer.jpg" class="full_line" />
 
+## Unsupported Document Types
+
+Check that the file you are uploading is a document.  We cannot currently process MP3 or compressed file formats such as Zip files.   While we attempt to process any type of document format, there are always differences between file versions.  For the best results, we recommend the PDF format.   If the file is a document and still cannot be processed please [contact us][] and provide the document so we can trouble-shoot it further.
+
 ## Noise in Documents
 
 Ever so very occasionally, we find that documents containing government redactions will look like they're covered in a dark gray fog of pixels. [GraphicsMagick][], which we use to break out images of each page in your document, seems to sometimes smear these redactions across the page. Recent updates to [Ghostscript][] seem to have resolved the problem for the most part, but if you're still seeing noise in documents, we've found that re-saving a document in Acrobat or Preview can fix the problem. If that doesn't work, [let us know][] and we'll help you figure it out.

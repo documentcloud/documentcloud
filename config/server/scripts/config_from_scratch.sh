@@ -34,7 +34,7 @@ zlib1g-dev libzlib-ruby sqlite3 libsqlite3-dev libcurl4-dev
 checkinstall libbz2-dev graphicsmagick pdftk xpdf libitext-java
 openoffice.org openoffice.org-java-common libtiff4-dev libpng12-dev
 libjpeg62-dev libleptonica-dev tesseract-ocr-dev tesseract-ocr-eng
-xfsprogs libpcre3-dev lzop sysstat libopenssl-ruby'
+xfsprogs libpcre3-dev lzop sysstat libopenssl-ruby libmagic-dev' 
 
 echo $PACKAGES | xargs apt-get install -y
 

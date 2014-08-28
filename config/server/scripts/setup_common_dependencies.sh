@@ -48,6 +48,7 @@ libpcre3-dev
 sysstat
 libbz2-dev
 make
+libmagic-dev
 '
 
 RUBY_DEPENDENCIES='
