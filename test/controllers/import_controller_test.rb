@@ -36,4 +36,13 @@ class ImportControllerTest < ActionController::TestCase
     assert_response 201
   end
 
+  def test_invalid_types
+    mp3 = fixture_file_upload('computers-in-control.mp3', 'audio/mpeg')
+    login_account!
+    assert_no_difference 'Document.count' do
+      get :upload_document, :file=>mp3, :title=>"Test Doc"
+    end
+    assert_response 409
+    assert_equal "Invalid File Type", json_body['errors']
+  end
 end

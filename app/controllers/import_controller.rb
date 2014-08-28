@@ -18,6 +18,8 @@ class ImportController < ApplicationController
     else
       # Render the HTML/script...
     end
+  rescue Document::InvalidFileType=>e
+    render :json => {'errors'=>e.to_s}, :status => 409
   end
 
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.

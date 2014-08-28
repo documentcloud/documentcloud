@@ -2,7 +2,8 @@
 class Document < ActiveRecord::Base
   include DC::Access
   include ActionView::Helpers::TextHelper
-  extend  DC::Store::DocumentFileType
+  include DC::Store::DocumentFileType
+
   # Accessors and constants:
 
   attr_accessor :mentions, :total_mentions, :annotation_count, :hits
@@ -172,7 +173,7 @@ class Document < ActiveRecord::Base
     email_me = params[:email_me] ? params[:email_me].to_i : false
     file_ext = File.extname(name).downcase[1..-1]
     if params[:file].respond_to?(:path) && ! self.valid_source_document?(params[:file].path)
-      raise ArgumentError.new("Invalid File Type")
+      raise InvalidFileType.new("Invalid File Type")
     end
     doc = self.create!(
       :organization_id    => organization.id,

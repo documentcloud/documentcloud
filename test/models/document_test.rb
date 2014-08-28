@@ -8,7 +8,7 @@ class DocumentTest < ActiveSupport::TestCase
 
   def test_file_types
     mp3 = fixture_file_upload('computers-in-control.mp3', 'audio/mpeg')
-    assert_raises(ArgumentError){
+    assert_raises(Document::InvalidFileType){
       Document.upload({
           :file=>mp3, :title=>"Test Doc", :make_public=>false, :email_me=>false
       }, louis, tribune )
