@@ -34,10 +34,11 @@ dc.model.UploadDocument = Backbone.Model.extend({
   },
 
   errorMessage: function(){
+    var file = this.get('title') + "." + this.get('extension');
     if ( this.overSizeLimit() ){
-      return _.t('max_upload_size_warn','<a href="/help/troubleshooting">',"</a>");
+      return _.t('max_upload_size_warn', file, '<a href="/help/troubleshooting">',"</a>");
     } else if ( this.invalidFileType() ){
-      return _.t('invalid_upload_file_type','<a href="/help/troubleshooting">',"</a>");
+      return _.t('invalid_upload_file_type', file, '<a href="/help/troubleshooting">',"</a>");
     }
     return "";
   },
