@@ -27,7 +27,7 @@ gem 'rdiscount',              '~> 2.1.6'
 gem 'rake'
 gem 'actionpack-page_caching'
 gem 'jammit',                 :github=>'documentcloud/jammit', :branch=>'rails4'
-gem 'nokogiri', '~> 1.6.0'
+gem 'nokogiri',                '~> 1.6.0'
 gem 'net-ssh-shell'
 
 group :development, :test do
