@@ -90,6 +90,17 @@
       opacity: 0.1; filter: alpha(opacity=30);
       z-index: 5;
     }
+    #upload_dialog .error .msg {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      font-size: 11px;
+      height: 14px;
+      line-height: 14px;
+      padding: 4px;
+      color: red;
+    }
+
   #upload_dialog .icon.file {
     margin-right: 10px;
   }

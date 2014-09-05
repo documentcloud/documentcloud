@@ -165,29 +165,39 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._tiles[id].setProgress(percentage);
   },
 
-  // Once done, hide the uploaded document tile and check to see if it's last, so the
+  // Once done, record any errors, hide the uploaded document tile and check to see if it's last, so the
   // dialog can close.
   _onComplete : function(e, files, index, xhr, handler) {
-    var id   = dc.inflector.sluggify(files[index].fileName || files[index].name);
-    var resp = xhr.responseText && JSON.parse(xhr.responseText);
+    var id    = dc.inflector.sluggify(files[index].fileName || files[index].name),
+        resp  = xhr.responseText && JSON.parse(xhr.responseText),
+        tile  = this._tiles[id],
+        model = this.collection.get(id);
 
-    this._tiles[id].setProgress(100);
+    tile.setProgress(100);
 
-    if (resp && resp.bad_request) {
-      return this.error("Upload failed.");
-    } else if (resp && resp.errors) {
-      return this.error(resp.errors);
-    } else if (!this.options.insertPages && resp) {
+    // if the resp is blank or 500 report generic failure message
+    if (!resp || resp.bad_request) {
+      model.set({error: _.t('upload_failed') });
+    } else if (resp.errors) {
+      model.set({error: resp.errors});
+    } else if (!this.options.insertPages) {
       Documents.add(new dc.model.Document(resp));
       if (this._project) Projects.incrementCountById(this._project.id);
-    } else if (this.options.insertPages && resp) {
+    } else if (this.options.insertPages) {
       this.documentResponse = resp;
     }
 
-    this._tiles[id].hide();
+    // don't hide file if it had an error so that the message is visible
+    if ( !model.get('error') )
+      tile.hide();
 
     if (index == this.collection.length-1) {
-      this._onAllComplete();
+      // leave dialog visible so the message can be read if there was error
+      if ( model.get('error') ){
+        this.hideSpinner();
+      } else {
+        this._onAllComplete();
+      }
     } else {
       this.startUpload(index+1);
     }
@@ -283,7 +293,10 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     'click .apply_all'    : 'applyAll'
   },
   
-  initialize: function(options) { this.options = options; },
+  initialize: function(options) {
+    this.options = options;
+    this.listenTo(this.model, 'change:error', this.onError);
+  },
 
   // Renders tile and sets up commonly used jQuery selectors.
   render : function() {
@@ -361,6 +374,12 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
   // Hide document tile when finished uploading.
   hide : function() {
     $(this.el).animate({opacity: 0}, 200).slideUp(200, function(){ $(this).remove(); });
+  },
+
+  onError: function(model,msg){
+    this._title.closest('.text_input')
+      .addClass('error')
+      .append('<span class="msg">'+msg+'</span>');
   }
 
 });
