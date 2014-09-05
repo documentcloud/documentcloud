@@ -169,9 +169,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // dialog can close.
   _onComplete : function(e, files, index, xhr, handler) {
     var id    = dc.inflector.sluggify(files[index].fileName || files[index].name),
-        resp  = xhr.responseText && JSON.parse(xhr.responseText),
         tile  = this._tiles[id],
-        model = this.collection.get(id);
+        model = this.collection.get(id),
+        resp;
+    try {
+      resp  = xhr.responseText && JSON.parse(xhr.responseText);
+    } catch (e) {}
 
     tile.setProgress(100);
 
