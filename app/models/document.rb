@@ -172,13 +172,13 @@ class Document < ActiveRecord::Base
                (params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE)
     email_me = params[:email_me] ? params[:email_me].to_i : false
     file_ext = File.extname(name).downcase[1..-1]
-    if params[:file].respond_to?(:path) && ! self.valid_source_document?(params[:file].path)
-      raise InvalidFileType.new("Invalid File Type")
-    end
+
+    valid_file = params[:url] ? true : self.valid_source_document?(params[:file].path)
+
     doc = self.create!(
       :organization_id    => organization.id,
       :account_id         => account.id,
-      :access             => PENDING,
+      :access             => valid_file ? PENDING : ERROR,
       :page_count         => 0,
       :title              => title,
       :description        => params[:description],
@@ -197,10 +197,10 @@ class Document < ActiveRecord::Base
     }
     if params[:url]
       import_options.merge!(:url => params[:url])
-    else
+    elsif valid_file
       DC::Store::AssetStore.new.save_original(doc, params[:file].path, access)
     end
-    doc.queue_import(import_options)
+    doc.queue_import(import_options) if valid_file
     if params[:project]
       project = Project.accessible(account).find_by_id(params[:project].to_i)
       project.add_document(doc) if project

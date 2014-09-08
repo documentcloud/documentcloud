@@ -21,13 +21,14 @@ class DocumentImport < DocumentAction
           end
         end
       end
+      if ! Document.valid_source_document?(file)
+        document.update_attributes(:access => Document::ERROR)
+        return []
+      end
       DC::Store::AssetStore.new.save_original(document, file )
     else
       file = File.basename document.original_file_path
       File.open(file, 'wb'){ |f| f << DC::Store::AssetStore.new.read_original(document) }
-    end
-    unless Document.valid_source_document?(file)
-      raise ArgumentError.new("Invalid File Type")
     end
 
     # Calculate the file hash for the document's original_file so that duplicates can be found
