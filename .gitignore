@@ -24,4 +24,4 @@ cloud_crowd.db
 public/search
 vendor/solr-4.0.0/solr-webapp/webapp/*
 .bundle
-
+public/javascripts/vendor/*/
