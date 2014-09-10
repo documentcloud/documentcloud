@@ -5,8 +5,8 @@ embed_assets: datauri
 javascripts:
   core:
     - public/javascripts/application.js
-    - public/javascripts/vendor/underscore-*.js
-    - public/javascripts/vendor/jquery-*.js
+    - public/javascripts/vendor/underscore/underscore.js
+    - public/javascripts/vendor/jquery/dist/jquery.js
     - public/javascripts/vendor/jquery.ui.core.js
     - public/javascripts/vendor/jquery.ui.widget.js
     - public/javascripts/vendor/jquery.ui.position.js
@@ -28,8 +28,6 @@ javascripts:
     - app/views/jst/editor/*.jst
   search_embed:
     - app/views/jst/embed/search_*.jst
-  note_embed:
-    - app/views/jst/embed/note_*.jst
   admin:
     - public/javascripts/admin/*.js
     - app/views/admin/*.jst
