@@ -1,9 +1,4 @@
-# When inheriting from this class, make sure to stick
-# these two dependencies up at the top of your class
-# because otherwise rails's autoloader might fail to load your classes.
-require File.dirname(__FILE__) + '/support/setup'
-require File.dirname(__FILE__) + '/support/document_action'
-
+# DocumentAction is defined in app/actions/support
 class DocumentImport < DocumentAction
   
   # Split a document import job into two parallel parts ... one for the image
