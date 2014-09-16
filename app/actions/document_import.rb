@@ -1,4 +1,4 @@
-# DocumentAction is defined in app/actions/support
+require File.join(File.dirname(__FILE__), 'support', 'document_action')
 class DocumentImport < DocumentAction
   
   # Split a document import job into two parallel parts ... one for the image

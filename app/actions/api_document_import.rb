@@ -1,3 +1,4 @@
+require File.join(File.dirname(__FILE__), 'document_import')
 class ApiDocumentImport < DocumentImport
   # No difference in implementation.
 
