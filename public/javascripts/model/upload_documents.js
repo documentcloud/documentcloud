@@ -10,7 +10,6 @@ dc.model.UploadDocument = Backbone.Model.extend({
   set : function(attrs) {
     var file = attrs.file;
     if (file) {
-      delete attrs.file;
       var fileName    = file.fileName || file.name;
       fileName        = fileName.match(/[^\/\\]+$/)[0]; // C:\fakepath\yatta yatta.pdf => yatta yatta.pdf
       attrs.title     = dc.inflector.titleize(fileName.replace(this.FILE_EXTENSION_MATCHER, ''));
@@ -24,6 +23,12 @@ dc.model.UploadDocument = Backbone.Model.extend({
 
   overSizeLimit : function() {
     return this.get('size') >= this.MAX_FILE_SIZE;
+  },
+
+  abort: function(){
+    if ( this.get('data').processing() ){
+      this.get('data').abort();
+    }
   }
 
 });
@@ -35,8 +40,13 @@ dc.model.UploadDocumentSet = Backbone.Collection.extend({
 
   comparator : function(model) {
     return model.get('position');
+  },
+  
+  completed: function(){
+    return this.filter( function(upload){
+      return upload.get('complete');
+    });
   }
-
 });
 
 window.UploadDocuments = new dc.model.UploadDocumentSet();
