@@ -81,11 +81,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       uploadUrl = '/documents/' + this.options.documentId + '/upload_insert_document';
     }
     this.form = $('#new_document_form');
-
     this.form.fileupload({
       url:               uploadUrl,
       sequentialUploads: true,
-      autoUpload:        false,
+      autoUpload:        !!this.options.autostart, // must be true or false - not undefined
       dropZone:          $('body'),
       add               : this._onSelect,
       progress          : this._onProgress,
@@ -122,6 +121,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       return dc.ui.Dialog.alert(_.t('max_upload_size_warn','<a href="/help/troubleshooting">',"</a>") );
     }
     this.render();
+    if (this.options.autostart){
+      data.submit();
+    }
   },
 
   _onFail: function(e, data){
