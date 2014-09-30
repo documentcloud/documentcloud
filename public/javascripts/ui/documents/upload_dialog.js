@@ -21,16 +21,16 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     };
     options = _.extend({}, defaults, options);
 
-    _.bindAll(this, 'setupUpload', '_countDocuments',
-      '_onSelect', '_onProgress', '_onComplete', '_onAllComplete');
+    _.bindAll(this, 'setupUpload','_onSelect',
+                    '_onProgress', '_onComplete', '_onAllComplete');
 
     dc.ui.Dialog.call(this, options);
     if (options.autostart) $(this.el).addClass('autostart');
     if (dc.app.navigation) {
       dc.app.navigation.bind('tab:documents', _.bind(function(){ _.defer(this.setupUpload); }, this));
     }
-    this.collection.bind('add',   this._countDocuments);
-    this.collection.bind('remove', this._countDocuments);
+    this.listenTo(this.collection,'add remove', this._countDocuments);
+
   },
 
   // Documents are already selected and are being drawn in the dialog.
@@ -57,24 +57,23 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // Each document being uploaded is drawn in a single tile, appended to the dialog's list.
   _renderDocumentTiles : function() {
     var tiles           = this._tiles;
-    var editable        = this.options.editable;
-    var multiFileUpload = this.options.multiFileUpload;
 
     this.collection.each(function(model) {
       var view = new dc.ui.UploadDocumentTile({
-        editable        : editable,
         model           : model,
-        multiFileUpload : multiFileUpload
+        editable        : this.options.editable,
+        multiFileUpload : this.options.multiFileUpload
       });
       tiles[model.id] = view.render();
-    });
+    },this);
 
     var viewEls = _.pluck(_.values(tiles), 'el');
     this._list.append(viewEls);
   },
 
-  // Be careful to only setup file uploading once, when the "Documents" tab is open.
+  // initializes the form with the fileupload library and sets up callbacks
   setupUpload : function() {
+    // Be careful to only setup file uploading once, when the "Documents" tab is open.
     if (this.form || (dc.app.navigation && !dc.app.navigation.isOpen('documents'))) return;
     var uploadUrl = '/import/upload_document';
     if (this.options.insertPages) {
@@ -93,18 +92,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     });
   },
 
-  // If flash is disabled, we fall back to a regular invisible file input field.
-  setupFileInput : function() {
-    var input = $('#new_document_input');
-    input.show().change(_.bind(function() {
-      this._project = _.first(Projects.selected());
-      $('#new_document_project').val(this._project ? this._project.id : '');
-      $('#new_document_form').submit();
-    }, this));
-  },
-
-  // Initial load of a document, before uploading is begun.
-  _onSelect : function(e, data){ //}files, index, xhr, handler, callback) {
+  // Callback for when a file is added to the queue, before uploading has begun.
+  _onSelect : function(e, data){
     if (_.isEmpty(data.files)) return;
 
     _.each(data.files, function(file,index){
@@ -116,43 +105,22 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       });
     },this);
 
+    // make sure no files are too large to process.  If they are, don't bother uploading them
     if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
       this.close();
       return dc.ui.Dialog.alert(_.t('max_upload_size_warn','<a href="/help/troubleshooting">',"</a>") );
     }
     this.render();
     if (this.options.autostart){
-      data.submit();
+      this.startUpload();
     }
   },
 
+  // Failure callback, one or more files have failed due to a non-200 HTTP response code.
   _onFail: function(e, data){
     _.each(data.files, function(file){
       file.model.set({error: data.errorThrown});
     });
-  },
-
-  // Called immediately before file to POSTed to server.
-  _uploadData : function(id, index) {
-    var attrs   = this._tiles[id].serialize();
-    var model   = this.collection.get(id);
-    var options = this.options;
-
-    model.set(attrs);
-    if (options.multiFileUpload && model.get('size')) attrs.multi_file_upload = true;
-    attrs.authenticity_token = $("meta[name='csrf-token']").attr("content");
-    if (this.$('#make_public').is(':checked')) attrs.make_public = true;
-    attrs.email_me = this.$('#email_on_complete').is(':checked') ? this.collection.length : 0;
-    if (this._project) attrs.project = this._project.id;
-    if (_.isNumber(options.insertPageAt)) attrs.insert_page_at = options.insertPageAt;
-    if (_.isNumber(options.replacePagesStart)) attrs.replace_pages_start = options.replacePagesStart;
-    if (_.isNumber(options.replacePagesEnd)) attrs.replace_pages_end = options.replacePagesEnd;
-    if (options.documentId)  attrs.document_id     = options.documentId;
-    if (options.insertPages) attrs.document_number = index + 1;
-    if (options.insertPages) attrs.document_count  = this.collection.length;
-    if (!options.autostart) this.showSpinner();
-    this._list[0].scrollTop = 0;
-    return attrs;
   },
 
   // Update the progress bar based on the browser's determination of upload progress.
@@ -187,7 +155,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   },
 
-  // Mark the file as completed.  Hide the tile if no errors occurred
+  // Marks the file as completed.  Hide the tile if no errors occurred
   _markFileComplete: function(file, xhr){
     var model = file.model,
         tile  = this._tiles[model.id],
@@ -215,8 +183,9 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     }
   },
 
-  // Once there are no uploads left, either close the dialog, or alert the user that everything
-  // is completed.
+  // Once there are no uploads left, close the upload dialog
+  // If the upload was initiated from a document viewer, close the window
+  // and alert the user that it was closed so the file can re-process
   _onAllComplete : function() {
     this.hideSpinner();
     if (this.options.insertPages) {
@@ -235,6 +204,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   // Update title and fields to match the new count of uploads.
+  // Called when a file is added or removed from the pending queue
   _countDocuments : function() {
     var num = this.collection.length;
     this.title( _.t('uploaded_x_documents',num) );
@@ -243,8 +213,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this.$('.upload_email_count').text( _.t('uploaded_x_document_has', num ) );
   },
 
-  // Ask the server how many work units are currently queued.
-  // Uses debounce to make sure status is only checked once per second
+  // Ask the server how many work units are currently queued and updates the info block on dialog with results
+  // Wraps the implementation with debounce to make sure status is only checked once per second
   checkQueueLength : _.debounce(function() {
     $.getJSON('/documents/queue_length.json', {}, _.bind(function(resp) {
       var num = resp.queue_length;
@@ -253,16 +223,15 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     }, this));
   },1000),
 
-  // Used by the ReplacePagesEditor to include the `insertPagesAt`, `replacePagesStart`,
-  // and `replacePagesEnd` options.
+  // Used by the ReplacePagesEditor to include the
+  //    `insertPagesAt`, `replacePagesStart`, and `replacePagesEnd` options.
   insertPagesAttrs : function(attrs) {
-    _.each(attrs, _.bind(function(value, attr) {
-      this.options[attr] = value;
-    }, this));
+    _.extend(this.options, attrs);
   },
 
-  // Overriding `Dialog#confirm` to validate titles.
+  // Overrides `Dialog#confirm`.  Validates titles and begins uploading by calling `startUpload`
   confirm : function(ev) {
+    // Don't start re-uploading if the OK button is disabled
     if ( this.$('.ok').hasClass('not_enabled')) {
       return;
     }
@@ -281,12 +250,37 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       this.error( _.t('must_upload_something') );
       return false;
     }
-
     this.collection.each( function(upload){
       this._tiles[upload.id].startProgress();
-      upload.get('data').submit();
+      var data = upload.get('data');
+      data.formData = this._uploadData(upload);
+      data.submit();
     },this);
   },
+
+  // Called by `startUpload` immediately before file is uploaded to server,
+  // returns the form data that should be included with the request
+  _uploadData : function(model){
+    var attrs   = this._tiles[model.id].serialize();
+    var options = this.options;
+
+    model.set(attrs);
+    if (options.multiFileUpload && model.get('size')) attrs.multi_file_upload = true;
+    attrs.authenticity_token = $("meta[name='csrf-token']").attr("content");
+    if (this.$('#make_public').is(':checked')) attrs.make_public = true;
+    attrs.email_me = this.$('#email_on_complete').is(':checked') ? this.collection.length : 0;
+    if (this._project) attrs.project = this._project.id;
+    if (_.isNumber(options.insertPageAt)) attrs.insert_page_at = options.insertPageAt;
+    if (_.isNumber(options.replacePagesStart)) attrs.replace_pages_start = options.replacePagesStart;
+    if (_.isNumber(options.replacePagesEnd)) attrs.replace_pages_end = options.replacePagesEnd;
+    if (options.documentId)  attrs.document_id     = options.documentId;
+    if (options.insertPages) attrs.document_number = model.get('position') + 1;
+    if (options.insertPages) attrs.document_count  = this.collection.length;
+    if (!options.autostart) this.showSpinner();
+    this._list[0].scrollTop = 0;
+    return attrs;
+  },
+
 
   // User-initiated close
   cancel : function() {
@@ -367,7 +361,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     this.$('.open_edit').toggleClass('active');
   },
 
-  // Called by uploader, used to zero-out progress bar. IE doesn't have a progress bar.
+  // Called by uploader, used to zero-out progress bar.
   startProgress : function() {
     this._percentage = 0;
     if (this.options.multiFileUpload) {
@@ -394,6 +388,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     $(this.el).animate({opacity: 0}, 200).slideUp(200, function(){ $(this).remove(); });
   },
 
+  // Sets the tile to have "error" css class and displays an error message to the right of the title
   onError: function(model,msg){
     this._title.closest('.text_input')
       .addClass('error')
