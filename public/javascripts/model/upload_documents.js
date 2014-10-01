@@ -5,6 +5,10 @@ dc.model.UploadDocument = Backbone.Model.extend({
 
   MAX_FILE_SIZE : 419430400, // 400 Megabytes
 
+  defaults: {
+    complete: false
+  },
+
   // When creating an UploadDocument, we pull off some properties that
   // are on the file object, and attach them as attributes.
   set : function(attrs) {
@@ -41,11 +45,10 @@ dc.model.UploadDocumentSet = Backbone.Collection.extend({
   comparator : function(model) {
     return model.get('position');
   },
-  
+
+  // returns an array of all completed uploads
   completed: function(){
-    return this.filter( function(upload){
-      return upload.get('complete');
-    });
+    return this.where({complete: true});
   }
 });
 
