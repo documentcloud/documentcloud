@@ -21,7 +21,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     };
     options = _.extend({}, defaults, options);
 
-    _.bindAll(this, 'setupUpload','_onSelect',
+    _.bindAll(this, 'setupUpload','_onSelect', '_onFailure',
                     '_onProgress', '_onComplete', '_onAllComplete');
 
     dc.ui.Dialog.call(this, options);
@@ -87,7 +87,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       dropZone:          $('body'),
       add               : this._onSelect,
       progress          : this._onProgress,
-      fail              : this._onFail,
+      fail              : this._onFailure,
       done              : this._onComplete
     });
   },
@@ -117,10 +117,11 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   // Failure callback, one or more files have failed due to a non-200 HTTP response code.
-  _onFail: function(e, data){
+  _onFailure: function(e, data){
     _.each(data.files, function(file){
-      file.model.set({error: data.errorThrown});
+      file.model.set({error: data.errorThrown, complete: true});
     });
+    this._updateCompletionStatus();
   },
 
   // Update the progress bar based on the browser's determination of upload progress.
@@ -137,7 +138,12 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     _.each(data.files, function(file){
       this._markFileComplete(file, data.xhr());
     }, this);
+    this._updateCompletionStatus();
+  },
 
+  // Hides the spinner.
+  // Also hides dialog if all files have completed without errors
+  _updateCompletionStatus: function(){
     var complete = this.collection.completed();
 
     // Hide spinner if all files are complete
@@ -145,14 +151,13 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       this.hideSpinner();
 
       var errors_present =  _.detect(complete, function(upload){
-          return upload.get('error');
+        return upload.get('error');
       });
       // Don't hide if any of the competed uploads had an error
       if ( !errors_present ){
         this._onAllComplete();
       }
     }
-
   },
 
   // Marks the file as completed.  Hide the tile if no errors occurred
@@ -240,7 +245,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       var num = this.collection.length;
       return this.error( _.t('must_have_doc_title', num ) );
     }
-    this.$('.OK').setMode('not', 'enabled');
+    this.$('.ok').setMode('not', 'enabled');
     this.startUpload();
   },
 
@@ -309,7 +314,8 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
 
   initialize: function(options) {
     this.options = options;
-    this.listenTo(this.model, 'change:error', this.onError);
+    this.listenTo(this.model, 'change:error',    this.onError);
+    this.listenTo(this.model, 'change:complete', this.onCompleted);
   },
 
   // Renders tile and sets up commonly used jQuery selectors.
@@ -337,11 +343,10 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     };
   },
 
-  // Clears out upload tile and also removes model from Upload Dialog's collection.
+  // Sends abort signal to file upload if it is still in process of uploading
+  // The abort signal will be caught by the fileUpload onFailure handler
   removeUploadFile : function() {
-    this.hide();
     this.model.abort();
-    UploadDocuments.remove(this.model);
   },
 
   // Apply the current file's attributes to all files in the upload.
@@ -393,6 +398,13 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     this._title.closest('.text_input')
       .addClass('error')
       .append('<span class="msg">'+msg+'</span>');
+  },
+
+  // Once file has been uploaded, it's impossible to modify it
+  // therefore, hide edit and cancel controls
+  onCompleted: function(){
+    // set visiblility vs just calling hide() in order to keep alignment with pending uploads
+    this.$('.icon').css("visibility", "hidden");
   }
 
-});
+})
