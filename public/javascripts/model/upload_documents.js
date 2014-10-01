@@ -29,9 +29,11 @@ dc.model.UploadDocument = Backbone.Model.extend({
     return this.get('size') >= this.MAX_FILE_SIZE;
   },
 
+  // aborts the file upload if it still in progress
   abort: function(){
-    if ( this.get('data').processing() ){
-      this.get('data').abort();
+    var upload = this.get('data');
+    if ( upload && 'pending' == upload.state() ){
+      upload.abort();
     }
   }
 
