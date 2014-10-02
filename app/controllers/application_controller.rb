@@ -97,13 +97,10 @@ class ApplicationController < ActionController::Base
 
   def api_login_required
     authenticate_or_request_with_http_basic("DocumentCloud") do |email, password|
-      @current_account = Account.log_in(email, password)
-      if @current_account.blank?
-        false
-      else
+      if @current_account = Account.log_in(email, password)
         @current_organization = @current_account.organization
-        true
       end
+      @current_account
     end
   end
 
