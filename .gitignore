@@ -9,6 +9,7 @@ db/*.pid
 db/mongodb*
 db/solr_*
 db/sphinx
+node_modules
 raw
 /secrets
 public/docs
