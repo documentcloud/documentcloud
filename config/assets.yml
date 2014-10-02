@@ -21,7 +21,6 @@ javascripts:
     - public/javascripts/ui/**/*.js
     - public/javascripts/app/**/*.js
     - app/views/jst/workspace/**/*.jst
-    - public/javascripts/viewer
   editor:
     - public/javascripts/editor/editor_toolbar.js
     - public/javascripts/editor/*.js
