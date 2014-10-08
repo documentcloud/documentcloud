@@ -98,6 +98,30 @@ class AdminController < ApplicationController
     @params = DEFAULT_SIGNUP_PARAMS.dup
   end
 
+  def download_document_hits
+    organization=Organization.find_by_slug( params[:slug])
+    if !organization
+      flash[:error]="Organization for #{params[:slug]} was not found"
+      render :action=>:document_hits and return
+    end
+    urls=RemoteUrl
+      .where(:document_id=>organization.documents.published.ids)
+      .group(:date_recorded,:document_id)
+      .select('date_recorded','document_id','sum(hits) as hits')
+
+    response.headers["Content-Type"] ||= 'text/csv'
+    response.headers["Content-Disposition"] = "attachment; filename=DocumentCloudEmbeddedHits.csv"
+    response.headers['Last-Modified'] = Time.now.ctime.to_s
+
+    self.response_body = Enumerator.new do |stream|
+      csv = CSV.new(stream)
+      csv << ["Day","Hits","Document"]
+      urls.each do | hit |
+         csv << [ hit.date_recorded.strftime("%Y-%m-%d"), hit.hits, hit.document.canonical_url(:format => :html) ]
+       end
+    end
+  end
+
   # Endpoint for our pixel-ping application, to save our analytic data every
   # so often -- delegate to a cloudcrowd job.
   def save_analytics
