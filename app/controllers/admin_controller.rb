@@ -99,21 +99,21 @@ class AdminController < ApplicationController
   end
 
   def download_document_hits
-    organization=Organization.find_by_slug( params[:slug])
+    organization=Organization.find_by_slug(params[:slug])
     if !organization
       flash[:error]="Organization for #{params[:slug]} was not found"
       render :action=>:document_hits and return
     end
-    urls=RemoteUrl
-      .where(:document_id=>organization.documents.published.ids)
-      .group(:date_recorded,:document_id)
-      .select('date_recorded','document_id','sum(hits) as hits')
 
     response.headers["Content-Type"] ||= 'text/csv'
-    response.headers["Content-Disposition"] = "attachment; filename=DocumentCloudEmbeddedHits.csv"
+    response.headers["Content-Disposition"] = "attachment; filename=#{organization.slug}-hits.csv"
     response.headers['Last-Modified'] = Time.now.ctime.to_s
 
     self.response_body = Enumerator.new do |stream|
+      urls=RemoteUrl
+        .where(:document_id=>organization.documents.published.ids)
+        .group(:date_recorded,:document_id)
+        .select('date_recorded','document_id','sum(hits) as hits')
       csv = CSV.new(stream)
       csv << ["Day","Hits","Document"]
       urls.each do | hit |
