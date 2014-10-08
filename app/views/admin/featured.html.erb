@@ -10,7 +10,7 @@
   $(function(){
 
     $('#content').append( (new dc.ui.FeaturedReporting( {
-      collection: new dc.model.FeaturedReports( <%= FeaturedReport.sorted.to_json %> ) 
+      collection: new dc.model.FeaturedReports( <%=raw FeaturedReport.sorted.to_json %> )
     } ) ).render().el);
   });
 
