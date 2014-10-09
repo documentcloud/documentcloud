@@ -332,6 +332,15 @@ class Account < ActiveRecord::Base
     end
   end
 
+  # Set the default membership.  Will mark the given membership as the default
+  # and the other memberships (if any) as non-default
+  def set_default_membership(default_membership)
+    raise "Membership must belong to account!" unless default_membership.account_id==self.id
+    self.memberships.each do | membership |
+      membership.update_attributes({ :default => (membership.id == default_membership.id) })
+    end
+  end
+
   def record_identity_attributes( identity )
     current_identities = ( self.identities ||= {} )
     current_identities[ identity['provider'] ] = identity['uid']

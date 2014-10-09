@@ -122,6 +122,23 @@ class AdminController < ApplicationController
     end
   end
 
+  def update_memberships
+    @account = Account.find(params[:id])
+    @account.set_default_membership(@account.memberships.find(params[:default_membership]))
+    params[:role].each do | membership_id, role|
+      @account.memberships.find(membership_id).update_attributes({ role: role })
+    end
+    redirect_to :action=>'memberships'
+  end
+  
+  def manage_memberships
+    @account = Account.lookup(params[:email])
+    if !@account
+      flash[:error]="Account for #{params[:email]} was not found"
+      render :action=>:memberships and return
+    end
+  end
+  
   # Endpoint for our pixel-ping application, to save our analytic data every
   # so often -- delegate to a cloudcrowd job.
   def save_analytics
