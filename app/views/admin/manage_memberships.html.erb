@@ -7,7 +7,7 @@
 <div id="full_screen_form" class="full_page_background">
   <form action="/admin/update_memberships/<%= @account.id %>" method="POST">
     <%= token_tag %>
-    <h1>Modify <%= @account.email %></h1>
+    <h1>Modify memberships for <%= @account.email %></h1>
     <% if flash[:error] %>
       <div class="form_error login_error">
         <span>
@@ -47,7 +47,7 @@
         </tbody>
     </table>
     <div class="line">
-        <div class="minibutton" id="submitbtn" value="Modify" onclick="$('#full_screen_form form').submit();">Modify</div>
+        <div class="minibutton" id="submitbtn" value="Modify" onclick="$('#full_screen_form form').submit();">Modify Memberships</div>
     </div>
 
 

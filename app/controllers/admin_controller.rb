@@ -123,6 +123,7 @@ class AdminController < ApplicationController
   end
 
   def update_memberships
+    redirect_to :action=>'memberships' unless request.post? and params[:id]
     @account = Account.find(params[:id])
     @account.set_default_membership(@account.memberships.find(params[:default_membership]))
     params[:role].each do | membership_id, role|
@@ -132,6 +133,7 @@ class AdminController < ApplicationController
   end
   
   def manage_memberships
+    redirect_to :action=>'memberships' unless request.post? and params[:email]
     @account = Account.lookup(params[:email])
     if !@account
       flash[:error]="Account for #{params[:email]} was not found"
