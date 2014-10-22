@@ -17,7 +17,7 @@ module DC
     module Matchers
       FIELD         = /("(.+?)"|'(.+?)'|[^'"\s]{2}\S*):\s*("(.+?)"|'(.+?)'|[^'"\s]\S*)/
       QUOTED_VALUE  = /("(.+?)"|'(.+?)')/
-      BOOLEAN       = /(or|and|[!+\-()])/i
+      BOOLEAN       = /(\bor\b|\band\b|[!+\-()])/i
     end
 
     DEFAULT_PER_PAGE  = 10
