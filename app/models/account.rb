@@ -275,12 +275,15 @@ class Account < ActiveRecord::Base
     LifecycleMailer.reviewer_instructions(documents, inviter_account, self, message, key).deliver
   end
 
-  # Upgrading a reviewer account to a newsroom account also moves their                 #
-  # notes over to the (potentially different) organization.                             # Move to Organization
-  def upgrade_reviewer_to_real(organization, role)                                      #
-    update_attributes :organization => organization, :role => role                      #
-    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{id}") #
-  end                                                                                   #
+  # Upgrades a reviewer account to a newsroom account.
+  # Switches their membership to the given role and makes sure the organization is correct
+  def upgrade_reviewer_to_real(organization, role)
+    # First attempt to find the membership for the given organization,
+    # or any membership that the account is a reviewer of
+    membership = memberships.where({:role=>Account::REVIEWER, :organization=>organization }).first ||
+                     memberships.where({:role=>Account::REVIEWER}).first
+    membership.update_attributes({:role=>role, :organization_id=>organization.id })
+  end
 
   # When a password reset request is made, send an email with a secure key to
   # reset the password.
