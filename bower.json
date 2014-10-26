@@ -12,7 +12,7 @@
   "dependencies":{
     "jquery": "1.11.1",
     "backbone": "1.1.2",
-    "documentcloud-notes": "git@github.com:documentcloud/documentcloud-notes.git"
+    "documentcloud-notes": "git://github.com/documentcloud/documentcloud-notes.git"
   },
   "moduleType": [
     "globals"
