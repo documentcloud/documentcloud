@@ -108,7 +108,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     // make sure no files are too large to process.  If they are, don't bother uploading them
     if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
       this.close();
-      return dc.ui.Dialog.alert(_.t('max_upload_size_warn','<a href="/help/troubleshooting">',"</a>") );
+      dc.ui.Dialog.alert(_.t('max_upload_size_warn','<a href="/help/troubleshooting">',"</a>") );
+      return;
     }
     this.render();
     if (this.options.autostart){
@@ -243,7 +244,8 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     var failed = _.select(this._tiles, function(tile) { return tile.ensureTitle(); });
     if (failed.length) {
       var num = this.collection.length;
-      return this.error( _.t('must_have_doc_title', num ) );
+      this.error( _.t('must_have_doc_title', num ) );
+      return;
     }
     this.$('.ok').setMode('not', 'enabled');
     this.startUpload();
@@ -261,6 +263,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       data.formData = this._uploadData(upload);
       data.submit();
     },this);
+    return true;
   },
 
   // Called by `startUpload` immediately before file is uploaded to server,
@@ -383,7 +386,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
 
   // Validation used by uploader dialog.
   ensureTitle : function() {
-    var noTitle = dc.inflector.trim(this._title.val()) == '';
+    var noTitle = _.isEmpty(dc.inflector.trim(this._title.val()));
     this._title.closest('.text_input').toggleClass('error', noTitle);
     return noTitle;
   },
@@ -407,4 +410,4 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     this.$('.icon').css("visibility", "hidden");
   }
 
-})
+});
