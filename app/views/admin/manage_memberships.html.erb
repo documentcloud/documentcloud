@@ -2,7 +2,7 @@
   @title = "Admin Dashboard :: Membership Maintenance"
   @stylesheets = [:admin]
   @javascripts = [:admin]
-  @bodyclass   = 'admin_memberships'
+  @bodyclass   = 'admin memberships'
 %>
 <div id="full_screen_form" class="full_page_background">
   <form action="/admin/update_memberships/<%= @account.id %>" method="POST">
@@ -15,12 +15,13 @@
         </span>
       </div>
     <% end %>
-    <table id="table">
+    <table class="admin_table">
         <thead>
             <tr>
                 <th>Default</th>
                 <th>Organization</th>
                 <th>Role</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -34,12 +35,15 @@
                 </td>
                 <td>
                     <select name="role[<%=membership.id%>]">
-                        <% DC::Roles::ROLE_NAMES.each do |id,name| %>
+                        <% Membership::ROLE_TITLES.each do |id,title| %>
                             <option value="<%=id %>" <%= "selected" if membership.role == id %>>
-                                <%= name.to_s.titleize %>
+                                <%= title %>
                             </option>
                         <% end  %>
                     </select>
+                </td>
+                <td>
+                  <%= link_to ">>", :action=>:manage_organization, :id=>membership.organization_id %>
                 </td>
             </tr>
 
