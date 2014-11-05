@@ -117,8 +117,30 @@ class AdminController < ApplicationController
     end
   end
 
+  def manage_organization
+    query = if params[:slug]
+              ["lower(slug)=:slug or lower(name)=:slug",{:slug=>params[:slug].downcase}]
+            elsif params[:id]
+              {:id=>params[:id]}
+            end
+    @organization = Organization.where(query).includes(:memberships=>:account).first
+    if @organization.nil?
+      flash[:error] = "Organization for '#{params[:slug]}' was not found"
+      render :action=>:organizations
+    end
+  end
+
+  def update_organization
+    @organization = Organization.find(params[:id])
+    Rails.logger.warn pick(params,:name,:slug)
+    if @organization.update_attributes( pick(params,:name,:slug) )
+      redirect_to :action=>'organizations' and return
+    end
+    flash[:error] = @organization.errors.full_messages.join("; ")
+    render :action=>:manage_organization
+  end
+
   def update_memberships
-    redirect_to :action=>'memberships' unless request.post? and params[:id]
     @account = Account.find(params[:id])
     @account.set_default_membership(@account.memberships.find(params[:default_membership]))
     params[:role].each do | membership_id, role|
@@ -126,16 +148,19 @@ class AdminController < ApplicationController
     end
     redirect_to :action=>'memberships'
   end
-  
+
   def manage_memberships
-    redirect_to :action=>'memberships' unless request.post? and params[:email]
-    @account = Account.lookup(params[:email])
+    @account = if params[:email]
+                 Account.lookup(params[:email])
+               elsif params[:id]
+                 Account.find(params[:id])
+               end
     if !@account
       flash[:error]="Account for #{params[:email]} was not found"
       render :action=>:memberships and return
     end
   end
-  
+
   # Endpoint for our pixel-ping application, to save our analytic data every
   # so often -- delegate to a cloudcrowd job.
   def save_analytics

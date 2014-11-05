@@ -1,13 +1,13 @@
-.admin_memberships table {
+.admin_table {
   margin: 20px auto;
   border: 1px solid #B0B0B0;
   font-size: 1.2em;
 }
 
-  .admin_memberships table thead {
+  .admin_table thead {
     text-align: left;
   }
-    .admin_memberships table thead th {
+    .admin_table thead th {
       background-image: linear-gradient(to bottom, #F0F0F0 0, #DBDBDB 100%);
       border: 1px solid #B0B0B0;
       color: #444;
@@ -17,12 +17,12 @@
     }
 
 
-  .admin_memberships table tbody {
+  .admin_table tbody {
     padding: 3px;
   }
-    .admin_memberships table td {
+    .admin_table td {
       padding: 3px 10px;
     }
-    .admin_memberships table tr:nth-child(even) {
+    .admin_table tr:nth-child(even) {
       background: #F2F2F2;
     }
