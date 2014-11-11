@@ -150,8 +150,7 @@ class AdminController < ApplicationController
 
   def update_organization
     @organization = Organization.find(params[:id])
-    Rails.logger.warn pick(params,:name,:slug)
-    if @organization.update_attributes( pick(params,:name,:slug) )
+    if @organization.update_attributes( {demo: false}.merge(pick(params,:name,:slug,:demo)) )
       redirect_to :action=>'organizations' and return
     end
     flash[:error] = @organization.errors.full_messages.join("; ")
