@@ -185,14 +185,15 @@ module DC
       DC::CSV::generate_csv(documents)
     end
 
-    def self.accounts_csv
-      accounts = Account.all.map {|a| a.canonical(:include_document_counts => true,
-                                                  :include_organization => true) }
-      columns  = accounts.first.keys.sort_by {|key| Account.column_names.index(key) || 1000 }
-      # columns = Account.column_names | Account.first.canonical(:include_document_counts => true).keys
-      DC::CSV::generate_csv(accounts, columns)
+    def self.accounts_csv(csv)
+      keys = Account.first.canonical(:include_document_counts => true, :include_organization => true).keys
+      csv << keys.map{ |key| key.titleize }
+      Account.find_each do | account |
+        record = account.canonical(:include_document_counts => true, :include_organization => true)
+        csv << keys.map {|key| record[key] }
+      end
     end
-    
+
     # To Do: set up a general notifier.
     # Should take a webhook url and a json payload to send.
     def self.notify_top_ten

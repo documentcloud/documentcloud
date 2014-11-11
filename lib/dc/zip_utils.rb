@@ -7,15 +7,12 @@ module DC
   module ZipUtils
 
     def package(zip_name)
-      temp_dir = Dir.mktmpdir# do |temp_dir|
-        zipfile = "#{temp_dir}/#{zip_name}"
-        Zip::File.open(zipfile, Zip::File::CREATE) do |zip|
-          yield zip
-        end
-        # TODO: We can stream, or even better, use X-Accel-Redirect, if we can
-        # be sure to clean up the Zip after the fact -- with a cron or equivalent.
-        send_file zipfile, :stream => false
-#      end
+      zipfile = Tempfile.new(["dc",".zip"])
+      Zip::File.open(zipfile.path, Zip::File::CREATE) do |zip|
+        yield zip
+      end
+      send_file zipfile.path, :type => 'application/zip', :disposition => 'attachment', :filename => zip_name
+      zipfile.close
     end
 
   end

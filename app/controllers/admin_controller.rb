@@ -64,8 +64,9 @@ class AdminController < ApplicationController
 
   def accounts_csv
     return not_found unless request.format.csv?
-    csv = DC::Statistics.accounts_csv
-    send_data csv, :type => :csv, :filename => 'documents.csv'
+    deliver_csv("#{Date.today}-accounts") do | csv |
+      DC::Statistics.accounts_csv(csv)
+    end
   end
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and
@@ -104,21 +105,15 @@ class AdminController < ApplicationController
       flash[:error]="Organization for #{params[:slug]} was not found"
       render :action=>:document_hits and return
     end
-
-    response.headers["Content-Type"] ||= 'text/csv'
-    response.headers["Content-Disposition"] = "attachment; filename=#{organization.slug}-hits.csv"
-    response.headers['Last-Modified'] = Time.now.ctime.to_s
-
-    self.response_body = Enumerator.new do |stream|
+    deliver_csv("organization.slug}-hits") do |csv|
+      csv << [ "Day","Hits","Document" ]
       urls=RemoteUrl
         .where(:document_id=>organization.documents.published.ids)
         .group(:date_recorded,:document_id)
         .select('date_recorded','document_id','sum(hits) as hits')
-      csv = CSV.new(stream)
-      csv << ["Day","Hits","Document"]
       urls.each do | hit |
-         csv << [ hit.date_recorded.strftime("%Y-%m-%d"), hit.hits, hit.document.canonical_url(:format => :html) ]
-       end
+        csv << [ hit.date_recorded.strftime("%Y-%m-%d"), hit.hits, hit.document.canonical_url(:format => :html) ]
+      end
     end
   end
 
@@ -252,6 +247,17 @@ class AdminController < ApplicationController
       result[utc.to_f.to_i] = value
     end
     result
+  end
+
+  # Streams a CSV download to the browser
+  def deliver_csv( filename )
+    response.headers["Content-Type"] ||= 'text/csv'
+    response.headers["Content-Disposition"] = "attachment; filename=#{filename}.csv"
+    response.headers['Last-Modified'] = Time.now.ctime.to_s
+    self.response_body = Enumerator.new do |stream|
+      csv = CSV.new(stream)
+      yield csv
+    end
   end
 
 end
