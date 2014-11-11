@@ -226,11 +226,16 @@ div.full_page_background {
       width: 545px;
       margin: 30px auto;
     }
-      .full_page_background label {
+      .full_page_background label{
+        width: 120px;
+      }
+      .full_page_background .row-message {
+        margin-bottom: 20px;
+      }
+      .full_page_background label, .row-message {
         display: block;
         text-align: right;
         font: bold 16px Arial;
-        width: 120px;
         line-height: 14px !important;
         color: #444;
         text-shadow: 0px 1px 1px #fff;
