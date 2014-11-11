@@ -15,7 +15,7 @@
         </span>
       </div>
     <% end %>
-    
+
     <div class="line">
       <div class="text_input">
         <div class="background">
@@ -39,6 +39,15 @@
       </div>
       <label for="slug">
         Slug:
+      </label>
+    </div>
+
+    <div class="line">
+      <div class="input">
+        <input type="checkbox" name="demo" id="demo" value="t" <%= "CHECKED" if @organization.demo %>/>
+      </div>
+      <label for="demo">
+        Demo Organization:
       </label>
     </div>
 
