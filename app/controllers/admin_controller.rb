@@ -79,24 +79,42 @@ class AdminController < ApplicationController
   def signup
     unless request.post?
       @params = DEFAULT_SIGNUP_PARAMS.dup
+      return render
     end
-    return render unless request.post?
     @params = params
-    organization_params = params.require(:organization).permit(:name,:slug,:language,:document_language)
-    org = Organization.create( organization_params )
-    return fail(org.errors.full_messages.join(', ')) if org.errors.any?
-    params[:account][:email].strip! if params[:account][:email]
-    user_params = params.require(:account).permit(:first_name,:last_name,:email,:slug,:language,:document_language)
-    acc = Account.new( user_params
-                       .merge( :language=>org.language, :document_language=>org.document_language ) )
-    acc.memberships.build({
-      :role => Account::ADMINISTRATOR, :default => true, :organization=>org
-    })
-    return org.destroy && fail( acc.errors.full_messages.join(', ') ) unless acc.save
 
-    acc.send_login_instructions
-    @success = "Account Created. Welcome email sent to #{acc.email}."
-    @params = DEFAULT_SIGNUP_PARAMS.dup
+    user_params = params.require(:account).permit(:first_name,:last_name,:email,:slug,:language,:document_language)
+
+    # First see if an account already exists for the email
+    @account = Account.lookup(user_params[:email])
+    if @account # Check if the account should be moved
+      if "t" != params[:move_account]
+        fail( "#{user_params[:email]} already exists!" ) and return
+      end
+    else
+      @account = Account.create( user_params
+        .merge( :language=>DC::Language::DEFAULT, :document_language=>DC::Language::DEFAULT ) )
+      if @account.errors.any?
+        fail( @account.errors.full_messages.join(', ') ) and return
+      end
+    end
+
+    # create the organization
+    organization_params = params.require(:organization).permit(:name,:slug,:language,:document_language)
+    organization = Organization.create( organization_params )
+    return fail(organization.errors.full_messages.join(', ')) if organization.errors.any?
+
+    # link the account to the organization
+    membership = @account.memberships.create({
+        :role => Account::ADMINISTRATOR, :default => true, :organization=>organization
+    })
+    @account.set_default_membership(membership)
+
+    @account.send_login_instructions
+    @success = "Account Created. Welcome email sent to #{@account.email}."
+    # clear variables so the form displays fresh
+    @account = nil
+    @params  = DEFAULT_SIGNUP_PARAMS.dup
   end
 
   def download_document_hits
@@ -260,6 +278,7 @@ class AdminController < ApplicationController
 
   def fail(message)
     @failure = message
+    flash[:error] = message
   end
 
   # Pass in the seconds since the epoch, for JavaScript.
