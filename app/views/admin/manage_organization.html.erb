@@ -1,0 +1,82 @@
+<%
+  @title = "Admin Dashboard :: Organization Maintenance"
+  @stylesheets = [:admin]
+  @javascripts = [:admin]
+  @bodyclass   = 'admin organizations'
+%>
+<div id="full_screen_form" class="full_page_background">
+  <form action="/admin/update_organization/<%= @organization.id %>" method="POST">
+    <%= token_tag %>
+    <h1>Modify <%= @organization.name %></h1>
+    <% if flash[:error] %>
+      <div class="form_error">
+        <span>
+          <%= flash[:error] %>
+        </span>
+      </div>
+    <% end %>
+
+    <div class="line">
+      <div class="text_input">
+        <div class="background">
+          <div class="inner">
+            <input type="text" name="name" id="name" value="<%= @organization.name %>"/>
+          </div>
+        </div>
+      </div>
+      <label for="name">
+        Name:
+      </label>
+    </div>
+
+    <div class="line">
+      <div class="text_input">
+        <div class="background">
+          <div class="inner">
+            <input type="text" name="slug" id="slug" value="<%= @organization.slug %>"/>
+          </div>
+        </div>
+      </div>
+      <label for="slug">
+        Slug:
+      </label>
+    </div>
+
+    <div class="line">
+      <div class="input">
+        <input type="checkbox" name="demo" id="demo" value="t" <%= "CHECKED" if @organization.demo %>/>
+      </div>
+      <label for="demo">
+        Demo Organization:
+      </label>
+    </div>
+
+    <table class="admin_table">
+      <caption>Members (<%= @organization.memberships.count %>)</caption>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+          <% @organization.memberships.each do | membership | %>
+            <tr>
+              <td><%= membership.account.full_name %></td>
+              <td><%= mail_to membership.account.email %></td>
+              <td><%= Membership::ROLE_TITLES[membership.role] %></td>
+              <td><%= link_to(">>", :action=>:manage_memberships, :id=>membership.account_id) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+    </table>
+
+    <div class="line">
+        <div class="minibutton" id="submitbtn" value="Modify" onclick="$('#full_screen_form form').submit();">Update Organization</div>
+    </div>
+
+
+  </form>
+</div>

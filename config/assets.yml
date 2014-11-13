@@ -57,7 +57,7 @@ stylesheets:
   admin:
     - public/stylesheets/pages/admin.css
     - public/stylesheets/pages/admin_featured_reports.css
-    - public/stylesheets/pages/admin_memberships.css
+    - public/stylesheets/pages/admin_table.css
   home:
     - public/stylesheets/pages/home.css
   embedded_login:
