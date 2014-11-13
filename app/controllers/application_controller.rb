@@ -118,12 +118,12 @@ class ApplicationController < ActionController::Base
   end
 
   def prefer_secure
-    secure_only if cookies['dc_logged_in'] == 'true'
+    secure_only(302) if cookies['dc_logged_in'] == 'true'
   end
 
-  def secure_only
+  def secure_only(status=301)
     if !request.ssl? && (request.format.html? || request.format.nil?)
-      redirect_to DC.server_root(:force_ssl => true) + request.original_fullpath
+      redirect_to DC.server_root(:force_ssl => true) + request.original_fullpath, :status => status
     end
   end
 
