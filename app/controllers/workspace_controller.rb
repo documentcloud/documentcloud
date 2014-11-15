@@ -8,7 +8,7 @@ class WorkspaceController < ApplicationController
 
   before_action :bouncer, :except => :index if Rails.env.staging?
 
-  before_action :prefer_secure,   :only => [:index]
+  before_action :secure_only
 
   # Main documentcloud.org page. Renders the workspace if logged in or
   # searching, the home page otherwise.

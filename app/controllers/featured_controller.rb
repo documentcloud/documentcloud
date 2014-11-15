@@ -1,4 +1,6 @@
 class FeaturedController < ApplicationController
+  
+  before_action :secure_only
 
   before_action :admin_required, :except => [:index]
 

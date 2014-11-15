@@ -1,4 +1,6 @@
 class PublicController < ApplicationController
+  
+  before_action :secure_only
 
   # Public search.
   def index
