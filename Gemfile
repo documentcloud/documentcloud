@@ -10,7 +10,7 @@ gem 'aws-sdk',                '~> 1.30', :require => 'aws' #11.1'
 gem 'pg',                     '~> 0.17'
 
 gem 'closure-compiler'
-gem 'docsplit',               '>= 0.6.4'
+gem 'docsplit',               '>= 0.7.6'
 gem 'sunspot_rails',          '~> 2.1.0'
 gem 'sunspot_solr',           '~> 2.1.0'
 gem 'progress_bar'  # optional, used by sunspot to show progress while re-indexing

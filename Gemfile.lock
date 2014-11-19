@@ -72,7 +72,7 @@ GEM
     cssmin (1.0.3)
     curb (0.8.6)
     daemons (1.1.9)
-    docsplit (0.7.5)
+    docsplit (0.7.6)
     erubis (2.7.0)
     eventmachine (1.0.3)
     faraday (0.9.0)
@@ -247,7 +247,7 @@ DEPENDENCIES
   closure-compiler
   cloud-crowd (~> 0.7.3)
   curb (~> 0.8.4)
-  docsplit (>= 0.6.4)
+  docsplit (>= 0.7.6)
   google_drive
   growl
   guard-bundler
