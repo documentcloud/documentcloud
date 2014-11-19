@@ -85,8 +85,13 @@ tesseract-ocr-swe
 tesseract-ocr-ukr
 '
 
+# Fonts to support Chinese, Japanese, and Korean character sets
+FONT_PACKAGES='
+ttf-wqy-microhei ttf-wqy-zenhei ttf-kochi-gothic  ttf-kochi-mincho fonts-nanum ttf-baekmuk
+'
+
 # install all system dependencies
-echo $PACKAGES $TESSERACT_LANGUAGES $RUBY_DEPENDENCIES | xargs apt-get install -y
+echo $PACKAGES $TESSERACT_LANGUAGES $RUBY_DEPENDENCIES $FONT_PACKAGES | xargs apt-get install -y
 
 #################################
 # INSTALL RUBY SWITCHER
