@@ -30,7 +30,7 @@ namespace :deploy do
       raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
 (e.g. `rake production deploy:[taskname]`)"
     end
-    upload_filetree( 'public/viewer/**/*' )
+    upload_filetree( 'public/viewer/*', '', /^public\//)
     upload_template( 'app/views/documents/loader.js.erb', 'viewer/loader.js' )
   end
 
