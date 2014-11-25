@@ -13,7 +13,7 @@ RAILS_ENV=production
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 apt-get install apt-transport-https ca-certificates
 
-echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger saucy main" | tee /etc/apt/sources.list.d/passenger.list
+echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger utopic main" | tee /etc/apt/sources.list.d/passenger.list
 
 apt-get update
 
