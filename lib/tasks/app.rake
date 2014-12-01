@@ -2,14 +2,10 @@ namespace :app do
 
   namespace :backup do
 
-    desc "Backup the rails production log file"
-    task :rails, [:file]=>:environment do |t, args|
-      DC::Store::AssetStore.new.save_backup('rails', args[:file])
-    end
-
-    desc "Backup the nginx log file"
-    task :nginx, [:file]=>:environment do |t, args|
-      DC::Store::AssetStore.new.save_backup('nginx', args[:file])
+    desc "Backup a file to the asset store that corresponds to the current environment."
+    task :logfile, [:type, :src_file]=>:environment do |t, args|
+      dest = "#{args[:type]}/#{Date.today}.log"
+      DC::Store::AssetStore.new.save_backup(args[:src_file], dest)
     end
 
   end

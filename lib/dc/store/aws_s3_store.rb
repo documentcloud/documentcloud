@@ -97,8 +97,8 @@ module DC
         remove_file(document.page_text_path(page_number))
       end
       
-      def save_backup(name, path)
-        bucket.objects["backups/#{name}/#{Date.today}.dump"].write(File.open(path))
+      def save_backup(src, dest)
+        bucket.objects["backups/#{dest}"].write(File.open(src))
       end
       
       # This is going to be *extremely* expensive. We can thread it, but
