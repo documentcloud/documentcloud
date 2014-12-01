@@ -18,7 +18,7 @@ USERNAME=ubuntu
 #################################
 
 # Always make sure that we have up to date postgres packages by adding their apt repository.
-echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+echo "deb http://apt.postgresql.org/pub/repos/apt/ utopic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 # and make sure that we have the key to verify their repository
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
@@ -39,7 +39,7 @@ xpdf
 libreoffice
 libreoffice-common
 libjpeg-dev
-libtiff4-dev
+libtiff5-dev
 libpng12-dev
 libleptonica-dev
 tesseract-ocr-dev
@@ -85,8 +85,18 @@ tesseract-ocr-swe
 tesseract-ocr-ukr
 '
 
+# Fonts to support Chinese, Japanese, and Korean character sets
+FONT_PACKAGES='
+ttf-wqy-microhei
+ttf-wqy-zenhei
+ttf-kochi-gothic
+ttf-kochi-mincho
+fonts-nanum
+ttf-baekmuk
+'
+
 # install all system dependencies
-echo $PACKAGES $TESSERACT_LANGUAGES $RUBY_DEPENDENCIES | xargs apt-get install -y
+echo $PACKAGES $TESSERACT_LANGUAGES $RUBY_DEPENDENCIES $FONT_PACKAGES | xargs apt-get install -y
 
 #################################
 # INSTALL RUBY SWITCHER
@@ -99,7 +109,7 @@ installer_tmp="/home/$USERNAME/downloads/"
 mkdir -p $installer_tmp
 cd $installer_tmp
 
-ruby_install_version='0.4.3'
+ruby_install_version='0.5.0'
 chruby_version='0.3.8'
 
 wget -O ruby-install-$ruby_install_version.tar.gz https://github.com/postmodern/ruby-install/archive/v$ruby_install_version.tar.gz
