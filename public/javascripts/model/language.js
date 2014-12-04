@@ -2,13 +2,17 @@
 
 dc.language = {
   NAMES: {
-    'eng': 'English',
-    'spa': 'Español/Spanish',
-    'fra': 'Français/French',
-    'deu': 'Duetch/German',
-    'dan': 'Danish',
-    'rus': 'Russian',
-    'ukr': 'Ukrainian'
+    'zho' : 'Chinese (Simplified)',
+    'tra' : 'Chinese (Traditional)', // this is not a real ISO-639-2 code, see note below.
+    'dan' : 'Danish',
+    'eng' : 'English',
+    'fra' : 'French',
+    'deu' : 'German',
+    'jpn' : 'Japanese',
+    'kor' : 'Korean',
+    'spa' : 'Spanish',
+    'rus' : 'Russian',
+    'ukr' : 'Ukrainian'
   },
   USER: ['eng','spa','rus','ukr']
 };
