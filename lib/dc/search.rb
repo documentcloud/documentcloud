@@ -18,6 +18,15 @@ module DC
       FIELD         = /("(.+?)"|'(.+?)'|[^'"\s]{2}\S*):\s*("(.+?)"|'(.+?)'|[^'"\s]\S*)/
       QUOTED_VALUE  = /("(.+?)"|'(.+?)')/
       BOOLEAN       = /(\bor\b|\band\b|[!+\-()])/i
+
+      def highlight_match(match, context)
+        return nil unless match
+        excerpt =  match.pre_match.length >= context ? match.pre_match[-context..-1] : match.pre_match
+        excerpt += "<b>#{ match.to_s }</b>"
+        excerpt += match.post_match.length >= context ? match.post_match[0..context] : match.post_match
+        excerpt
+      end
+
     end
 
     DEFAULT_PER_PAGE  = 10

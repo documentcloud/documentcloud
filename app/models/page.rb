@@ -58,41 +58,20 @@ class Page < ActiveRecord::Base
   end
 
   # Generate the highlighted excerpt of the page text for a given search phrase.
-  def self.mentions(doc_id, search_phrase, limit=3)
-
-    # Pull out all the quoted phrases, and regexp escape them.
-    phrases = search_phrase.scan(QUOTED_VALUE).map {|r| Regexp.escape(r[1] || r[2]) }
-    # Pull out all the bare words, remove boolean bits.
-    words   = search_phrase.gsub(QUOTED_VALUE, '').gsub(BOOLEAN, '')
-    # Split word parts, and regex escape them.
-    words   = words.split(/\s+/).map {|w| Regexp.escape(w) }
-    # Create a preferential finder for the bare-words-as-quoted-phrase-case.
-    phrases.unshift words.join('\\s+') if words.length > 1
-    # Get the array of all possible matches for the FTS search.
-    parts   = phrases + words
-    # Fix wildcards.
-    parts   = parts.map {|part| part.gsub('\\*', '\\S*') }
-    # Build the PSQL version of the regex.
-    psqlre  = "(" + parts.map {|part| "#{part}(?![a-z0-9])" }.join('|') + ")"
-    # Build the Ruby version of the regex.
-    rubyre  = /(#{ parts.map {|part| "\\b#{part}\\b" }.join('|') })/i
-
-    conds   = ["document_id = ? and text ~* ?", doc_id, psqlre]
-    query   = Page.where( conds )
+  def self.mentions(doc_id, psqlre, rubyre, limit)
+    query   = Page.where("document_id = ? and text ~* ?", doc_id, psqlre)
     pages   = query.order('page_number asc').limit( limit )
-    {
-      :mentions => pages.map {|p| {:page => p.page_number, :text => p.excerpt(rubyre)} }.select {|p| p[:text] },
-      :total    => query.count
-    }
+    mentions = pages.each_with_object([]) do |p, found|
+      if (excerpt = p.excerpt(rubyre))
+        found << {:page => p.page_number, :text => excerpt }
+      end
+    end
+    { :mentions => mentions, :total => query.count }
   end
 
   def excerpt(regex, context=150)
     match   =  text.match(regex)
-    return nil unless match
-    excerpt =  match.pre_match.length >= context ? match.pre_match[-context..-1] : match.pre_match
-    excerpt += "<b>#{ match.to_s }</b>"
-    excerpt += match.post_match.length >= context ? match.post_match[0..context] : match.post_match
-    excerpt
+    highlight_match(match,context) # from DC::Search::Matchers
   end
 
   def contains?(occurrence)

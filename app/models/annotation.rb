@@ -2,6 +2,7 @@ class Annotation < ActiveRecord::Base
 
   include DC::Store::DocumentResource
   include DC::Access
+  include DC::Search::Matchers
 
   belongs_to :document
   belongs_to :account # NB: This account is not the owner of the document.
@@ -66,8 +67,8 @@ class Annotation < ActiveRecord::Base
 
   scope :unrestricted, lambda{ where( :access => PUBLIC_LEVELS ) }
 
-  # Annotations are not indexed for the time being.
-
+  # Annotations are not directly searchable.  Rather the text from
+  # public annotations is included on the Document and can be searched there
   # searchable do
   #   text :title, :boost => 2.0
   #   text :content
@@ -118,6 +119,23 @@ class Annotation < ActiveRecord::Base
       .count
   end
 
+  # Generate the highlighted excerpt of the title and/or content for a given search phrase.
+  def self.mentions(doc_id, psqlre, rubyre, limit)
+    query = Annotation.where("document_id = ? and (content ~* ? or title ~* ?)", doc_id, psqlre, psqlre)
+    notes = query.order('page_number asc').limit( limit )
+    mentions = notes.each_with_object([]) do |n, found|
+      if (excerpt = n.excerpt(rubyre))
+        found << {:page => n.page_number, :text => excerpt }
+      end
+    end
+    { :mentions => mentions, :total => query.count }
+  end
+
+  def excerpt(regex, context=150)
+    match = title.match(regex) || content.match(regex)
+    highlight_match(match,context) # from DC::Search::Matchers
+  end
+  
   def page
     document.pages.find_by_page_number(page_number)
   end

@@ -119,14 +119,25 @@ class Document < ActiveRecord::Base
   # The definition of the Solr search index. Via sunspot-rails.
   searchable do
 
-    # Full Text...
     text :title, :default_boost => 2.0
     text :source
     text :description
+    
+    # Public annotations.  Private ones are not indexed due to the possibility
+    # of disclosing their text to accounts who can view the document, but not the annotation
+    text :annotation_title, :default_boost=>1.5 do
+      text = self.annotations.unrestricted.order('page_number asc').pluck(:title).join(' ')
+      DC::Search.clean_text(text)
+    end
+    text :annotation_content do
+      text = self.annotations.unrestricted.order('page_number asc').pluck(:content).join(' ')
+      DC::Search.clean_text(text)
+    end
+    
+    # Full page text
     text :full_text do
       DC::Search.clean_text(self.combined_page_text)
     end
-
     # Attributes...
     string  :title
     string  :source

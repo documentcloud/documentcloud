@@ -94,13 +94,21 @@ module DC
 
       # If we've got a full text search with results, we can get Postgres to
       # generate the text mentions for our search results.
-      def populate_mentions(mentions)
-        raise "Invalid number of mentions" unless mentions > 0 && mentions <= 10
+      def populate_mentions(max_mentions)
+        raise "Invalid number of mentions" unless max_mentions > 0 && max_mentions <= 10
         return false unless has_text? and has_results?
+        (psqlre, rubyre) = mention_matchers
         @results.each do |doc|
-          mention_data        = Page.mentions(doc.id, @text, mentions)
-          doc.mentions        = mention_data[:mentions]
-          doc.total_mentions  = mention_data[:total]
+          note_data = Annotation.mentions(doc.id, psqlre, rubyre, max_mentions)
+          # attempt to find enough page mentions to equal the requested count
+          remaining_mentions = max_mentions - note_data[:mentions]
+          page_data = if remaining_mentions > 0
+                        Page.mentions(doc.id, psqlre, rubyre, remaining_mentions )
+                      else
+                        { :mentions => [], :total => 0 }
+                      end
+          doc.mentions        = page_data[:mentions] + note_data[:mentions]
+          doc.total_mentions  = page_data[:total]    + note_data[:total]
         end
       end
 
@@ -188,6 +196,26 @@ module DC
         end
       end
 
+      def mention_matchers
+        # Pull out all the quoted phrases, and regexp escape them.
+        phrases = @text.scan(Matchers::QUOTED_VALUE).map {|r| Regexp.escape(r[1] || r[2]) }
+        # Pull out all the bare words, remove boolean bits.
+        words   = @text.gsub(Matchers::QUOTED_VALUE, '').gsub(Matchers::BOOLEAN, '')
+        # Split word parts, and regex escape them.
+        words   = words.split(/\s+/).map {|w| Regexp.escape(w) }
+        # Create a preferential finder for the bare-words-as-quoted-phrase-case.
+        phrases.unshift words.join('\\s+') if words.length > 1
+        # Get the array of all possible matches for the FTS search.
+        parts   = phrases + words
+        # Fix wildcards.
+        parts   = parts.map {|part| part.gsub('\\*', '\\S*') }
+        # Build the PSQL version of the regex.
+        psqlre  = "(" + parts.map {|part| "#{part}(?![a-z0-9])" }.join('|') + ")"
+        # Build the Ruby version of the regex.
+        rubyre  = /(#{ parts.map {|part| "\\b#{part}\\b" }.join('|') })/i
+        return [ psqlre, rubyre ]
+      end
+      
       # Build the Solr needed to run a full-text search. Hits the title,
       # the text content, the entities, etc.
       def build_text
