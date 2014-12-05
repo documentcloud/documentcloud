@@ -44,7 +44,7 @@ namespace :app do
     sh 'cd secrets && git pull && cd ..'
     sh 'git pull'
     sleep 0.2
-    sh 'bundle update'
+    sh 'bundle install'
   end
 
   desc "Repackage static assets"
