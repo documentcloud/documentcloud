@@ -30,7 +30,7 @@ class DocumentInsertPages < DocumentAction
 
       # Upload images + text.
       Docsplit.extract_images(pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :rolling => true, :output => 'images')
-      Docsplit.extract_text(pdf, :pages => 'all', :output => 'text')
+      Docsplit.extract_text(pdf, :pages => 'all', :output => 'text', :language => DC::Language.ocr_name(document.language))
       pdf_page_count.times do |i|
         number          = i + 1
         image_name      = "#{pdf_name}_#{number}.gif"

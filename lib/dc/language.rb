@@ -1,26 +1,52 @@
 module DC
   # The official list of supported languages
 
-  # should we be using iso15924 script codes?
-  #   http://www.unicode.org/iso15924/iso15924-codes.html
-
   # Needs to be kept in sync with JS version in
   # lib/dc/language.js
   module Language
     NAMES = {
+      'zho' => 'Chinese (Simplified)',
+      'tra' => 'Chinese (Traditional)', # this is not a real ISO-639-2 code, see note below.
+      'dan' => 'Danish',
       'eng' => 'English',
-      'spa' => 'Spanish',
       'fra' => 'French',
       'deu' => 'German',
-      'dan'=> 'Danish',
-      'rus'=> 'Russian',
-      'ukr'=> 'Ukrainian'
+      'jpn' => 'Japanese',
+      'kor' => 'Korean',
+      'spa' => 'Spanish',
+      'rus' => 'Russian',
+      'ukr' => 'Ukrainian'
     }
 
     SUPPORTED = NAMES.keys
     DEFAULT = 'eng'
     
     USER = ['spa','eng','rus','ukr']
+    
+    # For user facing purposes, documents are considered to have only a language.
+    # In reality documents possess two distinct properties a language 
+    # and a written script. The former can be represented by ISO-639-2 
+    # language codes and the latter by ISO-15924 script codes.
+    #
+    # In almost all cases the script of a document can be inferred based
+    # on its language (Ukrainian language documents are all written using Cyrillic)
+    # with the exception of Chinese which for political and historical reasons
+    # possesses two written scripts, traditional and simplified.
+    #
+    # The Tesseract OCR system requires knowing both language and script in order
+    # to be able to correctly process documents, and consequently has two separate
+    # langauge packages for Chinese, 'chi-tra' and 'chi-sim'.  All other language
+    # packs are identical to their ISO-639-2 code.
+    def self.ocr_name(code)
+      if code == 'tra'
+        'chi-tra' 
+      elsif code == 'zho'
+        'chi-sim'
+      else
+        code
+      end
+    end
+    
   end
 
 end
