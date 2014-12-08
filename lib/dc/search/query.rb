@@ -101,7 +101,7 @@ module DC
         @results.each do |doc|
           note_data = Annotation.mentions(doc.id, psqlre, rubyre, max_mentions)
           # attempt to find enough page mentions to equal the requested count
-          remaining_mentions = max_mentions - note_data[:mentions]
+          remaining_mentions = max_mentions - note_data[:total]
           page_data = if remaining_mentions > 0
                         Page.mentions(doc.id, psqlre, rubyre, remaining_mentions )
                       else
