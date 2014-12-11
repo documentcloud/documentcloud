@@ -5,10 +5,6 @@ dc.controllers.AccountSearcher = Backbone.Router.extend({
 
   showOrganization: function(organization){
     this.currentOrganization = organization
-  },
-  
-  showUser: function() {
-    
   }
-  
+
 });
