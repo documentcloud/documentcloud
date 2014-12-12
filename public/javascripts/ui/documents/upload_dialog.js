@@ -358,6 +358,8 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
   // The abort signal will be caught by the fileUpload onFailure handler
   removeUploadFile : function() {
     this.model.abort();
+    this.model.collection.remove(this.model);
+    this.remove();
   },
 
   // Apply the current file's attributes to all files in the upload.
