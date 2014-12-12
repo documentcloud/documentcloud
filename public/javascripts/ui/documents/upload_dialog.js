@@ -253,7 +253,6 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Starts the upload. Triggered by clicking the Submit button.
   startUpload : function() {
-    console.log("Started upload");
     if (!this.collection.length) {
       this.error( _.t('must_upload_something') );
       return false;
