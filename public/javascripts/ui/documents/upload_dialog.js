@@ -253,15 +253,18 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Starts the upload. Triggered by clicking the Submit button.
   startUpload : function() {
+    console.log("Started upload");
     if (!this.collection.length) {
       this.error( _.t('must_upload_something') );
       return false;
     }
     this.collection.each( function(upload){
-      this._tiles[upload.id].startProgress();
-      var data = upload.get('data');
-      data.formData = this._uploadData(upload);
-      data.submit();
+      if (!upload.get('complete')){
+        this._tiles[upload.id].startProgress();
+        var data = upload.get('data');
+        data.formData = this._uploadData(upload);
+        data.submit();
+      }
     },this);
     return true;
   },
