@@ -39,9 +39,9 @@ module DC
     # packs are identical to their ISO-639-2 code.
     def self.ocr_name(code)
       if code == 'tra'
-        'chi-tra' 
+        'chi_tra'
       elsif code == 'zho'
-        'chi-sim'
+        'chi_sim'
       else
         code
       end
