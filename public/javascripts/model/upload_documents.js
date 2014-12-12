@@ -5,8 +5,10 @@ dc.model.UploadDocument = Backbone.Model.extend({
 
   MAX_FILE_SIZE : 419430400, // 400 Megabytes
 
+  // State can be one of "pending", "uploading", "error", or "success"
+  // It starts out as "pending"
   defaults: {
-    complete: false
+    state: 'pending'
   },
 
   // When creating an UploadDocument, we pull off some properties that
@@ -24,11 +26,20 @@ dc.model.UploadDocument = Backbone.Model.extend({
     Backbone.Model.prototype.set.call(this, attrs);
     return this;
   },
-
+  // begin uploading the file.  Submits the data
+  // and then sets state to be "uploading"
+  beginUpload: function(uploadData){
+    var data = this.get('data');
+    data.formData = uploadData;
+    data.submit();
+    this.set({ state: "uploading"});
+  },
+  recordError: function(errorMessage){
+    this.set({error: errorMessage, state: 'error'});
+  },
   overSizeLimit : function() {
     return this.get('size') >= this.MAX_FILE_SIZE;
   },
-
   // aborts the file upload if it still in progress
   abort: function(){
     var upload = this.get('data');
@@ -48,10 +59,23 @@ dc.model.UploadDocumentSet = Backbone.Collection.extend({
     return model.get('position');
   },
 
-  // returns an array of all completed uploads
+  // returns an a object with success, error, and allComplete keys
+  // success and error are arrays that contain the files with the status
+  // allComplete indicates whether all files have completed
   completed: function(){
-    return this.where({complete: true});
+    var uploaded = { success: [], error: [], allComplete: true };
+    this.each(function(upload){
+      if (upload.get('state') == 'success'){
+        uploaded.success.push(upload);
+      } else if (upload.get('state') == 'error'){
+        uploaded.error.push(upload);
+      } else {
+        uploaded.allComplete = false;
+      }
+    });
+    return uploaded;
   }
+
 });
 
 window.UploadDocuments = new dc.model.UploadDocumentSet();
