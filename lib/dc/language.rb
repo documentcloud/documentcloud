@@ -2,7 +2,7 @@ module DC
   # The official list of supported languages
 
   # Needs to be kept in sync with JS version in
-  # lib/dc/language.js
+  # public/javascripts/model/language.js
   module Language
     NAMES = {
       'zho' => 'Chinese (Simplified)',
@@ -15,7 +15,9 @@ module DC
       'kor' => 'Korean',
       'spa' => 'Spanish',
       'rus' => 'Russian',
-      'ukr' => 'Ukrainian'
+      'ukr' => 'Ukrainian',
+      'ara' => 'Arabic',
+      'por' => 'Portuguese'
     }
 
     SUPPORTED = NAMES.keys

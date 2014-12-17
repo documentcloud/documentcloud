@@ -12,7 +12,9 @@ dc.language = {
     'kor' : 'Korean',
     'spa' : 'Spanish',
     'rus' : 'Russian',
-    'ukr' : 'Ukrainian'
+    'ukr' : 'Ukrainian',
+    'ara' : 'Arabic',
+    'por' : 'Portuguese'
   },
   USER: ['eng','spa','rus','ukr']
 };
