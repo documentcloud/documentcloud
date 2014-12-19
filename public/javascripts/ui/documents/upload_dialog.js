@@ -143,7 +143,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // Hide the dialog if all uploads have completed without errors
   _onComplete : function(e, data){
     _.each(data.files, function(file){
-      this._markFileComplete(file, data.xhr());
+      this._markFileComplete(file, data.jqXHR);
     }, this);
     this._updateCompletionStatus();
   },
@@ -174,19 +174,30 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
         tile  = this._tiles[model.id],
         resp;
     try {
-      resp  = xhr.responseText && JSON.parse(xhr.responseText);
+      if (xhr.responseJSON){
+        resp = xhr.responseJSON;
+      } else {
+        resp  = xhr.responseText && JSON.parse(xhr.responseText);
+      }
     } catch (e) {}
 
-    // if the response is blank or 500 report generic failure message
-    if (!resp || resp.bad_request) {
-      model.recordError( _.t('upload_failed') );
-    } else if (resp.errors) {
-      model.recordError( resp.errors );
-    } else if (!this.options.insertPages) {
-      Documents.add(new dc.model.Document(resp));
-      if (this._project) Projects.incrementCountById(this._project.id);
-    } else if (this.options.insertPages) {
-      this.documentResponse = resp;
+    // If the status is not 200, record errors provided
+    // or just the generic failure message
+    if (xhr.status != 200){
+        if ( resp && resp.errors ) {
+          model.recordError( resp.errors );
+        } else {
+          model.recordError( _.t('upload_failed') );
+        }
+      // Iframe uploads do not provide a body, so the response will have failed to parse above
+      // we should have one if the the file was uploaded via XHR
+    } else if (resp){
+      if (!this.options.insertPages) {
+        Documents.add(new dc.model.Document(resp));
+        if (this._project) Projects.incrementCountById(this._project.id);
+      } else if (this.options.insertPages) {
+        this.documentResponse = resp;
+      }
     }
 
     // record success unless we found an error above
