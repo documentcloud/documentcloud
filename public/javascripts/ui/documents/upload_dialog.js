@@ -386,9 +386,8 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     if (this.options.multiFileUpload) {
       this._progress.show();
     }
-    // hide edit and cancel controls since
-    // they cannot be used once upload has began
-    this.$('.icon').css("visibility", "hidden");
+    // hide edit control since it can't be used once upload has began
+    this.$('.icon.edit_title').css("visibility", "hidden");
   },
 
   // Smoothly animate progress bar to browser-supplied level.
