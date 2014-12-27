@@ -2,14 +2,16 @@
 
 dc.language = {
   NAMES: {
+    'ara' : 'Arabic',
     'zho' : 'Chinese (Simplified)',
-    'tra' : 'Chinese (Traditional)', // this is not a real ISO-639-2 code, see note below.
+    'tra' : 'Chinese (Traditional)', // this is not a real ISO-639-2 code, see comments on language.rb
     'dan' : 'Danish',
     'eng' : 'English',
     'fra' : 'French',
     'deu' : 'German',
     'jpn' : 'Japanese',
     'kor' : 'Korean',
+    'por' : 'Portuguese',
     'spa' : 'Spanish',
     'rus' : 'Russian',
     'ukr' : 'Ukrainian'
