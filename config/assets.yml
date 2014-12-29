@@ -6,14 +6,19 @@ javascripts:
   core:
     - public/javascripts/application.js
     - public/javascripts/vendor/underscore/underscore.js
-    - public/javascripts/vendor/jquery-1.9.0.js
-    - public/javascripts/vendor/jquery.ui.core.js
-    - public/javascripts/vendor/jquery.ui.widget.js
-    - public/javascripts/vendor/jquery.ui.position.js
-    - public/javascripts/vendor/jquery.ui.mouse.js
-    - public/javascripts/vendor/jquery.ui.sortable.js
-    - public/javascripts/vendor/jquery.ui.autocomplete.js
-    - public/javascripts/vendor/*.js
+    - public/javascripts/vendor/jquery/dist/jquery.js
+    - public/javascripts/vendor/jquery-ui/ui/core.js
+    - public/javascripts/vendor/jquery-ui/ui/widget.js
+    - public/javascripts/vendor/jquery-ui/ui/position.js
+    - public/javascripts/vendor/jquery-ui/ui/mouse.js
+    - public/javascripts/vendor/jquery-ui/ui/sortable.js
+    - public/javascripts/vendor/jquery-ui/ui/autocomplete.js
+    - public/javascripts/vendor/jquery-ui/ui/menu.js
+    - public/javascripts/vendor/backbone/backbone.js
+    - public/javascripts/vendor/sprintf.js
+    - public/javascripts/vendor/visualsearch-*.js
+    - public/javascripts/vendor/blueimp-file-upload/js/jquery.fileupload.js
+    - public/javascripts/vendor/blueimp-file-upload/js/jquery.iframe-transport.js
     - public/javascripts/lib/*.js
     - public/javascripts/translations/*.js
     - public/javascripts/model/*.js

@@ -11,7 +11,9 @@
   "description": "Document transparency tools for journalists",
   "dependencies":{
     "jquery": "1.11.1",
+    "jquery-ui": "1.11",
     "backbone": "1.1.2",
+    "blueimp-file-upload": "9.8",
     "documentcloud-notes": "git@github.com:documentcloud/documentcloud-notes.git"
   },
   "moduleType": [
