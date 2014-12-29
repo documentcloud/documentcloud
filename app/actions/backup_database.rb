@@ -26,7 +26,7 @@ class BackupDatabase < CloudCrowd::Action
   def backup(db_name)
     dump = File.join(@temp_dir, "#{db_name}.dump")
     system "PGPASSWORD=\"#{@pass}\" pg_dump -U #{@username} #{@host} -Fc #{db_name} > #{dump}"
-    DC::Store::AssetStore.new.save_backup(db_name, "{name}/#{Date.today}.dump")
+    DC::Store::AssetStore.new.save_backup(dump, "{name}/#{Date.today}.dump")
   end
 
 end

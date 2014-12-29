@@ -9,6 +9,7 @@ dc.language = {
     'eng' : 'English',
     'fra' : 'French',
     'deu' : 'German',
+    'ita' : 'Italian',
     'jpn' : 'Japanese',
     'kor' : 'Korean',
     'por' : 'Portuguese',

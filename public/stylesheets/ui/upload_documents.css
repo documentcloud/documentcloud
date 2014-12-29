@@ -54,6 +54,7 @@
   }
   #upload_dialog .text_input input {
     width: 315px;
+    margin-left: 0;
   }
   #upload_dialog .text_area {
     width: 311px; /* Damn textareas! */
@@ -88,6 +89,16 @@
       background: #fff;
       opacity: 0.1; filter: alpha(opacity=30);
       z-index: 5;
+    }
+    #upload_dialog .error .msg {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      font-size: 11px;
+      height: 14px;
+      line-height: 14px;
+      padding: 4px;
+      color: red;
     }
   #upload_dialog .icon.file {
     margin-right: 10px;
@@ -149,9 +160,6 @@
   text-align: left;
   margin: 8px 0 0px 4px;
 }
-  #upload_dialog .upload_options input {
-    margin-left: 0;
-  }
   #upload_dialog .upload_options label {
     display: inline;
     float: none;

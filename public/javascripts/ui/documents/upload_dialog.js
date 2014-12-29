@@ -21,15 +21,16 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     };
     options = _.extend({}, defaults, options);
 
-    _.bindAll(this, 'setupUpload', '_countDocuments', 'cancelUpload',
-      '_onSelect', '_onProgress', '_onComplete', '_onAllComplete');
+    _.bindAll(this, 'setupUpload','_onSelect', '_onFailure',
+                    '_onProgress', '_onComplete', '_onAllSuccess');
+
     dc.ui.Dialog.call(this, options);
     if (options.autostart) $(this.el).addClass('autostart');
     if (dc.app.navigation) {
       dc.app.navigation.bind('tab:documents', _.bind(function(){ _.defer(this.setupUpload); }, this));
     }
-    this.collection.bind('add',   this._countDocuments);
-    this.collection.bind('remove', this._countDocuments);
+    this.listenTo(this.collection,'add remove', this._countDocuments);
+
   },
 
   // Documents are already selected and are being drawn in the dialog.
@@ -49,151 +50,166 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
     this._renderDocumentTiles();
     this._countDocuments();
     this.center();
-    if (!this.options.autostart) this.checkQueueLength();
+
+    if (this.collection.findWhere({state: 'uploading'})){
+      this.$('.ok').setMode('not', 'enabled');
+    } else if (!this.options.autostart){
+      this.checkQueueLength() ;
+    }
+
     return this;
   },
 
   // Each document being uploaded is drawn in a single tile, appended to the dialog's list.
   _renderDocumentTiles : function() {
     var tiles           = this._tiles;
-    var editable        = this.options.editable;
-    var multiFileUpload = this.options.multiFileUpload;
 
     this.collection.each(function(model) {
       var view = new dc.ui.UploadDocumentTile({
-        editable        : editable,
         model           : model,
-        multiFileUpload : multiFileUpload
+        editable        : this.options.editable,
+        multiFileUpload : this.options.multiFileUpload
       });
       tiles[model.id] = view.render();
-    });
+    },this);
 
     var viewEls = _.pluck(_.values(tiles), 'el');
     this._list.append(viewEls);
   },
 
-  // Be careful to only setup file uploading once, when the "Documents" tab is open.
+  // initializes the form with the fileupload library and sets up callbacks
   setupUpload : function() {
+    // Be careful to only setup file uploading once, when the "Documents" tab is open.
     if (this.form || (dc.app.navigation && !dc.app.navigation.isOpen('documents'))) return;
     var uploadUrl = '/import/upload_document';
     if (this.options.insertPages) {
       uploadUrl = '/documents/' + this.options.documentId + '/upload_insert_document';
     }
     this.form = $('#new_document_form');
-    this.form.fileUpload({
-        url             : uploadUrl,
-        onAbort         : this.cancelUpload,
-        initUpload      : this._onSelect,
-        onProgress      : this._onProgress,
-        onLoad          : this._onComplete,
-        dragDropSupport : true,
-        dropZone        : $('body')
+    this.form.fileupload({
+      url:               uploadUrl,
+      sequentialUploads: true,
+      dropZone:          $('body'),
+      add               : this._onSelect,
+      progress          : this._onProgress,
+      fail              : this._onFailure,
+      done              : this._onComplete
     });
   },
 
-  // If flash is disabled, we fall back to a regular invisible file input field.
-  setupFileInput : function() {
-    var input = $('#new_document_input');
-    input.show().change(_.bind(function() {
-      this._project = _.first(Projects.selected());
-      $('#new_document_project').val(this._project ? this._project.id : '');
-      $('#new_document_form').submit();
-    }, this));
-  },
+  // Callback for when a file is added to the queue, before uploading has begun.
+  _onSelect : function(e, data){
+    if (_.isEmpty(data.files)) return;
 
-  // Initial load of a document, before uploading is begun.
-  _onSelect : function(e, files, index, xhr, handler, callback) {
-    var file = files[index];
-    this.collection.add(new dc.model.UploadDocument({
-      id          : dc.inflector.sluggify(file.fileName || file.name),
-      uploadIndex : index,
-      file        : file,
-      position    : index,
-      handler     : handler,
-      xhr         : xhr,
-      startUpload : callback
-    }));
+    _.each(data.files, function(file,index){
+      file.model = this.collection.add({
+        id          : dc.inflector.sluggify(file.fileName || file.name),
+        data        : data,
+        file        : file,
+        position    : index
+      });
+    },this);
 
-    if (index != files.length - 1) return;
-
+    // make sure no files are too large to process.  If they are, don't bother uploading them
     if (this.collection.any(function(file){ return file.overSizeLimit(); })) {
       this.close();
-      return dc.ui.Dialog.alert(_.t('max_upload_size_warn','<a href="/help/troubleshooting">',"</a>") );
+      dc.ui.Dialog.alert(_.t('max_upload_size_warn','<a href="/help/troubleshooting">',"</a>") );
+      return;
     }
-
     this.render();
-    if (this.options.autostart) this.startUpload(index);
-  },
 
-  // Cancel an upload by index.
-  cancelUpload : function(uploadIndex) {
-    if (this.collection.length <= 1) {
-      this.error( _.t('must_upload_something') );
-      return false;
+    if (this.options.autostart){
+      this.startUpload();
     }
-    return true;
   },
 
-  // Called immediately before file to POSTed to server.
-  _uploadData : function(id, index) {
-    var attrs   = this._tiles[id].serialize();
-    var model   = this.collection.get(id);
-    var options = this.options;
-
-    model.set(attrs);
-    if (options.multiFileUpload && model.get('size')) attrs.multi_file_upload = true;
-    attrs.authenticity_token = $("meta[name='csrf-token']").attr("content");
-    if (this.$('#make_public').is(':checked')) attrs.make_public = true;
-    attrs.email_me = this.$('#email_on_complete').is(':checked') ? this.collection.length : 0;
-    if (this._project) attrs.project = this._project.id;
-    if (_.isNumber(options.insertPageAt)) attrs.insert_page_at = options.insertPageAt;
-    if (_.isNumber(options.replacePagesStart)) attrs.replace_pages_start = options.replacePagesStart;
-    if (_.isNumber(options.replacePagesEnd)) attrs.replace_pages_end = options.replacePagesEnd;
-    if (options.documentId)  attrs.document_id     = options.documentId;
-    if (options.insertPages) attrs.document_number = index + 1;
-    if (options.insertPages) attrs.document_count  = this.collection.length;
-    if (!options.autostart) this.showSpinner();
-    this._list[0].scrollTop = 0;
-    return attrs;
+  // Failure callback, one or more files have failed due to a non-200 HTTP response code.
+  _onFailure: function(e, data){
+    _.each(data.files, function(file){
+      file.model.recordError(data.errorThrown);
+    });
+    this._updateCompletionStatus();
   },
 
   // Update the progress bar based on the browser's determination of upload progress.
-  _onProgress : function(e, files, index, xhr, handler) {
-    var id         = dc.inflector.sluggify(files[index].fileName || files[index].name);
-    var percentage = parseInt((e.loaded / e.total) * 100, 10);
-
-    this._tiles[id].setProgress(percentage);
+  _onProgress : function(e, data){
+    var percentage = parseInt((data.loaded / data.total) * 100, 10);
+    _.each(data.files, function(file,index){
+      this._tiles[file.model.get('id')].setProgress(percentage);
+    },this);
   },
 
-  // Once done, hide the uploaded document tile and check to see if it's last, so the
-  // dialog can close.
-  _onComplete : function(e, files, index, xhr, handler) {
-    var id   = dc.inflector.sluggify(files[index].fileName || files[index].name);
-    var resp = xhr.responseText && JSON.parse(xhr.responseText);
+  // Record completions to the uploaded files,
+  // Hide the dialog if all uploads have completed without errors
+  _onComplete : function(e, data){
+    _.each(data.files, function(file){
+      this._markFileComplete(file, data.jqXHR);
+    }, this);
+    this._updateCompletionStatus();
+  },
 
-    this._tiles[id].setProgress(100);
+  // Hides the spinner.
+  // Also hides dialog if all files have completed without errors
+  _updateCompletionStatus: function(){
+    var completed = this.collection.completed();
 
-    if (resp && resp.bad_request) {
-      return this.error("Upload failed.");
-    } else if (!this.options.insertPages && resp) {
-      Documents.add(new dc.model.Document(resp));
-      if (this._project) Projects.incrementCountById(this._project.id);
-    } else if (this.options.insertPages && resp) {
-      this.documentResponse = resp;
-    }
+    // Hide the spinner if all files have completed
+    if ( completed.allComplete ){
+      this.hideSpinner();
 
-    this._tiles[id].hide();
-
-    if (index == this.collection.length-1) {
-      this._onAllComplete();
+      // call the success handler if there were no errors
+      if ( !completed.error.length ){
+        this._onAllSuccess();
+      }
     } else {
-      this.startUpload(index+1);
+      // files were added to queue while upload was progressing
+      // we should start them
+      this.startUpload();
     }
   },
 
-  // Once there are no uploads left, either close the dialog, or alert the user that everything
-  // is completed.
-  _onAllComplete : function() {
+  // Marks the file as completed.  Hide the tile if no errors occurred
+  _markFileComplete: function(file, xhr){
+    var model = file.model,
+        tile  = this._tiles[model.id],
+        resp;
+    try {
+      if (xhr.responseJSON){
+        resp = xhr.responseJSON;
+      } else {
+        resp  = xhr.responseText && JSON.parse(xhr.responseText);
+      }
+    } catch (e) {}
+
+    // If the status is not 200, record errors provided
+    // or just the generic failure message
+    if (xhr.status != 200){
+        if ( resp && resp.errors ) {
+          model.recordError( resp.errors );
+        } else {
+          model.recordError( _.t('upload_failed') );
+        }
+      // Iframe uploads do not provide a body, so the response will have failed to parse above
+      // we should have one if the the file was uploaded via XHR
+    } else if (resp){
+      if (!this.options.insertPages) {
+        Documents.add(new dc.model.Document(resp));
+        if (this._project) Projects.incrementCountById(this._project.id);
+      } else if (this.options.insertPages) {
+        this.documentResponse = resp;
+      }
+    }
+
+    // record success unless we found an error above
+    if ( !model.get('error') ){
+      model.set({state: 'success'});
+    }
+  },
+
+  // Once all files have uploaded successfully, close the upload dialog
+  // If the upload was initiated from a document viewer, close the window
+  // and alert the user that it was closed so the file can re-process
+  _onAllSuccess : function() {
     this.hideSpinner();
     if (this.options.insertPages) {
       try {
@@ -211,51 +227,84 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   },
 
   // Update title and fields to match the new count of uploads.
+  // Called when a file is added or removed from the pending queue
   _countDocuments : function() {
     var num = this.collection.length;
-    
     this.title( _.t('uploaded_x_documents',num) );
 
     this.$('.upload_public_count').text( _.t('make_documents_public', num ) );
     this.$('.upload_email_count').text( _.t('uploaded_x_document_has', num ) );
   },
 
-  // Ask the server how many work units are currently queued.
-  checkQueueLength : function() {
+  // Ask the server how many work units are currently queued and updates the info block on dialog with results
+  // Wraps the implementation with debounce to make sure status is only checked once per second
+  checkQueueLength : _.debounce(function() {
     $.getJSON('/documents/queue_length.json', {}, _.bind(function(resp) {
       var num = resp.queue_length;
       if (num <= 0) return;
       this.info( _.t('document_processing_count', num ), true );
     }, this));
-  },
+  },1000),
 
-  // Used by the ReplacePagesEditor to include the `insertPagesAt`, `replacePagesStart`,
-  // and `replacePagesEnd` options.
+  // Used by the ReplacePagesEditor to include the
+  //    `insertPagesAt`, `replacePagesStart`, and `replacePagesEnd` options.
   insertPagesAttrs : function(attrs) {
-    _.each(attrs, _.bind(function(value, attr) {
-      this.options[attr] = value;
-    }, this));
+    _.extend(this.options, attrs);
   },
 
-  // Overriding `Dialog#confirm` to validate titles.
-  confirm : function() {
+  // Overrides `Dialog#confirm`.  Validates titles and begins uploading by calling `startUpload`
+  confirm : function(ev) {
+    // Don't start re-uploading if the OK button is disabled
+    if ( this.$('.ok').hasClass('not_enabled')) {
+      return;
+    }
     var failed = _.select(this._tiles, function(tile) { return tile.ensureTitle(); });
     if (failed.length) {
       var num = this.collection.length;
-      return this.error( _.t('must_have_doc_title', num ) );
+      this.error( _.t('must_have_doc_title', num ) );
+      return;
     }
     this.$('.ok').setMode('not', 'enabled');
-    this.startUpload(0);
+    this.startUpload();
   },
 
-  // Starts the first/next upload. Used by autostart and the Submit button.
-  startUpload : function(index) {
-    var tiles = this._tiles;
-    var doc = this.collection.models[index];
-    doc.get('handler').formData = this._uploadData(doc.get('id'), index);
-    doc.get('startUpload')();
-    tiles[doc.get('id')].startProgress();
+  // Starts the upload. Triggered by clicking the Submit button.
+  startUpload : function() {
+    if (!this.collection.length) {
+      this.error( _.t('must_upload_something') );
+      return false;
+    }
+    this.collection.each( function(upload){
+      if (upload.get('state') == 'pending'){
+        upload.beginUpload( this._uploadData(upload) );
+      }
+    },this);
+    return true;
   },
+
+  // Called by `startUpload` immediately before file is uploaded to server,
+  // returns the form data that should be included with the request
+  _uploadData : function(model){
+    var attrs   = this._tiles[model.id].serialize();
+    var options = this.options;
+
+    model.set(attrs);
+    if (options.multiFileUpload && model.get('size')) attrs.multi_file_upload = true;
+    attrs.authenticity_token = $("meta[name='csrf-token']").attr("content");
+    if (this.$('#make_public').is(':checked')) attrs.make_public = true;
+    attrs.email_me = this.$('#email_on_complete').is(':checked') ? this.collection.length : 0;
+    if (this._project) attrs.project = this._project.id;
+    if (_.isNumber(options.insertPageAt)) attrs.insert_page_at = options.insertPageAt;
+    if (_.isNumber(options.replacePagesStart)) attrs.replace_pages_start = options.replacePagesStart;
+    if (_.isNumber(options.replacePagesEnd)) attrs.replace_pages_end = options.replacePagesEnd;
+    if (options.documentId)  attrs.document_id     = options.documentId;
+    if (options.insertPages) attrs.document_number = model.get('position') + 1;
+    if (options.insertPages) attrs.document_count  = this.collection.length;
+    if (!options.autostart) this.showSpinner();
+    this._list[0].scrollTop = 0;
+    return attrs;
+  },
+
 
   // User-initiated close
   cancel : function() {
@@ -264,6 +313,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
 
   // Closes dialog when finished. Clears out collection for next upload.
   close : function() {
+    this.collection.invoke('abort');
     this.collection.reset();
     dc.ui.Dialog.prototype.close.call(this);
   }
@@ -280,8 +330,11 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     'click .open_edit'    : 'openEdit',
     'click .apply_all'    : 'applyAll'
   },
-  
-  initialize: function(options) { this.options = options; },
+
+  initialize: function(options) {
+    this.options = options;
+    this.listenTo(this.model, 'change:state', this.onStateChange);
+  },
 
   // Renders tile and sets up commonly used jQuery selectors.
   render : function() {
@@ -294,6 +347,10 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     $(this.el).html(template);
     this._title    = this.$('input[name=title]');
     this._progress = this.$('.progress_bar');
+    // show the progress bar if we were re-rendered while the upload was in progress.
+    if (this.model.get('state') == 'uploading'){
+      this.startProgress();
+    }
     return this;
   },
 
@@ -308,13 +365,12 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     };
   },
 
-  // Clears out upload tile and also removes model from Upload Dialog's collection.
+  // Sends abort signal to file upload if it is still in process of uploading
+  // The abort signal will be caught by the fileUpload onFailure handler
   removeUploadFile : function() {
-    if (dc.app.uploader.cancelUpload(this.model.get('uploadIndex'))) {
-      this.hide();
-      this.model.get('xhr').abort();
-      UploadDocuments.remove(this.model);
-    }
+    this.model.abort();
+    this.model.collection.remove(this.model);
+    this.remove();
   },
 
   // Apply the current file's attributes to all files in the upload.
@@ -334,12 +390,15 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
     this.$('.open_edit').toggleClass('active');
   },
 
-  // Called by uploader, used to zero-out progress bar. IE doesn't have a progress bar.
+  // Called once the file begins uploading.
+  // Zero out the progress bar and hide controls
   startProgress : function() {
     this._percentage = 0;
     if (this.options.multiFileUpload) {
       this._progress.show();
     }
+    // hide edit control since it can't be used once upload has began
+    this.$('.icon.edit_title').css("visibility", "hidden");
   },
 
   // Smoothly animate progress bar to browser-supplied level.
@@ -351,7 +410,7 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
 
   // Validation used by uploader dialog.
   ensureTitle : function() {
-    var noTitle = dc.inflector.trim(this._title.val()) == '';
+    var noTitle = _.isEmpty(dc.inflector.trim(this._title.val()));
     this._title.closest('.text_input').toggleClass('error', noTitle);
     return noTitle;
   },
@@ -359,6 +418,31 @@ dc.ui.UploadDocumentTile = Backbone.View.extend({
   // Hide document tile when finished uploading.
   hide : function() {
     $(this.el).animate({opacity: 0}, 200).slideUp(200, function(){ $(this).remove(); });
+  },
+
+  // called when the model's state changes.
+  // Valid states are: "pending", "uploading", "error", or "success"
+  onStateChange: function(model, state){
+    if ('error' == state){
+      this.onError();
+    } else if ('success' == state){
+      this.onSuccess();
+    } else if ('uploading' == state){
+      this.startProgress();
+    }
+  },
+
+  // Sets the tile to have "error" css class and displays an error message to the right of the title
+  onError: function(){
+    this._title.closest('.text_input')
+      .addClass('error')
+      .append('<span class="msg">'+this.model.get('error')+'</span>');
+  },
+
+  // hide ourselves once file is complete
+  onSuccess: function(){
+    // set visiblility vs just calling hide() in order to keep alignment with pending uploads
+    this.hide();
   }
 
 });
