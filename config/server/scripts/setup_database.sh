@@ -3,23 +3,23 @@
 USERNAME=ubuntu
 RAILS_ENVIRONMENT=production
 
-echo "deb http://apt.postgresql.org/pub/repos/apt/ saucy-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt-get update
 
 PACKAGES='
-postgresql-9.3
-postgresql-client-9.3
-postgresql-contrib-9.3
+postgresql-9.4
+postgresql-client-9.4
+postgresql-contrib-9.4
 '
 echo $PACKAGES | xargs apt-get install -y
 
 ## setup dummy postgres environment so that you can verify rails is working
-cp /etc/postgresql/9.3/main/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.default.conf
-cp config/server/files/postgres/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
-cp /etc/postgresql/9.3/main/postgresql.conf /etc/postgresql/9.3/main/postgresql.default.conf
-cp config/server/files/postgres/postgresql.conf /etc/postgresql/9.3/main/postgresql.conf
+cp /etc/postgresql/9.4/main/pg_hba.conf /etc/postgresql/9.4/main/pg_hba.default.conf
+cp config/server/files/postgres/pg_hba.conf /etc/postgresql/9.4/main/pg_hba.conf
+cp /etc/postgresql/9.4/main/postgresql.conf /etc/postgresql/9.4/main/postgresql.default.conf
+cp config/server/files/postgres/postgresql.conf /etc/postgresql/9.4/main/postgresql.conf
 /etc/init.d/postgresql reload
 sudo -u postgres createuser -s ubuntu
 sudo -u postgres createuser -s documentcloud
