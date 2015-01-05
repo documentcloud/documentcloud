@@ -1,7 +1,7 @@
 # Responsible for sending out lifecycle emails to active accounts.
 class LifecycleMailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper # pluralize and friends
-  
+
   SUPPORT   = 'support@documentcloud.org'
   NO_REPLY  = 'no-reply@documentcloud.org'
   INFO      = 'info@documentcloud.org'
@@ -110,9 +110,11 @@ class LifecycleMailer < ActionMailer::Base
   def account_and_document_csvs
     date = Date.today.strftime "%Y-%m-%d"
 
+    accounts = ""
+    DC::Statistics.accounts_csv( CSV.new(accounts) )
     attachments["accounts-#{date}.csv"] = {
       mime_type: 'text/csv',
-      content: DC::Statistics.accounts_csv
+      content: accounts
     }
 
     attachments["top-documents-#{date}.csv"] = {
