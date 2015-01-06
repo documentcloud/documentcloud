@@ -79,7 +79,7 @@ class AuthenticationController < ApplicationController
 
   # this is needed for running omniauth on rails 2.3.  Without it the route
   # causes an error even though omniauth is intercepting it
-  def blank; render :text => "Not Found.", :status => 404 end
+  def blank; render :plain => "Not Found.", :status => 404 end
 
   # this is the endpoint for an embedded document to obtain addition information
   # about the document as well as the current user
