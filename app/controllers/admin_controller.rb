@@ -123,7 +123,7 @@ class AdminController < ApplicationController
       flash[:error]="Organization for #{params[:slug]} was not found"
       render :action=>:document_hits and return
     end
-    deliver_csv("organization.slug}-hits") do |csv|
+    deliver_csv("#{organization.slug}-hits") do |csv|
       csv << [ "Day","Hits","Document" ]
       urls=RemoteUrl
         .where(:document_id=>organization.documents.published.ids)
