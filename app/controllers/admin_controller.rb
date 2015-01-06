@@ -130,7 +130,7 @@ class AdminController < ApplicationController
         .group(:date_recorded,:document_id)
         .select('date_recorded','document_id','sum(hits) as hits')
       urls.each do | hit |
-        csv << [ hit.date_recorded.strftime("%Y-%m-%d"), hit.hits, hit.document.canonical_url(:format => :html) ]
+        csv << [ hit.date_recorded.strftime("%Y-%m-%d"), hit.hits, hit.document.canonical_url(:html) ]
       end
     end
   end
