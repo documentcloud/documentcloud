@@ -488,7 +488,7 @@ class Document < ActiveRecord::Base
       url << "?#{updated_at.to_i}" if options[:cache_busting]
       url
     else
-      DC::Store::AssetStore.new.authorized_url path
+      DC::Store::AssetStore.new.authorized_url(path, :content_type => 'image/gif')
     end
   end
 
