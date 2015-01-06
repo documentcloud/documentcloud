@@ -213,7 +213,7 @@ class DocumentsController < ApplicationController
     return not_found unless current_page
     @response = current_page.text
     return if jsonp_request?
-    render :text => @response
+    render :plain => @response
   end
 
   def set_page_text
