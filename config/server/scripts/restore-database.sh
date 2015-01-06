@@ -1,4 +1,3 @@
-
 ######################################################################
 ## This is a collection of commands to setup a                      ##
 ## new Postgresql server and restore a database backup onto it.     ##
@@ -27,7 +26,7 @@ cd ~/documentcloud
 
 # Run configuration scripts
 sudo sh ./config/server/scripts/setup_common_dependencies.sh
-# initialize chruby 
+# initialize chruby
 . /etc/profile.d/chruby.sh
 # setup the db
 sudo sh ./config/server/scripts/setup_database.sh
@@ -52,7 +51,8 @@ export DATE=2014-12-28
 aws s3 cp s3://s3.documentcloud.org/backups/dcloud_production/$DATE.dump /srv/pg/$DATE-production.dump
 aws s3 cp s3://s3.documentcloud.org/backups/dcloud_analytics_production/$DATE.dump /srv/pg/$DATE-analytics.dump
 
-# restoring takes considerably longer, around 1.5 hours
+# restoring takes considerably longer.
+# As of Jan 3rd, 2015 - 92 mins for production, 28 for analytics
 pg_restore -Udocumentcloud -d dcloud_production /srv/pg/$DATE-production.dump
 pg_restore -Udocumentcloud -d dcloud_analytics_production /srv/pg/$DATE-production.dump
 
