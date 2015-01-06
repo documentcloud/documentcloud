@@ -474,7 +474,7 @@ class Document < ActiveRecord::Base
   def pdf_url(direct=false)
     return public_pdf_url  if public? || Rails.env.development?
     return private_pdf_url unless direct
-    DC::Store::AssetStore.new.authorized_url(pdf_path)
+    DC::Store::AssetStore.new.authorized_url(pdf_path, :content_type => 'application/pdf')
   end
 
   def thumbnail_url( options={} )
@@ -503,7 +503,7 @@ class Document < ActiveRecord::Base
   def full_text_url(direct=false)
     return public_full_text_url if public? || Rails.env.development?
     return private_full_text_url unless direct
-    DC::Store::AssetStore.new.authorized_url(full_text_path)
+    DC::Store::AssetStore.new.authorized_url(full_text_path, :content_type => 'text/plain; charset=utf-8')
   end
 
   def document_viewer_url(opts={})
