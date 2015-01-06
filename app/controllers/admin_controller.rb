@@ -191,7 +191,7 @@ class AdminController < ApplicationController
   # Ensure that the length of the pending document queue is ok.
   def queue_length
     ok = Document.pending.count <= Document::WARN_QUEUE_LENGTH
-    render :text => ok ? 'OK' : 'OVERLOADED'
+    render :plain => ok ? 'OK' : 'OVERLOADED'
   end
 
   # Spin up a new CloudCrowd medium worker, for processing. It takes a while
