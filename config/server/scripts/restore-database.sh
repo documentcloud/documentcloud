@@ -1,4 +1,12 @@
 
+######################################################################
+## This is a collection of commands to setup a                      ##
+## new Postgresql server and restore a database backup onto it.     ##
+##                                                                  ##
+## It's not intended as a script, but instead for each to be ran    ##
+## individually, so the output can be monitored                     ##
+######################################################################
+
 # Find ebs volume.  It'll be recongnizable by the size, (most likely xvdd)
 sudo lsblk
 
@@ -24,6 +32,7 @@ sudo sh ./config/server/scripts/setup_common_dependencies.sh
 # setup the db
 sudo sh ./config/server/scripts/setup_database.sh
 
+# Move and soft link DB install onto new mount point
 sudo service postgresql stop
 sudo mv /var/lib/postgresql/* /srv/pg/
 sudo rmdir /var/lib/postgresql
@@ -36,7 +45,8 @@ export AWS_ACCESS_KEY_ID=`grep aws_access_key secrets/secrets.yml |awk '{print $
 export AWS_SECRET_ACCESS_KEY=`grep aws_secret_key secrets/secrets.yml |awk '{print $2}'`
 export AWS_DEFAULT_REGION=us-east-1
 
-export DATE=2014-12-08
+# The DB backup to restore from
+export DATE=2014-12-28
 
 # Download the backups, takes around 10 minutes
 aws s3 cp s3://s3.documentcloud.org/backups/dcloud_production/$DATE.dump /srv/pg/$DATE-production.dump
@@ -45,7 +55,6 @@ aws s3 cp s3://s3.documentcloud.org/backups/dcloud_analytics_production/$DATE.du
 # restoring takes considerably longer, around 1.5 hours
 pg_restore -Udocumentcloud -d dcloud_production /srv/pg/$DATE-production.dump
 pg_restore -Udocumentcloud -d dcloud_analytics_production /srv/pg/$DATE-production.dump
-
 
 # cleanup the backup dumps
 rm /srv/pg/*dump
