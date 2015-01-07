@@ -474,7 +474,7 @@ class Document < ActiveRecord::Base
   def pdf_url(direct=false)
     return public_pdf_url  if public? || Rails.env.development?
     return private_pdf_url unless direct
-    DC::Store::AssetStore.new.authorized_url(pdf_path, :content_type => 'application/pdf')
+    DC::Store::AssetStore.new.authorized_url(pdf_path, :response_content_type => 'application/pdf')
   end
 
   def thumbnail_url( options={} )
@@ -488,7 +488,7 @@ class Document < ActiveRecord::Base
       url << "?#{updated_at.to_i}" if options[:cache_busting]
       url
     else
-      DC::Store::AssetStore.new.authorized_url(path, :content_type => 'image/gif')
+      DC::Store::AssetStore.new.authorized_url(path, :response_content_type => 'image/gif')
     end
   end
 
@@ -503,7 +503,7 @@ class Document < ActiveRecord::Base
   def full_text_url(direct=false)
     return public_full_text_url if public? || Rails.env.development?
     return private_full_text_url unless direct
-    DC::Store::AssetStore.new.authorized_url(full_text_path, :content_type => 'text/plain; charset=utf-8')
+    DC::Store::AssetStore.new.authorized_url(full_text_path, :response_content_type => 'text/plain; charset=utf-8')
   end
 
   def document_viewer_url(opts={})
