@@ -9,7 +9,7 @@ class Page < ActiveRecord::Base
   IMAGE_SIZES['thumbnail']  = '60x75!'
 
   MAX_PAGE_RESULTS = 1000
-  
+
   include DC::Store::DocumentResource
   include DC::Search::Matchers
   include ActionView::Helpers::SanitizeHelper
@@ -100,7 +100,8 @@ class Page < ActiveRecord::Base
   end
 
   def authorized_image_url(size)
-    DC::Store::AssetStore.new.authorized_url(document.page_image_path(page_number, size))
+    DC::Store::AssetStore.new.authorized_url(document.page_image_path(page_number, size),
+                                             :response_content_type => 'image/gif')
   end
 
 
