@@ -19,6 +19,8 @@ javascripts:
     - public/javascripts/vendor/visualsearch-*.js
     - public/javascripts/vendor/blueimp-file-upload/js/jquery.fileupload.js
     - public/javascripts/vendor/blueimp-file-upload/js/jquery.iframe-transport.js
+    - public/javascripts/vendor/flot/jquery.flot.js
+    - public/javascripts/vendor/flot/jquery.flot.time.js
     - public/javascripts/lib/*.js
     - public/javascripts/translations/*.js
     - public/javascripts/model/*.js

@@ -55,7 +55,7 @@ class AjaxHelpController < ApplicationController
     contents = File.read( help_for_language( language, resource ) )
     links = File.exists?( links_for_language( language, resource ) ) ?
       File.read( links_for_language( language, resource ) ) : ""
-    render :text => RDiscount.new(contents+links).to_html, :type => :html
+    render :html => RDiscount.new(contents+links).to_html
   end
 
 end

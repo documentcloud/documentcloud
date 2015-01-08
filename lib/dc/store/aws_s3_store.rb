@@ -206,7 +206,7 @@ module DC
       end
 
       def content_type(s3_path)
-        Mime::Type.lookup_by_extension(File.extname(s3_path)).to_s
+        Mime::Type.lookup_by_extension(File.extname(s3_path).remove(/^\./)).to_s
       end
 
       # Saves a local file to a location on S3, and returns the public URL.
