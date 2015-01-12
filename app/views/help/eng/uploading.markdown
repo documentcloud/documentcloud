@@ -1,16 +1,16 @@
 # Uploading documents
 
-Most DocumentCloud users are working PDFs, but our software can work with any file type that OpenOffice supports: Microsoft Word documents, RTFs and OpenDocument files will work just fine. Image files, including tiffs, jpegs and pngs will also work. 
+Most DocumentCloud users are working PDFs, but our software can work with any file type that OpenOffice supports: Microsoft Word documents, RTFs and OpenDocument files will work just fine. Image files, including tiffs, jpegs and pngs, also will work. 
 
-If you open a project before you begin uploading, your new documents will be added to the project you have open. 
+If you open a project before you begin uploading, your new documents will be added to that project.
 
-To upload one or more documents, click the "New Documents" button in the sidebar and select the files you'd like to upload. Hold down the ctrl key to select more than one document. *Note: multiple document upload is only supported in browsers other than Internet Explorer.*
+To upload one or more documents, click the "New Documents" button in the sidebar and select the files you'd like to upload. Hold down the ctrl key to select more than one document. *Note: multiple document upload is not supported in older versions of Internet Explorer.*
 
 <img src="/images/help/upload_dialog.png" class="full_line" />
  
-The uploader will suggest a title for your document, based on its file name. You can edit the title before you continue, but you'll also be able to edit each document's metadata after you've uploaded it. Consider providing additional data about each document: click on the pencil icon to expand a detailed form, where you can add a description and source for each document and set the access level. If the files you are uploading should share a source and description, click on the link titled: "Apply to All Files." 
+The uploader will suggest a title for your document based on its file name. You can edit the title before you continue, but you'll also be able to edit each document's metadata after you've uploaded it. Consider providing additional data about each document: click on the pencil icon to expand a detailed form, where you can add a description and source for each document and set the access level. If the files you are uploading should share a source and description, click on the link titled: "Apply to All Files." 
 
-When you're ready, click "Upload." The dialog will close when all files have been uploaded. Before you can work with them, however, DocumentCloud has more processing to do, to prepare your document for our document viewer. Most documents process in less than 30 minutes, but the time it takes to process documents depends heavily on how many other users are working at the same time. If you'd like to be notified when your batch of documents is finished being processed, click the checkbox, and we will send you an email they are ready. If you are uploading many large documents at once, let us know so and we can ensure there's enough computing power available.
+When you're ready, click "Upload." The dialog will close when all files have been uploaded. Before you can work with them, however, DocumentCloud must process the documents for the document viewer. Most documents process in less than 30 minutes, but the time depends on how many other users are working at the same time. If you'd like to be notified when your batch of documents is finished, click the checkbox and you'll get an email when they are ready. If you plan to upload many large documents at once, let us know so we can ensure there's enough computing power available.
  
 You might get better results if you optimize large documents (anything over 10 MB) before you upload them. On a Mac, [use Preview to reduce the size of your file][]. Adobe Acrobat [works as well][]. Don't have Acrobat or Preview? Take a look at our tips on [troubleshooting documents][] for more resources.
 

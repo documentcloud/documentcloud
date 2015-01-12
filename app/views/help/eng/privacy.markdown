@@ -8,9 +8,9 @@ If you are concerned about the secrecy of documents you have uploaded to Documen
 
   * DocumentCloud does have a [privacy policy](/privacy).
 
-  * All documents uploaded to DocumentCloud are passed through OpenCalais via their API. Take a look at their [terms of service][] if you haven't already.
+  * All documents uploaded to DocumentCloud are passed through OpenCalais via its API. Take a look at its [terms of service][] if you haven't already.
 
-  * This is the internet. Your documents are only ever as private as your password, documents shared internally are only as private as the least responsible user in your newsroom. There are countless ways to compromise your account, those include logging in from a publicly accessible workstation and failing to log out and accessing DocumentCloud over a public wireless connection.
+  * This is the internet. Your documents are only ever as private as your password, and documents shared internally are only as private as the least responsible user in your newsroom. There are countless ways to compromise your account, such as logging in from a publicly accessible workstation and failing to log out or accessing DocumentCloud over a public wireless connection.
 
 All of that said, we're doing our best to ensure that private material is and remains private.
 
