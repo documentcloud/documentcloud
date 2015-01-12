@@ -6,7 +6,7 @@ DocumentCloud's API allows users to search, upload, edit, and organize documents
 
  * If your project allows users to interact with data from DocumentCloud, you must cite DocumentCloud as the source of your data. If your project allows users to view or browse specific documents, you must cite DocumentCloud and the relevant contributing organizations, as identified in the API.
 
- * You may not use the API commercially, by which we mean you may not charge people money to look at the data, or sell advertising specifically against it.
+ * You may not use the API commercially, by which we mean you may not charge people money to look at the data or sell advertising specifically against it.
 
  * You understand and acknowledge that any data provided by our API may contain errors and omissions.
 
@@ -14,13 +14,13 @@ _We reserve the right to revise these guidelines. If you violate the spirit of t
 
 ## GET /api/search.json
 
-Search the catalog of public documents. This method can be used to scrape the public documents from your account for embedding purposes, or to enable searches of your archive of uploaded documents directly from your own website. See our <a href="searching">search documentation</a> for help with search queries.
+Search the catalog of public documents. This method can be used to scrape the public documents from your account for embedding purposes or to enable searches of your archive of uploaded documents directly from your own website. See our <a href="searching">search documentation</a> for help with search queries.
 
 Parameter     | Description           |  Example
 --------------|-----------------------|--------------
 q             | the search query      | group:nytimes title:nuclear
 page          | response page number  | 3 (defaults to 1)
-per_page      | the number of documents to return per page | 100 (defaults to 10, max is 1000)
+per_page      | the number of documents to return per page | 100 (defaults to 10, max is 1,000)
 sections      | include document sections in the results | true (not present by default)
 annotations   | include document annotations in the results | true (not present by default)
 data          | include key/value data in the results | true (not present by default)
@@ -56,7 +56,7 @@ mentions      | include highlighted mentions of the search phrase | 3 (not prese
 
 ### Tips
 
- * If you'd like to get back search results with more than ten documents on a page, pass the `per_page` parameter. A maximum of 1000 documents will be returned at a time.
+ * If you'd like to get back search results with more than 10 documents on a page, pass the `per_page` parameter. A maximum of 1,000 documents will be returned at a time.
 
 ## POST /api/upload.json
 
@@ -81,7 +81,7 @@ secure          | (optional) If you're dealing with a truly sensitive document, 
 ### Tips
 
  * Please ensure that you send the request properly encoded as "multipart/form-data"
- * Review your uploaded files and add a source and description if you didn't .
+ * Review your uploaded files and add a source and description if you didn't.
 
 ### Example
 
@@ -143,7 +143,7 @@ The response value of this method will be the JSON representation of your docume
 
 ### Tips
 
- * If your HTTP client is unable to create a PUT request, you can send it as a POST, and add an extra parameter: `_method=put`
+ * If your HTTP client is unable to create a PUT request, you can send it as a POST and add an extra parameter: `_method=put`
 
 ## DELETE /api/documents/[id].json
 

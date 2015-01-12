@@ -1,6 +1,6 @@
 # Publishing Documents, Notes, and Document Sets
 
-Ready to share make your documents public? Publish individual documents, embed a whole set of documents for your readers to browse, or embed a single note from any one document. Before you publish a note, document or document set, you'll want to make sure that the document or documents are public. Make a document public by editing the "Access Level" (from the "Edit" menu) or by setting a publication date (from the "Publish" menu).
+Ready to make your documents public? You can publish individual documents, embed a whole set of documents for your readers to browse, or embed a single note from any document. Before you publish a note, document or document set, you'll want to make sure that the document or documents are public. Do this by editing the "Access Level" (from the "Edit" menu) or by setting a publication date (from the "Publish" menu).
 
 # Publishing Individual Documents
 
@@ -14,25 +14,25 @@ We maintain a list of some of our [favorite embedded documents][] as examples of
 
 Before you embed a document on your site, we encourage you to fill in a couple of additional pieces of information about the document. Open the document to take one more look over the document's **title**, **description**, **source**, and **public notes**. If everything is as you like it, you're ready to continue.
 
-Select a document, open the "Publish" menu, and click "Embed Document Viewer", or right-click the document, and select "Embed Document Viewer".
+Select a document, open the "Publish" menu and click "Embed Document Viewer." Alternately, right-click the document and select "Embed Document Viewer."
 
-A dialog will appear, asking you to fill in two additional pieces of information: the **Related Article URL**, and the **Published URL**. The **Related Article URL** is the location of the article that uses this document as source material &mdash; adding this URL means that readers who find the document first will still find your reporting, too. The **Published URL** is the page where the document is embedded. Most users won't need to provide this &mdash; [pixel ping](http://www.propublica.org/nerds/item/pixel-ping-a-nodejs-stats-tracker) can usually tell us where the document is embedded. If a document might be accessed at more than one URL, however, you can specify the URL we should send users to if they find the document through a search of DocumentCloud.
+A dialog will appear, asking you to fill in two additional pieces of information: the **Related Article URL** and the **Published URL**. The **Related Article URL** is the location of the article that uses this document as source material &mdash; adding this URL means that readers who find the document first will still find your reporting, too. The **Published URL** is the page where the document is embedded. Most users won't need to provide this &mdash; [pixel ping](http://www.propublica.org/nerds/item/pixel-ping-a-nodejs-stats-tracker) can usually tell us where the document is embedded. If a document might be accessed at more than one URL, however, you can specify the URL we should send users to if they find the document through a search of DocumentCloud.
 
 On step one, you'll also see a checkbox offering to make the document public, if it's not already. While it's possible to paste the embed code before the document is made public, it won't start working until you've published the document on DocumentCloud.
 
-If you're not yet ready to make the document public, you can schedule it to be published at a future date. Click "Set Publication Date" in the "Publish" menu, and choose a date and an hour when you would like the document to be made public. This is useful if you already know when your story is going live, or if your article is running in the middle of the night.
+If you're not ready to make the document public, you can schedule it to be published at a future date. Click "Set Publication Date" in the "Publish" menu and choose a date and an hour when you would like the document to be made public. This is useful if you know when your story is going live, or if your story is running in the middle of the night.
 
 ## <span id="template">Configure the Document Viewer</span>
 
-Depending on how you wish to display the document on your website, you have two choices: You can create a template for a **full page** viewer, with your own logo, links, analytics and advertising; or you can embed a **fixed size** viewer directly inside an article. You can also embed multiple **fixed size** viewers on a single page.
+Depending on how you wish to display the document, you have two choices: You can create a template for a **full page** viewer, with your own logo, links, analytics and advertising; or you can embed a **fixed size** viewer directly inside an article. You can also embed multiple **fixed size** viewers on a single page.
 
-To create a **full page** template, use a fluid-width layout, with just a header &mdash; the viewer will take up the rest of the page. Make sure that your template has a proper doctype, and passes the [HTML validator][]. Templates that throw Internet Explorer into quirks mode will cause the viewer to display incorrectly.
+To create a **full page** template, use a fluid-width layout with just a header &mdash; the viewer will take up the rest of the page. Make sure that your template has a proper doctype and passes the [HTML validator][]. Templates that throw Internet Explorer into quirks mode will cause the viewer to display incorrectly.
 
-Here are some live examples worth checking out: [NewsHour][], [Arizona Republic][], [Chicago Tribune][], [ProPublica][], but there are [plenty more][].
+Live examples worth checking out are at the [Chicago Tribune][] and [ProPublica][], but there are [plenty more][].
 
 <img src="/images/help/newshour.jpg" class="full_line" />
 
-If you opt to embed a **fixed size** viewer, set the width and height in pixels. You can also toggle both the sidebar and the text tab. We recommend hiding the sidebar in document viewers that are narrower than 800 pixels. If you're embedding handwritten documents or documents with poor OCR results, hiding the text tab is usually a good idea. Use the "preview the document viewer" link to see an example of the viewer rendered to your specifications.
+If you opt to embed a **fixed size** viewer, set the width and height in pixels. Both the sidebar and the text tab can be shown or not. We recommend hiding the sidebar in document viewers that are narrower than 800 pixels. If you're embedding handwritten documents or documents with poor OCR results, hiding the text tab is usually a good idea. Use the "preview the document viewer" link to see an example of the viewer rendered to your specifications.
 
 To see a live example of a fixed size document with no sidebar, take a look at [this ballot from WNYC][].
 
@@ -64,7 +64,7 @@ On occasion you may have embedded documents which you would like to remain priva
 
 ![Embed Note Menu][]
 
-If you have [annotated a document](/help/notes), you can embed any note directly on your site. Users can embed notes from any document you have edit privileges to. To embed a note, select any document and then choose "Embed a Note" from the "Publish" menu.
+If you have [annotated a document](/help/notes), you can embed any note directly on your site. Users can embed notes from any document for which you have edit privileges. To embed a note, select any document and then choose "Embed a Note" from the "Publish" menu.
 
 You'll be asked to select the note to embed, and will be able to preview the embedded note. Use your own CSS to control the width of any note on your site. Your HTML embed code will look something like this:
 
@@ -82,14 +82,14 @@ Copy and paste the HTML onto your own site. Clicking the title or the image will
 
 If you'd rather embed a complete set of documents, DocumentCloud can provide the HTML to do that as well. Readers will be able to search or filter through as many documents as you'd like to share with them.
 
-You can embed any set of documents, whether or not you uploaded them: any document that has already been published by their contributor will open to the URL at which it originally appeared.
+You can embed any set of documents, whether or not you uploaded them: any document that has already been published by its contributor will open to the URL at which it originally appeared.
 
 To get started, find a set of documents you wish to embed -- either by selecting a project or by running a search. **Note:** future public documents added to the project or matching the search criteria will be added to your embedded document set. Open the "Publish" menu and select "Embed Document List." You'll see a dialog which allows you to configure the embedded set:
 
  * Provide a **title** to be displayed above the embedded set of documents;
  * **Order** documents alphabetically, by date uploaded, or by length;
  * Set the number of documents to display **per page** so that the embedded set suits the height and width of the space you have available;
- * Hide or reveal a **search bar**, that will allow your readers to search within the embedded set.
+ * Hide or reveal a **search bar** that will allow your readers to search within the embedded set.
 
 Once you're comfortable with your settings, preview the embedded document set. If the preview looks good, copy and paste the HTML embed code. Here's an example of what the embed code should look like:
 
@@ -121,10 +121,8 @@ Still have questions about publishing and embedding? Don't hesitate to [contact 
 [terms and conditions]: /terms
 [plenty more]: /featured
 [HTML validator]: http://validator.w3.org/
-[NewsHour]: http://www.pbs.org/newshour/rundown/stevens-testimony.html
-[Arizona Republic]: http://www.azdatapages.com/sb1070.html
 [Chicago Tribune]: http://media.apps.chicagotribune.com/docs/obama-subpoena.html
 [ProPublica]: http://www.propublica.org/documents/item/magnetars-responses-to-our-questions
 [this document from the Commercial Appeal]: http://www.commercialappeal.com/data/documents/bass-pro-lease/
-[this ballot from WNYC]: http://beta.wnyc.org/articles/its-free-country/2010/sep/07/new-nyc-ballot-could-cause-confusion/
+[this ballot from WNYC]: http://www.wnyc.org/story/93440-new-nyc-ballot-could-cause-confusion/
 [contact us]: javascript:dc.ui.Dialog.contact()
