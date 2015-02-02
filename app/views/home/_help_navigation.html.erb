@@ -7,12 +7,11 @@
   <ul id="help_navigation" class="sidebar_nav">
     <% @help_pages.each do |help_item| %>
       <li <% if @page == help_item %>class="active"<% end %>>
-        <% options = help_item == 'index' ? {} : {:page => help_item} %>
-        <% help_url = url_for(:action => 'help', :controller => 'home', :params => options) %>
+        <% page = help_item == 'index' ? '' : help_item %>
+        <% help_url = url_for(:action => 'help', :controller => 'home', :page => page) %>
         <a href="<%= help_url %>"><%= @help_titles[help_item.to_sym] %></a>
       </li>
     <% end %>
   </ul>
 
 </div>
-
