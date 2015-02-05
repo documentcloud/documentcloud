@@ -23,7 +23,7 @@ class Account < ActiveRecord::Base
     :presence   =>true,
     :uniqueness =>{ :case_sensitive => false },
     :format     =>{ :with => DC::Validators::EMAIL },
-    :if         => :has_memberships?
+    :if         => Proc.new{ |user| user.has_memberships? || user.email.present? }
 
   validate :validate_identity_is_unique
   validates :language, :inclusion=>{ :in => DC::Language::USER,

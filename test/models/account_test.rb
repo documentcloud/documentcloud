@@ -122,4 +122,16 @@ class AccountTest < ActiveSupport::TestCase
     assert louis.canonical( :include_organization=>true, :include_document_counts=>true)
   end
 
+  it "disallows leading/trailing spaces in email address" do
+    account = Account.new(first_name: ' Bob', last_name: 'Smith ',
+      language: DC::Language::DEFAULT, document_language: DC::Language::DEFAULT )
+    account.email = ' bob@test.com'
+    refute account.save
+    assert account.errors.include?(:email)
+    account.email = 'bob@test.com '
+    refute account.save
+    assert account.errors.include?(:email)
+    account.email = 'bob@test.com'
+    assert account.save
+  end
 end
