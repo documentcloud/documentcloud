@@ -68,7 +68,7 @@
       <div class="text_input">
         <div class="background">
           <div class="inner">
-            <input type="text" name="account[email]" id="account_email" value="<%= @params[:account][:email] %>" <%="readonly" if @account %> />
+            <input type="text" name="account[email]" id="account_email" value="<%= @params[:account][:email] %>" <%="readonly" if @account && !@account.errors.any? %> />
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@
       </label>
     </div>
 
-  <% if @account %>
+  <% if @account && !@account.errors.any? %>
     <div class="line">
       <p class="row-message">Account exists and is currently linked to  &ldquo;<%= @account.organization.name %>&rdquo;.</p>
       <div class="input">
