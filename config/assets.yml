@@ -21,6 +21,7 @@ javascripts:
     - public/javascripts/vendor/blueimp-file-upload/js/jquery.iframe-transport.js
     - public/javascripts/vendor/flot/jquery.flot.js
     - public/javascripts/vendor/flot/jquery.flot.time.js
+    - public/javascripts/vendor/flot/jquery.flot.selection.js
     - public/javascripts/lib/*.js
     - public/javascripts/translations/*.js
     - public/javascripts/model/*.js
