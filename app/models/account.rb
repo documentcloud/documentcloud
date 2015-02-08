@@ -23,7 +23,7 @@ class Account < ActiveRecord::Base
     :presence   =>true,
     :uniqueness =>{ :case_sensitive => false },
     :format     =>{ :with => DC::Validators::EMAIL },
-    :if         => :has_memberships?
+    :if         => Proc.new{ |user| user.has_memberships? || user.email.present? }
 
   validate :validate_identity_is_unique
   validates :language, :inclusion=>{ :in => DC::Language::USER,
@@ -71,7 +71,7 @@ class Account < ActiveRecord::Base
   # Retrieve the names of the contributors for the result set of documents.
   def self.names_for_documents(docs)
     ids = docs.map {|doc| doc.account_id }.uniq
-    self.where({:id => ids}).select('id, first_name, last_name').inject({}) do |hash, acc| 
+    self.where({:id => ids}).select('id, first_name, last_name').inject({}) do |hash, acc|
       hash[acc.id] = acc.full_name; hash
     end
   end
@@ -388,7 +388,7 @@ class Account < ActiveRecord::Base
       attrs['public_documents'] = Document.unrestricted.where(:account_id=>id).count
       attrs['private_documents'] = Document.restricted.where(:account_id => id).count
     end
-    
+
     # all of the below should be rendered obsolete and removed.
     if ( membership = options[:membership] || memberships.default.first )
       attrs['organization_id'] = membership.organization_id
@@ -398,7 +398,7 @@ class Account < ActiveRecord::Base
       attrs['organization_name'] = membership.organization.name if membership
       attrs['organizations']     = organizations.map(&:canonical)
     end
-    
+
     attrs
   end
 

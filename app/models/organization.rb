@@ -14,8 +14,6 @@ class Organization < ActiveRecord::Base
   validates :name, :slug, :uniqueness=>true
   validates :slug, :format => { :with => DC::Validators::SLUG }
 
-  validates :name, :slug, :presence=>true, :uniqueness=>true
-  validates :slug, :format=>{:with=> DC::Validators::SLUG}
   validates :language, :inclusion=>{ :in => DC::Language::USER,
     :message => "must be one of: (#{DC::Language::USER.join(', ')})" }
   validates :document_language,  :inclusion=>{ :in => DC::Language::SUPPORTED,

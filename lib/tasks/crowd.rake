@@ -1,3 +1,6 @@
+require_relative '../dc/cloud_crowd'
+require_relative '../../config/initializers/aws'
+
 namespace :crowd do
 
   task :console do
@@ -41,6 +44,11 @@ namespace :crowd do
     end
   end
   
+  namespace :cluster do
+    [:list_processes, :start_nodes, :kill_nodes].each do |command|
+      task(command){ CloudCrowd::NodeWrangler.new.send(command) }
+    end
+  end
 
 end
 

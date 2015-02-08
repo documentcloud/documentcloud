@@ -35,6 +35,10 @@ dc.model.UploadDocument = Backbone.Model.extend({
     this.set({ state: "uploading"});
   },
   recordError: function(errorMessage){
+    // if the upload was interrupted, no error message is returned
+    if (!errorMessage){
+      errorMessage = _.t('upload_failed');
+    }
     this.set({error: errorMessage, state: 'error'});
   },
   overSizeLimit : function() {
