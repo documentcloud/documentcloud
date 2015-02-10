@@ -298,6 +298,13 @@ dc.model.DocumentSet = Backbone.Collection.extend({
     return docs;
   },
 
+  // Compute the query needed to embed a given set of documents.
+  // If the query is longer than 255 characters, an empty string is returned
+  searchEmbedQuery:  function(docs){
+    var query = _.map(docs, function(doc){ return 'document: ' + doc.id; }).join(' ');
+    return query.length > 255 ? "" : query;
+  },
+
   downloadViewers : function(docs) {
     var ids = _.map(docs, function(doc){ return doc.id; });
     var dialog = dc.ui.Dialog.progress( _.t('downloading_progress', ids.length, docs[0].get('title') ) );

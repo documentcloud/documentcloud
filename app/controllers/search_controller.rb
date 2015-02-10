@@ -31,6 +31,9 @@ class SearchController < ApplicationController
     end
     results[:dc_url] = "#{DC.server_root}"
     js = "dc.embed.callback(#{results.to_json});"
+    if params[:q].length > 255
+      head :bad_request and return
+    end
     cache_page js unless request.ssl?
     render :js => js
   end
