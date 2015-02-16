@@ -32,21 +32,35 @@ namespace :crowd do
 
     end
   end
-  
-  namespace :node do 
+
+  namespace :node do
     desc "Handy unix shotgun for culling zombie crowd worker processes"
     task :cull do
       `ps aux | egrep "crowd|pdftk|pdftailor|tesseract|gm|soffice" | ruby -e 'STDIN.read.split("\n").each{ |line| puts line.split[1] unless line =~ /rake|grep/ }' | xargs kill`
     end
-    
+
     task :cleanup_tmp do
       `rm -rf /tmp/cloud_crowd_tmp/*; rm -rf /tmp/d#{Time.now.year}*`
     end
   end
-  
+
   namespace :cluster do
-    [:list_processes, :start_nodes, :kill_nodes].each do |command|
-      task(command){ CloudCrowd::NodeWrangler.new.send(command) }
+    desc "List processes running on worker nodes"
+    task :list_processes, :node_name do |t,args|
+      wrangler = CloudCrowd::NodeWrangler.new
+      if args[:node_name]
+        wrangler.list_processes(args[:node_name])
+      else
+        wrangler.list_processes()
+      end
+    end
+
+
+    [:start_nodes, :kill_nodes].each do |command|
+      desc "#{command.to_s.titleize} on the cluster."
+      task(command, :count, :node_name ) do |t,options|
+        CloudCrowd::NodeWrangler.new.send(command, options)
+      end
     end
   end
 
@@ -60,10 +74,7 @@ def crowd_folder
       'reindex'
     when File.exists?('API')
       'api'
-    else 
+    else
       RAILS_ENV
   end
 end
-
-
-
