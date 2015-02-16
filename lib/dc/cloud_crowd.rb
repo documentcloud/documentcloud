@@ -38,11 +38,19 @@ module CloudCrowd
       execute_on_hosts(script, @nodes)
     end
 
-    # startup worker nodes.
+    def start_nodes(pattern=DEFAULT_WORKER_MATCHER)
+      run_on_workers(script_contents("startup"), pattern)
+    end
+
+    def kill_nodes(pattern=DEFAULT_WORKER_MATCHER)
+      run_on_workers(script_contents("kill"), pattern)
+    end
+
+    # Start new ec2 instance(s) and provision them as worker nodes.
     # Options:
     #   :count - Number of nodes to start, defaults to 1
     #   :node_name - What to name the nodes once they're booted, defaults to "worker"
-    def start_nodes(options={})
+    def launch_nodes(options={})
       node_name = options.delete(:node_name) || "worker"
       options = {
         :count             => 1,
@@ -50,8 +58,9 @@ module CloudCrowd
         :image_id          => DC::SECRETS['ami'],
         :security_groups   => DC::SECRETS['aws_security_group'],
         :key_name          => DC::SECRETS['aws_ssh_key_name'],
-        :availability_zone => DC::SECRETS['aws_availability_zone']
+        :availability_zone => DC::CONFIG['aws_zone']
       }.merge(options)
+
       ec2 = AWS::EC2.new
       puts "Booting up #{options[:count]} new #{'node'.pluralize(options[:count].to_i)}"
       new_instances = ec2.instances.create( options )
@@ -84,7 +93,7 @@ module CloudCrowd
 
     # To be implemented.
     # N.B. - needs to take into account "special" nodes like worker04
-    def kill_nodes(pattern=DEFAULT_WORKER_MATCHER)
+    def shutdown_nodes(pattern=DEFAULT_WORKER_MATCHER)
       # run_on_workers(script_contents("kill"), pattern)
     end
 

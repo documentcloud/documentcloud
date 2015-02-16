@@ -45,26 +45,19 @@ namespace :crowd do
   end
 
   namespace :cluster do
-    desc "List processes running on worker nodes"
-    task :list_processes, :node_name do |t,args|
-      wrangler = CloudCrowd::NodeWrangler.new
-      if args[:node_name]
-        wrangler.list_processes(args[:node_name])
-      else
-        wrangler.list_processes()
-      end
+    [:list_processes, :start_nodes, :kill_nodes].each do |command|
+      task(command){ CloudCrowd::NodeWrangler.new.send(command) }
     end
 
-
-    [:start_nodes, :kill_nodes].each do |command|
-      desc "#{command.to_s.titleize} on the cluster."
-      task(command, :count, :node_name ) do |t,options|
-        CloudCrowd::NodeWrangler.new.send(command, options)
-      end
+    desc "Launch nodes on the cluster"
+    task(:launch_nodes, :count, :node_name) do |t,options|
+      CloudCrowd::NodeWrangler.new.launch_nodes(options)
     end
   end
 
 end
+
+
 
 def crowd_folder
   case
