@@ -1,10 +1,9 @@
 Hi <%= @document.account.full_name %>,
 
-We were unable to successfully process a document you uploaded on <%= @document.created_at.to_s(:wday_date_month) %> (<%= time_ago_in_words( @document.created_at) %> ago).  With your permission we'd like to take a look at "<%= @document.title %>" <%= @document.canonical_url(:html) %> to better diagnose the issue, and get it processed properly.
+We were unable to successfully process a document you uploaded on <%= @document.created_at.to_s(:wday_date_month) %> (<%= time_ago_in_words( @document.created_at) %> ago).  With your permission, we'd like to take a look at "<%= @document.title %>" <%= @document.canonical_url(:html) %> to better diagnose the issue and get it processed properly.
 
 Additionally, we'd like to add your document to the collection we use to test our tools against.  If the document is sensitive or you'd otherwise prefer not for us not to retain a copy of the document, don't hesitate to let us know.
 
 Thanks,
 
-Ted, Lauren & Nathan
-DocumentCloud
+The DocumentCloud Team
