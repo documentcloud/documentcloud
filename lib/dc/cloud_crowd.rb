@@ -14,6 +14,7 @@ module CloudCrowd
 
     # A wrangler will execute a shell script across a a list of hosts
     def execute_on_hosts(script, hosts)
+      hosts = [hosts] unless hosts.is_a?(Array)
       hosts.each do |host|
         @threads.push(Thread.new{
           puts "SSHing to #{host}:\n" + `ssh #{ssh_options} #{host} "bash -ls" <<SCRIPT\n#{script}\nSCRIPT`
@@ -27,8 +28,13 @@ module CloudCrowd
     # For DocumentCloud's purposes, we're running on Amazon & name extra nodes "workers"
     # so we fetch the list of machines using a regexp.
     def get_hosts_named(pattern=DEFAULT_WORKER_MATCHER)
+      if pattern.blank?
+        pattern = DEFAULT_WORKER_MATCHER
+      elsif pattern.is_a?(String)
+        pattern = /#{pattern}/
+      end
       ec2 = AWS::EC2.new
-      puts "Fetching worker host names"
+      puts "Fetching worker host names matching #{pattern}"
       instances = ec2.instances.select{ |i| i.status == :running && i.tags["Name"] =~ pattern }
       return instances.map{ |i| i.dns_name }
     end
@@ -36,6 +42,14 @@ module CloudCrowd
     def run_on_workers(script, pattern=DEFAULT_WORKER_MATCHER)
       @nodes = get_hosts_named(pattern) if @nodes.nil? or @nodes.empty?
       execute_on_hosts(script, @nodes)
+    end
+
+    def check_segfaults(pattern=DEFAULT_WORKER_MATCHER)
+      run_on_workers(script_contents("check_segfaults"), pattern)
+    end
+
+    def list_processes(pattern=DEFAULT_WORKER_MATCHER)
+      run_on_workers(script_contents("list_processes"), pattern)
     end
 
     def start_nodes(pattern=DEFAULT_WORKER_MATCHER)
@@ -52,15 +66,14 @@ module CloudCrowd
     #   :node_name - What to name the nodes once they're booted, defaults to "worker"
     def launch_nodes(options={})
       node_name = options.delete(:node_name) || "worker"
-      options = {
-        :count             => 1,
+      options={
+        :count             => ( options[:count] || 1 ).to_i,
         :instance_type     => 'c3.large',
         :image_id          => DC::SECRETS['ami'],
         :security_groups   => DC::SECRETS['aws_security_group'],
         :key_name          => DC::SECRETS['aws_ssh_key_name'],
         :availability_zone => DC::CONFIG['aws_zone']
-      }.merge(options)
-
+      }
       ec2 = AWS::EC2.new
       puts "Booting up #{options[:count]} new #{'node'.pluralize(options[:count].to_i)}"
       new_instances = ec2.instances.create( options )
@@ -97,13 +110,10 @@ module CloudCrowd
       # run_on_workers(script_contents("kill"), pattern)
     end
 
-    def list_processes(pattern=DEFAULT_WORKER_MATCHER)
-      run_on_workers(script_contents("list_processes"), pattern)
-    end
 
     private
     def ssh_options
-      "-o StrictHostKeyChecking=no -o CheckHostIP=no -o UserKnownHostsFile=/dev/null -l '#{@user}' -i '#{@key_path}'"
+      "-q -o StrictHostKeyChecking=no -o CheckHostIP=no -o UserKnownHostsFile=/dev/null -l '#{@user}' -i '#{@key_path}'"
     end
 
     def script_contents(name)
