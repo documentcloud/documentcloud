@@ -31,7 +31,7 @@ module CloudCrowd
       if pattern.blank?
         pattern = DEFAULT_WORKER_MATCHER
       elsif pattern.is_a?(String)
-        pattern = Regexp.new(pattern)
+        pattern = /#{pattern}/
       end
       ec2 = AWS::EC2.new
       puts "Fetching worker host names matching #{pattern}"
