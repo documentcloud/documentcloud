@@ -45,10 +45,8 @@ namespace :crowd do
   end
 
   namespace :cluster do
-    [:list_processes, :start_nodes, :kill_nodes, :check_segfaults].each do |command|
-      task(command, :name) do |t,options|
-        CloudCrowd::NodeWrangler.new.send(command,options[:name])
-      end
+    [:list_processes, :start_nodes, :kill_nodes].each do |command|
+      task(command){ CloudCrowd::NodeWrangler.new.send(command) }
     end
 
     desc "Launch nodes on the cluster"
