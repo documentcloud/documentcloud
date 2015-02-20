@@ -54,23 +54,26 @@
       page     : json.page,
       dc_url   : json.dc_url
     });
-
-    if (searches[id].isLoaded) {
-      searches[id].documents.reset(json.documents);
-      if (searches[id].options.search && !searches[id].originalLoaded) {
-        searches[id].workspace.render();
+    
+    var search = searches[id];
+    if (search.isLoaded) {
+      search.documents.reset(json.documents);
+      if (search.options.search && !search.originalLoaded) {
+        search.workspace.render();
       }
-      if (searches[id].options.q == searches[id].options.original_query) {
-        searches[id].originalLoaded = true;
+      if (search.options.q == search.options.original_query) {
+        search.originalLoaded = true;
       }
     } else {
-      searches[id].documents       = new dc.EmbedDocumentSet(json.documents, searches[id].options);
-      searches[id].workspace       = new dc.EmbedWorkspaceView(searches[id].options);
-      searches[id].originalOptions = _.clone(searches[id].options);
-      searches[id].isLoaded        = true;
-      searches[id].search          = searches[id].workspace.search;
+      search.documents       = new dc.EmbedDocumentSet(json.documents, search.options);
+      search.workspace       = new dc.EmbedWorkspaceView(search.options);
+      search.originalOptions = _.clone(search.options);
+      search.isLoaded        = true;
+      search.search          = search.workspace.search;
     }
-
+    searches[id] = search;
+    
+    if (search.options && search.options.afterLoad) search.options.afterLoad(search);
   };
 
   dc.EmbedDocument = dc.Backbone.Model.extend({
@@ -108,7 +111,8 @@
       'keypress .DC-search-box'    : 'maybePerformSearch'
     },
 
-    initialize : function() {
+    initialize : function(options) {
+      this.options = options;
       _.bindAll(this, 'search');
       this.embed     = searches[this.options.id];
       this.container = $(this.options.container);
@@ -264,7 +268,8 @@
       'click a.DC-document-tile' : 'click'
     },
 
-    initialize : function() {
+    initialize : function(options) {
+      this.options = options;
       this.embed = this.options.embed;
     },
 
