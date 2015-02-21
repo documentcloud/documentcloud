@@ -47,6 +47,8 @@ tesseract-ocr
 libpcre3-dev
 sysstat
 libbz2-dev
+libfreetype6-dev
+libfreeimage-dev
 make
 '
 
@@ -131,7 +133,7 @@ mkdir -p $installer_tmp
 cd $installer_tmp
 
 ruby_install_version='0.5.0'
-chruby_version='0.3.8'
+chruby_version='0.3.9'
 
 wget -O ruby-install-$ruby_install_version.tar.gz https://github.com/postmodern/ruby-install/archive/v$ruby_install_version.tar.gz
 tar -xzvf ruby-install-$ruby_install_version.tar.gz
@@ -143,11 +145,11 @@ tar -xzvf chruby-$chruby_version.tar.gz
 # # Import Postmodern's key.
 # wget https://raw.github.com/postmodern/postmodern.github.io/master/postmodern.asc
 # gpg --import postmodern.asc
-# 
+#
 # # Verify that ruby-install was signed by postmodern
 # wget https://raw.github.com/postmodern/ruby-install/master/pkg/ruby-install-$ruby_install_version.tar.gz.asc
 # gpg --verify ruby-install-$ruby_install_version.tar.gz.asc ruby-install-$ruby_install_version.tar.gz
-# 
+#
 # # Verify that chruby was signed by postmodern
 # wget https://raw.github.com/postmodern/chruby/master/pkg/chruby-$chruby_version.tar.gz.asc
 # gpg --verify chruby-$chruby_version.tar.gz.asc chruby-$chruby_version.tar.gz
@@ -159,7 +161,7 @@ cd "$installer_tmp/chruby-$chruby_version/"
 make install
 
 # Ensure that chruby is available to login shells and that
-# the current stable version of ruby is set to 
+# the current stable version of ruby is set to
 echo 'if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
   source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh
@@ -207,4 +209,3 @@ EOF
 uname -a | tee -a /etc/motd
 
 echo COMMON DEPENDENCY SETUP COMPLETED SUCCESSFULLY
-
