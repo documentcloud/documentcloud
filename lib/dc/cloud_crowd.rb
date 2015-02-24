@@ -53,13 +53,13 @@ module CloudCrowd
     def launch_nodes(options={})
       node_name = options.delete(:node_name) || "worker"
       options = {
-        :count             => 1,
+        :count             => ( options[:count] || 1 ).to_i,
         :instance_type     => 'c3.large',
         :image_id          => DC::SECRETS['ami'],
         :security_groups   => DC::SECRETS['aws_security_group'],
         :key_name          => DC::SECRETS['aws_ssh_key_name'],
         :availability_zone => DC::CONFIG['aws_zone']
-      }.merge(options)
+      }
 
       ec2 = AWS::EC2.new
       puts "Booting up #{options[:count]} new #{'node'.pluralize(options[:count].to_i)}"
@@ -103,7 +103,7 @@ module CloudCrowd
 
     private
     def ssh_options
-      "-o StrictHostKeyChecking=no -o CheckHostIP=no -o UserKnownHostsFile=/dev/null -l '#{@user}' -i '#{@key_path}'"
+      "-q -o StrictHostKeyChecking=no -o CheckHostIP=no -o UserKnownHostsFile=/dev/null -l '#{@user}' -i '#{@key_path}'"
     end
 
     def script_contents(name)
