@@ -12,11 +12,14 @@ module DC
       'eng' => 'English',
       'fra' => 'French',
       'deu' => 'German',
+      'hun' => 'Hungarian',
       'ita' => 'Italian',
       'jpn' => 'Japanese',
       'kor' => 'Korean',
+      'nor' => 'Norwegian',
       'por' => 'Portuguese',
       'spa' => 'Spanish',
+      'swe' => 'Swedish',
       'rus' => 'Russian',
       'ukr' => 'Ukrainian'
     }
