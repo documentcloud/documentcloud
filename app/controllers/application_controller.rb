@@ -153,19 +153,31 @@ class ApplicationController < ActionController::Base
   # Return forbidden when the access is unauthorized.
   def forbidden
     @next = CGI.escape(request.original_url)
-    render :file => "#{Rails.root}/public/403.html", :status => 403
+    respond_to do |format|
+      format.js  { json({:error=>"Forbidden"}, 403) }
+      format.json{ json({:error=>"Forbidden"}, 403) }
+      format.any { render :file => "#{Rails.root}/public/403.html", :status => 403 }
+    end
     false
   end
 
   # Return not_found when a resource can't be located.
   def not_found
-    render :file => "#{Rails.root}/public/404.html", :status => 404
+    respond_to do |format|
+      format.js  { json({:error=>"Not Found"}, 404) }
+      format.json{ json({:error=>"Not Found"}, 404) }
+      format.any { render :file => "#{Rails.root}/public/404.html", :status => 404 }
+    end
     false
   end
 
   # Return server_error when an uncaught exception bubbles up.
   def server_error(e)
-    render :file => "#{Rails.root}/public/500.html", :status => 500
+    respond_to do |format|
+      format.js  { json({:error=>"Internal Server Error (sorry)"}, 500) }
+      format.json{ json({:error=>"Internal Server Error (sorry)"}, 500) }
+      format.any { render :file => "#{Rails.root}/public/500.html", :status => 500 }
+    end
     false
   end
 
