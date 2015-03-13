@@ -15,9 +15,14 @@ module DC
     # Default AMI, instance type, and launch script to start a new instance.
     DEFAULT_BOOT_OPTIONS = {
       :ami      => DC::CONFIG['preconfigured_ami_id'],
-      :type     => 'm1.small',
+      :type     => 't2.micro',
       :scripts  => [SCRIPTS[:update]]
     }
+
+    def initialize(options = {})
+      @user     = options[:user]     || "ubuntu"
+      @key_path = options[:key_path] || "secrets/keys/documentcloud.pem"
+    end
 
     def ec2
       @ec2 ||= ::AWS::EC2.new
@@ -57,6 +62,47 @@ module DC
 
     def create_snapshot(volume_id)
       ec2.volumes[ volume_id ].create_snapshot
+    end
+
+    def launch_instances(options={}, &post_launch)
+      node_name = options.delete(:node_name) || "workers"
+      options = {
+        :instance_type     => 'c3.large',
+        :image_id          => DC::SECRETS['ami'],
+        :security_groups   => DC::SECRETS['aws_security_group'],
+        :key_name          => DC::SECRETS['aws_ssh_key_name'],
+        :availability_zone => DC::CONFIG['aws_zone']
+      }.merge(options)
+      
+      options[:count] = (options[:count] || 1).to_i unless options[:count].kind_of? Integer
+      raise ArgumentError, "Count must be an integer > 0" unless options[:count] > 0
+      
+      puts "Booting up #{options[:count]} new #{'node'.pluralize(options[:count])}"
+      new_instances = [ec2.instances.create( options )].flatten
+      # tag them all with Name=<node_name>
+      new_instances.each{ |instance|  instance.tag('Name', value: node_name ) }
+      # wait for Amazon to report them all non-pending
+      sleep 3 while new_instances.any? {|i| :pending == i.status }
+      # Some may have failed, if so report on them and remove from list
+      failed_instances = new_instances.find_all{|i| :running != i.status }
+      if failed_instances.any?
+        puts "#{failed_instances.map(&:dns_name)} failed to boot"
+        new_instances -= failed_instances
+      end
+      if new_instances.none?
+        puts "No instances launched successfully" and return false
+      end
+      booting_instances = new_instances.dup
+      while booting_instances.any? do
+        # an instance is fully booted if we can establish an ssh connection to it
+        puts "Waiting for #{booting_instances.map(&:dns_name).join(", ")} to boot"
+        booting_instances.delete_if do | instance |
+           system "ssh -o ConnectTimeout=10 #{ssh_options} #{instance.dns_name} exit 0 2>/dev/null"
+        end
+        sleep 5
+      end
+      
+      post_launch ? post_launch.yield(new_instances) : new_instances
     end
 
     # Boot a new instance, given `ami`, `type`, and `scripts` options.
@@ -116,6 +162,11 @@ module DC
     # Terminate an instance on EC2
     def terminate_instance(instance_id)
       ec2.instances[ instance_id ].terminate
+    end
+
+    private
+    def ssh_options
+      "-q -o StrictHostKeyChecking=no -o CheckHostIP=no -o UserKnownHostsFile=/dev/null -l '#{@user}' -i '#{@key_path}'"
     end
 
   end

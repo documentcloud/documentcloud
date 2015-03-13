@@ -1,5 +1,6 @@
-require_relative '../dc/cloud_crowd'
 require_relative '../../config/initializers/aws'
+require_relative '../dc/aws'
+require_relative '../dc/cloud_crowd'
 
 namespace :crowd do
 
@@ -50,7 +51,7 @@ namespace :crowd do
     end
 
     desc "Launch nodes on the cluster"
-    task(:launch_nodes, :count, :node_name) do |t,options|
+    task(:launch_nodes, :count, :node_name) do |t, options|
       CloudCrowd::NodeWrangler.new.launch_nodes(options)
     end
   end
