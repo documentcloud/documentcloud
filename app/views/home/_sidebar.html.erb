@@ -60,6 +60,13 @@
       News
     </div>
     <ul>
+      <% @news.each do |item| %>
+       <li>
+         Title: <%= item[:title] %>
+       </li>
+      <% end %>
+    </ul>
+    <ul>
       <li>
         March 12, 2015 &mdash; <a href="http://blog.documentcloud.org/blog/2015/03/hungarian-norwegian-swedish-ocr-support-added/">Hungarian, Norwegian, Swedish OCR support added</a>
       </li>
