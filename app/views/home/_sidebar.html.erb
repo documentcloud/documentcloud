@@ -62,9 +62,11 @@
     <ul>
       <% @news.each do |item| %>
         <li>
-          <%= item[:date].to_date.strftime("%B %-d, %Y") %> — <a href="<%= item[:url] %>"><%= item[:title] %></a>
+          <%= item[:date].to_date.strftime("%B %-d, %Y") %> — <a href="<%= item[:url] %>"><%= raw(item[:title]) %></a>
         </li>
       <% end %>
+      <li><a href="http://blog.documentcloud.org/">All posts</a></li>
+    </ul>
   </div>
 
   <div id="about" class="sidebar_section">
