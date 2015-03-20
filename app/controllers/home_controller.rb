@@ -13,10 +13,16 @@ class HomeController < ApplicationController
       time = Rails.env.production? ? 2.weeks.ago : nil
       Document.unrestricted.published.popular.random.since(time).first
     end
-    uri = URI('http://blog.documentcloud.org/?json=get_recent_posts&count=7')
-    response = Net::HTTP.get uri
-    feed = JSON.parse(response, :symbolize_names => true)
-    @news = feed[:posts]
+    # fetch the posts from our WordPress blog
+    begin
+      uri = URI('http://blog.documentcloud.org/?json=get_recent_posts&count=7')
+      response = Net::HTTP.get uri
+    rescue => e
+      # continue
+    else
+      feed = JSON.parse(response, :symbolize_names => true)
+      @news = feed[:posts]
+    end
   end
 
   def opensource

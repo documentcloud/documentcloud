@@ -60,12 +60,15 @@
       News
     </div>
     <ul>
-      <% @news.each do |item| %>
+      <% if @news != nil %>
+        <% @news.each do |item| %>
         <li>
           <%= item[:date].to_date.strftime("%B %-d, %Y") %> — <a href="<%= item[:url] %>"><%= raw(item[:title]) %></a>
         </li>
+        <% end %>
+      <% else %>
+        <li><a href="http://blog.documentcloud.org/">Read all blog posts</a></li>
       <% end %>
-      <li><a href="http://blog.documentcloud.org/">All posts</a></li>
     </ul>
   </div>
 
