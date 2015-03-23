@@ -43,6 +43,8 @@ cp ./config/server/files/nginx/{staging,production}.conf /etc/nginx/sites-availa
 ln -s /etc/nginx/sites-available/$RAILS_ENV.conf /etc/nginx/sites-enabled/documentcloud-$RAILS_ENV.conf
 ln -s /var/log/nginx /etc/nginx/logs
 
+mkdir /usr/share/nginx/logs
+
 service nginx restart
 rake $RAILS_ENV ping:start
 

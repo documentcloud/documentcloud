@@ -17,6 +17,9 @@ USERNAME=ubuntu
 # INSTALL SYSTEM DEPENDENCIES
 #################################
 
+# Make sure that apt-get doesn't attempt to load up any guis.
+DEBIAN_FRONTEND=noninteractive
+
 # Always make sure that we have up to date postgres packages by adding their apt repository.
 echo "deb http://apt.postgresql.org/pub/repos/apt/ utopic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
