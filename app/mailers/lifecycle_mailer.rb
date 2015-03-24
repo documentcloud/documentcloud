@@ -2,9 +2,10 @@
 class LifecycleMailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper # pluralize and friends
 
-  SUPPORT   = 'support@documentcloud.org'
-  NO_REPLY  = 'no-reply@documentcloud.org'
-  INFO      = 'info@documentcloud.org'
+  SUPPORT    = 'support@documentcloud.org'
+  EXCEPTIONS = 'exceptions@documentcloud.org'
+  NO_REPLY   = 'no-reply@documentcloud.org'
+  INFO       = 'info@documentcloud.org'
   default from: SUPPORT
 
   # Mail instructions for a new account, with a secure link to activate,
@@ -90,7 +91,7 @@ class LifecycleMailer < ActionMailer::Base
     mail({
         :subject  => "DocumentCloud exception (#{Rails.env}:#{`hostname`.chomp}): #{error.class.name}",
         :from     => NO_REPLY,
-        :to       => SUPPORT
+        :to       => EXCEPTIONS
       })
   end
 
