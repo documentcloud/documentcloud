@@ -43,7 +43,7 @@ mentions      |  incluyen las menciones destacadas de la frase de búsqueda    |
       </div>
       <label for="q">
         Consulta de búsqueda
-        <div>ej.: "person:geithner"</div>
+        <div>ej.: "title:arrest"</div>
       </label>
     </form>
   </div>

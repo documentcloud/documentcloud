@@ -46,7 +46,7 @@ mentions      | include highlighted mentions of the search phrase | 3 (not prese
       </div>
       <label for="q">
         Search Query:
-        <div>ex: "person:geithner"</div>
+        <div>ex: "title:arrest"</div>
       </label>
     </form>
   </div>
