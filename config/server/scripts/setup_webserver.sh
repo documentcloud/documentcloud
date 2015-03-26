@@ -7,8 +7,8 @@ set -e
 # This script needs to be run as root for permission purposes
 test $USER = 'root' || { echo run this as root >&2; exit 1; }
 
-USERNAME=ubuntu
-RAILS_ENV=production
+USERNAME=vagrant
+RAILS_ENV=development
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 apt-get install apt-transport-https ca-certificates
