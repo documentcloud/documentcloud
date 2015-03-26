@@ -2,7 +2,7 @@ $(function() {
 
   window.HomePage = Backbone.View.extend({
 
-    BLOG_HEADLINES_URL : 'http://blog.documentcloud.org/?json=get_recent_posts&count=7&callback=?',
+    BLOG_HEADLINES_URL : '//blog.documentcloud.org/?json=get_recent_posts&count=7&callback=?',
     FAVORITES_URL : '//twitter.com/favorites/documentcloud.json?callback=?',
 
     el : document.body,
