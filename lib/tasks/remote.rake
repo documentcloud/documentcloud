@@ -101,7 +101,7 @@ def remote(commands, machines)
   threads = []
   todo << "cd #{conf[:dir]}"
   todo << "./bin/bundle install"
-  todo << "./bin/rake #{RAILS_ENV} #{commands.flatten.join(' ')}"
+  todo << "./bin/rake #{RAILS_ENV} #{[commands].flatten.join(' ')}"
   machines.each do |host|
     threads << Thread.new do
       puts "\n-- #{host} --"
