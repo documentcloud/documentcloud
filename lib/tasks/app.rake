@@ -36,7 +36,7 @@ namespace :app do
   end
 
   task :console do
-    exec "script/console #{RAILS_ENV}"
+    exec "rails console #{RAILS_ENV}"
   end
 
   desc "Update the Rails application"
