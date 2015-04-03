@@ -25,7 +25,7 @@ module DC
         File.size?(local(path))
       end
 
-      def authorized_url(path)
+      def authorized_url(path, opts={})
         File.join(self.class.web_root, path)
       end
 
