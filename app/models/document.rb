@@ -900,7 +900,6 @@ class Document < ActiveRecord::Base
     end
     doc['sections']           = ordered_sections.map {|s| s.canonical } if options[:sections]
     doc['data']               = data if options[:data]
-    doc['language']           = language
     if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
       doc['annotations']      = self.annotations_with_authors(options[:account]).map {|a| a.canonical}
     elsif options[:annotations]
