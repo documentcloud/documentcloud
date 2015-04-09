@@ -171,6 +171,11 @@ class ApiController < ApplicationController
   end
 
   def oembed
+    url = URI.parse(params[:url]) rescue nil
+    if params[:url].blank? || !url
+      return render :status => 400, :text => "Missing valid URL parameter"
+    end
+
     respond_to do |format|
       format.json do
         @response = {
@@ -188,6 +193,8 @@ class ApiController < ApplicationController
         json_response
       end
       format.all do
+        # As per the oEmbed spec, unrecognized formats should get a 501
+        # error.
         render :status => 501, :text => "Unsupported request type"
       end
     end
