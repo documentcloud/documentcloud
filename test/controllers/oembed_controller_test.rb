@@ -27,4 +27,9 @@ class OembedControllerTest < ActionController::TestCase
     assert_response 501
   end
 
+  def test_wrong_domain
+    get :oembed, :format => "json", :url => CGI.escape("http://www.apple.com")
+    assert_response 404
+  end
+
 end

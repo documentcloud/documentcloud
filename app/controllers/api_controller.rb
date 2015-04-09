@@ -176,6 +176,10 @@ class ApiController < ApplicationController
       return render :status => 400, :text => "Missing valid URL parameter"
     end
 
+    if url.host != DC::CONFIG['server_root']
+      return render :status => 404, :text => "Resource not found"
+    end
+
     respond_to do |format|
       format.json do
         @response = {
