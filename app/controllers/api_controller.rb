@@ -176,6 +176,10 @@ class ApiController < ApplicationController
     json nil
   end
 
+  def oembed
+    json_response
+  end
+
   # Allow logging of all actions, apart from secure uploads.
   def logger
     params[:secure] ? nil : super

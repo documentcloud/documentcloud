@@ -179,9 +179,4 @@ class ApiControllerTest < ActionController::TestCase
     assert_raises( ActiveRecord::RecordNotFound ){ Project.find( project.id ) }
   end
 
-  def test_oembed_response
-    get :oembed
-    assert_response :success
-  end
-
 end
