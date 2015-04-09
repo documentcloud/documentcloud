@@ -176,7 +176,7 @@ class ApiController < ApplicationController
       return render :status => 400, :text => "Missing valid URL parameter"
     end
 
-    if url.host != DC::CONFIG['server_root']
+    unless url.host == DC::CONFIG['server_root'] # && Document.accessible(nil, nil).exists?(params[:id].to_i)
       return render :status => 404, :text => "Resource not found"
     end
 
