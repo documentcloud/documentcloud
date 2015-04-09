@@ -19,12 +19,6 @@ class ApiController < ApplicationController
     redirect_to '/help/api'
   end
 
-  def cors_options
-    return bad_request unless params[:allowed_methods]
-    maybe_set_cors_headers
-    render :nothing => true
-  end
-
   def search
     opts = API_OPTIONS.merge(pick(params, :sections, :annotations, :entities, :mentions, :data))
     if opts[:mentions] &&= opts[:mentions].to_i
@@ -178,6 +172,12 @@ class ApiController < ApplicationController
 
   def oembed
     json_response
+  end
+
+  def cors_options
+    return bad_request unless params[:allowed_methods]
+    maybe_set_cors_headers
+    render :nothing => true
   end
 
   # Allow logging of all actions, apart from secure uploads.
