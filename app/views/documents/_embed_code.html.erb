@@ -1,0 +1,12 @@
+<div id="DV-viewer-<%= doc.canonicalId() %>" class="DV-container"></div>
+<script src="//s3.amazonaws.com/s3.documentcloud.org/viewer/loader.js"></script>
+<script>
+  DV.load("<%= doc.get("document_viewer_js") %>", {
+  <%= options %>
+  });
+</script>
+  <% if (rawOptions.pdf !== false) { %><noscript>
+  <a href="<%= doc.publicUrl(doc.get('pdf_url')) %>"><%= doc.escape("title") %> (PDF)</a>
+  <br>
+  <a href="<%= doc.publicUrl(doc.get('full_text_url')) %>"><%= doc.escape("title") %> (Text)</a>
+</noscript><% } %>
