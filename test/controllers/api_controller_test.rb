@@ -28,7 +28,6 @@ class ApiControllerTest < ActionController::TestCase
     assert_recognizes(
       { controller: 'api', action: 'cors_options', :format=>'json', "allowed_methods"=>[:get] },
       { path: '/api/search.json',  method: :options } )
-
   end
 
   def test_index
@@ -50,8 +49,7 @@ class ApiControllerTest < ActionController::TestCase
     assert_equal ["Accept", "Authorization", "Content-Length", "Content-Type", "Cookie"], cors_allowed_headers.sort
   end
 
-
-  def test_search
+  def test_empty_search_results
     get :search, q: 'ponies', :format => :json
     assert_has_search_params Sunspot.session.searches.last, :keywords, 'ponies'
     assert_equal 0, json_body['total']
