@@ -171,6 +171,18 @@ class ApiController < ApplicationController
   end
 
   def oembed
+    @response = {
+      :type             => "rich",
+      :version          => "1.0",
+      :provider_name    => "DocumentCloud",
+      :provider_url     => DC.server_root,
+      :cache_age        => 300,
+      :resource_url     => nil,
+      :height           => nil,
+      :width            => nil,
+      :display_language => nil,
+      :html             => nil,
+    }
     json_response
   end
 
