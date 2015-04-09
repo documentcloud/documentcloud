@@ -171,19 +171,26 @@ class ApiController < ApplicationController
   end
 
   def oembed
-    @response = {
-      :type             => "rich",
-      :version          => "1.0",
-      :provider_name    => "DocumentCloud",
-      :provider_url     => DC.server_root,
-      :cache_age        => 300,
-      :resource_url     => nil,
-      :height           => nil,
-      :width            => nil,
-      :display_language => nil,
-      :html             => nil,
-    }
-    json_response
+    respond_to do |format|
+      format.json do
+        @response = {
+          :type             => "rich",
+          :version          => "1.0",
+          :provider_name    => "DocumentCloud",
+          :provider_url     => DC.server_root,
+          :cache_age        => 300,
+          :resource_url     => nil,
+          :height           => nil,
+          :width            => nil,
+          :display_language => nil,
+          :html             => nil,
+        }
+        json_response
+      end
+      format.all do
+        render :status => 501, :text => "Unsupported request type"
+      end
+    end
   end
 
   def cors_options
