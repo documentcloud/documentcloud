@@ -4,8 +4,12 @@ class OembedControllerTest < ActionController::TestCase
   
   tests ApiController
 
+  include Rails.application.routes.url_helpers
+  default_url_options[:host] = DC::CONFIG['server_root']
+
   def test_oembed_response
-    get :oembed, :format => "json", :url => CGI.escape("https://www.documentcloud.org/help")
+    url = CGI.escape(url_for :controller => 'workspace', :action => 'help')
+    get :oembed, :format => "json", :url => url
     assert_response :success
     assert_equal 'rich', json_body['type']
     assert_equal '1.0', json_body['version']
@@ -18,7 +22,8 @@ class OembedControllerTest < ActionController::TestCase
   end
 
   def test_unsupported_format
-    get :oembed, :format => "lol", :url => CGI.escape("https://www.documentcloud.org/help")
+    url = CGI.escape(url_for :controller => 'workspace', :action => 'help')
+    get :oembed, :format => "lol", :url => url
     assert_response 501
   end
 

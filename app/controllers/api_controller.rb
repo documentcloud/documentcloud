@@ -171,7 +171,7 @@ class ApiController < ApplicationController
   end
 
   def oembed
-    url = URI.parse(params[:url]) rescue nil
+    url = URI.parse(CGI.unescape(params[:url])) rescue nil
     if params[:url].blank? || !url
       return render :status => 400, :text => "Missing valid URL parameter"
     end
