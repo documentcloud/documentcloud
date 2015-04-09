@@ -12,7 +12,7 @@ class OembedControllerTest < ActionController::TestCase
     assert_equal DC.server_root, json_body['provider_url']
   end
 
-  def test_unsupport_format
+  def test_unsupported_format
     get :oembed, :format => "lol"
     assert_response 501
   end
