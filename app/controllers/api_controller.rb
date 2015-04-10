@@ -171,12 +171,14 @@ class ApiController < ApplicationController
   end
 
   def oembed
+
     url = URI.parse(CGI.unescape(params[:url])) rescue nil
-    if params[:url].blank? || !url
-      return render :status => 400, :text => "Missing valid URL parameter"
+    if params[:url].blank? or !url
+      return  render :status => 400, :text => "Missing valid URL parameter"
     end
 
-    unless url.host == DC::CONFIG['server_root'] # && Document.accessible(nil, nil).exists?(params[:id].to_i)
+    resource_params = Rails.application.routes.recognize_path(url.path) rescue nil
+    unless url.host == DC::CONFIG['server_root'] and resource_embeddable?(resource_params)
       return render :status => 404, :text => "Resource not found"
     end
 
@@ -216,6 +218,14 @@ class ApiController < ApplicationController
   end
 
   private
+
+  def resource_embeddable?(resource_params)
+    resource_params and
+    resource_params[:controller] == "documents" and
+    resource_params[:id] and
+    resource_params[:id] =~ DC::Validators::SLUG # and
+    # Document.accessible(nil, nil).exists?(params[:id].to_i) 
+  end
 
   def secure_silence_logs
     if params[:secure]
