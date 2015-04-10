@@ -173,14 +173,10 @@ class ApiController < ApplicationController
   def oembed
 
     url = URI.parse(CGI.unescape(params[:url])) rescue nil
-    if params[:url].blank? or !url
-      return  render :status => 400, :text => "Missing valid URL parameter"
-    end
+    return bad_request if params[:url].blank? or !url
 
     resource_params = Rails.application.routes.recognize_path(url.path) rescue nil
-    unless url.host == DC::CONFIG['server_root'] and resource_embeddable?(resource_params)
-      return render :status => 404, :text => "Resource not found"
-    end
+    return not_found unless url.host == DC::CONFIG['server_root'] and resource_embeddable?(resource_params)
 
     respond_to do |format|
       format.json do

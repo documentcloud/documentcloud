@@ -146,7 +146,11 @@ class ApplicationController < ActionController::Base
   end
 
   def bad_request
-    render :file => "#{Rails.root}/public/400.html", :status => 400
+    respond_to do |format|
+      format.js  { json({:error=>"Bad Request"}, 400) }
+      format.json{ json({:error=>"Bad Request"}, 400) }
+      format.any { render :file => "#{Rails.root}/public/400.html", :status => 400 }
+    end
     false
   end
 
