@@ -195,9 +195,8 @@ class ApiController < ApplicationController
         json_response
       end
       format.all do
-        # As per the oEmbed spec, unrecognized formats should get a 501
-        # error.
-        render :status => 501, :text => "Unsupported request type"
+        # Per the oEmbed spec, unrecognized formats should trigger a 501
+        not_implemented
       end
     end
   end

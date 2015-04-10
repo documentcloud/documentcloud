@@ -185,6 +185,17 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  # A resource was requested in a way we can't fulfill (e.g. an oEmbed
+  # request for XML when we only provide JSON)
+  def not_implemented
+    respond_to do |format|
+      format.js  { json({:error=>"Not Implemented"}, 501) }
+      format.json{ json({:error=>"Not Implemented"}, 501) }
+      format.any { render :file => "#{Rails.root}/public/501.html", :status => 501 }
+    end
+    false
+  end
+
   # Simple HTTP Basic Auth to make sure folks don't snoop where the shouldn't.
   def bouncer
     authenticate_or_request_with_http_basic("DocumentCloud") do |login, password|
