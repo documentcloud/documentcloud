@@ -8,6 +8,7 @@ class OembedControllerTest < ActionController::TestCase
   default_url_options[:host] = DC::CONFIG['server_root']
 
   let(:valid_resource_url) { CGI.escape(url_for :controller => 'documents', :action => 'show', :id => '1-is-the-lonelist-number', :format => 'html') }
+  let(:unsupported_resource_url) { CGI.escape(url_for :controller => 'home', :action => 'index') }
 
   def test_oembed_response
     get :oembed, :format => "json", :url => valid_resource_url
@@ -29,6 +30,11 @@ class OembedControllerTest < ActionController::TestCase
 
   def test_wrong_domain
     get :oembed, :format => "json", :url => CGI.escape("http://www.apple.com")
+    assert_response 404
+  end
+
+  def test_unsupported_resource
+    get :oembed, :format => "json", :url => unsupported_resource_url
     assert_response 404
   end
 
