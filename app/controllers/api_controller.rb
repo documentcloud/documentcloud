@@ -178,6 +178,31 @@ class ApiController < ApplicationController
     resource_params = Rails.application.routes.recognize_path(url.path) rescue nil
     return not_found unless url.host == DC::CONFIG['server_root'] and resource_embeddable?(resource_params)
 
+    # This block of variables are used in the embed code template
+    document_id = resource_params[:id]
+    @template_options = template_options = {
+      :use_default_container => params[:container].blank? || params[:container].nil?,
+      :default_container_id  => "DV-viewer-#{document_id}",
+      :resource_js_url       => url_for(resource_params.merge(:format => 'js'))
+    }
+    embed_data = {
+      :container        => params[:container] || template_options[:default_container_id],
+      :zoom             => params[:zoom] || nil,
+      :search           => params[:search] || nil,
+      :showAnnotations  => params[:notes] || nil,
+      :sidebar          => params[:sidebar] || nil,
+      :text             => params[:text] || nil,
+      :pdf              => params[:pdf] || nil,
+      :responsive       => params[:responsive] || nil,
+      :responsiveOffset => params[:responsive_offset] || nil,
+      :page             => params[:default_page] || nil,
+      :note             => params[:default_note] || nil,
+      :height           => params[:maxheight] || nil,
+      :width            => params[:maxwidth] || nil,
+    }
+    embed_data = Hash[embed_data.reject { |k, v| v.nil? }]
+    embed_html = ERB.new(File.read("#{Rails.root}/app/views/documents/_embed_code.html.erb")).result(binding)
+
     respond_to do |format|
       format.json do
         @response = {
@@ -187,10 +212,10 @@ class ApiController < ApplicationController
           :provider_url     => DC.server_root,
           :cache_age        => 300,
           :resource_url     => nil,
-          :height           => nil,
-          :width            => nil,
+          :height           => params[:maxheight],
+          :width            => params[:maxwidth],
           :display_language => nil,
-          :html             => nil,
+          :html             => embed_html,
         }
         json_response
       end
