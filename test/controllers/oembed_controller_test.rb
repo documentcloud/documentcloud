@@ -8,7 +8,9 @@ class OembedControllerTest < ActionController::TestCase
   default_url_options[:host] = DC::CONFIG['server_root']
 
   let(:valid_resource_url) { CGI.escape(url_for :controller => 'documents', :action => 'show', :id => '1-is-the-lonelist-number', :format => 'html') }
+  let(:missing_resource_url) { CGI.escape(url_for :controller => 'documents', :action => 'show', :id => '3-the-magic-number', :format => 'html') }
   let(:unsupported_resource_url) { CGI.escape(url_for :controller => 'home', :action => 'index') }
+  let(:external_resource_url) { CGI.escape('http://www2.warnerbros.com/spacejam/movie/jam.htm') }
 
   def test_oembed_response
     get :oembed, :format => "json", :url => valid_resource_url
@@ -29,7 +31,7 @@ class OembedControllerTest < ActionController::TestCase
   end
 
   def test_wrong_domain
-    get :oembed, :format => "json", :url => CGI.escape("http://www.apple.com")
+    get :oembed, :format => "json", :url => external_resource_url
     assert_response 404
   end
 
@@ -40,7 +42,6 @@ class OembedControllerTest < ActionController::TestCase
 
   def test_missing_resource
     skip "Not yet implemented missing resource check"
-    missing_resource_url = CGI.escape(url_for :controller => 'documents', :action => 'show', :id => '1-is-the-lonelist-number', :format => 'html')
     get :oembed, :format => "json", :url => missing_resource_url
     assert_response 404
   end
