@@ -72,44 +72,7 @@ ri
 ruby-dev
 '
 
-TESSERACT_LANGUAGES='
-tesseract-ocr-afr
-tesseract-ocr-ara
-tesseract-ocr-ces
-tesseract-ocr-chi-sim
-tesseract-ocr-chi-tra
-tesseract-ocr-dan
-tesseract-ocr-deu
-tesseract-ocr-eng
-tesseract-ocr-fin
-tesseract-ocr-fra
-tesseract-ocr-heb
-tesseract-ocr-hin
-tesseract-ocr-hrv
-tesseract-ocr-hun
-tesseract-ocr-ind
-tesseract-ocr-isl
-tesseract-ocr-ita
-tesseract-ocr-jpn
-tesseract-ocr-kor
-tesseract-ocr-lav
-tesseract-ocr-lit
-tesseract-ocr-nld
-tesseract-ocr-nor
-tesseract-ocr-pol
-tesseract-ocr-por
-tesseract-ocr-ron
-tesseract-ocr-rus
-tesseract-ocr-slk
-tesseract-ocr-slv
-tesseract-ocr-spa
-tesseract-ocr-sqi
-tesseract-ocr-srp
-tesseract-ocr-tha
-tesseract-ocr-tur
-tesseract-ocr-ukr
-tesseract-ocr-vie
-'
+TESSERACT_LANGUAGES='tesseract-ocr-*'
 
 # Fonts to support Chinese, Japanese, and Korean character sets
 FONT_PACKAGES='
