@@ -32,7 +32,7 @@ module DC
     attr_accessor :strategy, :dom_mechanism
     attr_reader   :resource, :config
     
-    def initialize(resource, config, options={})
+    def initialize(resource, embed_config={}, options={})
       # resource should be a wrapper object around a model 
       # which plucks out relevant metadata
       # Consider ActiveModel::Serializers for this purpose.
@@ -42,7 +42,7 @@ module DC
         raise ArgumentError, "Embed resource must `respond_to?` an ':#{attribute}' attribute" unless resource.respond_to?(attribute)
       end
       @resource      = resource
-      @config        = config # probably just a hash.
+      @embed_config  = embed_config
       @strategy      = options[:strategy]      || :server_side
       @dom_mechanism = options[:dom_mechanism] || :direct
     end
@@ -51,22 +51,22 @@ module DC
       template_options = {
         :use_default_container => @config[:container].nil? || @config[:container].empty?,
         :default_container_id  => "DV-viewer-#{@resource.id}",
-        :resource_js_url       => url_for(resource_params.merge(:format => 'js'))
+        :resource_js_url       => @resource.url
       }
       embed_data = {
-        :container        => params[:container]         || template_options[:default_container_id],
-        :zoom             => params[:zoom]              || nil,
-        :search           => params[:search]            || nil,
-        :showAnnotations  => params[:notes]             || nil,
-        :sidebar          => params[:sidebar]           || nil,
-        :text             => params[:text]              || nil,
-        :pdf              => params[:pdf]               || nil,
-        :responsive       => params[:responsive]        || nil,
-        :responsiveOffset => params[:responsive_offset] || nil,
-        :page             => params[:default_page]      || nil,
-        :note             => params[:default_note]      || nil,
-        :height           => params[:maxheight]         || nil,
-        :width            => params[:maxwidth]          || nil,
+        :container        => @config[:container]         || template_options[:default_container_id],
+        :zoom             => @config[:zoom]              || nil,
+        :search           => @config[:search]            || nil,
+        :showAnnotations  => @config[:notes]             || nil,
+        :sidebar          => @config[:sidebar]           || nil,
+        :text             => @config[:text]              || nil,
+        :pdf              => @config[:pdf]               || nil,
+        :responsive       => @config[:responsive]        || nil,
+        :responsiveOffset => @config[:responsive_offset] || nil,
+        :page             => @config[:default_page]      || nil,
+        :note             => @config[:default_note]      || nil,
+        :height           => @config[:maxheight]         || nil,
+        :width            => @config[:maxwidth]          || nil,
       }
       embed_data = Hash[embed_data.reject { |k, v| v.nil? }]
 
