@@ -25,12 +25,12 @@ class InitialMigration < ActiveRecord::Migration
     add_index "accounts", ["identities"], name: "index_accounts_on_identites", using: :gin
 
     create_table "annotations", force: true do |t|
-      t.integer  "organization_id",                null: false
-      t.integer  "account_id",                     null: false
-      t.integer  "document_id",                    null: false
-      t.integer  "page_number",                    null: false
-      t.integer  "access",                         null: false
-      t.text     "title",                          null: false
+      t.integer  "organization_id",     null: false
+      t.integer  "account_id",          null: false
+      t.integer  "document_id",         null: false
+      t.integer  "page_number",         null: false
+      t.integer  "access",              null: false
+      t.text     "title",               null: false
       t.text     "content"
       t.string   "location",            limit: 40
       t.datetime "created_at"
@@ -43,13 +43,6 @@ class InitialMigration < ActiveRecord::Migration
     create_table "app_constants", force: true do |t|
       t.string "key"
       t.string "value"
-    end
-
-    create_table "cloud_crowd_stats", force: true do |t|
-      t.tsrange "period"
-      t.integer "pending_count"
-      t.integer "average_wait"
-      t.integer "processing_count"
     end
 
     create_table "collaborations", force: true do |t|
@@ -104,7 +97,6 @@ class InitialMigration < ActiveRecord::Migration
     add_index "documents", ["account_id"], name: "index_documents_on_account_id", using: :btree
     add_index "documents", ["file_hash"], name: "index_documents_on_file_hash", using: :btree
     add_index "documents", ["hit_count"], name: "index_documents_on_hit_count", using: :btree
-    add_index "documents", ["organization_id"], name: "foo2", using: :btree
     add_index "documents", ["public_note_count"], name: "index_documents_on_public_note_count", using: :btree
 
     create_table "entities", force: true do |t|
