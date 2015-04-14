@@ -30,7 +30,7 @@ Embed strategy is the manner in which the embed code is introduced to the web pa
 module DC
   class Embed
     attr_accessor :strategy, :dom_mechanism
-    attr_reader   :resource, :config
+    attr_reader   :resource, :embed_config
     
     def initialize(resource, embed_config={}, options={})
       # resource should be a wrapper object around a model 
@@ -49,24 +49,24 @@ module DC
     
     def content_markup
       template_options = {
-        :use_default_container => @config[:container].nil? || @config[:container].empty?,
+        :use_default_container => @embed_config[:container].nil? || @embed_config[:container].empty?,
         :default_container_id  => "DV-viewer-#{@resource.id}",
         :resource_js_url       => @resource.url
       }
       embed_data = {
-        :container        => @config[:container]         || template_options[:default_container_id],
-        :zoom             => @config[:zoom]              || nil,
-        :search           => @config[:search]            || nil,
-        :showAnnotations  => @config[:notes]             || nil,
-        :sidebar          => @config[:sidebar]           || nil,
-        :text             => @config[:text]              || nil,
-        :pdf              => @config[:pdf]               || nil,
-        :responsive       => @config[:responsive]        || nil,
-        :responsiveOffset => @config[:responsive_offset] || nil,
-        :page             => @config[:default_page]      || nil,
-        :note             => @config[:default_note]      || nil,
-        :height           => @config[:maxheight]         || nil,
-        :width            => @config[:maxwidth]          || nil,
+        :container        => @embed_config[:container]         || template_options[:default_container_id],
+        :zoom             => @embed_config[:zoom]              || nil,
+        :search           => @embed_config[:search]            || nil,
+        :showAnnotations  => @embed_config[:notes]             || nil,
+        :sidebar          => @embed_config[:sidebar]           || nil,
+        :text             => @embed_config[:text]              || nil,
+        :pdf              => @embed_config[:pdf]               || nil,
+        :responsive       => @embed_config[:responsive]        || nil,
+        :responsiveOffset => @embed_config[:responsive_offset] || nil,
+        :page             => @embed_config[:default_page]      || nil,
+        :note             => @embed_config[:default_note]      || nil,
+        :height           => @embed_config[:maxheight]         || nil,
+        :width            => @embed_config[:maxwidth]          || nil,
       }
       embed_data = Hash[embed_data.reject { |k, v| v.nil? }]
 
