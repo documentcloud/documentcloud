@@ -38,7 +38,9 @@ module DC
       # Consider ActiveModel::Serializers for this purpose.
       # N.B. we should be able to generate oembed codes for things that are 
       # basically mocks of a document, not just for real documents
-      raise ArgumentError unless resource.respond_to?(:id)
+      [:id, :url].each do |attribute| 
+        raise ArgumentError, "Embed resource must `respond_to?` an ':#{attribute}' attribute" unless resource.respond_to?(attribute)
+      end
       @resource      = resource
       @config        = config # probably just a hash.
       @strategy      = options[:strategy]      || :server_side
