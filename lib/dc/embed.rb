@@ -33,8 +33,6 @@ module DC
     attr_reader   :resource, :config
     
     def initialize(resource, config, options={})
-      @strategy      = options[:strategy]      || :server_side
-      @dom_mechanism = options[:dom_mechanism] || :direct
       # resource should be a wrapper object around a model 
       # which plucks out relevant metadata
       # Consider ActiveModel::Serializers for this purpose.
@@ -43,6 +41,8 @@ module DC
       raise ArgumentError unless resource.respond_to?(:id)
       @resource      = resource
       @config        = config # probably just a hash.
+      @strategy      = options[:strategy]      || :server_side
+      @dom_mechanism = options[:dom_mechanism] || :direct
     end
     
     def content_markup
@@ -52,31 +52,31 @@ module DC
         :resource_js_url       => url_for(resource_params.merge(:format => 'js'))
       }
       embed_data = {
-        :container        => params[:container] || template_options[:default_container_id],
-        :zoom             => params[:zoom] || nil,
-        :search           => params[:search] || nil,
-        :showAnnotations  => params[:notes] || nil,
-        :sidebar          => params[:sidebar] || nil,
-        :text             => params[:text] || nil,
-        :pdf              => params[:pdf] || nil,
-        :responsive       => params[:responsive] || nil,
+        :container        => params[:container]         || template_options[:default_container_id],
+        :zoom             => params[:zoom]              || nil,
+        :search           => params[:search]            || nil,
+        :showAnnotations  => params[:notes]             || nil,
+        :sidebar          => params[:sidebar]           || nil,
+        :text             => params[:text]              || nil,
+        :pdf              => params[:pdf]               || nil,
+        :responsive       => params[:responsive]        || nil,
         :responsiveOffset => params[:responsive_offset] || nil,
-        :page             => params[:default_page] || nil,
-        :note             => params[:default_note] || nil,
-        :height           => params[:maxheight] || nil,
-        :width            => params[:maxwidth] || nil,
+        :page             => params[:default_page]      || nil,
+        :note             => params[:default_note]      || nil,
+        :height           => params[:maxheight]         || nil,
+        :width            => params[:maxwidth]          || nil,
       }
       embed_data = Hash[embed_data.reject { |k, v| v.nil? }]
+
       ERB.new(File.read("#{Rails.root}/app/views/documents/_embed_code.html.erb")).result(binding)
     end
     
     def bootstrap_markup
-      <<-BOOTSTRAP
-        <script src="//s3.amazonaws.com/s3.documentcloud.org/viewer/loader.js"></script>
-      BOOTSTRAP
+      '<script src="//s3.amazonaws.com/s3.documentcloud.org/viewer/loader.js"></script>'
     end
     
     def code
+      [bootstrap_markup, content_markup].join("\n")
     end
   end
 end
