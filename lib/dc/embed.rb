@@ -47,7 +47,7 @@ module DC
     
     def content_markup
       template_options = {
-        :use_default_container => params[:container].blank? || params[:container].nil?,
+        :use_default_container => @config[:container].nil? || @config[:container].empty?,
         :default_container_id  => "DV-viewer-#{@resource.id}",
         :resource_js_url       => url_for(resource_params.merge(:format => 'js'))
       }
