@@ -12,7 +12,19 @@ describe DC::Embed do
     DC::Embed.new(resource, {}).must_be_kind_of DC::Embed
   end
   
-  it "should output HTML markup"
+  it "should output HTML markup" do
+    embed_code = Nokogiri::HTML(DC::Embed.new(resource, {}).code)
+    embed_code.css("#DV-viewer-#{resource.id}").wont_be_empty
+    
+    # Embed code should include two script tags 
+    external_scripts = embed_code.xpath("//script[@src]")
+    external_scripts.count.must_equal 1
+    external_scripts.first.attribute("src").value.must_match /loader.js$/
+
+    code_scripts     = embed_code.xpath("//script[not(@src)]")
+    code_scripts.count.must_equal 1
+  end
+
   it "should output an oembed response as json"
   it "should output a JST template"
 end
