@@ -201,22 +201,32 @@ class ApiController < ApplicationController
       :width            => params[:maxwidth] || nil,
     }
     embed_data = Hash[embed_data.reject { |k, v| v.nil? }]
-    embed_html = ERB.new(File.read("#{Rails.root}/app/views/documents/_embed_code.html.erb")).result(binding)
+    #embed_html = ERB.new(File.read("#{Rails.root}/app/views/documents/_embed_code.html.erb")).result(binding)
 
+    # create a seralizer mock/class/struct for temporary use
+    resource_seralizer_klass = Struct.new(:id, :url)
+    # get the numeric id for the resource.
+    resource_numeric_id = document_id.split("-").first
+    resource_url = url_for(resource_params.merge(:format => 'js'))
+    resource = resource_seralizer_klass.new(resource_numeric_id, resource_url)
+    
+    embed = DC::OEmbed.new(resource)
+    
     respond_to do |format|
       format.json do
-        @response = {
-          :type             => "rich",
-          :version          => "1.0",
-          :provider_name    => "DocumentCloud",
-          :provider_url     => DC.server_root,
-          :cache_age        => 300,
-          :resource_url     => nil,
-          :height           => params[:maxheight],
-          :width            => params[:maxwidth],
-          :display_language => nil,
-          :html             => embed_html,
-        }
+        #@response = {
+        #  :type             => "rich",
+        #  :version          => "1.0",
+        #  :provider_name    => "DocumentCloud",
+        #  :provider_url     => DC.server_root,
+        #  :cache_age        => 300,
+        #  :resource_url     => nil,
+        #  :height           => params[:maxheight],
+        #  :width            => params[:maxwidth],
+        #  :display_language => nil,
+        #  :html             => embed_html,
+        #}
+        @response = embed.as_json.to_json
         json_response
       end
       format.all do
