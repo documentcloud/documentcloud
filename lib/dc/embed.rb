@@ -53,9 +53,13 @@ module DC
     def template
       unless @template
         @template = ERB.new(File.read(@template_path))
-        #template.location = @template_path # uncomment this once deployed onto Ruby 2.2
+        #@template.location = @template_path # uncomment this once deployed onto Ruby 2.2
       end
       @template
+    end
+    
+    def render(data, options)
+      template.result(binding)
     end
     
     def content_markup
@@ -82,7 +86,7 @@ module DC
       }
       embed_data = Hash[embed_data.reject { |k, v| v.nil? }]
       
-      template.result(binding)
+      render(embed_data, template_options)
     end
     
     def bootstrap_markup
