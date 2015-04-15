@@ -97,4 +97,28 @@ module DC
       [bootstrap_markup, content_markup].join("\n")
     end
   end
+  
+  class OEmbed < Embed
+    def bootstrap_markup
+      @bootstrap_template_path = "#{Rails.root}/app/views/documents/loader.js.erb"
+      @bootstrap_template = ERB.new(File.read(@bootstrap_template_path))
+      #@template.location = @template_path # uncomment this once deployed onto Ruby 2.2
+      "<script>#{@bootstrap_template.result(binding)}</script>"
+    end
+    
+    def as_json
+      {
+        :type             => "rich",
+        :version          => "1.0",
+        :provider_name    => "DocumentCloud",
+        :provider_url     => DC.server_root,
+        :cache_age        => 300,
+        :resource_url     => nil,
+        :height           => @embed_config[:maxheight],
+        :width            => @embed_config[:maxwidth],
+        :display_language => nil,
+        :html             => code,
+      }
+    end
+  end
 end
