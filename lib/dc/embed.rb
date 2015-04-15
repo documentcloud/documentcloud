@@ -66,18 +66,19 @@ module DC
       }
       embed_data = {
         :container        => @embed_config[:container]         || template_options[:default_container_id],
-        :zoom             => @embed_config[:zoom]              || nil,
-        :search           => @embed_config[:search]            || nil,
         :showAnnotations  => @embed_config[:notes]             || nil,
-        :sidebar          => @embed_config[:sidebar]           || nil,
-        :text             => @embed_config[:text]              || nil,
-        :pdf              => @embed_config[:pdf]               || nil,
-        :responsive       => @embed_config[:responsive]        || nil,
         :responsiveOffset => @embed_config[:responsive_offset] || nil,
         :page             => @embed_config[:default_page]      || nil,
         :note             => @embed_config[:default_note]      || nil,
         :height           => @embed_config[:maxheight]         || nil,
         :width            => @embed_config[:maxwidth]          || nil,
+        # all of the options below are passthrough.
+        :zoom             => @embed_config[:zoom]              || nil,
+        :search           => @embed_config[:search]            || nil,
+        :sidebar          => @embed_config[:sidebar]           || nil,
+        :text             => @embed_config[:text]              || nil,
+        :pdf              => @embed_config[:pdf]               || nil,
+        :responsive       => @embed_config[:responsive]        || nil,
       }
       embed_data = Hash[embed_data.reject { |k, v| v.nil? }]
       
