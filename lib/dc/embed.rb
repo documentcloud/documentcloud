@@ -29,7 +29,7 @@ Embed strategy is the manner in which the embed code is introduced to the web pa
 =end
 module DC
   class Embed
-    attr_accessor :strategy, :dom_mechanism
+    attr_accessor :strategy, :dom_mechanism, :template
     attr_reader   :resource, :embed_config
     
     def initialize(resource, embed_config={}, options={})
@@ -45,6 +45,17 @@ module DC
       @embed_config  = embed_config
       @strategy      = options[:strategy]      || :server_side
       @dom_mechanism = options[:dom_mechanism] || :direct
+
+      @template_path = options[:template_path] || "#{Rails.root}/app/views/documents/_embed_code.html.erb"
+      @template      = options[:template]
+    end
+    
+    def template
+      unless @template
+        @template = ERB.new(File.read(@template_path))
+        #template.location = @template_path # uncomment this once deployed onto Ruby 2.2
+      end
+      @template
     end
     
     def content_markup
@@ -69,8 +80,8 @@ module DC
         :width            => @embed_config[:maxwidth]          || nil,
       }
       embed_data = Hash[embed_data.reject { |k, v| v.nil? }]
-
-      ERB.new(File.read("#{Rails.root}/app/views/documents/_embed_code.html.erb")).result(binding)
+      
+      template.result(binding)
     end
     
     def bootstrap_markup
