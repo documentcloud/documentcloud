@@ -1,7 +1,6 @@
 <% if template_options[:use_default_container] %>
-  <div id="<%= template_options[:default_container_id] %>" class="DV-container"></div>
+<div id="<%= template_options[:default_container_id] %>" class="DV-container"></div>
 <% end %>
-<script src="//s3.amazonaws.com/s3.documentcloud.org/viewer/loader.js"></script>
 <script type="text/javascript">
   DV.load("<%= template_options[:resource_js_url] %>", {
     <%= embed_data.map{ |k,v| "'#{k}': '#{v}'"}.join(",\n") %>
