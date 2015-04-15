@@ -69,7 +69,7 @@ module DC
         :resource_js_url       => @resource.url
       }
       embed_data = {
-        :container        => @embed_config[:container]         || template_options[:default_container_id],
+        :container        => '#' + (@embed_config[:container]  || template_options[:default_container_id]),
         :showAnnotations  => @embed_config[:notes]             || nil,
         :responsiveOffset => @embed_config[:responsive_offset] || nil,
         :page             => @embed_config[:default_page]      || nil,
