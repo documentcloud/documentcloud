@@ -1,15 +1,15 @@
-<% if template_options[:use_default_container] %>
-<div id="<%= template_options[:default_container_id] %>" class="DV-container"></div>
+<% if options[:use_default_container] %>
+<div id="<%= options[:default_container_id] %>" class="DV-container"></div>
 <% end %>
 <script type="text/javascript">
-  DV.load("<%= template_options[:resource_js_url] %>", {
-    <%= embed_data.map{ |k,v| "'#{k}': '#{v}'"}.join(",\n") %>
+  DV.load("<%= options[:resource_js_url] %>", {
+    <%= data.map{ |k,v| "'#{k}': '#{v}'"}.join(",\n") %>
   });
 </script>
-<% if embed_data[:pdf] %>
+<% if data[:pdf] %>
 <noscript>
-  <a href="<%#= template_options[:pdf_url] %>"><%#= template_options[:title] %> (PDF)</a>
+  <a href="<%#= options[:pdf_url] %>"><%#= options[:title] %> (PDF)</a>
   <br>
-  <a href="<%#= template_options[:full_text_url] %>"><%#= template_options[:title] %> (Text)</a>
+  <a href="<%#= options[:full_text_url] %>"><%#= options[:title] %> (Text)</a>
 </noscript>
 <% end %>
