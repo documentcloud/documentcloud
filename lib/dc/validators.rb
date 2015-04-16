@@ -9,7 +9,11 @@ module DC
     SUBDOMAIN = /\A[0-9a-z\-_]+\Z/i
 
     # Proper slugs are alphanumeric, lowercased, with dashes.
-    SLUG = /\A[a-z0-9\-]+\Z/
+    SLUG_TEXT = /\A[a-z0-9\-]+\Z/
+
+    # Full document ID slugs must start with the numeric ID and contain
+    # the alphanumeric slug
+    SLUG = /\A[0-9]+-[a-z0-9-]+\Z/
 
     # IP Validation Regex.
     IP = /\A(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\Z/

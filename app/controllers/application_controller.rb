@@ -146,7 +146,11 @@ class ApplicationController < ActionController::Base
   end
 
   def bad_request
-    render :file => "#{Rails.root}/public/400.html", :status => 400
+    respond_to do |format|
+      format.js  { json({:error=>"Bad Request"}, 400) }
+      format.json{ json({:error=>"Bad Request"}, 400) }
+      format.any { render :file => "#{Rails.root}/public/400.html", :status => 400 }
+    end
     false
   end
 
@@ -177,6 +181,17 @@ class ApplicationController < ActionController::Base
       format.js  { json({:error=>"Internal Server Error (sorry)"}, 500) }
       format.json{ json({:error=>"Internal Server Error (sorry)"}, 500) }
       format.any { render :file => "#{Rails.root}/public/500.html", :status => 500 }
+    end
+    false
+  end
+
+  # A resource was requested in a way we can't fulfill (e.g. an oEmbed
+  # request for XML when we only provide JSON)
+  def not_implemented
+    respond_to do |format|
+      format.js  { json({:error=>"Not Implemented"}, 501) }
+      format.json{ json({:error=>"Not Implemented"}, 501) }
+      format.any { render :file => "#{Rails.root}/public/501.html", :status => 501 }
     end
     false
   end

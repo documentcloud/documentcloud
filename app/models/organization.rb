@@ -12,7 +12,7 @@ class Organization < ActiveRecord::Base
   has_many :documents
   validates :name, :slug, :presence=>true
   validates :name, :slug, :uniqueness=>true
-  validates :slug, :format => { :with => DC::Validators::SLUG }
+  validates :slug, :format => { :with => DC::Validators::SLUG_TEXT }
 
   validates :language, :inclusion=>{ :in => DC::Language::USER,
     :message => "must be one of: (#{DC::Language::USER.join(', ')})" }

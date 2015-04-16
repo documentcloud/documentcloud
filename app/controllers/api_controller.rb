@@ -19,12 +19,6 @@ class ApiController < ApplicationController
     redirect_to '/help/api'
   end
 
-  def cors_options
-    return bad_request unless params[:allowed_methods]
-    maybe_set_cors_headers
-    render :nothing => true
-  end
-
   def search
     opts = API_OPTIONS.merge(pick(params, :sections, :annotations, :entities, :mentions, :data))
     if opts[:mentions] &&= opts[:mentions].to_i
@@ -176,12 +170,55 @@ class ApiController < ApplicationController
     json nil
   end
 
+  def oembed
+    # get the target url and turn it into a manipulable object.
+    url = URI.parse(CGI.unescape(params[:url])) rescue nil
+    return bad_request if params[:url].blank? or !url
+
+    # Use the rails router to identify whether a URL is an embeddable resource
+    resource_params = Rails.application.routes.recognize_path(url.path) rescue nil
+    return not_found unless url.host == DC::CONFIG['server_root'] and resource_embeddable?(resource_params)
+
+    # create a seralizer mock/class/struct for temporary use
+    resource_seralizer_klass = Struct.new(:id, :url, :type)
+    resource_url = url_for(resource_params.merge(:format => 'js'))
+    resource = resource_seralizer_klass.new(resource_params[:id], resource_url, :document)
+    
+    config = pick(params, *DC::Embed.embed_klass(resource.type).config_keys)
+    embed = DC::Embed.embed_for(resource, config, {:strategy => :oembed})
+    
+    respond_to do |format|
+      format.json do
+        @response = embed.as_json.to_json
+        json_response
+      end
+      format.all do
+        # Per the oEmbed spec, unrecognized formats should trigger a 501
+        not_implemented
+      end
+    end
+  end
+
+  def cors_options
+    return bad_request unless params[:allowed_methods]
+    maybe_set_cors_headers
+    render :nothing => true
+  end
+
   # Allow logging of all actions, apart from secure uploads.
   def logger
     params[:secure] ? nil : super
   end
 
   private
+
+  def resource_embeddable?(resource_params)
+    resource_params and
+    resource_params[:controller] == "documents" and
+    resource_params[:id] and
+    resource_params[:id] =~ DC::Validators::SLUG # and
+    # Document.accessible(nil, nil).exists?(params[:id].to_i) 
+  end
 
   def secure_silence_logs
     if params[:secure]

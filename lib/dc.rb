@@ -11,6 +11,7 @@ require 'dc/zip_utils'
 require 'dc/import'
 require 'dc/i18n'
 require 'dc/urls'
+require 'dc/embed'
 
 module DC
 end
