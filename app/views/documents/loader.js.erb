@@ -21,12 +21,12 @@
 
   /*@cc_on
   /*@if (@_jscript_version < 5.8)
-    loadCSS('<%= asset_root %>/viewer/viewer.css');
+    loadCSS("<%= asset_root %>/viewer/viewer.css");
   @else @*/
-    loadCSS('<%= asset_root %>/viewer/viewer-datauri.css');
+    loadCSS("<%= asset_root %>/viewer/viewer-datauri.css");
   /*@end
   @*/
-  loadCSS('<%= asset_root %>/viewer/printviewer.css', 'print');
+  loadCSS("<%= asset_root %>/viewer/printviewer.css", 'print');
 
   /* Record the fact that the viewer is loaded. */
   DV.loaded = true;
