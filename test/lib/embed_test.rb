@@ -1,19 +1,19 @@
 require_relative '../test_helper'
 require 'pry'
 
-describe DC::Embed do
+describe DC::Embed::Document do
   
   let(:resource) { Struct.new(:id, :url).new("1235", "https://lol.wat/1235") }
   
   it "should require a resource" do
-    Proc.new{ DC::Embed.new(nil, {}) }.must_raise ArgumentError
-    Proc.new{ DC::Embed.new({}, {})  }.must_raise ArgumentError
+    Proc.new{ DC::Embed::Document.new(nil, {}) }.must_raise ArgumentError
+    Proc.new{ DC::Embed::Document.new({}, {})  }.must_raise ArgumentError
 
-    DC::Embed.new(resource, {}).must_be_kind_of DC::Embed
+    DC::Embed::Document.new(resource, {}).must_be_kind_of DC::Embed::Document
   end
   
   it "should output HTML markup" do
-    embed_code = Nokogiri::HTML(DC::Embed.new(resource, {}).code)
+    embed_code = Nokogiri::HTML(DC::Embed::Document.new(resource, {}).code)
     embed_code.css("#DV-viewer-#{resource.id}").wont_be_empty
     
     # Embed code should include two script tags 
