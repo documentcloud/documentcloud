@@ -27,4 +27,13 @@ describe DC::Embed::Document do
 
   it "should output an oembed response as json"
   it "should output a JST template"
+
+  it "should configure embed code based on config settings" do
+    config = {
+      :sidebar => false
+    }
+    embed = DC::Embed::Document.new(resource, config)
+    embed.embed_config[:sidebar].must_equal false
+    embed.code.must_match /sidebar/
+  end
 end

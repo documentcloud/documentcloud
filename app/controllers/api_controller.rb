@@ -184,7 +184,7 @@ class ApiController < ApplicationController
     resource_url = url_for(resource_params.merge(:format => 'js'))
     resource = resource_seralizer_klass.new(resource_params[:id], resource_url, :document)
     
-    config = pick(params, DC::Embed.embed_klass(resource).config_keys)
+    config = pick(params, *DC::Embed.embed_klass(resource.type).config_keys)
     embed = DC::Embed.embed_for(resource, config, {:strategy => :oembed})
     
     respond_to do |format|

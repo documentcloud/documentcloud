@@ -70,6 +70,7 @@ module DC
     end
     
     def self.embed_klass(type)
+      raise ArgumentError, "#{type} is not a recognized resource type" unless EMBEDDABLE_RESOURCES.include? type
       EMBED_RESOURCE_MAP[type]
     end
     
@@ -161,19 +162,19 @@ module DC
         }
         embed_data = {
           :container        => '#' + (@embed_config[:container]  || template_options[:default_container_id]),
-          :showAnnotations  => @embed_config[:notes]             || nil,
-          :responsiveOffset => @embed_config[:responsive_offset] || nil,
-          :page             => @embed_config[:default_page]      || nil,
-          :note             => @embed_config[:default_note]      || nil,
-          :height           => @embed_config[:maxheight]         || nil,
-          :width            => @embed_config[:maxwidth]          || nil,
+          :showAnnotations  => @embed_config.fetch(:notes,              nil),
+          :responsiveOffset => @embed_config.fetch(:responsive_offset,  nil),
+          :page             => @embed_config.fetch(:default_page,       nil),
+          :note             => @embed_config.fetch(:default_note,       nil),
+          :height           => @embed_config.fetch(:maxheight,          nil),
+          :width            => @embed_config.fetch(:maxwidth,           nil),
           # all of the options below are passthrough.
-          :zoom             => @embed_config[:zoom]              || nil,
-          :search           => @embed_config[:search]            || nil,
-          :sidebar          => @embed_config[:sidebar]           || nil,
-          :text             => @embed_config[:text]              || nil,
-          :pdf              => @embed_config[:pdf]               || nil,
-          :responsive       => @embed_config[:responsive]        || nil,
+          :zoom             => @embed_config.fetch(:zoom,       nil),
+          :search           => @embed_config.fetch(:search,     nil),
+          :sidebar          => @embed_config.fetch(:sidebar,    nil),
+          :text             => @embed_config.fetch(:text,       nil),
+          :pdf              => @embed_config.fetch(:pdf,        nil),
+          :responsive       => @embed_config.fetch(:responsive, nil),
         }
         embed_data = Hash[embed_data.reject { |k, v| v.nil? }]
       
