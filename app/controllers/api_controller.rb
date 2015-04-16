@@ -171,61 +171,23 @@ class ApiController < ApplicationController
   end
 
   def oembed
-
+    # get the target url and turn it into a manipulable object.
     url = URI.parse(CGI.unescape(params[:url])) rescue nil
     return bad_request if params[:url].blank? or !url
 
+    # Use the rails router to identify whether a URL is an embeddable resource
     resource_params = Rails.application.routes.recognize_path(url.path) rescue nil
     return not_found unless url.host == DC::CONFIG['server_root'] and resource_embeddable?(resource_params)
 
-    # This block of variables are used in the embed code template
-    document_id = resource_params[:id]
-    @template_options = template_options = {
-      :use_default_container => params[:container].blank? || params[:container].nil?,
-      :default_container_id  => "DV-viewer-#{document_id}",
-      :resource_js_url       => url_for(resource_params.merge(:format => 'js'))
-    }
-    embed_data = {
-      :container        => params[:container] || template_options[:default_container_id],
-      :zoom             => params[:zoom] || nil,
-      :search           => params[:search] || nil,
-      :showAnnotations  => params[:notes] || nil,
-      :sidebar          => params[:sidebar] || nil,
-      :text             => params[:text] || nil,
-      :pdf              => params[:pdf] || nil,
-      :responsive       => params[:responsive] || nil,
-      :responsiveOffset => params[:responsive_offset] || nil,
-      :page             => params[:default_page] || nil,
-      :note             => params[:default_note] || nil,
-      :height           => params[:maxheight] || nil,
-      :width            => params[:maxwidth] || nil,
-    }
-    embed_data = Hash[embed_data.reject { |k, v| v.nil? }]
-    #embed_html = ERB.new(File.read("#{Rails.root}/app/views/documents/_embed_code.html.erb")).result(binding)
-
     # create a seralizer mock/class/struct for temporary use
     resource_seralizer_klass = Struct.new(:id, :url)
-    # get the numeric id for the resource.
-    resource_numeric_id = document_id.split("-").first
     resource_url = url_for(resource_params.merge(:format => 'js'))
-    resource = resource_seralizer_klass.new(resource_numeric_id, resource_url)
+    resource = resource_seralizer_klass.new(resource_params[:id], resource_url)
     
     embed = DC::OEmbed.new(resource)
     
     respond_to do |format|
       format.json do
-        #@response = {
-        #  :type             => "rich",
-        #  :version          => "1.0",
-        #  :provider_name    => "DocumentCloud",
-        #  :provider_url     => DC.server_root,
-        #  :cache_age        => 300,
-        #  :resource_url     => nil,
-        #  :height           => params[:maxheight],
-        #  :width            => params[:maxwidth],
-        #  :display_language => nil,
-        #  :html             => embed_html,
-        #}
         @response = embed.as_json.to_json
         json_response
       end
