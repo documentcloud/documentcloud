@@ -180,12 +180,12 @@ class ApiController < ApplicationController
     return not_found unless url.host == DC::CONFIG['server_root'] and resource_embeddable?(resource_params)
 
     # create a seralizer mock/class/struct for temporary use
-    resource_seralizer_klass = Struct.new(:id, :url)
+    resource_seralizer_klass = Struct.new(:id, :url, :type)
     resource_url = url_for(resource_params.merge(:format => 'js'))
-    resource = resource_seralizer_klass.new(resource_params[:id], resource_url)
+    resource = resource_seralizer_klass.new(resource_params[:id], resource_url, :document)
     
-    #config = pick(DC::Embed::DocumentOEmbed.config_keys, params)
-    embed = DC::Embed::Document.new(resource, {}, {:strategy => :oembed})
+    config = pick(params, DC::Embed.embed_klass(resource).config_keys)
+    embed = DC::Embed.embed_for(resource, config, {:strategy => :oembed})
     
     respond_to do |format|
       format.json do

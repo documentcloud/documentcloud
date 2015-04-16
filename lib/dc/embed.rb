@@ -57,26 +57,35 @@ module DC
     }
     EMBEDDABLE_MODELS = EMBEDDABLE_MODEL_MAP.keys
     
-    def self.embed_for(resource, config={}, options={})
-      resource_type = case
+    def self.embed_type(resource)
+      case
       when EMBEDDABLE_MODELS.any?{ |model_klass| resource.kind_of? model_klass }
         EMBEDDABLE_MODEL_MAP[resource.class]
-      when EMBEDDABLE_RESOURCES.any?{ |embeddable_resource| resource.type == embeddable_resource }
+      when EMBEDDABLE_RESOURCES.include?(resource.type)
         resource.type
       else
         # set up a system to actually register types of things as embeddable
         raise ArgumentError, "#{resource} is not registered as an embeddable resource"
       end
-      EMBED_RESOURCE_MAP[resource_type].new(resource,config, options)
-    end
-
-    def self.code(resource, config, options)
-      self.embed_for(resource, config, options).code
     end
     
+    def self.embed_klass(type)
+      EMBED_RESOURCE_MAP[type]
+    end
+    
+    def self.embed_for(resource, config={}, options={})
+      self.embed_klass(self.embed_type(resource)).new(resource, config, options)
+    end
+
     class Base
       attr_accessor :strategy, :dom_mechanism, :template
       attr_reader   :resource, :embed_config
+      
+      CONFIG_KEYS = []
+      
+      def self.config_keys
+        self::CONFIG_KEYS
+      end
       
       def initialize(*args)
         raise NotImplementedError
@@ -109,6 +118,11 @@ module DC
     end
     
     class Document < Base
+      CONFIG_KEYS = [:default_page, :default_note, 
+                     :maxheight, :maxwidth, :zoom, 
+                     :notes, :search, :sidebar, :text, :pdf, 
+                     :responsive, :responsive_offset]
+      
       def initialize(resource, embed_config={}, options={})
         # resource should be a wrapper object around a model 
         # which plucks out relevant metadata
