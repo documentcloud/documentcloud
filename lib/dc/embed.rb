@@ -120,7 +120,7 @@ module DC
         end
         @resource      = resource
         @embed_config  = embed_config
-        @strategy      = options[:strategy]      || :server_side
+        @strategy      = options[:strategy]      || :literal
         @dom_mechanism = options[:dom_mechanism] || :direct
 
         @template_path = options[:template_path] || "#{Rails.root}/app/views/documents/_embed_code.html.erb"
@@ -167,35 +167,74 @@ module DC
       end
     
       def bootstrap_markup
-        '<script src="//s3.amazonaws.com/s3.documentcloud.org/viewer/loader.js"></script>'
+        @strategy == :oembed ? inline_loader : static_loader
       end
-    
-      def code
-        [bootstrap_markup, content_markup].join("\n")
+      
+      def inline_loader
+        asset_root = DC.cdn_root(:agnostic => true)
+        <<-SCRIPT
+        <script>
+          (function() {
+            /* If the viewer is already loaded, don't repeat the process. */
+            if (window.DV) { if (window.DV.loaded) { return; } }
+
+            window.DV = window.DV || {};
+            window.DV.recordHit = "#{DC.server_root(:agnostic=>true)}/pixel.gif";
+
+            var loadCSS = function(url, media) {
+              var link   = document.createElement('link');
+              link.rel   = 'stylesheet';
+              link.type  = 'text/css';
+              link.media = media || 'screen';
+              link.href  = url;
+              var head   = document.getElementsByTagName('head')[0];
+              head.appendChild(link);
+            };
+
+            /*@cc_on
+            /*@if (@_jscript_version < 5.8)
+              loadCSS("#{asset_root}/viewer/viewer.css");
+            @else @*/
+              loadCSS("#{asset_root}/viewer/viewer-datauri.css");
+            /*@end
+            @*/
+            loadCSS("#{asset_root}/viewer/printviewer.css", 'print');
+
+            /* Record the fact that the viewer is loaded. */
+            DV.loaded = true;
+          })();
+        </script>
+        <script type="text/javascript" src="#{asset_root}/viewer/viewer.js"></script>
+        SCRIPT
       end
-    end
-  
-    class DocumentOEmbed < Document
-      def bootstrap_markup
-        @bootstrap_template_path = "#{Rails.root}/app/views/documents/loader.js.erb"
-        @bootstrap_template = ERB.new(File.read(@bootstrap_template_path))
-        #@template.location = @template_path # uncomment this once deployed onto Ruby 2.2
-        "<script>#{@bootstrap_template.result(binding)}</script>"
+      
+      def static_loader
+        %(<script type="text/javascript" src="#{DC.cdn_root(:agnostic => true)}/viewer/loader.js"></script>)
       end
-    
+      
+      # intended for use in the static deployment to s3.
+      def self.static_loader(options={})
+        template_path = "#{Rails.root}/app/views/documents/loader.js.erb"
+        ERB.new(File.read(template_path)).result(binding)
+      end
+      
       def as_json
-        {
-          :type             => "rich",
-          :version          => "1.0",
-          :provider_name    => "DocumentCloud",
-          :provider_url     => DC.server_root,
-          :cache_age        => 300,
-          :resource_url     => nil,
-          :height           => @embed_config[:maxheight],
-          :width            => @embed_config[:maxwidth],
-          :display_language => nil,
-          :html             => code,
-        }
+        if @strategy == :oembed
+          {
+            :type             => "rich",
+            :version          => "1.0",
+            :provider_name    => "DocumentCloud",
+            :provider_url     => DC.server_root,
+            :cache_age        => 300,
+            :resource_url     => nil,
+            :height           => @embed_config[:maxheight],
+            :width            => @embed_config[:maxwidth],
+            :display_language => nil,
+            :html             => code,
+          }
+        else
+          @resource.as_json.merge(:html => code)
+        end
       end
     end
   end
