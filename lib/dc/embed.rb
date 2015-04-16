@@ -19,12 +19,21 @@ The mechanism used for containing the contents of an embed.  Effectively there a
 * in-DOM (direct)
 * iFrame
 
-## Strategy
+## Embedding Context
 
-Embed strategy is the manner in which the embed code is introduced to the web page it has been instructed to load on (either contained in the markup sent to the browser, or inserted dynamically via javascript).
+Embedding context is the manner in which the embed code is introduced to the web page it 
+has been instructed to load on (either contained in the markup sent to the browser, or 
+inserted dynamically via javascript).
+
+The embedding context is generally not known to the embed generator.
 
 * Embedded in markup (server_side)
 * Client-side injection (client_side)
+
+## Request Strategy
+
+* oEmbed
+* Literal
 
 =end
 module DC
