@@ -56,8 +56,8 @@ module DC
       ::Annotation => :note,
     }
     EMBEDDABLE_MODELS = EMBEDDABLE_MODEL_MAP.keys
-
-    def self.code(resource, config)
+    
+    def self.embed_for(resource, config={}, options={})
       resource_type = case
       when EMBEDDABLE_MODELS.any?{ |model_klass| resource.kind_of? model_klass }
         EMBEDDABLE_MODEL_MAP[resource.class]
@@ -67,8 +67,11 @@ module DC
         # set up a system to actually register types of things as embeddable
         raise ArgumentError, "#{resource} is not registered as an embeddable resource"
       end
-      embed_klass = EMBED_RESOURCE_MAP[resource_type]
-      embed_klass.new(resource, config).code
+      EMBED_RESOURCE_MAP[resource_type].new(resource,config, options)
+    end
+
+    def self.code(resource, config, options)
+      self.embed_for(resource, config, options).code
     end
     
     class Base
