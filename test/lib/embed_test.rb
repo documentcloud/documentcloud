@@ -43,7 +43,8 @@ describe DC::Embed::Document do
       :pdf               => true,
       :maxwidth          => 400,
       :maxheight         => 500,
-      :responsive_offset => 12
+      :responsive_offset => 12,
+      :container         => ".hi"
     }
     embed = DC::Embed::Document.new(resource, Hash[input_config.map{ |k,v| [k, v.to_s] }])
     

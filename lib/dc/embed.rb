@@ -120,24 +120,42 @@ module DC
     
     class Document < Base
       class Config
-        include Virtus.model{ |mod|
-          mod.coerce = true
-          mod.coercer.config.string.boolean_map = { 'false' => false, 'true' => true }
+        Boolean = Proc.new{ |value|
+          case
+          when (value.kind_of? TrueClass or value.kind_of? FalseClass); then value
+          when value == "true"; then true
+          when value == "false"; then false
+          else; value
+          end
         }
         
-        attribute :container,         String
-        attribute :default_page,      Integer
-        attribute :default_note,      Integer
-        attribute :maxheight,         Integer
-        attribute :maxwidth,          Integer
-        attribute :zoom,              Integer
-        attribute :notes,             Boolean
-        attribute :search,            Boolean
-        attribute :sidebar,           Boolean
-        attribute :text,              Boolean
-        attribute :pdf,               Boolean
-        attribute :responsive,        Boolean
-        attribute :responsive_offset, Integer
+        Integer = Proc.new { |value|
+          case
+          when value.kind_of?(Numeric); then value
+          when value =~ /\A[+-]?\d+\Z/; then value.to_i
+          when value =~ /\A[+-]?\d+\.\d+\Z/; then value.to_f
+          else; value
+          end
+        }
+        
+        String = Proc.new{ |value| value.to_s unless value.nil? }
+        
+        ATTRIBUTE_MAP = {
+          :container         => self::String,
+          :default_page      => self::Integer,
+          :default_note      => self::Integer,
+          :maxheight         => self::Integer,
+          :maxwidth          => self::Integer,
+          :zoom              => self::Integer,
+          :notes             => self::Boolean,
+          :search            => self::Boolean,
+          :sidebar           => self::Boolean,
+          :text              => self::Boolean,
+          :pdf               => self::Boolean,
+          :responsive        => self::Boolean,
+          :responsive_offset => self::Integer, }
+                 
+        KEYS = ATTRIBUTE_KEYS = ATTRIBUTE_MAP.keys
         
         NAME_MAP = {
           :notes             => :showAnnotations,
@@ -148,8 +166,21 @@ module DC
           :maxwidth          => :width,
         }
         
-        def self.keys
-          self.attribute_set.map(&:name)
+        def self.keys; KEYS; end
+        attr_reader *KEYS
+        def initialize(args={})
+          self.class.keys.each{ |attribute| self[attribute] = args[attribute] }
+        end
+        
+        def attributes
+          Hash[self.class.keys.map{ |attribute| [attribute, self[attribute]] }]
+        end
+        
+        def [](attribute); self.instance_variable_get("@#{attribute}"); end
+        
+        def []=(attribute, value)
+          raise ArgumentError unless KEYS.include? attribute
+          self.instance_variable_set("@#{attribute}", ATTRIBUTE_MAP[attribute].call(value))
         end
         
         def compact
@@ -206,7 +237,7 @@ module DC
           :resource_js_url       => @resource.url
         }
         
-        @embed_config.container ||= '#' + template_options[:default_container_id]
+        @embed_config[:container] ||= '#' + template_options[:default_container_id]
         render(@embed_config.dump, template_options)
       end
     
