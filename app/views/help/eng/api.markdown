@@ -18,6 +18,8 @@ DocumentCloud's API allows users to search, upload, edit, and organize documents
   * [List projects](#get-projects)  
   * [Update](#update-project)  
   * [Delete](#delete-project)  
+* oEmbed methods:  
+  * [Documents](#oembed-documents)  
 
 <a name="guidelines"></a>
 # API Guidelines and Terms of Service
@@ -250,6 +252,37 @@ Update an existing project for the current authenticated account. You can set th
 ## DELETE /api/projects/[id].json
 
 Delete a project that belongs to the current authenticated account.
+
+# oEmbed Methods
+
+<a name="oembed-documents"></a>
+## GET /api/oembed.json
+
+Embed a document.
+
+Parameter        | Description           |  Example
+-----------------|-----------------------|--------------
+url              | (required) URL-escaped document to embed     | https%3A//www.documentcloud.org/ documents/doc-name.html
+maxheight        | (optional) The viewer's height (pixels)    | 750
+maxwidth         | (optional) The viewer's width (pixels)     | 600
+container        | (optional) Specify the DOM container in which to open the viewer | #my-document-div
+notes            | (optional) Enable the notes tab   | true (default)
+text             | (optional) Enable the text tab   | true (default)
+default_note     | (optional) Open the document to a note. An integer<br/> representing the note ID | 214279
+zoom             | (optional) Show the zoom slider    | true (default)
+search           | (optional) Show the search box    | true (default)
+sidebar          | (optional) Show the sidebar    | true (default)
+pdf              | (optional) Include a link to the original PDF    | true (default)
+responsive       | (optional) Make the viewer responsive    | true (default)
+responsive_offset| (optional) Specify header height (pixels)    | 4
+default_page     | (optional) Open the document to a specified page   | 3
+
+
+### Example
+
+    /api/oembed.json?url=https%3A//www.documentcloud.org/documents/doc-name.html&responsive=true
+
+# Questions?
 
 Still have questions about the API? Don't hesitate to [contact us][].
 
