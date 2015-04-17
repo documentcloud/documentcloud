@@ -259,18 +259,18 @@ module DC
             var pendingQueue = window.DV._documentsWaitingForAppLoad = [];
             window.DV.load = function(resource, options) {
               pendingQueue.push({url: resource, options: options});
-            }
+            };
             
             var eventuallyLoadDocuments = function(){
               if (window.DV.viewers) {
-                for (i=0; i<pendingQueue.length; i++){ 
+                for (var i=0; i<pendingQueue.length; i++){ 
                   resource = pendingQueue[i];
                   DV.load(resource.url, resource.options);
                 }
               } else {
                 setTimeout(eventuallyLoadDocuments, 500);
               }
-            }
+            };
             eventuallyLoadDocuments();
 
             var loadCSS = function(url, media) {
