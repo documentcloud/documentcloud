@@ -1,6 +1,28 @@
+# The DocumentCloud API
+
+DocumentCloud's API allows users to search, upload, edit, and organize documents. In addition, an oEmbed service provides ways for developers to xxx.
+
+## Contents
+
+* General:  
+  * [API Guidelines and Terms of Service](#guidelines)  
+* Document methods:  
+  * [Search](#search-documents)  
+  * [Upload](#upload-documents)  
+  * [Get](#get-document)  
+  * [Update](#update-document)  
+  * [Delete](#delete-document)  
+  * [Entities](#get-entities)  
+* Project methods:  
+  * [Create](#create-project)  
+  * [List projects](#get-projects)  
+  * [Update](#update-project)  
+  * [Delete](#delete-project)  
+
+<a name="guidelines"></a>
 # API Guidelines and Terms of Service
 
-DocumentCloud's API allows users to search, upload, edit, and organize documents. No API key is required, so performing searches directly from JavaScript is fair game. Please be considerate, and don't hammer our servers. _Restrictions on the use of the DocumentCloud API do not apply to participating organizations working with documents uploaded by their own users._
+No API key is required, so performing searches directly from JavaScript is fair game. Please be considerate and don't hammer our servers. _Restrictions on the use of the DocumentCloud API do not apply to participating organizations working with documents uploaded by their own users._
 
  * You may not recreate DocumentCloud.org in its entirety or build an application that simply displays the complete set of documents. You may not build an application that displays the document set of a contributing organization.
 
@@ -12,6 +34,9 @@ DocumentCloud's API allows users to search, upload, edit, and organize documents
 
 _We reserve the right to revise these guidelines. If you violate the spirit of these terms, especially if you use the API to systematically access and reprint documents that you or your newsroom didn't contribute, expect to be blocked without advance warning._
 
+# Document Methods
+
+<a name="search-documents"></a>
 ## GET /api/search.json
 
 Search the catalog of public documents. This method can be used to scrape the public documents from your account for embedding purposes or to enable searches of your archive of uploaded documents directly from your own website. See our <a href="searching">search documentation</a> for help with search queries.
@@ -58,6 +83,7 @@ mentions      | include highlighted mentions of the search phrase | 3 (not prese
 
  * If you'd like to get back search results with more than 10 documents on a page, pass the `per_page` parameter. A maximum of 1,000 documents will be returned at a time.
 
+<a name="upload-documents"></a>
 ## POST /api/upload.json
 
 Our API for bulk uploads exposes the same method that we use internally, but wraps it in basic authentication over HTTPS. Documents will be uploaded into the authenticated account.
@@ -95,6 +121,7 @@ Using Ruby's RestClient library you could do:
       :data   => {"date" => "2009-04-01", "exhibit" => "E1146"}
     )
 
+<a name="get-document"></a>
 ## GET /api/documents/[id].json
 
 Retrieve the canonical JSON representation of a particular document, as specified by the document id (usually something like: **218-madoff-sec-report**).
@@ -125,6 +152,7 @@ Retrieve the canonical JSON representation of a particular document, as specifie
       "annotations":[]
     }}
 
+<a name="update-document"></a>
 ## PUT /api/documents/[id].json
 
 Update a document's **title**, **source**, **description**, **related article**, **access level**, or **data** with this method. Reference your document by its id (usually something like: **218-madoff-sec-report**).
@@ -145,6 +173,7 @@ The response value of this method will be the JSON representation of your docume
 
  * If your HTTP client is unable to create a PUT request, you can send it as a POST and add an extra parameter: `_method=put`
 
+<a name="delete-document"></a>
 ## DELETE /api/documents/[id].json
 
 Delete a document from DocumentCloud. You must be authenticated as the owner of the document for this method to work.
@@ -153,6 +182,7 @@ Delete a document from DocumentCloud. You must be authenticated as the owner of 
 
  * If your HTTP client is unable to create a DELETE request, you can send it as a POST, and add an extra parameter: `_method=delete`
 
+<a name="get-entities"></a>
 ## GET /api/documents/[id]/entities.json
 
 Retrieve the JSON for all of the entities that a particular document contains, specified by the document id (usually something like: **218-madoff-sec-report**). Entities are ordered by their relevance to the document as determined by OpenCalais.
@@ -175,6 +205,9 @@ Retrieve the JSON for all of the entities that a particular document contains, s
       }
     }
 
+# Project Methods
+
+<a name="create-project"></a>
 ## POST /api/projects.json
 
 Create a new project for the authenticated account, with a title, optional description, and optional document ids.
@@ -189,6 +222,7 @@ document_ids | (optional) a list of documents that the project contains, by id |
 
  * Note that you have to use the convention for passing an array of strings: `?document_ids[]=28-boumediene&document_ids[]=207-academy&document_ids[]=30-insider-trading`
 
+<a name="get-projects"></a>
 ## GET /api/projects.json
 
 Retrieve a list of project names and document ids. You must use basic authentication over HTTPS in order to make this request. The projects listed belong to the authenticated account.
@@ -207,10 +241,12 @@ Retrieve a list of project names and document ids. You must use basic authentica
       ...
     ]}
 
+<a name="update-project"></a>
 ## PUT /api/projects/[id].json
 
 Update an existing project for the current authenticated account. You can set the title, description or list of documents. See POST, above.
 
+<a name="delete-project"></a>
 ## DELETE /api/projects/[id].json
 
 Delete a project that belongs to the current authenticated account.
