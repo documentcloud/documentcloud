@@ -2,14 +2,7 @@
 <div id="<%= options[:default_container_id] %>" class="DV-container"></div>
 <% end %>
 <script type="text/javascript">
-  var eventuallyLoadDocument = function(){ 
-    if (DV && DV.load) {
-      DV.load("<%= options[:resource_js_url] %>", <%= data.to_json %>);
-    } else {
-      setTimeout(eventuallyLoadDocument, 500);
-    }
-  }
-  eventuallyLoadDocument();
+  DV.load("<%= options[:resource_js_url] %>", <%= data.to_json %>);
 </script>
 <% if data[:pdf] %>
 <noscript>
