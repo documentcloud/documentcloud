@@ -60,6 +60,10 @@ GEM
     aws-sdk-v1 (1.63.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     bcrypt (3.1.10)
     builder (3.2.2)
     celluloid (0.16.0)
@@ -74,10 +78,15 @@ GEM
       sinatra
       thin (>= 1.2.4)
     coderay (1.1.0)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
     cssmin (1.0.3)
     curb (0.8.6)
     daemons (1.1.9)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
     docsplit (0.8.0.alpha1)
+    equalizer (0.0.9)
     erubis (2.7.0)
     eventmachine (1.0.7)
     extlib (0.9.16)
@@ -123,6 +132,7 @@ GEM
     hike (1.2.3)
     hitimes (1.2.2)
     i18n (0.7.0)
+    ice_nine (0.11.1)
     iconv (1.0.4)
     jsmin (1.0.1)
     json (1.8.2)
@@ -270,6 +280,11 @@ GEM
       hitimes
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    virtus (1.0.5)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0, >= 0.0.3)
+      equalizer (~> 0.0, >= 0.0.9)
 
 PLATFORMS
   ruby
@@ -313,3 +328,4 @@ DEPENDENCIES
   sunspot_matchers
   sunspot_rails (~> 2.1.0)
   sunspot_solr (~> 2.1.0)
+  virtus (~> 1.0.5)

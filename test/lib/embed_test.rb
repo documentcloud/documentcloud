@@ -36,4 +36,24 @@ describe DC::Embed::Document do
     embed.embed_config[:sidebar].must_equal false
     embed.code.must_match /sidebar/
   end
+  
+  it "should convert string values to their literal values" do
+    input_config = {
+      :sidebar           => false,
+      :pdf               => true,
+      :maxwidth          => 400,
+      :maxheight         => 500,
+      :responsive_offset => 12
+    }
+    embed = DC::Embed::Document.new(resource, Hash[input_config.map{ |k,v| [k, v.to_s] }])
+    
+    config = embed.embed_config
+    input_config.keys.each do |key|
+      config[key].must_equal input_config[key]
+    end
+  end
+  
+  it "should output to keys the viewer recognizes" do
+    
+  end
 end

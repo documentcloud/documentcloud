@@ -119,10 +119,55 @@ module DC
     end
     
     class Document < Base
-      CONFIG_KEYS = [:default_page, :default_note, 
-                     :maxheight, :maxwidth, :zoom, 
-                     :notes, :search, :sidebar, :text, :pdf, 
-                     :responsive, :responsive_offset]
+      class Config
+        include Virtus.model{ |mod|
+          mod.coerce = true
+          mod.coercer.config.string.boolean_map = { 'false' => false, 'true' => true }
+        }
+        
+        attribute :container,         String
+        attribute :default_page,      Integer
+        attribute :default_note,      Integer
+        attribute :maxheight,         Integer
+        attribute :maxwidth,          Integer
+        attribute :zoom,              Integer
+        attribute :notes,             Boolean
+        attribute :search,            Boolean
+        attribute :sidebar,           Boolean
+        attribute :text,              Boolean
+        attribute :pdf,               Boolean
+        attribute :responsive,        Boolean
+        attribute :responsive_offset, Integer
+        
+        NAME_MAP = {
+          :notes             => :showAnnotations,
+          :responsive_offset => :responsiveOffset,
+          :default_page      => :page,
+          :default_note      => :note,
+          :maxheight         => :height,
+          :maxwidth          => :width,
+        }
+        
+        def self.keys
+          self.attribute_set.map(&:name)
+        end
+        
+        def compact
+          self.attributes.delete_if{ |key, value| value.nil? }
+        end
+        
+        def dump
+          attribute_pairs = self.compact.map do |attribute, value|
+            attribute = NAME_MAP[attribute] if NAME_MAP.keys.include? attribute
+            [attribute, value]
+          end
+          Hash[attribute_pairs]
+        end
+      end
+      
+      def self.config_keys
+        Config.keys
+      end
       
       def initialize(resource, embed_config={}, options={})
         # resource should be a wrapper object around a model 
@@ -134,8 +179,8 @@ module DC
           raise ArgumentError, "Embed resource must `respond_to?` an ':#{attribute}' attribute" unless resource.respond_to?(attribute)
         end
         @resource      = resource
-        @embed_config  = embed_config
-        @strategy      = options[:strategy]      || :literal
+        @embed_config  = Config.new(embed_config)
+        @strategy      = options[:strategy]      || :literal # :oembed is the other option.
         @dom_mechanism = options[:dom_mechanism] || :direct
 
         @template_path = options[:template_path] || "#{Rails.root}/app/views/documents/_embed_code.html.erb"
@@ -160,25 +205,9 @@ module DC
           :default_container_id  => "DV-viewer-#{@resource.id}",
           :resource_js_url       => @resource.url
         }
-        embed_data = {
-          :container        => '#' + (@embed_config[:container]  || template_options[:default_container_id]),
-          :showAnnotations  => @embed_config.fetch(:notes,              nil),
-          :responsiveOffset => @embed_config.fetch(:responsive_offset,  nil),
-          :page             => @embed_config.fetch(:default_page,       nil),
-          :note             => @embed_config.fetch(:default_note,       nil),
-          :height           => @embed_config.fetch(:maxheight,          nil),
-          :width            => @embed_config.fetch(:maxwidth,           nil),
-          # all of the options below are passthrough.
-          :zoom             => @embed_config.fetch(:zoom,       nil),
-          :search           => @embed_config.fetch(:search,     nil),
-          :sidebar          => @embed_config.fetch(:sidebar,    nil),
-          :text             => @embed_config.fetch(:text,       nil),
-          :pdf              => @embed_config.fetch(:pdf,        nil),
-          :responsive       => @embed_config.fetch(:responsive, nil),
-        }
-        embed_data = Hash[embed_data.reject { |k, v| v.nil? }]
-      
-        render(embed_data, template_options)
+        
+        @embed_config.container ||= '#' + template_options[:default_container_id]
+        render(@embed_config.dump, template_options)
       end
     
       def bootstrap_markup
