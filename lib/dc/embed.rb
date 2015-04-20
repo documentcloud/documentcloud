@@ -206,7 +206,7 @@ module DC
         # Consider ActiveModel::Serializers for this purpose.
         # N.B. we should be able to generate oembed codes for things that are 
         # basically mocks of a document, not just for real documents
-        [:id, :url].each do |attribute| 
+        [:id, :url, :js_url].each do |attribute| 
           raise ArgumentError, "Embed resource must `respond_to?` an ':#{attribute}' attribute" unless resource.respond_to?(attribute)
         end
         @resource      = resource
@@ -234,7 +234,7 @@ module DC
         template_options = {
           :use_default_container => @embed_config[:container].nil? || @embed_config[:container].empty?,
           :default_container_id  => "DV-viewer-#{@resource.id}",
-          :resource_js_url       => @resource.url
+          :resource_js_url       => @resource.js_url
         }
         
         @embed_config[:container] ||= '#' + template_options[:default_container_id]
@@ -257,15 +257,15 @@ module DC
             window.DV.recordHit = "#{DC.server_root(:agnostic=>true)}/pixel.gif";
             
             var pendingQueue = window.DV._documentsWaitingForAppLoad = [];
-            window.DV.load = function(resource, options) {
-              pendingQueue.push({url: resource, options: options});
+            window.DV.load = function(resource_js_url, options) {
+              pendingQueue.push({js_url: resource_js_url, options: options});
             };
             
             var eventuallyLoadDocuments = function(){
               if (window.DV.viewers) {
-                for (var i=0; i<pendingQueue.length; i++){ 
-                  resource = pendingQueue[i];
-                  DV.load(resource.url, resource.options);
+                for (var i=0; i < pendingQueue.length; i++){ 
+                  var resource = pendingQueue[i];
+                  DV.load(resource.js_url, resource.options);
                 }
               } else {
                 setTimeout(eventuallyLoadDocuments, 500);
@@ -318,10 +318,9 @@ module DC
             :provider_name    => "DocumentCloud",
             :provider_url     => DC.server_root(:force_ssl => true),
             :cache_age        => 300,
-            :resource_url     => nil,
+            :resource_url     => @resource.url,
             :height           => @embed_config[:maxheight],
             :width            => @embed_config[:maxwidth],
-            :display_language => nil,
             :html             => code,
           }
         else
