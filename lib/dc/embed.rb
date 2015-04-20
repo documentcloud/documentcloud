@@ -316,7 +316,7 @@ module DC
             :type             => "rich",
             :version          => "1.0",
             :provider_name    => "DocumentCloud",
-            :provider_url     => DC.server_root,
+            :provider_url     => DC.server_root(:force_ssl => true),
             :cache_age        => 300,
             :resource_url     => nil,
             :height           => @embed_config[:maxheight],
