@@ -1,6 +1,6 @@
 # The DocumentCloud API
 
-DocumentCloud's API allows users to search, upload, edit, and organize documents. In addition, an oEmbed service provides ways for developers to xxx.
+DocumentCloud's API allows users to search, upload, edit, and organize documents. In addition, an oEmbed service provides easy embedding of documents.
 
 ## Contents
 
