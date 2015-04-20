@@ -4,7 +4,6 @@ Los documentos que usted carga no son públicos hasta que usted los publique.
 
 Si usted está preocupado acerca de la confidencialidad de los documentos que ha subido a DocumentCloud y de las notas que ha incluido, usted debe tener un par de cosas en mente:
 
- * DocumentCloud es software beta.
  * DocumentCloud tiene una política de privacidad.
  * Todos los documentos cargados en DocumentCloud se pasan a través de OpenCalais a por medio de su API (IPA). Vea las condiciones de servicio si aún no lo ha hecho.
  * Este es el Internet. Sus documentos son tan privados como su contraseña, los documentos compartidos internamente son tan privados como el usuario menos responsable en su sala de redacción. Hay innumerables maneras de poner en riesgo su cuenta, incluyendo iniciar una sesión en una estación de trabajo de acceso público y  no cerrar la sesión, y acceder DocumentCloud por medio de una red inalámbrica pública.
