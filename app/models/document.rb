@@ -525,6 +525,10 @@ class Document < ActiveRecord::Base
     File.join(DC.server_root(:ssl => allow_ssl, :agnostic => format == :js), canonical_path(format))
   end
 
+  def oembed_url
+    "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url('html', true))}"
+  end
+
   def search_url
     "#{DC.server_root}/documents/#{id}/search.json?q={query}"
   end
