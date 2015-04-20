@@ -258,7 +258,7 @@ Delete a project that belongs to the current authenticated account.
 <a name="oembed-documents"></a>
 ## GET /api/oembed.json
 
-Generate embed code using our [oEmbed](http://oembed.com/) service. Returns a rich JSON response.
+Generate an embed code for a document using our [oEmbed](http://oembed.com/) service. Returns a rich JSON response.
 
 Parameter        | Description           |  Example
 -----------------|-----------------------|--------------
