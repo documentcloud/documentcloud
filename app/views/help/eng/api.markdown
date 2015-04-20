@@ -258,29 +258,44 @@ Delete a project that belongs to the current authenticated account.
 <a name="oembed-documents"></a>
 ## GET /api/oembed.json
 
-Embed a document.
+Generate embed code using our [oEmbed](http://oembed.com/) service. Returns a rich JSON response.
 
 Parameter        | Description           |  Example
 -----------------|-----------------------|--------------
-url              | (required) URL-escaped document to embed     | https%3A//www.documentcloud.org/ documents/doc-name.html
+url              | **(required)** URL-escaped document to embed     | https%3A//www.documentcloud.org/ documents/doc-name.html
 maxheight        | (optional) The viewer's height (pixels)    | 750
 maxwidth         | (optional) The viewer's width (pixels)     | 600
 container        | (optional) Specify the DOM container in which to open the viewer | #my-document-div
 notes            | (optional) Enable the notes tab   | true (default)
 text             | (optional) Enable the text tab   | true (default)
-default_note     | (optional) Open the document to a note. An integer<br/> representing the note ID | 214279
 zoom             | (optional) Show the zoom slider    | true (default)
 search           | (optional) Show the search box    | true (default)
 sidebar          | (optional) Show the sidebar    | true (default)
 pdf              | (optional) Include a link to the original PDF    | true (default)
 responsive       | (optional) Make the viewer responsive    | false (default)
 responsive_offset| (optional) Specify header height (pixels)    | 4
-default_page     | (optional) Open the document to a specified page   | 3
+default_note     | (optional) Open the document to a specific note. An integer representing the note ID | 214279
+default_page     | (optional) Open the document to a specific page   | 3
 
 
-### Example
+### Example request
 
     /api/oembed.json?url=https%3A//www.documentcloud.org/documents/doc-name.html&responsive=true
+
+### Example response
+
+    {
+      "type": "rich",
+      "version": "1.0",
+      "provider_name": "DocumentCloud",
+      "provider_url": "https://www.documentcloud.org/",
+      "cache_age": 300,
+      "resource_url": "https://www.documentcloud.org/documents/doc-name.html",
+      "height": 750,
+      "width": 600,
+      "display_language": "en",
+      "html": "<script>...</script>"
+    }
 
 # Questions?
 
