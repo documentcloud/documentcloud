@@ -273,7 +273,7 @@ zoom             | (optional) Show the zoom slider    | true (default)
 search           | (optional) Show the search box    | true (default)
 sidebar          | (optional) Show the sidebar    | true (default)
 pdf              | (optional) Include a link to the original PDF    | true (default)
-responsive       | (optional) Make the viewer responsive    | true (default)
+responsive       | (optional) Make the viewer responsive    | false (default)
 responsive_offset| (optional) Specify header height (pixels)    | 4
 default_page     | (optional) Open the document to a specified page   | 3
 
