@@ -301,3 +301,18 @@ default_page     | (opcional) Abra el documento a una página específica   | 3
 # Preguntas?
 
 ¿Aún tiene preguntas acerca de cómo colaborar? No dude en [comunicarse con nosotros](javascript:dc.ui.Dialog.contact(\)).
+
+<script type="text/javascript">
+  $(function() {
+    $('#search_form').submit(function(e) {
+      e.preventDefault();
+      $.getJSON('/api/search', {q : $('#q').val()}, function(resp) {
+        $('#search_results').show().text(JSON.stringify(resp, null, 2));
+      });
+    });
+    $('#run_search').click(function() {
+      $('#search_form').submit();
+    });
+    $('#help table td:nth-child(2n)').addClass('desc');
+  });
+</script>
