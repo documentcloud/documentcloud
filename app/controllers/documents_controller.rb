@@ -49,7 +49,7 @@ class DocumentsController < ApplicationController
     attrs = pick(params, :access, :title, :description, :source,
                          :related_article, :remote_url, :publish_at, :data, :language)
     success = doc.secure_update attrs, current_account
-    return json(doc, 403) unless success
+    return forbidden unless success
 
     clear_current_document_cache
     Document.populate_annotation_counts(current_account, [doc])
@@ -58,10 +58,7 @@ class DocumentsController < ApplicationController
 
   def destroy
     return not_found unless doc = current_document
-    if !current_account.owns_or_collaborates?(doc)
-      doc.errors.add(:base, "You don't have permission to delete the document." )
-      return json(doc, 403)
-    end
+    return forbidden unless current_account.owns_or_collaborates?(doc)
 
     clear_current_document_cache
     doc.destroy
