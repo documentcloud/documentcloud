@@ -16,7 +16,7 @@ class DocumentsController < ApplicationController
     Account.login_reviewer(params[:key], session, cookies) if params[:key]
     doc = current_document(true)
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
-    return render :file => "#{Rails.root}/public/doc_404.html", :status => 404 unless doc
+    return not_found unless doc
     respond_to do |format|
       format.html do
         @no_sidebar = (params[:sidebar] || '').match /no|false/
@@ -82,14 +82,14 @@ class DocumentsController < ApplicationController
 
   def reorder_pages
     return not_found unless doc = current_document(true)
-    return json(nil, 409) if params[:page_order].length != doc.page_count
+    return conflict if params[:page_order].length != doc.page_count
     doc.reorder_pages params[:page_order].map {|p| p.to_i }
     json doc
   end
 
   def upload_insert_document
     return not_found unless doc = current_document(true)
-    return json(nil, 409) unless params[:file] && params[:document_number] && (params[:insert_page_at] || params[:replace_pages_start])
+    return conflict unless params[:file] && params[:document_number] && (params[:insert_page_at] || params[:replace_pages_start])
 
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
       DC::Store::AssetStore.new.save_insert_pdf(doc, path, params[:document_number]+'.pdf')
@@ -183,7 +183,7 @@ class DocumentsController < ApplicationController
 
   def reprocess_text
     return not_found unless doc = current_document(true)
-    return json(nil, 403) unless current_account.allowed_to_edit?(doc)
+    return forbidden unless current_account.allowed_to_edit?(doc)
     doc.reprocess_text(params[:ocr])
     json nil
   end

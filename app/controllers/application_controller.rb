@@ -175,6 +175,15 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  def conflict
+    respond_to do |format|
+      format.js  { json({:error=>"Conflict"}, 409) }
+      format.json{ json({:error=>"Conflict"}, 409) }
+      format.any { render :file => "#{Rails.root}/public/409.html", :status => 409 }
+    end
+    false
+  end
+
   # Return server_error when an uncaught exception bubbles up.
   def server_error(e)
     respond_to do |format|
