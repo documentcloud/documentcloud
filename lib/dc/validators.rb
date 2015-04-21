@@ -13,7 +13,7 @@ module DC
 
     # Full document ID slugs must start with the numeric ID and contain
     # the alphanumeric slug
-    SLUG = /\A[0-9]+-[a-z0-9-]+\Z/
+    ID_SLUG = /\A(?<id>[0-9]+)-(?<slug>[a-z0-9-]+)\Z/
 
     # IP Validation Regex.
     IP = /\A(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\Z/

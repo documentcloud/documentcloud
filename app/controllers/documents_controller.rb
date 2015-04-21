@@ -262,7 +262,13 @@ class DocumentsController < ApplicationController
   end
 
   def current_document
-    @current_document ||= Document.accessible(current_account, current_organization).find_by_id(params[:id].to_i)
+    unless @current_document
+      params[:id].match(DC::Validators::ID_SLUG) do |match|
+        accessible_documents = Document.accessible(current_account, current_organization)
+        @current_document    = accessible_documents.where(:id => match[:id].to_i, :slug => match[:slug]).first
+      end
+    end
+    @current_document
   end
 
   def current_page

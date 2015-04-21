@@ -219,7 +219,7 @@ class ApiController < ApplicationController
     resource_params and
     resource_params[:controller] == "documents" and
     resource_params[:id] and
-    resource_params[:id] =~ DC::Validators::SLUG # and
+    resource_params[:id] =~ DC::Validators::ID_SLUG # and
     # Document.accessible(nil, nil).exists?(params[:id].to_i) 
   end
 
