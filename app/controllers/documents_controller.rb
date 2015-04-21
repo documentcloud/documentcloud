@@ -14,7 +14,7 @@ class DocumentsController < ApplicationController
 
   def show
     Account.login_reviewer(params[:key], session, cookies) if params[:key]
-    doc = current_document(true)
+    doc = current_document
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
     return not_found unless doc
     respond_to do |format|
@@ -45,7 +45,7 @@ class DocumentsController < ApplicationController
   end
 
   def update
-    return not_found unless doc = current_document(true)
+    return not_found unless doc = current_document
     attrs = pick(params, :access, :title, :description, :source,
                          :related_article, :remote_url, :publish_at, :data, :language)
     success = doc.secure_update attrs, current_account
@@ -57,7 +57,7 @@ class DocumentsController < ApplicationController
   end
 
   def destroy
-    return not_found unless doc = current_document(true)
+    return not_found unless doc = current_document
     if !current_account.owns_or_collaborates?(doc)
       doc.errors.add(:base, "You don't have permission to delete the document." )
       return json(doc, 403)
@@ -69,26 +69,26 @@ class DocumentsController < ApplicationController
   end
 
   def redact_pages
-    return not_found unless params[:redactions] && (doc = current_document(true))
+    return not_found unless params[:redactions] && (doc = current_document)
     doc.redact_pages JSON.parse(params[:redactions]), params[:color]
     json doc
   end
 
   def remove_pages
-    return not_found unless doc = current_document(true)
+    return not_found unless doc = current_document
     doc.remove_pages(params[:pages].map {|p| p.to_i })
     json doc
   end
 
   def reorder_pages
-    return not_found unless doc = current_document(true)
+    return not_found unless doc = current_document
     return conflict if params[:page_order].length != doc.page_count
     doc.reorder_pages params[:page_order].map {|p| p.to_i }
     json doc
   end
 
   def upload_insert_document
-    return not_found unless doc = current_document(true)
+    return not_found unless doc = current_document
     return conflict unless params[:file] && params[:document_number] && (params[:insert_page_at] || params[:replace_pages_start])
 
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
@@ -111,7 +111,7 @@ class DocumentsController < ApplicationController
   end
 
   def save_page_text
-    return not_found unless doc = current_document(true)
+    return not_found unless doc = current_document
     modified_pages = JSON.parse(params[:modified_pages])
     doc.save_page_text(modified_pages) unless modified_pages.empty?
     json doc
@@ -160,7 +160,7 @@ class DocumentsController < ApplicationController
   end
 
   def mentions
-    return not_found unless doc = current_document(true)
+    return not_found unless doc = current_document
     mention_data = Page.mentions(doc.id, params[:q], nil)
     json :mentions => mention_data[:mentions], :total_mentions => mention_data[:total]
   end
@@ -182,14 +182,14 @@ class DocumentsController < ApplicationController
   end
 
   def reprocess_text
-    return not_found unless doc = current_document(true)
+    return not_found unless doc = current_document
     return forbidden unless current_account.allowed_to_edit?(doc)
     doc.reprocess_text(params[:ocr])
     json nil
   end
 
   def send_pdf
-    return not_found unless current_document(true)
+    return not_found unless current_document
     redirect_to current_document.pdf_url(:direct)
   end
 
@@ -201,7 +201,7 @@ class DocumentsController < ApplicationController
   end
 
   def send_full_text
-    return not_found unless current_document(true)
+    return not_found unless current_document
     redirect_to current_document.full_text_url(:direct)
   end
 
@@ -219,7 +219,7 @@ class DocumentsController < ApplicationController
   end
 
   def search
-    doc       = current_document(true)
+    doc       = current_document
     pages     = Page.search_for_page_numbers(params[:q], doc)
     @response = {'query' => params[:q], 'results' => pages}
     json_response
@@ -227,7 +227,7 @@ class DocumentsController < ApplicationController
 
   def preview
     return unless login_required
-    doc = current_document(true)
+    doc = current_document
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
     return not_found unless doc
     @options = params[:options]
@@ -261,16 +261,14 @@ class DocumentsController < ApplicationController
     redirect_to current_document.document_viewer_url(:entity => meta, :page => page.page_number, :offset => params[:offset], :allow_ssl => true)
   end
 
-  def current_document(exists=false)
-    @current_document ||= exists ?
-      Document.accessible(current_account, current_organization).find_by_id(params[:id].to_i) :
-      Document.new(:id => params[:id].to_i)
+  def current_document
+    @current_document ||= Document.accessible(current_account, current_organization).find_by_id(params[:id].to_i)
   end
 
   def current_page
     num = params[:page_name][PAGE_NUMBER_EXTRACTOR, 1]
     return false unless num
-    return false unless current_document(true)
+    return false unless current_document
     @current_page ||= current_document.pages.find_by_page_number(num.to_i)
   end
   
