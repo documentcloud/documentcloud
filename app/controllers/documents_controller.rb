@@ -11,12 +11,15 @@ class DocumentsController < ApplicationController
 
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /.*-p(\d+)/
-
+  
   def show
     Account.login_reviewer(params[:key], session, cookies) if params[:key]
-    doc = current_document
-    return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
-    return not_found unless doc
+
+    unless current_document
+      return forbidden if Document.with_canonical_id(params[:id]).exists?
+      return not_found
+    end
+    
     respond_to do |format|
       format.html do
         @no_sidebar = (params[:sidebar] || '').match /no|false/
@@ -24,22 +27,22 @@ class DocumentsController < ApplicationController
         return if date_requested?
         return if entity_requested?
       end
-      format.pdf  { redirect_to(doc.pdf_url) }
-      format.text { redirect_to(doc.full_text_url) }
+      format.pdf  { redirect_to(current_document.pdf_url) }
+      format.text { redirect_to(current_document.full_text_url) }
       format.json do
-        @response = doc.canonical
+        @response = current_document.canonical
         json_response
       end
       format.js do
-        js = "DV.loadJSON(#{doc.canonical.to_json});"
-        cache_page js if doc.cacheable?
+        js = "DV.loadJSON(#{current_document.canonical.to_json});"
+        cache_page js if current_document.cacheable?
         render :js => js
       end
       format.xml do
-        render :xml => doc.canonical.to_xml(:root => 'document')
+        render :xml => current_document.canonical.to_xml(:root => 'document')
       end
       format.rdf do
-        @doc = doc
+        @doc = current_document
       end
     end
   end
@@ -57,7 +60,7 @@ class DocumentsController < ApplicationController
   end
 
   def destroy
-    return not_found unless doc = current_document
+    return not_found unless doc = current_document(:accept_id_without_slug=>true)
     return forbidden unless current_account.owns_or_collaborates?(doc)
 
     clear_current_document_cache
@@ -66,26 +69,26 @@ class DocumentsController < ApplicationController
   end
 
   def redact_pages
-    return not_found unless params[:redactions] && (doc = current_document)
+    return not_found unless params[:redactions] && (doc = current_document(:accept_id_without_slug=>true))
     doc.redact_pages JSON.parse(params[:redactions]), params[:color]
     json doc
   end
 
   def remove_pages
-    return not_found unless doc = current_document
+    return not_found unless doc = current_document(:accept_id_without_slug=>true)
     doc.remove_pages(params[:pages].map {|p| p.to_i })
     json doc
   end
 
   def reorder_pages
-    return not_found unless doc = current_document
+    return not_found unless doc = current_document(:accept_id_without_slug=>true)
     return conflict if params[:page_order].length != doc.page_count
     doc.reorder_pages params[:page_order].map {|p| p.to_i }
     json doc
   end
 
   def upload_insert_document
-    return not_found unless doc = current_document
+    return not_found unless doc = current_document(:accept_id_without_slug=>true)
     return conflict unless params[:file] && params[:document_number] && (params[:insert_page_at] || params[:replace_pages_start])
 
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
@@ -108,7 +111,7 @@ class DocumentsController < ApplicationController
   end
 
   def save_page_text
-    return not_found unless doc = current_document
+    return not_found unless doc = current_document(:accept_id_without_slug=>true)
     modified_pages = JSON.parse(params[:modified_pages])
     doc.save_page_text(modified_pages) unless modified_pages.empty?
     json doc
@@ -157,7 +160,7 @@ class DocumentsController < ApplicationController
   end
 
   def mentions
-    return not_found unless doc = current_document
+    return not_found unless doc = current_document(:accept_id_without_slug=>true)
     mention_data = Page.mentions(doc.id, params[:q], nil)
     json :mentions => mention_data[:mentions], :total_mentions => mention_data[:total]
   end
@@ -171,7 +174,7 @@ class DocumentsController < ApplicationController
 
   # TODO: Fix the note/annotation terminology.
   def per_page_note_counts
-    json current_document(true).per_page_annotation_counts
+    json current_document.per_page_annotation_counts
   end
 
   def queue_length
@@ -179,7 +182,7 @@ class DocumentsController < ApplicationController
   end
 
   def reprocess_text
-    return not_found unless doc = current_document
+    return not_found unless doc = current_document(:accept_id_without_slug=>true)
     return forbidden unless current_account.allowed_to_edit?(doc)
     doc.reprocess_text(params[:ocr])
     json nil
@@ -225,7 +228,7 @@ class DocumentsController < ApplicationController
   def preview
     return unless login_required
     doc = current_document
-    return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
+    return forbidden if doc.nil? && Document.with_canonical_id(params[:id]).exists?
     return not_found unless doc
     @options = params[:options]
   end
@@ -258,12 +261,18 @@ class DocumentsController < ApplicationController
     redirect_to current_document.document_viewer_url(:entity => meta, :page => page.page_number, :offset => params[:offset], :allow_ssl => true)
   end
 
-  def current_document
+  def current_document(options={})
     unless @current_document
-      params[:id].match(DC::Validators::ID_SLUG) do |match|
-        accessible_documents = Document.accessible(current_account, current_organization)
-        @current_document    = accessible_documents.where(:id => match[:id].to_i, :slug => match[:slug]).first
+      attributes = case params[:id]
+      when DC::Validators::ID_SLUG
+        match = Regexp.last_match
+        { :id => match[:id].to_i, :slug => match[:slug] }
+      when /\A(?<id>\d+)\Z/
+        options[:accept_id_without_slug] ? { :id => params[:id].to_i } : false
+      else
+        false
       end
+      @current_document = Document.accessible(current_account, current_organization).where(attributes).first
     end
     @current_document
   end

@@ -92,6 +92,7 @@ class Document < ActiveRecord::Base
 
   scope :since,         ->(time){ where( ["created_at >= ?", time] ) if time }
 
+  scope :with_canonical_id, ->(id){ id.match(DC::Validators::ID_SLUG); where(:id=>$1.to_i, :slug=>$2) }
 
   # Restrict accessible documents for a given account/organization.
   # Either the document itself is public, or it belongs to us, or it belongs to
