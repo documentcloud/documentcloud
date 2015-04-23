@@ -1,8 +1,27 @@
 # Publishing Documents, Notes, and Document Sets
 
-Ready to make your documents public? You can publish individual documents, embed a whole set of documents for your readers to browse, or embed a single note from any document. Before you publish a note, document or document set, you'll want to make sure that the document or documents are public. Do this by editing the "Access Level" (from the "Edit" menu) or by setting a publication date (from the "Publish" menu).
+Ready to share your documents with readers? Either by embedding our custom viewer or using oEmbed, you can publish individual documents, embed a set of documents that readers can browse, or embed a single note from any document. Here's how:
 
-# Publishing Individual Documents
+## Contents
+
+* [Making documents public](#public)  
+* Generating embed codes:  
+  * [Documents](#embed-document)  
+  * [Notes](#embed-note)  
+  * [Document Sets](#embed-set)  
+* [oEmbed service](#oembed):  
+  * [Documents](#oembed-document)  
+
+<a name="public"></a>
+# Making Documents Public
+
+Before you publish a note, document or document set, you'll want to make sure that the document or documents are public. There are two ways to do this:
+
+* Edit the "Access Level" (from the "Edit" menu).
+* Set a publication date (from the "Publish" menu).
+
+<a name="embed-document"></a>
+# Embed Codes for Individual Documents
 
 To publish any document from DocumentCloud, either download a standalone copy of the viewer, or generate, copy, and paste a simple embed code for that document. We strongly encourage you to embed code that links back to DocumentCloud for most documents. The instructions that follow assume some basic familiarity with HTML, but we've tried to keep the embedding process as simple as possible.
 
@@ -60,7 +79,8 @@ On occasion you may have embedded documents which you would like to remain priva
 
 [Let us know][] about your reporting!
 
-# <span id="note_embed">Embedding a Note from a Document</span>
+<a name="embed-note"></a>
+# <span id="note_embed">Embed Codes for a Note in a Document</span>
 
 ![Embed Note Menu][]
 
@@ -76,7 +96,8 @@ You'll be asked to select the note to embed, and will be able to preview the emb
 
 Copy and paste the HTML onto your own site. Clicking the title or the image will open the document. Documents will open in DocumentCloud unless you've published them elsewhere. We use [pixel ping](http://www.propublica.org/nerds/item/pixel-ping-a-nodejs-stats-tracker) to guess a document's Published URL, so if users won't find the document another way, you may need to add the Published URL manually.
 
-# <span id="docset">Embedding a Document Set</span>
+<a name="embed-set"></a>
+# <span id="docset">Embed Codes for a Document Set</span>
 
 ![Embed Search Menu][]
 
@@ -111,6 +132,17 @@ Paste the code into on your website, and you'll see the set of documents appear.
 <img src="/images/help/search_embed.png" class="full_line" />
 
 Click on any document to open it. If you've previously published the document on your website, we should have automatically detected its URL, and it will open at that URL. If the document is public but has not yet been published, it will open on DocumentCloud.org. If you're sure that you've published a document but it still opens on DocumentCloud.org, open the "Edit" menu, click "Published URL", and manually set the URL at which the document has been published.
+
+<a name="oembed"></a>
+# <span id="docset">oEmbed Service</span>
+
+oEmbed is a Web standard for providing embedded content on a site when a user posts a URL to that content.
+
+<a name="oembed-wordpress"></a>
+# <span id="docset">oEmbed with WordPress</span>
+
+
+
 
 Still have questions about publishing and embedding? Don't hesitate to [contact us][].
 
