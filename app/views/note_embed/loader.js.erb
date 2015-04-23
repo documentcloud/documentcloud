@@ -4,7 +4,7 @@
 
 (function() {
   // If the note embed is already loaded, don't repeat the process.
-  if (window.dc && window.dc.noteEmbedLoaded) return;
+  if (window.dc) { if (window.dc.noteEmbedLoaded) { return; } }
 
   window.dc = window.dc || {};
   window.dc.recordHit = "<%= DC.server_root(:agnostic=>true) %>/pixel.gif";
@@ -21,9 +21,9 @@
 
   /*@cc_on
   /*@if (@_jscript_version < 5.8)
-    loadCSS('<%= asset_root %>/note_embed/note_embed.css');
+    loadCSS("<%= asset_root %>/note_embed/note_embed.css");
   @else @*/
-    loadCSS('<%= asset_root %>/note_embed/note_embed-datauri.css');
+    loadCSS("<%= asset_root %>/note_embed/note_embed-datauri.css");
   /*@end
   @*/
 
@@ -31,5 +31,5 @@
   dc.noteEmbedLoaded = true;
 
   // Request the embed JavaScript.
-  document.write('<script type="text/javascript" src="<%= asset_root %>/note_embed/note_embed.js"></script>');
+  document.write('<script type="text/javascript" src="<%= asset_root %>/note_embed/note_embed.js"></scr' + 'ipt>');
 })();
