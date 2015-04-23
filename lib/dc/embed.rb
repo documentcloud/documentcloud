@@ -206,7 +206,7 @@ module DC
         # Consider ActiveModel::Serializers for this purpose.
         # N.B. we should be able to generate oembed codes for things that are 
         # basically mocks of a document, not just for real documents
-        [:id, :url, :js_url].each do |attribute| 
+        [:id, :js_url].each do |attribute| 
           raise ArgumentError, "Embed resource must `respond_to?` an ':#{attribute}' attribute" unless resource.respond_to?(attribute)
         end
         @resource      = resource
@@ -318,7 +318,6 @@ module DC
             :provider_name    => "DocumentCloud",
             :provider_url     => DC.server_root(:force_ssl => true),
             :cache_age        => 300,
-            :resource_url     => @resource.url,
             :height           => @embed_config[:maxheight],
             :width            => @embed_config[:maxwidth],
             :html             => code,
