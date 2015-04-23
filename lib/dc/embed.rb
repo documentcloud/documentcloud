@@ -352,6 +352,8 @@ module DC
         
         ATTRIBUTE_MAP = {
           :container         => self::String,
+          :maxheight         => self::Integer,
+          :maxwidth          => self::Integer,
         }
                  
         KEYS = ATTRIBUTE_KEYS = ATTRIBUTE_MAP.keys
