@@ -3,7 +3,7 @@ require 'pry'
 
 describe DC::Embed::Document do
   
-  let(:resource) { Struct.new(:id, :url).new("1235", "https://lol.wat/1235") }
+  let(:resource) { Struct.new(:id, :url, :js_url).new("1235", "https://lol.wat/1235", "https://lol.wat/1235.js") }
   
   it "should require a resource" do
     Proc.new{ DC::Embed::Document.new(nil, {}) }.must_raise ArgumentError
