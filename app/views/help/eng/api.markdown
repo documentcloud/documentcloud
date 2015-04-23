@@ -4,22 +4,23 @@ DocumentCloud's API allows users to search, upload, edit, and organize documents
 
 ## Contents
 
-* General:  
-  * [API Guidelines and Terms of Service](#guidelines)  
-* Document methods:  
-  * [Search](#search-documents)  
-  * [Upload](#upload-documents)  
-  * [Get](#get-document)  
-  * [Update](#update-document)  
-  * [Delete](#delete-document)  
-  * [Entities](#get-entities)  
-* Project methods:  
-  * [Create](#create-project)  
-  * [List projects](#get-projects)  
-  * [Update](#update-project)  
-  * [Delete](#delete-project)  
-* oEmbed methods:  
-  * [Documents](#oembed-documents)  
+* General:
+  * [API Guidelines and Terms of Service](#guidelines)
+* Document methods:
+  * [Search](#search-documents)
+  * [Upload](#upload-documents)
+  * [Get](#get-document)
+  * [Update](#update-document)
+  * [Delete](#delete-document)
+  * [Entities](#get-entities)
+* Project methods:
+  * [Create](#create-project)
+  * [List projects](#get-projects)
+  * [Update](#update-project)
+  * [Delete](#delete-project)
+* [oEmbed](#oembed):
+  * [Documents](#oembed-documents)
+  * [Notes](#oembed-notes)
 
 <a name="guidelines"></a>
 # API Guidelines and Terms of Service
@@ -253,19 +254,39 @@ Update an existing project for the current authenticated account. You can set th
 
 Delete a project that belongs to the current authenticated account.
 
-# oEmbed Methods
+<a name="oembed"></a>
+# oEmbed
 
-<a name="oembed-documents"></a>
 ## GET /api/oembed.json
 
-Generate an embed code for a document using our [oEmbed](http://oembed.com/) service. Returns a rich JSON response.
+Generate an embed code for a resource (a document or a note) using our [oEmbed](http://oembed.com/) service. Returns a rich JSON response.
+
+### Response format
+
+    {
+      "type": "rich",
+      "version": "1.0",
+      "provider_name": "DocumentCloud",
+      "provider_url": "https://www.documentcloud.org/",
+      "cache_age": 300,
+      "height": 750,
+      "width": 600,
+      "html": "<script>...</script>"
+    }
+
+<a name="oembed-documents"></a>
+### Example document request
+
+    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name.html&responsive=true
+
+### Parameters for documents
 
 Parameter        | Description           |  Example
 -----------------|-----------------------|--------------
 url              | **(required)** URL-escaped document to embed     | https%3A//www.documentcloud.org/ documents/doc-name.html
 maxheight        | (optional) The viewer's height (pixels)    | 750
 maxwidth         | (optional) The viewer's width (pixels)     | 600
-container        | (optional) Specify the DOM container in which to open the viewer | #my-document-div
+container        | (optional) Specify the DOM container in which to embed the viewer | #my-document-div
 notes            | (optional) Enable the notes tab   | true (default)
 text             | (optional) Enable the text tab   | true (default)
 zoom             | (optional) Show the zoom slider    | true (default)
@@ -277,25 +298,18 @@ responsive_offset| (optional) Specify header height (pixels)    | 4
 default_note     | (optional) Open the document to a specific note. An integer representing the note ID | 214279
 default_page     | (optional) Open the document to a specific page   | 3
 
+<a name="oembed-notes"></a>
+### Example note request
 
-### Example request
+    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name%2Fannotations%2F123.js
 
-    /api/oembed.json?url=https%3A//www.documentcloud.org/documents/doc-name.html&responsive=true
+### Parameters for notes
 
-### Example response
+Parameter        | Description           |  Example
+-----------------|-----------------------|--------------
+url              | **(required)** URL-escaped document to embed     | https%3A//www.documentcloud.org/ documents/doc-name.html
+container        | (optional) Specify the DOM container in which to embed the viewer | #my-document-div
 
-    {
-      "type": "rich",
-      "version": "1.0",
-      "provider_name": "DocumentCloud",
-      "provider_url": "https://www.documentcloud.org/",
-      "cache_age": 300,
-      "resource_url": "https://www.documentcloud.org/documents/doc-name.html",
-      "height": 750,
-      "width": 600,
-      "display_language": "en",
-      "html": "<script>...</script>"
-    }
 
 # Questions?
 
