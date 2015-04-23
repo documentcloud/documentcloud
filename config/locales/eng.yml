@@ -93,6 +93,7 @@
   - add_html_for_documents: Add this HTML to your site to embed these documents.
   - add_html_for_note: Add this HTML to your site to embed the note.
   - add_html_for_viewer: Add this HTML to your site to create a document viewer.
+  - add_wp_shortcode_for_viewer: ...or add this shortcode to your WordPress content.
   - add_note_instructions: Highlight a portion of the page, or click between pages
       to create a note.
   - add_private_note: Add a Private Note

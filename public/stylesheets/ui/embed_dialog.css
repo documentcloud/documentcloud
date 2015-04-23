@@ -8,7 +8,7 @@
   text-align: left;
 }
   .document_embed_dialog .custom {
-    height: 380px;
+    height: 430px;
     position: relative;
     font-size: 12px;
   }
@@ -84,15 +84,22 @@
       padding: 0;
     }
 
-  .document_embed_dialog textarea.snippet {
+  .document_embed_dialog .snippet {
     width: 484px;
-    height: 235px;
     border: 1px solid #dedede;
     font: 11px Menlo, Consolas, Monaco, Courier, monospace;
     margin: 10px 0px;
     padding: 8px;
     resize: none;
   }
+
+    .document_embed_dialog textarea.snippet {
+      height: 235px;
+    }
+  
+    .document_embed_dialog input.snippet {
+      height: 1.2em;
+    }
   
 .dialog .remove_lines {
   float: right;
