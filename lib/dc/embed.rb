@@ -444,7 +444,7 @@ module DC
         <<-SCRIPT
         <script>
           (function() {
-            // If the note embed is already loaded, don't repeat the process.
+            /* If the note embed is already loaded, don't repeat the process. */
             if (window.dc) { if (window.dc.noteEmbedLoaded) { return; } }
 
             window.dc = window.dc || {};
@@ -485,7 +485,7 @@ module DC
             /*@end
             @*/
 
-            // Record the fact that the note embed is loaded.
+            /* Record the fact that the note embed is loaded. */
             dc.noteEmbedLoaded = true;
           })();
         </script>
