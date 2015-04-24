@@ -48,7 +48,7 @@ class ImportController < ApplicationController
   end
 
   def expire_document_cache
-    job = JSON.parse(params[:job])
+    job = JSON.parse(params[:job] || "{}")
     record = ProcessingJob.find_by_cloud_crowd_id(job['id'])
 
     if record and record.document and record.document.cacheable?
