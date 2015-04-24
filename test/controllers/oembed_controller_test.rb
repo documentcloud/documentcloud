@@ -45,11 +45,4 @@ class OembedControllerTest < ActionController::TestCase
     get :oembed, :format => "json", :url => missing_resource_url
     assert_response 404
   end
-
-  def test_blank_container
-    get :oembed, :format => "json", :url => valid_resource_url, :container => ''
-    template_options = assigns(:template_options)
-    assert template_options[:use_default_container]
-  end
-
 end
