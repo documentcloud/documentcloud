@@ -1,13 +1,13 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 class WorkspaceControllerTest < ActionController::TestCase
 
-  it "requires login" do
+  test "requires login" do
     get :index
     assert_redirected_to '/home'
   end
 
-  it "has proper routes" do
+  test "has proper routes" do
     assert_recognizes({ controller: 'workspace', action: 'index' }, '/')
     assert_recognizes({ controller: 'workspace', action: 'index' }, '/results')
     assert_recognizes({ controller: 'workspace', action: 'index' }, '/search')
@@ -16,7 +16,7 @@ class WorkspaceControllerTest < ActionController::TestCase
     assert_recognizes({ controller: 'workspace', action: 'help', page: 'about' }, '/help/about')
   end
 
-  it "renders index" do
+  test "renders index" do
     login_account!
     get :index
     assert_response :success
@@ -25,15 +25,15 @@ class WorkspaceControllerTest < ActionController::TestCase
   end
 
 
-  it "has proper html for workspace" do
+  test "has proper html for workspace" do
     login_account!
     get :index
     assert_select 'body.workspace.logged_in'
     assert_select 'div#content'
-    # For future improvement: Parse the JavaScript out and test it
+    # For future improvement: Parse the JavaScript out and test test
   end
 
-  it "renders help" do
+  test "renders help" do
     get :help
     assert_response :success
   end
