@@ -47,7 +47,7 @@ A dialog will appear which you can use to view the existing key/value pairs, add
 
 To filter documents by data that you've added, either click on the tag (shown in the picture above), or search for the key/value pair as you would for any other field by typing `citizen: Pakistan` into the search box.
 
-You can add the same key multiple times with different values. To search for all citizens of Pakistan or Yemen: `citizen: Pakistan citizen: Yemen`
+You can enter the same key multiple times with different values for an "or" search. To search for all citizens of Pakistan *or* Yemen: `citizen: Pakistan citizen: Yemen`
 
 If you'd like to filter all documents with a `citizen` key, but you don't care about the value, you can use: `citizen: *`
 
