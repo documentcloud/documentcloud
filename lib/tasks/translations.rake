@@ -30,14 +30,14 @@ namespace :translations do
   desc "Compile Javascript version of translation strings"
   task :download do
 
-    require "google_drive"
+    require "google_drive_v0"
     require 'highline/import'
     require 'yaml'
 
     username = ask("[translations download] Enter your username:  ") { |q| q.echo = true }
     password = ask("[translations download] Enter your password:  ") { |q| q.echo = "*" }
     SPREADSHEET_KEY = '0AiY4dewFeJcNdGtHM1JRcUh6eW54TW1Peld1TjZoSnc'
-    session = GoogleDrive.login( username, password )
+    session = GoogleDriveV0.login( username, password )
     sheets = session.spreadsheet_by_key(SPREADSHEET_KEY).worksheets
 
     languages = {
