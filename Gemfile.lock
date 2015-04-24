@@ -283,7 +283,7 @@ DEPENDENCIES
   cloud-crowd (~> 0.7.3)
   curb (~> 0.8.4)
   docsplit (= 0.8.0.alpha1)
-  google_drive
+  google_drive (~> 1.0.0)
   growl
   guard-bundler
   guard-minitest
