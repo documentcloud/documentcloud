@@ -4,14 +4,14 @@ Ready to share your documents with readers? Either by embedding our custom viewe
 
 ## Contents
 
-* [Making documents public](#public)  
-* Generating embed codes:  
-  * [Documents](#embed-document)  
-  * [Notes](#embed-note)  
-  * [Document Sets](#embed-set)  
-* [oEmbed service](#oembed):  
-  * [oEmbed with WordPress](#oembed-wordpress)  
-  * [Documents](#oembed-document)  
+* [Making documents public](#public)
+* Generating embed codes:
+  * [Documents](#embed-document)
+  * [Notes](#embed-note)
+  * [Document Sets](#embed-set)
+* [oEmbed service](#oembed):
+  * [oEmbed with WordPress](#oembed-wordpress)
+  * [Documents](#oembed-document)
 
 <a name="public"></a>
 # Making Documents Public
