@@ -18,8 +18,9 @@ El API de DocumentCloud permite a los usuarios buscar, cargar, editar y organiza
   * [Listar de proyectos](#get-projects)  
   * [Actualizar](#update-project)  
   * [Borre](#delete-project)  
-* Métodos de oEmbed:  
+* [oEmbed](#oembed):
   * [Documentos](#oembed-documents)  
+  * [Notas](#oembed-notes)
 
 <a name="guidelines"></a>
 # Directrices y Condiciones del Servicio de API
@@ -254,36 +255,14 @@ Actualice un proyecto existente para la cuenta actual autenticada. Puede definir
 
 Borre un proyecto que pertenezca a la cuenta actual autenticada.
 
-# Métodos de oEmbed
+<a name="oembed"></a>
+# oEmbed
 
-<a name="oembed-documents"></a>
 ## GET /api/oembed.json
 
-Generar un código de inserción para un documento utilizando nuestro servicio [oEmbed](http://oembed.com/). Devuelve una rica respuesta JSON.
+Generar un código de inserción para un recurso (un documento o una nota) utilizando nuestro servicio [oEmbed](http://oembed.com/). Devuelve una rica respuesta JSON.
 
-Parámetro   | Descripción           | Ejemplo
------------------|-----------------------|--------------
-url              | **(requerido)** De escape de URL documento para incrustar     | https%3A//www.documentcloud.org/ documents/doc-name.html
-maxheight        | (opcional) La altura del espectador (pixels)    | 750
-maxwidth         | (opcional) La ancho del espectador (pixels)     | 600
-container        | (opcional) Especifique el contenedor DOM en el que abrir el espectador | #my-document-div
-notes            | (opcional) Activar la pestaña de notas   | true (default)
-text             | (opcional) Activar la pestaña de texto   | true (default)
-zoom             | (opcional) Mostrar el deslizador de zoom    | true (default)
-search           | (opcional) Mostrar el caja de búsqueda    | true (default)
-sidebar          | (opcional) Mostrar la barra lateral    | true (default)
-pdf              | (opcional) Para incluir un enlace al PDF original    | true (default)
-responsive       | (opcional) Hacer que el espectador adaptable    | false (default)
-responsive_offset| (opcional) Especifique la altura del cabezal (pixels)    | 4
-default_note     | (opcional) Abra el documento en una nota específica. Un entero que representa el ID de nota | 214279
-default_page     | (opcional) Abra el documento a una página específica   | 3
-
-
-### Solicitud ejemplo
-
-    /api/oembed.json?url=https%3A//www.documentcloud.org/documents/doc-name.html&responsive=true
-
-### Ejemplo respuesta
+### Formato de respuesta
 
     {
       "type": "rich",
@@ -297,6 +276,42 @@ default_page     | (opcional) Abra el documento a una página específica   | 3
       "display_language": "en",
       "html": "<script>...</script>"
     }
+
+<a name="oembed-documents"></a>
+### Ejemplo petición documento
+
+    /api/oembed.json?url=https%3A//www.documentcloud.org/documents/doc-name.html&responsive=true
+
+### Parámetros para documentos
+
+Parámetro   | Descripción           | Ejemplo
+-----------------|-----------------------|--------------
+url              | **(requerido)** De escape de URL documento para incrustar     | https%3A//www.documentcloud.org/ documents/doc-name.html
+maxheight        | (opcional) La altura del espectador (pixels)    | 750
+maxwidth         | (opcional) La ancho del espectador (pixels)     | 600
+container        | (opcional) Especifique el contenedor DOM en el que se incorporará al espectador | #my-document-div
+notes            | (opcional) Activar la pestaña de notas   | true (default)
+text             | (opcional) Activar la pestaña de texto   | true (default)
+zoom             | (opcional) Mostrar el deslizador de zoom    | true (default)
+search           | (opcional) Mostrar el caja de búsqueda    | true (default)
+sidebar          | (opcional) Mostrar la barra lateral    | true (default)
+pdf              | (opcional) Para incluir un enlace al PDF original    | true (default)
+responsive       | (opcional) Hacer que el espectador adaptable    | false (default)
+responsive_offset| (opcional) Especifique la altura del cabezal (pixels)    | 4
+default_note     | (opcional) Abra el documento en una nota específica. Un entero que representa el ID de nota | 214279
+default_page     | (opcional) Abra el documento a una página específica   | 3
+
+<a name="oembed-notes"></a>
+### Ejemplo petición nota
+
+    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name%2Fannotations%2F123.js
+
+### Parámetros para notas
+
+Parámetro   | Descripción           | Ejemplo
+-----------------|-----------------------|--------------
+url              | **(required)** De escape de URL documento para incrustar     | https%3A//www.documentcloud.org/ documents/doc-name.html
+container        | (optional) Especifique el contenedor DOM en el que se incorporará al espectador | #my-document-div
 
 # Preguntas?
 
