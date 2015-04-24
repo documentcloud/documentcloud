@@ -4,22 +4,22 @@ El API de DocumentCloud permite a los usuarios buscar, cargar, editar y organiza
 
 ## Contenido
 
-* General:  
-  * [Directrices y Condiciones del Servicio de API](#guidelines)  
-* Métodos de Documento:  
-  * [Busque](#search-documents)  
-  * [Cargar](#upload-documents)  
-  * [Obtener](#get-document)  
-  * [Actualizar](#update-document)  
-  * [Borre](#delete-document)  
-  * [Entitades](#get-entities)  
-* Métodos de Proyecto:  
-  * [Crear](#create-project)  
-  * [Listar de proyectos](#get-projects)  
-  * [Actualizar](#update-project)  
-  * [Borre](#delete-project)  
+* General:
+  * [Directrices y Condiciones del Servicio de API](#guidelines)
+* Métodos de Documento:
+  * [Busque](#search-documents)
+  * [Cargar](#upload-documents)
+  * [Obtener](#get-document)
+  * [Actualizar](#update-document)
+  * [Borre](#delete-document)
+  * [Entitades](#get-entities)
+* Métodos de Proyecto:
+  * [Crear](#create-project)
+  * [Listar de proyectos](#get-projects)
+  * [Actualizar](#update-project)
+  * [Borre](#delete-project)
 * [oEmbed](#oembed):
-  * [Documentos](#oembed-documents)  
+  * [Documentos](#oembed-documents)
   * [Notas](#oembed-notes)
 
 <a name="guidelines"></a>
