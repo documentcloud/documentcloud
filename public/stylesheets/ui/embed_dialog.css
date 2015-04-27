@@ -283,14 +283,19 @@
     margin: 0 0 2px 0;
     overflow: hidden;
   }
-  .note_embed_dialog textarea.snippet {
+  .note_embed_dialog .snippet {
     width: 96%;
-    height: 120px;
     border: 1px solid #dedede;
     font: 11px Menlo, Consolas, Monaco, Courier, monospace;
-    margin: 10px 0px 0;
+    margin: 10px 0px;
     padding: 8px;
     resize: none;
+  }
+  .note_embed_dialog textarea.snippet {
+    height: 120px;
+  }
+  .note_embed_dialog input.snippet {
+    height: 1.5em;
   }
 .note_embed_dialog .note {
    box-shadow: none; 

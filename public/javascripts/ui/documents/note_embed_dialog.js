@@ -81,7 +81,8 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
 
   // Remove line breaks from the viewer embed.
   removeLines : function() {
-    this.$('.snippet').val(this.$('.snippet').val().replace(/[\r\n]/g, ''));
+    var $html_snippet = this.$('#note_embed_html_snippet');
+    $html_snippet.val($html_snippet.val().replace(/[\r\n]/g, ''));
   },
 
   _renderNote : function() {
@@ -101,10 +102,10 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
 
   _renderEmbedCode : function() {
     var options          = this.embedOptions();
-    var serialized       = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['workspace/note_embed_code']({
       note    : this.note,
-      options : serialized.join(',\n    ')
+      options : _.map(options, function(value, key){ return key + ': ' + value; }).join(',\n    '),
+      shortcodeOptions: options ? ' ' + _.map(options, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' ') : '',
     }));
   },
 
@@ -134,8 +135,8 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
     this._next.html(last ? _.t('finish') : _.t('next') + ' &raquo;').setMode('is', 'enabled');
   },
 
-  selectSnippet : function() {
-    this.$('.snippet').select();
+  selectSnippet : function(e) {
+    this.$(e.target).closest('.snippet').select();
   },
 
   // If necessary, let the user change the document's access level before embedding.

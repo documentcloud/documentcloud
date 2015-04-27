@@ -171,7 +171,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
       doc: this.model,
       options: _.map(options, function(value, key){ return key + ': ' + value; }).join(',\n    '),
       shortcodeOptions: _.map(options, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' '),
-      rawOptions: options
+      rawOptions: options,
     }));
   },
 
