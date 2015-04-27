@@ -27,7 +27,7 @@ gem 'rdiscount',              '~> 2.1.6'
 gem 'rake'
 gem 'actionpack-page_caching'
 gem 'jammit',                 :github=>'documentcloud/jammit', :branch=>'rails4'
-gem 'nokogiri',                '~> 1.6.0'
+gem 'nokogiri',               '~> 1.6.0'
 gem 'net-ssh-shell'
 
 group :development, :test do
@@ -39,7 +39,7 @@ group :development, :test do
   gem 'guard-minitest'
   gem 'spring'
   # for downloading the translations from google spreadsheet
-  gem 'google_drive'
+  gem 'google_drive',         '~> 1.0.0'
   # securely ask for username/password for access to translation spreadsheet
   gem 'highline'
   gem "pry"
