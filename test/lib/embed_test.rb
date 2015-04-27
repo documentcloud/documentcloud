@@ -3,7 +3,7 @@ require 'pry'
 
 describe DC::Embed::Document do
   
-  let(:resource) { Struct.new(:id, :url).new("1235", "https://lol.wat/1235") }
+  let(:resource) { Struct.new(:id, :url, :js_url).new("1235", "https://lol.wat/1235", "https://lol.wat/1235.js") }
   
   it "should require a resource" do
     Proc.new{ DC::Embed::Document.new(nil, {}) }.must_raise ArgumentError
@@ -25,7 +25,18 @@ describe DC::Embed::Document do
     code_scripts.count.must_equal 1
   end
 
-  it "should output an oembed response as json"
+  it "should output an oembed response as json" do
+    oembed_data = DC::Embed::Document.new(resource, {:sidebar=>false}, {:strategy=>:oembed}).as_json
+    html = Nokogiri::HTML(oembed_data[:html])
+    
+    code_scripts = html.xpath("//script[not(@src)]")
+    code_scripts.count.must_equal 2
+    
+    viewer_code = html.xpath("//script[@src]")
+    viewer_code.count.must_equal 1
+    viewer_code.first.attribute("src").value.must_match /viewer.js$/
+  end
+  
   it "should output a JST template"
 
   it "should configure embed code based on config settings" do
