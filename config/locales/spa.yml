@@ -298,8 +298,8 @@
   - export: Exportar
   - export_to_overview_explain: Estás a punto de exportar a Panorama. Necesitas crear
       una cuenta de Panorama que requiere tu nombre de usuario y contraseña de DocumentCloud.
-  - featured_examples_list: Puedes ver varios ejemplos de documentos incrustados en
-      nuestra lista de %sreportajes destacados%s.
+  - featured_examples_documents_list: Puedes ver varios ejemplos de documentos incrustados
+      en nuestra lista de %sreportajes destacados%s.
   - featured_reporting_list: Puedes encontrar ejemplos de búsquedas incrustadas en
       nuestra lista de %sreportajes destacados%s.
   - filter: 'Filtro '

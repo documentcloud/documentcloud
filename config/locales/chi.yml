@@ -237,7 +237,7 @@
   - export: |
       輸出
   - export_to_overview_explain: "你將是輸出到概述模式。你必須創建一個概述模式帳戶，你必須提供概述模式，您DocumentCloud的用戶名和密碼。"
-  - featured_examples_list: "你可以從％s精選報告％s中找到很多嵌入式文件的例子。"
+  - featured_examples_documents_list: "你可以從％s精選報告％s中找到很多嵌入式文件的例子。"
   - featured_reporting_list: "你可以於名單上的％s 特選報告％找到嵌入式搜索的例子。"
   - finish: "完成"
   - first_name: "名字"

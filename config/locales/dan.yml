@@ -294,8 +294,8 @@
   - export_to_overview_explain: Du er ved at eksportere til Oversigt. Du skal oprette
       en konto i Oversigt, og du skal oplyse Oversigt om dit brugernavn og adgangskode
       til DocumentCloud.
-  - featured_examples_list: Du kan finde masser af eksempler på indlejrede dokumenter
-      på vores liste over %s eksempler %s .
+  - featured_examples_documents_list: Du kan finde masser af eksempler på indlejrede
+      dokumenter på vores liste over %s eksempler %s .
   - featured_reporting_list: Du kan finde eksempler på indlejrede søgninger på vores
       liste over %s eksempler %s .
   - filter: 'filter '
