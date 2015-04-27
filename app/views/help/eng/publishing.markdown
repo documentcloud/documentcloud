@@ -9,9 +9,7 @@ Ready to share your documents with readers? Either by embedding our custom viewe
   * [Documents](#embed-document)
   * [Notes](#embed-note)
   * [Document Sets](#embed-set)
-* [oEmbed service](#oembed):
-  * [oEmbed with WordPress](#oembed-wordpress)
-  * [Documents](#oembed-document)
+* [oEmbed service](#oembed)
 
 <a name="public"></a>
 # Making Documents Public
@@ -146,13 +144,6 @@ oEmbed is a Web standard for providing embedded content on a site via a request 
 ### Example note URL for oEmbed
 
     https://www.documentcloud.org/documents/1234-document-name.html#document/p2/a208505
-
-<a name="oembed-wordpress"></a>
-# <span id="docset">oEmbed with WordPress</span>
-
-DocumentCloud users who publish via WordPress can install a plugin that lets you embed documents, notes and document sets using [shortcodes](https://codex.wordpress.org/Shortcode_API).
-
-The plugin and instructions are available at XXX.
 
 # Questions?
 
