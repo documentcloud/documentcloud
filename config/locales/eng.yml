@@ -652,6 +652,7 @@
   - welcome_to_document_cloud: Welcome to DocumentCloud
   - width: Width
   - workspace: Workspace
+  - wp_shortcode_plugin_docs_link: Plugin required.
   - x_accounts:
     - "%d account"
     - "%d accounts"
