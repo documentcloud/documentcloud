@@ -1,5 +1,4 @@
 # Comentarios en documentos: Notas públicas, privadas, y de borrador
-12.0
 ![Annotations](/images/help/document_annotations.jpg)
 
 DocumentCloud soporta notas privadas y públicas. Las notas públicas son visibles para cualquier persona que tenga acceso al documento, mientras que las notas privadas son solamente visibles para su autor. Las notas públicas también pueden guardarse como  notas de borrador: las notas de borrador son visibles para cualquier persona con los privilegios necesarios para comentar en un documento, incluyendo [los evaluadores y colaboradores](collaboration), pero dichas notas no se publicarán en el documento. 
@@ -112,8 +111,14 @@ También puede incrustar una nota directamente. Visite nuestra página con infor
 
 Es fácil imprimir todas las notas de un documento en particular o de una colección de documentos. Si está en el espacio de trabajo, seleccione los documentos con las notas que le gustaría imprimir, abra el menú "Publicar" y haga clic en "Print Notes". Cuando visualice un documento, usted encontrará el enlace a "Imprimir Notas" en la barra lateral.
 
+## <span id="deleting">Eliminación de Notas</span>
+
+Para eliminar una nota de su documento, abra la nota haciendo clic en él. A continuación, haga clic en el icono de lápiz en la parte superior para acceder al modo de edición. Luego haga clic en el botón Eliminar para eliminar la nota. <strong>Importante:</strong> La eliminación de una nota no se puede deshacer, por lo que proceder con cautela.
+
 # <span id="sections">Agregando Secciones de Navegación</span>
 
 Para ayudar a diferenciar las partes de un documento largo, puede agregar enlaces de navegación a la barra lateral mediante la definición de secciones. Dentro del visor de documentos, haga clic en "Editar Secciones" para abrir el  cuadro de diálogo de Editor de Secciones. Agregue un título, una página de inicio, y una página final en cada sección que desea definir. Utilice los iconos de más y menos para añadir y eliminar filas. Cuando termine, no olvide guardar los cambios.
+
+# <span id="questions">Preguntas?</span>
 
 ¿Todavía tiene preguntas sobre como añadir notas a documentos? No dude en [comunicarse con nosotros](javascript:dc.ui.Dialog.contact(\)).

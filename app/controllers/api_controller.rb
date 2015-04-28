@@ -184,7 +184,13 @@ class ApiController < ApplicationController
     # The JS URL should match the protocol used for the request, but
     # the "canonical" resource URL can be our preferred one (HTTPS).
     resource_js_url = url_for(resource_params.merge(:format => 'js'))
-    resource = resource_serializer_klass.new(resource_params[:id], resource_js_url, :document)
+
+    controller_embed_map = {
+      'annotations' => :note,
+      'documents'   => :document,
+    }
+
+    resource = resource_serializer_klass.new(resource_params[:id], resource_js_url, controller_embed_map[resource_params[:controller]])
     
     config = pick(params, *DC::Embed.embed_klass(resource.type).config_keys)
     embed = DC::Embed.embed_for(resource, config, {:strategy => :oembed})
@@ -216,10 +222,18 @@ class ApiController < ApplicationController
 
   def resource_embeddable?(resource_params)
     resource_params and
-    resource_params[:controller] == "documents" and
     resource_params[:id] and
-    resource_params[:id] =~ DC::Validators::SLUG # and
-    # Document.accessible(nil, nil).exists?(params[:id].to_i) 
+    (
+      (
+        resource_params[:controller] == "documents" and
+        resource_params[:id] =~ DC::Validators::SLUG # and
+        # Document.accessible(nil, nil).exists?(params[:id].to_i) 
+      ) or
+      (
+        resource_params[:controller] == "annotations" and
+        resource_params[:document_id] =~ DC::Validators::SLUG
+      )
+    )
   end
 
   def secure_silence_logs

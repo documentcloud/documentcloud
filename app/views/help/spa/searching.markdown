@@ -48,7 +48,7 @@ Aparecerá un diálogo que puede utilizar para ver los pares clave/valor existen
 
 Para filtrar los documentos por medio de datos que ha añadido, haga clic en la etiqueta (que se muestra en la imagen de arriba), o busque  los pares clave/valor como si se tratara de cualquier otro campo, escribiendo citizen: Pakistan en el cuadro de búsqueda.
 
-Puede agregar la misma clave varias veces con diferentes valores. Para buscar todos los ciudadanos de Pakistán o Yemen: `citizen: Pakistan citizen: Yemen`
+Se pueden introducir los mismos tecla varias veces con diferentes valores para un "o" búsqueda. Para buscar todos los ciudadanos de Pakistán o Yemen: `citizen: Pakistan citizen: Yemen`
 
 Si desea filtrar todos los documentos con la clave `citizen`, pero no le importa el valor, puede utilizar: `citizen: *`
 
