@@ -111,10 +111,15 @@ You also can embed a note directly. See our [publishing and embedding](<a href="
 
 It's easy to print out all the notes on a particular document or collection of documents. If you're in the workspace, select the documents, open the "Publish" menu, and click "Print Notes." While viewing a document, you'll find the link to "Print Notes" in the sidebar.
 
+## <span id="deleting">Deleting Notes</span>
+
+To remove a note from your document, open the note by clicking on it. Next, click the pencil icon at the top to enter edit mode. Then click the Delete button to remove the note. <strong>Important:</strong> Deleting a note cannot be undone, so proceed with caution.
 
 # <span id="sections">Adding Sections for Navigation</span>
 
 To help differentiate portions of a long document, you can add navigation links to the sidebar by defining sections. Inside of the document viewer, click on "Edit Sections" to open the Section Editor dialog. Add a title, starting page, and ending page for each section. Use the plus and minus icons to add and remove rows. When you're done, don't forget to save.
+
+# <span id="questions">Questions?</span>
 
 Still have questions about annotating documents? Don't hesitate to [contact us][].
 
