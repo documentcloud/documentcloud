@@ -51,7 +51,6 @@ class ApiControllerTest < ActionController::TestCase
 
   test "test_empty_search_results" do
     get :search, q: 'ponies', :format => :json
-    assert_has_search_params Sunspot.session.searches.last, :keywords, 'ponies'
     assert_equal 0, json_body['total']
   end
 

@@ -1,16 +1,18 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'rails/test_help'
-require 'sunspot_matchers/test_helper'
+require 'sunspot-rails-tester'
 require "minitest/autorun"
+require 'pry'
 
 PROCESSING_JOBS = []
 
+$original_sunspot_session = Sunspot.session
+
 module DocumentCloudAssertions
   def self.included(base)
-    base.send :include,  SunspotMatchers::TestHelper
     base.setup do
-      Sunspot.session = SunspotMatchers::SunspotSessionSpy.new(Sunspot.session)
+      Sunspot.session = Sunspot::Rails::StubSessionProxy.new($original_sunspot_session)
     end
     base.teardown do
       PROCESSING_JOBS.clear
@@ -25,7 +27,7 @@ end
 
 class ActionController::TestCase
   include DocumentCloudAssertions
-
+  
   def login_account!( login = :louis, password='password' )
     account = accounts(login)
     @request.headers['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic

@@ -32,8 +32,7 @@ class DocumentTest < ActiveSupport::TestCase
 
   def test_searched_using_solr
     search = Document.search( "super keywords" )
-    assert_is_search_for Sunspot.session, Document
-    assert_has_search_params Sunspot.session.searches.last, :keywords, 'super keywords'
+    assert search.instance_variable_get(:@needs_solr)
   end
 
   def test_can_import_document

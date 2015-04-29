@@ -212,12 +212,6 @@ class DocumentsControllerTest < ActionController::TestCase
     assert_equal "This is my page!", pages(:first).text
   end
 
-  def test_search
-    get :search, :id=>doc.id, :q=>"Page Text"
-    assert_is_search_for Sunspot.session, Page
-    assert_has_search_params( Sunspot.session.searches.last, :keywords, '"Page Text"' )
-  end
-
   def test_preview
     login_account!
     get :preview, :id=>doc.id

@@ -11,8 +11,8 @@ gem 'pg',                     '~> 0.17'
 
 gem 'closure-compiler'
 gem 'docsplit',               '0.8.0.alpha1'
-gem 'sunspot_rails',          '~> 2.1.0'
-gem 'sunspot_solr',           '~> 2.1.0'
+gem 'sunspot_rails'
+gem 'sunspot_solr'
 gem 'progress_bar'  # optional, used by sunspot to show progress while re-indexing
 gem 'cloud-crowd',            '~>0.7.3'
 gem 'pdftailor'
@@ -33,7 +33,8 @@ gem 'net-ssh-shell'
 group :development, :test do
   gem 'guard-bundler'
   gem 'growl'
-  gem "sunspot_matchers"
+  gem "sunspot-rails-tester"
+  #gem 'sunspot_matchers'
   gem 'minitest'
   gem 'minitest-spec-rails'
   gem 'guard-minitest'
