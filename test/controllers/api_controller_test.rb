@@ -63,7 +63,7 @@ class ApiControllerTest < ActionController::TestCase
     assert_equal doc.canonical_id, json_body['documents'].first['id']
   end
 
-  def test_api_login_required_returns_http_401
+  def test_api_login_required_returns_unauthorized
     get :upload
     assert_response 401
   end
@@ -84,7 +84,7 @@ class ApiControllerTest < ActionController::TestCase
     request.headers['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials("WRONG-email@example.org", "WRONG-password")
     refute request.authorization.blank?
     get(:search, q: "document:#{doc.id}", format: :json)
-    assert_response 401
+    assert_response 403
   end
 
   def test_it_requires_authentication

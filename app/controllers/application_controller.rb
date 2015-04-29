@@ -99,8 +99,10 @@ class ApplicationController < ActionController::Base
     authenticate_or_request_with_http_basic("DocumentCloud") do |email, password|
       if @current_account = Account.log_in(email, password)
         @current_organization = @current_account.organization
+        @current_account
+      else
+        return forbidden
       end
-      @current_account
     end
   end
 
