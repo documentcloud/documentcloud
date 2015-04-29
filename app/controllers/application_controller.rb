@@ -97,24 +97,16 @@ class ApplicationController < ActionController::Base
 
   def api_login_required
     authenticate_or_request_with_http_basic("DocumentCloud") do |email, password|
-      @current_account = Account.log_in(email, password)
-      if @current_account.blank?
-        false
-      else
-        @current_organization = @current_account.organization
-        true
-      end
+      return false unless @current_account = Account.log_in(email, password)
+      @current_organization = @current_account.organization
+      true
     end
   end
 
   def api_login_optional
-    if request.authorization.blank?
-      # Public user
-      true
-    else
-      # The user is trying to log in. If the username/password is wrong, fail.
-      api_login_required
-    end
+    return if request.authorization.blank?
+    return unless @current_account = Account.log_in(*BasicAuth.user_name_and_password(request))
+    @current_organization = @current_account.organization
   end
   
   def allow_iframe
