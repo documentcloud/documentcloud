@@ -61,6 +61,30 @@ class ApiControllerTest < ActionController::TestCase
     assert_equal doc.canonical_id, json_body['documents'].first['id']
   end
 
+  def test_api_login_required_returns_unauthorized
+    get :upload
+    assert_response 401
+  end
+
+  def test_search_works_if_authenticated
+    # authentication is optional, but it can get you more docs
+    account = accounts(:louis)
+    request.headers['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(account.email, 'password')
+    get(:search, q: "document:#{doc.id}", format: :json)
+    assert_response 200
+    assert_equal 1, json_body['total']
+    assert_equal doc.canonical_id, json_body['documents'].first['id']
+  end
+
+  def test_search_doesnt_work_if_authentication_fails
+    # otherwise the user might enter the wrong password and be sad the extra docs are missing
+    # https://github.com/documentcloud/documentcloud/issues/89
+    request.headers['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials("WRONG-email@example.org", "WRONG-password")
+    refute request.authorization.blank?
+    get(:search, q: "document:#{doc.id}", format: :json)
+    assert_response 403
+  end
+
   def test_it_requires_authentication
     [ :upload, :project, :projects, :update, :destroy, :create_project, :update_project, :destroy_project ].each do | action |
       get action
