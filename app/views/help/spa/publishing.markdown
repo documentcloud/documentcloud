@@ -5,10 +5,11 @@
 ## Contents
 
 * [Haciendo documentos públicos](#public)
-* Generating embed codes:
+* Generar códigos embed:
   * [Documentos](#embed-document)
   * [Notas](#embed-note)
   * [Grupo de Documentos](#embed-set)
+* [WordPress Shortcodes](#wordpress)
 * [oEmbed service](#oembed)
 
 <a name="public"></a>
@@ -73,7 +74,7 @@ En ocasiones es posible que haya incorporado/incrustado documentos que le gustar
 
 ## <span id="intouch">Manténgase en contacto</span>
 
-[]¡Cuéntenos acerca de sus reportajes!](javascript:dc.ui.Dialog.contact(\))
+[¡Cuéntenos acerca de sus reportajes!](javascript:dc.ui.Dialog.contact(\))
 
 <a name="embed-note"></a>
 # <span id="note_embed">Incrustar una nota de un documento</span>
@@ -129,6 +130,23 @@ Pegue el código en su página web, y el conjunto de documentos aparecerá.
 <img src="/images/help/search_embed.png" class="full_line" />
 
 Haga clic en cualquier documento para abrirlo. Si ha publicado el documento en su página web previamente,  deberíamos haber detectado su URL automáticamente, y se abrirá con ese URL. Si el documento es público, pero aún no se ha publicado, se abrirá en DocumentCloud.org. Si está seguro de que usted ha publicado un documento, pero aun así se abre en DocumentCloud.org, abra el menú "Edit", haga clic en "URL Publicado", y establezca manualmente el URL con el que se ha publicado el documento.
+
+<a name="wordpress"></a>
+# <span id="docset">WordPress Shortcodes</span>
+
+Los usuarios que publican a través de WordPress pueden instalar un plugin que permite incorporar recursos DocumentCloud utilizando [shortcodes](https://codex.wordpress.org/Shortcode_API).
+
+Descargue el plugin DocumentCloud en su [página de plugin para WordPress](https://wordpress.org/plugins/documentcloud/). Instalar y activar de acuerdo a las instrucciones.
+
+Una vez activado, puede incrustar recursos con un simple shortcode. También puede pasar parámetros adicionales para controlar el tamaño y los atributos del embed. Por ejemplo, si desea incrustar un documento a 800px de ancho sin barra lateral, pre-desplazado a la página 3:
+
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html" width="800" sidebar="false" default_page="3"]
+
+Para una nota, utilice cualquier URL-nota específica:
+
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p1/a53674"]
+
+Una lista de todos los parámetros que puede utilizar con el código corto está disponible en [la página del plugin](https://wordpress.org/plugins/documentcloud/).
 
 <a name="oembed"></a>
 # <span id="docset">oEmbed Service</span>

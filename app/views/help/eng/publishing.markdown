@@ -9,6 +9,7 @@ Ready to share your documents with readers? Either by embedding our custom viewe
   * [Documents](#embed-document)
   * [Notes](#embed-note)
   * [Document Sets](#embed-set)
+* [WordPress Shortcodes](#wordpress)
 * [oEmbed service](#oembed)
 
 <a name="public"></a>
@@ -131,6 +132,23 @@ Paste the code into on your website, and you'll see the set of documents appear.
 <img src="/images/help/search_embed.png" class="full_line" />
 
 Click on any document to open it. If you've previously published the document on your website, we should have automatically detected its URL, and it will open at that URL. If the document is public but has not yet been published, it will open on DocumentCloud.org. If you're sure that you've published a document but it still opens on DocumentCloud.org, open the "Edit" menu, click "Published URL", and manually set the URL at which the document has been published.
+
+<a name="wordpress"></a>
+# <span id="docset">WordPress Shortcodes</span>
+
+Users who publish via WordPress can install a plugin that lets you embed DocumentCloud resources using [shortcodes](https://codex.wordpress.org/Shortcode_API).
+
+Download the DocumentCloud plugin at its [WordPress plugin page](https://wordpress.org/plugins/documentcloud/). Install and activate it according to the directions.
+
+Once activated, you can embed resources with a simple shortcode. You also can pass additional parameters to control the size and attributes of the embed. For example, if you want to embed a document at 800px wide with no sidebar, pre-scrolled to page 3:
+
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html" width="800" sidebar="false" default_page="3"]
+
+For a note, use any note-specific URL:
+
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p1/a53674"]
+
+A list of all the parameters you can use with the shortcode is available on the [plugin page](https://wordpress.org/plugins/documentcloud/).
 
 <a name="oembed"></a>
 # <span id="docset">oEmbed Service</span>
