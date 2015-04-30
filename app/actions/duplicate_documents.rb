@@ -9,7 +9,7 @@ class DuplicateDocuments < CloudCrowd::Action
         doc.duplicate!(account, options)
       rescue => e
         LifecycleMailer.exception_notification(e, options.merge({:document_id=>doc.id}) ).deliver
-        outcomes[:failed].push({:id=>doc.id, :access=>doc.access, :error=>{:name=>e.class.name, :message=>e.message})
+        outcomes[:failed].push(:id=>doc.id, :access=>doc.access, :error=>{:name=>e.class.name, :message=>e.message})
       end
       outcomes[:succeeded].push(doc.id)
     end
