@@ -18,7 +18,7 @@ class DuplicateDocuments < CloudCrowd::Action
   
   def merge
     # email manifest to us.
-    LifecycleMailer.logging_email("DuplicateDocument batch manifest", inputs)
+    LifecycleMailer.logging_email("DuplicateDocument batch manifest", input)
   end
   
   private
