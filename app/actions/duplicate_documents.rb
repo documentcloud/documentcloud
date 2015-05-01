@@ -21,8 +21,8 @@ class DuplicateDocuments < CloudCrowd::Action
     successes = []
     failures = []
     input.each do |result| 
-      successes.push(result["succeeded"])
-      failures.push(result["failed"])
+      successes += result["succeeded"]
+      failures  += result["failed"]
     end
     data = {:successes => successes, :failures => failures}
     LifecycleMailer.logging_email("DuplicateDocument batch manifest", data).deliver
