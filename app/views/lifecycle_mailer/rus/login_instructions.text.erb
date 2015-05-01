@@ -1,7 +1,7 @@
 <%= @account.full_name %> --
 
 <% if @admin -%>
-<%= @admin.full_name %> добавил вас в аккаунт <%= @account.organization_name %> на DocumentCloud.
+<%= @admin.full_name %> добавил вас в аккаунт <%= @account.organization.name %> на DocumentCloud.
 <% else -%>
 Для Вас и для <%= @account.organization.name %> был создан аккаунт на DocumentCloud.
 <% end -%>
