@@ -18,7 +18,13 @@ class DuplicateDocuments < CloudCrowd::Action
   
   def merge
     # email manifest to us.
-    LifecycleMailer.logging_email("DuplicateDocument batch manifest", input)
+    successes = []
+    failures = []
+    input.each do |result| 
+      successes.push(result["succeeded"])
+      failures.push(result["failed"])
+    end
+    LifecycleMailer.logging_email("DuplicateDocument batch manifest", {:successes => successes, :failures => failures})
   end
   
   private
