@@ -1,7 +1,23 @@
 # Publicando documentos, notas y conjuntos de documentos
 
-¿Esta listo para hacer que sus documentos sean públicos? Publique documentos individuales, incruste un conjunto de documentos que sus lectores puedan navegar, o integre una sola nota en cualquier documento. Antes de publicar una nota, un documento o conjunto de documentos, usted querrá asegurarse de que el documento o los documentos son públicos. Haga público un documento mediante la opción "Nivel de Accesol" (en el menú "Editar") o mediante la selección de una fecha de publicación (en el menú "Publicar").
+¿Esta listo para hacer que sus documentos sean públicos? Publique documentos individuales, incruste un conjunto de documentos que sus lectores puedan navegar, o integre una sola nota en cualquier documento. 
 
+## Contents
+
+* [Haciendo documentos públicos](#public)
+* Generar códigos embed:
+  * [Documentos](#embed-document)
+  * [Notas](#embed-note)
+  * [Grupo de Documentos](#embed-set)
+* [WordPress Shortcodes](#wordpress)
+* [oEmbed service](#oembed)
+
+<a name="public"></a>
+# Haciendo documentos públicos
+
+Antes de publicar una nota, un documento o conjunto de documentos, usted querrá asegurarse de que el documento o los documentos son públicos. Haga público un documento mediante la opción "Nivel de Accesol" (en el menú "Editar") o mediante la selección de una fecha de publicación (en el menú "Publicar").
+
+<a name="embed-document"></a>
 # Publicando documentos individuales
 
 Para publicar cualquier documento de DocumentCloud, puede descargar una copia independiente del visor, o generar, copiar, y pegar un código de inserción sencillo para ese documento. Le recomendamos incrustar un código que vincule a DocumentCloud en la mayoría de los documentos. Las siguientes instrucciones asumen que tiene conocimiento básico de HTML, pero hemos tratado que el proceso de incorporación/incrustación sea lo sencillo posible. 
@@ -58,8 +74,9 @@ En ocasiones es posible que haya incorporado/incrustado documentos que le gustar
 
 ## <span id="intouch">Manténgase en contacto</span>
 
-[]¡Cuéntenos acerca de sus reportajes!](javascript:dc.ui.Dialog.contact(\))
+[¡Cuéntenos acerca de sus reportajes!](javascript:dc.ui.Dialog.contact(\))
 
+<a name="embed-note"></a>
 # <span id="note_embed">Incrustar una nota de un documento</span>
 
 ![Embed Note Menu](/images/help/embed_note_menu.png)
@@ -77,6 +94,7 @@ Se le pedirá que seleccione la nota a insertar, y podrá revisar la nota incrus
 
 Copie y pegue el código HTML en su propio sitio. Al hacer clic en el título o la imagen, se abrirá el documento. Los documentos se abrirán en DocumentCloud a menos que los haya publicado en otra parte. Utilizamos pixel ping de adivinar el URL publicado de un documento, de manera que si los usuarios no pueden encuentran el documento de otra manera, puede que usted tenga que añadir el URL publicado manualmente.
 
+<a name="embed-set"></a>
 # <span id="docset">Incrustando un conjunto de documentos</span>
 
 ![Embed Search Menu](/images/help/embed_search_menu.png)
@@ -113,5 +131,38 @@ Pegue el código en su página web, y el conjunto de documentos aparecerá.
 
 Haga clic en cualquier documento para abrirlo. Si ha publicado el documento en su página web previamente,  deberíamos haber detectado su URL automáticamente, y se abrirá con ese URL. Si el documento es público, pero aún no se ha publicado, se abrirá en DocumentCloud.org. Si está seguro de que usted ha publicado un documento, pero aun así se abre en DocumentCloud.org, abra el menú "Edit", haga clic en "URL Publicado", y establezca manualmente el URL con el que se ha publicado el documento.
 
+<a name="wordpress"></a>
+# <span id="docset">WordPress Shortcodes</span>
+
+Los usuarios que publican a través de WordPress pueden instalar un plugin que permite incorporar recursos DocumentCloud utilizando [shortcodes](https://codex.wordpress.org/Shortcode_API).
+
+Descargue el plugin DocumentCloud en su [página de plugin para WordPress](https://wordpress.org/plugins/documentcloud/). Instalar y activar de acuerdo a las instrucciones.
+
+Una vez activado, puede incrustar recursos con un simple shortcode. También puede pasar parámetros adicionales para controlar el tamaño y los atributos del embed. Por ejemplo, si desea incrustar un documento a 800px de ancho, pre-desplazado a la página 3:
+
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html" width="800" default_page="3"]
+
+Para una nota, utilice cualquier URL-nota específica:
+
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p1/a53674"]
+
+Una lista de todos los parámetros que puede utilizar con el código corto está disponible en [la página del plugin](https://wordpress.org/plugins/documentcloud/).
+
+<a name="oembed"></a>
+# <span id="docset">oEmbed Service</span>
+
+oEmbed es un estándar Web para proporcionar el contenido embebido en un sitio a través de una petición a la URL del recurso. Si un sistema de gestión de contenidos apoya oEmbed, sólo tiene que pegar en la URL de un recurso DocumentCloud, y el CMS se ha podido ir a través de nuestro [oEmbed API] [] e incrustarlo. Consulte con el administrador de sistemas de la organización acerca de si su CMS apoya oEmbed.
+
+### Ejemplo URL documento para oEmbed
+
+    https://www.documentcloud.org/documents/1234-document-name.html
+
+### Ejemplo URL nota para oEmbed
+
+    https://www.documentcloud.org/documents/1234-document-name.html#document/p2/a208505
+
+# Preguntas?
 
 ¿Aún tiene preguntas acerca de la publicación e incrustación? No dude en [comunicarse con nosotros](javascript:dc.ui.Dialog.contact(\)).
+
+[oEmbed API]: https://www.documentcloud.org/help/api#oembed

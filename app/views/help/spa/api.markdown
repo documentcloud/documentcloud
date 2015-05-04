@@ -1,14 +1,42 @@
+# El API de DocumentCloud
+
+El API de DocumentCloud permite a los usuarios buscar, cargar, editar y organizar documentos. Además, un servicio oEmbed ofrece fácil incorporación de documentos.
+
+## Contenido
+
+* General:
+  * [Directrices y Condiciones del Servicio de API](#guidelines)
+* Métodos de Documento:
+  * [Busque](#search-documents)
+  * [Cargar](#upload-documents)
+  * [Obtener](#get-document)
+  * [Actualizar](#update-document)
+  * [Borre](#delete-document)
+  * [Entitades](#get-entities)
+* Métodos de Proyecto:
+  * [Crear](#create-project)
+  * [Listar de proyectos](#get-projects)
+  * [Actualizar](#update-project)
+  * [Borre](#delete-project)
+* [oEmbed](#oembed):
+  * [Documentos](#oembed-documents)
+  * [Notas](#oembed-notes)
+
+<a name="guidelines"></a>
 # Directrices y Condiciones del Servicio de API
 
-El API de DocumentCloud permite a los usuarios buscar, cargar, editar y organizar documentos. No se requiere ninguna clave de API, por lo cual realizar búsquedas directamente desde JavaScript es válido. Por favor sea amable, y no sobrecargue nuestros servidores. Restricciones sobre el uso de la API de DocumentCloud no aplican a las organizaciones aportadoras que trabajan con documentos cargados por sus propios usuarios.
+No se requiere ninguna clave de API, por lo cual realizar búsquedas directamente desde JavaScript es válido. Por favor sea amable, y no sobrecargue nuestros servidores. Restricciones sobre el uso de la API de DocumentCloud no aplican a las organizaciones aportadoras que trabajan con documentos cargados por sus propios usuarios.
 
  * Bajo ninguna circunstancia se permitirá la reproducción de DocumentCloud.org en su totalidad o construir una aplicación que simplemente muestre el conjunto completo de documentos. Tiene prohibido crear una aplicación que muestre el conjunto de documentos de una organización aportadora.
- * Si su proyecto permite a los usuarios interactuar con los datos de DocumentCloud, está obligado a  citar DocumentCloud como la fuente de sus datos. Si su proyecto permite a los usuarios ver o explorar documentos específicos, debe citar DocumentCloud, así como a  las organizaciones aportadoras pertinentes, identificadas en el API.
- * No se permite utilizar la API comercialmente,  lo que significa que no se permite cobrar dinero a la gente para mirar los datos, o vender publicidad con dicha información.
+ * Si su proyecto permite a los usuarios interactuar con los datos de DocumentCloud, está obligado a citar DocumentCloud como la fuente de sus datos. Si su proyecto permite a los usuarios ver o explorar documentos específicos, debe citar DocumentCloud, así como a las organizaciones aportadoras pertinentes, identificadas en el API.
+ * No se permite utilizar la API comercialmente, lo que significa que no se permite cobrar dinero a la gente para mirar los datos, o vender publicidad con dicha información.
  * Usted entiende y acepta que los datos proporcionados por nuestro API pueden contener errores y omisiones.
 
 _Nos reservamos el derecho de modificar estas directrices. Si usted infringe el espíritu de estas condiciones, sobre todo si utiliza la API para acceder e imprimir de forma sistemática los documentos que usted o su sala de redacción no contribuyó, anticipe ser bloqueado sin previo aviso._
 
+# Métodos de Documento
+
+<a name="search-documents"></a>
 ## GET /api/search.json
 
 Busque en el catálogo de documentos públicos. Este método se puede utilizar para extraer los documentos públicos de su cuenta con fines incrustarlos, o para permitir búsquedas de su archivo de documentos cargados directamente desde tu propio sitio web. Consulte  <a href="searching">nuestra información</a> de búsqueda para más ayuda con las consultas de búsqueda.
@@ -56,8 +84,8 @@ mentions      |  incluyen las menciones destacadas de la frase de búsqueda    |
 
  * Si desea obtener resultados de búsqueda con más de diez documentos en una página, pase el parámetro per_page. Un máximo de 1000 documentos se devolverán a la vez.
 
+<a name="upload-documents"></a>
 ## POST /api/upload.json
-
 
 Nuestra API para cargas en conjunto expone el mismo método que se utiliza internamente, pero lo envuelve en la autenticación básica a través de HTTPS. Los documentos se cargan en la cuenta autenticada.
 
@@ -95,6 +123,7 @@ Usando biblioteca RestClient de Ruby podría hacerlo siguiente:
       :data   => {"date" => "2009-04-01", "exhibit" => "E1146"}
     )
 
+<a name="get-document"></a>
 ## GET /api/documents/[id].json
 
 Recupere la representación canónica JSON de un documento en particular, según especificado por el identificador del documento (normalmente algo como: **218-madoff-sec-report**).
@@ -126,7 +155,7 @@ Recupere la representación canónica JSON de un documento en particular, según
       "annotations":[]
     }}
 
-
+<a name="update-document"></a>
 ## PUT /api/documents/[id].json
 
 Actualice el **título**, **fuente**, **descripción**, **artículo relacionado**, **nivel de acceso**, o los datos de un documento, con este método. Refiérase a su documento por su ID (normalmente algo como: **218-madoff-sec-report**).
@@ -144,29 +173,26 @@ project		    | (opcional) una identificación de proyectos numérica, para carga
 data 		    | (opcional) una mezcla  de pares clave / valor de datos {"data": {"status": "active"}} (json) arbitrarios | data[status]=active (query string)
 secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | verdadero 
 
-
-
 El valor en la respuesta de este método será la representación JSON de su documento (como se ve en el método GET arriba), con todos las actualizaciones aplicadas.
 
 ## Consejos
 
  * Si su cliente HTTP no puede crear una solicitud PUT, puede enviarlo como POST, y añadir un parámetro adicional: _method=put
  
-
+<a name="delete-document"></a>
 ## DELETE/api/documents /[id].Json
 
 Elimine un documento de DocumentCloud. Debe ser autentificado como el propietario del documento para que este método funcione.
 Consejos
 
  * Si su cliente HTTP no puede crear una petición DELETE, puede enviarlo como POST, y añadir un parámetro adicional: _method=delete
- 
+
+<a name="get-entities"></a>
 ## GET/api/documents/[id]/entities.json
 
 Recupere el JSON de todas las entidades que un determinado documento contiene, especificado por el ID del documento (normalmente algo como: **218-madoff-sec-report**). Las entidades son ordenadas por su relevancia al  el documento según es determinado por OpenCalais.
 
 ### Ejemplo de respuesta
-
-
 
     {
       "entities":{
@@ -184,8 +210,9 @@ Recupere el JSON de todas las entidades que un determinado documento contiene, e
       }
     }
 
+# Métodos de Proyecto
 
-
+<a name="create-project"></a>
 ## POST /api/projects.json
 
 Cree un nuevo proyecto para la cuenta autenticada, con un título, una descripción opcional y los identificadores (IDs) de documentos opcionales.
@@ -199,6 +226,7 @@ document_ids | 	(opcional) una lista de los documentos que el proyecto contiene,
 ## Consejos
  * Tenga en cuenta que tiene que utilizar la convención para pasar una matriz de cadenas: `?document_ids[]=28-boumediene&document_ids[]=207-academy&document_ids[]=30-insider-trading`
 
+<a name="get-projects"></a>
 ## GET/api/projects.json
 
 Recupere una lista de nombres de proyectos y IDs de documentos. Debe utilizar la autenticación básica a través de HTTPS para hacer esta solicitud. Los proyectos presentados a continuación pertenecen a la cuenta autenticada.
@@ -217,13 +245,89 @@ Recupere una lista de nombres de proyectos y IDs de documentos. Debe utilizar la
       ...
     ]}
 
-
+<a name="update-project"></a>
 ## PUT/api/projects/[id].json
 
 Actualice un proyecto existente para la cuenta actual autenticada. Puede definir el título, la descripción o la lista de documentos. Véase POST, arriba.
 
+<a name="delete-project"></a>
 ## DELETE/api/projects /[id].json
 
 Borre un proyecto que pertenezca a la cuenta actual autenticada.
 
+<a name="oembed"></a>
+# oEmbed
+
+## GET /api/oembed.json
+
+Generar un código de inserción para un recurso (un documento o una nota) utilizando nuestro servicio [oEmbed](http://oembed.com/). Devuelve una rica respuesta JSON.
+
+### Formato de respuesta
+
+    {
+      "type": "rich",
+      "version": "1.0",
+      "provider_name": "DocumentCloud",
+      "provider_url": "https://www.documentcloud.org/",
+      "cache_age": 300,
+      "resource_url": "https://www.documentcloud.org/documents/doc-name.html",
+      "height": 750,
+      "width": 600,
+      "display_language": "en",
+      "html": "<script>...</script>"
+    }
+
+<a name="oembed-documents"></a>
+### Ejemplo petición documento
+
+    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name.html&responsive=true
+
+### Parámetros para documentos
+
+Parámetro   | Descripción           | Ejemplo
+-----------------|-----------------------|--------------
+url              | **(requerido)** De escape de URL documento para incrustar     | https%3A//www.documentcloud.org/ documents/doc-name.html
+maxheight        | (opcional) La altura del espectador (pixels)    | 750
+maxwidth         | (opcional) La ancho del espectador (pixels)     | 600
+container        | (opcional) Especifique el contenedor DOM en el que se incorporará al espectador | #my-document-div
+notes            | (opcional) Activar la pestaña de notas   | true (default)
+text             | (opcional) Activar la pestaña de texto   | true (default)
+zoom             | (opcional) Mostrar el deslizador de zoom    | true (default)
+search           | (opcional) Mostrar el caja de búsqueda    | true (default)
+sidebar          | (opcional) Mostrar la barra lateral    | true (default)
+pdf              | (opcional) Para incluir un enlace al PDF original    | true (default)
+responsive       | (opcional) Hacer que el espectador adaptable    | false (default)
+responsive_offset| (opcional) Especifique la altura del cabezal (pixels)    | 4
+default_note     | (opcional) Abra el documento en una nota específica. Un entero que representa el ID de nota | 214279
+default_page     | (opcional) Abra el documento a una página específica   | 3
+
+<a name="oembed-notes"></a>
+### Ejemplo petición nota
+
+    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name%2Fannotations%2F123.js
+
+### Parámetros para notas
+
+Parámetro   | Descripción           | Ejemplo
+-----------------|-----------------------|--------------
+url              | **(required)** De escape de URL documento para incrustar     | https%3A//www.documentcloud.org/ documents/doc-name.html
+container        | (optional) Especifique el contenedor DOM en el que se incorporará al espectador | #my-document-div
+
+# Preguntas?
+
 ¿Aún tiene preguntas acerca de cómo colaborar? No dude en [comunicarse con nosotros](javascript:dc.ui.Dialog.contact(\)).
+
+<script type="text/javascript">
+  $(function() {
+    $('#search_form').submit(function(e) {
+      e.preventDefault();
+      $.getJSON('/api/search', {q : $('#q').val()}, function(resp) {
+        $('#search_results').show().text(JSON.stringify(resp, null, 2));
+      });
+    });
+    $('#run_search').click(function() {
+      $('#search_form').submit();
+    });
+    $('#help table td:nth-child(2n)').addClass('desc');
+  });
+</script>
