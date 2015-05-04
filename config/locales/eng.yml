@@ -291,7 +291,9 @@
   - export_to_overview_explain: You are about to export to Overview. You must create
       an Overview account, and you must provide Overview with your DocumentCloud username
       and password.
-  - featured_examples_list: You can find plenty of examples of embedded documents
+  - featured_examples_documents_list: You can find plenty of examples of embedded
+      documents on our list of %sfeatured reporting%s.
+  - featured_examples_notes_list: You can find plenty of examples of embedded notes
       on our list of %sfeatured reporting%s.
   - featured_reporting_list: You can find examples of embedded searches on our list
       of %sfeatured reporting%s.
@@ -651,7 +653,7 @@
   - welcome_to_document_cloud: Welcome to DocumentCloud
   - width: Width
   - workspace: Workspace
-  - wp_shortcode_plugin_docs_link: Plugin required.
+  - wp_shortcode_plugin_docs_link: "%sPlugin required%s."
   - x_accounts:
     - "%d account"
     - "%d accounts"

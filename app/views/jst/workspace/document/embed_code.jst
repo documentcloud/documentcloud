@@ -3,7 +3,7 @@
   <%= _.t('add_html_for_viewer') %>
 </div>
 
-<textarea class="snippet">
+<textarea id="document_embed_html_snippet" class="snippet">
 &lt;div id="DV-viewer-<%= doc.canonicalId() %>" class="DV-container"&gt;&lt;/div&gt;
 &lt;script src="//s3.amazonaws.com/s3.documentcloud.org/viewer/loader.js"&gt;&lt;/script&gt;
 &lt;script&gt;
@@ -19,5 +19,11 @@
 </textarea>
 
 <div class="dialog_info selectable_text interface">
-  <%= _.t('featured_examples_list', '<a class="text_link" href="http://www.documentcloud.org/featured" target="_blank">', '</a>') %>
+  <%= _.t('add_wp_shortcode_for_viewer') %> (<%= _.t('wp_shortcode_plugin_docs_link', '<a class="text_link" href="https://wordpress.org/plugins/documentcloud/" target="_blank">', '</a>') %>)
+</div>
+
+<input type="text" id="document_embed_wordpress_snippet" class="snippet" value="[documentcloud url=&quot;<%= doc.get("document_viewer_url") %>&quot; <%= shortcodeOptions %>]">
+
+<div class="dialog_info selectable_text interface">
+  <%= _.t('featured_examples_documents_list', '<a class="text_link" href="/featured" target="_blank">', '</a>') %>
 </div>

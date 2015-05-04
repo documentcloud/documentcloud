@@ -2,17 +2,22 @@
   <span class="text_link remove_lines"><%= _.t('remove_line_breaks') %></span>
 </div>
 
-<textarea class="snippet">
+<textarea id="note_embed_html_snippet" class="snippet">
 &lt;div id="DC-note-<%= note.get('id') %>" class="DC-note-container"&gt;&lt;/div&gt;
 &lt;script src="//s3.amazonaws.com/s3.documentcloud.org/notes/loader.js"&gt;&lt;/script&gt;
 &lt;script&gt;
-  dc.embed.loadNote('<%= note.resourceUrl({agnostic: true})%>'<% if (options) { %>, {
+  dc.embed.loadNote('<%= note.resourceUrl({agnostic: true}) %>'<% if (options) { %>, {
     <%= options %>
   }<% } %>);
 &lt;/script&gt;
 </textarea>
 
+<div class="dialog_info selectable_text interface">
+  <%= _.t('add_wp_shortcode_for_viewer') %> (<%= _.t('wp_shortcode_plugin_docs_link', '<a class="text_link" href="https://wordpress.org/plugins/documentcloud/" target="_blank">', '</a>') %>)
+</div>
+
+<input type="text" id="note_embed_wordpress_snippet" class="snippet" value="[documentcloud url=&quot;<%= note.resourceUrl() %>&quot;<%= shortcodeOptions %>]">
+
 <div class="publish_info publish_prepare_section_label selectable_text interface hidden">
-  You can find examples of embedded annotations on our list of
-  <a class="text_link" href="http://www.documentcloud.org/featured" target="_blank">featured reporting</a>.
+  <%= _.t( 'featured_examples_notes_list', '<a class="text_link" href="/featured" target="_blank">','</a>' ) %>
 </div>
