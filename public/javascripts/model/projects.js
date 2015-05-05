@@ -88,7 +88,8 @@ dc.model.Project = Backbone.Model.extend({
 
   notifyProjectChange : function(numDocs, removal) {
     var key = removal ? 'removed_from_x_documents' : 'added_to_x_documents'
-    dc.ui.notifier.show({mode : 'info', text : _.t( key, numDocs ) } );
+    var projectTitle = this.get('title');
+    dc.ui.notifier.show({mode : 'info', text : _.t( key, numDocs, projectTitle ) } );
   },
 
   // Does this project already contain a given document?
