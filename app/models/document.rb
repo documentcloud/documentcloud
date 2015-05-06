@@ -877,7 +877,7 @@ class Document < ActiveRecord::Base
     doc['source']             = source
     doc['created_at']         = created_at.to_formatted_s(:rfc822)
     doc['updated_at']         = updated_at.to_formatted_s(:rfc822)
-    doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
+    doc['canonical_url']      = canonical_url(:html, true)
     doc['language']           = language
     doc['file_hash']          = file_hash
     if options[:contributor]
