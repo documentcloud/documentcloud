@@ -1,7 +1,7 @@
 <% var notes = doc.notes.unrestricted(); %>
 <% if (notes.length) { %>
   <select class="note_select">
-    <% _.each(doc.notes.unrestricted(), function(note) { %>
+    <% _.each(notes, function(note) { %>
       <% var title = dc.inflector.truncate(note.get('title'), 30); %>
       <option value="<%= note.id %>">p.<%= note.get('page') %> &ndash; <%= title %></option>
     <% }); %>
