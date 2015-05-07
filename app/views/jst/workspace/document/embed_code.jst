@@ -11,7 +11,7 @@
   <%= options %>
   });
 &lt;/script&gt;
-  <% if (rawOptions.pdf !== false) { %>&lt;noscript&gt;
+<% if (rawOptions.pdf !== false) { %>&lt;noscript&gt;
   &lt;a href="<%= doc.publicUrl(doc.get('pdf_url')) %>"&gt;<%= doc.escape("title") %> (PDF)&lt;/a&gt;
   &lt;br /&gt;
   &lt;a href="<%= doc.publicUrl(doc.get('full_text_url')) %>"&gt;<%= doc.escape("title") %> (Text)&lt;/a&gt;
