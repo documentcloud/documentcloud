@@ -70,8 +70,13 @@ dc.model.Project = Backbone.Model.extend({
     }, 0);
 
     if (removedCount) {
+      var annotationsRemovedCount = _.reduce(documents, function(sum, doc) {
+        sum += doc.get('annotation_count');
+        return sum;
+      }, 0);
       if (Projects.firstSelected() === this) Documents.remove(documents);
       this.set({document_count : this.get('document_count') - removedCount});
+      this.set({annotation_count : this.get('annotation_count') - annotationsRemovedCount});
       this.notifyProjectChange(removedCount, true);
       if (!localOnly) {
         $.ajax({
