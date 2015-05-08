@@ -4,8 +4,9 @@ defaults: &defaults
   server_root:          dev.dcloud.org
   large_file_storage:   /mnt/large_files
   aws_zone:             us-east-1c
+  aws_region:           us-east-1
   preconfigured_ami_id: <%= secrets['ami'] %>
-  asset_root:         "dev.dcloud.org"
+  asset_root:           "dev.dcloud.org"
 
 development:
   <<: *defaults
