@@ -14,13 +14,14 @@ module DC
 
       # 60 seconds for persistent connections.
       S3_PARAMS       = {:connection_lifetime => 60}
+      AWS_REGION      = DC::CONFIG['aws_region']
 
       ACCESS_TO_ACL   = Hash.new(:private)
       DC::Access::PUBLIC_LEVELS.each{ |level| ACCESS_TO_ACL[level] = :public_read }
 
       module ClassMethods
         def asset_root
-          "https://s3.amazonaws.com/#{BUCKET_NAME}"
+          "https://s3-#{AWS_REGION}.amazonaws.com/#{BUCKET_NAME}"
         end
         def web_root
           asset_root
