@@ -20,7 +20,7 @@ dc.language = {
     'rus' : 'Russian',
     'ukr' : 'Ukrainian'
   },
-  USER: ['eng','spa','rus','ukr', 'dan']
+  USER: ['eng','spa','rus','ukr','dan']
 };
 
 dc.language.SUPPORTED = _.keys(dc.language.NAMES);
