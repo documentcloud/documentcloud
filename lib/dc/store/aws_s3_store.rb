@@ -21,7 +21,7 @@ module DC
 
       module ClassMethods
         def asset_root
-          "https://s3-#{AWS_REGION}.amazonaws.com/#{BUCKET_NAME}"
+          "https://s3.amazonaws.com/#{BUCKET_NAME}"
         end
         def web_root
           asset_root
