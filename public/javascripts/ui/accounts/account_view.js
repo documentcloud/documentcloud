@@ -193,7 +193,7 @@ dc.ui.AccountView = Backbone.View.extend({
       return true;
     }, this), {
       id          : 'disable_account_confirm',
-      title       : _.t('double_check_disable'),
+      title       : _.t('double_check_disable', this.model.fullName()),
       description : _.t('explain_disable_account', this.model.fullName(), '<span class="contact_support text_link">','</span>' ),
       saveText    : 'Disable'
     });
