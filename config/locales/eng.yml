@@ -238,7 +238,7 @@
   - edit_title: Edit Title
   - edit_x: Edit %s
   - editing_notes_sections: Editing Notes and Sections
-  - email: Email Address
+  - email: Email address
   - email_for_assistance: If you need assistance, please email us at support@documentcloud.org.
   - email_when_complete: Email me when %sdocuments have%s finished processing.
   - embed_a_note: Embed a Note
@@ -369,7 +369,7 @@
   - must_have_title: Please enter a title.
   - must_upload_something: You must upload at least one document.
   - new_account: New Account
-  - new_documents: New Documents
+  - new_documents: New documents
   - new_project: New Project
   - next: Next
   - no_appear_until_publish: will not appear until published.
