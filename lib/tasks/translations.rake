@@ -45,7 +45,7 @@ namespace :translations do
       "dan" => "Danish",
       "rus" => "Russian",
       "ukr" => "Ukrainian",
-      "chi" => "Mandarin (Traditional)",
+      # "chi" => "Mandarin (Traditional)",
     }
 
     translation_sheets = {
