@@ -157,9 +157,9 @@
   - contact_us: Contact Us
   - contributed_by: Contributed by
   - contributor: Contributor
-  - country: " Countries"
+  - country: Countries
   - create_new_project: Create a New Project
-  - date: " Dates"
+  - date: Dates
   - date_uploaded: Date Uploaded
   - default_document_language: Default Document Language
   - delete: Delete
@@ -415,7 +415,7 @@
   - order_documents_by: Order documents by
   - organization:
     - Organization
-    - " Organizations"
+    - Organizations
   - organizations_documents: Documents belonging to %s
   - over_x_mentions: Over %d mentions
   - page: *2
@@ -427,9 +427,9 @@
   - password_reset: DocumentCloud password reset
   - password_updated: Password updated
   - pending: Pending
-  - person: " People"
+  - person: People
   - pg: p.
-  - phone: " Phone"
+  - phone: Phone
   - place: Places
   - please_enter_email: Please enter an email address.
   - please_enter_valid_email: Please enter a valid email address.
@@ -610,9 +610,9 @@
   - sort_documents_by: Sort Documents By
   - source: Source
   - source_of_document: The source from which you obtained this document
-  - state: " States"
+  - state: States
   - step_x_of_x: Step %d of %d
-  - term: " Terms"
+  - term: Terms
   - terms: Terms
   - text: Text
   - text_reprocess_help: '"Reprocess" this document to take advantage of improvements
