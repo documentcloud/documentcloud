@@ -419,6 +419,7 @@
   - order_documents_by: Sorter dokumenter efter
   - organization:
     - Organisation
+    - Organisationer
   - organizations_documents: Dokumenter tilhører %s
   - over_x_mentions: Over %d omtaler
   - page: *2
