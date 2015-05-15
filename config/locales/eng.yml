@@ -238,7 +238,7 @@
   - edit_title: Edit Title
   - edit_x: Edit %s
   - editing_notes_sections: Editing Notes and Sections
-  - email: Email Addresses
+  - email: Email Address
   - email_for_assistance: If you need assistance, please email us at support@documentcloud.org.
   - email_when_complete: Email me when %sdocuments have%s finished processing.
   - embed_a_note: Embed a Note
@@ -336,7 +336,7 @@
   - invalid_upload_file_type: "\"%s\" has an invalid file type.  We are unable to
       process documents of this type, please convert the file to a supported document
       format such as PDF.  \n View %stroubleshooting%s for additional details."
-  - language: language
+  - language: Language
   - language_defaults: Language Defaults
   - last_name: Last name
   - length: Length
@@ -572,7 +572,7 @@
   - search_embed_nothing_chosen: You have not performed a search to embed.  Please
       either perform a search or select some documents.
   - search_embed_too_long_error: Too many documents were selected for embedding.  Please
-      select fewer documents or embed a project
+      select fewer documents or embed a project.
   - searching_dd: Searching Documents and Data
   - select_pages_remove: Select the pages you wish to remove.
   - select_single_to_embed: Please select a single document in order to create the

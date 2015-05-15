@@ -108,6 +108,7 @@
   - add_public_note: "Добавить публичную заметку"
   - add_public_note_warn: "Публичные заметки будут видны всем, кто увидит этот документ"
   - add_reviewer: "Добавить рецензента"
+  - add_wp_shortcode_for_viewer: "Добавьте этот код в пост или страницу на WordPress"
   - added_project: "добавлены в этот проект"
   - added_to_x_documents:
     - "Документ добавлен в %s"
@@ -309,6 +310,8 @@
       в DocumentCloud."
   - featured_examples_documents_list: "Множество примеров встроеных документов вы
       можете найти в нашем %sсписке примеров%s."
+  - featured_examples_notes_list: "Много примеров встроенных заметок есть на нашей
+      %sстранице примеров%s."
   - featured_reporting_list: |
       Вы можете найти примеры встраиваемого поиска в нашем списке %sпримеров использования%s.
   - filter: "Фильтр"
@@ -688,6 +691,7 @@
   - welcome_to_document_cloud: "Добро пожаловать в DocumentCloud!"
   - width: "Ширина"
   - workspace: "Интерфейс"
+  - wp_shortcode_plugin_docs_link: "%sНужен плагин%s."
   - x_accounts:
     - "%d аккаунт"
     - "%d аккаунта"

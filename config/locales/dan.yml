@@ -242,7 +242,7 @@
   - edit_title: Rediger titel
   - edit_x: Rediger %s
   - editing_notes_sections: Redigering af noter og sektioner
-  - email: Email adresser
+  - email: Email adresse
   - email_for_assistance: Hvis du har brug for hjælp, kan du kontakte os på support@documentcloud.org.
   - email_when_complete: Email mig, når %sdokumenter er%s færdige med at blive bearbejdet.
   - embed_a_note: Embed en note
@@ -339,7 +339,7 @@
   - invalid_upload_file_type: "\"%s\" has an invalid file type.  We are unable to
       process documents of this type, please convert the file to a supported document
       format such as PDF.  \n View %stroubleshooting%s for additional details."
-  - language: sprog
+  - language: Sprog
   - language_defaults: Sproglige standardindstillinger
   - last_name: Efternavn
   - length: Længde

@@ -107,6 +107,7 @@
   - add_public_note: "Додати публічну нотатку"
   - add_public_note_warn: "Публічні нотатки буде видно всім, хто побачить ций документ"
   - add_reviewer: "Додати рецензента"
+  - add_wp_shortcode_for_viewer: "Додайте цей код до посту чи сторінки на WordPress"
   - added_project: "буде додані до цього проекту"
   - added_to_x_documents:
     - "Документ додано до %s"
@@ -308,6 +309,8 @@
       ім'я користувача та пароль, які використовуєте для входу в DocumentCloud."
   - featured_examples_documents_list: "Багато прикладів вбудованих документів ви можете
       знайти у нашому %sсписку зразків%s."
+  - featured_examples_notes_list: "Багато прикладів нотаток, які було вбудовано до
+      сайтів, є на нашій %sсторінці з прикладами%s."
   - featured_reporting_list: "Ви можете знайти приклади пошуку, який можна вбудувати,
       у нашому списку %sприкладів використання%s."
   - filter: "Фільтр"
@@ -688,6 +691,7 @@
   - welcome_to_document_cloud: "Ласкаво просимо до DocumentCloud! "
   - width: "Ширина"
   - workspace: "Інтерфейс"
+  - wp_shortcode_plugin_docs_link: "%Потрібен плагін%s."
   - x_accounts:
     - "%d екаунт"
     - "%d екаунти"
