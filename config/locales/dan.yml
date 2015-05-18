@@ -26,7 +26,7 @@
   - expand: Udvid
   - finish: Afslut
   - for: af
-  - install_chrome_frame: Eller hvis du gerne vil fortsætte med at bruge Internet
+  - install_chrome_frame: Eller, hvis du gerne vil fortsætte med at bruge Internet
       Explorer 6, kan du %sinstallere Google Chrome Frame%s.
   - link_to_note: Link til denne note
   - loading: Loader
@@ -103,6 +103,7 @@
   - add_public_note: Tilføj en offentlig note
   - add_public_note_warn: Offentlige noter er synlige for alle, der ser dette dokument.
   - add_reviewer: Tilføj bedømmer
+  - add_wp_shortcode_for_viewer: Føj denne code til dit WordPress indhold.
   - added_project: føjet til dette projekt
   - added_to_x_documents:
     - Tilføjede et dokument til %s
@@ -336,9 +337,9 @@
       blive udskiftet på en gang. Når du er klar, klik på "Upload sider"-knappen.
   - insert_replace_pages: Indsæt/erstat sider
   - introduction: Indledning
-  - invalid_upload_file_type: "\"%s\" has an invalid file type.  We are unable to
-      process documents of this type, please convert the file to a supported document
-      format such as PDF.  \n View %stroubleshooting%s for additional details."
+  - invalid_upload_file_type: "\"%s\" har en ugyldig filtype. Vi kan ikke behandle
+      dokumenter af denne type. Konverter venligst filen til et understøttet dokumentformat
+      som PDF.  \n Se %sfejlfinding%s for yderligere detaljer."
   - language: Sprog
   - language_defaults: Sproglige standardindstillinger
   - last_name: Efternavn
@@ -573,10 +574,10 @@
   - saved: Gemt
   - search: Søg
   - search_bar: Søgefelt
-  - search_embed_nothing_chosen: You have not performed a search to embed.  Please
-      either perform a search or select some documents.
-  - search_embed_too_long_error: Too many documents were selected for embedding.  Please
-      select fewer documents or embed a project
+  - search_embed_nothing_chosen: Du har ikke udført en søgning for at embedde den.
+      Venligst foretag en søgning eller vælg nogle dokumenter.
+  - search_embed_too_long_error: Alt for mange dokumenter blev udvalgt til at embedde.
+      Vælg færre dokumenter eller embed et projekt.
   - searching_dd: Søgning i dokumenter og data
   - select_pages_remove: Vælg de sider, du ønsker at fjerne.
   - select_single_to_embed: Vælg et enkelt dokument at embedde.
@@ -657,6 +658,7 @@
   - welcome_to_document_cloud: 'Velkommen til DocumentCloud '
   - width: Bredde
   - workspace: Arbejdsområde
+  - wp_shortcode_plugin_docs_link: "%sPlugin nødvendigt%s."
   - x_accounts:
     - "%d konto"
     - "%d konti"
