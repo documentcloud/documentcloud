@@ -106,8 +106,8 @@
   - add_wp_shortcode_for_viewer: Føj denne code til dit WordPress indhold.
   - added_project: føjet til dette projekt
   - added_to_x_documents:
-    - Tilføjede et dokument til %s
-    - Tilføjede %d dokumenter til %s
+    - Tilføjede et dokument til %2$s
+    - Tilføjede %1$d dokumenter til %2$s
   - adding_accounts: Tilføj konti
   - administrator: Administrator
   - all_documents: Alle dokumenter
@@ -525,8 +525,8 @@
     - Fjern side
     - Fjern %d sider
   - removed_from_x_documents:
-    - Fjernede et dokument fra %s
-    - Fjernede %d dokumenter fra %s
+    - Fjernede et dokument fra %2$s
+    - Fjernede %1$d dokumenter fra %2$s
   - removing: Fjerner...
   - reorder_hint: Omarranger sider ved at trække og slippe.
   - reorder_pages: "Ændrer rækkefølge af sider"

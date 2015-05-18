@@ -107,8 +107,8 @@
   - add_wp_shortcode_for_viewer: Añadir este código corto a tu sitio de WordPress.
   - added_project: añadido a este proyecto
   - added_to_x_documents:
-    - Se agregó un documento a %s
-    - Se agregaron %d documentos a %s
+    - Se agregó un documento a %2$s
+    - Se agregaron %1$d documentos a %2$s
   - adding_accounts: Añadir Cuentas
   - administrator: Administrador
   - all_documents: Todos los Documentos
@@ -531,8 +531,8 @@
     - Retire página
     - Quite %d Páginas
   - removed_from_x_documents:
-    - Se eliminó un documento de %s
-    - Se eliminaron %d documentos de %s
+    - Se eliminó un documento de %2$s
+    - Se eliminaron %1$d documentos de %2$s
   - removing: Extracción de ...
   - reorder_hint: Reordenar páginas arrastrando y soltando.
   - reorder_pages: Reordenar Páginas
