@@ -104,8 +104,8 @@
   - add_wp_shortcode_for_viewer: Add this shortcode to your WordPress content.
   - added_project: added to this project
   - added_to_x_documents:
-    - Added a document to %s
-    - Added %d documents to %s
+    - Added a document to %2$s
+    - Added %1$d documents to %2$s
   - adding_accounts: Adding Accounts
   - administrator: Administrator
   - all_documents: All Documents
@@ -521,8 +521,8 @@
     - Remove Page
     - Remove %d Pages
   - removed_from_x_documents:
-    - Removed a document from %s
-    - Removed %d documents from %s
+    - Removed a document from %2$s
+    - Removed %1$d documents from %2$s
   - removing: Removing...
   - reorder_hint: Reorder pages by dragging and dropping.
   - reorder_pages: Reorder Pages
