@@ -1,0 +1,23 @@
+<%= @account.full_name %>,
+
+<% if @admin -%>
+Hej! <%= @admin.full_name %> hhar tilføjet dig til <%= @account.organization.name %>'s DocumentCloud konto.
+<% else -%>
+Hej! En DocumentCloud konto er blevet oprettet for dig og <%= @account.organization.name %>.
+<% end -%>
+
+Vælg din adgangskode og gå i gang på:
+
+<%= DC.server_root(:force_ssl => true) %>/accounts/enable/<%= @account.security_key.key %>
+
+Når du har indstillet din adgangskode, kan du logge ind på <%= DC.server_root(:ssl => false) %>/login ved at bruge <%= @account.email %> som dit brugernavn.
+
+Vi tilføjer funktioner og lytter til dine anmodninger. Hold øje med vores blog for opdateringer og lad os vide, hvad du har brug for fra DocumentCloud: http://documentcloud.uservoice.com
+
+Når du er logget ind, kan du finde oplysninger om at bruge DocumentCloud i praksis, herunder at oprette konti, søge efter dokumenter og mere under fanen hjælp.
+
+Med venlig hilsen,
+
+The DocumentCloud Team
+
+P.S. Vi er altid på udkig efter gode historier om, hvordan DocumentCloud hjælper din journalistik. Husk derfor at fortælle os, hvis du kører en historie, som DocumentCloud har spillet en rolle i!

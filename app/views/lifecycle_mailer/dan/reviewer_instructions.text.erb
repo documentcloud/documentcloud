@@ -1,0 +1,20 @@
+<%= @inviter_account.full_name %> ved <%= @organization_name %> har inviteret dig til at vurdere <% if @documents.count > 1 %><%= @documents.count %> dokumenter.<% else %>"<%= @documents[0] && @documents[0].title %>."<% end %> Brug URL<% if @documents.count != 1 %>s<% end %> nedenfor for at få adgang til <% if @documents.count > 1 %> dokumenterne<% else %> dokumentet<% end %>.
+<%- @documents.each do |d| -%>
+<%- if @documents.count > 1 -%><%= d.title %><%- end %>
+<%= DC.server_root(:ssl => true) %>/documents/<%= d.id %>-<%= d.slug %>.html<%= @key %>
+
+<%- end -%>
+<%- if @message && @message.length >= 1 -%>
+<%= @inviter_account.first_name %> kom med følgende vejledninger:
+
+
+<%= @message %>
+
+
+<%- end -%>
+Vær venlig ikke at dele denne webadresse, som blev dannet specielt til dig. Hvis du har kolleger, som du mener også bør se nærmere på indholdet, kan du nå <%= @inviter_account.full_name %> med <%= @inviter_account.email %>.
+
+<%= @organization_name %> bruger DocumentCloud til at dele og kommentere dokumenter. Du kan læse mere på http://www.documentcloud.org.
+
+The DocumentCloud Team
+
