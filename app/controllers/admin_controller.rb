@@ -60,7 +60,7 @@ class AdminController < ApplicationController
     respond_to do |format|
       format.any do
         expire_page "/admin/index.json"
-        json_response
+        redirect_to :action => :index
       end
     end
   end

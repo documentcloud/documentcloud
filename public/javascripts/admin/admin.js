@@ -228,6 +228,7 @@ dc.ui.Admin = Backbone.View.extend({
       label   : 'Administrative Actions',
       id      : 'admin_actions',
       items   : [
+        {title : 'Update Dashboard Stats',    onClick : function(){ window.location = '/admin/expire_stats'; }},
         {title : 'Add an Organization',       onClick : function(){ window.location = '/admin/signup'; }},
         {title : 'View CloudCrowd Console',   onClick : function(){ window.location = CLOUD_CROWD_SERVER; }},
         {title : 'Reprocess Last Failed Doc', onClick : this.reprocessFailedDocument},
